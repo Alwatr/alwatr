@@ -1,0 +1,22 @@
+// Reference: eslint.org/docs/user-guide/configuring/configuration-files
+
+{
+  "root": true,
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "parserOptions": { "project": ["./tsconfig.json"] },
+  "rules": {
+    "@typescript-eslint/strict-boolean-expressions": [
+      2,
+      {
+        "allowString": false,
+        "allowNumber": false
+      }
+    ]
+  },
+  "ignorePatterns": ["node_modules/"]
+}

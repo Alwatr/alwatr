@@ -1,0 +1,12 @@
+{
+  "name": "one",
+  "description": "The One Library",
+  "repository": "https://github.com/AliMD/One",
+  "author": "AliMD",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
+    "eslint": "^8.5.0",
+    "typescript": "^4.5.4"
+  }
+}

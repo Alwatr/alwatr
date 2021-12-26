@@ -1,0 +1,4 @@
+# Reference: https://eslint.org/docs/user-guide/configuring/ignoring-code
+
+**/*.js
+node_modules/

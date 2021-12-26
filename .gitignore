@@ -1,0 +1,7 @@
+# Reference: https://git-scm.com/docs/gitignore
+
+# Dependency directory
+node_modules/
+
+# OS metadata
+.DS_Store
