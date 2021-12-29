@@ -6,7 +6,7 @@
   "command": {
     "version": {
       "conventionalCommits": true,
-      "changelogPreset": "lit",
+      "changelogPreset": "angular",
       "message": "chore(release): %s"
     },
     "publish": {
