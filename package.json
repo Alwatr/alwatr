@@ -1,9 +1,12 @@
 {
-  "name": "one-web-components",
-  "version": "0.1.0",
+  "name": "@one/core",
+  "version": "0.0.0",
   "description": "One Web Components",
   "repository": "https://github.com/AliMD/One",
   "author": "Ali Mihandoost <alimihandoost@gmail.com>",
+  "contributors": [
+    "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
+  ],
   "license": "MIT",
   "type": "module",
   "private": true,
@@ -13,6 +16,6 @@
   },
   "workspaces": [
     "package/*",
-    "api"
+    "demo"
   ]
 }
