@@ -4,6 +4,7 @@
   "description": "@one packages demo",
   "main": "index.js",
   "author": "@one community",
+  "type": "module",
   "contributors": [
     "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
   ],
