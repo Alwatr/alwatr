@@ -8,15 +8,14 @@
   ],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
-  "parserOptions": { "project": ["./tsconfig.json"] },
+  "parserOptions": { "project": ["./ts-lint.json"] },
   "rules": {
-    "@typescript-eslint/strict-boolean-expressions": [
+    "@typescript-eslint/no-inferrable-type": [
       2,
       {
         "allowString": false,
         "allowNumber": false
       }
     ]
-  },
-  "ignorePatterns": ["node_modules/"]
+  }
 }
