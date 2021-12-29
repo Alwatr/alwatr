@@ -10,15 +10,11 @@
   "private": true,
   "scripts": {
     "b": "yarn build",
-    "w": "yarn watch",
     "s": "yarn serve",
     "c": "yarn clean",
     "build": "npm-run-all build:*",
     "build:ts": "tsc --build",
     "prepare": "yarn build",
-    "watch": "npm-run-all --parallel watch:*",
-    "watch:ts": "yarn build:ts --watch",
-    "watch:serve": "nodemon --watch dist ./dist/src/server.js",
     "clean": "tsc --build --clean"
   },
   "devDependencies": {
