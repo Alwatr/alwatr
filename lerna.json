@@ -1,0 +1,31 @@
+{
+  "version": "0.0.0",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "package": [
+    "api",
+    "package/*"
+  ],
+  "command": {
+    "version": {
+      "conventionalCommits": true,
+      "changelogPreset": "lit",
+      "message": "chore(release): %s"
+    },
+    "publish": {
+      "conventionalCommits": true,
+      "ignoreChanges": [
+        "*.md"
+      ]
+    },
+    "bootstrap": {
+      "hoist": true,
+      "npmClientArgs": [
+        "--no-package-lock"
+      ]
+    },
+    "run": {
+      "stream": true
+    }
+  }
+}
