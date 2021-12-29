@@ -1,5 +1,5 @@
 {
-  "name": "@one",
+  "name": "@one/core",
   "private": true,
   "description": "The One Library",
   "repository": "https://github.com/AliMD/One",
