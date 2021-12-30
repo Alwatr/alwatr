@@ -1,0 +1,21 @@
+// Reference: eslint.org/docs/user-guide/configuring/configuration-files
+
+{
+  "root": true,
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "parserOptions": { "project": ["./ts-lint.json"] },
+  "rules": {
+    "@typescript-eslint/no-inferrable-type": [
+      2,
+      {
+        "allowString": false,
+        "allowNumber": false
+      }
+    ]
+  }
+}
