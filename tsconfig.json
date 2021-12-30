@@ -2,22 +2,31 @@
 
 {
   "compilerOptions": {
-    "strict": true,
-    "lib": ["ScriptHost", "WebWorker", "DOM", "DOM.Iterable"],
+    "incremental": true,
     "target": "ES2019",
     "module": "ES2020",
-    "outDir":"./dist",
+    "lib": ["ES2020", "ScriptHost", "WebWorker", "DOM", "DOM.Iterable"],
     "declaration": true,
-    "skipLibCheck": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "composite": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "removeComments": true,
     "importHelpers": true,
-    "noImplicitAny": true,
+    "strict": true,
     "noUnusedLocals": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
     "noUnusedParameters": true,
-    "moduleResolution": "node",
+    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
-  }
+    "moduleResolution": "node",
+    "baseUrl": "./package",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": [],
+  "references": []
 }
