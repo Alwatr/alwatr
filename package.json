@@ -1,0 +1,20 @@
+{
+  "name": "@one/core",
+  "version": "0.0.0",
+  "description": "One Web Components",
+  "repository": "https://github.com/AliMD/One",
+  "author": "Ali Mihandoost <alimihandoost@gmail.com>",
+  "contributors": [
+    "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^4.0.0",
+    "typescript": "^4.5.4"
+  },
+  "workspaces": [
+    "package/*",
+    "demo"
+  ]
+}
