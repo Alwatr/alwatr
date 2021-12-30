@@ -1,7 +1,29 @@
-# Reference: https://git-scm.com/docs/gitignore
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
 
-# Dependency directory
-node_modules/
-
-# OS metadata
+# OSX
+.DS_STORE
 .DS_Store
+._*
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log*
+
+# Build
+dist
+.tsbuildinfo
+
+# Dependencies
+node_modules
+tsconfig.tsbuildinfo
+package-lock.json
+yarn.lock
+
+*.js
+*.map
+*.d.ts
+
