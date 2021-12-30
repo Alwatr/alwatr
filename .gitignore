@@ -14,11 +14,11 @@ Desktop.ini
 *.log*
 
 # Build
-dist
+dist/
 .tsbuildinfo
 
 # Dependencies
-node_modules
+node_modules/
 tsconfig.tsbuildinfo
 package-lock.json
 yarn.lock
@@ -26,4 +26,3 @@ yarn.lock
 *.js
 *.map
 *.d.ts
-
