@@ -2,7 +2,7 @@
   "name": "@one/demo",
   "version": "0.0.0",
   "description": "@one packages demo",
-  "main": "./dist/index.js",
+  "main": "index.js",
   "author": "@one community",
   "contributors": [
     "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
