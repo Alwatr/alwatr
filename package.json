@@ -3,14 +3,27 @@
   "version": "0.0.0",
   "description": "One Web Components",
   "repository": "https://github.com/AliMD/One",
-  "author": "Ali Mihandoost <alimihandoost@gmail.com>",
+  "author": "@one community",
   "contributors": [
     "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
   ],
-  "license": "MIT",
   "private": true,
+  "scripts": {
+    "b": "yarn build",
+    "w": "yarn watch",
+    "s": "yarn serve",
+    "c": "yarn clean",
+    "build": "npm-run-all build:*",
+    "build:ts": "tsc --build",
+    "prepare": "yarn build",
+    "watch": "npm-run-all --parallel watch:*",
+    "watch:ts": "yarn build:ts --watch",
+    "watch:serve": "nodemon --watch dist ./dist/src/server.js",
+    "clean": "tsc --build --clean"
+  },
   "devDependencies": {
     "lerna": "^4.0.0",
+    "npm-run-all": "^4.1.5",
     "typescript": "^4.5.4"
   },
   "workspaces": [
