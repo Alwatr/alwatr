@@ -1,21 +1,26 @@
 // Reference: eslint.org/docs/user-guide/configuring/configuration-files
 
 {
-  "root": true,
-  "extends": [
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
-  "parserOptions": { "project": ["./ts-lint.json"] },
-  "rules": {
-    "@typescript-eslint/no-inferrable-type": [
-      2,
-      {
-        "allowString": false,
-        "allowNumber": false
-      }
-    ]
-  }
+  "compilerOptions": {
+    "incremental": true,
+    "target": "ESNEXT",
+    "module": "ESNEXT",
+    "lib": ["ESNEXT", "DOM", "DOM.Iterable"],
+    "declaration": true,
+    "composite": true,
+    "importHelpers": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": ["demo", "package/**/*.ts"],
+  "exclude": [],
+  "compileOnSave": false
 }
