@@ -14,12 +14,13 @@
     "b": "yarn build",
     "s": "yarn serve",
     "c": "yarn clean",
-    "build": "npm-run-all build:*",
+    "build": "npm-run-all lint build:*",
     "build:ts": "tsc --build",
-    "prepare": "yarn build",
-    "clean": "tsc --build --clean",
     "lint": "npm-run-all lint:*",
-    "lint:ts": "eslint package/**/*.ts **/*.ts"
+    "lint:ts": "eslint package/**/*.ts **/*.ts",
+    "prepare": "yarn build",
+    "serve": "node ./dist/src/server.js",
+    "clean": "tsc --build --clean"
   },
   "devDependencies": {
     "lerna": "^4.0.0",
