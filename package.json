@@ -8,7 +8,6 @@
     "MohammadMahdi Zamanian <mm25zamanian@gmail.com>",
     "Amir Najafi <njfamirm@gmail.com>"
   ],
-  "license": "MIT",
   "private": true,
   "scripts": {
     "b": "yarn build",
