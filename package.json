@@ -18,7 +18,6 @@
     "lint": "npm-run-all lint:*",
     "lint:ts": "eslint package/**/*.ts **/*.ts",
     "prepare": "yarn build",
-    "serve": "node ./dist/src/server.js",
     "clean": "tsc --build --clean"
   },
   "devDependencies": {
