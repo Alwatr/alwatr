@@ -1,3 +1,3 @@
-import { persianNumberToEnglishNumber } from "@one/util/src/persian-number";
+import { persianNumberToEnglishNumber } from '@one/util/persian-number';
 
-console.log(persianNumberToEnglishNumber("۱۲۳۴"));
+console.log(persianNumberToEnglishNumber('۱۲۳۴'));
