@@ -23,19 +23,19 @@
     "clean": "tsc --build --clean"
   },
   "devDependencies": {
-    "lerna": "^4.0.0",
-    "typescript": "^4.5.4",
-    "eslint": "^7.22.0",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^8.6.0",
     "eslint-config-standard": "^16.0.2",
-    "eslint-config-standard-with-typescript": "^20.0.0",
+    "eslint-config-standard-with-typescript": "^21.0.1",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsdoc": "^32.3.0",
+    "eslint-plugin-jsdoc": "^37.5.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-wc": "^1.3.0",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "npm-run-all": "^4.1.5"
+    "lerna": "^4.0.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^4.5.4"
   },
   "workspaces": [
     "package/*",
