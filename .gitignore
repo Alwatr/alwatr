@@ -15,9 +15,11 @@ Desktop.ini
 
 # Build
 dist
-node_modules
 .tsbuildinfo
 tsconfig.tsbuildinfo
+
+# Dependencies
+node_modules
 package-lock.json
 
 *.js
