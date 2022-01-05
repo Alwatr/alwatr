@@ -1,0 +1,14 @@
+{
+  "name": "@one/util",
+  "version": "0.0.0",
+  "description": "Typescript/Javascript Utils",
+  "main": "index.js",
+  "author": "@one community",
+  "type": "module",
+  "contributors": [
+    "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
+  ],
+  "dependencies": {
+    "tslib": "^2.3.1"
+  }
+}
