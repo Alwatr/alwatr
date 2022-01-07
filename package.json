@@ -17,12 +17,14 @@
     "build:ts": "tsc --build",
     "lint": "npm-run-all lint:*",
     "lint:ts": "eslint package/**/*.ts **/*.ts",
+    "serve": "web-dev-server --watch --config dev-server.mjs",
     "prepare": "yarn build",
     "clean": "tsc --build --clean"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.8.1",
     "@typescript-eslint/parser": "^5.8.1",
+    "@web/dev-server": "^0.1.29",
     "eslint": "^8.6.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-config-standard-with-typescript": "^21.0.1",
