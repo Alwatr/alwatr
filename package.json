@@ -11,6 +11,7 @@
   "private": true,
   "scripts": {
     "b": "yarn build",
+    "w": "yarn watch",
     "s": "yarn serve",
     "c": "yarn clean",
     "build": "npm-run-all lint build:*",
@@ -19,6 +20,8 @@
     "lint:ts": "eslint package/**/*.ts **/*.ts",
     "serve": "web-dev-server --watch --config dev-server.mjs",
     "prepare": "yarn build",
+    "watch": "npm-run-all --parallel lint watch:* serve",
+    "watch:ts": "yarn build:ts --watch",
     "clean": "tsc --build --clean"
   },
   "devDependencies": {
