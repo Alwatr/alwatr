@@ -19,6 +19,9 @@
     "emitDecoratorMetadata": true
   },
   "include": ["demo/**/*.ts", "package/**/*.ts"],
-  "exclude": [],
+  "exclude": [
+    "**/*.d.ts",
+    "node_modules"
+  ],
   "compileOnSave": false
 }
