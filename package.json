@@ -1,0 +1,10 @@
+{
+  "license": "MIT",
+  "scripts": {
+    "scss-w": "node-sass -w ./src/scss/ -o ./dist/css/"
+  },
+  "devDependencies": {
+    "node-sass": "^7.0.1",
+    "sass": "^1.45.2"
+  }
+}
