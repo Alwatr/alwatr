@@ -1,0 +1,15 @@
+{
+  "name": "@theone/util",
+  "version": "0.0.0",
+  "description": "Typescript/Javascript Icon Pack Lit",
+  "main": "index.js",
+  "author": "@one community",
+  "type": "module",
+  "contributors": [
+    "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
+  ],
+  "dependencies": {
+    "lit": "^2.1.2",
+    "tslib": "^2.3.1"
+  }
+}
