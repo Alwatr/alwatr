@@ -78,6 +78,7 @@
   "exclude": [],
   "references": [
     {"path": "./package/util"},
+    {"path": "./package/svg-icon"},
     {"path": "./demo"},
   ]
 }
