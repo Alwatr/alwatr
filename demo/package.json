@@ -9,7 +9,9 @@
     "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
   ],
   "dependencies": {
+    "@one/svg-icon": "^0.0.0",
     "@one/util": "^0.0.0",
+    "lit": "^2.1.3",
     "tslib": "^2.2.0"
   }
 }
