@@ -5,6 +5,21 @@
   "main": "index.js",
   "author": "@one community",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/One/tree/next/package/svg-icon"
+  },
+  "files": [
+    "*.js",
+    "*.js.map",
+    "*.d.ts",
+    "*.d.ts.map",
+    "*.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "contributors": [
     "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
   ],
