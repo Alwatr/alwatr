@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "@one community",
   "type": "module",
+  "private": "true",
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/One/tree/next/demo"
