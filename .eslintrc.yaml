@@ -1,106 +1,38 @@
 root: true
+
 extends:
   - eslint:recommended
-  - standard-with-typescript
+  - google
   - plugin:@typescript-eslint/eslint-recommended
   - plugin:@typescript-eslint/recommended
   - plugin:wc/recommended
-  - plugin:jsdoc/recommended
-  # - plugin:prettier/recommended
+
 env:
   browser: true
   es2021: true
-overrides:
-  - files:
-      - "*.ts"
-      - "*.tsx"
+
 parser: "@typescript-eslint/parser"
 parserOptions:
-  ecmaVersion: 12
+  ecmaVersion: 2021
   sourceType: module
-  project: "ts-lint.json"
-  tsconfigRootDir: ./
 
 plugins:
   - "@typescript-eslint"
   - wc
-  - jsdoc
+
 settings:
   wc:
     elementBaseClasses:
-      - LitElement # TODO: Add other classes
+      - LitElement
+      # TODO: Add other classes
+
 rules:
-  # Godgiven recommended rules
   no-eval:
     - error
     - allowIndirect: true
-  curly:
-    - error
-    - all
-  comma-dangle:
-    - error
-    - arrays: only-multiline
-      objects: only-multiline
-      imports: only-multiline
-      exports: only-multiline
-      functions: only-multiline
-  no-void:
-    - error
-    - allowAsStatement: true
+  no-floating-decimal: error
+  "@typescript-eslint/no-empty-function": off
 
-  "@typescript-eslint/semi":
-    - error
-    - always
-    - omitLastInOneLineBlock: false
-  "@typescript-eslint/brace-style":
-    - error
-    - allman
-    - allowSingleLine: true
-  "@typescript-eslint/return-await":
-    - error
-    - in-try-catch
-  "@typescript-eslint/space-before-function-paren":
-    - error
-    - anonymous: never
-      named: never
-      asyncArrow: always
-  "@typescript-eslint/no-inferrable-types":
-    - off
-    - ignoreParameters: true
-      ignoreProperties: true
-  "@typescript-eslint/member-delimiter-style":
-    - error
-    - multiline:
-        delimiter: semi
-        requireLast: true
-      singleline:
-        delimiter: semi
-        requireLast: true
-  "@typescript-eslint/no-misused-promises":
-    - error
-    - checksVoidReturn: false
-      checksConditionals: true
-
-  # TODO:
-  # https://www.npmjs.com/package/eslint-plugin-no-autofix
-  # jsdoc/require-jsdoc:
-  #   - warn
-  #   - publicOnly: true
-  #     require:
-  #       ArrowFunctionExpression: true
-  #       ClassDeclaration: true
-  #       ClassExpression: true
-  #       FunctionDeclaration : true
-  #       FunctionExpression: true
-  #       MethodDefinition: true
-
-  # Remove unnecessary rules
-  import/export: off
-  jsdoc/require-param: off
-  jsdoc/require-returns: off
-  "@typescript-eslint/no-dynamic-delete": off
-  "@typescript-eslint/prefer-includes": off # https://jsperf.com/includes-vs-indexof
-  "@typescript-eslint/no-invalid-void-type": off
-  "@typescript-eslint/no-non-null-assertion": off
-  "@typescript-eslint/promise-function-async": off # TODO: more research
-  "@typescript-eslint/no-unnecessary-boolean-literal-compare": off
+  # TODO: Enable in future
+  require-jsdoc: off
+  valid-jsdoc: off

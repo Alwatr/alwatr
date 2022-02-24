@@ -1,6 +1,5 @@
 # Reference: https://eslint.org/docs/user-guide/configuring/ignoring-code
 
-
 *.js
 *.mjs
 *.map
