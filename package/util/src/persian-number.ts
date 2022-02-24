@@ -27,15 +27,12 @@ const arabicNumbers = [
 /**
  * persianNumberToEnglishNumber
  */
-export function persianNumberToEnglishNumber(string: string): string
-{
-  if (typeof string === 'string')
-  {
-    for (let number = 0; number < 10; number++)
-    {
+export function persianNumberToEnglishNumber(string: string): string {
+  if (typeof string === 'string') {
+    for (let number = 0; number < 10; number++) {
       string = string
-        .replace(persianNumbers[number], number.toString())
-        .replace(arabicNumbers[number], number.toString());
+          .replace(persianNumbers[number], number.toString())
+          .replace(arabicNumbers[number], number.toString());
     }
   }
   return string;

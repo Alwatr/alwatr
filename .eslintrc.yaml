@@ -27,6 +27,9 @@ settings:
       # TODO: Add other classes
 
 rules:
+  max-len:
+    - warn
+    - code: 120
   no-eval:
     - error
     - allowIndirect: true

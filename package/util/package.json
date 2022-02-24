@@ -1,10 +1,11 @@
 {
-  "name": "@one/util",
+  "name": "@vatr/util",
   "version": "0.0.0",
   "description": "Typescript/Javascript Utils",
   "main": "index.js",
-  "author": "@one community",
+  "author": "@vatr community",
   "type": "module",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/One/tree/next/package/util"

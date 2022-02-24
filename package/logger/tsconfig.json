@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "src",
+    "outDir": ".",
+  },
+  // files, include and exclude from the inheriting config are always overwritten.
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [],
+  "references": [
+    // { "path": "../x" },
+  ]
+}

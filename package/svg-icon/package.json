@@ -1,10 +1,11 @@
 {
-  "name": "@one/svg-icon",
+  "name": "@vatr/svg-icon",
   "version": "0.0.0",
   "description": "Typescript/Javascript Icon Pack Lit",
   "main": "index.js",
-  "author": "@one community",
+  "author": "@vatr community",
   "type": "module",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/One/tree/next/package/svg-icon"
@@ -24,7 +25,7 @@
     "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
   ],
   "dependencies": {
-    "lit": "^2.1.2",
+    "lit": "^2.2.0",
     "tslib": "^2.3.1"
   }
 }
