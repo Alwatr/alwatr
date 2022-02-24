@@ -3,6 +3,7 @@
   "description": "The Vatr Library",
   "repository": "https://github.com/AliMD/One",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "license": "MIT",
   "private": true,
   "workspaces": [
     "package/*",
