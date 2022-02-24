@@ -1,9 +1,9 @@
 {
-  "name": "@one/svg-icon",
+  "name": "@vatr/svg-icon",
   "version": "0.0.0",
   "description": "Typescript/Javascript Icon Pack Lit",
   "main": "index.js",
-  "author": "@one community",
+  "author": "@vatr community",
   "type": "module",
   "private": true,
   "repository": {

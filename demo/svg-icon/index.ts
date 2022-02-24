@@ -1,4 +1,4 @@
-import { home } from '@one/svg-icon/ion-icon.js';
+import { home } from '@vatr/svg-icon/ion-icon.js';
 import { LitElement, html, css, TemplateResult } from 'lit';
 
 export class Typography extends LitElement
