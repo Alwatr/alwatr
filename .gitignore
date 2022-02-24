@@ -16,7 +16,6 @@ Desktop.ini
 # Build
 dist
 .tsbuildinfo
-tsconfig.tsbuildinfo
 
 # Dependencies
 node_modules
