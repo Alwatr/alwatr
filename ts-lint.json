@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "incremental": true,
     "target": "ESNEXT",
     "module": "ESNEXT",
     "lib": ["ESNEXT", "DOM", "DOM.Iterable"],

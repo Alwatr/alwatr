@@ -1,0 +1,23 @@
+{
+  "eslint.packageManager": "yarn",
+  "npm.packageManager": "yarn",
+  "lit-plugin.strict": true,
+  "editor.wordWrapColumn": 120,
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "cSpell.language": "en,fa",
+  "cSpell.words": [
+    "Mihandoost",
+    "Vatr"
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "files.exclude": {
+    "**/*.map": true,
+    "**/*.js": true,
+    "**/*.d.ts": true,
+    "**/*.tsbuildinfo": true
+  },
+}
