@@ -1,5 +1,6 @@
 import {createLogger} from '@vatr/logger';
-import type {ListenerOptions, DispatchOptions, ListenerCallback, RequestSignalOptions} from './type';
+import {getSignalObject} from './core';
+import type {ListenerOptions, DispatchOptions, ListenerCallback, ListenerObject} from './type';
 
 const log = createLogger('vatr/signal');
 
@@ -11,17 +12,43 @@ const log = createLogger('vatr/signal');
  */
 export function addSignalListener<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
-    signalCallback: ListenerCallback<VatrSignals[SignalName]>,
+    signalCallback: ListenerCallback<SignalName>,
     options?: Partial<ListenerOptions>,
 ): symbol {
-  log('addSignalListener: %o', {signalName, options});
+  log('addSignalListener(`%s`, %o)', signalName, options);
 
-  // return _addSignalListener(signalName, signalCallback as ListenerCallback, {
-  //   once: false,
-  //   capture: false,
-  //   disabled: false,
-  //   ...options,
-  // });
+  const signal = getSignalObject(signalName);
+  const listener: ListenerObject<SignalName> = {
+    id: Symbol('Vatr Signal Listener'),
+    once: options?.once ?? false,
+    disabled: options?.disabled ?? false,
+    callback: signalCallback,
+  };
+
+  if (options?.priority) {
+    signal.priorityListenerList.push(listener);
+  } else {
+    signal.listenerList.push(listener);
+  }
+
+  // Run callback for old dispatch signal
+  if (!options?.once && 'value' in signal) {
+    if (options?.receivePrevious === 'Immediate') {
+      log('addSignalListener(`%s`): run callback(immediately)', signalName);
+      try {
+        signalCallback(signal.value);
+      } catch (err) {
+        console.error('addSignalListener(`%s`): signalCallback error! %o', signalName, err);
+      }
+    } else if (options?.receivePrevious === true) {
+      requestAnimationFrame(() => {
+        log('addSignalListener: run callback(delay): %s', signalName);
+        signalCallback(signal.value);
+      });
+    }
+  }
+
+  return listener.id;
 }
 
 /**
