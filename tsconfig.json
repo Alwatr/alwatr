@@ -106,6 +106,7 @@
   "include": [ "*.ts" ],
   "exclude": [],
   "references": [
+    {"path": "./package/logger"},
     {"path": "./package/util"},
     {"path": "./package/svg-icon"},
     {"path": "./demo"},
