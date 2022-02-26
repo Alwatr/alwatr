@@ -25,7 +25,6 @@ export interface ListenerOptions
   /**
    * If true, the listener will be called before other.
    * @default false
-   * @deprecated @TODO Please implement this feature.
    */
   priority: boolean;
 

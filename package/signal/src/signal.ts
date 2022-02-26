@@ -106,13 +106,16 @@ export function dispatchSignal<SignalName extends keyof VatrSignals>(
  * // dispatch request signal and wait for answer (wait for NEW signal).
  * const newContent = await requestSignal('content-change', {foo: 'bar'});
  */
-export async function requestSignal<SignalName extends keyof VatrRequestSignals>(
+export function requestSignal<SignalName extends keyof VatrRequestSignals>(
     signalName: SignalName,
     requestParam: VatrRequestSignals[SignalName],
 ): Promise<VatrSignals[SignalName]> {
   log('requestSignal: %s', signalName);
-
-  return Promise.resolve(undefined);
+  dispatchSignal(
+      `request-${signalName}` as unknown as SignalName,
+      requestParam as unknown as VatrSignals[SignalName], // mastmalize to avoid type error
+  );
+  return waitForSignal(signalName);
 }
 
 /**
@@ -133,7 +136,7 @@ export function setSignalProvider<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
     signalCallback: ListenerCallback<VatrSignals[SignalName]>,
 ): symbol {
-  log('addSignalListener: %o', {signalName, options});
+  log('addSignalListener(%s)', signalName);
 
 // return _addSignalListener(signalName, signalCallback as ListenerCallback, {
 //   once: false,
