@@ -82,6 +82,11 @@ export interface ListenerObject<SignalName extends keyof VatrSignals>
 export interface SignalObject<SignalName extends keyof VatrSignals>
 {
   /**
+   * Signal name for direct access.
+   */
+  name: SignalName;
+
+  /**
    * Last dispatched value.
    */
   value?: VatrSignals[SignalName];
@@ -90,6 +95,12 @@ export interface SignalObject<SignalName extends keyof VatrSignals>
    * If true, the signal is disabled.
    */
   disabled: boolean;
+
+  /**
+   * Dispatches debounced (delayed).
+   * Internal use case for debounce dispatch signal.
+   */
+  debounced: boolean;
 
   /**
    * Signal priority listeners list.

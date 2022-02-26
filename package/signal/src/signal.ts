@@ -1,8 +1,6 @@
-import {createLogger} from '@vatr/logger';
-import {getSignalObject} from './core';
+import {log, _getSignalObject, _callListeners, _removeSignalListener} from './core';
 import type {ListenerOptions, DispatchOptions, ListenerCallback, ListenerObject} from './type';
 
-const log = createLogger('vatr/signal');
 
 /**
  * Add new listener to specific signal.
@@ -15,9 +13,9 @@ export function addSignalListener<SignalName extends keyof VatrSignals>(
     signalCallback: ListenerCallback<SignalName>,
     options?: Partial<ListenerOptions>,
 ): symbol {
-  log('addSignalListener(`%s`, %o)', signalName, options);
+  log('addSignalListener(%s, %o)', signalName, options);
 
-  const signal = getSignalObject(signalName);
+  const signal = _getSignalObject(signalName);
   const listener: ListenerObject<SignalName> = {
     id: Symbol('Vatr Signal Listener'),
     once: options?.once ?? false,
@@ -34,15 +32,15 @@ export function addSignalListener<SignalName extends keyof VatrSignals>(
   // Run callback for old dispatch signal
   if (!options?.once && 'value' in signal) {
     if (options?.receivePrevious === 'Immediate') {
-      log('addSignalListener(`%s`): run callback(immediately)', signalName);
+      log('addSignalListener(%s): run callback(immediately)', signalName);
       try {
         signalCallback(signal.value);
       } catch (err) {
-        console.error('addSignalListener(`%s`): signalCallback error! %o', signalName, err);
+        console.error('addSignalListener(%s): signalCallback error! %o', signalName, err);
       }
     } else if (options?.receivePrevious === true) {
       requestAnimationFrame(() => {
-        log('addSignalListener: run callback(delay): %s', signalName);
+        log('addSignalListener(%s): run callback(delay)', signalName);
         signalCallback(signal.value);
       });
     }
@@ -62,16 +60,9 @@ export function removeSignalListener<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
     listenerId: symbol,
 ): void {
-  log('addSignalListener: `%s`', signalName);
-  const signal = getSignalObject(signalName);
-
-  let listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listenerId);
-  if (listenerIndex !== -1) { // found in listener list.
-    signal.priorityListenerList.splice(listenerIndex, 1);
-  } else { // not found try to find in priority listener list.
-    listenerIndex = signal.priorityListenerList.findIndex((_listener) => _listener.id === listenerId);
-    signal.priorityListenerList.splice(listenerIndex, 1);
-  }
+  log('addSignalListener(%s)', signalName);
+  const signal = _getSignalObject(signalName);
+  _removeSignalListener(signal, listenerId);
 }
 
 /**
@@ -85,7 +76,26 @@ export function dispatchSignal<SignalName extends keyof VatrSignals>(
     value: VatrSignals[SignalName],
     options?: Partial<DispatchOptions>,
 ): void {
-  log('dispatchSignal: %s => %o', signalName, value);
+  log('dispatchSignal(%s, %o, %o)', signalName, value, options);
+
+  const signal = _getSignalObject(signalName);
+  signal.value = value;
+
+  if (signal.disabled) return; // signal is disabled.
+  if (options?.debounce && signal.debounced) return; // last dispatch in progress.
+
+  if (!options?.debounce) {
+    // call listeners immediately.
+    _callListeners(signal);
+    return;
+  }
+
+  // call listeners in next frame.
+  signal.debounced = true;
+  requestAnimationFrame(() => {
+    _callListeners(signal);
+    signal.debounced = true;
+  });
 }
 
 /**
