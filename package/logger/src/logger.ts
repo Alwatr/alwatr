@@ -1,5 +1,14 @@
-export type LoggerType = (message: string, ...restParam: Array<unknown>) => void;
-export type LogLevelType = 'debug' | 'error' | 'info' | 'log' | 'trace' | 'warn';
+export type LoggerType = (
+  message: string,
+  ...restParam: Array<unknown>
+) => void;
+export type LogLevelType =
+  | 'debug'
+  | 'error'
+  | 'info'
+  | 'log'
+  | 'trace'
+  | 'warn';
 
 let colorIndex = 0;
 const colorList = [
@@ -37,10 +46,16 @@ const getNextColor = (): string => {
  * const log = createLogger('my scope', 'log', true);
  * log('my log message :)');
  */
-export function createLogger(scope: string, level: LogLevelType = 'debug', force?: boolean): LoggerType {
+export function createLogger(
+    scope: string,
+    level: LogLevelType = 'debug',
+    force?: boolean,
+): LoggerType {
   const color = getNextColor();
-  return (message: string, ...restParam: Array<unknown>) => {
-    if (!(force === true || window.localStorage?.getItem('DEBUG') != null)) return;
+  return (message: string, ...restParam: Array<unknown>): void => {
+    if (!(force === true || window.localStorage?.getItem('DEBUG') != null)) {
+      return;
+    }
     // first args must be separated as keyPattern for fix issue of `this._log('a=%s', a)`
     console[level](
         `%c%s%c  ${message}`,
