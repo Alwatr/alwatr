@@ -62,7 +62,16 @@ export function removeSignalListener<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
     listenerId: symbol,
 ): void {
-  log('removeSignalListener: %s', signalName);
+  log('addSignalListener: `%s`', signalName);
+  const signal = getSignalObject(signalName);
+
+  let listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listenerId);
+  if (listenerIndex !== -1) { // found in listener list.
+    signal.priorityListenerList.splice(listenerIndex, 1);
+  } else { // not found try to find in priority listener list.
+    listenerIndex = signal.priorityListenerList.findIndex((_listener) => _listener.id === listenerId);
+    signal.priorityListenerList.splice(listenerIndex, 1);
+  }
 }
 
 /**
@@ -100,7 +109,7 @@ export async function requestSignal<SignalName extends keyof VatrRequestSignals>
  * Define signal provider, which will be called when signal requested.
  *
  * @example
- * defineSignalProvider('content-change', async (requestParam) => {
+ * setSignalProvider('content-change', async (requestParam) => {
  *   const content = await fetchNewContent(requestParam);
  *   if (content != null) {
  *     return content; // dispatchSignal('content-change', content);
@@ -110,7 +119,7 @@ export async function requestSignal<SignalName extends keyof VatrRequestSignals>
  *   }
  * }
  */
-export function defineSignalProvider<SignalName extends keyof VatrSignals>(
+export function setSignalProvider<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
     signalCallback: ListenerCallback<VatrSignals[SignalName]>,
 ): symbol {
@@ -123,7 +132,6 @@ export function defineSignalProvider<SignalName extends keyof VatrSignals>(
 //   ...options,
 // });
 }
-
 
 /**
  * Resolved with signal value when signal is ready base on requested options.
@@ -158,4 +166,7 @@ export function hasSignalDispatchedBefore<SignalName extends keyof VatrSignals>(
   return dispatched;
 }
 
-
+// @TODO: getSignalOptions(signalName);
+// @TODO: setSignalOptions(signalName, {...});
+// @TODO: getListenerOptions(listenerId);
+// @TODO: setListenerOptions(listenerId, {...});
