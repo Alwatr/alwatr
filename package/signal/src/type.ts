@@ -37,15 +37,6 @@ export interface ListenerOptions
   disabled: boolean;
 
   /**
-   * If true, the listener will be called in animation frame debounce.
-   * If false, every signal is matter and count.
-   *
-   * @default true or dispatch signal config.
-   * @deprecated @TODO Please implement this feature.
-   */
-  debounce: boolean;
-
-  /**
    * Calling this listener (callback) with preview signal value (if dispatched before).
    * If Immediate, the listener will be called immediately without any debounce for preview signal.
    *
@@ -65,4 +56,48 @@ export interface DispatchOptions
   debounce: boolean;
 }
 
-export type ListenerCallback<T = unknown> = (detail: T) => void | Promise<void>;
+export type ListenerCallback<SignalName extends keyof VatrSignals> =
+  (detail: VatrSignals[SignalName]) => void | Promise<void>;
+
+export interface ListenerObject<SignalName extends keyof VatrSignals>
+{
+  /**
+   * Listener symbol id (unique).
+   */
+  id: symbol;
+
+  /**
+   * If true, the listener will be called only once and removed automatically after first call
+   */
+  once: boolean;
+
+  /**
+   * If true, the listener will be disabled.
+   */
+  disabled: boolean;
+
+  callback: ListenerCallback<SignalName>;
+}
+
+export interface SignalObject<SignalName extends keyof VatrSignals>
+{
+  /**
+   * Last dispatched value.
+   */
+  value?: VatrSignals[SignalName];
+
+  /**
+   * If true, the signal is disabled.
+   */
+  disabled: boolean;
+
+  /**
+   * Signal priority listeners list.
+   */
+  priorityListenerList: Array<ListenerObject<SignalName>>;
+
+  /**
+   * Signal listeners list.
+   */
+  listenerList: Array<ListenerObject<SignalName>>;
+}
