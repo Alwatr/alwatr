@@ -1,14 +1,5 @@
-export type LoggerType = (
-  message: string,
-  ...restParam: Array<unknown>
-) => void;
-export type LogLevelType =
-  | 'debug'
-  | 'error'
-  | 'info'
-  | 'log'
-  | 'trace'
-  | 'warn';
+export type LoggerFunction = (message: string, ...restParam: Array<unknown>) => void;
+export type LogLevels = 'debug' | 'error' | 'info' | 'log' | 'trace' | 'warn';
 
 let colorIndex = 0;
 const colorList = [
@@ -50,17 +41,22 @@ const debug = window.localStorage?.getItem('DEBUG')?.trim();
  */
 export function createLogger(
     scope: string,
-    level: LogLevelType = 'debug',
+    level: LogLevels = 'debug',
     force?: boolean,
-): LoggerType {
+): LoggerFunction {
   const color = getNextColor();
 
   if (debug != null) {
-    if (
-      (debug.charAt(0) === '*' ||
-        debug.charAt(debug.length) === '*' ||
-        debug === scope) &&
-      scope.match(`^(.*)${debug.replaceAll('*', '')}(.*)$`)
+    if (debug === scope) {
+      force = true;
+    } else if (
+      debug.charAt(0) === '*' &&
+      scope.match(`^(.*)${debug.slice(1)}$`)
+    ) {
+      force = true;
+    } else if (
+      debug.charAt(debug.length) === '*' &&
+      scope.match(`^${debug.slice(1)}(.*)$`)
     ) {
       force = true;
     }
