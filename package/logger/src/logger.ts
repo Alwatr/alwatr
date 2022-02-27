@@ -38,6 +38,8 @@ const getNextColor = (): string => {
   return color;
 };
 
+const debug = window.localStorage?.getItem('DEBUG')?.trim();
+
 /**
  * Create a logger function for fancy console debug with custom scope.
  *
@@ -52,10 +54,20 @@ export function createLogger(
     force?: boolean,
 ): LoggerType {
   const color = getNextColor();
-  return (message: string, ...restParam: Array<unknown>) => {
-    if (!(force === true || window.localStorage?.getItem('DEBUG') != null)) {
-      return;
+
+  if (debug != null) {
+    if (
+      (debug.charAt(0) === '*' ||
+        debug.charAt(debug.length) === '*' ||
+        debug === scope) &&
+      scope.match(`^(.*)${debug.replaceAll('*', '')}(.*)$`)
+    ) {
+      force = true;
     }
+  }
+
+  return (message: string, ...restParam: Array<unknown>): void => {
+    if (!force) return;
     // first args must be separated as keyPattern for fix issue of `this._log('a=%s', a)`
     console[level](
         `%c%s%c  ${message}`,
