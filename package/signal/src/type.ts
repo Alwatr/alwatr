@@ -1,19 +1,22 @@
-declare global
-{
+declare global {
   /**
-   * Global signal registry.
+   * Global signals value type registry.
    */
-  interface VatrSignals
-  {
+  interface VatrSignals {
     readonly 'easter-egg': void;
   }
 
-  interface VatrRequestSignals
-  {
-    readonly 'easter-egg': number;
-  }
+  /**
+   * Global request signal parameters types.
+   */
+  type VatrRequestSignals = {
+    [SignalName in keyof VatrSignals]: unknown;
+  };
 }
 
+/**
+ * addSignalListener options type
+ */
 export interface ListenerOptions
 {
   /**
@@ -44,20 +47,30 @@ export interface ListenerOptions
   receivePrevious: boolean | 'Immediate';
 }
 
+/**
+ * dispatchSignal options type
+ */
 export interface DispatchOptions
 {
   /**
    * If true, the dispatch will be send after animation frame debounce.
    * If false, every signal is matter and count.
+   * tips: debounce work like throttle this means listeners call with last dispatch value.
    *
    * @default true
    */
   debounce: boolean;
 }
 
+/**
+ * Signal listeners callback function type.
+ */
 export type ListenerCallback<SignalName extends keyof VatrSignals> =
   (detail: VatrSignals[SignalName]) => void | Promise<void>;
 
+/**
+ * Signal listeners object in database.
+ */
 export interface ListenerObject<SignalName extends keyof VatrSignals>
 {
   /**
@@ -78,6 +91,9 @@ export interface ListenerObject<SignalName extends keyof VatrSignals>
   callback: ListenerCallback<SignalName>;
 }
 
+/**
+ * Signal object in database.
+ */
 export interface SignalObject<SignalName extends keyof VatrSignals>
 {
   /**
@@ -102,12 +118,14 @@ export interface SignalObject<SignalName extends keyof VatrSignals>
   debounced: boolean;
 
   /**
-   * Signal priority listeners list.
-   */
-  priorityListenerList: Array<ListenerObject<SignalName>>;
-
-  /**
    * Signal listeners list.
    */
   listenerList: Array<ListenerObject<SignalName>>;
+}
+
+/**
+ * Signal stack database.
+ */
+export type SignalStack = {
+  [SignalName in keyof VatrSignals]?: SignalObject<SignalName>;
 }

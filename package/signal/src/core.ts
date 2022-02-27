@@ -1,5 +1,5 @@
 import {createLogger} from '@vatr/logger';
-import type {SignalObject} from './type';
+import type {SignalObject, SignalStack} from './type';
 
 export const log = createLogger('vatr/signal');
 export const error = createLogger('vatr/signal', 'error', true);
@@ -7,9 +7,7 @@ export const error = createLogger('vatr/signal', 'error', true);
 /**
  * Signal stack database.
  */
-const _signalStack: {
-  [SignalName in keyof VatrSignals]?: SignalObject<SignalName>;
-} = {};
+const _signalStack: SignalStack = {};
 
 /**
  * Access to signal option, Make new signal with default options if not exist.
@@ -23,7 +21,6 @@ export function _getSignalObject<SignalName extends keyof VatrSignals>(
       disabled: false,
       debounced: false,
       listenerList: [],
-      priorityListenerList: [],
     };
   }
   return _signalStack[signalName] as unknown as SignalObject<SignalName>;
@@ -51,11 +48,8 @@ export function _removeSignalListener<SignalName extends keyof VatrSignals>(
     signal: SignalObject<SignalName>,
     listenerId: symbol,
 ): void {
-  let listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listenerId);
+  const listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listenerId);
   if (listenerIndex !== -1) { // found in listener list.
-    signal.priorityListenerList.splice(listenerIndex, 1);
-  } else { // not found try to find in priority listener list.
-    listenerIndex = signal.priorityListenerList.findIndex((_listener) => _listener.id === listenerId);
-    signal.priorityListenerList.splice(listenerIndex, 1);
+    signal.listenerList.splice(listenerIndex, 1);
   }
 }
