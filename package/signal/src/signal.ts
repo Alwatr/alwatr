@@ -113,7 +113,7 @@ export function dispatchSignal<SignalName extends keyof VatrSignals>(
  * // dispatch request signal and wait for answer (wait for NEW signal).
  * const newContent = await requestSignal('content-change', {foo: 'bar'});
  */
-export function requestSignal<SignalName extends keyof VatrSignals>(
+export function requestSignal<SignalName extends keyof VatrRequestSignals>(
     signalName: SignalName,
     requestParam: VatrRequestSignals[SignalName],
 ): Promise<VatrSignals[SignalName]> {
@@ -139,14 +139,16 @@ export function requestSignal<SignalName extends keyof VatrSignals>(
  *   }
  * }
  */
-export function addSignalProvider<SignalName extends keyof VatrSignals>(
+export function addSignalProvider<SignalName extends keyof VatrRequestSignals>(
     signalName: SignalName,
-    signalCallback: ListenerCallback<SignalName>,
+    signalCallback: (detail: VatrRequestSignals[SignalName]) => void | Promise<void>,
 ): symbol {
   log('addSignalProvider(%s)', signalName);
-  return addSignalListener(`request-${signalName}` as unknown as SignalName, signalCallback, {
-    receivePrevious: true,
-  });
+  return addSignalListener(
+    `request-${signalName}` as unknown as SignalName,
+    signalCallback as unknown as ListenerCallback<SignalName>,
+    {receivePrevious: true},
+  );
 }
 
 /**
