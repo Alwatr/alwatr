@@ -23,14 +23,10 @@ export function addSignalListener<SignalName extends keyof VatrSignals>(
     callback: signalCallback,
   };
 
-  if (options?.priority) {
-    signal.priorityListenerList.push(listener);
-  } else {
-    signal.listenerList.push(listener);
-  }
+  let callbackCalled = false;
 
   // Run callback for old dispatch signal
-  if (!options?.once && 'value' in signal) {
+  if ('value' in signal) {
     if (options?.receivePrevious === 'Immediate') {
       log('addSignalListener(%s): run callback(immediately)', signalName);
       try {
@@ -38,11 +34,22 @@ export function addSignalListener<SignalName extends keyof VatrSignals>(
       } catch (err) {
         console.error('addSignalListener(%s): signalCallback error! %o', signalName, err);
       }
+      callbackCalled = true;
     } else if (options?.receivePrevious === true) {
       requestAnimationFrame(() => {
         log('addSignalListener(%s): run callback(delay)', signalName);
         signalCallback(signal.value);
       });
+      callbackCalled = true; // must be outside of requestAnimationFrame.
+    }
+  }
+
+  // if once then must remove listener after fist callback called! then why push it to listenerList?!
+  if (!(options?.once && callbackCalled)) {
+    if (options?.priority) {
+      signal.listenerList.unshift(listener);
+    } else {
+      signal.listenerList.push(listener);
     }
   }
 
@@ -79,6 +86,7 @@ export function dispatchSignal<SignalName extends keyof VatrSignals>(
   log('dispatchSignal(%s, %o, %o)', signalName, value, options);
 
   const signal = _getSignalObject(signalName);
+  // set value before check signal.debounced for act like throttle (call listeners with last dispatch value).
   signal.value = value;
 
   if (signal.disabled) return; // signal is disabled.
@@ -89,12 +97,11 @@ export function dispatchSignal<SignalName extends keyof VatrSignals>(
     _callListeners(signal);
     return;
   }
-
-  // call listeners in next frame.
+  // else: call listeners in next frame.
   signal.debounced = true;
   requestAnimationFrame(() => {
     _callListeners(signal);
-    signal.debounced = true;
+    signal.debounced = false;
   });
 }
 
@@ -106,7 +113,7 @@ export function dispatchSignal<SignalName extends keyof VatrSignals>(
  * // dispatch request signal and wait for answer (wait for NEW signal).
  * const newContent = await requestSignal('content-change', {foo: 'bar'});
  */
-export function requestSignal<SignalName extends keyof VatrRequestSignals>(
+export function requestSignal<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
     requestParam: VatrRequestSignals[SignalName],
 ): Promise<VatrSignals[SignalName]> {
@@ -119,7 +126,7 @@ export function requestSignal<SignalName extends keyof VatrRequestSignals>(
 }
 
 /**
- * Define signal provider, which will be called when signal requested.
+ * Define signal provider, which will be called when signal requested (addRequestSignalListener).
  *
  * @example
  * setSignalProvider('content-change', async (requestParam) => {
@@ -132,18 +139,14 @@ export function requestSignal<SignalName extends keyof VatrRequestSignals>(
  *   }
  * }
  */
-export function setSignalProvider<SignalName extends keyof VatrSignals>(
+export function addSignalProvider<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
-    signalCallback: ListenerCallback<VatrSignals[SignalName]>,
+    signalCallback: ListenerCallback<SignalName>,
 ): symbol {
-  log('addSignalListener(%s)', signalName);
-
-// return _addSignalListener(signalName, signalCallback as ListenerCallback, {
-//   once: false,
-//   capture: false,
-//   disabled: false,
-//   ...options,
-// });
+  log('addSignalProvider(%s)', signalName);
+  return addSignalListener(`request-${signalName}` as unknown as SignalName, signalCallback, {
+    receivePrevious: true,
+  });
 }
 
 /**
@@ -162,9 +165,15 @@ export async function waitForSignal<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
     receivePrevious?: boolean,
 ): Promise<VatrSignals[SignalName]> {
-  log('requestSignal: %s', signalName);
+  log('waitForSignal(%s)', signalName);
 
-  return Promise.resolve(undefined);
+  return new Promise((resolve) => {
+    addSignalListener(signalName, resolve, {
+      once: true,
+      priority: true,
+      receivePrevious: receivePrevious ?? false,
+    });
+  });
 }
 
 /**
@@ -174,12 +183,26 @@ export async function waitForSignal<SignalName extends keyof VatrSignals>(
  * if(hasSignalDispatchedBefore('easter-egg')) { ... }
  */
 export function hasSignalDispatchedBefore<SignalName extends keyof VatrSignals>(signalName: SignalName): boolean {
-  const dispatched = true;
-  log('hasSignalDispatchedBefore: %s => %s', signalName, dispatched);
+  const dispatched = 'value' in _getSignalObject(signalName);
+  log('hasSignalDispatchedBefore(%s) => %s', signalName, dispatched);
   return dispatched;
 }
 
+/**
+ * Expire the signal by clear last dispatched value.
+ * hasSignalDispatchedBefore and receivePrevious etc not work until new signal.
+ *
+ * @example
+ * hasSignalDispatchedBefore('easter-egg'); // true
+ * expireSignal('easter-egg');
+ * hasSignalDispatchedBefore('easter-egg'); // false
+ */
+export function expireSignal<SignalName extends keyof VatrSignals>(signalName: SignalName): void {
+  log('expireSignal(%s)', signalName);
+  delete _getSignalObject(signalName).value;
+}
+
 // @TODO: getSignalOptions(signalName);
-// @TODO: setSignalOptions(signalName, {...});
 // @TODO: getListenerOptions(listenerId);
+// @TODO: setSignalOptions(signalName, {...});
 // @TODO: setListenerOptions(listenerId, {...});
