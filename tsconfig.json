@@ -106,6 +106,7 @@
   "include": [ "*.ts" ],
   "exclude": [],
   "references": [
+    {"path": "./package/signal"},
     {"path": "./package/logger"},
     {"path": "./package/util"},
     {"path": "./demo"},
