@@ -9,6 +9,10 @@
   "include": [
     "**/*.ts"
   ],
+  "references": [
+    {"path": "../package/logger"},
+    {"path": "../package/util"},
+  ],
   "exclude": [
     "*.d.ts",
     "node_modules"
