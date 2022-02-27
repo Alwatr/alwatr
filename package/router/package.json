@@ -1,0 +1,25 @@
+{
+  "name": "@vatr/router",
+  "version": "0.0.0",
+  "description": "Elegant powerful routing based on the simplicity of signals",
+  "main": "router.js",
+  "type": "module",
+  "types": "router.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "**/*.js",
+    "**/*.d.ts",
+    "**/*.map",
+    "**/*.html",
+    "**/*.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/vatr",
+    "directory": "package/router"
+  },
+  "dependencies": {
+    "tslib": "^2.3.1"
+  }
+}
