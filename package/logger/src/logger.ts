@@ -29,7 +29,7 @@ const getNextColor = (): string => {
   return color;
 };
 
-const debug = window.localStorage?.getItem('DEBUG')?.trim();
+const debugString = window.localStorage?.getItem('DEBUG')?.trim();
 
 /**
  * Create a logger function for fancy console debug with custom scope.
@@ -45,25 +45,26 @@ export function createLogger(
     force?: boolean,
 ): LoggerFunction {
   const color = getNextColor();
+  let debug = force === true;
 
-  if (debug != null) {
-    if (debug === scope) {
-      force = true;
+  if (debugString != null && !debug) {
+    if (debugString === scope) {
+      debug = true;
     } else if (
-      debug.charAt(0) === '*' &&
-      scope.match(`^(.*)${debug.slice(1)}$`)
+      debugString.indexOf('*') === 0 &&
+      scope.indexOf(debugString.replaceAll('*', '')) !== -1
     ) {
-      force = true;
+      debug = true;
     } else if (
-      debug.charAt(debug.length) === '*' &&
-      scope.match(`^${debug.slice(1)}(.*)$`)
+      debugString.indexOf('*') === debugString.length &&
+      scope.indexOf(debugString.replaceAll('*', '')) !== -1
     ) {
-      force = true;
+      debug = true;
     }
   }
 
   return (message: string, ...restParam: Array<unknown>): void => {
-    if (!force) return;
+    if (!debug) return;
     // first args must be separated as keyPattern for fix issue of `this._log('a=%s', a)`
     console[level](
         `%c%s%c  ${message}`,
