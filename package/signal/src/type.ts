@@ -3,14 +3,14 @@ declare global {
    * Global signals value type registry.
    */
   interface VatrSignals {
-    readonly 'easter-egg': void;
+    readonly 'test': void;
   }
 
   /**
    * Global request signal parameters types.
    */
-   interface VatrRequestSignals {
-    readonly 'easter-egg': number;
+  interface VatrRequestSignals {
+    readonly 'test': {foo:string};
   }
 }
 

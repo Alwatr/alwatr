@@ -6,7 +6,7 @@ import type {ListenerOptions, DispatchOptions, ListenerCallback, ListenerObject}
  * Add new listener to specific signal.
  *
  * @example
- * const listener = addSignalListener('content-change', (content) => console.log(content));
+ * const listener = addSignalListener('test', (value) => console.log(value));
  */
 export function addSignalListener<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
@@ -60,8 +60,8 @@ export function addSignalListener<SignalName extends keyof VatrSignals>(
  * Remove listener from specific signal.
  *
  * @example
- * const listener = addSignalListener('content-change', ...);
- * removeSignalListener('content-change', listener);
+ * const listener = addSignalListener('test', ...);
+ * removeSignalListener('test', listener);
  */
 export function removeSignalListener<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
@@ -76,7 +76,7 @@ export function removeSignalListener<SignalName extends keyof VatrSignals>(
  * Dispatch signal to all listeners.
  *
  * @example
- * dispatchSignal('content-change', content);
+ * dispatchSignal('test', value);
  */
 export function dispatchSignal<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
@@ -111,7 +111,7 @@ export function dispatchSignal<SignalName extends keyof VatrSignals>(
  *
  * @example
  * // dispatch request signal and wait for answer (wait for NEW signal).
- * const newContent = await requestSignal('content-change', {foo: 'bar'});
+ * const newContent = await requestSignal('test', {foo: 'bar'});
  */
 export function requestSignal<SignalName extends keyof VatrRequestSignals>(
     signalName: SignalName,
@@ -129,10 +129,10 @@ export function requestSignal<SignalName extends keyof VatrRequestSignals>(
  * Define signal provider, which will be called when signal requested (addRequestSignalListener).
  *
  * @example
- * setSignalProvider('content-change', async (requestParam) => {
+ * setSignalProvider('test', async (requestParam) => {
  *   const content = await fetchNewContent(requestParam);
  *   if (content != null) {
- *     return content; // dispatchSignal('content-change', content);
+ *     return content; // dispatchSignal('test', value);
  *   }
  *   else {
  *     dispatchSignal('content-not-found');
@@ -159,7 +159,7 @@ export function addSignalProvider<SignalName extends keyof VatrRequestSignals>(
  *
  * @example
  * // Wait for NEW signal received.
- * const newContent = await waitForSignal('content-change');
+ * const newContent = await waitForSignal('test');
  * // get signal value from last dispatched signal (if any) or wait new signal received.
  * const route = await waitForSignal('route-change', {receivePrevious: true});
  */
@@ -182,7 +182,7 @@ export async function waitForSignal<SignalName extends keyof VatrSignals>(
  * Check signal dispatched before or not!
  *
  * @example
- * if(hasSignalDispatchedBefore('content-change')) { ... }
+ * if(hasSignalDispatchedBefore('test')) { ... }
  */
 export function hasSignalDispatchedBefore<SignalName extends keyof VatrSignals>(signalName: SignalName): boolean {
   const dispatched = 'value' in _getSignalObject(signalName);
@@ -195,9 +195,9 @@ export function hasSignalDispatchedBefore<SignalName extends keyof VatrSignals>(
  * hasSignalDispatchedBefore and receivePrevious etc not work until new signal.
  *
  * @example
- * hasSignalDispatchedBefore('content-change'); // true
- * expireSignal('content-change');
- * hasSignalDispatchedBefore('content-change'); // false
+ * hasSignalDispatchedBefore('test'); // true
+ * expireSignal('test');
+ * hasSignalDispatchedBefore('test'); // false
  */
 export function expireSignal<SignalName extends keyof VatrSignals>(signalName: SignalName): void {
   log('expireSignal(%s)', signalName);
