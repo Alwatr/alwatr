@@ -1,5 +1,6 @@
-export type LoggerType = (message: string, ...restParam: Array<unknown>) => void;
-export type LogLevelType = 'debug' | 'error' | 'info' | 'log' | 'trace' | 'warn';
+export * from './meta';
+export type LoggerFunction = (message: string, ...restParam: Array<unknown>) => void;
+export type LogLevels = 'debug' | 'error' | 'info' | 'log' | 'trace' | 'warn';
 
 let colorIndex = 0;
 const colorList = [
@@ -29,6 +30,8 @@ const getNextColor = (): string => {
   return color;
 };
 
+const debugString = window.localStorage?.getItem('DEBUG')?.trim();
+
 /**
  * Create a logger function for fancy console debug with custom scope.
  *
@@ -37,10 +40,32 @@ const getNextColor = (): string => {
  * const log = createLogger('my scope', 'log', true);
  * log('my log message :)');
  */
-export function createLogger(scope: string, level: LogLevelType = 'debug', force?: boolean): LoggerType {
+export function createLogger(
+    scope: string,
+    level: LogLevels = 'debug',
+    force?: boolean,
+): LoggerFunction {
   const color = getNextColor();
-  return (message: string, ...restParam: Array<unknown>) => {
-    if (!(force === true || window.localStorage?.getItem('DEBUG') != null)) return;
+  let debug = force === true;
+
+  if (debugString != null && !debug) {
+    if (debugString === scope) {
+      debug = true;
+    } else if (
+      debugString.indexOf('*') === 0 &&
+      scope.indexOf(debugString.replaceAll('*', '')) !== -1
+    ) {
+      debug = true;
+    } else if (
+      debugString.indexOf('*') === debugString.length - 1 &&
+      scope.indexOf(debugString.replaceAll('*', '')) === 0
+    ) {
+      debug = true;
+    }
+  }
+
+  return (message: string, ...restParam: Array<unknown>): void => {
+    if (!debug) return;
     // first args must be separated as keyPattern for fix issue of `this._log('a=%s', a)`
     console[level](
         `%c%s%c  ${message}`,

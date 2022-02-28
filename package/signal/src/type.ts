@@ -9,9 +9,9 @@ declare global {
   /**
    * Global request signal parameters types.
    */
-  type VatrRequestSignals = {
-    [SignalName in keyof VatrSignals]: unknown;
-  };
+   interface VatrRequestSignals {
+    readonly 'easter-egg': number;
+  }
 }
 
 /**

@@ -6,7 +6,7 @@ import type {ListenerOptions, DispatchOptions, ListenerCallback, ListenerObject}
  * Add new listener to specific signal.
  *
  * @example
- * const listener = addSignalListener('route-change', money => console.log(money));
+ * const listener = addSignalListener('content-change', (content) => console.log(content));
  */
 export function addSignalListener<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
@@ -113,7 +113,7 @@ export function dispatchSignal<SignalName extends keyof VatrSignals>(
  * // dispatch request signal and wait for answer (wait for NEW signal).
  * const newContent = await requestSignal('content-change', {foo: 'bar'});
  */
-export function requestSignal<SignalName extends keyof VatrSignals>(
+export function requestSignal<SignalName extends keyof VatrRequestSignals>(
     signalName: SignalName,
     requestParam: VatrRequestSignals[SignalName],
 ): Promise<VatrSignals[SignalName]> {
@@ -139,14 +139,16 @@ export function requestSignal<SignalName extends keyof VatrSignals>(
  *   }
  * }
  */
-export function addSignalProvider<SignalName extends keyof VatrSignals>(
+export function addSignalProvider<SignalName extends keyof VatrRequestSignals>(
     signalName: SignalName,
-    signalCallback: ListenerCallback<SignalName>,
+    signalCallback: (detail: VatrRequestSignals[SignalName]) => void | Promise<void>,
 ): symbol {
   log('addSignalProvider(%s)', signalName);
-  return addSignalListener(`request-${signalName}` as unknown as SignalName, signalCallback, {
-    receivePrevious: true,
-  });
+  return addSignalListener(
+    `request-${signalName}` as unknown as SignalName,
+    signalCallback as unknown as ListenerCallback<SignalName>,
+    {receivePrevious: true},
+  );
 }
 
 /**
@@ -180,7 +182,7 @@ export async function waitForSignal<SignalName extends keyof VatrSignals>(
  * Check signal dispatched before or not!
  *
  * @example
- * if(hasSignalDispatchedBefore('easter-egg')) { ... }
+ * if(hasSignalDispatchedBefore('content-change')) { ... }
  */
 export function hasSignalDispatchedBefore<SignalName extends keyof VatrSignals>(signalName: SignalName): boolean {
   const dispatched = 'value' in _getSignalObject(signalName);
@@ -193,9 +195,9 @@ export function hasSignalDispatchedBefore<SignalName extends keyof VatrSignals>(
  * hasSignalDispatchedBefore and receivePrevious etc not work until new signal.
  *
  * @example
- * hasSignalDispatchedBefore('easter-egg'); // true
- * expireSignal('easter-egg');
- * hasSignalDispatchedBefore('easter-egg'); // false
+ * hasSignalDispatchedBefore('content-change'); // true
+ * expireSignal('content-change');
+ * hasSignalDispatchedBefore('content-change'); // false
  */
 export function expireSignal<SignalName extends keyof VatrSignals>(signalName: SignalName): void {
   log('expireSignal(%s)', signalName);
