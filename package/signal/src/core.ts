@@ -1,8 +1,13 @@
-import {createLogger} from '@vatr/logger';
+import {createLogger, vatrRegisteredList} from '@vatr/logger';
 import type {SignalObject, SignalStack} from './type';
 
 export const log = createLogger('vatr/signal');
 export const error = createLogger('vatr/signal', 'error', true);
+
+vatrRegisteredList.push({
+  name: '@vatr/signal',
+  version: '{{VATR_VERSION}}',
+});
 
 /**
  * Signal stack database.
