@@ -56,8 +56,8 @@ export function createLogger(
     ) {
       debug = true;
     } else if (
-      debugString.indexOf('*') === debugString.length &&
-      scope.indexOf(debugString.replaceAll('*', '')) !== 0
+      debugString.indexOf('*') === debugString.length - 1 &&
+      scope.indexOf(debugString.replaceAll('*', '')) === 0
     ) {
       debug = true;
     }
