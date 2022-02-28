@@ -1,3 +1,4 @@
+export * from './meta';
 export type LoggerFunction = (message: string, ...restParam: Array<unknown>) => void;
 export type LogLevels = 'debug' | 'error' | 'info' | 'log' | 'trace' | 'warn';
 
