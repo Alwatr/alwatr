@@ -10,18 +10,17 @@ assignees: ''
 **Describe the bug**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
-
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
+
+**To get the Vatr registered list**
+Steps to view the Vatr registered list:
+1. Go to `Console`
+2. `window.Vatr` Type and press Enter
+4. See Vatr Registered List 
 
 **Desktop (please complete the following information):**
  - OS: [e.g. iOS]
