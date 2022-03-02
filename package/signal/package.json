@@ -1,6 +1,6 @@
 {
   "name": "@vatr/signal",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Manage and control all signals in your project.",
   "main": "signal.js",
   "type": "module",
