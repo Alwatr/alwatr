@@ -1,1 +1,1 @@
-# The Vatr Library
+# The Vatr Library (Alvatr Library)
