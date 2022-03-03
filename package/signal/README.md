@@ -41,7 +41,7 @@ addSignalListener('test-event', () => console.log(1));
 addSignalListener('test-event', () => console.log(2));
 addSignalListener('test-event', () => console.log(3));
 
-dispatchSignal('test-event', undefined);
+dispatchSignal('test-event');
 ```
 
 You can remove event from all sycle with `expireSignal`:
@@ -57,7 +57,7 @@ declare global {
 
 addSignalListener('test-event', () => console.log(1));
 expireSignal('test-event');
-dispatchSignal('test-event', undefined); // this line must make a Error
+dispatchSignal('test-event'); // this line must make a Error
 ```
 
 You can test a signal dispatch before now with `hasSignalDispatchedBefore`:
