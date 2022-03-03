@@ -5,11 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 0.1.0 (2022-03-02)
 
-
 ### Bug Fixes
 
 * **signal:** VatrRequestSignals global type ([228e333](https://github.com/AliMD/vatr/commit/228e3333326b23df51e7834872daf1349826bf09))
-
 
 ### Features
 

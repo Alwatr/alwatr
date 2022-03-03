@@ -5,13 +5,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 0.1.0 (2022-03-02)
 
-
 ### Bug Fixes
 
 * **logger:** fix debug scope ([be62f14](https://github.com/AliMD/vatr/commit/be62f142cbe3fe4d328e3fd9941ea7c2d640a23f))
 * **logger:** fix logger debug scope ([e734d21](https://github.com/AliMD/vatr/commit/e734d218db888ecec33a03dc805b98dd75543efd))
 * tsconfig issues ([159adeb](https://github.com/AliMD/vatr/commit/159adeb72de4626dc16f6657765605b0a2ddccb1))
-
 
 ### Features
 

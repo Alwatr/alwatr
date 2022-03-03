@@ -5,12 +5,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 0.1.0 (2022-03-02)
 
-
 ### Bug Fixes
 
 * change all [@one](https://github.com/one) to [@vatr](https://github.com/vatr) ([e0573bf](https://github.com/AliMD/One/commit/e0573bf8b55c9e25bad3f7b407cc2c3d509f36d3))
 * tsconfig issues ([159adeb](https://github.com/AliMD/One/commit/159adeb72de4626dc16f6657765605b0a2ddccb1))
-
 
 ### Features
 
