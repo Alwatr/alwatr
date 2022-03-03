@@ -30,11 +30,11 @@ export interface FetchOptions extends RequestInit
 }
 
 /**
- * Enhanced fetch API.
- * @example const response = await fetchData(url, {jsonResponse: false});
+ * Enhanced base fetch API.
+ * @example const response = await fetch(url, {jsonResponse: false});
  */
-export function fetchData(url: string, options?: FetchOptions): Promise<Response> {
-  log('fetchData', url, options);
+export function fetch(url: string, options?: FetchOptions): Promise<Response> {
+  log('fetch', url, options);
 
   if (!navigator.onLine) {
     throw new Error('vatr_fetch_offline');
@@ -74,7 +74,7 @@ export function fetchData(url: string, options?: FetchOptions): Promise<Response
     });
   }
   abortController.signal.addEventListener('abort', () => {
-    log('fetchData: aborted %s', abortController.signal.reason);
+    log('fetch: aborted %s', abortController.signal.reason);
   });
   options.signal = abortController.signal;
 
@@ -96,7 +96,7 @@ export function getData(
     queryParameters?: Record<string | number, string | number | boolean>,
     options?: FetchOptions,
 ): Promise<Response> {
-  return fetchData(url, {
+  return fetch(url, {
     queryParameters,
     ...options,
   });
@@ -131,7 +131,7 @@ export function postData(
     body: Record<string | number, unknown>,
     options?: FetchOptions,
 ): Promise<Response> {
-  return fetchData(url, {
+  return fetch(url, {
     method: 'POST',
     bodyObject: body,
     ...options,
