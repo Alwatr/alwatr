@@ -14,6 +14,9 @@
   "type": "module",
   "types": "fetch.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "contributors": [
+    "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
+  ],
   "license": "MIT",
   "files": [
     "**/*.js",
