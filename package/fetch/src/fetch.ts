@@ -26,7 +26,7 @@ export interface FetchOptions extends RequestInit
    */
   timeout?: number;
   bodyObject?: Record<string | number, unknown>;
-  queryParamList?: Record<string, string | number | boolean>;
+  queryParameters?: Record<string, string | number | boolean>;
 }
 
 /**
@@ -47,11 +47,11 @@ export function fetchData(url: string, options?: FetchOptions): Promise<Response
     ...options,
   };
 
-  if (options.queryParamList != null) {
+  if (options.queryParameters != null) {
     const queryArray = Object
-        .keys(options.queryParamList)
+        .keys(options.queryParameters)
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((key) => `${key}=${String(options!.queryParamList![key])}`)
+        .map((key) => `${key}=${String(options!.queryParameters![key])}`)
     ;
     if (queryArray.length > 0) {
       url += '?' + queryArray.join('&');
@@ -101,16 +101,18 @@ export function getData(
     ...options,
   });
 }
+
 /**
  * Enhanced fetch JSON.
  * @example
- * const json = await fetchJson<ProductList>('/api/products', {timeout: 5_000, queryParamList: {limit: 10}});
+ * const productList = await getJson('/api/products', {limit: 10}, {timeout: 5_000});
  */
-export async function fetchJson<ResponseType extends Record<string | number, unknown>>(
+export async function getJson<ResponseType extends Record<string | number, unknown>>(
     url: string,
+    queryParameters?: Record<string | number, string | number | boolean>,
     options?: FetchOptions,
 ): Promise<ResponseType> {
-  const response = await fetchData(url, options);
+  const response = await getData(url, queryParameters, options);
 
   if (!response.ok) {
     throw new Error('vatr_fetch_nok');
