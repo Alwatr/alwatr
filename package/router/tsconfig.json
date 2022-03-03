@@ -12,6 +12,7 @@
   ],
   "exclude": [],
   "references": [
+    { "path": "../logger" },
     { "path": "../signal" },
   ]
 }
