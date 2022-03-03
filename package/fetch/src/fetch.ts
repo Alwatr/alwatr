@@ -42,7 +42,7 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
 
   options = {
     method: 'GET',
-    timeout: 10_000,
+    timeout: 15_000,
     window: null,
     ...options,
   };
