@@ -2,6 +2,14 @@
   "name": "@vatr/logger",
   "version": "0.1.0",
   "description": "Create a logger function for fancy console debug with custom scope.",
+  "keywords": [
+    "vatr",
+    "alvatr",
+    "log",
+    "logger",
+    "console",
+    "debug"
+  ],
   "main": "logger.js",
   "type": "module",
   "types": "logger.d.ts",
