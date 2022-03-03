@@ -86,7 +86,37 @@ export function fetchData(url: string, options?: FetchOptions): Promise<Response
   return response;
 }
 
+/**
+ * Enhanced fetch JSON.
+ * @example
+ * const json = await fetchJson<ProductList>('/api/products', {timeout: 5_000, queryParamList: {limit: 10}});
  */
-export function fetch <ResponseType>(url: string, options?: FetchOptions): Promise<ResponseType> {
-  log('fetch', url, options);
+export async function fetchJson<ResponseType extends Record<string | number, unknown>>(
+    url: string,
+    options?: FetchOptions,
+): Promise<ResponseType> {
+  const response = await fetchData(url, options);
+
+  if (!response.ok) {
+    throw new Error('vatr_fetch_nok');
+  }
+
+  return response.json() as Promise<ResponseType>;
+}
+
+/**
+ * Enhanced post json data.
+ * @example
+ * const response = await postData('/api/product/new', {name: 'foo', ...});
+ */
+export function postData(
+    url: string,
+    body: Record<string | number, unknown>,
+    options?: FetchOptions,
+): Promise<Response> {
+  return fetchData(url, {
+    method: 'POST',
+    bodyObject: body,
+    ...options,
+  });
 }
