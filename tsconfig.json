@@ -108,6 +108,7 @@
   "references": [
     {"path": "./package/signal"},
     {"path": "./package/logger"},
+    {"path": "./package/fetch"},
     {"path": "./package/util"},
     {"path": "./demo"},
   ]
