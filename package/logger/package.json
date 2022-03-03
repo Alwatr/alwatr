@@ -1,6 +1,6 @@
 {
   "name": "@vatr/logger",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Create a logger function for fancy console debug with custom scope.",
   "keywords": [
     "vatr",
@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/AliMD/vatr/tree/main/package/logger#readme",
   "bugs": {
-    "url" : "https://github.com/AliMD/vatr/issues"
+    "url": "https://github.com/AliMD/vatr/issues"
   },
   "dependencies": {
     "tslib": "^2.3.1"

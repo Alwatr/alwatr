@@ -1,6 +1,6 @@
 {
   "name": "@vatr/signal",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Manage and control all signals in your project.",
   "keywords": [
     "vatr",
@@ -29,10 +29,10 @@
   },
   "homepage": "https://github.com/AliMD/vatr/tree/main/package/signal#readme",
   "bugs": {
-    "url" : "https://github.com/AliMD/vatr/issues"
+    "url": "https://github.com/AliMD/vatr/issues"
   },
   "dependencies": {
-    "@vatr/logger": "^0.1.1",
+    "@vatr/logger": "^0.1.2",
     "tslib": "^2.3.1"
   }
 }
