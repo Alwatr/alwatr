@@ -80,7 +80,7 @@ export function removeSignalListener<SignalName extends keyof VatrSignals>(
  */
 export function dispatchSignal<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
-    value: VatrSignals[SignalName],
+    value?: VatrSignals[SignalName],
     options?: Partial<DispatchOptions>,
 ): void {
   log('dispatchSignal(%s, %o, %o)', signalName, value, options);
