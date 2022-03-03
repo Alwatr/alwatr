@@ -27,7 +27,12 @@
     "url": "https://github.com/AliMD/vatr",
     "directory": "package/signal"
   },
+  "homepage": "https://github.com/AliMD/vatr/tree/main/package/signal#readme",
+  "bugs": {
+    "url" : "https://github.com/AliMD/vatr/issues"
+  },
   "dependencies": {
+    "@vatr/logger": "^0.1.1",
     "tslib": "^2.3.1"
   }
 }

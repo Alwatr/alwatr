@@ -30,6 +30,10 @@
     "url": "https://github.com/AliMD/vatr",
     "directory": "package/logger"
   },
+  "homepage": "https://github.com/AliMD/vatr/tree/main/package/logger#readme",
+  "bugs": {
+    "url" : "https://github.com/AliMD/vatr/issues"
+  },
   "dependencies": {
     "tslib": "^2.3.1"
   }
