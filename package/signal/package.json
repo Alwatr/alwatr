@@ -1,11 +1,16 @@
 {
   "name": "@vatr/signal",
-  "version": "0.0.0",
+  "version": "0.1.2",
   "description": "Manage and control all signals in your project.",
+  "keywords": [
+    "vatr",
+    "alvatr",
+    "signal"
+  ],
   "main": "signal.js",
   "type": "module",
   "types": "signal.d.ts",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
     "**/*.js",
@@ -14,12 +19,20 @@
     "**/*.html",
     "**/*.md"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/vatr",
     "directory": "package/signal"
   },
+  "homepage": "https://github.com/AliMD/vatr/tree/main/package/signal#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/vatr/issues"
+  },
   "dependencies": {
+    "@vatr/logger": "^0.1.2",
     "tslib": "^2.3.1"
   }
 }
