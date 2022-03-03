@@ -1,0 +1,41 @@
+root: true
+
+extends:
+  - eslint:recommended
+  - google
+  - plugin:@typescript-eslint/eslint-recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:wc/recommended
+
+env:
+  browser: true
+  es2021: true
+
+parser: "@typescript-eslint/parser"
+parserOptions:
+  ecmaVersion: 2021
+  sourceType: module
+
+plugins:
+  - "@typescript-eslint"
+  - wc
+
+settings:
+  wc:
+    elementBaseClasses:
+      - LitElement
+      # TODO: Add other classes
+
+rules:
+  max-len:
+    - warn
+    - code: 120
+  no-eval:
+    - error
+    - allowIndirect: true
+  no-floating-decimal: error
+  "@typescript-eslint/no-empty-function": off
+
+  # TODO: Enable in future
+  require-jsdoc: off
+  valid-jsdoc: off

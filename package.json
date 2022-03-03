@@ -1,0 +1,44 @@
+{
+  "name": "vatr",
+  "description": "The Vatr Library",
+  "repository": "https://github.com/AliMD/One",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "package/*",
+    "demo"
+  ],
+  "scripts": {
+    "b": "yarn build",
+    "w": "yarn watch",
+    "s": "yarn serve",
+    "c": "yarn clean",
+    "pm": "npm-run-all --sequential clean build ver-minor publish",
+    "pp": "npm-run-all --sequential clean build ver-patch publish",
+    "build": "npm-run-all lint build:*",
+    "build:ts": "tsc --build",
+    "lint": "npm-run-all lint:*",
+    "lint:ts": "eslint **/*.ts",
+    "serve": "web-dev-server --config dev-server.mjs",
+    "prepare": "yarn build",
+    "watch": "npm-run-all --parallel watch:* serve",
+    "watch:ts": "yarn build:ts --watch",
+    "clean": "yarn build:ts --clean && lerna exec \"rm -rf dist node_modules\" && find package -name '*.js' -type f -delete && find package -name '*.d.ts' -type f -delete && find package -name '*.map' -type f -delete",
+    "ver-minor": "lerna version minor --no-push && git push && git push --tags",
+    "ver-patch": "lerna version patch --no-push && git push && git push --tags",
+    "publish": "lerna publish from-package"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
+    "@web/dev-server": "^0.1.30",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-wc": "^1.3.2",
+    "lerna": "^4.0.0",
+    "npm-run-all": "^4.1.5",
+    "ts-lit-plugin": "^1.2.1",
+    "typescript": "^4.5.5"
+  }
+}
