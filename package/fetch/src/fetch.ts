@@ -31,7 +31,16 @@ export interface FetchOptions extends RequestInit
 
 /**
  * Enhanced base fetch API.
- * @example const response = await fetch(url, {jsonResponse: false});
+ * @example
+ * ```ts
+ * const response = await fetch('/api/products', {
+ *   timeout: 15_000,
+ *   queryParameters: {
+ *     limit: 10,
+ *   },
+ * });
+ * const productList = await response.json();
+ * ```
  */
 export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   log('fetch', url, options);
@@ -50,9 +59,8 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   if (options.queryParameters != null) {
     const queryArray = Object
         .keys(options.queryParameters)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((key) => `${key}=${String(options!.queryParameters![key])}`)
-    ;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        .map((key) => `${key}=${String(options!.queryParameters![key])}`);
     if (queryArray.length > 0) {
       url += '?' + queryArray.join('&');
     }
@@ -89,7 +97,10 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
 /**
  * Enhanced get data.
  * @example
- * const response = await postData('/api/products', {limit: 10}, {timeout: 5_000});
+ * ```ts
+ * const response = await getData('/api/products', {limit: 10}, {timeout: 5_000});
+ * const productList = await response.json();
+ * ```
  */
 export function getData(
     url: string,
@@ -105,7 +116,9 @@ export function getData(
 /**
  * Enhanced fetch JSON.
  * @example
+ * ```ts
  * const productList = await getJson('/api/products', {limit: 10}, {timeout: 5_000});
+ * ```
  */
 export async function getJson<ResponseType extends Record<string | number, unknown>>(
     url: string,
@@ -124,7 +137,13 @@ export async function getJson<ResponseType extends Record<string | number, unkno
 /**
  * Enhanced post json data.
  * @example
- * const response = await postData('/api/product/new', {name: 'foo', ...});
+ * ```ts
+ * const promiseResponse = postData('/api/user/login', {
+ *   username: 'demo',
+ *   password: 'demo2005',
+ * });
+ * promiseResponse.then(() => console.log('username and password sent to server'));
+ * ```
  */
 export function postData(
     url: string,
