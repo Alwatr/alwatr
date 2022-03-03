@@ -1,6 +1,6 @@
 {
   "name": "@vatr/logger",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Create a logger function for fancy console debug with custom scope.",
   "keywords": [
     "vatr",
@@ -13,7 +13,7 @@
   "main": "logger.js",
   "type": "module",
   "types": "logger.d.ts",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
     "**/*.js",
@@ -29,6 +29,10 @@
     "type": "git",
     "url": "https://github.com/AliMD/vatr",
     "directory": "package/logger"
+  },
+  "homepage": "https://github.com/AliMD/vatr/tree/main/package/logger#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/vatr/issues"
   },
   "dependencies": {
     "tslib": "^2.3.1"

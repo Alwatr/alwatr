@@ -3,16 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.1.1](https://github.com/AliMD/One/compare/v0.1.0...v0.1.1) (2022-03-03)
+## [0.1.2](https://github.com/AliMD/One/compare/v0.1.1...v0.1.2) (2022-03-03)
 
+**Note:** Version bump only for package vatr
+
+
+
+
+
+## [0.1.1](https://github.com/AliMD/One/compare/v0.1.0...v0.1.1) (2022-03-03)
 
 ### Bug Fixes
 
 * **packages:** add publish config to public ([9cb3710](https://github.com/AliMD/One/commit/9cb37106b5a35d24d5195ff54232e5769ccc034e))
-
-
-
-
 
 # 0.1.0 (2022-03-02)
 
