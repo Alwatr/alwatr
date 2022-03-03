@@ -18,9 +18,8 @@ If applicable, add screenshots to help explain your problem.
 
 **To get the Vatr registered list**
 Steps to view the Vatr registered list:
-1. Go to `Console`
-2. `window.Vatr` Type and press Enter
-4. See Vatr Registered List 
+1. Go to browser console
+2. run `JSON.stringify(window.Vatr.registeredList, null, 2);`
 
 **Desktop (please complete the following information):**
  - OS: [e.g. iOS]
