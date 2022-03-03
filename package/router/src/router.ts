@@ -1,5 +1,6 @@
 import {createLogger, vatrRegisteredList} from '@vatr/logger';
 import {clickTrigger} from './trigger-click';
+import {popstateTrigger} from './trigger-popstate';
 import type {InitOptions} from './type';
 
 export const log = createLogger('vatr/router');
@@ -16,4 +17,5 @@ vatrRegisteredList.push({
 export function initialRouter(options?: InitOptions) {
   log('initialRouter: %o', options);
   clickTrigger.enable = options?.clickTrigger ?? true;
+  popstateTrigger.enable = options?.popstateTrigger ?? true;
 }
