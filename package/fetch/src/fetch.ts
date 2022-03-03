@@ -87,6 +87,21 @@ export function fetchData(url: string, options?: FetchOptions): Promise<Response
 }
 
 /**
+ * Enhanced get data.
+ * @example
+ * const response = await postData('/api/products', {limit: 10}, {timeout: 5_000});
+ */
+export function getData(
+    url: string,
+    queryParameters?: Record<string | number, string | number | boolean>,
+    options?: FetchOptions,
+): Promise<Response> {
+  return fetchData(url, {
+    queryParameters,
+    ...options,
+  });
+}
+/**
  * Enhanced fetch JSON.
  * @example
  * const json = await fetchJson<ProductList>('/api/products', {timeout: 5_000, queryParamList: {limit: 10}});
