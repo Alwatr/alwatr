@@ -2,6 +2,7 @@ import {createLogger, vatrRegisteredList} from '@vatr/logger';
 import {hasSignalDispatchedBefore, requestSignal, setSignalProvider} from '@vatr/signal';
 import {clickTrigger} from './trigger-click';
 import {popstateTrigger} from './trigger-popstate';
+import {splitParameterString} from './util';
 import type {InitOptions, RequestRouteParam, Route} from './type';
 
 export const log = createLogger('vatr/router');
@@ -13,7 +14,7 @@ vatrRegisteredList.push({
 });
 
 /**
- * Initial and config Vatr Router
+ * Initial and config the Router
  */
 export function initialRouter(options?: InitOptions) {
   log('initialRouter: %o', options);
@@ -32,7 +33,7 @@ export function initialRouter(options?: InitOptions) {
 function routeSignalProvider(requestParam: RequestRouteParam): Route {
   log('routeSignalProvider: %o', requestParam);
   _updateBrowserHistory(requestParam);
-  return parseRoute(requestParam);
+  return makeRouteObject(requestParam);
 }
 
 /**
@@ -56,4 +57,35 @@ function _updateBrowserHistory(options: RequestRouteParam) {
   const changeState = options.pushState === 'replace' ? 'replaceState' : 'pushState';
   window.history[changeState](null, document.title, options.pathname + options.search + options.hash);
 }
+
+/**
+ * Make Route from RequestRouteParam.
+ */
+function makeRouteObject(requestParam: RequestRouteParam): Route {
+  log('makeRouteObject: %o', requestParam);
+  requestParam.search ??= '';
+  requestParam.hash ??= '';
+
+  const sectionList = requestParam.pathname
+      .split('/')
+      .map(decodeParam) // decode must be after split because encoded '/' maybe include in values.
+      .filter((section) => section.trim() !== '')
+  ;
+
+  return {
+    pathname: requestParam.pathname,
+    sectionList,
+    search: requestParam.search,
+    queryParamList: splitParameterString(requestParam.search.substring(1)/* remove first ? */),
+    hash: requestParam.hash,
+  };
 }
+
+function decodeParam(val: string): string {
+  try {
+    return decodeURIComponent(val);
+  } catch (err) {
+    return val;
+  }
+}
+
