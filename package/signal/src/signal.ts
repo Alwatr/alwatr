@@ -1,5 +1,17 @@
-import {log, _getSignalObject, _callListeners, _removeSignalListener} from './core';
-import type {ListenerOptions, DispatchOptions, ListenerCallback, ListenerObject} from './type';
+import {log,
+  _getSignalObject,
+  _callListeners,
+  _removeSignalListener,
+} from './core';
+
+import type {
+  ListenerOptions,
+  DispatchOptions,
+  ListenerCallback,
+  ListenerObject,
+  SignalProvider,
+  SignalProviderOptions,
+} from './type';
 
 /**
  * Add new listener to specific signal.
@@ -10,13 +22,13 @@ import type {ListenerOptions, DispatchOptions, ListenerCallback, ListenerObject}
 export function addSignalListener<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
     signalCallback: ListenerCallback<SignalName>,
-    options?: Partial<ListenerOptions>,
+    options?: ListenerOptions,
 ): symbol {
   log('addSignalListener(%s, %o)', signalName, options);
 
   const signal = _getSignalObject(signalName);
   const listener: ListenerObject<SignalName> = {
-    id: Symbol('Vatr Signal Listener'),
+    id: Symbol('Vatr signal listener for ' + signalName),
     once: options?.once ?? false,
     disabled: options?.disabled ?? false,
     callback: signalCallback,
@@ -79,8 +91,8 @@ export function removeSignalListener<SignalName extends keyof VatrSignals>(
  */
 export function dispatchSignal<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
-    value?: VatrSignals[SignalName],
-    options?: Partial<DispatchOptions>,
+    value: VatrSignals[SignalName],
+    options?: DispatchOptions,
 ): void {
   log('dispatchSignal(%s, %o, %o)', signalName, value, options);
 
@@ -140,7 +152,8 @@ export function requestSignal<SignalName extends keyof VatrRequestSignals>(
  */
 export function setSignalProvider<SignalName extends keyof VatrRequestSignals>(
     signalName: SignalName,
-    signalCallback: (requestParam: VatrRequestSignals[SignalName]) => void | Promise<void>,
+    signalProvider: SignalProvider<SignalName>,
+    options?: SignalProviderOptions,
 ): symbol {
   log('setSignalProvider(%s)', signalName);
   // @TODO: refactor with removeSignalProvider
@@ -150,10 +163,18 @@ export function setSignalProvider<SignalName extends keyof VatrRequestSignals>(
         signalName, signal.listenerList.length);
     signal.listenerList = [];
   }
+
+  const _callback = async (requestParam: VatrRequestSignals[SignalName]) => {
+    const signalValue = await signalProvider(requestParam);
+    if (signalValue !== undefined) { // null can be a valid value.
+      dispatchSignal(signalName, signalValue, {debounce: options?.debounce ?? true});
+    }
+  };
+
   return addSignalListener(
     `request-${signalName}` as unknown as SignalName,
-    signalCallback as unknown as ListenerCallback<SignalName>,
-    {receivePrevious: true},
+    _callback as unknown as ListenerCallback<SignalName>,
+    {receivePrevious: options?.receivePrevious ?? true},
   );
 }
 
