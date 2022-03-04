@@ -140,7 +140,7 @@ export function requestSignal<SignalName extends keyof VatrRequestSignals>(
  */
 export function setSignalProvider<SignalName extends keyof VatrRequestSignals>(
     signalName: SignalName,
-    signalCallback: (detail: VatrRequestSignals[SignalName]) => void | Promise<void>,
+    signalCallback: (signalValue: VatrRequestSignals[SignalName]) => void | Promise<void>,
 ): symbol {
   log('setSignalProvider(%s)', signalName);
   // @TODO: refactor with removeSignalProvider

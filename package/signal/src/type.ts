@@ -66,7 +66,7 @@ export interface DispatchOptions
  * Signal listeners callback function type.
  */
 export type ListenerCallback<SignalName extends keyof VatrSignals> =
-  (detail: VatrSignals[SignalName]) => void | Promise<void>;
+  (signalValue: VatrSignals[SignalName]) => void | Promise<void>;
 
 /**
  * Signal listeners object in database.
