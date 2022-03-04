@@ -20,9 +20,18 @@ export function initialRouter(options?: InitOptions) {
   clickTrigger.enable = options?.clickTrigger ?? true;
   popstateTrigger.enable = options?.popstateTrigger ?? true;
 
+  setSignalProvider('router-change', routeSignalProvider, {debounce: true, receivePrevious: true});
+
   // first route request.
-  if (hasSignalDispatchedBefore('vatr-router-change')) {
+  if (!hasSignalDispatchedBefore('router-change')) {
     const {pathname, search, hash} = window.location;
-    requestSignal('vatr-router-change', {pathname, search, hash});
+    requestSignal('router-change', {pathname, search, hash, pushState: false});
   }
+}
+
+function routeSignalProvider(requestParam: RequestRouteParam): Route {
+  log('routeSignalProvider: %o', requestParam);
+  _updateBrowserHistory(requestParam);
+  return parseRoute(requestParam);
+}
 }

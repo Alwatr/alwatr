@@ -15,7 +15,7 @@ export const popstateTrigger = {
     }
     // if none of the above, convert the click into a navigation signal.
     const {pathname, search, hash} = window.location;
-    requestSignal('vatr-router-change', {pathname, search, hash});
+    requestSignal('router-change', {pathname, search, hash, pushState: false});
   },
 
   set enable(enable: boolean) {
