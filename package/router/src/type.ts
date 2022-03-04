@@ -53,3 +53,13 @@ export interface InitOptions {
    */
   popstateTrigger?: boolean;
 }
+
+/**
+ * requestRouteHref options
+ */
+export interface RequestRouteHrefOptions {
+  sectionList: Array<string>;
+  queryParamList?: Record<string, string | number | boolean>;
+  hash?: string;
+}
+
