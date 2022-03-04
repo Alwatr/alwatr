@@ -2,7 +2,7 @@ import '@vatr/signal/type';
 
 declare global {
   interface VatrSignals {
-    'vatr-router-go': unknown;
+    'vatr-router-change': unknown;
   }
 
   interface VatrRequestSignals {
