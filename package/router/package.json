@@ -1,12 +1,13 @@
 {
   "name": "@vatr/router",
   "version": "0.0.0",
-  "description": "Elegant powerful routing based on the simplicity of signals",
+  "description": "Elegant powerful router module based on the simplicity of the signals.",
   "keywords": [
     "vatr",
     "alvatr",
     "router",
-    "route"
+    "route",
+    "khafan"
   ],
   "main": "router.js",
   "type": "module",

@@ -26,8 +26,10 @@ export interface RequestRouteParam {
   hash?: string;
   /**
    * Update browser history state (history.pushState or history.replaceState).
+   *
+   * @default true
    */
-   pushState?: boolean | 'replace';
+  pushState?: boolean | 'replace';
 }
 
 /**

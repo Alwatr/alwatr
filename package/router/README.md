@@ -1,6 +1,6 @@
 # @vatr/router
 
-Elegant powerful routing based on the simplicity of signals
+Elegant powerful router module based on the simplicity of the signals.
 
 ## Example usage
 
