@@ -1,7 +1,6 @@
 import {log, _getSignalObject, _callListeners, _removeSignalListener} from './core';
 import type {ListenerOptions, DispatchOptions, ListenerCallback, ListenerObject} from './type';
 
-
 /**
  * Add new listener to specific signal.
  *
@@ -139,17 +138,26 @@ export function requestSignal<SignalName extends keyof VatrRequestSignals>(
  *   }
  * }
  */
-export function addSignalProvider<SignalName extends keyof VatrRequestSignals>(
+export function setSignalProvider<SignalName extends keyof VatrRequestSignals>(
     signalName: SignalName,
     signalCallback: (detail: VatrRequestSignals[SignalName]) => void | Promise<void>,
 ): symbol {
-  log('addSignalProvider(%s)', signalName);
+  log('setSignalProvider(%s)', signalName);
+  // @TODO: refactor with removeSignalProvider
+  const signal = _getSignalObject(`request-${signalName}` as unknown as SignalName);
+  if (signal.listenerList.length>0) {
+    log('setSignalProvider(%s): WARNING! another provider defined and will removed!',
+        signalName, signal.listenerList.length);
+    signal.listenerList = [];
+  }
   return addSignalListener(
     `request-${signalName}` as unknown as SignalName,
     signalCallback as unknown as ListenerCallback<SignalName>,
     {receivePrevious: true},
   );
 }
+
+// @TODO: removeSignalProvider(signalName): void
 
 /**
  * Resolved with signal value when signal is ready base on requested options.
