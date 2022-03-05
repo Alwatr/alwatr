@@ -34,16 +34,20 @@ export function _getSignalObject<SignalName extends keyof VatrSignals>(
 export function _callListeners<SignalName extends keyof VatrSignals>(
     signal: SignalObject<SignalName>,
 ): void {
-  log('callListeners(%s, %o)', signal.name, signal.value);
+  log('_callListeners(%s, %o)', signal.name, signal.value);
+  if (signal.value === undefined) {
+    error('_callListeners(%s): signal must have a value!', signal.name, signal.value);
+    return;
+  }
   for (const listener of signal.listenerList) {
     if (listener.disabled) continue;
     try {
       const ret = listener.callback(signal.value);
       if (ret instanceof Promise) {
-        ret.catch((err) => error('callListeners(%s): listener.callback error! %o', signal.name, err));
+        ret.catch((err) => error('_callListeners(%s): listener.callback error! %o', signal.name, err));
       }
     } catch (err) {
-      error('callListeners(%s): listener.callback error! %o', signal.name, err);
+      error('_callListeners(%s): listener.callback error! %o', signal.name, err);
     }
     if (listener.once) _removeSignalListener(signal, listener.id);
   }

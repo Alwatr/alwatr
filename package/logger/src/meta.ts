@@ -14,6 +14,6 @@ window.Vatr ??= {};
 window.Vatr.registeredList = vatrRegisteredList;
 
 vatrRegisteredList.push({
-  name: '@vatr/router',
+  name: '@vatr/logger',
   version: '{{VATR_VERSION}}', // TODO: replace with real version at release time.
 });

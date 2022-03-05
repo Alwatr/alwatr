@@ -1,0 +1,37 @@
+name: 'Feature Request'
+description: Suggest a feature for Angular Framework
+
+body:
+  - type: dropdown
+    id: affected-packages
+    attributes:
+      label: Package(s)
+      description: Which @vatr/* package(s) are the source of the bug?
+      options:
+        - fetch
+        - logger
+        - router
+        - signal
+        - Don't known / other
+      multiple: true
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives-considered
+    attributes:
+      label: Alternatives considered

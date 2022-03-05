@@ -37,7 +37,7 @@ export function addSignalListener<SignalName extends keyof VatrSignals>(
   let callbackCalled = false;
 
   // Run callback for old dispatch signal
-  if ('value' in signal) {
+  if (signal.value !== undefined) {
     if (options?.receivePrevious === 'Immediate') {
       log('addSignalListener(%s): run callback(immediately)', signalName);
       try {
@@ -48,8 +48,10 @@ export function addSignalListener<SignalName extends keyof VatrSignals>(
       callbackCalled = true;
     } else if (options?.receivePrevious === true) {
       requestAnimationFrame(() => {
-        log('addSignalListener(%s): run callback(delay)', signalName);
-        signalCallback(signal.value);
+        if (signal.value !== undefined) {
+          log('addSignalListener(%s): run callback(delay)', signalName);
+          signalCallback(signal.value);
+        }
       });
       callbackCalled = true; // must be outside of requestAnimationFrame.
     }
@@ -78,7 +80,7 @@ export function removeSignalListener<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
     listenerId: symbol,
 ): void {
-  log('addSignalListener(%s)', signalName);
+  log('removeSignalListener(%s)', signalName);
   const signal = _getSignalObject(signalName);
   _removeSignalListener(signal, listenerId);
 }

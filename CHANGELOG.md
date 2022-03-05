@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/AliMD/One/compare/v0.2.0...v0.2.1) (2022-03-05)
+
+
+### Bug Fixes
+
+* **logger:** vatrRegisteredList name ([ff59133](https://github.com/AliMD/One/commit/ff5913321c4eafa1ce53fdacebf8fb4f23bfe430))
+* **signal:** signal value type issue ([292a4a7](https://github.com/AliMD/One/commit/292a4a7d12a2fd143761e67cd1ecd2e5e40f2ee9))
+
+
+### Features
+
+* **issue-template:** bug report and feqture request form template ([77159a7](https://github.com/AliMD/One/commit/77159a7076369781cfcf7167e58843e0fb25fa18))
+
+
+
+
+
 # [0.2.0](https://github.com/AliMD/One/compare/v0.1.2...v0.2.0) (2022-03-05)
 
 

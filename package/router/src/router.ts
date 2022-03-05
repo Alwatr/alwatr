@@ -1,14 +1,8 @@
-import {vatrRegisteredList} from '@vatr/logger';
 import {hasSignalDispatchedBefore, requestSignal, setSignalProvider} from '@vatr/signal';
 import {joinParameterList, log, routeSignalProvider} from './core';
 import {clickTrigger} from './trigger-click';
 import {popstateTrigger} from './trigger-popstate';
 import type {InitOptions, Route} from './type';
-
-vatrRegisteredList.push({
-  name: '@vatr/router',
-  version: '{{VATR_VERSION}}',
-});
 
 /**
  * Initial and config the Router.

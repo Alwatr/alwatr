@@ -1,6 +1,6 @@
 {
   "name": "@vatr/fetch",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Enhanced fetch api with timeout, helper methods and types written in tiny TypeScript module.",
   "keywords": [
     "fetch",
@@ -37,7 +37,7 @@
     "url": "https://github.com/AliMD/vatr/issues"
   },
   "dependencies": {
-    "@vatr/logger": "^0.2.0",
+    "@vatr/logger": "^0.2.1",
     "tslib": "^2.3.1"
   }
 }

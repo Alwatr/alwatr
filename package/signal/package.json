@@ -1,6 +1,6 @@
 {
   "name": "@vatr/signal",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Elegant powerful event system for handle global signals and states written in tiny TypeScript module.",
   "keywords": [
     "signal",
@@ -37,7 +37,7 @@
     "url": "https://github.com/AliMD/vatr/issues"
   },
   "dependencies": {
-    "@vatr/logger": "^0.2.0",
+    "@vatr/logger": "^0.2.1",
     "tslib": "^2.3.1"
   }
 }
