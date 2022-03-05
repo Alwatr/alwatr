@@ -28,26 +28,27 @@ export function initialRouter(options?: InitOptions) {
 }
 
 /**
- * Make anchor valid href from route options.
+ * Make anchor valid href from route.
  *
- * @example <a href=${requestRouteHref({section: 'article'})}>
+ * @example <a href=${ makeUrl({sectionList: ['product', 100]}) }>
  */
-export function requestRouteHref(requestRoute: RequestRouteHrefOptions): string {
-  let href = '/';
+export function makeUrl(route: Partial<Route>): string {
+  let href = '';
 
-  if (requestRoute.sectionList?.length > 0) {
-    href += requestRoute.sectionList.join('/');
+  if (route.sectionList != null) {
+    // @TODO: handle <base> url.
+    href += '/' + route.sectionList.join('/');
   }
 
-  if (requestRoute.queryParamList != null) {
-    href += '?' + joinParameterList(requestRoute.queryParamList);
+  if (route.queryParamList != null) {
+    href += '?' + joinParameterList(route.queryParamList);
   }
 
-  if (requestRoute.hash) { // != null && !== ''
-    if (requestRoute.hash.startsWith('#')) {
-      requestRoute.hash = requestRoute.hash.substring(1); // remove first `#`
+  if (route.hash) { // != null && !== ''
+    if (route.hash.indexOf('#') !== 0) {
+      route.hash += '#';
     }
-    href += '#' + requestRoute.hash;
+    href += route.hash;
   }
 
   return href;
