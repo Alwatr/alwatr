@@ -106,10 +106,11 @@
   "include": [ "*.ts" ],
   "exclude": [],
   "references": [
-    {"path": "./package/signal"},
     {"path": "./package/logger"},
-    {"path": "./package/fetch"},
     {"path": "./package/util"},
+    {"path": "./package/fetch"},
+    {"path": "./package/signal"},
+    {"path": "./package/router"},
     {"path": "./demo"},
   ]
 }

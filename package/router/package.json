@@ -1,0 +1,42 @@
+{
+  "name": "@vatr/router",
+  "version": "0.0.0",
+  "description": "Elegant powerful router module based on the simplicity of the signals.",
+  "keywords": [
+    "vatr",
+    "alvatr",
+    "router",
+    "route",
+    "khafan"
+  ],
+  "main": "router.js",
+  "type": "module",
+  "types": "router.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "contributors": [],
+  "license": "MIT",
+  "files": [
+    "**/*.js",
+    "**/*.d.ts",
+    "**/*.map",
+    "**/*.html",
+    "**/*.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/vatr",
+    "directory": "package/router"
+  },
+  "homepage": "https://github.com/AliMD/vatr/tree/main/package/router#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/vatr/issues"
+  },
+  "dependencies": {
+    "@vatr/logger": "^0.1.2",
+    "@vatr/signal": "^0.1.2",
+    "tslib": "^2.3.1"
+  }
+}

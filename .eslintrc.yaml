@@ -34,7 +34,8 @@ rules:
     - error
     - allowIndirect: true
   no-floating-decimal: error
-  "@typescript-eslint/no-empty-function": off
+  space-infix-ops: error
+  "@typescript-eslint/explicit-function-return-type": error
 
   # TODO: Enable in future
   require-jsdoc: off
