@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/AliMD/vatr/compare/v0.2.0...v0.2.1) (2022-03-05)
+
+
+### Bug Fixes
+
+* **logger:** vatrRegisteredList name ([ff59133](https://github.com/AliMD/vatr/commit/ff5913321c4eafa1ce53fdacebf8fb4f23bfe430))
+
+
+
+
+
 # [0.2.0](https://github.com/AliMD/vatr/compare/v0.1.2...v0.2.0) (2022-03-05)
 
 **Note:** Version bump only for package @vatr/logger
