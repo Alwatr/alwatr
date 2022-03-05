@@ -4,20 +4,19 @@ import type {RequestRouteParam, Route} from './type';
 export const log = createLogger('vatr/router');
 // export const error = createLogger('vatr/router', 'error', true);
 
-
 /**
  * Handle requests of 'router-change' signal.
  */
-export function _routeSignalProvider(requestParam: RequestRouteParam): Route {
+export function routeSignalProvider(requestParam: RequestRouteParam): Route {
   log('routeSignalProvider: %o', requestParam);
-  _updateBrowserHistory(requestParam);
-  return _makeRouteObject(requestParam);
+  updateBrowserHistory(requestParam);
+  return makeRouteObject(requestParam);
 }
 
 /**
  * Update browser history state (history.pushState or history.replaceState).
  */
-export function _updateBrowserHistory(options: RequestRouteParam) {
+export function updateBrowserHistory(options: RequestRouteParam): void {
   log('_updateBrowserHistory(%o)', options);
   if (options.pushState === false) return; // default is true then undefined means true.
 
@@ -39,7 +38,7 @@ export function _updateBrowserHistory(options: RequestRouteParam) {
 /**
  * Make Route from RequestRouteParam.
  */
-export function _makeRouteObject(requestParam: RequestRouteParam): Route {
+export function makeRouteObject(requestParam: RequestRouteParam): Route {
   log('makeRouteObject: %o', requestParam);
   requestParam.search ??= '';
   requestParam.hash ??= '';
@@ -48,12 +47,11 @@ export function _makeRouteObject(requestParam: RequestRouteParam): Route {
       .split('/')
       .map(_decodeURIComponent) // decode must be after split because encoded '/' maybe include in values.
       .filter((section) => section.trim() !== '')
+      .map(parseValue)
   ;
 
   return {
-    pathname: requestParam.pathname,
     sectionList,
-    search: requestParam.search,
     queryParamList: splitParameterString(requestParam.search.substring(1)/* remove first ? */),
     hash: requestParam.hash,
   };
@@ -99,9 +97,22 @@ export function splitParameterString(
       .split('&')
       .forEach((parameter) => {
         const parameterArray = parameter.split('=');
-        parameterList[parameterArray[0]] = parameterArray[1] ?? null;
+        parameterList[parameterArray[0]] = parameterArray[1] != null ? parseValue(parameterArray[1]) : null;
       })
   ;
 
   return parameterList;
+}
+
+/**
+ * Check type of a value is `number` or not
+ */
+export function parseValue(value: string): string | boolean | number {
+  const trimmedValue = value.trim().toLowerCase();
+  if (trimmedValue === '') return value;
+  if (trimmedValue === 'true' || trimmedValue === 'false') return trimmedValue === 'true';
+  const parsedValue = parseFloat(trimmedValue);
+  // note: `parseFloat('NaN').toString() === 'NaN'` is true, then always check isNaN
+  if (!isNaN(parsedValue) && parsedValue.toString() === trimmedValue) return parsedValue;
+  return value;
 }
