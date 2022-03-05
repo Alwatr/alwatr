@@ -6,7 +6,7 @@ As a contributor, here are the guidelines we would like you to follow:
 ## Code of Conduct
 
 Help us keep AlVatr projects open and inclusive.
-Please read and follow our [Code of Conduct][./CODE_OF_CONDUCT.md].
+Please read and follow our [Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## Found a Bug?
 
