@@ -1,6 +1,6 @@
 {
   "name": "@vatr/logger",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.",
   "keywords": [
     "log",

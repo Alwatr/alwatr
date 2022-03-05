@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/AliMD/vatr/compare/v0.1.2...v0.2.0) (2022-03-05)
+
+
+### Bug Fixes
+
+* **router:** rename setSignalProvider callback detail to requestParam ([6e09f87](https://github.com/AliMD/vatr/commit/6e09f8772d320625fb4c15ccaa0abcfa2932f992))
+* **signal:** fix dispatchSignal value parameters ([4d34cfb](https://github.com/AliMD/vatr/commit/4d34cfbb5281d5ce4a4f06ddaaf72218dde80cdd))
+
+
+### Features
+
+* **signal:** add contributors ([64287cd](https://github.com/AliMD/vatr/commit/64287cd8cea95665a6ed298177df60dadda7642b))
+* **signal:** improve signal provider by dispatch return content ([80c2b27](https://github.com/AliMD/vatr/commit/80c2b275bcc0521327400c5902f512c778f5eb3f))
+
+
+
+
+
 ## [0.1.2](https://github.com/AliMD/vatr/compare/v0.1.1...v0.1.2) (2022-03-03)
 
 **Note:** Version bump only for package @vatr/signal
