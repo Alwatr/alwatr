@@ -1,14 +1,16 @@
 {
   "name": "@vatr/fetch",
   "version": "0.1.2",
-  "description": "Enhanced fetch api with timeout, promise and types.",
+  "description": "Enhanced fetch api with timeout, helper methods and types written in tiny TypeScript module.",
   "keywords": [
-    "vatr",
-    "alvatr",
     "fetch",
     "request",
     "api",
-    "timeout"
+    "timeout",
+    "typescript",
+    "esm",
+    "vatr",
+    "alvatr"
   ],
   "main": "fetch.js",
   "type": "module",
