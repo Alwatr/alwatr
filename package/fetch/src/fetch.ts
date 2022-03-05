@@ -37,7 +37,7 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   log('fetch', url, options);
 
   if (!navigator.onLine) {
-    throw new Error('vatr_fetch_offline');
+    throw new Error('fetch_offline');
   }
 
   options = {
@@ -115,7 +115,7 @@ export async function getJson<ResponseType extends Record<string | number, unkno
   const response = await getData(url, queryParameters, options);
 
   if (!response.ok) {
-    throw new Error('vatr_fetch_nok');
+    throw new Error('fetch_nok');
   }
 
   return response.json() as Promise<ResponseType>;
