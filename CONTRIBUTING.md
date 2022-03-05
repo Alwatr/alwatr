@@ -1,6 +1,6 @@
 # Contributing to AlVatr projects
 
-We would love for you to contribute to Angular and help make it even better than it is today!
+We would love for you to contribute to AlVatr projects and help make it even better than it is today!
 As a contributor, here are the guidelines we would like you to follow:
 
 ## Code of Conduct
