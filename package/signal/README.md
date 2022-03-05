@@ -1,81 +1,40 @@
 # @vatr/signal
 
-A small and fast event system with `0` dependencies.
+Elegant powerful event system for handle global signals and states written in tiny TypeScript module.
 
-## Installation
+Every signal has own value and can be used as a advance **state management** like redux and recoil without the complexities and unnecessary facilities of those libraries.
 
-`npm install @vatr/signal`
+## Example usage
 
-## How to use
-
-define a signal type on `VatrSignals` and listene to event with `addSignalListener` and trigger the event with `dispatchSignal`.
+### Signal providers
 
 ```TypeScript
 import { addSignalListener, dispatchSignal } from 'https://esm.run/@vatr/signal';
 
 declare global {
   interface VatrSignals {
-    readonly 'test-event': number;
+    readonly 'my-money-change': number;
   }
 }
 
-addSignalListener('test-event', (value) => {
-    console.log(value);
+dispatchSignal('my-money-change', 10);
+// signal debounced with browser animation frame
+dispatchSignal('my-money-change', 20);
+```
+
+### Signal receivers in another file *without any cohesion with providers*
+
+*Receive as a event:*
+
+```TypeScript
+addSignalListener('my-money-change', (money) => {
+  // money type is automatically set to number.
+  console.log(money);
 });
-
-dispatchSignal('test-event', 1);
 ```
 
-Add multiple listene to the same event name:
+*Receive inside code as a promise:*
 
 ```TypeScript
-import { addSignalListener, dispatchSignal } from 'https://esm.run/@vatr/signal';
-
-declare global {
-  interface VatrSignals {
-    readonly 'test-event': void;
-  }
-}
-
-addSignalListener('test-event', () => { console.log(1); });
-addSignalListener('test-event', () => { console.log(2); });
-addSignalListener('test-event', () => { console.log(3); });
-
-dispatchSignal('test-event', void);
-```
-
-You can remove event from all sycle with `expireSignal`:
-
-```TypeScript
-import { addSignalListener, dispatchSignal, expireSignal } from 'https://esm.run/@vatr/signal';
-
-declare global {
-  interface VatrSignals {
-    readonly 'test-event': void;
-  }
-}
-
-addSignalListener('test-event', () => { console.log(1); });
-expireSignal('test-event');
-dispatchSignal('test-event', void); // this line must make a Error
-```
-
-You can test a signal dispatch before now with `hasSignalDispatchedBefore`:
-
-```TypeScript
-import { addSignalListener, dispatchSignal, hasSignalDispatchedBefore } from 'https://esm.run/@vatr/signal';
-
-declare global {
-  interface VatrSignals {
-    readonly 'test-event': number;
-  }
-}
-
-addSignalListener('test-event', (value) => {
-    console.log(value);
-});
-
-dispatchSignal('test-event', 1);
-
-console.log(hasSignalDispatchedBefore('test-event'));
+const money = await waitForSignal('my-money-change', {receivePrevious: true});
 ```

@@ -1,11 +1,13 @@
 {
   "name": "@vatr/signal",
   "version": "0.1.2",
-  "description": "Manage and control all signals in your project.",
+  "description": "Elegant powerful event system for handle global signals and states written in tiny TypeScript module.",
   "keywords": [
+    "signal",
+    "typescript",
+    "esm",
     "vatr",
-    "alvatr",
-    "signal"
+    "alvatr"
   ],
   "main": "signal.js",
   "type": "module",
