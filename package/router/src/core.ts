@@ -1,8 +1,13 @@
-import {createLogger} from '@vatr/logger';
+import {createLogger, vatrRegisteredList} from '@vatr/logger';
 import type {RequestRouteParam, Route} from './type';
 
 export const log = createLogger('vatr/router');
 // export const error = createLogger('vatr/router', 'error', true);
+
+vatrRegisteredList.push({
+  name: '@vatr/router',
+  version: '{{VATR_VERSION}}',
+});
 
 /**
  * Handle requests of 'router-change' signal.
