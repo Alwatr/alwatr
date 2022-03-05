@@ -1,5 +1,5 @@
 {
-  "version": "0.1.2",
+  "version": "0.2.0",
   "npmClient": "yarn",
   "useWorkspaces": true,
   "package": [
@@ -10,7 +10,7 @@
     "version": {
       "conventionalCommits": true,
       "changelogPreset": "angular",
-      "message": "chore(release): %s"
+      "message": "release: %s"
     },
     "publish": {
       "conventionalCommits": true,

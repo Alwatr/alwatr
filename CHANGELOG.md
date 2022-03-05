@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/AliMD/One/compare/v0.1.2...v0.2.0) (2022-03-05)
+
+
+### Bug Fixes
+
+* **fetch:** error codes ([4e0be80](https://github.com/AliMD/One/commit/4e0be80786b6667035ae82750f2351bd2da4f341))
+* **router:** rename setSignalProvider callback detail to requestParam ([6e09f87](https://github.com/AliMD/One/commit/6e09f8772d320625fb4c15ccaa0abcfa2932f992))
+* **router:** rename setSignalProvider callback detail to requestParam ([070c0f6](https://github.com/AliMD/One/commit/070c0f6c5e4d6994e9af19dca515acc4f7ad4c5a))
+* **router:** trigger click signal name ([b4a9477](https://github.com/AliMD/One/commit/b4a9477464cb05bb8fa227014de5e8af5b8dd600))
+* **signal:** fix dispatchSignal value parameters ([4d34cfb](https://github.com/AliMD/One/commit/4d34cfbb5281d5ce4a4f06ddaaf72218dde80cdd))
+* **tsconfig:** add router ([a107e08](https://github.com/AliMD/One/commit/a107e0872d59484ec208640b678e65212add53f0))
+* **util:** remove package ([b337d9a](https://github.com/AliMD/One/commit/b337d9a97c8f73c2a87e722b23a50718321d1648))
+
+
+### Features
+
+* **fetch:** add getData ([4a627c4](https://github.com/AliMD/One/commit/4a627c43d2ad07acb340f058f02d41ce57288405))
+* **fetch:** add postData and fetchJson ([b0262b8](https://github.com/AliMD/One/commit/b0262b83b5b7d8b7c376dce68aae3e16bd8e2610))
+* **fetch:** base fetch api ([925cdab](https://github.com/AliMD/One/commit/925cdab8700ffb801e1d836ffc5d3245b66815cf))
+* **fetch:** FetchOptions type ([dd2d141](https://github.com/AliMD/One/commit/dd2d1418d090387e1afa8277f78ae88ace17fd17))
+* **fetch:** new enhanced fetch package ([7e90472](https://github.com/AliMD/One/commit/7e904720c983372317358ce107f6ad0f79c65647))
+* **router:** _updateBrowserHistory ([8933a97](https://github.com/AliMD/One/commit/8933a97cde277708356fc123c7493774cf0b00ec))
+* **router:** base type ([f76d34b](https://github.com/AliMD/One/commit/f76d34b65fbfb9680662dd994136d90be99d496c))
+* **router:** first route request ([e0ad1d4](https://github.com/AliMD/One/commit/e0ad1d403f0023e2df44cb8b7a3a5710fcfbe877))
+* **router:** impeliment click trigger ([39f5f07](https://github.com/AliMD/One/commit/39f5f075f48ae4323ccca57467dde04ce8c9c3be))
+* **router:** impeliment popstate trigger ([1613131](https://github.com/AliMD/One/commit/16131312e4bc083ca3d6cf4c1458a93962946ccf))
+* **router:** initialRouter with trigers options ([802405f](https://github.com/AliMD/One/commit/802405fb17846be9fe51a41122c871b5aca9cf6b))
+* **router:** joinParameterList, splitParameterString ([9a4232b](https://github.com/AliMD/One/commit/9a4232b942f36a06cd3278e1a339639c9bcc82fa))
+* **router:** make new package for routing base on sognals ([39c9ae8](https://github.com/AliMD/One/commit/39c9ae8cf2d8288cfdefce0826f5fe89b2d7d550))
+* **router:** makeRouteObject ([6e0e5dc](https://github.com/AliMD/One/commit/6e0e5dc6fa10a6c02b1aeb198355040de6e235d2))
+* **router:** parseValue all sections and params value ([9af4079](https://github.com/AliMD/One/commit/9af4079f03dc2b656694f962701fcf75da23fa99))
+* **router:** requestRouteHref ([9341f3f](https://github.com/AliMD/One/commit/9341f3ff444bcdf26fd31f5eca71912dd70b7167))
+* **router:** route base types ([769e863](https://github.com/AliMD/One/commit/769e863b3a1569a01b320390b007bccaa80c3458))
+* **router:** routeSignalProvider ([ad187e7](https://github.com/AliMD/One/commit/ad187e706b6d62abd0668cf9bc7b64c49acab071))
+* **signal:** add contributors ([64287cd](https://github.com/AliMD/One/commit/64287cd8cea95665a6ed298177df60dadda7642b))
+* **signal:** improve signal provider by dispatch return content ([80c2b27](https://github.com/AliMD/One/commit/80c2b275bcc0521327400c5902f512c778f5eb3f))
+* **signal:** improve signal provider by dispatch return content ([188f295](https://github.com/AliMD/One/commit/188f2955e1663b318971e0d495bdd303a42bab56))
+
+
+
+
+
 ## [0.1.2](https://github.com/AliMD/One/compare/v0.1.1...v0.1.2) (2022-03-03)
 
 **Note:** Version bump only for package vatr

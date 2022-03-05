@@ -1,21 +1,20 @@
 {
-  "name": "@vatr/signal",
+  "name": "@vatr/router",
   "version": "0.2.0",
-  "description": "Elegant powerful event system for handle global signals and states written in tiny TypeScript module.",
+  "description": "Elegant powerful router (fundamental advance browser page routing) based on the simplicity of the signals written in tiny TypeScript module.",
   "keywords": [
-    "signal",
+    "router",
+    "route",
     "typescript",
     "esm",
     "vatr",
     "alvatr"
   ],
-  "main": "signal.js",
+  "main": "router.js",
   "type": "module",
-  "types": "signal.d.ts",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "contributors": [
-    "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
-  ],
+  "types": "router.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "contributors": [],
   "license": "MIT",
   "files": [
     "**/*.js",
@@ -30,14 +29,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/vatr",
-    "directory": "package/signal"
+    "directory": "package/router"
   },
-  "homepage": "https://github.com/AliMD/vatr/tree/main/package/signal#readme",
+  "homepage": "https://github.com/AliMD/vatr/tree/main/package/router#readme",
   "bugs": {
     "url": "https://github.com/AliMD/vatr/issues"
   },
   "dependencies": {
     "@vatr/logger": "^0.2.0",
+    "@vatr/signal": "^0.2.0",
     "tslib": "^2.3.1"
   }
 }
