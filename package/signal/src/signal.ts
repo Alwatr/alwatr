@@ -158,13 +158,13 @@ export function setSignalProvider<SignalName extends keyof VatrRequestSignals>(
   log('setSignalProvider(%s)', signalName);
   // @TODO: refactor with removeSignalProvider
   const signal = _getSignalObject(`request-${signalName}` as unknown as SignalName);
-  if (signal.listenerList.length>0) {
+  if (signal.listenerList.length > 0) {
     log('setSignalProvider(%s): WARNING! another provider defined and will removed!',
         signalName, signal.listenerList.length);
     signal.listenerList = [];
   }
 
-  const _callback = async (requestParam: VatrRequestSignals[SignalName]) => {
+  const _callback = async (requestParam: VatrRequestSignals[SignalName]): Promise<void> => {
     const signalValue = await signalProvider(requestParam);
     if (signalValue !== undefined) { // null can be a valid value.
       dispatchSignal(signalName, signalValue, {debounce: options?.debounce ?? true});
