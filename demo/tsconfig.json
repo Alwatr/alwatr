@@ -10,8 +10,7 @@
     "**/*.ts"
   ],
   "references": [
-    {"path": "../package/logger"},
-    {"path": "../package/util"},
+    {"path": "../package/logger"}
   ],
   "exclude": [
     "*.d.ts",
