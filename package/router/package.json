@@ -1,13 +1,14 @@
 {
   "name": "@vatr/router",
   "version": "0.0.0",
-  "description": "Elegant powerful router module based on the simplicity of the signals.",
+  "description": "Elegant powerful router (fundamental advance browser page routing) based on the simplicity of the signals written in tiny TypeScript module.",
   "keywords": [
-    "vatr",
-    "alvatr",
     "router",
     "route",
-    "khafan"
+    "typescript",
+    "esm",
+    "vatr",
+    "alvatr"
   ],
   "main": "router.js",
   "type": "module",

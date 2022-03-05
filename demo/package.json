@@ -26,7 +26,6 @@
   ],
   "dependencies": {
     "@vatr/logger": "^0.1.2",
-    "@vatr/util": "^0.1.0",
     "lit": "^2.1.3",
     "tslib": "^2.2.0"
   }

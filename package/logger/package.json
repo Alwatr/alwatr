@@ -1,14 +1,16 @@
 {
   "name": "@vatr/logger",
   "version": "0.1.2",
-  "description": "Create a logger function for fancy console debug with custom scope.",
+  "description": "Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.",
   "keywords": [
-    "vatr",
-    "alvatr",
     "log",
     "logger",
     "console",
-    "debug"
+    "debug",
+    "typescript",
+    "esm",
+    "vatr",
+    "alvatr"
   ],
   "main": "logger.js",
   "type": "module",

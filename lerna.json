@@ -10,7 +10,7 @@
     "version": {
       "conventionalCommits": true,
       "changelogPreset": "angular",
-      "message": "chore(release): %s"
+      "message": "release: %s"
     },
     "publish": {
       "conventionalCommits": true,

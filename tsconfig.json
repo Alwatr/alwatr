@@ -107,7 +107,6 @@
   "exclude": [],
   "references": [
     {"path": "./package/logger"},
-    {"path": "./package/util"},
     {"path": "./package/fetch"},
     {"path": "./package/signal"},
     {"path": "./package/router"},

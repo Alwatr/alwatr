@@ -1,6 +1,6 @@
 # @vatr/logger
 
-Create a logger function for fancy console debug with custom scope.
+Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.
 
 ## Example usage
 
