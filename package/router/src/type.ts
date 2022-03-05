@@ -12,9 +12,7 @@ declare global {
 export interface Route
 {
   // href: https://example.com/product/100/book?cart=1&color=white#description
-  pathname: string; // /product/100/book
-  sectionList: Array<string>; // [product, 100, book]
-  search: string; // ?cart=1&color=white
+  sectionList: Array<string | number | boolean>; // [product, 100, book]
   queryParamList: Record<string, string | number | boolean>; // {cart: 1, color: 'white'}
   hash: string; // '#header'
 }
@@ -54,12 +52,4 @@ export interface InitOptions {
   popstateTrigger?: boolean;
 }
 
-/**
- * requestRouteHref options
- */
-export interface RequestRouteHrefOptions {
-  sectionList: Array<string>;
-  queryParamList?: Record<string, string | number | boolean>;
-  hash?: string;
-}
 

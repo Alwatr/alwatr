@@ -1,9 +1,9 @@
 import {vatrRegisteredList} from '@vatr/logger';
 import {hasSignalDispatchedBefore, requestSignal, setSignalProvider} from '@vatr/signal';
-import {joinParameterList, log, _routeSignalProvider} from './core';
+import {joinParameterList, log, routeSignalProvider} from './core';
 import {clickTrigger} from './trigger-click';
 import {popstateTrigger} from './trigger-popstate';
-import type {InitOptions, RequestRouteHrefOptions} from './type';
+import type {InitOptions, Route} from './type';
 
 vatrRegisteredList.push({
   name: '@vatr/router',
@@ -13,12 +13,12 @@ vatrRegisteredList.push({
 /**
  * Initial and config the Router.
  */
-export function initialRouter(options?: InitOptions) {
+export function initialRouter(options?: InitOptions): void {
   log('initialRouter: %o', options);
   clickTrigger.enable = options?.clickTrigger ?? true;
   popstateTrigger.enable = options?.popstateTrigger ?? true;
 
-  setSignalProvider('router-change', _routeSignalProvider, {debounce: true, receivePrevious: true});
+  setSignalProvider('router-change', routeSignalProvider, {debounce: true, receivePrevious: true});
 
   // first route request.
   if (!hasSignalDispatchedBefore('router-change')) {
