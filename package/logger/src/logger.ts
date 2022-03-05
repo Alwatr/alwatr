@@ -30,7 +30,7 @@ const getNextColor = (): string => {
   return color;
 };
 
-const debugString = window.localStorage?.getItem('DEBUG')?.trim();
+const debugString = window.localStorage?.getItem('VATR_LOG')?.trim();
 
 /**
  * Create a logger function for fancy console debug with custom scope.
