@@ -3,7 +3,7 @@ declare global {
    * Global signals value type registry.
    */
   interface VatrSignals {
-    readonly 'easter-egg': void;
+    readonly 'easter-egg': number;
   }
 
   /**
