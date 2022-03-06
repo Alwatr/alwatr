@@ -1,6 +1,6 @@
 {
   "name": "@vatr/i18n",
-  "version": "0.0.0",
+  "version": "0.3.0",
   "description": "Elegant powerful translation module (i18n/l10n) with dynamic json storage written in tiny TypeScript, ES module.",
   "keywords": [
     "i18n",
@@ -37,9 +37,9 @@
     "url": "https://github.com/AliMD/vatr/issues"
   },
   "dependencies": {
-    "@vatr/logger": "^0.2.1",
-    "@vatr/signal": "^0.2.1",
-    "@vatr/fetch": "^0.2.1",
+    "@vatr/fetch": "^0.3.0",
+    "@vatr/logger": "^0.3.0",
+    "@vatr/signal": "^0.3.0",
     "tslib": "^2.3.1"
   }
 }

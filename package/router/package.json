@@ -1,6 +1,6 @@
 {
   "name": "@vatr/router",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Elegant powerful router (fundamental advance browser page routing) based on the simplicity of the signals written in tiny TypeScript module.",
   "keywords": [
     "router",
@@ -37,8 +37,8 @@
     "url": "https://github.com/AliMD/vatr/issues"
   },
   "dependencies": {
-    "@vatr/logger": "^0.2.1",
-    "@vatr/signal": "^0.2.1",
+    "@vatr/logger": "^0.3.0",
+    "@vatr/signal": "^0.3.0",
     "tslib": "^2.3.1"
   }
 }
