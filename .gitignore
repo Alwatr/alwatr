@@ -16,11 +16,26 @@ Desktop.ini
 # Build
 dist
 .tsbuildinfo
+*.js
+*.map
+*.d.ts
 
 # Dependencies
 node_modules
 package-lock.json
 
-*.js
-*.map
-*.d.ts
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.test

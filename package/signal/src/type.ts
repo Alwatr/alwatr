@@ -90,7 +90,7 @@ export type ListenerCallback<SignalName extends keyof VatrSignals> =
  */
 export type SignalProvider<SignalName extends keyof VatrRequestSignals> =
   (requestParam: VatrRequestSignals[SignalName]) =>
-    VatrSignals[SignalName] | Promise<VatrSignals[SignalName]> | void | Promise<void>
+    VatrSignals[SignalName] | void | Promise<VatrSignals[SignalName] | void>;
 
 /**
  * Signal listeners object in database.
