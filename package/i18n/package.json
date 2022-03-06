@@ -39,6 +39,7 @@
   "dependencies": {
     "@vatr/logger": "^0.2.1",
     "@vatr/signal": "^0.2.1",
+    "@vatr/fetch": "^0.2.1",
     "tslib": "^2.3.1"
   }
 }

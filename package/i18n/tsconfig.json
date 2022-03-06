@@ -14,5 +14,6 @@
   "references": [
     { "path": "../logger" },
     { "path": "../signal" },
+    { "path": "../fetch" },
   ]
 }

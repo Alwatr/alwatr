@@ -61,12 +61,7 @@ export function localize(key?: string | null): string | null;
 
 export function localize(key?: string | null): string | null {
   if (key == null) return null;
+  key = key.trim();
   if (key === '') return '';
-  if (translationResource == null) return loadingStr;
-  const localized = translationResource[key];
-  if (localized == null) {
-    error('%s not found!', key);
-    return `(${key})`;
-  }
-  return localized;
+  return _localize(key);
 }
