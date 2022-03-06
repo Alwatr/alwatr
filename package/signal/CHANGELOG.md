@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/AliMD/vatr/compare/v0.2.1...v0.3.0) (2022-03-06)
+
+
+### Bug Fixes
+
+* **signal:** signal provider type ([0151c57](https://github.com/AliMD/vatr/commit/0151c57d9b6d4f7e83bb9b1847ebe0ae53cd8f89))
+
+
+
+
+
 ## [0.2.1](https://github.com/AliMD/vatr/compare/v0.2.0...v0.2.1) (2022-03-05)
 
 
