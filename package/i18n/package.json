@@ -1,0 +1,45 @@
+{
+  "name": "@vatr/i18n",
+  "version": "0.0.0",
+  "description": "Elegant powerful translation module (i18n/l10n) with dynamic json storage written in tiny TypeScript, ES module.",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "l10n",
+    "localization",
+    "typescript",
+    "esm",
+    "vatr",
+    "alvatr"
+  ],
+  "main": "i18n.js",
+  "type": "module",
+  "types": "i18n.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "license": "MIT",
+  "files": [
+    "**/*.js",
+    "**/*.d.ts",
+    "**/*.map",
+    "**/*.html",
+    "**/*.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/vatr",
+    "directory": "package/i18n"
+  },
+  "homepage": "https://github.com/AliMD/vatr/tree/main/package/i18n#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/vatr/issues"
+  },
+  "dependencies": {
+    "@vatr/logger": "^0.2.1",
+    "@vatr/signal": "^0.2.1",
+    "@vatr/fetch": "^0.2.1",
+    "tslib": "^2.3.1"
+  }
+}
