@@ -1,7 +1,7 @@
 {
   "name": "@vatr/i18n",
   "version": "0.0.0",
-  "description": "vatr i18n",
+  "description": "Elegant powerful translation module (i18n/l10n) with dynamic json storage written in tiny TypeScript, ES module.",
   "keywords": [
     "i18n",
     "internationalization",
