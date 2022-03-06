@@ -1,6 +1,6 @@
 # @vatr/fetch
 
-Enhanced fetch api with timeout, helper methods and types written in tiny TypeScript, ES module.
+Enhanced fetch API with the timeout, helper methods, and types written in tiny TypeScript, ES module.
 
 ## Options
 
@@ -8,8 +8,8 @@ Enhanced fetch api with timeout, helper methods and types written in tiny TypeSc
 
 Options have two other parameters:
 
-- `bodyObject`: a json object that convert to string and put on the body.
-- `queryParameters`: a json object that convert to url query parames
+- `bodyObject`: a JSON object that converts to string and put on the body.
+- `queryParameters`: a JSON object that converts to URL query params
 
 ## Example usage
 
