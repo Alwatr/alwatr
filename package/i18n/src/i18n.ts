@@ -1,11 +1,23 @@
-import {addSignalListener} from '@vatr/signal';
-import {log, error} from './core';
+import {dispatchSignal, hasSignalDispatchedBefore} from '@vatr/signal';
+import {log, _localize, configuration} from './core';
+import type {I18nOptions} from './type';
 
-const loadingStr = '…';
-let translationResource: Record<string, string>;
-void addSignalListener('translation-resource-change', (resource) => {
-  translationResource = resource;
-});
+/**
+ * Initial and config the internationalization.
+ */
+export function initialI18n(options?: I18nOptions): void {
+  log('initialI18n: %o', options);
+  for (const key in options) {
+    if (Object.prototype.hasOwnProperty.call(options, key)) {
+      configuration[key] = options[key];
+    }
+  }
+
+  if (!hasSignalDispatchedBefore('local-change')) {
+    // set default local
+    dispatchSignal('local-change', configuration.defaultLocal);
+  }
+}
 
 /**
  * Localize a String_Key from the translation resource.
