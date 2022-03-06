@@ -192,7 +192,7 @@ export function setSignalProvider<SignalName extends keyof VatrRequestSignals>(
  * // Wait for NEW signal received.
  * const newContent = await waitForSignal('content-change');
  * // get signal value from last dispatched signal (if any) or wait new signal received.
- * const route = await waitForSignal('route-change', {receivePrevious: true});
+ * const route = await waitForSignal('route-change', true);
  */
 export async function waitForSignal<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
