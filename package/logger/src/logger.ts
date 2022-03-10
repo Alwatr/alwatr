@@ -1,7 +1,20 @@
-export * from './meta';
-export type LoggerFunction = (message: string, ...restParam: Array<unknown>) => void;
-export type LogLevels = 'debug' | 'error' | 'info' | 'log' | 'trace' | 'warn';
+import type {Logger} from './type';
 
+/**
+ * Define `window.Vatr.registeredList`
+ */
+export const vatrRegisteredList = window.Vatr?.registeredList || [];
+window.Vatr ??= {};
+window.Vatr.registeredList = vatrRegisteredList;
+
+vatrRegisteredList.push({
+  name: '@vatr/logger',
+  version: '{{VATR_VERSION}}', // TODO: replace with real version at release time.
+});
+
+/**
+ * Color list storage for logger.
+ */
 let colorIndex = 0;
 const colorList = [
   '#f05561',
@@ -31,48 +44,114 @@ const getNextColor = (): string => {
 };
 
 const debugString = window.localStorage?.getItem('VATR_LOG')?.trim();
+const getDebugState = (scope: string, force: boolean ): boolean => {
+  if (
+    debugString == null ||
+    debugString == ''
+  ) {
+    return false;
+  }
+
+  if (
+    force ||
+    debugString === scope ||
+    (
+      debugString.indexOf('*') === 0 && // starts with `*` for example: `*vatr*`
+      scope.indexOf(debugString.replaceAll('*', '')) !== -1
+    ) ||
+    (
+      debugString.indexOf('*') === debugString.length - 1 && // ends with `*` for example: `vatr/*`
+      scope.indexOf(debugString.replaceAll('*', '')) === 0
+    )
+  ) {
+    return true;
+  }
+
+  // else
+  return false;
+};
+
+export const style = {
+  scope: 'color: {{color}};',
+  reset: 'color: inherit;',
+};
 
 /**
  * Create a logger function for fancy console debug with custom scope.
  *
- * @property {boolean} force - if set to true logger will work even if its not in debug mode.
  * @example
- * const log = createLogger('my scope', 'log', true);
- * log('my log message :)');
+ *  const logger = createLogger('vatr/fetch');
+ *  function sayHello (name: string) {
+ *    logger.logMethodArgs('sayHello', {name});
+ *  }
  */
-export function createLogger(
+export const createLogger = (
     scope: string,
-    level: LogLevels = 'debug',
-    force?: boolean,
-): LoggerFunction {
-  const color = getNextColor();
-  let debug = force === true;
+    color: string = getNextColor(),
+    force = false,
+): Logger => {
+  scope = scope.trim();
 
-  if (debugString != null && !debug) {
-    if (debugString === scope) {
-      debug = true;
-    } else if (
-      debugString.indexOf('*') === 0 &&
-      scope.indexOf(debugString.replaceAll('*', '')) !== -1
-    ) {
-      debug = true;
-    } else if (
-      debugString.indexOf('*') === debugString.length - 1 &&
-      scope.indexOf(debugString.replaceAll('*', '')) === 0
-    ) {
-      debug = true;
-    }
+  const debug = getDebugState(scope, force);
+
+  const first = scope.charAt(0);
+  if (first !== '[' && first !== '{' && first !== '(' && first !== '<') {
+    scope = '[' + scope + ']';
   }
 
-  return (message: string, ...restParam: Array<unknown>): void => {
-    if (!debug) return;
-    // first args must be separated as keyPattern for fix issue of `this._log('a=%s', a)`
-    console[level](
-        `%c%s%c  ${message}`,
-        `color: ${color}; font-size: 1.2em;`,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const empty = (): void => {};
+
+  // else if debug is true for this scope
+  return {
+    color,
+    scope,
+
+    logMethod: debug ? console.debug.bind(
+        console,
+        '%c%s%c.%s();',
+        style.scope.replace('{{color}}', color),
         scope,
-        'color: inherit;font-size: 1em',
-        ...restParam,
-    );
+        style.reset,
+    ) : empty,
+
+    logMethodArgs: debug ? console.debug.bind(
+        console,
+        '%c%s%c.%s(%o);',
+        style.scope.replace('{{color}}', color),
+        scope,
+        style.reset,
+    ) : empty,
+
+    incident: debug ? console.trace.bind(
+        console,
+        '%c%s%c.%s() => Incident: "%s" (%s)!',
+        style.scope.replace('{{color}}', color),
+        scope,
+        style.reset,
+    ) : empty,
+
+    accident: console.warn.bind(
+        console,
+        '%c%s%c.%s => Accident: "%s" (%s)!',
+        style.scope.replace('{{color}}', color),
+        scope,
+        style.reset,
+    ),
+
+    error: console.error.bind(
+        console,
+        '%c%s%c.%s =>',
+        style.scope.replace('{{color}}', color),
+        scope,
+        style.reset,
+    ),
+
+    logOther: debug ? console.debug.bind(
+        console,
+        '%c%s',
+        style.scope.replace('{{color}}', color),
+        scope,
+    ) : empty,
   };
-}
+};
