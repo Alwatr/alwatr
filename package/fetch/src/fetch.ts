@@ -60,8 +60,10 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
 
   if (options.bodyObject != null) {
     options.body = JSON.stringify(options.bodyObject);
-    options.headers ??= {};
-    options.headers['Content-Type'] = 'application/json';
+    options.headers = {
+      ...options.headers,
+      'Content-Type': 'application/json',
+    };
   }
 
   // @TODO: AbortController polyfill
