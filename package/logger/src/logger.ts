@@ -80,7 +80,7 @@ export const style = {
  * Create a logger function for fancy console debug with custom scope.
  *
  * @example
- *  const logger = createLogger('vatr/fetch');
+ *  const logger = createLogger('demo');
  *  function sayHello (name: string) {
  *    logger.logMethodArgs('sayHello', {name});
  *  }
