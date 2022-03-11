@@ -1,5 +1,4 @@
-import {requestSignal} from '@vatr/signal';
-import {logger} from './core';
+import {logger, routerChangeSignal} from './core';
 
 let _enabled = false;
 
@@ -72,7 +71,7 @@ export const clickTrigger = {
 
     // if none of the above, convert the click into a navigation signal.
     const {pathname, search, hash} = anchor;
-    requestSignal('router-change', {pathname, search, hash});
+    routerChangeSignal.request({pathname, search, hash});
     // for a click event, the scroll is reset to the top position.
     if (event.type === 'click') {
       window.scrollTo(0, 0);
