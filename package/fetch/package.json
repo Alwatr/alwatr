@@ -9,7 +9,6 @@
     "timeout",
     "typescript",
     "esm",
-    "alwatr",
     "alwatr"
   ],
   "main": "fetch.js",
