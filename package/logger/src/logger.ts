@@ -102,56 +102,19 @@ export const createLogger = (
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const empty = (): void => {};
 
-  // else if debug is true for this scope
-  return {
+  const styleScope = style.scope.replaceAll('{{color}}', color);
+
+  /**
+   * Required logger object, accident, error always reported even when the debug is false.
+   */
+  const requiredItems = {
     color,
     scope,
-
-    logProperty: debug ? console.debug.bind(
-        console,
-        '%c%s%c.%s = %o;',
-        style.scope.replace('{{color}}', color),
-        scope,
-        style.reset,
-    ) : empty,
-
-    logMethod: debug ? console.debug.bind(
-        console,
-        '%c%s%c.%s();',
-        style.scope.replace('{{color}}', color),
-        scope,
-        style.reset,
-    ) : empty,
-
-    logMethodArgs: debug ? console.debug.bind(
-        console,
-        '%c%s%c.%s(%o);',
-        style.scope.replace('{{color}}', color),
-        scope,
-        style.reset,
-    ) : empty,
-
-    logMethodFull: debug ? console.debug.bind(
-        console,
-        '%c%s%c.%s(%o); // %o',
-        style.scope.replace('{{color}}', color),
-        scope,
-        style.reset,
-    ) : empty,
-
-
-    incident: debug ? console.trace.bind(
-        console,
-        '%c%s%c.%s() => Incident: "%s" (%s)!',
-        style.scope.replace('{{color}}', color),
-        scope,
-        style.reset,
-    ) : empty,
 
     accident: console.warn.bind(
         console,
         '%c%s%c.%s => Accident: "%s" (%s)!',
-        style.scope.replace('{{color}}', color),
+        styleScope,
         scope,
         style.reset,
     ),
@@ -159,16 +122,73 @@ export const createLogger = (
     error: console.error.bind(
         console,
         '%c%s%c.%s "%s" =>',
-        style.scope.replace('{{color}}', color),
+        styleScope,
+        scope,
+        style.reset,
+    ),
+  };
+
+  if (!debug) {
+    return {
+      ...requiredItems,
+      logProperty: empty,
+      logMethod: empty,
+      logMethodArgs: empty,
+      logMethodFull: empty,
+      incident: empty,
+      logOther: empty,
+    };
+  }
+
+  // else if debug is true for this scope
+  return {
+    ...requiredItems,
+
+    logProperty: console.debug.bind(
+        console,
+        '%c%s%c.%s = %o;',
+        styleScope,
         scope,
         style.reset,
     ),
 
-    logOther: debug ? console.debug.bind(
+    logMethod: console.debug.bind(
+        console,
+        '%c%s%c.%s();',
+        styleScope,
+        scope,
+        style.reset,
+    ),
+
+    logMethodArgs: console.debug.bind(
+        console,
+        '%c%s%c.%s(%o);',
+        styleScope,
+        scope,
+        style.reset,
+    ),
+
+    logMethodFull: console.debug.bind(
+        console,
+        '%c%s%c.%s(%o); // %o',
+        styleScope,
+        scope,
+        style.reset,
+    ),
+
+    incident: console.trace.bind(
+        console,
+        '%c%s%c.%s() => Incident: "%s" (%s)!',
+        styleScope,
+        scope,
+        style.reset,
+    ),
+
+    logOther: console.debug.bind(
         console,
         '%c%s',
-        style.scope.replace('{{color}}', color),
+        styleScope,
         scope,
-    ) : empty,
+    ),
   };
 };
