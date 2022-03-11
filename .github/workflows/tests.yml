@@ -1,10 +1,6 @@
 name: Tests
 
-on:
-  push:
-    branches:
-      - next
-  pull_request:
+on: [push, pull_request]
 
 env:
   NODE_VERSION: '16.x'
