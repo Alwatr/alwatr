@@ -1,10 +1,9 @@
-name: Verify
+name: Tests
 
 on:
   push:
     branches:
-      - main
-      - 'renovate/**'
+      - next
   pull_request:
 
 env:
@@ -38,7 +37,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: 'yarn'
 
       - run: yarn install --frozen-lockfile
       - run: yarn build:ts
