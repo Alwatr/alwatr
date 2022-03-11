@@ -1,244 +1,239 @@
+import {createLogger} from '@vatr/logger';
 import {
-  logger,
-  _getSignalObject,
-  _callListeners,
+  __getSignalObject,
   _removeSignalListener,
+  _setSignalProvider,
+  _dispatchSignal,
+  _addSignalListener,
 } from './core';
 
 import type {
   ListenerOptions,
   DispatchOptions,
   ListenerCallback,
-  ListenerObject,
   SignalProvider,
   SignalProviderOptions,
 } from './type';
 
 /**
- * Add new listener to specific signal.
- *
- * @example
- * const listener = addSignalListener('content-change', (content) => console.log(content));
+ * Signal API interface as a remote controller.
  */
-export function addSignalListener<SignalName extends keyof VatrSignals>(
-    signalName: SignalName,
-    signalCallback: ListenerCallback<SignalName>,
-    options?: ListenerOptions,
-): symbol {
-  logger.logMethodArgs('addSignalListener', {signalName, options});
+export class SignalInterface<SignalName extends keyof VatrSignals> {
+  private _signal;
+  private _logger;
 
-  const signal = _getSignalObject(signalName);
-  const listener: ListenerObject<SignalName> = {
-    id: Symbol('Vatr signal listener for ' + signalName),
-    once: options?.once ?? false,
-    disabled: options?.disabled ?? false,
-    callback: signalCallback,
-  };
-
-  let callbackCalled = false;
-
-  // Run callback for old dispatch signal
-  if (signal.value !== undefined) {
-    if (options?.receivePrevious === 'Immediate') {
-      logger.incident('addSignalListener', 'call_signal_callback', 'run callback with previous signal value!',
-          {signalName, mode: 'Immediate'});
-      try {
-        signalCallback(signal.value);
-      } catch (err) {
-        logger.error('addSignalListener', 'call_signal_callback_failed', (err as Error).stack || err, {signalName});
-      }
-      callbackCalled = true;
-    } else if (options?.receivePrevious === true) {
-      requestAnimationFrame(() => {
-        if (signal.value !== undefined) {
-          logger.incident('addSignalListener', 'call_signal_callback', 'run callback with previous signal value!',
-              {signalName, mode: 'Delay'});
-          signalCallback(signal.value);
-        }
-      });
-      callbackCalled = true; // must be outside of requestAnimationFrame.
-    }
+  constructor(signalName: SignalName) {
+    this._logger = createLogger('Signal:' + signalName);
+    this._signal = __getSignalObject(signalName);
   }
 
-  // if once then must remove listener after fist callback called! then why push it to listenerList?!
-  if (!(options?.once && callbackCalled)) {
-    if (options?.priority) {
-      signal.listenerList.unshift(listener);
-    } else {
-      signal.listenerList.push(listener);
-    }
+  /**
+   * Get signal name.
+   */
+  get name(): SignalName {
+    return this._signal.name;
   }
 
-  return listener.id;
-}
-
-/**
- * Remove listener from specific signal.
- *
- * @example
- * const listener = addSignalListener('content-change', ...);
- * removeSignalListener('content-change', listener);
- */
-export function removeSignalListener<SignalName extends keyof VatrSignals>(
-    signalName: SignalName,
-    listenerId: symbol,
-): void {
-  logger.logMethodArgs('removeSignalListener', signalName);
-
-  const signal = _getSignalObject(signalName);
-  _removeSignalListener(signal, listenerId);
-}
-
-/**
- * Dispatch signal to all listeners.
- *
- * @example
- * dispatchSignal('content-change', content);
- */
-export function dispatchSignal<SignalName extends keyof VatrSignals>(
-    signalName: SignalName,
-    value: VatrSignals[SignalName],
-    options?: DispatchOptions,
-): void {
-  logger.logMethodArgs('dispatchSignal', {signalName, value, options});
-
-  const signal = _getSignalObject(signalName);
-  // set value before check signal.debounced for act like throttle (call listeners with last dispatch value).
-  signal.value = value;
-
-  if (signal.disabled) return; // signal is disabled.
-  if (options?.debounce && signal.debounced) return; // last dispatch in progress.
-
-  if (!options?.debounce) {
-    // call listeners immediately.
-    _callListeners(signal);
-    return;
+  /**
+   * Get last dispatched signal value.
+   *
+   * Example
+   *
+   * ```ts
+   * const contentChangeSignal = new SignalInterface('content-change');
+   * if (contentChangeSignal.dispatched) {
+   *   const content = contentChangeSignal.value!;
+   *   ...
+   * }
+   * ```
+   */
+  get value(): VatrSignals[SignalName] | undefined {
+    return this._signal.value;
   }
-  // else: call listeners in next frame.
-  signal.debounced = true;
-  requestAnimationFrame(() => {
-    _callListeners(signal);
-    signal.debounced = false;
-  });
-}
 
-/**
- * Resolved with signal value when signal is ready base on requested options.
- * By default, dispatch request signal and wait for answer (wait new signal dispatched).
- *
- * @example
- * // dispatch request signal and wait for answer (wait for NEW signal).
- * const newContent = await requestSignal('content-change', {foo: 'bar'});
- */
-export function requestSignal<SignalName extends keyof VatrRequestSignals>(
-    signalName: SignalName,
-    requestParam: VatrRequestSignals[SignalName],
-): Promise<VatrSignals[SignalName]> {
-  logger.logMethodArgs('requestSignal', {signalName, requestParam});
+  /**
+   * Check signal dispatched before or not!
+   *
+   * Example
+   *
+   * ```ts
+   * const contentChangeSignal = new SignalInterface('content-change');
+   * if(contentChangeSignal.dispatched) {
+   *   // contentChangeSignal.value exist.
+   * }
+   * ```
+   */
+  get dispatched(): boolean {
+    return 'value' in this._signal;
+  }
 
-  dispatchSignal(
-      `request-${signalName}` as unknown as SignalName,
+  /**
+   * Disable signal, all dispatch's ignored (just value updated) and no more listeners will be called.
+   */
+  get disable(): boolean {
+    return this._signal.disabled;
+  }
+  set disabled(disabled: boolean) {
+    this._signal.disabled = disabled;
+  }
+
+  /**
+   * Expire the signal by clear last dispatched value.
+   *
+   * dispatched and receivePrevious etc not work until new signal.
+   *
+   * Example:
+   *
+   * ```ts
+   * const contentChangeSignal = new SignalInterface('content-change');
+   * contentChangeSignal.dispatched; // true
+   * contentChangeSignal.expire();
+   * contentChangeSignal.value; // undefined
+   * contentChangeSignal.dispatched; // false
+   * ```
+   */
+  expire(): void {
+    this._logger.logMethod('expire');
+    delete this._signal.value;
+  }
+
+  /**
+   * Define signal provider, which will be called when signal requested (addRequestSignalListener).
+   *
+   * Example:
+   *
+   * ```ts
+   * const contentChangeSignal = new SignalInterface('content-change');
+   * contentChangeSignal.setProvider(async (requestParam) => {
+   *   const content = await fetchNewContent(requestParam);
+   *   if (content != null) {
+   *     return content; // Dispatch signal 'content-change' with content.
+   *   }
+   *   else {
+   *     dispatchSignal('content-not-found');
+   *   }
+   * }
+   * ```
+   */
+  setProvider(signalProvider: SignalProvider<SignalName>, options?: SignalProviderOptions): symbol {
+    this._logger.logMethodArgs('setProvider', {options});
+    return _setSignalProvider(this.name, signalProvider, options);
+  }
+
+  // @TODO: removeProvider(signalName): void
+
+  /**
+   * Dispatch request signal and wait for answer (wait for new signal dispatched).
+   *
+   * Resolved with signal value when new signal received (getNextSignalValue).
+   *
+   * Example:
+   *
+   * ```ts
+   * const contentChangeSignal = new SignalInterface('content-change');
+   * // dispatch request signal and wait for answer (wait for NEW signal).
+   * const newContent = await contentChangeSignal.request({foo: 'bar'});
+   * ```
+   */
+  request(requestParam: VatrRequestSignals[SignalName]): Promise<VatrSignals[SignalName]> {
+    this._logger.logMethodArgs('request', {requestParam});
+    _dispatchSignal(
+      `request-${this.name}` as unknown as SignalName,
       requestParam as unknown as VatrSignals[SignalName], // mastmalize to avoid type error
-  );
-  return waitForSignal(signalName);
-}
-
-/**
- * Define signal provider, which will be called when signal requested (addRequestSignalListener).
- *
- * @example
- * setSignalProvider('content-change', async (requestParam) => {
- *   const content = await fetchNewContent(requestParam);
- *   if (content != null) {
- *     return content; // dispatchSignal('content-change', content);
- *   }
- *   else {
- *     dispatchSignal('content-not-found');
- *   }
- * }
- */
-export function setSignalProvider<SignalName extends keyof VatrRequestSignals>(
-    signalName: SignalName,
-    signalProvider: SignalProvider<SignalName>,
-    options?: SignalProviderOptions,
-): symbol {
-  logger.logMethodArgs('setSignalProvider', {signalName, options});
-
-  // @TODO: refactor with removeSignalProvider
-  const signal = _getSignalObject(`request-${signalName}` as unknown as SignalName);
-  if (signal.listenerList.length > 0) {
-    logger.accident('setSignalProvider', 'signal_provider_already_set', 'another provider defined and will removed'
-        , {signalName});
-    signal.listenerList = [];
+    );
+    return this.getNextSignalValue();
   }
 
-  const _callback = async (requestParam: VatrRequestSignals[SignalName]): Promise<void> => {
-    const signalValue = await signalProvider(requestParam);
-    if (signalValue !== undefined) { // null can be a valid value.
-      dispatchSignal(signalName, signalValue, {debounce: options?.debounce ?? true});
-    }
-  };
-
-  return addSignalListener(
-    `request-${signalName}` as unknown as SignalName,
-    _callback as unknown as ListenerCallback<SignalName>,
-    {receivePrevious: options?.receivePrevious ?? true},
-  );
-}
-
-// @TODO: removeSignalProvider(signalName): void
-
-/**
- * Resolved with signal value when signal is ready base on requested options.
- * By default, wait new signal received.
- *
- * @param receivePrevious If true, get signal value from last dispatched signal (if any) or wait new signal received.
- *
- * @example
- * // Wait for NEW signal received.
- * const newContent = await waitForSignal('content-change');
- * // get signal value from last dispatched signal (if any) or wait new signal received.
- * const route = await waitForSignal('route-change', true);
- */
-export async function waitForSignal<SignalName extends keyof VatrSignals>(
-    signalName: SignalName,
-    receivePrevious?: boolean,
-): Promise<VatrSignals[SignalName]> {
-  logger.logMethodArgs('waitForSignal', {signalName, receivePrevious});
-
-  return new Promise((resolve) => {
-    addSignalListener(signalName, resolve, {
-      once: true,
-      priority: true,
-      receivePrevious: receivePrevious ?? false,
+  /**
+   * Resolved with signal value when new signal received.
+   *
+   * Example:
+   *
+   * ```ts
+   * const contentChangeSignal = new SignalInterface('content-change');
+   * // Wait for NEW signal received.
+   * const newContent = await contentChangeSignal.getNextSignalValue();
+   * ```
+   */
+  getNextSignalValue(): Promise<VatrSignals[SignalName]> {
+    this._logger.logMethod('getNextSignalValue');
+    return new Promise((resolve) => {
+      this.addListener(resolve, {
+        once: true,
+        priority: true,
+        receivePrevious: false,
+      });
     });
-  });
-}
+  }
 
-/**
- * Check signal dispatched before or not!
- *
- * @example
- * if(hasSignalDispatchedBefore('content-change')) { ... }
- */
-export function hasSignalDispatchedBefore<SignalName extends keyof VatrSignals>(signalName: SignalName): boolean {
-  const dispatched = 'value' in _getSignalObject(signalName);
-  logger.logMethodFull('hasSignalDispatchedBefore', signalName, dispatched);
-  return dispatched;
-}
+  /**
+   * Resolved with signal value when signal is ready.
+   *
+   * Get signal value from last dispatched signal (if any) or wait for new signal received.
+   *
+   * Example:
+   *
+   * ```ts
+   * const contentChangeSignal = new SignalInterface('content-change');
+   * // get signal value from last dispatched signal (if any) or wait new signal received.
+   * const route = await getSignalValue('route-change');
+   * ```
+   */
+  getSignalValue(): Promise<VatrSignals[SignalName]> {
+    this._logger.logMethod('getSignalValue');
+    if (this._signal.value !== undefined) {
+      return Promise.resolve(this._signal.value);
+    } else {
+      return this.getNextSignalValue();
+    }
+  }
 
-/**
- * Expire the signal by clear last dispatched value.
- * hasSignalDispatchedBefore and receivePrevious etc not work until new signal.
- *
- * @example
- * hasSignalDispatchedBefore('content-change'); // true
- * expireSignal('content-change');
- * hasSignalDispatchedBefore('content-change'); // false
- */
-export function expireSignal<SignalName extends keyof VatrSignals>(signalName: SignalName): void {
-  logger.logMethodArgs('expireSignal', signalName);
-  delete _getSignalObject(signalName).value;
+  /**
+   * Dispatch signal to all listeners.
+   *
+   * Example:
+   *
+   * ```ts
+   * const contentChangeSignal = new SignalInterface('content-change');
+   * contentChangeSignal.dispatch(content);
+   * ```
+   */
+  dispatch(signalValue: VatrSignals[SignalName], options: DispatchOptions): void {
+    this._logger.logMethodArgs('dispatch', {signalValue, options});
+    _dispatchSignal(this._signal.name, signalValue, options);
+  }
+
+  /**
+   * Add new listener to the signal.
+   *
+   * Example:
+   *
+   * ```ts
+   * const contentChangeSignal = new SignalInterface('content-change');
+   * const listener = contentChangeSignal.addListener((content) => console.log(content));
+   * ```
+   */
+  addListener(listener: ListenerCallback<SignalName>, options?: ListenerOptions): symbol {
+    this._logger.logMethodArgs('addListener', {listener, options});
+    return _addSignalListener(this._signal.name, listener, options);
+  }
+
+  /**
+   * Remove listener from specific signal.
+   *
+   * Example:
+   *
+   * ```ts
+   * const contentChangeSignal = new SignalInterface('content-change');
+   * const listenerId = contentChangeSignal.addListener((content) => console.log(content));
+   * ...
+   * contentChangeSignal.removeListener(listenerId);
+   * ```
+   */
+  removeListener(listenerId: symbol): void {
+    this._logger.logMethod('removeListener');
+    _removeSignalListener(this._signal.name, listenerId);
+  }
 }
 
 // @TODO: getSignalOptions(signalName);
