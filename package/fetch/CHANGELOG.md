@@ -7,44 +7,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @alwatr/fetch
 
-
-
-
-
 # [0.4.0](https://github.com/AliMD/alwatr/compare/v0.3.0...v0.4.0) (2022-03-11)
-
 
 ### Bug Fixes
 
 * **fetch:** build issue [#73](https://github.com/AliMD/alwatr/issues/73) ([fb74463](https://github.com/AliMD/alwatr/commit/fb74463d367393706d16e482488a565bdfef70a1))
 
-
-
-
-
 # [0.3.0](https://github.com/AliMD/alwatr/compare/v0.2.1...v0.3.0) (2022-03-06)
 
 **Note:** Version bump only for package @alwatr/fetch
-
-
-
-
 
 ## [0.2.1](https://github.com/AliMD/alwatr/compare/v0.2.0...v0.2.1) (2022-03-05)
 
 **Note:** Version bump only for package @alwatr/fetch
 
-
-
-
-
 # [0.2.0](https://github.com/AliMD/alwatr/compare/v0.1.2...v0.2.0) (2022-03-05)
-
 
 ### Bug Fixes
 
 * **fetch:** error codes ([4e0be80](https://github.com/AliMD/alwatr/commit/4e0be80786b6667035ae82750f2351bd2da4f341))
-
 
 ### Features
 

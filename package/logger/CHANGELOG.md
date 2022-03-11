@@ -5,66 +5,38 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.5.0](https://github.com/AliMD/alwatr/compare/v0.4.0...v0.5.0) (2022-03-11)
 
-
 ### Performance Improvements
 
 * **logger:** refactor making logger object ([bc38018](https://github.com/AliMD/alwatr/commit/bc38018758540130df2f46c44521aea0a867bbe8))
 
-
-
-
-
 # [0.4.0](https://github.com/AliMD/alwatr/compare/v0.3.0...v0.4.0) (2022-03-11)
-
 
 ### Bug Fixes
 
 * **logger:** types missing ([712363d](https://github.com/AliMD/alwatr/commit/712363d3cf77a712f8c801c4dc9d06d256dfc0e6))
-
 
 ### Features
 
 * **logger:** add logProperty, logMethodFull ([8b0317d](https://github.com/AliMD/alwatr/commit/8b0317db88ed73604a27935a3a30cd5c31cb0804))
 * **logger:** complete refactor the logger with new API and fix show correct line number ([7efe8cf](https://github.com/AliMD/alwatr/commit/7efe8cf0f566e148406f38fdd60fa3d747c9bc51))
 
-
-
-
-
 # [0.3.0](https://github.com/AliMD/alwatr/compare/v0.2.1...v0.3.0) (2022-03-06)
 
 **Note:** Version bump only for package @alwatr/logger
 
-
-
-
-
 ## [0.2.1](https://github.com/AliMD/alwatr/compare/v0.2.0...v0.2.1) (2022-03-05)
-
 
 ### Bug Fixes
 
 * **logger:** alwatrRegisteredList name ([ff59133](https://github.com/AliMD/alwatr/commit/ff5913321c4eafa1ce53fdacebf8fb4f23bfe430))
 
-
-
-
-
 # [0.2.0](https://github.com/AliMD/alwatr/compare/v0.1.2...v0.2.0) (2022-03-05)
 
 **Note:** Version bump only for package @alwatr/logger
 
-
-
-
-
 ## [0.1.2](https://github.com/AliMD/alwatr/compare/v0.1.1...v0.1.2) (2022-03-03)
 
 **Note:** Version bump only for package @alwatr/logger
-
-
-
-
 
 ## [0.1.1](https://github.com/AliMD/alwatr/compare/v0.1.0...v0.1.1) (2022-03-03)
 
