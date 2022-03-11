@@ -1,4 +1,4 @@
-# @vatr/fetch
+# @alwatr/fetch
 
 Enhanced fetch API with the timeout, helper methods, and types written in tiny TypeScript, ES module.
 
@@ -14,7 +14,7 @@ Options have two other parameters:
 ## Example usage
 
 ```js
-import {getJson} from 'https://esm.run/@vatr/fetch';
+import {getJson} from 'https://esm.run/@alwatr/fetch';
 
 const productList = await getJson('/api/products', {limit: 10}, {timeout: 5_000});
 ```

@@ -1,13 +1,13 @@
 {
-  "name": "@vatr/signal",
+  "name": "@alwatr/signal",
   "version": "0.5.0",
   "description": "Elegant powerful event system for handle global signals and states written in tiny TypeScript module.",
   "keywords": [
     "signal",
     "typescript",
     "esm",
-    "vatr",
-    "alvatr"
+    "alwatr",
+    "alalwatr"
   ],
   "main": "signal.js",
   "type": "module",
@@ -29,15 +29,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AliMD/vatr",
+    "url": "https://github.com/AliMD/alwatr",
     "directory": "package/signal"
   },
-  "homepage": "https://github.com/AliMD/vatr/tree/main/package/signal#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/signal#readme",
   "bugs": {
-    "url": "https://github.com/AliMD/vatr/issues"
+    "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@vatr/logger": "^0.5.0",
+    "@alwatr/logger": "^0.5.0",
     "tslib": "^2.3.1"
   }
 }

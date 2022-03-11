@@ -1,14 +1,14 @@
-import {createLogger, vatrRegisteredList} from '@vatr/logger';
-import {SignalInterface} from '@vatr/signal';
-import {getJson} from '@vatr/fetch';
+import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
+import {SignalInterface} from '@alwatr/signal';
+import {getJson} from '@alwatr/fetch';
 import type {I18nOptions, L10Resource} from './type';
 
-vatrRegisteredList.push({
-  name: '@vatr/i18n',
-  version: '{{VATR_VERSION}}',
+alwatrRegisteredList.push({
+  name: '@alwatr/i18n',
+  version: '{{ALWATR_VERSION}}',
 });
 
-export const logger = createLogger('vatr/i18n');
+export const logger = createLogger('alwatr/i18n');
 
 export const configuration: I18nOptions = {
   autoFetchResources: true,

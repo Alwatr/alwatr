@@ -8,7 +8,7 @@ body:
     id: affected-packages
     attributes:
       label: Package(s)
-      description: Which @vatr/* package(s) are the source of the bug?
+      description: Which @alwatr/* package(s) are the source of the bug?
       options:
         - fetch
         - logger
@@ -54,21 +54,21 @@ body:
   - type: textarea
     id: registeredList
     attributes:
-      label: Vatr registered list
-      description: Please provide the Vatr registered list by running `console.log(JSON.stringify(window.Vatr.registeredList, null, 2));` in the browser console.
+      label: Alwatr registered list
+      description: Please provide the Alwatr registered list by running `console.log(JSON.stringify(window.Alwatr.registeredList, null, 2));` in the browser console.
       render: console
       placeholder: |
         [
           {
-            "name": "@vatr/logger",
+            "name": "@alwatr/logger",
             "version": "1.2.3"
           },
           {
-            "name": "@vatr/signal",
+            "name": "@alwatr/signal",
             "version": "1.2.3"
           },
           {
-            "name": "@vatr/router",
+            "name": "@alwatr/router",
             "version": "1.2.3"
           }
         ]

@@ -6,7 +6,7 @@ body:
     id: affected-packages
     attributes:
       label: Package(s)
-      description: Which @vatr/* package(s) are the source of the bug?
+      description: Which @alwatr/* package(s) are the source of the bug?
       options:
         - fetch
         - logger
