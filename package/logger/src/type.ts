@@ -24,6 +24,17 @@ export interface Logger {
   readonly scope: string;
 
   /**
+   * `console.debug` property change.
+   *
+   * Example:
+   *
+   * ```ts
+   * logger.logProperty('name', 'ali');
+   * ```
+   */
+  logProperty(property: string, value: unknown): void;
+
+  /**
    * `console.debug` function or method calls.
    *
    * Example:
@@ -42,20 +53,35 @@ export interface Logger {
    * Example:
    *
    * ```ts
-   *  function myMethod (a: number, b: number) {
-   *    logger.logMethodArgs('myMethod', {a, b});
-   *  }
+   * function myMethod (a: number, b: number) {
+   *   logger.logMethodArgs('myMethod', {a, b});
+   * }
    * ```
    */
-  logMethodArgs(method: string, args: Record<string, unknown>): void;
+  logMethodArgs(method: string, args: Record<string, unknown> | string | number | boolean): void;
 
   /**
-   * `console.trace` an expected event or accident. (not warn or error)
+   * `console.debug` function or method calls with arguments.
    *
    * Example:
    *
    * ```ts
-   * logger.incident('fetch', 'Abort_Signal', 'aborted signal received', {url: '/test.json'});
+   * function add (a: number, b: number): number {
+   *   const result = a + b;
+   *   logger.logMethodFull('add', {a, b}, result);
+   *   return result;
+   * }
+   * ```
+   */
+   logMethodFull(method: string, args: Record<string, unknown> | string | number | boolean, result: unknown): void;
+
+  /**
+   * `console.trace` an event or expected accident. (not warn or error)
+   *
+   * Example:
+   *
+   * ```ts
+   * logger.incident('fetch', 'abort_signal', 'aborted signal received', {url: '/test.json'});
    * ```
    */
   incident(method: string, code: string, desc: string, ...args: unknown[]): void;
@@ -66,7 +92,7 @@ export interface Logger {
    * Example:
    *
    * ```ts
-   * logger.accident('fetch', 'File_Not_Found', 'url requested return 404 not found', {url: '/test.json'});
+   * logger.accident('fetch', 'file_not_found', 'url requested return 404 not found', {url: '/test.json'});
    * ```
    */
   accident(method: string, code: string, desc: string, ...args: unknown[]): void;
@@ -81,11 +107,11 @@ export interface Logger {
    *   ...
    * }
    * catch (err) {
-   *   logger.error('myMethod', (err as Error).stack || err);
+   *   logger.error('myMethod', 'error_code', (err as Error).stack || err, {a: 1, b: 2});
    * }
    * ```
    */
-  error(method: string, errorStack: string | unknown): void;
+  error(method: string, code: string, errorStack: string | unknown, ...args: unknown[]): void;
 
   /**
    * Simple `console.debug` with styled scope.
