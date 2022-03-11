@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/AliMD/One/compare/v0.4.0...v0.5.0) (2022-03-11)
+
+
+### Bug Fixes
+
+* **signal:** disabled getter and optional dispatch options ([28ced3d](https://github.com/AliMD/One/commit/28ced3d0c4cdf44fc2aebfab98db0883fc5363fe))
+* **wordflows:** tests on all branches ([5cca930](https://github.com/AliMD/One/commit/5cca930f3adf88624c6ff7a1f3c551502f7a4826))
+
+
+### Features
+
+* **signal:** new SignalInterface ([221701a](https://github.com/AliMD/One/commit/221701a54ea9edda4a3a935a7b098e235ec52691))
+* **workflow:** add tests workflow ([7512aba](https://github.com/AliMD/One/commit/7512abae92add3fe73a0578d55f9439f7d1632af))
+* **workflow:** add verify workflow ([88fc40c](https://github.com/AliMD/One/commit/88fc40ce9affeaf715fc8dda600f35fa7b2c84b6))
+* **workflow:** rename workflow file ([e35df8f](https://github.com/AliMD/One/commit/e35df8fac972b7b4dc81dfac159d97d09b0b6751))
+
+
+### Performance Improvements
+
+* **logger:** refactor making logger object ([bc38018](https://github.com/AliMD/One/commit/bc38018758540130df2f46c44521aea0a867bbe8))
+
+
+
+
+
 # [0.4.0](https://github.com/AliMD/One/compare/v0.3.0...v0.4.0) (2022-03-11)
 
 
