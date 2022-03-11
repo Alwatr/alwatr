@@ -140,7 +140,7 @@ contentChangeSignal.setProvider(async (requestParam) => {
   else {
     // dispatch new signal: 'content-not-found'
   }
-}
+});
 ```
 
 ### `request(requestParam)`

@@ -124,7 +124,7 @@ export class SignalInterface<SignalName extends keyof VatrSignals> {
    *   else {
    *     // dispatch new signal: 'content-not-found'
    *   }
-   * }
+   * });
    * ```
    */
   setProvider(signalProvider: SignalProvider<SignalName>, options?: SignalProviderOptions): symbol {
