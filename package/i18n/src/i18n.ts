@@ -1,5 +1,4 @@
-import {dispatchSignal, hasSignalDispatchedBefore} from '@vatr/signal';
-import {logger, _localize, configuration} from './core';
+import {logger, _localize, configuration, localChangeSignal} from './core';
 import type {I18nOptions} from './type';
 
 /**
@@ -14,9 +13,9 @@ export function initialI18n(options?: Partial<I18nOptions>): void {
     }
   }
 
-  if (!hasSignalDispatchedBefore('local-change')) {
+  if (!localChangeSignal.dispatched) {
     // set default local
-    dispatchSignal('local-change', configuration.defaultLocal);
+    localChangeSignal.dispatch(configuration.defaultLocal);
   }
 }
 
