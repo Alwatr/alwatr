@@ -10,7 +10,7 @@
     "typescript",
     "esm",
     "alwatr",
-    "alalwatr"
+    "alwatr"
   ],
   "main": "fetch.js",
   "type": "module",

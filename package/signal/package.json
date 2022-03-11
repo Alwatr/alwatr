@@ -7,7 +7,7 @@
     "typescript",
     "esm",
     "alwatr",
-    "alalwatr"
+    "alwatr"
   ],
   "main": "signal.js",
   "type": "module",

@@ -9,7 +9,7 @@
     "typescript",
     "esm",
     "alwatr",
-    "alalwatr"
+    "alwatr"
   ],
   "main": "router.js",
   "type": "module",

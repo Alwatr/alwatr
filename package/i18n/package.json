@@ -10,7 +10,7 @@
     "typescript",
     "esm",
     "alwatr",
-    "alalwatr"
+    "alwatr"
   ],
   "main": "i18n.js",
   "type": "module",
