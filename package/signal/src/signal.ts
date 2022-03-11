@@ -29,15 +29,21 @@ export class SignalInterface<SignalName extends keyof VatrSignals> {
 
   /**
    * Get signal name.
+   *
+   * Example:
+   *
+   * ```ts
+   * console.log(contentChangeSignal.name);
+   * ```
    */
   get name(): SignalName {
     return this._signal.name;
   }
 
   /**
-   * Get last dispatched signal value.
+   * Get last dispatched signal value or undefined.
    *
-   * Example
+   * Example:
    *
    * ```ts
    * const contentChangeSignal = new SignalInterface('content-change');
@@ -69,6 +75,12 @@ export class SignalInterface<SignalName extends keyof VatrSignals> {
 
   /**
    * Disable signal, all dispatch's ignored (just value updated) and no more listeners will be called.
+   *
+   * Example:
+   *
+   * ```ts
+   * contentChangeSignal.disabled = true;
+   * ```
    */
   get disabled(): boolean {
     return this._signal.disabled;
@@ -110,7 +122,7 @@ export class SignalInterface<SignalName extends keyof VatrSignals> {
    *     return content; // Dispatch signal 'content-change' with content.
    *   }
    *   else {
-   *     dispatchSignal('content-not-found');
+   *     // dispatch new signal: 'content-not-found'
    *   }
    * }
    * ```
@@ -176,7 +188,7 @@ export class SignalInterface<SignalName extends keyof VatrSignals> {
    * ```ts
    * const contentChangeSignal = new SignalInterface('content-change');
    * // get signal value from last dispatched signal (if any) or wait new signal received.
-   * const route = await getSignalValue('route-change');
+   * const content = await contentChangeSignal.getSignalValue();
    * ```
    */
   getSignalValue(): Promise<VatrSignals[SignalName]> {
