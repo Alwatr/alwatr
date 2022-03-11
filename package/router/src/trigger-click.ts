@@ -1,4 +1,5 @@
 import {requestSignal} from '@vatr/signal';
+import {logger} from './core';
 
 let _enabled = false;
 
@@ -79,6 +80,8 @@ export const clickTrigger = {
   },
 
   set enable(enable: boolean) {
+    logger.logProperty('clickTrigger.enable', enable);
+
     if (enable && !_enabled) {
       window.document.addEventListener('click', clickTrigger._clickHandler);
     }
@@ -87,6 +90,7 @@ export const clickTrigger = {
     }
     _enabled = enable;
   },
+
   get enable(): boolean {
     return _enabled;
   },
