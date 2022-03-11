@@ -1,5 +1,14 @@
 import {createLogger, vatrRegisteredList} from '@vatr/logger';
-import type {SignalObject, SignalStack} from './type';
+import type {
+  DispatchOptions,
+  ListenerCallback,
+  ListenerObject,
+  ListenerOptions,
+  SignalObject,
+  SignalProvider,
+  SignalProviderOptions,
+  SignalStack,
+} from './type';
 
 export const logger = createLogger('vatr/signal');
 
@@ -16,7 +25,7 @@ const _signalStack: SignalStack = {};
 /**
  * Access to signal option, Make new signal with default options if not exist.
  */
-export function _getSignalObject<SignalName extends keyof VatrSignals>(
+export function __getSignalObject<SignalName extends keyof VatrSignals>(
     signalName: SignalName,
 ): SignalObject<SignalName> {
   if (!_signalStack[signalName]) {
@@ -30,7 +39,7 @@ export function _getSignalObject<SignalName extends keyof VatrSignals>(
   return _signalStack[signalName] as unknown as SignalObject<SignalName>;
 }
 
-export function _callListeners<SignalName extends keyof VatrSignals>(
+function __callListeners<SignalName extends keyof VatrSignals>(
     signal: SignalObject<SignalName>,
 ): void {
   logger.logMethodArgs('_callListeners', {signalName: signal.name, signalValue: signal.value});
@@ -50,16 +59,168 @@ export function _callListeners<SignalName extends keyof VatrSignals>(
     } catch (err) {
       logger.error('_callListeners', 'call_listener_failed', (err as Error).stack || err, {signalName: signal.name});
     }
-    if (listener.once) _removeSignalListener(signal, listener.id);
+    if (listener.once) _removeSignalListener(signal.name, listener.id);
   }
 }
 
+/**
+ * Add new listener to specific signal.
+ *
+ * Example:
+ *
+ * ```ts
+ * const listener = addSignalListener('content-change', (content) => console.log(content));
+ * ```
+ */
+export function _addSignalListener<SignalName extends keyof VatrSignals>(
+    signalName: SignalName,
+    signalCallback: ListenerCallback<SignalName>,
+    options?: ListenerOptions,
+): symbol {
+  logger.logMethodArgs('addSignalListener', {signalName, options});
+
+  const signal = __getSignalObject(signalName);
+  const listener: ListenerObject<SignalName> = {
+    id: Symbol('Vatr signal listener for ' + signalName),
+    once: options?.once ?? false,
+    disabled: options?.disabled ?? false,
+    callback: signalCallback,
+  };
+
+  let callbackCalled = false;
+
+  // Run callback for old dispatch signal
+  if (signal.value !== undefined) {
+    if (options?.receivePrevious === 'Immediate') {
+      logger.incident('addSignalListener', 'call_signal_callback', 'run callback with previous signal value!',
+          {signalName, mode: 'Immediate'});
+      try {
+        signalCallback(signal.value);
+      } catch (err) {
+        logger.error('addSignalListener', 'call_signal_callback_failed', (err as Error).stack || err, {signalName});
+      }
+      callbackCalled = true;
+    } else if (options?.receivePrevious === true) {
+      requestAnimationFrame(() => {
+        if (signal.value !== undefined) {
+          logger.incident('addSignalListener', 'call_signal_callback', 'run callback with previous signal value!',
+              {signalName, mode: 'Delay'});
+          signalCallback(signal.value);
+        }
+      });
+      callbackCalled = true; // must be outside of requestAnimationFrame.
+    }
+  }
+
+  // if once then must remove listener after fist callback called! then why push it to listenerList?!
+  if (!(options?.once && callbackCalled)) {
+    if (options?.priority) {
+      signal.listenerList.unshift(listener);
+    } else {
+      signal.listenerList.push(listener);
+    }
+  }
+
+  return listener.id;
+}
+
+/**
+ * Remove listener from specific signal.
+ *
+ * Example:
+ *
+ * ```ts
+ * const listener = addSignalListener('content-change', ...);
+ * removeSignalListener('content-change', listener);
+ * ```
+ */
 export function _removeSignalListener<SignalName extends keyof VatrSignals>(
-    signal: SignalObject<SignalName>,
+    signalName: SignalName,
     listenerId: symbol,
 ): void {
+  logger.logMethodArgs('_removeSignalListener', signalName);
+  const signal = __getSignalObject(signalName);
   const listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listenerId);
-  if (listenerIndex !== -1) { // found in listener list.
+  if (listenerIndex !== -1) {
     signal.listenerList.splice(listenerIndex, 1);
   }
+}
+
+/**
+ * Dispatch signal to all listeners.
+ *
+ * @example
+ * dispatchSignal('content-change', content);
+ */
+export function _dispatchSignal<SignalName extends keyof VatrSignals>(
+    signalName: SignalName,
+    value: VatrSignals[SignalName],
+    options?: DispatchOptions,
+): void {
+  logger.logMethodArgs('dispatchSignal', {signalName, value, options});
+
+  const signal = __getSignalObject(signalName);
+  // set value before check signal.debounced for act like throttle (call listeners with last dispatch value).
+  signal.value = value;
+
+  if (signal.disabled) return; // signal is disabled.
+  if (options?.debounce && signal.debounced) return; // last dispatch in progress.
+
+  if (!options?.debounce) {
+  // call listeners immediately.
+    __callListeners(signal);
+    return;
+  }
+  // else: call listeners in next frame.
+  signal.debounced = true;
+  requestAnimationFrame(() => {
+    __callListeners(signal);
+    signal.debounced = false;
+  });
+}
+
+/**
+ * Define signal provider, which will be called when signal requested (addRequestSignalListener).
+ *
+ * Example:
+ *
+ * ```ts
+ * setSignalProvider('content-change', async (requestParam) => {
+ *   const content = await fetchNewContent(requestParam);
+ *   if (content != null) {
+ *     return content; // dispatchSignal('content-change', content);
+ *   }
+ *   else {
+ *     dispatchSignal('content-not-found');
+ *   }
+ * }
+ * ```
+ */
+export function _setSignalProvider<SignalName extends keyof VatrRequestSignals>(
+    signalName: SignalName,
+    signalProvider: SignalProvider<SignalName>,
+    options?: SignalProviderOptions,
+): symbol {
+  logger.logMethodArgs('setSignalProvider', {signalName, options});
+
+  // @TODO: refactor with removeSignalProvider
+  const signal = __getSignalObject(`request-${signalName}` as unknown as SignalName);
+  if (signal.listenerList.length > 0) {
+    logger.accident('setSignalProvider', 'signal_provider_already_set', 'another provider defined and will removed'
+        , {signalName});
+    signal.listenerList = [];
+  }
+
+  const _callback = async (requestParam: VatrRequestSignals[SignalName]): Promise<void> => {
+    const signalValue = await signalProvider(requestParam);
+    if (signalValue !== undefined) { // null can be a valid value.
+      _dispatchSignal(signalName, signalValue, {debounce: options?.debounce ?? true});
+    }
+  };
+
+  return _addSignalListener(
+    `request-${signalName}` as unknown as SignalName,
+    _callback as unknown as ListenerCallback<SignalName>,
+    {receivePrevious: options?.receivePrevious ?? true},
+  );
 }
