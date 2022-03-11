@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/fetch",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Enhanced fetch api with timeout, helper methods and types written in tiny TypeScript module.",
   "keywords": [
     "fetch",
@@ -36,7 +36,7 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.5.0",
+    "@alwatr/logger": "^0.6.0",
     "tslib": "^2.3.1"
   }
 }

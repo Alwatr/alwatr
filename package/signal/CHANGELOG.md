@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/AliMD/alwatr/compare/v0.5.0...v0.6.0) (2022-03-11)
+
+
+### Bug Fixes
+
+* alalwatr ([898aa6e](https://github.com/AliMD/alwatr/commit/898aa6ed0888eab9265c83b96a50f1b8c216d143))
+* **packages:** duplicate alwatr keyword ([77d4aa2](https://github.com/AliMD/alwatr/commit/77d4aa2105ad47515c3eee251fd6b8c281d0d1fc))
+
+
+
+
+
 # [0.5.0](https://github.com/AliMD/alwatr/compare/v0.4.0...v0.5.0) (2022-03-11)
 
 
