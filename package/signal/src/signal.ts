@@ -70,7 +70,7 @@ export class SignalInterface<SignalName extends keyof VatrSignals> {
   /**
    * Disable signal, all dispatch's ignored (just value updated) and no more listeners will be called.
    */
-  get disable(): boolean {
+  get disabled(): boolean {
     return this._signal.disabled;
   }
   set disabled(disabled: boolean) {
@@ -198,7 +198,7 @@ export class SignalInterface<SignalName extends keyof VatrSignals> {
    * contentChangeSignal.dispatch(content);
    * ```
    */
-  dispatch(signalValue: VatrSignals[SignalName], options: DispatchOptions): void {
+  dispatch(signalValue: VatrSignals[SignalName], options?: DispatchOptions): void {
     this._logger.logMethodArgs('dispatch', {signalValue, options});
     _dispatchSignal(this._signal.name, signalValue, options);
   }
