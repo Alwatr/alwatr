@@ -1,8 +1,9 @@
-import {hasSignalDispatchedBefore, requestSignal, setSignalProvider} from '@vatr/signal';
-import {joinParameterList, logger, routeSignalProvider} from './core';
+import {joinParameterList, logger, routeSignalProvider, routerChangeSignal} from './core';
 import {clickTrigger} from './trigger-click';
 import {popstateTrigger} from './trigger-popstate';
 import type {InitOptions, Route} from './type';
+
+export {routerChangeSignal};
 
 /**
  * Initial and config the Router.
@@ -13,12 +14,12 @@ export function initialRouter(options?: InitOptions): void {
   clickTrigger.enable = options?.clickTrigger ?? true;
   popstateTrigger.enable = options?.popstateTrigger ?? true;
 
-  setSignalProvider('router-change', routeSignalProvider, {debounce: true, receivePrevious: true});
+  routerChangeSignal.setProvider(routeSignalProvider, {debounce: true, receivePrevious: true});
 
   // first route request.
-  if (!hasSignalDispatchedBefore('router-change')) {
+  if (!routerChangeSignal.dispatched) {
     const {pathname, search, hash} = window.location;
-    requestSignal('router-change', {pathname, search, hash, pushState: false});
+    routerChangeSignal.request({pathname, search, hash, pushState: false});
   }
 }
 

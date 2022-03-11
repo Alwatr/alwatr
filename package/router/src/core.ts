@@ -1,12 +1,15 @@
+import {SignalInterface} from '@vatr/signal';
 import {createLogger, vatrRegisteredList} from '@vatr/logger';
 import type {ParamList, RequestRouteParam, Route} from './type';
-
-export const logger = createLogger('vatr/router');
 
 vatrRegisteredList.push({
   name: '@vatr/router',
   version: '{{VATR_VERSION}}',
 });
+
+export const logger = createLogger('vatr/router');
+
+export const routerChangeSignal = new SignalInterface('router-change');
 
 /**
  * Handle requests of 'router-change' signal.
