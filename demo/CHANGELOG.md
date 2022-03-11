@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/AliMD/One/compare/v0.3.0...v0.4.0) (2022-03-11)
+
+
+### Features
+
+* **logger:** add logProperty, logMethodFull ([8b0317d](https://github.com/AliMD/One/commit/8b0317db88ed73604a27935a3a30cd5c31cb0804))
+* **logger:** complete refactor the logger with new API and fix show correct line number ([7efe8cf](https://github.com/AliMD/One/commit/7efe8cf0f566e148406f38fdd60fa3d747c9bc51))
+
+
+
+
+
 # [0.3.0](https://github.com/AliMD/One/compare/v0.2.1...v0.3.0) (2022-03-06)
 
 **Note:** Version bump only for package @vatr/demo

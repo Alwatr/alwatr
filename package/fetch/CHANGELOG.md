@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/AliMD/vatr/compare/v0.3.0...v0.4.0) (2022-03-11)
+
+
+### Bug Fixes
+
+* **fetch:** build issue [#73](https://github.com/AliMD/vatr/issues/73) ([fb74463](https://github.com/AliMD/vatr/commit/fb74463d367393706d16e482488a565bdfef70a1))
+
+
+
+
+
 # [0.3.0](https://github.com/AliMD/vatr/compare/v0.2.1...v0.3.0) (2022-03-06)
 
 **Note:** Version bump only for package @vatr/fetch

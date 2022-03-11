@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/AliMD/One/compare/v0.3.0...v0.4.0) (2022-03-11)
+
+
+### Bug Fixes
+
+* **fetch:** build issue [#73](https://github.com/AliMD/One/issues/73) ([fb74463](https://github.com/AliMD/One/commit/fb74463d367393706d16e482488a565bdfef70a1))
+* **i18n:** build issue [#75](https://github.com/AliMD/One/issues/75) ([fe7a108](https://github.com/AliMD/One/commit/fe7a108904176e63b8aa7e388d95ee8a90c6b71f))
+* **logger:** types missing ([712363d](https://github.com/AliMD/One/commit/712363d3cf77a712f8c801c4dc9d06d256dfc0e6))
+* **pr-template:** make it simple ([3f4253b](https://github.com/AliMD/One/commit/3f4253b3a44634e5440fe714937536fa18fa9b7a))
+* **router:** build issue for parameterList type [#75](https://github.com/AliMD/One/issues/75) ([5fc1ecd](https://github.com/AliMD/One/commit/5fc1ecd12b938936e2718f9307186493e2712e1f))
+* **tsconfig:** add useDefineForClassFields ([cf11de2](https://github.com/AliMD/One/commit/cf11de28d032e23aaac39b01a4a6f863b8fa13b8))
+
+
+### Features
+
+* **logger:** add logProperty, logMethodFull ([8b0317d](https://github.com/AliMD/One/commit/8b0317db88ed73604a27935a3a30cd5c31cb0804))
+* **logger:** complete refactor the logger with new API and fix show correct line number ([7efe8cf](https://github.com/AliMD/One/commit/7efe8cf0f566e148406f38fdd60fa3d747c9bc51))
+
+
+
+
+
 # [0.3.0](https://github.com/AliMD/One/compare/v0.2.1...v0.3.0) (2022-03-06)
 
 

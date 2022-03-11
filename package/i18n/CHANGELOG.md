@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/AliMD/vatr/compare/v0.3.0...v0.4.0) (2022-03-11)
+
+
+### Bug Fixes
+
+* **i18n:** build issue [#75](https://github.com/AliMD/vatr/issues/75) ([fe7a108](https://github.com/AliMD/vatr/commit/fe7a108904176e63b8aa7e388d95ee8a90c6b71f))
+
+
+
+
+
 # [0.3.0](https://github.com/AliMD/vatr/compare/v0.2.1...v0.3.0) (2022-03-06)
 
 
