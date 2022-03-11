@@ -1,14 +1,14 @@
 import {createLogger, vatrRegisteredList} from '@vatr/logger';
-import {addSignalListener, requestSignal, setSignalProvider, waitForSignal} from '@vatr/signal';
+import {SignalInterface} from '@vatr/signal';
 import {getJson} from '@vatr/fetch';
 import type {I18nOptions, L10Resource} from './type';
-
-export const logger = createLogger('vatr/i18n');
 
 vatrRegisteredList.push({
   name: '@vatr/i18n',
   version: '{{VATR_VERSION}}',
 });
+
+export const logger = createLogger('vatr/i18n');
 
 export const configuration: I18nOptions = {
   autoFetchResources: true,
@@ -16,24 +16,29 @@ export const configuration: I18nOptions = {
   defaultLocal: {code: 'en-US', language: 'en', direction: 'ltr'},
 };
 
+export const l10nResourceChangeSignal = new SignalInterface('l10n-resource-change');
+export const localChangeSignal = new SignalInterface('local-change');
+
 const loadingStr = '…';
 
 let l10nResource: L10Resource;
-addSignalListener('l10n-resource-change', (resource) => {
+l10nResourceChangeSignal.addListener((resource) => {
   logger.logMethodArgs('l10nResourceChanged', {resource});
   l10nResource = resource;
 });
 
-addSignalListener('local-change', (local) => {
+localChangeSignal.addListener((local) => {
   logger.logMethodArgs('localChanged', {local});
-  if (configuration.autoFetchResources) requestSignal('l10n-resource-change', local);
+  if (configuration.autoFetchResources) {
+    l10nResourceChangeSignal.request(local);
+  }
   document.documentElement.setAttribute('lang', local.code);
   document.documentElement.setAttribute('dir', local.direction);
 });
 
-setSignalProvider('l10n-resource-change', async (local): Promise<L10Resource | void> => {
+l10nResourceChangeSignal.setProvider(async (local): Promise<L10Resource | void> => {
   logger.logMethodArgs('l10nResourceProvider', {local});
-  const current = await waitForSignal('local-change', true);
+  const current = await localChangeSignal.getSignalValue();
   if (current.code !== local.code) {
     return await getJson<L10Resource>(`${configuration.resourcePath}/${local.code}.json`);
     // TODO: catch errors and fallback
