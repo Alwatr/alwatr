@@ -1,8 +1,7 @@
 import {createLogger, vatrRegisteredList} from '@vatr/logger';
-import type {RequestRouteParam, Route} from './type';
+import type {ParamList, RequestRouteParam, Route} from './type';
 
-export const log = createLogger('vatr/router');
-// export const error = createLogger('vatr/router', 'error', true);
+export const logger = createLogger('vatr/router');
 
 vatrRegisteredList.push({
   name: '@vatr/router',
@@ -13,7 +12,8 @@ vatrRegisteredList.push({
  * Handle requests of 'router-change' signal.
  */
 export function routeSignalProvider(requestParam: RequestRouteParam): Route {
-  log('routeSignalProvider: %o', requestParam);
+  logger.logMethodArgs('routeSignalProvider', {requestParam});
+
   updateBrowserHistory(requestParam);
   return makeRouteObject(requestParam);
 }
@@ -22,7 +22,8 @@ export function routeSignalProvider(requestParam: RequestRouteParam): Route {
  * Update browser history state (history.pushState or history.replaceState).
  */
 export function updateBrowserHistory(options: RequestRouteParam): void {
-  log('_updateBrowserHistory(%o)', options);
+  logger.logMethodArgs('updateBrowserHistory', {options});
+
   if (options.pushState === false) return; // default is true then undefined means true.
 
   options.search ??= '';
@@ -44,7 +45,8 @@ export function updateBrowserHistory(options: RequestRouteParam): void {
  * Make Route from RequestRouteParam.
  */
 export function makeRouteObject(requestParam: RequestRouteParam): Route {
-  log('makeRouteObject: %o', requestParam);
+  logger.logMethodArgs('makeRouteObject', {requestParam});
+
   requestParam.search ??= '';
   requestParam.hash ??= '';
 
@@ -62,6 +64,8 @@ export function makeRouteObject(requestParam: RequestRouteParam): Route {
   };
 }
 
+// --- Utils ---
+
 /**
  * decodeURIComponent without throwing error.
  */
@@ -77,7 +81,7 @@ export function _decodeURIComponent(val: string): string {
  * Make query string from {key:val} object
  */
 export function joinParameterList(
-    parameterList: Record<string, string | number | boolean> | null | undefined,
+    parameterList: ParamList | null | undefined,
 ): string {
   if (parameterList == null) return '';
   const list: Array<string> = [];
@@ -94,15 +98,15 @@ export function joinParameterList(
  */
 export function splitParameterString(
     parameterString: string | null | undefined,
-): Record<string, string | number | boolean> {
-  const parameterList = {};
+): ParamList {
+  const parameterList: ParamList = {};
   if (!parameterString) return parameterList;
 
   parameterString
       .split('&')
       .forEach((parameter) => {
         const parameterArray = parameter.split('=');
-        parameterList[parameterArray[0]] = parameterArray[1] != null ? parseValue(parameterArray[1]) : null;
+        parameterList[parameterArray[0]] = parameterArray[1] != null ? parseValue(parameterArray[1]) : '';
       })
   ;
 

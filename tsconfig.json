@@ -72,6 +72,7 @@
     /* Advanced Options */
     "skipLibCheck": true,                           /* Skip type checking of declaration files. */
     "forceConsistentCasingInFileNames": true,       /* Disallow inconsistently-cased references to the same file. */
+    "useDefineForClassFields": false,         /* Must be disabled for lit, https://lit.dev/docs/components/properties/#avoiding-issues-with-class-fields */
 
     "plugins": [
       {

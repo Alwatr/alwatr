@@ -1,5 +1,5 @@
 import {hasSignalDispatchedBefore, requestSignal, setSignalProvider} from '@vatr/signal';
-import {joinParameterList, log, routeSignalProvider} from './core';
+import {joinParameterList, logger, routeSignalProvider} from './core';
 import {clickTrigger} from './trigger-click';
 import {popstateTrigger} from './trigger-popstate';
 import type {InitOptions, Route} from './type';
@@ -8,7 +8,8 @@ import type {InitOptions, Route} from './type';
  * Initial and config the Router.
  */
 export function initialRouter(options?: InitOptions): void {
-  log('initialRouter: %o', options);
+  logger.logMethodArgs('initialRouter', {options});
+
   clickTrigger.enable = options?.clickTrigger ?? true;
   popstateTrigger.enable = options?.popstateTrigger ?? true;
 
@@ -27,6 +28,8 @@ export function initialRouter(options?: InitOptions): void {
  * @example <a href=${ makeUrl({sectionList: ['product', 100]}) }>
  */
 export function makeUrl(route: Partial<Route>): string {
+  logger.logMethodArgs('makeUrl', {route});
+
   let href = '';
 
   if (route.sectionList != null) {

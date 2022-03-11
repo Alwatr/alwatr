@@ -1,15 +1,16 @@
 import {dispatchSignal, hasSignalDispatchedBefore} from '@vatr/signal';
-import {log, _localize, configuration} from './core';
+import {logger, _localize, configuration} from './core';
 import type {I18nOptions} from './type';
 
 /**
  * Initial and config the internationalization.
  */
-export function initialI18n(options?: I18nOptions): void {
-  log('initialI18n: %o', options);
+export function initialI18n(options?: Partial<I18nOptions>): void {
+  logger.logMethodArgs('initialI18n', {options});
   for (const key in options) {
     if (Object.prototype.hasOwnProperty.call(options, key)) {
-      configuration[key] = options[key];
+      // WTF, mastmalize type.
+      (configuration[key as keyof I18nOptions] as unknown) = options[key as keyof I18nOptions] as unknown;
     }
   }
 
@@ -29,7 +30,7 @@ export function initialI18n(options?: I18nOptions): void {
  *  return null if the key is null or undefined (for optional input).
  *
  * @example
- * localize('Hello_World'); // Hello world!
+ * localize('hello_world'); // Hello world!
  */
 export function localize(key?: null): null;
 /**
@@ -42,7 +43,7 @@ export function localize(key?: null): null;
  *  return null if the key is null or undefined (for optional input).
  *
  * @example
- * localize('Hello_World'); // Hello world!
+ * localize('hello_world'); // Hello world!
  */
 export function localize(key: string): string;
 /**
@@ -55,13 +56,11 @@ export function localize(key: string): string;
  *  return null if the key is null or undefined (for optional input).
  *
  * @example
- * localize('Hello_World'); // Hello world!
+ * localize('hello_world'); // Hello world!
  */
 export function localize(key?: string | null): string | null;
 
 export function localize(key?: string | null): string | null {
   if (key == null) return null;
-  key = key.trim();
-  if (key === '') return '';
   return _localize(key);
 }
