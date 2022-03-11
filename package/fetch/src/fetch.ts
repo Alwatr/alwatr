@@ -1,7 +1,6 @@
 import {createLogger, vatrRegisteredList} from '@vatr/logger';
 
-const log = createLogger('vatr/fetch');
-// const error = createLogger('vatr/fetch', 'error', true);
+const logger = createLogger('vatr/fetch');
 
 vatrRegisteredList.push({
   name: '@vatr/fetch',
@@ -34,9 +33,10 @@ export interface FetchOptions extends RequestInit
  * @example const response = await fetch(url, {jsonResponse: false});
  */
 export function fetch(url: string, options?: FetchOptions): Promise<Response> {
-  log('fetch', url, options);
+  logger.logMethodArgs('fetch', {url, options});
 
   if (!navigator.onLine) {
+    logger.accident('fetch', 'abort_signal', 'abort signal received', {url});
     throw new Error('fetch_offline');
   }
 
@@ -60,8 +60,10 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
 
   if (options.bodyObject != null) {
     options.body = JSON.stringify(options.bodyObject);
-    options.headers ??= {};
-    options.headers['Content-Type'] = 'application/json';
+    options.headers = {
+      ...options.headers,
+      'Content-Type': 'application/json',
+    };
   }
 
   // @TODO: AbortController polyfill
@@ -74,11 +76,11 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
     });
   }
   abortController.signal.addEventListener('abort', () => {
-    log('fetch: aborted %s', abortController.signal.reason);
+    logger.incident('fetch', 'abort_signal', 'abort signal received', {url, reason: abortController.signal.reason});
   });
   options.signal = abortController.signal;
 
-  const timeoutId = setTimeout(() => abortController.abort(), options.timeout);
+  const timeoutId = setTimeout(() => abortController.abort('fetch_timeout'), options.timeout);
 
   // @TODO: browser fetch polyfill
   const response = window.fetch(url, options);
@@ -96,6 +98,7 @@ export function getData(
     queryParameters?: Record<string | number, string | number | boolean>,
     options?: FetchOptions,
 ): Promise<Response> {
+  logger.logMethodArgs('getData', {url, queryParameters, options});
   return fetch(url, {
     queryParameters,
     ...options,
@@ -112,6 +115,7 @@ export async function getJson<ResponseType extends Record<string | number, unkno
     queryParameters?: Record<string | number, string | number | boolean>,
     options?: FetchOptions,
 ): Promise<ResponseType> {
+  logger.logMethodArgs('getJson', {url, queryParameters, options});
   const response = await getData(url, queryParameters, options);
 
   if (!response.ok) {
@@ -131,6 +135,7 @@ export function postData(
     body: Record<string | number, unknown>,
     options?: FetchOptions,
 ): Promise<Response> {
+  logger.logMethodArgs('postData', {url, body, options});
   return fetch(url, {
     method: 'POST',
     bodyObject: body,

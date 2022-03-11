@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/AliMD/vatr/compare/v0.3.0...v0.4.0) (2022-03-11)
+
+
+### Bug Fixes
+
+* **router:** build issue for parameterList type [#75](https://github.com/AliMD/vatr/issues/75) ([5fc1ecd](https://github.com/AliMD/vatr/commit/5fc1ecd12b938936e2718f9307186493e2712e1f))
+
+
+
+
+
 # [0.3.0](https://github.com/AliMD/vatr/compare/v0.2.1...v0.3.0) (2022-03-06)
 
 **Note:** Version bump only for package @vatr/router

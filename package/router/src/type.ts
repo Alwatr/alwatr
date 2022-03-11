@@ -8,12 +8,14 @@ declare global {
   }
 }
 
+export type ParamList = Record<string, string | number | boolean>;
+
 // @TODO: description
 export interface Route
 {
   // href: https://example.com/product/100/book?cart=1&color=white#description
   sectionList: Array<string | number | boolean>; // [product, 100, book]
-  queryParamList: Record<string, string | number | boolean>; // {cart: 1, color: 'white'}
+  queryParamList: ParamList; // {cart: 1, color: 'white'}
   hash: string; // '#header'
 }
 

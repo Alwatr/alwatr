@@ -30,7 +30,7 @@
 
     /* Strict Type-Checking Options */
     "strict": true,                                 /* Enable all strict type-checking options. */
-    "noImplicitAny": false,                         /* Raise error on expressions and declarations with an implied 'any' type. */
+    // "noImplicitAny": false,                      /* Raise error on expressions and declarations with an implied 'any' type. */
     // "strictNullChecks": true,                    /* Enable strict null checks. */
     // "strictFunctionTypes": true,                 /* Enable strict checking of function types. */
     // "strictBindCallApply": true,                 /* Enable strict 'bind', 'call', and 'apply' methods on functions. */
@@ -43,6 +43,7 @@
     "noUnusedParameters": true,                     /* Report errors on unused parameters. */
     "noImplicitReturns": true,                      /* Report error when not all code paths in function return a value. */
     "noFallthroughCasesInSwitch": true,             /* Report errors for fallthrough cases in switch statement. */
+    "noImplicitOverride": true,                     /* Force to use override keyword when override super class methods. */
     // "noUncheckedIndexedAccess": true,            /* Include 'undefined' in index signature results */
     // "noPropertyAccessFromIndexSignature": true,  /* Require undeclared properties from index signatures to use element accesses. */
 
@@ -71,6 +72,7 @@
     /* Advanced Options */
     "skipLibCheck": true,                           /* Skip type checking of declaration files. */
     "forceConsistentCasingInFileNames": true,       /* Disallow inconsistently-cased references to the same file. */
+    "useDefineForClassFields": false,         /* Must be disabled for lit, https://lit.dev/docs/components/properties/#avoiding-issues-with-class-fields */
 
     "plugins": [
       {

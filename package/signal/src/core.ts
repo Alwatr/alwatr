@@ -1,8 +1,7 @@
 import {createLogger, vatrRegisteredList} from '@vatr/logger';
 import type {SignalObject, SignalStack} from './type';
 
-export const log = createLogger('vatr/signal');
-export const error = createLogger('vatr/signal', 'error', true);
+export const logger = createLogger('vatr/signal');
 
 vatrRegisteredList.push({
   name: '@vatr/signal',
@@ -34,9 +33,9 @@ export function _getSignalObject<SignalName extends keyof VatrSignals>(
 export function _callListeners<SignalName extends keyof VatrSignals>(
     signal: SignalObject<SignalName>,
 ): void {
-  log('_callListeners(%s, %o)', signal.name, signal.value);
+  logger.logMethodArgs('_callListeners', {signalName: signal.name, signalValue: signal.value});
   if (signal.value === undefined) {
-    error('_callListeners(%s): signal must have a value!', signal.name, signal.value);
+    logger.accident('_callListeners', 'no_signal_value', 'signal must have a value', {signalName: signal.name});
     return;
   }
   for (const listener of signal.listenerList) {
@@ -44,10 +43,12 @@ export function _callListeners<SignalName extends keyof VatrSignals>(
     try {
       const ret = listener.callback(signal.value);
       if (ret instanceof Promise) {
-        ret.catch((err) => error('_callListeners(%s): listener.callback error! %o', signal.name, err));
+        ret.catch((err) =>
+          logger.error('_callListeners', 'call_listener_failed', (err as Error).stack || err,
+              {signalName: signal.name}));
       }
     } catch (err) {
-      error('_callListeners(%s): listener.callback error! %o', signal.name, err);
+      logger.error('_callListeners', 'call_listener_failed', (err as Error).stack || err, {signalName: signal.name});
     }
     if (listener.once) _removeSignalListener(signal, listener.id);
   }

@@ -1,4 +1,5 @@
 import {requestSignal} from '@vatr/signal';
+import {logger} from './core';
 
 let _enabled = false;
 
@@ -19,6 +20,8 @@ export const popstateTrigger = {
   },
 
   set enable(enable: boolean) {
+    logger.logProperty('popstateTrigger.enable', enable);
+
     if (enable && !_enabled) {
       window.addEventListener('popstate', popstateTrigger._popstateHandler);
     }
@@ -27,6 +30,7 @@ export const popstateTrigger = {
     }
     _enabled = enable;
   },
+
   get enable(): boolean {
     return _enabled;
   },
