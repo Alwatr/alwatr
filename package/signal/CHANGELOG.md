@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/AliMD/vatr/compare/v0.4.0...v0.5.0) (2022-03-11)
+
+
+### Bug Fixes
+
+* **signal:** disabled getter and optional dispatch options ([28ced3d](https://github.com/AliMD/vatr/commit/28ced3d0c4cdf44fc2aebfab98db0883fc5363fe))
+
+
+### Features
+
+* **signal:** new SignalInterface ([221701a](https://github.com/AliMD/vatr/commit/221701a54ea9edda4a3a935a7b098e235ec52691))
+
+
+
+
+
 # [0.4.0](https://github.com/AliMD/vatr/compare/v0.3.0...v0.4.0) (2022-03-11)
 
 **Note:** Version bump only for package @vatr/signal
