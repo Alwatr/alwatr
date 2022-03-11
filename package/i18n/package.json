@@ -1,5 +1,5 @@
 {
-  "name": "@vatr/i18n",
+  "name": "@alwatr/i18n",
   "version": "0.5.0",
   "description": "Elegant powerful translation module (i18n/l10n) with dynamic json storage written in tiny TypeScript, ES module.",
   "keywords": [
@@ -9,8 +9,7 @@
     "localization",
     "typescript",
     "esm",
-    "vatr",
-    "alvatr"
+    "alwatr"
   ],
   "main": "i18n.js",
   "type": "module",
@@ -29,17 +28,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AliMD/vatr",
+    "url": "https://github.com/AliMD/alwatr",
     "directory": "package/i18n"
   },
-  "homepage": "https://github.com/AliMD/vatr/tree/main/package/i18n#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/i18n#readme",
   "bugs": {
-    "url": "https://github.com/AliMD/vatr/issues"
+    "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@vatr/fetch": "^0.5.0",
-    "@vatr/logger": "^0.5.0",
-    "@vatr/signal": "^0.5.0",
+    "@alwatr/fetch": "^0.5.0",
+    "@alwatr/logger": "^0.5.0",
+    "@alwatr/signal": "^0.5.0",
     "tslib": "^2.3.1"
   }
 }

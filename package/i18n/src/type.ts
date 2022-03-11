@@ -1,9 +1,9 @@
 declare global {
-  interface VatrSignals {
+  interface AlwatrSignals {
     'local-change': Local;
     'l10n-resource-change': L10Resource;
   }
-  interface VatrRequestSignals {
+  interface AlwatrRequestSignals {
     'l10n-resource-change': Local;
   }
 }

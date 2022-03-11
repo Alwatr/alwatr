@@ -1,5 +1,5 @@
 {
-  "name": "@vatr/router",
+  "name": "@alwatr/router",
   "version": "0.5.0",
   "description": "Elegant powerful router (fundamental advance browser page routing) based on the simplicity of the signals written in tiny TypeScript module.",
   "keywords": [
@@ -8,8 +8,7 @@
     "routing",
     "typescript",
     "esm",
-    "vatr",
-    "alvatr"
+    "alwatr"
   ],
   "main": "router.js",
   "type": "module",
@@ -29,16 +28,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AliMD/vatr",
+    "url": "https://github.com/AliMD/alwatr",
     "directory": "package/router"
   },
-  "homepage": "https://github.com/AliMD/vatr/tree/main/package/router#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/router#readme",
   "bugs": {
-    "url": "https://github.com/AliMD/vatr/issues"
+    "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@vatr/logger": "^0.5.0",
-    "@vatr/signal": "^0.5.0",
+    "@alwatr/logger": "^0.5.0",
+    "@alwatr/signal": "^0.5.0",
     "tslib": "^2.3.1"
   }
 }

@@ -9,7 +9,7 @@ Fixes #(issue)
 Please check if your PR fulfills the following requirements:
 
 - [ ] Open an issue for bug report or feature request and mention it to this PR.
-- [ ] The commit message follows our guidelines: <https://github.com/AliMD/vatr/blob/main/CONTRIBUTING.md#commit-message-format>
+- [ ] The commit message follows our guidelines: <https://github.com/AliMD/alwatr/blob/main/CONTRIBUTING.md#commit-message-format>
 - [ ] All methods have proper description in `jsdocs` format with `@example` section.
 - [ ] Docs have been added / updated (for bug fixes / features).
 - [ ] I have performed a self-review of my own code.

@@ -1,6 +1,6 @@
 declare global {
   interface Window {
-    Vatr?: {
+    Alwatr?: {
       registeredList?: Array<{
         name: string,
         version: string,

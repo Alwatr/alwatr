@@ -1,11 +1,11 @@
-# @vatr/logger
+# @alwatr/logger
 
 Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.
 
 ## Example usage
 
 ```ts
-import { createLogger } from 'https://esm.run/@vatr/logger';
+import { createLogger } from 'https://esm.run/@alwatr/logger';
 
 const logger = createLogger('demo');
 
@@ -22,19 +22,19 @@ Please remember to **reload** the window after changing the debug mode.
 - Debugging all scopes
 
   ```ts
-  window.localStorage?.setItem('VATR_LOG', '*');
+  window.localStorage?.setItem('ALWATR_LOG', '*');
   ```
 
 - Debugging specific scope
 
   ```ts
-  window.localStorage?.setItem('VATR_LOG', 'scope_name');
+  window.localStorage?.setItem('ALWATR_LOG', 'scope_name');
   ```
 
 - Debugging some scopes with pattern
 
   ```ts
-  window.localStorage?.setItem('VATR_LOG', '*vatr*');
+  window.localStorage?.setItem('ALWATR_LOG', '*alwatr*');
   ```
 
 ### API
@@ -42,7 +42,7 @@ Please remember to **reload** the window after changing the debug mode.
 ### Prepare the logger
 
 ```ts
-import {createLogger} from 'https://esm.run/@vatr/logger';
+import {createLogger} from 'https://esm.run/@alwatr/logger';
 const logger = createLogger('logger/demo', 'green');
 ```
 

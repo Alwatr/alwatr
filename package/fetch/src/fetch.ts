@@ -1,10 +1,10 @@
-import {createLogger, vatrRegisteredList} from '@vatr/logger';
+import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
 
-const logger = createLogger('vatr/fetch');
+const logger = createLogger('alwatr/fetch');
 
-vatrRegisteredList.push({
-  name: '@vatr/fetch',
-  version: '{{VATR_VERSION}}',
+alwatrRegisteredList.push({
+  name: '@alwatr/fetch',
+  version: '{{ALWATR_VERSION}}',
 });
 
 declare global {

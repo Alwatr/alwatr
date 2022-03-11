@@ -1,4 +1,4 @@
-import {createLogger} from '@vatr/logger';
+import {createLogger} from '@alwatr/logger';
 
 const logger = createLogger('logger/demo', 'green');
 

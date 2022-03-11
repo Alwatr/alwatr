@@ -1,4 +1,4 @@
-# @vatr/signal
+# @alwatr/signal
 
 Elegant powerful event system for handle global signals and states written in tiny TypeScript module.
 
@@ -6,21 +6,21 @@ Every signal has own value and can be used as a advance **state management** lik
 
 ## Example usage
 
-### Add your signal name to global `VatrSignals` type helper
+### Add your signal name to global `AlwatrSignals` type helper
 
 ```ts
 declare global {
   /**
    * Global signals value type registry.
    */
-  interface VatrSignals {
+  interface AlwatrSignals {
     readonly 'content-change': Record<string, number>;
   }
 
   /**
    * Global request signal parameters types.
    */
-   interface VatrRequestSignals {
+   interface AlwatrRequestSignals {
     readonly 'content-change': number;
   }
 }
@@ -29,7 +29,7 @@ declare global {
 ### Dispatch signal with value
 
 ```ts
-import {SignalInterface} from 'https://esm.run/@vatr/signal';
+import {SignalInterface} from 'https://esm.run/@alwatr/signal';
 
 const contentChangeSignal1 = new SignalInterface('content-change');
 
@@ -44,7 +44,7 @@ contentChangeSignal1.dispatch({a:3, b:4});
 ### Receive the signal value
 
 ```ts
-import {SignalInterface} from 'https://esm.run/@vatr/signal';
+import {SignalInterface} from 'https://esm.run/@alwatr/signal';
 
 const contentChangeSignal2 = new SignalInterface('content-change'); // Same share signal as contentChangeSignal1
 
@@ -60,7 +60,7 @@ contentChangeSignal2.addListener((content) => {
 #### `new SignalInterface(signal-name)`
 
 ```ts
-import {SignalInterface} from 'https://esm.run/@vatr/signal';
+import {SignalInterface} from 'https://esm.run/@alwatr/signal';
 
 const contentChangeSignal = new SignalInterface('content-change');
 ```
