@@ -9,7 +9,8 @@ export function initialI18n(options?: Partial<I18nOptions>): void {
   logger.logMethodArgs('initialI18n', {options});
   for (const key in options) {
     if (Object.prototype.hasOwnProperty.call(options, key)) {
-      configuration[key] = options[key];
+      // WTF, mastmalize type.
+      (configuration[key as keyof I18nOptions] as unknown) = options[key as keyof I18nOptions] as unknown;
     }
   }
 
