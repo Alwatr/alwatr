@@ -107,6 +107,14 @@ export const createLogger = (
     color,
     scope,
 
+    logProperty: debug ? console.debug.bind(
+        console,
+        '%c%s%c.%s = %o;',
+        style.scope.replace('{{color}}', color),
+        scope,
+        style.reset,
+    ) : empty,
+
     logMethod: debug ? console.debug.bind(
         console,
         '%c%s%c.%s();',
@@ -122,6 +130,15 @@ export const createLogger = (
         scope,
         style.reset,
     ) : empty,
+
+    logMethodFull: debug ? console.debug.bind(
+        console,
+        '%c%s%c.%s(%o); // %o',
+        style.scope.replace('{{color}}', color),
+        scope,
+        style.reset,
+    ) : empty,
+
 
     incident: debug ? console.trace.bind(
         console,
@@ -141,7 +158,7 @@ export const createLogger = (
 
     error: console.error.bind(
         console,
-        '%c%s%c.%s =>',
+        '%c%s%c.%s "%s" =>',
         style.scope.replace('{{color}}', color),
         scope,
         style.reset,
