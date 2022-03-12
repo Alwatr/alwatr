@@ -1,3 +1,5 @@
+import {TransformRangeOptions} from './type';
+
 if (typeof Number.isFinite !== 'function') {
   Number.isFinite = isFinite;
 }
@@ -11,6 +13,52 @@ export function isNumber(value: unknown): boolean {
   }
   return false;
 }
+
+/**
+ * Transform a number from one range to another.
+ *
+ * Example:
+ *
+ * ```js
+ * transformToRange(5, {in: [0, 10], out: [0, 100]}); // => 50
+ * ```
+ *
+ * Make percentage of any value
+ *
+ * ```js
+ * transformToRange(2000, {in: [0, 5000], out: [0, 100]}); // => 40
+ * ```
+ *
+ * Calculate progress-bar with
+ *
+ * ```js
+ * const progressOuterWith = 400; //px
+ * const gap = 5; //px (the visual gap between progressBar and component outer).
+ * const currentProgress = 30; //%
+ *
+ * const progressBarWith = transformToRange(currentProgress, {
+ *   in: [0, 100],
+ *   out: [componentPadding, progressOuterWith - componentPadding],
+ *   bound: true,
+ * });
+ *
+ * this.progressBar.style.width = `${progressBarWith}px`;
+ * ```
+ */
+export const transformToRange = (x: number, options: TransformRangeOptions): number => {
+  let y = (options.out[1] - options.out[0]) * (x - options.in[0]) / (options.in[1] - options.in[0]) + options.out[0];
+
+  if (options.bound) {
+    if (y < options.out[0]) {
+      y = options.out[0];
+    }
+    if (y > options.out[1]) {
+      y = options.out[1];
+    }
+  }
+
+  return y;
+};
 
 export const random = {
 
