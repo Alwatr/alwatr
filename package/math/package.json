@@ -1,0 +1,40 @@
+{
+  "name": "@alwatr/math",
+  "version": "0.6.0",
+  "description": "Simple useful Math library written in tiny TypeScript module.",
+  "keywords": [
+    "math",
+    "mathematics",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "main": "math.js",
+  "type": "module",
+  "types": "math.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "contributors": [],
+  "license": "MIT",
+  "files": [
+    "**/*.js",
+    "**/*.d.ts",
+    "**/*.map",
+    "**/*.html",
+    "**/*.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "package/math"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/math#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "dependencies": {
+    "tslib": "^2.3.1"
+  }
+}
