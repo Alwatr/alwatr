@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.2](https://github.com/AliMD/alwatr/compare/v0.7.1...v0.7.2) (2022-03-12)
+
+
+### Features
+
+* **signal:** demo as test ([fc3f9fd](https://github.com/AliMD/alwatr/commit/fc3f9fdd8c76c6bc5117f3ee894480500f81cc80))
+
+
+
+
+
 # [0.7.0](https://github.com/AliMD/alwatr/compare/v0.6.1...v0.7.0) (2022-03-12)
 
 **Note:** Version bump only for package @alwatr/demo

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.2](https://github.com/AliMD/alwatr/compare/v0.7.1...v0.7.2) (2022-03-12)
+
+
+### Features
+
+* **logger:** add debug and improve documents ([8f83d29](https://github.com/AliMD/alwatr/commit/8f83d2956e521f016fe530322f657c343f1a0b80))
+
+
+
+
+
 # [0.7.0](https://github.com/AliMD/alwatr/compare/v0.6.1...v0.7.0) (2022-03-12)
 
 **Note:** Version bump only for package @alwatr/logger

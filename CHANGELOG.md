@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.2](https://github.com/AliMD/alwatr/compare/v0.7.1...v0.7.2) (2022-03-12)
+
+
+### Bug Fixes
+
+* **router:** trigger-click error when tagName undefined ([c16328b](https://github.com/AliMD/alwatr/commit/c16328bb6dc96b5c330015ac560cf95920b9c7b2))
+* **signal:** promise to multi requests works ([dd59f0e](https://github.com/AliMD/alwatr/commit/dd59f0e5737abec72c41895b93365199fad66fcb))
+
+
+### Features
+
+* **logger:** add debug and improve documents ([8f83d29](https://github.com/AliMD/alwatr/commit/8f83d2956e521f016fe530322f657c343f1a0b80))
+* **signal:** demo as test ([fc3f9fd](https://github.com/AliMD/alwatr/commit/fc3f9fdd8c76c6bc5117f3ee894480500f81cc80))
+
+
+
+
+
 ## [0.7.1](https://github.com/AliMD/alwatr/compare/v0.7.0...v0.7.1) (2022-03-12)
 
 
