@@ -37,6 +37,7 @@ export interface I18nOptions {
 
   /**
    * Localization resource storage path (json files directory).
+   *
    * @default '/l10n'
    */
   resourcePath: string;
