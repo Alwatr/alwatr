@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/i18n",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "Elegant powerful translation module (i18n/l10n) with dynamic json storage written in tiny TypeScript, ES module.",
   "keywords": [
     "i18n",
@@ -36,9 +36,9 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/fetch": "^0.6.0",
-    "@alwatr/logger": "^0.6.0",
-    "@alwatr/signal": "^0.6.0",
+    "@alwatr/fetch": "^0.7.0",
+    "@alwatr/logger": "^0.7.0",
+    "@alwatr/signal": "^0.7.0",
     "tslib": "^2.3.1"
   }
 }

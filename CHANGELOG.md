@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/AliMD/alwatr/compare/v0.6.1...v0.7.0) (2022-03-12)
+
+
+### Bug Fixes
+
+* **lerna:** add ignoreChanges for all md files! ([fa35e9c](https://github.com/AliMD/alwatr/commit/fa35e9c39d4bcf646fcc05fcc95a654a7519f70e))
+* **workflow:** remove duplicate tests on push and pulls ([29691fa](https://github.com/AliMD/alwatr/commit/29691fa294e8ace81c8246382bbcb42b58c3ccc5))
+
+
+### Features
+
+* **math:** add isNumber ([3c5ee2b](https://github.com/AliMD/alwatr/commit/3c5ee2bbeb12a9c78df59aef291c971405d4d5fa))
+* **math:** new package for mathmatics ([7860385](https://github.com/AliMD/alwatr/commit/78603858b19693e613f6224b9c6d55d5c532e50d))
+* **math:** random ([18f585c](https://github.com/AliMD/alwatr/commit/18f585c882d40599ec9ed6531bda8f128d4cb5f8))
+* **math:** transformToRange ([62f334d](https://github.com/AliMD/alwatr/commit/62f334d37a625764dd9afad041a4489f1a61fa61))
+
+
+
+
+
 ## [0.6.1](https://github.com/AliMD/alwatr/compare/v0.6.0...v0.6.1) (2022-03-12)
 
 
