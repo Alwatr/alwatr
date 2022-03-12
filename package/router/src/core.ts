@@ -1,13 +1,13 @@
-import {SignalInterface} from '@vatr/signal';
-import {createLogger, vatrRegisteredList} from '@vatr/logger';
+import {SignalInterface} from '@alwatr/signal';
+import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
 import type {ParamList, RequestRouteParam, Route} from './type';
 
-vatrRegisteredList.push({
-  name: '@vatr/router',
-  version: '{{VATR_VERSION}}',
+alwatrRegisteredList.push({
+  name: '@alwatr/router',
+  version: '{{ALWATR_VERSION}}',
 });
 
-export const logger = createLogger('vatr/router');
+export const logger = createLogger('alwatr/router');
 
 export const routerChangeSignal = new SignalInterface('router-change');
 

@@ -3,14 +3,14 @@ import {logger, routerChangeSignal} from './core';
 let _enabled = false;
 
 /**
- * A navigation trigger for Vatr Router that translated clicks on `<a>` links into navigation signal.
+ * A navigation trigger for Alwatr Router that translated clicks on `<a>` links into navigation signal.
  *
  * Only regular clicks on in-app links are translated.
  * Only primary mouse button, no modifier keys, the target href is within the app's URL space.
  */
 export const clickTrigger = {
   /**
-   * Vatr router global click handler.
+   * Alwatr router global click handler.
    */
   _clickHandler(event: MouseEvent): void {
     if (

@@ -3,14 +3,14 @@ import {logger, routerChangeSignal} from './core';
 let _enabled = false;
 
 /**
-  * A navigation trigger for Vatr Router that translates popstate events into navigation signal.
+  * A navigation trigger for Alwatr Router that translates popstate events into navigation signal.
  */
 export const popstateTrigger = {
   /**
-   * Vatr router global popstate handler.
+   * Alwatr router global popstate handler.
    */
   _popstateHandler(event: PopStateEvent): void {
-    if (event.state === 'vatr-router-ignore') {
+    if (event.state === 'alwatr-router-ignore') {
       return;
     }
     // if none of the above, convert the click into a navigation signal.

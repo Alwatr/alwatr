@@ -1,4 +1,4 @@
-import {createLogger} from '@vatr/logger';
+import {createLogger} from '@alwatr/logger';
 import {
   __getSignalObject,
   _removeSignalListener,
@@ -18,7 +18,7 @@ import type {
 /**
  * Signal API interface as a remote controller.
  */
-export class SignalInterface<SignalName extends keyof VatrSignals> {
+export class SignalInterface<SignalName extends keyof AlwatrSignals> {
   private _signal;
   private _logger;
 
@@ -53,7 +53,7 @@ export class SignalInterface<SignalName extends keyof VatrSignals> {
    * }
    * ```
    */
-  get value(): VatrSignals[SignalName] | undefined {
+  get value(): AlwatrSignals[SignalName] | undefined {
     return this._signal.value;
   }
 
@@ -147,11 +147,11 @@ export class SignalInterface<SignalName extends keyof VatrSignals> {
    * const newContent = await contentChangeSignal.request({foo: 'bar'});
    * ```
    */
-  request(requestParam: VatrRequestSignals[SignalName]): Promise<VatrSignals[SignalName]> {
+  request(requestParam: AlwatrRequestSignals[SignalName]): Promise<AlwatrSignals[SignalName]> {
     this._logger.logMethodArgs('request', {requestParam});
     _dispatchSignal(
       `request-${this.name}` as unknown as SignalName,
-      requestParam as unknown as VatrSignals[SignalName], // mastmalize to avoid type error
+      requestParam as unknown as AlwatrSignals[SignalName], // mastmalize to avoid type error
     );
     return this.getNextSignalValue();
   }
@@ -167,7 +167,7 @@ export class SignalInterface<SignalName extends keyof VatrSignals> {
    * const newContent = await contentChangeSignal.getNextSignalValue();
    * ```
    */
-  getNextSignalValue(): Promise<VatrSignals[SignalName]> {
+  getNextSignalValue(): Promise<AlwatrSignals[SignalName]> {
     this._logger.logMethod('getNextSignalValue');
     return new Promise((resolve) => {
       this.addListener(resolve, {
@@ -191,7 +191,7 @@ export class SignalInterface<SignalName extends keyof VatrSignals> {
    * const content = await contentChangeSignal.getSignalValue();
    * ```
    */
-  getSignalValue(): Promise<VatrSignals[SignalName]> {
+  getSignalValue(): Promise<AlwatrSignals[SignalName]> {
     this._logger.logMethod('getSignalValue');
     if (this._signal.value !== undefined) {
       return Promise.resolve(this._signal.value);
@@ -210,7 +210,7 @@ export class SignalInterface<SignalName extends keyof VatrSignals> {
    * contentChangeSignal.dispatch(content);
    * ```
    */
-  dispatch(signalValue: VatrSignals[SignalName], options?: DispatchOptions): void {
+  dispatch(signalValue: AlwatrSignals[SignalName], options?: DispatchOptions): void {
     this._logger.logMethodArgs('dispatch', {signalValue, options});
     _dispatchSignal(this._signal.name, signalValue, options);
   }

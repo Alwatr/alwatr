@@ -1,7 +1,7 @@
 {
-  "name": "vatr",
-  "description": "The Vatr Library",
-  "repository": "https://github.com/AliMD/One",
+  "name": "alwatr",
+  "description": "The Alwatr Library",
+  "repository": "https://github.com/AliMD/alwatr/",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "private": true,

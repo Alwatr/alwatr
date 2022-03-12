@@ -1,4 +1,4 @@
-import {createLogger, vatrRegisteredList} from '@vatr/logger';
+import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
 import type {
   DispatchOptions,
   ListenerCallback,
@@ -10,11 +10,11 @@ import type {
   SignalStack,
 } from './type';
 
-export const logger = createLogger('vatr/signal');
+export const logger = createLogger('alwatr/signal');
 
-vatrRegisteredList.push({
-  name: '@vatr/signal',
-  version: '{{VATR_VERSION}}',
+alwatrRegisteredList.push({
+  name: '@alwatr/signal',
+  version: '{{ALWATR_VERSION}}',
 });
 
 /**
@@ -25,7 +25,7 @@ const _signalStack: SignalStack = {};
 /**
  * Access to signal option, Make new signal with default options if not exist.
  */
-export function __getSignalObject<SignalName extends keyof VatrSignals>(
+export function __getSignalObject<SignalName extends keyof AlwatrSignals>(
     signalName: SignalName,
 ): SignalObject<SignalName> {
   if (!_signalStack[signalName]) {
@@ -39,7 +39,7 @@ export function __getSignalObject<SignalName extends keyof VatrSignals>(
   return _signalStack[signalName] as unknown as SignalObject<SignalName>;
 }
 
-function __callListeners<SignalName extends keyof VatrSignals>(
+function __callListeners<SignalName extends keyof AlwatrSignals>(
     signal: SignalObject<SignalName>,
 ): void {
   logger.logMethodArgs('_callListeners', {signalName: signal.name, signalValue: signal.value});
@@ -72,7 +72,7 @@ function __callListeners<SignalName extends keyof VatrSignals>(
  * const listener = addSignalListener('content-change', (content) => console.log(content));
  * ```
  */
-export function _addSignalListener<SignalName extends keyof VatrSignals>(
+export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
     signalName: SignalName,
     signalCallback: ListenerCallback<SignalName>,
     options?: ListenerOptions,
@@ -81,7 +81,7 @@ export function _addSignalListener<SignalName extends keyof VatrSignals>(
 
   const signal = __getSignalObject(signalName);
   const listener: ListenerObject<SignalName> = {
-    id: Symbol('Vatr signal listener for ' + signalName),
+    id: Symbol('Alwatr signal listener for ' + signalName),
     once: options?.once ?? false,
     disabled: options?.disabled ?? false,
     callback: signalCallback,
@@ -134,7 +134,7 @@ export function _addSignalListener<SignalName extends keyof VatrSignals>(
  * removeSignalListener('content-change', listener);
  * ```
  */
-export function _removeSignalListener<SignalName extends keyof VatrSignals>(
+export function _removeSignalListener<SignalName extends keyof AlwatrSignals>(
     signalName: SignalName,
     listenerId: symbol,
 ): void {
@@ -152,9 +152,9 @@ export function _removeSignalListener<SignalName extends keyof VatrSignals>(
  * @example
  * dispatchSignal('content-change', content);
  */
-export function _dispatchSignal<SignalName extends keyof VatrSignals>(
+export function _dispatchSignal<SignalName extends keyof AlwatrSignals>(
     signalName: SignalName,
-    value: VatrSignals[SignalName],
+    value: AlwatrSignals[SignalName],
     options?: DispatchOptions,
 ): void {
   logger.logMethodArgs('dispatchSignal', {signalName, value, options});
@@ -196,7 +196,7 @@ export function _dispatchSignal<SignalName extends keyof VatrSignals>(
  * }
  * ```
  */
-export function _setSignalProvider<SignalName extends keyof VatrRequestSignals>(
+export function _setSignalProvider<SignalName extends keyof AlwatrRequestSignals>(
     signalName: SignalName,
     signalProvider: SignalProvider<SignalName>,
     options?: SignalProviderOptions,
@@ -211,7 +211,7 @@ export function _setSignalProvider<SignalName extends keyof VatrRequestSignals>(
     signal.listenerList = [];
   }
 
-  const _callback = async (requestParam: VatrRequestSignals[SignalName]): Promise<void> => {
+  const _callback = async (requestParam: AlwatrRequestSignals[SignalName]): Promise<void> => {
     const signalValue = await signalProvider(requestParam);
     if (signalValue !== undefined) { // null can be a valid value.
       _dispatchSignal(signalName, signalValue, {debounce: options?.debounce ?? true});

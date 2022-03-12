@@ -1,20 +1,19 @@
 {
-  "name": "@alwatr/fetch",
+  "name": "@alwatr/math",
   "version": "0.7.0",
-  "description": "Enhanced fetch api with timeout, helper methods and types written in tiny TypeScript module.",
+  "description": "Simple useful Math library written in tiny TypeScript module.",
   "keywords": [
-    "fetch",
-    "request",
-    "api",
-    "timeout",
+    "math",
+    "mathematics",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "fetch.js",
+  "main": "math.js",
   "type": "module",
-  "types": "fetch.d.ts",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "types": "math.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "contributors": [],
   "license": "MIT",
   "files": [
     "**/*.js",
@@ -29,14 +28,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/fetch"
+    "directory": "package/math"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/fetch#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/math#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.7.0",
     "tslib": "^2.3.1"
   }
 }

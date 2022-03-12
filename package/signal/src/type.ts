@@ -2,14 +2,14 @@ declare global {
   /**
    * Global signals value type registry.
    */
-  interface VatrSignals {
+  interface AlwatrSignals {
     readonly 'easter-egg': number;
   }
 
   /**
    * Global request signal parameters types.
    */
-   interface VatrRequestSignals {
+   interface AlwatrRequestSignals {
     readonly 'easter-egg': number;
   }
 }
@@ -82,20 +82,20 @@ export interface SignalProviderOptions {
 /**
  * Signal listeners callback function type.
  */
-export type ListenerCallback<SignalName extends keyof VatrSignals> =
-  (signalValue: VatrSignals[SignalName]) => void | Promise<void>;
+export type ListenerCallback<SignalName extends keyof AlwatrSignals> =
+  (signalValue: AlwatrSignals[SignalName]) => void | Promise<void>;
 
 /**
  * Signal provider function type used to setSignalProvider.
  */
-export type SignalProvider<SignalName extends keyof VatrRequestSignals> =
-  (requestParam: VatrRequestSignals[SignalName]) =>
-    VatrSignals[SignalName] | void | Promise<VatrSignals[SignalName] | void>;
+export type SignalProvider<SignalName extends keyof AlwatrRequestSignals> =
+  (requestParam: AlwatrRequestSignals[SignalName]) =>
+    AlwatrSignals[SignalName] | void | Promise<AlwatrSignals[SignalName] | void>;
 
 /**
  * Signal listeners object in database.
  */
-export interface ListenerObject<SignalName extends keyof VatrSignals>
+export interface ListenerObject<SignalName extends keyof AlwatrSignals>
 {
   /**
    * Listener symbol id (unique).
@@ -118,7 +118,7 @@ export interface ListenerObject<SignalName extends keyof VatrSignals>
 /**
  * Signal object in database.
  */
-export interface SignalObject<SignalName extends keyof VatrSignals>
+export interface SignalObject<SignalName extends keyof AlwatrSignals>
 {
   /**
    * Signal name for direct access.
@@ -128,7 +128,7 @@ export interface SignalObject<SignalName extends keyof VatrSignals>
   /**
    * Last dispatched value.
    */
-  value?: VatrSignals[SignalName];
+  value?: AlwatrSignals[SignalName];
 
   /**
    * If true, the signal is disabled.
@@ -151,5 +151,5 @@ export interface SignalObject<SignalName extends keyof VatrSignals>
  * Signal stack database.
  */
 export type SignalStack = {
-  [SignalName in keyof VatrSignals]?: SignalObject<SignalName>;
+  [SignalName in keyof AlwatrSignals]?: SignalObject<SignalName>;
 }

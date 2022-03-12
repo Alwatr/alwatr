@@ -1,9 +1,9 @@
 declare global {
-  interface VatrSignals {
+  interface AlwatrSignals {
     'router-change': Route;
   }
 
-  interface VatrRequestSignals {
+  interface AlwatrRequestSignals {
     'router-change': RequestRouteParam;
   }
 }
@@ -37,7 +37,7 @@ export interface RequestRouteParam {
  */
 export interface InitOptions {
   /**
-   * A navigation trigger for Vatr Router that translated clicks on `<a>` links into navigation signal.
+   * A navigation trigger for Alwatr Router that translated clicks on `<a>` links into navigation signal.
    *
    * Only regular clicks on in-app links are translated.
    * Only primary mouse button, no modifier keys, the target href is within the app's URL space.

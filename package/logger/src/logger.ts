@@ -1,15 +1,15 @@
 import type {Logger} from './type';
 
 /**
- * Define `window.Vatr.registeredList`
+ * Define `window.Alwatr.registeredList`
  */
-export const vatrRegisteredList = window.Vatr?.registeredList || [];
-window.Vatr ??= {};
-window.Vatr.registeredList = vatrRegisteredList;
+export const alwatrRegisteredList = window.Alwatr?.registeredList || [];
+window.Alwatr ??= {};
+window.Alwatr.registeredList = alwatrRegisteredList;
 
-vatrRegisteredList.push({
-  name: '@vatr/logger',
-  version: '{{VATR_VERSION}}', // TODO: replace with real version at release time.
+alwatrRegisteredList.push({
+  name: '@alwatr/logger',
+  version: '{{ALWATR_VERSION}}', // TODO: replace with real version at release time.
 });
 
 /**
@@ -43,7 +43,7 @@ const getNextColor = (): string => {
   return color;
 };
 
-const debugString = window.localStorage?.getItem('VATR_LOG')?.trim();
+const debugString = window.localStorage?.getItem('ALWATR_LOG')?.trim();
 const getDebugState = (scope: string, force: boolean ): boolean => {
   if (
     debugString == null ||
@@ -56,11 +56,11 @@ const getDebugState = (scope: string, force: boolean ): boolean => {
     force ||
     debugString === scope ||
     (
-      debugString.indexOf('*') === 0 && // starts with `*` for example: `*vatr*`
+      debugString.indexOf('*') === 0 && // starts with `*` for example: `*alwatr*`
       scope.indexOf(debugString.replaceAll('*', '')) !== -1
     ) ||
     (
-      debugString.indexOf('*') === debugString.length - 1 && // ends with `*` for example: `vatr/*`
+      debugString.indexOf('*') === debugString.length - 1 && // ends with `*` for example: `alwatr/*`
       scope.indexOf(debugString.replaceAll('*', '')) === 0
     )
   ) {
