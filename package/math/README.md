@@ -62,3 +62,47 @@ isNumber([]);                // false
 isNumber(function () {});    // false
 isNumber({});                // false
 ```
+
+### Generate Random
+
+### `value`
+
+Returns a float random number between 0 and 1 (1 Not included).
+
+```js
+console.log(random.value); // 0.7124123
+```
+
+### `random.integer(min: number, max: number): number`
+
+Generate a random integer between min and max.
+
+```js
+console.log(random.integer(1, 10)); // somewhere between 1 and 10
+```
+
+### `random.float(min: number, max: number): number`
+
+Generate a random float between min and max.
+
+```js
+console.log(random.float(1, 10)); // somewhere between 1 and 10
+```
+
+### `step(min: number, max: number, step: number): number`
+
+Generate a random integer between min and max with a step.
+
+```js
+console.log(random.step(6, 10, 2)); // 6 or 8 or 10
+```
+
+### `shuffle(array: any[]): any[]`
+
+Shuffle an array.
+
+```js
+const array = [1, 2, 3, 4, 5];
+random.shuffle(array);
+console.log(array); // [2, 4, 3, 1, 5]
+```
