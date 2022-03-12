@@ -31,23 +31,19 @@ export const clickTrigger = {
     }
 
     // find the <a> element that the click is at (or within)
-    let anchor = event
+    const anchor = event
         .composedPath()
-        .filter(
-            (eventTarget) => (eventTarget as HTMLElement).tagName.toLowerCase() === 'a',
-        )[0] as HTMLAnchorElement | null;
-
-    while (anchor != null && anchor.tagName.toLowerCase() !== 'a') {
-      anchor = anchor.parentNode as HTMLAnchorElement | null;
-    }
+        .find(
+            (target) => (target as HTMLElement)?.tagName?.toLowerCase() === 'a',
+        ) as HTMLAnchorElement | undefined;
 
     if (
       // ignore if the anchor is not found.
       anchor == null ||
       // ignore if the anchor is not an <a> element.
-      anchor.tagName.toLowerCase() !== 'a' ||
+      anchor.tagName?.toLowerCase() !== 'a' ||
       // ignore if the <a> element has a non-default target.
-      (anchor.target !== '' && anchor.target.toLowerCase() !== '_self' ) ||
+      (anchor.target !== '' && anchor.target?.toLowerCase() !== '_self' ) ||
       // ignore if the <a> element has a download attribute.
       anchor.hasAttribute('download') ||
       // ignore if the <a> element has a rel attribute.
