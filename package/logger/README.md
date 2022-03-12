@@ -39,14 +39,33 @@ Please remember to **reload** the window after changing the debug mode.
 
 ### API
 
-### Prepare the logger
+### `createLogger(scope: string, color: string, force = boolean)`
+
+Create a logger function for fancy console debug with custom scope.
+
+- **color** is optional and automatically select from internal fancy color list.
+- **force** is optional and default to false.
+
+Example:
 
 ```ts
 import {createLogger} from 'https://esm.run/@alwatr/logger';
-const logger = createLogger('logger/demo', 'green');
+const logger = createLogger('logger/demo');
 ```
 
-### `logProperty(property, value)`
+### `logger.debug: boolean`
+
+Debug state for current scope base on localStorage `ALWATR_LOG` pattern.
+
+### `logger.color: string`
+
+Debug state for current scope base on localStorage `ALWATR_LOG` pattern.
+
+### `logger.scope: string`
+
+Debug state for current scope base on localStorage `ALWATR_LOG` pattern.
+
+### `logger.logProperty(property, value)`
 
 `console.debug` property change.
 
@@ -56,7 +75,7 @@ Example:
 logger.logProperty('name', 'ali');
 ```
 
-### `logMethod(method)`
+### `logger.logMethod(method)`
 
 `console.debug` function or method calls.
 
@@ -68,7 +87,7 @@ function myMethod () {
 }
 ```
 
-### `logMethodArgs(method, args)`
+### `logger.logMethodArgs(method, args)`
 
 `console.debug` function or method calls with arguments.
 
@@ -80,7 +99,7 @@ function myMethod (a: number, b: number) {
 }
 ```
 
-### `logMethodFull(method, args, result)`
+### `logger.logMethodFull(method, args, result)`
 
 `console.debug` function or method calls with arguments.
 
@@ -94,7 +113,7 @@ function add (a: number, b: number): number {
 }
 ```
 
-### `incident(method, code, description, ...args)`
+### `logger.incident(method, code, description, ...args)`
 
 `console.trace` an event or expected accident. (not warn or error)
 
@@ -104,7 +123,7 @@ Example:
 logger.incident('fetch', 'abort_signal', 'aborted signal received', {url: '/test.json'});
 ```
 
-### `accident(method, code, description, ...args)`
+### `logger.accident(method, code, description, ...args)`
 
 `console.warn` an unexpected accident or error that you handled.
 
@@ -114,7 +133,7 @@ Example:
 logger.accident('fetch', 'file_not_found', 'url requested return 404 not found', {url: '/test.json'});
 ```
 
-### `error(method, code, errorStack, ...args)`
+### `logger.error(method, code, errorStack, ...args)`
 
 `console.error` an unexpected error.
 
@@ -129,7 +148,7 @@ catch (err) {
 }
 ```
 
-### `logOther(...args)`
+### `logger.logOther(...args)`
 
 Simple `console.debug` with styled scope.
 
