@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/AliMD/alwatr/compare/v0.6.0...v0.6.1) (2022-03-12)
+
+
+### Bug Fixes
+
+* **i18n:** package name in readme! ([5325e7f](https://github.com/AliMD/alwatr/commit/5325e7ff5f2b83862221544a4bcd931ed8b9f12f))
+
+
+
+
+
 # [0.6.0](https://github.com/AliMD/alwatr/compare/v0.5.0...v0.6.0) (2022-03-11)
 
 

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/AliMD/alwatr/compare/v0.6.0...v0.6.1) (2022-03-12)
+
+
+### Bug Fixes
+
+* **i18n:** package name in readme! ([5325e7f](https://github.com/AliMD/alwatr/commit/5325e7ff5f2b83862221544a4bcd931ed8b9f12f))
+* **lerna:** include readme to publish chnages ([524c8a0](https://github.com/AliMD/alwatr/commit/524c8a01551d2b523e9a099b294a41f071fffe6f))
+* **lerna:** remove ignoreChanges ([f2f20d6](https://github.com/AliMD/alwatr/commit/f2f20d61d532ec265373506a3b7629868c2ad446))
+
+
+
+
+
 # [0.6.0](https://github.com/AliMD/alwatr/compare/v0.5.0...v0.6.0) (2022-03-11)
 
 
