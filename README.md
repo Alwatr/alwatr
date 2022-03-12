@@ -1,3 +1,5 @@
 # The Alwatr Library
 
-[![Tests](https://github.com/AliMD/alwatr/actions/workflows/tests.yml/badge.svg?branch=${GH_BRANCH})](https://github.com/AliMD/alwatr/actions/workflows/tests.yml)
+Main: [![Tests](https://github.com/AliMD/alwatr/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/AliMD/alwatr/actions/workflows/tests.yml)
+
+Next: [![Tests](https://github.com/AliMD/alwatr/actions/workflows/tests.yml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/tests.yml)
