@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/AliMD/alwatr/compare/v0.7.0...v0.7.1) (2022-03-12)
+
+
+### Bug Fixes
+
+* **math:** build ([7cd8907](https://github.com/AliMD/alwatr/commit/7cd890765ddba0cca2938292eb8705995a2bfde8))
+
+
+
+
+
 # [0.7.0](https://github.com/AliMD/alwatr/compare/v0.6.1...v0.7.0) (2022-03-12)
 
 
