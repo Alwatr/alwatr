@@ -15,7 +15,8 @@
     "publish": {
       "conventionalCommits": true,
       "ignoreChanges": [
-        "*.md"
+        "*.md",
+        "!README.md"
       ]
     },
     "bootstrap": {
