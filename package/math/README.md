@@ -63,6 +63,64 @@ isNumber(function () {});    // false
 isNumber({});                // false
 ```
 
+### `transformToRange(x: number, options}): number`
+
+Transform a number from one range to another.
+
+Options:
+
+```ts
+{
+  /**
+   * The input range [min, max].
+   *
+   */
+  in: [number, number];
+
+  /**
+   * The output (request) range [min, max].
+   */
+  out: [number, number];
+
+  /**
+   * If true, the output will be bounded to the output range (between min and max).
+   *
+   * In default behavior when x (input number) does not between input min~max range,
+   * the output value will be out of output min~max range.
+   *
+   */
+  bound?: boolean;
+}
+```
+
+#### Example
+
+```js
+transformToRange(5, {in: [0, 10], out: [0, 100]}); // => 50
+```
+
+Make percentage of any value
+
+```js
+transformToRange(2000, {in: [0, 5000], out: [0, 100]}); // => 40
+```
+
+Calculate progress-bar with
+
+```js
+const progressOuterWith = 400; //px
+const gap = 5; //px (the visual gap between progressBar and component outer).
+const currentProgress = 30; //%
+
+const progressBarWith = transformToRange(currentProgress, {
+  in: [0, 100],
+  out: [componentPadding, progressOuterWith - componentPadding],
+  bound: true,
+});
+
+this.progressBar.style.width = `${progressBarWith}px`;
+```
+
 ### Generate Random
 
 ### `value`
