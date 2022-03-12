@@ -13,7 +13,10 @@
       "message": "release: %s"
     },
     "publish": {
-      "conventionalCommits": true
+      "conventionalCommits": true,
+      "ignoreChanges": [
+        "*.md"
+      ]
     },
     "bootstrap": {
       "hoist": true,
