@@ -1,13 +1,3 @@
-declare global {
-  interface AlwatrSignals {
-    'router-change': Route;
-  }
-
-  interface AlwatrRequestSignals {
-    'router-change': RequestRouteParam;
-  }
-}
-
 export type ParamList = Record<string, string | number | boolean>;
 
 // @TODO: description

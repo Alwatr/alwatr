@@ -1,9 +1,10 @@
-import {joinParameterList, logger, routeSignalProvider, routerChangeSignal} from './core';
+import {joinParameterList, logger, routeSignalProvider} from './core';
+import {routeChangeSignal} from './signal';
 import {clickTrigger} from './trigger-click';
 import {popstateTrigger} from './trigger-popstate';
 import type {InitOptions, Route} from './type';
 
-export {routerChangeSignal};
+export {routeChangeSignal};
 
 /**
  * Initial and config the Router.
@@ -14,12 +15,12 @@ export function initialRouter(options?: InitOptions): void {
   clickTrigger.enable = options?.clickTrigger ?? true;
   popstateTrigger.enable = options?.popstateTrigger ?? true;
 
-  routerChangeSignal.setProvider(routeSignalProvider, {debounce: true, receivePrevious: true});
+  routeChangeSignal.setProvider(routeSignalProvider, {debounce: true, receivePrevious: true});
 
   // first route request.
-  if (!routerChangeSignal.dispatched) {
+  if (!routeChangeSignal.dispatched) {
     const {pathname, search, hash} = window.location;
-    routerChangeSignal.request({pathname, search, hash, pushState: false});
+    routeChangeSignal.request({pathname, search, hash, pushState: false});
   }
 }
 
