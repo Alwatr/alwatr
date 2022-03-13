@@ -2,14 +2,14 @@ import {joinParameterList, logger, routeSignalProvider} from './core';
 import {routeChangeSignal} from './signal';
 import {clickTrigger} from './trigger-click';
 import {popstateTrigger} from './trigger-popstate';
-import type {InitOptions, Route} from './type';
+import type {InitOptions, Route, RoutesConfig} from './type';
 
-export {routeChangeSignal};
+export type {Route, RoutesConfig} from './type';
 
 /**
  * Initial and config the Router.
  */
-export function initialRouter(options?: InitOptions): void {
+function initial(options?: InitOptions): void {
   logger.logMethodArgs('initialRouter', {options});
 
   clickTrigger.enable = options?.clickTrigger ?? true;
@@ -29,7 +29,7 @@ export function initialRouter(options?: InitOptions): void {
  *
  * @example <a href=${ makeUrl({sectionList: ['product', 100]}) }>
  */
-export function makeUrl(route: Partial<Route>): string {
+function makeUrl(route: Partial<Route>): string {
   logger.logMethodArgs('makeUrl', {route});
 
   let href = '';
@@ -52,3 +52,25 @@ export function makeUrl(route: Partial<Route>): string {
 
   return href;
 }
+
+
+export const router = {
+  get currentRoute(): Route {
+    const route = routeChangeSignal.value;
+    if (route == null) {
+      throw (new Error('route_not_initialized'));
+    }
+    return route;
+  },
+
+  initial,
+
+  makeUrl,
+
+  outlet,
+
+  /**
+   * Signal interface of 'route-change' signal.
+   */
+  signal: routeChangeSignal,
+} as const;
