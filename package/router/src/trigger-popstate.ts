@@ -1,4 +1,5 @@
-import {logger, routerChangeSignal} from './core';
+import {logger} from './core';
+import {routeChangeSignal} from './signal';
 
 let _enabled = false;
 
@@ -15,7 +16,7 @@ export const popstateTrigger = {
     }
     // if none of the above, convert the click into a navigation signal.
     const {pathname, search, hash} = window.location;
-    routerChangeSignal.request({pathname, search, hash, pushState: false});
+    routeChangeSignal.request({pathname, search, hash, pushState: false});
   },
 
   set enable(enable: boolean) {
