@@ -1,7 +1,9 @@
 import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
-import {SignalInterface} from '@alwatr/signal';
 import {getJson} from '@alwatr/fetch';
+import {l10nResourceChangeSignal, localChangeSignal} from './signal';
 import type {I18nOptions, L10Resource} from './type';
+
+export {localChangeSignal, l10nResourceChangeSignal};
 
 alwatrRegisteredList.push({
   name: '@alwatr/i18n',
@@ -15,9 +17,6 @@ export const configuration: I18nOptions = {
   resourcePath: '/l10n',
   defaultLocal: {code: 'en-US', language: 'en', direction: 'ltr'},
 };
-
-export const l10nResourceChangeSignal = new SignalInterface('l10n-resource-change');
-export const localChangeSignal = new SignalInterface('local-change');
 
 const loadingStr = '…';
 
