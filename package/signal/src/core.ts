@@ -47,6 +47,7 @@ function __callListeners<SignalName extends keyof AlwatrSignals>(
     logger.accident('_callListeners', 'no_signal_value', 'signal must have a value', {signalName: signal.name});
     return;
   }
+
   for (const listener of signal.listenerList) {
     if (listener.disabled) continue;
     try {
@@ -59,8 +60,11 @@ function __callListeners<SignalName extends keyof AlwatrSignals>(
     } catch (err) {
       logger.error('_callListeners', 'call_listener_failed', (err as Error).stack || err, {signalName: signal.name});
     }
-    if (listener.once) _removeSignalListener(signal.name, listener.id);
   }
+
+  signal.listenerList
+      .filter((listener) => !listener.disabled && listener.once)
+      .forEach((listener) => _removeSignalListener(signal.name, listener.id));
 }
 
 /**
