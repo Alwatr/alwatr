@@ -33,8 +33,8 @@ export function updateBrowserHistory(options: RequestRouteParam): void {
   options.hash ??= '';
 
   if (
-    window.location.pathname === options.pathname ||
-    window.location.search === options.search ||
+    window.location.pathname === options.pathname &&
+    window.location.search === options.search &&
     window.location.hash === options.hash
   ) {
     return;
