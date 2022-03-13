@@ -1,13 +1,3 @@
-declare global {
-  interface AlwatrSignals {
-    'local-change': Local;
-    'l10n-resource-change': L10Resource;
-  }
-  interface AlwatrRequestSignals {
-    'l10n-resource-change': Local;
-  }
-}
-
 export type L10Resource = Record<string, string>;
 
 export interface Local{
