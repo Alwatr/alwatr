@@ -44,4 +44,9 @@ export interface InitOptions {
   popstateTrigger?: boolean;
 }
 
-
+export interface RoutesConfig {
+  map: (route: Route) => string | undefined;
+  list: Record<string, {
+    render: (route: Route) => unknown;
+  }>;
+}

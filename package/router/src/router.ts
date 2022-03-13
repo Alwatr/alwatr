@@ -53,6 +53,98 @@ function makeUrl(route: Partial<Route>): string {
   return href;
 }
 
+/**
+ * The result of calling the current route's render() callback base on routesConfig.
+ *
+ * outlet return `routesConfig.list[routesConfig.map(currentRoute)].render(currentRoute)`
+ *
+ * if `routesConfig.map()` return noting or not found in the list the "404" route will be used.
+ * if route location is app root and `routesConfig.map()` return noting then redirect to home automatically
+ *
+ * ```ts
+ * const routes: routesConfig = {
+ *   map: (route: Route) => route.sectionList[0]?.toString(),
+ *
+ *   list: {
+ *     'about': {
+ *       render: () => html`<page-about></page-about>`,
+ *     },
+ *     'product-list': {
+ *       render: () => {
+ *         import('./page-product-list.js'); // lazy loading page
+ *         html`<page-product-list></page-product-list>`,
+ *       }
+ *     },
+ *     'contact': {
+ *       render: () => html`<page-contact></page-contact>`,
+ *     },
+ *
+ *     'home': {
+ *       render: () => html`<page-home></page-home>`,
+ *     },
+ *     '404': {
+ *       render: () => html`<page-404></page-404>`,
+ *     },
+ *   },
+ * };
+
+ * router.outlet(routes);
+ * ```
+ */
+function outlet(routesConfig: RoutesConfig): unknown {
+  logger.logMethodArgs('outlet', {routesConfig});
+
+  const currentRoute = routeChangeSignal.value;
+  if (currentRoute == null) {
+    logger.accident('outlet', 'route_not_initialized', 'Signal "route-change" not dispatched yet');
+    return;
+  }
+
+  let page = routesConfig.map(currentRoute);
+
+  if (page == null && currentRoute.sectionList.length === 0) { // root
+    logger.incident(
+        'outlet',
+        'redirect_to_home',
+        'Route location is app root and routesConfig.map() return noting then redirect to home automatically',
+    );
+
+    page = 'home';
+
+    if (typeof routesConfig.list[page]?.render !== 'function') { // 'home' not defined!
+      logger.accident(
+          'outlet',
+          'no_render_for_home',
+          'routesConfig.list["home"] not defined',
+          {page, currentRoute, routesConfig},
+      );
+      routesConfig.list[page] = {render: () => 'Home Page!'};
+    }
+  }
+
+  if (page == null || typeof routesConfig.list[page]?.render !== 'function') { // 404
+    logger.accident(
+        'outlet',
+        'redirect_to_404',
+        'Requested page not defined in routesConfig.list',
+        {page, currentRoute, routesConfig},
+    );
+
+    page = '404';
+
+    if (typeof routesConfig.list[page]?.render !== 'function') { // 404
+      logger.accident(
+          'outlet',
+          'no_render_for_404',
+          'Page "404" not defined in routesConfig.list',
+          {page, currentRoute, routesConfig},
+      );
+      routesConfig.list[page] = {render: () => '404 Not Found!'};
+    }
+  }
+
+  return routesConfig.list[page].render(currentRoute);
+}
 
 export const router = {
   get currentRoute(): Route {
