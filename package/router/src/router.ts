@@ -4,7 +4,7 @@ import {clickTrigger} from './trigger-click';
 import {popstateTrigger} from './trigger-popstate';
 import type {InitOptions, Route, RoutesConfig} from './type';
 
-export type {Route, RoutesConfig} from './type';
+export type {Route, RequestRouteParam, RoutesConfig} from './type';
 
 /**
  * Initial and config the Router.
