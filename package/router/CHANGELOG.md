@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/AliMD/alwatr/compare/v0.7.2...v0.8.0) (2022-03-14)
+
+
+### Bug Fixes
+
+* **router:** updateBrowserHistory issue ([22b16e5](https://github.com/AliMD/alwatr/commit/22b16e599089f3abe5eb9dc285563fa9510ad97e))
+
+
+### Features
+
+* **router:** make outlet ([45852a8](https://github.com/AliMD/alwatr/commit/45852a809a9f48fb09cf9a8c5ecc3f6519f106cd))
+
+
+
+
+
+## [0.7.2](https://github.com/AliMD/alwatr/compare/v0.7.1...v0.7.2) (2022-03-12)
+
+
+### Bug Fixes
+
+* **router:** trigger-click error when tagName undefined ([c16328b](https://github.com/AliMD/alwatr/commit/c16328bb6dc96b5c330015ac560cf95920b9c7b2))
+
+
+
+
+
 # [0.7.0](https://github.com/AliMD/alwatr/compare/v0.6.1...v0.7.0) (2022-03-12)
 
 **Note:** Version bump only for package @alwatr/router

@@ -1,4 +1,3 @@
-import {SignalInterface} from '@alwatr/signal';
 import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
 import type {ParamList, RequestRouteParam, Route} from './type';
 
@@ -8,11 +7,8 @@ alwatrRegisteredList.push({
 });
 
 export const logger = createLogger('alwatr/router');
-
-export const routerChangeSignal = new SignalInterface('router-change');
-
 /**
- * Handle requests of 'router-change' signal.
+ * Handle requests of 'route-change' signal.
  */
 export function routeSignalProvider(requestParam: RequestRouteParam): Route {
   logger.logMethodArgs('routeSignalProvider', {requestParam});
@@ -33,8 +29,8 @@ export function updateBrowserHistory(options: RequestRouteParam): void {
   options.hash ??= '';
 
   if (
-    window.location.pathname === options.pathname ||
-    window.location.search === options.search ||
+    window.location.pathname === options.pathname &&
+    window.location.search === options.search &&
     window.location.hash === options.hash
   ) {
     return;

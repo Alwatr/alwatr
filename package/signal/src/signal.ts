@@ -149,11 +149,12 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    */
   request(requestParam: AlwatrRequestSignals[SignalName]): Promise<AlwatrSignals[SignalName]> {
     this._logger.logMethodArgs('request', {requestParam});
+    const nextSignalValuePromise = this.getNextSignalValue();
     _dispatchSignal(
       `request-${this.name}` as unknown as SignalName,
       requestParam as unknown as AlwatrSignals[SignalName], // mastmalize to avoid type error
     );
-    return this.getNextSignalValue();
+    return nextSignalValuePromise;
   }
 
   /**

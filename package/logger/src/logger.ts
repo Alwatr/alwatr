@@ -79,11 +79,15 @@ export const style = {
 /**
  * Create a logger function for fancy console debug with custom scope.
  *
- * @example
- *  const logger = createLogger('demo');
- *  function sayHello (name: string) {
- *    logger.logMethodArgs('sayHello', {name});
- *  }
+ * - **color** is optional and automatically select from internal fancy color list.
+ * - **force** is optional and default to false.
+ *
+ * Example:
+ *
+ * ```ts
+ * import {createLogger} from 'https://esm.run/@alwatr/logger';
+ * const logger = createLogger('logger/demo');
+ * ```
  */
 export const createLogger = (
     scope: string,
@@ -108,6 +112,7 @@ export const createLogger = (
    * Required logger object, accident, error always reported even when the debug is false.
    */
   const requiredItems = {
+    debug,
     color,
     scope,
 

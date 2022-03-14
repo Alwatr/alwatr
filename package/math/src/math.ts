@@ -1,9 +1,15 @@
 import {TransformRangeOptions} from './type';
 
+/**
+ * Number.isFinite simple polyfill
+ */
 if (typeof Number.isFinite !== 'function') {
   Number.isFinite = isFinite;
 }
 
+/**
+ * Check the value is number or can convert to a number, for example string ' 123 ' can be converted to 123
+ */
 export function isNumber(value: unknown): boolean {
   if (typeof value === 'number') {
     return value - value === 0;

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/AliMD/alwatr/compare/v0.7.2...v0.8.0) (2022-03-14)
+
+
+### Bug Fixes
+
+* **signal:** remove once listene in dispatch change imediatly the loop! ([e4d420d](https://github.com/AliMD/alwatr/commit/e4d420d3a086558dc01dcd7a9c5fe3e96677f092))
+
+
+
+
+
+## [0.7.2](https://github.com/AliMD/alwatr/compare/v0.7.1...v0.7.2) (2022-03-12)
+
+
+### Bug Fixes
+
+* **signal:** promise to multi requests works ([dd59f0e](https://github.com/AliMD/alwatr/commit/dd59f0e5737abec72c41895b93365199fad66fcb))
+
+
+
+
+
 # [0.7.0](https://github.com/AliMD/alwatr/compare/v0.6.1...v0.7.0) (2022-03-12)
 
 **Note:** Version bump only for package @alwatr/signal

@@ -19,8 +19,19 @@ declare global {
 }
 
 export interface Logger {
+  /**
+   * Debug state for current scope base on localStorage `ALWATR_LOG` pattern.
+   */
+  readonly debug: boolean;
+
+  /**
+   * Color picked for current scope.
+   */
   readonly color: string;
 
+  /**
+   * Scope defined for this logger.
+   */
   readonly scope: string;
 
   /**

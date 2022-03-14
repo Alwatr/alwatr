@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/AliMD/alwatr/compare/v0.7.2...v0.8.0) (2022-03-14)
+
+
+### Bug Fixes
+
+* **router:** updateBrowserHistory issue ([22b16e5](https://github.com/AliMD/alwatr/commit/22b16e599089f3abe5eb9dc285563fa9510ad97e))
+* **signal:** remove once listene in dispatch change imediatly the loop! ([e4d420d](https://github.com/AliMD/alwatr/commit/e4d420d3a086558dc01dcd7a9c5fe3e96677f092))
+
+
+### Features
+
+* **demo:** router outlet demo ([54576f0](https://github.com/AliMD/alwatr/commit/54576f0397df1d1471467564529a01b4e75335bf))
+* **router:** improve demo for test signal! ([59a1017](https://github.com/AliMD/alwatr/commit/59a1017f3ed323fea8e9e798f612f0f54b74b399))
+* **router:** make outlet ([45852a8](https://github.com/AliMD/alwatr/commit/45852a809a9f48fb09cf9a8c5ecc3f6519f106cd))
+* **router:** simple demo ([884359a](https://github.com/AliMD/alwatr/commit/884359ac2c77a306c2410d6fd351382b416c36fe))
+
+
+
+
+
+## [0.7.2](https://github.com/AliMD/alwatr/compare/v0.7.1...v0.7.2) (2022-03-12)
+
+
+### Bug Fixes
+
+* **router:** trigger-click error when tagName undefined ([c16328b](https://github.com/AliMD/alwatr/commit/c16328bb6dc96b5c330015ac560cf95920b9c7b2))
+* **signal:** promise to multi requests works ([dd59f0e](https://github.com/AliMD/alwatr/commit/dd59f0e5737abec72c41895b93365199fad66fcb))
+
+
+### Features
+
+* **logger:** add debug and improve documents ([8f83d29](https://github.com/AliMD/alwatr/commit/8f83d2956e521f016fe530322f657c343f1a0b80))
+* **signal:** demo as test ([fc3f9fd](https://github.com/AliMD/alwatr/commit/fc3f9fdd8c76c6bc5117f3ee894480500f81cc80))
+
+
+
+
+
+## [0.7.1](https://github.com/AliMD/alwatr/compare/v0.7.0...v0.7.1) (2022-03-12)
+
+
+### Bug Fixes
+
+* **math:** build ([7cd8907](https://github.com/AliMD/alwatr/commit/7cd890765ddba0cca2938292eb8705995a2bfde8))
+
+
+
+
+
 # [0.7.0](https://github.com/AliMD/alwatr/compare/v0.6.1...v0.7.0) (2022-03-12)
 
 
