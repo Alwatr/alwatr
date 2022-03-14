@@ -6,7 +6,7 @@ export interface Route
   // href: https://example.com/product/100/book?cart=1&color=white#description
   sectionList: Array<string | number | boolean>; // [product, 100, book]
   queryParamList: ParamList; // {cart: 1, color: 'white'}
-  hash: string; // '#header'
+  hash: string; // '#description'
 }
 
 // @TODO: description
@@ -44,4 +44,9 @@ export interface InitOptions {
   popstateTrigger?: boolean;
 }
 
-
+export interface RoutesConfig {
+  map: (route: Route) => string | undefined;
+  list: Record<string, {
+    render: (route: Route) => unknown;
+  }>;
+}
