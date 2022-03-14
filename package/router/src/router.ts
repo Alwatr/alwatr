@@ -27,7 +27,11 @@ function initial(options?: InitOptions): void {
 /**
  * Make anchor valid href from route.
  *
- * @example <a href=${ makeUrl({sectionList: ['product', 100]}) }>
+ * Example:
+ *
+ * ```html
+ * <a href=${ router.makeUrl({sectionList: ['product', 100]}) }>
+ * ```
  */
 function makeUrl(route: Partial<Route>): string {
   logger.logMethodArgs('makeUrl', {route});
@@ -146,6 +150,9 @@ function outlet(routesConfig: RoutesConfig): unknown {
   return routesConfig.list[page].render(currentRoute);
 }
 
+/**
+ * The Router API.
+ */
 export const router = {
   get currentRoute(): Route {
     const route = routeChangeSignal.value;
