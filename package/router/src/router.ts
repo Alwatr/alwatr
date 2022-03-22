@@ -63,12 +63,14 @@ function makeUrl(route: Partial<Route>): string {
  *
  * outlet return `routesConfig.list[routesConfig.map(currentRoute)].render(currentRoute)`
  *
+ * if the location is app root and `routesConfig.map()` return noting then redirect to home automatically
  * if `routesConfig.map()` return noting or not found in the list the "404" route will be used.
- * if route location is app root and `routesConfig.map()` return noting then redirect to home automatically
+ *
+ * Example:
  *
  * ```ts
  * const routes: routesConfig = {
- *   map: (route: Route) => route.sectionList[0]?.toString(),
+ *   map: (route) => route.sectionList[0]?.toString(),
  *
  *   list: {
  *     'about': {
