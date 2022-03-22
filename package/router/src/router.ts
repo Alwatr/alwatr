@@ -148,11 +148,7 @@ function outlet(routesConfig: RoutesConfig): unknown {
           {page, currentRoute, routesConfig},
       );
       routesConfig.list[page] = {
-        render: () => `
-          <div style="font-size: 1.2em; font-weight: bold; text-align: center;">
-            Error 404: Page Not Found!
-          </div>
-        `,
+        render: () => 'Error 404: Page Not Found!',
       };
     }
   }
