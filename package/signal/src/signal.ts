@@ -13,14 +13,16 @@ import type {
   ListenerCallback,
   SignalProvider,
   SignalProviderOptions,
+  ListenerObject,
+  SignalObject,
 } from './type';
 
 /**
  * Signal API interface as a remote controller.
  */
 export class SignalInterface<SignalName extends keyof AlwatrSignals> {
-  private _signal;
-  private _logger;
+  protected _signal;
+  protected _logger;
 
   constructor(signalName: SignalName) {
     this._logger = createLogger('Signal:' + signalName);
@@ -86,6 +88,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
     return this._signal.disabled;
   }
   set disabled(disabled: boolean) {
+    this._logger.logProperty('disabled', disabled);
     this._signal.disabled = disabled;
   }
 
@@ -129,7 +132,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    */
   setProvider(signalProvider: SignalProvider<SignalName>, options?: SignalProviderOptions): symbol {
     this._logger.logMethodArgs('setProvider', {options});
-    return _setSignalProvider(this.name, signalProvider, options);
+    return _setSignalProvider(this.name, signalProvider, options).id;
   }
 
   // @TODO: removeProvider(signalName): void
@@ -226,30 +229,56 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    * const listener = contentChangeSignal.addListener((content) => console.log(content));
    * ```
    */
-  addListener(listener: ListenerCallback<SignalName>, options?: ListenerOptions): symbol {
+  addListener(listener: ListenerCallback<SignalName>, options?: ListenerOptions): ListenerInterface<SignalName> {
     this._logger.logMethodArgs('addListener', {listener, options});
-    return _addSignalListener(this._signal.name, listener, options);
+    const listenerId = _addSignalListener(this._signal.name, listener, options);
+    return new ListenerInterface(this._signal, listenerId);
+  }
+}
+
+/**
+ * Signal Listener API interface as a remote controller.
+ */
+export class ListenerInterface<SignalName extends keyof AlwatrSignals> {
+  protected _logger;
+  constructor(
+    protected _signal: SignalObject<SignalName>,
+    protected _listener: ListenerObject<SignalName>,
+  ) {
+    this._logger = createLogger('Listener of ' + _signal.name);
   }
 
   /**
-   * Remove listener from specific signal.
+   * Disable signal, all dispatch's ignored (just value updated) and no more listeners will be called.
+   *
+   * Example:
+   *
+   * ```ts
+   * contentChangeSignal.disabled = true;
+   * ```
+   */
+  get disabled(): boolean {
+    return this._listener.disabled;
+  }
+  set disabled(disabled: boolean) {
+    this._logger.logProperty('disabled', disabled);
+    this._listener.disabled = disabled;
+  }
+
+  /**
+   * Remove listener from target signal.
    *
    * Example:
    *
    * ```ts
    * const contentChangeSignal = new SignalInterface('content-change');
-   * const listenerId = contentChangeSignal.addListener((content) => console.log(content));
+   * const listener = contentChangeSignal.addListener((content) => console.log(content));
    * ...
-   * contentChangeSignal.removeListener(listenerId);
+   * listener.remove();
    * ```
    */
-  removeListener(listenerId: symbol): void {
-    this._logger.logMethod('removeListener');
-    _removeSignalListener(this._signal.name, listenerId);
+  remove(): void {
+    this._logger.logMethod('remove');
+    _removeSignalListener(this._signal.name, this._listener.id);
   }
 }
-
-// @TODO: getSignalOptions(signalName);
-// @TODO: getListenerOptions(listenerId);
-// @TODO: setSignalOptions(signalName, {...});
-// @TODO: setListenerOptions(listenerId, {...});
