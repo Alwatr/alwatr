@@ -20,7 +20,8 @@ function initial(options?: InitOptions): void {
   // first route request.
   if (!routeChangeSignal.dispatched) {
     const {pathname, search, hash} = window.location;
-    routeChangeSignal.request({pathname, search, hash, pushState: false});
+    // Don't use `routeChangeSignal.request()` because we need set the route value immediately.
+    routeChangeSignal.dispatch(routeSignalProvider({pathname, search, hash, pushState: false}));
   }
 }
 
