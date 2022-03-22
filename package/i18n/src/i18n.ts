@@ -1,6 +1,9 @@
 import {logger, _localize, configuration} from './core';
-import {localChangeSignal} from './signal';
-import type {I18nOptions} from './type';
+import {localChangeSignal, l10nResourceChangeSignal} from './signal';
+import type {I18nOptions, Local} from './type';
+
+export {localChangeSignal, l10nResourceChangeSignal};
+export type {Local};
 
 /**
  * Initial and config the internationalization.

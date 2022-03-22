@@ -10,5 +10,6 @@ declare global {
     'l10n-resource-change': Local;
   }
 }
+
 export const l10nResourceChangeSignal = new SignalInterface('l10n-resource-change');
 export const localChangeSignal = new SignalInterface('local-change');
