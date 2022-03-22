@@ -2,6 +2,7 @@ import {joinParameterList, logger, routeSignalProvider} from './core';
 import {routeChangeSignal} from './signal';
 import {clickTrigger} from './trigger-click';
 import {popstateTrigger} from './trigger-popstate';
+import type {SignalInterface} from '@alwatr/signal';
 import type {InitOptions, Route, RoutesConfig} from './type';
 
 export type {Route, RequestRouteParam, RoutesConfig} from './type';
@@ -180,5 +181,5 @@ export const router = {
   /**
    * Signal interface of 'route-change' signal.
    */
-  signal: routeChangeSignal,
+  signal: routeChangeSignal as SignalInterface<'route-change'>,
 } as const;
