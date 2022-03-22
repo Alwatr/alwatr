@@ -249,12 +249,14 @@ export class ListenerInterface<SignalName extends keyof AlwatrSignals> {
   }
 
   /**
-   * Disable signal, all dispatch's ignored (just value updated) and no more listeners will be called.
+   * Disable the listener, not called anymore.
    *
    * Example:
    *
    * ```ts
-   * contentChangeSignal.disabled = true;
+   * const listener = contentChangeSignal.addListener((content) => console.log(content));
+   * ...
+   * listener.disabled = true;
    * ```
    */
   get disabled(): boolean {
