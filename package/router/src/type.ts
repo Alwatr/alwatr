@@ -44,8 +44,87 @@ export interface InitOptions {
   popstateTrigger?: boolean;
 }
 
+/**
+ * Routes config for router.outlet.
+ *
+ * The `router.outlet` return `list[map(currentRoute)].render(currentRoute)`.
+ *
+ * Example:
+ *
+ * ```ts
+ * const routes: routesConfig = {
+ *   map: (route) => route.sectionList[0]?.toString(),
+ *
+ *   list: {
+ *     'about': {
+ *       render: () => html`<page-about></page-about>`,
+ *     },
+ *     'product-list': {
+ *       render: () => {
+ *         import('./page-product-list.js'); // lazy loading page
+ *         html`<page-product-list></page-product-list>`,
+ *       }
+ *     },
+ *     'contact': {
+ *       render: () => html`<page-contact></page-contact>`,
+ *     },
+ *
+ *     'home': {
+ *       render: () => html`<page-home></page-home>`,
+ *     },
+ *     '404': {
+ *       render: () => html`<page-404></page-404>`,
+ *     },
+ *   },
+ * };
+ *
+ * router.outlet(routes);
+ * ```
+ */
 export interface RoutesConfig {
+  /**
+   * Routes map for finding the target route name (page name).
+   *
+   * if the location is app root and `routesConfig.map()` return noting then redirect to home automatically
+   * if `map` return noting or not found in the list the "404" route will be used.
+   *
+   * Example:
+   *
+   * ```ts
+   * map: (route) => route.sectionList[0]?.toString(),
+   * ```
+   */
   map: (route: Route) => string | undefined;
+
+  /**
+   * Define list of routes.
+   *
+   * Example:
+   *
+   * ```ts
+   * list: {
+   *   'about': {
+   *     render: () => html`<page-about></page-about>`,
+   *   },
+   *   'product-list': {
+   *     render: () => {
+   *       import('./page-product-list.js'); // lazy loading page
+   *       html`<page-product-list></page-product-list>`,
+   *     }
+   *   },
+   *   'contact': {
+   *     render: () => html`<page-contact></page-contact>`,
+   *   },
+   *
+   *   'home': {
+   *     render: () => html`<page-home></page-home>`,
+   *   },
+   *   '404': {
+   *     render: () => html`<page-404></page-404>`,
+   *   },
+   * },
+   * ```
+   */
   list: Record<string, {
     render: (route: Route) => unknown;
   }>;

@@ -2,8 +2,11 @@ import {joinParameterList, logger, routeSignalProvider} from './core';
 import {routeChangeSignal} from './signal';
 import {clickTrigger} from './trigger-click';
 import {popstateTrigger} from './trigger-popstate';
+
+import type {SignalInterface} from '@alwatr/signal';
 import type {InitOptions, Route, RoutesConfig} from './type';
 
+export {routeChangeSignal};
 export type {Route, RequestRouteParam, RoutesConfig} from './type';
 
 /**
@@ -20,7 +23,8 @@ function initial(options?: InitOptions): void {
   // first route request.
   if (!routeChangeSignal.dispatched) {
     const {pathname, search, hash} = window.location;
-    routeChangeSignal.request({pathname, search, hash, pushState: false});
+    // Don't use `routeChangeSignal.request()` because we need set the route value immediately.
+    routeChangeSignal.dispatch(routeSignalProvider({pathname, search, hash, pushState: false}));
   }
 }
 
@@ -62,12 +66,14 @@ function makeUrl(route: Partial<Route>): string {
  *
  * outlet return `routesConfig.list[routesConfig.map(currentRoute)].render(currentRoute)`
  *
+ * if the location is app root and `routesConfig.map()` return noting then redirect to home automatically
  * if `routesConfig.map()` return noting or not found in the list the "404" route will be used.
- * if route location is app root and `routesConfig.map()` return noting then redirect to home automatically
+ *
+ * Example:
  *
  * ```ts
  * const routes: routesConfig = {
- *   map: (route: Route) => route.sectionList[0]?.toString(),
+ *   map: (route) => route.sectionList[0]?.toString(),
  *
  *   list: {
  *     'about': {
@@ -143,7 +149,9 @@ function outlet(routesConfig: RoutesConfig): unknown {
           'Page "404" not defined in routesConfig.list',
           {page, currentRoute, routesConfig},
       );
-      routesConfig.list[page] = {render: () => '404 Not Found!'};
+      routesConfig.list[page] = {
+        render: () => 'Error 404: Page Not Found!',
+      };
     }
   }
 
@@ -171,5 +179,5 @@ export const router = {
   /**
    * Signal interface of 'route-change' signal.
    */
-  signal: routeChangeSignal,
+  signal: routeChangeSignal as SignalInterface<'route-change'>,
 } as const;
