@@ -146,7 +146,13 @@ function outlet(routesConfig: RoutesConfig): unknown {
           'Page "404" not defined in routesConfig.list',
           {page, currentRoute, routesConfig},
       );
-      routesConfig.list[page] = {render: () => '404 Not Found!'};
+      routesConfig.list[page] = {
+        render: () => `
+          <div style="font-size: 1.2em; font-weight: bold; text-align: center;">
+            Error 404: Page Not Found!
+          </div>
+        `,
+      };
     }
   }
 
