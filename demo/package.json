@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/demo",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "main": "index.js",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -9,7 +9,7 @@
     "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
   ],
   "dependencies": {
-    "@alwatr/logger": "^0.8.0",
+    "@alwatr/logger": "^0.9.0",
     "lit": "^2.1.3",
     "tslib": "^2.2.0"
   }
