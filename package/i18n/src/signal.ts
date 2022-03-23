@@ -1,4 +1,5 @@
 import {SignalInterface} from '@alwatr/signal';
+
 import {L10Resource, Local} from './type';
 
 declare global {

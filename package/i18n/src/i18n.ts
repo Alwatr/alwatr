@@ -1,5 +1,6 @@
 import {logger, _localize, configuration} from './core';
 import {localChangeSignal} from './signal';
+
 import type {I18nOptions} from './type';
 
 /**

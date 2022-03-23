@@ -1,4 +1,5 @@
 import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
+
 import type {ParamList, RequestRouteParam, Route} from './type';
 
 alwatrRegisteredList.push({

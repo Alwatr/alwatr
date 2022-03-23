@@ -1,4 +1,5 @@
 import {SignalInterface} from '@alwatr/signal';
+
 import type {RequestRouteParam, Route} from './type';
 
 declare global {
