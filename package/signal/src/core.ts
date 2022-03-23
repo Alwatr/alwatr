@@ -81,7 +81,7 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
     signalName: SignalName,
     signalCallback: ListenerCallback<SignalName>,
     options?: ListenerOptions,
-): symbol {
+): ListenerObject<SignalName> {
   logger.logMethodArgs('addSignalListener', {signalName, options});
 
   const signal = __getSignalObject(signalName);
@@ -126,7 +126,7 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
     }
   }
 
-  return listener.id;
+  return listener;
 }
 
 /**
@@ -205,7 +205,7 @@ export function _setSignalProvider<SignalName extends keyof AlwatrRequestSignals
     signalName: SignalName,
     signalProvider: SignalProvider<SignalName>,
     options?: SignalProviderOptions,
-): symbol {
+): ListenerObject<SignalName> {
   logger.logMethodArgs('setSignalProvider', {signalName, options});
 
   // @TODO: refactor with removeSignalProvider

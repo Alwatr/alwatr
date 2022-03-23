@@ -157,3 +157,28 @@ Example:
 ```ts
 logger.logOther('foo:', 'bar', {a: 1});
 ```
+
+### How to handle promises?
+
+For example with a promise function with error:
+
+```ts
+const failPromiseTest = (): Promise<never> => new Promise((_, reject) => reject(new Error('my_error_code')));
+```
+
+Best practices to catch the error and log it:
+
+```ts
+// Unhandled promise rejection (just log it)
+failPromiseTest()
+    .catch((err) => logger.error('myMethod', (err as Error).message || 'error_code', (err as Error).stack || err));
+
+// Handled promise rejection
+try {
+  await failPromiseTest();
+} catch (err) {
+  logger.accident('myMethod', 'error_code', 'failPromiseTest failed!, ' + (err as Error).message,
+      (err as Error).stack || err);
+  // do something to handle the error...
+}
+```

@@ -200,14 +200,28 @@ Example:
 const listener = contentChangeSignal.addListener((content) => console.log(content));
 ```
 
-### `removeListener(listener)`
+### Listener API Interface
+
+#### `listener.disabled`
+
+Disable the listener, not called anymore.
+
+Example:
+
+```ts
+const listener = contentChangeSignal.addListener((content) => console.log(content));
+...
+listener.disabled = true;
+```
+
+#### `listener.remove()`
 
 Remove listener from specific signal.
 
 Example:
 
 ```ts
-const listenerId = contentChangeSignal.addListener((content) => console.log(content));
+const listener = contentChangeSignal.addListener((content) => console.log(content));
 ...
-contentChangeSignal.removeListener(listenerId);
+listener.remove();
 ```
