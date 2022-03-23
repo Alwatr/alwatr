@@ -26,7 +26,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
   protected _logger;
 
   constructor(signalName: SignalName) {
-    this._logger = createLogger('Signal:' + signalName);
+    this._logger = createLogger(`signal<${signalName}>`);
     this._signal = __getSignalObject(signalName);
   }
 
