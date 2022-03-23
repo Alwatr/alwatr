@@ -3,8 +3,8 @@ import {routeChangeSignal} from './signal';
 import {clickTrigger} from './trigger-click';
 import {popstateTrigger} from './trigger-popstate';
 
-import type {SignalInterface} from '@alwatr/signal';
 import type {InitOptions, Route, RoutesConfig} from './type';
+import type {SignalInterface} from '@alwatr/signal';
 
 export {routeChangeSignal};
 export type {Route, RequestRouteParam, RoutesConfig} from './type';

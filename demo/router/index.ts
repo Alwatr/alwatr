@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {router} from '@alwatr/router';
+
 import type {Route, RoutesConfig} from '@alwatr/router';
 
 /**

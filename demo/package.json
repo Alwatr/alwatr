@@ -10,7 +10,6 @@
   ],
   "dependencies": {
     "@alwatr/logger": "^0.9.0",
-    "lit": "^2.1.3",
     "tslib": "^2.2.0"
   }
 }
