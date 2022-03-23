@@ -6,6 +6,8 @@ extends:
   - plugin:@typescript-eslint/eslint-recommended
   - plugin:@typescript-eslint/recommended
   - plugin:wc/recommended
+  - plugin:import/recommended
+  - plugin:import/typescript
 
 env:
   browser: true
@@ -19,6 +21,7 @@ parserOptions:
 plugins:
   - "@typescript-eslint"
   - wc
+  - import
 
 settings:
   wc:
@@ -36,6 +39,19 @@ rules:
   no-floating-decimal: error
   space-infix-ops: error
   "@typescript-eslint/explicit-function-return-type": error
+  "import/order":
+    - error
+    - groups:
+        - "type"
+        - "builtin"
+        - "external"
+        - "internal"
+        - - "parent"
+          - "sibling"
+          - "index"
+      "newlines-between": "always"
+      alphabetize:
+        order: "asc"
 
   # TODO: Enable in future
   require-jsdoc: off
