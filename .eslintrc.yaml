@@ -51,7 +51,8 @@ rules:
         - "type"
       "newlines-between": "always"
       alphabetize:
-        order: "asc"
+        order: asc
+        caseInsensitive: true
 
   # TODO: Enable in future
   require-jsdoc: off
