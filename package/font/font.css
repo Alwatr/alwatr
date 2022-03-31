@@ -1,10 +1,10 @@
 /******** Vazirmatn ********/
 @font-face {
   font-family: Vazirmatn;
-  src: 
-    local("Vazirmatn Thin"), 
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Thin.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Thin.woff2') format('woff2-variations'),
+  src:
+    local("Vazirmatn Thin"),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Thin.woff2') format('woff2')
   ;
   font-weight: 100;
@@ -15,10 +15,10 @@
 
 @font-face {
   font-family: Vazirmatn;
-  src: 
-    local("Vazirmatn ExtraLight"), 
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-ExtraLight.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-ExtraLight.woff2') format('woff2-variations'),
+  src:
+    local("Vazirmatn ExtraLight"),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-ExtraLight.woff2') format('woff2')
   ;
   font-weight: 200;
@@ -29,10 +29,10 @@
 
 @font-face {
   font-family: Vazirmatn;
-  src: 
+  src:
     local("Vazirmatn Light"),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Light.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Light.woff2') format('woff2-variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Light.woff2') format('woff2')
   ;
   font-weight: 300;
@@ -43,10 +43,10 @@
 
 @font-face {
   font-family: Vazirmatn;
-  src: 
+  src:
     local("Vazirmatn"),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2-variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2')
   ;
   font-weight: 400;
@@ -57,10 +57,10 @@
 
 @font-face {
   font-family: Vazirmatn;
-  src: 
-    local("Vazirmatn Medium"), 
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Medium.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Medium.woff2') format('woff2-variations'),
+  src:
+    local("Vazirmatn Medium"),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Medium.woff2') format('woff2')
   ;
   font-weight: 500;
@@ -71,10 +71,10 @@
 
 @font-face {
   font-family: Vazirmatn;
-  src: 
-    local("Vazirmatn SemiBold"), 
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-SemiBold.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-SemiBold.woff2') format('woff2-variations'),
+  src:
+    local("Vazirmatn SemiBold"),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-SemiBold.woff2') format('woff2')
   ;
   font-weight: 600;
@@ -85,10 +85,10 @@
 
 @font-face {
   font-family: Vazirmatn;
-  src: 
-    local("Vazirmatn"), 
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2-variations'),
+  src:
+    local("Vazirmatn"),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2')
   ;
   font-weight: 700;
@@ -99,10 +99,10 @@
 
 @font-face {
   font-family: Vazirmatn;
-  src: 
-    local("Vazirmatn ExtraBold"), 
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-ExtraBold.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-ExtraBold.woff2') format('woff2-variations'),
+  src:
+    local("Vazirmatn ExtraBold"),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-ExtraBold.woff2') format('woff2')
   ;
   font-weight: 800;
@@ -113,10 +113,10 @@
 
 @font-face {
   font-family: Vazirmatn;
-  src: 
-    local("Vazirmatn Black"), 
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Black.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Black.woff2') format('woff2-variations'),
+  src:
+    local("Vazirmatn Black"),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/fonts/webfonts/Vazirmatn-Black.woff2') format('woff2')
   ;
   font-weight: 900;
@@ -129,10 +129,10 @@
 /******** Vazirmatn ********/
 @font-face {
   font-family: Sahel;
-  src: 
+  src:
     local("Sahel"),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel.woff2') format('woff2-variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-VF.woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-VF.woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel.woff2') format('woff2')
     url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel.woff') format('woff')
   ;
@@ -143,10 +143,10 @@
 
 @font-face {
   font-family: Sahel;
-  src: 
+  src:
     local("Sahel"),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-Bold.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-Bold.woff2') format('woff2-variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-VF.woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-VF.woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-Bold.woff2') format('woff2'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-Bold.woff') format('woff')
   ;
@@ -157,10 +157,10 @@
 
 @font-face {
   font-family: Sahel;
-  src: 
+  src:
     local("Sahel Light"),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-Light.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-Light.woff2') format('woff2-variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-VF.woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-VF.woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-Light.woff2') format('woff2'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-Light.woff') format('woff')
   ;
@@ -171,10 +171,10 @@
 
 @font-face {
   font-family: Sahel;
-  src: 
+  src:
     local("Sahel SemiBold"),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-SemiBold.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-SemiBold.woff2') format('woff2-variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-VF.woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-VF.woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-SemiBold.woff2') format('woff2'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-SemiBold.woff') format('woff')
   ;
@@ -187,8 +187,8 @@
   font-family: Sahel;
   src:
     local("Sahel Black"),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-Black.woff2') format('woff2 supports variations'),
-    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-Black.woff2') format('woff2-variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-VF.woff2') format('woff2 supports variations'),
+    url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-VF.woff2') format('woff2-variations'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-Black.woff2') format('woff2'),
     url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font/dist/Sahel-Black.woff') format('woff')
   ;
