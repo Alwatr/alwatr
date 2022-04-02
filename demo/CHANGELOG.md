@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/AliMD/alwatr/compare/v0.9.0...v0.10.0) (2022-04-02)
+
+
+### Bug Fixes
+
+* **font:** cleanup ([cdd4ee1](https://github.com/AliMD/alwatr/commit/cdd4ee15332cb9f1ec19bf34ec02cb1f5999cad5))
+* try to fix typescript importer in eslint ([ceb508c](https://github.com/AliMD/alwatr/commit/ceb508c9d8152aba4f3833b1c1f4930828e2014d))
+
+
+### Features
+
+* **demo:** add font demo ([33f3825](https://github.com/AliMD/alwatr/commit/33f3825a7e23b86281d047dd3be3b2f8eb862b8d))
+* **demo:** font ([8035d73](https://github.com/AliMD/alwatr/commit/8035d73dc99d4ff9c8eec0f70bec43b97b80320c))
+
+
+
+
+
 # [0.9.0](https://github.com/AliMD/alwatr/compare/v0.8.0...v0.9.0) (2022-03-22)
 
 **Note:** Version bump only for package @alwatr/demo
