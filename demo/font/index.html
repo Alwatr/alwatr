@@ -1,39 +1,72 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@alwatr/font</title>
-    <link rel="preload" href="/node_modules/@alwatr/font/font.css" as="style" />
-    <link rel="stylesheet" href="/node_modules/@alwatr/font/font.css">
-    
-    <style>
-      .Vazirmatn {
-        font-family: Vazirmatn;
-      }
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 
-      .Sahel {
-        font-family: Sahel;
-      }
-    </style>
-    <script type="module" src="./index.js"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@alwatr/font</title>
+  <link rel="stylesheet" href="/node_modules/@alwatr/font/font.css" fetchpriority="high" />
 
-  <body>
-    <select id="select-font"></select>
-    <section id="font-preview">
-      <h3>تست فونت انتخابی</h3>
-      <p>
-        با توجه به حجم بالای فونت ها لطفا بعد از تغییرات شکیبا باشید.<br/>
-        در این فونت ها حروف گ چ پ ژ و یا عبارات عربی همراه با اِعراب به درستی کار میکنند.<br/>
-        لّلهُمَّ صَلِّ عَلی مُحَمَّد وَآلِ مُحَمَّد وَعَجِّل فَرَجَهُم<br/>
-        این فونت ها برای وب اصلاح شدند، برای مثال اعداد. 9 8 7 6 5 4 3 2 1 0<br/>
-        جهت استفاده نیازی به دانلود فونت و یا فایل CSS نیست<br/>
-        <i>فقط کافیه تگ لینک رو به سایتتون اضافه کنید.</i><br/>
-        <b>دقت کنید که برخی از فونت ها حالت بُلد خوبی ندارند</b><br/>
-        امیدوارم این سایت مفید و مورد استفاده قرار بگیره.
-        
-      </p>
-    </section>
-  </body>
+  <style>
+    body {
+      font-family: var(--font-system);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    section {
+      max-width: 500px;
+      margin: 2em auto;
+    }
+
+    .vazirmatn {
+      font-family: var(--font-vazirmatn), var(--font-system);
+    }
+
+    .vazirmatn-rd {
+      font-family: var(--font-vazirmatn-rd), var(--font-system);
+    }
+  </style>
+</head>
+
+<body>
+  <h1 dir="ltr">@alwatr/font</h1>
+  <section class="vazirmatn">
+    <h3>فونت وزیر‌متن</h3>
+    <p contenteditable="true" spellcheck="false">
+      بِسْمِ اللهِ الرَّحْمنِ الرَّحِیمِ
+      <br/>
+      به نام خداوند بخشنده مهربان
+      <br/><br/>
+      اللَّهُمَ کُنْ لِوَلِیکَ الحُجَةِ بنِ الحَسَن صَلَواتُکَ علَیهِ و عَلی آبائِهِ فِی هَذِهِ السَّاعَةِ وَ فِی کُلِّ سَاعَةٍ وَلِیاً وَ حَافِظاً وَ قَائِداً وَ نَاصِراً وَ دَلِیلًا وَ عَیناً حَتَّی تُسْکِنَهُ أَرْضَکَ طَوْعاً وَ تُمَتِّعَهُ فِیهَا طَوِیلًا.
+      <br/>
+      خدایا برای ولی‌ات حجّة بن الحسن كه درود‌هاى تو بر او و بر پدرانش باد، در این ساعت و در هر ساعت، سرپرست و نگهبان و پیشوا و یاور و راهنما و دیده‌بان باش، تا او را با رغبت مردم در زمینت سکونت دهی و زمانی طولانی بهره‌مندش سازی.
+      <br/>
+      0123456789 ۰۱۲۳۴۵۶۷۸۹ ٠١٢٣٤٥٦٧٨٩
+    </p>
+  </section>
+
+  <section class="vazirmatn-rd">
+    <h3>فونت وزیر‌متن نقطه‌گرد</h3>
+    <p></p>
+  </section>
+
+  <script>
+    const editor = document.querySelector('[contenteditable]');
+    const boxList = document.querySelectorAll('section>p');
+
+    function updateSampleData() {
+      const content = editor.innerHTML;
+      for (let i = 0; i < boxList.length; i++) {
+        boxList[i].innerHTML = content;
+      }
+    }
+
+    editor.addEventListener('focusout', updateSampleData);
+    updateSampleData();
+  </script>
+</body>
 </html>
