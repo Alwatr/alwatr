@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/AliMD/alwatr/compare/v0.10.0...v0.10.1) (2022-04-02)
+
+
+### Bug Fixes
+
+* **font:** including woff2 ([6d10eb3](https://github.com/AliMD/alwatr/commit/6d10eb33dbdd0f9b6b0f3b9930e44b099d499b77))
+
+
+
+
+
 # [0.10.0](https://github.com/AliMD/alwatr/compare/v0.9.0...v0.10.0) (2022-04-02)
 
 
