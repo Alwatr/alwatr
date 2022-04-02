@@ -1,27 +1,26 @@
 {
   "name": "@alwatr/font",
-  "version": "0.9.0",
-  "description": "Simple useful Arabic/Persian fonts package for web developers.",
+  "version": "0.0.0",
+  "description": "Best practices of using persian/arabic web fonts for progressive web applications (The Right Way).",
   "keywords": [
-    "math",
-    "mathematics",
-    "typescript",
-    "esm",
+    "font",
+    "fonts",
+    "persian",
+    "farsi",
+    "arabic",
+    "typography",
+    "pwa",
     "alwatr"
   ],
-  "main": "font.js",
-  "type": "module",
-  "types": "math.d.ts",
+  "main": "font.css",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "contributors": [
     "Godgiven <asmanp2012@gmail.com>"
   ],
   "license": "MIT",
   "files": [
-    "**/*.js",
-    "**/*.d.ts",
-    "**/*.map",
-    "**/*.html",
+    "**/*.woff",
+    "**/*.css",
     "**/*.md"
   ],
   "publishConfig": {
@@ -35,8 +34,5 @@
   "homepage": "https://github.com/AliMD/alwatr/tree/main/package/font#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
-  },
-  "dependencies": {
-    "tslib": "^2.3.1"
   }
 }
