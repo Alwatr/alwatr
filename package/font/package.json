@@ -19,7 +19,7 @@
   ],
   "license": "MIT",
   "files": [
-    "**/*.woff",
+    "**/*.woff*",
     "**/*.css",
     "**/*.md"
   ],
