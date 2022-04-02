@@ -1,22 +1,34 @@
 # @alwatr/font
 
-Simple useful Arabic/Persian fonts package for web developers.
+Best practices of using persian/arabic web fonts for progressive web applications (The Right Way).
 
 ## How to use
 
-### Use CSS
-
-Copy the code as the first element in the `<head>` of your HTML document.
-
-```css
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@alwatr/font/font.css" as="style" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@alwatr/font/font.css">
-```
-
-use `font-family` in your css file
-
-if you want load any font before page load you should follow way:
-
 ```html
-<link rel="preload" href="font-url" as="font" type="font/woff" crossorigin />
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <link 
+    rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/@alwatr/font@1.2.3/font.min.css" 
+    fetchpriority="high" 
+  />
+
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/@alwatr/font@1.2.3/vazirmatn/vazirmatn[wght].woff2" as="font" type="font/woff2" crossorigin />
+
+  <style>
+    body {
+      font-family: var(--font-vazirmatn), var(--font-system);
+    }
+  </style>
+</head>
+<body>
+  <h1>بِسْمِ اللهِ الرَّحْمنِ الرَّحِیمِ</h1>
+  <h2>به نام خداوند بخشنده مهربان</h2>
+</body>
+</html>
 ```
