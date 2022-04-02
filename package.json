@@ -19,7 +19,7 @@
     "pp": "npm-run-all --sequential clean build ver-patch publish",
     "lint": "npm-run-all --sequential lint:*",
     "lint:ts": "eslint **/*.ts",
-    "build": "npm-run-all --sequential build:ts build:es",
+    "build": "npm-run-all --sequential build:ts && lerna run build",
     "build:ts": "tsc --build",
     "clean": "yarn build:ts --clean && lerna exec \"rm -rf dist node_modules\" && find package -name '*.js' -type f -delete && find package -name '*.d.ts' -type f -delete && find package -name '*.map' -type f -delete",
     "serve:dev": "web-dev-server --config dev-server.mjs",
