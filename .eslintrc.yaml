@@ -42,6 +42,9 @@ rules:
     - allowIndirect: true
   no-floating-decimal: error
   space-infix-ops: error
+  new-cap:
+    - error
+    - capIsNewExceptionPattern: 'Mixin$'
   "@typescript-eslint/explicit-function-return-type": error
   "import/order":
     - error

@@ -16,11 +16,7 @@
   "contributors": [],
   "license": "MIT",
   "files": [
-    "**/*.js",
-    "**/*.d.ts",
-    "**/*.map",
-    "**/*.html",
-    "**/*.md"
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
   ],
   "publishConfig": {
     "access": "public"
