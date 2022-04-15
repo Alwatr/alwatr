@@ -1,0 +1,43 @@
+{
+  "name": "@alwatr/icon",
+  "version": "0.1.0",
+  "description": "Premium icons for AlWatr.",
+  "keywords": [
+    "icon",
+    "ionicons",
+    "ionic",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "main": "icon.js",
+  "type": "module",
+  "types": "icon.d.ts",
+  "author": "MohammadMahdi Zamanian <mm25zamanian@gmail.com> (https://mm25zamanian.ir)",
+  "license": "MIT",
+  "files": [
+    "**/*.js",
+    "**/*.d.ts",
+    "**/*.map",
+    "**/*.html",
+    "**/*.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "package/icon"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/icon#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "dependencies": {
+    "@alwatr/fetch": "^0.10.0",
+    "@alwatr/logger": "^0.10.0",
+    "lit": "^2.2.2",
+    "tslib": "^2.3.1"
+  }
+}

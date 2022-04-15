@@ -114,6 +114,7 @@
     {"path": "./package/router"},
     {"path": "./package/i18n"},
     {"path": "./package/math"},
+    {"path": "./package/icon"},
     {"path": "./demo"},
   ]
 }
