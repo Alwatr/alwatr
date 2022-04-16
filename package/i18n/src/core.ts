@@ -1,6 +1,8 @@
-import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
 import {getJson} from '@alwatr/fetch';
+import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
+
 import {l10nResourceChangeSignal, localChangeSignal} from './signal';
+
 import type {I18nOptions, L10Resource} from './type';
 
 export {localChangeSignal, l10nResourceChangeSignal};

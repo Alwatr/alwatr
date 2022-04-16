@@ -8,15 +8,20 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
-  "cSpell.language": "en,fa",
+  "cSpell.language": "en,fa,fa-IR",
   "cSpell.words": [
     "alwatr",
+    "Alwatr",
+    "calt",
     "khafan",
     "mastmalize",
     "Mihandoost",
     "noncallable",
+    "preconnect",
+    "preload",
+    "tnum",
     "tsbuildinfo",
-    "Alwatr"
+    "vazirmatn"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "files.exclude": {

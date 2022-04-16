@@ -1,4 +1,4 @@
-name: Tests
+name: Lint
 
 on:
   pull_request:
@@ -13,8 +13,6 @@ env:
 
 jobs:
   lint:
-    name: Lint
-
     runs-on: ubuntu-latest
 
     steps:
@@ -27,19 +25,3 @@ jobs:
 
       - run: yarn install --frozen-lockfile
       - run: yarn lint
-
-  build:
-    name: Build TypeScript
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'yarn'
-
-      - run: yarn install --frozen-lockfile
-      - run: yarn build:ts

@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/AliMD/alwatr/compare/v0.10.0...v0.10.1) (2022-04-02)
+
+
+### Bug Fixes
+
+* **font:** including woff2 ([6d10eb3](https://github.com/AliMD/alwatr/commit/6d10eb33dbdd0f9b6b0f3b9930e44b099d499b77))
+
+
+
+
+
+# [0.10.0](https://github.com/AliMD/alwatr/compare/v0.9.0...v0.10.0) (2022-04-02)
+
+
+### Bug Fixes
+
+* **font:** cleanup ([cdd4ee1](https://github.com/AliMD/alwatr/commit/cdd4ee15332cb9f1ec19bf34ec02cb1f5999cad5))
+* **font:** package file ([5c63a06](https://github.com/AliMD/alwatr/commit/5c63a0641d319e4b95ecc86671ce9456ab4d4be7))
+* **font:** woff2-variations addres ([88e4c52](https://github.com/AliMD/alwatr/commit/88e4c5296b9efe614aefeb45241fa066e40527c5))
+* **package.json:** build script ([8ad2061](https://github.com/AliMD/alwatr/commit/8ad2061dbc2bb73f01597794c12c53baa13a0d8b))
+* **package:** build/lint script ([939a1cf](https://github.com/AliMD/alwatr/commit/939a1cf494c1d1275ccfa459d4ab5bd9ae41cb0d))
+* try to fix typescript importer in eslint ([ceb508c](https://github.com/AliMD/alwatr/commit/ceb508c9d8152aba4f3833b1c1f4930828e2014d))
+
+
+### Features
+
+* **demo:** add font demo ([33f3825](https://github.com/AliMD/alwatr/commit/33f3825a7e23b86281d047dd3be3b2f8eb862b8d))
+* **demo:** font ([8035d73](https://github.com/AliMD/alwatr/commit/8035d73dc99d4ff9c8eec0f70bec43b97b80320c))
+* **font:** add vazirmatn font files ([6499d01](https://github.com/AliMD/alwatr/commit/6499d01fca69909071debefa545d6e9a9d5d85a1))
+* **font:** define fonts, the wight way! ([215afb8](https://github.com/AliMD/alwatr/commit/215afb8959dbc3fd1f0e2e0ebe10a878ab2ddec8))
+* **font:** init ([3bea1d9](https://github.com/AliMD/alwatr/commit/3bea1d9939c688cb9c80c87bb35c09910239b5a8))
+* **font:** sahel font ([7cd8b27](https://github.com/AliMD/alwatr/commit/7cd8b2785c1146f57241a4a0df6817988726d3f3))
+* **lint:** add import eslint ([7f2f1f5](https://github.com/AliMD/alwatr/commit/7f2f1f5f4b05a5940d711898606dd65cce6fc1a5))
+
+
+
+
+
 # [0.9.0](https://github.com/AliMD/alwatr/compare/v0.8.0...v0.9.0) (2022-03-22)
 
 
