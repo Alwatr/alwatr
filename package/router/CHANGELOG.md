@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/AliMD/alwatr/compare/v0.8.0...v0.9.0) (2022-03-22)
+
+
+### Bug Fixes
+
+* **router:** export RequestRouteParam type ([d07e0ea](https://github.com/AliMD/alwatr/commit/d07e0eaf7781b8c35f7f47c90fdbbbc7e229a060))
+* **router:** fire first route-change signal as soon as posible ([2ae176b](https://github.com/AliMD/alwatr/commit/2ae176b91f7461258bd7432064d6c81730f6f04e))
+* **router:** outlet default 404 render ([2218483](https://github.com/AliMD/alwatr/commit/22184830c6c93024e335707a60badbbf188745aa))
+* **router:** router.signal type helper ([88b8e26](https://github.com/AliMD/alwatr/commit/88b8e26c83f35c52ff69356f12650e77cc6537d2))
+* **router:** signal define issue ([d3921b5](https://github.com/AliMD/alwatr/commit/d3921b5d8bbe3dc4984a264801f2e992ceb1ece0))
+
+
+### Features
+
+* **router:** improve 404 template ([3af27f7](https://github.com/AliMD/alwatr/commit/3af27f71dec257e0a245605c6c333816e6e0c317))
+
+
+
+
+
 # [0.8.0](https://github.com/AliMD/alwatr/compare/v0.7.2...v0.8.0) (2022-03-14)
 
 

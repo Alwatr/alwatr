@@ -86,3 +86,76 @@ Make anchor valid href from route.
 ```html
 <a href=${ router.makeUrl({sectionList: ['product', 100]}) }>
 ```
+
+### Full example with [lit-element](https://lit.dev)
+
+```ts
+import {css, html, LitElement} from 'lit';
+import {customElement} from 'lit/decorators/custom-element.js';
+import {router} from '@alwatr/router';
+
+import type {ListenerInterface} from '@alwatr/signal';
+import type {RoutesConfig} from '@alwatr/router';
+import type {TemplateResult} from 'lit';
+
+@customElement('my-element')
+export class MyElement extends LitElement {
+  static override styles = css`
+    :host {
+      display: block;
+    }
+  `;
+
+  private _routes: RoutesConfig = {
+    map: (route) => route.sectionList[0]?.toString(),
+    list: {
+      'home': {
+        render: () => html`<page-home>Page Home ...</page-home>`,
+      },
+      'about': {
+        render: () => html`<page-about>Page About ...</page-about>`,
+      },
+      'article': {
+        render: (route) =>
+          route.sectionList[1] != null ?
+            html`<page-article>Page Article ${route.sectionList[1]} ...</page-article>` :
+            this._routes.list['404'],
+      },
+    },
+  };
+
+  constructor() {
+    super();
+    router.initial();
+  }
+
+  private _listenerList: Array<unknown> = [];
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this._listenerList.push(router.signal.addListener(() => this.requestUpdate()));
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this._listenerList.forEach((listener) => (listener as ListenerInterface<keyof AlwatrSignals>).remove());
+  }
+
+  override render(): TemplateResult {
+    return html`
+      <h2>Hello World!</h2>
+
+      <menu>
+        <li><a href=${router.makeUrl({sectionList: ['home']})}>Home</a></li>
+        <li><a href=${router.makeUrl({sectionList: ['about']})}>About</a></li>
+        <li><a href=${router.makeUrl({sectionList: ['article', 100]})}>Article 100</a></li>
+        <li><a href=${router.makeUrl({sectionList: ['contact']})}>Contact</a></li>
+      </menu>
+
+      <div class="page-container">
+        ${router.outlet(this._routes)}
+      </div>
+    `;
+  }
+}
+```

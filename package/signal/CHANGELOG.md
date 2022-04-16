@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/AliMD/alwatr/compare/v0.8.0...v0.9.0) (2022-03-22)
+
+
+### Features
+
+* **signal:** ListenerInterface ([38ef029](https://github.com/AliMD/alwatr/commit/38ef0291c5ba2e3619080ad89109d805d3d600f2))
+
+
+
+
+
 # [0.8.0](https://github.com/AliMD/alwatr/compare/v0.7.2...v0.8.0) (2022-03-14)
 
 
