@@ -1,2 +1,2 @@
-# @alwatr/fetch
+# @alwatr/icon
 
