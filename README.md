@@ -1,5 +1,9 @@
 # The Alwatr Library
 
-Main: [![Tests](https://github.com/AliMD/alwatr/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/AliMD/alwatr/actions/workflows/tests.yml)
+Main branch:
+[![Build](https://github.com/AliMD/alwatr/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/AliMD/alwatr/actions/workflows/build.yaml)
+[![Lint](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml/badge.svg?branch=main)](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml)
 
-Next: [![Tests](https://github.com/AliMD/alwatr/actions/workflows/tests.yml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/tests.yml)
+Next branch:
+[![Build](https://github.com/AliMD/alwatr/actions/workflows/build.yaml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/build.yaml)
+[![Lint](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml)
