@@ -13,13 +13,13 @@ env:
   browser: true
   es2021: true
 
-parser: "@typescript-eslint/parser"
+parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: 2021
   sourceType: module
 
 plugins:
-  - "@typescript-eslint"
+  - '@typescript-eslint'
   - import
   - wc
 
@@ -27,7 +27,7 @@ settings:
   import/resolver:
     typescript:
       alwaysTryTypes: true
-      project: "package/*/tsconfig.json"
+      project: 'package/*/tsconfig.json'
   wc:
     elementBaseClasses:
       - LitElement
@@ -42,18 +42,21 @@ rules:
     - allowIndirect: true
   no-floating-decimal: error
   space-infix-ops: error
-  "@typescript-eslint/explicit-function-return-type": error
-  "import/order":
+  new-cap:
+    - error
+    - capIsNewExceptionPattern: 'Mixin$'
+  '@typescript-eslint/explicit-function-return-type': error
+  'import/order':
     - error
     - groups:
-        - "builtin"
-        - "external"
-        - "internal"
-        - - "parent"
-          - "sibling"
-          - "index"
-        - "type"
-      "newlines-between": "always"
+        - 'builtin'
+        - 'external'
+        - 'internal'
+        - - 'parent'
+          - 'sibling'
+          - 'index'
+        - 'type'
+      'newlines-between': 'always'
       alphabetize:
         order: asc
         caseInsensitive: true

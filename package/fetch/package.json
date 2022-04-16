@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/fetch",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Enhanced fetch api with timeout, helper methods and types written in tiny TypeScript module.",
   "keywords": [
     "fetch",
@@ -17,11 +17,7 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
-    "**/*.js",
-    "**/*.d.ts",
-    "**/*.map",
-    "**/*.html",
-    "**/*.md"
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
   ],
   "publishConfig": {
     "access": "public"
@@ -36,7 +32,7 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.10.0",
+    "@alwatr/logger": "^0.11.0",
     "tslib": "^2.3.1"
   }
 }
