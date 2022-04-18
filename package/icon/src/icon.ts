@@ -51,9 +51,9 @@ export class AlWatrIcon extends LitElement {
     `;
   }
 
-  protected override willUpdate(
-      changedProperties: PropertyValues,
-  ): void {
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    super.willUpdate(changedProperties);
+
     if (changedProperties.has('name')) {
       this._logger.logProperty('name', this.name);
       this.loadIcon();
