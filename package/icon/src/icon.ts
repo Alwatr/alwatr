@@ -14,7 +14,7 @@ export class AlWatrIcon extends LitElement {
   @state() private isVisible = false;
 
   @property({reflect: true}) name!: string;
-  @property() size!: string;
+  @property() size?: 'sm' | 'lg';
 
   @query('div.icon-inner') private _iconInner!: HTMLDivElement;
 
@@ -42,22 +42,28 @@ export class AlWatrIcon extends LitElement {
         height: 100%;
         width: 100%;
       }
+
+      :host([size='sm']) {
+        font-size: 18px !important;
+      }
+
+      :host([size='lg']) {
+        font-size: 32px !important;
+      }
     `,
   ];
 
   protected override render(): TemplateResult {
-    return html`
-      ${when(this.isVisible, () => html`<div class="icon-inner"></div>`)}
-    `;
+    return html` ${when(this.isVisible, () => html` <div class="icon-inner"></div> `)} `;
   }
 
-  protected override willUpdate(changedProperties: PropertyValues): void {
-    super.willUpdate(changedProperties);
-
+  protected override update(changedProperties: PropertyValues): void {
     if (changedProperties.has('name')) {
       this._logger.logProperty('name', this.name);
       this.loadIcon();
     }
+
+    super.update(changedProperties);
   }
 
   protected override updated(): void {
