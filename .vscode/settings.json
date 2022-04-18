@@ -8,21 +8,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
-  "cSpell.language": "en,fa,fa-IR",
-  "cSpell.words": [
-    "alwatr",
-    "Alwatr",
-    "calt",
-    "khafan",
-    "mastmalize",
-    "Mihandoost",
-    "noncallable",
-    "preconnect",
-    "preload",
-    "tnum",
-    "tsbuildinfo",
-    "vazirmatn"
-  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "files.exclude": {
     "**/*.map": true,
@@ -30,4 +16,16 @@
     "**/*.d.ts": true,
     "**/*.tsbuildinfo": true
   },
+  "cSpell.language": "en,fa,fa-IR",
+  "cSpell.words": [
+    "alwatr",
+    "calt",
+    "mastmalize",
+    "mihandoost",
+    "preconnect",
+    "preload",
+    "tnum",
+    "tsbuildinfo",
+    "vazirmatn"
+  ]
 }
