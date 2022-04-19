@@ -1,3 +1,0 @@
-# Reference: https://git-scm.com/docs/git-config/2.6.7#_example
-[core]
-  autocrlf = input
