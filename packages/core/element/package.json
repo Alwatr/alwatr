@@ -1,20 +1,21 @@
 {
-  "name": "@alwatr/signal",
+  "name": "@alwatr/element",
   "version": "0.11.0",
-  "description": "Elegant powerful event system for handle global signals and states written in tiny TypeScript module.",
+  "description": "Elegant powerful web component (lit-element) helper mixins written in tiny TypeScript module.",
   "keywords": [
-    "signal",
+    "element",
+    "lit",
+    "lit-element",
+    "web-component",
+    "mixin",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "signal.js",
+  "main": "element.js",
   "type": "module",
-  "types": "signal.d.ts",
+  "types": "element.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "contributors": [
-    "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
-  ],
   "license": "MIT",
   "files": [
     "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
@@ -25,14 +26,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/signal"
+    "directory": "packages/core/element"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/signal#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/element#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
     "@alwatr/logger": "^0.11.0",
+    "lit": "^2.2.2",
     "tslib": "^2.3.1"
   }
 }

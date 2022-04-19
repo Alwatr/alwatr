@@ -1,19 +1,19 @@
 {
-  "name": "@alwatr/i18n",
+  "name": "@alwatr/fetch",
   "version": "0.11.0",
-  "description": "Elegant powerful translation module (i18n/l10n) with dynamic json storage written in tiny TypeScript, ES module.",
+  "description": "Enhanced fetch api with timeout, helper methods and types written in tiny TypeScript module.",
   "keywords": [
-    "i18n",
-    "internationalization",
-    "l10n",
-    "localization",
+    "fetch",
+    "request",
+    "api",
+    "timeout",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "i18n.js",
+  "main": "fetch.js",
   "type": "module",
-  "types": "i18n.d.ts",
+  "types": "fetch.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
@@ -25,16 +25,14 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/i18n"
+    "directory": "packages/core/fetch"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/i18n#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/fetch#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/fetch": "^0.11.0",
     "@alwatr/logger": "^0.11.0",
-    "@alwatr/signal": "^0.11.0",
     "tslib": "^2.3.1"
   }
 }

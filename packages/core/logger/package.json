@@ -1,20 +1,19 @@
 {
-  "name": "@alwatr/element",
+  "name": "@alwatr/logger",
   "version": "0.11.0",
-  "description": "Elegant powerful web component (lit-element) helper mixins written in tiny TypeScript module.",
+  "description": "Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.",
   "keywords": [
-    "element",
-    "lit",
-    "lit-element",
-    "web-component",
-    "mixin",
+    "log",
+    "logger",
+    "console",
+    "debug",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "element.js",
+  "main": "logger.js",
   "type": "module",
-  "types": "element.d.ts",
+  "types": "logger.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
@@ -26,15 +25,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/element"
+    "directory": "packages/core/logger"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/element#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/logger#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.11.0",
-    "lit": "^2.2.2",
     "tslib": "^2.3.1"
   }
 }
