@@ -38,7 +38,6 @@ export async function readJsonFile<T extends Record<string | number, unknown>>(
 export async function writeJsonFile(
     path: string,
     data: unknown,
-    overwrite = true,
 ): Promise<void> {
   // 'w' - Open file for writing. The file is created (if it does not exist) or truncated (if it exists).
   // 'wx' - Like 'w' but fails if path exists.
@@ -50,9 +49,6 @@ export async function writeJsonFile(
     await fs.mkdir(dirname(path), {recursive: true});
   }
 
-  if (overwrite === false) {
-    config.flag = 'wx';
-  }
   // Convert json to string
   const json = JSON.stringify(data, undefined, 2);
 
