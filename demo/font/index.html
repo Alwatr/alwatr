@@ -22,6 +22,15 @@
       margin: 2em auto;
     }
 
+    .animate {
+      transition: font-weight 1s linear;
+      font-weight: 100;
+    }
+
+    p:hover .animate {
+      font-weight: 900;
+    }
+
     .vazirmatn {
       font-family: var(--font-vazirmatn), var(--font-system);
     }
@@ -29,6 +38,11 @@
     .vazirmatn-rd {
       font-family: var(--font-vazirmatn-rd), var(--font-system);
     }
+
+    .sahel {
+      font-family: var(--font-sahel), var(--font-system);
+    }
+
   </style>
 </head>
 
@@ -37,7 +51,7 @@
   <section class="vazirmatn">
     <h3>فونت وزیر‌متن</h3>
     <p contenteditable="true" spellcheck="false">
-      بِسْمِ اللهِ الرَّحْمنِ الرَّحِیمِ
+      <span class="animate">بِسْمِ اللهِ الرَّحْمنِ الرَّحِیمِ</span>
       <br/>
       به نام خداوند بخشنده مهربان
       <br/><br/>
@@ -51,6 +65,11 @@
 
   <section class="vazirmatn-rd">
     <h3>فونت وزیر‌متن نقطه‌گرد</h3>
+    <p></p>
+  </section>
+
+  <section class="sahel">
+    <h3>فونت ساحل</h3>
     <p></p>
   </section>
 
