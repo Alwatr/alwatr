@@ -151,7 +151,7 @@
 /* Sahel Variable (Without-Latin) */
 @font-face {
   font-family: 'sahel-vf';
-  font-weight: 400 900;
+  font-weight: 300 900;
   src: url('sahel/sahel[wght].woff2') format('woff2 supports variations'), url('sahel/sahel[wght].woff2') format('woff2-variations');
   font-display: block;
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+1EE00-1EEFF;
