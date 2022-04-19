@@ -27,7 +27,7 @@
     "format": "npm-run-all --sequential format:prettier format:eslint",
     "format:eslint": "eslint **/*.ts --fix",
     "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --ignore-path ./.eslintignore --write",
-    "clean": "yarn build:ts --clean && lerna exec \"rm -rf dist node_modules\" && find package -name '*.js' -type f -delete && find package -name '*.d.ts' -type f -delete && find package -name '*.map' -type f -delete",
+    "clean": "yarn build:ts --clean && lerna run clean && rimraf \"{packages,demo}/**/*.{js,d.ts,map}\" \"{packages,demo}/**/.tsbuildinfo\" \"{packages,demo}/**/node_modules/\"",
     "serve:dev": "web-dev-server --config dev-server.mjs",
     "watch": "npm-run-all --parallel watch:* serve:dev",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput",
@@ -47,6 +47,7 @@
     "lerna": "^4.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
     "ts-lit-plugin": "^1.2.1",
     "typescript": "^4.6.3"
   }
