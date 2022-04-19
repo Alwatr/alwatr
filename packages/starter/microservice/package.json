@@ -2,6 +2,7 @@
   "name": "alwatr-microservice-starter",
   "version": "0.0.0",
   "description": "Alwatr Microservice Starter Kit",
+  "type": "module",
   "keywords": [
     "microservice",
     "api",
@@ -25,7 +26,7 @@
     "l": "yarn lint",
     "b": "yarn build",
     "cb": "npm-run-all --sequential clean build",
-    "s": "yarn serve",
+    "s": "npm-run-all --sequential clean build serve",
     "w": "yarn watch",
     "f": "yarn format",
     "fl": "yarn format:eslint",
