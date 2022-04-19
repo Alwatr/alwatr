@@ -25,9 +25,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/logger"
+    "directory": "package/core/logger"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/logger#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/core/logger#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

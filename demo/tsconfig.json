@@ -10,7 +10,13 @@
     "**/*.ts"
   ],
   "references": [
-    {"path": "../package/logger"}
+    {"path": "../package/core/logger"},
+    {"path": "../package/core/fetch"},
+    {"path": "../package/core/signal"},
+    {"path": "../package/core/router"},
+    {"path": "../package/core/i18n"},
+    {"path": "../package/core/math"},
+    {"path": "../package/core/element"},
   ],
   "exclude": [
     "*.d.ts",

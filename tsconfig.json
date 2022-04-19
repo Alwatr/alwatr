@@ -108,12 +108,12 @@
   "include": [ "*.ts" ],
   "exclude": [],
   "references": [
-    {"path": "./package/logger"},
-    {"path": "./package/fetch"},
-    {"path": "./package/signal"},
-    {"path": "./package/router"},
-    {"path": "./package/i18n"},
-    {"path": "./package/math"},
+    {"path": "./package/core/logger"},
+    {"path": "./package/core/fetch"},
+    {"path": "./package/core/signal"},
+    {"path": "./package/core/router"},
+    {"path": "./package/core/i18n"},
+    {"path": "./package/core/math"},
     {"path": "./demo"},
   ]
 }
