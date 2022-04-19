@@ -1,7 +1,7 @@
 {
-  "name": "@alwatr/file-storage",
+  "name": "@alwatr/data-storage",
   "version": "0.0.0",
-  "description": "Enhanced file-storage for TypeScript module.",
+  "description": "Enhanced data-storage for TypeScript module.",
   "keywords": [
     "json",
     "storage",
@@ -10,9 +10,9 @@
     "esm",
     "alwatr"
   ],
-  "main": "file-storage.js",
+  "main": "data-storage.js",
   "type": "module",
-  "types": "file-storage.d.ts",
+  "types": "data-storage.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
@@ -24,9 +24,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/file-storage"
+    "directory": "package/data-storage"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/file-storage#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/data-storage#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

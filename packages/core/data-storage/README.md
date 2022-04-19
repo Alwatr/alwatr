@@ -1,4 +1,4 @@
-# @file-storage
+# @data-storage
 
 Enhanced file storage API written in tiny TypeScript, ES module.
 

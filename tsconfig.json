@@ -109,7 +109,7 @@
   "exclude": [],
   "references": [
     {"path": "./packages/core/logger"},
-    {"path": "./packages/core/file-storage"},
+    {"path": "./packages/core/data-storage"},
     {"path": "./packages/core/fetch"},
     {"path": "./packages/core/signal"},
     {"path": "./packages/core/router"},
