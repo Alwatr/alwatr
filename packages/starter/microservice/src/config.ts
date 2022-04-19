@@ -1,4 +1,8 @@
-export const packageJson = {
-  version: '0.1.0',
-  description: 'Alwatr Microservice Starter Kit',
+import {config as loadDotEnv} from 'dotenv';
+
+loadDotEnv();
+
+export const config = {
+  host: process.env.HOST ?? '0.0.0.0',
+  port: process.env.PORT ?? 8000,
 };

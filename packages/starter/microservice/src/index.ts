@@ -1,3 +1,5 @@
-import {packageJson} from './config.js';
+import {config} from './config.js';
 
-console.log(`..:: ${packageJson.description} v${packageJson.version} ::..`);
+console.log(`..:: Alwatr Microservice Starter Kit ::..`);
+
+console.dir(config);

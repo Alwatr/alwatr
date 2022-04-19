@@ -15,10 +15,6 @@ Desktop.ini
 
 # Build
 dist
-.tsbuildinfo
-*.js
-*.map
-*.d.ts
 
 # Dependencies
 node_modules
