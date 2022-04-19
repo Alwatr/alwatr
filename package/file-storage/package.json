@@ -1,0 +1,37 @@
+{
+  "name": "@alwatr/file-storage",
+  "version": "0.11.0",
+  "description": "Enhanced fetch api with timeout, helper methods and types written in tiny TypeScript module.",
+  "keywords": [
+    "fetch",
+    "request",
+    "api",
+    "timeout",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "main": "file-storage.js",
+  "type": "module",
+  "types": "file-storage.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "license": "MIT",
+  "files": [
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "package/file-storage"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/file-storage#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "dependencies": {
+    "tslib": "^2.3.1"
+  }
+}
