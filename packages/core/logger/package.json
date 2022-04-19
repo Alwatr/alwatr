@@ -1,19 +1,19 @@
 {
-  "name": "@alwatr/fetch",
+  "name": "@alwatr/logger",
   "version": "0.11.0",
-  "description": "Enhanced fetch api with timeout, helper methods and types written in tiny TypeScript module.",
+  "description": "Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.",
   "keywords": [
-    "fetch",
-    "request",
-    "api",
-    "timeout",
+    "log",
+    "logger",
+    "console",
+    "debug",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "fetch.js",
+  "main": "logger.js",
   "type": "module",
-  "types": "fetch.d.ts",
+  "types": "logger.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
@@ -25,14 +25,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/core/fetch"
+    "directory": "packages/core/logger"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/core/fetch#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/logger#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.11.0",
     "tslib": "^2.3.1"
   }
 }

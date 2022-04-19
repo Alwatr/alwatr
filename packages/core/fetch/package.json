@@ -1,20 +1,20 @@
 {
-  "name": "@alwatr/signal",
+  "name": "@alwatr/fetch",
   "version": "0.11.0",
-  "description": "Elegant powerful event system for handle global signals and states written in tiny TypeScript module.",
+  "description": "Enhanced fetch api with timeout, helper methods and types written in tiny TypeScript module.",
   "keywords": [
-    "signal",
+    "fetch",
+    "request",
+    "api",
+    "timeout",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "signal.js",
+  "main": "fetch.js",
   "type": "module",
-  "types": "signal.d.ts",
+  "types": "fetch.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "contributors": [
-    "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
-  ],
   "license": "MIT",
   "files": [
     "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
@@ -25,9 +25,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/core/signal"
+    "directory": "packages/core/fetch"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/core/signal#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/fetch#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

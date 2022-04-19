@@ -25,9 +25,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/core/i18n"
+    "directory": "packages/core/i18n"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/core/i18n#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/i18n#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

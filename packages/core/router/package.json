@@ -25,9 +25,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/core/router"
+    "directory": "packages/core/router"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/core/router#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/router#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
