@@ -30,6 +30,11 @@ export async function readJsonFile<T extends Record<string | number, unknown>>(
   });
 }
 
+/**
+ * Enhanced write json file.
+ * @example
+ * await writeJsonFile('./file.json', { test: 'Every thing is ok' });
+ */
 export async function writeJsonFile(
     path: string,
     data: unknown,

@@ -6,7 +6,7 @@ Enhanced file storage API written in tiny TypeScript, ES module.
 
 ```typescript
 import {writeJsonFile, readJsonFile} from '@alwatr/storage/json.js';
-await writeJsonFile(jsonAdders, { test: 'Every thing is ok' });
-const json = await readJsonFile(jsonAdders);
+await writeJsonFile('./file.json', { test: 'Every thing is ok' });
+const json = await readJsonFile('./file.json');
 console.log(json);
 ```
