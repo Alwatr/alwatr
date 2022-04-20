@@ -1,5 +1,3 @@
-import {config} from './config.js';
-
-console.log(`..:: Alwatr Microservice Starter Kit ::..`);
-
-console.dir(config);
+import {logger} from './config.js';
+import './route/home.js';
+logger.logOther(`..:: Alwatr Microservice Starter Kit ::..`);
