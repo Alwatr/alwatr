@@ -1,12 +1,17 @@
+import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {LitElement, html, css} from 'lit';
 import {customElement, property, query, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
-import {logger} from './core';
 import {getSvgContent} from './requests';
 import {getUrl} from './utils';
 
 import type {TemplateResult, PropertyValues} from 'lit';
+
+alwatrRegisteredList.push({
+  name: '@alwatr/icon',
+  version: '{{ALWATR_VERSION}}',
+});
 
 @customElement('alwatr-icon')
 export class AlWatrIcon extends LitElement {
@@ -18,7 +23,7 @@ export class AlWatrIcon extends LitElement {
 
   @query('div.icon-inner') private _iconInner!: HTMLDivElement;
 
-  private _logger = logger;
+  private _logger = createLogger('alwatr/icon');
 
   static override styles = [
     css`

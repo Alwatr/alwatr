@@ -1,7 +1,5 @@
 import {getData} from '@alwatr/fetch';
 
-import {logger} from './core';
-
 const alwatrIconContent = new Map<string, string>();
 const requests = new Map<string, Promise<string>>();
 
@@ -25,8 +23,5 @@ export const getSvgContent = (url: string): Promise<string> => {
     }
   }
 
-  req.then((svgContent) =>
-    logger.logMethodFull('getSvgContent', {url: url}, svgContent),
-  );
   return req;
 };
