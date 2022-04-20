@@ -29,9 +29,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/font"
+    "directory": "packages/ui/font"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/font#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/ui/font#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   }

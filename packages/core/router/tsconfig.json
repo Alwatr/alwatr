@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
@@ -12,6 +12,7 @@
   ],
   "exclude": [],
   "references": [
-    // { "path": "../logger" },
+    { "path": "../logger" },
+    { "path": "../signal" },
   ]
 }
