@@ -1,7 +1,6 @@
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {LitElement, html, css} from 'lit';
 import {customElement, property, query, state} from 'lit/decorators.js';
-import {when} from 'lit/directives/when.js';
 
 import {getSvgContent} from './requests';
 import {getUrl} from './utils';
@@ -16,7 +15,6 @@ alwatrRegisteredList.push({
 @customElement('alwatr-icon')
 export class AlWatrIcon extends LitElement {
   @state() private svgContent?: string;
-  @state() private isVisible = false;
 
   @property({reflect: true}) name!: string;
   @property() size?: 'sm' | 'lg';
@@ -59,7 +57,7 @@ export class AlWatrIcon extends LitElement {
   ];
 
   protected override render(): TemplateResult {
-    return html` ${when(this.isVisible, () => html` <div class="icon-inner"></div> `)} `;
+    return html`<div class="icon-inner"></div> `;
   }
 
   protected override update(changedProperties: PropertyValues): void {
@@ -72,9 +70,7 @@ export class AlWatrIcon extends LitElement {
   }
 
   protected override updated(): void {
-    if (this.isVisible) {
-      this._iconInner.innerHTML = this.svgContent ?? '';
-    }
+    this._iconInner.innerHTML = this.svgContent ?? '';
   }
 
   protected loadIcon(): void {
@@ -87,7 +83,6 @@ export class AlWatrIcon extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.isVisible = true;
     this.loadIcon();
   }
 }
