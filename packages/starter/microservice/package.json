@@ -49,6 +49,7 @@
   "dependencies": {
     "@alwatr/logger": "^0.11.0",
     "@alwatr/math": "^0.11.0",
+    "@alwatr/micro-server": "^0.11.0",
     "dotenv": "^16.0.0"
   },
   "devDependencies": {
