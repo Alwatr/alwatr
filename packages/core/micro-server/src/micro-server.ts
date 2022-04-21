@@ -1,10 +1,14 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {createServer} from 'http';
 
-import {createLogger} from '@alwatr/logger';
+import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
 import type {Methods, ReplyContent} from './type.js';
 import type {IncomingMessage, ServerResponse} from 'http';
+
+alwatrRegisteredList.push({
+  name: '@alwatr/micro-server',
+  version: '{{ALWATR_VERSION}}',
+});
 
 export class AlwatrMicroServer {
   protected logger = createLogger(`micro-server:${this.port}`);
@@ -115,7 +119,8 @@ export class AlwatrMicroServer {
 export class AlwatrConnection {
   static versionPattern = new RegExp('^/v[0-9]+');
 
-  url = new URL(this.incomingMessage.url!.replace(AlwatrConnection.versionPattern, ''), 'http://localhost');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  url = new URL(this.incomingMessage.url!.replace(AlwatrConnection.versionPattern, ''), 'http://0.0.0.0');
   protected logger = createLogger(`connection`);
 
   readonly body = this._getRequestBody();
