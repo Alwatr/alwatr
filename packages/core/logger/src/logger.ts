@@ -1,11 +1,10 @@
 import type {Logger} from './type';
 
 /**
- * Define `window.Alwatr.registeredList`
+ * Define `globalThis.Alwatr.registeredList`
  */
-export const alwatrRegisteredList = window.Alwatr?.registeredList || [];
-window.Alwatr ??= {};
-window.Alwatr.registeredList = alwatrRegisteredList;
+export const alwatrRegisteredList = globalThis.Alwatr?.registeredList || [];
+globalThis.Alwatr ??= {registeredList: alwatrRegisteredList};
 
 alwatrRegisteredList.push({
   name: '@alwatr/logger',
@@ -43,8 +42,18 @@ const getNextColor = (): string => {
   return color;
 };
 
-const debugString = window.localStorage?.getItem('ALWATR_LOG')?.trim();
-const getDebugState = (scope: string, force: boolean ): boolean => {
+const debugString = globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim() ||
+                    globalThis.process?.env?.ALWATR_DEBUG?.trim(); // node
+
+const getDebugState = (scope: string): boolean => {
+  if (
+    debugString == null &&
+    globalThis.process && // nodejs
+    globalThis.process.env.NODE_ENV !== 'production'
+  ) {
+    return true;
+  }
+
   if (
     debugString == null ||
     debugString == ''
@@ -53,8 +62,8 @@ const getDebugState = (scope: string, force: boolean ): boolean => {
   }
 
   if (
-    force ||
     debugString === scope ||
+    debugString === '*' ||
     (
       debugString.indexOf('*') === 0 && // starts with `*` for example: `*alwatr*`
       scope.indexOf(debugString.replaceAll('*', '')) !== -1
@@ -96,7 +105,7 @@ export const createLogger = (
 ): Logger => {
   scope = scope.trim();
 
-  const debug = getDebugState(scope, force);
+  const debug = force || getDebugState(scope);
 
   const first = scope.charAt(0);
   if (first !== '[' && first !== '{' && first !== '(' && first !== '<') {

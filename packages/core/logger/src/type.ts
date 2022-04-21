@@ -1,12 +1,14 @@
+/* eslint-disable no-var */
+export interface GlobalAlwatr {
+  registeredList: Array<{
+    name: string,
+    version: string,
+  }>;
+}
+
 declare global {
-  interface Window {
-    Alwatr?: {
-      registeredList?: Array<{
-        name: string,
-        version: string,
-      }>;
-    }
-  }
+  var Alwatr: GlobalAlwatr;
+  var ALWATR_DEBUG: string | undefined;
 
   /**
    * @TODO: Make an issue to TS, WTF is this way! any better solution for more args in bind?!
