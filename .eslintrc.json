@@ -32,7 +32,7 @@
   },
   "rules": {
     "max-len": [
-      "warn",
+      "error",
       {
         "code": 120
       }

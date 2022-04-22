@@ -21,8 +21,9 @@ console.log(typeof Infinity); //=> 'number'
 
 #### True
 
+<!-- prettier-ignore -->
 ```js
-import { isNumber } from 'https://esm.run/@alwatr/math';
+import {isNumber} from 'https://esm.run/@alwatr/math';
 
 isNumber(5e3);               // true
 isNumber(0xff);              // true
@@ -49,8 +50,9 @@ isNumber(parseFloat('012')); // true
 
 #### False
 
+<!-- prettier-ignore -->
 ```js
-import { isNumber } from 'https://esm.run/@alwatr/math';
+import {isNumber} from 'https://esm.run/@alwatr/math';
 
 isNumber(Infinity);          // false
 isNumber(NaN);               // false

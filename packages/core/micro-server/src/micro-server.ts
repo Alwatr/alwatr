@@ -19,10 +19,15 @@ export class AlwatrMicroServer {
     this.server = createServer(this.handleRequest.bind(this));
 
     this.server.on('error', (err: NodeJS.ErrnoException) => {
-      this.logger.accident('server.onError', 'http_server_catch_error', 'HTTP server catch an error', {
-        errCode: err.code,
-        errMessage: err.message,
-      });
+      this.logger.accident(
+          'server.onError',
+          'http_server_catch_error',
+          'HTTP server catch an error',
+          {
+            errCode: err.code,
+            errMessage: err.message,
+          },
+      );
 
       if (err.code === 'EADDRINUSE') {
         this.logger.logOther('Address in use, retrying...');
@@ -34,10 +39,15 @@ export class AlwatrMicroServer {
     });
 
     this.server.on('clientError', (err: NodeJS.ErrnoException, socket) => {
-      this.logger.accident('server.clientError', 'http_server_catch_client_error', 'HTTP server catch a client error', {
-        errCode: err.code,
-        errMessage: err.message,
-      });
+      this.logger.accident(
+          'server.clientError',
+          'http_server_catch_client_error',
+          'HTTP server catch a client error',
+          {
+            errCode: err.code,
+            errMessage: err.message,
+          },
+      );
       socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
     });
 
@@ -61,14 +71,22 @@ export class AlwatrMicroServer {
     });
   }
 
+  // prettier-ignore
   protected middlewareList: Record<string, Record<string, (connection: AlwatrConnection) => void | Promise<void>>> = {
     all: {},
   };
 
-  protected async handleRequest(incomingMessage: IncomingMessage, serverResponse: ServerResponse): Promise<void> {
+  protected async handleRequest(
+      incomingMessage: IncomingMessage,
+      serverResponse: ServerResponse,
+  ): Promise<void> {
     this.logger.logMethod('handleRequest');
     if (incomingMessage.url == null) {
-      this.logger.accident('handleRequest', 'http_server_url_undefined', 'incomingMessage.url is undefined');
+      this.logger.accident(
+          'handleRequest',
+          'http_server_url_undefined',
+          'incomingMessage.url is undefined',
+      );
       return;
     }
 
@@ -80,10 +98,7 @@ export class AlwatrMicroServer {
     try {
       if (typeof this.middlewareList.all?.[route] === 'function') {
         await this.middlewareList.all[route](connection);
-      } else if (
-        method != null &&
-        typeof this.middlewareList[method]?.[route] === 'function'
-      ) {
+      } else if (method != null && typeof this.middlewareList[method]?.[route] === 'function') {
         await this.middlewareList[method][route](connection);
       } else {
         connection.reply({
@@ -119,8 +134,11 @@ export class AlwatrMicroServer {
 export class AlwatrConnection {
   static versionPattern = new RegExp('^/v[0-9]+');
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  url = new URL(this.incomingMessage.url!.replace(AlwatrConnection.versionPattern, ''), 'http://0.0.0.0');
+  url = new URL(
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    this.incomingMessage.url!.replace(AlwatrConnection.versionPattern, ''),
+    'http://0.0.0.0',
+  );
   protected logger = createLogger(`connection`);
 
   readonly body = this._getRequestBody();

@@ -10,8 +10,5 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "cSpell.language": "en,fa,fa-IR",
-  "cSpell.words": [
-    "alwatr",
-    "mihandoost"
-  ]
+  "cSpell.words": ["alwatr", "mihandoost"]
 }

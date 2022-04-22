@@ -13,4 +13,4 @@ interface ReplySuccessContent {
 
 export type ReplyContent = ReplyFailedContent | ReplySuccessContent;
 
-export type Methods = 'all' | 'get' | 'post' | 'put' | 'delete' | 'patch' | 'head' | 'options' & string;
+export type Methods = ('all' | 'get' | 'post' | 'put' | 'delete' | 'patch' | 'options') & string;

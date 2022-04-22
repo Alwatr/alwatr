@@ -230,7 +230,10 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    * const listener = contentChangeSignal.addListener((content) => console.log(content));
    * ```
    */
-  addListener(listener: ListenerCallback<SignalName>, options?: ListenerOptions): ListenerInterface<SignalName> {
+  addListener(
+      listener: ListenerCallback<SignalName>,
+      options?: ListenerOptions,
+  ): ListenerInterface<SignalName> {
     this._logger.logMethodArgs('addListener', {listener, options});
     const listenerId = _addSignalListener(this._signal.name, listener, options);
     return new ListenerInterface(this._signal, listenerId);

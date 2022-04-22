@@ -42,8 +42,9 @@ const getNextColor = (): string => {
   return color;
 };
 
-const debugString = globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim() ||
-                    globalThis.process?.env?.ALWATR_DEBUG?.trim(); // node
+const debugString =
+  globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim() ||
+  globalThis.process?.env?.ALWATR_DEBUG?.trim(); // node
 
 const getDebugState = (scope: string): boolean => {
   if (
@@ -54,6 +55,7 @@ const getDebugState = (scope: string): boolean => {
     return true;
   }
 
+  // prettier-ignore
   if (
     debugString == null ||
     debugString == ''
@@ -61,6 +63,7 @@ const getDebugState = (scope: string): boolean => {
     return false;
   }
 
+  // prettier-ignore
   if (
     debugString === scope ||
     debugString === '*' ||
@@ -89,7 +92,7 @@ export const style = {
  * Create a logger function for fancy console debug with custom scope.
  *
  * - **color** is optional and automatically select from internal fancy color list.
- * - **force** is optional and default to false.
+ * - **debug** is optional and automatically detect from localStorage `ALWATR_DEBUG` item or `process.env.ALWATR_DEBUG`
  *
  * Example:
  *
@@ -101,11 +104,9 @@ export const style = {
 export const createLogger = (
     scope: string,
     color: string = getNextColor(),
-    force = false,
+    debug = getDebugState(scope),
 ): Logger => {
   scope = scope.trim();
-
-  const debug = force || getDebugState(scope);
 
   const first = scope.charAt(0);
   if (first !== '[' && first !== '{' && first !== '(' && first !== '<') {
@@ -133,13 +134,7 @@ export const createLogger = (
         style.reset,
     ),
 
-    error: console.error.bind(
-        console,
-        '%c%s%c.%s "%s" =>',
-        styleScope,
-        scope,
-        style.reset,
-    ),
+    error: console.error.bind(console, '%c%s%c.%s "%s" =>', styleScope, scope, style.reset),
   };
 
   if (!debug) {
@@ -158,29 +153,11 @@ export const createLogger = (
   return {
     ...requiredItems,
 
-    logProperty: console.debug.bind(
-        console,
-        '%c%s%c.%s = %o;',
-        styleScope,
-        scope,
-        style.reset,
-    ),
+    logProperty: console.debug.bind(console, '%c%s%c.%s = %o;', styleScope, scope, style.reset),
 
-    logMethod: console.debug.bind(
-        console,
-        '%c%s%c.%s();',
-        styleScope,
-        scope,
-        style.reset,
-    ),
+    logMethod: console.debug.bind(console, '%c%s%c.%s();', styleScope, scope, style.reset),
 
-    logMethodArgs: console.debug.bind(
-        console,
-        '%c%s%c.%s(%o);',
-        styleScope,
-        scope,
-        style.reset,
-    ),
+    logMethodArgs: console.debug.bind(console, '%c%s%c.%s(%o);', styleScope, scope, style.reset),
 
     logMethodFull: console.debug.bind(
         console,
@@ -198,11 +175,6 @@ export const createLogger = (
         style.reset,
     ),
 
-    logOther: console.debug.bind(
-        console,
-        '%c%s',
-        styleScope,
-        scope,
-    ),
+    logOther: console.debug.bind(console, '%c%s', styleScope, scope),
   };
 };
