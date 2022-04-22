@@ -4,7 +4,7 @@ import {routeChangeSignal} from './signal';
 let _enabled = false;
 
 /**
-  * A navigation trigger for Alwatr Router that translates popstate events into navigation signal.
+ * A navigation trigger for Alwatr Router that translates popstate events into navigation signal.
  */
 export const popstateTrigger = {
   /**

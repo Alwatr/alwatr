@@ -20,7 +20,7 @@ declare global {
   /**
    * Global request signal parameters types.
    */
-   interface AlwatrRequestSignals {
+  interface AlwatrRequestSignals {
     readonly 'content-change': number;
   }
 }
@@ -33,12 +33,12 @@ import {SignalInterface} from 'https://esm.run/@alwatr/signal';
 
 const contentChangeSignal1 = new SignalInterface('content-change');
 
-contentChangeSignal1.dispatch({a:1, b:2});
+contentChangeSignal1.dispatch({a: 1, b: 2});
 
-contentChangeSignal1.dispatch({a:2, b:3});
+contentChangeSignal1.dispatch({a: 2, b: 3});
 
 // Multiple dispatch debounced and last value dispatched after an animate frame.
-contentChangeSignal1.dispatch({a:3, b:4});
+contentChangeSignal1.dispatch({a: 3, b: 4});
 ```
 
 ### Receive the signal value
@@ -95,7 +95,7 @@ Check signal dispatched before or not!
 Example
 
 ```ts
-if(contentChangeSignal.dispatched) {
+if (contentChangeSignal.dispatched) {
   // contentChangeSignal.value exist.
 }
 ```
@@ -136,8 +136,7 @@ contentChangeSignal.setProvider(async (requestParam) => {
   const content = await fetchNewContent(requestParam);
   if (content != null) {
     return content; // Dispatch signal 'content-change' with content.
-  }
-  else {
+  } else {
     // dispatch new signal: 'content-not-found'
   }
 });

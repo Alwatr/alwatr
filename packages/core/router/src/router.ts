@@ -51,7 +51,8 @@ function makeUrl(route: Partial<Route>): string {
     href += '?' + joinParameterList(route.queryParamList);
   }
 
-  if (route.hash) { // != null && !== ''
+  if (route.hash) {
+    // != null && !== ''
     if (route.hash.indexOf('#') !== 0) {
       route.hash += '#';
     }
@@ -112,7 +113,8 @@ function outlet(routesConfig: RoutesConfig): unknown {
 
   let page = routesConfig.map(currentRoute);
 
-  if (page == null && currentRoute.sectionList.length === 0) { // root
+  if (page == null && currentRoute.sectionList.length === 0) {
+    // root
     logger.incident(
         'outlet',
         'redirect_to_home',
@@ -121,34 +123,34 @@ function outlet(routesConfig: RoutesConfig): unknown {
 
     page = 'home';
 
-    if (typeof routesConfig.list[page]?.render !== 'function') { // 'home' not defined!
-      logger.accident(
-          'outlet',
-          'no_render_for_home',
-          'routesConfig.list["home"] not defined',
-          {page, currentRoute, routesConfig},
-      );
+    if (typeof routesConfig.list[page]?.render !== 'function') {
+      // 'home' not defined!
+      logger.accident('outlet', 'no_render_for_home', 'routesConfig.list["home"] not defined', {
+        page,
+        currentRoute,
+        routesConfig,
+      });
       routesConfig.list[page] = {render: () => 'Home Page!'};
     }
   }
 
-  if (page == null || typeof routesConfig.list[page]?.render !== 'function') { // 404
-    logger.accident(
-        'outlet',
-        'redirect_to_404',
-        'Requested page not defined in routesConfig.list',
-        {page, currentRoute, routesConfig},
-    );
+  if (page == null || typeof routesConfig.list[page]?.render !== 'function') {
+    // 404
+    logger.accident('outlet', 'redirect_to_404', 'Requested page not defined in routesConfig.list', {
+      page,
+      currentRoute,
+      routesConfig,
+    });
 
     page = '404';
 
-    if (typeof routesConfig.list[page]?.render !== 'function') { // 404
-      logger.accident(
-          'outlet',
-          'no_render_for_404',
-          'Page "404" not defined in routesConfig.list',
-          {page, currentRoute, routesConfig},
-      );
+    if (typeof routesConfig.list[page]?.render !== 'function') {
+      // 404
+      logger.accident('outlet', 'no_render_for_404', 'Page "404" not defined in routesConfig.list', {
+        page,
+        currentRoute,
+        routesConfig,
+      });
       routesConfig.list[page] = {
         render: () => 'Error 404: Page Not Found!',
       };
@@ -165,7 +167,7 @@ export const router = {
   get currentRoute(): Route {
     const route = routeChangeSignal.value;
     if (route == null) {
-      throw (new Error('route_not_initialized'));
+      throw new Error('route_not_initialized');
     }
     return route;
   },

@@ -1,8 +1,7 @@
 export type ParamList = Record<string, string | number | boolean>;
 
 // @TODO: description
-export interface Route
-{
+export interface Route {
   // href: https://example.com/product/100/book?cart=1&color=white#description
   sectionList: Array<string | number | boolean>; // [product, 100, book]
   queryParamList: ParamList; // {cart: 1, color: 'white'}
@@ -125,7 +124,10 @@ export interface RoutesConfig {
    * },
    * ```
    */
-  list: Record<string, {
-    render: (route: Route) => unknown;
-  }>;
+  list: Record<
+    string,
+    {
+      render: (route: Route) => unknown;
+    }
+  >;
 }

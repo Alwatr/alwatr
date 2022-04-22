@@ -18,8 +18,7 @@ declare global {
 }
 
 // @TODO: docs for all options
-export interface FetchOptions extends RequestInit
-{
+export interface FetchOptions extends RequestInit {
   /**
    * @default 10_000 ms
    */

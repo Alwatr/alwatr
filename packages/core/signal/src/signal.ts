@@ -242,10 +242,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
  */
 export class ListenerInterface<SignalName extends keyof AlwatrSignals> {
   protected _logger;
-  constructor(
-    protected _signal: SignalObject<SignalName>,
-    protected _listener: ListenerObject<SignalName>,
-  ) {
+  constructor(protected _signal: SignalObject<SignalName>, protected _listener: ListenerObject<SignalName>) {
     this._logger = createLogger('Listener of ' + _signal.name);
   }
 

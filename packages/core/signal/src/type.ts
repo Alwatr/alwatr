@@ -9,7 +9,7 @@ declare global {
   /**
    * Global request signal parameters types.
    */
-   interface AlwatrRequestSignals {
+  interface AlwatrRequestSignals {
     readonly 'easter-egg': number;
   }
 }
@@ -67,7 +67,7 @@ export interface SignalProviderOptions {
    *
    * @default true
    */
-   receivePrevious?: boolean | 'Immediate';
+  receivePrevious?: boolean | 'Immediate';
 
   /**
    * If true, the dispatch will be send after animation frame debounce.
@@ -76,27 +76,27 @@ export interface SignalProviderOptions {
    *
    * @default true
    */
- debounce?: boolean;
+  debounce?: boolean;
 }
 
 /**
  * Signal listeners callback function type.
  */
-export type ListenerCallback<SignalName extends keyof AlwatrSignals> =
-  (signalValue: AlwatrSignals[SignalName]) => void | Promise<void>;
+export type ListenerCallback<SignalName extends keyof AlwatrSignals> = (
+  signalValue: AlwatrSignals[SignalName]
+) => void | Promise<void>;
 
 /**
  * Signal provider function type used to setSignalProvider.
  */
-export type SignalProvider<SignalName extends keyof AlwatrRequestSignals> =
-  (requestParam: AlwatrRequestSignals[SignalName]) =>
-    AlwatrSignals[SignalName] | void | Promise<AlwatrSignals[SignalName] | void>;
+export type SignalProvider<SignalName extends keyof AlwatrRequestSignals> = (
+  requestParam: AlwatrRequestSignals[SignalName]
+) => AlwatrSignals[SignalName] | void | Promise<AlwatrSignals[SignalName] | void>;
 
 /**
  * Signal listeners object in database.
  */
-export interface ListenerObject<SignalName extends keyof AlwatrSignals>
-{
+export interface ListenerObject<SignalName extends keyof AlwatrSignals> {
   /**
    * Listener symbol id (unique).
    */
@@ -118,8 +118,7 @@ export interface ListenerObject<SignalName extends keyof AlwatrSignals>
 /**
  * Signal object in database.
  */
-export interface SignalObject<SignalName extends keyof AlwatrSignals>
-{
+export interface SignalObject<SignalName extends keyof AlwatrSignals> {
   /**
    * Signal name for direct access.
    */
@@ -152,4 +151,4 @@ export interface SignalObject<SignalName extends keyof AlwatrSignals>
  */
 export type SignalStack = {
   [SignalName in keyof AlwatrSignals]?: SignalObject<SignalName>;
-}
+};

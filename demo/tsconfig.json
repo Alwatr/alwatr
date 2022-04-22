@@ -6,9 +6,7 @@
     "outDir": ".",
     "tsBuildInfoFile": ".tsbuildinfo"
   },
-  "include": [
-    "**/*.ts"
-  ],
+  "include": ["**/*.ts"],
   "references": [
     {"path": "../packages/core/logger"},
     {"path": "../packages/core/fetch"},
@@ -16,10 +14,7 @@
     {"path": "../packages/core/router"},
     {"path": "../packages/core/i18n"},
     {"path": "../packages/core/math"},
-    {"path": "../packages/core/element"},
+    {"path": "../packages/core/element"}
   ],
-  "exclude": [
-    "*.d.ts",
-    "node_modules"
-  ]
+  "exclude": ["*.d.ts", "node_modules"]
 }

@@ -80,10 +80,7 @@ export class AlwatrMicroServer {
     try {
       if (typeof this.middlewareList.all?.[route] === 'function') {
         await this.middlewareList.all[route](connection);
-      } else if (
-        method != null &&
-        typeof this.middlewareList[method]?.[route] === 'function'
-      ) {
+      } else if (method != null && typeof this.middlewareList[method]?.[route] === 'function') {
         await this.middlewareList[method][route](connection);
       } else {
         connection.reply({

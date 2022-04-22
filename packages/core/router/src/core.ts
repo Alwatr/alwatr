@@ -56,10 +56,9 @@ export function makeRouteObject(requestParam: RequestRouteParam): Route {
       .filter((section) => section.trim() !== '')
       .map(parseValue)
   ;
-
   return {
     sectionList,
-    queryParamList: splitParameterString(requestParam.search.substring(1)/* remove first ? */),
+    queryParamList: splitParameterString(requestParam.search.substring(1) /* remove first ? */),
     hash: requestParam.hash,
   };
 }
@@ -80,9 +79,7 @@ export function _decodeURIComponent(val: string): string {
 /**
  * Make query string from {key:val} object
  */
-export function joinParameterList(
-    parameterList: ParamList | null | undefined,
-): string {
+export function joinParameterList(parameterList: ParamList | null | undefined): string {
   if (parameterList == null) return '';
   const list: Array<string> = [];
   for (const key in parameterList) {
@@ -96,19 +93,14 @@ export function joinParameterList(
 /**
  * Make {key:val} object from query string
  */
-export function splitParameterString(
-    parameterString: string | null | undefined,
-): ParamList {
+export function splitParameterString(parameterString: string | null | undefined): ParamList {
   const parameterList: ParamList = {};
   if (!parameterString) return parameterList;
 
-  parameterString
-      .split('&')
-      .forEach((parameter) => {
-        const parameterArray = parameter.split('=');
-        parameterList[parameterArray[0]] = parameterArray[1] != null ? parseValue(parameterArray[1]) : '';
-      })
-  ;
+  parameterString.split('&').forEach((parameter) => {
+    const parameterArray = parameter.split('=');
+    parameterList[parameterArray[0]] = parameterArray[1] != null ? parseValue(parameterArray[1]) : '';
+  });
 
   return parameterList;
 }

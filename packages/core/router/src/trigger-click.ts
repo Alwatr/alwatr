@@ -36,7 +36,8 @@ export const clickTrigger = {
         .composedPath()
         .find(
             (target) => (target as HTMLElement)?.tagName?.toLowerCase() === 'a',
-        ) as HTMLAnchorElement | undefined;
+        ) as HTMLAnchorElement | undefined
+    ;
 
     if (
       // ignore if the anchor is not found.
@@ -44,7 +45,7 @@ export const clickTrigger = {
       // ignore if the anchor is not an <a> element.
       anchor.tagName?.toLowerCase() !== 'a' ||
       // ignore if the <a> element has a non-default target.
-      (anchor.target !== '' && anchor.target?.toLowerCase() !== '_self' ) ||
+      (anchor.target !== '' && anchor.target?.toLowerCase() !== '_self') ||
       // ignore if the <a> element has a download attribute.
       anchor.hasAttribute('download') ||
       // ignore if the <a> element has a rel attribute.
