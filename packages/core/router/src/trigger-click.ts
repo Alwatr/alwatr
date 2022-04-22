@@ -31,6 +31,7 @@ export const clickTrigger = {
       return;
     }
 
+    // prettier-ignore
     // find the <a> element that the click is at (or within)
     const anchor = event
         .composedPath()
@@ -44,7 +45,7 @@ export const clickTrigger = {
       // ignore if the anchor is not an <a> element.
       anchor.tagName?.toLowerCase() !== 'a' ||
       // ignore if the <a> element has a non-default target.
-      (anchor.target !== '' && anchor.target?.toLowerCase() !== '_self' ) ||
+      (anchor.target !== '' && anchor.target?.toLowerCase() !== '_self') ||
       // ignore if the <a> element has a download attribute.
       anchor.hasAttribute('download') ||
       // ignore if the <a> element has a rel attribute.

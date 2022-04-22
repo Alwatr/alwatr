@@ -1,5 +1,4 @@
-export interface TransformRangeOptions
-{
+export interface TransformRangeOptions {
   /**
    * The input range [min, max].
    *

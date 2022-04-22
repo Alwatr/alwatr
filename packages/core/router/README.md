@@ -7,7 +7,7 @@ Elegant powerful router (fundamental advance browser page routing) based on the 
 ### Prepare
 
 ```ts
-import { router } from 'https://esm.run/@alwatr/router';
+import {router} from 'https://esm.run/@alwatr/router';
 
 /**
  * Initial and config the Router.
@@ -27,8 +27,7 @@ router.signal.addListener((route) => {
 Example page url: `https://example.com/product/100/book?cart=1&color=white#description`
 
 ```ts
-interface Route
-{
+interface Route {
   sectionList: Array<string | number | boolean>; // [product, 100, book]
   queryParamList: ParamList; // {cart: 1, color: 'white'}
   hash: string; // '#description'
@@ -89,6 +88,7 @@ Make anchor valid href from route.
 
 ### Full example with [lit-element](https://lit.dev)
 
+<!-- prettier-ignore -->
 ```ts
 import {css, html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
@@ -109,13 +109,13 @@ export class MyElement extends LitElement {
   private _routes: RoutesConfig = {
     map: (route) => route.sectionList[0]?.toString(),
     list: {
-      'home': {
+      home: {
         render: () => html`<page-home>Page Home ...</page-home>`,
       },
-      'about': {
+      about: {
         render: () => html`<page-about>Page About ...</page-about>`,
       },
-      'article': {
+      article: {
         render: (route) =>
           route.sectionList[1] != null ?
             html`<page-article>Page Article ${route.sectionList[1]} ...</page-article>` :
@@ -138,7 +138,9 @@ export class MyElement extends LitElement {
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this._listenerList.forEach((listener) => (listener as ListenerInterface<keyof AlwatrSignals>).remove());
+    this._listenerList.forEach((listener) =>
+      (listener as ListenerInterface<keyof AlwatrSignals>).remove()
+    );
   }
 
   override render(): TemplateResult {
@@ -152,9 +154,7 @@ export class MyElement extends LitElement {
         <li><a href=${router.makeUrl({sectionList: ['contact']})}>Contact</a></li>
       </menu>
 
-      <div class="page-container">
-        ${router.outlet(this._routes)}
-      </div>
+      <div class="page-container">${router.outlet(this._routes)}</div>
     `;
   }
 }

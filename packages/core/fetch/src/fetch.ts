@@ -18,8 +18,7 @@ declare global {
 }
 
 // @TODO: docs for all options
-export interface FetchOptions extends RequestInit
-{
+export interface FetchOptions extends RequestInit {
   /**
    * @default 10_000 ms
    */
@@ -48,11 +47,12 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   };
 
   if (options.queryParameters != null) {
+    // prettier-ignore
     const queryArray = Object
         .keys(options.queryParameters)
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((key) => `${key}=${String(options!.queryParameters![key])}`)
-    ;
+        .map((key) => `${key}=${String(options!.queryParameters![key])}`);
+
     if (queryArray.length > 0) {
       url += '?' + queryArray.join('&');
     }
@@ -76,7 +76,10 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
     });
   }
   abortController.signal.addEventListener('abort', () => {
-    logger.incident('fetch', 'abort_signal', 'abort signal received', {url, reason: abortController.signal.reason});
+    logger.incident('fetch', 'abort_signal', 'abort signal received', {
+      url,
+      reason: abortController.signal.reason,
+    });
   });
   options.signal = abortController.signal;
 

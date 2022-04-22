@@ -1,6 +1,6 @@
 export type L10Resource = Record<string, string>;
 
-export interface Local{
+export interface Local {
   /**
    * fa-IR, en-US, ...
    */

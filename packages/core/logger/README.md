@@ -5,11 +5,11 @@ Fancy colorful console debugger with custom scope written in tiny TypeScript, ES
 ## Example usage
 
 ```ts
-import { createLogger } from 'https://esm.run/@alwatr/logger';
+import {createLogger} from 'https://esm.run/@alwatr/logger';
 
 const logger = createLogger('demo');
 
-function sayHello (name: string) {
+function sayHello(name: string) {
   logger.logMethodArgs('sayHello', {name});
 }
 ```
@@ -44,7 +44,7 @@ Please remember to **reload** the window after changing the debug mode.
 Create a logger function for fancy console debug with custom scope.
 
 - **color** is optional and automatically select from internal fancy color list.
-- **force** is optional and default to false.
+- **debug** is optional and automatically detect from localStorage `ALWATR_DEBUG` item or `process.env.ALWATR_DEBUG`
 
 Example:
 
@@ -82,7 +82,7 @@ logger.logProperty('name', 'ali');
 Example:
 
 ```ts
-function myMethod () {
+function myMethod() {
   logger.logMethod('myMethod');
 }
 ```
@@ -94,7 +94,7 @@ function myMethod () {
 Example:
 
 ```ts
-function myMethod (a: number, b: number) {
+function myMethod(a: number, b: number) {
   logger.logMethodArgs('myMethod', {a, b});
 }
 ```
@@ -106,7 +106,7 @@ function myMethod (a: number, b: number) {
 Example:
 
 ```ts
-function add (a: number, b: number): number {
+function add(a: number, b: number): number {
   const result = a + b;
   logger.logMethodFull('add', {a, b}, result);
   return result;
@@ -130,7 +130,9 @@ logger.incident('fetch', 'abort_signal', 'aborted signal received', {url: '/test
 Example:
 
 ```ts
-logger.accident('fetch', 'file_not_found', 'url requested return 404 not found', {url: '/test.json'});
+logger.accident('fetch', 'file_not_found', 'url requested return 404 not found', {
+  url: '/test.json',
+});
 ```
 
 ### `logger.error(method, code, errorStack, ...args)`
@@ -163,22 +165,28 @@ logger.logOther('foo:', 'bar', {a: 1});
 For example with a promise function with error:
 
 ```ts
-const failPromiseTest = (): Promise<never> => new Promise((_, reject) => reject(new Error('my_error_code')));
+const failPromiseTest = (): Promise<never> =>
+  new Promise((_, reject) => reject(new Error('my_error_code')));
 ```
 
 Best practices to catch the error and log it:
 
 ```ts
 // Unhandled promise rejection (just log it)
-failPromiseTest()
-    .catch((err) => logger.error('myMethod', (err as Error).message || 'error_code', (err as Error).stack || err));
+failPromiseTest().catch((err) =>
+  logger.error('myMethod', (err as Error).message || 'error_code', (err as Error).stack || err)
+);
 
 // Handled promise rejection
 try {
   await failPromiseTest();
 } catch (err) {
-  logger.accident('myMethod', 'error_code', 'failPromiseTest failed!, ' + (err as Error).message,
-      (err as Error).stack || err);
+  logger.accident(
+    'myMethod',
+    'error_code',
+    'failPromiseTest failed!, ' + (err as Error).message,
+    (err as Error).stack || err
+  );
   // do something to handle the error...
 }
 ```
