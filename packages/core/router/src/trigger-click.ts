@@ -31,13 +31,13 @@ export const clickTrigger = {
       return;
     }
 
+    // prettier-ignore
     // find the <a> element that the click is at (or within)
     const anchor = event
         .composedPath()
         .find(
             (target) => (target as HTMLElement)?.tagName?.toLowerCase() === 'a',
-        ) as HTMLAnchorElement | undefined
-    ;
+        ) as HTMLAnchorElement | undefined;
 
     if (
       // ignore if the anchor is not found.

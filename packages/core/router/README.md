@@ -88,6 +88,7 @@ Make anchor valid href from route.
 
 ### Full example with [lit-element](https://lit.dev)
 
+<!-- prettier-ignore -->
 ```ts
 import {css, html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';

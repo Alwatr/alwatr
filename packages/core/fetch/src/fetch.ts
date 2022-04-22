@@ -47,11 +47,12 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   };
 
   if (options.queryParameters != null) {
+    // prettier-ignore
     const queryArray = Object
         .keys(options.queryParameters)
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((key) => `${key}=${String(options!.queryParameters![key])}`)
-    ;
+        .map((key) => `${key}=${String(options!.queryParameters![key])}`);
+
     if (queryArray.length > 0) {
       url += '?' + queryArray.join('&');
     }

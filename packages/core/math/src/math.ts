@@ -52,12 +52,8 @@ export function isNumber(value: unknown): boolean {
  * ```
  */
 export const transformToRange = (x: number, options: TransformRangeOptions): number => {
-  let y =
-    ((options.out[1] - options.out[0]) * (x - options.in[0])) /
-    (options.in[1] - options.in[0]) +
-    options.out[0]
-  ;
-
+  // prettier-ignore
+  let y = ((options.out[1] - options.out[0]) * (x - options.in[0])) / (options.in[1] - options.in[0]) + options.out[0];
   if (options.bound) {
     if (y < options.out[0]) {
       y = options.out[0];

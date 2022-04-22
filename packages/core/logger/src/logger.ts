@@ -42,8 +42,9 @@ const getNextColor = (): string => {
   return color;
 };
 
-const debugString = globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim() ||
-                    globalThis.process?.env?.ALWATR_DEBUG?.trim(); // node
+const debugString =
+  globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim() ||
+  globalThis.process?.env?.ALWATR_DEBUG?.trim(); // node
 
 const getDebugState = (scope: string): boolean => {
   if (
@@ -54,6 +55,7 @@ const getDebugState = (scope: string): boolean => {
     return true;
   }
 
+  // prettier-ignore
   if (
     debugString == null ||
     debugString == ''
@@ -61,6 +63,7 @@ const getDebugState = (scope: string): boolean => {
     return false;
   }
 
+  // prettier-ignore
   if (
     debugString === scope ||
     debugString === '*' ||

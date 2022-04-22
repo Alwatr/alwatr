@@ -21,6 +21,7 @@ console.log(typeof Infinity); //=> 'number'
 
 #### True
 
+<!-- prettier-ignore -->
 ```js
 import {isNumber} from 'https://esm.run/@alwatr/math';
 
@@ -49,6 +50,7 @@ isNumber(parseFloat('012')); // true
 
 #### False
 
+<!-- prettier-ignore -->
 ```js
 import {isNumber} from 'https://esm.run/@alwatr/math';
 

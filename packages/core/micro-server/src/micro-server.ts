@@ -71,6 +71,7 @@ export class AlwatrMicroServer {
     });
   }
 
+  // prettier-ignore
   protected middlewareList: Record<string, Record<string, (connection: AlwatrConnection) => void | Promise<void>>> = {
     all: {},
   };
