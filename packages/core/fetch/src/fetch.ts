@@ -75,7 +75,10 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
     });
   }
   abortController.signal.addEventListener('abort', () => {
-    logger.incident('fetch', 'abort_signal', 'abort signal received', {url, reason: abortController.signal.reason});
+    logger.incident('fetch', 'abort_signal', 'abort signal received', {
+      url,
+      reason: abortController.signal.reason,
+    });
   });
   options.signal = abortController.signal;
 

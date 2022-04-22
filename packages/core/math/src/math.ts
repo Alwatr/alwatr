@@ -52,7 +52,11 @@ export function isNumber(value: unknown): boolean {
  * ```
  */
 export const transformToRange = (x: number, options: TransformRangeOptions): number => {
-  let y = ((options.out[1] - options.out[0]) * (x - options.in[0])) / (options.in[1] - options.in[0]) + options.out[0];
+  let y =
+    ((options.out[1] - options.out[0]) * (x - options.in[0])) /
+    (options.in[1] - options.in[0]) +
+    options.out[0]
+  ;
 
   if (options.bound) {
     if (y < options.out[0]) {
@@ -110,7 +114,8 @@ export const random = {
    * console.log(random.step(6, 10, 2)); // 6 or 8 or 10
    * ```
    */
-  step: (min: number, max: number, step: number): number => min + random.integer(0, (max - min) / step) * step,
+  step: (min: number, max: number, step: number): number =>
+    min + random.integer(0, (max - min) / step) * step,
 
   /**
    * Shuffle an array.

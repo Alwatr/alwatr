@@ -130,7 +130,9 @@ logger.incident('fetch', 'abort_signal', 'aborted signal received', {url: '/test
 Example:
 
 ```ts
-logger.accident('fetch', 'file_not_found', 'url requested return 404 not found', {url: '/test.json'});
+logger.accident('fetch', 'file_not_found', 'url requested return 404 not found', {
+  url: '/test.json',
+});
 ```
 
 ### `logger.error(method, code, errorStack, ...args)`
@@ -163,7 +165,8 @@ logger.logOther('foo:', 'bar', {a: 1});
 For example with a promise function with error:
 
 ```ts
-const failPromiseTest = (): Promise<never> => new Promise((_, reject) => reject(new Error('my_error_code')));
+const failPromiseTest = (): Promise<never> =>
+  new Promise((_, reject) => reject(new Error('my_error_code')));
 ```
 
 Best practices to catch the error and log it:

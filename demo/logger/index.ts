@@ -19,7 +19,9 @@ console.debug('--- logger.incident ---');
 logger.incident('myMethod', 'abort_signal', 'Aborted signal received', {url: '/test.json'});
 
 console.debug('--- logger.accident ---');
-logger.accident('myMethod', 'file_not_found', 'Url requested return 404 not found', {url: '/test.json'});
+logger.accident('myMethod', 'file_not_found', 'Url requested return 404 not found', {
+  url: '/test.json',
+});
 
 console.debug('--- logger.logOther ---');
 logger.logOther('foo:', 'bar', {a: 1});

@@ -137,7 +137,9 @@ export class MyElement extends LitElement {
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this._listenerList.forEach((listener) => (listener as ListenerInterface<keyof AlwatrSignals>).remove());
+    this._listenerList.forEach((listener) =>
+      (listener as ListenerInterface<keyof AlwatrSignals>).remove()
+    );
   }
 
   override render(): TemplateResult {
