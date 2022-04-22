@@ -89,7 +89,7 @@ export const style = {
  * Create a logger function for fancy console debug with custom scope.
  *
  * - **color** is optional and automatically select from internal fancy color list.
- * - **force** is optional and default to false.
+ * - **debug** is optional and automatically detect from localStorage `ALWATR_DEBUG` item or `process.env.ALWATR_DEBUG`
  *
  * Example:
  *
@@ -98,14 +98,8 @@ export const style = {
  * const logger = createLogger('logger/demo');
  * ```
  */
-export const createLogger = (
-    scope: string,
-    color: string = getNextColor(),
-    force = false,
-): Logger => {
+export const createLogger = (scope: string, color: string = getNextColor(), debug = getDebugState(scope)): Logger => {
   scope = scope.trim();
-
-  const debug = force || getDebugState(scope);
 
   const first = scope.charAt(0);
   if (first !== '[' && first !== '{' && first !== '(' && first !== '<') {
