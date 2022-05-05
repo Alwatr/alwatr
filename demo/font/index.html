@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -19,6 +19,14 @@
       section {
         max-width: 500px;
         margin: 2em auto;
+      }
+
+      h3 {
+        font-size: 40px;
+      }
+
+      p {
+        font-size: 25px;
       }
 
       .animate {
@@ -41,14 +49,22 @@
       .sahel {
         font-family: var(--font-sahel), var(--font-system);
       }
+
+      .roboto {
+        font-family: var(--font-roboto), var(--font-system);
+      }
+
+      .roboto-italic {
+        font-family: var(--font-roboto-italic), var(--font-system);
+      }
     </style>
   </head>
 
   <body>
     <h1 dir="ltr">@alwatr/font</h1>
-    <section class="vazirmatn">
+    <section class="vazirmatn"  lang="fa" dir="rtl">
       <h3>فونت وزیر‌متن</h3>
-      <p contenteditable="true" spellcheck="false">
+      <p contenteditable="true" class="fa" spellcheck="false">
         <span class="animate">بِسْمِ اللهِ الرَّحْمنِ الرَّحِیمِ</span>
         <br />
         به نام خداوند بخشنده مهربان
@@ -65,29 +81,64 @@
       </p>
     </section>
 
-    <section class="vazirmatn-rd">
+    <section class="vazirmatn-rd" lang="fa" dir="rtl">
       <h3>فونت وزیر‌متن نقطه‌گرد</h3>
-      <p></p>
+      <p class="fa"></p>
     </section>
 
-    <section class="sahel">
+    <section class="sahel" lang="fa" dir="rtl">
       <h3>فونت ساحل</h3>
-      <p></p>
+      <p class="fa"></p>
+    </section>
+
+    <section class="roboto" lang="en" dir="ltr">
+      <h3>Roboto font</h3>
+      <p contenteditable="true" class="en" spellcheck="false">
+        <span class="animate">In the name of God</span>
+        <br /><br />
+        O Allah! Protect Your vicegerent Hujjat (the Proof) ibn. al-Hasan and send salutations upon
+        him, and his ancestors, now as well as at all the times, (as our) Imam, Guardian, Supporter,
+        and Guide until such time when you bestow upon him the honor of heading the (Divine)
+        Government. And let the people be delighted in his reign, by bestowing success, and by
+        extending his reign.
+        <br />
+        0123456789
+      </p>
+    </section>
+
+    <section class="roboto-italic" lang="en" dir="ltr">
+      <h3>Roboto italic font</h3>
+      <p class="en"></p>
     </section>
 
     <script>
-      const editor = document.querySelector('[contenteditable]');
-      const boxList = document.querySelectorAll('section>p');
+      const editorFa = document.querySelector('[contenteditable].fa');
+      const boxListFa = document.querySelectorAll('section>p.fa');
 
-      function updateSampleData() {
-        const content = editor.innerHTML;
-        for (let i = 0; i < boxList.length; i++) {
-          boxList[i].innerHTML = content;
+      function updateSampleDataFa() {
+        const content = editorFa.innerHTML;
+        for (let i = 0; i < boxListFa.length; i++) {
+          boxListFa[i].innerHTML = content;
         }
       }
 
-      editor.addEventListener('focusout', updateSampleData);
-      updateSampleData();
+      editorFa.addEventListener('focusout', updateSampleDataFa);
+      updateSampleDataFa();
+
+
+      const editorEn = document.querySelector('[contenteditable].en');
+      const boxListEn = document.querySelectorAll('section>p.en');
+
+      function updateSampleDataEn() {
+        const content = editorEn.innerHTML;
+        for (let i = 0; i < boxListEn.length; i++) {
+          boxListEn[i].innerHTML = content;
+        }
+      }
+
+      editorFa.addEventListener('focusout', updateSampleDataEn);
+      updateSampleDataEn();
+
     </script>
   </body>
 </html>
