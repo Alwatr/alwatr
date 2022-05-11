@@ -1,5 +1,13 @@
 # @alwatr/logger
 
+<div align="center">
+
+[![Published on npm](https://img.shields.io/npm/v/@alwatr/logger.svg?logo=npm)](https://www.npmjs.com/package/@alwatr/logger)
+[![Build Status](https://github.com/AliMD/alwatr/actions/workflows/build.yaml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/build.yaml)
+[![Lint Status](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml)
+
+</div>
+
 Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.
 
 ## Example usage
@@ -16,7 +24,7 @@ function sayHello(name: string) {
 
 ### Debug Mode
 
-Many of the methods in the logger are no-ops when the debug mode is off.  
+Many of the methods in the logger are no-ops when the debug mode is off.
 Please remember to **reload** the window after changing the debug mode.
 
 - Debugging all scopes

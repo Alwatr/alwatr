@@ -1,5 +1,13 @@
 # @alwatr/router
 
+<div align="center">
+
+[![Published on npm](https://img.shields.io/npm/v/@alwatr/router.svg?logo=npm)](https://www.npmjs.com/package/@alwatr/router)
+[![Build Status](https://github.com/AliMD/alwatr/actions/workflows/build.yaml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/build.yaml)
+[![Lint Status](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml)
+
+</div>
+
 Elegant powerful router (fundamental advance browser page routing) based on the simplicity of the signals written in tiny TypeScript module.
 
 ## Example usage

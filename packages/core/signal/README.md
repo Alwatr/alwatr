@@ -1,5 +1,13 @@
 # @alwatr/signal
 
+<div align="center">
+
+[![Published on npm](https://img.shields.io/npm/v/@alwatr/signal.svg?logo=npm)](https://www.npmjs.com/package/@alwatr/signal)
+[![Build Status](https://github.com/AliMD/alwatr/actions/workflows/build.yaml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/build.yaml)
+[![Lint Status](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml)
+
+</div>
+
 Elegant powerful event system for handle global signals and states written in tiny TypeScript module.
 
 Every signal has own value and can be used as a advance **state management** like redux and recoil without the complexities and unnecessary facilities of those libraries.

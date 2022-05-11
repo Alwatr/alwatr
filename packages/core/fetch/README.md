@@ -1,5 +1,13 @@
 # @alwatr/fetch
 
+<div align="center">
+
+[![Published on npm](https://img.shields.io/npm/v/@alwatr/fetch.svg?logo=npm)](https://www.npmjs.com/package/@alwatr/fetch)
+[![Build Status](https://github.com/AliMD/alwatr/actions/workflows/build.yaml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/build.yaml)
+[![Lint Status](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml)
+
+</div>
+
 Enhanced fetch API with the timeout, helper methods, and types written in tiny TypeScript, ES module.
 
 ## Options

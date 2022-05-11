@@ -1,5 +1,13 @@
 # @alwatr/font
 
+<div align="center">
+
+[![Published on npm](https://img.shields.io/npm/v/@alwatr/font.svg?logo=npm)](https://www.npmjs.com/package/@alwatr/font)
+[![Build Status](https://github.com/AliMD/alwatr/actions/workflows/build.yaml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/build.yaml)
+[![Lint Status](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml/badge.svg?branch=next)](https://github.com/AliMD/alwatr/actions/workflows/lint.yaml)
+
+</div>
+
 Best practices of using persian/arabic web fonts for progressive web applications (The Right Way).
 
 ## How to use
