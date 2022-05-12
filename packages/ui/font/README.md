@@ -23,16 +23,14 @@ Best practices of using persian/arabic web fonts for progressive web application
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@alwatr/font@1.2.3/font.min.css"
-      fetchpriority="high"
-    />
+      fetchpriority="high" />
 
     <link
       rel="preload"
       href="https://cdn.jsdelivr.net/npm/@alwatr/font@1.2.3/vazirmatn/vazirmatn[wght].woff2"
       as="font"
       type="font/woff2"
-      crossorigin
-    />
+      crossorigin />
 
     <style>
       body {

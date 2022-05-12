@@ -16,6 +16,7 @@ This is the monorepo for Alwatr packages, including `@alwatr/logger`, `@alwatr/f
 ### Packages
 
 - Core pakages
+
   - [`logger`](https://github.com/AliMD/alwatr/tree/next/packages/core/logger) - Colorful console debugger with custom scope.
 
   - [`fetch`](https://github.com/AliMD/alwatr/tree/next/packages/core/fetch) - Fetch API with the timeout, helper methods, and types.
@@ -29,6 +30,7 @@ This is the monorepo for Alwatr packages, including `@alwatr/logger`, `@alwatr/f
   - [`element`](https://github.com/AliMD/alwatr/tree/next/packages/core/element) - Web component (lit-element) helper mixins.
 
   - [`micro-server`](https://github.com/AliMD/alwatr/tree/next/packages/core/micro-server) - Nodejs server for microservice use cases.
+
 - Ui
   - [`font`](https://github.com/AliMD/alwatr/tree/next/packages/ui/font) - Using Persian/Arabic web fonts for progressive web applications.
 - Starter

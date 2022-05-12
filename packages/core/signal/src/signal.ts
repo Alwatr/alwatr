@@ -231,8 +231,8 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    * ```
    */
   addListener(
-      listener: ListenerCallback<SignalName>,
-      options?: ListenerOptions,
+    listener: ListenerCallback<SignalName>,
+    options?: ListenerOptions,
   ): ListenerInterface<SignalName> {
     this._logger.logMethodArgs('addListener', {listener, options});
     const listenerId = _addSignalListener(this._signal.name, listener, options);

@@ -34,15 +34,20 @@
     "max-len": [
       "error",
       {
-        "code": 120
+        "code": 100,
+        "tabWidth": 2,
+        "ignoreComments": true
       }
     ],
+    "operator-linebreak": ["error", "before"],
+    "indent": ["error", 2, {"SwitchCase": 1, "ignoredNodes": ["ConditionalExpression"]}],
     "no-eval": [
       "error",
       {
         "allowIndirect": true
       }
     ],
+    "@typescript-eslint/no-non-null-assertion": "off",
     "no-floating-decimal": "error",
     "space-infix-ops": "error",
     "new-cap": [

@@ -57,10 +57,10 @@ export function _localize(key: string): string {
   const localized = l10nResource[key];
   if (localized == null) {
     logger.accident(
-        'localize',
-        'l10n_key_not_found',
-        'Key not defined in the localization resource',
-        {key},
+      'localize',
+      'l10n_key_not_found',
+      'Key not defined in the localization resource',
+      {key},
     );
     return `(${key})`;
   }

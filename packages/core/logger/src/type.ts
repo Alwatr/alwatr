@@ -21,7 +21,7 @@ declare global {
       arg1: A1,
       arg2: A2,
       arg3: A3,
-      arg4: A4
+      arg4: A4,
     ): (...args: A) => R;
   }
 }
@@ -95,7 +95,7 @@ export interface Logger {
   logMethodFull(
     method: string,
     args: Record<string, unknown> | string | number | boolean,
-    result: unknown
+    result: unknown,
   ): void;
 
   /**

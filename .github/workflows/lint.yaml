@@ -5,10 +5,12 @@ name: Lint
 on:
   pull_request:
     paths:
-      - "**/*.ts"
+      - "**/*.{ts,md,html,json}"
+      - "README.md"
   push:
     paths:
-      - "**/*.ts"
+      - "**/*.{ts,md,html,json}"
+      - "README.md"
 
     branches:
         - next

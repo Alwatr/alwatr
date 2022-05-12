@@ -182,7 +182,7 @@ Best practices to catch the error and log it:
 ```ts
 // Unhandled promise rejection (just log it)
 failPromiseTest().catch((err) =>
-  logger.error('myMethod', (err as Error).message || 'error_code', (err as Error).stack || err)
+  logger.error('myMethod', (err as Error).message || 'error_code', (err as Error).stack || err),
 );
 
 // Handled promise rejection
@@ -193,7 +193,7 @@ try {
     'myMethod',
     'error_code',
     'failPromiseTest failed!, ' + (err as Error).message,
-    (err as Error).stack || err
+    (err as Error).stack || err,
   );
   // do something to handle the error...
 }

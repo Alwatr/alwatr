@@ -116,9 +116,10 @@ function outlet(routesConfig: RoutesConfig): unknown {
   if (page == null && currentRoute.sectionList.length === 0) {
     // root
     logger.incident(
-        'outlet',
-        'redirect_to_home',
-        'Route location is app root and routesConfig.map() return noting then redirect to home automatically',
+      'outlet',
+      'redirect_to_home',
+      `Route location is app root and routesConfig.map()
+       return noting then redirect to home automatically`,
     );
 
     page = 'home';
@@ -137,14 +138,14 @@ function outlet(routesConfig: RoutesConfig): unknown {
   if (page == null || typeof routesConfig.list[page]?.render !== 'function') {
     // 404
     logger.accident(
-        'outlet',
-        'redirect_to_404',
-        'Requested page not defined in routesConfig.list',
-        {
-          page,
-          currentRoute,
-          routesConfig,
-        },
+      'outlet',
+      'redirect_to_404',
+      'Requested page not defined in routesConfig.list',
+      {
+        page,
+        currentRoute,
+        routesConfig,
+      },
     );
 
     page = '404';
@@ -152,14 +153,14 @@ function outlet(routesConfig: RoutesConfig): unknown {
     if (typeof routesConfig.list[page]?.render !== 'function') {
       // 404
       logger.accident(
-          'outlet',
-          'no_render_for_404',
-          'Page "404" not defined in routesConfig.list',
-          {
-            page,
-            currentRoute,
-            routesConfig,
-          },
+        'outlet',
+        'no_render_for_404',
+        'Page "404" not defined in routesConfig.list',
+        {
+          page,
+          currentRoute,
+          routesConfig,
+        },
       );
       routesConfig.list[page] = {
         render: () => 'Error 404: Page Not Found!',

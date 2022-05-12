@@ -20,13 +20,13 @@ export class AlwatrMicroServer {
 
     this.server.on('error', (err: NodeJS.ErrnoException) => {
       this.logger.accident(
-          'server.onError',
-          'http_server_catch_error',
-          'HTTP server catch an error',
-          {
-            errCode: err.code,
-            errMessage: err.message,
-          },
+        'server.onError',
+        'http_server_catch_error',
+        'HTTP server catch an error',
+        {
+          errCode: err.code,
+          errMessage: err.message,
+        },
       );
 
       if (err.code === 'EADDRINUSE') {
@@ -40,13 +40,13 @@ export class AlwatrMicroServer {
 
     this.server.on('clientError', (err: NodeJS.ErrnoException, socket) => {
       this.logger.accident(
-          'server.clientError',
-          'http_server_catch_client_error',
-          'HTTP server catch a client error',
-          {
-            errCode: err.code,
-            errMessage: err.message,
-          },
+        'server.clientError',
+        'http_server_catch_client_error',
+        'HTTP server catch a client error',
+        {
+          errCode: err.code,
+          errMessage: err.message,
+        },
       );
       socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
     });
@@ -72,20 +72,21 @@ export class AlwatrMicroServer {
   }
 
   // prettier-ignore
-  protected middlewareList: Record<string, Record<string, (connection: AlwatrConnection) => void | Promise<void>>> = {
-    all: {},
-  };
+  protected middlewareList: Record<string, Record<string, (
+    connection: AlwatrConnection) => void | Promise<void>>> = {
+      all: {},
+    };
 
   protected async handleRequest(
-      incomingMessage: IncomingMessage,
-      serverResponse: ServerResponse,
+    incomingMessage: IncomingMessage,
+    serverResponse: ServerResponse,
   ): Promise<void> {
     this.logger.logMethod('handleRequest');
     if (incomingMessage.url == null) {
       this.logger.accident(
-          'handleRequest',
-          'http_server_url_undefined',
-          'incomingMessage.url is undefined',
+        'handleRequest',
+        'http_server_url_undefined',
+        'incomingMessage.url is undefined',
       );
       return;
     }
@@ -196,13 +197,13 @@ export class AlwatrConnection {
     } catch {
       this.logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!');
       return this.reply(
-        content.ok === false ?
-          {
+        content.ok === false
+          ? {
             ok: false,
             statusCode: content.statusCode,
             errorCode: content.errorCode,
-          } :
-          {
+          }
+          : {
             ok: false,
             statusCode: 500,
             errorCode: 'data_stringify_failed',

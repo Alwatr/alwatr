@@ -27,7 +27,7 @@ const _signalStack: SignalStack = {};
  * Access to signal option, Make new signal with default options if not exist.
  */
 export function __getSignalObject<SignalName extends keyof AlwatrSignals>(
-    signalName: SignalName,
+  signalName: SignalName,
 ): SignalObject<SignalName> {
   if (!_signalStack[signalName]) {
     _signalStack[signalName] = {
@@ -41,7 +41,7 @@ export function __getSignalObject<SignalName extends keyof AlwatrSignals>(
 }
 
 function __callListeners<SignalName extends keyof AlwatrSignals>(
-    signal: SignalObject<SignalName>,
+  signal: SignalObject<SignalName>,
 ): void {
   logger.logMethodArgs('_callListeners', {signalName: signal.name, signalValue: signal.value});
   if (signal.value === undefined) {
@@ -70,8 +70,8 @@ function __callListeners<SignalName extends keyof AlwatrSignals>(
   }
 
   signal.listenerList
-      .filter((listener) => !listener.disabled && listener.once)
-      .forEach((listener) => _removeSignalListener(signal.name, listener.id));
+    .filter((listener) => !listener.disabled && listener.once)
+    .forEach((listener) => _removeSignalListener(signal.name, listener.id));
 }
 
 /**
@@ -84,9 +84,9 @@ function __callListeners<SignalName extends keyof AlwatrSignals>(
  * ```
  */
 export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
-    signalName: SignalName,
-    signalCallback: ListenerCallback<SignalName>,
-    options?: ListenerOptions,
+  signalName: SignalName,
+  signalCallback: ListenerCallback<SignalName>,
+  options?: ListenerOptions,
 ): ListenerObject<SignalName> {
   logger.logMethodArgs('addSignalListener', {signalName, options});
 
@@ -104,22 +104,22 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
   if (signal.value !== undefined) {
     if (options?.receivePrevious === 'Immediate') {
       logger.incident(
-          'addSignalListener',
-          'call_signal_callback',
-          'run callback with previous signal value!',
-          {
-            signalName,
-            mode: 'Immediate',
-          },
+        'addSignalListener',
+        'call_signal_callback',
+        'run callback with previous signal value!',
+        {
+          signalName,
+          mode: 'Immediate',
+        },
       );
       try {
         signalCallback(signal.value);
       } catch (err) {
         logger.error(
-            'addSignalListener',
-            'call_signal_callback_failed',
-            (err as Error).stack || err,
-            {signalName},
+          'addSignalListener',
+          'call_signal_callback_failed',
+          (err as Error).stack || err,
+          {signalName},
         );
       }
       callbackCalled = true;
@@ -127,13 +127,13 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
       requestAnimationFrame(() => {
         if (signal.value !== undefined) {
           logger.incident(
-              'addSignalListener',
-              'call_signal_callback',
-              'run callback with previous signal value!',
-              {
-                signalName,
-                mode: 'Delay',
-              },
+            'addSignalListener',
+            'call_signal_callback',
+            'run callback with previous signal value!',
+            {
+              signalName,
+              mode: 'Delay',
+            },
           );
           signalCallback(signal.value);
         }
@@ -165,8 +165,8 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
  * ```
  */
 export function _removeSignalListener<SignalName extends keyof AlwatrSignals>(
-    signalName: SignalName,
-    listenerId: symbol,
+  signalName: SignalName,
+  listenerId: symbol,
 ): void {
   logger.logMethodArgs('_removeSignalListener', signalName);
   const signal = __getSignalObject(signalName);
@@ -183,9 +183,9 @@ export function _removeSignalListener<SignalName extends keyof AlwatrSignals>(
  * dispatchSignal('content-change', content);
  */
 export function _dispatchSignal<SignalName extends keyof AlwatrSignals>(
-    signalName: SignalName,
-    value: AlwatrSignals[SignalName],
-    options?: DispatchOptions,
+  signalName: SignalName,
+  value: AlwatrSignals[SignalName],
+  options?: DispatchOptions,
 ): void {
   logger.logMethodArgs('dispatchSignal', {signalName, value, options});
 
@@ -227,9 +227,9 @@ export function _dispatchSignal<SignalName extends keyof AlwatrSignals>(
  * ```
  */
 export function _setSignalProvider<SignalName extends keyof AlwatrRequestSignals>(
-    signalName: SignalName,
-    signalProvider: SignalProvider<SignalName>,
-    options?: SignalProviderOptions,
+  signalName: SignalName,
+  signalProvider: SignalProvider<SignalName>,
+  options?: SignalProviderOptions,
 ): ListenerObject<SignalName> {
   logger.logMethodArgs('setSignalProvider', {signalName, options});
 
@@ -237,12 +237,12 @@ export function _setSignalProvider<SignalName extends keyof AlwatrRequestSignals
   const signal = __getSignalObject(`request-${signalName}` as unknown as SignalName);
   if (signal.listenerList.length > 0) {
     logger.accident(
-        'setSignalProvider',
-        'signal_provider_already_set',
-        'another provider defined and will removed',
-        {
-          signalName,
-        },
+      'setSignalProvider',
+      'signal_provider_already_set',
+      'another provider defined and will removed',
+      {
+        signalName,
+      },
     );
     signal.listenerList = [];
   }

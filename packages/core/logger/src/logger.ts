@@ -42,38 +42,38 @@ const getNextColor = (): string => {
   return color;
 };
 
-const debugString =
-  globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim() ||
-  globalThis.process?.env?.ALWATR_DEBUG?.trim(); // node
+const debugString
+  = globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim()
+  || globalThis.process?.env?.ALWATR_DEBUG?.trim(); // node
 
 const getDebugState = (scope: string): boolean => {
   if (
-    debugString == null &&
-    globalThis.process && // nodejs
-    globalThis.process.env.NODE_ENV !== 'production'
+    debugString == null
+    && globalThis.process // nodejs
+    && globalThis.process.env.NODE_ENV !== 'production'
   ) {
     return true;
   }
 
   // prettier-ignore
   if (
-    debugString == null ||
-    debugString == ''
+    debugString == null
+    || debugString == ''
   ) {
     return false;
   }
 
   // prettier-ignore
   if (
-    debugString === scope ||
-    debugString === '*' ||
-    (
-      debugString.indexOf('*') === 0 && // starts with `*` for example: `*alwatr*`
-      scope.indexOf(debugString.replaceAll('*', '')) !== -1
-    ) ||
-    (
-      debugString.indexOf('*') === debugString.length - 1 && // ends with `*` for example: `alwatr/*`
-      scope.indexOf(debugString.replaceAll('*', '')) === 0
+    debugString === scope
+    || debugString === '*'
+    || (
+      debugString.indexOf('*') === 0 // starts with `*` for example: `*alwatr*`
+      && scope.indexOf(debugString.replaceAll('*', '')) !== -1
+    )
+    || (
+      debugString.indexOf('*') === debugString.length - 1 // ends with `*` for example: `alwatr/*`
+      && scope.indexOf(debugString.replaceAll('*', '')) === 0
     )
   ) {
     return true;
@@ -102,9 +102,9 @@ export const style = {
  * ```
  */
 export const createLogger = (
-    scope: string,
-    color: string = getNextColor(),
-    debug = getDebugState(scope),
+  scope: string,
+  color: string = getNextColor(),
+  debug = getDebugState(scope),
 ): Logger => {
   scope = scope.trim();
 
@@ -127,11 +127,11 @@ export const createLogger = (
     scope,
 
     accident: console.warn.bind(
-        console,
-        '%c%s%c.%s => Accident: "%s" (%s)!',
-        styleScope,
-        scope,
-        style.reset,
+      console,
+      '%c%s%c.%s => Accident: "%s" (%s)!',
+      styleScope,
+      scope,
+      style.reset,
     ),
 
     error: console.error.bind(console, '%c%s%c.%s "%s" =>', styleScope, scope, style.reset),
@@ -160,19 +160,19 @@ export const createLogger = (
     logMethodArgs: console.debug.bind(console, '%c%s%c.%s(%o);', styleScope, scope, style.reset),
 
     logMethodFull: console.debug.bind(
-        console,
-        '%c%s%c.%s(%o); // %o',
-        styleScope,
-        scope,
-        style.reset,
+      console,
+      '%c%s%c.%s(%o); // %o',
+      styleScope,
+      scope,
+      style.reset,
     ),
 
     incident: console.trace.bind(
-        console,
-        '%c%s%c.%s() => Incident: "%s" (%s)!',
-        styleScope,
-        scope,
-        style.reset,
+      console,
+      '%c%s%c.%s() => Incident: "%s" (%s)!',
+      styleScope,
+      scope,
+      style.reset,
     ),
 
     logOther: console.debug.bind(console, '%c%s', styleScope, scope),

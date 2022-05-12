@@ -49,9 +49,9 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   if (options.queryParameters != null) {
     // prettier-ignore
     const queryArray = Object
-        .keys(options.queryParameters)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((key) => `${key}=${String(options!.queryParameters![key])}`);
+      .keys(options.queryParameters)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      .map((key) => `${key}=${String(options!.queryParameters![key])}`);
 
     if (queryArray.length > 0) {
       url += '?' + queryArray.join('&');
@@ -97,9 +97,9 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
  * const response = await postData('/api/products', {limit: 10}, {timeout: 5_000});
  */
 export function getData(
-    url: string,
-    queryParameters?: Record<string | number, string | number | boolean>,
-    options?: FetchOptions,
+  url: string,
+  queryParameters?: Record<string | number, string | number | boolean>,
+  options?: FetchOptions,
 ): Promise<Response> {
   logger.logMethodArgs('getData', {url, queryParameters, options});
   return fetch(url, {
@@ -114,9 +114,9 @@ export function getData(
  * const productList = await getJson('/api/products', {limit: 10}, {timeout: 5_000});
  */
 export async function getJson<ResponseType extends Record<string | number, unknown>>(
-    url: string,
-    queryParameters?: Record<string | number, string | number | boolean>,
-    options?: FetchOptions,
+  url: string,
+  queryParameters?: Record<string | number, string | number | boolean>,
+  options?: FetchOptions,
 ): Promise<ResponseType> {
   logger.logMethodArgs('getJson', {url, queryParameters, options});
   const response = await getData(url, queryParameters, options);
@@ -134,9 +134,9 @@ export async function getJson<ResponseType extends Record<string | number, unkno
  * const response = await postData('/api/product/new', {name: 'foo', ...});
  */
 export function postData(
-    url: string,
-    body: Record<string | number, unknown>,
-    options?: FetchOptions,
+  url: string,
+  body: Record<string | number, unknown>,
+  options?: FetchOptions,
 ): Promise<Response> {
   logger.logMethodArgs('postData', {url, body, options});
   return fetch(url, {
