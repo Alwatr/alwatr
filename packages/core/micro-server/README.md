@@ -6,7 +6,7 @@ Elegant powerful nodejs server for microservice use cases, written in tiny TypeS
 
 ### Middleware
 
-#### [Core Helper](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+#### [CORS Helper](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 
 ```typescript
 app.route('all', '/', async (connection) => {
@@ -20,7 +20,7 @@ app.route('all', '/', async (connection) => {
       },
     },
     {
-      coreHelper: {
+      corsHelper: {
         allowOrigin: 'https://developer.mozilla.org', // That should not end with "/"
         allowMethod: '*',
         maxAge: 5 * 60, // 5 Minute

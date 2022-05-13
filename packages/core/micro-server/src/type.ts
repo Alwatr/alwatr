@@ -16,8 +16,11 @@ export interface ResponseOptions {
 }
 
 export interface CorsHelperHeader {
-  allowOrigin?: string;
-  allowMethod?: string;
+  allowOrigin: string;
+  allowMethods?: string;
+  allowHeaders?: string;
+  exposeHeaders?: string;
+  allowCredentials?: boolean;
   maxAge?: number;
 }
 

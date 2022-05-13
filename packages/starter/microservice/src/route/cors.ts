@@ -12,8 +12,8 @@ app.route('all', '/cors', async (connection) => {
       },
       {
         corsHelper: {
-          allowMethod: '*',
           allowOrigin: '*',
+          allowMethods: '*',
           maxAge: 5 * 60, // 5 min
         },
       },
