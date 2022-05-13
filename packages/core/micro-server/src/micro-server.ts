@@ -2,7 +2,9 @@ import {createServer} from 'http';
 
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
-import type {Methods, ReplyContent} from './type.js';
+import {coreHelper} from './middleware/core-helpers.js';
+
+import type {Methods, ReplyContent, ServerOptions as ResponseOptions} from './type.js';
 import type {IncomingMessage, ServerResponse} from 'http';
 
 alwatrRegisteredList.push({
@@ -182,7 +184,7 @@ export class AlwatrConnection {
     }
   }
 
-  reply(content: ReplyContent): void {
+  reply(content: ReplyContent, options?: ResponseOptions): void {
     this.logger.logMethodArgs('reply', {content});
 
     if (this.serverResponse.headersSent) {
@@ -208,6 +210,11 @@ export class AlwatrConnection {
             errorCode: 'data_stringify_failed',
           },
       );
+    }
+
+    // set core helper header
+    if (options?.coreHelper !== undefined) {
+      coreHelper(this.serverResponse, options?.coreHelper);
     }
 
     this.serverResponse.writeHead(content.statusCode, {
