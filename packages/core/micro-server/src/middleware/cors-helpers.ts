@@ -1,8 +1,8 @@
-import {CoreHelperHeader} from '../type';
+import {CorsHelperHeader} from '../type';
 
 import type {ServerResponse} from 'http';
 
-export function coreHelper(response: ServerResponse, header: CoreHelperHeader): void {
+export function corsHelper(response: ServerResponse, header: CorsHelperHeader): void {
   if (header.allowOrigin !== undefined) {
     response.setHeader('Access-Control-Allow-Origin', header.allowOrigin);
   }

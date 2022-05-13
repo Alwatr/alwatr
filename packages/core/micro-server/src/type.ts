@@ -11,11 +11,11 @@ interface ReplySuccessContent {
   data: Record<string, unknown>;
 }
 
-export interface ServerOptions {
-  coreHelper?: CoreHelperHeader;
+export interface ResponseOptions {
+  corsHelper?: CorsHelperHeader;
 }
 
-export interface CoreHelperHeader {
+export interface CorsHelperHeader {
   allowOrigin?: string;
   allowMethod?: string;
   maxAge?: number;

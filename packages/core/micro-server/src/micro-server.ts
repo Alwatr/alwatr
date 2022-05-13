@@ -2,9 +2,9 @@ import {createServer} from 'http';
 
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
-import {coreHelper} from './middleware/core-helpers.js';
+import {corsHelper} from './middleware/cors-helpers.js';
 
-import type {Methods, ReplyContent, ServerOptions as ResponseOptions} from './type.js';
+import type {Methods, ReplyContent, ResponseOptions} from './type.js';
 import type {IncomingMessage, ServerResponse} from 'http';
 
 alwatrRegisteredList.push({
@@ -212,9 +212,9 @@ export class AlwatrConnection {
       );
     }
 
-    // set core helper header
-    if (options?.coreHelper !== undefined) {
-      coreHelper(this.serverResponse, options?.coreHelper);
+    // set cors helper header
+    if (options?.corsHelper !== undefined) {
+      corsHelper(this.serverResponse, options?.corsHelper);
     }
 
     this.serverResponse.writeHead(content.statusCode, {
