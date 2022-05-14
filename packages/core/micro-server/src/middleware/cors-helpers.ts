@@ -2,6 +2,10 @@ import {CorsHelperHeader} from '../type';
 
 import type {ServerResponse} from 'http';
 
+/**
+ * Set CORS helper header.
+ * https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+ */
 export function corsHelper(response: ServerResponse, header: CorsHelperHeader): void {
   if (header.allowOrigin !== undefined) {
     response.setHeader('Access-Control-Allow-Origin', header.allowOrigin);

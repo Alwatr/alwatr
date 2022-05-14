@@ -1,6 +1,8 @@
 import {app} from '../app.js';
 
-app.route('all', '/', async (connection) => {
+import type {AlwatrConnection} from '@alwatr/micro-server';
+
+app.route('all', '/', async (connection: AlwatrConnection) => {
   connection.reply({
     ok: true,
     statusCode: 200,

@@ -212,7 +212,6 @@ export class AlwatrConnection {
       );
     }
 
-    // set cors helper header
     if (options?.corsHelper !== undefined) {
       corsHelper(this.serverResponse, options?.corsHelper);
     }
