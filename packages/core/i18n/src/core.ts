@@ -39,12 +39,9 @@ localChangeSignal.addListener((local) => {
 
 l10nResourceChangeSignal.setProvider(async (local): Promise<L10Resource | void> => {
   logger.logMethodArgs('l10nResourceProvider', {local});
-  const current = await localChangeSignal.getSignalValue();
-  if (current.code !== local.code) {
-    return await getJson<L10Resource>(`${configuration.resourcePath}/${local.code}.json`);
-    // TODO: catch errors and fallback
-    // TODO: cache requests
-  }
+  return await getJson<L10Resource>(`${configuration.resourcePath}/${local.code}.json`);
+  // TODO: catch errors and fallback
+  // TODO: cache requests
 });
 
 /**
