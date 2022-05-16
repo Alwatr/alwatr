@@ -57,16 +57,16 @@ export class AlWatrIcon extends LitElement {
   ];
 
   protected override render(): TemplateResult {
-    return html`<div class="icon-inner"></div> `;
+    return html`<div class="icon-inner"></div>`;
   }
 
   protected override update(changedProperties: PropertyValues): void {
+    super.update(changedProperties);
+
     if (changedProperties.has('name')) {
       this._logger.logProperty('name', this.name);
       this.loadIcon();
     }
-
-    super.update(changedProperties);
   }
 
   protected override updated(): void {
@@ -79,10 +79,5 @@ export class AlWatrIcon extends LitElement {
     getSvgContent(url).then((svgContent) => {
       this.svgContent = svgContent;
     });
-  }
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.loadIcon();
   }
 }
