@@ -6,7 +6,6 @@ app.route('post', '/echo', async (connection) => {
 
   connection.reply({
     ok: true,
-    statusCode: 200,
     data: {
       jsonBody,
     },
