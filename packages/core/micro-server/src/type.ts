@@ -7,7 +7,7 @@ interface ReplyFailedContent {
 
 interface ReplySuccessContent {
   ok: true;
-  statusCode: number;
+  statusCode?: number;
   data: Record<string, unknown>;
 }
 

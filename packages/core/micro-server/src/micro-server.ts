@@ -210,7 +210,7 @@ export class AlwatrConnection {
       );
     }
 
-    this.serverResponse.writeHead(content.statusCode, {
+    this.serverResponse.writeHead(content.statusCode ?? 200, {
       'Content-Length': body.length,
       'Content-Type': 'application/json',
       'Server': 'Alwatr MicroServer',
