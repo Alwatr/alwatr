@@ -30,9 +30,9 @@ export function updateBrowserHistory(options: RequestRouteParam): void {
   options.hash ??= '';
 
   if (
-    window.location.pathname === options.pathname
-    && window.location.search === options.search
-    && window.location.hash === options.hash
+    window.location.pathname === options.pathname &&
+    window.location.search === options.search &&
+    window.location.hash === options.hash
   ) {
     return;
   }
@@ -102,8 +102,8 @@ export function splitParameterString(parameterString: string | null | undefined)
 
   parameterString.split('&').forEach((parameter) => {
     const parameterArray = parameter.split('=');
-    parameterList[parameterArray[0]]
-      = parameterArray[1] != null ? parseValue(parameterArray[1]) : '';
+    parameterList[parameterArray[0]] =
+      parameterArray[1] != null ? parseValue(parameterArray[1]) : '';
   });
 
   return parameterList;

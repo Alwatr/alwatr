@@ -197,13 +197,13 @@ export class AlwatrConnection {
     } catch {
       this.logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!');
       return this.reply(
-        content.ok === false
-          ? {
+        content.ok === false ?
+          {
             ok: false,
             statusCode: content.statusCode,
             errorCode: content.errorCode,
-          }
-          : {
+          } :
+          {
             ok: false,
             statusCode: 500,
             errorCode: 'data_stringify_failed',

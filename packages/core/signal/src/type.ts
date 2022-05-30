@@ -83,14 +83,14 @@ export interface SignalProviderOptions {
  * Signal listeners callback function type.
  */
 export type ListenerCallback<SignalName extends keyof AlwatrSignals> = (
-  signalValue: AlwatrSignals[SignalName],
+  signalValue: AlwatrSignals[SignalName]
 ) => void | Promise<void>;
 
 /**
  * Signal provider function type used to setSignalProvider.
  */
 export type SignalProvider<SignalName extends keyof AlwatrRequestSignals> = (
-  requestParam: AlwatrRequestSignals[SignalName],
+  requestParam: AlwatrRequestSignals[SignalName]
 ) => AlwatrSignals[SignalName] | void | Promise<AlwatrSignals[SignalName] | void>;
 
 /**

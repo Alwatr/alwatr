@@ -16,17 +16,17 @@ export const clickTrigger = {
   _clickHandler(event: MouseEvent): void {
     if (
       // ignore if the default action is prevented.
-      event.defaultPrevented
+      event.defaultPrevented ||
       // ignore if the left mouse button is not pressed.
-      || event.button !== 0
+      event.button !== 0 ||
       // ignore if the meta key is pressed.
-      || event.metaKey
+      event.metaKey ||
       // ignore if the ctrl key is pressed.
-      || event.ctrlKey
+      event.ctrlKey ||
       // ignore if the shift key is pressed.
-      || event.shiftKey
+      event.shiftKey ||
       // ignore if the alt key is pressed.
-      || event.altKey
+      event.altKey
     ) {
       return;
     }
@@ -41,21 +41,21 @@ export const clickTrigger = {
 
     if (
       // ignore if the anchor is not found.
-      anchor == null
+      anchor == null ||
       // ignore if the anchor is not an <a> element.
-      || anchor.tagName?.toLowerCase() !== 'a'
+      anchor.tagName?.toLowerCase() !== 'a' ||
       // ignore if the <a> element has a non-default target.
-      || (anchor.target !== '' && anchor.target?.toLowerCase() !== '_self')
+      (anchor.target !== '' && anchor.target?.toLowerCase() !== '_self') ||
       // ignore if the <a> element has a download attribute.
-      || anchor.hasAttribute('download')
+      anchor.hasAttribute('download') ||
       // ignore if the <a> element has a rel attribute.
-      || anchor.getAttribute('rel') === 'external'
+      anchor.getAttribute('rel') === 'external' ||
       // ignore if the <a> element has a `router-ignore` attribute.
-      || anchor.hasAttribute('router-ignore')
+      anchor.hasAttribute('router-ignore') ||
       // ignore the anchor protocols other than HTTP and HTTPS (mailto, ftp, ...).
-      || (anchor.protocol !== 'http:' && anchor.protocol !== 'https:')
+      (anchor.protocol !== 'http:' && anchor.protocol !== 'https:') ||
       // ignore if the anchor points to another origin (include the port number).
-      || anchor.href.indexOf(window.location.origin) !== 0
+      anchor.href.indexOf(window.location.origin) !== 0
     ) {
       return;
     }

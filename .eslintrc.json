@@ -34,12 +34,12 @@
     "max-len": [
       "error",
       {
-        "code": 100,
+        "code": 120,
         "tabWidth": 2,
         "ignoreComments": true
       }
     ],
-    "operator-linebreak": ["error", "before"],
+    "operator-linebreak": ["error", "after"],
     "indent": ["error", 2, {"SwitchCase": 1, "ignoredNodes": ["ConditionalExpression"]}],
     "no-eval": [
       "error",

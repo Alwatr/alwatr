@@ -42,38 +42,38 @@ const getNextColor = (): string => {
   return color;
 };
 
-const debugString
-  = globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim()
-  || globalThis.process?.env?.ALWATR_DEBUG?.trim(); // node
+const debugString =
+  globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim() ||
+  globalThis.process?.env?.ALWATR_DEBUG?.trim(); // node
 
 const getDebugState = (scope: string): boolean => {
   if (
-    debugString == null
-    && globalThis.process // nodejs
-    && globalThis.process.env.NODE_ENV !== 'production'
+    debugString == null &&
+    globalThis.process && // nodejs
+    globalThis.process.env.NODE_ENV !== 'production'
   ) {
     return true;
   }
 
   // prettier-ignore
   if (
-    debugString == null
-    || debugString == ''
+    debugString == null ||
+    debugString == ''
   ) {
     return false;
   }
 
   // prettier-ignore
   if (
-    debugString === scope
-    || debugString === '*'
-    || (
-      debugString.indexOf('*') === 0 // starts with `*` for example: `*alwatr*`
-      && scope.indexOf(debugString.replaceAll('*', '')) !== -1
-    )
-    || (
-      debugString.indexOf('*') === debugString.length - 1 // ends with `*` for example: `alwatr/*`
-      && scope.indexOf(debugString.replaceAll('*', '')) === 0
+    debugString === scope ||
+    debugString === '*' ||
+    (
+      debugString.indexOf('*') === 0 && // starts with `*` for example: `*alwatr*`
+      scope.indexOf(debugString.replaceAll('*', '')) !== -1
+    ) ||
+    (
+      debugString.indexOf('*') === debugString.length - 1 && // ends with `*` for example: `alwatr/*`
+      scope.indexOf(debugString.replaceAll('*', '')) === 0
     )
   ) {
     return true;
