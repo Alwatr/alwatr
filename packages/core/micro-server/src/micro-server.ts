@@ -16,7 +16,7 @@ export class AlwatrMicroServer {
   protected logger = createLogger(`micro-server:${this.port}`);
   protected server = createServer(this.handleRequest);
 
-  constructor(protected port: number, autoListen = true) {
+  constructor(protected port: number, autoListen = true, public options?: ResponseOptions) {
     this.logger.logMethodArgs('new', {port, listen: autoListen});
     this.server = createServer(this.handleRequest.bind(this));
 
@@ -92,7 +92,7 @@ export class AlwatrMicroServer {
       return;
     }
 
-    const connection = new AlwatrConnection(incomingMessage, serverResponse);
+    const connection = new AlwatrConnection(incomingMessage, serverResponse, this.options);
     const route = connection.url.pathname;
     const method = connection.incomingMessage.method?.toLowerCase();
 
@@ -145,7 +145,11 @@ export class AlwatrConnection {
 
   readonly body = this._getRequestBody();
 
-  constructor(public incomingMessage: IncomingMessage, public serverResponse: ServerResponse) {
+  constructor(
+    public incomingMessage: IncomingMessage,
+    public serverResponse: ServerResponse,
+    public options?: ResponseOptions,
+  ) {
     this.logger.logMethodArgs('new', {method: incomingMessage.method, url: incomingMessage.url});
   }
 
@@ -184,7 +188,7 @@ export class AlwatrConnection {
     }
   }
 
-  reply(content: ReplyContent, options?: ResponseOptions): void {
+  reply(content: ReplyContent): void {
     this.logger.logMethodArgs('reply', {content});
 
     if (this.serverResponse.headersSent) {
@@ -212,8 +216,8 @@ export class AlwatrConnection {
       );
     }
 
-    if (options?.corsHelper !== undefined) {
-      corsHelper(this.serverResponse, options?.corsHelper);
+    if (this.options?.corsHelper !== undefined) {
+      corsHelper(this.serverResponse, this.options?.corsHelper);
     }
 
     this.serverResponse.writeHead(content.statusCode, {
