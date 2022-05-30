@@ -8,7 +8,6 @@ app.route('post', '/echo', async (connection: AlwatrConnection) => {
 
   connection.reply({
     ok: true,
-    statusCode: 200,
     data: {
       jsonBody,
     },
