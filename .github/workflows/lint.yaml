@@ -6,11 +6,11 @@ on:
   pull_request:
     paths:
       - "**/*.{ts,md,html,json}"
-      - "README.md"
+      - "*.md"
   push:
     paths:
       - "**/*.{ts,md,html,json}"
-      - "README.md"
+      - "*.md"
 
     branches:
         - next
