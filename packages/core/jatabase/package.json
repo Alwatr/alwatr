@@ -1,18 +1,19 @@
 {
-  "name": "@alwatr/data-storage",
+  "name": "@alwatr/jatabase",
   "version": "0.0.0",
-  "description": "Enhanced data-storage for TypeScript module.",
+  "description": "Elegant powerful micro in-memory Database with JSON disk backed, written in tiny TypeScript ES module.",
   "keywords": [
-    "json",
+    "database",
     "storage",
+    "json",
     "file",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "data-storage.js",
+  "main": "jatabase.js",
   "type": "module",
-  "types": "data-storage.d.ts",
+  "types": "jatabase.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
@@ -24,9 +25,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/data-storage"
+    "directory": "package/jatabase"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/data-storage#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/jatabase#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
