@@ -109,6 +109,7 @@
   "exclude": [],
   "references": [
     {"path": "./packages/core/logger"},
+    {"path": "./packages/core/jatabase"},
     {"path": "./packages/core/fetch"},
     {"path": "./packages/core/signal"},
     {"path": "./packages/core/router"},

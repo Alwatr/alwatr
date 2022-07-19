@@ -1,0 +1,37 @@
+{
+  "name": "@alwatr/jatabase",
+  "version": "0.0.0",
+  "description": "Elegant powerful micro in-memory Database with JSON disk backed, written in tiny TypeScript ES module.",
+  "keywords": [
+    "database",
+    "storage",
+    "json",
+    "file",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "main": "jatabase.js",
+  "type": "module",
+  "types": "jatabase.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "license": "MIT",
+  "files": [
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "package/jatabase"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/jatabase#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "dependencies": {
+    "tslib": "^2.3.1"
+  }
+}
