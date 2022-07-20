@@ -30,20 +30,22 @@ l10nResourceChangeSignal.addListener((resource) => {
 
 localChangeSignal.addListener((local) => {
   logger.logMethodArgs('localChanged', {local});
-  if (configuration.autoFetchResources) {
-    l10nResourceChangeSignal.request(local);
+  if (local.code !== l10nResourceChangeSignal.value?._localCode) {
+    l10nResourceChangeSignal.expire();
+    if (configuration.autoFetchResources) {
+      l10nResourceChangeSignal.request(local);
+    }
   }
   document.documentElement.setAttribute('lang', local.code);
   document.documentElement.setAttribute('dir', local.direction);
-});
+}, {priority: true});
 
 l10nResourceChangeSignal.setProvider(async (local): Promise<L10Resource | void> => {
   logger.logMethodArgs('l10nResourceProvider', {local});
-  const current = await localChangeSignal.getSignalValue();
-  if (current.code !== local.code) {
+  if (l10nResourceChangeSignal.value?._localCode !== local.code) {
     return await getJson<L10Resource>(`${configuration.resourcePath}/${local.code}.json`);
     // TODO: catch errors and fallback
-    // TODO: cache requests
+    // TODO: cache requests in interval fetch
   }
 });
 

@@ -1,4 +1,7 @@
-export type L10Resource = Record<string, string>;
+export interface L10Resource {
+  [key: string]: string;
+  _localCode: `${string}-${string}`
+}
 
 export interface Local {
   /**
