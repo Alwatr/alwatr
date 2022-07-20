@@ -12,9 +12,6 @@ declare global {
   interface AbortController {
     abort(reason?: string): void;
   }
-  interface AbortSignal {
-    reason?: string;
-  }
 }
 
 // @TODO: docs for all options
