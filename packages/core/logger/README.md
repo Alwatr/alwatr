@@ -22,19 +22,19 @@ Please remember to **reload** the window after changing the debug mode.
 - Debugging all scopes
 
   ```ts
-  window.localStorage?.setItem('ALWATR_LOG', '*');
+  window.localStorage?.setItem('ALWATR_DEBUG', '*');
   ```
 
 - Debugging specific scope
 
   ```ts
-  window.localStorage?.setItem('ALWATR_LOG', 'scope_name');
+  window.localStorage?.setItem('ALWATR_DEBUG', 'scope_name');
   ```
 
 - Debugging some scopes with pattern
 
   ```ts
-  window.localStorage?.setItem('ALWATR_LOG', '*alwatr*');
+  window.localStorage?.setItem('ALWATR_DEBUG', '*alwatr*');
   ```
 
 ### API
@@ -55,15 +55,15 @@ const logger = createLogger('logger/demo');
 
 ### `logger.debug: boolean`
 
-Debug state for current scope base on localStorage `ALWATR_LOG` pattern.
+Debug state for current scope base on localStorage `ALWATR_DEBUG` pattern.
 
 ### `logger.color: string`
 
-Debug state for current scope base on localStorage `ALWATR_LOG` pattern.
+Debug state for current scope base on localStorage `ALWATR_DEBUG` pattern.
 
 ### `logger.scope: string`
 
-Debug state for current scope base on localStorage `ALWATR_LOG` pattern.
+Debug state for current scope base on localStorage `ALWATR_DEBUG` pattern.
 
 ### `logger.logProperty(property, value)`
 
