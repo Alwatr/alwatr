@@ -66,6 +66,9 @@ export const transformToRange = (x: number, options: TransformRangeOptions): num
   return y;
 };
 
+const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+const charactersLength = characters.length;
+
 export const random = {
   /**
    * Returns a float random number between 0 and 1 (1 Not included).
@@ -81,7 +84,7 @@ export const random = {
   },
 
   /**
-   * Generate a random integer between min and max.
+   * Generate a random integer number between min and max (max included).
    *
    * Example:
    *
@@ -92,6 +95,7 @@ export const random = {
   integer: (min: number, max: number): number => Math.floor(random.float(min, max + 1)),
 
   /**
+   * Generate a random float number between min and max (max not included).
    *
    * Example:
    *
@@ -100,6 +104,26 @@ export const random = {
    * ```
    */
   float: (min: number, max: number): number => random.value * (max - min) + min,
+
+  /**
+   * Generate a random string with random length.
+   * The string will contain only characters from the characters list.
+   * The length of the string will be between min and max (max included).
+   * If max not specified, the length will be set to min.
+   *
+   * Example:
+   *
+   *```js
+   * console.log(random.string(6)); // something like 'Aab1V2'
+   * ```
+   */
+  string: (min: number, max?: number): string => {
+    let result = '';
+    for (let i = max != null ? random.integer(min, max) : min; i > 0; i--) {
+      result += characters.charAt(Math.floor(random.value * charactersLength));
+    }
+    return result;
+  },
 
   /**
    * Generate a random integer between min and max with a step.
