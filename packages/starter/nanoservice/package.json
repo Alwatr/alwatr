@@ -1,10 +1,11 @@
 {
-  "name": "alwatr-microservice-starter",
+  "name": "alwatr-nanoservice-starter",
   "version": "0.12.0",
-  "description": "Alwatr Microservice Starter Kit",
+  "description": "Alwatr Microservice/Nanoservice Starter Kit",
   "type": "module",
   "keywords": [
     "microservice",
+    "nanoservice",
     "api",
     "typescript",
     "esm",
@@ -16,9 +17,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/starter/microservice"
+    "directory": "packages/starter/nanoservice"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/starter/microservice#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/starter/nanoservice#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
@@ -34,7 +35,8 @@
     "start": "yarn serve",
     "lint": "npm-run-all --sequential lint:*",
     "lint:ts": "eslint **/*.ts",
-    "build": "tsc --build",
+    "build": "npm-run-all --sequential build:*",
+    "build:ts": "tsc --build",
     "format": "npm-run-all --sequential format:prettier format:eslint",
     "format:eslint": "eslint **/*.ts --fix",
     "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --ignore-path ./.eslintignore --write",
@@ -49,8 +51,7 @@
   "dependencies": {
     "@alwatr/logger": "^0.12.0",
     "@alwatr/math": "^0.12.0",
-    "@alwatr/micro-server": "^0.12.0",
-    "dotenv": "^16.0.0"
+    "@alwatr/nano-server": "^0.12.0"
   },
   "devDependencies": {
     "@types/node": "^18.0.6",

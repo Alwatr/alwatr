@@ -114,7 +114,7 @@
     {"path": "./packages/core/router"},
     {"path": "./packages/core/i18n"},
     {"path": "./packages/core/math"},
-    {"path": "./packages/core/micro-server"},
+    {"path": "./packages/core/nano-server"},
     {"path": "./packages/core/storage"},
     {"path": "./demo"}
   ]

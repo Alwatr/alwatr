@@ -6,12 +6,12 @@ import type {Methods, ReplyContent} from './type.js';
 import type {IncomingMessage, ServerResponse} from 'http';
 
 alwatrRegisteredList.push({
-  name: '@alwatr/micro-server',
+  name: '@alwatr/nano-server',
   version: '{{ALWATR_VERSION}}',
 });
 
-export class AlwatrMicroServer {
-  protected logger = createLogger(`alwatr-micro-server:${this.port}`);
+export class AlwatrNanoServer {
+  protected logger = createLogger(`alwatr-nano-server:${this.port}`);
   protected server = createServer(this.handleRequest);
 
   constructor(protected port: number, autoListen = true) {
@@ -58,7 +58,7 @@ export class AlwatrMicroServer {
       connection.serverResponse.writeHead(200, {
         'Content-Length': body.length,
         'Content-Type': 'plain/text',
-        'Server': 'Alwatr MicroServer',
+        'Server': 'Alwatr NanoServer',
       });
       connection.serverResponse.end(body);
     });
@@ -139,7 +139,7 @@ export class AlwatrConnection {
     this.incomingMessage.url!.replace(AlwatrConnection.versionPattern, ''),
     'http://0.0.0.0',
   );
-  protected logger = createLogger(`connection`);
+  protected logger = createLogger(`alwatr-nano-server-connection`);
 
   readonly body = this._getRequestBody();
 
@@ -213,7 +213,7 @@ export class AlwatrConnection {
     this.serverResponse.writeHead(content.statusCode ?? 200, {
       'Content-Length': body.length,
       'Content-Type': 'application/json',
-      'Server': 'Alwatr MicroServer',
+      'Server': 'Alwatr NanoServer',
     });
 
     this.serverResponse.write(body, 'utf8', (error: NodeJS.ErrnoException | null | undefined) => {

@@ -1,18 +1,18 @@
 {
-  "name": "@alwatr/micro-server",
+  "name": "@alwatr/nano-server",
   "version": "0.12.0",
-  "description": "Elegant powerful nodejs server for microservice use cases, written in tiny TypeScript module.",
+  "description": "Elegant powerful nodejs server for nanoservice use cases, written in tiny TypeScript module.",
   "keywords": [
     "server",
-    "microservice",
+    "nanoservice",
     "api",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "micro-server.js",
+  "main": "nano-server.js",
   "type": "module",
-  "types": "micro-server.d.ts",
+  "types": "nano-server.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
@@ -24,9 +24,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/core/micro-server"
+    "directory": "packages/core/nano-server"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/micro-server#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/nano-server#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

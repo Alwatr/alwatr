@@ -9,6 +9,7 @@
     "jgclark.vscode-todo-highlight",
     "redhat.vscode-yaml",
     "GitHub.vscode-pull-request-github",
-    "DavidAnson.vscode-markdownlint"
+    "DavidAnson.vscode-markdownlint",
+    "humao.rest-client"
   ]
 }
