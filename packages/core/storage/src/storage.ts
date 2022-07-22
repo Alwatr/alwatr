@@ -15,18 +15,46 @@ alwatrRegisteredList.push({
 });
 
 /**
- * Elegant powerful micro in-memory document Database with disk backed.
+ * Elegant micro in-memory json-like storage with disk backed,
+ * Fastest NoSQL Database written in tiny TypeScript ES module.
  *
- * @example
- * import {AlwatrStorage} from '@alwatr/storage';
+ * @param {string} name Storage name like database table name.
+ * @param {string} pathPrefix Saved file path prefix (default is `data`).
+ *
+ * Example:
+ *
+ * ```ts
+ * import {AlwatrStorage, DocumentObject} from '@alwatr/storage';
+ * interface User extends DocumentObject {...}
  * const db = new AlwatrStorage<User>('user-list');
- * await db.ready
- * const user = db.get('my-user-id', true);
+ * await db.readyPromise
+ * ```
  */
 export class AlwatrStorage<DocumentType extends DocumentObject> {
-  isReady = false;
-  readonly ready: Promise<void>;
+  /**
+   * Storage name like database table name.
+   */
   readonly name: string;
+
+  /**
+   * Ready promise resolved when the storage is ready.
+   * you can use this promise to wait for the storage to be loaded successfully and ready to use.
+   *
+   * Example:
+   *
+   * ```ts
+   * const db = new AlwatrStorage<User>('user-list');
+   * await db.readyPromise
+   * const user = db.get('user-1');
+   * ```
+   */
+  readonly readyPromise: Promise<void>;
+
+  /**
+   * Ready state set to true when the storage is ready and readyPromise resolved.
+   */
+  readyState = false;
+
 
   protected _logger: Logger;
   protected _storage: DocumentListStorage<DocumentType> = {};
@@ -36,7 +64,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     this._logger = createLogger(`alwatr-storage:${name}`);
     this.name = name;
     this._storagePath = `${pathPrefix}/${name}.json`;
-    this.ready = this._init();
+    this.readyPromise = this._init();
   }
 
   private async _init(): Promise<void> {
@@ -46,8 +74,8 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     } else {
       this._storage = {};
     }
-    this.isReady = true;
-    this._logger.logProperty('isReady', this.isReady);
+    this.readyState = true;
+    this._logger.logProperty('readyState', this.readyState);
   }
 
   /**
@@ -56,7 +84,13 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * @param documentId The id of the document object.
    * @param fastInstance by default it will return a copy of the document.
    * if you set fastInstance to true, it will return the original document.
-   * This is dangerous but much faster and you should use it only if you know what you are doing.
+   * This is dangerous but much faster, you should use it only if you know what you are doing.
+   *
+   * Example:
+   *
+   * ```ts
+   * const user = db.get('user-1');
+   * ```
    */
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
     this._logger.logMethodArgs('get', documentId);
@@ -76,7 +110,16 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * @param documentObject The document object to insert/update contain `_id`.
    * @param fastInstance by default it will make a copy of the document before set.
    * if you set fastInstance to true, it will set the original document.
-   * This is dangerous but much faster and you should use it only if you know what you are doing.
+   * This is dangerous but much faster, you should use it only if you know what you are doing.
+   *
+   * Example:
+   *
+   * ```ts
+   * db.set({
+   *   _id: 'user-1',
+   *   foo: 'bar',
+   * });
+   * ```
    */
   set(documentObject: DocumentType, fastInstance?: boolean): void {
     this._logger.logMethodArgs('set', documentObject._id);
@@ -98,6 +141,12 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
 
   /**
    * Remove a document object from the storage.
+   *
+   * Example:
+   *
+   * ```ts
+   * db.remove('user-1');
+   * ```
    */
   remove(documentId: string): void {
     this._logger.logMethodArgs('remove', documentId);

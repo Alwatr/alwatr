@@ -11,9 +11,9 @@ interface User extends DocumentObject {
 
 const db = new AlwatrStorage<User>('user-list', 'temp');
 
-// await db.ready
+// await db.readyPromise
 // or
-db.ready.then(() => {
+db.readyPromise.then(() => {
   console.log('db loaded and ready to access.');
 
   let ali = db.get('alimd');

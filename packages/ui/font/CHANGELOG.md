@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.12.0](https://github.com/AliMD/alwatr/compare/v0.11.0...v0.12.0) (2022-07-22)
 
-
 ### Bug Fixes
 
-* **font:** sahel-vf font-weight ([bf84782](https://github.com/AliMD/alwatr/commit/bf84782347ed4898d854325415f6f43b1953f842))
-
-
-
-
+- **font:** sahel-vf font-weight ([bf84782](https://github.com/AliMD/alwatr/commit/bf84782347ed4898d854325415f6f43b1953f842))
 
 # [0.11.0](https://github.com/AliMD/alwatr/compare/v0.10.1...v0.11.0) (2022-04-16)
 
