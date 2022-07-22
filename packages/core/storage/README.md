@@ -66,6 +66,14 @@ const db = new AlwatrStorage<User>('user-list');
 await db.readyPromise
 ```
 
+### `name: string`
+
+Name of the database.
+
+### `readyState: boolean`
+
+Database readiness status.
+
 ### `db.readyPromise`
 
 Initialize database.
