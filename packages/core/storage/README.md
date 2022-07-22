@@ -15,10 +15,10 @@ interface User extends DocumentObject {
 
 const db = new AlwatrStorage<User>('user-list');
 
-ali: User = {
-_id: 'alimd',
-name: 'Ali Mihandoost',
-email: 'ali@mihandoost.com',
+const ali: User = {
+  _id: 'alimd',
+  name: 'Ali Mihandoost',
+  email: 'ali@mihandoost.com',
 };
 
 db.set(ali);
@@ -77,10 +77,10 @@ Insert/update a document object in the storage.
 - **fastInstance** by default it will make a copy of the document before set. if you set fastInstance to true, it will set the original document. This is dangerous but much faster and you should use it only if you know what you are doing.
 
 ```ts
-ali: User = {
-_id: 'alimd',
-name: 'Ali Mihandoost',
-email: 'ali@mihandoost.com',
+const ali: User = {
+  _id: 'alimd',
+  name: 'Ali Mihandoost',
+  email: 'ali@mihandoost.com',
 };
 
 db.set(ali);
