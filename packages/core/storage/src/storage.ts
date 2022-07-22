@@ -10,7 +10,7 @@ import type {Logger} from '@alwatr/logger/type.js';
 export * from './type.js';
 
 alwatrRegisteredList.push({
-  name: '@alwatr/jatabase',
+  name: '@alwatr/storage',
   version: '{{ALWATR_VERSION}}',
 });
 
@@ -18,12 +18,12 @@ alwatrRegisteredList.push({
  * Elegant powerful micro in-memory document Database with disk backed.
  *
  * @example
- * import {Jatabase} from '@alwatr/jatabase';
- * const db = new Jatabase<User>('user-list');
+ * import {AlwatrStorage} from '@alwatr/storage';
+ * const db = new AlwatrStorage<User>('user-list');
  * await db.ready
  * const user = db.get('my-user-id', true);
  */
-export class Jatabase<DocumentType extends DocumentObject> {
+export class AlwatrStorage<DocumentType extends DocumentObject> {
   isReady = false;
   readonly ready: Promise<void>;
   readonly name: string;
@@ -33,7 +33,7 @@ export class Jatabase<DocumentType extends DocumentObject> {
   protected _storagePath: string;
 
   constructor(name: string, pathPrefix = 'data') {
-    this._logger = createLogger(`jatabase:${name}`);
+    this._logger = createLogger(`alwatr-storage:${name}`);
     this.name = name;
     this._storagePath = `${pathPrefix}/${name}.json`;
     this.ready = this._init();

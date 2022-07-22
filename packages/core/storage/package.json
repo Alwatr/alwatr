@@ -1,5 +1,5 @@
 {
-  "name": "@alwatr/jatabase",
+  "name": "@alwatr/storage",
   "version": "0.0.0",
   "description": "Elegant micro in-memory json-like storage with disk backed, Faster NoSQL Database written in tiny TypeScript ES module.",
   "keywords": [
@@ -15,9 +15,9 @@
     "esm",
     "alwatr"
   ],
-  "main": "jatabase.js",
+  "main": "storage.js",
   "type": "module",
-  "types": "jatabase.d.ts",
+  "types": "storage.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
@@ -29,9 +29,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "package/jatabase"
+    "directory": "package/storage"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/jatabase#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/package/storage#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

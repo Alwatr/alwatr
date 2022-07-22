@@ -115,7 +115,7 @@
     {"path": "./packages/core/i18n"},
     {"path": "./packages/core/math"},
     {"path": "./packages/core/micro-server"},
-    {"path": "./packages/core/jatabase"},
+    {"path": "./packages/core/storage"},
     {"path": "./demo"}
   ]
 }

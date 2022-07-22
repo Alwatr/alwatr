@@ -1,7 +1,7 @@
-import {Jatabase} from '@alwatr/jatabase';
 import {random} from '@alwatr/math';
+import {AlwatrStorage} from '@alwatr/storage';
 
-import type {DocumentObject} from '@alwatr/jatabase';
+import type {DocumentObject} from '@alwatr/storage';
 
 interface User extends DocumentObject {
   fname: string;
@@ -10,7 +10,7 @@ interface User extends DocumentObject {
   token: string;
 }
 
-const db = new Jatabase<User>('junk-data', 'temp');
+const db = new AlwatrStorage<User>('junk-data', 'temp');
 
 db.ready.then(() => {
   for (let i = 0; i < 10000; i++) {

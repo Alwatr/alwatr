@@ -1,6 +1,6 @@
-import {Jatabase} from '@alwatr/jatabase';
+import {AlwatrStorage} from '@alwatr/storage';
 
-import type {DocumentObject} from '@alwatr/jatabase';
+import type {DocumentObject} from '@alwatr/storage';
 
 interface User extends DocumentObject {
   fname: string;
@@ -9,7 +9,7 @@ interface User extends DocumentObject {
   token?: string;
 }
 
-const db = new Jatabase<User>('user-list', 'temp');
+const db = new AlwatrStorage<User>('user-list', 'temp');
 
 // await db.ready
 // or
