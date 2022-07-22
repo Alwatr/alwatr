@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/AliMD/alwatr/compare/v0.11.0...v0.12.0) (2022-07-22)
+
+
+### Bug Fixes
+
+* **fetch:** compatible with new ts types AbortSignal ([949655a](https://github.com/AliMD/alwatr/commit/949655a257852aaaaa311e32603ecc0819eedf51))
+
+
+
+
+
 # [0.11.0](https://github.com/AliMD/alwatr/compare/v0.10.1...v0.11.0) (2022-04-16)
 
 **Note:** Version bump only for package @alwatr/fetch

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/micro-server",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "Elegant powerful nodejs server for microservice use cases, written in tiny TypeScript module.",
   "keywords": [
     "server",
@@ -31,7 +31,7 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.11.0",
+    "@alwatr/logger": "^0.12.0",
     "tslib": "^2.3.1"
   }
 }
