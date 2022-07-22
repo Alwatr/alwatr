@@ -1,7 +1,7 @@
 import {existsSync, promises as fs} from 'fs';
 import {resolve, dirname} from 'path';
 
-import type {JSON} from './type';
+import type {JSON} from './type.js';
 
 // @TODO: add debug log
 

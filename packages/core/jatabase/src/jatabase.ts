@@ -1,11 +1,13 @@
+import {existsSync} from 'fs';
+
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
-import {readJsonFile, writeJsonFile} from './util';
+import {readJsonFile, writeJsonFile} from './util.js';
 
-import type {DocumentObject, DocumentListStorage} from './type';
-import type {Logger} from '@alwatr/logger/type';
+import type {DocumentObject, DocumentListStorage} from './type.js';
+import type {Logger} from '@alwatr/logger/type.js';
 
-export * from './type';
+export * from './type.js';
 
 alwatrRegisteredList.push({
   name: '@alwatr/jatabase',
