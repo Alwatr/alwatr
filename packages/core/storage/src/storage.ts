@@ -16,21 +16,26 @@ alwatrRegisteredList.push({
 
 /**
  * Elegant micro in-memory json-like storage with disk backed,
- * Faster NoSQL Database written in tiny TypeScript ES module.
+ * Fastest NoSQL Database written in tiny TypeScript ES module.
+ *
+ * @param {string} name Storage name like database table name.
+ * @param {string} pathPrefix Saved file path prefix (default is `data`).
  *
  * Example:
  *
  * ```ts
- * import {AlwatrStorage} from '@alwatr/storage';
- * interface User extends DocumentObject {
- *   name: string;
- *   email?: string;
- * }
+ * import {AlwatrStorage, DocumentObject} from '@alwatr/storage';
+ * interface User extends DocumentObject {...}
  * const db = new AlwatrStorage<User>('user-list');
  * await db.readyPromise
  * ```
  */
 export class AlwatrStorage<DocumentType extends DocumentObject> {
+  /**
+   * Storage name like database table name.
+   */
+  readonly name: string;
+
   /**
    * Ready promise resolved when the storage is ready.
    * you can use this promise to wait for the storage to be loaded successfully and ready to use.
@@ -38,12 +43,18 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * Example:
    *
    * ```ts
-   * await db.ready
+   * const db = new AlwatrStorage<User>('user-list');
+   * await db.readyPromise
+   * const user = db.get('user-1');
    * ```
    */
   readonly readyPromise: Promise<void>;
+
+  /**
+   * Ready state set to true when the storage is ready and readyPromise resolved.
+   */
   readyState = false;
-  readonly name: string;
+
 
   protected _logger: Logger;
   protected _storage: DocumentListStorage<DocumentType> = {};
@@ -73,12 +84,12 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * @param documentId The id of the document object.
    * @param fastInstance by default it will return a copy of the document.
    * if you set fastInstance to true, it will return the original document.
-   * This is dangerous but much faster and you should use it only if you know what you are doing.
+   * This is dangerous but much faster, you should use it only if you know what you are doing.
    *
    * Example:
    *
    * ```ts
-   * let user = db.get('alimd');
+   * const user = db.get('user-1');
    * ```
    */
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
@@ -99,17 +110,15 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * @param documentObject The document object to insert/update contain `_id`.
    * @param fastInstance by default it will make a copy of the document before set.
    * if you set fastInstance to true, it will set the original document.
-   * This is dangerous but much faster and you should use it only if you know what you are doing.
+   * This is dangerous but much faster, you should use it only if you know what you are doing.
    *
    * Example:
    *
    * ```ts
-   * const ali: User = {
-   *   _id: 'alimd',
-   *   name: 'Ali Mihandoost',
-   *   email: 'ali@mihandoost.com',
-   * };
-   * db.set(ali);
+   * db.set({
+   *   _id: 'user-1',
+   *   foo: 'bar',
+   * });
    * ```
    */
   set(documentObject: DocumentType, fastInstance?: boolean): void {
@@ -136,7 +145,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * Example:
    *
    * ```ts
-   * db.remove('alimd');
+   * db.remove('user-1');
    * ```
    */
   remove(documentId: string): void {
