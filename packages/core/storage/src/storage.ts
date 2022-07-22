@@ -98,6 +98,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
 
   /**
    * Remove a document object from the storage.
+   * @param documentId The id of the document object.
    */
   remove(documentId: string): void {
     this._logger.logMethodArgs('remove', documentId);
