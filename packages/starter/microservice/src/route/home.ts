@@ -1,6 +1,6 @@
 import {app} from '../app.js';
 
-app.route('all', '/', async (connection) => {
+app.route('get', '/', async (connection) => {
   connection.reply({
     ok: true,
     data: {

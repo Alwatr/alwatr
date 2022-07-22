@@ -12,10 +12,13 @@ Content-Type: application/json
 ### === Test all routes and errors ===
 
 ### Page Home
-GET {{base}}/
+GET {{base}}
 
-### Page 404
+### Page 404 (wrong path)
 GET {{base}}/jafang
+
+### Page 404 (wrong method)
+POST {{base}}
 
 ### Page health
 GET {{base}}/health

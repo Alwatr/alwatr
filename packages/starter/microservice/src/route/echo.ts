@@ -1,13 +1,13 @@
 import {app} from '../app.js';
 
 app.route('post', '/echo', async (connection) => {
-  const jsonBody = await connection.requireJsonBody();
-  if (jsonBody == null) return;
+  const bodyData = await connection.requireJsonBody();
+  if (bodyData == null) return;
 
   connection.reply({
     ok: true,
     data: {
-      jsonBody,
+      ...bodyData,
     },
   });
 });
