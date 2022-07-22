@@ -151,6 +151,17 @@ Generate a random float between min and max.
 console.log(random.float(1, 10)); // somewhere between 1 and 10
 ```
 
+### `string: (min: number, max?: number): string`
+
+Generate a random string with random length.  
+The string will contain only characters from the characters list.  
+The length of the string will be between min and max (max included).  
+If max not specified, the length will be set to min.
+
+```js
+console.log(random.string(6)); // something like 'Aab1V2'
+```
+
 ### `step(min: number, max: number, step: number): number`
 
 Generate a random integer between min and max with a step.

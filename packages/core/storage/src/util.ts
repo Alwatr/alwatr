@@ -1,7 +1,7 @@
 import {existsSync, promises as fs} from 'fs';
 import {resolve, dirname} from 'path';
 
-import type {JSON} from './type';
+import type {JSON} from './type.js';
 
 // @TODO: add debug log
 
@@ -26,7 +26,7 @@ export async function readJsonFile<T extends JSON>(path: string): Promise<T> {
   }
 
   try {
-    return JSON.parse(fileContent);
+    return JSON.parse(fileContent) as T;
   } catch (err) {
     throw new Error('invalid_json');
   }
@@ -50,7 +50,7 @@ export async function writeJsonFile<T extends JSON>(path: string, dataObject: T)
 
   let jsonContent;
   try {
-    jsonContent = JSON.stringify(dataObject, undefined, 2);
+    jsonContent = JSON.stringify(dataObject);
   } catch (err) {
     throw new Error('stringify_failed');
   }
