@@ -17,7 +17,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["demo/**/*.ts", "package/**/*.ts"],
+  "include": ["demo/**/*.ts", "packages/**/*.ts"],
   "exclude": [],
   "compileOnSave": false
 }

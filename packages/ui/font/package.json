@@ -1,0 +1,38 @@
+{
+  "name": "@alwatr/font",
+  "version": "0.12.0",
+  "description": "Best practices of using persian/arabic web fonts for progressive web applications (The Right Way).",
+  "keywords": [
+    "font",
+    "fonts",
+    "persian",
+    "farsi",
+    "arabic",
+    "typography",
+    "pwa",
+    "alwatr"
+  ],
+  "main": "font.css",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "contributors": [
+    "Godgiven <asmanp2012@gmail.com>"
+  ],
+  "license": "MIT",
+  "files": [
+    "**/*.woff*",
+    "**/*.css",
+    "**/*.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "packages/ui/font"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/ui/font#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  }
+}

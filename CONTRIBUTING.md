@@ -10,13 +10,13 @@ Please read and follow our [Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## Found a Bug?
 
-If you find a bug in the source code, you can help us by *submitting an issue* to our GitHub Repository.
-Even better, you can *submit a Pull Request* with a fix.
+If you find a bug in the source code, you can help us by _submitting an issue_ to our GitHub Repository.
+Even better, you can _submit a Pull Request_ with a fix.
 
 ## Missing a Feature?
 
-You can *request* a new feature by *submitting an issue* to our GitHub Repository.
-After accepted issue, if you would like to *implement* the feature, you can *submit a Pull Request*.
+You can _request_ a new feature by _submitting an issue_ to our GitHub Repository.
+After accepted issue, if you would like to _implement_ the feature, you can _submit a Pull Request_.
 
 ## Commit Message Format
 

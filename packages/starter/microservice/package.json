@@ -1,0 +1,69 @@
+{
+  "name": "alwatr-microservice-starter",
+  "version": "0.12.0",
+  "description": "Alwatr Microservice Starter Kit",
+  "type": "module",
+  "keywords": [
+    "microservice",
+    "api",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "packages/starter/microservice"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/starter/microservice#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "scripts": {
+    "l": "yarn lint",
+    "b": "yarn build",
+    "cb": "npm-run-all --sequential clean build",
+    "s": "npm-run-all --sequential clean build serve",
+    "w": "yarn watch",
+    "f": "yarn format",
+    "fl": "yarn format:eslint",
+    "fp": "yarn format:prettier",
+    "start": "yarn serve",
+    "lint": "npm-run-all --sequential lint:*",
+    "lint:ts": "eslint **/*.ts",
+    "build": "tsc --build",
+    "format": "npm-run-all --sequential format:prettier format:eslint",
+    "format:eslint": "eslint **/*.ts --fix",
+    "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --ignore-path ./.eslintignore --write",
+    "clean": "rimraf dist/",
+    "serve": "node dist/index.js",
+    "serve:debug": "node --inspect dist/index.js",
+    "watch": "npm-run-all --parallel watch:ts watch:node",
+    "watch:node": "nodemon dist/index.js",
+    "watch:debug-node": "nodemon --inspect dist/index.js",
+    "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
+  },
+  "dependencies": {
+    "@alwatr/logger": "^0.12.0",
+    "@alwatr/math": "^0.12.0",
+    "@alwatr/micro-server": "^0.12.0",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "eslint": "^8.13.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-import-resolver-typescript": "^3.3.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.15",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
+    "typescript": "4.7.4"
+  }
+}

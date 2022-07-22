@@ -24,12 +24,6 @@ dist
 node_modules
 package-lock.json
 
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-
 # Output of 'npm pack'
 *.tgz
 
@@ -39,3 +33,6 @@ lerna-debug.log*
 # dotenv environment variables file
 .env
 .env.test
+test.json
+
+temp

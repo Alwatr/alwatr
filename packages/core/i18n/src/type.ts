@@ -1,0 +1,45 @@
+export interface L10Resource {
+  [key: string]: string;
+  _localCode: `${string}-${string}`
+}
+
+export interface Local {
+  /**
+   * fa-IR, en-US, ...
+   */
+  code: `${string}-${string}`;
+
+  /**
+   * fa, en, ...
+   */
+  language: string;
+
+  /**
+   * ltr, rtl
+   */
+  direction: 'rtl' | 'ltr';
+}
+
+export interface I18nOptions {
+  /**
+   * Automatically fetch the localization resource from `resourcePath/localCode.json`.
+   *
+   * @default true
+   */
+  autoFetchResources: boolean;
+
+  /**
+   * Localization resource storage path (json files directory).
+   *
+   * @default '/l10n'
+   */
+  resourcePath: string;
+
+  /**
+   * Default language code.
+   *
+   * @default
+   * {code: 'en-US', language: 'en', direction: 'ltr'}
+   */
+  defaultLocal: Local;
+}
