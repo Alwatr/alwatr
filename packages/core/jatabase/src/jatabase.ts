@@ -32,7 +32,7 @@ export class Jatabase<DocumentType extends DocumentObject> {
   protected _storage: DocumentListStorage<DocumentType> = {};
   protected _storagePath: string;
 
-  constructor(name: string, pathPrefix = 'data/') {
+  constructor(name: string, pathPrefix = 'data') {
     this._logger = createLogger(`jatabase:${name}`);
     this.name = name;
     this._storagePath = `${pathPrefix}/${name}.json`;
@@ -41,7 +41,11 @@ export class Jatabase<DocumentType extends DocumentObject> {
 
   private async _init(): Promise<void> {
     this._logger.logMethod('_init');
-    this._storage = await readJsonFile<DocumentListStorage<DocumentType>>(this._storagePath);
+    if (existsSync(this._storagePath)) {
+      this._storage = await readJsonFile<DocumentListStorage<DocumentType>>(this._storagePath);
+    } else {
+      this._storage = {};
+    }
     this.isReady = true;
     this._logger.logProperty('isReady', this.isReady);
   }
