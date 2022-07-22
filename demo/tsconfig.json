@@ -14,7 +14,8 @@
     {"path": "../packages/core/router"},
     {"path": "../packages/core/i18n"},
     {"path": "../packages/core/math"},
-    {"path": "../packages/core/element"}
+    {"path": "../packages/core/element"},
+    {"path": "../packages/core/jatabase"},
   ],
   "exclude": ["*.d.ts", "node_modules"]
 }
