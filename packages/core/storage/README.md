@@ -17,7 +17,7 @@ interface User extends DocumentObject {
 
 const db = new AlwatrStorage<User>('user-list', 'temp');
 
-await db.ready
+await db.readyPromise
 console.log('db loaded and ready to access.');
 
 let ali = db.get('alimd');
@@ -63,23 +63,23 @@ interface User extends DocumentObject {
 
 const db = new AlwatrStorage<User>('user-list');
 
-await db.ready
+await db.readyPromise
 ```
 
-### `db.ready`
+### `db.readyPromise`
 
 Initialize database.
 
 Example:
 
 ```ts
-db.ready.then(() => {
+db.readyPromise.then(() => {
   // db initialized!
 });
 
 // or
 
-await db.ready
+await db.readyPromise
 // db initialized!
 ```
 

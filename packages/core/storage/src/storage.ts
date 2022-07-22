@@ -15,7 +15,8 @@ alwatrRegisteredList.push({
 });
 
 /**
- * Elegant powerful micro in-memory document Database with disk backed.
+ * Elegant micro in-memory json-like storage with disk backed,
+ * Faster NoSQL Database written in tiny TypeScript ES module.
  *
  * Example:
  *
@@ -26,12 +27,22 @@ alwatrRegisteredList.push({
  *   email?: string;
  * }
  * const db = new AlwatrStorage<User>('user-list');
- * await db.ready
+ * await db.readyPromise
  * ```
  */
 export class AlwatrStorage<DocumentType extends DocumentObject> {
-  isReady = false;
-  readonly ready: Promise<void>;
+  /**
+   * Ready promise resolved when the storage is ready.
+   * you can use this promise to wait for the storage to be loaded successfully and ready to use.
+   *
+   * Example:
+   *
+   * ```ts
+   * await db.ready
+   * ```
+   */
+  readonly readyPromise: Promise<void>;
+  readyState = false;
   readonly name: string;
 
   protected _logger: Logger;
@@ -42,7 +53,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     this._logger = createLogger(`alwatr-storage:${name}`);
     this.name = name;
     this._storagePath = `${pathPrefix}/${name}.json`;
-    this.ready = this._init();
+    this.readyPromise = this._init();
   }
 
   private async _init(): Promise<void> {
@@ -52,8 +63,8 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     } else {
       this._storage = {};
     }
-    this.isReady = true;
-    this._logger.logProperty('isReady', this.isReady);
+    this.readyState = true;
+    this._logger.logProperty('readyState', this.readyState);
   }
 
   /**
@@ -67,7 +78,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * Example:
    *
    * ```ts
-   * let ali = db.get('alimd');
+   * let user = db.get('alimd');
    * ```
    */
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
