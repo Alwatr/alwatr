@@ -139,7 +139,7 @@ export class AlwatrConnection {
     this.incomingMessage.url!.replace(AlwatrConnection.versionPattern, ''),
     'http://0.0.0.0',
   );
-  protected logger = createLogger(`connection`);
+  protected logger = createLogger(`alwatr-nano-server-connection`);
 
   readonly body = this._getRequestBody();
 
