@@ -97,8 +97,9 @@ export class Jatabase<DocumentType extends DocumentObject> {
       documentObject = JSON.parse(JSON.stringify(documentObject));
     }
 
-    this._storage[documentObject._id] = documentObject;
     this._storage._last = documentObject._id;
+    this._storage[documentObject._id] = documentObject;
+    this.save();
   }
 
   /**
@@ -114,12 +115,12 @@ export class Jatabase<DocumentType extends DocumentObject> {
    * Save the storage to disk.
    */
   save(): void {
-    this._logger.logMethod('save');
+    this._logger.logMethod('save.request');
     if (this._saveTimer != null) {
       return;
     }
     this._saveTimer = setTimeout(() => {
-      this._logger.logMethod('save.timeout');
+      this._logger.logMethod('save.action');
       clearTimeout(this._saveTimer);
       delete this._saveTimer;
       writeJsonFile(this._storagePath, this._storage);
