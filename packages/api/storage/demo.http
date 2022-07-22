@@ -1,0 +1,37 @@
+@base = http://localhost:8000/v1
+
+### echo
+POST {{base}}/echo
+Content-Type: application/json
+
+{
+  "a": 1,
+  "b": 2
+}
+
+### === Test all routes and errors ===
+
+### Page Home
+GET {{base}}
+
+### Page 404 (wrong path)
+GET {{base}}/jafang
+
+### Page 404 (wrong method)
+POST {{base}}
+
+### Page health
+GET {{base}}/health
+
+### empty body
+POST {{base}}/echo
+Content-Type: application/json
+
+### invalid json
+POST {{base}}/echo
+Content-Type: application/json
+
+{
+  "a": 1,
+  b: 2,
+}
