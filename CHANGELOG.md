@@ -36,12 +36,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - **nano-server:** make `statusCode` in `ReplySuccessContent` optional ([fe836f4](https://github.com/AliMD/alwatr/commit/fe836f452566c541d25857df34c952b413690d23))
 - **nano-server:** make new package ([2148dfc](https://github.com/AliMD/alwatr/commit/2148dfc910565f917d3cb8eb001cde08f2fc694d))
 - **nano-server:** new class for handle server and connections ([62e33a3](https://github.com/AliMD/alwatr/commit/62e33a383b5220820f68f74020e04a7c5b390f0f))
-- **microservice:** base app ([f8708cc](https://github.com/AliMD/alwatr/commit/f8708ccafe60ce89d635d43540ae1c627d0d8b55))
-- **microservice:** esnext module ([8e9bd3d](https://github.com/AliMD/alwatr/commit/8e9bd3dd4fe16cfba41930633071965b32c5e7a8))
-- **microservice:** home route ([851324e](https://github.com/AliMD/alwatr/commit/851324e328a5719fbc6702e72026e65df282db4f))
-- **microservice:** load .env file ([ded93cb](https://github.com/AliMD/alwatr/commit/ded93cbe21071db48fddd468a8279640502c1fbb))
-- **microservice:** make starter kit base files ([cbc2e47](https://github.com/AliMD/alwatr/commit/cbc2e478b1ad548134d4267c40548d1bd026bb62))
-- **microservice:** new echo route ([de12548](https://github.com/AliMD/alwatr/commit/de125484c7bdeef40527c6cda0b9a1f0d83f5930))
+- **nanoservice:** base app ([f8708cc](https://github.com/AliMD/alwatr/commit/f8708ccafe60ce89d635d43540ae1c627d0d8b55))
+- **nanoservice:** esnext module ([8e9bd3d](https://github.com/AliMD/alwatr/commit/8e9bd3dd4fe16cfba41930633071965b32c5e7a8))
+- **nanoservice:** home route ([851324e](https://github.com/AliMD/alwatr/commit/851324e328a5719fbc6702e72026e65df282db4f))
+- **nanoservice:** load .env file ([ded93cb](https://github.com/AliMD/alwatr/commit/ded93cbe21071db48fddd468a8279640502c1fbb))
+- **nanoservice:** make starter kit base files ([cbc2e47](https://github.com/AliMD/alwatr/commit/cbc2e478b1ad548134d4267c40548d1bd026bb62))
+- **nanoservice:** new echo route ([de12548](https://github.com/AliMD/alwatr/commit/de125484c7bdeef40527c6cda0b9a1f0d83f5930))
 
 # [0.11.0](https://github.com/AliMD/alwatr/compare/v0.10.1...v0.11.0) (2022-04-16)
 

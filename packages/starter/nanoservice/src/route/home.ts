@@ -4,7 +4,7 @@ app.route('get', '/', async (connection) => {
   connection.reply({
     ok: true,
     data: {
-      app: 'Alwatr Microservice Starter Kit',
+      app: 'Alwatr Nanoservice Starter Kit',
       message: 'Hello ;)',
     },
   });

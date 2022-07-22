@@ -6,6 +6,6 @@ export const config = {
   port: isNumber(process.env.PORT) ? +process.env.PORT! : 8000,
 };
 
-export const logger = createLogger('micro-service-starter');
+export const logger = createLogger('nanoservice-starter');
 
 logger.logProperty('config', config);
