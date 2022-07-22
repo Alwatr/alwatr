@@ -5,21 +5,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.12.0](https://github.com/AliMD/alwatr/compare/v0.11.0...v0.12.0) (2022-07-22)
 
-
 ### Bug Fixes
 
-* all package refrences ([11b027d](https://github.com/AliMD/alwatr/commit/11b027d4cdbe142e1f5ef6c6f87c1812fbb2d94b))
-
+- all package refrences ([11b027d](https://github.com/AliMD/alwatr/commit/11b027d4cdbe142e1f5ef6c6f87c1812fbb2d94b))
 
 ### Features
 
-* **font:** demo for sahel ([bb087ef](https://github.com/AliMD/alwatr/commit/bb087eff880aceaedfb253494581d1f363632573))
-* **jatabase:** demo ([17beb7e](https://github.com/AliMD/alwatr/commit/17beb7ecdf3e89b0ffee43f4365f3b2dc4950f99))
-* **logger:** node coloring support ([2b4aab6](https://github.com/AliMD/alwatr/commit/2b4aab655bc0707761587a7439de98bbd4ad0e08))
-
-
-
-
+- **font:** demo for sahel ([bb087ef](https://github.com/AliMD/alwatr/commit/bb087eff880aceaedfb253494581d1f363632573))
+- **jatabase:** demo ([17beb7e](https://github.com/AliMD/alwatr/commit/17beb7ecdf3e89b0ffee43f4365f3b2dc4950f99))
+- **logger:** node coloring support ([2b4aab6](https://github.com/AliMD/alwatr/commit/2b4aab655bc0707761587a7439de98bbd4ad0e08))
 
 # [0.11.0](https://github.com/AliMD/alwatr/compare/v0.10.1...v0.11.0) (2022-04-16)
 

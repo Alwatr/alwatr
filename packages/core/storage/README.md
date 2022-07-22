@@ -23,7 +23,7 @@ const ali: User = {
 
 db.set(ali);
 let user = db.get('alimd');
-console.log(user)
+console.log(user);
 ```
 
 # API
@@ -49,12 +49,12 @@ Initialize database.
 
 ```ts
 db.ready.then(() => {
-   // now db initialized!
-})
+  // now db initialized!
+});
 
 // or
 
-await db.ready()
+await db.ready();
 // now db initialized!
 ```
 
@@ -93,5 +93,5 @@ Remove a document object from the storage.
 - **documentId** is id of the document object.
 
 ```ts
-db.remove('alimd')
+db.remove('alimd');
 ```
