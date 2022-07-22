@@ -21,9 +21,12 @@ alwatrRegisteredList.push({
  *
  * ```ts
  * import {AlwatrStorage} from '@alwatr/storage';
+ * interface User extends DocumentObject {
+ *   name: string;
+ *   email?: string;
+ * }
  * const db = new AlwatrStorage<User>('user-list');
  * await db.ready
- * const user = db.get('my-user-id', true);
  * ```
  */
 export class AlwatrStorage<DocumentType extends DocumentObject> {
@@ -60,6 +63,12 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * @param fastInstance by default it will return a copy of the document.
    * if you set fastInstance to true, it will return the original document.
    * This is dangerous but much faster and you should use it only if you know what you are doing.
+   *
+   * Example:
+   *
+   * ```ts
+   * let ali = db.get('alimd');
+   * ```
    */
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
     this._logger.logMethodArgs('get', documentId);
@@ -80,6 +89,17 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * @param fastInstance by default it will make a copy of the document before set.
    * if you set fastInstance to true, it will set the original document.
    * This is dangerous but much faster and you should use it only if you know what you are doing.
+   *
+   * Example:
+   *
+   * ```ts
+   * const ali: User = {
+   *   _id: 'alimd',
+   *   name: 'Ali Mihandoost',
+   *   email: 'ali@mihandoost.com',
+   * };
+   * db.set(ali);
+   * ```
    */
   set(documentObject: DocumentType, fastInstance?: boolean): void {
     this._logger.logMethodArgs('set', documentObject._id);
@@ -101,7 +121,12 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
 
   /**
    * Remove a document object from the storage.
-   * @param documentId The id of the document object.
+   *
+   * Example:
+   *
+   * ```ts
+   * db.remove('alimd');
+   * ```
    */
   remove(documentId: string): void {
     this._logger.logMethodArgs('remove', documentId);
