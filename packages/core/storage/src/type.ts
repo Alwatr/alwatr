@@ -7,7 +7,5 @@ export interface DocumentObject {
   _updated?: number;
 }
 
-export type DocumentListStorage<DocType extends DocumentObject> = Record<
-  string,
-  DocType | undefined
-> & {_last?: string};
+export type DocumentListStorage<DocType extends DocumentObject> =
+  Record<string, DocType | undefined> & {_last?: string};

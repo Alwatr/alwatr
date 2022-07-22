@@ -12,7 +12,7 @@ interface User extends DocumentObject {
 
 const db = new AlwatrStorage<User>('junk-data', 'temp');
 
-db.ready.then(() => {
+db.readyPromise.then(() => {
   for (let i = 0; i < 10000; i++) {
     db.set({
       _id: random.string(4, 16),
