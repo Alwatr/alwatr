@@ -17,11 +17,14 @@ alwatrRegisteredList.push({
 /**
  * Elegant powerful micro in-memory document Database with disk backed.
  *
- * @example
+ * Example:
+ *
+ * ```ts
  * import {AlwatrStorage} from '@alwatr/storage';
  * const db = new AlwatrStorage<User>('user-list');
  * await db.ready
  * const user = db.get('my-user-id', true);
+ * ```
  */
 export class AlwatrStorage<DocumentType extends DocumentObject> {
   isReady = false;
