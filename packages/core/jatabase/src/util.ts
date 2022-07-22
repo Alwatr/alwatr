@@ -50,7 +50,7 @@ export async function writeJsonFile<T extends JSON>(path: string, dataObject: T)
 
   let jsonContent;
   try {
-    jsonContent = JSON.stringify(dataObject, undefined, 2);
+    jsonContent = JSON.stringify(dataObject);
   } catch (err) {
     throw new Error('stringify_failed');
   }
