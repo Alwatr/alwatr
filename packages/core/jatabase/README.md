@@ -1,3 +1,3 @@
 # @alwatr/jatabase
 
-Elegant powerful micro in-memory Database with JSON disk backed, written in tiny TypeScript ES module.
+Elegant micro in-memory json-like storage with disk backed, Faster NoSQL Database written in tiny TypeScript ES module.

@@ -1,11 +1,13 @@
 {
   "name": "@alwatr/jatabase",
   "version": "0.0.0",
-  "description": "Elegant powerful micro in-memory document Database with disk backed, written in tiny TypeScript ES module.",
+  "description": "Elegant micro in-memory json-like storage with disk backed, Faster NoSQL Database written in tiny TypeScript ES module.",
   "keywords": [
     "database",
     "storage",
     "json",
+    "nosql",
+    "no-sql",
     "data",
     "data-storage",
     "file",
