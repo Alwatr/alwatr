@@ -11,7 +11,7 @@ alwatrRegisteredList.push({
 });
 
 export class AlwatrMicroServer {
-  protected logger = createLogger(`micro-server:${this.port}`);
+  protected logger = createLogger(`alwatr-micro-server:${this.port}`);
   protected server = createServer(this.handleRequest);
 
   constructor(protected port: number, autoListen = true) {
