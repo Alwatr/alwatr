@@ -82,18 +82,12 @@ export class Jatabase<DocumentType extends DocumentObject> {
     this._logger.logMethodArgs('set', documentObject._id);
 
     // update meta
+    const oldData = this._storage[documentObject._id];
     documentObject._updated = Date.now();
-    if (documentObject._created == null) {
-      documentObject._created = documentObject._updated;
-    }
-    if (documentObject._rev == null) {
-      documentObject._rev = 0;
-    } else {
-      documentObject._rev++;
-    }
+    documentObject._created = oldData?._created ?? documentObject._updated;
+    documentObject._rev = (oldData?._rev ?? 0) + 1;
 
     if (fastInstance !== true) {
-      // clone
       documentObject = JSON.parse(JSON.stringify(documentObject));
     }
 
