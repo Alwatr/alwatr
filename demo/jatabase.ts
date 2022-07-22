@@ -9,31 +9,44 @@ interface User extends DocumentObject {
   token?: string;
 }
 
-const db = new Jatabase<User>('user-list');
+const db = new Jatabase<User>('user-list', 'temp');
 
 // await db.ready
 // or
 db.ready.then(() => {
   console.log('db loaded and ready to access.');
 
-  const ali = db.get('alimd');
+  let ali = db.get('alimd');
 
   if (ali == null) {
     console.log('ali not found');
-    return;
+    ali = {
+      _id: 'alimd',
+      fname: 'Ali',
+      lname: 'Mihandoost',
+      email: 'ali@mihandoost.com',
+    };
+  } else {
+    console.log('ali found: %o', ali);
+    /**
+     * {
+     *   _id: 'alimd',
+     *   fname: 'Ali',
+     *   lname: 'MM',
+     *   email: 'i@ali.md',
+     * }
+     */
+
+    ali.token = Math.random().toString(36).substring(2, 15);
   }
 
-  console.log(ali);
-  /**
-   * {
-   *   _id: 'alimd',
-   *   fname: 'Ali',
-   *   lname: 'MM',
-   *   email: 'i@ali.md',
-   * }
-   */
-
-  ali.token = '123qwe';
-
   db.set(ali);
+
+  db.set({
+    _id: 'fmd',
+    fname: 'Fatemeh',
+    lname: 'Mihandoost',
+    email: 'Fatemeh@mihandoost.com',
+    token: Math.random().toString(36).substring(2, 15),
+  });
 });
