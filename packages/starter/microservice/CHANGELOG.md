@@ -11,8 +11,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **micro-server:** make new package ([2148dfc](https://github.com/AliMD/alwatr/commit/2148dfc910565f917d3cb8eb001cde08f2fc694d))
-- **micro-server:** new class for handle server and connections ([62e33a3](https://github.com/AliMD/alwatr/commit/62e33a383b5220820f68f74020e04a7c5b390f0f))
+- **nano-server:** make new package ([2148dfc](https://github.com/AliMD/alwatr/commit/2148dfc910565f917d3cb8eb001cde08f2fc694d))
+- **nano-server:** new class for handle server and connections ([62e33a3](https://github.com/AliMD/alwatr/commit/62e33a383b5220820f68f74020e04a7c5b390f0f))
 - **microservice:** base app ([f8708cc](https://github.com/AliMD/alwatr/commit/f8708ccafe60ce89d635d43540ae1c627d0d8b55))
 - **microservice:** esnext module ([8e9bd3d](https://github.com/AliMD/alwatr/commit/8e9bd3dd4fe16cfba41930633071965b32c5e7a8))
 - **microservice:** home route ([851324e](https://github.com/AliMD/alwatr/commit/851324e328a5719fbc6702e72026e65df282db4f))

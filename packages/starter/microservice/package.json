@@ -50,7 +50,7 @@
   "dependencies": {
     "@alwatr/logger": "^0.12.0",
     "@alwatr/math": "^0.12.0",
-    "@alwatr/micro-server": "^0.12.0"
+    "@alwatr/nano-server": "^0.12.0"
   },
   "devDependencies": {
     "@types/node": "^18.0.6",
