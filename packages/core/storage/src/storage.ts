@@ -126,8 +126,9 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
 
     // update meta
     const oldData = this._storage[documentObject._id];
-    documentObject._updated = Date.now();
-    documentObject._created = oldData?._created ?? documentObject._updated;
+    documentObject._updatedAt = Date.now();
+    documentObject._createdAt = oldData?._createdAt ?? documentObject._updatedAt;
+    documentObject._createdBy = oldData?._createdBy ?? documentObject._updatedBy;
     documentObject._rev = (oldData?._rev ?? 0) + 1;
 
     if (fastInstance !== true) {

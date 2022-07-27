@@ -16,6 +16,7 @@ db.readyPromise.then(() => {
   for (let i = 0; i < 10000; i++) {
     db.set({
       _id: random.string(4, 16),
+      _updatedBy: 'demo' + i,
       fname: random.string(4, 16),
       lname: random.string(4, 32),
       email: random.string(8, 32),
