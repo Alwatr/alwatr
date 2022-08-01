@@ -5,7 +5,7 @@ import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {readJsonFile, writeJsonFile} from './util.js';
 
 import type {DocumentObject, DocumentListStorage} from './type.js';
-import type {Logger} from '@alwatr/logger/type.js';
+import type {AlwatrLogger} from '@alwatr/logger';
 
 export * from './type.js';
 
@@ -56,7 +56,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   readyState = false;
 
 
-  protected _logger: Logger;
+  protected _logger: AlwatrLogger;
   protected _storage: DocumentListStorage<DocumentType> = {};
   protected _storagePath: string;
 

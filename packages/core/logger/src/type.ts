@@ -26,7 +26,7 @@ declare global {
   }
 }
 
-export interface Logger {
+export interface AlwatrLogger {
   /**
    * Debug state for current scope base on localStorage `ALWATR_LOG` pattern.
    */
