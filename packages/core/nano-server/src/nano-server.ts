@@ -34,7 +34,7 @@ export class AlwatrNanoServer {
   listen(): void {
     this._logger.logMethod('listen');
     this._server.listen(this._config.port, this._config.host, () => {
-      this._logger.logOther(`listening on 0.0.0.0:${this._config.port}`);
+      this._logger.logOther(`listening on ${this._config.host}:${this._config.port}`);
     });
   }
 
@@ -184,7 +184,7 @@ export class AlwatrConnection {
   readonly url = new URL(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.incomingMessage.url!.replace(AlwatrConnection.versionPattern, ''),
-    'http://0.0.0.0',
+    'http://localhost/',
   );
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
