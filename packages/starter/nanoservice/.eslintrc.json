@@ -10,7 +10,7 @@
     "plugin:import/typescript"
   ],
   "env": {
-    "browser": true,
+    "node": true,
     "es2021": true
   },
   "parser": "@typescript-eslint/parser",
@@ -18,16 +18,15 @@
     "ecmaVersion": 2021,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "import", "wc"],
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
   "settings": {
     "import/resolver": {
       "typescript": {
-        "alwaysTryTypes": true,
-        "project": "packages/*/*/tsconfig.json"
+        "alwaysTryTypes": true
       }
-    },
-    "wc": {
-      "elementBaseClasses": ["LitElement"]
     }
   },
   "rules": {
@@ -55,7 +54,17 @@
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"], "type"],
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          [
+            "parent",
+            "sibling",
+            "index"
+          ],
+          "type"
+        ],
         "newlines-between": "always",
         "alphabetize": {
           "order": "asc",
