@@ -5,11 +5,12 @@
     "google",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:wc/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript"
   ],
   "env": {
-    "node": true,
+    "browser": true,
     "es2021": true
   },
   "parser": "@typescript-eslint/parser",
@@ -17,17 +18,21 @@
     "ecmaVersion": 2021,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "import"],
+  "plugins": ["@typescript-eslint", "import", "wc"],
   "settings": {
     "import/resolver": {
       "typescript": {
-        "alwaysTryTypes": true
+        "alwaysTryTypes": true,
+        "project": "packages/*/*/tsconfig.json"
       }
+    },
+    "wc": {
+      "elementBaseClasses": ["LitElement"]
     }
   },
   "rules": {
     "max-len": [
-      "warn",
+      "error",
       {
         "code": 120
       }
