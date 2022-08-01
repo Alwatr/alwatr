@@ -1,7 +1,8 @@
-@base = http://localhost:8000/v1
+@apiUrl = http://localhost:80
+@apiVersion = v1
 
 ### echo
-POST {{base}}/echo
+POST {{apiUrl}}/{{apiVersion}}/echo
 Content-Type: application/json
 
 {
@@ -9,26 +10,26 @@ Content-Type: application/json
   "b": 2
 }
 
-### === Test all routes and errors ===
+### === Test other routes and errors ===
 
 ### Page Home
-GET {{base}}
+GET {{apiUrl}}/{{apiVersion}}
 
 ### Page 404 (wrong path)
-GET {{base}}/jafang
+GET {{apiUrl}}/{{apiVersion}}/jafang
 
 ### Page 404 (wrong method)
-POST {{base}}
+POST {{apiUrl}}/{{apiVersion}}
 
 ### Page health
-GET {{base}}/health
+GET {{apiUrl}}/{{apiVersion}}/health
 
 ### empty body
-POST {{base}}/echo
+POST {{apiUrl}}/{{apiVersion}}/echo
 Content-Type: application/json
 
 ### invalid json
-POST {{base}}/echo
+POST {{apiUrl}}/{{apiVersion}}/echo
 Content-Type: application/json
 
 {

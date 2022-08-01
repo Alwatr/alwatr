@@ -1,6 +1,6 @@
 import {nanoServer} from '../lib/nano-server.js';
 
-nanoServer.route('get', '/', async (connection) => {
+nanoServer.route('GET', '/', async (connection) => {
   connection.reply({
     ok: true,
     data: {
