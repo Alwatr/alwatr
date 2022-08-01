@@ -190,6 +190,8 @@ export class AlwatrConnection {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   readonly method = this.incomingMessage.method!.toUpperCase() as Methods;
 
+  readonly token = this._getToken();
+
   readonly bodyPromise = this._getRequestBody();
 
   protected _logger = createLogger(`alwatr-nano-server-connection`);
@@ -245,6 +247,15 @@ export class AlwatrConnection {
     });
 
     this.serverResponse.end();
+  }
+
+  protected _getToken(): string | void {
+    const auth = this.incomingMessage.headers.authorization?.split(' ');
+    if (auth != null && auth[0] === 'Bearer') {
+      return auth[1];
+    } else {
+      return;
+    }
   }
 
   protected async _getRequestBody(): Promise<string | void> {
