@@ -1,4 +1,5 @@
-import type {Logger} from './type';
+import type {AlwatrLogger} from './type';
+export {AlwatrLogger};
 
 const isBrowser = typeof process === 'undefined';
 
@@ -109,7 +110,7 @@ export const createLogger = (
     scope: string,
     color: string = getNextColor(),
     debug = getDebugState(scope),
-): Logger => {
+): AlwatrLogger => {
   scope = scope.trim();
 
   const first = scope.charAt(0);

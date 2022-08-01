@@ -2,8 +2,10 @@ import {createServer} from 'http';
 
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
-import type {Methods, ReplyContent} from './type.js';
-import type {IncomingMessage, ServerResponse} from 'http';
+import type {Config, Methods, ReplyContent} from './type.js';
+import type {AlwatrLogger} from '@alwatr/logger';
+import type {IncomingMessage, ServerResponse} from 'node:http';
+import type {Duplex} from 'node:stream';
 
 alwatrRegisteredList.push({
   name: '@alwatr/nano-server',
@@ -11,64 +13,97 @@ alwatrRegisteredList.push({
 });
 
 export class AlwatrNanoServer {
-  protected logger = createLogger(`alwatr-nano-server:${this.port}`);
-  protected server = createServer(this.handleRequest);
+  protected _config: Config = {
+    host: '0.0.0.0',
+    port: 80,
+    autoListen: true,
+  };
+  protected _logger: AlwatrLogger;
+  protected _server = createServer(this._requestListener.bind(this));
 
-  constructor(protected port: number, autoListen = true) {
-    this.logger.logMethodArgs('new', {port, listen: autoListen});
-    this.server = createServer(this.handleRequest.bind(this));
-
-    this.server.on('error', (err: NodeJS.ErrnoException) => {
-      this.logger.accident(
-          'server.onError',
-          'http_server_catch_error',
-          'HTTP server catch an error',
-          {
-            errCode: err.code,
-            errMessage: err.message,
-          },
-      );
-
-      if (err.code === 'EADDRINUSE') {
-        this.logger.logOther('Address in use, retrying...');
-        setTimeout(() => {
-          this.server.close();
-          this.listen();
-        }, 1000);
-      }
-    });
-
-    this.server.on('clientError', (err: NodeJS.ErrnoException, socket) => {
-      this.logger.accident(
-          'server.clientError',
-          'http_server_catch_client_error',
-          'HTTP server catch a client error',
-          {
-            errCode: err.code,
-            errMessage: err.message,
-          },
-      );
-      socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
-    });
-
-    if (autoListen) this.listen();
-
-    this.route('get', '/health', async (connection) => {
-      const body = 'ok';
-      connection.serverResponse.writeHead(200, {
-        'Content-Length': body.length,
-        'Content-Type': 'plain/text',
-        'Server': 'Alwatr NanoServer',
-      });
-      connection.serverResponse.end(body);
-    });
+  constructor(config: Partial<Config>) {
+    this._config = config = {...this._config, ...config};
+    this._logger = createLogger(`alwatr-nano-server:${config.port}`);
+    this._logger.logMethodArgs('new', config);
+    this._server.on('error', this._errorListener.bind(this));
+    this._server.on('clientError', this._clientErrorListener.bind(this));
+    this.route('GET', '/health', this._onHealthCheckRequest.bind(this));
+    if (config.autoListen) this.listen();
   }
 
   listen(): void {
-    this.logger.logMethod('listen');
-    this.server.listen(this.port, '0.0.0.0', () => {
-      this.logger.logOther(`listening on 0.0.0.0:${this.port}`);
+    this._logger.logMethod('listen');
+    this._server.listen(this._config.port, this._config.host, () => {
+      this._logger.logOther(`listening on ${this._config.host}:${this._config.port}`);
     });
+  }
+
+  close(): void {
+    this._logger.logMethod('close');
+    this._server.close();
+  }
+
+  route(
+      method: Methods,
+      route: 'all' | `/${string}`,
+      middleware: (connection: AlwatrConnection) => void,
+  ): void {
+    this._logger.logMethodArgs('route', {method, route});
+
+    if (this.middlewareList[method] == null) this.middlewareList[method] = {};
+
+    if (typeof this.middlewareList[method][route] === 'function') {
+      this._logger.accident('route', 'route_already_exists', 'Route already exists', {
+        method,
+        route,
+      });
+      throw new Error('route_already_exists');
+    }
+
+    this.middlewareList[method][route] = middleware;
+  }
+
+  protected _errorListener(err: NodeJS.ErrnoException): void {
+    this._logger.accident(
+        'server.onError',
+        'http_server_catch_error',
+        'HTTP server catch an error',
+        {
+          errCode: err.code,
+          errMessage: err.message,
+        },
+    );
+
+    if (err.code === 'EADDRINUSE') {
+      this._logger.logOther('Address in use, retrying...');
+      setTimeout(() => {
+        this._server.close();
+        this.listen();
+      }, 1000);
+    }
+  }
+
+  protected _clientErrorListener(err: NodeJS.ErrnoException, socket: Duplex): void {
+    this._logger.accident(
+        'server.clientError',
+        'http_server_catch_client_error',
+        'HTTP server catch a client error',
+        {
+          errCode: err.code,
+          errMessage: err.message,
+        },
+    );
+    socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+  }
+
+  protected _onHealthCheckRequest(connection: AlwatrConnection): void {
+    const body = 'ok';
+    connection.serverResponse.writeHead(200, {
+      'Content-Length': body.length,
+      'Content-Type': 'plain/text',
+      'Server': 'Alwatr NanoServer',
+    });
+    connection.serverResponse.end(body);
   }
 
   // prettier-ignore
@@ -76,13 +111,14 @@ export class AlwatrNanoServer {
     all: {},
   };
 
-  protected async handleRequest(
+  protected async _requestListener(
       incomingMessage: IncomingMessage,
       serverResponse: ServerResponse,
   ): Promise<void> {
-    this.logger.logMethod('handleRequest');
+    this._logger.logMethod('handleRequest');
+
     if (incomingMessage.url == null) {
-      this.logger.accident(
+      this._logger.accident(
           'handleRequest',
           'http_server_url_undefined',
           'incomingMessage.url is undefined',
@@ -90,103 +126,85 @@ export class AlwatrNanoServer {
       return;
     }
 
+    if (incomingMessage.method == null) {
+      this._logger.accident(
+          'handleRequest',
+          'http_server_method_undefined',
+          'incomingMessage.method is undefined',
+      );
+      return;
+    }
+
     const connection = new AlwatrConnection(incomingMessage, serverResponse);
     const route = connection.url.pathname;
-    const method = connection.incomingMessage.method?.toLowerCase();
 
     // TODO: handled open remained connections.
+
+    const middleware =
+      this.middlewareList[connection.method]?.[route] ||
+      this.middlewareList.all[route] ||
+      this.middlewareList[connection.method]?.all ||
+      this.middlewareList.all.all;
+
     try {
-      if (typeof this.middlewareList.all?.[route] === 'function') {
-        await this.middlewareList.all[route](connection);
-      } else if (method != null && typeof this.middlewareList[method]?.[route] === 'function') {
-        await this.middlewareList[method][route](connection);
+      if (typeof middleware === 'function') {
+        await middleware(connection);
       } else {
-        connection.reply({
-          ok: false,
-          statusCode: 404,
-          errorCode: 'not_found',
-          data: {method, route},
-        });
+        this._notFoundListener(connection);
       }
     } catch (err) {
-      this.logger.error('handleRequest', 'http_server_error_500', err, {method, route});
-    }
-  }
-
-  route(method: Methods, route: string, middleware: (connection: AlwatrConnection) => void): void {
-    this.logger.logMethodArgs('route', {method, route});
-    if (typeof this.middlewareList[method]?.[route] === 'function') {
-      this.logger.accident('route', 'route_already_exists', 'Route already exists', {
-        method,
+      this._logger.error('handleRequest', 'http_server_middleware_error', err, {
+        method: connection.method,
         route,
       });
-      throw new Error('route_already_exists');
+      connection.reply({
+        ok: false,
+        statusCode: 500,
+        errorCode: 'http_server_middleware_error',
+      });
     }
-
-    if (this.middlewareList[method] == null) {
-      this.middlewareList[method] = {};
-    }
-
-    this.middlewareList[method][route] = middleware;
   }
+
+  protected _notFoundListener = (connection: AlwatrConnection): void => {
+    connection.reply({
+      ok: false,
+      statusCode: 404,
+      errorCode: 'not_found',
+      data: {
+        method: connection.method,
+        route: connection.url.pathname,
+      },
+    });
+  };
 }
 
 export class AlwatrConnection {
   static versionPattern = new RegExp('^/v[0-9]+');
 
-  url = new URL(
+  readonly url = new URL(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.incomingMessage.url!.replace(AlwatrConnection.versionPattern, ''),
-    'http://0.0.0.0',
+    'http://localhost/',
   );
-  protected logger = createLogger(`alwatr-nano-server-connection`);
 
-  readonly body = this._getRequestBody();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  readonly method = this.incomingMessage.method!.toUpperCase() as Methods;
+
+  readonly token = this._getToken();
+
+  readonly bodyPromise = this._getRequestBody();
+
+  protected _logger = createLogger(`alwatr-nano-server-connection`);
 
   constructor(public incomingMessage: IncomingMessage, public serverResponse: ServerResponse) {
-    this.logger.logMethodArgs('new', {method: incomingMessage.method, url: incomingMessage.url});
-  }
-
-  protected async _getRequestBody(): Promise<string> {
-    let body = '';
-
-    this.incomingMessage.on('data', (chunk: unknown) => {
-      body += chunk;
-    });
-
-    await new Promise((resolve) => this.incomingMessage.once('end', resolve));
-
-    return body;
-  }
-
-  async requireJsonBody<Type extends Record<string, unknown>>(): Promise<Type | void> {
-    // if request content type is json, parse the body
-    const body = await this.body;
-
-    if (body.length === 0) {
-      return this.reply({
-        ok: false,
-        statusCode: 400,
-        errorCode: 'require_body',
-      });
-    }
-
-    try {
-      return JSON.parse(body) as Type;
-    } catch (err) {
-      return this.reply({
-        ok: false,
-        statusCode: 400,
-        errorCode: 'invalid_json',
-      });
-    }
+    this._logger.logMethodArgs('new', {method: incomingMessage.method, url: incomingMessage.url});
   }
 
   reply(content: ReplyContent): void {
-    this.logger.logMethodArgs('reply', {content});
+    this._logger.logMethodArgs('reply', {content});
 
     if (this.serverResponse.headersSent) {
-      this.logger.accident('reply', 'http_header_sent', 'Response headers already sent');
+      this._logger.accident('reply', 'http_header_sent', 'Response headers already sent');
       return;
     }
 
@@ -194,7 +212,11 @@ export class AlwatrConnection {
     try {
       body = JSON.stringify(content);
     } catch {
-      this.logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!');
+      this._logger.accident(
+          'responseData',
+          'data_stringify_failed',
+          'JSON.stringify(data) failed!',
+      );
       return this.reply(
         content.ok === false ?
           {
@@ -217,14 +239,58 @@ export class AlwatrConnection {
     });
 
     this.serverResponse.write(body, 'utf8', (error: NodeJS.ErrnoException | null | undefined) => {
-      if (error != null) {
-        this.logger.accident('reply', 'http_response_write_failed', 'Response write failed', {
-          errCode: error.code,
-          errMessage: error.message,
-        });
-      }
+      if (error == null) return;
+      this._logger.accident('reply', 'http_response_write_failed', 'Response write failed', {
+        errCode: error.code,
+        errMessage: error.message,
+      });
     });
 
     this.serverResponse.end();
+  }
+
+  protected _getToken(): string | void {
+    const auth = this.incomingMessage.headers.authorization?.split(' ');
+    if (auth != null && auth[0] === 'Bearer') {
+      return auth[1];
+    } else {
+      return;
+    }
+  }
+
+  protected async _getRequestBody(): Promise<string | void> {
+    // method must be POST or PUT
+    if (!(this.method === 'POST' || this.method === 'PUT')) {
+      return;
+    }
+
+    const body = '';
+
+    await new Promise((resolve) => this.incomingMessage.once('end', resolve));
+
+    return body;
+  }
+
+  async requireJsonBody<Type extends Record<string, unknown>>(): Promise<Type | void> {
+    // if request content type is json, parse the body
+    const body = await this.bodyPromise;
+
+    if (body == null || body.length === 0) {
+      return this.reply({
+        ok: false,
+        statusCode: 400,
+        errorCode: 'require_body',
+      });
+    }
+
+    try {
+      return JSON.parse(body) as Type;
+    } catch (err) {
+      return this.reply({
+        ok: false,
+        statusCode: 400,
+        errorCode: 'invalid_json',
+      });
+    }
   }
 }

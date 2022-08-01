@@ -22,6 +22,7 @@ db.readyPromise.then(() => {
     console.log('ali not found');
     ali = {
       _id: 'alimd',
+      _updatedBy: 'demo',
       fname: 'Ali',
       lname: 'Mihandoost',
       email: 'ali@mihandoost.com',
@@ -44,6 +45,7 @@ db.readyPromise.then(() => {
 
   db.set({
     _id: 'fmd',
+    _updatedBy: 'demo',
     fname: 'Fatemeh',
     lname: 'Mihandoost',
     email: 'Fatemeh@mihandoost.com',

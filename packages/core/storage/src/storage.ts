@@ -5,7 +5,7 @@ import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {readJsonFile, writeJsonFile} from './util.js';
 
 import type {DocumentObject, DocumentListStorage} from './type.js';
-import type {Logger} from '@alwatr/logger/type.js';
+import type {AlwatrLogger} from '@alwatr/logger';
 
 export * from './type.js';
 
@@ -56,7 +56,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   readyState = false;
 
 
-  protected _logger: Logger;
+  protected _logger: AlwatrLogger;
   protected _storage: DocumentListStorage<DocumentType> = {};
   protected _storagePath: string;
 
@@ -126,8 +126,9 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
 
     // update meta
     const oldData = this._storage[documentObject._id];
-    documentObject._updated = Date.now();
-    documentObject._created = oldData?._created ?? documentObject._updated;
+    documentObject._updatedAt = Date.now();
+    documentObject._createdAt = oldData?._createdAt ?? documentObject._updatedAt;
+    documentObject._createdBy = oldData?._createdBy ?? documentObject._updatedBy;
     documentObject._rev = (oldData?._rev ?? 0) + 1;
 
     if (fastInstance !== true) {
