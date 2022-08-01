@@ -5,6 +5,7 @@
     "google",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:wc/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript"
   ],
@@ -17,7 +18,10 @@
     "ecmaVersion": 2021,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "import"],
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
   "settings": {
     "import/resolver": {
       "typescript": {
@@ -27,7 +31,7 @@
   },
   "rules": {
     "max-len": [
-      "warn",
+      "error",
       {
         "code": 120
       }
@@ -50,7 +54,17 @@
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"], "type"],
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          [
+            "parent",
+            "sibling",
+            "index"
+          ],
+          "type"
+        ],
         "newlines-between": "always",
         "alphabetize": {
           "order": "asc",

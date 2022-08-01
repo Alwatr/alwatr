@@ -264,7 +264,11 @@ export class AlwatrConnection {
       return;
     }
 
-    const body = '';
+    let body = '';
+
+    this.incomingMessage.on('data', (chunk: unknown) => {
+      body += chunk;
+    });
 
     await new Promise((resolve) => this.incomingMessage.once('end', resolve));
 
