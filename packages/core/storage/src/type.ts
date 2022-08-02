@@ -12,3 +12,17 @@ export interface DocumentObject {
 
 export type DocumentListStorage<DocType extends DocumentObject> =
   Record<string, DocType | undefined> & {_last?: string};
+
+export interface Config {
+  /**
+   * Storage name.
+   */
+  name: string,
+
+  /**
+   * Storage path.
+   *
+   * @default './db'
+   */
+  path?: string,
+}

@@ -4,10 +4,10 @@ import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
 import {readJsonFile, writeJsonFile} from './util.js';
 
-import type {DocumentObject, DocumentListStorage} from './type.js';
+import type {DocumentObject, DocumentListStorage, Config} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 
-export * from './type.js';
+export {DocumentObject, DocumentListStorage, Config};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage',
@@ -86,10 +86,10 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     return this.keys.length;
   }
 
-  constructor({name, path}: {name: string, path?: string}) {
-    this._logger = createLogger(`alwatr-storage:${name}`);
-    this.name = name;
-    this.storagePath = resolve(`${path ?? 'db'}/${name}.json`);
+  constructor(config: Config) {
+    this._logger = createLogger(`alwatr-storage:${config.name}`);
+    this.name = config.name;
+    this.storagePath = resolve(`${config.path ?? 'db'}/${config.name}.json`);
     this.readyPromise = this._init();
   }
 
