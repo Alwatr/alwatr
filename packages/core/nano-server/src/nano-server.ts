@@ -249,19 +249,20 @@ export class AlwatrConnection {
     this.serverResponse.end();
   }
 
-  protected _getToken(): string | void {
+  protected _getToken(): string | null {
     const auth = this.incomingMessage.headers.authorization?.split(' ');
-    if (auth != null && auth[0] === 'Bearer') {
-      return auth[1];
-    } else {
-      return;
+
+    if (auth == null || auth[0] !== 'Bearer') {
+      return null;
     }
+
+    return auth[1];
   }
 
-  protected async _getRequestBody(): Promise<string | void> {
+  protected async _getRequestBody(): Promise<string | null> {
     // method must be POST or PUT
     if (!(this.method === 'POST' || this.method === 'PUT')) {
-      return;
+      return null;
     }
 
     let body = '';
@@ -275,26 +276,28 @@ export class AlwatrConnection {
     return body;
   }
 
-  async requireJsonBody<Type extends Record<string, unknown>>(): Promise<Type | void> {
+  async requireJsonBody<Type extends Record<string, unknown>>(): Promise<Type | null> {
     // if request content type is json, parse the body
     const body = await this.bodyPromise;
 
-    if (body == null || body.length === 0) {
-      return this.reply({
+    if (body === null || body.length === 0) {
+      this.reply({
         ok: false,
         statusCode: 400,
         errorCode: 'require_body',
       });
+      return null;
     }
 
     try {
       return JSON.parse(body) as Type;
     } catch (err) {
-      return this.reply({
+      this.reply({
         ok: false,
         statusCode: 400,
         errorCode: 'invalid_json',
       });
+      return null;
     }
   }
 }
