@@ -1,5 +1,5 @@
 import {existsSync, promises as fs} from 'fs';
-import {resolve, dirname} from 'path';
+import {resolve, dirname} from 'node:path';
 
 import type {JSON} from './type.js';
 
@@ -10,12 +10,11 @@ import type {JSON} from './type.js';
  * @example
  * const fileContent = await readJsonFile('./file.json');
  */
-export async function readJsonFile<T extends JSON>(path: string): Promise<T> {
+export async function readJsonFile<T extends JSON>(path: string): Promise<T | null> {
   // Check the path is exist
-  path = resolve(path);
 
   if (!existsSync(path)) {
-    throw new Error('path_not_found');
+    return null;
   }
 
   let fileContent;
@@ -50,7 +49,7 @@ export async function writeJsonFile<T extends JSON>(path: string, dataObject: T)
 
   let jsonContent;
   try {
-    jsonContent = JSON.stringify(dataObject);
+    jsonContent = JSON.stringify(dataObject, null, 2);
   } catch (err) {
     throw new Error('stringify_failed');
   }

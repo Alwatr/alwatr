@@ -1,4 +1,4 @@
-import {existsSync} from 'fs';
+import {resolve} from 'node:path';
 
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
@@ -37,13 +37,18 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   readonly name: string;
 
   /**
+   * Storage file full path.
+   */
+  readonly storagePath: string;
+
+  /**
    * Ready promise resolved when the storage is ready.
    * you can use this promise to wait for the storage to be loaded successfully and ready to use.
    *
    * Example:
    *
    * ```ts
-   * const db = new AlwatrStorage<User>('user-list');
+   * const db = new AlwatrStorage<User>({name: 'user-list', path: 'db'});
    * await db.readyPromise
    * const user = db.get('user-1');
    * ```
@@ -53,29 +58,64 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   /**
    * Ready state set to true when the storage is ready and readyPromise resolved.
    */
-  readyState = false;
+  get readyState(): boolean {
+    return this._readyState;
+  }
 
-
+  protected _readyState = false;
   protected _logger: AlwatrLogger;
   protected _storage: DocumentListStorage<DocumentType> = {};
-  protected _storagePath: string;
+  protected _keys: Array<string> | null = null;
 
-  constructor(name: string, pathPrefix = 'data') {
+  /**
+   * All document ids in array.
+   */
+  get keys(): Array<string> {
+    if (this._readyState !== true) throw new Error('storage_not_ready');
+
+    if (this._keys === null) {
+      this._keys = Object.keys(this._storage);
+    }
+    return this._keys;
+  }
+
+  /**
+   * Size of the storage.
+   */
+  get length(): number {
+    return this.keys.length;
+  }
+
+  constructor({name, path}: {name: string, path?: string}) {
     this._logger = createLogger(`alwatr-storage:${name}`);
     this.name = name;
-    this._storagePath = `${pathPrefix}/${name}.json`;
+    this.storagePath = resolve(`${path ?? 'db'}/${name}.json`);
     this.readyPromise = this._init();
   }
 
+  /**
+   * Initial process like open/parse storage file.
+   * readyState will be set to true and readPromise will be resolved when this process finished.
+   */
   private async _init(): Promise<void> {
     this._logger.logMethod('_init');
-    if (existsSync(this._storagePath)) {
-      this._storage = await readJsonFile<DocumentListStorage<DocumentType>>(this._storagePath);
-    } else {
-      this._storage = {};
-    }
-    this.readyState = true;
+    this._storage = await readJsonFile<DocumentListStorage<DocumentType>>(this.storagePath) ?? {};
+    this._readyState = true;
     this._logger.logProperty('readyState', this.readyState);
+  }
+
+  /**
+   * Check documentId exist in the storage or not.
+   *
+   * Example:
+   *
+   * ```ts
+   * if(!userDB.has('user-1')) throw new Error('user not found');
+   * ```
+   */
+  has(documentId: string): boolean {
+    if (this._readyState !== true) throw new Error('storage_not_ready');
+    return this._storage[documentId] != null;
   }
 
   /**
@@ -94,6 +134,8 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    */
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
     this._logger.logMethodArgs('get', documentId);
+    if (this._readyState !== true) throw new Error('storage_not_ready');
+
     const documentObject = this._storage[documentId];
     if (documentObject == null) {
       return null;
@@ -123,6 +165,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    */
   set(documentObject: DocumentType, fastInstance?: boolean): void {
     this._logger.logMethodArgs('set', documentObject._id);
+    if (this._readyState !== true) throw new Error('storage_not_ready');
 
     // update meta
     const oldData = this._storage[documentObject._id];
@@ -151,6 +194,8 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    */
   remove(documentId: string): void {
     this._logger.logMethodArgs('remove', documentId);
+    if (this._readyState !== true) throw new Error('storage_not_ready');
+
     delete this._storage[documentId];
   }
 
@@ -160,6 +205,8 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    */
   save(): void {
     this._logger.logMethod('save.request');
+    if (this._readyState !== true) throw new Error('storage_not_ready');
+
     if (this._saveTimer != null) {
       return;
     }
@@ -167,7 +214,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
       this._logger.logMethod('save.action');
       clearTimeout(this._saveTimer);
       delete this._saveTimer;
-      writeJsonFile(this._storagePath, this._storage);
+      writeJsonFile(this.storagePath, this._storage);
     }, 100);
   }
 }
