@@ -1,13 +1,44 @@
 @apiUrl = http://localhost:80
-@apiVersion = v1
+@apiVersion = v0
+@token = demo123
 
-### echo
-POST {{apiUrl}}/{{apiVersion}}/echo
+### Get a public storage
+GET {{apiUrl}}/{{apiVersion}}/comment-list/page-1.json
+
+### Get a document by storageName/docId
+GET {{apiUrl}}/{{apiVersion}}/comment-list/page-1/comment-id-1
+authorization: Bearer {{token}}
+
+### Update/insert a document of storageName/docId
+POST {{apiUrl}}/{{apiVersion}}/comment-list/page-1
+authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "a": 1,
-  "b": 2
+  "_id": "comment-id-1",
+  "from": "Ali Mihandoost",
+  "message": "Salam ;)"
+}
+
+### Insert a document to storageName
+PUT {{apiUrl}}/{{apiVersion}}/comment-list/page-1
+authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "from": "Ali Mihandoost",
+  "message": "Salam ;)"
+}
+
+### Insert a document to storageName with custom id
+PUT {{apiUrl}}/{{apiVersion}}/comment-list/page-1
+authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "_id": "sdfsf",
+  "from": "Ali Mihandoost",
+  "message": "Salam ;)"
 }
 
 ### === Test other routes and errors ===
