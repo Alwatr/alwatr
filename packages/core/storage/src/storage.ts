@@ -200,7 +200,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     delete this._storage[documentId];
   }
 
-  private _saveTimer?: NodeJS.Timeout | number;
+  private _saveTimer: NodeJS.Timeout | null = null;
 
   /**
    * Save the storage to disk.
@@ -209,17 +209,17 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     this._logger.logMethod('save.request');
     if (this._readyState !== true) throw new Error('storage_not_ready');
 
-    if (this._saveTimer != null) {
-      return;
-    }
+    if (this._saveTimer != null) return; // save already requested
+
     this._saveTimer = setTimeout(() => {
       this._logger.logMethod('save.action');
-      clearTimeout(this._saveTimer);
-      delete this._saveTimer;
+      this._saveTimer = null;
+      // TODO: catch errors
       writeJsonFile(this.storagePath, this._storage);
     }, 100);
   }
 
+  // TODO: update all jsdoc and readme.
   unload(): void {
     this._logger.logMethod('unload');
     this._readyState = false;
