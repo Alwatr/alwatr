@@ -3,4 +3,4 @@ import './route/update.js';
 import './route/get.js';
 import {logger} from './lib/config.js';
 
-logger.logOther('..:: Alwatr Nanoservice Starter Kit ::..');
+logger.logOther('..:: Alwatr Storage Nanoservice API ::..');
