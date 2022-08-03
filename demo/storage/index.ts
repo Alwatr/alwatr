@@ -9,7 +9,7 @@ interface User extends DocumentObject {
   token?: string;
 }
 
-const db = new AlwatrStorage<User>('user-list', 'temp');
+const db = new AlwatrStorage<User>({name: 'user-list', path: 'db'});
 
 // await db.readyPromise
 // or

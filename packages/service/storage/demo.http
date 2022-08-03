@@ -1,14 +1,50 @@
 @apiUrl = http://localhost:80
-@apiVersion = v1
+@apiVersion = v0
+@token = demo_123456789_123456789_123456789_123456789_123456789
 
-### echo
-POST {{apiUrl}}/{{apiVersion}}/echo
+### Get a public storage
+GET {{apiUrl}}/{{apiVersion}}/comment-list/page-1.json
+
+### Get a document by storageName/docId
+GET {{apiUrl}}/{{apiVersion}}/sample/doc-id-1
+authorization: Bearer {{token}}
+
+### Update/insert a document in storageName
+POST {{apiUrl}}/{{apiVersion}}/sample
+authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "a": 1,
-  "b": 2
+  "_id": "doc-id-1",
+  "from": "Ali Mihandoost",
+  "message": "Salam ;)"
 }
+
+### Insert a document to storageName
+PUT {{apiUrl}}/{{apiVersion}}/sample
+authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "from": "Ali Mihandoost",
+  "message": "Salam ;)"
+}
+
+### Insert a document to storageName with custom id
+PUT {{apiUrl}}/{{apiVersion}}/sample
+authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "_id": "doc-id-2",
+  "from": "Ali Mihandoost",
+  "message": "Salam ;)"
+}
+
+### Insert a document to storageName with custom id
+DELETE {{apiUrl}}/{{apiVersion}}/sample/doc-id-2
+authorization: Bearer {{token}}
+
 
 ### === Test other routes and errors ===
 
@@ -19,13 +55,13 @@ GET {{apiUrl}}/{{apiVersion}}
 GET {{apiUrl}}/{{apiVersion}}/jafang
 
 ### Page 404 (wrong method)
-POST {{apiUrl}}/{{apiVersion}}
+TRACE {{apiUrl}}/{{apiVersion}}
 
 ### Page health
 GET {{apiUrl}}/{{apiVersion}}/health
 
 ### empty body
-POST {{apiUrl}}/{{apiVersion}}/echo
+POST {{apiUrl}}/{{apiVersion}}
 Content-Type: application/json
 
 ### invalid json

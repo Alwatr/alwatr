@@ -10,7 +10,7 @@ interface User extends DocumentObject {
   token: string;
 }
 
-const db = new AlwatrStorage<User>('junk-data', 'temp');
+const db = new AlwatrStorage<User>({name: 'junk-data', path: 'db'});
 
 db.readyPromise.then(() => {
   for (let i = 0; i < 10000; i++) {
