@@ -18,16 +18,21 @@ import {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} from '
 export class AlwatrStorageProvider {
   protected _logger = createLogger('alwatr-storage-provider');
   protected _list: Record<string, AlwatrStorage<DocumentObject>> = {};
+  protected _config: AlwatrStorageProviderConfig;
 
   constructor(config: AlwatrStorageProviderConfig) {
     this._logger.logMethodArgs('constructor', config);
+    this._config = config;
   }
 
   async get<DocumentType extends DocumentObject = DocumentObject>(
       config: AlwatrStorageConfig,
   ): Promise<AlwatrStorage<DocumentType>> {
     if (!this._list[config.name]) {
-      this._list[config.name] = new AlwatrStorage<DocumentType>(config);
+      this._list[config.name] = new AlwatrStorage<DocumentType>({
+        ...this._config,
+        ...config,
+      });
     }
     if (this._list[config.name].readyState !== true) {
       await this._list[config.name].readyPromise;
