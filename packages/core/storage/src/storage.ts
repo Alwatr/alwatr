@@ -4,10 +4,10 @@ import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
 import {readJsonFile, writeJsonFile} from './util.js';
 
-import type {DocumentObject, DocumentListStorage, Config} from './type.js';
+import type {DocumentObject, DocumentListStorage, AlwatrStorageConfig} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 
-export {DocumentObject, DocumentListStorage, Config};
+export {DocumentObject, DocumentListStorage, AlwatrStorageConfig as Config};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage',
@@ -53,7 +53,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * const user = db.get('user-1');
    * ```
    */
-  readonly readyPromise: Promise<void>;
+  readyPromise: Promise<void>;
 
   /**
    * Ready state set to true when the storage is ready and readyPromise resolved.
@@ -86,19 +86,20 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     return this.keys.length;
   }
 
-  constructor(config: Config) {
+  constructor(config: AlwatrStorageConfig) {
     this._logger = createLogger(`alwatr-storage:${config.name}`);
+    this._logger.logMethodArgs('constructor', config);
     this.name = config.name;
-    this.storagePath = resolve(`${config.path ?? 'db'}/${config.name}.json`);
-    this.readyPromise = this._init();
+    this.storagePath = resolve(`${config.path ?? './db'}/${config.name}.json`);
+    this.readyPromise = this._load();
   }
 
   /**
    * Initial process like open/parse storage file.
    * readyState will be set to true and readPromise will be resolved when this process finished.
    */
-  private async _init(): Promise<void> {
-    this._logger.logMethod('_init');
+  private async _load(): Promise<void> {
+    this._logger.logMethod('_load');
     this._storage = await readJsonFile<DocumentListStorage<DocumentType>>(this.storagePath) ?? {};
     this._readyState = true;
     this._logger.logProperty('readyState', this.readyState);
@@ -200,6 +201,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   }
 
   private _saveTimer?: NodeJS.Timeout | number;
+
   /**
    * Save the storage to disk.
    */
@@ -216,5 +218,18 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
       delete this._saveTimer;
       writeJsonFile(this.storagePath, this._storage);
     }, 100);
+  }
+
+  unload(): void {
+    this._logger.logMethod('unload');
+    this._readyState = false;
+    this._storage = {};
+    this.readyPromise = Promise.reject(new Error('storage_unloaded'));
+  }
+
+  reload(): void {
+    this._logger.logMethod('reload');
+    this._readyState = false;
+    this.readyPromise = this._load();
   }
 }

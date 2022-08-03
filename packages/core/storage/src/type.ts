@@ -13,7 +13,7 @@ export interface DocumentObject {
 export type DocumentListStorage<DocType extends DocumentObject> =
   Record<string, DocType | undefined> & {_last?: string};
 
-export interface Config {
+export type AlwatrStorageConfig = {
   /**
    * Storage name.
    */
@@ -21,6 +21,15 @@ export interface Config {
 
   /**
    * Storage path.
+   *
+   * @default './db'
+   */
+  path?: string,
+}
+
+export type AlwatrStorageProviderConfig = {
+  /**
+   * Default storage path. you can override it in get config params.
    *
    * @default './db'
    */
