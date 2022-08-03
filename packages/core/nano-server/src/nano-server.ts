@@ -21,10 +21,10 @@ export class AlwatrNanoServer {
   protected _logger: AlwatrLogger;
   protected _server = createServer(this._requestListener.bind(this));
 
-  constructor(config: Partial<Config>) {
+  constructor(config?: Partial<Config>) {
     this._config = config = {...this._config, ...config};
     this._logger = createLogger(`alwatr-nano-server:${config.port}`);
-    this._logger.logMethodArgs('new', config);
+    this._logger.logMethodArgs('constructor', config);
     this._server.on('error', this._errorListener.bind(this));
     this._server.on('clientError', this._clientErrorListener.bind(this));
     this.route('GET', '/health', this._onHealthCheckRequest.bind(this));
