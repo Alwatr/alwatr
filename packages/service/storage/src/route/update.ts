@@ -9,7 +9,7 @@ import type {DocumentObject} from '@alwatr/storage';
 nanoServer.route('POST', 'all', updateDocument);
 
 async function updateDocument(connection: AlwatrConnection): Promise<void> {
-  const storageName = connection.url.pathname.substring(1).trim(); // remove the first `/`
+  const storageName = connection.url.pathname.substring(1); // remove the first `/`
   logger.logMethodArgs('updateDocument', {storageName});
 
   const bodyData = await connection.requireJsonBody();

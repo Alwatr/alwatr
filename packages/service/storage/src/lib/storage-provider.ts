@@ -10,6 +10,7 @@ const dataModelStorage = await storageProvider.get<DataModel>({
   name: config.dataModelName,
   path: `${config.storagePath}/private`,
 });
+
 if (dataModelStorage.length === 0) {
   dataModelStorage.set({
     _id: 'sample',
