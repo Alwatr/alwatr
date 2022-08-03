@@ -1,7 +1,8 @@
 import {createLogger} from '@alwatr/logger';
 
-import {AlwatrStorage} from './storage';
-import {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} from './type';
+import {AlwatrStorage} from './storage.js';
+
+import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} from './type';
 
 /**
  * Easy access to many storages with auto garbage collector

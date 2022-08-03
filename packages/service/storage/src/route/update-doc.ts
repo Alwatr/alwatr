@@ -1,6 +1,6 @@
-import {logger} from '../lib/config.js';
+import {config, logger} from '../lib/config.js';
 import {nanoServer} from '../lib/nano-server.js';
-import {getStorage, getDataModel} from '../lib/storage.js';
+import {storageProvider, getDataModel} from '../lib/storage-provider.js';
 import {requireToken, subToken} from '../lib/token.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
@@ -24,7 +24,7 @@ async function updateDocument(connection: AlwatrConnection): Promise<void> {
     });
   }
 
-  const storageModel = await getDataModel(storageName);
+  const storageModel = getDataModel(storageName);
 
   if (storageModel === null) {
     return connection.reply({
@@ -38,9 +38,10 @@ async function updateDocument(connection: AlwatrConnection): Promise<void> {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const storage = getStorage(storageName, storageModel.subFolder);
-  await storage.readyPromise;
+  const storage = await storageProvider.get({
+    name: storageName,
+    path: `${config.storagePath}/${storageModel.subFolder}`,
+  });
 
   const document: DocumentObject = {
     ...bodyData, // TODO: validate keys
