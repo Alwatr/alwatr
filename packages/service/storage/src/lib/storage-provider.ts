@@ -21,15 +21,16 @@ if (dataModelStorage.length === 0) {
 
 export function getDataModel(storageName: string): DataModel | null {
   const splittedName = storageName.split('/');
-  let testStorageName = splittedName[0];
-  for (let i = 1; i < splittedName.length; i++) {
-    testStorageName += `/${splittedName[i]}`;
+  let testStorageName = '';
+  for (let i = 0; i < splittedName.length; i++) {
+    testStorageName += splittedName[i];
     if (dataModelStorage.has(testStorageName)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const dataModel = dataModelStorage.get(testStorageName, true)!;
       if (dataModel.subStorage === false && dataModel._id !== storageName) continue;
       return dataModel;
     }
+    testStorageName += '/';
   }
   return null;
 }

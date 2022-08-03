@@ -9,9 +9,18 @@ export function requireToken(connection: AlwatrConnection): string | null {
       statusCode: 401,
       errorCode: 'token_required',
     });
+    return null;
   }
 
   // TODO: validate token
+  if (token.length < 32) {
+    connection.reply({
+      ok: false,
+      statusCode: 403,
+      errorCode: 'token_not_valid',
+    });
+    return null;
+  }
 
   return token;
 }
