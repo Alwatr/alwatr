@@ -4,6 +4,8 @@ import {AlwatrStorage} from './storage.js';
 
 import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} from './type';
 
+// TODO: auto unload base of last usage time and memory limit.
+
 /**
  * Easy access to many storages with auto garbage collector
  *
@@ -26,6 +28,7 @@ export class AlwatrStorageProvider {
     this._config = config;
   }
 
+  // TODO: update all jsdoc and readme.
   async get<DocumentType extends DocumentObject = DocumentObject>(
       config: AlwatrStorageConfig,
   ): Promise<AlwatrStorage<DocumentType>> {
@@ -37,6 +40,7 @@ export class AlwatrStorageProvider {
     }
     if (this._list[config.name].readyState !== true) {
       await this._list[config.name].readyPromise;
+      console.log('Memory usage: %sMB', Math.round(process.memoryUsage.rss() / 100000) / 10);
     }
     return this._list[config.name] as AlwatrStorage<DocumentType>;
   }
