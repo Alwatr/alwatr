@@ -25,7 +25,7 @@ function benchmark(algorithm: DigestAlgorithm): void {
   for (; i > 0; i--) {
     tokenGenerator.generate(sampleData);
   }
-  const runPerSec = Math.round(testRun / (Date.now() - now)) * 1000;
+  const runPerSec = Math.round(testRun / (Date.now() - now) * 1000);
   console.log(`Benchmark for ${algorithm} runs %s per sec`, runPerSec);
 }
 
