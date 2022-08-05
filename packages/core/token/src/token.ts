@@ -32,7 +32,6 @@ export class AlwatrTokenGenerator {
   }
 
   generate(data: string): string {
-    this._logger.logMethodArgs('generate', {data});
     return this._generate(data, this.epoch);
   }
 
