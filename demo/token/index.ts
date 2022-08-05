@@ -1,14 +1,16 @@
-# @alwatr/token
-
-Secure authentication HOTP token generator (the HMAC-based One-Time Password algorithm) written in tiny TypeScript module.
-
-## Example
-
-```ts
 import {createLogger} from '@alwatr/logger';
 import {AlwatrTokenGenerator} from '@alwatr/token';
 
 import type {TokenStatus} from '@alwatr/token';
+
+const logger = createLogger('token/demo');
+
+const tokenGenerator = new AlwatrTokenGenerator({
+  secret: 'my-very-secret-key',
+  duration: '2s',
+  algorithm: 'sha512',
+  encoding: 'base64url',
+});
 
 type User = {
   id: string;
@@ -16,15 +18,6 @@ type User = {
   role: 'admin' | 'user';
   auth: string;
 };
-
-const logger = createLogger('token/demo');
-
-const tokenGenerator = new AlwatrTokenGenerator({
-  secret: 'my-very-secret-key',
-  duration: '1h',
-  algorithm: 'sha512',
-  encoding: 'base64url',
-});
 
 const user: User = {
   id: 'alimd',
@@ -52,11 +45,14 @@ function userValidate(user: User): TokenStatus {
 
 // demo
 const userData = login();
-userValidate(userData); // 'valid'
+userValidate(userData); // { validateStatus: 'valid' }
 
-// one hour later
-userValidate(user); // 'expired'
+setTimeout(() => {
+  // 2s later
+  userValidate(user); // { validateStatus: 'expired' }
+}, 2001);
 
-// one hours later
-userValidate(user); // 'invalid'
-```
+setTimeout(() => {
+  // 4s later
+  userValidate(user);
+}, 4001); // { validateStatus: 'invalid' }

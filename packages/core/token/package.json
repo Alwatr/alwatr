@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/token",
   "version": "0.12.0",
-  "description": "Secure auth time-base token generator written in tiny TypeScript module.",
+  "description": "Secure authentication HOTP token generator (the HMAC-based One-Time Password algorithm) written in tiny TypeScript module.",
   "keywords": [
     "token",
     "authentication",
@@ -11,6 +11,9 @@
     "hmac",
     "hash",
     "time",
+    "otp",
+    "hotp",
+    "otp-token",
     "typescript",
     "esm",
     "alwatr"
@@ -38,6 +41,7 @@
   },
   "dependencies": {
     "tslib": "^2.3.1",
-    "@alwatr/logger": "^0.12.0"
+    "@alwatr/logger": "^0.12.0",
+    "@alwatr/math": "^0.12.0"
   }
 }
