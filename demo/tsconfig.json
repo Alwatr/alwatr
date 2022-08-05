@@ -15,7 +15,8 @@
     {"path": "../packages/core/i18n"},
     {"path": "../packages/core/math"},
     {"path": "../packages/core/element"},
-    {"path": "../packages/core/storage"}
+    {"path": "../packages/core/storage"},
+    {"path": "../packages/core/token"}
   ],
   "exclude": ["*.d.ts", "node_modules"]
 }
