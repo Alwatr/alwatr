@@ -2,7 +2,7 @@ import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {LitElement} from 'lit';
 
 import type {Constructor} from './type';
-import type {Logger} from '@alwatr/logger/type';
+import type {AlwatrLogger} from '@alwatr/logger/type';
 import type {PropertyValues} from 'lit';
 
 alwatrRegisteredList.push({
@@ -11,7 +11,7 @@ alwatrRegisteredList.push({
 });
 
 declare class LoggerMixinInterface extends LitElement {
-  protected _logger: Logger;
+  protected _logger: AlwatrLogger;
 }
 
 export function LoggerMixin<ClassType extends Constructor<LitElement>>(

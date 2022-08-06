@@ -3,51 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.12.0](https://github.com/AliMD/alwatr/compare/v0.11.0...v0.12.0) (2022-07-22)
+# [0.13.0](https://github.com/AliMD/alwatr/compare/v0.12.0...v0.13.0) (2022-08-06)
 
 
 ### Bug Fixes
 
-* all package refrences ([11b027d](https://github.com/AliMD/alwatr/commit/11b027d4cdbe142e1f5ef6c6f87c1812fbb2d94b))
-* **fetch:** compatible with new ts types AbortSignal ([949655a](https://github.com/AliMD/alwatr/commit/949655a257852aaaaa311e32603ecc0819eedf51))
-* **font:** sahel-vf font-weight ([bf84782](https://github.com/AliMD/alwatr/commit/bf84782347ed4898d854325415f6f43b1953f842))
-* **github/workflow:** schema detect ([b3b813c](https://github.com/AliMD/alwatr/commit/b3b813c45011afdc3e38dc7215f0f4beb8dcc1dd))
-* **i18n:** load resources issue ([19b9e39](https://github.com/AliMD/alwatr/commit/19b9e39d5a415e60901c117be3f8f82d09ef8444))
-* **logger:** refactor behavior of force ([7d9307b](https://github.com/AliMD/alwatr/commit/7d9307bb78523f3dae17b3bd80fa2fb47c90975f))
-* **micro-server:** logger scope ([73dbf02](https://github.com/AliMD/alwatr/commit/73dbf029325169d900558e2361fec9fa4303e7e4))
-* **route:** remove default `200` status code ([12d9065](https://github.com/AliMD/alwatr/commit/12d9065c79ee7ca1acd458a20e9bd65b4554b8d2))
-* **storage:** auto save request on set ([a1b671d](https://github.com/AliMD/alwatr/commit/a1b671d9beb8909d1fd89a1ffb7f80e1115b3cc3))
-* **storage:** DocumentListStorage type issue ([f1c90b4](https://github.com/AliMD/alwatr/commit/f1c90b4b00a8696375e1a2f15d8b17378a33c7f2))
-* **storage:** import ext for node ([545fe3e](https://github.com/AliMD/alwatr/commit/545fe3e7be9cc2d44e83d6f138c2ed0192dd1e24))
-* **storage:** make empty storage if file not exist ([0105551](https://github.com/AliMD/alwatr/commit/010555176ea262080b774fb4c51a16acc91bccf1))
-* **storage:** minify saved json ([dcd0abc](https://github.com/AliMD/alwatr/commit/dcd0abc66882c914ce57aace8fdf68e58995cda0))
-* **storage:** prevent to lost old meta data ([508bd56](https://github.com/AliMD/alwatr/commit/508bd56ee179d326762ffcb0a4e749bc7f74057f))
+* **nano-server:** `incomingMessage` body ([0172390](https://github.com/AliMD/alwatr/commit/01723906f657c35a7a2a329b914308c3d9f06ff8))
+* **nano-server:** host log ([c0c0f97](https://github.com/AliMD/alwatr/commit/c0c0f971d0405f5731cf040962b4609c9472a2fc))
+* **nano-server:** logs ([72cb160](https://github.com/AliMD/alwatr/commit/72cb160b53e7bb04be6b5d24aa04f98d6a597e11))
+* **storage:** first log ([76a32d0](https://github.com/AliMD/alwatr/commit/76a32d071b22b3a5b96a880d386bb3408ebe29ad))
+* **storage:** imports ([8d86a73](https://github.com/AliMD/alwatr/commit/8d86a73c85c117416e2ae0f4c9b879bfbc2d8a7c))
+* **storage:** provider config ([4497dda](https://github.com/AliMD/alwatr/commit/4497ddae726fce45b9d94a600fa19a07d2d6d298))
+* **storage:** review and test ([adc1d0b](https://github.com/AliMD/alwatr/commit/adc1d0b2ebd9cce4df946b21745c1a61172e66bb))
+* **token:** calc benchs ([f1240cc](https://github.com/AliMD/alwatr/commit/f1240cce9247c6fb53dd63a940bd95123ba628d1))
 
 
 ### Features
 
-* **demo/data-storage:** init demo ([61814cd](https://github.com/AliMD/alwatr/commit/61814cde15b68f89b6ae233fa8362bf214c3813b))
-* **file-storage:** json ([55991c3](https://github.com/AliMD/alwatr/commit/55991c3ed1bf156509ec06d582d6b6e27dbe4803))
-* **font:** add sahel font ([c09c152](https://github.com/AliMD/alwatr/commit/c09c152c1123703a1a9eb1062a11a9b5e86e796a))
-* **font:** add sahel font ([89b769b](https://github.com/AliMD/alwatr/commit/89b769b496d3b84fb092e633067373af538a896b))
-* **font:** demo for sahel ([bb087ef](https://github.com/AliMD/alwatr/commit/bb087eff880aceaedfb253494581d1f363632573))
-* **jatabase:** demo ([17beb7e](https://github.com/AliMD/alwatr/commit/17beb7ecdf3e89b0ffee43f4365f3b2dc4950f99))
-* **jatabase:** impeliment class ([0fdd533](https://github.com/AliMD/alwatr/commit/0fdd533446943502c187d961ebfcbf872f7c15e1))
-* **logger:** compatible with node.js ([7ee8b6d](https://github.com/AliMD/alwatr/commit/7ee8b6de3143e39c300345dec6864c9c56a4aae7))
-* **logger:** node coloring support ([2b4aab6](https://github.com/AliMD/alwatr/commit/2b4aab655bc0707761587a7439de98bbd4ad0e08))
-* **micro-server:** make  `statusCode` in `ReplySuccessContent` optional ([fe836f4](https://github.com/AliMD/alwatr/commit/fe836f452566c541d25857df34c952b413690d23))
-* **micro-server:** make new package ([2148dfc](https://github.com/AliMD/alwatr/commit/2148dfc910565f917d3cb8eb001cde08f2fc694d))
-* **micro-server:** new class for handle server and connections ([62e33a3](https://github.com/AliMD/alwatr/commit/62e33a383b5220820f68f74020e04a7c5b390f0f))
-* **microservice:** base app ([f8708cc](https://github.com/AliMD/alwatr/commit/f8708ccafe60ce89d635d43540ae1c627d0d8b55))
-* **microservice:** esnext module ([8e9bd3d](https://github.com/AliMD/alwatr/commit/8e9bd3dd4fe16cfba41930633071965b32c5e7a8))
-* **microservice:** home route ([851324e](https://github.com/AliMD/alwatr/commit/851324e328a5719fbc6702e72026e65df282db4f))
-* **microservice:** load .env file ([ded93cb](https://github.com/AliMD/alwatr/commit/ded93cbe21071db48fddd468a8279640502c1fbb))
-* **microservice:** make starter kit base files ([cbc2e47](https://github.com/AliMD/alwatr/commit/cbc2e478b1ad548134d4267c40548d1bd026bb62))
-* **microservice:** new echo route ([de12548](https://github.com/AliMD/alwatr/commit/de125484c7bdeef40527c6cda0b9a1f0d83f5930))
+* **api/storage:** make nanoservice ([7626710](https://github.com/AliMD/alwatr/commit/762671063f62ac150806c128495bebbfad2fdeb2))
+* **nano-server:** add token to connection ([8677999](https://github.com/AliMD/alwatr/commit/867799920c917dbafe3a041a8946f7e77577552f))
+* **nano-server:** refactor, add seperate config, cache all routes ([2cdd203](https://github.com/AliMD/alwatr/commit/2cdd2030474b7c1796e311740f20b8f39631bae9))
+* **provider:** show mwmory usage on new data loaded ([1a24df3](https://github.com/AliMD/alwatr/commit/1a24df32d057cfdc91a1c8d47c3a0346065b9a40))
+* **service/storage:**  base config ([75ae7d2](https://github.com/AliMD/alwatr/commit/75ae7d27dc3d910a2f45cf92e63bbd5115cc8fca))
+* **service/storage:**  updateDocument route ([723c795](https://github.com/AliMD/alwatr/commit/723c795d573635653ee4246fb91dfe096a414cb2))
+* **service/storage:** extract and validate token ([dd4ffc4](https://github.com/AliMD/alwatr/commit/dd4ffc44b05ba0496b530a4a69164d595b72c081))
+* **service/storage:** make base types ([fb26b7a](https://github.com/AliMD/alwatr/commit/fb26b7a4f7646e17f4b1c6a5b2c4b51d666752a0))
+* **service/storage:** storage privider ([9b9c07f](https://github.com/AliMD/alwatr/commit/9b9c07f53725fb7eb2a92706d4f3392675d8aad2))
+* **service/storage:** test and demo ([22e8ad4](https://github.com/AliMD/alwatr/commit/22e8ad44cb39cacdb99f7535befed1a736aec773))
+* **storage:** add _createdBy and _updatedBy ([1a70945](https://github.com/AliMD/alwatr/commit/1a70945bc61921f13d839adde25fdfe9fb37eaad))
+* **storage:** docker ([a78f784](https://github.com/AliMD/alwatr/commit/a78f7845aaaf4faace6de92dae57763299ee7d10))
+* **storage:** get method ([0b04f12](https://github.com/AliMD/alwatr/commit/0b04f1209d7f865e2ef0e884a293587cfcd72420))
+* **storage:** improve process and add has, storagePath, keys and length ([4e323ad](https://github.com/AliMD/alwatr/commit/4e323ad10ee0630cfa02edd191167b69e14743ff))
+* **storage:** provider ([92df9f3](https://github.com/AliMD/alwatr/commit/92df9f33a1c5b044d95e2efed51281eb08556c94))
+* **token:** generate and verify HOTP tpkens ([d0372f8](https://github.com/AliMD/alwatr/commit/d0372f805a45d6fd6571b50821529068cec7d424))
+* **token:** new package files ([fe620e0](https://github.com/AliMD/alwatr/commit/fe620e0d9f84c4e6d8e0eed47d6b398e218429ad))
 
 
 
 
+
+# [0.12.0](https://github.com/AliMD/alwatr/compare/v0.11.0...v0.12.0) (2022-07-22)
+
+### Bug Fixes
+
+- all package refrences ([11b027d](https://github.com/AliMD/alwatr/commit/11b027d4cdbe142e1f5ef6c6f87c1812fbb2d94b))
+- **fetch:** compatible with new ts types AbortSignal ([949655a](https://github.com/AliMD/alwatr/commit/949655a257852aaaaa311e32603ecc0819eedf51))
+- **font:** sahel-vf font-weight ([bf84782](https://github.com/AliMD/alwatr/commit/bf84782347ed4898d854325415f6f43b1953f842))
+- **github/workflow:** schema detect ([b3b813c](https://github.com/AliMD/alwatr/commit/b3b813c45011afdc3e38dc7215f0f4beb8dcc1dd))
+- **i18n:** load resources issue ([19b9e39](https://github.com/AliMD/alwatr/commit/19b9e39d5a415e60901c117be3f8f82d09ef8444))
+- **logger:** refactor behavior of force ([7d9307b](https://github.com/AliMD/alwatr/commit/7d9307bb78523f3dae17b3bd80fa2fb47c90975f))
+- **nano-server:** logger scope ([73dbf02](https://github.com/AliMD/alwatr/commit/73dbf029325169d900558e2361fec9fa4303e7e4))
+- **route:** remove default `200` status code ([12d9065](https://github.com/AliMD/alwatr/commit/12d9065c79ee7ca1acd458a20e9bd65b4554b8d2))
+- **storage:** auto save request on set ([a1b671d](https://github.com/AliMD/alwatr/commit/a1b671d9beb8909d1fd89a1ffb7f80e1115b3cc3))
+- **storage:** DocumentListStorage type issue ([f1c90b4](https://github.com/AliMD/alwatr/commit/f1c90b4b00a8696375e1a2f15d8b17378a33c7f2))
+- **storage:** import ext for node ([545fe3e](https://github.com/AliMD/alwatr/commit/545fe3e7be9cc2d44e83d6f138c2ed0192dd1e24))
+- **storage:** make empty storage if file not exist ([0105551](https://github.com/AliMD/alwatr/commit/010555176ea262080b774fb4c51a16acc91bccf1))
+- **storage:** minify saved json ([dcd0abc](https://github.com/AliMD/alwatr/commit/dcd0abc66882c914ce57aace8fdf68e58995cda0))
+- **storage:** prevent to lost old meta data ([508bd56](https://github.com/AliMD/alwatr/commit/508bd56ee179d326762ffcb0a4e749bc7f74057f))
+
+### Features
+
+- **demo/data-storage:** init demo ([61814cd](https://github.com/AliMD/alwatr/commit/61814cde15b68f89b6ae233fa8362bf214c3813b))
+- **file-storage:** json ([55991c3](https://github.com/AliMD/alwatr/commit/55991c3ed1bf156509ec06d582d6b6e27dbe4803))
+- **font:** add sahel font ([c09c152](https://github.com/AliMD/alwatr/commit/c09c152c1123703a1a9eb1062a11a9b5e86e796a))
+- **font:** add sahel font ([89b769b](https://github.com/AliMD/alwatr/commit/89b769b496d3b84fb092e633067373af538a896b))
+- **font:** demo for sahel ([bb087ef](https://github.com/AliMD/alwatr/commit/bb087eff880aceaedfb253494581d1f363632573))
+- **jatabase:** demo ([17beb7e](https://github.com/AliMD/alwatr/commit/17beb7ecdf3e89b0ffee43f4365f3b2dc4950f99))
+- **jatabase:** impeliment class ([0fdd533](https://github.com/AliMD/alwatr/commit/0fdd533446943502c187d961ebfcbf872f7c15e1))
+- **logger:** compatible with node.js ([7ee8b6d](https://github.com/AliMD/alwatr/commit/7ee8b6de3143e39c300345dec6864c9c56a4aae7))
+- **logger:** node coloring support ([2b4aab6](https://github.com/AliMD/alwatr/commit/2b4aab655bc0707761587a7439de98bbd4ad0e08))
+- **nano-server:** make `statusCode` in `ReplySuccessContent` optional ([fe836f4](https://github.com/AliMD/alwatr/commit/fe836f452566c541d25857df34c952b413690d23))
+- **nano-server:** make new package ([2148dfc](https://github.com/AliMD/alwatr/commit/2148dfc910565f917d3cb8eb001cde08f2fc694d))
+- **nano-server:** new class for handle server and connections ([62e33a3](https://github.com/AliMD/alwatr/commit/62e33a383b5220820f68f74020e04a7c5b390f0f))
+- **nanoservice:** base app ([f8708cc](https://github.com/AliMD/alwatr/commit/f8708ccafe60ce89d635d43540ae1c627d0d8b55))
+- **nanoservice:** esnext module ([8e9bd3d](https://github.com/AliMD/alwatr/commit/8e9bd3dd4fe16cfba41930633071965b32c5e7a8))
+- **nanoservice:** home route ([851324e](https://github.com/AliMD/alwatr/commit/851324e328a5719fbc6702e72026e65df282db4f))
+- **nanoservice:** load .env file ([ded93cb](https://github.com/AliMD/alwatr/commit/ded93cbe21071db48fddd468a8279640502c1fbb))
+- **nanoservice:** make starter kit base files ([cbc2e47](https://github.com/AliMD/alwatr/commit/cbc2e478b1ad548134d4267c40548d1bd026bb62))
+- **nanoservice:** new echo route ([de12548](https://github.com/AliMD/alwatr/commit/de125484c7bdeef40527c6cda0b9a1f0d83f5930))
 
 # [0.11.0](https://github.com/AliMD/alwatr/compare/v0.10.1...v0.11.0) (2022-04-16)
 

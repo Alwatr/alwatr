@@ -9,11 +9,11 @@ interface User extends DocumentObject {
   token?: string;
 }
 
-const db = new AlwatrStorage<User>('user-list', 'temp');
+const db = new AlwatrStorage<User>({name: 'user-list', path: 'db'});
 
-// await db.ready
+// await db.readyPromise
 // or
-db.ready.then(() => {
+db.readyPromise.then(() => {
   console.log('db loaded and ready to access.');
 
   let ali = db.get('alimd');
@@ -22,6 +22,7 @@ db.ready.then(() => {
     console.log('ali not found');
     ali = {
       _id: 'alimd',
+      _updatedBy: 'demo',
       fname: 'Ali',
       lname: 'Mihandoost',
       email: 'ali@mihandoost.com',
@@ -44,6 +45,7 @@ db.ready.then(() => {
 
   db.set({
     _id: 'fmd',
+    _updatedBy: 'demo',
     fname: 'Fatemeh',
     lname: 'Mihandoost',
     email: 'Fatemeh@mihandoost.com',

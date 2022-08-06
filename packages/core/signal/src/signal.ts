@@ -230,10 +230,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    * const listener = contentChangeSignal.addListener((content) => console.log(content));
    * ```
    */
-  addListener(
-      listener: ListenerCallback<SignalName>,
-      options?: ListenerOptions,
-  ): ListenerInterface<SignalName> {
+  addListener(listener: ListenerCallback<SignalName>, options?: ListenerOptions): ListenerInterface<SignalName> {
     this._logger.logMethodArgs('addListener', {listener, options});
     const listenerId = _addSignalListener(this._signal.name, listener, options);
     return new ListenerInterface(this._signal, listenerId);
@@ -245,10 +242,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
  */
 export class ListenerInterface<SignalName extends keyof AlwatrSignals> {
   protected _logger;
-  constructor(
-    protected _signal: SignalObject<SignalName>,
-    protected _listener: ListenerObject<SignalName>,
-  ) {
+  constructor(protected _signal: SignalObject<SignalName>, protected _listener: ListenerObject<SignalName>) {
     this._logger = createLogger('Listener of ' + _signal.name);
   }
 

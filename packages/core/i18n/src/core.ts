@@ -28,17 +28,20 @@ l10nResourceChangeSignal.addListener((resource) => {
   l10nResource = resource;
 });
 
-localChangeSignal.addListener((local) => {
-  logger.logMethodArgs('localChanged', {local});
-  if (local.code !== l10nResourceChangeSignal.value?._localCode) {
-    l10nResourceChangeSignal.expire();
-    if (configuration.autoFetchResources) {
-      l10nResourceChangeSignal.request(local);
-    }
-  }
-  document.documentElement.setAttribute('lang', local.code);
-  document.documentElement.setAttribute('dir', local.direction);
-}, {priority: true});
+localChangeSignal.addListener(
+    (local) => {
+      logger.logMethodArgs('localChanged', {local});
+      if (local.code !== l10nResourceChangeSignal.value?._localCode) {
+        l10nResourceChangeSignal.expire();
+        if (configuration.autoFetchResources) {
+          l10nResourceChangeSignal.request(local);
+        }
+      }
+      document.documentElement.setAttribute('lang', local.code);
+      document.documentElement.setAttribute('dir', local.direction);
+    },
+    {priority: true},
+);
 
 l10nResourceChangeSignal.setProvider(async (local): Promise<L10Resource | void> => {
   logger.logMethodArgs('l10nResourceProvider', {local});
@@ -58,12 +61,7 @@ export function _localize(key: string): string {
   if (l10nResource == null) return loadingStr;
   const localized = l10nResource[key];
   if (localized == null) {
-    logger.accident(
-        'localize',
-        'l10n_key_not_found',
-        'Key not defined in the localization resource',
-        {key},
-    );
+    logger.accident('localize', 'l10n_key_not_found', 'Key not defined in the localization resource', {key});
     return `(${key})`;
   }
   return localized;

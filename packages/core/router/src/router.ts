@@ -136,31 +136,21 @@ function outlet(routesConfig: RoutesConfig): unknown {
 
   if (page == null || typeof routesConfig.list[page]?.render !== 'function') {
     // 404
-    logger.accident(
-        'outlet',
-        'redirect_to_404',
-        'Requested page not defined in routesConfig.list',
-        {
-          page,
-          currentRoute,
-          routesConfig,
-        },
-    );
+    logger.accident('outlet', 'redirect_to_404', 'Requested page not defined in routesConfig.list', {
+      page,
+      currentRoute,
+      routesConfig,
+    });
 
     page = '404';
 
     if (typeof routesConfig.list[page]?.render !== 'function') {
       // 404
-      logger.accident(
-          'outlet',
-          'no_render_for_404',
-          'Page "404" not defined in routesConfig.list',
-          {
-            page,
-            currentRoute,
-            routesConfig,
-          },
-      );
+      logger.accident('outlet', 'no_render_for_404', 'Page "404" not defined in routesConfig.list', {
+        page,
+        currentRoute,
+        routesConfig,
+      });
       routesConfig.list[page] = {
         render: () => 'Error 404: Page Not Found!',
       };

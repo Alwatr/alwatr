@@ -26,7 +26,7 @@ declare global {
   }
 }
 
-export interface Logger {
+export interface AlwatrLogger {
   /**
    * Debug state for current scope base on localStorage `ALWATR_LOG` pattern.
    */
@@ -92,11 +92,7 @@ export interface Logger {
    * }
    * ```
    */
-  logMethodFull(
-    method: string,
-    args: Record<string, unknown> | string | number | boolean,
-    result: unknown
-  ): void;
+  logMethodFull(method: string, args: Record<string, unknown> | string | number | boolean, result: unknown): void;
 
   /**
    * `console.trace` an event or expected accident. (not warn or error)

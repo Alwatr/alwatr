@@ -1,6 +1,6 @@
 export interface L10Resource {
   [key: string]: string;
-  _localCode: `${string}-${string}`
+  _localCode: `${string}-${string}`;
 }
 
 export interface Local {

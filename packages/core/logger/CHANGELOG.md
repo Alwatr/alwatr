@@ -3,22 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.12.0](https://github.com/AliMD/alwatr/compare/v0.11.0...v0.12.0) (2022-07-22)
+# [0.13.0](https://github.com/AliMD/alwatr/compare/v0.12.0...v0.13.0) (2022-08-06)
 
+**Note:** Version bump only for package @alwatr/logger
+
+
+
+
+
+# [0.12.0](https://github.com/AliMD/alwatr/compare/v0.11.0...v0.12.0) (2022-07-22)
 
 ### Bug Fixes
 
-* **logger:** refactor behavior of force ([7d9307b](https://github.com/AliMD/alwatr/commit/7d9307bb78523f3dae17b3bd80fa2fb47c90975f))
-
+- **logger:** refactor behavior of force ([7d9307b](https://github.com/AliMD/alwatr/commit/7d9307bb78523f3dae17b3bd80fa2fb47c90975f))
 
 ### Features
 
-* **logger:** compatible with node.js ([7ee8b6d](https://github.com/AliMD/alwatr/commit/7ee8b6de3143e39c300345dec6864c9c56a4aae7))
-* **logger:** node coloring support ([2b4aab6](https://github.com/AliMD/alwatr/commit/2b4aab655bc0707761587a7439de98bbd4ad0e08))
-
-
-
-
+- **logger:** compatible with node.js ([7ee8b6d](https://github.com/AliMD/alwatr/commit/7ee8b6de3143e39c300345dec6864c9c56a4aae7))
+- **logger:** node coloring support ([2b4aab6](https://github.com/AliMD/alwatr/commit/2b4aab655bc0707761587a7439de98bbd4ad0e08))
 
 # [0.11.0](https://github.com/AliMD/alwatr/compare/v0.10.1...v0.11.0) (2022-04-16)
 
