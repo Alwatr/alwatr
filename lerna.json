@@ -1,8 +1,11 @@
 {
-  "version": "0.12.0",
+  "version": "0.13.0",
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "package": ["demo", "packages/*/*"],
+  "package": [
+    "demo",
+    "packages/*/*"
+  ],
   "command": {
     "version": {
       "conventionalCommits": true,
@@ -11,11 +14,15 @@
     },
     "publish": {
       "conventionalCommits": true,
-      "ignoreChanges": ["*.md"]
+      "ignoreChanges": [
+        "*.md"
+      ]
     },
     "bootstrap": {
       "hoist": true,
-      "npmClientArgs": ["--no-package-lock"]
+      "npmClientArgs": [
+        "--no-package-lock"
+      ]
     },
     "run": {
       "stream": true
