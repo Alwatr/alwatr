@@ -43,11 +43,7 @@ export class AlwatrNanoServer {
     this._server.close();
   }
 
-  route(
-      method: Methods,
-      route: 'all' | `/${string}`,
-      middleware: (connection: AlwatrConnection) => void,
-  ): void {
+  route(method: Methods, route: 'all' | `/${string}`, middleware: (connection: AlwatrConnection) => void): void {
     this._logger.logMethodArgs('route', {method, route});
 
     if (this.middlewareList[method] == null) this.middlewareList[method] = {};
@@ -64,15 +60,10 @@ export class AlwatrNanoServer {
   }
 
   protected _errorListener(err: NodeJS.ErrnoException): void {
-    this._logger.accident(
-        'server.onError',
-        'http_server_catch_error',
-        'HTTP server catch an error',
-        {
-          errCode: err.code,
-          errMessage: err.message,
-        },
-    );
+    this._logger.accident('server.onError', 'http_server_catch_error', 'HTTP server catch an error', {
+      errCode: err.code,
+      errMessage: err.message,
+    });
 
     if (err.code === 'EADDRINUSE') {
       this._logger.logOther('Address in use, retrying...');
@@ -84,15 +75,10 @@ export class AlwatrNanoServer {
   }
 
   protected _clientErrorListener(err: NodeJS.ErrnoException, socket: Duplex): void {
-    this._logger.accident(
-        'server.clientError',
-        'http_server_catch_client_error',
-        'HTTP server catch a client error',
-        {
-          errCode: err.code,
-          errMessage: err.message,
-        },
-    );
+    this._logger.accident('server.clientError', 'http_server_catch_client_error', 'HTTP server catch a client error', {
+      errCode: err.code,
+      errMessage: err.message,
+    });
     socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
   }
 
@@ -111,27 +97,16 @@ export class AlwatrNanoServer {
     all: {},
   };
 
-  protected async _requestListener(
-      incomingMessage: IncomingMessage,
-      serverResponse: ServerResponse,
-  ): Promise<void> {
+  protected async _requestListener(incomingMessage: IncomingMessage, serverResponse: ServerResponse): Promise<void> {
     this._logger.logMethod('handleRequest');
 
     if (incomingMessage.url == null) {
-      this._logger.accident(
-          'handleRequest',
-          'http_server_url_undefined',
-          'incomingMessage.url is undefined',
-      );
+      this._logger.accident('handleRequest', 'http_server_url_undefined', 'incomingMessage.url is undefined');
       return;
     }
 
     if (incomingMessage.method == null) {
-      this._logger.accident(
-          'handleRequest',
-          'http_server_method_undefined',
-          'incomingMessage.method is undefined',
-      );
+      this._logger.accident('handleRequest', 'http_server_method_undefined', 'incomingMessage.method is undefined');
       return;
     }
 
@@ -212,11 +187,7 @@ export class AlwatrConnection {
     try {
       body = JSON.stringify(content);
     } catch {
-      this._logger.accident(
-          'responseData',
-          'data_stringify_failed',
-          'JSON.stringify(data) failed!',
-      );
+      this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!');
       return this.reply(
         content.ok === false ?
           {

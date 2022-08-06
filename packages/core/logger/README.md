@@ -165,8 +165,7 @@ logger.logOther('foo:', 'bar', {a: 1});
 For example with a promise function with error:
 
 ```ts
-const failPromiseTest = (): Promise<never> =>
-  new Promise((_, reject) => reject(new Error('my_error_code')));
+const failPromiseTest = (): Promise<never> => new Promise((_, reject) => reject(new Error('my_error_code')));
 ```
 
 Best practices to catch the error and log it:

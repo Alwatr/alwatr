@@ -2,7 +2,6 @@ import {AlwatrTokenGenerator} from '@alwatr/token';
 
 import type {DigestAlgorithm} from '@alwatr/token';
 
-
 if (process.env.NODE_ENV !== 'production') {
   console.log('Please run node in production for benchmark. NODE_ENV=production node demo/token/benchmark.js');
   process.exit();
@@ -25,7 +24,7 @@ function benchmark(algorithm: DigestAlgorithm): void {
   for (; i > 0; i--) {
     tokenGenerator.generate(sampleData);
   }
-  const runPerSec = Math.round(testRun / (Date.now() - now) * 1000);
+  const runPerSec = Math.round((testRun / (Date.now() - now)) * 1000);
   console.log(`Benchmark for ${algorithm} runs %s per sec`, runPerSec);
 }
 

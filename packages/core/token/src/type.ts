@@ -8,7 +8,7 @@ export type TokenGeneratorConfig = {
   /**
    * Secret string data to generate token.
    */
-   secret: string;
+  secret: string;
 
   /**
    * Token expiration time.
@@ -18,11 +18,10 @@ export type TokenGeneratorConfig = {
   /**
    * OpenSSl digest algorithm.
    */
-   algorithm: DigestAlgorithm;
+  algorithm: DigestAlgorithm;
 
   /**
    * Encoding of token.
    */
   encoding: 'base64' | 'base64url' | 'hex' | 'binary';
-}
-
+};

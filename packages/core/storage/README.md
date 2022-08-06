@@ -17,7 +17,7 @@ interface User extends DocumentObject {
 
 const db = new AlwatrStorage<User>('user-list', 'data');
 
-await db.readyPromise
+await db.readyPromise;
 console.log('db loaded and ready to access.');
 
 let ali = db.get('alimd');
@@ -71,7 +71,7 @@ Example:
 
 ```ts
 const db = new AlwatrStorage<User>('user-list');
-await db.readyPromise
+await db.readyPromise;
 const user = db.get('user-1');
 ```
 
@@ -81,8 +81,8 @@ Insert/update a document object in the storage.
 
 - **documentObject**: the document object to insert/update contain `_id`.
 - **fastInstance**: by default it will make a copy of the document before set.  
-if you set fastInstance to true, it will set the original document.  
-This is dangerous but much faster and you should use it only if you know what you are doing.
+  if you set fastInstance to true, it will set the original document.  
+  This is dangerous but much faster and you should use it only if you know what you are doing.
 
 Example:
 
@@ -99,7 +99,7 @@ Get a document object by id.
 
 - **documentId**: the id of the document object.
 - **fastInstance**: by default will return a copy of the document, if you set fastInstance to true, it will return the original document.  
-This is dangerous but much faster, you should use it only if you know what you are doing.
+  This is dangerous but much faster, you should use it only if you know what you are doing.
 
 Example:
 

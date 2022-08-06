@@ -92,11 +92,7 @@ export interface AlwatrLogger {
    * }
    * ```
    */
-  logMethodFull(
-    method: string,
-    args: Record<string, unknown> | string | number | boolean,
-    result: unknown
-  ): void;
+  logMethodFull(method: string, args: Record<string, unknown> | string | number | boolean, result: unknown): void;
 
   /**
    * `console.trace` an event or expected accident. (not warn or error)
