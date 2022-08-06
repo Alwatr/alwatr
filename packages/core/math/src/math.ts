@@ -150,3 +150,26 @@ export const random = {
    */
   shuffle: <T>(array: T[]): T[] => array.sort(() => random.value - 0.5),
 } as const;
+
+
+export type DurationUnit = 's' | 'm' | 'h' | 'd' | 'w' | 'M' | 'y';
+export type DurationString = `${number}${DurationUnit}`;
+const unitConversion = {
+  s: 1_000,
+  m: 60_000,
+  h: 3_600_000,
+  d: 86_400_000,
+  w: 604_800_000,
+  M: 2_592_000_000,
+  y: 31_536_000_000,
+};
+
+export function parseDuration(duration: DurationString, unit: DurationUnit | 'ms' = 'ms'): number {
+  duration = duration.trim() as DurationString;
+  const durationNumber = +duration.substring(0, duration.length - 1).trimEnd(); // trimEnd for `10 m`
+  const durationUnit = duration.substring(duration.length - 1) as DurationUnit;
+  if (unitConversion[durationUnit] == null) {
+    throw new Error(`invalid_init`);
+  }
+  return durationNumber * unitConversion[durationUnit] / (unit === 'ms' ? 1 : unitConversion[unit]);
+}

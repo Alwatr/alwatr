@@ -116,6 +116,7 @@
     {"path": "./packages/core/math"},
     {"path": "./packages/core/nano-server"},
     {"path": "./packages/core/storage"},
+    {"path": "./packages/core/token"},
     {"path": "./demo"}
   ]
 }
