@@ -12,6 +12,11 @@ alwatrRegisteredList.push({
   version: '{{ALWATR_VERSION}}',
 });
 
+/**
+ * Elegant powerful server for nanoservice use cases.
+ *
+ * @param {Partial<Config>=} config Server config.
+ */
 export class AlwatrNanoServer {
   protected _config: Config = {
     host: '0.0.0.0',
@@ -31,6 +36,9 @@ export class AlwatrNanoServer {
     if (config.autoListen) this.listen();
   }
 
+  /**
+   * Starts the HTTP server listening for connections.
+   */
   listen(): void {
     this._logger.logMethod('listen');
     this._server.listen(this._config.port, this._config.host, () => {
@@ -38,11 +46,21 @@ export class AlwatrNanoServer {
     });
   }
 
+  /**
+   * Stops the HTTP server from accepting new connections.
+   */
   close(): void {
     this._logger.logMethod('close');
     this._server.close();
   }
 
+  /**
+   * Refers to how an application’s endpoints (URIs) respond to client requests.
+   *
+   * @param {Methods} method Acceptable methods.
+   * @param {'all' | `/${string}`} route Acceptable request path.
+   * @param {(connection: AlwatrConnection) => void} middleware Request handler.
+   */
   route(
       method: Methods,
       route: 'all' | `/${string}`,
@@ -178,20 +196,35 @@ export class AlwatrNanoServer {
   };
 }
 
+/**
+ * Connection...?
+ */
 export class AlwatrConnection {
   static versionPattern = new RegExp('^/v[0-9]+');
 
+  /**
+   * Request URL.
+   */
   readonly url = new URL(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.incomingMessage.url!.replace(AlwatrConnection.versionPattern, ''),
     'http://localhost/',
   );
 
+  /**
+   * Request method.
+   */
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   readonly method = this.incomingMessage.method!.toUpperCase() as Methods;
 
+  /**
+   * The token placed in the request header.
+   */
   readonly token = this._getToken();
 
+  /**
+   * Request body for POST & PUT method.
+   */
   readonly bodyPromise = this._getRequestBody();
 
   protected _logger = createLogger(`alwatr-nano-server-connection`);
@@ -200,6 +233,11 @@ export class AlwatrConnection {
     this._logger.logMethodArgs('new', {method: incomingMessage.method, url: incomingMessage.url});
   }
 
+  /**
+   * Responds to the request.
+   *
+   * @param {ReplyContent} content Reply content.
+   */
   reply(content: ReplyContent): void {
     this._logger.logMethodArgs('reply', {content});
 
@@ -276,6 +314,11 @@ export class AlwatrConnection {
     return body;
   }
 
+  /**
+   * Parse request data.
+   *
+   * @returns Request body.
+   */
   async requireJsonBody<Type extends Record<string, unknown>>(): Promise<Type | null> {
     // if request content type is json, parse the body
     const body = await this.bodyPromise;
