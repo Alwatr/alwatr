@@ -12,28 +12,6 @@ alwatrRegisteredList.push({
   version: '{{ALWATR_VERSION}}',
 });
 
-/**
- * Elegant powerful server for nanoservice use cases.
- *
- * @param {Partial<Config>=} config Server config.
- *
- * Example:
- *
- * ```ts
- * import {AlwatrNanoServer} from '@alwatr/nano-server';
- * const nanoServer = new AlwatrNanoServer();
- *
- * nanoServer.route('GET', '/', async (connection) => {
- * connection.reply({
- *   ok: true,
- *   data: {
- *    app: 'Alwatr Nanoservice Starter Kit',
- *    message: 'Hello ;)',
- *   },
- *  });
- * });
- * ```
- */
 export class AlwatrNanoServer {
   protected _config: Config = {
     host: '0.0.0.0',
@@ -43,6 +21,28 @@ export class AlwatrNanoServer {
   protected _logger: AlwatrLogger;
   protected _server = createServer(this._requestListener.bind(this));
 
+  /**
+   * Elegant powerful server for nanoservice use cases.
+   *
+   * @param {Partial<Config>=} config Server config.
+   *
+   * Example:
+   *
+   * ```ts
+   * import {AlwatrNanoServer} from '@alwatr/nano-server';
+   * const nanoServer = new AlwatrNanoServer();
+   *
+   * nanoServer.route('GET', '/', async (connection) => {
+   * connection.reply({
+   *   ok: true,
+   *   data: {
+   *    app: 'Alwatr Nanoservice Starter Kit',
+   *    message: 'Hello ;)',
+   *   },
+   *  });
+   * });
+   * ```
+   */
   constructor(config?: Partial<Config>) {
     this._config = config = {...this._config, ...config};
     this._logger = createLogger(`alwatr-nano-server:${config.port}`);
