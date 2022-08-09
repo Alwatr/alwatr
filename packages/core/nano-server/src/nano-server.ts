@@ -92,6 +92,7 @@ export class AlwatrNanoServer {
    *
    * Example:
    *
+   * ```ts
    * nanoServer.route('GET', '/', async (connection) => {
    * connection.reply({
    *   ok: true,
@@ -281,7 +282,7 @@ export class AlwatrConnection {
    * @param {ReplyContent} content Reply content.
    *
    * Example:
-   *
+   * ```ts
    * nanoServer.route('GET', '/', async (connection) => {
    * connection.reply({
    *   ok: true,
