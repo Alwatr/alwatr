@@ -1,3 +1,1 @@
-# Alwatr core packages
-
-contain the core packages.
+# Alwatr Core Packages
