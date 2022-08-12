@@ -1,0 +1,50 @@
+version: '2.4'
+
+networks:
+  alwatr-public-network:
+    external:
+      name: alwatr-public-network
+
+services:
+  service-proxy:
+    image: ${PROXY_IMAGE}
+
+    hostname: "alwatr-traefik-proxy"
+
+    networks:
+      - alwatr-public-network
+
+    restart: unless-stopped
+
+    cpu_shares: 4096
+    mem_limit: 256m
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    ports:
+      - ${HOST}:80:80
+      - ${HOST}:443:443
+
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: ./traefik.toml
+        target: /traefik.toml
+      - type: bind
+        source: ./_data/acme.json
+        target: /acme.json
+
+    labels:
+      traefik.enable: true
+      traefik.backend: traefik
+      traefik.port: 8080
+      traefik.frontend.rule: Host:${DOMAIN}
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.auth.basic.users: ${AUTH}
+      traefik.frontend.redirect.entryPoint: https
