@@ -24,8 +24,6 @@ export class AlwatrNanoServer {
   /**
    * Elegant powerful server for nanoservice use cases.
    *
-   * @param {Partial<Config>=} config Server config.
-   *
    * Example:
    *
    * ```ts
@@ -86,9 +84,9 @@ export class AlwatrNanoServer {
   /**
    * Refers to how an application’s endpoints (URIs) respond to client requests.
    *
-   * @param {Methods} method Acceptable methods.
-   * @param {'all' | `/${string}`} route Acceptable request path.
-   * @param {(connection: AlwatrConnection) => void} middleware Request handler.
+   * @param method Acceptable methods.
+   * @param route Acceptable request path.
+   * @param middleware Request handler.
    *
    * Example:
    *
@@ -278,8 +276,6 @@ export class AlwatrConnection {
 
   /**
    * Responds to the request.
-   *
-   * @param {ReplyContent} content Reply content.
    *
    * Example:
    * ```ts
