@@ -22,7 +22,7 @@ export class AlwatrNanoServer {
   protected _server = createServer(this._requestListener.bind(this));
 
   /**
-   * Elegant powerful server for nanoservice use cases.
+   * Create a server for nanoservice use cases.
    *
    * Example:
    *
@@ -84,9 +84,9 @@ export class AlwatrNanoServer {
   /**
    * Refers to how an application’s endpoints (URIs) respond to client requests.
    *
-   * @param method Acceptable methods.
-   * @param route Acceptable request path.
-   * @param middleware Request handler.
+   * @param method - Acceptable methods.
+   * @param route - Acceptable request path.
+   * @param middleware - Request handler.
    *
    * Example:
    *
@@ -280,13 +280,13 @@ export class AlwatrConnection {
    * Example:
    * ```ts
    * nanoServer.route('GET', '/', async (connection) => {
-   * connection.reply({
-   *   ok: true,
-   *   data: {
-   *    app: 'Alwatr Nanoservice Starter Kit',
-   *    message: 'Hello ;)',
-   *   },
-   *  });
+   *   connection.reply({
+   *     ok: true,
+   *     data: {
+   *      app: 'Alwatr Nanoservice Starter Kit',
+   *      message: 'Hello ;)',
+   *     },
+   *    });
    * });
    * ```
    */
@@ -367,7 +367,7 @@ export class AlwatrConnection {
   }
 
   /**
-   * Parse request data.
+   * Parse request body.
    *
    * @returns Request body.
    *

@@ -16,7 +16,7 @@ function sayHello(name: string) {
 
 ### Debug Mode
 
-Many of the methods in the logger are no-ops when the debug mode is off.  
+Many of the methods in the logger are no-ops when the debug mode is off.
 Please remember to **reload** the window after changing the debug mode.
 
 - Debugging all scopes
@@ -37,7 +37,7 @@ Please remember to **reload** the window after changing the debug mode.
   window.localStorage?.setItem('ALWATR_DEBUG', '*alwatr*');
   ```
 
-### API
+## API
 
 ### `createLogger(scope: string, color: string, force = boolean)`
 
