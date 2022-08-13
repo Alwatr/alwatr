@@ -22,8 +22,8 @@ chmod 600 _data/acme.json
 echoStep "Starting..."
 docker-compose pull
 # docker-compose build --pull
-docker-compose up --detach --remove-orphans --force-recreate
+docker-compose up --detach --remove-orphans # --force-recreate
 
 echoStep "Done"
 
-docker-compose logs --tail=1000 --follow
+docker-compose logs --tail=300 --follow || true
