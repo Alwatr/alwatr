@@ -19,9 +19,11 @@ docker network create alwatr-public-network --subnet=172.18.0.0/16 || echo "netw
 [ ! -f _data/acme.json ] && touch _data/acme.json
 chmod 600 _data/acme.json
 
-echoStep "Starting..."
 docker-compose pull
 # docker-compose build --pull
+
+echoStep "Starting..."
+
 docker-compose up --detach --remove-orphans # --force-recreate
 
 echoStep "Done"
