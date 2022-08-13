@@ -1,0 +1,36 @@
+version: '2.4'
+
+networks:
+  alwatr-private-network:
+    external:
+      name: alwatr-private-network
+
+services:
+  database:
+    image: ${MARIADB_IMAGE}
+
+    hostname: mariadb.alwatr.io
+
+    networks:
+      - alwatr-private-network
+
+    cpu_shares: 4096
+    mem_limit: ${MEMOTY_LIMIT}
+
+    restart: unless-stopped
+
+    stop_grace_period: 2m
+
+    volumes:
+      - type: bind
+        source: ./_data
+        target: /var/lib/mysql
+
+    env_file:
+      - .env
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
