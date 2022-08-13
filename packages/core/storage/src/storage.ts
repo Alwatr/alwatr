@@ -100,7 +100,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    */
   private async _load(): Promise<void> {
     this._logger.logMethod('_load');
-    this._storage = await readJsonFile<DocumentListStorage<DocumentType>>(this.storagePath) ?? {};
+    this._storage = (await readJsonFile<DocumentListStorage<DocumentType>>(this.storagePath)) ?? {};
     this._readyState = true;
     this._logger.logProperty('readyState', this.readyState);
   }

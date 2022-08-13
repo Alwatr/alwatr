@@ -10,22 +10,23 @@ export interface DocumentObject {
   _updatedBy: string;
 }
 
-export type DocumentListStorage<DocType extends DocumentObject> =
-  Record<string, DocType | undefined> & {_last?: string};
+export type DocumentListStorage<DocType extends DocumentObject> = Record<string, DocType | undefined> & {
+  _last?: string;
+};
 
 export type AlwatrStorageConfig = {
   /**
    * Storage name.
    */
-  name: string,
+  name: string;
 
   /**
    * Storage path.
    *
    * @default './db'
    */
-  path?: string,
-}
+  path?: string;
+};
 
 export type AlwatrStorageProviderConfig = {
   /**
@@ -33,5 +34,5 @@ export type AlwatrStorageProviderConfig = {
    *
    * @default './db'
    */
-  path?: string,
-}
+  path?: string;
+};

@@ -134,8 +134,7 @@ export const random = {
    * console.log(random.step(6, 10, 2)); // 6 or 8 or 10
    * ```
    */
-  step: (min: number, max: number, step: number): number =>
-    min + random.integer(0, (max - min) / step) * step,
+  step: (min: number, max: number, step: number): number => min + random.integer(0, (max - min) / step) * step,
 
   /**
    * Shuffle an array.
@@ -150,7 +149,6 @@ export const random = {
    */
   shuffle: <T>(array: T[]): T[] => array.sort(() => random.value - 0.5),
 } as const;
-
 
 export type DurationUnit = 's' | 'm' | 'h' | 'd' | 'w' | 'M' | 'y';
 export type DurationString = `${number}${DurationUnit}`;
@@ -171,5 +169,5 @@ export function parseDuration(duration: DurationString, unit: DurationUnit | 'ms
   if (unitConversion[durationUnit] == null) {
     throw new Error(`invalid_init`);
   }
-  return durationNumber * unitConversion[durationUnit] / (unit === 'ms' ? 1 : unitConversion[unit]);
+  return (durationNumber * unitConversion[durationUnit]) / (unit === 'ms' ? 1 : unitConversion[unit]);
 }

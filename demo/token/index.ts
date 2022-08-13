@@ -42,7 +42,6 @@ function userValidate(user: User): TokenStatus {
   return validateStatus;
 }
 
-
 // demo
 const userData = login();
 userValidate(userData); // { validateStatus: 'valid' }

@@ -8,9 +8,7 @@ import type {AlwatrConnection} from '@alwatr/nano-server';
 nanoServer.route('GET', 'all', getDocument);
 
 async function getDocument(connection: AlwatrConnection): Promise<void> {
-  const splittedPath = connection
-      .url
-      .pathname
+  const splittedPath = connection.url.pathname
       .substring(1) // remove the first `/`
       .split('/');
 

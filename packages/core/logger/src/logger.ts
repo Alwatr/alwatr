@@ -52,11 +52,7 @@ const debugString = isBrowser ?
   globalThis.process?.env?.ALWATR_DEBUG?.trim();
 
 const getDebugState = (scope: string): boolean => {
-  if (
-    debugString == null &&
-    isBrowser === false &&
-    globalThis.process.env.NODE_ENV !== 'production'
-  ) {
+  if (debugString == null && isBrowser === false && globalThis.process.env.NODE_ENV !== 'production') {
     return true;
   }
 
@@ -133,13 +129,7 @@ export const createLogger = (
     scope,
 
     accident: isBrowser ?
-      console.error.bind(
-          console,
-          '%c%s%c.%s "%s" => Accident: "%s" (%s)!',
-          styleScope,
-          scope,
-          style.reset,
-      ) :
+      console.error.bind(console, '%c%s%c.%s "%s" => Accident: "%s" (%s)!', styleScope, scope, style.reset) :
       console.error.bind(console, `${styleScope}⚠️  %s\x1b[33m.%s "%s" =>${style.reset}`, scope),
 
     error: isBrowser ?
@@ -163,45 +153,17 @@ export const createLogger = (
   return {
     ...requiredItems,
 
-    logProperty: console.debug.bind(
-        console,
-        keySection + '.%s = %o;',
-        styleScope,
-        scope,
-        style.reset,
-    ),
+    logProperty: console.debug.bind(console, keySection + '.%s = %o;', styleScope, scope, style.reset),
 
     logMethod: console.debug.bind(console, keySection + '.%s();', styleScope, scope, style.reset),
 
-    logMethodArgs: console.debug.bind(
-        console,
-        keySection + '.%s(%o);',
-        styleScope,
-        scope,
-        style.reset,
-    ),
+    logMethodArgs: console.debug.bind(console, keySection + '.%s(%o);', styleScope, scope, style.reset),
 
-    logMethodFull: console.debug.bind(
-        console,
-        keySection + '.%s(%o); // %o',
-        styleScope,
-        scope,
-        style.reset,
-    ),
+    logMethodFull: console.debug.bind(console, keySection + '.%s(%o); // %o', styleScope, scope, style.reset),
 
     incident: isBrowser ?
-      console.trace.bind(
-          console,
-          '%c%s%c.%s() => Incident: "%s" (%s)!',
-          styleScope,
-          scope,
-          style.reset,
-      ) :
-      console.log.bind(
-          console,
-          `${styleScope}🔸 %s${style.reset}.%s() => Incident: "%s" (%s)!\x1b[0;2m`,
-          scope,
-      ),
+      console.trace.bind(console, '%c%s%c.%s() => Incident: "%s" (%s)!', styleScope, scope, style.reset) :
+      console.log.bind(console, `${styleScope}🔸 %s${style.reset}.%s() => Incident: "%s" (%s)!\x1b[0;2m`, scope),
 
     logOther: console.debug.bind(console, keySection, styleScope, scope, style.reset),
   };
