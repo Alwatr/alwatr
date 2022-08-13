@@ -206,7 +206,7 @@ export function _dispatchSignal<SignalName extends keyof AlwatrSignals>(
  *   else {
  *     dispatchSignal('content-not-found');
  *   }
- * }
+ * });
  * ```
  */
 export function _setSignalProvider<SignalName extends keyof AlwatrRequestSignals>(
@@ -216,14 +216,7 @@ export function _setSignalProvider<SignalName extends keyof AlwatrRequestSignals
 ): ListenerObject<SignalName> {
   logger.logMethodArgs('setSignalProvider', {signalName, options});
 
-  // @TODO: refactor with removeSignalProvider
-  const signal = __getSignalObject(`request-${signalName}` as unknown as SignalName);
-  if (signal.listenerList.length > 0) {
-    logger.accident('setSignalProvider', 'signal_provider_already_set', 'another provider defined and will removed', {
-      signalName,
-    });
-    signal.listenerList = [];
-  }
+  _removeSignalProvider(signalName);
 
   const _callback = async (requestParam: AlwatrRequestSignals[SignalName]): Promise<void> => {
     const signalValue = await signalProvider(requestParam);
@@ -238,4 +231,27 @@ export function _setSignalProvider<SignalName extends keyof AlwatrRequestSignals
     _callback as unknown as ListenerCallback<SignalName>,
     {receivePrevious: options?.receivePrevious ?? true},
   );
+}
+
+/**
+ * Remove a signal provider
+ *
+ * Example:
+ *
+ * ```ts
+ * _removeSignalProvider('content-change');
+ * ```
+ */
+export function _removeSignalProvider<SignalName extends keyof AlwatrRequestSignals>(
+    signalName: SignalName,
+): void {
+  logger.logMethodArgs('_removeSignalProvider', {signalName});
+
+  const signal = __getSignalObject(`request-${signalName}` as unknown as SignalName);
+  if (signal.listenerList.length > 0) {
+    logger.accident('setSignalProvider', 'signal_provider_already_set', 'another provider defined and will removed', {
+      signalName,
+    });
+    signal.listenerList = [];
+  }
 }
