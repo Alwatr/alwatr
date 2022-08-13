@@ -30,7 +30,7 @@ echoStep "Sync..."
 
 remoteShell $user@$host "mkdir -p /srv/$projectName"
 
-rsync -Pazh --del ./_*.sh ./.env ./*.yml ./*.toml  $user@$host:/srv/$projectName
+rsync -Pazh --del ./_*.sh ./.env ./*.yml ./*.toml  $user@$host:/srv/$projectName/
 
 if [[ "${1:-}" == "--down" ]]
 then
