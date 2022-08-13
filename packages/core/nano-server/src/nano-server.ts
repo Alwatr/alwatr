@@ -21,6 +21,26 @@ export class AlwatrNanoServer {
   protected _logger: AlwatrLogger;
   protected _server = createServer(this._requestListener.bind(this));
 
+  /**
+   * Create a server for nanoservice use cases.
+   *
+   * Example:
+   *
+   * ```ts
+   * import {AlwatrNanoServer} from '@alwatr/nano-server';
+   * const nanoServer = new AlwatrNanoServer();
+   *
+   * nanoServer.route('GET', '/', async (connection) => {
+   * connection.reply({
+   *   ok: true,
+   *   data: {
+   *    app: 'Alwatr Nanoservice Starter Kit',
+   *    message: 'Hello ;)',
+   *   },
+   *  });
+   * });
+   * ```
+   */
   constructor(config?: Partial<Config>) {
     this._config = config = {...this._config, ...config};
     this._logger = createLogger(`alwatr-nano-server:${config.port}`);
@@ -31,6 +51,15 @@ export class AlwatrNanoServer {
     if (config.autoListen) this.listen();
   }
 
+  /**
+   * Starts the HTTP server listening for connections.
+   *
+   * Example:
+   *
+   * ```ts
+   * nanoserver.listen();
+   * ```
+   */
   listen(): void {
     this._logger.logMethod('listen');
     this._server.listen(this._config.port, this._config.host, () => {
@@ -38,12 +67,46 @@ export class AlwatrNanoServer {
     });
   }
 
+  /**
+   * Stops the HTTP server from accepting new connections.
+   *
+   * Example:
+   *
+   * ```ts
+   * nanoserver.listen();
+   * ```
+   */
   close(): void {
     this._logger.logMethod('close');
     this._server.close();
   }
 
-  route(method: Methods, route: 'all' | `/${string}`, middleware: (connection: AlwatrConnection) => void): void {
+  /**
+   * Refers to how an application’s endpoints (URIs) respond to client requests.
+   *
+   * @param method - Acceptable methods.
+   * @param route - Acceptable request path.
+   * @param middleware - Request handler.
+   *
+   * Example:
+   *
+   * ```ts
+   * nanoServer.route('GET', '/', async (connection) => {
+   * connection.reply({
+   *   ok: true,
+   *   data: {
+   *    app: 'Alwatr Nanoservice Starter Kit',
+   *    message: 'Hello ;)',
+   *   },
+   *  });
+   * });
+   * ```
+   */
+  route(
+      method: Methods,
+      route: 'all' | `/${string}`,
+      middleware: (connection: AlwatrConnection) => void,
+  ): void {
     this._logger.logMethodArgs('route', {method, route});
 
     if (this.middlewareList[method] == null) this.middlewareList[method] = {};
@@ -153,20 +216,35 @@ export class AlwatrNanoServer {
   };
 }
 
+/**
+ * Connection...?
+ */
 export class AlwatrConnection {
   static versionPattern = new RegExp('^/v[0-9]+');
 
+  /**
+   * Request URL.
+   */
   readonly url = new URL(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.incomingMessage.url!.replace(AlwatrConnection.versionPattern, ''),
     'http://localhost/',
   );
 
+  /**
+   * Request method.
+   */
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   readonly method = this.incomingMessage.method!.toUpperCase() as Methods;
 
+  /**
+   * The token placed in the request header.
+   */
   readonly token = this._getToken();
 
+  /**
+   * Request body for POST & PUT method.
+   */
   readonly bodyPromise = this._getRequestBody();
 
   protected _logger = createLogger(`alwatr-nano-server-connection`);
@@ -175,6 +253,22 @@ export class AlwatrConnection {
     this._logger.logMethodArgs('new', {method: incomingMessage.method, url: incomingMessage.url});
   }
 
+  /**
+   * Responds to the request.
+   *
+   * Example:
+   * ```ts
+   * nanoServer.route('GET', '/', async (connection) => {
+   *   connection.reply({
+   *     ok: true,
+   *     data: {
+   *      app: 'Alwatr Nanoservice Starter Kit',
+   *      message: 'Hello ;)',
+   *     },
+   *    });
+   * });
+   * ```
+   */
   reply(content: ReplyContent): void {
     this._logger.logMethodArgs('reply', {content});
 
@@ -247,6 +341,16 @@ export class AlwatrConnection {
     return body;
   }
 
+  /**
+   * Parse request body.
+   *
+   * @returns Request body.
+   *
+   * Example:
+   * ```ts
+   * const bodyData = await connection.requireJsonBody();
+   * ```
+   */
   async requireJsonBody<Type extends Record<string, unknown>>(): Promise<Type | null> {
     // if request content type is json, parse the body
     const body = await this.bodyPromise;
