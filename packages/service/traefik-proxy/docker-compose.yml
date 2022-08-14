@@ -1,4 +1,4 @@
-version: '2.4'
+version: '2'
 
 networks:
   alwatr-public-network:
@@ -7,7 +7,7 @@ networks:
 
 services:
   service-proxy:
-    image: ${TRAEDIK_IMAGE}
+    image: ${TRAEFIK_IMAGE}
 
     hostname: traefik-proxy.alwatr.io
 

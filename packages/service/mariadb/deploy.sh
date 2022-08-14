@@ -6,8 +6,12 @@ thisPath="$(pwd)"
 projectName="$(basename "$thisPath")"
 cd $thisPath;
 
-user=root
-host=srv1
+host=${1:-}; shift;
+if [ -z "$host" ]
+then
+  echo "Pass the host as the first argument."
+  exit 1
+fi
 
 echoStep () {
   echo "🔸 $1"
@@ -28,15 +32,15 @@ fi
 
 echoStep "Sync..."
 
-remoteShell $user@$host "mkdir -p /srv/$projectName"
+remoteShell $host "mkdir -p /srv/$projectName"
 
-rsync -Pazh --del ./_*.sh ./.env ./*.yml $user@$host:/srv/$projectName/
+rsync -Pazh --del ./_*.sh ./.env ./*.yml $host:/srv/$projectName/
 
 if [[ "${1:-}" == "--down" ]]
 then
   echoStep "Down..."
-  remoteShell $user@$host "cd /srv/$projectName && docker-compose down --remove-orphans"
+  remoteShell $host "cd /srv/$projectName && docker-compose down --remove-orphans"
 else
   echoStep "Up..."
-  remoteShell $user@$host "cd /srv/$projectName && chmod +x _up.sh && ./_up.sh"
+  remoteShell $host "cd /srv/$projectName && chmod +x _up.sh && ./_up.sh"
 fi
