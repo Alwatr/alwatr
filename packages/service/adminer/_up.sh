@@ -20,7 +20,7 @@ docker-compose pull
 
 echoStep "Starting..."
 
-docker-compose up --detach --remove-orphans # --force-recreate
+docker-compose up --detach --remove-orphans --force-recreate
 
 echoStep "Done"
 

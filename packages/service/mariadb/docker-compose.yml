@@ -12,12 +12,10 @@ services:
     hostname: mariadb.alwatr.io
 
     networks:
-      alwatr-private-network:
-        aliases:
-          - mariadb.alwatr.io
+      - alwatr-private-network
 
     cpu_shares: 4096
-    mem_limit: ${MEMOTY_LIMIT}
+    mem_limit: ${MEMORY_LIMIT}
 
     restart: unless-stopped
 
