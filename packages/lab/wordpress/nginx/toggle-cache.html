@@ -43,29 +43,33 @@
       box-shadow: rgba(0, 0, 0, .5) 0 0 0 3px;
     }
   </style>
+</head>
+<body>
+  <button id="btn">...</button>
+  <p id="out"></p>
 
-  <script type="text/javascript" defer>
+  <script type="text/javascript">
     const cookieList = ['no_cache', 'comment_author', 'wp-postpass', 'wordpress_test_cookie', 'wordpress_logged_in'];
 
     const cache = {
       get state () {
         for(const cookieName of cookieList) {
           if(document.cookie.includes(cookieName)) {
-            return true;
+            return false;
           }
         }
-        return false;
+        return true;
       },
       set state (bool) {
         if (bool) {
-          document.cookie = 'no_cache=true';
-        }
-        else {
           for(const cookieName of cookieList) {
             if(document.cookie.includes(cookieName)) {
               document.cookie = cookieName + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
             }
           }
+        }
+        else {
+          document.cookie = 'no_cache=true';
         }
       }
     };
@@ -84,9 +88,5 @@
 
     btn.addEventListener('click', toggleCache);
   </script>
-</head>
-<body>
-  <button id="btn">...</button>
-  <p id="out"></p>
 </body>
 </html>
