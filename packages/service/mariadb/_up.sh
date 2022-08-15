@@ -20,12 +20,14 @@ docker network create alwatr-private-network || echo "network exist"
 docker-compose pull
 # docker-compose build --pull
 
-echoStep "Starting..."
+echoStep "Fix permitions..."
 
 docker-compose stop
 mysqlPath=/var/lib/mysql
 docker-compose run --rm --name 'fix-db' --user=root database \
   bash -c "ls -lahF $mysqlPath; chown -Rv mysql:mysql $mysqlPath; ls -lahF $mysqlPath;"
+
+echoStep "Starting..."
 
 docker-compose up --detach --remove-orphans # --force-recreate
 

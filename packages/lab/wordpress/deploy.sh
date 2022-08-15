@@ -14,7 +14,7 @@ fi
 
 if [ -z ${DEPLOY_PATH:-} ]
 then
-  echo '❌ Plsease set deploy path env by `DEPLOY_PATH=wp-test ./deploy.sh`'
+  echo "❌ Plsease set deploy path env by 'DEPLOY_PATH=$thisBasename ./deploy.sh'"
   exit 1
 fi
 

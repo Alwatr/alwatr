@@ -3,24 +3,34 @@ set -Eeuo pipefail
 trap "echo '❌ Error'" ERR
 
 thisPath="$(pwd)"
-projectName="$(basename "$thisPath")"
+thisBasename="$(basename "$thisPath")"
 cd $thisPath;
 
-host=${1:-}; shift;
-if [ -z "$host" ]
+if [ -z ${DEPLOY_HOST:-} ]
 then
-  echo "Pass the host as the first argument."
+  echo '❌ Plsease set deploy host env by `export DEPLOY_HOST=root@srv1.alwatr.io`'
   exit 1
 fi
+
+if [ -z ${DEPLOY_PATH:-} ]
+then
+  echo "❌ Plsease set deploy path env by 'DEPLOY_PATH=$thisBasename ./deploy.sh'"
+  exit 1
+fi
+
+DEPLOY_PATH="/srv/${DEPLOY_PATH:-$thisBasename}/"
+
+echo "DEPLOY_HOST: $DEPLOY_HOST"
+echo "DEPLOY_PATH: $DEPLOY_PATH"
 
 echoStep () {
   echo "🔸 $1"
 }
 
-remoteShell() {
+remoteShell () {
   server=$1; shift;
   echo "🔸 remoteShell => $server"
-  ssh -o "ConnectTimeout=5" -tt -q $server $@ || echo "❌ remoteShell error for $server"
+  ssh -o "ConnectTimeout=5" -tt -q $server $@
 }
 
 if [ ! -f .env ]
@@ -32,15 +42,15 @@ fi
 
 echoStep "Sync..."
 
-remoteShell $host "mkdir -p /srv/$projectName"
+remoteShell $DEPLOY_HOST "mkdir -p $DEPLOY_PATH"
 
-rsync -Pazh --del ./_*.sh ./.env ./*.yml $host:/srv/$projectName/
+rsync -Pazh --del ./_*.sh ./.env ./*.yml $DEPLOY_HOST:$DEPLOY_PATH/
 
 if [[ "${1:-}" == "--down" ]]
 then
   echoStep "Down..."
-  remoteShell $host "cd /srv/$projectName && docker-compose down --remove-orphans"
+  remoteShell $DEPLOY_HOST "cd $DEPLOY_PATH && docker-compose down --remove-orphans"
 else
   echoStep "Up..."
-  remoteShell $host "cd /srv/$projectName && chmod +x _up.sh && ./_up.sh"
+  remoteShell $DEPLOY_HOST "cd $DEPLOY_PATH && chmod +x _up.sh && ./_up.sh"
 fi
