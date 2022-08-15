@@ -26,7 +26,7 @@ time docker-compose up --detach --remove-orphans --force-recreate
 
 echoStep "Fix permitions..."
 
-time docker-compose exec php "fix-permition.sh"
+time docker-compose exec php "fix-permition.sh" || true
 
 echoStep "Done"
 

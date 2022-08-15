@@ -3,7 +3,7 @@
 set -Eeuo pipefail
 trap "echo '❌ Error'" ERR
 
-if [ ! -z "${SKIP_FIX_PERMISSIONS:-}" ]
+if [ "${SKIP_FIX_PERMISSIONS:-}" = "1" ]
 then
   echo "Skip fix permitions"
   exit 0
