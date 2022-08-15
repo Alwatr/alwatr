@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toggle Wordpress Cache</title>
+  <style>
+    body {
+      padding-top: 50px;
+      text-align: center;
+    }
+
+    button {
+      font-size: 1.1em;
+      padding: 1ch 1.5ch;
+    }
+  </style>
+  <script type="module">
+    const cookieList = ['no_cache', 'comment_author', 'wp-postpass', 'wordpress_test_cookie', 'wordpress_logged_in'];
+
+    const cache = {
+      get state () {
+        for(const cookieName of cookieList) {
+          if(document.cookie.includes(cookieName)) {
+            return true;
+          }
+        }
+        return false;
+      },
+      set state (bool) {
+        if (bool) {
+          document.cookie = 'no_cache=true';
+        }
+        else {
+          for(const cookieName of cookieList) {
+            if(document.cookie.includes(cookieName)) {
+              document.cookie = cookieName + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            }
+          }
+        }
+      }
+    };
+
+    function update () {
+      btn.innerText = `Toggle Cache: ${cache.state ? 'On' : 'Off'}`;
+      out.innerText = unescape(document.cookie) ?? 'No Cookies';
+    }
+
+    function toggleCache () {
+      cache.state = !cache.state;
+      update();
+    }
+
+    update();
+
+    btn.addEventListener('click', toggleCache);
+  </script>
+</head>
+<body>
+  <button id="btn">...</button>
+  <p id="out"></p>
+</body>
+</html>
