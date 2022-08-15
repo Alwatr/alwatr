@@ -8,13 +8,13 @@ cd $thisPath;
 
 if [ -z ${DEPLOY_HOST:-} ]
 then
-  echo '❌ Plsease set deploy host env by `export DEPLOY_HOST=root@srv1.alwatr.io`'
+  echo '❌ Please set deploy host env by `export DEPLOY_HOST=root@srv1.alwatr.io`'
   exit 1
 fi
 
 if [ -z ${DEPLOY_NAME:-} ]
 then
-  echo "❌ Plsease set deploy path env by 'DEPLOY_NAME=$thisBasename ./deploy.sh'"
+  echo "❌ Please set deploy path env by 'DEPLOY_NAME=$thisBasename ./deploy.sh'"
   exit 1
 fi
 
