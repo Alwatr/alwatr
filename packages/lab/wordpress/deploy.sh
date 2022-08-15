@@ -12,16 +12,19 @@ then
   exit 1
 fi
 
-if [ -z ${DEPLOY_PATH:-} ]
+if [ -z ${DEPLOY_NAME:-} ]
 then
-  echo "❌ Plsease set deploy path env by 'DEPLOY_PATH=$thisBasename ./deploy.sh'"
+  echo "❌ Plsease set deploy path env by 'DEPLOY_NAME=$thisBasename ./deploy.sh'"
   exit 1
 fi
 
-DEPLOY_PATH="/srv/${DEPLOY_PATH:-$thisBasename}/"
+DEPLOY_NAME=${DEPLOY_NAME:-$thisBasename}
+deployPath="/srv/$DEPLOY_NAME/"
+envPath=".env.$DEPLOY_NAME"
 
 echo "DEPLOY_HOST: $DEPLOY_HOST"
-echo "DEPLOY_PATH: $DEPLOY_PATH"
+echo "DEPLOY_NAME: $DEPLOY_NAME"
+echo "DEPLOY_PATH: $deployPath"
 
 echoStep () {
   echo "🔸 $1"
@@ -33,24 +36,26 @@ remoteShell () {
   ssh -o "ConnectTimeout=5" -tt -q $server $@
 }
 
-if [ ! -f .env ]
+if [ ! -f $envPath ]
 then
-  echo "❌ .env file not found"
-  cp .env.example .env
-  nano .env
+  echo "❌ $envPath not found!"
+  cp .env.example $envPath
+  nano $envPath
 fi
 
 echoStep "Sync..."
 
-remoteShell $DEPLOY_HOST "mkdir -p $DEPLOY_PATH"
+remoteShell $DEPLOY_HOST "mkdir -p $deployPath"
 
-rsync -Pazh --del ./_*.sh ./.env ./*.yml php nginx $DEPLOY_HOST:$DEPLOY_PATH/
+cp -afv $envPath .env
+rsync -Pazh --del ./_*.sh ./.env ./*.yml php nginx $DEPLOY_HOST:$deployPath
+rm -fv .env
 
 if [[ "${1:-}" == "--down" ]]
 then
   echoStep "Down..."
-  remoteShell $DEPLOY_HOST "cd $DEPLOY_PATH && docker-compose down --remove-orphans"
+  remoteShell $DEPLOY_HOST "cd $deployPath && docker-compose down --remove-orphans"
 else
   echoStep "Up..."
-  remoteShell $DEPLOY_HOST "cd $DEPLOY_PATH && chmod +x _up.sh && ./_up.sh"
+  remoteShell $DEPLOY_HOST "cd $deployPath && chmod +x _up.sh && ./_up.sh"
 fi

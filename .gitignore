@@ -32,7 +32,8 @@ package-lock.json
 
 # dotenv environment variables file
 .env
-.env.test
+.env.*
 test.json
 
 temp
+_data/
