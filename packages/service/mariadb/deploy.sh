@@ -48,7 +48,7 @@ echoStep "Sync..."
 remoteShell $DEPLOY_HOST "mkdir -p $deployPath"
 
 cp -afv $envPath .env
-rsync -Pazh --del ./_*.sh ./.env ./*.yml php nginx $DEPLOY_HOST:$deployPath
+rsync -Pazh --del ./_*.sh ./.env ./*.yml $DEPLOY_HOST:$deployPath
 rm -fv .env
 
 if [[ "${1:-}" == "--down" ]]
