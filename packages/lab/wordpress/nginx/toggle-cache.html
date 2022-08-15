@@ -4,18 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Toggle Wordpress Cache</title>
-  <style>
+
+  <style type="text/css">
     body {
-      padding-top: 50px;
+      padding-top: 3em;
       text-align: center;
+      background-color: #eee;
     }
 
     button {
-      font-size: 1.1em;
-      padding: 1ch 1.5ch;
+      background-color: initial;
+      background-image: linear-gradient(hsl(240deg 25% 35%), hsl(240deg 25% 15%));
+      border-radius: 8px;
+      border-width: 0;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, .1),0 3px 6px rgba(0, 0, 0, .05);
+      color: #fff;
+      cursor: pointer;
+      display: inline-block;
+      font-family: expo-brand-demi,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+      font-size: 1.2em;
+      outline: none;
+      text-decoration: none;
+      transition: all 150ms;
+      white-space: nowrap;
+      user-select: none;
+      -webkit-user-select: none;
+      padding: 1em 2em;
+    }
+
+    button:hover {
+      box-shadow: rgba(0, 1, 0, .2) 0 2px 8px;
+      opacity: .85;
+    }
+
+    button:focus,
+    button:active {
+      outline: 0;
+      box-shadow: rgba(0, 0, 0, .5) 0 0 0 3px;
     }
   </style>
-  <script type="module">
+
+  <script type="text/javascript" defer>
     const cookieList = ['no_cache', 'comment_author', 'wp-postpass', 'wordpress_test_cookie', 'wordpress_logged_in'];
 
     const cache = {
@@ -43,7 +72,7 @@
 
     function update () {
       btn.innerText = `Toggle Cache: ${cache.state ? 'On' : 'Off'}`;
-      out.innerText = unescape(document.cookie) ?? 'No Cookies';
+      out.innerText = unescape(document.cookie.trim()) || 'No Cookies';
     }
 
     function toggleCache () {
