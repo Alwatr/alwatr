@@ -34,3 +34,17 @@ export interface Config {
    */
   autoListen: boolean;
 }
+
+export interface Options {
+  /**
+   * CORS helper
+   */
+  CORSHelper?: CrossOriginResourceSharingHeaders;
+}
+
+export interface CrossOriginResourceSharingHeaders {
+  /**
+   * tells browsers to allow that origin to access the resource.
+   */
+   accessControlAllowOrigin: '*' | string[] | RegExp;
+}

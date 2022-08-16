@@ -2,7 +2,9 @@ import {createServer} from 'http';
 
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
-import type {Config, Methods, ReplyContent} from './type.js';
+import {setCORSHelperHeader as setCORSHelperHeader} from './middleware/cors-helper.js';
+
+import type {Config, Methods, Options, ReplyContent} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
@@ -41,15 +43,18 @@ export class AlwatrNanoServer {
    * });
    * ```
    */
-  constructor(config?: Partial<Config>) {
+  constructor(config?: Partial<Config>, public options?: Partial<Options>) {
     this._config = config = {...this._config, ...config};
     this._logger = createLogger(`alwatr-nano-server:${config.port}`);
+
     this._logger.logMethodArgs('constructor', config);
     this._server.on('error', this._errorListener.bind(this));
     this._server.on('clientError', this._clientErrorListener.bind(this));
     this.route('GET', '/health', this._onHealthCheckRequest.bind(this));
     if (config.autoListen) this.listen();
   }
+
+  CORSHelper = this.options?.CORSHelper;
 
   /**
    * Starts the HTTP server listening for connections.
@@ -173,7 +178,7 @@ export class AlwatrNanoServer {
       return;
     }
 
-    const connection = new AlwatrConnection(incomingMessage, serverResponse);
+    const connection = new AlwatrConnection(incomingMessage, serverResponse, this.options);
     const route = connection.url.pathname;
 
     // TODO: handled open remained connections.
@@ -249,9 +254,13 @@ export class AlwatrConnection {
 
   protected _logger = createLogger(`alwatr-nano-server-connection`);
 
-  constructor(public incomingMessage: IncomingMessage, public serverResponse: ServerResponse) {
+  constructor(
+    public incomingMessage: IncomingMessage,
+    public serverResponse: ServerResponse,
+    public options?: Options) {
     this._logger.logMethodArgs('new', {method: incomingMessage.method, url: incomingMessage.url});
   }
+
 
   /**
    * Responds to the request.
@@ -295,6 +304,10 @@ export class AlwatrConnection {
             errorCode: 'data_stringify_failed',
           },
       );
+    }
+
+    if (this.options?.CORSHelper !== undefined) {
+      setCORSHelperHeader(this, this.options.CORSHelper);
     }
 
     this.serverResponse.writeHead(content.statusCode ?? 200, {
