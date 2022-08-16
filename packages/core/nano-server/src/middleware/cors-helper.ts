@@ -1,7 +1,6 @@
 import type {AlwatrConnection} from '../nano-server';
 import type {CrossOriginResourceSharingHeaders} from '../type';
 
-
 export function setCORSHelperHeader(connection: AlwatrConnection, option: CrossOriginResourceSharingHeaders): void {
   const allowedOrigin = option.accessControlAllowOrigin;
   const requestOrigin = connection.incomingMessage.headers.origin;
@@ -29,4 +28,3 @@ export function setCORSHelperHeader(connection: AlwatrConnection, option: CrossO
 
   if (!allowed) return;
 }
-

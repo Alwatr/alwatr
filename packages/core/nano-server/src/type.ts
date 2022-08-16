@@ -46,5 +46,5 @@ export interface CrossOriginResourceSharingHeaders {
   /**
    * tells browsers to allow that origin to access the resource.
    */
-   accessControlAllowOrigin: '*' | string[] | RegExp;
+  accessControlAllowOrigin: '*' | string[] | RegExp;
 }
