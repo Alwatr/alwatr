@@ -114,6 +114,7 @@
     {"path": "./packages/core/storage"},
     {"path": "./packages/core/token"},
     {"path": "./packages/lab/zx-example"},
+    {"path": "./packages/lab/script"},
     {"path": "./demo"}
   ]
 }
