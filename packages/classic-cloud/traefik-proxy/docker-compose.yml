@@ -1,4 +1,4 @@
-version: '2.4'
+version: '2'
 
 networks:
   alwatr-public-network:
@@ -7,9 +7,9 @@ networks:
 
 services:
   service-proxy:
-    image: ${PROXY_IMAGE}
+    image: ${TRAEFIK_IMAGE}
 
-    hostname: "alwatr-traefik-proxy"
+    hostname: traefik-proxy.alwatr.io
 
     networks:
       - alwatr-public-network
@@ -42,7 +42,6 @@ services:
 
     labels:
       traefik.enable: true
-      traefik.backend: traefik
       traefik.port: 8080
       traefik.frontend.rule: Host:${DOMAIN}
       traefik.frontend.entryPoints: http, https
