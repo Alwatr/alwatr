@@ -1,19 +1,19 @@
-#!/usr/bin/env node
+#!/usr/bin/env zx
 
 import {existsSync} from 'fs';
 
 import {$, argv, echo} from 'zx';
 
 // $.verbose = false;
-$.prefix = 'set -Eeuo pipefail';
+// $.prefix = 'set -Eeuo pipefail'; # Not work!
 
 // await $`cd $(pwd)`;
 
-const DEPLOY_HOST = 'root@srv1.mihandoost.com';
+const DEPLOY_HOST = 'root@srv1.mihandoost.com'.trim();
 const baseName = await $`basename $(pwd)`;
-const DEPLOY_NAME = process.env.DEPLOY_NAME || baseName.stdout;
-const deployPath = `/tmp/${DEPLOY_NAME}`;
-const envPath = `.env.${DEPLOY_NAME}`;
+const DEPLOY_NAME = process.env.DEPLOY_NAME || baseName.stdout.trim();
+const deployPath = `/tmp/${DEPLOY_NAME}`.trim();
+const envPath = `.env.${DEPLOY_NAME}`.trim();
 
 function echoStep(step: string): void {
   echo`🔸 ${step}...`;
@@ -43,5 +43,6 @@ if (argv.down) {
   await remoteShell(DEPLOY_HOST, `cd ${deployPath} && docker-compose down --remove-orphans`);
 } else {
   echoStep('Up');
+  echo(deployPath);
   await remoteShell(DEPLOY_HOST, `cd ${deployPath} && chmod +x _up.sh && ./_up.sh`);
 }

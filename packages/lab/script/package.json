@@ -33,7 +33,7 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "scripts": {
-    "build": "chmod -v +x *.js"
+    "build": "chmod -v +x *.mjs"
   },
   "dependencies": {
     "tslib": "^2.3.1",
