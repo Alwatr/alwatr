@@ -2,6 +2,7 @@
 set -Eeuo pipefail
 trap "echo '❌ Error'" ERR
 
+TIMEFORMAT="done in %Rs"
 thisPath="$(pwd)"
 # projectName="$(basename "$thisPath")"
 cd $thisPath;
@@ -24,8 +25,8 @@ echoStep "Fix permitions..."
 
 docker-compose stop
 mysqlPath=/var/lib/mysql
-docker-compose run --rm --name 'fix-db' --user=root database \
-  bash -c "ls -lahF $mysqlPath; chown -Rv mysql:mysql $mysqlPath; ls -lahF $mysqlPath;"
+time docker-compose run --rm --name 'fix-db' --user=root database \
+  bash -c "ls -lahF $mysqlPath; chown -R mysql:mysql $mysqlPath; ls -lahF $mysqlPath;"
 
 echoStep "Starting..."
 

@@ -3,11 +3,11 @@ version: '2'
 networks:
   internal:
   alwatr-private-network:
-    external:
-      name: alwatr-private-network
+    name: alwatr-private-network
+    external: true
   alwatr-public-network:
-    external:
-      name: alwatr-public-network
+    name: alwatr-public-network
+    external: true
 
 services:
   nginx:
@@ -28,7 +28,7 @@ services:
       - php
 
     cpu_shares: 2048
-    mem_limit: ${NGINX_MEMOTY_LIMIT}
+    mem_limit: ${NGINX_MEMORY_LIMIT}
 
     volumes:
       - type: bind
@@ -69,7 +69,7 @@ services:
     restart: unless-stopped
 
     cpu_shares: 1024
-    mem_limit: ${PHP_MEMOTY_LIMIT}
+    mem_limit: ${PHP_MEMORY_LIMIT}
 
     volumes:
       - type: bind
