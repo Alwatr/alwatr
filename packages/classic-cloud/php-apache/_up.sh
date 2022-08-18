@@ -29,4 +29,4 @@ time docker compose exec --index 1 --user root php "fix-permition.sh" || true
 
 echoStep "Done"
 
-docker compose logs --since 5m --follow || true
+docker compose logs --tail 300 --follow || true
