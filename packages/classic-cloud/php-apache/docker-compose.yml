@@ -1,12 +1,10 @@
-version: '2'
-
 networks:
   alwatr-private-network:
-    external:
-      name: alwatr-private-network
+    name: alwatr-private-network
+    external: true
   alwatr-public-network:
-    external:
-      name: alwatr-public-network
+    name: alwatr-public-network
+    external: true
 
 services:
   php:
@@ -14,6 +12,9 @@ services:
       context: ./php
       args:
         - PHP_VERSION=${PHP_VERSION}
+        - APT_INSTALL=${APT_INSTALL}
+        - PHP_EXT_INSTALL=${PHP_EXT_INSTALL}
+        - APACHE_MODULE=${APACHE_MODULE}
         - SOURCEGUARDIAN_LOADER=${SOURCEGUARDIAN_LOADER}
         - IONCUBE_LOADER=${IONCUBE_LOADER}
 
