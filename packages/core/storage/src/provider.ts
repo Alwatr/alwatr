@@ -40,7 +40,7 @@ export class AlwatrStorageProvider {
     }
     if (this._list[config.name].readyState !== true) {
       await this._list[config.name].readyPromise;
-      console.log('Memory usage: %sMB', Math.round(process.memoryUsage.rss() / 100000) / 10);
+      this._logger.logProperty('Memory usage', Math.round(process.memoryUsage.rss() / 100000) / 10);
     }
     return this._list[config.name] as AlwatrStorage<DocumentType>;
   }
