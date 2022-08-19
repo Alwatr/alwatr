@@ -55,7 +55,7 @@ echoStep "Sync..."
 remoteShell $DEPLOY_HOST "mkdir -p $deployPath"
 
 cp -afv $envPath .env
-rsync -Pazh --del ./_*.sh ./.env ./*.yml ./*.toml $DEPLOY_HOST:$deployPath
+rsync -Pazhv --delete --exclude=_data --exclude=.env.* --exclude=deploy* --exclude=*.md ./ $DEPLOY_HOST:$deployPath
 rm -fv .env
 
 if [[ "${1:-}" == "--down" ]]
