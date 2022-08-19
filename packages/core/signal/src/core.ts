@@ -248,10 +248,5 @@ export function _removeSignalProvider<SignalName extends keyof AlwatrRequestSign
   logger.logMethodArgs('_removeSignalProvider', {signalName});
 
   const signal = __getSignalObject(`request-${signalName}` as unknown as SignalName);
-  if (signal.listenerList.length > 0) {
-    logger.accident('setSignalProvider', 'signal_provider_already_set', 'another provider defined and will removed', {
-      signalName,
-    });
-    signal.listenerList = [];
-  }
+  signal.listenerList = [];
 }

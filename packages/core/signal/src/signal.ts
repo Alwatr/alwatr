@@ -6,6 +6,7 @@ import {
   _setSignalProvider,
   _dispatchSignal,
   _addSignalListener,
+  _removeSignalProvider,
 } from './core';
 
 import type {
@@ -136,7 +137,21 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
     return _setSignalProvider(this.name, signalProvider, options).id;
   }
 
-  // @TODO: removeProvider(signalName): void
+  /**
+   * Remove signal provider, which will remove a provided signal
+   *
+   * Example:
+   *
+   * ```ts
+   * const contentChangeSignal = new SignalInterface('content-change');
+   * contentChangeSignal.setProvider(() => { ... });
+   * contentChangeSignal.removeProvider('content-change');
+   * ```
+   */
+  removeProvider(signalName: SignalName): void {
+    this._logger.logMethod('removeProvider');
+    _removeSignalProvider(signalName);
+  }
 
   /**
    * Dispatch request signal and wait for answer (wait for new signal dispatched).
