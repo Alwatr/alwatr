@@ -5,22 +5,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.13.0](https://github.com/AliMD/alwatr/compare/v0.12.0...v0.13.0) (2022-08-06)
 
-
 ### Bug Fixes
 
-* **token:** calc benchs ([f1240cc](https://github.com/AliMD/alwatr/commit/f1240cce9247c6fb53dd63a940bd95123ba628d1))
-
+- **token:** calc benchs ([f1240cc](https://github.com/AliMD/alwatr/commit/f1240cce9247c6fb53dd63a940bd95123ba628d1))
 
 ### Features
 
-* **storage:** add _createdBy and _updatedBy ([1a70945](https://github.com/AliMD/alwatr/commit/1a70945bc61921f13d839adde25fdfe9fb37eaad))
-* **storage:** improve process and add has, storagePath, keys and length ([4e323ad](https://github.com/AliMD/alwatr/commit/4e323ad10ee0630cfa02edd191167b69e14743ff))
-* **token:** generate and verify HOTP tpkens ([d0372f8](https://github.com/AliMD/alwatr/commit/d0372f805a45d6fd6571b50821529068cec7d424))
-* **token:** new package files ([fe620e0](https://github.com/AliMD/alwatr/commit/fe620e0d9f84c4e6d8e0eed47d6b398e218429ad))
-
-
-
-
+- **storage:** add \_createdBy and \_updatedBy ([1a70945](https://github.com/AliMD/alwatr/commit/1a70945bc61921f13d839adde25fdfe9fb37eaad))
+- **storage:** improve process and add has, storagePath, keys and length ([4e323ad](https://github.com/AliMD/alwatr/commit/4e323ad10ee0630cfa02edd191167b69e14743ff))
+- **token:** generate and verify HOTP tpkens ([d0372f8](https://github.com/AliMD/alwatr/commit/d0372f805a45d6fd6571b50821529068cec7d424))
+- **token:** new package files ([fe620e0](https://github.com/AliMD/alwatr/commit/fe620e0d9f84c4e6d8e0eed47d6b398e218429ad))
 
 # [0.12.0](https://github.com/AliMD/alwatr/compare/v0.11.0...v0.12.0) (2022-07-22)
 

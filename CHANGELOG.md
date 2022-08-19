@@ -5,42 +5,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.13.0](https://github.com/AliMD/alwatr/compare/v0.12.0...v0.13.0) (2022-08-06)
 
-
 ### Bug Fixes
 
-* **nano-server:** `incomingMessage` body ([0172390](https://github.com/AliMD/alwatr/commit/01723906f657c35a7a2a329b914308c3d9f06ff8))
-* **nano-server:** host log ([c0c0f97](https://github.com/AliMD/alwatr/commit/c0c0f971d0405f5731cf040962b4609c9472a2fc))
-* **nano-server:** logs ([72cb160](https://github.com/AliMD/alwatr/commit/72cb160b53e7bb04be6b5d24aa04f98d6a597e11))
-* **storage:** first log ([76a32d0](https://github.com/AliMD/alwatr/commit/76a32d071b22b3a5b96a880d386bb3408ebe29ad))
-* **storage:** imports ([8d86a73](https://github.com/AliMD/alwatr/commit/8d86a73c85c117416e2ae0f4c9b879bfbc2d8a7c))
-* **storage:** provider config ([4497dda](https://github.com/AliMD/alwatr/commit/4497ddae726fce45b9d94a600fa19a07d2d6d298))
-* **storage:** review and test ([adc1d0b](https://github.com/AliMD/alwatr/commit/adc1d0b2ebd9cce4df946b21745c1a61172e66bb))
-* **token:** calc benchs ([f1240cc](https://github.com/AliMD/alwatr/commit/f1240cce9247c6fb53dd63a940bd95123ba628d1))
-
+- **nano-server:** `incomingMessage` body ([0172390](https://github.com/AliMD/alwatr/commit/01723906f657c35a7a2a329b914308c3d9f06ff8))
+- **nano-server:** host log ([c0c0f97](https://github.com/AliMD/alwatr/commit/c0c0f971d0405f5731cf040962b4609c9472a2fc))
+- **nano-server:** logs ([72cb160](https://github.com/AliMD/alwatr/commit/72cb160b53e7bb04be6b5d24aa04f98d6a597e11))
+- **storage:** first log ([76a32d0](https://github.com/AliMD/alwatr/commit/76a32d071b22b3a5b96a880d386bb3408ebe29ad))
+- **storage:** imports ([8d86a73](https://github.com/AliMD/alwatr/commit/8d86a73c85c117416e2ae0f4c9b879bfbc2d8a7c))
+- **storage:** provider config ([4497dda](https://github.com/AliMD/alwatr/commit/4497ddae726fce45b9d94a600fa19a07d2d6d298))
+- **storage:** review and test ([adc1d0b](https://github.com/AliMD/alwatr/commit/adc1d0b2ebd9cce4df946b21745c1a61172e66bb))
+- **token:** calc benchs ([f1240cc](https://github.com/AliMD/alwatr/commit/f1240cce9247c6fb53dd63a940bd95123ba628d1))
 
 ### Features
 
-* **api/storage:** make nanoservice ([7626710](https://github.com/AliMD/alwatr/commit/762671063f62ac150806c128495bebbfad2fdeb2))
-* **nano-server:** add token to connection ([8677999](https://github.com/AliMD/alwatr/commit/867799920c917dbafe3a041a8946f7e77577552f))
-* **nano-server:** refactor, add seperate config, cache all routes ([2cdd203](https://github.com/AliMD/alwatr/commit/2cdd2030474b7c1796e311740f20b8f39631bae9))
-* **provider:** show mwmory usage on new data loaded ([1a24df3](https://github.com/AliMD/alwatr/commit/1a24df32d057cfdc91a1c8d47c3a0346065b9a40))
-* **service/storage:**  base config ([75ae7d2](https://github.com/AliMD/alwatr/commit/75ae7d27dc3d910a2f45cf92e63bbd5115cc8fca))
-* **service/storage:**  updateDocument route ([723c795](https://github.com/AliMD/alwatr/commit/723c795d573635653ee4246fb91dfe096a414cb2))
-* **service/storage:** extract and validate token ([dd4ffc4](https://github.com/AliMD/alwatr/commit/dd4ffc44b05ba0496b530a4a69164d595b72c081))
-* **service/storage:** make base types ([fb26b7a](https://github.com/AliMD/alwatr/commit/fb26b7a4f7646e17f4b1c6a5b2c4b51d666752a0))
-* **service/storage:** storage privider ([9b9c07f](https://github.com/AliMD/alwatr/commit/9b9c07f53725fb7eb2a92706d4f3392675d8aad2))
-* **service/storage:** test and demo ([22e8ad4](https://github.com/AliMD/alwatr/commit/22e8ad44cb39cacdb99f7535befed1a736aec773))
-* **storage:** add _createdBy and _updatedBy ([1a70945](https://github.com/AliMD/alwatr/commit/1a70945bc61921f13d839adde25fdfe9fb37eaad))
-* **storage:** docker ([a78f784](https://github.com/AliMD/alwatr/commit/a78f7845aaaf4faace6de92dae57763299ee7d10))
-* **storage:** get method ([0b04f12](https://github.com/AliMD/alwatr/commit/0b04f1209d7f865e2ef0e884a293587cfcd72420))
-* **storage:** improve process and add has, storagePath, keys and length ([4e323ad](https://github.com/AliMD/alwatr/commit/4e323ad10ee0630cfa02edd191167b69e14743ff))
-* **storage:** provider ([92df9f3](https://github.com/AliMD/alwatr/commit/92df9f33a1c5b044d95e2efed51281eb08556c94))
-* **token:** generate and verify HOTP tpkens ([d0372f8](https://github.com/AliMD/alwatr/commit/d0372f805a45d6fd6571b50821529068cec7d424))
-* **token:** new package files ([fe620e0](https://github.com/AliMD/alwatr/commit/fe620e0d9f84c4e6d8e0eed47d6b398e218429ad))
-
-
-
-
+- **api/storage:** make nanoservice ([7626710](https://github.com/AliMD/alwatr/commit/762671063f62ac150806c128495bebbfad2fdeb2))
+- **nano-server:** add token to connection ([8677999](https://github.com/AliMD/alwatr/commit/867799920c917dbafe3a041a8946f7e77577552f))
+- **nano-server:** refactor, add seperate config, cache all routes ([2cdd203](https://github.com/AliMD/alwatr/commit/2cdd2030474b7c1796e311740f20b8f39631bae9))
+- **provider:** show mwmory usage on new data loaded ([1a24df3](https://github.com/AliMD/alwatr/commit/1a24df32d057cfdc91a1c8d47c3a0346065b9a40))
+- **service/storage:** base config ([75ae7d2](https://github.com/AliMD/alwatr/commit/75ae7d27dc3d910a2f45cf92e63bbd5115cc8fca))
+- **service/storage:** updateDocument route ([723c795](https://github.com/AliMD/alwatr/commit/723c795d573635653ee4246fb91dfe096a414cb2))
+- **service/storage:** extract and validate token ([dd4ffc4](https://github.com/AliMD/alwatr/commit/dd4ffc44b05ba0496b530a4a69164d595b72c081))
+- **service/storage:** make base types ([fb26b7a](https://github.com/AliMD/alwatr/commit/fb26b7a4f7646e17f4b1c6a5b2c4b51d666752a0))
+- **service/storage:** storage privider ([9b9c07f](https://github.com/AliMD/alwatr/commit/9b9c07f53725fb7eb2a92706d4f3392675d8aad2))
+- **service/storage:** test and demo ([22e8ad4](https://github.com/AliMD/alwatr/commit/22e8ad44cb39cacdb99f7535befed1a736aec773))
+- **storage:** add \_createdBy and \_updatedBy ([1a70945](https://github.com/AliMD/alwatr/commit/1a70945bc61921f13d839adde25fdfe9fb37eaad))
+- **storage:** docker ([a78f784](https://github.com/AliMD/alwatr/commit/a78f7845aaaf4faace6de92dae57763299ee7d10))
+- **storage:** get method ([0b04f12](https://github.com/AliMD/alwatr/commit/0b04f1209d7f865e2ef0e884a293587cfcd72420))
+- **storage:** improve process and add has, storagePath, keys and length ([4e323ad](https://github.com/AliMD/alwatr/commit/4e323ad10ee0630cfa02edd191167b69e14743ff))
+- **storage:** provider ([92df9f3](https://github.com/AliMD/alwatr/commit/92df9f33a1c5b044d95e2efed51281eb08556c94))
+- **token:** generate and verify HOTP tpkens ([d0372f8](https://github.com/AliMD/alwatr/commit/d0372f805a45d6fd6571b50821529068cec7d424))
+- **token:** new package files ([fe620e0](https://github.com/AliMD/alwatr/commit/fe620e0d9f84c4e6d8e0eed47d6b398e218429ad))
 
 # [0.12.0](https://github.com/AliMD/alwatr/compare/v0.11.0...v0.12.0) (2022-07-22)
 
