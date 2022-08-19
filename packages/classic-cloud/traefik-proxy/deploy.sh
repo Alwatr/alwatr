@@ -6,6 +6,13 @@ thisPath="$(pwd)"
 thisBasename="$(basename "$thisPath")"
 cd $thisPath;
 
+if command -v code >/dev/null 2>&1
+then
+  editor="code --wait"
+else
+  editor="nano"
+fi
+
 if [ -z ${DEPLOY_HOST:-} ]
 then
   echo "❌ Please set deploy host env by 'export DEPLOY_HOST=root@srv1.alwatr.io'"
@@ -40,7 +47,7 @@ if [ ! -f $envPath ]
 then
   echo "❌ $envPath not found!"
   cp .env.example $envPath
-  nano $envPath
+  $editor $envPath
 fi
 
 echoStep "Sync..."
@@ -54,7 +61,7 @@ rm -fv .env
 if [[ "${1:-}" == "--down" ]]
 then
   echoStep "Down..."
-  remoteShell $DEPLOY_HOST "cd $deployPath && docker-compose down --remove-orphans"
+  remoteShell $DEPLOY_HOST "cd $deployPath && docker compose down --remove-orphans"
 else
   echoStep "Up..."
   remoteShell $DEPLOY_HOST "cd $deployPath && chmod +x _up.sh && ./_up.sh"
