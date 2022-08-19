@@ -7,10 +7,10 @@ services:
   database:
     image: ${MARIADB_IMAGE}
 
-    hostname: mariadb.alwatr.io
-
     networks:
-      - alwatr-private-network
+      alwatr-private-network:
+        aliases:
+          - ${MYSQL_HOST}
 
     cpu_shares: 4096
     mem_limit: ${MEMORY_LIMIT}

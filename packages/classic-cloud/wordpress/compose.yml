@@ -14,8 +14,6 @@ services:
       args:
         - NGINX_VERSION=${NGINX_VERSION}
 
-    hostname: nginx.alwatr.io
-
     networks:
       - internal
       - alwatr-public-network
@@ -58,11 +56,11 @@ services:
         - SOURCEGUARDIAN_LOADER=${SOURCEGUARDIAN_LOADER}
         - IONCUBE_LOADER=${IONCUBE_LOADER}
 
-    hostname: php.alwatr.io
-
     networks:
-      - internal
-      - alwatr-private-network
+      internal:
+        aliases:
+          - wordpress-php-fpm
+      alwatr-private-network:
 
     restart: unless-stopped
 

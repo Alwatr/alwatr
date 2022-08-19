@@ -7,7 +7,7 @@ networks:
     external: true
 
 services:
-  php:
+  php-apache:
     build:
       context: ./php
       args:
@@ -17,8 +17,6 @@ services:
         - APACHE_MODULE=${APACHE_MODULE}
         - SOURCEGUARDIAN_LOADER=${SOURCEGUARDIAN_LOADER}
         - IONCUBE_LOADER=${IONCUBE_LOADER}
-
-    hostname: php.alwatr.io
 
     networks:
       - alwatr-public-network
