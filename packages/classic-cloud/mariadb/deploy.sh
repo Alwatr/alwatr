@@ -5,6 +5,14 @@ trap "echo '❌ Error'" ERR
 thisPath="$(pwd)"
 thisBasename="$(basename "$thisPath")"
 cd $thisPath;
+rsync="rsync -Prlptzhv --delete --exclude=_data --exclude=.env.* --exclude=deploy* --exclude=*.md --exclude=.DS*"
+
+if command -v code >/dev/null 2>&1
+then
+  editor="code --wait"
+else
+  editor="nano"
+fi
 
 if [ -z ${DEPLOY_HOST:-} ]
 then
@@ -40,7 +48,7 @@ if [ ! -f $envPath ]
 then
   echo "❌ $envPath not found!"
   cp .env.example $envPath
-  nano $envPath
+  $editor $envPath
 fi
 
 echoStep "Sync..."
@@ -48,13 +56,13 @@ echoStep "Sync..."
 remoteShell $DEPLOY_HOST "mkdir -p $deployPath"
 
 cp -afv $envPath .env
-rsync -Pazh --del ./_*.sh ./.env ./*.yml $DEPLOY_HOST:$deployPath
+$rsync ./ $DEPLOY_HOST:$deployPath
 rm -fv .env
 
 if [[ "${1:-}" == "--down" ]]
 then
   echoStep "Down..."
-  remoteShell $DEPLOY_HOST "cd $deployPath && docker-compose down --remove-orphans"
+  remoteShell $DEPLOY_HOST "cd $deployPath && docker compose down --remove-orphans"
 else
   echoStep "Up..."
   remoteShell $DEPLOY_HOST "cd $deployPath && chmod +x _up.sh && ./_up.sh"

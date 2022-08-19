@@ -2,8 +2,8 @@
 set -Eeuo pipefail
 trap "echo '❌ Error'" ERR
 
+TIMEFORMAT="done in %Rs"
 thisPath="$(pwd)"
-# projectName="$(basename "$thisPath")"
 cd $thisPath;
 ls -lahF;
 
@@ -15,13 +15,13 @@ echoStep "Preparing..."
 
 docker network create alwatr-private-network || echo "network exist"
 
-docker-compose pull
-# docker-compose build --pull
+time docker compose pull
+# docker compose build --pull
 
 echoStep "Starting..."
 
-docker-compose up --detach --remove-orphans --force-recreate
+time docker compose up --detach --remove-orphans #--force-recreate
 
 echoStep "Done"
 
-docker-compose logs --tail=300 --follow || true
+docker compose logs --tail=300 --follow || true
