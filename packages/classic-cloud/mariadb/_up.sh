@@ -4,7 +4,6 @@ trap "echo '❌ Error'" ERR
 
 TIMEFORMAT="done in %Rs"
 thisPath="$(pwd)"
-# projectName="$(basename "$thisPath")"
 cd $thisPath;
 ls -lahF;
 
@@ -18,7 +17,7 @@ docker network create alwatr-private-network || echo "network exist"
 
 [ ! -d _data ] && mkdir _data
 
-docker compose pull
+time docker compose pull
 # docker compose build --pull
 
 echoStep "Fix permitions..."
@@ -30,7 +29,7 @@ time docker compose run --rm --name 'fix-db' --user=root database \
 
 echoStep "Starting..."
 
-docker compose up --detach --remove-orphans # --force-recreate
+time docker compose up --detach --remove-orphans # --force-recreate
 
 echoStep "Done"
 
