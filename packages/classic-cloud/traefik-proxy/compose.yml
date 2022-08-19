@@ -39,9 +39,8 @@ services:
         target: /acme.json
 
     labels:
-      traefik.enable: true
+      traefik.enable: false
       traefik.port: 8080
-      traefik.frontend.rule: Host:${DOMAIN}
-      traefik.frontend.entryPoints: http, https
-      traefik.frontend.auth.basic.users: ${AUTH}
-      traefik.frontend.redirect.entryPoint: https
+      traefik.http.routers.router0.rule: Host(${DOMAIN})
+      traefik.http.middlewares.auth.basicauth.users: ${AUTH}
+
