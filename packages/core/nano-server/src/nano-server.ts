@@ -102,11 +102,7 @@ export class AlwatrNanoServer {
    * });
    * ```
    */
-  route(
-      method: Methods,
-      route: 'all' | `/${string}`,
-      middleware: (connection: AlwatrConnection) => void,
-  ): void {
+  route(method: Methods, route: 'all' | `/${string}`, middleware: (connection: AlwatrConnection) => void): void {
     this._logger.logMethodArgs('route', {method, route});
 
     if (this.middlewareList[method] == null) this.middlewareList[method] = {};
