@@ -5,49 +5,43 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.14.0](https://github.com/AliMD/alwatr/compare/v0.13.0...v0.14.0) (2022-08-19)
 
-
 ### Bug Fixes
 
-* **classic-cloud:** docker-compose external syntax ([9c56389](https://github.com/AliMD/alwatr/commit/9c56389600a2cfce63b27de30087cf6655e86d83))
-* **cloud:** review and fix deploy issues in productions ([dce9b38](https://github.com/AliMD/alwatr/commit/dce9b384a5b0f303a1eba3c8e34f6e3cda62dbcc))
-* **deploy:** echo messages ([1052657](https://github.com/AliMD/alwatr/commit/1052657a87c9ad5ef8785adae215e68957f72d36))
-* **mariadb:** MEMORY_LIMIT ([20adf3f](https://github.com/AliMD/alwatr/commit/20adf3fb60b7e21fad2e6816cf8addad1b15899c))
-* **php:** display error off ([8a923b5](https://github.com/AliMD/alwatr/commit/8a923b5ef49ac68a43fe6e09bf931418f9a262c7))
-* **traefik:** review ([bbc8ed1](https://github.com/AliMD/alwatr/commit/bbc8ed11a1ede953fb87fc57cc356d28a97baeaf))
-* **wordpress/php:** refactor install script in php dockerfile ([4f33233](https://github.com/AliMD/alwatr/commit/4f33233e2fb96c0ef2ae9074ee20f39806af5aac))
-* **wordpress:** image ([bfee572](https://github.com/AliMD/alwatr/commit/bfee572885782744974eb296a073c33f721760a7))
-* **wordpress:** toggle cache issue ([d1ed858](https://github.com/AliMD/alwatr/commit/d1ed858e7d892c4d45ca196261bebe580e7fc994))
-* **wordpress:** WORDPRESS_DB_HOST ([8149875](https://github.com/AliMD/alwatr/commit/8149875695c2824e9107fe36d713a99b6bbd429b))
-
+- **classic-cloud:** docker-compose external syntax ([9c56389](https://github.com/AliMD/alwatr/commit/9c56389600a2cfce63b27de30087cf6655e86d83))
+- **cloud:** review and fix deploy issues in productions ([dce9b38](https://github.com/AliMD/alwatr/commit/dce9b384a5b0f303a1eba3c8e34f6e3cda62dbcc))
+- **deploy:** echo messages ([1052657](https://github.com/AliMD/alwatr/commit/1052657a87c9ad5ef8785adae215e68957f72d36))
+- **mariadb:** MEMORY_LIMIT ([20adf3f](https://github.com/AliMD/alwatr/commit/20adf3fb60b7e21fad2e6816cf8addad1b15899c))
+- **php:** display error off ([8a923b5](https://github.com/AliMD/alwatr/commit/8a923b5ef49ac68a43fe6e09bf931418f9a262c7))
+- **traefik:** review ([bbc8ed1](https://github.com/AliMD/alwatr/commit/bbc8ed11a1ede953fb87fc57cc356d28a97baeaf))
+- **wordpress/php:** refactor install script in php dockerfile ([4f33233](https://github.com/AliMD/alwatr/commit/4f33233e2fb96c0ef2ae9074ee20f39806af5aac))
+- **wordpress:** image ([bfee572](https://github.com/AliMD/alwatr/commit/bfee572885782744974eb296a073c33f721760a7))
+- **wordpress:** toggle cache issue ([d1ed858](https://github.com/AliMD/alwatr/commit/d1ed858e7d892c4d45ca196261bebe580e7fc994))
+- **wordpress:** WORDPRESS_DB_HOST ([8149875](https://github.com/AliMD/alwatr/commit/8149875695c2824e9107fe36d713a99b6bbd429b))
 
 ### Features
 
-* add multi .env file support to deploy script ([1937f01](https://github.com/AliMD/alwatr/commit/1937f01e92c043e30c2c94a5f5071ef2892e5448))
-* add readme for package category ([9429d05](https://github.com/AliMD/alwatr/commit/9429d056213c78fa6415187d099e80b5b70f6e62))
-* **adminer:** add new service ([b679ec1](https://github.com/AliMD/alwatr/commit/b679ec1b92270309f39ca16e0c67b40af2b846fa))
-* **cloud/deploy:** refactor rsync and ignore dsstore files ([6795812](https://github.com/AliMD/alwatr/commit/67958128348a826e6b89f2894cf48f5e16460c44))
-* **cloud:** update _up scripts ([8d376b8](https://github.com/AliMD/alwatr/commit/8d376b8a4b11704b3852b004622b9eb39e8bb5e4))
-* **cloud:** update rsync ([b29a34f](https://github.com/AliMD/alwatr/commit/b29a34f0c3983594b44d8652b1f87da52377b768))
-* **cloud:** update scripts ([d6addc6](https://github.com/AliMD/alwatr/commit/d6addc6e23283477e9055825a52333feb20c08a9))
-* **deploys:** refactor deploy script ([26c41d6](https://github.com/AliMD/alwatr/commit/26c41d6fd445b2fed81fa4653a4769c74c3e1638))
-* **mariadb:** add new service ([55f5dab](https://github.com/AliMD/alwatr/commit/55f5dab4bb68ad434797d9b222c8beea4e90a934))
-* **php-apache:** classic php with apache ([6e1536f](https://github.com/AliMD/alwatr/commit/6e1536ff8166152237ea07c67a2c3dd60fb22f4e))
-* **php-apache:** dynamic build  and update structure ([850486f](https://github.com/AliMD/alwatr/commit/850486f9756c90660eac7dd6ed6fa3e6aa64e51e))
-* **service/wordpress:** supper fast wordpress cloud! ([4998b90](https://github.com/AliMD/alwatr/commit/4998b90632a5105d0eec590e6b1c050ed18a8b41))
-* **services:** improve all docker deployment ([ba135ad](https://github.com/AliMD/alwatr/commit/ba135adfcee406e4e9078bf83f307d9a67dca611))
-* **toggle-cache:** improve styles ([ca9f07e](https://github.com/AliMD/alwatr/commit/ca9f07e1eab99f8a8b8a4143e6f1558d0e40e955))
-* **traefik:** add service proxy ([5c2c74a](https://github.com/AliMD/alwatr/commit/5c2c74afa8ee460c183568617776dce7f627f65d))
-* **traefik:** deploy script ([44f5959](https://github.com/AliMD/alwatr/commit/44f59592f053e795a04ec1189673268865c00439))
-* **traefik:** improve deployment ([1ec83db](https://github.com/AliMD/alwatr/commit/1ec83dbdc3683511026ad665be99f803dd79e3f7))
-* **wordpress:** add SKIP_FIX_PERMISSIONS ([79ab5d2](https://github.com/AliMD/alwatr/commit/79ab5d21b4c92e47532acf8a42dbe2c7c9223da7))
-* **wordpress:** args for install ioncube loader ([6e5fe71](https://github.com/AliMD/alwatr/commit/6e5fe711245fc3dc7ebba4917ed2edfe7a6f02e4))
-* **wordpress:** improve deployment to use multi env files ([db827fe](https://github.com/AliMD/alwatr/commit/db827febc0ebc4d2c6488bab1744b38ecfe01044))
-* **wp:** install Source Gaurdian loader! ([55c52ee](https://github.com/AliMD/alwatr/commit/55c52eec24cd1ac55175b007a3f05976dcd2a898))
-* **xz-example:** such a wow! ([b523293](https://github.com/AliMD/alwatr/commit/b5232932f3b17a39993fbb1a102c58daeef273f7))
-
-
-
-
+- add multi .env file support to deploy script ([1937f01](https://github.com/AliMD/alwatr/commit/1937f01e92c043e30c2c94a5f5071ef2892e5448))
+- add readme for package category ([9429d05](https://github.com/AliMD/alwatr/commit/9429d056213c78fa6415187d099e80b5b70f6e62))
+- **adminer:** add new service ([b679ec1](https://github.com/AliMD/alwatr/commit/b679ec1b92270309f39ca16e0c67b40af2b846fa))
+- **cloud/deploy:** refactor rsync and ignore dsstore files ([6795812](https://github.com/AliMD/alwatr/commit/67958128348a826e6b89f2894cf48f5e16460c44))
+- **cloud:** update \_up scripts ([8d376b8](https://github.com/AliMD/alwatr/commit/8d376b8a4b11704b3852b004622b9eb39e8bb5e4))
+- **cloud:** update rsync ([b29a34f](https://github.com/AliMD/alwatr/commit/b29a34f0c3983594b44d8652b1f87da52377b768))
+- **cloud:** update scripts ([d6addc6](https://github.com/AliMD/alwatr/commit/d6addc6e23283477e9055825a52333feb20c08a9))
+- **deploys:** refactor deploy script ([26c41d6](https://github.com/AliMD/alwatr/commit/26c41d6fd445b2fed81fa4653a4769c74c3e1638))
+- **mariadb:** add new service ([55f5dab](https://github.com/AliMD/alwatr/commit/55f5dab4bb68ad434797d9b222c8beea4e90a934))
+- **php-apache:** classic php with apache ([6e1536f](https://github.com/AliMD/alwatr/commit/6e1536ff8166152237ea07c67a2c3dd60fb22f4e))
+- **php-apache:** dynamic build and update structure ([850486f](https://github.com/AliMD/alwatr/commit/850486f9756c90660eac7dd6ed6fa3e6aa64e51e))
+- **service/wordpress:** supper fast wordpress cloud! ([4998b90](https://github.com/AliMD/alwatr/commit/4998b90632a5105d0eec590e6b1c050ed18a8b41))
+- **services:** improve all docker deployment ([ba135ad](https://github.com/AliMD/alwatr/commit/ba135adfcee406e4e9078bf83f307d9a67dca611))
+- **toggle-cache:** improve styles ([ca9f07e](https://github.com/AliMD/alwatr/commit/ca9f07e1eab99f8a8b8a4143e6f1558d0e40e955))
+- **traefik:** add service proxy ([5c2c74a](https://github.com/AliMD/alwatr/commit/5c2c74afa8ee460c183568617776dce7f627f65d))
+- **traefik:** deploy script ([44f5959](https://github.com/AliMD/alwatr/commit/44f59592f053e795a04ec1189673268865c00439))
+- **traefik:** improve deployment ([1ec83db](https://github.com/AliMD/alwatr/commit/1ec83dbdc3683511026ad665be99f803dd79e3f7))
+- **wordpress:** add SKIP_FIX_PERMISSIONS ([79ab5d2](https://github.com/AliMD/alwatr/commit/79ab5d21b4c92e47532acf8a42dbe2c7c9223da7))
+- **wordpress:** args for install ioncube loader ([6e5fe71](https://github.com/AliMD/alwatr/commit/6e5fe711245fc3dc7ebba4917ed2edfe7a6f02e4))
+- **wordpress:** improve deployment to use multi env files ([db827fe](https://github.com/AliMD/alwatr/commit/db827febc0ebc4d2c6488bab1744b38ecfe01044))
+- **wp:** install Source Gaurdian loader! ([55c52ee](https://github.com/AliMD/alwatr/commit/55c52eec24cd1ac55175b007a3f05976dcd2a898))
+- **xz-example:** such a wow! ([b523293](https://github.com/AliMD/alwatr/commit/b5232932f3b17a39993fbb1a102c58daeef273f7))
 
 # [0.13.0](https://github.com/AliMD/alwatr/compare/v0.12.0...v0.13.0) (2022-08-06)
 
