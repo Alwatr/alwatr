@@ -1,0 +1,300 @@
+# https://doc.traefik.io/traefik/v1.7/configuration/commons/
+
+# Enable debug mode.
+# This will install HTTP handlers to expose Go expvars under /debug/vars and
+# pprof profiling data under /debug/pprof/.
+# The log level will be set to DEBUG unless `logLevel` is specified.
+#
+# Optional
+# Default: false
+#
+# debug = true
+
+# Periodically check if a new version has been released.
+#
+# Optional
+# Default: true
+#
+# checkNewVersion = false
+
+# Tells traefik whether it should keep the trailing slashes in the paths (e.g. /paths/) or redirect to the no trailing slash paths instead (/paths).
+#
+# Optional
+# Default: false
+#
+# keepTrailingSlash = false
+
+# Providers throttle duration.
+#
+# Optional
+# Default: "2s"
+#
+# providersThrottleDuration = "2s"
+
+# Controls the maximum idle (keep-alive) connections to keep per-host.
+#
+# Optional
+# Default: 200
+#
+# maxIdleConnsPerHost = 200
+
+# If set to true invalid SSL certificates are accepted for backends.
+# This disables detection of man-in-the-middle attacks so should only be used on secure backend networks.
+#
+# Optional
+# Default: false
+#
+# insecureSkipVerify = true
+
+# Register Certificates in the rootCA.
+#
+# Optional
+# Default: []
+#
+# rootCAs = [ "/mycert.cert" ]
+
+# Allow the use of 0 as server weight.
+# - false: a weight 0 means internally a weight of 1.
+# - true: a weight 0 means internally a weight of 0 (a server with a weight of 0 is removed from the available servers).
+#
+# Optional
+# Default: false
+#
+# AllowMinWeightZero = true
+
+# Log level
+#
+# Optional
+# Default: "ERROR"
+#
+# Accepted values, in order of severity: "DEBUG", "INFO", "WARN", "ERROR", "FATAL", "PANIC"
+# Messages at and above the selected level will be logged.
+logLevel = "INFO"
+
+[traefikLog]
+  # By default the Traefik log is written to stdout in text format.
+  # filePath = "/path/to/traefik.log"
+  # format   = "json"
+
+[accessLog]
+  # By default it will write to stdout and produce logs in the textual Common Log Format (CLF), extended with additional fields.
+  # filePath = "/path/to/access.log"
+  # format = "json"
+  [accessLog.filters]
+    statusCodes = ["300-302", "400-410"]
+
+
+# Entrypoints to be used by frontends that do not specify any entrypoint.
+# Each frontend can specify its own entrypoints.
+#
+# Optional
+# Default: ["http"]
+#
+defaultEntryPoints = ["http", "https"]
+
+[entryPoints]
+  [entryPoints.http]
+    address = ":80"
+    compress = true
+    # [entryPoints.http.redirect]
+    # entryPoint = "https"
+  [entryPoints.https]
+    address = ":443"
+    compress = true
+    [entryPoints.https.tls]
+      minVersion = "VersionTLS11"
+
+# Enable retry sending request if network error
+# https://doc.traefik.io/traefik/v1.7/configuration/commons/#retry-configuration
+[retry]
+
+
+# Enable Docker Provider.
+[docker]
+
+  # Docker server endpoint. Can be a tcp or a unix socket endpoint.
+  #
+  # Required
+  #
+  endpoint = "unix:///var/run/docker.sock"
+
+  # Default base domain used for the frontend rules.
+  # Can be overridden by setting the "traefik.domain" label on a container.
+  #
+  # Optional
+  #
+  # domain = "webstatic.net"
+
+  # Enable watch docker changes.
+  #
+  # Optional
+  #
+  watch = true
+
+  # Override default configuration template.
+  # For advanced users :)
+  #
+  # Optional
+  #
+  # filename = "docker.tmpl"
+
+  # Override template version
+  # For advanced users :)
+  #
+  # Optional
+  # - "1": previous template version (must be used only with older custom templates, see "filename")
+  # - "2": current template version (must be used to force template version when "filename" is used)
+  #
+  # templateVersion = 2
+
+  # Expose containers by default in Traefik.
+  # If set to false, containers that don't have `traefik.enable=true` will be ignored.
+  #
+  # Optional
+  # Default: true
+  #
+  exposedByDefault = false
+
+  # Use the IP address from the binded port instead of the inner network one.
+  #
+  # In case no IP address is attached to the binded port (or in case
+  # there is no bind), the inner network one will be used as a fallback.
+  #
+  # Optional
+  # Default: false
+  #
+  #usebindportip = true
+
+  # Use Swarm Mode services as data provider.
+  #
+  # Optional
+  # Default: false
+  #
+  swarmMode = false
+
+  # Define a default docker network to use for connections to all containers.
+  # Can be overridden by the traefik.docker.network label.
+  #
+  # Optional
+  #
+  network = "alwatr-public-network"
+
+  # Enable docker TLS connection.
+  #
+  # Optional
+  #
+  #  [docker.tls]
+  #  ca = "/etc/ssl/ca.crt"
+  #  cert = "/etc/ssl/docker.crt"
+  #  key = "/etc/ssl/docker.key"
+  #  insecureSkipVerify = true
+
+
+[api]
+  # Name of the related entry point
+  #
+  # Optional
+  # Default: "traefik"
+  #
+  # entryPoint = "traefik"
+
+  # Enable Dashboard
+  #
+  # Optional
+  # Default: true
+  #
+  dashboard = true
+
+  # Enable debug mode.
+  # This will install HTTP handlers to expose Go expvars under /debug/vars and
+  # pprof profiling data under /debug/pprof/.
+  # Additionally, the log level will be set to DEBUG.
+  #
+  # Optional
+  # Default: false
+  #
+  #debug = true
+
+
+[acme]
+
+  # Email address used for registration.
+  #
+  # Required
+  #
+  email = "alimihandoost@gmail.com"
+
+  # File used for certificates storage.
+  #
+  # Optional (Deprecated)
+  #
+  #storageFile = "acme.json"
+
+  # File or key used for certificates storage.
+  #
+  # Required
+  #
+  storage = "acme.json"
+
+  # Entrypoint to proxy acme apply certificates to.
+  #
+  # Required
+  #
+  entryPoint = "https"
+
+  # If true, display debug log messages from the acme client library.
+  #
+  # Optional
+  # Default: false
+  #
+  acmeLogging = true
+
+  # If true, override certificates in key-value store when using storeconfig.
+  #
+  # Optional
+  # Default: false
+  #
+  # overrideCertificates = true
+
+  # Enable certificate generation on frontends host rules.
+  #
+  # Optional
+  # Default: false
+  #
+  onHostRule = true
+
+  # CA server to use.
+  # Uncomment the line to use Let's Encrypt's staging server,
+  # leave commented to go to prod.
+  #
+  # Optional
+  # Default: "https://acme-v02.api.letsencrypt.org/directory"
+  #
+  # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+
+  # KeyType to use.
+  #
+  # Optional
+  # Default: "RSA4096"
+  #
+  # Available values : "EC256", "EC384", "RSA2048", "RSA4096", "RSA8192"
+  #
+  # KeyType = "RSA4096"
+
+
+  # Use a HTTP-01 ACME challenge.
+  #
+  # Optional
+  #
+  [acme.httpChallenge]
+
+    # EntryPoint to use for the HTTP-01 challenges.
+    #
+    # Required
+    #
+    entryPoint = "http"
+
+# [file]
+
+# directory = "/conf.d/"
+# watch = true
