@@ -72,7 +72,7 @@ connection.reply({
 
 Request URL.
 
-### `connection.method: "*" | "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "CONNECT" | "TRACE" | "OPTIONS" | "PATCH"
+### `connection.method: "\*" | "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "CONNECT" | "TRACE" | "OPTIONS" | "PATCH"
 
 `
 
@@ -95,8 +95,8 @@ nanoServer.route('GET', '/', async (connection) => {
   connection.reply({
     ok: true,
     data: {
-    app: 'Alwatr Nanoservice Starter Kit',
-    message: 'Hello ;)',
+      app: 'Alwatr Nanoservice Starter Kit',
+      message: 'Hello ;)',
     },
   });
 });
