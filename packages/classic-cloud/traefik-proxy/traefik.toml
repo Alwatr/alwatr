@@ -32,6 +32,10 @@
     attempts = 4
     initialInterval = "100ms"
 
+
+  [http.middlewares.test-compress.compress]
+
+
 [providers]
   providersThrottleDuration = "2s"
   [providers.docker]
