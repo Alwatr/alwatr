@@ -20,7 +20,7 @@ time docker compose pull
 
 echoStep "Starting..."
 
-time docker compose up --detach --remove-orphans --force-recreate
+time docker compose up --detach --remove-orphans #--force-recreate
 
 echoStep "Done"
 

@@ -1,92 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Toggle Wordpress Cache</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toggle Wordpress Cache</title>
 
-  <style type="text/css">
-    body {
-      padding-top: 3em;
-      text-align: center;
-      background-color: #eee;
-    }
+    <style type="text/css">
+      body {
+        padding-top: 3em;
+        text-align: center;
+        background-color: #eee;
+      }
 
-    button {
-      background-color: initial;
-      background-image: linear-gradient(hsl(240deg 25% 35%), hsl(240deg 25% 15%));
-      border-radius: 8px;
-      border-width: 0;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, .1),0 3px 6px rgba(0, 0, 0, .05);
-      color: #fff;
-      cursor: pointer;
-      display: inline-block;
-      font-family: expo-brand-demi,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-      font-size: 1.2em;
-      outline: none;
-      text-decoration: none;
-      transition: all 150ms;
-      white-space: nowrap;
-      user-select: none;
-      -webkit-user-select: none;
-      padding: 1em 2em;
-    }
+      button {
+        background-color: initial;
+        background-image: linear-gradient(hsl(240deg 25% 35%), hsl(240deg 25% 15%));
+        border-radius: 8px;
+        border-width: 0;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.05);
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: expo-brand-demi, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+          Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+        font-size: 1.2em;
+        outline: none;
+        text-decoration: none;
+        transition: all 150ms;
+        white-space: nowrap;
+        user-select: none;
+        -webkit-user-select: none;
+        padding: 1em 2em;
+      }
 
-    button:hover {
-      box-shadow: rgba(0, 1, 0, .2) 0 2px 8px;
-      opacity: .85;
-    }
+      button:hover {
+        box-shadow: rgba(0, 1, 0, 0.2) 0 2px 8px;
+        opacity: 0.85;
+      }
 
-    button:focus,
-    button:active {
-      outline: 0;
-      box-shadow: rgba(0, 0, 0, .5) 0 0 0 3px;
-    }
-  </style>
-</head>
-<body>
-  <button id="btn">...</button>
-  <p id="out"></p>
+      button:focus,
+      button:active {
+        outline: 0;
+        box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn">...</button>
+    <p id="out"></p>
 
-  <script type="text/javascript">
-    const cookieList = ['no_cache', 'comment_author', 'wp-postpass', 'wordpress_test_cookie', 'wordpress_logged_in'];
+    <script type="text/javascript">
+      const cookieList = ['no_cache', 'comment_author', 'wp-postpass', 'wordpress_test_cookie', 'wordpress_logged_in'];
 
-    const cache = {
-      get state () {
-        for(const cookieName of cookieList) {
-          if(document.cookie.includes(cookieName)) {
-            return false;
-          }
-        }
-        return true;
-      },
-      set state (bool) {
-        if (bool) {
-          for(const cookieName of cookieList) {
-            if(document.cookie.includes(cookieName)) {
-              document.cookie = cookieName + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      const cache = {
+        get state() {
+          for (const cookieName of cookieList) {
+            if (document.cookie.includes(cookieName)) {
+              return false;
             }
           }
-        }
-        else {
-          document.cookie = 'no_cache=true';
-        }
+          return true;
+        },
+        set state(bool) {
+          if (bool) {
+            for (const cookieName of cookieList) {
+              if (document.cookie.includes(cookieName)) {
+                document.cookie = cookieName + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+              }
+            }
+          } else {
+            document.cookie = 'no_cache=true';
+          }
+        },
+      };
+
+      function update() {
+        btn.innerText = `Toggle Cache: ${cache.state ? 'On' : 'Off'}`;
+        out.innerText = unescape(document.cookie.trim()) || 'No Cookies';
       }
-    };
 
-    function update () {
-      btn.innerText = `Toggle Cache: ${cache.state ? 'On' : 'Off'}`;
-      out.innerText = unescape(document.cookie.trim()) || 'No Cookies';
-    }
+      function toggleCache() {
+        cache.state = !cache.state;
+        update();
+      }
 
-    function toggleCache () {
-      cache.state = !cache.state;
       update();
-    }
 
-    update();
-
-    btn.addEventListener('click', toggleCache);
-  </script>
-</body>
+      btn.addEventListener('click', toggleCache);
+    </script>
+  </body>
 </html>

@@ -52,8 +52,11 @@
 [certificatesResolvers]
   [certificatesResolvers.default]
     [certificatesResolvers.default.acme]
-      email = "alimihandoost@gmail.com"
-      storage = "acme.json"
+      email = "njfamirm@gmail.com"
+      storage = "/acme.json"
       certificatesDuration = 0
+      caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
       [certificatesResolvers.default.acme.httpChallenge]
-        entryPoint = "http"
+        entryPoint = "websecure"
+      [certificatesResolvers.default.acme.tlsChallenge]
+

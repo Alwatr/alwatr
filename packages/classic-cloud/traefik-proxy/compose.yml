@@ -7,10 +7,10 @@ services:
   service-proxy:
     image: ${TRAEFIK_IMAGE}
 
-    hostname: traefik-proxy.alwatr.io
+    # hostname: traefik-proxy.alwatr.io
 
-    networks:
-      - alwatr-public-network
+    # networks:
+    #   - alwatr-public-network
 
     restart: unless-stopped
 
@@ -24,8 +24,8 @@ services:
         max-file: '2'
 
     ports:
-      - ${HOST}:80:80
-      - ${HOST}:443:443
+      - 80:80
+      - 443:443
 
     volumes:
       - type: bind
@@ -38,9 +38,17 @@ services:
         source: ./_data/acme.json
         target: /acme.json
 
-    labels:
-      traefik.enable: false
-      traefik.port: 8080
-      traefik.http.routers.router0.rule: Host(${DOMAIN})
-      traefik.http.middlewares.auth.basicauth.users: ${AUTH}
+    # labels:
+    # traefik.enable: true
+    # traefik.port: 8080
+    # traefik.http.routers.router0.rule: Host(`${DOMAIN}`)
+    # traefik.http.middlewares.auth.basicauth.users: ${AUTH}
 
+  whoami:
+    image: 'traefik/whoami'
+    container_name: 'simple-service'
+    labels:
+      traefik.enable: true
+      traefik.http.routers.whoami.rule: Host(`whoami.localhost`)
+      traefik.http.routers.whoami.entrypoints: web
+      # traefik.http.routers.whoami.tls.certresolver: default
