@@ -38,8 +38,8 @@ services:
         source: ./_data/acme.json
         target: /acme.json
 
-    # labels:
-    # traefik.enable: true
+    labels:
+      traefik.enable: false
     # traefik.port: 8080
     # traefik.http.routers.router0.rule: Host(`${DOMAIN}`)
     # traefik.http.middlewares.auth.basicauth.users: ${AUTH}
