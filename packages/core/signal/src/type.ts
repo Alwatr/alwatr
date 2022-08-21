@@ -98,9 +98,9 @@ export type SignalProvider<SignalName extends keyof AlwatrRequestSignals> = (
  */
 export interface ListenerObject<SignalName extends keyof AlwatrSignals> {
   /**
-   * Listener symbol id (unique).
+   * Listener number id (unique).
    */
-  id: symbol;
+  id: number;
 
   /**
    * If true, the listener will be called only once and removed automatically after first call
