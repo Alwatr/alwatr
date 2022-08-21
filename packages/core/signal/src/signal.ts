@@ -23,11 +23,13 @@ import type {
  */
 export class SignalInterface<SignalName extends keyof AlwatrSignals> {
   protected _signal;
+  protected _requestSignal;
   protected _logger;
 
   constructor(signalName: SignalName) {
     this._logger = createLogger(`signal<${signalName}>`);
     this._signal = __getSignalObject(signalName);
+    this._requestSignal = __getSignalObject(`request-${signalName}` as unknown as SignalName);
   }
 
   /**
@@ -131,12 +133,10 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    * });
    * ```
    */
-  setProvider(signalProvider: SignalProvider<SignalName>, options?: SignalProviderOptions): symbol {
+  setProvider(signalProvider: SignalProvider<SignalName>, options?: SignalProviderOptions): ListenerObject<SignalName> {
     this._logger.logMethodArgs('setProvider', {options});
-    return _setSignalProvider(this.name, signalProvider, options).id;
+    return _setSignalProvider(this._signal, signalProvider, options);
   }
-
-  // @TODO: removeProvider(signalName): void
 
   /**
    * Dispatch request signal and wait for answer (wait for new signal dispatched).
@@ -154,8 +154,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
   request(requestParam: AlwatrRequestSignals[SignalName]): Promise<AlwatrSignals[SignalName]> {
     this._logger.logMethodArgs('request', {requestParam});
     const nextSignalValuePromise = this.getNextSignalValue();
-    _dispatchSignal(
-      `request-${this.name}` as unknown as SignalName,
+    _dispatchSignal(this._requestSignal,
       requestParam as unknown as AlwatrSignals[SignalName], // mastmalize to avoid type error
     );
     return nextSignalValuePromise;
@@ -217,7 +216,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    */
   dispatch(signalValue: AlwatrSignals[SignalName], options?: DispatchOptions): void {
     this._logger.logMethodArgs('dispatch', {signalValue, options});
-    _dispatchSignal(this._signal.name, signalValue, options);
+    _dispatchSignal(this._signal, signalValue, options);
   }
 
   /**
@@ -232,7 +231,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    */
   addListener(listener: ListenerCallback<SignalName>, options?: ListenerOptions): ListenerInterface<SignalName> {
     this._logger.logMethodArgs('addListener', {listener, options});
-    const listenerId = _addSignalListener(this._signal.name, listener, options);
+    const listenerId = _addSignalListener(this._signal, listener, options);
     return new ListenerInterface(this._signal, listenerId);
   }
 }
@@ -279,6 +278,6 @@ export class ListenerInterface<SignalName extends keyof AlwatrSignals> {
    */
   remove(): void {
     this._logger.logMethod('remove');
-    _removeSignalListener(this._signal.name, this._listener.id);
+    _removeSignalListener(this._signal, this._listener.id);
   }
 }
