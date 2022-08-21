@@ -19,9 +19,9 @@ alwatrRegisteredList.push({
 });
 
 /**
- * Signal `id` counter
+ * Listener `id`
  */
-let signalCounter = 0;
+let _lastListenerId = 0;
 
 /**
  * Signal stack database.
@@ -93,9 +93,8 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
 ): ListenerObject<SignalName> {
   logger.logMethodArgs('addSignalListener', {signal, options});
 
-  // const signal = __getSignalObject(signalName);
   const listener: ListenerObject<SignalName> = {
-    id: signalCounter++,
+    id: ++_lastListenerId,
     once: options?.once ?? false,
     disabled: options?.disabled ?? false,
     callback: signalCallback,
@@ -172,13 +171,12 @@ export function _removeSignalListener<SignalName extends keyof AlwatrSignals>(
  * dispatchSignal('content-change', content);
  */
 export function _dispatchSignal<SignalName extends keyof AlwatrSignals>(
-    signalName: SignalName,
+    signal: SignalObject<SignalName>,
     value: AlwatrSignals[SignalName],
     options?: DispatchOptions,
 ): void {
-  logger.logMethodArgs('dispatchSignal', {signalName, value, options});
+  logger.logMethodArgs('dispatchSignal', {signal, value, options});
 
-  const signal = __getSignalObject(signalName);
   // set value before check signal.debounced for act like throttle (call listeners with last dispatch value).
   signal.value = value;
 
@@ -216,16 +214,15 @@ export function _dispatchSignal<SignalName extends keyof AlwatrSignals>(
  * ```
  */
 export function _setSignalProvider<SignalName extends keyof AlwatrRequestSignals>(
-    signalName: SignalName,
+    signal: SignalObject<SignalName>,
     signalProvider: SignalProvider<SignalName>,
     options?: SignalProviderOptions,
 ): ListenerObject<SignalName> {
-  logger.logMethodArgs('setSignalProvider', {signalName, options});
+  logger.logMethodArgs('setSignalProvider', {signal, options});
 
-  const signal = __getSignalObject(`request-${signalName}` as unknown as SignalName);
   if (signal.listenerList.length > 0) {
     logger.accident('setSignalProvider', 'signal_provider_already_set', 'another provider defined and will removed', {
-      signalName,
+      signalName: signal.name,
     });
     signal.listenerList = [];
   }
@@ -234,7 +231,7 @@ export function _setSignalProvider<SignalName extends keyof AlwatrRequestSignals
     const signalValue = await signalProvider(requestParam);
     if (signalValue !== undefined) {
       // null can be a valid value.
-      _dispatchSignal(signalName, signalValue, {debounce: options?.debounce ?? true});
+      _dispatchSignal(signal, signalValue, {debounce: options?.debounce ?? true});
     }
   };
 
