@@ -220,11 +220,12 @@ export function _setSignalProvider<SignalName extends keyof AlwatrRequestSignals
 ): ListenerObject<SignalName> {
   logger.logMethodArgs('setSignalProvider', {signal, options});
 
-  if (signal.listenerList.length > 0) {
+  const requestSignal = __getSignalObject(`request-${signal.name}` as unknown as SignalName);
+  if (requestSignal.listenerList.length > 0) {
     logger.accident('setSignalProvider', 'signal_provider_already_set', 'another provider defined and will removed', {
       signalName: signal.name,
     });
-    signal.listenerList = [];
+    requestSignal.listenerList = [];
   }
 
   const _callback = async (requestParam: AlwatrRequestSignals[SignalName]): Promise<void> => {
@@ -235,7 +236,7 @@ export function _setSignalProvider<SignalName extends keyof AlwatrRequestSignals
     }
   };
 
-  return _addSignalListener(signal, _callback as unknown as ListenerCallback<SignalName>, {
+  return _addSignalListener(requestSignal, _callback as unknown as ListenerCallback<SignalName>, {
     receivePrevious: options?.receivePrevious ?? true,
   });
 }
