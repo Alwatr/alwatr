@@ -59,11 +59,10 @@ cp -afv $envPath .env
 $rsync ./ $DEPLOY_HOST:$deployPath
 rm -fv .env
 
-if [[ "${1:-}" == "--down" ]]
+if [ "${1:-}" = "down" ]
 then
   echoStep "Down..."
   remoteShell $DEPLOY_HOST "cd $deployPath && docker compose down --remove-orphans"
-else
   echoStep "Up..."
   remoteShell $DEPLOY_HOST "cd $deployPath && chmod +x _up.sh && ./_up.sh"
 fi
