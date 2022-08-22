@@ -1,7 +1,8 @@
-# https://hub.docker.com/_/wordpress/
 ARG PHP_VERSION=8.1
+ARG IMAGE_NAME=docker.io/php:${PHP_VERSION}-apache
 
-FROM docker.io/php:${PHP_VERSION}-apache
+FROM $IMAGE_NAME
+
 WORKDIR /var/www/html
 EXPOSE 80
 
