@@ -1,4 +1,4 @@
-# @alwatr/nginx
+# @alwatr/nginx - Alwatr Accelerated Nginx Container
 
 High performance, optimized NGINX for server web applications and api proxy with fast cache.
 
