@@ -37,7 +37,7 @@ contentChangeSignal1.dispatch({a: 1, b: 2});
 
 contentChangeSignal1.dispatch({a: 2, b: 3});
 
-// Multiple dispatch debounced and last value dispatched after an animate frame.
+// Multiple dispatch debounced and last value dispatched after an animation frame.
 contentChangeSignal1.dispatch({a: 3, b: 4});
 ```
 
@@ -175,7 +175,7 @@ Get signal value from last dispatched signal (if any) or wait for new signal rec
 Example:
 
 ```ts
-// get signal value from last dispatched signal (if any) or wait new signal received.
+// get signal value from last dispatched signal (if any) or wait for a new signal to receive
 const content = await contentChangeSignal.getSignalValue();
 ```
 
@@ -191,7 +191,7 @@ contentChangeSignal.dispatch(content);
 
 ### `addListener(listener)`
 
-Add new listener to the signal.
+Add a new listener to the signal.
 
 Example:
 
@@ -215,7 +215,7 @@ listener.disabled = true;
 
 #### `listener.remove()`
 
-Remove listener from specific signal.
+Remove a listener from specific signal.
 
 Example:
 
