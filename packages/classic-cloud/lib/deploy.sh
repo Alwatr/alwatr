@@ -34,6 +34,12 @@ echo "DEPLOY_HOST: $DEPLOY_HOST"
 echo "DEPLOY_NAME: $DEPLOY_NAME"
 echo "DEPLOY_PATH: $deployPath"
 
+echo "Deploy on: $thisPath"
+ls -lAhF
+
+echo "$envPath"
+cat $envPath
+
 echoStep () {
   echo "🔸 $1"
 }
@@ -63,6 +69,18 @@ if [ "${1:-}" = "down" ]
 then
   echoStep "Down..."
   remoteShell $DEPLOY_HOST "cd $deployPath && docker compose down --remove-orphans"
+
+elif [ "${1:-}" = "logs" ]
+then
+  echoStep "Logs..."
+  remoteShell $DEPLOY_HOST "cd $deployPath && docker compose logs --tail=300 --follow" || true
+
+elif [ "${1:-}" = "up" ]
+then
   echoStep "Up..."
   remoteShell $DEPLOY_HOST "cd $deployPath && chmod +x _up.sh && ./_up.sh"
+
+else
+  echoStep "List..."
+  remoteShell $DEPLOY_HOST "cd $deployPath && docker compose ps --all"
 fi
