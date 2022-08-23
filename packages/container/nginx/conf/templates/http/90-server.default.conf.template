@@ -1,46 +1,8 @@
 server {
+  listen 80 default_server;
+  server_name _;
+  root /var/www/html;
+
   include /etc/nginx/conf.d/http/server.default/*.conf;
   include /etc/nginx/conf.d/http/server/*.conf;
-
-  error_page 401 403 404 /nginx-error/40x.html;
-  error_page 500 501 503 504 /nginx-error/50x.html;
-
-  add_header  Strict-Transport-Security "max-age=31536000; includeSubDomains; preload;" always; # always https
-  add_header  X-Frame-Options SAMEORIGIN;
-  add_header  X-Content-Type-Options nosniff;
-  add_header  X-XSS-Protection "1; mode=block";
-  add_header  "X-UA-Compatible" "IE=Edge";
-  add_header  X-Cache $upstream_cache_status;
-  add_header  X-Skip-Cache $no_cache; # for debug
-
-  # limit request disabled behind edge proxy
-  limit_req zone=req_zone burst=150 nodelay;
-
-  location / {
-    # This is cool because no php is touched for static content.
-    try_files $uri $uri/ /index.php$is_args$args;
-  }
-
-  location @php-fpm {
-    try_files     $uri =404;
-    fastcgi_pass  php-fpm;
-    include       /etc/nginx/conf.d/fastcgi.conf;
-  }
-
-  location ~ [^/]\.php(/|$) {
-    try_files     $uri $uri/ /index.php$is_args$args @php-fpm;
-    fastcgi_pass  php-fpm;
-    include       /etc/nginx/conf.d/fastcgi.conf;
-  }
-
-  location = /toggle-cache.html {
-    default_type text/html;
-    alias /var/www/toggle-cache.html;
-  }
-
-  location /server-info {
-    access_log   off;
-    default_type text/plain;
-    return       200 "Alwatr Accelerated Web Server";
-  }
 }

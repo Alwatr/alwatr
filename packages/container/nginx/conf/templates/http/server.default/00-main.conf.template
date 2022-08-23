@@ -1,5 +1,6 @@
-listen $NGINX_LISTEN_PORT default_server;
+listen 80 default_server;
 # listen [::]:80 default_server;
+
 server_name _;
 
-root $NGINX_DEFAULT_ROOT;
+root /var/www/html;

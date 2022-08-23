@@ -17,6 +17,3 @@ open_file_cache_min_uses 2;
 open_file_cache_errors   on;
 # We need `open_log_file_cache` becouse https://serverfault.com/questions/547421
 open_log_file_cache      max=10000 inactive=30s min_uses=2;
-
-
-limit_req_zone  $binary_remote_addr zone=req_zone:10m rate=500r/s;

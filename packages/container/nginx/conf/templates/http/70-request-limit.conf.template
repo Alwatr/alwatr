@@ -1,0 +1,3 @@
+limit_req_zone $binary_remote_addr zone=req_zone:10m rate=200r/s;
+
+limit_req zone=req_zone burst=30 nodelay;
