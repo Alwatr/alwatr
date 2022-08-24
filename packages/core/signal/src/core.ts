@@ -54,7 +54,8 @@ export function _getSignalObject<SignalName extends keyof AlwatrSignals>(
 
 function __callListeners<SignalName extends keyof AlwatrSignals>(signal: SignalObject<SignalName>): void {
   logger.logMethodArgs('_callListeners', {signalName: signal.name, signalValue: signal.value});
-  if (signal.value === undefined) { // null is a valid value for signal.
+  if (signal.value === undefined) {
+    // null is a valid value for signal.
     logger.accident('_callListeners', 'no_signal_value', 'signal must have a value', {
       signalName: signal.name,
     });
@@ -111,7 +112,8 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
   let callbackCalled = false;
 
   // Run callback for old dispatch signal
-  if (signal.value !== undefined) { // null is a valid value for signal.
+  if (signal.value !== undefined) {
+    // null is a valid value for signal.
     if (options?.receivePrevious === 'Immediate') {
       logger.incident('_addSignalListener', 'call_signal_callback', 'run callback with previous signal value!', {
         signalName: signal.name,
@@ -127,7 +129,8 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
       callbackCalled = true;
     } else if (options?.receivePrevious === true) {
       requestAnimationFrame(() => {
-        if (signal.value !== undefined) { // null is a valid value for signal.
+        if (signal.value !== undefined) {
+          // null is a valid value for signal.
           logger.incident('_addSignalListener', 'call_signal_callback', 'run callback with previous signal value!', {
             signalName: signal.name,
             mode: 'Delay',
@@ -247,7 +250,8 @@ export function _setSignalProvider<SignalName extends keyof AlwatrSignals>(
 
   const _callback = async (requestParam: AlwatrRequestSignals[SignalName]): Promise<void> => {
     const signalValue = await signalProvider(requestParam);
-    if (signalValue !== undefined) { // null is a valid value for signal.
+    if (signalValue !== undefined) {
+      // null is a valid value for signal.
       _dispatchSignal(signal, signalValue, {debounce: options?.debounce ?? true});
     }
   };
