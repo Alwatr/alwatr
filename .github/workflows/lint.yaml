@@ -3,38 +3,52 @@
 name: Lint
 
 on:
+  workflow_dispatch:
+
   pull_request:
     paths:
-      - "**/*.{ts,md,html,json}"
-      - "*.md"
+      - "**.ts"
+
   push:
     paths:
-      - "**/*.{ts,md,html,json}"
-      - "*.md"
-
+      - "**.ts"
     branches:
       - next
       - main
       - release/*
 
 env:
-  NODE_VERSION: '16.x'
+  NODE_VERSION: latest
 
 jobs:
-  lint:
+  lint-ts:
+    name: Run eslint scanning
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      security-events: write
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'yarn'
+          cache: yarn
 
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+      - name: Run ESLint
+        run: yarn run eslint .
+          --config .eslintrc.json
+          --ext .ts,.tsx
+          --format @microsoft/eslint-formatter-sarif
+          --output-file eslint-results.sarif
+        continue-on-error: true
 
-      - name: Lint files
-        run: yarn lint
+      - name: Upload analysis results to GitHub
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: eslint-results.sarif
+          wait-for-processing: true
