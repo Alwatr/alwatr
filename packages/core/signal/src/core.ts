@@ -100,7 +100,7 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
     listenerCallback: ListenerCallback<SignalName>,
     options?: ListenerOptions,
 ): ListenerObject<SignalName> {
-  logger.logMethodArgs('_addSignalListener', {signal, options});
+  logger.logMethodArgs('_addSignalListener', {signalName: signal.name, options});
 
   const listener: ListenerObject<SignalName> = {
     id: ++_lastListenerId,
@@ -169,7 +169,7 @@ export function _removeSignalListener<SignalName extends keyof AlwatrSignals>(
     signal: SignalObject<SignalName>,
     listenerId: number,
 ): void {
-  logger.logMethodArgs('_removeSignalListener', {signal, listenerId});
+  logger.logMethodArgs('_removeSignalListener', {signalName: signal.name, listenerId});
   const listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listenerId);
   if (listenerIndex !== -1) {
     signal.listenerList.splice(listenerIndex, 1);
@@ -188,7 +188,7 @@ export function _dispatchSignal<SignalName extends keyof AlwatrSignals>(
     value: AlwatrSignals[SignalName],
     options?: DispatchOptions,
 ): void {
-  logger.logMethodArgs('dispatchSignal', {signal, value, options});
+  logger.logMethodArgs('dispatchSignal', {signalName: signal.name, value, options});
 
   // set value before check signal.debounced for act like throttle (call listeners with last dispatch value).
   signal.value = value;

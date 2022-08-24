@@ -232,7 +232,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
       listenerCallback: ListenerCallback<SignalName>,
       options?: ListenerOptions,
   ): ListenerInterface<SignalName> {
-    this._logger.logMethodArgs('addListener', {listenerCallback, options});
+    this._logger.logMethodArgs('addListener', {options});
     const listener = _addSignalListener(this._signal, listenerCallback, options);
     return new ListenerInterface(this._signal, listener);
   }
