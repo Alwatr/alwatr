@@ -127,7 +127,7 @@ contentChangeSignal.dispatched; // false
 
 ### `setProvider(provider)`
 
-Define signal provider, which will be called when signal requested (addRequestSignalListener).
+Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
 
 Example:
 
@@ -191,7 +191,7 @@ contentChangeSignal.dispatch(content);
 
 ### `addListener(listener)`
 
-Add a new listener to the signal.
+Adds a new listener to the signal.
 
 Example:
 
@@ -215,7 +215,7 @@ listener.disabled = true;
 
 #### `listener.remove()`
 
-Remove a listener from specific signal.
+Removes a listener from the signal.
 
 Example:
 
