@@ -4,7 +4,12 @@ name: Build
 
 on:
   pull_request:
+    paths:
+      - "**/*.ts"
   push:
+    paths:
+      - "**/*.ts"
+
     branches:
       - next
       - main
@@ -20,10 +25,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
 
-      - run: yarn install --frozen-lockfile
-      - run: yarn build:ts
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Typescript
+        run: yarn build:ts
