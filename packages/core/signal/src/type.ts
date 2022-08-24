@@ -3,7 +3,7 @@ declare global {
    * Global signals value type registry.
    */
   interface AlwatrSignals {
-    readonly 'easter-egg': number;
+    readonly 'easter-egg': string;
   }
 
   /**
