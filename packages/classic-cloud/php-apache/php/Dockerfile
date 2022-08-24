@@ -1,6 +1,5 @@
 ARG PHP_VERSION=8.1
-ARG WORDPRESS_VERSION=6.0
-ARG IMAGE_NAME=docker.io/wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}-fpm
+ARG IMAGE_NAME=docker.io/php:${PHP_VERSION}-apache
 
 FROM $IMAGE_NAME
 
@@ -30,6 +29,15 @@ RUN set -ex; \
   else \
     echo "Installing php extensions: $PHP_EXT_INSTALL"; \
     docker-php-ext-install $PHP_EXT_INSTALL; \
+  fi
+
+ARG APACHE_MODULE
+RUN set -ex; \
+  if [ -z "$APACHE_MODULE" ]; then \
+    echo "Skip apache modules"; \
+  else \
+    echo "Installing apache modules: $APACHE_MODULE"; \
+    a2enmod $APACHE_MODULE; \
   fi
 
 ARG SOURCEGUARDIAN_LOADER=0

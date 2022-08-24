@@ -1,9 +1,7 @@
-version: '2'
-
 networks:
   alwatr-public-network:
-    external:
-      name: alwatr-public-network
+    name: alwatr-public-network
+    external: true
 
 services:
   service-proxy:

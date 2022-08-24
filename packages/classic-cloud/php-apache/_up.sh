@@ -15,7 +15,6 @@ echoStep () {
 echoStep "Preparing..."
 
 [ ! -d _data ] && mkdir _data
-[ -f _data/wp-config.php ] && mv -fv "_data/wp-config.php" "_data/wp-config.php.bak"
 
 time docker compose pull
 time docker compose build --pull
@@ -26,8 +25,8 @@ time docker compose up --detach --remove-orphans --force-recreate
 
 echoStep "Fix permitions..."
 
-time docker compose exec php "fix-permition.sh" || true
+time docker compose exec --index 1 --user root php "fix-permition.sh" || true
 
 echoStep "Done"
 
-docker compose logs --tail=300 --follow || true
+docker compose logs --tail 300 --follow || true

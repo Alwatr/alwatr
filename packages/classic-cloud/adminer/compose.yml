@@ -1,25 +1,21 @@
-version: '2'
-
 networks:
   alwatr-private-network:
-    external:
-      name: alwatr-private-network
+    name: alwatr-private-network
+    external: true
   alwatr-public-network:
-    external:
-      name: alwatr-public-network
+    name: alwatr-public-network
+    external: true
 
 services:
-  dbadmin:
+  adminer:
     image: ${ADMINER_IMAGE}
-
-    hostname: adminer.alwatr.io
 
     cpu_shares: 256
     mem_limit: 256m
 
     stop_grace_period: 2s
 
-    restart: "no"
+    restart: unless-stopped
 
     networks:
       - alwatr-private-network
