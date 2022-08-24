@@ -12,7 +12,7 @@ document.getElementById('requestButton')?.addEventListener('click', async () => 
   console.info('1. request with 1');
   const value = await signal.request(1);
   console.info('3. new signal value', {value});
-});
+})
 
 document.getElementById('requestButton2')?.addEventListener('click', async () => {
   console.info('1. request with 1');
