@@ -32,7 +32,7 @@ env:
 
 jobs:
   lint-ts:
-    name: Run eslint scanning
+    name: ESLint Scanning
     runs-on: ubuntu-latest
 
     permissions:
