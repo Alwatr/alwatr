@@ -1,8 +1,10 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: Container Publish
+name: Publish Containers
 
 on:
+  workflow_dispatch:
+
   push:
     branches:
       - next
@@ -12,6 +14,7 @@ on:
   pull_request:
     paths:
       - 'packages/container/**'
+      - '.github/workflows/publish-container.yml'
     branches:
       - next
 
@@ -30,6 +33,13 @@ jobs:
       matrix:
         include:
           - image: alpine
+            version:
+              short: 3
+              full: 3.16
+          - image: tdlib
+            version:
+              short: 1
+              full: 1.8
 
     permissions:
       contents: read
@@ -50,8 +60,10 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{version}},prefix=alwatr-
+            type=semver,pattern={{major}}.{{minor}},prefix=alwatr-
+            type=raw,value=${{matrix.version.short}}
+            type=raw,value=${{matrix.version.full}}
 
       - name: Install cosign
         if: github.event_name != 'pull_request'
