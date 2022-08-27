@@ -42,8 +42,10 @@ jobs:
       - name: Run ESLint
         run: yarn lint:ts
 
+      - run: yarn config get registry
+
       - name: Publish
-        run: cat ~/.npmrc && yarn lerna publish from-package --registry https://npm.pkg.github.com/ --yes
+        run: yarn lerna publish from-package --registry https://npm.pkg.github.com/ --yes
         env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
