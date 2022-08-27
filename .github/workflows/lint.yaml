@@ -6,12 +6,16 @@ on:
   workflow_dispatch:
 
   pull_request:
+    paths:
+      - '**.ts'
     branches:
       - next*
       - main
       - release/*
 
   push:
+    paths:
+      - '**.ts'
     branches:
       - next*
       - main
