@@ -6,10 +6,12 @@ on:
   workflow_dispatch:
 
   release:
-    types: [created]
+    types:
+      - created
 
   push:
-    tags: [ 'v*.*.*' ]
+    tags:
+      - 'v*.*.*'
 
 env:
   NODE_VERSION: latest
