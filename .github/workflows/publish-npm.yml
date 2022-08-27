@@ -3,8 +3,11 @@
 name: Publish NPM
 
 on:
+  workflow_dispatch:
+
   release:
     types: [created]
+
   push:
     tags: [ 'v*.*.*' ]
 
@@ -13,7 +16,7 @@ env:
 
 jobs:
   publish-npm:
-    if: github.repository == 'AliMD/alwatr'
+    if: github.repository_owner == 'AliMD'
 
     name: Publish NPM
     runs-on: ubuntu-latest
