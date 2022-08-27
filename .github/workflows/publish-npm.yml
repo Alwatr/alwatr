@@ -5,16 +5,16 @@ name: Publish NPM
 on:
   release:
     types: [created]
-
   push:
-    branches:
-      - "feat/deploy-workflows" # test
+    tags: [ 'v*.*.*' ]
 
 env:
   NODE_VERSION: latest
 
 jobs:
   publish-npm:
+    if: github.repository == 'AliMD/alwatr'
+
     name: Publish NPM
     runs-on: ubuntu-latest
 
