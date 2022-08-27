@@ -3,6 +3,8 @@
 name: Container Publish
 
 on:
+  workflow_dispatch:
+
   push:
     branches:
       - next
