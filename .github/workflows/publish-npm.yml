@@ -32,6 +32,8 @@ jobs:
           node-version: ${{env.NODE_VERSION}}
           registry-url: https://npm.pkg.github.com/
           cache: yarn
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN_PACKAGE}}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -42,10 +44,12 @@ jobs:
       - name: Run ESLint
         run: yarn lint:ts
 
-      - run: npm config get registry && yarn config get registry && cat $NPM_CONFIG_USERCONFIG
+      - run: cat ${NPM_CONFIG_USERCONFIG} && echo "NODE_AUTH_TOKEN=${NODE_AUTH_TOKEN:0:5}"
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN_PACKAGE}}
 
       - name: Publish
         run: yarn lerna publish from-package --registry https://npm.pkg.github.com/ --yes
         env:
-          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN_PACKAGE}}
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN_PACKAGE}}
