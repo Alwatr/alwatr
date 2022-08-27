@@ -30,14 +30,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{env.NODE_VERSION}}
-          registry-url: https://npm.pkg.github.com/
+          registry-url: https://registry.npmjs.org/
           cache: yarn
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN_PACKAGE}}
-
-      - run: echo -e '\n@alwatr:registry=https://npm.pkg.github.com/' >> ${NPM_CONFIG_USERCONFIG} && cat ${NPM_CONFIG_USERCONFIG} && echo "NODE_AUTH_TOKEN=${NODE_AUTH_TOKEN:0:10}"
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN_PACKAGE}}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -51,6 +45,6 @@ jobs:
         run: yarn lint:ts
 
       - name: Publish
-        run: yarn lerna publish from-package --registry https://npm.pkg.github.com/ --yes
+        run: yarn run publish --yes
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN_PACKAGE}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
