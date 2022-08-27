@@ -17,9 +17,14 @@ RUN set -ex; \
       zlib-static \
       linux-headers; \
     curl -sSLo tdlib.tar.gz https://github.com/tdlib/td/archive/refs/tags/v${TDLIB_VERSION}.tar.gz; \
-    tar -xzf tdlib.tar.gz && cd td-${TDLIB_VERSION}; \
+    mkdir /tmp/td/ && cd /tmp/td/; \
+    tar -xzvf tdlib.tar.gz && cd td-${TDLIB_VERSION}; \
     mkdir build && cd build; \
     cmake -DCMAKE_BUILD_TYPE=Release ..; \
+    ls -lAhFtr; \
     cmake --build .; \
-    make install;
-    # apk del .build-deps;
+    ls -lAhFtr; \
+    make install; \
+    ls -lAhFtr /usr/local/lib/; \
+    apk del .build-deps; \
+    rm -rfv /tmp/td/;

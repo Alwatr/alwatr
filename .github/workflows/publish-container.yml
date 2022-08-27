@@ -36,6 +36,10 @@ jobs:
             version:
               short: 3
               full: 3.16
+          - image: tdlib
+            version:
+              short: 1
+              full: 1.8
 
     permissions:
       contents: read
