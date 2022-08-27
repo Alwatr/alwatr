@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: Publish NPM
+
+on:
+  release:
+    types: [created]
+
+  push:
+    branches:
+      - "feat/deploy-workflows" # test
+
+env:
+  NODE_VERSION: latest
+
+jobs:
+  publish-npm:
+    name: Publish NPM
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{env.NODE_VERSION}}
+          registry-url: https://npm.pkg.github.com/
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Typescript
+        run: yarn build:ts
+
+      - name: Run ESLint
+        run: yarn lint:ts
+
+      - name: Publish
+        run: yarn run publish --yes
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
