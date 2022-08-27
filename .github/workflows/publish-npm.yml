@@ -42,7 +42,7 @@ jobs:
       - name: Run ESLint
         run: yarn lint:ts
 
-      - run: yarn config get registry
+      - run: npm config get registry && yarn config get registry && cat $NPM_CONFIG_USERCONFIG
 
       - name: Publish
         run: yarn lerna publish from-package --registry https://npm.pkg.github.com/ --yes
