@@ -30,6 +30,9 @@ jobs:
       matrix:
         include:
           - image: alpine
+            versions:
+              - 3
+              - 3.16
 
     permissions:
       contents: read
@@ -50,8 +53,9 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{version}},prefix=alwatr-
+            type=semver,pattern={{major}}.{{minor}},prefix=alwatr-
+            type=raw,value=${{matrix.versions}}
 
       - name: Install cosign
         if: github.event_name != 'pull_request'
