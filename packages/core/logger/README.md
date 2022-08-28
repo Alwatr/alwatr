@@ -19,12 +19,6 @@ function sayHello(name: string) {
 Many of the methods in the logger are no-ops when the debug mode is off.
 Please remember to **reload** the window after changing the debug mode.
 
-- Display all log
-
-  ```ts
-  window.localStorage?.setItem('ALWATR_LOG', '*');
-  ```
-
 - Debugging all scopes
 
   ```ts
