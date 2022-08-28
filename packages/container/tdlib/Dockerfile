@@ -14,13 +14,13 @@ RUN set -ex; \
       zlib-dev \
       zlib-static \
       linux-headers; \
-    curl -sSLo tdlib.tar.gz https://github.com/tdlib/td/archive/refs/tags/v${TDLIB_VERSION}.tar.gz; \
     mkdir /tmp/td/ && cd /tmp/td/; \
+    curl -sSLo tdlib.tar.gz https://github.com/tdlib/td/archive/refs/tags/v${TDLIB_VERSION}.tar.gz; \
     tar -xzvf tdlib.tar.gz && cd td-${TDLIB_VERSION}; \
     mkdir build && cd build; \
-    cmake -DCMAKE_BUILD_TYPE=Release ..; \
+    cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_LTO=ON ..; \
     ls -lAhFtr; \
-    cmake --build .; \
+    cmake --build . --target install -j 4; \
     ls -lAhFtr; \
     make install; \
     ls -lAhFtr /usr/local/lib/; \
