@@ -40,8 +40,6 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN_PACKAGE}}
 
       - name: Build Typescript
         run: yarn build:ts
