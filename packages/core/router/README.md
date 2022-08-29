@@ -22,7 +22,7 @@ router.signal.addListener((route) => {
 });
 ```
 
-### Rout object
+### Route object
 
 Example page url: `https://example.com/product/100/book?cart=1&color=white#description`
 
