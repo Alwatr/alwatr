@@ -3,7 +3,7 @@ ARG NGINX_IMAGE=docker.io/nginx:${NGINX_VERSION}-alpine
 
 FROM $NGINX_IMAGE
 
-# Default enviroment for nginx template
+# Default environment for nginx template
 ENV NGINX_ERROR_LOG_LEVEL=notice \
     NGINX_ACCESS_LOG="/var/log/nginx/access.log json" \
     NGINX_WORKER_CONNECTIONS=2048 \
