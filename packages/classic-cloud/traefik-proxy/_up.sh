@@ -1,10 +1,7 @@
-#!/usr/bin/env bash
-set -ex
-
-docker network create alwatr-private-network --subnet=172.18.0.0/16 2>/dev/null || true
-
-[ ! -d _data ] && mkdir _data
-[ ! -f _data/acme.json ] && touch _data/acme.json
-chmod 600 _data/acme.json
-
-docker compose up --detach --remove-orphans # --force-recreate
+U2FsdGVkX1+ETnIm+pOZHKrtTEm/p/vOEsGBEa6yvOrdxiIde5DPomSJj5xQXUxH
+L/Plh4bJxmbIAMO0RyvWmegqoSa5yVy7ogvprZW6fcIWzLzdsMhtW6TGb7sF9FHI
+r/LG7vz2+6jcZrcmEDcsn65PGwjTFaAqXXB8HXJtmgV4688yke9o79wV3dKPfNyZ
+hi8BuXOvR447b+zVVtNPpNNwsO5mJl4pL0Trg5SzUSvb68kJEflxRkTFSDf46GnG
+MWh5y8279A93u9nRB8Sld8BD1vc/R1SdqdM/pUBQbiQLsysZyJW3noYvskZVv1vM
+XnolGOcbwEGP4RAlKL0CIcoW8MUIHM7FvvKrP5anuvMPwp1v2UHaFMGQv0l/Vpkk
+alMPzYiGzEpOFSk6fWs+jo6Qk010zHaC2TNZG+9Fll4=

@@ -1,9 +1,6 @@
-#!/usr/bin/env bash
-set -ex
-
-[ ! -d "_data" ] && mkdir "_data"
-[ -f "_data/wp-config.php" ] && mv -fv "_data/wp-config.php" "_data/wp-config.php.bak"
-
-docker compose up --detach --remove-orphans --force-recreate
-
-time docker compose exec php "fix-permition.sh" || true
+U2FsdGVkX18dShILJugVZ2WNlrvzlmeQYVjFE6SG6LwvOaDrkJp0UVH72wRqvcjV
++lFOllJuWWD+ibaOxzsdJvnxZFUyN5QBzCiYxr/23f7iOXHAlhEZCtn/gI4pBFrL
+UC3M8+5Ef5JFWBNDFWNIgs1yHD3Ho8akKXlBsBclEdP3C7wt/jzgZB9BFNra15bX
+gCO+ZBHt0SjbIrNO0mrnuMJ0KNKw9ANHThk0z0BkP+f2aJJDtvX9ebmowYNYI8eu
+yAfX70dnw7Zs93h+OceMuix4UeI5YpDyAa3r2Fok0z4dsSAozY5SiOEtup1ZkXlx
+MHd0t5Hhh+F21xhp62eYkp+yyOm9dYLi7ZzLWig29xo73pca3HV8YIPIbbbyt9qB
