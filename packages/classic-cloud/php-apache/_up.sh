@@ -1,32 +1,5 @@
-#!/usr/bin/env bash
-
-set -Eeuo pipefail
-trap "echo '❌ Error'" ERR
-
-TIMEFORMAT="done in %Rs"
-thisPath="$(dirname "$0")"
-cd $thisPath
-ls -lahF
-
-echoStep () {
-  echo "🔹 $1"
-}
-
-echoStep "Preparing..."
-
-[ ! -d _data ] && mkdir _data
-
-time docker compose pull
-time docker compose build --pull
-
-echoStep "Starting..."
-
-time docker compose up --detach --remove-orphans --force-recreate
-
-echoStep "Fix permitions..."
-
-time docker compose exec --index 1 --user root php "fix-permition.sh" || true
-
-echoStep "Done"
-
-docker compose logs --tail 300 --follow || true
+U2FsdGVkX18IqTJaRWh0rTOIg59+xSByMceFUT0AbDREJ7UvtJ6d9I5hXsy7cprL
+kVlRUpt3vtZtrRPJLvtmHyk+ji5NkHKzXdYciv2C+bfTumZQPm3vcL/cNcIS917s
+ISNJDFDQnp1O1+tUeTQ8N2vdzaO0G2kInrsatCDPEgz2juE8apvA+oZwgL7HouTt
+/yL1woDqtw1iaC3FbPboqLDhwvYV28/Qmlmo+zDuUN+YujaDqfr/39REtIW5wI9v
+Tu7TedV6MT2XRplf1mlm19cvh7USfjuHp/cLobIfaRw=
