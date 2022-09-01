@@ -1,28 +1,26 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: Build
+name: Publish NPM
 
 on:
   workflow_dispatch:
 
-  pull_request:
-    branches:
-      - next*
-      - main
-      - release/*
+  release:
+    types:
+      - created
 
   push:
-    branches:
-      - next*
-      - main
-      - release/*
+    tags:
+      - 'v*.*.*'
 
 env:
   NODE_VERSION: latest
 
 jobs:
-  build-ts:
-    name: Build Typescript
+  publish-npm:
+    if: github.repository_owner == 'AliMD'
+
+    name: Publish NPM
     runs-on: ubuntu-latest
 
     permissions:
@@ -36,7 +34,8 @@ jobs:
       - name: Setup nodejs
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: ${{env.NODE_VERSION}}
+          registry-url: https://registry.npmjs.org/
           cache: yarn
 
       - name: Install dependencies
@@ -44,3 +43,11 @@ jobs:
 
       - name: Build Typescript
         run: yarn build:ts
+
+      - name: Run ESLint
+        run: yarn lint:ts
+
+      - name: Publish
+        run: yarn run publish --yes
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

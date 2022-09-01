@@ -1,17 +1,43 @@
-# https://hub.docker.com/_/wordpress/
 ARG PHP_VERSION=8.1
 ARG WORDPRESS_VERSION=6.0
+ARG IMAGE_NAME=docker.io/wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}-fpm
 
-FROM docker.io/wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}-fpm
+FROM $IMAGE_NAME
+
+WORKDIR /var/www/html
+EXPOSE 80
+
+COPY php.conf.ini $PHP_INI_DIR/conf.d/
+COPY fix-permition.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/fix-permition.sh
+
+ARG APT_INSTALL
+RUN set -ex; \
+  if [ -z "$APT_INSTALL" ]; then \
+    echo "Skip apt packages: $APT_INSTALL"; \
+  else \
+    echo "Installing apt packages"; \
+    apt-get update -y; \
+    apt-get install -y --no-install-recommends $APT_INSTALL; \
+    apt-get autoremove -y; \
+    apt-get clean -y; \
+    rm -rfv /var/lib/apt/lists/*; \
+  fi
+ARG PHP_EXT_INSTALL
+RUN set -ex; \
+  if [ -z "$PHP_EXT_INSTALL" ]; then \
+    echo "Skip php extensions"; \
+  else \
+    echo "Installing php extensions: $PHP_EXT_INSTALL"; \
+    docker-php-ext-install $PHP_EXT_INSTALL; \
+  fi
 
 ARG SOURCEGUARDIAN_LOADER=0
-ARG IONCUBE_LOADER=0
-
-# Install and enable fu... sourceguardian loader! :_(
 RUN set -ex; \
   if [ "$SOURCEGUARDIAN_LOADER" != "1" ]; then \
-    echo "Skip install sourceguardian loader"; \
+    echo "Skip sourceguardian loader"; \
   else \
+    echo "Installing sourceguardian loader"; \
     PHP_VERSION=$(php -v | head -n1 | cut -d' ' -f2 | cut -d. -f1-2) \
     PHP_EXT_DIR=$(php -i | grep '^extension_dir =' | cut -d' ' -f3); \
     mkdir -p /tmp/sourceguardian; \
@@ -23,11 +49,12 @@ RUN set -ex; \
     rm -rf /tmp/sourceguardian; \
   fi
 
-# Install and enable fu... ioncube loader! :_(
+ARG IONCUBE_LOADER=0
 RUN set -ex; \
   if [ "$IONCUBE_LOADER" != "1" ]; then \
-    echo "Skip install ioncube loader"; \
+    echo "Skip ioncube loader"; \
   else \
+    echo "Installing ioncube loader"; \
     PHP_VERSION=$(php -v | head -n1 | cut -d' ' -f2 | cut -d. -f1-2) \
     PHP_EXT_DIR=$(php -i | grep '^extension_dir =' | cut -d' ' -f3); \
     mkdir -p /tmp/ioncube; \
@@ -38,7 +65,3 @@ RUN set -ex; \
     echo "zend_extension=ioncube.so" > $PHP_INI_DIR/conf.d/16-ioncube.ini; \
     rm -rf /tmp/ioncube; \
   fi
-
-COPY php.conf.ini $PHP_INI_DIR/conf.d/
-COPY fix-permition.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/fix-permition.sh
