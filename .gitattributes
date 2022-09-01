@@ -1,0 +1,3 @@
+deploy.sh  filter=crypt diff=crypt merge=crypt
+_up.sh  filter=crypt diff=crypt merge=crypt
+*.env  filter=crypt diff=crypt merge=crypt
