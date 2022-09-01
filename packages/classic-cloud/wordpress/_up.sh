@@ -1,33 +1,9 @@
 #!/usr/bin/env bash
+set -ex
 
-set -Eeuo pipefail
-trap "echo '❌ Error'" ERR
+[ ! -d "_data" ] && mkdir "_data"
+[ -f "_data/wp-config.php" ] && mv -fv "_data/wp-config.php" "_data/wp-config.php.bak"
 
-TIMEFORMAT="done in %Rs"
-thisPath="$(dirname "$0")"
-cd $thisPath
-ls -lahF
-
-echoStep () {
-  echo "🔹 $1"
-}
-
-echoStep "Preparing..."
-
-[ ! -d _data ] && mkdir _data
-[ -f _data/wp-config.php ] && mv -fv "_data/wp-config.php" "_data/wp-config.php.bak"
-
-time docker compose pull
-time docker compose build --pull
-
-echoStep "Starting..."
-
-time docker compose up --detach --remove-orphans --force-recreate
-
-echoStep "Fix permitions..."
+docker compose up --detach --remove-orphans --force-recreate
 
 time docker compose exec php "fix-permition.sh" || true
-
-echoStep "Done"
-
-docker compose logs --tail=300 --follow || true
