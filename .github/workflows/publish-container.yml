@@ -63,7 +63,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           images: |
-            name=${{env.REGISTRY}}/alwatr/${{matrix.image}},enable=true
+            name=${{env.REGISTRY}}/alwatr/${{matrix.image}},enable=false
             name=${{env.REGISTRY}}/${{github.repository_owner}}/${{matrix.image}},enable=true
 
           labels: |
