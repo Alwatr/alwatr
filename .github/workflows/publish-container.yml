@@ -31,17 +31,17 @@ jobs:
       matrix:
         include:
           - image: alpine
-            description: "A minimal Docker image based on Alpine Linux with a complete package index and only 5 MB in size!"
+            description: A minimal Docker image based on Alpine Linux with a complete package index and only 5 MB in size!
             version:
               short: 3
               full: 3.16
           - image: nginx
-            description: "High performance, optimized NGINX for server web applications and api proxy with fast cache."
+            description: High performance, optimized NGINX for server web applications and api proxy with fast cache.
             version:
-              short: 3
-              full: 3.16
+              short: 1
+              full: 1.21
           - image: tdlib
-            description: "Cross-platform library for building Telegram clients."
+            description: Cross-platform library for building Telegram clients.
             version:
               short: 1
               full: 1.8
@@ -61,11 +61,12 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
           images: ${{env.REGISTRY}}/alwatr/${{matrix.image}}
           labels: |
-            org.opencontainers.image.authors="alimihandoost@gmail.com"
-            org.opencontainers.image.title="@Alwatr/matrix.image"
-            org.opencontainers.image.description="matrix.description"
+            org.opencontainers.image.authors=Ali.Mihandoost@gmail.com
+            org.opencontainers.image.title=@Alwatr/${{matrix.image}}
+            org.opencontainers.image.description=${{matrix.description}}
           tags: |
             type=ref,event=branch
             type=ref,event=pr
