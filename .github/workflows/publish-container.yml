@@ -62,11 +62,15 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
-          images: ${{env.REGISTRY}}/alwatr/${{matrix.image}}
+          images: |
+            name=${{env.REGISTRY}}/alwatr/${{matrix.image}},enable=true
+            name=${{env.REGISTRY}}/${{github.repository_owner}}/${{matrix.image}},enable=true
+
           labels: |
             org.opencontainers.image.authors=Ali.Mihandoost@gmail.com
             org.opencontainers.image.title=@Alwatr/${{matrix.image}}
             org.opencontainers.image.description=${{matrix.description}}
+
           tags: |
             type=ref,event=branch
             type=ref,event=pr
