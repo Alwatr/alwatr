@@ -1,3 +1,0 @@
-http {
-  include /etc/nginx/conf.d/http/*.conf;
-}

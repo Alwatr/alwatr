@@ -1,8 +1,0 @@
-server {
-  listen 80 default_server;
-  server_name _;
-  root /var/www/html;
-
-  include /etc/nginx/conf.d/http/server.default/*.conf;
-  include /etc/nginx/conf.d/http/server/*.conf;
-}
