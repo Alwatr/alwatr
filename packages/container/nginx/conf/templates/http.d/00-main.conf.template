@@ -1,0 +1,17 @@
+server_tokens off;
+
+index index.html index.htm;
+
+tcp_nopush          $NGINX_TCP_NOPUSH;
+tcp_nodelay         $NGINX_TCP_NODELAY;
+sendfile            $NGINX_SENDFILE;
+sendfile_max_chunk  512k;
+
+# fix dns for docker and ssl
+resolver         127.0.0.11 ipv6=off valid=10s;
+resolver_timeout 5s;
+#resolver         1.1.1.1 8.8.8.8 8.8.4.4 valid=60s;
+#resolver_timeout 15s;
+
+# Sets the maximum allowed size of the client request body
+client_max_body_size        NGINX_CLIENT_MAX_BODY_SIZE;
