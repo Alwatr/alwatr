@@ -17,9 +17,7 @@ ENV NGINX_ERROR_LOG_LEVEL=notice \
     NGINX_EXPIRES_DEFAULT=5m \
     NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE=1
 
-RUN mkdir -p /var/www/html
-
-COPY html/  /var/www/
+COPY www/  /var/www/
 
 # All nginx configuration include entrypoints
 COPY conf/ /etc/nginx/
