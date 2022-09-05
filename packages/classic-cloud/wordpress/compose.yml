@@ -30,6 +30,9 @@ services:
       - type: bind
         source: ./_data/
         target: /var/www/html/
+        read_only: true
+        bind:
+          create_host_path: true
 
     tmpfs:
       - /var/cache
@@ -73,6 +76,8 @@ services:
       - type: bind
         source: ./_data/
         target: /var/www/html/
+        bind:
+          create_host_path: true
 
     tmpfs:
       - /tmp

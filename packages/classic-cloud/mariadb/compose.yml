@@ -23,6 +23,8 @@ services:
       - type: bind
         source: ./_data
         target: /var/lib/mysql
+        bind:
+          create_host_path: true
 
     tmpfs:
       - /tmp

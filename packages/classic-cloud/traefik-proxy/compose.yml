@@ -32,9 +32,12 @@ services:
       - type: bind
         source: ./traefik.toml
         target: /traefik.toml
+        read_only: true
       - type: bind
-        source: ./_data/acme.json
-        target: /acme.json
+        source: ./_data
+        target: /data
+        bind:
+          create_host_path: true
 
     labels:
       traefik.enable: true

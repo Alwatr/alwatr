@@ -31,6 +31,8 @@ services:
       - type: bind
         source: ./_data/
         target: /var/www/html/
+        bind:
+          create_host_path: true
 
     tmpfs:
       - /tmp
