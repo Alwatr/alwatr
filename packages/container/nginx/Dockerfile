@@ -17,12 +17,13 @@ ENV NGINX_ERROR_LOG_LEVEL=notice \
     NGINX_EXPIRES_DEFAULT=5m \
     NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE=1
 
-COPY www/  /var/www/
+RUN apk add --no-cache curl
+# HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl -fso /dev/null http://localhost/server-info || exit 1
 
-# All nginx configuration include entrypoints
+RUN rm -rfv /etc/nginx/conf.d/*
 COPY conf/ /etc/nginx/
+COPY www/  /var/www/
 
 EXPOSE 80
 ENTRYPOINT ["/etc/nginx/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl -fso /dev/null http://localhost/ || exit 1
