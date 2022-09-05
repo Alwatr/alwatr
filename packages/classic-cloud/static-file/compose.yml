@@ -6,7 +6,10 @@ networks:
 
 services:
   nginx:
-    image: ghcr.io/alimd/nginx:1
+    build:
+      context: ./nginx/
+      args:
+        - NGINX_VERSION=${NGINX_VERSION:-1.23}
 
     networks:
       - alwatr-public-network
@@ -14,12 +17,14 @@ services:
     restart: unless-stopped
 
     cpu_shares: 1024
-    mem_limit: ${NGINX_MEMORY_LIMIT}
+    mem_limit: ${NGINX_MEMORY_LIMIT:-256m}
 
-    # volumes:
-    #   - type: bind
-    #     source: ./_data/
-    #     target: /var/www/html/
+    env_file: .env
+
+    volumes:
+      - type: bind
+        source: ./_data/
+        target: /var/www/html/
 
     tmpfs:
       - /var/cache
