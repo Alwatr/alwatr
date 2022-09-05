@@ -21,8 +21,7 @@ services:
       - alwatr-private-network
       - alwatr-public-network
 
-    env_file:
-      - .env
+    env_file: .env
 
     labels:
       traefik.enable: true

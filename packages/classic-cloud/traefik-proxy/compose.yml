@@ -7,8 +7,6 @@ services:
   service-proxy:
     image: ${TRAEFIK_IMAGE}
 
-    hostname: traefik-proxy.alwatr.io
-
     networks:
       - alwatr-public-network
 

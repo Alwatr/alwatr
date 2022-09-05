@@ -77,8 +77,7 @@ services:
     tmpfs:
       - /tmp
 
-    env_file:
-      - .env
+    env_file: .env
 
     logging:
       driver: json-file
