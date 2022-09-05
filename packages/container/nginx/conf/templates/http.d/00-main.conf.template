@@ -14,4 +14,4 @@ resolver_timeout 5s;
 #resolver_timeout 15s;
 
 # Sets the maximum allowed size of the client request body
-client_max_body_size        NGINX_CLIENT_MAX_BODY_SIZE;
+client_max_body_size        $NGINX_CLIENT_MAX_BODY_SIZE;
