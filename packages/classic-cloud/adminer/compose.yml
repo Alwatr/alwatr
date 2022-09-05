@@ -8,7 +8,7 @@ networks:
 
 services:
   adminer:
-    image: ${ADMINER_IMAGE}
+    image: ${ADMINER_IMAGE:-docker.io/wodby/adminer}
 
     cpu_shares: 256
     mem_limit: 256m
@@ -21,8 +21,7 @@ services:
       - alwatr-private-network
       - alwatr-public-network
 
-    env_file:
-      - .env
+    env_file: .env
 
     labels:
       traefik.enable: true

@@ -234,7 +234,7 @@ defaultEntryPoints = ["http", "https"]
   #
   # Required
   #
-  storage = "acme.json"
+  storage = "/data/acme.json"
 
   # Entrypoint to proxy acme apply certificates to.
   #
