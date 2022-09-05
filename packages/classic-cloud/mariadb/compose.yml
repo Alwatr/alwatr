@@ -5,15 +5,15 @@ networks:
 
 services:
   database:
-    image: ${MARIADB_IMAGE}
+    image: ${MARIADB_IMAGE:-docker.io/mariadb}
 
     networks:
       alwatr-private-network:
         aliases:
-          - ${MYSQL_HOST}
+          - ${MYSQL_HOST:-mariadb}
 
     cpu_shares: 4096
-    mem_limit: ${MEMORY_LIMIT}
+    mem_limit: ${MEMORY_LIMIT:-4G}
 
     restart: unless-stopped
 

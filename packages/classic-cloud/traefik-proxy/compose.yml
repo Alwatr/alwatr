@@ -5,7 +5,7 @@ networks:
 
 services:
   service-proxy:
-    image: ${TRAEFIK_IMAGE}
+    image: ${TRAEFIK_IMAGE:-docker.io/traefik}
 
     networks:
       - alwatr-public-network
@@ -22,8 +22,8 @@ services:
         max-file: '2'
 
     ports:
-      - ${HOST}:80:80
-      - ${HOST}:443:443
+      - ${HOST:-0.0.0.0}:80:80
+      - ${HOST:-0.0.0.0}:443:443
 
     volumes:
       - type: bind
