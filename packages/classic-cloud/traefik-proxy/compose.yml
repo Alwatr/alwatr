@@ -5,7 +5,7 @@ networks:
 
 services:
   service-proxy:
-    image: ${TRAEFIK_IMAGE:-docker.io/traefik}
+    image: ${TRAEFIK_IMAGE:-docker.io/traefik:v1.7-alpine}
 
     networks:
       - alwatr-public-network
