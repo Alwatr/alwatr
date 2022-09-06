@@ -8,7 +8,7 @@ networks:
 
 services:
   adminer:
-    image: ${ADMINER_IMAGE:-docker.io/wodby/adminer}
+    image: ${ADMINER_IMAGE:-docker.io/wodby/adminer:4}
 
     cpu_shares: 256
     mem_limit: 256m

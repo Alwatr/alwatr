@@ -5,7 +5,7 @@ networks:
 
 services:
   database:
-    image: ${MARIADB_IMAGE:-docker.io/mariadb}
+    image: ${MARIADB_IMAGE:-docker.io/wodby/mariadb:10.8}
 
     networks:
       alwatr-private-network:
