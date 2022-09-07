@@ -11,8 +11,8 @@ Just because of `@alwatr/nginx` and php-fpm cashing It can work More than 1,000,
 
 **Fuck No!**
 
-To be honest, no PHP application or even framework is made in a cloud native way or mindset.  
-This might suck and you don't like it! But it's not my fault if php is bullshit and you like it just because it's popular and easy to learn!  
-I have to mention this to reduce my guilty conscience about having this package in the alwatr project!  
-There are always a few fundamental “architecture design” problems which cause the entire cloud native way impossible out of the box. Sometimes even with loads of work altering in the “core”, you won’t be able to run it in the way you wanted to.
-If you analyze your requirements and needs, you pick the right tools. If we want high availability, high performance, and ease of CI/CD, perhaps you should have picked another language…
+To be honest, no PHP application or even framework is made in a cloud-native way or mindset.  
+This might suck and you don't like it! But it's not my fault if PHP is bullshit and you like it just because it's popular and easy to learn!  
+I have to mention this to reduce my guilty conscience about having this package in the Alwatr project!  
+There are always a few fundamental “architecture design” problems that cause the entire cloud native way impossible out of the box. Sometimes even with loads of work altering in the “core”, you won’t be able to run it in the way you wanted to.
+If you analyze your requirements and needs, you pick the right tools. If we want high availability, high performance, and ease of CI/CD, perhaps you should have chosen another language…
