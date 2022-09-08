@@ -168,8 +168,10 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     this._logger.logMethodArgs('set', documentObject._id);
     if (this._readyState !== true) throw new Error('storage_not_ready');
 
-    // update meta
     const oldData = this._storage[documentObject._id];
+    if (oldData == null) this._keys = null; // Clear cached keys on new docId
+
+    // update meta
     documentObject._updatedAt = Date.now();
     documentObject._createdAt = oldData?._createdAt ?? documentObject._updatedAt;
     documentObject._createdBy = oldData?._createdBy ?? documentObject._updatedBy;
