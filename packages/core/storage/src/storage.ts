@@ -202,6 +202,26 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     delete this._storage[documentId];
   }
 
+  /**
+   * For each loop over all document objects.
+   *
+   * Example:
+   *
+   * ```ts
+   * userStorage.forEach(async (user) => {
+   *   await sendMessage(user._id, 'Happy new year!');
+   *   user.sent = true; // direct change document!
+   * });
+   * userStorage.save();
+   * ```
+   */
+  forEach(callbackfn: (documentObject: DocumentType) => void): void {
+    this.keys.forEach((documentId) => {
+      const documentObject = this._storage[documentId];
+      if (documentObject != null) callbackfn(documentObject);
+    });
+  }
+
   private _saveTimer: NodeJS.Timeout | null = null;
 
   /**
