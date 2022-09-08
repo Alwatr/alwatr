@@ -54,8 +54,8 @@ services:
     build:
       context: ./php
       args:
-        - PHP_VERSION=${PHP_VERSION:-8}
-        - WORDPRESS_VERSION=${WORDPRESS_VERSION:6}
+        - PHP_VERSION=${PHP_VERSION:-8.1}
+        - WORDPRESS_VERSION=${WORDPRESS_VERSION:-6}
         - APT_INSTALL=${APT_INSTALL:-}
         - PHP_EXT_INSTALL=${PHP_EXT_INSTALL:-}
         - SOURCEGUARDIAN_LOADER=${SOURCEGUARDIAN_LOADER:-0}
