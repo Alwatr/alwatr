@@ -1,0 +1,13 @@
+map $sent_http_content_type $expires {
+  default       $NGINX_EXPIRES_DEFAULT;
+  ~assets/      $NGINX_EXPIRES_STATIC;
+  text/html     $NGINX_EXPIRES_HTML;
+  text/*        $NGINX_EXPIRES_STATIC;
+  font/*        $NGINX_EXPIRES_STATIC;
+  image/*       $NGINX_EXPIRES_STATIC;
+  video/*       $NGINX_EXPIRES_STATIC;
+  audio/*       $NGINX_EXPIRES_STATIC;
+  application/* $NGINX_EXPIRES_STATIC;
+}
+
+expires $expires;

@@ -4,10 +4,17 @@ version: 2
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
+    reviewers:
+      - "AliMD"
+      - "njfamirm"
     schedule:
       interval: "daily"
 
   - package-ecosystem: "npm"
     directory: "/"
+    versioning-strategy: increase
+    reviewers:
+      - "AliMD"
+      - "njfamirm"
     schedule:
       interval: "daily"

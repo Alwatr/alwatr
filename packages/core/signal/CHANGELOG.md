@@ -3,18 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.15.0](https://github.com/AliMD/alwatr/compare/v0.14.0...v0.15.0) (2022-09-01)
+# [0.16.0](https://github.com/AliMD/alwatr/compare/v0.15.0...v0.16.0) (2022-09-08)
 
+**Note:** Version bump only for package @alwatr/signal
+
+# [0.15.0](https://github.com/AliMD/alwatr/compare/v0.14.0...v0.15.0) (2022-09-01)
 
 ### Bug Fixes
 
-* get signal object of `request` signal ([eec4b62](https://github.com/AliMD/alwatr/commit/eec4b6201d79785aa10f4b9c777449525158a346))
-* **signal:** fix some issues of `review` ([36ceb8b](https://github.com/AliMD/alwatr/commit/36ceb8b25987621065327b4fa475a213562af8e7))
-* **signal:** log performance and security issue ([dbe9483](https://github.com/AliMD/alwatr/commit/dbe9483b672099b91c18c3a103c2878435fd6508))
-
-
-
-
+- get signal object of `request` signal ([eec4b62](https://github.com/AliMD/alwatr/commit/eec4b6201d79785aa10f4b9c777449525158a346))
+- **signal:** fix some issues of `review` ([36ceb8b](https://github.com/AliMD/alwatr/commit/36ceb8b25987621065327b4fa475a213562af8e7))
+- **signal:** log performance and security issue ([dbe9483](https://github.com/AliMD/alwatr/commit/dbe9483b672099b91c18c3a103c2878435fd6508))
 
 # [0.14.0](https://github.com/AliMD/alwatr/compare/v0.13.0...v0.14.0) (2022-08-19)
 

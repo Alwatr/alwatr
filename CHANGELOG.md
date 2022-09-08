@@ -3,48 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.15.0](https://github.com/AliMD/alwatr/compare/v0.14.0...v0.15.0) (2022-09-01)
-
+# [0.16.0](https://github.com/AliMD/alwatr/compare/v0.15.0...v0.16.0) (2022-09-08)
 
 ### Bug Fixes
 
-* get signal object of `request` signal ([eec4b62](https://github.com/AliMD/alwatr/commit/eec4b6201d79785aa10f4b9c777449525158a346))
-* **package:** eslint command ([c74be93](https://github.com/AliMD/alwatr/commit/c74be93ebef1f78681525b8cd5a57b0f926e42ec))
-* remove npm token from install dependencies ([21f01cd](https://github.com/AliMD/alwatr/commit/21f01cd328d99ac8133d51d855295e7a338ade68))
-* **signal:** fix some issues of `review` ([36ceb8b](https://github.com/AliMD/alwatr/commit/36ceb8b25987621065327b4fa475a213562af8e7))
-* **signal:** log performance and security issue ([dbe9483](https://github.com/AliMD/alwatr/commit/dbe9483b672099b91c18c3a103c2878435fd6508))
-* **tdlib:** build issue ([861b70f](https://github.com/AliMD/alwatr/commit/861b70f1bf381cb91b2c7d06243e50f849eb0e5b))
-* **tdlib:** dockerfile ([e0ac726](https://github.com/AliMD/alwatr/commit/e0ac7262b84e35e11ea8d1b1243819f958082a6b))
-* **workflow/build:** name ([9710fba](https://github.com/AliMD/alwatr/commit/9710fbab011b3de5eb0c52f9f4fceabd801fab50))
-* **workflow/lint:** task name ([4b191e8](https://github.com/AliMD/alwatr/commit/4b191e85694f0c861b6b2ddf29a727e834355632))
-* **workflow:** run issue ([731a5b2](https://github.com/AliMD/alwatr/commit/731a5b2c2bf0fcbe7d0f44f501346b82654b16e7))
-* **workflows:** add workflow_dispatch ([9fc7db7](https://github.com/AliMD/alwatr/commit/9fc7db71f0fefbdf65c7301c3ca505d85ed7fd36))
-* **workflows:** change paths! ([7bca6e7](https://github.com/AliMD/alwatr/commit/7bca6e7e08c9c699b9b18b301c14e8c05761b836))
-* **workflows:** custom version tags for containers ([a752b90](https://github.com/AliMD/alwatr/commit/a752b900516052ebf0883b713c040b4f43a18364))
-* **workflows:** final test publish container ([ac7f361](https://github.com/AliMD/alwatr/commit/ac7f361e749f99e0b3eafc191c1917c8a6c90634))
-* **workflows:** image custom versions ([ccd80e8](https://github.com/AliMD/alwatr/commit/ccd80e8933e4fbc72538f2377d3b654baa33c679))
-* **workflows:** image custom versions ([1db6600](https://github.com/AliMD/alwatr/commit/1db6600d82745bcbe5ef2b8dcde646c8b0c0032a))
-* **workflows:** install deps ([2598166](https://github.com/AliMD/alwatr/commit/25981664622f111c5cdb66ae7687bfdced8fdacb))
-* **workflows:** name ([dd8f414](https://github.com/AliMD/alwatr/commit/dd8f414a44f265c0a45c324c353b733204ddc445))
-
+- **.github/depbot:** syntax issue ([b87c463](https://github.com/AliMD/alwatr/commit/b87c463f1dfec0bbde3772945ad7fc390ab572a5))
+- **classic-cloud:** review and fix issues ([680d55d](https://github.com/AliMD/alwatr/commit/680d55d192a8be69de53390c3ecdf50279cd8354))
+- **nginx:** load server dir confs ([5ee391a](https://github.com/AliMD/alwatr/commit/5ee391ada0207fd4bbe5bd27d1ee733c844b5609))
+- **nginx:** syntax issue ([2765ad8](https://github.com/AliMD/alwatr/commit/2765ad80bc44d75680ea75d219b3bea04d6fc762))
+- **publish-container:** 403 error ([ff14c5c](https://github.com/AliMD/alwatr/commit/ff14c5cd1dd19c6fefcfb9cece51f6de15385419))
+- **publish-container:** image metadatas ([008dbb5](https://github.com/AliMD/alwatr/commit/008dbb576a2a0c79a6a36f15df7c3a3d76c652fc))
+- **storage:** Clear cached keys on new docId ([2aa648c](https://github.com/AliMD/alwatr/commit/2aa648c4543cfef016b55d8389796445a118c73f))
+- **wordpress:** compose syntax issue ([4b85ac4](https://github.com/AliMD/alwatr/commit/4b85ac426c27872adbaa57e7252554f8f95ccfeb))
 
 ### Features
 
-* **classic-cloud:** child deploy script ([8d9eaef](https://github.com/AliMD/alwatr/commit/8d9eaefcc1a8f8a03da618b1599b9c03f2464320))
-* **classic-cloud:** new deployment ([8059d84](https://github.com/AliMD/alwatr/commit/8059d8422aa1f8a68617cb73cb254da6d79870eb))
-* **classic/deploy:** add logs and up command ([a7af093](https://github.com/AliMD/alwatr/commit/a7af09370297d4acc3efd12eb8ff2de5cda4d7b3))
-* **container:** alpine with CI deploy workflow ([e63b9ef](https://github.com/AliMD/alwatr/commit/e63b9ef6ff3759f7bef333e14ec115f90efbdd30))
-* **container:** tdlib! ([e407049](https://github.com/AliMD/alwatr/commit/e407049a7d529341e628f4c69ddf68f40863d72e))
-* **rnnoise-model:** ffmpge rnnoise models ([e543904](https://github.com/AliMD/alwatr/commit/e543904171c77d06565c96d1d264155a5df231f0))
-* update workflow ([538192f](https://github.com/AliMD/alwatr/commit/538192ffb9adf516b4df95e0f4408d72441e4c95))
-* **workflow/lint:** add schedule ([faaae0e](https://github.com/AliMD/alwatr/commit/faaae0e32498b2b0c14082bf7fb6d7e48258a7ed))
-* **workflows:** CodeQL Analyze ([00be21c](https://github.com/AliMD/alwatr/commit/00be21c392ad8f4ef10ba01b5cbcce826026cc18))
-* **workflows:** Dependency Review ([cbb1373](https://github.com/AliMD/alwatr/commit/cbb1373df07e198ff50ce5193dfe985dda9ea1f2))
-* **workflows:** new eslint workflow ([33c3a56](https://github.com/AliMD/alwatr/commit/33c3a56cde9a90833a0da17fba87f2268b62a0cb))
+- **classic-cloud:** static file serve and review deploy ([dea5158](https://github.com/AliMD/alwatr/commit/dea51589cc7589d1f9fd17b1a4e5fafca1c1f8d9))
+- **deploy:** rsync with symbolic links ([a540c20](https://github.com/AliMD/alwatr/commit/a540c20f9c7fb8b5b5abf105363ae1e76009de1f))
+- **nginx:** base config file ([c8f96f0](https://github.com/AliMD/alwatr/commit/c8f96f03e75ecd94914893b8face1fc742cceb32))
+- **nginx:** default page style ([7c007ee](https://github.com/AliMD/alwatr/commit/7c007ee3ef09065cd1763d13014ad0c1453e595a))
+- **nginx:** dockerfile ([adb90eb](https://github.com/AliMD/alwatr/commit/adb90eb3f07a38ef87c10a9cc3e9240c653c6697))
+- **nginx:** dynamic template generator ([9303883](https://github.com/AliMD/alwatr/commit/93038832595a0678b0162c718f3758efcf121671))
+- **nginx:** entrypoint.sh ([3b714f9](https://github.com/AliMD/alwatr/commit/3b714f9d96751dd10f006978119c01394fe6892f))
+- **nginx:** index page ([9ba0c06](https://github.com/AliMD/alwatr/commit/9ba0c0686a086b780dbca25e791ccbb694cf357a))
+- **nginx:** new container for alwatr/nginx ([b654dbf](https://github.com/AliMD/alwatr/commit/b654dbf7022aff9565ca7ed0cf2eab8c25919042))
+- **nginx:** optimize conf templates ([9791d5e](https://github.com/AliMD/alwatr/commit/9791d5e8f40aa054d2ba56bfc9ace4a8e05e37a3))
+- **nginx:** refactor to using alwatr nginx ([9b63ede](https://github.com/AliMD/alwatr/commit/9b63ede987936102e0da7d0d1c45920b12317c5e))
+- **nginx:** review and rearrange conf folders ([08e9b0c](https://github.com/AliMD/alwatr/commit/08e9b0cb3d201418af89dd8dff3c96a04aef040b))
+- **nginx:** tune-worker-processes.sh ([4747e54](https://github.com/AliMD/alwatr/commit/4747e54045be5cfd41808b9730c41f8113f54ba5))
+- **nginx:** update templates and custome err page ([a09ed2f](https://github.com/AliMD/alwatr/commit/a09ed2fdec4a984317ae65b55d1321d90bc63b19))
+- **publish-container:** improve CI/CD ([0b5f38c](https://github.com/AliMD/alwatr/commit/0b5f38c204d2a411e24b1035967f1bff9aee2180))
+- **storage:** forEach ([cc26999](https://github.com/AliMD/alwatr/commit/cc26999e4303c54cdd18c79c4b4515ac50480a6d))
 
+### Performance Improvements
 
+- **storage:** silent get ([c2cbd88](https://github.com/AliMD/alwatr/commit/c2cbd887f20031f86392aec6537bfd699a36480b))
 
+# [0.15.0](https://github.com/AliMD/alwatr/compare/v0.14.0...v0.15.0) (2022-09-01)
 
+### Bug Fixes
+
+- get signal object of `request` signal ([eec4b62](https://github.com/AliMD/alwatr/commit/eec4b6201d79785aa10f4b9c777449525158a346))
+- **package:** eslint command ([c74be93](https://github.com/AliMD/alwatr/commit/c74be93ebef1f78681525b8cd5a57b0f926e42ec))
+- remove npm token from install dependencies ([21f01cd](https://github.com/AliMD/alwatr/commit/21f01cd328d99ac8133d51d855295e7a338ade68))
+- **signal:** fix some issues of `review` ([36ceb8b](https://github.com/AliMD/alwatr/commit/36ceb8b25987621065327b4fa475a213562af8e7))
+- **signal:** log performance and security issue ([dbe9483](https://github.com/AliMD/alwatr/commit/dbe9483b672099b91c18c3a103c2878435fd6508))
+- **tdlib:** build issue ([861b70f](https://github.com/AliMD/alwatr/commit/861b70f1bf381cb91b2c7d06243e50f849eb0e5b))
+- **tdlib:** dockerfile ([e0ac726](https://github.com/AliMD/alwatr/commit/e0ac7262b84e35e11ea8d1b1243819f958082a6b))
+- **workflow/build:** name ([9710fba](https://github.com/AliMD/alwatr/commit/9710fbab011b3de5eb0c52f9f4fceabd801fab50))
+- **workflow/lint:** task name ([4b191e8](https://github.com/AliMD/alwatr/commit/4b191e85694f0c861b6b2ddf29a727e834355632))
+- **workflow:** run issue ([731a5b2](https://github.com/AliMD/alwatr/commit/731a5b2c2bf0fcbe7d0f44f501346b82654b16e7))
+- **workflows:** add workflow_dispatch ([9fc7db7](https://github.com/AliMD/alwatr/commit/9fc7db71f0fefbdf65c7301c3ca505d85ed7fd36))
+- **workflows:** change paths! ([7bca6e7](https://github.com/AliMD/alwatr/commit/7bca6e7e08c9c699b9b18b301c14e8c05761b836))
+- **workflows:** custom version tags for containers ([a752b90](https://github.com/AliMD/alwatr/commit/a752b900516052ebf0883b713c040b4f43a18364))
+- **workflows:** final test publish container ([ac7f361](https://github.com/AliMD/alwatr/commit/ac7f361e749f99e0b3eafc191c1917c8a6c90634))
+- **workflows:** image custom versions ([ccd80e8](https://github.com/AliMD/alwatr/commit/ccd80e8933e4fbc72538f2377d3b654baa33c679))
+- **workflows:** image custom versions ([1db6600](https://github.com/AliMD/alwatr/commit/1db6600d82745bcbe5ef2b8dcde646c8b0c0032a))
+- **workflows:** install deps ([2598166](https://github.com/AliMD/alwatr/commit/25981664622f111c5cdb66ae7687bfdced8fdacb))
+- **workflows:** name ([dd8f414](https://github.com/AliMD/alwatr/commit/dd8f414a44f265c0a45c324c353b733204ddc445))
+
+### Features
+
+- **classic-cloud:** child deploy script ([8d9eaef](https://github.com/AliMD/alwatr/commit/8d9eaefcc1a8f8a03da618b1599b9c03f2464320))
+- **classic-cloud:** new deployment ([8059d84](https://github.com/AliMD/alwatr/commit/8059d8422aa1f8a68617cb73cb254da6d79870eb))
+- **classic/deploy:** add logs and up command ([a7af093](https://github.com/AliMD/alwatr/commit/a7af09370297d4acc3efd12eb8ff2de5cda4d7b3))
+- **container:** alpine with CI deploy workflow ([e63b9ef](https://github.com/AliMD/alwatr/commit/e63b9ef6ff3759f7bef333e14ec115f90efbdd30))
+- **container:** tdlib! ([e407049](https://github.com/AliMD/alwatr/commit/e407049a7d529341e628f4c69ddf68f40863d72e))
+- **rnnoise-model:** ffmpge rnnoise models ([e543904](https://github.com/AliMD/alwatr/commit/e543904171c77d06565c96d1d264155a5df231f0))
+- update workflow ([538192f](https://github.com/AliMD/alwatr/commit/538192ffb9adf516b4df95e0f4408d72441e4c95))
+- **workflow/lint:** add schedule ([faaae0e](https://github.com/AliMD/alwatr/commit/faaae0e32498b2b0c14082bf7fb6d7e48258a7ed))
+- **workflows:** CodeQL Analyze ([00be21c](https://github.com/AliMD/alwatr/commit/00be21c392ad8f4ef10ba01b5cbcce826026cc18))
+- **workflows:** Dependency Review ([cbb1373](https://github.com/AliMD/alwatr/commit/cbb1373df07e198ff50ce5193dfe985dda9ea1f2))
+- **workflows:** new eslint workflow ([33c3a56](https://github.com/AliMD/alwatr/commit/33c3a56cde9a90833a0da17fba87f2268b62a0cb))
 
 # [0.14.0](https://github.com/AliMD/alwatr/compare/v0.13.0...v0.14.0) (2022-08-19)
 
