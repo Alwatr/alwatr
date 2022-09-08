@@ -1,12 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-import {
-  __getSignalObject,
-  _removeSignalListener,
-  _setSignalProvider,
-  _dispatchSignal,
-  _addSignalListener,
-} from './core';
+import {_getSignalObject, _removeSignalListener, _setSignalProvider, _dispatchSignal, _addSignalListener} from './core';
 
 import type {
   ListenerOptions,
@@ -23,11 +17,13 @@ import type {
  */
 export class SignalInterface<SignalName extends keyof AlwatrSignals> {
   protected _signal;
+  protected _requestSignal;
   protected _logger;
 
   constructor(signalName: SignalName) {
     this._logger = createLogger(`signal<${signalName}>`);
-    this._signal = __getSignalObject(signalName);
+    this._signal = _getSignalObject(signalName);
+    this._requestSignal = _getSignalObject(`request-${signalName}` as unknown as SignalName);
   }
 
   /**
@@ -114,7 +110,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
   }
 
   /**
-   * Define signal provider, which will be called when signal requested (addRequestSignalListener).
+   * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
    *
    * Example:
    *
@@ -131,12 +127,14 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    * });
    * ```
    */
-  setProvider(signalProvider: SignalProvider<SignalName>, options?: SignalProviderOptions): symbol {
+  setProvider(
+      signalProvider: SignalProvider<SignalName>,
+      options?: SignalProviderOptions,
+  ): ListenerInterface<SignalName> {
     this._logger.logMethodArgs('setProvider', {options});
-    return _setSignalProvider(this.name, signalProvider, options).id;
+    const listener = _setSignalProvider(this._signal, this._requestSignal, signalProvider, options);
+    return new ListenerInterface(this._requestSignal, listener);
   }
-
-  // @TODO: removeProvider(signalName): void
 
   /**
    * Dispatch request signal and wait for answer (wait for new signal dispatched).
@@ -155,7 +153,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
     this._logger.logMethodArgs('request', {requestParam});
     const nextSignalValuePromise = this.getNextSignalValue();
     _dispatchSignal(
-      `request-${this.name}` as unknown as SignalName,
+        this._requestSignal,
       requestParam as unknown as AlwatrSignals[SignalName], // mastmalize to avoid type error
     );
     return nextSignalValuePromise;
@@ -217,11 +215,11 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    */
   dispatch(signalValue: AlwatrSignals[SignalName], options?: DispatchOptions): void {
     this._logger.logMethodArgs('dispatch', {signalValue, options});
-    _dispatchSignal(this._signal.name, signalValue, options);
+    _dispatchSignal(this._signal, signalValue, options);
   }
 
   /**
-   * Add new listener to the signal.
+   * Adds a new listener to the signal.
    *
    * Example:
    *
@@ -230,10 +228,13 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    * const listener = contentChangeSignal.addListener((content) => console.log(content));
    * ```
    */
-  addListener(listener: ListenerCallback<SignalName>, options?: ListenerOptions): ListenerInterface<SignalName> {
-    this._logger.logMethodArgs('addListener', {listener, options});
-    const listenerId = _addSignalListener(this._signal.name, listener, options);
-    return new ListenerInterface(this._signal, listenerId);
+  addListener(
+      listenerCallback: ListenerCallback<SignalName>,
+      options?: ListenerOptions,
+  ): ListenerInterface<SignalName> {
+    this._logger.logMethodArgs('addListener', {options});
+    const listener = _addSignalListener(this._signal, listenerCallback, options);
+    return new ListenerInterface(this._signal, listener);
   }
 }
 
@@ -266,7 +267,7 @@ export class ListenerInterface<SignalName extends keyof AlwatrSignals> {
   }
 
   /**
-   * Remove listener from target signal.
+   * Removes a listener from the signal.
    *
    * Example:
    *
@@ -279,6 +280,6 @@ export class ListenerInterface<SignalName extends keyof AlwatrSignals> {
    */
   remove(): void {
     this._logger.logMethod('remove');
-    _removeSignalListener(this._signal.name, this._listener.id);
+    _removeSignalListener(this._signal, this._listener.id);
   }
 }

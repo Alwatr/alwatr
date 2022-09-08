@@ -3,27 +3,44 @@
 name: Build
 
 on:
+  workflow_dispatch:
+
   pull_request:
+    branches:
+      - next*
+      - main
+      - release/*
+
   push:
     branches:
-      - next
+      - next*
       - main
       - release/*
 
 env:
-  NODE_VERSION: '16.x'
+  NODE_VERSION: latest
 
 jobs:
   build-ts:
+    name: Build Typescript
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
+    permissions:
+      contents: read
+      security-events: write
 
-      - uses: actions/setup-node@v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup nodejs
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'yarn'
+          cache: yarn
 
-      - run: yarn install --frozen-lockfile
-      - run: yarn build:ts
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Typescript
+        run: yarn build:ts

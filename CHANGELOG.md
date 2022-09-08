@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/AliMD/alwatr/compare/v0.14.0...v0.15.0) (2022-09-01)
+
+
+### Bug Fixes
+
+* get signal object of `request` signal ([eec4b62](https://github.com/AliMD/alwatr/commit/eec4b6201d79785aa10f4b9c777449525158a346))
+* **package:** eslint command ([c74be93](https://github.com/AliMD/alwatr/commit/c74be93ebef1f78681525b8cd5a57b0f926e42ec))
+* remove npm token from install dependencies ([21f01cd](https://github.com/AliMD/alwatr/commit/21f01cd328d99ac8133d51d855295e7a338ade68))
+* **signal:** fix some issues of `review` ([36ceb8b](https://github.com/AliMD/alwatr/commit/36ceb8b25987621065327b4fa475a213562af8e7))
+* **signal:** log performance and security issue ([dbe9483](https://github.com/AliMD/alwatr/commit/dbe9483b672099b91c18c3a103c2878435fd6508))
+* **tdlib:** build issue ([861b70f](https://github.com/AliMD/alwatr/commit/861b70f1bf381cb91b2c7d06243e50f849eb0e5b))
+* **tdlib:** dockerfile ([e0ac726](https://github.com/AliMD/alwatr/commit/e0ac7262b84e35e11ea8d1b1243819f958082a6b))
+* **workflow/build:** name ([9710fba](https://github.com/AliMD/alwatr/commit/9710fbab011b3de5eb0c52f9f4fceabd801fab50))
+* **workflow/lint:** task name ([4b191e8](https://github.com/AliMD/alwatr/commit/4b191e85694f0c861b6b2ddf29a727e834355632))
+* **workflow:** run issue ([731a5b2](https://github.com/AliMD/alwatr/commit/731a5b2c2bf0fcbe7d0f44f501346b82654b16e7))
+* **workflows:** add workflow_dispatch ([9fc7db7](https://github.com/AliMD/alwatr/commit/9fc7db71f0fefbdf65c7301c3ca505d85ed7fd36))
+* **workflows:** change paths! ([7bca6e7](https://github.com/AliMD/alwatr/commit/7bca6e7e08c9c699b9b18b301c14e8c05761b836))
+* **workflows:** custom version tags for containers ([a752b90](https://github.com/AliMD/alwatr/commit/a752b900516052ebf0883b713c040b4f43a18364))
+* **workflows:** final test publish container ([ac7f361](https://github.com/AliMD/alwatr/commit/ac7f361e749f99e0b3eafc191c1917c8a6c90634))
+* **workflows:** image custom versions ([ccd80e8](https://github.com/AliMD/alwatr/commit/ccd80e8933e4fbc72538f2377d3b654baa33c679))
+* **workflows:** image custom versions ([1db6600](https://github.com/AliMD/alwatr/commit/1db6600d82745bcbe5ef2b8dcde646c8b0c0032a))
+* **workflows:** install deps ([2598166](https://github.com/AliMD/alwatr/commit/25981664622f111c5cdb66ae7687bfdced8fdacb))
+* **workflows:** name ([dd8f414](https://github.com/AliMD/alwatr/commit/dd8f414a44f265c0a45c324c353b733204ddc445))
+
+
+### Features
+
+* **classic-cloud:** child deploy script ([8d9eaef](https://github.com/AliMD/alwatr/commit/8d9eaefcc1a8f8a03da618b1599b9c03f2464320))
+* **classic-cloud:** new deployment ([8059d84](https://github.com/AliMD/alwatr/commit/8059d8422aa1f8a68617cb73cb254da6d79870eb))
+* **classic/deploy:** add logs and up command ([a7af093](https://github.com/AliMD/alwatr/commit/a7af09370297d4acc3efd12eb8ff2de5cda4d7b3))
+* **container:** alpine with CI deploy workflow ([e63b9ef](https://github.com/AliMD/alwatr/commit/e63b9ef6ff3759f7bef333e14ec115f90efbdd30))
+* **container:** tdlib! ([e407049](https://github.com/AliMD/alwatr/commit/e407049a7d529341e628f4c69ddf68f40863d72e))
+* **rnnoise-model:** ffmpge rnnoise models ([e543904](https://github.com/AliMD/alwatr/commit/e543904171c77d06565c96d1d264155a5df231f0))
+* update workflow ([538192f](https://github.com/AliMD/alwatr/commit/538192ffb9adf516b4df95e0f4408d72441e4c95))
+* **workflow/lint:** add schedule ([faaae0e](https://github.com/AliMD/alwatr/commit/faaae0e32498b2b0c14082bf7fb6d7e48258a7ed))
+* **workflows:** CodeQL Analyze ([00be21c](https://github.com/AliMD/alwatr/commit/00be21c392ad8f4ef10ba01b5cbcce826026cc18))
+* **workflows:** Dependency Review ([cbb1373](https://github.com/AliMD/alwatr/commit/cbb1373df07e198ff50ce5193dfe985dda9ea1f2))
+* **workflows:** new eslint workflow ([33c3a56](https://github.com/AliMD/alwatr/commit/33c3a56cde9a90833a0da17fba87f2268b62a0cb))
+
+
+
+
+
 # [0.14.0](https://github.com/AliMD/alwatr/compare/v0.13.0...v0.14.0) (2022-08-19)
 
 ### Bug Fixes
