@@ -134,7 +134,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * ```
    */
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
-    this._logger.logMethodArgs('get', documentId);
+    // this._logger.logMethodArgs('get', documentId);
     if (this._readyState !== true) throw new Error('storage_not_ready');
 
     const documentObject = this._storage[documentId];
