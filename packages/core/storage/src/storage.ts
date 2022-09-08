@@ -27,7 +27,7 @@ alwatrRegisteredList.push({
  * import {AlwatrStorage, DocumentObject} from '@alwatr/storage';
  * interface User extends DocumentObject {...}
  * const db = new AlwatrStorage<User>('user-list');
- * await db.readyPromise
+ * await userStorage.readyPromise
  * ```
  */
 export class AlwatrStorage<DocumentType extends DocumentObject> {
@@ -49,8 +49,8 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    *
    * ```ts
    * const db = new AlwatrStorage<User>({name: 'user-list', path: 'db'});
-   * await db.readyPromise
-   * const user = db.get('user-1');
+   * await userStorage.readyPromise
+   * const user = userStorage.get('user-1');
    * ```
    */
   readyPromise: Promise<void>;
@@ -111,7 +111,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * Example:
    *
    * ```ts
-   * if(!userDB.has('user-1')) throw new Error('user not found');
+   * if(!useruserStorage.has('user-1')) throw new Error('user not found');
    * ```
    */
   has(documentId: string): boolean {
@@ -130,7 +130,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * Example:
    *
    * ```ts
-   * const user = db.get('user-1');
+   * const user = userStorage.get('user-1');
    * ```
    */
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
@@ -158,7 +158,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * Example:
    *
    * ```ts
-   * db.set({
+   * userStorage.set({
    *   _id: 'user-1',
    *   foo: 'bar',
    * });
@@ -192,7 +192,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * Example:
    *
    * ```ts
-   * db.remove('user-1');
+   * userStorage.remove('user-1');
    * ```
    */
   remove(documentId: string): void {
@@ -241,7 +241,9 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     }, 100);
   }
 
-  // TODO: update all jsdoc and readme.
+  /**
+   * Unload storage data and free ram usage.
+   */
   unload(): void {
     this._logger.logMethod('unload');
     this._readyState = false;
@@ -249,6 +251,9 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     this.readyPromise = Promise.reject(new Error('storage_unloaded'));
   }
 
+  /**
+   * Reload storage data.
+   */
   reload(): void {
     this._logger.logMethod('reload');
     this._readyState = false;
