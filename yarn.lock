@@ -1332,14 +1332,14 @@
     semver "^7.3.7"
     tsutils "^3.21.0"
 
-"@typescript-eslint/parser@^5.32.0":
-  version "5.36.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-5.36.1.tgz#931c22c7bacefd17e29734628cdec8b2acdcf1ce"
-  integrity sha512-/IsgNGOkBi7CuDfUbwt1eOqUXF9WGVBW9dwEe1pi+L32XrTsZIgmDFIi2RxjzsvB/8i+MIf5JIoTEH8LOZ368A==
+"@typescript-eslint/parser@^5.36.2":
+  version "5.36.2"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-5.36.2.tgz#3ddf323d3ac85a25295a55fcb9c7a49ab4680ddd"
+  integrity sha512-qS/Kb0yzy8sR0idFspI9Z6+t7mqk/oRjnAYfewG+VN73opAUvmYL3oPIMmgOX6CnQS6gmVIXGshlb5RY/R22pA==
   dependencies:
-    "@typescript-eslint/scope-manager" "5.36.1"
-    "@typescript-eslint/types" "5.36.1"
-    "@typescript-eslint/typescript-estree" "5.36.1"
+    "@typescript-eslint/scope-manager" "5.36.2"
+    "@typescript-eslint/types" "5.36.2"
+    "@typescript-eslint/typescript-estree" "5.36.2"
     debug "^4.3.4"
 
 "@typescript-eslint/scope-manager@5.36.1":
@@ -1354,6 +1354,14 @@
   version "5.36.2"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-5.36.2.tgz#a75eb588a3879ae659514780831370642505d1cd"
   integrity sha512-cNNP51L8SkIFSfce8B1NSUBTJTu2Ts4nWeWbFrdaqjmn9yKrAaJUBHkyTZc0cL06OFHpb+JZq5AUHROS398Orw==
+  dependencies:
+    "@typescript-eslint/types" "5.36.2"
+    "@typescript-eslint/visitor-keys" "5.36.2"
+
+"@typescript-eslint/type-utils@5.36.1":
+  version "5.36.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/type-utils/-/type-utils-5.36.1.tgz#016fc2bff6679f54c0b2df848a493f0ca3d4f625"
+  integrity sha512-xfZhfmoQT6m3lmlqDvDzv9TiCYdw22cdj06xY0obSznBsT///GK5IEZQdGliXpAOaRL34o8phEvXzEo/VJx13Q==
   dependencies:
     "@typescript-eslint/types" "5.36.2"
     "@typescript-eslint/visitor-keys" "5.36.2"
