@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/AliMD/alwatr/compare/v0.15.0...v0.16.0) (2022-09-08)
+
+
+### Bug Fixes
+
+* **storage:** Clear cached keys on new docId ([2aa648c](https://github.com/AliMD/alwatr/commit/2aa648c4543cfef016b55d8389796445a118c73f))
+
+
+### Features
+
+* **storage:** forEach ([cc26999](https://github.com/AliMD/alwatr/commit/cc26999e4303c54cdd18c79c4b4515ac50480a6d))
+
+
+### Performance Improvements
+
+* **storage:** silent get ([c2cbd88](https://github.com/AliMD/alwatr/commit/c2cbd887f20031f86392aec6537bfd699a36480b))
+
+
+
+
+
 # [0.15.0](https://github.com/AliMD/alwatr/compare/v0.14.0...v0.15.0) (2022-09-01)
 
 **Note:** Version bump only for package @alwatr/storage
