@@ -2893,6 +2893,11 @@ execa@^5.0.0:
     signal-exit "^3.0.3"
     strip-final-newline "^2.0.0"
 
+exit-hook@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-3.1.0.tgz#0ba691facf29637930ead13e727cdc61860331b9"
+  integrity sha512-KiF9SiLZsKhSutx4V9sG2InYb0v1+2sfKlGD18et8/aGg2m4ij6MJbUHy/cnqJf4ncE7rWjqchE2SNIi4Lgg4A==
+
 expand-brackets@^2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/expand-brackets/-/expand-brackets-2.1.4.tgz#b77735e315ce30f6b6eff0f83b04151a22449622"

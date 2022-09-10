@@ -26,6 +26,16 @@ export type AlwatrStorageConfig = {
    * @default './db'
    */
   path?: string;
+
+  /**
+   * Save debounce timeout for minimal disk iops usage.
+   */
+  saveDebounce?: number;
+
+  /**
+   * Write pretty formatted JSON file.
+   */
+  saveBeautiful?: boolean;
 };
 
 export type AlwatrStorageProviderConfig = {
