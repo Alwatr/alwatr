@@ -1,7 +1,7 @@
 import {resolve} from 'node:path';
 
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
-import {exitHook} from 'exit-hook';
+import exitHook from 'exit-hook';
 
 import {readJsonFile, writeJsonFile} from './util.js';
 
