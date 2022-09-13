@@ -62,7 +62,7 @@
     "@alwatr/storage": "^0.16.1"
   },
   "devDependencies": {
-    "@types/node": "^18.7.16",
+    "@types/node": "^18.7.17",
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "@typescript-eslint/parser": "^5.36.2",
     "eslint": "^8.21.0",
