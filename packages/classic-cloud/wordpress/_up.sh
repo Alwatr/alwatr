@@ -1,33 +1,6 @@
-#!/usr/bin/env bash
-
-set -Eeuo pipefail
-trap "echo '❌ Error'" ERR
-
-TIMEFORMAT="done in %Rs"
-thisPath="$(dirname "$0")"
-cd $thisPath
-ls -lahF
-
-echoStep () {
-  echo "🔹 $1"
-}
-
-echoStep "Preparing..."
-
-[ ! -d _data ] && mkdir _data
-[ -f _data/wp-config.php ] && mv -fv "_data/wp-config.php" "_data/wp-config.php.bak"
-
-time docker compose pull
-time docker compose build --pull
-
-echoStep "Starting..."
-
-time docker compose up --detach --remove-orphans --force-recreate
-
-echoStep "Fix permitions..."
-
-time docker compose exec php "fix-permition.sh" || true
-
-echoStep "Done"
-
-docker compose logs --tail=300 --follow || true
+U2FsdGVkX1+r5TpHum4ctYGTXLmMTeAvXILFZ86AhUpR+2ziTcvL0psKf2VXHx/Y
+CDofTu024IWKqaCmbN9iSfLCeFhwW3zImNBab/bhOhKQ0wVBHTagXMp5CmIt0QeA
+zz2H9EJRUHISoVQOMxyJM70siScWfcIdWpuRKH13ZVgqc+Na3cLJkTEhPSXEWSEH
+8G2+sn0vQiIe7zJDROQiDjA+dL4NL+WByQfALG7D89Kvj/h3QqFBsPsyF7eAmwnH
+gV7vE/yCQ2V/tsf7PEWYbvdbrGmFBR6spN5iy/EDB6yPEwYCT74dVT80IuSKkcL0
+oWA9WBR4bo5vTDOuJsYHjw==

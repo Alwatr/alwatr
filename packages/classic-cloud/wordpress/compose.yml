@@ -12,7 +12,7 @@ services:
     build:
       context: ./nginx
       args:
-        - NGINX_VERSION=${NGINX_VERSION}
+        - NGINX_VERSION=${NGINX_VERSION:-1.23}
 
     networks:
       - internal
@@ -24,12 +24,15 @@ services:
       - php
 
     cpu_shares: 2048
-    mem_limit: ${NGINX_MEMORY_LIMIT}
+    mem_limit: ${NGINX_MEMORY_LIMIT:-256m}
 
     volumes:
       - type: bind
         source: ./_data/
         target: /var/www/html/
+        read_only: true
+        bind:
+          create_host_path: true
 
     tmpfs:
       - /var/cache
@@ -51,12 +54,12 @@ services:
     build:
       context: ./php
       args:
-        - PHP_VERSION=${PHP_VERSION}
-        - WORDPRESS_VERSION=${WORDPRESS_VERSION}
-        - APT_INSTALL=${APT_INSTALL}
-        - PHP_EXT_INSTALL=${PHP_EXT_INSTALL}
-        - SOURCEGUARDIAN_LOADER=${SOURCEGUARDIAN_LOADER}
-        - IONCUBE_LOADER=${IONCUBE_LOADER}
+        - PHP_VERSION=${PHP_VERSION:-8.1}
+        - WORDPRESS_VERSION=${WORDPRESS_VERSION:-6}
+        - APT_INSTALL=${APT_INSTALL:-}
+        - PHP_EXT_INSTALL=${PHP_EXT_INSTALL:-}
+        - SOURCEGUARDIAN_LOADER=${SOURCEGUARDIAN_LOADER:-0}
+        - IONCUBE_LOADER=${IONCUBE_LOADER:-0}
 
     networks:
       internal:
@@ -67,18 +70,19 @@ services:
     restart: unless-stopped
 
     cpu_shares: 1024
-    mem_limit: ${PHP_MEMORY_LIMIT}
+    mem_limit: ${PHP_MEMORY_LIMIT:-256m}
 
     volumes:
       - type: bind
         source: ./_data/
         target: /var/www/html/
+        bind:
+          create_host_path: true
 
     tmpfs:
       - /tmp
 
-    env_file:
-      - .env
+    env_file: .env
 
     logging:
       driver: json-file

@@ -1,36 +1,8 @@
-#!/usr/bin/env bash
-set -Eeuo pipefail
-trap "echo '❌ Error'" ERR
-
-TIMEFORMAT="done in %Rs"
-thisPath="$(pwd)"
-cd $thisPath;
-ls -lahF;
-
-echoStep () {
-  echo "🔸 $1"
-}
-
-echoStep "Preparing..."
-
-docker network create alwatr-private-network || echo "network exist"
-
-[ ! -d _data ] && mkdir _data
-
-time docker compose pull
-# docker compose build --pull
-
-echoStep "Fix permitions..."
-
-docker compose stop
-mysqlPath=/var/lib/mysql
-time docker compose run --rm --name 'fix-db' --user=root database \
-  bash -c "ls -lahF $mysqlPath; chown -R mysql:mysql $mysqlPath; ls -lahF $mysqlPath;"
-
-echoStep "Starting..."
-
-time docker compose up --detach --remove-orphans # --force-recreate
-
-echoStep "Done"
-
-docker compose logs --tail=300 --follow || true
+U2FsdGVkX1/Vy7P5nuD6qsWTAKM1/HOlcK5Y340cZP+1Wsp3g+uv4UocKVG+tgPf
+bZ7guWgC4qBZN6kDxWj7RlVp6QyL+BTCsEABDvVqRGJXedT3gF0oyx64z9OjMP2o
+gK4Ii6D8mV5Fiz5By5poUydAXPAnlxulkWn22m7eYyMrgl6XkHAFUBNGOeuxHUur
+3+Xc+4XKCr2MM7BUjCWKOUVEH4GI0mgdWdJjgskk+GFfwYpgzCMVoH6l2J9QI3sG
+9mf1H2FC+Vcd+W+bbDkXe/lLfy+yiBOtKEuN5XHl9rgw2AVaqaUNzIXgxS/zP/u+
+l31PIxcH0uqGYOJDf34oxCUzUgZOFMLb5yJmvVjos+mrlgwVh47rymgIqJoCiTLS
+6uA1ARGo0PHA0GXJV1L8NIK16zd6JH3cY+KYgcAIjXRCMzT5HKxut/8qupgr+hFS
+9fvk9Ma1gJ5UNEn3zzfgBzIdyyJTQXIwSUenxxyysmAzpOxwS9fybFy25+vOHJL7
