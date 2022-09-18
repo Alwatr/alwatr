@@ -40,7 +40,7 @@
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.37.0",
     "@web/dev-server": "^0.1.33",
-    "eslint": "^8.21.0",
+    "eslint": "^8.23.1",
     "eslint-config-google": "^0.14.0",
     "eslint-import-resolver-typescript": "^3.5.1",
     "eslint-plugin-import": "^2.26.0",
