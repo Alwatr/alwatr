@@ -3,38 +3,63 @@
 name: Lint
 
 on:
-  pull_request:
-    paths:
-      - "**/*.{ts,md,html,json}"
-      - "*.md"
-  push:
-    paths:
-      - "**/*.{ts,md,html,json}"
-      - "*.md"
+  workflow_dispatch:
 
+  pull_request:
     branches:
-      - next
+      - next*
       - main
       - release/*
 
+  push:
+    branches:
+      - next*
+      - main
+      - release/*
+
+  schedule:
+    - cron: '0 7 * * 4'
+    #        * * * * *
+    #        │ │ │ │ │
+    #        │ │ │ │ └───── day of the week (0 - 6 or SUN-SAT)
+    #        │ │ │ └─────── month (1 - 12 or JAN-DEC)
+    #        │ │ └───────── day of the month (1 - 31)
+    #        │ └─────────── hour (0 - 23)
+    #        └───────────── minute (0 - 59)
+
 env:
-  NODE_VERSION: '16.x'
+  NODE_VERSION: latest
 
 jobs:
-  lint:
+  lint-ts:
+    name: ESLint Scanning
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
+    permissions:
+      contents: read
+      security-events: write
 
-      - name: Setup Node.js
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup nodejs
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'yarn'
+          cache: yarn
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Lint files
-        run: yarn lint
+      - name: Run ESLint
+        run: yarn lint:ts
+          --format @microsoft/eslint-formatter-sarif
+          --output-file eslint-results.sarif
+        continue-on-error: true
+
+      - name: Upload analysis results to GitHub
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: eslint-results.sarif
+          wait-for-processing: true

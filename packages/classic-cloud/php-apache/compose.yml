@@ -11,12 +11,12 @@ services:
     build:
       context: ./php
       args:
-        - PHP_VERSION=${PHP_VERSION}
-        - APT_INSTALL=${APT_INSTALL}
-        - PHP_EXT_INSTALL=${PHP_EXT_INSTALL}
-        - APACHE_MODULE=${APACHE_MODULE}
-        - SOURCEGUARDIAN_LOADER=${SOURCEGUARDIAN_LOADER}
-        - IONCUBE_LOADER=${IONCUBE_LOADER}
+        - PHP_VERSION=${PHP_VERSION:-8.1}
+        - APT_INSTALL=${APT_INSTALL:-}
+        - PHP_EXT_INSTALL=${PHP_EXT_INSTALL:-}
+        - APACHE_MODULE=${APACHE_MODULE:-}
+        - SOURCEGUARDIAN_LOADER=${SOURCEGUARDIAN_LOADER:-0}
+        - IONCUBE_LOADER=${IONCUBE_LOADER:-0}
 
     networks:
       - alwatr-public-network
@@ -25,18 +25,19 @@ services:
     restart: unless-stopped
 
     cpu_shares: 1024
-    mem_limit: ${MEMORY_LIMIT}
+    mem_limit: ${MEMORY_LIMIT:-256m}
 
     volumes:
       - type: bind
         source: ./_data/
         target: /var/www/html/
+        bind:
+          create_host_path: true
 
     tmpfs:
       - /tmp
 
-    env_file:
-      - .env
+    env_file: .env
 
     logging:
       driver: json-file

@@ -1,8 +1,5 @@
 networks:
   internal:
-  alwatr-private-network:
-    name: alwatr-private-network
-    external: true
   alwatr-public-network:
     name: alwatr-public-network
     external: true
@@ -10,26 +7,27 @@ networks:
 services:
   nginx:
     build:
-      context: ./nginx
+      context: ./nginx/
       args:
-        - NGINX_VERSION=${NGINX_VERSION}
+        - NGINX_VERSION=${NGINX_VERSION:-1.23}
 
     networks:
-      - internal
       - alwatr-public-network
 
     restart: unless-stopped
 
-    depends_on:
-      - php
+    cpu_shares: 1024
+    mem_limit: ${NGINX_MEMORY_LIMIT:-256m}
 
-    cpu_shares: 2048
-    mem_limit: ${NGINX_MEMORY_LIMIT}
+    env_file: .env
 
     volumes:
       - type: bind
         source: ./_data/
         target: /var/www/html/
+        read_only: true
+        bind:
+          create_host_path: true
 
     tmpfs:
       - /var/cache
@@ -46,51 +44,3 @@ services:
       traefik.frontend.rule: Host:${DOMAIN}
       traefik.frontend.entryPoints: http, https
       traefik.frontend.redirect.entryPoint: https
-
-  php:
-    build:
-      context: ./php
-      args:
-        - PHP_VERSION=${PHP_VERSION}
-        - WORDPRESS_VERSION=${WORDPRESS_VERSION}
-        - SOURCEGUARDIAN_LOADER=${SOURCEGUARDIAN_LOADER}
-        - IONCUBE_LOADER=${IONCUBE_LOADER}
-
-    networks:
-      internal:
-        aliases:
-          - wordpress-php-fpm
-      alwatr-private-network:
-
-    restart: unless-stopped
-
-    cpu_shares: 1024
-    mem_limit: ${PHP_MEMORY_LIMIT}
-
-    volumes:
-      - type: bind
-        source: ./_data/
-        target: /var/www/html/
-
-    tmpfs:
-      - /tmp
-
-    env_file:
-      - .env
-
-    logging:
-      driver: json-file
-      options:
-        max-size: '10m'
-        max-file: '2'
-
-    environment:
-      WORDPRESS_CONFIG_EXTRA: |
-        /* Alwatr Setting */
-        define('WP_CACHE', true);
-        define('WP_POST_REVISIONS', 2);
-        define('IMAGE_EDIT_OVERWRITE', true);
-        define('FORCE_SSL_LOGIN', false);
-        define('FORCE_SSL_ADMIN', false);
-        define('WP_MEMORY_LIMIT', '256M');
-        define('WP_MAX_MEMORY_LIMIT', '256M'); # admin dashboard

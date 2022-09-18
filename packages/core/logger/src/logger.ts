@@ -129,8 +129,8 @@ export const createLogger = (
     scope,
 
     accident: isBrowser ?
-      console.error.bind(console, '%c%s%c.%s "%s" => Accident: "%s" (%s)!', styleScope, scope, style.reset) :
-      console.error.bind(console, `${styleScope}⚠️  %s\x1b[33m.%s "%s" =>${style.reset}`, scope),
+      console.warn.bind(console, '%c%s%c.%s "%s" => Accident: "%s" (%s)!', styleScope, scope, style.reset) :
+      console.warn.bind(console, `${styleScope}⚠️  %s\x1b[33m.%s "%s" =>${style.reset}`, scope),
 
     error: isBrowser ?
       console.error.bind(console, '%c%s%c.%s "%s" =>', styleScope, scope, style.reset) :

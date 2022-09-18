@@ -1,15 +1,11 @@
 #!/usr/bin/env bash
+set -ex
 
-set -Eeuo pipefail
-trap "echo '❌ Error'" ERR
-
-if [ "${SKIP_FIX_PERMISSIONS:-}" = "1" ]
+if [ "${SKIP_FIX_PERMISSIONS:-0}" = "1" ]
 then
   echo "Skip fix permitions"
   exit 0
 fi
-
-echo "Fix permitions..."
 
 data=/var/www/html/
 ls -lahF $data

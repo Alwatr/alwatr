@@ -1,0 +1,5 @@
+location /server-info {
+  access_log   off;
+  default_type text/plain;
+  return       200 "Alwatr Accelerated Web Server";
+}

@@ -1,0 +1,12 @@
+# Run as a unique, less privileged user for security reasons.
+# user www-data www-data; # user group
+user nginx;
+
+# The file storing the process ID of the main process
+pid /var/run/nginx.pid;
+
+# Reduces timer resolution in worker processes, thus reducing the number of gettimeofday() system calls made. By default, gettimeofday() is called each time a kernel event is received. With reduced resolution, gettimeofday() is only called once per specified interval.
+timer_resolution 100ms;
+
+# Defines named thread pools used for multi-threaded reading and sending of files without blocking worker processes.
+thread_pool default threads=32 max_queue=65536;

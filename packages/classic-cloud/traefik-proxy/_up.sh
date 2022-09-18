@@ -1,31 +1,7 @@
-#!/usr/bin/env bash
-set -Eeuo pipefail
-trap "echo '❌ Error'" ERR
-
-TIMEFORMAT="done in %Rs"
-thisPath="$(pwd)"
-cd $thisPath;
-ls -lahF;
-
-echoStep () {
-  echo "🔸 $1"
-}
-
-echoStep "Preparing..."
-
-docker network create alwatr-public-network --subnet=172.18.0.0/16 || echo "network exist"
-
-[ ! -d _data ] && mkdir _data
-[ ! -f _data/acme.json ] && touch _data/acme.json
-chmod 600 _data/acme.json
-
-time docker compose pull
-# docker compose build --pull
-
-echoStep "Starting..."
-
-time docker compose up --detach --remove-orphans # --force-recreate
-
-echoStep "Done"
-
-docker compose logs --tail=300 --follow || true
+U2FsdGVkX19VzLlPx+SbAidh/6teFb27N+2nPSr5nOMchO/p+hWVSlyDkZjenVXX
+enxR6tJ+SsfeQbUbhYP3IAhUsz9ZM+5ckvkpegODU57cdqJeNNf6hEMvhMn2mCcM
+Sa70WsqNZrSLl9vuoyE70DiH66HUkazrcmNzfDhFR8qd+mM62Tq/37XpIstcBchE
+ZgGxpgMSHIUA8BLQ+gj+3uiZPvStfjE+DASCIosjcLVQM6GtdyAorKabyn+DF7ux
+Fm4/iLoQHk225dpystUBw+XXgeNdAUnNPdPpv43+5Q0bGHCFuyRaKlvDTwo1Pa2D
+YMzqioLgqS5hD/zGm4L5TidwFXRXxUOlQzbpqcz/scd/znb6lioNvB4BhhV9DXH1
+1ws/meoTz0oma4qdXrn+0w==
