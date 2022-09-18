@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.1](https://github.com/AliMD/alwatr/compare/v0.16.0...v0.16.1) (2022-09-10)
+
+
+### Bug Fixes
+
+* **storage:** import exitHook ([c371381](https://github.com/AliMD/alwatr/commit/c37138121f7882239d7ecd38e3496f17919845a2))
+* **storage:** update AlwatrStorageProviderConfig ([bd33e36](https://github.com/AliMD/alwatr/commit/bd33e367c04cf0b7b11e803709da210a75318767))
+* **traefik:** up issue ([c9272b8](https://github.com/AliMD/alwatr/commit/c9272b8430116b2ad78dfc5a0bb48f0144bb33fd))
+
+
+### Features
+
+* **nginx:** $NGINX_AUTOINDEX env ([6678435](https://github.com/AliMD/alwatr/commit/6678435bd1a6f0f1c1b804e7c500b491d6d9c863))
+* **storage:** force save abd exist hook to prevent data lost ([e327d65](https://github.com/AliMD/alwatr/commit/e327d657217d2e814b007e69eeca4f5c42758979))
+
+
+
+
+
+# [0.16.0](https://github.com/AliMD/alwatr/compare/v0.15.0...v0.16.0) (2022-09-08)
+
+### Bug Fixes
+
+- **.github/depbot:** syntax issue ([b87c463](https://github.com/AliMD/alwatr/commit/b87c463f1dfec0bbde3772945ad7fc390ab572a5))
+- **classic-cloud:** review and fix issues ([680d55d](https://github.com/AliMD/alwatr/commit/680d55d192a8be69de53390c3ecdf50279cd8354))
+- **nginx:** load server dir confs ([5ee391a](https://github.com/AliMD/alwatr/commit/5ee391ada0207fd4bbe5bd27d1ee733c844b5609))
+- **nginx:** syntax issue ([2765ad8](https://github.com/AliMD/alwatr/commit/2765ad80bc44d75680ea75d219b3bea04d6fc762))
+- **publish-container:** 403 error ([ff14c5c](https://github.com/AliMD/alwatr/commit/ff14c5cd1dd19c6fefcfb9cece51f6de15385419))
+- **publish-container:** image metadatas ([008dbb5](https://github.com/AliMD/alwatr/commit/008dbb576a2a0c79a6a36f15df7c3a3d76c652fc))
+- **storage:** Clear cached keys on new docId ([2aa648c](https://github.com/AliMD/alwatr/commit/2aa648c4543cfef016b55d8389796445a118c73f))
+- **wordpress:** compose syntax issue ([4b85ac4](https://github.com/AliMD/alwatr/commit/4b85ac426c27872adbaa57e7252554f8f95ccfeb))
+
+### Features
+
+- **classic-cloud:** static file serve and review deploy ([dea5158](https://github.com/AliMD/alwatr/commit/dea51589cc7589d1f9fd17b1a4e5fafca1c1f8d9))
+- **deploy:** rsync with symbolic links ([a540c20](https://github.com/AliMD/alwatr/commit/a540c20f9c7fb8b5b5abf105363ae1e76009de1f))
+- **nginx:** base config file ([c8f96f0](https://github.com/AliMD/alwatr/commit/c8f96f03e75ecd94914893b8face1fc742cceb32))
+- **nginx:** default page style ([7c007ee](https://github.com/AliMD/alwatr/commit/7c007ee3ef09065cd1763d13014ad0c1453e595a))
+- **nginx:** dockerfile ([adb90eb](https://github.com/AliMD/alwatr/commit/adb90eb3f07a38ef87c10a9cc3e9240c653c6697))
+- **nginx:** dynamic template generator ([9303883](https://github.com/AliMD/alwatr/commit/93038832595a0678b0162c718f3758efcf121671))
+- **nginx:** entrypoint.sh ([3b714f9](https://github.com/AliMD/alwatr/commit/3b714f9d96751dd10f006978119c01394fe6892f))
+- **nginx:** index page ([9ba0c06](https://github.com/AliMD/alwatr/commit/9ba0c0686a086b780dbca25e791ccbb694cf357a))
+- **nginx:** new container for alwatr/nginx ([b654dbf](https://github.com/AliMD/alwatr/commit/b654dbf7022aff9565ca7ed0cf2eab8c25919042))
+- **nginx:** optimize conf templates ([9791d5e](https://github.com/AliMD/alwatr/commit/9791d5e8f40aa054d2ba56bfc9ace4a8e05e37a3))
+- **nginx:** refactor to using alwatr nginx ([9b63ede](https://github.com/AliMD/alwatr/commit/9b63ede987936102e0da7d0d1c45920b12317c5e))
+- **nginx:** review and rearrange conf folders ([08e9b0c](https://github.com/AliMD/alwatr/commit/08e9b0cb3d201418af89dd8dff3c96a04aef040b))
+- **nginx:** tune-worker-processes.sh ([4747e54](https://github.com/AliMD/alwatr/commit/4747e54045be5cfd41808b9730c41f8113f54ba5))
+- **nginx:** update templates and custome err page ([a09ed2f](https://github.com/AliMD/alwatr/commit/a09ed2fdec4a984317ae65b55d1321d90bc63b19))
+- **publish-container:** improve CI/CD ([0b5f38c](https://github.com/AliMD/alwatr/commit/0b5f38c204d2a411e24b1035967f1bff9aee2180))
+- **storage:** forEach ([cc26999](https://github.com/AliMD/alwatr/commit/cc26999e4303c54cdd18c79c4b4515ac50480a6d))
+
+### Performance Improvements
+
+- **storage:** silent get ([c2cbd88](https://github.com/AliMD/alwatr/commit/c2cbd887f20031f86392aec6537bfd699a36480b))
+
 # [0.15.0](https://github.com/AliMD/alwatr/compare/v0.14.0...v0.15.0) (2022-09-01)
 
 ### Bug Fixes

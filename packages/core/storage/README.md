@@ -17,10 +17,10 @@ interface User extends DocumentObject {
 
 const db = new AlwatrStorage<User>('user-list', 'data');
 
-await db.readyPromise;
+await userStorage.readyPromise;
 console.log('db loaded and ready to access.');
 
-let ali = db.get('alimd');
+let ali = userStorage.get('alimd');
 
 if (ali == null) {
   console.log('ali not found');
@@ -35,7 +35,7 @@ if (ali == null) {
   ali.token = Math.random().toString(36).substring(2, 15);
 }
 
-db.set(ali);
+userStorage.set(ali);
 ```
 
 ## API
@@ -51,7 +51,7 @@ Example:
 import {AlwatrStorage, DocumentObject} from '@alwatr/storage';
 interface User extends DocumentObject {...}
 const db = new AlwatrStorage<User>('user-list');
-await db.readyPromise
+await userStorage.readyPromise
 ```
 
 ### `readonly name: string`
@@ -71,8 +71,8 @@ Example:
 
 ```ts
 const db = new AlwatrStorage<User>('user-list');
-await db.readyPromise;
-const user = db.get('user-1');
+await userStorage.readyPromise;
+const user = userStorage.get('user-1');
 ```
 
 ### `set(documentObject: DocumentType, fastInstance?: boolean)`
@@ -87,7 +87,7 @@ Insert/update a document object in the storage.
 Example:
 
 ```ts
-db.set({
+userStorage.set({
   _id: 'user-1',
   foo: 'bar',
 });
@@ -104,7 +104,7 @@ Get a document object by id.
 Example:
 
 ```ts
-const user = db.get('user-1');
+const user = userStorage.get('user-1');
 ```
 
 ### `remove(documentId: string)`
@@ -114,5 +114,27 @@ Remove a document object from the storage.
 Example:
 
 ```ts
-db.remove('alimd');
+userStorage.remove('user-1');
 ```
+
+### `forEach(callbackfn: (documentObject: DocumentType) => void)`
+
+For each loop over all document objects.
+
+Example:
+
+```ts
+userStorage.forEach(async (user) => {
+  await sendMessage(user._id, 'Happy new year!');
+  user.sent = true; // direct change document!
+});
+userStorage.save();
+```
+
+### `unload()`
+
+Unload storage data and free ram usage.
+
+### `reload()`
+
+Reload storage data.
