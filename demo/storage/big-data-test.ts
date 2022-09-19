@@ -10,17 +10,28 @@ interface User extends DocumentObject {
   token: string;
 }
 
-const db = new AlwatrStorage<User>({name: 'junk-data', path: 'db'});
-
-db.readyPromise.then(() => {
-  for (let i = 0; i < 10000; i++) {
-    db.set({
-      _id: random.string(4, 16),
-      _updatedBy: 'demo' + i,
-      fname: random.string(4, 16),
-      lname: random.string(4, 32),
-      email: random.string(8, 32),
-      token: random.string(16),
-    });
-  }
+const db = new AlwatrStorage<User>({
+  name: 'junk-data',
+  path: 'db',
+  saveBeautiful: false,
+  saveDebounce: 10_000,
+  debug: false,
 });
+
+for (let i = 0; i < 100_000; i++) {
+  db.set({
+    _id: random.string(4, 16),
+    _updatedBy: 'demo' + i,
+    fname: random.string(4, 16),
+    lname: random.string(4, 32),
+    email: random.string(8, 32),
+    token: random.string(16),
+  });
+}
+
+console.time('get item');
+db.get('_latest');
+console.timeEnd('get item');
+
+db.forceSave();
+console.log('done');

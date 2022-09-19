@@ -40,6 +40,13 @@ export type AlwatrStorageConfig = {
    * @default false
    */
   saveBeautiful?: boolean;
+
+  /**
+   * Debug output logs
+   *
+   * @default undefined Auto detect base in NODE_ENV
+   */
+  debug?: boolean;
 };
 
 export type AlwatrStorageProviderConfig = {
@@ -63,4 +70,11 @@ export type AlwatrStorageProviderConfig = {
     * @default false
     */
    saveBeautiful?: boolean;
+
+  /**
+   * Debug output logs
+   *
+   * @default undefined Auto detect base in NODE_ENV
+   */
+  debug?: boolean;
 };

@@ -1,5 +1,5 @@
-import {existsSync, mkdirSync, readFileSync, writeFileSync, renameSync} from 'fs';
-import {resolve, dirname} from 'node:path';
+import {existsSync, mkdirSync, writeFileSync, renameSync, readFileSync} from 'node:fs';
+import {dirname} from 'node:path';
 
 import type {JSON} from './type.js';
 
@@ -10,22 +10,27 @@ import type {JSON} from './type.js';
  * @example
  * const fileContent = readJsonFile('./file.json');
  */
-export async function readJsonFile<T extends JSON>(path: string): Promise<T | null> {
-  // Check the path is exist
-
+export function readJsonFile<T extends JSON>(path: string): T | null {
   if (!existsSync(path)) {
     return null;
   }
 
-  let fileContent;
+  const timeKey = path.substring(path.lastIndexOf('/') + 1);
+
+  let fileContent: string;
   try {
+    console.time('AlwatrStorage Read ' + timeKey);
     fileContent = readFileSync(path, {encoding: 'utf-8'});
+    console.timeEnd('AlwatrStorage Read ' + timeKey);
   } catch (err) {
     throw new Error('read_file_failed');
   }
 
   try {
-    return JSON.parse(fileContent) as T;
+    console.time('AlwatrStorage Parse ' + timeKey);
+    const data = JSON.parse(fileContent) as T;
+    console.timeEnd('AlwatrStorage Parse ' + timeKey);
+    return data;
   } catch (err) {
     throw new Error('invalid_json');
   }
@@ -36,39 +41,42 @@ export async function readJsonFile<T extends JSON>(path: string): Promise<T | nu
  * @example
  * writeJsonFile('./file.json', { a:1, b:2, c:3 });
  */
-export async function writeJsonFile<T extends JSON>(
+export function writeJsonFile<T extends JSON>(
     path: string,
     dataObject: T,
     space?: string | number | undefined,
-): Promise<void> {
-  // Check the path is exist
-  try {
-    path = resolve(path);
-    if (!existsSync(path)) {
-      mkdirSync(dirname(path), {recursive: true});
-    }
-  } catch (err) {
-    throw new Error('make_dir_failed');
-  }
-
-  try {
-    if (existsSync(path)) {
-      renameSync(path, path + '.bk');
-    }
-  } catch (err) {
-    // @TODO: handle in forceSave and log with logger
-    console.error('cannot rename file!');
-  }
+): void {
+  const timeKey = path.substring(path.lastIndexOf('/') + 1);
 
   let jsonContent;
   try {
+    console.time('AlwatrStorage Stringify ' + timeKey);
     jsonContent = JSON.stringify(dataObject, null, space);
+    console.timeEnd('AlwatrStorage Stringify ' + timeKey);
   } catch (err) {
     throw new Error('stringify_failed');
   }
 
+
+  if (existsSync(path)) {
+    try {
+      renameSync(path, path + '.bk');
+    } catch (err) {
+      // @TODO: handle in forceSave and log with logger
+      console.error('cannot rename file!');
+    }
+  } else {
+    try {
+      mkdirSync(dirname(path), {recursive: true});
+    } catch (err) {
+      throw new Error('make_dir_failed');
+    }
+  }
+
   try {
+    console.time('AlwatrStorage Write ' + timeKey);
     writeFileSync(path, jsonContent, {encoding: 'utf-8', flag: 'w'});
+    console.timeEnd('AlwatrStorage Write ' + timeKey);
   } catch (err) {
     throw new Error('write_file_failed');
   }
