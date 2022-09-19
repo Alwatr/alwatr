@@ -30,17 +30,17 @@ jobs:
       security-events: write
 
     steps:
-      - name: Checkout repository
+      - name: ⤵️ Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup nodejs
+      - name: 🏗 Setup nodejs
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: yarn
 
-      - name: Install dependencies
+      - name: 🏗 Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build Typescript
+      - name: 🚀 Build Typescript
         run: yarn build:ts
