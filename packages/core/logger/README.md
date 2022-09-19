@@ -16,7 +16,7 @@ function sayHello(name: string) {
 
 ### Debug Mode
 
-Many of the methods in the logger are no-ops when the debug mode is off in browser.
+Many of the methods in the logger are no-ops when the debug mode is off in the browser.
 Please remember to **reload** the window after changing the debug mode.
 
 - Debugging all scopes
