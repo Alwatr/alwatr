@@ -162,12 +162,33 @@ const unitConversion = {
   y: 31_536_000_000,
 };
 
-export function parseDuration(duration: DurationString, unit: DurationUnit | 'ms' = 'ms'): number {
+/**
+ * Parse duration string to target unit.
+ *
+ * Example:
+ *
+ * ```js
+ * parseDuration('10s'); // 10,000
+ * parseDuration('10m'); // 600,000
+ * parseDuration('10h'); // 36,000,000
+ * parseDuration('10d'); // 864,000,000
+ * parseDuration('10w'); // 6,048,000,000
+ * parseDuration('10M'); // 25,920,000,000
+ * parseDuration('10y'); // 315,360,000,000
+ * parseDuration('10d', 'h'); // 240
+ * ```
+ */
+export function parseDuration(duration: DurationString, toUnit: DurationUnit | 'ms' = 'ms'): number {
   duration = duration.trim() as DurationString;
-  const durationNumber = +duration.substring(0, duration.length - 1).trimEnd(); // trimEnd for `10 m`
+  const durationNumberStr = duration.substring(0, duration.length - 1).trimEnd();// trimEnd for `10 m`
+  if (!isNumber(durationNumberStr)) {
+    throw new Error(`not_a_number`);
+  }
+  const durationNumber = +durationNumberStr;
   const durationUnit = duration.substring(duration.length - 1) as DurationUnit;
   if (unitConversion[durationUnit] == null) {
     throw new Error(`invalid_init`);
   }
-  return (durationNumber * unitConversion[durationUnit]) / (unit === 'ms' ? 1 : unitConversion[unit]);
+  return (durationNumber * unitConversion[durationUnit]) / (toUnit === 'ms' ? 1 : unitConversion[toUnit]);
 }
+
