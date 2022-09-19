@@ -29,9 +29,7 @@ export class AlwatrStorageProvider {
   }
 
   // TODO: update all jsdoc and readme.
-  async get<DocumentType extends DocumentObject = DocumentObject>(
-      config: AlwatrStorageConfig,
-  ): Promise<AlwatrStorage<DocumentType>> {
+  get<DocumentType extends DocumentObject = DocumentObject>(config: AlwatrStorageConfig): AlwatrStorage<DocumentType> {
     if (!this._list[config.name]) {
       this._list[config.name] = new AlwatrStorage<DocumentType>({
         ...this._config,

@@ -25,9 +25,8 @@ export function getDataModel(storageName: string): DataModel | null {
   let testStorageName = '';
   for (let i = 0; i < splittedName.length; i++) {
     testStorageName += splittedName[i];
-    if (dataModelStorage.has(testStorageName)) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const dataModel = dataModelStorage.get(testStorageName, true)!;
+    const dataModel = dataModelStorage.get(testStorageName, true);
+    if (dataModel != null) {
       if (dataModel.subStorage === false && dataModel._id !== storageName) continue;
       return dataModel;
     }
