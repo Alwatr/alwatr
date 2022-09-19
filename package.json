@@ -26,7 +26,7 @@
     "build:ts": "tsc --build",
     "format": "npm-run-all --sequential format:prettier format:eslint",
     "format:eslint": "yarn lint:ts --fix",
-    "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --ignore-path ./.eslintignore --write",
+    "format:prettier": "prettier . --ignore-path .gitignore --write",
     "clean": "yarn build:ts --clean && lerna run clean && rimraf \"{packages,demo}/**/*.{js,d.ts,map}\" \"{packages,demo}/**/.tsbuildinfo\" \"{packages,demo}/**/node_modules/\"",
     "serve:dev": "web-dev-server --config dev-server.mjs",
     "watch": "npm-run-all --parallel watch:* serve:dev",
