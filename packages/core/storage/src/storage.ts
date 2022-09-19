@@ -134,11 +134,14 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     const documentObject = this._storage[documentId];
     if (typeof documentObject === 'string') { // for example _last
       return this.get(documentObject);
-    } else if (documentObject == null) {
+    }
+    else if (documentObject == null) {
       return null;
-    } else if (fastInstance) {
+    }
+    else if (fastInstance) {
       return documentObject;
-    } else {
+    }
+    else {
       return JSON.parse(JSON.stringify(documentObject));
     }
   }
