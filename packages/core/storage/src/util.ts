@@ -43,11 +43,7 @@ export function readJsonFile<T extends JSON>(path: string): T | null {
  * @example
  * writeJsonFile('./file.json', { a:1, b:2, c:3 });
  */
-export function writeJsonFile<T extends JSON>(
-    path: string,
-    dataObject: T,
-    space?: string | number | undefined,
-): void {
+export function writeJsonFile<T extends JSON>(path: string, dataObject: T, space?: string | number | undefined): void {
   const timeKey = path.substring(path.lastIndexOf('/') + 1);
 
   let jsonContent;
@@ -59,7 +55,6 @@ export function writeJsonFile<T extends JSON>(
   catch (err) {
     throw new Error('stringify_failed');
   }
-
 
   if (existsSync(path)) {
     try {

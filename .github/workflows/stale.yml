@@ -5,7 +5,7 @@ name: Stale
 on:
   workflow_dispatch:
   schedule:
-    - cron: "2 8 * * *"
+    - cron: '2 8 * * *'
 
 jobs:
   stale:

@@ -62,14 +62,14 @@ export type AlwatrStorageProviderConfig = {
    *
    * @default 100
    */
-   saveDebounce?: number;
+  saveDebounce?: number;
 
-   /**
-    * Write pretty formatted JSON file.
-    *
-    * @default false
-    */
-   saveBeautiful?: boolean;
+  /**
+   * Write pretty formatted JSON file.
+   *
+   * @default false
+   */
+  saveBeautiful?: boolean;
 
   /**
    * Debug output logs
