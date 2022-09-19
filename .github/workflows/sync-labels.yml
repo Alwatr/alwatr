@@ -3,6 +3,7 @@
 name: Sync labels
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
