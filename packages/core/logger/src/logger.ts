@@ -18,8 +18,8 @@ alwatrRegisteredList.push({
  * Color list storage for logger.
  */
 let colorIndex = 0;
-const colorList = isBrowser ?
-  [
+const colorList = isBrowser
+  ? [
     '#35b997',
     '#f05561',
     '#ee224a',
@@ -35,8 +35,8 @@ const colorList = isBrowser ?
     '#1da2dc',
     '#f05123',
     '#ee2524',
-  ] :
-  ['0;36', '0;35', '0;34', '0;33', '0;32']; // red and white omitted
+  ]
+  : ['0;36', '0;35', '0;34', '0;33', '0;32']; // red and white omitted
 
 const getNextColor = (): string => {
   const color = colorList[colorIndex];
@@ -47,9 +47,9 @@ const getNextColor = (): string => {
   return color;
 };
 
-const debugString = isBrowser ?
-  globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim() :
-  globalThis.process?.env?.ALWATR_DEBUG?.trim();
+const debugString = isBrowser
+  ? globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim()
+  : globalThis.process?.env?.ALWATR_DEBUG?.trim();
 
 const getDebugState = (scope: string): boolean => {
   if (debugString == null && isBrowser === false && globalThis.process.env.NODE_ENV !== 'production') {
@@ -128,13 +128,13 @@ export const createLogger = (
     color,
     scope,
 
-    accident: isBrowser ?
-      console.warn.bind(console, '%c%s%c.%s "%s" => Accident: "%s" (%s)!', styleScope, scope, style.reset) :
-      console.warn.bind(console, `${styleScope}⚠️  %s\x1b[33m.%s "%s" =>${style.reset}`, scope),
+    accident: isBrowser
+      ? console.warn.bind(console, '%c%s%c.%s "%s" => Accident: "%s" (%s)!', styleScope, scope, style.reset)
+      : console.warn.bind(console, `${styleScope}⚠️  %s\x1b[33m.%s "%s" =>${style.reset}`, scope),
 
-    error: isBrowser ?
-      console.error.bind(console, '%c%s%c.%s "%s" =>', styleScope, scope, style.reset) :
-      console.error.bind(console, `${styleScope}❌ %s\x1b[31m.%s "%s" =>\x1b[0;2m`, scope),
+    error: isBrowser
+      ? console.error.bind(console, '%c%s%c.%s "%s" =>', styleScope, scope, style.reset)
+      : console.error.bind(console, `${styleScope}❌ %s\x1b[31m.%s "%s" =>\x1b[0;2m`, scope),
   };
 
   if (!debug) {
@@ -161,9 +161,9 @@ export const createLogger = (
 
     logMethodFull: console.debug.bind(console, keySection + '.%s(%o); // %o', styleScope, scope, style.reset),
 
-    incident: isBrowser ?
-      console.trace.bind(console, '%c%s%c.%s() => Incident: "%s" (%s)!', styleScope, scope, style.reset) :
-      console.log.bind(console, `${styleScope}🔸 %s${style.reset}.%s() => Incident: "%s" (%s)!\x1b[0;2m`, scope),
+    incident: isBrowser
+      ? console.trace.bind(console, '%c%s%c.%s() => Incident: "%s" (%s)!', styleScope, scope, style.reset)
+      : console.log.bind(console, `${styleScope}🔸 %s${style.reset}.%s() => Incident: "%s" (%s)!\x1b[0;2m`, scope),
 
     logOther: console.debug.bind(console, keySection, styleScope, scope, style.reset),
   };
