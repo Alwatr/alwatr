@@ -14,7 +14,6 @@ const db = new AlwatrStorage<User>({
   name: 'junk-data',
   path: 'db',
   saveBeautiful: false,
-  saveDebounce: 10_000,
   debug: false,
 });
 
@@ -30,8 +29,9 @@ for (let i = 0; i < 100_000; i++) {
 }
 
 console.time('get item');
-db.get('_latest');
+const item = db.get('_last');
 console.timeEnd('get item');
+console.dir(item);
 
 db.forceSave();
 console.log('done');

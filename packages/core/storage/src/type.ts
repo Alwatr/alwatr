@@ -30,7 +30,7 @@ export type AlwatrStorageConfig = {
   /**
    * Save debounce timeout for minimal disk iops usage.
    *
-   * @default 100
+   * @default 1000
    */
   saveDebounce?: number;
 
@@ -44,7 +44,7 @@ export type AlwatrStorageConfig = {
   /**
    * Debug output logs
    *
-   * @default undefined Auto detect base in NODE_ENV
+   * @default undefined Auto detect base on `NODE_ENV`
    */
   debug?: boolean;
 };

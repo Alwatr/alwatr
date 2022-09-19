@@ -9,7 +9,12 @@ interface User extends DocumentObject {
   token?: string;
 }
 
-const db = new AlwatrStorage<User>({name: 'user-list', path: 'db'});
+const db = new AlwatrStorage<User>({
+  name: 'user-list',
+  path: 'db',
+  saveBeautiful: true,
+  debug: true,
+});
 
 console.log('db loaded and ready to access.');
 
@@ -27,13 +32,13 @@ if (ali == null) {
 } else {
   console.log('ali found: %o', ali);
   /**
-     * {
-     *   _id: 'alimd',
-     *   fname: 'Ali',
-     *   lname: 'MM',
-     *   email: 'i@ali.md',
-     * }
-     */
+   * {
+   *   _id: 'alimd',
+   *   fname: 'Ali',
+   *   lname: 'MM',
+   *   email: 'i@ali.md',
+   * }
+   */
 
   ali.token = Math.random().toString(36).substring(2, 15);
 }

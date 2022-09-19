@@ -63,7 +63,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   /**
    * All document ids in array.
    *
-   * Contain `_latest`!
+   * Contain `_last`!
    */
   get keys(): Array<string> {
     if (this._keys === null) {
@@ -73,7 +73,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   }
 
   /**
-   * Size of the storage (count `_latest`).
+   * Size of the storage (count `_last`).
    */
   get length(): number {
     return this.keys.length;
@@ -86,7 +86,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
 
     this.name = config.name;
     this.storagePath = resolve(`${config.path ?? './db'}/${config.name}.json`);
-    this.saveDebounce = config.saveDebounce ?? 100;
+    this.saveDebounce = config.saveDebounce ?? 1000;
     this.saveBeautiful = config.saveBeautiful || false;
 
     exitHook(this.forceSave);
@@ -129,10 +129,10 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * ```
    */
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
-    // this._logger.logMethodArgs('get', documentId);
+    this._logger.logMethodArgs('get', documentId);
 
     const documentObject = this._storage[documentId];
-    if (typeof documentObject === 'string') { // for example _latest
+    if (typeof documentObject === 'string') { // for example _last
       return this.get(documentObject);
     } else if (documentObject == null) {
       return null;
@@ -221,7 +221,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void> {
     const keys = this.keys;
     for (const documentId of keys) {
-      if (documentId === '_latest') continue; // prevent to duplicate latest key.
+      if (documentId === '_last') continue; // prevent to duplicate latest key.
       const documentObject = this.get(documentId);
       if (documentObject != null) {
         const retVal = await callbackfn(documentObject);
