@@ -198,7 +198,8 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
     this._logger.logMethod('getSignalValue');
     if (this._signal.value !== undefined) {
       return Promise.resolve(this._signal.value);
-    } else {
+    }
+    else {
       return this.getNextSignalValue();
     }
   }

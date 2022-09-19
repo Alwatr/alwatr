@@ -29,7 +29,8 @@ if (ali == null) {
     lname: 'Mihandoost',
     email: 'ali@mihandoost.com',
   };
-} else {
+}
+else {
   console.log('ali found: %o', ali);
   /**
    * {

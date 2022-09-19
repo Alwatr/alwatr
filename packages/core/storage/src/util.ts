@@ -22,7 +22,8 @@ export function readJsonFile<T extends JSON>(path: string): T | null {
     console.time('AlwatrStorage Read ' + timeKey);
     fileContent = readFileSync(path, {encoding: 'utf-8'});
     console.timeEnd('AlwatrStorage Read ' + timeKey);
-  } catch (err) {
+  }
+  catch (err) {
     throw new Error('read_file_failed');
   }
 
@@ -31,7 +32,8 @@ export function readJsonFile<T extends JSON>(path: string): T | null {
     const data = JSON.parse(fileContent) as T;
     console.timeEnd('AlwatrStorage Parse ' + timeKey);
     return data;
-  } catch (err) {
+  }
+  catch (err) {
     throw new Error('invalid_json');
   }
 }
@@ -41,11 +43,7 @@ export function readJsonFile<T extends JSON>(path: string): T | null {
  * @example
  * writeJsonFile('./file.json', { a:1, b:2, c:3 });
  */
-export function writeJsonFile<T extends JSON>(
-    path: string,
-    dataObject: T,
-    space?: string | number | undefined,
-): void {
+export function writeJsonFile<T extends JSON>(path: string, dataObject: T, space?: string | number | undefined): void {
   const timeKey = path.substring(path.lastIndexOf('/') + 1);
 
   let jsonContent;
@@ -53,22 +51,25 @@ export function writeJsonFile<T extends JSON>(
     console.time('AlwatrStorage Stringify ' + timeKey);
     jsonContent = JSON.stringify(dataObject, null, space);
     console.timeEnd('AlwatrStorage Stringify ' + timeKey);
-  } catch (err) {
+  }
+  catch (err) {
     throw new Error('stringify_failed');
   }
-
 
   if (existsSync(path)) {
     try {
       renameSync(path, path + '.bk');
-    } catch (err) {
+    }
+    catch (err) {
       // @TODO: handle in forceSave and log with logger
       console.error('cannot rename file!');
     }
-  } else {
+  }
+  else {
     try {
       mkdirSync(dirname(path), {recursive: true});
-    } catch (err) {
+    }
+    catch (err) {
       throw new Error('make_dir_failed');
     }
   }
@@ -77,7 +78,8 @@ export function writeJsonFile<T extends JSON>(
     console.time('AlwatrStorage Write ' + timeKey);
     writeFileSync(path, jsonContent, {encoding: 'utf-8', flag: 'w'});
     console.timeEnd('AlwatrStorage Write ' + timeKey);
-  } catch (err) {
+  }
+  catch (err) {
     throw new Error('write_file_failed');
   }
 }

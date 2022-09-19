@@ -7,7 +7,7 @@ export default {
   // in a monorepo you need to set set the root dir to resolve modules
   // rootDir: '.',
   // debug: false,
-  hostname: "0.0.0.0",
+  hostname: '0.0.0.0',
   port: 8000,
   preserveSymlinks: true,
   plugins: [],

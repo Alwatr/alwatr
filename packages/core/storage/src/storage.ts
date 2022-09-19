@@ -50,7 +50,6 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    */
   readonly saveBeautiful;
 
-
   /**
    * The storage has unsaved changes that have not yet been saved.
    */
@@ -132,13 +131,17 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     this._logger.logMethodArgs('get', documentId);
 
     const documentObject = this._storage[documentId];
-    if (typeof documentObject === 'string') { // for example _last
+    if (typeof documentObject === 'string') {
+      // for example _last
       return this.get(documentObject);
-    } else if (documentObject == null) {
+    }
+    else if (documentObject == null) {
       return null;
-    } else if (fastInstance) {
+    }
+    else if (fastInstance) {
       return documentObject;
-    } else {
+    }
+    else {
       return JSON.parse(JSON.stringify(documentObject));
     }
   }
