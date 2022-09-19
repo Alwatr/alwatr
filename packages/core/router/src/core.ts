@@ -70,7 +70,8 @@ export function makeRouteObject(requestParam: RequestRouteParam): Route {
 export function _decodeURIComponent(val: string): string {
   try {
     return decodeURIComponent(val);
-  } catch (err) {
+  }
+  catch (err) {
     return val;
   }
 }

@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package alwatr-storage-nanoservice
 
-
-
-
-
 # [0.16.0](https://github.com/AliMD/alwatr/compare/v0.15.0...v0.16.0) (2022-09-08)
 
 **Note:** Version bump only for package alwatr-storage-nanoservice

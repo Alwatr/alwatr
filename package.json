@@ -26,7 +26,7 @@
     "build:ts": "tsc --build",
     "format": "npm-run-all --sequential format:prettier format:eslint",
     "format:eslint": "yarn lint:ts --fix",
-    "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --ignore-path ./.eslintignore --write",
+    "format:prettier": "prettier . --ignore-path .gitignore --write",
     "clean": "yarn build:ts --clean && lerna run clean && rimraf \"{packages,demo}/**/*.{js,d.ts,map}\" \"{packages,demo}/**/.tsbuildinfo\" \"{packages,demo}/**/node_modules/\"",
     "serve:dev": "web-dev-server --config dev-server.mjs",
     "watch": "npm-run-all --parallel watch:* serve:dev",
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
     "@web/dev-server": "^0.1.33",
     "eslint": "^8.23.1",
