@@ -30,7 +30,7 @@ export type AlwatrStorageConfig = {
   /**
    * Save debounce timeout for minimal disk iops usage.
    *
-   * @default 100
+   * @default 1000
    */
   saveDebounce?: number;
 
@@ -40,6 +40,13 @@ export type AlwatrStorageConfig = {
    * @default false
    */
   saveBeautiful?: boolean;
+
+  /**
+   * Debug output logs
+   *
+   * @default undefined Auto detect base on `NODE_ENV`
+   */
+  debug?: boolean;
 };
 
 export type AlwatrStorageProviderConfig = {
@@ -55,12 +62,19 @@ export type AlwatrStorageProviderConfig = {
    *
    * @default 100
    */
-   saveDebounce?: number;
+  saveDebounce?: number;
 
-   /**
-    * Write pretty formatted JSON file.
-    *
-    * @default false
-    */
-   saveBeautiful?: boolean;
+  /**
+   * Write pretty formatted JSON file.
+   *
+   * @default false
+   */
+  saveBeautiful?: boolean;
+
+  /**
+   * Debug output logs
+   *
+   * @default undefined Auto detect base in NODE_ENV
+   */
+  debug?: boolean;
 };

@@ -5,22 +5,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.16.1](https://github.com/AliMD/alwatr/compare/v0.16.0...v0.16.1) (2022-09-10)
 
-
 ### Bug Fixes
 
-* **storage:** import exitHook ([c371381](https://github.com/AliMD/alwatr/commit/c37138121f7882239d7ecd38e3496f17919845a2))
-* **storage:** update AlwatrStorageProviderConfig ([bd33e36](https://github.com/AliMD/alwatr/commit/bd33e367c04cf0b7b11e803709da210a75318767))
-* **traefik:** up issue ([c9272b8](https://github.com/AliMD/alwatr/commit/c9272b8430116b2ad78dfc5a0bb48f0144bb33fd))
-
+- **storage:** import exitHook ([c371381](https://github.com/AliMD/alwatr/commit/c37138121f7882239d7ecd38e3496f17919845a2))
+- **storage:** update AlwatrStorageProviderConfig ([bd33e36](https://github.com/AliMD/alwatr/commit/bd33e367c04cf0b7b11e803709da210a75318767))
+- **traefik:** up issue ([c9272b8](https://github.com/AliMD/alwatr/commit/c9272b8430116b2ad78dfc5a0bb48f0144bb33fd))
 
 ### Features
 
-* **nginx:** $NGINX_AUTOINDEX env ([6678435](https://github.com/AliMD/alwatr/commit/6678435bd1a6f0f1c1b804e7c500b491d6d9c863))
-* **storage:** force save abd exist hook to prevent data lost ([e327d65](https://github.com/AliMD/alwatr/commit/e327d657217d2e814b007e69eeca4f5c42758979))
-
-
-
-
+- **nginx:** $NGINX_AUTOINDEX env ([6678435](https://github.com/AliMD/alwatr/commit/6678435bd1a6f0f1c1b804e7c500b491d6d9c863))
+- **storage:** force save abd exist hook to prevent data lost ([e327d65](https://github.com/AliMD/alwatr/commit/e327d657217d2e814b007e69eeca4f5c42758979))
 
 # [0.16.0](https://github.com/AliMD/alwatr/compare/v0.15.0...v0.16.0) (2022-09-08)
 

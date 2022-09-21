@@ -31,26 +31,12 @@
     }
   },
   "rules": {
-    "max-len": [
-      "error",
-      {
-        "code": 120
-      }
-    ],
-    "no-eval": [
-      "error",
-      {
-        "allowIndirect": true
-      }
-    ],
+    "max-len": ["error", {"code": 120}],
+    "no-eval": ["error", {"allowIndirect": true}],
     "no-floating-decimal": "error",
     "space-infix-ops": "error",
-    "new-cap": [
-      "error",
-      {
-        "capIsNewExceptionPattern": "Mixin$"
-      }
-    ],
+    "new-cap": ["error", {"capIsNewExceptionPattern": "Mixin$"}],
+    "brace-style": ["error", "stroustrup", {"allowSingleLine": true}],
     "@typescript-eslint/explicit-function-return-type": "error",
     "import/order": [
       "error",

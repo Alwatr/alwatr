@@ -1,9 +1,20 @@
-export interface L10Resource {
-  [key: string]: string;
-  _localCode: `${string}-${string}`;
+declare global {
+  interface AlwatrSignals {
+    'locale-change': Locale;
+    'l10n-resource-change': L10Resource;
+  }
+
+  interface AlwatrRequestSignals {
+    'l10n-resource-change': Locale;
+  }
 }
 
-export interface Local {
+export type L10Resource = {
+  [key: string]: string;
+  _localeCode: `${string}-${string}`;
+};
+
+export type Locale = {
   /**
    * fa-IR, en-US, ...
    */
@@ -18,9 +29,9 @@ export interface Local {
    * ltr, rtl
    */
   direction: 'rtl' | 'ltr';
-}
+};
 
-export interface I18nOptions {
+export type I18nConfig = {
   /**
    * Automatically fetch the localization resource from `resourcePath/localCode.json`.
    *
@@ -41,5 +52,12 @@ export interface I18nOptions {
    * @default
    * {code: 'en-US', language: 'en', direction: 'ltr'}
    */
-  defaultLocal: Local;
-}
+  defaultLocale: Locale;
+
+  /**
+   * Use this loadingStr before l10nResource loaded.
+   *
+   * @default '…'
+   */
+  loadingStr: string;
+};

@@ -4,6 +4,8 @@ Elegant powerful translation module (i18n/l10n) with dynamic json storage writte
 
 ## Example usage
 
+@TODO: update docs from ts files
+
 ### Initialize
 
 ```js

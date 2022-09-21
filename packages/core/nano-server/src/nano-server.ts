@@ -188,10 +188,12 @@ export class AlwatrNanoServer {
     try {
       if (typeof middleware === 'function') {
         await middleware(connection);
-      } else {
+      }
+      else {
         this._notFoundListener(connection);
       }
-    } catch (err) {
+    }
+    catch (err) {
       this._logger.error('handleRequest', 'http_server_middleware_error', err, {
         method: connection.method,
         route,
@@ -285,7 +287,8 @@ export class AlwatrConnection {
     let body = '';
     try {
       body = JSON.stringify(content);
-    } catch {
+    }
+    catch {
       this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!');
       return this.reply(
         content.ok === false ?
@@ -375,7 +378,8 @@ export class AlwatrConnection {
 
     try {
       return JSON.parse(body) as Type;
-    } catch (err) {
+    }
+    catch (err) {
       this.reply({
         ok: false,
         statusCode: 400,

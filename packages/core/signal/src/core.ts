@@ -73,7 +73,8 @@ function __callListeners<SignalName extends keyof AlwatrSignals>(signal: SignalO
           }),
         );
       }
-    } catch (err) {
+    }
+    catch (err) {
       logger.error('_callListeners', 'call_listener_failed', (err as Error).stack || err, {
         signalName: signal.name,
       });
@@ -121,13 +122,15 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
       });
       try {
         listenerCallback(signal.value);
-      } catch (err) {
+      }
+      catch (err) {
         logger.error('_addSignalListener', 'call_signal_callback_failed', (err as Error).stack || err, {
           signalName: signal.name,
         });
       }
       callbackCalled = true;
-    } else if (options?.receivePrevious === true) {
+    }
+    else if (options?.receivePrevious === true) {
       requestAnimationFrame(() => {
         if (signal.value !== undefined) {
           // null is a valid value for signal.
@@ -146,7 +149,8 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
   if (!(options?.once && callbackCalled)) {
     if (options?.priority) {
       signal.listenerList.unshift(listener);
-    } else {
+    }
+    else {
       signal.listenerList.push(listener);
     }
   }

@@ -39,9 +39,11 @@ export class AlwatrTokenGenerator {
     const epoch = this.epoch;
     if (token === this._generate(data, epoch)) {
       return 'valid';
-    } else if (token === this._generate(data, epoch - 1)) {
+    }
+    else if (token === this._generate(data, epoch - 1)) {
       return 'expired';
-    } else {
+    }
+    else {
       return 'invalid';
     }
   }
