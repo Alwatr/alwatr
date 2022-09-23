@@ -1,0 +1,4 @@
+# Build
+*.js
+*.map
+*.d.ts

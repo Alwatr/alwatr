@@ -133,6 +133,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
   ): ListenerInterface<SignalName> {
     this._logger.logMethodArgs('setProvider', {options});
     const listener = _setSignalProvider(this._signal, this._requestSignal, signalProvider, options);
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     return new ListenerInterface(this._requestSignal, listener);
   }
 
@@ -235,6 +236,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
   ): ListenerInterface<SignalName> {
     this._logger.logMethodArgs('addListener', {options});
     const listener = _addSignalListener(this._signal, listenerCallback, options);
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     return new ListenerInterface(this._signal, listener);
   }
 }
