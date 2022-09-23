@@ -38,7 +38,7 @@ async function updateDocument(connection: AlwatrConnection): Promise<void> {
     });
   }
 
-  const storage = await storageProvider.get({
+  const storage = storageProvider.get({
     name: storageName,
     path: `${config.storagePath}/${storageModel.subFolder}`,
   });

@@ -4,6 +4,8 @@ Simple useful Math library written in tiny TypeScript module.
 
 ## API
 
+@TODO: update from ts files docs
+
 ### `isNumber(value: unknown): boolean`
 
 Check the value is number or can convert to a number, for example string ' 123 ' can be converted to 123.
