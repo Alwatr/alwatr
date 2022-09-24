@@ -1,5 +1,5 @@
 ARG NGINX_VERSION=1.23
-ARG NGINX_IMAGE=docker.io/nginx:${NGINX_VERSION}-alpine
+ARG NGINX_IMAGE=docker.io/library/nginx:${NGINX_VERSION}-alpine
 
 FROM $NGINX_IMAGE
 

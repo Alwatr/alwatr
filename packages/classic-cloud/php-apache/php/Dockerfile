@@ -1,5 +1,5 @@
 ARG PHP_VERSION=8.1
-ARG IMAGE_NAME=docker.io/php:${PHP_VERSION}-apache
+ARG IMAGE_NAME=docker.io/library/php:${PHP_VERSION}-apache
 
 FROM $IMAGE_NAME
 
