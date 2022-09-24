@@ -70,6 +70,32 @@ export class UnicodeDigits {
     return String.fromCharCode(this._toLangZeroCode + args.findIndex((v) => v != null));
   }
 
+  /**
+   * Translate number.
+   *
+   * @param {Array<UnicodeLangKeys> | 'all' | 'common'} fromLanguages - The source language to be translated.
+   * @param {UnicodeLangKeys} toLanguage - The destination language to be translated.
+   *
+   * Example:
+   *
+   * ```ts
+   * const unicodeDigits = new UnicodeDigits('common', 'en');
+   *
+   * const list = [
+   *   '0123456789',
+   *   '٠١٢٣٤٥٦٧٨٩',
+   *   '߀߁߂߃߄߅߆߇߈߉',
+   *   '०१२३४५६७८९',
+   *   '০১২৩৪৫৬৭৮৯',
+   *   '੦੧੨੩੪੫੬੭੮੯',
+   *   '૦૧૨૩૪૫૬૭૮૯',
+   *   '୦୧୨୩୪୫୬୭୮୯',
+   *   '௦௧௨௩௪௫௬௭௮௯',
+   * ].join('\n');
+   *
+   * console.log(unicodeDigits.translate(list));
+   * ```
+   */
   constructor(fromLanguages: Array<UnicodeLangKeys> | 'all' | 'common', toLanguage: UnicodeLangKeys) {
     if (fromLanguages === 'all') {
       fromLanguages = Object.keys(supportedLanguageList) as Array<UnicodeLangKeys>;
@@ -90,6 +116,30 @@ export class UnicodeDigits {
     this._replacer = this._replacer.bind(this);
   }
 
+  /**
+ * Convert the String of number of the source language to the destination language.
+ *
+ * @param {string} str - String of number of the source language.
+ * @returns String of number of the destination language.
+ *
+ * Example:
+ *
+ * ```ts
+ * const list = [
+ *   '0123456789',
+ *   '٠١٢٣٤٥٦٧٨٩',
+ *   '߀߁߂߃߄߅߆߇߈߉',
+ *   '०१२३४५६७८९',
+ *   '০১২৩৪৫৬৭৮৯',
+ *   '੦੧੨੩੪੫੬੭੮੯',
+ *   '૦૧૨૩૪૫૬૭૮૯',
+ *   '୦୧୨୩୪୫୬୭୮୯',
+ *   '௦௧௨௩௪௫௬௭௮௯',
+ * ].join('\n');
+ *
+ * console.log(unicodeDigits.translate(list));
+ * ```
+ */
   translate(str: string): string {
     return str.replace(this._searchRegExt, this._replacer);
   }
