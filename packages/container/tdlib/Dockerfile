@@ -1,5 +1,5 @@
 ARG ALPINE_VERSION=3.16
-FROM ghcr.io/alimd/alpine:${ALPINE_VERSION}
+FROM docker.io/library/alpine:${ALPINE_VERSION}
 
 ARG TDLIB_VERSION=1.8.0
 RUN set -ex; \
