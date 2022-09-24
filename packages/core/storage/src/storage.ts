@@ -5,7 +5,7 @@ import exitHook from 'exit-hook';
 
 import {readJsonFile, writeJsonFile} from './util.js';
 
-import type {DocumentObject, DocumentListStorage, AlwatrStorageConfig} from './type';
+import type {DocumentObject, DocumentListStorage, AlwatrStorageConfig} from './type.js';
 
 export {DocumentObject, DocumentListStorage, AlwatrStorageConfig as Config};
 

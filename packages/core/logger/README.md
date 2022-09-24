@@ -16,7 +16,7 @@ function sayHello(name: string) {
 
 ### Debug Mode
 
-Many of the methods in the logger are no-ops when the debug mode is off.
+Many of the methods in the logger are no-ops when the debug mode is off in the browser.
 Please remember to **reload** the window after changing the debug mode.
 
 - Debugging all scopes
@@ -36,6 +36,8 @@ Please remember to **reload** the window after changing the debug mode.
   ```ts
   window.localStorage?.setItem('ALWATR_DEBUG', '*alwatr*');
   ```
+
+> Make sure the [log level](https://developer.chrome.com/docs/devtools/console/log/#browser) in set correctly.
 
 ## API
 
