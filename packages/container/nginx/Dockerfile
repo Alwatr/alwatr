@@ -19,12 +19,13 @@ ENV NGINX_ERROR_LOG_LEVEL=notice \
     NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE=1
 
 RUN apk add --no-cache curl
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD curl -fso /dev/null http://localhost/server-info || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --start-period=1s --retries=3 CMD curl -fso /dev/null http://localhost/server-info || exit 1
 
 RUN rm -rfv /etc/nginx/conf.d/*
 COPY conf/ /etc/nginx/
 COPY www/  /var/www/
 
 EXPOSE 80
+WORKDIR /var/www/html/
 ENTRYPOINT ["/etc/nginx/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
