@@ -1,5 +1,5 @@
 ARG ALPINE_VERSION=3.16
-FROM docker.io/alpine:${ALPINE_VERSION}
+FROM docker.io/library/alpine:${ALPINE_VERSION}
 
 ARG APK_TESTING
 RUN set -ex; \

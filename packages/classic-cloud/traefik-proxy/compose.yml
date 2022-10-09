@@ -5,7 +5,7 @@ networks:
 
 services:
   service-proxy:
-    image: ${TRAEFIK_IMAGE:-docker.io/traefik:v1.7-alpine}
+    image: ${TRAEFIK_IMAGE:-docker.io/library/traefik:v1.7-alpine}
 
     networks:
       - alwatr-public-network
@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
 
     cpu_shares: 4096
-    mem_limit: 256m
+    mem_limit: ${MEMORY_LIMIT:-256m}
 
     logging:
       driver: json-file

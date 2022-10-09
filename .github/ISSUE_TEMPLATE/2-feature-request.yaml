@@ -1,5 +1,5 @@
 name: 'Feature Request'
-description: Suggest a feature for Angular Framework
+description: Suggest a feature for Alwatr packages
 
 body:
   - type: dropdown
@@ -12,6 +12,12 @@ body:
         - logger
         - router
         - signal
+        - token
+        - nano-server
+        - element
+        - i18n
+        - math
+        - font
         - Don't known / other
       multiple: true
     validations:
