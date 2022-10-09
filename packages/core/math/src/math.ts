@@ -10,6 +10,9 @@ if (typeof Number.isFinite !== 'function') {
 
 /**
  * Check the value is number or can convert to a number, for example string ' 123 ' can be converted to 123
+ *
+ *  @param {unknown} value - the value must check numberic.
+ *  @return {boolean} - is number status.
  */
 export function isNumber(value: unknown): boolean {
   if (typeof value === 'number') {
@@ -26,19 +29,19 @@ export function isNumber(value: unknown): boolean {
  *
  * Example:
  *
- * ```js
+ * ```ts
  * transformToRange(5, {in: [0, 10], out: [0, 100]}); // => 50
  * ```
  *
  * Make percentage of any value
  *
- * ```js
+ * ```ts
  * transformToRange(2000, {in: [0, 5000], out: [0, 100]}); // => 40
  * ```
  *
  * Calculate progress-bar with
  *
- * ```js
+ * ```ts
  * const progressOuterWith = 400; //px
  * const gap = 5; //px (the visual gap between progressBar and component outer).
  * const currentProgress = 30; //%

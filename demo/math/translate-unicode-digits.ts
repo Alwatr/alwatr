@@ -1,11 +1,10 @@
 import {UnicodeDigits} from '@alwatr/math';
 
-const unicodeDigits = new UnicodeDigits('common', 'fa');
+const unicodeDigits = new UnicodeDigits('all', 'fa');
 
 const list = [
   '0123456789',
   '٠١٢٣٤٥٦٧٨٩',
-  '۰۱۲۳۴۵۶۷۸۹',
   '߀߁߂߃߄߅߆߇߈߉',
   '०१२३४५६७८९',
   '০১২৩৪৫৬৭৮৯',
