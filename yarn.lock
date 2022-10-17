@@ -2956,10 +2956,10 @@ execa@^5.0.0:
     signal-exit "^3.0.3"
     strip-final-newline "^2.0.0"
 
-exit-hook@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-3.1.0.tgz#0ba691facf29637930ead13e727cdc61860331b9"
-  integrity sha512-KiF9SiLZsKhSutx4V9sG2InYb0v1+2sfKlGD18et8/aGg2m4ij6MJbUHy/cnqJf4ncE7rWjqchE2SNIi4Lgg4A==
+exit-hook@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-3.1.1.tgz#52ee17128dd4aaec521de740737df3df16ae4582"
+  integrity sha512-8zul4XiHQxkCl2ukCuNhKv0MXgsr+Nm/N3umNoJnDUlLLz2iWGo1kd5Y243uUhc9peULX08V2t7yKDHkwpqK4g==
 
 expand-brackets@^2.1.4:
   version "2.1.4"
