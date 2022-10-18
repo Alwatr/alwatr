@@ -34,3 +34,5 @@ Best practices of using persian/arabic web fonts for progressive web application
   </body>
 </html>
 ```
+
+[Demo](https://jsbin.com/zucajut/1/edit?html,output)
