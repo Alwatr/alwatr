@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
 
 const logger = createLogger('alwatr/fetch');
@@ -42,7 +43,7 @@ export interface FetchOptions extends RequestInit {
  * const response = await fetch(url, {timeout: 5_000, bodyObject: {a: 1, b: 2}});
  * ```
  */
-export function fetch(url: string, options?: FetchOptions): Promise<Response> {
+export function fetch(url: string, options: FetchOptions = {}): Promise<Response> {
   logger.logMethodArgs('fetch', {url, options});
 
   // if (!navigator.onLine) {
@@ -50,20 +51,17 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   //   throw new Error('fetch_offline');
   // }
 
-  options = {
-    method: 'GET',
-    timeout: 10_000,
-    retry: 3,
-    window: null,
-    ...options,
-  };
+  options.method = options.method ?? 'GET';
+  options.timeout = options.timeout ?? 5_000;
+  options.retry = options.retry ?? 3;
+  options.window = options.window ?? null;
 
   if (url.lastIndexOf('?') === -1 && options.queryParameters != null) {
     // prettier-ignore
     const queryArray = Object
         .keys(options.queryParameters)
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((key) => `${key}=${String(options!.queryParameters![key])}`);
+        .map((key) => `${key}=${String(options.queryParameters![key])}`);
 
     if (queryArray.length > 0) {
       url += '?' + queryArray.join('&');
@@ -83,10 +81,10 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   const externalAbortSignal = options.signal;
   options.signal = abortController.signal;
 
-  let timeouted = false;
+  let timedOut = false;
   const timeoutId = setTimeout(() => {
     abortController.abort('fetch_timeout');
-    timeouted = true;
+    timedOut = true;
   }, options.timeout);
 
   if (externalAbortSignal != null) {
@@ -109,17 +107,21 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   return response
       .then((response) => {
         clearTimeout(timeoutId);
+        if (response.status >= 502 && response.status <= 504) {
+          options.retry! --;
+          options.signal = externalAbortSignal;
+          return fetch(url, options);
+        }
         return response;
       })
-      .catch((err) => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (timeouted && options != null && options.retry != null && options.retry > 1) {
-          options.retry--;
+      .catch((reason) => {
+        if (timedOut && options.retry! > 1) {
+          options.retry! --;
           options.signal = externalAbortSignal;
           return fetch(url, options);
         }
         else {
-          return err;
+          throw reason;
         }
       });
 }
@@ -135,17 +137,30 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
  */
 export async function getJson<ResponseType extends Record<string | number, unknown>>(
     url: string,
-    options?: FetchOptions,
+    options: FetchOptions = {},
 ): Promise<ResponseType> {
   logger.logMethodArgs('getJson', {url, options});
 
   const response = await fetch(url, options);
 
-  if (!response.ok) {
-    throw new Error('fetch_nok');
+  let data: ResponseType;
+
+  try {
+    if (!response.ok) {
+      throw new Error('fetch_nok');
+    }
+    data = await response.json() as ResponseType;
+  }
+  catch (err) {
+    if (options.retry! > 1) {
+      data = await getJson(url, options);
+    }
+    else {
+      throw err;
+    }
   }
 
-  return response.json() as Promise<ResponseType>;
+  return data;
 }
 
 /**
