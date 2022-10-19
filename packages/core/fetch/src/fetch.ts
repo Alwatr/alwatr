@@ -17,9 +17,18 @@ declare global {
 // @TODO: docs for all options
 export interface FetchOptions extends RequestInit {
   /**
-   * @default 10_000 ms
+   * Fetch timeout.
+   *
+   * @default 5000 ms
    */
   timeout?: number;
+  /**
+   * Retry fetch if timeout.
+   *
+   * @default 3
+   */
+  retry?: number;
+
   bodyJson?: Record<string | number, unknown>;
   queryParameters?: Record<string, string | number | boolean>;
 }
@@ -44,11 +53,12 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   options = {
     method: 'GET',
     timeout: 10_000,
+    retry: 3,
     window: null,
     ...options,
   };
 
-  if (options.queryParameters != null) {
+  if (url.lastIndexOf('?') === -1 && options.queryParameters != null) {
     // prettier-ignore
     const queryArray = Object
         .keys(options.queryParameters)
@@ -60,7 +70,7 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
     }
   }
 
-  if (options.bodyJson != null) {
+  if (options.body != null && options.bodyJson != null) {
     options.body = JSON.stringify(options.bodyJson);
     options.headers = {
       ...options.headers,
@@ -73,7 +83,11 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   const externalAbortSignal = options.signal;
   options.signal = abortController.signal;
 
-  const timeoutId = setTimeout(() => abortController.abort('fetch_timeout'), options.timeout);
+  let timeouted = false;
+  const timeoutId = setTimeout(() => {
+    abortController.abort('fetch_timeout');
+    timeouted = true;
+  }, options.timeout);
 
   if (externalAbortSignal != null) {
     // Respect external abort signal
@@ -92,8 +106,22 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
 
   // @TODO: browser fetch polyfill
   const response = window.fetch(url, options);
-  response.then(() => clearTimeout(timeoutId));
-  return response;
+  return response
+      .then((response) => {
+        clearTimeout(timeoutId);
+        return response;
+      })
+      .catch((err) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        if (timeouted && options != null && options.retry != null && options.retry > 1) {
+          options.retry--;
+          options.signal = externalAbortSignal;
+          return fetch(url, options);
+        }
+        else {
+          return err;
+        }
+      });
 }
 
 /**
