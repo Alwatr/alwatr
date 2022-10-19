@@ -20,25 +20,30 @@ export interface FetchOptions extends RequestInit {
    * @default 10_000 ms
    */
   timeout?: number;
-  bodyObject?: Record<string | number, unknown>;
+  bodyJson?: Record<string | number, unknown>;
   queryParameters?: Record<string, string | number | boolean>;
 }
 
 /**
- * Enhanced base fetch API.
- * @example const response = await fetch(url, {jsonResponse: false});
+ * Enhanced Fetch API.
+ *
+ * Example:
+ *
+ * ```ts
+ * const response = await fetch(url, {timeout: 5_000, bodyObject: {a: 1, b: 2}});
+ * ```
  */
 export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   logger.logMethodArgs('fetch', {url, options});
 
-  if (!navigator.onLine) {
-    logger.accident('fetch', 'abort_signal', 'abort signal received', {url});
-    throw new Error('fetch_offline');
-  }
+  // if (!navigator.onLine) {
+  //   logger.accident('fetch', 'abort_signal', 'abort signal received', {url});
+  //   throw new Error('fetch_offline');
+  // }
 
   options = {
     method: 'GET',
-    timeout: 15_000,
+    timeout: 10_000,
     window: null,
     ...options,
   };
@@ -55,8 +60,8 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
     }
   }
 
-  if (options.bodyObject != null) {
-    options.body = JSON.stringify(options.bodyObject);
+  if (options.bodyJson != null) {
+    options.body = JSON.stringify(options.bodyJson);
     options.headers = {
       ...options.headers,
       'Content-Type': 'application/json',
@@ -66,21 +71,24 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   // @TODO: AbortController polyfill
   const abortController = new AbortController();
   const externalAbortSignal = options.signal;
+  options.signal = abortController.signal;
+
+  const timeoutId = setTimeout(() => abortController.abort('fetch_timeout'), options.timeout);
+
   if (externalAbortSignal != null) {
     // Respect external abort signal
     externalAbortSignal.addEventListener('abort', () => {
       abortController.abort(`external abort signal: ${externalAbortSignal.reason}`);
+      clearTimeout(timeoutId);
     });
   }
+
   abortController.signal.addEventListener('abort', () => {
     logger.incident('fetch', 'abort_signal', 'abort signal received', {
       url,
       reason: abortController.signal.reason,
     });
   });
-  options.signal = abortController.signal;
-
-  const timeoutId = setTimeout(() => abortController.abort('fetch_timeout'), options.timeout);
 
   // @TODO: browser fetch polyfill
   const response = window.fetch(url, options);
@@ -89,34 +97,21 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
 }
 
 /**
- * Enhanced get data.
- * @example
- * const response = await postData('/api/products', {limit: 10}, {timeout: 5_000});
- */
-export function getData(
-    url: string,
-    queryParameters?: Record<string | number, string | number | boolean>,
-    options?: FetchOptions,
-): Promise<Response> {
-  logger.logMethodArgs('getData', {url, queryParameters, options});
-  return fetch(url, {
-    queryParameters,
-    ...options,
-  });
-}
-
-/**
- * Enhanced fetch JSON.
- * @example
- * const productList = await getJson('/api/products', {limit: 10}, {timeout: 5_000});
+ * Get JSON Data with Enhanced Fetch API.
+ *
+ * Example:
+ *
+ * ```ts
+ * const productList = await getJson<ProductResponse>('/api/products', {queryParameters: {limit: 10}, timeout: 5_000});
+ * ```
  */
 export async function getJson<ResponseType extends Record<string | number, unknown>>(
     url: string,
-    queryParameters?: Record<string | number, string | number | boolean>,
     options?: FetchOptions,
 ): Promise<ResponseType> {
-  logger.logMethodArgs('getJson', {url, queryParameters, options});
-  const response = await getData(url, queryParameters, options);
+  logger.logMethodArgs('getJson', {url, options});
+
+  const response = await fetch(url, options);
 
   if (!response.ok) {
     throw new Error('fetch_nok');
@@ -126,19 +121,24 @@ export async function getJson<ResponseType extends Record<string | number, unkno
 }
 
 /**
- * Enhanced post json data.
- * @example
- * const response = await postData('/api/product/new', {name: 'foo', ...});
+ * Post JSON Data with Enhanced Fetch API.
+ *
+ * Example:
+ *
+ * ```ts
+ * const response = await postJson('/api/product/new', {name: 'foo', ...});
+ * ```
  */
-export function postData(
+export function postJson(
     url: string,
-    body: Record<string | number, unknown>,
+    bodyJson: Record<string | number, unknown>,
     options?: FetchOptions,
 ): Promise<Response> {
-  logger.logMethodArgs('postData', {url, body, options});
+  logger.logMethod('postJson');
+
   return fetch(url, {
     method: 'POST',
-    bodyObject: body,
+    bodyJson,
     ...options,
   });
 }
