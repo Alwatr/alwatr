@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
 
 const logger = createLogger('alwatr/fetch');
@@ -17,46 +18,58 @@ declare global {
 // @TODO: docs for all options
 export interface FetchOptions extends RequestInit {
   /**
-   * @default 10_000 ms
+   * A timeout for the fetch request.
+   *
+   * @default 5000 ms
    */
   timeout?: number;
-  bodyObject?: Record<string | number, unknown>;
+  /**
+   * If fetch response not acceptable or timed out, it will retry the request.
+   *
+   * @default 3
+   */
+  retry?: number;
+
+  bodyJson?: Record<string | number, unknown>;
   queryParameters?: Record<string, string | number | boolean>;
 }
 
 /**
- * Enhanced base fetch API.
- * @example const response = await fetch(url, {jsonResponse: false});
+ * It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout
+ *
+ * Example:
+ *
+ * ```ts
+ * const response = await fetch(url, {timeout: 5_000, bodyJson: {a: 1, b: 2}});
+ * ```
  */
-export function fetch(url: string, options?: FetchOptions): Promise<Response> {
+export function fetch(url: string, options: FetchOptions = {}): Promise<Response> {
   logger.logMethodArgs('fetch', {url, options});
 
-  if (!navigator.onLine) {
-    logger.accident('fetch', 'abort_signal', 'abort signal received', {url});
-    throw new Error('fetch_offline');
-  }
+  // if (!navigator.onLine) {
+  //   logger.accident('fetch', 'abort_signal', 'abort signal received', {url});
+  //   throw new Error('fetch_offline');
+  // }
 
-  options = {
-    method: 'GET',
-    timeout: 15_000,
-    window: null,
-    ...options,
-  };
+  options.method ??= 'GET';
+  options.timeout ??= 5_000;
+  options.retry ??= 3;
+  options.window ??= null;
 
-  if (options.queryParameters != null) {
+  if (url.lastIndexOf('?') === -1 && options.queryParameters != null) {
     // prettier-ignore
     const queryArray = Object
         .keys(options.queryParameters)
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((key) => `${key}=${String(options!.queryParameters![key])}`);
+        .map((key) => `${key}=${String(options.queryParameters![key])}`);
 
     if (queryArray.length > 0) {
       url += '?' + queryArray.join('&');
     }
   }
 
-  if (options.bodyObject != null) {
-    options.body = JSON.stringify(options.bodyObject);
+  if (options.body != null && options.bodyJson != null) {
+    options.body = JSON.stringify(options.bodyJson);
     options.headers = {
       ...options.headers,
       'Content-Type': 'application/json',
@@ -66,79 +79,127 @@ export function fetch(url: string, options?: FetchOptions): Promise<Response> {
   // @TODO: AbortController polyfill
   const abortController = new AbortController();
   const externalAbortSignal = options.signal;
+  options.signal = abortController.signal;
+
+  let timedOut = false;
+  const timeoutId = setTimeout(() => {
+    abortController.abort('fetch_timeout');
+    timedOut = true;
+  }, options.timeout);
+
   if (externalAbortSignal != null) {
     // Respect external abort signal
     externalAbortSignal.addEventListener('abort', () => {
       abortController.abort(`external abort signal: ${externalAbortSignal.reason}`);
+      clearTimeout(timeoutId);
     });
   }
+
   abortController.signal.addEventListener('abort', () => {
     logger.incident('fetch', 'abort_signal', 'abort signal received', {
       url,
       reason: abortController.signal.reason,
     });
   });
-  options.signal = abortController.signal;
-
-  const timeoutId = setTimeout(() => abortController.abort('fetch_timeout'), options.timeout);
 
   // @TODO: browser fetch polyfill
   const response = window.fetch(url, options);
-  response.then(() => clearTimeout(timeoutId));
-  return response;
+  return response
+      .then((response) => {
+        clearTimeout(timeoutId);
+        if (response.status >= 502 && response.status <= 504 && options.retry! > 1) {
+        options.retry!--;
+        options.signal = externalAbortSignal;
+
+        logger.accident('fetch', 'fetch_nok', 'fetch not ok and retry', {
+          retry: options.retry,
+          response,
+        });
+
+        return fetch(url, options);
+        }
+        return response;
+      })
+      .catch((reason) => {
+        if (timedOut && options.retry! > 1) {
+        options.retry!--;
+        options.signal = externalAbortSignal;
+
+        logger.accident('fetch', 'fetch_catch', 'fetch catch and retry', {
+          retry: options.retry,
+          reason,
+        });
+
+        return fetch(url, options);
+        }
+        else {
+          throw reason;
+        }
+      });
 }
 
 /**
- * Enhanced get data.
- * @example
- * const response = await postData('/api/products', {limit: 10}, {timeout: 5_000});
- */
-export function getData(
-    url: string,
-    queryParameters?: Record<string | number, string | number | boolean>,
-    options?: FetchOptions,
-): Promise<Response> {
-  logger.logMethodArgs('getData', {url, queryParameters, options});
-  return fetch(url, {
-    queryParameters,
-    ...options,
-  });
-}
-
-/**
- * Enhanced fetch JSON.
- * @example
- * const productList = await getJson('/api/products', {limit: 10}, {timeout: 5_000});
+ * It fetches a JSON file from a URL, and returns the JSON data
+ *
+ * Example:
+ *
+ * ```ts
+ * const productList = await getJson<ProductResponse>('/api/products', {queryParameters: {limit: 10}, timeout: 5_000});
+ * ```
  */
 export async function getJson<ResponseType extends Record<string | number, unknown>>(
     url: string,
-    queryParameters?: Record<string | number, string | number | boolean>,
-    options?: FetchOptions,
+    options: FetchOptions = {},
 ): Promise<ResponseType> {
-  logger.logMethodArgs('getJson', {url, queryParameters, options});
-  const response = await getData(url, queryParameters, options);
+  logger.logMethodArgs('getJson', {url, options});
 
-  if (!response.ok) {
-    throw new Error('fetch_nok');
+  const response = await fetch(url, options);
+
+  let data: ResponseType;
+
+  try {
+    if (!response.ok) {
+      throw new Error('fetch_nok');
+    }
+    data = (await response.json()) as ResponseType;
+  }
+  catch (err) {
+    logger.accident('getJson', 'response_json', 'response json error', {
+      retry: options.retry,
+      err,
+    });
+
+    if (options.retry! > 1) {
+      data = await getJson(url, options);
+    }
+    else {
+      throw err;
+    }
   }
 
-  return response.json() as Promise<ResponseType>;
+  return data;
 }
 
 /**
- * Enhanced post json data.
- * @example
- * const response = await postData('/api/product/new', {name: 'foo', ...});
+ * It takes a URL, a JSON object, and an optional FetchOptions object, and returns a Promise of a
+ * Response object
+ *
+ * Example:
+ *
+ * ```ts
+ * const response = await postJson('/api/product/new', {name: 'foo', ...});
+ * ```
  */
-export function postData(
+export function postJson(
     url: string,
-    body: Record<string | number, unknown>,
+    bodyJson: Record<string | number, unknown>,
     options?: FetchOptions,
 ): Promise<Response> {
-  logger.logMethodArgs('postData', {url, body, options});
+  logger.logMethod('postJson');
+
   return fetch(url, {
     method: 'POST',
-    bodyObject: body,
+    bodyJson,
     ...options,
   });
 }
