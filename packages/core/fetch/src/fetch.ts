@@ -107,7 +107,7 @@ export function fetch(url: string, options: FetchOptions = {}): Promise<Response
   return response
       .then((response) => {
         clearTimeout(timeoutId);
-        if (response.status >= 502 && response.status <= 504) {
+        if (response.status >= 502 && response.status <= 504 && options.retry! > 1) {
         options.retry!--;
         options.signal = externalAbortSignal;
 
