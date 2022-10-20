@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 24px;
+  padding: 24px;
+}
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  border-radius: 8px;
+  border: 1px solid #000;
+  position: relative;
+  background-color: #0d6efd;
+  color: #fff;
+  overflow: hidden;
+  padding: 24px 12px;
+  text-align: center;
+  margin: 0;
+  min-width: 200px;
+}
+button.success {
+  background-color: #198754;
+}
+button.fail {
+  background-color: #dc3545;
+}
+button.loading::before {
+  content: 'Loading ...';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+  background-color: #0006;
+  backdrop-filter: blur(2px);
+}
