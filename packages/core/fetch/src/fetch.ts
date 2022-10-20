@@ -51,10 +51,10 @@ export function fetch(url: string, options: FetchOptions = {}): Promise<Response
   //   throw new Error('fetch_offline');
   // }
 
-  options.method = options.method ?? 'GET';
-  options.timeout = options.timeout ?? 5_000;
-  options.retry = options.retry ?? 3;
-  options.window = options.window ?? null;
+  options.method ??= 'GET';
+  options.timeout ??= 5_000;
+  options.retry ??= 3;
+  options.window ??= null;
 
   if (url.lastIndexOf('?') === -1 && options.queryParameters != null) {
     // prettier-ignore
