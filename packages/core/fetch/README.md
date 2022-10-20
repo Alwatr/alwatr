@@ -15,20 +15,17 @@ Options have four other parameters:
 
 ## Example usage
 
-### fetch
-
-```ts
-import {fetch} from 'https://esm.run/@alwatr/fetch';
-
-const response = await fetch(url, {timeout: 5_000, bodyJson: {a: 1, b: 2}});
-```
-
-### getJson
-
 ```ts
 import {getJson} from 'https://esm.run/@alwatr/fetch';
 
-const productList = await getJson<ProductInterface>('/api/products', {
+interface ProductInterface {
+  _id: string;
+  name: string;
+  description: string;
+  image: string;
+}
+
+const productList = await getJson<Record<string, ProductInterface>>('/api/products', {
   queryParameters: {limit: 10},
   timeout: 15_000,
   retry: 5,
@@ -41,10 +38,22 @@ const productList = await getJson<ProductInterface>('/api/products', {
 
 It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout
 
+```ts
+await fetch(url, {timeout: 5_000, bodyJson: {a: 1, b: 2}});
+```
+
 ### `getJson(url: string, options: FetchOptions = {})`
 
 It fetches a JSON file from a URL, and returns the JSON data
 
+```ts
+await getJson('/api/products', {queryParameters: {limit: 10}, timeout: 5_000});
+```
+
 ### `postJson(url: string, bodyJson: Record<string | number, unknown>, options?: FetchOptions)`
 
 It takes a URL, a JSON object, and an optional FetchOptions object, and returns a Promise of a Response object
+
+```ts
+await postJson(url, {first_name: 'foo', last_name: 'bar'});
+```
