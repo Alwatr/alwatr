@@ -18,13 +18,13 @@ declare global {
 // @TODO: docs for all options
 export interface FetchOptions extends RequestInit {
   /**
-   * Fetch timeout.
+   * A timeout for the fetch request.
    *
    * @default 5000 ms
    */
   timeout?: number;
   /**
-   * Retry fetch if timeout.
+   * If the server is down, it will retry the request.
    *
    * @default 3
    */

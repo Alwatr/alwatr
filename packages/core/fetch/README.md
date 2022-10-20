@@ -9,12 +9,11 @@ Enhanced fetch API with the timeout, helper methods, and types written in tiny T
 Options have two other parameters:
 
 - `bodyObject`: a JSON object that converts to string and put on the body.
-- `queryParameters`: a JSON object that converts to URL query params
 
 ## Example usage
 
 ```js
 import {getJson} from 'https://esm.run/@alwatr/fetch';
 
-const productList = await getJson('/api/products', {limit: 10}, {timeout: 5_000});
+const productList = await getJson('/api/products', {timeout: 5_000});
 ```
