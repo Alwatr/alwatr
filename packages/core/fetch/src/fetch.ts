@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
 
 const logger = createLogger('alwatr/fetch');
@@ -107,7 +106,9 @@ export function fetch(url: string, options: FetchOptions = {}): Promise<Response
   return response
       .then((response) => {
         clearTimeout(timeoutId);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         if (response.status >= 502 && response.status <= 504 && options.retry! > 1) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         options.retry!--;
         options.signal = externalAbortSignal;
 
@@ -121,7 +122,9 @@ export function fetch(url: string, options: FetchOptions = {}): Promise<Response
         return response;
       })
       .catch((reason) => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         if (timedOut && options.retry! > 1) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         options.retry!--;
         options.signal = externalAbortSignal;
 
@@ -169,6 +172,7 @@ export async function getJson<ResponseType extends Record<string | number, unkno
       err,
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     if (options.retry! > 1) {
       data = await getJson(url, options);
     }
