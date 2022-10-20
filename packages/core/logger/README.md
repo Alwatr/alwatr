@@ -117,7 +117,7 @@ function add(a: number, b: number): number {
 
 ### `logger.incident(method, code, description, ...args)`
 
-`console.trace` an event or expected accident. (not warn or error)
+`console.log` an event or expected accident. (not warn or error)
 
 Example:
 
