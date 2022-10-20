@@ -162,7 +162,7 @@ export const createLogger = (
     logMethodFull: console.debug.bind(console, keySection + '.%s(%o); // %o', styleScope, scope, style.reset),
 
     incident: isBrowser
-      ? console.trace.bind(console, '%c%s%c.%s() => Incident: "%s" (%s)!', styleScope, scope, style.reset)
+      ? console.log.bind(console, '%c%s%c.%s() => Incident: "%s" (%s)!', styleScope, scope, style.reset)
       : console.log.bind(console, `${styleScope}🔸 %s${style.reset}.%s() => Incident: "%s" (%s)!\x1b[0;2m`, scope),
 
     logOther: console.debug.bind(console, keySection, styleScope, scope, style.reset),
