@@ -6,7 +6,7 @@ Enhanced fetch API with the timeout, helper methods, and types written in tiny T
 
 `Options` inherited from the `RequestInit`. you can watch all documents of the parameters RequestInit in [`fetch init parameters`](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters)
 
-Options have four other parameters:
+Options have some other parameters:
 
 - `bodyJson`: a JSON object that converts to string and put on the body.
 - `queryParameters`: a JSON object that converts to URL query params.
