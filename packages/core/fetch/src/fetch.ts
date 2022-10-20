@@ -24,7 +24,7 @@ export interface FetchOptions extends RequestInit {
    */
   timeout?: number;
   /**
-   * If the server is down, it will retry the request.
+   * If fetch response not acceptable or timed out, it will retry the request.
    *
    * @default 3
    */
@@ -35,12 +35,12 @@ export interface FetchOptions extends RequestInit {
 }
 
 /**
- * Enhanced Fetch API.
+ * It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout
  *
  * Example:
  *
  * ```ts
- * const response = await fetch(url, {timeout: 5_000, bodyObject: {a: 1, b: 2}});
+ * const response = await fetch(url, {timeout: 5_000, bodyJson: {a: 1, b: 2}});
  * ```
  */
 export function fetch(url: string, options: FetchOptions = {}): Promise<Response> {
@@ -108,17 +108,29 @@ export function fetch(url: string, options: FetchOptions = {}): Promise<Response
       .then((response) => {
         clearTimeout(timeoutId);
         if (response.status >= 502 && response.status <= 504) {
-          options.retry! --;
-          options.signal = externalAbortSignal;
-          return fetch(url, options);
+        options.retry!--;
+        options.signal = externalAbortSignal;
+
+        logger.accident('fetch', 'fetch_nok', 'fetch not ok and retry', {
+          retry: options.retry,
+          response,
+        });
+
+        return fetch(url, options);
         }
         return response;
       })
       .catch((reason) => {
         if (timedOut && options.retry! > 1) {
-          options.retry! --;
-          options.signal = externalAbortSignal;
-          return fetch(url, options);
+        options.retry!--;
+        options.signal = externalAbortSignal;
+
+        logger.accident('fetch', 'fetch_catch', 'fetch catch and retry', {
+          retry: options.retry,
+          reason,
+        });
+
+        return fetch(url, options);
         }
         else {
           throw reason;
@@ -127,7 +139,7 @@ export function fetch(url: string, options: FetchOptions = {}): Promise<Response
 }
 
 /**
- * Get JSON Data with Enhanced Fetch API.
+ * It fetches a JSON file from a URL, and returns the JSON data
  *
  * Example:
  *
@@ -149,9 +161,14 @@ export async function getJson<ResponseType extends Record<string | number, unkno
     if (!response.ok) {
       throw new Error('fetch_nok');
     }
-    data = await response.json() as ResponseType;
+    data = (await response.json()) as ResponseType;
   }
   catch (err) {
+    logger.accident('getJson', 'response_json', 'response json error', {
+      retry: options.retry,
+      err,
+    });
+
     if (options.retry! > 1) {
       data = await getJson(url, options);
     }
@@ -164,7 +181,8 @@ export async function getJson<ResponseType extends Record<string | number, unkno
 }
 
 /**
- * Post JSON Data with Enhanced Fetch API.
+ * It takes a URL, a JSON object, and an optional FetchOptions object, and returns a Promise of a
+ * Response object
  *
  * Example:
  *
