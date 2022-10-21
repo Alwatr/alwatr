@@ -41,7 +41,14 @@ export interface FetchOptions extends RequestInit {
    *
    * @default 'network_only'
    */
-  cacheStrategy: CacheStrategy;
+   cacheStrategy: CacheStrategy;
+
+   /**
+   * Cache storage name.
+   *
+   * @default 'alwatr_fetch_cache'
+   */
+  cacheStorageName: string;
 
   /**
    * Body as JS Object.
@@ -77,7 +84,7 @@ export async function fetch(_options: Partial<FetchOptions> & {url: string}): Pr
   // else handle cache strategies!
 
   if (cacheStorage == null) {
-    cacheStorage = await caches.open('alwatr-fetch-cache');
+    cacheStorage = await caches.open(options.cacheStorageName);
   }
 
   const request = new Request(options.url, options);
@@ -125,6 +132,7 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
   options.timeout ??= 5_000;
   options.retry ??= 3;
   options.cacheStrategy ??= 'network_only';
+  options.cacheStorageName ??= 'alwatr_fetch_cache';
 
   if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
     logger.accident('fetch', 'fetch_cache_strategy_ignore', 'Catch storage not support in this browser');
