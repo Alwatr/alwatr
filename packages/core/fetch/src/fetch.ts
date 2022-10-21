@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate'
+export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate';
 
 // @TODO: docs for all options
 export interface FetchOptions extends RequestInit {
@@ -41,9 +41,9 @@ export interface FetchOptions extends RequestInit {
    *
    * @default 'network_only'
    */
-   cacheStrategy: CacheStrategy;
+  cacheStrategy: CacheStrategy;
 
-   /**
+  /**
    * Cache storage name.
    *
    * @default 'alwatr_fetch_cache'
@@ -117,7 +117,16 @@ export async function fetch(_options: Partial<FetchOptions> & {url: string}): Pr
       }
     }
 
-    // case 'stale_while_revalidate': {}
+    case 'stale_while_revalidate': {
+      const cachedResponse = await cacheStorage.match(request);
+      const fetchedResponsePromise = _fetch(options).then((networkResponse) => {
+        if (networkResponse.ok) {
+          cacheStorage.put(request, networkResponse.clone());
+        }
+        return networkResponse;
+      });
+      return cachedResponse || fetchedResponsePromise;
+    }
 
     default: {
       return _fetch(options);
