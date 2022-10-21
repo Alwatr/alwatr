@@ -14,23 +14,125 @@ declare global {
   }
 }
 
+export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate'
+
 // @TODO: docs for all options
 export interface FetchOptions extends RequestInit {
+  /**
+   * Request URL.
+   */
+  url: string;
+
   /**
    * A timeout for the fetch request.
    *
    * @default 5000 ms
    */
-  timeout?: number;
+  timeout: number;
   /**
    * If fetch response not acceptable or timed out, it will retry the request.
    *
    * @default 3
    */
-  retry?: number;
+  retry: number;
 
+  /**
+   * Use cache storage.
+   *
+   * @default 'network_only'
+   */
+  cacheStrategy: CacheStrategy;
+
+  /**
+   * Body as JS Object.
+   */
   bodyJson?: Record<string | number, unknown>;
+
+  /**
+   * URL Query Parameters as JS Object.
+   */
   queryParameters?: Record<string, string | number | boolean>;
+}
+
+let cacheStorage: Cache;
+const cacheSupported = 'caches' in self;
+
+/**
+ * It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout and cacheStrategy
+ *
+ * Example:
+ *
+ * ```ts
+ * const response = await fetch(url, {timeout: 5_000, bodyJson: {a: 1, b: 2}});
+ * ```
+ */
+export async function fetch(_options: Partial<FetchOptions> & {url: string}): Promise<Response> {
+  const options = _processOptions(_options);
+
+  logger.logMethodArgs('fetch', {options});
+
+  if (options.cacheStrategy === 'network_only') {
+    return _fetch(options);
+  }
+  // else handle cache strategies!
+
+  if (cacheStorage == null) {
+    cacheStorage = await caches.open('alwatr-fetch-cache');
+  }
+
+  const request = new Request(options.url, options);
+
+  switch (options.cacheStrategy) {
+    case 'cache_first': {
+      const cachedResponse = await cacheStorage.match(request);
+      if (cachedResponse != null) return cachedResponse;
+      const response = await _fetch(options);
+      if (response.ok) {
+        cacheStorage.put(request, response);
+      }
+      return response;
+    }
+
+    default: {
+      return _fetch(options);
+    }
+  }
+}
+
+function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchOptions {
+  options.method ??= 'GET';
+  options.window ??= null;
+
+  options.timeout ??= 5_000;
+  options.retry ??= 3;
+  options.cacheStrategy ??= 'network_only';
+
+  if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
+    logger.accident('fetch', 'fetch_cache_strategy_ignore', 'Catch storage not support in this browser');
+    options.cacheStrategy = 'network_only';
+  }
+
+  if (options.url.lastIndexOf('?') === -1 && options.queryParameters != null) {
+    // prettier-ignore
+    const queryArray = Object
+        .keys(options.queryParameters)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        .map((key) => `${key}=${String(options.queryParameters![key])}`);
+
+    if (queryArray.length > 0) {
+      options.url += '?' + queryArray.join('&');
+    }
+  }
+
+  if (options.body != null && options.bodyJson != null) {
+    options.body = JSON.stringify(options.bodyJson);
+    options.headers = {
+      ...options.headers,
+      'Content-Type': 'application/json',
+    };
+  }
+
+  return options as FetchOptions;
 }
 
 /**
@@ -42,38 +144,8 @@ export interface FetchOptions extends RequestInit {
  * const response = await fetch(url, {timeout: 5_000, bodyJson: {a: 1, b: 2}});
  * ```
  */
-export async function fetch(url: string, options: FetchOptions = {}): Promise<Response> {
-  logger.logMethodArgs('fetch', {url, options});
-
-  // if (!navigator.onLine) {
-  //   logger.accident('fetch', 'abort_signal', 'abort signal received', {url});
-  //   throw new Error('fetch_offline');
-  // }
-
-  options.method ??= 'GET';
-  options.timeout ??= 5_000;
-  options.retry ??= 3;
-  options.window ??= null;
-
-  if (url.lastIndexOf('?') === -1 && options.queryParameters != null) {
-    // prettier-ignore
-    const queryArray = Object
-        .keys(options.queryParameters)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((key) => `${key}=${String(options.queryParameters![key])}`);
-
-    if (queryArray.length > 0) {
-      url += '?' + queryArray.join('&');
-    }
-  }
-
-  if (options.body != null && options.bodyJson != null) {
-    options.body = JSON.stringify(options.bodyJson);
-    options.headers = {
-      ...options.headers,
-      'Content-Type': 'application/json',
-    };
-  }
+async function _fetch(options: FetchOptions): Promise<Response> {
+  logger.logMethodArgs('_fetch', {options});
 
   // @TODO: AbortController polyfill
   const abortController = new AbortController();
@@ -95,24 +167,21 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Re
   }
 
   abortController.signal.addEventListener('abort', () => {
-    logger.incident('fetch', 'abort_signal', 'abort signal received', {
-      url,
+    logger.incident('fetch', 'fetch_abort_signal', 'fetch abort signal received', {
       reason: abortController.signal.reason,
     });
   });
-
-  let response: Response;
 
   const retryFetch = (): Promise<Response> => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     options.retry!--;
     options.signal = externalAbortSignal;
-    return fetch(url, options);
+    return fetch(options);
   };
 
   try {
     // @TODO: browser fetch polyfill
-    response = await window.fetch(url, options);
+    const response = await window.fetch(options.url, options);
     clearTimeout(timeoutId);
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -150,12 +219,11 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Re
  * ```
  */
 export async function getJson<ResponseType extends Record<string | number, unknown>>(
-    url: string,
-    options: FetchOptions = {},
+    options: Partial<FetchOptions> & {url: string},
 ): Promise<ResponseType> {
-  logger.logMethodArgs('getJson', {url, options});
+  logger.logMethodArgs('getJson', {options});
 
-  const response = await fetch(url, options);
+  const response = await fetch(options);
 
   let data: ResponseType;
 
@@ -173,7 +241,7 @@ export async function getJson<ResponseType extends Record<string | number, unkno
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     if (options.retry! > 1) {
-      data = await getJson(url, options);
+      data = await getJson(options);
     }
     else {
       throw err;
@@ -181,28 +249,4 @@ export async function getJson<ResponseType extends Record<string | number, unkno
   }
 
   return data;
-}
-
-/**
- * It takes a URL, a JSON object, and an optional FetchOptions object, and returns a Promise of a
- * Response object
- *
- * Example:
- *
- * ```ts
- * const response = await postJson('/api/product/new', {name: 'foo', ...});
- * ```
- */
-export function postJson(
-    url: string,
-    bodyJson: Record<string | number, unknown>,
-    options?: FetchOptions,
-): Promise<Response> {
-  logger.logMethod('postJson');
-
-  return fetch(url, {
-    method: 'POST',
-    bodyJson,
-    ...options,
-  });
 }
