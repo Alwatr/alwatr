@@ -42,7 +42,7 @@ export interface FetchOptions extends RequestInit {
  * const response = await fetch(url, {timeout: 5_000, bodyJson: {a: 1, b: 2}});
  * ```
  */
-export function fetch(url: string, options: FetchOptions = {}): Promise<Response> {
+export async function fetch(url: string, options: FetchOptions = {}): Promise<Response> {
   logger.logMethodArgs('fetch', {url, options});
 
   // if (!navigator.onLine) {
@@ -101,44 +101,43 @@ export function fetch(url: string, options: FetchOptions = {}): Promise<Response
     });
   });
 
-  // @TODO: browser fetch polyfill
-  const response = window.fetch(url, options);
-  return response
-      .then((response) => {
-        clearTimeout(timeoutId);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (response.status >= 502 && response.status <= 504 && options.retry! > 1) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        options.retry!--;
-        options.signal = externalAbortSignal;
+  let response: Response;
 
-        logger.accident('fetch', 'fetch_nok', 'fetch not ok and retry', {
-          retry: options.retry,
-          response,
-        });
+  const retryFetch = (): Promise<Response> => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    options.retry!--;
+    options.signal = externalAbortSignal;
+    return fetch(url, options);
+  };
 
-        return fetch(url, options);
-        }
-        return response;
-      })
-      .catch((reason) => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (timedOut && options.retry! > 1) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        options.retry!--;
-        options.signal = externalAbortSignal;
+  try {
+    // @TODO: browser fetch polyfill
+    response = await window.fetch(url, options);
+    clearTimeout(timeoutId);
 
-        logger.accident('fetch', 'fetch_catch', 'fetch catch and retry', {
-          retry: options.retry,
-          reason,
-        });
-
-        return fetch(url, options);
-        }
-        else {
-          throw reason;
-        }
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    if (options.retry! > 1 && response.status >= 502 && response.status <= 504) {
+      logger.accident('fetch', 'fetch_not_valid', 'fetch not valid and retry', {
+        response,
       });
+      return retryFetch();
+    }
+
+    return response;
+  }
+  catch (reason) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    if (timedOut && options.retry! > 1) {
+      logger.incident('fetch', 'fetch_timeout', 'fetch timeout and retry', {
+        reason,
+      });
+      return retryFetch();
+    }
+    else {
+      clearTimeout(timeoutId);
+      throw reason;
+    }
+  }
 }
 
 /**
