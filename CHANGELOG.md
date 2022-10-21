@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/AliMD/alwatr/compare/v0.16.1...v0.17.0) (2022-10-21)
+
+### Bug Fixes
+
+- **`logger`:** `accident` sould `console.warn` ([c210c9f](https://github.com/AliMD/alwatr/commit/c210c9f6a864692848ea0c89d6ffbdb19167732a))
+- **classic-cloud:** docker.io/library images ([d7e2294](https://github.com/AliMD/alwatr/commit/d7e229450d464f4a3480010f65163c4bb97b3212))
+- **container/nginx:** HEALTHCHECK and WORKDIR ([4c354eb](https://github.com/AliMD/alwatr/commit/4c354eb2d71af2f117c2c05272ac6bda2755d3f9))
+- **containers:** add dockerignore to improve performance ([9ec05a0](https://github.com/AliMD/alwatr/commit/9ec05a0a6e59f8ca353ccc73a1ffe54ff47c764b))
+- **fetch:** not ok retry condition ([0da1edd](https://github.com/AliMD/alwatr/commit/0da1edda64ec5abf70a83361d159e207691e368e))
+- **issue_template:** add all packages ([6e596ce](https://github.com/AliMD/alwatr/commit/6e596cef83af943301cd108e066f7d08e61c2c7f))
+- **signal:** default options ([bbb0d59](https://github.com/AliMD/alwatr/commit/bbb0d59442301344781691bbecad39aed7f6ac40))
+- **storage:** \_last ket ([a1c452a](https://github.com/AliMD/alwatr/commit/a1c452a50c7b53b03765bf37556264a64ac3ed55))
+- **tdlib:** prevent to unnecessary build ([4f17f3c](https://github.com/AliMD/alwatr/commit/4f17f3cc7e92b23150bf2763775b064f4332b5a6))
+- **traefik:** network name ([e839b06](https://github.com/AliMD/alwatr/commit/e839b06e209d55beb152a4a99437ee204808b8e9))
+- **workflow/publish-container:** nginx version ([c25d192](https://github.com/AliMD/alwatr/commit/c25d1922efc190cd6571dccae5618483b14df5d7))
+
+### Features
+
+- add config.yml ([d7ac8fb](https://github.com/AliMD/alwatr/commit/d7ac8fb47bfabea7048741ff1ecc669f94dfd6d1))
+- add math demo ([7a92dc2](https://github.com/AliMD/alwatr/commit/7a92dc22ab323ddea9ed166e597ea1924cf368e9))
+- add new workflows ([ee30b14](https://github.com/AliMD/alwatr/commit/ee30b1400cb7a30cdd8360283d2e5ab7117fb8d1))
+- **cc/deploy:** download "\_data" folder from server. ([8bdce57](https://github.com/AliMD/alwatr/commit/8bdce57ab6fa098e865108d986ba04948ab4213d))
+- **demo:** fetch ([2bf7a69](https://github.com/AliMD/alwatr/commit/2bf7a694f53921b3096b4092f85bd212ec32881b))
+- **distribution:** classic private docker registry ([2d0c960](https://github.com/AliMD/alwatr/commit/2d0c96082e38d00df885a50f94840dcc71299520))
+- **fetch:** docs & pattern ([459ad1c](https://github.com/AliMD/alwatr/commit/459ad1c5996f851769306639136d79c0f7270770))
+- **fetch:** logger & jsdocs ([36f652d](https://github.com/AliMD/alwatr/commit/36f652d5dad23b2aeb824af77d1b0e442119c6e8))
+- **fetch:** retry pattern ([5350d1a](https://github.com/AliMD/alwatr/commit/5350d1a81b9134d598f46006a1baa880b280ea98))
+- **Math:** translateUnicodeDigits ([996c507](https://github.com/AliMD/alwatr/commit/996c507abb4708b9ef32377eb4045efb8a3f0939))
+
+### Performance Improvements
+
+- **fetch:** syntax ([1fdd02e](https://github.com/AliMD/alwatr/commit/1fdd02ec8b52e32a124b8d7c1d1c7fd7c993e3af))
+
 ## [0.16.1](https://github.com/AliMD/alwatr/compare/v0.16.0...v0.16.1) (2022-09-10)
 
 ### Bug Fixes

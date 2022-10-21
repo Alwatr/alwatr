@@ -1,6 +1,6 @@
 {
   "name": "alwatr-storage-nanoservice",
-  "version": "0.16.1",
+  "version": "0.17.0",
   "description": "Alwatr Storage Nanoservice API, Elegant micro in-memory json-like storage with disk backed, Fastest NoSQL Database",
   "type": "module",
   "keywords": [
@@ -56,10 +56,10 @@
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.16.0",
-    "@alwatr/math": "^0.16.0",
-    "@alwatr/nano-server": "^0.16.0",
-    "@alwatr/storage": "^0.16.1"
+    "@alwatr/logger": "^0.17.0",
+    "@alwatr/math": "^0.17.0",
+    "@alwatr/nano-server": "^0.17.0",
+    "@alwatr/storage": "^0.17.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.2",

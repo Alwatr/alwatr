@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/AliMD/alwatr/compare/v0.16.1...v0.17.0) (2022-10-21)
+
+### Bug Fixes
+
+- **storage:** \_last ket ([a1c452a](https://github.com/AliMD/alwatr/commit/a1c452a50c7b53b03765bf37556264a64ac3ed55))
+
+### Features
+
+- add math demo ([7a92dc2](https://github.com/AliMD/alwatr/commit/7a92dc22ab323ddea9ed166e597ea1924cf368e9))
+- **demo:** fetch ([2bf7a69](https://github.com/AliMD/alwatr/commit/2bf7a694f53921b3096b4092f85bd212ec32881b))
+- **fetch:** docs & pattern ([459ad1c](https://github.com/AliMD/alwatr/commit/459ad1c5996f851769306639136d79c0f7270770))
+- **Math:** translateUnicodeDigits ([996c507](https://github.com/AliMD/alwatr/commit/996c507abb4708b9ef32377eb4045efb8a3f0939))
+
 # [0.16.0](https://github.com/AliMD/alwatr/compare/v0.15.0...v0.16.0) (2022-09-08)
 
 **Note:** Version bump only for package @alwatr/demo

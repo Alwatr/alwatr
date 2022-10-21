@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/storage",
-  "version": "0.16.1",
+  "version": "0.17.0",
   "description": "Elegant micro in-memory json-like storage with disk backed, Faster NoSQL Database written in tiny TypeScript ES module.",
   "keywords": [
     "database",
