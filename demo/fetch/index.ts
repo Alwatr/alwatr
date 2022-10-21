@@ -15,10 +15,13 @@ for (const button of buttons) {
       try {
         const response = await fetch({
           url,
+          timeout: 2000,
+          retry: 2,
+          mode: 'cors',
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           cacheStrategy: document.querySelector<HTMLSelectElement>('#cacheSelect')!.value as CacheStrategy,
         });
-        console.log('Demo response: %o', {url, response, json: await response.json()});
+        console.log('Demo response: %o', {url, response, text: await response.text()});
       }
       catch (error) {
         console.warn('Demo catch error: %o', {url, error});
