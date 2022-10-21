@@ -9,13 +9,26 @@
   </head>
 
   <body>
-    <h3>Check the console</h3>
+
+    <h1>@alwatr/fetch</h1>
+
+    <label for="cacheSelect">Cache Strategy:</label>
+    <select name="caches" id="cacheSelect">
+      <option value="network_only">Network Only</option>
+      <option value="network_first">Network First</option>
+      <option value="cache_only">Cache Only</option>
+      <option value="cache_first">Cache First</option>
+      <option value="stale_while_revalidate">Stale While Revalidate</option>
+    </select>
+
 
     <div class="buttons">
-      <button class="success" data-url="https://httpbin.org/status/200">200 Response</button>
-      <button class="success" data-url="https://httpbin.org/delay/1">1s Delay</button>
-      <button class="fail" data-url="https://httpbin.org/status/503">503 Response</button>
-      <button class="fail" data-url="https://httpbin.org/delay/5">5s Delay</button>
+      <button class="success" data-url="//httpbin.org/status/200">200 Response</button>
+      <button class="success" data-url="//httpbin.org/delay/1">1s Delay</button>
+      <button class="fail" data-url="//httpbin.org/status/503">503 Response</button>
+      <button class="fail" data-url="//httpbin.org/delay/5">5s Delay</button>
     </div>
+
+    <h3>Check the console for result</h3>
   </body>
 </html>
