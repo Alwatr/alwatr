@@ -108,7 +108,11 @@ export async function fetch(_options: Partial<FetchOptions> & {url: string}): Pr
 
     case 'network_first': {
       try {
-        return await _fetch(options);
+        const networkResponse = await _fetch(options);
+        if (networkResponse.ok) {
+          cacheStorage.put(request, networkResponse.clone());
+        }
+        return networkResponse;
       }
       catch (err) {
         const cachedResponse = await cacheStorage.match(request);
