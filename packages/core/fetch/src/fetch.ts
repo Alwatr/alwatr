@@ -88,10 +88,29 @@ export async function fetch(_options: Partial<FetchOptions> & {url: string}): Pr
       if (cachedResponse != null) return cachedResponse;
       const response = await _fetch(options);
       if (response.ok) {
-        cacheStorage.put(request, response);
+        cacheStorage.put(request, response.clone());
       }
       return response;
     }
+
+    case 'cache_only': {
+      const cachedResponse = await cacheStorage.match(request);
+      if (cachedResponse == null) throw new Error('fetch_cache_not_found');
+      return cachedResponse;
+    }
+
+    case 'network_first': {
+      try {
+        return await _fetch(options);
+      }
+      catch (err) {
+        const cachedResponse = await cacheStorage.match(request);
+        if (cachedResponse == null) throw err;
+        return cachedResponse;
+      }
+    }
+
+    // case 'stale_while_revalidate': {}
 
     default: {
       return _fetch(options);

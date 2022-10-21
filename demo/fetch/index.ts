@@ -18,7 +18,7 @@ for (const button of buttons) {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           cacheStrategy: document.querySelector<HTMLSelectElement>('#cacheSelect')!.value as CacheStrategy,
         });
-        console.log('Demo response: %o', {url, response});
+        console.log('Demo response: %o', {url, response, json: await response.json()});
       }
       catch (error) {
         console.warn('Demo catch error: %o', {url, error});
