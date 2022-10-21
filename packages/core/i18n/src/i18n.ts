@@ -112,7 +112,7 @@ l10n.resourceChangeSignal.setProvider(async (locale) => {
     return;
   }
 
-  return await getJson<L10Resource>(`${l10n.config.resourcePath}/${locale.code}.json`);
+  return await getJson<L10Resource>({url: `${l10n.config.resourcePath}/${locale.code}.json`});
   // TODO: cache requests using fetch (add feature for fetch)
   // TODO: catch errors and fallback
 });
