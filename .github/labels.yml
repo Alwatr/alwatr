@@ -78,3 +78,6 @@
 - name: 'minor'
   color: 0e8a16
   description: 'This PR causes a minor bump in the version number.'
+- name: 'release'
+  color: 5319E7
+  description: 'Release PR from next to main.'
