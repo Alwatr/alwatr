@@ -1,11 +1,13 @@
 {
   "name": "@alwatr/fetch",
   "version": "0.17.0",
-  "description": "Enhanced fetch api with timeout, helper methods and types written in tiny TypeScript module.",
+  "description": "Enhanced fetch API with cache strategy, retry pattern, timeout, helper methods and enhanced types written in tiny TypeScript, ES module.",
   "keywords": [
     "fetch",
     "request",
     "api",
+    "retry",
+    "cache",
     "timeout",
     "typescript",
     "esm",

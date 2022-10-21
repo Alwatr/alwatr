@@ -1,6 +1,6 @@
 # @alwatr/fetch
 
-Enhanced fetch API with the timeout, helper methods, and types written in tiny TypeScript, ES module.
+Enhanced fetch API with cache strategy, retry pattern, timeout, helper methods and enhanced types written in tiny TypeScript, ES module.
 
 ## Options
 
@@ -8,10 +8,18 @@ Enhanced fetch API with the timeout, helper methods, and types written in tiny T
 
 Options have some other parameters:
 
-- `bodyJson`: a JSON object that converts to string and put on the body.
-- `queryParameters`: a JSON object that converts to URL query params.
-- `timeout`: A timeout for the fetch request.
-- `retry` If fetch response not acceptable or timed out, it will retry the request
+- `url`: Request URL.
+- `bodyJson`: Body as JS Object.
+- `queryParameters`: URL Query Parameters as JS Object.
+- `timeout`: A timeout in ms for the fetch request (default `5000`ms).
+- `retry`: If fetch response not acceptable or timed out, it will retry the request (default `3`).
+- `cacheStorageName`: Cache storage name (default `alwatr_fetch_cache`).
+- `cacheStrategy`: Strategies for caching, (default `network_only`).
+  - `network_only`: Only network request without any cache.
+  - `network_first`: Network first, falling back to cache.
+  - `cache_only`: Cache only without any network request.
+  - `cache_first`: Cache first, falling back to network.
+  - `stale_while_revalidate`: Fastest strategy, Use cached first but always request network to update the cache.
 
 ## Example usage
 
@@ -25,35 +33,41 @@ interface ProductInterface {
   image: string;
 }
 
-const productList = await getJson<Record<string, ProductInterface>>('/api/products', {
+const productList = await getJson<Record<string, ProductInterface>>({
+  url: '/api/products',
   queryParameters: {limit: 10},
-  timeout: 15_000,
-  retry: 5,
+  timeout: 5_000,
+  retry: 3,
+  cacheStrategy: 'stale_while_revalidate',
 });
 ```
 
 ## API
 
-### `fetch(url: string, options: FetchOptions = {})`
+### `fetch(options: FetchOptions): Promise<Response>`
 
-It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout
+It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout and cacheStrategy.
 
 ```ts
-await fetch(url, {timeout: 5_000, bodyJson: {a: 1, b: 2}});
+const response = await fetch({
+  url: '/api/products',
+  queryParameters: {limit: 10},
+  timeout: 5_000,
+  retry: 3,
+  cacheStrategy: 'stale_while_revalidate',
+});
 ```
 
-### `getJson(url: string, options: FetchOptions = {})`
+### `getJson<T>(options: FetchOptions): Promise<T>`
 
-It fetches a JSON file from a URL, and returns the JSON data
-
-```ts
-await getJson('/api/products', {queryParameters: {limit: 10}, timeout: 5_000});
-```
-
-### `postJson(url: string, bodyJson: Record<string | number, unknown>, options?: FetchOptions)`
-
-It takes a URL, a JSON object, and an optional FetchOptions object, and returns a Promise of a Response object
+It fetches a JSON file from a URL, and returns the parsed data.
 
 ```ts
-await postJson(url, {first_name: 'foo', last_name: 'bar'});
+const productList = await getJson<ProductResponse>({
+  url: '/api/products',
+  queryParameters: {limit: 10},
+  timeout: 5_000,
+  retry: 3,
+  cacheStrategy: 'stale_while_revalidate',
+});
 ```

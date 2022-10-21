@@ -37,7 +37,7 @@ export interface FetchOptions extends RequestInit {
   retry: number;
 
   /**
-   * Use cache storage.
+   * Strategies for caching.
    *
    * @default 'network_only'
    */
@@ -65,12 +65,18 @@ let cacheStorage: Cache;
 const cacheSupported = 'caches' in self;
 
 /**
- * It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout and cacheStrategy
+ * It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout and cacheStrategy.
  *
  * Example:
  *
  * ```ts
- * const response = await fetch(url, {timeout: 5_000, bodyJson: {a: 1, b: 2}});
+ * const response = await fetch({
+ *   url: '/api/products',
+ *   queryParameters: {limit: 10},
+ *   timeout: 5_000,
+ *   retry: 3,
+ *   cacheStrategy: 'stale_while_revalidate',
+ * });
  * ```
  */
 export async function fetch(_options: Partial<FetchOptions> & {url: string}): Promise<Response> {
@@ -176,13 +182,7 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
 }
 
 /**
- * It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout
- *
- * Example:
- *
- * ```ts
- * const response = await fetch(url, {timeout: 5_000, bodyJson: {a: 1, b: 2}});
- * ```
+ * It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout.
  */
 async function _fetch(options: FetchOptions): Promise<Response> {
   logger.logMethodArgs('_fetch', {options});
@@ -250,12 +250,18 @@ async function _fetch(options: FetchOptions): Promise<Response> {
 }
 
 /**
- * It fetches a JSON file from a URL, and returns the JSON data
+ * It fetches a JSON file from a URL, and returns the parsed data.
  *
  * Example:
  *
  * ```ts
- * const productList = await getJson<ProductResponse>('/api/products', {queryParameters: {limit: 10}, timeout: 5_000});
+ * const productList = await getJson<ProductResponse>({
+ *   url: '/api/products',
+ *   queryParameters: {limit: 10},
+ *   timeout: 5_000,
+ *   retry: 3,
+ *   cacheStrategy: 'stale_while_revalidate',
+ * });
  * ```
  */
 export async function getJson<ResponseType extends Record<string | number, unknown>>(
