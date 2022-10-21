@@ -1,0 +1,43 @@
+networks:
+  internal:
+  alwatr-public-network:
+    name: alwatr-public-network
+    external: true
+
+services:
+  distribution:
+    image: ${DISTRIBUTION_IMAGE:-registry:2}
+
+    networks:
+      - alwatr-public-network
+
+    restart: unless-stopped
+
+    cpu_shares: 1024
+    mem_limit: ${MEMORY_LIMIT:-256m}
+
+    env_file: .env
+
+    volumes:
+      - type: bind
+        source: ./_data/
+        target: /var/lib/registry
+        bind:
+          create_host_path: true
+
+    # tmpfs:
+    #   - /var/cache
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    labels:
+      traefik.enable: true
+      traefik.port: 5000
+      traefik.frontend.rule: Host:${DOMAIN}
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+      traefik.frontend.auth.basic.users: ${AUTH}

@@ -46,22 +46,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'TypeScript' ]
+        language: ['TypeScript']
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
 
     steps:
-      - name: Checkout repository
+      - name: ⤵️ Checkout repository
         uses: actions/checkout@v3
 
-      - name: Initialize CodeQL
+      - name: 🏗 Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
           # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
           # queries: security-extended,security-and-quality
 
-      - name: Auto build
+      - name: 🏗 Auto build
         uses: github/codeql-action/autobuild@v2
 
-      - name: Perform CodeQL Analysis
+      - name: 🚀 Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2

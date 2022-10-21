@@ -2,19 +2,28 @@
 
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
     reviewers:
-      - "AliMD"
-      - "njfamirm"
+      - AliMD
+      - njfamirm
     schedule:
-      interval: "daily"
+      interval: daily
+    labels:
+      - ci
+      - priority-low
+      - maintenance
 
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: npm
+    directory: /
     versioning-strategy: increase
     reviewers:
-      - "AliMD"
-      - "njfamirm"
+      - AliMD
+      - njfamirm
     schedule:
-      interval: "daily"
+      interval: daily
+    labels:
+      - dependencies
+      - ci
+      - priority-low
+      - maintenance

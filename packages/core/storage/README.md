@@ -40,6 +40,8 @@ userStorage.set(ali);
 
 ## API
 
+@TODO: update from ts files
+
 ### `new AlwatrStorage<DocumentType>(name: string, pathPrefix = 'data')`
 
 - **name**: Storage name like database table name.

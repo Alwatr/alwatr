@@ -3,22 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.16.1](https://github.com/AliMD/alwatr/compare/v0.16.0...v0.16.1) (2022-09-10)
-
+# [0.17.0](https://github.com/AliMD/alwatr/compare/v0.16.1...v0.17.0) (2022-10-21)
 
 ### Bug Fixes
 
-* **storage:** import exitHook ([c371381](https://github.com/AliMD/alwatr/commit/c37138121f7882239d7ecd38e3496f17919845a2))
-* **storage:** update AlwatrStorageProviderConfig ([bd33e36](https://github.com/AliMD/alwatr/commit/bd33e367c04cf0b7b11e803709da210a75318767))
+- **storage:** \_last ket ([a1c452a](https://github.com/AliMD/alwatr/commit/a1c452a50c7b53b03765bf37556264a64ac3ed55))
 
+## [0.16.1](https://github.com/AliMD/alwatr/compare/v0.16.0...v0.16.1) (2022-09-10)
+
+### Bug Fixes
+
+- **storage:** import exitHook ([c371381](https://github.com/AliMD/alwatr/commit/c37138121f7882239d7ecd38e3496f17919845a2))
+- **storage:** update AlwatrStorageProviderConfig ([bd33e36](https://github.com/AliMD/alwatr/commit/bd33e367c04cf0b7b11e803709da210a75318767))
 
 ### Features
 
-* **storage:** force save abd exist hook to prevent data lost ([e327d65](https://github.com/AliMD/alwatr/commit/e327d657217d2e814b007e69eeca4f5c42758979))
-
-
-
-
+- **storage:** force save abd exist hook to prevent data lost ([e327d65](https://github.com/AliMD/alwatr/commit/e327d657217d2e814b007e69eeca4f5c42758979))
 
 # [0.16.0](https://github.com/AliMD/alwatr/compare/v0.15.0...v0.16.0) (2022-09-08)
 

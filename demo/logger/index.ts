@@ -32,6 +32,7 @@ logger1.logOther('foo:', 'bar', {a: 1});
 console.debug('--- logger.error ---');
 try {
   throw new Error('my_error_message');
-} catch (err) {
+}
+catch (err) {
   logger1.error('myMethod', 'error_code', (err as Error).stack || err, {a: 1, b: 2});
 }

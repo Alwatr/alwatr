@@ -1,6 +1,6 @@
 {
   "name": "alwatr-storage-nanoservice",
-  "version": "0.16.1",
+  "version": "0.17.0",
   "description": "Alwatr Storage Nanoservice API, Elegant micro in-memory json-like storage with disk backed, Fastest NoSQL Database",
   "type": "module",
   "keywords": [
@@ -56,23 +56,23 @@
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.16.0",
-    "@alwatr/math": "^0.16.0",
-    "@alwatr/nano-server": "^0.16.0",
-    "@alwatr/storage": "^0.16.1"
+    "@alwatr/logger": "^0.17.0",
+    "@alwatr/math": "^0.17.0",
+    "@alwatr/nano-server": "^0.17.0",
+    "@alwatr/storage": "^0.17.0"
   },
   "devDependencies": {
-    "@types/node": "^18.7.16",
-    "@typescript-eslint/eslint-plugin": "^5.32.0",
-    "@typescript-eslint/parser": "^5.36.2",
-    "eslint": "^8.21.0",
+    "@types/node": "^18.11.2",
+    "@typescript-eslint/eslint-plugin": "^5.40.1",
+    "@typescript-eslint/parser": "^5.40.1",
+    "eslint": "^8.25.0",
     "eslint-config-google": "^0.14.0",
     "eslint-import-resolver-typescript": "^3.5.1",
     "eslint-plugin-import": "^2.26.0",
-    "nodemon": "^2.0.19",
+    "nodemon": "^2.0.20",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
-    "typescript": "4.8.3"
+    "typescript": "4.8.4"
   }
 }

@@ -7,7 +7,6 @@ import {readJsonFile, writeJsonFile} from './util.js';
 
 import type {DocumentObject, DocumentListStorage, AlwatrStorageConfig} from './type.js';
 
-
 export {DocumentObject, DocumentListStorage, AlwatrStorageConfig as Config};
 
 alwatrRegisteredList.push({
@@ -28,7 +27,6 @@ alwatrRegisteredList.push({
  * import {AlwatrStorage, DocumentObject} from '@alwatr/storage';
  * interface User extends DocumentObject {...}
  * const db = new AlwatrStorage<User>('user-list');
- * await userStorage.readyPromise
  * ```
  */
 export class AlwatrStorage<DocumentType extends DocumentObject> {
@@ -53,37 +51,20 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   readonly saveBeautiful;
 
   /**
-   * Ready promise resolved when the storage is ready.
-   * you can use this promise to wait for the storage to be loaded successfully and ready to use.
-   *
-   * Example:
-   *
-   * ```ts
-   * const db = new AlwatrStorage<User>({name: 'user-list', path: 'db'});
-   * await userStorage.readyPromise
-   * const user = userStorage.get('user-1');
-   * ```
+   * The storage has unsaved changes that have not yet been saved.
    */
-  readyPromise;
+  hasUnsavedChanges = false;
 
-  /**
-   * Ready state set to true when the storage is ready and readyPromise resolved.
-   */
-  get readyState(): boolean {
-    return this._readyState;
-  }
-
-  protected _readyState = false;
   protected _logger;
   protected _storage: DocumentListStorage<DocumentType> = {};
   protected _keys: Array<string> | null = null;
 
   /**
    * All document ids in array.
+   *
+   * Contain `_last`!
    */
   get keys(): Array<string> {
-    if (this._readyState !== true) throw new Error('storage_not_ready');
-
     if (this._keys === null) {
       this._keys = Object.keys(this._storage);
     }
@@ -91,33 +72,32 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   }
 
   /**
-   * Size of the storage.
+   * Size of the storage (count `_last`).
    */
   get length(): number {
     return this.keys.length;
   }
 
   constructor(config: AlwatrStorageConfig) {
-    this._logger = createLogger(`alwatr-storage:${config.name}`);
+    this._logger = createLogger(`alwatr-storage:${config.name}`, undefined, config.debug);
     this._logger.logMethodArgs('constructor', config);
     this.forceSave = this.forceSave.bind(this);
+
     this.name = config.name;
     this.storagePath = resolve(`${config.path ?? './db'}/${config.name}.json`);
-    this.saveDebounce = config.saveDebounce ?? 100;
+    this.saveDebounce = config.saveDebounce ?? 1000;
     this.saveBeautiful = config.saveBeautiful || false;
-    this.readyPromise = this._load();
+
+    exitHook(this.forceSave);
+    this.load();
   }
 
   /**
-   * Initial process like open/parse storage file.
-   * readyState will be set to true and readPromise will be resolved when this process finished.
+   * Load process like open/parse storage file.
    */
-  private async _load(): Promise<void> {
-    this._logger.logMethod('_load');
-    this._storage = (await readJsonFile<DocumentListStorage<DocumentType>>(this.storagePath)) ?? {};
-    this._readyState = true;
-    exitHook(this.forceSave);
-    this._logger.logProperty('readyState', this.readyState);
+  private load(): void {
+    this._logger.logMethodArgs('load', {path: this.storagePath});
+    this._storage = readJsonFile<DocumentListStorage<DocumentType>>(this.storagePath) ?? {};
   }
 
   /**
@@ -130,7 +110,6 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * ```
    */
   has(documentId: string): boolean {
-    if (this._readyState !== true) throw new Error('storage_not_ready');
     return this._storage[documentId] != null;
   }
 
@@ -149,15 +128,20 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * ```
    */
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
-    // this._logger.logMethodArgs('get', documentId);
-    if (this._readyState !== true) throw new Error('storage_not_ready');
+    this._logger.logMethodArgs('get', documentId);
 
     const documentObject = this._storage[documentId];
-    if (documentObject == null) {
+    if (typeof documentObject === 'string') {
+      // for example _last
+      return this.get(documentObject);
+    }
+    else if (documentObject == null) {
       return null;
-    } else if (fastInstance) {
+    }
+    else if (fastInstance) {
       return documentObject;
-    } else {
+    }
+    else {
       return JSON.parse(JSON.stringify(documentObject));
     }
   }
@@ -179,12 +163,15 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * });
    * ```
    */
-  set(documentObject: DocumentType, fastInstance?: boolean): void {
+  set(documentObject: DocumentType, fastInstance?: boolean): DocumentType {
     this._logger.logMethodArgs('set', documentObject._id);
-    if (this._readyState !== true) throw new Error('storage_not_ready');
 
     const oldData = this._storage[documentObject._id];
     if (oldData == null) this._keys = null; // Clear cached keys on new docId
+
+    if (fastInstance !== true) {
+      documentObject = JSON.parse(JSON.stringify(documentObject));
+    }
 
     // update meta
     documentObject._updatedAt = Date.now();
@@ -192,13 +179,11 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     documentObject._createdBy = oldData?._createdBy ?? documentObject._updatedBy;
     documentObject._rev = (oldData?._rev ?? 0) + 1;
 
-    if (fastInstance !== true) {
-      documentObject = JSON.parse(JSON.stringify(documentObject));
-    }
-
     this._storage._last = documentObject._id;
     this._storage[documentObject._id] = documentObject;
+
     this.save();
+    return documentObject;
   }
 
   /**
@@ -210,31 +195,43 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * userStorage.remove('user-1');
    * ```
    */
-  remove(documentId: string): void {
+  remove(documentId: string): boolean {
     this._logger.logMethodArgs('remove', documentId);
-    if (this._readyState !== true) throw new Error('storage_not_ready');
 
+    if (this._storage[documentId] == null) {
+      return false;
+    }
+    // else
     delete this._storage[documentId];
+    this.save();
+    return true;
   }
 
   /**
-   * For each loop over all document objects.
+   * Loop over all document objects asynchronous.
+   *
+   * You can return false in callbackfn to break the loop.
    *
    * Example:
    *
    * ```ts
-   * userStorage.forEach(async (user) => {
+   * await userStorage.forAll(async (user) => {
    *   await sendMessage(user._id, 'Happy new year!');
-   *   user.sent = true; // direct change document!
+   *   user.sent = true; // direct change document (use with caution)!
    * });
-   * userStorage.save();
    * ```
    */
-  forEach(callbackfn: (documentObject: DocumentType) => void): void {
-    this.keys.forEach((documentId) => {
-      const documentObject = this._storage[documentId];
-      if (documentObject != null) callbackfn(documentObject);
-    });
+  async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void> {
+    const keys = this.keys;
+    for (const documentId of keys) {
+      if (documentId === '_last') continue; // prevent to duplicate latest key.
+      const documentObject = this.get(documentId);
+      if (documentObject != null) {
+        const retVal = await callbackfn(documentObject);
+        if (retVal === false) break;
+      }
+    }
+    this.save();
   }
 
   private _saveTimer: NodeJS.Timeout | null = null;
@@ -244,8 +241,8 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    */
   save(): void {
     this._logger.logMethod('save');
-    if (this._readyState !== true) throw new Error('storage_not_ready');
     if (this._saveTimer != null) return; // save already requested
+    this.hasUnsavedChanges = true;
     this._saveTimer = setTimeout(this.forceSave, this.saveDebounce);
   }
 
@@ -253,13 +250,17 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * Save the storage to disk without any debounce.
    */
   forceSave(): void {
-    this._logger.logMethod('forceSave');
+    this._logger.logMethodArgs('forceSave', {hasUnsavedChanges: this.hasUnsavedChanges});
+
     if (this._saveTimer != null) {
       clearTimeout(this._saveTimer);
       this._saveTimer = null;
     }
 
-    writeJsonFile(this.storagePath, this._storage, this.saveBeautiful ? 2 : 0);
+    if (this.hasUnsavedChanges) {
+      writeJsonFile(this.storagePath, this._storage, this.saveBeautiful ? 2 : 0);
+      this.hasUnsavedChanges = false;
+    }
   }
 
   /**
@@ -267,20 +268,9 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    */
   unload(): void {
     this._logger.logMethod('unload');
-    if (this._readyState) {
-      this._readyState = false;
+    if (this.hasUnsavedChanges) {
       this.forceSave();
     }
     this._storage = {};
-    this.readyPromise = Promise.reject(new Error('storage_unloaded'));
-  }
-
-  /**
-   * Reload storage data.
-   */
-  reload(): void {
-    this._logger.logMethod('reload');
-    this._readyState = false;
-    this.readyPromise = this._load();
   }
 }

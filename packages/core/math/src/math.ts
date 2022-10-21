@@ -1,4 +1,5 @@
 import {TransformRangeOptions} from './type';
+export * from './unicode-digits.js';
 
 /**
  * Number.isFinite simple polyfill
@@ -9,6 +10,9 @@ if (typeof Number.isFinite !== 'function') {
 
 /**
  * Check the value is number or can convert to a number, for example string ' 123 ' can be converted to 123
+ *
+ *  @param {unknown} value - the value must check numberic.
+ *  @return {boolean} - is number status.
  */
 export function isNumber(value: unknown): boolean {
   if (typeof value === 'number') {
@@ -25,19 +29,19 @@ export function isNumber(value: unknown): boolean {
  *
  * Example:
  *
- * ```js
+ * ```ts
  * transformToRange(5, {in: [0, 10], out: [0, 100]}); // => 50
  * ```
  *
  * Make percentage of any value
  *
- * ```js
+ * ```ts
  * transformToRange(2000, {in: [0, 5000], out: [0, 100]}); // => 40
  * ```
  *
  * Calculate progress-bar with
  *
- * ```js
+ * ```ts
  * const progressOuterWith = 400; //px
  * const gap = 5; //px (the visual gap between progressBar and component outer).
  * const currentProgress = 30; //%
@@ -51,7 +55,7 @@ export function isNumber(value: unknown): boolean {
  * this.progressBar.style.width = `${progressBarWith}px`;
  * ```
  */
-export const transformToRange = (x: number, options: TransformRangeOptions): number => {
+export function transformToRange(x: number, options: TransformRangeOptions): number {
   // prettier-ignore
   let y = ((options.out[1] - options.out[0]) * (x - options.in[0])) / (options.in[1] - options.in[0]) + options.out[0];
   if (options.bound) {
@@ -64,7 +68,7 @@ export const transformToRange = (x: number, options: TransformRangeOptions): num
   }
 
   return y;
-};
+}
 
 const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 const charactersLength = characters.length;
@@ -162,12 +166,32 @@ const unitConversion = {
   y: 31_536_000_000,
 };
 
-export function parseDuration(duration: DurationString, unit: DurationUnit | 'ms' = 'ms'): number {
+/**
+ * Parse duration string to target unit.
+ *
+ * Example:
+ *
+ * ```js
+ * parseDuration('10s'); // 10,000
+ * parseDuration('10m'); // 600,000
+ * parseDuration('10h'); // 36,000,000
+ * parseDuration('10d'); // 864,000,000
+ * parseDuration('10w'); // 6,048,000,000
+ * parseDuration('10M'); // 25,920,000,000
+ * parseDuration('10y'); // 315,360,000,000
+ * parseDuration('10d', 'h'); // 240
+ * ```
+ */
+export function parseDuration(duration: DurationString, toUnit: DurationUnit | 'ms' = 'ms'): number {
   duration = duration.trim() as DurationString;
-  const durationNumber = +duration.substring(0, duration.length - 1).trimEnd(); // trimEnd for `10 m`
+  const durationNumberStr = duration.substring(0, duration.length - 1).trimEnd(); // trimEnd for `10 m`
+  if (!isNumber(durationNumberStr)) {
+    throw new Error(`not_a_number`);
+  }
+  const durationNumber = +durationNumberStr;
   const durationUnit = duration.substring(duration.length - 1) as DurationUnit;
   if (unitConversion[durationUnit] == null) {
     throw new Error(`invalid_init`);
   }
-  return (durationNumber * unitConversion[durationUnit]) / (unit === 'ms' ? 1 : unitConversion[unit]);
+  return (durationNumber * unitConversion[durationUnit]) / (toUnit === 'ms' ? 1 : unitConversion[toUnit]);
 }
