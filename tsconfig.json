@@ -113,8 +113,9 @@
     {"path": "./packages/core/nano-server"},
     {"path": "./packages/core/storage"},
     {"path": "./packages/core/token"},
-    {"path": "./packages/ui/icon"},
+    {"path": "./packages/core/element"},
     {"path": "./packages/lab/zx-example"},
-    {"path": "./demo"}
+    {"path": "./packages/ui/icon"},
+    {"path": "./demo"},
   ]
 }
