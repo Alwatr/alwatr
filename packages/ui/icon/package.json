@@ -1,0 +1,35 @@
+{
+  "name": "@alwatr/icon",
+  "version": "0.0.1",
+  "description": "Premium icons for Ionic. ",
+  "keywords": [
+    "icon",
+    "component",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "main": "icon.js",
+  "type": "module",
+  "types": "icon.d.ts",
+  "author": "MohammadMahdi Zamanian <mm25zamanian@gmail.com> (https://mm25zamanian.ir)",
+  "license": "MIT",
+  "files": [
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "packages/ui/icon"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/ui/icon#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "dependencies": {
+    "tslib": "^2.3.1"
+  }
+}
