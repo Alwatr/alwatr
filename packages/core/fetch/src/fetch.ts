@@ -154,7 +154,9 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
   options.cacheStorageName ??= 'alwatr_fetch_cache';
 
   if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
-    logger.accident('fetch', 'fetch_cache_strategy_ignore', 'Catch storage not support in this browser');
+    logger.accident('fetch', 'fetch_cache_strategy_ignore', 'Cache storage not support in this browser', {
+      cacheSupported,
+    });
     options.cacheStrategy = 'network_only';
   }
 
