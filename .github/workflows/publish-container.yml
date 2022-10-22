@@ -40,11 +40,11 @@ jobs:
             version:
               short: 1
               full: 1.0.0-1.23-alpine
-          - image: tdlib
-            description: Cross-platform library for building Telegram clients.
-            version:
-              short: 1
-              full: 1.8
+          # - image: tdlib
+          #   description: Cross-platform library for building Telegram clients.
+          #   version:
+          #     short: 1
+          #     full: 1.8
 
     permissions:
       contents: read
