@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/AliMD/alwatr/compare/v0.17.0...v0.18.0) (2022-10-22)
+
+### Bug Fixes
+
+- **fetch:** update cache on network_first ([54b59cd](https://github.com/AliMD/alwatr/commit/54b59cdc64a543a0afcd09d2ec78d20661f3a06d))
+
+### Features
+
+- **fetch:** cache strategy ([106eabd](https://github.com/AliMD/alwatr/commit/106eabdd10574b24f9919049d0b509ae40168a9a))
+- **fetch:** optional cacheStorageName ([f2bd8f2](https://github.com/AliMD/alwatr/commit/f2bd8f2a899466628417294cb269fd569b87e17a))
+- **fetch:** stale_while_revalidate cache strategy ([f758f49](https://github.com/AliMD/alwatr/commit/f758f495efb42ce7441e8f2058c1b67de0615a8c))
+
 # [0.17.0](https://github.com/AliMD/alwatr/compare/v0.16.1...v0.17.0) (2022-10-21)
 
 ### Bug Fixes

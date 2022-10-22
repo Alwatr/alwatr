@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/AliMD/alwatr/compare/v0.17.0...v0.18.0) (2022-10-22)
+
+### Bug Fixes
+
+- **i18n:** compatible with new fetch api ([b06a6a5](https://github.com/AliMD/alwatr/commit/b06a6a5958a4be8d84b74187f1c145f70370c06b))
+
 # [0.17.0](https://github.com/AliMD/alwatr/compare/v0.16.1...v0.17.0) (2022-10-21)
 
 **Note:** Version bump only for package @alwatr/i18n
