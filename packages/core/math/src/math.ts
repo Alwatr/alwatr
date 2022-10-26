@@ -1,4 +1,4 @@
-import {TransformRangeOptions} from './type';
+import {TransformRangeOptions} from './type.js';
 export * from './unicode-digits.js';
 
 /**

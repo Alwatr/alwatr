@@ -1,8 +1,8 @@
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {LitElement} from 'lit';
 
-import type {Constructor} from './type';
-import type {AlwatrLogger} from '@alwatr/logger/type';
+import type {Constructor} from './type.js';
+import type {AlwatrLogger} from '@alwatr/logger/type.js';
 import type {PropertyValues} from 'lit';
 
 alwatrRegisteredList.push({

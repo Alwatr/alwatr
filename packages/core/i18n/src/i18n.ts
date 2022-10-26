@@ -2,7 +2,7 @@ import {getJson} from '@alwatr/fetch';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {SignalInterface} from '@alwatr/signal';
 
-import type {I18nConfig, L10Resource, Locale} from './type';
+import type {I18nConfig, L10Resource, Locale} from './type.js';
 
 const logger = createLogger('alwatr/i18n');
 
