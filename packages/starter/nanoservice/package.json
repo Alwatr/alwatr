@@ -54,7 +54,7 @@
     "@alwatr/nano-server": "^0.18.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.3",
+    "@types/node": "^18.11.7",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.41.0",
     "eslint": "^8.25.0",
