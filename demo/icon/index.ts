@@ -1,0 +1,1 @@
+import '@alwatr/icon';
