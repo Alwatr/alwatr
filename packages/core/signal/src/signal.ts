@@ -1,6 +1,10 @@
 import {createLogger} from '@alwatr/logger';
 
-import {_getSignalObject, _removeSignalListener, _setSignalProvider, _dispatchSignal, _addSignalListener} from './core';
+import {
+  _getSignalObject, _removeSignalListener,
+  _setSignalProvider, _dispatchSignal,
+  _addSignalListener,
+} from './core.js';
 
 import type {
   ListenerOptions,
@@ -10,7 +14,7 @@ import type {
   SignalProviderOptions,
   ListenerObject,
   SignalObject,
-} from './type';
+} from './type.js';
 
 /**
  * Signal API interface as a remote controller.

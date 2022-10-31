@@ -1,4 +1,4 @@
-import type {AlwatrLogger} from './type';
+import type {AlwatrLogger} from './type.js';
 export {AlwatrLogger};
 
 const isBrowser = typeof process === 'undefined';

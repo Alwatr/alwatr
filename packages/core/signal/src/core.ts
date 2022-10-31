@@ -9,7 +9,7 @@ import type {
   SignalProvider,
   SignalProviderOptions,
   SignalStack,
-} from './type';
+} from './type.js';
 
 export const logger = createLogger('alwatr/signal');
 
