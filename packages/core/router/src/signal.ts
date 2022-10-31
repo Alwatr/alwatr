@@ -1,6 +1,6 @@
 import {SignalInterface} from '@alwatr/signal';
 
-import type {RequestRouteParam, Route} from './type';
+import type {RequestRouteParam, Route} from './type.js';
 
 declare global {
   interface AlwatrSignals {
