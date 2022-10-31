@@ -30,21 +30,16 @@ export class AlwatrIcon extends AlwatrElement {
   @property({reflect: true}) preurl = 'https://cdn.jsdelivr.net/gh/ionic-team/ionicons@6.0.3/src/svg/';
 
   override render(): TemplateResult {
-    return html`
-      <svg width="512" height="512" viewBox="0 0 512 512">
-        <path
-          d="M80,212V448a16,16,0,0,0,16,16h96V328a24,24,0,0,1,24-24h80a24,24,0,0,1,24,24V464h96a16,16,0,0,0,16-16V212"
-          style="fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"
-        />
-        <path
-          d="M480,256,266.89,52c-5-5.28-16.69-5.34-21.78,0L32,256"
-          style="fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"
-        />
-        <polyline
-          points="400 179 400 64 352 64 352 133"
-          style="fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"
-        />
-      </svg>
-    `;
+    return html`<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+      <title>Book</title>
+      <path
+        d="M256 160c16-63.16 76.43-95.41 208-96a15.94 15.94 0 0116 16v288a16 16 0 01-16 16c-128 0-177.45 25.81-208 64-30.37-38-80-64-208-64-9.88 0-16-8.05-16-17.93V80a15.94 15.94 0 0116-16c131.57.59 192 32.84 208 96zM256 160v288"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="32"
+      />
+    </svg>`;
   }
 }
