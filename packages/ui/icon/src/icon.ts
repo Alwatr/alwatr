@@ -26,8 +26,8 @@ export class AlwatrIcon extends AlwatrElement {
     `,
   ];
 
-  @property({reflect: true}) name?: string;
-  @property({reflect: true}) preurl = 'https://cdn.jsdelivr.net/gh/ionic-team/ionicons@6.0.3/src/svg/';
+  @property() name?: string;
+  @property() preurl = 'https://cdn.jsdelivr.net/gh/ionic-team/ionicons@6.0.3/src/svg/';
 
   override render(): TemplateResult {
     return html`<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
