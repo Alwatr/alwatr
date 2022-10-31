@@ -1,5 +1,5 @@
-import {logger} from './core';
-import {routeChangeSignal} from './signal';
+import {logger} from './core.js';
+import {routeChangeSignal} from './signal.js';
 
 let _enabled = false;
 
