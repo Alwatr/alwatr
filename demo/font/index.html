@@ -2,16 +2,20 @@
 <html lang="fa" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@alwatr/font</title>
-    <link rel="stylesheet" href="/node_modules/@alwatr/font/vazirmatn.css" fetchpriority="high" />
-    <link rel="stylesheet" href="/node_modules/@alwatr/font/vazirmatn-roundot.css" fetchpriority="high" />
-    <link rel="stylesheet" href="/node_modules/@alwatr/font/sahel.css" fetchpriority="high" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/node_modules/@alwatr/font/vazirmatn.css" />
+    <link rel="stylesheet" href="/node_modules/@alwatr/font/vazirmatn-roundot.css" />
+    <link rel="stylesheet" href="/node_modules/@alwatr/font/sahel.css" />
 
     <style>
+      html {
+        color-scheme: light dark;
+      }
+
       body {
-        font-family: var(--font-system);
+        font-family: system-ui;
       }
 
       h1 {
@@ -19,7 +23,7 @@
       }
 
       section {
-        max-width: 500px;
+        max-width: 520px;
         margin: 2em auto;
       }
 
@@ -33,15 +37,15 @@
       }
 
       .vazirmatn {
-        font-family: var(--font-vazirmatn), var(--font-system);
+        font-family: var(--font-vazirmatn), system-ui;
       }
 
       .vazirmatn-roundot {
-        font-family: var(--font-vazirmatn-roundot), var(--font-system);
+        font-family: var(--font-vazirmatn-roundot), system-ui;
       }
 
       .sahel {
-        font-family: var(--font-sahel), var(--font-system);
+        font-family: var(--font-sahel), system-ui;
       }
     </style>
   </head>
