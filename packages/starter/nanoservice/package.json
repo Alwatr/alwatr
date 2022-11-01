@@ -1,6 +1,6 @@
 {
   "name": "alwatr-nanoservice-starter",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "description": "Alwatr Microservice/Nanoservice Starter Kit",
   "type": "module",
   "keywords": [
@@ -49,9 +49,9 @@
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.18.0",
-    "@alwatr/math": "^0.18.0",
-    "@alwatr/nano-server": "^0.18.0"
+    "@alwatr/logger": "^0.19.0",
+    "@alwatr/math": "^0.19.0",
+    "@alwatr/nano-server": "^0.19.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
