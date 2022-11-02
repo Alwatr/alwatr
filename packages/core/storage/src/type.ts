@@ -10,9 +10,7 @@ export interface DocumentObject {
   _updatedBy: string;
 }
 
-export type DocumentListStorage<DocType extends DocumentObject> = Record<string, DocType | undefined> & {
-  _last?: string;
-};
+export type DocumentListStorage<DocType extends DocumentObject> = Record<string, DocType | undefined>
 
 export type AlwatrStorageConfig = {
   /**

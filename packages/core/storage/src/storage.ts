@@ -61,8 +61,6 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
 
   /**
    * All document ids in array.
-   *
-   * Contain `_last`!
    */
   get keys(): Array<string> {
     if (this._keys === null) {
@@ -72,7 +70,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   }
 
   /**
-   * Size of the storage (count `_last`).
+   * Size of the storage.
    */
   get length(): number {
     return this.keys.length;
@@ -132,7 +130,6 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
 
     const documentObject = this._storage[documentId];
     if (typeof documentObject === 'string') {
-      // for example _last
       return this.get(documentObject);
     }
     else if (documentObject == null) {
@@ -179,7 +176,6 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     documentObject._createdBy = oldData?._createdBy ?? documentObject._updatedBy;
     documentObject._rev = (oldData?._rev ?? 0) + 1;
 
-    this._storage._last = documentObject._id;
     this._storage[documentObject._id] = documentObject;
 
     this.save();
@@ -224,7 +220,6 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void> {
     const keys = this.keys;
     for (const documentId of keys) {
-      if (documentId === '_last') continue; // prevent to duplicate latest key.
       const documentObject = this.get(documentId);
       if (documentObject != null) {
         const retVal = await callbackfn(documentObject);
