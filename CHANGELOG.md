@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/AliMD/alwatr/compare/v0.18.0...v0.19.0) (2022-11-01)
+
+### Bug Fixes
+
+- **font:** review ([a371bf2](https://github.com/AliMD/alwatr/commit/a371bf2bcf6477487ceeadeaa596919066f5c468))
+- Import error in webpack ([1a52f67](https://github.com/AliMD/alwatr/commit/1a52f67ff2788c51abd13126f34353c26aa669c3))
+- **publish-container:** ignore tdlib ([edd6729](https://github.com/AliMD/alwatr/commit/edd672974702d237699caa508d34b2cd9eb7d025))
+
+### Features
+
+- **`alwatr-icon`:** `url-prefix` attr ([3af2dd4](https://github.com/AliMD/alwatr/commit/3af2dd4ba4a6451d54db7577badce9b279509265))
+- **`alwatr-icon`:** define styles & proprties ([fa0e7c7](https://github.com/AliMD/alwatr/commit/fa0e7c7c22bd9d45e7c3bde7ddb1323875223f63))
+- **`alwatr-icon`:** reflect property ([b1ce3df](https://github.com/AliMD/alwatr/commit/b1ce3df4dc28c3e32cb02c5efcf518c406ebfa82))
+- **`alwatr-icon`:** svg content ([26752bf](https://github.com/AliMD/alwatr/commit/26752bf34376634eac531e066f4a98437fe60b90))
+- **`demo`:** improve icon demo ([6519f6f](https://github.com/AliMD/alwatr/commit/6519f6f05567b8a4ce3db0bd3a442139902a01d4))
+- **alwatr-icon:** improve ([8522864](https://github.com/AliMD/alwatr/commit/85228649e1d3c8d179e3fbb5c5d2eb606bc7be3a))
+- **demo:** improve demo dark mode ([b89217e](https://github.com/AliMD/alwatr/commit/b89217eb2bd271e1d62ebe29b41ac2599852d7da))
+- **demo:** seprate fonts ([222e014](https://github.com/AliMD/alwatr/commit/222e014d488416042bf1d8575bfc0eb84d6009e8))
+- **element:** add to tsconfig ([89ec9b6](https://github.com/AliMD/alwatr/commit/89ec9b6f672e96b2424b81465d118f6338ad5524))
+- **font:** rename font files ([eb76649](https://github.com/AliMD/alwatr/commit/eb76649be6b7eee14660664a037b2b535ce52805))
+- **font:** seprate stylesheets ([fafa726](https://github.com/AliMD/alwatr/commit/fafa726d887ddddda31042651e58d5180e4d5a97))
+
 # [0.18.0](https://github.com/AliMD/alwatr/compare/v0.17.0...v0.18.0) (2022-10-22)
 
 ### Bug Fixes

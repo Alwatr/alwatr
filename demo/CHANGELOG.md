@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/AliMD/alwatr/compare/v0.18.0...v0.19.0) (2022-11-01)
+
+### Bug Fixes
+
+- **font:** review ([a371bf2](https://github.com/AliMD/alwatr/commit/a371bf2bcf6477487ceeadeaa596919066f5c468))
+
+### Features
+
+- **`demo`:** improve icon demo ([6519f6f](https://github.com/AliMD/alwatr/commit/6519f6f05567b8a4ce3db0bd3a442139902a01d4))
+- **demo:** improve demo dark mode ([b89217e](https://github.com/AliMD/alwatr/commit/b89217eb2bd271e1d62ebe29b41ac2599852d7da))
+- **demo:** seprate fonts ([222e014](https://github.com/AliMD/alwatr/commit/222e014d488416042bf1d8575bfc0eb84d6009e8))
+
 # [0.18.0](https://github.com/AliMD/alwatr/compare/v0.17.0...v0.18.0) (2022-10-22)
 
 ### Features

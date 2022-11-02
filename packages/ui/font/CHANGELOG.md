@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/AliMD/alwatr/compare/v0.18.0...v0.19.0) (2022-11-01)
+
+### Bug Fixes
+
+- **font:** review ([a371bf2](https://github.com/AliMD/alwatr/commit/a371bf2bcf6477487ceeadeaa596919066f5c468))
+
+### Features
+
+- **font:** rename font files ([eb76649](https://github.com/AliMD/alwatr/commit/eb76649be6b7eee14660664a037b2b535ce52805))
+- **font:** seprate stylesheets ([fafa726](https://github.com/AliMD/alwatr/commit/fafa726d887ddddda31042651e58d5180e4d5a97))
+
 # [0.18.0](https://github.com/AliMD/alwatr/compare/v0.17.0...v0.18.0) (2022-10-22)
 
 **Note:** Version bump only for package @alwatr/font
