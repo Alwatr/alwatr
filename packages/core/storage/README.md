@@ -40,8 +40,6 @@ userStorage.set(ali);
 
 ## API
 
-@TODO: update from ts files
-
 ### `new AlwatrStorage<DocumentType>(name: string, pathPrefix = 'data')`
 
 - **name**: Storage name like database table name.
@@ -81,10 +79,10 @@ const user = userStorage.get('user-1');
 
 Insert/update a document object in the storage.
 
-- **documentObject**: the document object to insert/update contain `_id`.
-- **fastInstance**: by default it will make a copy of the document before set.  
-  if you set fastInstance to true, it will set the original document.  
-  This is dangerous but much faster and you should use it only if you know what you are doing.
+- **documentObject** The document object to insert/update contain `_id`.
+- **fastInstance** by default it will make a copy of the document before set.
+if you set fastInstance to true, it will set the original document.
+This is dangerous but much faster, you should use it only if you know what you are doing.
 
 Example:
 
@@ -99,9 +97,10 @@ userStorage.set({
 
 Get a document object by id.
 
-- **documentId**: the id of the document object.
-- **fastInstance**: by default will return a copy of the document, if you set fastInstance to true, it will return the original document.  
-  This is dangerous but much faster, you should use it only if you know what you are doing.
+- **documentId** The id of the document object.
+- **fastInstance** by default it will return a copy of the document.
+if you set fastInstance to true, it will return the original document.
+This is dangerous but much faster, you should use it only if you know what you are doing.
 
 Example:
 
@@ -119,24 +118,21 @@ Example:
 userStorage.remove('user-1');
 ```
 
-### `forEach(callbackfn: (documentObject: DocumentType) => void)`
+### `forAll(callbackfn: (documentObject: DocumentType) => void)`
 
-For each loop over all document objects.
+Loop over all document objects asynchronous.
+
+You can return false in callbackfn to break the loop.
 
 Example:
 
 ```ts
-userStorage.forEach(async (user) => {
+await userStorage.forAll(async (user) => {
   await sendMessage(user._id, 'Happy new year!');
-  user.sent = true; // direct change document!
+  user.sent = true; // direct change document (use with caution)!
 });
-userStorage.save();
 ```
 
 ### `unload()`
 
 Unload storage data and free ram usage.
-
-### `reload()`
-
-Reload storage data.
