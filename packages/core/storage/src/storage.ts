@@ -7,7 +7,7 @@ import {readJsonFile, writeJsonFile} from './util.js';
 
 import type {DocumentObject, DataStorage, AlwatrStorageConfig} from './type.js';
 
-export {DocumentObject, DataStorage as DocumentListStorage, AlwatrStorageConfig as Config};
+export {DocumentObject, DataStorage, AlwatrStorageConfig as Config};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage',
