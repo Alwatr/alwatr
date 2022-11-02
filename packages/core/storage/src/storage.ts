@@ -164,7 +164,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     this._logger.logMethodArgs('set', documentObject._id);
 
     const oldData = this._storage[documentObject._id];
-    if (oldData == null) this._keys = null; // Clear cached keys on new docId
+    if (oldData == null) this._keys = null; // Clear cached keys
 
     if (fastInstance !== true) {
       documentObject = JSON.parse(JSON.stringify(documentObject));
@@ -199,6 +199,10 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     }
     // else
     delete this._storage[documentId];
+
+    // Clear cached keys
+    this._keys = null;
+
     this.save();
     return true;
   }
@@ -267,5 +271,8 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
       this.forceSave();
     }
     this._storage = {};
+
+    // Clear cached keys
+    this._keys = null;
   }
 }
