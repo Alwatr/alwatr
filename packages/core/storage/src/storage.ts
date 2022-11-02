@@ -5,9 +5,9 @@ import exitHook from 'exit-hook';
 
 import {readJsonFile, writeJsonFile} from './util.js';
 
-import type {DocumentObject, DocumentListStorage, AlwatrStorageConfig} from './type.js';
+import type {DocumentObject, DataStorage, AlwatrStorageConfig} from './type.js';
 
-export {DocumentObject, DocumentListStorage, AlwatrStorageConfig as Config};
+export {DocumentObject, DataStorage as DocumentListStorage, AlwatrStorageConfig as Config};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage',
@@ -56,7 +56,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   hasUnsavedChanges = false;
 
   protected _logger;
-  protected _storage: DocumentListStorage<DocumentType> = {};
+  protected _storage: DataStorage<DocumentType>;
   protected _keys: Array<string> | null = null;
 
   /**
@@ -76,6 +76,10 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     return this.keys.length;
   }
 
+  protected get _newStorage(): DataStorage<DocumentType> {
+    return {ok: true, data: {}};
+  }
+
   constructor(config: AlwatrStorageConfig) {
     this._logger = createLogger(`alwatr-storage:${config.name}`, undefined, config.debug);
     this._logger.logMethodArgs('constructor', config);
@@ -87,15 +91,26 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     this.saveBeautiful = config.saveBeautiful || false;
 
     exitHook(this.forceSave);
-    this.load();
+    this._storage = this.load();
   }
 
   /**
-   * Load process like open/parse storage file.
+   * load storage file.
    */
-  private load(): void {
+  protected load(): DataStorage<DocumentType> {
     this._logger.logMethodArgs('load', {path: this.storagePath});
-    this._storage = readJsonFile<DocumentListStorage<DocumentType>>(this.storagePath) ?? {};
+
+    const storage = readJsonFile<DataStorage<DocumentType>>(this.storagePath);
+
+    if (storage === null) {
+      return this._newStorage;
+    }
+
+    if (storage.ok !== true) {
+      throw new Error('invalid_data');
+    }
+
+    return storage;
   }
 
   /**
@@ -108,7 +123,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * ```
    */
   has(documentId: string): boolean {
-    return this._storage[documentId] != null;
+    return this._storage.data[documentId] != null;
   }
 
   /**
@@ -128,7 +143,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
     this._logger.logMethodArgs('get', documentId);
 
-    const documentObject = this._storage[documentId];
+    const documentObject = this._storage.data[documentId];
     if (typeof documentObject === 'string') {
       return this.get(documentObject);
     }
@@ -163,7 +178,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   set(documentObject: DocumentType, fastInstance?: boolean): DocumentType {
     this._logger.logMethodArgs('set', documentObject._id);
 
-    const oldData = this._storage[documentObject._id];
+    const oldData = this._storage.data[documentObject._id];
     if (oldData == null) this._keys = null; // Clear cached keys
 
     if (fastInstance !== true) {
@@ -176,7 +191,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     documentObject._createdBy = oldData?._createdBy ?? documentObject._updatedBy;
     documentObject._rev = (oldData?._rev ?? 0) + 1;
 
-    this._storage[documentObject._id] = documentObject;
+    this._storage.data[documentObject._id] = documentObject;
 
     this.save();
     return documentObject;
@@ -194,11 +209,11 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   remove(documentId: string): boolean {
     this._logger.logMethodArgs('remove', documentId);
 
-    if (this._storage[documentId] == null) {
+    if (this._storage.data[documentId] == null) {
       return false;
     }
     // else
-    delete this._storage[documentId];
+    delete this._storage.data[documentId];
 
     // Clear cached keys
     this._keys = null;
@@ -263,16 +278,19 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   }
 
   /**
-   * Unload storage data and free ram usage.
+   * Unload storage data and free ram usage (auto saved before unload).
+   *
+   * Example:
+   *
+   * ```ts
+   * userStorage.unload();
+   * delete userStorage;
+   * ```
    */
   unload(): void {
     this._logger.logMethod('unload');
-    if (this.hasUnsavedChanges) {
-      this.forceSave();
-    }
-    this._storage = {};
-
-    // Clear cached keys
+    this.forceSave();
     this._keys = null;
+    this._storage = this._newStorage;
   }
 }
