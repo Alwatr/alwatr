@@ -40,7 +40,7 @@ userStorage.set(ali);
 
 ## API
 
-### `new AlwatrStorage<DocumentType>(name: string, pathPrefix = 'data')`
+### `new AlwatrStorage<DocumentType>(config: AlwatrStorageConfig)`
 
 - **name**: Storage name like database table name.
 - **pathPrefix**: Saved file path prefix (default is `data`).
@@ -58,14 +58,17 @@ await userStorage.readyPromise
 
 Storage name like database table name.
 
-### `readonly readyState: boolean`
+### `readonly storagePath: string`
 
-Ready state set to true when the storage is ready and readyPromise resolved.
+Storage file full path.
 
-### `readonly readyPromise`
+### `readonly saveDebounce: number`
 
-Ready promise resolved when the storage is ready.
-you can use this promise to wait for the storage to be loaded successfully and ready to use.
+Save debounce timeout for minimal disk iops usage.
+
+### `readonly saveBeautiful: boolean`
+
+Write pretty formatted JSON file.
 
 Example:
 
@@ -75,14 +78,20 @@ await userStorage.readyPromise;
 const user = userStorage.get('user-1');
 ```
 
-### `set(documentObject: DocumentType, fastInstance?: boolean)`
+### `keys: Array<string>`
+
+All document ids in array.
+
+### `length: number`
+
+### `set(documentObject: DocumentType, fastInstance?: boolean): DocumentType`
 
 Insert/update a document object in the storage.
 
-- **documentObject** The document object to insert/update contain `_id`.
-- **fastInstance** by default it will make a copy of the document before set.
-if you set fastInstance to true, it will set the original document.
-This is dangerous but much faster, you should use it only if you know what you are doing.
+- **documentObject**: The document object to insert/update contain `_id`.
+- **fastInstance**: by default it will make a copy of the document before set.
+  if you set fastInstance to true, it will set the original document.
+  This is dangerous but much faster, you should use it only if you know what you are doing.
 
 Example:
 
@@ -93,14 +102,14 @@ userStorage.set({
 });
 ```
 
-### `get(documentId: string, fastInstance?: boolean)`
+### `get(documentId: string, fastInstance?: boolean): DocumentType | null`
 
 Get a document object by id.
 
-- **documentId** The id of the document object.
-- **fastInstance** by default it will return a copy of the document.
-if you set fastInstance to true, it will return the original document.
-This is dangerous but much faster, you should use it only if you know what you are doing.
+- **documentId**: The id of the document object.
+- **fastInstance**: by default it will return a copy of the document.
+  if you set fastInstance to true, it will return the original document.
+  This is dangerous but much faster, you should use it only if you know what you are doing.
 
 Example:
 
@@ -108,7 +117,17 @@ Example:
 const user = userStorage.get('user-1');
 ```
 
-### `remove(documentId: string)`
+### `has(documentId: string): boolean`
+
+Check documentId exist in the storage or not.
+
+Example:
+
+```ts
+if (!useruserStorage.has('user-1')) throw new Error('user not found');
+```
+
+### `remove(documentId: string): boolean`
 
 Remove a document object from the storage.
 
@@ -118,7 +137,7 @@ Example:
 userStorage.remove('user-1');
 ```
 
-### `forAll(callbackfn: (documentObject: DocumentType) => void)`
+### `async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void>`
 
 Loop over all document objects asynchronous.
 
@@ -133,6 +152,21 @@ await userStorage.forAll(async (user) => {
 });
 ```
 
-### `unload()`
+### `save(): void`
 
-Unload storage data and free ram usage.
+Save the storage to disk.
+
+### `forceSave(): void`
+
+Save the storage to disk without any debounce.
+
+### `unload(): void`
+
+Unload storage data and free ram usage (auto saved before unload).
+
+Example:
+
+```ts
+userStorage.unload();
+delete userStorage;
+```
