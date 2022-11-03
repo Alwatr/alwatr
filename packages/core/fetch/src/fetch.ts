@@ -15,7 +15,7 @@ declare global {
 }
 
 export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate';
-export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
+export type CacheDistinct = 'never' | 'always' | 'until_load' | 'auto';
 
 // @TODO: docs for all options
 export interface FetchOptions extends RequestInit {
@@ -67,7 +67,7 @@ export interface FetchOptions extends RequestInit {
    *
    * @default 'never'
    */
-  cacheDuplicate: CacheDuplicate;
+  cacheDistinct: CacheDistinct;
 
   /**
    * Body as JS Object.
@@ -92,7 +92,7 @@ export interface FetchOptions extends RequestInit {
  *   timeout: 5_000,
  *   retry: 3,
  *   cacheStrategy: 'stale_while_revalidate',
- *   cacheDuplicate: 'auto',
+ *   cacheDistinct: 'auto',
  * });
  * ```
  */
@@ -142,7 +142,7 @@ export async function getJson<ResponseType extends Record<string | number, unkno
  *   timeout: 5_000,
  *   retry: 3,
  *   cacheStrategy: 'stale_while_revalidate',
- *   cacheDuplicate: 'auto',
+ *   cacheDistinct: 'auto',
  * });
  * ```
  */
@@ -163,7 +163,7 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
   options.retry ??= 3;
   options.cacheStrategy ??= 'network_only';
   options.cacheStorageName ??= 'alwatr_fetch_cache';
-  options.cacheDuplicate ??= 'never';
+  options.cacheDistinct ??= 'never';
 
   if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
     logger.accident('fetch', 'fetch_cache_strategy_ignore', 'Cache storage not support in this browser', {
@@ -172,8 +172,8 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
     options.cacheStrategy = 'network_only';
   }
 
-  if (options.cacheDuplicate === 'auto') {
-    options.cacheDuplicate = cacheSupported ? 'until_load' : 'always';
+  if (options.cacheDistinct === 'auto') {
+    options.cacheDistinct = cacheSupported ? 'until_load' : 'always';
   }
 
   if (options.url.lastIndexOf('?') === -1 && options.queryParameters != null) {
@@ -202,7 +202,7 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
 let cacheStorage: Cache;
 const cacheSupported = 'caches' in self;
 
-// const duplicateRequestStorage: Record<string, Promise<Response>> = {};
+const promisedRequestStorage: Record<string, Promise<Response>> = {};
 
 /**
  * Handle Cache Strategy over `_handleRetryPattern`.
@@ -211,7 +211,7 @@ export async function _handleCacheStrategy(options: FetchOptions): Promise<Respo
   logger.logMethodArgs('_handleCacheStorage', {options});
 
   if (options.cacheStrategy === 'network_only') {
-    return _handleRetryPattern(options);
+    return _handleDistinctRequest(options);
   }
   // else handle cache strategies!
 
@@ -225,7 +225,7 @@ export async function _handleCacheStrategy(options: FetchOptions): Promise<Respo
     case 'cache_first': {
       const cachedResponse = await cacheStorage.match(request);
       if (cachedResponse != null) return cachedResponse;
-      const response = await _handleRetryPattern(options);
+      const response = await _handleDistinctRequest(options);
       if (response.ok) {
         cacheStorage.put(request, response.clone());
       }
@@ -240,7 +240,7 @@ export async function _handleCacheStrategy(options: FetchOptions): Promise<Respo
 
     case 'network_first': {
       try {
-        const networkResponse = await _handleRetryPattern(options);
+        const networkResponse = await _handleDistinctRequest(options);
         if (networkResponse.ok) {
           cacheStorage.put(request, networkResponse.clone());
         }
@@ -255,7 +255,7 @@ export async function _handleCacheStrategy(options: FetchOptions): Promise<Respo
 
     case 'stale_while_revalidate': {
       const cachedResponse = await cacheStorage.match(request);
-      const fetchedResponsePromise = _handleRetryPattern(options).then((networkResponse) => {
+      const fetchedResponsePromise = _handleDistinctRequest(options).then((networkResponse) => {
         if (networkResponse.ok) {
           cacheStorage.put(request, networkResponse.clone());
         }
@@ -265,9 +265,30 @@ export async function _handleCacheStrategy(options: FetchOptions): Promise<Respo
     }
 
     default: {
-      return _handleRetryPattern(options);
+      return _handleDistinctRequest(options);
     }
   }
+}
+
+async function _handleDistinctRequest(options: FetchOptions): Promise<Response> {
+  let request = promisedRequestStorage[options.url];
+
+  if (request == null) {
+    request = _handleRetryPattern(options);
+    promisedRequestStorage[options.url] = request;
+  }
+
+  request = request.then((response) => {
+    response = response.clone();
+
+    if (options.cacheDistinct === 'until_load') {
+      delete promisedRequestStorage[options.url];
+    }
+
+    return response;
+  });
+
+  return request;
 }
 
 /**
@@ -338,7 +359,8 @@ async function _handleTimeout(options: FetchOptions): Promise<Response> {
       });
     });
 
-    window.fetch(options.url, options)
+    window
+        .fetch(options.url, options)
         .then((response) => resolved(response))
         .catch((reason) => reject(reason))
         .finally(() => clearTimeout(timeoutId));
