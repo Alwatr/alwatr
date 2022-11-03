@@ -18,15 +18,56 @@ alwatrRegisteredList.push({
  * Elegant micro in-memory json-like storage with disk backed,
  * Fastest NoSQL Database written in tiny TypeScript ES module.
  *
- * @param {string} name Storage name like database table name.
- * @param {string} pathPrefix Saved file path prefix (default is `data`).
- *
  * Example:
  *
  * ```ts
- * import {AlwatrStorage, DocumentObject} from '@alwatr/storage';
- * interface User extends DocumentObject {...}
- * const db = new AlwatrStorage<User>('user-list');
+ * import {AlwatrStorage} from '@alwatr/storage';
+ *
+ * import type {DocumentObject} from '@alwatr/storage';
+ *
+ * interface User extends DocumentObject {
+ *   fname: string;
+ *   lname: string;
+ *   email: string;
+ *   token?: string;
+ * }
+ *
+ * const db = new AlwatrStorage<User>({
+ *   name: 'user-list',
+ *   path: 'db',
+ *   saveBeautiful: true,
+ *   debug: true,
+ * });
+ *
+ * console.log('db loaded and ready to access.');
+ *
+ * let ali = db.get('alimd');
+ *
+ * if (ali == null) {
+ *   console.log('ali not found');
+ *   ali = {
+ *     _id: 'alimd',
+ *     _updatedBy: 'demo',
+ *     fname: 'Ali',
+ *     lname: 'Mihandoost',
+ *     email: 'ali@mihandoost.com',
+ *   };
+ * }
+ * else {
+ *   console.log('ali found: %o', ali);
+ *   ali.token = Math.random().toString(36).substring(2, 15);
+ * }
+ *
+ * db.set(ali);
+ *
+ * db.set({
+ *   _id: 'fmd',
+ *   _updatedBy: 'demo',
+ *   fname: 'Fatemeh',
+ *   lname: 'Mihandoost',
+ *   email: 'Fatemeh@mihandoost.com',
+ *   token: Math.random().toString(36).substring(2, 15),
+ * });
  * ```
  */
 export class AlwatrStorage<DocumentType extends DocumentObject> {
