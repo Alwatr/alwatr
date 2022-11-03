@@ -1,12 +1,12 @@
 import {AlwatrElement} from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
-import {svg, css, PropertyDeclaration, nothing} from 'lit';
+import {svg, css, nothing} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
 import {property} from 'lit/decorators/property.js';
 import {state} from 'lit/decorators/state.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 
-import type {TemplateResult} from 'lit';
+import type {TemplateResult, PropertyDeclaration} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,6 +16,11 @@ declare global {
 
 const requests: Record<string, Promise<Response>> = {};
 
+/**
+ * Alwatr icon component
+ *
+ * @attr {boolean} flip-rtl
+ */
 @customElement('alwatr-icon')
 export class AlwatrIcon extends AlwatrElement {
   static override styles = [
@@ -28,12 +33,13 @@ export class AlwatrIcon extends AlwatrElement {
         fill: currentColor;
         box-sizing: content-box !important;
       }
-      :host(.rtl) {
+
+      :host([flip-rtl][dir='rtl']) svg {
         transform: scaleX(-1);
       }
+
       svg {
         display: block;
-
         height: 100%;
         width: 100%;
       }
@@ -42,7 +48,6 @@ export class AlwatrIcon extends AlwatrElement {
 
   @property() name?: string;
   @property({attribute: 'url-prefix'}) urlPrefix = 'https://cdn.jsdelivr.net/npm/ionicons@5/dist/svg/';
-  @property({attribute: 'flip-rtl', type: Boolean}) flipRtl = false;
 
   @state() protected _svgContent: TemplateResult | typeof nothing = nothing;
 
@@ -56,11 +61,8 @@ export class AlwatrIcon extends AlwatrElement {
   ): void {
     super.requestUpdate(name, oldValue, options);
 
-    if ((name === 'name' || name === 'urlPrefix') && this.name !== undefined && this.urlPrefix !== undefined) {
+    if (name === 'name' && this.name !== undefined && this.urlPrefix !== undefined) {
       this._getIcon(this.name, this.urlPrefix).then((iconSvg) => (this._svgContent = svg`${unsafeSVG(iconSvg)}`));
-    }
-    else if (name === 'flipRtl') {
-      this.classList[this.flipRtl ? 'add' : 'remove']('rtl');
     }
   }
 
