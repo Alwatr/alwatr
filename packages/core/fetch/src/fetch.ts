@@ -15,6 +15,7 @@ declare global {
 }
 
 export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate';
+export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
 
 // @TODO: docs for all options
 export interface FetchOptions extends RequestInit {
@@ -39,6 +40,12 @@ export interface FetchOptions extends RequestInit {
   /**
    * Strategies for caching.
    *
+   * - `network_only`: Only network request without any cache.
+   * - `network_first`: Network first, falling back to cache.
+   * - `cache_only`: Cache only without any network request.
+   * - `cache_first`: Cache first, falling back to network.
+   * - `stale_while_revalidate`: Fastest strategy, Use cached first but always request network to update the cache.
+   *
    * @default 'network_only'
    */
   cacheStrategy: CacheStrategy;
@@ -51,6 +58,18 @@ export interface FetchOptions extends RequestInit {
   cacheStorageName: string;
 
   /**
+   * Simple memory caching for duplicate requests by url (include query parameters).
+   *
+   * - `never`: Never cache.
+   * - `always`: Always cache.
+   * - `until_load`: Cache parallel requests until request completed (it will be removed after the promise resolved).
+   * - `auto`: If CacheStorage was supported use `until_load` strategy else use `always`.
+   *
+   * @default 'never'
+   */
+  cacheDuplicate: CacheDuplicate;
+
+  /**
    * Body as JS Object.
    */
   bodyJson?: Record<string | number, unknown>;
@@ -59,196 +78,6 @@ export interface FetchOptions extends RequestInit {
    * URL Query Parameters as JS Object.
    */
   queryParameters?: Record<string, string | number | boolean>;
-}
-
-let cacheStorage: Cache;
-const cacheSupported = 'caches' in self;
-
-/**
- * It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout and cacheStrategy.
- *
- * Example:
- *
- * ```ts
- * const response = await fetch({
- *   url: '/api/products',
- *   queryParameters: {limit: 10},
- *   timeout: 5_000,
- *   retry: 3,
- *   cacheStrategy: 'stale_while_revalidate',
- * });
- * ```
- */
-export async function fetch(_options: Partial<FetchOptions> & {url: string}): Promise<Response> {
-  const options = _processOptions(_options);
-
-  logger.logMethodArgs('fetch', {options});
-
-  if (options.cacheStrategy === 'network_only') {
-    return _fetch(options);
-  }
-  // else handle cache strategies!
-
-  if (cacheStorage == null) {
-    cacheStorage = await caches.open(options.cacheStorageName);
-  }
-
-  const request = new Request(options.url, options);
-
-  switch (options.cacheStrategy) {
-    case 'cache_first': {
-      const cachedResponse = await cacheStorage.match(request);
-      if (cachedResponse != null) return cachedResponse;
-      const response = await _fetch(options);
-      if (response.ok) {
-        cacheStorage.put(request, response.clone());
-      }
-      return response;
-    }
-
-    case 'cache_only': {
-      const cachedResponse = await cacheStorage.match(request);
-      if (cachedResponse == null) throw new Error('fetch_cache_not_found');
-      return cachedResponse;
-    }
-
-    case 'network_first': {
-      try {
-        const networkResponse = await _fetch(options);
-        if (networkResponse.ok) {
-          cacheStorage.put(request, networkResponse.clone());
-        }
-        return networkResponse;
-      }
-      catch (err) {
-        const cachedResponse = await cacheStorage.match(request);
-        if (cachedResponse == null) throw err;
-        return cachedResponse;
-      }
-    }
-
-    case 'stale_while_revalidate': {
-      const cachedResponse = await cacheStorage.match(request);
-      const fetchedResponsePromise = _fetch(options).then((networkResponse) => {
-        if (networkResponse.ok) {
-          cacheStorage.put(request, networkResponse.clone());
-        }
-        return networkResponse;
-      });
-      return cachedResponse || fetchedResponsePromise;
-    }
-
-    default: {
-      return _fetch(options);
-    }
-  }
-}
-
-function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchOptions {
-  options.method ??= 'GET';
-  options.window ??= null;
-
-  options.timeout ??= 5_000;
-  options.retry ??= 3;
-  options.cacheStrategy ??= 'network_only';
-  options.cacheStorageName ??= 'alwatr_fetch_cache';
-
-  if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
-    logger.accident('fetch', 'fetch_cache_strategy_ignore', 'Cache storage not support in this browser', {
-      cacheSupported,
-    });
-    options.cacheStrategy = 'network_only';
-  }
-
-  if (options.url.lastIndexOf('?') === -1 && options.queryParameters != null) {
-    // prettier-ignore
-    const queryArray = Object
-        .keys(options.queryParameters)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((key) => `${key}=${String(options.queryParameters![key])}`);
-
-    if (queryArray.length > 0) {
-      options.url += '?' + queryArray.join('&');
-    }
-  }
-
-  if (options.body != null && options.bodyJson != null) {
-    options.body = JSON.stringify(options.bodyJson);
-    options.headers = {
-      ...options.headers,
-      'Content-Type': 'application/json',
-    };
-  }
-
-  return options as FetchOptions;
-}
-
-/**
- * It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout.
- */
-async function _fetch(options: FetchOptions): Promise<Response> {
-  logger.logMethodArgs('_fetch', {options});
-
-  // @TODO: AbortController polyfill
-  const abortController = new AbortController();
-  const externalAbortSignal = options.signal;
-  options.signal = abortController.signal;
-
-  let timedOut = false;
-  const timeoutId = setTimeout(() => {
-    abortController.abort('fetch_timeout');
-    timedOut = true;
-  }, options.timeout);
-
-  if (externalAbortSignal != null) {
-    // Respect external abort signal
-    externalAbortSignal.addEventListener('abort', () => {
-      abortController.abort(`external abort signal: ${externalAbortSignal.reason}`);
-      clearTimeout(timeoutId);
-    });
-  }
-
-  abortController.signal.addEventListener('abort', () => {
-    logger.incident('fetch', 'fetch_abort_signal', 'fetch abort signal received', {
-      reason: abortController.signal.reason,
-    });
-  });
-
-  const retryFetch = (): Promise<Response> => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    options.retry!--;
-    options.signal = externalAbortSignal;
-    return fetch(options);
-  };
-
-  try {
-    // @TODO: browser fetch polyfill
-    const response = await window.fetch(options.url, options);
-    clearTimeout(timeoutId);
-
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    if (options.retry! > 1 && response.status >= 502 && response.status <= 504) {
-      logger.accident('fetch', 'fetch_not_valid', 'fetch not valid and retry', {
-        response,
-      });
-      return retryFetch();
-    }
-
-    return response;
-  }
-  catch (reason) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    if (timedOut && options.retry! > 1) {
-      logger.incident('fetch', 'fetch_timeout', 'fetch timeout and retry', {
-        reason,
-      });
-      return retryFetch();
-    }
-    else {
-      clearTimeout(timeoutId);
-      throw reason;
-    }
-  }
 }
 
 /**
@@ -263,6 +92,7 @@ async function _fetch(options: FetchOptions): Promise<Response> {
  *   timeout: 5_000,
  *   retry: 3,
  *   cacheStrategy: 'stale_while_revalidate',
+ *   cacheDuplicate: 'auto',
  * });
  * ```
  */
@@ -297,4 +127,220 @@ export async function getJson<ResponseType extends Record<string | number, unkno
   }
 
   return data;
+}
+
+/**
+ * It's a wrapper around the browser's `fetch` function that adds retry pattern, timeout, cacheStrategy,
+ * remove duplicates, etc.
+ *
+ * Example:
+ *
+ * ```ts
+ * const response = await fetch({
+ *   url: '/api/products',
+ *   queryParameters: {limit: 10},
+ *   timeout: 5_000,
+ *   retry: 3,
+ *   cacheStrategy: 'stale_while_revalidate',
+ *   cacheDuplicate: 'auto',
+ * });
+ * ```
+ */
+export function fetch(_options: Partial<FetchOptions> & {url: string}): Promise<Response> {
+  const options = _processOptions(_options);
+  logger.logMethodArgs('fetch', {options});
+  return _handleCacheStrategy(options);
+}
+
+/**
+ * Process fetch options and set defaults, etc.
+ */
+function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchOptions {
+  options.method ??= 'GET';
+  options.window ??= null;
+
+  options.timeout ??= 5_000;
+  options.retry ??= 3;
+  options.cacheStrategy ??= 'network_only';
+  options.cacheStorageName ??= 'alwatr_fetch_cache';
+  options.cacheDuplicate ??= 'never';
+
+  if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
+    logger.accident('fetch', 'fetch_cache_strategy_ignore', 'Cache storage not support in this browser', {
+      cacheSupported,
+    });
+    options.cacheStrategy = 'network_only';
+  }
+
+  if (options.cacheDuplicate === 'auto') {
+    options.cacheDuplicate = cacheSupported ? 'until_load' : 'always';
+  }
+
+  if (options.url.lastIndexOf('?') === -1 && options.queryParameters != null) {
+    // prettier-ignore
+    const queryArray = Object
+        .keys(options.queryParameters)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        .map((key) => `${key}=${String(options.queryParameters![key])}`);
+
+    if (queryArray.length > 0) {
+      options.url += '?' + queryArray.join('&');
+    }
+  }
+
+  if (options.body != null && options.bodyJson != null) {
+    options.body = JSON.stringify(options.bodyJson);
+    options.headers = {
+      ...options.headers,
+      'Content-Type': 'application/json',
+    };
+  }
+
+  return options as FetchOptions;
+}
+
+let cacheStorage: Cache;
+const cacheSupported = 'caches' in self;
+
+// const duplicateRequestStorage: Record<string, Promise<Response>> = {};
+
+/**
+ * Handle Cache Strategy over `_handleRetryPattern`.
+ */
+export async function _handleCacheStrategy(options: FetchOptions): Promise<Response> {
+  logger.logMethodArgs('_handleCacheStorage', {options});
+
+  if (options.cacheStrategy === 'network_only') {
+    return _handleRetryPattern(options);
+  }
+  // else handle cache strategies!
+
+  if (cacheStorage == null) {
+    cacheStorage = await caches.open(options.cacheStorageName);
+  }
+
+  const request = new Request(options.url, options);
+
+  switch (options.cacheStrategy) {
+    case 'cache_first': {
+      const cachedResponse = await cacheStorage.match(request);
+      if (cachedResponse != null) return cachedResponse;
+      const response = await _handleRetryPattern(options);
+      if (response.ok) {
+        cacheStorage.put(request, response.clone());
+      }
+      return response;
+    }
+
+    case 'cache_only': {
+      const cachedResponse = await cacheStorage.match(request);
+      if (cachedResponse == null) throw new Error('fetch_cache_not_found');
+      return cachedResponse;
+    }
+
+    case 'network_first': {
+      try {
+        const networkResponse = await _handleRetryPattern(options);
+        if (networkResponse.ok) {
+          cacheStorage.put(request, networkResponse.clone());
+        }
+        return networkResponse;
+      }
+      catch (err) {
+        const cachedResponse = await cacheStorage.match(request);
+        if (cachedResponse == null) throw err;
+        return cachedResponse;
+      }
+    }
+
+    case 'stale_while_revalidate': {
+      const cachedResponse = await cacheStorage.match(request);
+      const fetchedResponsePromise = _handleRetryPattern(options).then((networkResponse) => {
+        if (networkResponse.ok) {
+          cacheStorage.put(request, networkResponse.clone());
+        }
+        return networkResponse;
+      });
+      return cachedResponse || fetchedResponsePromise;
+    }
+
+    default: {
+      return _handleRetryPattern(options);
+    }
+  }
+}
+
+/**
+ * Handle retry pattern over `_handleTimeout`.
+ */
+async function _handleRetryPattern(options: FetchOptions): Promise<Response> {
+  logger.logMethod('_handleRetryPattern');
+
+  const externalAbortSignal = options.signal;
+
+  const retryFetch = (): Promise<Response> => {
+    options.retry--;
+    options.signal = externalAbortSignal;
+    return _handleRetryPattern(options);
+  };
+
+  try {
+    const response = await _handleTimeout(options);
+
+    if (options.retry > 1 && response.status >= 502 && response.status <= 504) {
+      logger.accident('fetch', 'fetch_not_valid', 'fetch not valid and retry', {
+        response,
+      });
+      return retryFetch();
+    }
+    // else
+    return response;
+  }
+  catch (reason) {
+    if ((reason as Error)?.message === 'fetch_timeout' && options.retry > 1) {
+      logger.incident('fetch', 'fetch_timeout', 'fetch timeout and retry', {
+        reason,
+      });
+      return retryFetch();
+    }
+    // else
+    throw reason;
+  }
+}
+
+/**
+ * It's a wrapper around the browser's `fetch` with timeout.
+ */
+async function _handleTimeout(options: FetchOptions): Promise<Response> {
+  logger.logMethod('_handleTimeout');
+  return new Promise((resolved, reject) => {
+    // @TODO: AbortController polyfill
+    const abortController = new AbortController();
+    const externalAbortSignal = options.signal;
+    options.signal = abortController.signal;
+
+    const timeoutId = setTimeout(() => {
+      reject(new Error('fetch_timeout'));
+      abortController.abort('fetch_timeout');
+    }, options.timeout);
+
+    if (externalAbortSignal != null) {
+      // Respect external abort signal
+      externalAbortSignal.addEventListener('abort', () => {
+        abortController.abort(`external abort signal: ${externalAbortSignal.reason}`);
+        clearTimeout(timeoutId);
+      });
+    }
+
+    abortController.signal.addEventListener('abort', () => {
+      logger.incident('fetch', 'fetch_abort_signal', 'fetch abort signal received', {
+        reason: abortController.signal.reason,
+      });
+    });
+
+    window.fetch(options.url, options)
+        .then((response) => resolved(response))
+        .catch((reason) => reject(reason))
+        .finally(() => clearTimeout(timeoutId));
+  });
 }
