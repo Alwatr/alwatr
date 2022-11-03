@@ -6,15 +6,13 @@ import {property} from 'lit/decorators/property.js';
 import {state} from 'lit/decorators/state.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 
-import type {TemplateResult, PropertyDeclaration} from 'lit';
+import type {TemplateResult, PropertyDeclaration, PropertyValues} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-icon': AlwatrIcon;
   }
 }
-
-const requests: Record<string, Promise<Response>> = {};
 
 /**
  * Alwatr icon component
@@ -61,20 +59,28 @@ export class AlwatrIcon extends AlwatrElement {
   ): void {
     super.requestUpdate(name, oldValue, options);
 
-    if (name === 'name' && this.name !== undefined && this.urlPrefix !== undefined) {
-      this._getIcon(this.name, this.urlPrefix).then((iconSvg) => (this._svgContent = svg`${unsafeSVG(iconSvg)}`));
+    if (name === 'name' && this.name && this.urlPrefix) {
+      this._loadIcon(this.name, this.urlPrefix);
     }
   }
+  override shouldUpdate(changedProperties: PropertyValues): boolean {
+    return changedProperties.has('_svgContent');
+  }
 
-  protected async _getIcon(name: string, urlPrefix: string): Promise<string> {
-    const url = urlPrefix + name + '.svg';
-    let request = requests[url];
+  protected async _loadIcon(name: string, urlPrefix: string): Promise<void> {
+    try {
+      const response = await fetch({
+        url: urlPrefix + name + '.svg',
+        cacheStorageName: 'alwatr-icon',
+        cacheStrategy: 'cache_first',
+      });
+      const iconSvg = await response.text();
 
-    if (request == null) {
-      request = fetch({url, cacheStorageName: 'alwatr-icon', cacheStrategy: 'cache_first'});
-      requests[url] = request;
+      this._logger.logMethodArgs('_loadIcon', {name, urlPrefix});
+      this._svgContent = svg`${unsafeSVG(iconSvg)}`;
     }
-
-    return request.then((response) => response.clone().text());
+    catch (error) {
+      this._logger.error('load_icon', 'get_icon_failed', error, {name, urlPrefix});
+    }
   }
 }
