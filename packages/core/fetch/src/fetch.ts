@@ -7,13 +7,6 @@ alwatrRegisteredList.push({
   version: '{{ALWATR_VERSION}}',
 });
 
-declare global {
-  // Patch typescript's global types
-  interface AbortController {
-    abort(reason?: string): void;
-  }
-}
-
 export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate';
 export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
 
@@ -79,6 +72,11 @@ export interface FetchOptions extends RequestInit {
   queryParameters?: Record<string, string | number | boolean>;
 }
 
+let cacheStorage: Cache;
+const cacheSupported = 'caches' in self;
+
+const duplicateRequestStorage: Record<string, Promise<Response>> = {};
+
 /**
  * It fetches a JSON file from a URL, and returns the parsed data.
  *
@@ -101,7 +99,7 @@ export async function getJson<ResponseType extends Record<string | number, unkno
   const options = _processOptions(_options);
   logger.logMethodArgs('getJson', {options});
 
-  const response = await _handleCacheStrategy(options);
+  const response = await _handleRemoveDuplicate(options);
 
   let data: ResponseType;
 
@@ -148,7 +146,7 @@ export async function getJson<ResponseType extends Record<string | number, unkno
 export function fetch(_options: Partial<FetchOptions> & {url: string}): Promise<Response> {
   const options = _processOptions(_options);
   logger.logMethodArgs('fetch', {options});
-  return _handleCacheStrategy(options);
+  return _handleRemoveDuplicate(options);
 }
 
 /**
@@ -198,21 +196,32 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
   return options as FetchOptions;
 }
 
-let cacheStorage: Cache;
-const cacheSupported = 'caches' in self;
+/**
+ * Handle Remove Duplicates over `_handleCacheStrategy`.
+ */
+function _handleRemoveDuplicate(options: FetchOptions): Promise<Response> {
+  if (options.removeDuplicate === 'never') return _handleCacheStrategy(options);
 
-// const duplicateRequestStorage: Record<string, Promise<Response>> = {};
+  logger.logMethod('_handleRemoveDuplicate');
+
+  duplicateRequestStorage[options.url] ??= _handleCacheStrategy(options);
+
+  if (options.removeDuplicate === 'until_load') {
+    duplicateRequestStorage[options.url].then(() => delete duplicateRequestStorage[options.url]);
+  }
+
+  return duplicateRequestStorage[options.url];
+}
 
 /**
  * Handle Cache Strategy over `_handleRetryPattern`.
  */
-export async function _handleCacheStrategy(options: FetchOptions): Promise<Response> {
-  logger.logMethodArgs('_handleCacheStorage', {options});
-
+async function _handleCacheStrategy(options: FetchOptions): Promise<Response> {
   if (options.cacheStrategy === 'network_only') {
     return _handleRetryPattern(options);
   }
   // else handle cache strategies!
+  logger.logMethod('_handleCacheStrategy');
 
   if (cacheStorage == null) {
     cacheStorage = await caches.open(options.cacheStorageName);
@@ -273,6 +282,8 @@ export async function _handleCacheStrategy(options: FetchOptions): Promise<Respo
  * Handle retry pattern over `_handleTimeout`.
  */
 async function _handleRetryPattern(options: FetchOptions): Promise<Response> {
+  if (!(options.retry >= 1)) return _handleTimeout(options);
+
   logger.logMethod('_handleRetryPattern');
 
   const externalAbortSignal = options.signal;
@@ -310,7 +321,7 @@ async function _handleRetryPattern(options: FetchOptions): Promise<Response> {
 /**
  * It's a wrapper around the browser's `fetch` with timeout.
  */
-async function _handleTimeout(options: FetchOptions): Promise<Response> {
+function _handleTimeout(options: FetchOptions): Promise<Response> {
   logger.logMethod('_handleTimeout');
   return new Promise((resolved, reject) => {
     // @TODO: AbortController polyfill
@@ -337,7 +348,8 @@ async function _handleTimeout(options: FetchOptions): Promise<Response> {
       });
     });
 
-    window.fetch(options.url, options)
+    window
+        .fetch(options.url, options)
         .then((response) => resolved(response))
         .catch((reason) => reject(reason))
         .finally(() => clearTimeout(timeoutId));
