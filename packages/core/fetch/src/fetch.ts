@@ -96,11 +96,12 @@ export interface FetchOptions extends RequestInit {
  * ```
  */
 export async function getJson<ResponseType extends Record<string | number, unknown>>(
-    options: Partial<FetchOptions> & {url: string},
+    _options: Partial<FetchOptions> & {url: string},
 ): Promise<ResponseType> {
+  const options = _processOptions(_options);
   logger.logMethodArgs('getJson', {options});
 
-  const response = await fetch(options);
+  const response = await _handleCacheStrategy(options);
 
   let data: ResponseType;
 
@@ -116,8 +117,7 @@ export async function getJson<ResponseType extends Record<string | number, unkno
       err,
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    if (options.retry! > 1) {
+    if (options.retry > 1) {
       data = await getJson(options);
     }
     else {
