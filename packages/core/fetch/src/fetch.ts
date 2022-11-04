@@ -17,7 +17,6 @@ declare global {
 export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate';
 export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
 
-// @TODO: docs for all options
 export interface FetchOptions extends RequestInit {
   /**
    * Request URL.
@@ -58,16 +57,16 @@ export interface FetchOptions extends RequestInit {
   cacheStorageName: string;
 
   /**
-   * Simple memory caching for duplicate requests by url (include query parameters).
+   * Simple memory caching for remove duplicate/parallel requests.
    *
-   * - `never`: Never cache.
-   * - `always`: Always cache.
+   * - `never`: Never use memory caching.
+   * - `always`: Always use memory caching and remove all duplicate requests.
    * - `until_load`: Cache parallel requests until request completed (it will be removed after the promise resolved).
    * - `auto`: If CacheStorage was supported use `until_load` strategy else use `always`.
    *
    * @default 'never'
    */
-  cacheDuplicate: CacheDuplicate;
+  removeDuplicate: CacheDuplicate;
 
   /**
    * Body as JS Object.
@@ -163,7 +162,7 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
   options.retry ??= 3;
   options.cacheStrategy ??= 'network_only';
   options.cacheStorageName ??= 'alwatr_fetch_cache';
-  options.cacheDuplicate ??= 'never';
+  options.removeDuplicate ??= 'never';
 
   if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
     logger.accident('fetch', 'fetch_cache_strategy_ignore', 'Cache storage not support in this browser', {
@@ -172,8 +171,8 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
     options.cacheStrategy = 'network_only';
   }
 
-  if (options.cacheDuplicate === 'auto') {
-    options.cacheDuplicate = cacheSupported ? 'until_load' : 'always';
+  if (options.removeDuplicate === 'auto') {
+    options.removeDuplicate = cacheSupported ? 'until_load' : 'always';
   }
 
   if (options.url.lastIndexOf('?') === -1 && options.queryParameters != null) {
