@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/AliMD/alwatr/compare/v0.19.0...v0.20.0) (2022-11-05)
+
+### Bug Fixes
+
+- **fetch:** \_handleRemoveDuplicate ([6207b48](https://github.com/AliMD/alwatr/commit/6207b4867935d05a0e5a1c795de9efab4ff77c68))
+- **fetch:** cacheStorageName issue ([e641ff7](https://github.com/AliMD/alwatr/commit/e641ff740055a68b6397f00bf46f1d05943c348a))
+- **fetch:** method type and case ([8d4ba77](https://github.com/AliMD/alwatr/commit/8d4ba77e56ecfe2aeaa459dcd26039c38c4b2199))
+- **fetch:** prevent duplicate revalidateCallback on first time ([2da7dc5](https://github.com/AliMD/alwatr/commit/2da7dc579e4850af06914590a231548cd469cd75))
+- **storage:** clear cached keys ([fa2c4be](https://github.com/AliMD/alwatr/commit/fa2c4bed8e2fd84c5eeca57f8f2ff8b87030a58b))
+- **storage:** export DocumentListStorage type ([ea6cc7d](https://github.com/AliMD/alwatr/commit/ea6cc7dd996e6cacba85b71c8448ac22965b8c1b))
+
+### Features
+
+- **`alwatr-icon`:** icon component ([4a24cdc](https://github.com/AliMD/alwatr/commit/4a24cdcfbb55bdc3928dd39ca9e6372caec386b2))
+- **demo:** dynamic icon demo ([f9c57f5](https://github.com/AliMD/alwatr/commit/f9c57f52bb8ebcbe5f2d26d2aa3287cda48df5c5))
+- **demo:** fetch revalidateCallback ([55a58b7](https://github.com/AliMD/alwatr/commit/55a58b7174065bc01b52de32816505e189cbdf34))
+- **deploy:** add another script for simpler usage ([521da6e](https://github.com/AliMD/alwatr/commit/521da6ecd623d0cbd8e5ac84216195e2da063f4c))
+- **deploy:** download upload \_data ([d50cea6](https://github.com/AliMD/alwatr/commit/d50cea6a5f483292029155667515c05f4d92a963))
+- **fetch:** add retryDelay ([28e3244](https://github.com/AliMD/alwatr/commit/28e3244a2d35e7a1a91f9a5a4942f1bb4a56d981))
+- **fetch:** revalidate callback for `stale_while_revalidate` cache strategy. ([8976cc4](https://github.com/AliMD/alwatr/commit/8976cc424b2a9e96e4cfa69941d5378a6640af6f))
+- **fetch:** simple memory caching for remove duplicate/parallel requests ([74cd7f1](https://github.com/AliMD/alwatr/commit/74cd7f1500d730021a0f577c0ecfd7a2460fdb15))
+- **fetch:** update demo ([441c084](https://github.com/AliMD/alwatr/commit/441c08418c67283cf192ca192bfd5f0e238ecdc5))
+- **icon:** refactor and improve ([d75a3f7](https://github.com/AliMD/alwatr/commit/d75a3f7e3d748f974366a2e5a452f3039d19bf18))
+
 # [0.19.0](https://github.com/AliMD/alwatr/compare/v0.18.0...v0.19.0) (2022-11-01)
 
 ### Bug Fixes

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/AliMD/alwatr/compare/v0.19.0...v0.20.0) (2022-11-05)
+
+### Bug Fixes
+
+- **storage:** clear cached keys ([fa2c4be](https://github.com/AliMD/alwatr/commit/fa2c4bed8e2fd84c5eeca57f8f2ff8b87030a58b))
+- **storage:** export DocumentListStorage type ([ea6cc7d](https://github.com/AliMD/alwatr/commit/ea6cc7dd996e6cacba85b71c8448ac22965b8c1b))
+
 # [0.19.0](https://github.com/AliMD/alwatr/compare/v0.18.0...v0.19.0) (2022-11-01)
 
 ### Bug Fixes
