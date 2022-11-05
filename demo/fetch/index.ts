@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {fetch} from '@alwatr/fetch';
 
-import type {CacheStrategy} from '@alwatr/fetch';
+import type {CacheStrategy, CacheDuplicate} from '@alwatr/fetch';
 
 const buttons = document.querySelectorAll('button') as NodeListOf<HTMLButtonElement>;
 
@@ -9,24 +10,19 @@ for (const button of buttons) {
 
   if (button && url) {
     button.addEventListener('click', async () => {
-      if (button.classList.contains('loading')) return;
-
-      button.classList.add('loading');
       try {
         const response = await fetch({
           url,
-          timeout: 2000,
-          retry: 2,
           mode: 'cors',
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          cacheStrategy: document.querySelector<HTMLSelectElement>('#cacheSelect')!.value as CacheStrategy,
+          timeout: +document.querySelector<HTMLSelectElement>('#timeout')!.value,
+          cacheStrategy: document.querySelector<HTMLSelectElement>('#cacheStrategy')!.value as CacheStrategy,
+          removeDuplicate: document.querySelector<HTMLSelectElement>('#removeDuplicate')!.value as CacheDuplicate,
         });
         console.log('Demo response: %o', {url, response, text: await response.text()});
       }
       catch (error) {
         console.warn('Demo catch error: %o', {url, error});
       }
-      button.classList.remove('loading');
     });
   }
 }

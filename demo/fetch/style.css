@@ -1,45 +1,63 @@
-* {
-  margin: 0;
-  box-sizing: border-box;
+html {
+  color-scheme: light dark;
 }
 
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  gap: 24px;
-  padding: 24px;
+body {
+  font-family: system-ui;
+  width: 20em;
+  margin: 5em auto 0;
+}
+
+h1, h3 {
+  text-align: center;
 }
 
 button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  border-radius: 8px;
-  border: 1px solid #000;
-  position: relative;
-  background-color: #0d6efd;
+  --border-size: 3px;
+  --corner-size: .45em; /* size of the corner */
+  --color: #373B44;
+
+  margin: var(--corner-size);
+  padding: calc(.5em + var(--corner-size)) calc(.9em + var(--corner-size));
+  color: var(--color);
+  --_p: var(--corner-size);
+  background:
+    conic-gradient(from 90deg at var(--border-size) var(--border-size),#0000 90deg,var(--color) 0)
+    var(--_p) var(--_p)/calc(100% - var(--border-size) - 2*var(--_p)) calc(100% - var(--border-size) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--border-size) solid #0000;
+  outline-offset: .6em;
+  font-size: 16px;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button:hover,
+button:focus-visible{
+  --_p: 0px;
+  outline-color: var(--color);
+  outline-offset: .05em;
+}
+
+button:active {
+  background: var(--color);
   color: #fff;
-  overflow: hidden;
-  padding: 24px 12px;
-  text-align: center;
-  margin: 0;
-  min-width: 200px;
 }
-button.success {
-  background-color: #198754;
-}
-button.fail {
-  background-color: #dc3545;
-}
-button.loading::before {
-  content: 'Loading ...';
+
+.option-container,
+.button-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  inset: 0;
-  background-color: #0006;
-  backdrop-filter: blur(2px);
+  flex-direction: column;
+  margin: 1em;
+}
+
+@media (prefers-color-scheme: dark) {
+  button {
+    --color: #d8dbdf;
+  }
+  button:active {
+    background: #373B44;
+  }
 }

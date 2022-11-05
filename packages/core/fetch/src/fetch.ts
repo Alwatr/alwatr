@@ -48,11 +48,9 @@ export interface FetchOptions extends RequestInit {
   cacheStrategy: CacheStrategy;
 
   /**
-   * Cache storage name.
-   *
-   * @default 'alwatr_fetch_cache'
+   * Cache storage custom name.
    */
-  cacheStorageName: string;
+  cacheStorageName?: string;
 
   /**
    * Simple memory caching for remove duplicate/parallel requests.
@@ -77,7 +75,7 @@ export interface FetchOptions extends RequestInit {
   queryParameters?: Record<string, string | number | boolean>;
 }
 
-let cacheStorage: Cache;
+let alwatrCacheStorage: Cache;
 const cacheSupported = 'caches' in self;
 
 const duplicateRequestStorage: Record<string, Promise<Response>> = {};
@@ -164,7 +162,6 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
   options.timeout ??= 5_000;
   options.retry ??= 3;
   options.cacheStrategy ??= 'network_only';
-  options.cacheStorageName ??= 'alwatr_fetch_cache';
   options.removeDuplicate ??= 'never';
 
   if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
@@ -244,9 +241,12 @@ async function _handleCacheStrategy(options: FetchOptions): Promise<Response> {
   // else handle cache strategies!
   logger.logMethod('_handleCacheStrategy');
 
-  if (cacheStorage == null) {
-    cacheStorage = await caches.open(options.cacheStorageName);
+  if (alwatrCacheStorage == null && options.cacheStorageName == null) {
+    alwatrCacheStorage = await caches.open('alwatr_fetch_cache');
   }
+
+  const cacheStorage =
+    options.cacheStorageName != null ? await caches.open(options.cacheStorageName) : alwatrCacheStorage;
 
   const request = new Request(options.url, options);
 

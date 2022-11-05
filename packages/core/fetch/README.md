@@ -32,7 +32,7 @@ const productList = await getJson<Record<string, ProductInterface>>({
 - `queryParameters`: URL Query Parameters as JS Object.
 - `timeout`: A timeout in ms for the fetch request (default `5000`ms).
 - `retry`: If fetch response not acceptable or timed out, it will retry the request (default `3`).
-- `cacheStorageName`: Cache storage name (default `alwatr_fetch_cache`).
+- `cacheStorageName`: Cache storage custom name (default `alwatr_fetch_cache`).
 - `cacheStrategy`: Strategies for caching (default `network_only`).
   - `network_only`: Only network request without any cache.
   - `network_first`: Network first, falling back to cache.
