@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/AliMD/alwatr/compare/v0.19.0...v0.20.0) (2022-11-05)
+
+### Features
+
+- **`alwatr-icon`:** icon component ([4a24cdc](https://github.com/AliMD/alwatr/commit/4a24cdcfbb55bdc3928dd39ca9e6372caec386b2))
+- **demo:** dynamic icon demo ([f9c57f5](https://github.com/AliMD/alwatr/commit/f9c57f52bb8ebcbe5f2d26d2aa3287cda48df5c5))
+- **demo:** fetch revalidateCallback ([55a58b7](https://github.com/AliMD/alwatr/commit/55a58b7174065bc01b52de32816505e189cbdf34))
+- **fetch:** update demo ([441c084](https://github.com/AliMD/alwatr/commit/441c08418c67283cf192ca192bfd5f0e238ecdc5))
+
 # [0.19.0](https://github.com/AliMD/alwatr/compare/v0.18.0...v0.19.0) (2022-11-01)
 
 ### Bug Fixes

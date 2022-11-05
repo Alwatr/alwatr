@@ -12,11 +12,14 @@ export type {Route, RequestRouteParam, RoutesConfig} from './type.js';
 /**
  * Initial and config the Router.
  */
-function initial(options?: InitOptions): void {
+function initial(options: InitOptions = {}): void {
+  options.clickTrigger ??= true;
+  options.popstateTrigger ??= true;
+
   logger.logMethodArgs('initialRouter', {options});
 
-  clickTrigger.enable = options?.clickTrigger ?? true;
-  popstateTrigger.enable = options?.popstateTrigger ?? true;
+  clickTrigger.enable = options.clickTrigger;
+  popstateTrigger.enable = options.popstateTrigger;
 
   routeChangeSignal.setProvider(routeSignalProvider, {debounce: true, receivePrevious: true});
 
@@ -24,7 +27,7 @@ function initial(options?: InitOptions): void {
   if (!routeChangeSignal.dispatched) {
     const {pathname, search, hash} = window.location;
     // Don't use `routeChangeSignal.request()` because we need set the route value immediately.
-    routeChangeSignal.dispatch(routeSignalProvider({pathname, search, hash, pushState: false}));
+    routeChangeSignal.dispatch(routeSignalProvider({pathname, search, hash, pushState: false}), {debounce: false});
   }
 }
 

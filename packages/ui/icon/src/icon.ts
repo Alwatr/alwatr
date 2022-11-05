@@ -1,45 +1,110 @@
 import {AlwatrElement} from '@alwatr/element';
+import {fetch} from '@alwatr/fetch';
 import {html, css} from 'lit';
-import {customElement} from 'lit/decorators/custom-element.js';
+import {customElement} from 'lit/decorators.js';
 import {property} from 'lit/decorators/property.js';
+import {state} from 'lit/decorators/state.js';
+import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 
-import type {TemplateResult} from 'lit';
+import type {PropertyValues, HTMLTemplateResult} from 'lit';
 
+declare global {
+  interface HTMLElementTagNameMap {
+    'alwatr-icon': AlwatrIcon;
+  }
+}
+
+/**
+ * Alwatr icon component
+ *
+ * @attr {boolean} flip-rtl
+ */
 @customElement('alwatr-icon')
 export class AlwatrIcon extends AlwatrElement {
-  static override styles = [
-    css`
-      :host {
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-        contain: strict;
-        fill: currentColor;
-        box-sizing: content-box !important;
-      }
-      svg {
-        display: block;
+  static override styles = css`
+    :host {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      contain: strict;
+      fill: currentcolor;
+      box-sizing: content-box !important;
+    }
 
-        height: 100%;
-        width: 100%;
-      }
-    `,
-  ];
+    :host([flip-rtl][dir='rtl']) svg {
+      transform: scaleX(-1);
+    }
 
-  @property() name?: string;
-  @property({attribute: 'url-prefix'}) urlPrefix = 'https://cdn.jsdelivr.net/gh/ionic-team/ionicons@6.0.3/src/svg/';
+    svg {
+      display: block;
+      height: 100%;
+      width: 100%;
+      stroke: currentcolor;
+    }
+  `;
 
-  override render(): TemplateResult {
-    return html`<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
-      <title>Book</title>
-      <path
-        d="M256 160c16-63.16 76.43-95.41 208-96a15.94 15.94 0 0116 16v288a16 16 0 01-16 16c-128 0-177.45 25.81-208 64-30.37-38-80-64-208-64-9.88 0-16-8.05-16-17.93V80a15.94 15.94 0 0116-16c131.57.59 192 32.84 208 96zM256 160v288"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="32"
-      />
-    </svg>`;
+  protected static _fallback: HTMLTemplateResult = html`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <title>Square</title>
+    <path
+      d="M416 448H96a32.09 32.09 0 01-32-32V96a32.09 32.09 0
+    0132-32h320a32.09 32.09 0 0132 32v320a32.09 32.09 0 01-32 32z"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="32"
+    />
+  </svg>`;
+
+  @property()
+    name?: string;
+
+  @property({attribute: 'url-prefix'})
+    urlPrefix?: string;
+
+  @state()
+  protected _icon?: HTMLTemplateResult;
+
+  override render(): unknown {
+    this._logger.logMethod('render');
+    return this._icon;
   }
+
+  override shouldUpdate(changedProperties: PropertyValues): boolean {
+    if (changedProperties.has('name') || changedProperties.has('urlPrefix')) {
+      this._fetchIcon();
+    }
+    return changedProperties.has('_icon') && this._icon != null;
+  }
+
+  protected async _fetchIcon(): Promise<void> {
+    this._logger.logMethodArgs('_fetchIcon', {name: this.name, urlPrefix: this.urlPrefix});
+
+    if (!(this.name != null && this.name.length > 0)) return;
+
+    try {
+      this._icon = html`${unsafeSVG(await preloadIcon(this.name, this.urlPrefix))}`;
+    }
+    catch (error) {
+      this._logger.error('_fetchIcon', 'fetch_failed', (error as Error).stack || error);
+      this._icon = AlwatrIcon._fallback;
+    }
+  }
+}
+
+export async function preloadIcon(
+    name: string,
+    urlPrefix = 'https://cdn.jsdelivr.net/npm/@alwatr/icon@0/svg/',
+): Promise<string> {
+  const url = urlPrefix + name + '.svg';
+  const response = await fetch({
+    url,
+    removeDuplicate: 'auto',
+    cacheStrategy: 'cache_first',
+  });
+
+  if (response.ok !== true) {
+    throw new Error('fetch_failed');
+  }
+
+  return await response.text();
 }

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/AliMD/alwatr/compare/v0.19.0...v0.20.0) (2022-11-05)
+
+### Bug Fixes
+
+- **fetch:** \_handleRemoveDuplicate ([6207b48](https://github.com/AliMD/alwatr/commit/6207b4867935d05a0e5a1c795de9efab4ff77c68))
+- **fetch:** cacheStorageName issue ([e641ff7](https://github.com/AliMD/alwatr/commit/e641ff740055a68b6397f00bf46f1d05943c348a))
+- **fetch:** method type and case ([8d4ba77](https://github.com/AliMD/alwatr/commit/8d4ba77e56ecfe2aeaa459dcd26039c38c4b2199))
+- **fetch:** prevent duplicate revalidateCallback on first time ([2da7dc5](https://github.com/AliMD/alwatr/commit/2da7dc579e4850af06914590a231548cd469cd75))
+
+### Features
+
+- **fetch:** add retryDelay ([28e3244](https://github.com/AliMD/alwatr/commit/28e3244a2d35e7a1a91f9a5a4942f1bb4a56d981))
+- **fetch:** revalidate callback for `stale_while_revalidate` cache strategy. ([8976cc4](https://github.com/AliMD/alwatr/commit/8976cc424b2a9e96e4cfa69941d5378a6640af6f))
+- **fetch:** simple memory caching for remove duplicate/parallel requests ([74cd7f1](https://github.com/AliMD/alwatr/commit/74cd7f1500d730021a0f577c0ecfd7a2460fdb15))
+
 # [0.19.0](https://github.com/AliMD/alwatr/compare/v0.18.0...v0.19.0) (2022-11-01)
 
 **Note:** Version bump only for package @alwatr/fetch
