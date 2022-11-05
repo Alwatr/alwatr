@@ -4,34 +4,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@alwatr/icon</title>
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="index.js"></script>
     <style>
       html {
         color-scheme: light dark;
       }
-      alwatr-icon:nth-child(1) {
-        font-size: 1em;
+
+      .icons {
+        display: inline-block;
+        border: 1px dashed cadetblue;
+        padding: 0.6em;
       }
-      alwatr-icon:nth-child(2) {
+
+      alwatr-icon {
         font-size: 2em;
+        transition: font-size 0.5s, color 0.5s;
+        margin: 0.3em;
       }
-      alwatr-icon:nth-child(3) {
-        font-size: 4em;
-      }
-      alwatr-icon:nth-child(4) {
-        font-size: 8em;
-      }
-      alwatr-icon:nth-child(5) {
-        font-size: 16em;
+      alwatr-icon:hover {
+        font-size: 5em;
+        color: steelblue;
       }
     </style>
   </head>
 
   <body>
-    <alwatr-icon name="chatbubbles-outline"></alwatr-icon>
-    <alwatr-icon name="chatbubbles-outline"></alwatr-icon>
-    <alwatr-icon name="chatbubbles-outline"></alwatr-icon>
-    <alwatr-icon name="chatbubbles-outline"></alwatr-icon>
-    <alwatr-icon name="chatbubbles-outline"></alwatr-icon>
+    <h1>@alwatr/icon</h1>
+
+    <div class="icons">
+    </div>
   </body>
 </html>
