@@ -24,15 +24,23 @@ export interface FetchOptions extends RequestInit {
   /**
    * A timeout for the fetch request.
    *
-   * @default 5000 ms
+   * @default 10_000 ms
    */
   timeout: number;
+
   /**
    * If fetch response not acceptable or timed out, it will retry the request.
    *
    * @default 3
    */
   retry: number;
+
+  /**
+   * Delay before each retries.
+   *
+   * @default 1_000 ms
+   */
+   retryDelay: number;
 
   /**
    * Simple memory caching for remove duplicate/parallel requests.
@@ -94,7 +102,7 @@ const duplicateRequestStorage: Record<string, Promise<Response>> = {};
  * const productList = await getJson<ProductResponse>({
  *   url: '/api/products',
  *   queryParameters: {limit: 10},
- *   timeout: 5_000,
+ *   timeout: 10_000,
  *   retry: 3,
  *   cacheStrategy: 'stale_while_revalidate',
  *   cacheDuplicate: 'auto',
@@ -144,7 +152,7 @@ export async function getJson<ResponseType extends Record<string | number, unkno
  * const response = await fetch({
  *   url: '/api/products',
  *   queryParameters: {limit: 10},
- *   timeout: 5_000,
+ *   timeout: 10_000,
  *   retry: 3,
  *   cacheStrategy: 'stale_while_revalidate',
  *   cacheDuplicate: 'auto',
@@ -164,8 +172,9 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
   options.method = options.method != null ? options.method.toUpperCase() : 'GET';
   options.window ??= null;
 
-  options.timeout ??= 5_000;
+  options.timeout ??= 10_000;
   options.retry ??= 3;
+  options.retryDelay ??= 1_000;
   options.cacheStrategy ??= 'network_only';
   options.removeDuplicate ??= 'never';
 
@@ -319,10 +328,11 @@ async function _handleRetryPattern(options: FetchOptions): Promise<Response> {
 
   const externalAbortSignal = options.signal;
 
-  const retryFetch = (): Promise<Response> => {
+  const retryFetch = async (): Promise<Response> => {
     options.retry--;
     options.signal = externalAbortSignal;
-    return _handleRetryPattern(options);
+    await _wait(options.retryDelay);
+    return _handleCacheStrategy(options); // maybe cache updated by another request ;)
   };
 
   try {
@@ -386,3 +396,5 @@ function _handleTimeout(options: FetchOptions): Promise<Response> {
         .finally(() => clearTimeout(timeoutId));
   });
 }
+
+const _wait = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
