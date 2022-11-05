@@ -30,8 +30,9 @@ const productList = await getJson<Record<string, ProductInterface>>({
 - `url`: Request URL.
 - `bodyJson`: Body as JS Object.
 - `queryParameters`: URL Query Parameters as JS Object.
-- `timeout`: A timeout in ms for the fetch request (default `5000`ms).
+- `timeout`: A timeout in ms for the fetch request (default `10_000`ms).
 - `retry`: If fetch response not acceptable or timed out, it will retry the request (default `3`).
+- `retryDelay`: Delay before each retries (default `1_000`).
 - `removeDuplicate`: Simple memory caching for remove duplicate/parallel requests (default `never`).
   - `never`: Never use memory caching.
   - `always`: Always use memory caching and remove all duplicate requests (just by method+url).
