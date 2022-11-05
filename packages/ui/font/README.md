@@ -1,38 +1,65 @@
 # @alwatr/font
 
-Best practices of using persian/arabic web fonts for progressive web applications (The Right Way).
+Best practices (The Right Way) of using Persian/Arabic web fonts for Web Sites/Apps.
 
 ## How to use
 
+Insert these lines inside `<head>` tag.
+[Demo](https://jsbin.com/zucajut/edit?html,output)
+
+### Vazirmatn
+
 ```html
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<meta charset="UTF-8" />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@alwatr/font@1.2.3/font.min.css" fetchpriority="high" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 
-    <link
-      rel="preload"
-      href="https://cdn.jsdelivr.net/npm/@alwatr/font@1.2.3/vazirmatn/vazirmatn[wght].woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.19.0/vazirmatn.min.css" fetchpriority="high" />
 
-    <style>
-      body {
-        font-family: var(--font-vazirmatn), var(--font-system);
-      }
-    </style>
-  </head>
-  <body>
-    <h1>بِسْمِ اللهِ الرَّحْمنِ الرَّحِیمِ</h1>
-    <h2>به نام خداوند بخشنده مهربان</h2>
-  </body>
-</html>
+<link
+  rel="preload"
+  href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.19.0/vazirmatn/vazirmatn[wght].woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
 ```
 
-[Demo](https://jsbin.com/zucajut/1/edit?html,output)
+### Vazirmatn Round Dot
+
+```html
+<meta charset="UTF-8" />
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.19.0/vazirmatn-roundot.min.css" fetchpriority="high" />
+
+<link
+  rel="preload"
+  href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.19.0/vazirmatn-roundot/vazirmatn-roundot[wght].woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+```
+
+### Sahel
+
+```html
+<meta charset="UTF-8" />
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.19.0/sahel.min.css" fetchpriority="high" />
+
+<link
+  rel="preload"
+  href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.19.0/sahel/sahel[wght].woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+```

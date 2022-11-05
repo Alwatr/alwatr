@@ -2,7 +2,7 @@ import {getJson} from '@alwatr/fetch';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {SignalInterface} from '@alwatr/signal';
 
-import type {I18nConfig, L10Resource, Locale} from './type';
+import type {I18nConfig, L10Resource, Locale} from './type.js';
 
 const logger = createLogger('alwatr/i18n');
 
@@ -112,7 +112,7 @@ l10n.resourceChangeSignal.setProvider(async (locale) => {
     return;
   }
 
-  return await getJson<L10Resource>(`${l10n.config.resourcePath}/${locale.code}.json`);
+  return await getJson<L10Resource>({url: `${l10n.config.resourcePath}/${locale.code}.json`});
   // TODO: cache requests using fetch (add feature for fetch)
   // TODO: catch errors and fallback
 });

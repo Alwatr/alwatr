@@ -21,5 +21,5 @@ jobs:
           github-token: '${{ secrets.GITHUB_TOKEN }}'
           valid-labels: >-
             breaking-change, bugfix, documentation, enhancement,
-            refactor, performance, new-feature, maintenance, ci, dependencies
+            refactor, release, performance, new-feature, maintenance, ci, dependencies
           disable-reviews: true

@@ -2,7 +2,7 @@ import {createLogger} from '@alwatr/logger';
 
 import {AlwatrStorage} from './storage.js';
 
-import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} from './type';
+import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} from './type.js';
 
 // TODO: auto unload base of last usage time and memory limit.
 

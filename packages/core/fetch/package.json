@@ -1,11 +1,13 @@
 {
   "name": "@alwatr/fetch",
-  "version": "0.16.0",
-  "description": "Enhanced fetch api with timeout, helper methods and types written in tiny TypeScript module.",
+  "version": "0.19.0",
+  "description": "Enhanced fetch API with cache strategy, retry pattern, timeout, helper methods and enhanced types written in tiny TypeScript, ES module.",
   "keywords": [
     "fetch",
     "request",
     "api",
+    "retry",
+    "cache",
     "timeout",
     "typescript",
     "esm",
@@ -32,7 +34,7 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.16.0",
-    "tslib": "^2.3.1"
+    "@alwatr/logger": "^0.19.0",
+    "tslib": "^2.4.1"
   }
 }
