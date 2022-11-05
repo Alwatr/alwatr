@@ -17,6 +17,9 @@ for (const button of buttons) {
           timeout: +document.querySelector<HTMLSelectElement>('#timeout')!.value,
           cacheStrategy: document.querySelector<HTMLSelectElement>('#cacheStrategy')!.value as CacheStrategy,
           removeDuplicate: document.querySelector<HTMLSelectElement>('#removeDuplicate')!.value as CacheDuplicate,
+          async revalidateCallback(response) {
+            console.log('Demo revalidateCallback: %o', {url, response, text: await response.text()});
+          },
         });
         console.log('Demo response: %o', {url, response, text: await response.text()});
       }
