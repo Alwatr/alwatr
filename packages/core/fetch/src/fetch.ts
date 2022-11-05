@@ -17,6 +17,11 @@ export interface FetchOptions extends RequestInit {
   url: string;
 
   /**
+   * A string to set request's method.
+   */
+  method: string;
+
+  /**
    * A timeout for the fetch request.
    *
    * @default 5000 ms
@@ -153,7 +158,7 @@ export function fetch(_options: Partial<FetchOptions> & {url: string}): Promise<
  * Process fetch options and set defaults, etc.
  */
 function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchOptions {
-  options.method ??= 'GET';
+  options.method = options.method != null ? options.method.toUpperCase() : 'GET';
   options.window ??= null;
 
   options.timeout ??= 5_000;
