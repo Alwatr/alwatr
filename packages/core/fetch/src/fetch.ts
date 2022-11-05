@@ -35,6 +35,18 @@ export interface FetchOptions extends RequestInit {
   retry: number;
 
   /**
+   * Simple memory caching for remove duplicate/parallel requests.
+   *
+   * - `never`: Never use memory caching.
+   * - `always`: Always use memory caching and remove all duplicate requests.
+   * - `until_load`: Cache parallel requests until request completed (it will be removed after the promise resolved).
+   * - `auto`: If CacheStorage was supported use `until_load` strategy else use `always`.
+   *
+   * @default 'never'
+   */
+  removeDuplicate: CacheDuplicate;
+
+  /**
    * Strategies for caching.
    *
    * - `network_only`: Only network request without any cache.
@@ -48,21 +60,14 @@ export interface FetchOptions extends RequestInit {
   cacheStrategy: CacheStrategy;
 
   /**
+   * Revalidate callback for `stale_while_revalidate` cache strategy.
+   */
+  revalidateCallback?: (response: Response) => void;
+
+  /**
    * Cache storage custom name.
    */
   cacheStorageName?: string;
-
-  /**
-   * Simple memory caching for remove duplicate/parallel requests.
-   *
-   * - `never`: Never use memory caching.
-   * - `always`: Always use memory caching and remove all duplicate requests.
-   * - `until_load`: Cache parallel requests until request completed (it will be removed after the promise resolved).
-   * - `auto`: If CacheStorage was supported use `until_load` strategy else use `always`.
-   *
-   * @default 'never'
-   */
-  removeDuplicate: CacheDuplicate;
 
   /**
    * Body as JS Object.
@@ -287,6 +292,9 @@ async function _handleCacheStrategy(options: FetchOptions): Promise<Response> {
       const fetchedResponsePromise = _handleRetryPattern(options).then((networkResponse) => {
         if (networkResponse.ok) {
           cacheStorage.put(request, networkResponse.clone());
+          if (typeof options.revalidateCallback === 'function' && cachedResponse == null) {
+            options.revalidateCallback(networkResponse);
+          }
         }
         return networkResponse;
       });
