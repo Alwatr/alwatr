@@ -93,7 +93,7 @@ export class AlwatrIcon extends AlwatrElement {
 
 export async function preloadIcon(
     name: string,
-    urlPrefix = 'https://cdn.jsdelivr.net/npm/ionicons@5/dist/svg/',
+    urlPrefix = 'https://cdn.jsdelivr.net/npm/@alwatr/icon@0/svg/',
 ): Promise<string> {
   const url = urlPrefix + name + '.svg';
   const response = await fetch({
