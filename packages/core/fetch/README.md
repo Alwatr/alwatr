@@ -32,18 +32,19 @@ const productList = await getJson<Record<string, ProductInterface>>({
 - `queryParameters`: URL Query Parameters as JS Object.
 - `timeout`: A timeout in ms for the fetch request (default `5000`ms).
 - `retry`: If fetch response not acceptable or timed out, it will retry the request (default `3`).
-- `cacheStorageName`: Cache storage custom name (default `alwatr_fetch_cache`).
+- `removeDuplicate`: Simple memory caching for remove duplicate/parallel requests (default `never`).
+  - `never`: Never use memory caching.
+  - `always`: Always use memory caching and remove all duplicate requests (just by method+url).
+  - `until_load`: Cache parallel requests until request completed (it will be removed after the promise resolved).
+  - `auto`: If CacheStorage was supported use `until_load` strategy else use `always`.
 - `cacheStrategy`: Strategies for caching (default `network_only`).
   - `network_only`: Only network request without any cache.
   - `network_first`: Network first, falling back to cache.
   - `cache_only`: Cache only without any network request.
   - `cache_first`: Cache first, falling back to network.
   - `stale_while_revalidate`: Fastest strategy, Use cached first but always request network to update the cache.
-- `removeDuplicate`: Simple memory caching for remove duplicate/parallel requests (default `never`).
-  - `never`: Never use memory caching.
-  - `always`: Always use memory caching and remove all duplicate requests (just by method+url).
-  - `until_load`: Cache parallel requests until request completed (it will be removed after the promise resolved).
-  - `auto`: If CacheStorage was supported use `until_load` strategy else use `always`.
+- `revalidateCallback`: Revalidate callback for `stale_while_revalidate` cache strategy.
+- `cacheStorageName`: Cache storage custom name (default `alwatr_fetch_cache`).
 
 [Read more about standard cache strategies](https://developer.chrome.com/docs/workbox/caching-strategies-overview/#caching-strategies)
 
