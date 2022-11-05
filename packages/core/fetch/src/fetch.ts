@@ -289,15 +289,17 @@ async function _handleCacheStrategy(options: FetchOptions): Promise<Response> {
 
     case 'stale_while_revalidate': {
       const cachedResponse = await cacheStorage.match(request);
-      const fetchedResponsePromise = _handleRetryPattern(options).then((networkResponse) => {
+      const fetchedResponsePromise = _handleRetryPattern(options);
+
+      fetchedResponsePromise.then((networkResponse) => {
         if (networkResponse.ok) {
           cacheStorage.put(request, networkResponse.clone());
-          if (typeof options.revalidateCallback === 'function' && cachedResponse == null) {
+          if (cachedResponse != null && typeof options.revalidateCallback === 'function') {
             options.revalidateCallback(networkResponse);
           }
         }
-        return networkResponse;
       });
+
       return cachedResponse || fetchedResponsePromise;
     }
 
