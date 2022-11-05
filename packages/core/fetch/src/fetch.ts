@@ -204,18 +204,34 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
 /**
  * Handle Remove Duplicates over `_handleCacheStrategy`.
  */
-function _handleRemoveDuplicate(options: FetchOptions): Promise<Response> {
+async function _handleRemoveDuplicate(options: FetchOptions): Promise<Response> {
   if (options.removeDuplicate === 'never') return _handleCacheStrategy(options);
 
   logger.logMethod('_handleRemoveDuplicate');
 
-  duplicateRequestStorage[options.url] ??= _handleCacheStrategy(options);
+  const cacheKey = `[${options.method}] ${options.url}`;
+  const firstRequest = duplicateRequestStorage[cacheKey] == null;
 
-  if (options.removeDuplicate === 'until_load') {
-    duplicateRequestStorage[options.url].then(() => delete duplicateRequestStorage[options.url]);
+  // We must cache fetch promise without await for handle other parallel requests.
+  duplicateRequestStorage[cacheKey] ??= _handleCacheStrategy(options);
+
+  try {
+    // For all requests need to await for clone responses.
+    const response = await duplicateRequestStorage[cacheKey];
+
+    if (firstRequest === true) {
+      if (response.ok !== true || options.removeDuplicate === 'until_load') {
+        delete duplicateRequestStorage[cacheKey];
+      }
+    }
+
+    return response.clone();
   }
-
-  return duplicateRequestStorage[options.url];
+  catch (err) {
+    // clean cache on any error.
+    delete duplicateRequestStorage[cacheKey];
+    throw err;
+  }
 }
 
 /**
