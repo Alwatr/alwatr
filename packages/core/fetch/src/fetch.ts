@@ -17,6 +17,11 @@ export interface FetchOptions extends RequestInit {
   url: string;
 
   /**
+   * A string to set request's method.
+   */
+  method: string;
+
+  /**
    * A timeout for the fetch request.
    *
    * @default 5000 ms
@@ -153,7 +158,7 @@ export function fetch(_options: Partial<FetchOptions> & {url: string}): Promise<
  * Process fetch options and set defaults, etc.
  */
 function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchOptions {
-  options.method ??= 'GET';
+  options.method = options.method != null ? options.method.toUpperCase() : 'GET';
   options.window ??= null;
 
   options.timeout ??= 5_000;
@@ -199,18 +204,34 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
 /**
  * Handle Remove Duplicates over `_handleCacheStrategy`.
  */
-function _handleRemoveDuplicate(options: FetchOptions): Promise<Response> {
+async function _handleRemoveDuplicate(options: FetchOptions): Promise<Response> {
   if (options.removeDuplicate === 'never') return _handleCacheStrategy(options);
 
   logger.logMethod('_handleRemoveDuplicate');
 
-  duplicateRequestStorage[options.url] ??= _handleCacheStrategy(options);
+  const cacheKey = `[${options.method}] ${options.url}`;
+  const firstRequest = duplicateRequestStorage[cacheKey] == null;
 
-  if (options.removeDuplicate === 'until_load') {
-    duplicateRequestStorage[options.url].then(() => delete duplicateRequestStorage[options.url]);
+  // We must cache fetch promise without await for handle other parallel requests.
+  duplicateRequestStorage[cacheKey] ??= _handleCacheStrategy(options);
+
+  try {
+    // For all requests need to await for clone responses.
+    const response = await duplicateRequestStorage[cacheKey];
+
+    if (firstRequest === true) {
+      if (response.ok !== true || options.removeDuplicate === 'until_load') {
+        delete duplicateRequestStorage[cacheKey];
+      }
+    }
+
+    return response.clone();
   }
-
-  return duplicateRequestStorage[options.url];
+  catch (err) {
+    // clean cache on any error.
+    delete duplicateRequestStorage[cacheKey];
+    throw err;
+  }
 }
 
 /**
