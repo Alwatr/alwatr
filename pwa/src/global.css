@@ -1,18 +1,3 @@
-@font-face {
-  font-family: 'Vazirmatn';
-  font-style: normal;
-  font-weight: 100 900;
-  font-stretch: 100%;
-  src: url(https://cdn.jsdelivr.net/npm/vazirmatn@32.101.0/fonts/webfonts/Vazirmatn[wght].woff2) format('woff2');
-  font-display: block;
-  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+1EE00-1EEFF;
-}
-
-html {
-  --ion-default-font: 'Vazirmatn', 'Roboto', 'Helvetica Neue', sans-serif;
-  --ion-font-family: var(--ion-default-font);
-}
-
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;

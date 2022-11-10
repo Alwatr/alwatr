@@ -4,7 +4,7 @@
   "description": "Flight Finder",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "private": true,
   "scripts": {
     "l": "yarn lint",
