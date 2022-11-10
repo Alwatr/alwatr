@@ -47,6 +47,8 @@
         "capIsNewExceptionPattern": "Mixin$"
       }
     ],
+    "brace-style": ["error", "stroustrup", {"allowSingleLine": true}],
+    "operator-linebreak": ["error", "after", {"overrides": {"?": "before", ":": "before"}}],
     "@typescript-eslint/explicit-function-return-type": "error",
     "import/order": [
       "error",

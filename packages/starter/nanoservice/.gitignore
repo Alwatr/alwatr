@@ -26,3 +26,6 @@ package-lock.json
 # dotenv environment variables file
 .env
 .env.test
+
+# storage
+_data
