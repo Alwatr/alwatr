@@ -44,8 +44,8 @@
     "serve": "node dist/index.js",
     "serve:debug": "node --inspect dist/index.js",
     "watch": "npm-run-all --parallel watch:ts watch:node",
-    "watch:node": "nodemon dist/index.js",
-    "watch:debug-node": "nodemon --inspect dist/index.js",
+    "watch:node": "nodemon --ignore _data/ dist/index.js",
+    "watch:debug-node": "nodemon --ignore _data/ --inspect dist/index.js",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "dependencies": {
