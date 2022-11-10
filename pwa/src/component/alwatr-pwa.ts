@@ -5,7 +5,7 @@ import {cache} from 'lit/directives/cache.js';
 
 import {BaseElement} from './app-debt/element';
 
-import './page/page-home';
+import './page-flight-finder';
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {ListenerInterface} from '@alwatr/signal';

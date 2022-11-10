@@ -3,9 +3,9 @@ import {customElement} from 'lit/decorators/custom-element.js';
 import {map} from 'lit/directives/map.js';
 
 import {BaseElement} from '../app-debt/element';
-import ionTheming from '../stylesheet/ionic.theming';
+import ionTheming from '../style/ionic.theming';
 
-import type {AirlineInterface} from '../type/airline';
+import type {AirlineInterface} from '../type';
 import type {ListenerInterface} from '@alwatr/signal';
 import type {TemplateResult} from 'lit';
 
