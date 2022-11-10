@@ -1,31 +1,25 @@
+import {AlwatrElement} from '@alwatr/element';
 import {router} from '@alwatr/router';
 import {css, html} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
 import {cache} from 'lit/directives/cache.js';
 
-import {BaseElement} from './app-debt/element';
-
 import './page-flight-finder';
 
 import type {RoutesConfig} from '@alwatr/router';
-import type {ListenerInterface} from '@alwatr/signal';
 import type {TemplateResult} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'flight-finder-pwa': FlightFinderPWA;
+    'alwatr-pwa': AlwatrPWA;
   }
 }
 
 /**
- * Flight Finder PWA Root Element
- *
- * ```html
- * <flight-finder-pwa></flight-finder-pwa>
- * ```
+ * alwatr-pwa PWA Root Element
  */
-@customElement('flight-finder-pwa')
-export class FlightFinderPWA extends BaseElement {
+@customElement('alwatr-pwa')
+export class AlwatrPWA extends AlwatrElement {
   static override styles = [
     css`
       :host {
@@ -80,15 +74,17 @@ export class FlightFinderPWA extends BaseElement {
 
   constructor() {
     super();
+    router.signal.addListener((route) => {
+      this._logger.logMethodArgs('routeChanged', {route});
+      this.requestUpdate();
+    });
     router.initial();
   }
 
   protected _activePage = 'home';
 
   protected _routes: RoutesConfig = {
-    // TODO: refactor route, we need to get active page!
-    // TODO: ability to redirect!
-    map: (route) => (this._activePage = route.sectionList[0]?.toString().trim() || 'home'),
+    map: (route) => route.sectionList[0]?.toString(),
     list: {
       home: {
         render: () => html`<page-home class="page"></page-home>`,
@@ -96,27 +92,7 @@ export class FlightFinderPWA extends BaseElement {
     },
   };
 
-  protected _listenerList: Array<unknown> = [];
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this._listenerList.push(
-        router.signal.addListener(
-            (route) => {
-              this._logger.logMethodArgs('routeChanged', {route});
-              this.requestUpdate();
-            },
-            {receivePrevious: true},
-        ),
-    );
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this._listenerList.forEach((listener) => (listener as ListenerInterface<keyof AlwatrSignals>).remove());
-  }
-
   override render(): TemplateResult {
-    return html` <div class="page-container">${cache(router.outlet(this._routes))}</div> `;
+    return html`<div class="page-container">${cache(router.outlet(this._routes))}</div>`;
   }
 }

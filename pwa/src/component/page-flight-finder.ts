@@ -1,22 +1,23 @@
+import {AlwatrElement} from '@alwatr/element';
+import '@ionic/core/dist/types/components';
 import {css, html} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
 import {map} from 'lit/directives/map.js';
 
-import {BaseElement} from '../app-debt/element';
 import ionTheming from '../style/ionic.theming';
 
 import type {AirlineInterface} from '../type';
-import type {ListenerInterface} from '@alwatr/signal';
 import type {TemplateResult} from 'lit';
+
 
 declare global {
   interface HTMLElementTagNameMap {
-    'page-home': PageHome;
+    'page-flight-finder': PageFlightFinder;
   }
 }
 
-@customElement('page-home')
-export class PageHome extends BaseElement {
+@customElement('page-flight-finder')
+export class PageFlightFinder extends AlwatrElement {
   static override styles = [
     ionTheming,
     css`
@@ -99,16 +100,6 @@ export class PageHome extends BaseElement {
       maxPrice: 987000000,
     },
   ];
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-    // this._listenerList.push(router.signal.addListener(() => this.requestUpdate()));
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this._listenerList.forEach((listener) => (listener as ListenerInterface<keyof AlwatrSignals>).remove());
-  }
 
   override render(): TemplateResult {
     return html`
