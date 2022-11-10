@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/AliMD/alwatr/compare/v0.19.0...v0.20.0) (2022-11-05)
+
+### Features
+
+- **`alwatr-icon`:** icon component ([4a24cdc](https://github.com/AliMD/alwatr/commit/4a24cdcfbb55bdc3928dd39ca9e6372caec386b2))
+- **demo:** dynamic icon demo ([f9c57f5](https://github.com/AliMD/alwatr/commit/f9c57f52bb8ebcbe5f2d26d2aa3287cda48df5c5))
+- **demo:** fetch revalidateCallback ([55a58b7](https://github.com/AliMD/alwatr/commit/55a58b7174065bc01b52de32816505e189cbdf34))
+- **fetch:** update demo ([441c084](https://github.com/AliMD/alwatr/commit/441c08418c67283cf192ca192bfd5f0e238ecdc5))
+
+# [0.19.0](https://github.com/AliMD/alwatr/compare/v0.18.0...v0.19.0) (2022-11-01)
+
+### Bug Fixes
+
+- **font:** review ([a371bf2](https://github.com/AliMD/alwatr/commit/a371bf2bcf6477487ceeadeaa596919066f5c468))
+
+### Features
+
+- **`demo`:** improve icon demo ([6519f6f](https://github.com/AliMD/alwatr/commit/6519f6f05567b8a4ce3db0bd3a442139902a01d4))
+- **demo:** improve demo dark mode ([b89217e](https://github.com/AliMD/alwatr/commit/b89217eb2bd271e1d62ebe29b41ac2599852d7da))
+- **demo:** seprate fonts ([222e014](https://github.com/AliMD/alwatr/commit/222e014d488416042bf1d8575bfc0eb84d6009e8))
+
+# [0.18.0](https://github.com/AliMD/alwatr/compare/v0.17.0...v0.18.0) (2022-10-22)
+
+### Features
+
+- **fetch:** cache strategy ([106eabd](https://github.com/AliMD/alwatr/commit/106eabdd10574b24f9919049d0b509ae40168a9a))
+- **fetch:** cache strategy demo ([47dd239](https://github.com/AliMD/alwatr/commit/47dd2391cd1d760cfec8b0f54a249d05b83b4c33))
+- **fetch:** improve demo ([638830f](https://github.com/AliMD/alwatr/commit/638830f817923a71ce0900776622a858e4905cad))
+
+# [0.17.0](https://github.com/AliMD/alwatr/compare/v0.16.1...v0.17.0) (2022-10-21)
+
+### Bug Fixes
+
+- **storage:** \_last ket ([a1c452a](https://github.com/AliMD/alwatr/commit/a1c452a50c7b53b03765bf37556264a64ac3ed55))
+
+### Features
+
+- add math demo ([7a92dc2](https://github.com/AliMD/alwatr/commit/7a92dc22ab323ddea9ed166e597ea1924cf368e9))
+- **demo:** fetch ([2bf7a69](https://github.com/AliMD/alwatr/commit/2bf7a694f53921b3096b4092f85bd212ec32881b))
+- **fetch:** docs & pattern ([459ad1c](https://github.com/AliMD/alwatr/commit/459ad1c5996f851769306639136d79c0f7270770))
+- **Math:** translateUnicodeDigits ([996c507](https://github.com/AliMD/alwatr/commit/996c507abb4708b9ef32377eb4045efb8a3f0939))
+
 # [0.16.0](https://github.com/AliMD/alwatr/compare/v0.15.0...v0.16.0) (2022-09-08)
 
 **Note:** Version bump only for package @alwatr/demo

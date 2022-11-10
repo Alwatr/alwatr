@@ -6,6 +6,7 @@ Elegant micro in-memory json-like storage with disk backed, Fastest NoSQL Databa
 
 ```ts
 import {AlwatrStorage} from '@alwatr/storage';
+
 import type {DocumentObject} from '@alwatr/storage';
 
 interface User extends DocumentObject {
@@ -15,59 +16,61 @@ interface User extends DocumentObject {
   token?: string;
 }
 
-const db = new AlwatrStorage<User>('user-list', 'data');
+const db = new AlwatrStorage<User>({
+  name: 'user-list',
+  path: 'db',
+  saveBeautiful: true,
+  debug: true,
+});
 
-await userStorage.readyPromise;
 console.log('db loaded and ready to access.');
 
-let ali = userStorage.get('alimd');
+let ali = db.get('alimd');
 
 if (ali == null) {
   console.log('ali not found');
   ali = {
     _id: 'alimd',
+    _updatedBy: 'demo',
     fname: 'Ali',
     lname: 'Mihandoost',
     email: 'ali@mihandoost.com',
   };
-} else {
+}
+else {
   console.log('ali found: %o', ali);
   ali.token = Math.random().toString(36).substring(2, 15);
 }
 
-userStorage.set(ali);
+db.set(ali);
+
+db.set({
+  _id: 'fmd',
+  _updatedBy: 'demo',
+  fname: 'Fatemeh',
+  lname: 'Mihandoost',
+  email: 'Fatemeh@mihandoost.com',
+  token: Math.random().toString(36).substring(2, 15),
+});
 ```
 
 ## API
-
-@TODO: update from ts files
-
-### `new AlwatrStorage<DocumentType>(name: string, pathPrefix = 'data')`
-
-- **name**: Storage name like database table name.
-- **pathPrefix**: Saved file path prefix (default is `data`).
-
-Example:
-
-```ts
-import {AlwatrStorage, DocumentObject} from '@alwatr/storage';
-interface User extends DocumentObject {...}
-const db = new AlwatrStorage<User>('user-list');
-await userStorage.readyPromise
-```
 
 ### `readonly name: string`
 
 Storage name like database table name.
 
-### `readonly readyState: boolean`
+### `readonly storagePath: string`
 
-Ready state set to true when the storage is ready and readyPromise resolved.
+Storage file full path.
 
-### `readonly readyPromise`
+### `readonly saveDebounce: number`
 
-Ready promise resolved when the storage is ready.
-you can use this promise to wait for the storage to be loaded successfully and ready to use.
+Save debounce timeout for minimal disk iops usage.
+
+### `readonly saveBeautiful: boolean`
+
+Write pretty formatted JSON file.
 
 Example:
 
@@ -77,14 +80,20 @@ await userStorage.readyPromise;
 const user = userStorage.get('user-1');
 ```
 
-### `set(documentObject: DocumentType, fastInstance?: boolean)`
+### `keys: Array<string>`
+
+All document ids in array.
+
+### `length: number`
+
+### `set(documentObject: DocumentType, fastInstance?: boolean): DocumentType`
 
 Insert/update a document object in the storage.
 
-- **documentObject**: the document object to insert/update contain `_id`.
-- **fastInstance**: by default it will make a copy of the document before set.  
-  if you set fastInstance to true, it will set the original document.  
-  This is dangerous but much faster and you should use it only if you know what you are doing.
+- **documentObject**: The document object to insert/update contain `_id`.
+- **fastInstance**: by default it will make a copy of the document before set.
+  if you set fastInstance to true, it will set the original document.
+  This is dangerous but much faster, you should use it only if you know what you are doing.
 
 Example:
 
@@ -95,12 +104,13 @@ userStorage.set({
 });
 ```
 
-### `get(documentId: string, fastInstance?: boolean)`
+### `get(documentId: string, fastInstance?: boolean): DocumentType | null`
 
 Get a document object by id.
 
-- **documentId**: the id of the document object.
-- **fastInstance**: by default will return a copy of the document, if you set fastInstance to true, it will return the original document.  
+- **documentId**: The id of the document object.
+- **fastInstance**: by default it will return a copy of the document.
+  if you set fastInstance to true, it will return the original document.
   This is dangerous but much faster, you should use it only if you know what you are doing.
 
 Example:
@@ -109,7 +119,17 @@ Example:
 const user = userStorage.get('user-1');
 ```
 
-### `remove(documentId: string)`
+### `has(documentId: string): boolean`
+
+Check documentId exist in the storage or not.
+
+Example:
+
+```ts
+if (!useruserStorage.has('user-1')) throw new Error('user not found');
+```
+
+### `remove(documentId: string): boolean`
 
 Remove a document object from the storage.
 
@@ -119,24 +139,36 @@ Example:
 userStorage.remove('user-1');
 ```
 
-### `forEach(callbackfn: (documentObject: DocumentType) => void)`
+### `async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void>`
 
-For each loop over all document objects.
+Loop over all document objects asynchronous.
+
+You can return false in callbackfn to break the loop.
 
 Example:
 
 ```ts
-userStorage.forEach(async (user) => {
+await userStorage.forAll(async (user) => {
   await sendMessage(user._id, 'Happy new year!');
-  user.sent = true; // direct change document!
+  user.sent = true; // direct change document (use with caution)!
 });
-userStorage.save();
 ```
 
-### `unload()`
+### `save(): void`
 
-Unload storage data and free ram usage.
+Save the storage to disk.
 
-### `reload()`
+### `forceSave(): void`
 
-Reload storage data.
+Save the storage to disk without any debounce.
+
+### `unload(): void`
+
+Unload storage data and free ram usage (auto saved before unload).
+
+Example:
+
+```ts
+userStorage.unload();
+delete userStorage;
+```

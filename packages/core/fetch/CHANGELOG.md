@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/AliMD/alwatr/compare/v0.19.0...v0.20.0) (2022-11-05)
+
+### Bug Fixes
+
+- **fetch:** \_handleRemoveDuplicate ([6207b48](https://github.com/AliMD/alwatr/commit/6207b4867935d05a0e5a1c795de9efab4ff77c68))
+- **fetch:** cacheStorageName issue ([e641ff7](https://github.com/AliMD/alwatr/commit/e641ff740055a68b6397f00bf46f1d05943c348a))
+- **fetch:** method type and case ([8d4ba77](https://github.com/AliMD/alwatr/commit/8d4ba77e56ecfe2aeaa459dcd26039c38c4b2199))
+- **fetch:** prevent duplicate revalidateCallback on first time ([2da7dc5](https://github.com/AliMD/alwatr/commit/2da7dc579e4850af06914590a231548cd469cd75))
+
+### Features
+
+- **fetch:** add retryDelay ([28e3244](https://github.com/AliMD/alwatr/commit/28e3244a2d35e7a1a91f9a5a4942f1bb4a56d981))
+- **fetch:** revalidate callback for `stale_while_revalidate` cache strategy. ([8976cc4](https://github.com/AliMD/alwatr/commit/8976cc424b2a9e96e4cfa69941d5378a6640af6f))
+- **fetch:** simple memory caching for remove duplicate/parallel requests ([74cd7f1](https://github.com/AliMD/alwatr/commit/74cd7f1500d730021a0f577c0ecfd7a2460fdb15))
+
+# [0.19.0](https://github.com/AliMD/alwatr/compare/v0.18.0...v0.19.0) (2022-11-01)
+
+**Note:** Version bump only for package @alwatr/fetch
+
+# [0.18.0](https://github.com/AliMD/alwatr/compare/v0.17.0...v0.18.0) (2022-10-22)
+
+### Bug Fixes
+
+- **fetch:** update cache on network_first ([54b59cd](https://github.com/AliMD/alwatr/commit/54b59cdc64a543a0afcd09d2ec78d20661f3a06d))
+
+### Features
+
+- **fetch:** cache strategy ([106eabd](https://github.com/AliMD/alwatr/commit/106eabdd10574b24f9919049d0b509ae40168a9a))
+- **fetch:** optional cacheStorageName ([f2bd8f2](https://github.com/AliMD/alwatr/commit/f2bd8f2a899466628417294cb269fd569b87e17a))
+- **fetch:** stale_while_revalidate cache strategy ([f758f49](https://github.com/AliMD/alwatr/commit/f758f495efb42ce7441e8f2058c1b67de0615a8c))
+
+# [0.17.0](https://github.com/AliMD/alwatr/compare/v0.16.1...v0.17.0) (2022-10-21)
+
+### Bug Fixes
+
+- **fetch:** not ok retry condition ([0da1edd](https://github.com/AliMD/alwatr/commit/0da1edda64ec5abf70a83361d159e207691e368e))
+
+### Features
+
+- **fetch:** docs & pattern ([459ad1c](https://github.com/AliMD/alwatr/commit/459ad1c5996f851769306639136d79c0f7270770))
+- **fetch:** logger & jsdocs ([36f652d](https://github.com/AliMD/alwatr/commit/36f652d5dad23b2aeb824af77d1b0e442119c6e8))
+- **fetch:** retry pattern ([5350d1a](https://github.com/AliMD/alwatr/commit/5350d1a81b9134d598f46006a1baa880b280ea98))
+
+### Performance Improvements
+
+- **fetch:** syntax ([1fdd02e](https://github.com/AliMD/alwatr/commit/1fdd02ec8b52e32a124b8d7c1d1c7fd7c993e3af))
+
 # [0.16.0](https://github.com/AliMD/alwatr/compare/v0.15.0...v0.16.0) (2022-09-08)
 
 **Note:** Version bump only for package @alwatr/fetch

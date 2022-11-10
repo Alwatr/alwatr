@@ -1,0 +1,17 @@
+services:
+  wireguard:
+    image: linuxserver/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    volumes:
+      - ./_data:/config
+      - /usr/src:/usr/src # location of kernel headers
+      - /lib/modules:/lib/modules
+    ports:
+      - ${SERVERPORT:-51820}:${SERVERPORT:-51820}/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+    env_file: .env
