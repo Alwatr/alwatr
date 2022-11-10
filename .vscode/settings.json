@@ -1,0 +1,30 @@
+{
+  "eslint.packageManager": "yarn",
+  "npm.packageManager": "yarn",
+  "lit-plugin.strict": true,
+  "editor.wordWrapColumn": 120,
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "cSpell.language": "en,fa",
+  "cSpell.words": [
+    "alwatr",
+    "khafan",
+    "Loggable",
+    "mastmalize",
+    "Mihandoost",
+    "noncallable",
+    "tsbuildinfo",
+    "webcomponents",
+    "webcomponentsjs"
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "files.exclude": {
+    "src/**/*.map": true,
+    "src/**/*.js": true,
+    "src/**/*.d.ts": true,
+    "src/**/*.tsbuildinfo": true
+  }
+}
