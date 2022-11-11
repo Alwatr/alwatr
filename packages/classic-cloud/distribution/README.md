@@ -1,1 +1,3 @@
-# @alwatr/distribution Classic private docker registry
+# Alwatr Container Distribution Deployment
+
+Private container registry.

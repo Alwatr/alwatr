@@ -1,4 +1,4 @@
-# @alwatr/fetch
+# Alwatr Fetch - `@alwatr/fetch`
 
 Enhanced fetch API with cache strategy, retry pattern, timeout, helper methods and enhanced types written in tiny TypeScript, ES module.
 

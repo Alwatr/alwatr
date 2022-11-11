@@ -1,26 +1,16 @@
-# @alwatr/nginx - Alwatr Accelerated Web Server
+# Alwatr Accelerated Web Server
 
-High performance, optimized NGINX for server web applications and api proxy with fast cache.
-
-## Cloud Native Application Best Practices
-
-The right way of using `@alwatr/nginx` is behind kubernetes ingress or simple edge reverse-proxy, then don't config edge stuff like gzip compression, ssl, etc or even config domain or multi websites!
+High performance, optimized NGINX for serve web applications and api proxy with fast cache.
 
 ## Usage
 
-### Pull image from the command line
-
-```sh
-docker pull ghcr.io/alimd/nginx:1
-```
-
-### Use as base image in Dockerfile
+The right way of using the alwatr nginx is behind kubernetes ingress or simple edge reverse-proxy, then don't config edge stuff like gzip compression, ssl, etc or even config domain or multiple websites.
 
 ```Dockerfile
 FROM ghcr.io/alimd/nginx:1
 ```
 
-#### PWA Dockerfile Sample
+### PWA Dockerfile Sample
 
 ```Dockerfile
 ARG NODE_VERSION=lts

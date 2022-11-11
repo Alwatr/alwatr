@@ -1,6 +1,6 @@
-# @alwatr/wordpress container
+# Alwatr Superfast Wordpress Deployment
 
-## Superfast Wordpress Container for CloudNative Kubernetes Deployments
+## Superfast Containerize Wordpress Deployment for CloudNative Kubernetes
 
 This container image is based on the official Wordpress image, but with a few tweaks to make it more suitable for Kubernetes deployments.
 

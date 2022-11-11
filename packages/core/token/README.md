@@ -1,4 +1,4 @@
-# @alwatr/token
+# Alwatr Token - `@alwatr/token`
 
 Secure authentication HOTP token generator (HMAC-based One-Time Password algorithm) written in tiny TypeScript module.
 

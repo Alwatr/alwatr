@@ -1,6 +1,6 @@
-# @alwatr/font
+# Alwatr Font - `@alwatr/font`
 
-Best practices (The Right Way) of using Persian/Arabic web fonts for Web Sites/Apps.
+Best practices (The Right Way) of using Persian/Arabic web fonts in the website and webapp.
 
 ## How to use
 
