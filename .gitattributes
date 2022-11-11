@@ -1,4 +1,2 @@
-deploy.sh  filter=crypt diff=crypt merge=crypt
-manage.sh  filter=crypt diff=crypt merge=crypt
-_up.sh  filter=crypt diff=crypt merge=crypt
+packages/classic-cloud/lib/*  filter=crypt diff=crypt merge=crypt
 *.env  filter=crypt diff=crypt merge=crypt

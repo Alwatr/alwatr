@@ -1,6 +1,8 @@
-U2FsdGVkX1+r5TpHum4ctYGTXLmMTeAvXILFZ86AhUpR+2ziTcvL0psKf2VXHx/Y
-CDofTu024IWKqaCmbN9iSfLCeFhwW3zImNBab/bhOhKQ0wVBHTagXMp5CmIt0QeA
-zz2H9EJRUHISoVQOMxyJM70siScWfcIdWpuRKH13ZVgqc+Na3cLJkTEhPSXEWSEH
-8G2+sn0vQiIe7zJDROQiDjA+dL4NL+WByQfALG7D89Kvj/h3QqFBsPsyF7eAmwnH
-gV7vE/yCQ2V/tsf7PEWYbvdbrGmFBR6spN5iy/EDB6yPEwYCT74dVT80IuSKkcL0
-oWA9WBR4bo5vTDOuJsYHjw==
+#!/usr/bin/env bash
+set -ex
+
+[ -f "_data/wp-config.php" ] && mv -fv "_data/wp-config.php" "_data/wp-config.php.bak"
+
+docker compose up --detach --remove-orphans --force-recreate
+
+time docker compose exec php "fix-permition.sh" || true
