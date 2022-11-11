@@ -1,0 +1,35 @@
+{
+  "log": {
+    "access": {
+      "type": "Console",
+      "level": "Debug"
+    },
+    "error": {
+      "type": "Console",
+      "level": "Debug"
+    }
+  },
+  "inbounds": [
+    {
+      "protocol": "vmess",
+      "listen": "0.0.0.0",
+      "port": 80,
+      "tag": "in-vmess",
+      "settings": {
+        "users": ["d06ffa2e-ef51-4def-ad9d-37803453d33e"]
+      },
+      "streamSettings": {
+        "transport": "ws",
+        "transportSettings":{},
+        "security":"none",
+        "securitySettings":{}
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "out-direct"
+    }
+  ]
+}
