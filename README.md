@@ -1,1 +1,1 @@
-![Alwatr](./logo.svg#gh-dark-mode-only)
+![Alwatr](./docs/image/logo.svg#gh-dark-mode-only)
