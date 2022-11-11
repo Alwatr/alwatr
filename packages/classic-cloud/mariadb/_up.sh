@@ -1,8 +1,11 @@
-U2FsdGVkX1/Vy7P5nuD6qsWTAKM1/HOlcK5Y340cZP+1Wsp3g+uv4UocKVG+tgPf
-bZ7guWgC4qBZN6kDxWj7RlVp6QyL+BTCsEABDvVqRGJXedT3gF0oyx64z9OjMP2o
-gK4Ii6D8mV5Fiz5By5poUydAXPAnlxulkWn22m7eYyMrgl6XkHAFUBNGOeuxHUur
-3+Xc+4XKCr2MM7BUjCWKOUVEH4GI0mgdWdJjgskk+GFfwYpgzCMVoH6l2J9QI3sG
-9mf1H2FC+Vcd+W+bbDkXe/lLfy+yiBOtKEuN5XHl9rgw2AVaqaUNzIXgxS/zP/u+
-l31PIxcH0uqGYOJDf34oxCUzUgZOFMLb5yJmvVjos+mrlgwVh47rymgIqJoCiTLS
-6uA1ARGo0PHA0GXJV1L8NIK16zd6JH3cY+KYgcAIjXRCMzT5HKxut/8qupgr+hFS
-9fvk9Ma1gJ5UNEn3zzfgBzIdyyJTQXIwSUenxxyysmAzpOxwS9fybFy25+vOHJL7
+#!/usr/bin/env bash
+set -ex
+
+docker network create alwatr-private-network 2>/dev/null || true
+
+mysqlPath="/var/lib/mysql"
+docker compose stop
+time docker compose run --rm --name 'fix-db' --user=root database \
+  bash -c "ls -lahF $mysqlPath; chown -R mysql:mysql $mysqlPath; ls -lahF $mysqlPath;"
+
+docker compose up --detach --remove-orphans # --force-recreate
