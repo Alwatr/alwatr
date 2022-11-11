@@ -15,7 +15,6 @@
   "main": "icon.js",
   "type": "module",
   "types": "icon.d.ts",
-  "private": true,
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "contributors": [
     "MohammadMahdi Zamanian <mm25zamanian@gmail.com> (https://mm25zamanian.ir)"
