@@ -1,4 +1,4 @@
-# @alwatr/signal
+# Alwatr Signal - `@alwatr/signal`
 
 Elegant powerful event system for handle global signals and states written in tiny TypeScript module.
 

@@ -1,5 +1,5 @@
-# @alwatr/php-apache container
+# Alwatr PHP Apache Deployment
 
-## Supper Classic PHP Container With Apache
+Supper Classic PHP Container With Apache.
 
-**PLEASE ALWAYS USE PHP WITH NGINX IN FPM MODE, THIS PROJECT IS JUST FOR EDUCATION PURPOSE.**
+**PLEASE ALWAYS USE PHP WITH NGINX IN FPM MODE.**
