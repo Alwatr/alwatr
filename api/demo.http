@@ -1,5 +1,5 @@
 @apiUrl = http://localhost:80
-@apiVersion = v1
+@apiVersion = v0
 
 ## add job
 POST {{apiUrl}}/{{apiVersion}}/add
@@ -8,16 +8,5 @@ Content-Type: application/json
 {
   "origin": "KIH",
   "dest": "THR",
-  "date": "1401/10/10"
-}
-
-### === Test other routes and errors ===
-
-# not valid data
-POST {{apiUrl}}/{{apiVersion}}/add-job
-Content-Type: application/json
-
-{
-  "origin": "KIH",
   "date": "1401/10/10"
 }
