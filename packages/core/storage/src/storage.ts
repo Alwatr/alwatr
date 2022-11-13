@@ -101,6 +101,13 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   protected _keys: Array<string> | null = null;
 
   /**
+   * All document in array.
+   */
+  get data(): Record<string, DocumentType | undefined> {
+    return this._storage.data;
+  }
+
+  /**
    * All document ids in array.
    */
   get keys(): Array<string> {
