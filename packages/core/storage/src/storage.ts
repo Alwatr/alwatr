@@ -103,7 +103,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   /**
    * All document in array.
    */
-  get data(): Record<string, DocumentType | undefined> {
+  get _data(): Record<string, DocumentType | undefined> {
     return this._storage.data;
   }
 

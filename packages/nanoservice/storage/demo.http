@@ -10,7 +10,7 @@ GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
 authorization: Bearer {{token}}
 
 ### Insert document
-POST {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
 authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -38,12 +38,11 @@ DELETE {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
 authorization: Bearer {{token}}
 
 ### Get keys
-GET HTTP/1.1 {{apiUrl}}/{{apiVersion}}/keys?storage=comments/page1
+GET {{apiUrl}}/{{apiVersion}}/keys?storage=comments/page1
 authorization: Bearer {{token}}
 
-
 ### Get all data
-GET HTTP/1.1 {{apiUrl}}/{{apiVersion}}/all?storage=comments/page1
+GET {{apiUrl}}/{{apiVersion}}/all?storage=comments/page1
 authorization: Bearer {{token}}
 
 ### === Test other routes and errors ===
@@ -61,14 +60,19 @@ TRACE {{apiUrl}}/{{apiVersion}}
 GET {{apiUrl}}/{{apiVersion}}/health
 
 ### empty body
-POST {{apiUrl}}/{{apiVersion}}
+### Insert document
+PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+authorization: Bearer {{token}}
 Content-Type: application/json
 
 ### invalid json
-POST {{apiUrl}}/{{apiVersion}}/echo
+PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "a": 1,
-  b: 2,
+  "_id": "c1",
+  "_updatedBy": "demo",
+  from: "Ali Mihandoost",
+  "message": "Salam"
 }

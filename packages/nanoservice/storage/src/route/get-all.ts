@@ -19,6 +19,6 @@ async function getAllDocument(connection: AlwatrConnection): Promise<void> {
 
   connection.reply({
     ok: true,
-    data: storage.data,
+    data: storage._data,
   });
 }
