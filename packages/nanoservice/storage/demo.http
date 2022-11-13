@@ -1,50 +1,50 @@
 @apiUrl = http://localhost:80
 @apiVersion = v0
-@token = demo_123456789_123456789_123456789_123456789_123456789
+@token = alwatr_110_313
 
-### Get a public storage
-GET {{apiUrl}}/{{apiVersion}}/comment-list/page-1.json
+### Get a public storage over nginx serve
+# GET {{apiUrl}}/{{apiVersion}}/public/comments/page1.json
 
-### Get a document by storageName/docId
-GET {{apiUrl}}/{{apiVersion}}/sample/doc-id-1
+### Get a document by storageName and docId
+GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
 authorization: Bearer {{token}}
 
-### Update/insert a document in storageName
-POST {{apiUrl}}/{{apiVersion}}/sample
-authorization: Bearer {{token}}
-Content-Type: application/json
-
-{
-  "_id": "doc-id-1",
-  "from": "Ali Mihandoost",
-  "message": "Salam ;)"
-}
-
-### Insert a document to storageName
-PUT {{apiUrl}}/{{apiVersion}}/sample
+### Insert document
+PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
 authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
+  "_id": "c1",
+  "_updatedBy": "demo",
   "from": "Ali Mihandoost",
-  "message": "Salam ;)"
+  "message": "Salam"
 }
 
-### Insert a document to storageName with custom id
-PUT {{apiUrl}}/{{apiVersion}}/sample
+### Edit document
+PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
 authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "_id": "doc-id-2",
+  "_id": "c1",
+  "_updatedBy": "demo",
   "from": "Ali Mihandoost",
   "message": "Salam ;)"
 }
 
-### Insert a document to storageName with custom id
-DELETE {{apiUrl}}/{{apiVersion}}/sample/doc-id-2
+### Remove document
+DELETE HTTP/1.1 {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
 authorization: Bearer {{token}}
 
+### Get keys
+GET HTTP/1.1 {{apiUrl}}/{{apiVersion}}/keys?storage=comments/page1
+authorization: Bearer {{token}}
+
+
+### Get all data
+GET HTTP/1.1 {{apiUrl}}/{{apiVersion}}/all?storage=comments/page1
+authorization: Bearer {{token}}
 
 ### === Test other routes and errors ===
 
