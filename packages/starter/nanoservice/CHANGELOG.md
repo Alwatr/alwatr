@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/AliMD/alwatr/compare/v0.20.0...v0.21.0) (2022-11-13)
+
+### Bug Fixes
+
+- ignore \_data folder for nodemon ([d63b3d5](https://github.com/AliMD/alwatr/commit/d63b3d5dd7f5c9c279b17b272d6216df460c4ea8))
+
 # [0.20.0](https://github.com/AliMD/alwatr/compare/v0.19.0...v0.20.0) (2022-11-05)
 
 **Note:** Version bump only for package alwatr-nanoservice-starter

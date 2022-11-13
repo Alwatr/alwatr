@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/AliMD/alwatr/compare/v0.20.0...v0.21.0) (2022-11-13)
+
+### Bug Fixes
+
+- ignore \_data folder for nodemon ([d63b3d5](https://github.com/AliMD/alwatr/commit/d63b3d5dd7f5c9c279b17b272d6216df460c4ea8))
+- **readme:** logo path ([48e3107](https://github.com/AliMD/alwatr/commit/48e310723ea8de3912564d93926f9a8eb61dba73))
+
+### Features
+
+- **classic-cloud:** restore ssh agent for deploy scripts ([674a575](https://github.com/AliMD/alwatr/commit/674a5753c4b708843c805d2a7dd8a7b9349318cd))
+- **ipsec:** new cc deployment ([3b844b8](https://github.com/AliMD/alwatr/commit/3b844b8f33c8b7428c929b934100144515db1219))
+- **openvpn:** new cc deployment ([4e655cc](https://github.com/AliMD/alwatr/commit/4e655ccee3d88127ca9424a714d505305ea4b2d2))
+- **shadowsocks:** new cc deployment ([5ce5735](https://github.com/AliMD/alwatr/commit/5ce57354caf639c20d0117eeeba335b6c4da6570))
+- **v2fly:** new cc deployment ([609fb9b](https://github.com/AliMD/alwatr/commit/609fb9b9011d18b25a6119bcd594d6769c9d8695))
+- **wireguard:** new cc deployment ([3b190ef](https://github.com/AliMD/alwatr/commit/3b190efbd14ea51678def1b698337ec4770c6792))
+
 # [0.20.0](https://github.com/AliMD/alwatr/compare/v0.19.0...v0.20.0) (2022-11-05)
 
 ### Bug Fixes
