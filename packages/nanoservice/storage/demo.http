@@ -10,7 +10,7 @@ GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
 authorization: Bearer {{token}}
 
 ### Insert document
-PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+POST {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
 authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -34,7 +34,7 @@ Content-Type: application/json
 }
 
 ### Remove document
-DELETE HTTP/1.1 {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
+DELETE {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
 authorization: Bearer {{token}}
 
 ### Get keys

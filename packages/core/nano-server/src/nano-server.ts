@@ -409,7 +409,7 @@ export class AlwatrConnection {
         this.reply({
           ok: false,
           statusCode: 406,
-          errorCode: `${param}_QUERY_PARAMETER_REQUIRED`,
+          errorCode: `${param}_query_parameter_required`,
         });
         return null;
       }
