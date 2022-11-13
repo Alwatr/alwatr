@@ -401,7 +401,22 @@ export class AlwatrConnection {
     return connectionToken;
   }
 
-  // requireParams<T>(...paramName: Array<string>): T {
-  //   this.
-  // }
+  requireQueryParams<T extends Record<string, unknown>>(params: Array<string>): T | null {
+    const parsedParams: Record<string, string> = {};
+    for (const param of params) {
+      const paramValue = this.url.searchParams.get(param);
+      if (paramValue === null || param.length === 0) {
+        this.reply({
+          ok: false,
+          statusCode: 406,
+          errorCode: `${param}_QUERY_PARAMETER_REQUIRED`,
+        });
+        return null;
+      }
+
+      parsedParams[param] = paramValue;
+    }
+
+    return parsedParams as T;
+  }
 }

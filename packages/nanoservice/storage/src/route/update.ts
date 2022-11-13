@@ -1,7 +1,6 @@
-import {logger} from '../lib/config.js';
+import {config, logger} from '../lib/config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
-import {requireToken} from '../lib/token.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
 import type {DocumentObject} from '@alwatr/storage';
@@ -13,12 +12,11 @@ async function updateDocument(connection: AlwatrConnection): Promise<void> {
   const storageName = connection.url.pathname.substring(1); // remove the first `/`
   logger.logMethodArgs('updateDocument', {method: connection.method, storageName});
 
-  const token = requireToken(connection);
-  const document = await connection.requireJsonBody<DocumentObject>();
+  const token = connection.requireToken(config.token);
+  if (token == null) return;
 
-  if (document == null || token == null) {
-    return;
-  }
+  const document = await connection.requireJsonBody<DocumentObject>();
+  if (document == null) return;
 
   if (storageName.length < 2) {
     return connection.reply({

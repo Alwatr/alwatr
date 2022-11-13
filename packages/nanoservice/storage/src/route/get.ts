@@ -12,7 +12,7 @@ async function getDocument(connection: AlwatrConnection): Promise<void> {
   const token = connection.requireToken(config.token);
   if (token == null) return;
 
-  const params = connection.requireQueryParams({storage: String, id: Number});
+  const params = connection.requireQueryParams<{storage: string, id: string}>(['storage', 'id']);
   if (params == null) return;
 
   const storage = storageProvider.get({name: params.storage});
