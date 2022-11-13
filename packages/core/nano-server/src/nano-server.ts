@@ -326,7 +326,7 @@ export class AlwatrConnection {
 
   protected async _getRequestBody(): Promise<string | null> {
     // method must be POST or PUT
-    if (!(this.method === 'POST' || this.method === 'PUT')) {
+    if (!(this.method === 'POST' || this.method === 'PUT' || this.method === 'PATCH')) {
       return null;
     }
 
