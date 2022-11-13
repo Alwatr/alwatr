@@ -400,4 +400,8 @@ export class AlwatrConnection {
 
     return connectionToken;
   }
+
+  // requireParams<T>(...paramName: Array<string>): T {
+  //   this.
+  // }
 }
