@@ -1,2 +1,3 @@
-U2FsdGVkX19QDj1532rpraR4qFHgC7vxIeTZSW7yrrejYlrH1iwzAj28Iy+CzhT/
-4uqBo3z1ZFTOe+ZtuT2FLg==
+#!/usr/bin/env bash
+
+source ../lib/deploy.sh

@@ -1,0 +1,34 @@
+services:
+  dockovpn:
+    image: lscr.io/linuxserver/wireguard:latest
+
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+
+    ports:
+      - ${SERVERPORT:-51820}:${SERVERPORT:-51820}/udp
+
+    cpu_shares: 512
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    env_file: .env
+
+    volumes:
+      - type: bind
+        source: /lib/modules
+        target: /lib/modules
+      - type: bind
+        source: /usr/src
+        target: /usr/src
+      - type: bind
+        source: ./_data
+        target: /config
+        bind:
+          create_host_path: true
+

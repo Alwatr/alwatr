@@ -1,1 +1,1 @@
-# @alwatr/static-server container
+# Alwatr Superfast Static File Server

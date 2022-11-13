@@ -1,4 +1,6 @@
-U2FsdGVkX1+xKtNUdx0WZHOR5G8ufGVMaTEYPOHAhwVez6VV4dDVVXxRfoBGXEmG
-NILaakdVMMt0DdZB+jXDt+x+rqOKwe83R7styCrw2TEQU9qp+U4g8wT9YUM9XYyC
-p40DDJDSx+l/Se19h18E5/t4eJJeH3Pns16L2X9/PHV133wO1TS489IxYYQwQ503
-7Ax+8BsCXubNsKp/nqgm8dAfLNllbtouVBmopZXAuiDTPb9FiYkQn7gN0usXUZy3
+#!/usr/bin/env bash
+set -ex
+
+docker compose up --detach --remove-orphans --force-recreate
+
+time docker compose exec --index 1 --user root php "fix-permition.sh" || true

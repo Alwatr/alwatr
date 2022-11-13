@@ -146,6 +146,7 @@ export class AlwatrNanoServer {
     connection.serverResponse.writeHead(200, {
       'Content-Length': body.length,
       'Content-Type': 'plain/text',
+      'Access-Control-Allow-Origin': '*',
       'Server': 'Alwatr NanoServer',
     });
     connection.serverResponse.end(body);

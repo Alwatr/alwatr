@@ -1,0 +1,26 @@
+services:
+  dockovpn:
+    image: docker.io/v2fly/v2fly-core:latest
+
+    ports:
+      - ${PORT}:${PORT}
+      - ${PORT}:${PORT}/udp
+
+    cpu_shares: 512
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    command:
+      - run
+      - -format=jsonv5
+      - -c
+      - /etc/config/${CONFIG}.json
+
+    env_file: .env
+
+    volumes:
+      - type: bind
+        source: ./config
+        target: /etc/config
+        read_only: true
