@@ -376,4 +376,28 @@ export class AlwatrConnection {
       return null;
     }
   }
+
+  requireToken(token: string): string | null {
+    const connectionToken = this.token;
+
+    if (connectionToken == null) {
+      this.reply({
+        ok: false,
+        statusCode: 401,
+        errorCode: 'authorization_required',
+      });
+      return null;
+    }
+
+    if (connectionToken !== token) {
+      this.reply({
+        ok: false,
+        statusCode: 403,
+        errorCode: 'access_denied',
+      });
+      return null;
+    }
+
+    return connectionToken;
+  }
 }
