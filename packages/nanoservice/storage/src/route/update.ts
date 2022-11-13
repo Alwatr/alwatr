@@ -6,27 +6,20 @@ import type {AlwatrConnection} from '@alwatr/nano-server';
 import type {DocumentObject} from '@alwatr/storage';
 
 nanoServer.route('PATCH', 'all', updateDocument);
-nanoServer.route('DELETE', 'all', updateDocument);
 
 async function updateDocument(connection: AlwatrConnection): Promise<void> {
-  const storageName = connection.url.pathname.substring(1); // remove the first `/`
-  logger.logMethodArgs('updateDocument', {method: connection.method, storageName});
+  logger.logMethod('updateDocument');
 
   const token = connection.requireToken(config.token);
   if (token == null) return;
 
+  const param = connection.requireQueryParams<{storage: string}>(['storage']);
+  if (param === null) return;
+
   const document = await connection.requireJsonBody<DocumentObject>();
   if (document == null) return;
 
-  if (storageName.length < 2) {
-    return connection.reply({
-      ok: false,
-      statusCode: 404,
-      errorCode: 'storage_name_required',
-    });
-  }
-
-  if (typeof document._id != 'string') {
+  if (document._id.length === 0) {
     return connection.reply({
       ok: false,
       statusCode: 406,
@@ -36,26 +29,10 @@ async function updateDocument(connection: AlwatrConnection): Promise<void> {
 
   document._updatedBy ??= 'admin';
 
-  const storage = storageProvider.get({name: storageName});
+  const storage = storageProvider.get({name: param.storage});
 
-  if (connection.method === 'DELETE') {
-    connection.reply(
-      storage.remove(document._id)
-        ? {
-          ok: true,
-          data: {},
-        }
-        : {
-          ok: false,
-          statusCode: 404,
-          errorCode: 'document_not_found',
-        },
-    );
-  }
-  else {
-    connection.reply({
-      ok: true,
-      data: storage.set(document, true),
-    });
-  }
+  connection.reply({
+    ok: true,
+    data: storage.set(document, true),
+  });
 }
