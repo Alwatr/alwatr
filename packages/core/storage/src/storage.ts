@@ -105,7 +105,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    */
   get keys(): Array<string> {
     if (this._keys === null) {
-      this._keys = Object.keys(this._storage);
+      this._keys = Object.keys(this._storage.data);
     }
     return this._keys;
   }
