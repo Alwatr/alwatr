@@ -386,7 +386,7 @@ export class AlwatrConnection {
     }
   }
 
-  requireToken(validator?: (token: string) => boolean | Array<string> | string): string | null {
+  requireToken(validator?: ((token: string) => boolean) | Array<string> | string): string | null {
     const token = this.getToken();
 
     if (token == null) {
@@ -404,9 +404,9 @@ export class AlwatrConnection {
     else if (Array.isArray(validator)) {
       if (validator.includes(token)) return token;
     }
-    else if (typeof validator === 'function') {
-      if (validator(token) === true) return token;
-    }
+    // else if (typeof validator === 'function') {
+    //   if (validator(token) === true) return token;
+    // }
 
     this.reply({
       ok: false,
@@ -416,22 +416,48 @@ export class AlwatrConnection {
     return null;
   }
 
+  protected _sanitizeParam(
+      paramName: string,
+      paramType: 'string' | 'number' | 'boolean',
+  ): string | number | boolean | null {
+    let paramValue: string | number | boolean | null = this.url.searchParams.get(paramName);
+
+    if (paramValue == null || paramValue.length === 0) return null;
+
+    if (paramType === 'number') {
+      paramValue = +paramValue;
+      if (isNaN(paramValue)) return null;
+    }
+    else if (paramType === 'boolean') {
+      if (paramValue === 'true') {
+        paramValue = true;
+      }
+      else if (paramValue === 'false') {
+        paramValue = false;
+      }
+      else return null;
+    }
+
+    return paramValue;
+  }
 
   requireQueryParams<T extends ParamsType = ParamsType>(
       params: Record<string, 'string' | 'number' | 'boolean'>,
   ): T | null {
-    const parsedParams: Partial<T> = {};
+    const parsedParams: Record<string, string | number | boolean | null> = {};
 
     for (const paramName in params) {
-      const paramType = params[paramName];
-      parsedParams[paramName] = this._sanitizeParam(paramName, paramType);
-      if (parsedParams[paramName] == null) {
-        this.reply({
-          ok: false,
-          statusCode: 406,
-          errorCode: `${param}_query_parameter_required`,
-        });
-        return null;
+      if (Object.prototype.hasOwnProperty.call(params, paramName)) {
+        const paramType = params[paramName];
+        parsedParams[paramName] = this._sanitizeParam(paramName, paramType);
+        if (parsedParams[paramName] == null) {
+          this.reply({
+            ok: false,
+            statusCode: 406,
+            errorCode: `query_parameter_required`,
+          });
+          return null;
+        }
       }
     }
 
