@@ -1,11 +1,10 @@
 import {createLogger} from '@alwatr/logger';
-import {isNumber} from '@alwatr/math';
-
-export const config = {
-  /* eslint-disable @typescript-eslint/no-non-null-assertion */
-  port: isNumber(process.env.PORT) ? +process.env.PORT! : 80,
-};
 
 export const logger = createLogger('nanoservice-starter');
+
+export const config = {
+  host: process.env.HOST ?? '0.0.0.0',
+  port: process.env.PORT != null ? +process.env.PORT : 80,
+};
 
 logger.logProperty('config', config);
