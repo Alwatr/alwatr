@@ -348,7 +348,15 @@ export class AlwatrConnection {
    * ```
    */
   async requireJsonBody<Type extends Record<string, unknown>>(): Promise<Type | null> {
-    // @TODO: if request content type is json
+    // if request content type is json
+    if (this.incomingMessage.headers['content-type'] !== 'application/json') {
+      this.reply({
+        ok: false,
+        statusCode: 400,
+        errorCode: 'require_body_json',
+      });
+      return null;
+    }
 
     const body = await this.getBody();
 
