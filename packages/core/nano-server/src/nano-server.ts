@@ -234,17 +234,7 @@ export class AlwatrConnection {
    * Request method.
    */
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  readonly method = this.incomingMessage.method!.toUpperCase() as Methods;
-
-  /**
-   * The token placed in the request header.
-   */
-  readonly token = this._getToken();
-
-  /**
-   * Request body for POST & PUT method.
-   */
-  readonly bodyPromise = this._getRequestBody();
+  readonly method = this.incomingMessage.method!.toUpperCase() as Exclude<Methods, 'ALL'>;
 
   protected _logger = createLogger(`alwatr-nano-server-connection`);
 
@@ -314,7 +304,10 @@ export class AlwatrConnection {
     this.serverResponse.end();
   }
 
-  protected _getToken(): string | null {
+  /**
+   * Get the token placed in the request header.
+   */
+  getToken(): string | null {
     const auth = this.incomingMessage.headers.authorization?.split(' ');
 
     if (auth == null || auth[0] !== 'Bearer') {
@@ -324,7 +317,10 @@ export class AlwatrConnection {
     return auth[1];
   }
 
-  protected async _getRequestBody(): Promise<string | null> {
+  /**
+   * Get request body.
+   */
+  async getBody(): Promise<string | null> {
     // method must be POST or PUT
     if (!(this.method === 'POST' || this.method === 'PUT' || this.method === 'PATCH')) {
       return null;
@@ -352,10 +348,11 @@ export class AlwatrConnection {
    * ```
    */
   async requireJsonBody<Type extends Record<string, unknown>>(): Promise<Type | null> {
-    // if request content type is json, parse the body
-    const body = await this.bodyPromise;
+    // @TODO: if request content type is json
 
-    if (body === null || body.length === 0) {
+    const body = await this.getBody();
+
+    if (body == null || body.length === 0) {
       this.reply({
         ok: false,
         statusCode: 400,
