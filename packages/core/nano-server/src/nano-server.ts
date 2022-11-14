@@ -404,14 +404,16 @@ export class AlwatrConnection {
     return null;
   }
 
-    return connectionToken;
-  }
 
-  requireQueryParams<T extends Record<string, unknown>>(params: Array<string>): T | null {
-    const parsedParams: Record<string, string> = {};
-    for (const param of params) {
-      const paramValue = this.url.searchParams.get(param);
-      if (paramValue === null || param.length === 0) {
+  requireQueryParams<T extends ParamsType = ParamsType>(
+      params: Record<string, 'string' | 'number' | 'boolean'>,
+  ): T | null {
+    const parsedParams: Partial<T> = {};
+
+    for (const paramName in params) {
+      const paramType = params[paramName];
+      parsedParams[paramName] = this._sanitizeParam(paramName, paramType);
+      if (parsedParams[paramName] == null) {
         this.reply({
           ok: false,
           statusCode: 406,
@@ -419,10 +421,9 @@ export class AlwatrConnection {
         });
         return null;
       }
-
-      parsedParams[param] = paramValue;
     }
 
     return parsedParams as T;
   }
 }
+type ParamsType = Record<string, string | number | boolean>
