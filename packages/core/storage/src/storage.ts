@@ -139,11 +139,14 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
    * load storage file.
    */
   protected load(): DataStorage<DocumentType> {
-    this._logger.logMethodArgs('load', {path: this.storagePath});
+    this._logger.logMethodArgs('load', {name: this.name, path: this.storagePath});
 
     const storage = readJsonFile<DataStorage<DocumentType>>(this.storagePath);
 
     if (storage === null) {
+      this._logger.incident('load', 'file_not_found', 'Storage path not found, empty storage loaded', {
+        path: this.storagePath,
+      });
       return this._newStorage;
     }
 
