@@ -13,7 +13,7 @@ interface ReplySuccessContent {
 
 export type ReplyContent = ReplyFailedContent | ReplySuccessContent;
 
-export type Methods = 'ALL' | 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'TRACE' | 'OPTIONS' | 'PATCH';
+export type Methods = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'TRACE' | 'OPTIONS' | 'PATCH';
 
 export interface Config {
   /**

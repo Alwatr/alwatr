@@ -102,7 +102,11 @@ export class AlwatrNanoServer {
    * });
    * ```
    */
-  route(method: Methods, route: 'all' | `/${string}`, middleware: (connection: AlwatrConnection) => void): void {
+  route(
+      method: 'ALL' | Methods,
+      route: 'all' | `/${string}`,
+      middleware: (connection: AlwatrConnection) => void,
+  ): void {
     this._logger.logMethodArgs('route', {method, route});
 
     if (this.middlewareList[method] == null) this.middlewareList[method] = {};
@@ -154,7 +158,7 @@ export class AlwatrNanoServer {
 
   // prettier-ignore
   protected middlewareList: Record<string, Record<string, (connection: AlwatrConnection) => void | Promise<void>>> = {
-    all: {},
+    ALL: {},
   };
 
   protected async _requestListener(incomingMessage: IncomingMessage, serverResponse: ServerResponse): Promise<void> {
@@ -234,7 +238,7 @@ export class AlwatrConnection {
    * Request method.
    */
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  readonly method = this.incomingMessage.method!.toUpperCase() as Exclude<Methods, 'ALL'>;
+  readonly method = this.incomingMessage.method!.toUpperCase() as Methods;
 
   protected _logger = createLogger(`alwatr-nano-server-connection`);
 
