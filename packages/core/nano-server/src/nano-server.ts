@@ -374,10 +374,10 @@ export class AlwatrConnection {
     }
   }
 
-  requireToken(token: string): string | null {
-    const connectionToken = this.token;
+  requireToken(validator?: (token: string) => boolean | Array<string> | string): string | null {
+    const token = this.getToken();
 
-    if (connectionToken == null) {
+    if (token == null) {
       this.reply({
         ok: false,
         statusCode: 401,
@@ -385,15 +385,24 @@ export class AlwatrConnection {
       });
       return null;
     }
-
-    if (connectionToken !== token) {
-      this.reply({
-        ok: false,
-        statusCode: 403,
-        errorCode: 'access_denied',
-      });
-      return null;
+    else if (validator === undefined) return token;
+    else if (typeof validator === 'string') {
+      if (token === validator) return token;
     }
+    else if (Array.isArray(validator)) {
+      if (validator.includes(token)) return token;
+    }
+    else if (typeof validator === 'function') {
+      if (validator(token) === true) return token;
+    }
+
+    this.reply({
+      ok: false,
+      statusCode: 403,
+      errorCode: 'access_denied',
+    });
+    return null;
+  }
 
     return connectionToken;
   }
