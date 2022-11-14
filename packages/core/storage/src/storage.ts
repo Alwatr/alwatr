@@ -117,6 +117,10 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     return this.keys.length;
   }
 
+  get _data(): typeof this._storage.data {
+    return this._storage.data;
+  }
+
   protected get _newStorage(): DataStorage<DocumentType> {
     return {ok: true, data: {}};
   }
