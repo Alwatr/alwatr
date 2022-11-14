@@ -13,7 +13,7 @@ async function updateDocument(connection: AlwatrConnection): Promise<void> {
   const token = connection.requireToken(config.token);
   if (token == null) return;
 
-  const param = connection.requireQueryParams<{storage: string}>(['storage']);
+  const param = connection.requireQueryParams<{storage: string}>({'storage': 'string'});
   if (param === null) return;
 
   const document = await connection.requireJsonBody<DocumentObject>();

@@ -12,7 +12,7 @@ async function removeDocument(connection: AlwatrConnection): Promise<void> {
   const token = connection.requireToken(config.token);
   if (token == null) return;
 
-  const param = connection.requireQueryParams<{storage: string, id: string}>(['storage', 'id']);
+  const param = connection.requireQueryParams<{storage: string, id: string}>({'storage': 'string', 'id': 'string'});
   if (param === null) return;
 
   const storage = storageProvider.get({name: param.storage});
