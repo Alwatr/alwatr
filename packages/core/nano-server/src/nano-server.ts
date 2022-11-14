@@ -177,9 +177,9 @@ export class AlwatrNanoServer {
 
     const middleware =
       this.middlewareList[connection.method]?.[route] ||
-      this.middlewareList.all[route] ||
+      this.middlewareList.ALL[route] ||
       this.middlewareList[connection.method]?.all ||
-      this.middlewareList.all.all;
+      this.middlewareList.ALL.all;
 
     try {
       if (typeof middleware === 'function') {
