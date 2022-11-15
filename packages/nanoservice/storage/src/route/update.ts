@@ -13,13 +13,13 @@ async function updateDocument(connection: AlwatrConnection): Promise<void> {
   const token = connection.requireToken(config.token);
   if (token == null) return;
 
-  const param = connection.requireQueryParams<{storage: string}>({'storage': 'string'});
+  const param = connection.requireQueryParams<{storage: string}>({storage: 'string'});
   if (param === null) return;
 
   const document = await connection.requireJsonBody<DocumentObject>();
   if (document == null) return;
 
-  if (document._id.length === 0) {
+  if (!(typeof document._id === 'string' && document._id.length !== 0)) {
     return connection.reply({
       ok: false,
       statusCode: 406,
