@@ -10,7 +10,7 @@ function getDocument(connection: AlwatrConnection): void {
   logger.logMethod('getDocument');
 
   if (!connection.url.search) {
-    connection.reply({
+    return connection.reply({
       ok: true,
       data: {
         app: 'Alwatr Storage Server',
