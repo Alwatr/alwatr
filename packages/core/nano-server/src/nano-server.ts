@@ -350,6 +350,7 @@ export class AlwatrConnection {
    * Example:
    * ```ts
    * const bodyData = await connection.requireJsonBody();
+   * if (bodyData == null) return;
    * ```
    */
   async requireJsonBody<Type extends Record<string, unknown>>(): Promise<Type | null> {
@@ -388,7 +389,15 @@ export class AlwatrConnection {
   }
 
   /**
-   * TODO: document benevis lotfan
+   * Parse and validate request token.
+   *
+   * @returns Request token.
+   *
+   * Example:
+   * ```ts
+   * const token = connection.requireToken((token) => token.length > 12);
+   * if (token == null) return;
+   * ```
    */
   requireToken(validator?: ((token: string) => boolean) | Array<string> | string): string | null {
     const token = this.getToken();
@@ -422,7 +431,7 @@ export class AlwatrConnection {
   }
 
   /**
-   * TODO: document benevis lotfan
+   * Parse query param and validate with param type
    */
   protected _sanitizeParam(name: string, type: ParamType): string | number | boolean | null {
     let value: string | number | boolean | null = this.url.searchParams.get(name);
@@ -455,7 +464,15 @@ export class AlwatrConnection {
   }
 
   /**
-   * TODO: document benevis lotfan
+   * Parse and validate query params.
+   *
+   * @returns Query params object.
+   *
+   * Example:
+   * ```ts
+   * const token = connection.requireQueryParams<{id: string}>({id: 'string'});
+   * if (token == null) return;
+   * ```
    */
   requireQueryParams<T extends QueryParams = QueryParams>(params: Record<string, ParamType>): T | null {
     const parsedParams: Record<string, string | number | boolean | null> = {};
