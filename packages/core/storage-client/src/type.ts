@@ -35,3 +35,18 @@ export type AlwatrStorageConfig = {
    */
   debug?: boolean;
 };
+
+type ServerResponseFailed<T> = {
+  ok: false;
+  statusCode: number;
+  errorCode: string;
+  data?: T;
+}
+
+type ServerResponseSuccess<T> = {
+  ok: true;
+  statusCode?: number;
+  data: T;
+}
+
+export type ServerResponse<T extends Record<string, unknown>> = ServerResponseSuccess<T> | ServerResponseFailed<T>;

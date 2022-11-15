@@ -36,6 +36,7 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "tslib": "^2.4.1"
+    "tslib": "^2.4.1",
+    "@alwatr/fetch": "^0.21.0"
   }
 }

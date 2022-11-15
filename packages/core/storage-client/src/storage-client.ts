@@ -1,8 +1,7 @@
-import {resolve} from 'node:path';
-
+import {getJson} from '@alwatr/fetch';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
-import type {DocumentObject, DataStorage, AlwatrStorageConfig} from './type.js';
+import type {DocumentObject, DataStorage, AlwatrStorageConfig, ServerResponse} from './type.js';
 
 export {DocumentObject, DataStorage, AlwatrStorageConfig as Config};
 
@@ -136,8 +135,24 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * const user = userStorage.get('user-1');
    * ```
    */
-  get(documentId: string, fastInstance?: boolean): DocumentType | null {
+  async get(documentId: string): Promise<DocumentType | null> {
+    const content = await getJson<ServerResponse<DocumentType>>({
+      url: this.server,
+      queryParameters: {
+        storage: this.name,
+        id: documentId,
+      },
+    });
 
+    if (content.ok) {
+      return content.data;
+    }
+    else if (content.errorCode === 'document_not_found') {
+      return null;
+    }
+    else {
+      throw new Error('fetch_failed');
+    }
   }
 
   /**
