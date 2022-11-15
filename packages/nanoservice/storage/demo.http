@@ -21,6 +21,18 @@ Content-Type: application/json
   "message": "Salam"
 }
 
+###
+PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "_id": "c2",
+  "_updatedBy": "demo",
+  "from": "Fateme Mihandoost",
+  "message": "Aleyk Salam"
+}
+
 ### Edit document
 PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
 authorization: Bearer {{token}}
@@ -33,7 +45,7 @@ Content-Type: application/json
   "message": "Salam ;)"
 }
 
-### Remove document
+### Delete document
 DELETE {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
 authorization: Bearer {{token}}
 
@@ -46,6 +58,9 @@ GET {{apiUrl}}/{{apiVersion}}/all?storage=comments/page1
 authorization: Bearer {{token}}
 
 ### === Test other routes and errors ===
+
+### Page Home
+GET {{apiUrl}}/{{apiVersion}}
 
 ### Page health
 GET {{apiUrl}}/{{apiVersion}}/health
@@ -71,8 +86,5 @@ authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "_id": "c1",
-  "_updatedBy": "demo",
-  from: "Ali Mihandoost",
-  "message": "Salam"
+  "_id":
 }
