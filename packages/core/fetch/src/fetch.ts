@@ -89,7 +89,7 @@ export interface FetchOptions extends RequestInit {
 }
 
 let alwatrCacheStorage: Cache;
-const cacheSupported = 'caches' in self;
+const cacheSupported = 'caches' in globalThis;
 
 const duplicateRequestStorage: Record<string, Promise<Response>> = {};
 
@@ -389,7 +389,7 @@ function _handleTimeout(options: FetchOptions): Promise<Response> {
       });
     });
 
-    window
+    globalThis
         .fetch(options.url, options)
         .then((response) => resolved(response))
         .catch((reason) => reject(reason))
