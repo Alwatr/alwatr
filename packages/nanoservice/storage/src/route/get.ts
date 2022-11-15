@@ -9,6 +9,16 @@ nanoServer.route('GET', '/', getDocument);
 function getDocument(connection: AlwatrConnection): void {
   logger.logMethod('getDocument');
 
+  if (!connection.url.search) {
+    connection.reply({
+      ok: true,
+      data: {
+        app: 'Alwatr Storage Server',
+        message: 'Hello ;)',
+      },
+    });
+  }
+
   const token = connection.requireToken(config.token);
   if (token == null) return;
 
