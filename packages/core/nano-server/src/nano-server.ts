@@ -323,7 +323,12 @@ export class AlwatrConnection {
   }
 
   /**
-   * Get request body.
+   * Get request body for POST, PUT and POST methods.
+   *
+   * Example:
+   * ```ts
+   * const body = await connection.getBody();
+   * ```
    */
   async getBody(): Promise<string | null> {
     // method must be POST or PUT
