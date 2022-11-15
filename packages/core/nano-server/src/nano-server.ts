@@ -230,16 +230,14 @@ export class AlwatrConnection {
    * Request URL.
    */
   readonly url = new URL(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.incomingMessage.url!.replace(AlwatrConnection.versionPattern, ''),
-    'http://localhost/',
+      (this.incomingMessage.url ?? '').replace(AlwatrConnection.versionPattern, ''),
+      'http://localhost/',
   );
 
   /**
    * Request method.
    */
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  readonly method = this.incomingMessage.method!.toUpperCase() as Methods;
+  readonly method = (this.incomingMessage.method ?? 'GET').toUpperCase() as Methods;
 
   protected _logger = createLogger(`alwatr-nano-server-connection`);
 
