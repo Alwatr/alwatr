@@ -246,16 +246,16 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
   }
 
   /**
-   * Remove a document object from the storage.
+   * Delete a document object from the storage.
    *
    * Example:
    *
    * ```ts
-   * userStorage.remove('user-1');
+   * userStorage.delete('user-1');
    * ```
    */
-  remove(documentId: string): boolean {
-    this._logger.logMethodArgs('remove', documentId);
+  delete(documentId: string): boolean {
+    this._logger.logMethodArgs('delete', documentId);
 
     if (this._storage.data[documentId] == null) {
       return false;

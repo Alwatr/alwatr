@@ -129,14 +129,14 @@ Example:
 if (!useruserStorage.has('user-1')) throw new Error('user not found');
 ```
 
-### `remove(documentId: string): boolean`
+### `delete(documentId: string): boolean`
 
-Remove a document object from the storage.
+Delete a document object from the storage.
 
 Example:
 
 ```ts
-userStorage.remove('user-1');
+userStorage.delete('user-1');
 ```
 
 ### `async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void>`

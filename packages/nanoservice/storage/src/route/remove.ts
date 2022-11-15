@@ -17,7 +17,7 @@ async function removeDocument(connection: AlwatrConnection): Promise<void> {
 
   const storage = storageProvider.get({name: param.storage});
 
-  if (storage.remove(param.id) === true) {
+  if (storage.delete(param.id) === true) {
     connection.reply({
       ok: true,
       data: {},
