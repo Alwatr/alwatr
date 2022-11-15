@@ -1,8 +1,9 @@
 import {createServer} from 'http';
 
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
+import {isNumber} from '@alwatr/math';
 
-import type {Config, Methods, ReplyContent} from './type.js';
+import type {Config, Methods, ParamType, QueryParams, ReplyContent} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
@@ -386,6 +387,9 @@ export class AlwatrConnection {
     }
   }
 
+  /**
+   * TODO: document benevis lotfan
+   */
   requireToken(validator?: ((token: string) => boolean) | Array<string> | string): string | null {
     const token = this.getToken();
 
@@ -397,17 +401,18 @@ export class AlwatrConnection {
       });
       return null;
     }
-    else if (validator === undefined) return token;
+    else if (validator === undefined) {
+      return token;
+    }
     else if (typeof validator === 'string') {
       if (token === validator) return token;
     }
     else if (Array.isArray(validator)) {
       if (validator.includes(token)) return token;
     }
-    // else if (typeof validator === 'function') {
-    //   if (validator(token) === true) return token;
-    // }
-
+    else if (typeof validator === 'function') {
+      if (validator(token) === true) return token;
+    }
     this.reply({
       ok: false,
       statusCode: 403,
@@ -416,52 +421,64 @@ export class AlwatrConnection {
     return null;
   }
 
-  protected _sanitizeParam(
-      paramName: string,
-      paramType: 'string' | 'number' | 'boolean',
-  ): string | number | boolean | null {
-    let paramValue: string | number | boolean | null = this.url.searchParams.get(paramName);
+  /**
+   * TODO: document benevis lotfan
+   */
+  protected _sanitizeParam(name: string, type: ParamType): string | number | boolean | null {
+    let value: string | number | boolean | null = this.url.searchParams.get(name);
 
-    if (paramValue == null || paramValue.length === 0) return null;
-
-    if (paramType === 'number') {
-      paramValue = +paramValue;
-      if (isNaN(paramValue)) return null;
+    if (value == null || value.length === 0) {
+      return null;
     }
-    else if (paramType === 'boolean') {
-      if (paramValue === 'true') {
-        paramValue = true;
+
+    if (type === 'string') {
+      return value;
+    }
+
+    value = value.trim();
+
+    if (type === 'number') {
+      return isNumber(value) ? +value : null;
+    }
+
+    if (type === 'boolean') {
+      if (value === 'true' || value === '1') {
+        value = true;
       }
-      else if (paramValue === 'false') {
-        paramValue = false;
+      else if (value === 'false' || value === '0') {
+        value = false;
       }
       else return null;
     }
 
-    return paramValue;
+    return null;
   }
 
-  requireQueryParams<T extends ParamsType = ParamsType>(
-      params: Record<string, 'string' | 'number' | 'boolean'>,
-  ): T | null {
+  /**
+   * TODO: document benevis lotfan
+   */
+  requireQueryParams<T extends QueryParams = QueryParams>(params: Record<string, ParamType>): T | null {
     const parsedParams: Record<string, string | number | boolean | null> = {};
 
     for (const paramName in params) {
-      if (Object.prototype.hasOwnProperty.call(params, paramName)) {
-        const paramType = params[paramName];
-        parsedParams[paramName] = this._sanitizeParam(paramName, paramType);
-        if (parsedParams[paramName] == null) {
-          this.reply({
-            ok: false,
-            statusCode: 406,
-            errorCode: `query_parameter_required`,
-          });
-          return null;
-        }
+      if (!Object.prototype.hasOwnProperty.call(params, paramName)) continue;
+      const paramType = params[paramName];
+      const paramValue = (parsedParams[paramName] = this._sanitizeParam(paramName, paramType));
+      if (paramValue == null) {
+        this.reply({
+          ok: false,
+          statusCode: 406,
+          errorCode: `query_parameter_required`,
+          data: {
+            paramName,
+            paramType,
+            paramValue,
+          },
+        });
+        return null;
       }
     }
 
     return parsedParams as T;
   }
 }
-type ParamsType = Record<string, string | number | boolean>

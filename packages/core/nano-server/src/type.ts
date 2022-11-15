@@ -34,3 +34,6 @@ export interface Config {
    */
   autoListen: boolean;
 }
+
+export type QueryParams = Record<string, string | number | boolean>;
+export type ParamType = 'string' | 'number' | 'boolean';
