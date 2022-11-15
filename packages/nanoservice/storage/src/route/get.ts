@@ -1,52 +1,35 @@
 import {config, logger} from '../lib/config.js';
 import {nanoServer} from '../lib/nano-server.js';
-import {storageProvider, getDataModel} from '../lib/storage-provider.js';
-import {requireToken} from '../lib/token.js';
+import {storageProvider} from '../lib/storage-provider.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
 
-nanoServer.route('GET', 'all', getDocument);
+nanoServer.route('GET', '/', getDocument);
 
-async function getDocument(connection: AlwatrConnection): Promise<void> {
-  const splittedPath = connection.url.pathname
-      .substring(1) // remove the first `/`
-      .split('/');
+function getDocument(connection: AlwatrConnection): void {
+  logger.logMethod('getDocument');
 
-  if (splittedPath.length < 2) {
+  if (!connection.url.search) {
     return connection.reply({
-      ok: false,
-      statusCode: 400,
-      errorCode: 'invalid_path_format',
+      ok: true,
+      data: {
+        app: 'Alwatr Storage Server',
+        message: 'Hello ;)',
+      },
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const documentId = splittedPath.pop()!;
-  const storageName = splittedPath.join('/');
+  const token = connection.requireToken(config.token);
+  if (token == null) return;
 
-  logger.logMethodArgs('getDocument', {storageName, documentId});
+  const params = connection.requireQueryParams<{storage: string, id: string}>({storage: 'string', id: 'string'});
+  if (params == null) return;
 
-  const token = requireToken(connection);
-  if (token === null) return;
+  const storage = storageProvider.get({name: params.storage});
 
-  const storageModel = getDataModel(storageName);
+  const document = storage.get(params.id, true);
 
-  if (storageModel === null) {
-    return connection.reply({
-      ok: false,
-      statusCode: 404,
-      errorCode: 'storage_not_defined',
-    });
-  }
-
-  const storage = storageProvider.get({
-    name: storageName,
-    path: `${config.storagePath}/${storageModel.subFolder}`,
-  });
-
-  const document = storage.get(documentId, true);
-
-  if (document === null) {
+  if (document == null) {
     return connection.reply({
       ok: false,
       statusCode: 404,

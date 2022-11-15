@@ -13,7 +13,7 @@ interface ReplySuccessContent {
 
 export type ReplyContent = ReplyFailedContent | ReplySuccessContent;
 
-export type Methods = '*' | 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'TRACE' | 'OPTIONS' | 'PATCH';
+export type Methods = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'TRACE' | 'OPTIONS' | 'PATCH';
 
 export interface Config {
   /**
@@ -34,3 +34,6 @@ export interface Config {
    */
   autoListen: boolean;
 }
+
+export type QueryParams = Record<string, string | number | boolean>;
+export type ParamType = 'string' | 'number' | 'boolean';
