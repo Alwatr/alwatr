@@ -470,8 +470,9 @@ export class AlwatrConnection {
    *
    * Example:
    * ```ts
-   * const token = connection.requireQueryParams<{id: string}>({id: 'string'});
-   * if (token == null) return;
+   * const params = connection.requireQueryParams<{id: string}>({id: 'string'});
+   * if (params == null) return;
+   * console.log(params.id);
    * ```
    */
   requireQueryParams<T extends QueryParams = QueryParams>(params: Record<string, ParamType>): T | null {

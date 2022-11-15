@@ -78,13 +78,13 @@ Request URL.
 
 Request method.
 
-### `connection.token: string | null`
-
-The token placed in the request header.
-
 ### `connection.bodyPromise: string | null`
 
 Request body for **POST** & **PUT** method.
+
+### `connection.getToken(): string | null`
+
+Get the token placed in the request header.
 
 ### `connection.reply(content: ReplyContent)`
 
@@ -110,4 +110,30 @@ Example:
 
 ```ts
 const bodyData = await connection.requireJsonBody();
+if (bodyData == null) return;
+```
+
+### `requireToken(validator: ((token: string) => boolean) | Array<string> | string): string | null`
+
+Parse and validate request token.
+Returns request token.
+
+Example:
+
+```ts
+const token = connection.requireToken((token) => token.length > 12);
+if (token == null) return;
+```
+
+### `requireQueryParams<T>(params: Record<string, ParamType>): T | null`
+
+Parse and validate query params.
+Returns query params object.
+
+Example:
+
+```ts
+const params = connection.requireQueryParams<{id: string}>({id: 'string'});
+if (params == null) return;
+console.log(params.id);
 ```
