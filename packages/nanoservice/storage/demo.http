@@ -47,20 +47,20 @@ authorization: Bearer {{token}}
 
 ### === Test other routes and errors ===
 
-### Page Home
-GET {{apiUrl}}/{{apiVersion}}
+### Page health
+GET {{apiUrl}}/{{apiVersion}}/health
 
-### Page 404 (wrong path)
-GET {{apiUrl}}/{{apiVersion}}/jafang
+### Get a document without token
+GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1/page1&id=c1
 
 ### Page 404 (wrong method)
 TRACE {{apiUrl}}/{{apiVersion}}
 
-### Page health
-GET {{apiUrl}}/{{apiVersion}}/health
+### Get a document by storageName without id
+GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+authorization: Bearer {{token}}
 
 ### empty body
-### Insert document
 PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
 authorization: Bearer {{token}}
 Content-Type: application/json
