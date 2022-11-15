@@ -72,15 +72,21 @@ connection.reply({
 
 Request URL.
 
-### `connection.method: "\*" | "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "CONNECT" | "TRACE" | "OPTIONS" | "PATCH"
+### `connection.method: "ALL" | "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "CONNECT" | "TRACE" | "OPTIONS" | "PATCH"
 
 `
 
 Request method.
 
-### `connection.bodyPromise: string | null`
+### `connection.getBody(): Promise<string | null>`
 
-Request body for **POST** & **PUT** method.
+Get request body for **POST**, **PUT** and **POST** methods..
+
+Example:
+
+```ts
+const body = await connection.getBody();
+```
 
 ### `connection.getToken(): string | null`
 
