@@ -1,4 +1,4 @@
-import {getJson} from '@alwatr/fetch';
+import {fetch} from '@alwatr/fetch';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {SignalInterface} from '@alwatr/signal';
 
@@ -112,9 +112,28 @@ l10n.resourceChangeSignal.setProvider(async (locale) => {
     return;
   }
 
-  return await getJson<L10Resource>({url: `${l10n.config.resourcePath}/${locale.code}.json`});
-  // TODO: cache requests using fetch (add feature for fetch)
-  // TODO: catch errors and fallback
+  const url = `${l10n.config.resourcePath}/${locale.code}.json`;
+  try {
+    const response = await fetch({
+      url,
+      retry: 20,
+      retryDelay: 1_000,
+      timeout: 10_000,
+      removeDuplicate: 'auto',
+      cacheStrategy: 'stale_while_revalidate',
+    });
+
+    if (response.ok) {
+      return response.json();
+    }
+    else {
+      throw new Error('fetch_nok');
+    }
+  }
+  catch (err) {
+    logger.error('resourceProvider', 'fetch_failed', (err as Error).stack || err, {locale, url});
+    // TODO: user error signal.
+  }
 });
 
 /**
