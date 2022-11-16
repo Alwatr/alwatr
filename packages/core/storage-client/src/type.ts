@@ -31,10 +31,6 @@ export type AlwatrStorageClientConfig = {
    debug?: boolean;
 };
 
-export type StorageKeys = {
-  keys: Array<string>;
-};
-
 type ServerResponseFailed = {
   ok: false;
   statusCode: number;

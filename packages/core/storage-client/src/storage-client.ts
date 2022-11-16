@@ -68,11 +68,11 @@ alwatrRegisteredList.push({
  * ```
  */
 export class AlwatrStorageClient<DocumentType extends DocumentObject> {
-  protected _logger = createLogger(`alwatr-storage-client:${this.config.name}`, undefined, this.config.debug);
+  protected _logger = createLogger(`alwatr-storage-client:${this.config.name}`, undefined);
 
   constructor(public readonly config: AlwatrStorageClientConfig) {
-    if (config.host[config.host.length - 1] === '/') {
-      config.host = config.host.substring(0, config.host.length - 1);
+    if (!(config.host[config.host.length - 1] === '/')) {
+      config.host += '/';
     }
     this._logger.logMethodArgs('constructor', config);
   }
@@ -218,7 +218,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    */
   async getAll(): Promise<Record<string, DocumentType>> {
     const response = await fetch({
-      url: this.config.host + '/all',
+      url: this.config.host + 'all',
       queryParameters: {
         storage: this.config.name,
       },
