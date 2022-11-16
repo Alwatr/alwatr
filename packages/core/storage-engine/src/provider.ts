@@ -1,8 +1,8 @@
 import {createLogger} from '@alwatr/logger';
 
-import {AlwatrStorage} from './storage.js';
+import {AlwatrStorageEngine} from './storage-engine.js';
 
-import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} from './type.js';
+import type {AlwatrStorageEngineConfig, AlwatrStorageEngineProviderConfig, DocumentObject} from './type.js';
 
 // TODO: auto unload base of last usage time and memory limit.
 
@@ -12,32 +12,32 @@ import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} f
  * Example:
  *
  * ```ts
- * import {AlwatrStorageProvider} from '@alwatr/storage-engine';
- * const storageList = new AlwatrStorageProvider();
+ * import {AlwatrStorageEngineProvider} from '@alwatr/storage-engine';
+ * const storageList = new AlwatrStorageEngineProvider();
  * // ...
  * const user = (await storageList.get('user-list')).get('userId1');
  * ```
  */
-export class AlwatrStorageProvider {
+export class AlwatrStorageEngineProvider {
   protected _logger = createLogger('alwatr-storage-provider');
-  protected _list: Record<string, AlwatrStorage<DocumentObject>> = {};
-  protected _config: AlwatrStorageProviderConfig;
+  protected _list: Record<string, AlwatrStorageEngine<DocumentObject>> = {};
 
-  constructor(config: AlwatrStorageProviderConfig) {
-    this._logger.logMethodArgs('constructor', config);
-    this._config = config;
+  constructor(protected _config: AlwatrStorageEngineProviderConfig) {
+    this._logger.logMethodArgs('constructor', _config);
   }
 
   // TODO: update all jsdoc and readme.
-  get<DocumentType extends DocumentObject = DocumentObject>(config: AlwatrStorageConfig): AlwatrStorage<DocumentType> {
+  get<DocumentType extends DocumentObject = DocumentObject>(
+      config: AlwatrStorageEngineConfig,
+  ): AlwatrStorageEngine<DocumentType> {
     if (!this._list[config.name]) {
-      this._list[config.name] = new AlwatrStorage<DocumentType>({
+      this._list[config.name] = new AlwatrStorageEngine<DocumentType>({
         ...this._config,
         ...config,
       });
       console.log('Memory usage: %sMB', Math.round(process.memoryUsage.rss() / 100000) / 10);
     }
-    return this._list[config.name] as AlwatrStorage<DocumentType>;
+    return this._list[config.name] as AlwatrStorageEngine<DocumentType>;
   }
 
   unload(name: string): void {

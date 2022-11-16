@@ -15,7 +15,7 @@ export type DataStorage<T extends DocumentObject> = {
   data: Record<string, T | undefined>;
 }
 
-export type AlwatrStorageConfig = {
+export type AlwatrStorageEngineConfig = {
   /**
    * Storage name.
    */
@@ -50,7 +50,7 @@ export type AlwatrStorageConfig = {
   debug?: boolean;
 };
 
-export type AlwatrStorageProviderConfig = {
+export type AlwatrStorageEngineProviderConfig = {
   /**
    * Default storage path. you can override it in get config params.
    *

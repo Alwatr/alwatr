@@ -1,5 +1,5 @@
 import {random} from '@alwatr/math';
-import {AlwatrStorage} from '@alwatr/storage-engine';
+import {AlwatrStorageEngine} from '@alwatr/storage-engine';
 
 import type {DocumentObject} from '@alwatr/storage-engine';
 
@@ -10,7 +10,7 @@ interface User extends DocumentObject {
   token: string;
 }
 
-const db = new AlwatrStorage<User>({
+const db = new AlwatrStorageEngine<User>({
   name: 'junk-data',
   path: 'db',
   saveBeautiful: false,
