@@ -5,9 +5,9 @@ import exitHook from 'exit-hook';
 
 import {readJsonFile, writeJsonFile} from './util.js';
 
-import type {DocumentObject, DataStorage, AlwatrStorageConfig} from './type.js';
+import type {DocumentObject, DataStorage, AlwatrStorageEngineConfig} from './type.js';
 
-export {DocumentObject, DataStorage, AlwatrStorageConfig as Config};
+export {DocumentObject, DataStorage, AlwatrStorageEngineConfig};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage-engine',
@@ -125,7 +125,7 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
     return {ok: true, data: {}};
   }
 
-  constructor(config: AlwatrStorageConfig) {
+  constructor(config: AlwatrStorageEngineConfig) {
     this._logger = createLogger(`alwatr-storage:${config.name}`, undefined, config.debug);
     this._logger.logMethodArgs('constructor', config);
     this.forceSave = this.forceSave.bind(this);
