@@ -26,7 +26,7 @@ export type AlwatrStorageConfig = {
    *
    * @default './db'
    */
-  server?: string;
+  server: string;
 
   /**
    * Debug output logs
@@ -34,6 +34,8 @@ export type AlwatrStorageConfig = {
    * @default undefined Auto detect base on `NODE_ENV`
    */
   debug?: boolean;
+
+  token: string;
 };
 
 type ServerResponseFailed<T> = {

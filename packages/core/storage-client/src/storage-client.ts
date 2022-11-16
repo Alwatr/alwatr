@@ -1,4 +1,4 @@
-import {getJson} from '@alwatr/fetch';
+import {fetch} from '@alwatr/fetch';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
 import type {DocumentObject, DataStorage, AlwatrStorageConfig, ServerResponse} from './type.js';
@@ -78,47 +78,13 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   readonly server;
 
   protected _logger;
-  protected _storage: DataStorage<DocumentType>;
-  protected _keys: Array<string> | null = null;
-
-  /**
-   * All document ids in array.
-   */
-  get keys(): Array<string> {
-  }
-
-  /**
-   * Size of the storage.
-   */
-  get length(): number {
-  }
-
-  get getAll(): typeof this._storage.data {
-  }
-
-  protected get _newStorage(): DataStorage<DocumentType> {
-    return {ok: true, data: {}};
-  }
 
   constructor(config: AlwatrStorageConfig) {
     this._logger = createLogger(`alwatr-storage-client:${config.name}`, undefined, config.debug);
     this._logger.logMethodArgs('constructor', config);
 
     this.name = config.name;
-    this.server = resolve(`${config.path ?? './db'}/${config.name}.json`);
-  }
-
-  /**
-   * Check documentId exist in the storage or not.
-   *
-   * Example:
-   *
-   * ```ts
-   * if(!useruserStorage.has('user-1')) throw new Error('user not found');
-   * ```
-   */
-  has(documentId: string): boolean {
-    return this._storage.data[documentId] != null;
+    this.server = config.server;
   }
 
   /**
@@ -136,13 +102,25 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * ```
    */
   async get(documentId: string): Promise<DocumentType | null> {
-    const content = await getJson<ServerResponse<DocumentType>>({
+    const response = await fetch({
       url: this.server,
       queryParameters: {
         storage: this.name,
         id: documentId,
       },
+      headers: {
+        'Authorization': 'Bearer alwatr_110_313',
+      },
     });
+
+    let content: ServerResponse<DocumentType>;
+    try {
+      content = (await response.json()) as ServerResponse<DocumentType>;
+    }
+    catch {
+      this._logger.error('set', 'invalid_json', 'Parsing json failed');
+      return null;
+    }
 
     if (content.ok) {
       return content.data;
@@ -172,7 +150,34 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * });
    * ```
    */
-  set(documentObject: DocumentType, fastInstance?: boolean): DocumentType {}
+  async set(documentObject: DocumentType): Promise<DocumentType | null> {
+    const response = await fetch({
+      url: this.server,
+      method: 'PATCH',
+      queryParameters: {
+        storage: this.name,
+      },
+      headers: {
+        'Authorization': 'Bearer alwatr_110_313',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(documentObject),
+    });
+
+    let content: ServerResponse<DocumentType>;
+    try {
+      content = (await response.json()) as ServerResponse<DocumentType>;
+    }
+    catch {
+      throw new Error('invalid_json');
+    }
+
+    if (content.ok) {
+      return content.data;
+    }
+
+    throw new Error('fetch_failed');
+  }
 
   /**
    * Delete a document object from the storage.
@@ -183,7 +188,106 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * userStorage.delete('user-1');
    * ```
    */
-  delete(documentId: string): boolean {
+  async delete(documentId: string): Promise<true | null> {
+    const response = await fetch({
+      url: this.server,
+      method: 'DELETE',
+      queryParameters: {
+        storage: this.name,
+        id: documentId,
+      },
+      headers: {
+        'Authorization': 'Bearer alwatr_110_313',
+      },
+    });
+
+    let content: ServerResponse<DocumentType>;
+    try {
+      content = (await response.json()) as ServerResponse<DocumentType>;
+    }
+    catch {
+      throw new Error('invalid_json');
+    }
+
+    if (content.ok) {
+      return content.ok;
+    }
+    else if (content.errorCode === 'document_not_found') {
+      return null;
+    }
+    else {
+      throw new Error('fetch_failed');
+    }
+  }
+
+  /**
+   * Get a document object by id.
+   *
+   * @param documentId The id of the document object.
+   * @param fastInstance by default it will return a copy of the document.
+   * if you set fastInstance to true, it will return the original document.
+   * This is dangerous but much faster, you should use it only if you know what you are doing.
+   *
+   * Example:
+   *
+   * ```ts
+   * const user = userStorage.get('user-1');
+   * ```
+   */
+  async getAll(): Promise<DocumentType | null> {
+    const response = await fetch({
+      url: `${this.server}/all`,
+      queryParameters: {
+        storage: this.name,
+      },
+      headers: {
+        'Authorization': 'Bearer alwatr_110_313',
+      },
+    });
+
+    let content: ServerResponse<DocumentType>;
+    try {
+      content = (await response.json()) as ServerResponse<DocumentType>;
+    }
+    catch {
+      this._logger.error('set', 'invalid_json', 'Parsing json failed');
+      return null;
+    }
+
+    if (content.ok) {
+      return content.data;
+    }
+    else {
+      throw new Error('fetch_failed');
+    }
+  }
+
+  async keys(): Promise<DocumentObject | null> {
+    const response = await fetch({
+      url: `${this.server}/keys`,
+      queryParameters: {
+        storage: this.name,
+      },
+      headers: {
+        'Authorization': 'Bearer alwatr_110_313',
+      },
+    });
+
+    let content: ServerResponse<DocumentType>;
+    try {
+      content = (await response.json()) as ServerResponse<DocumentType>;
+    }
+    catch {
+      this._logger.error('set', 'invalid_json', 'Parsing json failed');
+      return null;
+    }
+
+    if (content.ok) {
+      return content.data;
+    }
+    else {
+      throw new Error('fetch_failed');
+    }
   }
 
   /**
@@ -200,6 +304,6 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * });
    * ```
    */
-  async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void> {
-  }
+  // async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void> {
+  // }
 }
