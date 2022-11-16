@@ -1,59 +1,46 @@
-export type JSON = Record<string, unknown>;
+import type {DocumentObject} from '@alwatr/storage-engine';
 
-export interface DocumentObject {
-  [key: string]: unknown;
-  _id: string;
-  _rev?: number;
-  _createdAt?: number;
-  _createdBy?: string;
-  _updatedAt?: number;
-  _updatedBy: string;
-}
-
-export type DataStorage<T extends DocumentObject> = {
-  ok: true;
-  data: Record<string, T | undefined>;
-};
-
-export type AlwatrStorageConfig = {
+export type AlwatrStorageClientConfig = {
   /**
-   * Storage name.
+   * Storage name (like database name).
    */
   name: string;
 
   /**
-   * Storage path.
+   * Storage server host name (url).
    */
-  server: string;
+  host: string;
 
   /**
-   * Storage token.
+   * Storage server token (like database password).
    */
   token: string;
 
   /**
-   * Debug output logs
+   * A timeout in ms for the fetch request.
    *
-   * @default undefined Auto detect base on `NODE_ENV`
+   * @default `undefined` use fetch default.
    */
-  debug?: boolean;
+  timeout?: number;
 };
 
 export type StorageKeys = {
-  keys: Array<string>
-}
+  keys: Array<string>;
+};
 
-type ServerResponseFailed<T> = {
+type ServerResponseFailed = {
   ok: false;
   statusCode: number;
   errorCode: string;
-  data?: T;
+  data?: Record<string, unknown>;
 };
 
-type ServerResponseSuccess<T> = {
+type ServerResponseSuccess<DataType> = {
   ok: true;
   statusCode?: number;
-  data: T;
+  data: DataType;
 };
 
-export type ServerResponse<T extends Record<string, unknown>> = ServerResponseSuccess<T> | ServerResponseFailed<T>;
+export type ServerResponse<DataType extends Record<string, unknown> = DocumentObject> =
+  | ServerResponseSuccess<DataType>
+  | ServerResponseFailed;
