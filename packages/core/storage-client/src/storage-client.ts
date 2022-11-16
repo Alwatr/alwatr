@@ -73,7 +73,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   readonly name;
 
   /**
-   * Storage file full path.
+   * Storage server URL.
    */
   readonly server;
 
@@ -93,14 +93,11 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * Get a document object by id.
    *
    * @param documentId The id of the document object.
-   * @param fastInstance by default it will return a copy of the document.
-   * if you set fastInstance to true, it will return the original document.
-   * This is dangerous but much faster, you should use it only if you know what you are doing.
    *
    * Example:
    *
    * ```ts
-   * const user = userStorage.get('user-1');
+   * const user = await userStorage.get('user-1');
    * ```
    */
   async get(documentId: string): Promise<DocumentType | null> {
@@ -139,14 +136,11 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * Insert/update a document object in the storage.
    *
    * @param documentObject The document object to insert/update contain `_id`.
-   * @param fastInstance by default it will make a copy of the document before set.
-   * if you set fastInstance to true, it will set the original document.
-   * This is dangerous but much faster, you should use it only if you know what you are doing.
    *
    * Example:
    *
    * ```ts
-   * userStorage.set({
+   * await userStorage.set({
    *   _id: 'user-1',
    *   foo: 'bar',
    * });
@@ -223,17 +217,12 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   }
 
   /**
-   * Get a document object by id.
-   *
-   * @param documentId The id of the document object.
-   * @param fastInstance by default it will return a copy of the document.
-   * if you set fastInstance to true, it will return the original document.
-   * This is dangerous but much faster, you should use it only if you know what you are doing.
+   * Get All a document object.
    *
    * Example:
    *
    * ```ts
-   * const user = userStorage.get('user-1');
+   * const userList = await userStorage.getAll();
    * ```
    */
   async getAll(): Promise<DocumentType | null> {
@@ -264,6 +253,15 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
     }
   }
 
+  /**
+   * Get All a document keys.
+   *
+   * Example:
+   *
+   * ```ts
+   * const keys = await userStorage.keys();
+   * ```
+   */
   async keys(): Promise<Array<string> | null> {
     const response = await fetch({
       url: `${this.server}/keys`,
