@@ -11,7 +11,7 @@ interface User extends DocumentObject {
 
 const db = new AlwatrStorageClient<User>({
   name: 'user-list',
-  server: 'http://localhost:80',
+  host: 'http://localhost:80/',
   token: 'alwatr_110_313',
 });
 
@@ -58,7 +58,3 @@ console.log(await db.getAll());
 console.log(await db.keys());
 console.log(await db.delete('ali'));
 console.log(await db.delete('alimd'));
-
-db.forAll((user) => {
-  console.log(user.fname);
-});

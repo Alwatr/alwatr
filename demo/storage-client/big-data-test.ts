@@ -12,7 +12,7 @@ interface User extends DocumentObject {
 
 const db = new AlwatrStorageClient<User>({
   name: 'junk-data',
-  server: 'http://localhost:80',
+  host: 'http://localhost:80',
   token: 'alwatr_110_313',
 });
 
