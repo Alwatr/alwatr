@@ -111,7 +111,7 @@
     {"path": "./packages/core/i18n"},
     {"path": "./packages/core/math"},
     {"path": "./packages/core/nano-server"},
-    {"path": "./packages/core/storage"},
+    {"path": "./packages/core/storage-engine"},
     {"path": "./packages/core/token"},
     {"path": "./packages/core/element"},
     {"path": "./packages/lab/zx-example"},
