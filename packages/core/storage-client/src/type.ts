@@ -13,7 +13,7 @@ export interface DocumentObject {
 export type DataStorage<T extends DocumentObject> = {
   ok: true;
   data: Record<string, T | undefined>;
-}
+};
 
 export type AlwatrStorageConfig = {
   /**
@@ -23,10 +23,13 @@ export type AlwatrStorageConfig = {
 
   /**
    * Storage path.
-   *
-   * @default './db'
    */
   server: string;
+
+  /**
+   * Storage token.
+   */
+  token: string;
 
   /**
    * Debug output logs
@@ -34,8 +37,6 @@ export type AlwatrStorageConfig = {
    * @default undefined Auto detect base on `NODE_ENV`
    */
   debug?: boolean;
-
-  token: string;
 };
 
 type ServerResponseFailed<T> = {
@@ -43,12 +44,12 @@ type ServerResponseFailed<T> = {
   statusCode: number;
   errorCode: string;
   data?: T;
-}
+};
 
 type ServerResponseSuccess<T> = {
   ok: true;
   statusCode?: number;
   data: T;
-}
+};
 
 export type ServerResponse<T extends Record<string, unknown>> = ServerResponseSuccess<T> | ServerResponseFailed<T>;

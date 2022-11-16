@@ -78,6 +78,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   readonly server;
 
   protected _logger;
+  protected _token;
 
   constructor(config: AlwatrStorageConfig) {
     this._logger = createLogger(`alwatr-storage-client:${config.name}`, undefined, config.debug);
@@ -85,6 +86,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
 
     this.name = config.name;
     this.server = config.server;
+    this._token = config.token;
   }
 
   /**
@@ -109,7 +111,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
         id: documentId,
       },
       headers: {
-        'Authorization': 'Bearer alwatr_110_313',
+        'Authorization': `Bearer ${this._token}`,
       },
     });
 
@@ -158,7 +160,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
         storage: this.name,
       },
       headers: {
-        'Authorization': 'Bearer alwatr_110_313',
+        'Authorization': `Bearer ${this._token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(documentObject),
@@ -197,7 +199,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
         id: documentId,
       },
       headers: {
-        'Authorization': 'Bearer alwatr_110_313',
+        'Authorization': `Bearer ${this._token}`,
       },
     });
 
@@ -241,7 +243,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
         storage: this.name,
       },
       headers: {
-        'Authorization': 'Bearer alwatr_110_313',
+        'Authorization': `Bearer ${this._token}`,
       },
     });
 
@@ -269,7 +271,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
         storage: this.name,
       },
       headers: {
-        'Authorization': 'Bearer alwatr_110_313',
+        'Authorization': `Bearer ${this._token}`,
       },
     });
 
