@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-import {AlwatrStorage} from './storage.js';
+import {AlwatrStorage} from './storage-engine.js';
 
 import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} from './type.js';
 
