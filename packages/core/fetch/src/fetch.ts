@@ -283,7 +283,7 @@ async function _handleRetryPattern(options: FetchOptions): Promise<Response> {
     options.retry--;
     options.signal = externalAbortSignal;
     await _wait(options.retryDelay);
-    return _handleCacheStrategy(options); // maybe cache updated by another request ;)
+    return _handleRetryPattern(options);
   };
 
   try {
