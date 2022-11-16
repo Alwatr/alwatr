@@ -1,6 +1,6 @@
-import {AlwatrStorage} from '../packages/core/storage-engine/src/storage';
+import {AlwatrStorage} from '@alwatr/storage-engine';
 
-import type {DocumentObject} from '../packages/core/storage-engine/src/storage';
+import type {DocumentObject} from '@alwatr/storage-engine';
 
 interface User extends DocumentObject {
   fname: string;
