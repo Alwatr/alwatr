@@ -112,6 +112,7 @@
     {"path": "./packages/core/math"},
     {"path": "./packages/core/nano-server"},
     {"path": "./packages/core/storage"},
+    {"path": "./packages/core/storage-client"},
     {"path": "./packages/core/token"},
     {"path": "./packages/core/element"},
     {"path": "./packages/lab/zx-example"},
