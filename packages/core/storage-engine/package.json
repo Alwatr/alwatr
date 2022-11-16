@@ -15,9 +15,9 @@
     "esm",
     "alwatr"
   ],
-  "main": "storage.js",
+  "main": "storage-engine.js",
   "type": "module",
-  "types": "storage.d.ts",
+  "types": "storage-engine.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [

@@ -5,9 +5,9 @@ import exitHook from 'exit-hook';
 
 import {readJsonFile, writeJsonFile} from './util.js';
 
-import type {DocumentObject, DataStorage, AlwatrStorageConfig} from './type.js';
+import type {DocumentObject, DataStorage, AlwatrStorageEngineConfig} from './type.js';
 
-export {DocumentObject, DataStorage, AlwatrStorageConfig as Config};
+export {DocumentObject, DataStorage, AlwatrStorageEngineConfig};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage-engine',
@@ -21,7 +21,7 @@ alwatrRegisteredList.push({
  * Example:
  *
  * ```ts
- * import {AlwatrStorage} from '@alwatr/storage-engine';
+ * import {AlwatrStorageEngine} from '@alwatr/storage-engine';
  *
  * import type {DocumentObject} from '@alwatr/storage-engine';
  *
@@ -32,7 +32,7 @@ alwatrRegisteredList.push({
  *   token?: string;
  * }
  *
- * const db = new AlwatrStorage<User>({
+ * const db = new AlwatrStorageEngine<User>({
  *   name: 'user-list',
  *   path: 'db',
  *   saveBeautiful: true,
@@ -70,7 +70,7 @@ alwatrRegisteredList.push({
  * });
  * ```
  */
-export class AlwatrStorage<DocumentType extends DocumentObject> {
+export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
   /**
    * Storage name like database table name.
    */
@@ -125,7 +125,7 @@ export class AlwatrStorage<DocumentType extends DocumentObject> {
     return {ok: true, data: {}};
   }
 
-  constructor(config: AlwatrStorageConfig) {
+  constructor(config: AlwatrStorageEngineConfig) {
     this._logger = createLogger(`alwatr-storage:${config.name}`, undefined, config.debug);
     this._logger.logMethodArgs('constructor', config);
     this.forceSave = this.forceSave.bind(this);
