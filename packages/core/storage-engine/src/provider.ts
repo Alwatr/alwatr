@@ -12,13 +12,13 @@ import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} f
  * Example:
  *
  * ```ts
- * import {AlwatrStorageProvider} from '@alwatr/storage-engine';
- * const storageList = new AlwatrStorageProvider();
+ * import {AlwatrStorageEngineProvider} from '@alwatr/storage-engine';
+ * const storageList = new AlwatrStorageEngineProvider();
  * // ...
  * const user = (await storageList.get('user-list')).get('userId1');
  * ```
  */
-export class AlwatrStorageProvider {
+export class AlwatrStorageEngineProvider {
   protected _logger = createLogger('alwatr-storage-provider');
   protected _list: Record<string, AlwatrStorageEngine<DocumentObject>> = {};
   protected _config: AlwatrStorageProviderConfig;
