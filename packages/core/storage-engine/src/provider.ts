@@ -2,7 +2,7 @@ import {createLogger} from '@alwatr/logger';
 
 import {AlwatrStorageEngine} from './storage-engine.js';
 
-import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} from './type.js';
+import type {AlwatrStorageEngineConfig, AlwatrStorageEngineProviderConfig, DocumentObject} from './type.js';
 
 // TODO: auto unload base of last usage time and memory limit.
 
@@ -21,15 +21,17 @@ import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} f
 export class AlwatrStorageEngineProvider {
   protected _logger = createLogger('alwatr-storage-provider');
   protected _list: Record<string, AlwatrStorageEngine<DocumentObject>> = {};
-  protected _config: AlwatrStorageProviderConfig;
+  protected _config: AlwatrStorageEngineProviderConfig;
 
-  constructor(config: AlwatrStorageProviderConfig) {
+  constructor(config: AlwatrStorageEngineProviderConfig) {
     this._logger.logMethodArgs('constructor', config);
     this._config = config;
   }
 
   // TODO: update all jsdoc and readme.
-  get<DocumentType extends DocumentObject = DocumentObject>(config: AlwatrStorageConfig): AlwatrStorageEngine<DocumentType> {
+  get<DocumentType extends DocumentObject = DocumentObject>(
+      config: AlwatrStorageEngineConfig,
+  ): AlwatrStorageEngine<DocumentType> {
     if (!this._list[config.name]) {
       this._list[config.name] = new AlwatrStorageEngine<DocumentType>({
         ...this._config,
