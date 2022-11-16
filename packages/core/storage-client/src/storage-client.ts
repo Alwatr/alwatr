@@ -117,8 +117,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       content = (await response.json()) as ServerResponse<DocumentType>;
     }
     catch {
-      this._logger.error('set', 'invalid_json', 'Parsing json failed');
-      return null;
+      throw new Error('invalid_json');
     }
 
     if (content.ok) {
@@ -171,8 +170,9 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
     if (content.ok) {
       return content.data;
     }
-
-    throw new Error('fetch_failed');
+    else {
+      throw new Error('fetch_failed');
+    }
   }
 
   /**
@@ -241,8 +241,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       content = (await response.json()) as ServerResponse<DocumentType>;
     }
     catch {
-      this._logger.error('set', 'invalid_json', 'Parsing json failed');
-      return null;
+      throw new Error('invalid_json');
     }
 
     if (content.ok) {
@@ -300,10 +299,19 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * ```ts
    * await userStorage.forAll(async (user) => {
    *   await sendMessage(user._id, 'Happy new year!');
-   *   user.sent = true; // direct change document (use with caution)!
    * });
    * ```
    */
-  // async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void> {
-  // }
+  async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void> {
+    const keys = await this.keys();
+    if (keys == null) throw new Error('null_keys_list');
+
+    for (const documentId of keys) {
+      const documentObject = await this.get(documentId);
+      if (documentObject != null) {
+        const retVal = await callbackfn(documentObject);
+        if (retVal === false) break;
+      }
+    }
+  }
 }
