@@ -1,5 +1,5 @@
 {
-  "name": "alwatr-storage-nanoservice",
+  "name": "alwatr-storage-server",
   "version": "0.21.0",
   "description": "Alwatr Storage Nanoservice API, Elegant micro in-memory json-like storage with disk backed, Fastest NoSQL Database",
   "type": "module",
@@ -24,9 +24,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/nanoservice/storage"
+    "directory": "packages/service/storage-server"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/nanoservice/storage#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/service/storage-server#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
