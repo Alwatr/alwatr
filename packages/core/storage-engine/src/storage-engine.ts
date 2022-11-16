@@ -21,7 +21,7 @@ alwatrRegisteredList.push({
  * Example:
  *
  * ```ts
- * import {AlwatrStorage} from '@alwatr/storage-engine';
+ * import {AlwatrStorageEngine} from '@alwatr/storage-engine';
  *
  * import type {DocumentObject} from '@alwatr/storage-engine';
  *
@@ -32,7 +32,7 @@ alwatrRegisteredList.push({
  *   token?: string;
  * }
  *
- * const db = new AlwatrStorage<User>({
+ * const db = new AlwatrStorageEngine<User>({
  *   name: 'user-list',
  *   path: 'db',
  *   saveBeautiful: true,
@@ -70,7 +70,7 @@ alwatrRegisteredList.push({
  * });
  * ```
  */
-export class AlwatrStorage<DocumentType extends DocumentObject> {
+export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
   /**
    * Storage name like database table name.
    */

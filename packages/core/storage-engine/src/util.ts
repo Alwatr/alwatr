@@ -3,7 +3,7 @@ import {dirname} from 'node:path';
 
 import type {JSON} from './type.js';
 
-// @TODO: add debug log
+// TODO: add debug log
 
 /**
  * Enhanced read json file.
@@ -19,18 +19,18 @@ export function readJsonFile<T extends JSON>(path: string): T | null {
 
   let fileContent: string;
   try {
-    console.time('AlwatrStorage Read ' + timeKey);
+    console.time('AlwatrStorageEngine Read ' + timeKey);
     fileContent = readFileSync(path, {encoding: 'utf-8'});
-    console.timeEnd('AlwatrStorage Read ' + timeKey);
+    console.timeEnd('AlwatrStorageEngine Read ' + timeKey);
   }
   catch (err) {
     throw new Error('read_file_failed');
   }
 
   try {
-    console.time('AlwatrStorage Parse ' + timeKey);
+    console.time('AlwatrStorageEngine Parse ' + timeKey);
     const data = JSON.parse(fileContent) as T;
-    console.timeEnd('AlwatrStorage Parse ' + timeKey);
+    console.timeEnd('AlwatrStorageEngine Parse ' + timeKey);
     return data;
   }
   catch (err) {
@@ -48,9 +48,9 @@ export function writeJsonFile<T extends JSON>(path: string, dataObject: T, space
 
   let jsonContent;
   try {
-    console.time('AlwatrStorage Stringify ' + timeKey);
+    console.time('AlwatrStorageEngine Stringify ' + timeKey);
     jsonContent = JSON.stringify(dataObject, null, space);
-    console.timeEnd('AlwatrStorage Stringify ' + timeKey);
+    console.timeEnd('AlwatrStorageEngine Stringify ' + timeKey);
   }
   catch (err) {
     throw new Error('stringify_failed');
@@ -75,9 +75,9 @@ export function writeJsonFile<T extends JSON>(path: string, dataObject: T, space
   }
 
   try {
-    console.time('AlwatrStorage Write ' + timeKey);
+    console.time('AlwatrStorageEngine Write ' + timeKey);
     writeFileSync(path, jsonContent, {encoding: 'utf-8', flag: 'w'});
-    console.timeEnd('AlwatrStorage Write ' + timeKey);
+    console.timeEnd('AlwatrStorageEngine Write ' + timeKey);
   }
   catch (err) {
     throw new Error('write_file_failed');

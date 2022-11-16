@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-import {AlwatrStorage} from './storage-engine.js';
+import {AlwatrStorageEngine} from './storage-engine.js';
 
 import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} from './type.js';
 
@@ -20,7 +20,7 @@ import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} f
  */
 export class AlwatrStorageProvider {
   protected _logger = createLogger('alwatr-storage-provider');
-  protected _list: Record<string, AlwatrStorage<DocumentObject>> = {};
+  protected _list: Record<string, AlwatrStorageEngine<DocumentObject>> = {};
   protected _config: AlwatrStorageProviderConfig;
 
   constructor(config: AlwatrStorageProviderConfig) {
@@ -29,15 +29,15 @@ export class AlwatrStorageProvider {
   }
 
   // TODO: update all jsdoc and readme.
-  get<DocumentType extends DocumentObject = DocumentObject>(config: AlwatrStorageConfig): AlwatrStorage<DocumentType> {
+  get<DocumentType extends DocumentObject = DocumentObject>(config: AlwatrStorageConfig): AlwatrStorageEngine<DocumentType> {
     if (!this._list[config.name]) {
-      this._list[config.name] = new AlwatrStorage<DocumentType>({
+      this._list[config.name] = new AlwatrStorageEngine<DocumentType>({
         ...this._config,
         ...config,
       });
       console.log('Memory usage: %sMB', Math.round(process.memoryUsage.rss() / 100000) / 10);
     }
-    return this._list[config.name] as AlwatrStorage<DocumentType>;
+    return this._list[config.name] as AlwatrStorageEngine<DocumentType>;
   }
 
   unload(name: string): void {

@@ -5,7 +5,7 @@ Elegant micro in-memory json-like storage with disk backed, Fastest NoSQL Databa
 ## Example usage
 
 ```ts
-import {AlwatrStorage} from '@alwatr/storage-engine';
+import {AlwatrStorageEngine} from '@alwatr/storage-engine';
 
 import type {DocumentObject} from '@alwatr/storage-engine';
 
@@ -16,7 +16,7 @@ interface User extends DocumentObject {
   token?: string;
 }
 
-const db = new AlwatrStorage<User>({
+const db = new AlwatrStorageEngine<User>({
   name: 'user-list',
   path: 'db',
   saveBeautiful: true,
@@ -75,7 +75,7 @@ Write pretty formatted JSON file.
 Example:
 
 ```ts
-const db = new AlwatrStorage<User>('user-list');
+const db = new AlwatrStorageEngine<User>('user-list');
 await userStorage.readyPromise;
 const user = userStorage.get('user-1');
 ```
