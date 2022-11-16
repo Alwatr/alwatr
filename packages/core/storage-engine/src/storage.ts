@@ -10,7 +10,7 @@ import type {DocumentObject, DataStorage, AlwatrStorageConfig} from './type.js';
 export {DocumentObject, DataStorage, AlwatrStorageConfig as Config};
 
 alwatrRegisteredList.push({
-  name: '@alwatr/storage',
+  name: '@alwatr/storage-engine',
   version: '{{ALWATR_VERSION}}',
 });
 
@@ -21,9 +21,9 @@ alwatrRegisteredList.push({
  * Example:
  *
  * ```ts
- * import {AlwatrStorage} from '@alwatr/storage';
+ * import {AlwatrStorage} from '@alwatr/storage-engine';
  *
- * import type {DocumentObject} from '@alwatr/storage';
+ * import type {DocumentObject} from '@alwatr/storage-engine';
  *
  * interface User extends DocumentObject {
  *   fname: string;

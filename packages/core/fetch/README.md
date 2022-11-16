@@ -4,26 +4,29 @@ Enhanced fetch API with cache strategy, retry pattern, timeout, helper methods a
 
 ## Example usage
 
+### `fetch(options: FetchOptions): Promise<Response>`
+
+It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout and cacheStrategy.
+
 ```ts
-import {getJson} from 'https://esm.run/@alwatr/fetch';
+import {fetch} from 'https://esm.run/@alwatr/fetch';
 
-interface ProductInterface {
-  _id: string;
-  name: string;
-  description: string;
-  image: string;
-}
-
-const productList = await getJson<Record<string, ProductInterface>>({
+const response = await fetch({
   url: '/api/products',
   queryParameters: {limit: 10},
   timeout: 5_000,
   retry: 3,
   cacheStrategy: 'stale_while_revalidate',
 });
+
+if (!response.ok) throw new Error('fetch_failed');
+
+const productList = await response.json();
+
+console.log(productList);
 ```
 
-## Fetch Options
+### Fetch Options
 
 `FetchOptions` inherited from the [fetch standard parameters](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters) and some other...
 
@@ -48,33 +51,3 @@ const productList = await getJson<Record<string, ProductInterface>>({
 - `cacheStorageName`: Cache storage custom name (default `alwatr_fetch_cache`).
 
 [Read more about standard cache strategies](https://developer.chrome.com/docs/workbox/caching-strategies-overview/#caching-strategies)
-
-## API
-
-### `fetch(options: FetchOptions): Promise<Response>`
-
-It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout and cacheStrategy.
-
-```ts
-const response = await fetch({
-  url: '/api/products',
-  queryParameters: {limit: 10},
-  timeout: 5_000,
-  retry: 3,
-  cacheStrategy: 'stale_while_revalidate',
-});
-```
-
-### `getJson<T>(options: FetchOptions): Promise<T>`
-
-It fetches a JSON file from a URL, and returns the parsed data.
-
-```ts
-const productList = await getJson<ProductResponse>({
-  url: '/api/products',
-  queryParameters: {limit: 10},
-  timeout: 5_000,
-  retry: 3,
-  cacheStrategy: 'stale_while_revalidate',
-});
-```

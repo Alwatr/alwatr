@@ -1,7 +1,7 @@
 import {random} from '@alwatr/math';
-import {AlwatrStorageClient} from '@alwatr/storage-client';
+import {AlwatrStorage} from '@alwatr/storage-engine';
 
-import type {DocumentObject} from '@alwatr/storage-client';
+import type {DocumentObject} from '@alwatr/storage-engine';
 
 interface User extends DocumentObject {
   fname: string;
@@ -10,14 +10,14 @@ interface User extends DocumentObject {
   token: string;
 }
 
-const db = new AlwatrStorageClient<User>({
+const db = new AlwatrStorage<User>({
   name: 'junk-data',
-  server: 'http://localhost:80',
-  token: 'alwatr_110_313',
+  path: 'db',
+  saveBeautiful: false,
+  debug: false,
 });
 
-console.time('get item');
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 100_000; i++) {
   db.set({
     _id: random.string(4, 16),
     _updatedBy: 'demo' + i,
@@ -27,6 +27,11 @@ for (let i = 0; i < 100; i++) {
     token: random.string(16),
   });
 }
-console.timeEnd('get item');
 
+console.time('get item');
+const item = db.get('_last');
+console.timeEnd('get item');
+console.dir(item);
+
+db.forceSave();
 console.log('done');

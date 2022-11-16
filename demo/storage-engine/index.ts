@@ -1,6 +1,6 @@
-import {AlwatrStorageClient} from '@alwatr/storage-client';
+import {AlwatrStorage} from '@alwatr/storage-engine';
 
-import type {DocumentObject} from '@alwatr/storage-client';
+import type {DocumentObject} from '@alwatr/storage-engine';
 
 interface User extends DocumentObject {
   fname: string;
@@ -9,15 +9,16 @@ interface User extends DocumentObject {
   token?: string;
 }
 
-const db = new AlwatrStorageClient<User>({
+const db = new AlwatrStorage<User>({
   name: 'user-list',
-  server: 'http://localhost:80',
-  token: 'alwatr_110_313',
+  path: 'db',
+  saveBeautiful: true,
+  debug: true,
 });
 
 console.log('db loaded and ready to access.');
 
-let ali = await db.get('alimd');
+let ali = db.get('alimd');
 
 if (ali == null) {
   console.log('ali not found');
@@ -52,13 +53,4 @@ db.set({
   lname: 'Mihandoost',
   email: 'Fatemeh@mihandoost.com',
   token: Math.random().toString(36).substring(2, 15),
-});
-
-console.log(await db.getAll());
-console.log(await db.keys());
-console.log(await db.delete('ali'));
-console.log(await db.delete('alimd'));
-
-db.forAll((user) => {
-  console.log(user.fname);
 });
