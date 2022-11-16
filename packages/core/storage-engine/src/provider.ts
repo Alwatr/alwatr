@@ -21,11 +21,9 @@ import type {AlwatrStorageEngineConfig, AlwatrStorageEngineProviderConfig, Docum
 export class AlwatrStorageEngineProvider {
   protected _logger = createLogger('alwatr-storage-provider');
   protected _list: Record<string, AlwatrStorageEngine<DocumentObject>> = {};
-  protected _config: AlwatrStorageEngineProviderConfig;
 
-  constructor(config: AlwatrStorageEngineProviderConfig) {
-    this._logger.logMethodArgs('constructor', config);
-    this._config = config;
+  constructor(protected _config: AlwatrStorageEngineProviderConfig) {
+    this._logger.logMethodArgs('constructor', _config);
   }
 
   // TODO: update all jsdoc and readme.
