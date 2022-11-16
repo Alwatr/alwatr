@@ -1,7 +1,7 @@
 import {fetch} from '@alwatr/fetch';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
-import type {DocumentObject, DataStorage, AlwatrStorageConfig, ServerResponse} from './type.js';
+import type {DocumentObject, DataStorage, AlwatrStorageConfig, ServerResponse, StorageKeys} from './type.js';
 
 export {DocumentObject, DataStorage, AlwatrStorageConfig as Config};
 
@@ -264,7 +264,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
     }
   }
 
-  async keys(): Promise<DocumentObject | null> {
+  async keys(): Promise<Array<string> | null> {
     const response = await fetch({
       url: `${this.server}/keys`,
       queryParameters: {
@@ -275,9 +275,9 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       },
     });
 
-    let content: ServerResponse<DocumentType>;
+    let content: ServerResponse<StorageKeys>;
     try {
-      content = (await response.json()) as ServerResponse<DocumentType>;
+      content = (await response.json()) as ServerResponse<StorageKeys>;
     }
     catch {
       this._logger.error('set', 'invalid_json', 'Parsing json failed');
@@ -285,7 +285,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
     }
 
     if (content.ok) {
-      return content.data;
+      return content.data.keys;
     }
     else {
       throw new Error('fetch_failed');
