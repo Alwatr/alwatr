@@ -3,7 +3,7 @@ import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
-import type {DocumentObject} from '@alwatr/storage';
+import type {DocumentObject} from '../../storage-engine/src/storage';
 
 nanoServer.route('PATCH', 'all', updateDocument);
 

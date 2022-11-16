@@ -1,4 +1,4 @@
-import {AlwatrStorageProvider} from '@alwatr/storage/provider.js';
+import {AlwatrStorageProvider} from '../../storage-engine/src/provider.js';
 
 import {config} from './config.js';
 
