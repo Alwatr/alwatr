@@ -12,7 +12,7 @@ import type {AlwatrStorageConfig, AlwatrStorageProviderConfig, DocumentObject} f
  * Example:
  *
  * ```ts
- * import {AlwatrStorageProvider} from '@alwatr/storage';
+ * import {AlwatrStorageProvider} from '@alwatr/storage-engine';
  * const storageList = new AlwatrStorageProvider();
  * // ...
  * const user = (await storageList.get('user-list')).get('userId1');
