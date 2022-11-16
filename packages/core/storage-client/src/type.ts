@@ -22,6 +22,13 @@ export type AlwatrStorageClientConfig = {
    * @default `undefined` use fetch default.
    */
   timeout?: number;
+
+  /**
+   * Debug output logs
+   *
+   * @default undefined Auto detect base on `NODE_ENV`
+   */
+   debug?: boolean;
 };
 
 export type StorageKeys = {

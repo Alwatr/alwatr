@@ -1,7 +1,7 @@
 import {fetch} from '@alwatr/fetch';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
-import type {AlwatrStorageClientConfig, ServerResponse, StorageKeys} from './type.js';
+import type {AlwatrStorageClientConfig, ServerResponse} from './type.js';
 import type {DocumentObject} from '@alwatr/storage-engine';
 
 export {DocumentObject, AlwatrStorageClientConfig as AlwatrStorageConfig};
