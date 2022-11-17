@@ -134,7 +134,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    */
   async has(documentId: string): Promise<boolean> {
     const response = await fetch({
-      url: this.config.host,
+      url: this.config.host + 'has',
       queryParameters: {
         storage: this.config.name,
         id: documentId,
@@ -145,7 +145,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       timeout: this.config.timeout,
     });
 
-    let content: ServerResponse<{has: 'true' | 'false'}>;
+    let content: ServerResponse<{has: boolean}>;
     try {
       content = await response.json();
     }
@@ -153,11 +153,9 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       throw new Error('invalid_json');
     }
 
-    if (content.ok === true && content.data.has === 'true') {
-      return true;
-    }
-    if (content.ok === true && content.data.has === 'false') {
-      return false;
+
+    if (content.ok === true && typeof content.data.has === 'boolean') {
+      return content.data.has;
     }
     else {
       throw new Error('fetch_failed');
