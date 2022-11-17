@@ -1,4 +1,5 @@
 import './route/get.js';
+import './route/has.js';
 import './route/patch.js';
 import './route/delete.js';
 import './route/keys.js';

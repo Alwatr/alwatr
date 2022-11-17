@@ -17,6 +17,7 @@
     {"path": "../packages/core/math"},
     {"path": "../packages/core/element"},
     {"path": "../packages/core/storage-engine"},
+    {"path": "../packages/core/storage-client"},
     {"path": "../packages/core/token"}
   ],
   "exclude": ["*.d.ts", "node_modules"]

@@ -48,10 +48,10 @@
     "format:eslint": "eslint **/*.ts --fix",
     "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --ignore-path ./.eslintignore --write",
     "clean": "rimraf dist/",
-    "serve": "node dist/index.js",
+    "serve": "node --trace-gc dist/index.js",
     "serve:debug": "node --inspect dist/index.js",
     "watch": "run-s clean build && run-p watch:ts watch:node",
-    "watch:node": "nodemon -w dist/ dist/index.js",
+    "watch:node": "nodemon -w dist/ --trace-gc dist/index.js",
     "watch:debug-node": "nodemon -w dist/ --inspect dist/index.js",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },

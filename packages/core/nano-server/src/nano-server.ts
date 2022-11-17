@@ -262,8 +262,6 @@ export class AlwatrConnection {
    * ```
    */
   reply(content: ReplyContent): void {
-    this._logger.logMethodArgs('reply', {content});
-
     if (this.serverResponse.headersSent) {
       this._logger.accident('reply', 'http_header_sent', 'Response headers already sent');
       return;
@@ -272,6 +270,7 @@ export class AlwatrConnection {
     let body = '';
     try {
       body = JSON.stringify(content);
+      this._logger.logMethodArgs('reply', {body: body.length > 400 ? body.substring(0, 200) + '...' : content});
     }
     catch {
       this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!');
