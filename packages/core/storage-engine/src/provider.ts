@@ -47,8 +47,8 @@ export class AlwatrStorageEngineProvider {
   }
 
   unloadAll(): void {
-    // eslint-disable-next-line guard-for-in
     for (const name in this._list) {
+      if (!Object.prototype.hasOwnProperty.call(this._list, name)) continue;
       this._list[name].unload();
     }
     this._list = {};
