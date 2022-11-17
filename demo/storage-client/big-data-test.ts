@@ -12,13 +12,19 @@ interface User extends DocumentObject {
 
 const db = new AlwatrStorageClient<User>({
   name: 'junk-data',
-  host: 'http://localhost:80',
+  host: 'http://127.0.0.1:80',
   token: 'alwatr_110_313',
+  timeout: 2_000,
 });
 
-console.time('get item');
-for (let i = 0; i < 100; i++) {
-  db.set({
+console.time('set all items');
+
+const max = 100_000;
+for (let i = 0; i < max; i++) {
+  if (i % 1000 === 0) {
+    console.log(i);
+  }
+  await db.set({
     _id: random.string(4, 16),
     _updatedBy: 'demo' + i,
     fname: random.string(4, 16),
@@ -26,7 +32,24 @@ for (let i = 0; i < 100; i++) {
     email: random.string(8, 32),
     token: random.string(16),
   });
+
+  if (i === max / 2) {
+    db.set({
+      _id: 'alimd',
+      _updatedBy: 'demo' + i,
+      fname: 'Ali',
+      lname: 'Mihandoost',
+      email: 'ali@mihandoost.com',
+      token: 'alimd007',
+    });
+  }
 }
+
+console.timeEnd('set all items');
+
+console.time('get item');
+const item = await db.get('alimd');
 console.timeEnd('get item');
+console.dir(item);
 
 console.log('done');
