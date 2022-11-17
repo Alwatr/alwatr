@@ -68,7 +68,7 @@ alwatrRegisteredList.push({
  * ```
  */
 export class AlwatrStorageClient<DocumentType extends DocumentObject> {
-  protected _logger = createLogger(`alwatr-storage-client:${this.config.name}`, undefined);
+  protected _logger = createLogger('alwatr-storage-client:' + this.config.name, undefined, this.config.debug);
 
   constructor(public readonly config: AlwatrStorageClientConfig) {
     if (!(config.host[config.host.length - 1] === '/')) {
@@ -88,7 +88,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * const user = await userStorage.get('user-1');
    * ```
    */
-  async get(documentId: string): Promise<DocumentType | null> {
+  async get(documentId: string): Promise<DocumentType> {
     const response = await fetch({
       url: this.config.host,
       queryParameters: {
@@ -113,7 +113,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       return content.data;
     }
     else if (content.ok === false && content.errorCode === 'document_not_found') {
-      return null;
+      throw new Error('document_not_found');
     }
     else {
       throw new Error('fetch_failed');
@@ -178,7 +178,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * });
    * ```
    */
-  async set(documentObject: DocumentType): Promise<DocumentType | null> {
+  async set(documentObject: DocumentType): Promise<DocumentType> {
     const response = await fetch({
       url: this.config.host,
       method: 'PATCH',

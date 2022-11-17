@@ -11,11 +11,10 @@ interface User extends DocumentObject {
 
 const db = new AlwatrStorageClient<User>({
   name: 'user-list',
-  host: 'http://localhost:80/',
+  host: 'http://127.0.0.1:80',
   token: 'alwatr_110_313',
+  timeout: 2_000,
 });
-
-console.log('db loaded and ready to access.');
 
 let ali = await db.get('alimd');
 
@@ -43,9 +42,9 @@ else {
   ali.token = Math.random().toString(36).substring(2, 15);
 }
 
-db.set(ali);
+await db.set(ali);
 
-db.set({
+await db.set({
   _id: 'fmd',
   _updatedBy: 'demo',
   fname: 'Fatemeh',
@@ -54,7 +53,13 @@ db.set({
   token: Math.random().toString(36).substring(2, 15),
 });
 
-console.log(await db.getAll());
-console.log(await db.keys());
-console.log(await db.delete('ali'));
-console.log(await db.delete('alimd'));
+console.log('keys: %o', await db.keys());
+console.log('getAll: %o', await db.getAll());
+console.log('delete: %o', await db.delete('alimd'));
+console.log('delete: %o', await db.delete('fmd'));
+try {
+  await db.delete('abcd');
+}
+catch (err) {
+  console.log('delete 404: %o', (err as Error).message);
+}

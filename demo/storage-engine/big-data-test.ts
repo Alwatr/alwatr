@@ -17,7 +17,10 @@ const db = new AlwatrStorageEngine<User>({
   debug: false,
 });
 
-for (let i = 0; i < 100_000; i++) {
+console.time('set all items');
+
+const max = 100_000;
+for (let i = 0; i < max; i++) {
   db.set({
     _id: random.string(4, 16),
     _updatedBy: 'demo' + i,
@@ -26,10 +29,23 @@ for (let i = 0; i < 100_000; i++) {
     email: random.string(8, 32),
     token: random.string(16),
   });
+
+  if (i === max / 2) {
+    db.set({
+      _id: 'alimd',
+      _updatedBy: 'demo' + i,
+      fname: 'Ali',
+      lname: 'Mihandoost',
+      email: 'ali@mihandoost.com',
+      token: 'alimd007',
+    });
+  }
 }
 
+console.timeEnd('set all items');
+
 console.time('get item');
-const item = db.get('_last');
+const item = db.get('alimd');
 console.timeEnd('get item');
 console.dir(item);
 
