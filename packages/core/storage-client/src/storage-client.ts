@@ -1,4 +1,4 @@
-import {fetch} from '@alwatr/fetch';
+import {fetch, FetchOptions} from '@alwatr/fetch';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
 import type {AlwatrStorageClientConfig, ServerResponse} from './type.js';
@@ -65,8 +65,20 @@ alwatrRegisteredList.push({
 export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   protected _logger = createLogger('alwatr-storage-client:' + this.config.name, undefined, this.config.debug);
 
+  /**
+   * Default fetch options.
+   */
+  fetchOption: Partial<FetchOptions> = {
+    keepalive: true,
+    timeout: this.config.timeout ?? 3_000,
+    retry: 3,
+    retryDelay: 300,
+    headers: {
+      Authorization: `Bearer ${this.config.token}`,
+    },
+  };
+
   constructor(public readonly config: AlwatrStorageClientConfig) {
-    // add / at end of URL
     if (!(config.host[config.host.length - 1] === '/')) {
       config.host += '/';
     }
@@ -86,15 +98,12 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    */
   async get(documentId: string): Promise<DocumentType> {
     const response = await fetch({
+      ...this.fetchOption,
       url: this.config.host,
       queryParameters: {
         storage: this.config.name,
         id: documentId,
       },
-      headers: {
-        Authorization: `Bearer ${this.config.token}`,
-      },
-      timeout: this.config.timeout,
     });
 
     let content: ServerResponse<DocumentType>;
@@ -130,15 +139,12 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    */
   async has(documentId: string): Promise<boolean> {
     const response = await fetch({
+      ...this.fetchOption,
       url: this.config.host + 'has',
       queryParameters: {
         storage: this.config.name,
         id: documentId,
       },
-      headers: {
-        Authorization: `Bearer ${this.config.token}`,
-      },
-      timeout: this.config.timeout,
     });
 
     let content: ServerResponse<{has: boolean}>;
@@ -173,17 +179,17 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    */
   async set(documentObject: DocumentType): Promise<DocumentType> {
     const response = await fetch({
+      ...this.fetchOption,
       url: this.config.host,
       method: 'PATCH',
       queryParameters: {
         storage: this.config.name,
       },
       headers: {
-        'Authorization': `Bearer ${this.config.token}`,
+        ...this.fetchOption.headers,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(documentObject),
-      timeout: this.config.timeout,
     });
 
     let content: ServerResponse<DocumentType>;
@@ -213,16 +219,13 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    */
   async delete(documentId: string): Promise<void> {
     const response = await fetch({
+      ...this.fetchOption,
       url: this.config.host,
       method: 'DELETE',
       queryParameters: {
         storage: this.config.name,
         id: documentId,
       },
-      headers: {
-        Authorization: `Bearer ${this.config.token}`,
-      },
-      timeout: this.config.timeout,
     });
 
     let content: ServerResponse<Record<string, never>>;
@@ -255,14 +258,11 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    */
   async getAll(): Promise<Record<string, DocumentType>> {
     const response = await fetch({
+      ...this.fetchOption,
       url: this.config.host + 'all',
       queryParameters: {
         storage: this.config.name,
       },
-      headers: {
-        Authorization: `Bearer ${this.config.token}`,
-      },
-      timeout: this.config.timeout,
     });
 
     let content: ServerResponse<Record<string, DocumentType>>;
@@ -292,14 +292,11 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    */
   async keys(): Promise<Array<string>> {
     const response = await fetch({
+      ...this.fetchOption,
       url: this.config.host + 'keys',
       queryParameters: {
         storage: this.config.name,
       },
-      headers: {
-        Authorization: `Bearer ${this.config.token}`,
-      },
-      timeout: this.config.timeout,
     });
 
     let content: ServerResponse<{keys: Array<string>}>;

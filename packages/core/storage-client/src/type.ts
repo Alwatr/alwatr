@@ -19,7 +19,7 @@ export type AlwatrStorageClientConfig = {
   /**
    * A timeout in ms for the fetch request.
    *
-   * @default `undefined` use fetch default.
+   * @default 10_000 ms
    */
   timeout?: number;
 

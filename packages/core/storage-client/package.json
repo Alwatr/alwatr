@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "tslib": "^2.4.1",
+    "@alwatr/logger": "^0.21.0",
     "@alwatr/fetch": "^0.21.0"
   }
 }

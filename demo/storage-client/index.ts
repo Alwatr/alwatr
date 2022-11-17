@@ -17,7 +17,6 @@ if (token == null) {
 const db = new AlwatrStorageClient<User>({
   name: 'user-list',
   host: 'http://127.0.0.1:80',
-  timeout: 2_000,
   token,
 });
 
