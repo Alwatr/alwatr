@@ -25,30 +25,19 @@ for (let i = 0; i < max; i++) {
     console.log(i);
   }
   await db.set({
-    _id: random.string(4, 16),
-    _updatedBy: 'demo' + i,
+    _id: 'demo_' + i,
+    _updatedBy: 'demo_' + i,
     fname: random.string(4, 16),
     lname: random.string(4, 32),
     email: random.string(8, 32),
     token: random.string(16),
   });
-
-  if (i === max / 2) {
-    db.set({
-      _id: 'alimd',
-      _updatedBy: 'demo' + i,
-      fname: 'Ali',
-      lname: 'Mihandoost',
-      email: 'ali@mihandoost.com',
-      token: 'alimd007',
-    });
-  }
 }
 
 console.timeEnd('set all items');
 
 console.time('get item');
-const item = await db.get('alimd');
+const item = await db.get('user_' + (max / 2));
 console.timeEnd('get item');
 console.dir(item);
 
