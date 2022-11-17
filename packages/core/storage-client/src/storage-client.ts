@@ -145,7 +145,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       timeout: this.config.timeout,
     });
 
-    let content: ServerResponse<DocumentType>;
+    let content: ServerResponse<{has: 'true' | 'false'}>;
     try {
       content = await response.json();
     }
@@ -153,10 +153,10 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       throw new Error('invalid_json');
     }
 
-    if (content.ok === true) {
+    if (content.ok === true && content.data.has === 'true') {
       return true;
     }
-    else if (content.ok === false && content.errorCode === 'document_not_found') {
+    if (content.ok === true && content.data.has === 'false') {
       return false;
     }
     else {
