@@ -3,7 +3,7 @@ import {createServer} from 'http';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
 
-import type {Config, Methods, ParamType, QueryParams, ReplyContent} from './type.js';
+import type {NanoServerConfig, Methods, ParamType, QueryParams, ReplyContent} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
@@ -14,13 +14,13 @@ alwatrRegisteredList.push({
 });
 
 export class AlwatrNanoServer {
-  protected _config: Config = {
-    host: '0.0.0.0',
-    port: 80,
-    autoListen: true,
-  };
+  protected _config: NanoServerConfig;
   protected _logger: AlwatrLogger;
-  protected _server = createServer(this._requestListener.bind(this));
+
+  /**
+   * Core HTTP Server.
+   */
+  httpServer;
 
   /**
    * Create a server for nanoservice use cases.
@@ -42,28 +42,38 @@ export class AlwatrNanoServer {
    * });
    * ```
    */
-  constructor(config?: Partial<Config>) {
-    this._config = config = {...this._config, ...config};
-    this._logger = createLogger(`alwatr-nano-server:${config.port}`);
-    this._logger.logMethodArgs('constructor', config);
-    this._server.on('error', this._errorListener.bind(this));
-    this._server.on('clientError', this._clientErrorListener.bind(this));
-    this.route('GET', '/health', this._onHealthCheckRequest.bind(this));
-    if (config.autoListen) this.listen();
-  }
+  constructor(config?: Partial<NanoServerConfig>) {
+    this._config = {
+      host: '0.0.0.0',
+      port: 80,
+      requestTimeout: 10_000,
+      headersTimeout: 130_000,
+      keepAliveTimeout: 120_000,
+      ...config,
+    };
 
-  /**
-   * Starts the HTTP server listening for connections.
-   *
-   * Example:
-   *
-   * ```ts
-   * nanoserver.listen();
-   * ```
-   */
-  listen(): void {
-    this._logger.logMethod('listen');
-    this._server.listen(this._config.port, this._config.host, () => {
+    this._logger = createLogger('alwatr-nano-server:' + this._config.port);
+    this._logger.logMethodArgs('constructor', {config: this._config});
+
+    this._requestListener = this._requestListener.bind(this);
+    this._errorListener = this._errorListener.bind(this);
+    this._clientErrorListener = this._clientErrorListener.bind(this);
+    this._onHealthCheckRequest = this._onHealthCheckRequest.bind(this);
+
+    this.httpServer = createServer({
+      keepAlive: true,
+      keepAliveInitialDelay: 0,
+      noDelay: true,
+    }, this._requestListener);
+    this.httpServer.requestTimeout = this._config.requestTimeout;
+    this.httpServer.keepAliveTimeout = this._config.keepAliveTimeout;
+    this.httpServer.headersTimeout = this._config.headersTimeout;
+
+    this.httpServer.on('error', this._errorListener);
+    this.httpServer.on('clientError', this._clientErrorListener);
+    this.route('GET', '/health', this._onHealthCheckRequest);
+
+    this.httpServer.listen(this._config.port, this._config.host, () => {
       this._logger.logOther(`listening on ${this._config.host}:${this._config.port}`);
     });
   }
@@ -74,12 +84,12 @@ export class AlwatrNanoServer {
    * Example:
    *
    * ```ts
-   * nanoserver.listen();
+   * nanoserver.close();
    * ```
    */
   close(): void {
     this._logger.logMethod('close');
-    this._server.close();
+    this.httpServer.close();
   }
 
   /**
@@ -132,9 +142,11 @@ export class AlwatrNanoServer {
     if (err.code === 'EADDRINUSE') {
       this._logger.logOther('Address in use, retrying...');
       setTimeout(() => {
-        this._server.close();
-        this.listen();
-      }, 1000);
+        this.httpServer.close();
+        this.httpServer.listen(this._config.port, this._config.host, () => {
+          this._logger.logOther(`listening on ${this._config.host}:${this._config.port}`);
+        });
+      }, 2000);
     }
   }
 
@@ -151,7 +163,6 @@ export class AlwatrNanoServer {
     connection.serverResponse.writeHead(200, {
       'Content-Length': body.length,
       'Content-Type': 'plain/text',
-      'Access-Control-Allow-Origin': '*',
       'Server': 'Alwatr NanoServer',
     });
     connection.serverResponse.end(body);
@@ -293,6 +304,7 @@ export class AlwatrConnection {
       'Content-Length': body.length,
       'Content-Type': 'application/json',
       'Server': 'Alwatr NanoServer',
+      'Access-Control-Allow-Origin': '*',
     });
 
     this.serverResponse.write(body, 'utf8', (error: NodeJS.ErrnoException | null | undefined) => {
