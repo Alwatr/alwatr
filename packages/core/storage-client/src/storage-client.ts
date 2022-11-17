@@ -121,6 +121,50 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   }
 
   /**
+   * Check document exists by id.
+   *
+   * @param documentId The id of the document object.
+   *
+   * Example:
+   *
+   * ```ts
+   * const isUserExists = await userStorage.has('user-1');
+   * if (!isUserExists) console.log('user_not_found')
+   * ```
+   */
+  async has(documentId: string): Promise<boolean> {
+    const response = await fetch({
+      url: this.config.host,
+      queryParameters: {
+        storage: this.config.name,
+        id: documentId,
+      },
+      headers: {
+        'Authorization': `Bearer ${this.config.token}`,
+      },
+      timeout: this.config.timeout,
+    });
+
+    let content: ServerResponse<DocumentType>;
+    try {
+      content = await response.json();
+    }
+    catch {
+      throw new Error('invalid_json');
+    }
+
+    if (content.ok === true) {
+      return true;
+    }
+    else if (content.ok === false && content.errorCode === 'document_not_found') {
+      return false;
+    }
+    else {
+      throw new Error('fetch_failed');
+    }
+  }
+
+  /**
    * Insert/update a document object in the storage.
    *
    * @param documentObject The document object to insert/update contain `_id`.
