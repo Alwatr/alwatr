@@ -45,6 +45,10 @@ Content-Type: application/json
   "message": "Salam ;)"
 }
 
+### Check document exists by storageName and docId
+GET {{apiUrl}}/{{apiVersion}}/has?storage=comments/page1&id=c1
+authorization: Bearer {{token}}
+
 ### Delete document
 DELETE {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
 authorization: Bearer {{token}}
@@ -70,6 +74,11 @@ GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1/page1&id=c1
 
 ### Page 404 (wrong method)
 TRACE {{apiUrl}}/{{apiVersion}}
+
+### Document not exists
+GET {{apiUrl}}/{{apiVersion}}/has?storage=comments/page1&id=foo
+authorization: Bearer {{token}}
+
 
 ### Get a document by storageName without id
 GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
