@@ -9,11 +9,16 @@ interface User extends DocumentObject {
   token?: string;
 }
 
+const token = process.env.TOKEN;
+if (token == null) {
+  throw new Error('token_not_defined');
+}
+
 const db = new AlwatrStorageClient<User>({
   name: 'user-list',
   host: 'http://127.0.0.1:80',
-  token: 'alwatr_110_313',
   timeout: 2_000,
+  token,
 });
 
 let ali: User;
@@ -32,18 +37,23 @@ try {
 
   ali.token = Math.random().toString(36).substring(2, 15);
 }
-catch {
-  console.log('ali not found');
-  ali = {
-    _id: 'alimd',
-    _updatedBy: 'demo',
-    fname: 'Ali',
-    lname: 'Mihandoost',
-    email: 'ali@mihandoost.com',
-  };
+catch (err) {
+  if ((err as Error).message === 'document_not_found') {
+    console.log('ali not found');
+    ali = {
+      _id: 'alimd',
+      _updatedBy: 'demo',
+      fname: 'Ali',
+      lname: 'Mihandoost',
+      email: 'ali@mihandoost.com',
+    };
+    await db.set(ali);
+  }
+  else {
+    console.error(err);
+  }
 }
 
-await db.set(ali);
 
 await db.set({
   _id: 'fmd',
@@ -59,6 +69,7 @@ console.log('keys: %o', await db.keys());
 console.log('getAll: %o', await db.getAll());
 console.log('delete: %o', await db.delete('alimd'));
 console.log('delete: %o', await db.delete('fmd'));
+
 try {
   await db.delete('abcd');
 }
