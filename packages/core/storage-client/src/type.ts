@@ -7,7 +7,7 @@ export type AlwatrStorageClientConfig = {
   name: string;
 
   /**
-   * Storage server host name (url).
+   * Storage server host name (URL).
    */
   host: string;
 

@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/storage-client",
   "version": "0.21.0",
-  "description": "Elegant micro storage client written in tiny TypeScript ES module.",
+  "description": "Elegant micro client for storage server written in tiny TypeScript ES module.",
   "keywords": [
     "database",
     "storage",

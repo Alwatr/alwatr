@@ -1,99 +1,102 @@
-# Alwatr Storage - `@alwatr/storage-client`
+# Alwatr Storage Client - `@alwatr/storage-client`
 
-Elegant micro in-memory json-like storage with disk backed, Fastest NoSQL Database written in tiny TypeScript ES module.
+Elegant micro client for storage server written in tiny TypeScript ES module.
 
 ## Example usage
 
 ```ts
-import {AlwatrStorage} from '@alwatr/storage';
-
-import type {DocumentObject} from '@alwatr/storage';
+import {AlwatrStorageClient} from '@alwatr/storage-client';
+import type {DocumentObject} from '@alwatr/storage-client';
 
 interface User extends DocumentObject {
-  fname: string;
-  lname: string;
   email: string;
   token?: string;
 }
 
-const db = new AlwatrStorage<User>({
+const db = new AlwatrStorageClient<User>({
   name: 'user-list',
-  path: 'db',
-  saveBeautiful: true,
-  debug: true,
+  host: 'http://127.0.0.1:80',
+  token: 'alwatr_110_313',
+  timeout: 2_000,
 });
 
-console.log('db loaded and ready to access.');
+await db.set({
+  _id: 'alimd',
+  _updatedBy: 'demo',
+  email: 'ali@mihandoost.com',
+});
 
-let ali = db.get('alimd');
-
-if (ali == null) {
-  console.log('ali not found');
-  ali = {
-    _id: 'alimd',
-    _updatedBy: 'demo',
-    fname: 'Ali',
-    lname: 'Mihandoost',
-    email: 'ali@mihandoost.com',
-  };
-}
-else {
-  console.log('ali found: %o', ali);
-  ali.token = Math.random().toString(36).substring(2, 15);
-}
-
-db.set(ali);
-
-db.set({
+await db.set({
   _id: 'fmd',
   _updatedBy: 'demo',
-  fname: 'Fatemeh',
-  lname: 'Mihandoost',
   email: 'Fatemeh@mihandoost.com',
   token: Math.random().toString(36).substring(2, 15),
 });
+
+console.log('has \'alimd\': %o', await db.has('alimd'));
+console.log('keys: %o', await db.keys());
+console.log('getAll: %o', await db.getAll());
+console.log('delete: %o', await db.delete('alimd'));
+try {
+  await db.delete('abcd');
+}
+catch (err) {
+  console.log('delete 404: %o', (err as Error).message);
+}
 ```
 
 ## API
 
-### `readonly name: string`
+### `config.name: string`
 
-Storage name like database table name.
+Storage name (like database name).
 
-### `readonly storagePath: string`
+### `config.host: string`
 
-Storage file full path.
+Storage server host name (URL).
 
-### `readonly saveDebounce: number`
+### `config.token: string`
 
-Save debounce timeout for minimal disk iops usage.
+Storage server token (like database password).
 
-### `readonly saveBeautiful: boolean`
+### `config.timeout?: number`
 
-Write pretty formatted JSON file.
+A timeout in ms for the fetch request.
+
+### `config.debug?: boolean`
+
+Debug output logs.
+
+### `get(documentId: string): Promise<DocumentType>`
+
+Get a document object by id.
+
+- **documentId**: The id of the document object.
 
 Example:
 
 ```ts
-const db = new AlwatrStorage<User>('user-list');
-await userStorage.readyPromise;
-const user = userStorage.get('user-1');
+const user = await userStorage.get('user-1');
 ```
 
-### `keys: Array<string>`
+### `has(documentId: string): Promise<boolean>`
 
-All document ids in array.
+Check document exists by id.
 
-### `length: number`
+- **documentId**: The id of the document object.
+
+Example:
+
+```ts
+const isUserExists = await userStorage.has('user-1');
+if (!isUserExists) console.log('user_not_found');
+```
 
 ### `set(documentObject: DocumentType, fastInstance?: boolean): DocumentType`
 
 Insert/update a document object in the storage.
 
 - **documentObject**: The document object to insert/update contain `_id`.
-- **fastInstance**: by default it will make a copy of the document before set.
-  if you set fastInstance to true, it will set the original document.
-  This is dangerous but much faster, you should use it only if you know what you are doing.
 
 Example:
 
@@ -104,32 +107,7 @@ userStorage.set({
 });
 ```
 
-### `get(documentId: string, fastInstance?: boolean): DocumentType | null`
-
-Get a document object by id.
-
-- **documentId**: The id of the document object.
-- **fastInstance**: by default it will return a copy of the document.
-  if you set fastInstance to true, it will return the original document.
-  This is dangerous but much faster, you should use it only if you know what you are doing.
-
-Example:
-
-```ts
-const user = userStorage.get('user-1');
-```
-
-### `has(documentId: string): boolean`
-
-Check documentId exist in the storage or not.
-
-Example:
-
-```ts
-if (!useruserStorage.has('user-1')) throw new Error('user not found');
-```
-
-### `delete(documentId: string): boolean`
+### `delete(documentId: string): Promise<void>`
 
 Delete a document object from the storage.
 
@@ -139,36 +117,12 @@ Example:
 userStorage.delete('user-1');
 ```
 
-### `async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void>`
+### `getAll(): Promise<Record<string, DocumentType>>`
 
-Loop over all document objects asynchronous.
-
-You can return false in callbackfn to break the loop.
+Dump all storage data.
 
 Example:
 
 ```ts
-await userStorage.forAll(async (user) => {
-  await sendMessage(user._id, 'Happy new year!');
-  user.sent = true; // direct change document (use with caution)!
-});
-```
-
-### `save(): void`
-
-Save the storage to disk.
-
-### `forceSave(): void`
-
-Save the storage to disk without any debounce.
-
-### `unload(): void`
-
-Unload storage data and free ram usage (auto saved before unload).
-
-Example:
-
-```ts
-userStorage.unload();
-delete userStorage;
+const userStorage = await userStorage.getAll();
 ```
