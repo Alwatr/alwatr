@@ -1,18 +1,23 @@
 {
-  "name": "@alwatr/nano-server",
+  "name": "@alwatr/storage-engine",
   "version": "0.21.0",
-  "description": "Elegant powerful nodejs server for nanoservice use cases, written in tiny TypeScript module.",
+  "description": "Elegant micro in-memory json-like storage with disk backed, Faster NoSQL Database written in tiny TypeScript ES module.",
   "keywords": [
-    "server",
-    "nanoservice",
-    "api",
+    "database",
+    "storage",
+    "json",
+    "nosql",
+    "no-sql",
+    "data",
+    "data-storage",
+    "file",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "nano-server.js",
+  "main": "storage-engine.js",
   "type": "module",
-  "types": "nano-server.d.ts",
+  "types": "storage-engine.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
@@ -24,15 +29,14 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/core/nano-server"
+    "directory": "packages/core/storage-engine"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/nano-server#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/storage-engine#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.21.0",
-    "@alwatr/math": "^0.21.0",
+    "exit-hook": "^3.1.2",
     "tslib": "^2.4.1"
   }
 }

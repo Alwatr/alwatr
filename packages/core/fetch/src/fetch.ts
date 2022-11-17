@@ -89,58 +89,9 @@ export interface FetchOptions extends RequestInit {
 }
 
 let alwatrCacheStorage: Cache;
-const cacheSupported = 'caches' in self;
+const cacheSupported = 'caches' in globalThis;
 
 const duplicateRequestStorage: Record<string, Promise<Response>> = {};
-
-/**
- * It fetches a JSON file from a URL, and returns the parsed data.
- *
- * Example:
- *
- * ```ts
- * const productList = await getJson<ProductResponse>({
- *   url: '/api/products',
- *   queryParameters: {limit: 10},
- *   timeout: 10_000,
- *   retry: 3,
- *   cacheStrategy: 'stale_while_revalidate',
- *   cacheDuplicate: 'auto',
- * });
- * ```
- */
-export async function getJson<ResponseType extends Record<string | number, unknown>>(
-    _options: Partial<FetchOptions> & {url: string},
-): Promise<ResponseType> {
-  const options = _processOptions(_options);
-  logger.logMethodArgs('getJson', {options});
-
-  const response = await _handleRemoveDuplicate(options);
-
-  let data: ResponseType;
-
-  try {
-    if (!response.ok) {
-      throw new Error('fetch_nok');
-    }
-    data = (await response.json()) as ResponseType;
-  }
-  catch (err) {
-    logger.accident('getJson', 'response_json', 'response json error', {
-      retry: options.retry,
-      err,
-    });
-
-    if (options.retry > 1) {
-      data = await getJson(options);
-    }
-    else {
-      throw err;
-    }
-  }
-
-  return data;
-}
 
 /**
  * It's a wrapper around the browser's `fetch` function that adds retry pattern, timeout, cacheStrategy,
@@ -332,7 +283,7 @@ async function _handleRetryPattern(options: FetchOptions): Promise<Response> {
     options.retry--;
     options.signal = externalAbortSignal;
     await _wait(options.retryDelay);
-    return _handleCacheStrategy(options); // maybe cache updated by another request ;)
+    return _handleRetryPattern(options);
   };
 
   try {
@@ -389,7 +340,7 @@ function _handleTimeout(options: FetchOptions): Promise<Response> {
       });
     });
 
-    window
+    globalThis
         .fetch(options.url, options)
         .then((response) => resolved(response))
         .catch((reason) => reject(reason))

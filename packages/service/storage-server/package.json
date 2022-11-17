@@ -1,14 +1,21 @@
 {
-  "name": "alwatr-nanoservice-starter",
+  "name": "alwatr-storage-server",
   "version": "0.21.0",
-  "description": "Alwatr Microservice/Nanoservice Starter Kit",
+  "description": "Alwatr Storage Nanoservice API, Elegant micro in-memory json-like storage with disk backed, Fastest NoSQL Database",
   "type": "module",
   "keywords": [
+    "database",
+    "storage",
+    "json",
+    "nosql",
+    "no-sql",
+    "api",
+    "data",
+    "data-storage",
+    "file",
     "microservice",
     "nanoservice",
-    "api",
     "typescript",
-    "esm",
     "alwatr"
   ],
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -17,9 +24,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/starter/nanoservice"
+    "directory": "packages/service/storage-server"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/starter/nanoservice#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/service/storage-server#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
@@ -41,16 +48,17 @@
     "format:eslint": "eslint **/*.ts --fix",
     "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --ignore-path ./.eslintignore --write",
     "clean": "rimraf dist/",
-    "serve": "node dist/index.js",
+    "serve": "node --trace-gc dist/index.js",
     "serve:debug": "node --inspect dist/index.js",
     "watch": "run-s clean build && run-p watch:ts watch:node",
-    "watch:node": "nodemon -w dist/ dist/index.js",
+    "watch:node": "nodemon -w dist/ --trace-gc dist/index.js",
     "watch:debug-node": "nodemon -w dist/ --inspect dist/index.js",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "dependencies": {
     "@alwatr/logger": "^0.21.0",
-    "@alwatr/nano-server": "^0.21.0"
+    "@alwatr/nano-server": "^0.21.0",
+    "@alwatr/storage-engine": "^0.21.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
