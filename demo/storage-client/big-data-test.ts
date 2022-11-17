@@ -52,4 +52,13 @@ const item = await db.get('alimd');
 console.timeEnd('get item');
 console.dir(item);
 
+console.time('get keys');
+const keys = await db.keys();
+console.timeEnd('get keys');
+console.log(keys.length);
+
+console.time('get all');
+await db.getAll();
+console.timeEnd('get all');
+
 console.log('done');
