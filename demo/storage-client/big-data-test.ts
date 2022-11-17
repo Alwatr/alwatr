@@ -10,11 +10,16 @@ interface User extends DocumentObject {
   token: string;
 }
 
+const token = process.env.TOKEN;
+if (token == null) {
+  throw new Error('token_not_defined');
+}
+
 const db = new AlwatrStorageClient<User>({
   name: 'junk-data',
   host: 'http://127.0.0.1:80',
-  token: 'alwatr_110_313',
   timeout: 2_000,
+  token,
 });
 
 console.time('set all items');
