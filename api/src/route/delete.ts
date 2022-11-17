@@ -2,9 +2,9 @@ import {logger} from '../lib/config.js';
 import {nanoServer} from '../lib/nano-server.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
-import {stroage} from 'src/lib/storage.js';
+import {stroage} from '../lib/storage.js';
 
-// add job API
+// delete object
 nanoServer.route('DELETE', '/delete', handler);
 
 async function handler(connection: AlwatrConnection): Promise<void> {
@@ -38,7 +38,7 @@ async function handler(connection: AlwatrConnection): Promise<void> {
     connection.reply({
       ok: false,
       errorCode: 'job_not_found',
-      statusCode: 400,
+      statusCode: 404,
       data: {
         app: 'Job API',
         message: 'Job not found',

@@ -2,9 +2,9 @@ import {logger} from '../lib/config.js';
 import {nanoServer} from '../lib/nano-server.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
-import {stroage} from 'src/lib/storage.js';
+import {stroage} from '../lib/storage.js';
 
-// add job API
+// get current job object
 nanoServer.route('GET', '/current', handler);
 
 async function handler(connection: AlwatrConnection): Promise<void> {
