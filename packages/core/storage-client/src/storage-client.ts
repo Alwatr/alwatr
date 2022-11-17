@@ -12,15 +12,13 @@ alwatrRegisteredList.push({
 });
 
 /**
- * Elegant micro in-memory json-like storage with disk backed,
- * Fastest NoSQL Database written in tiny TypeScript ES module.
+ * Elegant micro client for storage server written in tiny TypeScript ES module.
  *
  * Example:
  *
  * ```ts
- * import {AlwatrStorage} from '@alwatr/storage';
- *
- * import type {DocumentObject} from '@alwatr/storage';
+ * import {AlwatrStorageClient} from '@alwatr/storage-client';
+ * import type {DocumentObject} from '@alwatr/storage-client';
  *
  * interface User extends DocumentObject {
  *   fname: string;
@@ -29,35 +27,22 @@ alwatrRegisteredList.push({
  *   token?: string;
  * }
  *
- * const db = new AlwatrStorage<User>({
+ * const db = new AlwatrStorageClient<User>({
  *   name: 'user-list',
- *   path: 'db',
- *   saveBeautiful: true,
- *   debug: true,
+ *   host: 'http://127.0.0.1:80',
+ *   token: 'alwatr_110_313',
+ *   timeout: 2_000,
  * });
  *
- * console.log('db loaded and ready to access.');
+ * await db.set({
+ *   _id: 'alimd',
+ *   _updatedBy: 'demo',
+ *   fname: 'Ali',
+ *   lname: 'Mihandoost',
+ *   email: 'ali@mihandoost.com',
+ * });
  *
- * let ali = db.get('alimd');
- *
- * if (ali == null) {
- *   console.log('ali not found');
- *   ali = {
- *     _id: 'alimd',
- *     _updatedBy: 'demo',
- *     fname: 'Ali',
- *     lname: 'Mihandoost',
- *     email: 'ali@mihandoost.com',
- *   };
- * }
- * else {
- *   console.log('ali found: %o', ali);
- *   ali.token = Math.random().toString(36).substring(2, 15);
- * }
- *
- * db.set(ali);
- *
- * db.set({
+ * await db.set({
  *   _id: 'fmd',
  *   _updatedBy: 'demo',
  *   fname: 'Fatemeh',
@@ -65,12 +50,23 @@ alwatrRegisteredList.push({
  *   email: 'Fatemeh@mihandoost.com',
  *   token: Math.random().toString(36).substring(2, 15),
  * });
- * ```
+ *
+ * console.log('has \'alimd\': %o', await db.has('alimd'));
+ * console.log('keys: %o', await db.keys());
+ * console.log('getAll: %o', await db.getAll());
+ * console.log('delete: %o', await db.delete('alimd'));
+ * try {
+ *   await db.delete('abcd');
+ * }
+ * catch (err) {
+ *   console.log('delete 404: %o', (err as Error).message);
+ * }
  */
 export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   protected _logger = createLogger('alwatr-storage-client:' + this.config.name, undefined, this.config.debug);
 
   constructor(public readonly config: AlwatrStorageClientConfig) {
+    // add / at end of URL
     if (!(config.host[config.host.length - 1] === '/')) {
       config.host += '/';
     }
@@ -96,7 +92,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
         id: documentId,
       },
       headers: {
-        'Authorization': `Bearer ${this.config.token}`,
+        Authorization: `Bearer ${this.config.token}`,
       },
       timeout: this.config.timeout,
     });
@@ -129,7 +125,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    *
    * ```ts
    * const isUserExists = await userStorage.has('user-1');
-   * if (!isUserExists) console.log('user_not_found')
+   * if (!isUserExists) console.log('user_not_found');
    * ```
    */
   async has(documentId: string): Promise<boolean> {
@@ -140,7 +136,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
         id: documentId,
       },
       headers: {
-        'Authorization': `Bearer ${this.config.token}`,
+        Authorization: `Bearer ${this.config.token}`,
       },
       timeout: this.config.timeout,
     });
@@ -152,7 +148,6 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
     catch {
       throw new Error('invalid_json');
     }
-
 
     if (content.ok === true && typeof content.data.has === 'boolean') {
       return content.data.has;
@@ -225,7 +220,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
         id: documentId,
       },
       headers: {
-        'Authorization': `Bearer ${this.config.token}`,
+        Authorization: `Bearer ${this.config.token}`,
       },
       timeout: this.config.timeout,
     });
@@ -265,7 +260,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
         storage: this.config.name,
       },
       headers: {
-        'Authorization': `Bearer ${this.config.token}`,
+        Authorization: `Bearer ${this.config.token}`,
       },
       timeout: this.config.timeout,
     });
@@ -302,7 +297,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
         storage: this.config.name,
       },
       headers: {
-        'Authorization': `Bearer ${this.config.token}`,
+        Authorization: `Bearer ${this.config.token}`,
       },
       timeout: this.config.timeout,
     });
