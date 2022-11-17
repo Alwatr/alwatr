@@ -1,3 +1,5 @@
+// yarn build && NODE_ENV=production TOKEN=alwatr_110_313 node --trace-gc demo/storage-client/big-data-test.js
+
 import {random} from '@alwatr/math';
 import {AlwatrStorageClient} from '@alwatr/storage-client';
 
@@ -18,19 +20,22 @@ if (token == null) {
 const db = new AlwatrStorageClient<User>({
   name: 'junk-data',
   host: 'http://127.0.0.1:80',
-  timeout: 2_000,
   token,
 });
 
+setInterval(() => {
+  console.log('Memory usage: %sMB', Math.round(process.memoryUsage.rss() / 100000) / 10);
+}, 2_000);
+
 console.time('set all items');
 
-const max = 100_000;
+const max = 10_000;
 for (let i = 0; i < max; i++) {
   if (i % 1000 === 0) {
     console.log(i);
   }
   await db.set({
-    _id: 'demo_' + i,
+    _id: 'user_' + i,
     _updatedBy: 'demo_' + i,
     fname: random.string(4, 16),
     lname: random.string(4, 32),
