@@ -34,10 +34,6 @@ import {AlwatrNanoServer} from 'https://esm.run/@alwatr/nano-server';
 const nanoServer = new AlwatrNanoServer();
 ```
 
-### `nanoserver.listen()`
-
-Starts the HTTP server listening for connections.
-
 ### `nanoserver.close()`
 
 Stops the HTTP server from accepting new connections.
