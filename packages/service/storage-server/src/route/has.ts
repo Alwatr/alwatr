@@ -17,17 +17,8 @@ async function has(connection: AlwatrConnection): Promise<void> {
 
   const storage = storageProvider.get({name: params.storage});
 
-  if (!storage.has(params.id)) {
-    connection.reply({
-      ok: false,
-      errorCode: 'document_not_exists',
-      statusCode: 404,
-    });
-    return;
-  }
-
   connection.reply({
     ok: true,
-    data: {},
+    data: {has: storage.has(params.id)},
   });
 }

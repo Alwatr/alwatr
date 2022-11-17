@@ -16,19 +16,10 @@ const db = new AlwatrStorageClient<User>({
   timeout: 2_000,
 });
 
-let ali = await db.get('alimd');
+let ali: User;
 
-if (ali == null) {
-  console.log('ali not found');
-  ali = {
-    _id: 'alimd',
-    _updatedBy: 'demo',
-    fname: 'Ali',
-    lname: 'Mihandoost',
-    email: 'ali@mihandoost.com',
-  };
-}
-else {
+try {
+  ali = await db.get('alimd');
   console.log('ali found: %o', ali);
   /**
    * {
@@ -40,6 +31,16 @@ else {
    */
 
   ali.token = Math.random().toString(36).substring(2, 15);
+}
+catch {
+  console.log('ali not found');
+  ali = {
+    _id: 'alimd',
+    _updatedBy: 'demo',
+    fname: 'Ali',
+    lname: 'Mihandoost',
+    email: 'ali@mihandoost.com',
+  };
 }
 
 await db.set(ali);
@@ -53,6 +54,7 @@ await db.set({
   token: Math.random().toString(36).substring(2, 15),
 });
 
+console.log('has \'alimd\': %o', await db.has('alimd'));
 console.log('keys: %o', await db.keys());
 console.log('getAll: %o', await db.getAll());
 console.log('delete: %o', await db.delete('alimd'));
