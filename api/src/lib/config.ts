@@ -3,9 +3,9 @@ import {isNumber} from '@alwatr/math';
 
 export const config = {
   port: isNumber(process.env.PORT) ? +process.env.PORT! : 8000,
-  host: process.env.HOST ?? 'localhost',
+  host: process.env.HOST ?? '127.0.0.1',
   storageServerHost: process.env.STORAGE_API_DOMAIN ?? 'http://127.0.0.1',
-  storageName: process.env.STORAGE_NAME ?? 'sample',
+  storageName: process.env.STORAGE_NAME ?? 'job-list',
   storageToken: process.env.STORAGE_TOKEN,
 };
 
