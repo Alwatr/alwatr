@@ -2,14 +2,8 @@
 @apiVersion = v0
 @token = alwatr_110_313
 
-GET {{apiUrl}}/{{apiVersion}}/current
-authorization: Bearer {{token}}
-
-DELETE {{apiUrl}}/{{apiVersion}}/delete?id=df2d806e
-authorization: Bearer {{token}}
-
-## Add job
-PATCH {{apiUrl}}/{{apiVersion}}/add
+# Add job
+PUT {{apiUrl}}/{{apiVersion}}/job/add
 authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -18,3 +12,12 @@ Content-Type: application/json
   "dest": "THR",
   "date": "1401/10/10"
 }
+
+
+DELETE {{apiUrl}}/{{apiVersion}}/job/delete?id=1
+authorization: Bearer {{token}}
+
+
+GET {{apiUrl}}/{{apiVersion}}/job/current
+authorization: Bearer {{token}}
+

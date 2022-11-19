@@ -5,48 +5,31 @@ import type {AlwatrConnection} from '@alwatr/nano-server';
 import {stroage} from '../lib/storage.js';
 import type {Job} from '../lib/type.js';
 
-// add job
-nanoServer.route('PATCH', '/add', handler);
+// Add job
+nanoServer.route('PUT', '/job/add', handler);
 
 async function handler(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('handler');
 
-  const bodyJson = await connection.requireJsonBody();
+  const bodyJson = await connection.requireJsonBody<Job>();
   if (bodyJson === null) return;
 
-  let parsedBody: Job | null;
-  // parse and validate data
   try {
-    parsedBody = bodyJson as Job;
-  } catch {
-    parsedBody = null;
-  }
-
-  if (parsedBody === null) {
+    const job = await stroage.set({
+      ...bodyJson,
+      _id: 'auto_increment',
+      _updatedBy: 'system',
+    });
+    connection.reply({
+      ok: true,
+      data: {job: job},
+    });
+  } catch (err) {
+    logger.error('handler', 'internal_server_error', (err as Error).message);
     connection.reply({
       ok: false,
-      errorCode: 'body_not_valid',
-      statusCode: 422,
-      data: {
-        app: 'Job API',
-        message: 'Body not valid',
-      },
+      statusCode: 500,
+      errorCode: 'internal_server_error',
     });
-    return;
   }
-
-  // add job
-  await stroage.set({
-    _id: Math.random().toString(16).substring(7),
-    _updatedBy: 'system',
-    ...parsedBody,
-  });
-
-  connection.reply({
-    ok: true,
-    data: {
-      app: 'Job API',
-      message: 'New job added',
-    },
-  });
 }
