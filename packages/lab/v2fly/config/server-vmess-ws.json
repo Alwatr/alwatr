@@ -16,13 +16,17 @@
       "port": 80,
       "tag": "in-vmess",
       "settings": {
-        "users": ["d06ffa2e-ef51-4def-ad9d-37803453d33e"]
+        "users": ["d06ffa2e-ef51-4def-ad9d-37803453d33e", "8f9f1692-8d0a-271d-e2d0-1f4c998ecc95"]
       },
       "streamSettings": {
         "transport": "ws",
         "transportSettings":{},
         "security":"none",
         "securitySettings":{}
+      },
+      "mux": {
+        "enabled": true,
+        "concurrency": 8
       }
     }
   ],
