@@ -155,7 +155,7 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
     }
   }
 
-  if (options.body == null && options.bodyJson != null) {
+  if (options.bodyJson != null) {
     options.body = JSON.stringify(options.bodyJson);
     options.headers = {
       ...options.headers,
