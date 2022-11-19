@@ -27,7 +27,8 @@ async function handler(connection: AlwatrConnection): Promise<void> {
         current: allJobResponse,
       },
     });
-  } catch {
+  } catch (err) {
+    logger.error('handler', 'internal_error', (err as Error).message)
     connection.reply({
       ok: false,
       errorCode: 'internal_error',

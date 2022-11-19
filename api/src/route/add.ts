@@ -6,7 +6,7 @@ import {stroage} from '../lib/storage.js';
 import type {Job} from '../lib/type.js';
 
 // add job
-nanoServer.route('POST', '/add', handler);
+nanoServer.route('PATCH', '/add', handler);
 
 async function handler(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('handler');
