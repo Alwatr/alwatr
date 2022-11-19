@@ -62,10 +62,15 @@ async function request(): Promise<void> {
 }
 
 async function getBench(): Promise<void> {
-  console.time('get item');
-  const item = await db.get('user_5000');
-  console.timeEnd('get item');
-  console.dir(item);
+  try {
+    console.time('get item');
+    const item = await db.get('user_5000');
+    console.timeEnd('get item');
+    console.dir(item);
+  }
+  catch {
+    console.log('user_5000 id not found!');
+  }
 
   console.time('get keys');
   const keys = await db.keys();
