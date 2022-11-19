@@ -1,16 +1,16 @@
 import type {DocumentObject} from '@alwatr/storage-engine';
 
-export type Job = {
+export interface Job extends DocumentObject {
   origin: string;
   dest: string;
   date: string;
-  flightList: Record<string, FlightInformation>;
-};
+  minPrice: number;
+  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
+  flightList: Array<FlightInformation>;
+}
 
-export interface FlightInformation extends DocumentObject {
+export interface FlightInformation {
   price: number;
-  departureTime: string;
-  arrivalTime: string;
+  departureTime: number;
   seatCount: number;
-  formattedDate: string;
 }
