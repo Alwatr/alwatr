@@ -71,6 +71,8 @@ alwatrRegisteredList.push({
  * ```
  */
 export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
+  static readonly formatVersion = 3;
+
   /**
    * Storage name like database table name.
    */
@@ -117,8 +119,27 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
     return this.keys.length;
   }
 
+  /**
+   * Get all data.
+   */
   get _data(): typeof this._storage.data {
     return this._storage.data;
+  }
+
+  /**
+   * Get storage meta.
+   */
+  get meta(): typeof this._storage.meta {
+    return this._storage.meta;
+  }
+
+  /**
+   * Get next auto increment id for numerical document id.
+   */
+  get nextAutoIncrementId(): string {
+    const id = this._storage.meta ? +this._storage.meta.lastUpdatedId : 0;
+    if (isNaN(id)) throw new Error('doc_id_is_nan');
+    return (id + 1).toString();
   }
 
   protected get _newStorage(): DataStorage<DocumentType> {
@@ -226,18 +247,36 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
   set(documentObject: DocumentType, fastInstance?: boolean): DocumentType {
     this._logger.logMethodArgs('set', documentObject._id);
 
-    const oldData = this._storage.data[documentObject._id];
-    if (oldData == null) this._keys = null; // Clear cached keys
-
     if (fastInstance !== true) {
       documentObject = JSON.parse(JSON.stringify(documentObject));
     }
+
+    if (documentObject._id === 'auto_increment') {
+      documentObject._id = this.nextAutoIncrementId;
+    }
+
+    const oldData = this._storage.data[documentObject._id];
 
     // update meta
     documentObject._updatedAt = Date.now();
     documentObject._createdAt = oldData?._createdAt ?? documentObject._updatedAt;
     documentObject._createdBy = oldData?._createdBy ?? documentObject._updatedBy;
     documentObject._rev = (oldData?._rev ?? 0) + 1;
+
+    this._storage.meta ??= {
+      formatVersion: AlwatrStorageEngine.formatVersion,
+      reversion: 0,
+      lastCreatedId: documentObject._id,
+      lastUpdatedId: '',
+      lastUpdatedAt: 0,
+    };
+    this._storage.meta.reversion++;
+    this._storage.meta.lastUpdatedId = documentObject._id;
+    this._storage.meta.lastUpdatedAt = documentObject._updatedAt;
+    if (oldData == null) {
+      this._keys = null; // Clear cached keys
+      this._storage.meta.lastCreatedId = documentObject._id;
+    }
 
     this._storage.data[documentObject._id] = documentObject;
 
@@ -265,6 +304,8 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
 
     // Clear cached keys
     this._keys = null;
+
+    if (this._storage.meta) this._storage.meta.reversion++;
 
     this.save();
     return true;
