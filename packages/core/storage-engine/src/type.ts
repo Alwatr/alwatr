@@ -2,6 +2,9 @@ export type JSON = Record<string, unknown>;
 
 export interface DocumentObject {
   [key: string]: unknown;
+  /**
+   * Document uniq ID or `auto_increment`.
+   */
   _id: string;
   _rev?: number;
   _createdAt?: number;
@@ -12,6 +15,13 @@ export interface DocumentObject {
 
 export type DataStorage<T extends DocumentObject> = {
   ok: true;
+  meta?: {
+    formatVersion: number;
+    reversion: number;
+    lastUpdatedAt: number;
+    lastUpdatedId: string;
+    lastCreatedId: string;
+  };
   data: Record<string, T | undefined>;
 }
 
