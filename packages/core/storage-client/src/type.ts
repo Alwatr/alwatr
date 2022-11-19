@@ -19,7 +19,9 @@ export type AlwatrStorageClientConfig = {
   /**
    * A timeout in ms for the fetch request.
    *
-   * @default 10_000 ms
+   * Use with cation, you will have memory leak issue in nodejs.
+   *
+   * @default 0 disabled
    */
   timeout?: number;
 
