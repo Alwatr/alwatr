@@ -70,7 +70,9 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    */
   fetchOption: Partial<FetchOptions> = {
     keepalive: true,
-    timeout: this.config.timeout ?? 3_000,
+    timeout: this.config.timeout ?? 0,
+    cacheStrategy: 'network_only',
+    removeDuplicate: 'never',
     retry: 3,
     retryDelay: 300,
     headers: {
@@ -185,11 +187,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       queryParameters: {
         storage: this.config.name,
       },
-      headers: {
-        ...this.fetchOption.headers,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(documentObject),
+      bodyJson: documentObject,
     });
 
     let content: ServerResponse<DocumentType>;
