@@ -37,7 +37,7 @@ async function handler(connection: AlwatrConnection): Promise<void> {
 
   // add job
   await stroage.set({
-    _id: 'test',
+    _id: Math.random().toString(16).substring(7),
     _updatedBy: 'system',
     ...parsedBody,
   });
