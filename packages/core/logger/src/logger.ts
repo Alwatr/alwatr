@@ -129,12 +129,12 @@ export const createLogger = (
     scope,
 
     accident: isBrowser
-      ? console.warn.bind(console, '%c%s%c.%s() "%s" => Accident: "%s" (%s)!', styleScope, scope, style.reset)
-      : console.warn.bind(console, `${styleScope}⚠️  %s\x1b[33m.%s() "%s" =>${style.reset}`, scope),
+      ? console.warn.bind(console, '%c%s%c.%s() Accident `%s` %s!', styleScope, scope, style.reset)
+      : console.warn.bind(console, `${styleScope}⚠️\n%s\x1b[33m.%s() Accident \`%s\` %s!${style.reset}`, scope),
 
     error: isBrowser
-      ? console.error.bind(console, '%c%s%c.%s() "%s" =>', styleScope, scope, style.reset)
-      : console.error.bind(console, `${styleScope}❌ %s\x1b[31m.%s() "%s" =>\x1b[0;2m`, scope),
+      ? console.error.bind(console, '%c%s%c.%s() Error `%s`\n', styleScope, scope, style.reset)
+      : console.error.bind(console, `${styleScope}❌\n%s\x1b[31m.%s() Error \`%s\`${style.reset}\n`, scope),
   };
 
   if (!debug) {
@@ -159,11 +159,11 @@ export const createLogger = (
 
     logMethodArgs: console.debug.bind(console, keySection + '.%s(%o);', styleScope, scope, style.reset),
 
-    logMethodFull: console.debug.bind(console, keySection + '.%s(%o); // %o', styleScope, scope, style.reset),
+    logMethodFull: console.debug.bind(console, keySection + '.%s(%o) => %o', styleScope, scope, style.reset),
 
     incident: isBrowser
-      ? console.log.bind(console, '%c%s%c.%s() => Incident: "%s" (%s)!', styleScope, scope, style.reset)
-      : console.log.bind(console, `${styleScope}⚠️  %s${style.reset}.%s() => Incident: "%s" (%s)!\x1b[0;2m`, scope),
+      ? console.log.bind(console, '%c%s%c.%s() Incident `%s` %s!', styleScope, scope, 'color: orange;')
+      : console.log.bind(console, `${styleScope}🚸\n%s${style.reset}.%s() Incident \`%s\` %s!${style.reset}`, scope),
 
     logOther: console.debug.bind(console, keySection, styleScope, scope, style.reset),
   };
