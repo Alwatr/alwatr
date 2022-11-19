@@ -1,8 +1,16 @@
-@apiUrl = http://localhost:80
+@apiUrl = http://127.0.0.1:8000
 @apiVersion = v0
+@token = alwatr_110_313
 
-## add job
-POST {{apiUrl}}/{{apiVersion}}/add
+GET {{apiUrl}}/{{apiVersion}}/current
+authorization: Bearer {{token}}
+
+DELETE {{apiUrl}}/{{apiVersion}}/delete?id=df2d806e
+authorization: Bearer {{token}}
+
+## Add job
+PATCH {{apiUrl}}/{{apiVersion}}/add
+authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
