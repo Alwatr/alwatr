@@ -18,8 +18,8 @@
     "f": "yarn format",
     "fl": "yarn format:eslint",
     "fp": "yarn format:prettier",
-    "pm": "run-s clean build ver-minor",
-    "pp": "run-s clean build ver-patch",
+    "pm": "run-s pull clean build ver-minor push",
+    "pp": "run-s pull clean build ver-patch push",
     "lint": "run-s lint:*",
     "lint:ts": "eslint . --config .eslintrc.json --ext .ts --ignore-path .gitignore",
     "build": "run-s build:ts && lerna run build",
@@ -31,8 +31,10 @@
     "serve:dev": "web-dev-server --config dev-server.mjs",
     "watch": "run-p watch:* serve:dev",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput",
-    "ver-minor": "lerna version minor --no-push && git push && git push --tags",
-    "ver-patch": "lerna version patch --no-push && git push && git push --tags",
+    "ver-minor": "lerna version minor --no-push",
+    "ver-patch": "lerna version patch --no-push",
+    "pull": "git pull",
+    "push": "git push && git push --tags",
     "publish": "lerna publish from-package"
   },
   "devDependencies": {
