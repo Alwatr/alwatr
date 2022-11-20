@@ -95,7 +95,18 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * Example:
    *
    * ```ts
-   * const user = await userStorage.get('user-1');
+   * try {
+   *   const user = await userStorage.get('user-1');
+   *   console.dir(item);
+   * }
+   * catch (err) {
+   *   if ((err as Error)?.message === 'document_not_found') {
+   *     console.log('user_5000 id not found!');
+   *   }
+   *   else {
+   *     console.err((err as Error)?.message ?? err);
+   *   }
+   * }
    * ```
    */
   async get(documentId: string): Promise<DocumentType> {
@@ -135,8 +146,8 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * Example:
    *
    * ```ts
-   * const isUserExists = await userStorage.has('user-1');
-   * if (!isUserExists) console.log('user_not_found');
+   * const userExist = await userStorage.has('user-1');
+   * if (!userExist) console.log('user_not_found');
    * ```
    */
   async has(documentId: string): Promise<boolean> {

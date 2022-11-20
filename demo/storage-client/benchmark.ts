@@ -1,4 +1,4 @@
-// yarn build && NODE_ENV=production TOKEN=alwatr_110_313 node --trace-gc demo/storage-client/big-data-test.js
+// yarn build && NODE_ENV=production TOKEN=alwatr_110_313 node demo/storage-client/benchmark.js
 
 import {random} from '@alwatr/math';
 import {AlwatrStorageClient} from '@alwatr/storage-client';
@@ -63,9 +63,19 @@ async function request(): Promise<void> {
 
 async function getBench(): Promise<void> {
   console.time('get item');
-  const item = await db.get('user_5000');
+  try {
+    const item = await db.get('user_5000');
+    console.dir(item);
+  }
+  catch (err) {
+    if ((err as Error)?.message === 'document_not_found') {
+      console.log('user_5000 id not found!');
+    }
+    else {
+      throw err;
+    }
+  }
   console.timeEnd('get item');
-  console.dir(item);
 
   console.time('get keys');
   const keys = await db.keys();
