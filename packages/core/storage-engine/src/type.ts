@@ -20,10 +20,10 @@ export type DataStorage<T extends DocumentObject> = {
     reversion: number;
     lastUpdatedAt: number;
     lastUpdatedId: string;
-    lastCreatedId: string;
+    lastAutoId?: string;
   };
   data: Record<string, T | undefined>;
-}
+};
 
 export type AlwatrStorageEngineConfig = {
   /**
