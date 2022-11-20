@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/AliMD/alwatr/compare/v0.21.0...v0.22.0) (2022-11-20)
+
+### Bug Fixes
+
+- **fetch:** \_handleRetryPattern ([fe4ac12](https://github.com/AliMD/alwatr/commit/fe4ac12b4ad3086d44e545591c767cb322e32b8d))
+- **fetch:** bodyJson issue ([5d8d6fa](https://github.com/AliMD/alwatr/commit/5d8d6fa4a0f608c2c5ed583aa54de9b836daaa5f))
+
+### Features
+
+- **fetch:** support nodejs ([2ed2ef4](https://github.com/AliMD/alwatr/commit/2ed2ef42e9f204d4896ada4e20b839cfabdc7284))
+
+### Performance Improvements
+
+- **fetch:** Improve performance and decrease memory usage ([7c29333](https://github.com/AliMD/alwatr/commit/7c293339215bea3a5013effe4aea5b6267a7a75e))
+
 # [0.21.0](https://github.com/AliMD/alwatr/compare/v0.20.0...v0.21.0) (2022-11-13)
 
 **Note:** Version bump only for package @alwatr/fetch

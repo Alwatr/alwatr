@@ -1,8 +1,9 @@
 import {createServer} from 'http';
 
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
+import {isNumber} from '@alwatr/math';
 
-import type {Config, Methods, ReplyContent} from './type.js';
+import type {NanoServerConfig, Methods, ParamType, QueryParams, ReplyContent} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
@@ -13,13 +14,13 @@ alwatrRegisteredList.push({
 });
 
 export class AlwatrNanoServer {
-  protected _config: Config = {
-    host: '0.0.0.0',
-    port: 80,
-    autoListen: true,
-  };
+  protected _config: NanoServerConfig;
   protected _logger: AlwatrLogger;
-  protected _server = createServer(this._requestListener.bind(this));
+
+  /**
+   * Core HTTP Server.
+   */
+  httpServer;
 
   /**
    * Create a server for nanoservice use cases.
@@ -41,28 +42,38 @@ export class AlwatrNanoServer {
    * });
    * ```
    */
-  constructor(config?: Partial<Config>) {
-    this._config = config = {...this._config, ...config};
-    this._logger = createLogger(`alwatr-nano-server:${config.port}`);
-    this._logger.logMethodArgs('constructor', config);
-    this._server.on('error', this._errorListener.bind(this));
-    this._server.on('clientError', this._clientErrorListener.bind(this));
-    this.route('GET', '/health', this._onHealthCheckRequest.bind(this));
-    if (config.autoListen) this.listen();
-  }
+  constructor(config?: Partial<NanoServerConfig>) {
+    this._config = {
+      host: '0.0.0.0',
+      port: 80,
+      requestTimeout: 10_000,
+      headersTimeout: 130_000,
+      keepAliveTimeout: 120_000,
+      ...config,
+    };
 
-  /**
-   * Starts the HTTP server listening for connections.
-   *
-   * Example:
-   *
-   * ```ts
-   * nanoserver.listen();
-   * ```
-   */
-  listen(): void {
-    this._logger.logMethod('listen');
-    this._server.listen(this._config.port, this._config.host, () => {
+    this._logger = createLogger('alwatr-nano-server:' + this._config.port);
+    this._logger.logMethodArgs('constructor', {config: this._config});
+
+    this._requestListener = this._requestListener.bind(this);
+    this._errorListener = this._errorListener.bind(this);
+    this._clientErrorListener = this._clientErrorListener.bind(this);
+    this._onHealthCheckRequest = this._onHealthCheckRequest.bind(this);
+
+    this.httpServer = createServer({
+      keepAlive: true,
+      keepAliveInitialDelay: 0,
+      noDelay: true,
+    }, this._requestListener);
+    this.httpServer.requestTimeout = this._config.requestTimeout;
+    this.httpServer.keepAliveTimeout = this._config.keepAliveTimeout;
+    this.httpServer.headersTimeout = this._config.headersTimeout;
+
+    this.httpServer.on('error', this._errorListener);
+    this.httpServer.on('clientError', this._clientErrorListener);
+    this.route('GET', '/health', this._onHealthCheckRequest);
+
+    this.httpServer.listen(this._config.port, this._config.host, () => {
       this._logger.logOther(`listening on ${this._config.host}:${this._config.port}`);
     });
   }
@@ -73,12 +84,12 @@ export class AlwatrNanoServer {
    * Example:
    *
    * ```ts
-   * nanoserver.listen();
+   * nanoserver.close();
    * ```
    */
   close(): void {
     this._logger.logMethod('close');
-    this._server.close();
+    this.httpServer.close();
   }
 
   /**
@@ -102,7 +113,11 @@ export class AlwatrNanoServer {
    * });
    * ```
    */
-  route(method: Methods, route: 'all' | `/${string}`, middleware: (connection: AlwatrConnection) => void): void {
+  route(
+      method: 'ALL' | Methods,
+      route: 'all' | `/${string}`,
+      middleware: (connection: AlwatrConnection) => void,
+  ): void {
     this._logger.logMethodArgs('route', {method, route});
 
     if (this.middlewareList[method] == null) this.middlewareList[method] = {};
@@ -127,9 +142,11 @@ export class AlwatrNanoServer {
     if (err.code === 'EADDRINUSE') {
       this._logger.logOther('Address in use, retrying...');
       setTimeout(() => {
-        this._server.close();
-        this.listen();
-      }, 1000);
+        this.httpServer.close();
+        this.httpServer.listen(this._config.port, this._config.host, () => {
+          this._logger.logOther(`listening on ${this._config.host}:${this._config.port}`);
+        });
+      }, 2000);
     }
   }
 
@@ -146,7 +163,6 @@ export class AlwatrNanoServer {
     connection.serverResponse.writeHead(200, {
       'Content-Length': body.length,
       'Content-Type': 'plain/text',
-      'Access-Control-Allow-Origin': '*',
       'Server': 'Alwatr NanoServer',
     });
     connection.serverResponse.end(body);
@@ -154,7 +170,7 @@ export class AlwatrNanoServer {
 
   // prettier-ignore
   protected middlewareList: Record<string, Record<string, (connection: AlwatrConnection) => void | Promise<void>>> = {
-    all: {},
+    ALL: {},
   };
 
   protected async _requestListener(incomingMessage: IncomingMessage, serverResponse: ServerResponse): Promise<void> {
@@ -177,9 +193,9 @@ export class AlwatrNanoServer {
 
     const middleware =
       this.middlewareList[connection.method]?.[route] ||
-      this.middlewareList.all[route] ||
+      this.middlewareList.ALL[route] ||
       this.middlewareList[connection.method]?.all ||
-      this.middlewareList.all.all;
+      this.middlewareList.ALL.all;
 
     try {
       if (typeof middleware === 'function') {
@@ -225,26 +241,14 @@ export class AlwatrConnection {
    * Request URL.
    */
   readonly url = new URL(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.incomingMessage.url!.replace(AlwatrConnection.versionPattern, ''),
-    'http://localhost/',
+      (this.incomingMessage.url ?? '').replace(AlwatrConnection.versionPattern, ''),
+      'http://localhost/',
   );
 
   /**
    * Request method.
    */
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  readonly method = this.incomingMessage.method!.toUpperCase() as Methods;
-
-  /**
-   * The token placed in the request header.
-   */
-  readonly token = this._getToken();
-
-  /**
-   * Request body for POST & PUT method.
-   */
-  readonly bodyPromise = this._getRequestBody();
+  readonly method = (this.incomingMessage.method ?? 'GET').toUpperCase() as Methods;
 
   protected _logger = createLogger(`alwatr-nano-server-connection`);
 
@@ -269,8 +273,6 @@ export class AlwatrConnection {
    * ```
    */
   reply(content: ReplyContent): void {
-    this._logger.logMethodArgs('reply', {content});
-
     if (this.serverResponse.headersSent) {
       this._logger.accident('reply', 'http_header_sent', 'Response headers already sent');
       return;
@@ -279,6 +281,7 @@ export class AlwatrConnection {
     let body = '';
     try {
       body = JSON.stringify(content);
+      this._logger.logMethodArgs('reply', {body: body.length > 400 ? body.substring(0, 200) + '...' : content});
     }
     catch {
       this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!');
@@ -301,6 +304,7 @@ export class AlwatrConnection {
       'Content-Length': body.length,
       'Content-Type': 'application/json',
       'Server': 'Alwatr NanoServer',
+      'Access-Control-Allow-Origin': '*',
     });
 
     this.serverResponse.write(body, 'utf8', (error: NodeJS.ErrnoException | null | undefined) => {
@@ -314,7 +318,10 @@ export class AlwatrConnection {
     this.serverResponse.end();
   }
 
-  protected _getToken(): string | null {
+  /**
+   * Get the token placed in the request header.
+   */
+  getToken(): string | null {
     const auth = this.incomingMessage.headers.authorization?.split(' ');
 
     if (auth == null || auth[0] !== 'Bearer') {
@@ -324,9 +331,17 @@ export class AlwatrConnection {
     return auth[1];
   }
 
-  protected async _getRequestBody(): Promise<string | null> {
+  /**
+   * Get request body for POST, PUT and POST methods.
+   *
+   * Example:
+   * ```ts
+   * const body = await connection.getBody();
+   * ```
+   */
+  async getBody(): Promise<string | null> {
     // method must be POST or PUT
-    if (!(this.method === 'POST' || this.method === 'PUT')) {
+    if (!(this.method === 'POST' || this.method === 'PUT' || this.method === 'PATCH')) {
       return null;
     }
 
@@ -349,13 +364,23 @@ export class AlwatrConnection {
    * Example:
    * ```ts
    * const bodyData = await connection.requireJsonBody();
+   * if (bodyData == null) return;
    * ```
    */
   async requireJsonBody<Type extends Record<string, unknown>>(): Promise<Type | null> {
-    // if request content type is json, parse the body
-    const body = await this.bodyPromise;
+    // if request content type is json
+    if (this.incomingMessage.headers['content-type'] !== 'application/json') {
+      this.reply({
+        ok: false,
+        statusCode: 400,
+        errorCode: 'require_body_json',
+      });
+      return null;
+    }
 
-    if (body === null || body.length === 0) {
+    const body = await this.getBody();
+
+    if (body == null || body.length === 0) {
       this.reply({
         ok: false,
         statusCode: 400,
@@ -375,5 +400,117 @@ export class AlwatrConnection {
       });
       return null;
     }
+  }
+
+  /**
+   * Parse and validate request token.
+   *
+   * @returns Request token.
+   *
+   * Example:
+   * ```ts
+   * const token = connection.requireToken((token) => token.length > 12);
+   * if (token == null) return;
+   * ```
+   */
+  requireToken(validator?: ((token: string) => boolean) | Array<string> | string): string | null {
+    const token = this.getToken();
+
+    if (token == null) {
+      this.reply({
+        ok: false,
+        statusCode: 401,
+        errorCode: 'authorization_required',
+      });
+      return null;
+    }
+    else if (validator === undefined) {
+      return token;
+    }
+    else if (typeof validator === 'string') {
+      if (token === validator) return token;
+    }
+    else if (Array.isArray(validator)) {
+      if (validator.includes(token)) return token;
+    }
+    else if (typeof validator === 'function') {
+      if (validator(token) === true) return token;
+    }
+    this.reply({
+      ok: false,
+      statusCode: 403,
+      errorCode: 'access_denied',
+    });
+    return null;
+  }
+
+  /**
+   * Parse query param and validate with param type
+   */
+  protected _sanitizeParam(name: string, type: ParamType): string | number | boolean | null {
+    let value: string | number | boolean | null = this.url.searchParams.get(name);
+
+    if (value == null || value.length === 0) {
+      return null;
+    }
+
+    if (type === 'string') {
+      return value;
+    }
+
+    value = value.trim();
+
+    if (type === 'number') {
+      return isNumber(value) ? +value : null;
+    }
+
+    if (type === 'boolean') {
+      if (value === 'true' || value === '1') {
+        value = true;
+      }
+      else if (value === 'false' || value === '0') {
+        value = false;
+      }
+      else return null;
+    }
+
+    return null;
+  }
+
+  /**
+   * Parse and validate query params.
+   *
+   * @returns Query params object.
+   *
+   * Example:
+   * ```ts
+   * const params = connection.requireQueryParams<{id: string}>({id: 'string'});
+   * if (params == null) return;
+   * console.log(params.id);
+   * ```
+   */
+  requireQueryParams<T extends QueryParams = QueryParams>(params: Record<string, ParamType>): T | null {
+    const parsedParams: Record<string, string | number | boolean | null> = {};
+
+    for (const paramName in params) {
+      if (!Object.prototype.hasOwnProperty.call(params, paramName)) continue;
+      const paramType = params[paramName];
+      const paramValue = (parsedParams[paramName] = this._sanitizeParam(paramName, paramType));
+      if (paramValue == null) {
+        this.reply({
+          ok: false,
+          statusCode: 406,
+          errorCode: `query_parameter_required`,
+          data: {
+            paramName,
+            paramType,
+            paramValue,
+          },
+        });
+        return null;
+      }
+    }
+
+    return parsedParams as T;
   }
 }

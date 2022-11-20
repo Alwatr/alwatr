@@ -1,0 +1,42 @@
+{
+  "name": "@alwatr/storage-engine",
+  "version": "0.22.0",
+  "description": "Elegant micro in-memory json-like storage with disk backed, Faster NoSQL Database written in tiny TypeScript ES module.",
+  "keywords": [
+    "database",
+    "storage",
+    "json",
+    "nosql",
+    "no-sql",
+    "data",
+    "data-storage",
+    "file",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "main": "storage-engine.js",
+  "type": "module",
+  "types": "storage-engine.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "license": "MIT",
+  "files": [
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "packages/core/storage-engine"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/storage-engine#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "dependencies": {
+    "exit-hook": "^3.1.2",
+    "tslib": "^2.4.1"
+  }
+}
