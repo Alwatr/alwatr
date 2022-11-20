@@ -290,7 +290,6 @@ async function _handleRetryPattern(options: FetchOptions): Promise<Response> {
       logger.incident('fetch', 'fetch_server_error', 'fetch server error ' + response.status);
       throw new Error('fetch_server_error');
     }
-
     else return response;
   }
   catch (err) {

@@ -33,7 +33,6 @@ setInterval(() => {
   last = i;
 }, 2_000);
 
-
 console.time('set all items');
 
 async function request(): Promise<void> {
@@ -41,14 +40,16 @@ async function request(): Promise<void> {
 
   for (let j = 0; j < 100; j++) {
     i++;
-    parallelRequest.push(db.set({
-      _id: 'user_' + i,
-      _updatedBy: 'demo_' + i,
-      fname: random.string(4, 16),
-      lname: random.string(4, 32),
-      email: random.string(8, 32),
-      token: random.string(16),
-    }));
+    parallelRequest.push(
+        db.set({
+          _id: 'user_' + i,
+          _updatedBy: 'demo_' + i,
+          fname: random.string(4, 16),
+          lname: random.string(4, 32),
+          email: random.string(8, 32),
+          token: random.string(16),
+        }),
+    );
   }
 
   await Promise.all(parallelRequest);

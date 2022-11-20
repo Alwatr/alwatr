@@ -31,4 +31,3 @@ services:
         target: /config
         bind:
           create_host_path: true
-

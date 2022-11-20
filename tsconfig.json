@@ -117,6 +117,6 @@
     {"path": "./packages/core/element"},
     {"path": "./packages/lab/zx-example"},
     {"path": "./packages/ui/icon"},
-    {"path": "./demo"},
+    {"path": "./demo"}
   ]
 }

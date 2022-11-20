@@ -53,7 +53,6 @@ catch (err) {
   }
 }
 
-
 await db.set({
   _id: 'fmd',
   _updatedBy: 'demo',

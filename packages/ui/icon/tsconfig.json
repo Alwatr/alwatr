@@ -7,13 +7,11 @@
     "outDir": "."
   },
   // files, include and exclude from the inheriting config are always overwritten.
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["src/**/*"],
   "exclude": [],
   "references": [
     {
       "path": "../../core/element"
-    },
+    }
   ]
 }
