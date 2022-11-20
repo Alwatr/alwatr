@@ -1,63 +1,56 @@
 {
-  "name": "alwatr-nanoservice-starter",
-  "version": "0.20.0",
-  "description": "Alwatr Microservice/Nanoservice Starter Kit",
+  "name": "@alwatr/flight-finder-api",
+  "version": "0.1.0",
+  "description": "Alwatr Flight Finder API Microservice",
   "type": "module",
-  "keywords": [
-    "microservice",
-    "nanoservice",
-    "api",
-    "typescript",
-    "esm",
-    "alwatr"
-  ],
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/starter/nanoservice"
-  },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/starter/nanoservice#readme",
-  "bugs": {
-    "url": "https://github.com/AliMD/alwatr/issues"
+    "url": "https://github.com/AliMD/flight-finder",
+    "directory": "api"
   },
   "scripts": {
     "l": "yarn lint",
     "b": "yarn build",
-    "cb": "npm-run-all --sequential clean build",
-    "s": "npm-run-all --sequential clean build serve",
+    "cb": "run-s clean build",
+    "s": "run-s clean build serve",
     "w": "yarn watch",
     "f": "yarn format",
     "fl": "yarn format:eslint",
     "fp": "yarn format:prettier",
     "start": "yarn serve",
-    "lint": "npm-run-all --sequential lint:*",
-    "lint:ts": "eslint **/*.ts",
-    "build": "npm-run-all --sequential build:*",
+    "lint": "run-s lint:*",
+    "lint:ts": "eslint . --config .eslintrc.json --ext .ts --ignore-path ../.gitignore",
+    "build": "run-s build:*",
     "build:ts": "tsc --build",
-    "format": "npm-run-all --sequential format:prettier format:eslint",
-    "format:eslint": "eslint **/*.ts --fix",
-    "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --ignore-path ./.eslintignore --write",
+    "format": "run-s format:prettier format:eslint",
+    "format:eslint": "yarn lint:ts --fix",
+    "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --ignore-path ../.gitignore --write",
     "clean": "rimraf dist/",
     "serve": "node dist/index.js",
     "serve:debug": "node --inspect dist/index.js",
-    "watch": "npm-run-all --parallel watch:ts watch:node",
-    "watch:node": "nodemon --ignore _data/ dist/index.js",
-    "watch:debug-node": "nodemon --ignore _data/ --inspect dist/index.js",
+    "watch": "run-s clean build && run-p watch:ts watch:node",
+    "watch:node": "nodemon -w dist/ dist/index.js",
+    "watch:debug-node": "nodemon -w dist/ --inspect dist/index.js",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.20.0",
-    "@alwatr/math": "^0.20.0",
-    "@alwatr/nano-server": "^0.20.0"
+    "@alwatr/logger": "^0.22.0",
+    "@alwatr/nano-server": "^0.22.0",
+    "@alwatr/storage-client": "^0.22.0",
+    "@alwatr/storage-engine": "^0.22.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
-    "@typescript-eslint/eslint-plugin": "^5.42.1",
-    "@typescript-eslint/parser": "^5.42.1",
-    "eslint": "^8.27.0",
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.43.0",
+    "eslint": "^8.28.0",
     "eslint-config-google": "^0.14.0",
     "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-import": "^2.26.0",
@@ -65,6 +58,6 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
-    "typescript": "4.8.4"
+    "typescript": "4.9.3"
   }
 }
