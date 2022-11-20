@@ -17,7 +17,7 @@ jobs:
   add-to-project:
     name: Add To GitHub projects
     runs-on: ubuntu-latest
-    
+
     permissions:
       issues: write
       pull-requests: write
@@ -28,6 +28,6 @@ jobs:
         uses: actions/add-to-project@v0.3.0
         with:
           project-url: https://github.com/users/AliMD/projects/3
-          github-token: ${{ github.token }}
+          github-token: ${{ secrets.ADD_TO_PROJECT }}
           # labeled: a, b
           # label-operator: AND
