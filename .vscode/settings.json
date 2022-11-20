@@ -1,0 +1,14 @@
+{
+  "eslint.packageManager": "yarn",
+  "npm.packageManager": "yarn",
+  "editor.wordWrapColumn": 120,
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "cSpell.language": "en,fa,fa-IR",
+  "cSpell.words": ["alwatr", "mihandoost"]
+}
