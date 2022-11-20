@@ -2,22 +2,34 @@
 @apiVersion = v0
 @token = alwatr_110_313
 
-# Add job
-PUT {{apiUrl}}/{{apiVersion}}/job/add
-authorization: Bearer {{token}}
+### Home
+GET {{apiUrl}}/{{apiVersion}}
+
+### Get all jobs
+Get {{apiUrl}}/{{apiVersion}}/job
+Authorization: Bearer {{token}}
+
+### New job
+PUT {{apiUrl}}/{{apiVersion}}/job
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
   "origin": "KIH",
   "dest": "THR",
-  "date": "1401/10/10"
+  "date": "1401/10/1"
 }
 
+### Edit job (not permit)
+PUT {{apiUrl}}/{{apiVersion}}/job
+Authorization: Bearer {{token}}
+Content-Type: application/json
 
-DELETE {{apiUrl}}/{{apiVersion}}/job/delete?id=1
-authorization: Bearer {{token}}
+{
+  "_id": "1",
+  "...": "..."
+}
 
-
-GET {{apiUrl}}/{{apiVersion}}/job/current
-authorization: Bearer {{token}}
-
+### Delete job
+DELETE {{apiUrl}}/{{apiVersion}}/job?id=1
+Authorization: Bearer {{token}}
