@@ -1,10 +1,15 @@
 {
-  "name": "alwatr",
+  "name": "@alwatr/monorepo",
   "description": "The Alwatr Library",
   "repository": "https://github.com/AliMD/alwatr/",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
+  "type": "module",
   "private": true,
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
   "workspaces": [
     "packages/*/*",
     "demo"

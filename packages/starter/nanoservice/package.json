@@ -1,5 +1,5 @@
 {
-  "name": "alwatr-nanoservice-starter",
+  "name": "@alwatr/nanoservice-starter",
   "version": "0.22.0",
   "description": "Alwatr Microservice/Nanoservice Starter Kit",
   "type": "module",
@@ -14,6 +14,10 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
