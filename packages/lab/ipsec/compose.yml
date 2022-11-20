@@ -6,8 +6,8 @@ services:
       - NET_ADMIN
 
     ports:
-      - "500:500/udp"
-      - "4500:4500/udp"
+      - '500:500/udp'
+      - '4500:4500/udp'
 
     privileged: true
 
@@ -24,4 +24,3 @@ services:
         target: /etc/ipsec.d
         bind:
           create_host_path: true
-

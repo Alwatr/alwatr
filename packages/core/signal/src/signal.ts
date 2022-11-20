@@ -1,8 +1,10 @@
 import {createLogger} from '@alwatr/logger';
 
 import {
-  _getSignalObject, _removeSignalListener,
-  _setSignalProvider, _dispatchSignal,
+  _getSignalObject,
+  _removeSignalListener,
+  _setSignalProvider,
+  _dispatchSignal,
   _addSignalListener,
 } from './core.js';
 

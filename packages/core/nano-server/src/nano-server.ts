@@ -60,11 +60,14 @@ export class AlwatrNanoServer {
     this._clientErrorListener = this._clientErrorListener.bind(this);
     this._onHealthCheckRequest = this._onHealthCheckRequest.bind(this);
 
-    this.httpServer = createServer({
-      keepAlive: true,
-      keepAliveInitialDelay: 0,
-      noDelay: true,
-    }, this._requestListener);
+    this.httpServer = createServer(
+        {
+          keepAlive: true,
+          keepAliveInitialDelay: 0,
+          noDelay: true,
+        },
+        this._requestListener,
+    );
     this.httpServer.requestTimeout = this._config.requestTimeout;
     this.httpServer.keepAliveTimeout = this._config.keepAliveTimeout;
     this.httpServer.headersTimeout = this._config.headersTimeout;

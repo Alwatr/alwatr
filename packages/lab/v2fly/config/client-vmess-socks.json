@@ -37,9 +37,9 @@
       },
       "streamSettings": {
         "transport": "ws",
-        "transportSettings":{},
-        "security":"none",
-        "securitySettings":{}
+        "transportSettings": {},
+        "security": "none",
+        "securitySettings": {}
       }
     }
   ]

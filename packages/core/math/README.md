@@ -56,6 +56,7 @@ console.log(typeof Infinity); //=> 'number'
 
 #### True
 
+<!-- prettier-ignore -->
 ```ts
 import {isNumber} from 'https://esm.run/@alwatr/math';
 

@@ -36,8 +36,7 @@ if (ali == null) {
     lname: 'Mihandoost',
     email: 'ali@mihandoost.com',
   };
-}
-else {
+} else {
   console.log('ali found: %o', ali);
   ali.token = Math.random().toString(36).substring(2, 15);
 }

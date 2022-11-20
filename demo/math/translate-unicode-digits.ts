@@ -26,4 +26,4 @@ for (let i = count; i > 0; i--) {
   unicodeDigits.translate(list);
 }
 
-console.log(count / (Date.now() - start) * 1000);
+console.log((count / (Date.now() - start)) * 1000);

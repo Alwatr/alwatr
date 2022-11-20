@@ -117,29 +117,29 @@ export class UnicodeDigits {
   }
 
   /**
- * Convert the String of number of the source language to the destination language.
- *
- * @param {string} str - String of number of the source language.
- * @returns String of number of the destination language.
- *
- * Example:
- *
- * ```ts
- * const list = [
- *   '0123456789',
- *   '٠١٢٣٤٥٦٧٨٩',
- *   '߀߁߂߃߄߅߆߇߈߉',
- *   '०१२३४५६७८९',
- *   '০১২৩৪৫৬৭৮৯',
- *   '੦੧੨੩੪੫੬੭੮੯',
- *   '૦૧૨૩૪૫૬૭૮૯',
- *   '୦୧୨୩୪୫୬୭୮୯',
- *   '௦௧௨௩௪௫௬௭௮௯',
- * ].join('\n');
- *
- * console.log(unicodeDigits.translate(list));
- * ```
- */
+   * Convert the String of number of the source language to the destination language.
+   *
+   * @param {string} str - String of number of the source language.
+   * @returns String of number of the destination language.
+   *
+   * Example:
+   *
+   * ```ts
+   * const list = [
+   *   '0123456789',
+   *   '٠١٢٣٤٥٦٧٨٩',
+   *   '߀߁߂߃߄߅߆߇߈߉',
+   *   '०१२३४५६७८९',
+   *   '০১২৩৪৫৬৭৮৯',
+   *   '੦੧੨੩੪੫੬੭੮੯',
+   *   '૦૧૨૩૪૫૬૭૮૯',
+   *   '୦୧୨୩୪୫୬୭୮୯',
+   *   '௦௧௨௩௪௫௬௭௮௯',
+   * ].join('\n');
+   *
+   * console.log(unicodeDigits.translate(list));
+   * ```
+   */
   translate(str: string): string {
     return str.replace(this._searchRegExt, this._replacer);
   }
