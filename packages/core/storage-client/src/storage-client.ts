@@ -4,7 +4,7 @@ import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import type {AlwatrStorageClientConfig, ServerResponse} from './type.js';
 import type {DocumentObject} from '@alwatr/storage-engine';
 
-export {DocumentObject, AlwatrStorageClientConfig as AlwatrStorageConfig};
+export {DocumentObject, AlwatrStorageClientConfig};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage-client',
