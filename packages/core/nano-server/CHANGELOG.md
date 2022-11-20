@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/AliMD/alwatr/compare/v0.21.0...v0.22.0) (2022-11-20)
+
+### Bug Fixes
+
+- **nano-server:** method all ([b20afa1](https://github.com/AliMD/alwatr/commit/b20afa1fb8eeb13c4b6e3d811ae6fbbeb7465306))
+- **nano-server:** no-non-null-assertion ([ad5588c](https://github.com/AliMD/alwatr/commit/ad5588c6e0e863aa03cca44c23144dbf371795da))
+- **nano-server:** parse body on PATCH method ([cba790f](https://github.com/AliMD/alwatr/commit/cba790f43dc88c00ee99f5f7d7c872e8f6d1618d))
+- **nano-server:** remove ALL from Methods type ([1f67c07](https://github.com/AliMD/alwatr/commit/1f67c07a5044c6d7cf89605e269af468aa49094c))
+- **nano-server:** review require... methods and fix issues ([a7e4bae](https://github.com/AliMD/alwatr/commit/a7e4bae89440c2fc72a0a9e6060aac894b18eddf))
+- **service/storage:** remove home route ([5b4160d](https://github.com/AliMD/alwatr/commit/5b4160df0237085e43a103a02b9b63404eddda2c))
+
+### Features
+
+- **nano-server:** add \_sanitizeParam ([46edbc3](https://github.com/AliMD/alwatr/commit/46edbc33eb164f6676d8a5c939d52accededfd45))
+- **nano-server:** keep alive performance and options ([5ed78b6](https://github.com/AliMD/alwatr/commit/5ed78b6cf5b7fd1b00c28df26ca250d4025dc676))
+- **nano-server:** parse and validate query params in AlwatrConnection ([1eadd68](https://github.com/AliMD/alwatr/commit/1eadd68d3e1f92e47d743b7412ae247f3414738f))
+- **nano-server:** validate content type header in requireJsonBody ([d99eb74](https://github.com/AliMD/alwatr/commit/d99eb742c0c5ea1b92f44767d570bd42b9c9e342))
+- **service/storage:** add remove route ([d4452cd](https://github.com/AliMD/alwatr/commit/d4452cd0366452ab07d82b338dbba345c32cd61d))
+- **service/storage:** add requireToken to AlwatrConnection ([8073773](https://github.com/AliMD/alwatr/commit/8073773577b88a52baa90c6042bac52260ec3dc1))
+
+### Performance Improvements
+
+- **nano-server:** faster log ([8ff716e](https://github.com/AliMD/alwatr/commit/8ff716e1eaee59047f816e1645aa9dde7635b571))
+
 # [0.21.0](https://github.com/AliMD/alwatr/compare/v0.20.0...v0.21.0) (2022-11-13)
 
 **Note:** Version bump only for package @alwatr/nano-server

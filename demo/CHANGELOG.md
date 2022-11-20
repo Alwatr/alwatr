@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/AliMD/alwatr/compare/v0.21.0...v0.22.0) (2022-11-20)
+
+### Bug Fixes
+
+- **demo/storage-client:** handle document not found ([fb73532](https://github.com/AliMD/alwatr/commit/fb73532fd1a1b52552d0b79f97847db059444785))
+- **demo/storage-client:** use host in config ([f3bd04d](https://github.com/AliMD/alwatr/commit/f3bd04dd047afebd99650f57fe6a2715b014dfb2))
+- **storage-client:** demo ([83fa9d0](https://github.com/AliMD/alwatr/commit/83fa9d0bde2a65a02c225bcb9829a87667606fb6))
+- **storage-client:** demo get not found ([5070912](https://github.com/AliMD/alwatr/commit/507091267f06a8f854833ccac5b9a3f77c46ae70))
+- **storage-client:** demo security issue ([85a71d4](https://github.com/AliMD/alwatr/commit/85a71d496bd9e62863ce85c5abb994648f69a36c))
+- **storage-client:** handle 404 in benchmark ([b149c85](https://github.com/AliMD/alwatr/commit/b149c857ae8ec46ae854eb5fd3893395945d5da2))
+- **storage:** performance demo test ([17b2c1a](https://github.com/AliMD/alwatr/commit/17b2c1a54132b524b2389976fb2e21f84e20e9c1))
+- **tsconfig:** rename storage to storage-engine ([229dd77](https://github.com/AliMD/alwatr/commit/229dd77a0aa928013f93ac43514309e163631a29))
+
+### Features
+
+- **demo:** forAll storage-client ([a856099](https://github.com/AliMD/alwatr/commit/a856099f5644a0b059fd0ff25521376d5f9b97eb))
+- **demo:** storage-client ([e19abc4](https://github.com/AliMD/alwatr/commit/e19abc4ecd59200204be7f26ce0021157a26e262))
+- **fetch:** support nodejs ([2ed2ef4](https://github.com/AliMD/alwatr/commit/2ed2ef42e9f204d4896ada4e20b839cfabdc7284))
+- **storage-client:** benchmark test ([7c0fc92](https://github.com/AliMD/alwatr/commit/7c0fc92fa910168775459dc2be484844a6a178cb))
+- **storage-client:** performance demo ([186832c](https://github.com/AliMD/alwatr/commit/186832cfea21b02aa6f7c9ec3eba768fa0ea64ed))
+
+### Performance Improvements
+
+- **storage-client:** refactor for perf improve and keep alive ([ed0b743](https://github.com/AliMD/alwatr/commit/ed0b743a8936602b63d92c216d2d65f6a31d74cf))
+
 # [0.21.0](https://github.com/AliMD/alwatr/compare/v0.20.0...v0.21.0) (2022-11-13)
 
 **Note:** Version bump only for package @alwatr/demo
