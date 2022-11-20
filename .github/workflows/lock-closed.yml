@@ -42,8 +42,3 @@ jobs:
             to this closed one.
           pr-comment: >
             Pull Request closed and locked due to lack of activity.
-
-            If you'd like to build on this closed PR, you can clone it using
-            this method: https://stackoverflow.com/a/14969986
-
-            Then open a new PR, referencing this closed PR in your message.
