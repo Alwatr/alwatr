@@ -29,3 +29,4 @@ package-lock.json
 
 # storage
 _data
+**/db
