@@ -1,9 +1,9 @@
 import {logger} from '../../lib/config.js';
 import {nanoServer} from '../../lib/nano-server.js';
-
-import type {AlwatrConnection} from '@alwatr/nano-server';
 import {storage} from '../../lib/storage.js';
+
 import type {Job} from '../../lib/type.js';
+import type {AlwatrConnection} from '@alwatr/nano-server';
 
 // Add job
 nanoServer.route('PUT', '/job', newJob);
@@ -20,11 +20,11 @@ async function newJob(connection: AlwatrConnection): Promise<void> {
   job._updatedBy ??= 'api';
 
   try {
-    if (job._id !== 'auto_increment' && await storage.has(job._id)) {
+    if (job._id !== 'auto_increment' && (await storage.has(job._id))) {
       return connection.reply({
         ok: false,
         statusCode: 400,
-        errorCode: 'job_exist'
+        errorCode: 'job_exist',
       });
     }
     // else
