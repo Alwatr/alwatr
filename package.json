@@ -19,7 +19,7 @@
     "lint:ts": "eslint . --config .eslintrc.json --ext .ts --ignore-path ./.gitignore",
     "format": "run-s format:prettier format:eslint",
     "format:eslint": "yarn lint:ts --fix",
-    "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --ignore-path ./.gitignore --write"
+    "format:prettier": "prettier . --ignore-path ./.gitignore --write"
   },
   "workspaces": [
     "api"
