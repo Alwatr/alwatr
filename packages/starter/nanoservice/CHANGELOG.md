@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.22.1](https://github.com/AliMD/alwatr/compare/v0.22.0...v0.22.1) (2022-11-21)
+
+### Bug Fixes
+
+- **service:** update package.json ([31dc122](https://github.com/AliMD/alwatr/commit/31dc122cd4050167ece17e53800b3844b5c99c16))
+- **starter/nano-server:** remove wc plugin from eslint ([6611644](https://github.com/AliMD/alwatr/commit/6611644226ff19533435810ae0b4a105e3275bbd))
+
 # [0.22.0](https://github.com/AliMD/alwatr/compare/v0.21.0...v0.22.0) (2022-11-20)
 
 ### Bug Fixes

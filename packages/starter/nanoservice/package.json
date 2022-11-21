@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/nanoservice-starter",
-  "version": "0.22.0",
+  "version": "0.22.1",
   "description": "Alwatr Microservice/Nanoservice Starter Kit",
   "type": "module",
   "keywords": [
@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@alwatr/logger": "^0.22.0",
-    "@alwatr/nano-server": "^0.22.0"
+    "@alwatr/nano-server": "^0.22.1"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",

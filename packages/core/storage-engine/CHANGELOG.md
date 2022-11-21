@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.22.1](https://github.com/AliMD/alwatr/compare/v0.22.0...v0.22.1) (2022-11-21)
+
+### Bug Fixes
+
+- **storage-engine:** auto_increment issue ([ff7bdca](https://github.com/AliMD/alwatr/commit/ff7bdca2138398a3f69551e8235c3d1a9a0fae60))
+
 # [0.22.0](https://github.com/AliMD/alwatr/compare/v0.21.0...v0.22.0) (2022-11-20)
 
 ### Features

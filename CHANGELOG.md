@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.22.1](https://github.com/AliMD/alwatr/compare/v0.22.0...v0.22.1) (2022-11-21)
+
+### Bug Fixes
+
+- add rest client extension to recommendation ([33a4a25](https://github.com/AliMD/alwatr/commit/33a4a2579208d6026380bbe8eaa9d4f9d2a8a1b9))
+- **service:** update package.json ([31dc122](https://github.com/AliMD/alwatr/commit/31dc122cd4050167ece17e53800b3844b5c99c16))
+- **starter/nano-server:** remove wc plugin from eslint ([6611644](https://github.com/AliMD/alwatr/commit/6611644226ff19533435810ae0b4a105e3275bbd))
+- **storage-client:** types issues ([c083bd0](https://github.com/AliMD/alwatr/commit/c083bd08cd2364bc64ebd1e60c668f37784d8502))
+- **storage-engine:** auto_increment issue ([ff7bdca](https://github.com/AliMD/alwatr/commit/ff7bdca2138398a3f69551e8235c3d1a9a0fae60))
+- **workflows:** add-to-project token ([2528762](https://github.com/AliMD/alwatr/commit/252876251187cb50d44cb324e4a989de47ccfc84))
+- **workflows:** add-to-project token ([2eee23a](https://github.com/AliMD/alwatr/commit/2eee23a2a536ed00780e385917de0c7edc2e4403))
+
+### Features
+
+- **workflows:** Add To GitHub projects ([41aa33a](https://github.com/AliMD/alwatr/commit/41aa33a7448fc2ab983e2446a1c3d80f532cd04c))
+
 # [0.22.0](https://github.com/AliMD/alwatr/compare/v0.21.0...v0.22.0) (2022-11-20)
 
 ### Bug Fixes
