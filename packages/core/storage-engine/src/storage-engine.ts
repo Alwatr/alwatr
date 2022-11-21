@@ -137,9 +137,12 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
    * Get next auto increment id for numerical document id.
    */
   get nextAutoIncrementId(): string {
-    const id = this._storage.meta ? +this._storage.meta.lastUpdatedId : 0;
+    let id = +(this._storage.meta?.lastAutoId ?? -1);
     if (isNaN(id)) throw new Error('doc_id_is_nan');
-    return (id + 1).toString();
+    do {
+      id++;
+    } while (this._storage.data[id.toString()] != null);
+    return id.toString();
   }
 
   protected get _newStorage(): DataStorage<DocumentType> {
@@ -251,11 +254,17 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
       documentObject = JSON.parse(JSON.stringify(documentObject));
     }
 
-    if (documentObject._id === 'auto_increment') {
+    const autoIncrement = documentObject._id === 'auto_increment';
+
+    if (autoIncrement) {
       documentObject._id = this.nextAutoIncrementId;
     }
 
     const oldData = this._storage.data[documentObject._id];
+
+    if (oldData == null) {
+      this._keys = null; // Clear cached keys
+    }
 
     // update meta
     documentObject._updatedAt = Date.now();
@@ -266,16 +275,14 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
     this._storage.meta ??= {
       formatVersion: AlwatrStorageEngine.formatVersion,
       reversion: 0,
-      lastCreatedId: documentObject._id,
       lastUpdatedId: '',
       lastUpdatedAt: 0,
     };
     this._storage.meta.reversion++;
     this._storage.meta.lastUpdatedId = documentObject._id;
     this._storage.meta.lastUpdatedAt = documentObject._updatedAt;
-    if (oldData == null) {
-      this._keys = null; // Clear cached keys
-      this._storage.meta.lastCreatedId = documentObject._id;
+    if (autoIncrement) {
+      this._storage.meta.lastAutoId = documentObject._id;
     }
 
     this._storage.data[documentObject._id] = documentObject;

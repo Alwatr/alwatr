@@ -33,14 +33,13 @@ await db.set({
   token: Math.random().toString(36).substring(2, 15),
 });
 
-console.log('has \'alimd\': %o', await db.has('alimd'));
+console.log("has 'alimd': %o", await db.has('alimd'));
 console.log('keys: %o', await db.keys());
 console.log('getAll: %o', await db.getAll());
 console.log('delete: %o', await db.delete('alimd'));
 try {
   await db.delete('abcd');
-}
-catch (err) {
+} catch (err) {
   console.log('delete 404: %o', (err as Error).message);
 }
 ```
@@ -79,12 +78,10 @@ Example:
 try {
   const user = await userStorage.get('user-1');
   console.dir(item);
-}
-catch (err) {
+} catch (err) {
   if ((err as Error)?.message === 'document_not_found') {
     console.log('user_5000 id not found!');
-  }
-  else {
+  } else {
     console.err((err as Error)?.message ?? err);
   }
 }

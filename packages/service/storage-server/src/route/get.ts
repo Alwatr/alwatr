@@ -22,7 +22,7 @@ function getDocument(connection: AlwatrConnection): void {
   const token = connection.requireToken(config.token);
   if (token == null) return;
 
-  const params = connection.requireQueryParams<{storage: string, id: string}>({storage: 'string', id: 'string'});
+  const params = connection.requireQueryParams<{storage: string; id: string}>({storage: 'string', id: 'string'});
   if (params == null) return;
 
   const storage = storageProvider.get({name: params.storage});
