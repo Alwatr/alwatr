@@ -1,5 +1,6 @@
 @apiUrl = http://127.0.0.1:8000
 @apiVersion = v0
+@token = alwatr_110_313
 
 ### Home
 GET {{apiUrl}}/{{apiVersion}}
@@ -7,7 +8,9 @@ GET {{apiUrl}}/{{apiVersion}}
 ### Send message
 POST {{apiUrl}}/{{apiVersion}}/
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
+  "to": "all",
   "message": "salam"
 }
