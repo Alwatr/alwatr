@@ -36,6 +36,7 @@
     "@alwatr/logger": "^0.22.0",
     "@alwatr/nano-server": "^0.22.1",
     "@alwatr/storage-client": "^0.22.1",
+    "@alwatr/storage-engine": "^0.22.1",
     "telegraf": "^4.11.2"
   },
   "devDependencies": {

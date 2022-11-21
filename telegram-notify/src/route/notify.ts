@@ -1,3 +1,4 @@
+import {sendMessage} from '../bot/send-message.js';
 import {logger} from '../lib/config.js';
 import {nanoServer} from '../lib/nano-server.js';
 

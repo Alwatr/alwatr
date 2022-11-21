@@ -3,7 +3,7 @@ import {createLogger} from '@alwatr/logger';
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
 
 if (telegramBotToken == undefined) {
-  throw new Error('telegram_bot_token_required');
+  throw new Error('TELEGRAM_BOT_TOKEN required');
 }
 
 export const config = {
