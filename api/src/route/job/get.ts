@@ -1,8 +1,8 @@
 import {logger} from '../../lib/config.js';
 import {nanoServer} from '../../lib/nano-server.js';
+import {storage} from '../../lib/storage.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
-import {storage} from '../../lib/storage.js';
 
 // Get current job object
 nanoServer.route('GET', '/job', getJob);

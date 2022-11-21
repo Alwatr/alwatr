@@ -15,7 +15,7 @@ export const config = {
     host: process.env.STORAGE_HOST ?? 'http://127.0.0.1',
     name: process.env.STORAGE_NAME ?? 'job',
     token: storageToken,
-  }
+  },
 };
 
 export const logger = createLogger('flight-finder-api');
