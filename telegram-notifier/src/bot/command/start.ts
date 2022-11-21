@@ -7,6 +7,7 @@ import {MemberList} from '../../lib/type.js';
 bot.command('start', async (ctx): Promise<void> => {
   const chatId = ctx.chat.id;
   logger.logMethodArgs('command/start', {chatId});
+
   const target: MemberList = storage.get('all', true) ?? {
     _id: 'all',
     _updatedBy: 'api',
@@ -15,5 +16,6 @@ bot.command('start', async (ctx): Promise<void> => {
 
   target.memberList.push(chatId);
   storage.set(target, true);
+
   await ctx.reply('You are registered to notify list!');
 });
