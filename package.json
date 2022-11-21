@@ -22,7 +22,8 @@
     "format:prettier": "prettier . --ignore-path ./.gitignore --write"
   },
   "workspaces": [
-    "api"
+    "api",
+    "telegram-notify"
   ],
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.43.0",

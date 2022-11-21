@@ -4,7 +4,7 @@ nanoServer.route('GET', '/', async (connection) => {
   connection.reply({
     ok: true,
     data: {
-      app: 'Alwatr Flight Finder Notify Microservice',
+      app: 'Alwatr Notify Microservice',
       message: 'Hello ;)',
     },
   });

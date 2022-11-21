@@ -1,7 +1,7 @@
 {
-  "name": "@alwatr/flight-finder-notify",
+  "name": "@alwatr/telegram-notify",
   "version": "0.0.0",
-  "description": "Alwatr Flight Finder Notify Microservice",
+  "description": "Alwatr Telegram Notify Microservice",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
@@ -13,7 +13,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/flight-finder",
-    "directory": "api"
+    "directory": "telegram-notify"
   },
   "scripts": {
     "l": "yarn lint",
@@ -21,17 +21,9 @@
     "cb": "run-s clean build",
     "s": "run-s clean build serve",
     "w": "yarn watch",
-    "f": "yarn format",
-    "fl": "yarn format:eslint",
-    "fp": "yarn format:prettier",
     "start": "yarn serve",
-    "lint": "run-s lint:*",
-    "lint:ts": "eslint . --config .eslintrc.json --ext .ts --ignore-path ../.gitignore",
     "build": "run-s build:*",
     "build:ts": "tsc --build",
-    "format": "run-s format:prettier format:eslint",
-    "format:eslint": "yarn lint:ts --fix",
-    "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --ignore-path ../.gitignore --write",
     "clean": "rimraf dist/",
     "serve": "node dist/index.js",
     "serve:debug": "node --inspect dist/index.js",
@@ -42,10 +34,8 @@
   },
   "dependencies": {
     "@alwatr/logger": "^0.22.0",
-    "@alwatr/nano-server": "^0.22.0",
-    "@alwatr/storage-client": "^0.22.0",
-    "@alwatr/storage-engine": "^0.22.0",
-    "grammy": "^1.12.0",
+    "@alwatr/nano-server": "^0.22.1",
+    "@alwatr/storage-client": "^0.22.1",
     "telegraf": "^4.11.2"
   },
   "devDependencies": {

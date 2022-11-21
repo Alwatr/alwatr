@@ -1,5 +1,3 @@
-import {bot} from '../lib/bot.js';
-import {adminChatId} from '../lib/command/start.js';
 import {logger} from '../lib/config.js';
 import {nanoServer} from '../lib/nano-server.js';
 
@@ -11,10 +9,10 @@ nanoServer.route('POST', '/', notify);
 async function notify(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('notify');
 
-  const bodyJson = await connection.requireJsonBody<{message: string}>();
+  const bodyJson = await connection.requireJsonBody<{to: string, message: string}>();
   if (bodyJson == null) return;
 
-  await bot.telegram.sendMessage(adminChatId!, bodyJson.message);
+  await sendMessage(bodyJson.to, bodyJson.message);
 
   connection.reply({
     ok: true,
