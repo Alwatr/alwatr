@@ -10,7 +10,28 @@
     "node": ">=16.0.0",
     "npm": ">=7.0.0"
   },
+  "scripts": {
+    "f": "yarn format",
+    "fl": "yarn format:eslint",
+    "fp": "yarn format:prettier",
+    "l": "yarn lint",
+    "lint": "run-s lint:*",
+    "lint:ts": "eslint . --config .eslintrc.json --ext .ts --ignore-path ./.gitignore",
+    "format": "run-s format:prettier format:eslint",
+    "format:eslint": "yarn lint:ts --fix",
+    "format:prettier": "prettier . --ignore-path ./.gitignore --write"
+  },
   "workspaces": [
     "api"
-  ]
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.43.0",
+    "eslint": "^8.28.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-import-resolver-typescript": "^3.5.2",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-wc": "^1.3.2",
+    "prettier": "^2.7.1"
+  }
 }
