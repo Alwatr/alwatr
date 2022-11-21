@@ -1,4 +1,4 @@
-import {createServer} from 'http';
+import {createServer} from 'node:http';
 
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
@@ -61,12 +61,12 @@ export class AlwatrNanoServer {
     this._onHealthCheckRequest = this._onHealthCheckRequest.bind(this);
 
     this.httpServer = createServer(
-        {
-          keepAlive: true,
-          keepAliveInitialDelay: 0,
-          noDelay: true,
-        },
-        this._requestListener,
+      {
+        keepAlive: true,
+        keepAliveInitialDelay: 0,
+        noDelay: true,
+      },
+      this._requestListener
     );
     this.httpServer.requestTimeout = this._config.requestTimeout;
     this.httpServer.keepAliveTimeout = this._config.keepAliveTimeout;
@@ -117,9 +117,9 @@ export class AlwatrNanoServer {
    * ```
    */
   route(
-      method: 'ALL' | Methods,
-      route: 'all' | `/${string}`,
-      middleware: (connection: AlwatrConnection) => void,
+    method: 'ALL' | Methods,
+    route: 'all' | `/${string}`,
+    middleware: (connection: AlwatrConnection) => void
   ): void {
     this._logger.logMethodArgs('route', {method, route});
 
@@ -166,7 +166,7 @@ export class AlwatrNanoServer {
     connection.serverResponse.writeHead(200, {
       'Content-Length': body.length,
       'Content-Type': 'plain/text',
-      'Server': 'Alwatr NanoServer',
+      Server: 'Alwatr NanoServer',
     });
     connection.serverResponse.end(body);
   }
@@ -203,12 +203,10 @@ export class AlwatrNanoServer {
     try {
       if (typeof middleware === 'function') {
         await middleware(connection);
-      }
-      else {
+      } else {
         this._notFoundListener(connection);
       }
-    }
-    catch (err) {
+    } catch (err) {
       this._logger.error('handleRequest', 'http_server_middleware_error', err, {
         method: connection.method,
         route,
@@ -244,8 +242,8 @@ export class AlwatrConnection {
    * Request URL.
    */
   readonly url = new URL(
-      (this.incomingMessage.url ?? '').replace(AlwatrConnection.versionPattern, ''),
-      'http://localhost/',
+    (this.incomingMessage.url ?? '').replace(AlwatrConnection.versionPattern, ''),
+    'http://localhost/'
   );
 
   /**
@@ -285,28 +283,27 @@ export class AlwatrConnection {
     try {
       body = JSON.stringify(content);
       this._logger.logMethodArgs('reply', {body: body.length > 400 ? body.substring(0, 200) + '...' : content});
-    }
-    catch {
+    } catch {
       this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!');
       return this.reply(
         content.ok === false
           ? {
-            ok: false,
-            statusCode: content.statusCode,
-            errorCode: content.errorCode,
-          }
+              ok: false,
+              statusCode: content.statusCode,
+              errorCode: content.errorCode,
+            }
           : {
-            ok: false,
-            statusCode: 500,
-            errorCode: 'data_stringify_failed',
-          },
+              ok: false,
+              statusCode: 500,
+              errorCode: 'data_stringify_failed',
+            }
       );
     }
 
     this.serverResponse.writeHead(content.statusCode ?? 200, {
       'Content-Length': body.length,
       'Content-Type': 'application/json',
-      'Server': 'Alwatr NanoServer',
+      Server: 'Alwatr NanoServer',
       'Access-Control-Allow-Origin': '*',
     });
 
@@ -394,8 +391,7 @@ export class AlwatrConnection {
 
     try {
       return JSON.parse(body) as Type;
-    }
-    catch (err) {
+    } catch (err) {
       this.reply({
         ok: false,
         statusCode: 400,
@@ -426,17 +422,13 @@ export class AlwatrConnection {
         errorCode: 'authorization_required',
       });
       return null;
-    }
-    else if (validator === undefined) {
+    } else if (validator === undefined) {
       return token;
-    }
-    else if (typeof validator === 'string') {
+    } else if (typeof validator === 'string') {
       if (token === validator) return token;
-    }
-    else if (Array.isArray(validator)) {
+    } else if (Array.isArray(validator)) {
       if (validator.includes(token)) return token;
-    }
-    else if (typeof validator === 'function') {
+    } else if (typeof validator === 'function') {
       if (validator(token) === true) return token;
     }
     this.reply({
@@ -470,11 +462,9 @@ export class AlwatrConnection {
     if (type === 'boolean') {
       if (value === 'true' || value === '1') {
         value = true;
-      }
-      else if (value === 'false' || value === '0') {
+      } else if (value === 'false' || value === '0') {
         value = false;
-      }
-      else return null;
+      } else return null;
     }
 
     return null;

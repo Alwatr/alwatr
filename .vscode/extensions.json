@@ -9,8 +9,9 @@
     "christian-kohler.path-intellisense",
     "jgclark.vscode-todo-highlight",
     "redhat.vscode-yaml",
-    "GitHub.vscode-pull-request-github",
-    "DavidAnson.vscode-markdownlint",
-    "stylelint.vscode-stylelint"
+    "github.vscode-pull-request-github",
+    "davidanson.vscode-markdownlint",
+    "stylelint.vscode-stylelint",
+    "humao.rest-client"
   ]
 }
