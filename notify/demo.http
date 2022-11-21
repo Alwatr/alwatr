@@ -1,0 +1,13 @@
+@apiUrl = http://127.0.0.1:8000
+@apiVersion = v0
+
+### Home
+GET {{apiUrl}}/{{apiVersion}}
+
+### New job
+POST {{apiUrl}}/{{apiVersion}}/
+Content-Type: application/json
+
+{
+  "message": "salam"
+}
