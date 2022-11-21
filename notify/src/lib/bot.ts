@@ -1,6 +1,7 @@
-import {Telegraf} from 'telegraf'
-import { config } from './config.js'
+import {Telegraf} from 'telegraf';
 
-export const bot = new Telegraf(config.telegramBot.token)
+import {config} from './config.js';
 
-bot.launch()
+export const bot = new Telegraf(config.telegramBot.token);
+
+bot.launch();

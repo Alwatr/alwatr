@@ -4,7 +4,7 @@
 ### Home
 GET {{apiUrl}}/{{apiVersion}}
 
-### New job
+### Send message
 POST {{apiUrl}}/{{apiVersion}}/
 Content-Type: application/json
 

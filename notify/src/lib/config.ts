@@ -1,9 +1,9 @@
 import {createLogger} from '@alwatr/logger';
 
-const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN
+const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
 
 if (telegramBotToken == undefined) {
-  throw new Error('telegram_bot_token_required')
+  throw new Error('telegram_bot_token_required');
 }
 
 export const config = {
@@ -12,8 +12,8 @@ export const config = {
     host: process.env.HOST ?? '127.0.0.1',
   },
   telegramBot: {
-    token: telegramBotToken
-  }
+    token: telegramBotToken,
+  },
 };
 
 export const logger = createLogger('flight-finder-notify');
