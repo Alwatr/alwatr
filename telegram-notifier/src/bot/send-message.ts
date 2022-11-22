@@ -3,18 +3,21 @@ import {logger} from '../lib/config.js';
 import {storage} from '../lib/storage.js';
 
 export async function sendMessage(to: string, message: string): Promise<void> {
-  logger.logMethodArgs('sendMessage', {
-    to: to,
-    message: message,
-  });
+  logger.logMethodArgs('sendMessage', {to, message});
 
   const target = storage.get(to);
   if (target === null) {
-    logger.error('sendMessage', 'null_target', 'Target is null');
+    logger.incident('sendMessage', 'target_not_found', 'no one registered to this toke', {to});
     return;
   }
 
   for (const chatId of target.memberList) {
-    bot.telegram.sendMessage(chatId, message);
+    try {
+      await bot.telegram.sendMessage(chatId, message);
+    }
+    catch (err) {
+      // TODO: handle blocked user
+      logger.error('sendMessage', 'error_send_message', (err as Error).stack || err, {chatId});
+    }
   }
 }
