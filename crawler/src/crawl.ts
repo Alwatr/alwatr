@@ -3,9 +3,8 @@ import {fetch} from '@alwatr/fetch';
 import {config, logger} from './lib/config.js';
 import {storage} from './lib/storage.js';
 
-import type {JobFilter, JobResult} from './lib/type.js';
+import type {Job, JobFilter, JobResult} from './lib/type.js';
 import type {FetchOptions} from '@alwatr/fetch';
-
 
 export async function crawlAllJobs(): Promise<void> {
   logger.logMethod('crawlAllJobs');
@@ -16,8 +15,8 @@ export async function crawlAllJobs(): Promise<void> {
     const oldResultList = job.resultList;
     const resultList = await crawl(job.filter);
     job.resultList = resultList;
-    if (differentObject(resultList, oldResultList)) {
-      const message = makeMessage(resultList);
+    if (!differentObject(resultList, oldResultList)) {
+      const message = makeMessage(job);
       await notify(config.notifier.to, message);
     }
     await storage.set(job);
@@ -26,7 +25,7 @@ export async function crawlAllJobs(): Promise<void> {
 
 async function crawl(filter: JobFilter): Promise<Array<JobResult>> {
   logger.logMethodArgs('crawl', filter);
-  const fetchOption = makeRequestOption(filter); // make fetch options
+  const fetchOption = makeRequestOption(filter);
   const response = await makeRequest(fetchOption);
   if (response === null) throw new Error('make_request_failed');
   let resultList = await translateResponse(response);
@@ -94,11 +93,29 @@ function extraFilterResult(jobResultList: Array<JobResult>): Array<JobResult> {
   return jobResultList;
 }
 
-function makeMessage(_jobResultList: Array<JobResult>): string {
+function makeMessage(job: Job): string {
   logger.logMethod('makeMessage');
-  return '';
+  let message = `💡\n\nFlight from ${job.filter.origin} to ${job.filter.dest} on the ${job.filter.date}`;
+
+  job.resultList.forEach((jobResult) => {
+    message += '\n\n' + `price: ${jobResult.price}\ntime:${jobResult.time}\nseat count${jobResult.seatCount}`;
+  });
+
+  return message;
 }
 
-async function notify(_to: string, _message: string): Promise<void> {
-  logger.logMethod('notify');
+async function notify(to: string, message: string): Promise<void> {
+  const response = await fetch({
+    url: config.notifier.host,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    bodyJson: {
+      to: to,
+      message: message,
+    },
+  });
+
+  console.log(response);
 }
