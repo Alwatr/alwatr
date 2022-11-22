@@ -88,6 +88,10 @@ const reset = css`
   ion-input input::-webkit-date-and-time-value {
     text-align: start;
   }
+
+  alwatr-icon {
+    font-size: 24px;
+  }
 `;
 
 export default reset;
