@@ -15,17 +15,10 @@ Desktop.ini
 
 # Build
 dist
-.tsbuildinfo
-src/**/*.js
-src/**/*.map
-src/**/*.d.ts
 
 # Dependencies
 node_modules
 package-lock.json
-
-# Output of 'npm pack'
-*.tgz
 
 # Yarn Integrity file
 .yarn-integrity
@@ -33,3 +26,7 @@ package-lock.json
 # dotenv environment variables file
 .env
 .env.test
+
+# storage
+_data
+**/db

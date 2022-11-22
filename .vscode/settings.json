@@ -11,14 +11,9 @@
   "cSpell.language": "en,fa",
   "cSpell.words": [
     "alwatr",
-    "khafan",
     "Loggable",
-    "mastmalize",
     "Mihandoost",
-    "noncallable",
-    "tsbuildinfo",
-    "webcomponents",
-    "webcomponentsjs"
+    "noncallable"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "files.exclude": {
