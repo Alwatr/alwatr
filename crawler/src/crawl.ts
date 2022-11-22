@@ -15,7 +15,7 @@ export async function crawlAllJobs(): Promise<void> {
     const oldResultList = job.resultList;
     const resultList = await crawl(job.filter);
     job.resultList = resultList;
-    if (!differentObject(resultList, oldResultList)) {
+    if (differentObject(resultList, oldResultList)) {
       const message = makeMessage(job);
       await notify(config.notifier.to, message);
     }
@@ -34,7 +34,7 @@ async function crawl(filter: JobFilter): Promise<Array<JobResult>> {
 }
 
 function differentObject(obj1: unknown, obj2: unknown): boolean {
-  return JSON.stringify(obj1) === JSON.stringify(obj2);
+  return !(JSON.stringify(obj1) === JSON.stringify(obj2));
 }
 
 function makeRequestOption(filter: JobFilter): Partial<FetchOptions> & {url: string} {
@@ -79,7 +79,7 @@ async function translateResponse(response: Response): Promise<Array<JobResult>> 
   const jobResult: Array<JobResult> = [];
   for (const flightInformation of responseJson.flightHeaderList) {
     jobResult.push({
-      price: +(flightInformation.formattedPrice as string).replace(/,/g, ''),
+      price: +(flightInformation.formattedPrice as string).replaceAll(',', ''),
       seatCount: flightInformation.seatCount,
       time: flightInformation.cleanDepartureTime,
     });
@@ -95,10 +95,10 @@ function extraFilterResult(jobResultList: Array<JobResult>): Array<JobResult> {
 
 function makeMessage(job: Job): string {
   logger.logMethod('makeMessage');
-  let message = `💡\n\nFlight from ${job.filter.origin} to ${job.filter.dest} on the ${job.filter.date}`;
+  let message = `🛫\n\nFlight from ${job.filter.origin} to ${job.filter.dest} on the ${job.filter.date}`;
 
   job.resultList.forEach((jobResult) => {
-    message += '\n\n' + `price: ${jobResult.price}\ntime:${jobResult.time}\nseat count${jobResult.seatCount}`;
+    message += '\n\n' + `Price: ${jobResult.price}\nTime: ${jobResult.time}\nSeat Count: ${jobResult.seatCount}`;
   });
 
   return message;
