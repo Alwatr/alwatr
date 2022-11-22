@@ -1,11 +1,11 @@
+import {getBabelOutputPlugin} from '@rollup/plugin-babel';
+import resolve from '@rollup/plugin-node-resolve';
+import {copy} from '@web/rollup-plugin-copy';
 import {rollupPluginHTML} from '@web/rollup-plugin-html';
 import {polyfillsLoader} from '@web/rollup-plugin-polyfills-loader';
-import resolve from '@rollup/plugin-node-resolve';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import summary from 'rollup-plugin-summary';
-import { getBabelOutputPlugin } from '@rollup/plugin-babel';
-import { terser } from 'rollup-plugin-terser';
-import { copy } from '@web/rollup-plugin-copy';
+import {terser} from 'rollup-plugin-terser';
 
 function onwarn(warning) {
   if (warning.code !== 'THIS_IS_UNDEFINED') {
@@ -28,7 +28,7 @@ export default {
 
     resolve(), // Resolve bare module specifiers to relative paths
 
-    minifyHTML(), // Minify HTML template literals
+    minifyHTML.default(), // Minify HTML template literals
 
     terser({ // Minify JS
       ecma: 2020,
@@ -65,14 +65,14 @@ export default {
           {
             name: 'lit-polyfill-support',
             path: 'node_modules/lit/polyfill-support.js',
-            test: "!('attachShadow' in Element.prototype)",
+            test: '!(\'attachShadow\' in Element.prototype)',
             module: false,
           },
         ],
       },
     }),
 
-    summary({ showMinifiedSize: false }), // Print bundle summary
+    summary({showMinifiedSize: false}), // Print bundle summary
 
     copy({
       patterns: ['localization/**/*'],

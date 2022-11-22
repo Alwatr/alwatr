@@ -1,6 +1,5 @@
 import {AlwatrElement} from '@alwatr/element';
 import {router} from '@alwatr/router';
-import {initialize} from '@ionic/core/components';
 import {css, html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
@@ -18,8 +17,6 @@ declare global {
     'alwatr-pwa': AlwatrPWA;
   }
 }
-
-initialize();
 
 /**
  * alwatr-pwa PWA Root Element

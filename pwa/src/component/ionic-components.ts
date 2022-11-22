@@ -1,3 +1,5 @@
+import '@ionic/core/dist/types/components';
+import {initialize} from '@ionic/core/components';
 import {defineCustomElement as ionAlert} from '@ionic/core/components/ion-alert.js';
 import {defineCustomElement as ionApp} from '@ionic/core/components/ion-app.js';
 import {defineCustomElement as ionAvatar} from '@ionic/core/components/ion-avatar.js';
@@ -41,6 +43,8 @@ import {defineCustomElement as ionThumbnail} from '@ionic/core/components/ion-th
 import {defineCustomElement as ionTitle} from '@ionic/core/components/ion-title.js';
 import {defineCustomElement as ionToast} from '@ionic/core/components/ion-toast.js';
 import {defineCustomElement as ionToolbar} from '@ionic/core/components/ion-toolbar.js';
+
+initialize();
 
 ionApp();
 ionAlert();
