@@ -1,0 +1,35 @@
+@apiUrl = http://127.0.0.1:8000
+@apiVersion = v0
+@token = alwatr_110_313
+
+### Home
+GET {{apiUrl}}/{{apiVersion}}
+
+### Get all jobs
+Get {{apiUrl}}/{{apiVersion}}/job
+Authorization: Bearer {{token}}
+
+### New job
+PUT {{apiUrl}}/{{apiVersion}}/job
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "origin": "KIH",
+  "dest": "THR",
+  "date": "1401/10/1"
+}
+
+### Edit job (not permit)
+PUT {{apiUrl}}/{{apiVersion}}/job
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "_id": "1",
+  "...": "..."
+}
+
+### Delete job
+DELETE {{apiUrl}}/{{apiVersion}}/job?id=1
+Authorization: Bearer {{token}}
