@@ -3,13 +3,18 @@ import {logger} from '../../lib/config.js';
 import {storage} from '../../lib/storage.js';
 import {MemberList} from '../../lib/type.js';
 
-
 bot.command('start', async (ctx): Promise<void> => {
   const chatId = ctx.chat.id;
-  logger.logMethodArgs('command/start', {chatId});
+  const token = ctx.message.text.split(' ')[1];
+  logger.logMethodArgs('command/start', {chatId, token});
 
-  const target: MemberList = storage.get('all', true) ?? {
-    _id: 'all',
+  if (token == null) {
+    ctx.reply('You don\'t have premision!');
+    return;
+  }
+
+  const target: MemberList = storage.get(token, true) ?? {
+    _id: token,
     _updatedBy: 'api',
     memberList: [],
   };
