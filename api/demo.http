@@ -15,9 +15,11 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "origin": "KIH",
-  "dest": "THR",
-  "date": "1401/10/1"
+  "filter": {
+    "origin": "KIH",
+    "dest": "THR",
+    "date": "1401/10/1"
+  }
 }
 
 ### Edit job (not permit)
