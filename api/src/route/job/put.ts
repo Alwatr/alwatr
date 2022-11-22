@@ -18,6 +18,7 @@ async function newJob(connection: AlwatrConnection): Promise<void> {
 
   job._id ??= 'auto_increment';
   job._updatedBy ??= 'api';
+  job.resultList = [];
 
   try {
     if (job._id !== 'auto_increment' && (await storage.has(job._id))) {
