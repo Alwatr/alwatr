@@ -9,8 +9,8 @@ import type {FetchOptions} from '@alwatr/fetch';
 export async function crawlAllJobs(): Promise<void> {
   logger.logMethod('crawlAllJobs');
   const jobList = await storage.getAll();
-  // eslint-disable-next-line guard-for-in
   for (const jobId in jobList) {
+    if (!jobList[jobId] === null) continue;
     const job = jobList[jobId];
     const oldResultList = job.resultList;
     const resultList = await crawl(job.filter);
