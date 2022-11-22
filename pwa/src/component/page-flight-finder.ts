@@ -1,14 +1,15 @@
 import {AlwatrElement} from '@alwatr/element';
-import '@ionic/core/dist/types/components';
 import {css, html} from 'lit';
-import {customElement} from 'lit/decorators/custom-element.js';
+import {customElement, state} from 'lit/decorators.js';
 import {map} from 'lit/directives/map.js';
 
+import ionNormalize from '../style/ionic.normalize';
 import ionTheming from '../style/ionic.theming';
 
-import type {AirlineInterface} from '../type';
-import type {TemplateResult} from 'lit';
+import './job-item';
 
+import type {Job} from '../type';
+import type {TemplateResult, PropertyValues} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -19,55 +20,20 @@ declare global {
 @customElement('page-flight-finder')
 export class PageFlightFinder extends AlwatrElement {
   static override styles = [
+    ionNormalize,
     ionTheming,
     css`
-      * {
-        user-select: none;
-      }
       :host {
         display: flex;
         flex-direction: column;
       }
+
       ion-card-content {
         padding: 0 !important;
       }
       ion-card.airline__list,
       ion-card.form {
         --ion-item-background: var(--ion-color-primary-contrast);
-      }
-
-      ion-card.airline__list .airline::part(native) {
-        align-items: flex-end;
-      }
-      ion-card.airline__list .airline ion-label {
-        display: flex !important;
-        flex-direction: column;
-        justify-content: flex-end;
-        gap: 8px;
-      }
-      ion-card.airline__list .airline ion-label[slot='end'] * {
-        text-align: end;
-        justify-content: flex-end;
-      }
-
-      ion-card.airline__list .airline .airline__title {
-        font-size: 1em;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      ion-card.airline__list .airline .airline__title ion-icon {
-        font-size: 1.3em;
-      }
-      ion-card.airline__list .airline .airline__subtitle {
-        font-size: 0.9em;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        color: var(--ion-color-step-600);
-      }
-      ion-card.airline__list .airline .airline__subtitle .airline__subtitle-price {
-        color: var(--ion-color-danger, #eb445a);
       }
     `,
     css`
@@ -81,23 +47,32 @@ export class PageFlightFinder extends AlwatrElement {
     `,
   ];
 
-  protected _listenerList: Array<unknown> = [];
-  protected _airlineList: AirlineInterface[] = [
+  @state() protected _airlineList: Job[] = [
     {
-      origin: 'مشهد',
-      destination: 'تهران',
-      date: '۱۴۰۰/۰۹/۲۴',
-      time: 'عصر',
-      maxPrice: 987000000,
+      filter: {
+        origin: 'MHD',
+        dest: 'THR',
+        date: '1401/01/10',
+        dayPart: ['afternoon'],
+        maxPrice: 100,
+      },
+      resultList: [],
     },
     {
-      origin: 'مشهد',
-      destination: 'تهران',
-      date: '۱۴۰۰/۰۱/۲۴',
-      time: 'عصر',
-      foundFlights: 3,
-      price: 1000000,
-      maxPrice: 987000000,
+      filter: {
+        origin: 'THR',
+        dest: 'MHD',
+        date: '1401/09/24',
+        dayPart: ['evening', 'morning'],
+        maxPrice: 10000,
+      },
+      resultList: [
+        {
+          price: 1230,
+          seatCount: 2,
+          time: 0,
+        },
+      ],
     },
   ];
 
@@ -109,14 +84,15 @@ export class PageFlightFinder extends AlwatrElement {
         </ion-toolbar>
       </ion-header>
 
-      <ion-content fullscreen> ${this._renderAirlineListCard()}${this._renderForm()} </ion-content>
+      <ion-content fullscreen> ${this._renderAirlineListCard()} ${this._renderForm()} </ion-content>
     `;
+  }
+  protected override firstUpdated(changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(changedProperties);
   }
 
   protected _renderAirlineListCard(): TemplateResult {
-    const airlineItemList = map(this._airlineList, (airline, index) =>
-      this._renderAirlineItem(airline, index, this._airlineList.length),
-    );
+    const airlineItemList = map(this._airlineList, (airline) => html` <job-item .job=${airline}></job-item> `);
 
     return html`
       <ion-card class="airline__list">
@@ -129,46 +105,6 @@ export class PageFlightFinder extends AlwatrElement {
           <ion-list lines="full"> ${airlineItemList} </ion-list>
         </ion-card-content>
       </ion-card>
-    `;
-  }
-  protected _renderAirlineItem(airline: AirlineInterface, index: number, total: number): TemplateResult {
-    const t =
-      airline.price != null && airline.foundFlights != null ?
-        html`
-            <div class="airline__title">
-              <span>${airline.foundFlights.toLocaleString('fa')}</span>
-              پرواز
-            </div>
-            <div class="airline__subtitle">
-              <span class="airline__subtitle-price"> ${airline.price.toLocaleString('fa')} </span>
-              <span> ه&zwnj;ت </span>
-            </div>
-          ` :
-        html` <div class="airline__subtitle">یافت نشد</div> `;
-
-    return html`
-      <ion-item-sliding>
-        <ion-item class="airline" .lines=${index === total - 1 ? 'none' : undefined}>
-          <ion-label>
-            <div class="airline__title">
-              <span> ${airline.destination} </span>
-              <ion-icon name="arrow-forward-outline" color="primary"></ion-icon>
-              <span> ${airline.origin} </span>
-            </div>
-            <div class="airline__subtitle">
-              <span>${airline.date}</span>
-              <span>${airline.time}</span>
-            </div>
-          </ion-label>
-          <ion-label slot="end">${t}</ion-label>
-        </ion-item>
-
-        <ion-item-options side="start">
-          <ion-item-option color="danger">
-            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
     `;
   }
   protected _renderForm(): TemplateResult {
