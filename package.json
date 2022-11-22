@@ -23,7 +23,8 @@
   },
   "workspaces": [
     "api",
-    "telegram-notifier"
+    "telegram-notifier",
+    "crawler"
   ],
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.43.0",

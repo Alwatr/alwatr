@@ -13,7 +13,7 @@ export async function sendMessage(to: string, message: string): Promise<void> {
 
   for (const chatId of target.memberList) {
     try {
-      await bot.telegram.sendMessage(chatId, message);
+      await bot.telegram.sendMessage(chatId, message, {parse_mode: 'MarkdownV2'});
     }
     catch (err) {
       // TODO: handle blocked user
