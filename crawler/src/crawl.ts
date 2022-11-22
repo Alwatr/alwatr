@@ -3,7 +3,7 @@ import {fetch} from '@alwatr/fetch';
 import {config, logger} from './lib/config.js';
 import {storage} from './lib/storage.js';
 
-import type {Job, JobFilter, JobResult} from './lib/type.js';
+import type {Job, JobFilter, JobResult, SepehrResponse} from './lib/type.js';
 import type {FetchOptions} from '@alwatr/fetch';
 
 export async function crawlAllJobs(): Promise<void> {
@@ -74,7 +74,7 @@ async function makeRequest(option: Partial<FetchOptions> & {url: string}): Promi
 
 async function translateResponse(response: Response): Promise<Array<JobResult>> {
   logger.logMethod('translateResponse');
-  const responseJson = await response.json();
+  const responseJson: SepehrResponse = await response.json();
 
   const jobResult: Array<JobResult> = [];
   for (const flightInformation of responseJson.flightHeaderList) {
