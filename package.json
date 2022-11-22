@@ -23,6 +23,7 @@
   },
   "workspaces": [
     "api",
+    "pwa",
     "telegram-notifier"
   ],
   "devDependencies": {
