@@ -8,8 +8,9 @@ if (telegramBotToken == undefined) {
 
 export const config = {
   nanoServer: {
-    port: process.env.PORT != null ? +process.env.PORT : 8001,
-    host: process.env.HOST ?? '127.0.0.1',
+    host: process.env.HOST ?? '0.0.0.0',
+    port: process.env.PORT != null ? +process.env.PORT : 8002,
+    token: process.env.TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
   telegramBot: {
     token: telegramBotToken,
