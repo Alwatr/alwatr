@@ -15,7 +15,7 @@ export async function crawlAllJobs(): Promise<void> {
     const oldResultList = job.resultList;
     const resultList = await crawl(job.filter);
     job.resultList = resultList;
-    if (!differentObject(resultList, oldResultList)) {
+    if (differentObject(resultList, oldResultList)) {
       const message = makeMessage(job);
       await notify(config.notifier.to, message);
     }
@@ -27,14 +27,13 @@ async function crawl(filter: JobFilter): Promise<Array<JobResult>> {
   logger.logMethodArgs('crawl', filter);
   const fetchOption = makeRequestOption(filter);
   const response = await makeRequest(fetchOption);
-  if (response === null) throw new Error('make_request_failed');
   let resultList = await translateResponse(response);
   resultList = extraFilterResult(resultList);
   return resultList;
 }
 
 function differentObject(obj1: unknown, obj2: unknown): boolean {
-  return JSON.stringify(obj1) === JSON.stringify(obj2);
+  return JSON.stringify(obj1) !== JSON.stringify(obj2);
 }
 
 function makeRequestOption(filter: JobFilter): Partial<FetchOptions> & {url: string} {
@@ -43,7 +42,7 @@ function makeRequestOption(filter: JobFilter): Partial<FetchOptions> & {url: str
     url: 'https://api.sepehr360.ir//fa/FlightAvailability/Api/B2cOnewayFlightApi/Search',
     method: 'POST',
     headers: {
-      'authority': 'api.sepehr360.ir',
+      authority: 'api.sepehr360.ir',
     },
     bodyJson: {
       currencyType: 'IRR',
@@ -59,15 +58,14 @@ function makeRequestOption(filter: JobFilter): Partial<FetchOptions> & {url: str
   return fetchOptions;
 }
 
-async function makeRequest(option: Partial<FetchOptions> & {url: string}): Promise<Response | null> {
+async function makeRequest(option: Partial<FetchOptions> & {url: string}): Promise<Response> {
   const response = await fetch({
     ...option,
     retry: 5,
     timeout: 30_000,
   });
   if (!response.ok) {
-    logger.error('makeRequest', 'fetch_data_failed', response.statusText);
-    return null;
+    throw new Error('fetch_failed');
   }
   return response;
 }
@@ -109,12 +107,9 @@ async function notify(to: string, message: string): Promise<void> {
     url: config.notifier.host,
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      Authorization: `Bearer ${config.notifier.token}`,
     },
-    bodyJson: {
-      to: to,
-      message: message,
-    },
+    bodyJson: {to, message},
   });
 
   console.log(response);
