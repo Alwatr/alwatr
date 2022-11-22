@@ -1,3 +1,3 @@
-import {review} from './lib/airline-review.js';
+import {crawlAllJobs} from './crawl.js';
 
-setInterval(review, 10_000);
+crawlAllJobs();

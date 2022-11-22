@@ -1,37 +1,20 @@
-import type {DocumentObject} from '@alwatr/storage-engine';
+import type {DocumentObject} from '@alwatr/storage-client';
 
-export interface AirlineInformation {
+export interface Job extends DocumentObject {
+  filter: JobFilter;
+  resultList: Array<JobResult>;
+}
+
+export interface JobFilter extends Record<string, unknown> {
   origin: string;
   dest: string;
   date: string;
+  minPrice: number;
+  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
 }
 
-// list airline information
-export interface AirlineList extends DocumentObject {
-  informationList: Array<AirlineInformation>;
-}
-
-// dynamic per flight information
-export interface DynamicFlightInformation extends DocumentObject {
+export interface JobResult extends Record<string, unknown> {
   price: number;
-  departureTime: string;
-  arrivalTime: string;
+  time: number;
   seatCount: number;
-}
-
-// fixed per airline information + dynamic per flight information
-export interface FlightInformation extends DynamicFlightInformation {
-  formattedDate: string;
-}
-
-export interface TelegramBotConfig extends DocumentObject {
-  token: string;
-}
-
-export interface TelegramBotMessage extends DocumentObject {
-  text: string;
-}
-
-export interface TelegramBotAdmin extends DocumentObject {
-  chatId: number;
 }

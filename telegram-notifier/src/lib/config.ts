@@ -16,6 +16,6 @@ export const config = {
   },
 };
 
-export const logger = createLogger('flight-finder-notify');
+export const logger = createLogger('telegram-notifier');
 
 logger.logProperty('config', config);
