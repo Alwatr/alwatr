@@ -1,4 +1,4 @@
-import type {DocumentObject} from '@alwatr/storage';
+import type {DocumentObject} from '@alwatr/storage-engine';
 
 export interface AirlineInformation {
   origin: string;

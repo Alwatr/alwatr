@@ -1,6 +1,6 @@
 import {getAirlineFlightListInformation} from './airline-information.js';
 import {logger} from './config.js';
-import {airlineStorage, flightStorage} from './storage.js.js';
+import {airlineStorage, flightStorage} from './storage.js';
 
 import type {AirlineInformation} from './type';
 
