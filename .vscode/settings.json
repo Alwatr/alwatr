@@ -17,9 +17,9 @@
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "files.exclude": {
-    "src/**/*.map": true,
-    "src/**/*.js": true,
-    "src/**/*.d.ts": true,
-    "src/**/*.tsbuildinfo": true
+    "**/src/**/*.map": true,
+    "**/src/**/*.js": true,
+    "**/src/**/*.d.ts": true,
+    "**/src/**/*.tsbuildinfo": true
   }
 }
