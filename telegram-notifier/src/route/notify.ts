@@ -1,5 +1,5 @@
 import {sendMessage} from '../bot/send-message.js';
-import {logger} from '../lib/config.js';
+import {config, logger} from '../lib/config.js';
 import {nanoServer} from '../lib/nano-server.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
@@ -12,6 +12,8 @@ async function notify(connection: AlwatrConnection): Promise<void> {
 
   const bodyJson = await connection.requireJsonBody<{to: string, message: string}>();
   if (bodyJson == null) return;
+
+  if (connection.requireToken(config.nanoServer.token))
 
   await sendMessage(bodyJson.to, bodyJson.message);
 

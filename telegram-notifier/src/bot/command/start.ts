@@ -9,7 +9,7 @@ bot.command('start', async (ctx): Promise<void> => {
   logger.logMethodArgs('command/start', {chatId, token});
 
   if (token == null) {
-    ctx.reply('You don\'t have premision!');
+    ctx.reply('You don\'t have permission!');
     return;
   }
 
