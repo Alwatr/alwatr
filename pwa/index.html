@@ -9,19 +9,11 @@
 
     <title>Flight Finder</title>
     <meta name="description" content="An Flight Finder Progressive Web Application!" />
-    <!-- <link rel="canonical" href="my website without www to prevent duplicate content" /> -->
 
     <base href="/" />
 
     <link rel="preconnect" href="https://polyfill.io/" crossorigin />
     <link rel="preconnect" href="https://cdn.jsdelivr.net/" crossorigin />
-    <link
-      rel="preload"
-      href="https://fonts.gstatic.com/s/notosansarabic/v14/nwpCtLGrOAZMl5nJ_wfgRg3DrWFZWsnVBJ_sS6tlqHHFlj4wv4rqxzLI.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
 
     <link rel="icon" href="image/icon-192.png" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#3277b9" />
@@ -47,25 +39,16 @@
     <meta name="msapplication-TileColor" content="#3277b9" />
     <meta name="msapplication-tap-highlight" content="no" />
 
-    <!-- <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@alwatr/logger@0.8.0/font.css"
-    media="print"
-    onload="this.onload=null; this.media='all'"
-  /> -->
-
-    <link rel="stylesheet" href="src/global.css" />
+    <link rel="stylesheet" href="node_modules/@alwatr/font/vazirmatn.css" />
+    <link rel="stylesheet" href="src/style/global.css" />
   </head>
   <body>
     <ion-app>
-      <flight-finder-pwa></flight-finder-pwa>
+      <alwatr-pwa class="ion-page"></alwatr-pwa>
     </ion-app>
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.toggleAttribute"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core@6.0.12/dist/ionic/ionic.esm.js"></script>
-    <script type="module" src="src/flight-finder-pwa.js"></script>
-
-    <script nomodule defer src="https://cdn.jsdelivr.net/npm/@ionic/core@6.0.12/dist/ionic/ionic.js"></script>
+    <script type="module" src="src/component/alwatr-pwa.js"></script>
 
     <noscript>
       <div class="noscript">

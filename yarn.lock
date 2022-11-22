@@ -11,6 +11,15 @@
     lit "^2.4.0"
     tslib "^2.4.1"
 
+"@alwatr/element@^0.22.0":
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/element/-/element-0.22.0.tgz#a5c13d561b814a4242e555103ceebcf595965567"
+  integrity sha512-f/sisgTCD7f7JBsvYUq9SSq+UijPjFZXNQvnlJ+FbDZpxyYAusJ7LbA+X6kE2ajs23+hryu+xo2bQKfTIs0Aaw==
+  dependencies:
+    "@alwatr/logger" "^0.22.0"
+    lit "^2.4.1"
+    tslib "^2.4.1"
+
 "@alwatr/fetch@^0.20.0":
   version "0.20.0"
   resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.20.0.tgz#fa06d23fbf1df9ed92b86b8a1aa1e21fe4b7c0ff"
@@ -25,6 +34,20 @@
   integrity sha512-VpG6Re8ysIpQLpsuV34lBt/lwOqHAguOoDLGoRVr/hilW/sin4Xlvnzbkvt4m318Pb9BPDtCHDgkrLG/Nkejdw==
   dependencies:
     "@alwatr/logger" "^0.22.0"
+    tslib "^2.4.1"
+
+"@alwatr/font@^0.22.1":
+  version "0.22.1"
+  resolved "https://registry.yarnpkg.com/@alwatr/font/-/font-0.22.1.tgz#ddcb72ef15ebfe086ed31aca08d0508932b98054"
+  integrity sha512-zsjXOMrbdbwJzyJ6TvEOsb8CORpK7HIWXRdxonhdhbslzzUwQc9Hoar/3clbnKcCIYvkpkO3vCSwUUi0hVZv9A==
+
+"@alwatr/icon@^0.22.1":
+  version "0.22.1"
+  resolved "https://registry.yarnpkg.com/@alwatr/icon/-/icon-0.22.1.tgz#7f6c2a354e59d463a8c877452bf8d7f2beac8bae"
+  integrity sha512-yC2JMYy9wE7KTL/XdR1GTtbhCmUwueUJvuFlcOSZXA0TeuyLxk8mJnPu+23bixxF805EtbBT3lXLl4MUKjScqw==
+  dependencies:
+    "@alwatr/element" "^0.22.0"
+    lit "^2.4.1"
     tslib "^2.4.1"
 
 "@alwatr/logger@^0.20.0":
