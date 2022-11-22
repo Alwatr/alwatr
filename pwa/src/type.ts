@@ -1,9 +1,18 @@
-export interface AirlineInterface {
+export interface Job {
+  filter: JobFilter;
+  resultList: Array<JobResult>;
+}
+
+export interface JobFilter extends Record<string, unknown> {
   origin: string;
-  destination: string;
+  dest: string;
   date: string;
-  time: string;
   maxPrice: number;
-  foundFlights?: number;
-  price?: number;
+  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
+}
+
+export interface JobResult extends Record<string, unknown> {
+  price: number;
+  time: number;
+  seatCount: number;
 }
