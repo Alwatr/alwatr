@@ -33,7 +33,7 @@ const duplicateRequestStorage: Record<string, Promise<Response>> = {};
  * });
  * ```
  */
-export function fetch(_options: Required<FetchOptions>): Promise<Response> {
+export function fetch(_options: FetchOptions): Promise<Response> {
   const options = _processOptions(_options);
   logger.logMethodArgs('fetch', {options});
   return _handleCacheStrategy(options);
@@ -86,7 +86,7 @@ function _processOptions(options: FetchOptions): Required<FetchOptions> {
   if (options.token != null) {
     options.headers = {
       ...options.headers,
-      'Authorization': `Bearer ${options.token}`,
+      Authorization: `Bearer ${options.token}`,
     };
   }
 
