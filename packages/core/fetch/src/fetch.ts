@@ -94,39 +94,6 @@ function _processOptions(options: FetchOptions): Required<FetchOptions> {
 }
 
 /**
- * Handle Remove Duplicates over `_handleRetryPattern`.
- */
-async function _handleRemoveDuplicate(options: Required<FetchOptions>): Promise<Response> {
-  if (options.removeDuplicate === 'never') return _handleRetryPattern(options);
-
-  logger.logMethod('_handleRemoveDuplicate');
-
-  const cacheKey = `[${options.method}] ${options.url}`;
-  const firstRequest = duplicateRequestStorage[cacheKey] == null;
-
-  // We must cache fetch promise without await for handle other parallel requests.
-  duplicateRequestStorage[cacheKey] ??= _handleRetryPattern(options);
-
-  try {
-    // For all requests need to await for clone responses.
-    const response = await duplicateRequestStorage[cacheKey];
-
-    if (firstRequest === true) {
-      if (response.ok !== true || options.removeDuplicate === 'until_load') {
-        delete duplicateRequestStorage[cacheKey];
-      }
-    }
-
-    return response.clone();
-  }
-  catch (err) {
-    // clean cache on any error.
-    delete duplicateRequestStorage[cacheKey];
-    throw err;
-  }
-}
-
-/**
  * Handle Cache Strategy over `_handleRemoveDuplicate`.
  */
 async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Response> {
@@ -148,7 +115,10 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
   switch (options.cacheStrategy) {
     case 'cache_first': {
       const cachedResponse = await cacheStorage.match(request);
-      if (cachedResponse != null) return cachedResponse;
+      if (cachedResponse != null) {
+        return cachedResponse;
+      }
+      // else
       const response = await _handleRemoveDuplicate(options);
       if (response.ok) {
         cacheStorage.put(request, response.clone());
@@ -158,8 +128,11 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
 
     case 'cache_only': {
       const cachedResponse = await cacheStorage.match(request);
-      if (cachedResponse == null) throw new Error('fetch_cache_not_found');
-      return cachedResponse;
+      if (cachedResponse != null) {
+        return cachedResponse;
+      }
+      // else
+      throw new Error('fetch_cache_not_found');
     }
 
     case 'network_first': {
@@ -172,30 +145,64 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
       }
       catch (err) {
         const cachedResponse = await cacheStorage.match(request);
-        if (cachedResponse == null) throw err;
-        return cachedResponse;
+        if (cachedResponse != null) {
+          return cachedResponse;
+        }
+        // else
+        throw err;
       }
     }
 
     case 'stale_while_revalidate': {
       const cachedResponse = await cacheStorage.match(request);
-      const fetchedResponsePromise = _handleRemoveDuplicate(options);
-
-      fetchedResponsePromise.then((networkResponse) => {
+      const fetchedResponsePromise = _handleRemoveDuplicate(options).then((networkResponse) => {
         if (networkResponse.ok) {
           cacheStorage.put(request, networkResponse.clone());
           if (cachedResponse != null && typeof options.revalidateCallback === 'function') {
             options.revalidateCallback(networkResponse);
           }
         }
+        return networkResponse;
       });
 
-      return cachedResponse || fetchedResponsePromise;
+      return cachedResponse ?? fetchedResponsePromise;
     }
 
     default: {
       return _handleRemoveDuplicate(options);
     }
+  }
+}
+
+/**
+ * Handle Remove Duplicates over `_handleRetryPattern`.
+ */
+async function _handleRemoveDuplicate(options: Required<FetchOptions>): Promise<Response> {
+  if (options.removeDuplicate === 'never') return _handleRetryPattern(options);
+
+  logger.logMethod('_handleRemoveDuplicate');
+
+  const cacheKey = options.method + ' ' + options.url;
+
+  // We must cache fetch promise without await for handle other parallel requests.
+  duplicateRequestStorage[cacheKey] ??= _handleRetryPattern(options);
+
+  try {
+    // For all requests need to await for clone responses.
+    const response = await duplicateRequestStorage[cacheKey];
+
+    if (duplicateRequestStorage[cacheKey] != null) {
+      if (response.ok !== true || options.removeDuplicate === 'until_load') {
+        delete duplicateRequestStorage[cacheKey];
+      }
+    }
+
+    return response.clone();
+  }
+  catch (err) {
+    // clean cache on any error.
+    delete duplicateRequestStorage[cacheKey];
+    throw err;
   }
 }
 
@@ -213,11 +220,11 @@ async function _handleRetryPattern(options: Required<FetchOptions>): Promise<Res
   try {
     const response = await _handleTimeout(options);
 
-    if (response.status >= 500) {
-      logger.incident('fetch', 'fetch_server_error', 'fetch server error ' + response.status);
-      throw new Error('fetch_server_error');
+    if (response.status < 500) {
+      return response;
     }
-    else return response;
+    // else
+    throw new Error('fetch_server_error');
   }
   catch (err) {
     logger.accident('fetch', (err as Error)?.name ?? 'fetch_failed', 'fetch failed and retry', {err});
