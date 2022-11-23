@@ -16,7 +16,6 @@ on:
 env:
   NODE_VERSION: latest
 
-
 jobs:
   build-ts:
     name: Build Typescript

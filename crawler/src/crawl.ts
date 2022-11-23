@@ -72,7 +72,7 @@ async function makeRequest(option: Partial<FetchOptions> & {url: string}): Promi
 
 async function translateResponse(response: Response): Promise<Array<JobResult>> {
   logger.logMethod('translateResponse');
-  const responseJson = await response.json() as SepehrResponse;
+  const responseJson = (await response.json()) as SepehrResponse;
 
   const jobResult: Array<JobResult> = [];
   for (const flightInformation of responseJson.flightHeaderList) {

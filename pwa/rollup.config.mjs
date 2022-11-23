@@ -30,7 +30,8 @@ export default {
 
     minifyHTML.default(), // Minify HTML template literals
 
-    terser({ // Minify JS
+    terser({
+      // Minify JS
       ecma: 2020,
       module: true,
       warnings: true,
@@ -65,7 +66,7 @@ export default {
           {
             name: 'lit-polyfill-support',
             path: 'node_modules/lit/polyfill-support.js',
-            test: '!(\'attachShadow\' in Element.prototype)',
+            test: "!('attachShadow' in Element.prototype)",
             module: false,
           },
         ],
