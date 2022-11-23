@@ -18,3 +18,13 @@ export interface JobResult extends Record<string, unknown> {
   time: number;
   seatCount: number;
 }
+
+export interface SepehrResponse extends Record<string, unknown> {
+  flightHeaderList: Array<SepehrFlightInformation>
+}
+
+interface SepehrFlightInformation extends Record<string, unknown> {
+  formattedPrice: string;
+  seatCount: number;
+  cleanDepartureTime: number;
+}

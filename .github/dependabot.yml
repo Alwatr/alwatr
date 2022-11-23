@@ -1,0 +1,29 @@
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    reviewers:
+      - AliMD
+      - njfamirm
+    schedule:
+      interval: daily
+    labels:
+      - ci
+      - priority-low
+      - maintenance
+
+  - package-ecosystem: npm
+    directory: /
+    versioning-strategy: increase
+    reviewers:
+      - AliMD
+      - njfamirm
+    schedule:
+      interval: daily
+    labels:
+      - dependencies
+      - ci
+      - priority-low
+      - maintenance
