@@ -75,9 +75,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
     removeDuplicate: 'never',
     retry: 3,
     retryDelay: 300,
-    headers: {
-      Authorization: `Bearer ${this.config.token}`,
-    },
+    token: this.config.token,
   };
 
   constructor(public readonly config: AlwatrStorageClientConfig) {

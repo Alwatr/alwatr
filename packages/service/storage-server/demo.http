@@ -1,17 +1,17 @@
-@apiUrl = http://localhost:80
+@apiUrl = http://127.0.0.1:9000
 @apiVersion = v0
-@token = alwatr_110_313
+@token = YOUR_SECRET_TOKEN
 
 ### Get a public storage over nginx serve
 # GET {{apiUrl}}/{{apiVersion}}/public/comments/page1.json
 
 ### Get a document by storageName and docId
 GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
-authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 ### Insert document
 PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
-authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 ###
 PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
-authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -35,7 +35,7 @@ Content-Type: application/json
 
 ### Edit document
 PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
-authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -47,19 +47,19 @@ Content-Type: application/json
 
 ### Check document exists by storageName and docId
 GET {{apiUrl}}/{{apiVersion}}/has?storage=comments/page1&id=c1
-authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 ### Delete document
 DELETE {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
-authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 ### Get keys
 GET {{apiUrl}}/{{apiVersion}}/keys?storage=comments/page1
-authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 ### Get all data
 GET {{apiUrl}}/{{apiVersion}}/all?storage=comments/page1
-authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 ### === Test other routes and errors ===
 
@@ -77,21 +77,21 @@ TRACE {{apiUrl}}/{{apiVersion}}
 
 ### Document not exists
 GET {{apiUrl}}/{{apiVersion}}/has?storage=comments/page1&id=foo
-authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 
 ### Get a document by storageName without id
 GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
-authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 ### empty body
 PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
-authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 ### invalid json
 PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
-authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
