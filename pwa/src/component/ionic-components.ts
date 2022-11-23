@@ -1,4 +1,4 @@
-import '@ionic/core/dist/types/components';
+// import '@ionic/core/dist/types/components';
 import {initialize} from '@ionic/core/components';
 import {defineCustomElement as ionAlert} from '@ionic/core/components/ion-alert.js';
 import {defineCustomElement as ionApp} from '@ionic/core/components/ion-app.js';

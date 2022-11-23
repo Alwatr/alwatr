@@ -3,11 +3,11 @@ import {router} from '@alwatr/router';
 import {css, html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import ionNormalize from '../style/ionic.normalize';
-import ionTheming from '../style/ionic.theming';
+import ionNormalize from './style/ionic.normalize';
+import ionTheming from './style/ionic.theming';
 
-import './page-flight-finder';
-import './ionic-components';
+import './component/page-flight-finder';
+import './component/ionic-components';
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {TemplateResult} from 'lit';

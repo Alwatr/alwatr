@@ -13,7 +13,7 @@
     "w": "yarn watch",
     "build": "npm-run-all --sequential build:ts build:es",
     "build:ts": "tsc --build --pretty",
-    "build:es": "rollup -c",
+    "build:es": "rm -rf dist && rollup -c",
     "clean": "yarn build:ts --clean && rm -rf dist && find src -name '*.js' -type f -delete && find src -name '*.d.ts' -type f -delete && find src -name '*.map' -type f -delete",
     "serve:dev": "web-dev-server --config dev-server.mjs",
     "serve:dist": "web-dev-server --config dev-server-dist.mjs",

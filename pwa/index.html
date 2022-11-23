@@ -10,10 +10,18 @@
     <title>Flight Finder</title>
     <meta name="description" content="An Flight Finder Progressive Web Application!" />
 
-    <base href="/" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 
-    <link rel="preconnect" href="https://polyfill.io/" crossorigin />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net/" crossorigin />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.21.0/vazirmatn.min.css" fetchpriority="high" />
+
+    <link
+      rel="preload"
+      href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.21.0/vazirmatn/vazirmatn[wght].woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     <link rel="icon" href="image/icon-192.png" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#3277b9" />
@@ -39,7 +47,6 @@
     <meta name="msapplication-TileColor" content="#3277b9" />
     <meta name="msapplication-tap-highlight" content="no" />
 
-    <link rel="stylesheet" href="node_modules/@alwatr/font/vazirmatn.css" />
     <link rel="stylesheet" href="src/style/global.css" />
   </head>
   <body>
@@ -47,7 +54,6 @@
       <alwatr-pwa class="ion-page"></alwatr-pwa>
     </ion-app>
 
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.toggleAttribute"></script>
     <script type="module" src="src/component/alwatr-pwa.js"></script>
 
     <noscript>

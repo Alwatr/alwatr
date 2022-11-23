@@ -15,6 +15,7 @@ Desktop.ini
 
 # Build
 dist
+build
 **/src/**/*.map
 **/src/**/*.js
 **/src/**/*.d.ts
