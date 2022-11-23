@@ -48,9 +48,9 @@ jobs:
           cache: yarn
 
       - name: 🏗 Install dependencies
-        working-directory: '{{matrix.folder}}'
+        working-directory: ${{ matrix.folder }}
         run: yarn install --frozen-lockfile
 
       - name: 🚀 Build Typescript
-        working-directory: '{{matrix.folder}}'
+        working-directory: ${{ matrix.folder }}
         run: yarn build
