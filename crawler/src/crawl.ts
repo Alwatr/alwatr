@@ -3,19 +3,19 @@ import {fetch} from '@alwatr/fetch';
 import {config, logger} from './lib/config.js';
 import {storage} from './lib/storage.js';
 
-import type {Job, JobFilter, JobResult} from './lib/type.js';
+import type {Job, JobFilter, JobResult, SepehrResponse} from './lib/type.js';
 import type {FetchOptions} from '@alwatr/fetch';
 
 export async function crawlAllJobs(): Promise<void> {
   logger.logMethod('crawlAllJobs');
   const jobList = await storage.getAll();
-  // eslint-disable-next-line guard-for-in
   for (const jobId in jobList) {
+    if (!Object.prototype.hasOwnProperty.call(jobList, jobId)) continue;
     const job = jobList[jobId];
     const oldResultList = job.resultList;
     const resultList = await crawl(job.filter);
     job.resultList = resultList;
-    if (!differentObject(resultList, oldResultList)) {
+    if (differentObject(resultList, oldResultList)) {
       const message = makeMessage(job);
       await notify(config.notifier.to, message);
     }
@@ -34,7 +34,7 @@ async function crawl(filter: JobFilter): Promise<Array<JobResult>> {
 }
 
 function differentObject(obj1: unknown, obj2: unknown): boolean {
-  return JSON.stringify(obj1) === JSON.stringify(obj2);
+  return JSON.stringify(obj1) !== JSON.stringify(obj2);
 }
 
 function makeRequestOption(filter: JobFilter): Partial<FetchOptions> & {url: string} {
@@ -74,12 +74,12 @@ async function makeRequest(option: Partial<FetchOptions> & {url: string}): Promi
 
 async function translateResponse(response: Response): Promise<Array<JobResult>> {
   logger.logMethod('translateResponse');
-  const responseJson = await response.json();
+  const responseJson = await response.json() as SepehrResponse;
 
   const jobResult: Array<JobResult> = [];
   for (const flightInformation of responseJson.flightHeaderList) {
     jobResult.push({
-      price: +(flightInformation.formattedPrice as string).replace(/,/g, ''),
+      price: +(flightInformation.formattedPrice as string).replaceAll(',', ''),
       seatCount: flightInformation.seatCount,
       time: flightInformation.cleanDepartureTime,
     });
@@ -95,10 +95,10 @@ function extraFilterResult(jobResultList: Array<JobResult>): Array<JobResult> {
 
 function makeMessage(job: Job): string {
   logger.logMethod('makeMessage');
-  let message = `💡\n\nFlight from ${job.filter.origin} to ${job.filter.dest} on the ${job.filter.date}`;
+  let message = `🛫\n\nFlight from ${job.filter.origin} to ${job.filter.dest} on the ${job.filter.date}`;
 
   job.resultList.forEach((jobResult) => {
-    message += '\n\n' + `price: ${jobResult.price}\ntime:${jobResult.time}\nseat count${jobResult.seatCount}`;
+    message += '\n\n' + `Price: ${jobResult.price}\nTime: ${jobResult.time}\nSeat Count: ${jobResult.seatCount}`;
   });
 
   return message;
