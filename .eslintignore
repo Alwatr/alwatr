@@ -1,7 +1,4 @@
-# Reference: https://eslint.org/docs/user-guide/configuring/ignoring-code
-
-# dependencies
 node_modules/
-
-# build
-dist/
+*.js
+*.map
+*.d.ts

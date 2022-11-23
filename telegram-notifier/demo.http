@@ -1,6 +1,6 @@
 @apiUrl = http://127.0.0.1:8001
 @apiVersion = v0
-@token = alwatr_110_313
+@token = YOUR_SECRET_TOKEN
 
 ### Home
 GET {{apiUrl}}/{{apiVersion}}
@@ -11,6 +11,5 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "to": "all",
   "message": "salam"
 }

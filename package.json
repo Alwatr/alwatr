@@ -23,8 +23,9 @@
   },
   "workspaces": [
     "api",
-    "telegram-notifier",
-    "crawler"
+    "pwa",
+    "crawler",
+    "telegram-notifier"
   ],
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "^3.0.0",

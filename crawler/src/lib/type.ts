@@ -20,7 +20,7 @@ export interface JobResult extends Record<string, unknown> {
 }
 
 export interface SepehrResponse extends Record<string, unknown> {
-  flightHeaderList: Array<SepehrFlightInformation>
+  flightHeaderList: Array<SepehrFlightInformation>;
 }
 
 interface SepehrFlightInformation extends Record<string, unknown> {
