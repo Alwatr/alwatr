@@ -20,10 +20,10 @@ export interface JobResult extends Record<string, unknown> {
 }
 
 export interface SepehrResponse extends Record<string, unknown> {
-  flightHeaderList: Array<FlightInformation>
+  flightHeaderList: Array<SepehrFlightInformation>
 }
 
-interface FlightInformation extends Record<string, unknown> {
+interface SepehrFlightInformation extends Record<string, unknown> {
   formattedPrice: string;
   seatCount: number;
   cleanDepartureTime: number;

@@ -10,7 +10,7 @@ export async function crawlAllJobs(): Promise<void> {
   logger.logMethod('crawlAllJobs');
   const jobList = await storage.getAll();
   for (const jobId in jobList) {
-    if (!jobList[jobId] === null) continue;
+    if (!Object.prototype.hasOwnProperty.call(jobList, jobId)) continue;
     const job = jobList[jobId];
     const oldResultList = job.resultList;
     const resultList = await crawl(job.filter);
@@ -34,7 +34,7 @@ async function crawl(filter: JobFilter): Promise<Array<JobResult>> {
 }
 
 function differentObject(obj1: unknown, obj2: unknown): boolean {
-  return !(JSON.stringify(obj1) === JSON.stringify(obj2));
+  return JSON.stringify(obj1) !== JSON.stringify(obj2);
 }
 
 function makeRequestOption(filter: JobFilter): Partial<FetchOptions> & {url: string} {
@@ -74,7 +74,7 @@ async function makeRequest(option: Partial<FetchOptions> & {url: string}): Promi
 
 async function translateResponse(response: Response): Promise<Array<JobResult>> {
   logger.logMethod('translateResponse');
-  const responseJson: SepehrResponse = await response.json();
+  const responseJson = await response.json() as SepehrResponse;
 
   const jobResult: Array<JobResult> = [];
   for (const flightInformation of responseJson.flightHeaderList) {
