@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/AliMD/alwatr/compare/v0.22.1...v0.23.0) (2022-11-23)
+
+### Bug Fixes
+
+- **nano-server:** getToken ([a2f1ccb](https://github.com/AliMD/alwatr/commit/a2f1ccbe5d81d3f284ba1ce80dd2e54ec2245848))
+
 ## [0.22.1](https://github.com/AliMD/alwatr/compare/v0.22.0...v0.22.1) (2022-11-21)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/element",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "description": "Elegant powerful web component (lit-element) helper mixins written in tiny TypeScript module.",
   "keywords": [
     "element",
@@ -33,7 +33,7 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.22.0",
+    "@alwatr/logger": "^0.23.0",
     "lit": "^2.4.1",
     "tslib": "^2.4.1"
   }
