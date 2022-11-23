@@ -1,95 +1,15 @@
 import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
 
+import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type';
+
+export {FetchOptions, CacheDuplicate, CacheStrategy};
+
 const logger = createLogger('alwatr/fetch');
 
 alwatrRegisteredList.push({
   name: '@alwatr/fetch',
   version: '{{ALWATR_VERSION}}',
 });
-
-export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate';
-export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
-
-export interface FetchOptions extends RequestInit {
-  /**
-   * Request URL.
-   */
-  url: string;
-
-  /**
-   * A string to set request's method.
-   */
-  method: string;
-
-  /**
-   * A timeout for the fetch request.
-   * Set `0` for disable it.
-   *
-   * Use with cation, you will have memory leak issue in nodejs.
-   *
-   * @default 10_000 ms
-   */
-  timeout: number;
-
-  /**
-   * If fetch response not acceptable or timed out, it will retry the request.
-   *
-   * @default 3
-   */
-  retry: number;
-
-  /**
-   * Delay before each retries.
-   *
-   * @default 1_000 ms
-   */
-  retryDelay: number;
-
-  /**
-   * Simple memory caching for remove duplicate/parallel requests.
-   *
-   * - `never`: Never use memory caching.
-   * - `always`: Always use memory caching and remove all duplicate requests.
-   * - `until_load`: Cache parallel requests until request completed (it will be removed after the promise resolved).
-   * - `auto`: If CacheStorage was supported use `until_load` strategy else use `always`.
-   *
-   * @default 'never'
-   */
-  removeDuplicate: CacheDuplicate;
-
-  /**
-   * Strategies for caching.
-   *
-   * - `network_only`: Only network request without any cache.
-   * - `network_first`: Network first, falling back to cache.
-   * - `cache_only`: Cache only without any network request.
-   * - `cache_first`: Cache first, falling back to network.
-   * - `stale_while_revalidate`: Fastest strategy, Use cached first but always request network to update the cache.
-   *
-   * @default 'network_only'
-   */
-  cacheStrategy: CacheStrategy;
-
-  /**
-   * Revalidate callback for `stale_while_revalidate` cache strategy.
-   */
-  revalidateCallback?: (response: Response) => void;
-
-  /**
-   * Cache storage custom name.
-   */
-  cacheStorageName?: string;
-
-  /**
-   * Body as JS Object.
-   */
-  bodyJson?: Record<string | number, unknown>;
-
-  /**
-   * URL Query Parameters as JS Object.
-   */
-  queryParameters?: Record<string, string | number | boolean>;
-}
 
 let alwatrCacheStorage: Cache;
 const cacheSupported = 'caches' in globalThis;
@@ -113,7 +33,7 @@ const duplicateRequestStorage: Record<string, Promise<Response>> = {};
  * });
  * ```
  */
-export function fetch(_options: Partial<FetchOptions> & {url: string}): Promise<Response> {
+export function fetch(_options: Required<FetchOptions>): Promise<Response> {
   const options = _processOptions(_options);
   logger.logMethodArgs('fetch', {options});
   return _handleCacheStrategy(options);
@@ -122,7 +42,7 @@ export function fetch(_options: Partial<FetchOptions> & {url: string}): Promise<
 /**
  * Process fetch options and set defaults, etc.
  */
-function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchOptions {
+function _processOptions(options: FetchOptions): Required<FetchOptions> {
   options.method = options.method != null ? options.method.toUpperCase() : 'GET';
   options.window ??= null;
 
@@ -169,12 +89,14 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
       'Authorization': `Bearer ${options.token}`,
     };
   }
+
+  return options as Required<FetchOptions>;
 }
 
 /**
  * Handle Remove Duplicates over `_handleRetryPattern`.
  */
-async function _handleRemoveDuplicate(options: FetchOptions): Promise<Response> {
+async function _handleRemoveDuplicate(options: Required<FetchOptions>): Promise<Response> {
   if (options.removeDuplicate === 'never') return _handleRetryPattern(options);
 
   logger.logMethod('_handleRemoveDuplicate');
@@ -207,7 +129,7 @@ async function _handleRemoveDuplicate(options: FetchOptions): Promise<Response> 
 /**
  * Handle Cache Strategy over `_handleRemoveDuplicate`.
  */
-async function _handleCacheStrategy(options: FetchOptions): Promise<Response> {
+async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Response> {
   if (options.cacheStrategy === 'network_only') {
     return _handleRemoveDuplicate(options);
   }
@@ -280,7 +202,7 @@ async function _handleCacheStrategy(options: FetchOptions): Promise<Response> {
 /**
  * Handle retry pattern over `_handleTimeout`.
  */
-async function _handleRetryPattern(options: FetchOptions): Promise<Response> {
+async function _handleRetryPattern(options: Required<FetchOptions>): Promise<Response> {
   if (!(options.retry > 1)) return _handleTimeout(options);
 
   logger.logMethod('_handleRetryPattern');
