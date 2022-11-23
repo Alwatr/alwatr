@@ -163,7 +163,12 @@ function _processOptions(options: Partial<FetchOptions> & {url: string}): FetchO
     };
   }
 
-  return options as FetchOptions;
+  if (options.token != null) {
+    options.headers = {
+      ...options.headers,
+      'Authorization': `Bearer ${options.token}`,
+    };
+  }
 }
 
 /**
