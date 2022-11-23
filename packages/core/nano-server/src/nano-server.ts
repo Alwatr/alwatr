@@ -327,7 +327,7 @@ export class AlwatrConnection {
   getToken(): string | null {
     const auth = this.incomingMessage.headers.authorization?.split(' ');
 
-    if (auth == null || auth[0] !== 'Bearer') {
+    if (auth == null || auth[0].toLowerCase() !== 'bearer') {
       return null;
     }
 
