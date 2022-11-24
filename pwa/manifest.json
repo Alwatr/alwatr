@@ -1,7 +1,7 @@
 {
-  "short_name": "Alwatr-PWA",
-  "name": "Alwatr-PWA",
-  "description": "Alwatr PWA",
+  "short_name": "Flight-Finder-PWA",
+  "name": "Flight-Finder-PWA",
+  "description": "Flight Finder PWA",
   "start_url": "/?pwa",
   "display": "standalone",
   "theme_color": "#3277b9",

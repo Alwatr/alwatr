@@ -27,6 +27,7 @@ jobs:
           - folder: api
           - folder: crawler
           - folder: telegram-notifier
+          - folder: pwa
 
     permissions:
       contents: read
