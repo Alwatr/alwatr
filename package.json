@@ -3,7 +3,6 @@
   "description": "Alwatr Flight Finder",
   "repository": "https://github.com/AliMD/flight-finder/",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "license": "MIT",
   "type": "module",
   "private": true,
   "engines": {
