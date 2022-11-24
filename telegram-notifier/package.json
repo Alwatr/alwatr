@@ -4,7 +4,6 @@
   "description": "Alwatr Telegram Notify Microservice",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "license": "MIT",
   "private": true,
   "engines": {
     "node": ">=16.0.0",

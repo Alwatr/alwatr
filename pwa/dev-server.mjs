@@ -1,10 +1,8 @@
 // https://modern-web.dev/docs/dev-server/cli-and-configuration/#configuration-file
 
-import * as fs from 'fs';
-
 const config = {
   hostname: '0.0.0.0',
-  port: 8000,
+  port: 80,
   appIndex: './',
   rootDir: '.',
   nodeResolve: true,
