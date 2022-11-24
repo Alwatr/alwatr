@@ -50,20 +50,20 @@
   dependencies:
     tslib "^2.4.1"
 
-"@alwatr/math@^0.22.1":
-  version "0.22.1"
-  resolved "https://registry.yarnpkg.com/@alwatr/math/-/math-0.22.1.tgz#c9ee6357d3420294d08c86d3cacef0cceabc6bc7"
-  integrity sha512-g/ldMwjxHsF6Bg2V6JkdvAzqxdDpoQT+Lmg6TZ/13o/Vfvi/mmXn/2OaH9Bo09c88lFLWqx/tDz63SOYyyf7SQ==
+"@alwatr/math@^0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/math/-/math-0.23.0.tgz#4730b05414d4794e75f80b9dc05a224b04415fd9"
+  integrity sha512-lSKh1St1jy+jGPvo3yxffJwFBT7YK+n+a9naqXuYzYk8GJsc0uuBkHfH7/YgNoOxQKacqQ/W+PR0tmekafBWCA==
   dependencies:
     tslib "^2.4.1"
 
-"@alwatr/nano-server@^0.22.1":
-  version "0.22.1"
-  resolved "https://registry.yarnpkg.com/@alwatr/nano-server/-/nano-server-0.22.1.tgz#bfd9a28d0c8eccfbc508987375497756327c3844"
-  integrity sha512-yhPlGXnstvKPDGqAfHa2mnKOjx1FlZ2k9QyipyC9hk7Fmgbp5ktQAlVfT/vpfJVT6oJig7kM8PIOfDjoAaGmfg==
+"@alwatr/nano-server@^0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/nano-server/-/nano-server-0.23.0.tgz#073801d757f23c4e9b0cfc77d319a0343e546b30"
+  integrity sha512-WjYZcTlVSAT/AdZkmDdpqPUHePK/4dFQCtrFGxmERFJEAVHmhkDBQRPEL2LwuiOxgOOcdJ8gw5puYv6ibMr3Ow==
   dependencies:
-    "@alwatr/logger" "^0.22.0"
-    "@alwatr/math" "^0.22.1"
+    "@alwatr/logger" "^0.23.0"
+    "@alwatr/math" "^0.23.0"
     tslib "^2.4.1"
 
 "@alwatr/router@^0.22.1":
