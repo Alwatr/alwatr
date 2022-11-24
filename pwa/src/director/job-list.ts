@@ -16,17 +16,17 @@ export const jobListSignal = new SignalInterface('job-list');
 
 jobListSignal.setProvider(async () => {
   try {
-    const respnse = await fetch({
-      url: '',
-      token: '',
+    const response = await fetch({
+      url: window.appConfig?.api ?? '/job',
+      token: window.appConfig?.token,
       cacheStrategy: 'stale_while_revalidate',
     });
 
-    if (respnse.ok !== true) {
+    if (response.ok !== true) {
       throw new Error('fetch_failed');
     }
 
-    const responseData = (await respnse.json()) as ServerResponse<Record<string, Job>>;
+    const responseData = (await response.json()) as ServerResponse<Record<string, Job>>;
 
     if (responseData.ok !== true) {
       throw new Error('fetch_failed');

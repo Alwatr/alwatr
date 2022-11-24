@@ -1,4 +1,14 @@
-export interface Job {
+declare global {
+  // eslint-disable-next-line no-var
+  var appConfig: Record<string, string | undefined> | undefined;
+
+  interface AlwatrSignals {
+    readonly 'job-add': Pick<Job, 'filter'>;
+  }
+}
+
+export interface Job extends Record<string, unknown> {
+  _id: string;
   filter: JobFilter;
   resultList: Array<JobResult>;
 }

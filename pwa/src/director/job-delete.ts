@@ -15,18 +15,18 @@ export const jobDeleteSignal = new SignalInterface('job-delete');
 
 jobDeleteSignal.addListener(async (id) => {
   try {
-    const respnse = await fetch({
-      url: '',
-      token: '',
+    const response = await fetch({
+      url: window.appConfig?.api ?? '/job',
+      token: window.appConfig?.token,
       method: 'DELETE',
       queryParameters: {id},
     });
 
-    if (respnse.ok !== true) {
+    if (response.ok !== true) {
       throw new Error('fetch_failed');
     }
 
-    const responseData = (await respnse.json()) as ServerResponse<never>;
+    const responseData = (await response.json()) as ServerResponse<never>;
 
     if (responseData.ok !== true) {
       throw new Error('fetch_failed');

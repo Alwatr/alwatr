@@ -5,28 +5,22 @@ import {jobListSignal} from './job-list';
 
 import type {Job, ServerResponse} from '../type';
 
-declare global {
-  interface AlwatrSignals {
-    readonly 'job-add': Pick<Job, 'filter'>;
-  }
-}
-
 export const jobAddSignal = new SignalInterface('job-add');
 
 jobAddSignal.addListener(async (job) => {
   try {
-    const respnse = await fetch({
-      url: '',
-      token: '',
+    const response = await fetch({
+      url: window.appConfig?.api ?? '/job',
+      token: window.appConfig?.token,
       method: 'PUT',
       bodyJson: job,
     });
 
-    if (respnse.ok !== true) {
+    if (response.ok !== true) {
       throw new Error('fetch_failed');
     }
 
-    const responseData = (await respnse.json()) as ServerResponse<never>;
+    const responseData = (await response.json()) as ServerResponse<Job>;
 
     if (responseData.ok !== true) {
       throw new Error('fetch_failed');
