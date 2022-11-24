@@ -30,6 +30,9 @@ export class PageFlightFinder extends AlwatrElement {
         display: flex;
         flex-direction: column;
       }
+      ion-card {
+        margin: 1em 1em !important;
+      }
 
       ion-card-content {
         padding: 0 !important;
@@ -41,11 +44,11 @@ export class PageFlightFinder extends AlwatrElement {
     `,
     css`
       ion-card.form ion-item {
-        margin: 0 8px 8px;
+        margin: 0 .8em .6em;
       }
       ion-card.form ion-button.form-btn {
-        margin-left: 12px;
-        margin-right: 12px;
+        margin-left: 1em;
+        margin-right: 1em;
       }
       ion-card.form .form__input-date {
         display: flex;
@@ -103,6 +106,19 @@ export class PageFlightFinder extends AlwatrElement {
   static cityListTemplate = Object.keys(cityList).map(
       (city) => html`<ion-select-option value=${city}>${city} - ${cityList[city]}</ion-select-option>`,
   );
+  static seatListTemplate = Array.from(Array(9).keys()).map((seatNumber) => {
+    return html`
+      <ion-select-option value=${++seatNumber}> ${seatNumber.toLocaleString('fa-IR')} صندلی </ion-select-option>
+    `;
+  });
+  static dayListTemplate = Array.from(Array(31).keys()).map((dayNumber) => {
+    return html` <ion-select-option value=${++dayNumber}> ${dayNumber.toLocaleString('fa-IR')} </ion-select-option> `;
+  });
+  static monthListTemplate = Array.from(Array(12).keys()).map((monthNumber) => {
+    const month = new Date(0, monthNumber + 3).toLocaleDateString('fa-IR', {month: 'long'});
+
+    return html`<ion-select-option value=${monthNumber}>${month}</ion-select-option>`;
+  });
   private __newJob: Partial<JobFilter> = {};
 
   override connectedCallback(): void {
@@ -154,13 +170,13 @@ export class PageFlightFinder extends AlwatrElement {
             <div class="form__input-date">
               <ion-item fill="solid">
                 <ion-label position="floating">مبدأ</ion-label>
-                <ion-select name="origin" @ionChange=${this.__inputChanged}>
+                <ion-select name="origin" ok-text="تایید" cancel-text="لغو" @ionChange=${this.__inputChanged}>
                   ${PageFlightFinder.cityListTemplate}
                 </ion-select>
               </ion-item>
               <ion-item fill="solid">
                 <ion-label position="floating">مقصد</ion-label>
-                <ion-select name="dest" @ionChange=${this.__inputChanged}>
+                <ion-select name="dest" ok-text="تایید" cancel-text="لغو" @ionChange=${this.__inputChanged}>
                   ${PageFlightFinder.cityListTemplate}
                 </ion-select>
               </ion-item>
@@ -172,61 +188,16 @@ export class PageFlightFinder extends AlwatrElement {
             <div class="form__input-date">
               <ion-item fill="solid">
                 <ion-label position="floating">روز</ion-label>
-                <ion-select interface="popover">
-                  <ion-select-option value="dy1">1</ion-select-option>
-                  <ion-select-option value="dy2">2</ion-select-option>
-                  <ion-select-option value="dy3">3</ion-select-option>
-                  <ion-select-option value="dy4">4</ion-select-option>
-                  <ion-select-option value="dy5">5</ion-select-option>
-                  <ion-select-option value="dy6">6</ion-select-option>
-                  <ion-select-option value="dy7">7</ion-select-option>
-                  <ion-select-option value="dy8">8</ion-select-option>
-                  <ion-select-option value="dy9">9</ion-select-option>
-                  <ion-select-option value="dy10">10</ion-select-option>
-                  <ion-select-option value="dy11">11</ion-select-option>
-                  <ion-select-option value="dy12">12</ion-select-option>
-                  <ion-select-option value="dy13">13</ion-select-option>
-                  <ion-select-option value="dy14">14</ion-select-option>
-                  <ion-select-option value="dy15">15</ion-select-option>
-                  <ion-select-option value="dy16">16</ion-select-option>
-                  <ion-select-option value="dy17">17</ion-select-option>
-                  <ion-select-option value="dy18">18</ion-select-option>
-                  <ion-select-option value="dy19">19</ion-select-option>
-                  <ion-select-option value="dy20">20</ion-select-option>
-                  <ion-select-option value="dy21">21</ion-select-option>
-                  <ion-select-option value="dy22">22</ion-select-option>
-                  <ion-select-option value="dy23">23</ion-select-option>
-                  <ion-select-option value="dy24">24</ion-select-option>
-                  <ion-select-option value="dy25">25</ion-select-option>
-                  <ion-select-option value="dy26">26</ion-select-option>
-                  <ion-select-option value="dy27">27</ion-select-option>
-                  <ion-select-option value="dy28">28</ion-select-option>
-                  <ion-select-option value="dy29">29</ion-select-option>
-                  <ion-select-option value="dy30">30</ion-select-option>
-                  <ion-select-option value="dy31">31</ion-select-option>
-                </ion-select>
+                <ion-select interface="popover">${PageFlightFinder.dayListTemplate}</ion-select>
               </ion-item>
               <ion-item fill="solid">
                 <ion-label position="floating">ماه</ion-label>
-                <ion-select interface="popover">
-                  <ion-select-option value="dy1">1</ion-select-option>
-                  <ion-select-option value="dy2">2</ion-select-option>
-                  <ion-select-option value="dy3">3</ion-select-option>
-                  <ion-select-option value="dy4">4</ion-select-option>
-                  <ion-select-option value="dy5">5</ion-select-option>
-                  <ion-select-option value="dy6">6</ion-select-option>
-                  <ion-select-option value="dy7">7</ion-select-option>
-                  <ion-select-option value="dy8">8</ion-select-option>
-                  <ion-select-option value="dy9">9</ion-select-option>
-                  <ion-select-option value="dy10">10</ion-select-option>
-                  <ion-select-option value="dy11">11</ion-select-option>
-                  <ion-select-option value="dy12">12</ion-select-option>
-                </ion-select>
+                <ion-select interface="popover">${PageFlightFinder.monthListTemplate}</ion-select>
               </ion-item>
             </div>
             <ion-item fill="solid">
               <ion-label position="floating">تعداد صندلی</ion-label>
-              <ion-input type="number" debounce="30"></ion-input>
+              <ion-select interface="popover">${PageFlightFinder.seatListTemplate}</ion-select>
             </ion-item>
             <ion-item fill="solid">
               <ion-label position="floating">حداکثر قیمت</ion-label>
