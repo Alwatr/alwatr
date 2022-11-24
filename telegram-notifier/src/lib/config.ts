@@ -3,13 +3,13 @@ import {createLogger} from '@alwatr/logger';
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
 
 if (telegramBotToken == undefined) {
-  throw new Error('TELEGRAM_BOT_TOKEN required');
+  throw new Error('telegram bot token required, TELEGRAM_BOT_TOKEN="YOUR_SECRET_TOKEN" yarn start');
 }
 
 export const config = {
   nanoServer: {
     host: process.env.HOST ?? '0.0.0.0',
-    port: process.env.PORT != null ? +process.env.PORT : 8002,
+    port: process.env.PORT != null ? +process.env.PORT : 8001,
     token: process.env.TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
   telegramBot: {
