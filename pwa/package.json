@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@alwatr/element": "^0.22.0",
-    "@alwatr/icon": "^0.22.1",
+    "@alwatr/icon": "^0.23.0",
     "@alwatr/logger": "^0.22.0",
     "@alwatr/router": "^0.22.1",
     "@alwatr/fetch": "^0.23.0",
