@@ -79,9 +79,6 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   };
 
   constructor(public readonly config: AlwatrStorageClientConfig) {
-    if (!(config.host[config.host.length - 1] === '/')) {
-      config.host += '/';
-    }
     this._logger.logMethodArgs('constructor', config);
   }
 
@@ -110,7 +107,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   async get(documentId: string): Promise<DocumentType> {
     const response = await fetch({
       ...this.fetchOption,
-      url: this.config.host,
+      url: 'http://' + this.config.host + ':' + this.config.port + '/',
       queryParameters: {
         storage: this.config.name,
         id: documentId,
@@ -151,7 +148,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   async has(documentId: string): Promise<boolean> {
     const response = await fetch({
       ...this.fetchOption,
-      url: this.config.host + 'has',
+      url: 'http://' + this.config.host + ':' + this.config.port + '/' + 'has',
       queryParameters: {
         storage: this.config.name,
         id: documentId,
@@ -189,9 +186,11 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * ```
    */
   async set(documentObject: DocumentType): Promise<DocumentType> {
+    console.log('fyucclclcl');
+
     const response = await fetch({
       ...this.fetchOption,
-      url: this.config.host,
+      url: 'http://' + this.config.host + ':' + this.config.port + '/',
       method: 'PATCH',
       queryParameters: {
         storage: this.config.name,
@@ -227,7 +226,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   async delete(documentId: string): Promise<void> {
     const response = await fetch({
       ...this.fetchOption,
-      url: this.config.host,
+      url: 'http://' + this.config.host + ':' + this.config.port + '/',
       method: 'DELETE',
       queryParameters: {
         storage: this.config.name,
@@ -266,7 +265,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   async getAll(): Promise<Record<string, DocumentType>> {
     const response = await fetch({
       ...this.fetchOption,
-      url: this.config.host + 'all',
+      url: 'http://' + this.config.host + ':' + this.config.port + '/' + 'all',
       queryParameters: {
         storage: this.config.name,
       },
@@ -300,7 +299,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   async keys(): Promise<Array<string>> {
     const response = await fetch({
       ...this.fetchOption,
-      url: this.config.host + 'keys',
+      url: 'http://' + this.config.host + ':' + this.config.port + '/' + 'keys',
       queryParameters: {
         storage: this.config.name,
       },
