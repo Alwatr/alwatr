@@ -47,6 +47,15 @@ export class PageFlightFinder extends AlwatrElement {
         margin-left: 12px;
         margin-right: 12px;
       }
+      ion-card.form .form__input-date {
+        display: flex;
+      }
+      ion-card.form .form__input-date ion-item {
+        flex: 1 1 0;
+      }
+      ion-card.form .form__input-date ion-item:last-child {
+        margin-right: 0;
+      }
     `,
   ];
 
@@ -151,21 +160,16 @@ export class PageFlightFinder extends AlwatrElement {
                 ${PageFlightFinder.cityListTemplate}
               </ion-select>
             </ion-item>
-            <ion-item fill="solid">
-              <ion-label position="floating">تاریخ</ion-label>
-              <ion-select name="date" @ionChange=${this.__inputChanged} interface="popover">
-                <ion-select-option value="1401/09/24">۱۴۰۱/۰۹/۲۴</ion-select-option>
-                <ion-select-option value="1401/09/25">۱۴۰۱/۰۹/۲۵</ion-select-option>
-                <ion-select-option value="1401/09/26">۱۴۰۱/۰۹/۲۶</ion-select-option>
-                <ion-select-option value="1401/09/27">۱۴۰۱/۰۹/۲۷</ion-select-option>
-                <ion-select-option value="1401/09/28">۱۴۰۱/۰۹/۲۸</ion-select-option>
-                <ion-select-option value="1401/09/29">۱۴۰۱/۰۹/۲۹</ion-select-option>
-                <ion-select-option value="1401/09/30">۱۴۰۱/۰۹/۳۰</ion-select-option>
-                <ion-select-option value="1401/10/01">۱۴۰۱/۱۰/۰۱</ion-select-option>
-                <ion-select-option value="1401/10/02">۱۴۰۱/۱۰/۰۲</ion-select-option>
-                <ion-select-option value="1401/10/03">۱۴۰۱/۱۰/۰۳</ion-select-option>
-              </ion-select>
-            </ion-item>
+            <div class="form__input-date">
+              <ion-item fill="solid">
+                <ion-label position="floating">روز</ion-label>
+                <ion-input type="number" debounce="30" min="1" max="31"></ion-input>
+              </ion-item>
+              <ion-item fill="solid">
+                <ion-label position="floating">ماه</ion-label>
+                <ion-input type="number" debounce="30" min="1" max="12"></ion-input>
+              </ion-item>
+            </div>
             <ion-item fill="solid">
               <ion-label position="floating">زمان</ion-label>
               <ion-select name="dayPart" @ionChange=${this.__inputChanged} interface="popover">
