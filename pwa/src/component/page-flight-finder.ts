@@ -85,12 +85,12 @@ export class PageFlightFinder extends AlwatrElement {
       },
       resultList: [
         {
-          price: 10000,
+          price: 14550000,
           time: 0,
           seatCount: 0,
         },
         {
-          price: 12000,
+          price: 1450000000,
           time: 0,
           seatCount: 0,
         },
@@ -151,17 +151,23 @@ export class PageFlightFinder extends AlwatrElement {
 
         <ion-card-content>
           <ion-list>
+            <div class="form__input-date">
+              <ion-item fill="solid">
+                <ion-label position="floating">مبدأ</ion-label>
+                <ion-select name="origin" @ionChange=${this.__inputChanged}>
+                  ${PageFlightFinder.cityListTemplate}
+                </ion-select>
+              </ion-item>
+              <ion-item fill="solid">
+                <ion-label position="floating">مقصد</ion-label>
+                <ion-select name="dest" @ionChange=${this.__inputChanged}>
+                  ${PageFlightFinder.cityListTemplate}
+                </ion-select>
+              </ion-item>
+            </div>
             <ion-item fill="solid">
-              <ion-label position="floating">مبدأ</ion-label>
-              <ion-select name="origin" @ionChange=${this.__inputChanged}>
-                ${PageFlightFinder.cityListTemplate}
-              </ion-select>
-            </ion-item>
-            <ion-item fill="solid">
-              <ion-label position="floating">مقصد</ion-label>
-              <ion-select name="dest" @ionChange=${this.__inputChanged}>
-                ${PageFlightFinder.cityListTemplate}
-              </ion-select>
+              <ion-label position="floating">توضیحات</ion-label>
+              <ion-input type="text" debounce="30"></ion-input>
             </ion-item>
             <div class="form__input-date">
               <ion-item fill="solid">
@@ -219,12 +225,8 @@ export class PageFlightFinder extends AlwatrElement {
               </ion-item>
             </div>
             <ion-item fill="solid">
-              <ion-label position="floating">زمان</ion-label>
-              <ion-select name="dayPart" @ionChange=${this.__inputChanged} interface="popover">
-                <ion-select-option value="morning">صبح</ion-select-option>
-                <ion-select-option value="evening">عصر</ion-select-option>
-                <ion-select-option value="night">شب</ion-select-option>
-              </ion-select>
+              <ion-label position="floating">تعداد صندلی</ion-label>
+              <ion-input type="number" debounce="30"></ion-input>
             </ion-item>
             <ion-item fill="solid">
               <ion-label position="floating">حداکثر قیمت</ion-label>

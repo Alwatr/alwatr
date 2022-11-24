@@ -136,7 +136,7 @@ export class JobItem extends AlwatrElement {
         </div>
         <div class="job__subtitle">
           <span class="job__subtitle-price ion-color-danger"> ${lowestPrice.toLocaleString('fa')} </span>
-          <span> ه&zwnj;ت </span>
+          <span> تومان </span>
         </div>
       `;
     }
