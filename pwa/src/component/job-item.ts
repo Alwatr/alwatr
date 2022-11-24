@@ -2,7 +2,7 @@ import {AlwatrElement} from '@alwatr/element';
 import {css, html, nothing} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
-import '@alwatr/icon';
+import '@alwatr/icon'; // TODO: preload icons after complete UI
 
 import ionNormalize from '../style/ionic.normalize';
 import ionTheming from '../style/ionic.theming';
@@ -89,10 +89,10 @@ export class JobItem extends AlwatrElement {
       <ion-item-sliding>
         <ion-item class="job" lines="full">
           <ion-label>
-            ${this._renderTitle(i18nCityList[this.job.filter.origin], i18nCityList[this.job.filter.dest])}
-            ${this._renderSubtitle(this.job.filter.date, i18nDayPartList[this.job.filter.dayPart[0]])}
+            ${this.__renderTitle(i18nCityList[this.job.filter.origin], i18nCityList[this.job.filter.dest])}
+            ${this.__renderSubtitle(this.job.filter.date, i18nDayPartList[this.job.filter.dayPart[0]])}
           </ion-label>
-          <ion-label slot="end"> ${this._renderFoundList(this.job.resultList)} </ion-label>
+          <ion-label slot="end"> ${this.__renderFoundList(this.job.resultList)} </ion-label>
         </ion-item>
 
         <ion-item-options side="start">
@@ -104,7 +104,7 @@ export class JobItem extends AlwatrElement {
     `;
   }
 
-  protected _renderTitle(origin: string, destination: string): TemplateResult {
+  private __renderTitle(origin: string, destination: string): TemplateResult {
     return html`
       <div class="job__title">
         <span>${destination}</span>
@@ -118,7 +118,7 @@ export class JobItem extends AlwatrElement {
       </div>
     `;
   }
-  protected _renderSubtitle(date: string, time: string): TemplateResult {
+  private __renderSubtitle(date: string, time: string): TemplateResult {
     return html`
       <div class="job__subtitle">
         <span>${date}</span>
@@ -126,7 +126,7 @@ export class JobItem extends AlwatrElement {
       </div>
     `;
   }
-  protected _renderFoundList(resultList: Array<JobResult>): TemplateResult {
+  private __renderFoundList(resultList: Array<JobResult>): TemplateResult {
     if (resultList.length !== 0) {
       const lowestPrice = Math.min(...resultList.map((result) => result.price));
       return html`
