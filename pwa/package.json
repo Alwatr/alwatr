@@ -30,11 +30,11 @@
   },
   "dependencies": {
     "@alwatr/element": "^0.22.0",
-    "@alwatr/fetch": "^0.22.1",
     "@alwatr/icon": "^0.22.1",
     "@alwatr/logger": "^0.22.0",
     "@alwatr/router": "^0.22.1",
-    "@alwatr/signal": "^0.22.1",
+    "@alwatr/fetch": "^0.23.0",
+    "@alwatr/signal": "^0.23.0",
     "@ionic/core": "^6.3.8",
     "@webcomponents/webcomponentsjs": "^2.7.0",
     "lit": "^2.4.1"

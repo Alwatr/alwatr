@@ -19,6 +19,14 @@
     "@alwatr/logger" "^0.22.0"
     tslib "^2.4.1"
 
+"@alwatr/fetch@^0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.23.0.tgz#d69b594bc1c91539f1a777e61f71005bf6b6709a"
+  integrity sha512-rixGMmz47HGNNbfvk9OSTejARwe6n/V/cARNQpAAER3N3XZDKPJca9Kr09hsEnxmfTFDUdzDuS1Z8Qqxylf52A==
+  dependencies:
+    "@alwatr/logger" "^0.23.0"
+    tslib "^2.4.1"
+
 "@alwatr/icon@^0.22.1":
   version "0.22.1"
   resolved "https://registry.yarnpkg.com/@alwatr/icon/-/icon-0.22.1.tgz#7f6c2a354e59d463a8c877452bf8d7f2beac8bae"
@@ -32,6 +40,13 @@
   version "0.22.0"
   resolved "https://registry.yarnpkg.com/@alwatr/logger/-/logger-0.22.0.tgz#2b4c9baf1763ce767076ed876291cd48bbba1764"
   integrity sha512-jVkPv7eo019mEg7fYw+wVgTk2JqUFk1OTuTHF3CW3XG0Su8wscgsjGtQCLwDBtODMIIyiKztFFbcFZcfnNAb2Q==
+  dependencies:
+    tslib "^2.4.1"
+
+"@alwatr/logger@^0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/logger/-/logger-0.23.0.tgz#255d6f931d9219046da24507ee0bad0c762ab5f2"
+  integrity sha512-Ax5yRqp801zECYxGue5fFwGyA0jjoHtX/s41HfGw86F+GgkxFHZ8p1I7huzb9fk2f/deGowgOxrmA1NihLvqGA==
   dependencies:
     tslib "^2.4.1"
 
@@ -66,6 +81,14 @@
   integrity sha512-GWPB+NMaTD8BDTbtA0OiYPX6WyMiM1MeUyc2/QpPBAkIHlCzJBLad8YKtw4udpykdWnc7d+PndK/vihb/YkYeA==
   dependencies:
     "@alwatr/logger" "^0.22.0"
+    tslib "^2.4.1"
+
+"@alwatr/signal@^0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/signal/-/signal-0.23.0.tgz#778c2c3c338930995c3dd5b85040235f69d563f5"
+  integrity sha512-JX41cq+SBey0ZMgjHiTf1NWOgh5Zyi47BQqrN+Ykfqg7HhFgTtZtjT5xJJEyUvtWLHp5+S1Vr2eJWYWqU1tC+g==
+  dependencies:
+    "@alwatr/logger" "^0.23.0"
     tslib "^2.4.1"
 
 "@alwatr/storage-client@^0.22.1":

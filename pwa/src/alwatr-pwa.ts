@@ -8,6 +8,7 @@ import ionTheming from './style/ionic.theming';
 
 import './component/page-flight-finder';
 import './component/ionic-components';
+import './director';
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {TemplateResult} from 'lit';
