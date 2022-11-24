@@ -66,21 +66,13 @@
     "@alwatr/math" "^0.23.0"
     tslib "^2.4.1"
 
-"@alwatr/router@^0.22.1":
-  version "0.22.1"
-  resolved "https://registry.yarnpkg.com/@alwatr/router/-/router-0.22.1.tgz#ae36ae3e11421de5379eaf64140f5d61cc361620"
-  integrity sha512-CIeUk0w3oDCuatuOMVP18+k8dKIXRHp95s6RFqJjOEUJkbmBdPLHRdKymbfxPD67KebWhpjQnCNCQts61uZN3A==
+"@alwatr/router@^0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/router/-/router-0.23.0.tgz#3aa93aa0e4dc27ac32613b2325183c973165b3ba"
+  integrity sha512-b3qu9v98+1YtbcBVLu54cZL3MV9mU3DxNgX06/hguAAFEOQrftegrwLVtVQb7/lIuOQYV+PSh5NXwvAc7JZ5ng==
   dependencies:
-    "@alwatr/logger" "^0.22.0"
-    "@alwatr/signal" "^0.22.1"
-    tslib "^2.4.1"
-
-"@alwatr/signal@^0.22.1":
-  version "0.22.1"
-  resolved "https://registry.yarnpkg.com/@alwatr/signal/-/signal-0.22.1.tgz#7c0cbbdffbccfecd99f5cbde1d59ec50a0265cd4"
-  integrity sha512-GWPB+NMaTD8BDTbtA0OiYPX6WyMiM1MeUyc2/QpPBAkIHlCzJBLad8YKtw4udpykdWnc7d+PndK/vihb/YkYeA==
-  dependencies:
-    "@alwatr/logger" "^0.22.0"
+    "@alwatr/logger" "^0.23.0"
+    "@alwatr/signal" "^0.23.0"
     tslib "^2.4.1"
 
 "@alwatr/signal@^0.23.0":
