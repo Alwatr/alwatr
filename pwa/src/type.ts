@@ -23,6 +23,7 @@ type ServerResponseFailed = {
   statusCode: number;
   errorCode: string;
   data?: Record<string, unknown>;
+  _id: number;
 };
 
 type ServerResponseSuccess<DataType> = {

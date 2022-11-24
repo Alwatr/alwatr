@@ -51,14 +51,14 @@ export class PageFlightFinder extends AlwatrElement {
 
   @state() private __jobList: Array<Job> = [];
 
-  static __jobListSignal = new SignalInterface('job-list');
-  static __jobAddSignal = new SignalInterface('job-add');
+  static jobListSignal = new SignalInterface('job-list');
+  static jobAddSignal = new SignalInterface('job-add');
   private __newJob: Partial<JobFilter> = {};
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    PageFlightFinder.__jobListSignal.addListener((jobList) => {
+    PageFlightFinder.jobListSignal.addListener((jobList) => {
       this.__jobList = jobList;
     });
   }
@@ -103,21 +103,21 @@ export class PageFlightFinder extends AlwatrElement {
           <ion-list>
             <ion-item fill="solid">
               <ion-label position="floating">مبدأ</ion-label>
-              <ion-select name="origin" @ionChange=${this.__inputChanged}>
+              <ion-select name="origin" @ionChange=${this.__inputChanged} interface="popover">
                 <ion-select-option value="MHD">مشهد</ion-select-option>
                 <ion-select-option value="THR">تهران</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item fill="solid">
               <ion-label position="floating">مقصد</ion-label>
-              <ion-select name="dest" @ionChange=${this.__inputChanged}>
+              <ion-select name="dest" @ionChange=${this.__inputChanged} interface="popover">
                 <ion-select-option value="MHD">مشهد</ion-select-option>
                 <ion-select-option value="THR">تهران</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item fill="solid">
               <ion-label position="floating">تاریخ</ion-label>
-              <ion-select name="date" @ionChange=${this.__inputChanged}>
+              <ion-select name="date" @ionChange=${this.__inputChanged} interface="popover">
                 <ion-select-option value="data1">۱۴۰۱/۰۹/۲۴</ion-select-option>
                 <ion-select-option value="data2">۱۴۰۱/۰۹/۲۵</ion-select-option>
                 <ion-select-option value="data3">۱۴۰۱/۰۹/۲۶</ion-select-option>
@@ -132,7 +132,7 @@ export class PageFlightFinder extends AlwatrElement {
             </ion-item>
             <ion-item fill="solid">
               <ion-label position="floating">زمان</ion-label>
-              <ion-select name="dayPart" @ionChange=${this.__inputChanged}>
+              <ion-select name="dayPart" @ionChange=${this.__inputChanged} interface="popover">
                 <ion-select-option value="morning">صبح</ion-select-option>
                 <ion-select-option value="evening">عصر</ion-select-option>
                 <ion-select-option value="night">شب</ion-select-option>
@@ -158,11 +158,9 @@ export class PageFlightFinder extends AlwatrElement {
       event,
     });
 
-    if (this.__formValidate) {
-      PageFlightFinder.__jobAddSignal.dispatch({
-        filter: this.__newJob as Required<typeof this.__newJob>,
-      });
-    }
+    PageFlightFinder.jobAddSignal.dispatch({
+      filter: this.__newJob as Required<typeof this.__newJob>,
+    });
   }
 
   private __inputChanged(event: InputCustomEvent | SelectCustomEvent<string>): void {
