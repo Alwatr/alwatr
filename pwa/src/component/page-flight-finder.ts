@@ -53,6 +53,9 @@ export class PageFlightFinder extends AlwatrElement {
       ion-card.form .form__input-date ion-item {
         flex: 1 1 0;
       }
+      ion-card.form .form__input-date ion-item::part(native) {
+        height: 100%;
+      }
       ion-card.form .form__input-date ion-item:last-child {
         margin-right: 0;
       }
@@ -163,11 +166,56 @@ export class PageFlightFinder extends AlwatrElement {
             <div class="form__input-date">
               <ion-item fill="solid">
                 <ion-label position="floating">روز</ion-label>
-                <ion-input type="number" debounce="30" min="1" max="31"></ion-input>
+                <ion-select interface="popover">
+                  <ion-select-option value="dy1">1</ion-select-option>
+                  <ion-select-option value="dy2">2</ion-select-option>
+                  <ion-select-option value="dy3">3</ion-select-option>
+                  <ion-select-option value="dy4">4</ion-select-option>
+                  <ion-select-option value="dy5">5</ion-select-option>
+                  <ion-select-option value="dy6">6</ion-select-option>
+                  <ion-select-option value="dy7">7</ion-select-option>
+                  <ion-select-option value="dy8">8</ion-select-option>
+                  <ion-select-option value="dy9">9</ion-select-option>
+                  <ion-select-option value="dy10">10</ion-select-option>
+                  <ion-select-option value="dy11">11</ion-select-option>
+                  <ion-select-option value="dy12">12</ion-select-option>
+                  <ion-select-option value="dy13">13</ion-select-option>
+                  <ion-select-option value="dy14">14</ion-select-option>
+                  <ion-select-option value="dy15">15</ion-select-option>
+                  <ion-select-option value="dy16">16</ion-select-option>
+                  <ion-select-option value="dy17">17</ion-select-option>
+                  <ion-select-option value="dy18">18</ion-select-option>
+                  <ion-select-option value="dy19">19</ion-select-option>
+                  <ion-select-option value="dy20">20</ion-select-option>
+                  <ion-select-option value="dy21">21</ion-select-option>
+                  <ion-select-option value="dy22">22</ion-select-option>
+                  <ion-select-option value="dy23">23</ion-select-option>
+                  <ion-select-option value="dy24">24</ion-select-option>
+                  <ion-select-option value="dy25">25</ion-select-option>
+                  <ion-select-option value="dy26">26</ion-select-option>
+                  <ion-select-option value="dy27">27</ion-select-option>
+                  <ion-select-option value="dy28">28</ion-select-option>
+                  <ion-select-option value="dy29">29</ion-select-option>
+                  <ion-select-option value="dy30">30</ion-select-option>
+                  <ion-select-option value="dy31">31</ion-select-option>
+                </ion-select>
               </ion-item>
               <ion-item fill="solid">
                 <ion-label position="floating">ماه</ion-label>
-                <ion-input type="number" debounce="30" min="1" max="12"></ion-input>
+                <ion-select interface="popover">
+                  <ion-select-option value="dy1">1</ion-select-option>
+                  <ion-select-option value="dy2">2</ion-select-option>
+                  <ion-select-option value="dy3">3</ion-select-option>
+                  <ion-select-option value="dy4">4</ion-select-option>
+                  <ion-select-option value="dy5">5</ion-select-option>
+                  <ion-select-option value="dy6">6</ion-select-option>
+                  <ion-select-option value="dy7">7</ion-select-option>
+                  <ion-select-option value="dy8">8</ion-select-option>
+                  <ion-select-option value="dy9">9</ion-select-option>
+                  <ion-select-option value="dy10">10</ion-select-option>
+                  <ion-select-option value="dy11">11</ion-select-option>
+                  <ion-select-option value="dy12">12</ion-select-option>
+                </ion-select>
               </ion-item>
             </div>
             <ion-item fill="solid">
