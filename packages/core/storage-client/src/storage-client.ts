@@ -68,7 +68,8 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   /**
    * Default fetch options.
    */
-  fetchOption: Partial<FetchOptions> = {
+  fetchOption: FetchOptions = {
+    url: 'http://' + this.config.host + ':' + this.config.port + '/',
     keepalive: true,
     timeout: this.config.timeout ?? 0,
     cacheStrategy: 'network_only',
@@ -107,7 +108,6 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   async get(documentId: string): Promise<DocumentType> {
     const response = await fetch({
       ...this.fetchOption,
-      url: 'http://' + this.config.host + ':' + this.config.port + '/',
       queryParameters: {
         storage: this.config.name,
         id: documentId,
@@ -148,7 +148,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   async has(documentId: string): Promise<boolean> {
     const response = await fetch({
       ...this.fetchOption,
-      url: 'http://' + this.config.host + ':' + this.config.port + '/' + 'has',
+      url: this.fetchOption.url + 'has',
       queryParameters: {
         storage: this.config.name,
         id: documentId,
@@ -190,7 +190,6 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
 
     const response = await fetch({
       ...this.fetchOption,
-      url: 'http://' + this.config.host + ':' + this.config.port + '/',
       method: 'PATCH',
       queryParameters: {
         storage: this.config.name,
@@ -226,7 +225,6 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   async delete(documentId: string): Promise<void> {
     const response = await fetch({
       ...this.fetchOption,
-      url: 'http://' + this.config.host + ':' + this.config.port + '/',
       method: 'DELETE',
       queryParameters: {
         storage: this.config.name,
@@ -265,7 +263,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   async getAll(): Promise<Record<string, DocumentType>> {
     const response = await fetch({
       ...this.fetchOption,
-      url: 'http://' + this.config.host + ':' + this.config.port + '/' + 'all',
+      url: this.fetchOption.url + 'all',
       queryParameters: {
         storage: this.config.name,
       },
@@ -299,7 +297,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   async keys(): Promise<Array<string>> {
     const response = await fetch({
       ...this.fetchOption,
-      url: 'http://' + this.config.host + ':' + this.config.port + '/' + 'keys',
+      url: this.fetchOption.url + 'keys',
       queryParameters: {
         storage: this.config.name,
       },
