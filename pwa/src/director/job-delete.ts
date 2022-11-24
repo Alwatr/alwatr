@@ -2,14 +2,9 @@ import {fetch} from '@alwatr/fetch';
 import {SignalInterface} from '@alwatr/signal';
 
 import {jobListSignal} from './job-list';
+import {toastShowSignal} from './toast-show';
 
 import type {ServerResponse} from '../type';
-
-declare global {
-  interface AlwatrSignals {
-    readonly 'job-delete': string;
-  }
-}
 
 export const jobDeleteSignal = new SignalInterface('job-delete');
 
@@ -33,7 +28,9 @@ jobDeleteSignal.addListener(async (id) => {
     }
   }
   catch (error) {
-    // TODO: show toast
+    toastShowSignal.request({
+      message: (error as Error).message,
+    });
   }
 
   jobListSignal.request();
