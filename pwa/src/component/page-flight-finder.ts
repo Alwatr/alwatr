@@ -1,7 +1,5 @@
 import {AlwatrElement} from '@alwatr/element';
-import {isNumber} from '@alwatr/math';
 import {SignalInterface} from '@alwatr/signal';
-import {InputCustomEvent, SelectCustomEvent} from '@ionic/core';
 import {css, html} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {map} from 'lit/directives/map.js';
@@ -12,6 +10,7 @@ import ionTheming from '../style/ionic.theming';
 import './job-item';
 
 import type {Job, JobFilter} from '../type';
+import type {InputCustomEvent, SelectCustomEvent} from '@ionic/core';
 import type {TemplateResult} from 'lit';
 
 declare global {
@@ -52,14 +51,14 @@ export class PageFlightFinder extends AlwatrElement {
 
   @state() private __jobList: Array<Job> = [];
 
-  private __jobListSignal = new SignalInterface('job-list');
-  private __jobAddSignal = new SignalInterface('job-add');
-  private __jobAddInputs: Partial<JobFilter> = {};
+  static __jobListSignal = new SignalInterface('job-list');
+  static __jobAddSignal = new SignalInterface('job-add');
+  private __newJob: Partial<JobFilter> = {};
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this.__jobListSignal.addListener((jobList) => {
+    PageFlightFinder.__jobListSignal.addListener((jobList) => {
       this.__jobList = jobList;
     });
   }
@@ -104,21 +103,21 @@ export class PageFlightFinder extends AlwatrElement {
           <ion-list>
             <ion-item fill="solid">
               <ion-label position="floating">مبدأ</ion-label>
-              <ion-select name="origin" @ionChange=${this.__jobAddInputChanged}>
+              <ion-select name="origin" @ionChange=${this.__inputChanged}>
                 <ion-select-option value="MHD">مشهد</ion-select-option>
                 <ion-select-option value="THR">تهران</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item fill="solid">
               <ion-label position="floating">مقصد</ion-label>
-              <ion-select name="dest" @ionChange=${this.__jobAddInputChanged}>
+              <ion-select name="dest" @ionChange=${this.__inputChanged}>
                 <ion-select-option value="MHD">مشهد</ion-select-option>
                 <ion-select-option value="THR">تهران</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item fill="solid">
               <ion-label position="floating">تاریخ</ion-label>
-              <ion-select name="date" @ionChange=${this.__jobAddInputChanged}>
+              <ion-select name="date" @ionChange=${this.__inputChanged}>
                 <ion-select-option value="data1">۱۴۰۱/۰۹/۲۴</ion-select-option>
                 <ion-select-option value="data2">۱۴۰۱/۰۹/۲۵</ion-select-option>
                 <ion-select-option value="data3">۱۴۰۱/۰۹/۲۶</ion-select-option>
@@ -133,7 +132,7 @@ export class PageFlightFinder extends AlwatrElement {
             </ion-item>
             <ion-item fill="solid">
               <ion-label position="floating">زمان</ion-label>
-              <ion-select name="dayPart" @ionChange=${this.__jobAddInputChanged}>
+              <ion-select name="dayPart" @ionChange=${this.__inputChanged}>
                 <ion-select-option value="morning">صبح</ion-select-option>
                 <ion-select-option value="evening">عصر</ion-select-option>
                 <ion-select-option value="night">شب</ion-select-option>
@@ -141,55 +140,61 @@ export class PageFlightFinder extends AlwatrElement {
             </ion-item>
             <ion-item fill="solid">
               <ion-label position="floating">حداکثر قیمت</ion-label>
-              <ion-input name="maxPrice" type="number" @ionChange=${this.__jobAddInputChanged}></ion-input>
+              <ion-input name="maxPrice" type="number" debounce="30" @ionChange=${this.__inputChanged}></ion-input>
               <ion-note slot="helper">${this.__maxPriceHelper}</ion-note>
             </ion-item>
-            <ion-button class="form-btn" expand="block" @click=${this.__jobAddSubmit}> ارسال </ion-button>
+            <ion-button class="form-btn" expand="block" ?disabled=${!this.__formValidate} @click=${this.__submit}>
+              ارسال
+            </ion-button>
           </ion-list>
         </ion-card-content>
       </ion-card>
     `;
   }
 
-  private __jobAddSubmit(event: PointerEvent): void {
-    this._logger.logMethodArgs('__jobAddSubmit', {
-      jobAddInputs: this.__jobAddInputs,
+  private __submit(event: PointerEvent): void {
+    this._logger.logMethodArgs('__submit', {
+      newJob: this.__newJob,
       event,
     });
 
-    if (Object.values(this.__jobAddInputs).length === 5) {
-      this.__jobAddSignal.dispatch({
-        filter: this.__jobAddInputs as Required<typeof this.__jobAddInputs>,
+    if (this.__formValidate) {
+      PageFlightFinder.__jobAddSignal.dispatch({
+        filter: this.__newJob as Required<typeof this.__newJob>,
       });
     }
   }
 
-  private __jobAddInputChanged(event: InputCustomEvent | SelectCustomEvent<string>): void {
-    const name = event.target.name as keyof typeof this.__jobAddInputs | null;
-    let value: number | string | null | undefined = event.detail.value;
+  private __inputChanged(event: InputCustomEvent | SelectCustomEvent<string>): void {
+    const name = event.target.name as string | undefined;
+    const value = event.detail.value as string | undefined;
+
+    this._logger.logMethodArgs('__inputChanged', {name, value});
+
+    if (name == null) return;
+
+    this.requestUpdate();
+
+    if (value == null || value.trim() == '') {
+      delete this.__newJob[name];
+      return;
+    }
 
     if (name === 'maxPrice') {
-      value = isNumber(value) ? Number(value) : value;
+      this.__newJob[name] = +value;
     }
-    // ? possible `name`|`value` value is ''
-    if (name != null && value != null) {
-      this.__jobAddInputs[name] = value;
-
-      if (name === 'maxPrice') {
-        this.requestUpdate('__jobAddInputs');
-      }
+    else {
+      this.__newJob[name] = value;
     }
-
-    this._logger.logMethodArgs('__jobAddInputChanged', {
-      name,
-      value,
-      event,
-    });
   }
 
   private get __maxPriceHelper(): string {
-    const maxPrice = (this.__jobAddInputs.maxPrice || 0).toLocaleString('fa-IR');
+    const maxPrice = (this.__newJob.maxPrice ?? 0).toLocaleString('fa-IR');
 
-    return `حداکثر قیمت ${maxPrice} تومان است.`;
+    return maxPrice + ' تومان';
+  }
+
+  private get __formValidate(): boolean {
+    return Object.keys(this.__newJob).length === 5;
   }
 }
