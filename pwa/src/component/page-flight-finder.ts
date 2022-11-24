@@ -4,6 +4,7 @@ import {css, html} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {map} from 'lit/directives/map.js';
 
+import {cityList} from '../city-list';
 import ionNormalize from '../style/ionic.normalize';
 import ionTheming from '../style/ionic.theming';
 
@@ -53,6 +54,9 @@ export class PageFlightFinder extends AlwatrElement {
 
   static jobListSignal = new SignalInterface('job-list');
   static jobAddSignal = new SignalInterface('job-add');
+  static cityListTemplate = Object.keys(cityList).map(
+      (city) => html`<ion-select-option value=${city}>${cityList[city]}</ion-select-option>`,
+  );
   private __newJob: Partial<JobFilter> = {};
 
   override connectedCallback(): void {
@@ -103,16 +107,14 @@ export class PageFlightFinder extends AlwatrElement {
           <ion-list>
             <ion-item fill="solid">
               <ion-label position="floating">مبدأ</ion-label>
-              <ion-select name="origin" @ionChange=${this.__inputChanged} interface="popover">
-                <ion-select-option value="MHD">مشهد</ion-select-option>
-                <ion-select-option value="THR">تهران</ion-select-option>
+              <ion-select name="origin" @ionChange=${this.__inputChanged}>
+                ${PageFlightFinder.cityListTemplate}
               </ion-select>
             </ion-item>
             <ion-item fill="solid">
               <ion-label position="floating">مقصد</ion-label>
-              <ion-select name="dest" @ionChange=${this.__inputChanged} interface="popover">
-                <ion-select-option value="MHD">مشهد</ion-select-option>
-                <ion-select-option value="THR">تهران</ion-select-option>
+              <ion-select name="dest" @ionChange=${this.__inputChanged}>
+                ${PageFlightFinder.cityListTemplate}
               </ion-select>
             </ion-item>
             <ion-item fill="solid">
