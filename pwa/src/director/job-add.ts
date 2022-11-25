@@ -2,6 +2,7 @@ import {fetch} from '@alwatr/fetch';
 import {SignalInterface} from '@alwatr/signal';
 
 import {jobListSignal} from './job-list';
+import {showToastSignal} from './toast';
 
 import type {Job, ServerResponse} from '../type';
 
@@ -27,7 +28,9 @@ jobAddSignal.addListener(async (job) => {
     }
   }
   catch (error) {
-    // TODO: show toast
+    showToastSignal.dispatch({
+      message: 'عملیات با خطا رو به رو شد',
+    });
   }
 
   jobListSignal.request();

@@ -1,16 +1,9 @@
 import {fetch} from '@alwatr/fetch';
 import {SignalInterface} from '@alwatr/signal';
 
-import type {Job, ServerResponse} from '../type';
+import {showToastSignal} from './toast';
 
-declare global {
-  interface AlwatrSignals {
-    readonly 'job-list': Array<Job>;
-  }
-  interface AlwatrRequestSignals {
-    readonly 'job-list': void;
-  }
-}
+import type {Job, ServerResponse} from '../type';
 
 export const jobListSignal = new SignalInterface('job-list');
 
@@ -35,9 +28,11 @@ jobListSignal.setProvider(async () => {
     return Object.values(responseData.data);
   }
   catch (error) {
-    // TODO: show toast
-    return;
+    showToastSignal.dispatch({
+      message: 'عملیات با خطا رو به رو شد',
+    });
   }
+  return;
 });
 
 jobListSignal.request();

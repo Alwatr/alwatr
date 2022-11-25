@@ -1,9 +1,17 @@
+import type {ToastOptions} from '@ionic/core';
+
 declare global {
   // eslint-disable-next-line no-var
   var appConfig: Record<string, string | undefined> | undefined;
 
   interface AlwatrSignals {
     readonly 'job-add': Pick<Job, 'filter'>;
+    readonly 'job-delete': string;
+    readonly 'job-list': Array<Job>;
+    readonly toast: Partial<ToastOptions> & {message: string};
+  }
+  interface AlwatrRequestSignals {
+    readonly 'job-list': void;
   }
 }
 
