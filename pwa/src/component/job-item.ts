@@ -56,10 +56,10 @@ export class JobItem extends AlwatrElement {
         padding: 0.8em 0;
       }
       .job ion-label[slot='start'] {
-        margin-left: 0.5em;
+        margin-inline-start: 0.5em;
       }
       .job ion-label[slot='end'] {
-        margin-right: 0.5em;
+        margin-inline-end: 0.5em;
         height: 100%;
       }
       .job ion-label[slot='end'] * {

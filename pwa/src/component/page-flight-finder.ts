@@ -31,11 +31,7 @@ export class PageFlightFinder extends AlwatrElement {
         flex-direction: column;
       }
       ion-card {
-        margin: 1em 1em !important;
-      }
-
-      ion-card-content {
-        padding: 0 !important;
+        margin: 0.8em 1em;
       }
       ion-card.airline__list,
       ion-card.form {
@@ -44,7 +40,7 @@ export class PageFlightFinder extends AlwatrElement {
     `,
     css`
       ion-card.form ion-item {
-        margin: 0 .8em .6em;
+        margin: 0 0.8em 0.6em;
       }
       ion-card.form ion-button.form-btn {
         margin-left: 1em;
@@ -151,9 +147,7 @@ export class PageFlightFinder extends AlwatrElement {
           <ion-card-subtitle> ۱۲۳ ثانیه پیش </ion-card-subtitle>
         </ion-card-header>
 
-        <ion-card-content>
-          <ion-list lines="full"> ${airlineItemList} </ion-list>
-        </ion-card-content>
+        <ion-list lines="full"> ${airlineItemList} </ion-list>
       </ion-card>
     `;
   }
@@ -165,50 +159,48 @@ export class PageFlightFinder extends AlwatrElement {
           <ion-card-title>درخواست جدید</ion-card-title>
         </ion-card-header>
 
-        <ion-card-content>
-          <ion-list>
-            <div class="form__input-date">
-              <ion-item fill="solid">
-                <ion-label position="floating">مبدأ</ion-label>
-                <ion-select name="origin" ok-text="تایید" cancel-text="لغو" @ionChange=${this.__inputChanged}>
-                  ${PageFlightFinder.cityListTemplate}
-                </ion-select>
-              </ion-item>
-              <ion-item fill="solid">
-                <ion-label position="floating">مقصد</ion-label>
-                <ion-select name="dest" ok-text="تایید" cancel-text="لغو" @ionChange=${this.__inputChanged}>
-                  ${PageFlightFinder.cityListTemplate}
-                </ion-select>
-              </ion-item>
-            </div>
+        <ion-list>
+          <div class="form__input-date">
             <ion-item fill="solid">
-              <ion-label position="floating">توضیحات</ion-label>
-              <ion-input type="text" debounce="30"></ion-input>
-            </ion-item>
-            <div class="form__input-date">
-              <ion-item fill="solid">
-                <ion-label position="floating">روز</ion-label>
-                <ion-select interface="popover">${PageFlightFinder.dayListTemplate}</ion-select>
-              </ion-item>
-              <ion-item fill="solid">
-                <ion-label position="floating">ماه</ion-label>
-                <ion-select interface="popover">${PageFlightFinder.monthListTemplate}</ion-select>
-              </ion-item>
-            </div>
-            <ion-item fill="solid">
-              <ion-label position="floating">تعداد صندلی</ion-label>
-              <ion-select interface="popover">${PageFlightFinder.seatListTemplate}</ion-select>
+              <ion-label position="floating">مبدأ</ion-label>
+              <ion-select name="origin" ok-text="تایید" cancel-text="لغو" @ionChange=${this.__inputChanged}>
+                ${PageFlightFinder.cityListTemplate}
+              </ion-select>
             </ion-item>
             <ion-item fill="solid">
-              <ion-label position="floating">حداکثر قیمت</ion-label>
-              <ion-input name="maxPrice" type="number" debounce="30" @ionChange=${this.__inputChanged}></ion-input>
-              <ion-note slot="helper">${this.__maxPriceHelper}</ion-note>
+              <ion-label position="floating">مقصد</ion-label>
+              <ion-select name="dest" ok-text="تایید" cancel-text="لغو" @ionChange=${this.__inputChanged}>
+                ${PageFlightFinder.cityListTemplate}
+              </ion-select>
             </ion-item>
-            <ion-button class="form-btn" expand="block" ?disabled=${!this.__formValidate} @click=${this.__submit}>
-              ارسال
-            </ion-button>
-          </ion-list>
-        </ion-card-content>
+          </div>
+          <ion-item fill="solid">
+            <ion-label position="floating">توضیحات</ion-label>
+            <ion-input type="text" debounce="30"></ion-input>
+          </ion-item>
+          <div class="form__input-date">
+            <ion-item fill="solid">
+              <ion-label position="floating">روز</ion-label>
+              <ion-select interface="popover">${PageFlightFinder.dayListTemplate}</ion-select>
+            </ion-item>
+            <ion-item fill="solid">
+              <ion-label position="floating">ماه</ion-label>
+              <ion-select interface="popover">${PageFlightFinder.monthListTemplate}</ion-select>
+            </ion-item>
+          </div>
+          <ion-item fill="solid">
+            <ion-label position="floating">تعداد صندلی</ion-label>
+            <ion-select interface="popover">${PageFlightFinder.seatListTemplate}</ion-select>
+          </ion-item>
+          <ion-item fill="solid">
+            <ion-label position="floating">حداکثر قیمت</ion-label>
+            <ion-input name="maxPrice" type="number" debounce="30" @ionChange=${this.__inputChanged}></ion-input>
+            <ion-note slot="helper">${this.__maxPriceHelper}</ion-note>
+          </ion-item>
+          <ion-button class="form-btn" expand="block" ?disabled=${!this.__formValidate} @click=${this.__submit}>
+            ارسال
+          </ion-button>
+        </ion-list>
       </ion-card>
     `;
   }
