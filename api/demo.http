@@ -1,6 +1,6 @@
 @apiUrl = http://127.0.0.1:8000
 @apiVersion = v0
-@token = alwatr_110_313
+@token = YOUR_SECRET_TOKEN
 
 ### Home
 GET {{apiUrl}}/{{apiVersion}}
@@ -18,7 +18,7 @@ Content-Type: application/json
   "filter": {
     "origin": "KIH",
     "dest": "THR",
-    "date": "1401/10/1"
+    "date": "1401/09/10"
   }
 }
 
