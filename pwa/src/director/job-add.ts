@@ -10,7 +10,7 @@ export const jobAddSignal = new SignalInterface('job-add');
 jobAddSignal.addListener(async (job) => {
   try {
     const response = await fetch({
-      url: window.appConfig?.api ?? '/job',
+      url: window.appConfig?.api + '/job' ?? '/job',
       token: window.appConfig?.token,
       method: 'PUT',
       bodyJson: job,
