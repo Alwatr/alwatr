@@ -185,6 +185,11 @@ html.plt-ios.plt-pwa {
   }
 }
 
-ion-alert * {
+ion-alert *,
+ion-popover * {
   font-family: var(--ion-font-family) !important;
+}
+ion-popover {
+  --max-height: 208px;
+  --backdrop-opacity: 1;
 }
