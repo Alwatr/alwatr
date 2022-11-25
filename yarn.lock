@@ -11,14 +11,6 @@
     lit "^2.4.1"
     tslib "^2.4.1"
 
-"@alwatr/fetch@^0.22.1":
-  version "0.22.1"
-  resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.22.1.tgz#afd26beb943c729e7e8b875b51e84ec57114d657"
-  integrity sha512-VpG6Re8ysIpQLpsuV34lBt/lwOqHAguOoDLGoRVr/hilW/sin4Xlvnzbkvt4m318Pb9BPDtCHDgkrLG/Nkejdw==
-  dependencies:
-    "@alwatr/logger" "^0.22.0"
-    tslib "^2.4.1"
-
 "@alwatr/fetch@^0.23.0":
   version "0.23.0"
   resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.23.0.tgz#d69b594bc1c91539f1a777e61f71005bf6b6709a"
@@ -34,13 +26,6 @@
   dependencies:
     "@alwatr/element" "^0.23.0"
     lit "^2.4.1"
-    tslib "^2.4.1"
-
-"@alwatr/logger@^0.22.0":
-  version "0.22.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/logger/-/logger-0.22.0.tgz#2b4c9baf1763ce767076ed876291cd48bbba1764"
-  integrity sha512-jVkPv7eo019mEg7fYw+wVgTk2JqUFk1OTuTHF3CW3XG0Su8wscgsjGtQCLwDBtODMIIyiKztFFbcFZcfnNAb2Q==
-  dependencies:
     tslib "^2.4.1"
 
 "@alwatr/logger@^0.23.0":
@@ -83,23 +68,14 @@
     "@alwatr/logger" "^0.23.0"
     tslib "^2.4.1"
 
-"@alwatr/storage-client@^0.22.1":
-  version "0.22.1"
-  resolved "https://registry.yarnpkg.com/@alwatr/storage-client/-/storage-client-0.22.1.tgz#9be3266954f3fa0dbe5ca0123690178bf765ab3d"
-  integrity sha512-myXnvoO3drSHQHL/XLnHNDKJbuXWpSCU/pHyiP04EvqWk89umEfH6e6kwpcS1t0gIpg/AArH8WhdUwaFs906oA==
+"@alwatr/storage-client@^0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/storage-client/-/storage-client-0.23.0.tgz#dad1d2a4fec08d8fdc7ef31bd0a3710b355d19d2"
+  integrity sha512-3tEHEWsuKrb8Dj6TqvX8E3HoqXqTHylLJyIFswPt7nghJ6uPqDbOrDbB6YClS3AmZMgzhBel5E9w5tHRM43LEw==
   dependencies:
-    "@alwatr/fetch" "^0.22.1"
-    "@alwatr/logger" "^0.22.0"
-    "@alwatr/storage-engine" "^0.22.1"
-    tslib "^2.4.1"
-
-"@alwatr/storage-engine@^0.22.1":
-  version "0.22.1"
-  resolved "https://registry.yarnpkg.com/@alwatr/storage-engine/-/storage-engine-0.22.1.tgz#8dc4dbef18d33f5b48775689c8654b93927c20d9"
-  integrity sha512-Rcglgocpf57qtDI8epruIMA7R+ysXjQwEzuypKp7G+cMkXlbYz8Z5RSvRdnSzRfpdriFzHebR0rj+QTMbNNPOg==
-  dependencies:
-    "@alwatr/logger" "^0.22.0"
-    exit-hook "^3.1.2"
+    "@alwatr/fetch" "^0.23.0"
+    "@alwatr/logger" "^0.23.0"
+    "@alwatr/storage-engine" "^0.23.0"
     tslib "^2.4.1"
 
 "@alwatr/storage-engine@^0.23.0":
