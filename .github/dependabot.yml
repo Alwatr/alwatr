@@ -4,6 +4,7 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
+    open-pull-requests-limit: 20
     reviewers:
       - AliMD
       - njfamirm
@@ -17,6 +18,7 @@ updates:
   - package-ecosystem: npm
     directory: /
     versioning-strategy: increase
+    open-pull-requests-limit: 20
     reviewers:
       - AliMD
       - njfamirm
