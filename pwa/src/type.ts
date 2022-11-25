@@ -8,11 +8,10 @@ declare global {
     readonly 'job-add': Pick<Job, 'filter'>;
     readonly 'job-delete': string;
     readonly 'job-list': Array<Job>;
-    readonly 'toast': HTMLIonToastElement;
+    readonly toast: Partial<ToastOptions> & {message: string};
   }
   interface AlwatrRequestSignals {
     readonly 'job-list': void;
-    readonly 'toast': Partial<ToastOptions> & {message: string};
   }
 }
 

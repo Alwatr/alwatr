@@ -28,8 +28,8 @@ jobListSignal.setProvider(async () => {
     return Object.values(responseData.data);
   }
   catch (error) {
-    showToastSignal.request({
-      message: (error as Error).message,
+    showToastSignal.dispatch({
+      message: 'عملیات با خطا رو به رو شد',
     });
   }
   return;

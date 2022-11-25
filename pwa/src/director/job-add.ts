@@ -28,8 +28,8 @@ jobAddSignal.addListener(async (job) => {
     }
   }
   catch (error) {
-    showToastSignal.request({
-      message: (error as Error).message,
+    showToastSignal.dispatch({
+      message: 'عملیات با خطا رو به رو شد',
     });
   }
 
