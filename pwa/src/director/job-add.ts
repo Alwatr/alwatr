@@ -2,7 +2,7 @@ import {fetch} from '@alwatr/fetch';
 import {SignalInterface} from '@alwatr/signal';
 
 import {jobListSignal} from './job-list';
-import {toastShowSignal} from './toast-show';
+import {showToastSignal} from './toast';
 
 import type {Job, ServerResponse} from '../type';
 
@@ -28,7 +28,7 @@ jobAddSignal.addListener(async (job) => {
     }
   }
   catch (error) {
-    toastShowSignal.request({
+    showToastSignal.request({
       message: (error as Error).message,
     });
   }
