@@ -35,4 +35,4 @@ jobListSignal.setProvider(async () => {
   return;
 });
 
-jobListSignal.request();
+jobListSignal.request({});
