@@ -68,3 +68,26 @@ services:
       options:
         max-size: '10m'
         max-file: '2'
+  pwa:
+    build:
+      context: ./pwa
+
+    restart: "no"
+
+    stop_grace_period: 30s
+
+    cpu_shares: 2048
+    # mem_limit: 256m
+
+    env_file: .env
+
+    tmpfs:
+      - /var/cache
+
+    tty: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
