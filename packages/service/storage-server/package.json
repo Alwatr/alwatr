@@ -56,9 +56,9 @@
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.21.0",
-    "@alwatr/nano-server": "^0.21.0",
-    "@alwatr/storage-engine": "^0.21.0"
+    "@alwatr/logger": "^0.23.0",
+    "@alwatr/nano-server": "^0.23.0",
+    "@alwatr/storage-engine": "^0.23.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",

@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-export const logger = createLogger('service-storage');
+export const logger = createLogger('storage-server');
 
 export const config = {
   host: process.env.HOST ?? '0.0.0.0',
