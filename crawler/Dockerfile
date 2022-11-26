@@ -5,7 +5,6 @@ FROM node:${NODE_VERSION}-alpine
 WORKDIR /app
 
 COPY package.json ./
-
 RUN yarn install --frozen-lockfile --non-interactive
 
 COPY . .
