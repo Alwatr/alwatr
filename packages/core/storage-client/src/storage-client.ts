@@ -4,7 +4,7 @@ import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import type {AlwatrStorageClientConfig, ServerResponse} from './type.js';
 import type {DocumentObject} from '@alwatr/storage-engine';
 
-export {DocumentObject, AlwatrStorageClientConfig as AlwatrStorageConfig};
+export {DocumentObject, AlwatrStorageClientConfig};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage-client',
@@ -68,22 +68,18 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
   /**
    * Default fetch options.
    */
-  fetchOption: Partial<FetchOptions> = {
+  fetchOption: FetchOptions = {
+    url: 'http://' + this.config.host + ':' + this.config.port + '/',
     keepalive: true,
     timeout: this.config.timeout ?? 0,
     cacheStrategy: 'network_only',
     removeDuplicate: 'never',
     retry: 3,
     retryDelay: 300,
-    headers: {
-      Authorization: `Bearer ${this.config.token}`,
-    },
+    token: this.config.token,
   };
 
   constructor(public readonly config: AlwatrStorageClientConfig) {
-    if (!(config.host[config.host.length - 1] === '/')) {
-      config.host += '/';
-    }
     this._logger.logMethodArgs('constructor', config);
   }
 
@@ -95,13 +91,25 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * Example:
    *
    * ```ts
-   * const user = await userStorage.get('user-1');
+   * try {
+   *   const user = await userStorage.get('user-1');
+   *   console.dir(item);
+   * }
+   * catch (err) {
+   *   if ((err as Error)?.message === 'document_not_found') {
+   *     console.log('user_5000 id not found!');
+   *   }
+   *   else {
+   *     console.err((err as Error)?.message ?? err);
+   *   }
+   * }
    * ```
    */
   async get(documentId: string): Promise<DocumentType> {
+    this._logger.logMethodArgs('get', {documentId});
+
     const response = await fetch({
       ...this.fetchOption,
-      url: this.config.host,
       queryParameters: {
         storage: this.config.name,
         id: documentId,
@@ -135,14 +143,16 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * Example:
    *
    * ```ts
-   * const isUserExists = await userStorage.has('user-1');
-   * if (!isUserExists) console.log('user_not_found');
+   * const userExist = await userStorage.has('user-1');
+   * if (!userExist) console.log('user_not_found');
    * ```
    */
   async has(documentId: string): Promise<boolean> {
+    this._logger.logMethodArgs('has', {documentId});
+
     const response = await fetch({
       ...this.fetchOption,
-      url: this.config.host + 'has',
+      url: this.fetchOption.url + 'has',
       queryParameters: {
         storage: this.config.name,
         id: documentId,
@@ -180,9 +190,10 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * ```
    */
   async set(documentObject: DocumentType): Promise<DocumentType> {
+    this._logger.logMethodArgs('set', {documentId: documentObject._id});
+
     const response = await fetch({
       ...this.fetchOption,
-      url: this.config.host,
       method: 'PATCH',
       queryParameters: {
         storage: this.config.name,
@@ -216,9 +227,10 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * ```
    */
   async delete(documentId: string): Promise<void> {
+    this._logger.logMethodArgs('delete', {documentId});
+
     const response = await fetch({
       ...this.fetchOption,
-      url: this.config.host,
       method: 'DELETE',
       queryParameters: {
         storage: this.config.name,
@@ -255,9 +267,11 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * ```
    */
   async getAll(): Promise<Record<string, DocumentType>> {
+    this._logger.logMethod('getAll');
+
     const response = await fetch({
       ...this.fetchOption,
-      url: this.config.host + 'all',
+      url: this.fetchOption.url + 'all',
       queryParameters: {
         storage: this.config.name,
       },
@@ -289,9 +303,11 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * ```
    */
   async keys(): Promise<Array<string>> {
+    this._logger.logMethod('keys');
+
     const response = await fetch({
       ...this.fetchOption,
-      url: this.config.host + 'keys',
+      url: this.fetchOption.url + 'keys',
       queryParameters: {
         storage: this.config.name,
       },

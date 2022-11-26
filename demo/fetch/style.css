@@ -8,17 +8,18 @@ body {
   margin: 5em auto 0;
 }
 
-h1, h3 {
+h1,
+h3 {
   text-align: center;
 }
 
 button {
   --border-size: 3px;
-  --corner-size: .45em; /* size of the corner */
-  --color: #373B44;
+  --corner-size: 0.45em; /* size of the corner */
+  --color: #373b44;
 
   margin: var(--corner-size);
-  padding: calc(.5em + var(--corner-size)) calc(.9em + var(--corner-size));
+  padding: calc(0.5em + var(--corner-size)) calc(0.9em + var(--corner-size));
   color: var(--color);
   --_p: var(--corner-size);
   background:
@@ -26,7 +27,7 @@ button {
     var(--_p) var(--_p)/calc(100% - var(--border-size) - 2*var(--_p)) calc(100% - var(--border-size) - 2*var(--_p));
   transition: .3s linear, color 0s, background-color 0s;
   outline: var(--border-size) solid #0000;
-  outline-offset: .6em;
+  outline-offset: 0.6em;
   font-size: 16px;
   border: 0;
   user-select: none;
@@ -35,10 +36,10 @@ button {
 }
 
 button:hover,
-button:focus-visible{
+button:focus-visible {
   --_p: 0px;
   outline-color: var(--color);
-  outline-offset: .05em;
+  outline-offset: 0.05em;
 }
 
 button:active {
@@ -58,6 +59,6 @@ button:active {
     --color: #d8dbdf;
   }
   button:active {
-    background: #373B44;
+    background: #373b44;
   }
 }

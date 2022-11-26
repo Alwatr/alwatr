@@ -1,4 +1,4 @@
-import {createServer} from 'http';
+import {createServer} from 'node:http';
 
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
@@ -60,11 +60,14 @@ export class AlwatrNanoServer {
     this._clientErrorListener = this._clientErrorListener.bind(this);
     this._onHealthCheckRequest = this._onHealthCheckRequest.bind(this);
 
-    this.httpServer = createServer({
-      keepAlive: true,
-      keepAliveInitialDelay: 0,
-      noDelay: true,
-    }, this._requestListener);
+    this.httpServer = createServer(
+        {
+          keepAlive: true,
+          keepAliveInitialDelay: 0,
+          noDelay: true,
+        },
+        this._requestListener,
+    );
     this.httpServer.requestTimeout = this._config.requestTimeout;
     this.httpServer.keepAliveTimeout = this._config.keepAliveTimeout;
     this.httpServer.headersTimeout = this._config.headersTimeout;
@@ -324,7 +327,7 @@ export class AlwatrConnection {
   getToken(): string | null {
     const auth = this.incomingMessage.headers.authorization?.split(' ');
 
-    if (auth == null || auth[0] !== 'Bearer') {
+    if (auth == null || auth[0].toLowerCase() !== 'bearer') {
       return null;
     }
 

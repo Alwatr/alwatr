@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/AliMD/alwatr/compare/v0.22.1...v0.23.0) (2022-11-23)
+
+**Note:** Version bump only for package @alwatr/nanoservice-starter
+
+## [0.22.1](https://github.com/AliMD/alwatr/compare/v0.22.0...v0.22.1) (2022-11-21)
+
+### Bug Fixes
+
+- **service:** update package.json ([31dc122](https://github.com/AliMD/alwatr/commit/31dc122cd4050167ece17e53800b3844b5c99c16))
+- **starter/nano-server:** remove wc plugin from eslint ([6611644](https://github.com/AliMD/alwatr/commit/6611644226ff19533435810ae0b4a105e3275bbd))
+
+# [0.22.0](https://github.com/AliMD/alwatr/compare/v0.21.0...v0.22.0) (2022-11-20)
+
+### Bug Fixes
+
+- **starter/ns:** add host ([5747ff7](https://github.com/AliMD/alwatr/commit/5747ff73bf6e2cdf0c1c67fac69a4700db1d4c64))
+
 # [0.21.0](https://github.com/AliMD/alwatr/compare/v0.20.0...v0.21.0) (2022-11-13)
 
 ### Bug Fixes

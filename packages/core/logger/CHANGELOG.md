@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/AliMD/alwatr/compare/v0.22.1...v0.23.0) (2022-11-23)
+
+**Note:** Version bump only for package @alwatr/logger
+
+# [0.22.0](https://github.com/AliMD/alwatr/compare/v0.21.0...v0.22.0) (2022-11-20)
+
+### Bug Fixes
+
+- **logger:** message format in node ([0ab9153](https://github.com/AliMD/alwatr/commit/0ab9153e407cafd07af8b77b63e25c8d21b474c0))
+
+### Features
+
+- **logger:** better log in browser and node ([1a35ac4](https://github.com/AliMD/alwatr/commit/1a35ac4bbb9aae4280ea99b8383459cf44de0baa))
+
 # [0.21.0](https://github.com/AliMD/alwatr/compare/v0.20.0...v0.21.0) (2022-11-13)
 
 **Note:** Version bump only for package @alwatr/logger

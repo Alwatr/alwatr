@@ -7,9 +7,14 @@ export type AlwatrStorageClientConfig = {
   name: string;
 
   /**
-   * Storage server host name (URL).
+   * Storage server host name.
    */
   host: string;
+
+  /**
+   * Storage server port number.
+   */
+  port: number;
 
   /**
    * Storage server token (like database password).
@@ -30,7 +35,7 @@ export type AlwatrStorageClientConfig = {
    *
    * @default undefined Auto detect base on `NODE_ENV`
    */
-   debug?: boolean;
+  debug?: boolean;
 };
 
 type ServerResponseFailed = {

@@ -9,14 +9,12 @@ interface User extends DocumentObject {
   token?: string;
 }
 
-const token = process.env.TOKEN;
-if (token == null) {
-  throw new Error('token_not_defined');
-}
+const token = process.env.TOKEN ?? 'YOUR_SECRET_TOKEN';
 
 const db = new AlwatrStorageClient<User>({
   name: 'user-list',
-  host: 'http://127.0.0.1:80',
+  host: '127.0.0.1',
+  port: 9000,
   token,
 });
 
@@ -53,7 +51,6 @@ catch (err) {
   }
 }
 
-
 await db.set({
   _id: 'fmd',
   _updatedBy: 'demo',
@@ -66,8 +63,8 @@ await db.set({
 console.log('has \'alimd\': %o', await db.has('alimd'));
 console.log('keys: %o', await db.keys());
 console.log('getAll: %o', await db.getAll());
-console.log('delete: %o', await db.delete('alimd'));
-console.log('delete: %o', await db.delete('fmd'));
+await db.delete('alimd');
+await db.delete('fmd');
 
 try {
   await db.delete('abcd');

@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/AliMD/alwatr/compare/v0.22.1...v0.23.0) (2022-11-23)
+
+**Note:** Version bump only for package @alwatr/storage-server
+
+## [0.22.1](https://github.com/AliMD/alwatr/compare/v0.22.0...v0.22.1) (2022-11-21)
+
+### Bug Fixes
+
+- **service:** update package.json ([31dc122](https://github.com/AliMD/alwatr/commit/31dc122cd4050167ece17e53800b3844b5c99c16))
+
+# [0.22.0](https://github.com/AliMD/alwatr/compare/v0.21.0...v0.22.0) (2022-11-20)
+
+### Bug Fixes
+
+- **storage-client:** return boolean has in method ([68123cd](https://github.com/AliMD/alwatr/commit/68123cd92d2ec085dc72d948a163c26796b27adc))
+- **storage-server:** add host ([0f1d126](https://github.com/AliMD/alwatr/commit/0f1d126094cb816e947d9926088e93d556573c40))
+- **storage-server:** DocumentObject type ([cf8cf3e](https://github.com/AliMD/alwatr/commit/cf8cf3e128ddce690d5a7ad044007d7e76b3f6f9))
+- **storage-server:** path DocumentObject issue ([83ba54c](https://github.com/AliMD/alwatr/commit/83ba54cb73ba8efb5b395c0772d37601e997175e))
+- **storage-server:** use new storage-engine ([48bd4eb](https://github.com/AliMD/alwatr/commit/48bd4eb2e010d7ba1a29816b30dadb0a8247e0f0))
+
+### Features
+
+- **service/storage-server:** has route ([7254393](https://github.com/AliMD/alwatr/commit/72543932408f5ffc24df79d577d3de8f97fb0358))
+
+### Performance Improvements
+
+- **storage-server:** debug --trace-gc ([8f6adf4](https://github.com/AliMD/alwatr/commit/8f6adf4d6547c57f62e105ce83eef014360b3ca3))
+
 # [0.21.0](https://github.com/AliMD/alwatr/compare/v0.20.0...v0.21.0) (2022-11-13)
 
 **Note:** Version bump only for package alwatr-storage-nanoservice

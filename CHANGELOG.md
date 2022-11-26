@@ -3,6 +3,116 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/AliMD/alwatr/compare/v0.22.1...v0.23.0) (2022-11-23)
+
+### Bug Fixes
+
+- **fetch:** types ([4ce81a7](https://github.com/AliMD/alwatr/commit/4ce81a7b82d01ab938754bc5e483ccb074671e33))
+- **nano-server:** getToken ([a2f1ccb](https://github.com/AliMD/alwatr/commit/a2f1ccbe5d81d3f284ba1ce80dd2e54ec2245848))
+
+### Features
+
+- **fetch:** set token in options ([033a638](https://github.com/AliMD/alwatr/commit/033a63846f8c43b86c7d0a662e4bb6aa7cae3af5))
+
+## [0.22.1](https://github.com/AliMD/alwatr/compare/v0.22.0...v0.22.1) (2022-11-21)
+
+### Bug Fixes
+
+- add rest client extension to recommendation ([33a4a25](https://github.com/AliMD/alwatr/commit/33a4a2579208d6026380bbe8eaa9d4f9d2a8a1b9))
+- **service:** update package.json ([31dc122](https://github.com/AliMD/alwatr/commit/31dc122cd4050167ece17e53800b3844b5c99c16))
+- **starter/nano-server:** remove wc plugin from eslint ([6611644](https://github.com/AliMD/alwatr/commit/6611644226ff19533435810ae0b4a105e3275bbd))
+- **storage-client:** types issues ([c083bd0](https://github.com/AliMD/alwatr/commit/c083bd08cd2364bc64ebd1e60c668f37784d8502))
+- **storage-engine:** auto_increment issue ([ff7bdca](https://github.com/AliMD/alwatr/commit/ff7bdca2138398a3f69551e8235c3d1a9a0fae60))
+- **workflows:** add-to-project token ([2528762](https://github.com/AliMD/alwatr/commit/252876251187cb50d44cb324e4a989de47ccfc84))
+- **workflows:** add-to-project token ([2eee23a](https://github.com/AliMD/alwatr/commit/2eee23a2a536ed00780e385917de0c7edc2e4403))
+
+### Features
+
+- **workflows:** Add To GitHub projects ([41aa33a](https://github.com/AliMD/alwatr/commit/41aa33a7448fc2ab983e2446a1c3d80f532cd04c))
+
+# [0.22.0](https://github.com/AliMD/alwatr/compare/v0.21.0...v0.22.0) (2022-11-20)
+
+### Bug Fixes
+
+- **demo/storage-client:** handle document not found ([fb73532](https://github.com/AliMD/alwatr/commit/fb73532fd1a1b52552d0b79f97847db059444785))
+- **demo/storage-client:** use host in config ([f3bd04d](https://github.com/AliMD/alwatr/commit/f3bd04dd047afebd99650f57fe6a2715b014dfb2))
+- **fetch:** \_handleRetryPattern ([fe4ac12](https://github.com/AliMD/alwatr/commit/fe4ac12b4ad3086d44e545591c767cb322e32b8d))
+- **fetch:** bodyJson issue ([5d8d6fa](https://github.com/AliMD/alwatr/commit/5d8d6fa4a0f608c2c5ed583aa54de9b836daaa5f))
+- **gitignore:** ignore db ([ba53c73](https://github.com/AliMD/alwatr/commit/ba53c73ea7343c821e1406cefd7d03392f0f49f5))
+- **logger:** message format in node ([0ab9153](https://github.com/AliMD/alwatr/commit/0ab9153e407cafd07af8b77b63e25c8d21b474c0))
+- **nano-server:** method all ([b20afa1](https://github.com/AliMD/alwatr/commit/b20afa1fb8eeb13c4b6e3d811ae6fbbeb7465306))
+- **nano-server:** no-non-null-assertion ([ad5588c](https://github.com/AliMD/alwatr/commit/ad5588c6e0e863aa03cca44c23144dbf371795da))
+- **nano-server:** parse body on PATCH method ([cba790f](https://github.com/AliMD/alwatr/commit/cba790f43dc88c00ee99f5f7d7c872e8f6d1618d))
+- **nano-server:** remove ALL from Methods type ([1f67c07](https://github.com/AliMD/alwatr/commit/1f67c07a5044c6d7cf89605e269af468aa49094c))
+- **nano-server:** review require... methods and fix issues ([a7e4bae](https://github.com/AliMD/alwatr/commit/a7e4bae89440c2fc72a0a9e6060aac894b18eddf))
+- **nano-server:** set correct valitator type ([61d4a2a](https://github.com/AliMD/alwatr/commit/61d4a2a697e4beac00c94afcd86ca4cbc4b6c5a8))
+- **ns/storage:** home page issue ([98aeb00](https://github.com/AliMD/alwatr/commit/98aeb00d3c2c7b6d8888c98f374d6550ff43a0c1))
+- **ns/storage:** review and fix issues ([658426a](https://github.com/AliMD/alwatr/commit/658426a9ebc2125dfca96ee032ce7584511d710b))
+- **service/storage:** duplicate \_data property ([61b78ac](https://github.com/AliMD/alwatr/commit/61b78acd8bd7865cad5cec7b2f7d50b8e802fcec))
+- **service/storage:** remove home route ([5b4160d](https://github.com/AliMD/alwatr/commit/5b4160df0237085e43a103a02b9b63404eddda2c))
+- **service/storage:** remove id type from requireQueryParams ([b2724f4](https://github.com/AliMD/alwatr/commit/b2724f4176204a826c3c521618ca92e73904f8e6))
+- **service/storage:** update demo request ([bf02e99](https://github.com/AliMD/alwatr/commit/bf02e99e9b40f044506d2b7aaa98a5f7fccbbaa3))
+- **starter/ns:** add host ([5747ff7](https://github.com/AliMD/alwatr/commit/5747ff73bf6e2cdf0c1c67fac69a4700db1d4c64))
+- **storage-client:** demo ([83fa9d0](https://github.com/AliMD/alwatr/commit/83fa9d0bde2a65a02c225bcb9829a87667606fb6))
+- **storage-client:** demo get not found ([5070912](https://github.com/AliMD/alwatr/commit/507091267f06a8f854833ccac5b9a3f77c46ae70))
+- **storage-client:** demo security issue ([85a71d4](https://github.com/AliMD/alwatr/commit/85a71d496bd9e62863ce85c5abb994648f69a36c))
+- **storage-client:** fetch in has method ([a6f9098](https://github.com/AliMD/alwatr/commit/a6f909821510c8da2fe9ab7340d3f010165a84c8))
+- **storage-client:** handle 404 in benchmark ([b149c85](https://github.com/AliMD/alwatr/commit/b149c857ae8ec46ae854eb5fd3893395945d5da2))
+- **storage-client:** nodejs memory leak issue ([d5e0cde](https://github.com/AliMD/alwatr/commit/d5e0cde091b8eba450a443ceba737aa1cac4fd3e))
+- **storage-client:** remove all null as value ([6fbc6e5](https://github.com/AliMD/alwatr/commit/6fbc6e52e4b3d64ee5f347df6dc92673ce79e7ed))
+- **storage-client:** return array of string in keys ([b838f1f](https://github.com/AliMD/alwatr/commit/b838f1f0161b3b76edc855e227161851bebaf3be))
+- **storage-client:** return boolean has in method ([68123cd](https://github.com/AliMD/alwatr/commit/68123cd92d2ec085dc72d948a163c26796b27adc))
+- **storage-client:** review!!!!! ([c803991](https://github.com/AliMD/alwatr/commit/c8039914aed6b1ad98d60de8b39122542811121b))
+- **storage-client:** types ([f277771](https://github.com/AliMD/alwatr/commit/f277771973908d280b1879e96e77446c9f88bbe9))
+- **storage-client:** use dynamic token ([3c68806](https://github.com/AliMD/alwatr/commit/3c68806762c027af7a2d5e019d08de6a8b079661))
+- **storage-server:** add host ([0f1d126](https://github.com/AliMD/alwatr/commit/0f1d126094cb816e947d9926088e93d556573c40))
+- **storage-server:** DocumentObject type ([cf8cf3e](https://github.com/AliMD/alwatr/commit/cf8cf3e128ddce690d5a7ad044007d7e76b3f6f9))
+- **storage-server:** path DocumentObject issue ([83ba54c](https://github.com/AliMD/alwatr/commit/83ba54cb73ba8efb5b395c0772d37601e997175e))
+- **storage-server:** use new storage-engine ([48bd4eb](https://github.com/AliMD/alwatr/commit/48bd4eb2e010d7ba1a29816b30dadb0a8247e0f0))
+- **storage:** change remove to delete ([97397f9](https://github.com/AliMD/alwatr/commit/97397f968be5fa50de32374604bb68ce05b6237a))
+- **storage:** get data keys on keys ([b3c26c0](https://github.com/AliMD/alwatr/commit/b3c26c0779eebc06c6202aa3d8c83868ccaf291a))
+- **storage:** get keys issue ([bdef7b1](https://github.com/AliMD/alwatr/commit/bdef7b1b57a58a86b6a012267f95cfad581fb7ee))
+- **storage:** performance demo test ([17b2c1a](https://github.com/AliMD/alwatr/commit/17b2c1a54132b524b2389976fb2e21f84e20e9c1))
+- **tsconfig:** rename storage to storage-engine ([229dd77](https://github.com/AliMD/alwatr/commit/229dd77a0aa928013f93ac43514309e163631a29))
+
+### Features
+
+- **demo:** forAll storage-client ([a856099](https://github.com/AliMD/alwatr/commit/a856099f5644a0b059fd0ff25521376d5f9b97eb))
+- **demo:** storage-client ([e19abc4](https://github.com/AliMD/alwatr/commit/e19abc4ecd59200204be7f26ce0021157a26e262))
+- **fetch:** support nodejs ([2ed2ef4](https://github.com/AliMD/alwatr/commit/2ed2ef42e9f204d4896ada4e20b839cfabdc7284))
+- **logger:** better log in browser and node ([1a35ac4](https://github.com/AliMD/alwatr/commit/1a35ac4bbb9aae4280ea99b8383459cf44de0baa))
+- **nano-server:** add \_sanitizeParam ([46edbc3](https://github.com/AliMD/alwatr/commit/46edbc33eb164f6676d8a5c939d52accededfd45))
+- **nano-server:** keep alive performance and options ([5ed78b6](https://github.com/AliMD/alwatr/commit/5ed78b6cf5b7fd1b00c28df26ca250d4025dc676))
+- **nano-server:** parse and validate query params in AlwatrConnection ([1eadd68](https://github.com/AliMD/alwatr/commit/1eadd68d3e1f92e47d743b7412ae247f3414738f))
+- **nano-server:** validate content type header in requireJsonBody ([d99eb74](https://github.com/AliMD/alwatr/commit/d99eb742c0c5ea1b92f44767d570bd42b9c9e342))
+- **ns/storage:** home page ([73b287c](https://github.com/AliMD/alwatr/commit/73b287c0b717854b1c4bd240cb47196b81ea83af))
+- **package:** pull push script ([7551d92](https://github.com/AliMD/alwatr/commit/7551d927873508816cb4cd0cba8d1563226aaa66))
+- **service/storage-server:** has route ([7254393](https://github.com/AliMD/alwatr/commit/72543932408f5ffc24df79d577d3de8f97fb0358))
+- **service/storage:** add all route ([a698e1d](https://github.com/AliMD/alwatr/commit/a698e1d67258bc3e8931333c4ecfea4db271c59f))
+- **service/storage:** add keys route ([46fb970](https://github.com/AliMD/alwatr/commit/46fb9708c4a5438d1ef5179e3cba79cad4d004b0))
+- **service/storage:** add remove route ([d4452cd](https://github.com/AliMD/alwatr/commit/d4452cd0366452ab07d82b338dbba345c32cd61d))
+- **service/storage:** add requireToken to AlwatrConnection ([8073773](https://github.com/AliMD/alwatr/commit/8073773577b88a52baa90c6042bac52260ec3dc1))
+- **storage-client:** AlwatrStorageClient class structure ([164f44e](https://github.com/AliMD/alwatr/commit/164f44e1028b325941d1b90be670b8f4194bfc75))
+- **storage-client:** benchmark test ([7c0fc92](https://github.com/AliMD/alwatr/commit/7c0fc92fa910168775459dc2be484844a6a178cb))
+- **storage-client:** forAll method ([40f802a](https://github.com/AliMD/alwatr/commit/40f802aa02b02d8d9341822b36708fc81f16cbce))
+- **storage-client:** get method ([3f2d1a6](https://github.com/AliMD/alwatr/commit/3f2d1a6363daa006a38c40f95d9b528937d38896))
+- **storage-client:** get, set, delete, getAll, keys methods ([2da68ba](https://github.com/AliMD/alwatr/commit/2da68ba81ed5b18fba1c5a63a7e22cbcd98dda47))
+- **storage-client:** has method ([ba64195](https://github.com/AliMD/alwatr/commit/ba6419512b75f3bd17a7d86fc2d41a41d8179d8d))
+- **storage-client:** new package ([cfe72da](https://github.com/AliMD/alwatr/commit/cfe72da75f49f66c4d03875b0cb7c29966bb1c84))
+- **storage-client:** performance demo ([186832c](https://github.com/AliMD/alwatr/commit/186832cfea21b02aa6f7c9ec3eba768fa0ea64ed))
+- **storage-engine:** storage meta and auto_increment id ([3726947](https://github.com/AliMD/alwatr/commit/37269479e483e3108f3b8ef6706ea1d701290222))
+- **storage:** add data method ([b6454a5](https://github.com/AliMD/alwatr/commit/b6454a5bf111c2457644b19af6f5c33f9cccf3d1))
+- **storage:** better debug logs in load ([4be86df](https://github.com/AliMD/alwatr/commit/4be86df60b8994d42dae2b8b756b1421f18c7d94))
+- **storage:** get \_data ([528d2be](https://github.com/AliMD/alwatr/commit/528d2bed9ce0a349ba0e9dbb565ea4c7170b92a5))
+- **v2fly:** mux ([737e032](https://github.com/AliMD/alwatr/commit/737e0326a5ba0c13fd29033c8877cf958e23e780))
+
+### Performance Improvements
+
+- **fetch:** Improve performance and decrease memory usage ([7c29333](https://github.com/AliMD/alwatr/commit/7c293339215bea3a5013effe4aea5b6267a7a75e))
+- **nano-server:** faster log ([8ff716e](https://github.com/AliMD/alwatr/commit/8ff716e1eaee59047f816e1645aa9dde7635b571))
+- **storage-client:** refactor for perf improve and keep alive ([ed0b743](https://github.com/AliMD/alwatr/commit/ed0b743a8936602b63d92c216d2d65f6a31d74cf))
+- **storage-server:** debug --trace-gc ([8f6adf4](https://github.com/AliMD/alwatr/commit/8f6adf4d6547c57f62e105ce83eef014360b3ca3))
+
 # [0.21.0](https://github.com/AliMD/alwatr/compare/v0.20.0...v0.21.0) (2022-11-13)
 
 ### Bug Fixes

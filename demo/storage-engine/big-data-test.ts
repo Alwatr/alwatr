@@ -34,7 +34,7 @@ for (let i = 0; i < max; i++) {
 console.timeEnd('set all items');
 
 console.time('get item');
-const item = db.get('user_' + (max / 2));
+const item = db.get('user_' + max / 2);
 console.timeEnd('get item');
 console.dir(item);
 
