@@ -1,3 +1,11 @@
+networks:
+  alwatr-private-network:
+    name: alwatr-private-network
+    external: true
+  alwatr-public-network:
+    name: alwatr-public-network
+    external: true
+
 services:
   storage-server:
     image: storage-server:latest
@@ -11,6 +19,9 @@ services:
     env_file: .env
 
     tty: true
+
+    networks:
+      - alwatr-public-network
 
     logging:
       driver: json-file
@@ -33,6 +44,10 @@ services:
 
     tty: true
 
+    networks:
+      - alwatr-public-network
+      - alwatr-private-network
+
     logging:
       driver: json-file
       options:
@@ -53,6 +68,9 @@ services:
     env_file: .env
 
     tty: true
+
+    networks:
+      - alwatr-private-network
 
     logging:
       driver: json-file
@@ -82,11 +100,15 @@ services:
         bind:
           create_host_path: true
 
+    networks:
+      - alwatr-private-network
+
     logging:
       driver: json-file
       options:
         max-size: '10m'
         max-file: '2'
+
   pwa:
     build:
       context: ./pwa
@@ -104,6 +126,9 @@ services:
       - /var/cache
 
     tty: true
+
+    networks:
+      - alwatr-public-network
 
     logging:
       driver: json-file
