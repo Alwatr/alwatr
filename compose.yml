@@ -1,4 +1,25 @@
 services:
+  api:
+    build:
+      context: ./api
+
+    restart: "no"
+
+    stop_grace_period: 30s
+
+    cpu_shares: 2048
+    # mem_limit: 256m
+
+    env_file: .env
+
+    tty: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
   telegram-notifier:
     build:
       context: ./telegram-notifier

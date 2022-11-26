@@ -1,0 +1,24 @@
+ARG NODE_VERSION=18
+
+FROM node:${NODE_VERSION}-alpine
+
+WORKDIR /app
+
+COPY package.json ./
+
+RUN yarn install --frozen-lockfile --non-interactive
+
+COPY . .
+RUN yarn build
+
+ENV PORT 80
+ENV TOKEN ${API_TOKEN}
+ENV STORAGE_NAME ${STORAGE_NAME}
+ENV STORAGE_HOST ${STORAGE_HOST}
+ENV STORAGE_PORT ${STORAGE_PORT}
+ENV STORAGE_TOKEN ${STORAGE_TOKEN}
+ENV NODE_ENV production
+
+EXPOSE 80
+
+CMD ["dist/index.js"]
