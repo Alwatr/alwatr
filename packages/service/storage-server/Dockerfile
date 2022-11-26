@@ -1,8 +1,8 @@
-FROM node:18-alpine
+ARG NODE_VERSION=18
+
+FROM node:${NODE_VERSION}-alpine
 
 LABEL maintainer="S. Ali Mihandoost <ali.mihandoost@gmail.com>"
-
-ENV NODE_ENV production
 
 WORKDIR /app
 
@@ -11,9 +11,15 @@ WORKDIR /app
 
 COPY package.json ./
 
-RUN yarn install --frozen-lockfile --production=true --non-interactive
+RUN yarn install --frozen-lockfile --non-interactive
 
-COPY dist .
+COPY . .
+
+RUN yarn build
+
+ENV PORT 80
+ENV TOKEN ${STORAGE_TOKEN}
+ENV NODE_ENV production
 
 EXPOSE 80
 
