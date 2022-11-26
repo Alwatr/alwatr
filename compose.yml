@@ -1,0 +1,28 @@
+services:
+  telegram-notifier:
+    build:
+      context: ./telegram-notifier
+
+    restart: "no"
+
+    stop_grace_period: 30s
+
+    cpu_shares: 2048
+    # mem_limit: 256m
+
+    env_file: .env
+
+    tty: true
+
+    volumes:
+      - type: bind
+        source: ./db
+        target: /db
+        bind:
+          create_host_path: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
