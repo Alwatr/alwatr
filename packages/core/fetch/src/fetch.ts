@@ -1,8 +1,20 @@
 import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
 
-import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type';
+import type {
+  FetchOptions,
+  CacheDuplicate,
+  CacheStrategy,
+  AlwatrDocumentObject,
+  AlwatrServiceResponse,
+} from './type';
 
-export {FetchOptions, CacheDuplicate, CacheStrategy};
+export {
+  FetchOptions,
+  CacheDuplicate,
+  CacheStrategy,
+  AlwatrDocumentObject,
+  AlwatrServiceResponse,
+};
 
 const logger = createLogger('alwatr/fetch');
 

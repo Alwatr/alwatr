@@ -1,4 +1,3 @@
-
 export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate';
 export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
 
@@ -87,3 +86,33 @@ export interface FetchOptions extends RequestInit {
    */
   token?: string;
 }
+
+export type AlwatrDocumentObject = {
+  [key: string]: unknown;
+  id: string;
+  _meta?: {
+    rev: number;
+    created: number;
+    updated: number;
+  };
+};
+
+export type AlwatrServiceResponseFailed = {
+  ok: false;
+  errorCode: string;
+  _meta?: Record<string, unknown>;
+};
+
+export type AlwatrServiceResponseSuccess<
+  TData extends Record<string, unknown>,
+  TMeta extends Record<string, unknown> = never
+> = {
+  ok: true;
+  _meta?: TMeta;
+  data: TData;
+};
+
+export type AlwatrServiceResponse<
+  TData extends Record<string, unknown>,
+  TMeta extends Record<string, unknown> = never
+> = AlwatrServiceResponseSuccess<TData, TMeta> | AlwatrServiceResponseFailed;
