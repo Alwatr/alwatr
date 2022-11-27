@@ -23,9 +23,9 @@ alwatrRegisteredList.push({
  * ```ts
  * import {AlwatrStorageEngine} from '@alwatr/storage-engine';
  *
- * import type {DocumentObject} from '@alwatr/storage-engine';
+ * import type {AlwatrDocumentObject} from '@alwatr/fetch';
  *
- * interface User extends DocumentObject {
+ * interface User extends AlwatrDocumentObject {
  *   fname: string;
  *   lname: string;
  *   email: string;
@@ -47,7 +47,6 @@ alwatrRegisteredList.push({
  *   console.log('ali not found');
  *   ali = {
  *     id: 'alimd',
- *     _updatedBy: 'demo',
  *     fname: 'Ali',
  *     lname: 'Mihandoost',
  *     email: 'ali@mihandoost.com',
@@ -62,7 +61,6 @@ alwatrRegisteredList.push({
  *
  * db.set({
  *   id: 'fmd',
- *   _updatedBy: 'demo',
  *   fname: 'Fatemeh',
  *   lname: 'Mihandoost',
  *   email: 'Fatemeh@mihandoost.com',

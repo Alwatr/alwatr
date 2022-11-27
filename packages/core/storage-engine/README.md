@@ -7,9 +7,9 @@ Elegant micro in-memory json-like storage with disk backed, Fastest NoSQL Databa
 ```ts
 import {AlwatrStorageEngine} from '@alwatr/storage-engine';
 
-import type {DocumentObject} from '@alwatr/storage-engine';
+import type {AlwatrDocumentObject} from '@alwatr/storage-engine';
 
-interface User extends DocumentObject {
+interface User extends AlwatrDocumentObject {
   fname: string;
   lname: string;
   email: string;
@@ -31,7 +31,6 @@ if (ali == null) {
   console.log('ali not found');
   ali = {
     id: 'alimd',
-    _updatedBy: 'demo',
     fname: 'Ali',
     lname: 'Mihandoost',
     email: 'ali@mihandoost.com',
@@ -45,7 +44,6 @@ db.set(ali);
 
 db.set({
   id: 'fmd',
-  _updatedBy: 'demo',
   fname: 'Fatemeh',
   lname: 'Mihandoost',
   email: 'Fatemeh@mihandoost.com',

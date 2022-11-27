@@ -16,7 +16,6 @@ Content-Type: application/json
 
 {
   "id": "c1",
-  "_updatedBy": "demo",
   "from": "Ali Mihandoost",
   "message": "Salam"
 }
@@ -28,7 +27,6 @@ Content-Type: application/json
 
 {
   "id": "c2",
-  "_updatedBy": "demo",
   "from": "Fateme Mihandoost",
   "message": "Aleyk Salam"
 }
@@ -40,7 +38,6 @@ Content-Type: application/json
 
 {
   "id": "c1",
-  "_updatedBy": "demo",
   "from": "Ali Mihandoost",
   "message": "Salam ;)"
 }

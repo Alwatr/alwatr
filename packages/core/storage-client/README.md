@@ -6,9 +6,9 @@ Elegant micro client for storage server written in tiny TypeScript ES module.
 
 ```ts
 import {AlwatrStorageClient} from '@alwatr/storage-client';
-import type {DocumentObject} from '@alwatr/storage-client';
+import type {AlwatrDocumentObject} from '@alwatr/storage-client';
 
-interface User extends DocumentObject {
+interface User extends AlwatrDocumentObject {
   email: string;
   token?: string;
 }
@@ -16,19 +16,17 @@ interface User extends DocumentObject {
 const db = new AlwatrStorageClient<User>({
   name: 'user-list',
   host: 'http://127.0.0.1:80',
-  token: 'alwatr_110_313',
+  token: 'YOUR_SECRET_TOKEN',
   timeout: 2_000,
 });
 
 await db.set({
   id: 'alimd',
-  _updatedBy: 'demo',
   email: 'ali@mihandoost.com',
 });
 
 await db.set({
   id: 'fmd',
-  _updatedBy: 'demo',
   email: 'Fatemeh@mihandoost.com',
   token: Math.random().toString(36).substring(2, 15),
 });

@@ -30,13 +30,12 @@ alwatrRegisteredList.push({
  * const db = new AlwatrStorageClient<User>({
  *   name: 'user-list',
  *   host: 'http://127.0.0.1:80',
- *   token: 'alwatr_110_313',
+ *   token: 'YOUR_SECRET_TOKEN',
  *   timeout: 2_000,
  * });
  *
  * await db.set({
  *   id: 'alimd',
- *   _updatedBy: 'demo',
  *   fname: 'Ali',
  *   lname: 'Mihandoost',
  *   email: 'ali@mihandoost.com',
@@ -44,7 +43,6 @@ alwatrRegisteredList.push({
  *
  * await db.set({
  *   id: 'fmd',
- *   _updatedBy: 'demo',
  *   fname: 'Fatemeh',
  *   lname: 'Mihandoost',
  *   email: 'Fatemeh@mihandoost.com',
