@@ -3,7 +3,7 @@ import {createServer} from 'node:http';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
 
-import type {NanoServerConfig, Methods, ParamType, QueryParams, ReplyContent} from './type.js';
+import type {NanoServerConfig, Methods, ParamType, QueryParams, ReplyContent, ConnectionConfig} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
@@ -49,6 +49,8 @@ export class AlwatrNanoServer {
       requestTimeout: 10_000,
       headersTimeout: 130_000,
       keepAliveTimeout: 120_000,
+      healthRoute: true,
+      allowAllOrigin: false,
       ...config,
     };
 
@@ -73,8 +75,14 @@ export class AlwatrNanoServer {
 
     this.httpServer.on('error', this._errorListener);
     this.httpServer.on('clientError', this._clientErrorListener);
-    this.route('GET', '/health', this._onHealthCheckRequest);
-    this.route('OPTIONS', 'all', this._onHOptionRequest);
+
+    if (this._config.healthRoute === true) {
+      this.route('GET', '/health', this._onHealthCheckRequest);
+    }
+
+    if (this._config.allowAllOrigin === true) {
+      this.route('OPTIONS', 'all', this._onHOptionRequest);
+    }
 
     this.httpServer.listen(this._config.port, this._config.host, () => {
       this._logger.logOther(`listening on ${this._config.host}:${this._config.port}`);
@@ -198,7 +206,9 @@ export class AlwatrNanoServer {
       return;
     }
 
-    const connection = new AlwatrConnection(incomingMessage, serverResponse);
+    const connection = new AlwatrConnection(incomingMessage, serverResponse, {
+      allowAllOrigin: this._config.allowAllOrigin,
+    });
     const route = connection.url.pathname;
 
     // TODO: handled open remained connections.
@@ -264,7 +274,11 @@ export class AlwatrConnection {
 
   protected _logger = createLogger(`alwatr-nano-server-connection`);
 
-  constructor(public incomingMessage: IncomingMessage, public serverResponse: ServerResponse) {
+  constructor(
+    public incomingMessage: IncomingMessage,
+    public serverResponse: ServerResponse,
+    public config: ConnectionConfig,
+  ) {
     this._logger.logMethodArgs('new', {method: incomingMessage.method, url: incomingMessage.url});
   }
 
@@ -312,12 +326,17 @@ export class AlwatrConnection {
       );
     }
 
-    this.serverResponse.writeHead(content.statusCode ?? 200, {
+    const headers: Record<string, string | number> = {
       'Content-Length': body.length,
       'Content-Type': 'application/json',
       'Server': 'Alwatr NanoServer',
-      'Access-Control-Allow-Origin': '*',
-    });
+    };
+
+    if (this.config.allowAllOrigin === true) {
+      headers['Access-Control-Allow-Origin'] = '*';
+    }
+
+    this.serverResponse.writeHead(content.statusCode ?? 200, headers);
 
     this.serverResponse.write(body, 'utf8', (error: NodeJS.ErrnoException | null | undefined) => {
       if (error == null) return;

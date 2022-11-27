@@ -52,6 +52,29 @@ export interface NanoServerConfig {
    * @default 120_000 ms
    */
   keepAliveTimeout: number;
+
+  /**
+   * Add /health route.
+   *
+   * @default true
+   */
+  healthRoute: boolean;
+
+  /**
+   * Add OPTIONS route for preflight requests to allow access all origins.
+   *
+   * @default false
+   */
+  allowAllOrigin: boolean;
+}
+
+export interface ConnectionConfig {
+  /**
+   * Add `Access-Control-Allow-Origin: *` header.
+   *
+   * @default false
+   */
+  allowAllOrigin: boolean;
 }
 
 export type QueryParams = Record<string, string | number | boolean>;
