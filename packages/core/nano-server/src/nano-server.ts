@@ -3,10 +3,12 @@ import {createServer} from 'node:http';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
 
-import type {NanoServerConfig, Methods, ParamType, QueryParams, ReplyContent, ConnectionConfig} from './type.js';
+import type {NanoServerConfig, ConnectionConfig, Methods, ParamType, QueryParams, ReplyContent} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
+
+export {NanoServerConfig, ConnectionConfig, Methods, ParamType, QueryParams, ReplyContent};
 
 alwatrRegisteredList.push({
   name: '@alwatr/nano-server',

@@ -1,9 +1,9 @@
 import {random} from '@alwatr/math';
 import {AlwatrStorageEngine} from '@alwatr/storage-engine';
 
-import type {DocumentObject} from '@alwatr/storage-engine';
+import type {AlwatrDocumentObject} from '@alwatr/fetch';
 
-interface User extends DocumentObject {
+interface User extends AlwatrDocumentObject {
   fname: string;
   lname: string;
   email: string;
@@ -22,8 +22,7 @@ console.time('set all items');
 const max = 100_000;
 for (let i = 0; i < max; i++) {
   db.set({
-    _id: 'user_' + i,
-    _updatedBy: 'demo_' + i,
+    id: 'user_' + i,
     fname: random.string(4, 16),
     lname: random.string(4, 32),
     email: random.string(8, 32),
