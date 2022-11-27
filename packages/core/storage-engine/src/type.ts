@@ -1,29 +1,19 @@
-export type JSON = Record<string, unknown>;
+import type {AlwatrDocumentObject, AlwatrServiceResponseSuccess} from '@alwatr/fetch/type.js';
 
-export interface DocumentObject {
-  [key: string]: unknown;
-  /**
-   * Document uniq ID or `auto_increment`.
-   */
-  _id: string;
-  _rev?: number;
-  _createdAt?: number;
-  _createdBy?: string;
-  _updatedAt?: number;
-  _updatedBy: string;
-}
+export {AlwatrDocumentObject};
 
-export type DataStorage<T extends DocumentObject> = {
-  ok: true;
-  meta?: {
-    formatVersion: number;
-    reversion: number;
-    lastUpdatedAt: number;
-    lastUpdatedId: string;
-    lastAutoId?: string;
-  };
-  data: Record<string, T | undefined>;
+export type StorageMeta = {
+  formatVersion: number;
+  reversion: number;
+  lastUpdatedAt: number;
+  lastUpdatedId: string;
+  lastAutoId?: string;
 };
+
+export type DataStorage<T extends AlwatrDocumentObject> = AlwatrServiceResponseSuccess<
+  Record<string, T | undefined>,
+  StorageMeta
+>;
 
 export type AlwatrStorageEngineConfig = {
   /**

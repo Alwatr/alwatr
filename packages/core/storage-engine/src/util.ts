@@ -1,8 +1,6 @@
 import {existsSync, mkdirSync, writeFileSync, renameSync, readFileSync} from 'node:fs';
 import {dirname} from 'node:path';
 
-import type {JSON} from './type.js';
-
 // TODO: add debug log
 
 /**
@@ -10,7 +8,7 @@ import type {JSON} from './type.js';
  * @example
  * const fileContent = readJsonFile('./file.json');
  */
-export function readJsonFile<T extends JSON>(path: string): T | null {
+export function readJsonFile<T extends Record<string, unknown>>(path: string): T | null {
   if (!existsSync(path)) {
     return null;
   }
@@ -43,7 +41,11 @@ export function readJsonFile<T extends JSON>(path: string): T | null {
  * @example
  * writeJsonFile('./file.json', { a:1, b:2, c:3 });
  */
-export function writeJsonFile<T extends JSON>(path: string, dataObject: T, space?: string | number | undefined): void {
+export function writeJsonFile<T extends Record<string, unknown>>(
+    path: string,
+    dataObject: T,
+    space?: string | number | undefined,
+): void {
   const timeKey = path.substring(path.lastIndexOf('/') + 1);
 
   let jsonContent;
