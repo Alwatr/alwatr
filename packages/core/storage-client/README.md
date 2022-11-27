@@ -21,13 +21,13 @@ const db = new AlwatrStorageClient<User>({
 });
 
 await db.set({
-  _id: 'alimd',
+  id: 'alimd',
   _updatedBy: 'demo',
   email: 'ali@mihandoost.com',
 });
 
 await db.set({
-  _id: 'fmd',
+  id: 'fmd',
   _updatedBy: 'demo',
   email: 'Fatemeh@mihandoost.com',
   token: Math.random().toString(36).substring(2, 15),
@@ -104,13 +104,13 @@ if (!userExist) console.log('user_not_found');
 
 Insert/update a document object in the storage.
 
-- **documentObject**: The document object to insert/update contain `_id`.
+- **documentObject**: The document object to insert/update contain `id`.
 
 Example:
 
 ```ts
 userStorage.set({
-  _id: 'user-1',
+  id: 'user-1',
   foo: 'bar',
 });
 ```

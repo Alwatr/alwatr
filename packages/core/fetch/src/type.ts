@@ -88,7 +88,7 @@ export interface FetchOptions extends RequestInit {
 }
 
 export type AlwatrDocumentObject = {
-  [key: string]: unknown;
+  // [key: string]: unknown;
   id: string;
   _meta?: {
     rev: number;

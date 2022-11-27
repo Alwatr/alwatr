@@ -2,8 +2,8 @@ import {config, logger} from '../lib/config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
+import type {AlwatrDocumentObject} from '@alwatr/fetch';
 import type {AlwatrConnection} from '@alwatr/nano-server';
-import type {DocumentObject} from '@alwatr/storage-engine';
 
 nanoServer.route('PATCH', 'all', updateDocument);
 
@@ -16,18 +16,16 @@ async function updateDocument(connection: AlwatrConnection): Promise<void> {
   const param = connection.requireQueryParams<{storage: string}>({storage: 'string'});
   if (param === null) return;
 
-  const document = await connection.requireJsonBody<DocumentObject>();
+  const document = await connection.requireJsonBody<AlwatrDocumentObject>();
   if (document == null) return;
 
-  if (!(typeof document._id === 'string' && document._id.length !== 0)) {
+  if (!(typeof document.id === 'string' && document.id.length !== 0)) {
     return connection.reply({
       ok: false,
       statusCode: 406,
       errorCode: 'doc_id_required',
     });
   }
-
-  document._updatedBy ??= 'admin';
 
   const storage = storageProvider.get({name: param.storage});
 

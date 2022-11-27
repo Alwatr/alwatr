@@ -24,7 +24,6 @@ if (ali == null) {
   console.log('ali not found');
   ali = {
     id: 'alimd',
-    _updatedBy: 'demo',
     fname: 'Ali',
     lname: 'Mihandoost',
     email: 'ali@mihandoost.com',

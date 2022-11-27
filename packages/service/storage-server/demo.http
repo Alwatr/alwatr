@@ -15,7 +15,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "_id": "c1",
+  "id": "c1",
   "_updatedBy": "demo",
   "from": "Ali Mihandoost",
   "message": "Salam"
@@ -27,7 +27,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "_id": "c2",
+  "id": "c2",
   "_updatedBy": "demo",
   "from": "Fateme Mihandoost",
   "message": "Aleyk Salam"
@@ -39,7 +39,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "_id": "c1",
+  "id": "c1",
   "_updatedBy": "demo",
   "from": "Ali Mihandoost",
   "message": "Salam ;)"
@@ -95,5 +95,5 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "_id":
+  "id":
 }

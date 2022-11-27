@@ -35,7 +35,7 @@ alwatrRegisteredList.push({
  * });
  *
  * await db.set({
- *   _id: 'alimd',
+ *   id: 'alimd',
  *   _updatedBy: 'demo',
  *   fname: 'Ali',
  *   lname: 'Mihandoost',
@@ -43,7 +43,7 @@ alwatrRegisteredList.push({
  * });
  *
  * await db.set({
- *   _id: 'fmd',
+ *   id: 'fmd',
  *   _updatedBy: 'demo',
  *   fname: 'Fatemeh',
  *   lname: 'Mihandoost',
@@ -124,7 +124,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject> {
       throw new Error('invalid_json');
     }
 
-    if (content.ok === true && typeof content.data._id === 'string') {
+    if (content.ok === true && typeof content.data.id === 'string') {
       return content.data;
     }
     else if (content.ok === false && content.errorCode === 'document_not_found') {
@@ -178,13 +178,13 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject> {
   /**
    * Insert/update a document object in the storage.
    *
-   * @param documentObject The document object to insert/update contain `_id`.
+   * @param documentObject The document object to insert/update contain `id`.
    *
    * Example:
    *
    * ```ts
    * await userStorage.set({
-   *   _id: 'user-1',
+   *   id: 'user-1',
    *   foo: 'bar',
    * });
    * ```
@@ -209,7 +209,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject> {
       throw new Error('invalid_json');
     }
 
-    if (content.ok && typeof content.data._id === 'string') {
+    if (content.ok && typeof content.data.id === 'string') {
       return content.data;
     }
     else {

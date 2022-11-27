@@ -43,7 +43,6 @@ async function request(): Promise<void> {
     i++;
     const newUser: User = {
       id: 'user_' + i,
-      _updatedBy: 'demo_' + i,
       fname: random.string(4, 16),
       lname: random.string(4, 32),
       email: random.string(8, 32),
