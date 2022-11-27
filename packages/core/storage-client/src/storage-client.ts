@@ -1,10 +1,10 @@
 import {fetch, FetchOptions} from '@alwatr/fetch';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
-import type {AlwatrStorageClientConfig, ServerResponse} from './type.js';
-import type {DocumentObject} from '@alwatr/storage-engine';
+import type {AlwatrStorageClientConfig} from './type.js';
+import type {AlwatrDocumentObject, AlwatrServiceResponse} from '@alwatr/fetch';
 
-export {DocumentObject, AlwatrStorageClientConfig};
+export {AlwatrStorageClientConfig, AlwatrDocumentObject};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage-client',
@@ -18,9 +18,9 @@ alwatrRegisteredList.push({
  *
  * ```ts
  * import {AlwatrStorageClient} from '@alwatr/storage-client';
- * import type {DocumentObject} from '@alwatr/storage-client';
+ * import type {AlwatrDocumentObject } from '@alwatr/storage-client';
  *
- * interface User extends DocumentObject {
+ * interface User extends AlwatrDocumentObject  {
  *   fname: string;
  *   lname: string;
  *   email: string;
@@ -62,7 +62,7 @@ alwatrRegisteredList.push({
  *   console.log('delete 404: %o', (err as Error).message);
  * }
  */
-export class AlwatrStorageClient<DocumentType extends DocumentObject> {
+export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject> {
   protected _logger = createLogger('alwatr-storage-client:' + this.config.name, undefined, this.config.debug);
 
   /**
@@ -116,7 +116,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       },
     });
 
-    let content: ServerResponse<DocumentType>;
+    let content: AlwatrServiceResponse<DocumentType>;
     try {
       content = await response.json();
     }
@@ -159,7 +159,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       },
     });
 
-    let content: ServerResponse<{has: boolean}>;
+    let content: AlwatrServiceResponse<{has: boolean}>;
     try {
       content = await response.json();
     }
@@ -190,7 +190,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
    * ```
    */
   async set(documentObject: DocumentType): Promise<DocumentType> {
-    this._logger.logMethodArgs('set', {documentId: documentObject._id});
+    this._logger.logMethodArgs('set', {documentId: documentObject.id});
 
     const response = await fetch({
       ...this.fetchOption,
@@ -201,7 +201,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       bodyJson: documentObject,
     });
 
-    let content: ServerResponse<DocumentType>;
+    let content: AlwatrServiceResponse<DocumentType>;
     try {
       content = await response.json();
     }
@@ -238,7 +238,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       },
     });
 
-    let content: ServerResponse<Record<string, never>>;
+    let content: AlwatrServiceResponse<Record<string, never>>;
     try {
       content = await response.json();
     }
@@ -277,7 +277,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       },
     });
 
-    let content: ServerResponse<Record<string, DocumentType>>;
+    let content: AlwatrServiceResponse<Record<string, DocumentType>>;
     try {
       content = await response.json();
     }
@@ -313,7 +313,7 @@ export class AlwatrStorageClient<DocumentType extends DocumentObject> {
       },
     });
 
-    let content: ServerResponse<{keys: Array<string>}>;
+    let content: AlwatrServiceResponse<{keys: Array<string>}>;
     try {
       content = await response.json();
     }
