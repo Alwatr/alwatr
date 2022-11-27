@@ -51,7 +51,7 @@ jobs:
             path: service/storage-server
             description: Storage nanoservice with disk backed, Fastest NoSQL Database.
             version:
-              short: 22
+              short: 0
               full: 0.22.0
 
           # - image: tdlib
