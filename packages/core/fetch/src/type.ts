@@ -1,5 +1,7 @@
+export type Methods = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'TRACE' | 'OPTIONS' | 'PATCH';
 export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate';
 export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
+export type QueryParameters = Record<string, string | number | boolean>;
 
 export interface FetchOptions extends RequestInit {
   /**
@@ -9,8 +11,10 @@ export interface FetchOptions extends RequestInit {
 
   /**
    * A string to set request's method.
+   *
+   * @default 'GET'
    */
-  method?: string;
+  method?: Methods;
 
   /**
    * A timeout for the fetch request.
@@ -79,7 +83,7 @@ export interface FetchOptions extends RequestInit {
   /**
    * URL Query Parameters as JS Object.
    */
-  queryParameters?: Record<string, string | number | boolean>;
+  queryParameters?: QueryParameters;
 
   /**
    * Add token to Authentication bearer header.
@@ -88,9 +92,8 @@ export interface FetchOptions extends RequestInit {
 }
 
 export type AlwatrDocumentObject = {
-  // [key: string]: unknown;
   id: string;
-  _meta?: {
+  meta?: {
     rev: number;
     created: number;
     updated: number;
@@ -99,20 +102,26 @@ export type AlwatrDocumentObject = {
 
 export type AlwatrServiceResponseFailed = {
   ok: false;
+  statusCode: number;
   errorCode: string;
-  _meta?: Record<string, unknown>;
+  meta?: Record<string, unknown>;
+  data?: never;
 };
 
-export type AlwatrServiceResponseSuccess<
-  TData extends Record<string, unknown>,
-  TMeta extends Record<string, unknown> = never
-> = {
+export type AlwatrServiceResponseSuccess<TData = Record<string, unknown>> = {
   ok: true;
-  _meta?: TMeta;
+  statusCode?: number;
+  errorCode?: never;
+  meta?: never;
   data: TData;
 };
 
-export type AlwatrServiceResponse<
-  TData extends Record<string, unknown>,
-  TMeta extends Record<string, unknown> = never
-> = AlwatrServiceResponseSuccess<TData, TMeta> | AlwatrServiceResponseFailed;
+export type AlwatrServiceResponseSuccessWithMeta<
+  TData = Record<string, unknown>,
+  TMeta = Record<string, never>
+> = AlwatrServiceResponseSuccess<TData> & {meta: TMeta};
+
+export type AlwatrServiceResponse<TData = Record<string, unknown>, TMeta = Record<string, never>> =
+  | AlwatrServiceResponseSuccess<TData>
+  | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>
+  | AlwatrServiceResponseFailed;
