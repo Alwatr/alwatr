@@ -314,27 +314,21 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject> {
   }
 
   /**
-   * Loop over all document objects asynchronous.
-   *
-   * You can return false in callbackfn to break the loop.
+   * Loop over all document objects.
    *
    * Example:
    *
    * ```ts
-   * await userStorage.forAll(async (user) => {
+   * for(const user of userStorage.allObject()) {
    *   await sendMessage(user.id, 'Happy new year!');
    *   user.sent = true; // direct change document (use with caution)!
-   * });
+   * }
    * ```
    */
-  async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void> {
-    const keys = this.keys;
-    for (const documentId of keys) {
+  * allObject(): Generator<DocumentType, void, void> {
+    for (const documentId of this.keys) {
       const documentObject = this.get(documentId);
-      if (documentObject != null) {
-        const retVal = await callbackfn(documentObject);
-        if (retVal === false) break;
-      }
+      if (documentObject != null) yield documentObject;
     }
     this.save();
   }
