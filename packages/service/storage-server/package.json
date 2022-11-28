@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/storage-server",
   "version": "0.23.0",
-  "description": "Alwatr Storage Nanoservice API, Elegant micro in-memory json-like storage with disk backed, Fastest NoSQL Database",
+  "description": "Alwatr Storage Server, Elegant micro in-memory json-like storage nanoservice with disk backed, Fastest NoSQL Database.",
   "type": "module",
   "keywords": [
     "database",
