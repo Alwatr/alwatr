@@ -1,5 +1,4 @@
 ARG NODE_VERSION=lts
-ARG DIST=dist
 FROM node:${NODE_VERSION} as build
 
 WORKDIR /app
@@ -13,12 +12,12 @@ RUN if [ -f *.lock ]; then \
 
 COPY . .
 RUN yarn build
+
+ARG DIST=dist
 RUN ls -lahF ${DIST}
 
 # ---
 
-ARG NODE_VERSION=lts
-ARG DIST=dist
 FROM node:${NODE_VERSION}
 
 WORKDIR /app
@@ -33,4 +32,5 @@ CMD index.js
 COPY --from=build /app/package.json /app/yarn.lock ./
 RUN yarn install --frozen-lockfile --non-interactive --production && yarn cache clean
 
+ARG DIST=dist
 COPY --from=build /app/${dist} .
