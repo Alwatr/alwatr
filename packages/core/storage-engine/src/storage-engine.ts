@@ -68,7 +68,7 @@ alwatrRegisteredList.push({
  * });
  * ```
  */
-export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject> {
+export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = AlwatrDocumentObject> {
   static readonly formatVersion = 4;
 
   /**
