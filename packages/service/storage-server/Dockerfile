@@ -30,7 +30,7 @@ ENV PORT 80
 EXPOSE 80
 CMD index.js
 
-COPY --from=build package.json *.lock ./
+COPY --from=build /app/package.json /app/yarn.lock ./
 RUN yarn install --frozen-lockfile --non-interactive --production && yarn cache clean
 
-COPY --from=build ./${dist} .
+COPY --from=build /app/${dist} .
