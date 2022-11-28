@@ -55,7 +55,7 @@ export function fetch(_options: FetchOptions): Promise<Response> {
  * Process fetch options and set defaults, etc.
  */
 function _processOptions(options: FetchOptions): Required<FetchOptions> {
-  options.method = options.method != null ? options.method.toUpperCase() : 'GET';
+  options.method ??= 'GET';
   options.window ??= null;
 
   options.timeout ??= 10_000;
