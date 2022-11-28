@@ -3,7 +3,7 @@ import {createServer} from 'node:http';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
 
-import type {NanoServerConfig, ConnectionConfig, ParamKeyType} from './type.js';
+import type {NanoServerConfig, ConnectionConfig, ParamKeyType, ParamValueType} from './type.js';
 import type {
   AlwatrServiceResponse,
   AlwatrServiceResponseFailed,
@@ -503,10 +503,10 @@ export class AlwatrConnection {
   }
 
   /**
-   * Parse query param and validate with param type
+   * Parse query param and validate with param type.
    */
-  protected _sanitizeParam(name: string, type: ParamKeyType): string | number | boolean | null {
-    let value: string | number | boolean | null = this.url.searchParams.get(name);
+  protected _sanitizeParam(name: string, type: ParamKeyType): ParamValueType {
+    let value = this.url.searchParams.get(name);
 
     if (value == null || value.length === 0) {
       return null;
@@ -516,18 +516,18 @@ export class AlwatrConnection {
       return value;
     }
 
-    value = value.trim();
-
     if (type === 'number') {
       return isNumber(value) ? +value : null;
     }
 
     if (type === 'boolean') {
+      value = value.trim();
+
       if (value === 'true' || value === '1') {
-        value = true;
+        return true;
       }
       else if (value === 'false' || value === '0') {
-        value = false;
+        return false;
       }
       else return null;
     }
@@ -548,7 +548,7 @@ export class AlwatrConnection {
    * ```
    */
   requireQueryParams<T extends QueryParameters = QueryParameters>(params: Record<string, ParamKeyType>): T | null {
-    const parsedParams: Record<string, string | number | boolean | null> = {};
+    const parsedParams: Record<string, ParamValueType> = {};
 
     for (const paramName in params) {
       if (!Object.prototype.hasOwnProperty.call(params, paramName)) continue;

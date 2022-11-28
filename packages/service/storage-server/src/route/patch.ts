@@ -2,8 +2,8 @@ import {config, logger} from '../lib/config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
-import type {AlwatrDocumentObject} from '@alwatr/fetch';
 import type {AlwatrConnection} from '@alwatr/nano-server';
+import type {AlwatrDocumentObject} from '@alwatr/storage-engine';
 
 nanoServer.route('PATCH', 'all', updateDocument);
 
