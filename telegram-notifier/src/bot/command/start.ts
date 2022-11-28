@@ -14,8 +14,7 @@ bot.command('start', async (ctx): Promise<void> => {
   }
 
   const target: MemberList = storage.get(token, true) ?? {
-    _id: token,
-    _updatedBy: 'api',
+    id: token,
     memberList: [],
   };
 

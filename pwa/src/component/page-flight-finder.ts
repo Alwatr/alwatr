@@ -63,7 +63,7 @@ export class PageFlightFinder extends AlwatrElement {
 
   @state() private __jobList: Array<Job> = [
     {
-      _id: '2',
+      id: '2',
       filter: {
         dest: 'MHD',
         origin: 'THR',
@@ -74,7 +74,7 @@ export class PageFlightFinder extends AlwatrElement {
       resultList: [],
     },
     {
-      _id: '3',
+      id: '3',
       filter: {
         dest: 'THR',
         origin: 'MHD',

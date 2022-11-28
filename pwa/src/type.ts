@@ -16,7 +16,7 @@ declare global {
 }
 
 export interface Job extends Record<string, unknown> {
-  _id: string;
+  id: string;
   filter: JobFilter;
   resultList: Array<JobResult>;
 }
