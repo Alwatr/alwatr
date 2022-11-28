@@ -1,6 +1,6 @@
 # Alwatr Storage Server
 
-Elegant micro in-memory json-like storage nanoservice with disk backed, Fastest NoSQL Database.
+Elegant Nano server for `@alwatr/storage-engine`.
 
 ## How to use
 
