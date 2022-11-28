@@ -7,7 +7,7 @@ import {readJsonFile, writeJsonFile} from './util.js';
 
 import type {DataStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject} from './type.js';
 
-export {DataStorage, AlwatrStorageEngineConfig};
+export {DataStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage-engine',
@@ -68,7 +68,7 @@ alwatrRegisteredList.push({
  * });
  * ```
  */
-export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject> {
+export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = AlwatrDocumentObject> {
   static readonly formatVersion = 4;
 
   /**
