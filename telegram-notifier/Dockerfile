@@ -1,20 +1,29 @@
-ARG NODE_VERSION=18
-
-FROM node:${NODE_VERSION}-alpine
+ARG NODE_VERSION=lts
+FROM node:${NODE_VERSION} as build
 
 WORKDIR /app
 
-COPY package.json ./
-RUN yarn install --frozen-lockfile --non-interactive
+COPY package.json *.lock ./
+RUN yarn install --frozen-lockfile --non-interactive && yarn cache clean
 
 COPY . .
 RUN yarn build
 
-ENV PORT 80
-ENV TELEGRAM_BOT_TOKEN ${TELEGRAM_BOT_TOKEN}
-ENV TOKEN ${NOTIFIER_TOKEN}
-ENV NODE_ENV production
+# ---
 
+ARG NODE_VERSION=lts
+FROM node:${NODE_VERSION}
+
+WORKDIR /app
+
+ENV NODE_ENV production
+ENV ALWATR_DEBUG *
+ENV HOST 0.0.0.0
+ENV PORT 80
 EXPOSE 80
 
+COPY package.json *.lock ./
+RUN yarn install --frozen-lockfile --non-interactive --production && yarn cache clean
+
+COPY --from=build /app/dist/ .
 CMD ["dist/index.js"]

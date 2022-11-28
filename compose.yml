@@ -8,7 +8,7 @@ networks:
 
 services:
   storage-server:
-    image: storage-server:latest
+    image: ghcr.io/alimd/storage-server:0.22.0
     restart: "no"
 
     stop_grace_period: 30s
