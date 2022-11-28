@@ -1,17 +1,24 @@
 ARG NODE_VERSION=lts
+ARG DIST=dist
 FROM node:${NODE_VERSION} as build
 
 WORKDIR /app
 
 COPY package.json *.lock ./
-RUN yarn install --frozen-lockfile --non-interactive && yarn cache clean
+RUN if [ -f *.lock ]; then \
+      yarn install --frozen-lockfile --non-interactive \
+    else \
+      yarn install --non-interactive \
+    fi;
 
 COPY . .
 RUN yarn build
+RUN ls -lahF ${DIST}
 
 # ---
 
 ARG NODE_VERSION=lts
+ARG DIST=dist
 FROM node:${NODE_VERSION}
 
 WORKDIR /app
@@ -21,9 +28,9 @@ ENV ALWATR_DEBUG *
 ENV HOST 0.0.0.0
 ENV PORT 80
 EXPOSE 80
+CMD index.js
 
-COPY package.json *.lock ./
+COPY --from=build package.json *.lock ./
 RUN yarn install --frozen-lockfile --non-interactive --production && yarn cache clean
 
-COPY --from=build /app/dist/ .
-CMD ["dist/index.js"]
+COPY --from=build ./${dist} .
