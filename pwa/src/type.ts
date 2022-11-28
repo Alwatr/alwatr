@@ -15,25 +15,34 @@ declare global {
   }
 }
 
-export interface Job extends Record<string, unknown> {
+export type dayParts = 'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
+
+export type Job = {
   _id: string;
   filter: JobFilter;
   resultList: Array<JobResult>;
-}
+};
 
-export interface JobFilter extends Record<string, unknown> {
+export type JobFilter = {
   origin: string;
   dest: string;
   date: string;
+  description?: string;
+  seatCount: number;
   maxPrice: number;
-  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
-}
+  dayPart: Array<dayParts>;
+};
 
-export interface JobResult extends Record<string, unknown> {
+export type NewJobFilter = {
+  month: number;
+  day: number;
+} & Omit<JobFilter, 'date'>;
+
+export type JobResult = {
   price: number;
   time: number;
   seatCount: number;
-}
+};
 
 // TODO: Transfer this type in a package
 type ServerResponseFailed = {

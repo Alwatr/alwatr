@@ -18,7 +18,7 @@ declare global {
   }
 }
 
-const i18nDayPartList: Record<JobFilter['dayPart'][0], string> = {
+export const i18nDayPartList: Record<JobFilter['dayPart'][0], string> = {
   earlyMorning: 'صبح زود',
   morning: 'صبح',
   midday: 'نیمه روز',
