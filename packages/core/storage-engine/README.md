@@ -136,19 +136,17 @@ Example:
 userStorage.delete('user-1');
 ```
 
-### `async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void>`
+### `*allObject()`
 
-Loop over all document objects asynchronous.
-
-You can return false in callbackfn to break the loop.
+Loop over all document objects.
 
 Example:
 
 ```ts
-await userStorage.forAll(async (user) => {
+for(const user of userStorage.allObject()) {
   await sendMessage(user.id, 'Happy new year!');
   user.sent = true; // direct change document (use with caution)!
-});
+}
 ```
 
 ### `save(): void`

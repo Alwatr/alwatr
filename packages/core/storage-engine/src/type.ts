@@ -1,16 +1,15 @@
-import type {AlwatrDocumentObject, AlwatrServiceResponseSuccess} from '@alwatr/fetch/type.js';
+import type {AlwatrDocumentObject, AlwatrServiceResponseSuccessWithMeta} from '@alwatr/fetch/type.js';
 
 export {AlwatrDocumentObject};
 
 export type StorageMeta = {
   formatVersion: number;
   reversion: number;
-  lastUpdatedAt: number;
-  lastUpdatedId: string;
-  lastAutoId?: string;
+  lastUpdated: number;
+  lastAutoId: number;
 };
 
-export type DataStorage<T extends AlwatrDocumentObject> = AlwatrServiceResponseSuccess<
+export type DataStorage<T extends AlwatrDocumentObject> = AlwatrServiceResponseSuccessWithMeta<
   Record<string, T | undefined>,
   StorageMeta
 >;

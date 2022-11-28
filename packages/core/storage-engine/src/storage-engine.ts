@@ -92,7 +92,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject> {
   readonly saveBeautiful;
 
   /**
-   * The storage has unsaved changes that have not yet been saved.
+   * The storage has unsaved changes that have not yet saved.
    */
   hasUnsavedChanges = false;
 
@@ -127,24 +127,32 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject> {
   /**
    * Get storage meta.
    */
-  get _meta(): typeof this._storage._meta {
-    return this._storage._meta;
+  get meta(): typeof this._storage.meta {
+    return this._storage.meta;
   }
 
   /**
    * Get next auto increment id for numerical document id.
    */
-  get nextAutoIncrementId(): string {
-    let id = +(this._storage._meta?.lastAutoId ?? -1);
-    if (isNaN(id)) throw new Error('doc_id_is_nan');
+  nextAutoIncrementId(): string {
+    this._storage.meta.lastAutoId;
     do {
-      id++;
-    } while (this._storage.data[id.toString()] != null);
-    return id.toString();
+      this._storage.meta.lastAutoId++;
+    } while (this._storage.data[this._storage.meta.lastAutoId.toString()] != null);
+    return this._storage.meta.lastAutoId.toString();
   }
 
   protected get _newStorage(): DataStorage<DocumentType> {
-    return {ok: true, data: {}};
+    return {
+      ok: true,
+      meta: {
+        formatVersion: AlwatrStorageEngine.formatVersion,
+        reversion: 0,
+        lastUpdated: Date.now(),
+        lastAutoId: -1,
+      },
+      data: {},
+    };
   }
 
   constructor(config: AlwatrStorageEngineConfig) {
@@ -252,10 +260,8 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject> {
       documentObject = JSON.parse(JSON.stringify(documentObject));
     }
 
-    const autoIncrement = documentObject.id === 'auto_increment';
-
-    if (autoIncrement) {
-      documentObject.id = this.nextAutoIncrementId;
+    if (documentObject.id === 'auto_increment') {
+      documentObject.id = this.nextAutoIncrementId();
     }
 
     const oldData = this._storage.data[documentObject.id];
@@ -265,27 +271,16 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject> {
     }
 
     // update meta
-    documentObject._meta ??= {
+    documentObject.meta ??= {
       rev: 0,
       updated: 0,
       created: 0,
     };
-    documentObject._meta.updated = Date.now();
-    documentObject._meta.created = oldData?._meta?.created ?? documentObject._meta.updated;
-    documentObject._meta.rev = (oldData?._meta?.rev ?? 0) + 1;
+    documentObject.meta.updated = Date.now();
+    documentObject.meta.created = oldData?.meta?.created ?? documentObject.meta.updated;
+    documentObject.meta.rev = (oldData?.meta?.rev ?? 0) + 1;
 
-    this._storage._meta ??= {
-      formatVersion: AlwatrStorageEngine.formatVersion,
-      reversion: 0,
-      lastUpdatedId: '',
-      lastUpdatedAt: 0,
-    };
-    this._storage._meta.reversion++;
-    this._storage._meta.lastUpdatedId = documentObject.id;
-    this._storage._meta.lastUpdatedAt = documentObject._meta.updated;
-    if (autoIncrement) {
-      this._storage._meta.lastAutoId = documentObject.id;
-    }
+    this._storage.meta.lastUpdated = documentObject.meta.updated;
 
     this._storage.data[documentObject.id] = documentObject;
 
@@ -313,8 +308,6 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject> {
 
     // Clear cached keys
     this._keys = null;
-
-    if (this._storage._meta) this._storage._meta.reversion++;
 
     this.save();
     return true;
@@ -353,6 +346,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject> {
    */
   save(): void {
     this._logger.logMethod('save');
+    this._storage.meta.reversion++;
     if (this._saveTimer != null) return; // save already requested
     this.hasUnsavedChanges = true;
     this._saveTimer = setTimeout(this.forceSave, this.saveDebounce);
