@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.24.0](https://github.com/AliMD/alwatr/compare/v0.23.0...v0.24.0) (2022-11-28)
+
+### Bug Fixes
+
+- **demo/storage-client:** set default token ([f7a8962](https://github.com/AliMD/alwatr/commit/f7a896202e4a6acd2c248904cdc32dae2773550b))
+- **demo/storage-client:** update config ([2c71396](https://github.com/AliMD/alwatr/commit/2c71396f628942e776814a8bc08705bac679e5ab))
+- **demo:** update types ([010b123](https://github.com/AliMD/alwatr/commit/010b123075d073c8583f557608a9781064d7cc5c))
+- remove \_updatedBy ([d8d5c83](https://github.com/AliMD/alwatr/commit/d8d5c83884bbd30566001ff84faf9e840503471c))
+- update types ([44cc57f](https://github.com/AliMD/alwatr/commit/44cc57f97a99ed810dae3fde39c9525bd0e8ff3c))
+- use ~ for package version ([4e027ff](https://github.com/AliMD/alwatr/commit/4e027ff63875e03b088ebcdc1bdf2495f4494eec))
+
 # [0.23.0](https://github.com/AliMD/alwatr/compare/v0.22.1...v0.23.0) (2022-11-23)
 
 **Note:** Version bump only for package @alwatr/demo
