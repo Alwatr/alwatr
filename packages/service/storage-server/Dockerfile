@@ -1,5 +1,5 @@
 ARG NODE_VERSION=lts
-FROM node:${NODE_VERSION} as build
+FROM docker.io/library/node:${NODE_VERSION} as build
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ RUN ls -lahF ${DIST}
 
 # ---
 
-FROM node:${NODE_VERSION}
+FROM docker.io/library/node:${NODE_VERSION}
 
 WORKDIR /app
 
