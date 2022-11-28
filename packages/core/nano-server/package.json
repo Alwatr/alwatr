@@ -33,6 +33,7 @@
   "dependencies": {
     "@alwatr/logger": "~0.23.0",
     "@alwatr/math": "~0.23.0",
+    "@alwatr/fetch": "~0.23.0",
     "tslib": "~2.4.1"
   }
 }
