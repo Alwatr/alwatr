@@ -6,29 +6,28 @@ Elegant micro client for storage server written in tiny TypeScript ES module.
 
 ```ts
 import {AlwatrStorageClient} from '@alwatr/storage-client';
-import type {DocumentObject} from '@alwatr/storage-client';
+import type {AlwatrDocumentObject} from '@alwatr/storage-client';
 
-interface User extends DocumentObject {
+interface User extends AlwatrDocumentObject {
   email: string;
   token?: string;
 }
 
 const db = new AlwatrStorageClient<User>({
   name: 'user-list',
-  host: 'http://127.0.0.1:80',
-  token: 'alwatr_110_313',
+  host: '127.0.0.1',
+  port: 9000,
+  token: 'YOUR_SECRET_TOKEN',
   timeout: 2_000,
 });
 
 await db.set({
-  _id: 'alimd',
-  _updatedBy: 'demo',
+  id: 'alimd',
   email: 'ali@mihandoost.com',
 });
 
 await db.set({
-  _id: 'fmd',
-  _updatedBy: 'demo',
+  id: 'fmd',
   email: 'Fatemeh@mihandoost.com',
   token: Math.random().toString(36).substring(2, 15),
 });
@@ -104,13 +103,13 @@ if (!userExist) console.log('user_not_found');
 
 Insert/update a document object in the storage.
 
-- **documentObject**: The document object to insert/update contain `_id`.
+- **documentObject**: The document object to insert/update contain `id`.
 
 Example:
 
 ```ts
 userStorage.set({
-  _id: 'user-1',
+  id: 'user-1',
   foo: 'bar',
 });
 ```

@@ -5,9 +5,9 @@ import exitHook from 'exit-hook';
 
 import {readJsonFile, writeJsonFile} from './util.js';
 
-import type {DocumentObject, DataStorage, AlwatrStorageEngineConfig} from './type.js';
+import type {DataStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject} from './type.js';
 
-export {DocumentObject, DataStorage, AlwatrStorageEngineConfig};
+export {DataStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage-engine',
@@ -23,9 +23,9 @@ alwatrRegisteredList.push({
  * ```ts
  * import {AlwatrStorageEngine} from '@alwatr/storage-engine';
  *
- * import type {DocumentObject} from '@alwatr/storage-engine';
+ * import type {AlwatrDocumentObject} from '@alwatr/fetch';
  *
- * interface User extends DocumentObject {
+ * interface User extends AlwatrDocumentObject {
  *   fname: string;
  *   lname: string;
  *   email: string;
@@ -46,8 +46,7 @@ alwatrRegisteredList.push({
  * if (ali == null) {
  *   console.log('ali not found');
  *   ali = {
- *     _id: 'alimd',
- *     _updatedBy: 'demo',
+ *     id: 'alimd',
  *     fname: 'Ali',
  *     lname: 'Mihandoost',
  *     email: 'ali@mihandoost.com',
@@ -61,8 +60,7 @@ alwatrRegisteredList.push({
  * db.set(ali);
  *
  * db.set({
- *   _id: 'fmd',
- *   _updatedBy: 'demo',
+ *   id: 'fmd',
  *   fname: 'Fatemeh',
  *   lname: 'Mihandoost',
  *   email: 'Fatemeh@mihandoost.com',
@@ -70,8 +68,8 @@ alwatrRegisteredList.push({
  * });
  * ```
  */
-export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
-  static readonly formatVersion = 3;
+export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject> {
+  static readonly formatVersion = 4;
 
   /**
    * Storage name like database table name.
@@ -94,7 +92,7 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
   readonly saveBeautiful;
 
   /**
-   * The storage has unsaved changes that have not yet been saved.
+   * The storage has unsaved changes that have not yet saved.
    */
   hasUnsavedChanges = false;
 
@@ -136,17 +134,25 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
   /**
    * Get next auto increment id for numerical document id.
    */
-  get nextAutoIncrementId(): string {
-    let id = +(this._storage.meta?.lastAutoId ?? -1);
-    if (isNaN(id)) throw new Error('doc_id_is_nan');
+  nextAutoIncrementId(): string {
+    this._storage.meta.lastAutoId;
     do {
-      id++;
-    } while (this._storage.data[id.toString()] != null);
-    return id.toString();
+      this._storage.meta.lastAutoId++;
+    } while (this._storage.data[this._storage.meta.lastAutoId.toString()] != null);
+    return this._storage.meta.lastAutoId.toString();
   }
 
   protected get _newStorage(): DataStorage<DocumentType> {
-    return {ok: true, data: {}};
+    return {
+      ok: true,
+      meta: {
+        formatVersion: AlwatrStorageEngine.formatVersion,
+        reversion: 0,
+        lastUpdated: Date.now(),
+        lastAutoId: -1,
+      },
+      data: {},
+    };
   }
 
   constructor(config: AlwatrStorageEngineConfig) {
@@ -233,7 +239,7 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
   /**
    * Insert/update a document object in the storage.
    *
-   * @param documentObject The document object to insert/update contain `_id`.
+   * @param documentObject The document object to insert/update contain `id`.
    * @param fastInstance by default it will make a copy of the document before set.
    * if you set fastInstance to true, it will set the original document.
    * This is dangerous but much faster, you should use it only if you know what you are doing.
@@ -242,50 +248,41 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
    *
    * ```ts
    * userStorage.set({
-   *   _id: 'user-1',
+   *   id: 'user-1',
    *   foo: 'bar',
    * });
    * ```
    */
   set(documentObject: DocumentType, fastInstance?: boolean): DocumentType {
-    this._logger.logMethodArgs('set', documentObject._id);
+    this._logger.logMethodArgs('set', documentObject.id);
 
     if (fastInstance !== true) {
       documentObject = JSON.parse(JSON.stringify(documentObject));
     }
 
-    const autoIncrement = documentObject._id === 'auto_increment';
-
-    if (autoIncrement) {
-      documentObject._id = this.nextAutoIncrementId;
+    if (documentObject.id === 'auto_increment') {
+      documentObject.id = this.nextAutoIncrementId();
     }
 
-    const oldData = this._storage.data[documentObject._id];
+    const oldData = this._storage.data[documentObject.id];
 
     if (oldData == null) {
       this._keys = null; // Clear cached keys
     }
 
     // update meta
-    documentObject._updatedAt = Date.now();
-    documentObject._createdAt = oldData?._createdAt ?? documentObject._updatedAt;
-    documentObject._createdBy = oldData?._createdBy ?? documentObject._updatedBy;
-    documentObject._rev = (oldData?._rev ?? 0) + 1;
-
-    this._storage.meta ??= {
-      formatVersion: AlwatrStorageEngine.formatVersion,
-      reversion: 0,
-      lastUpdatedId: '',
-      lastUpdatedAt: 0,
+    documentObject.meta ??= {
+      rev: 0,
+      updated: 0,
+      created: 0,
     };
-    this._storage.meta.reversion++;
-    this._storage.meta.lastUpdatedId = documentObject._id;
-    this._storage.meta.lastUpdatedAt = documentObject._updatedAt;
-    if (autoIncrement) {
-      this._storage.meta.lastAutoId = documentObject._id;
-    }
+    documentObject.meta.updated = Date.now();
+    documentObject.meta.created = oldData?.meta?.created ?? documentObject.meta.updated;
+    documentObject.meta.rev = (oldData?.meta?.rev ?? 0) + 1;
 
-    this._storage.data[documentObject._id] = documentObject;
+    this._storage.meta.lastUpdated = documentObject.meta.updated;
+
+    this._storage.data[documentObject.id] = documentObject;
 
     this.save();
     return documentObject;
@@ -312,34 +309,26 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
     // Clear cached keys
     this._keys = null;
 
-    if (this._storage.meta) this._storage.meta.reversion++;
-
     this.save();
     return true;
   }
 
   /**
-   * Loop over all document objects asynchronous.
-   *
-   * You can return false in callbackfn to break the loop.
+   * Loop over all document objects.
    *
    * Example:
    *
    * ```ts
-   * await userStorage.forAll(async (user) => {
-   *   await sendMessage(user._id, 'Happy new year!');
+   * for(const user of userStorage.allObject()) {
+   *   await sendMessage(user.id, 'Happy new year!');
    *   user.sent = true; // direct change document (use with caution)!
-   * });
+   * }
    * ```
    */
-  async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void> {
-    const keys = this.keys;
-    for (const documentId of keys) {
+  * allObject(): Generator<DocumentType, void, void> {
+    for (const documentId of this.keys) {
       const documentObject = this.get(documentId);
-      if (documentObject != null) {
-        const retVal = await callbackfn(documentObject);
-        if (retVal === false) break;
-      }
+      if (documentObject != null) yield documentObject;
     }
     this.save();
   }
@@ -351,6 +340,7 @@ export class AlwatrStorageEngine<DocumentType extends DocumentObject> {
    */
   save(): void {
     this._logger.logMethod('save');
+    this._storage.meta.reversion++;
     if (this._saveTimer != null) return; // save already requested
     this.hasUnsavedChanges = true;
     this._saveTimer = setTimeout(this.forceSave, this.saveDebounce);

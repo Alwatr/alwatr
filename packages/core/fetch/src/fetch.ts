@@ -1,8 +1,20 @@
 import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
 
-import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type';
+import type {
+  FetchOptions,
+  CacheDuplicate,
+  CacheStrategy,
+  AlwatrDocumentObject,
+  AlwatrServiceResponse,
+} from './type';
 
-export {FetchOptions, CacheDuplicate, CacheStrategy};
+export {
+  FetchOptions,
+  CacheDuplicate,
+  CacheStrategy,
+  AlwatrDocumentObject,
+  AlwatrServiceResponse,
+};
 
 const logger = createLogger('alwatr/fetch');
 
@@ -43,7 +55,7 @@ export function fetch(_options: FetchOptions): Promise<Response> {
  * Process fetch options and set defaults, etc.
  */
 function _processOptions(options: FetchOptions): Required<FetchOptions> {
-  options.method = options.method != null ? options.method.toUpperCase() : 'GET';
+  options.method ??= 'GET';
   options.window ??= null;
 
   options.timeout ??= 10_000;

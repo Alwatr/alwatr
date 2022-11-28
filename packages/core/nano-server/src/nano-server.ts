@@ -3,10 +3,30 @@ import {createServer} from 'node:http';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
 
-import type {NanoServerConfig, Methods, ParamType, QueryParams, ReplyContent, ConnectionConfig} from './type.js';
+import type {NanoServerConfig, ConnectionConfig, ParamKeyType, ParamValueType} from './type.js';
+import type {
+  AlwatrServiceResponse,
+  AlwatrServiceResponseFailed,
+  AlwatrServiceResponseSuccess,
+  AlwatrServiceResponseSuccessWithMeta,
+  Methods,
+  QueryParameters,
+} from '@alwatr/fetch/type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
+
+export {
+  NanoServerConfig,
+  ConnectionConfig,
+  ParamKeyType,
+  AlwatrServiceResponse,
+  AlwatrServiceResponseFailed,
+  AlwatrServiceResponseSuccess,
+  AlwatrServiceResponseSuccessWithMeta,
+  Methods,
+  QueryParameters,
+};
 
 alwatrRegisteredList.push({
   name: '@alwatr/nano-server',
@@ -245,7 +265,7 @@ export class AlwatrNanoServer {
       ok: false,
       statusCode: 404,
       errorCode: 'not_found',
-      data: {
+      meta: {
         method: connection.method,
         route: connection.url.pathname,
       },
@@ -254,7 +274,7 @@ export class AlwatrNanoServer {
 }
 
 /**
- * Connection...?
+ * Alwatr Connection
  */
 export class AlwatrConnection {
   static versionPattern = new RegExp('^/v[0-9]+');
@@ -272,7 +292,7 @@ export class AlwatrConnection {
    */
   readonly method = (this.incomingMessage.method ?? 'GET').toUpperCase() as Methods;
 
-  protected _logger = createLogger(`alwatr-nano-server-connection`);
+  protected _logger = createLogger('alwatr-nano-server-connection');
 
   constructor(
     public incomingMessage: IncomingMessage,
@@ -298,7 +318,14 @@ export class AlwatrConnection {
    * });
    * ```
    */
-  reply(content: ReplyContent): void {
+  reply(content: AlwatrServiceResponse): void {
+    content.statusCode ??= 200;
+    this._logger.logMethodArgs('reply', {
+      ok: content.ok,
+      statusCode: content.statusCode,
+      errorCode: content.errorCode,
+    });
+
     if (this.serverResponse.headersSent) {
       this._logger.accident('reply', 'http_header_sent', 'Response headers already sent');
       return;
@@ -398,7 +425,7 @@ export class AlwatrConnection {
    * if (bodyData == null) return;
    * ```
    */
-  async requireJsonBody<Type extends Record<string, unknown>>(): Promise<Type | null> {
+  async requireJsonBody<T>(): Promise<T | null> {
     // if request content type is json
     if (this.incomingMessage.headers['content-type'] !== 'application/json') {
       this.reply({
@@ -421,7 +448,7 @@ export class AlwatrConnection {
     }
 
     try {
-      return JSON.parse(body) as Type;
+      return JSON.parse(body) as T;
     }
     catch (err) {
       this.reply({
@@ -476,10 +503,10 @@ export class AlwatrConnection {
   }
 
   /**
-   * Parse query param and validate with param type
+   * Parse query param and validate with param type.
    */
-  protected _sanitizeParam(name: string, type: ParamType): string | number | boolean | null {
-    let value: string | number | boolean | null = this.url.searchParams.get(name);
+  protected _sanitizeParam(name: string, type: ParamKeyType): ParamValueType {
+    let value = this.url.searchParams.get(name);
 
     if (value == null || value.length === 0) {
       return null;
@@ -489,18 +516,18 @@ export class AlwatrConnection {
       return value;
     }
 
-    value = value.trim();
-
     if (type === 'number') {
       return isNumber(value) ? +value : null;
     }
 
     if (type === 'boolean') {
+      value = value.trim();
+
       if (value === 'true' || value === '1') {
-        value = true;
+        return true;
       }
       else if (value === 'false' || value === '0') {
-        value = false;
+        return false;
       }
       else return null;
     }
@@ -520,8 +547,8 @@ export class AlwatrConnection {
    * console.log(params.id);
    * ```
    */
-  requireQueryParams<T extends QueryParams = QueryParams>(params: Record<string, ParamType>): T | null {
-    const parsedParams: Record<string, string | number | boolean | null> = {};
+  requireQueryParams<T extends QueryParameters = QueryParameters>(params: Record<string, ParamKeyType>): T | null {
+    const parsedParams: Record<string, ParamValueType> = {};
 
     for (const paramName in params) {
       if (!Object.prototype.hasOwnProperty.call(params, paramName)) continue;
@@ -531,8 +558,8 @@ export class AlwatrConnection {
         this.reply({
           ok: false,
           statusCode: 406,
-          errorCode: `query_parameter_required`,
-          data: {
+          errorCode: 'query_parameter_required',
+          meta: {
             paramName,
             paramType,
             paramValue,
