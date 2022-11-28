@@ -27,17 +27,17 @@ export class AlwatrStorageEngineProvider {
   }
 
   // TODO: update all jsdoc and readme.
-  get<DocumentType extends AlwatrDocumentObject = AlwatrDocumentObject>(
+  get<T extends AlwatrDocumentObject = AlwatrDocumentObject>(
       config: AlwatrStorageEngineConfig,
-  ): AlwatrStorageEngine<DocumentType> {
+  ): AlwatrStorageEngine<T> {
     if (!this._list[config.name]) {
-      this._list[config.name] = new AlwatrStorageEngine<DocumentType>({
+      this._list[config.name] = new AlwatrStorageEngine<T>({
         ...this._config,
         ...config,
       });
       console.log('Memory usage: %sMB', Math.round(process.memoryUsage.rss() / 100000) / 10);
     }
-    return this._list[config.name] as AlwatrStorageEngine<DocumentType>;
+    return this._list[config.name] as AlwatrStorageEngine<T>;
   }
 
   unload(name: string): void {
