@@ -2,21 +2,16 @@ import {fetch} from '@alwatr/fetch';
 import {SignalInterface} from '@alwatr/signal';
 
 import {jobListSignal} from './job-list';
+import {showToastSignal} from './toast';
 
 import type {ServerResponse} from '../type';
-
-declare global {
-  interface AlwatrSignals {
-    readonly 'job-delete': string;
-  }
-}
 
 export const jobDeleteSignal = new SignalInterface('job-delete');
 
 jobDeleteSignal.addListener(async (id) => {
   try {
     const response = await fetch({
-      url: window.appConfig?.api ?? '/job',
+      url: window.appConfig?.api + '/job' ?? '/job',
       token: window.appConfig?.token,
       method: 'DELETE',
       queryParameters: {id},
@@ -33,8 +28,10 @@ jobDeleteSignal.addListener(async (id) => {
     }
   }
   catch (error) {
-    // TODO: show toast
+    showToastSignal.dispatch({
+      message: 'عملیات با خطا رو به رو شد',
+    });
   }
 
-  jobListSignal.request();
+  jobListSignal.request({});
 });

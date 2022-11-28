@@ -2,6 +2,7 @@ import {fetch} from '@alwatr/fetch';
 import {SignalInterface} from '@alwatr/signal';
 
 import {jobListSignal} from './job-list';
+import {showToastSignal} from './toast';
 
 import type {Job, ServerResponse} from '../type';
 
@@ -10,7 +11,7 @@ export const jobAddSignal = new SignalInterface('job-add');
 jobAddSignal.addListener(async (job) => {
   try {
     const response = await fetch({
-      url: window.appConfig?.api ?? '/job',
+      url: window.appConfig?.api + '/job' ?? '/job',
       token: window.appConfig?.token,
       method: 'PUT',
       bodyJson: job,
@@ -27,8 +28,10 @@ jobAddSignal.addListener(async (job) => {
     }
   }
   catch (error) {
-    // TODO: show toast
+    showToastSignal.dispatch({
+      message: 'عملیات با خطا رو به رو شد',
+    });
   }
 
-  jobListSignal.request();
+  jobListSignal.request({});
 });

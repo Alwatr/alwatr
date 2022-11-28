@@ -51,7 +51,16 @@ export class JobItem extends AlwatrElement {
         display: flex !important;
         flex-direction: column;
         justify-content: flex-end;
-        gap: 8px;
+        gap: 0.1em;
+        margin: 0;
+        padding: 0.8em 0;
+      }
+      .job ion-label[slot='start'] {
+        margin-inline-start: 0.5em;
+      }
+      .job ion-label[slot='end'] {
+        margin-inline-end: 0.5em;
+        height: 100%;
       }
       .job ion-label[slot='end'] * {
         text-align: end;
@@ -66,6 +75,9 @@ export class JobItem extends AlwatrElement {
       .job .job__title .job__title__arrow-icon {
         font-size: 1.3em;
         color: var(--ion-color-base);
+      }
+      .job .job__subtitle.job__subtitle-founded {
+        margin-bottom: auto;
       }
       .job .job__subtitle {
         font-size: 0.9em;
@@ -90,7 +102,11 @@ export class JobItem extends AlwatrElement {
         <ion-item class="job" lines="full">
           <ion-label>
             ${this.__renderTitle(i18nCityList[this.job.filter.origin], i18nCityList[this.job.filter.dest])}
-            ${this.__renderSubtitle(this.job.filter.date, i18nDayPartList[this.job.filter.dayPart[0]])}
+            ${this.__renderSubtitle(
+      this.job.filter.date,
+      this.job.filter.dayPart.map((part) => i18nDayPartList[part]).join(' - '),
+  )}
+            ${this.__renderDescription('بر عمر کار کشته لعنت')}
           </ion-label>
           <ion-label slot="end"> ${this.__renderFoundList(this.job.resultList)} </ion-label>
         </ion-item>
@@ -118,6 +134,7 @@ export class JobItem extends AlwatrElement {
       </div>
     `;
   }
+
   private __renderSubtitle(date: string, time: string): TemplateResult {
     return html`
       <div class="job__subtitle">
@@ -126,6 +143,7 @@ export class JobItem extends AlwatrElement {
       </div>
     `;
   }
+
   private __renderFoundList(resultList: Array<JobResult>): TemplateResult {
     if (resultList.length !== 0) {
       const lowestPrice = Math.min(...resultList.map((result) => result.price));
@@ -134,12 +152,16 @@ export class JobItem extends AlwatrElement {
           <span>${resultList.length.toLocaleString('fa')}</span>
           پرواز
         </div>
-        <div class="job__subtitle">
+        <div class="job__subtitle job__subtitle-founded">
           <span class="job__subtitle-price ion-color-danger"> ${lowestPrice.toLocaleString('fa')} </span>
-          <span> ه&zwnj;ت </span>
+          <span> تومان </span>
         </div>
       `;
     }
-    return html` <div class="job__subtitle">یافت نشد</div> `;
+    return html` <ion-note>یافت نشد</ion-note> `;
+  }
+
+  private __renderDescription(description: string): TemplateResult {
+    return html` <ion-note>${description}</ion-note> `;
   }
 }
