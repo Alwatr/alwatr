@@ -43,21 +43,21 @@
     "publish": "lerna publish from-package"
   },
   "devDependencies": {
-    "@microsoft/eslint-formatter-sarif": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.44.0",
-    "@typescript-eslint/parser": "^5.44.0",
+    "@microsoft/eslint-formatter-sarif": "~3.0.0",
+    "@typescript-eslint/eslint-plugin": "~5.44.0",
+    "@typescript-eslint/parser": "~5.44.0",
     "@typescript/lib-dom": "npm:@types/web",
-    "@web/dev-server": "^0.1.35",
-    "eslint": "^8.28.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-import-resolver-typescript": "^3.5.2",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-wc": "^1.3.2",
-    "lerna": "^6.0.3",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.8.0",
-    "rimraf": "^3.0.2",
-    "ts-lit-plugin": "^1.2.1",
-    "typescript": "^4.9.3"
+    "@web/dev-server": "~0.1.35",
+    "eslint": "~8.28.0",
+    "eslint-config-google": "~0.14.0",
+    "eslint-import-resolver-typescript": "~3.5.2",
+    "eslint-plugin-import": "~2.26.0",
+    "eslint-plugin-wc": "~1.4.0",
+    "lerna": "~6.0.3",
+    "npm-run-all": "~4.1.5",
+    "prettier": "~2.8.0",
+    "rimraf": "~3.0.2",
+    "ts-lit-plugin": "~1.2.1",
+    "typescript": "~4.9.3"
   }
 }

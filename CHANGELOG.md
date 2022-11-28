@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.24.0](https://github.com/AliMD/alwatr/compare/v0.23.0...v0.24.0) (2022-11-28)
+
+### Bug Fixes
+
+- **demo/storage-client:** set default token ([f7a8962](https://github.com/AliMD/alwatr/commit/f7a896202e4a6acd2c248904cdc32dae2773550b))
+- **demo/storage-client:** update config ([2c71396](https://github.com/AliMD/alwatr/commit/2c71396f628942e776814a8bc08705bac679e5ab))
+- **demo:** update types ([010b123](https://github.com/AliMD/alwatr/commit/010b123075d073c8583f557608a9781064d7cc5c))
+- **fetch:** AlwatrServiceResponseSuccessWithMeta types ([b46f3f2](https://github.com/AliMD/alwatr/commit/b46f3f22a7c5a671385b0a8f58d0881501ce1b94))
+- **fetch:** use nre method type ([1c63eca](https://github.com/AliMD/alwatr/commit/1c63eca994582c241112c3e5ae79bac49831532f))
+- **nano-server:** \_sanitizeParam types ([bd4f39d](https://github.com/AliMD/alwatr/commit/bd4f39d32ceef5f2be26fce27a37cc7e1d5f6bd6))
+- **nano-server:** deps ([ea0ceba](https://github.com/AliMD/alwatr/commit/ea0ceba7da3d1bc0542d9eb69d951aa3c3165175))
+- **nano-server:** handle preflight request ([ab575cd](https://github.com/AliMD/alwatr/commit/ab575cd67b3f06dc64c895a7080e766b02ee3c22))
+- **nano-server:** use config for cors ([947dad9](https://github.com/AliMD/alwatr/commit/947dad9473d7408aad9a4640ffdd2157edae10c5))
+- **publish-container:** prevent to build on any pr merged ([7f4296d](https://github.com/AliMD/alwatr/commit/7f4296d9ee1fb8697ea4a6f81937f4efc973ab10))
+- remove \_updatedBy ([d8d5c83](https://github.com/AliMD/alwatr/commit/d8d5c83884bbd30566001ff84faf9e840503471c))
+- **service/storage-server:** dockerfile syntaxt ([42ba235](https://github.com/AliMD/alwatr/commit/42ba235371de46f6ef9a0ea5554afa41fe9001fa))
+- **storage-engine:** generic get type ([a287362](https://github.com/AliMD/alwatr/commit/a2873624fe2fd8071944528dba2e0c1d4dd006cc))
+- **storage-engine:** update types ([26bc0ae](https://github.com/AliMD/alwatr/commit/26bc0ae48b0b41cc2a9d18d3bb2883fafb447ede))
+- **storage-engine:** util types ([41f97fd](https://github.com/AliMD/alwatr/commit/41f97fdbd4c902dc11b82b230a805bbf7b77ec81))
+- **storage-server:** dockerfile ([5fc7c9a](https://github.com/AliMD/alwatr/commit/5fc7c9a018ebcc6acefb0c6c6740759a7f7f8bd4))
+- **storage-server:** dockerfile args ([7777ca4](https://github.com/AliMD/alwatr/commit/7777ca4f1c7a33a21753b52205fcca0540d5eea2))
+- **storage-server:** dockerfile copy path ([a3021af](https://github.com/AliMD/alwatr/commit/a3021af0cdb35a25271e2a9e447a39426e634645))
+- **storage-server:** dockerfile from ([af63854](https://github.com/AliMD/alwatr/commit/af63854b24da6fa75108fe962a278fc107070102))
+- **storage-server:** types ([3f3d98a](https://github.com/AliMD/alwatr/commit/3f3d98a3dcd51340f888ab3db10c624e4e1ecd4b))
+- **storage-server:** types ([4b33fac](https://github.com/AliMD/alwatr/commit/4b33fac1b6b8c43867817487278fc814d2fc2972))
+- update types ([44cc57f](https://github.com/AliMD/alwatr/commit/44cc57f97a99ed810dae3fde39c9525bd0e8ff3c))
+- use ~ for package version ([4e027ff](https://github.com/AliMD/alwatr/commit/4e027ff63875e03b088ebcdc1bdf2495f4494eec))
+- **workflow:** use path for building container ([3cf8369](https://github.com/AliMD/alwatr/commit/3cf8369965f54f60b98facb0998350ae7e10ec20))
+
+### Features
+
+- **service/storage-server:** dockerignore ([530d342](https://github.com/AliMD/alwatr/commit/530d342e6f9fcd5c9ec4638b1a714fb3ac08c083))
+- **storage-client:** use document object from fetch ([1ab7f5d](https://github.com/AliMD/alwatr/commit/1ab7f5da462975bc3b765663d9e3ff97c214a4e3))
+- **storage-engine:** improve provider debug ([c9cfc8f](https://github.com/AliMD/alwatr/commit/c9cfc8f4914887d4861e67f5a39670a646e9900a))
+- **storage-server:** dockerfile ([aa80d6e](https://github.com/AliMD/alwatr/commit/aa80d6ec431e3b62beb26dba0fcc220ad27aaaf0))
+- **storage-server:** remove deps to fetch ([93d0c24](https://github.com/AliMD/alwatr/commit/93d0c244b9b943e4fd4ec982086574cd413fde11))
+
 # [0.23.0](https://github.com/AliMD/alwatr/compare/v0.22.1...v0.23.0) (2022-11-23)
 
 ### Bug Fixes

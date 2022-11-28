@@ -14,9 +14,9 @@ FROM ghcr.io/alimd/nginx:1
 
 ```Dockerfile
 ARG NODE_VERSION=lts
-FROM node:${NODE_VERSION} as build-deps
+FROM docker.io/library/node:${NODE_VERSION} as build-deps
 WORKDIR /app
-COPY package.json *.lock .
+COPY package.json *.lock ./
 RUN yarn install --frozen-lockfile --non-interactive && yarn cache clean
 COPY . .
 RUN yarn build

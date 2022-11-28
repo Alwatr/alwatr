@@ -1,11 +1,11 @@
-// yarn build && NODE_ENV=production TOKEN=alwatr_110_313 node demo/storage-client/benchmark.js
+// yarn build && NODE_ENV=production TOKEN=YOUR_SECRET_TOKEN node demo/storage-client/benchmark.js
 
 import {random} from '@alwatr/math';
 import {AlwatrStorageClient} from '@alwatr/storage-client';
 
-import type {DocumentObject} from '@alwatr/storage-client';
+import type {AlwatrDocumentObject} from '@alwatr/storage-client';
 
-interface User extends DocumentObject {
+interface User extends AlwatrDocumentObject {
   fname: string;
   lname: string;
   email: string;
@@ -19,7 +19,8 @@ if (token == null) {
 
 const db = new AlwatrStorageClient<User>({
   name: 'junk-data',
-  host: 'http://127.0.0.1:80',
+  host: '127.0.0.1',
+  port: 9000,
   token,
 });
 
@@ -40,16 +41,15 @@ async function request(): Promise<void> {
 
   for (let j = 0; j < 100; j++) {
     i++;
-    parallelRequest.push(
-        db.set({
-          _id: 'user_' + i,
-          _updatedBy: 'demo_' + i,
-          fname: random.string(4, 16),
-          lname: random.string(4, 32),
-          email: random.string(8, 32),
-          token: random.string(16),
-        }),
-    );
+    const newUser: User = {
+      id: 'user_' + i,
+      fname: random.string(4, 16),
+      lname: random.string(4, 32),
+      email: random.string(8, 32),
+      token: random.string(16),
+    };
+
+    parallelRequest.push(db.set(newUser));
   }
 
   await Promise.all(parallelRequest);

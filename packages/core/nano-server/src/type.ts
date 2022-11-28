@@ -1,20 +1,3 @@
-interface ReplyFailedContent {
-  ok: false;
-  statusCode: number;
-  errorCode: string;
-  data?: Record<string, unknown>;
-}
-
-interface ReplySuccessContent {
-  ok: true;
-  statusCode?: number;
-  data: Record<string, unknown>;
-}
-
-export type ReplyContent = ReplyFailedContent | ReplySuccessContent;
-
-export type Methods = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'TRACE' | 'OPTIONS' | 'PATCH';
-
 export interface NanoServerConfig {
   /**
    * The port number to listen on.
@@ -52,7 +35,30 @@ export interface NanoServerConfig {
    * @default 120_000 ms
    */
   keepAliveTimeout: number;
+
+  /**
+   * Add /health route.
+   *
+   * @default true
+   */
+  healthRoute: boolean;
+
+  /**
+   * Add OPTIONS route for preflight requests to allow access all origins.
+   *
+   * @default false
+   */
+  allowAllOrigin: boolean;
 }
 
-export type QueryParams = Record<string, string | number | boolean>;
-export type ParamType = 'string' | 'number' | 'boolean';
+export interface ConnectionConfig {
+  /**
+   * Add `Access-Control-Allow-Origin: *` header.
+   *
+   * @default false
+   */
+  allowAllOrigin: boolean;
+}
+
+export type ParamKeyType = 'string' | 'number' | 'boolean';
+export type ParamValueType = string | number | boolean | null;

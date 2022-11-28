@@ -1,20 +1,36 @@
-FROM node:18-alpine
-
-LABEL maintainer="S. Ali Mihandoost <ali.mihandoost@gmail.com>"
-
-ENV NODE_ENV production
+ARG NODE_VERSION=lts
+FROM docker.io/library/node:${NODE_VERSION} as build
 
 WORKDIR /app
 
-# USER node
-# COPY --chown=node:node
+COPY package.json *.lock ./
+RUN if [ -f *.lock ]; then \
+      yarn install --frozen-lockfile --non-interactive; \
+    else \
+      yarn install --non-interactive; \
+    fi;
 
-COPY package.json ./
+COPY . .
+RUN yarn build
 
-RUN yarn install --frozen-lockfile --production=true --non-interactive
+ARG DIST=dist
+RUN ls -lahF ${DIST}
 
-COPY dist .
+# ---
 
+FROM docker.io/library/node:${NODE_VERSION}
+
+WORKDIR /app
+
+ENV NODE_ENV production
+ENV ALWATR_DEBUG *
+ENV HOST 0.0.0.0
+ENV PORT 80
 EXPOSE 80
+CMD index.js
 
-CMD ["dist/index.js"]
+COPY --from=build /app/package.json /app/yarn.lock ./
+RUN yarn install --frozen-lockfile --non-interactive --production && yarn cache clean
+
+ARG DIST=dist
+COPY --from=build /app/${dist} .
