@@ -6,9 +6,9 @@ WORKDIR /app
 
 COPY package.json *.lock ./
 RUN if [ -f *.lock ]; then \
-      yarn install --frozen-lockfile --non-interactive \
+      yarn install --frozen-lockfile --non-interactive; \
     else \
-      yarn install --non-interactive \
+      yarn install --non-interactive; \
     fi;
 
 COPY . .
