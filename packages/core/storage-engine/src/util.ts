@@ -8,7 +8,7 @@ import {dirname} from 'node:path';
  * @example
  * const fileContent = readJsonFile('./file.json');
  */
-export function readJsonFile<T extends Record<string, unknown>>(path: string): T | null {
+export function readJsonFile<T>(path: string): T | null {
   if (!existsSync(path)) {
     return null;
   }
@@ -41,17 +41,13 @@ export function readJsonFile<T extends Record<string, unknown>>(path: string): T
  * @example
  * writeJsonFile('./file.json', { a:1, b:2, c:3 });
  */
-export function writeJsonFile<T extends Record<string, unknown>>(
-    path: string,
-    dataObject: T,
-    space?: string | number | undefined,
-): void {
+export function writeJsonFile(path: string, data: unknown, space?: string | number | undefined): void {
   const timeKey = path.substring(path.lastIndexOf('/') + 1);
 
   let jsonContent;
   try {
     console.time('AlwatrStorageEngine Stringify ' + timeKey);
-    jsonContent = JSON.stringify(dataObject, null, space);
+    jsonContent = JSON.stringify(data, null, space);
     console.timeEnd('AlwatrStorageEngine Stringify ' + timeKey);
   }
   catch (err) {
