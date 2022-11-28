@@ -116,12 +116,15 @@ export type AlwatrServiceResponseSuccess<TData = Record<string, unknown>> = {
   data: TData;
 };
 
-export type AlwatrServiceResponseSuccessWithMeta<
-  TData = Record<string, unknown>,
-  TMeta = Record<string, never>
-> = AlwatrServiceResponseSuccess<TData> & {meta: TMeta};
+export type AlwatrServiceResponseSuccessWithMeta<TData = Record<string, unknown>, TMeta = Record<string, unknown>> = {
+  ok: true;
+  statusCode?: number;
+  errorCode?: never;
+  meta: TMeta;
+  data: TData;
+};
 
-export type AlwatrServiceResponse<TData = Record<string, unknown>, TMeta = Record<string, never>> =
+export type AlwatrServiceResponse<TData = Record<string, unknown>, TMeta = Record<string, unknown>> =
   | AlwatrServiceResponseSuccess<TData>
   | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>
   | AlwatrServiceResponseFailed;
