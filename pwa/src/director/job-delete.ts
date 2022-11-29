@@ -4,7 +4,7 @@ import {SignalInterface} from '@alwatr/signal';
 import {jobListSignal} from './job-list';
 import {showToastSignal} from './toast';
 
-import type {ServerResponse} from '../type';
+import type {AlwatrServiceResponse} from '@alwatr/fetch';
 
 export const jobDeleteSignal = new SignalInterface('job-delete');
 
@@ -21,7 +21,7 @@ jobDeleteSignal.addListener(async (id) => {
       throw new Error('fetch_failed');
     }
 
-    const responseData = (await response.json()) as ServerResponse<never>;
+    const responseData = (await response.json()) as AlwatrServiceResponse<never>;
 
     if (responseData.ok !== true) {
       throw new Error('fetch_failed');
