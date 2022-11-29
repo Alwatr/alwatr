@@ -1,3 +1,4 @@
+import type {AlwatrDocumentObject} from '@alwatr/fetch';
 import type {ToastOptions} from '@ionic/core';
 
 declare global {
@@ -5,7 +6,7 @@ declare global {
   var appConfig: Record<string, string | undefined> | undefined;
 
   interface AlwatrSignals {
-    readonly 'job-add': Pick<Job, 'filter'>;
+    readonly 'job-add': Pick<Job, 'detail'>;
     readonly 'job-delete': string;
     readonly 'job-list': Array<Job>;
     readonly toast: Partial<ToastOptions> & {message: string};
@@ -17,26 +18,25 @@ declare global {
 
 export type dayParts = 'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
 
-export interface Job extends Record<string, unknown> {
-  id: string;
-  filter: JobFilter;
+export interface Job extends AlwatrDocumentObject {
+  detail: JobDetail;
   resultList: Array<JobResult>;
 }
 
-export type JobFilter = {
+export interface JobDetail extends Record<string, unknown> {
   origin: string;
   dest: string;
   date: string;
-  description?: string;
   seatCount: number;
-  maxPrice: number;
-  dayPart: Array<dayParts>;
-};
+  maxPrice: number | null;
+  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
+  description: string | null;
+}
 
-export type NewJobFilter = {
+export type NewJobDetail = {
   month: number;
   day: number;
-} & Omit<JobFilter, 'date'>;
+} & Omit<JobDetail, 'date'>;
 
 export type JobResult = {
   price: number;

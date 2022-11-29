@@ -9,7 +9,7 @@ import ionNormalize from '../style/ionic.normalize';
 import ionTheming from '../style/ionic.theming';
 import {i18nDayPartList} from './job-item';
 
-import type {dayParts, Job, NewJobFilter} from '../type';
+import type {dayParts, Job, NewJobDetail} from '../type';
 import type {InputCustomEvent, SelectCustomEvent} from '@ionic/core';
 import type {TemplateResult} from 'lit';
 
@@ -19,7 +19,7 @@ declare global {
   }
 }
 
-const dayPartList: NewJobFilter['dayPart'] = ['earlyMorning', 'morning', 'midday', 'afternoon', 'evening', 'night'];
+const dayPartList: NewJobDetail['dayPart'] = ['earlyMorning', 'morning', 'midday', 'afternoon', 'evening', 'night'];
 
 @customElement('page-flight-finder')
 export class PageFlightFinder extends AlwatrElement {
@@ -65,24 +65,26 @@ export class PageFlightFinder extends AlwatrElement {
   @state() private __jobList: Array<Job> = [
     {
       id: '2',
-      filter: {
+      detail: {
         dest: 'MHD',
         origin: 'THR',
         date: '1401/09/10',
         maxPrice: 389000,
         seatCount: 0,
+        description: 'تست',
         dayPart: [],
       },
       resultList: [],
     },
     {
       id: '3',
-      filter: {
+      detail: {
         dest: 'THR',
         origin: 'MHD',
         date: '1401/09/12',
         maxPrice: 30000,
         seatCount: 0,
+        description: 'تست',
         dayPart: [],
       },
       resultList: [
@@ -121,7 +123,7 @@ export class PageFlightFinder extends AlwatrElement {
 
     return html`<ion-select-option value=${++monthNumber}>${month}</ion-select-option>`;
   });
-  private __newJob: Partial<NewJobFilter> = {};
+  private __newJob: Partial<NewJobDetail> = {};
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -229,14 +231,14 @@ export class PageFlightFinder extends AlwatrElement {
       event,
     });
 
-    const newJobData = this.__newJob as Required<NewJobFilter>;
+    const newJobData = this.__newJob as Required<NewJobDetail>;
     const currentYear = new Date().toLocaleDateString('fa-IR', {
       numberingSystem: 'latn',
       year: 'numeric',
     });
 
     PageFlightFinder.jobAddSignal.dispatch({
-      filter: {
+      detail: {
         dest: newJobData.dest,
         origin: newJobData.origin,
         dayPart: newJobData.dayPart,
@@ -251,7 +253,7 @@ export class PageFlightFinder extends AlwatrElement {
   private __inputChanged(
       event: InputCustomEvent | SelectCustomEvent<string> | SelectCustomEvent<Array<dayParts>>,
   ): void {
-    const name = event.target.name as keyof NewJobFilter | undefined;
+    const name = event.target.name as keyof NewJobDetail | undefined;
     const value = event.detail.value;
 
     this._logger.logMethodArgs('__inputChanged', {name, value});

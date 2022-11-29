@@ -9,7 +9,7 @@ import ionTheming from '../style/ionic.theming';
 
 import './ionic-components';
 
-import type {Job, JobFilter, JobResult} from '../type';
+import type {Job, JobDetail, JobResult} from '../type';
 import type {TemplateResult} from 'lit';
 
 declare global {
@@ -18,7 +18,7 @@ declare global {
   }
 }
 
-export const i18nDayPartList: Record<JobFilter['dayPart'][0], string> = {
+export const i18nDayPartList: Record<JobDetail['dayPart'][0], string> = {
   earlyMorning: 'صبح زود',
   morning: 'صبح',
   midday: 'نیمه روز',
@@ -101,10 +101,10 @@ export class JobItem extends AlwatrElement {
       <ion-item-sliding>
         <ion-item class="job" lines="full">
           <ion-label>
-            ${this.__renderTitle(i18nCityList[this.job.filter.origin], i18nCityList[this.job.filter.dest])}
+            ${this.__renderTitle(i18nCityList[this.job.detail.origin], i18nCityList[this.job.detail.dest])}
             ${this.__renderSubtitle(
-      this.job.filter.date,
-      this.job.filter.dayPart.map((part) => i18nDayPartList[part]).join(' - '),
+      this.job.detail.date,
+      this.job.detail.dayPart.map((part) => i18nDayPartList[part]).join(' - '),
   )}
             ${this.__renderDescription('بر عمر کار کشته لعنت')}
           </ion-label>

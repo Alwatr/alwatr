@@ -11,7 +11,7 @@ export interface JobDetail extends Record<string, unknown> {
   date: string;
   seatCount: number;
   maxPrice: number | null;
-  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'> | null;
+  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
   description: string | null;
 }
 
