@@ -3,7 +3,7 @@ import {fetch} from '@alwatr/fetch';
 import {config, logger} from './lib/config.js';
 import {storage} from './lib/storage.js';
 
-import type {Job, JobFilter, JobResult, SepehrResponse} from './lib/type.js';
+import type {Job, JobDetail, JobResult, SepehrResponse} from './lib/type.js';
 import type {FetchOptions} from '@alwatr/fetch';
 
 export async function crawlAllJobs(): Promise<void> {
@@ -13,7 +13,7 @@ export async function crawlAllJobs(): Promise<void> {
     if (!Object.prototype.hasOwnProperty.call(jobList, jobId)) continue;
     const job = jobList[jobId];
     const oldResultList = job.resultList;
-    const resultList = await crawl(job.filter);
+    const resultList = await crawl(job.detail);
     job.resultList = resultList;
     if (differentObject(resultList, oldResultList)) {
       const message = makeMessage(job);
@@ -23,9 +23,9 @@ export async function crawlAllJobs(): Promise<void> {
   }
 }
 
-async function crawl(filter: JobFilter): Promise<Array<JobResult>> {
-  logger.logMethodArgs('crawl', filter);
-  const fetchOption = makeRequestOption(filter);
+async function crawl(detail: JobDetail): Promise<Array<JobResult>> {
+  logger.logMethodArgs('crawl', detail);
+  const fetchOption = makeRequestOption(detail);
   const response = await makeRequest(fetchOption);
   let resultList = await translateResponse(response);
   resultList = extraFilterResult(resultList);
@@ -36,7 +36,7 @@ function differentObject(obj1: unknown, obj2: unknown): boolean {
   return JSON.stringify(obj1) !== JSON.stringify(obj2);
 }
 
-function makeRequestOption(filter: JobFilter): Partial<FetchOptions> & {url: string} {
+function makeRequestOption(detail: JobDetail): Partial<FetchOptions> & {url: string} {
   logger.logMethod('makeRequest');
   const fetchOptions: Partial<FetchOptions> & {url: string} = {
     url: 'https://api.sepehr360.ir//fa/FlightAvailability/Api/B2cOnewayFlightApi/Search',
@@ -49,9 +49,9 @@ function makeRequestOption(filter: JobFilter): Partial<FetchOptions> & {url: str
       sortOrder: 1,
       pageSize: 20,
       pageNumber: 0,
-      originAirportIataCode: filter.origin,
-      destinationAirportIataCode: filter.dest,
-      departureDate: filter.date,
+      originAirportIataCode: detail.origin,
+      destinationAirportIataCode: detail.dest,
+      departureDate: detail.date,
     },
   };
 
@@ -93,7 +93,12 @@ function extraFilterResult(jobResultList: Array<JobResult>): Array<JobResult> {
 
 function makeMessage(job: Job): string {
   logger.logMethod('makeMessage');
-  let message = `🛫\n\nFlight from ${job.filter.origin} to ${job.filter.dest} on the ${job.filter.date}`;
+  let message = `🛫
+
+  Flight from ${job.detail.origin} to ${job.detail.dest} on the ${job.detail.date}
+
+  Description: ${job.detail.description}
+  `;
 
   job.resultList.forEach((jobResult) => {
     message += '\n\n' + `Price: ${jobResult.price}\nTime: ${jobResult.time}\nSeat Count: ${jobResult.seatCount}`;
