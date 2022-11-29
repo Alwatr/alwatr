@@ -1,6 +1,6 @@
-import type {DocumentObject} from '@alwatr/storage-client';
+import type {AlwatrDocumentObject} from '@alwatr/storage-client';
 
-export interface Job extends DocumentObject {
+export interface Job extends AlwatrDocumentObject {
   filter: JobFilter;
   resultList: Array<JobResult>;
 }

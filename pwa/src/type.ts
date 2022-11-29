@@ -17,8 +17,8 @@ declare global {
 
 export type dayParts = 'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
 
-export type Job = {
-  _id: string;
+export interface Job extends Record<string, unknown> {
+  id: string;
   filter: JobFilter;
   resultList: Array<JobResult>;
 };
