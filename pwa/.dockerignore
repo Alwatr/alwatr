@@ -5,7 +5,7 @@
 !global.css
 !manifest.json
 !config.js
-!rollup.config.json
+!rollup.config.js
 !config.json
 !robots.txt
 !package.json

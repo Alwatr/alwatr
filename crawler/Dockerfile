@@ -27,10 +27,10 @@ ENV ALWATR_DEBUG *
 ENV HOST 0.0.0.0
 ENV PORT 80
 EXPOSE 80
-CMD index.js
+CMD ["node", "index.js"]
 
 COPY --from=build /app/package.json /app/yarn.lock ./
 RUN yarn install --frozen-lockfile --non-interactive --production && yarn cache clean
 
 ARG DIST=dist
-COPY --from=build /app/${dist} .
+COPY --from=build /app/${DIST} .
