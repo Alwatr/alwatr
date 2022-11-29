@@ -16,12 +16,11 @@ async function newJob(connection: AlwatrConnection): Promise<void> {
   const job = await connection.requireJsonBody<Job>();
   if (job === null) return;
 
-  job._id ??= 'auto_increment';
-  job._updatedBy ??= 'api';
+  job.id ??= 'auto_increment';
   job.resultList = [];
 
   try {
-    if (job._id !== 'auto_increment' && (await storage.has(job._id))) {
+    if (job.id !== 'auto_increment' && (await storage.has(job.id))) {
       return connection.reply({
         ok: false,
         statusCode: 400,
@@ -31,7 +30,8 @@ async function newJob(connection: AlwatrConnection): Promise<void> {
     // else
     connection.reply({
       ok: true,
-      data: await storage.set(job),
+      // FIXME:
+      data: (await storage.set(job)) as unknown as Record<string, unknown>,
     });
   }
   catch (err) {
