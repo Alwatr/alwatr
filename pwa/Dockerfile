@@ -1,7 +1,18 @@
-FROM nginx:1-alpine
+ARG NODE_VERSION=18
+ARG NGINX_VERSION=1.0.0-1.23-alpine
 
-WORKDIR /usr/share/nginx/html
+FROM node:${NODE_VERSION}-alpine AS build
 
-COPY dist/ .
+WORKDIR /app
 
-RUN ls -lAhF
+COPY package.json ./
+RUN yarn install --frozen-lockfile --non-interactive
+
+COPY . .
+RUN yarn build
+
+FROM ghcr.io/alimd/nginx:${NGINX_VERSION}
+
+COPY --from=build /app .
+
+RUN ls

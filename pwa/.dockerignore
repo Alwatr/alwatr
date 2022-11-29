@@ -1,1 +1,13 @@
 *
+!src/
+!image
+!index.html
+!global.css
+!manifest.json
+!config.js
+!rollup.config.json
+!config.json
+!robots.txt
+!package.json
+!*.lock
+!tsconfig.json

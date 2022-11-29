@@ -1,0 +1,137 @@
+networks:
+  alwatr-private-network:
+    name: alwatr-private-network
+    external: true
+  alwatr-public-network:
+    name: alwatr-public-network
+    external: true
+
+services:
+  storage-server:
+    image: ghcr.io/alimd/storage-server:0.22.0
+    restart: "no"
+
+    stop_grace_period: 30s
+
+    cpu_shares: 2048
+    # mem_limit: 256m
+
+    env_file: .env
+
+    tty: true
+
+    networks:
+      - alwatr-public-network
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+  api:
+    build:
+      context: ./api
+
+    restart: "no"
+
+    stop_grace_period: 30s
+
+    cpu_shares: 2048
+    # mem_limit: 256m
+
+    env_file: .env
+
+    tty: true
+
+    networks:
+      - alwatr-public-network
+      - alwatr-private-network
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+  crawler:
+    build:
+      context: ./crawler
+
+    restart: "no"
+
+    stop_grace_period: 30s
+
+    cpu_shares: 2048
+    # mem_limit: 256m
+
+    env_file: .env
+
+    tty: true
+
+    networks:
+      - alwatr-private-network
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+  telegram-notifier:
+    build:
+      context: ./telegram-notifier
+
+    restart: "no"
+
+    stop_grace_period: 30s
+
+    cpu_shares: 2048
+    # mem_limit: 256m
+
+    env_file: .env
+
+    tty: true
+
+    volumes:
+      - type: bind
+        source: ./db
+        target: /db
+        bind:
+          create_host_path: true
+
+    networks:
+      - alwatr-private-network
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+  pwa:
+    build:
+      context: ./pwa
+
+    restart: "no"
+
+    stop_grace_period: 30s
+
+    cpu_shares: 2048
+    # mem_limit: 256m
+
+    env_file: .env
+
+    tmpfs:
+      - /var/cache
+
+    tty: true
+
+    networks:
+      - alwatr-public-network
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
