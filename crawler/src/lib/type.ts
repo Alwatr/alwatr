@@ -10,7 +10,7 @@ export interface JobFilter extends Record<string, unknown> {
   dest: string;
   date: string;
   minPrice: number;
-  dayPart: 'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
+  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
 }
 
 export interface JobResult extends Record<string, unknown> {
