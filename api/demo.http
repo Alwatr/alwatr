@@ -18,7 +18,7 @@ Content-Type: application/json
   "filter": {
     "origin": "KIH",
     "dest": "THR",
-    "date": "1401/10/1"
+    "date": "1401/09/10"
   }
 }
 
@@ -28,7 +28,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "_id": "1",
+  "id": "1",
   "...": "..."
 }
 

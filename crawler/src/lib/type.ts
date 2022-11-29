@@ -1,6 +1,6 @@
-import type {DocumentObject} from '@alwatr/storage-client';
+import type {AlwatrDocumentObject} from '@alwatr/storage-client';
 
-export interface Job extends DocumentObject {
+export interface Job extends AlwatrDocumentObject {
   filter: JobFilter;
   resultList: Array<JobResult>;
 }
@@ -10,7 +10,7 @@ export interface JobFilter extends Record<string, unknown> {
   dest: string;
   date: string;
   minPrice: number;
-  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
+  dayPart: 'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
 }
 
 export interface JobResult extends Record<string, unknown> {

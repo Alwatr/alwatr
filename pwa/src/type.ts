@@ -1,31 +1,48 @@
+import type {ToastOptions} from '@ionic/core';
+
 declare global {
   // eslint-disable-next-line no-var
   var appConfig: Record<string, string | undefined> | undefined;
 
   interface AlwatrSignals {
     readonly 'job-add': Pick<Job, 'filter'>;
+    readonly 'job-delete': string;
+    readonly 'job-list': Array<Job>;
+    readonly toast: Partial<ToastOptions> & {message: string};
+  }
+  interface AlwatrRequestSignals {
+    readonly 'job-list': Record<string, never>;
   }
 }
 
+export type dayParts = 'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
+
 export interface Job extends Record<string, unknown> {
-  _id: string;
+  id: string;
   filter: JobFilter;
   resultList: Array<JobResult>;
-}
+};
 
-export interface JobFilter extends Record<string, unknown> {
+export type JobFilter = {
   origin: string;
   dest: string;
   date: string;
+  description?: string;
+  seatCount: number;
   maxPrice: number;
-  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
-}
+  dayPart: Array<dayParts>;
+};
 
-export interface JobResult extends Record<string, unknown> {
+export type NewJobFilter = {
+  month: number;
+  day: number;
+} & Omit<JobFilter, 'date'>;
+
+export type JobResult = {
   price: number;
   time: number;
   seatCount: number;
-}
+};
 
 // TODO: Transfer this type in a package
 type ServerResponseFailed = {
