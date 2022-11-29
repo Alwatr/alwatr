@@ -21,7 +21,7 @@ export interface Job extends Record<string, unknown> {
   id: string;
   filter: JobFilter;
   resultList: Array<JobResult>;
-};
+}
 
 export type JobFilter = {
   origin: string;

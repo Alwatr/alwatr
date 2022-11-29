@@ -15,10 +15,5 @@
     "*/src/**/*.d.ts": true
   },
   "cSpell.language": "en,fa",
-  "cSpell.words": [
-    "alwatr",
-    "Loggable",
-    "Mihandoost",
-    "noncallable"
-  ],
+  "cSpell.words": ["alwatr", "Loggable", "Mihandoost", "noncallable"]
 }
