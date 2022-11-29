@@ -10,7 +10,7 @@ export const jobListSignal = new SignalInterface('job-list');
 jobListSignal.setProvider(async () => {
   try {
     const response = await fetch({
-      url: window.appConfig?.api + '/job' ?? '/job',
+      url: window.appConfig?.api ? window.appConfig.api + '/job' : '/job',
       token: window.appConfig?.token,
       cacheStrategy: 'stale_while_revalidate',
     });
