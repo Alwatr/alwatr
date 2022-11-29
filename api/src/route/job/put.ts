@@ -30,7 +30,8 @@ async function newJob(connection: AlwatrConnection): Promise<void> {
     // else
     connection.reply({
       ok: true,
-      data: await storage.set(job),
+      // FIXME:
+      data: (await storage.set(job)) as unknown as Record<string, unknown>,
     });
   }
   catch (err) {
