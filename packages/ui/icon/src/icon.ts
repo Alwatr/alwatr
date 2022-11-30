@@ -8,10 +8,22 @@ import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 
 import type {PropertyValues, HTMLTemplateResult} from 'lit';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'alwatr-icon': AlwatrIcon;
+export async function preloadIcon(
+  name: string,
+  urlPrefix = 'https://cdn.jsdelivr.net/npm/@alwatr/icon@0/svg/',
+): Promise<string> {
+  const url = `${urlPrefix + name}.svg`;
+  const response = await fetch({
+    url,
+    removeDuplicate: 'auto',
+    cacheStrategy: 'cache_first',
+  });
+
+  if (response.ok !== true) {
+    throw new Error('fetch_failed');
   }
+
+  return response.text();
 }
 
 /**
@@ -91,20 +103,8 @@ export class AlwatrIcon extends AlwatrElement {
   }
 }
 
-export async function preloadIcon(
-    name: string,
-    urlPrefix = 'https://cdn.jsdelivr.net/npm/@alwatr/icon@0/svg/',
-): Promise<string> {
-  const url = urlPrefix + name + '.svg';
-  const response = await fetch({
-    url,
-    removeDuplicate: 'auto',
-    cacheStrategy: 'cache_first',
-  });
-
-  if (response.ok !== true) {
-    throw new Error('fetch_failed');
+declare global {
+  interface HTMLElementTagNameMap {
+    'alwatr-icon': AlwatrIcon;
   }
-
-  return await response.text();
 }
