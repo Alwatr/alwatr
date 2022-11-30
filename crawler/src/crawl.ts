@@ -17,7 +17,12 @@ export async function crawlAllJobs(): Promise<void> {
     job.resultList = resultList;
     if (differentObject(resultList, oldResultList)) {
       const message = makeMessage(job);
-      await notify(config.notifier.to, message);
+      try {
+        await notify(config.notifier.to, message);
+      }
+      catch (err) {
+        logger.error('crawlAllJobs', 'notify_failed', (err as Error).stack || err);
+      }
     }
     await storage.set(job);
   }
@@ -28,7 +33,7 @@ async function crawl(detail: JobDetail): Promise<Array<JobResult>> {
   const fetchOption = makeRequestOption(detail);
   const response = await makeRequest(fetchOption);
   let resultList = await translateResponse(response);
-  resultList = extraFilterResult(resultList);
+  resultList = extraFilterResult(resultList, detail);
   return resultList;
 }
 
@@ -86,9 +91,22 @@ async function translateResponse(response: Response): Promise<Array<JobResult>> 
   return jobResult;
 }
 
-function extraFilterResult(jobResultList: Array<JobResult>): Array<JobResult> {
+function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): Array<JobResult> {
   logger.logMethod('extraFilterResult');
-  return jobResultList;
+  let filteredJobResultList: Array<JobResult> = jobResultList;
+
+  if (detail.maxPrice !== null) {
+    filteredJobResultList = filteredJobResultList.filter((job) => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      return job.price >= detail.maxPrice!;
+    });
+  }
+
+  filteredJobResultList.filter((job) => {
+    return job.seatCount >= detail.seatCount;
+  });
+
+  return filteredJobResultList;
 }
 
 function makeMessage(job: Job): string {
@@ -108,7 +126,7 @@ function makeMessage(job: Job): string {
 }
 
 async function notify(to: string, message: string): Promise<void> {
-  const response = await fetch({
+  await fetch({
     url: config.notifier.host,
     method: 'POST',
     headers: {
@@ -116,6 +134,4 @@ async function notify(to: string, message: string): Promise<void> {
     },
     bodyJson: {to, message},
   });
-
-  console.log(response);
 }
