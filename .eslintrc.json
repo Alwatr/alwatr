@@ -3,11 +3,14 @@
   "extends": [
     "eslint:recommended",
     "google",
+    "@open-wc/eslint-config",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:wc/recommended",
     "plugin:import/recommended",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:lit/recommended",
+    "plugin:lit-a11y/recommended"
   ],
   "env": {
     "browser": true,
@@ -18,7 +21,13 @@
     "ecmaVersion": 2021,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "import", "wc"],
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "wc",
+    "lit",
+    "lit-a11y"
+  ],
   "settings": {
     "import/resolver": {
       "typescript": {
@@ -27,22 +36,68 @@
       }
     },
     "wc": {
-      "elementBaseClasses": ["LitElement"]
+      "elementBaseClasses": [
+        "LitElement"
+      ]
     }
   },
   "rules": {
-    "max-len": ["error", {"code": 120}],
-    "no-eval": ["error", {"allowIndirect": true}],
-    "no-floating-decimal": "error",
-    "space-infix-ops": "error",
-    "new-cap": ["error", {"capIsNewExceptionPattern": "Mixin$"}],
-    "brace-style": ["error", "stroustrup", {"allowSingleLine": true}],
-    "operator-linebreak": ["error", "after", {"overrides": {"?": "before", ":": "before"}}],
+    "max-len": [
+      "error",
+      {
+        "code": 120
+      }
+    ],
+    "no-eval": [
+      "error",
+      {
+        "allowIndirect": true
+      }
+    ],
+    "new-cap": [
+      "error",
+      {
+        "capIsNewExceptionPattern": "Mixin$"
+      }
+    ],
+    "brace-style": [
+      "error",
+      "stroustrup",
+      {
+        "allowSingleLine": true
+      }
+    ],
+    "operator-linebreak": [
+      "error",
+      "after",
+      {
+        "overrides": {
+          "?": "before",
+          ":": "before"
+        }
+      }
+    ],
+    "object-curly-spacing": [
+      "error",
+      "never"
+    ],
     "@typescript-eslint/explicit-function-return-type": "error",
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"], "type"],
+        "groups": [
+          [
+            "builtin",
+            "external"
+          ],
+          "internal",
+          [
+            "parent",
+            "sibling"
+          ],
+          "index",
+          "type"
+        ],
         "newlines-between": "always",
         "alphabetize": {
           "order": "asc",
@@ -50,6 +105,8 @@
         }
       }
     ],
+    "no-floating-decimal": "error",
+    "space-infix-ops": "error",
     "import/no-unresolved": "off",
     "require-jsdoc": "off",
     "valid-jsdoc": "off"
