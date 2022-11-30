@@ -55,7 +55,7 @@ jobs:
             description: Storage nanoservice with disk backed, Fastest NoSQL Database.
             version:
               short: 0
-              full: 0.24.0
+              full: 0.24.1
 
           # - image: tdlib
           #   path: container/tdlib
