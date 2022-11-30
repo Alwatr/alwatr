@@ -123,7 +123,9 @@ export class PageFlightFinder extends AlwatrElement {
 
     return html`<ion-select-option value=${++monthNumber}>${month}</ion-select-option>`;
   });
-  private __newJob: Partial<NewJobDetail> = {};
+  private __newJob: Partial<NewJobDetail> = {
+    seatCount: 1,
+  };
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -202,7 +204,12 @@ export class PageFlightFinder extends AlwatrElement {
           </div>
           <ion-item fill="solid">
             <ion-label position="floating">تعداد صندلی</ion-label>
-            <ion-select name="seatCount" interface="popover" @ionChange=${this.__inputChanged}>
+            <ion-select
+              name="seatCount"
+              interface="popover"
+              .value=${this.__newJob.seatCount?.toString() ?? '1'}
+              @ionChange=${this.__inputChanged}
+            >
               ${PageFlightFinder.seatListTemplate}
             </ion-select>
           </ion-item>
@@ -240,8 +247,8 @@ export class PageFlightFinder extends AlwatrElement {
       detail: {
         dest: this.__newJob.dest as string,
         origin: this.__newJob.origin as string,
-        dayPart: this.__newJob.dayPart as dayParts[],
-        maxPrice: this.__newJob.maxPrice ?? 0,
+        dayPart: (this.__newJob.dayPart as dayParts[]) ?? [],
+        maxPrice: this.__newJob.maxPrice ?? null,
         seatCount: this.__newJob.seatCount ?? 1,
         description: this.__newJob.description ?? '',
         date: `${currentYear}/${this.__newJob.month}/${this.__newJob.day}`,
@@ -284,6 +291,6 @@ export class PageFlightFinder extends AlwatrElement {
   }
 
   private get __formValidate(): boolean {
-    return Object.keys(this.__newJob).length >= 5;
+    return Object.keys(this.__newJob).length >= 4;
   }
 }
