@@ -161,8 +161,8 @@ export class JobItem extends AlwatrElement {
     return html` <ion-note>یافت نشد</ion-note> `;
   }
 
-  private __renderDescription(description: string | null): TemplateResult | typeof nothing {
-    if (description == null) return nothing;
+  private __renderDescription(description: string): TemplateResult | typeof nothing {
+    if (description.trim() == '') return nothing;
 
     return html` <ion-note>${description}</ion-note> `;
   }
