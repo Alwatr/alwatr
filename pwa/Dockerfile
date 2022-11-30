@@ -1,7 +1,7 @@
-ARG NODE_VERSION=lts
+ARG NODE_VERSION=19
 ARG NGINX_VERSION=1.0.0-1.23-alpine
 
-FROM docker.io/library/node:${NODE_VERSION} as build
+FROM docker.io/library/node:${NODE_VERSION}-alpine as builder
 
 WORKDIR /app
 
@@ -13,10 +13,10 @@ RUN if [ -f *.lock ]; then \
     fi;
 
 COPY . .
-RUN yarn build
+RUN yarn build && \
+    ls -lAh dist
 
-FROM ghcr.io/alimd/nginx:${NGINX_VERSION}
-
+FROM ghcr.io/alimd/nginx:${NGINX_VERSION} as nginx
 
 ARG DIST=dist
 COPY --from=build /app/${DIST} .

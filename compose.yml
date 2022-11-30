@@ -135,3 +135,11 @@ services:
       options:
         max-size: '10m'
         max-file: '2'
+
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${DOMAIN}
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+      traefik.frontend.auth.basic.users: $AUTH

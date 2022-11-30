@@ -1,5 +1,5 @@
-ARG NODE_VERSION=lts
-FROM docker.io/library/node:${NODE_VERSION} as build
+ARG NODE_VERSION=19
+FROM docker.io/library/node:${NODE_VERSION}-alpine as builder
 
 WORKDIR /app
 
@@ -11,26 +11,28 @@ RUN if [ -f *.lock ]; then \
     fi;
 
 COPY . .
-RUN yarn build
-
-ARG DIST=dist
-RUN ls -lahF ${DIST}
+RUN yarn build && \
+    rm -rf node_modules && \
+    yarn install --frozen-lockfile --non-interactive --production && \
+    ls -lahF && \
+    ls -lAh dist
 
 # ---
 
-FROM docker.io/library/node:${NODE_VERSION}
+FROM docker.io/library/node:${NODE_VERSION}-alpine as app
 
 WORKDIR /app
+
+RUN apk add --no-cache tini
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["node", "index.js"]
 
 ENV NODE_ENV production
 ENV ALWATR_DEBUG *
 ENV HOST 0.0.0.0
 ENV PORT 80
 EXPOSE 80
-CMD ["node", "index.js"]
 
-COPY --from=build /app/package.json /app/yarn.lock ./
-RUN yarn install --frozen-lockfile --non-interactive --production && yarn cache clean
-
-ARG DIST=dist
-COPY --from=build /app/${DIST} .
+COPY --from=builder /app/node_modules/ ./node_modules/
+COPY --from=builder /app/dist/ ./
+RUN ls -lahF
