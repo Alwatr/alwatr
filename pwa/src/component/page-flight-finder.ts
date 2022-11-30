@@ -262,7 +262,7 @@ export class PageFlightFinder extends AlwatrElement {
 
     this.requestUpdate();
 
-    if (value == null) {
+    if (value == null || (typeof value === 'string' && value.trim() === '')) {
       delete this.__newJob[name];
       return;
     }
