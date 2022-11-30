@@ -30,7 +30,7 @@ export interface JobDetail {
   seatCount: number;
   maxPrice: number | null;
   dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
-  description: string | null;
+  description: string;
 }
 
 export type NewJobDetail = {

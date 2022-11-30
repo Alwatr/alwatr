@@ -12,7 +12,7 @@ export interface JobDetail extends Record<string, unknown> {
   seatCount: number;
   maxPrice: number | null;
   dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
-  description: string | null;
+  description: string;
 }
 
 export interface JobResult extends Record<string, unknown> {
