@@ -49,10 +49,10 @@ const getNextColor = (): string => {
 
 const debugString = isBrowser
   ? globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim()
-  : globalThis.process?.env?.ALWATR_DEBUG?.trim();
+  : process?.env?.ALWATR_DEBUG?.trim();
 
 const getDebugState = (scope: string): boolean => {
-  if (debugString == null && isBrowser === false && globalThis.process.env.NODE_ENV !== 'production') {
+  if (debugString == null && isBrowser === false && process.env.NODE_ENV !== 'production') {
     return true;
   }
 
@@ -102,12 +102,10 @@ export const style = {
  * const logger = createLogger('logger/demo');
  * ```
  */
-export const createLogger = (
-    scope: string,
-    color: string = getNextColor(),
-    debug = getDebugState(scope),
-): AlwatrLogger => {
+export const createLogger = (scope: string, color?: string | null, debug?: boolean): AlwatrLogger => {
   scope = scope.trim();
+  color ??= getNextColor();
+  debug ??= getDebugState(scope);
 
   const first = scope.charAt(0);
   if (first !== '[' && first !== '{' && first !== '(' && first !== '<') {
