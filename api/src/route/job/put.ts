@@ -17,7 +17,6 @@ async function newJob(connection: AlwatrConnection): Promise<void> {
   if (job === null) return;
 
   job.id ??= 'auto_increment';
-  job.detail.seatCount ?? 1;
   job.resultList = [];
 
   try {
