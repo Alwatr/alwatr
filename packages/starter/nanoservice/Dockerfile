@@ -33,5 +33,5 @@ ENV HOST 0.0.0.0
 ENV PORT 80
 EXPOSE 80
 
-COPY --from=build /app/node_modules /app/dist/ ./
+COPY --from=builder /app/node_modules /app/dist/ ./
 RUN ls -lahF
