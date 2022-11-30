@@ -106,7 +106,7 @@ export class JobItem extends AlwatrElement {
       this.job.detail.date,
       this.job.detail.dayPart.map((part) => i18nDayPartList[part]).join(' - '),
   )}
-            ${this.__renderDescription('بر عمر کار کشته لعنت')}
+            ${this.__renderDescription(this.job.detail.description)}
           </ion-label>
           <ion-label slot="end"> ${this.__renderFoundList(this.job.resultList)} </ion-label>
         </ion-item>
@@ -161,7 +161,9 @@ export class JobItem extends AlwatrElement {
     return html` <ion-note>یافت نشد</ion-note> `;
   }
 
-  private __renderDescription(description: string): TemplateResult {
+  private __renderDescription(description: string | null): TemplateResult | typeof nothing {
+    if (description == null) return nothing;
+
     return html` <ion-note>${description}</ion-note> `;
   }
 }

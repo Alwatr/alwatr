@@ -231,7 +231,6 @@ export class PageFlightFinder extends AlwatrElement {
       event,
     });
 
-    const newJobData = this.__newJob as Required<NewJobDetail>;
     const currentYear = new Date().toLocaleDateString('fa-IR', {
       numberingSystem: 'latn',
       year: 'numeric',
@@ -239,13 +238,13 @@ export class PageFlightFinder extends AlwatrElement {
 
     PageFlightFinder.jobAddSignal.dispatch({
       detail: {
-        dest: newJobData.dest,
-        origin: newJobData.origin,
-        dayPart: newJobData.dayPart,
-        maxPrice: newJobData.maxPrice,
-        seatCount: newJobData.seatCount,
-        description: newJobData.description,
-        date: `${currentYear}/${newJobData.month}/${newJobData.day}`,
+        dest: this.__newJob.dest as string,
+        origin: this.__newJob.origin as string,
+        dayPart: this.__newJob.dayPart as dayParts[],
+        maxPrice: this.__newJob.maxPrice ?? 0,
+        seatCount: this.__newJob.seatCount ?? 1,
+        description: this.__newJob.description ?? '',
+        date: `${currentYear}/${this.__newJob.month}/${this.__newJob.day}`,
       },
     });
   }
@@ -285,6 +284,6 @@ export class PageFlightFinder extends AlwatrElement {
   }
 
   private get __formValidate(): boolean {
-    return Object.keys(this.__newJob).length >= 8;
+    return Object.keys(this.__newJob).length >= 5;
   }
 }
