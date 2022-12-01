@@ -2,29 +2,30 @@
 # yarn lockfile v1
 
 
-"@alwatr/element@^0.24.0":
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/element/-/element-0.24.0.tgz#f5956140b7252d1aed4035aa739795c8ec7c5bfb"
-  integrity sha512-G/gPSxQouRa88FyyNOpz0pSYKc2S0XvZ6T/U8IAhJLdtiUdmS+gcRijtLLfcsW56NeiCkxKz+8TDQR0yVywIVQ==
+"@alwatr/element@^0.24.0", "@alwatr/element@^0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@alwatr/element/-/element-0.24.1.tgz#3b9675fb4b81952cddf08393c714697c34e6f56a"
+  integrity sha512-iOmOgeQMAlgjyaqf14rEmd9Bb3nIRr45qHp5GelFMOq6OcpF6cMl9tyNblow48mwRLmZg7CdeJUGVvZ+KZaRow==
   dependencies:
-    "@alwatr/logger" "^0.24.0"
+    "@alwatr/logger" "^0.24.1"
     lit "~2.4.1"
     tslib "~2.4.1"
 
-"@alwatr/fetch@^0.24.0":
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.24.0.tgz#0def66d13ef8161c0a7b5c1d98105c5155b469c9"
-  integrity sha512-4+412HIcYvHwApG9vvpx3xRcOE0rO1MSck2s96+sj8VJntWhvXktxLFfghMYzAlJf5ijVFjlNXyCBd0Kxb7dSQ==
+"@alwatr/fetch@^0.24.0", "@alwatr/fetch@^0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.24.1.tgz#76c6864e66dd3c2d5ab9ed37df9c00ec72800771"
+  integrity sha512-1OOBZrXy47sPNYPglkdUEqhfI72lwAMg3poaAxj7j/LX0FN2JK61k0x6JuGZ++UjIMt679ObEBNP500rSUWmYA==
   dependencies:
-    "@alwatr/logger" "^0.24.0"
+    "@alwatr/logger" "^0.24.1"
     tslib "~2.4.1"
 
-"@alwatr/icon@^0.24.0":
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/icon/-/icon-0.24.0.tgz#bb6bf4e169fcc2e2f4b5e3d05f0b0f6cf8aad4b5"
-  integrity sha512-i0q2cbi80YhA6s9e3CT8Ul9hC1okWzc3hOPdrspLjV9Hih0+FP8ryJX0neg54kEyMe3NNrOVVxqKZZsLqpwGjQ==
+"@alwatr/icon@^0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@alwatr/icon/-/icon-0.24.1.tgz#4fc69629750eb7b797fb78a5d837fe4dff3cf962"
+  integrity sha512-WnDWAMagn/M/GxK4DO4OGdET3HDX5ZuQaGnI9S8wVrLJW+uRllRk/zYu59/moRNdA/rWYzDBcqg5CchgVoFh7w==
   dependencies:
-    "@alwatr/element" "^0.24.0"
+    "@alwatr/element" "^0.24.1"
+    "@alwatr/fetch" "^0.24.1"
     lit "~2.4.1"
     tslib "~2.4.1"
 
