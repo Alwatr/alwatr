@@ -1,4 +1,5 @@
 import {AlwatrElement} from '@alwatr/element';
+import {l10n} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
 import {css, html} from 'lit';
 import {customElement} from 'lit/decorators.js';
@@ -40,6 +41,18 @@ export class AlwatrPWA extends AlwatrElement {
 
   constructor() {
     super();
+
+    l10n.config.defaultLocale = {
+      code: 'fa-IR',
+      direction: 'rtl',
+      language: 'fa',
+    };
+    l10n.setLocal();
+
+    l10n.resourceChangeSignal.addListener((resource) => {
+      this._logger.logMethodArgs('l10nResourceChanged', {resource});
+      this.requestUpdate();
+    });
     router.signal.addListener((route) => {
       this._logger.logMethodArgs('routeChanged', {route});
       this.requestUpdate();
