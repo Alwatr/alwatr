@@ -1,3 +1,4 @@
+import type {AlwatrDocumentObject} from '@alwatr/fetch';
 import type {ToastOptions} from '@ionic/core';
 
 declare global {
@@ -5,7 +6,7 @@ declare global {
   var appConfig: Record<string, string | undefined> | undefined;
 
   interface AlwatrSignals {
-    readonly 'job-add': Pick<Job, 'filter'>;
+    readonly 'job-add': Pick<Job, 'detail'>;
     readonly 'job-delete': string;
     readonly 'job-list': Array<Job>;
     readonly toast: Partial<ToastOptions> & {message: string};
@@ -15,40 +16,30 @@ declare global {
   }
 }
 
-export interface Job extends Record<string, unknown> {
-  id: string;
-  filter: JobFilter;
+export type dayParts = 'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
+
+export interface Job extends AlwatrDocumentObject {
+  detail: JobDetail;
   resultList: Array<JobResult>;
 }
 
-export interface JobFilter extends Record<string, unknown> {
+export interface JobDetail {
   origin: string;
   dest: string;
   date: string;
-  maxPrice: number;
+  seatCount: number;
+  maxPrice: number | null;
   dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
+  description: string;
 }
 
-export interface JobResult extends Record<string, unknown> {
+export type NewJobDetail = {
+  month: number;
+  day: number;
+} & Omit<JobDetail, 'date'>;
+
+export type JobResult = {
   price: number;
   time: number;
   seatCount: number;
-}
-
-// TODO: Transfer this type in a package
-type ServerResponseFailed = {
-  ok: false;
-  statusCode: number;
-  errorCode: string;
-  data?: Record<string, unknown>;
 };
-
-type ServerResponseSuccess<DataType> = {
-  ok: true;
-  statusCode?: number;
-  data: DataType;
-};
-
-export type ServerResponse<DataType extends Record<string, unknown>> =
-  | ServerResponseSuccess<DataType>
-  | ServerResponseFailed;
