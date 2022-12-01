@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.1](https://github.com/AliMD/alwatr/compare/v0.24.0...v0.24.1) (2022-12-01)
+
+### Bug Fixes
+
+- **logger:** optimize for browserify builds ([7afdc1c](https://github.com/AliMD/alwatr/commit/7afdc1cb5baf9b66dedcdc251595c02a79a163b2))
+
 # [0.24.0](https://github.com/AliMD/alwatr/compare/v0.23.0...v0.24.0) (2022-11-28)
 
 ### Bug Fixes

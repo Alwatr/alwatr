@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.1](https://github.com/AliMD/alwatr/compare/v0.24.0...v0.24.1) (2022-12-01)
+
+### Bug Fixes
+
+- **i18n:** setLocal type ([d801958](https://github.com/AliMD/alwatr/commit/d801958bcc130e93677a1efe2c0c2c6dc420b700))
+- **logger:** optimize for browserify builds ([7afdc1c](https://github.com/AliMD/alwatr/commit/7afdc1cb5baf9b66dedcdc251595c02a79a163b2))
+- **service/storage-server:** Dockerfile CMD ([1823e56](https://github.com/AliMD/alwatr/commit/1823e56229eccaba86325344011fb54804f66496))
+- **services:** dockerfile copy issue ([d2cf4bc](https://github.com/AliMD/alwatr/commit/d2cf4bccc0f5cdc034dbce9d17262d17b0df1198))
+- **services:** dockerfile copy issue ([0fa5bba](https://github.com/AliMD/alwatr/commit/0fa5bba017124221cfcfe75ad9ac1ad402faedef))
+- set correct dependencies in package.json and references in tsconfig.json ([1fb05a8](https://github.com/AliMD/alwatr/commit/1fb05a80e1e098f3334cf3b4bd9c9ebf0c75fbf8))
+
+### Features
+
+- **i18n:** improve i18n types ([cf7d1cb](https://github.com/AliMD/alwatr/commit/cf7d1cb863ac039ec42fadeeb40ac371cfe936c5))
+
 # [0.24.0](https://github.com/AliMD/alwatr/compare/v0.23.0...v0.24.0) (2022-11-28)
 
 ### Bug Fixes

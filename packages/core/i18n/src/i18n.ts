@@ -45,7 +45,7 @@ export const l10n: {
   /**
    * Dispatch `locale-change` signal and initial the process.
    */
-  setLocal: (locale: Locale) => void;
+  setLocal: (locale?: Locale) => void;
 
   localize: typeof localize;
 
@@ -84,7 +84,7 @@ l10n.localeChangeSignal.addListener(
       logger.logMethodArgs('localeChange', locale);
       l10n.locale = locale;
 
-      if (l10n.resourceChangeSignal.value?._localCode !== locale.code) {
+      if (l10n.resourceChangeSignal.value?._code !== locale.code) {
         l10n.resourceChangeSignal.expire();
         if (l10n.config.autoFetchResources) {
           l10n.resourceChangeSignal.request(locale);
@@ -124,7 +124,15 @@ l10n.resourceChangeSignal.setProvider(async (locale) => {
     });
 
     if (response.ok) {
-      return response.json();
+      const resource = (await response.json()) as L10Resource;
+      if (resource._code == null) {
+        logger.accident('resourceProvider', 'resource_not_valid', 'Key `_code` not defined in l10n resource', {
+          url,
+          resource,
+        });
+        throw new Error('resource_not_valid');
+      }
+      return resource;
     }
     else {
       throw new Error('fetch_nok');
@@ -133,6 +141,7 @@ l10n.resourceChangeSignal.setProvider(async (locale) => {
   catch (err) {
     logger.error('resourceProvider', 'fetch_failed', (err as Error).stack || err, {locale, url});
     // TODO: user error signal.
+    return;
   }
 });
 
@@ -141,8 +150,11 @@ l10n.resourceChangeSignal.setProvider(async (locale) => {
  *
  * @param key The String_Key of the translation resource to localize.
  * @returns The localized string.
+ *
  *  return `…` if the translation resource is not yet loaded.
- *  return `(key)` if the key not defined in the translation resource.
+ *
+ *  return `{key}` if the key not defined in the translation resource.
+ *
  *  return null if the key is null or undefined (for optional input).
  *
  * @example
@@ -154,8 +166,11 @@ function localize(key?: null): null;
  *
  * @param key The String_Key of the translation resource to localize.
  * @returns The localized string.
+ *
  *  return `…` if the translation resource is not yet loaded.
- *  return `(key)` if the key not defined in the translation resource.
+ *
+ *  return `{key}` if the key not defined in the translation resource.
+ *
  *  return null if the key is null or undefined (for optional input).
  *
  * @example
@@ -167,8 +182,11 @@ function localize(key: string): string;
  *
  * @param key The String_Key of the translation resource to localize.
  * @returns The localized string.
+ *
  *  return `…` if the translation resource is not yet loaded.
- *  return `(key)` if the key not defined in the translation resource.
+ *
+ *  return `{key}` if the key not defined in the translation resource.
+ *
  *  return null if the key is null or undefined (for optional input).
  *
  * @example

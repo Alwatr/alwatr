@@ -9,21 +9,22 @@ declare global {
   }
 }
 
-export type L10Resource = {
-  [key: string]: string;
-  _localeCode: `${string}-${string}`;
+export type LocalCode = `${Lowercase<string>}-${Uppercase<string>}`;
+
+export type L10Resource = Record<string, string> & {
+  _code: LocalCode;
 };
 
 export type Locale = {
   /**
    * fa-IR, en-US, ...
    */
-  code: `${string}-${string}`;
+  code: LocalCode;
 
   /**
    * fa, en, ...
    */
-  language: string;
+  language: Lowercase<string>;
 
   /**
    * ltr, rtl

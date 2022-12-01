@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/nanoservice-starter",
-  "version": "0.24.0",
+  "version": "0.24.1",
   "description": "Alwatr Microservice/Nanoservice Starter Kit",
   "type": "module",
   "keywords": [
@@ -53,13 +53,13 @@
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.24.0",
-    "@alwatr/nano-server": "^0.24.0"
+    "@alwatr/logger": "^0.24.1",
+    "@alwatr/nano-server": "^0.24.1"
   },
   "devDependencies": {
     "@types/node": "~18.11.9",
-    "@typescript-eslint/eslint-plugin": "~5.44.0",
-    "@typescript-eslint/parser": "~5.44.0",
+    "@typescript-eslint/eslint-plugin": "~5.45.0",
+    "@typescript-eslint/parser": "~5.45.0",
     "eslint": "~8.28.0",
     "eslint-config-google": "~0.14.0",
     "eslint-import-resolver-typescript": "~3.5.2",
