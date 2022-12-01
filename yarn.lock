@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@alwatr/element@^0.24.0", "@alwatr/element@^0.24.1":
+"@alwatr/element@^0.24.1":
   version "0.24.1"
   resolved "https://registry.yarnpkg.com/@alwatr/element/-/element-0.24.1.tgz#3b9675fb4b81952cddf08393c714697c34e6f56a"
   integrity sha512-iOmOgeQMAlgjyaqf14rEmd9Bb3nIRr45qHp5GelFMOq6OcpF6cMl9tyNblow48mwRLmZg7CdeJUGVvZ+KZaRow==
@@ -11,12 +11,22 @@
     lit "~2.4.1"
     tslib "~2.4.1"
 
-"@alwatr/fetch@^0.24.0", "@alwatr/fetch@^0.24.1":
+"@alwatr/fetch@^0.24.1":
   version "0.24.1"
   resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.24.1.tgz#76c6864e66dd3c2d5ab9ed37df9c00ec72800771"
   integrity sha512-1OOBZrXy47sPNYPglkdUEqhfI72lwAMg3poaAxj7j/LX0FN2JK61k0x6JuGZ++UjIMt679ObEBNP500rSUWmYA==
   dependencies:
     "@alwatr/logger" "^0.24.1"
+    tslib "~2.4.1"
+
+"@alwatr/i18n@^0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@alwatr/i18n/-/i18n-0.24.1.tgz#ad77f457d7bf3aaaf066b1d85c3531331980137a"
+  integrity sha512-h0ckS+cw/gsNXkYcQbuQM0TQaarX3RGAulTTNiEUQr0QcH1Ink/iZrBsJ39aEBw6raqMYBYLSQqVdi0npYbb5Q==
+  dependencies:
+    "@alwatr/fetch" "^0.24.1"
+    "@alwatr/logger" "^0.24.1"
+    "@alwatr/signal" "^0.24.1"
     tslib "~2.4.1"
 
 "@alwatr/icon@^0.24.1":
