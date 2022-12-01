@@ -11,12 +11,12 @@
     lit "~2.4.1"
     tslib "~2.4.1"
 
-"@alwatr/fetch@^0.24.0":
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.24.0.tgz#0def66d13ef8161c0a7b5c1d98105c5155b469c9"
-  integrity sha512-4+412HIcYvHwApG9vvpx3xRcOE0rO1MSck2s96+sj8VJntWhvXktxLFfghMYzAlJf5ijVFjlNXyCBd0Kxb7dSQ==
+"@alwatr/fetch@^0.24.0", "@alwatr/fetch@^0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.24.1.tgz#76c6864e66dd3c2d5ab9ed37df9c00ec72800771"
+  integrity sha512-1OOBZrXy47sPNYPglkdUEqhfI72lwAMg3poaAxj7j/LX0FN2JK61k0x6JuGZ++UjIMt679ObEBNP500rSUWmYA==
   dependencies:
-    "@alwatr/logger" "^0.24.0"
+    "@alwatr/logger" "^0.24.1"
     tslib "~2.4.1"
 
 "@alwatr/icon@^0.24.0":
@@ -79,13 +79,13 @@
     "@alwatr/storage-engine" "^0.24.0"
     tslib "~2.4.1"
 
-"@alwatr/storage-engine@^0.24.0":
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/storage-engine/-/storage-engine-0.24.0.tgz#96f2b28a12d2a4adedd3c066d53a49d0db19ccd6"
-  integrity sha512-rlrWtWMz4gwo81PbuhdZqJtQviQUj7qeHgiHmaU+Xko2sMXHADScl7XoyHbHyaiXOY4Q2PVku9HsMyy26pGr0A==
+"@alwatr/storage-engine@^0.24.0", "@alwatr/storage-engine@^0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@alwatr/storage-engine/-/storage-engine-0.24.1.tgz#cd7a81a8ee8b7c8971e4f3d62ce96e64b63487c9"
+  integrity sha512-iM15WPyz62sNToBfEsGqUb/rtMvuTN5jifJOuxgc/6TTKZ41G/nH/zgFBhb1ZvN1oB5seoSMLJ3amBJOs4S3ig==
   dependencies:
-    "@alwatr/fetch" "^0.24.0"
-    "@alwatr/logger" "^0.24.0"
+    "@alwatr/fetch" "^0.24.1"
+    "@alwatr/logger" "^0.24.1"
     exit-hook "~3.1.2"
     tslib "~2.4.1"
 
