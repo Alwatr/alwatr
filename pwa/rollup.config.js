@@ -36,7 +36,7 @@ export default {
     {
       dir: 'build',
       format: 'esm',
-      entryFileNames: '[name].esm.js'
+      entryFileNames: '[name].esm.js',
     },
     // {
     //   dir: 'build',

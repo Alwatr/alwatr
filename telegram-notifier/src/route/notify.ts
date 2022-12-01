@@ -15,7 +15,6 @@ async function notify(connection: AlwatrConnection): Promise<void> {
   const bodyJson = await connection.requireJsonBody<{to: string; message: string}>();
   if (bodyJson == null) return;
 
-
   await sendMessage(bodyJson.to, bodyJson.message);
 
   connection.reply({
