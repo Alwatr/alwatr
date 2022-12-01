@@ -45,7 +45,7 @@ export const l10n: {
   /**
    * Dispatch `locale-change` signal and initial the process.
    */
-  setLocal: (locale: Locale) => void;
+  setLocal: (locale?: Locale) => void;
 
   localize: typeof localize;
 
