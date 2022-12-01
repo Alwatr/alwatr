@@ -988,10 +988,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@ionic/core@^6.3.8":
-  version "6.3.8"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-6.3.8.tgz#e957e6b76f675fd72196984ca02883c104a14f8f"
-  integrity sha512-mpawxkbjx/lBaWMYexvEHzKP9+03gKKe/CXHGnBh7z9WHpDuR+H9jdojjiHkakoN79TcdM3G+BYMZ0tVGeeJhw==
+"@ionic/core@^6.3.9":
+  version "6.3.9"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-6.3.9.tgz#6999d2d284edfd9f289bf75eca2282bd65c1ec87"
+  integrity sha512-0JlCGIgLASoxZ6XXEkhCMQzdedvzqI7lsD6zBYPkUyMFOMTff7fZdQg1r9v9IQVHW+UCuyM4xc0MT4YOD4/S3A==
   dependencies:
     "@stencil/core" "^2.18.0"
     ionicons "^6.0.4"
