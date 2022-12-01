@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.1](https://github.com/AliMD/alwatr/compare/v0.24.0...v0.24.1) (2022-12-01)
+
+### Bug Fixes
+
+- **services:** dockerfile copy issue ([d2cf4bc](https://github.com/AliMD/alwatr/commit/d2cf4bccc0f5cdc034dbce9d17262d17b0df1198))
+- **services:** dockerfile copy issue ([0fa5bba](https://github.com/AliMD/alwatr/commit/0fa5bba017124221cfcfe75ad9ac1ad402faedef))
+
 # [0.24.0](https://github.com/AliMD/alwatr/compare/v0.23.0...v0.24.0) (2022-11-28)
 
 ### Bug Fixes
