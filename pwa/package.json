@@ -32,7 +32,7 @@
     "@alwatr/element": "^0.24.0",
     "@alwatr/icon": "^0.24.0",
     "@alwatr/logger": "^0.24.0",
-    "@alwatr/router": "^0.24.0",
+    "@alwatr/router": "^0.24.1",
     "@alwatr/fetch": "^0.24.0",
     "@alwatr/signal": "^0.24.0",
     "@ionic/core": "^6.3.8",
