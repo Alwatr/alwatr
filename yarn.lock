@@ -70,17 +70,17 @@
     "@alwatr/logger" "^0.24.1"
     tslib "~2.4.1"
 
-"@alwatr/storage-client@^0.24.0":
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/storage-client/-/storage-client-0.24.0.tgz#2188eb8c29767ab3d86a8b8098e0052ab661b60f"
-  integrity sha512-+pAubHWsNdPA0Ence95DBGntBiB+55vCfyxH0MOds6zCsheYW6EiY3MXAqt03xEuZM+44qlPmbgDbcPUoFYaZw==
+"@alwatr/storage-client@^0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@alwatr/storage-client/-/storage-client-0.24.1.tgz#c5d6ce24e62fc68e77ebfc3ec080793de80fd485"
+  integrity sha512-FOiXew/7O6BeDSG5YibX15Iho7u+LmF9n8FuQgMNnlhwLaJr9LJL9xelhWSQcbW2r26a3c3pACnyu9xkg2844w==
   dependencies:
-    "@alwatr/fetch" "^0.24.0"
-    "@alwatr/logger" "^0.24.0"
-    "@alwatr/storage-engine" "^0.24.0"
+    "@alwatr/fetch" "^0.24.1"
+    "@alwatr/logger" "^0.24.1"
+    "@alwatr/storage-engine" "^0.24.1"
     tslib "~2.4.1"
 
-"@alwatr/storage-engine@^0.24.0", "@alwatr/storage-engine@^0.24.1":
+"@alwatr/storage-engine@^0.24.1":
   version "0.24.1"
   resolved "https://registry.yarnpkg.com/@alwatr/storage-engine/-/storage-engine-0.24.1.tgz#cd7a81a8ee8b7c8971e4f3d62ce96e64b63487c9"
   integrity sha512-iM15WPyz62sNToBfEsGqUb/rtMvuTN5jifJOuxgc/6TTKZ41G/nH/zgFBhb1ZvN1oB5seoSMLJ3amBJOs4S3ig==
