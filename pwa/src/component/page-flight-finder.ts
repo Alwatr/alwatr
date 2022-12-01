@@ -1,4 +1,5 @@
 import {AlwatrElement} from '@alwatr/element';
+import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {css, html} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
@@ -34,7 +35,7 @@ export class PageFlightFinder extends AlwatrElement {
       ion-card {
         margin: 0.8em 1em;
       }
-      ion-card.airline__list,
+      ion-card.job__list,
       ion-card.form {
         --ion-item-background: var(--ion-color-primary-contrast);
       }
@@ -130,6 +131,10 @@ export class PageFlightFinder extends AlwatrElement {
   override connectedCallback(): void {
     super.connectedCallback();
 
+    l10n.resourceChangeSignal.addListener(() => {
+      this.requestUpdate();
+    });
+
     PageFlightFinder.jobListSignal.addListener((jobList) => {
       this.__jobList = jobList;
     });
@@ -139,11 +144,11 @@ export class PageFlightFinder extends AlwatrElement {
     return html`
       <ion-header>
         <ion-toolbar color="primary">
-          <ion-title>پرواز یاب</ion-title>
+          <ion-title>${l10n.localize('flight_finder')}</ion-title>
         </ion-toolbar>
       </ion-header>
 
-      <ion-content fullscreen> ${this.__renderAirlineListCard()} ${this.__renderForm()} </ion-content>
+      <ion-content fullscreen>${this.__renderAirlineListCard()} ${this.__renderForm()}</ion-content>
     `;
   }
 
@@ -151,10 +156,10 @@ export class PageFlightFinder extends AlwatrElement {
     const airlineItemList = map(this.__jobList, (airline) => html` <job-item .job=${airline}></job-item> `);
 
     return html`
-      <ion-card class="airline__list">
+      <ion-card class="job__list">
         <ion-card-header>
-          <ion-card-title>لیست پرواز ها</ion-card-title>
-          <ion-card-subtitle> ۱۲۳ ثانیه پیش </ion-card-subtitle>
+          <ion-card-title>${l10n.localize('search_list')}</ion-card-title>
+          <ion-card-subtitle>۵ ${l10n.localize('seconds_ago')}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-list lines="full"> ${airlineItemList} </ion-list>
@@ -172,38 +177,48 @@ export class PageFlightFinder extends AlwatrElement {
         <ion-list>
           <div class="form__input-row">
             <ion-item fill="solid">
-              <ion-label position="floating">مبدأ</ion-label>
-              <ion-select name="origin" ok-text="تایید" cancel-text="لغو" @ionChange=${this.__inputChanged}>
+              <ion-label position="floating">${l10n.localize('origin')}</ion-label>
+              <ion-select
+                name="origin"
+                ok-text=${l10n.localize('confirm')}
+                cancel-text=${l10n.localize('cancel')}
+                @ionChange=${this.__inputChanged}
+              >
                 ${PageFlightFinder.cityListTemplate}
               </ion-select>
             </ion-item>
             <ion-item fill="solid">
-              <ion-label position="floating">مقصد</ion-label>
-              <ion-select name="dest" ok-text="تایید" cancel-text="لغو" @ionChange=${this.__inputChanged}>
+              <ion-label position="floating">${l10n.localize('destination')}</ion-label>
+              <ion-select
+                name="dest"
+                ok-text=${l10n.localize('confirm')}
+                cancel-text=${l10n.localize('cancel')}
+                @ionChange=${this.__inputChanged}
+              >
                 ${PageFlightFinder.cityListTemplate}
               </ion-select>
             </ion-item>
           </div>
           <ion-item fill="solid">
-            <ion-label position="floating">توضیحات</ion-label>
+            <ion-label position="floating">${l10n.localize('description')}</ion-label>
             <ion-input name="description" type="text" debounce="30" @ionChange=${this.__inputChanged}></ion-input>
           </ion-item>
           <div class="form__input-row">
             <ion-item fill="solid">
-              <ion-label position="floating">روز</ion-label>
+              <ion-label position="floating">${l10n.localize('day')}</ion-label>
               <ion-select name="day" interface="popover" @ionChange=${this.__inputChanged}>
                 ${PageFlightFinder.dayListTemplate}
               </ion-select>
             </ion-item>
             <ion-item fill="solid">
-              <ion-label position="floating">ماه</ion-label>
+              <ion-label position="floating">${l10n.localize('month')}</ion-label>
               <ion-select name="month" interface="popover" @ionChange=${this.__inputChanged}>
                 ${PageFlightFinder.monthListTemplate}
               </ion-select>
             </ion-item>
           </div>
           <ion-item fill="solid">
-            <ion-label position="floating">تعداد صندلی</ion-label>
+            <ion-label position="floating">${l10n.localize('seat_count')}</ion-label>
             <ion-select
               name="seatCount"
               interface="popover"
@@ -214,18 +229,24 @@ export class PageFlightFinder extends AlwatrElement {
             </ion-select>
           </ion-item>
           <ion-item fill="solid">
-            <ion-label position="floating">بخش روز</ion-label>
-            <ion-select name="dayPart" ok-text="تایید" cancel-text="لغو" multiple @ionChange=${this.__inputChanged}>
+            <ion-label position="floating">${l10n.localize('day_part')}</ion-label>
+            <ion-select
+              name="dayPart"
+              ok-text=${l10n.localize('confirm')}
+              cancel-text=${l10n.localize('cancel')}
+              multiple
+              @ionChange=${this.__inputChanged}
+            >
               ${PageFlightFinder.dayPartListTemplate}
             </ion-select>
           </ion-item>
           <ion-item fill="solid">
-            <ion-label position="floating">حداکثر قیمت</ion-label>
+            <ion-label position="floating">${l10n.localize('maximum_price')}</ion-label>
             <ion-input name="maxPrice" type="number" debounce="30" @ionChange=${this.__inputChanged}></ion-input>
             <ion-note slot="helper">${this.__maxPriceHelper}</ion-note>
           </ion-item>
           <ion-button class="form-btn" expand="block" ?disabled=${!this.__formValidate} @click=${this.__submit}>
-            ارسال
+            ${l10n.localize('send')}
           </ion-button>
         </ion-list>
       </ion-card>
@@ -238,7 +259,7 @@ export class PageFlightFinder extends AlwatrElement {
       event,
     });
 
-    const currentYear = new Date().toLocaleDateString('fa-IR', {
+    const currentYear = new Date().toLocaleDateString(l10n.locale?.code, {
       numberingSystem: 'latn',
       year: 'numeric',
     });
@@ -285,9 +306,9 @@ export class PageFlightFinder extends AlwatrElement {
   }
 
   private get __maxPriceHelper(): string {
-    const maxPrice = (this.__newJob.maxPrice ?? 0).toLocaleString('fa-IR');
+    const maxPrice = l10n.formatNumber(this.__newJob.maxPrice ?? 0);
 
-    return maxPrice + ' تومان';
+    return maxPrice + ' ' + l10n.localize('config_currency');
   }
 
   private get __formValidate(): boolean {
