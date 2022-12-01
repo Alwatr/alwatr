@@ -132,9 +132,10 @@ export class PageFlightFinder extends AlwatrElement {
     super.connectedCallback();
 
     l10n.resourceChangeSignal.addListener((resource) => {
-      this._logger.logMethodArgs('l10nResourceChanged', {resource});
+      this._logger.logMethod('resourceChangeSignal');
       this.requestUpdate();
     });
+
     PageFlightFinder.jobListSignal.addListener((jobList) => {
       this.__jobList = jobList;
     });
@@ -148,7 +149,7 @@ export class PageFlightFinder extends AlwatrElement {
         </ion-toolbar>
       </ion-header>
 
-      <ion-content fullscreen> ${this.__renderAirlineListCard()} ${this.__renderForm()} </ion-content>
+      <ion-content fullscreen>${this.__renderAirlineListCard()} ${this.__renderForm()}</ion-content>
     `;
   }
 
@@ -159,7 +160,7 @@ export class PageFlightFinder extends AlwatrElement {
       <ion-card class="job__list">
         <ion-card-header>
           <ion-card-title>${l10n.localize('search_list')}</ion-card-title>
-          <ion-card-subtitle>${'۱۲۳ ' + l10n.localize('seconds_ago')}</ion-card-subtitle>
+          <ion-card-subtitle>۵ ${l10n.localize('seconds_ago')}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-list lines="full"> ${airlineItemList} </ion-list>
