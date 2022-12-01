@@ -131,8 +131,7 @@ export class PageFlightFinder extends AlwatrElement {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    l10n.resourceChangeSignal.addListener((resource) => {
-      this._logger.logMethod('resourceChangeSignal');
+    l10n.resourceChangeSignal.addListener(() => {
       this.requestUpdate();
     });
 

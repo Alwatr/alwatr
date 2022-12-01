@@ -98,8 +98,7 @@ export class JobItem extends AlwatrElement {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    l10n.resourceChangeSignal.addListener((resource) => {
-      this._logger.logMethodArgs('l10nResourceChanged', {resource});
+    l10n.resourceChangeSignal.addListener(() => {
       this.requestUpdate();
     });
   }

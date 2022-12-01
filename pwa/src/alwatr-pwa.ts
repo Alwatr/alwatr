@@ -49,14 +49,11 @@ export class AlwatrPWA extends AlwatrElement {
     };
     l10n.setLocal();
 
-    l10n.resourceChangeSignal.addListener((resource) => {
-      this._logger.logMethodArgs('l10nResourceChanged', {resource});
-      this.requestUpdate();
-    });
     router.signal.addListener((route) => {
       this._logger.logMethodArgs('routeChanged', {route});
       this.requestUpdate();
     });
+
     router.initial();
   }
 
