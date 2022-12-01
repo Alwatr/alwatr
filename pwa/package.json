@@ -35,7 +35,7 @@
     "@alwatr/router": "^0.24.1",
     "@alwatr/fetch": "^0.24.0",
     "@alwatr/signal": "^0.24.0",
-    "@ionic/core": "^6.3.8",
+    "@ionic/core": "^6.3.9",
     "@webcomponents/webcomponentsjs": "^2.7.0",
     "lit": "^2.4.1"
   },
