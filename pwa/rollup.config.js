@@ -8,6 +8,7 @@ import terser from '@rollup/plugin-terser';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import summary from 'rollup-plugin-summary';
 import {generateSW} from 'rollup-plugin-workbox';
+import {existsSync} from 'fs';
 
 function onwarn(warning) {
   if (warning.code !== 'THIS_IS_UNDEFINED') {
@@ -23,6 +24,9 @@ const htmlPlugin = rollupPluginHTML({
   injectServiceWorker: true,
   extractAssets: true,
 });
+const litPolyfill = existsSync('node_modules/lit/polyfill-support.js')
+  ? 'node_modules/lit/polyfill-support.js'
+  : '../node_modules/lit/polyfill-support.js';
 
 /** @type {import('rollup').RollupOptions} */
 const options = {
@@ -74,7 +78,7 @@ const options = {
         custom: [
           {
             name: 'lit-polyfill-support',
-            path: '../node_modules/lit/polyfill-support.js',
+            path: litPolyfill,
             test: "!('attachShadow' in Element.prototype)",
             module: false,
           },
