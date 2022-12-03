@@ -7,6 +7,7 @@ import {getBabelOutputPlugin} from '@rollup/plugin-babel';
 import terser from '@rollup/plugin-terser';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import summary from 'rollup-plugin-summary';
+import {generateSW} from 'rollup-plugin-workbox';
 
 function onwarn(warning) {
   if (warning.code !== 'THIS_IS_UNDEFINED') {
@@ -18,6 +19,8 @@ function onwarn(warning) {
 const htmlPlugin = rollupPluginHTML({
   rootDir: './',
   flattenOutput: false,
+  serviceWorkerPath: 'dist/sw.js',
+  injectServiceWorker: true,
   extractAssets: true,
 });
 
@@ -34,7 +37,7 @@ const options = {
     resolve(),
     // Minify HTML template literals
     minifyHTML.default({
-      failOnError: true
+      failOnError: true,
     }),
     // Minify JS
     terser({
@@ -85,10 +88,13 @@ const options = {
     }),
     // Optional: copy any static assets to build directory
     copy({
-      patterns: [
-        'images/**/*',
-        'robots.txt'
-      ],
+      patterns: ['image/**/*', 'l10n/**/*', 'robots.txt'],
+    }),
+    generateSW({
+      swDest: 'dist/sw.js',
+      globDirectory: 'dist/',
+      skipWaiting: true,
+      globPatterns: ['**/*.{js,css,html,json}', '**/*.{png,svg}'],
     }),
   ],
   // Specifies two JS output configurations, modern and legacy, which the HTML plugin will
