@@ -1262,7 +1262,7 @@
     "@babel/helper-module-imports" "^7.10.4"
     "@rollup/pluginutils" "^3.1.0"
 
-"@rollup/plugin-babel@~6.0.3":
+"@rollup/plugin-babel@^6.0.3":
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-babel/-/plugin-babel-6.0.3.tgz#07ccde15de278c581673034ad6accdb4a153dfeb"
   integrity sha512-fKImZKppa1A/gX73eg4JGo+8kQr/q1HBQaCGKECZ0v4YBBv3lFqi14+7xyApECzvkLTHCifx+7ntcrvtBIRcpg==
@@ -1294,7 +1294,7 @@
     is-module "^1.0.0"
     resolve "^1.19.0"
 
-"@rollup/plugin-node-resolve@~15.0.1":
+"@rollup/plugin-node-resolve@^15.0.1":
   version "15.0.1"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-15.0.1.tgz#72be449b8e06f6367168d5b3cd5e2802e0248971"
   integrity sha512-ReY88T7JhJjeRVbfCyNj+NXAG3IIsVMsX9b5/9jC98dRP8/yxlZdz7mHZbHk5zHr24wZZICS5AcXsFZAXYUQEg==
@@ -1764,7 +1764,14 @@
     terser "^5.14.2"
     whatwg-fetch "^3.5.0"
 
-"@web/rollup-plugin-html@^1.7.0":
+"@web/rollup-plugin-copy@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@web/rollup-plugin-copy/-/rollup-plugin-copy-0.3.0.tgz#fe999b2ea3dd71c8e663e6947fc2eb92a221e8e8"
+  integrity sha512-QNNtE7Svhk0/p21etaR0JQXYhlMgTAg/HmRXDMmQHMf3uOUWsWMGiJa96P49RRVJut1ECB5FDFeBUgFEmegysQ==
+  dependencies:
+    glob "^7.1.6"
+
+"@web/rollup-plugin-html@^1.11.0", "@web/rollup-plugin-html@^1.7.0":
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/@web/rollup-plugin-html/-/rollup-plugin-html-1.11.0.tgz#46c2bcb3a3b9db55d53b897ffc7e7ef2f618a052"
   integrity sha512-EqUcV5plGYTV/utdbX8g5t8Yq/z6VfFuQuPD39ckOQuRj7Rj6HD15FHwLHpFAWOR0+GrDnNzR74RvI4ipGm0qQ==
@@ -1783,7 +1790,7 @@
     estree-walker "^2.0.2"
     magic-string "^0.25.7"
 
-"@web/rollup-plugin-polyfills-loader@^1.1.0":
+"@web/rollup-plugin-polyfills-loader@^1.1.0", "@web/rollup-plugin-polyfills-loader@^1.3.1":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@web/rollup-plugin-polyfills-loader/-/rollup-plugin-polyfills-loader-1.3.1.tgz#8cd22da8e7c661897285cae90e3b4bdf464dfdca"
   integrity sha512-dV73QWsGMFkCGwgs2l6ADmDFtsEIduTJLSBL5wBHp5wZm1Sy4SQAEGTsDMRDX5cpAHRT9+sUnKLLREfBppuJbA==
@@ -5022,7 +5029,7 @@ rimraf@^3.0.2, rimraf@~3.0.2:
   dependencies:
     glob "^7.1.3"
 
-rollup-plugin-minify-html-literals@~1.2.6:
+rollup-plugin-minify-html-literals@^1.2.6:
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/rollup-plugin-minify-html-literals/-/rollup-plugin-minify-html-literals-1.2.6.tgz#775d9502e786ac6a4fc23ac53e5cb1658627938b"
   integrity sha512-JRq2fjlCTiw0zu+1Sy3ClHGCxA79dWGr4HLHWSQgd060StVW9fBVksuj8Xw/suPkNSGClJf/4xNQ1MF6JeXPaw==
@@ -5030,7 +5037,7 @@ rollup-plugin-minify-html-literals@~1.2.6:
     minify-html-literals "^1.3.5"
     rollup-pluginutils "^2.8.2"
 
-rollup-plugin-summary@~2.0.0:
+rollup-plugin-summary@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-summary/-/rollup-plugin-summary-2.0.0.tgz#ad228d3eb897140d3b7f71e0b23b71b2f2352df3"
   integrity sha512-7Av6DQeCmVNpFmCdkkbMya1CneeGWhjSXXQ3B4yDO+BvN/Kbohqi3IEYXAvgHP3iIafSfMyOw+PBLFUlvf1ViA==
@@ -5041,7 +5048,7 @@ rollup-plugin-summary@~2.0.0:
     gzip-size "^7.0.0"
     terser "^5.15.1"
 
-rollup-plugin-terser@^7.0.0, rollup-plugin-terser@^7.0.2, rollup-plugin-terser@~7.0.2:
+rollup-plugin-terser@^7.0.0, rollup-plugin-terser@^7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/rollup-plugin-terser/-/rollup-plugin-terser-7.0.2.tgz#e8fbba4869981b2dc35ae7e8a502d5c6c04d324d"
   integrity sha512-w3iIaU4OxcF52UUXiZNsNeuXIMDvFrr+ZXK6bFZ0Q60qyVfq4uLptoS4bbq3paG3x216eQllFZX7zt6TIImguQ==
