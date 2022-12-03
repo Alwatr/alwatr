@@ -4,32 +4,50 @@ import {polyfillsLoader} from '@web/rollup-plugin-polyfills-loader';
 import {copy} from '@web/rollup-plugin-copy';
 import resolve from '@rollup/plugin-node-resolve';
 import {getBabelOutputPlugin} from '@rollup/plugin-babel';
-import {terser} from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import summary from 'rollup-plugin-summary';
+
+function onwarn(warning) {
+  if (warning.code !== 'THIS_IS_UNDEFINED') {
+    console.error(`(!) ${warning.message}`);
+  }
+}
 
 // Configure an instance of @web/rollup-plugin-html
 const htmlPlugin = rollupPluginHTML({
   rootDir: './',
   flattenOutput: false,
+  extractAssets: true,
 });
 
-export default {
+/** @type {import('rollup').RollupOptions} */
+const options = {
   // Entry point for application build; can specify a glob to build multiple
   // HTML files for non-SPA app
   input: 'index.html',
+  onwarn,
+  treeshake: true,
   plugins: [
     htmlPlugin,
     // Resolve bare module specifiers to relative paths
     resolve(),
     // Minify HTML template literals
-    minifyHTML.default(),
+    minifyHTML.default({
+      failOnError: true
+    }),
     // Minify JS
     terser({
+      ecma: 2019,
       module: true,
       warnings: true,
+      mangle: {
+        properties: {
+          regex: /^__/,
+        },
+      },
     }),
-    // Inject polyfills into HTML (core-js, regnerator-runtime, webcoponents,
+    // Inject polyfills into HTML (core-js, regenerator-runtime, web-components,
     // lit/polyfill-support) and dynamically loads modern vs. legacy builds
     polyfillsLoader({
       modernOutput: {
@@ -49,11 +67,11 @@ export default {
         fetch: true,
         webcomponents: true,
         // Custom configuration for loading Lit's polyfill-support module,
-        // required for interfacing with the webcomponents polyfills
+        // required for interfacing with the web-components polyfills
         custom: [
           {
             name: 'lit-polyfill-support',
-            path: 'node_modules/lit/polyfill-support.js',
+            path: '../node_modules/lit/polyfill-support.js',
             test: "!('attachShadow' in Element.prototype)",
             module: false,
           },
@@ -61,10 +79,16 @@ export default {
       },
     }),
     // Print bundle summary
-    summary(),
+    summary({
+      showBrotliSize: true,
+      showGzippedSize: true,
+    }),
     // Optional: copy any static assets to build directory
     copy({
-      patterns: ['images/**/*'],
+      patterns: [
+        'images/**/*',
+        'robots.txt'
+      ],
     }),
   ],
   // Specifies two JS output configurations, modern and legacy, which the HTML plugin will
@@ -76,7 +100,7 @@ export default {
       format: 'esm',
       chunkFileNames: '[name]-[hash].js',
       entryFileNames: '[name]-[hash].js',
-      dir: 'build',
+      dir: 'dist',
       plugins: [htmlPlugin.api.addOutput('modern')],
     },
     {
@@ -84,7 +108,7 @@ export default {
       format: 'esm',
       chunkFileNames: 'legacy-[name]-[hash].js',
       entryFileNames: 'legacy-[name]-[hash].js',
-      dir: 'build',
+      dir: 'dist',
       plugins: [
         htmlPlugin.api.addOutput('legacy'),
         // Uses babel to compile JS to ES5 and modules to SystemJS
@@ -107,3 +131,5 @@ export default {
   ],
   preserveEntrySignatures: false,
 };
+
+export default options;
