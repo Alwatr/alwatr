@@ -133,6 +133,10 @@ export const createLogger = (scope: string, color?: string | null, debug?: boole
     error: isBrowser
       ? console.error.bind(console, '%c%s%c.%s() Error `%s`\n', styleScope, scope, style.reset)
       : console.error.bind(console, `${styleScope}❌\n%s\x1b[31m.%s() Error \`%s\`${style.reset}\n`, scope),
+
+    incident: isBrowser
+      ? console.log.bind(console, '%c%s%c.%s() Incident `%s` %s!', styleScope, scope, 'color: orange;')
+      : console.log.bind(console, `${styleScope}🚸\n%s${style.reset}.%s() Incident \`%s\` %s!${style.reset}`, scope),
   };
 
   if (!debug) {
@@ -142,7 +146,6 @@ export const createLogger = (scope: string, color?: string | null, debug?: boole
       logMethod: empty,
       logMethodArgs: empty,
       logMethodFull: empty,
-      incident: empty,
       logOther: empty,
     };
   }
@@ -158,10 +161,6 @@ export const createLogger = (scope: string, color?: string | null, debug?: boole
     logMethodArgs: console.debug.bind(console, keySection + '.%s(%o);', styleScope, scope, style.reset),
 
     logMethodFull: console.debug.bind(console, keySection + '.%s(%o) => %o', styleScope, scope, style.reset),
-
-    incident: isBrowser
-      ? console.log.bind(console, '%c%s%c.%s() Incident `%s` %s!', styleScope, scope, 'color: orange;')
-      : console.log.bind(console, `${styleScope}🚸\n%s${style.reset}.%s() Incident \`%s\` %s!${style.reset}`, scope),
 
     logOther: console.debug.bind(console, keySection, styleScope, scope, style.reset),
   };
