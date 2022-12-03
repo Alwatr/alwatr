@@ -1,34 +1,37 @@
 {
   "compilerOptions": {
+    /* Basic Options */
+    "incremental": true,
     "target": "ES2022",
-    "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
+    "module": "ES2022",
+    "lib": [
+      "ES2022",
+    ],
     // "allowJs": true,
     // "checkJs": true,
     // "jsx": "preserve",
-    "declaration": false,
-    "declarationMap": false,
-    "sourceMap": false,
+    "declaration": true,
+    "declarationMap": true,
     // "outFile": "./",
-    "outDir": "./dist",
-    // "rootDir": "./src",
-    // "composite": true,
-    // "tsBuildInfoFile": ".tsbuildinfo",
-    "removeComments": true,
+    "outDir": "./src",
+    "rootDir": "./src",
+    "composite": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "removeComments": false,
     // "noEmit": true,
     "importHelpers": true,
     // "downlevelIteration": true,
     // "isolatedModules": true,
-
+    /* Strict Type-Checking Options */
     "strict": true,
-    // "noImplicitAny": false,
-    // "strictNullChecks": true,
-    // "strictFunctionTypes": true,
-    // "strictBindCallApply": true,
-    // "strictPropertyInitialization": true,
-    // "noImplicitThis": true,
-    // "alwaysStrict": true,
-
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    /* Additional Checks */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
@@ -36,31 +39,39 @@
     "noImplicitOverride": true,
     // "noUncheckedIndexedAccess": true,
     // "noPropertyAccessFromIndexSignature": true,
-
+    /* Module Resolution Options */
     "moduleResolution": "node",
     "baseUrl": "./",
     // "paths": {},
     // "rootDirs": [],
     // "typeRoots": [],
     // "types": [],
-    // "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true,
     // "esModuleInterop": true,
     // "preserveSymlinks": true,
     // "allowUmdGlobalAccess": true,
-
+    /* Source Map Options */
+    "sourceMap": true,
     // "sourceRoot": "",
     // "mapRoot": "",
     // "inlineSourceMap": true,
-    // "inlineSources": true,
-
+    "inlineSources": true,
+    /* Experimental Options */
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-
+    /* Advanced Options */
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "plugins": [
+      {
+        "name": "ts-lit-plugin",
+        "strict": true
+      }
+    ]
   },
-
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [],
 }

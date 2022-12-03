@@ -43,7 +43,7 @@
     // "noPropertyAccessFromIndexSignature": true,
     /* Module Resolution Options */
     "moduleResolution": "node",
-    "baseUrl": "./package",
+    "baseUrl": "./",
     // "paths": {},
     // "rootDirs": [],
     // "typeRoots": [],
