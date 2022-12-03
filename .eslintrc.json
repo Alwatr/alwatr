@@ -99,6 +99,7 @@
     ],
     "import/no-unresolved": "off",
     "require-jsdoc": "off",
-    "valid-jsdoc": "off"
+    "valid-jsdoc": "off",
+    "wc/guard-super-call": "off"
   }
 }
