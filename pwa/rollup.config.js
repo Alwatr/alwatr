@@ -1,14 +1,18 @@
 // Import rollup plugins
+import {existsSync} from 'node:fs';
+
+import {getBabelOutputPlugin} from '@rollup/plugin-babel';
+import resolve from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
+import {copy} from '@web/rollup-plugin-copy';
 import {rollupPluginHTML} from '@web/rollup-plugin-html';
 import {polyfillsLoader} from '@web/rollup-plugin-polyfills-loader';
-import {copy} from '@web/rollup-plugin-copy';
-import resolve from '@rollup/plugin-node-resolve';
-import {getBabelOutputPlugin} from '@rollup/plugin-babel';
-import terser from '@rollup/plugin-terser';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import summary from 'rollup-plugin-summary';
 import {generateSW} from 'rollup-plugin-workbox';
-import {existsSync} from 'fs';
+
+
+import {workboxConfig} from './workbox-config.js';
 
 function onwarn(warning) {
   if (warning.code !== 'THIS_IS_UNDEFINED') {
@@ -24,6 +28,7 @@ const htmlPlugin = rollupPluginHTML({
   injectServiceWorker: true,
   extractAssets: true,
 });
+
 const litPolyfill = existsSync('node_modules/lit/polyfill-support.js')
   ? 'node_modules/lit/polyfill-support.js'
   : '../node_modules/lit/polyfill-support.js';
@@ -79,7 +84,7 @@ const options = {
           {
             name: 'lit-polyfill-support',
             path: litPolyfill,
-            test: "!('attachShadow' in Element.prototype)",
+            test: '!(\'attachShadow\' in Element.prototype)',
             module: false,
           },
         ],
@@ -94,12 +99,7 @@ const options = {
     copy({
       patterns: ['image/**/*', 'l10n/**/*', 'robots.txt'],
     }),
-    generateSW({
-      swDest: 'dist/sw.js',
-      globDirectory: 'dist/',
-      skipWaiting: true,
-      globPatterns: ['**/*.{js,css,html,json}', '**/*.{png,svg}'],
-    }),
+    generateSW(workboxConfig, ({swDest, count, size}) => console.log('📦', swDest, '#️⃣ ', count, '🐘', size)),
   ],
   // Specifies two JS output configurations, modern and legacy, which the HTML plugin will
   // automatically choose between; the legacy build is compiled to ES5
