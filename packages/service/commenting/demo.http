@@ -25,3 +25,8 @@ Content-Type: application/json
   "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   "replyId": "5"
 }
+
+### Get all comment
+GET {{apiUrl}}/all?path=product/test
+Authorization: Bearer {{token}}
+Content-Type: application/json

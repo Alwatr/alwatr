@@ -3,23 +3,28 @@ import {nanoServer} from '../lib/nano-server.js';
 import {storage} from '../lib/storage.js';
 import {Comment} from '../lib/type.js';
 
-
 import type {AlwatrConnection} from '@alwatr/nano-server';
 
 nanoServer.route('PUT', '/', addComment);
 
 async function addComment(connection: AlwatrConnection): Promise<void> {
+  logger.logMethod('addComment');
   const token = connection.requireToken(config.nanoServer.token);
 
   if (token == null) return;
 
-  const params = await connection.requireQueryParams<{path: string}>({path: 'string'});
+  const params = connection.requireQueryParams<{path: string}>({path: 'string'});
   if (params == null) return;
 
   const bodyJson = await connection.requireJsonBody<Comment>();
   if (bodyJson == null) return;
 
   storage.config.name = params.path;
+
+  // check reply id exists
+  if (bodyJson.replyId !== undefined && !(await storage.has(bodyJson.replyId))) {
+    delete(bodyJson.replyId);
+  }
 
   try {
     connection.reply({
@@ -28,7 +33,7 @@ async function addComment(connection: AlwatrConnection): Promise<void> {
     });
   }
   catch (err) {
-    logger.error('newJob', (err as Error).message ?? 'storage_error', (err as Error).stack ?? err);
+    logger.error('addComment', (err as Error).message ?? 'storage_error', (err as Error).stack ?? err);
     connection.reply({
       ok: false,
       statusCode: 500,

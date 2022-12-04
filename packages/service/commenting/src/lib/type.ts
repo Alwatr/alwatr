@@ -1,6 +1,7 @@
 import {AlwatrDocumentObject} from '@alwatr/storage-engine';
 
 export type Comment = AlwatrDocumentObject & {
-  userName: string;
+  userId: string;
   text: string;
+  replyId?: string;
 }
