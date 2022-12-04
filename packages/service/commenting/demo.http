@@ -6,7 +6,7 @@
 GET {{apiUrl}}/
 
 ### Add comment
-PUT {{apiUrl}}/add?path=product/test
+PUT {{apiUrl}}/?path=product/test
 Authorization: Bearer {{token}}
 Content-Type: application/json
 

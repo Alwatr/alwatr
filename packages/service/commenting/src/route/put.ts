@@ -1,5 +1,4 @@
-import {logger} from 'src/lib/config.js';
-
+import {config, logger} from '../lib/config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storage} from '../lib/storage.js';
 import {Comment} from '../lib/type.js';
@@ -7,9 +6,13 @@ import {Comment} from '../lib/type.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
 
-nanoServer.route('PUT', '/add', addComment);
+nanoServer.route('PUT', '/', addComment);
 
 async function addComment(connection: AlwatrConnection): Promise<void> {
+  const token = connection.requireToken(config.nanoServer.token);
+
+  if (token == null) return;
+
   const params = await connection.requireQueryParams<{path: string}>({path: 'string'});
   if (params == null) return;
 
