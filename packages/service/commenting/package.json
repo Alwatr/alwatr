@@ -65,6 +65,7 @@
   "dependencies": {
     "@alwatr/logger": "^0.24.1",
     "@alwatr/nano-server": "^0.24.1",
+    "@alwatr/storage-client": "^0.24.1",
     "@alwatr/storage-engine": "^0.24.1"
   },
   "devDependencies": {
