@@ -14,3 +14,14 @@ Content-Type: application/json
   "userName": "njfamirm",
   "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 }
+
+### Add reply comment
+PUT {{apiUrl}}/?path=product/test
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "userName": "njfamirm",
+  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "replyId": "5"
+}
