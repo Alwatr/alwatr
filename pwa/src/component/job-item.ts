@@ -1,15 +1,16 @@
 import {AlwatrElement} from '@alwatr/element';
+import {l10n} from '@alwatr/i18n';
 import {css, html, nothing} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
-import '@alwatr/icon'; // TODO: preload icons after complete UI
+import '@alwatr/icon';
 
 import ionNormalize from '../style/ionic.normalize';
 import ionTheming from '../style/ionic.theming';
 
 import './ionic-components';
 
-import type {Job, JobFilter, JobResult} from '../type';
+import type {Job, JobDetail, JobResult} from '../type';
 import type {TemplateResult} from 'lit';
 
 declare global {
@@ -18,7 +19,7 @@ declare global {
   }
 }
 
-const i18nDayPartList: Record<JobFilter['dayPart'][0], string> = {
+export const i18nDayPartList: Record<JobDetail['dayPart'][0], string> = {
   earlyMorning: 'صبح زود',
   morning: 'صبح',
   midday: 'نیمه روز',
@@ -94,19 +95,27 @@ export class JobItem extends AlwatrElement {
 
   @property({attribute: false, type: Object}) job?: Job;
 
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    l10n.resourceChangeSignal.addListener(() => {
+      this.requestUpdate();
+    });
+  }
+
   override render(): TemplateResult | typeof nothing {
-    if (this.job == null) return nothing;
+    if (this.job == null || this.job.detail == null) return nothing;
 
     return html`
       <ion-item-sliding>
         <ion-item class="job" lines="full">
           <ion-label>
-            ${this.__renderTitle(i18nCityList[this.job.filter.origin], i18nCityList[this.job.filter.dest])}
+            ${this.__renderTitle(i18nCityList[this.job.detail.origin], i18nCityList[this.job.detail.dest])}
             ${this.__renderSubtitle(
-      this.job.filter.date,
-      this.job.filter.dayPart.map((part) => i18nDayPartList[part]).join(' - '),
+      this.job.detail.date,
+      this.job.detail.dayPart.map((part) => i18nDayPartList[part]).join(' - '),
   )}
-            ${this.__renderDescription('بر عمر کار کشته لعنت')}
+            ${this.__renderDescription(this.job.detail.description)}
           </ion-label>
           <ion-label slot="end"> ${this.__renderFoundList(this.job.resultList)} </ion-label>
         </ion-item>
@@ -149,19 +158,21 @@ export class JobItem extends AlwatrElement {
       const lowestPrice = Math.min(...resultList.map((result) => result.price));
       return html`
         <div class="job__title">
-          <span>${resultList.length.toLocaleString('fa')}</span>
-          پرواز
+          <span>${l10n.formatNumber(resultList.length)}</span>
+          ${l10n.localize('flight')}
         </div>
         <div class="job__subtitle job__subtitle-founded">
-          <span class="job__subtitle-price ion-color-danger"> ${lowestPrice.toLocaleString('fa')} </span>
-          <span> تومان </span>
+          <span class="job__subtitle-price ion-color-danger"> ${l10n.formatNumber(lowestPrice)} </span>
+          <span>${l10n.localize('config_currency')}</span>
         </div>
       `;
     }
-    return html` <ion-note>یافت نشد</ion-note> `;
+    return html` <ion-note>${l10n.localize('not_found')}</ion-note> `;
   }
 
-  private __renderDescription(description: string): TemplateResult {
+  private __renderDescription(description: string): TemplateResult | typeof nothing {
+    if (description.trim() == '') return nothing;
+
     return html` <ion-note>${description}</ion-note> `;
   }
 }
