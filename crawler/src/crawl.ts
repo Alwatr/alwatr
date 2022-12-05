@@ -19,6 +19,7 @@ export async function crawlAllJobs(): Promise<void> {
       const message = makeMessage(job);
       try {
         await notify(config.notifier.to, message);
+        logger.logOther(`Notified to ${config.notifier.to}!`);
       }
       catch (err) {
         logger.error('crawlAllJobs', 'notify_failed', (err as Error).stack || err);
@@ -95,10 +96,9 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
   logger.logMethod('extraFilterResult');
   let filteredJobResultList: Array<JobResult> = jobResultList;
 
-  if (detail.maxPrice !== null) {
+  if (detail.maxPrice != null) {
     filteredJobResultList = filteredJobResultList.filter((job) => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return job.price >= detail.maxPrice!;
+      return job.price >= detail.maxPrice;
     });
   }
 
