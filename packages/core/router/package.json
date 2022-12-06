@@ -32,8 +32,8 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.24.1",
-    "@alwatr/signal": "^0.24.1",
+    "@alwatr/logger": "~0.24.1",
+    "@alwatr/signal": "~0.24.1",
     "tslib": "~2.4.1"
   }
 }

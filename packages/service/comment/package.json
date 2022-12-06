@@ -1,36 +1,34 @@
 {
-  "name": "@alwatr/storage-server",
+  "name": "@alwatr/comment",
   "version": "0.24.1",
-  "description": "Alwatr Storage Server, Elegant micro in-memory json-like storage nanoservice with disk backed, Fastest NoSQL Database.",
+  "description": "Alwatr Comment API Microservice, Distributed simple and fast comment nanoservice base on @alwatr/storage-server",
   "type": "module",
   "keywords": [
-    "database",
-    "storage",
-    "json",
-    "nosql",
-    "no-sql",
     "api",
-    "data",
-    "data-storage",
-    "file",
+    "comment",
+    "chat",
     "microservice",
     "nanoservice",
     "typescript",
     "alwatr"
   ],
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "contributors": [
+    "S. Amir Mohammad Najafi <njfamirm@gmail.com> (https://njfamirm.ir)"
+  ],
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=7.0.0"
+    "node": ">=19.0.0",
+    "npm": ">=8.0.0",
+    "yarn": ">=1.22.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/service/storage-server"
+    "directory": "packages/service/comment"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/service/storage-server#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/service/comment#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
@@ -62,13 +60,13 @@
   "dependencies": {
     "@alwatr/logger": "~0.24.1",
     "@alwatr/nano-server": "~0.24.1",
-    "@alwatr/storage-engine": "~0.24.1"
+    "@alwatr/storage-client": "~0.24.1"
   },
   "devDependencies": {
     "@types/node": "~18.11.10",
     "@typescript-eslint/eslint-plugin": "~5.45.0",
     "@typescript-eslint/parser": "~5.45.0",
-    "eslint": "~8.29.0",
+    "eslint": "~8.28.0",
     "eslint-config-google": "~0.14.0",
     "eslint-import-resolver-typescript": "~3.5.2",
     "eslint-plugin-import": "~2.26.0",
