@@ -59,7 +59,7 @@ jobs:
 
           - image: comment
             path: service/comment
-            description: Elegant powerful nodejs server for comment microservice, written in tiny TypeScript module.
+            description: Distributed simple and fast comment nanoservice base on @alwatr/storage-server
             version:
               short: 0
               full: 0.24.1
