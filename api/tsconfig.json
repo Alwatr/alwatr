@@ -15,7 +15,7 @@
     "declaration": true,
     "declarationMap": true,
     // "outFile": "./",
-    "outDir": "./src",
+    "outDir": "./dist",
     "rootDir": "./src",
     // "composite": true,
     // "tsBuildInfoFile": ".tsbuildinfo",
