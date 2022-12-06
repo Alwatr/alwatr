@@ -14,12 +14,10 @@ async function getAllComment(connection: AlwatrConnection): Promise<void> {
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
   if (params == null) return;
 
-  storage.config.name = params.storage;
-
   try {
     connection.reply({
       ok: true,
-      data: await storage.getAll(),
+      data: await storage.getAll(params.storage),
     });
   }
   catch (err) {

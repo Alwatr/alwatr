@@ -19,17 +19,15 @@ async function addComment(connection: AlwatrConnection): Promise<void> {
   const bodyJson = await connection.requireJsonBody<Message>();
   if (bodyJson == null) return;
 
-  storage.config.name = params.storage;
-
   // check reply id exists
-  if (bodyJson.replyId !== undefined && !(await storage.has(bodyJson.replyId))) {
+  if (bodyJson.replyId !== undefined && !(await storage.has(bodyJson.replyId, params.storage))) {
     delete(bodyJson.replyId);
   }
 
   try {
     connection.reply({
       ok: true,
-      data: await storage.set({...bodyJson, id: 'auto_increment'}),
+      data: await storage.set({...bodyJson, id: 'auto_increment'}, params.storage),
     });
   }
   catch (err) {

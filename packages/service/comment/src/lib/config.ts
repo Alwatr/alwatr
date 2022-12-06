@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-export const logger = createLogger('storage-server');
+export const logger = createLogger('comment');
 
 export const config = {
   nanoServer: {
@@ -12,7 +12,6 @@ export const config = {
   storage: {
     host: process.env.STORAGE_HOST ?? '127.0.0.1',
     port: process.env.STORAGE_PORT != null ? +process.env.STORAGE_PORT : 9000,
-    name: process.env.STORAGE_NAME ?? 'comment',
     token: process.env.STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
 };
