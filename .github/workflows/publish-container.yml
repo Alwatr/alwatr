@@ -57,9 +57,9 @@ jobs:
               short: 0
               full: 0.24.1
 
-          - image: commenting
-            path: service/commenting
-            description: Elegant powerful nodejs server for commenting microservice, written in tiny TypeScript module.
+          - image: comment
+            path: service/comment
+            description: Elegant powerful nodejs server for comment microservice, written in tiny TypeScript module.
             version:
               short: 0
               full: 0.24.1

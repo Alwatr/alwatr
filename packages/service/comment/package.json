@@ -1,7 +1,7 @@
 {
-  "name": "@alwatr/commenting",
+  "name": "@alwatr/comment",
   "version": "0.24.1",
-  "description": "Alwatr Commenting API Microservice",
+  "description": "Alwatr Comment API Microservice",
   "type": "module",
   "keywords": [
     "database",
@@ -12,7 +12,7 @@
     "api",
     "data",
     "data-storage",
-    "commenting",
+    "comment",
     "comment",
     "chat",
     "file",
@@ -35,9 +35,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/service/commenting"
+    "directory": "packages/service/comment"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/service/commenting#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/service/comment#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
