@@ -7,9 +7,9 @@ Elegant micro in-memory json-like storage with disk backed, Fastest NoSQL Databa
 ```ts
 import {AlwatrStorageEngine} from '@alwatr/storage-engine';
 
-import type {DocumentObject} from '@alwatr/storage-engine';
+import type {AlwatrDocumentObject} from '@alwatr/storage-engine';
 
-interface User extends DocumentObject {
+interface User extends AlwatrDocumentObject {
   fname: string;
   lname: string;
   email: string;
@@ -30,8 +30,7 @@ let ali = db.get('alimd');
 if (ali == null) {
   console.log('ali not found');
   ali = {
-    _id: 'alimd',
-    _updatedBy: 'demo',
+    id: 'alimd',
     fname: 'Ali',
     lname: 'Mihandoost',
     email: 'ali@mihandoost.com',
@@ -44,8 +43,7 @@ if (ali == null) {
 db.set(ali);
 
 db.set({
-  _id: 'fmd',
-  _updatedBy: 'demo',
+  id: 'fmd',
   fname: 'Fatemeh',
   lname: 'Mihandoost',
   email: 'Fatemeh@mihandoost.com',
@@ -89,7 +87,7 @@ All document ids in array.
 
 Insert/update a document object in the storage.
 
-- **documentObject**: The document object to insert/update contain `_id`.
+- **documentObject**: The document object to insert/update contain `id`.
 - **fastInstance**: by default it will make a copy of the document before set.
   if you set fastInstance to true, it will set the original document.
   This is dangerous but much faster, you should use it only if you know what you are doing.
@@ -98,7 +96,7 @@ Example:
 
 ```ts
 userStorage.set({
-  _id: 'user-1',
+  id: 'user-1',
   foo: 'bar',
 });
 ```
@@ -138,19 +136,17 @@ Example:
 userStorage.delete('user-1');
 ```
 
-### `async forAll(callbackfn: (documentObject: DocumentType) => void | false | Promise<void | false>): Promise<void>`
+### `*allObject()`
 
-Loop over all document objects asynchronous.
-
-You can return false in callbackfn to break the loop.
+Loop over all document objects.
 
 Example:
 
 ```ts
-await userStorage.forAll(async (user) => {
-  await sendMessage(user._id, 'Happy new year!');
+for(const user of userStorage.allObject()) {
+  await sendMessage(user.id, 'Happy new year!');
   user.sent = true; // direct change document (use with caution)!
-});
+}
 ```
 
 ### `save(): void`

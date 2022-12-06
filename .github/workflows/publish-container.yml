@@ -10,8 +10,11 @@ on:
       - 'packages/container/**'
       - 'packages/service/**'
       - '.github/workflows/publish-container.yml'
+    tags:
+      - 'v*.*.*'
     branches:
       - next
+      - main
 
   pull_request:
     paths:
@@ -52,7 +55,14 @@ jobs:
             description: Storage nanoservice with disk backed, Fastest NoSQL Database.
             version:
               short: 0
-              full: 0.22.0
+              full: 0.24.1
+
+          - image: comment
+            path: service/comment
+            description: Distributed simple and fast comment nanoservice base on @alwatr/storage-server
+            version:
+              short: 0
+              full: 0.24.1
 
           # - image: tdlib
           #   path: container/tdlib

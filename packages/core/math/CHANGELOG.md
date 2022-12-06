@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.1](https://github.com/AliMD/alwatr/compare/v0.24.0...v0.24.1) (2022-12-01)
+
+### Bug Fixes
+
+- set correct dependencies in package.json and references in tsconfig.json ([1fb05a8](https://github.com/AliMD/alwatr/commit/1fb05a80e1e098f3334cf3b4bd9c9ebf0c75fbf8))
+
+# [0.24.0](https://github.com/AliMD/alwatr/compare/v0.23.0...v0.24.0) (2022-11-28)
+
+### Bug Fixes
+
+- use ~ for package version ([4e027ff](https://github.com/AliMD/alwatr/commit/4e027ff63875e03b088ebcdc1bdf2495f4494eec))
+
 # [0.23.0](https://github.com/AliMD/alwatr/compare/v0.22.1...v0.23.0) (2022-11-23)
 
 **Note:** Version bump only for package @alwatr/math

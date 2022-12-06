@@ -5,13 +5,14 @@
     "google",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:wc/recommended",
     "plugin:import/recommended",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:wc/best-practice",
+    "plugin:lit/recommended"
   ],
   "env": {
-    "browser": true,
-    "es2021": true
+    "shared-node-browser": true,
+    "es2022": true
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

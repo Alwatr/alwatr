@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.1](https://github.com/AliMD/alwatr/compare/v0.24.0...v0.24.1) (2022-12-01)
+
+**Note:** Version bump only for package @alwatr/nano-server
+
+# [0.24.0](https://github.com/AliMD/alwatr/compare/v0.23.0...v0.24.0) (2022-11-28)
+
+### Bug Fixes
+
+- **demo:** update types ([010b123](https://github.com/AliMD/alwatr/commit/010b123075d073c8583f557608a9781064d7cc5c))
+- **nano-server:** \_sanitizeParam types ([bd4f39d](https://github.com/AliMD/alwatr/commit/bd4f39d32ceef5f2be26fce27a37cc7e1d5f6bd6))
+- **nano-server:** deps ([ea0ceba](https://github.com/AliMD/alwatr/commit/ea0ceba7da3d1bc0542d9eb69d951aa3c3165175))
+- **nano-server:** handle preflight request ([ab575cd](https://github.com/AliMD/alwatr/commit/ab575cd67b3f06dc64c895a7080e766b02ee3c22))
+- **nano-server:** use config for cors ([947dad9](https://github.com/AliMD/alwatr/commit/947dad9473d7408aad9a4640ffdd2157edae10c5))
+- use ~ for package version ([4e027ff](https://github.com/AliMD/alwatr/commit/4e027ff63875e03b088ebcdc1bdf2495f4494eec))
+
 # [0.23.0](https://github.com/AliMD/alwatr/compare/v0.22.1...v0.23.0) (2022-11-23)
 
 ### Bug Fixes

@@ -106,7 +106,7 @@ export class UnicodeDigits {
 
     this._toLangZeroCode = supportedLanguageList[toLanguage];
 
-    const regParts = [];
+    const regParts: Array<string> = [];
     for (let n = 0; n < 10; n++) {
       regParts.push(
           '(' + fromLanguages.map((langKey) => String.fromCharCode(supportedLanguageList[langKey] + n)).join('|') + ')',

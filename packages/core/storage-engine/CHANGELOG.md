@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.1](https://github.com/AliMD/alwatr/compare/v0.24.0...v0.24.1) (2022-12-01)
+
+**Note:** Version bump only for package @alwatr/storage-engine
+
+# [0.24.0](https://github.com/AliMD/alwatr/compare/v0.23.0...v0.24.0) (2022-11-28)
+
+### Bug Fixes
+
+- remove \_updatedBy ([d8d5c83](https://github.com/AliMD/alwatr/commit/d8d5c83884bbd30566001ff84faf9e840503471c))
+- **storage-engine:** generic get type ([a287362](https://github.com/AliMD/alwatr/commit/a2873624fe2fd8071944528dba2e0c1d4dd006cc))
+- **storage-engine:** update types ([26bc0ae](https://github.com/AliMD/alwatr/commit/26bc0ae48b0b41cc2a9d18d3bb2883fafb447ede))
+- **storage-engine:** util types ([41f97fd](https://github.com/AliMD/alwatr/commit/41f97fdbd4c902dc11b82b230a805bbf7b77ec81))
+- update types ([44cc57f](https://github.com/AliMD/alwatr/commit/44cc57f97a99ed810dae3fde39c9525bd0e8ff3c))
+- use ~ for package version ([4e027ff](https://github.com/AliMD/alwatr/commit/4e027ff63875e03b088ebcdc1bdf2495f4494eec))
+
+### Features
+
+- **storage-engine:** improve provider debug ([c9cfc8f](https://github.com/AliMD/alwatr/commit/c9cfc8f4914887d4861e67f5a39670a646e9900a))
+
 # [0.23.0](https://github.com/AliMD/alwatr/compare/v0.22.1...v0.23.0) (2022-11-23)
 
 **Note:** Version bump only for package @alwatr/storage-engine

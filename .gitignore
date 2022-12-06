@@ -14,11 +14,11 @@ Desktop.ini
 *.log*
 
 # Build
-dist
 .tsbuildinfo
-*.js
 *.map
 *.d.ts
+*.js
+!/*.js
 
 # Dependencies
 node_modules

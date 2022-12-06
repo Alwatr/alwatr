@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.1](https://github.com/AliMD/alwatr/compare/v0.24.0...v0.24.1) (2022-12-01)
+
+**Note:** Version bump only for package @alwatr/fetch
+
+# [0.24.0](https://github.com/AliMD/alwatr/compare/v0.23.0...v0.24.0) (2022-11-28)
+
+### Bug Fixes
+
+- **fetch:** AlwatrServiceResponseSuccessWithMeta types ([b46f3f2](https://github.com/AliMD/alwatr/commit/b46f3f22a7c5a671385b0a8f58d0881501ce1b94))
+- **fetch:** use nre method type ([1c63eca](https://github.com/AliMD/alwatr/commit/1c63eca994582c241112c3e5ae79bac49831532f))
+- update types ([44cc57f](https://github.com/AliMD/alwatr/commit/44cc57f97a99ed810dae3fde39c9525bd0e8ff3c))
+- use ~ for package version ([4e027ff](https://github.com/AliMD/alwatr/commit/4e027ff63875e03b088ebcdc1bdf2495f4494eec))
+
 # [0.23.0](https://github.com/AliMD/alwatr/compare/v0.22.1...v0.23.0) (2022-11-23)
 
 ### Bug Fixes

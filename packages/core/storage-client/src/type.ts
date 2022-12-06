@@ -1,10 +1,8 @@
-import type {DocumentObject} from '@alwatr/storage-engine';
-
 export type AlwatrStorageClientConfig = {
   /**
    * Storage name (like database name).
    */
-  name: string;
+  name?: string;
 
   /**
    * Storage server host name.
@@ -37,20 +35,3 @@ export type AlwatrStorageClientConfig = {
    */
   debug?: boolean;
 };
-
-type ServerResponseFailed = {
-  ok: false;
-  statusCode: number;
-  errorCode: string;
-  data?: Record<string, unknown>;
-};
-
-type ServerResponseSuccess<DataType> = {
-  ok: true;
-  statusCode?: number;
-  data: DataType;
-};
-
-export type ServerResponse<DataType extends Record<string, unknown> = DocumentObject> =
-  | ServerResponseSuccess<DataType>
-  | ServerResponseFailed;

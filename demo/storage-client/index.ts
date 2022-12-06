@@ -1,8 +1,8 @@
 import {AlwatrStorageClient} from '@alwatr/storage-client';
 
-import type {DocumentObject} from '@alwatr/storage-client';
+import type {AlwatrDocumentObject} from '@alwatr/storage-client';
 
-interface User extends DocumentObject {
+interface User extends AlwatrDocumentObject {
   fname: string;
   lname: string;
   email: string;
@@ -25,7 +25,7 @@ try {
   console.log('ali found: %o', ali);
   /**
    * {
-   *   _id: 'alimd',
+   *   id: 'alimd',
    *   fname: 'Ali',
    *   lname: 'MM',
    *   email: 'i@ali.md',
@@ -37,9 +37,8 @@ try {
 catch (err) {
   if ((err as Error).message === 'document_not_found') {
     console.log('ali not found');
-    ali = {
-      _id: 'alimd',
-      _updatedBy: 'demo',
+    const ali = {
+      id: 'alimd',
       fname: 'Ali',
       lname: 'Mihandoost',
       email: 'ali@mihandoost.com',
@@ -52,8 +51,7 @@ catch (err) {
 }
 
 await db.set({
-  _id: 'fmd',
-  _updatedBy: 'demo',
+  id: 'fmd',
   fname: 'Fatemeh',
   lname: 'Mihandoost',
   email: 'Fatemeh@mihandoost.com',

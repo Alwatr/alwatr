@@ -49,10 +49,10 @@ const getNextColor = (): string => {
 
 const debugString = isBrowser
   ? globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim()
-  : globalThis.process?.env?.ALWATR_DEBUG?.trim();
+  : process?.env?.ALWATR_DEBUG?.trim();
 
 const getDebugState = (scope: string): boolean => {
-  if (debugString == null && isBrowser === false && globalThis.process.env.NODE_ENV !== 'production') {
+  if (debugString == null && isBrowser === false && process.env.NODE_ENV !== 'production') {
     return true;
   }
 
@@ -102,12 +102,10 @@ export const style = {
  * const logger = createLogger('logger/demo');
  * ```
  */
-export const createLogger = (
-    scope: string,
-    color: string = getNextColor(),
-    debug = getDebugState(scope),
-): AlwatrLogger => {
+export const createLogger = (scope: string, color?: string | null, debug?: boolean): AlwatrLogger => {
   scope = scope.trim();
+  color ??= getNextColor();
+  debug ??= getDebugState(scope);
 
   const first = scope.charAt(0);
   if (first !== '[' && first !== '{' && first !== '(' && first !== '<') {
@@ -128,6 +126,10 @@ export const createLogger = (
     color,
     scope,
 
+    incident: isBrowser
+      ? console.log.bind(console, '%c%s%c.%s() Incident `%s` %s!', styleScope, scope, 'color: orange;')
+      : console.log.bind(console, `${styleScope}🚸\n%s${style.reset}.%s() Incident \`%s\` %s!${style.reset}`, scope),
+
     accident: isBrowser
       ? console.warn.bind(console, '%c%s%c.%s() Accident `%s` %s!', styleScope, scope, style.reset)
       : console.warn.bind(console, `${styleScope}⚠️\n%s\x1b[33m.%s() Accident \`%s\` %s!${style.reset}`, scope),
@@ -144,7 +146,6 @@ export const createLogger = (
       logMethod: empty,
       logMethodArgs: empty,
       logMethodFull: empty,
-      incident: empty,
       logOther: empty,
     };
   }
@@ -160,10 +161,6 @@ export const createLogger = (
     logMethodArgs: console.debug.bind(console, keySection + '.%s(%o);', styleScope, scope, style.reset),
 
     logMethodFull: console.debug.bind(console, keySection + '.%s(%o) => %o', styleScope, scope, style.reset),
-
-    incident: isBrowser
-      ? console.log.bind(console, '%c%s%c.%s() Incident `%s` %s!', styleScope, scope, 'color: orange;')
-      : console.log.bind(console, `${styleScope}🚸\n%s${style.reset}.%s() Incident \`%s\` %s!${style.reset}`, scope),
 
     logOther: console.debug.bind(console, keySection, styleScope, scope, style.reset),
   };

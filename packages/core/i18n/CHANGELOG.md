@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.1](https://github.com/AliMD/alwatr/compare/v0.24.0...v0.24.1) (2022-12-01)
+
+### Bug Fixes
+
+- **i18n:** setLocal type ([d801958](https://github.com/AliMD/alwatr/commit/d801958bcc130e93677a1efe2c0c2c6dc420b700))
+
+### Features
+
+- **i18n:** improve i18n types ([cf7d1cb](https://github.com/AliMD/alwatr/commit/cf7d1cb863ac039ec42fadeeb40ac371cfe936c5))
+
+# [0.24.0](https://github.com/AliMD/alwatr/compare/v0.23.0...v0.24.0) (2022-11-28)
+
+### Bug Fixes
+
+- use ~ for package version ([4e027ff](https://github.com/AliMD/alwatr/commit/4e027ff63875e03b088ebcdc1bdf2495f4494eec))
+
 # [0.23.0](https://github.com/AliMD/alwatr/compare/v0.22.1...v0.23.0) (2022-11-23)
 
 **Note:** Version bump only for package @alwatr/i18n
