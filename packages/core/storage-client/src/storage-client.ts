@@ -60,7 +60,7 @@ alwatrRegisteredList.push({
  *   console.log('delete 404: %o', (err as Error).message);
  * }
  */
-export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject> {
+export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = AlwatrDocumentObject> {
   protected _logger = createLogger('alwatr-storage-client:' + this.config.name, undefined, this.config.debug);
 
   /**
@@ -103,18 +103,23 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject> {
    * }
    * ```
    */
-  async get(documentId: string): Promise<DocumentType> {
+  async get<T extends DocumentType = DocumentType>(
+      documentId: string,
+      storage: string | undefined = this.config.name,
+  ): Promise<T> {
     this._logger.logMethodArgs('get', {documentId});
+
+    if (storage == null) throw new Error('storage_not_defined');
 
     const response = await fetch({
       ...this.fetchOption,
       queryParameters: {
-        storage: this.config.name,
+        storage,
         id: documentId,
       },
     });
 
-    let content: AlwatrServiceResponse<DocumentType>;
+    let content: AlwatrServiceResponse<T>;
     try {
       content = await response.json();
     }
