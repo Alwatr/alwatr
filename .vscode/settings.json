@@ -10,9 +10,9 @@
   },
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "files.exclude": {
-    "*/src/**/*.map": true,
-    "*/src/**/*.js": true,
-    "*/src/**/*.d.ts": true
+    "**/*.map": true,
+    "**/*.d.ts": true,
+    "**/*.tsbuildinfo": true,
   },
   "cSpell.language": "en,fa",
   "cSpell.words": [

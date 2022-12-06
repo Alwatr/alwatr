@@ -6,7 +6,9 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "private": true,
   "engines": {
-    "npm": ">=7.0.0"
+    "node": ">=19.0.0",
+    "npm": ">=8.0.0",
+    "yarn": ">=1.22.0"
   },
   "browserslist": "> 0.1%, not dead",
   "repository": {
@@ -20,11 +22,11 @@
     "s": "run-s clean build serve",
     "w": "yarn watch",
     "start": "yarn serve",
-    "clean": "rimraf build/",
-    "build": "run-s build:*",
+    "clean": "yarn build:ts --clean && rimraf dist",
+    "build": "run-s build:ts build:es",
     "build:ts": "tsc --build --pretty",
-    "build:es": "yarn clean && rollup -c",
-    "serve": "web-dev-server --config dev-server.mjs",
+    "build:es": "rimraf dist && rollup -c",
+    "serve": "wds",
     "watch": "run-s clean build:ts && run-p watch:ts serve",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
@@ -37,20 +39,26 @@
     "@alwatr/router": "~0.24.1",
     "@alwatr/signal": "~0.24.1",
     "@ionic/core": "~6.3.9",
-    "@webcomponents/webcomponentsjs": "~2.7.0",
     "lit": "~2.4.1"
   },
   "devDependencies": {
-    "rimraf": "^3.0.2",
+    "rimraf": "~3.0.2",
     "@babel/preset-env": "~7.20.2",
     "@rollup/plugin-babel": "~6.0.3",
     "@rollup/plugin-node-resolve": "~15.0.1",
+    "@rollup/plugin-terser": "~0.1.0",
     "@web/dev-server": "~0.1.35",
+    "@web/dev-server-esbuild": "~0.3.3",
+    "@web/rollup-plugin-copy": "~0.3.0",
+    "@web/rollup-plugin-html": "~1.11.0",
+    "@web/rollup-plugin-polyfills-loader": "~1.3.1",
+    "@webcomponents/webcomponentsjs": "~2.7.0",
+    "lit-analyzer": "~1.2.1",
     "npm-run-all": "~4.1.5",
     "rollup": "~3.5.1",
     "rollup-plugin-minify-html-literals": "~1.2.6",
     "rollup-plugin-summary": "~2.0.0",
-    "rollup-plugin-terser": "~7.0.2",
+    "rollup-plugin-workbox": "~6.2.0",
     "ts-lit-plugin": "~1.2.1",
     "tslib": "~2.4.1",
     "typescript": "~4.9.3"

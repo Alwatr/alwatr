@@ -6,6 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
     />
+    <base href="/">
 
     <title>Flight Finder</title>
     <meta name="description" content="An Flight Finder Progressive Web Application!" />
@@ -19,12 +20,7 @@
       fetchpriority="high"
     />
 
-    <link
-      rel="preload"
-      href="config.js"
-      as="script"
-      type="text/javascript"
-    />
+    <link rel="preload" href="config.js" as="script" type="text/javascript" />
 
     <link
       rel="preload"
@@ -34,11 +30,11 @@
       crossorigin
     />
 
-    <link rel="icon" href="image/icon-192.png" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#3277b9" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#3277b9" />
 
     <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="image/favicon.ico" sizes="any" />
 
     <!-- Add to home screen for Chrome on Android. Fallback for manifest.json -->
     <meta name="mobile-web-app-capable" content="yes" />
@@ -51,14 +47,14 @@
     <link rel="apple-touch-startup-image" href="image/icon-192.png" />
 
     <!-- Home screen icons -->
-    <link rel="apple-touch-icon" href="image/icon-192.png" />
+    <link rel="apple-touch-icon" href="image/apple-touch-icon.png" />
 
     <!-- Tile icon for Windows 8 (144x144 + tile color) -->
     <meta name="msapplication-TileImage" content="image/icon-192.png" />
     <meta name="msapplication-TileColor" content="#3277b9" />
     <meta name="msapplication-tap-highlight" content="no" />
 
-    <link rel="stylesheet" href="global.css" />
+    <link rel="stylesheet" href="src/style/global.css" />
   </head>
   <body>
     <ion-app>

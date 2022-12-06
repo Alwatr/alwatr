@@ -16,10 +16,10 @@ Desktop.ini
 # Build
 dist
 build
-**/src/**/*.map
+*.map
+*.d.ts
+*.tsbuildinfo
 **/src/**/*.js
-**/src/**/*.d.ts
-**/src/**/*.tsbuildinfo
 
 # Dependencies
 node_modules
@@ -27,10 +27,6 @@ package-lock.json
 
 # Yarn Integrity file
 .yarn-integrity
-
-# dotenv environment variables file
-.env
-.env.test
 
 # storage
 _data
