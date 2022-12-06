@@ -5,25 +5,29 @@
 ### home
 GET {{apiUrl}}/
 
-### Add comment
-PUT {{apiUrl}}/?storage=product/test
+### Add new comment
+PATCH {{apiUrl}}/?storage=product/test
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
+  "id": "auto_increment",
   "user": "njfamirm",
-  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  "type": "text",
+  "text": "سلام ;)"
 }
 
-### Add reply comment
-PUT {{apiUrl}}/?storage=product/test
+### Add new reply
+PATCH {{apiUrl}}/?storage=product/test
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "user": "njfamirm",
-  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  "replyId": "5"
+  "id": "auto_increment",
+  "user": "alimd",
+  "type": "text",
+  "text": "علیک سلام :)",
+  "replyId": "1"
 }
 
 ### Get all comment

@@ -8,6 +8,7 @@ nanoServer.route('GET', '/all', getAllComment);
 
 async function getAllComment(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('getAllComment');
+
   const token = connection.requireToken(config.nanoServer.token);
   if (token == null) return;
 
