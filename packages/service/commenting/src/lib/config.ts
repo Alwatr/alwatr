@@ -6,6 +6,7 @@ export const config = {
   nanoServer: {
     host: process.env.HOST ?? '0.0.0.0',
     port: process.env.PORT != null ? +process.env.PORT : 8000,
+    allowAllOrigin: true,
     token: process.env.TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
   storage: {
