@@ -1,6 +1,6 @@
 # Comment Service
 
-Elegant powerful nodejs server for comment microservice, written in tiny TypeScript module.
+Distributed simple and fast comment nanoservice base on [@alwatr/storage-server](../storage-server/).
 
 ## How to use
 
