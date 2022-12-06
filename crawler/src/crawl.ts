@@ -11,21 +11,21 @@ export async function crawlAllJobs(): Promise<void> {
   const jobList = await storage.getAll();
   for (const jobId in jobList) {
     if (!Object.prototype.hasOwnProperty.call(jobList, jobId)) continue;
-    const job = jobList[jobId];
-    const oldResultList = job.resultList;
-    const resultList = await crawl(job.detail);
-    job.resultList = resultList;
-    if (differentObject(resultList, oldResultList)) {
-      const message = makeMessage(job);
-      try {
+    try {
+      const job = jobList[jobId];
+      const oldResultList = job.resultList;
+      const resultList = await crawl(job.detail);
+      job.resultList = resultList;
+      if (differentObject(resultList, oldResultList)) {
+        const message = makeMessage(job);
         await notify(config.notifier.to, message);
         logger.logOther(`Notified to ${config.notifier.to}!`);
       }
-      catch (err) {
-        logger.error('crawlAllJobs', 'notify_failed', (err as Error).stack || err);
-      }
+      await storage.set(job);
     }
-    await storage.set(job);
+    catch (err) {
+      logger.error('crawlAllJobs', 's', (err as Error).stack);
+    }
   }
 }
 
@@ -97,8 +97,9 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
   let filteredJobResultList: Array<JobResult> = jobResultList;
 
   if (detail.maxPrice != null) {
+    const maxPrice = detail.maxPrice;
     filteredJobResultList = filteredJobResultList.filter((job) => {
-      return job.price >= detail.maxPrice;
+      return job.price >= maxPrice;
     });
   }
 
