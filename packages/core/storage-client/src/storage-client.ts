@@ -150,14 +150,16 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * if (!userExist) console.log('user_not_found');
    * ```
    */
-  async has(documentId: string): Promise<boolean> {
+  async has(documentId: string, storage: string | undefined = this.config.name): Promise<boolean> {
     this._logger.logMethodArgs('has', {documentId});
+
+    if (storage == null) throw new Error('storage_not_defined');
 
     const response = await fetch({
       ...this.fetchOption,
       url: this.fetchOption.url + 'has',
       queryParameters: {
-        storage: this.config.name,
+        storage,
         id: documentId,
       },
     });
@@ -192,19 +194,24 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * });
    * ```
    */
-  async set(documentObject: DocumentType): Promise<DocumentType> {
+  async set<T extends DocumentType = DocumentType>(
+      documentObject: T,
+      storage: string | undefined = this.config.name,
+  ): Promise<T> {
     this._logger.logMethodArgs('set', {documentId: documentObject.id});
+
+    if (storage == null) throw new Error('storage_not_defined');
 
     const response = await fetch({
       ...this.fetchOption,
       method: 'PATCH',
       queryParameters: {
-        storage: this.config.name,
+        storage,
       },
       bodyJson: documentObject,
     });
 
-    let content: AlwatrServiceResponse<DocumentType>;
+    let content: AlwatrServiceResponse<T>;
     try {
       content = await response.json();
     }
@@ -229,14 +236,16 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * await userStorage.delete('user-1');
    * ```
    */
-  async delete(documentId: string): Promise<void> {
+  async delete(documentId: string, storage: string | undefined = this.config.name): Promise<void> {
     this._logger.logMethodArgs('delete', {documentId});
+
+    if (storage == null) throw new Error('storage_not_defined');
 
     const response = await fetch({
       ...this.fetchOption,
       method: 'DELETE',
       queryParameters: {
-        storage: this.config.name,
+        storage,
         id: documentId,
       },
     });
@@ -269,18 +278,22 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * const userStorage = await userStorage.getAll();
    * ```
    */
-  async getAll(): Promise<Record<string, DocumentType>> {
+  async getAll<T extends DocumentType = DocumentType>(
+      storage: string | undefined = this.config.name,
+  ): Promise<Record<string, T>> {
     this._logger.logMethod('getAll');
+
+    if (storage == null) throw new Error('storage_not_defined');
 
     const response = await fetch({
       ...this.fetchOption,
       url: this.fetchOption.url + 'all',
       queryParameters: {
-        storage: this.config.name,
+        storage,
       },
     });
 
-    let content: AlwatrServiceResponse<Record<string, DocumentType>>;
+    let content: AlwatrServiceResponse<Record<string, T>>;
     try {
       content = await response.json();
     }
@@ -305,14 +318,16 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * const userIdArray = await userStorage.keys();
    * ```
    */
-  async keys(): Promise<Array<string>> {
+  async keys(storage?: string): Promise<Array<string>> {
     this._logger.logMethod('keys');
+
+    if (storage == null) throw new Error('storage_not_defined');
 
     const response = await fetch({
       ...this.fetchOption,
       url: this.fetchOption.url + 'keys',
       queryParameters: {
-        storage: this.config.name,
+        storage,
       },
     });
 
