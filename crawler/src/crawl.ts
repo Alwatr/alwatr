@@ -11,15 +11,21 @@ export async function crawlAllJobs(): Promise<void> {
   const jobList = await storage.getAll();
   for (const jobId in jobList) {
     if (!Object.prototype.hasOwnProperty.call(jobList, jobId)) continue;
-    const job = jobList[jobId];
-    const oldResultList = job.resultList;
-    const resultList = await crawl(job.detail);
-    job.resultList = resultList;
-    if (differentObject(resultList, oldResultList)) {
-      const message = makeMessage(job);
-      await notify(config.notifier.to, message);
+    try {
+      const job = jobList[jobId];
+      const oldResultList = job.resultList;
+      const resultList = await crawl(job.detail);
+      job.resultList = resultList;
+      if (differentObject(resultList, oldResultList)) {
+        const message = makeMessage(job);
+        await notify(config.notifier.to, message);
+        logger.logOther(`Notified to ${config.notifier.to}!`);
+      }
+      await storage.set(job);
     }
-    await storage.set(job);
+    catch (err) {
+      logger.error('crawlAllJobs', 's', (err as Error).stack);
+    }
   }
 }
 
@@ -28,7 +34,7 @@ async function crawl(detail: JobDetail): Promise<Array<JobResult>> {
   const fetchOption = makeRequestOption(detail);
   const response = await makeRequest(fetchOption);
   let resultList = await translateResponse(response);
-  resultList = extraFilterResult(resultList);
+  resultList = extraFilterResult(resultList, detail);
   return resultList;
 }
 
@@ -86,9 +92,22 @@ async function translateResponse(response: Response): Promise<Array<JobResult>> 
   return jobResult;
 }
 
-function extraFilterResult(jobResultList: Array<JobResult>): Array<JobResult> {
+function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): Array<JobResult> {
   logger.logMethod('extraFilterResult');
-  return jobResultList;
+  let filteredJobResultList: Array<JobResult> = jobResultList;
+
+  if (detail.maxPrice != null) {
+    const maxPrice = detail.maxPrice;
+    filteredJobResultList = filteredJobResultList.filter((job) => {
+      return job.price >= maxPrice;
+    });
+  }
+
+  filteredJobResultList.filter((job) => {
+    return job.seatCount >= detail.seatCount;
+  });
+
+  return filteredJobResultList;
 }
 
 function makeMessage(job: Job): string {
@@ -108,7 +127,7 @@ function makeMessage(job: Job): string {
 }
 
 async function notify(to: string, message: string): Promise<void> {
-  const response = await fetch({
+  await fetch({
     url: config.notifier.host,
     method: 'POST',
     headers: {
@@ -116,6 +135,4 @@ async function notify(to: string, message: string): Promise<void> {
     },
     bodyJson: {to, message},
   });
-
-  console.log(response);
 }
