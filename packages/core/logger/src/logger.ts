@@ -126,6 +126,10 @@ export const createLogger = (scope: string, color?: string | null, debug?: boole
     color,
     scope,
 
+    incident: isBrowser
+      ? console.log.bind(console, '%c%s%c.%s() Incident `%s` %s!', styleScope, scope, 'color: orange;')
+      : console.log.bind(console, `${styleScope}🚸\n%s${style.reset}.%s() Incident \`%s\` %s!${style.reset}`, scope),
+
     accident: isBrowser
       ? console.warn.bind(console, '%c%s%c.%s() Accident `%s` %s!', styleScope, scope, style.reset)
       : console.warn.bind(console, `${styleScope}⚠️\n%s\x1b[33m.%s() Accident \`%s\` %s!${style.reset}`, scope),
@@ -142,7 +146,6 @@ export const createLogger = (scope: string, color?: string | null, debug?: boole
       logMethod: empty,
       logMethodArgs: empty,
       logMethodFull: empty,
-      incident: empty,
       logOther: empty,
     };
   }
@@ -158,10 +161,6 @@ export const createLogger = (scope: string, color?: string | null, debug?: boole
     logMethodArgs: console.debug.bind(console, keySection + '.%s(%o);', styleScope, scope, style.reset),
 
     logMethodFull: console.debug.bind(console, keySection + '.%s(%o) => %o', styleScope, scope, style.reset),
-
-    incident: isBrowser
-      ? console.log.bind(console, '%c%s%c.%s() Incident `%s` %s!', styleScope, scope, 'color: orange;')
-      : console.log.bind(console, `${styleScope}🚸\n%s${style.reset}.%s() Incident \`%s\` %s!${style.reset}`, scope),
 
     logOther: console.debug.bind(console, keySection, styleScope, scope, style.reset),
   };
