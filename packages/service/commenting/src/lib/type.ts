@@ -1,7 +1,18 @@
-import {AlwatrDocumentObject} from '@alwatr/storage-engine';
+import {AlwatrDocumentObject} from '@alwatr/storage-client';
 
-export type Comment = AlwatrDocumentObject & {
-  userId: string;
-  text: string;
+type CommonMessage = AlwatrDocumentObject & {
+  user: unknown;
   replyId?: string;
-}
+};
+
+export type TextMessage = CommonMessage & {
+  type: 'text';
+  text: string;
+};
+
+export type PhotoMessage = CommonMessage & {
+  type: 'photo';
+  photo: Record<string, unknown>;
+};
+
+export type Message = TextMessage | PhotoMessage;

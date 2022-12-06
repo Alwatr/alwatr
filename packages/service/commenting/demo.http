@@ -16,17 +16,17 @@ Content-Type: application/json
 }
 
 ### Add reply comment
-PUT {{apiUrl}}/?path=product/test
+PUT {{apiUrl}}/?storage=product/test
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "userName": "njfamirm",
+  "user": "njfamirm",
   "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   "replyId": "5"
 }
 
 ### Get all comment
-GET {{apiUrl}}/all?path=product/test
+GET {{apiUrl}}/all?storage=product/test
 Authorization: Bearer {{token}}
 Content-Type: application/json

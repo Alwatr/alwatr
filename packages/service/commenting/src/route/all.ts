@@ -11,10 +11,10 @@ async function getAllComment(connection: AlwatrConnection): Promise<void> {
   const token = connection.requireToken(config.nanoServer.token);
   if (token == null) return;
 
-  const params = connection.requireQueryParams<{path: string}>({path: 'string'});
+  const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
   if (params == null) return;
 
-  storage.config.name = params.path;
+  storage.config.name = params.storage;
 
   try {
     connection.reply({

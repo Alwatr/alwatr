@@ -1,7 +1,7 @@
 import {config, logger} from '../lib/config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storage} from '../lib/storage.js';
-import {Comment} from '../lib/type.js';
+import {Message} from '../lib/type.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
 
@@ -13,13 +13,13 @@ async function addComment(connection: AlwatrConnection): Promise<void> {
 
   if (token == null) return;
 
-  const params = connection.requireQueryParams<{path: string}>({path: 'string'});
+  const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
   if (params == null) return;
 
-  const bodyJson = await connection.requireJsonBody<Comment>();
+  const bodyJson = await connection.requireJsonBody<Message>();
   if (bodyJson == null) return;
 
-  storage.config.name = params.path;
+  storage.config.name = params.storage;
 
   // check reply id exists
   if (bodyJson.replyId !== undefined && !(await storage.has(bodyJson.replyId))) {

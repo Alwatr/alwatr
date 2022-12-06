@@ -1,6 +1,6 @@
 import {AlwatrStorageClient} from '@alwatr/storage-client';
 
 import {config} from './config.js';
-import {Comment} from './type.js';
+import {Message} from './type.js';
 
-export const storage = new AlwatrStorageClient<Comment>(config.storage);
+export const storage = new AlwatrStorageClient<Message>(config.storage);
