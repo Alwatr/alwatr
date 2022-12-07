@@ -33,9 +33,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/core/token"
+    "directory": "core/token"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/token#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/core/token#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

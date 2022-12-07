@@ -29,9 +29,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/core/storage-client"
+    "directory": "core/storage-client"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/storage-client#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/core/storage-client#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

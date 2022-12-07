@@ -29,9 +29,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/ui/icon"
+    "directory": "ui-kit/icon"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/ui/icon#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui-kit/icon#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

@@ -14,5 +14,5 @@ yarn build
 ## Usage
 
 ```bash
-./packages/lab/zx-example/zx-example.js
+./cloud/lab/zx-example/zx-example.js
 ```

@@ -29,9 +29,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/core/storage-engine"
+    "directory": "core/storage-engine"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/core/storage-engine#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/core/storage-engine#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

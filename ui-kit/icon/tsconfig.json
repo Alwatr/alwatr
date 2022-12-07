@@ -1,5 +1,5 @@
 {
-  "extends": "../../../tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
@@ -11,7 +11,7 @@
   "exclude": [],
   "references": [
     {
-      "path": ["../../core/element", "../../core/fetch"],
+      "path": ["../element", "../../core/fetch"],
     }
   ]
 }
