@@ -1,0 +1,26 @@
+services:
+  dockovpn:
+    image: docker.io/hwdsl2/ipsec-vpn-server:latest
+
+    cap_add:
+      - NET_ADMIN
+
+    ports:
+      - '500:500/udp'
+      - '4500:4500/udp'
+
+    privileged: true
+
+    cpu_shares: 512
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    env_file: .env
+
+    volumes:
+      - type: bind
+        source: ./_data
+        target: /etc/ipsec.d
+        bind:
+          create_host_path: true

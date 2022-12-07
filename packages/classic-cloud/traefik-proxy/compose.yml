@@ -1,0 +1,48 @@
+networks:
+  alwatr-public-network:
+    name: alwatr-public-network
+    external: true
+
+services:
+  service-proxy:
+    image: ${TRAEFIK_IMAGE:-docker.io/library/traefik:v1.7-alpine}
+
+    networks:
+      - alwatr-public-network
+
+    restart: unless-stopped
+
+    cpu_shares: 4096
+    mem_limit: ${MEMORY_LIMIT:-256m}
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    ports:
+      - ${HOST:-0.0.0.0}:80:80
+      - ${HOST:-0.0.0.0}:443:443
+
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: ./traefik.toml
+        target: /traefik.toml
+        read_only: true
+      - type: bind
+        source: ./_data
+        target: /data
+        bind:
+          create_host_path: true
+
+    labels:
+      traefik.enable: true
+      traefik.port: 8080
+      traefik.frontend.rule: Host:${DOMAIN}
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.auth.basic.users: ${AUTH}
+      traefik.frontend.redirect.entryPoint: https

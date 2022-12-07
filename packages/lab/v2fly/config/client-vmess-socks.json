@@ -1,0 +1,46 @@
+{
+  "log": {
+    "access": {
+      "type": "Console",
+      "level": "Debug"
+    },
+    "error": {
+      "type": "Console",
+      "level": "Debug"
+    }
+  },
+  "inbounds": [
+    {
+      "protocol": "socks",
+      "listen": "0.0.0.0",
+      "port": 1080,
+      "tag": "in-socks",
+      "settings": {
+        "address": "0.0.0.0",
+        "udpEnabled": true,
+        "packetEncoding": "None"
+      },
+      "mux": {
+        "enabled": true,
+        "concurrency": 8
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vmess",
+      "tag": "out-vmess",
+      "settings": {
+        "address": "www.onixgroup.pro",
+        "port": 80,
+        "uuid": "d06ffa2e-ef51-4def-ad9d-37803453d33e"
+      },
+      "streamSettings": {
+        "transport": "ws",
+        "transportSettings": {},
+        "security": "none",
+        "securitySettings": {}
+      }
+    }
+  ]
+}

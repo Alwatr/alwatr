@@ -1,0 +1,49 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@alwatr/fetch</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="index.js"></script>
+  </head>
+
+  <body>
+    <h1>@alwatr/fetch</h1>
+
+    <div class="option-container">
+      <label for="cacheStrategy">Cache Strategy:</label>
+      <select id="cacheStrategy">
+        <option value="stale_while_revalidate">Stale While Revalidate</option>
+        <option value="cache_first">Cache First</option>
+        <option value="cache_only">Cache Only</option>
+        <option value="network_first">Network First</option>
+        <option value="network_only">Network Only</option>
+      </select>
+
+      <label for="removeDuplicate">Remove duplicate:</label>
+      <select id="removeDuplicate">
+        <option value="auto">Auto</option>
+        <option value="until_load">Until Load</option>
+        <option value="always">Always</option>
+        <option value="never">Never</option>
+      </select>
+
+      <label for="timeout">Timeout:</label>
+      <select id="timeout">
+        <option value="3000">3,000</option>
+        <option value="5000">5,000</option>
+        <option value="10000">10,000</option>
+      </select>
+    </div>
+
+    <div class="button-container">
+      <button data-url="//httpbin.org/uuid">Random UUID</button>
+      <button data-url="//httpbin.org/status/503">Error 503</button>
+      <button data-url="//httpbin.org/delay/1">With 1s Delay</button>
+      <button data-url="//httpbin.org/delay/5">With 5s Delay</button>
+    </div>
+
+    <h3>Check the console for result</h3>
+  </body>
+</html>

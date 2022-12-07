@@ -1,0 +1,58 @@
+{
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "google",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:wc/best-practice",
+    "plugin:lit/recommended"
+  ],
+  "env": {
+    "shared-node-browser": true,
+    "es2022": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "import", "wc"],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "packages/*/*/tsconfig.json"
+      }
+    },
+    "wc": {
+      "elementBaseClasses": ["LitElement"]
+    }
+  },
+  "rules": {
+    "max-len": ["error", {"code": 120}],
+    "no-eval": ["error", {"allowIndirect": true}],
+    "no-floating-decimal": "error",
+    "space-infix-ops": "error",
+    "new-cap": ["error", {"capIsNewExceptionPattern": "Mixin$"}],
+    "brace-style": ["error", "stroustrup", {"allowSingleLine": true}],
+    "operator-linebreak": ["error", "after", {"overrides": {"?": "before", ":": "before"}}],
+    "@typescript-eslint/explicit-function-return-type": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"], "type"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "import/no-unresolved": "off",
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off"
+  }
+}

@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: Lock closed
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: '5 8 * * *'
+    #        * * * * *
+    #        │ │ │ │ │
+    #        │ │ │ │ └───── day of the week (0 - 6 or SUN-SAT)
+    #        │ │ │ └─────── month (1 - 12 or JAN-DEC)
+    #        │ │ └───────── day of the month (1 - 31)
+    #        │ └─────────── hour (0 - 23)
+    #        └───────────── minute (0 - 59)
+
+jobs:
+  lock:
+    name: Lock closed issues and PRs
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+      pull-requests: write
+
+    concurrency:
+      group: lock-closed
+
+    steps:
+      - name: 🔒 Lock closed issues and PRs
+        uses: dessant/lock-threads@v4
+        with:
+          github-token: ${{ github.token }}
+          issue-inactive-days: 7
+          pr-inactive-days: 1
+          pr-lock-reason: resolved
+          issue-comment: >
+            Issue closed and locked due to lack of activity.
+
+            If you encounter this same issue, please open a new issue and refer
+            to this closed one.
+          pr-comment: >
+            Pull Request closed and locked due to lack of activity.

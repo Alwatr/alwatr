@@ -1,0 +1,36 @@
+location ~* wp-includes/theme-compat/ {
+  deny all;
+}
+
+location ~* /(\.|wp-config\.php|wp-config\.txt|changelog\.txt|readme\.txt|readme\.html|license\.txt) {
+  deny all;
+}
+
+location ~* wp-includes/js/tinymce/langs/.*.php {
+  deny all;
+}
+
+location ~* /(?:uploads|files|wp-content|wp-includes)/.*\.php\$ {
+  deny all;
+}
+
+location ~* /wp-content/uploads/nginx-helper/ {
+  internal;
+}
+
+location ~* ^/(wp-content)/(.*?)\.(zip|gz|tar|bzip2|7z)\$ {
+  deny all;
+}
+
+location ~ ^/wp-content/uploads/sucuri {
+  deny all;
+}
+
+location ~ ^/wp-content/updraft {
+  deny all;
+}
+
+location ~ ^/wp-content/uploads/.*.(php|pl|py|jsp|asp|htm|html|shtml|sh|cgi)$ {
+  types { }
+  default_type text/plain;
+}

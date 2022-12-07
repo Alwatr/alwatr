@@ -1,0 +1,24 @@
+services:
+  dockovpn:
+    image: docker.io/alekslitvinenk/openvpn:latest
+
+    cap_add:
+      - NET_ADMIN
+
+    ports:
+      - 1194:1194/udp
+      - 8080:8080
+
+    cpu_shares: 512
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    env_file: .env
+
+    # volumes:
+    #   - type: bind
+    #     source: ./_data
+    #     target: /opt/Dockovpn_data
+    #     bind:
+    #       create_host_path: true

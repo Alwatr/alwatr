@@ -1,0 +1,38 @@
+{
+  "eslint.packageManager": "yarn",
+  "npm.packageManager": "yarn",
+  "lit-plugin.strict": true,
+  "editor.wordWrapColumn": 120,
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.useEditorConfig": true,
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "files.exclude": {
+    "**/*.map": true,
+    "**/*.d.ts": true,
+    "**/*.tsbuildinfo": true
+  },
+  "cSpell.language": "en,fa,fa-IR",
+  "cSpell.words": [
+    "alwatr",
+    "calt",
+    "currentcolor",
+    "Kubernetes",
+    "mastmalize",
+    "mihandoost",
+    "nanoserver",
+    "nanoservice",
+    "noncallable",
+    "preconnect",
+    "preload",
+    "roundot",
+    "Superfast",
+    "tnum",
+    "tsbuildinfo",
+    "vazirmatn"
+  ]
+}

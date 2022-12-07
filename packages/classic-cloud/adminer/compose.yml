@@ -1,0 +1,32 @@
+networks:
+  alwatr-private-network:
+    name: alwatr-private-network
+    external: true
+  alwatr-public-network:
+    name: alwatr-public-network
+    external: true
+
+services:
+  adminer:
+    image: ${ADMINER_IMAGE:-docker.io/wodby/adminer:4}
+
+    cpu_shares: 256
+    mem_limit: 256m
+
+    stop_grace_period: 2s
+
+    restart: unless-stopped
+
+    networks:
+      - alwatr-private-network
+      - alwatr-public-network
+
+    env_file: .env
+
+    labels:
+      traefik.enable: true
+      traefik.port: 9000
+      traefik.frontend.rule: Host:${DOMAIN}
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+      traefik.frontend.auth.basic.users: $AUTH

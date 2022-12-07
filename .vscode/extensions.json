@@ -1,0 +1,18 @@
+{
+  "recommendations": [
+    "christian-kohler.path-intellisense",
+    "davidanson.vscode-markdownlint",
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "humao.rest-client",
+    "irongeek.vscode-env",
+    "jgclark.vscode-todo-highlight",
+    "redhat.vscode-yaml",
+    "runem.lit-plugin",
+    "william-voyek.vscode-nginx",
+    "streetsidesoftware.code-spell-checker-persian",
+    "streetsidesoftware.code-spell-checker",
+    "stylelint.vscode-stylelint",
+  ]
+}

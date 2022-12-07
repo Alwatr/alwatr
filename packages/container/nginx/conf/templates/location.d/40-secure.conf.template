@@ -1,0 +1,33 @@
+location ~* (?:\.(?:bak|conf|dist|fla|in[ci]|log|psd|sh|sql|sw[op]|lock)|~)$ {
+  deny all;
+  access_log off; log_not_found off;
+}
+
+location ~* \.(pl|cgi|py|sh|lua)\$ {
+  return 444;
+}
+
+location ~* (w00tw00t) {
+  return 444;
+}
+
+location ~* \.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl)\$|^(\..*|Entries.*|Repository|Root|Tag|Template)\$|\.php_ {
+  return 444;
+}
+
+location = /robots.txt {
+  access_log off; log_not_found off;
+}
+
+location = /favicon.ico {
+  access_log off; log_not_found off;
+}
+
+location ~ /\. {
+  deny all;
+  access_log off; log_not_found off;
+}
+
+# if ($request_method !~ ^(GET|HEAD|POST)$ ) {
+#     return 405;
+# }

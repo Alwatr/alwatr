@@ -1,0 +1,43 @@
+name: 'Feature Request'
+description: Suggest a feature for Alwatr packages
+
+body:
+  - type: dropdown
+    id: affected-packages
+    attributes:
+      label: Package(s)
+      description: Which @alwatr/* package(s) are the source of the bug?
+      options:
+        - fetch
+        - logger
+        - router
+        - signal
+        - token
+        - nano-server
+        - element
+        - i18n
+        - math
+        - font
+        - Don't known / other
+      multiple: true
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives-considered
+    attributes:
+      label: Alternatives considered

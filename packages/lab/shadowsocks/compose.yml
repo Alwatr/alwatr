@@ -1,0 +1,13 @@
+services:
+  dockovpn:
+    image: docker.io/dockage/shadowsocks-server:latest
+
+    ports:
+      - 53:8388
+
+    cpu_shares: 512
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    env_file: .env

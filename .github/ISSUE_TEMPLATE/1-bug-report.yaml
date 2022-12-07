@@ -1,0 +1,81 @@
+name: Bug Report
+description: Report a bug to help us improve
+labels:
+  - bug
+
+body:
+  - type: dropdown
+    id: affected-packages
+    attributes:
+      label: Package(s)
+      description: Which @alwatr/* package(s) are the source of the bug?
+      options:
+        - fetch
+        - logger
+        - router
+        - signal
+        - Don't known / other
+      multiple: true
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: input
+    id: reproduction
+    attributes:
+      label: reproduction link
+      description: Please provide a link to a minimal reproduction of the bug, for example use [JSBin](https://jsbin.com/) to make a demo.
+
+  - type: textarea
+    id: exception-or-error
+    attributes:
+      label: Please provide the exception or error you saw (Preferably with a screenshot)
+
+  - type: textarea
+    id: device
+    attributes:
+      label: Device or platform
+      description: What is your device and platform?
+      placeholder: |
+        Device: Desktop or Phone
+        OS: iOS 14.1
+        Browser: Chrome
+        Version: 100
+    validations:
+      required: true
+
+  - type: textarea
+    id: registeredList
+    attributes:
+      label: Alwatr registered list
+      description: Please provide the Alwatr registered list by running `console.log(JSON.stringify(window.Alwatr.registeredList, null, 2));` in the browser console.
+      render: console
+      placeholder: |
+        [
+          {
+            "name": "@alwatr/logger",
+            "version": "1.2.3"
+          },
+          {
+            "name": "@alwatr/signal",
+            "version": "1.2.3"
+          },
+          {
+            "name": "@alwatr/router",
+            "version": "1.2.3"
+          }
+        ]
+    validations:
+      required: true
+
+  - type: textarea
+    id: other
+    attributes:
+      label: Anything else?

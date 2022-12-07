@@ -1,0 +1,37 @@
+mv Vazirmatn-NL-Black.ttf         vazirmatn-900.ttf
+mv Vazirmatn-NL-Bold.ttf          vazirmatn-700.ttf
+mv Vazirmatn-NL-ExtraBold.ttf     vazirmatn-800.ttf
+mv Vazirmatn-NL-ExtraLight.ttf    vazirmatn-200.ttf
+mv Vazirmatn-NL-Light.ttf         vazirmatn-300.ttf
+mv Vazirmatn-NL-Medium.ttf        vazirmatn-500.ttf
+mv Vazirmatn-NL-Regular.ttf       vazirmatn-400.ttf
+mv Vazirmatn-NL-SemiBold.ttf      vazirmatn-600.ttf
+mv Vazirmatn-NL-Thin.ttf          vazirmatn-100.ttf
+mv Vazirmatn-RD-NL-Black.ttf      vazirmatn-roundot-900.ttf
+mv Vazirmatn-RD-NL-Bold.ttf       vazirmatn-roundot-700.ttf
+mv Vazirmatn-RD-NL-ExtraBold.ttf  vazirmatn-roundot-800.ttf
+mv Vazirmatn-RD-NL-ExtraLight.ttf vazirmatn-roundot-200.ttf
+mv Vazirmatn-RD-NL-Light.ttf      vazirmatn-roundot-300.ttf
+mv Vazirmatn-RD-NL-Medium.ttf     vazirmatn-roundot-500.ttf
+mv Vazirmatn-RD-NL-Regular.ttf    vazirmatn-roundot-400.ttf
+mv Vazirmatn-RD-NL-SemiBold.ttf   vazirmatn-roundot-600.ttf
+mv Vazirmatn-RD-NL-Thin.ttf       vazirmatn-roundot-100.ttf
+
+npx ttf2woff vazirmatn-900.ttf vazirmatn-900.woff
+npx ttf2woff vazirmatn-700.ttf vazirmatn-700.woff
+npx ttf2woff vazirmatn-800.ttf vazirmatn-800.woff
+npx ttf2woff vazirmatn-200.ttf vazirmatn-200.woff
+npx ttf2woff vazirmatn-300.ttf vazirmatn-300.woff
+npx ttf2woff vazirmatn-500.ttf vazirmatn-500.woff
+npx ttf2woff vazirmatn-400.ttf vazirmatn-400.woff
+npx ttf2woff vazirmatn-600.ttf vazirmatn-600.woff
+npx ttf2woff vazirmatn-100.ttf vazirmatn-100.woff
+npx ttf2woff vazirmatn-roundot-900.ttf vazirmatn-roundot-900.woff
+npx ttf2woff vazirmatn-roundot-700.ttf vazirmatn-roundot-700.woff
+npx ttf2woff vazirmatn-roundot-800.ttf vazirmatn-roundot-800.woff
+npx ttf2woff vazirmatn-roundot-200.ttf vazirmatn-roundot-200.woff
+npx ttf2woff vazirmatn-roundot-300.ttf vazirmatn-roundot-300.woff
+npx ttf2woff vazirmatn-roundot-500.ttf vazirmatn-roundot-500.woff
+npx ttf2woff vazirmatn-roundot-400.ttf vazirmatn-roundot-400.woff
+npx ttf2woff vazirmatn-roundot-600.ttf vazirmatn-roundot-600.woff
+npx ttf2woff vazirmatn-roundot-100.ttf vazirmatn-roundot-100.woff

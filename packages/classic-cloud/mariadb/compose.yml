@@ -1,0 +1,38 @@
+networks:
+  alwatr-private-network:
+    name: alwatr-private-network
+    external: true
+
+services:
+  database:
+    image: ${MARIADB_IMAGE:-docker.io/wodby/mariadb:10.8}
+
+    networks:
+      alwatr-private-network:
+        aliases:
+          - ${MYSQL_HOST:-mariadb}
+
+    cpu_shares: 4096
+    mem_limit: ${MEMORY_LIMIT:-4G}
+
+    restart: unless-stopped
+
+    stop_grace_period: 2m
+
+    volumes:
+      - type: bind
+        source: ./_data
+        target: /var/lib/mysql
+        bind:
+          create_host_path: true
+
+    tmpfs:
+      - /tmp
+
+    env_file: .env
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
