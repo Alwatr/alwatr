@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.node-base.json",
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+
+  "include": ["src/**/*"],
+  "exclude": [],
+  "references": [
+    {"path": "../../core/logger/tsconfig.json"},
+    {"path": "../../core/nano-server/tsconfig.json"},
+    {"path": "../../core/storage-client/tsconfig.json"},
+    {"path": "../../core/storage-engine/tsconfig.json"}
+  ]
+}
