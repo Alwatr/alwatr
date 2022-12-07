@@ -16,7 +16,6 @@
     "directory": "crawler"
   },
   "scripts": {
-    "l": "yarn lint",
     "b": "yarn build",
     "cb": "run-s clean build",
     "s": "run-s clean build serve",
