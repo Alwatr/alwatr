@@ -11,7 +11,9 @@
     "npm": ">=7.0.0"
   },
   "workspaces": [
-    "packages/*/*",
+    "core/*",
+    "services/*",
+    "ui-kit/*",
     "demo"
   ],
   "scripts": {

@@ -7,8 +7,8 @@ on:
 
   push:
     paths:
-      - 'packages/container/**'
-      - 'packages/service/**'
+      - 'cloud/container/**'
+      - 'services/**'
       - '.github/workflows/publish-container.yml'
     tags:
       - 'v*.*.*'
@@ -18,8 +18,8 @@ on:
 
   pull_request:
     paths:
-      - 'packages/container/**'
-      - 'packages/service/**'
+      - 'cloud/container/**'
+      - 'services/**'
       - '.github/workflows/publish-container.yml'
 
 env:
@@ -37,35 +37,35 @@ jobs:
       matrix:
         include:
           - image: alpine
-            path: container/alpine
+            path: cloud/container/alpine
             description: A minimal Docker image based on Alpine Linux with a complete package index and only 5 MB in size!
             version:
               short: 3
               full: 3.16
 
           - image: nginx
-            path: container/nginx
+            path: cloud/container/nginx
             description: High performance, optimized NGINX for server web applications and api proxy with fast cache.
             version:
               short: 1
               full: 1.0.0-1.23-alpine
 
           - image: storage-server
-            path: service/storage-server
+            path: services/storage-server
             description: Storage nanoservice with disk backed, Fastest NoSQL Database.
             version:
               short: 0
               full: 0.24.1
 
           - image: comment
-            path: service/comment
+            path: services/comment
             description: Distributed simple and fast comment nanoservice base on @alwatr/storage-server
             version:
               short: 0
               full: 0.24.1
 
           # - image: tdlib
-          #   path: container/tdlib
+          #   path: cloud/container/tdlib
           #   description: Cross-platform library for building Telegram clients.
           #   version:
           #     short: 1
@@ -123,7 +123,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v3
         with:
-          context: packages/${{matrix.path}}
+          context: ${{matrix.path}}
           push: ${{github.event_name != 'pull_request'}}
           tags: ${{steps.meta.outputs.tags}}
           labels: ${{steps.meta.outputs.labels}}

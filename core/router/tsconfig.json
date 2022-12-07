@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "rootDir": "src",
+    "outDir": "."
+  },
+  // files, include and exclude from the inheriting config are always overwritten.
+  "include": ["src/**/*"],
+  "exclude": [],
+  "references": [{"path": "../logger"}, {"path": "../signal"}]
+}

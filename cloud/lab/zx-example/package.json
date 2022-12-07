@@ -1,0 +1,41 @@
+{
+  "name": "@alwatr/zx-example",
+  "version": "0.25.0",
+  "description": "Test google zx with typescript in action.",
+  "keywords": [
+    "zx-example",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "main": "zx-example.js",
+  "type": "module",
+  "types": "zx-example.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "contributors": [],
+  "license": "MIT",
+  "private": true,
+  "files": [
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "cloud/lab/zx-example"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/cloud/lab/zx-example#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "scripts": {
+    "build": "chmod -v +x *.js"
+  },
+  "dependencies": {
+    "@alwatr/logger": "^0.25.0",
+    "tslib": "~2.4.1",
+    "zx": "~7.1.1"
+  }
+}
