@@ -53,6 +53,7 @@
       }
     ],
     "import/no-unresolved": "off",
+    "wc/guard-super-call": "off",
     "require-jsdoc": "off",
     "valid-jsdoc": "off"
   }
