@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
+    />
+    <base href="/">
+
+    <title>Flight Finder</title>
+    <meta name="description" content="An Flight Finder Progressive Web Application!" />
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.21.0/vazirmatn.min.css"
+      fetchpriority="high"
+    />
+
+    <link rel="preload" href="config.js" as="script" type="text/javascript" />
+
+    <link
+      rel="preload"
+      href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.21.0/vazirmatn/vazirmatn[wght].woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#3277b9" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#3277b9" />
+
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="image/favicon.ico" sizes="any" />
+
+    <!-- Add to home screen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Flight Finder" />
+
+    <!-- Add to home screen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Flight Finder" />
+    <link rel="apple-touch-startup-image" href="image/icon-192.png" />
+
+    <!-- Home screen icons -->
+    <link rel="apple-touch-icon" href="image/apple-touch-icon.png" />
+
+    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="image/icon-192.png" />
+    <meta name="msapplication-TileColor" content="#3277b9" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <link rel="stylesheet" href="src/style/global.css" />
+  </head>
+  <body>
+    <ion-app>
+      <alwatr-pwa class="ion-page"></alwatr-pwa>
+    </ion-app>
+
+    <script type="text/javascript" src="./config.js"></script>
+    <!-- <script type="module" src="build/alwatr-pwa.esm.js"></script> -->
+    <script type="module" src="src/alwatr-pwa.js"></script>
+
+    <noscript>
+      <div class="noscript">
+        <p dir="ltr">Please enable JavaScript to view this website.</p>
+        <p dir="rtl">لطفا JavaScript را برای مشاهده این وب سایت فعال کنید.</p>
+      </div>
+    </noscript>
+  </body>
+</html>
