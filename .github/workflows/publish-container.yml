@@ -8,7 +8,7 @@ on:
   push:
     paths:
       - 'cloud/container/**'
-      - 'service/**'
+      - 'services/**'
       - '.github/workflows/publish-container.yml'
     tags:
       - 'v*.*.*'
@@ -19,7 +19,7 @@ on:
   pull_request:
     paths:
       - 'cloud/container/**'
-      - 'service/**'
+      - 'services/**'
       - '.github/workflows/publish-container.yml'
 
 env:

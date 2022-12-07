@@ -28,9 +28,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "service/storage-server"
+    "directory": "services/storage-server"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/service/storage-server#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/services/storage-server#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

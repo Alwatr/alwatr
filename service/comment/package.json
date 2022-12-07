@@ -26,9 +26,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "service/comment"
+    "directory": "services/comment"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/service/comment#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/services/comment#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

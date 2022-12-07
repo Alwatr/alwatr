@@ -12,7 +12,6 @@
   },
   "workspaces": [
     "core/*",
-    "cloud/*/*",
     "services/*",
     "ui-kit/*",
     "demo"

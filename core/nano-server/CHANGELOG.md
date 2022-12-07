@@ -43,7 +43,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - **nano-server:** parse body on PATCH method ([cba790f](https://github.com/AliMD/alwatr/commit/cba790f43dc88c00ee99f5f7d7c872e8f6d1618d))
 - **nano-server:** remove ALL from Methods type ([1f67c07](https://github.com/AliMD/alwatr/commit/1f67c07a5044c6d7cf89605e269af468aa49094c))
 - **nano-server:** review require... methods and fix issues ([a7e4bae](https://github.com/AliMD/alwatr/commit/a7e4bae89440c2fc72a0a9e6060aac894b18eddf))
-- **service/storage:** remove home route ([5b4160d](https://github.com/AliMD/alwatr/commit/5b4160df0237085e43a103a02b9b63404eddda2c))
+- **services/storage:** remove home route ([5b4160d](https://github.com/AliMD/alwatr/commit/5b4160df0237085e43a103a02b9b63404eddda2c))
 
 ### Features
 
@@ -51,8 +51,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - **nano-server:** keep alive performance and options ([5ed78b6](https://github.com/AliMD/alwatr/commit/5ed78b6cf5b7fd1b00c28df26ca250d4025dc676))
 - **nano-server:** parse and validate query params in AlwatrConnection ([1eadd68](https://github.com/AliMD/alwatr/commit/1eadd68d3e1f92e47d743b7412ae247f3414738f))
 - **nano-server:** validate content type header in requireJsonBody ([d99eb74](https://github.com/AliMD/alwatr/commit/d99eb742c0c5ea1b92f44767d570bd42b9c9e342))
-- **service/storage:** add remove route ([d4452cd](https://github.com/AliMD/alwatr/commit/d4452cd0366452ab07d82b338dbba345c32cd61d))
-- **service/storage:** add requireToken to AlwatrConnection ([8073773](https://github.com/AliMD/alwatr/commit/8073773577b88a52baa90c6042bac52260ec3dc1))
+- **services/storage:** add remove route ([d4452cd](https://github.com/AliMD/alwatr/commit/d4452cd0366452ab07d82b338dbba345c32cd61d))
+- **services/storage:** add requireToken to AlwatrConnection ([8073773](https://github.com/AliMD/alwatr/commit/8073773577b88a52baa90c6042bac52260ec3dc1))
 
 ### Performance Improvements
 
