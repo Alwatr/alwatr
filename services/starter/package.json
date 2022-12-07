@@ -21,9 +21,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "starter/nanoservice"
+    "directory": "services/starter"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/starter/nanoservice#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/services/starter#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
