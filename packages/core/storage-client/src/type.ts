@@ -2,7 +2,7 @@ export type AlwatrStorageClientConfig = {
   /**
    * Storage name (like database name).
    */
-  name: string;
+  name?: string;
 
   /**
    * Storage server host name.

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.25.0](https://github.com/AliMD/alwatr/compare/v0.24.1...v0.25.0) (2022-12-07)
+
+### Bug Fixes
+
+- **math:** UnicodeDigits type issue ([508a9b2](https://github.com/AliMD/alwatr/commit/508a9b22a792284f7b5c54d095d6212d6277dc6b))
+
 ## [0.24.1](https://github.com/AliMD/alwatr/compare/v0.24.0...v0.24.1) (2022-12-01)
 
 ### Bug Fixes

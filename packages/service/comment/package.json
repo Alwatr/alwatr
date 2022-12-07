@@ -1,29 +1,34 @@
 {
-  "name": "@alwatr/nanoservice-starter",
+  "name": "@alwatr/comment",
   "version": "0.25.0",
-  "description": "Alwatr Microservice/Nanoservice Starter Kit",
+  "description": "Alwatr Comment API Microservice, Distributed simple and fast comment nanoservice base on @alwatr/storage-server",
   "type": "module",
   "keywords": [
+    "api",
+    "comment",
+    "chat",
     "microservice",
     "nanoservice",
-    "api",
     "typescript",
-    "esm",
     "alwatr"
   ],
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "contributors": [
+    "S. Amir Mohammad Najafi <njfamirm@gmail.com> (https://njfamirm.ir)"
+  ],
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=7.0.0"
+    "node": ">=19.0.0",
+    "npm": ">=8.0.0",
+    "yarn": ">=1.22.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "packages/starter/nanoservice"
+    "directory": "packages/service/comment"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/starter/nanoservice#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/packages/service/comment#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
@@ -38,12 +43,12 @@
     "fp": "yarn format:prettier",
     "start": "yarn serve",
     "lint": "run-s lint:*",
-    "lint:ts": "eslint . --config .eslintrc.json --ext .ts --ignore-path .gitignore",
+    "lint:ts": "eslint . --config .eslintrc.json --ext .ts",
     "build": "run-s build:*",
     "build:ts": "tsc --build",
     "format": "run-s format:prettier format:eslint",
     "format:eslint": "yarn lint:ts --fix",
-    "format:prettier": "prettier . --ignore-path .gitignore --write",
+    "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --write",
     "clean": "rimraf dist/",
     "serve": "node dist/index.js",
     "serve:debug": "node --inspect dist/index.js",
@@ -54,13 +59,14 @@
   },
   "dependencies": {
     "@alwatr/logger": "^0.25.0",
-    "@alwatr/nano-server": "^0.25.0"
+    "@alwatr/nano-server": "^0.25.0",
+    "@alwatr/storage-client": "^0.25.0"
   },
   "devDependencies": {
     "@types/node": "~18.11.11",
     "@typescript-eslint/eslint-plugin": "~5.45.1",
     "@typescript-eslint/parser": "~5.45.1",
-    "eslint": "~8.29.0",
+    "eslint": "~8.28.0",
     "eslint-config-google": "~0.14.0",
     "eslint-import-resolver-typescript": "~3.5.2",
     "eslint-plugin-import": "~2.26.0",

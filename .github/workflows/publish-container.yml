@@ -57,6 +57,13 @@ jobs:
               short: 0
               full: 0.24.1
 
+          - image: comment
+            path: service/comment
+            description: Distributed simple and fast comment nanoservice base on @alwatr/storage-server
+            version:
+              short: 0
+              full: 0.24.1
+
           # - image: tdlib
           #   path: container/tdlib
           #   description: Cross-platform library for building Telegram clients.
