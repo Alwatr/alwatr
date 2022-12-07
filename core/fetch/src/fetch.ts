@@ -76,11 +76,11 @@ function _processOptions(options: FetchOptions): Required<FetchOptions> {
   }
 
   if (options.url.lastIndexOf('?') === -1 && options.queryParameters != null) {
+    const queryParameters = options.queryParameters;
     // prettier-ignore
     const queryArray = Object
-        .keys(options.queryParameters)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((key) => `${key}=${String(options.queryParameters![key])}`);
+        .keys(queryParameters)
+        .map((key) => `${key}=${String(queryParameters[key])}`);
 
     if (queryArray.length > 0) {
       options.url += '?' + queryArray.join('&');
