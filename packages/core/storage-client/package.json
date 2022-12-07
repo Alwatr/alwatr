@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/storage-client",
-  "version": "0.24.1",
+  "version": "0.25.0",
   "description": "Elegant micro client for storage server written in tiny TypeScript ES module.",
   "keywords": [
     "database",
@@ -36,9 +36,9 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/fetch": "~0.24.1",
-    "@alwatr/logger": "~0.24.1",
-    "@alwatr/storage-engine": "~0.24.1",
+    "@alwatr/fetch": "^0.25.0",
+    "@alwatr/logger": "^0.25.0",
+    "@alwatr/storage-engine": "^0.25.0",
     "tslib": "~2.4.1"
   }
 }

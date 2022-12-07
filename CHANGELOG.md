@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.25.0](https://github.com/AliMD/alwatr/compare/v0.24.1...v0.25.0) (2022-12-07)
+
+### Bug Fixes
+
+- **deps:** typescipt version ([5b6d98c](https://github.com/AliMD/alwatr/commit/5b6d98c82350eef6df30f420e550dd4cf356b974))
+- **math:** UnicodeDigits type issue ([508a9b2](https://github.com/AliMD/alwatr/commit/508a9b22a792284f7b5c54d095d6212d6277dc6b))
+- web-dev-server ([98cbb53](https://github.com/AliMD/alwatr/commit/98cbb53ca98bd8905d76cd2e419b5fb1a20b53f1))
+
+### Features
+
+- **comment:** new types ([13a0fe9](https://github.com/AliMD/alwatr/commit/13a0fe97a1f9b65fafea893a198fdea4310ddd8d))
+- **logger:** log incident in production mode ([c9b6c56](https://github.com/AliMD/alwatr/commit/c9b6c56182750444b1cced3343b02eea6a9f24c5))
+- **service/commenting:** add base nano server ([705d7b9](https://github.com/AliMD/alwatr/commit/705d7b99c2cd7369d496051538f09de35660b2df))
+- **service/commenting:** add route ([542cc52](https://github.com/AliMD/alwatr/commit/542cc529f42a9e524d0a8faa76de51011b12d655))
+- **service/commenting:** get all route ([581cebe](https://github.com/AliMD/alwatr/commit/581cebe78840237619c820f4c45aa06b87672076))
+- **service/commenting:** rename add to put route ([170af3b](https://github.com/AliMD/alwatr/commit/170af3b198347a6cbaa1f0454da9d74e15f43f4e))
+- **service/commenting:** replyId ([5629a01](https://github.com/AliMD/alwatr/commit/5629a013916d479ea6816c76b0db4ff8befcdc7c))
+- **storage-client:** dynamic storage name ([07cf5fb](https://github.com/AliMD/alwatr/commit/07cf5fb2086d1f8ad0f731470a5dfb313038b51c))
+- **storage-client:** dynamic storage name ([2f0ca5b](https://github.com/AliMD/alwatr/commit/2f0ca5b85241c2298efc503e5f14f994a35be484))
+
 ## [0.24.1](https://github.com/AliMD/alwatr/compare/v0.24.0...v0.24.1) (2022-12-01)
 
 ### Bug Fixes

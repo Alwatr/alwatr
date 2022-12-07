@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.25.0](https://github.com/AliMD/alwatr/compare/v0.24.1...v0.25.0) (2022-12-07)
+
+### Features
+
+- **storage-client:** dynamic storage name ([07cf5fb](https://github.com/AliMD/alwatr/commit/07cf5fb2086d1f8ad0f731470a5dfb313038b51c))
+- **storage-client:** dynamic storage name ([2f0ca5b](https://github.com/AliMD/alwatr/commit/2f0ca5b85241c2298efc503e5f14f994a35be484))
+
 ## [0.24.1](https://github.com/AliMD/alwatr/compare/v0.24.0...v0.24.1) (2022-12-01)
 
 **Note:** Version bump only for package @alwatr/storage-client
