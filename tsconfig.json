@@ -83,19 +83,18 @@
   "exclude": [],
 
   "references": [
-    {"path": "./packages/core/logger"},
-    {"path": "./packages/core/fetch"},
-    {"path": "./packages/core/signal"},
-    {"path": "./packages/core/router"},
-    {"path": "./packages/core/i18n"},
-    {"path": "./packages/core/math"},
-    {"path": "./packages/core/nano-server"},
-    {"path": "./packages/core/storage-engine"},
-    {"path": "./packages/core/storage-client"},
-    {"path": "./packages/core/token"},
-    {"path": "./packages/core/element"},
-    {"path": "./packages/lab/zx-example"},
-    {"path": "./packages/ui/icon"},
-    {"path": "./demo"}
+    {"path": "./core/logger/tsconfig.json"},
+    {"path": "./core/fetch/tsconfig.json"},
+    {"path": "./core/signal/tsconfig.json"},
+    {"path": "./core/router/tsconfig.json"},
+    {"path": "./core/i18n/tsconfig.json"},
+    {"path": "./core/math/tsconfig.json"},
+    {"path": "./core/nano-server/tsconfig.json"},
+    {"path": "./core/storage-engine/tsconfig.json"},
+    {"path": "./core/storage-client/tsconfig.json"},
+    {"path": "./core/token/tsconfig.json"},
+    {"path": "./ui-kit/element/tsconfig.json"},
+    {"path": "./ui-kit/icon/tsconfig.json"},
+    {"path": "./demo/tsconfig.json"}
   ]
 }

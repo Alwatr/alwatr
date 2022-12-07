@@ -2,7 +2,12 @@
   "version": "0.25.0",
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "package": ["demo", "packages/*/*"],
+  "package": [
+    "core/*",
+    "services/*",
+    "ui-kit/*",
+    "demo"
+  ],
   "command": {
     "version": {
       "conventionalCommits": true,

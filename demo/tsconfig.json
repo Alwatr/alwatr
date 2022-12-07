@@ -8,17 +8,17 @@
   },
   "include": ["**/*.ts"],
   "references": [
-    {"path": "../packages/core/logger"},
-    {"path": "../packages/core/fetch"},
-    {"path": "../packages/core/signal"},
-    {"path": "../packages/ui/icon"},
-    {"path": "../packages/core/router"},
-    {"path": "../packages/core/i18n"},
-    {"path": "../packages/core/math"},
-    {"path": "../packages/core/element"},
-    {"path": "../packages/core/storage-engine"},
-    {"path": "../packages/core/storage-client"},
-    {"path": "../packages/core/token"}
+    {"path": "../core/logger"},
+    {"path": "../core/fetch"},
+    {"path": "../core/signal"},
+    {"path": "../core/router"},
+    {"path": "../core/i18n"},
+    {"path": "../core/math"},
+    {"path": "../ui-kit/element"},
+    {"path": "../ui-kit/icon"},
+    {"path": "../core/storage-engine"},
+    {"path": "../core/storage-client"},
+    {"path": "../core/token"}
   ],
   "exclude": ["*.d.ts", "node_modules"]
 }
