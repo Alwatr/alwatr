@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base",
+  "extends": "../../../tsconfig.base",
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
@@ -9,7 +9,5 @@
 
   "include": ["src/**/*"],
   "exclude": [],
-  "references": [
-    {"path": "../logger"},
-  ]
+  "references": []
 }

@@ -10,13 +10,12 @@
   "include": ["src/**/*"],
   "exclude": [],
   "references": [
-    {"path": "../../ui-kit"},
+    {"path": "../../ui-kit/element"},
+    {"path": "../../ui-kit/icon"},
     {"path": "../../core/fetch"},
     {"path": "../../core/i18n"},
-    {"path": "../../core/icon"},
     {"path": "../../core/logger"},
     {"path": "../../core/router"},
     {"path": "../../core/signal"},
-    {"path": "../../core/core"}
   ]
 }

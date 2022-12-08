@@ -3,11 +3,11 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "."
   },
 
-  "include": ["src/**/*"],
+  "include": ["**/*.ts"],
   "exclude": ["*.d.ts", "node_modules"],
   "references": [
     {"path": "../core/logger"},

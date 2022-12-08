@@ -10,6 +10,7 @@
   "files": [],
   "exclude": [],
   "references": [
+    // core
     {"path": "./core/logger"},
     {"path": "./core/fetch"},
     {"path": "./core/signal"},
@@ -20,8 +21,25 @@
     {"path": "./core/storage-engine"},
     {"path": "./core/storage-client"},
     {"path": "./core/token"},
+
+    // ui-kit
     {"path": "./ui-kit/element"},
     {"path": "./ui-kit/icon"},
-    {"path": "./demo"}
+
+    // demo
+    {"path": "./demo"},
+
+    // services
+    {"path": "./services/comment"},
+    {"path": "./services/starter"},
+    {"path": "./services/storage-server"},
+    {"path": "./services/telegram-notifier"},
+    {"path": "./services/flight-crawler"},
+
+    // uniquely
+    {"path": "./uniquely/flight-finder"},
+
+    // pwa
+    {"path": "./pwa/flight-finder/tsconfig.json"}
   ]
 }
