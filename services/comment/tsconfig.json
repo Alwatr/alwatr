@@ -7,7 +7,7 @@
     "outDir": "dist"
   },
 
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
     {"path": "../../core/nano-server"},

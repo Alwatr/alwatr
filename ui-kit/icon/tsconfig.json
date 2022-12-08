@@ -13,7 +13,7 @@
     ],
   },
 
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
     {"path": "../element"},
