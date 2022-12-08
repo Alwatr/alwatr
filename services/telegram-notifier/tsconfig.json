@@ -12,7 +12,6 @@
   "references": [
     {"path": "../../core/logger"},
     {"path": "../../core/nano-server"},
-    {"path": "../../core/storage-client"},
     {"path": "../../core/storage-engine"}
   ]
 }
