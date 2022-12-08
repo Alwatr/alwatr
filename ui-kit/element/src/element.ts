@@ -12,17 +12,17 @@ alwatrRegisteredList.push({
 });
 
 declare class LoggerMixinInterface extends LitElement {
-  private _logger: AlwatrLogger;
+  protected _logger: AlwatrLogger;
 }
 declare class SignalMixinInterface extends LitElement {
-  private _signalListenerList: Array<unknown>;
+  protected _signalListenerList: Array<unknown>;
 }
 
 export function LoggerMixin<ClassType extends Constructor<LitElement>>(
     superClass: ClassType,
 ): Constructor<LoggerMixinInterface> & ClassType {
   class LoggerMixinClass extends superClass {
-    private _logger = createLogger(`<${this.tagName.toLowerCase()}>`);
+    protected _logger = createLogger(`<${this.tagName.toLowerCase()}>`);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(...args: any[]) {
@@ -65,7 +65,7 @@ export function SignalMixin<ClassType extends Constructor<LitElement>>(
     superClass: ClassType,
 ): Constructor<SignalMixinInterface> & ClassType {
   class SignalMixinClass extends superClass {
-    private _signalListenerList: Array<unknown> = [];
+    protected _signalListenerList: Array<unknown> = [];
 
     override disconnectedCallback(): void {
       super.disconnectedCallback();
