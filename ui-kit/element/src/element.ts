@@ -15,7 +15,7 @@ declare class LoggerMixinInterface extends LitElement {
   protected _logger: AlwatrLogger;
 }
 declare class SignalMixinInterface extends LitElement {
-  protected _signalListenerList: Array<unknown>;
+  protected _signalListenerList: Array<ListenerInterface<keyof AlwatrSignals>>;
 }
 
 export function LoggerMixin<ClassType extends Constructor<LitElement>>(
@@ -65,12 +65,12 @@ export function SignalMixin<ClassType extends Constructor<LitElement>>(
     superClass: ClassType,
 ): Constructor<SignalMixinInterface> & ClassType {
   class SignalMixinClass extends superClass {
-    protected _signalListenerList: Array<unknown> = [];
+    protected _signalListenerList: Array<ListenerInterface<keyof AlwatrSignals>> = [];
 
     override disconnectedCallback(): void {
       super.disconnectedCallback();
 
-      this._signalListenerList.forEach((listener) => (listener as ListenerInterface<keyof AlwatrSignals>).remove());
+      this._signalListenerList.forEach((listener) => listener.remove());
     }
   }
 
