@@ -3,7 +3,6 @@ import {SignalInterface} from '@alwatr/signal';
 import {css, html} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 
-import {sampleProductList} from '../config';
 import styles from '../style';
 
 import '../component/product-card';

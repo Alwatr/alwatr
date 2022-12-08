@@ -1,6 +1,3 @@
-// Import rollup plugins
-import {existsSync} from 'node:fs';
-
 import {getBabelOutputPlugin} from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
@@ -28,8 +25,6 @@ const htmlPlugin = rollupPluginHTML({
   injectServiceWorker: true,
   extractAssets: true,
 });
-
-const litPolyfill = '../../node_modules/lit/polyfill-support.js';
 
 /** @type {import('rollup').RollupOptions} */
 const options = {
@@ -81,7 +76,7 @@ const options = {
         custom: [
           {
             name: 'lit-polyfill-support',
-            path: litPolyfill,
+            path: '../../node_modules/lit/polyfill-support.js',
             test: '!(\'attachShadow\' in Element.prototype)',
             module: false,
           },
