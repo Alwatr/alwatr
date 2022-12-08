@@ -14,6 +14,8 @@
     "core/*",
     "services/*",
     "ui-kit/*",
+    "uniquely/*",
+    "pwa/*",
     "demo"
   ],
   "scripts": {

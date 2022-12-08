@@ -18,6 +18,7 @@ Desktop.ini
 *.map
 *.d.ts
 *.js
+dist
 !/*.js
 
 # Dependencies
