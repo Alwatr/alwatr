@@ -1,0 +1,195 @@
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+:root {
+  --ion-color-primary: #1e88e5;
+  --ion-color-primary-rgb: 30, 136, 229;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #1a78ca;
+  --ion-color-primary-tint: #3594e8;
+
+  --ion-color-secondary: #3949ab;
+  --ion-color-secondary-rgb: 57, 73, 171;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #324096;
+  --ion-color-secondary-tint: #4d5bb3;
+
+  --ion-color-tertiary: #8e24aa;
+  --ion-color-tertiary-rgb: 142, 36, 170;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #7d2096;
+  --ion-color-tertiary-tint: #993ab3;
+
+  --ion-color-success: #388e3c;
+  --ion-color-success-rgb: 56, 142, 60;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #317d35;
+  --ion-color-success-tint: #4c9950;
+
+  --ion-color-warning: #ffa000;
+  --ion-color-warning-rgb: 255, 160, 0;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e08d00;
+  --ion-color-warning-tint: #ffaa1a;
+
+  --ion-color-danger: #d32f2f;
+  --ion-color-danger-rgb: 211, 47, 47;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #ba2929;
+  --ion-color-danger-tint: #d74444;
+
+  --ion-color-medium: #607d8b;
+  --ion-color-medium-rgb: 96, 125, 139;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #546e7a;
+  --ion-color-medium-tint: #708a97;
+
+  --ion-color-light: #eceff1;
+  --ion-color-light-rgb: 236, 239, 241;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d0d2d4;
+  --ion-color-light-tint: #eef1f2;
+
+  --ion-background-color: #efefef;
+  --ion-background-color-rgb: 238, 238, 238;
+
+  --ion-text-color: #01010e;
+  --ion-text-color-rgb: 1, 1, 14;
+
+  --ion-color-step-50: #e2e2e3;
+  --ion-color-step-100: #d6d6d8;
+  --ion-color-step-150: #cacacc;
+  --ion-color-step-200: #bfbfc1;
+  --ion-color-step-250: #b3b3b6;
+  --ion-color-step-300: #a7a7ab;
+  --ion-color-step-350: #9b9ba0;
+  --ion-color-step-400: #8f8f94;
+  --ion-color-step-450: #838389;
+  --ion-color-step-500: #78787e;
+  --ion-color-step-550: #6c6c73;
+  --ion-color-step-600: #606068;
+  --ion-color-step-650: #54545c;
+  --ion-color-step-700: #484851;
+  --ion-color-step-750: #3c3c46;
+  --ion-color-step-800: #30303b;
+  --ion-color-step-850: #252530;
+  --ion-color-step-900: #191924;
+  --ion-color-step-950: #0d0d19;
+
+  --ion-item-background: var(--ion-color-primary-contrast);
+  --ion-card-background: var(--ion-color-primary-contrast);
+}
+
+.noscript {
+  text-align: center;
+  font-size: 2rem;
+  padding: 2em 1em;
+}
+
+.noscript p {
+  margin: 0.5em 0;
+}
+
+body.backdrop-no-scroll {
+  overflow: hidden;
+}
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  position: fixed;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  transform: translateZ(0);
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+  touch-action: manipulation;
+  -webkit-user-drag: none;
+  -ms-content-zooming: none;
+  word-wrap: break-word;
+  overscroll-behavior-y: none;
+  text-size-adjust: none;
+  background-color: var(--ion-background-color, #1111);
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  text-size-adjust: 100%;
+  font-family: var(--ion-font-family);
+}
+
+html.ion-ce body {
+  display: block;
+}
+
+html.plt-pwa {
+  height: 100vh;
+}
+
+html.plt-ios.plt-hybrid,
+html.plt-ios.plt-pwa {
+  --ion-statusbar-padding: 20px;
+}
+
+.ion-page {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: space-between;
+  contain: layout size style;
+  overflow: hidden;
+  z-index: 0;
+}
+
+@supports (padding-top: 20px) {
+  html {
+    --ion-safe-area-top: var(--ion-statusbar-padding);
+  }
+}
+
+@supports (padding-top: constant(safe-area-inset-top)) {
+  html {
+    --ion-safe-area-top: constant(safe-area-inset-top);
+    --ion-safe-area-bottom: constant(safe-area-inset-bottom);
+    --ion-safe-area-left: constant(safe-area-inset-left);
+    --ion-safe-area-right: constant(safe-area-inset-right);
+  }
+}
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  html {
+    --ion-safe-area-top: env(safe-area-inset-top);
+    --ion-safe-area-bottom: env(safe-area-inset-bottom);
+    --ion-safe-area-left: env(safe-area-inset-left);
+    --ion-safe-area-right: env(safe-area-inset-right);
+  }
+}
+
+ion-alert *,
+ion-popover * {
+  font-family: var(--ion-font-family) !important;
+}
+ion-popover {
+  --max-height: 208px;
+  --backdrop-opacity: 1;
+}
