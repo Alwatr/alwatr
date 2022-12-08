@@ -29,8 +29,6 @@ const htmlPlugin = rollupPluginHTML({
   extractAssets: true,
 });
 
-const litPolyfill = '../../node_modules/lit/polyfill-support.js';
-
 /** @type {import('rollup').RollupOptions} */
 const options = {
   // Entry point for application build; can specify a glob to build multiple
@@ -81,7 +79,7 @@ const options = {
         custom: [
           {
             name: 'lit-polyfill-support',
-            path: litPolyfill,
+            path: '../../node_modules/lit/polyfill-support.js',
             test: '!(\'attachShadow\' in Element.prototype)',
             module: false,
           },
