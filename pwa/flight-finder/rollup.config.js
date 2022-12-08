@@ -29,9 +29,7 @@ const htmlPlugin = rollupPluginHTML({
   extractAssets: true,
 });
 
-const litPolyfill = existsSync('node_modules/lit/polyfill-support.js')
-  ? 'node_modules/lit/polyfill-support.js'
-  : '../node_modules/lit/polyfill-support.js';
+const litPolyfill = '../../node_modules/lit/polyfill-support.js';
 
 /** @type {import('rollup').RollupOptions} */
 const options = {
