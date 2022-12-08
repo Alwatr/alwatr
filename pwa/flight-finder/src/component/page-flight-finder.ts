@@ -102,9 +102,12 @@ export class PageFlightFinder extends AlwatrElement {
       ],
     },
   ];
+  @state() private __showLoading = false;
+  @state() private __jobAddPending = false;
 
   static jobListSignal = new SignalInterface('job-list');
   static jobAddSignal = new SignalInterface('job-add');
+  static loadingSignal = new SignalInterface('loading');
   static cityListTemplate = Object.keys(cityList).map(
       (city) => html`<ion-select-option value=${city}>${city} - ${cityList[city]}</ion-select-option>`,
   );
@@ -138,6 +141,11 @@ export class PageFlightFinder extends AlwatrElement {
     PageFlightFinder.jobListSignal.addListener((jobList) => {
       this.__jobList = jobList;
     });
+
+    PageFlightFinder.loadingSignal.addListener((promiseList) => {
+      this.__showLoading = promiseList.length > 0;
+      this.__jobAddPending = promiseList.includes('job-add');
+    });
   }
 
   override render(): TemplateResult {
@@ -145,6 +153,7 @@ export class PageFlightFinder extends AlwatrElement {
       <ion-header>
         <ion-toolbar color="primary">
           <ion-title>${l10n.localize('flight_finder')}</ion-title>
+          <ion-progress-bar type="indeterminate" color="secondary" ?hidden=${!this.__showLoading}></ion-progress-bar>
         </ion-toolbar>
       </ion-header>
 
@@ -245,7 +254,12 @@ export class PageFlightFinder extends AlwatrElement {
             <ion-input name="maxPrice" type="number" debounce="30" @ionChange=${this.__inputChanged}></ion-input>
             <ion-note slot="helper">${this.__maxPriceHelper}</ion-note>
           </ion-item>
-          <ion-button class="form-btn" expand="block" ?disabled=${!this.__formValidate} @click=${this.__submit}>
+          <ion-button
+            class="form-btn"
+            expand="block"
+            ?disabled=${!this.__formValidate && !this.__jobAddPending}
+            @click=${this.__submit}
+          >
             ${l10n.localize('send')}
           </ion-button>
         </ion-list>

@@ -27,6 +27,7 @@ import {defineCustomElement as ionList} from '@ionic/core/components/ion-list.js
 import {defineCustomElement as ionLoading} from '@ionic/core/components/ion-loading.js';
 import {defineCustomElement as ionModal} from '@ionic/core/components/ion-modal.js';
 import {defineCustomElement as ionNote} from '@ionic/core/components/ion-note.js';
+import {defineCustomElement as ionProgressBar} from '@ionic/core/components/ion-progress-bar.js';
 import {defineCustomElement as ionRadioGroup} from '@ionic/core/components/ion-radio-group.js';
 import {defineCustomElement as ionRadio} from '@ionic/core/components/ion-radio.js';
 import {defineCustomElement as ionRow} from '@ionic/core/components/ion-row.js';
@@ -68,6 +69,7 @@ ionItem();
 ionItemSliding();
 ionItemOptions();
 ionItemOption();
+ionProgressBar();
 ionLabel();
 ionLoading();
 ionList();

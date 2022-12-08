@@ -6,16 +6,22 @@ declare global {
   var appConfig: Record<string, string | undefined> | undefined;
 
   interface AlwatrSignals {
-    readonly 'job-add': Pick<Job, 'detail'>;
-    readonly 'job-delete': string;
-    readonly 'job-list': Array<Job>;
     readonly toast: Partial<ToastOptions> & {message: string};
+    readonly 'job-add': Pick<Job, 'detail'>;
+    readonly loading: Array<loadingPromised>;
+    readonly 'job-list': Array<Job>;
+    readonly 'job-delete': string;
   }
   interface AlwatrRequestSignals {
     readonly 'job-list': Record<string, never>;
+    readonly loading: {
+      key: loadingPromised;
+      status: 'start' | 'end';
+    };
   }
 }
 
+export type loadingPromised = 'job-add' | 'job-list' | 'job-delete';
 export type dayParts = 'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
 
 export interface Job extends AlwatrDocumentObject {
