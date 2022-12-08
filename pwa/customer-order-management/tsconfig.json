@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.base",
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "rootDir": "src",
+    "outDir": "build"
+  },
+
+  "include": ["src/**/*"],
+  "exclude": [],
+  "references": [
+    {"path": "../../ui-kit/element"},
+    {"path": "../../ui-kit/icon"},
+    {"path": "../../core/fetch"},
+    {"path": "../../core/i18n"},
+    {"path": "../../core/logger"},
+    {"path": "../../core/router"},
+    {"path": "../../core/signal"},
+  ]
+}
