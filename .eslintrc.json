@@ -24,7 +24,7 @@
     "import/resolver": {
       "typescript": {
         "alwaysTryTypes": true,
-        "project": ["tsconfig.base.json", "**/tsconfig.json"],
+        "project": ["**"],
         "projectFolderIgnoreList": ["**/node_modules/**"]
       }
     },

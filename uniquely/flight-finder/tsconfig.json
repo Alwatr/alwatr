@@ -8,8 +8,8 @@
   "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
-    {"path": "../../core/nano-server/tsconfig.json"},
-    {"path": "../../core/logger/tsconfig.json"},
-    {"path": "../../core/storage-client/tsconfig.json"},
+    {"path": "../../core/nano-server"},
+    {"path": "../../core/logger"},
+    {"path": "../../core/storage-client"},
   ]
 }

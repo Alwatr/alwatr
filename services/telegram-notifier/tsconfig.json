@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.base",
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
@@ -10,9 +10,9 @@
   "include": ["src/**/*"],
   "exclude": [],
   "references": [
-    {"path": "../../core/logger/tsconfig.json"},
-    {"path": "../../core/nano-server/tsconfig.json"},
-    {"path": "../../core/storage-client/tsconfig.json"},
-    {"path": "../../core/storage-engine/tsconfig.json"}
+    {"path": "../../core/logger"},
+    {"path": "../../core/nano-server"},
+    {"path": "../../core/storage-client"},
+    {"path": "../../core/storage-engine"}
   ]
 }

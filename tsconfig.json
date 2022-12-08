@@ -1,7 +1,7 @@
 // https://www.typescriptlang.org/tsconfig
 
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "./tsconfig.base",
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
@@ -10,18 +10,18 @@
   "files": [],
   "exclude": [],
   "references": [
-    {"path": "./core/logger/tsconfig.json"},
-    {"path": "./core/fetch/tsconfig.json"},
-    {"path": "./core/signal/tsconfig.json"},
-    {"path": "./core/router/tsconfig.json"},
-    {"path": "./core/i18n/tsconfig.json"},
-    {"path": "./core/math/tsconfig.json"},
-    {"path": "./core/nano-server/tsconfig.json"},
-    {"path": "./core/storage-engine/tsconfig.json"},
-    {"path": "./core/storage-client/tsconfig.json"},
-    {"path": "./core/token/tsconfig.json"},
-    {"path": "./ui-kit/element/tsconfig.json"},
-    {"path": "./ui-kit/icon/tsconfig.json"},
-    {"path": "./demo/tsconfig.json"}
+    {"path": "./core/logger"},
+    {"path": "./core/fetch"},
+    {"path": "./core/signal"},
+    {"path": "./core/router"},
+    {"path": "./core/i18n"},
+    {"path": "./core/math"},
+    {"path": "./core/nano-server"},
+    {"path": "./core/storage-engine"},
+    {"path": "./core/storage-client"},
+    {"path": "./core/token"},
+    {"path": "./ui-kit/element"},
+    {"path": "./ui-kit/icon"},
+    {"path": "./demo"}
   ]
 }

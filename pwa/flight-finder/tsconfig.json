@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.base",
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
@@ -10,13 +10,13 @@
   "include": ["src/**/*"],
   "exclude": [],
   "references": [
-    {"path": "../../ui-kit/tsconfig.json"},
-    {"path": "../../core/fetch/tsconfig.json"},
-    {"path": "../../core/i18n/tsconfig.json"},
-    {"path": "../../core/icon/tsconfig.json"},
-    {"path": "../../core/logger/tsconfig.json"},
-    {"path": "../../core/router/tsconfig.json"},
-    {"path": "../../core/signal/tsconfig.json"},
-    {"path": "../../core/core/tsconfig.json"}
+    {"path": "../../ui-kit"},
+    {"path": "../../core/fetch"},
+    {"path": "../../core/i18n"},
+    {"path": "../../core/icon"},
+    {"path": "../../core/logger"},
+    {"path": "../../core/router"},
+    {"path": "../../core/signal"},
+    {"path": "../../core/core"}
   ]
 }

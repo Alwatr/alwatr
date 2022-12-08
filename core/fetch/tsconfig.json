@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.base",
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
@@ -12,8 +12,8 @@
   "references": [
     {
       "path": [
-        "../element/tsconfig.json",
-        "../../core/fetch/tsconfig.json"
+        "../element",
+        "../../core/fetch"
     ],
     }
   ]
