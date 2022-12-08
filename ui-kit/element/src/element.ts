@@ -3,6 +3,7 @@ import {LitElement} from 'lit';
 
 import type {Constructor} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger/type.js';
+import type {ListenerInterface} from '@alwatr/signal';
 import type {PropertyValues} from 'lit';
 
 alwatrRegisteredList.push({
@@ -11,14 +12,17 @@ alwatrRegisteredList.push({
 });
 
 declare class LoggerMixinInterface extends LitElement {
-  protected _logger: AlwatrLogger;
+  private _logger: AlwatrLogger;
+}
+declare class SignalMixinInterface extends LitElement {
+  private _signalListenerList: Array<unknown>;
 }
 
 export function LoggerMixin<ClassType extends Constructor<LitElement>>(
     superClass: ClassType,
 ): Constructor<LoggerMixinInterface> & ClassType {
   class LoggerMixinClass extends superClass {
-    protected _logger = createLogger(`<${this.tagName.toLowerCase()}>`);
+    private _logger = createLogger(`<${this.tagName.toLowerCase()}>`);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(...args: any[]) {
@@ -57,5 +61,20 @@ export function LoggerMixin<ClassType extends Constructor<LitElement>>(
 
   return LoggerMixinClass as unknown as Constructor<LoggerMixinInterface> & ClassType;
 }
+export function SignalMixin<ClassType extends Constructor<LitElement>>(
+    superClass: ClassType,
+): Constructor<SignalMixinInterface> & ClassType {
+  class SignalMixinClass extends superClass {
+    private _signalListenerList: Array<unknown> = [];
 
-export const AlwatrElement = LoggerMixin(LitElement);
+    override disconnectedCallback(): void {
+      super.disconnectedCallback();
+
+      this._signalListenerList.forEach((listener) => (listener as ListenerInterface<keyof AlwatrSignals>).remove());
+    }
+  }
+
+  return SignalMixinClass as unknown as Constructor<SignalMixinInterface> & ClassType;
+}
+
+export const AlwatrElement = SignalMixin(LoggerMixin(LitElement));
