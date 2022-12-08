@@ -1,6 +1,4 @@
 // Import rollup plugins
-import {existsSync} from 'node:fs';
-
 import {getBabelOutputPlugin} from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
