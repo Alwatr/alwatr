@@ -1,4 +1,3 @@
-// Import rollup plugins
 import {getBabelOutputPlugin} from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
@@ -8,7 +7,6 @@ import {polyfillsLoader} from '@web/rollup-plugin-polyfills-loader';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import summary from 'rollup-plugin-summary';
 import {generateSW} from 'rollup-plugin-workbox';
-
 
 import {workboxConfig} from './workbox-config.js';
 
