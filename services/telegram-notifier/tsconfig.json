@@ -4,13 +4,14 @@
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "rootDir": "src",
-    "outDir": "."
+    "outDir": "dist"
   },
 
   "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
-    {"path": "../logger"},
-    {"path": "../math"},
+    {"path": "../../core/logger"},
+    {"path": "../../core/nano-server"},
+    {"path": "../../core/storage-engine"}
   ]
 }

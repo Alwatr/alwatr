@@ -1,12 +1,14 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../tsconfig.base",
   "compilerOptions": {
     "composite": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
     "rootDir": ".",
-    "outDir": ".",
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "outDir": "."
   },
+
   "include": ["**/*.ts"],
+  "exclude": ["*.d.ts", "node_modules"],
   "references": [
     {"path": "../core/logger"},
     {"path": "../core/fetch"},
@@ -20,5 +22,4 @@
     {"path": "../core/storage-client"},
     {"path": "../core/token"}
   ],
-  "exclude": ["*.d.ts", "node_modules"]
 }

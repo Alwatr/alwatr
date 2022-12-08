@@ -31,9 +31,9 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/fetch": "^0.25.0",
-    "@alwatr/logger": "^0.25.0",
-    "@alwatr/math": "^0.25.0",
+    "@alwatr/fetch": "~0.25.0",
+    "@alwatr/logger": "~0.25.0",
+    "@alwatr/math": "~0.25.0",
     "tslib": "~2.4.1"
   }
 }

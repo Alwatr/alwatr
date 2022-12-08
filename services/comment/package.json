@@ -33,22 +33,13 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "scripts": {
-    "l": "yarn lint",
     "b": "yarn build",
     "cb": "run-s clean build",
     "s": "run-s clean build serve",
     "w": "yarn watch",
-    "f": "yarn format",
-    "fl": "yarn format:eslint",
-    "fp": "yarn format:prettier",
     "start": "yarn serve",
-    "lint": "run-s lint:*",
-    "lint:ts": "eslint . --config .eslintrc.json --ext .ts",
     "build": "run-s build:*",
     "build:ts": "tsc --build",
-    "format": "run-s format:prettier format:eslint",
-    "format:eslint": "yarn lint:ts --fix",
-    "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --write",
     "clean": "rimraf dist/",
     "serve": "node dist/index.js",
     "serve:debug": "node --inspect dist/index.js",
@@ -58,22 +49,15 @@
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.25.0",
-    "@alwatr/nano-server": "^0.25.0",
-    "@alwatr/storage-client": "^0.25.0"
+    "@alwatr/logger": "~0.25.0",
+    "@alwatr/nano-server": "~0.25.0",
+    "@alwatr/storage-client": "~0.25.0"
   },
   "devDependencies": {
     "@types/node": "~18.11.11",
-    "@typescript-eslint/eslint-plugin": "~5.45.1",
-    "@typescript-eslint/parser": "~5.45.1",
-    "eslint": "~8.28.0",
-    "eslint-config-google": "~0.14.0",
-    "eslint-import-resolver-typescript": "~3.5.2",
-    "eslint-plugin-import": "~2.26.0",
     "nodemon": "~2.0.20",
     "npm-run-all": "~4.1.5",
-    "prettier": "~2.8.0",
     "rimraf": "~3.0.2",
-    "typescript": "~4.9.3"
+    "typescript": "~4.9.4"
   }
 }

@@ -1,66 +1,17 @@
 {
+  "extends": "../../tsconfig.base",
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ESNext",
-    "lib": ["ESNext"],
-    // "allowJs": true,
-    // "checkJs": true,
-    // "jsx": "preserve",
-    "declaration": false,
-    "declarationMap": false,
-    "sourceMap": false,
-    // "outFile": "./",
-    "outDir": "./dist",
-    // "rootDir": "./src",
-    // "composite": true,
-    // "tsBuildInfoFile": ".tsbuildinfo",
-    "removeComments": true,
-    // "noEmit": true,
-    "importHelpers": true,
-    // "downlevelIteration": true,
-    // "isolatedModules": true,
-
-    "strict": true,
-    // "noImplicitAny": false,
-    // "strictNullChecks": true,
-    // "strictFunctionTypes": true,
-    // "strictBindCallApply": true,
-    // "strictPropertyInitialization": true,
-    // "noImplicitThis": true,
-    // "alwaysStrict": true,
-
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    // "noUncheckedIndexedAccess": true,
-    // "noPropertyAccessFromIndexSignature": true,
-
-    "moduleResolution": "node",
-    "baseUrl": "./",
-    // "paths": {},
-    // "rootDirs": [],
-    // "typeRoots": [],
-    // "types": [],
-    // "allowSyntheticDefaultImports": true,
-    // "esModuleInterop": true,
-    // "preserveSymlinks": true,
-    // "allowUmdGlobalAccess": true,
-
-    // "sourceRoot": "",
-    // "mapRoot": "",
-    // "inlineSourceMap": true,
-    // "inlineSources": true,
-
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": false
+    "composite": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "rootDir": "src",
+    "outDir": "dist"
   },
 
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts"],
+  "exclude": [],
+  "references": [
+    {"path": "../../core/nano-server"},
+    {"path": "../../core/logger"},
+    {"path": "../../core/storage-client"},
+  ]
 }

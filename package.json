@@ -14,6 +14,8 @@
     "core/*",
     "services/*",
     "ui-kit/*",
+    "uniquely/*",
+    "pwa/*",
     "demo"
   ],
   "scripts": {
@@ -60,9 +62,9 @@
     "lerna": "~6.1.0",
     "lit-analyzer": "~1.2.1",
     "npm-run-all": "~4.1.5",
-    "prettier": "~2.8.0",
+    "prettier": "~2.8.1",
     "rimraf": "~3.0.2",
     "ts-lit-plugin": "~1.2.1",
-    "typescript": "~4.9.3"
+    "typescript": "~4.9.4"
   }
 }

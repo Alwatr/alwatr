@@ -16,7 +16,6 @@
     "directory": "telegram-notify"
   },
   "scripts": {
-    "l": "yarn lint",
     "b": "yarn build",
     "cb": "run-s clean build",
     "s": "run-s clean build serve",
@@ -33,10 +32,9 @@
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@alwatr/logger": "~0.24.1",
-    "@alwatr/nano-server": "~0.24.1",
-    "@alwatr/storage-client": "~0.24.1",
-    "@alwatr/storage-engine": "~0.24.1",
+    "@alwatr/logger": "~0.25.0",
+    "@alwatr/nano-server": "~0.25.0",
+    "@alwatr/storage-engine": "~0.25.0",
     "telegraf": "~4.11.2"
   },
   "devDependencies": {
@@ -44,6 +42,6 @@
     "nodemon": "~2.0.20",
     "npm-run-all": "~4.1.5",
     "rimraf": "~3.0.2",
-    "typescript": "4.9.3"
+    "typescript": "4.9.4"
   }
 }
