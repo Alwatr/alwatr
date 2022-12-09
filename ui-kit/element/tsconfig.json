@@ -16,6 +16,7 @@
   "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
-    {"path": "../../core/logger"}
+    {"path": "../../core/logger"},
+    {"path": "../../core/signal"}
   ]
 }

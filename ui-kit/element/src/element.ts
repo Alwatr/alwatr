@@ -3,6 +3,7 @@ import {LitElement} from 'lit';
 
 import type {Constructor} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger/type.js';
+import type {ListenerInterface} from '@alwatr/signal';
 import type {PropertyValues} from 'lit';
 
 alwatrRegisteredList.push({
@@ -10,7 +11,7 @@ alwatrRegisteredList.push({
   version: '{{ALWATR_VERSION}}',
 });
 
-declare class LoggerMixinInterface extends LitElement {
+export declare class LoggerMixinInterface extends LitElement {
   protected _logger: AlwatrLogger;
 }
 
@@ -36,14 +37,19 @@ export function LoggerMixin<ClassType extends Constructor<LitElement>>(
       super.disconnectedCallback();
     }
 
-    protected override update(_changedProperties: PropertyValues): void {
-      this._logger.logMethod('update');
-      super.update(_changedProperties);
+    protected override update(changedProperties: PropertyValues): void {
+      this._logger.logMethodArgs('update', {changedProperties});
+      super.update(changedProperties);
     }
 
-    protected override firstUpdated(_changedProperties: PropertyValues): void {
-      this._logger.logMethod('firstUpdated');
-      super.firstUpdated(_changedProperties);
+    protected override firstUpdated(changedProperties: PropertyValues): void {
+      this._logger.logMethodArgs('firstUpdated', {changedProperties});
+      super.firstUpdated(changedProperties);
+    }
+
+    protected override render(): unknown {
+      this._logger.logMethod('render');
+      return;
     }
 
     override dispatchEvent(event: Event): boolean {
@@ -58,4 +64,24 @@ export function LoggerMixin<ClassType extends Constructor<LitElement>>(
   return LoggerMixinClass as unknown as Constructor<LoggerMixinInterface> & ClassType;
 }
 
-export const AlwatrElement = LoggerMixin(LitElement);
+export declare class SignalMixinInterface extends LitElement {
+  protected _signalListenerList: Array<ListenerInterface<keyof AlwatrSignals>>;
+}
+
+export function SignalMixin<ClassType extends Constructor<LitElement>>(
+    superClass: ClassType,
+): Constructor<SignalMixinInterface> & ClassType {
+  class SignalMixinClass extends superClass {
+    protected _signalListenerList: Array<ListenerInterface<keyof AlwatrSignals>> = [];
+
+    override disconnectedCallback(): void {
+      super.disconnectedCallback();
+
+      this._signalListenerList.forEach((listener) => listener.remove());
+    }
+  }
+
+  return SignalMixinClass as unknown as Constructor<SignalMixinInterface> & ClassType;
+}
+
+export const AlwatrElement = SignalMixin(LoggerMixin(LitElement));
