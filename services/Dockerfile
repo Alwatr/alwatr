@@ -11,11 +11,21 @@ RUN if [ -f *.lock ]; then \
     fi;
 
 COPY . .
-RUN yarn build && \
+
+ARG SOURCE_PATH
+RUN set -ex;\
+    if [ -z "${SOURCE_PATH}" ]; then\
+      echo 'SOURCE_PATH not defined'>&2;\
+      exit 1;\
+    fi \
+    yarn build:ts;\
+    cd "${SOURCE_PATH}";\
+    pwd; ls -lahF;\
+    yarn build;\
+    ls -lAh dist;\
+    cd /app;\
     rm -rf node_modules && \
-    yarn install --frozen-lockfile --non-interactive --production && \
-    ls -lahF && \
-    ls -lAh dist
+    yarn install --frozen-lockfile --non-interactive --production
 
 # ---
 
@@ -34,5 +44,5 @@ ENV PORT 80
 EXPOSE 80
 
 COPY --from=builder /app/node_modules/ ./node_modules/
-COPY --from=builder /app/dist/ ./
-RUN ls -lahF
+COPY --from=builder /app/${SOURCE_PATH}/dist/ ./
+RUN ls -lAhF
