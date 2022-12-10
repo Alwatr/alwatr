@@ -91,7 +91,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           context: .
           file: ${{ matrix.dockerfile }}
-          build-args: NODE_VERSION=${{ env.NODE_VERSION }},SOURCE_PATH=${{ matrix.source }},
+          build-args: NODE_VERSION=${{ env.NODE_VERSION }},SOURCE_PATH=${{ matrix.source }}
           # cache-from: type=gha
           # cache-to: type=gha,mode=max
 
