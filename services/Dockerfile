@@ -17,15 +17,18 @@ RUN set -ex;\
     if [ -z "${SOURCE_PATH}" ]; then\
       echo 'SOURCE_PATH not defined'>&2;\
       exit 1;\
-    fi;\
-    yarn build:ts;\
-    cd "${SOURCE_PATH}";\
+    fi;
+
+RUN  yarn build:ts;
+
+RUN cd "${SOURCE_PATH}";\
     pwd; ls -lahF;\
     yarn build;\
-    ls -lAh dist;\
-    cd /app;\
+    ls -lAh dist;
+
+RUN  cd /app;\
     rm -rf node_modules;\
-    yarn install --frozen-lockfile --non-interactive --production
+    yarn install --frozen-lockfile --non-interactive --production;
 
 # ---
 
