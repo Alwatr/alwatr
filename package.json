@@ -48,8 +48,8 @@
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "~3.0.0",
-    "@typescript-eslint/eslint-plugin": "~5.45.1",
-    "@typescript-eslint/parser": "~5.45.1",
+    "@typescript-eslint/eslint-plugin": "~5.46.0",
+    "@typescript-eslint/parser": "~5.46.0",
     "@typescript/lib-dom": "npm:@types/web",
     "@web/dev-server": "~0.1.35",
     "@web/dev-server-esbuild": "~0.3.3",
