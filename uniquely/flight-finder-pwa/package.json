@@ -22,7 +22,7 @@
     "s": "run-s clean build serve",
     "w": "yarn watch",
     "start": "yarn serve",
-    "clean": "yarn build:ts --clean && rimraf dist",
+    "clean": "rimraf dist build .tsbuildinfo src/**/*.{js,d.ts,map}",
     "build": "run-s build:ts build:es",
     "build:ts": "tsc --build --pretty",
     "build:es": "rimraf dist && rollup -c",
