@@ -117,7 +117,7 @@ jobs:
           context: .
           file: ${{ matrix.dockerfile }}
           build-args: |
-            SOURCE_PATH=${{ matrix.source }}
+            PACKAGE_SOURCE=${{ matrix.source }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

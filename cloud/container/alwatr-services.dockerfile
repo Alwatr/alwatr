@@ -3,30 +3,37 @@ FROM docker.io/library/node:${NODE_VERSION}-alpine as builder
 
 WORKDIR /app
 
-
-# COPY package.json *.lock ./
-
-COPY . .
+# Install dependencies
+COPY package.json *.lock ./
 RUN if [ -f *.lock ]; then \
       yarn install --frozen-lockfile --non-interactive; \
     else \
       yarn install --non-interactive; \
     fi;
 
-ARG SOURCE_PATH
-RUN set -ex;\
-    if [ -z "${SOURCE_PATH}" ]; then\
-      echo 'SOURCE_PATH not defined'>&2;\
-      exit 1;\
-    fi;
+COPY . .
 
+# Reinstall to link internal packages
+RUN yarn install --frozen-lockfile --non-interactive;
+
+# Build all ts files
 RUN  yarn build:ts;
 
-RUN cd "${SOURCE_PATH}"; pwd; ls -lahF;\
+# Build target package
+ARG PACKAGE_SOURCE
+RUN set -ex;\
+    if [ -z "${PACKAGE_SOURCE}" ]; then\
+      echo 'PACKAGE_SOURCE not defined'>&2;\
+      exit 1;\
+    fi;
+RUN set -ex;\
+    cd "${PACKAGE_SOURCE}"; pwd; ls -lahF;\
     yarn build;\
     cd dist; pwd; ls -lahF;
 
-RUN  cd /app;\
+# Clean devDependencies
+RUN set -ex;\
+    pwd;\
     rm -rf node_modules;\
     yarn install --frozen-lockfile --non-interactive --production;
 
@@ -48,6 +55,6 @@ EXPOSE 80
 
 COPY --from=builder /app/node_modules/ ./node_modules/
 
-ARG SOURCE_PATH
-COPY --from=builder /app/${SOURCE_PATH}/dist/ ./
+ARG PACKAGE_SOURCE
+COPY --from=builder /app/${PACKAGE_SOURCE}/dist/ ./
 RUN ls -lAhF
