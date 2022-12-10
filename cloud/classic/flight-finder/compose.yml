@@ -123,6 +123,13 @@ services:
         max-size: '10m'
         max-file: '2'
 
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${API_DOMAIN}
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+
 
   pwa:
     image: ghcr.io/alimd/api:${PWA_VERSION:-next}
@@ -144,6 +151,7 @@ services:
     labels:
       traefik.enable: true
       traefik.port: 80
-      traefik.frontend.rule: Host:${DOMAIN}
+      traefik.frontend.rule: Host:${PWA_DOMAIN}
       traefik.frontend.entryPoints: http, https
       traefik.frontend.redirect.entryPoint: https
+      traefik.frontend.auth.basic.users: $PWA_AUTH
