@@ -92,8 +92,8 @@ jobs:
           file: ${{ matrix.dockerfile }}
           build-args: |
             SOURCE_PATH=${{ matrix.source }}
-          # cache-from: type=gha
-          # cache-to: type=gha,mode=max
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       # - name: 🏗 Install cosign
       #   if: github.event_name != 'pull_request'
