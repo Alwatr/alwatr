@@ -43,6 +43,7 @@ FROM docker.io/library/node:${NODE_VERSION}-alpine as app
 
 WORKDIR /app
 
+# Install tini for recive system signal in nodejs
 RUN apk add --no-cache tini
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["node", "index.js"]
@@ -53,8 +54,10 @@ ENV HOST 0.0.0.0
 ENV PORT 80
 EXPOSE 80
 
+# Copy all deps from last stage (temporary until refactor build)
 COPY --from=builder /app/node_modules/ ./node_modules/
 
+# Copy builded files from last stage
 ARG PACKAGE_SOURCE
 COPY --from=builder /app/${PACKAGE_SOURCE}/dist/ ./
 RUN ls -lAhF
