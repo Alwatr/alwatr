@@ -13,9 +13,10 @@ on:
     #   - main
 
   pull_request:
-    # paths:
-    #   - 'services/**'
-    #   - '.github/workflows/publish-services.yml'
+    paths:
+      - 'cloud/container/alwatr-services.dockerfile'
+      - 'cloud/container/alwatr-pwa.dockerfile'
+      - '.github/workflows/publish-services.yml'
 
 env:
   REGISTRY: ghcr.io
