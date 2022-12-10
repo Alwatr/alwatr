@@ -47,7 +47,7 @@ WORKDIR /app
 # Install tini for recive system signal in nodejs
 RUN apk add --no-cache tini
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "index.js"]
+CMD ["node", "--input-type=module", "index.js"]
 
 ENV NODE_ENV production
 ENV ALWATR_DEBUG *
