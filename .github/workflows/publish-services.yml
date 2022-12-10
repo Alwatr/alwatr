@@ -8,9 +8,8 @@ on:
   push:
     tags:
       - 'v*.*.*'
-    # branches:
-    #   - next
-    #   - main
+    branches:
+      - next
 
   pull_request:
     paths:
@@ -104,7 +103,7 @@ jobs:
             type=semver,enable=true,pattern={{major}}.{{minor}}
             type=semver,enable=true,pattern={{version}}
             type=ref,enable=true,event=pr
-            type=ref,enable=false,event=branch
+            type=ref,enable=true,event=branch
 
       - name: 🚀 Build and push container image
         id: build-and-push
