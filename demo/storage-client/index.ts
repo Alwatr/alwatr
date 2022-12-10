@@ -9,7 +9,7 @@ interface User extends AlwatrDocumentObject {
   token?: string;
 }
 
-const token = process.env.TOKEN ?? 'YOUR_SECRET_TOKEN';
+const token = process.env.TOKEN ?? 'ACCSESS_TOKEN';
 
 const db = new AlwatrStorageClient<User>({
   name: 'user-list',

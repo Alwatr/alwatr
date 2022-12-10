@@ -1,6 +1,6 @@
 @apiUrl = http://127.0.0.1:9000
 @apiVersion = v0
-@token = YOUR_SECRET_TOKEN
+@token = ACCSESS_TOKEN
 
 ### Get a public storage over nginx serve
 # GET {{apiUrl}}/{{apiVersion}}/public/comments/page1.json

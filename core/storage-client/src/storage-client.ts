@@ -30,7 +30,7 @@ alwatrRegisteredList.push({
  * const db = new AlwatrStorageClient<User>({
  *   name: 'user-list',
  *   host: 'http://127.0.0.1:80',
- *   token: 'YOUR_SECRET_TOKEN',
+ *   token: 'ACCSESS_TOKEN',
  *   timeout: 2_000,
  * });
  *
