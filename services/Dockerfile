@@ -48,5 +48,7 @@ ENV PORT 80
 EXPOSE 80
 
 COPY --from=builder /app/node_modules/ ./node_modules/
+
+ARG SOURCE_PATH
 COPY --from=builder /app/${SOURCE_PATH}/dist/ ./
 RUN ls -lAhF
