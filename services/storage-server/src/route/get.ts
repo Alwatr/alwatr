@@ -19,7 +19,7 @@ function getDocument(connection: AlwatrConnection): void {
     });
   }
 
-  const token = connection.requireToken(config.token);
+  const token = connection.requireToken(config.accessToken);
   if (token == null) return;
 
   const params = connection.requireQueryParams<{storage: string; id: string}>({storage: 'string', id: 'string'});
