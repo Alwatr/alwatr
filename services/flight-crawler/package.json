@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/flight-finder-crawler",
   "version": "0.0.0",
-  "description": "Alwatr Flight Finder Crawler Microservice",
+  "description": "Alwatr Flight Crawler Microservice",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "private": true,
@@ -23,7 +23,7 @@
     "start": "yarn serve",
     "build": "run-s build:*",
     "build:ts": "tsc --build",
-    "clean": "rimraf dist/",
+    "clean": "rimraf dist build .tsbuildinfo src/**/*.{js,d.ts,map}",
     "serve": "node dist/index.js",
     "serve:debug": "node --inspect dist/index.js",
     "watch": "run-s clean build && run-p watch:ts watch:node",

@@ -33,9 +33,7 @@
     {"path": "./services/flight-crawler"},
 
     // uniquely
-    {"path": "./uniquely/flight-finder"},
-
-    // pwa
-    {"path": "./pwa/flight-finder/tsconfig.json"}
+    {"path": "./uniquely/flight-finder-api"},
+    {"path": "./uniquely/flight-finder-pwa"},
   ]
 }
