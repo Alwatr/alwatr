@@ -39,7 +39,7 @@
     "@alwatr/router": "~0.25.0",
     "@alwatr/signal": "~0.25.0",
     "@ionic/core": "~6.4.0",
-    "lit": "~2.4.1"
+    "lit": "~2.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
