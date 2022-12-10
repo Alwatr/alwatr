@@ -36,7 +36,7 @@ jobs:
         include:
           - image: storage-server
             source: services/storage-server
-            dockerfile: services/Dockerfile
+            dockerfile: cloud/container/alwatr-services.dockerfile
             description: Alwatr Storage Server, Elegant micro in-memory json-like storage nanoservice with disk backed, Fastest NoSQL Database.
 
     permissions:
