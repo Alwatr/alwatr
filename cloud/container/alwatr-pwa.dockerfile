@@ -33,12 +33,6 @@ RUN set -ex;\
     yarn build;\
     cd dist; pwd; ls -lahF;
 
-# Clean devDependencies
-RUN set -ex;\
-    pwd;\
-    rm -rf node_modules;\
-    yarn install --frozen-lockfile --non-interactive --production;
-
 # ---
 
 FROM ghcr.io/alimd/nginx:${NGINX_VERSION} as nginx
