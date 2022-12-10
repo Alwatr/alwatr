@@ -39,6 +39,31 @@ jobs:
             dockerfile: cloud/container/alwatr-services.dockerfile
             description: Alwatr Storage Server, Elegant micro in-memory json-like storage nanoservice with disk backed, Fastest NoSQL Database.
 
+          - image: comment
+            source: services/comment
+            dockerfile: cloud/container/alwatr-services.dockerfile
+            description: Alwatr Comment API Microservice, Distributed simple and fast comment nanoservice base on @alwatr/storage-server.
+
+          - image: storage-server
+            source: services/flight-crawler
+            dockerfile: cloud/container/alwatr-services.dockerfile
+            description: Alwatr Flight Crawler Microservic.
+
+          - image: telegram-notifier
+            source: services/telegram-notifier
+            dockerfile: cloud/container/alwatr-services.dockerfile
+            description: Alwatr Telegram Notify Microservice.
+
+          - image: flight-finder-api
+            source: uniquely/flight-finder-api
+            dockerfile: cloud/container/alwatr-services.dockerfile
+            description: Alwatr Flight Finder API Microservice.
+
+          - image: flight-finder-pwa
+            source: uniquely/flight-finder-pwa
+            dockerfile: cloud/container/alwatr-pwa.dockerfile
+            description: Alwatr Flight Finder PWA.
+
     permissions:
       contents: read
       packages: write
