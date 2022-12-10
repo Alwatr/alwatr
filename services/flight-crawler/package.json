@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/flight-finder-crawler",
   "version": "0.0.0",
-  "description": "Alwatr Flight Finder Crawler Microservice",
+  "description": "Alwatr Flight Crawler Microservice",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "private": true,
