@@ -1,10 +1,11 @@
-# *
-# !/core/
-# !/pwa/
-# !/services/
-# !/ui-kit/
-# !/uniquely/
-# !package.json
-# !lerna.json
-# !tsconfig*
-# !*.lock
+*
+!/core/
+!/pwa/
+!/services/
+!/ui-kit/
+!/demo/
+!/uniquely/
+!package.json
+!lerna.json
+!tsconfig*
+!*.lock

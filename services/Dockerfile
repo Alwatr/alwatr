@@ -22,10 +22,9 @@ RUN set -ex;\
 
 RUN  yarn build:ts;
 
-RUN cd "${SOURCE_PATH}";\
-    pwd; ls -lahF;\
+RUN cd "${SOURCE_PATH}"; pwd; ls -lahF;\
     yarn build;\
-    ls -lAh dist;
+    cd dist; pwd; ls -lahF;
 
 RUN  cd /app;\
     rm -rf node_modules;\
