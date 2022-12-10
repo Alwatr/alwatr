@@ -99,7 +99,7 @@ services:
 
 
   api:
-    image: ghcr.io/alimd/api:${API_VERSION:-next}
+    image: ghcr.io/alimd/flight-finder-api:${API_VERSION:-next}
 
     cpu_shares: 1024
     mem_limit: 256m
@@ -132,7 +132,7 @@ services:
 
 
   pwa:
-    image: ghcr.io/alimd/api:${PWA_VERSION:-next}
+    image: ghcr.io/alimd/flight-finder-pwa:${PWA_VERSION:-next}
 
     cpu_shares: 1024
     mem_limit: 256m
