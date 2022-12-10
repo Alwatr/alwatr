@@ -18,7 +18,6 @@ on:
     #   - '.github/workflows/publish-services.yml'
 
 env:
-  NODE_VERSION: 19
   REGISTRY: ghcr.io
   USERNAME: ${{github.repository_owner}}
   # USERNAME: ${{github.actor}}
@@ -92,7 +91,6 @@ jobs:
           context: .
           file: ${{ matrix.dockerfile }}
           build-args: |
-            NODE_VERSION=${{ env.NODE_VERSION }}
             SOURCE_PATH=${{ matrix.source }}
           # cache-from: type=gha
           # cache-to: type=gha,mode=max
