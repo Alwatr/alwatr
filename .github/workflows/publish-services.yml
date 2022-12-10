@@ -45,7 +45,7 @@ jobs:
             dockerfile: cloud/container/alwatr-services.dockerfile
             description: Alwatr Comment API Microservice, Distributed simple and fast comment nanoservice base on @alwatr/storage-server.
 
-          - image: storage-server
+          - image: flight-crawler
             source: services/flight-crawler
             dockerfile: cloud/container/alwatr-services.dockerfile
             description: Alwatr Flight Crawler Microservic.
