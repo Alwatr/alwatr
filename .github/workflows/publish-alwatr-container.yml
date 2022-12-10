@@ -13,8 +13,7 @@ on:
 
   pull_request:
     paths:
-      - 'cloud/container/alwatr-services.dockerfile'
-      - 'cloud/container/alwatr-pwa.dockerfile'
+      - 'cloud/container/alwatr-*.dockerfile'
       - '.github/workflows/publish-services.yml'
 
 env:

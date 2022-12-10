@@ -13,7 +13,6 @@ on:
       - 'v*.*.*'
     branches:
       - next
-      - main
 
   pull_request:
     paths:
@@ -47,20 +46,6 @@ jobs:
             version:
               short: 1
               full: 1.0.0-1.23-alpine
-
-          - image: storage-server
-            path: services/storage-server
-            description: Storage nanoservice with disk backed, Fastest NoSQL Database.
-            version:
-              short: 0
-              full: 0.24.1
-
-          - image: comment
-            path: services/comment
-            description: Distributed simple and fast comment nanoservice base on @alwatr/storage-server
-            version:
-              short: 0
-              full: 0.24.1
 
           # - image: tdlib
           #   path: cloud/container/tdlib
