@@ -12,10 +12,10 @@ on:
     #   - next
     #   - main
 
-  # pull_request:
-  #   paths:
-  #     - 'services/**'
-  #     - '.github/workflows/publish-services.yml'
+  pull_request:
+    # paths:
+    #   - 'services/**'
+    #   - '.github/workflows/publish-services.yml'
 
 env:
   REGISTRY: ghcr.io
