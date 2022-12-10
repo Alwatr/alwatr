@@ -14,6 +14,7 @@ export const config = {
   },
   storage: {
     path: process.env.STORAGE_PATH ?? 'db',
+    name: 'notifier-storage',
   },
   telegramBot: {
     token: telegramBotToken,
