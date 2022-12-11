@@ -17,19 +17,22 @@
   },
   "scripts": {
     "b": "yarn build",
+    "c": "yarn clean",
     "cb": "run-s clean build",
     "s": "run-s clean build serve",
     "w": "yarn watch",
     "start": "yarn serve",
-    "build": "run-s build:*",
-    "build:es": "node ./esbuild.config.js",
+    "build": "yarn build:es --analyze=verbose",
+    "build:ts": "tsc --build",
+    "build:es": "esbuild src/index.ts --platform=node --target=node19 --bundle --format=esm --sourcemap --outdir=dist --out-extension:.js=.mjs",
     "clean": "rimraf dist build .tsbuildinfo **/*.{d.ts,map} src/**/*.{js,cjs,mjs}",
-    "serve": "node dist/index.js",
-    "serve:debug": "node --inspect dist/index.js",
-    "watch": "run-s clean build && run-p watch:ts watch:node",
-    "watch:node": "nodemon -w dist/ dist/index.js",
-    "watch:debug-node": "nodemon -w dist/ --inspect dist/index.js",
-    "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
+    "serve": "node dist/index.*js",
+    "serve:debug": "node --inspect dist/index.*js",
+    "watch": "run-s clean build && run-p watch:es watch:node",
+    "watch:node": "nodemon -w dist/ dist/index.*js",
+    "watch:debug-node": "nodemon -w dist/ --inspect dist/index.*js",
+    "watch:ts": "yarn build:ts --watch --preserveWatchOutput",
+    "watch:es": "yarn build:es --watch"
   },
   "dependencies": {
     "@alwatr/logger": "~0.25.0",
@@ -39,9 +42,10 @@
   },
   "devDependencies": {
     "@types/node": "~18.11.12",
+    "esbuild": "^0.16.4",
     "nodemon": "~2.0.20",
     "npm-run-all": "~4.1.5",
     "rimraf": "~3.0.2",
-    "typescript": "4.9.4"
+    "typescript": "~4.9.4"
   }
 }

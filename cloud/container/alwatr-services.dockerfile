@@ -47,9 +47,10 @@ WORKDIR /app
 # Install tini for recive system signal in nodejs
 RUN apk add --no-cache tini
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "index.js"]
+CMD ["node", "index.*js"]
 
 ENV NODE_ENV production
+ENV NODE_OPTIONS --enable-source-maps
 ENV ALWATR_DEBUG *
 ENV HOST 0.0.0.0
 ENV PORT 80
