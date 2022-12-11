@@ -1,9 +1,7 @@
 import {Telegraf} from 'telegraf';
 
-import {config, logger} from './config.js';
+import {config} from './config.js';
 
 export const bot = new Telegraf(config.telegramBot.token);
 
-await bot.launch();
-
-logger.logProperty('getMe', await bot.telegram.getMe());
+bot.launch();
