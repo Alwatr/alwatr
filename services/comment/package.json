@@ -40,7 +40,7 @@
     "start": "yarn serve",
     "build": "run-s build:*",
     "build:es": "esbuild src/index.ts --bundle --format=esm --minify --target=es2022 --platform=node --outfile=dist/index.js",
-    "clean": "rimraf dist build .tsbuildinfo src/**/*.{js,d.ts,map}",
+    "clean": "rimraf dist build .tsbuildinfo **/*.{d.ts,map} src/**/*.{js,cjs,mjs}",
     "serve": "node dist/index.js",
     "serve:debug": "node --inspect dist/index.js",
     "watch": "run-s clean build && run-p watch:ts watch:node",
