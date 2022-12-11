@@ -4,12 +4,12 @@ import {router} from '@alwatr/router';
 import {css, html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import ionNormalize from './style/ionic.normalize';
-import ionTheming from './style/ionic.theming';
+import ionNormalize from './style/ionic.normalize.js';
+import ionTheming from './style/ionic.theming.js';
 
-import './component/page-flight-finder';
-import './component/ionic-components';
-import './director';
+import './component/page-flight-finder.js';
+import './component/ionic-components.js';
+import './director.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {TemplateResult} from 'lit';

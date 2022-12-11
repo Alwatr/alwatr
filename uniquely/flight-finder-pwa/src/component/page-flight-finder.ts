@@ -5,12 +5,12 @@ import {css, html} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {map} from 'lit/directives/map.js';
 
-import {cityList} from '../city-list';
-import ionNormalize from '../style/ionic.normalize';
-import ionTheming from '../style/ionic.theming';
-import {i18nDayPartList} from './job-item';
+import {cityList} from '../city-list.js';
+import ionNormalize from '../style/ionic.normalize.js';
+import ionTheming from '../style/ionic.theming.js';
+import {i18nDayPartList} from './job-item.js';
 
-import type {dayParts, Job, NewJobDetail} from '../type';
+import type {dayParts, Job, NewJobDetail} from '../type.js';
 import type {InputCustomEvent, SelectCustomEvent} from '@ionic/core';
 import type {TemplateResult} from 'lit';
 

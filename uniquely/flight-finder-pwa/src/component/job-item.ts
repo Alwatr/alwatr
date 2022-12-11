@@ -5,12 +5,12 @@ import {customElement, property} from 'lit/decorators.js';
 
 import '@alwatr/icon';
 
-import ionNormalize from '../style/ionic.normalize';
-import ionTheming from '../style/ionic.theming';
+import ionNormalize from '../style/ionic.normalize.js';
+import ionTheming from '../style/ionic.theming.js';
 
 import './ionic-components';
 
-import type {Job, JobDetail, JobResult} from '../type';
+import type {Job, JobDetail, JobResult} from '../type.js';
 import type {TemplateResult} from 'lit';
 
 declare global {
