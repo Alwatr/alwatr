@@ -1,5 +1,5 @@
 import {bot} from '../lib/bot.js';
-import {logger} from '../lib/config.js';
+import {logger} from '../config.js';
 import {storage} from '../lib/storage.js';
 
 export async function sendMessage(to: string, message: string): Promise<void> {

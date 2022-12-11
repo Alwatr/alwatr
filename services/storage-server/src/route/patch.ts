@@ -1,4 +1,4 @@
-import {config, logger} from '../lib/config.js';
+import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 

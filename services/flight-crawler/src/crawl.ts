@@ -1,6 +1,6 @@
 import {fetch} from '@alwatr/fetch';
 
-import {config, logger} from './lib/config.js';
+import {config, logger} from './config.js';
 import {storage} from './lib/storage.js';
 
 import type {Job, JobDetail, JobResult, SepehrResponse} from './lib/type.js';
