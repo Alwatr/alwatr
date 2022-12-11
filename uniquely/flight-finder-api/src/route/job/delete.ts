@@ -10,7 +10,7 @@ nanoServer.route('DELETE', '/job', deleteJob);
 async function deleteJob(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('deleteJob');
 
-  if (connection.requireToken(config.nanoServer.token) == null) return;
+  if (connection.requireToken(config.nanoServer.accessToken) == null) return;
 
   const params = connection.requireQueryParams<{id: string}>({id: 'string'});
   if (params === null) return;

@@ -10,7 +10,7 @@ nanoServer.route('GET', '/job', getJob);
 async function getJob(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('getJob');
 
-  if (connection.requireToken(config.nanoServer.token) == null) return;
+  if (connection.requireToken(config.nanoServer.accessToken) == null) return;
 
   try {
     connection.reply({

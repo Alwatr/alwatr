@@ -9,7 +9,7 @@ nanoServer.route('GET', '/all', getAllDocument);
 async function getAllDocument(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('getAllDocument');
 
-  const token = connection.requireToken(config.token);
+  const token = connection.requireToken(config.accessToken);
   if (token == null) return;
 
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});

@@ -11,7 +11,7 @@ nanoServer.route('PUT', '/job', newJob);
 async function newJob(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('newJob');
 
-  if (connection.requireToken(config.nanoServer.token) == null) return;
+  if (connection.requireToken(config.nanoServer.accessToken) == null) return;
 
   const job = await connection.requireJsonBody<Job>();
   if (job === null) return;

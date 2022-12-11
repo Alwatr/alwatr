@@ -10,7 +10,7 @@ nanoServer.route('PATCH', 'all', updateDocument);
 async function updateDocument(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('updateDocument');
 
-  const token = connection.requireToken(config.token);
+  const token = connection.requireToken(config.accessToken);
   if (token == null) return;
 
   const param = connection.requireQueryParams<{storage: string}>({storage: 'string'});

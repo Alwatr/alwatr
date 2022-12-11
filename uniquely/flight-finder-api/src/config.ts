@@ -12,7 +12,7 @@ export const config = {
   nanoServer: {
     host: process.env.HOST ?? '0.0.0.0',
     port: process.env.PORT != null ? +process.env.PORT : 8000,
-    token: process.env.TOKEN ?? 'YOUR_SECRET_TOKEN',
+    accessToken: process.env.ACCESS_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
 };
 
