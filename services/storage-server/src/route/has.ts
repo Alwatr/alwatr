@@ -9,7 +9,7 @@ nanoServer.route('GET', '/has', has);
 async function has(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('has');
 
-  const token = connection.requireToken(config.token);
+  const token = connection.requireToken(config.accessToken);
   if (token == null) return;
 
   const params = connection.requireQueryParams<{storage: string; id: string}>({storage: 'string', id: 'string'});

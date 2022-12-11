@@ -10,7 +10,7 @@ nanoServer.route('PATCH', '/', setComment);
 async function setComment(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('setComment');
 
-  const token = connection.requireToken(config.nanoServer.token);
+  const token = connection.requireToken(config.nanoServer.accessToken);
   if (token == null) return;
 
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
