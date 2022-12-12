@@ -1,5 +1,7 @@
 import {createLogger} from '@alwatr/logger';
 
+export const logger = createLogger('telegram-notifier');
+
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
 
 if (telegramBotToken == undefined) {
@@ -21,6 +23,5 @@ export const config = {
   },
 };
 
-export const logger = createLogger('telegram-notifier');
 
 logger.logProperty('config', config);

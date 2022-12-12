@@ -1,4 +1,4 @@
-import {logger} from '../lib/config.js';
+import {logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';

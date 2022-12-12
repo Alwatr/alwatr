@@ -9,4 +9,4 @@ export const config = {
   accessToken: process.env.ACCESS_TOKEN ?? 'YOUR_SECRET_TOKEN',
 };
 
-logger.logProperty('config', {...config, token: '***'});
+logger.logProperty('config', config);

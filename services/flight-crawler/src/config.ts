@@ -1,5 +1,7 @@
 import {createLogger} from '@alwatr/logger';
 
+export const logger = createLogger('flight-crawler');
+
 export const config = {
   storage: {
     host: process.env.STORAGE_HOST ?? '127.0.0.1',
@@ -13,7 +15,5 @@ export const config = {
     token: process.env.NOTIFIER_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
 };
-
-export const logger = createLogger('flight-finder-crawler');
 
 logger.logProperty('config', config);

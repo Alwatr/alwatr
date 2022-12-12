@@ -1,5 +1,5 @@
 import {sendMessage} from '../bot/send-message.js';
-import {config, logger} from '../lib/config.js';
+import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
