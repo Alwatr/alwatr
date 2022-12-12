@@ -1,10 +1,10 @@
 import {config, logger} from '../config.js';
 import {bot} from './bot.js';
-import { sendMessage } from './send-message.js';
+import {sendMessage} from './send-message.js';
 
-export async function launchBot() {
+export async function launchBot(): Promise<void> {
   logger.logMethod('launchBot');
   await bot.launch();
   logger.logProperty('botInfo', bot.botInfo);
-  sendMessage(config.telegramBot.debugNotifyToken, '⚡️ Bot launched')
+  sendMessage(config.telegramBot.debugNotifyToken, '⚡️ Bot launched');
 }
