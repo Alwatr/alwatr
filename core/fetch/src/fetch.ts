@@ -6,7 +6,7 @@ import type {
   CacheStrategy,
   AlwatrDocumentObject,
   AlwatrServiceResponse,
-} from './type';
+} from './type.js';
 
 export {
   FetchOptions,

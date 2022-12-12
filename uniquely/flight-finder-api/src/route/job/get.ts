@@ -1,4 +1,4 @@
-import {config, logger} from '../../lib/config.js';
+import {config, logger} from '../../config.js';
 import {nanoServer} from '../../lib/nano-server.js';
 import {storage} from '../../lib/storage.js';
 
@@ -10,7 +10,7 @@ nanoServer.route('GET', '/job', getJob);
 async function getJob(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('getJob');
 
-  if (connection.requireToken(config.nanoServer.token) == null) return;
+  if (connection.requireToken(config.nanoServer.accessToken) == null) return;
 
   try {
     connection.reply({
