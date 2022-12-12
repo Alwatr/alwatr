@@ -320,21 +320,21 @@ export class AlwatrConnection {
    */
   reply(content: AlwatrServiceResponse): void {
     content.statusCode ??= 200;
-    this._logger.logMethodArgs('reply', {
-      ok: content.ok,
-      statusCode: content.statusCode,
-      errorCode: content.errorCode,
-    });
+    // this._logger.logMethodArgs('reply', {
+    //   ok: content.ok,
+    //   statusCode: content.statusCode,
+    //   errorCode: content.errorCode,
+    // });
 
     if (this.serverResponse.headersSent) {
       this._logger.accident('reply', 'http_header_sent', 'Response headers already sent');
       return;
     }
 
-    let body = '';
+    let contentStr: string;
     try {
-      body = JSON.stringify(content);
-      this._logger.logMethodArgs('reply', {body: body.length > 400 ? body.substring(0, 200) + '...' : content});
+      contentStr = JSON.stringify(content);
+      this._logger.logMethodArgs('reply', contentStr.length > 400 ? contentStr.substring(0, 200) + '...' : content);
     }
     catch {
       this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!');
@@ -354,7 +354,7 @@ export class AlwatrConnection {
     }
 
     const headers: Record<string, string | number> = {
-      'Content-Length': body.length,
+      'Content-Length': contentStr.length,
       'Content-Type': 'application/json',
       'Server': 'Alwatr NanoServer',
     };
@@ -365,7 +365,7 @@ export class AlwatrConnection {
 
     this.serverResponse.writeHead(content.statusCode ?? 200, headers);
 
-    this.serverResponse.write(body, 'utf8', (error: NodeJS.ErrnoException | null | undefined) => {
+    this.serverResponse.write(contentStr, 'utf8', (error: NodeJS.ErrnoException | null | undefined) => {
       if (error == null) return;
       this._logger.accident('reply', 'http_response_write_failed', 'Response write failed', {
         errCode: error.code,
