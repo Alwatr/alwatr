@@ -99,11 +99,11 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
   if (detail.maxPrice != null) {
     const maxPrice = detail.maxPrice;
     filteredJobResultList = filteredJobResultList.filter((job) => {
-      return job.price >= maxPrice;
+      return job.price <= maxPrice;
     });
   }
 
-  filteredJobResultList.filter((job) => {
+  filteredJobResultList = filteredJobResultList.filter((job) => {
     return job.seatCount >= detail.seatCount;
   });
 
