@@ -20,6 +20,8 @@ build({
     '.js': '.mjs',
   },
 
+  external: ['telegraf'],
+
   // banner: {
   //   js: 'import { createRequire } from \'module\';const require = createRequire(import.meta.url);',
   // },
