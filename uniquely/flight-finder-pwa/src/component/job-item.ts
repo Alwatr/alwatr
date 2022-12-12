@@ -5,12 +5,13 @@ import {customElement, property} from 'lit/decorators.js';
 
 import '@alwatr/icon';
 
+import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 
 import './ionic-components';
 
-import type {Job, JobDetail, JobResult} from '../type.js';
+import type {Job, JobResult} from '../type.js';
 import type {TemplateResult} from 'lit';
 
 declare global {
@@ -18,19 +19,6 @@ declare global {
     'job-item': JobItem;
   }
 }
-
-export const i18nDayPartList: Record<JobDetail['dayPart'][0], string> = {
-  earlyMorning: 'صبح زود',
-  morning: 'صبح',
-  midday: 'نیمه روز',
-  afternoon: 'بعد از ظهر',
-  evening: 'عصر',
-  night: 'شب',
-};
-const i18nCityList: Record<string, string> = {
-  MHD: 'مشهد',
-  THR: 'تهران',
-};
 
 @customElement('job-item')
 export class JobItem extends AlwatrElement {
@@ -110,11 +98,11 @@ export class JobItem extends AlwatrElement {
       <ion-item-sliding>
         <ion-item class="job" lines="full">
           <ion-label>
-            ${this.__renderTitle(i18nCityList[this.job.detail.origin], i18nCityList[this.job.detail.dest])}
+            ${this.__renderTitle(cityList[this.job.detail.origin], cityList[this.job.detail.dest])}
             ${this.__renderSubtitle(
-      this.job.detail.date,
-      this.job.detail.dayPart.map((part) => i18nDayPartList[part]).join(' - '),
-  )}
+              this.job.detail.date,
+              this.job.detail.dayPart.map((part) => l10n.localize(part)).join(' - '),
+            )}
             ${this.__renderDescription(this.job.detail.description)}
           </ion-label>
           <ion-label slot="end"> ${this.__renderFoundList(this.job.resultList)} </ion-label>
