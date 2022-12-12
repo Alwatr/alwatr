@@ -9,7 +9,7 @@ import ionTheming from './style/ionic.theming.js';
 
 import './component/page-flight-finder.js';
 import './component/ionic-components.js';
-import './director.js';
+import './director/index.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {TemplateResult} from 'lit';

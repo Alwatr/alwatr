@@ -57,9 +57,9 @@ ENV PORT 80
 EXPOSE 80
 
 # Tell nodejs to run as ESM Modules
-RUN echo '{"type":"module"}' > package.json
+# RUN echo '{"type":"module"}' > package.json
 
-# Copy all deps from last stage (temporary until refactor build)
+# Copy all deps from last stage
 COPY --from=builder /app/node_modules/ ./node_modules/
 
 # Copy builded files from last stage
