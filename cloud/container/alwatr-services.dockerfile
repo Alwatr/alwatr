@@ -45,9 +45,9 @@ FROM docker.io/library/node:${NODE_VERSION}-alpine as app
 WORKDIR /app
 
 # Install tini for recive system signal in nodejs
-RUN apk add --no-cache tini
-ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "index.*js"]
+# RUN apk add --no-cache tini
+# ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["yarn", "serve"]
 
 ENV NODE_ENV production
 ENV NODE_OPTIONS --enable-source-maps
@@ -60,9 +60,10 @@ EXPOSE 80
 # RUN echo '{"type":"module"}' > package.json
 
 # Copy all deps from last stage
-COPY --from=builder /app/node_modules/ ./node_modules/
+COPY --from=builder /app/node_modules ./node_modules
 
 # Copy builded files from last stage
 ARG PACKAGE_SOURCE
-COPY --from=builder /app/${PACKAGE_SOURCE}/dist/ ./
+COPY --from=builder /app/${PACKAGE_SOURCE}/package.json ./
+COPY --from=builder /app/${PACKAGE_SOURCE}/dist ./dist
 RUN pwd; ls -lAhF;
