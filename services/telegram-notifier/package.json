@@ -25,7 +25,7 @@
     "build": "./esbuild.mjs",
     "build:ts": "tsc --build",
     "clean": "rimraf dist build .tsbuildinfo **/*.{d.ts,map} src/**/*.{js,cjs,mjs}",
-    "serve": "node dist/index.mjs",
+    "serve": "while true; do node dist/index.mjs; sleep 15; done",
     "serve:debug": "node --inspect --enable-source-maps dist/index.mjs",
     "watch": "run-s clean build && run-p watch:es watch:node",
     "watch:node": "nodemon -w dist/ --enable-source-maps dist/index.mjs",
