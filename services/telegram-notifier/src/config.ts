@@ -1,5 +1,7 @@
 import {createLogger} from '@alwatr/logger';
 
+export const logger = createLogger('telegram-notifier');
+
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
 
 if (telegramBotToken == undefined) {
@@ -10,13 +12,16 @@ export const config = {
   nanoServer: {
     host: process.env.HOST ?? '0.0.0.0',
     port: process.env.PORT != null ? +process.env.PORT : 8001,
-    token: process.env.TOKEN ?? 'YOUR_SECRET_TOKEN',
+    accessToken: process.env.ACCESS_TOKEN ?? 'YOUR_SECRET_TOKEN',
+  },
+  storage: {
+    path: process.env.STORAGE_PATH ?? 'db',
+    name: 'notifier-storage',
   },
   telegramBot: {
     token: telegramBotToken,
   },
 };
 
-export const logger = createLogger('telegram-notifier');
 
 logger.logProperty('config', config);

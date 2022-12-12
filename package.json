@@ -20,6 +20,8 @@
   "scripts": {
     "l": "yarn lint",
     "b": "yarn build",
+    "br": "run-s build:ts build:r",
+    "c": "yarn clean",
     "cb": "run-s clean build",
     "s": "run-s build serve",
     "w": "yarn watch",
@@ -30,8 +32,9 @@
     "pp": "run-s pull clean build ver-patch push",
     "lint": "run-s lint:*",
     "lint:ts": "eslint . --config .eslintrc.json --ext .ts --ignore-path .gitignore",
-    "build": "run-s build:ts && lerna run build",
+    "build": "yarn build:ts",
     "build:ts": "tsc --build",
+    "build:r": "lerna run build",
     "format": "run-s format:prettier format:eslint",
     "format:eslint": "yarn lint:ts --fix",
     "format:prettier": "prettier . --ignore-path .gitignore --write",
@@ -65,5 +68,8 @@
     "rimraf": "~3.0.2",
     "ts-lit-plugin": "~1.2.1",
     "typescript": "~4.9.4"
+  },
+  "resolutions": {
+    "esbuild": "~0.16.4"
   }
 }

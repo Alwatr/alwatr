@@ -1,8 +1,8 @@
 import {fetch} from '@alwatr/fetch';
 import {SignalInterface} from '@alwatr/signal';
 
-import {jobListSignal} from './job-list';
-import {showToastSignal} from './toast';
+import {jobListSignal} from './job-list.js';
+import {showToastSignal} from './toast.js';
 
 import type {AlwatrServiceResponse} from '@alwatr/fetch';
 

@@ -1,0 +1,157 @@
+networks:
+  internal:
+  alwatr-public-network:
+    name: alwatr-public-network
+    external: true
+
+services:
+
+  storage-server:
+    image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION:-next}
+
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    stop_grace_period: 30s
+
+    restart: unless-stopped
+
+    networks:
+      internal:
+        aliases:
+          - "${APP_ID}-storage-server"
+
+    environment:
+      - STORAGE_PATH=/storage
+      - TOKEN=${STORAGE_TOKEN}
+
+    volumes:
+      - type: bind
+        source: ./_data/storage
+        target: /storage
+        bind:
+          create_host_path: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+
+  telegram-notifier:
+    image: ghcr.io/alimd/telegram-notifier:${TELEGRAM_NOTIFIER_VERSION:-next}
+
+    cpu_shares: 512
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      internal:
+        aliases:
+          - "${APP_ID}-telegram-notifier"
+
+    environment:
+      - STORAGE_PATH=/storage
+      - TOKEN=${TELEGRAM_NOTIFIER_TOKEN}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+
+    volumes:
+      - type: bind
+        source: ./_data/telegram-notifier
+        target: /storage
+        bind:
+          create_host_path: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+
+  flight-crawler:
+    image: ghcr.io/alimd/flight-crawler:${FLIGHT_CRAWLER_VERSION:-next}
+
+    cpu_shares: 512
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      internal:
+
+    environment:
+      - STORAGE_HOST="${APP_ID}-storage-server"
+      - STORAGE_PORT=80
+      - STORAGE_NAME=${STORAGE_NAME}
+      - STORAGE_TOKEN=${STORAGE_TOKEN}
+      - NOTIFIER_HOST="http://${APP_ID}-telegram-notifier"
+      - NOTIFIER_TOKEN=${TELEGRAM_NOTIFIER_TOKEN}
+      - NOTIFIER_TO=${TELEGRAM_NOTIFIER_TO}
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+
+  api:
+    image: ghcr.io/alimd/flight-finder-api:${API_VERSION:-next}
+
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      internal:
+      alwatr-public-network:
+
+    environment:
+      - STORAGE_HOST="${APP_ID}-storage-server"
+      - STORAGE_PORT=80
+      - STORAGE_NAME=${STORAGE_NAME}
+      - STORAGE_TOKEN=${STORAGE_TOKEN}
+      - TOKEN=${API_TOKEN}
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${API_DOMAIN}
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+
+
+  pwa:
+    image: ghcr.io/alimd/flight-finder-pwa:${PWA_VERSION:-next}
+
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      alwatr-public-network:
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${PWA_DOMAIN}
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+      traefik.frontend.auth.basic.users: $PWA_AUTH

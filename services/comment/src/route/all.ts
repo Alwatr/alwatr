@@ -1,4 +1,4 @@
-import {config, logger} from '../lib/config.js';
+import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storage} from '../lib/storage.js';
 
@@ -9,7 +9,7 @@ nanoServer.route('GET', '/all', getAllComment);
 async function getAllComment(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('getAllComment');
 
-  const token = connection.requireToken(config.nanoServer.token);
+  const token = connection.requireToken(config.nanoServer.accessToken);
   if (token == null) return;
 
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});

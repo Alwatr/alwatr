@@ -5,7 +5,8 @@
     /* Basic Options */
     "incremental": true,
     "target": "ES2019",
-    "module": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     // "allowJs": true,
     // "checkJs": true,
@@ -43,7 +44,6 @@
     // "noPropertyAccessFromIndexSignature": true,
 
     /* Module Resolution Options */
-    "moduleResolution": "node",
     // "paths": {},
     // "rootDirs": [],
     // "typeRoots": [],
@@ -68,5 +68,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": false,
+
+    "listEmittedFiles": true,
+    // "diagnostics": true,
   },
 }
