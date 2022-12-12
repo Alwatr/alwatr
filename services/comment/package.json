@@ -52,11 +52,11 @@
     "watch:es": "yarn build:es --watch"
   },
   "dependencies": {
-    "@alwatr/logger": "~0.25.0",
-    "@alwatr/nano-server": "~0.25.0",
-    "@alwatr/storage-client": "~0.25.0"
   },
   "devDependencies": {
+    "@alwatr/logger": "~0.25.0",
+    "@alwatr/nano-server": "~0.25.0",
+    "@alwatr/storage-client": "~0.25.0",
     "@types/node": "~18.11.12",
     "esbuild": "~0.16.4",
     "nodemon": "~2.0.20",
