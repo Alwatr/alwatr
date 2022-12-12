@@ -1,7 +1,7 @@
 import {logger} from '../../config.js';
-import {bot} from '../../lib/bot.js';
 import {storage} from '../../lib/storage.js';
 import {MemberList} from '../../lib/type.js';
+import {bot} from '../bot.js';
 
 bot.command('start', async (ctx): Promise<void> => {
   const chatId = ctx.chat.id;

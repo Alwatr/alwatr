@@ -14,7 +14,7 @@ on:
   pull_request:
     paths:
       - 'cloud/container/alwatr-*.dockerfile'
-      - '.github/workflows/publish-services.yml'
+      - '.github/workflows/publish-alwatr-container.yml'
 
 env:
   REGISTRY: ghcr.io
