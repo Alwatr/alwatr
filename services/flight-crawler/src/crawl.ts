@@ -16,7 +16,7 @@ export async function crawlAllJobs(): Promise<void> {
       const oldResultList = job.resultList;
       const resultList = await crawl(job.detail);
       job.resultList = resultList;
-      if (differentObject(resultList, oldResultList)) {
+      if (job.resultList.length > 0 && differentObject(job.resultList, oldResultList)) {
         const message = makeMessage(job);
         await notify(config.notifier.to, message);
         logger.logOther(`Notified to ${config.notifier.to}!`);
