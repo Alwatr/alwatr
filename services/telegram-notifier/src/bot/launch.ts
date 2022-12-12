@@ -6,7 +6,8 @@ export async function launchBot(): Promise<void> {
   logger.logMethod('launchBot');
   try {
     await bot.launch();
-  } catch (err) {
+  }
+  catch (err) {
     logger.error('launchBot', 'launch_bot_failed', (err as Error).stack || err);
     throw new Error('launch_bot_failed');
   }
