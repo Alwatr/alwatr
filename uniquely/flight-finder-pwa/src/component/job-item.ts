@@ -1,5 +1,6 @@
 import {AlwatrElement} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
+import {SignalInterface} from '@alwatr/signal';
 import {css, html, nothing} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
@@ -83,6 +84,8 @@ export class JobItem extends AlwatrElement {
 
   @property({attribute: false, type: Object}) job?: Job;
 
+  static jobDeleteSignal = new SignalInterface('job-delete');
+
   override connectedCallback(): void {
     super.connectedCallback();
 
@@ -109,7 +112,7 @@ export class JobItem extends AlwatrElement {
         </ion-item>
 
         <ion-item-options side="start">
-          <ion-item-option color="danger">
+          <ion-item-option color="danger" @click=${this.__delete}>
             <alwatr-icon slot="icon-only" name="close-outline"></alwatr-icon>
           </ion-item-option>
         </ion-item-options>
@@ -131,7 +134,6 @@ export class JobItem extends AlwatrElement {
       </div>
     `;
   }
-
   private __renderSubtitle(date: string, time: string): TemplateResult {
     return html`
       <div class="job__subtitle">
@@ -140,7 +142,6 @@ export class JobItem extends AlwatrElement {
       </div>
     `;
   }
-
   private __renderFoundList(resultList: Array<JobResult>): TemplateResult {
     if (resultList.length !== 0) {
       const lowestPrice = Math.min(...resultList.map((result) => result.price));
@@ -157,10 +158,15 @@ export class JobItem extends AlwatrElement {
     }
     return html` <ion-note>${l10n.localize('not_found')}</ion-note> `;
   }
-
   private __renderDescription(description: string): TemplateResult | typeof nothing {
     if (description.trim() == '') return nothing;
 
     return html` <ion-note>${description}</ion-note> `;
+  }
+
+  private __delete(): void {
+    if (this.job?.id == null) return;
+
+    JobItem.jobDeleteSignal.dispatch(this.job.id);
   }
 }
