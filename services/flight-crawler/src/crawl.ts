@@ -1,6 +1,7 @@
 import {fetch} from '@alwatr/fetch';
 
 import {config, logger} from './config.js';
+import {cityList} from './lib/city-list.js';
 import {storage} from './lib/storage.js';
 
 import type {Job, JobDetail, JobResult, SepehrResponse} from './lib/type.js';
@@ -112,16 +113,15 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
 
 function makeMessage(job: Job): string {
   logger.logMethod('makeMessage');
-  let message = `🛫
 
-  Flight from ${job.detail.origin} to ${job.detail.dest} on the ${job.detail.date}
+  let message = `پرواز از ${cityList[job.detail.origin]} به ${cityList[job.detail.dest]} در تاریخ ${job.detail.date}`;
 
-  Description: ${job.detail.description}
-  `;
-
-  job.resultList.forEach((jobResult) => {
-    message += '\n\n' + `Price: ${jobResult.price}\nTime: ${jobResult.time}\nSeat Count: ${jobResult.seatCount}`;
-  });
+  // add description if exists
+  job.detail.description
+    ? (message += 'توضیحات' + job.detail.description)
+    : void job.resultList.forEach((jobResult) => {
+      message += '\n\n' + `قیمت: ${jobResult.price}\n ساعت: ${jobResult.time}\nتعداد صندلی: ${jobResult.seatCount}`;
+    });
 
   return message;
 }
