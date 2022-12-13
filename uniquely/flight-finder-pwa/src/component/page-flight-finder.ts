@@ -4,7 +4,6 @@ import {SignalInterface} from '@alwatr/signal';
 import {css, html} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {map} from 'lit/directives/map.js';
-import {when} from 'lit/directives/when.js';
 
 import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
@@ -40,6 +39,10 @@ export class PageFlightFinder extends AlwatrElement {
       ion-card.job__list,
       ion-card.form {
         --ion-item-background: var(--ion-color-primary-contrast);
+      }
+      ion-card.job__list .nothing {
+        display: flex;
+        justify-content: center;
       }
     `,
     css`
@@ -110,7 +113,7 @@ export class PageFlightFinder extends AlwatrElement {
 
       <ion-content fullscreen>
         ${this.__renderAirlineListCard()}
-        ${this.__renderForm()}
+        ${this.__renderForm}
         <div class="version">v${Alwatr.version}-pr1</div>
       </ion-content>
     `;
@@ -229,7 +232,7 @@ export class PageFlightFinder extends AlwatrElement {
 
     PageFlightFinder.jobAddSignal.dispatch({
       detail: {
-        dest: this.__newJob.dest as string,
+        destination: this.__newJob.destination as string,
         origin: this.__newJob.origin as string,
         dayPart: (this.__newJob.dayPart as dayParts[]) ?? [],
         maxPrice: this.__newJob.maxPrice ?? null,
@@ -238,7 +241,9 @@ export class PageFlightFinder extends AlwatrElement {
         date: `${currentYear}/${this.__newJob.month}/${this.__newJob.day}`,
       },
     });
+  }
 
+  private __dayPartListTemplate(): Array<TemplateResult> {
     return dayPartList.map((part) => {
       return html` <ion-select-option value=${part}> ${l10n.localize(part)} </ion-select-option> `;
     });

@@ -104,7 +104,7 @@ export class JobItem extends AlwatrElement {
             ${this.__renderTitle(cityList[this.job.detail.origin], cityList[this.job.detail.destination])}
             ${this.__renderSubtitle(
       this.job.detail.date,
-      this.job.detail.dayPart.map((part) => i18nDayPartList[part]).join(' - '),
+      this.job.detail.dayPart.map((part) => l10n.localize(part)).join(' - '),
   )}
             ${this.__renderDescription(this.job.detail.description)}
           </ion-label>
