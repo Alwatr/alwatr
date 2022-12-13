@@ -41,10 +41,6 @@ export class PageFlightFinder extends AlwatrElement {
       ion-card.form {
         --ion-item-background: var(--ion-color-primary-contrast);
       }
-      ion-card.job__list .nothing {
-        display: flex;
-        justify-content: center;
-      }
     `,
     css`
       ion-card.form ion-item {
@@ -74,7 +70,7 @@ export class PageFlightFinder extends AlwatrElement {
   static jobListSignal = new SignalInterface('job-list');
   static jobAddSignal = new SignalInterface('job-add');
   static cityListTemplate = Object.keys(cityList).map(
-    (city) => html`<ion-select-option value=${city}>${city} - ${cityList[city]}</ion-select-option>`,
+      (city) => html`<ion-select-option value=${city}>${city} - ${cityList[city]}</ion-select-option>`,
   );
   static seatListTemplate = Array.from(Array(9).keys()).map((seatNumber) => {
     return html`
@@ -112,62 +108,15 @@ export class PageFlightFinder extends AlwatrElement {
         </ion-toolbar>
       </ion-header>
 
-      <ion-content fullscreen>${this.__renderAirlineListCard} ${this.__renderForm}</ion-content>
+      <ion-content fullscreen>
+        ${this.__renderAirlineListCard()}
+        ${this.__renderForm()}
+        <div class="version">v${Alwatr.version}-pr1</div>
+      </ion-content>
     `;
   }
 
-  private __submit(event: PointerEvent): void {
-    this._logger.logMethodArgs('__submit', {
-      newJob: this.__newJob,
-      event,
-    });
-
-    const currentYear = new Date().toLocaleDateString(l10n.locale?.code, {
-      numberingSystem: 'latn',
-      year: 'numeric',
-    });
-
-    PageFlightFinder.jobAddSignal.dispatch({
-      detail: {
-        dest: this.__newJob.dest as string,
-        origin: this.__newJob.origin as string,
-        dayPart: (this.__newJob.dayPart as dayParts[]) ?? [],
-        maxPrice: this.__newJob.maxPrice ?? null,
-        seatCount: this.__newJob.seatCount ?? 1,
-        description: this.__newJob.description ?? '',
-        date: `${currentYear}/${this.__newJob.month}/${this.__newJob.day}`,
-      },
-    });
-  }
-  private __inputChanged(
-    event: InputCustomEvent | SelectCustomEvent<string> | SelectCustomEvent<Array<dayParts>>,
-  ): void {
-    const name = event.target.name as keyof NewJobDetail | undefined;
-    const value = event.detail.value;
-
-    this._logger.logMethodArgs('__inputChanged', {name, value});
-
-    if (name == null) return;
-
-    this.requestUpdate();
-
-    if (value == null || (typeof value === 'string' && value.trim() === '')) {
-      delete this.__newJob[name];
-      return;
-    }
-
-    if (name === 'maxPrice' || name === 'seatCount' || name === 'day' || name === 'month') {
-      this.__newJob[name] = +value;
-    }
-    else if (name === 'dayPart') {
-      this.__newJob[name] = value as Array<dayParts>;
-    }
-    else {
-      this.__newJob[name] = value as string;
-    }
-  }
-
-  private get __renderAirlineListCard(): TemplateResult {
+  private __renderAirlineListCard(): TemplateResult {
     const airlineItemList = map(this.__jobList, (airline) => html` <job-item .job=${airline}></job-item> `);
 
     return html`
@@ -177,13 +126,7 @@ export class PageFlightFinder extends AlwatrElement {
           <ion-card-subtitle>۵ ${l10n.localize('seconds_ago')}</ion-card-subtitle>
         </ion-card-header>
 
-        <ion-list lines="full">
-          ${when(
-            this.__jobList.length !== 0,
-            () => airlineItemList,
-            () => html` <ion-note class="nothing"> ${l10n.localize('nothing_found')} </ion-note> `,
-          )}
-        </ion-list>
+        <ion-list lines="full"> ${airlineItemList} </ion-list>
       </ion-card>
     `;
   }
@@ -272,10 +215,61 @@ export class PageFlightFinder extends AlwatrElement {
       </ion-card>
     `;
   }
-  private get __dayPartListTemplate(): TemplateResult[] {
+
+  private __submit(event: PointerEvent): void {
+    this._logger.logMethodArgs('__submit', {
+      newJob: this.__newJob,
+      event,
+    });
+
+    const currentYear = new Date().toLocaleDateString(l10n.locale?.code, {
+      numberingSystem: 'latn',
+      year: 'numeric',
+    });
+
+    PageFlightFinder.jobAddSignal.dispatch({
+      detail: {
+        dest: this.__newJob.dest as string,
+        origin: this.__newJob.origin as string,
+        dayPart: (this.__newJob.dayPart as dayParts[]) ?? [],
+        maxPrice: this.__newJob.maxPrice ?? null,
+        seatCount: this.__newJob.seatCount ?? 1,
+        description: this.__newJob.description ?? '',
+        date: `${currentYear}/${this.__newJob.month}/${this.__newJob.day}`,
+      },
+    });
+
     return dayPartList.map((part) => {
       return html` <ion-select-option value=${part}> ${l10n.localize(part)} </ion-select-option> `;
     });
+  }
+
+  private __inputChanged(
+      event: InputCustomEvent | SelectCustomEvent<string> | SelectCustomEvent<Array<dayParts>>,
+  ): void {
+    const name = event.target.name as keyof NewJobDetail | undefined;
+    const value = event.detail.value;
+
+    this._logger.logMethodArgs('__inputChanged', {name, value});
+
+    if (name == null) return;
+
+    this.requestUpdate();
+
+    if (value == null || (typeof value === 'string' && value.trim() === '')) {
+      delete this.__newJob[name];
+      return;
+    }
+
+    if (name === 'maxPrice' || name === 'seatCount' || name === 'day' || name === 'month') {
+      this.__newJob[name] = +value;
+    }
+    else if (name === 'dayPart') {
+      this.__newJob[name] = value as Array<dayParts>;
+    }
+    else {
+      this.__newJob[name] = value as string;
+    }
   }
 
   private get __maxPriceHelper(): string {

@@ -43,6 +43,9 @@ const options = {
       ecma: 2019,
       module: true,
       warnings: true,
+      format: {
+        comments: false,
+      },
       mangle: {
         properties: {
           regex: /^__/,

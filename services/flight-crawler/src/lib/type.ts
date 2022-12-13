@@ -7,7 +7,7 @@ export interface Job extends AlwatrDocumentObject {
 
 export interface JobDetail extends Record<string, unknown> {
   origin: string;
-  dest: string;
+  destination: string;
   date: string;
   seatCount: number;
   maxPrice: number | null;
@@ -17,17 +17,29 @@ export interface JobDetail extends Record<string, unknown> {
 
 export interface JobResult extends Record<string, unknown> {
   price: number;
-  time: number;
+  time: string;
   seatCount: number;
+  airline: string,
+  airplane: string,
+  flightId: string,
+  arrivalTime: string,
 }
 
 export interface SepehrResponse extends Record<string, unknown> {
   flightHeaderList: Array<SepehrFlightInformation>;
-
 }
 
 interface SepehrFlightInformation extends Record<string, unknown> {
-  formattedPrice: string;
-  seatCount: number;
-  cleanDepartureTime: number;
+  airlineName: string,
+  airlineIataCode: string,
+  airplaneName: string,
+  cleanFlightNumber: string,
+  cleanDepartureTime: string,
+  arrivalTime: string,
+  originName: string,
+  destinationName: string,
+  cabinType: string,
+  formattedPrice: string,
+  durationTotalMinutes: number,
+  seatCount: number,
 }

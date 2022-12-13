@@ -9,7 +9,7 @@ bot.command('start', async (ctx): Promise<void> => {
   logger.logMethodArgs('command/start', {chatId, token});
 
   if (token == null) {
-    ctx.reply('You don\'t have permission!');
+    ctx.reply('این یک بات خصوصی هستش! لطفا مزاحم نشوید.');
     return;
   }
 
@@ -18,8 +18,13 @@ bot.command('start', async (ctx): Promise<void> => {
     memberList: [],
   };
 
+  if (target.memberList.indexOf(chatId) !== -1) {
+    ctx.reply('شما درحال حاضر عضو این لیست هستید!');
+    return;
+  }
+
   target.memberList.push(chatId);
   storage.set(target, true);
 
-  await ctx.reply('You are registered to notify list!');
+  await ctx.reply('شما با موفقیت در لیست ثبت شدید.');
 });
