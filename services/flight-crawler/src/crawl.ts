@@ -17,7 +17,7 @@ export async function crawlAllJobs(): Promise<void> {
       const oldResultList = job.resultList;
       const resultList = await crawl(job.detail);
       job.resultList = resultList;
-      if (job.resultList.length > 0 && differentObject(job.resultList, oldResultList)) {
+      if (differentObject(job.resultList, oldResultList)) {
         const message = makeMessage(job);
         await notify(config.notifier.to, message);
         logger.logOther(`Notified to ${config.notifier.to}!`);
@@ -57,7 +57,7 @@ function makeRequestOption(detail: JobDetail): Partial<FetchOptions> & {url: str
       pageSize: 20,
       pageNumber: 0,
       originAirportIataCode: detail.origin,
-      destinationAirportIataCode: detail.dest,
+      destinationAirportIataCode: detail.destination,
       departureDate: detail.date,
       sort: 1,
     },
@@ -135,16 +135,27 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
 function makeMessage(job: Job): string {
   logger.logMethod('makeMessage');
 
-  let message = `پرواز از ${cityList[job.detail.origin]} به ${cityList[job.detail.dest]} در تاریخ ${job.detail.date}`;
+  // prettier-ignore
+  const resultListStr = job.resultList.length === 0 ? 'هیچ پروازی یافت نشد!'
+  : job.resultList.map((jobResult) => `
+    قیمت: ${jobResult.price}
+    ساعت: ${jobResult.time}
+    هواپیمایی ${jobResult.airline}
+  `).join('');
 
-  // add description if exists
-  job.detail.description ? (message += '\nتوضیحات:' + job.detail.description) : null;
+  return `
+    تغییرات جدید در جستجوی ${job.id}:
 
-  job.resultList.forEach((jobResult) => {
-    message += '\n\n' + `قیمت: ${jobResult.price}\n ساعت: ${jobResult.time}\nتعداد صندلی: ${jobResult.seatCount}`;
-  });
+    ${job.detail.description}
 
-  return message;
+    ${cityList[job.detail.origin]} ✈️ ${cityList[job.detail.destination]}
+
+    تاریخ: ${job.detail.date}
+    حداکثر قیمت: ${job.detail.maxPrice}
+    تعداد صندلی: ${job.detail.seatCount}
+
+    ${resultListStr}
+  `.replaceAll('    ', '');
 }
 
 async function notify(to: string, message: string): Promise<void> {
