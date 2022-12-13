@@ -1,6 +1,7 @@
 import {fetch} from '@alwatr/fetch';
 
 import {config, logger} from './config.js';
+import {cityList} from './lib/city-list.js';
 import {storage} from './lib/storage.js';
 
 import type {Job, JobDetail, JobResult, SepehrResponse} from './lib/type.js';
@@ -16,7 +17,7 @@ export async function crawlAllJobs(): Promise<void> {
       const oldResultList = job.resultList;
       const resultList = await crawl(job.detail);
       job.resultList = resultList;
-      if (differentObject(resultList, oldResultList)) {
+      if (job.resultList.length > 0 && differentObject(job.resultList, oldResultList)) {
         const message = makeMessage(job);
         await notify(config.notifier.to, message);
         logger.logOther(`Notified to ${config.notifier.to}!`);
@@ -58,6 +59,7 @@ function makeRequestOption(detail: JobDetail): Partial<FetchOptions> & {url: str
       originAirportIataCode: detail.origin,
       destinationAirportIataCode: detail.dest,
       departureDate: detail.date,
+      sort: 1,
     },
   };
 
@@ -86,8 +88,28 @@ async function translateResponse(response: Response): Promise<Array<JobResult>> 
       price: +(flightInformation.formattedPrice as string).replaceAll(',', ''),
       seatCount: flightInformation.seatCount,
       time: flightInformation.cleanDepartureTime,
+      airline: flightInformation.airlineName,
+      airplane: flightInformation.airplaneName,
+      arrivalTime: flightInformation.arrivalTime,
+      flightId: flightInformation.cleanFlightNumber,
     });
   }
+
+  jobResult.sort((a, b) => {
+    const compare = a.price - b.price;
+    if (compare != 0) {
+      return compare;
+    }
+    else if (a.flightId > b.flightId) {
+      return 1;
+    }
+    else if (a.flightId < b.flightId) {
+      return -1;
+    }
+    else {
+      return 0;
+    }
+  });
 
   return jobResult;
 }
@@ -99,11 +121,11 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
   if (detail.maxPrice != null) {
     const maxPrice = detail.maxPrice;
     filteredJobResultList = filteredJobResultList.filter((job) => {
-      return job.price >= maxPrice;
+      return job.price <= maxPrice;
     });
   }
 
-  filteredJobResultList.filter((job) => {
+  filteredJobResultList = filteredJobResultList.filter((job) => {
     return job.seatCount >= detail.seatCount;
   });
 
@@ -112,15 +134,14 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
 
 function makeMessage(job: Job): string {
   logger.logMethod('makeMessage');
-  let message = `🛫
 
-  Flight from ${job.detail.origin} to ${job.detail.dest} on the ${job.detail.date}
+  let message = `پرواز از ${cityList[job.detail.origin]} به ${cityList[job.detail.dest]} در تاریخ ${job.detail.date}`;
 
-  Description: ${job.detail.description}
-  `;
+  // add description if exists
+  job.detail.description ? (message += '\nتوضیحات:' + job.detail.description) : null;
 
   job.resultList.forEach((jobResult) => {
-    message += '\n\n' + `Price: ${jobResult.price}\nTime: ${jobResult.time}\nSeat Count: ${jobResult.seatCount}`;
+    message += '\n\n' + `قیمت: ${jobResult.price}\n ساعت: ${jobResult.time}\nتعداد صندلی: ${jobResult.seatCount}`;
   });
 
   return message;

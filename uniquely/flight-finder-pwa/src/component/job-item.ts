@@ -5,6 +5,7 @@ import {customElement, property} from 'lit/decorators.js';
 
 import '@alwatr/icon';
 
+import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 
@@ -27,10 +28,7 @@ export const i18nDayPartList: Record<JobDetail['dayPart'][0], string> = {
   evening: 'عصر',
   night: 'شب',
 };
-const i18nCityList: Record<string, string> = {
-  MHD: 'مشهد',
-  THR: 'تهران',
-};
+const i18nCityList: Record<string, string> = cityList;
 
 @customElement('job-item')
 export class JobItem extends AlwatrElement {

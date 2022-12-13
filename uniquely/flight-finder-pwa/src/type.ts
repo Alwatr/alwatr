@@ -12,7 +12,7 @@ declare global {
     readonly toast: Partial<ToastOptions> & {message: string};
   }
   interface AlwatrRequestSignals {
-    readonly 'job-list': Record<string, never>;
+    readonly 'job-list': null;
   }
 }
 
@@ -40,6 +40,6 @@ export type NewJobDetail = {
 
 export type JobResult = {
   price: number;
-  time: number;
+  time: string;
   seatCount: number;
 };

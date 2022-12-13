@@ -19,9 +19,9 @@ export const config = {
     name: 'notifier-storage',
   },
   telegramBot: {
+    debugNotifyToken: 'debug007',
     token: telegramBotToken,
   },
 };
-
 
 logger.logProperty('config', config);

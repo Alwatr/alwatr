@@ -170,7 +170,7 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
       const fetchedResponsePromise = _handleRemoveDuplicate(options).then((networkResponse) => {
         if (networkResponse.ok) {
           cacheStorage.put(request, networkResponse.clone());
-          if (cachedResponse != null && typeof options.revalidateCallback === 'function') {
+          if (typeof options.revalidateCallback === 'function') {
             options.revalidateCallback(networkResponse);
           }
         }
@@ -239,7 +239,7 @@ async function _handleRetryPattern(options: Required<FetchOptions>): Promise<Res
     throw new Error('fetch_server_error');
   }
   catch (err) {
-    logger.accident('fetch', (err as Error)?.name ?? 'fetch_failed', 'fetch failed and retry', {err});
+    logger.accident('fetch', 'fetch_failed_retry', (err as Error)?.message ?? 'fetch failed and retry', err);
 
     await _wait(options.retryDelay);
 

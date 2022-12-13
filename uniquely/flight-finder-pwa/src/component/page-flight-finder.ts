@@ -39,6 +39,12 @@ export class PageFlightFinder extends AlwatrElement {
       ion-card.form {
         --ion-item-background: var(--ion-color-primary-contrast);
       }
+
+      .version {
+        direction: ltr;
+        margin: 0 16px 8px;
+        font-size: 0.7em;
+      }
     `,
     css`
       ion-card.form ion-item {
@@ -63,45 +69,7 @@ export class PageFlightFinder extends AlwatrElement {
     `,
   ];
 
-  @state() private __jobList: Array<Job> = [
-    {
-      id: '2',
-      detail: {
-        dest: 'MHD',
-        origin: 'THR',
-        date: '1401/09/10',
-        maxPrice: 389000,
-        seatCount: 0,
-        description: 'تست',
-        dayPart: [],
-      },
-      resultList: [],
-    },
-    {
-      id: '3',
-      detail: {
-        dest: 'THR',
-        origin: 'MHD',
-        date: '1401/09/12',
-        maxPrice: 30000,
-        seatCount: 0,
-        description: 'تست',
-        dayPart: [],
-      },
-      resultList: [
-        {
-          price: 14550000,
-          time: 0,
-          seatCount: 0,
-        },
-        {
-          price: 1450000000,
-          time: 0,
-          seatCount: 0,
-        },
-      ],
-    },
-  ];
+  @state() private __jobList: Array<Job> = [];
 
   static jobListSignal = new SignalInterface('job-list');
   static jobAddSignal = new SignalInterface('job-add');
@@ -148,7 +116,11 @@ export class PageFlightFinder extends AlwatrElement {
         </ion-toolbar>
       </ion-header>
 
-      <ion-content fullscreen>${this.__renderAirlineListCard()} ${this.__renderForm()}</ion-content>
+      <ion-content fullscreen>
+        ${this.__renderAirlineListCard()}
+        ${this.__renderForm()}
+        <div class="version">v${Alwatr.version}-pr1</div>
+      </ion-content>
     `;
   }
 
