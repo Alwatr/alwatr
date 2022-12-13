@@ -58,6 +58,7 @@ function makeRequestOption(detail: JobDetail): Partial<FetchOptions> & {url: str
       originAirportIataCode: detail.origin,
       destinationAirportIataCode: detail.dest,
       departureDate: detail.date,
+      sort: 1,
     },
   };
 
