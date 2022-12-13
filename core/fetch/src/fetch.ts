@@ -170,7 +170,7 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
       const fetchedResponsePromise = _handleRemoveDuplicate(options).then((networkResponse) => {
         if (networkResponse.ok) {
           cacheStorage.put(request, networkResponse.clone());
-          if (cachedResponse != null && typeof options.revalidateCallback === 'function') {
+          if (typeof options.revalidateCallback === 'function') {
             options.revalidateCallback(networkResponse);
           }
         }
