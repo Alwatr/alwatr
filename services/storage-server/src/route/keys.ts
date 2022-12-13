@@ -9,7 +9,7 @@ nanoServer.route('GET', '/keys', getStorageKeys);
 async function getStorageKeys(connection: AlwatrConnection): Promise<void> {
   logger.logMethod('getStorageKeys');
 
-  const token = connection.requireToken(config.accessToken);
+  const token = connection.requireToken(config.nanoServer.accessToken);
   if (token == null) return;
 
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
