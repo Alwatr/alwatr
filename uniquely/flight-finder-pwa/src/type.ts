@@ -25,7 +25,7 @@ export interface Job extends AlwatrDocumentObject {
 
 export interface JobDetail {
   origin: string;
-  dest: string;
+  destination: string;
   date: string;
   seatCount: number;
   maxPrice: number | null;

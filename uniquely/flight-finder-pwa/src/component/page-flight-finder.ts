@@ -238,7 +238,7 @@ export class PageFlightFinder extends AlwatrElement {
 
     PageFlightFinder.jobAddSignal.dispatch({
       detail: {
-        dest: this.__newJob.dest as string,
+        destination: this.__newJob.destination as string,
         origin: this.__newJob.origin as string,
         dayPart: (this.__newJob.dayPart as dayParts[]) ?? [],
         maxPrice: this.__newJob.maxPrice ?? null,
