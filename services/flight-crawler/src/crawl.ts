@@ -118,11 +118,11 @@ function makeMessage(job: Job): string {
   let message = `پرواز از ${cityList[job.detail.origin]} به ${cityList[job.detail.dest]} در تاریخ ${job.detail.date}`;
 
   // add description if exists
-  job.detail.description
-    ? (message += 'توضیحات' + job.detail.description)
-    : void job.resultList.forEach((jobResult) => {
-      message += '\n\n' + `قیمت: ${jobResult.price}\n ساعت: ${jobResult.time}\nتعداد صندلی: ${jobResult.seatCount}`;
-    });
+  job.detail.description ? (message += '\nتوضیحات:' + job.detail.description) : null;
+
+  job.resultList.forEach((jobResult) => {
+    message += '\n\n' + `قیمت: ${jobResult.price}\n ساعت: ${jobResult.time}\nتعداد صندلی: ${jobResult.seatCount}`;
+  });
 
   return message;
 }
