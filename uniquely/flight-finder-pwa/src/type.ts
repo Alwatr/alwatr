@@ -40,6 +40,6 @@ export type NewJobDetail = {
 
 export type JobResult = {
   price: number;
-  time: number;
+  time: string;
   seatCount: number;
 };
