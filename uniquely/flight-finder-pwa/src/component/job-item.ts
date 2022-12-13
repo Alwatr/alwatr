@@ -123,14 +123,14 @@ export class JobItem extends AlwatrElement {
   private __renderTitle(origin: string, destination: string): TemplateResult {
     return html`
       <div class="job__title">
-        <span>${destination}</span>
+        <span>${origin}</span>
         <alwatr-icon
           class="job__title__arrow-icon ion-color-primary"
           name="arrow-forward-outline"
           dir="rtl"
           flip-rtl
         ></alwatr-icon>
-        <span>${origin}</span>
+        <span>${destination}</span>
       </div>
     `;
   }
