@@ -23,6 +23,5 @@
     {"path": "../../core/logger"},
     {"path": "../../core/router"},
     {"path": "../../core/signal"},
-    {"path": "../../services/flight-crawler"},
   ]
 }

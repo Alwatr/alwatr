@@ -5,7 +5,7 @@ import {customElement, property} from 'lit/decorators.js';
 
 import '@alwatr/icon';
 
-import {cityList} from '../../../../services/flight-crawler/src/lib/city-list.js';
+import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 
