@@ -68,7 +68,7 @@ export interface FetchOptions extends RequestInit {
   /**
    * Revalidate callback for `stale_while_revalidate` cache strategy.
    */
-  revalidateCallback?: (response: Response) => void;
+  revalidateCallback?: (response: Response) => void | Promise<void>;
 
   /**
    * Cache storage custom name.

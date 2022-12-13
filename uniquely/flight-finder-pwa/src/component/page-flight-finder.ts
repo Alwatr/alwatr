@@ -39,6 +39,12 @@ export class PageFlightFinder extends AlwatrElement {
       ion-card.form {
         --ion-item-background: var(--ion-color-primary-contrast);
       }
+
+      .version {
+        direction: ltr;
+        margin: 0 16px 8px;
+        font-size: 0.7em;
+      }
     `,
     css`
       ion-card.form ion-item {
@@ -110,7 +116,11 @@ export class PageFlightFinder extends AlwatrElement {
         </ion-toolbar>
       </ion-header>
 
-      <ion-content fullscreen>${this.__renderAirlineListCard()} ${this.__renderForm()}</ion-content>
+      <ion-content fullscreen>
+        ${this.__renderAirlineListCard()}
+        ${this.__renderForm()}
+        <div class="version">v${Alwatr.version}-pr1</div>
+      </ion-content>
     `;
   }
 

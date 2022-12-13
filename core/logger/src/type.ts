@@ -1,5 +1,6 @@
 /* eslint-disable no-var */
 export interface GlobalAlwatr {
+  version: string;
   registeredList: Array<{
     name: string;
     version: string;
