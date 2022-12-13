@@ -88,6 +88,10 @@ async function translateResponse(response: Response): Promise<Array<JobResult>> 
       price: +(flightInformation.formattedPrice as string).replaceAll(',', ''),
       seatCount: flightInformation.seatCount,
       time: flightInformation.cleanDepartureTime,
+      airline: flightInformation.airlineName,
+      airplane: flightInformation.airplaneName,
+      arrivalTime: flightInformation.arrivalTime,
+      flightId: flightInformation.cleanFlightNumber,
     });
   }
 
