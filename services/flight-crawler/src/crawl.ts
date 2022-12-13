@@ -95,6 +95,22 @@ async function translateResponse(response: Response): Promise<Array<JobResult>> 
     });
   }
 
+  jobResult.sort((a, b) => {
+    const compare = a.price - b.price;
+    if (compare != 0) {
+      return compare;
+    }
+    else if (a.flightId > b.flightId) {
+      return 1;
+    }
+    else if (a.flightId < b.flightId) {
+      return -1;
+    }
+    else {
+      return 0;
+    }
+  });
+
   return jobResult;
 }
 
