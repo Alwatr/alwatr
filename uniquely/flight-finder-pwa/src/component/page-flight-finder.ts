@@ -5,7 +5,7 @@ import {css, html} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {map} from 'lit/directives/map.js';
 
-import {cityList} from '../city-list.js';
+import {cityList} from '../../../../services/flight-crawler/src/lib/city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 import {i18nDayPartList} from './job-item.js';
