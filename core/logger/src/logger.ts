@@ -7,7 +7,7 @@ const isBrowser = typeof process === 'undefined';
  * Define `globalThis.Alwatr.registeredList`
  */
 export const alwatrRegisteredList = globalThis.Alwatr?.registeredList || [];
-globalThis.Alwatr ??= {registeredList: alwatrRegisteredList};
+globalThis.Alwatr ??= {version: '0.25.0', registeredList: alwatrRegisteredList};
 
 alwatrRegisteredList.push({
   name: '@alwatr/logger',
