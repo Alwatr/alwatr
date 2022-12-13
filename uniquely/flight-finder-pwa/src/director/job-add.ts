@@ -34,5 +34,5 @@ jobAddSignal.addListener(async (job) => {
     });
   }
 
-  jobListSignal.request({});
+  jobListSignal.request(null);
 });

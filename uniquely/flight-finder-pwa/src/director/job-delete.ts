@@ -33,5 +33,5 @@ jobDeleteSignal.addListener(async (id) => {
     });
   }
 
-  jobListSignal.request({});
+  jobListSignal.request(null);
 });
