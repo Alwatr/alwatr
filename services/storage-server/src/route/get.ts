@@ -19,7 +19,7 @@ function getDocument(connection: AlwatrConnection): void {
     });
   }
 
-  const token = connection.requireToken(config.accessToken);
+  const token = connection.requireToken(config.nanoServer.accessToken);
   if (token == null) return;
 
   const params = connection.requireQueryParams<{storage: string; id: string}>({storage: 'string', id: 'string'});
