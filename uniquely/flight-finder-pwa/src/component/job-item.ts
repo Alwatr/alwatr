@@ -108,7 +108,7 @@ export class JobItem extends AlwatrElement {
       <ion-item-sliding>
         <ion-item class="job" lines="full">
           <ion-label>
-            ${this.__renderTitle(i18nCityList[this.job.detail.origin], i18nCityList[this.job.detail.dest])}
+            ${this.__renderTitle(i18nCityList[this.job.detail.origin], i18nCityList[this.job.detail.destination])}
             ${this.__renderSubtitle(
       this.job.detail.date,
       this.job.detail.dayPart.map((part) => i18nDayPartList[part]).join(' - '),
