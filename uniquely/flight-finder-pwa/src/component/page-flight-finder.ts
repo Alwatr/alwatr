@@ -9,8 +9,8 @@ import {map} from 'lit/directives/map.js';
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 
-import './job-item';
-import './job-add-form';
+import './job-item.js';
+import './job-add-form.js';
 
 import type {Job} from '../type.js';
 import type {TemplateResult} from 'lit';
@@ -40,6 +40,12 @@ export class PageFlightFinder extends AlwatrElement {
       ion-card.job__list .nothing {
         display: flex;
         justify-content: center;
+      }
+
+      .version {
+        direction: ltr;
+        margin: 0 16px 8px;
+        font-size: 0.7em;
       }
     `,
   ];

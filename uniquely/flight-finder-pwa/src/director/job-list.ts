@@ -27,6 +27,10 @@ jobListSignal.setProvider(async () => {
     const response = await fetch({
       url: window.appConfig?.api ? window.appConfig.api + '/job' : '/job',
       token: window.appConfig?.token,
+      cacheStrategy: 'stale_while_revalidate',
+      revalidateCallback(response) {
+        _dispatchJobList(response);
+      },
       cache: 'no-cache',
     });
 

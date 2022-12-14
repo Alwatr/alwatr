@@ -55,7 +55,7 @@ export class JobAddForm extends AlwatrElement {
 
   static jobAddSignal = new SignalInterface('job-add');
   static cityListTemplate = Object.keys(cityList).map(
-    (city) => html`<ion-select-option value=${city}>${city} - ${cityList[city]}</ion-select-option>`,
+      (city) => html`<ion-select-option value=${city}>${city} - ${cityList[city]}</ion-select-option>`,
   );
   static seatListTemplate = Array.from(Array(9).keys()).map((seatNumber) => {
     return html`
@@ -199,7 +199,7 @@ export class JobAddForm extends AlwatrElement {
     this.__close();
   }
   private __inputChanged(
-    event: InputCustomEvent | SelectCustomEvent<string> | SelectCustomEvent<Array<dayParts>>,
+      event: InputCustomEvent | SelectCustomEvent<string> | SelectCustomEvent<Array<dayParts>>,
   ): void {
     const name = event.target.name as keyof NewJobDetail | undefined;
     const value = event.detail.value;

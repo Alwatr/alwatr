@@ -10,7 +10,7 @@ import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 
-import './ionic-components';
+import './ionic-components.js';
 
 import type {Job, JobResult} from '../type.js';
 import type {TemplateResult} from 'lit';
@@ -165,7 +165,10 @@ export class JobItem extends AlwatrElement {
   }
 
   private __delete(): void {
-    if (this.job?.id == null) return;
+    if (this.job?.id == null) {
+      this._logger.incident('__delete', 'null_job_id', 'Job ID in null.');
+      return;
+    }
 
     JobItem.jobDeleteSignal.dispatch(this.job.id);
   }
