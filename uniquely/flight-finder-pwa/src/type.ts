@@ -23,13 +23,13 @@ export interface Job extends AlwatrDocumentObject {
   resultList: Array<JobResult>;
 }
 
-export interface JobDetail {
+export interface JobDetail extends Record<string, unknown> {
   origin: string;
   destination: string;
   date: string;
   seatCount: number;
   maxPrice: number | null;
-  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
+  dayPart: Array<dayParts>;
   description: string;
 }
 
@@ -42,4 +42,8 @@ export type JobResult = {
   price: number;
   time: string;
   seatCount: number;
+  airline: string,
+  airplane: string,
+  flightId: string,
+  arrivalTime: string,
 };
