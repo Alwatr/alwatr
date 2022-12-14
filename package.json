@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "~3.0.0",
-    "@typescript-eslint/eslint-plugin": "~5.46.0",
+    "@typescript-eslint/eslint-plugin": "~5.46.1",
     "@typescript-eslint/parser": "~5.46.1",
     "@typescript/lib-dom": "npm:@types/web",
     "@web/dev-server": "~0.1.35",
