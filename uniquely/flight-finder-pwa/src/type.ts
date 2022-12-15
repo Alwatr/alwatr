@@ -23,7 +23,7 @@ export interface Job extends AlwatrDocumentObject {
   resultList: Array<JobResult>;
 }
 
-export interface JobDetail extends Record<string, unknown> {
+export interface JobDetail {
   origin: string;
   destination: string;
   date: string;
