@@ -151,7 +151,7 @@ function makeMessage(job: Job): string {
     ${cityList[job.detail.origin]} ✈️ ${cityList[job.detail.destination]}
 
     تاریخ: ${job.detail.date}
-    حداکثر قیمت: ${job.detail.maxPrice}
+    حداکثر قیمت: ${job.detail.maxPrice ? job.detail.maxPrice : 'ندارد'}
     تعداد صندلی: ${job.detail.seatCount}
 
     ${resultListStr}
