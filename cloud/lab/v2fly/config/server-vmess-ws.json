@@ -1,39 +1,15 @@
-{
-  "log": {
-    "access": {
-      "type": "Console",
-      "level": "Debug"
-    },
-    "error": {
-      "type": "Console",
-      "level": "Debug"
-    }
-  },
-  "inbounds": [
-    {
-      "protocol": "vmess",
-      "listen": "0.0.0.0",
-      "port": 80,
-      "tag": "in-vmess",
-      "settings": {
-        "users": ["d06ffa2e-ef51-4def-ad9d-37803453d33e", "8f9f1692-8d0a-271d-e2d0-1f4c998ecc95"]
-      },
-      "streamSettings": {
-        "transport": "ws",
-        "transportSettings": {},
-        "security": "none",
-        "securitySettings": {}
-      },
-      "mux": {
-        "enabled": true,
-        "concurrency": 8
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "tag": "out-direct"
-    }
-  ]
-}
+U2FsdGVkX1/3pY/fUEgz+SWc/1BJP+udBRTsuU3frCgj6a9IXyXLUu8mKNZLhTnU
+ZY69m4hrRc/jBGrzENhm5FD+EFQzVWIHir7TkYn9IBboLHV1mEUdkE8edwIekceF
+UX5wfb3QuB+fHIaFw6Xs1EoxTX9+723dZq/vLbJuNxvI3xQs8iPg/SaJoajDG3oK
+bpy9qL4ZdBNmLtj8ETIkFN6sKNiH5wVTTrON6bVuEDoN0wLz6UTWe3AfoEgmrCdd
+0o3i8zq99o0UUjfNUBWvVFmfD9g1KqQEe6rxHzFhQ9sylvy8fAr+xI+ZtN0phuHc
+IlLgE6xgeOzLqZMLnKmpftwftHxD7F9F619pINSrYc6qcwKGjopB8/EURxwt9MY3
+28UtfF+CQKJMAqNfqlI9oFkCxerDJcDV0mDlofVwYaX+RTaSdGcRW50OSYIHtXM1
+deLNWGXGaudrnhA38jAzS9VctGe+h0T+/hdp8KsqQ8nI/OeG90xBzcBitIzNPV2w
+qewP8d60g+suXz1CqkBSzkIZK1EB33QBI1MeL7Av2al6chRsaCfOg8ySn8jp0wzd
+oRJ02Afolw/dI/EYj2OU7jiH9nNC8H4dkLzhO7k9wZgut2NMkmi5wSNF+jCgRIWL
++CLhYAVQvNMlUgl37a13lgk995WOknGKsnNTrJxoVLguv4SwEqp6L1ANE0gyuBjm
+muIg14OH2rvpV1q6EXq5Fy8+dYVzQ+IqvKpel5r8l0mxSGsvDQ0UBKtzJvr6rGqk
+GvJTVzq+s/2nnDOI/EifxtFzw75Hpll0v1qIjZf38C0rphBQSwSZ7u4o0QFm/XVm
+VIVrqLUv2N2ZCpZKTK6TxU0cT5skAhtgb1SuKVVO167Ak0VtDWX9Zmiuey52l0Zh
+JtSPUARwIa6h9AJDsZ34oNTkKpa2gAaIK/oXMyaRcnblssf9LT6M2YJ026XZWTS4

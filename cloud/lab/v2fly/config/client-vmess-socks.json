@@ -1,46 +1,19 @@
-{
-  "log": {
-    "access": {
-      "type": "Console",
-      "level": "Debug"
-    },
-    "error": {
-      "type": "Console",
-      "level": "Debug"
-    }
-  },
-  "inbounds": [
-    {
-      "protocol": "socks",
-      "listen": "0.0.0.0",
-      "port": 1080,
-      "tag": "in-socks",
-      "settings": {
-        "address": "0.0.0.0",
-        "udpEnabled": true,
-        "packetEncoding": "None"
-      },
-      "mux": {
-        "enabled": true,
-        "concurrency": 8
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "vmess",
-      "tag": "out-vmess",
-      "settings": {
-        "address": "www.onixgroup.pro",
-        "port": 80,
-        "uuid": "d06ffa2e-ef51-4def-ad9d-37803453d33e"
-      },
-      "streamSettings": {
-        "transport": "ws",
-        "transportSettings": {},
-        "security": "none",
-        "securitySettings": {}
-      }
-    }
-  ]
-}
+U2FsdGVkX1/t00EdlKONpmvydUx3HNoYFtukmJVweCb8kl6GD43Y9MOrykEnRZ1/
++SD/+10UiDEgxwT79Et2GkGqkvF20iAfpCqMO+ReSTpcGe7/vxow6UIMLtTJUIeT
+LRZRlxhekk+hGyQZIE8yHfcZdmEx3eh1S5yOEwOCLYe/cBsIQSmppF2LTwNYgcfd
+PR1PDk3075b05ouH+OsxtXj2DZ0IoRZaqJcfuAuEVoqCw96x2QiJvans50mKD3IN
+Rg7DwayOTn/rtVnDh24BH2qVrHtbV55qCc/uYObGsLOC657M191/L+5Gke2HpOyx
+81MlIhRqlBFsLr1TywyHQwHPSPg3B+zESqQW+IFYI7G6GpAAHgMp+Zwq0yyN0whU
+7jjztWzGTVGbb6IHMpz3mQRUioad4rzJXZaOuIgKpWGj3oafUU7Q6hsJQX0CpbOo
+jM4ZCiZV8DGiDGiDQ8OGyQivaQWDUQqHX18Cut3UF3mfPA2wCKUva2G1Q4oaAs0Q
+dlK5y2qh5hZvWNDODnSZI+Sy9hnDJnwFDqS1lKd/oZvo2giGZyeUcTSvdC3DqrGG
+e9/cvaur1hAu96NzjP//+z0TaVIZbYj8tpwVEIcXkUnB+hr654ZlBLMsyxV/wAtl
+7I2dac8KHRiIZlvTh3y+oVnbNZAIxd50c4DgKx/5ofcsriaW4vRgQ8fCIHg/CScI
+ERncLMbBE+IsOk1j54FfVCOKv60BSPJjgT+7OAHvziVOTrmK0rokNC3WKPq4B01O
+SZjQFFprKCmzyPgDiGPgZ3J6L+mIT61eSAgQnx8W7pRiIBgMKAc0ApSar+g0ezd0
+z32mT5zgdH98ROTudXElwq9m+mjJh18BX/yxNqHDV4G4EsyyaYBGwrI+5snKOXOV
+s4JQ0JFj/JDi2NRHEY2LG4dB1vUxKFMf5BhIdwm5UwQfKXMlICshPfTEzUBYtcgt
+kLhUmTOPPiHHMIVvd/RbcZTLZwcapdOHSJQe6/lN7f9RRQaou/aK2c+kAx3jjsDZ
+Mtwn6l4O17O15RyRZW00fZsp2LoKjkg6sTpDZB01W2/l+yE4p1fO9xeiLu58hB1l
+ffC1Z1u3DESh2iskzsr7/HBZQP6ccP1tDW1rej5LhYZdxsR8ryE9AI6xwo3AIidh
+RdDELyLWrSOtjE7re0xaZCi+wq8PgiwnDEq/gAKeYSg=
