@@ -82,9 +82,9 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
  * ```
  */
 export function fetch(options: FetchOptions): Promise<Response> {
-  const _options = _processOptions(options);
-  logger.logMethodArgs('fetch', {options, _options});
-  return _handleCacheStrategy(_options);
+  options = _processOptions(options);
+  logger.logMethodArgs('fetch', {options});
+  return _handleCacheStrategy(options as Required<FetchOptions>);
 }
 
 /**
