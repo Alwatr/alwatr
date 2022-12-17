@@ -124,12 +124,12 @@ Example:
 userStorage.delete('user-1');
 ```
 
-### `getAll(): Promise<Record<string, DocumentType>>`
+### `getStorage(): Promise<AlwatrDocumentStorage>`
 
 Dump all storage data.
 
 Example:
 
 ```ts
-const userStorage = await userStorage.getAll();
+const userStorage = await userStorage.getStorage();
 ```
