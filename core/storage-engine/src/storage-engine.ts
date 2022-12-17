@@ -215,7 +215,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
     this._logger.logMethodArgs('get', documentId);
 
-    const documentObject = this._storage.data[documentId];
+    const documentObject = this._storage.data[documentId] as DocumentType | undefined;
     if (typeof documentObject === 'string') {
       return this.get(documentObject);
     }
@@ -258,7 +258,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
       documentObject.id = this._nextAutoIncrementId();
     }
 
-    const oldData = this._storage.data[documentObject.id];
+    const oldData = this._storage.data[documentObject.id] as DocumentType | undefined;
 
     if (oldData == null) {
       this._keys = null; // Clear cached keys

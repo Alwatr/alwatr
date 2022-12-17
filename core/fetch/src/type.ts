@@ -137,6 +137,6 @@ export type AlwatrDocumentMeta = {
 };
 
 export type AlwatrDocumentStorage<T extends AlwatrDocumentObject> = Omit<
-  AlwatrServiceResponseSuccessWithMeta<Record<string, T | undefined>, AlwatrDocumentMeta>,
+  AlwatrServiceResponseSuccessWithMeta<Record<string, T>, AlwatrDocumentMeta>,
   'statusCode' | 'errorCode'
 >;
