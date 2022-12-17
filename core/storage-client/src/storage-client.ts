@@ -3,7 +3,7 @@ import {AlwatrDocumentStorage} from '@alwatr/fetch/src/type.js';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
 import type {AlwatrStorageClientConfig} from './type.js';
-import type {AlwatrDocumentObject, AlwatrServiceResponse} from '@alwatr/fetch';
+import type {AlwatrDocumentObject} from '@alwatr/fetch';
 
 export {AlwatrStorageClientConfig, AlwatrDocumentObject};
 
