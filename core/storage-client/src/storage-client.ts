@@ -195,7 +195,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
     });
 
     if (typeof responseJson.data?.id !== 'string') {
-      this._logger.error('has', 'invalid_response_data', {responseJson});
+      this._logger.error('set', 'invalid_response_data', {responseJson});
       throw new Error('invalid_response_data');
     }
 
@@ -253,7 +253,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       typeof responseJson.meta !== 'object' ||
       typeof responseJson.meta.lastUpdated !== 'number'
     ) {
-      this._logger.error('has', 'invalid_response_data', {responseJson});
+      this._logger.error('getStorage', 'invalid_response_data', {responseJson});
       throw new Error('invalid_response_data');
     }
 
@@ -284,7 +284,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
     const keys = responseJson.data.keys;
 
     if (!Array.isArray(keys)) {
-      this._logger.error('has', 'invalid_response_data', {responseJson});
+      this._logger.error('keys', 'invalid_response_data', {responseJson});
       throw new Error('invalid_response_data');
     }
 
