@@ -5,18 +5,24 @@ export interface Job extends AlwatrDocumentObject {
   resultList: Array<JobResult>;
 }
 
+export type dayParts = 'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
+
 export interface JobDetail extends Record<string, unknown> {
   origin: string;
-  dest: string;
+  destination: string;
   date: string;
   seatCount: number;
   maxPrice: number | null;
-  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
+  dayPart: Array<dayParts>;
   description: string;
 }
 
 export interface JobResult extends Record<string, unknown> {
   price: number;
-  time: number;
+  time: string;
   seatCount: number;
+  airline: string,
+  airplane: string,
+  flightId: string,
+  arrivalTime: string,
 }

@@ -17,7 +17,7 @@ Content-Type: application/json
 {
   "detail": {
     "origin": "KIH",
-    "dest": "THR",
+    "destination": "THR",
     "date": "1401/09/10",
     "seatCount": 1,
     "maxPrice": null,
