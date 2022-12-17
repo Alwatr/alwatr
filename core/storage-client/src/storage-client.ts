@@ -73,7 +73,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
     cacheStrategy: 'network_only',
     removeDuplicate: 'never',
     retry: 3,
-    retryDelay: 300,
+    retryDelay: 500,
     token: this.config.token,
   };
 
@@ -244,7 +244,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       ...this.fetchOption,
       url: this.fetchOption.url + 'storage',
       queryParameters: {
-        storage: name,
+        name,
       },
     })) as AlwatrDocumentStorage<T>;
 
