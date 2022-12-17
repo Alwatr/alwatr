@@ -9,9 +9,8 @@ export type StorageMeta = {
   lastAutoId: number;
 };
 
-export type DataStorage<T extends AlwatrDocumentObject> = AlwatrServiceResponseSuccessWithMeta<
-  Record<string, T | undefined>,
-  StorageMeta
+export type DataStorage<T extends AlwatrDocumentObject> = Readonly<
+  Omit<AlwatrServiceResponseSuccessWithMeta<Record<string, T | undefined>, StorageMeta>, 'statusCode' | 'errorCode'>
 >;
 
 export type AlwatrStorageEngineConfig = {

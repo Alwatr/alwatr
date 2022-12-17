@@ -6,6 +6,7 @@ import exitHook from 'exit-hook';
 import {readJsonFile, writeJsonFile} from './util.js';
 
 import type {DataStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject} from './type.js';
+import type {AlwatrLogger} from '@alwatr/logger';
 
 export {DataStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject};
 
@@ -74,30 +75,31 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   /**
    * Storage name like database table name.
    */
-  readonly name;
+  readonly name: string;
 
   /**
    * Storage file full path.
    */
-  readonly storagePath;
+  readonly storagePath: string;
 
   /**
    * Save debounce timeout for minimal disk iops usage.
    */
-  readonly saveDebounce;
+  saveDebounce: number;
 
   /**
    * Write pretty formatted JSON file.
    */
-  readonly saveBeautiful;
+  saveBeautiful: boolean;
 
   /**
    * The storage has unsaved changes that have not yet saved.
    */
   hasUnsavedChanges = false;
 
-  protected _logger;
-  protected _storage: DataStorage<DocumentType>;
+  _storage: DataStorage<DocumentType>;
+
+  protected _logger: AlwatrLogger;
   protected _keys: Array<string> | null = null;
 
   /**
@@ -118,23 +120,9 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   }
 
   /**
-   * Get all data.
-   */
-  get _data(): typeof this._storage.data {
-    return this._storage.data;
-  }
-
-  /**
-   * Get storage meta.
-   */
-  get meta(): typeof this._storage.meta {
-    return this._storage.meta;
-  }
-
-  /**
    * Get next auto increment id for numerical document id.
    */
-  nextAutoIncrementId(): string {
+  protected _nextAutoIncrementId(): string {
     this._storage.meta.lastAutoId;
     do {
       this._storage.meta.lastAutoId++;
@@ -185,7 +173,13 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     }
 
     if (storage.ok !== true) {
-      throw new Error('invalid_data');
+      this._logger.error('load', 'invalid_storage_data', {storage});
+      throw new Error('invalid_storage_data');
+    }
+
+    if (storage.meta?.formatVersion !== AlwatrStorageEngine.formatVersion) {
+      this._logger.error('load', 'storage_version_incompatible', {storageMeta: storage.meta});
+      throw new Error('storage_version_incompatible');
     }
 
     return storage;
@@ -197,7 +191,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    * Example:
    *
    * ```ts
-   * if(!useruserStorage.has('user-1')) throw new Error('user not found');
+   * if(!userStorage.has('user-1')) throw new Error('user not found');
    * ```
    */
   has(documentId: string): boolean {
@@ -261,7 +255,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     }
 
     if (documentObject.id === 'auto_increment') {
-      documentObject.id = this.nextAutoIncrementId();
+      documentObject.id = this._nextAutoIncrementId();
     }
 
     const oldData = this._storage.data[documentObject.id];
