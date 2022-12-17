@@ -227,7 +227,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * const userStorage = await userStorage.getStorage();
    * ```
    */
-  async getAll<T extends DocumentType = DocumentType>(
+  async getStorage<T extends DocumentType = DocumentType>(
       name: string | undefined = this.config.name,
   ): Promise<AlwatrDocumentStorage<T>> {
     this._logger.logMethod('getStorage');
