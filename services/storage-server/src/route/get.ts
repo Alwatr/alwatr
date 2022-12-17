@@ -25,9 +25,9 @@ function getDocument(connection: AlwatrConnection): void {
   const params = connection.requireQueryParams<{storage: string; id: string}>({storage: 'string', id: 'string'});
   if (params == null) return;
 
-  const storage = storageProvider.get({name: params.storage});
+  const storageEngine = storageProvider.get({name: params.storage});
 
-  const document = storage.get(params.id, true);
+  const document = storageEngine.get(params.id, true);
 
   if (document == null) {
     return connection.reply({

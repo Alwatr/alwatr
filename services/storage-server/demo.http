@@ -55,7 +55,7 @@ GET {{apiUrl}}/{{apiVersion}}/keys?storage=comments/page1
 Authorization: Bearer {{token}}
 
 ### Get all data
-GET {{apiUrl}}/{{apiVersion}}/all?storage=comments/page1
+GET {{apiUrl}}/{{apiVersion}}/storage?name=comments/page1
 Authorization: Bearer {{token}}
 
 ### === Test other routes and errors ===
