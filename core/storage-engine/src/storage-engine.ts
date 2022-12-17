@@ -8,7 +8,7 @@ import {readJsonFile, writeJsonFile} from './util.js';
 import type {AlwatrDocumentStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 
-export {AlwatrDocumentStorage as DataStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject};
+export {AlwatrDocumentStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage-engine',
