@@ -5,10 +5,10 @@ import exitHook from 'exit-hook';
 
 import {readJsonFile, writeJsonFile} from './util.js';
 
-import type {DataStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject} from './type.js';
+import type {AlwatrDocumentStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 
-export {DataStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject};
+export {AlwatrDocumentStorage as DataStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage-engine',
@@ -97,7 +97,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    */
   hasUnsavedChanges = false;
 
-  _storage: DataStorage<DocumentType>;
+  _storage: AlwatrDocumentStorage<DocumentType>;
 
   protected _logger: AlwatrLogger;
   protected _keys: Array<string> | null = null;
@@ -130,7 +130,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     return this._storage.meta.lastAutoId.toString();
   }
 
-  protected get _newStorage(): DataStorage<DocumentType> {
+  protected get _newStorage(): AlwatrDocumentStorage<DocumentType> {
     return {
       ok: true,
       meta: {
@@ -160,10 +160,10 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   /**
    * load storage file.
    */
-  protected load(): DataStorage<DocumentType> {
+  protected load(): AlwatrDocumentStorage<DocumentType> {
     this._logger.logMethodArgs('load', {name: this.name, path: this.storagePath});
 
-    const storage = readJsonFile<DataStorage<DocumentType>>(this.storagePath);
+    const storage = readJsonFile<AlwatrDocumentStorage<DocumentType>>(this.storagePath);
 
     if (storage === null) {
       this._logger.incident('load', 'file_not_found', 'Storage path not found, empty storage loaded', {
