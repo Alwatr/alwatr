@@ -128,3 +128,15 @@ export type AlwatrServiceResponse<TData = Record<string, unknown>, TMeta = Recor
   | AlwatrServiceResponseSuccess<TData>
   | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>
   | AlwatrServiceResponseFailed;
+
+export type AlwatrDocumentMeta = {
+  formatVersion: number;
+  reversion: number;
+  lastUpdated: number;
+  lastAutoId: number;
+};
+
+export type AlwatrDocumentStorage<T extends AlwatrDocumentObject> = Omit<
+  AlwatrServiceResponseSuccessWithMeta<Record<string, T | undefined>, AlwatrDocumentMeta>,
+  'statusCode' | 'errorCode'
+>;
