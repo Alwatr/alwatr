@@ -32,31 +32,44 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
 ): Promise<AlwatrServiceResponseSuccess<TData> | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>> {
   logger.logMethod('serviceRequest');
 
-  const response = await fetch(options);
+  let response: Response;
+  try {
+    response = await fetch(options);
+  }
+  catch (err) {
+    logger.error('serviceRequest', (err as Error).message || 'fetch_failed', (err as Error).stack || err, options);
+    throw new Error('fetch_failed');
+  }
+
+  let responseText: string;
+  try {
+    responseText = await response.text();
+  }
+  catch (err) {
+    logger.error('serviceRequest', 'invalid_response', (err as Error).message || err, {
+      response,
+    });
+    throw new Error('invalid_response');
+  }
 
   let responseJson: AlwatrServiceResponse<TData, TMeta>;
   try {
-    responseJson = await response.json();
+    responseJson = JSON.parse(responseText);
   }
   catch (err) {
-    let responseText: string | null = null;
-    try {
-      responseText = await response.text();
-    }
-    catch {
-      logger.accident('serviceRequest', 'invalid_response', 'Cannot extract response.text()');
-    }
-    logger.error('serviceRequest', 'invalid_json', err, {responseText});
+    logger.error('serviceRequest', 'invalid_json', (err as Error).message || err, {responseText});
     throw new Error('invalid_json');
   }
 
   if (responseJson.ok !== true) {
-    logger.error('serviceRequest', 'fetch_nok', {responseJson});
     if (typeof responseJson.errorCode === 'string') {
+      logger.accident('serviceRequest', responseJson.errorCode, 'fetch response not ok', {responseJson});
       throw new Error(responseJson.errorCode);
     }
-    // else
-    throw new Error('fetch_nok');
+    else {
+      logger.error('serviceRequest', 'fetch_nok', 'fetch response not ok', {responseJson});
+      throw new Error('fetch_nok');
+    }
   }
 
   // TODO: generate fetch signals hook (for easier handle loading and show error toast)
