@@ -1,4 +1,4 @@
-import {config, logger} from '../lib/config.js';
+import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
@@ -19,7 +19,7 @@ function getDocument(connection: AlwatrConnection): void {
     });
   }
 
-  const token = connection.requireToken(config.token);
+  const token = connection.requireToken(config.nanoServer.accessToken);
   if (token == null) return;
 
   const params = connection.requireQueryParams<{storage: string; id: string}>({storage: 'string', id: 'string'});

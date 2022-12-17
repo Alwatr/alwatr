@@ -18,5 +18,12 @@
   "maximum_price": "حداکثر قیمت",
   "send": "ارسال",
   "not_found": "یافت نشد",
-  "flight": "پرواز"
+  "flight": "پرواز",
+  "earlyMorning": "صبح زود",
+  "morning": "صبح",
+  "midday": "نیمه روز",
+  "afternoon": "بعد از ظهر",
+  "evening": "عصر",
+  "night": "شب",
+  "nothing_found": "هیچ چیز یافت نشد"
 }

@@ -43,4 +43,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: 🚀 Build Typescript
-        run: yarn build
+        run: yarn build:ts && yarn lerna run build:ts
+
+      - name: 🚀 Extra Packages Build
+        run: yarn lerna run build

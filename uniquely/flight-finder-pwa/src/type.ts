@@ -12,7 +12,7 @@ declare global {
     readonly toast: Partial<ToastOptions> & {message: string};
   }
   interface AlwatrRequestSignals {
-    readonly 'job-list': Record<string, never>;
+    readonly 'job-list': null;
   }
 }
 
@@ -25,11 +25,11 @@ export interface Job extends AlwatrDocumentObject {
 
 export interface JobDetail {
   origin: string;
-  dest: string;
+  destination: string;
   date: string;
   seatCount: number;
   maxPrice: number | null;
-  dayPart: Array<'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night'>;
+  dayPart: Array<dayParts>;
   description: string;
 }
 
@@ -40,6 +40,10 @@ export type NewJobDetail = {
 
 export type JobResult = {
   price: number;
-  time: number;
+  time: string;
   seatCount: number;
+  airline: string,
+  airplane: string,
+  flightId: string,
+  arrivalTime: string,
 };

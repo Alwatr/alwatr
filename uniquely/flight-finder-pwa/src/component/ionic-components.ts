@@ -13,6 +13,8 @@ import {defineCustomElement as ionCardTitle} from '@ionic/core/components/ion-ca
 import {defineCustomElement as ionCard} from '@ionic/core/components/ion-card.js';
 import {defineCustomElement as ionCol} from '@ionic/core/components/ion-col.js';
 import {defineCustomElement as ionContent} from '@ionic/core/components/ion-content.js';
+import {defineCustomElement as ionFabButton} from '@ionic/core/components/ion-fab-button.js';
+import {defineCustomElement as ionFab} from '@ionic/core/components/ion-fab.js';
 import {defineCustomElement as ionFooter} from '@ionic/core/components/ion-footer.js';
 import {defineCustomElement as ionGrid} from '@ionic/core/components/ion-grid.js';
 import {defineCustomElement as ionHeader} from '@ionic/core/components/ion-header.js';
@@ -61,6 +63,8 @@ ionCardTitle();
 ionCol();
 ionContent();
 ionFooter();
+ionFab();
+ionFabButton();
 ionGrid();
 ionHeader();
 ionInput();

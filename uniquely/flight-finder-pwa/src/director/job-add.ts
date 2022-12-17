@@ -1,10 +1,10 @@
 import {fetch} from '@alwatr/fetch';
 import {SignalInterface} from '@alwatr/signal';
 
-import {jobListSignal} from './job-list';
-import {showToastSignal} from './toast';
+import {jobListSignal} from './job-list.js';
+import {showToastSignal} from './toast.js';
 
-import type {Job} from '../type';
+import type {Job} from '../type.js';
 import type {AlwatrServiceResponse} from '@alwatr/fetch';
 
 export const jobAddSignal = new SignalInterface('job-add');
@@ -34,5 +34,5 @@ jobAddSignal.addListener(async (job) => {
     });
   }
 
-  jobListSignal.request({});
+  jobListSignal.request(null);
 });

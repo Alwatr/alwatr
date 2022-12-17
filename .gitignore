@@ -19,7 +19,7 @@ Desktop.ini
 *.d.ts
 *.js
 !/*.js
-!pwa/*/*.js
+!esbuild.config.js
 dist
 build
 

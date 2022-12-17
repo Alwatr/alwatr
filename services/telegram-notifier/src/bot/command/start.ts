@@ -1,7 +1,7 @@
-import {bot} from '../../lib/bot.js';
-import {logger} from '../../lib/config.js';
+import {logger} from '../../config.js';
 import {storage} from '../../lib/storage.js';
 import {MemberList} from '../../lib/type.js';
+import {bot} from '../bot.js';
 
 bot.command('start', async (ctx): Promise<void> => {
   const chatId = ctx.chat.id;
@@ -9,7 +9,7 @@ bot.command('start', async (ctx): Promise<void> => {
   logger.logMethodArgs('command/start', {chatId, token});
 
   if (token == null) {
-    ctx.reply('You don\'t have permission!');
+    ctx.reply('این یک بات خصوصی هستش! لطفا مزاحم نشوید.');
     return;
   }
 
@@ -18,8 +18,13 @@ bot.command('start', async (ctx): Promise<void> => {
     memberList: [],
   };
 
+  if (target.memberList.indexOf(chatId) !== -1) {
+    ctx.reply('شما درحال حاضر عضو این لیست هستید!');
+    return;
+  }
+
   target.memberList.push(chatId);
   storage.set(target, true);
 
-  await ctx.reply('You are registered to notify list!');
+  await ctx.reply('شما با موفقیت در لیست ثبت شدید.');
 });

@@ -14,7 +14,7 @@ on:
   pull_request:
     paths:
       - 'cloud/container/alwatr-*.dockerfile'
-      - '.github/workflows/publish-services.yml'
+      - '.github/workflows/publish-alwatr-container.yml'
 
 env:
   REGISTRY: ghcr.io
@@ -26,7 +26,7 @@ jobs:
   build:
     if: github.repository_owner == 'AliMD'
 
-    name: Build & Publish Services
+    name: Build Container
     runs-on: ubuntu-latest
 
     strategy:
