@@ -2,7 +2,7 @@ import {AlwatrElement} from '@alwatr/element';
 import {css, html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import styles from '../style';
+import styles from '../style/index.js';
 
 import type {ListenerInterface} from '@alwatr/signal';
 import type {TemplateResult} from 'lit';

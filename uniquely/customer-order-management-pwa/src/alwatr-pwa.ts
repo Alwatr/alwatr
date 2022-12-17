@@ -5,15 +5,15 @@ import {css, html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {cache} from 'lit/directives/cache.js';
 
-import styles from './style';
+import styles from './style/index.js';
 
-import './component/ionic';
-import './page/page-product-list';
-import './page/page-invoice';
-import './page/page-amount';
-import './page/page-information';
-import './page/page-order';
-import './page/page-home';
+import './component/ionic.js';
+import './page/page-product-list.js';
+import './page/page-invoice.js';
+import './page/page-amount.js';
+import './page/page-information.js';
+import './page/page-order.js';
+import './page/page-home.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {ListenerInterface} from '@alwatr/signal';

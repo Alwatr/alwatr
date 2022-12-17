@@ -3,11 +3,11 @@ import {SignalInterface} from '@alwatr/signal';
 import {css, html} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 
-import styles from '../style';
+import styles from '../style/index.js';
 
-import '../component/product-card';
+import '../component/product-card.js';
 
-import type {Product} from '../type';
+import type {Product} from '../type.js';
 import type {TemplateResult} from 'lit';
 
 declare global {

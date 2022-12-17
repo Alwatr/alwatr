@@ -2,10 +2,10 @@ import {AlwatrElement} from '@alwatr/element';
 import {css, html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {sampleProductList} from '../config';
-import styles from '../style';
+import {sampleProductList} from '../config.js';
+import styles from '../style/index.js';
 
-import '../component/product-item';
+import '../component/product-item.js';
 
 import type {TemplateResult} from 'lit';
 

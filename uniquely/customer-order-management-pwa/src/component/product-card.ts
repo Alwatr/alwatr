@@ -4,7 +4,7 @@ import {customElement} from 'lit/decorators.js';
 import {property} from 'lit/decorators/property.js';
 import {live} from 'lit/directives/live.js';
 
-import styles from '../style';
+import styles from '../style/index.js';
 
 import type {TemplateResult} from 'lit';
 

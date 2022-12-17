@@ -1,6 +1,6 @@
-import ionicNormalize from './ionic.normalize';
-import ionicTheming from './ionic.theming';
-import normalize from './normalize';
+import ionicNormalize from './ionic.normalize.js';
+import ionicTheming from './ionic.theming.js';
+import normalize from './normalize.js';
 
 import type {CSSResult} from 'lit';
 
