@@ -1,6 +1,6 @@
 import {config, logger} from '../../config.js';
 import {nanoServer} from '../../lib/nano-server.js';
-import {storage} from '../../lib/storage.js';
+import {storageClient} from '../../lib/storage.js';
 
 import type {Job} from '../../lib/type.js';
 import type {AlwatrConnection} from '@alwatr/nano-server';
@@ -20,7 +20,7 @@ async function newJob(connection: AlwatrConnection): Promise<void> {
   job.resultList = [];
 
   try {
-    if (job.id !== 'auto_increment' && (await storage.has(job.id))) {
+    if (job.id !== 'auto_increment' && (await storageClient.has(job.id))) {
       return connection.reply({
         ok: false,
         statusCode: 400,
@@ -31,7 +31,7 @@ async function newJob(connection: AlwatrConnection): Promise<void> {
     connection.reply({
       ok: true,
       // FIXME:
-      data: (await storage.set(job)) as unknown as Record<string, unknown>,
+      data: (await storageClient.set(job)) as unknown as Record<string, unknown>,
     });
   }
   catch (err) {
