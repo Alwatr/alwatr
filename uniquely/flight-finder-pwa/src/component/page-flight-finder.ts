@@ -83,7 +83,7 @@ export class PageFlightFinder extends AlwatrElement {
           </ion-fab-button>
         </ion-fab>
 
-        <div class="version">v${Alwatr.version}-prv2</div>
+        <div class="version">v${Alwatr.version}-prv3</div>
       </ion-content>
     `;
   }
