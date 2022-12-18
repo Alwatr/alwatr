@@ -15,9 +15,9 @@ async function removeDocument(connection: AlwatrConnection): Promise<void> {
   const param = connection.requireQueryParams<{storage: string; id: string}>({storage: 'string', id: 'string'});
   if (param === null) return;
 
-  const storage = storageProvider.get({name: param.storage});
+  const storageEngine = storageProvider.get({name: param.storage});
 
-  if (storage.delete(param.id) === true) {
+  if (storageEngine.delete(param.id) === true) {
     connection.reply({
       ok: true,
       data: {},

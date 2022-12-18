@@ -84,7 +84,7 @@ async function getBench(): Promise<void> {
   console.log('keys.length: %s', keys.length);
 
   console.time('get all');
-  await db.getAll();
+  await db.getStorage();
   console.timeEnd('get all');
 }
 

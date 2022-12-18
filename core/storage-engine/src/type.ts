@@ -1,18 +1,7 @@
-import type {AlwatrDocumentObject, AlwatrServiceResponseSuccessWithMeta} from '@alwatr/fetch/type.js';
+import type {AlwatrDocumentObject, AlwatrDocumentMeta, AlwatrDocumentStorage} from '@alwatr/fetch/type.js';
 
-export {AlwatrDocumentObject};
+export {AlwatrDocumentObject, AlwatrDocumentMeta, AlwatrDocumentStorage};
 
-export type StorageMeta = {
-  formatVersion: number;
-  reversion: number;
-  lastUpdated: number;
-  lastAutoId: number;
-};
-
-export type DataStorage<T extends AlwatrDocumentObject> = AlwatrServiceResponseSuccessWithMeta<
-  Record<string, T | undefined>,
-  StorageMeta
->;
 
 export type AlwatrStorageEngineConfig = {
   /**

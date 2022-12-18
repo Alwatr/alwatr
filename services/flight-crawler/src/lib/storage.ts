@@ -4,4 +4,4 @@ import {config} from '../config.js';
 
 import type {Job} from './type.js';
 
-export const storage = new AlwatrStorageClient<Job>(config.storage);
+export const storageClient = new AlwatrStorageClient<Job>(config.storage);

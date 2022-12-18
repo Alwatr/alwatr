@@ -1,6 +1,6 @@
 import {config, logger} from '../../config.js';
 import {nanoServer} from '../../lib/nano-server.js';
-import {storage} from '../../lib/storage.js';
+import {storageClient} from '../../lib/storage.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
 
@@ -16,7 +16,7 @@ async function deleteJob(connection: AlwatrConnection): Promise<void> {
   if (params === null) return;
 
   try {
-    await storage.delete(params.id);
+    await storageClient.delete(params.id);
     connection.reply({
       ok: true,
       data: {},

@@ -5,9 +5,10 @@ import exitHook from 'exit-hook';
 
 import {readJsonFile, writeJsonFile} from './util.js';
 
-import type {DataStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject} from './type.js';
+import type {AlwatrDocumentStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject} from './type.js';
+import type {AlwatrLogger} from '@alwatr/logger';
 
-export {DataStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject};
+export {AlwatrDocumentStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject};
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage-engine',
@@ -74,30 +75,31 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   /**
    * Storage name like database table name.
    */
-  readonly name;
+  readonly name: string;
 
   /**
    * Storage file full path.
    */
-  readonly storagePath;
+  readonly storagePath: string;
 
   /**
    * Save debounce timeout for minimal disk iops usage.
    */
-  readonly saveDebounce;
+  saveDebounce: number;
 
   /**
    * Write pretty formatted JSON file.
    */
-  readonly saveBeautiful;
+  saveBeautiful: boolean;
 
   /**
    * The storage has unsaved changes that have not yet saved.
    */
   hasUnsavedChanges = false;
 
-  protected _logger;
-  protected _storage: DataStorage<DocumentType>;
+  _storage: AlwatrDocumentStorage<DocumentType>;
+
+  protected _logger: AlwatrLogger;
   protected _keys: Array<string> | null = null;
 
   /**
@@ -118,23 +120,9 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   }
 
   /**
-   * Get all data.
-   */
-  get _data(): typeof this._storage.data {
-    return this._storage.data;
-  }
-
-  /**
-   * Get storage meta.
-   */
-  get meta(): typeof this._storage.meta {
-    return this._storage.meta;
-  }
-
-  /**
    * Get next auto increment id for numerical document id.
    */
-  nextAutoIncrementId(): string {
+  protected _nextAutoIncrementId(): string {
     this._storage.meta.lastAutoId;
     do {
       this._storage.meta.lastAutoId++;
@@ -142,7 +130,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     return this._storage.meta.lastAutoId.toString();
   }
 
-  protected get _newStorage(): DataStorage<DocumentType> {
+  protected get _newStorage(): AlwatrDocumentStorage<DocumentType> {
     return {
       ok: true,
       meta: {
@@ -172,10 +160,10 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   /**
    * load storage file.
    */
-  protected load(): DataStorage<DocumentType> {
+  protected load(): AlwatrDocumentStorage<DocumentType> {
     this._logger.logMethodArgs('load', {name: this.name, path: this.storagePath});
 
-    const storage = readJsonFile<DataStorage<DocumentType>>(this.storagePath);
+    const storage = readJsonFile<AlwatrDocumentStorage<DocumentType>>(this.storagePath);
 
     if (storage === null) {
       this._logger.incident('load', 'file_not_found', 'Storage path not found, empty storage loaded', {
@@ -185,7 +173,13 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     }
 
     if (storage.ok !== true) {
-      throw new Error('invalid_data');
+      this._logger.error('load', 'invalid_storage_data', {storage});
+      throw new Error('invalid_storage_data');
+    }
+
+    if (storage.meta?.formatVersion !== AlwatrStorageEngine.formatVersion) {
+      this._logger.error('load', 'storage_version_incompatible', {storageMeta: storage.meta});
+      throw new Error('storage_version_incompatible');
     }
 
     return storage;
@@ -197,7 +191,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    * Example:
    *
    * ```ts
-   * if(!useruserStorage.has('user-1')) throw new Error('user not found');
+   * if(!userStorage.has('user-1')) throw new Error('user not found');
    * ```
    */
   has(documentId: string): boolean {
@@ -221,7 +215,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
     this._logger.logMethodArgs('get', documentId);
 
-    const documentObject = this._storage.data[documentId];
+    const documentObject = this._storage.data[documentId] as DocumentType | undefined;
     if (typeof documentObject === 'string') {
       return this.get(documentObject);
     }
@@ -261,10 +255,10 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     }
 
     if (documentObject.id === 'auto_increment') {
-      documentObject.id = this.nextAutoIncrementId();
+      documentObject.id = this._nextAutoIncrementId();
     }
 
-    const oldData = this._storage.data[documentObject.id];
+    const oldData = this._storage.data[documentObject.id] as DocumentType | undefined;
 
     if (oldData == null) {
       this._keys = null; // Clear cached keys

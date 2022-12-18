@@ -15,10 +15,10 @@ async function has(connection: AlwatrConnection): Promise<void> {
   const params = connection.requireQueryParams<{storage: string; id: string}>({storage: 'string', id: 'string'});
   if (params == null) return;
 
-  const storage = storageProvider.get({name: params.storage});
+  const storageEngine = storageProvider.get({name: params.storage});
 
   connection.reply({
     ok: true,
-    data: {has: storage.has(params.id)},
+    data: {has: storageEngine.has(params.id)},
   });
 }
