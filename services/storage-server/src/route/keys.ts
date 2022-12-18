@@ -15,10 +15,10 @@ async function getStorageKeys(connection: AlwatrConnection): Promise<void> {
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
   if (params == null) return;
 
-  const storage = storageProvider.get({name: params.storage});
+  const storageEngine = storageProvider.get({name: params.storage});
 
   connection.reply({
     ok: true,
-    data: {keys: storage.keys},
+    data: {keys: storageEngine.keys},
   });
 }

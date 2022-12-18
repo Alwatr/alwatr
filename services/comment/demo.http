@@ -31,6 +31,6 @@ Content-Type: application/json
 }
 
 ### Get all comment
-GET {{apiUrl}}/all?storage=product/test
+GET {{apiUrl}}/storage?name=product/test
 Authorization: Bearer {{token}}
 Content-Type: application/json

@@ -27,10 +27,10 @@ async function updateDocument(connection: AlwatrConnection): Promise<void> {
     });
   }
 
-  const storage = storageProvider.get({name: param.storage});
+  const storageEngine = storageProvider.get({name: param.storage});
 
   connection.reply({
     ok: true,
-    data: storage.set(document, true),
+    data: storageEngine.set(document, true),
   });
 }

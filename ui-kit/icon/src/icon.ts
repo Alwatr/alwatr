@@ -84,8 +84,8 @@ export class AlwatrIcon extends AlwatrElement {
     try {
       this._icon = html`${unsafeSVG(await preloadIcon(this.name, this.urlPrefix))}`;
     }
-    catch (error) {
-      this._logger.error('_fetchIcon', 'fetch_failed', (error as Error).stack || error);
+    catch (err) {
+      this._logger.error('_fetchIcon', 'fetch_failed', err);
       this._icon = AlwatrIcon._fallback;
     }
   }

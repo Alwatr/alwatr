@@ -34,5 +34,5 @@ try {
   throw new Error('my_error_message');
 }
 catch (err) {
-  logger1.error('myMethod', 'error_code', (err as Error).stack || err, {a: 1, b: 2});
+  logger1.error('myMethod', 'error_code', err, {a: 1, b: 2});
 }

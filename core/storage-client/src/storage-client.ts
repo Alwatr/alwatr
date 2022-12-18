@@ -1,8 +1,8 @@
-import {fetch, FetchOptions} from '@alwatr/fetch';
+import {serviceRequest, FetchOptions} from '@alwatr/fetch';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 
 import type {AlwatrStorageClientConfig} from './type.js';
-import type {AlwatrDocumentObject, AlwatrServiceResponse} from '@alwatr/fetch';
+import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/fetch/type.js';
 
 export {AlwatrStorageClientConfig, AlwatrDocumentObject};
 
@@ -61,7 +61,11 @@ alwatrRegisteredList.push({
  * }
  */
 export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = AlwatrDocumentObject> {
-  protected _logger = createLogger('alwatr-storage-client:' + this.config.name, undefined, this.config.debug);
+  protected _logger = createLogger(
+      'alwatr-storage-client' + (this.config.name == null ? '' : ':' + this.config.name),
+      undefined,
+      this.config.debug,
+  );
 
   /**
    * Default fetch options.
@@ -73,7 +77,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
     cacheStrategy: 'network_only',
     removeDuplicate: 'never',
     retry: 3,
-    retryDelay: 300,
+    retryDelay: 500,
     token: this.config.token,
   };
 
@@ -98,7 +102,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    *     console.log('user_5000 id not found!');
    *   }
    *   else {
-   *     console.err((err as Error)?.message ?? err);
+   *     console.err((err as Error)?.message || err);
    *   }
    * }
    * ```
@@ -107,11 +111,10 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       documentId: string,
       storage: string | undefined = this.config.name,
   ): Promise<T> {
-    this._logger.logMethodArgs('get', {documentId});
-
+    this._logger.logMethodArgs('get', {storage, documentId});
     if (storage == null) throw new Error('storage_not_defined');
 
-    const response = await fetch({
+    const responseJson = await serviceRequest<T>({
       ...this.fetchOption,
       queryParameters: {
         storage,
@@ -119,23 +122,12 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       },
     });
 
-    let content: AlwatrServiceResponse<T>;
-    try {
-      content = await response.json();
-    }
-    catch {
-      throw new Error('invalid_json');
+    if (typeof responseJson.data !== 'object' || typeof responseJson.data.id !== 'string') {
+      this._logger.error('get', 'invalid_response_data', {responseJson});
+      throw new Error('invalid_response_data');
     }
 
-    if (content.ok === true && typeof content.data.id === 'string') {
-      return content.data;
-    }
-    else if (content.ok === false && content.errorCode === 'document_not_found') {
-      throw new Error('document_not_found');
-    }
-    else {
-      throw new Error('fetch_failed');
-    }
+    return responseJson.data;
   }
 
   /**
@@ -151,11 +143,10 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * ```
    */
   async has(documentId: string, storage: string | undefined = this.config.name): Promise<boolean> {
-    this._logger.logMethodArgs('has', {documentId});
-
+    this._logger.logMethodArgs('has', {storage, documentId});
     if (storage == null) throw new Error('storage_not_defined');
 
-    const response = await fetch({
+    const responseJson = await serviceRequest<{has: boolean | unknown}>({
       ...this.fetchOption,
       url: this.fetchOption.url + 'has',
       queryParameters: {
@@ -164,20 +155,14 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       },
     });
 
-    let content: AlwatrServiceResponse<{has: boolean}>;
-    try {
-      content = await response.json();
-    }
-    catch {
-      throw new Error('invalid_json');
+    const has = responseJson.data?.has;
+
+    if (typeof has !== 'boolean') {
+      this._logger.error('has', 'invalid_response_data', {responseJson});
+      throw new Error('invalid_response_data');
     }
 
-    if (content.ok === true && typeof content.data.has === 'boolean') {
-      return content.data.has;
-    }
-    else {
-      throw new Error('fetch_failed');
-    }
+    return has;
   }
 
   /**
@@ -199,10 +184,9 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       storage: string | undefined = this.config.name,
   ): Promise<T> {
     this._logger.logMethodArgs('set', {documentId: documentObject.id});
-
     if (storage == null) throw new Error('storage_not_defined');
 
-    const response = await fetch({
+    const responseJson = await serviceRequest<T>({
       ...this.fetchOption,
       method: 'PATCH',
       queryParameters: {
@@ -211,20 +195,12 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       bodyJson: documentObject,
     });
 
-    let content: AlwatrServiceResponse<T>;
-    try {
-      content = await response.json();
-    }
-    catch {
-      throw new Error('invalid_json');
+    if (typeof responseJson.data?.id !== 'string') {
+      this._logger.error('set', 'invalid_response_data', {responseJson});
+      throw new Error('invalid_response_data');
     }
 
-    if (content.ok && typeof content.data.id === 'string') {
-      return content.data;
-    }
-    else {
-      throw new Error('fetch_failed');
-    }
+    return responseJson.data;
   }
 
   /**
@@ -237,11 +213,10 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * ```
    */
   async delete(documentId: string, storage: string | undefined = this.config.name): Promise<void> {
-    this._logger.logMethodArgs('delete', {documentId});
-
+    this._logger.logMethodArgs('delete', {storage, documentId});
     if (storage == null) throw new Error('storage_not_defined');
 
-    const response = await fetch({
+    await serviceRequest({
       ...this.fetchOption,
       method: 'DELETE',
       queryParameters: {
@@ -249,64 +224,41 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
         id: documentId,
       },
     });
-
-    let content: AlwatrServiceResponse<Record<string, never>>;
-    try {
-      content = await response.json();
-    }
-    catch {
-      throw new Error('invalid_json');
-    }
-
-    if (content.ok) {
-      return;
-    }
-    else if (content.errorCode === 'document_not_found') {
-      throw new Error('document_not_found');
-    }
-    else {
-      throw new Error('fetch_failed');
-    }
   }
 
   /**
-   * Dump all storage data.
+   * Dump all storage.
    *
    * Example:
    *
    * ```ts
-   * const userStorage = await userStorage.getAll();
+   * const userStorage = await userStorage.getStorage();
    * ```
    */
-  async getAll<T extends DocumentType = DocumentType>(
-      storage: string | undefined = this.config.name,
-  ): Promise<Record<string, T>> {
-    this._logger.logMethod('getAll');
+  async getStorage<T extends DocumentType = DocumentType>(
+      name: string | undefined = this.config.name,
+  ): Promise<AlwatrDocumentStorage<T>> {
+    this._logger.logMethod('getStorage');
+    if (name == null) throw new Error('storage_not_defined');
 
-    if (storage == null) throw new Error('storage_not_defined');
-
-    const response = await fetch({
+    const responseJson = (await serviceRequest({
       ...this.fetchOption,
-      url: this.fetchOption.url + 'all',
+      url: this.fetchOption.url + 'storage',
       queryParameters: {
-        storage,
+        name,
       },
-    });
+    })) as AlwatrDocumentStorage<T>;
 
-    let content: AlwatrServiceResponse<Record<string, T>>;
-    try {
-      content = await response.json();
-    }
-    catch {
-      throw new Error('invalid_json');
+    if (
+      typeof responseJson.data !== 'object' ||
+      typeof responseJson.meta !== 'object' ||
+      typeof responseJson.meta.lastUpdated !== 'number'
+    ) {
+      this._logger.error('getStorage', 'invalid_response_data', {responseJson});
+      throw new Error('invalid_response_data');
     }
 
-    if (content.ok) {
-      return content.data;
-    }
-    else {
-      throw new Error('fetch_failed');
-    }
+    return responseJson;
   }
 
   /**
@@ -318,12 +270,11 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * const userIdArray = await userStorage.keys();
    * ```
    */
-  async keys(storage?: string): Promise<Array<string>> {
+  async keys(storage: string | undefined = this.config.name): Promise<Array<string>> {
     this._logger.logMethod('keys');
-
     if (storage == null) throw new Error('storage_not_defined');
 
-    const response = await fetch({
+    const responseJson = await serviceRequest<{keys: Array<string> | unknown}>({
       ...this.fetchOption,
       url: this.fetchOption.url + 'keys',
       queryParameters: {
@@ -331,19 +282,13 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       },
     });
 
-    let content: AlwatrServiceResponse<{keys: Array<string>}>;
-    try {
-      content = await response.json();
-    }
-    catch {
-      throw new Error('invalid_json');
+    const keys = responseJson.data.keys;
+
+    if (!Array.isArray(keys)) {
+      this._logger.error('keys', 'invalid_response_data', {responseJson});
+      throw new Error('invalid_response_data');
     }
 
-    if (content.ok && Array.isArray(content.data?.keys)) {
-      return content.data.keys;
-    }
-    else {
-      throw new Error('fetch_failed');
-    }
+    return keys;
   }
 }

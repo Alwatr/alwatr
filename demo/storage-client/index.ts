@@ -60,7 +60,7 @@ await db.set({
 
 console.log('has \'alimd\': %o', await db.has('alimd'));
 console.log('keys: %o', await db.keys());
-console.log('getAll: %o', await db.getAll());
+console.log('getAll: %o', await db.getStorage());
 await db.delete('alimd');
 await db.delete('fmd');
 

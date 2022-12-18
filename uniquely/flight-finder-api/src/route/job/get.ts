@@ -1,6 +1,6 @@
 import {config, logger} from '../../config.js';
 import {nanoServer} from '../../lib/nano-server.js';
-import {storage} from '../../lib/storage.js';
+import {storageClient} from '../../lib/storage.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
 
@@ -13,17 +13,20 @@ async function getJob(connection: AlwatrConnection): Promise<void> {
   if (connection.requireToken(config.nanoServer.accessToken) == null) return;
 
   try {
-    connection.reply({
-      ok: true,
-      data: await storage.getAll(),
-    });
+    connection.reply(await storageClient.getStorage());
   }
-  catch (err) {
-    logger.error('getJob', (err as Error).message ?? 'storage_error', (err as Error).stack ?? err);
+  catch (_err) {
+    const err = _err as Error;
+    logger.error('getJob', err.message || 'storage_error', err);
     connection.reply({
       ok: false,
       statusCode: 500,
       errorCode: 'storage_error',
+      meta: {
+        name: err.name,
+        message: err.message,
+        cause: err.cause,
+      },
     });
   }
 }

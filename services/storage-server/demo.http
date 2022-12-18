@@ -6,7 +6,7 @@
 # GET {{apiUrl}}/{{apiVersion}}/public/comments/page1.json
 
 ### Get a document by storageName and docId
-GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
+GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=0
 Authorization: Bearer {{token}}
 
 ### Insert document
@@ -15,9 +15,9 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "id": "c1",
+  "id": "auto_increment",
   "from": "Ali Mihandoost",
-  "message": "Salam"
+  "message": "سلام"
 }
 
 ###
@@ -26,9 +26,9 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "id": "c2",
+  "id": "auto_increment",
   "from": "Fateme Mihandoost",
-  "message": "Aleyk Salam"
+  "message": "علیک سلام"
 }
 
 ### Edit document
@@ -37,17 +37,17 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "id": "c1",
+  "id": "0",
   "from": "Ali Mihandoost",
   "message": "Salam ;)"
 }
 
 ### Check document exists by storageName and docId
-GET {{apiUrl}}/{{apiVersion}}/has?storage=comments/page1&id=c1
+GET {{apiUrl}}/{{apiVersion}}/has?storage=comments/page1&id=0
 Authorization: Bearer {{token}}
 
 ### Delete document
-DELETE {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=c1
+DELETE {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=0
 Authorization: Bearer {{token}}
 
 ### Get keys
@@ -55,7 +55,7 @@ GET {{apiUrl}}/{{apiVersion}}/keys?storage=comments/page1
 Authorization: Bearer {{token}}
 
 ### Get all data
-GET {{apiUrl}}/{{apiVersion}}/all?storage=comments/page1
+GET {{apiUrl}}/{{apiVersion}}/storage?name=comments/page1
 Authorization: Bearer {{token}}
 
 ### === Test other routes and errors ===
@@ -67,7 +67,7 @@ GET {{apiUrl}}/{{apiVersion}}
 GET {{apiUrl}}/{{apiVersion}}/health
 
 ### Get a document without token
-GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1/page1&id=c1
+GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1/page1&id=0
 
 ### Page 404 (wrong method)
 TRACE {{apiUrl}}/{{apiVersion}}
