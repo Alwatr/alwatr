@@ -24,6 +24,7 @@ services:
     environment:
       - STORAGE_PATH=/storage
       - ACCESS_TOKEN=${STORAGE_TOKEN}
+      - ALWATR_DEBUG=${STORAGE_SERVER_DEBUG:-}
 
     volumes:
       - type: bind
@@ -56,7 +57,8 @@ services:
       - STORAGE_PATH=/storage
       - ACCESS_TOKEN=${TELEGRAM_NOTIFIER_TOKEN}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-      - DEBUG=*
+      - ALWATR_DEBUG=${TELEGRAM_NOTIFIER_DEBUG:-}
+      - DEBUG=${TELEGRAM_NOTIFIER_DEBUG:-}
 
     volumes:
       - type: bind
@@ -91,6 +93,7 @@ services:
       - NOTIFIER_HOST=http://${APP_ID}-telegram-notifier
       - NOTIFIER_TOKEN=${TELEGRAM_NOTIFIER_TOKEN}
       - NOTIFIER_TO=${TELEGRAM_NOTIFIER_TO}
+      - ALWATR_DEBUG=${FLIGHT_CRAWLER_DEBUG:-}
 
     logging:
       driver: json-file
@@ -117,6 +120,7 @@ services:
       - STORAGE_NAME=${STORAGE_NAME}
       - STORAGE_TOKEN=${STORAGE_TOKEN}
       - ACCESS_TOKEN=${API_TOKEN}
+      - ALWATR_DEBUG=${API_DEBUG:-}
 
     logging:
       driver: json-file
