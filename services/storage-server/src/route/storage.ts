@@ -17,5 +17,5 @@ async function getStorage(connection: AlwatrConnection): Promise<void> {
 
   const storageEngine = storageProvider.get({name: params.name});
 
-  connection.reply(storageEngine._storage);
+  connection.reply({...storageEngine._storage});
 }
