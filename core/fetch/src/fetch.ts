@@ -37,8 +37,8 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
     response = await fetch(options);
   }
   catch (err) {
-    logger.error('serviceRequest', 'fetch_failed', err, options);
-    throw new Error('fetch_failed');
+    logger.error('serviceRequest', (err as Error).message || 'fetch_failed', err, options);
+    throw new Error((err as Error).message || 'fetch_failed');
   }
 
   let responseText: string;
