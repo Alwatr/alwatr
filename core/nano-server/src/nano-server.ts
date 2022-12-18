@@ -165,19 +165,17 @@ export class AlwatrNanoServer {
   }
 
   protected _errorListener(err: NodeJS.ErrnoException): void {
-    this._logger.accident('server.onError', 'http_server_catch_error', 'HTTP server catch an error', {
-      errCode: err.code,
-      errMessage: err.message,
-    });
-
     if (err.code === 'EADDRINUSE') {
-      this._logger.logOther('Address in use, retrying...');
+      this._logger.incident('server.onError', 'address_in_use', 'Address in use, retrying...', err);
       setTimeout(() => {
         this.httpServer.close();
         this.httpServer.listen(this._config.port, this._config.host, () => {
           this._logger.logOther(`listening on ${this._config.host}:${this._config.port}`);
         });
       }, 2000);
+    }
+    else {
+      this._logger.error('server.onError', 'http_server_catch_error', err.message || 'HTTP server catch an error', err);
     }
   }
 
@@ -331,8 +329,9 @@ export class AlwatrConnection {
     this._logger.logMethodArgs('reply', {ok: content.ok, statusCode: content.statusCode});
 
     if (this.serverResponse.headersSent) {
-      this._logger.accident('reply', 'http_header_sent', 'Response headers already sent');
-      return;
+      this._logger.error('reply', 'http_header_sent', 'Response headers already sent');
+      if (content.ok === false) return; // prevent loop.
+      throw new Error('http_header_sent');
     }
 
     let buffer: Buffer;
@@ -399,11 +398,6 @@ export class AlwatrConnection {
    * ```
    */
   async getBody(): Promise<string | null> {
-    // method must be POST or PUT
-    if (!(this.method === 'POST' || this.method === 'PUT' || this.method === 'PATCH')) {
-      return null;
-    }
-
     let body = '';
 
     this.incomingMessage.on('data', (chunk: unknown) => {

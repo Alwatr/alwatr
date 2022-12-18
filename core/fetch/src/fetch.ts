@@ -114,7 +114,7 @@ function _processOptions(options: FetchOptions): Required<FetchOptions> {
   options.removeDuplicate ??= 'never';
 
   if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
-    logger.accident('fetch', 'fetch_cache_strategy_ignore', 'Cache storage not support in this browser', {
+    logger.incident('fetch', 'fetch_cache_strategy_ignore', 'Cache storage not support in this browser', {
       cacheSupported,
     });
     options.cacheStrategy = 'network_only';
