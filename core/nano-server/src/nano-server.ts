@@ -334,6 +334,11 @@ export class AlwatrConnection {
       throw new Error('http_header_sent');
     }
 
+    if (!this._logger.debug && !content.ok && content.meta) {
+      // clear debug info from client for security reasons.
+      delete content.meta;
+    }
+
     let buffer: Buffer;
 
     try {
