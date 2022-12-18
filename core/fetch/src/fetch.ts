@@ -38,7 +38,7 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
   }
   catch (err) {
     logger.error('serviceRequest', (err as Error).message || 'fetch_failed', err, options);
-    throw new Error((err as Error).message || 'fetch_failed');
+    throw err;
   }
 
   let responseText: string;
@@ -49,7 +49,7 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
     logger.error('serviceRequest', 'invalid_response', err, {
       response,
     });
-    throw new Error('invalid_response');
+    throw err;
   }
 
   let responseJson: AlwatrServiceResponse<TData, TMeta>;
@@ -58,7 +58,7 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
   }
   catch (err) {
     logger.error('serviceRequest', 'invalid_json', err, {responseText});
-    throw new Error('invalid_json');
+    throw err;
   }
 
   if (responseJson.ok !== true) {
