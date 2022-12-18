@@ -320,24 +320,22 @@ export class AlwatrConnection {
    */
   reply(content: AlwatrServiceResponse): void {
     content.statusCode ??= 200;
-    // this._logger.logMethodArgs('reply', {
-    //   ok: content.ok,
-    //   statusCode: content.statusCode,
-    //   errorCode: content.errorCode,
-    // });
+
+    // this._logger.logMethodArgs('reply', content);
+    this._logger.logMethodArgs('reply', {ok: content.ok, statusCode: content.statusCode});
 
     if (this.serverResponse.headersSent) {
       this._logger.accident('reply', 'http_header_sent', 'Response headers already sent');
       return;
     }
 
-    let contentStr: string;
+    let buffer: Buffer;
+
     try {
-      contentStr = JSON.stringify(content);
-      this._logger.logMethodArgs('reply', contentStr.length > 400 ? contentStr.substring(0, 200) + '...' : content);
+      buffer = Buffer.from(JSON.stringify(content), 'utf8');
     }
-    catch {
-      this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!');
+    catch (err) {
+      this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!', err);
       return this.reply(
         content.ok === false
           ? {
@@ -354,7 +352,7 @@ export class AlwatrConnection {
     }
 
     const headers: Record<string, string | number> = {
-      'Content-Length': contentStr.length,
+      'Content-Length': buffer.byteLength,
       'Content-Type': 'application/json',
       'Server': 'Alwatr NanoServer',
     };
@@ -365,12 +363,9 @@ export class AlwatrConnection {
 
     this.serverResponse.writeHead(content.statusCode ?? 200, headers);
 
-    this.serverResponse.write(contentStr, 'utf8', (error: NodeJS.ErrnoException | null | undefined) => {
+    this.serverResponse.write(buffer, 'binary', (error: NodeJS.ErrnoException | null | undefined) => {
       if (error == null) return;
-      this._logger.accident('reply', 'http_response_write_failed', 'Response write failed', {
-        errCode: error.code,
-        errMessage: error.message,
-      });
+      this._logger.error('reply', 'http_response_write_failed', 'reply failed', error);
     });
 
     this.serverResponse.end();
