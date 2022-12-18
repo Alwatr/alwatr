@@ -1,6 +1,6 @@
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
-import {storage} from '../lib/storage.js';
+import {storageClient} from '../lib/storage.js';
 import {Message} from '../lib/type.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
@@ -27,17 +27,26 @@ async function setComment(connection: AlwatrConnection): Promise<void> {
   // }
 
   try {
+    const comment = await storageClient.set(bodyJson, params.storage);
+    logger.logProperty('comment', comment);
+
     connection.reply({
       ok: true,
-      data: await storage.set(bodyJson, params.storage),
+      data: comment,
     });
   }
-  catch (err) {
-    logger.error('setComment', (err as Error).message ?? 'storage_error', (err as Error).stack ?? err);
+  catch (_err) {
+    const err = _err as Error;
+    logger.error('setComment', err.message || 'storage_error', err);
     connection.reply({
       ok: false,
       statusCode: 500,
       errorCode: 'storage_error',
+      meta: {
+        name: err.name,
+        message: err.message,
+        cause: err.cause,
+      },
     });
   }
 }

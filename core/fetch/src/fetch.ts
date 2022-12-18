@@ -37,7 +37,7 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
     response = await fetch(options);
   }
   catch (err) {
-    logger.error('serviceRequest', (err as Error).message || 'fetch_failed', (err as Error).stack || err, options);
+    logger.error('serviceRequest', 'fetch_failed', err, options);
     throw new Error('fetch_failed');
   }
 
@@ -46,7 +46,7 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
     responseText = await response.text();
   }
   catch (err) {
-    logger.error('serviceRequest', 'invalid_response', (err as Error).message || err, {
+    logger.error('serviceRequest', 'invalid_response', err, {
       response,
     });
     throw new Error('invalid_response');
@@ -57,7 +57,7 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
     responseJson = JSON.parse(responseText);
   }
   catch (err) {
-    logger.error('serviceRequest', 'invalid_json', (err as Error).message || err, {responseText});
+    logger.error('serviceRequest', 'invalid_json', err, {responseText});
     throw new Error('invalid_json');
   }
 
@@ -289,7 +289,7 @@ async function _handleRetryPattern(options: Required<FetchOptions>): Promise<Res
     throw new Error('fetch_server_error');
   }
   catch (err) {
-    logger.accident('fetch', 'fetch_failed_retry', (err as Error)?.message ?? 'fetch failed and retry', err);
+    logger.accident('fetch', 'fetch_failed_retry', (err as Error)?.message || 'fetch failed and retry', err);
 
     await _wait(options.retryDelay);
 

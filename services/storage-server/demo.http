@@ -17,7 +17,7 @@ Content-Type: application/json
 {
   "id": "auto_increment",
   "from": "Ali Mihandoost",
-  "message": "Salam"
+  "message": "سلام"
 }
 
 ###
@@ -28,7 +28,7 @@ Content-Type: application/json
 {
   "id": "auto_increment",
   "from": "Fateme Mihandoost",
-  "message": "Aleyk Salam"
+  "message": "علیک سلام"
 }
 
 ### Edit document

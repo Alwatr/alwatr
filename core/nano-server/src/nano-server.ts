@@ -247,7 +247,8 @@ export class AlwatrNanoServer {
         this._notFoundListener(connection);
       }
     }
-    catch (err) {
+    catch (_err) {
+      const err = _err as Error;
       this._logger.error('handleRequest', 'http_server_middleware_error', err, {
         method: connection.method,
         route,
@@ -256,6 +257,11 @@ export class AlwatrNanoServer {
         ok: false,
         statusCode: 500,
         errorCode: 'http_server_middleware_error',
+        meta: {
+          name: err?.name,
+          message: err?.message,
+          cause: err?.cause,
+        },
       });
     }
   }

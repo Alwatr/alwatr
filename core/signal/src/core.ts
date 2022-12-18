@@ -68,14 +68,14 @@ function __callListeners<SignalName extends keyof AlwatrSignals>(signal: SignalO
       const ret = listener.callback(signal.value);
       if (ret instanceof Promise) {
         ret.catch((err) =>
-          logger.error('_callListeners', 'call_listener_failed', (err as Error).stack || err, {
+          logger.error('_callListeners', 'call_listener_failed', err, {
             signalName: signal.name,
           }),
         );
       }
     }
     catch (err) {
-      logger.error('_callListeners', 'call_listener_failed', (err as Error).stack || err, {
+      logger.error('_callListeners', 'call_listener_failed', err, {
         signalName: signal.name,
       });
     }
@@ -129,7 +129,7 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
         listenerCallback(signal.value);
       }
       catch (err) {
-        logger.error('_addSignalListener', 'call_signal_callback_failed', (err as Error).stack || err, {
+        logger.error('_addSignalListener', 'call_signal_callback_failed', err, {
           signalName: signal.name,
         });
       }

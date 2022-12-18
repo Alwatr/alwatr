@@ -139,7 +139,7 @@ l10n.resourceChangeSignal.setProvider(async (locale) => {
     }
   }
   catch (err) {
-    logger.error('resourceProvider', 'fetch_failed', (err as Error).stack || err, {locale, url});
+    logger.error('resourceProvider', 'fetch_failed', err, {locale, url});
     // TODO: user error signal.
     return;
   }
