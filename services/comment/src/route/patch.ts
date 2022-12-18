@@ -27,12 +27,9 @@ async function setComment(connection: AlwatrConnection): Promise<void> {
   // }
 
   try {
-    const comment = await storageClient.set(bodyJson, params.storage);
-    logger.logProperty('comment', comment);
-
     connection.reply({
       ok: true,
-      data: comment,
+      data: await storageClient.set(bodyJson, params.storage),
     });
   }
   catch (_err) {
