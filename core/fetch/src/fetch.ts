@@ -37,8 +37,8 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
     response = await fetch(options);
   }
   catch (err) {
-    logger.error('serviceRequest', (err as Error).message || 'fetch_failed', (err as Error).stack || err, options);
-    throw new Error('fetch_failed');
+    logger.error('serviceRequest', (err as Error).message || 'fetch_failed', err, options);
+    throw err;
   }
 
   let responseText: string;
@@ -46,10 +46,10 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
     responseText = await response.text();
   }
   catch (err) {
-    logger.error('serviceRequest', 'invalid_response', (err as Error).message || err, {
+    logger.error('serviceRequest', 'invalid_response', err, {
       response,
     });
-    throw new Error('invalid_response');
+    throw err;
   }
 
   let responseJson: AlwatrServiceResponse<TData, TMeta>;
@@ -57,8 +57,8 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
     responseJson = JSON.parse(responseText);
   }
   catch (err) {
-    logger.error('serviceRequest', 'invalid_json', (err as Error).message || err, {responseText});
-    throw new Error('invalid_json');
+    logger.error('serviceRequest', 'invalid_json', err, {responseText});
+    throw err;
   }
 
   if (responseJson.ok !== true) {
@@ -114,7 +114,7 @@ function _processOptions(options: FetchOptions): Required<FetchOptions> {
   options.removeDuplicate ??= 'never';
 
   if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
-    logger.accident('fetch', 'fetch_cache_strategy_ignore', 'Cache storage not support in this browser', {
+    logger.incident('fetch', 'fetch_cache_strategy_ignore', 'Cache storage not support in this browser', {
       cacheSupported,
     });
     options.cacheStrategy = 'network_only';
@@ -289,7 +289,7 @@ async function _handleRetryPattern(options: Required<FetchOptions>): Promise<Res
     throw new Error('fetch_server_error');
   }
   catch (err) {
-    logger.accident('fetch', 'fetch_failed_retry', (err as Error)?.message ?? 'fetch failed and retry', err);
+    logger.accident('fetch', 'fetch_failed_retry', (err as Error)?.message || 'fetch failed and retry', err);
 
     await _wait(options.retryDelay);
 

@@ -127,11 +127,11 @@ export interface AlwatrLogger {
    *   ...
    * }
    * catch (err) {
-   *   logger.error('myMethod', 'error_code', (err as Error).stack || err, {a: 1, b: 2});
+   *   logger.error('myMethod', 'error_code', err, {a: 1, b: 2});
    * }
    * ```
    */
-  error(method: string, code: string, errorStack: string | unknown, ...args: unknown[]): void;
+  error(method: string, code: string, ...args: unknown[]): void;
 
   /**
    * Simple `console.debug` with styled scope.

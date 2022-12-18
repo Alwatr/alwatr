@@ -17,7 +17,7 @@ export async function sendMessage(to: string, message: string): Promise<void> {
     }
     catch (err) {
       // TODO: handle blocked user
-      logger.error('sendMessage', 'error_send_message', (err as Error).stack || err, {chatId});
+      logger.error('sendMessage', 'error_send_message', err, {chatId});
     }
   }
 }

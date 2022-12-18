@@ -9,12 +9,12 @@ export async function launchBot(): Promise<void> {
     logger.logProperty('botInfo', bot.botInfo);
 
     bot.launch().catch((err) => {
-      logger.error('launchBot', 'launch_bot_failed', (err as Error).stack || err);
+      logger.error('launchBot', 'launch_bot_failed', err);
     });
 
     await sendMessage(config.telegramBot.debugNotifyToken, '⚡️ Bot launched');
   }
   catch (err) {
-    logger.error('launchBot', 'launch_bot_failed', (err as Error).stack || err);
+    logger.error('launchBot', 'launch_bot_failed', err);
   }
 }

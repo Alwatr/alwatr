@@ -22,19 +22,26 @@ async function deleteJob(connection: AlwatrConnection): Promise<void> {
       data: {},
     });
   }
-  catch (err) {
-    if ((err as Error).message === 'document_not_found') {
-      return connection.reply({
+  catch (_err) {
+    const err = _err as Error;
+    if (err.message === 'document_not_found') {
+      connection.reply({
         ok: false,
         statusCode: 404,
         errorCode: 'document_not_found',
       });
     }
-    // else
-    connection.reply({
-      ok: false,
-      statusCode: 500,
-      errorCode: 'storage_error',
-    });
+    else {
+      connection.reply({
+        ok: false,
+        statusCode: 500,
+        errorCode: 'storage_error',
+        meta: {
+          name: err.name,
+          message: err.message,
+          cause: err.cause,
+        },
+      });
+    }
   }
 }

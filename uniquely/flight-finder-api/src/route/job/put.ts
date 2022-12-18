@@ -34,12 +34,18 @@ async function newJob(connection: AlwatrConnection): Promise<void> {
       data: (await storageClient.set(job)) as unknown as Record<string, unknown>,
     });
   }
-  catch (err) {
-    logger.error('newJob', (err as Error).message ?? 'storage_error', (err as Error).stack ?? err);
+  catch (_err) {
+    const err = _err as Error;
+    logger.error('newJob', err.message || 'storage_error', err);
     connection.reply({
       ok: false,
       statusCode: 500,
       errorCode: 'storage_error',
+      meta: {
+        name: err.name,
+        message: err.message,
+        cause: err.cause,
+      },
     });
   }
 }

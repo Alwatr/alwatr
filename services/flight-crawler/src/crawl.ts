@@ -25,7 +25,7 @@ export async function crawlAllJobs(): Promise<void> {
       await storageClient.set(job);
     }
     catch (err) {
-      logger.error('crawlAllJobs', 's', (err as Error).stack);
+      logger.error('crawlAllJobs', 'crawling_failed', err);
     }
   }
 }

@@ -81,7 +81,7 @@ try {
   if ((err as Error)?.message === 'document_not_found') {
     console.log('user_5000 id not found!');
   } else {
-    console.err((err as Error)?.message ?? err);
+    console.error(err);
   }
 }
 ```
