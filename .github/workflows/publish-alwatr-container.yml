@@ -119,12 +119,12 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # - name: 🏗 Install cosign
-      #   if: github.event_name != 'pull_request'
-      #   uses: sigstore/cosign-installer@main
+      - name: 🏗 Install cosign
+        if: github.event_name != 'pull_request'
+        uses: sigstore/cosign-installer@main
 
-      # - name: 🏗 Sign the published container image
-      #   if: ${{github.event_name != 'pull_request'}}
-      #   env:
-      #     COSIGN_EXPERIMENTAL: 'true'
-      #   run: echo "${{steps.meta.outputs.tags}}" | xargs -I {} cosign sign {}@${{steps.build-and-push.outputs.digest}}
+      - name: 🏗 Sign the published container image
+        if: ${{github.event_name != 'pull_request'}}
+        env:
+          COSIGN_EXPERIMENTAL: 'true'
+        run: echo "${{steps.meta.outputs.tags}}" | xargs -I {} cosign sign {}@${{steps.build-and-push.outputs.digest}}
