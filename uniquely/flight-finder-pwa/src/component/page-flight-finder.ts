@@ -8,6 +8,7 @@ import {map} from 'lit/directives/map.js';
 
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
+import {getHumanTime} from '../util/human-time.js';
 
 import './job-item.js';
 import './job-add-form.js';
@@ -51,9 +52,11 @@ export class PageFlightFinder extends AlwatrElement {
   ];
 
   private __jobList: Array<Job> = [];
+  private __relativeTime: string = '';
 
-  static jobListSignal = new SignalInterface('job-list');
+  static jobDataSignal = new SignalInterface('job-data');
   static jobAddSignal = new SignalInterface('job-add');
+  static relativeTimeFormatter = new Intl.RelativeTimeFormat('fa-IR', {style: 'narrow'});
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -62,8 +65,16 @@ export class PageFlightFinder extends AlwatrElement {
       this.requestUpdate();
     });
 
-    PageFlightFinder.jobListSignal.addListener((jobList) => {
-      this.__jobList = jobList;
+    PageFlightFinder.jobDataSignal.addListener((jobList) => {
+      this.__jobList = Object.values(jobList.data);
+
+      const now = new Date().getTime();
+      const relativeTimeObject = getHumanTime(now - (jobList.meta?.lastUpdated ?? now));
+
+      this.__relativeTime = PageFlightFinder.relativeTimeFormatter.format(
+        -Math.floor(relativeTimeObject.humanTime),
+        relativeTimeObject.units
+      );
       this.requestUpdate();
     });
   }
@@ -94,7 +105,7 @@ export class PageFlightFinder extends AlwatrElement {
       <ion-card class="job__list">
         <ion-card-header>
           <ion-card-title>${l10n.localize('search_list')}</ion-card-title>
-          <ion-card-subtitle>۵ ${l10n.localize('seconds_ago')}</ion-card-subtitle>
+          <ion-card-subtitle>${this.__relativeTime}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-list lines="full">
@@ -112,7 +123,6 @@ export class PageFlightFinder extends AlwatrElement {
     modal.addEventListener('close', () => {
       modal.dismiss();
     });
-
 
     await modal.present();
   }
