@@ -52,7 +52,7 @@ export class PageFlightFinder extends AlwatrElement {
   ];
 
   private __jobList: Array<Job> = [];
-  private __relativeTime: string = '';
+  private __relativeTime = '';
 
   static jobDataSignal = new SignalInterface('job-data');
   static jobAddSignal = new SignalInterface('job-add');
@@ -72,8 +72,8 @@ export class PageFlightFinder extends AlwatrElement {
       const relativeTimeObject = getHumanTime(now - (jobList.meta?.lastUpdated ?? now));
 
       this.__relativeTime = PageFlightFinder.relativeTimeFormatter.format(
-        -Math.floor(relativeTimeObject.humanTime),
-        relativeTimeObject.units
+          -Math.floor(relativeTimeObject.humanTime),
+          relativeTimeObject.units,
       );
       this.requestUpdate();
     });

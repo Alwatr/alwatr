@@ -1,5 +1,5 @@
-import {createLogger} from '@alwatr/logger';
 import {fetch} from '@alwatr/fetch';
+import {createLogger} from '@alwatr/logger';
 import {SignalInterface} from '@alwatr/signal';
 
 import {showToastSignal} from './toast.js';
@@ -43,7 +43,8 @@ jobDataSignal.setProvider(async () => {
     });
 
     await _dispatchJobList(response);
-  } catch (error) {
+  }
+  catch (error) {
     logger.error('jobListProvider', 'fetch_failed', error);
 
     showToastSignal.dispatch({

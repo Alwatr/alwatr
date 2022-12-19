@@ -9,7 +9,8 @@ export function getHumanTime(timestamp: number): {
   if (time > 1000 * 60 * 60) {
     humanTime = time / (1000 * 60 * 60);
     units = 'hours';
-  } else if (time > 1000 * 60) {
+  }
+  else if (time > 1000 * 60) {
     humanTime = time / (1000 * 60);
     units = 'minutes';
   }
