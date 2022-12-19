@@ -1,4 +1,4 @@
-import type {AlwatrDocumentObject} from '@alwatr/fetch';
+import type {AlwatrDocumentObject, AlwatrServiceResponse} from '@alwatr/fetch';
 import type {ToastOptions} from '@ionic/core';
 
 declare global {
@@ -8,13 +8,15 @@ declare global {
   interface AlwatrSignals {
     readonly 'job-add': Pick<Job, 'detail'>;
     readonly 'job-delete': string;
-    readonly 'job-list': Array<Job>;
+    readonly 'job-data': AlwatrServiceResponse<Record<string, Job>, jobMeta> & {ok: true};
     readonly toast: Partial<ToastOptions> & {message: string};
   }
   interface AlwatrRequestSignals {
-    readonly 'job-list': null;
+    readonly 'job-data': null;
   }
 }
+
+export type jobMeta = {formatVersion: 4; lastAutoId: 18; lastUpdated: 1671454823773; reversion: 5742};
 
 export type dayParts = 'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
 
@@ -42,8 +44,8 @@ export type JobResult = {
   price: number;
   time: string;
   seatCount: number;
-  airline: string,
-  airplane: string,
-  flightId: string,
-  arrivalTime: string,
+  airline: string;
+  airplane: string;
+  flightId: string;
+  arrivalTime: string;
 };
