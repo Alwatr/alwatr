@@ -1,57 +1,39 @@
-import {fetch} from '@alwatr/fetch';
+import {serviceRequest} from '@alwatr/fetch';
+import {AlwatrDocumentStorage} from '@alwatr/fetch/src/type.js';
 import {createLogger} from '@alwatr/logger';
 import {SignalInterface} from '@alwatr/signal';
 
 import {showToastSignal} from './toast.js';
 
-import type {Job, jobMeta} from '../type.js';
-import type {AlwatrServiceResponse} from '@alwatr/fetch';
+import type {Job} from '../type.js';
 
 export const logger = createLogger('[director/job-data]');
 export const jobDataSignal = new SignalInterface('job-data');
 
-async function _dispatchJobList(response: Response): Promise<void> {
-  logger.logMethodArgs('_dispatchJobList', {response});
-
-  if (response.ok !== true) {
-    throw new Error('fetch_failed');
-  }
-
-  const responseData = (await response.json()) as AlwatrServiceResponse<Record<string, Job>, jobMeta>;
-
-  if (responseData.ok !== true) {
-    throw new Error('fetch_failed');
-  }
-
-  jobDataSignal.dispatch(responseData);
-}
-
 jobDataSignal.setProvider(async () => {
+  logger.logMethod('jobListProvider');
+  const firstTime = jobDataSignal.value == null;
+
   try {
-    logger.logMethod('jobListProvider');
-
-    const response = await fetch({
-      url: window.appConfig?.api ? window.appConfig.api + '/job' : '/job',
-      token: window.appConfig?.token,
-      cacheStrategy: 'stale_while_revalidate',
-      revalidateCallback(response) {
-        logger.logMethodArgs('revalidateCallback', {response});
-
-        _dispatchJobList(response.clone());
-      },
-      cache: 'no-cache',
-    });
-
-    await _dispatchJobList(response);
+    jobDataSignal.dispatch(
+      <AlwatrDocumentStorage<Job>> await serviceRequest({
+        url: window.appConfig?.api ? window.appConfig.api + '/job' : '/job',
+        token: window.appConfig?.token,
+        cache: 'no-cache',
+        cacheStrategy: firstTime ? 'cache_only' : 'network_only',
+      }),
+    );
   }
   catch (error) {
-    logger.error('jobListProvider', 'fetch_failed', error);
-
-    showToastSignal.dispatch({
-      message: 'عملیات با خطا رو به رو شد',
-    });
+    if ((error as Error).message !== 'fetch_cache_not_found') {
+      logger.error('jobListProvider', 'fetch_failed', error);
+      showToastSignal.dispatch({
+        message: 'عملیات با خطا رو به رو شد',
+      });
+    }
   }
-  return;
+
+  if (firstTime) jobDataSignal.request(null);
 });
 
 jobDataSignal.request(null);
