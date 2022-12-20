@@ -52,13 +52,13 @@ export class AlwatrNanoServer {
    * const nanoServer = new AlwatrNanoServer();
    *
    * nanoServer.route('GET', '/', async (connection) => {
-   * connection.reply({
+   * return {
    *   ok: true,
    *   data: {
    *    app: 'Alwatr Nanoservice Starter Kit',
    *    message: 'Hello ;)',
    *   },
-   *  });
+   *  };
    * });
    * ```
    */
@@ -134,20 +134,22 @@ export class AlwatrNanoServer {
    *
    * ```ts
    * nanoServer.route('GET', '/', async (connection) => {
-   * connection.reply({
+   * return {
    *   ok: true,
    *   data: {
    *    app: 'Alwatr Nanoservice Starter Kit',
    *    message: 'Hello ;)',
    *   },
    *  });
-   * });
+   * };
    * ```
    */
   route<TMeta = Record<string, unknown>, TData = Record<string, unknown>>(
       method: 'ALL' | Methods,
       route: 'all' | `/${string}`,
-      middleware: (connection: AlwatrConnection) => AlwatrServiceResponse<TData, TMeta> | null,
+      middleware: (
+      connection: AlwatrConnection
+    ) => AlwatrServiceResponse<TData, TMeta> | Promise<AlwatrServiceResponse<TData, TMeta> | null> | null,
   ): void {
     this._logger.logMethodArgs('route', {method, route});
 
@@ -170,13 +172,13 @@ export class AlwatrNanoServer {
    * Example:
    * ```ts
    * nanoServer.route('GET', '/', async (connection) => {
-   *   connection.reply({
+   *   return {
    *     ok: true,
    *     data: {
    *      app: 'Alwatr Nanoservice Starter Kit',
    *      message: 'Hello ;)',
    *     },
-   *    });
+   *    };
    * });
    * ```
    */
@@ -334,7 +336,7 @@ export class AlwatrNanoServer {
         method: connection.method,
         route,
       });
-      connection.reply({
+      this.reply(serverResponse, {
         ok: false,
         statusCode: 500,
         errorCode: 'http_server_middleware_error',
@@ -348,7 +350,7 @@ export class AlwatrNanoServer {
   }
 
   protected _notFoundListener = (connection: AlwatrConnection): void => {
-    connection.reply({
+    this.reply(connection.serverResponse, {
       ok: false,
       statusCode: 404,
       errorCode: 'not_found',
@@ -430,10 +432,9 @@ export class AlwatrConnection {
    * Example:
    * ```ts
    * const bodyData = await connection.requireJsonBody();
-   * if (bodyData == null) return;
    * ```
    */
-  async requireJsonBody<T>(): Promise<T | null> {
+  async requireJsonBody<T>(): Promise<T> {
     // if request content type is json
     if (this.incomingMessage.headers['content-type'] !== 'application/json') {
       throw new Error('require_body_json');
@@ -526,11 +527,10 @@ export class AlwatrConnection {
    * Example:
    * ```ts
    * const params = connection.requireQueryParams<{id: string}>({id: 'string'});
-   * if (params == null) return;
    * console.log(params.id);
    * ```
    */
-  requireQueryParams<T extends QueryParameters = QueryParameters>(params: Record<string, ParamKeyType>): T | null {
+  requireQueryParams<T extends QueryParameters = QueryParameters>(params: Record<string, ParamKeyType>): T {
     const parsedParams: Record<string, ParamValueType> = {};
 
     for (const paramName in params) {
