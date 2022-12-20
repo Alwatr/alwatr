@@ -1,5 +1,5 @@
 import {serviceRequest} from '@alwatr/fetch';
-import {AlwatrDocumentStorage} from '@alwatr/fetch/src/type.js';
+import {AlwatrDocumentStorage, CacheStrategy} from '@alwatr/fetch/src/type.js';
 import {createLogger} from '@alwatr/logger';
 import {SignalInterface} from '@alwatr/signal';
 
@@ -10,9 +10,8 @@ import type {Job} from '../type.js';
 export const logger = createLogger('[director/job-data]');
 export const jobDataSignal = new SignalInterface('job-data');
 
-jobDataSignal.setProvider(async () => {
+async function requestJobStorage(cacheStrategy: CacheStrategy): Promise<void> {
   logger.logMethod('jobListProvider');
-  const firstTime = jobDataSignal.value == null;
 
   try {
     jobDataSignal.dispatch(
@@ -20,7 +19,7 @@ jobDataSignal.setProvider(async () => {
         url: window.appConfig?.api ? window.appConfig.api + '/job' : '/job',
         token: window.appConfig?.token,
         cache: 'no-cache',
-        cacheStrategy: firstTime ? 'cache_only' : 'network_only',
+        cacheStrategy,
       }),
     );
   }
@@ -32,9 +31,10 @@ jobDataSignal.setProvider(async () => {
       });
     }
   }
+}
 
-  if (firstTime) jobDataSignal.request(null);
-});
+jobDataSignal.setProvider(() => requestJobStorage('network_first'));
 
-jobDataSignal.request(null);
+requestJobStorage('cache_only').then(() => requestJobStorage('network_first'));
+
 setInterval(() => jobDataSignal.request(null), 60_000);
