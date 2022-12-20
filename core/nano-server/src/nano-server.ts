@@ -144,10 +144,10 @@ export class AlwatrNanoServer {
    * });
    * ```
    */
-  route(
+  route<TMeta = Record<string, unknown>, TData = Record<string, unknown>>(
       method: 'ALL' | Methods,
       route: 'all' | `/${string}`,
-      middleware: (connection: AlwatrConnection) => void,
+      middleware: (connection: AlwatrConnection) => AlwatrServiceResponse<TData, TMeta> | null,
   ): void {
     this._logger.logMethodArgs('route', {method, route});
 
@@ -162,6 +162,79 @@ export class AlwatrNanoServer {
     }
 
     this.middlewareList[method][route] = middleware;
+  }
+
+  /**
+   * Responds to the request.
+   *
+   * Example:
+   * ```ts
+   * nanoServer.route('GET', '/', async (connection) => {
+   *   connection.reply({
+   *     ok: true,
+   *     data: {
+   *      app: 'Alwatr Nanoservice Starter Kit',
+   *      message: 'Hello ;)',
+   *     },
+   *    });
+   * });
+   * ```
+   */
+  reply(serverResponse: ServerResponse, content: AlwatrServiceResponse<unknown, unknown>): void {
+    content.statusCode ??= 200;
+    this._logger.logMethodArgs('reply', {ok: content.ok, statusCode: content.statusCode});
+
+    if (serverResponse.headersSent) {
+      this._logger.error('reply', 'http_header_sent', 'Response headers already sent');
+      if (content.ok === false) return; // prevent loop.
+      throw new Error('http_header_sent');
+    }
+
+    if (!this._logger.debug && !content.ok && content.meta) {
+      // clear debug info from client for security reasons.
+      delete content.meta;
+    }
+
+    let buffer: Buffer;
+
+    try {
+      buffer = Buffer.from(JSON.stringify(content), 'utf8');
+    }
+    catch (err) {
+      this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!', err);
+      return this.reply(
+          serverResponse,
+        content.ok === false
+          ? {
+            ok: false,
+            statusCode: content.statusCode,
+            errorCode: content.errorCode,
+          }
+          : {
+            ok: false,
+            statusCode: 500,
+            errorCode: 'data_stringify_failed',
+          },
+      );
+    }
+
+    const headers: Record<string, string | number> = {
+      'Content-Length': buffer.byteLength,
+      'Content-Type': 'application/json',
+      'Server': 'Alwatr NanoServer',
+    };
+
+    if (this._config.allowAllOrigin === true) {
+      headers['Access-Control-Allow-Origin'] = '*';
+    }
+
+    try {
+      serverResponse.writeHead(content.statusCode ?? 200, headers);
+      serverResponse.end(buffer, 'binary');
+    }
+    catch (err) {
+      this._logger.error('reply', 'reply_failed', err);
+    }
   }
 
   protected _errorListener(err: NodeJS.ErrnoException): void {
@@ -187,7 +260,7 @@ export class AlwatrNanoServer {
     socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
   }
 
-  protected _onHealthCheckRequest(connection: AlwatrConnection): void {
+  protected _onHealthCheckRequest(connection: AlwatrConnection): null {
     const body = 'ok';
     connection.serverResponse.writeHead(200, {
       'Content-Length': body.length,
@@ -195,21 +268,28 @@ export class AlwatrNanoServer {
       'Server': 'Alwatr NanoServer',
     });
     connection.serverResponse.end(body);
+
+    return null;
   }
 
-  protected _onHOptionRequest(connection: AlwatrConnection): void {
+  protected _onHOptionRequest(connection: AlwatrConnection): null {
     connection.serverResponse.writeHead(204, {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': '*',
       'Access-Control-Allow-Headers': '*',
     });
     connection.serverResponse.end();
+
+    return null;
   }
 
   // prettier-ignore
-  protected middlewareList: Record<string, Record<string, (connection: AlwatrConnection) => void | Promise<void>>> = {
-    ALL: {},
-  };
+  protected middlewareList: Record<string, Record<string,
+      (connection: AlwatrConnection) =>
+        AlwatrServiceResponse<unknown, unknown> | null | Promise<AlwatrServiceResponse<unknown, unknown> | null>
+    >> = {
+      ALL: {},
+    };
 
   protected async _requestListener(incomingMessage: IncomingMessage, serverResponse: ServerResponse): Promise<void> {
     this._logger.logMethod('handleRequest');
@@ -239,7 +319,10 @@ export class AlwatrNanoServer {
 
     try {
       if (typeof middleware === 'function') {
-        await middleware(connection);
+        const content = await middleware(connection);
+        if (content !== null) {
+          this.reply(serverResponse, content);
+        }
       }
       else {
         this._notFoundListener(connection);
@@ -304,81 +387,6 @@ export class AlwatrConnection {
     public config: ConnectionConfig,
   ) {
     this._logger.logMethodArgs('new', {method: incomingMessage.method, url: incomingMessage.url});
-  }
-
-  /**
-   * Responds to the request.
-   *
-   * Example:
-   * ```ts
-   * nanoServer.route('GET', '/', async (connection) => {
-   *   connection.reply({
-   *     ok: true,
-   *     data: {
-   *      app: 'Alwatr Nanoservice Starter Kit',
-   *      message: 'Hello ;)',
-   *     },
-   *    });
-   * });
-   * ```
-   */
-  reply(content: AlwatrServiceResponse): void {
-    content.statusCode ??= 200;
-
-    // this._logger.logMethodArgs('reply', content);
-    this._logger.logMethodArgs('reply', {ok: content.ok, statusCode: content.statusCode});
-
-    if (this.serverResponse.headersSent) {
-      this._logger.error('reply', 'http_header_sent', 'Response headers already sent');
-      if (content.ok === false) return; // prevent loop.
-      throw new Error('http_header_sent');
-    }
-
-    if (!this._logger.debug && !content.ok && content.meta) {
-      // clear debug info from client for security reasons.
-      delete content.meta;
-    }
-
-    let buffer: Buffer;
-
-    try {
-      buffer = Buffer.from(JSON.stringify(content), 'utf8');
-    }
-    catch (err) {
-      this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!', err);
-      return this.reply(
-        content.ok === false
-          ? {
-            ok: false,
-            statusCode: content.statusCode,
-            errorCode: content.errorCode,
-          }
-          : {
-            ok: false,
-            statusCode: 500,
-            errorCode: 'data_stringify_failed',
-          },
-      );
-    }
-
-    const headers: Record<string, string | number> = {
-      'Content-Length': buffer.byteLength,
-      'Content-Type': 'application/json',
-      'Server': 'Alwatr NanoServer',
-    };
-
-    if (this.config.allowAllOrigin === true) {
-      headers['Access-Control-Allow-Origin'] = '*';
-    }
-
-    this.serverResponse.writeHead(content.statusCode ?? 200, headers);
-
-    this.serverResponse.write(buffer, 'binary', (error: NodeJS.ErrnoException | null | undefined) => {
-      if (error == null) return;
-      this._logger.error('reply', 'http_response_write_failed', 'reply failed', error);
-    });
-
-    this.serverResponse.end();
   }
 
   /**
