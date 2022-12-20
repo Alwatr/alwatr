@@ -436,35 +436,20 @@ export class AlwatrConnection {
   async requireJsonBody<T>(): Promise<T | null> {
     // if request content type is json
     if (this.incomingMessage.headers['content-type'] !== 'application/json') {
-      this.reply({
-        ok: false,
-        statusCode: 400,
-        errorCode: 'require_body_json',
-      });
-      return null;
+      throw new Error('require_body_json');
     }
 
     const body = await this.getBody();
 
     if (body == null || body.length === 0) {
-      this.reply({
-        ok: false,
-        statusCode: 400,
-        errorCode: 'require_body',
-      });
-      return null;
+      throw new Error('require_body');
     }
 
     try {
       return JSON.parse(body) as T;
     }
     catch (err) {
-      this.reply({
-        ok: false,
-        statusCode: 400,
-        errorCode: 'invalid_json',
-      });
-      return null;
+      throw new Error('invalid_json');
     }
   }
 
@@ -483,12 +468,7 @@ export class AlwatrConnection {
     const token = this.getToken();
 
     if (token == null) {
-      this.reply({
-        ok: false,
-        statusCode: 401,
-        errorCode: 'authorization_required',
-      });
-      return null;
+      throw new Error('authorization_required');
     }
     else if (validator === undefined) {
       return token;
@@ -502,12 +482,7 @@ export class AlwatrConnection {
     else if (typeof validator === 'function') {
       if (validator(token) === true) return token;
     }
-    this.reply({
-      ok: false,
-      statusCode: 403,
-      errorCode: 'access_denied',
-    });
-    return null;
+    throw new Error('access_denied');
   }
 
   /**
@@ -563,17 +538,7 @@ export class AlwatrConnection {
       const paramType = params[paramName];
       const paramValue = (parsedParams[paramName] = this._sanitizeParam(paramName, paramType));
       if (paramValue == null) {
-        this.reply({
-          ok: false,
-          statusCode: 406,
-          errorCode: 'query_parameter_required',
-          meta: {
-            paramName,
-            paramType,
-            paramValue,
-          },
-        });
-        return null;
+        throw new Error('query_parameter_required');
       }
     }
 
