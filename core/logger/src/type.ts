@@ -96,7 +96,8 @@ export interface AlwatrLogger {
   logMethodFull(method: string, args: Record<string, unknown> | string | number | boolean, result: unknown): void;
 
   /**
-   * `console.log` an event or expected accident. (not warn or error)
+   * `console.log` an event or expected accident.
+   * not warn or error just important information.
    *
    * Example:
    *
@@ -107,7 +108,7 @@ export interface AlwatrLogger {
   incident(method: string, code: string, desc: string, ...args: unknown[]): void;
 
   /**
-   * `console.warn` an unexpected accident or error that you handled.
+   * `console.warn` an unexpected accident or error that you handled like warning.
    *
    * Example:
    *

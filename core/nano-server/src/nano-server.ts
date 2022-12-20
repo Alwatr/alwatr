@@ -448,6 +448,11 @@ export class AlwatrConnection {
    * ```
    */
   async getBody(): Promise<string | null> {
+    // method must be POST or PUT or PATCH
+    if (!(this.method === 'POST' || this.method === 'PUT' || this.method === 'PATCH')) {
+      return null;
+    }
+
     let body = '';
 
     this.incomingMessage.on('data', (chunk: unknown) => {
