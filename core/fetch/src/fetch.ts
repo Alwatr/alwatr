@@ -190,7 +190,12 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
     case 'cache_only': {
       const cachedResponse = await cacheStorage.match(request);
       if (cachedResponse == null) {
-        logger.error('_handleCacheStrategy', 'fetch_cache_not_found', {request});
+        logger.accident(
+            '_handleCacheStrategy',
+            'fetch_cache_not_found',
+            'cacheStorage is cache_only but no cache found',
+            {url: request.url},
+        );
         throw new Error('fetch_cache_not_found');
       }
       // else

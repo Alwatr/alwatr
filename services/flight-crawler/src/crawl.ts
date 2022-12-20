@@ -138,9 +138,7 @@ function makeMessage(job: Job): string {
   // prettier-ignore
   const resultListStr = job.resultList.length === 0 ? 'هیچ پروازی یافت نشد!'
   : job.resultList.map((jobResult) => `
-    قیمت: ${jobResult.price.toLocaleString('en-US')}
-    ساعت: ${jobResult.time}
-    هواپیمایی ${jobResult.airline}
+    💰${jobResult.price.toLocaleString('en-US')} ⏰${jobResult.time} 💺${jobResult.seatCount} 🛫${jobResult.flightId}
   `).join('');
 
   return `

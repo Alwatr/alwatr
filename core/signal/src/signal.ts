@@ -160,7 +160,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
     const nextSignalValuePromise = this.getNextSignalValue();
     _dispatchSignal(
         this._requestSignal,
-      requestParam as unknown as AlwatrSignals[SignalName], // mastmalize to avoid type error
+        requestParam as unknown as AlwatrSignals[SignalName], // mastmalize to avoid type error
     );
     return nextSignalValuePromise;
   }
