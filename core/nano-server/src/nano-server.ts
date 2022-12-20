@@ -332,20 +332,55 @@ export class AlwatrNanoServer {
     }
     catch (_err) {
       const err = _err as Error;
-      this._logger.error('handleRequest', 'http_server_middleware_error', err, {
-        method: connection.method,
-        route,
-      });
-      this.reply(serverResponse, {
-        ok: false,
-        statusCode: 500,
-        errorCode: 'http_server_middleware_error',
-        meta: {
-          name: err?.name,
-          message: err?.message,
-          cause: err?.cause,
-        },
-      });
+      // 400 status code
+      if (['require_body_json', 'invalid_json', 'require_body'].includes(err.message)) {
+        this.reply(serverResponse, {
+          ok: false,
+          statusCode: 400,
+          errorCode: err.message,
+        });
+      }
+      // 401 status code
+      else if (['authorization_required'].includes(err.message)) {
+        this.reply(serverResponse, {
+          ok: false,
+          statusCode: 401,
+          errorCode: err.message,
+        });
+      }
+      // 403 status code
+      else if (['access_denied'].includes(err.message)) {
+        this.reply(serverResponse, {
+          ok: false,
+          statusCode: 403,
+          errorCode: err.message,
+        });
+      }
+      // 406 status code
+      else if (['query_parameter_required'].includes(err.message)) {
+        this.reply(serverResponse, {
+          ok: false,
+          statusCode: 406,
+          errorCode: err.message,
+        });
+      }
+      else {
+        // 500 status code
+        this._logger.error('handleRequest', 'http_server_middleware_error', err, {
+          method: connection.method,
+          route,
+        });
+        this.reply(serverResponse, {
+          ok: false,
+          statusCode: 500,
+          errorCode: 'http_server_middleware_error',
+          meta: {
+            name: err?.name,
+            message: err?.message,
+            cause: err?.cause,
+          },
+        });
+      }
     }
   }
 
