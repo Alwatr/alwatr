@@ -221,7 +221,7 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
         if (networkResponse.ok) {
           cacheStorage.put(request, networkResponse.clone());
           if (typeof options.revalidateCallback === 'function') {
-            options.revalidateCallback(networkResponse);
+            setTimeout(options.revalidateCallback, 0, networkResponse.clone());
           }
         }
         return networkResponse;
