@@ -51,7 +51,7 @@ alwatrRegisteredList.push({
  *
  * console.log('has \'alimd\': %o', await db.has('alimd'));
  * console.log('keys: %o', await db.keys());
- * console.log('getAll: %o', await db.getAll());
+ * console.log('getStorage: %o', await db.getStorage());
  * console.log('delete: %o', await db.delete('alimd'));
  * try {
  *   await db.delete('abcd');
@@ -102,7 +102,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    *     console.log('user_5000 id not found!');
    *   }
    *   else {
-   *     console.err((err as Error)?.message || err);
+   *     console.error((err as Error)?.message || err);
    *   }
    * }
    * ```
