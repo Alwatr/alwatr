@@ -4,21 +4,23 @@ FROM docker.io/library/node:${NODE_VERSION}-alpine as builder
 
 WORKDIR /app
 
+ENV NODE_ENV production
+
 # Install dependencies
 COPY package.json *.lock ./
 RUN if [ -f *.lock ]; then \
-      yarn install --frozen-lockfile --non-interactive; \
+      yarn install --frozen-lockfile --non-interactive --production false; \
     else \
-      yarn install --non-interactive; \
+      yarn install --non-interactive --production false; \
     fi;
 
 COPY . .
 
 # Reinstall to link internal packages
-RUN yarn install --frozen-lockfile --non-interactive;
+RUN yarn install --frozen-lockfile --non-interactive --production false;
 
 # Build all ts files
-RUN  yarn build:ts;
+RUN yarn build:ts;
 
 # Build target package
 ARG PACKAGE_SOURCE
@@ -36,7 +38,7 @@ RUN set -ex;\
 RUN set -ex;\
     pwd;\
     rm -rf node_modules;\
-    yarn install --frozen-lockfile --non-interactive --production;
+    yarn install --frozen-lockfile --non-interactive --production true;
 
 # ---
 
