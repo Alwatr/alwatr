@@ -2,14 +2,14 @@ import {fetch} from '@alwatr/fetch';
 
 import {config, logger} from './config.js';
 import {cityList} from './lib/city-list.js';
-import {storage} from './lib/storage.js';
+import {storageClient} from './lib/storage.js';
 
 import type {Job, JobDetail, JobResult, SepehrResponse} from './lib/type.js';
 import type {FetchOptions} from '@alwatr/fetch';
 
 export async function crawlAllJobs(): Promise<void> {
   logger.logMethod('crawlAllJobs');
-  const jobList = await storage.getAll();
+  const jobList = (await storageClient.getStorage()).data;
   for (const jobId in jobList) {
     if (!Object.prototype.hasOwnProperty.call(jobList, jobId)) continue;
     try {
@@ -22,10 +22,10 @@ export async function crawlAllJobs(): Promise<void> {
         await notify(config.notifier.to, message);
         logger.logOther(`Notified to ${config.notifier.to}!`);
       }
-      await storage.set(job);
+      await storageClient.set(job);
     }
     catch (err) {
-      logger.error('crawlAllJobs', 's', (err as Error).stack);
+      logger.error('crawlAllJobs', 'crawling_failed', err);
     }
   }
 }
@@ -138,9 +138,7 @@ function makeMessage(job: Job): string {
   // prettier-ignore
   const resultListStr = job.resultList.length === 0 ? 'هیچ پروازی یافت نشد!'
   : job.resultList.map((jobResult) => `
-    قیمت: ${jobResult.price}
-    ساعت: ${jobResult.time}
-    هواپیمایی ${jobResult.airline}
+    💰${jobResult.price.toLocaleString('en-US')} ⏰${jobResult.time} 💺${jobResult.seatCount} 🛫${jobResult.flightId}
   `).join('');
 
   return `
@@ -151,7 +149,7 @@ function makeMessage(job: Job): string {
     ${cityList[job.detail.origin]} ✈️ ${cityList[job.detail.destination]}
 
     تاریخ: ${job.detail.date}
-    حداکثر قیمت: ${job.detail.maxPrice ? job.detail.maxPrice : 'ندارد'}
+    حداکثر قیمت: ${job.detail.maxPrice ? job.detail.maxPrice.toLocaleString('en-US') : 'ندارد'}
     تعداد صندلی: ${job.detail.seatCount}
 
     ${resultListStr}

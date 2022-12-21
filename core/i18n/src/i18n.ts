@@ -139,7 +139,7 @@ l10n.resourceChangeSignal.setProvider(async (locale) => {
     }
   }
   catch (err) {
-    logger.error('resourceProvider', 'fetch_failed', (err as Error).stack || err, {locale, url});
+    logger.error('resourceProvider', 'fetch_failed', err, {locale, url});
     // TODO: user error signal.
     return;
   }
@@ -204,7 +204,10 @@ function localize(key?: string | null): string | null {
 
   const localized = l10n.resource[key];
   if (localized == null) {
-    logger.accident('localize', 'l10n_key_not_found', 'Key not defined in the localization resource', {key});
+    logger.accident('localize', 'l10n_key_not_found', 'Key not defined in the localization resource', {
+      key,
+      local: l10n.resource?._code,
+    });
     return `{${key}}`;
   }
 

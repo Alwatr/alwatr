@@ -12,10 +12,7 @@ interface User extends AlwatrDocumentObject {
   token: string;
 }
 
-const token = process.env.TOKEN;
-if (token == null) {
-  throw new Error('token_not_defined');
-}
+const token = process.env.TOKEN ?? 'YOUR_SECRET_TOKEN';
 
 const db = new AlwatrStorageClient<User>({
   name: 'junk-data',
@@ -84,7 +81,7 @@ async function getBench(): Promise<void> {
   console.log('keys.length: %s', keys.length);
 
   console.time('get all');
-  await db.getAll();
+  await db.getStorage();
   console.timeEnd('get all');
 }
 

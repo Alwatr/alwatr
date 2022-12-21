@@ -3,7 +3,7 @@ import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {modalController} from '@ionic/core';
 import {css, html} from 'lit';
-import {customElement, state} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators.js';
 import {map} from 'lit/directives/map.js';
 
 import ionNormalize from '../style/ionic.normalize.js';
@@ -50,7 +50,7 @@ export class PageFlightFinder extends AlwatrElement {
     `,
   ];
 
-  @state() private __jobList: Array<Job> = [];
+  private __jobList: Array<Job> = [];
 
   static jobListSignal = new SignalInterface('job-list');
   static jobAddSignal = new SignalInterface('job-add');
@@ -64,6 +64,7 @@ export class PageFlightFinder extends AlwatrElement {
 
     PageFlightFinder.jobListSignal.addListener((jobList) => {
       this.__jobList = jobList;
+      this.requestUpdate();
     });
   }
   override render(): TemplateResult {
@@ -83,14 +84,12 @@ export class PageFlightFinder extends AlwatrElement {
           </ion-fab-button>
         </ion-fab>
 
-        <div class="version">v${Alwatr.version}-pr1</div>
+        <div class="version">v${Alwatr.version}-prv3</div>
       </ion-content>
     `;
   }
 
   private __renderAirlineListCard(): TemplateResult {
-    const airlineItemList = map(this.__jobList, (airline) => html` <job-item .job=${airline}></job-item> `);
-
     return html`
       <ion-card class="job__list">
         <ion-card-header>
@@ -98,7 +97,9 @@ export class PageFlightFinder extends AlwatrElement {
           <ion-card-subtitle>۵ ${l10n.localize('seconds_ago')}</ion-card-subtitle>
         </ion-card-header>
 
-        <ion-list lines="full"> ${airlineItemList} </ion-list>
+        <ion-list lines="full">
+          ${map(this.__jobList, (airline) => html`<job-item .job=${airline}></job-item>`)}
+        </ion-list>
       </ion-card>
     `;
   }

@@ -165,19 +165,17 @@ export class AlwatrNanoServer {
   }
 
   protected _errorListener(err: NodeJS.ErrnoException): void {
-    this._logger.accident('server.onError', 'http_server_catch_error', 'HTTP server catch an error', {
-      errCode: err.code,
-      errMessage: err.message,
-    });
-
     if (err.code === 'EADDRINUSE') {
-      this._logger.logOther('Address in use, retrying...');
+      this._logger.incident('server.onError', 'address_in_use', 'Address in use, retrying...', err);
       setTimeout(() => {
         this.httpServer.close();
         this.httpServer.listen(this._config.port, this._config.host, () => {
           this._logger.logOther(`listening on ${this._config.host}:${this._config.port}`);
         });
       }, 2000);
+    }
+    else {
+      this._logger.error('server.onError', 'http_server_catch_error', err.message || 'HTTP server catch an error', err);
     }
   }
 
@@ -247,7 +245,8 @@ export class AlwatrNanoServer {
         this._notFoundListener(connection);
       }
     }
-    catch (err) {
+    catch (_err) {
+      const err = _err as Error;
       this._logger.error('handleRequest', 'http_server_middleware_error', err, {
         method: connection.method,
         route,
@@ -256,6 +255,11 @@ export class AlwatrNanoServer {
         ok: false,
         statusCode: 500,
         errorCode: 'http_server_middleware_error',
+        meta: {
+          name: err?.name,
+          message: err?.message,
+          cause: err?.cause,
+        },
       });
     }
   }
@@ -320,24 +324,28 @@ export class AlwatrConnection {
    */
   reply(content: AlwatrServiceResponse): void {
     content.statusCode ??= 200;
-    // this._logger.logMethodArgs('reply', {
-    //   ok: content.ok,
-    //   statusCode: content.statusCode,
-    //   errorCode: content.errorCode,
-    // });
+
+    // this._logger.logMethodArgs('reply', content);
+    this._logger.logMethodArgs('reply', {ok: content.ok, statusCode: content.statusCode});
 
     if (this.serverResponse.headersSent) {
-      this._logger.accident('reply', 'http_header_sent', 'Response headers already sent');
-      return;
+      this._logger.error('reply', 'http_header_sent', 'Response headers already sent');
+      if (content.ok === false) return; // prevent loop.
+      throw new Error('http_header_sent');
     }
 
-    let contentStr: string;
-    try {
-      contentStr = JSON.stringify(content);
-      this._logger.logMethodArgs('reply', contentStr.length > 400 ? contentStr.substring(0, 200) + '...' : content);
+    if (!this._logger.debug && !content.ok && content.meta) {
+      // clear debug info from client for security reasons.
+      delete content.meta;
     }
-    catch {
-      this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!');
+
+    let buffer: Buffer;
+
+    try {
+      buffer = Buffer.from(JSON.stringify(content), 'utf8');
+    }
+    catch (err) {
+      this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!', err);
       return this.reply(
         content.ok === false
           ? {
@@ -354,7 +362,7 @@ export class AlwatrConnection {
     }
 
     const headers: Record<string, string | number> = {
-      'Content-Length': contentStr.length,
+      'Content-Length': buffer.byteLength,
       'Content-Type': 'application/json',
       'Server': 'Alwatr NanoServer',
     };
@@ -365,12 +373,9 @@ export class AlwatrConnection {
 
     this.serverResponse.writeHead(content.statusCode ?? 200, headers);
 
-    this.serverResponse.write(contentStr, 'utf8', (error: NodeJS.ErrnoException | null | undefined) => {
+    this.serverResponse.write(buffer, 'binary', (error: NodeJS.ErrnoException | null | undefined) => {
       if (error == null) return;
-      this._logger.accident('reply', 'http_response_write_failed', 'Response write failed', {
-        errCode: error.code,
-        errMessage: error.message,
-      });
+      this._logger.error('reply', 'http_response_write_failed', 'reply failed', error);
     });
 
     this.serverResponse.end();
@@ -398,7 +403,7 @@ export class AlwatrConnection {
    * ```
    */
   async getBody(): Promise<string | null> {
-    // method must be POST or PUT
+    // method must be POST or PUT or PATCH
     if (!(this.method === 'POST' || this.method === 'PUT' || this.method === 'PATCH')) {
       return null;
     }
