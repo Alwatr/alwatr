@@ -144,7 +144,7 @@ export class AlwatrNanoServer {
    * };
    * ```
    */
-  route<TMeta = Record<string, unknown>, TData = Record<string, unknown>>(
+  route<TData = Record<string, unknown>, TMeta = Record<string, unknown>>(
       method: 'ALL' | Methods,
       route: 'all' | `/${string}`,
       middleware: (
@@ -317,17 +317,13 @@ export class AlwatrNanoServer {
       this.middlewareList[connection.method]?.[route] ||
       this.middlewareList.ALL[route] ||
       this.middlewareList[connection.method]?.all ||
-      this.middlewareList.ALL.all;
+      this.middlewareList.ALL.all ||
+      this._notFoundListener;
 
     try {
-      if (typeof middleware === 'function') {
-        const content = await middleware(connection);
-        if (content !== null) {
-          this.reply(serverResponse, content);
-        }
-      }
-      else {
-        this._notFoundListener(connection);
+      const content = await middleware(connection);
+      if (content !== null) {
+        this.reply(serverResponse, content);
       }
     }
     catch (_err) {
@@ -384,8 +380,8 @@ export class AlwatrNanoServer {
     }
   }
 
-  protected _notFoundListener = (connection: AlwatrConnection): void => {
-    this.reply(connection.serverResponse, {
+  protected _notFoundListener = (connection: AlwatrConnection): AlwatrServiceResponseFailed => {
+    return connection.serverResponse, {
       ok: false,
       statusCode: 404,
       errorCode: 'not_found',
@@ -393,7 +389,7 @@ export class AlwatrNanoServer {
         method: connection.method,
         route: connection.url.pathname,
       },
-    });
+    };
   };
 }
 
