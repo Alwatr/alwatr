@@ -3,6 +3,7 @@ import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {css, html, nothing} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import {when} from 'lit/directives/when.js';
 
 import '@alwatr/icon';
 
@@ -107,10 +108,7 @@ export class JobItem extends AlwatrElement {
         <ion-item class="job" lines="full">
           <ion-label>
             ${this.__renderTitle(cityList[this.job.detail.origin], cityList[this.job.detail.destination])}
-            ${this.__renderSubtitle(
-      this.job.detail.date,
-      this.job.detail.dayPart.map((part) => l10n.localize(part)).join(' - '),
-  )}
+            ${this.__renderSubtitle(this.job.detail.date, this.job.detail.minHour, this.job.detail.maxHour)}
             ${this.__renderDescription(this.job.detail.description)}
           </ion-label>
           <ion-label slot="end"> ${this.__renderFoundList(this.job.resultList)} </ion-label>
@@ -139,12 +137,19 @@ export class JobItem extends AlwatrElement {
       </div>
     `;
   }
-  private __renderSubtitle(date: string, time: string): TemplateResult {
+  private __renderSubtitle(date: string, minHour: number | null, maxHour: number | null): TemplateResult {
     return html`
       <div class="job__subtitle">
         <span>${date}</span>
-        <span>${time}</span>
       </div>
+      ${when(
+      minHour != null && maxHour != null,
+      () => html`
+          <div class="job__subtitle">
+            <span> از ${minHour} تا ${maxHour} </span>
+          </div>
+        `,
+  )}
     `;
   }
   private __renderFoundList(resultList: Array<JobResult>): TemplateResult {
