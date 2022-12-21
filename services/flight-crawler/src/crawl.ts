@@ -129,13 +129,17 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
     return job.seatCount >= detail.seatCount;
   });
 
-  filteredJobResultList = filteredJobResultList.filter((job) => {
-    const jobTime = job.time.split(':');
-    const time = +jobTime[0] * 60 + +jobTime[1];
+  if (detail.minHour != null && detail.maxHour != null) {
+    const minHour = detail.minHour;
+    const maxHour = detail.maxHour;
+    filteredJobResultList = filteredJobResultList.filter((job) => {
+      const jobTime = job.time.split(':');
+      const time = +jobTime[0] * 60 + +jobTime[1];
 
-    if (time >= detail.minHour * 60 && time <= detail.maxHour * 60) return true;
-    return false;
-  });
+      if (time >= minHour * 60 && time <= maxHour * 60) return true;
+      return false;
+    });
+  }
 
   return filteredJobResultList;
 }
