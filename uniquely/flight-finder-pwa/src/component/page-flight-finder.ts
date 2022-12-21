@@ -42,6 +42,11 @@ export class PageFlightFinder extends AlwatrElement {
         justify-content: center;
       }
 
+      span#timer{
+        display:inline-block;
+        min-width:23px;
+      }
+
       .version {
         direction: ltr;
         margin: 0 16px 8px;
@@ -53,7 +58,6 @@ export class PageFlightFinder extends AlwatrElement {
 
   static jobDataSignal = new SignalInterface('job-data');
   static jobAddSignal = new SignalInterface('job-add');
-  static relativeTimeFormatter = new Intl.RelativeTimeFormat('fa-IR', {style: 'narrow'});
 
   private __jobList?: Array<Job>;
   private __lastUpdate = 0;
@@ -67,7 +71,10 @@ export class PageFlightFinder extends AlwatrElement {
   private __updateTimer(): void {
     const timer = this._timer;
     if (timer == null || this.__lastUpdate === 0) return;
-    timer.innerText = l10n.formatNumber(Math.round((Date.now() - this.__lastUpdate) / 1000));
+
+    const time = Math.floor((Date.now() - this.__lastUpdate) / 6_000) / 10;
+
+    timer.innerText = l10n.formatNumber(time);
   }
 
   override connectedCallback(): void {
@@ -79,11 +86,11 @@ export class PageFlightFinder extends AlwatrElement {
 
     PageFlightFinder.jobDataSignal.addListener((jobList) => {
       this.__jobList = Object.values(jobList.data);
-      this.__lastUpdate = Date.now();
+      this.__lastUpdate = jobList.meta.lastUpdated;
       this.requestUpdate();
     });
 
-    setInterval(this.__updateTimer, 1000);
+    setInterval(this.__updateTimer, 3_000);
   }
   override render(): TemplateResult {
     return html`
@@ -112,7 +119,7 @@ export class PageFlightFinder extends AlwatrElement {
       <ion-card class="job__list">
         <ion-card-header>
           <ion-card-title>${l10n.localize('search_list')}</ion-card-title>
-          <ion-card-subtitle><span id="timer">-</span> ${l10n.localize('seconds_ago')}</ion-card-subtitle>
+          <ion-card-subtitle><span id="timer">-</span> ${l10n.localize('minutes_ago')}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-list lines="full">
