@@ -501,7 +501,7 @@ export class AlwatrConnection {
    * if (token == null) return;
    * ```
    */
-  requireToken(validator?: ((token: string) => boolean) | Array<string> | string): string | null {
+  requireToken(validator?: ((token: string) => boolean) | Array<string> | string): string {
     const token = this.getToken();
 
     if (token == null) {
