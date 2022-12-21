@@ -3,7 +3,7 @@ import {createServer} from 'node:http';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
 
-import type {NanoServerConfig, ConnectionConfig, ParamKeyType, ParamValueType, MaybePromise} from './type.js';
+import type {NanoServerConfig, ConnectionConfig, ParamKeyType, ParamValueType, RouteMiddleware} from './type.js';
 import type {
   AlwatrServiceResponse,
   AlwatrServiceResponseFailed,
@@ -147,9 +147,7 @@ export class AlwatrNanoServer {
   route<TData = Record<string, unknown>, TMeta = Record<string, unknown>>(
       method: 'ALL' | Methods,
       route: 'all' | `/${string}`,
-      middleware: (
-      connection: AlwatrConnection
-    ) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>,
+      middleware: (connection: AlwatrConnection) => RouteMiddleware<AlwatrServiceResponse<TData, TMeta> | null>,
   ): void {
     this._logger.logMethodArgs('route', {method, route});
 
@@ -288,7 +286,7 @@ export class AlwatrNanoServer {
   // prettier-ignore
   protected middlewareList: Record<string, Record<string,
       (connection: AlwatrConnection) =>
-      MaybePromise<AlwatrServiceResponse<unknown, unknown> | null>
+      RouteMiddleware<AlwatrServiceResponse<unknown, unknown> | null>
     >> = {
       ALL: {},
     };
@@ -327,40 +325,11 @@ export class AlwatrNanoServer {
       }
     }
     catch (_err) {
-      const err = _err as Error;
-      // 400 status code
-      if (['require_body_json', 'invalid_json', 'require_body'].includes(err.message)) {
-        this.reply(serverResponse, {
-          ok: false,
-          statusCode: 400,
-          errorCode: err.message,
-        });
-      }
-      // 401 status code
-      else if (['authorization_required'].includes(err.message)) {
-        this.reply(serverResponse, {
-          ok: false,
-          statusCode: 401,
-          errorCode: err.message,
-        });
-      }
-      // 403 status code
-      else if (['access_denied'].includes(err.message)) {
-        this.reply(serverResponse, {
-          ok: false,
-          statusCode: 403,
-          errorCode: err.message,
-        });
-      }
-      // 406 status code
-      else if (['query_parameter_required'].includes(err.message)) {
-        this.reply(serverResponse, {
-          ok: false,
-          statusCode: 406,
-          errorCode: err.message,
-        });
+      if (typeof _err === 'object' && _err != null && 'ok' in _err) {
+        this.reply(serverResponse, <AlwatrServiceResponse> _err);
       }
       else {
+        const err = _err as Error;
         // 500 status code
         this._logger.error('handleRequest', 'http_server_middleware_error', err, {
           method: connection.method,
@@ -381,15 +350,18 @@ export class AlwatrNanoServer {
   }
 
   protected _notFoundListener = (connection: AlwatrConnection): AlwatrServiceResponseFailed => {
-    return connection.serverResponse, {
-      ok: false,
-      statusCode: 404,
-      errorCode: 'not_found',
-      meta: {
-        method: connection.method,
-        route: connection.url.pathname,
-      },
-    };
+    return (
+      connection.serverResponse,
+      {
+        ok: false,
+        statusCode: 404,
+        errorCode: 'not_found',
+        meta: {
+          method: connection.method,
+          route: connection.url.pathname,
+        },
+      }
+    );
   };
 }
 
@@ -473,20 +445,35 @@ export class AlwatrConnection {
   async requireJsonBody<T>(): Promise<T> {
     // if request content type is json
     if (this.incomingMessage.headers['content-type'] !== 'application/json') {
-      throw new Error('require_body_json');
+      // eslint-disable-next-line no-throw-literal
+      throw {
+        ok: false,
+        statusCode: 400,
+        errorCode: 'require_json_body',
+      };
     }
 
     const body = await this.getBody();
 
     if (body == null || body.length === 0) {
-      throw new Error('require_body');
+      // eslint-disable-next-line no-throw-literal
+      throw {
+        ok: false,
+        statusCode: 400,
+        errorCode: 'require_body',
+      };
     }
 
     try {
       return JSON.parse(body) as T;
     }
     catch (err) {
-      throw new Error('invalid_json');
+      // eslint-disable-next-line no-throw-literal
+      throw {
+        ok: false,
+        statusCode: 400,
+        errorCode: 'invalid_json',
+      };
     }
   }
 
@@ -505,7 +492,12 @@ export class AlwatrConnection {
     const token = this.getToken();
 
     if (token == null) {
-      throw new Error('authorization_required');
+      // eslint-disable-next-line no-throw-literal
+      throw {
+        ok: false,
+        statusCode: 401,
+        errorCode: 'authorization_required',
+      };
     }
     else if (validator === undefined) {
       return token;
@@ -519,7 +511,12 @@ export class AlwatrConnection {
     else if (typeof validator === 'function') {
       if (validator(token) === true) return token;
     }
-    throw new Error('access_denied');
+    // eslint-disable-next-line no-throw-literal
+    throw {
+      ok: false,
+      statusCode: 403,
+      errorCode: 'access_denied',
+    };
   }
 
   /**
@@ -574,7 +571,17 @@ export class AlwatrConnection {
       const paramType = params[paramName];
       const paramValue = (parsedParams[paramName] = this._sanitizeParam(paramName, paramType));
       if (paramValue == null) {
-        throw new Error('query_parameter_required');
+        // eslint-disable-next-line no-throw-literal
+        throw {
+          ok: false,
+          statusCode: 406,
+          errorCode: 'query_parameter_required',
+          meta: {
+            paramName,
+            paramType,
+            paramValue,
+          },
+        };
       }
     }
 
