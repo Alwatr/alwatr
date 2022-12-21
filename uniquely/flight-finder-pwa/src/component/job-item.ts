@@ -2,7 +2,7 @@ import {AlwatrElement} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {css, html, nothing} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property, query} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
 import '@alwatr/icon';
@@ -89,6 +89,7 @@ export class JobItem extends AlwatrElement {
   ];
 
   @property({attribute: false, type: Object}) job?: Job;
+  @query('ion-item-sliding') private __ionItemSliding?: HTMLElement;
 
   static jobDeleteSignal = new SignalInterface('job-delete');
 
@@ -104,7 +105,7 @@ export class JobItem extends AlwatrElement {
     if (this.job == null || this.job.detail == null) return nothing;
 
     return html`
-      <ion-item-sliding>
+      <ion-item-sliding @dblclick=${this.__openSliding}>
         <ion-item class="job" lines="full">
           <ion-label>
             ${this.__renderTitle(cityList[this.job.detail.origin], cityList[this.job.detail.destination])}
@@ -119,6 +120,7 @@ export class JobItem extends AlwatrElement {
             <alwatr-icon slot="icon-only" name="close-outline"></alwatr-icon>
           </ion-item-option>
         </ion-item-options>
+        <ion-item-options side="end"> </ion-item-options>
       </ion-item-sliding>
     `;
   }
@@ -181,5 +183,18 @@ export class JobItem extends AlwatrElement {
     }
 
     JobItem.jobDeleteSignal.dispatch(this.job.id);
+  }
+  private async __openSliding(event: PointerEvent): Promise<void> {
+    if (this.__ionItemSliding == null) return;
+
+    event.preventDefault();
+    const itemSliding = this.__ionItemSliding as HTMLIonItemSlidingElement;
+
+    if ((await itemSliding.getSlidingRatio()) > 0) {
+      await itemSliding.closeOpened();
+    }
+    else {
+      await itemSliding.open('start');
+    }
   }
 }
