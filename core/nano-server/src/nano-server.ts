@@ -324,12 +324,12 @@ export class AlwatrNanoServer {
         this.reply(serverResponse, content);
       }
     }
-    catch (_err) {
-      if (typeof _err === 'object' && _err != null && 'ok' in _err) {
-        this.reply(serverResponse, <AlwatrServiceResponse> _err);
+    catch (errorObject) {
+      if (typeof errorObject === 'object' && errorObject != null && 'ok' in errorObject) {
+        this.reply(serverResponse, <AlwatrServiceResponse> errorObject);
       }
       else {
-        const err = _err as Error;
+        const err = errorObject as Error;
         // 500 status code
         this._logger.error('handleRequest', 'http_server_middleware_error', err, {
           method: connection.method,
