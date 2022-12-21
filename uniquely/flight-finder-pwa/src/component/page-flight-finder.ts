@@ -3,7 +3,7 @@ import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {modalController} from '@ionic/core';
 import {css, html} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {customElement, query} from 'lit/decorators.js';
 import {map} from 'lit/directives/map.js';
 
 import ionNormalize from '../style/ionic.normalize.js';
@@ -42,6 +42,11 @@ export class PageFlightFinder extends AlwatrElement {
         justify-content: center;
       }
 
+      #timer {
+        display: inline-block;
+        min-width: 23px;
+      }
+
       .version {
         direction: ltr;
         margin: 0 16px 8px;
@@ -50,10 +55,26 @@ export class PageFlightFinder extends AlwatrElement {
     `,
   ];
 
-  private __jobList: Array<Job> = [];
-
-  static jobListSignal = new SignalInterface('job-list');
+  static jobDocumentStorageSignal = new SignalInterface('job-document-storage');
   static jobAddSignal = new SignalInterface('job-add');
+
+  private __jobList?: Array<Job>;
+  private __lastUpdate = 0;
+  @query('#timer') protected _timer?: HTMLSpanElement;
+
+  constructor() {
+    super();
+    this.__updateTimer = this.__updateTimer.bind(this);
+  }
+
+  private __updateTimer(): void {
+    const timer = this._timer;
+    if (timer == null || this.__lastUpdate === 0) return;
+
+    const time = Math.floor((Date.now() - this.__lastUpdate) / 6_000) / 10;
+
+    timer.innerText = l10n.formatNumber(time);
+  }
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -62,10 +83,13 @@ export class PageFlightFinder extends AlwatrElement {
       this.requestUpdate();
     });
 
-    PageFlightFinder.jobListSignal.addListener((jobList) => {
-      this.__jobList = jobList;
+    PageFlightFinder.jobDocumentStorageSignal.addListener((jobList) => {
+      this.__jobList = Object.values(jobList.data);
+      this.__lastUpdate = jobList.meta.lastUpdated;
       this.requestUpdate();
     });
+
+    setInterval(this.__updateTimer, 3_000);
   }
   override render(): TemplateResult {
     return html`
@@ -84,7 +108,7 @@ export class PageFlightFinder extends AlwatrElement {
           </ion-fab-button>
         </ion-fab>
 
-        <div class="version">v${Alwatr.version}-prv3</div>
+        <div class="version">v${Alwatr.version}-prv4</div>
       </ion-content>
     `;
   }
@@ -94,7 +118,7 @@ export class PageFlightFinder extends AlwatrElement {
       <ion-card class="job__list">
         <ion-card-header>
           <ion-card-title>${l10n.localize('search_list')}</ion-card-title>
-          <ion-card-subtitle>۵ ${l10n.localize('seconds_ago')}</ion-card-subtitle>
+          <ion-card-subtitle><span id="timer">-</span> ${l10n.localize('minutes_ago')}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-list lines="full">
@@ -112,7 +136,6 @@ export class PageFlightFinder extends AlwatrElement {
     modal.addEventListener('close', () => {
       modal.dismiss();
     });
-
 
     await modal.present();
   }
