@@ -42,9 +42,9 @@ export class PageFlightFinder extends AlwatrElement {
         justify-content: center;
       }
 
-      span#timer{
-        display:inline-block;
-        min-width:23px;
+      #timer {
+        display: inline-block;
+        min-width: 23px;
       }
 
       .version {
@@ -54,7 +54,6 @@ export class PageFlightFinder extends AlwatrElement {
       }
     `,
   ];
-
 
   static jobDocumentStorageSignal = new SignalInterface('job-document-storage');
   static jobAddSignal = new SignalInterface('job-add');
