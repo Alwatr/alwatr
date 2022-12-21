@@ -1,10 +1,6 @@
 import {nanoServer} from '../lib/nano-server.js';
 
-import type {AlwatrServiceResponse} from '@alwatr/nano-server';
-
-nanoServer.route('GET', '/', home);
-
-function home(): AlwatrServiceResponse {
+nanoServer.route('GET', '/', () => {
   return {
     ok: true,
     data: {
@@ -12,4 +8,4 @@ function home(): AlwatrServiceResponse {
       message: 'Hello ;)',
     },
   };
-}
+});

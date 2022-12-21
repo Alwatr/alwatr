@@ -56,14 +56,13 @@ export class AlwatrNanoServer {
    * const nanoServer = new AlwatrNanoServer();
    *
    * nanoServer.route('GET', '/', async (connection) => {
-   * return {
    *   ok: true,
    *   data: {
    *    app: 'Alwatr Nanoservice Starter Kit',
    *    message: 'Hello ;)',
    *   },
    *  };
-   * });
+   * );
    * ```
    */
   constructor(config?: Partial<NanoServerConfig>) {

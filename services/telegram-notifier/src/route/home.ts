@@ -1,15 +1,11 @@
-import {AlwatrServiceResponse} from '@alwatr/nano-server';
-
 import {nanoServer} from '../lib/nano-server.js';
 
-nanoServer.route('GET', '/', home);
-
-function home(): AlwatrServiceResponse {
+nanoServer.route('GET', '/', () => {
   return {
     ok: true,
     data: {
-      app: 'Alwatr Notify Microservice',
+      app: 'Alwatr Telegram Notify Microservice',
       message: 'Hello ;)',
     },
   };
-}
+});
