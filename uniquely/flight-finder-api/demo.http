@@ -21,7 +21,6 @@ Content-Type: application/json
     "date": "1401/09/10",
     "seatCount": 1,
     "maxPrice": null,
-    "dayPart": ["earlyMorning"],
     "description": "Test!"
   }
 }
