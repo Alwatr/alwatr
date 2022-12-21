@@ -3,7 +3,7 @@ import {createServer} from 'node:http';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
 
-import type {NanoServerConfig, ConnectionConfig, ParamKeyType, ParamValueType, RouteMiddleware} from './type.js';
+import type {NanoServerConfig, ConnectionConfig, ParamKeyType, ParamValueType, MaybePromise} from './type.js';
 import type {
   AlwatrServiceResponse,
   AlwatrServiceResponseFailed,
@@ -15,6 +15,10 @@ import type {
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
+
+
+export type RouteMiddleware<TData = Record<string, unknown>, TMeta = Record<string, unknown>> =
+  (connection: AlwatrConnection) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>
 
 export {
   NanoServerConfig,
@@ -147,7 +151,7 @@ export class AlwatrNanoServer {
   route<TData = Record<string, unknown>, TMeta = Record<string, unknown>>(
       method: 'ALL' | Methods,
       route: 'all' | `/${string}`,
-      middleware: (connection: AlwatrConnection) => RouteMiddleware<AlwatrServiceResponse<TData, TMeta> | null>,
+      middleware: RouteMiddleware<TData, TMeta>,
   ): void {
     this._logger.logMethodArgs('route', {method, route});
 
@@ -161,7 +165,7 @@ export class AlwatrNanoServer {
       throw new Error('route_already_exists');
     }
 
-    this.middlewareList[method][route] = middleware;
+    this.middlewareList[method][route] = <RouteMiddleware> middleware;
   }
 
   /**
@@ -284,12 +288,9 @@ export class AlwatrNanoServer {
   }
 
   // prettier-ignore
-  protected middlewareList: Record<string, Record<string,
-      (connection: AlwatrConnection) =>
-      RouteMiddleware<AlwatrServiceResponse<unknown, unknown> | null>
-    >> = {
-      ALL: {},
-    };
+  protected middlewareList: Record<string, Record<string, RouteMiddleware>> = {
+    ALL: {},
+  };
 
   protected async _requestListener(incomingMessage: IncomingMessage, serverResponse: ServerResponse): Promise<void> {
     this._logger.logMethod('handleRequest');
