@@ -129,6 +129,14 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
     return job.seatCount >= detail.seatCount;
   });
 
+  filteredJobResultList = filteredJobResultList.filter((job) => {
+    const jobTime = job.time.split(':');
+    const time = +jobTime[0] * 60 + +jobTime[1];
+
+    if (time >= detail.minHour * 60 && time <= detail.maxHour * 60) return true;
+    return false;
+  });
+
   return filteredJobResultList;
 }
 

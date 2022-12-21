@@ -15,6 +15,8 @@ export interface JobDetail extends Record<string, unknown> {
   maxPrice: number | null;
   dayPart: Array<dayParts>;
   description: string;
+  minHour: number;
+  maxHour: number;
 }
 
 export interface JobResult extends Record<string, unknown> {
