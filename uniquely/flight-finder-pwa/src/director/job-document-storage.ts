@@ -8,13 +8,13 @@ import {showToastSignal} from './toast.js';
 import type {Job} from '../type.js';
 
 export const logger = createLogger('[director/job-document-storage]');
-export const jobDataSignal = new SignalInterface('job-document-storage');
+export const jobDocumentStorageSignal = new SignalInterface('job-document-storage');
 
 async function requestJobStorage(cacheStrategy: CacheStrategy): Promise<void> {
   logger.logMethod('jobListProvider');
 
   try {
-    jobDataSignal.dispatch(
+    jobDocumentStorageSignal.dispatch(
       <AlwatrDocumentStorage<Job>> await serviceRequest({
         url: window.appConfig?.api ? window.appConfig.api + '/job' : '/job',
         token: window.appConfig?.token,
@@ -33,8 +33,8 @@ async function requestJobStorage(cacheStrategy: CacheStrategy): Promise<void> {
   }
 }
 
-jobDataSignal.setProvider(() => requestJobStorage('network_first'));
+jobDocumentStorageSignal.setProvider(() => requestJobStorage('network_first'));
 
 requestJobStorage('cache_only').then(() => requestJobStorage('network_first'));
 
-setInterval(() => jobDataSignal.request(null), 60_000);
+setInterval(() => jobDocumentStorageSignal.request(null), 60_000);
