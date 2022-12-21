@@ -1,0 +1,6 @@
+@apiUrl = http://127.0.0.1:8000
+@apiVersion = v0
+@token = YOUR_SECRET_TOKEN
+
+### Home
+GET {{apiUrl}}/{{apiVersion}}
