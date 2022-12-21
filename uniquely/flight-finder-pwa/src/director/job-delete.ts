@@ -1,7 +1,7 @@
 import {fetch} from '@alwatr/fetch';
 import {SignalInterface} from '@alwatr/signal';
 
-import {jobListSignal} from './job-list.js';
+import {jobDocumentStorageSignal} from './job-document-storage.js';
 import {showToastSignal} from './toast.js';
 
 import type {AlwatrServiceResponse} from '@alwatr/fetch';
@@ -33,5 +33,5 @@ jobDeleteSignal.addListener(async (id) => {
     });
   }
 
-  jobListSignal.request(null);
+  jobDocumentStorageSignal.request(null);
 });
