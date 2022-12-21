@@ -4,6 +4,9 @@
   "description": "Alwatr Flight Finder API Microservice",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "contributors": [
+    "S. Amir Mohammad Najafi <njfamirm@gmail.com> (https://njfamirm.ir)"
+  ],
   "private": true,
   "engines": {
     "node": ">=19.0.0",
@@ -12,8 +15,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AliMD/flight-finder",
-    "directory": "api"
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "uniquely/flight-finder-api"
   },
   "scripts": {
     "b": "yarn build",
