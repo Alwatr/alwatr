@@ -8,11 +8,11 @@ declare global {
   interface AlwatrSignals {
     readonly 'job-add': Pick<Job, 'detail'>;
     readonly 'job-delete': string;
-    readonly 'job-data': AlwatrDocumentStorage<Job>;
+    readonly 'job-document-storage': AlwatrDocumentStorage<Job>;
     readonly toast: Partial<ToastOptions> & {message: string};
   }
   interface AlwatrRequestSignals {
-    readonly 'job-data': null;
+    readonly 'job-document-storage': null;
   }
 }
 

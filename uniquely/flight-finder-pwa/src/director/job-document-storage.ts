@@ -7,8 +7,8 @@ import {showToastSignal} from './toast.js';
 
 import type {Job} from '../type.js';
 
-export const logger = createLogger('[director/job-data]');
-export const jobDataSignal = new SignalInterface('job-data');
+export const logger = createLogger('[director/job-document-storage]');
+export const jobDataSignal = new SignalInterface('job-document-storage');
 
 async function requestJobStorage(cacheStrategy: CacheStrategy): Promise<void> {
   logger.logMethod('jobListProvider');

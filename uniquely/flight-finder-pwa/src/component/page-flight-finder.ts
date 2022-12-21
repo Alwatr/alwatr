@@ -56,7 +56,7 @@ export class PageFlightFinder extends AlwatrElement {
   ];
 
 
-  static jobDataSignal = new SignalInterface('job-data');
+  static jobDocumentStorageSignal = new SignalInterface('job-document-storage');
   static jobAddSignal = new SignalInterface('job-add');
 
   private __jobList?: Array<Job>;
@@ -84,7 +84,7 @@ export class PageFlightFinder extends AlwatrElement {
       this.requestUpdate();
     });
 
-    PageFlightFinder.jobDataSignal.addListener((jobList) => {
+    PageFlightFinder.jobDocumentStorageSignal.addListener((jobList) => {
       this.__jobList = Object.values(jobList.data);
       this.__lastUpdate = jobList.meta.lastUpdated;
       this.requestUpdate();
