@@ -3,7 +3,7 @@ import {createServer} from 'node:http';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
 
-import type {NanoServerConfig, ConnectionConfig, ParamKeyType, ParamValueType} from './type.js';
+import type {NanoServerConfig, ConnectionConfig, ParamKeyType, ParamValueType, MaybePromise} from './type.js';
 import type {
   AlwatrServiceResponse,
   AlwatrServiceResponseFailed,
@@ -149,7 +149,7 @@ export class AlwatrNanoServer {
       route: 'all' | `/${string}`,
       middleware: (
       connection: AlwatrConnection
-    ) => AlwatrServiceResponse<TData, TMeta> | Promise<AlwatrServiceResponse<TData, TMeta> | null> | null,
+    ) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>,
   ): void {
     this._logger.logMethodArgs('route', {method, route});
 
@@ -288,7 +288,7 @@ export class AlwatrNanoServer {
   // prettier-ignore
   protected middlewareList: Record<string, Record<string,
       (connection: AlwatrConnection) =>
-        AlwatrServiceResponse<unknown, unknown> | null | Promise<AlwatrServiceResponse<unknown, unknown> | null>
+      MaybePromise<AlwatrServiceResponse<unknown, unknown> | null>
     >> = {
       ALL: {},
     };
