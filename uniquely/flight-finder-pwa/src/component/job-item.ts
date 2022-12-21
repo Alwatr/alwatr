@@ -184,10 +184,9 @@ export class JobItem extends AlwatrElement {
 
     JobItem.jobDeleteSignal.dispatch(this.job.id);
   }
-  private async __openSliding(event: PointerEvent): Promise<void> {
+  private async __openSliding(): Promise<void> {
     if (this.__ionItemSliding == null) return;
 
-    event.preventDefault();
     const itemSliding = this.__ionItemSliding as HTMLIonItemSlidingElement;
 
     if ((await itemSliding.getSlidingRatio()) > 0) {
