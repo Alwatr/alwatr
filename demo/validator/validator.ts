@@ -35,9 +35,17 @@ function validator<T extends Record<string, unknown>>(valueObj: Record<string, u
           value = value.trim();
           validObj[paramName] = false;
         }
+        else {
+          throw new Error('invalid_type', {
+            cause: {
+              name: 'boolean_validator',
+              message: `'${value}' not valid`,
+            },
+          });
+        }
       }
       else {
-        throw new Error(undefined, {
+        throw new Error('invalid_type', {
           cause: {
             name: 'boolean_validator',
             message: `'${value}' not valid`,
@@ -99,12 +107,12 @@ try {
   );
 }
 catch (error) {
-  console.log((error as Error));
+  console.log(error as Error);
 }
 
 try {
-  console.log(validator<{a: boolean}>({a: 'trus'}, {a: 'boolean'}));
+  console.log(validator<{a: boolean}>({a: 'tru'}, {a: 'boolean'}));
 }
 catch (error) {
-  console.log((error as Error));
+  console.log(error as Error);
 }
