@@ -1,7 +1,6 @@
 import {AlwatrElement} from '@alwatr/element';
-import {css, html, nothing} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {css, html} from 'lit';
+import {customElement} from 'lit/decorators.js';
 
 import type {TemplateResult} from 'lit';
 
@@ -30,12 +29,7 @@ export class AlwatrAvatar extends AlwatrElement {
     `,
   ];
 
-  @property() src?: string;
-  @property() alt?: string;
-
-  override render(): TemplateResult | typeof nothing {
-    if (this.src == null) return nothing;
-
-    return html` <img src=${this.src} alt=${ifDefined(this.alt)} /> `;
+  override render(): TemplateResult {
+    return html` <img src="https://picsum.photos/200/200?random=3" /> `;
   }
 }
