@@ -125,24 +125,21 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
 
   if (detail.maxPrice != null) {
     const maxPrice = detail.maxPrice;
-    filteredJobResultList = filteredJobResultList.filter((job) => {
-      return job.price <= maxPrice;
+    filteredJobResultList = filteredJobResultList.filter((result) => {
+      return result.price <= maxPrice;
     });
   }
 
-  filteredJobResultList = filteredJobResultList.filter((job) => {
-    return job.seatCount >= detail.seatCount;
+  filteredJobResultList = filteredJobResultList.filter((result) => {
+    return result.seatCount >= detail.seatCount;
   });
 
   if (detail.minHour != null && detail.maxHour != null) {
     const minHour = detail.minHour;
     const maxHour = detail.maxHour;
-    filteredJobResultList = filteredJobResultList.filter((job) => {
-      const jobTime = job.time.split(':');
-      const time = +jobTime[0] * 60 + +jobTime[1];
-
-      if (time >= minHour * 60 && time <= maxHour * 60) return true;
-      return false;
+    filteredJobResultList = filteredJobResultList.filter((result) => {
+      const resultTime = +result.time.trim().split(':')[0];
+      return resultTime >= minHour && resultTime <= maxHour;
     });
   }
 
