@@ -6,6 +6,7 @@ import {customElement} from 'lit/decorators.js';
 import '@alwatr/icon';
 
 import '../components/alwatr-bubbles';
+import '../components/alwatr-avatar';
 
 import type {TemplateResult} from 'lit';
 
@@ -169,9 +170,9 @@ export class PageHome extends AlwatrElement {
       this.__renderMessage('https://picsum.photos/200/200?random=2', 'لورم ایپسوم متن ساختگی با تولید سادگی '),
       this.__renderMessage('https://picsum.photos/200/200?random=3', 'لورم ایپسوم متن ساختگی با '),
       this.__renderMessage(
-          'https://picsum.photos/200/200?random=4',
-          'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت ',
-          'end',
+        'https://picsum.photos/200/200?random=4',
+        'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت ',
+        'end'
       ),
       this.__renderMessage('https://picsum.photos/200/200?random=5', 'لورم ایپسوم متن ساختگی با تولید سادگی '),
     ];
@@ -193,9 +194,6 @@ export class PageHome extends AlwatrElement {
           <button class="alwatr__icon-button">
             <alwatr-icon name="happy-outline"></alwatr-icon>
           </button>
-          <button class="alwatr__icon-button">
-            <alwatr-icon name="add-circle-outline"></alwatr-icon>
-          </button>
         </footer>
       </section>
     `;
@@ -205,7 +203,7 @@ export class PageHome extends AlwatrElement {
     return html`
       <div class="chat-message ${side + '-side'}">
         <div class="chat-message__avatar">
-          <img src=${avatarSource} />
+          <alwatr-avatar .src=${avatarSource}></alwatr-avatar>
         </div>
         <alwatr-message-bubble side=${side} .message=${message}></alwatr-message-bubble>
       </div>
@@ -219,8 +217,7 @@ export class PageHome extends AlwatrElement {
 
     if (lines < 6) {
       textarea.rows = textarea.value.split('\n').length;
-    }
-    else {
+    } else {
       textarea.rows = 6;
     }
   }
