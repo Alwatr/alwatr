@@ -5,6 +5,8 @@ import {customElement} from 'lit/decorators.js';
 
 import '@alwatr/icon';
 
+import '../components/alwatr-icon-button';
+
 import type {TemplateResult} from 'lit';
 
 declare global {
@@ -103,43 +105,13 @@ export class PageHome extends AlwatrElement {
       }
     `,
     css`
-      button.alwatr__icon-button {
-        display: inline-flex;
-
-        justify-content: center;
-        align-items: center;
-        flex-shrink: 0;
-
-        width: 3.5em;
-        height: 3.5em;
-
-        min-width: 46px;
-        min-height: 46px;
-
-        border: none;
-        color: var(--text-secondary-color);
-        background-color: #0000;
-        border-radius: 27px;
-        transition: background-color 300ms ease;
-      }
-      button.alwatr__icon-button:hover {
-        background-color: #6661;
-      }
-      button.alwatr__icon-button:focus {
-        background-color: #8883;
-      }
-      button.alwatr__icon-button alwatr-icon {
-        font-size: 26px;
-      }
-    `,
-    css`
       .alwatr__textarea {
         display: flex;
         flex: 1 1 0;
         background-color: var(--tertiary-color);
         border-radius: 24px;
         align-items: end;
-        margin-inline-start: 1em;
+        margin-inline-start: 0.75em;
       }
       .alwatr__textarea-input {
         display: flex;
@@ -176,9 +148,9 @@ export class PageHome extends AlwatrElement {
       this.__renderMessage('https://picsum.photos/200/200?random=2', 'لورم ایپسوم متن ساختگی با تولید سادگی '),
       this.__renderMessage('https://picsum.photos/200/200?random=3', 'لورم ایپسوم متن ساختگی با '),
       this.__renderMessage(
-          'https://picsum.photos/200/200?random=4',
-          'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت ',
-          'end',
+        'https://picsum.photos/200/200?random=4',
+        'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت ',
+        'end'
       ),
       this.__renderMessage('https://picsum.photos/200/200?random=5', 'لورم ایپسوم متن ساختگی با تولید سادگی '),
     ];
@@ -187,9 +159,8 @@ export class PageHome extends AlwatrElement {
         <div class="chat-main__content">${messages}</div>
         <footer class="chat-footer">
           <div class="alwatr__textarea">
-            <button class="alwatr__textarea-slot alwatr__icon-button">
-              <alwatr-icon name="mic-outline"></alwatr-icon>
-            </button>
+            <alwatr-icon-button class="alwatr__textarea-slot" name="mic-outline"> </alwatr-icon-button>
+
             <textarea
               class="alwatr__textarea-input"
               rows="1"
@@ -197,12 +168,8 @@ export class PageHome extends AlwatrElement {
               @input=${this.__inputChange}
             ></textarea>
           </div>
-          <button class="alwatr__icon-button">
-            <alwatr-icon name="happy-outline"></alwatr-icon>
-          </button>
-          <button class="alwatr__icon-button">
-            <alwatr-icon name="add-circle-outline"></alwatr-icon>
-          </button>
+          <alwatr-icon-button name="happy-outline"> </alwatr-icon-button>
+          <alwatr-icon-button name="add-circle-outline"> </alwatr-icon-button>
         </footer>
       </section>
     `;
@@ -226,8 +193,7 @@ export class PageHome extends AlwatrElement {
 
     if (lines < 6) {
       textarea.rows = textarea.value.split('\n').length;
-    }
-    else {
+    } else {
       textarea.rows = 6;
     }
   }
