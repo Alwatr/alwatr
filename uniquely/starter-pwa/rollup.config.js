@@ -6,7 +6,7 @@ import minifyHTML from 'rollup-plugin-minify-html-literals';
 import summary from 'rollup-plugin-summary';
 import {generateSW} from 'rollup-plugin-workbox';
 
-import {workboxConfig} from './workbox-config.js';
+import {workboxConfig} from './workbox.config.js';
 
 function onwarn(warning) {
   if (warning.code !== 'THIS_IS_UNDEFINED') {
