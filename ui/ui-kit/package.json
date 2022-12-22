@@ -1,24 +1,24 @@
 {
-  "name": "@alwatr/element",
-  "version": "0.25.0",
-  "description": "Elegant powerful web component (lit-element) helper mixins written in tiny TypeScript module.",
+  "name": "@alwatr/ui-kit",
+  "version": "0.0.0",
+  "description": "Alwatr UI Elements Kit",
+  "private": true,
   "keywords": [
     "element",
+    "ui-kit",
+    "ui",
     "lit",
     "lit-element",
     "web-component",
-    "mixin",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "element.js",
   "type": "module",
-  "types": "element.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
-    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
+    "**/**/*.{d.ts.map,d.ts,js.map,js,md}"
   ],
   "publishConfig": {
     "access": "public"
@@ -26,16 +26,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "ui-kit/element"
+    "directory": "ui/ui-kit"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui-kit/element#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui/ui-kit#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
     "@alwatr/logger": "~0.25.0",
-    "@alwatr/signal": "~0.25.0",
-    "lit": "~2.5.0",
+    "@alwatr/element": "~0.25.0",
     "tslib": "~2.4.1"
   }
 }
