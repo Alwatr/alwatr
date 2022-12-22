@@ -32,7 +32,6 @@ function validator<T extends Record<string, unknown>>(valueObj: Record<string, u
           validObj[paramName] = true;
         }
         else if (value === 'false' || value === '0') {
-          value = value.trim();
           validObj[paramName] = false;
         }
         else {
