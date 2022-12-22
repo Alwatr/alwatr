@@ -38,8 +38,7 @@
     "@alwatr/i18n": "~0.25.0",
     "@alwatr/icon": "~0.25.0",
     "@alwatr/logger": "~0.25.0",
-    "@alwatr/router": "~0.25.0",
-    "lit": "~2.5.0"
+    "@alwatr/router": "~0.25.0"
   },
   "devDependencies": {
     "@babel/core": "~7.20.5",

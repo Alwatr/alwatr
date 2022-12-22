@@ -1,8 +1,7 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrElement, customElement} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {css, html} from 'lit';
-import {customElement} from 'lit/decorators.js';
 
 import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';

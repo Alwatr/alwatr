@@ -1,8 +1,7 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrElement, customElement, property} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {css, html, nothing} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
 
 import '@alwatr/icon';
 
