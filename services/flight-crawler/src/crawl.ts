@@ -10,12 +10,12 @@ import type {FetchOptions} from '@alwatr/fetch';
 export async function crawlAllJobs(): Promise<void> {
   logger.logMethod('crawlAllJobs');
   const jobList = (await storageClient.getStorage()).data;
-  const jobKey = Object.keys(jobList);
+  const jobKeyList = Object.keys(jobList);
   let updated = false;
 
-  for (let i = 0; i < jobKey.length; i++) {
+  for (let i = 0; i < jobKeyList.length; i++) {
     try {
-      const job = jobList[jobKey[i]];
+      const job = jobList[jobKeyList[i]];
       const oldResultList = job.resultList;
       const resultList = await crawl(job.detail);
       job.resultList = resultList;
@@ -23,16 +23,16 @@ export async function crawlAllJobs(): Promise<void> {
         const message = makeMessage(job);
         await notify(config.notifier.to, message);
         logger.logOther(`Notified to ${config.notifier.to}!`);
+        await storageClient.set(job);
+        updated = true;
       }
-      await storageClient.set(job);
-      updated = true;
     }
     catch (err) {
       logger.error('crawlAllJobs', 'crawling_failed', err);
     }
   }
   // for updating meta
-  if (updated === false) await storageClient.set(jobList[jobKey[jobKey.length - 1]]);
+  if (updated === false) await storageClient.set(jobList[jobKeyList[jobKeyList.length - 1]]);
 }
 
 async function crawl(detail: JobDetail): Promise<Array<JobResult>> {
