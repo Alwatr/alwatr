@@ -5,6 +5,8 @@ import {customElement} from 'lit/decorators.js';
 
 import '@alwatr/icon';
 
+import '../components/alwatr-avatar';
+
 import type {TemplateResult} from 'lit';
 
 declare global {
@@ -200,9 +202,6 @@ export class PageHome extends AlwatrElement {
           <button class="alwatr__icon-button">
             <alwatr-icon name="happy-outline"></alwatr-icon>
           </button>
-          <button class="alwatr__icon-button">
-            <alwatr-icon name="add-circle-outline"></alwatr-icon>
-          </button>
         </footer>
       </section>
     `;
@@ -212,7 +211,7 @@ export class PageHome extends AlwatrElement {
     return html`
       <div class="chat-message ${side + '-side'}">
         <div class="chat-message__avatar">
-          <img src=${avatarSource} />
+          <alwatr-avatar .src=${avatarSource}></alwatr-avatar>
         </div>
         <div class="chat-message__text">${message}</div>
       </div>
