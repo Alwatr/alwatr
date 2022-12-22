@@ -2,6 +2,25 @@
 # yarn lockfile v1
 
 
+"@alwatr/element@^0.25.0", "@alwatr/element@~0.25.0":
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/element/-/element-0.25.0.tgz#473ebc1e700c0783a01c45a21a91b0ce97c24380"
+  integrity sha512-Uc07giTNQFyIr7IUo0Zf/D3cT+0ugeYBNUS5rnKdBrhtj47MrbhcOxwX0pEdYTKFKL3wgnSvYLLUdKcILQ5ojA==
+  dependencies:
+    "@alwatr/logger" "^0.25.0"
+    lit "~2.4.1"
+    tslib "~2.4.1"
+
+"@alwatr/icon@~0.25.0":
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/icon/-/icon-0.25.0.tgz#9cf73de999ee45aa81ab1338ec5f7b9f2f69a9be"
+  integrity sha512-PS3z6FDHs89GrTQQWC+ILW+GLhUS7UyYbefOh91shiaNuOQeSzLDfwpM/3QHBQQr0iQP6xUz1EG/33FGG09uBQ==
+  dependencies:
+    "@alwatr/element" "^0.25.0"
+    "@alwatr/fetch" "^0.25.0"
+    lit "~2.4.1"
+    tslib "~2.4.1"
+
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
@@ -1814,7 +1833,7 @@
     npmlog "^6.0.2"
     write-file-atomic "^4.0.1"
 
-"@lit/reactive-element@^1.3.0", "@lit/reactive-element@^1.5.0":
+"@lit/reactive-element@^1.3.0", "@lit/reactive-element@^1.4.0", "@lit/reactive-element@^1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-1.5.0.tgz#344cc33f2d1491d094b8ef824a9fe31d150d2375"
   integrity sha512-fQh9FDK0LPTwDk+0HhSZEtb8K0LTN1wXerwpGrWA+a8tWulYRDLI4vQDWp4GOIsewn0572KYV/oZ3+492D7osA==
@@ -6075,12 +6094,21 @@ lit-element@^3.2.0:
     "@lit/reactive-element" "^1.3.0"
     lit-html "^2.2.0"
 
-lit-html@^2.2.0, lit-html@^2.5.0:
+lit-html@^2.2.0, lit-html@^2.4.0, lit-html@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.5.0.tgz#9d4c0bb3652a6b10bc4ccdb627dfa9eff1215474"
   integrity sha512-bLHosg1XL3JRUcKdSVI0sLCs0y1wWrj2sqqAN3cZ7bDDPNgmDHH29RV48x6Wz3ZmkxIupaE+z7uXSZ/pXWAO1g==
   dependencies:
     "@types/trusted-types" "^2.0.2"
+
+lit@~2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/lit/-/lit-2.4.1.tgz#21251ac14eb1ec8ca7cd15c9ac3564359809f7b5"
+  integrity sha512-qohSgLiyN1cFnJG26dIiY03S4F49857A0AHQfnS0zYtnUVnD2MFvx+UT52rtXsIuNFQrnUupX+zyGSATlk1f/A==
+  dependencies:
+    "@lit/reactive-element" "^1.4.0"
+    lit-element "^3.2.0"
+    lit-html "^2.4.0"
 
 lit@~2.5.0:
   version "2.5.0"
