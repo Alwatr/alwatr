@@ -14,9 +14,7 @@
     "esm",
     "alwatr"
   ],
-  "main": "index.js",
   "type": "module",
-  "types": "index.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
