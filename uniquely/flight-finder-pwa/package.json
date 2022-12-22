@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/flight-finder-pwa",
-  "version": "0.0.0",
+  "version": "0.26.0",
   "description": "Alwatr Flight Finder PWA",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -31,13 +31,13 @@
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@alwatr/element": "~0.25.0",
-    "@alwatr/fetch": "~0.25.0",
-    "@alwatr/i18n": "~0.25.0",
-    "@alwatr/icon": "~0.25.0",
-    "@alwatr/logger": "~0.25.0",
-    "@alwatr/router": "~0.25.0",
-    "@alwatr/signal": "~0.25.0",
+    "@alwatr/element": "^0.26.0",
+    "@alwatr/fetch": "^0.26.0",
+    "@alwatr/i18n": "^0.26.0",
+    "@alwatr/icon": "^0.26.0",
+    "@alwatr/logger": "^0.26.0",
+    "@alwatr/router": "^0.26.0",
+    "@alwatr/signal": "^0.26.0",
     "@ionic/core": "~6.4.1",
     "lit": "~2.5.0"
   },

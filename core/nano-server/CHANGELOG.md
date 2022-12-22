@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/AliMD/alwatr/compare/v0.25.0...v0.26.0) (2022-12-22)
+
+### Bug Fixes
+
+- inline home route ([ce978f6](https://github.com/AliMD/alwatr/commit/ce978f6e1e2890e853d0db351c08efca665e5fad))
+- **nano-server:** check method on getBody ([9aa9857](https://github.com/AliMD/alwatr/commit/9aa9857fb6ad96f861f31c651bf131813e46b343))
+- **nano-server:** handle utf8 reply issue ([33aa238](https://github.com/AliMD/alwatr/commit/33aa238d99f92c03a5b39e829cb39172dc45d5c6))
+- **nano-server:** remove return null on requireToken ([3c6779f](https://github.com/AliMD/alwatr/commit/3c6779f6b114aa1afe71e9b2054fb6dbe273c26a))
+- **nano-server:** route generic ([94e181b](https://github.com/AliMD/alwatr/commit/94e181ba1172399ac992af6dc969c56e4edffbf0))
+- **nano-server:** update docs and return type ([df949c1](https://github.com/AliMD/alwatr/commit/df949c19ea75921ab9c3e7323dc33ef340bd3ee7))
+- set correct path ([d01ce6f](https://github.com/AliMD/alwatr/commit/d01ce6ffa749a5e3e0e11e35b4ed61d75d61fec9))
+- tsconfig ([e96dcd3](https://github.com/AliMD/alwatr/commit/e96dcd30774a9f06f7d051e0504192cbbe019e35))
+
+### Features
+
+- improve accident debugging ([d697e6c](https://github.com/AliMD/alwatr/commit/d697e6c4c7d0a4172f4dba9caf6fbd478f79de9c))
+- improve error debugging ([1fba504](https://github.com/AliMD/alwatr/commit/1fba50400a1e8ececc10bbe8ea11cc8dcea2289c))
+- **nano-server:** clear debug info from client for security reasons. ([5814af2](https://github.com/AliMD/alwatr/commit/5814af2ceeac6e2175c4ab924e4b40cef765072c))
+- **nano-server:** maybe promise type ([d782761](https://github.com/AliMD/alwatr/commit/d7827616ea71b7e6328c6a85b80c2daec0b6f512))
+- **nano-server:** reply throw on route ([083dfa5](https://github.com/AliMD/alwatr/commit/083dfa51b391dc689d1d4fed9f1f17d768e7384c))
+- **nano-server:** routeMiddleware type ([a05b1a2](https://github.com/AliMD/alwatr/commit/a05b1a2bc79aeca67a81f4758f5d2b0f6c890028))
+
 # [0.25.0](https://github.com/AliMD/alwatr/compare/v0.24.1...v0.25.0) (2022-12-07)
 
 **Note:** Version bump only for package @alwatr/nano-server
