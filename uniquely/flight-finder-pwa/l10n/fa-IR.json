@@ -1,0 +1,25 @@
+{
+  "_code": "fa-IR",
+
+  "config_currency": "تومان",
+
+  "flight_finder": "پرواز یاب",
+  "search_list": "لیست جستجو",
+  "minutes_ago": "دقیقه پیش",
+  "origin": "مبدا",
+  "destination": "مقصد",
+  "confirm": "تایید",
+  "cancel": "لغو",
+  "description": "توضیحات",
+  "day": "روز",
+  "month": "ماه",
+  "seat_count": "تعداد صندلی",
+  "day_part": "بخش روز",
+  "maximum_price": "حداکثر قیمت",
+  "send": "ارسال",
+  "not_found": "یافت نشد",
+  "flight": "پرواز",
+  "from_hour": "از ساعت",
+  "to_hour": "تا ساعت",
+  "nothing_found": "هیچ چیز یافت نشد"
+}

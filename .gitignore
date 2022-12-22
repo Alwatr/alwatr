@@ -19,6 +19,9 @@ Desktop.ini
 *.d.ts
 *.js
 !/*.js
+!esbuild.config.js
+dist
+build
 
 # Dependencies
 node_modules

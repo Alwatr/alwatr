@@ -1,0 +1,15 @@
+@apiUrl = http://127.0.0.1:8001
+@apiVersion = v0
+@token = YOUR_SECRET_TOKEN
+
+### Home
+GET {{apiUrl}}/{{apiVersion}}
+
+### Send message
+POST {{apiUrl}}/{{apiVersion}}/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "message": "salam"
+}

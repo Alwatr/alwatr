@@ -1,0 +1,36 @@
+@apiUrl = http://127.0.0.1:8000
+@apiVersion = v0
+@token = YOUR_SECRET_TOKEN
+
+### home
+GET {{apiUrl}}/
+
+### Add new comment
+PATCH {{apiUrl}}/?storage=product/test
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "auto_increment",
+  "user": "njfamirm",
+  "type": "text",
+  "text": "سلام ;)"
+}
+
+### Add new reply
+PATCH {{apiUrl}}/?storage=product/test
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "auto_increment",
+  "user": "alimd",
+  "type": "text",
+  "text": "علیک سلام :)",
+  "replyId": "1"
+}
+
+### Get all comment
+GET {{apiUrl}}/storage?name=product/test
+Authorization: Bearer {{token}}
+Content-Type: application/json

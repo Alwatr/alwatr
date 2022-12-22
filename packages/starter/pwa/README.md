@@ -1,1 +1,0 @@
-# Alwatr PWA Starter Kit

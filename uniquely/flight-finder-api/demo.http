@@ -1,0 +1,43 @@
+@apiUrl = http://127.0.0.1:8000
+@apiVersion = v0
+@token = YOUR_SECRET_TOKEN
+
+### Home
+GET {{apiUrl}}/{{apiVersion}}
+
+### Get all jobs
+Get {{apiUrl}}/{{apiVersion}}/job
+Authorization: Bearer {{token}}
+
+### New job
+PUT {{apiUrl}}/{{apiVersion}}/job
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "detail": {
+    "origin": "KIH",
+    "destination": "THR",
+    "date": "1401/09/10",
+    "seatCount": 1,
+    "maxPrice": null,
+    "minHour": null,
+    "maxHour": null,
+    "description": "Test!"
+
+  }
+}
+
+### Edit job (not permit)
+PUT {{apiUrl}}/{{apiVersion}}/job
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "1",
+  "...": "..."
+}
+
+### Delete job
+DELETE {{apiUrl}}/{{apiVersion}}/job?id=1
+Authorization: Bearer {{token}}

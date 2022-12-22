@@ -1,101 +1,43 @@
 // https://www.typescriptlang.org/tsconfig
-// TODO: add all new configs
 
 {
+  "extends": "./tsconfig.base",
   "compilerOptions": {
-    /* Basic Options */
-    "incremental": true,
-    "target": "ES2019",
-    "module": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    // "allowJs": true,
-    // "checkJs": true,
-    // "jsx": "preserve",
-    "declaration": true,
-    "declarationMap": true,
-    // "outFile": "./",
-    "outDir": "./",
-    // "rootDir": "./src",
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
-    "removeComments": false,
-    // "noEmit": true,
-    "importHelpers": true,
-    // "downlevelIteration": true,
-    // "isolatedModules": true,
-
-    /* Strict Type-Checking Options */
-    "strict": true,
-    "noImplicitAny": false,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-
-    /* Additional Checks */
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    // "noUncheckedIndexedAccess": true,
-    // "noPropertyAccessFromIndexSignature": true,
-
-    /* Module Resolution Options */
-    "moduleResolution": "node",
-    "baseUrl": "./package",
-    // "paths": {},
-    // "rootDirs": [],
-    // "typeRoots": [],
-    // "types": [],
-    "allowSyntheticDefaultImports": true,
-    // "esModuleInterop": true,
-    // "preserveSymlinks": true,
-    // "allowUmdGlobalAccess": true,
-
-    /* Source Map Options */
-    "sourceMap": true,
-    // "sourceRoot": "",
-    // "mapRoot": "",
-    // "inlineSourceMap": true,
-    "inlineSources": true,
-
-    /* Experimental Options */
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-
-    /* Advanced Options */
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": false,
-
-    "plugins": [
-      {
-        "name": "ts-lit-plugin",
-        "strict": true
-      }
-    ]
   },
-
-  "include": ["*.ts"],
+  "files": [],
   "exclude": [],
-
   "references": [
-    {"path": "./packages/core/logger"},
-    {"path": "./packages/core/fetch"},
-    {"path": "./packages/core/signal"},
-    {"path": "./packages/core/router"},
-    {"path": "./packages/core/i18n"},
-    {"path": "./packages/core/math"},
-    {"path": "./packages/core/nano-server"},
-    {"path": "./packages/core/storage-engine"},
-    {"path": "./packages/core/storage-client"},
-    {"path": "./packages/core/token"},
-    {"path": "./packages/core/element"},
-    {"path": "./packages/lab/zx-example"},
-    {"path": "./packages/ui/icon"},
-    {"path": "./demo"}
+    // core
+    {"path": "./core/logger"},
+    {"path": "./core/fetch"},
+    {"path": "./core/signal"},
+    {"path": "./core/router"},
+    {"path": "./core/i18n"},
+    {"path": "./core/math"},
+    {"path": "./core/nano-server"},
+    {"path": "./core/storage-engine"},
+    {"path": "./core/storage-client"},
+    {"path": "./core/token"},
+
+    // ui
+    {"path": "./ui/element"},
+    {"path": "./ui/icon"},
+    {"path": "./ui/ui-kit"},
+
+    // demo
+    {"path": "./demo"},
+
+    // services
+    {"path": "./services/comment"},
+    {"path": "./services/starter"},
+    {"path": "./services/storage-server"},
+    {"path": "./services/telegram-notifier"},
+    {"path": "./services/flight-crawler"},
+
+    // uniquely
+    {"path": "./uniquely/flight-finder-api"},
+    {"path": "./uniquely/flight-finder-pwa"},
   ]
 }

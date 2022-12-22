@@ -1,0 +1,96 @@
+@apiUrl = http://127.0.0.1:9000
+@apiVersion = v0
+@token = YOUR_SECRET_TOKEN
+
+### Get a public storage over nginx serve
+# GET {{apiUrl}}/{{apiVersion}}/public/comments/page1.json
+
+### Get a document by storageName and docId
+GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=0
+Authorization: Bearer {{token}}
+
+### Insert document
+PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "auto_increment",
+  "from": "Ali Mihandoost",
+  "message": "سلام"
+}
+
+###
+PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "auto_increment",
+  "from": "Fateme Mihandoost",
+  "message": "علیک سلام"
+}
+
+### Edit document
+PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "0",
+  "from": "Ali Mihandoost",
+  "message": "Salam ;)"
+}
+
+### Check document exists by storageName and docId
+GET {{apiUrl}}/{{apiVersion}}/has?storage=comments/page1&id=0
+Authorization: Bearer {{token}}
+
+### Delete document
+DELETE {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=0
+Authorization: Bearer {{token}}
+
+### Get keys
+GET {{apiUrl}}/{{apiVersion}}/keys?storage=comments/page1
+Authorization: Bearer {{token}}
+
+### Get all data
+GET {{apiUrl}}/{{apiVersion}}/storage?name=comments/page1
+Authorization: Bearer {{token}}
+
+### === Test other routes and errors ===
+
+### Page Home
+GET {{apiUrl}}/{{apiVersion}}
+
+### Page health
+GET {{apiUrl}}/{{apiVersion}}/health
+
+### Get a document without token
+GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1/page1&id=0
+
+### Page 404 (wrong method)
+TRACE {{apiUrl}}/{{apiVersion}}
+
+### Document not exists
+GET {{apiUrl}}/{{apiVersion}}/has?storage=comments/page1&id=foo
+Authorization: Bearer {{token}}
+
+
+### Get a document by storageName without id
+GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+Authorization: Bearer {{token}}
+
+### empty body
+PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### invalid json
+PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id":
+}

@@ -1,0 +1,65 @@
+{
+  "name": "@alwatr/comment",
+  "version": "0.26.0",
+  "description": "Alwatr Comment API Microservice, Distributed simple and fast comment nanoservice base on @alwatr/storage-server",
+  "type": "module",
+  "keywords": [
+    "api",
+    "comment",
+    "chat",
+    "microservice",
+    "nanoservice",
+    "typescript",
+    "alwatr"
+  ],
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "contributors": [
+    "S. Amir Mohammad Najafi <njfamirm@gmail.com> (https://njfamirm.ir)"
+  ],
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=19.0.0",
+    "npm": ">=8.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "services/comment"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/services/comment#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "scripts": {
+    "b": "yarn build",
+    "c": "yarn clean",
+    "cb": "run-s clean build",
+    "s": "yarn start",
+    "w": "yarn watch",
+    "start": "NODE_OPTIONS=--enable-source-maps run-s clean build serve",
+    "build": "yarn build:es --analyze=verbose",
+    "build:ts": "tsc --build",
+    "build:es": "esbuild src/index.ts --platform=node --target=node19 --bundle --format=esm --minify --sourcemap --outdir=dist --out-extension:.js=.mjs",
+    "clean": "rimraf dist build .tsbuildinfo **/*.{d.ts,map} src/**/*.{js,cjs,mjs}",
+    "serve": "node --enable-source-maps dist/index.mjs",
+    "serve:debug": "node --inspect --enable-source-maps dist/index.mjs",
+    "watch": "run-s clean build && run-p watch:es watch:node",
+    "watch:node": "nodemon -w dist/ --enable-source-maps dist/index.mjs",
+    "watch:debug-node": "nodemon -w dist/ --inspect --enable-source-maps dist/index.mjs",
+    "watch:ts": "yarn build:ts --watch --preserveWatchOutput",
+    "watch:es": "yarn build:es --watch"
+  },
+  "devDependencies": {
+    "@alwatr/logger": "^0.26.0",
+    "@alwatr/nano-server": "^0.26.0",
+    "@alwatr/storage-client": "^0.26.0",
+    "@types/node": "~18.11.17",
+    "esbuild": "~0.16.10",
+    "nodemon": "~2.0.20",
+    "npm-run-all": "~4.1.5",
+    "rimraf": "~3.0.2",
+    "typescript": "~4.9.4"
+  }
+}

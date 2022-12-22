@@ -11,12 +11,17 @@
     "npm": ">=7.0.0"
   },
   "workspaces": [
-    "packages/*/*",
+    "core/*",
+    "services/*",
+    "ui/*",
+    "uniquely/*",
     "demo"
   ],
   "scripts": {
     "l": "yarn lint",
     "b": "yarn build",
+    "br": "run-s build:ts build:r",
+    "c": "yarn clean",
     "cb": "run-s clean build",
     "s": "run-s build serve",
     "w": "yarn watch",
@@ -27,12 +32,13 @@
     "pp": "run-s pull clean build ver-patch push",
     "lint": "run-s lint:*",
     "lint:ts": "eslint . --config .eslintrc.json --ext .ts --ignore-path .gitignore",
-    "build": "run-s build:ts && lerna run build",
+    "build": "yarn build:ts",
     "build:ts": "tsc --build",
+    "build:r": "lerna run build",
     "format": "run-s format:prettier format:eslint",
     "format:eslint": "yarn lint:ts --fix",
     "format:prettier": "prettier . --ignore-path .gitignore --write",
-    "clean": "yarn build:ts --clean && lerna run clean && rimraf \"{packages,demo}/**/*.{js,d.ts,map}\" \"{packages,demo}/**/.tsbuildinfo\" \"{packages,demo}/**/node_modules/\"",
+    "clean": "yarn build:ts --clean && lerna run clean",
     "serve": "wds",
     "watch": "run-p watch:* serve",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput",
@@ -44,23 +50,26 @@
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "~3.0.0",
-    "@typescript-eslint/eslint-plugin": "~5.45.1",
-    "@typescript-eslint/parser": "~5.45.1",
+    "@typescript-eslint/eslint-plugin": "~5.47.0",
+    "@typescript-eslint/parser": "~5.47.0",
     "@typescript/lib-dom": "npm:@types/web",
     "@web/dev-server": "~0.1.35",
     "@web/dev-server-esbuild": "~0.3.3",
-    "eslint": "~8.29.0",
+    "eslint": "~8.30.0",
     "eslint-config-google": "~0.14.0",
     "eslint-import-resolver-typescript": "~3.5.2",
     "eslint-plugin-import": "~2.26.0",
-    "eslint-plugin-lit": "~1.7.0",
+    "eslint-plugin-lit": "~1.7.2",
     "eslint-plugin-wc": "~1.4.0",
     "lerna": "~6.1.0",
     "lit-analyzer": "~1.2.1",
     "npm-run-all": "~4.1.5",
-    "prettier": "~2.8.0",
+    "prettier": "~2.8.1",
     "rimraf": "~3.0.2",
     "ts-lit-plugin": "~1.2.1",
-    "typescript": "~4.9.3"
+    "typescript": "~4.9.4"
+  },
+  "resolutions": {
+    "esbuild": "~0.16.4"
   }
 }

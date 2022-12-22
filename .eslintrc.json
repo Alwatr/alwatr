@@ -24,7 +24,8 @@
     "import/resolver": {
       "typescript": {
         "alwaysTryTypes": true,
-        "project": "packages/*/*/tsconfig.json"
+        "project": ["**/tsconfig.json"],
+        "projectFolderIgnoreList": ["**/node_modules/**"]
       }
     },
     "wc": {
@@ -52,6 +53,7 @@
       }
     ],
     "import/no-unresolved": "off",
+    "wc/guard-super-call": "off",
     "require-jsdoc": "off",
     "valid-jsdoc": "off"
   }
