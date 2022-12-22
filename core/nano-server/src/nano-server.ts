@@ -3,7 +3,7 @@ import {createServer} from 'node:http';
 import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
 
-import type {NanoServerConfig, ConnectionConfig, ParamKeyType, ParamValueType} from './type.js';
+import type {NanoServerConfig, ConnectionConfig, ParamKeyType, ParamValueType, MaybePromise} from './type.js';
 import type {
   AlwatrServiceResponse,
   AlwatrServiceResponseFailed,
@@ -15,6 +15,10 @@ import type {
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
+
+
+export type RouteMiddleware<TData = Record<string, unknown>, TMeta = Record<string, unknown>> =
+  (connection: AlwatrConnection) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>
 
 export {
   NanoServerConfig,
@@ -52,14 +56,13 @@ export class AlwatrNanoServer {
    * const nanoServer = new AlwatrNanoServer();
    *
    * nanoServer.route('GET', '/', async (connection) => {
-   * connection.reply({
    *   ok: true,
    *   data: {
    *    app: 'Alwatr Nanoservice Starter Kit',
    *    message: 'Hello ;)',
    *   },
-   *  });
-   * });
+   *  };
+   * );
    * ```
    */
   constructor(config?: Partial<NanoServerConfig>) {
@@ -134,20 +137,20 @@ export class AlwatrNanoServer {
    *
    * ```ts
    * nanoServer.route('GET', '/', async (connection) => {
-   * connection.reply({
+   * return {
    *   ok: true,
    *   data: {
    *    app: 'Alwatr Nanoservice Starter Kit',
    *    message: 'Hello ;)',
    *   },
    *  });
-   * });
+   * };
    * ```
    */
-  route(
+  route<TData = Record<string, unknown>, TMeta = Record<string, unknown>>(
       method: 'ALL' | Methods,
       route: 'all' | `/${string}`,
-      middleware: (connection: AlwatrConnection) => void,
+      middleware: RouteMiddleware<TData, TMeta>,
   ): void {
     this._logger.logMethodArgs('route', {method, route});
 
@@ -161,7 +164,80 @@ export class AlwatrNanoServer {
       throw new Error('route_already_exists');
     }
 
-    this.middlewareList[method][route] = middleware;
+    this.middlewareList[method][route] = <RouteMiddleware> middleware;
+  }
+
+  /**
+   * Responds to the request.
+   *
+   * Example:
+   * ```ts
+   * nanoServer.route('GET', '/', async (connection) => {
+   *   return {
+   *     ok: true,
+   *     data: {
+   *      app: 'Alwatr Nanoservice Starter Kit',
+   *      message: 'Hello ;)',
+   *     },
+   *    };
+   * });
+   * ```
+   */
+  reply(serverResponse: ServerResponse, content: AlwatrServiceResponse<unknown, unknown>): void {
+    content.statusCode ??= 200;
+    this._logger.logMethodArgs('reply', {ok: content.ok, statusCode: content.statusCode});
+
+    if (serverResponse.headersSent) {
+      this._logger.error('reply', 'http_header_sent', 'Response headers already sent');
+      if (content.ok === false) return; // prevent loop.
+      throw new Error('http_header_sent');
+    }
+
+    if (!this._logger.debug && !content.ok && content.meta) {
+      // clear debug info from client for security reasons.
+      delete content.meta;
+    }
+
+    let buffer: Buffer;
+
+    try {
+      buffer = Buffer.from(JSON.stringify(content), 'utf8');
+    }
+    catch (err) {
+      this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!', err);
+      return this.reply(
+          serverResponse,
+        content.ok === false
+          ? {
+            ok: false,
+            statusCode: content.statusCode,
+            errorCode: content.errorCode,
+          }
+          : {
+            ok: false,
+            statusCode: 500,
+            errorCode: 'data_stringify_failed',
+          },
+      );
+    }
+
+    const headers: Record<string, string | number> = {
+      'Content-Length': buffer.byteLength,
+      'Content-Type': 'application/json',
+      'Server': 'Alwatr NanoServer',
+    };
+
+    if (this._config.allowAllOrigin === true) {
+      headers['Access-Control-Allow-Origin'] = '*';
+    }
+
+    try {
+      serverResponse.writeHead(content.statusCode ?? 200, headers);
+      serverResponse.end(buffer, 'binary');
+    }
+    catch (err) {
+      this._logger.error('reply', 'reply_failed', err);
+    }
   }
 
   protected _errorListener(err: NodeJS.ErrnoException): void {
@@ -187,7 +263,7 @@ export class AlwatrNanoServer {
     socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
   }
 
-  protected _onHealthCheckRequest(connection: AlwatrConnection): void {
+  protected _onHealthCheckRequest(connection: AlwatrConnection): null {
     const body = 'ok';
     connection.serverResponse.writeHead(200, {
       'Content-Length': body.length,
@@ -195,19 +271,23 @@ export class AlwatrNanoServer {
       'Server': 'Alwatr NanoServer',
     });
     connection.serverResponse.end(body);
+
+    return null;
   }
 
-  protected _onHOptionRequest(connection: AlwatrConnection): void {
+  protected _onHOptionRequest(connection: AlwatrConnection): null {
     connection.serverResponse.writeHead(204, {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': '*',
       'Access-Control-Allow-Headers': '*',
     });
     connection.serverResponse.end();
+
+    return null;
   }
 
   // prettier-ignore
-  protected middlewareList: Record<string, Record<string, (connection: AlwatrConnection) => void | Promise<void>>> = {
+  protected middlewareList: Record<string, Record<string, RouteMiddleware>> = {
     ALL: {},
   };
 
@@ -235,45 +315,53 @@ export class AlwatrNanoServer {
       this.middlewareList[connection.method]?.[route] ||
       this.middlewareList.ALL[route] ||
       this.middlewareList[connection.method]?.all ||
-      this.middlewareList.ALL.all;
+      this.middlewareList.ALL.all ||
+      this._notFoundListener;
 
     try {
-      if (typeof middleware === 'function') {
-        await middleware(connection);
-      }
-      else {
-        this._notFoundListener(connection);
+      const content = await middleware(connection);
+      if (content !== null) {
+        this.reply(serverResponse, content);
       }
     }
-    catch (_err) {
-      const err = _err as Error;
-      this._logger.error('handleRequest', 'http_server_middleware_error', err, {
-        method: connection.method,
-        route,
-      });
-      connection.reply({
-        ok: false,
-        statusCode: 500,
-        errorCode: 'http_server_middleware_error',
-        meta: {
-          name: err?.name,
-          message: err?.message,
-          cause: err?.cause,
-        },
-      });
+    catch (errorObject) {
+      if (typeof errorObject === 'object' && errorObject != null && 'ok' in errorObject) {
+        this.reply(serverResponse, <AlwatrServiceResponse> errorObject);
+      }
+      else {
+        const err = errorObject as Error;
+        // 500 status code
+        this._logger.error('handleRequest', 'http_server_middleware_error', err, {
+          method: connection.method,
+          route,
+        });
+        this.reply(serverResponse, {
+          ok: false,
+          statusCode: 500,
+          errorCode: 'http_server_middleware_error',
+          meta: {
+            name: err?.name,
+            message: err?.message,
+            cause: err?.cause,
+          },
+        });
+      }
     }
   }
 
-  protected _notFoundListener = (connection: AlwatrConnection): void => {
-    connection.reply({
-      ok: false,
-      statusCode: 404,
-      errorCode: 'not_found',
-      meta: {
-        method: connection.method,
-        route: connection.url.pathname,
-      },
-    });
+  protected _notFoundListener = (connection: AlwatrConnection): AlwatrServiceResponseFailed => {
+    return (
+      connection.serverResponse,
+      {
+        ok: false,
+        statusCode: 404,
+        errorCode: 'not_found',
+        meta: {
+          method: connection.method,
+          route: connection.url.pathname,
+        },
+      }
+    );
   };
 }
 
@@ -304,81 +392,6 @@ export class AlwatrConnection {
     public config: ConnectionConfig,
   ) {
     this._logger.logMethodArgs('new', {method: incomingMessage.method, url: incomingMessage.url});
-  }
-
-  /**
-   * Responds to the request.
-   *
-   * Example:
-   * ```ts
-   * nanoServer.route('GET', '/', async (connection) => {
-   *   connection.reply({
-   *     ok: true,
-   *     data: {
-   *      app: 'Alwatr Nanoservice Starter Kit',
-   *      message: 'Hello ;)',
-   *     },
-   *    });
-   * });
-   * ```
-   */
-  reply(content: AlwatrServiceResponse): void {
-    content.statusCode ??= 200;
-
-    // this._logger.logMethodArgs('reply', content);
-    this._logger.logMethodArgs('reply', {ok: content.ok, statusCode: content.statusCode});
-
-    if (this.serverResponse.headersSent) {
-      this._logger.error('reply', 'http_header_sent', 'Response headers already sent');
-      if (content.ok === false) return; // prevent loop.
-      throw new Error('http_header_sent');
-    }
-
-    if (!this._logger.debug && !content.ok && content.meta) {
-      // clear debug info from client for security reasons.
-      delete content.meta;
-    }
-
-    let buffer: Buffer;
-
-    try {
-      buffer = Buffer.from(JSON.stringify(content), 'utf8');
-    }
-    catch (err) {
-      this._logger.accident('responseData', 'data_stringify_failed', 'JSON.stringify(data) failed!', err);
-      return this.reply(
-        content.ok === false
-          ? {
-            ok: false,
-            statusCode: content.statusCode,
-            errorCode: content.errorCode,
-          }
-          : {
-            ok: false,
-            statusCode: 500,
-            errorCode: 'data_stringify_failed',
-          },
-      );
-    }
-
-    const headers: Record<string, string | number> = {
-      'Content-Length': buffer.byteLength,
-      'Content-Type': 'application/json',
-      'Server': 'Alwatr NanoServer',
-    };
-
-    if (this.config.allowAllOrigin === true) {
-      headers['Access-Control-Allow-Origin'] = '*';
-    }
-
-    this.serverResponse.writeHead(content.statusCode ?? 200, headers);
-
-    this.serverResponse.write(buffer, 'binary', (error: NodeJS.ErrnoException | null | undefined) => {
-      if (error == null) return;
-      this._logger.error('reply', 'http_response_write_failed', 'reply failed', error);
-    });
-
-    this.serverResponse.end();
   }
 
   /**
@@ -427,41 +440,40 @@ export class AlwatrConnection {
    * Example:
    * ```ts
    * const bodyData = await connection.requireJsonBody();
-   * if (bodyData == null) return;
    * ```
    */
-  async requireJsonBody<T>(): Promise<T | null> {
+  async requireJsonBody<T>(): Promise<T> {
     // if request content type is json
     if (this.incomingMessage.headers['content-type'] !== 'application/json') {
-      this.reply({
+      // eslint-disable-next-line no-throw-literal
+      throw {
         ok: false,
         statusCode: 400,
-        errorCode: 'require_body_json',
-      });
-      return null;
+        errorCode: 'require_json_body',
+      };
     }
 
     const body = await this.getBody();
 
     if (body == null || body.length === 0) {
-      this.reply({
+      // eslint-disable-next-line no-throw-literal
+      throw {
         ok: false,
         statusCode: 400,
         errorCode: 'require_body',
-      });
-      return null;
+      };
     }
 
     try {
       return JSON.parse(body) as T;
     }
     catch (err) {
-      this.reply({
+      // eslint-disable-next-line no-throw-literal
+      throw {
         ok: false,
         statusCode: 400,
         errorCode: 'invalid_json',
-      });
-      return null;
+      };
     }
   }
 
@@ -476,16 +488,16 @@ export class AlwatrConnection {
    * if (token == null) return;
    * ```
    */
-  requireToken(validator?: ((token: string) => boolean) | Array<string> | string): string | null {
+  requireToken(validator?: ((token: string) => boolean) | Array<string> | string): string {
     const token = this.getToken();
 
     if (token == null) {
-      this.reply({
+      // eslint-disable-next-line no-throw-literal
+      throw {
         ok: false,
         statusCode: 401,
         errorCode: 'authorization_required',
-      });
-      return null;
+      };
     }
     else if (validator === undefined) {
       return token;
@@ -499,12 +511,12 @@ export class AlwatrConnection {
     else if (typeof validator === 'function') {
       if (validator(token) === true) return token;
     }
-    this.reply({
+    // eslint-disable-next-line no-throw-literal
+    throw {
       ok: false,
       statusCode: 403,
       errorCode: 'access_denied',
-    });
-    return null;
+    };
   }
 
   /**
@@ -548,11 +560,10 @@ export class AlwatrConnection {
    * Example:
    * ```ts
    * const params = connection.requireQueryParams<{id: string}>({id: 'string'});
-   * if (params == null) return;
    * console.log(params.id);
    * ```
    */
-  requireQueryParams<T extends QueryParameters = QueryParameters>(params: Record<string, ParamKeyType>): T | null {
+  requireQueryParams<T extends QueryParameters = QueryParameters>(params: Record<string, ParamKeyType>): T {
     const parsedParams: Record<string, ParamValueType> = {};
 
     for (const paramName in params) {
@@ -560,7 +571,8 @@ export class AlwatrConnection {
       const paramType = params[paramName];
       const paramValue = (parsedParams[paramName] = this._sanitizeParam(paramName, paramType));
       if (paramValue == null) {
-        this.reply({
+        // eslint-disable-next-line no-throw-literal
+        throw {
           ok: false,
           statusCode: 406,
           errorCode: 'query_parameter_required',
@@ -569,8 +581,7 @@ export class AlwatrConnection {
             paramType,
             paramValue,
           },
-        });
-        return null;
+        };
       }
     }
 

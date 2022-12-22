@@ -2,23 +2,22 @@ import {sendMessage} from '../bot/send-message.js';
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 
-import type {AlwatrConnection} from '@alwatr/nano-server';
+import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 
 // Send message to admin
 nanoServer.route('POST', '/', notify);
 
-async function notify(connection: AlwatrConnection): Promise<void> {
+async function notify(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('notify');
 
-  if (connection.requireToken(config.nanoServer.accessToken) == null) return;
+  connection.requireToken(config.nanoServer.accessToken);
 
   const bodyJson = await connection.requireJsonBody<{to: string; message: string}>();
-  if (bodyJson == null) return;
 
   await sendMessage(bodyJson.to, bodyJson.message);
 
-  connection.reply({
+  return {
     ok: true,
     data: {},
-  });
+  };
 }
