@@ -26,9 +26,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "ui-kit/element"
+    "directory": "ui/element"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui-kit/element#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui/element#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

@@ -17,6 +17,6 @@
   "exclude": [],
   "references": [
     {"path": "../../core/logger"},
-    {"path": "../../core/element"},
+    {"path": "../../ui/element"},
   ]
 }
