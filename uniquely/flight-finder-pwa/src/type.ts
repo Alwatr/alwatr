@@ -16,8 +16,6 @@ declare global {
   }
 }
 
-export type dayParts = 'earlyMorning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
-
 export interface Job extends AlwatrDocumentObject {
   detail: JobDetail;
   resultList: Array<JobResult>;
@@ -29,7 +27,8 @@ export interface JobDetail {
   date: string;
   seatCount: number;
   maxPrice: number | null;
-  dayPart: Array<dayParts>;
+  minHour: number | null;
+  maxHour: number | null;
   description: string;
 }
 
