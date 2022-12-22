@@ -99,7 +99,7 @@ export class JobAddForm extends AlwatrElement {
                 <ion-label position="floating">${l10n.localize('origin')}</ion-label>
                 <ion-select
                   name="origin"
-                  ok-text="${l10n.localize('confirm')}l"
+                  ok-text="${l10n.localize('confirm')}"
                   cancel-text=${l10n.localize('cancel')}
                   @ionChange=${this.__inputChanged}
                 >

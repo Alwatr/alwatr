@@ -3,21 +3,18 @@ import {nanoServer} from '../lib/nano-server.js';
 import {storageClient} from '../lib/storage.js';
 import {Message} from '../lib/type.js';
 
-import type {AlwatrConnection} from '@alwatr/nano-server';
+import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 
 nanoServer.route('PATCH', '/', setComment);
 
-async function setComment(connection: AlwatrConnection): Promise<void> {
+async function setComment(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('setComment');
 
-  const token = connection.requireToken(config.nanoServer.accessToken);
-  if (token == null) return;
+  connection.requireToken(config.nanoServer.accessToken);
 
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
-  if (params == null) return;
 
   const bodyJson = await connection.requireJsonBody<Message>();
-  if (bodyJson == null) return;
 
   bodyJson.id ??= 'auto_increment';
 
@@ -27,15 +24,15 @@ async function setComment(connection: AlwatrConnection): Promise<void> {
   // }
 
   try {
-    connection.reply({
+    return {
       ok: true,
       data: await storageClient.set(bodyJson, params.storage),
-    });
+    };
   }
   catch (_err) {
     const err = _err as Error;
     logger.error('setComment', err.message || 'storage_error', err);
-    connection.reply({
+    return {
       ok: false,
       statusCode: 500,
       errorCode: 'storage_error',
@@ -44,6 +41,6 @@ async function setComment(connection: AlwatrConnection): Promise<void> {
         message: err.message,
         cause: err.cause,
       },
-    });
+    };
   }
 }
