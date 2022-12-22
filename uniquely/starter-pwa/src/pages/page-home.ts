@@ -166,15 +166,11 @@ export class PageHome extends AlwatrElement {
 
   override render(): TemplateResult {
     const messages = [
-      this.__renderMessage('https://picsum.photos/200/200?random=1', 'لورم ایپسوم متن '),
-      this.__renderMessage('https://picsum.photos/200/200?random=2', 'لورم ایپسوم متن ساختگی با تولید سادگی '),
-      this.__renderMessage('https://picsum.photos/200/200?random=3', 'لورم ایپسوم متن ساختگی با '),
-      this.__renderMessage(
-        'https://picsum.photos/200/200?random=4',
-        'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت ',
-        'end'
-      ),
-      this.__renderMessage('https://picsum.photos/200/200?random=5', 'لورم ایپسوم متن ساختگی با تولید سادگی '),
+      this.__renderMessage('لورم ایپسوم متن '),
+      this.__renderMessage('لورم ایپسوم متن ساختگی با تولید سادگی '),
+      this.__renderMessage('لورم ایپسوم متن ساختگی با '),
+      this.__renderMessage('لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت ', true),
+      this.__renderMessage('لورم ایپسوم متن ساختگی با تولید سادگی '),
     ];
     return html`
       <section class="chat-main">
@@ -199,15 +195,8 @@ export class PageHome extends AlwatrElement {
     `;
   }
 
-  private __renderMessage(avatarSource: string, message: string, side: 'start' | 'end' = 'start'): TemplateResult {
-    return html`
-      <div class="chat-message ${side + '-side'}">
-        <div class="chat-message__avatar">
-          <alwatr-avatar .src=${avatarSource}></alwatr-avatar>
-        </div>
-        <alwatr-message-bubble side=${side} .message=${message}></alwatr-message-bubble>
-      </div>
-    `;
+  private __renderMessage(message: string, endSide = false): TemplateResult {
+    return html` <alwatr-chat-message .message=${message} ?endSide=${endSide}></alwatr-chat-message> `;
   }
 
   private __inputChange(event: InputEvent): void {
