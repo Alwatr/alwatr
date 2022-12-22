@@ -1,4 +1,4 @@
-import type {AlwatrDocumentObject} from '@alwatr/fetch';
+import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/fetch/type.js';
 import type {ToastOptions} from '@ionic/core';
 
 declare global {
@@ -8,11 +8,11 @@ declare global {
   interface AlwatrSignals {
     readonly 'job-add': Pick<Job, 'detail'>;
     readonly 'job-delete': string;
-    readonly 'job-list': Array<Job>;
+    readonly 'job-document-storage': AlwatrDocumentStorage<Job>;
     readonly toast: Partial<ToastOptions> & {message: string};
   }
   interface AlwatrRequestSignals {
-    readonly 'job-list': null;
+    readonly 'job-document-storage': null;
   }
 }
 
@@ -42,8 +42,8 @@ export type JobResult = {
   price: number;
   time: string;
   seatCount: number;
-  airline: string,
-  airplane: string,
-  flightId: string,
-  arrivalTime: string,
+  airline: string;
+  airplane: string;
+  flightId: string;
+  arrivalTime: string;
 };
