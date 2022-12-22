@@ -16,8 +16,8 @@
   "browserslist": "> 0.1%, not dead",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AliMD/flight-finder",
-    "directory": "pwa"
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "uniquely/starter-pwa"
   },
   "scripts": {
     "b": "yarn build",

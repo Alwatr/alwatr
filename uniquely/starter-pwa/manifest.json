@@ -4,8 +4,8 @@
   "description": "Alwatr PWA Starter",
   "start_url": "/?pwa",
   "display": "standalone",
-  "theme_color": "#000",
-  "background_color": "#000",
+  "theme_color": "#673ab7",
+  "background_color": "#673ab7",
   "orientation": "portrait",
   "default_locale": "en",
   "icons": [
