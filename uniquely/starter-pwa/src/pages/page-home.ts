@@ -5,6 +5,7 @@ import {customElement} from 'lit/decorators.js';
 
 import '@alwatr/icon';
 
+import '../components/alwatr-chat-message';
 import '../components/alwatr-bubbles';
 import '../components/alwatr-avatar';
 
