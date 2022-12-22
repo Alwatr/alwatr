@@ -21,9 +21,10 @@
     {"path": "./core/storage-client"},
     {"path": "./core/token"},
 
-    // ui-kit
-    {"path": "./ui-kit/element"},
-    {"path": "./ui-kit/icon"},
+    // ui
+    {"path": "./ui/element"},
+    {"path": "./ui/icon"},
+    {"path": "./ui/ui-kit"},
 
     // demo
     {"path": "./demo"},
