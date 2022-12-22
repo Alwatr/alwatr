@@ -8,8 +8,8 @@ import type {PropertyValues} from 'lit';
 
 export * from 'lit';
 export * from 'lit/decorators.js';
-export * from 'lit/directive.js';
 export {map} from 'lit/directives/map.js';
+export {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 
 alwatrRegisteredList.push({
   name: '@alwatr/element',
