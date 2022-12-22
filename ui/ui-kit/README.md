@@ -1,5 +1,5 @@
-# Alwatr Element - `@alwatr/element`
+# Alwatr UI-Kit - `@alwatr/ui-kit`
 
-Elegant powerful web component (lit-element) helper mixins written in tiny TypeScript module.
+Alwatr UI Elements Kit.
 
 <!-- @TODO: ## Example usage -->
