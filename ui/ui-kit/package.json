@@ -2,6 +2,7 @@
   "name": "@alwatr/ui-kit",
   "version": "0.0.0",
   "description": "Alwatr UI Elements Kit",
+  "private": true,
   "keywords": [
     "element",
     "ui-kit",
@@ -36,8 +37,6 @@
   "dependencies": {
     "@alwatr/logger": "~0.25.0",
     "@alwatr/element": "~0.25.0",
-    "@alwatr/signal": "~0.25.0",
-    "lit": "~2.5.0",
     "tslib": "~2.4.1"
   }
 }
