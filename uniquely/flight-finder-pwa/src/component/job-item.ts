@@ -79,6 +79,11 @@ export class JobItem extends AlwatrElement {
       .job .job__subtitle .job__subtitle-price {
         color: var(--ion-color-base);
       }
+
+      ion-item-options {
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+      }
     `,
   ];
 

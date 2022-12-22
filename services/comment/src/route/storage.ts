@@ -2,26 +2,24 @@ import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageClient} from '../lib/storage.js';
 
-import type {AlwatrConnection} from '@alwatr/nano-server';
+import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 
 nanoServer.route('GET', '/storage', getStorage);
 
-async function getStorage(connection: AlwatrConnection): Promise<void> {
+async function getStorage(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('getStorage');
 
-  const token = connection.requireToken(config.nanoServer.accessToken);
-  if (token == null) return;
+  connection.requireToken(config.nanoServer.accessToken);
 
   const params = connection.requireQueryParams<{name: string}>({name: 'string'});
-  if (params == null) return;
 
   try {
-    connection.reply(await storageClient.getStorage(params.name));
+    return await storageClient.getStorage(params.name);
   }
   catch (_err) {
     const err = _err as Error;
     logger.error('getStorage', err.message || 'storage_error', err);
-    connection.reply({
+    return {
       ok: false,
       statusCode: 500,
       errorCode: 'storage_error',
@@ -30,6 +28,6 @@ async function getStorage(connection: AlwatrConnection): Promise<void> {
         message: err.message,
         cause: err.cause,
       },
-    });
+    };
   }
 }
