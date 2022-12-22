@@ -5,7 +5,7 @@ import {customElement} from 'lit/decorators.js';
 
 import '@alwatr/icon';
 
-import '../components/alwatr-bubbles';
+import '../components/alwatr-message-bubble';
 
 import type {TemplateResult} from 'lit';
 
