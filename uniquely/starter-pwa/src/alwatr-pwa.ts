@@ -28,6 +28,10 @@ export class AlwatrPWA extends AlwatrElement {
         flex-shrink: 1;
         flex-basis: 0%;
         contain: size layout style;
+        height: 100%;
+      }
+      * {
+        box-sizing: border-box;
       }
     `,
   ];
@@ -36,9 +40,9 @@ export class AlwatrPWA extends AlwatrElement {
     super();
 
     l10n.config.defaultLocale = {
-      code: 'en-US',
-      direction: 'ltr',
-      language: 'en',
+      code: 'fa-IR',
+      direction: 'rtl',
+      language: 'fa',
     };
     l10n.setLocal();
 
