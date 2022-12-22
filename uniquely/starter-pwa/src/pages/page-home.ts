@@ -5,6 +5,8 @@ import {customElement} from 'lit/decorators.js';
 
 import '@alwatr/icon';
 
+import '../components/alwatr-bubbles';
+
 import type {TemplateResult} from 'lit';
 
 declare global {
@@ -63,13 +65,6 @@ export class PageHome extends AlwatrElement {
         width: 100%;
         height: 100%;
       }
-      .chat-message__text {
-        display: flex;
-        background-color: #fff;
-        font-size: 14px;
-        color: var(--text-primary-color);
-        padding: 1em 0.85em;
-      }
 
       .chat-message.start-side {
         justify-content: start;
@@ -77,9 +72,8 @@ export class PageHome extends AlwatrElement {
       .chat-message.start-side .chat-message__avatar {
         order: 1;
       }
-      .chat-message.start-side .chat-message__text {
+      .chat-message.start-side alwatr-message-bubble {
         order: 2;
-        border-radius: 1.5em 1.5em 0.5em 1.5em;
       }
 
       .chat-message.end-side {
@@ -88,9 +82,8 @@ export class PageHome extends AlwatrElement {
       .chat-message.end-side .chat-message__avatar {
         order: 2;
       }
-      .chat-message.end-side .chat-message__text {
+      .chat-message.end-side alwatr-message-bubble {
         order: 1;
-        border-radius: 1.5em 1.5em 1.5em 0.5em;
       }
 
       .chat-footer {
@@ -214,7 +207,7 @@ export class PageHome extends AlwatrElement {
         <div class="chat-message__avatar">
           <img src=${avatarSource} />
         </div>
-        <div class="chat-message__text">${message}</div>
+        <alwatr-message-bubble side=${side} .message=${message}></alwatr-message-bubble>
       </div>
     `;
   }
