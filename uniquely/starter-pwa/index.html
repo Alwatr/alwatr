@@ -53,11 +53,36 @@
     <meta name="msapplication-TileImage" content="image/icon-192.png" />
     <meta name="msapplication-TileColor" content="#673ab7" />
     <meta name="msapplication-tap-highlight" content="no" />
+
+    <style>
+      :root {
+        --primary-color: #ffd8e4;
+        --secondary-color: #eae3f1;
+        --tertiary-color: #f4eff4;
+        --background-color: #f7f2f9;
+
+        --text-primary-color: #39373e;
+        --text-secondary-color: #616362;
+      }
+    </style>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      html {
+        height: 100%;
+      }
+      body {
+        min-height: 100%;
+        height: 100%;
+        background-color: var(--background-color);
+      }
+    </style>
   </head>
   <body>
-    <ion-app>
-      <alwatr-pwa class="ion-page"></alwatr-pwa>
-    </ion-app>
+    <alwatr-pwa class="ion-page"></alwatr-pwa>
 
     <script type="module" src="build/alwatr-pwa.js"></script>
 

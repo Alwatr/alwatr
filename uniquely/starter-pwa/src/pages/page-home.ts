@@ -117,7 +117,7 @@ export class PageHome extends AlwatrElement {
         min-height: 46px;
 
         border: none;
-        color: var(--text-scondary-color);
+        color: var(--text-secondary-color);
         background-color: #0000;
         border-radius: 27px;
         transition: background-color 300ms ease;
