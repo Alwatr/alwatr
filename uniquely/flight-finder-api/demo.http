@@ -21,7 +21,10 @@ Content-Type: application/json
     "date": "1401/09/10",
     "seatCount": 1,
     "maxPrice": null,
+    "minHour": null,
+    "maxHour": null,
     "description": "Test!"
+
   }
 }
 
