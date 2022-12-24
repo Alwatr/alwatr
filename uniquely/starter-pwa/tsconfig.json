@@ -1,0 +1,25 @@
+{
+  "extends": "../../tsconfig.base",
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "rootDir": "src",
+    "outDir": "build",
+    "plugins": [
+      {
+        "name": "ts-lit-plugin",
+        "strict": true
+      }
+    ],
+  },
+
+  "include": ["src/**/*.ts"],
+  "exclude": [],
+  "references": [
+    {"path": "../../ui/element"},
+    {"path": "../../ui/icon"},
+    {"path": "../../core/i18n"},
+    {"path": "../../core/logger"},
+    {"path": "../../core/router"},
+  ]
+}
