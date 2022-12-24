@@ -1,4 +1,4 @@
-import {AlwatrElement, customElement, property} from '@alwatr/element';
+import {AlwatrElement, customElement, property, when, query} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {css, html, nothing} from 'lit';
@@ -87,6 +87,7 @@ export class JobItem extends AlwatrElement {
   ];
 
   @property({attribute: false, type: Object}) job?: Job;
+  @query('ion-item-sliding') private __ionItemSliding?: HTMLElement;
 
   static jobDeleteSignal = new SignalInterface('job-delete');
 
@@ -102,14 +103,11 @@ export class JobItem extends AlwatrElement {
     if (this.job == null || this.job.detail == null) return nothing;
 
     return html`
-      <ion-item-sliding>
+      <ion-item-sliding @dblclick=${this.__openSliding}>
         <ion-item class="job" lines="full">
           <ion-label>
             ${this.__renderTitle(cityList[this.job.detail.origin], cityList[this.job.detail.destination])}
-            ${this.__renderSubtitle(
-      this.job.detail.date,
-      this.job.detail.dayPart.map((part) => l10n.localize(part)).join(' - '),
-  )}
+            ${this.__renderSubtitle(this.job.detail.date, this.job.detail.minHour, this.job.detail.maxHour)}
             ${this.__renderDescription(this.job.detail.description)}
           </ion-label>
           <ion-label slot="end"> ${this.__renderFoundList(this.job.resultList)} </ion-label>
@@ -120,6 +118,7 @@ export class JobItem extends AlwatrElement {
             <alwatr-icon slot="icon-only" name="close-outline"></alwatr-icon>
           </ion-item-option>
         </ion-item-options>
+        <ion-item-options side="end"> </ion-item-options>
       </ion-item-sliding>
     `;
   }
@@ -138,12 +137,19 @@ export class JobItem extends AlwatrElement {
       </div>
     `;
   }
-  private __renderSubtitle(date: string, time: string): TemplateResult {
+  private __renderSubtitle(date: string, minHour: number | null, maxHour: number | null): TemplateResult {
     return html`
       <div class="job__subtitle">
         <span>${date}</span>
-        <span>${time}</span>
       </div>
+      ${when(
+      minHour != null && maxHour != null,
+      () => html`
+          <div class="job__subtitle">
+            <span> از ${minHour} تا ${maxHour} </span>
+          </div>
+        `,
+  )}
     `;
   }
   private __renderFoundList(resultList: Array<JobResult>): TemplateResult {
@@ -175,5 +181,17 @@ export class JobItem extends AlwatrElement {
     }
 
     JobItem.jobDeleteSignal.dispatch(this.job.id);
+  }
+  private async __openSliding(): Promise<void> {
+    if (this.__ionItemSliding == null) return;
+
+    const itemSliding = this.__ionItemSliding as HTMLIonItemSlidingElement;
+
+    if ((await itemSliding.getSlidingRatio()) > 0) {
+      await itemSliding.closeOpened();
+    }
+    else {
+      await itemSliding.open('start');
+    }
   }
 }

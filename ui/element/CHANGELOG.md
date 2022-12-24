@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/AliMD/alwatr/compare/v0.25.0...v0.26.0) (2022-12-22)
+
+### Bug Fixes
+
+- **ui/\*:** package path in refrences ([841d86d](https://github.com/AliMD/alwatr/commit/841d86dc2555fdc86a950b490ea2eb9fffe4df2d))
+
 # [0.25.0](https://github.com/AliMD/alwatr/compare/v0.24.1...v0.25.0) (2022-12-07)
 
 **Note:** Version bump only for package @alwatr/element

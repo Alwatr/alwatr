@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/router",
-  "version": "0.25.0",
+  "version": "0.26.0",
   "description": "Elegant powerful router (fundamental advance browser page routing) based on the simplicity of the signals written in tiny TypeScript module.",
   "keywords": [
     "router",
@@ -32,8 +32,8 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "~0.25.0",
-    "@alwatr/signal": "~0.25.0",
+    "@alwatr/logger": "^0.26.0",
+    "@alwatr/signal": "^0.26.0",
     "tslib": "~2.4.1"
   }
 }
