@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@alwatr/math@~0.26.0":
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/math/-/math-0.26.0.tgz#924cb6c0f0ada5929b96cf718d4b6238ceab6446"
+  integrity sha512-iP8GJErkWw4Yh/GAX1yUOM5jB+Jw6aSAVzGRgsurdwqIfeZVSkvgB5VCSU2ZR0t2OWju2OEUvPfEwV2cIbdLsw==
+  dependencies:
+    tslib "~2.4.1"
+
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
