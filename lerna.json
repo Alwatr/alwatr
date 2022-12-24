@@ -1,13 +1,8 @@
 {
-  "version": "0.25.0",
+  "version": "0.26.0",
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "package": [
-    "core/*",
-    "services/*",
-    "ui/*",
-    "demo"
-  ],
+  "package": ["core/*", "services/*", "ui/*", "demo"],
   "command": {
     "version": {
       "conventionalCommits": true,
