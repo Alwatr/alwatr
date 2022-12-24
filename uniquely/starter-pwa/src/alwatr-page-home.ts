@@ -9,12 +9,15 @@ import type {TemplateResult} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'page-home': PageHome;
+    'page-home': AlwatrDemoHome;
   }
 }
 
-@customElement('page-home')
-export class PageHome extends AlwatrElement {
+/**
+ * Alwatr Demo Home Page
+ */
+@customElement('alwatr-page-home')
+export class AlwatrDemoHome extends AlwatrElement {
   static override styles = [
     css`
       :host {
@@ -27,6 +30,7 @@ export class PageHome extends AlwatrElement {
   override connectedCallback(): void {
     super.connectedCallback();
 
+    // TODO: this._signalListenerList.push
     l10n.resourceChangeSignal.addListener(() => {
       this.requestUpdate();
     });
