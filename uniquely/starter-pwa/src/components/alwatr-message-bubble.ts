@@ -29,7 +29,7 @@ export class AlwatrMessageBubble extends AlwatrElement {
   ];
 
   @property({attribute: false}) message?: string;
-  @property({reflect: true, state: false}) endSide = false;
+  @property({reflect: true, state: false, type: Boolean}) endSide = false;
 
   override render(): TemplateResult | typeof nothing {
     return html` ${this.message?.trim()} `;
