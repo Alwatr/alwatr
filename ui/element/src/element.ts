@@ -10,6 +10,7 @@ export * from 'lit';
 export * from 'lit/decorators.js';
 export {map} from 'lit/directives/map.js';
 export {unsafeSVG} from 'lit/directives/unsafe-svg.js';
+export {when} from 'lit/directives/when.js';
 
 alwatrRegisteredList.push({
   name: '@alwatr/element',
