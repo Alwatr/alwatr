@@ -33,6 +33,6 @@
   },
   "dependencies": {
     "tslib": "~2.4.1",
-    "@alwatr/validator": "~0.26.0"
+    "@alwatr/math": "~0.26.0"
   }
 }
