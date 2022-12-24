@@ -1,22 +1,24 @@
 {
-  "name": "@alwatr/nano-server",
+  "name": "@alwatr/ui-kit",
   "version": "0.26.0",
-  "description": "Elegant powerful nodejs server for nanoservice use cases, written in tiny TypeScript module.",
+  "description": "Alwatr UI Elements Kit",
+  "private": true,
   "keywords": [
-    "server",
-    "nanoservice",
-    "api",
+    "element",
+    "ui-kit",
+    "ui",
+    "lit",
+    "lit-element",
+    "web-component",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "nano-server.js",
   "type": "module",
-  "types": "nano-server.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
-    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
+    "**/**/*.{d.ts.map,d.ts,js.map,js,md}"
   ],
   "publishConfig": {
     "access": "public"
@@ -24,16 +26,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "core/nano-server"
+    "directory": "ui/ui-kit"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/core/nano-server#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui/ui-kit#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/fetch": "^0.26.0",
+    "@alwatr/element": "^0.26.0",
     "@alwatr/logger": "^0.26.0",
-    "@alwatr/math": "^0.26.0",
     "tslib": "~2.4.1"
   }
 }
