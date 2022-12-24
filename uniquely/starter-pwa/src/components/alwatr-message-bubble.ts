@@ -20,6 +20,7 @@ export class AlwatrMessageBubble extends AlwatrElement {
         font-size: 14px;
         color: var(--text-primary-color);
         padding: 1em 0.85em;
+        border-radius: 1.5em 1.5em 0.5em 1.5em;
       }
 
       :host([endSide]) {
