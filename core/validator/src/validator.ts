@@ -24,7 +24,7 @@ function validator<DataType extends Record<string, unknown>>(value: Record<strin
         throw new Error('invalid_type', {
           cause: {
             name: 'boolean_validator',
-            message: `'${validValue}' not valid`,
+            message: JSON.stringify(value),
           },
         });
       }
@@ -37,7 +37,7 @@ function validator<DataType extends Record<string, unknown>>(value: Record<strin
         throw new Error('invalid_type', {
           cause: {
             name: 'number_validator',
-            message: `'${validValue}' not valid`,
+            message: JSON.stringify(value),
           },
         });
       }
