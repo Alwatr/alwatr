@@ -18,12 +18,29 @@ export class AlwatrChatMessage extends AlwatrElement {
         display: flex;
         align-items: end;
         gap: 0.75em;
+        justify-content: start;
+      }
+      alwatr-avatar {
+        order: 1;
+      }
+      alwatr-message-bubble {
+        order: 2;
+      }
+
+      :host([endSide]) {
+        justify-content: end;
+      }
+      :host([endSide]) alwatr-avatar {
+        order: 2;
+      }
+      :host([endSide]) alwatr-message-bubble {
+        order: 1;
       }
     `,
   ];
 
   @property({attribute: false}) message?: string;
-  @property({reflect: true}) endSide = false;
+  @property({reflect: true, type: Boolean}) endSide = false;
 
   override render(): TemplateResult {
     return html`
