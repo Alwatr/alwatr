@@ -20,6 +20,8 @@
     {"path": "../core/math"},
     {"path": "../ui/icon"},
     {"path": "../core/storage-engine"},
+    {"path": "../core/storage-client"},
+    {"path": "../core/token"},
     {"path": "../core/validator"}
   ]
 }
