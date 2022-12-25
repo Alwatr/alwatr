@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/AliMD/alwatr/compare/v0.25.0...v0.26.0) (2022-12-22)
+
+### Bug Fixes
+
+- all import without .js ([fa739ab](https://github.com/AliMD/alwatr/commit/fa739ab23f67bae1d10bfcc146920b71377a26fc))
+- **core/fetch:** tsconfig refrences ([e6b9542](https://github.com/AliMD/alwatr/commit/e6b9542284e67b67600da4dcebd19daedb031c9c))
+- **fetch:** always call revalidateCallback ([444edc5](https://github.com/AliMD/alwatr/commit/444edc52b6dd5de5418ae8630e1f2270f0114372))
+- **fetch:** enhance handle and report errors in serviceRequest ([dbfc7ff](https://github.com/AliMD/alwatr/commit/dbfc7ff2a036216498dc8e2ff58b74b7eb8d9bc0))
+- **fetch:** fetch_cache_not_found is not error ([3d1aa4e](https://github.com/AliMD/alwatr/commit/3d1aa4e572fbf4bc7b0a527a3fdcf4c521af18dd))
+- **fetch:** fetch_failed error message ([3e98bd9](https://github.com/AliMD/alwatr/commit/3e98bd926a495c13d476f2f1cfb9e546a059d4d8))
+- **fetch:** remove extra \_options ([ad24c81](https://github.com/AliMD/alwatr/commit/ad24c8104b944ebda52308e60d41976ac1eeee81))
+- **fetch:** revalidateCallback issue ([7207909](https://github.com/AliMD/alwatr/commit/72079098edb438c28256dad03d7802bc2fab0858))
+- set correct path ([d01ce6f](https://github.com/AliMD/alwatr/commit/d01ce6ffa749a5e3e0e11e35b4ed61d75d61fec9))
+- **storage-engine:** AlwatrDocumentStorage ([ca9a7bf](https://github.com/AliMD/alwatr/commit/ca9a7bf5e17b333538e749ada5d481a06c847101))
+- tsconfig ([e96dcd3](https://github.com/AliMD/alwatr/commit/e96dcd30774a9f06f7d051e0504192cbbe019e35))
+- tsconfig refrences ([cea0562](https://github.com/AliMD/alwatr/commit/cea05621ecfa499476c5b10a412e60f27ba6a06d))
+
+### Features
+
+- **fetch:** add AlwatrDocumentStorage type ([44b84f0](https://github.com/AliMD/alwatr/commit/44b84f0754169a707472655811020f6e542a6e5d))
+- **fetch:** serviceRequest ([b0b5478](https://github.com/AliMD/alwatr/commit/b0b5478d16b2cb590cfc29d644006e4a459dd6d6))
+- **fetch:** serviceRequest ([#513](https://github.com/AliMD/alwatr/issues/513)) ([113ee49](https://github.com/AliMD/alwatr/commit/113ee498c778d9efc00cc4807bfef09e52336a31))
+- improve accident debugging ([d697e6c](https://github.com/AliMD/alwatr/commit/d697e6c4c7d0a4172f4dba9caf6fbd478f79de9c))
+- improve error debugging ([1fba504](https://github.com/AliMD/alwatr/commit/1fba50400a1e8ececc10bbe8ea11cc8dcea2289c))
+
 # [0.25.0](https://github.com/AliMD/alwatr/compare/v0.24.1...v0.25.0) (2022-12-07)
 
 **Note:** Version bump only for package @alwatr/fetch

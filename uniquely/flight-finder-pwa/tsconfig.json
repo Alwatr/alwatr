@@ -16,9 +16,8 @@
   "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
-    {"path": "../../ui-kit/element"},
-
-    {"path": "../../ui-kit/icon"},
+    {"path": "../../ui/element"},
+    {"path": "../../ui/icon"},
     {"path": "../../core/fetch"},
     {"path": "../../core/i18n"},
     {"path": "../../core/logger"},

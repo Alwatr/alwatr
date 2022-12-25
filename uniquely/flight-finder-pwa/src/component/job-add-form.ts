@@ -1,8 +1,6 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrElement, customElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
-import {css, html} from 'lit';
-import {customElement} from 'lit/decorators.js';
 
 import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
@@ -10,17 +8,15 @@ import ionTheming from '../style/ionic.theming.js';
 
 import './ionic-components';
 
-import type {dayParts, NewJobDetail} from '../type.js';
+import type {NewJobDetail} from '../type.js';
+import type {TemplateResult} from '@alwatr/element';
 import type {InputCustomEvent, SelectCustomEvent} from '@ionic/core';
-import type {TemplateResult} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
     'job-add-form': JobAddForm;
   }
 }
-
-const dayPartList: NewJobDetail['dayPart'] = ['earlyMorning', 'morning', 'midday', 'afternoon', 'evening', 'night'];
 
 @customElement('job-add-form')
 export class JobAddForm extends AlwatrElement {
@@ -69,6 +65,9 @@ export class JobAddForm extends AlwatrElement {
     const month = new Date(0, monthNumber + 3).toLocaleDateString('fa-IR', {month: 'long'});
 
     return html`<ion-select-option value=${++monthNumber}>${month}</ion-select-option>`;
+  });
+  static hourListTemplate = Array.from(Array(24).keys()).map((hourNumber) => {
+    return html` <ion-select-option value=${hourNumber}> ${hourNumber.toLocaleString('fa-IR')} </ion-select-option> `;
   });
   private __newJob: Partial<NewJobDetail> = {
     seatCount: 1,
@@ -147,18 +146,20 @@ export class JobAddForm extends AlwatrElement {
                 ${JobAddForm.seatListTemplate}
               </ion-select>
             </ion-item>
-            <ion-item fill="solid">
-              <ion-label position="floating">${l10n.localize('day_part')}</ion-label>
-              <ion-select
-                name="dayPart"
-                ok-text=${l10n.localize('confirm')}
-                cancel-text=${l10n.localize('cancel')}
-                multiple
-                @ionChange=${this.__inputChanged}
-              >
-                ${this.__dayPartListTemplate}
-              </ion-select>
-            </ion-item>
+            <div class="form__input-row">
+              <ion-item fill="solid">
+                <ion-label position="floating">${l10n.localize('from_hour')}</ion-label>
+                <ion-select name="minHour" interface="popover" @ionChange=${this.__inputChanged}>
+                  ${JobAddForm.hourListTemplate}
+                </ion-select>
+              </ion-item>
+              <ion-item fill="solid">
+                <ion-label position="floating">${l10n.localize('to_hour')}</ion-label>
+                <ion-select name="maxHour" interface="popover" @ionChange=${this.__inputChanged}>
+                  ${JobAddForm.hourListTemplate}
+                </ion-select>
+              </ion-item>
+            </div>
             <ion-item fill="solid">
               <ion-label position="floating">${l10n.localize('maximum_price')}</ion-label>
               <ion-input name="maxPrice" type="number" debounce="30" @ionChange=${this.__inputChanged}></ion-input>
@@ -188,7 +189,8 @@ export class JobAddForm extends AlwatrElement {
       detail: {
         destination: this.__newJob.destination as string,
         origin: this.__newJob.origin as string,
-        dayPart: (this.__newJob.dayPart as dayParts[]) ?? [],
+        maxHour: this.__newJob.maxHour ?? null,
+        minHour: this.__newJob.minHour ?? null,
         maxPrice: this.__newJob.maxPrice ?? null,
         seatCount: this.__newJob.seatCount ?? 1,
         description: this.__newJob.description ?? '',
@@ -198,9 +200,7 @@ export class JobAddForm extends AlwatrElement {
 
     this.__close();
   }
-  private __inputChanged(
-      event: InputCustomEvent | SelectCustomEvent<string> | SelectCustomEvent<Array<dayParts>>,
-  ): void {
+  private __inputChanged(event: InputCustomEvent | SelectCustomEvent<string>): void {
     const name = event.target.name as keyof NewJobDetail | undefined;
     const value = event.detail.value;
 
@@ -215,24 +215,15 @@ export class JobAddForm extends AlwatrElement {
       return;
     }
 
-    if (name === 'maxPrice' || name === 'seatCount' || name === 'day' || name === 'month') {
-      this.__newJob[name] = +value;
-    }
-    else if (name === 'dayPart') {
-      this.__newJob[name] = value as Array<dayParts>;
+    if (name === 'origin' || name === 'destination' || name === 'description') {
+      this.__newJob[name] = value as string;
     }
     else {
-      this.__newJob[name] = value as string;
+      this.__newJob[name] = +value;
     }
   }
   private __close(): void {
     this.parentElement?.dispatchEvent(new Event('close'));
-  }
-
-  private get __dayPartListTemplate(): TemplateResult[] {
-    return dayPartList.map((part) => {
-      return html` <ion-select-option value=${part}> ${l10n.localize(part)} </ion-select-option> `;
-    });
   }
 
   private get __maxPriceHelper(): string {

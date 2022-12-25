@@ -1,10 +1,7 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrElement, map, customElement, query, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {modalController} from '@ionic/core';
-import {css, html} from 'lit';
-import {customElement, query} from 'lit/decorators.js';
-import {map} from 'lit/directives/map.js';
 
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
@@ -13,7 +10,7 @@ import './job-item.js';
 import './job-add-form.js';
 
 import type {Job} from '../type.js';
-import type {TemplateResult} from 'lit';
+import type {TemplateResult} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -108,7 +105,7 @@ export class PageFlightFinder extends AlwatrElement {
           </ion-fab-button>
         </ion-fab>
 
-        <div class="version">v${Alwatr.version}-prv6</div>
+        <div class="version">v${Alwatr.version}-prv7</div>
       </ion-content>
     `;
   }

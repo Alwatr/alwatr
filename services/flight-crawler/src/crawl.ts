@@ -10,10 +10,12 @@ import type {FetchOptions} from '@alwatr/fetch';
 export async function crawlAllJobs(): Promise<void> {
   logger.logMethod('crawlAllJobs');
   const jobList = (await storageClient.getStorage()).data;
-  for (const jobId in jobList) {
-    if (!Object.prototype.hasOwnProperty.call(jobList, jobId)) continue;
+  const jobKeyList = Object.keys(jobList);
+  let updated = false;
+
+  for (let i = 0; i < jobKeyList.length; i++) {
     try {
-      const job = jobList[jobId];
+      const job = jobList[jobKeyList[i]];
       const oldResultList = job.resultList;
       const resultList = await crawl(job.detail);
       job.resultList = resultList;
@@ -21,13 +23,16 @@ export async function crawlAllJobs(): Promise<void> {
         const message = makeMessage(job);
         await notify(config.notifier.to, message);
         logger.logOther(`Notified to ${config.notifier.to}!`);
+        await storageClient.set(job);
+        updated = true;
       }
-      await storageClient.set(job);
     }
     catch (err) {
       logger.error('crawlAllJobs', 'crawling_failed', err);
     }
   }
+  // for updating meta
+  if (updated === false) await storageClient.set(jobList[jobKeyList[jobKeyList.length - 1]]);
 }
 
 async function crawl(detail: JobDetail): Promise<Array<JobResult>> {
@@ -120,14 +125,23 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
 
   if (detail.maxPrice != null) {
     const maxPrice = detail.maxPrice;
-    filteredJobResultList = filteredJobResultList.filter((job) => {
-      return job.price <= maxPrice;
+    filteredJobResultList = filteredJobResultList.filter((result) => {
+      return result.price <= maxPrice;
     });
   }
 
-  filteredJobResultList = filteredJobResultList.filter((job) => {
-    return job.seatCount >= detail.seatCount;
+  filteredJobResultList = filteredJobResultList.filter((result) => {
+    return result.seatCount >= detail.seatCount;
   });
+
+  if (detail.minHour != null && detail.maxHour != null) {
+    const minHour = detail.minHour;
+    const maxHour = detail.maxHour;
+    filteredJobResultList = filteredJobResultList.filter((result) => {
+      const resultTime = +result.time.trim().split(':')[0];
+      return resultTime >= minHour && resultTime <= maxHour;
+    });
+  }
 
   return filteredJobResultList;
 }
@@ -151,6 +165,7 @@ function makeMessage(job: Job): string {
     تاریخ: ${job.detail.date}
     حداکثر قیمت: ${job.detail.maxPrice ? job.detail.maxPrice.toLocaleString('en-US') : 'ندارد'}
     تعداد صندلی: ${job.detail.seatCount}
+    ${job.detail.minHour && job.detail.minHour ? `از ساعت ${job.detail.minHour} تا ${job.detail.maxHour}` : '' }
 
     ${resultListStr}
   `.replaceAll('    ', '');
