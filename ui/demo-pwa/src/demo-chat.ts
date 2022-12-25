@@ -28,10 +28,11 @@ export class AlwatrDemoHome extends AlwatrElement {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    // TODO: this._signalListenerList.push
-    l10n.resourceChangeSignal.addListener(() => {
-      this.requestUpdate();
-    });
+    this._signalListenerList.push(
+        l10n.resourceChangeSignal.addListener(() => {
+          this.requestUpdate();
+        }),
+    );
   }
 
   override render(): TemplateResult {
