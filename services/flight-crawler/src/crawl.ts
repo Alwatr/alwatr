@@ -165,7 +165,7 @@ function makeMessage(job: Job): string {
     تاریخ: ${job.detail.date}
     حداکثر قیمت: ${job.detail.maxPrice ? job.detail.maxPrice.toLocaleString('en-US') : 'ندارد'}
     تعداد صندلی: ${job.detail.seatCount}
-    ${job.detail.minHour && job.detail.minHour ? `از ساعت ${job.detail.minHour} تا ساعت ${job.detail.maxHour}` : '' }
+    ${job.detail.minHour && job.detail.minHour ? `از ساعت ${job.detail.minHour} تا ${job.detail.maxHour}` : '' }
 
     ${resultListStr}
   `.replaceAll('    ', '');
