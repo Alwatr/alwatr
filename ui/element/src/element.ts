@@ -14,6 +14,7 @@ export {when} from 'lit/directives/when.js';
 export {repeat} from 'lit/directives/repeat.js';
 export {ifDefined} from 'lit/directives/if-defined.js';
 export {unsafeSVG} from 'lit/directives/unsafe-svg.js';
+export {cache} from 'lit/directives/cache.js';
 
 alwatrRegisteredList.push({
   name: '@alwatr/element',

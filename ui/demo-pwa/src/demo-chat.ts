@@ -1,21 +1,20 @@
-import {AlwatrElement, css, html} from '@alwatr/element';
+import {customElement, AlwatrElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
-import {customElement} from 'lit/decorators.js';
 
-import '@alwatr/icon';
+import '@alwatr/ui-kit/chat/chat-avatar.js';
 
 import type {TemplateResult} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'page-home': AlwatrDemoHome;
+    'alwatr-demo-chat': AlwatrDemoHome;
   }
 }
 
 /**
  * Alwatr Demo Home Page
  */
-@customElement('alwatr-page-home')
+@customElement('alwatr-demo-chat')
 export class AlwatrDemoHome extends AlwatrElement {
   static override styles = [
     css`
@@ -38,10 +37,9 @@ export class AlwatrDemoHome extends AlwatrElement {
   override render(): TemplateResult {
     return html`
       <section>
-        <h1>
-          <alwatr-icon name="home-outline"></alwatr-icon>
-          ${l10n.localize('page_home')}
-        </h1>
+        <alwatr-chat-avatar user="1"></alwatr-chat-avatar>
+        <alwatr-chat-avatar user="2"></alwatr-chat-avatar>
+        <alwatr-chat-avatar user="3"></alwatr-chat-avatar>
       </section>
     `;
   }
