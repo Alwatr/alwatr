@@ -1,11 +1,10 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
-import {css, html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import '@alwatr/icon';
 
-import type {TemplateResult} from 'lit';
+import type {TemplateResult} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {

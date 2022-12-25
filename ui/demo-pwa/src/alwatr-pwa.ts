@@ -1,13 +1,12 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
-import {css, html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import './alwatr-page-home.js';
 
+import type {TemplateResult} from '@alwatr/element';
 import type {RoutesConfig} from '@alwatr/router';
-import type {TemplateResult} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
