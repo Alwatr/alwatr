@@ -1,24 +1,24 @@
-import {AlwatrElement, css, html} from '@alwatr/element';
+import {AlwatrElement, css, html, cache} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
 import {customElement} from 'lit/decorators.js';
 
-import './alwatr-page-home.js';
+import './demo-chat.js';
 
 import type {TemplateResult} from '@alwatr/element';
 import type {RoutesConfig} from '@alwatr/router';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-pwa': AlwatrPWA;
+    'alwatr-pwa-root': AlwatrPwaRoot;
   }
 }
 
 /**
  * Alwatr PWA Root Element
  */
-@customElement('alwatr-pwa')
-export class AlwatrPWA extends AlwatrElement {
+@customElement('alwatr-pwa-root')
+export class AlwatrPwaRoot extends AlwatrElement {
   static override styles = [
     css`
       :host {
@@ -54,12 +54,12 @@ export class AlwatrPWA extends AlwatrElement {
     map: (route) => route.sectionList[0]?.toString(),
     list: {
       home: {
-        render: () => html`<alwatr-page-home></alwatr-page-home>`,
+        render: () => html`<alwatr-demo-chat></alwatr-demo-chat>`,
       },
     },
   };
 
   override render(): TemplateResult {
-    return html`<main class="page-container">${router.outlet(this._routes)}</main>`;
+    return html`<main class="page-container">${cache(router.outlet(this._routes))}</main>`;
   }
 }
