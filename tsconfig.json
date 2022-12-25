@@ -40,5 +40,8 @@
     {"path": "./uniquely/flight-finder-api"},
     {"path": "./uniquely/flight-finder-pwa"},
     {"path": "./uniquely/starter-pwa"},
+
+    // labs
+    {"path": "./labs/zx-example"}
   ]
 }
