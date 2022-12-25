@@ -6,12 +6,12 @@ import type {TemplateResult} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-avatar': AlwatrAvatar;
+    'alwatr-chat-avatar': AlwatrChatAvatar;
   }
 }
 
-@customElement('alwatr-avatar')
-export class AlwatrAvatar extends AlwatrElement {
+@customElement('alwatr-chat-avatar')
+export class AlwatrChatAvatar extends AlwatrElement {
   static override styles = [
     css`
       :host {
