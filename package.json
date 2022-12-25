@@ -15,6 +15,7 @@
     "services/*",
     "ui/*",
     "uniquely/*",
+    "labs/*",
     "demo"
   ],
   "scripts": {
