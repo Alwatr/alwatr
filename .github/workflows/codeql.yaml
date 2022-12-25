@@ -9,19 +9,11 @@ on:
     paths:
       - '**.ts'
       - '**.js'
-    branches:
-      - next*
-      - main
-      - release/*
 
   push:
     paths:
       - '**.ts'
       - '**.js'
-    branches:
-      - next*
-      - main
-      - release/*
 
   schedule:
     - cron: '0 7 * * 1'
