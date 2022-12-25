@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.26.1](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.26.1) (2022-12-25)
+
+### Bug Fixes
+
+- **flight-crawler:** maxHour in makeMessage ([b6599f9](https://github.com/AliMD/alwatr/commit/b6599f9f17fca56268cf8cad9d719e6d2a6c4fef))
+- **flight-crawler:** min&max hour in make message ([611930b](https://github.com/AliMD/alwatr/commit/611930b2984dcdf046b7ca6696ef0d0b7fe16bfc))
+- **flight-crawler:** min&max hour in make message ([a75f7a0](https://github.com/AliMD/alwatr/commit/a75f7a027b9cdaf2edc6574d781b09b3caf3eb78))
+- **labs/zx:** readme ([51164ae](https://github.com/AliMD/alwatr/commit/51164ae94eb4d06076981b3844377d2088f24bdb))
+- **logger:** version ([2295fee](https://github.com/AliMD/alwatr/commit/2295fee74e8eebd9db399129de31f2b0d6d6b168))
+- **package:** build:r before version ([31e03c9](https://github.com/AliMD/alwatr/commit/31e03c9ea41c75715f4b1a296bf79d8d292d7442))
+
+### Features
+
+- **ff-deploy:** depend on ([d53fae0](https://github.com/AliMD/alwatr/commit/d53fae02700599146ca42e615819fb67bca9feaf))
+- **flight-crawler:** min&max hour filter in make message ([bf62864](https://github.com/AliMD/alwatr/commit/bf62864c3d2bd3e00079d03cb260aeda23072008))
+- labs ([c672f3c](https://github.com/AliMD/alwatr/commit/c672f3cd7e2a336c0fed2bcba5f09d85da62728e))
+- labs refrences and workspace ([9676e29](https://github.com/AliMD/alwatr/commit/9676e290a84e4da07dc38d4c66c29b9a6a6cc179))
+- **ui/demo:** new pwa package ([#508](https://github.com/AliMD/alwatr/issues/508)) ([93b9722](https://github.com/AliMD/alwatr/commit/93b972254845756d339574f4eec909807e69b3c4))
+
 # [0.26.0](https://github.com/AliMD/alwatr/compare/v0.25.0...v0.26.0) (2022-12-22)
 
 ### Bug Fixes

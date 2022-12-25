@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/ui-demo-pwa",
-  "version": "0.0.0",
+  "version": "0.26.1",
   "description": "Alwatr Progressive Web Application Demo.",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -34,11 +34,11 @@
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "devDependencies": {
-    "@alwatr/element": "~0.26.0",
-    "@alwatr/i18n": "~0.26.0",
-    "@alwatr/icon": "~0.26.0",
-    "@alwatr/logger": "~0.26.0",
-    "@alwatr/router": "~0.26.0",
+    "@alwatr/element": "^0.26.1",
+    "@alwatr/i18n": "^0.26.1",
+    "@alwatr/icon": "^0.26.1",
+    "@alwatr/logger": "^0.26.1",
+    "@alwatr/router": "^0.26.1",
     "@babel/core": "~7.20.5",
     "@babel/preset-env": "~7.20.2",
     "@rollup/plugin-babel": "~6.0.3",

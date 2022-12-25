@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.26.1](https://github.com/AliMD/flight-finder/compare/v0.26.0...v0.26.1) (2022-12-25)
+
+### Bug Fixes
+
+- **flight-crawler:** maxHour in makeMessage ([b6599f9](https://github.com/AliMD/flight-finder/commit/b6599f9f17fca56268cf8cad9d719e6d2a6c4fef))
+- **flight-crawler:** min&max hour in make message ([611930b](https://github.com/AliMD/flight-finder/commit/611930b2984dcdf046b7ca6696ef0d0b7fe16bfc))
+- **flight-crawler:** min&max hour in make message ([a75f7a0](https://github.com/AliMD/flight-finder/commit/a75f7a027b9cdaf2edc6574d781b09b3caf3eb78))
+
+### Features
+
+- **flight-crawler:** min&max hour filter in make message ([bf62864](https://github.com/AliMD/flight-finder/commit/bf62864c3d2bd3e00079d03cb260aeda23072008))
+
 # [0.26.0](https://github.com/AliMD/flight-finder/compare/v0.25.0...v0.26.0) (2022-12-22)
 
 ### Bug Fixes
