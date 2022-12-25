@@ -1,8 +1,7 @@
-import {AlwatrElement, unsafeSVG, customElement, property, state} from '@alwatr/element';
+import {AlwatrElement, unsafeSVG, customElement, property, state, html, css} from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
-import {html, css} from 'lit';
 
-import type {PropertyValues, HTMLTemplateResult} from 'lit';
+import type {PropertyValues, HTMLTemplateResult} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {

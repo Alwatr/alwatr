@@ -1,7 +1,6 @@
-import {AlwatrElement, customElement, property, query, when} from '@alwatr/element';
+import {AlwatrElement, customElement, property, query, when, css, html, nothing} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
-import {css, html, nothing} from 'lit';
 
 import '@alwatr/icon';
 
@@ -12,7 +11,7 @@ import ionTheming from '../style/ionic.theming.js';
 import './ionic-components.js';
 
 import type {Job, JobResult} from '../type.js';
-import type {TemplateResult} from 'lit';
+import type {TemplateResult} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {

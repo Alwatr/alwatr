@@ -1,4 +1,4 @@
-import {css} from 'lit';
+import {css} from '@alwatr/element';
 
 const reset = css`
   .ion-page {

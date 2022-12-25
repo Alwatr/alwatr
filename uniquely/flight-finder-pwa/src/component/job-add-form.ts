@@ -1,7 +1,6 @@
-import {AlwatrElement, customElement} from '@alwatr/element';
+import {AlwatrElement, customElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
-import {css, html} from 'lit';
 
 import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
@@ -10,8 +9,8 @@ import ionTheming from '../style/ionic.theming.js';
 import './ionic-components';
 
 import type {NewJobDetail} from '../type.js';
+import type {TemplateResult} from '@alwatr/element';
 import type {InputCustomEvent, SelectCustomEvent} from '@ionic/core';
-import type {TemplateResult} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
