@@ -1,9 +1,7 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrElement, customElement, property, query, when} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {css, html, nothing} from 'lit';
-import {customElement, property, query} from 'lit/decorators.js';
-import {when} from 'lit/directives/when.js';
 
 import '@alwatr/icon';
 

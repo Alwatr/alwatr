@@ -1,10 +1,8 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrElement, map, customElement, query} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {modalController} from '@ionic/core';
 import {css, html} from 'lit';
-import {customElement, query} from 'lit/decorators.js';
-import {map} from 'lit/directives/map.js';
 
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';

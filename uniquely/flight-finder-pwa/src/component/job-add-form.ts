@@ -1,8 +1,7 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrElement, customElement} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {css, html} from 'lit';
-import {customElement} from 'lit/decorators.js';
 
 import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
@@ -202,9 +201,7 @@ export class JobAddForm extends AlwatrElement {
 
     this.__close();
   }
-  private __inputChanged(
-      event: InputCustomEvent | SelectCustomEvent<string>,
-  ): void {
+  private __inputChanged(event: InputCustomEvent | SelectCustomEvent<string>): void {
     const name = event.target.name as keyof NewJobDetail | undefined;
     const value = event.detail.value;
 

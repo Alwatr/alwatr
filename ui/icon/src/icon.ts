@@ -1,10 +1,6 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrElement, unsafeSVG, customElement, property, state} from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
 import {html, css} from 'lit';
-import {customElement} from 'lit/decorators.js';
-import {property} from 'lit/decorators/property.js';
-import {state} from 'lit/decorators/state.js';
-import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 
 import type {PropertyValues, HTMLTemplateResult} from 'lit';
 

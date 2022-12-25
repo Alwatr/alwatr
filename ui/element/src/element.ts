@@ -6,6 +6,14 @@ import type {AlwatrLogger} from '@alwatr/logger/type.js';
 import type {ListenerInterface} from '@alwatr/signal';
 import type {PropertyValues} from 'lit';
 
+export * from 'lit';
+export * from 'lit/decorators.js';
+export {map} from 'lit/directives/map.js';
+export {when} from 'lit/directives/when.js';
+export {repeat} from 'lit/directives/repeat.js';
+export {ifDefined} from 'lit/directives/if-defined.js';
+export {unsafeSVG} from 'lit/directives/unsafe-svg.js';
+
 alwatrRegisteredList.push({
   name: '@alwatr/element',
   version: '{{ALWATR_VERSION}}',
