@@ -19,11 +19,7 @@
   "send": "ارسال",
   "not_found": "یافت نشد",
   "flight": "پرواز",
-  "earlyMorning": "صبح زود",
-  "morning": "صبح",
-  "midday": "نیمه روز",
-  "afternoon": "بعد از ظهر",
-  "evening": "عصر",
-  "night": "شب",
+  "from_hour": "از ساعت",
+  "to_hour": "تا ساعت",
   "nothing_found": "هیچ چیز یافت نشد"
 }

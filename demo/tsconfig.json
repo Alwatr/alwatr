@@ -16,8 +16,8 @@
     {"path": "../core/router"},
     {"path": "../core/i18n"},
     {"path": "../core/math"},
-    {"path": "../ui-kit/element"},
-    {"path": "../ui-kit/icon"},
+    {"path": "../ui/element"},
+    {"path": "../ui/icon"},
     {"path": "../core/storage-engine"},
     {"path": "../core/storage-client"},
     {"path": "../core/token"}

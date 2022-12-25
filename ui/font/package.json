@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/font",
-  "version": "0.25.0",
+  "version": "0.26.0",
   "description": "Best practices (The Right Way) of using Persian/Arabic web fonts in the website and webapp.",
   "keywords": [
     "font",
@@ -32,9 +32,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "ui-kit/font"
+    "directory": "ui/font"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui-kit/font#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui/font#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   }
