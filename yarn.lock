@@ -2229,13 +2229,6 @@
     "@rollup/pluginutils" "^3.1.0"
     magic-string "^0.25.7"
 
-"@rollup/plugin-terser@~0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-terser/-/plugin-terser-0.1.0.tgz#7530c0f11667637419d71820461646c418526041"
-  integrity sha512-N2KK+qUfHX2hBzVzM41UWGLrEmcjVC37spC8R3c9mt3oEDFKh3N2e12/lLp9aVSt86veR0TQiCNQXrm8C6aiUQ==
-  dependencies:
-    terser "^5.15.1"
-
 "@rollup/plugin-terser@~0.2.1":
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-terser/-/plugin-terser-0.2.1.tgz#dcf0b163216dafb64611b170a7667e76a7f03d2b"
@@ -2612,9 +2605,9 @@
     eslint-visitor-keys "^3.3.0"
 
 "@typescript/lib-dom@npm:@types/web":
-  version "0.0.84"
-  resolved "https://registry.yarnpkg.com/@types/web/-/web-0.0.84.tgz#8af9bbfa7d31a0af97cb955fe56bc8c74332f80d"
-  integrity sha512-FgWNoeTgX2GRAJzktyp/pqbwrwL7ifKE7FAxo4CA/mayBomylWKpSe4jaY8UqnrAFyHExfANP8DI8s+aHqaRgQ==
+  version "0.0.86"
+  resolved "https://registry.yarnpkg.com/@types/web/-/web-0.0.86.tgz#40c9936750b2bd8961c22604ccc7b9de2dc7b0d4"
+  integrity sha512-d8mYKwcKvkMSlxlDovHyRD7GhNpe10ti4GaX4dR0lsQqk+2l9Y72PU2yPpYlRajQrpfuOWlgGqs8jpbSU9udpg==
 
 "@web/config-loader@^0.1.3":
   version "0.1.3"
@@ -7885,13 +7878,6 @@ rollup@^2.43.1, rollup@^2.67.0:
   version "2.79.1"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.79.1.tgz#bedee8faef7c9f93a2647ac0108748f497f081c7"
   integrity sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==
-  optionalDependencies:
-    fsevents "~2.3.2"
-
-rollup@~3.7.5:
-  version "3.7.5"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-3.7.5.tgz#db580f8eda50237b0721ddea301fb981cd992933"
-  integrity sha512-z0ZbqHBtS/et2EEUKMrAl2CoSdwN7ZPzL17UMiKN9RjjqHShTlv7F9J6ZJZJNREYjBh3TvBrdfjkFDIXFNeuiQ==
   optionalDependencies:
     fsevents "~2.3.2"
 
