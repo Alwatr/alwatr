@@ -1,6 +1,5 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrDummyElement, customElement, property} from '@alwatr/element';
 import {css, html} from 'lit';
-import {customElement} from 'lit/decorators.js';
 
 import type {TemplateResult} from 'lit';
 
@@ -11,25 +10,32 @@ declare global {
 }
 
 @customElement('alwatr-chat-avatar')
-export class AlwatrChatAvatar extends AlwatrElement {
+export class AlwatrChatAvatar extends AlwatrDummyElement {
   static override styles = [
     css`
       :host {
-        display: flex;
-        flex-shrink: 0;
-        width: 35px;
-        height: 35px;
-        overflow: hidden;
+        display: inline-block;
+        width: 2.5rem;
+        height: 2.5rem;
         border-radius: 50%;
+        overflow: hidden;
+        overflow: clip;
+        overflow-clip-margin: content-box;
+        box-sizing: content-box;
       }
+
       img {
-        width: 100%;
-        height: 100%;
+        display: block;
+        width: inherit;
+        height: inherit;
       }
     `,
   ];
 
+  @property()
+    user = '';
+
   override render(): TemplateResult {
-    return html` <img src="https://picsum.photos/200/200?random=3" /> `;
+    return html`<img src="https://i.pravatar.cc/40?u=${this.user}" alt="User ${this.user} profile image" />`;
   }
 }
