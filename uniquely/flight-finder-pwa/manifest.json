@@ -1,7 +1,7 @@
 {
-  "short_name": "Flight-Finder-PWA",
-  "name": "Flight-Finder-PWA",
-  "description": "Flight Finder PWA",
+  "short_name": "Flight Finder",
+  "name": "Flight Finder PWA",
+  "description": "A Flight Finder Progressive Web Application",
   "start_url": "/?pwa",
   "display": "standalone",
   "theme_color": "#673ab7",
@@ -10,9 +10,9 @@
   "default_locale": "fa",
   "icons": [
     {"src": "/image/favicon.ico", "type": "image/x-icon", "sizes": "32x32"},
-    {"src": "/image/icon-192.png", "type": "image/png", "sizes": "192x192"},
-    {"src": "/image/icon-512.png", "type": "image/png", "sizes": "512x512"},
     {"src": "/image/icon-192-maskable.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable"},
-    {"src": "/image/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable"}
+    {"src": "/image/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable"},
+    {"src": "/image/icon-192.png", "type": "image/png", "sizes": "192x192"},
+    {"src": "/image/icon-512.png", "type": "image/png", "sizes": "512x512"}
   ]
 }

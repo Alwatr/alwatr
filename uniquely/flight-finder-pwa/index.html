@@ -1,60 +1,60 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa-IR" dir="rtl">
   <head>
+    <base href="/" />
+
     <meta charset="utf-8" />
+    <title>Flight Finder</title>
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://api.counterme.ir" crossorigin />
+
+    <link
+      crossorigin
+      media="print"
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.21.0/vazirmatn.min.css"
+      onload="this.media='all';this.onload=null;"
+    />
+    <link rel="stylesheet" href="src/style/global.css" />
+
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#673ab7" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
     />
-    <base href="/" />
 
-    <title>Flight Finder</title>
-    <meta name="description" content="An Flight Finder Progressive Web Application!" />
-
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.21.0/vazirmatn.min.css"
-      fetchpriority="high"
-    />
-
-    <!-- <link rel="preload" href="config.js" as="script" type="text/javascript" /> -->
-
-    <link
-      rel="preload"
-      href="https://cdn.jsdelivr.net/npm/@alwatr/font@0.21.0/vazirmatn/vazirmatn[wght].woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#673ab7" />
-
+    <link rel="shortcut icon" href="image/favicon.ico" />
     <link rel="manifest" href="manifest.json" />
-    <link rel="icon" href="image/favicon.ico" sizes="any" />
-
     <!-- Add to home screen for Chrome on Android. Fallback for manifest.json -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="application-name" content="Flight Finder" />
-
     <!-- Add to home screen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Flight Finder" />
     <link rel="apple-touch-startup-image" href="image/icon-192.png" />
-
     <!-- Home screen icons -->
-    <link rel="apple-touch-icon" href="image/apple-touch-icon.png" />
-
+    <link rel="apple-touch-icon" href="image/icon-180.png" />
     <!-- Tile icon for Windows 8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="image/icon-192.png" />
+    <meta name="msapplication-TileImage" content="image/icon-512.png" />
     <meta name="msapplication-TileColor" content="#673ab7" />
     <meta name="msapplication-tap-highlight" content="no" />
 
-    <link rel="stylesheet" href="src/style/global.css" />
+    <meta name="description" content="A Flight Finder Progressive Web Application." />
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:title" content="Flight Finder" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./image/banner.jpg" />
+    <meta property="og:image:secure_url" content="./image/banner.jpg" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="500" />
+    <meta property="og:image:height" content="500" />
+    <meta name="og:description" content="A Flight Finder Progressive Web Application." />
+
+    <link rel="canonical" href="https://pwa.counterme.ir" />
   </head>
   <body>
     <ion-app>
