@@ -3,7 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": ".",
     "plugins": [
       {
@@ -13,10 +13,9 @@
     ],
   },
   // files, include and exclude from the inheriting config are always overwritten.
-  "include": ["**/src/**/*.ts"],
-  "exclude": [],
+  "include": ["**/*.ts"],
+  "exclude": ["*.d.ts", "node_modules"],
   "references": [
-    {"path": "../../core/logger"},
-    {"path": "../../ui/element"},
+    {"path": "../element"},
   ]
 }
