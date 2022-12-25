@@ -34,11 +34,11 @@
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "devDependencies": {
-    "@alwatr/element": "~0.25.0",
-    "@alwatr/i18n": "~0.25.0",
-    "@alwatr/icon": "~0.25.0",
-    "@alwatr/logger": "~0.25.0",
-    "@alwatr/router": "~0.25.0",
+    "@alwatr/element": "~0.26.0",
+    "@alwatr/i18n": "~0.26.0",
+    "@alwatr/icon": "~0.26.0",
+    "@alwatr/logger": "~0.26.0",
+    "@alwatr/router": "~0.26.0",
     "lit": "~2.5.0",
     "@babel/core": "~7.20.5",
     "@babel/preset-env": "~7.20.2",
