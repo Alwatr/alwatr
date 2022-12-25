@@ -1,4 +1,4 @@
-import {css} from 'lit';
+import {css} from '@alwatr/element';
 
 const theming = css`
   .ion-color-primary {

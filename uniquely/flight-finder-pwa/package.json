@@ -30,7 +30,7 @@
     "watch": "run-s clean build:ts && run-p watch:ts serve",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
-  "dependencies": {
+  "devDependencies": {
     "@alwatr/element": "~0.26.0",
     "@alwatr/fetch": "~0.26.0",
     "@alwatr/i18n": "~0.26.0",
@@ -39,9 +39,6 @@
     "@alwatr/router": "~0.26.0",
     "@alwatr/signal": "~0.26.0",
     "@ionic/core": "~6.4.1",
-    "lit": "~2.5.0"
-  },
-  "devDependencies": {
     "@babel/core": "~7.20.7",
     "@babel/preset-env": "~7.20.2",
     "@rollup/plugin-babel": "~6.0.3",
