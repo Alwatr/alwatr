@@ -24,7 +24,12 @@ export class AlwatrPwaRoot extends AlwatrElement {
       :host {
         display: flex;
         flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+        overflow: clip;
+        contain: layout size style;
       }
+
       .page-container {
         flex-grow: 1;
         contain: size layout style;
@@ -60,6 +65,6 @@ export class AlwatrPwaRoot extends AlwatrElement {
   };
 
   override render(): TemplateResult {
-    return html`<main class="page-container">${cache(router.outlet(this._routes))}</main>`;
+    return html`<div class="page-container">${cache(router.outlet(this._routes))}</div>`;
   }
 }
