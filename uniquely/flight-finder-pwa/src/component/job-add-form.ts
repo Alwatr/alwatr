@@ -1,4 +1,4 @@
-import {AlwatrElement, customElement, css, html} from '@alwatr/element';
+import {AlwatrSmartElement, customElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 
@@ -19,7 +19,7 @@ declare global {
 }
 
 @customElement('job-add-form')
-export class JobAddForm extends AlwatrElement {
+export class JobAddForm extends AlwatrSmartElement {
   static override styles = [
     ionNormalize,
     ionTheming,

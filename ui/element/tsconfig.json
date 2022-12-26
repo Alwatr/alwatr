@@ -17,6 +17,8 @@
   "exclude": [],
   "references": [
     {"path": "../../core/logger"},
-    {"path": "../../core/signal"}
+    {"path": "../../core/signal"},
+    {"path": "../../core/i18n"},
+    {"path": "../../core/router"},
   ]
 }

@@ -1,4 +1,4 @@
-import {AlwatrElement, customElement, css, html} from '@alwatr/element';
+import {AlwatrSmartElement, customElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
 
@@ -22,7 +22,7 @@ declare global {
  * alwatr-pwa PWA Root Element
  */
 @customElement('alwatr-pwa')
-export class AlwatrPWA extends AlwatrElement {
+export class AlwatrPWA extends AlwatrSmartElement {
   static override styles = [
     ionNormalize,
     ionTheming,
