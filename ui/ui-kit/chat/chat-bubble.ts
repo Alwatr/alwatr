@@ -1,17 +1,15 @@
-import {AlwatrElement} from '@alwatr/element';
-import {css, html, nothing} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {AlwatrDummyElement, css, html, nothing, customElement, property} from '@alwatr/element';
 
-import type {TemplateResult} from 'lit';
+import type {TemplateResult} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-message-bubble': AlwatrMessageBubble;
+    'alwatr-chat-bubble': AlwatrChatBubble;
   }
 }
 
-@customElement('alwatr-message-bubble')
-export class AlwatrMessageBubble extends AlwatrElement {
+@customElement('alwatr-chat-bubble')
+export class AlwatrChatBubble extends AlwatrDummyElement {
   static override styles = [
     css`
       :host {
