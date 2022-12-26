@@ -1,5 +1,4 @@
-import {AlwatrDummyElement, customElement, property} from '@alwatr/element';
-import {css, html} from 'lit';
+import {AlwatrDummyElement, css, customElement, html, property} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -7,6 +6,9 @@ declare global {
   }
 }
 
+/**
+ * Alwatr chat message avatar element.
+ */
 @customElement('alwatr-chat-avatar')
 export class AlwatrChatAvatar extends AlwatrDummyElement {
   static override styles = css`
@@ -19,6 +21,7 @@ export class AlwatrChatAvatar extends AlwatrDummyElement {
       overflow: clip;
       overflow-clip-margin: content-box;
       box-sizing: content-box;
+      flex-shrink: 0;
     }
 
     img {
@@ -29,7 +32,7 @@ export class AlwatrChatAvatar extends AlwatrDummyElement {
   `;
 
   @property()
-    user = '';
+    user?: string;
 
   override render(): unknown {
     return html`<img src="https://i.pravatar.cc/40?u=${this.user}" alt="User ${this.user} profile image" />`;

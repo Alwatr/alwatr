@@ -6,25 +6,30 @@ declare global {
   }
 }
 
+/**
+ * Alwatr chat message bubble box element.
+ *
+ * @attr end-side
+ *
+ */
 @customElement('alwatr-chat-bubble')
 export class AlwatrChatBubble extends AlwatrDummyElement {
   static override styles = css`
     :host {
       display: inline-block;
-      background-color: gray;
-      padding: 1em 0.85em;
+      background-color: lightgrey;
+      padding: 0.6rem 1.2rem;
     }
 
     :host,
     :host([dir='rtl'][end-side]) {
-      border-radius: 1.5em 1.5em 1.5em 0.5em;
+      border-radius: 1.5rem 1.5rem 1.5rem 0.5rem;
     }
 
     :host([dir='rtl']),
     :host([end-side]) {
-      border-radius: 1.5em 1.5em 0.5em 1.5em;
+      border-radius: 1.5rem 1.5rem 0.5rem 1.5rem;
     }
-
   `;
 
   @property()
