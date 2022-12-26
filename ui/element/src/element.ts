@@ -3,9 +3,9 @@ import {LitElement} from 'lit';
 
 import {LoggerMixin} from './mixins/logging.js';
 import {SignalMixin} from './mixins/signal.js';
+import {AlwatrRootElement} from './root.js';
 
-export * from './mixins/logging.js';
-export * from './mixins/signal.js';
+export {LoggerMixin, SignalMixin, AlwatrRootElement};
 
 export * from 'lit';
 export * from 'lit/decorators.js';
@@ -22,4 +22,4 @@ alwatrRegisteredList.push({
 });
 
 export const AlwatrDummyElement = LoggerMixin(LitElement);
-export const AlwatrElement = SignalMixin(LoggerMixin(LitElement));
+export const AlwatrSmartElement = SignalMixin(LoggerMixin(LitElement));
