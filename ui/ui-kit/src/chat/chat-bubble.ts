@@ -18,17 +18,19 @@ export class AlwatrChatBubble extends AlwatrDummyElement {
     :host {
       display: inline-block;
       background-color: lightgrey;
-      padding: 0.6rem 1.2rem;
+      padding: 0.8rem 1.4rem;
     }
 
     :host,
     :host([dir='rtl'][end-side]) {
-      border-radius: 1.5rem 1.5rem 1.5rem 0.5rem;
+      border-radius: 1.8rem;
+      border-bottom-left-radius: 0.5rem;
     }
 
     :host([dir='rtl']),
     :host([end-side]) {
-      border-radius: 1.5rem 1.5rem 0.5rem 1.5rem;
+      border-bottom-left-radius: 1.8rem;
+      border-bottom-right-radius: 0.5rem;
     }
   `;
 
