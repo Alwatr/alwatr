@@ -2,6 +2,7 @@
   "eslint.packageManager": "yarn",
   "npm.packageManager": "yarn",
   "lit-plugin.strict": true,
+  "lit-plugin.rules.no-missing-import": "off",
   "editor.wordWrapColumn": 120,
   "editor.formatOnPaste": false,
   "editor.formatOnSave": false,
