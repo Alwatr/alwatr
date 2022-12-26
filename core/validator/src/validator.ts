@@ -1,10 +1,10 @@
 import {isNumber} from '@alwatr/math';
 
-import type {schema} from './type.js';
+import type {Schema} from './type.js';
 
-export {validator};
+export {validator, Schema};
 
-function validator<DataType extends Record<string, unknown>>(value: Record<string, unknown>, schema: schema): DataType {
+function validator<DataType extends Record<string, unknown>>(value: Record<string, unknown>, schema: Schema): DataType {
   for (const paramName in schema) {
     if (!Object.prototype.hasOwnProperty.call(schema, paramName)) continue;
 
@@ -12,7 +12,7 @@ function validator<DataType extends Record<string, unknown>>(value: Record<strin
     // nested object
     if (typeof schema[paramName] === 'object') {
       value[paramName] =
-        validator<DataType>(value[paramName] as Record<string, unknown>, schema[paramName] as schema);
+        validator<DataType>(value[paramName] as Record<string, unknown>, schema[paramName] as Schema);
     }
 
     const validValue = value[paramName] as string | number | boolean;

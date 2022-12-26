@@ -1,3 +1,3 @@
-export type schema = {
-  [key: string]: schema | 'string' | 'number' | 'boolean';
+export type Schema = {
+  [key: string]: Schema | 'string' | 'number' | 'boolean';
 }
