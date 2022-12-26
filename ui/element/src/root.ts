@@ -44,16 +44,16 @@ export class AlwatrRootElement extends LoggerMixin(LitElement) {
   }
 
   protected _initRouter(): void {
-    // l10n.config.defaultLocale = {
-    //   code: 'fa-IR',
-    //   direction: 'rtl',
-    //   language: 'fa',
-    // };
     l10n.config.defaultLocale = {
-      code: 'en-US',
-      direction: 'ltr',
-      language: 'en',
+      code: 'fa-IR',
+      direction: 'rtl',
+      language: 'fa',
     };
+    // l10n.config.defaultLocale = {
+    //   code: 'en-US',
+    //   direction: 'ltr',
+    //   language: 'en',
+    // };
     l10n.setLocal();
 
     router.signal.addListener((route) => {
