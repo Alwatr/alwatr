@@ -15,8 +15,8 @@ export class AlwatrChatAvatar extends AlwatrDummyElement {
     css`
       :host {
         display: inline-block;
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 4rem;
+        height: 4rem;
         border-radius: 50%;
         overflow: hidden;
         overflow: clip;
