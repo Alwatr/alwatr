@@ -1,2 +1,2 @@
-cloud/classic/lib/*  filter=crypt diff=crypt merge=crypt
+cloud/classic/libs/*  filter=crypt diff=crypt merge=crypt
 *.env  filter=crypt diff=crypt merge=crypt
