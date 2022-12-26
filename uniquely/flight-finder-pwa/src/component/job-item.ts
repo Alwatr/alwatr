@@ -1,4 +1,4 @@
-import {AlwatrElement, customElement, property, query, when, css, html, nothing} from '@alwatr/element';
+import {AlwatrSmartElement, customElement, property, query, when, css, html, nothing} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 
@@ -20,7 +20,7 @@ declare global {
 }
 
 @customElement('job-item')
-export class JobItem extends AlwatrElement {
+export class JobItem extends AlwatrSmartElement {
   static override styles = [
     ionNormalize,
     ionTheming,
