@@ -1,4 +1,4 @@
-import {AlwatrElement, unsafeSVG, customElement, property, state, html, css} from '@alwatr/element';
+import {AlwatrDummyElement, unsafeSVG, customElement, property, state, html, css} from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
 
 import type {PropertyValues, HTMLTemplateResult} from '@alwatr/element';
@@ -15,7 +15,7 @@ declare global {
  * @attr {boolean} flip-rtl
  */
 @customElement('alwatr-icon')
-export class AlwatrIcon extends AlwatrElement {
+export class AlwatrIcon extends AlwatrDummyElement {
   static override styles = css`
     :host {
       display: inline-block;
@@ -93,8 +93,11 @@ export async function preloadIcon(
   const url = urlPrefix + name + '.svg';
   const response = await fetch({
     url,
+    timeout: 6000,
+    retry: 5,
     removeDuplicate: 'auto',
     cacheStrategy: 'cache_first',
+    cache: 'force-cache',
   });
 
   if (response.ok !== true) {

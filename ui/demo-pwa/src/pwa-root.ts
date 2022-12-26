@@ -1,4 +1,4 @@
-import {AlwatrElement, css, html, cache} from '@alwatr/element';
+import {AlwatrSmartElement, css, html, cache} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
 import {customElement} from 'lit/decorators.js';
@@ -18,7 +18,7 @@ declare global {
  * Alwatr PWA Root Element
  */
 @customElement('alwatr-pwa-root')
-export class AlwatrPwaRoot extends AlwatrElement {
+export class AlwatrPwaRoot extends AlwatrSmartElement {
   static override styles = [
     css`
       :host {

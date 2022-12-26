@@ -1,4 +1,4 @@
-import {AlwatrElement, map, customElement, query, css, html} from '@alwatr/element';
+import {AlwatrSmartElement, map, customElement, query, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {modalController} from '@ionic/core';
@@ -19,7 +19,7 @@ declare global {
 }
 
 @customElement('page-flight-finder')
-export class PageFlightFinder extends AlwatrElement {
+export class PageFlightFinder extends AlwatrSmartElement {
   static override styles = [
     ionNormalize,
     ionTheming,
