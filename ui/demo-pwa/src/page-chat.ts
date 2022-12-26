@@ -39,19 +39,20 @@ export class AlwatrPageHome extends AlwatrSmartElement {
   override render(): unknown {
     return html`
       text on surface
+
       <p>
         text on surface-variant
       </p>
+
       <p>
         <span class="section-name">alwatr-chat-avatar</span>
-
         <alwatr-chat-avatar .user=${'1'}></alwatr-chat-avatar>
         <alwatr-chat-avatar .user=${'2'}></alwatr-chat-avatar>
         <alwatr-chat-avatar .user=${'3'}></alwatr-chat-avatar>
       </p>
+
       <p>
         <span class="section-name">alwatr-chat-bubble</span>
-
         <alwatr-chat-bubble .message=${'سلام'}></alwatr-chat-bubble>
         <alwatr-chat-bubble .message=${'چطوری؟'} end-side></alwatr-chat-bubble>
         <br/><br/>
@@ -60,9 +61,9 @@ export class AlwatrPageHome extends AlwatrSmartElement {
           ' Veritatis quia nemo eaque laboriosam unde consequatur!'}
         ></alwatr-chat-bubble>
       </p>
+
       <p>
         <span class="section-name">alwatr-chat-message</span>
-
         <alwatr-chat-message .user=${'1'} .message=${'سلام'}></alwatr-chat-message>
         <br/>
         <alwatr-chat-message .user=${'2'} .message=${'چطوری؟'} end-side></alwatr-chat-message>

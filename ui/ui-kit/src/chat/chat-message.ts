@@ -12,7 +12,6 @@ declare global {
  * Alwatr chat message box element.
  *
  * @attr end-side
- *
  */
 @customElement('alwatr-chat-message')
 export class AlwatrChatMessage extends AlwatrDummyElement {
