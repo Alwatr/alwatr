@@ -1,12 +1,12 @@
 import {l10n} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
-import {LitElement, css, CSSResultGroup, html} from 'lit';
+import {LitElement, html, css} from 'lit';
+import {cache} from 'lit/directives/cache.js';
 
 import {LoggerMixin} from './mixins/logging.js';
 
-import type {TemplateResult} from '@alwatr/element';
 import type {RoutesConfig} from '@alwatr/router';
-
+import type {TemplateResult, CSSResultGroup} from 'lit';
 
 /**
  * Alwatr Root Base Element
@@ -59,6 +59,7 @@ export class AlwatrRootElement extends LoggerMixin(LitElement) {
   }
 
   override render(): TemplateResult {
+    super.render();
     return html`<div class="page-container">${cache(router.outlet(this._routes))}</div>`;
   }
 }
