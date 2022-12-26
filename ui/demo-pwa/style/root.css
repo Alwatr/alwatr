@@ -34,7 +34,7 @@ body {
   /* Theme */
   color: var(--md-sys-color-on-background);
   background-color: var(--md-sys-color-background);
-  font-family: var(--md-sys-typescale-body-medium-font);
+  /* font-family: var(--md-sys-typescale-body-medium-font); */
   font-weight: var(--md-sys-typescale-body-medium-weight);
   font-size: var(--md-sys-typescale-body-medium-size);
   font-style: var(--md-sys-typescale-body-medium-font-style);
