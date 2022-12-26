@@ -1,11 +1,8 @@
-import {AlwatrElement, css, html, cache} from '@alwatr/element';
-import {l10n} from '@alwatr/i18n';
-import {router} from '@alwatr/router';
+import {AlwatrRootElement, css, html, cache} from '@alwatr/element';
 import {customElement} from 'lit/decorators.js';
 
 import './demo-chat.js';
 
-import type {TemplateResult} from '@alwatr/element';
 import type {RoutesConfig} from '@alwatr/router';
 
 declare global {
@@ -18,44 +15,8 @@ declare global {
  * Alwatr PWA Root Element
  */
 @customElement('alwatr-pwa-root')
-export class AlwatrPwaRoot extends AlwatrElement {
-  static override styles = [
-    css`
-      :host {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        overflow: hidden;
-        overflow: clip;
-        contain: layout size style;
-      }
-
-      .page-container {
-        flex-grow: 1;
-        contain: size layout style;
-      }
-    `,
-  ];
-
-  constructor() {
-    super();
-
-    l10n.config.defaultLocale = {
-      code: 'en-US',
-      direction: 'ltr',
-      language: 'en',
-    };
-    l10n.setLocal();
-
-    router.signal.addListener((route) => {
-      this._logger.logMethodArgs('routeChanged', {route});
-      this.requestUpdate();
-    });
-
-    router.initial();
-  }
-
-  protected _routes: RoutesConfig = {
+export class AlwatrPwaRoot extends AlwatrRootElement {
+  protected override _routes: RoutesConfig = {
     map: (route) => route.sectionList[0]?.toString(),
     list: {
       home: {
@@ -63,8 +24,4 @@ export class AlwatrPwaRoot extends AlwatrElement {
       },
     },
   };
-
-  override render(): TemplateResult {
-    return html`<div class="page-container">${cache(router.outlet(this._routes))}</div>`;
-  }
 }
