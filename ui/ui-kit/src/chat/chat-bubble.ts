@@ -17,8 +17,9 @@ export class AlwatrChatBubble extends AlwatrDummyElement {
   static override styles = css`
     :host {
       display: inline-block;
-      background-color: lightgrey;
       padding: 0.8rem 1.4rem;
+      color: var(--md-sys-color-on-surface);
+      background-color: var(--md-sys-color-surface);
     }
 
     :host,
