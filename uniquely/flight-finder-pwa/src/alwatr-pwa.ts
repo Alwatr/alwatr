@@ -9,7 +9,6 @@ import './component/page-flight-finder.js';
 import './component/ionic-components.js';
 import './director/index.js';
 
-import type {TemplateResult} from '@alwatr/element';
 import type {RoutesConfig} from '@alwatr/router';
 
 declare global {
@@ -66,7 +65,7 @@ export class AlwatrPWA extends AlwatrSmartElement {
     },
   };
 
-  override render(): TemplateResult {
+  override render(): unknown {
     return html` <main class="page-container">${router.outlet(this._routes)}</main>`;
   }
 }

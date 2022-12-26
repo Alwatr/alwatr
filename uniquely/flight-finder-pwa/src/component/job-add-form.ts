@@ -9,7 +9,6 @@ import ionTheming from '../style/ionic.theming.js';
 import './ionic-components';
 
 import type {NewJobDetail} from '../type.js';
-import type {TemplateResult} from '@alwatr/element';
 import type {InputCustomEvent, SelectCustomEvent} from '@ionic/core';
 
 declare global {
@@ -73,7 +72,7 @@ export class JobAddForm extends AlwatrSmartElement {
     seatCount: 1,
   };
 
-  override render(): TemplateResult {
+  override render(): unknown {
     return html`
       <ion-header>
         <ion-toolbar color="secondary">

@@ -3,8 +3,6 @@ import {l10n} from '@alwatr/i18n';
 
 import '@alwatr/ui-kit/chat/chat-avatar.js';
 
-import type {TemplateResult} from '@alwatr/element';
-
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-demo-chat': AlwatrDemoHome;
@@ -35,7 +33,7 @@ export class AlwatrDemoHome extends AlwatrSmartElement {
     );
   }
 
-  override render(): TemplateResult {
+  override render(): unknown {
     return html`
       <section>
         <alwatr-chat-avatar user="1"></alwatr-chat-avatar>

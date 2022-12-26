@@ -6,7 +6,7 @@ import {cache} from 'lit/directives/cache.js';
 import {LoggerMixin} from './mixins/logging.js';
 
 import type {RoutesConfig} from '@alwatr/router';
-import type {TemplateResult, CSSResultGroup} from 'lit';
+import type {CSSResultGroup} from 'lit';
 
 /**
  * Alwatr Root Base Element
@@ -58,7 +58,7 @@ export class AlwatrRootElement extends LoggerMixin(LitElement) {
     router.initial();
   }
 
-  override render(): TemplateResult {
+  override render(): unknown {
     super.render();
     return html`<div class="page-container">${cache(router.outlet(this._routes))}</div>`;
   }

@@ -96,7 +96,6 @@ import {router} from '@alwatr/router';
 
 import type {ListenerInterface} from '@alwatr/signal';
 import type {RoutesConfig} from '@alwatr/router';
-import type {TemplateResult} from '@alwatr/element';
 
 @customElement('my-element')
 export class MyElement extends LitElement {
@@ -143,7 +142,7 @@ export class MyElement extends LitElement {
     );
   }
 
-  override render(): TemplateResult {
+  override render() {
     return html`
       <h2>Hello World!</h2>
 

@@ -98,7 +98,7 @@ export class JobItem extends AlwatrSmartElement {
     });
   }
 
-  override render(): TemplateResult | typeof nothing {
+  override render(): unknown {
     if (this.job == null || this.job.detail == null) return nothing;
 
     return html`
