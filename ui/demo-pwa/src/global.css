@@ -43,10 +43,11 @@ body {
   height: 100%;
   max-width: 100%;
   max-height: 100%;
+  box-sizing: border-box;
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 62.5%; /* 10px */
   -webkit-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -54,7 +55,8 @@ html {
 }
 
 body {
-  line-height: 1.5;
+  font-size: 1.5rem; /* 15px */
+  line-height: 1.6; /* 24px */
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -69,7 +71,6 @@ body {
   color: var(--primary-text-color);
   background-color: --primary-background-color;
   overscroll-behavior-y: none;
-
 }
 
 .noscript {

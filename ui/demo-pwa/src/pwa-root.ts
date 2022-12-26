@@ -1,7 +1,7 @@
 import {AlwatrRootElement, html} from '@alwatr/element';
 import {customElement} from 'lit/decorators.js';
 
-import './demo-chat.js';
+import './page-chat.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 
@@ -20,7 +20,7 @@ export class AlwatrPwaRoot extends AlwatrRootElement {
     map: (route) => route.sectionList[0]?.toString(),
     list: {
       home: {
-        render: () => html`<alwatr-demo-chat></alwatr-demo-chat>`,
+        render: () => html`<alwatr-page-chat></alwatr-page-chat>`,
       },
     },
   };

@@ -16,6 +16,7 @@ export class AlwatrRootElement extends LoggerMixin(LitElement) {
     :host {
       display: flex;
       flex-direction: column;
+      box-sizing: border-box;
       height: 100%;
       overflow: hidden;
       overflow: clip;
@@ -43,10 +44,15 @@ export class AlwatrRootElement extends LoggerMixin(LitElement) {
   }
 
   protected _initRouter(): void {
+    // l10n.config.defaultLocale = {
+    //   code: 'fa-IR',
+    //   direction: 'rtl',
+    //   language: 'fa',
+    // };
     l10n.config.defaultLocale = {
-      code: 'fa-IR',
-      direction: 'rtl',
-      language: 'fa',
+      code: 'en-US',
+      direction: 'ltr',
+      language: 'en',
     };
     l10n.setLocal();
 
