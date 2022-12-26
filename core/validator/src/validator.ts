@@ -18,7 +18,7 @@ function validator<DataType extends Record<string, unknown>>(value: Record<strin
 
     if (valueType === 'boolean') {
       if (validValue === true || validValue === false) {
-        value[paramName] = true;
+        value[paramName] = validValue;
       }
       else {
         throw new Error('invalid_type', {
