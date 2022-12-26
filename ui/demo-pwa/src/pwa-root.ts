@@ -1,4 +1,4 @@
-import {AlwatrRootElement, css, html, cache} from '@alwatr/element';
+import {AlwatrRootElement, html} from '@alwatr/element';
 import {customElement} from 'lit/decorators.js';
 
 import './demo-chat.js';
