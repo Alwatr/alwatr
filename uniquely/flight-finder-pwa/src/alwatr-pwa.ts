@@ -1,8 +1,6 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrSmartElement, customElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
-import {css, html} from 'lit';
-import {customElement} from 'lit/decorators.js';
 
 import ionNormalize from './style/ionic.normalize.js';
 import ionTheming from './style/ionic.theming.js';
@@ -12,7 +10,6 @@ import './component/ionic-components.js';
 import './director/index.js';
 
 import type {RoutesConfig} from '@alwatr/router';
-import type {TemplateResult} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -24,7 +21,7 @@ declare global {
  * alwatr-pwa PWA Root Element
  */
 @customElement('alwatr-pwa')
-export class AlwatrPWA extends AlwatrElement {
+export class AlwatrPWA extends AlwatrSmartElement {
   static override styles = [
     ionNormalize,
     ionTheming,
@@ -68,7 +65,7 @@ export class AlwatrPWA extends AlwatrElement {
     },
   };
 
-  override render(): TemplateResult {
+  override render(): unknown {
     return html` <main class="page-container">${router.outlet(this._routes)}</main>`;
   }
 }

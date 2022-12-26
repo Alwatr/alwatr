@@ -17,7 +17,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "uniquely/starter-pwa"
+    "directory": "ui/demo-pwa"
   },
   "scripts": {
     "b": "yarn build",
@@ -39,12 +39,12 @@
     "@alwatr/icon": "~0.26.0",
     "@alwatr/logger": "~0.26.0",
     "@alwatr/router": "~0.26.0",
-    "lit": "~2.5.0",
+    "@alwatr/ui-kit": "~0.26.0",
     "@babel/core": "~7.20.5",
     "@babel/preset-env": "~7.20.2",
     "@rollup/plugin-babel": "~6.0.3",
     "@rollup/plugin-node-resolve": "~15.0.1",
-    "@rollup/plugin-terser": "~0.1.0",
+    "@rollup/plugin-terser": "~0.2.1",
     "@web/dev-server": "~0.1.35",
     "@web/dev-server-esbuild": "~0.3.3",
     "@web/rollup-plugin-copy": "~0.3.0",
@@ -54,7 +54,7 @@
     "lit-analyzer": "~1.2.1",
     "npm-run-all": "~4.1.5",
     "rimraf": "~3.0.2",
-    "rollup": "~3.7.5",
+    "rollup": "~3.8.1",
     "rollup-plugin-minify-html-literals": "~1.2.6",
     "rollup-plugin-summary": "~2.0.0",
     "rollup-plugin-workbox": "~6.2.0",

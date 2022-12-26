@@ -1,10 +1,7 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrSmartElement, map, customElement, query, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {modalController} from '@ionic/core';
-import {css, html} from 'lit';
-import {customElement, query} from 'lit/decorators.js';
-import {map} from 'lit/directives/map.js';
 
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
@@ -13,7 +10,7 @@ import './job-item.js';
 import './job-add-form.js';
 
 import type {Job} from '../type.js';
-import type {TemplateResult} from 'lit';
+import type {TemplateResult} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -22,7 +19,7 @@ declare global {
 }
 
 @customElement('page-flight-finder')
-export class PageFlightFinder extends AlwatrElement {
+export class PageFlightFinder extends AlwatrSmartElement {
   static override styles = [
     ionNormalize,
     ionTheming,
@@ -91,7 +88,7 @@ export class PageFlightFinder extends AlwatrElement {
 
     setInterval(this.__updateTimer, 3_000);
   }
-  override render(): TemplateResult {
+  override render(): unknown {
     return html`
       <ion-header>
         <ion-toolbar color="primary">

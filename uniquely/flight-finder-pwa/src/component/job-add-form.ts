@@ -1,8 +1,6 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrSmartElement, customElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
-import {css, html} from 'lit';
-import {customElement} from 'lit/decorators.js';
 
 import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
@@ -12,7 +10,6 @@ import './ionic-components';
 
 import type {NewJobDetail} from '../type.js';
 import type {InputCustomEvent, SelectCustomEvent} from '@ionic/core';
-import type {TemplateResult} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -21,7 +18,7 @@ declare global {
 }
 
 @customElement('job-add-form')
-export class JobAddForm extends AlwatrElement {
+export class JobAddForm extends AlwatrSmartElement {
   static override styles = [
     ionNormalize,
     ionTheming,
@@ -75,7 +72,7 @@ export class JobAddForm extends AlwatrElement {
     seatCount: 1,
   };
 
-  override render(): TemplateResult {
+  override render(): unknown {
     return html`
       <ion-header>
         <ion-toolbar color="secondary">
@@ -202,9 +199,7 @@ export class JobAddForm extends AlwatrElement {
 
     this.__close();
   }
-  private __inputChanged(
-      event: InputCustomEvent | SelectCustomEvent<string>,
-  ): void {
+  private __inputChanged(event: InputCustomEvent | SelectCustomEvent<string>): void {
     const name = event.target.name as keyof NewJobDetail | undefined;
     const value = event.detail.value;
 
