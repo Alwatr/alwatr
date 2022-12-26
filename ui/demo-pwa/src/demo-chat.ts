@@ -2,6 +2,7 @@ import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 
 import '@alwatr/ui-kit/chat/chat-avatar.js';
+import '@alwatr/ui-kit/chat/chat-bubble.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -35,11 +36,19 @@ export class AlwatrDemoHome extends AlwatrSmartElement {
 
   override render(): unknown {
     return html`
-      <section>
+      <p>
         <alwatr-chat-avatar user="1"></alwatr-chat-avatar>
         <alwatr-chat-avatar user="2"></alwatr-chat-avatar>
         <alwatr-chat-avatar user="3"></alwatr-chat-avatar>
-      </section>
+      </p>
+      <p>
+        <alwatr-chat-bubble message="سلام" dir="rtl"></alwatr-chat-bubble>
+        <alwatr-chat-bubble message="چطوری؟" end-side dir="rtl"></alwatr-chat-bubble>
+        <alwatr-chat-bubble
+          .message=${'Lorem ipsum dolor sit amet consectetur adipisicing elit.' +
+          ' Veritatis quia nemo eaque laboriosam unde consequatur!'}
+        ></alwatr-chat-bubble>
+      </p>
     `;
   }
 }

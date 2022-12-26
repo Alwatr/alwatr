@@ -1,6 +1,4 @@
-import {AlwatrDummyElement, css, html, nothing, customElement, property} from '@alwatr/element';
-
-import type {TemplateResult} from '@alwatr/element';
+import {AlwatrDummyElement, css, html, customElement, property, ifDefined, PropertyValues} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -10,27 +8,37 @@ declare global {
 
 @customElement('alwatr-chat-bubble')
 export class AlwatrChatBubble extends AlwatrDummyElement {
-  static override styles = [
-    css`
-      :host {
-        display: flex;
-        background-color: #fff;
-        font-size: 14px;
-        color: var(--text-primary-color);
-        padding: 1em 0.85em;
-        border-radius: 1.5em 1.5em 0.5em 1.5em;
-      }
+  static override styles = css`
+    :host {
+      display: inline-block;
+      background-color: gray;
+      padding: 1em 0.85em;
+    }
 
-      :host([endSide]) {
-        border-radius: 1.5em 1.5em 1.5em 0.5em;
-      }
-    `,
-  ];
+    :host,
+    :host([dir='rtl'][end-side]) {
+      border-radius: 1.5em 1.5em 1.5em 0.5em;
+    }
 
-  @property({attribute: false}) message?: string;
-  @property({reflect: true, state: false, type: Boolean}) endSide = false;
+    :host([dir='rtl']),
+    :host([end-side]) {
+      border-radius: 1.5em 1.5em 0.5em 1.5em;
+    }
 
-  override render(): TemplateResult | typeof nothing {
-    return html` ${this.message?.trim()} `;
+  `;
+
+  @property()
+    message?: string;
+
+  @property({type: Boolean, attribute: 'end-side', reflect: true})
+    endSide = false;
+
+  protected override shouldUpdate(_changedProperties: PropertyValues): boolean {
+    return super.shouldUpdate(_changedProperties) &&
+      !(_changedProperties.size === 1 && _changedProperties.has('endSide'));
+  }
+
+  override render(): unknown {
+    return html`${ifDefined(this.message)}`;
   }
 }
