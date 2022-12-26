@@ -5,21 +5,20 @@ import type {Schema} from './type.js';
 export {validator, Schema};
 
 function validator<DataType extends Record<string, unknown>>(value: Record<string, unknown>, schema: Schema): DataType {
-  for (const paramName in schema) {
-    if (!Object.prototype.hasOwnProperty.call(schema, paramName)) continue;
+  for (const instance in schema) {
+    if (!Object.prototype.hasOwnProperty.call(schema, instance)) continue;
 
-    const valueType = schema[paramName];
+    const valueType = schema[instance];
     // nested object
-    if (typeof schema[paramName] === 'object') {
-      value[paramName] =
-        validator<DataType>(value[paramName] as Record<string, unknown>, schema[paramName] as Schema);
+    if (typeof schema[instance] === 'object') {
+      value[instance] = validator<DataType>(value[instance] as Record<string, unknown>, schema[instance] as Schema);
     }
 
-    const validValue = value[paramName] as string | number | boolean;
+    const valueKey = value[instance] as string | number | boolean;
 
     if (valueType === 'boolean') {
-      if (validValue === true || validValue === false) {
-        value[paramName] = validValue;
+      if (valueKey === true || valueKey === false) {
+        value[instance] = valueKey;
       }
       else {
         throw new Error('invalid_type', {
@@ -31,8 +30,8 @@ function validator<DataType extends Record<string, unknown>>(value: Record<strin
       }
     }
     else if (valueType === 'number') {
-      if (isNumber(validValue)) {
-        value[paramName] = +validValue;
+      if (isNumber(valueKey)) {
+        value[instance] = +valueKey;
       }
       else {
         throw new Error('invalid_type', {
@@ -44,7 +43,17 @@ function validator<DataType extends Record<string, unknown>>(value: Record<strin
       }
     }
     else if (valueType === 'string') {
-      value[paramName] = validValue.toString();
+      if (typeof valueKey === 'string') {
+        value[instance] = valueKey;
+      }
+      else {
+        throw new Error('invalid_type', {
+          cause: {
+            name: 'string',
+            message: JSON.stringify(value),
+          },
+        });
+      }
     }
   }
 
