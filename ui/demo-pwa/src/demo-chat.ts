@@ -1,4 +1,4 @@
-import {customElement, AlwatrElement, css, html} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 
 import '@alwatr/ui-kit/chat/chat-avatar.js';
@@ -15,7 +15,7 @@ declare global {
  * Alwatr Demo Home Page
  */
 @customElement('alwatr-demo-chat')
-export class AlwatrDemoHome extends AlwatrElement {
+export class AlwatrDemoHome extends AlwatrSmartElement {
   static override styles = [
     css`
       :host {
