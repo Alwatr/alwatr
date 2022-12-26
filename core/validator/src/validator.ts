@@ -9,6 +9,7 @@ function validator<DataType extends Record<string, unknown>>(value: Record<strin
     if (!Object.prototype.hasOwnProperty.call(schema, paramName)) continue;
 
     const valueType = schema[paramName];
+    // nested object
     if (typeof schema[paramName] === 'object') {
       value[paramName] =
         validator<DataType>(value[paramName] as Record<string, unknown>, schema[paramName] as schema);
@@ -23,7 +24,7 @@ function validator<DataType extends Record<string, unknown>>(value: Record<strin
       else {
         throw new Error('invalid_type', {
           cause: {
-            name: 'boolean_validator',
+            name: 'boolean',
             message: JSON.stringify(value),
           },
         });
@@ -36,7 +37,7 @@ function validator<DataType extends Record<string, unknown>>(value: Record<strin
       else {
         throw new Error('invalid_type', {
           cause: {
-            name: 'number_validator',
+            name: 'number',
             message: JSON.stringify(value),
           },
         });
