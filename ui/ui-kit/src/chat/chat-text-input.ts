@@ -17,19 +17,26 @@ export class AlwatrChatTextInput extends AlwatrDummyElement {
       display: flex;
       flex: 1 1 100%;
       align-items: end;
-      /* font options */
-      font-size: 16px;
       /* theme options */
-      color: var(--md-sys-color-on-surface-variant);
       background-color: var(--md-sys-color-surface-variant);
       /* shape options */
-      border-radius: 1.5em;
+      border-radius: 23px;
+      /* typography */
+      font-family: var(--md-sys-typescale-body-medium-font);
+      font-weight: var(--md-sys-typescale-body-medium-weight);
+      font-size: var(--md-sys-typescale-body-medium-size);
+      font-style: var(--md-sys-typescale-body-medium-font-style);
+      letter-spacing: var(--md-sys-typescale-body-medium-tracking);
+      line-height: var(--md-sys-typescale-body-medium-line-height);
+      text-transform: var(--md-sys-typescale-body-medium-text-transform);
+      text-decoration: var(--md-sys-typescale-body-medium-text-decoration);
     }
     textarea {
       /* flex options */
       display: flex;
       flex: 1 1 100%;
       /* reset */
+      color: var(--md-sys-color-surface-tint);
       resize: none;
       border: none;
       outline: none;
