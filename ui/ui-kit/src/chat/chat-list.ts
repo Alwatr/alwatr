@@ -34,7 +34,10 @@ export function* map<T>(
 export class AlwatrChatList extends AlwatrDummyElement {
   static override styles = css`
     :host {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      padding: var(--md-sys-spacing-track-2) var(--md-sys-spacing-track-1) var(--md-sys-spacing-track-1);
+      gap: var(--md-sys-spacing-track-1);
       color: var(--md-sys-color-on-surface-variant);
       background-color: var(--md-sys-color-surface-variant);
     }
@@ -55,8 +58,12 @@ export class AlwatrChatList extends AlwatrDummyElement {
     return html`${map(
         this.storage.data,
         (message) => html`
-          <alwatr-chat-message .message=${message} ?end-side=${message.from !== this.currentUser}></alwatr-chat-message>
-        `,
+        <alwatr-chat-message
+          dir="rtl"
+          .message=${message}
+          ?end-side=${message.from !== this.currentUser}
+        ></alwatr-chat-message>
+      `,
     )}`;
   }
 }

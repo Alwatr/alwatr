@@ -102,26 +102,24 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       box-sizing: border-box;
       height: 100%;
       overflow-y: auto;
-      padding: 1.5rem;
+      padding: var(--md-sys-spacing-side-padding);
+      max-width: var(--md-sys-layout-max-width);
+      margin: 0 auto;
     }
 
     p {
-      padding: 1.5rem;
+      padding: var(--md-sys-spacing-track-2) var(--md-sys-spacing-track-1) var(--md-sys-spacing-track-1);
       color: var(--md-sys-color-on-surface-variant);
       background-color: var(--md-sys-color-surface-variant);
     }
 
     .section-name {
       display: block;
-      margin-bottom: 1rem;
+      margin-bottom: var(--md-sys-spacing-track-1);
     }
 
     alwatr-chat-message {
-      margin: 1rem 0;
-    }
-
-    alwatr-chat-list {
-      min-height: 25rem;
+      margin: var(--md-sys-spacing-track-1) 0;
     }
   `;
 

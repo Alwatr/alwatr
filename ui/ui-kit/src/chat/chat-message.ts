@@ -27,17 +27,24 @@ export class AlwatrChatMessage extends AlwatrDummyElement {
     :host {
       display: flex;
       align-items: flex-end;
-      gap: 1rem;
+      gap: var(--md-sys-spacing-track-1);
+      flex-direction: row;
+    }
+
+    :host([end-side]) {
+      flex-direction: row-reverse;
     }
 
     :host,
     :host([dir='rtl'][end-side]) {
-      flex-direction: row;
+      padding-left: 0;
+      padding-right: var(--md-sys-spacing-track-9);
     }
 
     :host([dir='rtl']),
     :host([end-side]) {
-      flex-direction: row-reverse
+      padding-left: var(--md-sys-spacing-track-9);
+      padding-right: 0;
     }
   `;
 
@@ -52,7 +59,7 @@ export class AlwatrChatMessage extends AlwatrDummyElement {
     if (this.message == null) return nothing;
     return html`
       <alwatr-chat-avatar .user=${this.message.from}></alwatr-chat-avatar>
-      <alwatr-chat-bubble .text=${this.message.text} .endSide=${this.endSide}></alwatr-chat-bubble>
+      <alwatr-chat-bubble dir="rtl" .text=${this.message.text} .endSide=${this.endSide}></alwatr-chat-bubble>
     `;
   }
 }
