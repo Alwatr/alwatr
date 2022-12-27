@@ -19,6 +19,8 @@ export class AlwatrFilledCard extends AlwatrCard {
       :host {
         color: var(--md-sys-color-on-primary-container);
         background-color: var(--md-sys-color-primary-container);
+
+        --_elevation-level: 0;
       }
     `,
   ];

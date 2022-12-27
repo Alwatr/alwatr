@@ -20,6 +20,8 @@ export class AlwatrOutlinedCard extends AlwatrCard {
         color: var(--md-sys-color-on-background);
         background-color: var(--md-sys-color-background);
         border: 1px solid var(--md-sys-color-outline);
+
+        --_elevation-level: 0;
       }
     `,
   ];
