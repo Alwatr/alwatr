@@ -3,6 +3,9 @@ import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element
 import '@alwatr/ui-kit/chat/chat-avatar.js';
 import '@alwatr/ui-kit/chat/chat-bubble.js';
 import '@alwatr/ui-kit/chat/chat-message.js';
+import '@alwatr/ui-kit/card/elevated-card.js';
+import '@alwatr/ui-kit/card/filled-card.js';
+import '@alwatr/ui-kit/card/outlined-card.js';
 
 import type {ChatMessage} from '@alwatr/ui-kit/chat/chat-message.js';
 
@@ -23,7 +26,8 @@ const messageList: Array<ChatMessage> = [
   {
     from: 'user-2',
     type: 'text',
-    text: 'با تمام جهل و مستی تصمیم گرفته‌ام دفترچه رزوگار را با پاک کنِ مهر و عطوفت پاک کنم\n' +
+    text:
+      'با تمام جهل و مستی تصمیم گرفته‌ام دفترچه رزوگار را با پاک کنِ مهر و عطوفت پاک کنم\n' +
       'و از اول با نام تو روزگار را آغاز کنم.',
   },
   {
@@ -59,7 +63,8 @@ const messageList: Array<ChatMessage> = [
   {
     from: 'user-4',
     type: 'text',
-    text: 'سالهاست می اندیشم که هنگام بهار مگر چه می شود که اینگونه به هم می ریزیم' +
+    text:
+      'سالهاست می اندیشم که هنگام بهار مگر چه می شود که اینگونه به هم می ریزیم' +
       '،مهربان می شویم، به سراغ هم می رویم و از همه مهمتر منتظر می شویم…',
   },
   {
@@ -103,6 +108,12 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     alwatr-chat-list {
       min-height: 25rem;
     }
+
+    alwatr-elevated-card,
+    alwatr-filled-card,
+    alwatr-outlined-card {
+      margin-bottom: 1em;
+    }
   `;
 
   override render(): unknown {
@@ -110,9 +121,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     return html`
       text on surface
 
-      <p>
-        text on surface-variant
-      </p>
+      <p>text on surface-variant</p>
 
       <p>
         <span class="section-name">alwatr-chat-avatar</span>
@@ -121,17 +130,27 @@ export class AlwatrPageHome extends AlwatrSmartElement {
 
       <p>
         <span class="section-name">alwatr-chat-bubble</span>
-        ${map(messageListShort, (message) => html`
-          <alwatr-chat-bubble .text=${message.text} ?end-side=${message.from !== me}></alwatr-chat-bubble>
-        `)}
+        ${map(
+      messageListShort,
+      (message) => html`
+            <alwatr-chat-bubble .text=${message.text} ?end-side=${message.from !== me}></alwatr-chat-bubble>
+          `,
+  )}
       </p>
 
       <p>
         <span class="section-name">alwatr-chat-message</span>
-        ${map(messageListShort, (message) => html`
-          <alwatr-chat-message .message=${message} ?end-side=${message.from !== me}></alwatr-chat-message>
-        `)}
+        ${map(
+      messageListShort,
+      (message) => html`
+            <alwatr-chat-message .message=${message} ?end-side=${message.from !== me}></alwatr-chat-message>
+          `,
+  )}
       </p>
+
+      <alwatr-elevated-card> Elevated Card </alwatr-elevated-card>
+      <alwatr-filled-card> Filled Card </alwatr-filled-card>
+      <alwatr-outlined-card> Outlined Card </alwatr-outlined-card>
 
       <alwatr-chat-list .list=${messageList}></alwatr-chat-list>
     `;
