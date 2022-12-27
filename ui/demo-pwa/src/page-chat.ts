@@ -3,9 +3,9 @@ import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element
 import '@alwatr/ui-kit/chat/chat-avatar.js';
 import '@alwatr/ui-kit/chat/chat-bubble.js';
 import '@alwatr/ui-kit/chat/chat-message.js';
-import '@alwatr/ui-kit/card/elevated-card.js';
-import '@alwatr/ui-kit/card/filled-card.js';
-import '@alwatr/ui-kit/card/outlined-card.js';
+import '@alwatr/ui-kit/cards/elevated-card.js';
+import '@alwatr/ui-kit/cards/filled-card.js';
+import '@alwatr/ui-kit/cards/outlined-card.js';
 
 import type {ChatMessage} from '@alwatr/ui-kit/chat/chat-message.js';
 
@@ -148,9 +148,13 @@ export class AlwatrPageHome extends AlwatrSmartElement {
   )}
       </p>
 
-      <alwatr-elevated-card> Elevated Card </alwatr-elevated-card>
-      <alwatr-filled-card> Filled Card </alwatr-filled-card>
-      <alwatr-outlined-card> Outlined Card </alwatr-outlined-card>
+      <p>
+        <span class="section-name">alwatr card</span>
+
+        <alwatr-elevated-card> Elevated Card </alwatr-elevated-card>
+        <alwatr-filled-card> Filled Card </alwatr-filled-card>
+        <alwatr-outlined-card> Outlined Card </alwatr-outlined-card>
+      </p>
 
       <alwatr-chat-list .list=${messageList}></alwatr-chat-list>
     `;
