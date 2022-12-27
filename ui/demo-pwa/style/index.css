@@ -9,6 +9,7 @@
 @import url('tokens/motion.css');
 @import url('tokens/state.css');
 @import url('tokens/elevation.css');
+@import url('tokens/spacing.css');
 
 @import url('safe-area.css');
 @import url('root.css');
