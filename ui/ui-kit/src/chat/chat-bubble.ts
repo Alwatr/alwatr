@@ -1,4 +1,4 @@
-import {AlwatrDummyElement, css, html, customElement, property, ifDefined, PropertyValues} from '@alwatr/element';
+import {AlwatrDummyElement, css, html, customElement, property, PropertyValues} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -20,6 +20,7 @@ export class AlwatrChatBubble extends AlwatrDummyElement {
       padding: 0.8rem 1.4rem;
       color: var(--md-sys-color-on-surface);
       background-color: var(--md-sys-color-surface);
+      white-space: pre-line;
     }
 
     :host,
@@ -36,7 +37,7 @@ export class AlwatrChatBubble extends AlwatrDummyElement {
   `;
 
   @property()
-    message?: string;
+    text?: string;
 
   @property({type: Boolean, attribute: 'end-side', reflect: true})
     endSide = false;
@@ -47,6 +48,7 @@ export class AlwatrChatBubble extends AlwatrDummyElement {
   }
 
   override render(): unknown {
-    return html`${ifDefined(this.message)}`;
+    super.render();
+    return html`${this.text ?? '...'}`;
   }
 }
