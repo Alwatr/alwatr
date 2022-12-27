@@ -17,5 +17,7 @@
   "exclude": [],
   "references": [
     {"path": "../element"},
+    {"path": "../icon"},
+    {"path": "../../core/fetch"},
   ]
 }
