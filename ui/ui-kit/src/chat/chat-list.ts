@@ -36,8 +36,8 @@ export class AlwatrChatList extends AlwatrDummyElement {
     :host {
       display: flex;
       flex-direction: column;
-      padding: var(--md-sys-spacing-track-2) var(--md-sys-spacing-track-1) var(--md-sys-spacing-track-1);
-      gap: var(--md-sys-spacing-track-1);
+      padding: var(--md-sys-spacing-track-3) var(--md-sys-spacing-track-2) var(--md-sys-spacing-track-2);
+      gap: var(--md-sys-spacing-track-2);
       color: var(--md-sys-color-on-surface-variant);
       background-color: var(--md-sys-color-surface-variant);
     }
@@ -49,9 +49,6 @@ export class AlwatrChatList extends AlwatrDummyElement {
   @property({type: Object, attribute: false})
     currentUser?: string;
 
-  @property({type: Boolean, attribute: 'end-side', reflect: true})
-    endSide = false;
-
   override render(): unknown {
     super.render();
     if (this.storage == null) return nothing;
@@ -59,9 +56,8 @@ export class AlwatrChatList extends AlwatrDummyElement {
         this.storage.data,
         (message) => html`
         <alwatr-chat-message
-          dir="rtl"
           .message=${message}
-          ?end-side=${message.from !== this.currentUser}
+          ?self=${message.from === this.currentUser}
         ></alwatr-chat-message>
       `,
     )}`;
