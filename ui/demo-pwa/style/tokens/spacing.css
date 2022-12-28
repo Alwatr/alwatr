@@ -1,0 +1,81 @@
+/* https://material.io/design/layout/spacing-methods.html */
+:root {
+  --md-sys-spacing-track-1: 8px;
+  --md-sys-spacing-track-2: 16px;
+  --md-sys-spacing-track-3: 24px;
+  --md-sys-spacing-track-4: 32px;
+  --md-sys-spacing-track-5: 40px;
+  --md-sys-spacing-track-6: 48px;
+  --md-sys-spacing-track-7: 56px;
+  --md-sys-spacing-track-8: 64px;
+  --md-sys-spacing-track-9: 72px;
+
+  --md-sys-spacing-halftrack-1: 4px;
+  --md-sys-spacing-halftrack-2: 8px;
+  --md-sys-spacing-halftrack-3: 12px;
+  --md-sys-spacing-halftrack-4: 16px;
+  --md-sys-spacing-halftrack-5: 20px;
+  --md-sys-spacing-halftrack-6: 24px;
+  --md-sys-spacing-halftrack-7: 28px;
+  --md-sys-spacing-halftrack-8: 32px;
+  --md-sys-spacing-halftrack-9: 36px;
+
+  --md-sys-breakpoint-handset: 600px;
+  --md-sys-breakpoint-tablet: 840px;
+  --md-sys-breakpoint-laptop: 1240px;
+  --md-sys-breakpoint-large-screen: 1440px;
+
+  --md-sys-spacing-column-1: calc(
+    ( var(--md-sys-layout-max-width)
+    - var(--md-sys-spacing-side-padding) * 2
+    - var(--md-sys-spacing-gutter) * (var(--md-sys-layout-columns) - 1)
+    ) / var(--md-sys-layout-columns)
+  );
+  --md-sys-spacing-column-2: calc(var(--md-sys-spacing-column-1) * 2 + var(--md-sys-spacing-gutter));
+  --md-sys-spacing-column-3: calc(var(--md-sys-spacing-column-1) * 3 + var(--md-sys-spacing-gutter) * 2);
+  --md-sys-spacing-column-4: calc(var(--md-sys-spacing-column-1) * 4 + var(--md-sys-spacing-gutter) * 3);
+
+  /* < 600px */
+  --md-sys-layout-columns: 4;
+  --md-sys-layout-max-width: 100vw;
+  --md-sys-spacing-side-padding: var(--md-sys-spacing-track-2);
+  --md-sys-spacing-gutter: var(--md-sys-spacing-track-2);
+}
+
+/* >= 600 */
+@media only screen and (min-width: 600px) {
+  :root {
+    --md-sys-layout-columns: 8;
+    /* --md-sys-layout-max-width: 100vw; */
+    --md-sys-spacing-side-padding: var(--md-sys-spacing-track-3);
+    --md-sys-spacing-gutter: var(--md-sys-spacing-track-3);
+  }
+}
+
+/* >= 840px */
+@media only screen and (min-width: 840px) {
+  :root {
+    --md-sys-layout-columns: 12;
+    --md-sys-layout-max-width: 840px;
+    /* --md-sys-spacing-side-padding: var(--md-sys-spacing-track-3);
+    --md-sys-spacing-gutter: var(--md-sys-spacing-track-3); */
+  }
+}
+
+/* >= 1200px */
+@media only screen and (min-width: 1200px) {
+  :root {
+    --md-sys-layout-max-width: 100vw;
+    --md-sys-spacing-side-padding: var(--md-sys-spacing-track-4);
+    --md-sys-spacing-gutter: var(--md-sys-spacing-track-4);
+  }
+}
+
+/* >= 1440px */
+@media only screen and (min-width: 1440px) {
+  :root {
+    --md-sys-layout-max-width: 100vw;
+    --md-sys-spacing-side-padding: var(--md-sys-spacing-track-5);
+    --md-sys-spacing-gutter: var(--md-sys-spacing-track-5);
+  }
+}
