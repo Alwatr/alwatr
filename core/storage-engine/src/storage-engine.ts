@@ -5,10 +5,9 @@ import exitHook from 'exit-hook';
 
 import {readJsonFile, writeJsonFile} from './util.js';
 
-import type {AlwatrDocumentStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject} from './type.js';
+import type {AlwatrStorageEngineConfig} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
-
-export {AlwatrDocumentStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject};
+import type {AlwatrDocumentStorage, AlwatrDocumentObject} from '@alwatr/type';
 
 alwatrRegisteredList.push({
   name: '@alwatr/storage-engine',

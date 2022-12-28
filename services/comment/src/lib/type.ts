@@ -1,4 +1,4 @@
-import {AlwatrDocumentObject} from '@alwatr/storage-client';
+import {AlwatrDocumentObject} from '@alwatr/type';
 
 type CommonMessage = AlwatrDocumentObject & {
   user: unknown;

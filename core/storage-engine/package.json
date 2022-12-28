@@ -40,5 +40,8 @@
     "@alwatr/logger": "~0.26.0",
     "exit-hook": "~3.1.4",
     "tslib": "~2.4.1"
+  },
+  "devDependencies": {
+    "@alwatr/type": "~0.26.0"
   }
 }

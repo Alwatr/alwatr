@@ -1,6 +1,6 @@
 import {AlwatrStorageClient} from '@alwatr/storage-client';
 
-import type {AlwatrDocumentObject} from '@alwatr/storage-client';
+import type {AlwatrDocumentObject} from '@alwatr/type';
 
 interface User extends AlwatrDocumentObject {
   fname: string;

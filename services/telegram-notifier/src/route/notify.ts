@@ -2,7 +2,8 @@ import {sendMessage} from '../bot/send-message.js';
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 
-import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
+import type {AlwatrConnection} from '@alwatr/nano-server';
+import type {AlwatrServiceResponse} from '@alwatr/type';
 
 // Send message to admin
 nanoServer.route('POST', '/', notify);

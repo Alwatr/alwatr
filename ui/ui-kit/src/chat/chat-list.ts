@@ -2,7 +2,7 @@ import {AlwatrDummyElement, css, customElement, html, nothing, property} from '@
 import './chat-message.js';
 
 import type {ChatMessage as _ChatMessage} from './chat-message.js';
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/fetch/type.js';
+import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -46,7 +46,7 @@ export class AlwatrChatList extends AlwatrDummyElement {
   @property({type: Object, attribute: false})
     storage?: ChatStorage;
 
-  @property({type: Object, attribute: false})
+  @property({type: String, attribute: false})
     currentUser?: string;
 
   override render(): unknown {

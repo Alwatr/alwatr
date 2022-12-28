@@ -15,11 +15,12 @@
     {"path": "../core/signal"},
     {"path": "../core/router"},
     {"path": "../core/i18n"},
+    {"path": "../core/type"},
+    {"path": "../core/storage-client"},
+    {"path": "../core/token"},
     {"path": "../core/math"},
     {"path": "../ui/element"},
     {"path": "../ui/icon"},
     {"path": "../core/storage-engine"},
-    {"path": "../core/storage-client"},
-    {"path": "../core/token"}
   ],
 }

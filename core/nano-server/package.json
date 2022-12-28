@@ -35,5 +35,8 @@
     "@alwatr/logger": "~0.26.0",
     "@alwatr/math": "~0.26.0",
     "tslib": "~2.4.1"
+  },
+  "devDependencies": {
+    "@alwatr/type": "~0.26.0"
   }
 }

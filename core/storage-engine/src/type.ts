@@ -1,8 +1,3 @@
-import type {AlwatrDocumentObject, AlwatrDocumentMeta, AlwatrDocumentStorage} from '@alwatr/fetch/type.js';
-
-export {AlwatrDocumentObject, AlwatrDocumentMeta, AlwatrDocumentStorage};
-
-
 export type AlwatrStorageEngineConfig = {
   /**
    * Storage name.

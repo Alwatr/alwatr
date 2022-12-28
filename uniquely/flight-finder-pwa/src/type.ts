@@ -1,4 +1,4 @@
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/fetch/type.js';
+import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
 import type {ToastOptions} from '@ionic/core';
 
 declare global {

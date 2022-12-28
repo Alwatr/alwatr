@@ -1,4 +1,4 @@
-import type {Methods, QueryParameters} from '@alwatr/type/src';
+import type {Methods, QueryParameters} from '@alwatr/type';
 
 export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate';
 export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
