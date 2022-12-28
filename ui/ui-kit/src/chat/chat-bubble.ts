@@ -1,4 +1,4 @@
-import {AlwatrDummyElement, css, html, customElement, property} from '@alwatr/element';
+import {AlwatrDummyElement, css, html, customElement, property, DirectionMixin} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -13,7 +13,7 @@ declare global {
  *
  */
 @customElement('alwatr-chat-bubble')
-export class AlwatrChatBubble extends AlwatrDummyElement {
+export class AlwatrChatBubble extends DirectionMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
       display: inline-block;
