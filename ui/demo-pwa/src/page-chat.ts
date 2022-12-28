@@ -5,6 +5,7 @@ import '@alwatr/ui-kit/chat/chat-avatar.js';
 import '@alwatr/ui-kit/chat/chat-bubble.js';
 import '@alwatr/ui-kit/chat/chat-message.js';
 import '@alwatr/ui-kit/chat/chat-list.js';
+import '@alwatr/ui-kit/icon-button/standard-icon-button.js';
 
 import type {ChatStorage} from '@alwatr/ui-kit/chat/chat-list.js';
 
@@ -35,7 +36,8 @@ const chatStorage: ChatStorage = {
       id: '2',
       from: 'user-2',
       type: 'text',
-      text: 'با تمام جهل و مستی تصمیم گرفته‌ام دفترچه رزوگار را با پاک کنِ مهر و عطوفت پاک کنم\n' +
+      text:
+        'با تمام جهل و مستی تصمیم گرفته‌ام دفترچه رزوگار را با پاک کنِ مهر و عطوفت پاک کنم\n' +
         'و از اول با نام تو روزگار را آغاز کنم.',
     },
     '3': {
@@ -78,7 +80,8 @@ const chatStorage: ChatStorage = {
       id: '9',
       from: 'user-4',
       type: 'text',
-      text: 'سالهاست می اندیشم که هنگام بهار مگر چه می شود که اینگونه به هم می ریزیم' +
+      text:
+        'سالهاست می اندیشم که هنگام بهار مگر چه می شود که اینگونه به هم می ریزیم' +
         '،مهربان می شویم، به سراغ هم می رویم و از همه مهمتر منتظر می شویم…',
     },
     '10': {
@@ -132,22 +135,34 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       </p>
 
       <p>
+        <span class="section-name">icon buttons</span>
+        <alwatr-standard-icon-button .icon=${'mic-outline'}></alwatr-standard-icon-button>
+        <alwatr-standard-icon-button .icon=${'home-outline'}></alwatr-standard-icon-button>
+      </p>
+
+      <p>
         <span class="section-name">alwatr-chat-avatar</span>
         ${map(messageListShort, (message) => html`<alwatr-chat-avatar .user=${message.from}></alwatr-chat-avatar>`)}
       </p>
 
       <p>
         <span class="section-name">alwatr-chat-bubble</span>
-        ${map(messageListShort, (message) => html`
-          <alwatr-chat-bubble .text=${message.text} ?end-side=${message.from !== currentUser}></alwatr-chat-bubble>
-        `)}
+        ${map(
+      messageListShort,
+      (message) => html`
+            <alwatr-chat-bubble .text=${message.text} ?end-side=${message.from !== currentUser}></alwatr-chat-bubble>
+          `,
+  )}
       </p>
 
       <p>
         <span class="section-name">alwatr-chat-message</span>
-        ${map(messageListShort, (message) => html`
-          <alwatr-chat-message .message=${message} ?end-side=${message.from !== currentUser}></alwatr-chat-message>
-        `)}
+        ${map(
+      messageListShort,
+      (message) => html`
+            <alwatr-chat-message .message=${message} ?end-side=${message.from !== currentUser}></alwatr-chat-message>
+          `,
+  )}
       </p>
 
       <alwatr-chat-list .storage=${chatStorage} .currentUser=${currentUser}></alwatr-chat-list>
