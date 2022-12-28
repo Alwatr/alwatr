@@ -46,11 +46,6 @@ export class AlwatrRootElement extends AlwatrSmartElement {
   }
 
   protected _initRouter(): void {
-    // l10n.config.defaultLocale = {
-    //   code: 'fa-IR',
-    //   direction: 'rtl',
-    //   language: 'fa',
-    // };
     l10n.config.defaultLocale = {
       code: 'en-US',
       direction: 'ltr',

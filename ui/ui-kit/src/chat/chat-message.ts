@@ -1,4 +1,4 @@
-import {AlwatrDummyElement, css, customElement, html, nothing, property} from '@alwatr/element';
+import {AlwatrDummyElement, css, customElement, html, nothing, property, DirectionMixin} from '@alwatr/element';
 import './chat-avatar.js';
 import './chat-bubble.js';
 
@@ -22,7 +22,7 @@ export type ChatMessage = ChatTextMessage; // TODO: ChatPhotoMessage
  * @attr self
  */
 @customElement('alwatr-chat-message')
-export class AlwatrChatMessage extends AlwatrDummyElement {
+export class AlwatrChatMessage extends DirectionMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
       display: flex;
