@@ -1,4 +1,4 @@
-import {AlwatrDummyElement, css, html, customElement, property, PropertyValues} from '@alwatr/element';
+import {AlwatrDummyElement, css, html, customElement, property} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -9,7 +9,7 @@ declare global {
 /**
  * Alwatr chat message bubble box element.
  *
- * @attr end-side
+ * @attr {start|end} side
  *
  */
 @customElement('alwatr-chat-bubble')
@@ -25,14 +25,14 @@ export class AlwatrChatBubble extends AlwatrDummyElement {
       border-radius: var(--md-sys-shape-large);
     }
 
-    :host,
-    :host([dir='rtl'][end-side]) {
+    :host([side='start']),
+    :host([side='end'][dir='rtl']) {
       border-bottom-left-radius: var(--md-sys-shape-corner-extra-small-default-size);
       border-bottom-right-radius: var(--md-sys-shape-large);
     }
 
-    :host([dir='rtl']),
-    :host([end-side]) {
+    :host([side='end']),
+    :host([side='start'][dir='rtl']) {
       border-bottom-left-radius: var(--md-sys-shape-large);
       border-bottom-right-radius: var(--md-sys-shape-corner-extra-small-default-size);
     }
@@ -40,14 +40,6 @@ export class AlwatrChatBubble extends AlwatrDummyElement {
 
   @property()
     text?: string;
-
-  @property({type: Boolean, attribute: 'end-side', reflect: true})
-    endSide = false;
-
-  protected override shouldUpdate(_changedProperties: PropertyValues): boolean {
-    return super.shouldUpdate(_changedProperties) &&
-      !(_changedProperties.size === 1 && _changedProperties.has('endSide'));
-  }
 
   override render(): unknown {
     super.render();
