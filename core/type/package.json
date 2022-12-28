@@ -1,0 +1,30 @@
+{
+  "name": "@alwatr/type",
+  "version": "0.26.0",
+  "description": "Alwatr Types",
+  "private": true,
+  "keywords": [
+    "type",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "type": "module",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "license": "MIT",
+  "files": [
+    "**/**/*.{d.ts.map,d.ts,js.map,js,md}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "core/type"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/core/type#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  }
+}
