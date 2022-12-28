@@ -1,9 +1,10 @@
 import {l10n} from '@alwatr/i18n';
-import {LitElement} from 'lit';
 
 import type {Constructor} from '../type.js';
+import type {LoggerMixinInterface} from './logging.js';
 
-export declare class LocalizeMixinInterface extends LitElement {
+
+export declare class LocalizeMixinInterface extends LoggerMixinInterface {
   protected _signalListenerList: Array<unknown>;
   protected l10n: {
     localize: typeof l10n.localize;
@@ -11,7 +12,7 @@ export declare class LocalizeMixinInterface extends LitElement {
   };
 }
 
-export function LocalizeMixin<T extends Constructor<LitElement>>(
+export function LocalizeMixin<T extends Constructor<LoggerMixinInterface>>(
     superClass: T,
 ): Constructor<LocalizeMixinInterface> & T {
   class LocalizeMixinClass extends superClass {
@@ -26,12 +27,13 @@ export function LocalizeMixin<T extends Constructor<LitElement>>(
       super.connectedCallback();
       this._signalListenerList.push(
           l10n.resourceChangeSignal.addListener(() => {
-            this._l10nResourceChange();
+            this._l10nResourceChanged();
           }),
       );
     }
 
-    protected _l10nResourceChange(): void {
+    protected _l10nResourceChanged(): void {
+      this._logger.logMethod('_l10nResourceChange');
       this.requestUpdate();
     }
   }

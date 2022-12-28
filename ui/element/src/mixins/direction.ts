@@ -1,16 +1,16 @@
 import {l10n} from '@alwatr/i18n';
-import {LitElement} from 'lit';
 
 import type {Constructor} from '../type.js';
+import type {LoggerMixinInterface} from './logging.js';
 
-export declare class DirectionMixinInterface extends LitElement {
+export declare class DirectionMixinInterface extends LoggerMixinInterface {
   protected _signalListenerList: Array<unknown>;
   protected _dirParent: HTMLElement | null;
   protected _updateDir: () => void;
   protected _localeChange: () => void;
 }
 
-export function DirectionMixin<T extends Constructor<LitElement>>(
+export function DirectionMixin<T extends Constructor<LoggerMixinInterface>>(
     superClass: T,
 ): Constructor<DirectionMixinInterface> & T {
   class DirectionMixinClass extends superClass {
@@ -21,7 +21,7 @@ export function DirectionMixin<T extends Constructor<LitElement>>(
       super.connectedCallback();
       this._signalListenerList.push(
           l10n.localeChangeSignal.addListener(() => {
-            this._localeChange();
+            this._localeChanged();
           }),
       );
     }
@@ -30,11 +30,13 @@ export function DirectionMixin<T extends Constructor<LitElement>>(
      * Update direction from this._dirParent or l10n.locale
      */
     protected _updateDir(): void {
+      this._logger.logMethod('_updateDir');
       const dir = this._dirParent?.dir || l10n.locale?.direction || document.documentElement.dir;
       this.setAttribute('dir', dir === 'rtl' ? dir : 'ltr');
     }
 
-    protected _localeChange(): void {
+    protected _localeChanged(): void {
+      this._logger.logMethod('_localeChanged');
       if (this._dirParent !== null) {
         return this._updateDir();
       }
