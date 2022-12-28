@@ -103,8 +103,6 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       height: 100%;
       overflow-y: auto;
       padding: var(--md-sys-spacing-side-padding);
-      max-width: var(--md-sys-layout-max-width);
-      margin: 0 auto;
     }
 
     p {
