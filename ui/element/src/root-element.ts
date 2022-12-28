@@ -1,17 +1,19 @@
 import {l10n} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
-import {LitElement, html, css} from 'lit';
+import {html, css} from 'lit';
 import {cache} from 'lit/directives/cache.js';
 
-import {LoggerMixin} from './mixins/logging.js';
+import {AlwatrSmartElement} from './smart-element.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {CSSResultGroup} from 'lit';
 
 /**
- * Alwatr Root Base Element
+ * Alwatr Root Element
+ *
+ * Include: AlwatrSmartElement, root styles, router config, multi-page render
  */
-export class AlwatrRootElement extends LoggerMixin(LitElement) {
+export class AlwatrRootElement extends AlwatrSmartElement {
   static override styles: CSSResultGroup = css`
     :host {
       display: flex;
