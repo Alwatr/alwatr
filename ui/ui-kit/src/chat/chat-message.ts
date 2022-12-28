@@ -9,9 +9,9 @@ declare global {
 }
 
 export type ChatTextMessage = {
-  from: string,
-  type: 'text',
-  text: string,
+  from: string;
+  type: 'text';
+  text: string;
 };
 
 export type ChatMessage = ChatTextMessage; // TODO: ChatPhotoMessage
@@ -19,7 +19,7 @@ export type ChatMessage = ChatTextMessage; // TODO: ChatPhotoMessage
 /**
  * Alwatr chat message box element.
  *
- * @attr end-side
+ * @attr self
  */
 @customElement('alwatr-chat-message')
 export class AlwatrChatMessage extends AlwatrDummyElement {
@@ -29,37 +29,57 @@ export class AlwatrChatMessage extends AlwatrDummyElement {
       align-items: flex-end;
       gap: var(--md-sys-spacing-track-1);
       flex-direction: row;
+      justify-content: flex-start;
+      align-self: flex-start;
+      padding-left: 0;
+      padding-right: var(--md-sys-spacing-track-6);
     }
 
-    :host([end-side]) {
-      flex-direction: row-reverse;
+    :host([self]) {
+      justify-content: flex-end;
+      align-self: flex-end;
+      padding-right: 0;
+      padding-left: var(--md-sys-spacing-track-9);
     }
 
-    :host,
-    :host([dir='rtl'][end-side]) {
+    :host([dir='rtl']) {
+      padding-right: 0;
+      padding-left: var(--md-sys-spacing-track-6);
+    }
+
+    :host([dir='rtl'][self]) {
       padding-left: 0;
       padding-right: var(--md-sys-spacing-track-9);
     }
 
-    :host([dir='rtl']),
-    :host([end-side]) {
-      padding-left: var(--md-sys-spacing-track-9);
-      padding-right: 0;
+    :host([self]) alwatr-chat-bubble {
+      color: var(--md-sys-color-on-secondary);
+      background-color: var(--md-sys-color-secondary);
+    }
+
+    alwatr-chat-bubble {
+      max-width: var(--md-sys-spacing-column-3);
     }
   `;
 
   @property({type: Object, attribute: false})
     message?: ChatTextMessage;
 
-  @property({type: Boolean, attribute: 'end-side', reflect: true})
-    endSide = false;
+  @property({type: Boolean, attribute: 'self', reflect: true})
+    self = false;
 
   override render(): unknown {
     super.render();
     if (this.message == null) return nothing;
-    return html`
-      <alwatr-chat-avatar .user=${this.message.from}></alwatr-chat-avatar>
-      <alwatr-chat-bubble dir="rtl" .text=${this.message.text} .endSide=${this.endSide}></alwatr-chat-bubble>
-    `;
+
+    const bubble = html`<alwatr-chat-bubble
+      .text=${this.message.text}
+      side=${this.self ? 'end' : 'start'}
+    ></alwatr-chat-bubble>`;
+
+    // prettier-ignore
+    return this.self
+      ? bubble
+      : [html`<alwatr-chat-avatar .user=${this.message.from}></alwatr-chat-avatar>`, bubble];
   }
 }
