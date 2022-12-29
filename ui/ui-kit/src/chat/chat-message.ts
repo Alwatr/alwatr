@@ -1,4 +1,7 @@
 import {AlwatrDummyElement, css, customElement, html, nothing, property, DirectionMixin} from '@alwatr/element';
+
+import type {ChatTextMessage} from '@alwatr/type';
+
 import './chat-avatar.js';
 import './chat-bubble.js';
 
@@ -7,14 +10,6 @@ declare global {
     'alwatr-chat-message': AlwatrChatMessage;
   }
 }
-
-export type ChatTextMessage = {
-  from: string;
-  type: 'text';
-  text: string;
-};
-
-export type ChatMessage = ChatTextMessage; // TODO: ChatPhotoMessage
 
 /**
  * Alwatr chat message box element.

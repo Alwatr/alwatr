@@ -1,17 +1,12 @@
 import {AlwatrDummyElement, css, customElement, html, nothing, property} from '@alwatr/element';
+import {ChatStorage} from '@alwatr/type';
 import './chat-message.js';
-
-import type {ChatMessage as _ChatMessage} from './chat-message.js';
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/fetch/type.js';
 
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-chat-list': AlwatrChatList;
   }
 }
-
-export type ChatMessage = AlwatrDocumentObject & _ChatMessage;
-export type ChatStorage = AlwatrDocumentStorage<ChatMessage>;
 
 export function* map<T>(
     items: Record<string, T> | undefined,
@@ -38,15 +33,34 @@ export class AlwatrChatList extends AlwatrDummyElement {
       flex-direction: column;
       padding: var(--md-sys-spacing-track-3) var(--md-sys-spacing-track-2) var(--md-sys-spacing-track-2);
       gap: var(--md-sys-spacing-track-2);
-      color: var(--md-sys-color-on-surface-variant);
-      background-color: var(--md-sys-color-surface-variant);
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    :host(::-webkit-scrollbar) {
+      width: var(--theme-scrollbar-size);
+      height: var(--theme-scrollbar-size);
+    }
+
+    :host(::-webkit-scrollbar-corner),
+    :host(::-webkit-scrollbar-track) {
+      background-color: red;
+    }
+
+    :host(::-webkit-scrollbar-thumb) {
+      background-color: var(--theme-scrollbar-color);
+      border-radius: var(--theme-scrollbar-radius);
+    }
+
+    :host(::-webkit-scrollbar-thumb:hover) {
+      background-color: var(--theme-scrollbar-color-hover);
     }
   `;
 
   @property({type: Object, attribute: false})
     storage?: ChatStorage;
 
-  @property({type: Object, attribute: false})
+  @property({type: String, attribute: false})
     currentUser?: string;
 
   override render(): unknown {
