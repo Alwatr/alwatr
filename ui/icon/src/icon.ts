@@ -7,10 +7,11 @@ import {
   html,
   css,
   DirectionMixin,
+  PropertyValues,
 } from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
 
-import type {PropertyValues, HTMLTemplateResult} from '@alwatr/element';
+import type {HTMLTemplateResult} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -65,14 +66,11 @@ export class AlwatrIcon extends DirectionMixin(AlwatrDummyElement) {
   @property({attribute: 'url-prefix'})
     urlPrefix?: string;
 
-  @property({attribute: 'flip-rtl', reflect: true, state: false})
-    flipRtl = false;
-
   @state()
   protected _icon?: HTMLTemplateResult;
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    super.render();
     return this._icon;
   }
 
@@ -80,7 +78,7 @@ export class AlwatrIcon extends DirectionMixin(AlwatrDummyElement) {
     if (changedProperties.has('name') || changedProperties.has('urlPrefix')) {
       this._fetchIcon();
     }
-    return changedProperties.has('_icon') && this._icon != null;
+    return super.shouldUpdate(changedProperties) && changedProperties.has('_icon') && this._icon != null;
   }
 
   protected async _fetchIcon(): Promise<void> {
