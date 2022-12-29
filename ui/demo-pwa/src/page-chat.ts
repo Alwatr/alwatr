@@ -115,10 +115,9 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       color: var(--md-sys-color-on-surface-variant);
       background-color: var(--md-sys-color-surface-variant);
     }
-    p.on-primary {
+    p.surface {
       color: var(--md-sys-color-on-surface);
       background-color: var(--md-sys-color-surface);
-      border: 1px solid var(--md-sys-color-on-surface);
     }
 
     .section-name {
@@ -139,14 +138,15 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       <p @click=${this._changeLocale}>text on surface-variant</p>
 
       <p>
-        <span class="section-name">icon buttons</span>
+        <span class="section-name">alwatr-standard-icon-button</span>
         <alwatr-standard-icon-button .icon=${'menu-outline'}></alwatr-standard-icon-button>
         <alwatr-standard-icon-button .icon=${'mic-outline'}></alwatr-standard-icon-button>
         <alwatr-standard-icon-button .icon=${'happy-outline'}></alwatr-standard-icon-button>
         <alwatr-standard-icon-button .icon=${'send'}></alwatr-standard-icon-button>
       </p>
 
-      <p style="background-color:#fff;">
+      <p class="surface">
+        <span class="section-name">alwatr-chat-text-input</span>
         <alwatr-chat-text-input></alwatr-chat-text-input>
       </p>
 
