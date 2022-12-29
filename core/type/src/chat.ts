@@ -1,7 +1,7 @@
-import {AlwatrDocumentObject} from '@alwatr/type';
+import type {AlwatrDocumentObject} from './storage.js';
 
 type CommonMessage = AlwatrDocumentObject & {
-  user: unknown;
+  from: unknown;
   replyId?: string;
 };
 

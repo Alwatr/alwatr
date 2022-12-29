@@ -1,10 +1,9 @@
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageClient} from '../lib/storage.js';
-import {Message} from '../lib/type.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
-import type {AlwatrServiceResponse} from '@alwatr/type';
+import type {Message, AlwatrServiceResponse} from '@alwatr/type';
 
 nanoServer.route('PATCH', '/', setComment);
 

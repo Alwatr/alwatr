@@ -7,7 +7,6 @@ import type {AlwatrDocumentStorage} from '@alwatr/type';
 
 export const commentDocumentStorageSignal = new SignalInterface('comment-document-storage');
 
-
 async function requestCommentStorage(cacheStrategy: CacheStrategy): Promise<void> {
   // logger.logMethod('jobListProvider');
   console.log('jobListProvider');

@@ -1,4 +1,6 @@
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
+import {TextMessage} from '@alwatr/type';
+
+import type {AlwatrDocumentStorage} from '@alwatr/type';
 
 declare global {
   interface AlwatrSignals {
@@ -6,12 +8,6 @@ declare global {
   }
 }
 
-export type ChatTextMessage = {
+export type ChatMessage = TextMessage & {
   from: string;
-  type: 'text';
-  text: string;
 };
-
-export type _ChatMessage = ChatTextMessage; // TODO: ChatPhotoMessage
-
-export type ChatMessage = AlwatrDocumentObject & _ChatMessage;
