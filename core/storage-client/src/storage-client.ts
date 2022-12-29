@@ -1,9 +1,9 @@
 import {serviceRequest} from '@alwatr/fetch';
-import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
+import {createLogger} from '@alwatr/logger';
+import {AlwatrDocumentObject, AlwatrDocumentStorage, alwatrRegisteredList} from '@alwatr/type';
 
 import type {AlwatrStorageClientConfig} from './type.js';
 import type {FetchOptions} from '@alwatr/fetch';
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
 
 export {AlwatrStorageClientConfig};
 

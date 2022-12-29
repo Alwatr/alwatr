@@ -1,13 +1,9 @@
+import {alwatrRegisteredList} from '@alwatr/type';
+
 import type {AlwatrLogger} from './type.js';
 export {AlwatrLogger};
 
 const isBrowser = typeof process === 'undefined';
-
-/**
- * Define `globalThis.Alwatr.registeredList`
- */
-export const alwatrRegisteredList = globalThis.Alwatr?.registeredList || [];
-globalThis.Alwatr ??= {version: '0.26.0', registeredList: alwatrRegisteredList};
 
 alwatrRegisteredList.push({
   name: '@alwatr/logger',
