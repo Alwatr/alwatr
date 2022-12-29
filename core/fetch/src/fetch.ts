@@ -1,12 +1,12 @@
 import {createLogger} from '@alwatr/logger';
-import {
+import {alwatrRegisteredList} from '@alwatr/type';
+
+import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type.js';
+import type {
   AlwatrServiceResponse,
   AlwatrServiceResponseSuccessWithMeta,
   AlwatrServiceResponseSuccess,
-  alwatrRegisteredList,
 } from '@alwatr/type';
-
-import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type.js';
 
 export {FetchOptions, CacheDuplicate, CacheStrategy};
 

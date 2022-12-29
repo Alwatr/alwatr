@@ -33,10 +33,10 @@
   "dependencies": {
     "@alwatr/fetch": "~0.26.0",
     "@alwatr/logger": "~0.26.0",
-    "@alwatr/math": "~0.26.0",
-    "tslib": "~2.4.1"
+    "@alwatr/math": "~0.26.0"
   },
   "devDependencies": {
+    "tslib": "~2.4.1",
     "@alwatr/type": "~0.26.0"
   }
 }

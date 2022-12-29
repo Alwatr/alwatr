@@ -1,11 +1,11 @@
 import type {AlwatrDocumentObject} from '@alwatr/type';
 
-export interface Job extends AlwatrDocumentObject {
+export type Job = AlwatrDocumentObject & {
   detail: JobDetail;
   resultList: Array<JobResult>;
 }
 
-export interface JobDetail extends Record<string, unknown> {
+export type JobDetail = Record<string, unknown> & {
   origin: string;
   destination: string;
   date: string;
@@ -16,7 +16,7 @@ export interface JobDetail extends Record<string, unknown> {
   maxHour: number | null;
 }
 
-export interface JobResult extends Record<string, unknown> {
+export type JobResult = Record<string, unknown> & {
   price: number;
   time: string;
   seatCount: number;
@@ -26,11 +26,11 @@ export interface JobResult extends Record<string, unknown> {
   arrivalTime: string,
 }
 
-export interface SepehrResponse extends Record<string, unknown> {
+export type SepehrResponse = Record<string, unknown> & {
   flightHeaderList: Array<SepehrFlightInformation>;
 }
 
-interface SepehrFlightInformation extends Record<string, unknown> {
+type SepehrFlightInformation = Record<string, unknown> & {
   airlineName: string,
   airlineIataCode: string,
   airplaneName: string,

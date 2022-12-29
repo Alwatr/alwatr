@@ -1,13 +1,8 @@
-import {TextMessage} from '@alwatr/type';
+import type {TextMessage, AlwatrDocumentStorage} from '@alwatr/type';
 
-import type {AlwatrDocumentStorage} from '@alwatr/type';
 
 declare global {
   interface AlwatrSignals {
-    'comment-document-storage': AlwatrDocumentStorage<ChatMessage>;
+    'comment-document-storage': AlwatrDocumentStorage<TextMessage>;
   }
 }
-
-export type ChatMessage = TextMessage & {
-  from: string;
-};

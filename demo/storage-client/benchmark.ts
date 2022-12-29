@@ -5,7 +5,7 @@ import {AlwatrStorageClient} from '@alwatr/storage-client';
 
 import type {AlwatrDocumentObject} from '@alwatr/type';
 
-interface User extends AlwatrDocumentObject {
+type User = AlwatrDocumentObject & {
   fname: string;
   lname: string;
   email: string;

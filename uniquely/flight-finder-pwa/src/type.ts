@@ -16,12 +16,12 @@ declare global {
   }
 }
 
-export interface Job extends AlwatrDocumentObject {
+export type Job = AlwatrDocumentObject & {
   detail: JobDetail;
   resultList: Array<JobResult>;
 }
 
-export interface JobDetail {
+export type JobDetail = {
   origin: string;
   destination: string;
   date: string;
