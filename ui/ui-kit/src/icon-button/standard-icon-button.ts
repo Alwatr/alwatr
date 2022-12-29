@@ -73,9 +73,13 @@ export class AlwatrStandardIconButton extends AlwatrDummyElement {
     }
   `;
 
-  @property() icon?: string;
+  @property()
+    icon?: string;
+
+  @property({type: Boolean, attribute: 'flip-rtl'})
+    flipRtl = false;
 
   override render(): unknown {
-    return html`<alwatr-icon .name=${this.icon}></alwatr-icon>`;
+    return html`<alwatr-icon ?flip-rtl=${this.flipRtl} .name=${this.icon}></alwatr-icon>`;
   }
 }
