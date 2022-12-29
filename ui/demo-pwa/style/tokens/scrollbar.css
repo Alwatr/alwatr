@@ -1,7 +1,7 @@
 :root {
-  --md-scrollbar-size: var(--md-sys-spacing-track-1);
-  --md-scrollbar-background: transparent;
-  --md-scrollbar-color: var(--md-sys-color-secondary);
-  --md-scrollbar-color-hover: var(--md-sys-color-secondary);
-  --md-scrollbar-radius: 0;
+  --alwatr-scrollbar-size: var(--alwatr-sys-spacing-track-1);
+  --alwatr-scrollbar-background: transparent;
+  --alwatr-scrollbar-color: var(--alwatr-sys-color-secondary);
+  --alwatr-scrollbar-color-hover: var(--alwatr-sys-color-secondary);
+  --alwatr-scrollbar-radius: 0;
 }

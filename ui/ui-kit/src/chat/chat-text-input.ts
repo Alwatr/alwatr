@@ -17,14 +17,14 @@ declare global {
 export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
-      --_height: var(--md-sys-spacing-track-6);
+      --_height: var(--alwatr-sys-spacing-track-6);
       display: flex;
       user-select: none;
       align-items: flex-end;
       vertical-align: middle;
       border-radius: calc(var(--_height) / 2);
-      color: var(--md-sys-color-on-surface-variant);
-      background-color: var(--md-sys-color-surface-variant);
+      color: var(--alwatr-sys-color-on-surface-variant);
+      background-color: var(--alwatr-sys-color-surface-variant);
       flex-grow: 1;
     }
 
@@ -44,9 +44,9 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
       background-color: transparent;
       font-family: inherit;
       word-wrap: break-word;
-      line-height: var(--md-sys-spacing-track-2);
-      padding: var(--md-sys-spacing-track-1);
-      margin: var(--md-sys-spacing-track-1);
+      line-height: var(--alwatr-sys-spacing-track-2);
+      padding: var(--alwatr-sys-spacing-track-1);
+      margin: var(--alwatr-sys-spacing-track-1);
       margin-inline-end: 0;
     }
   `;

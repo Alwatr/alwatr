@@ -98,8 +98,8 @@ export class AlwatrChat extends AlwatrSmartElement {
     :host {
       display: flex;
       flex-direction: column;
-      color: var(--md-sys-color-on-secondary-container);
-      background-color: var(--md-sys-color-secondary-container);
+      color: var(--alwatr-sys-color-on-secondary-container);
+      background-color: var(--alwatr-sys-color-secondary-container);
     }
   `;
 
