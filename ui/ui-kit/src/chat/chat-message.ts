@@ -1,4 +1,7 @@
 import {AlwatrDummyElement, css, customElement, html, nothing, property, DirectionMixin} from '@alwatr/element';
+
+import type {TextMessage} from '@alwatr/type/chat.js';
+
 import './chat-avatar.js';
 import './chat-bubble.js';
 
@@ -8,13 +11,10 @@ declare global {
   }
 }
 
-export type ChatTextMessage = {
+// TODO: ChatPhotoMessage
+export type ChatMessage = TextMessage & {
   from: string;
-  type: 'text';
-  text: string;
 };
-
-export type ChatMessage = ChatTextMessage; // TODO: ChatPhotoMessage
 
 /**
  * Alwatr chat message box element.
@@ -63,7 +63,7 @@ export class AlwatrChatMessage extends DirectionMixin(AlwatrDummyElement) {
   `;
 
   @property({type: Object, attribute: false})
-    message?: ChatTextMessage;
+    message?: ChatMessage;
 
   @property({type: Boolean, attribute: 'self', reflect: true})
     self = false;

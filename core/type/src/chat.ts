@@ -1,7 +1,7 @@
 import {AlwatrDocumentObject} from '@alwatr/storage-client';
 
 type CommonMessage = AlwatrDocumentObject & {
-  user: unknown;
+  from: unknown;
   replyId?: string;
 };
 
