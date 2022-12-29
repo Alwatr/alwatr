@@ -1,6 +1,6 @@
-import {AlwatrDummyElement, css, customElement, html, DirectionMixin} from '@alwatr/element';
+import {AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
 
-import '../icon-button/standard-icon-button';
+import '../icon-button/standard-icon-button.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -12,7 +12,7 @@ declare global {
  * Alwatr chat text input element.
  */
 @customElement('alwatr-chat-text-input')
-export class AlwatrChatTextInput extends DirectionMixin(AlwatrDummyElement) {
+export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
       /* flex options */
@@ -55,7 +55,11 @@ export class AlwatrChatTextInput extends DirectionMixin(AlwatrDummyElement) {
   override render(): unknown {
     return html`
       <alwatr-standard-icon-button .icon=${'send'}></alwatr-standard-icon-button>
-      <textarea rows="1" placeholder="تایپ کنید" @input=${this.__inputChange}></textarea>
+      <textarea
+        rows="1"
+        placeholder=${this.l10n.localize('chat_text_input_placeholder')}
+        @input=${this.__inputChange}
+      ></textarea>
     `;
   }
 
