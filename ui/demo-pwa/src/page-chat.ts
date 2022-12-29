@@ -136,8 +136,10 @@ export class AlwatrPageHome extends AlwatrSmartElement {
 
       <p>
         <span class="section-name">icon buttons</span>
+        <alwatr-standard-icon-button .icon=${'menu-outline'}></alwatr-standard-icon-button>
         <alwatr-standard-icon-button .icon=${'mic-outline'}></alwatr-standard-icon-button>
-        <alwatr-standard-icon-button .icon=${'home-outline'}></alwatr-standard-icon-button>
+        <alwatr-standard-icon-button .icon=${'happy-outline'}></alwatr-standard-icon-button>
+        <alwatr-standard-icon-button .icon=${'send'}></alwatr-standard-icon-button>
       </p>
 
       <p>
