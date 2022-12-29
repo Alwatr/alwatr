@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
+
+### Bug Fixes
+
+- **icon:** DirectionMixin! ([61b369e](https://github.com/AliMD/alwatr/commit/61b369e4a058d38df79f281dc84193129a12b4a5))
+- **icon:** PropertyValues ([ccba95a](https://github.com/AliMD/alwatr/commit/ccba95a7a716773c57474d8002320304e772e3cc))
+- **icon:** reflect flip-rtl errro ([b2359e6](https://github.com/AliMD/alwatr/commit/b2359e64c2ef9c381274fe91cc038593c0603ee9))
+
+### Features
+
+- **element:** export from lit ([21f15d8](https://github.com/AliMD/alwatr/commit/21f15d86319a40fab02d86f24a1451c056f36a7c))
+- **ui/icon:** localize mixin ([d91fe98](https://github.com/AliMD/alwatr/commit/d91fe98c3d9df8e30e5159ab93bb8018ef6d4c90))
+
 # [0.26.0](https://github.com/AliMD/alwatr/compare/v0.25.0...v0.26.0) (2022-12-22)
 
 ### Bug Fixes
