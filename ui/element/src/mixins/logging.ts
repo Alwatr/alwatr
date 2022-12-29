@@ -1,8 +1,8 @@
 import {createLogger} from '@alwatr/logger';
 import {LitElement} from 'lit';
 
-import type {Constructor} from '../type.js';
 import type {AlwatrLogger} from '@alwatr/logger/type.js';
+import type {Constructor} from '@alwatr/type';
 import type {PropertyValues} from 'lit';
 
 export declare class LoggerMixinInterface extends LitElement {

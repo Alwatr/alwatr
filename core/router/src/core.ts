@@ -1,4 +1,5 @@
-import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
+import {createLogger} from '@alwatr/logger';
+import {alwatrRegisteredList} from '@alwatr/type';
 
 import type {ParamList, RequestRouteParam, Route} from './type.js';
 

@@ -1,7 +1,8 @@
 import {createServer} from 'node:http';
 
-import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
+import {createLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
+import {alwatrRegisteredList} from '@alwatr/type';
 
 import type {NanoServerConfig, ConnectionConfig} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';

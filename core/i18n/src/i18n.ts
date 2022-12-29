@@ -1,6 +1,7 @@
 import {fetch} from '@alwatr/fetch';
-import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
+import {createLogger} from '@alwatr/logger';
 import {SignalInterface} from '@alwatr/signal';
+import {alwatrRegisteredList} from '@alwatr/type';
 
 import type {I18nConfig, L10Resource, Locale} from './type.js';
 

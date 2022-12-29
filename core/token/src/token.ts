@@ -1,7 +1,8 @@
 import {createHmac} from 'node:crypto';
 
-import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
+import {createLogger} from '@alwatr/logger';
 import {parseDuration} from '@alwatr/math';
+import {alwatrRegisteredList} from '@alwatr/type';
 
 import type {TokenGeneratorConfig, TokenStatus} from './type.js';
 

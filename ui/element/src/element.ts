@@ -1,4 +1,4 @@
-import {alwatrRegisteredList} from '@alwatr/logger';
+import {alwatrRegisteredList} from '@alwatr/type';
 import {LitElement} from 'lit';
 
 import {LoggerMixin} from './mixins/logging.js';

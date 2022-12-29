@@ -39,5 +39,8 @@
     "@alwatr/router": "~0.26.0",
     "lit": "~2.5.0",
     "tslib": "~2.4.1"
+  },
+  "devDependencies": {
+    "@alwatr/type": "~0.26.0"
   }
 }

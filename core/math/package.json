@@ -30,7 +30,8 @@
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@alwatr/type": "~0.26.0",
     "tslib": "~2.4.1"
   }
 }
