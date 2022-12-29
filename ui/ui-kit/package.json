@@ -34,7 +34,9 @@
   },
   "dependencies": {
     "@alwatr/element": "~0.26.0",
-    "@alwatr/fetch": "~0.26.0",
+    "@alwatr/fetch": "~0.26.0"
+  },
+  "devDependencies": {
     "@alwatr/type": "~0.26.0",
     "tslib": "~2.4.1"
   }

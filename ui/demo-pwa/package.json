@@ -38,6 +38,7 @@
     "@alwatr/i18n": "~0.26.0",
     "@alwatr/icon": "~0.26.0",
     "@alwatr/logger": "~0.26.0",
+    "@alwatr/type": "~0.26.0",
     "@alwatr/router": "~0.26.0",
     "@alwatr/ui-kit": "~0.26.0",
     "@babel/core": "~7.20.5",

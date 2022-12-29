@@ -16,5 +16,6 @@
     {"path": "../../core/logger"},
     {"path": "../../core/type"},
     {"path": "../../core/storage-client"},
+    {"path": "../../core/type"},
   ]
 }

@@ -1,6 +1,4 @@
 import {AlwatrDummyElement, css, customElement, html, nothing, property, DirectionMixin} from '@alwatr/element';
-
-import type {TextMessage} from '@alwatr/type';
 import './chat-avatar.js';
 import './chat-bubble.js';
 
