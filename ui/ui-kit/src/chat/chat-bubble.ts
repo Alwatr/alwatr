@@ -17,7 +17,11 @@ export class AlwatrChatBubble extends DirectionMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
       display: inline-block;
-      padding: var(--alwatr-sys-spacing-track-1) var(--alwatr-sys-spacing-track-2) var(--alwatr-sys-spacing-halftrack-3);
+      padding:
+        var(--alwatr-sys-spacing-track-1)
+        var(--alwatr-sys-spacing-track-2)
+        var(--alwatr-sys-spacing-halftrack-3)
+      ;
       color: var(--alwatr-sys-color-on-surface);
       background-color: var(--alwatr-sys-color-surface);
       white-space: pre-line;
