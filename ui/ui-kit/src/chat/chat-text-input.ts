@@ -1,4 +1,4 @@
-import {AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
+import {AlwatrDummyElement, css, customElement, html, DirectionMixin} from '@alwatr/element';
 
 import '../icon-button/standard-icon-button';
 
@@ -12,7 +12,7 @@ declare global {
  * Alwatr chat text input element.
  */
 @customElement('alwatr-chat-text-input')
-export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
+export class AlwatrChatTextInput extends DirectionMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
       /* flex options */
