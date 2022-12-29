@@ -10,6 +10,8 @@ declare global {
 
 /**
  * Alwatr standard icon button element.
+ *
+ * @attr {boolean} flip-rtl
  */
 @customElement('alwatr-standard-icon-button')
 export class AlwatrStandardIconButton extends AlwatrDummyElement {
@@ -23,10 +25,9 @@ export class AlwatrStandardIconButton extends AlwatrDummyElement {
       vertical-align: middle;
       flex-grow: 0;
       flex-shrink: 0;
-      flex-basis: auto;
 
       cursor: pointer;
-      color: var(--md-sys-color-on-surface-variant);
+      /* color: var(--md-sys-color-on-surface-variant); */
       background-color: transparent;
       width: var(--md-sys-spacing-track-5);
       height: var(--md-sys-spacing-track-5);
