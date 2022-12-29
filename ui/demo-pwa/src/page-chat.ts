@@ -108,13 +108,15 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       display: flex;
       flex-direction: column;
 
-      color: var(--md-sys-color-on-surface-variant);
-      background-color: var(--md-sys-color-surface-variant);
+      color: var(--md-sys-color-on-secondary-container);
+      background-color: var(--md-sys-color-secondary-container);
     }
 
     alwatr-chat-list {
       flex-grow: 1;
       overflow-y: auto;
+      background-color: transparent;
+      color: inherit;
     }
   `;
 
