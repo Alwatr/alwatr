@@ -1,7 +1,13 @@
 :root {
-  --alwatr-scrollbar-size: var(--alwatr-sys-spacing-track-1);
-  --alwatr-scrollbar-background: transparent;
-  --alwatr-scrollbar-color: var(--alwatr-sys-color-secondary);
-  --alwatr-scrollbar-color-hover: var(--alwatr-sys-color-secondary);
-  --alwatr-scrollbar-radius: 0;
+  --alwatr-sys-scrollbar-background: transparent;
+  --alwatr-sys-scrollbar-color: var(--alwatr-ref-palette-neutral-variant50);
+  --alwatr-sys-scrollbar-color-hover: var(--alwatr-ref-palette-neutral-variant30);
+  --alwatr-sys-scrollbar-size: 3px;
+  --alwatr-sys-scrollbar-radius: calc(var(--alwatr-sys-scrollbar-size) / 2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --alwatr-sys-scrollbar-color-hover: var(--alwatr-ref-palette-neutral-variant60);
+  }
 }
