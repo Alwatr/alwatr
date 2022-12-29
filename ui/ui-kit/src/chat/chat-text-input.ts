@@ -1,4 +1,6 @@
-import {AlwatrDummyElement, css, customElement, html} from '@alwatr/element';
+import {AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
+
+import '../icon-button/standard-icon-button';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -10,7 +12,7 @@ declare global {
  * Alwatr chat text input element.
  */
 @customElement('alwatr-chat-text-input')
-export class AlwatrChatTextInput extends AlwatrDummyElement {
+export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
       /* flex options */
@@ -20,16 +22,8 @@ export class AlwatrChatTextInput extends AlwatrDummyElement {
       /* theme options */
       background-color: var(--md-sys-color-surface-variant);
       /* shape options */
-      border-radius: 23px;
-      /* typography */
-      font-family: var(--md-sys-typescale-body-medium-font);
-      font-weight: var(--md-sys-typescale-body-medium-weight);
-      font-size: var(--md-sys-typescale-body-medium-size);
-      font-style: var(--md-sys-typescale-body-medium-font-style);
-      letter-spacing: var(--md-sys-typescale-body-medium-tracking);
-      line-height: var(--md-sys-typescale-body-medium-line-height);
-      text-transform: var(--md-sys-typescale-body-medium-text-transform);
-      text-decoration: var(--md-sys-typescale-body-medium-text-decoration);
+      border-radius: var(--md-sys-spacing-halftrack-7);
+      padding: var(--md-sys-spacing-track-1);
     }
     textarea {
       /* flex options */
@@ -44,17 +38,25 @@ export class AlwatrChatTextInput extends AlwatrDummyElement {
       min-width: unset;
       /* font options */
       font-family: var(--font-vazirmatn);
-      font-size: 1em;
+      font-weight: var(--md-sys-typescale-body-medium-weight);
+      font-size: var(--md-sys-typescale-body-medium-size);
+      font-style: var(--md-sys-typescale-body-medium-font-style);
+      letter-spacing: var(--md-sys-typescale-body-medium-tracking);
+      line-height: var(--md-sys-typescale-body-medium-line-height);
+      text-transform: var(--md-sys-typescale-body-medium-text-transform);
+      text-decoration: var(--md-sys-typescale-body-medium-text-decoration);
       /* spacing options */
-      line-height: 1.25em;
       margin: auto;
-      margin-inline: 0 1em;
-      padding: 0.9em 1em;
+      margin-inline: 0 var(--md-sys-spacing-track-2);
+      padding: var(--md-sys-spacing-track-1);
     }
   `;
 
   override render(): unknown {
-    return html` <textarea rows="1" placeholder="تایپ کنید" @input=${this.__inputChange}></textarea> `;
+    return html`
+      <alwatr-standard-icon-button .icon=${'send'}></alwatr-standard-icon-button>
+      <textarea rows="1" placeholder="تایپ کنید" @input=${this.__inputChange}></textarea>
+    `;
   }
 
   private __inputChange(event: InputEvent): void {
