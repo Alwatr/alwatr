@@ -1,5 +1,4 @@
 import {AlwatrDummyElement, css, customElement, html} from '@alwatr/element';
-
 import './chat-text-input.js';
 import '../icon-button/standard-icon-button.js';
 import {l10n} from '@alwatr/i18n';
