@@ -1,23 +1,16 @@
-import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
-import {LitElement} from 'lit';
+import {createLogger} from '@alwatr/logger';
 
-import type {Constructor} from './type.js';
+import type {Constructor} from '../type.js';
 import type {AlwatrLogger} from '@alwatr/logger/type.js';
-import type {ListenerInterface} from '@alwatr/signal';
-import type {PropertyValues} from 'lit';
-
-alwatrRegisteredList.push({
-  name: '@alwatr/element',
-  version: '{{ALWATR_VERSION}}',
-});
+import type {LitElement, PropertyValues} from 'lit';
 
 export declare class LoggerMixinInterface extends LitElement {
   protected _logger: AlwatrLogger;
 }
 
-export function LoggerMixin<ClassType extends Constructor<LitElement>>(
-    superClass: ClassType,
-): Constructor<LoggerMixinInterface> & ClassType {
+export function LoggerMixin<T extends Constructor<LitElement>>(
+    superClass: T,
+): Constructor<LoggerMixinInterface> & T {
   class LoggerMixinClass extends superClass {
     protected _logger = createLogger(`<${this.tagName.toLowerCase()}>`);
 
@@ -61,27 +54,5 @@ export function LoggerMixin<ClassType extends Constructor<LitElement>>(
     }
   }
 
-  return LoggerMixinClass as unknown as Constructor<LoggerMixinInterface> & ClassType;
+  return LoggerMixinClass as unknown as Constructor<LoggerMixinInterface> & T;
 }
-
-export declare class SignalMixinInterface extends LitElement {
-  protected _signalListenerList: Array<ListenerInterface<keyof AlwatrSignals>>;
-}
-
-export function SignalMixin<ClassType extends Constructor<LitElement>>(
-    superClass: ClassType,
-): Constructor<SignalMixinInterface> & ClassType {
-  class SignalMixinClass extends superClass {
-    protected _signalListenerList: Array<ListenerInterface<keyof AlwatrSignals>> = [];
-
-    override disconnectedCallback(): void {
-      super.disconnectedCallback();
-
-      this._signalListenerList.forEach((listener) => listener.remove());
-    }
-  }
-
-  return SignalMixinClass as unknown as Constructor<SignalMixinInterface> & ClassType;
-}
-
-export const AlwatrElement = SignalMixin(LoggerMixin(LitElement));

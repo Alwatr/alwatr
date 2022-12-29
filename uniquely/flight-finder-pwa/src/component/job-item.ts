@@ -1,9 +1,6 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrSmartElement, customElement, property, query, when, css, html, nothing} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
-import {css, html, nothing} from 'lit';
-import {customElement, property, query} from 'lit/decorators.js';
-import {when} from 'lit/directives/when.js';
 
 import '@alwatr/icon';
 
@@ -14,7 +11,7 @@ import ionTheming from '../style/ionic.theming.js';
 import './ionic-components.js';
 
 import type {Job, JobResult} from '../type.js';
-import type {TemplateResult} from 'lit';
+import type {TemplateResult} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -23,7 +20,7 @@ declare global {
 }
 
 @customElement('job-item')
-export class JobItem extends AlwatrElement {
+export class JobItem extends AlwatrSmartElement {
   static override styles = [
     ionNormalize,
     ionTheming,
@@ -101,7 +98,7 @@ export class JobItem extends AlwatrElement {
     });
   }
 
-  override render(): TemplateResult | typeof nothing {
+  override render(): unknown {
     if (this.job == null || this.job.detail == null) return nothing;
 
     return html`

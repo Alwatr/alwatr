@@ -1,0 +1,18 @@
+.elevation-0 {
+  box-shadow: var(--alwatr-sys-elevation-level0);
+}
+.elevation-1 {
+  box-shadow: var(--alwatr-sys-elevation-level1);
+}
+.elevation-2 {
+  box-shadow: var(--alwatr-sys-elevation-level2);
+}
+.elevation-3 {
+  box-shadow: var(--alwatr-sys-elevation-level3);
+}
+.elevation-4 {
+  box-shadow: var(--alwatr-sys-elevation-level4);
+}
+.elevation-5 {
+  box-shadow: var(--alwatr-sys-elevation-level5);
+}

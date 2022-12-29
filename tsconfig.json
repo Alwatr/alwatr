@@ -20,6 +20,7 @@
     {"path": "./core/storage-engine"},
     {"path": "./core/storage-client"},
     {"path": "./core/token"},
+    {"path": "./core/type"},
 
     // ui
     {"path": "./ui/element"},
@@ -39,5 +40,9 @@
     // uniquely
     {"path": "./uniquely/flight-finder-api"},
     {"path": "./uniquely/flight-finder-pwa"},
+    {"path": "./ui/demo-pwa"},
+
+    // labs
+    {"path": "./labs/zx-example"}
   ]
 }

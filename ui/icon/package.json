@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/icon",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "description": "Best practices (The Right Way) of using premium designed icons in the website and webapp.",
   "keywords": [
     "icon",
@@ -36,9 +36,8 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/element": "^0.26.0",
-    "@alwatr/fetch": "^0.26.0",
-    "lit": "~2.5.0",
+    "@alwatr/element": "^0.27.0",
+    "@alwatr/fetch": "^0.27.0",
     "tslib": "~2.4.1"
   }
 }

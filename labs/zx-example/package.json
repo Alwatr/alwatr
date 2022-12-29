@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/zx-example",
-  "version": "0.25.0",
+  "version": "0.27.0",
   "description": "Test google zx with typescript in action.",
   "keywords": [
     "zx-example",
@@ -24,9 +24,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "cloud/lab/zx-example"
+    "directory": "labs/zx-example"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/cloud/lab/zx-example#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/labs/zx-example#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
@@ -34,7 +34,7 @@
     "build": "chmod -v +x *.js"
   },
   "dependencies": {
-    "@alwatr/logger": "~0.25.0",
+    "@alwatr/logger": "^0.27.0",
     "tslib": "~2.4.1",
     "zx": "~7.1.1"
   }

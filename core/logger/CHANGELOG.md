@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
+
+### Bug Fixes
+
+- **logger:** version ([2295fee](https://github.com/AliMD/alwatr/commit/2295fee74e8eebd9db399129de31f2b0d6d6b168))
+
 # [0.26.0](https://github.com/AliMD/alwatr/compare/v0.25.0...v0.26.0) (2022-12-22)
 
 ### Bug Fixes

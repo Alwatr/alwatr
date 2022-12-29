@@ -15,6 +15,7 @@
     "services/*",
     "ui/*",
     "uniquely/*",
+    "labs/*",
     "demo"
   ],
   "scripts": {
@@ -28,8 +29,8 @@
     "f": "yarn format",
     "fl": "yarn format:eslint",
     "fp": "yarn format:prettier",
-    "pm": "run-s pull clean build ver-minor push",
-    "pp": "run-s pull clean build ver-patch push",
+    "pm": "run-s pull clean build:ts build:r ver-minor push",
+    "pp": "run-s pull clean build:ts build:r ver-patch push",
     "lint": "run-s lint:*",
     "lint:ts": "eslint . --config .eslintrc.json --ext .ts --ignore-path .gitignore",
     "build": "yarn build:ts",
@@ -50,8 +51,8 @@
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "~3.0.0",
-    "@typescript-eslint/eslint-plugin": "~5.47.0",
-    "@typescript-eslint/parser": "~5.47.0",
+    "@typescript-eslint/eslint-plugin": "~5.47.1",
+    "@typescript-eslint/parser": "~5.47.1",
     "@typescript/lib-dom": "npm:@types/web",
     "@web/dev-server": "~0.1.35",
     "@web/dev-server-esbuild": "~0.3.3",
@@ -61,7 +62,7 @@
     "eslint-plugin-import": "~2.26.0",
     "eslint-plugin-lit": "~1.7.2",
     "eslint-plugin-wc": "~1.4.0",
-    "lerna": "~6.1.0",
+    "lerna": "~6.3.0",
     "lit-analyzer": "~1.2.1",
     "npm-run-all": "~4.1.5",
     "prettier": "~2.8.1",

@@ -13,10 +13,11 @@
     ],
   },
   // files, include and exclude from the inheriting config are always overwritten.
-  "include": ["**/src/**/*.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
-    {"path": "../../core/logger"},
-    {"path": "../../ui/element"},
+    {"path": "../element"},
+    {"path": "../icon"},
+    {"path": "../../core/fetch"},
   ]
 }
