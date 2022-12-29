@@ -4,6 +4,7 @@ import {l10n} from '@alwatr/i18n';
 import '@alwatr/ui-kit/chat/chat-avatar.js';
 import '@alwatr/ui-kit/chat/chat-bubble.js';
 import '@alwatr/ui-kit/chat/chat-message.js';
+import '@alwatr/ui-kit/chat/chat-text-input.js';
 import '@alwatr/ui-kit/chat/chat-list.js';
 import '@alwatr/ui-kit/icon-button/standard-icon-button.js';
 
@@ -114,6 +115,10 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       color: var(--md-sys-color-on-surface-variant);
       background-color: var(--md-sys-color-surface-variant);
     }
+    p.surface {
+      color: var(--md-sys-color-on-surface);
+      background-color: var(--md-sys-color-surface);
+    }
 
     .section-name {
       display: block;
@@ -130,16 +135,19 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     return html`
       text on surface
 
-      <p @click=${this._changeLocale}>
-        text on surface-variant
-      </p>
+      <p @click=${this._changeLocale}>text on surface-variant</p>
 
       <p>
-        <span class="section-name">icon buttons</span>
+        <span class="section-name">alwatr-standard-icon-button</span>
         <alwatr-standard-icon-button .icon=${'menu-outline'}></alwatr-standard-icon-button>
         <alwatr-standard-icon-button .icon=${'mic-outline'}></alwatr-standard-icon-button>
         <alwatr-standard-icon-button .icon=${'happy-outline'}></alwatr-standard-icon-button>
         <alwatr-standard-icon-button .icon=${'send'}></alwatr-standard-icon-button>
+      </p>
+
+      <p class="surface">
+        <span class="section-name">alwatr-chat-text-input</span>
+        <alwatr-chat-text-input></alwatr-chat-text-input>
       </p>
 
       <p>
@@ -174,12 +182,12 @@ export class AlwatrPageHome extends AlwatrSmartElement {
   protected _changeLocale(): void {
     l10n.setLocal(
       l10n.locale?.code !== l10n.config.defaultLocale.code
-      ? l10n.config.defaultLocale
-      : {
-        code: 'fa-IR',
-        direction: 'rtl',
-        language: 'fa',
-      },
+        ? l10n.config.defaultLocale
+        : {
+          code: 'fa-IR',
+          direction: 'rtl',
+          language: 'fa',
+        },
     );
   }
 }

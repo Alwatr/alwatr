@@ -121,10 +121,6 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
   if (signal.value !== undefined) {
     // null is a valid value for signal.
     if (options.receivePrevious === 'Immediate') {
-      logger.incident('_addSignalListener', 'call_signal_callback', 'run callback with previous signal value', {
-        signalName: signal.name,
-        mode: 'Immediate',
-      });
       try {
         listenerCallback(signal.value);
       }
@@ -139,10 +135,6 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
       requestAnimationFrame(() => {
         if (signal.value !== undefined) {
           // null is a valid value for signal.
-          logger.incident('_addSignalListener', 'call_signal_callback', 'run callback with previous signal value', {
-            signalName: signal.name,
-            mode: 'Delay',
-          });
           listenerCallback(signal.value);
         }
       });

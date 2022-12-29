@@ -21,6 +21,7 @@ export class AlwatrChatAvatar extends AlwatrDummyElement {
       overflow: clip;
       overflow-clip-margin: content-box;
       box-sizing: content-box;
+      flex-grow: 0;
       flex-shrink: 0;
     }
 
