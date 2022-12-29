@@ -1,4 +1,4 @@
-import {AlwatrDummyElement, unsafeSVG, customElement, property, state, html, css} from '@alwatr/element';
+import {AlwatrDummyElement, unsafeSVG, customElement, property, state, html, css, LocalizeMixin} from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
 
 import type {PropertyValues, HTMLTemplateResult} from '@alwatr/element';
@@ -15,7 +15,7 @@ declare global {
  * @attr {boolean} flip-rtl
  */
 @customElement('alwatr-icon')
-export class AlwatrIcon extends AlwatrDummyElement {
+export class AlwatrIcon extends LocalizeMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
       display: inline-block;
@@ -55,6 +55,9 @@ export class AlwatrIcon extends AlwatrDummyElement {
 
   @property({attribute: 'url-prefix'})
     urlPrefix?: string;
+
+  @property({attribute: 'flip-rtl', reflect: true, state: false})
+    flipRtl = false;
 
   @state()
   protected _icon?: HTMLTemplateResult;
