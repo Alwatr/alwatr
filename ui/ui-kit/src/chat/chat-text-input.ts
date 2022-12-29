@@ -17,40 +17,36 @@ declare global {
 export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
-      /* flex options */
+      --_height: var(--md-sys-spacing-track-6);
       display: flex;
-      flex: 1 1 100%;
-      align-items: end;
-      /* theme options */
+      user-select: none;
+      align-items: flex-end;
+      vertical-align: middle;
+      border-radius: calc(var(--_height)/2);
+      color: var(--md-sys-color-on-surface-variant);
       background-color: var(--md-sys-color-surface-variant);
-      /* shape options */
-      border-radius: var(--md-sys-spacing-halftrack-7);
-      padding: var(--md-sys-spacing-track-1);
     }
+
+    alwatr-standard-icon-button {
+      width: var(--_height);
+      height: var(--_height);
+    }
+
     textarea {
-      /* flex options */
-      display: flex;
-      flex: 1 1 100%;
-      /* reset */
-      color: var(--md-sys-color-surface-tint);
+      flex-grow: 1;
+      width: auto;
+      min-width: auto;
+      color: inherit;
       resize: none;
       border: none;
-      outline: none;
-      background: transparent;
-      min-width: unset;
-      /* font options */
-      font-family: var(--font-vazirmatn);
-      font-weight: var(--md-sys-typescale-body-medium-weight);
-      font-size: var(--md-sys-typescale-body-medium-size);
-      font-style: var(--md-sys-typescale-body-medium-font-style);
-      letter-spacing: var(--md-sys-typescale-body-medium-tracking);
-      line-height: var(--md-sys-typescale-body-medium-line-height);
-      text-transform: var(--md-sys-typescale-body-medium-text-transform);
-      text-decoration: var(--md-sys-typescale-body-medium-text-decoration);
-      /* spacing options */
-      margin: auto;
-      margin-inline: 0 var(--md-sys-spacing-track-2);
+      outline: 0;
+      background-color: transparent;
+      font-family: inherit;
+      word-wrap: break-word;
+      line-height: var(--md-sys-spacing-track-2);
       padding: var(--md-sys-spacing-track-1);
+      margin: var(--md-sys-spacing-track-1);
+      margin-inline-end: 0;
     }
   `;
 
@@ -58,12 +54,12 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
 
   override render(): unknown {
     return html`
-      <alwatr-standard-icon-button .icon=${'send'}></alwatr-standard-icon-button>
       <textarea
         rows="1"
         placeholder=${this.l10n.localize('chat_text_input_placeholder')}
         @input=${this.__inputChange}
       ></textarea>
+      <alwatr-standard-icon-button .icon=${'send'} flip-rtl></alwatr-standard-icon-button>
     `;
   }
 
