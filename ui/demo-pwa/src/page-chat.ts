@@ -1,12 +1,7 @@
-import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element';
-import {l10n} from '@alwatr/i18n';
+import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
-import '@alwatr/ui-kit/chat/chat-avatar.js';
-import '@alwatr/ui-kit/chat/chat-bubble.js';
-import '@alwatr/ui-kit/chat/chat-message.js';
-import '@alwatr/ui-kit/chat/chat-text-input.js';
+import '@alwatr/ui-kit/chat/chat-footer.js';
 import '@alwatr/ui-kit/chat/chat-list.js';
-import '@alwatr/ui-kit/icon-button/standard-icon-button.js';
 
 import type {ChatStorage} from '@alwatr/ui-kit/chat/chat-list.js';
 
@@ -94,8 +89,6 @@ const chatStorage: ChatStorage = {
   },
 };
 
-const messageListShort = Object.values(chatStorage.data).splice(0, 5);
-
 /**
  * Alwatr Demo Home Page
  */
@@ -103,91 +96,35 @@ const messageListShort = Object.values(chatStorage.data).splice(0, 5);
 export class AlwatrPageHome extends AlwatrSmartElement {
   static override styles = css`
     :host {
-      display: block;
-      box-sizing: border-box;
       height: 100%;
-      overflow-y: auto;
-      padding: var(--md-sys-spacing-side-padding);
     }
 
-    p {
-      padding: var(--md-sys-spacing-track-2) var(--md-sys-spacing-track-1) var(--md-sys-spacing-track-1);
+    .alwatr-chat {
+      height: 100%;
+    }
+
+    /* inside alwatr chat */
+    .alwatr-chat {
+      display: flex;
+      flex-direction: column;
+
       color: var(--md-sys-color-on-surface-variant);
       background-color: var(--md-sys-color-surface-variant);
     }
-    p.surface {
-      color: var(--md-sys-color-on-surface);
-      background-color: var(--md-sys-color-surface);
-    }
 
-    .section-name {
-      display: block;
-      margin-bottom: var(--md-sys-spacing-track-1);
-    }
-
-    alwatr-chat-message {
-      margin: var(--md-sys-spacing-track-1) 0;
+    alwatr-chat-list {
+      flex-grow: 1;
+      overflow-y: auto;
     }
   `;
 
   override render(): unknown {
     super.render();
     return html`
-      text on surface
-
-      <p @click=${this._changeLocale}>text on surface-variant</p>
-
-      <p>
-        <span class="section-name">alwatr-standard-icon-button</span>
-        <alwatr-standard-icon-button .icon=${'menu-outline'}></alwatr-standard-icon-button>
-        <alwatr-standard-icon-button .icon=${'mic-outline'}></alwatr-standard-icon-button>
-        <alwatr-standard-icon-button .icon=${'happy-outline'}></alwatr-standard-icon-button>
-        <alwatr-standard-icon-button .icon=${'send'}></alwatr-standard-icon-button>
-      </p>
-
-      <p class="surface">
-        <span class="section-name">alwatr-chat-text-input</span>
-        <alwatr-chat-text-input></alwatr-chat-text-input>
-      </p>
-
-      <p>
-        <span class="section-name">alwatr-chat-avatar</span>
-        ${map(messageListShort, (message) => html`<alwatr-chat-avatar .user=${message.from}></alwatr-chat-avatar>`)}
-      </p>
-
-      <p>
-        <span class="section-name">alwatr-chat-bubble</span>
-        ${map(
-      messageListShort,
-      (message) => html`
-            <alwatr-chat-bubble .text=${message.text} ?end-side=${message.from !== currentUser}></alwatr-chat-bubble>
-          `,
-  )}
-      </p>
-
-      <p>
-        <span class="section-name">alwatr-chat-message</span>
-        ${map(
-      messageListShort,
-      (message) => html`
-            <alwatr-chat-message .message=${message} ?end-side=${message.from !== currentUser}></alwatr-chat-message>
-          `,
-  )}
-      </p>
-
-      <alwatr-chat-list .storage=${chatStorage} .currentUser=${currentUser}></alwatr-chat-list>
+      <main class="alwatr-chat">
+        <alwatr-chat-list .storage=${chatStorage} .currentUser=${currentUser}></alwatr-chat-list>
+        <alwatr-chat-footer></alwatr-chat-footer>
+      </main>
     `;
-  }
-
-  protected _changeLocale(): void {
-    l10n.setLocal(
-      l10n.locale?.code !== l10n.config.defaultLocale.code
-        ? l10n.config.defaultLocale
-        : {
-          code: 'fa-IR',
-          direction: 'rtl',
-          language: 'fa',
-        },
-    );
   }
 }
