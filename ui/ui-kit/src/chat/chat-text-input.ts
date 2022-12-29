@@ -22,9 +22,10 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
       user-select: none;
       align-items: flex-end;
       vertical-align: middle;
-      border-radius: calc(var(--_height)/2);
+      border-radius: calc(var(--_height) / 2);
       color: var(--md-sys-color-on-surface-variant);
       background-color: var(--md-sys-color-surface-variant);
+      flex-grow: 1;
     }
 
     alwatr-standard-icon-button {
