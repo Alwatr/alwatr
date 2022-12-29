@@ -19,38 +19,7 @@
   --md-sys-motion-easing-standard-accelerate-y0: 0;
   --md-sys-motion-easing-standard-accelerate-x1: 1;
   --md-sys-motion-easing-standard-accelerate-y1: 1;
-  /* Duration 1000ms */
-  --md-sys-motion-duration-1000: 1000ms;
-  /* Duration 900ms */
-  --md-sys-motion-duration-900: 900ms;
-  /* Duration 800ms */
-  --md-sys-motion-duration-800: 800ms;
-  /* Duration 700ms */
-  --md-sys-motion-duration-700: 700ms;
-  /* Duration 600ms */
-  --md-sys-motion-duration-600: 600ms;
-  /* Duration 550ms */
-  --md-sys-motion-duration-550: 550ms;
-  /* Duration 500ms */
-  --md-sys-motion-duration-500: 500ms;
-  /* Duration 450ms */
-  --md-sys-motion-duration-450: 450ms;
-  /* Duration 400ms */
-  --md-sys-motion-duration-400: 400ms;
-  /* Duration 350ms */
-  --md-sys-motion-duration-350: 350ms;
-  /* Duration 300ms */
-  --md-sys-motion-duration-300: 300ms;
-  /* Duration 250ms */
-  --md-sys-motion-duration-250: 250ms;
-  /* Duration 200ms */
-  --md-sys-motion-duration-200: 200ms;
-  /* Duration 150ms */
-  --md-sys-motion-duration-150: 150ms;
-  /* Duration 100ms */
-  --md-sys-motion-duration-100: 100ms;
-  /* Duration 50ms */
-  --md-sys-motion-duration-50: 50ms;
+
   /* Standard easing (in and out) */
   --md-sys-motion-easing-standard-x0: 0.20000000298023224;
   --md-sys-motion-easing-standard-y0: 0;
@@ -68,4 +37,21 @@
   --md-sys-motion-easing-emphasized-y1: 1;
   /* Motion path */
   --md-sys-motion-path-standard-path: 1;
+
+
+  /* Alwatr */
+  --md-ref-motion-duration-frame: 16.66666666666666667ms;
+
+  --md-sys-motion-duration-none: calc(2 * var(--md-ref-motion-duration-frame));
+  --md-sys-motion-duration-small-in: calc(8 * var(--md-ref-motion-duration-frame));
+  --md-sys-motion-duration-small-out: calc(6 * var(--md-ref-motion-duration-frame));
+  --md-sys-motion-duration-medium-in: calc(16 * var(--md-ref-motion-duration-frame));
+  --md-sys-motion-duration-medium-out: calc(12 * var(--md-ref-motion-duration-frame));
+  --md-sys-motion-duration-large-in: calc(18 * var(--md-ref-motion-duration-frame));
+  --md-sys-motion-duration-large-out: calc(16 * var(--md-ref-motion-duration-frame));
+
+  --md-sys-motion-easing-linear: cubic-bezier(0.4, 0, 0.6, 1);
+  --md-sys-motion-easing-incoming: cubic-bezier(0, 0, 0.2, 1);
+  --md-sys-motion-easing-exiting: cubic-bezier(0.4, 0, 1, 1);
+  --md-sys-motion-easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 }

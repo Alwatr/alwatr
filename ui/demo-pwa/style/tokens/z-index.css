@@ -1,0 +1,14 @@
+:root {
+  --md-sys-zindex-bottomness: -900;
+  --md-sys-zindex-below: -1;
+  --md-sys-zindex-default: 1;
+  --md-sys-zindex-above: 2;
+  --md-sys-zindex-dropdown: 100;
+  --md-sys-zindex-sticky: 200;
+  --md-sys-zindex-fixed: 300;
+  --md-sys-zindex-backdrop: 400;
+  --md-sys-zindex-modal: 500;
+  --md-sys-zindex-popover: 600;
+  --md-sys-zindex-tooltip: 700;
+  --md-sys-zindex-topness: 900;
+}
