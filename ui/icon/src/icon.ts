@@ -7,11 +7,10 @@ import {
   html,
   css,
   DirectionMixin,
-  PropertyValues,
 } from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
 
-import type {HTMLTemplateResult} from '@alwatr/element';
+import type {PropertyValues, HTMLTemplateResult} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
