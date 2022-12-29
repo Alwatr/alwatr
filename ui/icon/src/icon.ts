@@ -1,4 +1,13 @@
-import {AlwatrDummyElement, unsafeSVG, customElement, property, state, html, css} from '@alwatr/element';
+import {
+  AlwatrDummyElement,
+  unsafeSVG,
+  customElement,
+  property,
+  state,
+  html,
+  css,
+  DirectionMixin,
+} from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
 
 import type {PropertyValues, HTMLTemplateResult} from '@alwatr/element';
@@ -15,7 +24,7 @@ declare global {
  * @attr {boolean} flip-rtl
  */
 @customElement('alwatr-icon')
-export class AlwatrIcon extends AlwatrDummyElement {
+export class AlwatrIcon extends DirectionMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
       display: inline-block;
@@ -60,7 +69,7 @@ export class AlwatrIcon extends AlwatrDummyElement {
   protected _icon?: HTMLTemplateResult;
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    super.render();
     return this._icon;
   }
 
@@ -68,7 +77,7 @@ export class AlwatrIcon extends AlwatrDummyElement {
     if (changedProperties.has('name') || changedProperties.has('urlPrefix')) {
       this._fetchIcon();
     }
-    return changedProperties.has('_icon') && this._icon != null;
+    return super.shouldUpdate(changedProperties) && changedProperties.has('_icon') && this._icon != null;
   }
 
   protected async _fetchIcon(): Promise<void> {
