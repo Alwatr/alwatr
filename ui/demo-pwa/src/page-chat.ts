@@ -1,4 +1,5 @@
 import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element';
+import {l10n} from '@alwatr/i18n';
 
 import '@alwatr/ui-kit/chat/chat-avatar.js';
 import '@alwatr/ui-kit/chat/chat-bubble.js';
@@ -126,7 +127,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     return html`
       text on surface
 
-      <p>
+      <p @click=${this._changeLocale}>
         text on surface-variant
       </p>
 
@@ -151,5 +152,17 @@ export class AlwatrPageHome extends AlwatrSmartElement {
 
       <alwatr-chat-list .storage=${chatStorage} .currentUser=${currentUser}></alwatr-chat-list>
     `;
+  }
+
+  protected _changeLocale(): void {
+    l10n.setLocal(
+      l10n.locale?.code !== l10n.config.defaultLocale.code
+      ? l10n.config.defaultLocale
+      : {
+        code: 'fa-IR',
+        direction: 'rtl',
+        language: 'fa',
+      },
+    );
   }
 }

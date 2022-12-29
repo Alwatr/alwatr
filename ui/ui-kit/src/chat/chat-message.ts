@@ -1,4 +1,4 @@
-import {AlwatrDummyElement, css, customElement, html, nothing, property} from '@alwatr/element';
+import {AlwatrDummyElement, css, customElement, html, nothing, property, DirectionMixin} from '@alwatr/element';
 
 import type {TextMessage} from '@alwatr/type';
 import './chat-avatar.js';
@@ -21,7 +21,7 @@ export type ChatMessage = TextMessage & {
  * @attr self
  */
 @customElement('alwatr-chat-message')
-export class AlwatrChatMessage extends AlwatrDummyElement {
+export class AlwatrChatMessage extends DirectionMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
       display: flex;

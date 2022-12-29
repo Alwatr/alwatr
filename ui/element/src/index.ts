@@ -1,11 +1,11 @@
 import {alwatrRegisteredList} from '@alwatr/type';
-import {LitElement} from 'lit';
 
-import {LoggerMixin} from './mixins/logging.js';
-import {SignalMixin} from './mixins/signal.js';
-import {AlwatrRootElement} from './root.js';
+export * from './dummy-element.js';
+export * from './smart-element.js';
+export * from './root-element.js';
 
-export {LoggerMixin, SignalMixin, AlwatrRootElement};
+export * from './mixins/localize.js';
+export * from './mixins/direction.js';
 
 export * from 'lit';
 export * from 'lit/decorators.js';
@@ -21,5 +21,3 @@ alwatrRegisteredList.push({
   version: '{{ALWATR_VERSION}}',
 });
 
-export const AlwatrDummyElement = LoggerMixin(LitElement);
-export const AlwatrSmartElement = SignalMixin(LoggerMixin(LitElement));

@@ -1,14 +1,13 @@
-import {LitElement} from 'lit';
-
 import type {Constructor} from '@alwatr/type';
+import type {LitElement} from 'lit';
 
 export declare class SignalMixinInterface extends LitElement {
   protected _signalListenerList: Array<unknown>;
 }
 
-export function SignalMixin<ClassType extends Constructor<LitElement>>(
-    superClass: ClassType,
-): Constructor<SignalMixinInterface> & ClassType {
+export function SignalMixin<T extends Constructor<LitElement>>(
+    superClass: T,
+): Constructor<SignalMixinInterface> & T {
   class SignalMixinClass extends superClass {
     protected _signalListenerList: Array<Record<string, unknown>> = [];
 
@@ -23,5 +22,5 @@ export function SignalMixin<ClassType extends Constructor<LitElement>>(
     }
   }
 
-  return SignalMixinClass as unknown as Constructor<SignalMixinInterface> & ClassType;
+  return SignalMixinClass as unknown as Constructor<SignalMixinInterface> & T;
 }
