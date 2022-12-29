@@ -17,18 +17,18 @@ export class AlwatrChatFooter extends AlwatrDummyElement {
   static override styles = css`
     :host {
       display: flex;
-      gap: var(--md-sys-spacing-track-1);
-      padding: var(--md-sys-spacing-track-2);
-      padding-inline-start: var(--md-sys-spacing-track-1);
-      border-top-left-radius: var(--md-sys-shape-corner-large-top-top-left);
-      border-top-right-radius: var(--md-sys-shape-corner-large-top-top-right);
-      color: var(--md-sys-color-on-surface);
-      background-color: var(--md-sys-color-surface);
+      gap: var(--alwatr-sys-spacing-track-1);
+      padding: var(--alwatr-sys-spacing-track-2);
+      padding-inline-start: var(--alwatr-sys-spacing-track-1);
+      border-top-left-radius: var(--alwatr-sys-shape-corner-large-top-top-left);
+      border-top-right-radius: var(--alwatr-sys-shape-corner-large-top-top-right);
+      color: var(--alwatr-sys-color-on-surface);
+      background-color: var(--alwatr-sys-color-surface);
     }
 
     alwatr-standard-icon-button {
-      width: var(--md-sys-spacing-track-6);
-      height: var(--md-sys-spacing-track-6);
+      width: var(--alwatr-sys-spacing-track-6);
+      height: var(--alwatr-sys-spacing-track-6);
     }
   `;
 

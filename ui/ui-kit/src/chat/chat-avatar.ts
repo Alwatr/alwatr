@@ -14,8 +14,8 @@ export class AlwatrChatAvatar extends AlwatrDummyElement {
   static override styles = css`
     :host {
       display: inline-block;
-      width: var(--md-sys-spacing-track-5);
-      height: var(--md-sys-spacing-track-5);
+      width: var(--alwatr-sys-spacing-track-5);
+      height: var(--alwatr-sys-spacing-track-5);
       border-radius: 50%;
       overflow: hidden;
       overflow: clip;

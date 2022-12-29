@@ -1,8 +1,5 @@
 /* TODO: Refactor pwa build to esbuild and move the styles to ui-kit */
 
-@import url('theme/light.css') screen and (prefers-color-scheme: light);
-@import url('theme/dark.css') screen and (prefers-color-scheme: dark);
-
 @import url('tokens/palette.css');
 @import url('tokens/typography.css');
 @import url('tokens/shape.css');

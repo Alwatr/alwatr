@@ -27,38 +27,38 @@ export class AlwatrChatMessage extends DirectionMixin(AlwatrDummyElement) {
     :host {
       display: flex;
       align-items: flex-end;
-      gap: var(--md-sys-spacing-track-1);
+      gap: var(--alwatr-sys-spacing-track-1);
       flex-direction: row;
       justify-content: flex-start;
       align-self: flex-start;
       padding-left: 0;
-      padding-right: var(--md-sys-spacing-track-6);
+      padding-right: var(--alwatr-sys-spacing-track-6);
     }
 
     :host([self]) {
       justify-content: flex-end;
       align-self: flex-end;
       padding-right: 0;
-      padding-left: var(--md-sys-spacing-track-9);
+      padding-left: var(--alwatr-sys-spacing-track-9);
     }
 
     :host([dir='rtl']) {
       padding-right: 0;
-      padding-left: var(--md-sys-spacing-track-6);
+      padding-left: var(--alwatr-sys-spacing-track-6);
     }
 
     :host([dir='rtl'][self]) {
       padding-left: 0;
-      padding-right: var(--md-sys-spacing-track-9);
+      padding-right: var(--alwatr-sys-spacing-track-9);
     }
 
     :host([self]) alwatr-chat-bubble {
-      color: var(--md-sys-color-on-secondary);
-      background-color: var(--md-sys-color-secondary);
+      color: var(--alwatr-sys-color-on-secondary);
+      background-color: var(--alwatr-sys-color-secondary);
     }
 
     alwatr-chat-bubble {
-      max-width: var(--md-sys-spacing-column-3);
+      max-width: var(--alwatr-sys-spacing-column-3);
     }
   `;
 

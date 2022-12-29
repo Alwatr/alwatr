@@ -26,7 +26,7 @@ const chatStorage: ChatStorage = {
       id: '1',
       from: 'user-1',
       type: 'text',
-      text: 'سلام',
+      text: 'به یاد اولتر...',
     },
     '2': {
       id: '2',
@@ -70,9 +70,21 @@ const chatStorage: ChatStorage = {
       id: '8',
       from: 'user-2',
       type: 'text',
-      text: 'اما برای چه ؟ برای که ؟\nاینان منتظرند تا  بهار شود ؟',
+      text: 'اما برای چه ؟\nاینان منتظرند تا  بهار شود ؟',
     },
     '9': {
+      id: '1',
+      from: 'user-1',
+      type: 'text',
+      text: 'برای که ؟',
+    },
+    '10': {
+      id: '4',
+      from: 'user-2',
+      type: 'text',
+      text: 'دیوانه مسلمانی که در روزهای انتظار هزار بار به دیوانگی‌اش ایمان می‌آورد….',
+    },
+    '11': {
       id: '9',
       from: 'user-4',
       type: 'text',
@@ -80,11 +92,17 @@ const chatStorage: ChatStorage = {
         'سالهاست می اندیشم که هنگام بهار مگر چه می شود که اینگونه به هم می ریزیم' +
         '،مهربان می شویم، به سراغ هم می رویم و از همه مهمتر منتظر می شویم…',
     },
-    '10': {
+    '12': {
       id: '10',
       from: 'user-4',
       type: 'text',
       text: 'انتظار...',
+    },
+    '13': {
+      id: '1',
+      from: 'user-1',
+      type: 'text',
+      text: 'زیبا بود مرسی',
     },
   },
 };
@@ -96,10 +114,24 @@ const chatStorage: ChatStorage = {
 export class AlwatrChat extends AlwatrSmartElement {
   static override styles = css`
     :host {
-      display: flex;
-      flex-direction: column;
-      color: var(--md-sys-color-on-secondary-container);
-      background-color: var(--md-sys-color-secondary-container);
+      display: block;
+      padding-top: var(--alwatr-sys-spacing-track-1);
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    alwatr-chat-list {
+      height: 100%;
+      color: var(--alwatr-sys-color-on-secondary-container);
+      background-color: var(--alwatr-sys-color-secondary-container);
+      padding-bottom: calc(12 * var(--alwatr-sys-spacing-track));
+    }
+
+    alwatr-chat-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
   `;
 
