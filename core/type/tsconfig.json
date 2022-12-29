@@ -9,7 +9,5 @@
   // files, include and exclude from the inheriting config are always overwritten.
   "include": ["src/**/*.ts"],
   "exclude": [],
-  "references": [
-    {"path": "../storage-client"}
-  ]
+  "references": []
 }
