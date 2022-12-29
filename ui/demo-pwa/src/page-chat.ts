@@ -136,9 +136,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     return html`
       text on surface
 
-      <p @click=${this._changeLocale}>
-        text on surface-variant
-      </p>
+      <p @click=${this._changeLocale}>text on surface-variant</p>
 
       <p>
         <span class="section-name">icon buttons</span>
@@ -146,6 +144,10 @@ export class AlwatrPageHome extends AlwatrSmartElement {
         <alwatr-standard-icon-button .icon=${'mic-outline'}></alwatr-standard-icon-button>
         <alwatr-standard-icon-button .icon=${'happy-outline'}></alwatr-standard-icon-button>
         <alwatr-standard-icon-button .icon=${'send'}></alwatr-standard-icon-button>
+      </p>
+
+      <p style="background-color:#fff;">
+        <alwatr-chat-text-input></alwatr-chat-text-input>
       </p>
 
       <p>
@@ -180,12 +182,12 @@ export class AlwatrPageHome extends AlwatrSmartElement {
   protected _changeLocale(): void {
     l10n.setLocal(
       l10n.locale?.code !== l10n.config.defaultLocale.code
-      ? l10n.config.defaultLocale
-      : {
-        code: 'fa-IR',
-        direction: 'rtl',
-        language: 'fa',
-      },
+        ? l10n.config.defaultLocale
+        : {
+          code: 'fa-IR',
+          direction: 'rtl',
+          language: 'fa',
+        },
     );
   }
 }
