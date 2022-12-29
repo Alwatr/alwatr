@@ -76,6 +76,6 @@ export class AlwatrStandardIconButton extends AlwatrDummyElement {
   @property() icon?: string;
 
   override render(): unknown {
-    return html`<alwatr-icon .name=${this.icon}></alwatr-icon>`;
+    return html`<alwatr-icon flip-rtl .name=${this.icon}></alwatr-icon>`;
   }
 }
