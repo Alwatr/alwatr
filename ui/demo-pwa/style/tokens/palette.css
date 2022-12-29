@@ -119,9 +119,9 @@
   --alwatr-sys-color-error-container-light: #ffdad6;
   --alwatr-sys-color-on-error-light: #ffffff;
   --alwatr-sys-color-on-error-container-light: #410002;
-  --alwatr-sys-color-background-light: #fdfcff;
+  --alwatr-sys-color-background-light: var(--alwatr-ref-palette-neutral95);
   --alwatr-sys-color-on-background-light: #1a1c1e;
-  --alwatr-sys-color-surface-light: #fdfcff;
+  --alwatr-sys-color-surface-light: var(--alwatr-ref-palette-neutral99);;
   --alwatr-sys-color-on-surface-light: #1a1c1e;
   --alwatr-sys-color-surface-variant-light: #dfe2eb;
   --alwatr-sys-color-on-surface-variant-light: #43474e;
@@ -150,9 +150,9 @@
   --alwatr-sys-color-error-container-dark: #93000a;
   --alwatr-sys-color-on-error-dark: #690005;
   --alwatr-sys-color-on-error-container-dark: #ffdad6;
-  --alwatr-sys-color-background-dark: #1a1c1e;
-  --alwatr-sys-color-on-background-dark: #e3e2e6;
-  --alwatr-sys-color-surface-dark: #1a1c1e;
+  --alwatr-sys-color-background-dark: var(--alwatr-ref-palette-neutral20);
+  --alwatr-sys-color-on-background-dark: #060606;
+  --alwatr-sys-color-surface-dark: var(--alwatr-ref-palette-neutral10);;
   --alwatr-sys-color-on-surface-dark: #e3e2e6;
   --alwatr-sys-color-surface-variant-dark: #43474e;
   --alwatr-sys-color-on-surface-variant-dark: #c3c6cf;
@@ -164,4 +164,77 @@
   --alwatr-sys-color-surface-tint-dark: #a4c9ff;
   --alwatr-sys-color-outline-variant-dark: #43474e;
   --alwatr-sys-color-scrim-dark: #000000;
+
+
 }
+
+:root {
+  /* theme light */
+  --alwatr-sys-color-primary: var(--alwatr-sys-color-primary-light);
+  --alwatr-sys-color-on-primary: var(--alwatr-sys-color-on-primary-light);
+  --alwatr-sys-color-primary-container: var(--alwatr-sys-color-primary-container-light);
+  --alwatr-sys-color-on-primary-container: var(--alwatr-sys-color-on-primary-container-light);
+  --alwatr-sys-color-secondary: var(--alwatr-sys-color-secondary-light);
+  --alwatr-sys-color-on-secondary: var(--alwatr-sys-color-on-secondary-light);
+  --alwatr-sys-color-secondary-container: var(--alwatr-sys-color-secondary-container-light);
+  --alwatr-sys-color-on-secondary-container: var(--alwatr-sys-color-on-secondary-container-light);
+  --alwatr-sys-color-tertiary: var(--alwatr-sys-color-tertiary-light);
+  --alwatr-sys-color-on-tertiary: var(--alwatr-sys-color-on-tertiary-light);
+  --alwatr-sys-color-tertiary-container: var(--alwatr-sys-color-tertiary-container-light);
+  --alwatr-sys-color-on-tertiary-container: var(--alwatr-sys-color-on-tertiary-container-light);
+  --alwatr-sys-color-error: var(--alwatr-sys-color-error-light);
+  --alwatr-sys-color-error-container: var(--alwatr-sys-color-error-container-light);
+  --alwatr-sys-color-on-error: var(--alwatr-sys-color-on-error-light);
+  --alwatr-sys-color-on-error-container: var(--alwatr-sys-color-on-error-container-light);
+  --alwatr-sys-color-background: var(--alwatr-sys-color-background-light);
+  --alwatr-sys-color-on-background: var(--alwatr-sys-color-on-background-light);
+  --alwatr-sys-color-surface: var(--alwatr-sys-color-surface-light);
+  --alwatr-sys-color-on-surface: var(--alwatr-sys-color-on-surface-light);
+  --alwatr-sys-color-surface-variant: var(--alwatr-sys-color-surface-variant-light);
+  --alwatr-sys-color-on-surface-variant: var(--alwatr-sys-color-on-surface-variant-light);
+  --alwatr-sys-color-outline: var(--alwatr-sys-color-outline-light);
+  --alwatr-sys-color-inverse-on-surface: var(--alwatr-sys-color-inverse-on-surface-light);
+  --alwatr-sys-color-inverse-surface: var(--alwatr-sys-color-inverse-surface-light);
+  --alwatr-sys-color-inverse-primary: var(--alwatr-sys-color-inverse-primary-light);
+  --alwatr-sys-color-shadow: var(--alwatr-sys-color-shadow-light);
+  --alwatr-sys-color-surface-tint: var(--alwatr-sys-color-surface-tint-light);
+  --alwatr-sys-color-outline-variant: var(--alwatr-sys-color-outline-variant-light);
+  --alwatr-sys-color-scrim: var(--alwatr-sys-color-scrim-light);
+ }
+
+ @media (prefers-color-scheme: dark) {
+  :root {
+    /* theme dark */
+    --alwatr-sys-color-primary: var(--alwatr-sys-color-primary-dark);
+    --alwatr-sys-color-on-primary: var(--alwatr-sys-color-on-primary-dark);
+    --alwatr-sys-color-primary-container: var(--alwatr-sys-color-primary-container-dark);
+    --alwatr-sys-color-on-primary-container: var(--alwatr-sys-color-on-primary-container-dark);
+    --alwatr-sys-color-secondary: var(--alwatr-sys-color-secondary-dark);
+    --alwatr-sys-color-on-secondary: var(--alwatr-sys-color-on-secondary-dark);
+    --alwatr-sys-color-secondary-container: var(--alwatr-sys-color-secondary-container-dark);
+    --alwatr-sys-color-on-secondary-container: var(--alwatr-sys-color-on-secondary-container-dark);
+    --alwatr-sys-color-tertiary: var(--alwatr-sys-color-tertiary-dark);
+    --alwatr-sys-color-on-tertiary: var(--alwatr-sys-color-on-tertiary-dark);
+    --alwatr-sys-color-tertiary-container: var(--alwatr-sys-color-tertiary-container-dark);
+    --alwatr-sys-color-on-tertiary-container: var(--alwatr-sys-color-on-tertiary-container-dark);
+    --alwatr-sys-color-error: var(--alwatr-sys-color-error-dark);
+    --alwatr-sys-color-error-container: var(--alwatr-sys-color-error-container-dark);
+    --alwatr-sys-color-on-error: var(--alwatr-sys-color-on-error-dark);
+    --alwatr-sys-color-on-error-container: var(--alwatr-sys-color-on-error-container-dark);
+    --alwatr-sys-color-background: var(--alwatr-sys-color-background-dark);
+    --alwatr-sys-color-on-background: var(--alwatr-sys-color-on-background-dark);
+    --alwatr-sys-color-surface: var(--alwatr-sys-color-surface-dark);
+    --alwatr-sys-color-on-surface: var(--alwatr-sys-color-on-surface-dark);
+    --alwatr-sys-color-surface-variant: var(--alwatr-sys-color-surface-variant-dark);
+    --alwatr-sys-color-on-surface-variant: var(--alwatr-sys-color-on-surface-variant-dark);
+    --alwatr-sys-color-outline: var(--alwatr-sys-color-outline-dark);
+    --alwatr-sys-color-inverse-on-surface: var(--alwatr-sys-color-inverse-on-surface-dark);
+    --alwatr-sys-color-inverse-surface: var(--alwatr-sys-color-inverse-surface-dark);
+    --alwatr-sys-color-inverse-primary: var(--alwatr-sys-color-inverse-primary-dark);
+    --alwatr-sys-color-shadow: var(--alwatr-sys-color-shadow-dark);
+    --alwatr-sys-color-surface-tint: var(--alwatr-sys-color-surface-tint-dark);
+    --alwatr-sys-color-outline-variant: var(--alwatr-sys-color-outline-variant-dark);
+    --alwatr-sys-color-scrim: var(--alwatr-sys-color-scrim-dark);
+   }
+
+ }
