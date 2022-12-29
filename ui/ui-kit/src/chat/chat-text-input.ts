@@ -1,5 +1,7 @@
 import {AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
 
+import type {PropertyValues} from '@alwatr/element';
+
 import '../icon-button/standard-icon-button.js';
 
 declare global {
@@ -52,6 +54,8 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
     }
   `;
 
+  inputElement: HTMLTextAreaElement | null = null;
+
   override render(): unknown {
     return html`
       <alwatr-standard-icon-button .icon=${'send'}></alwatr-standard-icon-button>
@@ -63,15 +67,14 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
     `;
   }
 
+  protected override firstUpdated(changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(changedProperties);
+    this.inputElement = this.renderRoot.querySelector('textarea');
+  }
+
   private __inputChange(event: InputEvent): void {
     const textarea = event.target as HTMLTextAreaElement;
-    const lines = textarea.value.split('\n').length;
-
-    if (lines < 6) {
-      textarea.rows = textarea.value.split('\n').length;
-    }
-    else {
-      textarea.rows = 6;
-    }
+    const value = textarea.value;
+    textarea.rows = Math.min(value.split('\n').length, 6);
   }
 }
