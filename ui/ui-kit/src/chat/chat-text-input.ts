@@ -76,9 +76,13 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
 
   protected _sendTextMessage(): void {
     this._logger.logMethod('_sendTextMessage');
-    const message = this.inputElement?.value;
-    if (message != null && message.length > 0) {
+    if (this.inputElement == null) return;
+
+    const message = this.inputElement.value;
+    if (message.length > 0) {
       chatSendMessageSignal.request({text: message});
+      this.inputElement.rows = 1;
+      this.inputElement.value = '';
     }
   }
 
