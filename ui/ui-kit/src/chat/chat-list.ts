@@ -1,17 +1,13 @@
 import {AlwatrDummyElement, css, customElement, html, nothing, property} from '@alwatr/element';
 import './chat-message.js';
 
-import type {ChatMessage as _ChatMessage} from './chat-message.js';
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/fetch/type.js';
+import type {ChatStorage} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-chat-list': AlwatrChatList;
   }
 }
-
-export type ChatMessage = AlwatrDocumentObject & _ChatMessage;
-export type ChatStorage = AlwatrDocumentStorage<ChatMessage>;
 
 export function* map<T>(
     items: Record<string, T> | undefined,

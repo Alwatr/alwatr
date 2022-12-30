@@ -19,5 +19,6 @@
     {"path": "../element"},
     {"path": "../icon"},
     {"path": "../../core/fetch"},
+    {"path": "../../core/type"},
   ]
 }

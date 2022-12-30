@@ -4,13 +4,12 @@ import type {
   FetchOptions,
   CacheDuplicate,
   CacheStrategy,
-  AlwatrDocumentObject,
   AlwatrServiceResponse,
   AlwatrServiceResponseSuccessWithMeta,
   AlwatrServiceResponseSuccess,
 } from './type.js';
 
-export {FetchOptions, CacheDuplicate, CacheStrategy, AlwatrDocumentObject, AlwatrServiceResponse};
+export {FetchOptions, CacheDuplicate, CacheStrategy, AlwatrServiceResponse};
 
 const logger = createLogger('alwatr/fetch');
 

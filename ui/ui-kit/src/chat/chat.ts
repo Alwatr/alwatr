@@ -3,7 +3,7 @@ import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 import './chat-footer.js';
 import './chat-list.js';
 
-import type {ChatStorage} from './chat-list.js';
+import type {ChatStorage} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
