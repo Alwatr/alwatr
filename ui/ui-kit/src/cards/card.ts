@@ -9,8 +9,8 @@ export class AlwatrCard extends AlwatrDummyElement {
       :host {
         display: flex;
         flex-direction: column;
-        padding: 1rem;
-        border-radius: var(--md-sys-shape-corner-small-default-size);
+        border-radius: var(--alwatr-sys-shape-corner-medium-default-size);
+        color: var(--alwatr-sys-color-on-surface);
       }
     `,
   ];
