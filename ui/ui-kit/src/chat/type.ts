@@ -1,6 +1,5 @@
 
-import type {AlwatrDocumentStorage} from '@alwatr/fetch/src/type.js';
-import type {ChatStorage, ChatTextMessage} from '@alwatr/type';
+import type {AlwatrDocumentStorage, ChatStorage, ChatTextMessage} from '@alwatr/type';
 
 declare global {
   // eslint-disable-next-line no-var

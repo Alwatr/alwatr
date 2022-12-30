@@ -4,8 +4,8 @@ import {SignalInterface} from '@alwatr/signal';
 
 import {chatDocumentStorageSignal} from './chat-document-storage.js';
 
-import type {CacheStrategy, AlwatrDocumentStorage} from '@alwatr/fetch/type.js';
-import type {ChatTextMessage} from '@alwatr/type';
+import type {CacheStrategy} from '@alwatr/fetch/type.js';
+import type {AlwatrDocumentStorage, ChatTextMessage} from '@alwatr/type';
 
 export const logger = createLogger('[director/chat-send-text-message]');
 export const chatSendMessageSignal = new SignalInterface('chat-send-text-message');
