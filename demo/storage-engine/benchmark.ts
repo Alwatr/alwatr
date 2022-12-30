@@ -1,7 +1,7 @@
 import {random} from '@alwatr/math';
 import {AlwatrStorageEngine} from '@alwatr/storage-engine';
 
-import type {AlwatrDocumentObject} from '@alwatr/fetch';
+import type {AlwatrDocumentObject} from '@alwatr/fetch/type.js';
 
 interface User extends AlwatrDocumentObject {
   fname: string;
