@@ -28,8 +28,5 @@
   "homepage": "https://github.com/AliMD/alwatr/tree/main/core/type#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
-  },
-  "devDependencies": {
-    "@alwatr/fetch": "~0.27.0"
   }
 }
