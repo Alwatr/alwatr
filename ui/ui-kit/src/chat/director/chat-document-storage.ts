@@ -5,7 +5,7 @@ import {SignalInterface} from '@alwatr/signal';
 import type {CacheStrategy} from '@alwatr/fetch/type.js';
 import type {ChatStorage} from '@alwatr/type';
 
-export const logger = createLogger('[director/job-document-storage]');
+export const logger = createLogger('[director/chat-document-storage]');
 export const chatDocumentStorageSignal = new SignalInterface('chat-document-storage');
 
 async function requestChatStorage(cacheStrategy: CacheStrategy): Promise<void> {

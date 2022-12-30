@@ -12,7 +12,7 @@ Content-Type: application/json
 
 {
   "id": "auto_increment",
-  "user": "njfamirm",
+  "from": "njfamirm",
   "type": "text",
   "text": "سلام ;)"
 }
@@ -24,7 +24,7 @@ Content-Type: application/json
 
 {
   "id": "auto_increment",
-  "user": "alimd",
+  "from": "alimd",
   "type": "text",
   "text": "علیک سلام :)",
   "replyId": "1"

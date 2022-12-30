@@ -1,5 +1,7 @@
 import {AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
 
+import {chatSendMessageSignal} from './director/chat-send-message.js';
+
 import type {PropertyValues} from '@alwatr/element';
 
 import '../icon-button/standard-icon-button.js';
@@ -64,8 +66,20 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
         placeholder=${this.l10n.localize('chat_text_input_placeholder')}
         @input=${this.__inputChange}
       ></textarea>
-      <alwatr-standard-icon-button .icon=${'send'} flip-rtl></alwatr-standard-icon-button>
+      <alwatr-standard-icon-button
+        @click=${this._sendTextMessage}
+        .icon=${'send'}
+        flip-rtl
+      ></alwatr-standard-icon-button>
     `;
+  }
+
+  protected _sendTextMessage(): void {
+    this._logger.logMethod('_sendTextMessage');
+    const message = this.inputElement?.value;
+    if (message != null && message.length > 0) {
+      chatSendMessageSignal.request({text: message});
+    }
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
