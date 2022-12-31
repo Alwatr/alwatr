@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
+
+### Features
+
+- new ui design system ([8c9c8ba](https://github.com/AliMD/alwatr/commit/8c9c8ba29c477838f3e7034b902f4e0dafabd17c))
+
 # [0.26.0](https://github.com/AliMD/alwatr/compare/v0.25.0...v0.26.0) (2022-12-22)
 
 ### Bug Fixes

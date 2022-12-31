@@ -18,30 +18,31 @@ html {
 }
 
 body {
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  word-wrap: break-word;
+  text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  font-feature-settings: 'calt' 1, 'tnum' 0;
   -webkit-user-drag: none;
   -ms-content-zooming: none;
   -ms-touch-action: pan-x pan-y pinch-zoom;
   touch-action: pan-x pan-y pinch-zoom;
-  word-wrap: break-word;
   transform: translateZ(0);
   overflow: hidden;
   overflow: clip;
   overscroll-behavior-y: none;
 
   /* Theme */
-  color: var(--md-sys-color-on-background);
-  background-color: var(--md-sys-color-background);
-  /* font-family: var(--md-sys-typescale-body-medium-font); */
-  font-weight: var(--md-sys-typescale-body-medium-weight);
-  font-size: var(--md-sys-typescale-body-medium-size);
-  font-style: var(--md-sys-typescale-body-medium-font-style);
-  letter-spacing: var(--md-sys-typescale-body-medium-tracking);
-  line-height: var(--md-sys-typescale-body-medium-line-height);
-  text-transform: var(--md-sys-typescale-body-medium-text-transform);
-  text-decoration: var(--md-sys-typescale-body-medium-text-decoration);
+  color: var(--alwatr-sys-color-on-background);
+  background-color: var(--alwatr-sys-color-background);
+  font-family: var(--alwatr-sys-typescale-body-medium-font-family-name);
+  font-weight: var(--alwatr-sys-typescale-body-medium-font-weight);
+  font-size: var(--alwatr-sys-typescale-body-medium-font-size);
+  letter-spacing: var(--alwatr-sys-typescale-body-medium-letter-spacing);
+  line-height: var(--alwatr-sys-typescale-body-medium-line-height);
 }
 
 .noscript {

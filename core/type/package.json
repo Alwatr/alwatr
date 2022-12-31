@@ -1,7 +1,8 @@
 {
   "name": "@alwatr/type",
-  "version": "0.26.0",
-  "description": "Alwatr Types",
+  "version": "0.27.0",
+  "description": "Alwatr Global Types",
+  "private": true,
   "keywords": [
     "type",
     "typescript",
@@ -9,7 +10,8 @@
     "alwatr"
   ],
   "type": "module",
-  "main": "type.js",
+  "main": "index.js",
+  "types": "index.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [

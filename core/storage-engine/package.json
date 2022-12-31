@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/storage-engine",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "description": "Elegant micro in-memory json-like storage with disk backed, Faster NoSQL Database written in tiny TypeScript ES module.",
   "keywords": [
     "database",
@@ -36,12 +36,12 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/fetch": "~0.26.0",
-    "@alwatr/logger": "~0.26.0",
+    "@alwatr/fetch": "^0.27.0",
+    "@alwatr/logger": "^0.27.0",
     "exit-hook": "~3.1.4",
     "tslib": "~2.4.1"
   },
   "devDependencies": {
-    "@alwatr/type": "~0.26.0"
+    "@alwatr/type": "~0.27.0"
   }
 }

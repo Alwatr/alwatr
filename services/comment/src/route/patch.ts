@@ -3,7 +3,7 @@ import {nanoServer} from '../lib/nano-server.js';
 import {storageClient} from '../lib/storage.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
-import type {Message, AlwatrServiceResponse} from '@alwatr/type';
+import type {ChatMessage, AlwatrServiceResponse} from '@alwatr/type';
 
 nanoServer.route('PATCH', '/', setComment);
 
@@ -14,7 +14,7 @@ async function setComment(connection: AlwatrConnection): Promise<AlwatrServiceRe
 
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
 
-  const bodyJson = await connection.requireJsonBody<Message>();
+  const bodyJson = await connection.requireJsonBody<ChatMessage>();
 
   bodyJson.id ??= 'auto_increment';
 

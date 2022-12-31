@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/AliMD/flight-finder/compare/v0.26.0...v0.27.0) (2022-12-29)
+
+### Bug Fixes
+
+- **ff-pwa:** root html head tags & icon ([3d5b83a](https://github.com/AliMD/flight-finder/commit/3d5b83a569f2d001e31eee0b5782d60321aa453f))
+- **ff-pwa:** root html metas ([9ec0a01](https://github.com/AliMD/flight-finder/commit/9ec0a0168d19c716213acc9a5ab454404024a523))
+- **ff-pwa:** viewport ([dba2530](https://github.com/AliMD/flight-finder/commit/dba2530b0b040c48d213844ef4833e6ac90ed405))
+
+### Features
+
+- **element:** export from lit ([21f15d8](https://github.com/AliMD/flight-finder/commit/21f15d86319a40fab02d86f24a1451c056f36a7c))
+- **ff-pwa:** add banner ([5e647f6](https://github.com/AliMD/flight-finder/commit/5e647f60c49bddae4ed8d78d67377264465b2adc))
+- **ff-pwa:** app name ([0fb42ae](https://github.com/AliMD/flight-finder/commit/0fb42ae3001efbee91d98058816296106373c9b1))
+- **ui/demo:** new pwa package ([#508](https://github.com/AliMD/flight-finder/issues/508)) ([93b9722](https://github.com/AliMD/flight-finder/commit/93b972254845756d339574f4eec909807e69b3c4))
+
 # [0.26.0](https://github.com/AliMD/flight-finder/compare/v0.25.0...v0.26.0) (2022-12-22)
 
 ### Bug Fixes

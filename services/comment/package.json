@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/comment",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "description": "Alwatr Comment API Microservice, Distributed simple and fast comment nanoservice base on @alwatr/storage-server",
   "type": "module",
   "keywords": [
@@ -52,11 +52,10 @@
     "watch:es": "yarn build:es --watch"
   },
   "devDependencies": {
-    "@alwatr/logger": "~0.26.0",
-    "@alwatr/nano-server": "~0.26.0",
-    "@alwatr/type": "~0.26.0",
-    "@alwatr/storage-client": "~0.26.0",
-    "@alwatr/type": "~0.26.0",
+    "@alwatr/logger": "^0.27.0",
+    "@alwatr/nano-server": "^0.27.0",
+    "@alwatr/type": "^0.27.0",
+    "@alwatr/storage-client": "^0.27.0",
     "@types/node": "~18.11.18",
     "esbuild": "~0.16.11",
     "nodemon": "~2.0.20",

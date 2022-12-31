@@ -1,18 +1,20 @@
-import type {AlwatrDocumentObject} from './storage.js';
+import {AlwatrDocumentObject, AlwatrDocumentStorage} from './storage.js';
 
 type CommonMessage = AlwatrDocumentObject & {
-  from: unknown;
+  from: string;
   replyId?: string;
 };
 
-export type TextMessage = CommonMessage & {
+export type ChatTextMessage = CommonMessage & {
   type: 'text';
   text: string;
 };
 
-export type PhotoMessage = CommonMessage & {
+export type ChatPhotoMessage = CommonMessage & {
   type: 'photo';
-  photo: Record<string, unknown>;
+  photo: unknown;
 };
 
-export type Message = TextMessage | PhotoMessage;
+export type ChatMessage = ChatTextMessage;
+
+export type ChatStorage = AlwatrDocumentStorage<ChatTextMessage>;

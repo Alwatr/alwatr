@@ -47,7 +47,7 @@
 
 /* Global page typography */
 :root {
-  --font-sahel: 'sahel-vf', 'sahel';
+  --alwatr-ref-font-family-sahel: 'sahel-vf', 'sahel';
 }
 body {
   text-rendering: optimizeLegibility;

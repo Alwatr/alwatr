@@ -1,4 +1,4 @@
-import type {AlwatrServiceResponseSuccessWithMeta} from './service.js';
+import type {AlwatrServiceResponseSuccessWithMeta} from './service-response.js';
 
 export type AlwatrDocumentObject = {
   id: string;
@@ -15,7 +15,6 @@ export type AlwatrDocumentMeta = {
   lastUpdated: number;
   lastAutoId: number;
 };
-
 
 export type AlwatrDocumentStorage<T extends AlwatrDocumentObject> = Omit<
   AlwatrServiceResponseSuccessWithMeta<Record<string, T>, AlwatrDocumentMeta>,
