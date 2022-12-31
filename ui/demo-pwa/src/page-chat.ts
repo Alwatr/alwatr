@@ -23,6 +23,12 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     alwatr-chat {
       height: 100%;
     }
+
+    alwatr-elevated-card,
+    alwatr-filled-card,
+    alwatr-outlined-card {
+      margin-bottom: 1em;
+    }
   `;
 
   override render(): unknown {
