@@ -2,6 +2,8 @@ import {createServer} from 'node:http';
 
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
+import {validator} from '@alwatr/validator';
+
 
 import type {NanoServerConfig, ConnectionConfig} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
@@ -15,7 +17,13 @@ import type {
   ParamKeyType,
   ParamValueType,
   QueryParameters,
+<<<<<<< HEAD
 } from '@alwatr/type';
+=======
+} from '@alwatr/fetch/type.js';
+import type {AlwatrLogger} from '@alwatr/logger';
+import type {Schema} from '@alwatr/validator';
+>>>>>>> a4dad6fc (feat(nano-server): add validator to requireJsonBody)
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
 
@@ -445,7 +453,7 @@ export class AlwatrConnection {
    * const bodyData = await connection.requireJsonBody();
    * ```
    */
-  async requireJsonBody<T>(): Promise<T> {
+  async requireJsonBody<T>(validatorSchema?: Schema): Promise<T> {
     // if request content type is json
     if (this.incomingMessage.headers['content-type'] !== 'application/json') {
       // eslint-disable-next-line no-throw-literal
@@ -467,10 +475,11 @@ export class AlwatrConnection {
       };
     }
 
+    let jsonBody: T;
     try {
-      return JSON.parse(body) as T;
+      jsonBody = JSON.parse(body) as T;
     }
-    catch (err) {
+    catch {
       // eslint-disable-next-line no-throw-literal
       throw {
         ok: false,
@@ -478,6 +487,25 @@ export class AlwatrConnection {
         errorCode: 'invalid_json',
       };
     }
+
+    if (validatorSchema != null) {
+      try {
+        jsonBody = validator<T>(<Record<string, unknown>> jsonBody, validatorSchema);
+      }
+      catch (err) {
+        // eslint-disable-next-line no-throw-literal
+        throw {
+          ok: false,
+          statusCode: 400,
+          errorCode: 'invalid_body_json',
+          meta: {
+            cause: (err as Error).cause,
+          },
+        };
+      }
+    }
+
+    return jsonBody;
   }
 
   /**
