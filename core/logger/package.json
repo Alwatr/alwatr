@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/logger",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "description": "Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.",
   "keywords": [
     "log",

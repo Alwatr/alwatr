@@ -14,13 +14,14 @@ export class AlwatrChatAvatar extends AlwatrDummyElement {
   static override styles = css`
     :host {
       display: inline-block;
-      width: 4rem;
-      height: 4rem;
+      width: var(--alwatr-sys-spacing-track-5);
+      height: var(--alwatr-sys-spacing-track-5);
       border-radius: 50%;
       overflow: hidden;
       overflow: clip;
       overflow-clip-margin: content-box;
       box-sizing: content-box;
+      flex-grow: 0;
       flex-shrink: 0;
     }
 

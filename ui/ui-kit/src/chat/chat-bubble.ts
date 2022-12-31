@@ -1,4 +1,4 @@
-import {AlwatrDummyElement, css, html, customElement, property, PropertyValues} from '@alwatr/element';
+import {AlwatrDummyElement, css, html, customElement, property, DirectionMixin} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -9,43 +9,41 @@ declare global {
 /**
  * Alwatr chat message bubble box element.
  *
- * @attr end-side
+ * @attr {start|end} side
  *
  */
 @customElement('alwatr-chat-bubble')
-export class AlwatrChatBubble extends AlwatrDummyElement {
+export class AlwatrChatBubble extends DirectionMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
       display: inline-block;
-      padding: 0.8rem 1.4rem;
-      color: var(--md-sys-color-on-surface);
-      background-color: var(--md-sys-color-surface);
+      padding:
+        var(--alwatr-sys-spacing-track-1)
+        var(--alwatr-sys-spacing-track-2)
+        var(--alwatr-sys-spacing-halftrack-3)
+      ;
+      color: var(--alwatr-sys-color-on-surface);
+      background-color: var(--alwatr-sys-color-surface);
       white-space: pre-line;
+      /* max-width: var(--alwatr-sys-spacing-column-3); */
+      border-radius: var(--alwatr-sys-shape-large);
     }
 
-    :host,
-    :host([dir='rtl'][end-side]) {
-      border-radius: var(--md-sys-shape-large);
-      border-bottom-left-radius: var(--md-sys-shape-corner-extra-small-default-size);
+    :host([side='start']),
+    :host([side='end'][dir='rtl']) {
+      border-bottom-left-radius: var(--alwatr-sys-shape-corner-extra-small-default-size);
+      border-bottom-right-radius: var(--alwatr-sys-shape-large);
     }
 
-    :host([dir='rtl']),
-    :host([end-side]) {
-      border-bottom-left-radius: var(--md-sys-shape-large);
-      border-bottom-right-radius: var(--md-sys-shape-corner-extra-small-default-size);
+    :host([side='end']),
+    :host([side='start'][dir='rtl']) {
+      border-bottom-left-radius: var(--alwatr-sys-shape-large);
+      border-bottom-right-radius: var(--alwatr-sys-shape-corner-extra-small-default-size);
     }
   `;
 
   @property()
     text?: string;
-
-  @property({type: Boolean, attribute: 'end-side', reflect: true})
-    endSide = false;
-
-  protected override shouldUpdate(_changedProperties: PropertyValues): boolean {
-    return super.shouldUpdate(_changedProperties) &&
-      !(_changedProperties.size === 1 && _changedProperties.has('endSide'));
-  }
 
   override render(): unknown {
     super.render();

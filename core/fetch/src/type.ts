@@ -3,6 +3,8 @@ export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'c
 export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
 export type QueryParameters = Record<string, string | number | boolean>;
 
+export * from '@alwatr/type';
+
 export interface FetchOptions extends RequestInit {
   /**
    * Request URL.
@@ -90,53 +92,3 @@ export interface FetchOptions extends RequestInit {
    */
   token?: string;
 }
-
-export type AlwatrDocumentObject = {
-  id: string;
-  meta?: {
-    rev: number;
-    created: number;
-    updated: number;
-  };
-};
-
-export type AlwatrServiceResponseFailed = {
-  ok: false;
-  statusCode: number;
-  errorCode: string;
-  meta?: Record<string, unknown>;
-  data?: never;
-};
-
-export type AlwatrServiceResponseSuccess<TData = Record<string, unknown>> = {
-  ok: true;
-  statusCode?: number;
-  errorCode?: never;
-  meta?: never;
-  data: TData;
-};
-
-export type AlwatrServiceResponseSuccessWithMeta<TData = Record<string, unknown>, TMeta = Record<string, unknown>> = {
-  ok: true;
-  statusCode?: number;
-  errorCode?: never;
-  meta: TMeta;
-  data: TData;
-};
-
-export type AlwatrServiceResponse<TData = Record<string, unknown>, TMeta = Record<string, unknown>> =
-  | AlwatrServiceResponseSuccess<TData>
-  | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>
-  | AlwatrServiceResponseFailed;
-
-export type AlwatrDocumentMeta = {
-  formatVersion: number;
-  reversion: number;
-  lastUpdated: number;
-  lastAutoId: number;
-};
-
-export type AlwatrDocumentStorage<T extends AlwatrDocumentObject> = Omit<
-  AlwatrServiceResponseSuccessWithMeta<Record<string, T>, AlwatrDocumentMeta>,
-  'statusCode' | 'errorCode'
->;

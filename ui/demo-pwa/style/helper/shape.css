@@ -1,34 +1,34 @@
 .shape-none {
-  border-radius: var(--md-sys-shape-corner-none-default-size);
+  border-radius: var(--alwatr-sys-shape-corner-none-default-size);
 }
 .shape-extra-small {
-  border-radius: var(--md-sys-shape-corner-extra-small-default-size);
+  border-radius: var(--alwatr-sys-shape-corner-extra-small-default-size);
 }
 .shape-small {
-  border-radius: var(--md-sys-shape-corner-small-default-size);
+  border-radius: var(--alwatr-sys-shape-corner-small-default-size);
 }
 .shape-medium {
-  border-radius: var(--md-sys-shape-corner-medium-default-size);
+  border-radius: var(--alwatr-sys-shape-corner-medium-default-size);
 }
 .shape-large {
-  border-radius: var(--md-sys-shape-corner-large-default-size);
+  border-radius: var(--alwatr-sys-shape-corner-large-default-size);
 }
 .shape-extra-large {
-  border-radius: var(--md-sys-shape-corner-extra-large-default-size);
+  border-radius: var(--alwatr-sys-shape-corner-extra-large-default-size);
 }
 .extra-small-top {
-  border-top-left-radius: var(--md-sys-shape-corner-extra-small-top-top-left);
-  border-top-right-radius: var(--md-sys-shape-corner-extra-small-top-top-right);
+  border-top-left-radius: var(--alwatr-sys-shape-corner-extra-small-top-top-left);
+  border-top-right-radius: var(--alwatr-sys-shape-corner-extra-small-top-top-right);
 }
 .large-end {
-  border-top-right-radius: var(--md-sys-shape-corner-large-end-top-right);
-  border-bottom-right-radius: var(--md-sys-shape-corner-large-end-bottom-right);
+  border-top-right-radius: var(--alwatr-sys-shape-corner-large-end-top-right);
+  border-bottom-right-radius: var(--alwatr-sys-shape-corner-large-end-bottom-right);
 }
 .large-top {
-  border-top-left-radius: var(--md-sys-shape-corner-large-top-top-left);
-  border-top-right-radius: var(--md-sys-shape-corner-large-top-top-right);
+  border-top-left-radius: var(--alwatr-sys-shape-corner-large-top-top-left);
+  border-top-right-radius: var(--alwatr-sys-shape-corner-large-top-top-right);
 }
 .extra-large-top {
-  border-top-left-radius: var(--md-sys-shape-corner-extra-large-top-top-left);
-  border-top-right-radius: var(--md-sys-shape-corner-extra-large-top-top-right);
+  border-top-left-radius: var(--alwatr-sys-shape-corner-extra-large-top-top-left);
+  border-top-right-radius: var(--alwatr-sys-shape-corner-extra-large-top-top-right);
 }
