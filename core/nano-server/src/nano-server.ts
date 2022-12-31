@@ -17,13 +17,8 @@ import type {
   ParamKeyType,
   ParamValueType,
   QueryParameters,
-<<<<<<< HEAD
 } from '@alwatr/type';
-=======
-} from '@alwatr/fetch/type.js';
-import type {AlwatrLogger} from '@alwatr/logger';
-import type {Schema} from '@alwatr/validator';
->>>>>>> a4dad6fc (feat(nano-server): add validator to requireJsonBody)
+import type {JsonSchema} from '@alwatr/validator';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
 
@@ -453,7 +448,7 @@ export class AlwatrConnection {
    * const bodyData = await connection.requireJsonBody();
    * ```
    */
-  async requireJsonBody<T>(validatorSchema?: Schema): Promise<T> {
+  async requireJsonBody<T>(validatorSchema?: JsonSchema, validatorAdditionalProperties?: boolean): Promise<T> {
     // if request content type is json
     if (this.incomingMessage.headers['content-type'] !== 'application/json') {
       // eslint-disable-next-line no-throw-literal
@@ -490,7 +485,7 @@ export class AlwatrConnection {
 
     if (validatorSchema != null) {
       try {
-        jsonBody = validator<T>(<Record<string, unknown>> jsonBody, validatorSchema);
+        jsonBody = validator<T>(validatorSchema, <Record<string, unknown>> jsonBody, validatorAdditionalProperties);
       }
       catch (err) {
         // eslint-disable-next-line no-throw-literal
