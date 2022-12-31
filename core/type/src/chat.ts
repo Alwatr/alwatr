@@ -13,8 +13,9 @@ export type ChatTextMessage = CommonMessage & {
 export type ChatPhotoMessage = CommonMessage & {
   type: 'photo';
   photo: unknown;
+  text?: string;
 };
 
-export type ChatMessage = ChatTextMessage;
+export type ChatMessage = ChatTextMessage | ChatPhotoMessage;
 
 export type ChatStorage = AlwatrDocumentStorage<ChatTextMessage>;
