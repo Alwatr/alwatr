@@ -14,7 +14,7 @@ async function setComment(connection: AlwatrConnection): Promise<AlwatrServiceRe
 
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
 
-  const bodyJson = await connection.requireJsonBody<ChatMessage>();
+  const bodyJson = await connection.requireJsonBody<ChatMessage>({from: 'string', type: 'string', text: 'string'});
 
   bodyJson.id ??= 'auto_increment';
 
