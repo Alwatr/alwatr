@@ -1,4 +1,4 @@
-import type {DurationString} from '@alwatr/type';
+import type {DurationString} from '@alwatr/math';
 
 export type DigestAlgorithm = 'md5' | 'sha1' | 'sha224' | 'sha256' | 'sha384' | 'sha512';
 
