@@ -13,7 +13,6 @@ export type ChatTextMessage = CommonMessage & {
 export type ChatPhotoMessage = CommonMessage & {
   type: 'photo';
   photo: unknown;
-  text?: string;
 };
 
 export type ChatMessage = ChatTextMessage | ChatPhotoMessage;
