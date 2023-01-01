@@ -1,8 +1,6 @@
 import {TransformRangeOptions} from './type.js';
 export * from './unicode-digits.js';
 
-import type {DurationString, DurationUnit} from '@alwatr/type';
-
 /**
  * Number.isFinite simple polyfill
  */
@@ -156,6 +154,8 @@ export const random = {
   shuffle: <T>(array: T[]): T[] => array.sort(() => random.value - 0.5),
 } as const;
 
+export type DurationUnit = 's' | 'm' | 'h' | 'd' | 'w' | 'M' | 'y';
+export type DurationString = `${number}${DurationUnit}`;
 const unitConversion = {
   s: 1_000,
   m: 60_000,
