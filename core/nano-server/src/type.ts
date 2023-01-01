@@ -62,5 +62,3 @@ export interface ConnectionConfig {
 
 export type ParamKeyType = 'string' | 'number' | 'boolean';
 export type ParamValueType = string | number | boolean | null;
-
-export type MaybePromise<T> = T | Promise<T>

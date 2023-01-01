@@ -1,18 +1,19 @@
 import {createServer} from 'node:http';
 
-import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
+import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
 
-import type {NanoServerConfig, ConnectionConfig, ParamKeyType, ParamValueType, MaybePromise} from './type.js';
+import type {NanoServerConfig, ConnectionConfig} from './type.js';
+import type {AlwatrLogger} from '@alwatr/logger';
 import type {
   AlwatrServiceResponse,
   AlwatrServiceResponseFailed,
-  AlwatrServiceResponseSuccess,
-  AlwatrServiceResponseSuccessWithMeta,
+  MaybePromise,
   Methods,
+  ParamKeyType,
+  ParamValueType,
   QueryParameters,
-} from '@alwatr/fetch/type.js';
-import type {AlwatrLogger} from '@alwatr/logger';
+} from '@alwatr/type';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
 
@@ -23,16 +24,9 @@ export type RouteMiddleware<TData = Record<string, unknown>, TMeta = Record<stri
 export {
   NanoServerConfig,
   ConnectionConfig,
-  ParamKeyType,
-  AlwatrServiceResponse,
-  AlwatrServiceResponseFailed,
-  AlwatrServiceResponseSuccess,
-  AlwatrServiceResponseSuccessWithMeta,
-  Methods,
-  QueryParameters,
 };
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/nano-server',
   version: '{{ALWATR_VERSION}}',
 });

@@ -21,6 +21,7 @@ declare global {
 /**
  * Alwatr icon component
  *
+ * @attr {boolean} name
  * @attr {boolean} flip-rtl
  */
 @customElement('alwatr-icon')

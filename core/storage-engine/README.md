@@ -9,7 +9,7 @@ import {AlwatrStorageEngine} from '@alwatr/storage-engine';
 
 import type {AlwatrDocumentObject} from '@alwatr/storage-engine';
 
-interface User extends AlwatrDocumentObject {
+type User = AlwatrDocumentObject & {
   fname: string;
   lname: string;
   email: string;

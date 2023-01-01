@@ -1,8 +1,7 @@
 {
   "name": "@alwatr/type",
   "version": "0.27.0",
-  "description": "Alwatr Global Types",
-  "private": true,
+  "description": "Alwatr projects common entities types",
   "keywords": [
     "type",
     "typescript",

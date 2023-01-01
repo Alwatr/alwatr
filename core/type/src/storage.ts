@@ -1,4 +1,4 @@
-import {AlwatrServiceResponseSuccessWithMeta} from './service-response.js';
+import type {AlwatrServiceResponseSuccessWithMeta} from './service-response.js';
 
 export type AlwatrDocumentObject = {
   id: string;

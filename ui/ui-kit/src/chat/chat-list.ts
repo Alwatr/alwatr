@@ -64,7 +64,7 @@ export class AlwatrChatList extends AlwatrDummyElement {
   @property({type: Object, attribute: false})
     storage?: ChatStorage;
 
-  @property({type: Object, attribute: false})
+  @property({type: String, attribute: false})
     currentUser?: string;
 
   override render(): unknown {

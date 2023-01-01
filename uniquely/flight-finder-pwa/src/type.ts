@@ -1,4 +1,4 @@
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/fetch/type.js';
+import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
 import type {ToastOptions} from '@ionic/core';
 
 declare global {
@@ -16,12 +16,12 @@ declare global {
   }
 }
 
-export interface Job extends AlwatrDocumentObject {
+export type Job = AlwatrDocumentObject & {
   detail: JobDetail;
   resultList: Array<JobResult>;
 }
 
-export interface JobDetail {
+export type JobDetail = {
   origin: string;
   destination: string;
   date: string;

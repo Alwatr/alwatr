@@ -1,7 +1,7 @@
-export type Methods = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'TRACE' | 'OPTIONS' | 'PATCH';
+import type {Methods, QueryParameters} from '@alwatr/type';
+
 export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate';
 export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
-export type QueryParameters = Record<string, string | number | boolean>;
 
 export * from '@alwatr/type';
 

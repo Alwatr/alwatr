@@ -1,4 +1,4 @@
-import {AlwatrDocumentObject, AlwatrDocumentStorage} from './storage.js';
+import type {AlwatrDocumentObject, AlwatrDocumentStorage} from './storage.js';
 
 type CommonMessage = AlwatrDocumentObject & {
   from: string;

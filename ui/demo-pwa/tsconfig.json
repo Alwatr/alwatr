@@ -19,6 +19,7 @@
     {"path": "../../core/logger"},
     {"path": "../../core/router"},
     {"path": "../../core/i18n"},
+    {"path": "../../core/type"},
     {"path": "../../ui/element"},
     {"path": "../../ui/icon"},
     {"path": "../../ui/ui-kit"},

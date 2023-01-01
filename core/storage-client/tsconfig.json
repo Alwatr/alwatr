@@ -12,6 +12,7 @@
   "references": [
     {"path": "../logger"},
     {"path": "../fetch"},
+    {"path": "../type"},
     {"path": "../storage-engine"}
   ]
 }

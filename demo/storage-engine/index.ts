@@ -1,8 +1,8 @@
 import {AlwatrStorageEngine} from '@alwatr/storage-engine';
 
-import type {AlwatrDocumentObject} from '@alwatr/fetch/type.js';
+import type {AlwatrDocumentObject} from '@alwatr/type';
 
-interface User extends AlwatrDocumentObject {
+type User = AlwatrDocumentObject & {
   fname: string;
   lname: string;
   email: string;

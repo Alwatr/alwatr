@@ -1,6 +1,6 @@
 import {AlwatrDummyElement, css, customElement, html, nothing, property, DirectionMixin} from '@alwatr/element';
 
-import type {ChatTextMessage} from '@alwatr/type';
+import type {ChatMessage} from '@alwatr/type';
 
 import './chat-avatar.js';
 import './chat-bubble.js';
@@ -58,14 +58,14 @@ export class AlwatrChatMessage extends DirectionMixin(AlwatrDummyElement) {
   `;
 
   @property({type: Object, attribute: false})
-    message?: ChatTextMessage;
+    message?: ChatMessage;
 
   @property({type: Boolean, attribute: 'self', reflect: true})
     self = false;
 
   override render(): unknown {
     super.render();
-    if (this.message == null) return nothing;
+    if (this.message == null || this.message.type !== 'text') return nothing;
 
     const bubble = html`<alwatr-chat-bubble
       .text=${this.message.text}

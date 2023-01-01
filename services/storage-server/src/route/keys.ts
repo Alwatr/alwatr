@@ -2,7 +2,9 @@ import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
-import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
+import type {AlwatrConnection} from '@alwatr/nano-server';
+import type {AlwatrServiceResponse} from '@alwatr/type';
+
 
 nanoServer.route('GET', '/keys', getStorageKeys);
 

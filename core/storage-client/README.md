@@ -8,7 +8,7 @@ Elegant micro client for storage server written in tiny TypeScript ES module.
 import {AlwatrStorageClient} from '@alwatr/storage-client';
 import type {AlwatrDocumentObject} from '@alwatr/storage-client';
 
-interface User extends AlwatrDocumentObject {
+type User = AlwatrDocumentObject & {
   email: string;
   token?: string;
 }

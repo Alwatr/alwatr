@@ -5,7 +5,7 @@ import {jobDocumentStorageSignal} from './job-document-storage.js';
 import {showToastSignal} from './toast.js';
 
 import type {Job} from '../type.js';
-import type {AlwatrServiceResponse} from '@alwatr/fetch';
+import type {AlwatrServiceResponse} from '@alwatr/type';
 
 export const jobAddSignal = new SignalInterface('job-add');
 

@@ -1,4 +1,4 @@
-import type {Constructor} from '../type.js';
+import type {Constructor} from '@alwatr/type';
 import type {LitElement} from 'lit';
 
 export declare class SignalMixinInterface extends LitElement {

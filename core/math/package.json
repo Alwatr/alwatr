@@ -32,5 +32,8 @@
   },
   "dependencies": {
     "tslib": "~2.4.1"
+  },
+  "devDependencies": {
+    "@alwatr/type": "~0.27.0"
   }
 }
