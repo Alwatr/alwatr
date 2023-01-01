@@ -20,7 +20,7 @@ export class AlwatrChatBubble extends DirectionMixin(AlwatrDummyElement) {
       padding:
         var(--alwatr-sys-spacing-track-1)
         var(--alwatr-sys-spacing-track-2)
-        var(--alwatr-sys-spacing-halftrack-3)
+        calc(1.5 * var(--alwatr-sys-spacing-track))
       ;
       color: var(--alwatr-sys-color-on-surface);
       background-color: var(--alwatr-sys-color-surface);

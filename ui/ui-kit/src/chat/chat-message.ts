@@ -65,7 +65,7 @@ export class AlwatrChatMessage extends DirectionMixin(AlwatrDummyElement) {
 
   override render(): unknown {
     super.render();
-    if (this.message == null) return nothing;
+    if (this.message == null || this.message.type !== 'text') return nothing;
 
     const bubble = html`<alwatr-chat-bubble
       .text=${this.message.text}
