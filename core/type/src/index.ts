@@ -2,7 +2,6 @@ export * from './chat.js';
 export * from './service-response.js';
 export * from './storage.js';
 export * from './alwatr.js';
-export * from './math.js';
 export * from './type-helper.js';
 
 Alwatr.registeredList.push({
