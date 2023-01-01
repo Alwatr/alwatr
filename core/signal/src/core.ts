@@ -1,5 +1,4 @@
-import {createLogger} from '@alwatr/logger';
-import {alwatrRegisteredList} from '@alwatr/type';
+import {createLogger, globalAlwatr} from '@alwatr/logger';
 
 import type {
   DispatchOptions,
@@ -14,7 +13,7 @@ import type {
 
 export const logger = createLogger('alwatr/signal');
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/signal',
   version: '{{ALWATR_VERSION}}',
 });

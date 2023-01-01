@@ -1,5 +1,4 @@
-import {createLogger} from '@alwatr/logger';
-import {alwatrRegisteredList} from '@alwatr/type';
+import {createLogger, globalAlwatr} from '@alwatr/logger';
 
 import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type.js';
 import type {
@@ -12,7 +11,7 @@ export {FetchOptions, CacheDuplicate, CacheStrategy};
 
 const logger = createLogger('alwatr/fetch');
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/fetch',
   version: '{{ALWATR_VERSION}}',
 });

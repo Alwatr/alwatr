@@ -1,7 +1,6 @@
 import {resolve} from 'node:path';
 
-import {createLogger} from '@alwatr/logger';
-import {alwatrRegisteredList} from '@alwatr/type';
+import {createLogger, globalAlwatr} from '@alwatr/logger';
 import exitHook from 'exit-hook';
 
 import {readJsonFile, writeJsonFile} from './util.js';
@@ -10,7 +9,7 @@ import type {AlwatrStorageEngineConfig} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {AlwatrDocumentStorage, AlwatrDocumentObject} from '@alwatr/type';
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/storage-engine',
   version: '{{ALWATR_VERSION}}',
 });

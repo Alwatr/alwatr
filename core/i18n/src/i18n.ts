@@ -1,13 +1,12 @@
 import {fetch} from '@alwatr/fetch';
-import {createLogger} from '@alwatr/logger';
+import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {SignalInterface} from '@alwatr/signal';
-import {alwatrRegisteredList} from '@alwatr/type';
 
 import type {I18nConfig, L10Resource, Locale} from './type.js';
 
 const logger = createLogger('alwatr/i18n');
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/i18n',
   version: '{{ALWATR_VERSION}}',
 });

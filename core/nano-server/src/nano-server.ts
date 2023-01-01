@@ -1,8 +1,7 @@
 import {createServer} from 'node:http';
 
-import {createLogger} from '@alwatr/logger';
+import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
-import {alwatrRegisteredList} from '@alwatr/type';
 
 import type {NanoServerConfig, ConnectionConfig} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
@@ -27,7 +26,7 @@ export {
   ConnectionConfig,
 };
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/nano-server',
   version: '{{ALWATR_VERSION}}',
 });
