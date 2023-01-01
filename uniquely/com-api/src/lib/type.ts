@@ -1,4 +1,4 @@
-import type {AlwatrDocumentObject} from '@alwatr/storage-client';
+import type {AlwatrDocumentObject} from '@alwatr/type';
 
 export type Order = AlwatrDocumentObject & {
   user: User;
