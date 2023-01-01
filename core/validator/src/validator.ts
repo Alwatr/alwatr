@@ -48,7 +48,7 @@ export function validator<T extends ValidType>(
       else {
         throw new Error('invalid_type', {
           cause: {
-            itemPath,
+            itemPath: itemPath,
             itemSchema: 'Boolean',
             itemValue: String(itemValue),
           },
@@ -63,7 +63,7 @@ export function validator<T extends ValidType>(
       else {
         throw new Error('invalid_type', {
           cause: {
-            itemPath,
+            itemPath: itemPath,
             itemSchema: 'Number',
             itemValue: String(itemValue),
           },
@@ -78,7 +78,7 @@ export function validator<T extends ValidType>(
       else {
         throw new Error('invalid_type', {
           cause: {
-            itemPath,
+            itemPath: itemPath,
             itemSchema: 'String',
             itemValue: String(itemValue),
           },
