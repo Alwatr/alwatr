@@ -21,3 +21,5 @@ if (globalThis.Alwatr == null) {
 if (Alwatr.registeredList == null) {
   Alwatr.registeredList = [];
 }
+
+export const alwatrRegisteredList = Alwatr.registeredList;
