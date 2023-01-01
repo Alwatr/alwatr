@@ -1,7 +1,7 @@
 {
-  "name": "@alwatr/flight-finder-api",
+  "name": "@alwatr/com-api",
   "version": "0.27.0",
-  "description": "Alwatr Flight Finder API Microservice",
+  "description": "Alwatr Customer Order Management API Microservice",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "contributors": [
@@ -16,7 +16,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "uniquely/flight-finder-api"
+    "directory": "uniquely/com-api"
   },
   "scripts": {
     "b": "yarn build",
@@ -38,10 +38,9 @@
     "watch:es": "yarn build:es --watch"
   },
   "devDependencies": {
-    "@alwatr/logger": "^0.27.0",
-    "@alwatr/type": "~0.27.0",
-    "@alwatr/nano-server": "^0.27.0",
-    "@alwatr/storage-client": "^0.27.0",
+    "@alwatr/logger": "~0.27.0",
+    "@alwatr/nano-server": "~0.27.0",
+    "@alwatr/storage-client": "~0.27.0",
     "@types/node": "~18.11.18",
     "esbuild": "~0.16.11",
     "nodemon": "~2.0.20",
