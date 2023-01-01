@@ -1,11 +1,11 @@
-import {alwatrRegisteredList} from '@alwatr/type';
+import {globalAlwatr} from './global-alwatr.js';
 
 import type {AlwatrLogger} from './type.js';
-export {AlwatrLogger};
+export {AlwatrLogger, globalAlwatr};
 
 const isBrowser = typeof process === 'undefined';
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/logger',
   version: '{{ALWATR_VERSION}}', // TODO: replace with real version at release time.
 });

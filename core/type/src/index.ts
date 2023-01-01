@@ -1,7 +1,7 @@
 export * from './chat.js';
 export * from './service-response.js';
 export * from './storage.js';
-export * from './alwatr.js';
+export * from './global.js';
 export * from './type-helper.js';
 
 Alwatr.registeredList.push({
