@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-export const logger = createLogger('flight-finder-api');
+export const logger = createLogger('com-api');
 
 export const config = {
   storage: {
