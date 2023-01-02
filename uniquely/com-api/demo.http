@@ -54,3 +54,7 @@ Content-Type: application/json
     }
   ]
 }
+
+### Get user order list
+get {{apiUrl}}/{{apiVersion}}/order?userId=1
+Authorization: Bearer {{token}}
