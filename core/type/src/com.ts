@@ -9,7 +9,6 @@ export type Order = AlwatrDocumentObject & {
 export type User = AlwatrDocumentObject & {
   name: string;
   phoneNumber: string;
-  id: string;
   nationalCode: number;
 }
 
@@ -19,7 +18,6 @@ export type OrderDetail = {
 }
 
 export type Product = AlwatrDocumentObject & {
-  id: string;
   name: string;
   description: string;
   unitType: string;

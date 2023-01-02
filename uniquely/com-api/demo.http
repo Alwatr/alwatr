@@ -4,3 +4,20 @@
 
 ### Home
 GET {{apiUrl}}/{{apiVersion}}
+
+### New product
+PUT {{apiUrl}}/{{apiVersion}}/product
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "product-1",
+  "description": "product one description",
+  "unitType": "m",
+  "price": 1000000
+}
+
+### Get all product
+Get {{apiUrl}}/{{apiVersion}}/product
+Authorization: Bearer {{token}}
+
