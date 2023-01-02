@@ -1,4 +1,5 @@
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
+import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {Job, JobDetail} from '@alwatr/type/flight-finder.js';
 import type {ToastOptions} from '@ionic/core';
 
 declare global {
@@ -16,33 +17,7 @@ declare global {
   }
 }
 
-export type Job = AlwatrDocumentObject & {
-  detail: JobDetail;
-  resultList: Array<JobResult>;
-}
-
-export type JobDetail = {
-  origin: string;
-  destination: string;
-  date: string;
-  seatCount: number;
-  maxPrice: number | null;
-  minHour: number | null;
-  maxHour: number | null;
-  description: string;
-}
-
 export type NewJobDetail = {
   month: number;
   day: number;
 } & Omit<JobDetail, 'date'>;
-
-export type JobResult = {
-  price: number;
-  time: string;
-  seatCount: number;
-  airline: string;
-  airplane: string;
-  flightId: string;
-  arrivalTime: string;
-};

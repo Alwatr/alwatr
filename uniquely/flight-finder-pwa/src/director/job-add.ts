@@ -4,8 +4,8 @@ import {SignalInterface} from '@alwatr/signal';
 import {jobDocumentStorageSignal} from './job-document-storage.js';
 import {showToastSignal} from './toast.js';
 
-import type {Job} from '../type.js';
 import type {AlwatrServiceResponse} from '@alwatr/type';
+import type {Job} from '@alwatr/type/flight-finder.js';
 
 export const jobAddSignal = new SignalInterface('job-add');
 
