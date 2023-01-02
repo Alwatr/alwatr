@@ -9,6 +9,8 @@ import type {AlwatrStorageEngineConfig} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {AlwatrDocumentStorage, AlwatrDocumentObject} from '@alwatr/type';
 
+export type {AlwatrDocumentStorage, AlwatrDocumentObject};
+
 globalAlwatr.registeredList.push({
   name: '@alwatr/storage-engine',
   version: '{{ALWATR_VERSION}}',

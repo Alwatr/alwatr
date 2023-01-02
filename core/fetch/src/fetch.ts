@@ -5,9 +5,16 @@ import type {
   AlwatrServiceResponse,
   AlwatrServiceResponseSuccessWithMeta,
   AlwatrServiceResponseSuccess,
-} from '@alwatr/type';
+} from '@alwatr/nano-server';
 
-export {FetchOptions, CacheDuplicate, CacheStrategy};
+export {
+  FetchOptions,
+  CacheDuplicate,
+  CacheStrategy,
+  AlwatrServiceResponse,
+  AlwatrServiceResponseSuccessWithMeta,
+  AlwatrServiceResponseSuccess,
+};
 
 const logger = createLogger('alwatr/fetch');
 

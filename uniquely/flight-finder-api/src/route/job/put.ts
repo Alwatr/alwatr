@@ -3,8 +3,7 @@ import {nanoServer} from '../../lib/nano-server.js';
 import {storageClient} from '../../lib/storage.js';
 
 import type {Job} from '../../lib/type.js';
-import type {AlwatrConnection} from '@alwatr/nano-server';
-import type {AlwatrServiceResponse} from '@alwatr/type';
+import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 
 // Add job
 nanoServer.route('PUT', '/job', newJob);
