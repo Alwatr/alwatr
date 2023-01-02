@@ -21,3 +21,36 @@ Content-Type: application/json
 Get {{apiUrl}}/{{apiVersion}}/product
 Authorization: Bearer {{token}}
 
+
+### New order
+PUT {{apiUrl}}/{{apiVersion}}/order
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "user": {
+    "id": "1",
+    "name": "user-1",
+    "phoneNumber": "989154321012",
+    "nationalCode": "09282343533838"
+  },
+  "detail": {
+    "description": "",
+    "reciver": {
+      "id": "2",
+      "name": "user-2",
+      "phoneNumber": "989334321012",
+      "nationalCode": "094083094889"
+    }
+  },
+  "itemList": [
+    {
+      "id": "1",
+      "name": "product-1",
+      "description": "product one description",
+      "unitType": "m",
+      "price": 1000000,
+      "value": 20
+    }
+  ]
+}
