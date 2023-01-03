@@ -56,7 +56,7 @@
     "@typescript/lib-dom": "npm:@types/web",
     "@web/dev-server": "~0.1.35",
     "@web/dev-server-esbuild": "~0.3.3",
-    "eslint": "~8.30.0",
+    "eslint": "~8.31.0",
     "eslint-config-google": "~0.14.0",
     "eslint-import-resolver-typescript": "~3.5.2",
     "eslint-plugin-import": "~2.26.0",
