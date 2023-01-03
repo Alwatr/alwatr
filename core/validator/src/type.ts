@@ -11,5 +11,5 @@ export type JsonSchema = {
 };
 
 export type ValidType = {
-  [key: string]: ValidType | string | number | boolean | null | undefined;
+  [key: string]: ValidType | string | number | boolean | null;
 };
