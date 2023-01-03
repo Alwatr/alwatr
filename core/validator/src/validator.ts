@@ -9,8 +9,6 @@ export function validator<T extends ValidType>(
     targetObject: Record<string, unknown>,
     path = '.',
 ): T {
-  const validObject: ValidType = {};
-
   if (typeof targetObject !== 'object' || targetObject == null) {
     throw new Error('invalid_type', {
       cause: {
@@ -21,29 +19,39 @@ export function validator<T extends ValidType>(
     });
   }
 
-  for (const itemName in validSchema) {
-    if (!Object.prototype.hasOwnProperty.call(validSchema, itemName)) continue;
+  for (const itemName in targetObject) {
+    if (!Object.prototype.hasOwnProperty.call(targetObject, itemName)) continue;
 
     const itemPath = `${path}/${itemName}`;
     const itemSchema = validSchema[itemName];
+    const itemValue = targetObject[itemName] as string | number | boolean | Record<string, unknown>;
 
-    if (typeof itemSchema === 'object') {
-      // nested object
-      const itemValue = targetObject[itemName] as Record<string, unknown>;
-      validObject[itemName] = validator<ValidType>(itemSchema, itemValue, itemPath);
-      continue;
+    if (itemSchema == null) {
+      throw new Error('invalid_type', {
+        cause: {
+          itemPath,
+          itemSchema: 'undefined',
+          itemValue: String(itemValue),
+        },
+      });
     }
-    // else
 
-    const itemValue = targetObject[itemName] as string | number | boolean;
+    else if (typeof itemSchema === 'object') {
+      // nested object
+      targetObject[itemName] = validator<ValidType>(
+          itemSchema,
+          itemValue as Record<string, unknown>,
+          itemPath,
+      );
+    }
 
-    if (itemSchema === Boolean) {
+    else if (itemSchema === Boolean) {
       const strValue = String(itemValue).toLowerCase();
       if (strValue === 'true') {
-        validObject[itemName] = true;
+        targetObject[itemName] = true;
       }
       else if (strValue === 'false') {
-        validObject[itemName] = false;
+        targetObject[itemName] = false;
       }
       else {
         throw new Error('invalid_type', {
@@ -58,7 +66,7 @@ export function validator<T extends ValidType>(
 
     else if (itemSchema === Number) {
       if (isNumber(itemValue)) {
-        validObject[itemName] = +itemValue;
+        targetObject[itemName] = +itemValue;
       }
       else {
         throw new Error('invalid_type', {
@@ -73,7 +81,7 @@ export function validator<T extends ValidType>(
 
     else if (itemSchema === String) {
       if (typeof itemValue === 'string') {
-        validObject[itemName] = itemValue;
+        targetObject[itemName] = itemValue;
       }
       else {
         throw new Error('invalid_type', {
@@ -97,5 +105,5 @@ export function validator<T extends ValidType>(
     }
   }
 
-  return validObject as T;
+  return targetObject as T;
 }
