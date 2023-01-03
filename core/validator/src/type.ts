@@ -1,7 +1,16 @@
 export type JsonSchema = {
-  [key: string]: JsonSchema | StringConstructor | NumberConstructor | BooleanConstructor;
-}
+  [key: string]:
+    | JsonSchema
+    | StringConstructor
+    | NumberConstructor
+    | BooleanConstructor
+    | string
+    | number
+    | boolean
+    | null
+    | undefined;
+};
 
 export type ValidType = {
-  [key: string]: ValidType | string | number | boolean;
-}
+  [key: string]: ValidType | string | number | boolean | null | undefined;
+};

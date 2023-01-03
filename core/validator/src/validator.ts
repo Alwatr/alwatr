@@ -93,15 +93,17 @@ export function validator<T extends ValidType>(
         });
       }
     }
-
     else {
-      throw new Error('invalid_schema', {
-        cause: {
-          itemPath,
-          itemSchema: String(itemSchema),
-          itemValue: String(itemValue),
-        },
-      });
+      if (itemValue !== itemSchema) {
+        throw new Error('invalid_type', {
+          cause: {
+            message: 'invalid enum value',
+            itemPath,
+            itemSchema: String(itemSchema),
+            itemValue: String(itemValue),
+          },
+        });
+      }
     }
   }
 
