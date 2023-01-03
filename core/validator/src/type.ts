@@ -7,8 +7,7 @@ export type JsonSchema = {
     | string
     | number
     | boolean
-    | null
-    | undefined;
+    | null;
 };
 
 export type ValidType = {

@@ -1,40 +1,47 @@
 import {validator} from '@alwatr/validator';
 
-// number
-console.log(validator<{a: number}>({a: Number}, {a: 2}));
-console.log(validator<{a: number}>({a: Number}, {a: '2'}));
-
-// boolean
-console.log(validator<{a: boolean}>({a: Boolean}, {a: 'false'}));
-console.log(validator<{a: boolean}>({a: Boolean}, {a: 'true'}));
-
-// string
-console.log(validator<{a: string}>({a: String}, {a: 'salam'}));
-
-// nested object
+console.log('basic test');
 console.log(
-    validator<{a: number; b: {c: boolean, d: {e: number}}}>(
-        {a: Number, b: {c: Boolean, d: {e: Number}}},
-        {a: '2', b: {c: true, d: {e: 1}}},
+    validator<
+      {num: number; str: string; bool: boolean; _null: null; undef: undefined; ali: 'ali'; five: 5; true: true}
+    >(
+        {num: Number, str: String, bool: Boolean, _null: null, undef: undefined, ali: 'ali', five: 5, true: true},
+        {num: 123, str: 'test', bool: false, _null: null, undef: undefined, ali: 'ali', five: 5, true: true},
     ),
 );
 
-// not valid
+console.log('sanitize value test');
+console.log(
+    validator<
+      {num: number; str: string; bool: boolean; _null: null; undef: undefined; ali: 'ali'; five: 5; true: true}
+    >(
+        {num: Number, str: String, bool: Boolean, _null: null, undef: undefined, ali: 'ali', five: 5, true: true},
+        {num: '123', str: 'test', bool: 'false', _null: null, undef: undefined, ali: 'ali', five: 5, true: true},
+    ),
+);
+
+console.log('nested value test');
+console.log(
+    validator<
+      {a: {num: number; str: string; bool: boolean; _null: null; undef: undefined; ali: 'ali'; five: 5; true: true}}
+    >(
+        {a: {num: Number, str: String, bool: Boolean, _null: null, undef: undefined, ali: 'ali', five: 5, true: true}},
+        {a: {num: '123', str: 'test', bool: 'false', _null: null, undef: undefined, ali: 'ali', five: 5, true: true}},
+    ),
+);
+
+console.log('not valid test');
 try {
   console.log(
-      validator<{a: number; b: {c: boolean, d: {e: number}}}>(
-          {a: Number, b: {c: Boolean, d: {e: Number}}},
-          {a: '2', b: {c: true, d: {e: true}}},
+      validator<
+        {num: number}
+      >(
+          {num: Number},
+          {num: 'asd'},
       ),
   );
+  new Error('validator_not_work');
 }
-catch (error) {
-  console.log(error);
-}
-
-try {
-  console.log(validator<{a: boolean}>({a: Boolean}, {a: 'test'}));
-}
-catch (error) {
-  console.log(error);
+catch (err) {
+  console.log('test ok, error cause: ', (err as Error).cause);
 }
