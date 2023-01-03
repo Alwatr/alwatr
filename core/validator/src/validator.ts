@@ -97,5 +97,5 @@ export function validator<T extends ValidType>(
     }
   }
 
-  return targetObject as T;
+  return validObject as T;
 }
