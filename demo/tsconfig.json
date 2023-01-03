@@ -22,5 +22,6 @@
     {"path": "../ui/element"},
     {"path": "../ui/icon"},
     {"path": "../core/storage-engine"},
+    {"path": "../core/validator"}
   ],
 }
