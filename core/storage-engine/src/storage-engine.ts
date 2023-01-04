@@ -9,7 +9,7 @@ import type {AlwatrStorageEngineConfig} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {AlwatrDocumentStorage, AlwatrDocumentObject} from '@alwatr/type';
 
-export type {AlwatrDocumentStorage, AlwatrDocumentObject};
+export type {AlwatrDocumentObject, AlwatrDocumentStorage};
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/storage-engine',
@@ -25,7 +25,7 @@ globalAlwatr.registeredList.push({
  * ```ts
  * import {AlwatrStorageEngine} from '@alwatr/storage-engine';
  *
- * import type {AlwatrDocumentObject} from '@alwatr/fetch';
+ * import type {AlwatrDocumentObject} from '@alwatr/storage-engine';
  *
  * interface User extends AlwatrDocumentObject {
  *   fname: string;

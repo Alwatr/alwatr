@@ -3,9 +3,7 @@ import {createLogger, globalAlwatr} from '@alwatr/logger';
 
 import type {AlwatrStorageClientConfig} from './type.js';
 import type {FetchOptions} from '@alwatr/fetch';
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/storage-engine';
-
-export {AlwatrStorageClientConfig, AlwatrDocumentObject, AlwatrDocumentStorage};
+import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/storage-client',

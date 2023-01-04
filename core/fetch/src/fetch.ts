@@ -5,7 +5,7 @@ import type {
   AlwatrServiceResponse,
   AlwatrServiceResponseSuccessWithMeta,
   AlwatrServiceResponseSuccess,
-} from '@alwatr/nano-server';
+} from '@alwatr/type';
 
 export {
   FetchOptions,
