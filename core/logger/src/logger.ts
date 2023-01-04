@@ -1,6 +1,7 @@
 import {globalAlwatr} from './global-alwatr.js';
 
 import type {AlwatrLogger} from './type.js';
+
 export {AlwatrLogger, globalAlwatr};
 
 const isBrowser = typeof process === 'undefined';

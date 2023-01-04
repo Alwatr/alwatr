@@ -9,8 +9,14 @@ import {
   DirectionMixin,
 } from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
+import {globalAlwatr} from '@alwatr/logger';
 
 import type {PropertyValues, HTMLTemplateResult} from '@alwatr/element';
+
+globalAlwatr.registeredList.push({
+  name: '@alwatr/icon',
+  version: '{{ALWATR_VERSION}}',
+});
 
 declare global {
   interface HTMLElementTagNameMap {

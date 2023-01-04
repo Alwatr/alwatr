@@ -20,6 +20,7 @@
     {"path": "./core/storage-engine"},
     {"path": "./core/storage-client"},
     {"path": "./core/token"},
+    {"path": "./core/validator"},
     {"path": "./core/type"},
 
     // ui

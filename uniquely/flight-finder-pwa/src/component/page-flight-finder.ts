@@ -9,8 +9,8 @@ import ionTheming from '../style/ionic.theming.js';
 import './job-item.js';
 import './job-add-form.js';
 
-import type {Job} from '../type.js';
 import type {TemplateResult} from '@alwatr/element';
+import type {Job} from '@alwatr/type/flight-finder.js';
 
 declare global {
   interface HTMLElementTagNameMap {

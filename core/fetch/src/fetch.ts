@@ -7,7 +7,14 @@ import type {
   AlwatrServiceResponseSuccess,
 } from '@alwatr/type';
 
-export {FetchOptions, CacheDuplicate, CacheStrategy};
+export {
+  FetchOptions,
+  CacheDuplicate,
+  CacheStrategy,
+  AlwatrServiceResponse,
+  AlwatrServiceResponseSuccessWithMeta,
+  AlwatrServiceResponseSuccess,
+};
 
 const logger = createLogger('alwatr/fetch');
 
