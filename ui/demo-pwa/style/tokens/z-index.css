@@ -1,14 +1,14 @@
 :root {
-  --alwatr-sys-zindex-bottomness: -900;
-  --alwatr-sys-zindex-below: -1;
-  --alwatr-sys-zindex-default: 1;
-  --alwatr-sys-zindex-above: 2;
-  --alwatr-sys-zindex-dropdown: 100;
-  --alwatr-sys-zindex-sticky: 200;
-  --alwatr-sys-zindex-fixed: 300;
-  --alwatr-sys-zindex-backdrop: 400;
-  --alwatr-sys-zindex-modal: 500;
-  --alwatr-sys-zindex-popover: 600;
-  --alwatr-sys-zindex-tooltip: 700;
-  --alwatr-sys-zindex-topness: 900;
+  --sys-zindex-bottomness: -900;
+  --sys-zindex-below: -1;
+  --sys-zindex-default: 1;
+  --sys-zindex-above: 2;
+  --sys-zindex-dropdown: 100;
+  --sys-zindex-sticky: 200;
+  --sys-zindex-fixed: 300;
+  --sys-zindex-backdrop: 400;
+  --sys-zindex-modal: 500;
+  --sys-zindex-popover: 600;
+  --sys-zindex-tooltip: 700;
+  --sys-zindex-topness: 900;
 }
