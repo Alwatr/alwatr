@@ -1,5 +1,9 @@
 :root {
   /* references */
+  --ref-font-weight-regular: 400;
+  --ref-font-weight-medium: 500;
+  --ref-font-weight-bold: 700;
+
   --ref-font-family-system:
     system-ui,
     -apple-system,
@@ -17,11 +21,9 @@
     'Segoe UI Emoji',
     'Segoe UI Symbol'
   ;
-  --ref-font-weight-bold: 700;
-  --ref-font-weight-medium: 500;
-  --ref-font-weight-regular: 400;
   --sys-font-family-plain: var(--font-vazirmatn), var(--ref-font-family-system);
   --sys-font-family-brand: var(--font-vazirmatn), var(--ref-font-family-system);
+
   /* display - large */
   --sys-typescale-display-large-font-family-name: var(--sys-font-family-brand);
   --sys-typescale-display-large-font-weight: var(--ref-font-weight-regular);
@@ -67,9 +69,9 @@
   /* body - medium */
   --sys-typescale-body-medium-font-family-name: var(--sys-font-family-plain);
   --sys-typescale-body-medium-font-weight: var(--ref-font-weight-regular);
-  --sys-typescale-body-medium-font-size: 14px;
-  --sys-typescale-body-medium-line-height: 20px;
-  --sys-typescale-body-medium-letter-spacing: 0.25px;
+  --sys-typescale-body-medium-font-size: 1.4rem;
+  --sys-typescale-body-medium-line-height: 2rem;
+  --sys-typescale-body-medium-letter-spacing: 0.025rem;
   /* body - small */
   --sys-typescale-body-small-font-family-name: var(--sys-font-family-plain);
   --sys-typescale-body-small-font-weight: var(--ref-font-weight-regular);

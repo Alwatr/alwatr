@@ -20,8 +20,8 @@ export class AlwatrChatFooter extends AlwatrDummyElement {
       gap: var(--sys-spacing-track);
       padding: calc(2 * var(--sys-spacing-track));
       padding-inline-start: var(--sys-spacing-track);
-      border-top-left-radius: var(--sys-shape-corner-large-top-top-left);
-      border-top-right-radius: var(--sys-shape-corner-large-top-top-right);
+      border-top-left-radius: var(--sys-radius-large);
+      border-top-right-radius: var(--sys-radius-large);
       color: var(--sys-color-on-surface);
       background-color: var(--sys-color-surface);
     }

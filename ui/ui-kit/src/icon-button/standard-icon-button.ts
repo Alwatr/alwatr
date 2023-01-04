@@ -54,17 +54,17 @@ export class AlwatrStandardIconButton extends AlwatrDummyElement {
     }
 
     :host(:hover)::before {
-      opacity: var(--sys-state-hover-state-layer-opacity);
+      opacity: var(--sys-opacity-hover);
       transition-duration: var(--sys-motion-duration-small-in);
     }
 
     :host(:active)::before {
-      opacity: var(--sys-state-pressed-state-layer-opacity);
+      opacity: var(--sys-opacity-pressed);
       transition-duration: 0ms;
     }
 
     :host(:focus)::before {
-      opacity: var(--sys-state-focus-state-layer-opacity);
+      opacity: var(--sys-opacity-focus);
       transition-duration: var(--sys-motion-duration-small-in);
     }
 

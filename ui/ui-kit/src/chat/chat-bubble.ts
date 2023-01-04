@@ -31,14 +31,14 @@ export class AlwatrChatBubble extends DirectionMixin(AlwatrDummyElement) {
 
     :host([side='start']),
     :host([side='end'][dir='rtl']) {
-      border-bottom-left-radius: var(--sys-shape-corner-extra-small-default-size);
+      border-bottom-left-radius: var(--sys-radius-xsmall);
       border-bottom-right-radius: var(--sys-shape-large);
     }
 
     :host([side='end']),
     :host([side='start'][dir='rtl']) {
       border-bottom-left-radius: var(--sys-shape-large);
-      border-bottom-right-radius: var(--sys-shape-corner-extra-small-default-size);
+      border-bottom-right-radius: var(--sys-radius-xsmall);
     }
   `;
 

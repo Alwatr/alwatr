@@ -18,6 +18,7 @@ html {
 }
 
 body {
+  contain: layout size style;
   text-rendering: optimizeLegibility;
   font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
@@ -25,7 +26,6 @@ body {
   word-wrap: break-word;
   text-size-adjust: none;
   -webkit-text-size-adjust: none;
-  font-feature-settings: 'calt' 1, 'tnum' 0;
   -webkit-user-drag: none;
   -ms-content-zooming: none;
   -ms-touch-action: pan-x pan-y pinch-zoom;

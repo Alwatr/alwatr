@@ -1,5 +1,5 @@
 :root {
-  --source: #005fac;
+  /* --source: #005fac; */
   /* primary */
   --ref-palette-primary0: #000000;
   --ref-palette-primary10: #001c39;
@@ -114,7 +114,7 @@
   --sys-color-tertiary-light: #6d5677;
   --sys-color-on-tertiary-light: #ffffff;
   --sys-color-tertiary-container-light: #f6d9ff;
-  --sys-color-on-tertiary-container-light: #271430;
+  --sys-color-on-tertiary-container-light: #271530;
   --sys-color-error-light: #ba1a1a;
   --sys-color-error-container-light: #ffdad6;
   --sys-color-on-error-light: #ffffff;
@@ -164,8 +164,6 @@
   --sys-color-surface-tint-dark: #a4c9ff;
   --sys-color-outline-variant-dark: #43474e;
   --sys-color-scrim-dark: #000000;
-
-
 }
 
 :root {

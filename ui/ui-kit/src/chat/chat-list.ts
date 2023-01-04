@@ -33,8 +33,8 @@ export class AlwatrChatList extends AlwatrDummyElement {
       display: flex;
       flex-direction: column;
       gap: calc(2 * var(--sys-spacing-track));
-      border-top-left-radius: var(--sys-shape-corner-large-top-top-left);
-      border-top-right-radius: var(--sys-shape-corner-large-top-top-right);
+      border-top-left-radius: var(--sys-radius-large);
+      border-top-right-radius: var(--sys-radius-large);
       padding: calc(2 * var(--sys-spacing-track));
       flex-grow: 1;
       overflow-y: auto;
