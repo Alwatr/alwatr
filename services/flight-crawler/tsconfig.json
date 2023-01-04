@@ -13,8 +13,8 @@
   "exclude": [],
   "references": [
     {"path": "../../core/logger"},
-    {"path": "../../core/nano-server"},
     {"path": "../../core/type"},
+    {"path": "../../core/fetch"},
     {"path": "../../core/storage-client"},
   ]
 }

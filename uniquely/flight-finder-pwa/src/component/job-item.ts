@@ -10,8 +10,8 @@ import ionTheming from '../style/ionic.theming.js';
 
 import './ionic-components.js';
 
-import type {Job, JobResult} from '../type.js';
 import type {TemplateResult} from '@alwatr/element';
+import type {Job, JobResult} from '@alwatr/type/flight-finder.js';
 
 declare global {
   interface HTMLElementTagNameMap {

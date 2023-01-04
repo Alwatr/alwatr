@@ -5,8 +5,6 @@ import type {AlwatrStorageClientConfig} from './type.js';
 import type {FetchOptions} from '@alwatr/fetch';
 import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
 
-export {AlwatrStorageClientConfig};
-
 globalAlwatr.registeredList.push({
   name: '@alwatr/storage-client',
   version: '{{ALWATR_VERSION}}',

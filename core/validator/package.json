@@ -1,20 +1,20 @@
 {
-  "name": "@alwatr/router",
+  "name": "@alwatr/validator",
   "version": "0.27.0",
-  "description": "Elegant powerful router (fundamental advance browser page routing) based on the simplicity of the signals written in tiny TypeScript module.",
+  "description": "Simple useful validator library written in tiny TypeScript module.",
   "keywords": [
-    "router",
-    "route",
-    "routing",
+    "validator",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "router.js",
+  "main": "validator.js",
   "type": "module",
-  "types": "router.d.ts",
+  "types": "validator.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "contributors": [],
+  "contributors": [
+    "S. Amir Mohammad Najafi <njfamirm@gmail.com> (njfamirm.ir)"
+  ],
   "license": "MIT",
   "files": [
     "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
@@ -25,15 +25,14 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "core/router"
+    "directory": "core/validator"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/core/router#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/core/validator#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.27.0",
-    "@alwatr/signal": "^0.27.0",
+    "@alwatr/math": "^0.27.0",
     "tslib": "^2.4.1"
   }
 }
