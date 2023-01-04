@@ -33,6 +33,10 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
       height: var(--_height);
     }
 
+    :host([filled]) alwatr-standard-icon-button {
+      color: var(--sys-color-tertiary);
+    }
+
     textarea {
       flex-grow: 1;
       width: auto;
@@ -73,5 +77,6 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
     const textarea = event.target as HTMLTextAreaElement;
     const value = textarea.value;
     textarea.rows = Math.min(value.split('\n').length, 6);
+    this.toggleAttribute('filled', value.length > 0);
   }
 }
