@@ -26,18 +26,18 @@ export class AlwatrChatBubble extends DirectionMixin(AlwatrDummyElement) {
       background-color: var(--sys-color-surface);
       white-space: pre-line;
       /* max-width: var(--sys-spacing-column-3); */
-      border-radius: var(--sys-shape-large);
+      border-radius: var(--sys-radius-large);
     }
 
     :host([side='start']),
     :host([side='end'][dir='rtl']) {
       border-bottom-left-radius: var(--sys-radius-xsmall);
-      border-bottom-right-radius: var(--sys-shape-large);
+      border-bottom-right-radius: var(--sys-radius-large);
     }
 
     :host([side='end']),
     :host([side='start'][dir='rtl']) {
-      border-bottom-left-radius: var(--sys-shape-large);
+      border-bottom-left-radius: var(--sys-radius-large);
       border-bottom-right-radius: var(--sys-radius-xsmall);
     }
   `;
