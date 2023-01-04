@@ -106,90 +106,87 @@
 
 :root {
   /* theme light */
-  --sys-color-primary: var(--sys-color-primary40);
-  --sys-color-on-primary: var(--sys-color-primary100);
-  --sys-color-primary-container: var(--sys-color-primary90);
-  --sys-color-on-primary-container: var(--sys-color-primary10);
+  --sys-color-primary: var(--ref-palette-primary40);
+  --sys-color-on-primary: var(--ref-palette-primary100);
+  --sys-color-primary-container: var(--ref-palette-primary90);
+  --sys-color-on-primary-container: var(--ref-palette-primary10);
 
-  --sys-color-secondary: var(--sys-color-secondary40);
-  --sys-color-on-secondary: var(--sys-color-secondary100);
-  --sys-color-secondary-container: var(--sys-color-secondary90);
-  --sys-color-on-secondary-container: var(--sys-color-secondary10);
+  --sys-color-secondary: var(--ref-palette-secondary40);
+  --sys-color-on-secondary: var(--ref-palette-secondary100);
+  --sys-color-secondary-container: var(--ref-palette-secondary90);
+  --sys-color-on-secondary-container: var(--ref-palette-secondary10);
 
-  --sys-color-tertiary: var(--sys-color-tertiary40);
-  --sys-color-on-tertiary: var(--sys-color-tertiary100);
-  --sys-color-tertiary-container: var(--sys-color-tertiary90);
-  --sys-color-on-tertiary-container: var(--sys-color-tertiary10);
+  --sys-color-tertiary: var(--ref-palette-tertiary40);
+  --sys-color-on-tertiary: var(--ref-palette-tertiary100);
+  --sys-color-tertiary-container: var(--ref-palette-tertiary90);
+  --sys-color-on-tertiary-container: var(--ref-palette-tertiary10);
 
-  /* --sys-color-background: var(--sys-color-neutral99); */
-  --sys-color-background: var(--sys-color-neutral95);
-  --sys-color-on-background: var(--sys-color-neutral10);
+  /* --sys-color-background: var(--ref-palette-neutral99); */
+  --sys-color-background: var(--ref-palette-neutral95);
+  --sys-color-on-background: var(--ref-palette-neutral10);
 
-  --sys-color-surface: var(--sys-color-neutral99);
-  --sys-color-on-surface: var(--sys-color-neutral10);
+  --sys-color-surface: var(--ref-palette-neutral99);
+  --sys-color-on-surface: var(--ref-palette-neutral10);
 
-  --sys-color-surface-variant: var(--sys-color-neutral-variant90);
-  --sys-color-on-surface-variant: var(--sys-color-neutral-variant30);
-  --sys-color-surface-tint: var(--sys-color-primary40);
+  --sys-color-surface-variant: var(--ref-palette-neutral-variant90);
+  --sys-color-on-surface-variant: var(--ref-palette-neutral-variant30);
 
-  --sys-color-outline: var(--sys-color-neutral-variant50);
-  --sys-color-outline-variant: var(--sys-color-neutral-variant80);
+  --sys-color-outline: var(--ref-palette-neutral-variant50);
+  --sys-color-outline-variant: var(--ref-palette-neutral-variant80);
 
-  --sys-color-error: var(--sys-color-error40);
-  --sys-color-error-container: var(--sys-color-error90);
-  --sys-color-on-error: var(--sys-color-error99);
-  --sys-color-on-error-container: var(--sys-color-error10);
+  --sys-color-error: var(--ref-palette-error40);
+  --sys-color-error-container: var(--ref-palette-error90);
+  --sys-color-on-error: var(--ref-palette-error100);
+  --sys-color-on-error-container: var(--ref-palette-error10);
 
-  --sys-color-inverse-primary: var(--sys-color-primary80);
-  --sys-color-inverse-surface: var(--sys-color-neutral20);
-  --sys-color-inverse-on-surface: var(--sys-color-neutral95);
+  --sys-color-inverse-primary: var(--ref-palette-primary80);
+  --sys-color-inverse-surface: var(--ref-palette-neutral20);
+  --sys-color-inverse-on-surface: var(--ref-palette-neutral95);
 
-  --sys-color-shadow: #000;
-  --sys-color-scrim: #000;
+  --sys-color-surface-tint: var(--sys-color-primary);
+  --sys-color-shadow: var(--ref-palette-neutral0);
+  --sys-color-scrim: var(--ref-palette-neutral0);
+
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     /* theme dark */
-    --sys-color-primary: var(--sys-color-primary80);
-    --sys-color-on-primary: var(--sys-color-primary20);
-    --sys-color-primary-container: var(--sys-color-primary30);
-    --sys-color-on-primary-container: var(--sys-color-primary90);
+    --sys-color-primary: var(--ref-palette-primary80);
+    --sys-color-on-primary: var(--ref-palette-primary20);
+    --sys-color-primary-container: var(--ref-palette-primary30);
+    --sys-color-on-primary-container: var(--ref-palette-primary90);
 
-    --sys-color-secondary: var(--sys-color-secondary80);
-    --sys-color-on-secondary: var(--sys-color-secondary20);
-    --sys-color-secondary-container: var(--sys-color-secondary30);
-    --sys-color-on-secondary-container: var(--sys-color-secondary90);
+    --sys-color-secondary: var(--ref-palette-secondary80);
+    --sys-color-on-secondary: var(--ref-palette-secondary20);
+    --sys-color-secondary-container: var(--ref-palette-secondary30);
+    --sys-color-on-secondary-container: var(--ref-palette-secondary90);
 
-    --sys-color-tertiary: var(--sys-color-tertiary80);
-    --sys-color-on-tertiary: var(--sys-color-tertiary20);
-    --sys-color-tertiary-container: var(--sys-color-tertiary30);
-    --sys-color-on-tertiary-container: var(--sys-color-tertiary90);
+    --sys-color-tertiary: var(--ref-palette-tertiary80);
+    --sys-color-on-tertiary: var(--ref-palette-tertiary20);
+    --sys-color-tertiary-container: var(--ref-palette-tertiary30);
+    --sys-color-on-tertiary-container: var(--ref-palette-tertiary90);
 
-    /* --sys-color-background: var(--sys-color-neutral10); */
-    --sys-color-background: var(--sys-color-neutral20);
-    --sys-color-on-background: var(--sys-color-neutral90);
+    /* --sys-color-background: var(--ref-palette-neutral10); */
+    --sys-color-background: var(--ref-palette-neutral20);
+    --sys-color-on-background: var(--ref-palette-neutral90);
 
-    --sys-color-surface: var(--sys-color-neutral10);
-    --sys-color-on-surface: var(--sys-color-neutral90);
+    --sys-color-surface: var(--ref-palette-neutral10);
+    --sys-color-on-surface: var(--ref-palette-neutral90);
 
-    --sys-color-surface-variant: var(--sys-color-neutral-variant30);
-    --sys-color-on-surface-variant: var(--sys-color-neutral-variant80);
-    --sys-color-surface-tint: var(--sys-color-primary80);
+    --sys-color-surface-variant: var(--ref-palette-neutral-variant30);
+    --sys-color-on-surface-variant: var(--ref-palette-neutral-variant80);
 
-    --sys-color-outline: var(--sys-color-neutral-variant60);
-    --sys-color-outline-variant: var(--sys-color-neutral-variant30);
+    --sys-color-outline: var(--ref-palette-neutral-variant60);
+    --sys-color-outline-variant: var(--ref-palette-neutral-variant30);
 
-    --sys-color-error: var(--sys-color-error80);
-    --sys-color-error-container: var(--sys-color-error30);
-    --sys-color-on-error: var(--sys-color-error20);
-    --sys-color-on-error-container: var(--sys-color-error90);
+    --sys-color-error: var(--ref-palette-error80);
+    --sys-color-error-container: var(--ref-palette-error30);
+    --sys-color-on-error: var(--ref-palette-error20);
+    --sys-color-on-error-container: var(--ref-palette-error90);
 
-    --sys-color-inverse-primary: var(--sys-color-primary40);
-    --sys-color-inverse-surface: var(--sys-color-neutral90);
-    --sys-color-inverse-on-surface: var(--sys-color-neutral10);
-
-    --sys-color-shadow: #000;
-    --sys-color-scrim: #000;
+    --sys-color-inverse-primary: var(--ref-palette-primary40);
+    --sys-color-inverse-surface: var(--ref-palette-neutral90);
+    --sys-color-inverse-on-surface: var(--ref-palette-neutral20);
   }
 }
