@@ -4,9 +4,9 @@ import {SignalInterface} from '@alwatr/signal';
 
 import {showToastSignal} from './toast.js';
 
-import type {Job} from '../type.js';
 import type {CacheStrategy} from '@alwatr/fetch';
 import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {Job} from '@alwatr/type/flight-finder.js';
 
 export const logger = createLogger('[director/job-document-storage]');
 export const jobDocumentStorageSignal = new SignalInterface('job-document-storage');
