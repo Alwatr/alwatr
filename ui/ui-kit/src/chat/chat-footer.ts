@@ -17,9 +17,9 @@ export class AlwatrChatFooter extends AlwatrDummyElement {
   static override styles = css`
     :host {
       display: flex;
-      gap: var(--alwatr-sys-spacing-track-1);
-      padding: var(--alwatr-sys-spacing-track-2);
-      padding-inline-start: var(--alwatr-sys-spacing-track-1);
+      gap: var(--alwatr-sys-spacing-track);
+      padding: calc(2 * var(--alwatr-sys-spacing-track));
+      padding-inline-start: var(--alwatr-sys-spacing-track);
       border-top-left-radius: var(--alwatr-sys-shape-corner-large-top-top-left);
       border-top-right-radius: var(--alwatr-sys-shape-corner-large-top-top-right);
       color: var(--alwatr-sys-color-on-surface);
@@ -27,8 +27,8 @@ export class AlwatrChatFooter extends AlwatrDummyElement {
     }
 
     alwatr-standard-icon-button {
-      width: var(--alwatr-sys-spacing-track-6);
-      height: var(--alwatr-sys-spacing-track-6);
+      width: calc(6 * var(--alwatr-sys-spacing-track));
+      height: calc(6 * var(--alwatr-sys-spacing-track));
     }
   `;
 

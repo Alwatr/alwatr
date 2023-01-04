@@ -32,10 +32,10 @@ export class AlwatrChatList extends AlwatrDummyElement {
     :host {
       display: flex;
       flex-direction: column;
-      gap: var(--alwatr-sys-spacing-track-2);
+      gap: calc(2 * var(--alwatr-sys-spacing-track));
       border-top-left-radius: var(--alwatr-sys-shape-corner-large-top-top-left);
       border-top-right-radius: var(--alwatr-sys-shape-corner-large-top-top-right);
-      padding: var(--alwatr-sys-spacing-track-2) var(--alwatr-sys-spacing-track-2) var(--alwatr-sys-spacing-track-2);
+      padding: calc(2 * var(--alwatr-sys-spacing-track));
       flex-grow: 1;
       overflow-y: auto;
       box-sizing: border-box;
@@ -73,10 +73,7 @@ export class AlwatrChatList extends AlwatrDummyElement {
     return html`${map(
         this.storage.data,
         (message) => html`
-        <alwatr-chat-message
-          .message=${message}
-          ?self=${message.from === this.currentUser}
-        ></alwatr-chat-message>
+        <alwatr-chat-message .message=${message} ?self=${message.from === this.currentUser}></alwatr-chat-message>
       `,
     )}`;
   }

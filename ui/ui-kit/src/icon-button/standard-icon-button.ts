@@ -29,8 +29,8 @@ export class AlwatrStandardIconButton extends AlwatrDummyElement {
       cursor: pointer;
       /* color: var(--alwatr-sys-color-on-surface-variant); */
       background-color: transparent;
-      width: var(--alwatr-sys-spacing-track-5);
-      height: var(--alwatr-sys-spacing-track-5);
+      width: calc(5 * var(--alwatr-sys-spacing-track));
+      height: calc(5 * var(--alwatr-sys-spacing-track));
       border-radius: 50%;
       outline: 0;
       overflow: hidden;
@@ -69,8 +69,8 @@ export class AlwatrStandardIconButton extends AlwatrDummyElement {
     }
 
     alwatr-icon {
-      width: var(--alwatr-sys-spacing-track-3);
-      height: var(--alwatr-sys-spacing-track-3);
+      width: calc(3 * var(--alwatr-sys-spacing-track));
+      height: calc(3 * var(--alwatr-sys-spacing-track));
     }
   `;
 

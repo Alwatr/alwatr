@@ -115,7 +115,7 @@ export class AlwatrChat extends AlwatrSmartElement {
   static override styles = css`
     :host {
       display: block;
-      padding-top: var(--alwatr-sys-spacing-track-1);
+      padding-top: var(--alwatr-sys-spacing-track);
       box-sizing: border-box;
       position: relative;
     }

@@ -18,8 +18,8 @@ export class AlwatrChatBubble extends DirectionMixin(AlwatrDummyElement) {
     :host {
       display: inline-block;
       padding:
-        var(--alwatr-sys-spacing-track-1)
-        var(--alwatr-sys-spacing-track-2)
+        var(--alwatr-sys-spacing-track)
+        calc(2 * var(--alwatr-sys-spacing-track))
         calc(1.5 * var(--alwatr-sys-spacing-track))
       ;
       color: var(--alwatr-sys-color-on-surface);

@@ -17,7 +17,7 @@ declare global {
 export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
-      --_height: var(--alwatr-sys-spacing-track-6);
+      --_height: calc(6 * var(--alwatr-sys-spacing-track));
       display: flex;
       user-select: none;
       align-items: flex-end;
@@ -44,9 +44,9 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
       background-color: transparent;
       font-family: inherit;
       word-wrap: break-word;
-      line-height: var(--alwatr-sys-spacing-track-2);
-      padding: var(--alwatr-sys-spacing-track-1);
-      margin: var(--alwatr-sys-spacing-track-1);
+      line-height: calc(2 * var(--alwatr-sys-spacing-track));
+      padding: var(--alwatr-sys-spacing-track);
+      margin: var(--alwatr-sys-spacing-track);
       margin-inline-end: 0;
     }
   `;
