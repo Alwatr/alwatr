@@ -27,50 +27,50 @@ export class AlwatrStandardIconButton extends AlwatrDummyElement {
       flex-shrink: 0;
 
       cursor: pointer;
-      /* color: var(--alwatr-sys-color-on-surface-variant); */
+      /* color: var(--sys-color-on-surface-variant); */
       background-color: transparent;
-      width: calc(5 * var(--alwatr-sys-spacing-track));
-      height: calc(5 * var(--alwatr-sys-spacing-track));
+      width: calc(5 * var(--sys-spacing-track));
+      height: calc(5 * var(--sys-spacing-track));
       border-radius: 50%;
       outline: 0;
       overflow: hidden;
       overflow: clip;
-      z-index: var(--alwatr-sys-zindex-default);
+      z-index: var(--sys-zindex-default);
       -webkit-tap-highlight-color: transparent;
     }
 
     :host::before {
       content: '';
       position: absolute;
-      z-index: var(--alwatr-sys-zindex-below);
+      z-index: var(--sys-zindex-below);
       left: 0;
       right: 0;
       top: 0;
       bottom: 0;
       inset: 0;
       opacity: 0;
-      transition: opacity var(--alwatr-sys-motion-duration-small-out) var(--alwatr-sys-motion-easing-linear);
-      background-color: var(--alwatr-sys-color-on-surface-variant);
+      transition: opacity var(--sys-motion-duration-small-out) var(--sys-motion-easing-linear);
+      background-color: var(--sys-color-on-surface-variant);
     }
 
     :host(:hover)::before {
-      opacity: var(--alwatr-sys-state-hover-state-layer-opacity);
-      transition-duration: var(--alwatr-sys-motion-duration-small-in);
+      opacity: var(--sys-state-hover-state-layer-opacity);
+      transition-duration: var(--sys-motion-duration-small-in);
     }
 
     :host(:active)::before {
-      opacity: var(--alwatr-sys-state-pressed-state-layer-opacity);
+      opacity: var(--sys-state-pressed-state-layer-opacity);
       transition-duration: 0ms;
     }
 
     :host(:focus)::before {
-      opacity: var(--alwatr-sys-state-focus-state-layer-opacity);
-      transition-duration: var(--alwatr-sys-motion-duration-small-in);
+      opacity: var(--sys-state-focus-state-layer-opacity);
+      transition-duration: var(--sys-motion-duration-small-in);
     }
 
     alwatr-icon {
-      width: calc(3 * var(--alwatr-sys-spacing-track));
-      height: calc(3 * var(--alwatr-sys-spacing-track));
+      width: calc(3 * var(--sys-spacing-track));
+      height: calc(3 * var(--sys-spacing-track));
     }
   `;
 

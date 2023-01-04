@@ -36,13 +36,13 @@ body {
   overscroll-behavior-y: none;
 
   /* Theme */
-  color: var(--alwatr-sys-color-on-background);
-  background-color: var(--alwatr-sys-color-background);
-  font-family: var(--alwatr-sys-typescale-body-medium-font-family-name);
-  font-weight: var(--alwatr-sys-typescale-body-medium-font-weight);
-  font-size: var(--alwatr-sys-typescale-body-medium-font-size);
-  letter-spacing: var(--alwatr-sys-typescale-body-medium-letter-spacing);
-  line-height: var(--alwatr-sys-typescale-body-medium-line-height);
+  color: var(--sys-color-on-background);
+  background-color: var(--sys-color-background);
+  font-family: var(--sys-typescale-body-medium-font-family-name);
+  font-weight: var(--sys-typescale-body-medium-font-weight);
+  font-size: var(--sys-typescale-body-medium-font-size);
+  letter-spacing: var(--sys-typescale-body-medium-letter-spacing);
+  line-height: var(--sys-typescale-body-medium-line-height);
 }
 
 .noscript {

@@ -1,58 +1,58 @@
 /* https://material.io/design/layout/spacing-methods.html */
 :root {
-  --alwatr-sys-spacing-track: 8px;
+  --sys-spacing-track: 8px;
 
-  --alwatr-sys-breakpoint-handset: 600px;
-  --alwatr-sys-breakpoint-tablet: 840px;
-  --alwatr-sys-breakpoint-laptop: 1240px;
-  --alwatr-sys-breakpoint-large-screen: 1440px;
+  --sys-breakpoint-handset: 600px;
+  --sys-breakpoint-tablet: 840px;
+  --sys-breakpoint-laptop: 1240px;
+  --sys-breakpoint-large-screen: 1440px;
 
-  --alwatr-sys-spacing-column-1: calc(
-    (100vw - var(--alwatr-sys-spacing-side-padding) * 2 - var(--alwatr-sys-spacing-gutter) * (var(--alwatr-sys-column-count) - 1))
-    / var(--alwatr-sys-column-count)
+  --sys-spacing-column-1: calc(
+    (100vw - var(--sys-spacing-side-padding) * 2 - var(--sys-spacing-gutter) * (var(--sys-column-count) - 1))
+    / var(--sys-column-count)
   );
-  --alwatr-sys-spacing-column-2: calc(var(--alwatr-sys-spacing-column-1) * 2 + var(--alwatr-sys-spacing-gutter));
-  --alwatr-sys-spacing-column-3: calc(var(--alwatr-sys-spacing-column-1) * 3 + var(--alwatr-sys-spacing-gutter) * 2);
-  --alwatr-sys-spacing-column-4: calc(var(--alwatr-sys-spacing-column-1) * 4 + var(--alwatr-sys-spacing-gutter) * 3);
+  --sys-spacing-column-2: calc(var(--sys-spacing-column-1) * 2 + var(--sys-spacing-gutter));
+  --sys-spacing-column-3: calc(var(--sys-spacing-column-1) * 3 + var(--sys-spacing-gutter) * 2);
+  --sys-spacing-column-4: calc(var(--sys-spacing-column-1) * 4 + var(--sys-spacing-gutter) * 3);
 
   /* < 600px */
-  --alwatr-sys-column-count: 4;
-  --alwatr-sys-spacing-side-padding: var(--alwatr-sys-spacing-track);
-  --alwatr-sys-spacing-gutter: calc(2 * var(--alwatr-sys-spacing-track));
+  --sys-column-count: 4;
+  --sys-spacing-side-padding: var(--sys-spacing-track);
+  --sys-spacing-gutter: calc(2 * var(--sys-spacing-track));
 }
 
 /* >= 600 */
 @media only screen and (min-width: 600px) {
   :root {
-    --alwatr-sys-column-count: 8;
-    --alwatr-sys-spacing-side-padding: calc(3 * var(--alwatr-sys-spacing-track));
-    --alwatr-sys-spacing-gutter: calc(3 * var(--alwatr-sys-spacing-track));
+    --sys-column-count: 8;
+    --sys-spacing-side-padding: calc(3 * var(--sys-spacing-track));
+    --sys-spacing-gutter: calc(3 * var(--sys-spacing-track));
   }
 }
 
 /* >= 840px */
 @media only screen and (min-width: 840px) {
   :root {
-    --alwatr-sys-column-count: 12;
-    /* --alwatr-sys-spacing-side-padding: calc(3 * var(--alwatr-sys-spacing-track));
-    --alwatr-sys-spacing-gutter: calc(3 * var(--alwatr-sys-spacing-track)); */
+    --sys-column-count: 12;
+    /* --sys-spacing-side-padding: calc(3 * var(--sys-spacing-track));
+    --sys-spacing-gutter: calc(3 * var(--sys-spacing-track)); */
   }
 }
 
 /* >= 1200px */
 @media only screen and (min-width: 1200px) {
   :root {
-    /* --alwatr-sys-column-count: 12; */
-    --alwatr-sys-spacing-side-padding: calc(4 * var(--alwatr-sys-spacing-track));
-    --alwatr-sys-spacing-gutter: calc(4 * var(--alwatr-sys-spacing-track));
+    /* --sys-column-count: 12; */
+    --sys-spacing-side-padding: calc(4 * var(--sys-spacing-track));
+    --sys-spacing-gutter: calc(4 * var(--sys-spacing-track));
   }
 }
 
 /* >= 1440px */
 /* @media only screen and (min-width: 1440px) {
   :root {
-    --alwatr-sys-column-count: 12;
-    --alwatr-sys-spacing-side-padding: calc(4 * var(--alwatr-sys-spacing-track));
-    --alwatr-sys-spacing-gutter: calc(4 * var(--alwatr-sys-spacing-track));
+    --sys-column-count: 12;
+    --sys-spacing-side-padding: calc(4 * var(--sys-spacing-track));
+    --sys-spacing-gutter: calc(4 * var(--sys-spacing-track));
   }
 } */

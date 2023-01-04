@@ -28,7 +28,7 @@ export const hostElevation = css`
               clamp(0, var(--_elevation-level) - 4, 1)
           )
       )
-      0px var(--alwatr-sys-color-shadow);
+      0px var(--sys-color-shadow);
   }
   :host::after {
     opacity: 0.15;
@@ -42,6 +42,6 @@ export const hostElevation = css`
       )
       calc(1px * (3 * clamp(0, var(--_elevation-level), 2) + 2 * clamp(0, var(--_elevation-level) - 2, 3)))
       calc(1px * (clamp(0, var(--_elevation-level), 4) + 2 * clamp(0, var(--_elevation-level) - 4, 1)))
-      var(--alwatr-sys-color-shadow);
+      var(--sys-color-shadow);
   }
 `;

@@ -115,16 +115,16 @@ export class AlwatrChat extends AlwatrSmartElement {
   static override styles = css`
     :host {
       display: block;
-      padding-top: var(--alwatr-sys-spacing-track);
+      padding-top: var(--sys-spacing-track);
       box-sizing: border-box;
       position: relative;
     }
 
     alwatr-chat-list {
       height: 100%;
-      color: var(--alwatr-sys-color-on-secondary-container);
-      background-color: var(--alwatr-sys-color-secondary-container);
-      padding-bottom: calc(12 * var(--alwatr-sys-spacing-track));
+      color: var(--sys-color-on-secondary-container);
+      background-color: var(--sys-color-secondary-container);
+      padding-bottom: calc(12 * var(--sys-spacing-track));
     }
 
     alwatr-chat-footer {
