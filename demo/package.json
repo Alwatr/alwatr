@@ -10,15 +10,15 @@
     "S. Amir Mohammad Najafi <njfamirm@gmail.com> (https://njfamirm.ir)"
   ],
   "dependencies": {
-    "@alwatr/logger": "~0.27.0",
-    "@alwatr/fetch": "~0.27.0",
-    "@alwatr/signal": "~0.27.0",
-    "@alwatr/router": "~0.27.0",
-    "@alwatr/i18n": "~0.27.0",
-    "@alwatr/math": "~0.27.0",
-    "@alwatr/type": "~0.27.0",
-    "@alwatr/storage-client": "~0.27.0",
-    "@alwatr/token": "~0.27.0",
-    "tslib": "~2.4.1"
+    "@alwatr/logger": "^0.27.0",
+    "@alwatr/fetch": "^0.27.0",
+    "@alwatr/signal": "^0.27.0",
+    "@alwatr/router": "^0.27.0",
+    "@alwatr/i18n": "^0.27.0",
+    "@alwatr/math": "^0.27.0",
+    "@alwatr/type": "^0.27.0",
+    "@alwatr/storage-client": "^0.27.0",
+    "@alwatr/token": "^0.27.0",
+    "tslib": "^2.4.1"
   }
 }
