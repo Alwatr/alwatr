@@ -1,11 +1,11 @@
-import type {AlwatrDocumentObject} from '@alwatr/type';
+import type {AlwatrDocumentObject} from './storage.js';
 
 export type Job = AlwatrDocumentObject & {
   detail: JobDetail;
   resultList: Array<JobResult>;
 }
 
-export type JobDetail = Record<string, unknown> & {
+export type JobDetail = {
   origin: string;
   destination: string;
   date: string;
@@ -16,7 +16,7 @@ export type JobDetail = Record<string, unknown> & {
   maxHour: number | null;
 }
 
-export type JobResult = Record<string, unknown> & {
+export type JobResult = {
   price: number;
   time: string;
   seatCount: number;

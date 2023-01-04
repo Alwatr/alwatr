@@ -4,8 +4,9 @@ import {config, logger} from './config.js';
 import {cityList} from './lib/city-list.js';
 import {storageClient} from './lib/storage.js';
 
-import type {Job, JobDetail, JobResult, SepehrResponse} from './lib/type.js';
+import type {SepehrResponse} from './lib/type.js';
 import type {FetchOptions} from '@alwatr/fetch';
+import type {Job, JobDetail, JobResult} from '@alwatr/type/flight-finder.js';
 
 export async function crawlAllJobs(): Promise<void> {
   logger.logMethod('crawlAllJobs');
