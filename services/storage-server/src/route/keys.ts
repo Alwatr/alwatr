@@ -1,4 +1,4 @@
-import {config, logger} from '../config.js';
+import {logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
@@ -9,7 +9,7 @@ nanoServer.route('GET', '/keys', getStorageKeys);
 function getStorageKeys(connection: AlwatrConnection): AlwatrServiceResponse {
   logger.logMethod('getStorageKeys');
 
-  connection.requireToken(config.nanoServer.accessToken);
+  connection.requireToken();
 
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
 

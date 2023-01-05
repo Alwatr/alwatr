@@ -1,4 +1,4 @@
-import {config, logger} from '../../config.js';
+import {logger} from '../../config.js';
 import {nanoServer} from '../../lib/nano-server.js';
 import {storageClient} from '../../lib/storage.js';
 
@@ -11,7 +11,7 @@ nanoServer.route('PUT', '/job', newJob);
 async function newJob(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('newJob');
 
-  connection.requireToken(config.nanoServer.accessToken);
+  connection.requireToken();
 
   const job = await connection.requireJsonBody<Job>();
 

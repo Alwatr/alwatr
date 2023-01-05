@@ -1,4 +1,4 @@
-import {config, logger} from '../config.js';
+import {logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
@@ -10,7 +10,7 @@ nanoServer.route('PATCH', 'all', updateDocument);
 async function updateDocument(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('updateDocument');
 
-  connection.requireToken(config.nanoServer.accessToken);
+  connection.requireToken();
 
   const param = connection.requireQueryParams<{storage: string}>({storage: 'string'});
 

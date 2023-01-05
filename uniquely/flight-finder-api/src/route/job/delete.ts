@@ -1,4 +1,4 @@
-import {config, logger} from '../../config.js';
+import {logger} from '../../config.js';
 import {nanoServer} from '../../lib/nano-server.js';
 import {storageClient} from '../../lib/storage.js';
 
@@ -10,7 +10,7 @@ nanoServer.route('DELETE', '/job', deleteJob);
 async function deleteJob(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('deleteJob');
 
-  connection.requireToken(config.nanoServer.accessToken) == null;
+  connection.requireToken();
 
   const params = connection.requireQueryParams<{id: string}>({id: 'string'});
 

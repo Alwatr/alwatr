@@ -49,6 +49,13 @@ export interface NanoServerConfig {
    * @default false
    */
   allowAllOrigin: boolean;
+
+  /**
+   * Default access token.
+   *
+   * @default null
+   */
+  accessToken: string | null;
 }
 
 export interface ConnectionConfig {
@@ -58,6 +65,13 @@ export interface ConnectionConfig {
    * @default false
    */
   allowAllOrigin: boolean;
+
+  /**
+   * Default access token.
+   *
+   * @default null
+   */
+  accessToken: string | null;
 }
 
 export type ParamKeyType = 'string' | 'number' | 'boolean';

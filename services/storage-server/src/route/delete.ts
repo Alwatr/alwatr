@@ -1,4 +1,4 @@
-import {config, logger} from '../config.js';
+import {logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
@@ -9,7 +9,7 @@ nanoServer.route('DELETE', 'all', deleteDocument);
 function deleteDocument(connection: AlwatrConnection): AlwatrServiceResponse {
   logger.logMethodArgs('deleteDocument', {method: connection.method});
 
-  connection.requireToken(config.nanoServer.accessToken);
+  connection.requireToken();
 
   const param = connection.requireQueryParams<{storage: string; id: string}>({storage: 'string', id: 'string'});
 

@@ -74,6 +74,7 @@ export class AlwatrNanoServer {
       keepAliveTimeout: 120_000,
       healthRoute: true,
       allowAllOrigin: false,
+      accessToken: null,
       ...config,
     };
 
@@ -306,6 +307,7 @@ export class AlwatrNanoServer {
 
     const connection = new AlwatrConnection(incomingMessage, serverResponse, {
       allowAllOrigin: this._config.allowAllOrigin,
+      accessToken: this._config.accessToken,
     });
     const route = connection.url.pathname;
 
@@ -499,7 +501,7 @@ export class AlwatrConnection {
         errorCode: 'authorization_required',
       };
     }
-    else if (validator === undefined) {
+    else if (validator === undefined && token === this.config.accessToken) {
       return token;
     }
     else if (typeof validator === 'string') {

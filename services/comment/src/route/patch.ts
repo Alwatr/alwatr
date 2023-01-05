@@ -1,4 +1,4 @@
-import {config, logger} from '../config.js';
+import {logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageClient} from '../lib/storage.js';
 
@@ -10,7 +10,7 @@ nanoServer.route('PATCH', '/', setComment);
 async function setComment(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('setComment');
 
-  connection.requireToken(config.nanoServer.accessToken);
+  connection.requireToken();
 
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
 
