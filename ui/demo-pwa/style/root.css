@@ -18,6 +18,7 @@ html {
 }
 
 body {
+  contain: layout size style;
   text-rendering: optimizeLegibility;
   font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
@@ -25,7 +26,6 @@ body {
   word-wrap: break-word;
   text-size-adjust: none;
   -webkit-text-size-adjust: none;
-  font-feature-settings: 'calt' 1, 'tnum' 0;
   -webkit-user-drag: none;
   -ms-content-zooming: none;
   -ms-touch-action: pan-x pan-y pinch-zoom;
@@ -36,13 +36,13 @@ body {
   overscroll-behavior-y: none;
 
   /* Theme */
-  color: var(--alwatr-sys-color-on-background);
-  background-color: var(--alwatr-sys-color-background);
-  font-family: var(--alwatr-sys-typescale-body-medium-font-family-name);
-  font-weight: var(--alwatr-sys-typescale-body-medium-font-weight);
-  font-size: var(--alwatr-sys-typescale-body-medium-font-size);
-  letter-spacing: var(--alwatr-sys-typescale-body-medium-letter-spacing);
-  line-height: var(--alwatr-sys-typescale-body-medium-line-height);
+  color: var(--sys-color-on-background);
+  background-color: var(--sys-color-background);
+  font-family: var(--sys-typescale-body-medium-font-family-name);
+  font-weight: var(--sys-typescale-body-medium-font-weight);
+  font-size: var(--sys-typescale-body-medium-font-size);
+  letter-spacing: var(--sys-typescale-body-medium-letter-spacing);
+  line-height: var(--sys-typescale-body-medium-line-height);
 }
 
 .noscript {

@@ -1,10 +1,10 @@
 :root {
   /* Dragged state layer opacity */
-  --alwatr-sys-state-dragged-state-layer-opacity: 0.2;
+  --sys-opacity-dragged: 0.2;
   /* Pressed state layer opacity */
-  --alwatr-sys-state-pressed-state-layer-opacity: 0.15;
+  --sys-opacity-pressed: 0.15;
   /* Focus state layer opacity */
-  --alwatr-sys-state-focus-state-layer-opacity: 0.15;
+  --sys-opacity-focus: 0.15;
   /* Hover state layer opacity */
-  --alwatr-sys-state-hover-state-layer-opacity: 0.09;
+  --sys-opacity-hover: 0.09;
 }

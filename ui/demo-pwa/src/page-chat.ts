@@ -16,7 +16,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
   static override styles = css`
     :host {
       display: block;
-      padding: 0 var(--alwatr-sys-spacing-side-padding);
+      padding: 0 var(--sys-spacing-side-padding);
       box-sizing: border-box;
     }
     :host,

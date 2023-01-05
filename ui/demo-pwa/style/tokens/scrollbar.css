@@ -1,13 +1,14 @@
 :root {
-  --alwatr-sys-scrollbar-background: transparent;
-  --alwatr-sys-scrollbar-color: var(--alwatr-ref-palette-neutral-variant50);
-  --alwatr-sys-scrollbar-color-hover: var(--alwatr-ref-palette-neutral-variant30);
-  --alwatr-sys-scrollbar-size: 3px;
-  --alwatr-sys-scrollbar-radius: calc(var(--alwatr-sys-scrollbar-size) / 2);
+  --sys-scrollbar-background: transparent;
+  --sys-scrollbar-color: rgba(0, 0, 0, var(--sys-opacity-hover));
+  --sys-scrollbar-color-hover: rgba(0, 0, 0, var(--sys-opacity-pressed));
+  --sys-scrollbar-size: 3px;
+  --sys-scrollbar-radius: calc(var(--sys-scrollbar-size) / 2);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --alwatr-sys-scrollbar-color-hover: var(--alwatr-ref-palette-neutral-variant60);
+    --sys-scrollbar-color: rgba(255, 255, 255, var(--sys-opacity-hover));
+    --sys-scrollbar-color-hover: rgba(255, 255, 255, var(--sys-opacity-pressed));
   }
 }

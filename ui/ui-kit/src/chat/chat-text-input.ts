@@ -17,20 +17,24 @@ declare global {
 export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
-      --_height: var(--alwatr-sys-spacing-track-6);
+      --_height: calc(6 * var(--sys-spacing-track));
       display: flex;
       user-select: none;
       align-items: flex-end;
       vertical-align: middle;
       border-radius: calc(var(--_height) / 2);
-      color: var(--alwatr-sys-color-on-surface-variant);
-      background-color: var(--alwatr-sys-color-surface-variant);
+      color: var(--sys-color-on-surface-variant);
+      background-color: var(--sys-color-surface-variant);
       flex-grow: 1;
     }
 
     alwatr-standard-icon-button {
       width: var(--_height);
       height: var(--_height);
+    }
+
+    :host([filled]) alwatr-standard-icon-button {
+      color: var(--sys-color-tertiary);
     }
 
     textarea {
@@ -44,9 +48,9 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
       background-color: transparent;
       font-family: inherit;
       word-wrap: break-word;
-      line-height: var(--alwatr-sys-spacing-track-2);
-      padding: var(--alwatr-sys-spacing-track-1);
-      margin: var(--alwatr-sys-spacing-track-1);
+      line-height: calc(2 * var(--sys-spacing-track));
+      padding: var(--sys-spacing-track);
+      margin: var(--sys-spacing-track);
       margin-inline-end: 0;
     }
   `;
@@ -73,5 +77,6 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
     const textarea = event.target as HTMLTextAreaElement;
     const value = textarea.value;
     textarea.rows = Math.min(value.split('\n').length, 6);
+    this.toggleAttribute('filled', value.length > 0);
   }
 }
