@@ -18,7 +18,6 @@
   "references": [
     {"path": "../../core/logger"},
     {"path": "../../core/type"},
-    {"path": "../../core/signal"},
     {"path": "../../core/i18n"},
     {"path": "../../core/router"},
   ]

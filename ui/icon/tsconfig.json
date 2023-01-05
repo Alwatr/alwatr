@@ -17,6 +17,7 @@
   "exclude": [],
   "references": [
     {"path": "../element"},
-    {"path": "../../core/fetch"}
+    {"path": "../../core/fetch"},
+    {"path": "../../core/logger"}
   ]
 }
