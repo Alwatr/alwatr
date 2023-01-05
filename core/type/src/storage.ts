@@ -9,7 +9,7 @@ export type AlwatrDocumentObject = {
   };
 };
 
-export type AlwatrDocumentMeta = {
+export type AlwatrStorageMeta = {
   formatVersion: number;
   reversion: number;
   lastUpdated: number;
@@ -17,6 +17,6 @@ export type AlwatrDocumentMeta = {
 };
 
 export type AlwatrDocumentStorage<T extends AlwatrDocumentObject> = Omit<
-  AlwatrServiceResponseSuccessWithMeta<Record<string, T>, AlwatrDocumentMeta>,
+  AlwatrServiceResponseSuccessWithMeta<Record<string, T>, AlwatrStorageMeta>,
   'statusCode' | 'errorCode'
 >;
