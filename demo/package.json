@@ -4,22 +4,22 @@
   "main": "index.js",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
-  "private": "true",
+  "private": true,
   "contributors": [
     "MohammadMahdi Zamanian <mm25zamanian@gmail.com>",
     "S. Amir Mohammad Najafi <njfamirm@gmail.com> (https://njfamirm.ir)"
   ],
   "dependencies": {
-    "@alwatr/logger": "^0.27.0",
     "@alwatr/fetch": "^0.27.0",
-    "@alwatr/signal": "^0.27.0",
-    "@alwatr/router": "^0.27.0",
-    "@alwatr/type": "^0.27.0",
-    "@alwatr/storage-client": "^0.27.0",
-    "@alwatr/token": "^0.27.0",
-    "@alwatr/math": "^0.27.0",
     "@alwatr/icon": "^0.27.0",
+    "@alwatr/logger": "^0.27.0",
+    "@alwatr/math": "^0.27.0",
+    "@alwatr/router": "^0.27.0",
+    "@alwatr/signal": "^0.27.0",
+    "@alwatr/storage-client": "^0.27.0",
     "@alwatr/storage-engine": "^0.27.0",
+    "@alwatr/token": "^0.27.0",
+    "@alwatr/type": "^0.27.0",
     "@alwatr/validator": "^0.27.0",
     "tslib": "^2.4.1"
   }

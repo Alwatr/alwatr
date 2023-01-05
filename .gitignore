@@ -39,3 +39,11 @@ package-lock.json
 temp
 _data
 db
+
+# yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/versions
