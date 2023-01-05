@@ -17,7 +17,7 @@ export class AlwatrElevatedCard extends AlwatrCard {
     ...AlwatrCard.styles,
     css`
       :host {
-        background-color: var(--alwatr-sys-color-surface);
+        background-color: var(--sys-color-surface);
 
         --_elevation-level: 1;
       }

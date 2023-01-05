@@ -17,7 +17,7 @@ export class AlwatrFilledCard extends AlwatrCard {
     ...AlwatrCard.styles,
     css`
       :host {
-        background-color: var(--alwatr-sys-color-surface-variant);
+        background-color: var(--sys-color-surface-variant);
 
         --_elevation-level: 0;
       }
