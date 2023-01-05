@@ -1,7 +1,6 @@
-export type User = {
-  id: string;
-  identity: {
-    phoneNumber: string;
-    email?: string;
-  };
+import type {AlwatrDocumentObject} from './storage.js';
+
+export type User = AlwatrDocumentObject & {
+  name: string;
+  phoneNumber: string;
 };
