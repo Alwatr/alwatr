@@ -11,7 +11,7 @@
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.useEditorConfig": true,
-  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "files.exclude": {
     "**/*.map": true,
     "**/*.d.ts": true,
@@ -40,5 +40,12 @@
     "typescale",
     "vazirmatn",
     "zindex"
-  ]
+  ],
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "eslint.nodePath": ".yarn/sdks",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
