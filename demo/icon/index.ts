@@ -423,8 +423,8 @@ const container = document.querySelector('.icons')!;
 
 function addIcon(): void {
   const iconElement = document.createElement('alwatr-icon');
-  iconElement.name = iconList[random.integer(0, iconList.length - 1)] + '-outline';
-  container.appendChild(iconElement);
+  iconElement.setAttribute('name', iconList[random.integer(0, iconList.length - 1)] + '-outline');
+  container.appendChild(iconElement as unknown as Node);
 }
 
 document.addEventListener('click', addIcon);

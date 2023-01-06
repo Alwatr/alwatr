@@ -16,7 +16,7 @@ __metadata:
     esbuild: "npm:^0.16.14"
     nodemon: "npm:^2.0.20"
     npm-run-all: "npm:^4.1.5"
-    rimraf: "npm:^4.0.4"
+    rimraf: "npm:^4.0.2"
     typescript: "npm:^4.9.4"
   languageName: unknown
   linkType: soft
@@ -33,7 +33,7 @@ __metadata:
     esbuild: "npm:^0.16.14"
     nodemon: "npm:^2.0.20"
     npm-run-all: "npm:^4.1.5"
-    rimraf: "npm:^4.0.4"
+    rimraf: "npm:^4.0.2"
     typescript: "npm:^4.9.4"
   languageName: unknown
   linkType: soft
@@ -53,6 +53,7 @@ __metadata:
     "@alwatr/token": "npm:^0.27.0"
     "@alwatr/type": "npm:^0.27.0"
     "@alwatr/validator": "npm:^0.27.0"
+    "@types/node": "npm:^18.11.18"
     tslib: "npm:^2.4.1"
   languageName: unknown
   linkType: soft
@@ -65,7 +66,7 @@ __metadata:
     "@alwatr/logger": "npm:^0.27.0"
     "@alwatr/router": "npm:^0.27.0"
     "@alwatr/type": "npm:^0.27.0"
-    lit: "npm:^2.6.1"
+    lit: "npm:^2.5.0"
     tslib: "npm:^2.4.1"
   languageName: unknown
   linkType: soft
@@ -92,7 +93,7 @@ __metadata:
     esbuild: "npm:^0.16.14"
     nodemon: "npm:^2.0.20"
     npm-run-all: "npm:^4.1.5"
-    rimraf: "npm:^4.0.4"
+    rimraf: "npm:^4.0.2"
     typescript: "npm:^4.9.4"
   languageName: unknown
   linkType: soft
@@ -101,6 +102,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/flight-finder-crawler@workspace:services/flight-crawler"
   dependencies:
+    "@alwatr/fetch": "npm:^0.27.0"
     "@alwatr/logger": "npm:^0.27.0"
     "@alwatr/nano-server": "npm:^0.27.0"
     "@alwatr/storage-client": "npm:^0.27.0"
@@ -109,7 +111,7 @@ __metadata:
     esbuild: "npm:^0.16.14"
     nodemon: "npm:^2.0.20"
     npm-run-all: "npm:^4.1.5"
-    rimraf: "npm:^4.0.4"
+    rimraf: "npm:^4.0.2"
     typescript: "npm:^4.9.4"
   languageName: unknown
   linkType: soft
@@ -128,7 +130,7 @@ __metadata:
     "@alwatr/type": "npm:^0.27.0"
     "@babel/core": "npm:^7.20.12"
     "@babel/preset-env": "npm:^7.20.2"
-    "@ionic/core": "npm:^6.4.2"
+    "@ionic/core": "npm:^6.4.1"
     "@rollup/plugin-babel": "npm:^6.0.3"
     "@rollup/plugin-node-resolve": "npm:^15.0.1"
     "@rollup/plugin-terser": "npm:^0.3.0"
@@ -140,8 +142,8 @@ __metadata:
     "@webcomponents/webcomponentsjs": "npm:^2.7.0"
     lit-analyzer: "npm:^1.2.1"
     npm-run-all: "npm:^4.1.5"
-    rimraf: "npm:^4.0.4"
-    rollup: "npm:^3.10.0"
+    rimraf: "npm:^4.0.2"
+    rollup: "npm:^3.9.1"
     rollup-plugin-minify-html-literals: "npm:^1.2.6"
     rollup-plugin-summary: "npm:^2.0.0"
     rollup-plugin-workbox: "npm:^6.2.0"
@@ -185,6 +187,7 @@ __metadata:
   resolution: "@alwatr/logger@workspace:core/logger"
   dependencies:
     "@alwatr/type": "npm:^0.27.0"
+    "@types/node": "npm:^18.11.18"
     tslib: "npm:^2.4.1"
   languageName: unknown
   linkType: soft
@@ -203,21 +206,21 @@ __metadata:
   resolution: "@alwatr/monorepo@workspace:."
   dependencies:
     "@microsoft/eslint-formatter-sarif": "npm:^3.0.0"
-    "@typescript-eslint/eslint-plugin": "npm:^5.48.1"
-    "@typescript-eslint/parser": "npm:^5.48.1"
+    "@typescript-eslint/eslint-plugin": "npm:^5.48.0"
+    "@typescript-eslint/parser": "npm:^5.48.0"
     "@web/dev-server": "npm:^0.1.35"
     "@web/dev-server-esbuild": "npm:^0.3.3"
     eslint: "npm:^8.31.0"
     eslint-config-google: "npm:^0.14.0"
-    eslint-import-resolver-typescript: "npm:^3.5.3"
-    eslint-plugin-import: "npm:^2.27.4"
-    eslint-plugin-lit: "npm:^1.8.0"
+    eslint-import-resolver-typescript: "npm:^3.5.2"
+    eslint-plugin-import: "npm:^2.26.0"
+    eslint-plugin-lit: "npm:^1.7.2"
     eslint-plugin-wc: "npm:^1.4.0"
-    lerna: "npm:^6.4.1"
+    lerna: "npm:^6.4.0"
     lit-analyzer: "npm:^1.2.1"
     npm-run-all: "npm:^4.1.5"
-    prettier: "npm:^2.8.2"
-    rimraf: "npm:^4.0.4"
+    prettier: "npm:^2.8.1"
+    rimraf: "npm:^4.0.2"
     ts-lit-plugin: "npm:^1.2.1"
     typescript: "npm:^4.9.4"
   languageName: unknown
@@ -230,6 +233,7 @@ __metadata:
     "@alwatr/logger": "npm:^0.27.0"
     "@alwatr/math": "npm:^0.27.0"
     "@alwatr/type": "npm:^0.27.0"
+    "@types/node": "npm:^18.11.18"
     tslib: "npm:^2.4.1"
   languageName: unknown
   linkType: soft
@@ -244,7 +248,7 @@ __metadata:
     esbuild: "npm:^0.16.14"
     nodemon: "npm:^2.0.20"
     npm-run-all: "npm:^4.1.5"
-    rimraf: "npm:^4.0.4"
+    rimraf: "npm:^4.0.2"
     typescript: "npm:^4.9.4"
   languageName: unknown
   linkType: soft
@@ -275,6 +279,7 @@ __metadata:
     "@alwatr/fetch": "npm:^0.27.0"
     "@alwatr/logger": "npm:^0.27.0"
     "@alwatr/type": "npm:^0.27.0"
+    "@types/node": "npm:^18.11.18"
     tslib: "npm:^2.4.1"
   languageName: unknown
   linkType: soft
@@ -285,6 +290,7 @@ __metadata:
   dependencies:
     "@alwatr/logger": "npm:^0.27.0"
     "@alwatr/type": "npm:^0.27.0"
+    "@types/node": "npm:^18.11.18"
     exit-hook: "npm:^3.1.4"
     tslib: "npm:^2.4.1"
   languageName: unknown
@@ -302,7 +308,7 @@ __metadata:
     esbuild: "npm:^0.16.14"
     nodemon: "npm:^2.0.20"
     npm-run-all: "npm:^4.1.5"
-    rimraf: "npm:^4.0.4"
+    rimraf: "npm:^4.0.2"
     typescript: "npm:^4.9.4"
   languageName: unknown
   linkType: soft
@@ -319,7 +325,7 @@ __metadata:
     esbuild: "npm:^0.16.14"
     nodemon: "npm:^2.0.20"
     npm-run-all: "npm:^4.1.5"
-    rimraf: "npm:^4.0.4"
+    rimraf: "npm:^4.0.2"
     telegraf: "npm:^4.11.2"
     typescript: "npm:^4.9.4"
   languageName: unknown
@@ -331,6 +337,7 @@ __metadata:
   dependencies:
     "@alwatr/logger": "npm:^0.27.0"
     "@alwatr/math": "npm:^0.27.0"
+    "@types/node": "npm:^18.11.18"
     tslib: "npm:^2.4.1"
   languageName: unknown
   linkType: soft
@@ -346,6 +353,7 @@ __metadata:
   resolution: "@alwatr/ui-demo-pwa@workspace:ui/demo-pwa"
   dependencies:
     "@alwatr/element": "npm:^0.27.0"
+    "@alwatr/router": "npm:^0.27.0"
     "@alwatr/ui-kit": "npm:^0.27.0"
     "@babel/core": "npm:^7.20.12"
     "@babel/preset-env": "npm:^7.20.2"
@@ -360,8 +368,8 @@ __metadata:
     "@webcomponents/webcomponentsjs": "npm:^2.7.0"
     lit-analyzer: "npm:^1.2.1"
     npm-run-all: "npm:^4.1.5"
-    rimraf: "npm:^4.0.4"
-    rollup: "npm:^3.10.0"
+    rimraf: "npm:^4.0.2"
+    rollup: "npm:^3.9.1"
     rollup-plugin-minify-html-literals: "npm:^1.2.6"
     rollup-plugin-summary: "npm:^2.0.0"
     rollup-plugin-workbox: "npm:^6.2.0"
@@ -378,6 +386,7 @@ __metadata:
     "@alwatr/element": "npm:^0.27.0"
     "@alwatr/fetch": "npm:^0.27.0"
     "@alwatr/i18n": "npm:^0.27.0"
+    "@alwatr/icon": "npm:^0.27.0"
     "@alwatr/type": "npm:^0.27.0"
     tslib: "npm:^2.4.1"
   languageName: unknown
@@ -1936,7 +1945,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ionic/core@npm:^6.4.2":
+"@ionic/core@npm:^6.4.1":
   version: 6.4.2
   resolution: "@ionic/core@npm:6.4.2"
   dependencies:
@@ -3785,7 +3794,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.48.1":
+"@typescript-eslint/eslint-plugin@npm:^5.48.0":
   version: 5.48.1
   resolution: "@typescript-eslint/eslint-plugin@npm:5.48.1"
   dependencies:
@@ -3808,7 +3817,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.48.1":
+"@typescript-eslint/parser@npm:^5.48.0":
   version: 5.48.1
   resolution: "@typescript-eslint/parser@npm:5.48.1"
   dependencies:
@@ -6119,7 +6128,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-typescript@npm:^3.5.3":
+"eslint-import-resolver-typescript@npm:^3.5.2":
   version: 3.5.3
   resolution: "eslint-import-resolver-typescript@npm:3.5.3"
   dependencies:
@@ -6149,7 +6158,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.27.4":
+"eslint-plugin-import@npm:^2.26.0":
   version: 2.27.4
   resolution: "eslint-plugin-import@npm:2.27.4"
   dependencies:
@@ -6174,7 +6183,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-lit@npm:^1.8.0":
+"eslint-plugin-lit@npm:^1.7.2":
   version: 1.8.2
   resolution: "eslint-plugin-lit@npm:1.8.2"
   dependencies:
@@ -8487,7 +8496,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lerna@npm:^6.4.1":
+"lerna@npm:^6.4.0":
   version: 6.4.1
   resolution: "lerna@npm:6.4.1"
   dependencies:
@@ -8617,7 +8626,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:^2.6.1":
+"lit@npm:^2.5.0":
   version: 2.6.1
   resolution: "lit@npm:2.6.1"
   dependencies:
@@ -10309,7 +10318,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.8.2":
+"prettier@npm:^2.8.1":
   version: 2.8.3
   resolution: "prettier@npm:2.8.3"
   bin:
@@ -10857,7 +10866,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:^4.0.4":
+"rimraf@npm:^4.0.2":
   version: 4.0.4
   resolution: "rimraf@npm:4.0.4"
   bin:
@@ -10929,6 +10938,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rollup@npm:3.9.1":
+  version: 3.9.1
+  resolution: "rollup@npm:3.9.1"
+  dependencies:
+    fsevents: "npm:~2.3.2"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: 5772b4d375307fd452395ca31c009c9b1354ac78866c80836ad895f383fbacebb721fb33c8b55e0a7906c8259823c8d1aa1945f14de65381025a615a5646f8bd
+  languageName: node
+  linkType: hard
+
 "rollup@npm:^2.43.1, rollup@npm:^2.67.0":
   version: 2.79.1
   resolution: "rollup@npm:2.79.1"
@@ -10943,7 +10966,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^3.10.0":
+"rollup@npm:^3.9.1":
   version: 3.10.0
   resolution: "rollup@npm:3.10.0"
   dependencies:

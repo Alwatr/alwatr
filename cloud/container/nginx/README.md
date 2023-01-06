@@ -17,7 +17,7 @@ ARG NODE_VERSION=lts
 FROM docker.io/library/node:${NODE_VERSION} as build-deps
 WORKDIR /app
 COPY package.json *.lock ./
-RUN yarn install --frozen-lockfile --non-interactive && yarn cache clean
+RUN yarn install --immutable && yarn cache clean
 COPY . .
 RUN yarn build
 

@@ -1,4 +1,5 @@
-# Build
 *.js
+*.cjs
 *.map
 *.d.ts
+.yarn/

@@ -21,11 +21,11 @@
     "cb": "run-s clean build",
     "s": "yarn start",
     "w": "yarn watch",
-    "start": "NODE_OPTIONS=--enable-source-maps run-s clean build serve",
+    "start": "run-s clean build serve",
     "build": "yarn build:es --analyze=verbose",
     "build:ts": "tsc --build",
     "build:es": "esbuild src/index.ts --platform=node --target=node19 --bundle --format=esm --minify --sourcemap --outdir=dist --out-extension:.js=.mjs",
-    "clean": "rimraf dist build .tsbuildinfo **/*.{d.ts,map} src/**/*.{js,cjs,mjs}",
+    "clean": "rm -rf dist build .tsbuildinfo \"**/*.{d.ts,map}\" \"src/**/*.{js,cjs,mjs}\"",
     "serve": "while true; do node dist/index.mjs; sleep 180; done",
     "serve:debug": "node --inspect --enable-source-maps dist/index.mjs",
     "watch": "run-s clean build && run-p watch:es watch:node",
@@ -35,6 +35,7 @@
     "watch:es": "yarn build:es --watch"
   },
   "devDependencies": {
+    "@alwatr/fetch": "^0.27.0",
     "@alwatr/logger": "^0.27.0",
     "@alwatr/nano-server": "^0.27.0",
     "@alwatr/storage-client": "^0.27.0",
@@ -43,7 +44,7 @@
     "esbuild": "^0.16.14",
     "nodemon": "^2.0.20",
     "npm-run-all": "^4.1.5",
-    "rimraf": "^4.0.4",
+    "rimraf": "^4.0.2",
     "typescript": "^4.9.4"
   }
 }

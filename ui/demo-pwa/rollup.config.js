@@ -5,7 +5,6 @@ import {rollupPluginHTML} from '@web/rollup-plugin-html';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import summary from 'rollup-plugin-summary';
 import {generateSW} from 'rollup-plugin-workbox';
-
 import {workboxConfig} from './workbox.config.js';
 
 function onwarn(warning) {

@@ -10,15 +10,15 @@ ENV NODE_ENV production
 # Install dependencies
 COPY package.json *.lock ./
 RUN if [ -f *.lock ]; then \
-      yarn install --frozen-lockfile --non-interactive --production false; \
+      yarn install --immutable; \
     else \
-      yarn install --non-interactive --production false; \
+      yarn install; \
     fi;
 
 COPY . .
 
 # Reinstall to link internal packages
-RUN yarn install --frozen-lockfile --non-interactive --production false;
+RUN yarn install --immutable;
 
 # Build all ts files
 RUN  yarn build:ts;

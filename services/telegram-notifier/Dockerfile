@@ -5,15 +5,14 @@ WORKDIR /app
 
 COPY package.json *.lock ./
 RUN if [ -f *.lock ]; then \
-      yarn install --frozen-lockfile --non-interactive; \
+      yarn install --immutable; \
     else \
-      yarn install --non-interactive; \
+      yarn install; \
     fi;
 
 COPY . .
 RUN yarn build && \
-    rm -rf node_modules && \
-    yarn install --frozen-lockfile --non-interactive --production && \
+    yarn workspaces focus --all --immutable && \
     ls -lahF && \
     ls -lAh dist
 
@@ -33,6 +32,6 @@ ENV HOST 0.0.0.0
 ENV PORT 80
 EXPOSE 80
 
-COPY --from=builder /app/node_modules/ ./node_modules/
+# COPY --from=builder /app/node_modules/ ./node_modules/
 COPY --from=builder /app/dist/ ./
 RUN ls -lahF

@@ -19,9 +19,8 @@ import type {
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
 
-export type RouteMiddleware<TData = Record<string, unknown>, TMeta = Record<string, unknown>> = (
-  connection: AlwatrConnection
-) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>;
+export type RouteMiddleware<TData = Record<string, unknown>, TMeta = Record<string, unknown>> =
+  (connection: AlwatrConnection) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>
 
 export {
   NanoServerConfig,

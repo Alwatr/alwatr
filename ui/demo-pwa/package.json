@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@alwatr/element": "^0.27.0",
+    "@alwatr/router": "^0.27.0",
     "@alwatr/ui-kit": "^0.27.0",
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
@@ -49,8 +50,8 @@
     "@webcomponents/webcomponentsjs": "^2.7.0",
     "lit-analyzer": "^1.2.1",
     "npm-run-all": "^4.1.5",
-    "rimraf": "^4.0.4",
-    "rollup": "^3.10.0",
+    "rimraf": "^4.0.2",
+    "rollup": "^3.9.1",
     "rollup-plugin-minify-html-literals": "^1.2.6",
     "rollup-plugin-summary": "^2.0.0",
     "rollup-plugin-workbox": "^6.2.0",
