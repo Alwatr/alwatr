@@ -75,7 +75,7 @@
 
 /* Global page typography */
 :root {
-  --alwatr-ref-font-family-vazirmatn-roundot: 'vazirmatn-roundot-vf', 'vazirmatn-roundot';
+  --ref-font-family-vazirmatn-roundot: 'vazirmatn-roundot-vf', 'vazirmatn-roundot';
 }
 body {
   text-rendering: optimizeLegibility;
