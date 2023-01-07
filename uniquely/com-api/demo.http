@@ -1,6 +1,46 @@
 @apiUrl = http://127.0.0.1:8000
 @apiVersion = v0
-@token = YOUR_SECRET_TOKEN
+@token = YOUR_SECRET
 
 ### Home
 GET {{apiUrl}}/{{apiVersion}}
+
+### New product
+PUT {{apiUrl}}/{{apiVersion}}/product
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "product-1",
+  "description": "product one description",
+  "unitType": "m",
+  "price": 1000000
+}
+
+### Get all product
+Get {{apiUrl}}/{{apiVersion}}/product
+Authorization: Bearer {{token}}
+
+
+### New order
+PUT {{apiUrl}}/{{apiVersion}}/order
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "description": "test_description",
+  "itemList": [
+    {
+      "id": "1",
+      "name": "product-1",
+      "description": "product one description",
+      "unitType": "m",
+      "price": 1000000,
+      "value": 20
+    }
+  ]
+}
+
+### Get user order list
+get {{apiUrl}}/{{apiVersion}}/order
+Authorization: Bearer {{token}}
