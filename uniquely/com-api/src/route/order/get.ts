@@ -1,6 +1,7 @@
 import {logger} from '../../config.js';
 import {nanoServer} from '../../lib/nano-server.js';
 import {orderStorageClient} from '../../lib/storage.js';
+import {tokenGenerator} from '../../token.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
 import type {AlwatrServiceResponse} from '@alwatr/type';
@@ -11,9 +12,11 @@ nanoServer.route('GET', '/order', getOrder);
 async function getOrder(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('getOrder');
 
-  const token = connection.requireToken(() => {
-    // validate with @alwatr/token
-    return true;
+  const params = connection.requireQueryParams<{userId: string}>({userId: 'string'});
+
+  const token = connection.requireToken((token: string) => {
+    const isValid = tokenGenerator.verify(params.userId, token);
+    return isValid === 'valid';
   });
 
   orderStorageClient.config.name = token;
