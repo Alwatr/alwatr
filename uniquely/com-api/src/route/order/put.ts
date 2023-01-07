@@ -1,4 +1,4 @@
-import {config, logger} from '../../config.js';
+import {logger} from '../../config.js';
 import {nanoServer} from '../../lib/nano-server.js';
 import {orderStorageClient} from '../../lib/storage.js';
 
@@ -12,9 +12,13 @@ nanoServer.route('PUT', '/order', newOrder);
 async function newOrder(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('newOrder');
 
-  connection.requireToken(config.nanoServer.accessToken);
-
+  const token = connection.requireToken(() => {
+    // vliadator with @alwatr/token
+    return true;
+  });
   const order = await connection.requireJsonBody<Order>();
+
+  orderStorageClient.config.name = token;
 
   order.id ??= 'auto_increment';
 

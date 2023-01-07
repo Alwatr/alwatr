@@ -1,6 +1,6 @@
 @apiUrl = http://127.0.0.1:8000
 @apiVersion = v0
-@token = YOUR_SECRET_TOKEN
+@token = YOUR_SECRET
 
 ### Home
 GET {{apiUrl}}/{{apiVersion}}
@@ -28,21 +28,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "user": {
-    "id": "1",
-    "name": "user-1",
-    "phoneNumber": "989154321012",
-    "nationalCode": "09282343533838"
-  },
-  "detail": {
-    "description": "",
-    "reciver": {
-      "id": "2",
-      "name": "user-2",
-      "phoneNumber": "989334321012",
-      "nationalCode": "094083094889"
-    }
-  },
+  "description": "test_description",
   "itemList": [
     {
       "id": "1",
@@ -56,5 +42,5 @@ Content-Type: application/json
 }
 
 ### Get user order list
-get {{apiUrl}}/{{apiVersion}}/order?userId=1
+get {{apiUrl}}/{{apiVersion}}/order
 Authorization: Bearer {{token}}

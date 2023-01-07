@@ -8,6 +8,7 @@ export type Order = AlwatrDocumentObject & {
 export type Product = AlwatrDocumentObject & {
   name: string;
   description: string;
+  unitType: string;
   price: number;
 };
 

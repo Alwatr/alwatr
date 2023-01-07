@@ -1,5 +1,3 @@
-import {Order} from '@alwatr/type/src/com.js';
-
 import {logger} from '../../config.js';
 import {nanoServer} from '../../lib/nano-server.js';
 import {orderStorageClient} from '../../lib/storage.js';
@@ -13,24 +11,17 @@ nanoServer.route('GET', '/order', getOrder);
 async function getOrder(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('getOrder');
 
-  const {userId} = connection.requireQueryParams<{userId: string}>({'userId': 'string'});
+  const token = connection.requireToken(() => {
+    // validate with @alwatr/token
+    return true;
+  });
 
-  const storage = await orderStorageClient.getStorage();
-  const userOrderList: Array<Order> = [];
-
-  for (const order in storage.data) {
-    if (!Object.prototype.hasOwnProperty.call(storage.data, order)) continue;
-    if (storage.data[order].user.id === userId) {
-      userOrderList.push(storage.data[order]);
-    }
-  }
+  orderStorageClient.config.name = token;
 
   try {
     return {
       ok: true,
-      data: {
-        orderList: userOrderList,
-      },
+      data: await orderStorageClient.getStorage(),
     };
   }
   catch (_err) {
