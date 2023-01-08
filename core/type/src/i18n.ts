@@ -20,3 +20,10 @@ export type Locale = {
    */
   direction: 'rtl' | 'ltr';
 };
+
+/**
+ * Multi language string
+ *
+ * {fa: 'سلام', en: 'hello'}
+ */
+export type i18nString = Record<Lowercase<string>, string>;
