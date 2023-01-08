@@ -3,11 +3,11 @@ import {SignalInterface} from '@alwatr/signal';
 import {css, html} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 
+import {sampleProductList, Product} from '../config.js';
 import styles from '../style/index.js';
 
 import '../component/product-card.js';
 
-import type {Product} from '../type.js';
 import type {TemplateResult} from 'lit';
 
 declare global {
@@ -47,8 +47,9 @@ export class PageProductList extends AlwatrElement {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    PageProductList.productListSignal.addListener((productList) => {
-      this.__productList = productList;
+    this.__productList = sampleProductList;
+    PageProductList.productListSignal.addListener(() => {
+      // this.__productList = sampleProductList;
     });
   }
 
@@ -70,7 +71,7 @@ export class PageProductList extends AlwatrElement {
           html`
           <product-card
             id=${product.id}
-            .name=${product.name}
+            .name=${product.title}
             .imageSrc=${product.image}
             .price=${product.price}
           ></product-card>
