@@ -19,7 +19,7 @@ export class AlwatrElevatedCard extends AlwatrCard {
       :host {
         background-color: var(--sys-color-surface);
 
-        --_elevation-level: 1;
+        --elevation-level: 1;
       }
     `,
   ];

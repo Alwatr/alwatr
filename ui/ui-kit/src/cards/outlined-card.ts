@@ -19,8 +19,6 @@ export class AlwatrOutlinedCard extends AlwatrCard {
       :host {
         background-color: var(--sys-color-surface);
         border: 1px solid var(--sys-color-outline);
-
-        --_elevation-level: 0;
       }
     `,
   ];
