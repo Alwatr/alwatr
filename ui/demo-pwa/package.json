@@ -36,7 +36,7 @@
   "devDependencies": {
     "@alwatr/element": "^0.27.0",
     "@alwatr/ui-kit": "^0.27.0",
-    "@babel/core": "^7.20.5",
+    "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-node-resolve": "^15.0.1",
