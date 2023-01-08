@@ -12,8 +12,10 @@ export type TokenGeneratorConfig = {
 
   /**
    * Token expiration time.
+   *
+   * `null` mean without expiration time
    */
-  duration: DurationString;
+  duration: DurationString | null;
 
   /**
    * OpenSSl digest algorithm.
