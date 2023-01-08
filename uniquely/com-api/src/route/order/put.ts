@@ -5,7 +5,7 @@ import {tokenGenerator} from '../../token.js';
 
 import type {AlwatrConnection} from '@alwatr/nano-server';
 import type {AlwatrServiceResponse} from '@alwatr/type';
-import type {Order} from '@alwatr/type/com.js';
+import type {Order} from '@alwatr/type/customer-order-management.js';
 
 // Add order
 nanoServer.route('PUT', '/order', newOrder);
@@ -25,10 +25,8 @@ async function newOrder(connection: AlwatrConnection): Promise<AlwatrServiceResp
 
   orderStorageClient.config.name = token;
 
-  order.id ??= 'auto_increment';
-
   try {
-    if (order.id !== 'auto_increment' && (await orderStorageClient.has(order.id))) {
+    if (await orderStorageClient.has(order.id)) {
       return {
         ok: false,
         statusCode: 400,

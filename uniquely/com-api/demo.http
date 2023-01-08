@@ -10,24 +10,37 @@ Get {{apiUrl}}/{{apiVersion}}/product
 Authorization: Bearer {{token}}
 
 ### New order
-PUT {{apiUrl}}/{{apiVersion}}/order?userId=njfamirm
+PUT {{apiUrl}}/{{apiVersion}}/order?userId=alimd
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "description": "test_description",
+  "id": "0-0",
   "itemList": [
     {
-      "id": "1",
-      "name": "product-1",
-      "description": "product one description",
-      "unitType": "m",
-      "price": 1000000,
-      "value": 20
+      "productId": "12345",
+      "price": {
+        "price": 1000000,
+        "finalPrice": 950000
+      },
+      "qty": 20
     }
-  ]
+  ],
+
+  "delivery": {
+    "recipientName": "ali",
+    "recipientNationalCode": "0934614566",
+    "address": "Mashhad, 29 dey, koche 29",
+    "shipmentType": "x",
+    "carType": "y"
+  },
+
+  "discountType": "number",
+  "totalPrice": 1000000,
+  "shippingPrice": 1100000,
+  "finalPrice": 900000
 }
 
 ### Get user order list
-get {{apiUrl}}/{{apiVersion}}/order
+get {{apiUrl}}/{{apiVersion}}/order?userId=alimd
 Authorization: Bearer {{token}}
