@@ -4,7 +4,7 @@ import {config} from './config.js';
 
 export const tokenGenerator = new AlwatrTokenGenerator({
   secret: config.token.secret,
-  duration: '1y',
+  duration: null,
   algorithm: 'sha256',
   encoding: 'base64url',
 });
