@@ -16,6 +16,7 @@ const currentUser = 'user-1';
 const chatStorage: ChatStorage = {
   ok: true,
   meta: {
+    id: `${currentUser}-chat`,
     formatVersion: 4,
     lastAutoId: 0,
     lastUpdated: Date.now(),

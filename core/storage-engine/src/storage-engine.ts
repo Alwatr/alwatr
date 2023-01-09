@@ -135,6 +135,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     return {
       ok: true,
       meta: {
+        id: this.name,
         formatVersion: AlwatrStorageEngine.formatVersion,
         reversion: 0,
         lastUpdated: Date.now(),

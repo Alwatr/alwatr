@@ -10,6 +10,7 @@ export type AlwatrDocumentObject = {
 };
 
 export type AlwatrStorageMeta = {
+  id: string;
   formatVersion: number;
   reversion: number;
   lastUpdated: number;
