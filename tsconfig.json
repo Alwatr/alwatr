@@ -37,6 +37,7 @@
     {"path": "./services/storage-server"},
     {"path": "./services/comment"},
     {"path": "./services/form-registering"},
+    {"path": "./services/photo"},
 
     // uniquely
     {"path": "./uniquely/flight-finder-api"},
