@@ -17,6 +17,7 @@
   "exclude": [],
   "references": [
     {"path": "../../core/router"},
+    {"path": "../../core/fetch"},
     {"path": "../../ui/element"},
     {"path": "../../ui/ui-kit"},
   ]

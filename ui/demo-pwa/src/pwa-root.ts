@@ -2,6 +2,7 @@ import {AlwatrRootElement, html, customElement} from '@alwatr/element';
 
 import './page-chat.js';
 import './page-card.js';
+import './page-file-uploader.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 
@@ -24,6 +25,9 @@ export class AlwatrPwaRoot extends AlwatrRootElement {
       },
       card: {
         render: () => html`<alwatr-page-card></alwatr-page-card>`,
+      },
+      fileUploader: {
+        render: () => html`<alwatr-file-uploader></alwatr-file-uploader>`,
       },
     },
   };
