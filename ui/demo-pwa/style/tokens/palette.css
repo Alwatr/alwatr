@@ -1,56 +1,62 @@
 :root {
-  /* --source: #005fac; */
+  --ref-palette-primary-hue: 207;
+  --ref-palette-secondary-hue: calc(var(--ref-palette-primary-hue) + 12);
+  --ref-palette-tertiary-hue: calc(var(--ref-palette-primary-hue) + 70);
+
   /* primary */
-  --ref-palette-primary0: #000000;
-  --ref-palette-primary10: #001c39;
-  --ref-palette-primary20: #00315d;
-  --ref-palette-primary25: #003c70;
-  --ref-palette-primary30: #004884;
-  --ref-palette-primary35: #005398;
-  --ref-palette-primary40: #015fac;
-  --ref-palette-primary50: #3279c7;
-  --ref-palette-primary60: #5293e3;
-  --ref-palette-primary70: #6faeff;
-  --ref-palette-primary80: #a4c9ff;
-  --ref-palette-primary90: #d4e3ff;
-  --ref-palette-primary95: #ebf1ff;
-  --ref-palette-primary98: #f8f9ff;
-  --ref-palette-primary99: #fdfcff;
-  --ref-palette-primary100: #ffffff;
+  --ref-palette-primary0: hsl(var(--ref-palette-primary-hue), 0%, 0%);
+  --ref-palette-primary10: hsl(var(--ref-palette-primary-hue), 100%, 10%);
+  --ref-palette-primary20: hsl(var(--ref-palette-primary-hue), 100%, 20%);
+  --ref-palette-primary25: hsl(var(--ref-palette-primary-hue), 100%, 25%);
+  --ref-palette-primary30: hsl(var(--ref-palette-primary-hue), 100%, 30%);
+  --ref-palette-primary35: hsl(var(--ref-palette-primary-hue), 100%, 35%);
+  --ref-palette-primary40: hsl(var(--ref-palette-primary-hue), 100%, 40%);
+  --ref-palette-primary50: hsl(var(--ref-palette-primary-hue), 80%, 50%);
+  --ref-palette-primary60: hsl(var(--ref-palette-primary-hue), 85%, 60%);
+  --ref-palette-primary70: hsl(var(--ref-palette-primary-hue), 88%, 70%);
+  --ref-palette-primary80: hsl(var(--ref-palette-primary-hue), 95%, 82%);
+  --ref-palette-primary90: hsl(var(--ref-palette-primary-hue), 100%, 90%);
+  --ref-palette-primary95: hsl(var(--ref-palette-primary-hue), 100%, 95%);
+  --ref-palette-primary98: hsl(var(--ref-palette-primary-hue), 100%, 98%);
+  --ref-palette-primary99: hsl(var(--ref-palette-primary-hue), 100%, 99%);
+  --ref-palette-primary100: hsl(var(--ref-palette-primary-hue), 100%, 100%);
+
   /* secondary */
-  --ref-palette-secondary0: #000000;
-  --ref-palette-secondary10: #111c2b;
-  --ref-palette-secondary20: #263141;
-  --ref-palette-secondary25: #313c4c;
-  --ref-palette-secondary30: #3d4758;
-  --ref-palette-secondary35: #485364;
-  --ref-palette-secondary40: #545f71;
-  --ref-palette-secondary50: #6d788a;
-  --ref-palette-secondary60: #8691a4;
-  --ref-palette-secondary70: #a1acc0;
-  --ref-palette-secondary80: #bcc7db;
-  --ref-palette-secondary90: #d8e3f8;
-  --ref-palette-secondary95: #ebf1ff;
-  --ref-palette-secondary98: #f8f9ff;
-  --ref-palette-secondary99: #fdfcff;
-  --ref-palette-secondary100: #ffffff;
+  --ref-palette-secondary0: hsl(var(--ref-palette-secondary-hue), 0%, 0%);
+  --ref-palette-secondary10: hsl(var(--ref-palette-secondary-hue), 40%, 11%);
+  --ref-palette-secondary20: hsl(var(--ref-palette-secondary-hue), 27%, 20%);
+  --ref-palette-secondary25: hsl(var(--ref-palette-secondary-hue), 23%, 25%);
+  --ref-palette-secondary30: hsl(var(--ref-palette-secondary-hue), 20%, 30%);
+  --ref-palette-secondary35: hsl(var(--ref-palette-secondary-hue), 18%, 35%);
+  --ref-palette-secondary40: hsl(var(--ref-palette-secondary-hue), 16%, 40%);
+  --ref-palette-secondary50: hsl(var(--ref-palette-secondary-hue), 13%, 50%);
+  --ref-palette-secondary60: hsl(var(--ref-palette-secondary-hue), 17%, 60%);
+  --ref-palette-secondary70: hsl(var(--ref-palette-secondary-hue), 24%, 70%);
+  --ref-palette-secondary80: hsl(var(--ref-palette-secondary-hue), 40%, 80%);
+  --ref-palette-secondary90: hsl(var(--ref-palette-secondary-hue), 70%, 90%);
+  --ref-palette-secondary95: hsl(var(--ref-palette-secondary-hue), 100%, 95%);
+  --ref-palette-secondary98: hsl(var(--ref-palette-secondary-hue), 100%, 98%);
+  --ref-palette-secondary99: hsl(var(--ref-palette-secondary-hue), 100%, 99%);
+  --ref-palette-secondary100: hsl(var(--ref-palette-secondary-hue), 100%, 100%);
+
   /* tertiary */
-  --ref-palette-tertiary0: #000000;
-  --ref-palette-tertiary10: #271430;
-  --ref-palette-tertiary20: #3d2946;
-  --ref-palette-tertiary25: #483452;
-  --ref-palette-tertiary30: #543f5e;
-  --ref-palette-tertiary35: #614a6a;
-  --ref-palette-tertiary40: #6d5677;
-  --ref-palette-tertiary50: #876e90;
-  --ref-palette-tertiary60: #a288ab;
-  --ref-palette-tertiary70: #bda2c6;
-  --ref-palette-tertiary80: #d9bde3;
-  --ref-palette-tertiary90: #f6d9ff;
-  --ref-palette-tertiary95: #fdebff;
-  --ref-palette-tertiary98: #fff7fc;
-  --ref-palette-tertiary99: #fffbff;
-  --ref-palette-tertiary100: #ffffff;
+  --ref-palette-tertiary0: hsl(var(--ref-palette-tertiary-hue), 0%, 0%);
+  --ref-palette-tertiary10: hsl(var(--ref-palette-tertiary-hue), 40%, 11%);
+  --ref-palette-tertiary20: hsl(var(--ref-palette-tertiary-hue), 27%, 20%);
+  --ref-palette-tertiary25: hsl(var(--ref-palette-tertiary-hue), 23%, 25%);
+  --ref-palette-tertiary30: hsl(var(--ref-palette-tertiary-hue), 20%, 30%);
+  --ref-palette-tertiary35: hsl(var(--ref-palette-tertiary-hue), 18%, 35%);
+  --ref-palette-tertiary40: hsl(var(--ref-palette-tertiary-hue), 16%, 40%);
+  --ref-palette-tertiary50: hsl(var(--ref-palette-tertiary-hue), 13%, 50%);
+  --ref-palette-tertiary60: hsl(var(--ref-palette-tertiary-hue), 17%, 60%);
+  --ref-palette-tertiary70: hsl(var(--ref-palette-tertiary-hue), 24%, 70%);
+  --ref-palette-tertiary80: hsl(var(--ref-palette-tertiary-hue), 40%, 80%);
+  --ref-palette-tertiary90: hsl(var(--ref-palette-tertiary-hue), 70%, 90%);
+  --ref-palette-tertiary95: hsl(var(--ref-palette-tertiary-hue), 100%, 95%);
+  --ref-palette-tertiary98: hsl(var(--ref-palette-tertiary-hue), 100%, 98%);
+  --ref-palette-tertiary99: hsl(var(--ref-palette-tertiary-hue), 100%, 99%);
+  --ref-palette-tertiary100: hsl(var(--ref-palette-tertiary-hue), 100%, 100%);
+
   /* neutral */
   --ref-palette-neutral0: #000000;
   --ref-palette-neutral10: #1a1c1e;
@@ -68,6 +74,7 @@
   --ref-palette-neutral98: #faf9fd;
   --ref-palette-neutral99: #fdfcff;
   --ref-palette-neutral100: #ffffff;
+
   /* neutral-variant */
   --ref-palette-neutral-variant0: #000000;
   --ref-palette-neutral-variant10: #181c22;
@@ -85,6 +92,7 @@
   --ref-palette-neutral-variant98: #f8f9ff;
   --ref-palette-neutral-variant99: #fdfcff;
   --ref-palette-neutral-variant100: #ffffff;
+
   /* error */
   --ref-palette-error0: #000000;
   --ref-palette-error10: #410002;
@@ -106,7 +114,8 @@
 
 :root {
   /* theme light */
-  --sys-color-primary: var(--ref-palette-primary40);
+  --sys-color-primary-hsl: var(--ref-palette-primary40);
+  --sys-color-primary: hsl(var(--sys-color-primary-hsl));
   --sys-color-on-primary: var(--ref-palette-primary100);
   --sys-color-primary-container: var(--ref-palette-primary90);
   --sys-color-on-primary-container: var(--ref-palette-primary10);
@@ -185,7 +194,8 @@
     --sys-color-on-error: var(--ref-palette-error20);
     --sys-color-on-error-container: var(--ref-palette-error90);
 
-    --sys-color-inverse-primary: var(--ref-palette-primary40);
+    --sys-color-inverse-primary-hsl: var(--ref-palette-primary40);
+    --sys-color-inverse-primary: hsl(var(--sys-color-inverse-primary-hsl));
     --sys-color-inverse-surface: var(--ref-palette-neutral90);
     --sys-color-inverse-on-surface: var(--ref-palette-neutral20);
   }
