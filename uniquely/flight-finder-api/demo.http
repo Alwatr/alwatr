@@ -24,7 +24,6 @@ Content-Type: application/json
     "minHour": null,
     "maxHour": null,
     "description": "Test!"
-
   }
 }
 

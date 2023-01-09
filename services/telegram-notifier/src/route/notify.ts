@@ -12,7 +12,9 @@ async function notify(connection: AlwatrConnection): Promise<AlwatrServiceRespon
 
   connection.requireToken(config.nanoServer.accessToken);
 
-  const bodyJson = await connection.requireJsonBody<{to: string; message: string}>({to: String, message: String});
+  const bodyJson = await connection.requireJsonBody<{to: string; message: string}>({
+    schema: {to: String, message: String},
+  });
 
   await sendMessage(bodyJson.to, bodyJson.message);
 

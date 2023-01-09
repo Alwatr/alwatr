@@ -14,7 +14,10 @@ async function updateDocument(connection: AlwatrConnection): Promise<AlwatrServi
 
   const param = connection.requireQueryParams<{storage: string}>({storage: 'string'});
 
-  const document = await connection.requireJsonBody<AlwatrDocumentObject>();
+  const document = await connection.requireJsonBody<AlwatrDocumentObject>({
+    schema: {id: String},
+    additionalProperties: true,
+  });
 
   if (!(typeof document.id === 'string' && document.id.length !== 0)) {
     return {

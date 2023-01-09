@@ -13,7 +13,23 @@ async function newJob(connection: AlwatrConnection): Promise<AlwatrServiceRespon
 
   connection.requireToken(config.nanoServer.accessToken);
 
-  const job = await connection.requireJsonBody<Job>();
+  /* FIXME:
+    maxPrice validator
+    minHour validator
+    maxHour validator
+  */
+  const job = await connection.requireJsonBody<Job>({
+    schema: {
+      detail: {
+        origin: String,
+        destination: String,
+        date: String,
+        seatCount: Number,
+        description: String,
+      },
+    },
+    additionalProperties: true,
+  });
 
   job.id ??= 'auto_increment';
   job.resultList = [];
