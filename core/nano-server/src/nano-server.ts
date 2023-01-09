@@ -4,7 +4,6 @@ import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
 import {validator} from '@alwatr/validator';
 
-
 import type {NanoServerConfig, ConnectionConfig} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {
@@ -448,7 +447,7 @@ export class AlwatrConnection {
    * const bodyData = await connection.requireJsonBody();
    * ```
    */
-  async requireJsonBody<T>(validatorSchema?: JsonSchema, validatorAdditionalProperties?: boolean): Promise<T> {
+  async requireJsonBody<T>(validatorParams?: {schema: JsonSchema; additionalProperties?: boolean}): Promise<T> {
     // if request content type is json
     if (this.incomingMessage.headers['content-type'] !== 'application/json') {
       // eslint-disable-next-line no-throw-literal
@@ -483,9 +482,13 @@ export class AlwatrConnection {
       };
     }
 
-    if (validatorSchema != null) {
+    if (validatorParams?.schema != null) {
       try {
-        jsonBody = validator<T>(validatorSchema, <Record<string, unknown>> jsonBody, validatorAdditionalProperties);
+        jsonBody = validator<T>(
+            validatorParams.schema,
+          <Record<string, unknown>>jsonBody,
+          validatorParams.additionalProperties,
+        );
       }
       catch (err) {
         // eslint-disable-next-line no-throw-literal
