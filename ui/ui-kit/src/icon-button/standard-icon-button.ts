@@ -27,7 +27,6 @@ export class AlwatrStandardIconButton extends AlwatrDummyElement {
     focusRingHost,
     css`
       :host {
-        position: relative;
         display: inline-flex;
         user-select: none;
         align-items: center;
