@@ -15,6 +15,9 @@ export const config = {
     token: process.env.STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
     name: process.env.STORAGE_NAME ?? 'photo',
   },
+  token: {
+    secret: process.env.SECRET ?? 'SECRET',
+  },
 };
 
 logger.logProperty('config', config);

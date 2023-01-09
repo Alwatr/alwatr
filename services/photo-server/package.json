@@ -54,6 +54,7 @@
     "@alwatr/logger": "^0.27.0",
     "@alwatr/nano-server": "^0.27.0",
     "@alwatr/type": "^0.27.0",
+    "@alwatr/token": "^0.27.0",
     "@alwatr/storage-client": "^0.27.0",
     "@types/node": "^18.11.18",
     "esbuild": "^0.16.14",
