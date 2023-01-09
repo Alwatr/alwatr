@@ -478,6 +478,55 @@ export class AlwatrConnection {
   }
 
   /**
+   * Get file uploaded
+   *
+   * Example:
+   * ```ts
+   * const body = await connection.getFileBody();
+   * ```
+   */
+  async getFileBody(): Promise<Buffer | null> {
+    // method must be POST
+    if (!(this.method === 'POST')) {
+      return null;
+    }
+
+    const body: Buffer[] = [];
+
+    this.incomingMessage.on('data', (chunk: Buffer) => {
+      body.push(chunk);
+    });
+
+    await new Promise((resolve) => this.incomingMessage.once('end', resolve));
+
+    if (body.length === 0) return null;
+    return Buffer.concat(body);
+  }
+
+  /**
+   * Parse request body.
+   *
+   * Example:
+   * ```ts
+   * const bodyData = await connection.requireFileBody();
+   * ```
+   */
+  async requireFileBody(): Promise<Buffer> {
+    const body = await this.getFileBody();
+
+    if (body == null) {
+      // eslint-disable-next-line no-throw-literal
+      throw {
+        ok: false,
+        statusCode: 400,
+        errorCode: 'require_file_body',
+      };
+    }
+
+    return body;
+  }
+
+  /**
    * Parse and validate request token.
    *
    * @returns Request token.
