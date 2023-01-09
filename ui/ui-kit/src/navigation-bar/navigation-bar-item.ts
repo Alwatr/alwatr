@@ -113,20 +113,24 @@ export class AlwatrNavigationBarItem extends AlwatrDummyElement {
     `,
   ];
 
-  @property() href?: string;
+  @property()
+    href?: string;
 
-  @property() label?: string;
+  @property()
+    label?: string;
 
-  @property() icon?: string;
+  @property()
+    icon?: string;
 
-  @property({attribute: 'badge-value'}) badgeValue?: string;
+  @property({attribute: 'badge-value'})
+    badgeValue?: string;
 
   override render(): unknown {
     return html`
       <a class="navigation-bar-item" href=${ifDefined(this.href)}>
         <div class="active-indicator">
           <alwatr-icon class="icon active-icon" .name=${this.icon}></alwatr-icon>
-          <alwatr-icon class="icon inactive-icon" .name=${`${this.icon}-outline`}></alwatr-icon>
+          <alwatr-icon class="icon inactive-icon" .name=${this.icon + '-outline'}></alwatr-icon>
         </div>
 
         <span class="label">${this.label}</span>
