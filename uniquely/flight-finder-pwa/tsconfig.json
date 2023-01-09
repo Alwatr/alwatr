@@ -23,6 +23,7 @@
     {"path": "../../core/type"},
     {"path": "../../core/logger"},
     {"path": "../../core/router"},
-    {"path": "../../core/signal"}
+    {"path": "../../core/signal"},
+    {"path": "../../core/validator"}
   ]
 }

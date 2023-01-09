@@ -39,6 +39,7 @@
     "@alwatr/router": "^0.28.0",
     "@alwatr/signal": "^0.28.0",
     "@alwatr/type": "^0.28.0",
+    "@alwatr/validator": "^0.28.0",
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
     "@ionic/core": "^6.5.0",

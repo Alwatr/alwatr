@@ -1,6 +1,7 @@
 import {AlwatrSmartElement, customElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
+import {validator} from '@alwatr/validator';
 
 import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
@@ -184,6 +185,7 @@ export class JobAddForm extends AlwatrSmartElement {
       year: 'numeric',
     });
 
+    // validated before submit
     JobAddForm.jobAddSignal.dispatch({
       detail: {
         destination: this.__newJob.destination as string,
@@ -191,7 +193,7 @@ export class JobAddForm extends AlwatrSmartElement {
         maxHour: this.__newJob.maxHour ?? null,
         minHour: this.__newJob.minHour ?? null,
         maxPrice: this.__newJob.maxPrice ?? null,
-        seatCount: this.__newJob.seatCount ?? 1,
+        seatCount: this.__newJob.seatCount as number,
         description: this.__newJob.description ?? '',
         date: `${currentYear}/${this.__newJob.month}/${this.__newJob.day}`,
       },
@@ -231,6 +233,21 @@ export class JobAddForm extends AlwatrSmartElement {
     return maxPrice + ' ' + l10n.localize('config_currency');
   }
   private get __formValidate(): boolean {
-    return Object.keys(this.__newJob).length >= 4;
+    try {
+      validator({
+        origin: String,
+        destination: String,
+        seatCount: Number,
+        month: Number,
+        day: Number,
+      },
+      this.__newJob,
+      true,
+      );
+      return true;
+    }
+    catch {
+      return false;
+    }
   }
 }
