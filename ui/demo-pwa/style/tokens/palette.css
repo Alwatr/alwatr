@@ -1,8 +1,9 @@
 :root {
-  --ref-palette-primary-hue: 207;
-  --ref-palette-secondary-hue: calc(var(--ref-palette-primary-hue) + 12);
-  --ref-palette-tertiary-hue: calc(var(--ref-palette-primary-hue) + 70);
-  --ref-palette-neutral-hue: calc(var(--ref-palette-primary-hue) + 20);
+  --ref-palette-primary-hue: 256;
+  --ref-palette-secondary-hue: 260; /* calc(var(--ref-palette-primary-hue) + 12); */
+  --ref-palette-tertiary-hue: 340; /* calc(var(--ref-palette-primary-hue) + 70); */
+  --ref-palette-neutral-hue: 342; /* calc(var(--ref-palette-primary-hue) + 20); */
+  --ref-palette-neutral-variant-hue: 270; /* calc(var(--ref-palette-primary-hue) + 20); */
   --ref-palette-error-hue: 356;
 
   /* primary */
@@ -78,22 +79,22 @@
   --ref-palette-neutral100: var(--ref-palette-neutral-hue), 100%, 100%;
 
   /* neutral-variant */
-  --ref-palette-neutral-variant0: var(--ref-palette-neutral-hue), 0%, 0%;
-  --ref-palette-neutral-variant10: var(--ref-palette-neutral-hue), 17%, 11%;
-  --ref-palette-neutral-variant20: var(--ref-palette-neutral-hue), 11%, 20%;
-  --ref-palette-neutral-variant25: var(--ref-palette-neutral-hue), 9%, 24%;
-  --ref-palette-neutral-variant30: var(--ref-palette-neutral-hue), 8%, 28%;
-  --ref-palette-neutral-variant35: var(--ref-palette-neutral-hue), 7%, 33%;
-  --ref-palette-neutral-variant40: var(--ref-palette-neutral-hue), 6%, 38%;
-  --ref-palette-neutral-variant50: var(--ref-palette-neutral-hue), 5%, 48%;
-  --ref-palette-neutral-variant60: var(--ref-palette-neutral-hue), 5.6%, 58%;
-  --ref-palette-neutral-variant70: var(--ref-palette-neutral-hue), 7.4%, 68%;
-  --ref-palette-neutral-variant80: var(--ref-palette-neutral-hue), 11.1%, 79%;
-  --ref-palette-neutral-variant90: var(--ref-palette-neutral-hue), 23.1%, 90%;
-  --ref-palette-neutral-variant95: var(--ref-palette-neutral-hue), 54.5%, 95%;
-  --ref-palette-neutral-variant98: var(--ref-palette-neutral-hue), 100%, 98%;
-  --ref-palette-neutral-variant99: var(--ref-palette-neutral-hue), 100%, 99%;
-  --ref-palette-neutral-variant100: var(--ref-palette-neutral-hue), 100%, 100%;
+  --ref-palette-neutral-variant0: var(--ref-palette-neutral-variant-hue), 0%, 0%;
+  --ref-palette-neutral-variant10: var(--ref-palette-neutral-variant-hue), 17%, 11%;
+  --ref-palette-neutral-variant20: var(--ref-palette-neutral-variant-hue), 11%, 20%;
+  --ref-palette-neutral-variant25: var(--ref-palette-neutral-variant-hue), 9%, 24%;
+  --ref-palette-neutral-variant30: var(--ref-palette-neutral-variant-hue), 8%, 28%;
+  --ref-palette-neutral-variant35: var(--ref-palette-neutral-variant-hue), 7%, 33%;
+  --ref-palette-neutral-variant40: var(--ref-palette-neutral-variant-hue), 6%, 38%;
+  --ref-palette-neutral-variant50: var(--ref-palette-neutral-variant-hue), 5%, 48%;
+  --ref-palette-neutral-variant60: var(--ref-palette-neutral-variant-hue), 5.6%, 58%;
+  --ref-palette-neutral-variant70: var(--ref-palette-neutral-variant-hue), 7.4%, 68%;
+  --ref-palette-neutral-variant80: var(--ref-palette-neutral-variant-hue), 11.1%, 79%;
+  --ref-palette-neutral-variant90: var(--ref-palette-neutral-variant-hue), 23.1%, 90%;
+  --ref-palette-neutral-variant95: var(--ref-palette-neutral-variant-hue), 54.5%, 95%;
+  --ref-palette-neutral-variant98: var(--ref-palette-neutral-variant-hue), 100%, 98%;
+  --ref-palette-neutral-variant99: var(--ref-palette-neutral-variant-hue), 100%, 99%;
+  --ref-palette-neutral-variant100: var(--ref-palette-neutral-variant-hue), 100%, 100%;
 
   /* error */
   --ref-palette-error0: var(--ref-palette-error-hue), 0%, 0%;
@@ -131,8 +132,8 @@
   --sys-color-tertiary-container-hsl: var(--ref-palette-tertiary90);
   --sys-color-on-tertiary-container-hsl: var(--ref-palette-tertiary10);
 
-  /* --sys-color-background-hsl: var(--ref-palette-neutral99); */
-  --sys-color-background-hsl: var(--ref-palette-neutral95);
+  --sys-color-background-hsl: var(--ref-palette-neutral99);
+  /* --sys-color-background-hsl: var(--ref-palette-neutral95); */
   --sys-color-on-background-hsl: var(--ref-palette-neutral10);
 
   --sys-color-surface-hsl: var(--ref-palette-neutral99);
@@ -217,8 +218,8 @@
     --sys-color-tertiary-container-hsl: var(--ref-palette-tertiary30);
     --sys-color-on-tertiary-container-hsl: var(--ref-palette-tertiary90);
 
-    /* --sys-color-background-hsl: var(--ref-palette-neutral10); */
-    --sys-color-background-hsl: var(--ref-palette-neutral20);
+    --sys-color-background-hsl: var(--ref-palette-neutral10);
+    /* --sys-color-background-hsl: var(--ref-palette-neutral20); */
     --sys-color-on-background-hsl: var(--ref-palette-neutral90);
 
     --sys-color-surface-hsl: var(--ref-palette-neutral10);
