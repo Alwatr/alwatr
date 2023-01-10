@@ -19,7 +19,8 @@ export const focusRingStyle = css`
     );
   }
 
-  :host(:focus) {
+  :host(:focus),
+  :host(:focus-within) {
     background-image: linear-gradient(
       hsla(var(--_color-hsl), var(--sys-opacity-focus)),
       hsla(var(--_color-hsl), var(--sys-opacity-focus))
