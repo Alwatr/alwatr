@@ -16,28 +16,60 @@ declare global {
  * Alwatr Card Base Element
  *
  * @attr {elevated|filled|outlined} type
+ * @attr {boolean} disabled
  */
 @customElement('alwatr-card')
 export class AlwatrCard extends AlwatrDummyElement {
   static override styles: CSSResultGroup = [
     focusRingStyle,
     css`
-      :host,
-      :host([type="filled"]) {
+      :host /* filled */ {
         --_color-hsl: var(--sys-color-on-surface-variant-hsl);
-        background-color: var(--sys-color-surface-variant);
+        display: block;
+        padding: calc(2 * var(--sys-spacing-track));
         border-radius: var(--sys-radius-medium);
+        box-shadow: var(--elevation-0);
+        background-color: var(--sys-color-surface-variant);
+        transition: box-shadow var(--sys-motion-duration-small-out) var(--sys-motion-easing-linear);
       }
 
-      :host([type="elevated"]) {
+      :host([disabled]) {
+        opacity: 0.38;
+        pointer-events: none;
+        box-shadow: var(--elevation-1);
+      }
+
+      :host(:hover) {
+        box-shadow: var(--elevation-1);
+      }
+
+      :host(:active) {
+        box-shadow: var(--elevation-0);
+      }
+
+      :host([type='elevated']) {
         --_color-hsl: var(--sys-color-on-surface-hsl);
+        box-shadow: var(--elevation-1);
         background-color: var(--sys-color-surface);
       }
 
-      :host([type="outlined"]) {
+      :host([type='elevated']:hover) {
+        box-shadow: var(--elevation-2);
+      }
+
+      :host([type='elevated']:active) {
+        box-shadow: var(--elevation-1);
+      }
+
+      :host([type='outlined']) {
         --_color-hsl: var(--sys-color-on-surface-hsl);
         background-color: var(--sys-color-surface);
         border: 1px solid var(--sys-color-outline);
+      }
+
+      :host([type='outlined'][disabled]) {
+        box-shadow: var(--elevation-0);
+        opacity: 0.12;
       }
     `,
   ];
