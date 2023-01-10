@@ -122,8 +122,8 @@ export class AlwatrChat extends AlwatrSmartElement {
 
     alwatr-chat-list {
       height: 100%;
-      color: var(--sys-color-on-secondary-container);
-      background-color: var(--sys-color-secondary-container);
+      color: var(--sys-color-on-surface-variant);
+      background-color: var(--sys-color-surface-variant);
       padding-bottom: calc(12 * var(--sys-spacing-track));
     }
 

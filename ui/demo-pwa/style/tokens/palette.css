@@ -132,7 +132,7 @@
   --sys-color-tertiary-container-hsl: var(--ref-palette-tertiary90);
   --sys-color-on-tertiary-container-hsl: var(--ref-palette-tertiary10);
 
-  --sys-color-background-hsl: var(--ref-palette-neutral99);
+  --sys-color-background-hsl: var(--ref-palette-neutral98);
   /* --sys-color-background-hsl: var(--ref-palette-neutral95); */
   --sys-color-on-background-hsl: var(--ref-palette-neutral10);
 
