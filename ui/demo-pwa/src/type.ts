@@ -1,13 +1,12 @@
-
-import type {AlwatrDocumentStorage, ChatStorage, ChatTextMessage} from '@alwatr/type';
+import type {ChatStorage} from '@alwatr/type';
 
 declare global {
   // eslint-disable-next-line no-var
   var appConfig: Record<string, string | undefined> | undefined;
 
   interface AlwatrSignals {
-    'chat-document-storage': ChatStorage;
-    'chat-send-text-message': AlwatrDocumentStorage<ChatTextMessage>;
+    'chat-storage': ChatStorage;
+    'chat-send-text-message': ChatStorage;
   }
 
   interface AlwatrRequestSignals {

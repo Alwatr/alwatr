@@ -1,12 +1,9 @@
-import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html, property, nothing} from '@alwatr/element';
+
+import type {ChatStorage} from '@alwatr/type';
 
 import './chat-footer.js';
 import './chat-list.js';
-import './director/index.js';
-
-import {chatDocumentStorageSignal} from './director/chat-document-storage.js';
-
-import type {ChatStorage} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -21,17 +18,6 @@ const currentUser = 'user-1';
  */
 @customElement('alwatr-chat')
 export class AlwatrChat extends AlwatrSmartElement {
-  protected _chatStorage: ChatStorage = {
-    ok: true,
-    meta: {
-      formatVersion: 4,
-      lastAutoId: 0,
-      lastUpdated: 0,
-      reversion: 0,
-    },
-    data: {},
-  };
-
   static override styles = css`
     :host {
       display: block;
@@ -55,20 +41,18 @@ export class AlwatrChat extends AlwatrSmartElement {
     }
   `;
 
-  protected override firstUpdated(): void {
-    this._logger.logMethod('firstUpdated');
-    chatDocumentStorageSignal.addListener((chatStorage) => {
-      this._logger.logProperty('chatStorage', chatStorage);
-      this._chatStorage = chatStorage;
-      this.requestUpdate();
-    });
-  }
+  @property({type: Object, attribute: false})
+    storage?: ChatStorage | null;
 
   override render(): unknown {
     super.render();
     return html`
-      <alwatr-chat-list .storage=${this._chatStorage} .currentUser=${currentUser}></alwatr-chat-list>
-      <alwatr-chat-footer></alwatr-chat-footer>
+      ${this.storage !== null
+        ? html`
+            <alwatr-chat-list .storage=${this.storage} .currentUser=${currentUser}></alwatr-chat-list>
+            <alwatr-chat-footer></alwatr-chat-footer>
+          `
+        : nothing}
     `;
   }
 }
