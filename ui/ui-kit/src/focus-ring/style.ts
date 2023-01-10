@@ -1,26 +1,28 @@
 import {css} from '@alwatr/element';
 
-export const focusRingHost = css`
+export const focusRingStyle = css`
   :host {
-    position: relative;
-    overflow: hidden;
-    overflow: clip;
-
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+    color: hsl(var(--_color-hsl, 0, 100%, 50%));
   }
 
   :host(:hover) {
-    background-image: linear-gradient(rgba(0, 0, 0, var(--sys-opacity-hover)), rgba(0, 0, 0, var(--sys-opacity-hover)));
+    background-image: linear-gradient(
+      hsla(var(--_color-hsl), var(--sys-opacity-hover)),
+      hsla(var(--_color-hsl), var(--sys-opacity-hover))
+    );
   }
 
   :host(:active) {
     background-image: linear-gradient(
-      rgba(0, 0, 0, var(--sys-opacity-pressed)),
-      rgba(0, 0, 0, var(--sys-opacity-pressed))
+      hsla(var(--_color-hsl), var(--sys-opacity-pressed)),
+      hsla(var(--_color-hsl), var(--sys-opacity-pressed))
     );
   }
 
   :host(:focus) {
-    background-image: linear-gradient(rgba(0, 0, 0, var(--sys-opacity-focus)), rgba(0, 0, 0, var(--sys-opacity-focus)));
+    background-image: linear-gradient(
+      hsla(var(--_color-hsl), var(--sys-opacity-focus)),
+      hsla(var(--_color-hsl), var(--sys-opacity-focus))
+    );
   }
 `;
