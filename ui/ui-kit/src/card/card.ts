@@ -36,7 +36,6 @@ export class AlwatrCard extends AlwatrDummyElement {
       :host([disabled]) {
         opacity: 0.38;
         pointer-events: none;
-        box-shadow: var(--elevation-1);
       }
 
       :host(:hover) {
