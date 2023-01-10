@@ -1,6 +1,6 @@
 import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
-import {chatDocumentStorageSignal} from './director/chat-storage.js';
+import {chatStorageSignal} from './director/chat-storage.js';
 
 import type {ChatStorage} from '@alwatr/type';
 
@@ -34,13 +34,13 @@ export class AlwatrPageHome extends AlwatrSmartElement {
   override connectedCallback(): void {
     super.connectedCallback();
     this._signalListenerList.push(
-        chatDocumentStorageSignal.addListener((chatStorage) => {
+        chatStorageSignal.addListener((chatStorage) => {
           this._logger.logProperty('chatStorage', chatStorage);
           this._chatStorage = chatStorage;
           this.requestUpdate();
         }));
 
-    setInterval(() => chatDocumentStorageSignal.request(null), 5_000);
+    setInterval(() => chatStorageSignal.request(null), 5_000);
   }
 
   override render(): unknown {

@@ -2,13 +2,13 @@ import {serviceRequest} from '@alwatr/fetch';
 import {createLogger} from '@alwatr/logger';
 import {SignalInterface} from '@alwatr/signal';
 
-import {chatDocumentStorageSignal} from './chat-storage.js';
+import {chatStorageSignal} from './chat-storage.js';
 
 import type {CacheStrategy} from '@alwatr/fetch/type.js';
 import type {ChatStorage} from '@alwatr/type';
 
-export const logger = createLogger('[director/chat-send-text-message]');
-export const chatSendMessageSignal = new SignalInterface('chat-send-text-message');
+const logger = createLogger('[director/chat-send-text-message]');
+const chatSendMessageSignal = new SignalInterface('chat-send-text-message');
 
 async function requestSendMessage(message: string, cacheStrategy: CacheStrategy): Promise<void> {
   logger.logMethod('requestSendMessage');
@@ -44,5 +44,5 @@ async function requestSendMessage(message: string, cacheStrategy: CacheStrategy)
 chatSendMessageSignal.setProvider((message) => requestSendMessage(message.text, 'network_only'));
 
 chatSendMessageSignal.addListener(() => {
-  chatDocumentStorageSignal.request({});
+  chatStorageSignal.request({});
 });

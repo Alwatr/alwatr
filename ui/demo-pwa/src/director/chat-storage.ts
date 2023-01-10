@@ -6,14 +6,14 @@ import type {CacheStrategy} from '@alwatr/fetch/type.js';
 import type {ChatStorage} from '@alwatr/type';
 
 
-export const logger = createLogger('[director/chat-storage]');
-export const chatDocumentStorageSignal = new SignalInterface('chat-storage');
+const logger = createLogger('[director/chat-storage]');
+export const chatStorageSignal = new SignalInterface('chat-storage');
 
 async function requestChatStorage(cacheStrategy: CacheStrategy): Promise<void> {
   logger.logMethod('requestChatStorage');
 
   try {
-    chatDocumentStorageSignal.dispatch(
+    chatStorageSignal.dispatch(
       <ChatStorage> await serviceRequest({
         url: window.appConfig?.chat ? window.appConfig.chat + '/storage' : '/storage',
         queryParameters: {
@@ -33,6 +33,6 @@ async function requestChatStorage(cacheStrategy: CacheStrategy): Promise<void> {
   }
 }
 
-chatDocumentStorageSignal.setProvider(() => requestChatStorage('network_first'));
+chatStorageSignal.setProvider(() => requestChatStorage('network_first'));
 
 requestChatStorage('cache_only').then(() => requestChatStorage('network_first'));

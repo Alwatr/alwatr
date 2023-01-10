@@ -74,6 +74,9 @@ export class AlwatrChat extends AlwatrSmartElement {
 
   protected _sendMessage(): void {
     const message = this.footer?.chatTextInput?.inputElement?.value;
+    if (this.footer?.chatTextInput?.inputElement?.rows == null) return;
+    this.footer.chatTextInput.inputElement.rows = 1;
+    this.footer.chatTextInput.inputElement.value = '';
     if (message == null) return;
     chatSendMessageSignal.request({text: message});
   }
