@@ -1,7 +1,10 @@
-import {AlwatrDummyElement, css, customElement, html} from '@alwatr/element';
+import {AlwatrDummyElement, css, customElement, html, query} from '@alwatr/element';
+import {l10n} from '@alwatr/i18n';
+
+import type {AlwatrChatTextInput} from './chat-text-input.js'; './chat-text-input.js';
+
 import './chat-text-input.js';
 import '../icon-button/standard-icon-button.js';
-import {l10n} from '@alwatr/i18n';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -14,6 +17,11 @@ declare global {
  */
 @customElement('alwatr-chat-footer')
 export class AlwatrChatFooter extends AlwatrDummyElement {
+  constructor() {
+    super();
+    this._onSendButtonClicked = this._onSendButtonClicked.bind(this);
+  }
+
   static override styles = css`
     :host {
       display: flex;
@@ -32,15 +40,22 @@ export class AlwatrChatFooter extends AlwatrDummyElement {
     }
   `;
 
-  override render(): unknown {
-    return html`
-      <alwatr-standard-icon-button .icon=${'happy-outline'} @click=${this._changeLocale}></alwatr-standard-icon-button>
-      <alwatr-chat-text-input></alwatr-chat-text-input>
-    `;
-  }
+    @query('alwatr-chat-text-input')
+      chatTextInput?: AlwatrChatTextInput;
 
-  protected _changeLocale(): void {
-    l10n.setLocal(
+    override render(): unknown {
+      return html`
+      <alwatr-standard-icon-button .icon=${'happy-outline'} @click=${this._changeLocale}></alwatr-standard-icon-button>
+      <alwatr-chat-text-input @send=${this._onSendButtonClicked}></alwatr-chat-text-input>
+    `;
+    }
+
+    protected _onSendButtonClicked(): void {
+      this.dispatchEvent(new Event('send'));
+    }
+
+    protected _changeLocale(): void {
+      l10n.setLocal(
       l10n.locale?.code !== l10n.config.defaultLocale.code
         ? l10n.config.defaultLocale
         : {
@@ -48,6 +63,6 @@ export class AlwatrChatFooter extends AlwatrDummyElement {
           direction: 'rtl',
           language: 'fa',
         },
-    );
-  }
+      );
+    }
 }

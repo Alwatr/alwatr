@@ -1,17 +1,30 @@
-import {customElement, AlwatrSmartElement, css, html, property, nothing} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html, property, nothing, query} from '@alwatr/element';
+import {SignalInterface} from '@alwatr/signal';
 
+import type {AlwatrChatFooter} from './chat-footer.js';
 import type {ChatStorage} from '@alwatr/type';
 
 import './chat-footer.js';
 import './chat-list.js';
 
 declare global {
+  interface AlwatrSignals {
+    'chat-storage': ChatStorage;
+    'chat-send-text-message': ChatStorage;
+  }
+
+  interface AlwatrRequestSignals {
+    'chat-send-text-message': {text: string};
+  }
+
   interface HTMLElementTagNameMap {
     'alwatr-chat': AlwatrChat;
   }
 }
 
 const currentUser = 'user-1';
+
+export const chatSendMessageSignal = new SignalInterface('chat-send-text-message');
 
 /**
  * Alwatr Demo Home Page
@@ -44,15 +57,24 @@ export class AlwatrChat extends AlwatrSmartElement {
   @property({type: Object, attribute: false})
     storage?: ChatStorage | null;
 
+  @query('alwatr-chat-footer')
+    footer?: AlwatrChatFooter;
+
   override render(): unknown {
     super.render();
     return html`
       ${this.storage !== null
         ? html`
             <alwatr-chat-list .storage=${this.storage} .currentUser=${currentUser}></alwatr-chat-list>
-            <alwatr-chat-footer></alwatr-chat-footer>
+            <alwatr-chat-footer @send=${this._sendMessage}></alwatr-chat-footer>
           `
         : nothing}
     `;
+  }
+
+  protected _sendMessage(): void {
+    const message = this.footer?.chatTextInput?.inputElement?.value;
+    if (message == null) return;
+    chatSendMessageSignal.request({text: message});
   }
 }

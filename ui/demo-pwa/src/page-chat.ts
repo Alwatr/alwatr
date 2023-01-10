@@ -39,6 +39,8 @@ export class AlwatrPageHome extends AlwatrSmartElement {
           this._chatStorage = chatStorage;
           this.requestUpdate();
         }));
+
+    setInterval(() => chatDocumentStorageSignal.request(null), 5_000);
   }
 
   override render(): unknown {

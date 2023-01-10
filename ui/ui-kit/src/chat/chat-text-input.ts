@@ -1,6 +1,4 @@
-import {AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
-
-import type {PropertyValues} from '@alwatr/element';
+import {AlwatrDummyElement, css, customElement, html, LocalizeMixin, query} from '@alwatr/element';
 
 import '../icon-button/standard-icon-button.js';
 
@@ -55,7 +53,8 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
     }
   `;
 
-  inputElement: HTMLTextAreaElement | null = null;
+  @query('.message-input')
+    inputElement?: HTMLTextAreaElement;
 
   override render(): unknown {
     return html`
@@ -63,6 +62,7 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
         rows="1"
         placeholder=${this.l10n.localize('chat_text_input_placeholder')}
         @input=${this.__inputChange}
+        class="message-input"
       ></textarea>
       <alwatr-standard-icon-button
         @click=${this._sendTextMessage}
@@ -74,19 +74,7 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
 
   protected _sendTextMessage(): void {
     this._logger.logMethod('_sendTextMessage');
-    if (this.inputElement == null) return;
-
-    const message = this.inputElement.value;
-    if (message.length > 0) {
-      chatSendMessageSignal.request({text: message});
-      this.inputElement.rows = 1;
-      this.inputElement.value = '';
-    }
-  }
-
-  protected override firstUpdated(changedProperties: PropertyValues<this>): void {
-    super.firstUpdated(changedProperties);
-    this.inputElement = this.renderRoot.querySelector('textarea');
+    this.dispatchEvent(new Event('send'));
   }
 
   private __inputChange(event: InputEvent): void {

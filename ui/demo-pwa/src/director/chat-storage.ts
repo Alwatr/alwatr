@@ -36,5 +36,3 @@ async function requestChatStorage(cacheStrategy: CacheStrategy): Promise<void> {
 chatDocumentStorageSignal.setProvider(() => requestChatStorage('network_first'));
 
 requestChatStorage('cache_only').then(() => requestChatStorage('network_first'));
-
-// setInterval(() => chatDocumentStorageSignal.request(null), 5_000);
