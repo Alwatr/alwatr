@@ -3,6 +3,7 @@
   --ref-palette-secondary-hue: calc(var(--ref-palette-primary-hue) + 12);
   --ref-palette-tertiary-hue: calc(var(--ref-palette-primary-hue) + 70);
   --ref-palette-neutral-hue: calc(var(--ref-palette-primary-hue) + 20);
+  --ref-palette-error-hue: 356;
 
   /* primary */
   --ref-palette-primary0: var(--ref-palette-primary-hue), 0%, 0%;
@@ -95,22 +96,22 @@
   --ref-palette-neutral-variant100: var(--ref-palette-neutral-hue), 100%, 100%;
 
   /* error */
-  --ref-palette-error0: #000000;
-  --ref-palette-error10: #410002;
-  --ref-palette-error20: #690005;
-  --ref-palette-error25: #7e0007;
-  --ref-palette-error30: #93000a;
-  --ref-palette-error35: #a80710;
-  --ref-palette-error40: #ba1a1a;
-  --ref-palette-error50: #de3730;
-  --ref-palette-error60: #ff5449;
-  --ref-palette-error70: #ff897d;
-  --ref-palette-error80: #ffb4ab;
-  --ref-palette-error90: #ffdad6;
-  --ref-palette-error95: #ffedea;
-  --ref-palette-error98: #fff8f7;
-  --ref-palette-error99: #fffbff;
-  --ref-palette-error100: #ffffff;
+  --ref-palette-error0: var(--ref-palette-error-hue), 0%, 0%;
+  --ref-palette-error10: var(--ref-palette-error-hue), 100%, 13%;
+  --ref-palette-error20: var(--ref-palette-error-hue), 100%, 21%;
+  --ref-palette-error25: var(--ref-palette-error-hue), 100%, 25%;
+  --ref-palette-error30: var(--ref-palette-error-hue), 100%, 29%;
+  --ref-palette-error35: var(--ref-palette-error-hue), 92%, 34%;
+  --ref-palette-error40: var(--ref-palette-error-hue), 75%, 42%;
+  --ref-palette-error50: var(--ref-palette-error-hue), 73%, 53%;
+  --ref-palette-error60: var(--ref-palette-error-hue), 100%, 64%;
+  --ref-palette-error70: var(--ref-palette-error-hue), 100%, 75%;
+  --ref-palette-error80: var(--ref-palette-error-hue), 100%, 84%;
+  --ref-palette-error90: var(--ref-palette-error-hue), 100%, 91%;
+  --ref-palette-error95: var(--ref-palette-error-hue), 100%, 95%;
+  --ref-palette-error98: var(--ref-palette-error-hue), 100%, 98%;
+  --ref-palette-error99: var(--ref-palette-error-hue), 100%, 99%;
+  --ref-palette-error100: var(--ref-palette-error-hue), 100%, 100%;
 }
 
 :root {
@@ -196,7 +197,6 @@
   --sys-color-surface-tint: hsl(var(--sys-color-surface-tint-hsl));
   --sys-color-shadow: hsl(var(--sys-color-shadow-hsl));
   --sys-color-scrim: hsl(var(--sys-color-scrim-hsl));
-
 }
 
 @media (prefers-color-scheme: dark) {
