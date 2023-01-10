@@ -24,9 +24,9 @@ async function uploadPhoto(connection: AlwatrConnection): Promise<AlwatrServiceR
   }
 
   const buffer = await connection.requireFileBody();
-  const photoId = `${generateToken.generate(buffer.toString()).slice(0, 7)}.png`;
+  const id = `${generateToken.generate(buffer.toString()).slice(0, 7)}.${mimeType.split('/')[1]}`;
 
-  writeFileSync(photoId, buffer);
+  writeFileSync(id, buffer);
 
   // optimize
 
@@ -34,7 +34,7 @@ async function uploadPhoto(connection: AlwatrConnection): Promise<AlwatrServiceR
     return {
       ok: true,
       data: {
-        photoId: photoId,
+        id: id,
       },
     };
   }

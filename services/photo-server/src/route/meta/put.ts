@@ -13,20 +13,15 @@ nanoServer.route('PUT', '/meta', addPhotoMeta);
 async function addPhotoMeta(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('addPhotoMeta');
 
-  connection.requireToken(config.nanoServer.accessToken);
-
   const body = await connection.requireJsonBody<Photo>();
-  console.log(body);
-
 
   if (!existsSync(`${config.photo.originalPath}/${body.id}`)) {
-    console.log(`${config.photo.originalPath}/${body.id}`);
-
     // eslint-disable-next-line no-throw-literal
     throw {
       ok: false,
       errorCode: 'photo_not_exists',
       statusCode: 400,
+      id: body.id,
     };
   }
 
