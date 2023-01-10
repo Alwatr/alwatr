@@ -486,8 +486,8 @@ export class AlwatrConnection {
    * ```
    */
   async getFileBody(): Promise<Buffer | null> {
-    // method must be POST
-    if (!(this.method === 'POST')) {
+    // method must be POST or PUT or PATCH
+    if (!(this.method === 'POST' || this.method === 'PUT' || this.method === 'PATCH')) {
       return null;
     }
 
