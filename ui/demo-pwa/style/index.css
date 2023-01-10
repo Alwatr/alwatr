@@ -4,7 +4,7 @@
 @import url('tokens/typography.css');
 @import url('tokens/shape.css');
 @import url('tokens/motion.css');
-@import url('tokens/state.css');
+@import url('tokens/opacity.css');
 @import url('tokens/elevation.css');
 @import url('tokens/spacing.css');
 @import url('tokens/scrollbar.css');
