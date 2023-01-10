@@ -2,7 +2,7 @@ import {AlwatrDummyElement, css, customElement, html, property} from '@alwatr/el
 
 import '@alwatr/icon';
 
-import {focusRingHost} from '../focus-ring/style.js';
+import {focusRingStyle} from '../focus-ring/style.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -24,9 +24,11 @@ declare global {
  */
 export class AlwatrStandardIconButton extends AlwatrDummyElement {
   static override styles = [
-    focusRingHost,
+    focusRingStyle,
     css`
       :host {
+        --_color-hsl: var(--sys-color-on-surface-variant-hsl);
+
         display: inline-flex;
         user-select: none;
         align-items: center;
@@ -36,7 +38,6 @@ export class AlwatrStandardIconButton extends AlwatrDummyElement {
         flex-shrink: 0;
 
         cursor: pointer;
-        /* color: var(--sys-color-on-surface-variant); */
         background-color: transparent;
         width: calc(5 * var(--sys-spacing-track));
         height: calc(5 * var(--sys-spacing-track));
