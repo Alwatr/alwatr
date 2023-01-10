@@ -3,7 +3,7 @@ export default {
   port: 8080,
   open: true,
   watch: true,
-  // appIndex: 'index.html',
+  appIndex: 'index.html',
   nodeResolve: {
     exportConditions: ['development']
   },
@@ -13,5 +13,15 @@ export default {
   // debug: false,
   preserveSymlinks: true,
   plugins: [],
-  middleware: [],
+  middleware: [(context, next) => {
+    // if file not found, return app index.html
+    if (!(
+      context.url === '/' ||
+      context.url.startsWith('/__web-dev-server') ||
+      fs.existsSync(config.rootDir + context.url)
+    )) {
+      context.url = config.appIndex;
+    }
+    return next();
+  }],
 };
