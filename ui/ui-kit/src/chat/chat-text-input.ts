@@ -1,7 +1,5 @@
 import {AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
 
-import {chatSendMessageSignal} from './director/chat-send-message.js';
-
 import type {PropertyValues} from '@alwatr/element';
 
 import '../icon-button/standard-icon-button.js';

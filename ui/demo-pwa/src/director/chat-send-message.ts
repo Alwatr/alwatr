@@ -2,10 +2,10 @@ import {serviceRequest} from '@alwatr/fetch';
 import {createLogger} from '@alwatr/logger';
 import {SignalInterface} from '@alwatr/signal';
 
-import {chatDocumentStorageSignal} from './chat-document-storage.js';
+import {chatDocumentStorageSignal} from './chat-storage.js';
 
 import type {CacheStrategy} from '@alwatr/fetch/type.js';
-import type {AlwatrDocumentStorage, ChatTextMessage} from '@alwatr/type';
+import type {ChatStorage} from '@alwatr/type';
 
 export const logger = createLogger('[director/chat-send-text-message]');
 export const chatSendMessageSignal = new SignalInterface('chat-send-text-message');
@@ -15,7 +15,7 @@ async function requestSendMessage(message: string, cacheStrategy: CacheStrategy)
 
   try {
     chatSendMessageSignal.dispatch(
-      <AlwatrDocumentStorage<ChatTextMessage>> await serviceRequest({
+      <ChatStorage> await serviceRequest({
         url: window.appConfig?.chat ? window.appConfig.chat + '/' : '/',
         method: 'PATCH',
         queryParameters: {
