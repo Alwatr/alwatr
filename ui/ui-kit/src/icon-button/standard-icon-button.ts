@@ -2,7 +2,7 @@ import {AlwatrDummyElement, css, customElement, html, property} from '@alwatr/el
 
 import '@alwatr/icon';
 
-import {focusRingStyle} from '../focus-ring/style.js';
+import {focusRingStyle} from '../style/helper/focus-ring.js';
 
 declare global {
   interface HTMLElementTagNameMap {
