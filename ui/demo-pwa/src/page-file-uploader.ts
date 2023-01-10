@@ -1,5 +1,8 @@
 import {AlwatrDummyElement, customElement, html, query} from '@alwatr/element';
-import {fetch} from '@alwatr/fetch';
+import {serviceRequest} from '@alwatr/fetch';
+
+import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/fetch';
+import type {Photo, PhotoMeta} from '@alwatr/type/photo.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -18,35 +21,85 @@ export class AlwatrFileUploader extends AlwatrDummyElement {
   @query('.photo-input')
     photoInput: HTMLInputElement | undefined;
 
+  @query('.meta-input')
+    metaInput: HTMLInputElement | undefined;
+
   protected override firstUpdated(): void {
-    this.photoForm?.addEventListener('submit', async (event) => {
+    this.photoForm?.addEventListener('submit', (event) => {
       event.preventDefault();
-
-      if (this.photoInput?.files == null) return;
-      const file = this.photoInput.files[0];
-
-      if (!(file.type === 'image/png' || file.type === 'image/jpeg')) {
-        return;
-      }
-
-      const fileBlob = new Blob([file]);
-
-      await fetch({
-        url: 'http://localhost:8000/upload',
-        method: 'PUT',
-        body: fileBlob,
-        headers: {
-          'Content-Type': file.type,
-        },
-      });
+      this._submitForm();
     });
+  }
+
+  protected async _submitForm(): Promise<void> {
+    if (this.photoInput?.files == null) return;
+    const file = this.photoInput.files[0];
+
+    let response;
+    try {
+      response = await this._uploadPhoto(file);
+    }
+    catch (err) {
+      this._logger.error('_submitForm', 'upload_failed');
+      return;
+    }
+
+    const meta = this.metaInput?.value;
+
+    try {
+      await this._putPhotoMeta(<string> response.data.id, meta);
+    }
+    catch {
+      this._logger.error('_submitForm', 'put_meta_failed');
+      return;
+    }
+  }
+
+  protected async _uploadPhoto(
+      file: File,
+  ): Promise<AlwatrServiceResponseSuccessWithMeta<Photo, PhotoMeta>> {
+    if (!(file.type === 'image/png' || file.type === 'image/jpeg')) {
+      throw new Error('invalid_file_type');
+    }
+
+    const fileBlob = new Blob([file]);
+
+    const response = await serviceRequest<Photo, PhotoMeta>({
+      url: 'http://localhost:8000/upload',
+      method: 'PUT',
+      body: fileBlob,
+      headers: {
+        'Content-Type': file.type,
+      },
+    });
+
+    return response as AlwatrServiceResponseSuccessWithMeta<Photo, PhotoMeta>;
+  }
+
+  protected async _putPhotoMeta(
+      id: string,
+      description?: string,
+  ): Promise<AlwatrServiceResponseSuccessWithMeta<Photo, PhotoMeta>> {
+    const response = await serviceRequest<Photo, PhotoMeta>({
+      url: 'http://localhost:8000/meta',
+      method: 'PUT',
+      bodyJson: {
+        id: id,
+        meta: {
+          ...(description && {description}),
+        },
+      },
+    });
+
+    return response as AlwatrServiceResponseSuccessWithMeta<Photo, PhotoMeta>;
   }
 
   override render(): unknown {
     return html`
       <form class="photo-form">
-        <input type="file" name="photo" class="photo-input">
-        <input type="submit">
+        <input type="file" name="photo" class="photo-input" />
+        <input type="text" name="meta" class="meta-input" />
+        <input type="submit" />
       </form>
     `;
   }
