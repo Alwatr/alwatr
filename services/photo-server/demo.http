@@ -4,3 +4,16 @@
 
 ### home
 GET {{apiUrl}}/
+
+### Add new comment
+PUT {{apiUrl}}/meta
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "Urqxnat.png",
+  "meta": {
+    "order": 2,
+    "description": "test photo"
+  }
+}

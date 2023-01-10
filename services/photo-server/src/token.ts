@@ -6,5 +6,5 @@ export const generateToken = new AlwatrTokenGenerator({
   algorithm: 'sha256',
   duration: null,
   encoding: 'base64url',
-  secret: config.token.secret,
+  secret: config.photo.secret,
 });

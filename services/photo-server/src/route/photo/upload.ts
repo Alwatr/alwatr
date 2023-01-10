@@ -1,15 +1,15 @@
 import {writeFileSync} from 'node:fs';
 
-import {logger} from '../config.js';
-import {nanoServer} from '../lib/nano-server.js';
-import {generateToken} from '../token.js';
+import {logger} from '../../config.js';
+import {nanoServer} from '../../lib/nano-server.js';
+import {generateToken} from '../../token.js';
 
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 
-nanoServer.route('POST', '/', addPhoto);
+nanoServer.route('PUT', '/upload', uploadPhoto);
 
-async function addPhoto(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
-  logger.logMethod('addPhoto');
+async function uploadPhoto(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
+  logger.logMethod('uploadPhoto');
 
   // connection.requireToken(config.nanoServer.accessToken);
 
@@ -24,10 +24,11 @@ async function addPhoto(connection: AlwatrConnection): Promise<AlwatrServiceResp
   }
 
   const buffer = await connection.requireFileBody();
+  const photoId = `${generateToken.generate(buffer.toString()).slice(0, 7)}.png`;
 
-  const photoId = generateToken.generate(buffer.toString()).slice(0, 7);
+  writeFileSync(photoId, buffer);
 
-  writeFileSync(`${photoId}.${mimeType.split('/')[1]}`, buffer);
+  // optimize
 
   try {
     return {
@@ -39,7 +40,7 @@ async function addPhoto(connection: AlwatrConnection): Promise<AlwatrServiceResp
   }
   catch (_err) {
     const err = _err as Error;
-    logger.error('addPhoto', err.message || 'storage_error', err);
+    logger.error('uploadPhoto', err.message || 'storage_error', err);
     return {
       ok: false,
       statusCode: 500,

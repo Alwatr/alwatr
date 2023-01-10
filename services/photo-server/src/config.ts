@@ -15,8 +15,10 @@ export const config = {
     token: process.env.STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
     name: process.env.STORAGE_NAME ?? 'photo',
   },
-  token: {
-    secret: process.env.SECRET ?? 'SECRET',
+  photo: {
+    secret: process.env.PHOTO_SECRET ?? 'SECRET',
+    originalPath: process.env.ORIGINAL_PHOTO_PATH ?? './',
+
   },
 };
 

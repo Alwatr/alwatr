@@ -32,8 +32,8 @@ export class AlwatrFileUploader extends AlwatrDummyElement {
       const fileBlob = new Blob([file]);
 
       await fetch({
-        url: 'http://localhost:8000',
-        method: 'POST',
+        url: 'http://localhost:8000/upload',
+        method: 'PUT',
         body: fileBlob,
         headers: {
           'Content-Type': file.type,
