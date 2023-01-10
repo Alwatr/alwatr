@@ -10,7 +10,6 @@ declare global {
   }
 }
 
-@customElement('alwatr-standard-icon-button')
 /**
  * Alwatr standard icon button element.
  *
@@ -22,6 +21,7 @@ declare global {
  * @attr {string} url-prefix
  * @attr {boolean} flip-rtl
  */
+@customElement('alwatr-standard-icon-button')
 export class AlwatrStandardIconButton extends AlwatrDummyElement {
   static override styles = [
     focusRingStyle,
