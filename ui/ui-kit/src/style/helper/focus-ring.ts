@@ -3,6 +3,7 @@ import {css} from '@alwatr/element';
 export const focusRingStyle = css`
   :host {
     color: hsl(var(--_color-hsl, 0, 100%, 50%));
+    outline: 0;
   }
 
   :host(:hover) {
@@ -25,5 +26,11 @@ export const focusRingStyle = css`
       hsla(var(--_color-hsl), var(--sys-opacity-focus)),
       hsla(var(--_color-hsl), var(--sys-opacity-focus))
     );
+  }
+
+  :host([disabled]) {
+    opacity: 0.38;
+    pointer-events: none;
+    box-shadow: var(--elevation-0) !important;
   }
 `;

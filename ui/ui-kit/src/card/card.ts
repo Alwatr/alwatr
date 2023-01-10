@@ -33,17 +33,8 @@ export class AlwatrCard extends AlwatrDummyElement {
         transition: box-shadow var(--sys-motion-duration-small-out) var(--sys-motion-easing-linear);
       }
 
-      :host([disabled]) {
-        opacity: 0.38;
-        pointer-events: none;
-      }
-
-      :host(:hover) {
+      :host(:hover:not(:active)) {
         box-shadow: var(--elevation-1);
-      }
-
-      :host(:active) {
-        box-shadow: var(--elevation-0);
       }
 
       :host([type='elevated']) {
@@ -52,7 +43,7 @@ export class AlwatrCard extends AlwatrDummyElement {
         background-color: var(--sys-color-surface);
       }
 
-      :host([type='elevated']:hover) {
+      :host([type='elevated']:hover:not(:active)) {
         box-shadow: var(--elevation-2);
       }
 
@@ -67,7 +58,6 @@ export class AlwatrCard extends AlwatrDummyElement {
       }
 
       :host([type='outlined'][disabled]) {
-        box-shadow: var(--elevation-0);
         opacity: 0.12;
       }
     `,
