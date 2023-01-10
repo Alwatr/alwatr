@@ -11,7 +11,7 @@
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.useEditorConfig": true,
-  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "typescript.tsdk": "node_modules/typescript/lib",
   "files.exclude": {
     "**/*.map": true,
     "**/*.d.ts": true,
