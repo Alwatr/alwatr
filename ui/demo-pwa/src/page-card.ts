@@ -17,29 +17,49 @@ export class AlwatrPageCard extends AlwatrSmartElement {
     :host {
       display: flex;
       flex-wrap: wrap;
-      padding: 0 var(--sys-spacing-side-padding);
+      padding: var(--sys-spacing-track);
       box-sizing: border-box;
       height: 100%;
-      gap: var(--sys-spacing-side-padding);
+      gap: var(--sys-spacing-track);
     }
 
     alwatr-card {
+      flex-grow: 1;
+      display: flex;
+      align-items: flex-end;
       width: 25%;
+      user-select: none;
+    }
+
+    input {
+      padding: var(--sys-spacing-track);
+      color: inherit;
+      background-color: transparent;
+      border: 0;
+      border-bottom: 1px solid transparent;
+    }
+
+    input:focus {
+      border-bottom-color: currentColor;
+      outline: 0;
     }
   `;
 
   override render(): unknown {
     super.render();
     return html`
-      <alwatr-card type="elevated">elevated</alwatr-card>
-      <alwatr-card type="elevated">elevated</alwatr-card>
-      <alwatr-card type="elevated">elevated</alwatr-card>
-      <alwatr-card type="filled">filled</alwatr-card>
-      <alwatr-card type="filled">filled</alwatr-card>
-      <alwatr-card type="filled">filled</alwatr-card>
-      <alwatr-card type="outlined">outlined</alwatr-card>
-      <alwatr-card type="outlined">outlined</alwatr-card>
-      <alwatr-card type="outlined">outlined</alwatr-card>
+      <alwatr-card type="elevated"><input type="text" value="elevated"/></alwatr-card>
+      <alwatr-card type="elevated"><input type="text" value="elevated"/></alwatr-card>
+      <alwatr-card type="elevated" disabled><input type="text" value="elevated" disabled/></alwatr-card>
+      <alwatr-card type="filled"><input type="text" value="filled"/></alwatr-card>
+      <alwatr-card type="filled"><input type="text" value="filled"/></alwatr-card>
+      <alwatr-card type="filled" disabled><input type="text" value="filled" disabled/></alwatr-card>
+      <alwatr-card type="outlined"><input type="text" value="outlined"/></alwatr-card>
+      <alwatr-card type="outlined"><input type="text" value="outlined"/></alwatr-card>
+      <alwatr-card type="outlined" disabled><input type="text" value="outlined" disabled/></alwatr-card>
+      <alwatr-card type="outlined"><input type="text" value="outlined"/></alwatr-card>
+      <alwatr-card type="elevated"><input type="text" value="elevated"/></alwatr-card>
+      <alwatr-card type="filled"><input type="text" value="filled"/></alwatr-card>
     `;
   }
 }
