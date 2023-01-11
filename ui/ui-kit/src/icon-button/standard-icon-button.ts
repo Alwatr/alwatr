@@ -1,8 +1,6 @@
-import {AlwatrDummyElement, css, customElement, html, property} from '@alwatr/element';
+import {AlwatrSurfaceElement, css, customElement, html, property} from '@alwatr/element';
 
 import '@alwatr/icon';
-
-import {focusRingStyle} from '../style/helper/focus-ring.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -17,18 +15,17 @@ declare global {
  * @prop {String} urlPrefix
  * @prop {Boolean} flipRtl
  *
- * @attr {string} icon
- * @attr {string} url-prefix
- * @attr {boolean} flip-rtl
+ * @attr {String} icon
+ * @attr {String} url-prefix
+ * @attr {Boolean} flip-rtl
  */
 @customElement('alwatr-standard-icon-button')
-export class AlwatrStandardIconButton extends AlwatrDummyElement {
+export class AlwatrStandardIconButton extends AlwatrSurfaceElement {
   static override styles = [
-    focusRingStyle,
+    AlwatrSurfaceElement.styles,
     css`
       :host {
-        --_color-hsl: var(--sys-color-on-surface-variant-hsl);
-
+        --_surface-color-on: var(--sys-color-on-surface-variant-hsl);
         display: inline-flex;
         user-select: none;
         align-items: center;
@@ -47,6 +44,7 @@ export class AlwatrStandardIconButton extends AlwatrDummyElement {
         overflow: clip;
         z-index: var(--sys-zindex-default);
         -webkit-tap-highlight-color: transparent;
+        box-shadow: none;
       }
 
       alwatr-icon {
@@ -64,6 +62,11 @@ export class AlwatrStandardIconButton extends AlwatrDummyElement {
 
   @property({type: Boolean, attribute: 'flip-rtl'})
     flipRtl = false;
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.setAttribute('stated', '');
+  }
 
   override render(): unknown {
     return html`<alwatr-icon ?flip-rtl=${this.flipRtl} .name=${this.icon} .urlPrefix=${this.urlPrefix}></alwatr-icon>`;

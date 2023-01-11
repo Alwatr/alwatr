@@ -34,7 +34,7 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
     }
 
     :host([filled]) alwatr-standard-icon-button {
-      color: var(--sys-color-tertiary);
+      --_surface-color-on: var(--sys-color-tertiary-hsl);
     }
 
     textarea {
