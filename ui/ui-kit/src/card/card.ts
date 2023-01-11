@@ -28,27 +28,27 @@ export class AlwatrCard extends AlwatrDummyElement {
         display: block;
         padding: calc(2 * var(--sys-spacing-track));
         border-radius: var(--sys-radius-medium);
-        box-shadow: var(--elevation-0);
+        box-shadow: var(--sys-surface-elevation-0);
         background-color: var(--sys-color-surface-variant);
         transition: box-shadow var(--sys-motion-duration-small-out) var(--sys-motion-easing-linear);
       }
 
       :host(:hover:not(:active)) {
-        box-shadow: var(--elevation-1);
+        box-shadow: var(--sys-surface-elevation-1);
       }
 
       :host([type='elevated']) {
         --_color-hsl: var(--sys-color-on-surface-hsl);
-        box-shadow: var(--elevation-1);
+        box-shadow: var(--sys-surface-elevation-1);
         background-color: var(--sys-color-surface);
       }
 
       :host([type='elevated']:hover:not(:active)) {
-        box-shadow: var(--elevation-2);
+        box-shadow: var(--sys-surface-elevation-2);
       }
 
       :host([type='elevated']:active) {
-        box-shadow: var(--elevation-1);
+        box-shadow: var(--sys-surface-elevation-1);
       }
 
       :host([type='outlined']) {

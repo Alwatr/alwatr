@@ -1,0 +1,47 @@
+:root {
+  --sys-surface-tint-opacity-1: 0.05;
+  --sys-surface-tint-opacity-2: 0.08;
+  --sys-surface-tint-opacity-3: 0.11;
+  --sys-surface-tint-opacity-3: 0.12;
+  --sys-surface-tint-opacity-3: 0.14;
+
+  --sys-surface-state-opacity-dragged: 0.159;
+  --sys-surface-state-opacity-pressed: 0.119;
+  --sys-surface-state-opacity-focus: 0.119;
+  --sys-surface-state-opacity-hover: 0.079;
+
+  --sys-surface-elevation-opacity-1: 0.2;
+  --sys-surface-elevation-opacity-2: 0.14;
+  --sys-surface-elevation-opacity-3: 0.12;
+
+  --sys-surface-elevation-0:
+    0px 0px 0px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-1)),
+    0px 0px 0px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-2)),
+    0px 0px 0px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-3))
+  ;
+  --sys-surface-elevation-1:
+    0px 2px 1px -1px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-1)),
+    0px 1px 1px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-2)),
+    0px 1px 3px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-3))
+  ;
+  --sys-surface-elevation-2:
+    0px 3px 1px -2px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-1)),
+    0px 2px 2px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-2)),
+    0px 1px 5px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-3))
+  ;
+  --sys-surface-elevation-3:
+    0px 3px 3px -2px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-1)),
+    0px 3px 4px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-2)),
+    0px 1px 8px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-3))
+  ;
+  --sys-surface-elevation-4:
+    0px 2px 4px -1px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-1)),
+    0px 4px 5px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-2)),
+    0px 1px 10px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-3))
+  ;
+  --sys-surface-elevation-5:
+    0px 3px 5px -1px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-1)),
+    0px 5px 8px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-2)),
+    0px 1px 14px 0px hsla(var(--sys-color-shadow-hsl), var(--sys-surface-elevation-opacity-3))
+  ;
+}

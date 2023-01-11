@@ -8,29 +8,29 @@ export const focusRingStyle = css`
 
   :host(:hover) {
     background-image: linear-gradient(
-      hsla(var(--_color-hsl), var(--sys-opacity-hover)),
-      hsla(var(--_color-hsl), var(--sys-opacity-hover))
+      hsla(var(--_color-hsl), var(--sys-surface-state-opacity-hover)),
+      hsla(var(--_color-hsl), var(--sys-surface-state-opacity-hover))
     );
   }
 
   :host(:active) {
     background-image: linear-gradient(
-      hsla(var(--_color-hsl), var(--sys-opacity-pressed)),
-      hsla(var(--_color-hsl), var(--sys-opacity-pressed))
+      hsla(var(--_color-hsl), var(--sys-surface-state-opacity-pressed)),
+      hsla(var(--_color-hsl), var(--sys-surface-state-opacity-pressed))
     );
   }
 
   :host(:focus),
   :host(:focus-within) {
     background-image: linear-gradient(
-      hsla(var(--_color-hsl), var(--sys-opacity-focus)),
-      hsla(var(--_color-hsl), var(--sys-opacity-focus))
+      hsla(var(--_color-hsl), var(--sys-surface-state-opacity-focus)),
+      hsla(var(--_color-hsl), var(--sys-surface-state-opacity-focus))
     );
   }
 
   :host([disabled]) {
     opacity: 0.38;
     pointer-events: none;
-    box-shadow: var(--elevation-0) !important;
+    box-shadow: var(--sys-surface-elevation-0) !important;
   }
 `;
