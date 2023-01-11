@@ -10,6 +10,5 @@
 @import url('tokens/spacing.css');
 @import url('tokens/scrollbar.css');
 @import url('tokens/z-index.css');
-
 @import url('safe-area.css');
-@import url('root.css');
+@import url('body.css');
