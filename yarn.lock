@@ -4312,10 +4312,10 @@ eslint-plugin-import@^2.26.0:
     resolve "^1.22.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-lit@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-lit/-/eslint-plugin-lit-1.7.2.tgz#97d76a30c1c38f273dd289e1cf066b0b1db32173"
-  integrity sha512-vkz9KvwVfHg7yDQCmokLGzUDypg683miswSw5xBiTszv4Qyus5/CgAK7U7dMgbVBa8G5wxHedY2zr9VCMNTaPQ==
+eslint-plugin-lit@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-lit/-/eslint-plugin-lit-1.8.0.tgz#bb04c660b7f32e9f8cf22b87f4c59947358e637c"
+  integrity sha512-wY/Z4SksuTkpELl4okhXHBf63V44PV2n19/HOBa7cPH6g+yyzvIMpIZ26BQbzEC54GwwWoYtONY3WvAjMNV8Cg==
   dependencies:
     parse5 "^6.0.1"
     parse5-htmlparser2-tree-adapter "^6.0.1"
