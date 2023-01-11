@@ -48,18 +48,18 @@ export class AlwatrPageCard extends AlwatrSmartElement {
   override render(): unknown {
     super.render();
     return html`
-      <alwatr-card type="elevated"><input type="text" value="elevated"/></alwatr-card>
-      <alwatr-card type="elevated"><input type="text" value="elevated"/></alwatr-card>
-      <alwatr-card type="elevated" disabled><input type="text" value="elevated" disabled/></alwatr-card>
-      <alwatr-card type="filled"><input type="text" value="filled"/></alwatr-card>
-      <alwatr-card type="filled"><input type="text" value="filled"/></alwatr-card>
-      <alwatr-card type="filled" disabled><input type="text" value="filled" disabled/></alwatr-card>
-      <alwatr-card type="outlined"><input type="text" value="outlined"/></alwatr-card>
-      <alwatr-card type="outlined"><input type="text" value="outlined"/></alwatr-card>
-      <alwatr-card type="outlined" disabled><input type="text" value="outlined" disabled/></alwatr-card>
-      <alwatr-card type="outlined"><input type="text" value="outlined"/></alwatr-card>
-      <alwatr-card type="elevated"><input type="text" value="elevated"/></alwatr-card>
-      <alwatr-card type="filled"><input type="text" value="filled"/></alwatr-card>
+      <alwatr-card stated elevated><input type="text" value="elevated"/></alwatr-card>
+      <alwatr-card stated elevated><input type="text" value="elevated"/></alwatr-card>
+      <alwatr-card stated elevated disabled><input type="text" value="elevated" disabled/></alwatr-card>
+      <alwatr-card stated elevated="2"><input type="text" value="elevated 2"/></alwatr-card>
+      <alwatr-card stated elevated="3"><input type="text" value="elevated 3"/></alwatr-card>
+      <alwatr-card stated elevated="4"><input type="text" value="elevated 4"/></alwatr-card>
+      <alwatr-card stated filled><input type="text" value="filled"/></alwatr-card>
+      <alwatr-card stated elevated filled><input type="text" value="filled"/></alwatr-card>
+      <alwatr-card stated filled disabled><input type="text" value="filled" disabled/></alwatr-card>
+      <alwatr-card stated outlined><input type="text" value="outlined"/></alwatr-card>
+      <alwatr-card stated outlined><input type="text" value="outlined"/></alwatr-card>
+      <alwatr-card stated outlined disabled><input type="text" value="outlined" disabled/></alwatr-card>
     `;
   }
 }

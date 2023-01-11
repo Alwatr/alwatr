@@ -27,8 +27,7 @@ declare global {
 /**
  * Alwatr icon component
  *
- * @attr {boolean} name
- * @attr {boolean} flip-rtl
+ * @attr {Boolean} flip-rtl
  */
 @customElement('alwatr-icon')
 export class AlwatrIcon extends DirectionMixin(AlwatrDummyElement) {
