@@ -3,7 +3,7 @@ import {LitElement} from 'lit';
 import {LoggerMixin} from './mixins/logging.js';
 
 /**
- * Alwatr Dummy Element
+ * Alwatr Dummy Base Element
  *
  * Include: LoggerMixin
  */

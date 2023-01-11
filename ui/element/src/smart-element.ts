@@ -2,7 +2,7 @@ import {AlwatrDummyElement} from './dummy-element.js';
 import {SignalMixin} from './mixins/signal.js';
 
 /**
- * Alwatr Smart Element
+ * Alwatr Smart Base Element
  *
  * Include: SignalMixin, AlwatrDummyElement
  */

@@ -2,6 +2,7 @@ import {globalAlwatr} from '@alwatr/logger';
 
 export * from './dummy-element.js';
 export * from './smart-element.js';
+export * from './surface-element.js';
 export * from './root-element.js';
 
 export * from './mixins/localize.js';

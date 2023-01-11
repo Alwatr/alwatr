@@ -2,13 +2,16 @@
   --sys-surface-tint-opacity-1: 0.05;
   --sys-surface-tint-opacity-2: 0.08;
   --sys-surface-tint-opacity-3: 0.11;
-  --sys-surface-tint-opacity-3: 0.12;
-  --sys-surface-tint-opacity-3: 0.14;
+  --sys-surface-tint-opacity-4: 0.12;
+  --sys-surface-tint-opacity-5: 0.14;
 
   --sys-surface-state-opacity-dragged: 0.159;
   --sys-surface-state-opacity-pressed: 0.119;
   --sys-surface-state-opacity-focus: 0.119;
   --sys-surface-state-opacity-hover: 0.079;
+
+  --sys-surface-disabled-opacity: 0.38;
+  --sys-surface-disabled-outlined-opacity: 0.12;
 
   --sys-surface-elevation-opacity-1: 0.2;
   --sys-surface-elevation-opacity-2: 0.14;

@@ -9,7 +9,7 @@ import type {RoutesConfig} from '@alwatr/router';
 import type {CSSResultGroup} from 'lit';
 
 /**
- * Alwatr Root Element
+ * Alwatr Root Base Element
  *
  * Include: AlwatrSmartElement, root styles, router config, multi-page render
  */

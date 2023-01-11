@@ -36,7 +36,7 @@
   --sys-color-inverse-surface-hsl: var(--ref-palette-neutral20);
   --sys-color-inverse-on-surface-hsl: var(--ref-palette-neutral95);
 
-  --sys-color-surface-tint-hsl: var(--sys-color-primary);
+  --sys-color-surface-tint-hsl: var(--sys-color-primary-hsl);
   --sys-color-shadow-hsl: var(--ref-palette-neutral0);
   --sys-color-scrim-hsl: var(--ref-palette-neutral0);
 
