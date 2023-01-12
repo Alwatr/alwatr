@@ -40,7 +40,6 @@
   --sys-color-shadow-hsl: var(--ref-palette-neutral0);
   --sys-color-scrim-hsl: var(--ref-palette-neutral0);
 
-
   /* make colors from hsl vars */
   --sys-color-primary: hsl(var(--sys-color-primary-hsl));
   --sys-color-on-primary: hsl(var(--sys-color-on-primary-hsl));

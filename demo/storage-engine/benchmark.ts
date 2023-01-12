@@ -8,7 +8,7 @@ type User = AlwatrDocumentObject & {
   lname: string;
   email: string;
   token: string;
-}
+};
 
 const db = new AlwatrStorageEngine<User>({
   name: 'junk-data',

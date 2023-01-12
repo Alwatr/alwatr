@@ -19,8 +19,9 @@ import type {
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
 
-export type RouteMiddleware<TData = Record<string, unknown>, TMeta = Record<string, unknown>> =
-  (connection: AlwatrConnection) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>
+export type RouteMiddleware<TData = Record<string, unknown>, TMeta = Record<string, unknown>> = (
+  connection: AlwatrConnection
+) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>;
 
 export {
   NanoServerConfig,
@@ -163,7 +164,7 @@ export class AlwatrNanoServer {
       throw new Error('route_already_exists');
     }
 
-    this.middlewareList[method][route] = <RouteMiddleware> middleware;
+    this.middlewareList[method][route] = <RouteMiddleware>middleware;
   }
 
   /**
@@ -325,7 +326,7 @@ export class AlwatrNanoServer {
     }
     catch (errorObject) {
       if (typeof errorObject === 'object' && errorObject != null && 'ok' in errorObject) {
-        this.reply(serverResponse, <AlwatrServiceResponse> errorObject);
+        this.reply(serverResponse, <AlwatrServiceResponse>errorObject);
       }
       else {
         const err = errorObject as Error;

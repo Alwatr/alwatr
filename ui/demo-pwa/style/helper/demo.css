@@ -68,7 +68,6 @@ body {
   background-color: hsl(var(--ref-palette-primary100));
 }
 
-
 .row:nth-child(2) .box:nth-child(1) {
   background-color: hsl(var(--ref-palette-secondary0));
 }
@@ -119,7 +118,6 @@ body {
 .row:nth-child(2) .box:nth-child(16) {
   background-color: hsl(var(--ref-palette-secondary100));
 }
-
 
 .row:nth-child(3) .box:nth-child(1) {
   background-color: hsl(var(--ref-palette-tertiary0));
@@ -172,8 +170,6 @@ body {
   background-color: hsl(var(--ref-palette-tertiary100));
 }
 
-
-
 .row:nth-child(4) .box:nth-child(1) {
   background-color: hsl(var(--ref-palette-neutral0));
 }
@@ -224,8 +220,6 @@ body {
 .row:nth-child(4) .box:nth-child(16) {
   background-color: hsl(var(--ref-palette-neutral100));
 }
-
-
 
 .row:nth-child(5) .box:nth-child(1) {
   background-color: hsl(var(--ref-palette-neutral-variant0));

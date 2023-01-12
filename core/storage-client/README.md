@@ -11,7 +11,7 @@ import type {AlwatrDocumentObject} from '@alwatr/storage-client';
 type User = AlwatrDocumentObject & {
   email: string;
   token?: string;
-}
+};
 
 const db = new AlwatrStorageClient<User>({
   name: 'user-list',

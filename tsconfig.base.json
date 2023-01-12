@@ -69,7 +69,7 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": false,
 
-    "listEmittedFiles": true,
+    "listEmittedFiles": true
     // "diagnostics": true,
-  },
+  }
 }

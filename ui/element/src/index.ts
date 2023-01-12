@@ -21,4 +21,3 @@ globalAlwatr.registeredList.push({
   name: '@alwatr/element',
   version: '{{ALWATR_VERSION}}',
 });
-

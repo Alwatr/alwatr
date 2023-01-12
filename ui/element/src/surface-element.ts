@@ -65,15 +65,15 @@ export class AlwatrSurfaceElement extends AlwatrDummyElement {
       --_surface-elevation: var(--sys-surface-elevation-1);
       --_surface-tint-opacity: var(--sys-surface-tint-opacity-1);
     }
-    :host([elevated="2"]) {
+    :host([elevated='2']) {
       --_surface-elevation: var(--sys-surface-elevation-2);
       --_surface-tint-opacity: var(--sys-surface-tint-opacity-2);
     }
-    :host([elevated="3"]) {
+    :host([elevated='3']) {
       --_surface-elevation: var(--sys-surface-elevation-3);
       --_surface-tint-opacity: var(--sys-surface-tint-opacity-3);
     }
-    :host([elevated="4"]) {
+    :host([elevated='4']) {
       --_surface-elevation: var(--sys-surface-elevation-4);
       --_surface-tint-opacity: var(--sys-surface-tint-opacity-4);
     }
@@ -101,21 +101,21 @@ export class AlwatrSurfaceElement extends AlwatrDummyElement {
       --_surface-elevation: var(--sys-surface-elevation-2);
       --_surface-tint-opacity: var(--sys-surface-tint-opacity-2);
     }
-    :host([stated][elevated="2"]:hover:not(:active)),
-    :host([stated][elevated="2"]:focus),
-    :host([stated][elevated="2"]:focus-within) {
+    :host([stated][elevated='2']:hover:not(:active)),
+    :host([stated][elevated='2']:focus),
+    :host([stated][elevated='2']:focus-within) {
       --_surface-elevation: var(--sys-surface-elevation-3);
       --_surface-tint-opacity: var(--sys-surface-tint-opacity-3);
     }
-    :host([stated][elevated="3"]:hover:not(:active)),
-    :host([stated][elevated="3"]:focus),
-    :host([stated][elevated="3"]:focus-within) {
+    :host([stated][elevated='3']:hover:not(:active)),
+    :host([stated][elevated='3']:focus),
+    :host([stated][elevated='3']:focus-within) {
       --_surface-elevation: var(--sys-surface-elevation-4);
       --_surface-tint-opacity: var(--sys-surface-tint-opacity-4);
     }
-    :host([stated][elevated="4"]:hover:not(:active)),
-    :host([stated][elevated="4"]:focus),
-    :host([stated][elevated="4"]:focus-within) {
+    :host([stated][elevated='4']:hover:not(:active)),
+    :host([stated][elevated='4']:focus),
+    :host([stated][elevated='4']:focus-within) {
       --_surface-elevation: var(--sys-surface-elevation-5);
       --_surface-tint-opacity: var(--sys-surface-tint-opacity-5);
     }
@@ -130,8 +130,5 @@ export class AlwatrSurfaceElement extends AlwatrDummyElement {
     :host([outlined][disabled]) {
       opacity: var(--sys-surface-disabled-outlined-opacity);
     }
-
   `;
 }
-
-

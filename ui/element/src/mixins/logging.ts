@@ -8,9 +8,7 @@ export declare class LoggerMixinInterface extends LitElement {
   protected _logger: AlwatrLogger;
 }
 
-export function LoggerMixin<T extends Constructor<LitElement>>(
-    superClass: T,
-): Constructor<LoggerMixinInterface> & T {
+export function LoggerMixin<T extends Constructor<LitElement>>(superClass: T): Constructor<LoggerMixinInterface> & T {
   class LoggerMixinClass extends superClass {
     protected _logger = createLogger(`<${this.tagName.toLowerCase()}>`);
 

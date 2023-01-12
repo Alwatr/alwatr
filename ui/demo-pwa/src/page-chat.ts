@@ -27,8 +27,6 @@ export class AlwatrPageHome extends AlwatrSmartElement {
 
   override render(): unknown {
     super.render();
-    return html`
-      <alwatr-chat></alwatr-chat>
-    `;
+    return html`<alwatr-chat></alwatr-chat>`;
   }
 }
