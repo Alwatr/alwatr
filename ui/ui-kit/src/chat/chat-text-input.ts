@@ -1,9 +1,9 @@
 import {AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
 
-import type {PropertyValues} from '@alwatr/element';
-
 import '../icon-button/standard-icon-button.js';
+
 import type {AlwatrStandardIconButton} from '../icon-button/standard-icon-button.js';
+import type {PropertyValues} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
