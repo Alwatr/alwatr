@@ -41,7 +41,7 @@ export function DirectionMixin<T extends Constructor<LoggerMixinInterface>>(
         return this._updateDir();
       }
       // else
-      let dirParent = (this.assignedSlot || this.parentNode) as (HTMLElement | null);
+      let dirParent = (this.assignedSlot || this.parentNode) as HTMLElement | null;
       while (dirParent != null && dirParent !== document.documentElement && !dirParent.dir) {
         // prettier-ignore
         dirParent = (

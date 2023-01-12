@@ -1,8 +1,9 @@
 import {AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
 
-import type {PropertyValues} from '@alwatr/element';
-
 import '../icon-button/standard-icon-button.js';
+
+import type {AlwatrStandardIconButton} from '../icon-button/standard-icon-button.js';
+import type {PropertyValues} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -31,10 +32,7 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
     alwatr-standard-icon-button {
       width: var(--_height);
       height: var(--_height);
-    }
-
-    :host([filled]) alwatr-standard-icon-button {
-      color: var(--sys-color-tertiary);
+      --_surface-color-on: var(--sys-color-tertiary-hsl);
     }
 
     textarea {
@@ -56,6 +54,7 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
   `;
 
   inputElement: HTMLTextAreaElement | null = null;
+  sendButtonElement: AlwatrStandardIconButton | null = null;
 
   override render(): unknown {
     return html`
@@ -64,19 +63,20 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
         placeholder=${this.l10n.localize('chat_text_input_placeholder')}
         @input=${this.__inputChange}
       ></textarea>
-      <alwatr-standard-icon-button .icon=${'send'} flip-rtl></alwatr-standard-icon-button>
+      <alwatr-standard-icon-button .icon=${'send'} flip-rtl disabled></alwatr-standard-icon-button>
     `;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
     this.inputElement = this.renderRoot.querySelector('textarea');
+    this.sendButtonElement = this.renderRoot.querySelector('alwatr-standard-icon-button');
   }
 
   private __inputChange(event: InputEvent): void {
     const textarea = event.target as HTMLTextAreaElement;
     const value = textarea.value;
     textarea.rows = Math.min(value.split('\n').length, 6);
-    this.toggleAttribute('filled', value.length > 0);
+    this.sendButtonElement?.toggleAttribute('disabled', value.length === 0);
   }
 }

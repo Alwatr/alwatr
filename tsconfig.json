@@ -4,7 +4,7 @@
   "extends": "./tsconfig.base",
   "compilerOptions": {
     "composite": true,
-    "tsBuildInfoFile": ".tsbuildinfo",
+    "tsBuildInfoFile": ".tsbuildinfo"
   },
   "files": [],
   "exclude": [],

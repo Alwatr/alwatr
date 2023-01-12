@@ -4,7 +4,6 @@ import {storageProvider} from '../lib/storage-provider.js';
 
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 
-
 nanoServer.route('GET', '/keys', getStorageKeys);
 
 function getStorageKeys(connection: AlwatrConnection): AlwatrServiceResponse {

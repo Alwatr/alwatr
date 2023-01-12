@@ -5,9 +5,7 @@ export declare class SignalMixinInterface extends LitElement {
   protected _signalListenerList: Array<unknown>;
 }
 
-export function SignalMixin<T extends Constructor<LitElement>>(
-    superClass: T,
-): Constructor<SignalMixinInterface> & T {
+export function SignalMixin<T extends Constructor<LitElement>>(superClass: T): Constructor<SignalMixinInterface> & T {
   class SignalMixinClass extends superClass {
     protected _signalListenerList: Array<Record<string, unknown>> = [];
 

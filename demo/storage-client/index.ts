@@ -7,7 +7,7 @@ type User = AlwatrDocumentObject & {
   lname: string;
   email: string;
   token?: string;
-}
+};
 
 const token = process.env.TOKEN ?? 'YOUR_SECRET_TOKEN';
 

@@ -5,4 +5,4 @@ export const workboxConfig = {
   clientsClaim: true,
   skipWaiting: true,
   globPatterns: ['**/*.{js,css,html,json,png,svg,ico,webp}'],
-}
+};

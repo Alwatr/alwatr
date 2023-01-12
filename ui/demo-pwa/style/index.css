@@ -3,10 +3,9 @@
 @import url('tokens/palette-hct.css');
 @import url('tokens/color.css');
 @import url('tokens/typography.css');
-@import url('tokens/shape.css');
+@import url('tokens/radius.css');
 @import url('tokens/motion.css');
-@import url('tokens/opacity.css');
-@import url('tokens/elevation.css');
+@import url('tokens/surface.css');
 @import url('tokens/spacing.css');
 @import url('tokens/scrollbar.css');
 @import url('tokens/z-index.css');

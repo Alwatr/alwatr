@@ -7,7 +7,7 @@ const config = {
   watch: true,
   appIndex: 'index.html',
   nodeResolve: {
-    exportConditions: ['development']
+    exportConditions: ['development'],
   },
   esbuildTarget: 'auto',
   // in a monorepo you need to set set the root dir to resolve modules

@@ -32,7 +32,7 @@ export type ProductPrice = AlwatrDocumentObject & {
    * Final price after any discount
    */
   finalPrice: number;
-}
+};
 
 export type Order = AlwatrDocumentObject & {
   /**
@@ -73,7 +73,7 @@ export type OrderDelivery = {
   shipmentType: typeof shipmentTypeCS[number];
   carType: typeof carTypeCS[number];
   timePeriod: typeof timePeriodCS[number];
-}
+};
 
 export type OrderItem = {
   productId: string;
