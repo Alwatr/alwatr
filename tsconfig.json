@@ -32,10 +32,11 @@
     {"path": "./demo"},
 
     // services
-    {"path": "./services/comment"},
-    {"path": "./services/storage-server"},
     {"path": "./services/telegram-notifier"},
     {"path": "./services/flight-crawler"},
+    {"path": "./services/storage-server"},
+    {"path": "./services/comment"},
+    {"path": "./services/form"},
 
     // uniquely
     {"path": "./uniquely/flight-finder-api"},
