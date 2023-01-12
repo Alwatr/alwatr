@@ -1,0 +1,17 @@
+@apiUrl = http://127.0.0.1:8000
+@apiVersion = v0
+@token = YOUR_SECRET_TOKEN
+
+### home
+GET {{apiUrl}}/
+
+### Add new form
+PUT {{apiUrl}}/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "filed1": "test1",
+  "filed2": "test2",
+  "filed13": "test3"
+}
