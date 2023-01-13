@@ -1,6 +1,7 @@
 import {css, customElement, AlwatrDummyElement, property, LocalizeMixin, nothing, html} from '@alwatr/element';
 
 import '@alwatr/ui-kit/icon-button/standard-icon-button.js';
+import '@alwatr/ui-kit/card/card.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -24,66 +25,67 @@ export class AlwatrProductCard extends LocalizeMixin(AlwatrDummyElement) {
     css`
       :host {
         display: flex;
-        flex: 1 1 calc(var(--alwatr-sys-spacing-column-2) - var(--alwatr-sys-spacing-halftrack-3));
+        flex: 1 1 var(--sys-spacing-column-2);
       }
+
       .product-card {
+        --_surface-elevation: var(--sys-surface-elevation-1);
+        --_surface-tint-opacity: var(--sys-surface-tint-opacity-1);
+
+        position: relative;
         width: 100%;
         padding: 0;
-        transition-property: background-color;
-        transition-duration: var(--alwatr-sys-motion-duration-small-out);
-        transition-timing-function: var(--alwatr-sys-motion-easing-exiting);
+        transition-property: background-color, box-shadow;
+        transition-duration: var(--sys-motion-duration-medium-out);
+        transition-timing-function: var(--sys-motion-easing-exiting);
       }
-      .product-card::before,
-      .product-card::after {
-        transition-property: box-shadow;
-        transition-duration: var(--alwatr-sys-motion-duration-small-out);
-        transition-timing-function: var(--alwatr-sys-motion-easing-exiting);
-      }
+
       .product-card .product-card__toggle {
         position: absolute;
         top: 0;
         right: 0;
-        color: var(--alwatr-sys-color-on-surface-variant);
+        color: var(--sys-color-on-surface-variant);
       }
+
       .product-card .product-card__image {
         width: 100%;
-        border-radius: var(--alwatr-sys-shape-corner-medium-default-size);
+        border-radius: var(--sys-shape-corner-medium-default-size);
       }
+
       .product-card .product-card__title {
-        font-weight: var(--alwatr-sys-typescale-title-medium-font-weight);
-        font-size: var(--alwatr-sys-typescale-title-medium-font-size);
-        letter-spacing: var(--alwatr-sys-typescale-title-medium-letter-spacing);
-        line-height: var(--alwatr-sys-typescale-title-medium-line-height);
-        margin: var(--alwatr-sys-spacing-track-1);
+        font-weight: var(--sys-typescale-title-medium-font-weight);
+        font-size: var(--sys-typescale-title-medium-font-size);
+        letter-spacing: var(--sys-typescale-title-medium-letter-spacing);
+        line-height: var(--sys-typescale-title-medium-line-height);
+        margin: var(--sys-spacing-track);
         margin-bottom: auto;
-        padding-bottom: var(--alwatr-sys-spacing-track-1);
+        padding-bottom: var(--sys-spacing-track);
       }
+
       .product-card .product-card__price {
-        font-weight: var(--alwatr-sys-typescale-title-small-font-weight);
-        font-size: var(--alwatr-sys-typescale-title-small-font-size);
-        letter-spacing: var(--alwatr-sys-typescale-title-small-letter-spacing);
-        line-height: var(--alwatr-sys-typescale-title-small-line-height);
-        margin: 0 var(--alwatr-sys-spacing-track-1) var(--alwatr-sys-spacing-track-1);
+        font-weight: var(--sys-typescale-title-small-font-weight);
+        font-size: var(--sys-typescale-title-small-font-size);
+        letter-spacing: var(--sys-typescale-title-small-letter-spacing);
+        line-height: var(--sys-typescale-title-small-line-height);
+        margin: 0 var(--sys-spacing-track) var(--sys-spacing-track);
       }
+
       .product-card .product-card__description {
-        font-weight: var(--alwatr-sys-typescale-body-small-font-weight);
-        font-size: var(--alwatr-sys-typescale-body-small-font-size);
-        letter-spacing: var(--alwatr-sys-typescale-body-small-letter-spacing);
-        line-height: var(--alwatr-sys-typescale-body-small-line-height);
+        font-weight: var(--sys-typescale-body-small-font-weight);
+        font-size: var(--sys-typescale-body-small-font-size);
+        letter-spacing: var(--sys-typescale-body-small-letter-spacing);
+        line-height: var(--sys-typescale-body-small-line-height);
 
-        margin: var(--alwatr-sys-spacing-track-1);
+        margin: var(--sys-spacing-track);
       }
-      /* selected state */
+
       :host([selected]) .product-card {
-        background-color: var(--alwatr-sys-color-tertiary-container);
+        --_surface-color-bg: var(--sys-color-secondary-container-hsl);
+        --_surface-color-on: var(--sys-color-on-secondary-container-hsl);
+        --_surface-elevation: var(--sys-surface-elevation-3);
 
-        --_elevation-level: 2;
-
-        transition-duration: var(--alwatr-sys-motion-duration-large-in);
-        transition-timing-function: var(--alwatr-sys-motion-easing-incoming);
-      }
-      :host([selected]) .product-card .product-card__toggle {
-        color: var(--alwatr-sys-color-on-tertiary-container);
+        transition-duration: var(--sys-motion-duration-medium-in);
+        transition-timing-function: var(--sys-motion-easing-incoming);
       }
     `,
   ];
@@ -110,13 +112,13 @@ export class AlwatrProductCard extends LocalizeMixin(AlwatrDummyElement) {
     const icon = this.selected ? 'radio-button-on-outline' : 'radio-button-off-outline';
 
     return html`
-      <alwatr-elevated-card class="product-card">
+      <alwatr-card class="product-card">
         <alwatr-standard-icon-button class="product-card__toggle" .icon=${icon}></alwatr-standard-icon-button>
         <img class="product-card__image" src=${this.product.image} />
         <h2 class="product-card__title">${this.product.name}</h2>
         <h3 class="product-card__price">${this.l10n.formatNumber(this.product.price)}</h3>
         <p class="product-card__description">${this.product.description}</p>
-      </alwatr-elevated-card>
+      </alwatr-card>
     `;
   }
 

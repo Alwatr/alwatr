@@ -2,7 +2,6 @@ import {customElement, AlwatrSmartElement, css, html, map, LocalizeMixin} from '
 import {l10n} from '@alwatr/i18n';
 
 import './product-card.js';
-import '@alwatr/ui-kit/cards/elevated-card.js';
 
 import type {ProductType} from './product-card.js';
 import type {PropertyValues} from '@alwatr/element';
@@ -103,8 +102,8 @@ export class AlwatrPageProducts extends LocalizeMixin(AlwatrSmartElement) {
       .cards {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--alwatr-sys-spacing-track-2);
-        padding: var(--alwatr-sys-spacing-track-2);
+        gap: var(--sys-spacing-gutter);
+        padding: var(--sys-spacing-side-padding);
       }
     `,
   ];
