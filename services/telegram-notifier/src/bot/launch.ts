@@ -1,6 +1,6 @@
-import {config, logger} from '../config.js';
 import {bot} from './bot.js';
 import {sendMessage} from './send-message.js';
+import {config, logger} from '../config.js';
 
 export async function launchBot(): Promise<void> {
   logger.logMethod('launchBot');

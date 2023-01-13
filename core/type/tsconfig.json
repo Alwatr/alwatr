@@ -4,7 +4,7 @@
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "rootDir": "src",
-    "outDir": ".",
+    "outDir": "."
   },
   // files, include and exclude from the inheriting config are always overwritten.
   "include": ["src/**/*.ts"],

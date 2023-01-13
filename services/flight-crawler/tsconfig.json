@@ -5,7 +5,7 @@
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "rootDir": "src",
-    "outDir": "build",
+    "outDir": "build"
     // "noEmit": true
   },
 
@@ -13,7 +13,8 @@
   "exclude": [],
   "references": [
     {"path": "../../core/logger"},
-    {"path": "../../core/nano-server"},
-    {"path": "../../core/storage-client"},
+    {"path": "../../core/type"},
+    {"path": "../../core/fetch"},
+    {"path": "../../core/storage-client"}
   ]
 }

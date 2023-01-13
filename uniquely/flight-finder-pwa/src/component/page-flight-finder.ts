@@ -9,8 +9,8 @@ import ionTheming from '../style/ionic.theming.js';
 import './job-item.js';
 import './job-add-form.js';
 
-import type {Job} from '../type.js';
 import type {TemplateResult} from '@alwatr/element';
+import type {Job} from '@alwatr/type/flight-finder.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -105,7 +105,7 @@ export class PageFlightFinder extends AlwatrSmartElement {
           </ion-fab-button>
         </ion-fab>
 
-        <div class="version">v${Alwatr.version}-prv7</div>
+        <div class="version">v{{ALWATR_VERSION}}</div>
       </ion-content>
     `;
   }

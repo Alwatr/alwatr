@@ -1,4 +1,4 @@
-import {AlwatrServiceResponseSuccessWithMeta} from './service-response.js';
+import type {AlwatrServiceResponseSuccessWithMeta} from './service-response.js';
 
 export type AlwatrDocumentObject = {
   id: string;
@@ -9,7 +9,8 @@ export type AlwatrDocumentObject = {
   };
 };
 
-export type AlwatrDocumentMeta = {
+export type AlwatrStorageMeta = {
+  id: string;
   formatVersion: number;
   reversion: number;
   lastUpdated: number;
@@ -17,6 +18,6 @@ export type AlwatrDocumentMeta = {
 };
 
 export type AlwatrDocumentStorage<T extends AlwatrDocumentObject> = Omit<
-  AlwatrServiceResponseSuccessWithMeta<Record<string, T>, AlwatrDocumentMeta>,
+  AlwatrServiceResponseSuccessWithMeta<Record<string, T>, AlwatrStorageMeta>,
   'statusCode' | 'errorCode'
 >;

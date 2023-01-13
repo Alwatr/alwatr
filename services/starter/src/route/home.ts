@@ -6,5 +6,4 @@ nanoServer.route('GET', '/', () => ({
     app: 'Alwatr Nanoservice Starter Kit',
     message: 'Hello ;)',
   },
-}
-));
+}));

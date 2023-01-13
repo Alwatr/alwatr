@@ -1,8 +1,7 @@
 import {l10n} from '@alwatr/i18n';
 
-import type {Constructor} from '../type.js';
 import type {LoggerMixinInterface} from './logging.js';
-
+import type {Constructor} from '@alwatr/type';
 
 export declare class LocalizeMixinInterface extends LoggerMixinInterface {
   protected _signalListenerList: Array<unknown>;

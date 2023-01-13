@@ -9,8 +9,14 @@ import {
   DirectionMixin,
 } from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
+import {globalAlwatr} from '@alwatr/logger';
 
 import type {PropertyValues, HTMLTemplateResult} from '@alwatr/element';
+
+globalAlwatr.registeredList.push({
+  name: '@alwatr/icon',
+  version: '{{ALWATR_VERSION}}',
+});
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -21,7 +27,7 @@ declare global {
 /**
  * Alwatr icon component
  *
- * @attr {boolean} flip-rtl
+ * @attr {Boolean} flip-rtl
  */
 @customElement('alwatr-icon')
 export class AlwatrIcon extends DirectionMixin(AlwatrDummyElement) {

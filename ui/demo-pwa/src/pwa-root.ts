@@ -1,8 +1,8 @@
-import {AlwatrRootElement, html} from '@alwatr/element';
-import {customElement} from 'lit/decorators.js';
+import {AlwatrRootElement, html, customElement} from '@alwatr/element';
 
 import './page-chat.js';
 import './page-products.js';
+import './page-card.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 
@@ -25,6 +25,9 @@ export class AlwatrPwaRoot extends AlwatrRootElement {
       // },
       home: {
         render: () => html`<alwatr-page-products></alwatr-page-products>`,
+      },
+      card: {
+        render: () => html`<alwatr-page-card></alwatr-page-card>`,
       },
     },
   };

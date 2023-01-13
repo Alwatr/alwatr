@@ -9,12 +9,12 @@ import {AlwatrStorageEngine} from '@alwatr/storage-engine';
 
 import type {AlwatrDocumentObject} from '@alwatr/storage-engine';
 
-interface User extends AlwatrDocumentObject {
+type User = AlwatrDocumentObject & {
   fname: string;
   lname: string;
   email: string;
   token?: string;
-}
+};
 
 const db = new AlwatrStorageEngine<User>({
   name: 'user-list',
@@ -143,7 +143,7 @@ Loop over all document objects.
 Example:
 
 ```ts
-for(const user of userStorage.allObject()) {
+for (const user of userStorage.allObject()) {
   await sendMessage(user.id, 'Happy new year!');
   user.sent = true; // direct change document (use with caution)!
 }

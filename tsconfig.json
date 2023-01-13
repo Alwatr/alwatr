@@ -4,7 +4,7 @@
   "extends": "./tsconfig.base",
   "compilerOptions": {
     "composite": true,
-    "tsBuildInfoFile": ".tsbuildinfo",
+    "tsBuildInfoFile": ".tsbuildinfo"
   },
   "files": [],
   "exclude": [],
@@ -20,6 +20,7 @@
     {"path": "./core/storage-engine"},
     {"path": "./core/storage-client"},
     {"path": "./core/token"},
+    {"path": "./core/validator"},
     {"path": "./core/type"},
 
     // ui

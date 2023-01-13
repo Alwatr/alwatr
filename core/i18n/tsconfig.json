@@ -10,9 +10,9 @@
   "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
+    {"path": "../type"},
     {"path": "../logger"},
     {"path": "../signal"},
     {"path": "../fetch"}
   ]
 }
-

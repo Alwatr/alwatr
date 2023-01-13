@@ -1,6 +1,10 @@
 :root {
   /* references */
-  --alwatr-ref-font-family-system:
+  --ref-font-weight-regular: 400;
+  --ref-font-weight-medium: 500;
+  --ref-font-weight-bold: 700;
+
+  --ref-font-family-system:
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
@@ -17,99 +21,97 @@
     'Segoe UI Emoji',
     'Segoe UI Symbol'
   ;
-  --alwatr-ref-font-weight-bold: 700;
-  --alwatr-ref-font-weight-medium: 500;
-  --alwatr-ref-font-weight-regular: 400;
-  --alwatr-sys-font-family-plain: var(--font-vazirmatn), var(--alwatr-ref-font-family-system);
-  --alwatr-sys-font-family-brand: var(--font-vazirmatn), var(--alwatr-ref-font-family-system);
+  --sys-font-family-plain: var(--font-vazirmatn), var(--ref-font-family-system);
+  --sys-font-family-brand: var(--font-vazirmatn), var(--ref-font-family-system);
+
   /* display - large */
-  --alwatr-sys-typescale-display-large-font-family-name: var(--alwatr-sys-font-family-brand);
-  --alwatr-sys-typescale-display-large-font-weight: var(--alwatr-ref-font-weight-regular);
-  --alwatr-sys-typescale-display-large-font-size: 57px;
-  --alwatr-sys-typescale-display-large-line-height: 64px;
-  --alwatr-sys-typescale-display-large-letter-spacing: -0.25px;
+  --sys-typescale-display-large-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-display-large-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-display-large-font-size: 5.7rem;
+  --sys-typescale-display-large-line-height: 6.4rem;
+  --sys-typescale-display-large-letter-spacing: -0.025rem;
   /* display - medium */
-  --alwatr-sys-typescale-display-medium-font-family-name: var(--alwatr-sys-font-family-brand);
-  --alwatr-sys-typescale-display-medium-font-weight: var(--alwatr-ref-font-weight-regular);
-  --alwatr-sys-typescale-display-medium-font-size: 45px;
-  --alwatr-sys-typescale-display-medium-line-height: 52px;
-  --alwatr-sys-typescale-display-medium-letter-spacing: 0px;
+  --sys-typescale-display-medium-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-display-medium-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-display-medium-font-size: 4.5rem;
+  --sys-typescale-display-medium-line-height: 5.2rem;
+  --sys-typescale-display-medium-letter-spacing: 0rem;
   /* display - small */
-  --alwatr-sys-typescale-display-small-font-family-name: var(--alwatr-sys-font-family-brand);
-  --alwatr-sys-typescale-display-small-font-weight: var(--alwatr-ref-font-weight-regular);
-  --alwatr-sys-typescale-display-small-font-size: 36px;
-  --alwatr-sys-typescale-display-small-line-height: 44px;
-  --alwatr-sys-typescale-display-small-letter-spacing: 0px;
+  --sys-typescale-display-small-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-display-small-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-display-small-font-size: 3.6rem;
+  --sys-typescale-display-small-line-height: 4.4rem;
+  --sys-typescale-display-small-letter-spacing: 0rem;
   /* headline - large */
-  --alwatr-sys-typescale-headline-large-font-family-name: var(--alwatr-sys-font-family-brand);
-  --alwatr-sys-typescale-headline-large-font-weight: var(--alwatr-ref-font-weight-regular);
-  --alwatr-sys-typescale-headline-large-font-size: 32px;
-  --alwatr-sys-typescale-headline-large-line-height: 40px;
-  --alwatr-sys-typescale-headline-large-letter-spacing: 0px;
+  --sys-typescale-headline-large-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-headline-large-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-headline-large-font-size: 3.2rem;
+  --sys-typescale-headline-large-line-height: 4rem;
+  --sys-typescale-headline-large-letter-spacing: 0rem;
   /* headline - medium */
-  --alwatr-sys-typescale-headline-medium-font-family-name: var(--alwatr-sys-font-family-brand);
-  --alwatr-sys-typescale-headline-medium-font-weight: var(--alwatr-ref-font-weight-regular);
-  --alwatr-sys-typescale-headline-medium-font-size: 28px;
-  --alwatr-sys-typescale-headline-medium-line-height: 36px;
-  --alwatr-sys-typescale-headline-medium-letter-spacing: 0px;
+  --sys-typescale-headline-medium-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-headline-medium-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-headline-medium-font-size: 2.8rem;
+  --sys-typescale-headline-medium-line-height: 3.6rem;
+  --sys-typescale-headline-medium-letter-spacing: 0rem;
   /* headline - small */
-  --alwatr-sys-typescale-headline-small-font-family-name: var(--alwatr-sys-font-family-brand);
-  --alwatr-sys-typescale-headline-small-font-weight: var(--alwatr-ref-font-weight-regular);
-  --alwatr-sys-typescale-headline-small-font-size: 24px;
-  --alwatr-sys-typescale-headline-small-line-height: 32px;
-  --alwatr-sys-typescale-headline-small-letter-spacing: 0px;
+  --sys-typescale-headline-small-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-headline-small-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-headline-small-font-size: 2.4rem;
+  --sys-typescale-headline-small-line-height: 3.2rem;
+  --sys-typescale-headline-small-letter-spacing: 0rem;
   /* body - large */
-  --alwatr-sys-typescale-body-large-font-family-name: var(--alwatr-sys-font-family-plain);
-  --alwatr-sys-typescale-body-large-font-weight: var(--alwatr-ref-font-weight-regular);
-  --alwatr-sys-typescale-body-large-font-size: 16px;
-  --alwatr-sys-typescale-body-large-line-height: 24px;
-  --alwatr-sys-typescale-body-large-letter-spacing: 0.50px;
+  --sys-typescale-body-large-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-body-large-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-body-large-font-size: 1.6rem;
+  --sys-typescale-body-large-line-height: 2.4rem;
+  --sys-typescale-body-large-letter-spacing: 0.05rem;
   /* body - medium */
-  --alwatr-sys-typescale-body-medium-font-family-name: var(--alwatr-sys-font-family-plain);
-  --alwatr-sys-typescale-body-medium-font-weight: var(--alwatr-ref-font-weight-regular);
-  --alwatr-sys-typescale-body-medium-font-size: 14px;
-  --alwatr-sys-typescale-body-medium-line-height: 20px;
-  --alwatr-sys-typescale-body-medium-letter-spacing: 0.25px;
+  --sys-typescale-body-medium-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-body-medium-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-body-medium-font-size: 1.4rem;
+  --sys-typescale-body-medium-line-height: 2rem;
+  --sys-typescale-body-medium-letter-spacing: 0.025rem;
   /* body - small */
-  --alwatr-sys-typescale-body-small-font-family-name: var(--alwatr-sys-font-family-plain);
-  --alwatr-sys-typescale-body-small-font-weight: var(--alwatr-ref-font-weight-regular);
-  --alwatr-sys-typescale-body-small-font-size: 12px;
-  --alwatr-sys-typescale-body-small-line-height: 16px;
-  --alwatr-sys-typescale-body-small-letter-spacing: 0.40px;
+  --sys-typescale-body-small-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-body-small-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-body-small-font-size: 1.2rem;
+  --sys-typescale-body-small-line-height: 1.6rem;
+  --sys-typescale-body-small-letter-spacing: 0.04rem;
   /* label - large */
-  --alwatr-sys-typescale-label-large-font-family-name: var(--alwatr-sys-font-family-plain);
-  --alwatr-sys-typescale-label-large-font-weight: var(--alwatr-ref-font-weight-medium);
-  --alwatr-sys-typescale-label-large-font-size: 14px;
-  --alwatr-sys-typescale-label-large-line-height: 20px;
-  --alwatr-sys-typescale-label-large-letter-spacing: 0.10px;
+  --sys-typescale-label-large-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-label-large-font-weight: var(--ref-font-weight-medium);
+  --sys-typescale-label-large-font-size: 1.4rem;
+  --sys-typescale-label-large-line-height: 2rem;
+  --sys-typescale-label-large-letter-spacing: 0.01rem;
   /* label - medium */
-  --alwatr-sys-typescale-label-medium-font-family-name: var(--alwatr-sys-font-family-plain);
-  --alwatr-sys-typescale-label-medium-font-weight: var(--alwatr-ref-font-weight-medium);
-  --alwatr-sys-typescale-label-medium-font-size: 12px;
-  --alwatr-sys-typescale-label-medium-line-height: 16px;
-  --alwatr-sys-typescale-label-medium-letter-spacing: 0.50px;
+  --sys-typescale-label-medium-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-label-medium-font-weight: var(--ref-font-weight-medium);
+  --sys-typescale-label-medium-font-size: 1.2rem;
+  --sys-typescale-label-medium-line-height: 1.6rem;
+  --sys-typescale-label-medium-letter-spacing: 0.05rem;
   /* label - small */
-  --alwatr-sys-typescale-label-small-font-family-name: var(--alwatr-sys-font-family-plain);
-  --alwatr-sys-typescale-label-small-font-weight: var(--alwatr-ref-font-weight-medium);
-  --alwatr-sys-typescale-label-small-font-size: 11px;
-  --alwatr-sys-typescale-label-small-line-height: 16px;
-  --alwatr-sys-typescale-label-small-letter-spacing: 0.50px;
+  --sys-typescale-label-small-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-label-small-font-weight: var(--ref-font-weight-medium);
+  --sys-typescale-label-small-font-size: 1.1rem;
+  --sys-typescale-label-small-line-height: 1.6rem;
+  --sys-typescale-label-small-letter-spacing: 0.05rem;
   /* title - large */
-  --alwatr-sys-typescale-title-large-font-family-name: var(--alwatr-sys-font-family-brand);
-  --alwatr-sys-typescale-title-large-font-weight: var(--alwatr-ref-font-weight-regular);
-  --alwatr-sys-typescale-title-large-font-size: 22px;
-  --alwatr-sys-typescale-title-large-line-height: 28px;
-  --alwatr-sys-typescale-title-large-letter-spacing: 0px;
+  --sys-typescale-title-large-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-title-large-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-title-large-font-size: 2.2rem;
+  --sys-typescale-title-large-line-height: 2.8rem;
+  --sys-typescale-title-large-letter-spacing: 0rem;
   /* title - medium */
-  --alwatr-sys-typescale-title-medium-font-family-name: var(--alwatr-sys-font-family-plain);
-  --alwatr-sys-typescale-title-medium-font-weight: var(--alwatr-ref-font-weight-medium);
-  --alwatr-sys-typescale-title-medium-font-size: 16px;
-  --alwatr-sys-typescale-title-medium-line-height: 24px;
-  --alwatr-sys-typescale-title-medium-letter-spacing: 0.15px;
+  --sys-typescale-title-medium-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-title-medium-font-weight: var(--ref-font-weight-medium);
+  --sys-typescale-title-medium-font-size: 1.6rem;
+  --sys-typescale-title-medium-line-height: 2.4rem;
+  --sys-typescale-title-medium-letter-spacing: 0.015rem;
   /* title - small */
-  --alwatr-sys-typescale-title-small-font-family-name: var(--alwatr-sys-font-family-plain);
-  --alwatr-sys-typescale-title-small-font-weight: var(--alwatr-ref-font-weight-medium);
-  --alwatr-sys-typescale-title-small-font-size: 14px;
-  --alwatr-sys-typescale-title-small-line-height: 20px;
-  --alwatr-sys-typescale-title-small-letter-spacing: 0.10px;
+  --sys-typescale-title-small-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-title-small-font-weight: var(--ref-font-weight-medium);
+  --sys-typescale-title-small-font-size: 1.4rem;
+  --sys-typescale-title-small-line-height: 2rem;
+  --sys-typescale-title-small-letter-spacing: 0.01rem;
 }
