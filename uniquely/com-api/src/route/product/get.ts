@@ -1,6 +1,6 @@
-import {logger} from '../../config.js';
+import {config, logger} from '../../config.js';
 import {nanoServer} from '../../lib/nano-server.js';
-import {productStorageClient} from '../../lib/storage.js';
+import {orderStorageClient} from '../../lib/storage.js';
 
 import type {AlwatrServiceResponse} from '@alwatr/type';
 
@@ -11,7 +11,7 @@ async function getProduct(): Promise<AlwatrServiceResponse> {
   logger.logMethod('getProduct');
 
   try {
-    return await productStorageClient.getStorage();
+    return await orderStorageClient.getStorage(config.productStorage.name);
   }
   catch (_err) {
     const err = _err as Error;

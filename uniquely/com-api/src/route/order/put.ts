@@ -23,10 +23,8 @@ async function newOrder(connection: AlwatrConnection): Promise<AlwatrServiceResp
 
   const order = await connection.requireJsonBody<Order>();
 
-  orderStorageClient.config.name = token;
-
   try {
-    if (await orderStorageClient.has(order.id)) {
+    if (await orderStorageClient.has(order.id, token)) {
       return {
         ok: false,
         statusCode: 400,

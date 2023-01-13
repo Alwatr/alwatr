@@ -19,13 +19,8 @@ async function getOrder(connection: AlwatrConnection): Promise<AlwatrServiceResp
     return isValid === 'valid';
   });
 
-  orderStorageClient.config.name = token;
-
   try {
-    return {
-      ok: true,
-      data: await orderStorageClient.getStorage(),
-    };
+    return await orderStorageClient.getStorage(token);
   }
   catch (_err) {
     const err = _err as Error;

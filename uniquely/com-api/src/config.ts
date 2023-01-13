@@ -9,10 +9,7 @@ export const config = {
     token: process.env.ORDER_STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
   productStorage: {
-    host: process.env.PRODUCT_STORAGE_HOST ?? '127.0.0.1',
-    port: process.env.PRODUCT_STORAGE_PORT != null ? +process.env.PRODUCT_STORAGE_PORT : 9000,
     name: process.env.SPRODUCT_TORAGE_NAME ?? 'product',
-    token: process.env.PRODUCT_STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
   token: {
     secret: process.env.SECRET ?? 'YOUR_SECRET',
