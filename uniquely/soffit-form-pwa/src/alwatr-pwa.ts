@@ -1,6 +1,14 @@
-import {AlwatrRootElement, html, customElement, type TemplateResult, cache} from '@alwatr/element';
+import {AlwatrRootElement, html, customElement, cache, css} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {router, RoutesConfig} from '@alwatr/router';
+
+import ionNormalize from './style/ionic.normalize.js';
+import ionTheming from './style/ionic.theming.js';
+
+import './ionic-components.js';
+import './page-form.js';
+
+import type {TemplateResult} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -13,6 +21,20 @@ declare global {
  */
 @customElement('alwatr-pwa')
 export class AlwatrPwa extends AlwatrRootElement {
+  static override styles = [
+    ionNormalize,
+    ionTheming,
+    css`
+      .page-container {
+        position: relative;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 0%;
+        contain: size layout style;
+      }
+    `,
+  ];
+
   constructor() {
     super();
 
@@ -35,12 +57,12 @@ export class AlwatrPwa extends AlwatrRootElement {
     map: (route) => route.sectionList[0]?.toString(),
     list: {
       home: {
-        render: () => html`<p>${l10n.localize('hello')}</p>`,
+        render: () => html`<page-form class="ion-page"></page-form>`,
       },
     },
   };
 
   override render(): TemplateResult {
-    return html`<div>${cache(router.outlet(this._routes))}</div>`;
+    return html`<main class="page-container">${cache(router.outlet(this._routes))}</main>`;
   }
 }

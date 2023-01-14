@@ -1,0 +1,195 @@
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+:root {
+  --ion-background-color: #eceff1;
+  --ion-background-color-rgb: 236, 239, 241;
+
+  --ion-text-color: #010a0e;
+  --ion-text-color-rgb: 1, 10, 14;
+
+  --ion-color-step-50: #e0e4e6;
+  --ion-color-step-100: #d5d8da;
+  --ion-color-step-150: #c9cdcf;
+  --ion-color-step-200: #bdc1c4;
+  --ion-color-step-250: #b1b6b8;
+  --ion-color-step-300: #a6aaad;
+  --ion-color-step-350: #9a9fa2;
+  --ion-color-step-400: #8e9396;
+  --ion-color-step-450: #82888b;
+  --ion-color-step-500: #777d80;
+  --ion-color-step-550: #6b7174;
+  --ion-color-step-600: #5f6669;
+  --ion-color-step-650: #535a5d;
+  --ion-color-step-700: #484f52;
+  --ion-color-step-750: #3c4347;
+  --ion-color-step-800: #30383b;
+  --ion-color-step-850: #242c30;
+  --ion-color-step-900: #182125;
+  --ion-color-step-950: #0d1519;
+
+  --ion-color-primary: #7e57c2;
+  --ion-color-primary-rgb: 126, 87, 194;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #6f4dab;
+  --ion-color-primary-tint: #8b68c8;
+
+  --ion-color-secondary: #1e88e5;
+  --ion-color-secondary-rgb: 30, 136, 229;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #1a78ca;
+  --ion-color-secondary-tint: #3594e8;
+
+  --ion-color-tertiary: #c2185b;
+  --ion-color-tertiary-rgb: 194, 24, 91;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #ab1550;
+  --ion-color-tertiary-tint: #c82f6b;
+
+  --ion-color-success: #43a047;
+  --ion-color-success-rgb: 67, 160, 71;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #3b8d3e;
+  --ion-color-success-tint: #56aa59;
+
+  --ion-color-warning: #ffa000;
+  --ion-color-warning-rgb: 255, 160, 0;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e08d00;
+  --ion-color-warning-tint: #ffaa1a;
+
+  --ion-color-danger: #e53935;
+  --ion-color-danger-rgb: 229, 57, 53;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #ca322f;
+  --ion-color-danger-tint: #e84d49;
+
+  --ion-color-medium: #757575;
+  --ion-color-medium-rgb: 117, 117, 117;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #676767;
+  --ion-color-medium-tint: #838383;
+
+  --ion-color-light: #eeeeee;
+  --ion-color-light-rgb: 238, 238, 238;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d1d1d1;
+  --ion-color-light-tint: #f0f0f0;
+
+  --ion-card-background: var(--ion-color-primary-contrast);
+  --ion-card-background-rgb: var(--ion-color-primary-contrast-rgb);
+}
+
+.noscript {
+  text-align: center;
+  font-size: 2rem;
+  padding: 2em 1em;
+}
+
+.noscript p {
+  margin: 0.5em 0;
+}
+
+body.backdrop-no-scroll {
+  overflow: hidden;
+}
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  position: fixed;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  transform: translateZ(0);
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+  touch-action: manipulation;
+  -webkit-user-drag: none;
+  -ms-content-zooming: none;
+  word-wrap: break-word;
+  overscroll-behavior-y: none;
+  text-size-adjust: none;
+  background-color: var(--ion-background-color, #1111);
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  text-size-adjust: 100%;
+  font-family: var(--ion-font-family);
+}
+
+html.ion-ce body {
+  display: block;
+}
+
+html.plt-pwa {
+  height: 100vh;
+}
+
+html.plt-ios.plt-hybrid,
+html.plt-ios.plt-pwa {
+  --ion-statusbar-padding: 20px;
+}
+
+.ion-page {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: space-between;
+  contain: layout size style;
+  overflow: hidden;
+  z-index: 0;
+}
+
+@supports (padding-top: 20px) {
+  html {
+    --ion-safe-area-top: var(--ion-statusbar-padding);
+  }
+}
+
+@supports (padding-top: constant(safe-area-inset-top)) {
+  html {
+    --ion-safe-area-top: constant(safe-area-inset-top);
+    --ion-safe-area-bottom: constant(safe-area-inset-bottom);
+    --ion-safe-area-left: constant(safe-area-inset-left);
+    --ion-safe-area-right: constant(safe-area-inset-right);
+  }
+}
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  html {
+    --ion-safe-area-top: env(safe-area-inset-top);
+    --ion-safe-area-bottom: env(safe-area-inset-bottom);
+    --ion-safe-area-left: env(safe-area-inset-left);
+    --ion-safe-area-right: env(safe-area-inset-right);
+  }
+}
+
+ion-alert *,
+ion-popover * {
+  font-family: var(--ion-font-family) !important;
+}
+ion-popover {
+  --max-height: 208px;
+  --backdrop-opacity: 1;
+}
