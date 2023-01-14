@@ -15,3 +15,7 @@ Content-Type: application/json
   "filed2": "test2",
   "filed13": "test3"
 }
+
+### Get storage
+GET {{apiUrl}}/storage
+Authorization: Bearer {{token}}
