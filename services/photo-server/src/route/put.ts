@@ -1,8 +1,9 @@
 import {writeFileSync} from 'node:fs';
 
-import {logger} from '../../config.js';
-import {nanoServer} from '../../lib/nano-server.js';
-import {generateToken} from '../../token.js';
+import {logger} from '../config.js';
+import {nanoServer} from '../lib/nano-server.js';
+import {storageClient} from '../lib/storage.js';
+import {generateToken} from '../token.js';
 
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 
@@ -23,19 +24,23 @@ async function uploadPhoto(connection: AlwatrConnection): Promise<AlwatrServiceR
     };
   }
 
+
   const buffer = await connection.requireFileBody();
   const id = `${generateToken.generate(buffer.toString()).slice(0, 7)}.${mimeType.split('/')[1]}`;
 
-  writeFileSync(id, buffer);
+  // extract photo meta from search params
+  const meta: Record<string, string> = {};
+  connection.url.searchParams.forEach((value, key) => {
+    meta[key] = value;
+  });
 
+  writeFileSync(id, buffer);
   // optimize
 
   try {
     return {
       ok: true,
-      data: {
-        id: id,
-      },
+      data: await storageClient.set({id: id, meta: meta}),
     };
   }
   catch (_err) {

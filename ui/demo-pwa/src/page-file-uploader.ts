@@ -35,28 +35,21 @@ export class AlwatrFileUploader extends AlwatrDummyElement {
     if (this.photoInput?.files == null) return;
     const file = this.photoInput.files[0];
 
-    let response;
+    const meta = this.metaInput?.value;
+    if (meta == null) return;
+
     try {
-      response = await this._uploadPhoto(file);
+      await this._uploadPhoto(file, meta);
     }
     catch (err) {
       this._logger.error('_submitForm', 'upload_failed');
-      return;
-    }
-
-    const meta = this.metaInput?.value;
-
-    try {
-      await this._putPhotoMeta(<string> response.data.id, meta);
-    }
-    catch {
-      this._logger.error('_submitForm', 'put_meta_failed');
       return;
     }
   }
 
   protected async _uploadPhoto(
       file: File,
+      description: string,
   ): Promise<AlwatrServiceResponseSuccessWithMeta<Photo, PhotoMeta>> {
     if (!(file.type === 'image/png' || file.type === 'image/jpeg')) {
       throw new Error('invalid_file_type');
@@ -71,28 +64,14 @@ export class AlwatrFileUploader extends AlwatrDummyElement {
       headers: {
         'Content-Type': file.type,
       },
-    });
-
-    return response as AlwatrServiceResponseSuccessWithMeta<Photo, PhotoMeta>;
-  }
-
-  protected async _putPhotoMeta(
-      id: string,
-      description?: string,
-  ): Promise<AlwatrServiceResponseSuccessWithMeta<Photo, PhotoMeta>> {
-    const response = await serviceRequest<Photo, PhotoMeta>({
-      url: 'http://localhost:8000/meta',
-      method: 'PUT',
-      bodyJson: {
-        id: id,
-        meta: {
-          ...(description && {description}),
-        },
+      queryParameters: {
+        'description': description,
       },
     });
 
     return response as AlwatrServiceResponseSuccessWithMeta<Photo, PhotoMeta>;
   }
+
 
   override render(): unknown {
     return html`
