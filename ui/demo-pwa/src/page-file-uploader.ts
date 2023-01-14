@@ -58,7 +58,7 @@ export class AlwatrFileUploader extends AlwatrDummyElement {
     const fileBlob = new Blob([file]);
 
     const response = await serviceRequest<Photo, PhotoMeta>({
-      url: 'http://localhost:8000/upload',
+      url: 'http://localhost:8000/',
       method: 'PUT',
       body: fileBlob,
       headers: {

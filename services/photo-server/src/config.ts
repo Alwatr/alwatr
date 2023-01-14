@@ -17,7 +17,7 @@ export const config = {
   },
   photo: {
     secret: process.env.PHOTO_SECRET ?? 'SECRET',
-    originalPath: process.env.ORIGINAL_PHOTO_PATH ?? './',
+    originalPath: process.env.ORIGINAL_PHOTO_PATH ?? './photo',
 
   },
 };
