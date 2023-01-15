@@ -4,4 +4,4 @@ import './route/home.js';
 import './route/put.js';
 import './route/storage.js';
 
-logger.logOther('..:: Alwatr Form Nanoservice API ::..');
+logger.logOther('..:: Alwatr Form Registration API Nanoservice ::..');

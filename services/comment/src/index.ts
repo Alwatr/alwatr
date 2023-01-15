@@ -3,4 +3,4 @@ import './route/patch.js';
 import './route/storage.js';
 import {logger} from './config.js';
 
-logger.logOther('..:: Alwatr Comment Nanoservice API ::..');
+logger.logOther('..:: Alwatr Comment API Nanoservice ::..');

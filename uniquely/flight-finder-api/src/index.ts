@@ -4,4 +4,4 @@ import './route/job/delete.js';
 import './route/job/get.js';
 import {logger} from './config.js';
 
-logger.logOther('..:: Flight Find API ::..');
+logger.logOther('..:: Alwatr Flight Finder Application API ::..');
