@@ -6,7 +6,7 @@
 GET {{apiUrl}}/
 
 ### Add new form
-PUT {{apiUrl}}/
+PUT {{apiUrl}}/form/
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ### Get storage
-GET {{apiUrl}}/storage
+GET {{apiUrl}}/form/?storage
 Authorization: Bearer {{token}}
 
 

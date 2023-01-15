@@ -9,31 +9,11 @@ nanoServer.route('PUT', '/', setForm);
 
 async function setForm(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('setForm');
-
   connection.requireToken(config.nanoServer.accessToken);
-
   const bodyJson = await connection.requireJsonBody<AlwatrDocumentObject>();
-
   bodyJson.id ??= 'auto_increment';
-
-  try {
-    return {
-      ok: true,
-      data: await storageClient.set(bodyJson),
-    };
-  }
-  catch (_err) {
-    const err = _err as Error;
-    logger.error('setForm', err.message || 'storage_error', err);
-    return {
-      ok: false,
-      statusCode: 500,
-      errorCode: 'storage_error',
-      meta: {
-        name: err.name,
-        message: err.message,
-        cause: err.cause,
-      },
-    };
-  }
+  return {
+    ok: true,
+    data: await storageClient.set(bodyJson),
+  };
 }
