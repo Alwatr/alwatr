@@ -1,12 +1,11 @@
 {
-  "name": "@alwatr/comment",
+  "name": "@alwatr/form-registration",
   "version": "0.27.0",
-  "description": "Alwatr Comment API Nanoservice, Distributed simple and fast comment nanoservice.",
+  "description": "Alwatr Form Registration API Nanoservice, Distributed simple and fast nanoservice for registering form information.",
   "type": "module",
   "keywords": [
     "api",
-    "comment",
-    "chat",
+    "form",
     "microservice",
     "nanoservice",
     "typescript",
@@ -26,9 +25,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "services/comment"
+    "directory": "services/form"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/services/comment#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/services/form#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
@@ -60,7 +59,7 @@
     "esbuild": "^0.16.14",
     "nodemon": "^2.0.20",
     "npm-run-all": "^4.1.5",
-    "rimraf": "^4.0.4",
+    "rimraf": "^3.0.2",
     "typescript": "^4.9.4"
   }
 }

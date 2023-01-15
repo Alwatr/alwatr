@@ -1,0 +1,50 @@
+@apiUrl = http://127.0.0.1:8000
+@apiVersion = v0
+@token = YOUR_SECRET_TOKEN
+
+### home
+GET {{apiUrl}}/
+
+### Add new form
+PUT {{apiUrl}}/form/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "filed1": "test1",
+  "filed2": "test2",
+  "filed13": "test3"
+}
+
+### Get storage
+GET {{apiUrl}}/form/?storage
+Authorization: Bearer {{token}}
+
+
+
+### === Test other routes and errors ===
+
+### Page Home
+GET {{apiUrl}}/{{apiVersion}}
+
+### Page 404 (wrong path)
+GET {{apiUrl}}/{{apiVersion}}/jafang
+
+### Page 404 (wrong method)
+POST {{apiUrl}}/{{apiVersion}}
+
+### Page health
+GET {{apiUrl}}/{{apiVersion}}/health
+
+### empty body
+POST {{apiUrl}}/{{apiVersion}}/echo
+Content-Type: application/json
+
+### invalid json
+POST {{apiUrl}}/{{apiVersion}}/echo
+Content-Type: application/json
+
+{
+  "a": 1,
+  b: 2,
+}
