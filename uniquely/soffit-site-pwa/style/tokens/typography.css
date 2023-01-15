@@ -1,0 +1,117 @@
+:root {
+  /* references */
+  --ref-font-weight-regular: 400;
+  --ref-font-weight-medium: 500;
+  --ref-font-weight-bold: 700;
+
+  --ref-font-family-system:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Open Sans',
+    'Helvetica Neue',
+    'Arial',
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol'
+  ;
+  --sys-font-family-plain: var(--font-vazirmatn), var(--ref-font-family-system);
+  --sys-font-family-brand: var(--font-vazirmatn), var(--ref-font-family-system);
+
+  /* display - large */
+  --sys-typescale-display-large-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-display-large-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-display-large-font-size: 5.7rem;
+  --sys-typescale-display-large-line-height: 6.4rem;
+  --sys-typescale-display-large-letter-spacing: -0.025rem;
+  /* display - medium */
+  --sys-typescale-display-medium-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-display-medium-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-display-medium-font-size: 4.5rem;
+  --sys-typescale-display-medium-line-height: 5.2rem;
+  --sys-typescale-display-medium-letter-spacing: 0rem;
+  /* display - small */
+  --sys-typescale-display-small-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-display-small-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-display-small-font-size: 3.6rem;
+  --sys-typescale-display-small-line-height: 4.4rem;
+  --sys-typescale-display-small-letter-spacing: 0rem;
+  /* headline - large */
+  --sys-typescale-headline-large-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-headline-large-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-headline-large-font-size: 3.2rem;
+  --sys-typescale-headline-large-line-height: 4rem;
+  --sys-typescale-headline-large-letter-spacing: 0rem;
+  /* headline - medium */
+  --sys-typescale-headline-medium-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-headline-medium-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-headline-medium-font-size: 2.8rem;
+  --sys-typescale-headline-medium-line-height: 3.6rem;
+  --sys-typescale-headline-medium-letter-spacing: 0rem;
+  /* headline - small */
+  --sys-typescale-headline-small-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-headline-small-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-headline-small-font-size: 2.4rem;
+  --sys-typescale-headline-small-line-height: 3.2rem;
+  --sys-typescale-headline-small-letter-spacing: 0rem;
+  /* body - large */
+  --sys-typescale-body-large-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-body-large-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-body-large-font-size: 1.6rem;
+  --sys-typescale-body-large-line-height: 2.4rem;
+  --sys-typescale-body-large-letter-spacing: 0.05rem;
+  /* body - medium */
+  --sys-typescale-body-medium-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-body-medium-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-body-medium-font-size: 1.4rem;
+  --sys-typescale-body-medium-line-height: 2rem;
+  --sys-typescale-body-medium-letter-spacing: 0.025rem;
+  /* body - small */
+  --sys-typescale-body-small-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-body-small-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-body-small-font-size: 1.2rem;
+  --sys-typescale-body-small-line-height: 1.6rem;
+  --sys-typescale-body-small-letter-spacing: 0.04rem;
+  /* label - large */
+  --sys-typescale-label-large-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-label-large-font-weight: var(--ref-font-weight-medium);
+  --sys-typescale-label-large-font-size: 1.4rem;
+  --sys-typescale-label-large-line-height: 2rem;
+  --sys-typescale-label-large-letter-spacing: 0.01rem;
+  /* label - medium */
+  --sys-typescale-label-medium-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-label-medium-font-weight: var(--ref-font-weight-medium);
+  --sys-typescale-label-medium-font-size: 1.2rem;
+  --sys-typescale-label-medium-line-height: 1.6rem;
+  --sys-typescale-label-medium-letter-spacing: 0.05rem;
+  /* label - small */
+  --sys-typescale-label-small-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-label-small-font-weight: var(--ref-font-weight-medium);
+  --sys-typescale-label-small-font-size: 1.1rem;
+  --sys-typescale-label-small-line-height: 1.6rem;
+  --sys-typescale-label-small-letter-spacing: 0.05rem;
+  /* title - large */
+  --sys-typescale-title-large-font-family-name: var(--sys-font-family-brand);
+  --sys-typescale-title-large-font-weight: var(--ref-font-weight-regular);
+  --sys-typescale-title-large-font-size: 2.2rem;
+  --sys-typescale-title-large-line-height: 2.8rem;
+  --sys-typescale-title-large-letter-spacing: 0rem;
+  /* title - medium */
+  --sys-typescale-title-medium-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-title-medium-font-weight: var(--ref-font-weight-medium);
+  --sys-typescale-title-medium-font-size: 1.6rem;
+  --sys-typescale-title-medium-line-height: 2.4rem;
+  --sys-typescale-title-medium-letter-spacing: 0.015rem;
+  /* title - small */
+  --sys-typescale-title-small-font-family-name: var(--sys-font-family-plain);
+  --sys-typescale-title-small-font-weight: var(--ref-font-weight-medium);
+  --sys-typescale-title-small-font-size: 1.4rem;
+  --sys-typescale-title-small-line-height: 2rem;
+  --sys-typescale-title-small-letter-spacing: 0.01rem;
+}
