@@ -1,7 +1,7 @@
 {
-  "name": "@alwatr/form",
+  "name": "@alwatr/form-registration",
   "version": "0.27.0",
-  "description": "Alwatr Form API Microservice, Distributed simple and fast form nanoservice base on @alwatr/storage-server",
+  "description": "Alwatr Form Registration API Microservice, Distributed simple and fast nanoservice for registering form information base on @alwatr/storage-server",
   "type": "module",
   "keywords": [
     "api",
