@@ -1,3 +1,3 @@
-# Form Registration API Microservice
+# Form Registration API Nanoservice
 
-Distributed simple and fast nanoservice for registering form information base on  [@alwatr/storage-server](../storage-server/).
+Distributed simple and fast nanoservice for registering form information.

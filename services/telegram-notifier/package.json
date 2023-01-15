@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/telegram-notify",
   "version": "0.27.0",
-  "description": "Alwatr Telegram Notify Microservice, Distributed simple and fast telegram notify nanoservice base on @alwatr/storage-server",
+  "description": "Alwatr Telegram Notify Microservice, Distributed simple and fast telegram notify nanoservice.",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "private": true,

@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/comment",
   "version": "0.27.0",
-  "description": "Alwatr Comment API Nanoservice, Distributed simple and fast comment nanoservice base on @alwatr/storage-server",
+  "description": "Alwatr Comment API Nanoservice, Distributed simple and fast comment nanoservice.",
   "type": "module",
   "keywords": [
     "api",

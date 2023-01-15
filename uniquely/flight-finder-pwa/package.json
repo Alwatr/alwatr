@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/flight-finder-pwa",
   "version": "0.27.0",
-  "description": "Alwatr Flight Finder PWA",
+  "description": "Alwatr Flight Finder PWA.",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "private": true,
