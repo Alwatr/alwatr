@@ -33,7 +33,6 @@
 
     // services
     {"path": "./services/comment"},
-    {"path": "./services/starter"},
     {"path": "./services/storage-server"},
     {"path": "./services/telegram-notifier"},
     {"path": "./services/flight-crawler"},
