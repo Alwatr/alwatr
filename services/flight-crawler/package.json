@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/flight-finder-crawler",
   "version": "0.27.0",
-  "description": "Alwatr Flight Crawler Microservice",
+  "description": "Alwatr Flight Crawler Nanoservice, Distributed simple and fast flight crawler nanoservice base on",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "private": true,
