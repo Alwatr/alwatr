@@ -10,10 +10,13 @@ nanoServer.route('PUT', '/', setForm);
 async function setForm(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('setForm');
   connection.requireToken(config.nanoServer.accessToken);
+
+  const {storage} = connection.requireQueryParams<{storage: string}>({storage: 'string'});
+
   const bodyJson = await connection.requireJsonBody<AlwatrDocumentObject>();
   bodyJson.id ??= 'auto_increment';
   return {
     ok: true,
-    data: await storageClient.set(bodyJson),
+    data: await storageClient.set(bodyJson, storage),
   };
 }

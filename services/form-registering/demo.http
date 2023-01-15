@@ -6,7 +6,7 @@
 GET {{apiUrl}}/
 
 ### Add new form
-PUT {{apiUrl}}/form/
+PUT {{apiUrl}}?storage=test
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -17,10 +17,8 @@ Content-Type: application/json
 }
 
 ### Get storage
-GET {{apiUrl}}/form/?storage
+GET {{apiUrl}}/storage?name=test
 Authorization: Bearer {{token}}
-
-
 
 ### === Test other routes and errors ===
 

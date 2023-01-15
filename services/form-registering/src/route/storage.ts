@@ -9,5 +9,8 @@ nanoServer.route('GET', '/storage', getFormStorage);
 async function getFormStorage(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('getFormStorage');
   connection.requireToken(config.nanoServer.accessToken);
-  return await storageClient.getStorage();
+
+  const {name} = connection.requireQueryParams<{name: string}>({name: 'string'});
+
+  return await storageClient.getStorage(name);
 }
