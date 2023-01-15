@@ -1,6 +1,7 @@
 import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
 import '@alwatr/ui-kit/card/card.js';
+import '@alwatr/ui-kit/radio/radio.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -48,7 +49,16 @@ export class AlwatrPageCard extends AlwatrSmartElement {
   override render(): unknown {
     super.render();
     return html`
-      <alwatr-card stated elevated><input type="text" value="elevated" /></alwatr-card>
+      <alwatr-card stated elevated>
+        <form>
+          <alwatr-radio name="test" value="test1" checked></alwatr-radio>
+          <alwatr-radio name="test" value="test2" checked></alwatr-radio>
+          <alwatr-radio name="test" value="test3"></alwatr-radio>
+          <alwatr-radio name="test" value="test4"></alwatr-radio>
+          <alwatr-radio name="test" value="test5"></alwatr-radio>
+          <alwatr-radio name="test" value="test6"></alwatr-radio>
+        </form>
+      </alwatr-card>
       <alwatr-card stated elevated><input type="text" value="elevated" /></alwatr-card>
       <alwatr-card stated elevated disabled><input type="text" value="elevated" disabled /></alwatr-card>
       <alwatr-card stated elevated="2"><input type="text" value="elevated 2" /></alwatr-card>
