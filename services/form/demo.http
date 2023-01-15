@@ -19,3 +19,32 @@ Content-Type: application/json
 ### Get storage
 GET {{apiUrl}}/storage
 Authorization: Bearer {{token}}
+
+
+
+### === Test other routes and errors ===
+
+### Page Home
+GET {{apiUrl}}/{{apiVersion}}
+
+### Page 404 (wrong path)
+GET {{apiUrl}}/{{apiVersion}}/jafang
+
+### Page 404 (wrong method)
+POST {{apiUrl}}/{{apiVersion}}
+
+### Page health
+GET {{apiUrl}}/{{apiVersion}}/health
+
+### empty body
+POST {{apiUrl}}/{{apiVersion}}/echo
+Content-Type: application/json
+
+### invalid json
+POST {{apiUrl}}/{{apiVersion}}/echo
+Content-Type: application/json
+
+{
+  "a": 1,
+  b: 2,
+}
