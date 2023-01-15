@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/com-api",
   "version": "0.27.0",
-  "description": "Alwatr Customer Order Management API Microservice",
+  "description": "Alwatr Customer Order Management API",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "contributors": [
