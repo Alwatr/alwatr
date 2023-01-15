@@ -70,8 +70,8 @@ jobs:
             dockerfile: cloud/container/alwatr-pwa.dockerfile
             description: Alwatr Flight Finder PWA.
 
-          - image: soffit-pwa
-            source: uniquely/soffit-pwa
+          - image: soffit-site-pwa
+            source: uniquely/soffit-site-pwa
             dockerfile: cloud/container/alwatr-pwa.dockerfile
             description: Alwatr Soffit PWA.
 
