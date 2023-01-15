@@ -26,20 +26,22 @@ Authorization: Bearer {{token}}
 GET {{apiUrl}}/{{apiVersion}}
 
 ### Page 404 (wrong path)
-GET {{apiUrl}}/{{apiVersion}}/jafang
+GET {{apiUrl}}/jafang
 
 ### Page 404 (wrong method)
-POST {{apiUrl}}/{{apiVersion}}
+PUT {{apiUrl}}/
 
 ### Page health
 GET {{apiUrl}}/{{apiVersion}}/health
 
 ### empty body
-POST {{apiUrl}}/{{apiVersion}}/echo
+POST {{apiUrl}}/{{apiVersion}}?storage=test
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 ### invalid json
-POST {{apiUrl}}/{{apiVersion}}/echo
+POST {{apiUrl}}/{{apiVersion}}?storage=test
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
