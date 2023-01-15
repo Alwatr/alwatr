@@ -53,8 +53,8 @@ jobs:
             dockerfile: cloud/container/alwatr-services.dockerfile
             description: Alwatr Telegram Notify Microservice.
 
-          - image: form
-            source: services/form
+          - image: form-registering
+            source: services/form-registering
             dockerfile: cloud/container/alwatr-services.dockerfile
             description: Alwatr Form API Microservice.
 

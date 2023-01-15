@@ -39,7 +39,7 @@ services:
         max-file: '2'
 
   api:
-    image: ghcr.io/alimd/form:${API_VERSION:-next}
+    image: ghcr.io/alimd/form-registering:${API_VERSION:-next}
 
     cpu_shares: 1024
     mem_limit: 256m
