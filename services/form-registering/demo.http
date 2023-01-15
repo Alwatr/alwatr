@@ -6,7 +6,7 @@
 GET {{apiUrl}}/
 
 ### Add new form
-PUT {{apiUrl}}?storage=test
+POST {{apiUrl}}?storage=test
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
