@@ -38,6 +38,7 @@ export class AlwatrStandardIconButton extends AlwatrSurfaceElement {
       a {
         display: flex;
         flex-direction: column;
+        width: 100%;
         padding: calc(3 * var(--sys-spacing-track));
         gap: calc(1.5 * var(--sys-spacing-track));
         color: inherit;
@@ -58,6 +59,11 @@ export class AlwatrStandardIconButton extends AlwatrSurfaceElement {
         font-size: var(--sys-typescale-label-large-font-size);
         letter-spacing: var(--sys-typescale-label-large-letter-spacing);
         line-height: var(--sys-typescale-label-large-line-height);
+      }
+
+      .headline:empty,
+      .description:empty {
+        display: none;
       }
 
       alwatr-icon {
