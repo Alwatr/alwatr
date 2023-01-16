@@ -21,8 +21,8 @@ export class AlwatrFileUploader extends AlwatrDummyElement {
   @query('.photo-input')
     photoInput: HTMLInputElement | undefined;
 
-  @query('.meta-input')
-    metaInput: HTMLInputElement | undefined;
+  @query('.description-input')
+    descriptionInput: HTMLInputElement | undefined;
 
   protected override firstUpdated(): void {
     this.photoForm?.addEventListener('submit', (event) => {
@@ -35,11 +35,11 @@ export class AlwatrFileUploader extends AlwatrDummyElement {
     if (this.photoInput?.files == null) return;
     const file = this.photoInput.files[0];
 
-    const meta = this.metaInput?.value;
-    if (meta == null) return;
+    const description = this.descriptionInput?.value;
+    if (description == null) return;
 
     try {
-      await this._uploadPhoto(file, meta);
+      await this._uploadPhoto(file, description);
     }
     catch (err) {
       this._logger.error('_submitForm', 'upload_failed');
@@ -77,7 +77,7 @@ export class AlwatrFileUploader extends AlwatrDummyElement {
     return html`
       <form class="photo-form">
         <input type="file" name="photo" class="photo-input" />
-        <input type="text" name="meta" class="meta-input" />
+        <input type="text" name="description" class="description-input" />
         <input type="submit" />
       </form>
     `;

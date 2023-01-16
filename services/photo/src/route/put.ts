@@ -28,17 +28,13 @@ async function addPhoto(connection: AlwatrConnection): Promise<AlwatrServiceResp
   const buffer = await connection.requireFileBody();
   const id = `${generateToken.generate(buffer.toString()).slice(0, 7)}.${mimeType.split('/')[1]}`;
 
-  // extract photo meta from search params
-  const meta: Record<string, string> = {};
-  connection.url.searchParams.forEach((value, key) => {
-    meta[key] = value;
-  });
+  const meta = connection.requireQueryParams<{description: string}>({description: 'string'});
 
   writeFileSync(`${config.photo.originalPath}/${id}`, buffer);
   // optimize
 
   return {
     ok: true,
-    data: await storageClient.set({id: id, meta: meta}),
+    data: await storageClient.set({id: id, meta: meta.description}),
   };
 }

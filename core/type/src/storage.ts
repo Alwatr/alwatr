@@ -3,9 +3,9 @@ import type {AlwatrServiceResponseSuccessWithMeta} from './service-response.js';
 export type AlwatrDocumentObject = {
   id: string;
   meta?: {
-    rev?: number;
-    created?: number;
-    updated?: number;
+    rev: number;
+    created: number;
+    updated: number;
   };
 };
 
