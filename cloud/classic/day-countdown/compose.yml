@@ -1,0 +1,36 @@
+networks:
+  internal:
+
+services:
+  telegram-notifier:
+    image: ghcr.io/alimd/telegram-day-count-notifier:${TELEGRAM_NOTIFIER_VERSION:-next}
+
+    cpu_shares: 512
+    mem_limit: 256m
+
+    # restart: unless-stopped
+
+    networks:
+      internal:
+        aliases:
+          - '${APP_ID}-telegram-notifier'
+
+    environment:
+      - STORAGE_PATH=/storage
+      - ACCESS_TOKEN=${TELEGRAM_NOTIFIER_TOKEN}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_NOTIFIER_TOKEN}
+      - ALWATR_DEBUG=${TELEGRAM_NOTIFIER_DEBUG:-}
+      - DEBUG=${TELEGRAM_NOTIFIER_DEBUG:-}
+
+    volumes:
+      - type: bind
+        source: ./_data/telegram-notifier
+        target: /storage
+        bind:
+          create_host_path: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
