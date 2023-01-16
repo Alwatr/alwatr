@@ -5,6 +5,7 @@
     "tsBuildInfoFile": ".tsbuildinfo",
     "rootDir": "src",
     "outDir": "build",
+    "noEmit": true,
     "plugins": [
       {
         "name": "ts-lit-plugin",
