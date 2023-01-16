@@ -1,7 +1,3 @@
-# Photo Server
+# Photo API Nanoservice
 
-Photo server
-
-## How to use
-
-Check [demo.http](demo.http).
+Distributed simple and fast nanoservice for photo upload & resizing.

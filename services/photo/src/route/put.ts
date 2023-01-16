@@ -37,24 +37,8 @@ async function addPhoto(connection: AlwatrConnection): Promise<AlwatrServiceResp
   writeFileSync(`${config.photo.originalPath}/${id}`, buffer);
   // optimize
 
-  try {
-    return {
-      ok: true,
-      data: await storageClient.set({id: id, meta: meta}),
-    };
-  }
-  catch (_err) {
-    const err = _err as Error;
-    logger.error('addPhoto', err.message || 'storage_error', err);
-    return {
-      ok: false,
-      statusCode: 500,
-      errorCode: 'storage_error',
-      meta: {
-        name: err.name,
-        message: err.message,
-        cause: err.cause,
-      },
-    };
-  }
+  return {
+    ok: true,
+    data: await storageClient.set({id: id, meta: meta}),
+  };
 }

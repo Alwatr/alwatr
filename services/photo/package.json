@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/photo",
   "version": "0.27.0",
-  "description": "Alwatr Photo Microservice",
+  "description": "Distributed simple and fast nanoservice for photo upload & resizing.",
   "type": "module",
   "keywords": [
     "api",
