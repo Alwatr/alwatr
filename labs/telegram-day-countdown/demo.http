@@ -1,0 +1,16 @@
+@apiUrl = http://127.0.0.1:8001
+@apiVersion = v0
+@token = YOUR_SECRET_TOKEN
+
+### Home
+GET {{apiUrl}}/
+
+### Send message
+POST {{apiUrl}}/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "chatId": "7837384348",
+  "message": "salam"
+}
