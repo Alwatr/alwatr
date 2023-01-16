@@ -41,6 +41,7 @@
     // uniquely
     {"path": "./uniquely/flight-finder-api"},
     {"path": "./uniquely/flight-finder-pwa"},
+    {"path": "./uniquely/salavat-pwa"},
     {"path": "./ui/demo-pwa"},
 
     // labs
