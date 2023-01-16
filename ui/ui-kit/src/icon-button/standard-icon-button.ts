@@ -69,6 +69,11 @@ export class AlwatrStandardIconButton extends AlwatrSurfaceElement {
   }
 
   override render(): unknown {
-    return html`<alwatr-icon ?flip-rtl=${this.flipRtl} .name=${this.icon} .urlPrefix=${this.urlPrefix}></alwatr-icon>`;
+    return html`<alwatr-icon
+      part="icon"
+      ?flip-rtl=${this.flipRtl}
+      .name=${this.icon}
+      .urlPrefix=${this.urlPrefix}
+    ></alwatr-icon>`;
   }
 }
