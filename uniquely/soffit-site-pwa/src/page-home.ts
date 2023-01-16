@@ -2,8 +2,6 @@ import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
 import '@alwatr/ui-kit/icon-box/icon-box.js';
 
-import './icon-box.js';
-
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-page-home': AlwatrPageHome;
