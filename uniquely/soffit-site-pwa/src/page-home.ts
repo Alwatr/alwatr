@@ -1,5 +1,7 @@
 import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
+import '@alwatr/ui-kit/icon-box/icon-box.js';
+
 import './icon-box.js';
 
 declare global {
@@ -18,6 +20,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       display: flex;
       flex-direction: column;
       height: 100%;
+      overflow-y: auto;
     }
 
     section {
@@ -60,12 +63,12 @@ export class AlwatrPageHome extends AlwatrSmartElement {
         <img src="image/soffit.jpg" />
       </header>
       <section>
-        <icon-box href="/" icon="gift-outline" label="شرکت در قرعه کشی میدکس"></icon-box>
-        <icon-box href="/" icon="download-outline" label="دانلود کاتالوگ"></icon-box>
-        <icon-box href="/" icon="earth-outline" label="سایت اصلی"></icon-box>
-        <icon-box href="/" icon="call-outline" label="ارتباط مستقیم با سافیت"></icon-box>
-        <icon-box href="/" icon="logo-instagram" label="اینستاگرام" instagram></icon-box>
-        <icon-box href="/" icon="send-outline" label="کانال تلگرام" telegram></icon-box>
+        <alwatr-icon-box href="/" icon="gift-outline" headline="شرکت در قرعه کشی میدکس"></alwatr-icon-box>
+        <alwatr-icon-box href="/" icon="download-outline" headline="دانلود کاتالوگ"></alwatr-icon-box>
+        <alwatr-icon-box href="/" icon="earth-outline" headline="سایت اصلی"></alwatr-icon-box>
+        <alwatr-icon-box href="/" icon="call-outline" headline="ارتباط مستقیم با سافیت"></alwatr-icon-box>
+        <alwatr-icon-box href="/" icon="logo-instagram" headline="اینستاگرام"></alwatr-icon-box>
+        <alwatr-icon-box href="/" icon="send-outline" headline="کانال تلگرام"></alwatr-icon-box>
       </section>
       <footer>
         <span>A good ceiling is vital. But a SOFFIT ceiling can be an inspiration.</span>
