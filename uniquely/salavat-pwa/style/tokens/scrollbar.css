@@ -1,0 +1,14 @@
+:root {
+  --sys-scrollbar-background: transparent;
+  --sys-scrollbar-color: rgba(0, 0, 0, var(--sys-surface-state-opacity-hover));
+  --sys-scrollbar-color-hover: rgba(0, 0, 0, var(--sys-surface-state-opacity-pressed));
+  --sys-scrollbar-size: 3px;
+  --sys-scrollbar-radius: calc(var(--sys-scrollbar-size) / 2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sys-scrollbar-color: rgba(255, 255, 255, var(--sys-surface-state-opacity-hover));
+    --sys-scrollbar-color-hover: rgba(255, 255, 255, var(--sys-surface-state-opacity-pressed));
+  }
+}
