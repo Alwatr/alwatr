@@ -46,6 +46,7 @@
 
     // labs
     {"path": "./labs/zx-example"},
-    {"path": "./labs/telegram-day-countdown"}
+    {"path": "./labs/telegram-day-countdown"},
+    {"path": "./labs/day-countdown-api"}
   ]
 }
