@@ -19,6 +19,9 @@ async function newDayCountdownUser(connection: AlwatrConnection): Promise<Alwatr
       ok: false,
       statusCode: 409,
       errorCode: 'day_countdown_set_before',
+      data: {
+        message: 'Day countdown set before!',
+      } as never,
     };
   }
 
