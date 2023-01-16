@@ -9,25 +9,25 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "image/manifest/icon-192x192.jpg",
+      "src": "images/manifest/icon-192x192.jpg",
       "sizes": "192x192",
       "type": "image/jpeg",
       "purpose": "maskable"
     },
     {
-      "src": "image/manifest/icon-512x512.jpg",
+      "src": "images/manifest/icon-512x512.jpg",
       "sizes": "512x512",
       "type": "image/jpeg",
       "purpose": "maskable"
     },
     {
-      "src": "image/manifest/icon-192x192.png",
+      "src": "images/manifest/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "image/manifest/icon-512x512.png",
+      "src": "images/manifest/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"

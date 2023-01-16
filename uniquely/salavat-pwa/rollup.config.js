@@ -59,7 +59,7 @@ const options = {
     }),
     // Optional: copy any static assets to build directory
     copy({
-      patterns: ['image/**/*', 'l10n/**/*', 'robots.txt'],
+      patterns: ['images/**/*', 'l10n/**/*', 'robots.txt'],
     }),
     generateSW(workboxConfig, ({swDest, count, size}) => console.log('📦', swDest, '#️⃣ ', count, '🐘', size)),
   ],
