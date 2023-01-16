@@ -18,7 +18,7 @@ export const config = {
     token: telegramBotToken,
   },
   apiService: {
-    domain: process.env.API_SERVICE_HOST ?? 'localhost:8000',
+    domain: process.env.API_SERVICE_HOST ?? 'http://localhost:8000',
     accessToken: process.env.API_SERVICE_ACCESS_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
 };
