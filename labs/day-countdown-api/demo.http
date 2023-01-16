@@ -4,3 +4,12 @@
 
 ### Home
 GET {{apiUrl}}/
+
+### New day downcount
+PATCH {{apiUrl}}/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "chatId": "23029323"
+}
