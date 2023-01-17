@@ -15,27 +15,52 @@ logger.logOther(banner);
 rmSync(dist, {recursive: true, force: true});
 logger.logOther('dist removed');
 
-cp('assets', dist, {recursive: true, force: true}, ()=>logger.logOther('cp assets done'));
+cp('assets', dist, {recursive: true, force: true, verbatimSymlinks: true}, ()=>logger.logOther('cp assets done'));
 
 await build({
-  entryPoints: ['./src/alwatr-pwa.ts'],
+  entryPoints: ['src/alwatr-pwa.ts'],
 
   logLevel: 'debug',
   platform: 'browser',
   target: 'es2018',
   format: 'esm',
 
-  bundle: true,
+  // minify: true,
   treeShaking: true,
-  minify: true,
   sourcemap: true,
+  bundle: true,
+  splitting: true,
+  charset: 'utf8',
+  legalComments: 'none',
 
+  outbase: 'src',
+  assetNames: 'asset/[name]-[hash]',
+  entryNames: '[dir]/[name]-[hash]',
+  chunkNames: 'chunks/[name]-[hash]',
   outdir: dist,
 
-  // external: [],
+  loader: {
+    '.png': 'copy',
+    '.jpg': 'copy',
+    '.woff': 'copy',
+    '.woff2': 'copy',
+  },
 
   banner: {
     js: banner,
     css: banner,
   },
 });
+
+/*
+  TODO:
+  - Serve mode or use wds
+  - Watch mode
+  - Replace file hash in html
+  - Assets hash
+  - PostCSS css file
+  - PostCSS lit internal styles
+  - Replace alwatr version
+    https://esbuild.github.io/api/#write
+    https://github.com/fakundo/esbuild-plugin-replace-regex/blob/master/src/index.js#L30
+*/

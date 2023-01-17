@@ -30,6 +30,7 @@
     "nanoserver",
     "nanoservice",
     "noncallable",
+    "outbase",
     "outdir",
     "preconnect",
     "preload",
