@@ -7,5 +7,5 @@ export * from './type-helper.js';
 
 Alwatr.registeredList.push({
   name: '@alwatr/type',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });

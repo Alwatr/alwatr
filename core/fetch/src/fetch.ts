@@ -20,7 +20,7 @@ const logger = createLogger('alwatr/fetch');
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/fetch',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 let alwatrCacheStorage: Cache;

@@ -10,7 +10,7 @@ const logger = createLogger('alwatr/i18n');
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/i18n',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 export const l10n: {

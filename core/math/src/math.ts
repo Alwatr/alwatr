@@ -5,7 +5,7 @@ export {UnicodeDigits, type UnicodeLangKeys} from './unicode-digits.js';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/math',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 /**
