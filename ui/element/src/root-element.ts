@@ -1,12 +1,9 @@
 import {l10n} from '@alwatr/i18n';
-import {router} from '@alwatr/router';
-import {html, css} from 'lit';
+import {type RoutesConfig, router} from '@alwatr/router';
+import {type CSSResultGroup, html, css} from 'lit';
 import {cache} from 'lit/directives/cache.js';
 
 import {AlwatrSmartElement} from './smart-element.js';
-
-import type {RoutesConfig} from '@alwatr/router';
-import type {CSSResultGroup} from 'lit';
 
 /**
  * Alwatr Root Base Element

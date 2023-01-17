@@ -5,8 +5,7 @@ Elegant micro client for storage server written in tiny TypeScript ES module.
 ## Example usage
 
 ```ts
-import {AlwatrStorageClient} from '@alwatr/storage-client';
-import type {AlwatrDocumentObject} from '@alwatr/storage-client';
+import {type AlwatrDocumentObject, AlwatrStorageClient} from '@alwatr/storage-client';
 
 type User = AlwatrDocumentObject & {
   email: string;

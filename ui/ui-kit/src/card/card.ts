@@ -1,6 +1,4 @@
-import {AlwatrSurfaceElement, css, customElement, html} from '@alwatr/element';
-
-import type {CSSResultGroup} from '@alwatr/element';
+import {type CSSResultGroup, AlwatrSurfaceElement, css, customElement, html} from '@alwatr/element';
 
 export type CardType = 'elevated' | 'filled' | 'outlined';
 

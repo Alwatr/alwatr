@@ -7,7 +7,7 @@ import type {
   AlwatrServiceResponseSuccess,
 } from '@alwatr/type';
 
-export {
+export type {
   FetchOptions,
   CacheDuplicate,
   CacheStrategy,

@@ -1,4 +1,6 @@
 import {
+  type PropertyValues,
+  type HTMLTemplateResult,
   AlwatrDummyElement,
   unsafeSVG,
   customElement,
@@ -10,8 +12,6 @@ import {
 } from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
 import {globalAlwatr} from '@alwatr/logger';
-
-import type {PropertyValues, HTMLTemplateResult} from '@alwatr/element';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/icon',

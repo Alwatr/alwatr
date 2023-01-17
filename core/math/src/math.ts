@@ -1,7 +1,7 @@
 import {globalAlwatr} from '@alwatr/logger';
 
-import {TransformRangeOptions} from './type.js';
-export * from './unicode-digits.js';
+import type {TransformRangeOptions} from './type.js';
+export {UnicodeDigits, type UnicodeLangKeys} from './unicode-digits.js';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/math',
