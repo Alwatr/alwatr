@@ -5,8 +5,9 @@ import {rmSync, cp} from 'node:fs';
 import {createLogger} from '@alwatr/logger';
 import {build} from 'esbuild';
 
-const logger = createLogger('alwatr-pwa-build');
+import packageJson from './package.json' assert {type: 'json'};
 
+const logger = createLogger('alwatr-pwa-build');
 const banner = '/* ..:: Alwatr UI Demo ::.. */\n';
 const dist = 'dist';
 
@@ -33,11 +34,9 @@ await build({
   charset: 'utf8',
   legalComments: 'none',
 
-  outbase: 'src',
-  assetNames: 'asset/[name]-[hash]',
-  entryNames: '[dir]/[name]-[hash]',
-  chunkNames: 'chunks/[name]-[hash]',
-  outdir: dist,
+  define: {
+    '_ALWATR_VERSION_': `'${packageJson.version}'`,
+  },
 
   loader: {
     '.png': 'copy',
@@ -50,6 +49,12 @@ await build({
     js: banner,
     css: banner,
   },
+
+  outbase: 'src',
+  outdir: dist,
+  assetNames: 'asset/[name]-[hash]',
+  entryNames: '[dir]/[name]-[hash]',
+  chunkNames: 'chunks/[name]-[hash]',
 });
 
 /*
@@ -60,7 +65,7 @@ await build({
   - Assets hash
   - PostCSS css file
   - PostCSS lit internal styles
-  - Replace alwatr version
+
     https://esbuild.github.io/api/#write
     https://github.com/fakundo/esbuild-plugin-replace-regex/blob/master/src/index.js#L30
 */
