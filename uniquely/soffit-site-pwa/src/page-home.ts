@@ -21,6 +21,29 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       overflow-y: auto;
     }
 
+    :host::-webkit-scrollbar {
+      width: var(--sys-scrollbar-size);
+      height: var(--sys-scrollbar-size);
+    }
+
+    :host::-webkit-scrollbar-corner,
+    :host::-webkit-scrollbar-track {
+      background-color: var(--sys-scrollbar-background);
+    }
+
+    :host::-webkit-scrollbar-track {
+      margin: var(--sys-spacing-track);
+    }
+
+    :host::-webkit-scrollbar-thumb {
+      background-color: var(--sys-scrollbar-color);
+      border-radius: var(--sys-scrollbar-radius);
+    }
+
+    :host(:hover)::-webkit-scrollbar-thumb {
+      background-color: var(--sys-scrollbar-color-hover);
+    }
+
     section {
       display: flex;
       flex-direction: column;
