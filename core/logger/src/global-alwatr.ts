@@ -6,7 +6,10 @@ if (globalThis.Alwatr == null) {
   };
 }
 
-if (globalThis._ALWATR_VERSION_ == null) {
+try {
+  _ALWATR_VERSION_;
+}
+catch {
   globalThis._ALWATR_VERSION_ = 'ERROR';
   console.warn('!! SCRIPTS LOADED OUTSIDE OF ALWATR BUILD ENVIRONMENT !!');
 }
