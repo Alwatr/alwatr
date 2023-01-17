@@ -1,7 +1,7 @@
-import {AlwatrStorageEngine} from '@alwatr/storage-engine';
+import {AlwatrStorageClient} from '@alwatr/storage-client';
 
 import {config} from '../config.js';
 
-import type {TotalSalavatCount} from '@alwatr/type/salavat.js';
+import type {AlwatrDocumentObject} from '@alwatr/type';
 
-export const storageEngine = new AlwatrStorageEngine<TotalSalavatCount>(config.storage);
+export const storageClient = new AlwatrStorageClient<AlwatrDocumentObject>(config.storage);
