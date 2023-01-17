@@ -56,17 +56,46 @@ export class AlwatrPageHome extends AlwatrSmartElement {
 
   override render(): unknown {
     super.render();
+
+    // eslint-disable-next-line max-len
+    const loremText = `مداد رنگی ها مشغول بودند به جز مداد سفید، هیهم باشیم شاید فردا ما هم در کنار هم نباشیم…`;
+
     return html`
       <header>
         <img src="image/soffit.jpg" />
       </header>
       <section>
-        <alwatr-icon-box href="/" icon="gift-outline" headline="شرکت در قرعه کشی میدکس"></alwatr-icon-box>
-        <alwatr-icon-box href="/" icon="download-outline" headline="دانلود کاتالوگ"></alwatr-icon-box>
-        <alwatr-icon-box href="/" icon="earth-outline" headline="سایت اصلی"></alwatr-icon-box>
-        <alwatr-icon-box href="/" icon="call-outline" headline="ارتباط مستقیم با سافیت"></alwatr-icon-box>
-        <alwatr-icon-box href="/" icon="logo-instagram" headline="اینستاگرام"></alwatr-icon-box>
-        <alwatr-icon-box href="/" icon="send-outline" headline="کانال تلگرام"></alwatr-icon-box>
+        <alwatr-icon-box
+          href="/"
+          icon="gift-outline"
+          description=${loremText}
+          headline="شرکت در قرعه کشی میدکس"
+        ></alwatr-icon-box>
+        <alwatr-icon-box
+          href="/"
+          icon="download-outline"
+          description=${loremText}
+          headline="دانلود کاتالوگ"
+        ></alwatr-icon-box>
+        <alwatr-icon-box href="/" icon="earth-outline" description=${loremText} headline="سایت اصلی"></alwatr-icon-box>
+        <alwatr-icon-box
+          href="/"
+          icon="call-outline"
+          description=${loremText}
+          headline="ارتباط مستقیم با سافیت"
+        ></alwatr-icon-box>
+        <alwatr-icon-box
+          href="/"
+          icon="logo-instagram"
+          description=${loremText}
+          headline="اینستاگرام"
+        ></alwatr-icon-box>
+        <alwatr-icon-box
+          href="/"
+          icon="send-outline"
+          description=${loremText}
+          headline="کانال تلگرام"
+        ></alwatr-icon-box>
       </section>
       <footer>
         <span>A good ceiling is vital. But a SOFFIT ceiling can be an inspiration.</span>
