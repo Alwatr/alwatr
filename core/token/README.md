@@ -6,9 +6,7 @@ Secure authentication HOTP token generator (HMAC-based One-Time Password algorit
 
 ```ts
 import {createLogger} from '@alwatr/logger';
-import {AlwatrTokenGenerator} from '@alwatr/token';
-
-import type {TokenStatus} from '@alwatr/token';
+import {type TokenStatus, AlwatrTokenGenerator} from '@alwatr/token';
 
 type User = {
   id: string;

@@ -1,7 +1,5 @@
 import {createLogger} from '@alwatr/logger';
-import {AlwatrTokenGenerator} from '@alwatr/token';
-
-import type {TokenStatus} from '@alwatr/token';
+import {type TokenStatus, AlwatrTokenGenerator} from '@alwatr/token';
 
 const logger = createLogger('token/demo');
 

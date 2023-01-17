@@ -6,10 +6,10 @@ import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 
-import './ionic-components';
-
 import type {NewJobDetail} from '../type.js';
 import type {InputCustomEvent, SelectCustomEvent} from '@ionic/core';
+
+import './ionic-components';
 
 declare global {
   interface HTMLElementTagNameMap {

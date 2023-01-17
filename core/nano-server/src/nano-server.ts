@@ -23,7 +23,7 @@ export type RouteMiddleware<TData = Record<string, unknown>, TMeta = Record<stri
   connection: AlwatrConnection
 ) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>;
 
-export {
+export type {
   NanoServerConfig,
   ConnectionConfig,
   AlwatrServiceResponse,

@@ -1,6 +1,4 @@
-import {AlwatrTokenGenerator} from '@alwatr/token';
-
-import type {DigestAlgorithm} from '@alwatr/token';
+import {type DigestAlgorithm, AlwatrTokenGenerator} from '@alwatr/token';
 
 if (process.env.NODE_ENV !== 'production') {
   console.log('Please run node in production for benchmark. NODE_ENV=production node demo/token/benchmark.js');

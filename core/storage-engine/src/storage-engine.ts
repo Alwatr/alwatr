@@ -1,13 +1,14 @@
 import {resolve} from 'node:path';
 
 import {createLogger, globalAlwatr, type AlwatrLogger} from '@alwatr/logger';
-import {type AlwatrDocumentStorage, type AlwatrDocumentObject} from '@alwatr/type';
 import exitHook from 'exit-hook';
 
-import {type AlwatrStorageEngineConfig} from './type.js';
 import {readJsonFile, writeJsonFile} from './util.js';
 
-export {type AlwatrDocumentObject, type AlwatrDocumentStorage};
+import type {AlwatrStorageEngineConfig} from './type.js';
+import type {AlwatrDocumentStorage, AlwatrDocumentObject} from '@alwatr/type';
+
+export type {AlwatrDocumentObject, AlwatrDocumentStorage};
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/storage-engine',
@@ -21,9 +22,7 @@ globalAlwatr.registeredList.push({
  * Example:
  *
  * ```ts
- * import {AlwatrStorageEngine} from '@alwatr/storage-engine';
- *
- * import type {AlwatrDocumentObject} from '@alwatr/storage-engine';
+ * import {type AlwatrDocumentObject, AlwatrStorageEngine} from '@alwatr/storage-engine';
  *
  * interface User extends AlwatrDocumentObject {
  *   fname: string;

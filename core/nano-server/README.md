@@ -5,8 +5,7 @@ Elegant powerful nodejs server for nanoservice use cases, written in tiny TypeSc
 ## Example usage
 
 ```ts
-import {AlwatrNanoServer} from 'https://esm.run/@alwatr/nano-server';
-import type {AlwatrConnection} from 'https://esm.run/@alwatr/nano-server';
+import {type AlwatrConnection, AlwatrNanoServer} from 'https://esm.run/@alwatr/nano-server';
 
 const nanoServer = new AlwatrNanoServer();
 
