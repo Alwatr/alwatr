@@ -1,22 +1,23 @@
 import {l10n} from '@alwatr/i18n';
-import {type RoutesConfig, router} from '@alwatr/router';
-import {type CSSResultGroup, html, css} from 'lit';
+import {router, type RoutesConfig} from '@alwatr/router';
+import {html, css, type CSSResultGroup} from 'lit';
 import {cache} from 'lit/directives/cache.js';
 
+import '@alwatr/ui-kit/style/token.css';
+import '@alwatr/ui-kit/style/pwa.css';
 import {AlwatrSmartElement} from './smart-element.js';
 
 /**
  * Alwatr Root Base Element
  *
- * Include: AlwatrSmartElement, root styles, router config, multi-page render
+ * Include: AlwatrPwaElement, root styles, router config, multi-page render
  */
-export class AlwatrRootElement extends AlwatrSmartElement {
+export class AlwatrPwaElement extends AlwatrSmartElement {
   static override styles: CSSResultGroup = css`
     :host {
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
-      height: 100%;
       overflow: hidden;
       overflow: clip;
       contain: layout size style;
