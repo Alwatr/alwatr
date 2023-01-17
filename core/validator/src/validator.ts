@@ -2,7 +2,7 @@ import {isNumber} from '@alwatr/math';
 
 import type {JsonSchema, ValidType} from './type.js';
 
-export {type JsonSchema};
+export type {JsonSchema};
 
 export function validator<T extends ValidType>(
     validSchema: JsonSchema,
