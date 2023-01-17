@@ -1,4 +1,4 @@
-import {customElement, AlwatrSmartElement, css, html, unsafeHTML} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html, unsafeHTML, state} from '@alwatr/element';
 
 import '@alwatr/ui-kit/card/card.js';
 
@@ -18,13 +18,16 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       display: flex;
       flex-direction: column;
       height: 100%;
+      width: max-content;
+      margin: 0 auto;
       padding: 0 calc(8 * var(--sys-spacing-track));
     }
 
     .text-start,
     .text-large,
     .text-end {
-      display: flex;
+      display: inline-flex;
+      width: max-content;
       align-items: center;
       text-shadow: 0.05em 0.05em 0.2em #0008;
     }
@@ -47,16 +50,18 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     }
 
     .text-start {
-      justify-content: flex-start;
+      align-self: flex-start;
+      margin-inline-end: calc(2 * var(--sys-spacing-track));
     }
 
     .text-large {
       direction: ltr;
-      justify-content: center;
+      align-self: center;
     }
 
     .text-end {
-      justify-content: flex-end;
+      align-self: flex-end;
+      margin-inline-start: calc(2 * var(--sys-spacing-track));
     }
 
     .text-large span {
@@ -64,10 +69,12 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     }
   `;
 
+  @state() protected _number = 1_428_584;
+
   override render(): unknown {
     super.render();
 
-    const numberTemplate = Number(1_947_394)
+    const numberTemplate = Number(this._number)
         .toLocaleString('fa-IR', {
           style: 'decimal',
         })
@@ -76,7 +83,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     return html`
       <div class="text-start">تا این لحظه</div>
       <div class="text-large">${unsafeHTML(numberTemplate)}</div>
-      <div class="text-end">صلوات نذر فرج شده</div>
+      <div class="text-end">صلوات نذر فرج</div>
     `;
   }
 }
