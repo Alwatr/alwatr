@@ -1,6 +1,7 @@
 import {SalavatVow} from '@alwatr/type/src/salavat.js';
 
 import {config, logger} from '../../config.js';
+import {updateGlobalCount, globalCount} from '../../global-vow.js';
 import {nanoServer} from '../../lib/nano-server.js';
 import {storageClient} from '../../lib/storage.js';
 
@@ -17,8 +18,13 @@ async function newVow(connection:AlwatrConnection): Promise<AlwatrServiceRespons
 
   body.id = 'auto_increment';
 
+  await storageClient.set(body);
+  await updateGlobalCount();
+
   return {
     ok: true,
-    data: await storageClient.set(body),
+    data: {
+      globalCount,
+    },
   };
 }
