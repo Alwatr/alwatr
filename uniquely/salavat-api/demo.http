@@ -13,3 +13,6 @@ Content-Type: application/json
 {
   "count": 30
 }
+
+### Get Global Count
+Get {{apiUrl}}/vow
