@@ -1,6 +1,5 @@
-import {createLogger} from '@alwatr/logger';
+import {type AlwatrLogger, createLogger} from '@alwatr/logger';
 
-import type {AlwatrLogger} from '@alwatr/logger/type.js';
 import type {Constructor} from '@alwatr/type';
 import type {LitElement, PropertyValues} from 'lit';
 

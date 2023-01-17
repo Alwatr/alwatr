@@ -1,9 +1,9 @@
 import {AlwatrRootElement, html, customElement} from '@alwatr/element';
 
+import type {RoutesConfig} from '@alwatr/router';
+
 import './page-chat.js';
 import './page-card.js';
-
-import type {RoutesConfig} from '@alwatr/router';
 
 declare global {
   interface HTMLElementTagNameMap {

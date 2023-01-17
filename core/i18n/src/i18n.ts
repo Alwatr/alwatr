@@ -4,7 +4,7 @@ import {SignalInterface} from '@alwatr/signal';
 
 import type {I18nConfig, L10Resource, Locale} from './type.js';
 
-export * from './type.js';
+export type {I18nConfig, L10Resource, Locale} from './type.js';
 
 const logger = createLogger('alwatr/i18n');
 

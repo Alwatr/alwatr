@@ -3,11 +3,10 @@ import {routeChangeSignal} from './signal.js';
 import {clickTrigger} from './trigger-click.js';
 import {popstateTrigger} from './trigger-popstate.js';
 
-import type {InitOptions, Route, RoutesConfig} from './type.js';
+import type {InitOptions, Route, RoutesConfig, RequestRouteParam} from './type.js';
 import type {SignalInterface} from '@alwatr/signal';
 
-export {routeChangeSignal};
-export type {Route, RequestRouteParam, RoutesConfig} from './type.js';
+export {type Route, type RequestRouteParam, type RoutesConfig, routeChangeSignal};
 
 /**
  * Initial and config the Router.

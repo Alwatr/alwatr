@@ -1,4 +1,4 @@
-import {AlwatrSmartElement, map, customElement, query, css, html} from '@alwatr/element';
+import {type TemplateResult, AlwatrSmartElement, map, customElement, query, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {modalController} from '@ionic/core';
@@ -6,11 +6,10 @@ import {modalController} from '@ionic/core';
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 
+import type {Job} from '@alwatr/type/flight-finder.js';
+
 import './job-item.js';
 import './job-add-form.js';
-
-import type {TemplateResult} from '@alwatr/element';
-import type {Job} from '@alwatr/type/flight-finder.js';
 
 declare global {
   interface HTMLElementTagNameMap {
