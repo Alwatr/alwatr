@@ -4,3 +4,12 @@
 
 ### home
 GET {{apiUrl}}/
+
+### New Vow
+POST {{apiUrl}}/vow
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "count": 30
+}
