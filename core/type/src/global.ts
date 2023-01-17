@@ -10,5 +10,6 @@ export type GlobalAlwatr = {
 };
 
 declare global {
+  var _ALWATR_VERSION_: string;
   var Alwatr: GlobalAlwatr;
 }

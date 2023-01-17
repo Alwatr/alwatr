@@ -8,7 +8,7 @@ const isBrowser = typeof process === 'undefined';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/logger',
-  version: '{{ALWATR_VERSION}}', // TODO: replace with real version at release time.
+  version: _ALWATR_VERSION_,
 });
 
 /**

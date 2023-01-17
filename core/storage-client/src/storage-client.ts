@@ -8,7 +8,7 @@ export {type AlwatrStorageClientConfig};
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/storage-client',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 /**

@@ -6,6 +6,11 @@ if (globalThis.Alwatr == null) {
   };
 }
 
+if (globalThis._ALWATR_VERSION_ == null) {
+  globalThis._ALWATR_VERSION_ = 'ERROR';
+  console.warn('!! SCRIPTS LOADED OUTSIDE OF ALWATR BUILD ENVIRONMENT !!');
+}
+
 if (Alwatr.registeredList == null) {
   Alwatr.registeredList = [];
 }
