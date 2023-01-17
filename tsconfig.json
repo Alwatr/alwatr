@@ -43,6 +43,7 @@
     {"path": "./uniquely/flight-finder-pwa"},
     {"path": "./uniquely/soffit-pwa"},
     {"path": "./ui/demo-pwa"},
+    {"path": "./uniquely/salavat-api"},
 
     // labs
     {"path": "./labs/zx-example"}
