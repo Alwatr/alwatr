@@ -20,5 +20,5 @@ export {cache} from 'lit/directives/cache.js';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/element',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });

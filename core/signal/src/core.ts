@@ -15,7 +15,7 @@ export const logger = createLogger('alwatr/signal');
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/signal',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 /**

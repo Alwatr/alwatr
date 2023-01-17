@@ -34,7 +34,7 @@ export type {
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/nano-server',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 export class AlwatrNanoServer {

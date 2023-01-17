@@ -15,7 +15,7 @@ import {globalAlwatr} from '@alwatr/logger';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/icon',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 declare global {

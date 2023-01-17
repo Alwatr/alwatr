@@ -9,7 +9,7 @@ export type {TokenGeneratorConfig, TokenStatus, DigestAlgorithm};
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/token',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 export class AlwatrTokenGenerator {
