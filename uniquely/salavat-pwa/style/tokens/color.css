@@ -85,40 +85,40 @@
 @media (prefers-color-scheme: dark) {
   :root {
     /* theme dark */
-    --sys-color-primary-hsl: var(--ref-palette-primary80);
-    --sys-color-on-primary-hsl: var(--ref-palette-primary20);
-    --sys-color-primary-container-hsl: var(--ref-palette-primary30);
-    --sys-color-on-primary-container-hsl: var(--ref-palette-primary90);
+    /* --sys-color-primary-hsl: var(--ref-palette-primary80); */
+    /* --sys-color-on-primary-hsl: var(--ref-palette-primary20); */
+    /* --sys-color-primary-container-hsl: var(--ref-palette-primary30); */
+    /* --sys-color-on-primary-container-hsl: var(--ref-palette-primary90); */
 
-    --sys-color-secondary-hsl: var(--ref-palette-secondary80);
-    --sys-color-on-secondary-hsl: var(--ref-palette-secondary20);
-    --sys-color-secondary-container-hsl: var(--ref-palette-secondary30);
-    --sys-color-on-secondary-container-hsl: var(--ref-palette-secondary90);
+    /* --sys-color-secondary-hsl: var(--ref-palette-secondary80); */
+    /* --sys-color-on-secondary-hsl: var(--ref-palette-secondary20); */
+    /* --sys-color-secondary-container-hsl: var(--ref-palette-secondary30); */
+    /* --sys-color-on-secondary-container-hsl: var(--ref-palette-secondary90); */
 
-    --sys-color-tertiary-hsl: var(--ref-palette-tertiary80);
-    --sys-color-on-tertiary-hsl: var(--ref-palette-tertiary20);
-    --sys-color-tertiary-container-hsl: var(--ref-palette-tertiary30);
-    --sys-color-on-tertiary-container-hsl: var(--ref-palette-tertiary90);
+    /* --sys-color-tertiary-hsl: var(--ref-palette-tertiary80); */
+    /* --sys-color-on-tertiary-hsl: var(--ref-palette-tertiary20); */
+    /* --sys-color-tertiary-container-hsl: var(--ref-palette-tertiary30); */
+    /* --sys-color-on-tertiary-container-hsl: var(--ref-palette-tertiary90); */
 
-    --sys-color-background-hsl: var(--ref-palette-neutral10);
-    --sys-color-on-background-hsl: var(--ref-palette-neutral90);
+    /* --sys-color-background-hsl: var(--ref-palette-neutral10); */
+    /* --sys-color-on-background-hsl: var(--ref-palette-neutral90); */
 
-    --sys-color-surface-hsl: var(--ref-palette-neutral10);
-    --sys-color-on-surface-hsl: var(--ref-palette-neutral90);
+    /* --sys-color-surface-hsl: var(--ref-palette-neutral10); */
+    /* --sys-color-on-surface-hsl: var(--ref-palette-neutral90); */
 
-    --sys-color-surface-variant-hsl: var(--ref-palette-neutral-variant30);
-    --sys-color-on-surface-variant-hsl: var(--ref-palette-neutral-variant80);
+    /* --sys-color-surface-variant-hsl: var(--ref-palette-neutral-variant30); */
+    /* --sys-color-on-surface-variant-hsl: var(--ref-palette-neutral-variant80); */
 
-    --sys-color-outline-hsl: var(--ref-palette-neutral-variant60);
-    --sys-color-outline-variant-hsl: var(--ref-palette-neutral-variant30);
+    /* --sys-color-outline-hsl: var(--ref-palette-neutral-variant60); */
+    /* --sys-color-outline-variant-hsl: var(--ref-palette-neutral-variant30); */
 
-    --sys-color-error-hsl: var(--ref-palette-error80);
-    --sys-color-error-container-hsl: var(--ref-palette-error30);
-    --sys-color-on-error-hsl: var(--ref-palette-error20);
-    --sys-color-on-error-container-hsl: var(--ref-palette-error90);
+    /* --sys-color-error-hsl: var(--ref-palette-error80); */
+    /* --sys-color-error-container-hsl: var(--ref-palette-error30); */
+    /* --sys-color-on-error-hsl: var(--ref-palette-error20); */
+    /* --sys-color-on-error-container-hsl: var(--ref-palette-error90); */
 
-    --sys-color-inverse-primary-hsl: var(--ref-palette-primary40);
-    --sys-color-inverse-surface-hsl: var(--ref-palette-neutral90);
-    --sys-color-inverse-on-surface-hsl: var(--ref-palette-neutral20);
+    /* --sys-color-inverse-primary-hsl: var(--ref-palette-primary40); */
+    /* --sys-color-inverse-surface-hsl: var(--ref-palette-neutral90); */
+    /* --sys-color-inverse-on-surface-hsl: var(--ref-palette-neutral20); */
   }
 }
