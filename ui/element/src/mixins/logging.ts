@@ -1,4 +1,4 @@
-import {type AlwatrLogger, createLogger} from '@alwatr/logger';
+import {createLogger, type AlwatrLogger} from '@alwatr/logger';
 
 import type {Constructor} from '@alwatr/type';
 import type {LitElement, PropertyValues} from 'lit';
