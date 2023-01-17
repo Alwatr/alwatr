@@ -5,6 +5,9 @@
 ### home
 GET {{apiUrl}}/
 
+### Get Global Count
+Get {{apiUrl}}/vow
+
 ### New Vow
 POST {{apiUrl}}/vow
 Authorization: Bearer {{token}}
@@ -13,6 +16,3 @@ Content-Type: application/json
 {
   "count": 30
 }
-
-### Get Global Count
-Get {{apiUrl}}/vow
