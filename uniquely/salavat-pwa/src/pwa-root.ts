@@ -24,8 +24,11 @@ export class AlwatrPwaRoot extends AlwatrRootElement {
   static override styles: CSSResultGroup = [
     AlwatrRootElement.styles,
     css`
+      :host {
+        user-select: none;
+      }
       .page-container {
-        padding-bottom: calc(4 * var(--sys-spacing-track));
+        padding-bottom: calc(2 * var(--sys-spacing-track));
         flex-grow: 0 !important;
         contain: layout style;
       }
@@ -60,7 +63,7 @@ export class AlwatrPwaRoot extends AlwatrRootElement {
         justify-content: center;
         flex-grow: 1;
         /* url reapet position/size */
-        background: url('/images/main-image.jpg') no-repeat center/cover;
+        background: url('/images/main-image.jpg') no-repeat top center/cover;
         /* top right/left bottom */
         margin: 0 calc(7 * var(--sys-spacing-track)) calc(3 * var(--sys-spacing-track));
         border-radius: 0 0 50vw 50vw;
@@ -89,13 +92,11 @@ export class AlwatrPwaRoot extends AlwatrRootElement {
         justify-content: space-between;
         height: calc(7 * var(--sys-spacing-track));
 
-        text-shadow: 0.05em 0.05em 0.2em #0008;
-
-        font-family: var(--sys-typescale-title-medium-font-family-name);
-        font-weight: var(--sys-typescale-title-medium-font-weight);
-        font-size: var(--sys-typescale-title-medium-font-size);
-        letter-spacing: var(--sys-typescale-title-medium-letter-spacing);
-        line-height: var(--sys-typescale-title-medium-line-height);
+        font-family: var(--sys-typescale-title-small-font-family-name);
+        font-weight: var(--sys-typescale-title-small-font-weight);
+        font-size: var(--sys-typescale-title-small-font-size);
+        letter-spacing: var(--sys-typescale-title-small-letter-spacing);
+        line-height: var(--sys-typescale-title-small-line-height);
       }
 
       footer span {
@@ -106,15 +107,7 @@ export class AlwatrPwaRoot extends AlwatrRootElement {
       }
 
       footer span alwatr-icon {
-        font-size: calc(3 * var(--sys-spacing-track));
-      }
-
-      footer span alwatr-icon.love {
-        color: hsl(350deg 70% 50%);
-      }
-
-      footer span alwatr-icon.him {
-        color: hsl(130deg 100% 40%);
+        font-size: calc(2.5 * var(--sys-spacing-track));
       }
     `,
   ];
@@ -156,7 +149,7 @@ export class AlwatrPwaRoot extends AlwatrRootElement {
       <footer>
         <span class="made-with-love">
           Made With
-          <alwatr-icon name="heart" class="love"></alwatr-icon>
+          <alwatr-icon name="heart-outline" class="love"></alwatr-icon>
           for
           <alwatr-icon name="heart" class="him"></alwatr-icon>
         </span>
