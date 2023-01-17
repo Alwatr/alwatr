@@ -19,7 +19,7 @@ declare global {
  * Alwatr PWA Root Element
  */
 @customElement('alwatr-pwa')
-export class AlwatrPwa extends AlwatrPwaElement {
+class AlwatrPwa extends AlwatrPwaElement {
   protected override _routes: RoutesConfig = {
     map: (route) => route.sectionList[0]?.toString(),
     list: {
