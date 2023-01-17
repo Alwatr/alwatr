@@ -25,13 +25,12 @@
     "s": "yarn start",
     "w": "yarn watch",
     "start": "NODE_OPTIONS=--enable-source-maps run-s clean build serve",
-    "clean": "rimraf dist build .tsbuildinfo **/*.{d.ts,map} src/**/*.{js,cjs,mjs}",
-    "build": "run-s build:ts build:es",
-    "build:ts": "tsc --build",
-    "build:es": "rimraf dist && rollup -c",
+    "clean": "rimraf dist build .tsbuildinfo",
+    "build": "./esbuild.mjs",
+    "build:tsc": "tsc --build",
     "serve": "wds",
-    "watch": "run-s clean build:ts && run-p watch:ts serve",
-    "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
+    "watch": "run-p watch:ts serve",
+    "watch:ts": "yarn build --clean --watch"
   },
   "devDependencies": {
     "@alwatr/element": "^0.27.0",

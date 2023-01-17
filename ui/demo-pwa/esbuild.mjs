@@ -11,32 +11,38 @@ import packageJson from './package.json' assert {type: 'json'};
 
 const logger = createLogger('alwatr-pwa-build');
 const banner = '/* ..:: Alwatr UI Demo ::.. */\n';
+const srcDir = 'src';
 const resDir = 'res';
 const outDir = 'dist';
 const srcFilename = 'alwatr-pwa';
+const productionMode = process.env.NODE_ENV === 'production';
+const watchMode = process.argv.includes('--watch');
 
 logger.logOther(banner);
 
+logger.logProperty('watchMode', watchMode);
+logger.logProperty('productionMode', productionMode);
+
 if (process.argv.includes('--clean')) {
   logger.logMethod('clean build');
-  await fs.rmdir(outDir, {recursive: true, force: true});
+  await fs.rm(outDir, {recursive: true, force: true});
 }
 
 const copyPromise = fs.cp(resDir, outDir, {recursive: true, force: true, verbatimSymlinks: true});
 
-const buildPromise = esbuild.build({
-  entryPoints: [`src/${srcFilename}.ts`],
+const esBuild = esbuild.build({
+  entryPoints: [`${srcDir}/${srcFilename}.ts`],
 
   logLevel: 'info',
   platform: 'browser',
   target: 'es2018',
   format: 'esm',
-  conditions: ['development'], // dev-mode
+  conditions: productionMode ? undefined : ['development'],
 
-  minify: false, // dev-mode
+  minify: true,
   treeShaking: true,
   sourcemap: true,
-  sourcesContent: true, // dev-mode
+  sourcesContent: !productionMode,
   bundle: true,
   splitting: true,
   charset: 'ascii',
@@ -60,11 +66,14 @@ const buildPromise = esbuild.build({
     css: banner,
   },
 
-  outbase: 'src',
+  outbase: srcDir,
   outdir: outDir,
   assetNames: 'asset/[name]-[hash]',
-  entryNames: '[dir]/[name]-[hash]',
+  entryNames: watchMode ? '[name]' : '[dir]/[name]-[hash]',
   chunkNames: 'chunks/[name]-[hash]',
+
+  incremental: watchMode,
+  watch: watchMode,
 });
 
 async function makeHtml() {
@@ -72,7 +81,7 @@ async function makeHtml() {
 
   let htmlContent = await fs.readFile(`${resDir}/index.html`, {encoding: 'utf-8'});
 
-  const metafile = (await buildPromise).metafile;
+  const metafile = (await esBuild).metafile;
   const outFiles = Object.keys(metafile.outputs);
 
   const jsFilename = outFiles
@@ -105,9 +114,10 @@ async function makeHtml() {
   await fs.writeFile(`${outDir}/index.html`, htmlContent, {encoding: 'utf-8', flag: 'w'});
 }
 
-makeHtml();
-
-console.log(await esbuild.analyzeMetafile((await buildPromise).metafile));
+if (!watchMode) {
+  makeHtml();
+  console.log(await esbuild.analyzeMetafile((await esBuild).metafile));
+}
 
 /*
   TODO:
