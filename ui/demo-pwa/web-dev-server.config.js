@@ -5,7 +5,7 @@ const config = {
   port: 8080,
   open: true,
   watch: true,
-  debug: true,
+  // debug: true,
   rootDir: 'dist',
   appIndex: 'index.html',
   plugins: [],
