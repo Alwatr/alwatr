@@ -1,25 +1,27 @@
 import {l10n} from '@alwatr/i18n';
-import {type RoutesConfig, router} from '@alwatr/router';
-import {type CSSResultGroup, html, css} from 'lit';
+import {router, type RoutesConfig} from '@alwatr/router';
+import {html, css, type CSSResultGroup, type PropertyValues} from 'lit';
 import {cache} from 'lit/directives/cache.js';
 
+import '@alwatr/ui-kit/style/token.css';
+import '@alwatr/ui-kit/style/pwa.css';
 import {AlwatrSmartElement} from './smart-element.js';
 
 /**
  * Alwatr Root Base Element
  *
- * Include: AlwatrSmartElement, root styles, router config, multi-page render
+ * Include: AlwatrPwaElement, root styles, router config, multi-page render
  */
-export class AlwatrRootElement extends AlwatrSmartElement {
+export class AlwatrPwaElement extends AlwatrSmartElement {
   static override styles: CSSResultGroup = css`
     :host {
+      contain: layout size style;
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
-      height: 100%;
       overflow: hidden;
       overflow: clip;
-      contain: layout size style;
+      height: 100%;
     }
 
     .page-container {
@@ -61,5 +63,10 @@ export class AlwatrRootElement extends AlwatrSmartElement {
   override render(): unknown {
     super.render();
     return html`<div class="page-container">${cache(router.outlet(this._routes))}</div>`;
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(changedProperties);
+    this.removeAttribute('unresolved');
   }
 }

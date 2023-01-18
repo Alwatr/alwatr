@@ -1,4 +1,4 @@
-import {type CSSResultGroup, css} from 'lit';
+import {css, type CSSResultGroup} from 'lit';
 
 import {AlwatrDummyElement} from './dummy-element.js';
 

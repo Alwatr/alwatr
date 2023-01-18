@@ -21,7 +21,7 @@ COPY . .
 RUN yarn install --frozen-lockfile --non-interactive --production false;
 
 # Build all ts files
-RUN  yarn build:ts;
+RUN yarn build:ts
 
 # Build target package
 ARG PACKAGE_SOURCE

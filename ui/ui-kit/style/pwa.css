@@ -58,3 +58,9 @@ body {
 body.no-scroll {
   overflow: hidden;
 }
+
+alwatr-pwa[unresolved] {
+  display: block;
+  text-align: center;
+  /* TODO: skeleton */
+}
