@@ -108,8 +108,6 @@ export async function preloadIcon(
   const url = urlPrefix + name + '.svg';
   const response = await fetch({
     url,
-    timeout: 6000,
-    retry: 5,
     removeDuplicate: 'auto',
     cacheStrategy: 'cache_first',
     cache: 'force-cache',
