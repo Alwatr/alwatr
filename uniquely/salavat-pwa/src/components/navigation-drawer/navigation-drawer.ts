@@ -20,7 +20,7 @@ export class AlwatrNavigationDrawer extends AlwatrSmartElement {
         position: fixed;
         inset: 0;
         z-index: var(--sys-zindex-topness);
-        right: calc(-1 * 45 * var(--sys-spacing-track));
+        right: -100vw;
         transform: translateX(0px);
 
         width: 100%;
@@ -60,7 +60,7 @@ export class AlwatrNavigationDrawer extends AlwatrSmartElement {
     `,
     css`
       :host([open]) {
-        transform: translateX(calc(-1 * 45 * var(--sys-spacing-track)));
+        transform: translateX(-100vw);
 
         transition-duration: var(--sys-motion-duration-large-in);
         transition-timing-function: var(--sys-motion-easing-incoming);
@@ -93,11 +93,23 @@ export class AlwatrNavigationDrawer extends AlwatrSmartElement {
     return html`
       <div class="navigation-drawer" @click=${this.navigationDrawerClicked}>
         <div class="navigation-drawer__items">
-          <alwatr-navigation-drawer-item icon="megaphone" label="کمپین"></alwatr-navigation-drawer-item>
-          <alwatr-navigation-drawer-item icon="book" label="داستان ما"></alwatr-navigation-drawer-item>
-          <alwatr-navigation-drawer-item icon="people" label="حمایت از ما"></alwatr-navigation-drawer-item>
-          <alwatr-navigation-drawer-item icon="image" label="دانلود والپیپر"></alwatr-navigation-drawer-item>
-          <alwatr-navigation-drawer-item icon="cloud-download" label="دانلود اپلیکشین"></alwatr-navigation-drawer-item>
+          <alwatr-navigation-drawer-item tabindex="-1" icon="megaphone" label="کمپین"></alwatr-navigation-drawer-item>
+          <alwatr-navigation-drawer-item tabindex="-1" icon="book" label="داستان ما"></alwatr-navigation-drawer-item>
+          <alwatr-navigation-drawer-item
+            tabindex="-1"
+            icon="people"
+            label="حمایت از ما"
+          ></alwatr-navigation-drawer-item>
+          <alwatr-navigation-drawer-item
+            tabindex="-1"
+            icon="image"
+            label="دانلود والپیپر"
+          ></alwatr-navigation-drawer-item>
+          <alwatr-navigation-drawer-item
+            tabindex="-1"
+            icon="cloud-download"
+            label="دانلود اپلیکشین"
+          ></alwatr-navigation-drawer-item>
         </div>
       </div>
     `;

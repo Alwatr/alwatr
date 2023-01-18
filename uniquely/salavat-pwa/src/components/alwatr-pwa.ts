@@ -4,9 +4,13 @@ import {l10n} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
 
+import '@alwatr/ui-kit/style/theme/palette-dynamic.css';
+import '@alwatr/ui-kit/style/theme/color.css';
+import '@alwatr/font/vazirmatn.css';
 import '@alwatr/icon';
 import '@alwatr/ui-kit/icon-button/standard-icon-button.js';
 
+import '../../res/styles/index.css';
 import './navigation-drawer/navigation-drawer.js';
 import './navigation-drawer/navigation-drawer-item.js';
 import '../pages/page-home.js';

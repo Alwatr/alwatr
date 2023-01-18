@@ -5,15 +5,9 @@ const config = {
   port: 8080,
   open: true,
   watch: true,
+  // debug: true,
+  rootDir: 'dist',
   appIndex: 'index.html',
-  nodeResolve: {
-    exportConditions: ['development'],
-  },
-  esbuildTarget: 'auto',
-  // in a monorepo you need to set set the root dir to resolve modules
-  rootDir: '.',
-  // debug: false,
-  preserveSymlinks: true,
   plugins: [],
   middleware: [(context, next) => {
     // if file not found, return app index.html
