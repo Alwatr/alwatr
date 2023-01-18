@@ -29,8 +29,8 @@
     "build": "./esbuild.mjs",
     "build:tsc": "tsc --build",
     "serve": "wds",
-    "watch": "run-p watch:ts serve",
-    "watch:ts": "yarn build --clean --watch"
+    "watch": "run-p watch:es serve",
+    "watch:es": "yarn build --clean --watch --debug"
   },
   "devDependencies": {
     "@alwatr/element": "^0.27.0",
