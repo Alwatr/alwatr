@@ -11,19 +11,23 @@ import packageJson from './package.json' assert {type: 'json'};
 
 const logger = createLogger('alwatr-pwa-build');
 const banner = '/* ..:: Alwatr UI Demo ::.. */\n';
+
 const srcDir = 'src';
 const resDir = 'res';
 const outDir = 'dist';
 const srcFilename = 'alwatr-pwa';
-const productionMode = process.env.NODE_ENV === 'production';
+
+const cleanMode = process.argv.includes('--clean');
 const watchMode = process.argv.includes('--watch');
+const debugMode = watchMode || process.argv.includes('--debug');
 
 logger.logOther(banner);
 
+logger.logProperty('cleanMode', cleanMode);
 logger.logProperty('watchMode', watchMode);
-logger.logProperty('productionMode', productionMode);
+logger.logProperty('debugMode', debugMode);
 
-if (process.argv.includes('--clean')) {
+if (cleanMode) {
   logger.logMethod('clean build');
   await fs.rm(outDir, {recursive: true, force: true});
 }
@@ -37,12 +41,12 @@ const esBuild = esbuild.build({
   platform: 'browser',
   target: 'es2018',
   format: 'esm',
-  conditions: productionMode ? undefined : ['development'],
+  conditions: debugMode ? ['development'] : undefined,
 
   minify: true,
   treeShaking: true,
   sourcemap: true,
-  sourcesContent: !productionMode,
+  sourcesContent: debugMode,
   bundle: true,
   splitting: true,
   charset: 'ascii',
@@ -116,13 +120,14 @@ async function makeHtml() {
 
 if (!watchMode) {
   makeHtml();
+}
+
+if (debugMode) {
   console.log(await esbuild.analyzeMetafile((await esBuild).metafile));
 }
 
 /*
   TODO:
-  - Serve mode or use wds
-  - Watch mode
   - Assets hash
   - PostCSS css file
   - lit css loader
