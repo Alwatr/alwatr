@@ -1,11 +1,14 @@
 import {AlwatrRootElement, html, customElement, css} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
+import {SignalInterface} from '@alwatr/signal';
 
 import '@alwatr/icon';
 import '@alwatr/ui-kit/icon-button/standard-icon-button.js';
 
-import './page-home.js';
+import './navigation-drawer/navigation-drawer.js';
+import './navigation-drawer/navigation-drawer-item.js';
+import '../pages/page-home.js';
 
 import type {CSSResultGroup} from '@alwatr/element';
 import type {RoutesConfig} from '@alwatr/router';
@@ -91,6 +94,7 @@ export class AlwatrPwaRoot extends AlwatrRootElement {
         align-items: center;
         justify-content: space-between;
         height: calc(7 * var(--sys-spacing-track));
+        backdrop-filter: blur(var(--sys-spacing-track));
 
         font-family: var(--sys-typescale-title-small-font-family-name);
         font-weight: var(--sys-typescale-title-small-font-weight);
@@ -111,6 +115,8 @@ export class AlwatrPwaRoot extends AlwatrRootElement {
       }
     `,
   ];
+
+  static navigationDrawerSignal = new SignalInterface('navigation-drawer');
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -134,14 +140,22 @@ export class AlwatrPwaRoot extends AlwatrRootElement {
   override render(): unknown {
     super.render();
     return html`
+      <!-- floating elements -->
+      <alwatr-navigation-drawer @click=${this.navigationDrawerClicked}></alwatr-navigation-drawer>
       <header>
-        <alwatr-standard-icon-button icon="menu-outline" stated></alwatr-standard-icon-button>
+        <alwatr-standard-icon-button
+          icon="menu-outline"
+          stated
+          @click=${this.menuButtonClicked}
+        ></alwatr-standard-icon-button>
         <alwatr-standard-icon-button
           icon="salavat-small"
           url-prefix="/images/icons/"
           stated
         ></alwatr-standard-icon-button>
       </header>
+
+      <!-- static elements -->
       <div class="main-image">
         <alwatr-standard-icon-button icon="add-outline" filled stated></alwatr-standard-icon-button>
       </div>
@@ -157,5 +171,23 @@ export class AlwatrPwaRoot extends AlwatrRootElement {
         <alwatr-standard-icon-button icon="cloud-download-outline" stated></alwatr-standard-icon-button>
       </footer>
     `;
+  }
+
+  private menuButtonClicked(event: PointerEvent): void {
+    this._logger.logMethod('menuButtonClicked');
+
+    event.stopPropagation();
+
+    AlwatrPwaRoot.navigationDrawerSignal.dispatch({open: true});
+  }
+
+  private navigationDrawerClicked(event: PointerEvent): void {
+    this._logger.logMethodArgs('pageClicked', {open: AlwatrPwaRoot.navigationDrawerSignal.value?.open === true});
+
+    event.stopPropagation();
+
+    if (AlwatrPwaRoot.navigationDrawerSignal.value?.open === true) {
+      AlwatrPwaRoot.navigationDrawerSignal.dispatch({open: false});
+    }
   }
 }
