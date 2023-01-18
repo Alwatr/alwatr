@@ -1,40 +1,26 @@
-import {AlwatrSurfaceElement, ifDefined, css, customElement, html, property} from '@alwatr/element';
+import {AlwatrSurfaceElement, ifDefined, css, customElement, html, property, nothing} from '@alwatr/element';
 
 import '@alwatr/icon';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-icon-box': AlwatrStandardIconButton;
+    'alwatr-icon-box': AlwatrIconBox;
   }
 }
 
-export type iconBoxProperties = {
+export type IconBoxContent = {
   icon: string;
   headline: string;
   description: string;
   href?: string;
-  flipRtl: boolean;
+  flipRtl?: boolean;
 }
 
 /**
  * Alwatr standard icon button element.
- *
- * @prop {String} icon
- * @prop {String} href
- * @prop {String} headline
- * @prop {String} description
- * @prop {String} urlPrefix
- * @prop {Boolean} flipRtl
- *
- * @attr {String} icon
- * @attr {String} href
- * @attr {String} headline
- * @attr {String} description
- * @attr {String} url-prefix
- * @attr {Boolean} flip-rtl
  */
 @customElement('alwatr-icon-box')
-export class AlwatrStandardIconButton extends AlwatrSurfaceElement {
+export class AlwatrIconBox extends AlwatrSurfaceElement {
   static override styles = [
     AlwatrSurfaceElement.styles,
     css`
@@ -106,12 +92,7 @@ export class AlwatrStandardIconButton extends AlwatrSurfaceElement {
   ];
 
   @property({type: Object})
-    properties: iconBoxProperties = {
-      icon: '',
-      description: '',
-      flipRtl: false,
-      headline: '',
-    };
+    content?: IconBoxContent;
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -120,11 +101,12 @@ export class AlwatrStandardIconButton extends AlwatrSurfaceElement {
   }
 
   override render(): unknown {
+    if (this.content == null) return nothing;
     return html`
-      <a href=${ifDefined(this.properties?.href)}>
-        <alwatr-icon .name=${this.properties.icon} ?flip-rtl=${this.properties.flipRtl}></alwatr-icon>
-        <div class="headline">${this.properties.headline}</div>
-        <div class="description">${this.properties.description}</div>
+      <a href=${ifDefined(this.content?.href)}>
+        <alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>
+        <div class="headline">${this.content.headline}</div>
+        <div class="description">${this.content.description}</div>
       </a>
     `;
   }
