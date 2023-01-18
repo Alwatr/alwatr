@@ -54,19 +54,14 @@ export class AlwatrPageCard extends AlwatrSmartElement {
     super.render();
     return html`
       <alwatr-icon-box
-        icon="gift-outline"
-        headline="شرکت در قرعه کشی میدکس"
-        .description=${loremText}
+        .content=${{icon: 'gift-outline', headline: 'شرکت در قرعه کشی میدکس', description: loremText}}
       ></alwatr-icon-box>
       <alwatr-icon-box
-        icon="download-outline"
-        headline="دانلود کاتالوگ"
-        .description=${loremText}
+      .content=${{icon: 'download-outline', headline: 'دانلود کاتالوگ', description: loremText}}
       ></alwatr-icon-box>
       <alwatr-icon-box
-        icon="earth-outline"
-        headline="سایت اصلی"
-        .description=${loremText}
+      .content=${{icon: 'earth-outline', headline: 'سایت اصلی', description: loremText}}
+
       ></alwatr-icon-box>
 
       <alwatr-card stated elevated><input type="text" value="elevated" /></alwatr-card>
