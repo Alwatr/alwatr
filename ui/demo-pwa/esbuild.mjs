@@ -128,7 +128,8 @@ if (debugMode) {
 
 /*
   TODO:
-  - Assets hash
+  - Workbox and sw
+  - Res (all assets) hash
   - PostCSS css file
   - lit css loader
   - PostCSS lit internal styles
