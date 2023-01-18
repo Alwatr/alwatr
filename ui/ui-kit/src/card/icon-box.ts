@@ -13,7 +13,7 @@ declare global {
 export type IconBoxContent = {
   icon: string;
   headline: string;
-  description: string;
+  description?: string;
   href?: string;
   flipRtl?: boolean;
 }
@@ -47,11 +47,11 @@ export class AlwatrIconBox extends AlwatrCard {
       }
 
       .headline {
-        font-family: var(--sys-typescale-display-small-font-family-name);
-        font-weight: var(--sys-typescale-display-small-font-weight);
-        font-size: var(--sys-typescale-display-small-font-size);
-        letter-spacing: var(--sys-typescale-display-small-letter-spacing);
-        line-height: var(--sys-typescale-display-small-line-height);
+        font-family: var(--sys-typescale-headline-small-font-family-name);
+        font-weight: var(--sys-typescale-headline-small-font-weight);
+        font-size: var(--sys-typescale-headline-small-font-size);
+        letter-spacing: var(--sys-typescale-headline-small-letter-spacing);
+        line-height: var(--sys-typescale-headline-small-line-height);
       }
 
       .headline alwatr-icon {
@@ -66,11 +66,11 @@ export class AlwatrIconBox extends AlwatrCard {
       }
 
       .description {
-        font-family: var(--sys-typescale-body-medium-font-family-name);
-        font-weight: var(--sys-typescale-body-medium-font-weight);
-        font-size: var(--sys-typescale-body-medium-font-size);
-        letter-spacing: var(--sys-typescale-body-medium-letter-spacing);
-        line-height: var(--sys-typescale-body-medium-line-height);
+        font-family: var(--sys-typescale-body-small-font-family-name);
+        font-weight: var(--sys-typescale-body-small-font-weight);
+        font-size: var(--sys-typescale-body-small-font-size);
+        letter-spacing: var(--sys-typescale-body-small-letter-spacing);
+        line-height: var(--sys-typescale-body-small-line-height);
         margin-top: calc(2 * var(--sys-spacing-track));
         white-space: pre-line;
       }
@@ -97,7 +97,7 @@ export class AlwatrIconBox extends AlwatrCard {
       <a href=${ifDefined(this.content.href)}>
         <div class="headline">
           <alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>
-          ${this.content.headline}
+          <span>${this.content.headline}</span>
         </div>
         <div class="description">${this.content.description}</div>
       </a>
