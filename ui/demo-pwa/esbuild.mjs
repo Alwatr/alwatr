@@ -28,7 +28,7 @@ logger.logProperty('watchMode', watchMode);
 logger.logProperty('debugMode', debugMode);
 
 if (cleanMode) {
-  logger.logMethod('clean build');
+  logger.logMethod('cleanDist');
   await fs.rm(outDir, {recursive: true, force: true});
 }
 
