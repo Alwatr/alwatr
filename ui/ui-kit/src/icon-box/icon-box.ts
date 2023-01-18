@@ -8,6 +8,14 @@ declare global {
   }
 }
 
+export type iconBoxProperties = {
+  icon: string;
+  headline: string;
+  description: string;
+  href?: string;
+  flipRtl: boolean;
+}
+
 /**
  * Alwatr standard icon button element.
  *
@@ -97,23 +105,13 @@ export class AlwatrStandardIconButton extends AlwatrSurfaceElement {
     `,
   ];
 
-  @property()
-    icon = '';
-
-  @property()
-    headline = '';
-
-  @property()
-    description = '';
-
-  @property()
-    href?: string;
-
-  @property({attribute: 'url-prefix'})
-    urlPrefix?: string;
-
-  @property({type: Boolean, attribute: 'flip-rtl'})
-    flipRtl = false;
+  @property({type: Object})
+    properties: iconBoxProperties = {
+      icon: '',
+      description: '',
+      flipRtl: false,
+      headline: '',
+    };
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -123,10 +121,10 @@ export class AlwatrStandardIconButton extends AlwatrSurfaceElement {
 
   override render(): unknown {
     return html`
-      <a href=${ifDefined(this.href)}>
-        <alwatr-icon .name=${this.icon} .urlPrefix=${this.urlPrefix} ?flip-rtl=${this.flipRtl}></alwatr-icon>
-        <div class="headline">${this.headline}</div>
-        <div class="description">${this.description}</div>
+      <a href=${ifDefined(this.properties?.href)}>
+        <alwatr-icon .name=${this.properties.icon} ?flip-rtl=${this.properties.flipRtl}></alwatr-icon>
+        <div class="headline">${this.properties.headline}</div>
+        <div class="description">${this.properties.description}</div>
       </a>
     `;
   }
