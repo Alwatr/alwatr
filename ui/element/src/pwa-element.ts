@@ -3,9 +3,11 @@ import {router, type RoutesConfig} from '@alwatr/router';
 import {html, css, type CSSResultGroup, type PropertyValues} from 'lit';
 import {cache} from 'lit/directives/cache.js';
 
+import {registerServiceWorker} from './helper/service-worker.js';
+import {AlwatrSmartElement} from './smart-element.js';
+
 import '@alwatr/ui-kit/style/token.css';
 import '@alwatr/ui-kit/style/pwa.css';
-import {AlwatrSmartElement} from './smart-element.js';
 
 /**
  * Alwatr Root Base Element
@@ -69,5 +71,6 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
     this.removeAttribute('unresolved');
+    registerServiceWorker();
   }
 }
