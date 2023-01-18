@@ -1,5 +1,10 @@
-import {AlwatrRootElement, html, customElement} from '@alwatr/element';
+import {html, customElement} from '@alwatr/element';
+import {AlwatrPwaElement} from '@alwatr/element/pwa-element.js';
 import {l10n} from '@alwatr/i18n';
+
+import '@alwatr/ui-kit/style/theme/palette-300.css';
+import '@alwatr/ui-kit/style/theme/color.css';
+import '@alwatr/font/vazirmatn.css';
 
 import './page-home.js';
 
@@ -16,7 +21,7 @@ declare global {
  * Alwatr PWA Root Element
  */
 @customElement('alwatr-pwa-root')
-export class AlwatrPwaRoot extends AlwatrRootElement {
+export class AlwatrPwaRoot extends AlwatrPwaElement {
   protected override _routes: RoutesConfig = {
     map: (route) => route.sectionList[0]?.toString(),
     list: {
