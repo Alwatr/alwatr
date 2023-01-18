@@ -22,18 +22,22 @@ export class AlwatrPageCard extends AlwatrSmartElement {
       flex-wrap: wrap;
       padding: var(--sys-spacing-track);
       box-sizing: border-box;
-      /* height: 100%; */
+      height: 100%;
       gap: var(--sys-spacing-track);
+      overflow-y: scroll;
     }
 
     alwatr-card,
     alwatr-icon-box {
       flex-grow: 1;
-      display: flex;
-      align-items: flex-end;
       width: 25%;
       user-select: none;
       min-height: 15rem;
+    }
+
+    alwatr-card {
+      display: flex;
+      align-items: flex-end;
     }
 
     input {
@@ -54,13 +58,13 @@ export class AlwatrPageCard extends AlwatrSmartElement {
     super.render();
     return html`
       <alwatr-icon-box
-        .content=${{icon: 'gift-outline', headline: 'شرکت در قرعه کشی میدکس', description: loremText}}
+        .content=${{icon: 'gift-outline', headline: 'قرعه کشی', description: loremText}}
       ></alwatr-icon-box>
       <alwatr-icon-box
-        .content=${{icon: 'download-outline', headline: 'دانلود کاتالوگ', description: loremText}}
+        .content=${{icon: 'download-outline', headline: 'کاتالوگ', description: loremText}}
       ></alwatr-icon-box>
       <alwatr-icon-box
-        .content=${{icon: 'earth-outline', headline: 'سایت اصلی', description: loremText}}
+        .content=${{icon: 'earth-outline', headline: 'وب‌سایت', description: loremText, href: '/'}}
       ></alwatr-icon-box>
 
       <alwatr-card stated elevated><input type="text" value="elevated" /></alwatr-card>

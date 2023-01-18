@@ -1,6 +1,8 @@
-import {AlwatrSurfaceElement, ifDefined, css, customElement, html, property, nothing} from '@alwatr/element';
+import {css, customElement, html, property, nothing, ifDefined} from '@alwatr/element';
 
 import '@alwatr/icon';
+
+import {AlwatrCard} from './card.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -20,73 +22,61 @@ export type IconBoxContent = {
  * Alwatr standard icon button element.
  */
 @customElement('alwatr-icon-box')
-export class AlwatrIconBox extends AlwatrSurfaceElement {
+export class AlwatrIconBox extends AlwatrCard {
   static override styles = [
-    AlwatrSurfaceElement.styles,
+    AlwatrCard.styles,
     css`
       :host {
-        display: flex;
-        transition-property: background-color, color;
+        display: block;
+        padding: 0;
+        transition-property: color, background-color;
+        transition-duration: var(--sys-motion-duration-small);
+        transition-timing-function: var(--sys-motion-easing-linear);
+      }
+      :host(:hover) {
+        --_surface-color-on: var(--sys-color-on-primary-hsl);
+        --_surface-color-bg: var(--sys-color-primary-hsl);
       }
 
       a {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        padding: calc(3 * var(--sys-spacing-track));
-        gap: calc(1.5 * var(--sys-spacing-track));
+        display: block;
+        padding: calc(2 * var(--sys-spacing-track));
+        border-radius: inherit;
         color: inherit;
         text-decoration: none;
       }
 
       .headline {
-        font-family: var(--sys-typescale-title-large-font-family-name);
-        font-weight: var(--sys-typescale-title-large-font-weight);
-        font-size: var(--sys-typescale-title-large-font-size);
-        letter-spacing: var(--sys-typescale-title-large-letter-spacing);
-        line-height: var(--sys-typescale-title-large-line-height);
+        font-family: var(--sys-typescale-display-small-font-family-name);
+        font-weight: var(--sys-typescale-display-small-font-weight);
+        font-size: var(--sys-typescale-display-small-font-size);
+        letter-spacing: var(--sys-typescale-display-small-letter-spacing);
+        line-height: var(--sys-typescale-display-small-line-height);
+        margin-bottom: calc(2 * var(--sys-spacing-track));
+      }
+
+      .headline alwatr-icon {
+        display: block;
+        margin-bottom: var(--sys-spacing-track);
+        font-size: 2em;
+        color: var(--sys-color-primary);
+        transition: color var(--sys-motion-duration-small) var(--sys-motion-easing-linear);
+      }
+      :host(:hover) .headline alwatr-icon {
+        color: var(--sys-color-on-primary);
       }
 
       .description {
-        font-family: var(--sys-typescale-label-large-font-family-name);
-        font-weight: var(--sys-typescale-label-large-font-weight);
-        font-size: var(--sys-typescale-label-large-font-size);
-        letter-spacing: var(--sys-typescale-label-large-letter-spacing);
-        line-height: var(--sys-typescale-label-large-line-height);
+        font-family: var(--sys-typescale-body-medium-font-family-name);
+        font-weight: var(--sys-typescale-body-medium-font-weight);
+        font-size: var(--sys-typescale-body-medium-font-size);
+        letter-spacing: var(--sys-typescale-body-medium-letter-spacing);
+        line-height: var(--sys-typescale-body-medium-line-height);
       }
 
       .headline:empty,
       .description:empty {
         display: none;
-      }
-
-      alwatr-icon {
-        color: var(--sys-color-primary);
-        width: calc(5 * var(--sys-spacing-track));
-        height: calc(5 * var(--sys-spacing-track));
-        margin-bottom: var(--sys-spacing-track);
-        transition-property: color;
-      }
-
-      :host,
-      :host alwatr-icon {
-        transition-duration: var(--sys-motion-duration-small-out);
-        transition-timing-function: var(--sys-motion-easing-exiting);
-      }
-    `,
-    css`
-      :host(:hover) {
-        --_surface-color-on: var(--sys-color-on-primary-hsl);
-        --_surface-color-bg: var(--sys-color-primary-hsl);
-      }
-      :host(:hover) alwatr-icon {
-        color: var(--sys-color-on-primary);
-      }
-
-      :host(:hover),
-      :host(:hover) alwatr-icon {
-        transition-duration: var(--sys-motion-duration-small-in);
-        transition-timing-function: var(--sys-motion-easing-incoming);
       }
     `,
   ];
@@ -97,15 +87,18 @@ export class AlwatrIconBox extends AlwatrSurfaceElement {
   override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('stated', '');
-    this.setAttribute('elevated', '');
+    this.setAttribute('elevated', '3');
   }
 
   override render(): unknown {
+    this._logger.logMethod('render');
     if (this.content == null) return nothing;
     return html`
       <a href=${ifDefined(this.content?.href)}>
-        <alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>
-        <div class="headline">${this.content.headline}</div>
+        <div class="headline">
+          <alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>
+          ${this.content.headline}
+        </div>
         <div class="description">${this.content.description}</div>
       </a>
     `;

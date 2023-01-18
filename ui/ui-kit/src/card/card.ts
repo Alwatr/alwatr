@@ -23,7 +23,7 @@ export class AlwatrCard extends AlwatrSurfaceElement {
   ];
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`<slot></slot>`;
   }
 }
