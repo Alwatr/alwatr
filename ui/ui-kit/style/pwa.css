@@ -59,12 +59,8 @@ body.no-scroll {
   overflow: hidden;
 }
 
-alwatr-pwa {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  height: 100%;
-  overflow: hidden;
-  overflow: clip;
-  contain: layout size style;
+alwatr-pwa[unresolved] {
+  display: block;
+  text-align: center;
+  /* TODO: skeleton */
 }

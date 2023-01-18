@@ -1,6 +1,6 @@
 import {l10n} from '@alwatr/i18n';
 import {router, type RoutesConfig} from '@alwatr/router';
-import {html, css, type CSSResultGroup} from 'lit';
+import {html, css, type CSSResultGroup, type PropertyValues} from 'lit';
 import {cache} from 'lit/directives/cache.js';
 
 import '@alwatr/ui-kit/style/token.css';
@@ -62,5 +62,10 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
   override render(): unknown {
     super.render();
     return html`<div class="page-container">${cache(router.outlet(this._routes))}</div>`;
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(changedProperties);
+    this.removeAttribute('unresolved');
   }
 }
