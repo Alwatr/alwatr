@@ -1069,13 +1069,13 @@
   resolved "https://registry.yarnpkg.com/@hutson/parse-repository-url/-/parse-repository-url-3.0.2.tgz#98c23c950a3d9b6c8f0daed06da6c3af06981340"
   integrity sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==
 
-"@ionic/core@^6.4.2":
-  version "6.4.2"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-6.4.2.tgz#44e777f71f074a68734f15a40b84c685cc37a258"
-  integrity sha512-X6lKIrVL68UC3HenkUpOMw2Wu6D+XN42EbBPJdKFxGiW8ozhpzYj8QMUcX6ESC7jk44CrpUN3GpHhb+Lrw78OA==
+"@ionic/core@^6.5.0":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-6.5.0.tgz#60095211c15609218855a924117d65764db69334"
+  integrity sha512-vefrnd1WYZJnjSXwsY1sn3HJpBDKPGnwtO2US55Qrjz0d9HyUwocHgVvkvLAAKZG+LGErJbVeV8aTmdYEydRgg==
   dependencies:
     "@stencil/core" "^2.18.0"
-    ionicons "^6.0.4"
+    ionicons "^6.1.1"
     tslib "^2.1.0"
 
 "@isaacs/string-locale-compare@^1.1.0":
@@ -5449,10 +5449,10 @@ intersection-observer@^0.12.0:
   resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.12.2.tgz#4a45349cc0cd91916682b1f44c28d7ec737dc375"
   integrity sha512-7m1vEcPCxXYI8HqnL8CKI6siDyD+eIWSwgB3DZA+ZTogxk9I4CDnj4wilt9x/+/QbHI4YG5YZNmC6458/e9Ktg==
 
-ionicons@^6.0.4:
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-6.0.4.tgz#ab7aa439b7f17f29e0ef0a28568b4920c3167bfd"
-  integrity sha512-uDNOkBo0OVYV+kIhb51g9mb7r3Z0b+78GPZQBsjXuaetNmrB/mNTqN/uFtO+vxL/rQySKjzk8qeKJI5NWL9Ueg==
+ionicons@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-6.1.1.tgz#4c24c29aaf9ec235d741e7fe692e47ea814b1a7d"
+  integrity sha512-Qe6mx25DFNwA9UL1rhewI5StI3uD4+BqB2KdvLjyWhtvoUXwyAsmfHLZuDANAHQowIKtTt6BZCt5/g5NIQ635Q==
   dependencies:
     "@stencil/core" "^2.18.0"
 
