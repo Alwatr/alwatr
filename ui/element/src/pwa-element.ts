@@ -41,23 +41,24 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
 
   constructor() {
     super();
+    this._initLocale();
     this._initRouter();
   }
 
-  protected _initRouter(): void {
-    l10n.config.defaultLocale = {
-      code: 'en-US',
-      direction: 'ltr',
-      language: 'en',
-    };
+  protected _initLocale(): void {
+    this._logger.logMethod('_initLocale');
     l10n.setLocal();
+  }
 
-    router.signal.addListener((route) => {
-      this._logger.logMethodArgs('routeChanged', {route});
-      this.requestUpdate();
-    });
-
+  protected _initRouter(): void {
+    this._logger.logMethod('_initRouter');
+    router.signal.addListener(this._routeChanged.bind(this));
     router.initial();
+  }
+
+  protected _routeChanged(): void {
+    this._logger.logMethod('routeChanged');
+    this.requestUpdate();
   }
 
   override render(): unknown {
