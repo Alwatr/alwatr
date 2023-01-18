@@ -31,14 +31,12 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
     },
   };
 
-  override firstUpdated(changedProperties: PropertyValues<this>): void {
-    super.firstUpdated(changedProperties);
-
+  protected override _initLocale(): void {
     l10n.config.defaultLocale = {
       code: 'fa-IR',
       direction: 'rtl',
       language: 'fa',
     };
-    l10n.setLocal();
+    super._initLocale();
   }
 }
