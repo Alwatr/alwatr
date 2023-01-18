@@ -52,7 +52,6 @@ export class AlwatrIconBox extends AlwatrCard {
         font-size: var(--sys-typescale-display-small-font-size);
         letter-spacing: var(--sys-typescale-display-small-letter-spacing);
         line-height: var(--sys-typescale-display-small-line-height);
-        margin-bottom: calc(2 * var(--sys-spacing-track));
       }
 
       .headline alwatr-icon {
@@ -72,9 +71,9 @@ export class AlwatrIconBox extends AlwatrCard {
         font-size: var(--sys-typescale-body-medium-font-size);
         letter-spacing: var(--sys-typescale-body-medium-letter-spacing);
         line-height: var(--sys-typescale-body-medium-line-height);
+        margin-top: calc(2 * var(--sys-spacing-track));
       }
 
-      .headline:empty,
       .description:empty {
         display: none;
       }
