@@ -11,7 +11,7 @@ services:
     cpu_shares: 1024
     mem_limit: 256m
 
-    # restart: unless-stopped
+    restart: unless-stopped
 
     networks:
       alwatr-public-network:

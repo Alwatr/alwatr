@@ -73,7 +73,7 @@ jobs:
           - image: soffit-pwa
             source: uniquely/soffit-pwa
             dockerfile: cloud/container/alwatr-pwa.dockerfile
-            description: Alwatr Soffit PWA.
+            description: Soffit PWA.
 
     permissions:
       contents: read
