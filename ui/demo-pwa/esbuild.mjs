@@ -6,6 +6,7 @@ import {promises as fs, existsSync} from 'node:fs';
 
 import {createLogger} from '@alwatr/logger';
 import * as esbuild from 'esbuild';
+import {generateSW} from 'workbox-build';
 
 import packageJson from './package.json' assert {type: 'json'};
 
@@ -109,17 +110,31 @@ async function makeHtml() {
     throw new Error('css_filename_not_found');
   }
 
-  htmlContent = htmlContent
-      .replace('alwatr-pwa.css', cssFilename)
-      .replace('alwatr-pwa.js', jsFilename)
-  ;
+  htmlContent = htmlContent.replace('alwatr-pwa.css', cssFilename).replace('alwatr-pwa.js', jsFilename);
 
   await copyPromise; // wait to cp done
   await fs.writeFile(`${outDir}/index.html`, htmlContent, {encoding: 'utf-8', flag: 'w'});
 }
 
+async function buildServiceWorker() {
+  logger.logMethod('buildServiceWorker');
+
+  const build = await generateSW({
+    swDest: `${outDir}/service-worker.js`,
+    globDirectory: `${outDir}`,
+    clientsClaim: true,
+    skipWaiting: true,
+    globPatterns: [
+      '**/*.{js,css,html,json,png,svg,ico,webp,woff2,woff}',
+    ],
+  });
+
+  logger.logOther('serviceWorkerPath', build);
+}
+
 if (!watchMode) {
-  makeHtml();
+  await makeHtml();
+  await buildServiceWorker();
 }
 
 if (debugMode) {
