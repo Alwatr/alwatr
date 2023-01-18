@@ -40,7 +40,7 @@
     "@alwatr/signal": "^0.27.0",
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
-    "@ionic/core": "^6.4.2",
+    "@ionic/core": "^6.5.0",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-terser": "^0.3.0",
