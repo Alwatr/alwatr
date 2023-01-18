@@ -5,10 +5,8 @@ import {l10n} from '@alwatr/i18n';
 import '@alwatr/ui-kit/style/theme/palette-300.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/font/vazirmatn.css';
-
 import './page-home.js';
 
-import type {PropertyValues} from '@alwatr/element';
 import type {RoutesConfig} from '@alwatr/router';
 
 declare global {
