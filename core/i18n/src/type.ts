@@ -1,6 +1,6 @@
 import type {L10Resource, Locale} from '@alwatr/type';
 
-export {L10Resource, Locale};
+export type {L10Resource, Locale};
 
 declare global {
   interface AlwatrSignals {

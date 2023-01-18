@@ -1,16 +1,5 @@
 :root {
-  --ref-palette-primary-hue: 300;
-  --ref-palette-primary-chroma: 48%; /* maximum 48 */
-  --ref-palette-secondary-hue: var(--ref-palette-primary-hue);
-  --ref-palette-secondary-chroma: 16%;
-  --ref-palette-tertiary-hue: calc(var(--ref-palette-primary-hue) + 60);
-  --ref-palette-tertiary-chroma: 24%;
-  --ref-palette-neutral-hue: var(--ref-palette-primary-hue);
-  --ref-palette-neutral-chroma: 4;
-  --ref-palette-neutral-variant-hue: var(--ref-palette-primary-hue);
-  --ref-palette-neutral-variant-chroma: 8;
-  --ref-palette-error-hue: 25;
-  --ref-palette-error-chroma: 84;
+  /* HCT 300 */
 
   /* primary */
   --ref-palette-primary0: 0, 0%, 0%;

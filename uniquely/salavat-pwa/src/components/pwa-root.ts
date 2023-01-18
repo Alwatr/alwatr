@@ -1,4 +1,5 @@
-import {AlwatrRootElement, html, customElement, css} from '@alwatr/element';
+import {html, customElement, css} from '@alwatr/element';
+import {AlwatrPwaElement} from '@alwatr/element/pwa-element.js';
 import {l10n} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
@@ -23,9 +24,9 @@ declare global {
  * Alwatr PWA Root Element
  */
 @customElement('alwatr-pwa-root')
-export class AlwatrPwaRoot extends AlwatrRootElement {
+export class AlwatrPwaRoot extends AlwatrPwaElement {
   static override styles: CSSResultGroup = [
-    AlwatrRootElement.styles,
+    AlwatrPwaElement.styles,
     css`
       :host {
         user-select: none;

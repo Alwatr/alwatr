@@ -1,10 +1,9 @@
-import {serviceRequest} from '@alwatr/fetch';
+import {type CacheStrategy, serviceRequest} from '@alwatr/fetch';
 import {createLogger} from '@alwatr/logger';
 import {SignalInterface} from '@alwatr/signal';
 
 import {showToastSignal} from './toast.js';
 
-import type {CacheStrategy} from '@alwatr/fetch';
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Job} from '@alwatr/type/flight-finder.js';
 

@@ -5,9 +5,7 @@ Elegant micro in-memory json-like storage with disk backed, Fastest NoSQL Databa
 ## Example usage
 
 ```ts
-import {AlwatrStorageEngine} from '@alwatr/storage-engine';
-
-import type {AlwatrDocumentObject} from '@alwatr/storage-engine';
+import {type AlwatrDocumentObject, AlwatrStorageEngine} from '@alwatr/storage-engine';
 
 type User = AlwatrDocumentObject & {
   fname: string;

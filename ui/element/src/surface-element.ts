@@ -1,8 +1,6 @@
-import {css} from 'lit';
+import {css, type CSSResultGroup} from 'lit';
 
 import {AlwatrDummyElement} from './dummy-element.js';
-
-import type {CSSResultGroup} from 'lit';
 
 /**
  * Alwatr Surface Base Element

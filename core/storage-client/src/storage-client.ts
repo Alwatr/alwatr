@@ -1,15 +1,14 @@
-import {serviceRequest} from '@alwatr/fetch';
+import {type FetchOptions, serviceRequest} from '@alwatr/fetch';
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 
 import type {AlwatrStorageClientConfig} from './type.js';
-import type {FetchOptions} from '@alwatr/fetch';
 import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
 
-export {AlwatrStorageClientConfig};
+export {type AlwatrStorageClientConfig};
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/storage-client',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 /**
@@ -18,8 +17,7 @@ globalAlwatr.registeredList.push({
  * Example:
  *
  * ```ts
- * import {AlwatrStorageClient} from '@alwatr/storage-client';
- * import type {AlwatrDocumentObject } from '@alwatr/storage-client';
+ * import {type AlwatrDocumentObject, AlwatrStorageClient} from '@alwatr/storage-client';
  *
  * interface User extends AlwatrDocumentObject  {
  *   fname: string;

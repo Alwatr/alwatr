@@ -23,7 +23,7 @@ export type RouteMiddleware<TData = Record<string, unknown>, TMeta = Record<stri
   connection: AlwatrConnection
 ) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>;
 
-export {
+export type {
   NanoServerConfig,
   ConnectionConfig,
   AlwatrServiceResponse,
@@ -34,7 +34,7 @@ export {
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/nano-server',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 export class AlwatrNanoServer {
