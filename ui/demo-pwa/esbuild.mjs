@@ -127,7 +127,7 @@ async function buildServiceWorker() {
     clientsClaim: true,
     skipWaiting: true,
     globPatterns: [
-      '**/*.{js,css,html,json,png,svg,ico,webp,woff2,woff}',
+      '**/*.{js,css,json,png,svg,ico,webp,woff2}',
     ],
   });
 
