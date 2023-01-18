@@ -15,12 +15,13 @@ import {AlwatrSmartElement} from './smart-element.js';
 export class AlwatrPwaElement extends AlwatrSmartElement {
   static override styles: CSSResultGroup = css`
     :host {
+      contain: layout size style;
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
       overflow: hidden;
       overflow: clip;
-      contain: layout size style;
+      height: 100%;
     }
 
     .page-container {
