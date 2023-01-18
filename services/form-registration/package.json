@@ -25,9 +25,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "services/form"
+    "directory": "services/form-registration"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/services/form#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/services/form-registration#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

@@ -44,8 +44,8 @@ jobs:
             dockerfile: cloud/container/alwatr-services.dockerfile
             description: Alwatr Flight Crawler Nanoservice, Distributed simple and fast flight crawler nanoservice.
 
-          - image: form-registering
-            source: services/form-registering
+          - image: form-registration
+            source: services/form-registration
             dockerfile: cloud/container/alwatr-services.dockerfile
             description: Alwatr Form Registration API Nanoservice, Distributed simple and fast nanoservice for registering form information.
 
@@ -69,6 +69,11 @@ jobs:
             source: uniquely/flight-finder-pwa
             dockerfile: cloud/container/alwatr-pwa.dockerfile
             description: Alwatr Flight Finder PWA.
+
+          - image: soffit-pwa
+            source: uniquely/soffit-pwa
+            dockerfile: cloud/container/alwatr-pwa.dockerfile
+            description: Soffit PWA.
 
     permissions:
       contents: read

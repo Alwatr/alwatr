@@ -36,12 +36,12 @@
     {"path": "./services/flight-crawler"},
     {"path": "./services/storage-server"},
     {"path": "./services/comment"},
-    {"path": "./services/form-registering"},
+    {"path": "./services/form-registration"},
 
     // uniquely
     {"path": "./uniquely/flight-finder-api"},
     {"path": "./uniquely/flight-finder-pwa"},
-    {"path": "./uniquely/soffit-site-pwa"},
+    {"path": "./uniquely/soffit-pwa"},
     {"path": "./ui/demo-pwa"},
 
     // labs
