@@ -4325,10 +4325,10 @@ eslint-plugin-import@^2.27.5:
     semver "^6.3.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-lit@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-lit/-/eslint-plugin-lit-1.8.0.tgz#bb04c660b7f32e9f8cf22b87f4c59947358e637c"
-  integrity sha512-wY/Z4SksuTkpELl4okhXHBf63V44PV2n19/HOBa7cPH6g+yyzvIMpIZ26BQbzEC54GwwWoYtONY3WvAjMNV8Cg==
+eslint-plugin-lit@^1.8.2:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-lit/-/eslint-plugin-lit-1.8.2.tgz#e4ba34f641e7ffdde3c6004313a99dafd1945a43"
+  integrity sha512-4mOGcSRNEPMh7AN2F7Iy6no36nuFgyYOsnTRhFw1k8xyy1Zm6QOp788ywDvJqy+eelFbLPBhq20Qr55a887Dmw==
   dependencies:
     parse5 "^6.0.1"
     parse5-htmlparser2-tree-adapter "^6.0.1"

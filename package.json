@@ -60,7 +60,7 @@
     "eslint-config-google": "^0.14.0",
     "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-lit": "^1.8.0",
+    "eslint-plugin-lit": "^1.8.2",
     "eslint-plugin-wc": "^1.4.0",
     "lerna": "^6.4.1",
     "lit-analyzer": "^1.2.1",
