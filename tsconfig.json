@@ -36,7 +36,7 @@
     {"path": "./services/flight-crawler"},
     {"path": "./services/storage-server"},
     {"path": "./services/comment"},
-    {"path": "./services/form-registering"},
+    {"path": "./services/form-registration"},
 
     // uniquely
     {"path": "./uniquely/flight-finder-api"},
