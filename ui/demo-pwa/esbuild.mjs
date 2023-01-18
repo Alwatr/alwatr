@@ -110,7 +110,9 @@ async function makeHtml() {
     throw new Error('css_filename_not_found');
   }
 
-  htmlContent = htmlContent.replace('alwatr-pwa.css', cssFilename).replace('alwatr-pwa.js', jsFilename);
+  htmlContent = htmlContent
+      .replace('alwatr-pwa.css', cssFilename)
+      .replace('alwatr-pwa.js', jsFilename);
 
   await copyPromise; // wait to cp done
   await fs.writeFile(`${outDir}/index.html`, htmlContent, {encoding: 'utf-8', flag: 'w'});
@@ -133,6 +135,7 @@ async function buildServiceWorker() {
 }
 
 if (!watchMode) {
+  // first, the dist files must be created, and then create a service worker from that.
   await makeHtml();
   await buildServiceWorker();
 }
