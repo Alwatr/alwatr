@@ -57,7 +57,7 @@ export class AlwatrIconBox extends AlwatrCard {
       .headline alwatr-icon {
         display: block;
         margin-bottom: var(--sys-spacing-track);
-        font-size: 2em;
+        font-size: 1.5em;
         color: var(--sys-color-primary);
         transition: color var(--sys-motion-duration-small) var(--sys-motion-easing-linear);
       }
@@ -72,6 +72,7 @@ export class AlwatrIconBox extends AlwatrCard {
         letter-spacing: var(--sys-typescale-body-medium-letter-spacing);
         line-height: var(--sys-typescale-body-medium-line-height);
         margin-top: calc(2 * var(--sys-spacing-track));
+        white-space: pre-line;
       }
 
       .description:empty {
@@ -93,7 +94,7 @@ export class AlwatrIconBox extends AlwatrCard {
     this._logger.logMethod('render');
     if (this.content == null) return nothing;
     return html`
-      <a href=${ifDefined(this.content?.href)}>
+      <a href=${ifDefined(this.content.href)}>
         <div class="headline">
           <alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>
           ${this.content.headline}
