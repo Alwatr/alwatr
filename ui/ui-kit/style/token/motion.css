@@ -2,12 +2,12 @@
   --ref-motion-duration-frame: 16.66666666666666667ms;
 
   --sys-motion-duration-none: calc(2 * var(--ref-motion-duration-frame));
-  --sys-motion-duration-small-in: calc(8 * var(--ref-motion-duration-frame));
+  --sys-motion-duration-small: calc(8 * var(--ref-motion-duration-frame));
   --sys-motion-duration-small-out: calc(6 * var(--ref-motion-duration-frame));
-  --sys-motion-duration-medium-in: calc(16 * var(--ref-motion-duration-frame));
+  --sys-motion-duration-medium: calc(16 * var(--ref-motion-duration-frame));
   --sys-motion-duration-medium-out: calc(12 * var(--ref-motion-duration-frame));
-  --sys-motion-duration-large-in: calc(18 * var(--ref-motion-duration-frame));
-  --sys-motion-duration-large-out: calc(16 * var(--ref-motion-duration-frame));
+  --sys-motion-duration-large: calc(18 * var(--ref-motion-duration-frame));
+  --sys-motion-duration-large-out: var(--sys-motion-duration-medium);
 
   --sys-motion-easing-linear: cubic-bezier(0.4, 0, 0.6, 1);
   --sys-motion-easing-incoming: cubic-bezier(0, 0, 0.2, 1);
