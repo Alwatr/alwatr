@@ -42,6 +42,7 @@
     {"path": "./uniquely/flight-finder-api"},
     {"path": "./uniquely/flight-finder-pwa"},
     {"path": "./uniquely/soffit-pwa"},
+    {"path": "./uniquely/salavat-pwa"},
     {"path": "./ui/demo-pwa"},
     {"path": "./uniquely/salavat-api"},
 

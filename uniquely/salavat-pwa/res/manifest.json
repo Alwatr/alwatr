@@ -1,0 +1,36 @@
+{
+  "short_name": "Salav.at",
+  "name": "www.Salav.at",
+  "description": "www.Salav.at",
+  "start_url": "/?pwa",
+  "display": "standalone",
+  "theme_color": "#3277b9",
+  "background_color": "#3277b9",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "images/manifest/icon-192x192.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    },
+    {
+      "src": "images/manifest/icon-512x512.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    },
+    {
+      "src": "images/manifest/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/manifest/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
