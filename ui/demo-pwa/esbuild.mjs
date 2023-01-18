@@ -19,7 +19,7 @@ const srcFilename = 'alwatr-pwa';
 
 const cleanMode = process.argv.includes('--clean');
 const watchMode = process.argv.includes('--watch');
-const debugMode = watchMode || process.argv.includes('--debug');
+const debugMode = process.argv.includes('--debug');
 
 logger.logOther(banner);
 

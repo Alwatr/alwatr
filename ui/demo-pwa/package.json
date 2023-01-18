@@ -20,8 +20,8 @@
     "directory": "ui/demo-pwa"
   },
   "scripts": {
-    "b": "yarn build",
-    "cb": "run-s clean build",
+    "b": "yarn build --debug",
+    "cb": "yarn build --debug --clean",
     "s": "yarn start",
     "w": "yarn watch",
     "start": "NODE_OPTIONS=--enable-source-maps run-s clean build serve",
