@@ -1,12 +1,48 @@
-import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element';
 
-import '@alwatr/ui-kit/icon-box/icon-box.js';
+import '@alwatr/ui-kit/card/icon-box.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-page-home': AlwatrPageHome;
   }
 }
+
+const menuList: Array<IconBoxContent> = [
+  {
+    icon: 'logo-microsoft',
+    headline: 'بازرگانی سافیت',
+    description: `مجموعه تولیدی بازرگانی سافیت
+      تولید کننده عمده محصولات DRY WALL ، سازه ۶۰ کلیک، تایل کچی 60*60 و روکش P.V.C
+      برند درجه یک صادراتی با فعالیت های بین المللی و ویژگی های ممتاز`,
+  },
+  {
+    icon: 'gift-outline',
+    headline: 'قرعه کشی',
+    description: 'فرم شرکت در قرعه کشی میدکس',
+  },
+  {
+    icon: 'download-outline',
+    headline: 'کاتالوگ',
+    description: 'دانلود کاتالوگ معرفی محصولات بازرگانی سافیت',
+  },
+  {
+    icon: 'call-outline',
+    headline: 'ارتباط با ما',
+    description: 'ارتباط مستقیم با دفتر مرکزی بازرگانی سافیت',
+  },
+  {
+    icon: 'logo-instagram',
+    headline: 'اینستاگرام',
+    description: 'کانال اینستاگرام بازرگانی سافیت',
+  },
+  {
+    icon: 'send-outline',
+    headline: 'تلگرام',
+    description: 'کانال تلگرام بازرگانی سافیت',
+  },
+];
 
 /**
  * Alwatr Demo Home Page
@@ -79,50 +115,18 @@ export class AlwatrPageHome extends AlwatrSmartElement {
 
   override render(): unknown {
     super.render();
-
-    // eslint-disable-next-line max-len
-    const loremText = `مداد رنگی ها مشغول بودند به جز مداد سفید، هیهم باشیم شاید فردا ما هم در کنار هم نباشیم…`;
-
     return html`
       <header>
-        <img src="image/soffit.jpg" />
+        <img src="image/soffit.png" alt="SOFFIT Logo" />
       </header>
-      <section>
-        <alwatr-icon-box
-          href="/"
-          icon="gift-outline"
-          description=${loremText}
-          headline="شرکت در قرعه کشی میدکس"
-        ></alwatr-icon-box>
-        <alwatr-icon-box
-          href="/"
-          icon="download-outline"
-          description=${loremText}
-          headline="دانلود کاتالوگ"
-        ></alwatr-icon-box>
-        <alwatr-icon-box href="/" icon="earth-outline" description=${loremText} headline="سایت اصلی"></alwatr-icon-box>
-        <alwatr-icon-box
-          href="/"
-          icon="call-outline"
-          description=${loremText}
-          headline="ارتباط مستقیم با سافیت"
-        ></alwatr-icon-box>
-        <alwatr-icon-box
-          href="/"
-          icon="logo-instagram"
-          description=${loremText}
-          headline="اینستاگرام"
-        ></alwatr-icon-box>
-        <alwatr-icon-box
-          href="/"
-          icon="send-outline"
-          description=${loremText}
-          headline="کانال تلگرام"
-        ></alwatr-icon-box>
-      </section>
+      <section>${this._menuTemplate()}</section>
       <footer>
         <span>A good ceiling is vital. But a SOFFIT ceiling can be an inspiration.</span>
       </footer>
     `;
+  }
+
+  protected _menuTemplate():unknown {
+    return map(menuList, (menuItem) => html`<alwatr-icon-box .content=${menuItem}></alwatr-icon-box>`);
   }
 }
