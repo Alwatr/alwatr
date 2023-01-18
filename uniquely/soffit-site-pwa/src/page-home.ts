@@ -9,8 +9,9 @@ declare global {
   }
 }
 
-const menuList: Array<IconBoxContent> = [
+const menuList: Array<IconBoxContent & {wide?: boolean}> = [
   {
+    wide: true,
     icon: 'logo-microsoft',
     headline: 'بازرگانی سافیت',
     description: `مجموعه تولیدی بازرگانی سافیت
@@ -18,19 +19,15 @@ const menuList: Array<IconBoxContent> = [
       برند درجه یک صادراتی با فعالیت های بین المللی و ویژگی های ممتاز`,
   },
   {
+    wide: true,
     icon: 'gift-outline',
-    headline: 'قرعه کشی',
-    description: 'فرم شرکت در قرعه کشی میدکس',
+    headline: 'قرعه‌کشی میدکس',
+    description: 'فرم شرکت در قرعه‌کشی میدکس',
   },
   {
-    icon: 'download-outline',
-    headline: 'کاتالوگ',
+    icon: 'cloud-download-outline',
+    headline: 'دانلود کاتالوگ',
     description: 'دانلود کاتالوگ معرفی محصولات بازرگانی سافیت',
-  },
-  {
-    icon: 'call-outline',
-    headline: 'ارتباط با ما',
-    description: 'ارتباط مستقیم با دفتر مرکزی بازرگانی سافیت',
   },
   {
     icon: 'logo-instagram',
@@ -39,8 +36,13 @@ const menuList: Array<IconBoxContent> = [
   },
   {
     icon: 'send-outline',
-    headline: 'تلگرام',
+    headline: 'کانال تلگرام',
     description: 'کانال تلگرام بازرگانی سافیت',
+  },
+  {
+    icon: 'call-outline',
+    headline: 'تماس باما',
+    description: 'ارتباط مستقیم با دفتر مرکزی بازرگانی سافیت',
   },
 ];
 
@@ -51,8 +53,7 @@ const menuList: Array<IconBoxContent> = [
 export class AlwatrPageHome extends AlwatrSmartElement {
   static override styles = css`
     :host {
-      display: flex;
-      flex-direction: column;
+      display: block;
       height: 100%;
       overflow-y: auto;
     }
@@ -80,53 +81,52 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       background-color: var(--sys-scrollbar-color-hover);
     }
 
-    section {
+    main {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      flex-grow: 1;
-      box-sizing: border-box;
+      flex-wrap: wrap;
       padding: calc(2 * var(--sys-spacing-track));
       gap: calc(2 * var(--sys-spacing-track));
     }
 
+    main alwatr-icon-box {
+      width: 40%;
+      flex-grow: 1;
+    }
+
+    main alwatr-icon-box[wide] {
+      width: 100%;
+    }
+
     header {
-      display: flex;
-      align-items: center;
       padding: calc(2 * var(--sys-spacing-track));
     }
 
     header img {
+      display: block;
       width: 100%;
     }
 
     footer {
-      width: 100%;
-      display: flex;
       direction: ltr;
       text-align: center;
-      box-sizing: border-box;
-      color: var(--sys-color-on-primary-container);
+      color: var(--sys-color-on-secondary-container);
       padding: calc(2 * var(--sys-spacing-track));
-      background-color: var(--sys-color-primary-container);
-      box-shadow: var(--sys-surface-elevation-4);
+      background-color: var(--sys-color-secondary-container);
     }
   `;
 
   override render(): unknown {
     super.render();
     return html`
-      <header>
-        <img src="image/soffit.png" alt="SOFFIT Logo" />
-      </header>
-      <section>${this._menuTemplate()}</section>
-      <footer>
-        <span>A good ceiling is vital. But a SOFFIT ceiling can be an inspiration.</span>
-      </footer>
+      <header><img src="image/soffit.png" alt="SOFFIT Logo" /></header>
+      <main>${this._menuTemplate()}</main>
+      <footer><span>A good ceiling is vital.<br/>a SOFFIT ceiling can be an inspiration.</span></footer>
     `;
   }
 
   protected _menuTemplate():unknown {
-    return map(menuList, (menuItem) => html`<alwatr-icon-box .content=${menuItem}></alwatr-icon-box>`);
+    return map(menuList, (menuItem) => html`
+      <alwatr-icon-box .content=${menuItem} ?wide=${menuItem.wide}></alwatr-icon-box>
+    `);
   }
 }
