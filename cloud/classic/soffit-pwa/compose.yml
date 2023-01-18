@@ -6,7 +6,7 @@ networks:
 
 services:
   pwa:
-    image: ghcr.io/alimd/soffit-site-pwa:${PWA_VERSION:-next}
+    image: ghcr.io/alimd/soffit-pwa:${PWA_VERSION:-next}
 
     cpu_shares: 1024
     mem_limit: 256m
