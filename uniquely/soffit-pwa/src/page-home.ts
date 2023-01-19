@@ -1,7 +1,8 @@
 import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element';
 
-import '@alwatr/ui-kit/card/icon-box.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+
+import '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -23,26 +24,35 @@ const menuList: Array<IconBoxContent & {wide?: boolean}> = [
     icon: 'gift-outline',
     headline: 'قرعه‌کشی میدکس',
     description: 'فرم شرکت در قرعه‌کشی میدکس',
+    href: 'https://formafzar.com/form/fd8lo',
+    target: '_blank',
   },
   {
     icon: 'cloud-download-outline',
     headline: 'دانلود کاتالوگ',
     description: 'دانلود کاتالوگ معرفی محصولات بازرگانی سافیت',
+    href: '',
+    target: 'download',
   },
   {
     icon: 'logo-instagram',
     headline: 'اینستاگرام',
     description: 'کانال اینستاگرام بازرگانی سافیت',
+    href: 'https://instagram.com/soffit.co',
+    target: '_blank',
   },
   {
     icon: 'send-outline',
     headline: 'کانال تلگرام',
     description: 'کانال تلگرام بازرگانی سافیت',
+    href: 'https://t.me/soffitcompany',
+    target: '_blank',
   },
   {
     icon: 'call-outline',
     headline: 'تماس باما',
     description: 'ارتباط مستقیم با دفتر مرکزی بازرگانی سافیت',
+    href: 'tel:+989155599674',
   },
 ];
 

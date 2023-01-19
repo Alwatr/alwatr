@@ -16,7 +16,8 @@ export type IconBoxContent = {
   description?: string;
   href?: string;
   flipRtl?: boolean;
-}
+  target?: 'download' | '_blank';
+};
 
 /**
  * Alwatr standard icon button element.
@@ -32,6 +33,8 @@ export class AlwatrIconBox extends AlwatrCard {
         transition-property: color, background-color;
         transition-duration: var(--sys-motion-duration-small);
         transition-timing-function: var(--sys-motion-easing-linear);
+        user-select: none;
+        -webkit-user-select: none;
       }
       :host(:hover) {
         --_surface-color-on: var(--sys-color-on-primary-hsl);
@@ -93,8 +96,14 @@ export class AlwatrIconBox extends AlwatrCard {
   override render(): unknown {
     this._logger.logMethod('render');
     if (this.content == null) return nothing;
+    const target = this.content.target !== 'download' ? this.content.target : undefined;
+
     return html`
-      <a href=${ifDefined(this.content.href)}>
+      <a
+        href=${ifDefined(this.content.href)}
+        target=${ifDefined(target)}
+        ?download=${this.content.target === 'download'}
+      >
         <div class="headline">
           <alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>
           <span>${this.content.headline}</span>
