@@ -28,21 +28,25 @@ const menuList: Array<IconBoxContent & {wide?: boolean}> = [
     icon: 'cloud-download-outline',
     headline: 'دانلود کاتالوگ',
     description: 'دانلود کاتالوگ معرفی محصولات بازرگانی سافیت',
+    href: '',
   },
   {
     icon: 'logo-instagram',
     headline: 'اینستاگرام',
     description: 'کانال اینستاگرام بازرگانی سافیت',
+    href: 'https://instagram.com/soffit.co?igshid=MDM4ZDc5MmU=',
   },
   {
     icon: 'send-outline',
     headline: 'کانال تلگرام',
     description: 'کانال تلگرام بازرگانی سافیت',
+    href: 'https://t.me/soffitcompany',
   },
   {
     icon: 'call-outline',
     headline: 'تماس باما',
     description: 'ارتباط مستقیم با دفتر مرکزی بازرگانی سافیت',
+    href: 'tel: +989155599674',
   },
 ];
 
