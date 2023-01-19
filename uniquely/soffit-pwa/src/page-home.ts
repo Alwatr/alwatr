@@ -30,18 +30,21 @@ const menuList: Array<IconBoxContent & {wide?: boolean}> = [
     headline: 'دانلود کاتالوگ',
     description: 'دانلود کاتالوگ معرفی محصولات بازرگانی سافیت',
     href: '',
+    target: 'download',
   },
   {
     icon: 'logo-instagram',
     headline: 'اینستاگرام',
     description: 'کانال اینستاگرام بازرگانی سافیت',
     href: 'https://instagram.com/soffit.co',
+    target: 'blank',
   },
   {
     icon: 'send-outline',
     headline: 'کانال تلگرام',
     description: 'کانال تلگرام بازرگانی سافیت',
     href: 'https://t.me/soffitcompany',
+    target: 'blank',
   },
   {
     icon: 'call-outline',

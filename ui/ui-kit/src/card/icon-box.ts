@@ -16,7 +16,7 @@ export type IconBoxContent = {
   description?: string;
   href?: string;
   flipRtl?: boolean;
-  target?: 'download' | '_blank' | '_top' | '_parent' | '_self';
+  target?: 'download' | 'blank';
 };
 
 /**
@@ -33,6 +33,8 @@ export class AlwatrIconBox extends AlwatrCard {
         transition-property: color, background-color;
         transition-duration: var(--sys-motion-duration-small);
         transition-timing-function: var(--sys-motion-easing-linear);
+        user-select: none;
+        -webkit-user-select: none;
       }
       :host(:hover) {
         --_surface-color-on: var(--sys-color-on-primary-hsl);
@@ -94,10 +96,15 @@ export class AlwatrIconBox extends AlwatrCard {
   override render(): unknown {
     this._logger.logMethod('render');
     if (this.content == null) return nothing;
+    let target: string | undefined;
+    if (this.content.target === 'blank') {
+      target = '_blank';
+    }
+
     return html`
       <a
         href=${ifDefined(this.content.href)}
-        target=${this.content.href !== 'download' ? ifDefined(this.content.href) : '_self'}
+        target=${ifDefined(target)}
         ?download=${this.content.target === 'download'}
       >
         <div class="headline">
