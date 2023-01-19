@@ -35,6 +35,7 @@ function swStateChange(sw: ServiceWorker): void {
     // if old controller available then its update else its new install
     if (navigator.serviceWorker.controller) {
       // send sw-updated signal;
+      setTimeout(() => window.location.reload(), 1_000); // temp
     }
   }
   else if (sw.state === 'redundant') {
