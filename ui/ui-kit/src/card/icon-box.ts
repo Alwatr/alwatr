@@ -16,7 +16,7 @@ export type IconBoxContent = {
   description?: string;
   href?: string;
   flipRtl?: boolean;
-  target?: 'download' | 'blank';
+  target?: 'download' | '_blank';
 };
 
 /**
@@ -96,7 +96,7 @@ export class AlwatrIconBox extends AlwatrCard {
   override render(): unknown {
     this._logger.logMethod('render');
     if (this.content == null) return nothing;
-    const target = this.content.target === 'blank' ? '_blank' : undefined;
+    const target = this.content.target !== 'download' ? this.content.target : undefined;
 
     return html`
       <a

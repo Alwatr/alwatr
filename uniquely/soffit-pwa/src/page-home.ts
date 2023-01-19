@@ -25,7 +25,7 @@ const menuList: Array<IconBoxContent & {wide?: boolean}> = [
     headline: 'قرعه‌کشی میدکس',
     description: 'فرم شرکت در قرعه‌کشی میدکس',
     href: 'https://formafzar.com/form/fd8lo',
-    target: 'blank',
+    target: '_blank',
   },
   {
     icon: 'cloud-download-outline',
@@ -39,14 +39,14 @@ const menuList: Array<IconBoxContent & {wide?: boolean}> = [
     headline: 'اینستاگرام',
     description: 'کانال اینستاگرام بازرگانی سافیت',
     href: 'https://instagram.com/soffit.co',
-    target: 'blank',
+    target: '_blank',
   },
   {
     icon: 'send-outline',
     headline: 'کانال تلگرام',
     description: 'کانال تلگرام بازرگانی سافیت',
     href: 'https://t.me/soffitcompany',
-    target: 'blank',
+    target: '_blank',
   },
   {
     icon: 'call-outline',
