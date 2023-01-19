@@ -96,10 +96,7 @@ export class AlwatrIconBox extends AlwatrCard {
   override render(): unknown {
     this._logger.logMethod('render');
     if (this.content == null) return nothing;
-    let target: string | undefined;
-    if (this.content.target === 'blank') {
-      target = '_blank';
-    }
+    const target = this.content.target === 'blank' ? '_blank' : undefined;
 
     return html`
       <a
