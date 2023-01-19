@@ -29,8 +29,6 @@ export class AlwatrNavigationDrawer extends AlwatrSmartElement {
         will-change: transform;
 
         transition-property: transform;
-        transition-duration: var(--sys-motion-duration-large-out);
-        transition-timing-function: var(--sys-motion-easing-exiting);
       }
 
       .navigation-drawer {
@@ -39,6 +37,7 @@ export class AlwatrNavigationDrawer extends AlwatrSmartElement {
         justify-content: center;
         overflow-y: auto;
 
+        box-shadow: 0 0 0 100vw #0000;
         background-color: var(--sys-color-surface);
         background-image: url('/images/background.jpg');
         background-repeat: no-repeat;
@@ -48,6 +47,10 @@ export class AlwatrNavigationDrawer extends AlwatrSmartElement {
         max-width: calc(100vw - 7 * var(--sys-spacing-track));
         width: calc(45 * var(--sys-spacing-track));
         height: 100%;
+
+        will-change: box-shadow;
+
+        transition-property: box-shadow;
       }
 
       .navigation-drawer__items {
@@ -57,13 +60,19 @@ export class AlwatrNavigationDrawer extends AlwatrSmartElement {
         padding: calc(1.5 * var(--sys-spacing-track));
         backdrop-filter: blur(2vw);
       }
-    `,
-    css`
+
+      :host,
+      :host .navigation-drawer {
+        transition-duration: var(--sys-motion-duration-large);
+        transition-timing-function: var(--sys-motion-easing-in-out);
+      }
+
       :host([open]) {
         transform: translateX(-100vw);
+      }
 
-        transition-duration: var(--sys-motion-duration-large-in);
-        transition-timing-function: var(--sys-motion-easing-incoming);
+      :host([open]) .navigation-drawer {
+        box-shadow: 0 0 100vw 100vw #0008;
       }
     `,
   ];
@@ -75,14 +84,10 @@ export class AlwatrNavigationDrawer extends AlwatrSmartElement {
 
     const navigationDrawerSignalListener = AlwatrNavigationDrawer.navigationDrawerSignal.addListener((options) => {
       if (options.open === true) {
-        requestAnimationFrame(() => {
-          this.setAttribute('open', '');
-        });
+        this.setAttribute('open', '');
       }
       else {
-        requestAnimationFrame(() => {
-          this.removeAttribute('open');
-        });
+        this.removeAttribute('open');
       }
     });
 

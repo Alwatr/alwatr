@@ -183,7 +183,7 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
 
     event.stopPropagation();
 
-    // AlwatrPwaRoot.navigationDrawerSignal.dispatch({open: true});
+    AlwatrPwaRoot.navigationDrawerSignal.dispatch({open: true});
   }
 
   private navigationDrawerClicked(event: PointerEvent): void {
