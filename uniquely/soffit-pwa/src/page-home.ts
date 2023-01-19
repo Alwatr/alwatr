@@ -24,6 +24,8 @@ const menuList: Array<IconBoxContent & {wide?: boolean}> = [
     icon: 'gift-outline',
     headline: 'قرعه‌کشی میدکس',
     description: 'فرم شرکت در قرعه‌کشی میدکس',
+    href: 'https://formafzar.com/form/fd8lo',
+    target: 'blank',
   },
   {
     icon: 'cloud-download-outline',
