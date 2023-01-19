@@ -4,8 +4,8 @@
   "description": "A good ceiling is vital. But a SOFFIT ceiling can be an inspiration.",
   "start_url": "/?pwa",
   "display": "standalone",
-  "theme_color": "#673ab7",
-  "background_color": "#673ab7",
+  "theme_color": "#2b4f9c",
+  "background_color": "#faf8ff",
   "orientation": "portrait",
   "default_locale": "en",
   "icons": [
