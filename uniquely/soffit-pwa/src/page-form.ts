@@ -1,4 +1,4 @@
-import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element';
 
 import '@alwatr/ui-kit/card/card.js';
 
@@ -7,6 +7,8 @@ declare global {
     'alwatr-page-form': AlwatrPageForm;
   }
 }
+
+const activityType = ['پخش کننده تایل', 'نصاب تایل', 'فروشنده و مغازه‌دار', 'پیمانکار', 'سازنده', 'سایر'];
 
 /**
  * Soffit Form Page
@@ -69,8 +71,7 @@ export class AlwatrPageForm extends AlwatrSmartElement {
       margin: calc(2 * var(--sys-spacing-track));
     }
 
-    input,
-    input::placeholder {
+    input {
       font-family: var(--sys-typescale-body-large-font-family-name);
       font-weight: var(--sys-typescale-body-large-font-weight);
       font-size: var(--sys-typescale-body-large-font-size);
@@ -78,7 +79,8 @@ export class AlwatrPageForm extends AlwatrSmartElement {
       line-height: var(--sys-typescale-body-large-line-height);
     }
 
-    input {
+    input[type='text'],
+    input[type='tel'] {
       width: 80%;
       padding: calc(2 * var(--sys-spacing-track));
       color: var(--sys-color-on-surface);
@@ -121,6 +123,12 @@ export class AlwatrPageForm extends AlwatrSmartElement {
       padding: 0;
       margin: 0;
     }
+
+    .radio-button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
   `;
 
   override render(): unknown {
@@ -130,7 +138,7 @@ export class AlwatrPageForm extends AlwatrSmartElement {
         <h1>فرم ثبت کد قرعه کشی</h1>
         <form>
           <input type="text" name="lottery-code" placeholder="شماره قرعه کشی" />
-          <input type="text" name="activity-type" placeholder="نوع فعالیت" />
+          <div class="radio-button-container">${this._renderRadioButtons()}</div>
           <input type="text" name="name" placeholder="نام و نام‌خانوادگی" />
           <input type="tel" name="phone-number" placeholder="شماره موبایل" />
           <alwatr-card elevated>
@@ -139,5 +147,15 @@ export class AlwatrPageForm extends AlwatrSmartElement {
         </form>
       </main>
     `;
+  }
+
+  protected _renderRadioButtons(): unknown {
+    return map(
+        activityType,
+        (activity) => html`<div>
+        <input type="radio" name="activity-type" value="${activity}" />
+        <label>${activity}</label>
+      </div>`,
+    );
   }
 }
