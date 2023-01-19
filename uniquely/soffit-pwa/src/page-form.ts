@@ -1,5 +1,7 @@
 import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
+import '@alwatr/ui-kit/card/card.js';
+
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-page-form': AlwatrPageForm;
@@ -60,6 +62,7 @@ export class AlwatrPageForm extends AlwatrSmartElement {
       align-items: center;
       justify-content: center;
       height: 100%;
+      padding: calc(2 * var(--sys-spacing-track));
     }
 
     form > * {
@@ -76,6 +79,7 @@ export class AlwatrPageForm extends AlwatrSmartElement {
     }
 
     input {
+      width: 80%;
       padding: calc(2 * var(--sys-spacing-track));
       color: var(--sys-color-on-surface);
       border: 1px solid var(--sys-color-outline);
@@ -94,6 +98,29 @@ export class AlwatrPageForm extends AlwatrSmartElement {
     input:focus {
       border: 2px solid var(--sys-color-primary);
     }
+
+    button {
+      font-family: var(--sys-typescale-label-large-font-family-name);
+      font-weight: var(--sys-typescale-label-large-font-weight);
+      font-size: var(--sys-typescale-label-large-font-size);
+      letter-spacing: var(--sys-typescale-label-large-letter-spacing);
+      line-height: var(--sys-typescale-label-large-line-height);
+
+      color: var(--sys-color-surface);
+      background-color: var(--sys-color-primary);
+      border: none;
+      border-radius: 9999px;
+      padding: calc(2 * var(--sys-spacing-track));
+      width: 100%;
+      width: 100%;
+    }
+
+    alwatr-card {
+      width: 80%;
+      border-radius: 9999px;
+      padding: 0;
+      margin: 0;
+    }
   `;
 
   override render(): unknown {
@@ -106,7 +133,9 @@ export class AlwatrPageForm extends AlwatrSmartElement {
           <input type="text" name="activity-type" placeholder="نوع فعالیت" />
           <input type="text" name="name" placeholder="نام و نام‌خانوادگی" />
           <input type="tel" name="phone-number" placeholder="شماره موبایل" />
-          <button type="submit">ارسال فرم</button>
+          <alwatr-card elevated>
+            <button type="submit">ارسال فرم</button>
+          </alwatr-card>
         </form>
       </main>
     `;
