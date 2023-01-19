@@ -14,5 +14,13 @@
     {"src": "/image/favicon.ico", "type": "image/x-icon", "sizes": "32x32"},
     {"src": "/image/icon-192.png", "type": "image/png", "sizes": "192x192"},
     {"src": "/image/icon-512.png", "type": "image/png", "sizes": "512x512"}
+  ],
+  "screenshots": [
+    {
+      "src": "/image/screenshot/home-page.jpg",
+      "sizes": "333x720",
+      "type": "image/jpg",
+      "label": "Home Page"
+    }
   ]
 }
