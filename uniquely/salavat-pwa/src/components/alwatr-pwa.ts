@@ -14,6 +14,7 @@ import '../../res/styles/index.css';
 import './navigation-drawer/navigation-drawer.js';
 import './navigation-drawer/navigation-drawer-item.js';
 import '../pages/page-home.js';
+import '../pages/page-campaign.js';
 
 import type {CSSResultGroup} from '@alwatr/element';
 import type {RoutesConfig} from '@alwatr/router';
@@ -138,6 +139,9 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
     list: {
       home: {
         render: () => html`<alwatr-page-home></alwatr-page-home>`,
+      },
+      campaign: {
+        render: () => html`<alwatr-page-campaign></alwatr-page-campaign>`,
       },
     },
   };
