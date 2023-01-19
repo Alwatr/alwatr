@@ -1,7 +1,5 @@
 import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element';
 
-import '@alwatr/ui-kit/card/card.js';
-
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-page-form': AlwatrPageForm;
@@ -16,6 +14,12 @@ const activityType = ['پخش کننده تایل', 'نصاب تایل', 'فرو
 @customElement('alwatr-page-form')
 export class AlwatrPageForm extends AlwatrSmartElement {
   static override styles = css`
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     :host {
       display: block;
       height: 100%;
@@ -46,32 +50,27 @@ export class AlwatrPageForm extends AlwatrSmartElement {
     }
 
     main {
+      width: 100%;
+      padding: calc(5 * var(--sys-spacing-track)) calc(2 * var(--sys-spacing-track));
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       justify-content: center;
-      padding: calc(2 * var(--sys-spacing-track));
+      align-items: center;
       gap: calc(2 * var(--sys-spacing-track));
     }
 
-    main form {
-      width: 40%;
-      flex-grow: 1;
-    }
-
     form {
+      width: 80vw;
+      padding: calc(2 * var(--sys-spacing-track));
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100%;
-      padding: calc(2 * var(--sys-spacing-track));
+      gap: calc(3 * var(--sys-spacing-track));
     }
 
-    form > * {
-      margin: calc(2 * var(--sys-spacing-track));
-    }
-
-    input {
+    input,
+    button {
       font-family: var(--sys-typescale-body-large-font-family-name);
       font-weight: var(--sys-typescale-body-large-font-weight);
       font-size: var(--sys-typescale-body-large-font-size);
@@ -81,53 +80,59 @@ export class AlwatrPageForm extends AlwatrSmartElement {
 
     input[type='text'],
     input[type='tel'] {
-      width: 80%;
+      width: 100%;
       padding: calc(2 * var(--sys-spacing-track));
       color: var(--sys-color-on-surface);
+      background-color: inherit;
       border: 1px solid var(--sys-color-outline);
-      line-height: calc(2 * var(--sys-spacing-track));
       border-radius: var(--sys-radius-xsmall);
+      line-height: calc(2 * var(--sys-spacing-track));
     }
-
+    input[type='radio'] {
+      accent-color: var(--sys-color-primary);
+      width: var(--sys-typescale-body-large-line-height);
+      height: var(--sys-typescale-body-large-line-height);
+    }
     input::placeholder {
       color: var(--sys-color-on-surface-variant);
     }
-
     input:hover {
       border: 1px solid var(--sys-color-on-surface);
     }
-
     input:focus {
       border: 2px solid var(--sys-color-primary);
     }
 
     button {
-      font-family: var(--sys-typescale-label-large-font-family-name);
-      font-weight: var(--sys-typescale-label-large-font-weight);
-      font-size: var(--sys-typescale-label-large-font-size);
-      letter-spacing: var(--sys-typescale-label-large-letter-spacing);
-      line-height: var(--sys-typescale-label-large-line-height);
-
-      color: var(--sys-color-surface);
+      width: 100%;
+      padding: calc(2 * var(--sys-spacing-track));
+      color: var(--sys-color-on-primary);
       background-color: var(--sys-color-primary);
       border: none;
       border-radius: 9999px;
-      padding: calc(2 * var(--sys-spacing-track));
-      width: 100%;
-      width: 100%;
+      box-shadow: var(--sys-surface-elevation-0);
+      cursor: pointer;
+      transition: box-shadow var(--sys-motion-duration-small) var(--sys-motion-easing-linear);
     }
-
-    alwatr-card {
-      width: 80%;
-      border-radius: 9999px;
-      padding: 0;
-      margin: 0;
+    button:hover {
+      box-shadow: var(--sys-surface-elevation-1);
+    }
+    button:focus {
+      box-shadow: var(--sys-surface-elevation-0);
     }
 
     .radio-button-container {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      gap: var(--sys-spacing-track);
+      flex-wrap: wrap;
+    }
+    .radio-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: calc(2 * var(--sys-spacing-track));
     }
   `;
 
@@ -138,12 +143,10 @@ export class AlwatrPageForm extends AlwatrSmartElement {
         <h1>فرم ثبت کد قرعه کشی</h1>
         <form>
           <input type="text" name="lottery-code" placeholder="شماره قرعه کشی" />
-          <div class="radio-button-container">${this._renderRadioButtons()}</div>
           <input type="text" name="name" placeholder="نام و نام‌خانوادگی" />
           <input type="tel" name="phone-number" placeholder="شماره موبایل" />
-          <alwatr-card elevated>
-            <button type="submit">ارسال فرم</button>
-          </alwatr-card>
+          <div class="radio-button-container">${this._renderRadioButtons()}</div>
+          <button type="submit">ارسال فرم</button>
         </form>
       </main>
     `;
@@ -152,10 +155,10 @@ export class AlwatrPageForm extends AlwatrSmartElement {
   protected _renderRadioButtons(): unknown {
     return map(
         activityType,
-        (activity) => html`<div>
+        (activity) => html`<span class="radio-button">
         <input type="radio" name="activity-type" value="${activity}" />
         <label>${activity}</label>
-      </div>`,
+      </span>`,
     );
   }
 }
