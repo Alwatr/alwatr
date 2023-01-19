@@ -41,6 +41,19 @@ export class AlwatrPageForm extends AlwatrSmartElement {
       background-color: var(--sys-scrollbar-color-hover);
     }
 
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: calc(2 * var(--sys-spacing-track));
+      gap: calc(2 * var(--sys-spacing-track));
+    }
+
+    main form {
+      width: 40%;
+      flex-grow: 1;
+    }
+
     form {
       display: flex;
       flex-direction: column;
@@ -86,11 +99,16 @@ export class AlwatrPageForm extends AlwatrSmartElement {
   override render(): unknown {
     super.render();
     return html`
-      <form>
-        <input dir="ltr" name="fname" placeholder="First name" value="Amir" />
-        <input dir="ltr" name="lname" placeholder="Last name"/>
-        <input dir="ltr" name="age" placeholder="Age" />
-      </form>
+      <main>
+        <h1>فرم ثبت کد قرعه کشی</h1>
+        <form>
+          <input type="text" name="lottery-code" placeholder="شماره قرعه کشی" />
+          <input type="text" name="activity-type" placeholder="نوع فعالیت" />
+          <input type="text" name="name" placeholder="نام و نام‌خانوادگی" />
+          <input type="tel" name="phone-number" placeholder="شماره موبایل" />
+          <button type="submit">ارسال فرم</button>
+        </form>
+      </main>
     `;
   }
 }
