@@ -8,6 +8,7 @@ import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/font/vazirmatn.css';
 
 import './page-home.js';
+import './page-form.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 
@@ -27,6 +28,9 @@ class AlwatrPwa extends AlwatrPwaElement {
     list: {
       home: {
         render: () => html`<alwatr-page-home></alwatr-page-home>`,
+      },
+      form: {
+        render: () => html`<alwatr-page-form></alwatr-page-form>`,
       },
     },
   };
