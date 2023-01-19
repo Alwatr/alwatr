@@ -8,9 +8,6 @@ declare global {
   }
 }
 
-/**
- * Alwatr Demo Home Page
- */
 @customElement('alwatr-page-home')
 export class AlwatrPageHome extends AlwatrSmartElement {
   static override styles = css`
