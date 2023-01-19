@@ -1,7 +1,8 @@
 import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element';
 
-import '@alwatr/ui-kit/card/icon-box.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+
+import '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -34,7 +35,7 @@ const menuList: Array<IconBoxContent & {wide?: boolean}> = [
     icon: 'logo-instagram',
     headline: 'اینستاگرام',
     description: 'کانال اینستاگرام بازرگانی سافیت',
-    href: 'https://instagram.com/soffit.co?igshid=MDM4ZDc5MmU=',
+    href: 'https://instagram.com/soffit.co',
   },
   {
     icon: 'send-outline',
@@ -46,7 +47,7 @@ const menuList: Array<IconBoxContent & {wide?: boolean}> = [
     icon: 'call-outline',
     headline: 'تماس باما',
     description: 'ارتباط مستقیم با دفتر مرکزی بازرگانی سافیت',
-    href: 'tel: +989155599674',
+    href: 'tel:+989155599674',
   },
 ];
 

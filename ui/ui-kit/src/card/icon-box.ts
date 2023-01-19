@@ -16,7 +16,8 @@ export type IconBoxContent = {
   description?: string;
   href?: string;
   flipRtl?: boolean;
-}
+  target?: 'download' | '_blank' | '_top' | '_parent' | '_self';
+};
 
 /**
  * Alwatr standard icon button element.
@@ -94,7 +95,11 @@ export class AlwatrIconBox extends AlwatrCard {
     this._logger.logMethod('render');
     if (this.content == null) return nothing;
     return html`
-      <a href=${ifDefined(this.content.href)}>
+      <a
+        href=${ifDefined(this.content.href)}
+        target=${this.content.href !== 'download' ? ifDefined(this.content.href) : '_self'}
+        ?download=${this.content.target === 'download'}
+      >
         <div class="headline">
           <alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>
           <span>${this.content.headline}</span>
