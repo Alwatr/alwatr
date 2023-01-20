@@ -18,15 +18,15 @@
   "screenshots": [
     {
       "src": "/image/screenshot-1.jpg",
-      "sizes": "333x720",
+      "sizes": "414x896",
       "type": "image/jpg",
-      "label": "Soffit PWA Light"
+      "label": "Soffit PWA (Dark Theme)"
     },
     {
       "src": "/image/screenshot-2.jpg",
-      "sizes": "333x720",
+      "sizes": "414x896",
       "type": "image/jpg",
-      "label": "Soffit PWA Dark"
+      "label": "Soffit PWA (Light Theme)"
     }
   ]
 }
