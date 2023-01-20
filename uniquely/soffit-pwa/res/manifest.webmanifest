@@ -2,12 +2,12 @@
   "short_name": "بازرگانی سافیت",
   "name": "بازرگانی سافیت",
   "description": "A good ceiling is vital. But a SOFFIT ceiling can be an inspiration.",
-  "start_url": "/?pwa",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#2b4f9c",
   "background_color": "#faf8ff",
   "orientation": "portrait",
-  "default_locale": "en",
+  "default_locale": "fa",
   "icons": [
     {"src": "/image/icon-192-maskable.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable"},
     {"src": "/image/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable"},
@@ -17,10 +17,16 @@
   ],
   "screenshots": [
     {
-      "src": "/image/screenshot/page-home.jpg",
-      "sizes": "333x720",
+      "src": "/image/screenshot-1.jpg",
+      "sizes": "414x896",
       "type": "image/jpg",
-      "label": "Home Page"
+      "label": "Soffit PWA (Dark Theme)"
+    },
+    {
+      "src": "/image/screenshot-2.jpg",
+      "sizes": "414x896",
+      "type": "image/jpg",
+      "label": "Soffit PWA (Light Theme)"
     }
   ]
 }
