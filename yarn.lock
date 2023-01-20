@@ -4521,10 +4521,10 @@ execa@^5.0.0:
     signal-exit "^3.0.3"
     strip-final-newline "^2.0.0"
 
-exit-hook@^3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-3.1.4.tgz#0207c03701fb18278096ca72346596e5b1608008"
-  integrity sha512-uw2D+5uwXP7ZIs2O5D+q2lJ3cNmP0p6sxmjf1gBPhpAjbFWT0v4XNrv5JlmfL0ulIJnPnfJgX/Zf4V4D9oYC7A==
+exit-hook@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-3.2.0.tgz#7d86bc361a4d79278001b72a0509318a6f468f20"
+  integrity sha512-aIQN7Q04HGAV/I5BszisuHTZHXNoC23WtLkxdCLuYZMdWviRD0TMIt2bnUBi9MrHaF/hH8b3gwG9iaAUHKnJGA==
 
 expand-brackets@^2.1.4:
   version "2.1.4"
