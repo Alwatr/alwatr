@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
+
+### Bug Fixes
+
+- **type:** revert paramkey ([f1ad066](https://github.com/AliMD/alwatr/commit/f1ad06621f7fe80018573e50804e9f3c1b2edde1))
+
+### Features
+
+- **type:** add optional text on ChatPhotoMessage ([af83f5b](https://github.com/AliMD/alwatr/commit/af83f5b8604cecd3c9b0cb2375267458fd02431d))
+- **type:** define math types ([8c19f40](https://github.com/AliMD/alwatr/commit/8c19f4058d4361b7d3f4f714595e34cb6fa21109))
+
 # [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
 
 **Note:** Version bump only for package @alwatr/math

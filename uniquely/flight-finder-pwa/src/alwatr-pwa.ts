@@ -1,15 +1,12 @@
 import {AlwatrSmartElement, customElement, css, html} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
-import {router} from '@alwatr/router';
+import {type RoutesConfig, router} from '@alwatr/router';
 
 import ionNormalize from './style/ionic.normalize.js';
 import ionTheming from './style/ionic.theming.js';
 
 import './component/page-flight-finder.js';
 import './component/ionic-components.js';
-import './director/index.js';
-
-import type {RoutesConfig} from '@alwatr/router';
 
 declare global {
   interface HTMLElementTagNameMap {

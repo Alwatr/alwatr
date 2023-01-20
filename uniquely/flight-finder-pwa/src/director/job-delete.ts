@@ -1,10 +1,8 @@
-import {fetch} from '@alwatr/fetch';
+import {type AlwatrServiceResponse, fetch} from '@alwatr/fetch';
 import {SignalInterface} from '@alwatr/signal';
 
 import {jobDocumentStorageSignal} from './job-document-storage.js';
 import {showToastSignal} from './toast.js';
-
-import type {AlwatrServiceResponse} from '@alwatr/fetch';
 
 export const jobDeleteSignal = new SignalInterface('job-delete');
 

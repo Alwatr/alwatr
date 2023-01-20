@@ -10,7 +10,7 @@
         "name": "ts-lit-plugin",
         "strict": true
       }
-    ],
+    ]
   },
 
   "include": ["src/**/*.ts"],
@@ -20,8 +20,9 @@
     {"path": "../../ui/icon"},
     {"path": "../../core/fetch"},
     {"path": "../../core/i18n"},
+    {"path": "../../core/type"},
     {"path": "../../core/logger"},
     {"path": "../../core/router"},
-    {"path": "../../core/signal"},
+    {"path": "../../core/signal"}
   ]
 }

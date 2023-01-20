@@ -1,4 +1,6 @@
 import {
+  type PropertyValues,
+  type HTMLTemplateResult,
   AlwatrDummyElement,
   unsafeSVG,
   customElement,
@@ -9,8 +11,12 @@ import {
   DirectionMixin,
 } from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
+import {globalAlwatr} from '@alwatr/logger';
 
-import type {PropertyValues, HTMLTemplateResult} from '@alwatr/element';
+globalAlwatr.registeredList.push({
+  name: '@alwatr/icon',
+  version: _ALWATR_VERSION_,
+});
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -21,7 +27,7 @@ declare global {
 /**
  * Alwatr icon component
  *
- * @attr {boolean} flip-rtl
+ * @attr {Boolean} flip-rtl
  */
 @customElement('alwatr-icon')
 export class AlwatrIcon extends DirectionMixin(AlwatrDummyElement) {
@@ -102,8 +108,6 @@ export async function preloadIcon(
   const url = urlPrefix + name + '.svg';
   const response = await fetch({
     url,
-    timeout: 6000,
-    retry: 5,
     removeDuplicate: 'auto',
     cacheStrategy: 'cache_first',
     cache: 'force-cache',

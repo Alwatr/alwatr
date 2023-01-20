@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
+
+### Bug Fixes
+
+- review issue ([e5d192c](https://github.com/AliMD/alwatr/commit/e5d192cbee6917c2de01146cf8bd026895724ab8))
+- version in package.json ([403baa5](https://github.com/AliMD/alwatr/commit/403baa53159db2a0fff5b3651769b85e66b13191))
+
+### Features
+
+- **storage-engine:** migrate old storages ([10fc378](https://github.com/AliMD/alwatr/commit/10fc3785ee22bf397dd1448cf0c1568be65fb8cb))
+- **type:** id in storage meta type ([146b9eb](https://github.com/AliMD/alwatr/commit/146b9eb4ebc748eda852988328b88abb75651945))
+
 # [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
 
 **Note:** Version bump only for package @alwatr/storage-engine

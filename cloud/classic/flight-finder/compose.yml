@@ -5,7 +5,6 @@ networks:
     external: true
 
 services:
-
   storage-server:
     image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION:-next}
 
@@ -14,12 +13,12 @@ services:
 
     stop_grace_period: 30s
 
-    # restart: unless-stopped
+    restart: unless-stopped
 
     networks:
       internal:
         aliases:
-          - "${APP_ID}-storage-server"
+          - '${APP_ID}-storage-server'
 
     environment:
       - STORAGE_PATH=/storage
@@ -39,19 +38,18 @@ services:
         max-size: '10m'
         max-file: '2'
 
-
   telegram-notifier:
     image: ghcr.io/alimd/telegram-notifier:${TELEGRAM_NOTIFIER_VERSION:-next}
 
     cpu_shares: 512
     mem_limit: 256m
 
-    # restart: unless-stopped
+    restart: unless-stopped
 
     networks:
       internal:
         aliases:
-          - "${APP_ID}-telegram-notifier"
+          - '${APP_ID}-telegram-notifier'
 
     environment:
       - STORAGE_PATH=/storage
@@ -73,14 +71,13 @@ services:
         max-size: '10m'
         max-file: '2'
 
-
   flight-crawler:
     image: ghcr.io/alimd/flight-crawler:${FLIGHT_CRAWLER_VERSION:-next}
 
     cpu_shares: 512
     mem_limit: 256m
 
-    # restart: unless-stopped
+    restart: unless-stopped
 
     networks:
       internal:
@@ -105,14 +102,13 @@ services:
         max-size: '10m'
         max-file: '2'
 
-
   api:
     image: ghcr.io/alimd/flight-finder-api:${API_VERSION:-next}
 
     cpu_shares: 1024
     mem_limit: 256m
 
-    # restart: unless-stopped
+    restart: unless-stopped
 
     networks:
       internal:
@@ -142,14 +138,13 @@ services:
       traefik.frontend.entryPoints: http, https
       traefik.frontend.redirect.entryPoint: https
 
-
   pwa:
     image: ghcr.io/alimd/flight-finder-pwa:${PWA_VERSION:-next}
 
     cpu_shares: 1024
     mem_limit: 256m
 
-    # restart: unless-stopped
+    restart: unless-stopped
 
     networks:
       alwatr-public-network:

@@ -1,14 +1,14 @@
 import {random} from '@alwatr/math';
 import {AlwatrStorageEngine} from '@alwatr/storage-engine';
 
-import type {AlwatrDocumentObject} from '@alwatr/fetch';
+import type {AlwatrDocumentObject} from '@alwatr/type';
 
-interface User extends AlwatrDocumentObject {
+type User = AlwatrDocumentObject & {
   fname: string;
   lname: string;
   email: string;
   token: string;
-}
+};
 
 const db = new AlwatrStorageEngine<User>({
   name: 'junk-data',

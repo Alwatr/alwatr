@@ -22,7 +22,7 @@
     // "noEmit": true,
     "importHelpers": true,
     // "downlevelIteration": true,
-    // "isolatedModules": true,
+    "isolatedModules": true, // need for esbuild
 
     /* Strict Type-Checking Options */
     "strict": true,
@@ -69,7 +69,7 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": false,
 
-    "listEmittedFiles": true,
+    "listEmittedFiles": true
     // "diagnostics": true,
-  },
+  }
 }

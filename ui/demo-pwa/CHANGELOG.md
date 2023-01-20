@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
+
+### Bug Fixes
+
+- **chat:** colors ([4cf93f6](https://github.com/AliMD/alwatr/commit/4cf93f6a5b2ee925e1b4a66f3535b4e6e7dfc1f0))
+- **demo-pwa:** clean metafile ([66032b3](https://github.com/AliMD/alwatr/commit/66032b375f51ac4ade3aa44f06f550e40749d452))
+- **demo-pwa:** dev-server config ([941bf8d](https://github.com/AliMD/alwatr/commit/941bf8d63475c470c3d3635c8f24272947ef8bda))
+- **demo-pwa:** prevent to export root file ([6f52c3e](https://github.com/AliMD/alwatr/commit/6f52c3e417c1cf69adbdf445f1eeb57fa668aed8))
+- **demo-ui:** offline available pwa config ([2874859](https://github.com/AliMD/alwatr/commit/28748596cf0f8c9311c8c14d469fcf43350b5070))
+- **pwa-element:** prevent to default import css for backward compatibility ([89591a2](https://github.com/AliMD/alwatr/commit/89591a28d1d829512200c8a0a026cbb7558e198d))
+- **pwa:** cleanup rollup ([988a125](https://github.com/AliMD/alwatr/commit/988a125140b9042cd33f0249876b84e7fe12112b))
+- **pwa:** debug mode scripts ([681fdc2](https://github.com/AliMD/alwatr/commit/681fdc24897b7bd4f677f26fd45ea048d5f9a675))
+- **pwa:** sw config ([c7b88ed](https://github.com/AliMD/alwatr/commit/c7b88ed638045932a517000749bad6889f22e1f8))
+- refrence type in tsconfigs ([0652ac6](https://github.com/AliMD/alwatr/commit/0652ac67be6167f4bfa60bf84282e40af3228f16))
+- review issue ([e5d192c](https://github.com/AliMD/alwatr/commit/e5d192cbee6917c2de01146cf8bd026895724ab8))
+- **style/palette:** unreading ([1b9c573](https://github.com/AliMD/alwatr/commit/1b9c5735b5cd3b826448628d14dd618b153c9c14))
+- **ui/color:** color and palette issues ([79df153](https://github.com/AliMD/alwatr/commit/79df153fa4d636a69a7fc437df54c64e02eb4a3c))
+- **ui/tokens:** spacing ([d9096ff](https://github.com/AliMD/alwatr/commit/d9096ff2712713fb77b892e76f0c04398184c526))
+- **ui/token:** state opacity ([34fec9a](https://github.com/AliMD/alwatr/commit/34fec9a9357c6af37c41e58c779daf3d396c10ec))
+- version in package.json ([403baa5](https://github.com/AliMD/alwatr/commit/403baa53159db2a0fff5b3651769b85e66b13191))
+
+### Features
+
+- **demo-pwa:** add middleware for routing ([bfc8f4f](https://github.com/AliMD/alwatr/commit/bfc8f4f2be306321fcfe40b9e44d30c640eb085d))
+- **demo-pwa:** build service worker on build proccess ([87c5d1e](https://github.com/AliMD/alwatr/commit/87c5d1e56ca5d232d026fa8e51b6c8acf66cbced))
+- **demo-pwa:** demo icon-box ([87b720b](https://github.com/AliMD/alwatr/commit/87b720b9844f71d9314b20c90803b18e0b1c379a))
+- **demo-pwa:** new esbuild process ([72e083e](https://github.com/AliMD/alwatr/commit/72e083ef13d313dee6453074cff6d470127630e0))
+- **demo-pwa:** register service worker ([ad8e2d8](https://github.com/AliMD/alwatr/commit/ad8e2d8073327d289bd069069847e98b12dba302))
+- **icon-box:** new style and layout ([2003e33](https://github.com/AliMD/alwatr/commit/2003e33e5095358e24fd4e07b3fc92a3b8a9d7d7))
+- **palette:** theming ([9a7d896](https://github.com/AliMD/alwatr/commit/9a7d896d4c82457dac12458c0fef1b8c8a75e9a0))
+- **pwa:** dev server ([4f5afcf](https://github.com/AliMD/alwatr/commit/4f5afcf047f88ba0ec5ccf061caf38b2cff632c2))
+- **pwa:** esbuild --debug mode ([fa0192c](https://github.com/AliMD/alwatr/commit/fa0192c2e1179ae953a1d67880464f48ec26452b))
+- **pwa:** improve esbuild ([5b78a6e](https://github.com/AliMD/alwatr/commit/5b78a6ebbd9491117393d299825c9c13e8c51481))
+- **pwa:** replace _ALWATR_VERSION_ from [#677](https://github.com/AliMD/alwatr/issues/677) ([eb30fc5](https://github.com/AliMD/alwatr/commit/eb30fc5e7779b8ee8bdab86b5e079018bd877718))
+- **pwa:** replace file hash in html ([145da60](https://github.com/AliMD/alwatr/commit/145da60afdaf9a48d0d1ac5a9228138413a64ff0))
+- **pwa:** unresolved state for show skeleton or loading ([8c4e834](https://github.com/AliMD/alwatr/commit/8c4e834b1415df14d6c76ef4d2040c60dc638b9e))
+- **pwa:** watch mode ([a0a0d88](https://github.com/AliMD/alwatr/commit/a0a0d884890002873434d1a2cf22976f4520f8ca))
+- **type:** add optional text on ChatPhotoMessage ([af83f5b](https://github.com/AliMD/alwatr/commit/af83f5b8604cecd3c9b0cb2375267458fd02431d))
+- **type:** define chat type ([e4a345a](https://github.com/AliMD/alwatr/commit/e4a345a7c932d88f0d13e2df1b3dd7d2ad745932))
+- **type:** define chat type ([174fb02](https://github.com/AliMD/alwatr/commit/174fb02fe287c6fee6e9783f91dfa1928dbaf2ce))
+- **ui/card/demo:** improve card demo ([3176cbe](https://github.com/AliMD/alwatr/commit/3176cbeb290453519542424a942dd0c282ef63ed))
+- **ui/color:** separate palette hsl/hct ([d9e23ac](https://github.com/AliMD/alwatr/commit/d9e23ac84579275211d2ffbe3cdc55ec964337cb))
+- **ui/demo-pwa:** error tokens ([98c4aa2](https://github.com/AliMD/alwatr/commit/98c4aa2efd7d54fc130a4fb502b42d0be4e68d13))
+- **ui/demo-pwa:** page card ([16c11f0](https://github.com/AliMD/alwatr/commit/16c11f05464f05a0949207975a08009ca969943e))
+- **ui:** add mdc layout grid system ([044d6a9](https://github.com/AliMD/alwatr/commit/044d6a9d24227e352293c0ef3d62156bdf5d27d5))
+- **ui:** new AlwatrSurfaceElement with elevation/tint/state simulation ([0877f4f](https://github.com/AliMD/alwatr/commit/0877f4f3dd780321f3c7498cffde66653a24de43))
+- **ui:** new color ([0669b38](https://github.com/AliMD/alwatr/commit/0669b3882fa161ba2984e1278d00f57cd003a9b1))
+
 # [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
 
 ### Bug Fixes

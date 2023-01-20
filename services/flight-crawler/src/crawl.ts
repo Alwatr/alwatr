@@ -1,11 +1,11 @@
-import {fetch} from '@alwatr/fetch';
+import {type FetchOptions, fetch} from '@alwatr/fetch';
 
 import {config, logger} from './config.js';
 import {cityList} from './lib/city-list.js';
 import {storageClient} from './lib/storage.js';
 
-import type {Job, JobDetail, JobResult, SepehrResponse} from './lib/type.js';
-import type {FetchOptions} from '@alwatr/fetch';
+import type {SepehrResponse} from './lib/type.js';
+import type {Job, JobDetail, JobResult} from '@alwatr/type/flight-finder.js';
 
 export async function crawlAllJobs(): Promise<void> {
   logger.logMethod('crawlAllJobs');
@@ -165,7 +165,7 @@ function makeMessage(job: Job): string {
     تاریخ: ${job.detail.date}
     حداکثر قیمت: ${job.detail.maxPrice ? job.detail.maxPrice.toLocaleString('en-US') : 'ندارد'}
     تعداد صندلی: ${job.detail.seatCount}
-    ${job.detail.minHour && job.detail.minHour ? `از ساعت ${job.detail.minHour} تا ${job.detail.maxHour}` : '' }
+    ${job.detail.minHour && job.detail.minHour ? `از ساعت ${job.detail.minHour} تا ${job.detail.maxHour}` : ''}
 
     ${resultListStr}
   `.replaceAll('    ', '');

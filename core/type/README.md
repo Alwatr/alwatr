@@ -1,3 +1,3 @@
 # Alwatr Types - `@alwatr/type`
 
-Alwatr Types.
+Alwatr projects common entities types.

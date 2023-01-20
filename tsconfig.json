@@ -4,7 +4,7 @@
   "extends": "./tsconfig.base",
   "compilerOptions": {
     "composite": true,
-    "tsBuildInfoFile": ".tsbuildinfo",
+    "tsBuildInfoFile": ".tsbuildinfo"
   },
   "files": [],
   "exclude": [],
@@ -20,6 +20,7 @@
     {"path": "./core/storage-engine"},
     {"path": "./core/storage-client"},
     {"path": "./core/token"},
+    {"path": "./core/validator"},
     {"path": "./core/type"},
 
     // ui
@@ -31,15 +32,16 @@
     {"path": "./demo"},
 
     // services
-    {"path": "./services/comment"},
-    {"path": "./services/starter"},
-    {"path": "./services/storage-server"},
     {"path": "./services/telegram-notifier"},
     {"path": "./services/flight-crawler"},
+    {"path": "./services/storage-server"},
+    {"path": "./services/comment"},
+    {"path": "./services/form-registration"},
 
     // uniquely
     {"path": "./uniquely/flight-finder-api"},
     {"path": "./uniquely/flight-finder-pwa"},
+    {"path": "./uniquely/soffit-pwa"},
     {"path": "./ui/demo-pwa"},
 
     // labs

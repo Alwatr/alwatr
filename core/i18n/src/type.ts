@@ -1,3 +1,7 @@
+import type {L10Resource, Locale} from '@alwatr/type';
+
+export type {L10Resource, Locale};
+
 declare global {
   interface AlwatrSignals {
     'locale-change': Locale;
@@ -8,29 +12,6 @@ declare global {
     'l10n-resource-change': Locale;
   }
 }
-
-export type LocalCode = `${Lowercase<string>}-${Uppercase<string>}`;
-
-export type L10Resource = Record<string, string> & {
-  _code: LocalCode;
-};
-
-export type Locale = {
-  /**
-   * fa-IR, en-US, ...
-   */
-  code: LocalCode;
-
-  /**
-   * fa, en, ...
-   */
-  language: Lowercase<string>;
-
-  /**
-   * ltr, rtl
-   */
-  direction: 'rtl' | 'ltr';
-};
 
 export type I18nConfig = {
   /**

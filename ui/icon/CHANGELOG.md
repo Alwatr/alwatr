@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
+
+### Bug Fixes
+
+- **icon:** attr name ([92492bd](https://github.com/AliMD/alwatr/commit/92492bde7595a272ce38476732ee32ddc758d9d2))
+- **icon:** fetch timeout ([46ee93e](https://github.com/AliMD/alwatr/commit/46ee93e2a3b50ec5b087dd86a84ebee37a9695c5))
+
 # [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
 
 ### Bug Fixes

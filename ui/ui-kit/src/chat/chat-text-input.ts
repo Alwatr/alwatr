@@ -1,8 +1,8 @@
-import {AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
-
-import type {PropertyValues} from '@alwatr/element';
+import {type PropertyValues, AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
 
 import '../icon-button/standard-icon-button.js';
+
+import type {AlwatrStandardIconButton} from '../icon-button/standard-icon-button.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -17,20 +17,21 @@ declare global {
 export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
-      --_height: var(--alwatr-sys-spacing-track-6);
+      --_height: calc(6 * var(--sys-spacing-track));
       display: flex;
       user-select: none;
       align-items: flex-end;
       vertical-align: middle;
       border-radius: calc(var(--_height) / 2);
-      color: var(--alwatr-sys-color-on-surface-variant);
-      background-color: var(--alwatr-sys-color-surface-variant);
+      color: var(--sys-color-on-surface-variant);
+      background-color: var(--sys-color-surface-variant);
       flex-grow: 1;
     }
 
     alwatr-standard-icon-button {
       width: var(--_height);
       height: var(--_height);
+      --_surface-color-on: var(--sys-color-tertiary-hsl);
     }
 
     textarea {
@@ -44,14 +45,15 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
       background-color: transparent;
       font-family: inherit;
       word-wrap: break-word;
-      line-height: var(--alwatr-sys-spacing-track-2);
-      padding: var(--alwatr-sys-spacing-track-1);
-      margin: var(--alwatr-sys-spacing-track-1);
+      line-height: calc(2 * var(--sys-spacing-track));
+      padding: var(--sys-spacing-track);
+      margin: var(--sys-spacing-track);
       margin-inline-end: 0;
     }
   `;
 
   inputElement: HTMLTextAreaElement | null = null;
+  sendButtonElement: AlwatrStandardIconButton | null = null;
 
   override render(): unknown {
     return html`
@@ -60,18 +62,20 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
         placeholder=${this.l10n.localize('chat_text_input_placeholder')}
         @input=${this.__inputChange}
       ></textarea>
-      <alwatr-standard-icon-button .icon=${'send'} flip-rtl></alwatr-standard-icon-button>
+      <alwatr-standard-icon-button .icon=${'send'} flip-rtl disabled></alwatr-standard-icon-button>
     `;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
     this.inputElement = this.renderRoot.querySelector('textarea');
+    this.sendButtonElement = this.renderRoot.querySelector('alwatr-standard-icon-button');
   }
 
   private __inputChange(event: InputEvent): void {
     const textarea = event.target as HTMLTextAreaElement;
     const value = textarea.value;
     textarea.rows = Math.min(value.split('\n').length, 6);
+    this.sendButtonElement?.toggleAttribute('disabled', value.length === 0);
   }
 }

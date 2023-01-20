@@ -1,0 +1,111 @@
+:root {
+  /* HCT 300 */
+
+  /* primary */
+  --ref-palette-primary0: 0, 0%, 0%;
+  --ref-palette-primary10: 262.8, 100%, 18%;
+  --ref-palette-primary20: 259.8, 59.4%, 28%;
+  --ref-palette-primary25: 258.6, 50%, 32.9%;
+  --ref-palette-primary30: 258.1, 43%, 37.8%;
+  --ref-palette-primary35: 257.9, 38.5%, 42.7%;
+  --ref-palette-primary40: 257.6, 35%, 47.6%;
+  --ref-palette-primary50: 257.9, 40.5%, 57.8%;
+  --ref-palette-primary60: 257.5, 55.3%, 68.4%;
+  --ref-palette-primary70: 257.6, 86.8%, 79.2%;
+  --ref-palette-primary80: 257.9, 100%, 86.9%;
+  --ref-palette-primary90: 261.2, 100%, 93.3%;
+  --ref-palette-primary95: 270, 100%, 96.5%;
+  --ref-palette-primary98: 292.5, 100%, 98.4%;
+  --ref-palette-primary99: 300, 100%, 99.2%;
+  --ref-palette-primary100: 0, 0%, 100%;
+
+  /* secondary */
+  --ref-palette-secondary0: 0, 0%, 0%;
+  --ref-palette-secondary10: 256.7, 26.5%, 13.3%;
+  --ref-palette-secondary20: 258, 18.2%, 21.6%;
+  --ref-palette-secondary25: 258, 15.2%, 25.9%;
+  --ref-palette-secondary30: 258, 12.8%, 30.6%;
+  --ref-palette-secondary35: 260, 11.7%, 35.1%;
+  --ref-palette-secondary40: 260, 10.3%, 39.8%;
+  --ref-palette-secondary50: 260.9, 9.1%, 49.6%;
+  --ref-palette-secondary60: 260.9, 11.2%, 59.8%;
+  --ref-palette-secondary70: 262.5, 15.8%, 70.2%;
+  --ref-palette-secondary80: 264, 25.8%, 81%;
+  --ref-palette-secondary90: 263.1, 65%, 92.2%;
+  --ref-palette-secondary95: 270, 100%, 96.5%;
+  --ref-palette-secondary98: 292.5, 100%, 98.4%;
+  --ref-palette-secondary99: 300, 100%, 99.2%;
+  --ref-palette-secondary100: 0, 0%, 100%;
+
+  /* tertiary */
+  --ref-palette-tertiary0: 0, 0%, 0%;
+  --ref-palette-tertiary10: 338.2, 50.8%, 12.7%;
+  --ref-palette-tertiary20: 340.5, 33.3%, 21.8%;
+  --ref-palette-tertiary25: 341.1, 28.4%, 26.3%;
+  --ref-palette-tertiary30: 340.5, 25.3%, 31%;
+  --ref-palette-tertiary35: 341.4, 23.1%, 35.7%;
+  --ref-palette-tertiary40: 342.3, 21.2%, 40.8%;
+  --ref-palette-tertiary50: 342.1, 18.7%, 50.8%;
+  --ref-palette-tertiary60: 343.2, 25.3%, 61.2%;
+  --ref-palette-tertiary70: 343, 37.1%, 72%;
+  --ref-palette-tertiary80: 343.9, 65.1%, 83.1%;
+  --ref-palette-tertiary90: 345.8, 100%, 92.5%;
+  --ref-palette-tertiary95: 347.4, 100%, 96.3%;
+  --ref-palette-tertiary98: 0, 100%, 98.6%;
+  --ref-palette-tertiary99: 300, 100%, 99.2%;
+  --ref-palette-tertiary100: 0, 0%, 100%;
+
+  /* neutral */
+  --ref-palette-neutral0: 0, 0%, 0%;
+  --ref-palette-neutral10: 260, 5.3%, 11.2%;
+  --ref-palette-neutral20: 280, 3%, 19.4%;
+  --ref-palette-neutral25: 280, 2.5%, 23.7%;
+  --ref-palette-neutral30: 270, 2.8%, 28.2%;
+  --ref-palette-neutral35: 276, 3%, 32.7%;
+  --ref-palette-neutral40: 276, 2.6%, 37.5%;
+  --ref-palette-neutral50: 285, 1.7%, 47.1%;
+  --ref-palette-neutral60: 288, 2.3%, 57.1%;
+  --ref-palette-neutral70: 300, 2.4%, 67.5%;
+  --ref-palette-neutral80: 300, 4.5%, 78.2%;
+  --ref-palette-neutral90: 300, 9.1%, 89.2%;
+  --ref-palette-neutral95: 310, 23.1%, 94.9%;
+  --ref-palette-neutral98: 300, 55.6%, 98.2%;
+  --ref-palette-neutral99: 300, 100%, 99.2%;
+  --ref-palette-neutral100: 0, 0%, 100%;
+
+  /* neutral-variant */
+  --ref-palette-neutral-variant0: 0, 0%, 0%;
+  --ref-palette-neutral-variant10: 262.5, 13.3%, 11.8%;
+  --ref-palette-neutral-variant20: 262.5, 7.8%, 20%;
+  --ref-palette-neutral-variant25: 260, 7.2%, 24.5%;
+  --ref-palette-neutral-variant30: 266.7, 6.1%, 28.8%;
+  --ref-palette-neutral-variant35: 266.7, 5.3%, 33.5%;
+  --ref-palette-neutral-variant40: 266.7, 4.6%, 38.2%;
+  --ref-palette-neutral-variant50: 270, 4.1%, 47.8%;
+  --ref-palette-neutral-variant60: 270, 4.7%, 58%;
+  --ref-palette-neutral-variant70: 272.7, 6.8%, 68.4%;
+  --ref-palette-neutral-variant80: 272.7, 10.3%, 79%;
+  --ref-palette-neutral-variant90: 278.2, 21.6%, 90%;
+  --ref-palette-neutral-variant95: 275, 54.5%, 95.7%;
+  --ref-palette-neutral-variant98: 292.5, 100%, 98.4%;
+  --ref-palette-neutral-variant99: 300, 100%, 99.2%;
+  --ref-palette-neutral-variant100: 0, 0%, 100%;
+
+  /* error */
+  --ref-palette-error0: 0, 0%, 0%;
+  --ref-palette-error10: 358.2, 100%, 12.7%;
+  --ref-palette-error20: 357.1, 100%, 20.6%;
+  --ref-palette-error25: 356.7, 100%, 24.7%;
+  --ref-palette-error30: 355.9, 100%, 28.8%;
+  --ref-palette-error35: 356.6, 92%, 34.3%;
+  --ref-palette-error40: 0, 75.5%, 41.6%;
+  --ref-palette-error50: 2.4, 72.5%, 52.9%;
+  --ref-palette-error60: 3.6, 100%, 64.3%;
+  --ref-palette-error70: 5.5, 100%, 74.5%;
+  --ref-palette-error80: 6.4, 100%, 83.5%;
+  --ref-palette-error90: 5.9, 100%, 92%;
+  --ref-palette-error95: 8.6, 100%, 95.9%;
+  --ref-palette-error98: 7.5, 100%, 98.4%;
+  --ref-palette-error99: 300, 100%, 99.2%;
+  --ref-palette-error100: 0, 0%, 100%;
+}

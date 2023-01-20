@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
+
+### Bug Fixes
+
+- refrence type in tsconfigs ([0652ac6](https://github.com/AliMD/alwatr/commit/0652ac67be6167f4bfa60bf84282e40af3228f16))
+- resolve conflict ([052314d](https://github.com/AliMD/alwatr/commit/052314d2adb3b9b0e44e54f9b8e6d60fc1827075))
+- **services:** app name in home page ([6feab58](https://github.com/AliMD/alwatr/commit/6feab58b5655c7a09150ec83adf9f3bd8fe976b4))
+- **services:** name and desc ([453c1b6](https://github.com/AliMD/alwatr/commit/453c1b6ff334a23bea690b7ff9dd874471b25bb9))
+- **services:** service name in first log ([879f87f](https://github.com/AliMD/alwatr/commit/879f87fd4d4b47454d608a5b71d70e47601c7cd7))
+- version in package.json ([403baa5](https://github.com/AliMD/alwatr/commit/403baa53159db2a0fff5b3651769b85e66b13191))
+
+### Features
+
+- **type:** chat ([4b7ac95](https://github.com/AliMD/alwatr/commit/4b7ac95522dcb637ebab2eda0b8f3e0cd80d59b0))
+- **type:** define chat type ([e4a345a](https://github.com/AliMD/alwatr/commit/e4a345a7c932d88f0d13e2df1b3dd7d2ad745932))
+- **type:** define chat type ([174fb02](https://github.com/AliMD/alwatr/commit/174fb02fe287c6fee6e9783f91dfa1928dbaf2ce))
+
 # [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
 
 **Note:** Version bump only for package @alwatr/comment

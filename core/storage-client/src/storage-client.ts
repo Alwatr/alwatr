@@ -1,14 +1,14 @@
-import {serviceRequest, FetchOptions} from '@alwatr/fetch';
-import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
+import {type FetchOptions, serviceRequest} from '@alwatr/fetch';
+import {createLogger, globalAlwatr} from '@alwatr/logger';
 
 import type {AlwatrStorageClientConfig} from './type.js';
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/fetch/type.js';
+import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
 
-export {AlwatrStorageClientConfig, AlwatrDocumentObject};
+export {type AlwatrStorageClientConfig};
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/storage-client',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 /**
@@ -17,8 +17,7 @@ alwatrRegisteredList.push({
  * Example:
  *
  * ```ts
- * import {AlwatrStorageClient} from '@alwatr/storage-client';
- * import type {AlwatrDocumentObject } from '@alwatr/storage-client';
+ * import {type AlwatrDocumentObject, AlwatrStorageClient} from '@alwatr/storage-client';
  *
  * interface User extends AlwatrDocumentObject  {
  *   fname: string;

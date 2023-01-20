@@ -1,17 +1,25 @@
-import {AlwatrSmartElement, customElement, property, query, when, css, html, nothing} from '@alwatr/element';
+import {
+  type TemplateResult,
+  AlwatrSmartElement,
+  customElement,
+  property,
+  query,
+  when,
+  css,
+  html,
+  nothing,
+} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
-
-import '@alwatr/icon';
 
 import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 
-import './ionic-components.js';
+import type {Job, JobResult} from '@alwatr/type/flight-finder.js';
 
-import type {Job, JobResult} from '../type.js';
-import type {TemplateResult} from '@alwatr/element';
+import '@alwatr/icon';
+import './ionic-components.js';
 
 declare global {
   interface HTMLElementTagNameMap {

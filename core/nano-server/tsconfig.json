@@ -11,6 +11,7 @@
   "exclude": [],
   "references": [
     {"path": "../logger"},
-    {"path": "../fetch"}
+    {"path": "../math"},
+    {"path": "../type"},
   ]
 }

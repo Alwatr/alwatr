@@ -1,22 +1,26 @@
-import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
+import {createLogger, globalAlwatr} from '@alwatr/logger';
 
+import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type.js';
 import type {
-  FetchOptions,
-  CacheDuplicate,
-  CacheStrategy,
-  AlwatrDocumentObject,
   AlwatrServiceResponse,
   AlwatrServiceResponseSuccessWithMeta,
   AlwatrServiceResponseSuccess,
-} from './type.js';
+} from '@alwatr/type';
 
-export {FetchOptions, CacheDuplicate, CacheStrategy, AlwatrDocumentObject, AlwatrServiceResponse};
+export type {
+  FetchOptions,
+  CacheDuplicate,
+  CacheStrategy,
+  AlwatrServiceResponse,
+  AlwatrServiceResponseSuccessWithMeta,
+  AlwatrServiceResponseSuccess,
+};
 
 const logger = createLogger('alwatr/fetch');
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/fetch',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 let alwatrCacheStorage: Cache;

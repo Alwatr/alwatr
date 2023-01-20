@@ -1,17 +1,13 @@
 import {AlwatrDummyElement, css, customElement, html, nothing, property} from '@alwatr/element';
 import './chat-message.js';
 
-import type {ChatMessage as _ChatMessage} from './chat-message.js';
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/fetch/type.js';
+import type {ChatStorage} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-chat-list': AlwatrChatList;
   }
 }
-
-export type ChatMessage = AlwatrDocumentObject & _ChatMessage;
-export type ChatStorage = AlwatrDocumentStorage<ChatMessage>;
 
 export function* map<T>(
     items: Record<string, T> | undefined,
@@ -36,39 +32,43 @@ export class AlwatrChatList extends AlwatrDummyElement {
     :host {
       display: flex;
       flex-direction: column;
-      gap: var(--alwatr-sys-spacing-track-2);
-      border-top-left-radius: var(--alwatr-sys-shape-corner-large-top-top-left);
-      border-top-right-radius: var(--alwatr-sys-shape-corner-large-top-top-right);
-      padding: var(--alwatr-sys-spacing-track-2) var(--alwatr-sys-spacing-track-2) var(--alwatr-sys-spacing-track-2);
+      gap: calc(2 * var(--sys-spacing-track));
+      border-top-left-radius: var(--sys-radius-large);
+      border-top-right-radius: var(--sys-radius-large);
+      padding: calc(2 * var(--sys-spacing-track));
       flex-grow: 1;
       overflow-y: auto;
       box-sizing: border-box;
     }
 
     :host::-webkit-scrollbar {
-      width: var(--alwatr-sys-scrollbar-size);
-      height: var(--alwatr-sys-scrollbar-size);
+      width: var(--sys-scrollbar-size);
+      height: var(--sys-scrollbar-size);
     }
 
     :host::-webkit-scrollbar-corner,
     :host::-webkit-scrollbar-track {
-      background-color: var(--alwatr-sys-scrollbar-background);
+      background-color: var(--sys-scrollbar-background);
+    }
+
+    :host::-webkit-scrollbar-track {
+      margin: var(--sys-spacing-track);
     }
 
     :host::-webkit-scrollbar-thumb {
-      background-color: var(--alwatr-sys-scrollbar-color);
-      border-radius: var(--alwatr-sys-scrollbar-radius);
+      background-color: var(--sys-scrollbar-color);
+      border-radius: var(--sys-scrollbar-radius);
     }
 
     :host(:hover)::-webkit-scrollbar-thumb {
-      background-color: var(--alwatr-sys-scrollbar-color-hover);
+      background-color: var(--sys-scrollbar-color-hover);
     }
   `;
 
   @property({type: Object, attribute: false})
     storage?: ChatStorage;
 
-  @property({type: Object, attribute: false})
+  @property({type: String, attribute: false})
     currentUser?: string;
 
   override render(): unknown {
@@ -77,10 +77,7 @@ export class AlwatrChatList extends AlwatrDummyElement {
     return html`${map(
         this.storage.data,
         (message) => html`
-        <alwatr-chat-message
-          .message=${message}
-          ?self=${message.from === this.currentUser}
-        ></alwatr-chat-message>
+        <alwatr-chat-message .message=${message} ?self=${message.from === this.currentUser}></alwatr-chat-message>
       `,
     )}`;
   }

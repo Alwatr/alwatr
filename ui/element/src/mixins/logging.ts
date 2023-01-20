@@ -1,16 +1,13 @@
-import {createLogger} from '@alwatr/logger';
+import {createLogger, type AlwatrLogger} from '@alwatr/logger';
 
-import type {Constructor} from '../type.js';
-import type {AlwatrLogger} from '@alwatr/logger/type.js';
+import type {Constructor} from '@alwatr/type';
 import type {LitElement, PropertyValues} from 'lit';
 
 export declare class LoggerMixinInterface extends LitElement {
   protected _logger: AlwatrLogger;
 }
 
-export function LoggerMixin<T extends Constructor<LitElement>>(
-    superClass: T,
-): Constructor<LoggerMixinInterface> & T {
+export function LoggerMixin<T extends Constructor<LitElement>>(superClass: T): Constructor<LoggerMixinInterface> & T {
   class LoggerMixinClass extends superClass {
     protected _logger = createLogger(`<${this.tagName.toLowerCase()}>`);
 

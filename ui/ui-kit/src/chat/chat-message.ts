@@ -1,4 +1,7 @@
 import {AlwatrDummyElement, css, customElement, html, nothing, property, DirectionMixin} from '@alwatr/element';
+
+import type {ChatMessage} from '@alwatr/type';
+
 import './chat-avatar.js';
 import './chat-bubble.js';
 
@@ -7,14 +10,6 @@ declare global {
     'alwatr-chat-message': AlwatrChatMessage;
   }
 }
-
-export type ChatTextMessage = {
-  from: string;
-  type: 'text';
-  text: string;
-};
-
-export type ChatMessage = ChatTextMessage; // TODO: ChatPhotoMessage
 
 /**
  * Alwatr chat message box element.
@@ -27,50 +22,50 @@ export class AlwatrChatMessage extends DirectionMixin(AlwatrDummyElement) {
     :host {
       display: flex;
       align-items: flex-end;
-      gap: var(--alwatr-sys-spacing-track-1);
+      gap: var(--sys-spacing-track);
       flex-direction: row;
       justify-content: flex-start;
       align-self: flex-start;
       padding-left: 0;
-      padding-right: var(--alwatr-sys-spacing-track-6);
+      padding-right: calc(6 * var(--sys-spacing-track));
     }
 
     :host([self]) {
       justify-content: flex-end;
       align-self: flex-end;
       padding-right: 0;
-      padding-left: var(--alwatr-sys-spacing-track-9);
+      padding-left: calc(9 * var(--sys-spacing-track));
     }
 
     :host([dir='rtl']) {
       padding-right: 0;
-      padding-left: var(--alwatr-sys-spacing-track-6);
+      padding-left: calc(6 * var(--sys-spacing-track));
     }
 
     :host([dir='rtl'][self]) {
       padding-left: 0;
-      padding-right: var(--alwatr-sys-spacing-track-9);
+      padding-right: calc(9 * var(--sys-spacing-track));
     }
 
     :host([self]) alwatr-chat-bubble {
-      color: var(--alwatr-sys-color-on-secondary);
-      background-color: var(--alwatr-sys-color-secondary);
+      color: var(--sys-color-on-secondary);
+      background-color: var(--sys-color-secondary);
     }
 
     alwatr-chat-bubble {
-      max-width: var(--alwatr-sys-spacing-column-3);
+      max-width: var(--sys-spacing-column-3);
     }
   `;
 
   @property({type: Object, attribute: false})
-    message?: ChatTextMessage;
+    message?: ChatMessage;
 
   @property({type: Boolean, attribute: 'self', reflect: true})
     self = false;
 
   override render(): unknown {
     super.render();
-    if (this.message == null) return nothing;
+    if (this.message == null || this.message.type !== 'text') return nothing;
 
     const bubble = html`<alwatr-chat-bubble
       .text=${this.message.text}

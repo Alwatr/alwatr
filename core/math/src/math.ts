@@ -1,5 +1,12 @@
-import {TransformRangeOptions} from './type.js';
-export * from './unicode-digits.js';
+import {globalAlwatr} from '@alwatr/logger';
+
+import type {TransformRangeOptions} from './type.js';
+export {UnicodeDigits, type UnicodeLangKeys} from './unicode-digits.js';
+
+globalAlwatr.registeredList.push({
+  name: '@alwatr/math',
+  version: _ALWATR_VERSION_,
+});
 
 /**
  * Number.isFinite simple polyfill

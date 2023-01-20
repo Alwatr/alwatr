@@ -1,10 +1,10 @@
-import {createLogger, alwatrRegisteredList} from '@alwatr/logger';
+import {createLogger, globalAlwatr} from '@alwatr/logger';
 
 import type {ParamList, RequestRouteParam, Route} from './type.js';
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/router',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 export const logger = createLogger('alwatr/router');

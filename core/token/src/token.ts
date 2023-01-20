@@ -1,28 +1,30 @@
 import {createHmac} from 'node:crypto';
 
-import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
+import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {parseDuration} from '@alwatr/math';
 
-import type {TokenGeneratorConfig, TokenStatus} from './type.js';
+import type {TokenGeneratorConfig, TokenStatus, DigestAlgorithm} from './type.js';
 
-export * from './type.js';
+export type {TokenGeneratorConfig, TokenStatus, DigestAlgorithm};
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/token',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 export class AlwatrTokenGenerator {
   protected _logger = createLogger('alwatr-token-generator');
-  private _duration: number;
+  private _duration: number | null;
 
   get epoch(): number {
-    return Math.floor(Date.now() / this._duration);
+    return this._duration == null
+      ? 0
+      : Math.floor(Date.now() / this._duration);
   }
 
   constructor(public config: TokenGeneratorConfig) {
     this._logger.logMethodArgs('constructor', config);
-    this._duration = parseDuration(config.duration);
+    this._duration = config.duration == null ? null : parseDuration(config.duration);
   }
 
   protected _generate(data: string, epoch: number): string {
@@ -39,6 +41,9 @@ export class AlwatrTokenGenerator {
     const epoch = this.epoch;
     if (token === this._generate(data, epoch)) {
       return 'valid';
+    }
+    else if (this._duration == null) {
+      return 'invalid';
     }
     else if (token === this._generate(data, epoch - 1)) {
       return 'expired';

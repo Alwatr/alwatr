@@ -1,9 +1,9 @@
 import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
+import type {ChatStorage} from '@alwatr/type';
+
 import './chat-footer.js';
 import './chat-list.js';
-
-import type {ChatStorage} from './chat-list.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,6 +16,7 @@ const currentUser = 'user-1';
 const chatStorage: ChatStorage = {
   ok: true,
   meta: {
+    id: `${currentUser}-chat`,
     formatVersion: 4,
     lastAutoId: 0,
     lastUpdated: Date.now(),
@@ -115,16 +116,16 @@ export class AlwatrChat extends AlwatrSmartElement {
   static override styles = css`
     :host {
       display: block;
-      padding-top: var(--alwatr-sys-spacing-track-1);
+      padding-top: var(--sys-spacing-track);
       box-sizing: border-box;
       position: relative;
     }
 
     alwatr-chat-list {
       height: 100%;
-      color: var(--alwatr-sys-color-on-secondary-container);
-      background-color: var(--alwatr-sys-color-secondary-container);
-      padding-bottom: calc(12 * var(--alwatr-sys-spacing-track));
+      color: var(--sys-color-on-surface-variant);
+      background-color: var(--sys-color-surface-variant);
+      padding-bottom: calc(12 * var(--sys-spacing-track));
     }
 
     alwatr-chat-footer {

@@ -1,8 +1,8 @@
-import {alwatrRegisteredList} from '@alwatr/logger';
+import {globalAlwatr} from '@alwatr/logger';
 
 export * from './dummy-element.js';
 export * from './smart-element.js';
-export * from './root-element.js';
+export * from './surface-element.js';
 
 export * from './mixins/localize.js';
 export * from './mixins/direction.js';
@@ -14,10 +14,10 @@ export {when} from 'lit/directives/when.js';
 export {repeat} from 'lit/directives/repeat.js';
 export {ifDefined} from 'lit/directives/if-defined.js';
 export {unsafeSVG} from 'lit/directives/unsafe-svg.js';
+export {unsafeHTML} from 'lit/directives/unsafe-html.js';
 export {cache} from 'lit/directives/cache.js';
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/element',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
-

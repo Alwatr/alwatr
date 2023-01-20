@@ -1,7 +1,7 @@
 import {l10n} from '@alwatr/i18n';
 
-import type {Constructor} from '../type.js';
 import type {LoggerMixinInterface} from './logging.js';
+import type {Constructor} from '@alwatr/type';
 
 export declare class DirectionMixinInterface extends LoggerMixinInterface {
   protected _signalListenerList: Array<unknown>;
@@ -41,7 +41,7 @@ export function DirectionMixin<T extends Constructor<LoggerMixinInterface>>(
         return this._updateDir();
       }
       // else
-      let dirParent = (this.assignedSlot || this.parentNode) as (HTMLElement | null);
+      let dirParent = (this.assignedSlot || this.parentNode) as HTMLElement | null;
       while (dirParent != null && dirParent !== document.documentElement && !dirParent.dir) {
         // prettier-ignore
         dirParent = (

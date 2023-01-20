@@ -18,27 +18,27 @@ export class AlwatrChatBubble extends DirectionMixin(AlwatrDummyElement) {
     :host {
       display: inline-block;
       padding:
-        var(--alwatr-sys-spacing-track-1)
-        var(--alwatr-sys-spacing-track-2)
-        var(--alwatr-sys-spacing-halftrack-3)
+        var(--sys-spacing-track)
+        calc(2 * var(--sys-spacing-track))
+        calc(1.5 * var(--sys-spacing-track))
       ;
-      color: var(--alwatr-sys-color-on-surface);
-      background-color: var(--alwatr-sys-color-surface);
+      color: var(--sys-color-on-surface);
+      background-color: var(--sys-color-surface);
       white-space: pre-line;
-      /* max-width: var(--alwatr-sys-spacing-column-3); */
-      border-radius: var(--alwatr-sys-shape-large);
+      /* max-width: var(--sys-spacing-column-3); */
+      border-radius: var(--sys-radius-large);
     }
 
     :host([side='start']),
     :host([side='end'][dir='rtl']) {
-      border-bottom-left-radius: var(--alwatr-sys-shape-corner-extra-small-default-size);
-      border-bottom-right-radius: var(--alwatr-sys-shape-large);
+      border-bottom-left-radius: var(--sys-radius-xsmall);
+      border-bottom-right-radius: var(--sys-radius-large);
     }
 
     :host([side='end']),
     :host([side='start'][dir='rtl']) {
-      border-bottom-left-radius: var(--alwatr-sys-shape-large);
-      border-bottom-right-radius: var(--alwatr-sys-shape-corner-extra-small-default-size);
+      border-bottom-left-radius: var(--sys-radius-large);
+      border-bottom-right-radius: var(--sys-radius-xsmall);
     }
   `;
 

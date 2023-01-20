@@ -13,7 +13,7 @@ function getDocument(connection: AlwatrConnection): AlwatrServiceResponse {
     return {
       ok: true,
       data: {
-        app: 'Alwatr Storage Server',
+        app: '..:: Alwatr Storage Server ::..',
         message: 'Hello ;)',
       },
     };

@@ -1,18 +1,18 @@
 import {resolve} from 'node:path';
 
-import {alwatrRegisteredList, createLogger} from '@alwatr/logger';
+import {createLogger, globalAlwatr, type AlwatrLogger} from '@alwatr/logger';
 import exitHook from 'exit-hook';
 
 import {readJsonFile, writeJsonFile} from './util.js';
 
-import type {AlwatrDocumentStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject} from './type.js';
-import type {AlwatrLogger} from '@alwatr/logger';
+import type {AlwatrStorageEngineConfig} from './type.js';
+import type {AlwatrDocumentStorage, AlwatrDocumentObject} from '@alwatr/type';
 
-export {AlwatrDocumentStorage, AlwatrStorageEngineConfig, AlwatrDocumentObject};
+export type {AlwatrDocumentObject, AlwatrDocumentStorage};
 
-alwatrRegisteredList.push({
+globalAlwatr.registeredList.push({
   name: '@alwatr/storage-engine',
-  version: '{{ALWATR_VERSION}}',
+  version: _ALWATR_VERSION_,
 });
 
 /**
@@ -22,9 +22,7 @@ alwatrRegisteredList.push({
  * Example:
  *
  * ```ts
- * import {AlwatrStorageEngine} from '@alwatr/storage-engine';
- *
- * import type {AlwatrDocumentObject} from '@alwatr/fetch';
+ * import {type AlwatrDocumentObject, AlwatrStorageEngine} from '@alwatr/storage-engine';
  *
  * interface User extends AlwatrDocumentObject {
  *   fname: string;
@@ -70,7 +68,7 @@ alwatrRegisteredList.push({
  * ```
  */
 export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = AlwatrDocumentObject> {
-  static readonly formatVersion = 4;
+  static readonly formatVersion = 5;
 
   /**
    * Storage name like database table name.
@@ -134,6 +132,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     return {
       ok: true,
       meta: {
+        id: this.name,
         formatVersion: AlwatrStorageEngine.formatVersion,
         reversion: 0,
         lastUpdated: Date.now(),
@@ -155,6 +154,10 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
 
     exitHook(this.forceSave);
     this._storage = this.load();
+
+    if (this._storage.meta?.formatVersion !== AlwatrStorageEngine.formatVersion) {
+      this._migrateStorage();
+    }
   }
 
   /**
@@ -177,12 +180,31 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
       throw new Error('invalid_storage_data');
     }
 
-    if (storage.meta?.formatVersion !== AlwatrStorageEngine.formatVersion) {
-      this._logger.error('load', 'storage_version_incompatible', {storageMeta: storage.meta});
+    return storage;
+  }
+
+  protected _migrateStorage(): void {
+    if (this._storage.meta == null) {
+      this._storage.meta = {
+        id: this.name,
+        formatVersion: 5,
+        reversion: 0,
+        lastUpdated: Date.now(),
+        lastAutoId: -1,
+      };
+    }
+
+    if (this._storage.meta.formatVersion === 4) {
+      this._storage.meta.id = this.name;
+      this._storage.meta.formatVersion = 5;
+    }
+
+    if (this._storage.meta.formatVersion !== AlwatrStorageEngine.formatVersion) {
+      this._logger.error('load', 'storage_version_incompatible', {storageMeta: this._storage.meta});
       throw new Error('storage_version_incompatible');
     }
 
-    return storage;
+    this.save();
   }
 
   /**
