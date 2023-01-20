@@ -16,7 +16,7 @@ const menuList: Array<IconBoxContent & {wide?: boolean}> = [
     icon: 'logo-microsoft',
     headline: 'بازرگانی سافیت',
     description: `مجموعه تولیدی بازرگانی سافیت
-      تولید کننده عمده محصولات DRY WALL ، سازه ۶۰ کلیک، تایل کچی 60*60 و روکش P.V.C
+      تولید کننده عمده محصولات DRY WALL، سازه ۶۰ کلیک، تایل کچی 60*60 و روکش P.V.C
       برند درجه یک صادراتی با فعالیت های بین المللی و ویژگی های ممتاز`,
   },
   {
@@ -123,8 +123,8 @@ export class AlwatrPageHome extends AlwatrSmartElement {
 
     .version {
       position: absolute;
-      left: var(--sys-spacing-track);
-      bottom: var(--sys-spacing-track);
+      right: var(--sys-spacing-track);
+      bottom: 0;
       font-size: var(--sys-typescale-label-small-font-size);
       line-height: var(--sys-typescale-label-small-line-height);
       letter-spacing: var(--sys-typescale-label-small-letter-spacing);
