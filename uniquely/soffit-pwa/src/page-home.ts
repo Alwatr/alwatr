@@ -122,6 +122,19 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       color: var(--sys-color-on-secondary-container);
       padding: calc(2 * var(--sys-spacing-track));
       background-color: var(--sys-color-secondary-container);
+      position: relative;
+    }
+
+    .version {
+      position: absolute;
+      left: var(--sys-spacing-track);
+      bottom: var(--sys-spacing-track);
+      font-size: var(--sys-typescale-label-small-font-size);
+      line-height: var(--sys-typescale-label-small-line-height);
+      letter-spacing: var(--sys-typescale-label-small-letter-spacing);
+      opacity: var(--sys-surface-disabled-opacity);
+      user-select: none;
+      -webkit-user-select: none;
     }
   `;
 
@@ -130,13 +143,17 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     return html`
       <header><img src="image/soffit.png" alt="SOFFIT Logo" /></header>
       <main>${this._menuTemplate()}</main>
-      <footer><span>A good ceiling is vital.<br/>a SOFFIT ceiling can be an inspiration.</span></footer>
+      <footer>
+        <span>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</span>
+        <span class="version">v${_ALWATR_VERSION_}</span>
+      </footer>
     `;
   }
 
-  protected _menuTemplate():unknown {
-    return map(menuList, (menuItem) => html`
-      <alwatr-icon-box .content=${menuItem} ?wide=${menuItem.wide}></alwatr-icon-box>
-    `);
+  protected _menuTemplate(): unknown {
+    return map(
+        menuList,
+        (menuItem) => html` <alwatr-icon-box .content=${menuItem} ?wide=${menuItem.wide}></alwatr-icon-box> `,
+    );
   }
 }
