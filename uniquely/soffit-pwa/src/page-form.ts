@@ -1,10 +1,9 @@
 import {customElement, AlwatrSmartElement, css, html, map, query} from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
 
-declare global {
-  // eslint-disable-next-line no-var
-  var appConfig: Record<string, string | undefined> | undefined;
+import {config} from './config.js';
 
+declare global {
   interface HTMLElementTagNameMap {
     'alwatr-page-form': AlwatrPageForm;
   }
@@ -147,8 +146,8 @@ export class AlwatrPageForm extends AlwatrSmartElement {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     await fetch({
-      url: 'http://localhost:8000/',
-      token: 'YOUR_SECRET_TOKEN',
+      url: config.apiUrl + '/',
+      token: config.apiAccessToken,
       method: 'PUT',
       bodyJson: {
         lotteryCode: (form.elements.namedItem('lottery-code') as HTMLInputElement).value,
