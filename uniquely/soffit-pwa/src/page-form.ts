@@ -1,6 +1,10 @@
-import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html, map, query} from '@alwatr/element';
+import {fetch} from '@alwatr/fetch';
 
 declare global {
+  // eslint-disable-next-line no-var
+  var appConfig: Record<string, string | undefined> | undefined;
+
   interface HTMLElementTagNameMap {
     'alwatr-page-form': AlwatrPageForm;
   }
@@ -13,6 +17,11 @@ const activityType = ['پخش کننده تایل', 'نصاب تایل', 'فرو
  */
 @customElement('alwatr-page-form')
 export class AlwatrPageForm extends AlwatrSmartElement {
+  constructor() {
+    super();
+    this._submitForm = this._submitForm.bind(this);
+  }
+
   static override styles = css`
     :host {
       display: block;
@@ -45,6 +54,7 @@ export class AlwatrPageForm extends AlwatrSmartElement {
 
     main {
       width: 100%;
+      box-sizing: border-box;
       padding: calc(5 * var(--sys-spacing-track)) calc(2 * var(--sys-spacing-track));
       display: flex;
       flex-direction: column;
@@ -129,6 +139,29 @@ export class AlwatrPageForm extends AlwatrSmartElement {
       gap: calc(2 * var(--sys-spacing-track));
     }
   `;
+
+  @query('form')
+    form?: HTMLFormElement;
+
+  protected async _submitForm(event: SubmitEvent): Promise<void> {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    await fetch({
+      url: 'http://localhost:8000/',
+      token: 'YOUR_SECRET_TOKEN',
+      method: 'PUT',
+      bodyJson: {
+        lotteryCode: (form.elements.namedItem('lottery-code') as HTMLInputElement).value,
+        name: (form.elements.namedItem('name') as HTMLInputElement).value,
+        phoneNumber: (form.elements.namedItem('phone-number') as HTMLInputElement).value,
+        activityType: (form.elements.namedItem('activity-type') as HTMLInputElement).value,
+      },
+    });
+  }
+
+  protected override firstUpdated(): void {
+    this.form?.addEventListener('submit', this._submitForm);
+  }
 
   override render(): unknown {
     super.render();
