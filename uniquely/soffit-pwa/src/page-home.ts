@@ -78,10 +78,6 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       background-color: var(--sys-scrollbar-background);
     }
 
-    :host::-webkit-scrollbar-track {
-      margin: var(--sys-spacing-track);
-    }
-
     :host::-webkit-scrollbar-thumb {
       background-color: var(--sys-scrollbar-color);
       border-radius: var(--sys-scrollbar-radius);
