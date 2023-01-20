@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
+
+### Bug Fixes
+
+- **element/sw-helper:** reload on new update ([b07db77](https://github.com/AliMD/alwatr/commit/b07db77bf8a9c28235cdfe9f1d0aff972feda73c))
+- **pwa-element:** prevent to default import css for backward compatibility ([89591a2](https://github.com/AliMD/alwatr/commit/89591a28d1d829512200c8a0a026cbb7558e198d))
+- **pwa:** debug mode scripts ([681fdc2](https://github.com/AliMD/alwatr/commit/681fdc24897b7bd4f677f26fd45ea048d5f9a675))
+- version in package.json ([403baa5](https://github.com/AliMD/alwatr/commit/403baa53159db2a0fff5b3651769b85e66b13191))
+
+### Features
+
+- **demo-pwa:** register service worker ([ad8e2d8](https://github.com/AliMD/alwatr/commit/ad8e2d8073327d289bd069069847e98b12dba302))
+- **element:** separate \_initLocale, \_initRouter and \_routeChanged ([a0af8ec](https://github.com/AliMD/alwatr/commit/a0af8ecfb6f5da24898da629de822cfe54ea5586))
+- **element:** service worker register ([c98b1f6](https://github.com/AliMD/alwatr/commit/c98b1f601b7a277d2bf713637f7475b037961f3a))
+- **element:** service-worker helper ([6ec8b59](https://github.com/AliMD/alwatr/commit/6ec8b59a617d514315926dac7c3e3318867782d2))
+- **icon-box:** new style and layout ([2003e33](https://github.com/AliMD/alwatr/commit/2003e33e5095358e24fd4e07b3fc92a3b8a9d7d7))
+- **pwa:** unresolved state for show skeleton or loading ([8c4e834](https://github.com/AliMD/alwatr/commit/8c4e834b1415df14d6c76ef4d2040c60dc638b9e))
+- **type:** define constructor type ([39c5ab7](https://github.com/AliMD/alwatr/commit/39c5ab74f0a1471d5e20beff89f6885265907633))
+- **ui/element:** export `unsafeHTML` ([2cb6d49](https://github.com/AliMD/alwatr/commit/2cb6d49aca60dbbda45990bf13e0b9622725a0ef))
+- **ui:** new AlwatrSurfaceElement with elevation/tint/state simulation ([0877f4f](https://github.com/AliMD/alwatr/commit/0877f4f3dd780321f3c7498cffde66653a24de43))
+
 # [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
 
 ### Bug Fixes

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/AliMD/flight-finder/compare/v0.27.0...v0.28.0) (2023-01-20)
+
+### Bug Fixes
+
+- review issue ([e5d192c](https://github.com/AliMD/flight-finder/commit/e5d192cbee6917c2de01146cf8bd026895724ab8))
+- **services:** name and desc ([453c1b6](https://github.com/AliMD/flight-finder/commit/453c1b6ff334a23bea690b7ff9dd874471b25bb9))
+- **services:** service name in first log ([879f87f](https://github.com/AliMD/flight-finder/commit/879f87fd4d4b47454d608a5b71d70e47601c7cd7))
+- version in package.json ([403baa5](https://github.com/AliMD/flight-finder/commit/403baa53159db2a0fff5b3651769b85e66b13191))
+
 # [0.27.0](https://github.com/AliMD/flight-finder/compare/v0.26.0...v0.27.0) (2022-12-29)
 
 ### Bug Fixes

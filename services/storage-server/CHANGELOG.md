@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
+
+### Bug Fixes
+
+- **services:** app name in home page ([6feab58](https://github.com/AliMD/alwatr/commit/6feab58b5655c7a09150ec83adf9f3bd8fe976b4))
+- **services:** service name in first log ([879f87f](https://github.com/AliMD/alwatr/commit/879f87fd4d4b47454d608a5b71d70e47601c7cd7))
+- version in package.json ([403baa5](https://github.com/AliMD/alwatr/commit/403baa53159db2a0fff5b3651769b85e66b13191))
+
 # [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
 
 **Note:** Version bump only for package @alwatr/storage-server

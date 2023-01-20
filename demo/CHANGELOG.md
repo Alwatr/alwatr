@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
+
+### Bug Fixes
+
+- review issue ([e5d192c](https://github.com/AliMD/alwatr/commit/e5d192cbee6917c2de01146cf8bd026895724ab8))
+- **validator:** remove extra trim ([ee9b601](https://github.com/AliMD/alwatr/commit/ee9b601198ea8dded43497df6824e09f65be86b3))
+- **validator:** validate boolean ([c0cfdc2](https://github.com/AliMD/alwatr/commit/c0cfdc21a99cf02bb4d56c00ba186429e72d3aa2))
+
+### Features
+
+- **validator:** demo ([9e577ca](https://github.com/AliMD/alwatr/commit/9e577cad18be45942d36d633932ef0aa2c2ec512))
+- **validator:** demo ([b48a30b](https://github.com/AliMD/alwatr/commit/b48a30bac9f02f0b7edb3b4069c324f835f6d49b))
+- **validator:** update demo ([d49929f](https://github.com/AliMD/alwatr/commit/d49929fca0007aa94482010b7a6245f0bb360bc0))
+- **validator:** update demo ([cc21a90](https://github.com/AliMD/alwatr/commit/cc21a906b371f51696c3619fc0df0f392be99dee))
+- **validator:** update demo ([4f11b61](https://github.com/AliMD/alwatr/commit/4f11b61af433f348cc4a4bd5f837848c6c1298a4))
+
 # [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
 
 **Note:** Version bump only for package @alwatr/demo

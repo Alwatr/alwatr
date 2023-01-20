@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/nano-server",
-  "version": "0.27.0",
+  "version": "0.28.0",
   "description": "Elegant powerful nodejs server for nanoservice use cases, written in tiny TypeScript module.",
   "keywords": [
     "server",
@@ -31,11 +31,11 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.27.0",
-    "@alwatr/math": "^0.27.0",
+    "@alwatr/logger": "^0.28.0",
+    "@alwatr/math": "^0.28.0",
     "tslib": "^2.4.1"
   },
   "devDependencies": {
-    "@alwatr/type": "^0.27.0"
+    "@alwatr/type": "^0.28.0"
   }
 }

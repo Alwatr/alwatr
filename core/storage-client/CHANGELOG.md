@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
+
+### Bug Fixes
+
+- review issue ([e5d192c](https://github.com/AliMD/alwatr/commit/e5d192cbee6917c2de01146cf8bd026895724ab8))
+- **storage-client:** export AlwatrStorageClientConfig ([9d626c2](https://github.com/AliMD/alwatr/commit/9d626c28898c7d97776896317d246b8483ecbe5e))
+
+### Features
+
+- **type:** define alwatrRegistredList ([25406c2](https://github.com/AliMD/alwatr/commit/25406c268f39cf3e055ea05c9fc7b50bd3dd0a17))
+
 # [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
 
 **Note:** Version bump only for package @alwatr/storage-client

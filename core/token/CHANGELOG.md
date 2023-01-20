@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
+
+### Bug Fixes
+
+- **token:** types ([a7da60e](https://github.com/AliMD/alwatr/commit/a7da60e720ac83b8d2d2ed5c0b811dea1952a2b9))
+
+### Features
+
+- **token:** generate and verify token without expiration time ([6db78f0](https://github.com/AliMD/alwatr/commit/6db78f0644e076c3401a263173d7139838bbbf0c))
+- **type:** define math types ([8c19f40](https://github.com/AliMD/alwatr/commit/8c19f4058d4361b7d3f4f714595e34cb6fa21109))
+
 # [0.27.0](https://github.com/AliMD/alwatr/compare/v0.26.0...v0.27.0) (2022-12-29)
 
 **Note:** Version bump only for package @alwatr/token

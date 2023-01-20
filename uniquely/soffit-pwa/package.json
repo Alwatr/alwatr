@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/soffit-pwa",
-  "version": "0.27.0",
+  "version": "0.28.0",
   "description": "A good ceiling is vital. But a SOFFIT ceiling can be an inspiration.",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -33,8 +33,8 @@
     "watch:es": "yarn build --clean --watch --debug"
   },
   "devDependencies": {
-    "@alwatr/element": "^0.27.0",
-    "@alwatr/ui-kit": "^0.27.0",
+    "@alwatr/element": "^0.28.0",
+    "@alwatr/ui-kit": "^0.28.0",
     "@web/dev-server": "^0.1.35",
     "@webcomponents/webcomponentsjs": "^2.7.0",
     "lit-analyzer": "^1.2.1",
