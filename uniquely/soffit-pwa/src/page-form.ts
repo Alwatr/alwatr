@@ -14,12 +14,6 @@ const activityType = ['پخش کننده تایل', 'نصاب تایل', 'فرو
 @customElement('alwatr-page-form')
 export class AlwatrPageForm extends AlwatrSmartElement {
   static override styles = css`
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     :host {
       display: block;
       height: 100%;
@@ -62,11 +56,10 @@ export class AlwatrPageForm extends AlwatrSmartElement {
     form {
       width: 80vw;
       padding: calc(2 * var(--sys-spacing-track));
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: calc(3 * var(--sys-spacing-track));
+    }
+
+    form > * {
+      margin: calc(2 * var(--sys-spacing-track)) 0;
     }
 
     input,
@@ -80,6 +73,7 @@ export class AlwatrPageForm extends AlwatrSmartElement {
 
     input[type='text'],
     input[type='tel'] {
+      box-sizing: border-box;
       width: 100%;
       padding: calc(2 * var(--sys-spacing-track));
       color: var(--sys-color-on-surface);
