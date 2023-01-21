@@ -2,7 +2,7 @@
   --ref-palette-primary-hue: 209;
   --ref-palette-primary-chroma: 48%; /* maximum 48 */
   --ref-palette-secondary-hue: var(--ref-palette-primary-hue);
-  --ref-palette-secondary-chroma: 16%;
+  --ref-palette-secondary-chroma: 50%;
   /* --ref-palette-tertiary-hue: calc(var(--ref-palette-primary-hue) + 60); */
   /* --ref-palette-tertiary-chroma: 24%; */
   --ref-palette-tertiary-hue: 30;
@@ -16,6 +16,15 @@
 }
 
 :root {
+  --sys-color-primary-hsl: var(--ref-palette-primary40);
+  --sys-color-on-primary-hsl: var(--ref-palette-primary100);
+
+  --sys-color-secondary-hsl: var(--ref-palette-secondary20);
+  --sys-color-on-secondary-hsl: var(--ref-palette-secondary100);
+
+  --sys-color-tertiary-hsl: var(--ref-palette-tertiary50);
+  --sys-color-on-tertiary-hsl: var(--ref-palette-tertiary100);
+
   --sys-color-background-hsl: var(--ref-palette-neutral10);
   --sys-color-on-background-hsl: var(--ref-palette-neutral90);
 
@@ -32,8 +41,7 @@
   --sys-color-error-container-hsl: var(--ref-palette-error30);
   --sys-color-on-error-hsl: var(--ref-palette-error20);
   --sys-color-on-error-container-hsl: var(--ref-palette-error90);
-
-  --sys-color-inverse-primary-hsl: var(--ref-palette-primary40);
-  --sys-color-inverse-surface-hsl: var(--ref-palette-neutral90);
-  --sys-color-inverse-on-surface-hsl: var(--ref-palette-neutral20); */
+*/
+  --sys-color-inverse-surface-hsl: var(--ref-palette-neutral20);
+  --sys-color-inverse-on-surface-hsl: var(--ref-palette-neutral95);
 }
