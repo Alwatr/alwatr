@@ -1,5 +1,9 @@
-import {AlwatrSmartElement, customElement, html, css} from '@alwatr/element';
-import {SignalInterface} from '@alwatr/signal';
+import {AlwatrDummyElement, customElement, html, css, property, map} from '@alwatr/element';
+import {router} from '@alwatr/router';
+
+import './navigation-drawer-salavat-counter.js';
+
+import type {Routes} from '../../types/route.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -7,50 +11,38 @@ declare global {
   }
 }
 
-/**
- * @attr {boolean} open
- */
 @customElement('alwatr-navigation-drawer')
-export class AlwatrNavigationDrawer extends AlwatrSmartElement {
+export class AlwatrNavigationDrawer extends AlwatrDummyElement {
   static override styles = [
     css`
       :host {
         display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
 
         position: fixed;
-        inset: 0;
+        top: 0;
+        bottom: 0;
         z-index: var(--sys-zindex-topness);
-        right: -100vw;
+        right: calc(-1 * 45 * var(--sys-spacing-track));
         transform: translateX(0px);
-
-        width: 100%;
-        height: 100%;
-
-        will-change: transform;
-
-        transition-property: transform;
-      }
-
-      .navigation-drawer {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
         overflow-y: auto;
 
-        box-shadow: 0 0 0 100vw #0000;
+        max-width: calc(100vw - 7 * var(--sys-spacing-track));
+        width: calc(45 * var(--sys-spacing-track));
+        height: 100%;
+
         background-color: var(--sys-color-surface);
         background-image: url('/images/background.jpg');
         background-repeat: no-repeat;
         background-position: bottom right;
         background-size: cover;
 
-        max-width: calc(100vw - 7 * var(--sys-spacing-track));
-        width: calc(45 * var(--sys-spacing-track));
-        height: 100%;
+        will-change: transform;
 
-        will-change: box-shadow;
-
-        transition-property: box-shadow;
+        transition-property: transform;
+        transition-duration: var(--sys-motion-duration-large);
+        transition-timing-function: var(--sys-motion-easing-in-out);
       }
 
       .navigation-drawer__items {
@@ -61,66 +53,39 @@ export class AlwatrNavigationDrawer extends AlwatrSmartElement {
         backdrop-filter: blur(2vw);
       }
 
-      :host,
-      :host .navigation-drawer {
-        transition-duration: var(--sys-motion-duration-large);
-        transition-timing-function: var(--sys-motion-easing-in-out);
-      }
-
       :host([open]) {
-        transform: translateX(-100vw);
-      }
-
-      :host([open]) .navigation-drawer {
-        box-shadow: 0 0 100vw 100vw #0008;
+        transform: translateX(calc(-1 * 45 * var(--sys-spacing-track)));
       }
     `,
   ];
 
-  static navigationDrawerSignal = new SignalInterface('navigation-drawer');
+  @property({type: Object})
+    routes: Routes = {};
 
-  override connectedCallback(): void {
-    super.connectedCallback();
+  @property()
+    currentSlug?: string;
 
-    const navigationDrawerSignalListener = AlwatrNavigationDrawer.navigationDrawerSignal.addListener((options) => {
-      if (options.open === true) {
-        this.setAttribute('open', '');
-      }
-      else {
-        this.removeAttribute('open');
-      }
-    });
-
-    this._signalListenerList.push(navigationDrawerSignalListener);
-  }
+  @property({type: Boolean, reflect: true})
+    open = false;
 
   override render(): unknown {
-    return html`
-      <div class="navigation-drawer" @click=${this.navigationDrawerClicked}>
-        <div class="navigation-drawer__items">
-          <alwatr-navigation-drawer-item tabindex="-1" icon="megaphone" label="کمپین"></alwatr-navigation-drawer-item>
-          <alwatr-navigation-drawer-item tabindex="-1" icon="book" label="داستان ما"></alwatr-navigation-drawer-item>
-          <alwatr-navigation-drawer-item
-            tabindex="-1"
-            icon="people"
-            label="حمایت از ما"
-          ></alwatr-navigation-drawer-item>
-          <alwatr-navigation-drawer-item
-            tabindex="-1"
-            icon="image"
-            label="دانلود والپیپر"
-          ></alwatr-navigation-drawer-item>
-          <alwatr-navigation-drawer-item
-            tabindex="-1"
-            icon="cloud-download"
-            label="دانلود اپلیکشین"
-          ></alwatr-navigation-drawer-item>
-        </div>
-      </div>
-    `;
-  }
+    const itemsTemplate = map(Object.keys(this.routes), (slug) => {
+      const route = this.routes[slug];
+      const selected = this.currentSlug === slug;
 
-  private navigationDrawerClicked(event: PointerEvent): void {
-    event.stopPropagation();
+      return html`<alwatr-navigation-drawer-item
+        .href=${router.makeUrl({sectionList: [slug]})}
+        .icon=${route.icon.name}
+        .urlPrefix=${route.icon.urlPrefix}
+        .label=${route.title}
+        .twoToneIcon=${route.twoToneIcon ?? false}
+        ?active=${selected}
+      ></alwatr-navigation-drawer-item>`;
+    });
+
+    return html`
+      <alwatr-navigation-salavat-counter></alwatr-navigation-salavat-counter>
+      <div class="navigation-drawer__items">${itemsTemplate}</div>
+    `;
   }
 }

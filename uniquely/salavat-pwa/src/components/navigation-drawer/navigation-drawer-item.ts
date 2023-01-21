@@ -1,4 +1,4 @@
-import {customElement, property, html, css, ifDefined, AlwatrSurfaceElement} from '@alwatr/element';
+import {customElement, property, html, css, ifDefined, AlwatrSurfaceElement, when} from '@alwatr/element';
 
 import '@alwatr/icon';
 
@@ -35,6 +35,7 @@ export class AlwatrNavigationDrawerItem extends AlwatrSurfaceElement {
         user-select: none;
         cursor: pointer;
         text-decoration: none;
+        color: inherit;
 
         transition-property: color, background-color;
 
@@ -70,23 +71,16 @@ export class AlwatrNavigationDrawerItem extends AlwatrSurfaceElement {
         letter-spacing: var(--sys-typescale-label-large-letter-spacing);
         line-height: var(--sys-typescale-label-large-line-height);
       }
-    `,
-    css`
-      :host([active]) .navigation-drawer-item {
-        color: var(--sys-color-on-secondary-container);
-        background-color: var(--sys-color-secondary-container);
-      }
 
       :host([active]) .navigation-drawer-item .inactive-icon,
       :host(:not([active])) .navigation-drawer-item .active-icon {
         opacity: 0;
       }
-    `,
-    css`
+
       /* incoming transition */
       :host([active]) .navigation-drawer-item,
       .navigation-drawer-item .icon {
-        transition-duration: var(--sys-motion-duration-small-in);
+        transition-duration: var(--sys-motion-duration-small);
         transition-timing-function: var(--sys-motion-easing-incoming);
       }
 
@@ -100,19 +94,39 @@ export class AlwatrNavigationDrawerItem extends AlwatrSurfaceElement {
     `,
   ];
 
-  @property() href?: string;
+  @property()
+    href?: string;
 
-  @property() label = '';
+  @property()
+    label = '';
 
-  @property() icon = '';
+  @property()
+    icon = '';
 
-  @property({type: Boolean, reflect: true}) active = false;
+  @property({attribute: 'url-prefix'})
+    urlPrefix?: string;
+
+  @property({type: Boolean, reflect: true})
+    active = false;
+
+  @property({type: Boolean, reflect: true, attribute: 'two-tone-icon'})
+    twoToneIcon = false;
 
   override render(): unknown {
     return html`
       <a class="navigation-drawer-item" href=${ifDefined(this.href)}>
-        <alwatr-icon class="icon inactive-icon" name="${this.icon}-outline"></alwatr-icon>
-        <alwatr-icon class="icon active-icon" name=${this.icon}></alwatr-icon>
+        ${when(
+      this.twoToneIcon,
+      () => html`
+            <alwatr-icon
+              class="icon inactive-icon"
+              .urlPrefix=${this.urlPrefix}
+              name="${this.icon}-outline"
+            ></alwatr-icon>
+            <alwatr-icon class="icon active-icon" .urlPrefix=${this.urlPrefix} name=${this.icon}></alwatr-icon>
+          `,
+      () => html` <alwatr-icon class="icon" .urlPrefix=${this.urlPrefix} name=${this.icon}></alwatr-icon> `,
+  )}
 
         <span class="label">${this.label}</span>
       </a>
