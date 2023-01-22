@@ -1,9 +1,13 @@
-import {css, type CSSResultGroup} from 'lit';
+import {AlwatrDummyElement, customElement, html, css, type CSSResultGroup} from '@alwatr/element';
 
-import {AlwatrDummyElement} from './dummy-element.js';
+declare global {
+  interface HTMLElementTagNameMap {
+    'alwatr-surface': AlwatrSurface;
+  }
+}
 
 /**
- * Alwatr Surface Base Element
+ * Alwatr Surface Element
  *
  * @extends AlwatrDummyElement
  *
@@ -11,6 +15,7 @@ import {AlwatrDummyElement} from './dummy-element.js';
  * @attr {Number|Boolean} elevated - tinted by default
  * @attr {Boolean} filled
  * @attr {Boolean} outlined
+ * @attr {Boolean} active-outline - outline on active and focus
  * @attr {Boolean} disabled
  *
  * @cssprop {String} [--_surface-color-on=var(--sys-color-on-surface-hsl)]
@@ -21,7 +26,8 @@ import {AlwatrDummyElement} from './dummy-element.js';
  * @cssprop {Number} [--_surface-tint-opacity=0]
  * @cssprop {Number} [--_surface-state-opacity=0]
  */
-export class AlwatrSurfaceElement extends AlwatrDummyElement {
+@customElement('alwatr-surface')
+export class AlwatrSurface extends AlwatrDummyElement {
   static override styles: CSSResultGroup = css`
     :host {
       --_surface-color-on: var(--sys-color-on-surface-hsl);
@@ -33,6 +39,7 @@ export class AlwatrSurfaceElement extends AlwatrDummyElement {
       --_surface-state-opacity: 0;
 
       display: block;
+      padding: calc(2 * var(--sys-spacing-track));
       color: hsl(var(--_surface-color-on));
       background-color: hsl(var(--_surface-color-bg));
       box-shadow: var(--_surface-elevation);
@@ -87,6 +94,13 @@ export class AlwatrSurfaceElement extends AlwatrDummyElement {
       --_surface-state-opacity: var(--sys-surface-state-opacity-focus);
     }
 
+    :host([active-outline]:active),
+    :host([active-outline]:focus),
+    :host([active-outline]:focus-within) {
+      border-color: var(--sys-color-primary);
+      box-shadow: 0 0 0.4px 0.8px var(--sys-color-primary);
+    }
+
     :host([stated]:hover:not(:active)),
     :host([stated]:focus),
     :host([stated]:focus-within) {
@@ -129,4 +143,9 @@ export class AlwatrSurfaceElement extends AlwatrDummyElement {
       opacity: var(--sys-surface-disabled-outlined-opacity);
     }
   `;
+
+  override render(): unknown {
+    this._logger.logMethod('render');
+    return html`<slot></slot>`;
+  }
 }
