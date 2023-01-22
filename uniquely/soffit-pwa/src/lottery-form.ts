@@ -1,4 +1,10 @@
 import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element';
+import {fetch} from '@alwatr/fetch';
+
+import {config} from './config.js';
+
+import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
+
 import '@alwatr/ui-kit/text-field/text-field.js';
 import '@alwatr/ui-kit/button/button.js';
 
@@ -72,6 +78,30 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     }
   `;
 
+  protected override async firstUpdated(): Promise<void> {
+    await this._submit();
+  }
+
+  protected _submit(): Promise<Response> {
+    return fetch({
+      url: config.apiUrl + '/',
+      token: config.apiAccessToken,
+      method: 'PUT',
+      bodyJson: this._getInputData(),
+    });
+  }
+
+  protected _getInputData(): Record<string, unknown> {
+    return {
+      code: (this.shadowRoot?.getElementById('code') as AlwatrTextField).inputElement?.value,
+      name: (this.shadowRoot?.getElementById('name') as AlwatrTextField).inputElement?.value,
+      phone: (this.shadowRoot?.getElementById('phone') as AlwatrTextField).inputElement?.value,
+      activity: (this.shadowRoot?.getElementById('activity') as HTMLFieldSetElement).form?.elements.namedItem(
+          'activity',
+      ),
+    };
+  }
+
   override render(): unknown {
     super.render();
     return html`
@@ -99,17 +129,17 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
         stated
         placeholder="شماره موبایل"
       ></alwatr-text-field>
-      <fieldset>
+      <fieldset id="activity">
         <legend>نوع فعالیت:</legend>
         ${this._radioButtonTemplate()}
       </fieldset>
-      <alwatr-button outlined>ارسال فرم</alwatr-button>
+      <alwatr-button @click=${this._submit} outlined>ارسال فرم</alwatr-button>
     `;
   }
 
   protected _radioButtonTemplate(): unknown {
     return map(_activityType, (activity, index) => {
-      const id = 'activityType' + index;
+      const id: string = 'activityType' + index;
       return html`<div>
         <input type="radio" id=${id} name="activity" value="${activity}" />
         <label for=${id}>${activity}</label>
