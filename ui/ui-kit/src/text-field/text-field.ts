@@ -27,6 +27,8 @@ export type InputType =
 
 /**
  * Alwatr outlined text field.
+ *
+ * @attr {String} name
  */
 @customElement('alwatr-text-field')
 export class AlwatrTextField extends AlwatrSurface {

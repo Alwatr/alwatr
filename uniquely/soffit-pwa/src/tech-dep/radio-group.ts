@@ -1,4 +1,4 @@
-import {customElement, css, html, map, AlwatrDummyElement, property} from '@alwatr/element';
+import {customElement, css, html, map, AlwatrDummyElement} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -6,35 +6,31 @@ declare global {
   }
 }
 
-const _optionList = [
+const _optionList: Array<{label: string, value?: string}> = [
   {
     label: 'پخش کننده تایل',
-    value: '',
   },
   {
     label: 'نصاب تایل',
-    value: '',
   },
   {
     label: 'فروشنده و مغازه‌دار',
-    value: '',
   },
   {
     label: 'پیمانکار',
-    value: '',
   },
   {
     label: 'سازنده',
-    value: '',
   },
   {
     label: 'سایر',
-    value: '',
   },
 ];
 
 /**
  * Alwatr fieldset element
+ *
+ * @attr {String} name
  */
 @customElement('alwatr-radio-group')
 export class AlwatrFieldSet extends AlwatrDummyElement {
@@ -96,7 +92,7 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
   override render(): unknown {
     super.render();
     return html`
-      <fieldset id="activity">
+      <fieldset>
         <legend>نوع فعالیت:</legend>
         ${this._inputTemplate()}
       </fieldset>
@@ -107,7 +103,7 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
     return map(_optionList, (item, index) => {
       const id: string = 'radioInput' + index;
       return html`<div>
-        <input type="radio" id=${id} value="${item.value}" />
+        <input type="radio" id=${id} name=${this.name} value="${item.value ?? item.label}" />
         <label for=${id}>${item.label}</label>
       </div>`;
     });

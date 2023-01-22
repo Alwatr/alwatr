@@ -139,7 +139,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
         stated
         placeholder="شماره موبایل"
       ></alwatr-text-field>
-      <alwatr-radio-group></alwatr-radio-group>
+      <alwatr-radio-group name="activity"></alwatr-radio-group>
       <alwatr-button outlined @click=${this.submit}>ارسال فرم</alwatr-button>
     `;
   }
