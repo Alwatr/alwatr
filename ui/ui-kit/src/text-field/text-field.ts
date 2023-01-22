@@ -92,6 +92,18 @@ export class AlwatrTextField extends AlwatrSurface {
 
   inputElement: HTMLInputElement | null = null;
 
+  get value(): string {
+    return this.inputElement?.value ?? '';
+  }
+  set value(val: string) {
+    if (this.inputElement != null) {
+      this.inputElement.value = val;
+    }
+    else {
+      this.updateComplete.then(() => {this.value = val;});
+    }
+  }
+
   override render(): unknown {
     this._logger.logMethod('render');
     return html`<input type=${this.type} placeholder=${ifDefined(this.placeholder)}></input>`;
