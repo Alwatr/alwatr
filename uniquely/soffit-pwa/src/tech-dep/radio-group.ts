@@ -35,6 +35,10 @@ const _optionList: Array<{label: string, value?: string}> = [
 @customElement('alwatr-radio-group')
 export class AlwatrFieldSet extends AlwatrDummyElement {
   static override styles = css`
+    :host {
+      display: block;
+      transition: opacity var(--sys-motion-duration-small) var(--sys-motion-easing-linear);
+    }
     fieldset {
       display: block;
       padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
@@ -44,7 +48,7 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
       letter-spacing: var(--sys-typescale-body-large-letter-spacing);
       line-height: var(--sys-typescale-body-large-line-height);
       border: 1px solid var(--sys-color-outline);
-      border-radius: var(--sys-radius-xsmall);
+      border-radius: var(--sys-radius-small);
       background-color: transparent;
       margin: var(--sys-spacing-track) 0;
     }

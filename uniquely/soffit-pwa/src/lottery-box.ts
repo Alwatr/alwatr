@@ -58,7 +58,7 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
 
   private _boxContentTemplate(): unknown {
     if (this.expanded) {
-      return html`<alwatr-lottery-form @form-submitted=${this._formSubmitted}></alwatr-lottery-form>`;
+      return html`<alwatr-lottery-form invisible @form-submitted=${this._formSubmitted}></alwatr-lottery-form>`;
     }
     else if (this.submitted) {
       return html`<span class="success">اطلاعات شما با موفقیت ذخیره شد.</span>`;
@@ -103,10 +103,10 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
       this.style.height = 'auto';
       return;
     }
-    form.style.opacity = '0';
+    // form.style.opacity = '0';
     await this._setTransition(true);
     this.style.height = this.scrollHeight + 'px';
-    form.style.opacity = '1';
+    form.animateVisible();
     this.addEventListener('transitionend', () => {
       this._logger.logMethod('_animateExpand_transitionend');
       this._setTransition(false);
@@ -128,7 +128,7 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
     }
     this.style.height = this.getBoundingClientRect().height + 'px';
     await this._setTransition(true);
-    form.style.opacity = '0';
+    // form.style.opacity = '0';
     this.style.height = this._collapseHeight + 'px';
     this.addEventListener('transitionend', () => {
       this._logger.logMethod('_animateCollapse_transitionend');
