@@ -46,8 +46,8 @@ export class AlwatrTextField extends AlwatrSurface {
         background-color: transparent;
       }
 
-      :host([stated][outlined]) {
-        box-shadow: none;
+      :host([stated][outlined]:hover) {
+        --_surface-elevation: var(--sys-surface-elevation-0);
       }
 
       input {
