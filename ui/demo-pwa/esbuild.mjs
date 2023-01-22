@@ -35,7 +35,7 @@ if (cleanMode) {
 
 const copyPromise = fs.cp(resDir, outDir, {recursive: true, force: true, verbatimSymlinks: true});
 
-const esBuild = esbuild.build({
+const esbuildContext = await esbuild.context({
   entryPoints: [`${srcDir}/${srcFilename}.ts`],
 
   logLevel: 'info',
@@ -76,17 +76,16 @@ const esBuild = esbuild.build({
   assetNames: 'asset/[name]-[hash]',
   entryNames: watchMode ? '[name]' : '[dir]/[name]-[hash]',
   chunkNames: 'chunks/[name]-[hash]',
-
-  incremental: watchMode,
-  watch: watchMode,
 });
+
+const esBuildPromise = esbuildContext.rebuild();
 
 async function makeHtml() {
   logger.logMethod('makeHtml');
 
   let htmlContent = await fs.readFile(`${resDir}/index.html`, {encoding: 'utf-8'});
 
-  const metafile = (await esBuild).metafile;
+  const metafile = (await esBuildPromise).metafile;
   const outFiles = Object.keys(metafile.outputs);
 
   const jsFilename = outFiles
@@ -134,14 +133,19 @@ async function buildServiceWorker() {
   logger.logOther('serviceWorkerPath', build);
 }
 
-if (!watchMode) {
-  // first, the dist files must be created, and then create a service worker from that.
-  await makeHtml();
-  await buildServiceWorker();
+if (watchMode) {
+  esbuildContext.watch({});
 }
+else {
+  await makeHtml();
+  esbuildContext.dispose();
 
-if (debugMode) {
-  console.log(await esbuild.analyzeMetafile((await esBuild).metafile));
+
+  if (debugMode) {
+    console.log(await esbuild.analyzeMetafile((await esBuildPromise).metafile));
+  }
+
+  await buildServiceWorker(); // makeHtml must be done first
 }
 
 /*

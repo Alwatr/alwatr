@@ -35,8 +35,10 @@
   "devDependencies": {
     "@alwatr/element": "^0.28.0",
     "@alwatr/ui-kit": "^0.28.0",
+    "@material/web": "^1.0.0-pre.1",
     "@web/dev-server": "^0.1.35",
     "@webcomponents/webcomponentsjs": "^2.7.0",
+    "esbuild": "^0.17.3",
     "lit-analyzer": "^1.2.1",
     "npm-run-all": "^4.1.5",
     "rimraf": "^4.1.1",
