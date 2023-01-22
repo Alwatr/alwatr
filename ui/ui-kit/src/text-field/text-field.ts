@@ -84,6 +84,8 @@ export class AlwatrTextField extends AlwatrSurface {
     `,
   ];
 
+  name = this.getAttribute('name') ?? 'unknown';
+
   @property({type: String})
     type: InputType = 'text';
 

@@ -1,4 +1,4 @@
-import {customElement, css, html, map, AlwatrDummyElement} from '@alwatr/element';
+import {customElement, css, html, map, AlwatrDummyElement, property} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -83,6 +83,8 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
       accent-color: var(--sys-color-primary);
     }
   `;
+
+  name = this.getAttribute('name') ?? 'unknown';
 
   get value(): string {
     for (const inputElement of this.renderRoot.querySelectorAll('input')) {
