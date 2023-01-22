@@ -33,7 +33,7 @@ export class AlwatrIconBox extends AlwatrSurface {
       :host {
         display: block;
         padding: 0;
-        transition-property: color, background-color;
+        transition-property: color, background-color, opacity;
         transition-duration: var(--sys-motion-duration-small);
         transition-timing-function: var(--sys-motion-easing-linear);
         font-family: var(--sys-typescale-body-small-font-family-name);
