@@ -1,6 +1,6 @@
 import {AlwatrDummyElement, css, customElement, html} from '@alwatr/element';
 import './chat-text-input.js';
-import '../icon-button/standard-icon-button.js';
+import '../button/icon-button.js';
 import {l10n} from '@alwatr/i18n';
 
 declare global {
@@ -26,7 +26,7 @@ export class AlwatrChatFooter extends AlwatrDummyElement {
       background-color: var(--sys-color-surface);
     }
 
-    alwatr-standard-icon-button {
+    alwatr-icon-button {
       width: calc(6 * var(--sys-spacing-track));
       height: calc(6 * var(--sys-spacing-track));
     }
@@ -34,7 +34,7 @@ export class AlwatrChatFooter extends AlwatrDummyElement {
 
   override render(): unknown {
     return html`
-      <alwatr-standard-icon-button .icon=${'happy-outline'} @click=${this._changeLocale}></alwatr-standard-icon-button>
+      <alwatr-icon-button .icon=${'happy-outline'} @click=${this._changeLocale}></alwatr-icon-button>
       <alwatr-chat-text-input></alwatr-chat-text-input>
     `;
   }

@@ -1,8 +1,8 @@
 import {type PropertyValues, AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
 
-import '../icon-button/standard-icon-button.js';
+import '../button/icon-button.js';
 
-import type {AlwatrStandardIconButton} from '../icon-button/standard-icon-button.js';
+import type {AlwatrStandardIconButton} from '../button/icon-button.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -28,7 +28,7 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
       flex-grow: 1;
     }
 
-    alwatr-standard-icon-button {
+    alwatr-icon-button {
       width: var(--_height);
       height: var(--_height);
       --_surface-color-on: var(--sys-color-tertiary-hsl);
@@ -62,14 +62,14 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
         placeholder=${this.l10n.localize('chat_text_input_placeholder')}
         @input=${this.__inputChange}
       ></textarea>
-      <alwatr-standard-icon-button .icon=${'send'} flip-rtl disabled></alwatr-standard-icon-button>
+      <alwatr-icon-button .icon=${'send'} flip-rtl disabled></alwatr-icon-button>
     `;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
     this.inputElement = this.renderRoot.querySelector('textarea');
-    this.sendButtonElement = this.renderRoot.querySelector('alwatr-standard-icon-button');
+    this.sendButtonElement = this.renderRoot.querySelector('alwatr-icon-button');
   }
 
   private __inputChange(event: InputEvent): void {
