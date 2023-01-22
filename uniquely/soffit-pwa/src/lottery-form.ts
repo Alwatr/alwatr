@@ -93,12 +93,10 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
 
   protected _getInputData(): Record<string, unknown> {
     return {
-      code: (this.shadowRoot?.getElementById('code') as AlwatrTextField).inputElement?.value,
-      name: (this.shadowRoot?.getElementById('name') as AlwatrTextField).inputElement?.value,
-      phone: (this.shadowRoot?.getElementById('phone') as AlwatrTextField).inputElement?.value,
-      activity: (this.shadowRoot?.getElementById('activity') as HTMLFieldSetElement).form?.elements.namedItem(
-          'activity',
-      ),
+      code: (this.renderRoot.querySelector('#code') as AlwatrTextField).inputElement?.value,
+      name: (this.renderRoot.querySelector('#name') as AlwatrTextField).inputElement?.value,
+      phone: (this.renderRoot.querySelector('#phone') as AlwatrTextField).inputElement?.value,
+      // activity?
     };
   }
 
