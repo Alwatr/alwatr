@@ -1,9 +1,13 @@
-import {css, type CSSResultGroup} from 'lit';
+import {AlwatrDummyElement, customElement, html, css, type CSSResultGroup} from '@alwatr/element';
 
-import {AlwatrDummyElement} from './dummy-element.js';
+declare global {
+  interface HTMLElementTagNameMap {
+    'alwatr-surface': AlwatrSurface;
+  }
+}
 
 /**
- * Alwatr Surface Base Element
+ * Alwatr Surface Element
  *
  * @extends AlwatrDummyElement
  *
@@ -22,7 +26,8 @@ import {AlwatrDummyElement} from './dummy-element.js';
  * @cssprop {Number} [--_surface-tint-opacity=0]
  * @cssprop {Number} [--_surface-state-opacity=0]
  */
-export class AlwatrSurfaceElement extends AlwatrDummyElement {
+@customElement('alwatr-surface')
+export class AlwatrSurface extends AlwatrDummyElement {
   static override styles: CSSResultGroup = css`
     :host {
       --_surface-color-on: var(--sys-color-on-surface-hsl);
@@ -34,6 +39,7 @@ export class AlwatrSurfaceElement extends AlwatrDummyElement {
       --_surface-state-opacity: 0;
 
       display: block;
+      padding: calc(2 * var(--sys-spacing-track));
       color: hsl(var(--_surface-color-on));
       background-color: hsl(var(--_surface-color-bg));
       box-shadow: var(--_surface-elevation);
@@ -137,4 +143,9 @@ export class AlwatrSurfaceElement extends AlwatrDummyElement {
       opacity: var(--sys-surface-disabled-outlined-opacity);
     }
   `;
+
+  override render(): unknown {
+    this._logger.logMethod('render');
+    return html`<slot></slot>`;
+  }
 }
