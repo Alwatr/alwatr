@@ -17,6 +17,8 @@ declare global {
 
 /**
  * Soffit lottery form element
+ *
+ * @attr {Boolean} invisible
  */
 @customElement('alwatr-lottery-form')
 export class AlwatrLotteryForm extends AlwatrSmartElement {
@@ -38,48 +40,8 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
       margin-top: 0;
     }
 
-    fieldset {
-      display: block;
-      padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
-      font-family: var(--sys-typescale-body-large-font-family-name);
-      font-weight: var(--sys-typescale-body-large-font-weight);
-      font-size: var(--sys-typescale-body-large-font-size);
-      letter-spacing: var(--sys-typescale-body-large-letter-spacing);
-      line-height: var(--sys-typescale-body-large-line-height);
-      border: 1px solid var(--sys-color-outline);
-      border-radius: var(--sys-radius-xsmall);
-      background-color: transparent;
-      margin: var(--sys-spacing-track) 0;
-    }
-
-    fieldset:active,
-    fieldset:focus,
-    fieldset:focus-within {
-      border-color: var(--sys-color-primary);
-    }
-
-    fieldset legend {
-      padding: 0 var(--sys-spacing-track);
-    }
-
-    fieldset div {
-      margin-top: var(--sys-spacing-track);
-    }
-    fieldset div:first-of-type {
-      margin-top: 0;
-    }
-
-    fieldset label,
-    input[type='radio'] {
-      display: inline-block;
-      vertical-align: middle;
-      margin: 0;
-    }
-
-    input[type='radio'] {
-      width: 20px;
-      height: 20px;
-      accent-color: var(--sys-color-primary);
+    :host([invisible]) * {
+      opacity: 0;
     }
   `;
 
@@ -91,7 +53,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     this._logger.logMethodArgs('_submit', bodyJson);
     this.disabled = true;
     await new Promise((resolve) => setTimeout(resolve, 3_000));
-    this.disabled = false;
+    // this.disabled = false;
     this.dispatchEvent(new CustomEvent('form-submitted'));
     // return fetch({
     //   url: config.api + '/',
@@ -142,5 +104,12 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
       <alwatr-radio-group name="activity"></alwatr-radio-group>
       <alwatr-button outlined @click=${this.submit}>ارسال فرم</alwatr-button>
     `;
+  }
+
+  async animateVisible(): Promise<void> {
+    for (const element of this.renderRoot.querySelectorAll<HTMLElement>('*')) {
+      element.style.opacity = '1';
+      await new Promise((resolve) => setTimeout(resolve, 120));
+    }
   }
 }
