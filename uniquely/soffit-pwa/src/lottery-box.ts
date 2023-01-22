@@ -23,10 +23,17 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
   static override styles = css`
     :host {
       display: block;
+      overflow: hidden;
     }
 
     .success {
       color: var(--sys-color-primary);
+    }
+
+    :host([transition]) {
+      transition-property: height;
+      transition-duration: var(--sys-motion-duration-medium);
+      transition-timing-function: var(--sys-motion-easing-linear);
     }
   `;
 
@@ -49,7 +56,6 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
     `;
   }
 
-
   private _boxContentTemplate(): unknown {
     if (this.expanded) {
       return html`<alwatr-lottery-form @form-submitted=${this._formSubmitted}></alwatr-lottery-form>`;
@@ -62,14 +68,74 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
     }
   }
 
-  private _click(): void {
+  private async _click(): Promise<void> {
     this._logger.logMethod('_click');
-    if (!this.expanded && !this.submitted) this.expanded = true;
+    if (!this.expanded && !this.submitted) {
+      await this._currentAnimate;
+      this._currentAnimate = this._animateExpand();
+    }
   }
 
-  private _formSubmitted(): void {
+  private async _formSubmitted(): Promise<void> {
     this._logger.logMethod('_formSubmitted');
-    this.expanded = false;
-    this.submitted = true;
+    await this._currentAnimate;
+    this._currentAnimate = this._animateCollapse();
+  }
+
+  private _currentAnimate?: Promise<void>;
+  private _setTransition(val: boolean): Promise<number> {
+    this.toggleAttribute('transition', val);
+    return new Promise((resolve) => requestAnimationFrame(resolve));
+  }
+
+  private _collapseHeight = 0;
+  async _animateExpand(): Promise<void> {
+    this._logger.logMethod('_animateExpand');
+    if (this.expanded) return;
+    await this._setTransition(false);
+    this._collapseHeight = this.getBoundingClientRect().height;
+    this.style.height = this._collapseHeight + 'px';
+    this.expanded = true;
+    await this.updateComplete;
+    const form = this.renderRoot.querySelector('alwatr-lottery-form');
+    if (!form) {
+      this._logger.error('_animateExpand', 'form_not_found');
+      this.style.height = 'auto';
+      return;
+    }
+    form.style.opacity = '0';
+    await this._setTransition(true);
+    this.style.height = this.scrollHeight + 'px';
+    form.style.opacity = '1';
+    this.addEventListener('transitionend', () => {
+      this._logger.logMethod('_animateExpand_transitionend');
+      this._setTransition(false);
+      this.style.height = 'auto';
+    }, {once: true});
+  }
+
+  async _animateCollapse(): Promise<void> {
+    this._logger.logMethod('_animateCollapse');
+    if (!this.expanded) return;
+    await this._setTransition(false);
+    const form = this.renderRoot.querySelector('alwatr-lottery-form');
+    if (!form) {
+      this._logger.error('_animateCollapse', 'form_not_found');
+      this.expanded = false;
+      this.submitted = true;
+      this.style.height = 'auto';
+      return;
+    }
+    this.style.height = this.getBoundingClientRect().height + 'px';
+    await this._setTransition(true);
+    form.style.opacity = '0';
+    this.style.height = this._collapseHeight + 'px';
+    this.addEventListener('transitionend', () => {
+      this._logger.logMethod('_animateCollapse_transitionend');
+      this._setTransition(false);
+      this.expanded = false;
+      this.submitted = true;
+      this.style.height = 'auto';
+    }, {once: true});
   }
 }
