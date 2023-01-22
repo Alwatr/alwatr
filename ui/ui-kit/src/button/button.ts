@@ -6,7 +6,7 @@ import {AlwatrSurface} from '../card/surface.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-button': AlwatrTextField;
+    'alwatr-button': AlwatrButton;
   }
 }
 
@@ -14,7 +14,7 @@ declare global {
  * Alwatr outlined text field.
  */
 @customElement('alwatr-button')
-export class AlwatrTextField extends AlwatrSurface {
+export class AlwatrButton extends AlwatrSurface {
   static override styles = [
     AlwatrSurface.styles,
     css`

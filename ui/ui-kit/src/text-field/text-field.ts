@@ -27,6 +27,8 @@ export type InputType =
 
 /**
  * Alwatr outlined text field.
+ *
+ * @attr {String} name
  */
 @customElement('alwatr-text-field')
 export class AlwatrTextField extends AlwatrSurface {
@@ -46,8 +48,8 @@ export class AlwatrTextField extends AlwatrSurface {
         background-color: transparent;
       }
 
-      :host([stated][outlined]) {
-        box-shadow: none;
+      :host([stated][outlined]:hover) {
+        --_surface-elevation: var(--sys-surface-elevation-0);
       }
 
       input {
@@ -84,6 +86,8 @@ export class AlwatrTextField extends AlwatrSurface {
     `,
   ];
 
+  name = this.getAttribute('name') ?? 'unknown';
+
   @property({type: String})
     type: InputType = 'text';
 
@@ -91,6 +95,18 @@ export class AlwatrTextField extends AlwatrSurface {
     placeholder?: string;
 
   inputElement: HTMLInputElement | null = null;
+
+  get value(): string {
+    return this.inputElement?.value ?? '';
+  }
+  set value(val: string) {
+    if (this.inputElement != null) {
+      this.inputElement.value = val;
+    }
+    else {
+      this.updateComplete.then(() => {this.value = val;});
+    }
+  }
 
   override render(): unknown {
     this._logger.logMethod('render');

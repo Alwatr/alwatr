@@ -56,6 +56,7 @@ export class AlwatrSurface extends AlwatrDummyElement {
       border-radius: var(--sys-radius-medium);
       overflow: hidden;
       overflow: clip;
+      transition: opacity var(--sys-motion-duration-small) var(--sys-motion-easing-linear);
     }
 
     :host([outlined]) {

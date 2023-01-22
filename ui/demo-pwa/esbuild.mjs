@@ -21,12 +21,14 @@ const srcFilename = 'alwatr-pwa';
 const cleanMode = process.argv.includes('--clean');
 const watchMode = process.argv.includes('--watch');
 const debugMode = process.argv.includes('--debug');
+const prettyMode = process.argv.includes('--pretty');
 
 logger.logOther(banner);
 
 logger.logProperty('cleanMode', cleanMode);
 logger.logProperty('watchMode', watchMode);
 logger.logProperty('debugMode', debugMode);
+logger.logProperty('prettyMode', prettyMode);
 
 if (cleanMode) {
   logger.logMethod('cleanDist');
@@ -44,7 +46,7 @@ const esbuildContext = await esbuild.context({
   format: 'esm',
   conditions: debugMode ? ['development'] : undefined,
 
-  minify: true,
+  minify: !prettyMode,
   treeShaking: true,
   sourcemap: true,
   sourcesContent: debugMode,
