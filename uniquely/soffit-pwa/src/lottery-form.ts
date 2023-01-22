@@ -1,4 +1,4 @@
-import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
 
 import {config} from './tech-dep/config.js';
@@ -14,8 +14,6 @@ declare global {
     'alwatr-lottery-form': AlwatrLotteryForm;
   }
 }
-
-const _activityType = ['پخش کننده تایل', 'نصاب تایل', 'فروشنده و مغازه‌دار', 'پیمانکار', 'سازنده', 'سایر'];
 
 /**
  * Soffit lottery form element
@@ -78,10 +76,6 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
       accent-color: var(--sys-color-primary);
     }
   `;
-
-  protected override async firstUpdated(): Promise<void> {
-    await this._submit();
-  }
 
   protected _submit(): Promise<Response> {
     return fetch({
