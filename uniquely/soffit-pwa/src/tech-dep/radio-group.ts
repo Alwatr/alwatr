@@ -6,7 +6,32 @@ declare global {
   }
 }
 
-const _activityType = ['پخش کننده تایل', 'نصاب تایل', 'فروشنده و مغازه‌دار', 'پیمانکار', 'سازنده', 'سایر'];
+const _optionList = [
+  {
+    label: 'پخش کننده تایل',
+    value: '',
+  },
+  {
+    label: 'نصاب تایل',
+    value: '',
+  },
+  {
+    label: 'فروشنده و مغازه‌دار',
+    value: '',
+  },
+  {
+    label: 'پیمانکار',
+    value: '',
+  },
+  {
+    label: 'سازنده',
+    value: '',
+  },
+  {
+    label: 'سایر',
+    value: '',
+  },
+];
 
 /**
  * Alwatr fieldset element
@@ -59,6 +84,13 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
     }
   `;
 
+  get value(): string {
+    for (const inputElement of this.renderRoot.querySelectorAll('input')) {
+      if (inputElement.checked) return inputElement.value;
+    }
+    return '';
+  }
+
   override render(): unknown {
     super.render();
     return html`
@@ -70,11 +102,11 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
   }
 
   protected _inputTemplate(): unknown {
-    return map(_activityType, (activity, index) => {
-      const id: string = 'activityType' + index;
+    return map(_optionList, (item, index) => {
+      const id: string = 'radioInput' + index;
       return html`<div>
-        <input type="radio" id=${id} name="activity" value="${activity}" />
-        <label for=${id}>${activity}</label>
+        <input type="radio" id=${id} value="${item.value}" />
+        <label for=${id}>${item.label}</label>
       </div>`;
     });
   }
