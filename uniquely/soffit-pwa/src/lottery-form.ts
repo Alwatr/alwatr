@@ -1,7 +1,7 @@
 import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
 
-import {config} from './config.js';
+import {config} from './tech-dep/config.js';
 
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
@@ -84,8 +84,8 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
 
   protected _submit(): Promise<Response> {
     return fetch({
-      url: config.apiUrl + '/',
-      token: config.apiAccessToken,
+      url: config.api + '/',
+      token: config.token,
       method: 'PUT',
       bodyJson: this._getInputData(),
     });
