@@ -2,7 +2,7 @@ import {css, customElement, html, property, ifDefined, type PropertyValues} from
 
 import '@alwatr/icon';
 
-import {AlwatrSurface} from '../card/surface-element.js';
+import {AlwatrSurface} from '../card/surface.js';
 
 declare global {
   interface HTMLElementTagNameMap {
