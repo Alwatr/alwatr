@@ -2,7 +2,7 @@ import {css, customElement, html, property, nothing, ifDefined} from '@alwatr/el
 
 import '@alwatr/icon';
 
-import {AlwatrCard} from './card.js';
+import {AlwatrSurface} from './surface-element.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -21,11 +21,14 @@ export type IconBoxContent = {
 
 /**
  * Alwatr standard icon button element.
+ *
+ * @attr {Boolean} highlight - Primary color on hover and active
+ * @attr {Boolean} pre-line - Add `white-space: pre-line;` to description
  */
 @customElement('alwatr-icon-box')
-export class AlwatrIconBox extends AlwatrCard {
+export class AlwatrIconBox extends AlwatrSurface {
   static override styles = [
-    AlwatrCard.styles,
+    AlwatrSurface.styles,
     css`
       :host {
         display: block;
@@ -33,20 +36,26 @@ export class AlwatrIconBox extends AlwatrCard {
         transition-property: color, background-color;
         transition-duration: var(--sys-motion-duration-small);
         transition-timing-function: var(--sys-motion-easing-linear);
+        font-family: var(--sys-typescale-body-small-font-family-name);
+        font-weight: var(--sys-typescale-body-small-font-weight);
+        font-size: var(--sys-typescale-body-small-font-size);
+        letter-spacing: var(--sys-typescale-body-small-letter-spacing);
+        line-height: var(--sys-typescale-body-small-line-height);
         user-select: none;
         -webkit-user-select: none;
+        overflow: clip;
       }
-      :host(:hover) {
+      :host([highlight]:hover) {
         --_surface-color-on: var(--sys-color-on-primary-hsl);
         --_surface-color-bg: var(--sys-color-primary-hsl);
       }
 
-      a {
+      .container {
         display: block;
         padding: calc(2 * var(--sys-spacing-track));
         border-radius: inherit;
         color: inherit;
-        text-decoration: none;
+        text-decoration: inherit;
       }
 
       .headline {
@@ -55,6 +64,7 @@ export class AlwatrIconBox extends AlwatrCard {
         font-size: var(--sys-typescale-headline-small-font-size);
         letter-spacing: var(--sys-typescale-headline-small-letter-spacing);
         line-height: var(--sys-typescale-headline-small-line-height);
+        margin: 0;
       }
 
       .headline alwatr-icon {
@@ -64,22 +74,15 @@ export class AlwatrIconBox extends AlwatrCard {
         color: var(--sys-color-primary);
         transition: color var(--sys-motion-duration-small) var(--sys-motion-easing-linear);
       }
-      :host(:hover) .headline alwatr-icon {
+      :host([highlight]:hover) .headline alwatr-icon {
         color: var(--sys-color-on-primary);
       }
 
       .description {
-        font-family: var(--sys-typescale-body-small-font-family-name);
-        font-weight: var(--sys-typescale-body-small-font-weight);
-        font-size: var(--sys-typescale-body-small-font-size);
-        letter-spacing: var(--sys-typescale-body-small-letter-spacing);
-        line-height: var(--sys-typescale-body-small-line-height);
         margin-top: calc(2 * var(--sys-spacing-track));
-        white-space: pre-line;
       }
-
-      .description:empty {
-        display: none;
+      :host([pre-line]) .description {
+        white-space: pre-line;
       }
     `,
   ];
@@ -87,29 +90,27 @@ export class AlwatrIconBox extends AlwatrCard {
   @property({type: Object})
     content?: IconBoxContent;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.setAttribute('stated', '');
-    this.setAttribute('elevated', '3');
-  }
-
   override render(): unknown {
     this._logger.logMethod('render');
-    if (this.content == null) return nothing;
-    const target = this.content.target !== 'download' ? this.content.target : undefined;
+    const content = this.content;
+    if (content == null) return nothing;
+    const target = content.target !== 'download' ? content.target : undefined;
 
-    return html`
-      <a
-        href=${ifDefined(this.content.href)}
-        target=${ifDefined(target)}
-        ?download=${this.content.target === 'download'}
-      >
-        <div class="headline">
-          <alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>
-          <span>${this.content.headline}</span>
-        </div>
-        <div class="description">${this.content.description}</div>
-      </a>
+    const template = html`
+      <h3 class="headline">
+        <alwatr-icon .name=${content.icon} ?flip-rtl=${content.flipRtl}></alwatr-icon>
+        <span>${content.headline}</span>
+      </h3>
+      <div class="description"><slot>${content.description}</slot></div>
     `;
+
+    return content.href == null
+      ? html`<div class="container">${template}</div>`
+      : html`<a
+          class="container"
+          href=${ifDefined(content.href)}
+          target=${ifDefined(target)}
+          ?download=${content.target === 'download'}
+        >${template}</a>`;
   }
 }
