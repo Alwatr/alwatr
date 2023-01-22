@@ -1,7 +1,7 @@
-import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
-import {fetch} from '@alwatr/fetch';
+import {customElement, AlwatrSmartElement, css, html, property} from '@alwatr/element';
+// import {fetch} from '@alwatr/fetch';
 
-import {config} from './tech-dep/config.js';
+// import {config} from './tech-dep/config.js';
 
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
@@ -23,6 +23,12 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
   static override styles = css`
     :host {
       display: block;
+      transition: opacity var(--sys-motion-duration-small) var(--sys-motion-easing-linear);
+    }
+
+    :host([disabled]) {
+      pointer-events: none;
+      opacity: var(--sys-surface-disabled-opacity);
     }
 
     alwatr-text-field {
@@ -77,29 +83,40 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     }
   `;
 
-  protected _submit(): Promise<Response> {
-    return fetch({
-      url: config.api + '/',
-      token: config.token,
-      method: 'PUT',
-      bodyJson: this._getInputData(),
-    });
+  @property({type: Boolean, reflect: true})
+    disabled = false;
+
+  async submit(): Promise<void> {
+    const bodyJson = this.getFormData();
+    this._logger.logMethodArgs('_submit', bodyJson);
+    this.disabled = true;
+    await new Promise((resolve) => setTimeout(resolve, 3_000));
+    this.disabled = false;
+    this.dispatchEvent(new CustomEvent('form-submitted'));
+    // return fetch({
+    //   url: config.api + '/',
+    //   token: config.token,
+    //   method: 'PUT',
+    //   bodyJson,
+    // });
   }
 
-  protected _getInputData(): Record<string, unknown> {
-    return {
-      code: (this.renderRoot.querySelector('#code') as AlwatrTextField).inputElement?.value,
-      name: (this.renderRoot.querySelector('#name') as AlwatrTextField).inputElement?.value,
-      phone: (this.renderRoot.querySelector('#phone') as AlwatrTextField).inputElement?.value,
-      // activity?
-    };
+  getFormData(): Record<string, unknown> {
+    this._logger.logMethod('_getInputData');
+    const data: Record<string, string> = {};
+    for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>(
+        'alwatr-text-field,alwatr-radio-group',
+    )) {
+      data[inputElement.name] = inputElement.value;
+    }
+    return data;
   }
 
   override render(): unknown {
     super.render();
     return html`
       <alwatr-text-field
-        id="code"
+        name="code"
         type="text"
         outlined
         active-outline
@@ -107,7 +124,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
         placeholder="شماره قرعه‌کشی"
       ></alwatr-text-field>
       <alwatr-text-field
-        id="name"
+        name="name"
         type="text"
         outlined
         active-outline
@@ -115,7 +132,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
         placeholder="نام و نام‌خانوادگی"
       ></alwatr-text-field>
       <alwatr-text-field
-        id="phone"
+        name="phone"
         type="tel"
         outlined
         active-outline
@@ -123,7 +140,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
         placeholder="شماره موبایل"
       ></alwatr-text-field>
       <alwatr-radio-group></alwatr-radio-group>
-      <alwatr-button @click=${this._submit} outlined>ارسال فرم</alwatr-button>
+      <alwatr-button outlined @click=${this.submit}>ارسال فرم</alwatr-button>
     `;
   }
 }

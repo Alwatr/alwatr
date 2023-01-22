@@ -1,4 +1,4 @@
-import {customElement, AlwatrSmartElement, css, html, property} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html, state} from '@alwatr/element';
 
 import '@alwatr/ui-kit/card/icon-box.js';
 import './lottery-form.js';
@@ -26,21 +26,46 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
     }
   `;
 
-  @property({type: Boolean})
+  @state()
     expanded = false;
+
+  @state()
+    submitted = false;
 
   override render(): unknown {
     super.render();
     return html`
-      <alwatr-icon-box .content=${_lotteryContent} elevated="3" ?stated=${!this.expanded} @click=${this._click}>
-        ${this.expanded
-          ? html`<alwatr-lottery-form></alwatr-lottery-form>`
-          : html`فرم شرکت در قرعه‌کشی میدکس`}
-      </alwatr-icon-box>
+      <alwatr-icon-box
+        .content=${_lotteryContent}
+        elevated="3"
+        ?stated=${!this.expanded}
+        ?highlight=${!this.expanded && !this.submitted}
+        @click=${this._click}
+      >${this._boxContentTemplate()}</alwatr-icon-box>
     `;
   }
 
-  _click(): void {
-    if (!this.expanded) this.expanded = true;
+
+  private _boxContentTemplate(): unknown {
+    if (this.expanded) {
+      return html`<alwatr-lottery-form @form-submitted=${this._formSubmitted}></alwatr-lottery-form>`;
+    }
+    else if (this.submitted) {
+      return html`اطلاعات شما با موفقیت ذخیره شد.`;
+    }
+    else {
+      return html`فرم شرکت در قرعه‌کشی میدکس`;
+    }
+  }
+
+  private _click(): void {
+    this._logger.logMethod('_click');
+    if (!this.expanded && !this.submitted) this.expanded = true;
+  }
+
+  private _formSubmitted(): void {
+    this._logger.logMethod('_formSubmitted');
+    this.expanded = false;
+    this.submitted = true;
   }
 }
