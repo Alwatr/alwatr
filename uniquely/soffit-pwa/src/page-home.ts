@@ -3,6 +3,7 @@ import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 import '@alwatr/ui-kit/card/icon-box.js';
+import './lottery-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -10,22 +11,16 @@ declare global {
   }
 }
 
-const menuList: Array<IconBoxContent & {wide?: boolean}> = [
-  {
-    wide: true,
-    icon: 'logo-microsoft',
-    headline: 'بازرگانی سافیت',
-    description: `مجموعه تولیدی بازرگانی سافیت
-      تولید کننده عمده محصولات DRY WALL، سازه ۶۰ کلیک، تایل کچی 60*60 و روکش P.V.C
-      برند درجه یک صادراتی با فعالیت های بین المللی و ویژگی های ممتاز`,
-  },
-  {
-    wide: true,
-    icon: 'gift-outline',
-    headline: 'قرعه‌کشی میدکس',
-    description: 'فرم شرکت در قرعه‌کشی میدکس',
-    href: '/form',
-  },
+const _aboutContent = {
+  wide: true,
+  icon: 'logo-microsoft',
+  headline: 'بازرگانی سافیت',
+  description: `مجموعه تولیدی بازرگانی سافیت
+    تولید کننده عمده محصولات DRY WALL، سازه ۶۰ کلیک، تایل کچی 60*60 و روکش P.V.C
+    برند درجه یک صادراتی با فعالیت های بین المللی و ویژگی های ممتاز`,
+};
+
+const _menuList: Array<IconBoxContent & {wide?: boolean}> = [
   {
     icon: 'cloud-download-outline',
     headline: 'دانلود کاتالوگ',
@@ -49,6 +44,7 @@ const menuList: Array<IconBoxContent & {wide?: boolean}> = [
   },
   {
     icon: 'call-outline',
+    flipRtl: true,
     headline: 'تماس باما',
     description: 'ارتباط مستقیم با دفتر مرکزی بازرگانی سافیت',
     href: 'tel:+989155599674',
@@ -67,23 +63,13 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       overflow-y: auto;
     }
 
-    :host::-webkit-scrollbar {
-      width: var(--sys-scrollbar-size);
-      height: var(--sys-scrollbar-size);
+    header {
+      padding: calc(2 * var(--sys-spacing-track));
     }
 
-    :host::-webkit-scrollbar-corner,
-    :host::-webkit-scrollbar-track {
-      background-color: var(--sys-scrollbar-background);
-    }
-
-    :host::-webkit-scrollbar-thumb {
-      background-color: var(--sys-scrollbar-color);
-      border-radius: var(--sys-scrollbar-radius);
-    }
-
-    :host(:hover)::-webkit-scrollbar-thumb {
-      background-color: var(--sys-scrollbar-color-hover);
+    header img {
+      display: block;
+      width: 100%;
     }
 
     main {
@@ -93,22 +79,18 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       gap: calc(2 * var(--sys-spacing-track));
     }
 
-    main alwatr-icon-box {
+    alwatr-icon-box {
       width: 40%;
       flex-grow: 1;
     }
 
-    main alwatr-icon-box[wide] {
+    alwatr-icon-box[wide],
+    alwatr-lottery-box {
       width: 100%;
     }
 
-    header {
-      padding: calc(2 * var(--sys-spacing-track));
-    }
-
-    header img {
-      display: block;
-      width: 100%;
+    alwatr-lottery-form {
+      padding: 0 var(--sys-spacing-track);
     }
 
     footer {
@@ -137,7 +119,11 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     super.render();
     return html`
       <header><img src="image/soffit.png" alt="SOFFIT Logo" /></header>
-      <main>${this._menuTemplate()}</main>
+      <main>
+        <alwatr-icon-box .content=${_aboutContent} stated elevated="3" pre-line wide></alwatr-icon-box>
+        <alwatr-lottery-box></alwatr-lottery-box>
+        ${this._menuTemplate()}
+      </main>
       <footer>
         <span>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</span>
         <span class="version">v${_ALWATR_VERSION_}</span>
@@ -147,8 +133,14 @@ export class AlwatrPageHome extends AlwatrSmartElement {
 
   protected _menuTemplate(): unknown {
     return map(
-        menuList,
-        (menuItem) => html` <alwatr-icon-box .content=${menuItem} ?wide=${menuItem.wide}></alwatr-icon-box> `,
+        _menuList,
+        (item) => html`
+          <alwatr-icon-box
+            .content=${item}
+            highlight stated elevated="3"
+            pre-line
+            ?wide=${item.wide}
+          ></alwatr-icon-box>`,
     );
   }
 }
