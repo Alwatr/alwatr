@@ -24,6 +24,10 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
     :host {
       display: block;
     }
+
+    .success {
+      color: var(--sys-color-primary);
+    }
   `;
 
   @state()
@@ -51,7 +55,7 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
       return html`<alwatr-lottery-form @form-submitted=${this._formSubmitted}></alwatr-lottery-form>`;
     }
     else if (this.submitted) {
-      return html`اطلاعات شما با موفقیت ذخیره شد.`;
+      return html`<span class="success">اطلاعات شما با موفقیت ذخیره شد.</span>`;
     }
     else {
       return html`فرم شرکت در قرعه‌کشی میدکس`;
