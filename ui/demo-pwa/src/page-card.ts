@@ -1,6 +1,6 @@
 import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
-import '@alwatr/ui-kit/card/card.js';
+import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
@@ -27,7 +27,7 @@ export class AlwatrPageCard extends AlwatrSmartElement {
       overflow-y: scroll;
     }
 
-    alwatr-card,
+    alwatr-surface,
     alwatr-icon-box {
       flex-grow: 1;
       width: 25%;
@@ -35,7 +35,7 @@ export class AlwatrPageCard extends AlwatrSmartElement {
       min-height: 15rem;
     }
 
-    alwatr-card {
+    alwatr-surface {
       display: flex;
       align-items: flex-end;
     }
@@ -67,21 +67,21 @@ export class AlwatrPageCard extends AlwatrSmartElement {
         .content=${{icon: 'earth-outline', headline: 'وب‌سایت', description: loremText, href: '/'}}
       ></alwatr-icon-box>
 
-      <alwatr-card stated elevated><input type="text" value="elevated" /></alwatr-card>
-      <alwatr-card stated elevated><input type="text" value="elevated" /></alwatr-card>
-      <alwatr-card stated elevated disabled><input type="text" value="elevated" disabled /></alwatr-card>
+      <alwatr-surface stated elevated><input type="text" value="elevated" /></alwatr-surface>
+      <alwatr-surface stated elevated><input type="text" value="elevated" /></alwatr-surface>
+      <alwatr-surface stated elevated disabled><input type="text" value="elevated" disabled /></alwatr-surface>
 
-      <alwatr-card stated elevated="2"><input type="text" value="elevated 2" /></alwatr-card>
-      <alwatr-card stated elevated="3"><input type="text" value="elevated 3" /></alwatr-card>
-      <alwatr-card stated elevated="4"><input type="text" value="elevated 4" /></alwatr-card>
+      <alwatr-surface stated elevated="2"><input type="text" value="elevated 2" /></alwatr-surface>
+      <alwatr-surface stated elevated="3"><input type="text" value="elevated 3" /></alwatr-surface>
+      <alwatr-surface stated elevated="4"><input type="text" value="elevated 4" /></alwatr-surface>
 
-      <alwatr-card stated filled><input type="text" value="filled" /></alwatr-card>
-      <alwatr-card stated elevated filled><input type="text" value="filled" /></alwatr-card>
-      <alwatr-card stated filled disabled><input type="text" value="filled" disabled /></alwatr-card>
+      <alwatr-surface stated filled><input type="text" value="filled" /></alwatr-surface>
+      <alwatr-surface stated elevated filled><input type="text" value="filled" /></alwatr-surface>
+      <alwatr-surface stated filled disabled><input type="text" value="filled" disabled /></alwatr-surface>
 
-      <alwatr-card stated outlined><input type="text" value="outlined" /></alwatr-card>
-      <alwatr-card stated outlined><input type="text" value="outlined" /></alwatr-card>
-      <alwatr-card stated outlined disabled><input type="text" value="outlined" disabled /></alwatr-card>
+      <alwatr-surface stated outlined><input type="text" value="outlined" /></alwatr-surface>
+      <alwatr-surface stated outlined><input type="text" value="outlined" /></alwatr-surface>
+      <alwatr-surface stated outlined disabled><input type="text" value="outlined" disabled /></alwatr-surface>
     `;
   }
 }
