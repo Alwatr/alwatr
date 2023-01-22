@@ -1,10 +1,11 @@
-import {AlwatrSurfaceElement, css, customElement, html, property} from '@alwatr/element';
+import {css, customElement, html, property} from '@alwatr/element';
 
 import '@alwatr/icon';
+import {AlwatrSurface} from '../card/surface-element.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-standard-icon-button': AlwatrStandardIconButton;
+    'alwatr-icon-button': AlwatrStandardIconButton;
   }
 }
 
@@ -19,10 +20,10 @@ declare global {
  * @attr {String} url-prefix
  * @attr {Boolean} flip-rtl
  */
-@customElement('alwatr-standard-icon-button')
-export class AlwatrStandardIconButton extends AlwatrSurfaceElement {
+@customElement('alwatr-icon-button')
+export class AlwatrStandardIconButton extends AlwatrSurface {
   static override styles = [
-    AlwatrSurfaceElement.styles,
+    AlwatrSurface.styles,
     css`
       :host {
         --_surface-color-on: var(--sys-color-on-surface-variant-hsl);
