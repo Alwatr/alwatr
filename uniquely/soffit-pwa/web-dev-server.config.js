@@ -1,6 +1,7 @@
 import {existsSync} from 'node:fs';
 
 // https://modern-web.dev/docs/dev-server/cli-and-configuration/#configuration-file
+/** @type {import('@web/dev-server').DevServerConfig} */
 const config = {
   port: 8080,
   open: true,
