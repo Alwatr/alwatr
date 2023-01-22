@@ -7,7 +7,7 @@ import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 import '@alwatr/ui-kit/text-field/text-field.js';
 import '@alwatr/ui-kit/button/button.js';
-import './fieldset.js';
+import './radio-group.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -122,7 +122,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
         stated
         placeholder="شماره موبایل"
       ></alwatr-text-field>
-      <alwatr-fieldset></alwatr-fieldset>
+      <alwatr-radio-group></alwatr-radio-group>
       <alwatr-button @click=${this._submit} outlined>ارسال فرم</alwatr-button>
     `;
   }

@@ -2,7 +2,7 @@ import {customElement, css, html, map, AlwatrDummyElement} from '@alwatr/element
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-fieldset': AlwatrFieldSet;
+    'alwatr-radio-group': AlwatrFieldSet;
   }
 }
 
@@ -11,7 +11,7 @@ const _activityType = ['پخش کننده تایل', 'نصاب تایل', 'فر�
 /**
  * Alwatr fieldset element
  */
-@customElement('alwatr-fieldset')
+@customElement('alwatr-radio-group')
 export class AlwatrFieldSet extends AlwatrDummyElement {
   static override styles = css`
     fieldset {
