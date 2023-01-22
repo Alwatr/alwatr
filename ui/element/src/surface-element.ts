@@ -11,6 +11,7 @@ import {AlwatrDummyElement} from './dummy-element.js';
  * @attr {Number|Boolean} elevated - tinted by default
  * @attr {Boolean} filled
  * @attr {Boolean} outlined
+ * @attr {Boolean} active-outline - outline on active and focus
  * @attr {Boolean} disabled
  *
  * @cssprop {String} [--_surface-color-on=var(--sys-color-on-surface-hsl)]
@@ -85,6 +86,13 @@ export class AlwatrSurfaceElement extends AlwatrDummyElement {
     :host([stated]:focus),
     :host([stated]:focus-within) {
       --_surface-state-opacity: var(--sys-surface-state-opacity-focus);
+    }
+
+    :host([active-outline]:active),
+    :host([active-outline]:focus),
+    :host([active-outline]:focus-within) {
+      border-color: var(--sys-color-primary);
+      box-shadow: 0 0 0.4px 0.8px var(--sys-color-primary);
     }
 
     :host([stated]:hover:not(:active)),
