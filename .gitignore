@@ -19,6 +19,7 @@ Desktop.ini
 *.d.ts
 *.js
 !*.config.js
+!**/res/*.js
 dist
 build
 
