@@ -41,6 +41,7 @@ export class AlwatrSnackBar extends AlwatrSurface {
         height: min-content;
         min-height: calc(6 * var(--sys-spacing-track));
         border-radius: var(--sys-radius-small);
+        padding: 0;
         padding-inline-start: calc(2 * var(--sys-spacing-track));
 
         opacity: 0;
@@ -68,8 +69,9 @@ export class AlwatrSnackBar extends AlwatrSurface {
         padding: calc(1.5 * var(--sys-spacing-track)) 0;
       }
 
-      alwatr-standard-icon-button {
+      alwatr-icon-button {
         margin: auto calc(0.5 * var(--sys-spacing-track));
+        padding: 0;
       }
     `,
   ];
@@ -99,11 +101,11 @@ export class AlwatrSnackBar extends AlwatrSurface {
       this.closeIcon,
       () =>
         html`
-            <alwatr-standard-icon-button
+            <alwatr-icon-button
               icon="close-outline"
               stated
               @click=${this.closeIconClicked}
-            ></alwatr-standard-icon-button>
+            ></alwatr-icon-button>
           `,
   )}
     `;

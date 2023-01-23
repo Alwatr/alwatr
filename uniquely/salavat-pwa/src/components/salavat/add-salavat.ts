@@ -47,7 +47,7 @@ export class AlwatrAddSalavat extends LocalizeMixin(AlwatrSmartElement) {
       padding: 0 calc(2 * var(--sys-spacing-track));
     }
 
-    .salavat-add alwatr-standard-icon-button {
+    .salavat-add alwatr-icon-button {
       --_surface-color-bg: var(--sys-color-on-tertiary-hsl);
       --_surface-color-on: var(--sys-color-tertiary-hsl);
     }
@@ -59,6 +59,10 @@ export class AlwatrAddSalavat extends LocalizeMixin(AlwatrSmartElement) {
 
       flex-grow: 1;
       margin: 0 -12px;
+    }
+
+    alwatr-icon-button {
+      padding: 0;
     }
   `;
 
@@ -93,11 +97,7 @@ export class AlwatrAddSalavat extends LocalizeMixin(AlwatrSmartElement) {
         </div>
       </div>
       <div class="salavat-add">
-        <alwatr-standard-icon-button
-          icon="add-outline"
-          stated
-          @click=${this.increaseSalavatSlider}
-        ></alwatr-standard-icon-button>
+        <alwatr-icon-button icon="add-outline" stated @click=${this.increaseSalavatSlider}></alwatr-icon-button>
         <mwc-slider
           dir="ltr"
           min="0"
@@ -106,11 +106,7 @@ export class AlwatrAddSalavat extends LocalizeMixin(AlwatrSmartElement) {
           @input=${this.addSalavatSliderInput}
           @change=${this.addSalavatSliderChange}
         ></mwc-slider>
-        <alwatr-standard-icon-button
-          icon="remove-outline"
-          stated
-          @click=${this.decreaseSalavatSlider}
-        ></alwatr-standard-icon-button>
+        <alwatr-icon-button icon="remove-outline" stated @click=${this.decreaseSalavatSlider}></alwatr-icon-button>
       </div>
     `;
   }
@@ -121,7 +117,6 @@ export class AlwatrAddSalavat extends LocalizeMixin(AlwatrSmartElement) {
     if (this.salavatIncreaseCount < this.addSalavatSliderMax) {
       this.salavatIncreaseCount++;
     }
-
 
     this.addSalavatSliderInput(new CustomEvent<{value: number}>('input', {detail: {value: this.salavatIncreaseCount}}));
     this.addSalavatSliderChange(

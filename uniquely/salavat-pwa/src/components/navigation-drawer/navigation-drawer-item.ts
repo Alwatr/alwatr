@@ -23,6 +23,8 @@ export class AlwatrNavigationDrawerItem extends AlwatrSurface {
         overflow: hidden;
         overflow: clip;
         width: 100%;
+
+        padding: 0;
       }
 
       .navigation-drawer-item {

@@ -1,7 +1,5 @@
 import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
-import '@alwatr/ui-kit/card/card.js';
-
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-page-about': AlwatrPageAbout;

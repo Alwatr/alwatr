@@ -1,9 +1,8 @@
 import {customElement, AlwatrSmartElement, css, html, LocalizeMixin} from '@alwatr/element';
 import {SignalInterface} from '@alwatr/signal';
 
-import '@alwatr/ui-kit/card/card.js';
 import '@material/mwc-slider/slider.js';
-import '@alwatr/ui-kit/icon-button/standard-icon-button.js';
+import '@alwatr/ui-kit/button/icon-button.js';
 
 import '../components/salavat/add-salavat.js';
 import '../components/salavat/salavat-counter.js';

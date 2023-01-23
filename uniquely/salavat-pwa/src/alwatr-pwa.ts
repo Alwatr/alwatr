@@ -8,7 +8,7 @@ import '@alwatr/ui-kit/style/theme/palette-dynamic.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/font/vazirmatn-roundot.css';
 import '@alwatr/icon';
-import '@alwatr/ui-kit/icon-button/standard-icon-button.js';
+import '@alwatr/ui-kit/button/icon-button.js';
 
 import routes from './routes.js';
 
@@ -43,9 +43,10 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
         flex-direction: column;
       }
 
-      alwatr-standard-icon-button {
+      alwatr-icon-button {
         width: calc(7 * var(--sys-spacing-track));
         height: calc(7 * var(--sys-spacing-track));
+        padding: 0;
       }
 
       alwatr-navigation-drawer ~ .scrim {
@@ -82,7 +83,7 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
         z-index: var(--sys-zindex-default);
       }
 
-      header alwatr-standard-icon-button::part(icon) {
+      header alwatr-icon-button::part(icon) {
         width: calc(4 * var(--sys-spacing-track));
         height: calc(4 * var(--sys-spacing-track));
       }
@@ -92,7 +93,7 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
         align-items: flex-end;
         justify-content: center;
         flex-grow: 1;
-        /* url reapet position/size */
+        /* url repeat position/size */
         background: url('/images/main-image.jpg') no-repeat top center/cover;
         /* top right/left bottom */
         margin: 0 calc(7 * var(--sys-spacing-track)) calc(3 * var(--sys-spacing-track));
@@ -102,7 +103,7 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
         overflow: clip;
       }
 
-      .main-image alwatr-standard-icon-button {
+      .main-image alwatr-icon-button {
         --_surface-color-bg: var(--sys-color-primary-hsl);
 
         border-radius: 100px 100px 0px 0px;
@@ -117,11 +118,11 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
         transition-timing-function: var(--sys-motion-easing-in-out);
       }
 
-      .main-image alwatr-standard-icon-button[show] {
+      .main-image alwatr-icon-button[show] {
         margin-bottom: 0;
       }
 
-      .main-image alwatr-standard-icon-button::part(icon) {
+      .main-image alwatr-icon-button::part(icon) {
         width: calc(5 * var(--sys-spacing-track));
         height: calc(5 * var(--sys-spacing-track));
       }
@@ -153,7 +154,7 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
     `,
   ];
 
-  @query('.main-image>alwatr-standard-icon-button')
+  @query('.main-image>alwatr-icon-button')
   private salavatSubmitButton?: AlwatrStandardIconButton;
 
   @query('alwatr-navigation-drawer')
@@ -235,21 +236,13 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
       <div class="scrim" @click=${this.mainClicked}></div>
 
       <header>
-        <alwatr-standard-icon-button
-          icon="menu-outline"
-          stated
-          @click=${this.menuButtonClicked}
-        ></alwatr-standard-icon-button>
-        <alwatr-standard-icon-button
-          icon="salavat-small"
-          url-prefix="/images/icons/"
-          stated
-        ></alwatr-standard-icon-button>
+        <alwatr-icon-button icon="menu-outline" stated @click=${this.menuButtonClicked}></alwatr-icon-button>
+        <alwatr-icon-button icon="salavat-small" url-prefix="/images/icons/" stated></alwatr-icon-button>
       </header>
 
       <main class="page-container">
         <div class="main-image">
-          <alwatr-standard-icon-button icon="add-outline" filled stated></alwatr-standard-icon-button>
+          <alwatr-icon-button icon="add-outline" filled stated></alwatr-icon-button>
         </div>
 
         ${router.outlet(this._routes)}
@@ -265,7 +258,7 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
           <alwatr-icon name="heart" class="him"></alwatr-icon>
         </span>
 
-        <alwatr-standard-icon-button icon="cloud-download-outline" stated></alwatr-standard-icon-button>
+        <alwatr-icon-button icon="cloud-download-outline" stated></alwatr-icon-button>
       </footer>
     `;
   }

@@ -24,6 +24,8 @@ export class AlwatrTextButton extends AlwatrSurface {
         overflow: hidden;
         overflow: clip;
 
+        padding: 0;
+
         font-family: var(--sys-typescale-label-medium-font-family-name);
         font-weight: var(--sys-typescale-label-medium-font-weight);
         font-size: var(--sys-typescale-label-medium-font-size);
