@@ -33,8 +33,13 @@ export class AlwatrIconBox extends AlwatrSurface {
       :host {
         display: block;
         padding: 0;
-        transition-property: color, background-color, opacity;
-        transition-duration: var(--sys-motion-duration-small);
+        transition-property: color, background-color, opacity, height;
+        transition-duration:
+          var(--sys-motion-duration-small),
+          var(--sys-motion-duration-small),
+          var(--sys-motion-duration-small),
+          var(--sys-motion-duration-medium)
+        ;
         transition-timing-function: var(--sys-motion-easing-normal);
         font-family: var(--sys-typescale-body-small-font-family-name);
         font-weight: var(--sys-typescale-body-small-font-weight);
@@ -43,6 +48,7 @@ export class AlwatrIconBox extends AlwatrSurface {
         line-height: var(--sys-typescale-body-small-line-height);
         user-select: none;
         -webkit-user-select: none;
+        overflow: hidden;
         overflow: clip;
       }
       :host([highlight]:hover) {
