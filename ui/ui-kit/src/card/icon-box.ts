@@ -51,6 +51,11 @@ export class AlwatrIconBox extends AlwatrSurface {
         overflow: hidden;
         overflow: clip;
       }
+
+      :host([highlight]) {
+        cursor: pointer;
+      }
+
       :host([highlight]:hover) {
         --_surface-color-on: var(--sys-color-on-primary-hsl);
         --_surface-color-bg: var(--sys-color-primary-hsl);
