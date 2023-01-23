@@ -370,12 +370,15 @@ export class AlwatrNanoServer {
  */
 export class AlwatrConnection {
   static versionPattern = new RegExp('^/v[0-9]+');
+  static apiPattern = new RegExp('^/api');
 
   /**
    * Request URL.
    */
   readonly url = new URL(
-      (this.incomingMessage.url ?? '').replace(AlwatrConnection.versionPattern, ''),
+      (this.incomingMessage.url ?? '')
+          .replace(AlwatrConnection.apiPattern, '')
+          .replace(AlwatrConnection.versionPattern, ''),
       'http://localhost/',
   );
 

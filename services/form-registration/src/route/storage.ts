@@ -4,7 +4,7 @@ import {storageClient} from '../lib/storage.js';
 
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 
-nanoServer.route('GET', '/storage', getFormStorage);
+nanoServer.route('GET', '/form/storage', getFormStorage);
 
 async function getFormStorage(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('getFormStorage');

@@ -5,7 +5,7 @@ import {storageClient} from '../lib/storage.js';
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 import type {AlwatrDocumentObject} from '@alwatr/type';
 
-nanoServer.route('PUT', '/', setForm);
+nanoServer.route('PUT', '/form/', setForm);
 
 async function setForm(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('setForm');
