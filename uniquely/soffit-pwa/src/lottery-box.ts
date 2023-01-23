@@ -117,34 +117,29 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
     }
     form.animateVisible();
 
-    this.addEventListener('transitionend', () => {
+    box.addEventListener('transitionend', () => {
       this._logger.logMethod('_animateExpand_transitionend');
       box.style.height = 'auto';
     }, {once: true});
   }
 
   async _animateCollapse(): Promise<void> {
+    if (!this.expanded || this._box == null) return;
     this._logger.logMethod('_animateCollapse');
-    if (!this.expanded) return;
+    const box = this._box;
     await delayFrame();
-    const form = this.renderRoot.querySelector('alwatr-lottery-form');
-    if (!form) {
-      this._logger.error('_animateCollapse', 'form_not_found');
-      this.expanded = false;
-      this.submitted = true;
-      this.style.height = 'auto';
-      return;
-    }
-    this.style.height = this.scrollHeight + 'px';
+
+    box.style.height = box.scrollHeight + 'px';
     await delayFrame();
-    // form.style.opacity = '0';
-    this.style.height = this._collapseHeight + 'px';
-    this.addEventListener('transitionend', () => {
+    box.style.height = this._collapseHeight + 'px';
+
+    box.addEventListener('transitionend', async () => {
       this._logger.logMethod('_animateCollapse_transitionend');
-      delayFrame();
       this.expanded = false;
       this.submitted = true;
-      this.style.height = 'auto';
+      // this.style.height = 'auto';
+      await delayFrame();
+      box.style.height = box.scrollHeight + 'px';
     }, {once: true});
   }
 }
