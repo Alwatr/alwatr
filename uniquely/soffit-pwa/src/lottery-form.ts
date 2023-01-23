@@ -53,14 +53,16 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     this._logger.logMethodArgs('_submit', bodyJson);
     this.disabled = true;
     await new Promise((resolve) => setTimeout(resolve, 3_000));
-    // this.disabled = false;
-    this.dispatchEvent(new CustomEvent('form-submitted'));
+
     // return fetch({
+    //   method: 'PUT',
     //   url: config.api + '/',
     //   token: config.token,
-    //   method: 'PUT',
     //   bodyJson,
     // });
+
+    // this.disabled = false;
+    this.dispatchEvent(new CustomEvent('form-submitted'));
   }
 
   getFormData(): Record<string, unknown> {
