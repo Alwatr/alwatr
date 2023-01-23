@@ -9,7 +9,7 @@
   --sys-motion-duration-large: calc(18 * var(--ref-motion-duration-frame));
   --sys-motion-duration-large-out: var(--sys-motion-duration-medium);
 
-  --sys-motion-easing-linear: cubic-bezier(0.4, 0, 0.6, 1);
+  --sys-motion-easing-normal: cubic-bezier(0.4, 0, 0.6, 1);
   --sys-motion-easing-incoming: cubic-bezier(0, 0, 0.2, 1);
   --sys-motion-easing-exiting: cubic-bezier(0.4, 0, 1, 1);
   --sys-motion-easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);

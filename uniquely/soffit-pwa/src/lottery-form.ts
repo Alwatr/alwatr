@@ -25,7 +25,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
   static override styles = css`
     :host {
       display: block;
-      transition: opacity var(--sys-motion-duration-medium) var(--sys-motion-easing-linear);
+      transition: opacity var(--sys-motion-duration-medium) var(--sys-motion-easing-normal);
     }
 
     :host([disabled]) {
