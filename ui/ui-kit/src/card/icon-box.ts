@@ -122,7 +122,6 @@ export class AlwatrIconBox extends AlwatrSurface {
           href=${ifDefined(content.href)}
           target=${ifDefined(target)}
           ?download=${content.target === 'download'}
-          >${template}</a
-        >`;
+        >${template}</a>`;
   }
 }
