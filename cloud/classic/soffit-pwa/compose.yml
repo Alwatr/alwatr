@@ -5,6 +5,75 @@ networks:
     external: true
 
 services:
+  storage-server:
+    image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION:-next}
+
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    stop_grace_period: 30s
+
+    restart: unless-stopped
+
+    networks:
+      internal:
+        aliases:
+          - '${APP_ID}-storage-server'
+
+    environment:
+      - STORAGE_PATH=/storage
+      - ACCESS_TOKEN=${STORAGE_TOKEN}
+      - ALWATR_DEBUG=${STORAGE_SERVER_DEBUG:-}
+
+    volumes:
+      - type: bind
+        source: ./_data/storage
+        target: /storage
+        bind:
+          create_host_path: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+  form-registration:
+    image: ghcr.io/alimd/form-registration:${FORM_REGISTRATION_VERSION:-next}
+
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      internal:
+      alwatr-public-network:
+
+    depends_on:
+      - storage-server
+
+    environment:
+      - STORAGE_HOST=${APP_ID}-storage-server
+      - STORAGE_PORT=80
+      - STORAGE_NAME=${STORAGE_NAME}
+      - STORAGE_TOKEN=${STORAGE_TOKEN}
+      - ACCESS_TOKEN=${FORM_REGISTRATION_TOKEN}
+      - ALWATR_DEBUG=${FORM_REGISTRATION_DEBUG:-}
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${FORM_REGISTRATION_DOMAIN}
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+
   pwa:
     image: ghcr.io/alimd/soffit-pwa:${PWA_VERSION:-next}
 
