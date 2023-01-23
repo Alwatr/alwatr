@@ -86,7 +86,7 @@ export function validator<T extends ValidType>(
       }
     }
     else if (itemSchema === String) {
-      if (typeof itemValue !== 'string') {
+      if (typeof itemValue !== 'string' || itemValue === '') {
         throw new Error('invalid_type', {
           cause: {
             message: 'invalid type',
