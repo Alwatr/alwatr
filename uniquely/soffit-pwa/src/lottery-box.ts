@@ -30,10 +30,12 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
       color: var(--sys-color-primary);
     }
 
-    :host([transition]) {
-      transition-property: height;
-      transition-duration: var(--sys-motion-duration-medium);
-      transition-timing-function: var(--sys-motion-easing-linear);
+    .success {
+      font-family: var(--sys-typescale-label-large-font-family-name);
+      font-weight: var(--sys-typescale-label-large-font-weight);
+      font-size: var(--sys-typescale-label-large-font-size);
+      letter-spacing: var(--sys-typescale-label-large-letter-spacing);
+      line-height: var(--sys-typescale-label-large-line-height);
     }
   `;
 
