@@ -1,4 +1,4 @@
 window.appConfig = {
-  api: 'http://localhost:8000',
+  api: '/api/v0',
   token: 'YOUR_SECRET_TOKEN',
 };
