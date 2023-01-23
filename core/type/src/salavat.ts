@@ -1,6 +1,6 @@
 import type {AlwatrDocumentObject} from './storage.js';
 
-export type GlobalSalavatCount = AlwatrDocumentObject & {
-  id: 'salavat_count',
+export type TotalSalavatCount = AlwatrDocumentObject & {
+  id: 'total_salavat_count',
   count: number;
 };
