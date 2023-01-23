@@ -141,7 +141,7 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
       await delayFrame();
       box.style.height = box.scrollHeight + 'px';
       box.addEventListener('transitionend', () => {
-        this.style.height = 'auto';
+        box.style.height = 'auto';
       }, {once: true});
     }, {once: true});
   }
