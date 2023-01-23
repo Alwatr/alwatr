@@ -1,7 +1,7 @@
-import {GlobalSalavatCount} from '@alwatr/type/src/salavat.js';
+import {TotalSalavatCount} from '@alwatr/type/src/salavat.js';
 
 import {config, logger} from '../../config.js';
-import {getGlobalCount} from '../../counter.js';
+import {getTotalCount} from '../../counter.js';
 import {nanoServer} from '../../lib/nano-server.js';
 import {storageEngine} from '../../lib/storage.js';
 
@@ -15,11 +15,11 @@ async function newVow(connection: AlwatrConnection): Promise<AlwatrServiceRespon
   connection.requireToken(config.nanoServer.accessToken);
 
   // FIXME: validate with @alwatr/validator
-  const {count} = await connection.requireJsonBody<GlobalSalavatCount>();
+  const {count} = await connection.requireJsonBody<TotalSalavatCount>();
 
-  let globalCount = getGlobalCount();
+  let globalCount = getTotalCount();
   globalCount += count;
-  storageEngine.set({id: 'salavat_count', count: globalCount});
+  storageEngine.set({id: 'total_salavat_count', count: globalCount});
 
   return {
     ok: true,
