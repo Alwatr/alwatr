@@ -1,6 +1,5 @@
 import {customElement, AlwatrSmartElement, css, html, property} from '@alwatr/element';
 import {serviceRequest} from '@alwatr/fetch';
-import {UnicodeDigits} from '@alwatr/math';
 import {validator, type JsonSchema} from '@alwatr/validator';
 
 import {config} from './tech-dep/config.js';
@@ -11,7 +10,6 @@ import '@alwatr/ui-kit/text-field/text-field.js';
 import '@alwatr/ui-kit/button/button.js';
 import './tech-dep/radio-group.js';
 
-const unicodeDigits = new UnicodeDigits('common', 'en');
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -99,7 +97,6 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     )) {
       data[inputElement.name] = inputElement.value;
     }
-    data.phone = unicodeDigits.translate(String(data.phone).replaceAll(' ', ''));
     return data;
   }
 
@@ -108,7 +105,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     return html`
       <alwatr-text-field
         name="code"
-        type="text"
+        type="number"
         outlined
         active-outline
         stated

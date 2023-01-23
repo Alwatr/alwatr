@@ -19,7 +19,6 @@
   "references": [
     {"path": "../../core/router"},
     {"path": "../../core/fetch"},
-    {"path": "../../core/math"},
     {"path": "../../core/validator"},
     {"path": "../../ui/element"},
     {"path": "../../ui/ui-kit"},
