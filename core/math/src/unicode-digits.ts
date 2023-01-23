@@ -141,6 +141,6 @@ export class UnicodeDigits {
    * ```
    */
   translate(str: string): string {
-    return str.replace(this._searchRegExt, this._replacer);
+    return str.trim() === '' ? str : str.replace(this._searchRegExt, this._replacer);
   }
 }
