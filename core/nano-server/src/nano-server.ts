@@ -481,11 +481,11 @@ export class AlwatrConnection {
 
     if (validatorParams?.schema != null) {
       try {
-        jsonBody = validator<T>(
+        jsonBody = validator(
             validatorParams.schema,
           <Record<string, unknown>>jsonBody,
           validatorParams.additionalProperties,
-        );
+        ) as unknown as T;
       }
       catch (err) {
         // eslint-disable-next-line no-throw-literal
