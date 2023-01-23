@@ -33,9 +33,14 @@ export class AlwatrIconBox extends AlwatrSurface {
       :host {
         display: block;
         padding: 0;
-        transition-property: color, background-color, opacity;
-        transition-duration: var(--sys-motion-duration-small);
-        transition-timing-function: var(--sys-motion-easing-linear);
+        transition-property: color, background-color, opacity, height;
+        transition-duration:
+          var(--sys-motion-duration-small),
+          var(--sys-motion-duration-small),
+          var(--sys-motion-duration-small),
+          var(--sys-motion-duration-medium)
+        ;
+        transition-timing-function: var(--sys-motion-easing-normal);
         font-family: var(--sys-typescale-body-small-font-family-name);
         font-weight: var(--sys-typescale-body-small-font-weight);
         font-size: var(--sys-typescale-body-small-font-size);
@@ -43,6 +48,7 @@ export class AlwatrIconBox extends AlwatrSurface {
         line-height: var(--sys-typescale-body-small-line-height);
         user-select: none;
         -webkit-user-select: none;
+        overflow: hidden;
         overflow: clip;
       }
       :host([highlight]:hover) {
@@ -72,7 +78,7 @@ export class AlwatrIconBox extends AlwatrSurface {
         margin-bottom: var(--sys-spacing-track);
         font-size: 1.5em;
         color: var(--sys-color-primary);
-        transition: color var(--sys-motion-duration-small) var(--sys-motion-easing-linear);
+        transition: color var(--sys-motion-duration-small) var(--sys-motion-easing-normal);
       }
       :host([highlight]:hover) .headline alwatr-icon {
         color: var(--sys-color-on-primary);

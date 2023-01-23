@@ -37,7 +37,7 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
   static override styles = css`
     :host {
       display: block;
-      transition: opacity var(--sys-motion-duration-small) var(--sys-motion-easing-linear);
+      transition: opacity var(--sys-motion-duration-small) var(--sys-motion-easing-normal);
     }
     fieldset {
       display: block;

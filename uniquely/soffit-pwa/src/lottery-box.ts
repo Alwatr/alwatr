@@ -1,4 +1,8 @@
-import {customElement, AlwatrSmartElement, css, html, state} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html, state, type PropertyValues} from '@alwatr/element';
+
+import {delayFrame} from './tech-dep/util.js';
+
+import type {AlwatrIconBox} from '@alwatr/ui-kit/card/icon-box.js';
 
 import '@alwatr/ui-kit/card/icon-box.js';
 import './lottery-form.js';
@@ -23,17 +27,16 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
   static override styles = css`
     :host {
       display: block;
-      overflow: hidden;
+      padding: 0;
     }
 
     .success {
       color: var(--sys-color-primary);
-    }
-
-    :host([transition]) {
-      transition-property: height;
-      transition-duration: var(--sys-motion-duration-medium);
-      transition-timing-function: var(--sys-motion-easing-linear);
+      font-family: var(--sys-typescale-label-large-font-family-name);
+      font-weight: var(--sys-typescale-label-large-font-weight);
+      font-size: var(--sys-typescale-label-large-font-size);
+      letter-spacing: var(--sys-typescale-label-large-letter-spacing);
+      line-height: var(--sys-typescale-label-large-line-height);
     }
   `;
 
@@ -42,6 +45,8 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
 
   @state()
     submitted = false;
+
+  private _box: AlwatrIconBox | null = null;
 
   override render(): unknown {
     super.render();
@@ -54,6 +59,11 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
         @click=${this._click}
       >${this._boxContentTemplate()}</alwatr-icon-box>
     `;
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(changedProperties);
+    this._box = this.renderRoot.querySelector('alwatr-icon-box');
   }
 
   private _boxContentTemplate(): unknown {
@@ -83,59 +93,53 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
   }
 
   private _currentAnimate?: Promise<void>;
-  private _setTransition(val: boolean): Promise<number> {
-    this.toggleAttribute('transition', val);
-    return new Promise((resolve) => requestAnimationFrame(resolve));
-  }
 
   private _collapseHeight = 0;
   async _animateExpand(): Promise<void> {
+    if (this.expanded || this._box == null) return;
     this._logger.logMethod('_animateExpand');
-    if (this.expanded) return;
-    await this._setTransition(false);
-    this._collapseHeight = this.getBoundingClientRect().height;
-    this.style.height = this._collapseHeight + 'px';
+    const box = this._box;
+    await delayFrame();
+
+    this._collapseHeight = box.scrollHeight;
+    box.style.height = this._collapseHeight + 'px';
     this.expanded = true;
     await this.updateComplete;
+    await delayFrame();
+
+    box.style.height = box.scrollHeight + 'px';
+
     const form = this.renderRoot.querySelector('alwatr-lottery-form');
     if (!form) {
       this._logger.error('_animateExpand', 'form_not_found');
       this.style.height = 'auto';
       return;
     }
-    // form.style.opacity = '0';
-    await this._setTransition(true);
-    this.style.height = this.scrollHeight + 'px';
     form.animateVisible();
-    this.addEventListener('transitionend', () => {
+
+    box.addEventListener('transitionend', () => {
       this._logger.logMethod('_animateExpand_transitionend');
-      this._setTransition(false);
-      this.style.height = 'auto';
+      box.style.height = 'auto';
     }, {once: true});
   }
 
   async _animateCollapse(): Promise<void> {
+    if (!this.expanded || this._box == null) return;
     this._logger.logMethod('_animateCollapse');
-    if (!this.expanded) return;
-    await this._setTransition(false);
-    const form = this.renderRoot.querySelector('alwatr-lottery-form');
-    if (!form) {
-      this._logger.error('_animateCollapse', 'form_not_found');
-      this.expanded = false;
-      this.submitted = true;
-      this.style.height = 'auto';
-      return;
-    }
-    this.style.height = this.getBoundingClientRect().height + 'px';
-    await this._setTransition(true);
-    // form.style.opacity = '0';
-    this.style.height = this._collapseHeight + 'px';
-    this.addEventListener('transitionend', () => {
+    const box = this._box;
+    await delayFrame();
+
+    box.style.height = box.scrollHeight + 'px';
+    await delayFrame();
+    box.style.height = this._collapseHeight + 'px';
+
+    box.addEventListener('transitionend', async () => {
       this._logger.logMethod('_animateCollapse_transitionend');
-      this._setTransition(false);
       this.expanded = false;
       this.submitted = true;
-      this.style.height = 'auto';
+      // this.style.height = 'auto';
+      await delayFrame();
+      box.style.height = box.scrollHeight + 'px';
     }, {once: true});
   }
 }
