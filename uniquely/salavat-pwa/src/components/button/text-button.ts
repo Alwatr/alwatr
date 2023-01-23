@@ -1,4 +1,5 @@
-import {customElement, property, html, css, ifDefined, AlwatrSurfaceElement} from '@alwatr/element';
+import {customElement, property, html, css, ifDefined} from '@alwatr/element';
+import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 
 import '@alwatr/icon';
 
@@ -9,9 +10,9 @@ declare global {
 }
 
 @customElement('alwatr-text-button')
-export class AlwatrTextButton extends AlwatrSurfaceElement {
+export class AlwatrTextButton extends AlwatrSurface {
   static override styles = [
-    AlwatrSurfaceElement.styles,
+    AlwatrSurface.styles,
     css`
       :host {
         --_surface-color-bg: transparent;

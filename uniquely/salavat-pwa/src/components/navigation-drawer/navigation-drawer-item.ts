@@ -1,4 +1,5 @@
-import {customElement, property, html, css, ifDefined, AlwatrSurfaceElement, when} from '@alwatr/element';
+import {customElement, property, html, css, ifDefined, when} from '@alwatr/element';
+import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 
 import '@alwatr/icon';
 
@@ -9,9 +10,9 @@ declare global {
 }
 
 @customElement('alwatr-navigation-drawer-item')
-export class AlwatrNavigationDrawerItem extends AlwatrSurfaceElement {
+export class AlwatrNavigationDrawerItem extends AlwatrSurface {
   static override styles = [
-    AlwatrSurfaceElement.styles,
+    AlwatrSurface.styles,
     css`
       :host {
         --_surface-color-bg: transparent;

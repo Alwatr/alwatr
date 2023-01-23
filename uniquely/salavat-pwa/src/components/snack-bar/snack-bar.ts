@@ -1,6 +1,7 @@
-import {customElement, property, html, css, AlwatrSurfaceElement, when} from '@alwatr/element';
+import {customElement, property, html, css, when} from '@alwatr/element';
+import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 
-import '@alwatr/ui-kit/icon-button/standard-icon-button.js';
+import '@alwatr/ui-kit/button/icon-button.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -22,9 +23,9 @@ declare global {
  * @fires close-icon
  */
 @customElement('alwatr-snack-bar')
-export class AlwatrSnackBar extends AlwatrSurfaceElement {
+export class AlwatrSnackBar extends AlwatrSurface {
   static override styles = [
-    AlwatrSurfaceElement.styles,
+    AlwatrSurface.styles,
     css`
       :host {
         display: flex;

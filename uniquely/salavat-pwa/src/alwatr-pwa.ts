@@ -21,7 +21,7 @@ import type {AlwatrNavigationDrawer} from './components/navigation-drawer/naviga
 import type {AlwatrSnackBar} from './components/snack-bar/snack-bar.js';
 import type {CSSResultGroup} from '@alwatr/element';
 import type {RoutesConfig} from '@alwatr/router';
-import type {AlwatrStandardIconButton} from '@alwatr/ui-kit/icon-button/standard-icon-button.js';
+import type {AlwatrStandardIconButton} from '@alwatr/ui-kit/button/icon-button.js';
 
 declare global {
   interface HTMLElementTagNameMap {
