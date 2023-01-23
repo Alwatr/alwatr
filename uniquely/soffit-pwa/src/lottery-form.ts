@@ -1,5 +1,7 @@
 import {customElement, AlwatrSmartElement, css, html, property} from '@alwatr/element';
 import {serviceRequest} from '@alwatr/fetch';
+import {UnicodeDigits} from '@alwatr/math';
+import {validator, type JsonSchema} from '@alwatr/validator';
 
 import {config} from './tech-dep/config.js';
 
@@ -8,6 +10,8 @@ import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 import '@alwatr/ui-kit/button/button.js';
 import './tech-dep/radio-group.js';
+
+const unicodeDigits = new UnicodeDigits('common', 'en');
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -48,30 +52,54 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
   @property({type: Boolean, reflect: true})
     disabled = false;
 
+  static validSchema: JsonSchema = {
+    code: String,
+    name: String,
+    phone: Number,
+    activity: String,
+  };
+
   async submit(): Promise<void> {
-    const bodyJson = this.getFormData();
-    this._logger.logMethodArgs('_submit', bodyJson);
+    let bodyJson = this.getFormData();
+    this._logger.logMethodArgs('submit', bodyJson);
+
+    try {
+      bodyJson = validator(AlwatrLotteryForm.validSchema, bodyJson);
+    }
+    catch (err) {
+      this._logger.error('submit', 'invalid_form_data', (err as Error).cause);
+      alert('اطلاعات فرم صحیح نمی‌باشد.');
+      return;
+    }
+
     this.disabled = true;
+    try {
+      await serviceRequest({
+        method: 'PUT',
+        url: config.api + '/',
+        token: config.token,
+        bodyJson,
+      });
+    }
+    catch (err) {
+      this._logger.error('submit', 'request_failed', (err as Error).cause);
+      this.disabled = false;
+      alert('لطفا از اتصال خود به اینترنت اطمینان حاصل فرمایید و مجددا ارسال کنید.');
+      return;
+    }
 
-    await serviceRequest({
-      method: 'PUT',
-      url: config.api + '/',
-      token: config.token,
-      bodyJson,
-    });
-
-    // this.disabled = false;
     this.dispatchEvent(new CustomEvent('form-submitted'));
   }
 
   getFormData(): Record<string, unknown> {
-    this._logger.logMethod('_getInputData');
+    this._logger.logMethod('getFormData');
     const data: Record<string, string> = {};
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>(
         'alwatr-text-field,alwatr-radio-group',
     )) {
       data[inputElement.name] = inputElement.value;
     }
+    data.phone = unicodeDigits.translate(String(data.phone).replaceAll(' ', ''));
     return data;
   }
 

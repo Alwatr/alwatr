@@ -36,6 +36,8 @@
     "@alwatr/element": "^0.28.0",
     "@alwatr/ui-kit": "^0.28.0",
     "@alwatr/fetch": "^0.28.0",
+    "@alwatr/math": "^0.28.0",
+    "@alwatr/validator": "^0.28.0",
     "@web/dev-server": "^0.1.35",
     "@webcomponents/webcomponentsjs": "^2.7.0",
     "esbuild": "^0.17.3",
