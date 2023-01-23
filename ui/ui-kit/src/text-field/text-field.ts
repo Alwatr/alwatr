@@ -1,8 +1,11 @@
 import {css, customElement, html, property, ifDefined, type PropertyValues} from '@alwatr/element';
+import {UnicodeDigits} from '@alwatr/math';
 
 import '@alwatr/icon';
 
 import {AlwatrSurface} from '../card/surface.js';
+
+const unicodeDigits = new UnicodeDigits('common', 'en');
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -97,7 +100,11 @@ export class AlwatrTextField extends AlwatrSurface {
   inputElement: HTMLInputElement | null = null;
 
   get value(): string {
-    return this.inputElement?.value ?? '';
+    let val = unicodeDigits.translate(this.inputElement?.value ?? '');
+    if (this.type === 'number' || this.type === 'tel') {
+      val = val.replaceAll(' ', '');
+    }
+    return val;
   }
   set value(val: string) {
     if (this.inputElement != null) {
