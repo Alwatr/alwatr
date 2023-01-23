@@ -10,3 +10,12 @@ body {
   background-position: bottom right;
   background-size: cover;
 }
+
+@media (orientation: landscape) {
+  alwatr-pwa-root {
+    display: none;
+  }
+  body {
+    background-image: url('../images/background-desktop.jpg');
+  }
+}
