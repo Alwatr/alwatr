@@ -7,14 +7,14 @@ import type {AlwatrServiceResponse} from '@alwatr/nano-server';
 nanoServer.route('GET', '/vow', totalCount);
 
 async function totalCount(): Promise<AlwatrServiceResponse> {
-  logger.logMethod('globalCount');
+  logger.logMethod('totalCount');
 
-  const globalCount = getTotalCount();
+  const totalSalavatCount = getTotalCount();
 
   return {
     ok: true,
     data: {
-      globalCount,
+      totalSalavatCount,
     },
   };
 }

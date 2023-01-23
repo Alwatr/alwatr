@@ -17,14 +17,14 @@ async function newVow(connection: AlwatrConnection): Promise<AlwatrServiceRespon
   // FIXME: validate with @alwatr/validator
   const {count} = await connection.requireJsonBody<TotalSalavatCount>();
 
-  let globalCount = getTotalCount();
-  globalCount += count;
-  storageEngine.set({id: 'total_salavat_count', count: globalCount});
+  let totalSalavatCount = getTotalCount();
+  totalSalavatCount += count;
+  storageEngine.set({id: 'total_salavat_count', count: totalSalavatCount});
 
   return {
     ok: true,
     data: {
-      globalCount,
+      totalSalavatCount,
     },
   };
 }
