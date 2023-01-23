@@ -4,9 +4,9 @@ import {nanoServer} from '../../lib/nano-server.js';
 
 import type {AlwatrServiceResponse} from '@alwatr/nano-server';
 
-nanoServer.route('GET', '/vow', globalCount);
+nanoServer.route('GET', '/vow', totalCount);
 
-async function globalCount(): Promise<AlwatrServiceResponse> {
+async function totalCount(): Promise<AlwatrServiceResponse> {
   logger.logMethod('globalCount');
 
   const globalCount = getTotalCount();
