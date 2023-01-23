@@ -4,7 +4,7 @@ import type {JsonSchema, ValidType} from './type.js';
 
 export type {JsonSchema};
 
-export function validator<T>(
+export function validator<T extends ValidType>(
     validSchema: JsonSchema,
     targetObject: Record<string, unknown>,
     additionalProperties = false,

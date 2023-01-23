@@ -1,11 +1,11 @@
-import {createServer} from 'node:http';
+import {createServer, type IncomingMessage, type ServerResponse} from 'node:http';
+import {type Duplex} from 'node:stream';
 
-import {createLogger, globalAlwatr} from '@alwatr/logger';
+import {createLogger, globalAlwatr, type AlwatrLogger} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
-import {validator} from '@alwatr/validator';
+import {validator, type JsonSchema} from '@alwatr/validator';
 
 import type {NanoServerConfig, ConnectionConfig} from './type.js';
-import type {AlwatrLogger} from '@alwatr/logger';
 import type {
   AlwatrServiceResponse,
   AlwatrServiceResponseFailed,
@@ -17,9 +17,6 @@ import type {
   ParamValueType,
   QueryParameters,
 } from '@alwatr/type';
-import type {JsonSchema} from '@alwatr/validator';
-import type {IncomingMessage, ServerResponse} from 'node:http';
-import type {Duplex} from 'node:stream';
 
 export type RouteMiddleware<TData = Record<string, unknown>, TMeta = Record<string, unknown>> = (
   connection: AlwatrConnection
