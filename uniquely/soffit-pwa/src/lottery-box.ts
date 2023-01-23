@@ -138,9 +138,11 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
       this.expanded = false;
       this.submitted = true;
       await this.updateComplete;
+      await box.updateComplete;
       await delayFrame();
       box.style.height = box.scrollHeight + 'px';
       box.addEventListener('transitionend', () => {
+        this._logger.logMethod('_animateCollapse_transitionend2');
         box.style.height = 'auto';
       }, {once: true});
     }, {once: true});
