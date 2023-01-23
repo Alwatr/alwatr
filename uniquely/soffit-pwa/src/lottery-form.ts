@@ -1,7 +1,7 @@
 import {customElement, AlwatrSmartElement, css, html, property} from '@alwatr/element';
-// import {fetch} from '@alwatr/fetch';
+import {serviceRequest} from '@alwatr/fetch';
 
-// import {config} from './tech-dep/config.js';
+import {config} from './tech-dep/config.js';
 
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
@@ -52,14 +52,13 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     const bodyJson = this.getFormData();
     this._logger.logMethodArgs('_submit', bodyJson);
     this.disabled = true;
-    await new Promise((resolve) => setTimeout(resolve, 3_000));
 
-    // return fetch({
-    //   method: 'PUT',
-    //   url: config.api + '/',
-    //   token: config.token,
-    //   bodyJson,
-    // });
+    await serviceRequest({
+      method: 'PUT',
+      url: config.api + '/',
+      token: config.token,
+      bodyJson,
+    });
 
     // this.disabled = false;
     this.dispatchEvent(new CustomEvent('form-submitted'));
