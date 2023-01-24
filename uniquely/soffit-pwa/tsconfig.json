@@ -20,6 +20,7 @@
     {"path": "../../core/router"},
     {"path": "../../core/fetch"},
     {"path": "../../core/validator"},
+    {"path": "../../core/util"},
     {"path": "../../ui/element"},
     {"path": "../../ui/ui-kit"},
   ]
