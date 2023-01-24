@@ -1,4 +1,4 @@
-import {html, customElement, css, query} from '@alwatr/element';
+import {html, customElement, css, query, state} from '@alwatr/element';
 import {AlwatrPwaElement} from '@alwatr/element/pwa-element.js';
 import {l10n} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
@@ -16,6 +16,7 @@ import '../res/styles/index.css';
 import './components/navigation-drawer/navigation-drawer.js';
 import './components/navigation-drawer/navigation-drawer-item.js';
 import './components/snack-bar/snack-bar.js';
+import './director/director.js';
 
 import type {AlwatrNavigationDrawer} from './components/navigation-drawer/navigation-drawer.js';
 import type {AlwatrSnackBar} from './components/snack-bar/snack-bar.js';
@@ -111,8 +112,9 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
         height: calc(7 * var(--sys-spacing-track));
         margin-bottom: calc(-1 * 7 * var(--sys-spacing-track));
         background-color: hsl(var(--_surface-color-bg));
+        opacity: 1;
 
-        transition-property: margin-bottom;
+        transition-property: margin-bottom, opacity;
         transition-delay: var(--sys-motion-duration-large);
         transition-duration: var(--sys-motion-duration-large);
         transition-timing-function: var(--sys-motion-easing-in-out);
@@ -120,6 +122,11 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
 
       .main-image alwatr-icon-button[show] {
         margin-bottom: 0;
+      }
+
+      .main-image alwatr-icon-button[disabled] {
+        opacity: .4;
+        pointer-events: none;
       }
 
       .main-image alwatr-icon-button::part(icon) {
@@ -163,11 +170,18 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
   @query('alwatr-snack-bar')
   private snackBar?: AlwatrSnackBar;
 
+  @state()
+  private salavatSubmitButtonLoading = false;
+
   static navigationDrawerSignal = new SignalInterface('navigation-drawer');
 
   static snackBarSignal = new SignalInterface('snack-bar');
 
   static salavatSubmitButtonSignal = new SignalInterface('salavat-submit-button');
+
+  static salavatIncreaseSignal = new SignalInterface('salavat-increase');
+
+  static salavatCountSignal = new SignalInterface('salavat-count');
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -214,11 +228,6 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
         navigationDrawerSignalListener,
         snackBarSignalListener,
     );
-
-    AlwatrPwaRoot.snackBarSignal.dispatch({
-      open: true,
-      text: 'در زندگی زخمهایی هست که مثل خوره روح را آهسته در انزوا میخورد و میتراشد.',
-    });
   }
 
   protected override _routes: RoutesConfig = {
@@ -242,7 +251,13 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
 
       <main class="page-container">
         <div class="main-image">
-          <alwatr-icon-button icon="add-outline" filled stated></alwatr-icon-button>
+          <alwatr-icon-button
+            icon="add-outline"
+            filled
+            stated
+            ?disabled=${this.salavatSubmitButtonLoading}
+            @click=${this.submitSalavatIncrease}
+          ></alwatr-icon-button>
         </div>
 
         ${router.outlet(this._routes)}
@@ -297,5 +312,16 @@ export class AlwatrPwaRoot extends AlwatrPwaElement {
 
   private snackBarClose(): void {
     AlwatrPwaRoot.snackBarSignal.dispatch({});
+  }
+
+  private async submitSalavatIncrease(): Promise<void> {
+    if (AlwatrPwaRoot.salavatIncreaseSignal.value != null) {
+      this.salavatSubmitButtonLoading = true;
+
+      await AlwatrPwaRoot.salavatCountSignal.request(AlwatrPwaRoot.salavatIncreaseSignal.value);
+
+      AlwatrPwaRoot.salavatIncreaseSignal.dispatch(0);
+      this.salavatSubmitButtonLoading = false;
+    }
   }
 }
