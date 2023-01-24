@@ -8,6 +8,3 @@ export const tokenGenerator = new AlwatrTokenGenerator({
   algorithm: 'sha256',
   encoding: 'base64url',
 });
-
-console.log(tokenGenerator.generate('alimd')); // for test
-console.log(tokenGenerator.generate('njfamirm')); // for test

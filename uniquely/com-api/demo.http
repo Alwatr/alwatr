@@ -1,17 +1,17 @@
 @apiUrl = http://127.0.0.1:8000
 @apiVersion = v0
-@token = YOUR_SECRET
+@token = YOUR_SECRET_TOKEN
+@userToken = 8FanBtr0adx_Nmocgy_XkzaZ0-bRn59G9SO1I2bk2jo
 
 ### Home
 GET {{apiUrl}}/{{apiVersion}}
 
 ### Get all product
-Get {{apiUrl}}/{{apiVersion}}/product
-Authorization: Bearer {{token}}
+Get {{apiUrl}}/{{apiVersion}}/product/
 
 ### New order
-PUT {{apiUrl}}/{{apiVersion}}/order?userId=alimd
-Authorization: Bearer {{token}}
+PUT {{apiUrl}}/{{apiVersion}}/order/?userId=njfamirm
+Authorization: Bearer {{userToken}}
 Content-Type: application/json
 
 {
@@ -42,5 +42,5 @@ Content-Type: application/json
 }
 
 ### Get user order list
-get {{apiUrl}}/{{apiVersion}}/order?userId=alimd
-Authorization: Bearer {{token}}
+get {{apiUrl}}/{{apiVersion}}/order/?userId=njfamirm
+Authorization: Bearer {{userToken}}
