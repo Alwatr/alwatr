@@ -1,4 +1,4 @@
-import {customElement, property, html, css, when} from '@alwatr/element';
+import {customElement, property, html, css, when, PropertyDeclaration} from '@alwatr/element';
 import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 
 import '@alwatr/ui-kit/button/icon-button.js';
@@ -88,10 +88,27 @@ export class AlwatrSnackBar extends AlwatrSurface {
   @property({type: Boolean, reflect: true, attribute: 'close-icon'})
     closeIcon = false;
 
+  private timeoutTimer?: NodeJS.Timeout;
+
   override connectedCallback(): void {
     super.connectedCallback();
 
     this.setAttribute('elevated', '3');
+  }
+
+  override requestUpdate(
+      name?: PropertyKey | undefined,
+      oldValue?: unknown,
+      options?: PropertyDeclaration<unknown, unknown> | undefined,
+  ): void {
+    super.requestUpdate(name, oldValue, options);
+
+    if (name === 'timeout') {
+      clearTimeout(this.timeoutTimer);
+      this.timeoutTimer = setTimeout(() => {
+        this.open = false;
+      }, this.timeout);
+    }
   }
 
   override render(): unknown {
@@ -100,13 +117,7 @@ export class AlwatrSnackBar extends AlwatrSurface {
       ${when(
       this.closeIcon,
       () =>
-        html`
-            <alwatr-icon-button
-              icon="close-outline"
-              stated
-              @click=${this.closeIconClicked}
-            ></alwatr-icon-button>
-          `,
+        html` <alwatr-icon-button icon="close-outline" stated @click=${this.closeIconClicked}></alwatr-icon-button> `,
   )}
     `;
   }
