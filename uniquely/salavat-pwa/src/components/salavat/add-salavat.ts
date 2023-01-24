@@ -30,6 +30,9 @@ export class AlwatrAddSalavat extends LocalizeMixin(AlwatrSmartElement) {
     }
 
     .my-salavat-count .count {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       direction: ltr;
       font-weight: 700;
     }
@@ -66,16 +69,15 @@ export class AlwatrAddSalavat extends LocalizeMixin(AlwatrSmartElement) {
     }
   `;
 
-  @property({type: Number})
-    mySalavatCount = 0;
+  @state()
+  private salavatIncreaseCount = 0;
 
   @state()
-  protected salavatIncreaseCount = 0;
-
-  @state()
-  protected addSalavatSliderMax = 50;
+  private addSalavatSliderMax = 50;
 
   static salavatIncreaseSignal = new SignalInterface('salavat-increase');
+
+  static salavatCountSignal = new SignalInterface('salavat-count');
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -92,7 +94,7 @@ export class AlwatrAddSalavat extends LocalizeMixin(AlwatrSmartElement) {
       <div class="my-salavat-count">
         صلوات های من:
         <div class="count">
-          <span class="old-salavat">${this.l10n.formatNumber(this.mySalavatCount)}</span>
+          <alwatr-salavat-counter class="old-salavat" .salavatCountType=${'mySalavatCount'}></alwatr-salavat-counter>
           <span class="increase">+ ${this.l10n.formatNumber(this.salavatIncreaseCount)}</span>
         </div>
       </div>

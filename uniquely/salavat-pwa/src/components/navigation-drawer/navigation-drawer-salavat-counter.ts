@@ -1,4 +1,5 @@
-import {customElement, html, css, AlwatrSmartElement, state, LocalizeMixin} from '@alwatr/element';
+import {customElement, html, css, AlwatrSmartElement, state, LocalizeMixin, AlwatrDummyElement} from '@alwatr/element';
+import {SignalInterface} from '@alwatr/signal';
 
 import '@alwatr/icon';
 
@@ -9,7 +10,7 @@ declare global {
 }
 
 @customElement('alwatr-navigation-salavat-counter')
-export class AlwatrNavigationSalavatCounter extends LocalizeMixin(AlwatrSmartElement) {
+export class AlwatrNavigationSalavatCounter extends LocalizeMixin(AlwatrDummyElement) {
   static override styles = css`
     :host {
       display: flex;
@@ -53,13 +54,11 @@ export class AlwatrNavigationSalavatCounter extends LocalizeMixin(AlwatrSmartEle
     }
   `;
 
-  @state() protected salavatCount = 0;
-
   override render(): unknown {
     return html`
       <div>
         <span>صلوات های من: </span>
-        <span class="number">${this.l10n.formatNumber(this.salavatCount)}</span>
+        <alwatr-salavat-counter class="number" .salavatCountType=${'mySalavatCount'}></alwatr-salavat-counter>
       </div>
     `;
   }
