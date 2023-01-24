@@ -12,8 +12,8 @@ import type {
   ListenerOptions,
   DispatchOptions,
   ListenerCallback,
-  SignalProvider,
-  SignalProviderOptions,
+  ProviderFunction,
+  ProviderOptions,
   ListenerObject,
   SignalObject,
 } from './type.js';
@@ -59,7 +59,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    * ```
    */
   get value(): AlwatrSignals[SignalName] | undefined {
-    return this._signal.value;
+    return this._signal.detail;
   }
 
   /**
@@ -112,7 +112,7 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    */
   expire(): void {
     this._logger.logMethod('expire');
-    delete this._signal.value;
+    delete this._signal.detail;
   }
 
   /**
@@ -134,8 +134,8 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    * ```
    */
   setProvider(
-      signalProvider: SignalProvider<SignalName>,
-      options?: SignalProviderOptions,
+      signalProvider: ProviderFunction<SignalName>,
+      options?: ProviderOptions,
   ): ListenerInterface<SignalName> {
     this._logger.logMethodArgs('setProvider', {options});
     const listener = _setSignalProvider(this._signal, this._requestSignal, signalProvider, options);
@@ -202,8 +202,8 @@ export class SignalInterface<SignalName extends keyof AlwatrSignals> {
    */
   getSignalValue(): Promise<AlwatrSignals[SignalName]> {
     this._logger.logMethod('getSignalValue');
-    if (this._signal.value !== undefined) {
-      return Promise.resolve(this._signal.value);
+    if (this._signal.detail !== undefined) {
+      return Promise.resolve(this._signal.detail);
     }
     else {
       return this.getNextSignalValue();
