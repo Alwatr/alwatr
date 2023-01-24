@@ -1,4 +1,18 @@
-import {customElement, html, css, AlwatrDummyElement, LocalizeMixin, unsafeHTML, property} from '@alwatr/element';
+import {
+  customElement,
+  html,
+  css,
+  LocalizeMixin,
+  unsafeHTML,
+  property,
+  AlwatrSmartElement,
+  state,
+} from '@alwatr/element';
+import {SignalInterface} from '@alwatr/signal';
+
+import '../loader/dot-loader.js';
+
+import type {SalavatCount} from '../../types/signals/salavat-count.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -7,73 +21,46 @@ declare global {
 }
 
 @customElement('alwatr-salavat-counter')
-export class AlwatrSalavatCounter extends LocalizeMixin(AlwatrDummyElement) {
+export class AlwatrSalavatCounter extends LocalizeMixin(AlwatrSmartElement) {
   static override styles = css`
     :host {
       display: flex;
-      flex-direction: column;
-      width: max-content;
-      backdrop-filter: blur(4px);
-      margin: 0 auto;
-      padding: 0 calc(4 * var(--sys-spacing-track)) calc(2 * var(--sys-spacing-track));
-    }
-
-    .text-start,
-    .text-large,
-    .text-end {
-      display: inline-flex;
-      width: max-content;
       align-items: center;
-      text-shadow: 0.05em 0.05em 0.2em #0008;
-    }
+      justify-content: center;
 
-    .text-large {
-      font-family: var(--sys-typescale-display-large-font-family-name);
-      font-weight: var(--sys-typescale-display-large-font-weight);
-      font-size: var(--sys-typescale-display-large-font-size);
-      letter-spacing: var(--sys-typescale-display-large-letter-spacing);
-      line-height: var(--sys-typescale-display-large-line-height);
-    }
+      height: 1.5em;
+      width: max-content;
 
-    .text-start,
-    .text-end {
-      font-family: var(--sys-typescale-headline-small-font-family-name);
-      font-weight: 300;
-      font-size: var(--sys-typescale-headline-small-font-size);
-      letter-spacing: var(--sys-typescale-headline-small-letter-spacing);
-      line-height: var(--sys-typescale-headline-small-line-height);
-    }
-
-    .text-start {
-      align-self: flex-start;
-      margin-inline-end: calc(2 * var(--sys-spacing-track));
-    }
-
-    .text-large {
       direction: ltr;
-      align-self: center;
-    }
-
-    .text-end {
-      align-self: flex-end;
-      margin-inline-start: calc(2 * var(--sys-spacing-track));
-    }
-
-    .text-large span {
-      color: var(--sys-color-tertiary);
+      text-shadow: 0.05em 0.05em 0.2em #0008;
     }
   `;
 
-  @property({type: Number})
-    salavatCount = 0;
+  static salavatCountSignal = new SignalInterface('salavat-count');
+
+  @property({type: String, attribute: 'salavat-count-type'})
+    salavatCountType: keyof SalavatCount = 'totalSalavatCount';
+
+  @state()
+  private salavatCountSignalValue?: SalavatCount;
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    const salavatCountSignalListener = AlwatrSalavatCounter.salavatCountSignal.addListener((value) => {
+      this.salavatCountSignalValue = value;
+    });
+
+    this._signalListenerList.push(salavatCountSignalListener);
+  }
 
   override render(): unknown {
-    return html`
-      <div class="text-start">تا این لحظه</div>
-      <div class="text-large">
-        ${unsafeHTML(this.l10n.formatNumber(this.salavatCount).replaceAll('٬', '<span>٬</span>'))}
-      </div>
-      <div class="text-end">صلوات نذر فرج</div>
-    `;
+    if (this.salavatCountSignalValue != null) {
+      const count = this.salavatCountSignalValue[this.salavatCountType];
+
+      return unsafeHTML(this.l10n.formatNumber(count).replaceAll('٬', '<span>٬</span>'));
+    }
+
+    return html`<alwatr-dot-loader></alwatr-dot-loader>`;
   }
 }
