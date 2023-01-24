@@ -14,6 +14,8 @@ declare global {
   }
 }
 
+export type DebounceType = 'No' | 'AnimationFrame' | 'Timeout';
+
 /**
  * addSignalListener options type
  */
@@ -41,9 +43,9 @@ export interface ListenerOptions {
    * Calling this listener (callback) with preview signal value (if dispatched before).
    * If Immediate, the listener will be called immediately without any debounce for preview signal.
    *
-   * @default true
+   * @default `AnimationFrame`
    */
-  receivePrevious?: boolean | 'Immediate';
+  receivePrevious?: DebounceType | 'NextCycle';
 }
 
 /**
@@ -55,52 +57,58 @@ export interface DispatchOptions {
    * If false, every signal is matter and count.
    * tips: debounce work like throttle this means listeners call with last dispatch value.
    *
-   * @default true
+   * @default `AnimationFrame`
    */
-  debounce?: boolean;
+  debounce?: DebounceType;
 }
 
-export interface SignalProviderOptions {
+/**
+ * setSignalProvider options type.
+ */
+export interface ProviderOptions {
   /**
    * Calling signal provider (request signal callback) with preview signal value (if dispatched before).
    * If Immediate, the listener will be called immediately without any debounce for preview signal.
    *
-   * @default true
+   * @default `NextCycle`
    */
-  receivePrevious?: boolean | 'Immediate';
+  receivePrevious?: DebounceType | 'NextCycle';
 
   /**
    * If true, the dispatch will be send after animation frame debounce.
    * If false, every signal is matter and count.
-   * tips: debounce work like throttle this means listeners call with last dispatch value.
+   * tips: debounce true work like throttle this means listeners call with last dispatch value.
    *
-   * @default true
+   * @default `AnimationFrame`
    */
-  debounce?: boolean;
+  debounce?: DebounceType;
 }
 
 /**
  * Signal listeners callback function type.
  */
-export type ListenerCallback<SignalName extends keyof AlwatrSignals> = (
-  signalValue: AlwatrSignals[SignalName]
-) => void | Promise<void>;
+export type ListenerCallback<T extends Record<string, unknown>> = (detail: T) => void | Promise<void>;
 
 /**
  * Signal provider function type used to setSignalProvider.
  */
-export type SignalProvider<SignalName extends keyof AlwatrRequestSignals> = (
-  requestParam: AlwatrRequestSignals[SignalName]
-) => AlwatrSignals[SignalName] | void | Promise<AlwatrSignals[SignalName] | void>;
+export type ProviderFunction<TSignal extends Record<string, unknown>, TRequest extends Record<string, unknown>> = (
+  requestDetail: TRequest
+) => TSignal | void | Promise<TSignal | void>;
 
 /**
- * Signal listeners object in database.
+ * Signal listeners object in storage.
  */
-export interface ListenerObject<SignalName extends keyof AlwatrSignals> {
+export interface ListenerObject<T extends Record<string, unknown>> {
   /**
    * Unique listener id
    */
   id: number;
+
+  /**
+   * Signal name
+   */
+  signalName: string;
 
   /**
    * If true, the listener will be called only once and removed automatically after first call
@@ -112,22 +120,22 @@ export interface ListenerObject<SignalName extends keyof AlwatrSignals> {
    */
   disabled: boolean;
 
-  callback: ListenerCallback<SignalName>;
+  callback: ListenerCallback<T>;
 }
 
 /**
- * Signal object in database.
+ * Signal object in storage.
  */
-export interface SignalObject<SignalName extends keyof AlwatrSignals> {
+export interface SignalObject<T extends Record<string, unknown>> {
   /**
    * Signal name for direct access.
    */
-  name: SignalName;
+  name: string;
 
   /**
    * Last dispatched value.
    */
-  value?: AlwatrSignals[SignalName];
+  detail?: T;
 
   /**
    * If true, the signal is disabled.
@@ -143,12 +151,10 @@ export interface SignalObject<SignalName extends keyof AlwatrSignals> {
   /**
    * Signal listeners list.
    */
-  listenerList: Array<ListenerObject<SignalName>>;
+  listenerList: Array<ListenerObject<T>>;
 }
 
 /**
- * Signal stack database.
+ * Signal stack storage.
  */
-export type SignalStack = {
-  [SignalName in keyof AlwatrSignals]?: SignalObject<SignalName>;
-};
+export type SignalStorage = Record<string, SignalObject<Record<string, unknown>> | undefined>;

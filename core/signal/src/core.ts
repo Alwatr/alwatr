@@ -6,9 +6,9 @@ import type {
   ListenerObject,
   ListenerOptions,
   SignalObject,
-  SignalProvider,
-  SignalProviderOptions,
-  SignalStack,
+  ProviderFunction,
+  ProviderOptions,
+  SignalStorage,
 } from './type.js';
 
 export const logger = createLogger('alwatr/signal');
@@ -23,10 +23,12 @@ globalAlwatr.registeredList.push({
  */
 let _lastListenerId = 0;
 
+const debounceTimeout = 5;
+
 /**
  * Signal stack database.
  */
-const _signalStack: SignalStack = {};
+const _signalStorage: SignalStorage = {};
 
 /**
  * Get signal object by name, If not available, it will create a new signal with default options.
@@ -38,25 +40,26 @@ const _signalStack: SignalStack = {};
  * signal.disabled = true;
  * ```
  */
-export function _getSignalObject<SignalName extends keyof AlwatrSignals>(
-    signalName: SignalName,
-): SignalObject<SignalName> {
-  if (!_signalStack[signalName]) {
-    _signalStack[signalName] = {
+export function _getSignalObject<T extends Record<string, unknown>>(signalName: string): SignalObject<T> {
+  if (!_signalStorage[signalName]) {
+    _signalStorage[signalName] = {
       name: signalName,
       disabled: false,
       debounced: false,
       listenerList: [],
     };
   }
-  return _signalStack[signalName] as unknown as SignalObject<SignalName>;
+  return _signalStorage[signalName] as unknown as SignalObject<T>;
 }
 
-function __callListeners<SignalName extends keyof AlwatrSignals>(signal: SignalObject<SignalName>): void {
-  logger.logMethodArgs('_callListeners', {signalName: signal.name, signalValue: signal.value});
-  if (signal.value === undefined) {
-    // null is a valid value for signal.
-    logger.accident('_callListeners', 'no_signal_value', 'signal must have a value', {
+/**
+ * Call all listeners callback of special signal.
+ */
+function __callListeners<T extends Record<string, unknown>>(signal: SignalObject<T>): void {
+  logger.logMethodArgs('__callListeners', {signalName: signal.name, signalDetail: signal.detail});
+  if (signal.detail === undefined) {
+    // null is a valid detail for signal.
+    logger.accident('__callListeners', 'no_signal_detail', 'signal must have a detail', {
       signalName: signal.name,
     });
     return;
@@ -65,17 +68,17 @@ function __callListeners<SignalName extends keyof AlwatrSignals>(signal: SignalO
   for (const listener of signal.listenerList) {
     if (listener.disabled) continue;
     try {
-      const ret = listener.callback(signal.value);
+      const ret = listener.callback(signal.detail);
       if (ret instanceof Promise) {
         ret.catch((err) =>
-          logger.error('_callListeners', 'call_listener_failed', err, {
+          logger.error('__callListeners', 'call_listener_failed', err, {
             signalName: signal.name,
           }),
         );
       }
     }
     catch (err) {
-      logger.error('_callListeners', 'call_listener_failed', err, {
+      logger.error('__callListeners', 'call_listener_failed', err, {
         signalName: signal.name,
       });
     }
@@ -83,11 +86,11 @@ function __callListeners<SignalName extends keyof AlwatrSignals>(signal: SignalO
 
   signal.listenerList
       .filter((listener) => !listener.disabled && listener.once)
-      .forEach((listener) => _removeSignalListener(signal, listener.id));
+      .forEach((listener) => _removeSignalListener(listener));
 }
 
 /**
- * Adds a new listener to the signal.
+ * Adds a new listener to a signal.
  *
  * Example:
  *
@@ -96,59 +99,57 @@ function __callListeners<SignalName extends keyof AlwatrSignals>(signal: SignalO
  * const listener = _addSignalListener(signal, (content) => console.log(content));
  * ```
  */
-export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
-    signal: SignalObject<SignalName>,
-    listenerCallback: ListenerCallback<SignalName>,
+export function _addSignalListener<T extends Record<string, unknown>>(
+    signal: string | SignalObject<T>,
+    listenerCallback: ListenerCallback<T>,
     options: ListenerOptions = {},
-): ListenerObject<SignalName> {
+): ListenerObject<T> {
+  const _signal = typeof signal === 'string' ? _getSignalObject<T>(signal) : signal;
   options.once ??= false;
   options.disabled ??= false;
-  options.receivePrevious ??= true;
+  options.receivePrevious ??= 'AnimationFrame';
   options.priority ??= false;
 
-  logger.logMethodArgs('_addSignalListener', {signalName: signal.name, options});
+  logger.logMethodArgs('_addSignalListener', {signal: _signal.name, options});
 
-  const listener: ListenerObject<SignalName> = {
+  const listener: ListenerObject<T> = {
     id: ++_lastListenerId,
+    signalName: _signal.name,
     once: options.once,
     disabled: options.disabled,
     callback: listenerCallback,
   };
 
-  let callbackCalled = false;
+  const callbackCall = _signal.detail !== undefined && options.receivePrevious !== 'No';
+  if (callbackCall) {
+    // Run callback for old dispatch signal
 
-  // Run callback for old dispatch signal
-  if (signal.value !== undefined) {
-    // null is a valid value for signal.
-    if (options.receivePrevious === 'Immediate') {
+    const callback = (): void => {
       try {
-        listenerCallback(signal.value);
+        if (_signal.detail !== undefined) listenerCallback(_signal.detail);
       }
       catch (err) {
         logger.error('_addSignalListener', 'call_signal_callback_failed', err, {
-          signalName: signal.name,
+          signalName: _signal.name,
         });
       }
-      callbackCalled = true;
+    };
+
+    if (options.receivePrevious === 'AnimationFrame') {
+      requestAnimationFrame(callback);
     }
-    else if (options.receivePrevious === true) {
-      requestAnimationFrame(() => {
-        if (signal.value !== undefined) {
-          // null is a valid value for signal.
-          listenerCallback(signal.value);
-        }
-      });
-      callbackCalled = true; // must be outside of requestAnimationFrame.
+    else {
+      setTimeout(callback, options.receivePrevious === 'NextCycle' ? 0 : debounceTimeout);
     }
   }
 
   // if once then must remove listener after fist callback called! then why push it to listenerList?!
-  if (!(options.once === true && callbackCalled === true)) {
+  if (!(callbackCall && options.once)) {
     if (options.priority === true) {
-      signal.listenerList.unshift(listener);
+      _signal.listenerList.unshift(listener);
     }
     else {
-      signal.listenerList.push(listener);
+      _signal.listenerList.push(listener);
     }
   }
 
@@ -157,21 +158,11 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
 
 /**
  * Removes a listener from the signal.
- *
- * Example:
- *
- * ```ts
- * const signal = _getSignalObject('content-change')
- * const listener = _addSignalListener(signal, ...);
- * _removeSignalListener(signal, listener);
- * ```
  */
-export function _removeSignalListener<SignalName extends keyof AlwatrSignals>(
-    signal: SignalObject<SignalName>,
-    listenerId: number,
-): void {
-  logger.logMethodArgs('_removeSignalListener', {signalName: signal.name, listenerId});
-  const listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listenerId);
+export function _removeSignalListener(listener: Pick<ListenerObject<unknown>, 'id' | 'signalName'>): void {
+  logger.logMethodArgs('_removeSignalListener', {signalName: listener.signalName, listenerId: listener.id});
+  const signal = _getSignalObject(listener.signalName);
+  const listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listener.id);
   if (listenerIndex !== -1) {
     signal.listenerList.splice(listenerIndex, 1);
   }
@@ -184,63 +175,62 @@ export function _removeSignalListener<SignalName extends keyof AlwatrSignals>(
  * const signal = _getSignalObject('content-change')
  * _dispatchSignal(signal, content);
  */
-export function _dispatchSignal<SignalName extends keyof AlwatrSignals>(
-    signal: SignalObject<SignalName>,
-    value: AlwatrSignals[SignalName],
+export function _dispatchSignal<T extends Record<string, unknown>>(
+    signal: SignalObject<T> | string,
+    detail: T,
     options: DispatchOptions = {},
 ): void {
-  options.debounce ??= true;
+  const _signal = typeof signal === 'string' ? _getSignalObject<T>(signal) : signal;
+  options.debounce ??= 'AnimationFrame';
 
-  logger.logMethodArgs('dispatchSignal', {signalName: signal.name, value, options});
+  logger.logMethodArgs('_dispatchSignal', {signalName: _signal.name, detail, options});
 
-  // set value before check signal.debounced for act like throttle (call listeners with last dispatch value).
-  signal.value = value;
+  // set detail before check signal.debounced for act like throttle (call listeners with last dispatch detail).
+  _signal.detail = detail;
 
-  if (signal.disabled) return; // signal is disabled.
-  if (options.debounce === true && signal.debounced === true) return; // last dispatch in progress.
+  if (_signal.disabled) return; // signal is disabled.
 
-  if (options.debounce !== true) {
+  // Simple debounce noise filtering
+  if (options.debounce !== 'No' && _signal.debounced === true) return; // last dispatch in progress.
+
+  if (options.debounce === 'No') {
     // call listeners immediately.
-    __callListeners(signal);
+    __callListeners(_signal);
     return;
   }
-  // else: call listeners in next frame.
-  signal.debounced = true;
-  requestAnimationFrame(() => {
-    __callListeners(signal);
-    signal.debounced = false;
-  });
+  // else
+  _signal.debounced = true;
+  const callListeners = (): void => {
+    __callListeners(_signal);
+    _signal.debounced = false;
+  };
+  options.debounce === 'AnimationFrame'
+    ? requestAnimationFrame(callListeners)
+    : setTimeout(callListeners, debounceTimeout);
+}
+
+/**
+ * Get current signal detail
+ */
+export function _getSignalDetail<T extends Record<string, unknown>>(signal: string | SignalObject<T>): T | undefined {
+  const _signal = typeof signal === 'string' ? _getSignalObject<T>(signal) : signal;
+  return _signal.detail;
 }
 
 /**
  * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
- *
- * Example:
- *
- * ```ts
- * const signal = _getSignalObject('content-change');
- * const requestSignal = _getSignalObject('request-content-change');
- * _setSignalProvider(signal, requestSignal, async (requestParam) => {
- *   const content = await fetchNewContent(requestParam);
- *   if (content != null) {
- *     return content; // dispatchSignal('content-change', content);
- *   }
- *   else {
- *     dispatchSignal('content-not-found');
- *   }
- * }
- * ```
  */
-export function _setSignalProvider<SignalName extends keyof AlwatrSignals>(
-    signal: SignalObject<SignalName>,
-    requestSignal: SignalObject<SignalName>,
-    signalProvider: SignalProvider<SignalName>,
-    options: SignalProviderOptions = {},
-): ListenerObject<SignalName> {
-  options.debounce ??= true;
-  options.receivePrevious ??= true;
+export function _setSignalProvider<TSignal extends Record<string, unknown>, TRequest extends Record<string, unknown>>(
+    signalName: string,
+    signalProvider: ProviderFunction<TSignal, TRequest>,
+    options: ProviderOptions = {},
+): ListenerObject<TRequest> {
+  options.debounce ??= 'AnimationFrame';
+  options.receivePrevious ??= 'AnimationFrame';
 
-  logger.logMethodArgs('_setSignalProvider', {signal: signal.name, requestSignal: requestSignal.name, options});
+  logger.logMethodArgs('_setSignalProvider', {signalName, options});
+
+  const requestSignal = _getSignalObject<TRequest>('request-' + signalName);
 
   if (requestSignal.listenerList.length > 0) {
     logger.accident(
@@ -248,21 +238,21 @@ export function _setSignalProvider<SignalName extends keyof AlwatrSignals>(
         'another_signal_provider_exist',
         'Another provider exist! It will be removed to fix the problem',
         {
-          signalName: signal.name,
+          signalName: signalName,
         },
     );
     requestSignal.listenerList = [];
   }
 
-  const _callback = async (requestParam: AlwatrRequestSignals[SignalName]): Promise<void> => {
-    const signalValue = await signalProvider(requestParam);
-    if (signalValue !== undefined) {
-      // null is a valid value for signal.
-      _dispatchSignal(signal, signalValue, {debounce: options.debounce});
+  const _callback = async (requestParam: TRequest): Promise<void> => {
+    const signalDetail = await signalProvider(requestParam);
+    if (signalDetail !== undefined) {
+      // null is a valid detail for signal.
+      _dispatchSignal(signalName, signalDetail, {debounce: options.debounce});
     }
   };
 
-  return _addSignalListener(requestSignal, _callback as unknown as ListenerCallback<SignalName>, {
+  return _addSignalListener<TRequest>(requestSignal, _callback, {
     receivePrevious: options.receivePrevious,
   });
 }
