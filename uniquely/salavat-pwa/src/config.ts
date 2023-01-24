@@ -1,6 +1,6 @@
 const config = {
   api: 'http://127.0.0.1:8000',
-  token: '',
+  token: 'YOUR_SECRET_TOKEN',
 };
 
 export default config;
