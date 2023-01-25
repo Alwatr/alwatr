@@ -99,16 +99,16 @@ export type ProviderFunction<TSignal extends Record<string, unknown>, TRequest e
 /**
  * Signal listeners object in storage.
  */
-export interface ListenerObject<T extends Record<string, unknown>> {
+export type ListenerObject<T extends Record<string, unknown>> = {
   /**
    * Unique listener id
    */
   id: number;
 
   /**
-   * Signal name
+   * Signal id
    */
-  signalName: string;
+  signalId: string;
 
   /**
    * If true, the listener will be called only once and removed automatically after first call
@@ -126,11 +126,11 @@ export interface ListenerObject<T extends Record<string, unknown>> {
 /**
  * Signal object in storage.
  */
-export interface SignalObject<T extends Record<string, unknown>> {
+export type SignalObject<T extends Record<string, unknown>> = {
   /**
-   * Signal name for direct access.
+   * Signal id for direct access.
    */
-  name: string;
+  id: string;
 
   /**
    * Last dispatched value.

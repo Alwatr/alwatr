@@ -31,7 +31,7 @@ const debounceTimeout = 5;
 const _signalStorage: SignalStorage = {};
 
 /**
- * Get signal object by name, If not available, it will create a new signal with default options.
+ * Get signal object by id, If not available, it will create a new signal with default options.
  *
  * Example:
  *
@@ -40,27 +40,28 @@ const _signalStorage: SignalStorage = {};
  * signal.disabled = true;
  * ```
  */
-export function _getSignalObject<T extends Record<string, unknown>>(signalName: string): SignalObject<T> {
-  if (!_signalStorage[signalName]) {
-    _signalStorage[signalName] = {
-      name: signalName,
+export function _getSignalObject<T extends Record<string, unknown>>(id: string): SignalObject<T> {
+  const signal = <SignalObject<T>>_signalStorage[id];
+  if (signal == null) {
+    _signalStorage[id] = {
+      id,
       disabled: false,
       debounced: false,
       listenerList: [],
     };
   }
-  return _signalStorage[signalName] as unknown as SignalObject<T>;
+  return _signalStorage[id] as SignalObject<T>;
 }
 
 /**
  * Call all listeners callback of special signal.
  */
 function __callListeners<T extends Record<string, unknown>>(signal: SignalObject<T>): void {
-  logger.logMethodArgs('__callListeners', {signalName: signal.name, signalDetail: signal.detail});
+  logger.logMethodArgs('__callListeners', {signalId: signal.id, signalDetail: signal.detail});
   if (signal.detail === undefined) {
     // null is a valid detail for signal.
     logger.accident('__callListeners', 'no_signal_detail', 'signal must have a detail', {
-      signalName: signal.name,
+      signalId: signal.id,
     });
     return;
   }
@@ -72,14 +73,14 @@ function __callListeners<T extends Record<string, unknown>>(signal: SignalObject
       if (ret instanceof Promise) {
         ret.catch((err) =>
           logger.error('__callListeners', 'call_listener_failed', err, {
-            signalName: signal.name,
+            signalId: signal.id,
           }),
         );
       }
     }
     catch (err) {
       logger.error('__callListeners', 'call_listener_failed', err, {
-        signalName: signal.name,
+        signalId: signal.id,
       });
     }
   }
@@ -110,11 +111,11 @@ export function _addSignalListener<T extends Record<string, unknown>>(
   options.receivePrevious ??= 'AnimationFrame';
   options.priority ??= false;
 
-  logger.logMethodArgs('_addSignalListener', {signal: _signal.name, options});
+  logger.logMethodArgs('_addSignalListener', {signal: _signal.id, options});
 
   const listener: ListenerObject<T> = {
     id: ++_lastListenerId,
-    signalName: _signal.name,
+    signalId: _signal.id,
     once: options.once,
     disabled: options.disabled,
     callback: listenerCallback,
@@ -130,7 +131,7 @@ export function _addSignalListener<T extends Record<string, unknown>>(
       }
       catch (err) {
         logger.error('_addSignalListener', 'call_signal_callback_failed', err, {
-          signalName: _signal.name,
+          signalId: _signal.id,
         });
       }
     };
@@ -159,9 +160,11 @@ export function _addSignalListener<T extends Record<string, unknown>>(
 /**
  * Removes a listener from the signal.
  */
-export function _removeSignalListener(listener: Pick<ListenerObject<unknown>, 'id' | 'signalName'>): void {
-  logger.logMethodArgs('_removeSignalListener', {signalName: listener.signalName, listenerId: listener.id});
-  const signal = _getSignalObject(listener.signalName);
+export function _removeSignalListener(
+    listener: Pick<ListenerObject<Record<string, unknown>>, 'id' | 'signalId'>,
+): void {
+  logger.logMethodArgs('_removeSignalListener', {signalId: listener.signalId, listenerId: listener.id});
+  const signal = _getSignalObject(listener.signalId);
   const listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listener.id);
   if (listenerIndex !== -1) {
     signal.listenerList.splice(listenerIndex, 1);
@@ -183,7 +186,7 @@ export function _dispatchSignal<T extends Record<string, unknown>>(
   const _signal = typeof signal === 'string' ? _getSignalObject<T>(signal) : signal;
   options.debounce ??= 'AnimationFrame';
 
-  logger.logMethodArgs('_dispatchSignal', {signalName: _signal.name, detail, options});
+  logger.logMethodArgs('_dispatchSignal', {signalId: _signal.id, detail, options});
 
   // set detail before check signal.debounced for act like throttle (call listeners with last dispatch detail).
   _signal.detail = detail;
@@ -221,16 +224,16 @@ export function _getSignalDetail<T extends Record<string, unknown>>(signal: stri
  * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
  */
 export function _setSignalProvider<TSignal extends Record<string, unknown>, TRequest extends Record<string, unknown>>(
-    signalName: string,
+    signalId: string,
     signalProvider: ProviderFunction<TSignal, TRequest>,
     options: ProviderOptions = {},
 ): ListenerObject<TRequest> {
   options.debounce ??= 'AnimationFrame';
   options.receivePrevious ??= 'AnimationFrame';
 
-  logger.logMethodArgs('_setSignalProvider', {signalName, options});
+  logger.logMethodArgs('_setSignalProvider', {signalId: signalId, options});
 
-  const requestSignal = _getSignalObject<TRequest>('request-' + signalName);
+  const requestSignal = _getSignalObject<TRequest>('request-' + signalId);
 
   if (requestSignal.listenerList.length > 0) {
     logger.accident(
@@ -238,7 +241,7 @@ export function _setSignalProvider<TSignal extends Record<string, unknown>, TReq
         'another_signal_provider_exist',
         'Another provider exist! It will be removed to fix the problem',
         {
-          signalName: signalName,
+          signalId,
         },
     );
     requestSignal.listenerList = [];
@@ -248,7 +251,7 @@ export function _setSignalProvider<TSignal extends Record<string, unknown>, TReq
     const signalDetail = await signalProvider(requestParam);
     if (signalDetail !== undefined) {
       // null is a valid detail for signal.
-      _dispatchSignal(signalName, signalDetail, {debounce: options.debounce});
+      _dispatchSignal(signalId, signalDetail, {debounce: options.debounce});
     }
   };
 
