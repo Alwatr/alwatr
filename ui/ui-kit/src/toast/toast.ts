@@ -1,7 +1,8 @@
 import {css, customElement, html, nothing, property, TemplateResult} from '@alwatr/element';
 
-import '@alwatr/icon';
 import {AlwatrSurface} from '../card/surface.js';
+
+import '@alwatr/icon';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -12,7 +13,8 @@ declare global {
 export type ToastContent = {
   message: string;
   autoHideDelay: number;
-  show: boolean;
+  actionButtonLabel?: string;
+  actionCallBack?: () => void;
 };
 
 /**
@@ -60,6 +62,7 @@ export class AlwatrToast extends AlwatrSurface {
         padding: 0;
         display: inline;
         max-width: 50em;
+        flex-grow: 1;
         color: var(--sys-color-inverse-on-surface);
         font-family: var(--sys-typescale-body-medium-font-family-name);
         font-weight: var(--sys-typescale-body-medium-font-weight);
@@ -68,10 +71,23 @@ export class AlwatrToast extends AlwatrSurface {
         line-height: var(--sys-typescale-body-medium-line-height);
       }
 
-      .close-icon {
+      .close-button {
         padding: 0;
         color: var(--sys-color-inverse-on-surface);
         font-size: var(--sys-typescale-headline-small-font-size);
+        cursor: pointer;
+      }
+
+      .action-button {
+        display: block;
+        white-space: nowrap;
+        color: var(--sys-color-inverse-primary);
+        font-family: var(--sys-typescale-label-large-font-family-name);
+        font-weight: var(--sys-typescale-label-large-font-weight);
+        font-size: var(--sys-typescale-label-large-font-size);
+        letter-spacing: var(--sys-typescale-label-large-letter-spacing);
+        line-height: var(--sys-typescale-label-large-line-height);
+        cursor: pointer;
       }
     `,
   ];
@@ -79,9 +95,11 @@ export class AlwatrToast extends AlwatrSurface {
   @property({type: Object, reflect: true})
     content: ToastContent = {
       message: '',
-      show: false,
-      autoHideDelay: -1,
+      autoHideDelay: 0,
     };
+
+  @property({type: Boolean, reflect: true})
+    show = false;
 
   protected _show(): void {
     this._logger.logMethod('_show');
@@ -108,14 +126,26 @@ export class AlwatrToast extends AlwatrSurface {
     super.render();
     return html`
       <p class="message">${this.content.message}</p>
+      ${this._actionButtonTemplate()}
       ${this._closeButtonTemplate()}
     `;
   }
 
   protected _closeButtonTemplate(): TemplateResult | typeof nothing {
     this._logger.logMethod('_closeButtonTemplate');
-
     if (this.content.autoHideDelay !== 0) return nothing;
-    return html`<alwatr-icon @click=${this._hide} class="close-icon" name="close"></alwatr-icon>`;
+    return html`<alwatr-icon @click=${this._hide} class="close-button" name="close"></alwatr-icon>`;
+  }
+
+  protected _actionButtonTemplate(): TemplateResult | typeof nothing {
+    this._logger.logMethod('_actionButtonTemplate');
+
+    if (this.content.actionButtonLabel === undefined) return nothing;
+    return html`<span @click=${(): void => {
+      if (this.content.actionCallBack === undefined) return;
+      this.content.actionCallBack();
+      this._hide();
+    }} class="action-button"
+      >${this.content.actionButtonLabel}</span>`;
   }
 }
