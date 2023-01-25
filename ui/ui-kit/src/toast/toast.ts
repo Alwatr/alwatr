@@ -21,31 +21,27 @@ export type ToastOptions = {
 @customElement('alwatr-toast')
 export class AlwatrToast extends AlwatrSurface {
   static override styles = [
+    AlwatrSurface.styles,
     css`
       :host {
         box-sizing: border-box;
-        display: block;
-        margin: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
-        padding: 0;
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        transition: bottom, top, margin, opacity;
-        transition-duration:var(--sys-motion-duration-small);
-        transition-timing-function: var(--sys-motion-easing-normal);
-        opacity: 0;
-
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        justify-content: space-between;
         gap: var(--sys-spacing-track);
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
         padding: calc(2 * var(--sys-spacing-track));
         background-color: var(--sys-color-inverse-surface);
-        color: var(--sys-color-inverse-on-surface);
         border-radius: var(--sys-radius-small);
+        transition: bottom, top, margin, opacity;
+        transition-duration:var(--sys-motion-duration-small);
+        transition-timing-function: var(--sys-motion-easing-normal);
+        opacity: 0;
       }
 
       :host([show]) {
@@ -56,8 +52,8 @@ export class AlwatrToast extends AlwatrSurface {
       .message {
         margin: 0;
         padding: 0;
-        color: inherit;
         display: inline;
+        color: var(--sys-color-inverse-on-surface);
         font-family: var(--sys-typescale-body-medium-font-family-name);
         font-weight: var(--sys-typescale-body-medium-font-weight);
         font-size: var(--sys-typescale-body-medium-font-size);
@@ -67,8 +63,7 @@ export class AlwatrToast extends AlwatrSurface {
 
       .close-icon {
         padding: 0;
-        color: inherit;
-        font-size: 24px;
+        color: var(--sys-color-inverse-on-surface);
         font-size: var(--sys-typescale-headline-small-font-size);
       }
     `,
