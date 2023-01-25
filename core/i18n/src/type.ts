@@ -2,17 +2,6 @@ import type {L10Resource, Locale} from '@alwatr/type';
 
 export type {L10Resource, Locale};
 
-declare global {
-  interface AlwatrSignals {
-    'locale-change': Locale;
-    'l10n-resource-change': L10Resource;
-  }
-
-  interface AlwatrRequestSignals {
-    'l10n-resource-change': Locale;
-  }
-}
-
 export type I18nConfig = {
   /**
    * Automatically fetch the localization resource from `resourcePath/localCode.json`.
