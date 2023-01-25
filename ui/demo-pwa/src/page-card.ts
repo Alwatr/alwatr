@@ -2,6 +2,7 @@ import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
 import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/toast/toast.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -82,6 +83,8 @@ export class AlwatrPageCard extends AlwatrSmartElement {
       <alwatr-surface stated outlined><input type="text" value="outlined" /></alwatr-surface>
       <alwatr-surface stated outlined><input type="text" value="outlined" /></alwatr-surface>
       <alwatr-surface stated outlined disabled><input type="text" value="outlined" disabled /></alwatr-surface>
+
+      <alwatr-toast></alwatr-toast>
     `;
   }
 }

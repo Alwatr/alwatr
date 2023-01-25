@@ -1,12 +1,7 @@
-import {css, customElement, html, nothing, state, type PropertyValues} from '@alwatr/element';
-import {ListenerInterface} from '@alwatr/signal';
+import {css, customElement, html, property, state} from '@alwatr/element';
 
-import '../button/icon-button.js';
-import '../button/button.js';
-
-import {toastSignal} from './signal.js';
+import '@alwatr/icon';
 import {AlwatrSurface} from '../card/surface.js';
-
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -14,19 +9,11 @@ declare global {
   }
 }
 
-export type ToastType = 'info' | 'error';
-export interface ToastActionInterface {
-  label: string;
-  callback: (...args: any) => void;
-}
-export interface AlwatrToastOptionsInterface {
+export type ToastOptions = {
   message: string;
-  timer: number;
-  type: ToastType;
-  open: boolean;
-  icon?: string;
-  action?: ToastActionInterface;
-}
+  autoClose: boolean;
+  show: boolean;
+};
 
 /**
  * Alwatr toast.
@@ -34,91 +21,90 @@ export interface AlwatrToastOptionsInterface {
 @customElement('alwatr-toast')
 export class AlwatrToast extends AlwatrSurface {
   static override styles = [
-    AlwatrSurface.styles,
     css`
       :host {
-        display: block
+        box-sizing: border-box;
+        display: block;
+        margin: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
+        padding: 0;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        transition: bottom, top, margin, opacity;
+        transition-duration:var(--sys-motion-duration-small);
+        transition-timing-function: var(--sys-motion-easing-normal);
+        opacity: 0;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--sys-spacing-track);
+        padding: calc(2 * var(--sys-spacing-track));
+        background-color: var(--sys-color-inverse-surface);
+        color: var(--sys-color-inverse-on-surface);
+        border-radius: var(--sys-radius-small);
+      }
+
+      :host([show]) {
+        margin: calc(2 * var(--sys-spacing-track));
+        opacity: 1;
+      }
+
+      .message {
+        margin: 0;
+        padding: 0;
+        color: inherit;
+        display: inline;
+        font-family: var(--sys-typescale-body-medium-font-family-name);
+        font-weight: var(--sys-typescale-body-medium-font-weight);
+        font-size: var(--sys-typescale-body-medium-font-size);
+        letter-spacing: var(--sys-typescale-body-medium-letter-spacing);
+        line-height: var(--sys-typescale-body-medium-line-height);
+      }
+
+      .close-icon {
+        padding: 0;
+        color: inherit;
+        font-size: 24px;
+        font-size: var(--sys-typescale-headline-small-font-size);
       }
     `,
   ];
 
-  @state() options: AlwatrToastOptionsInterface = {
-    message: 'Toast',
-    open: false,
-    timer: -1, // Stay open to infinity
-    type: 'info',
+  @state() protected _options: ToastOptions = {
+    message: 'Simple message to show a message to the user',
+    autoClose: false,
+    show: true,
   };
 
-  protected _toastTimeout = 0;
-  protected _toastSignalListener: ListenerInterface<'toast'> | null = null;
+  @property({type: Boolean, reflect: true})
+    show = this._options.show;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    this.addEventListener('animationend', this.toastAnimationEndHandler);
-    this._toastSignalListener = toastSignal.addListener((toastOptions) => {
-      this.options = toastOptions;
-    });
+  protected _show(): void {
+    this._logger.logMethod('_show');
+    this.setAttribute('show', '');
   }
 
-  override disconnectedCallback(): void {
-    this.removeEventListener('animationend', this.toastAnimationEndHandler);
-    this._toastSignalListener!.remove();
+  protected _close(): void {
+    this._logger.logMethod('_close');
+    this.removeAttribute('show');
+  }
 
-    super.disconnectedCallback();
+  protected override async firstUpdated(): Promise<void> {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    this._show();
+    this.setAttribute('elevated', '3');
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
 
     return html`
-      <div>
-        <p>${this.options.message}</p>
-        <alwatr-icon-button .icon=${'close'} flip-rtl></alwatr-icon-button>
-      </div>
-
-      ${this.options.action
-        ? html`
-            <alwatr-button @click=${this.options.action.callback}>${this.options.action.label}</alwatr-button>`
-        : nothing}
+      <p class="message">${this._options.message}</p>
+      <alwatr-icon @click=${this._close} class="close-icon" name="close"></alwatr-icon>
     `;
-  }
-
-  protected override updated(changedProperties: PropertyValues): void {
-    this._logger.logMethodArgs('updated', {changedProperties});
-
-    if (changedProperties.has('options') && changedProperties.get('options') != null) {
-      if (this.options.open && this.options.timer > 0) {
-        this.autoClose();
-      }
-
-      this.dispatchEvent(new CustomEvent('toast-open-changed', {
-        detail: this.options.open,
-      }));
-    }
-  }
-
-  protected toastAnimationEndHandler(): void {
-    this._logger.logMethod('toastAnimationEndHandler');
-
-    if (!this.options.open) {
-      this.removeAttribute('closing');
-    }
-  }
-
-  protected toastCloseHandler(): void {
-    this._logger.logMethod('toastCloseHandler');
-
-    this.options.open = false;
-    clearTimeout(this._toastTimeout);
-
-    requestAnimationFrame(() => {
-      this.setAttribute('closing', '');
-    });
-  }
-
-  protected autoClose(): void {
-    this._logger.logMethod('autoClose');
-    this._toastTimeout = window.setTimeout(this.toastCloseHandler, Number(this.options.timer));
   }
 }
