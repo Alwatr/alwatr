@@ -246,7 +246,7 @@ export function _untilNextSignal<T extends Record<string, unknown>>(signal: stri
  * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
  */
 export function _setSignalProvider<TSignal extends Record<string, unknown>, TRequest extends Record<string, unknown>>(
-    signal: string | SignalObject<T>,
+    signal: string | SignalObject<TSignal>,
     signalProvider: ProviderFunction<TSignal, TRequest>,
     options: ProviderOptions = {},
 ): ListenerObject<TRequest> {

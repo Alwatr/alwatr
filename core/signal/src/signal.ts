@@ -11,7 +11,10 @@ import {
 
 import type {OmitFirstParam} from '@alwatr/type';
 
-export interface SignalControllerInterface<T extends Record<string, unknown>> {
+export interface SignalControllerInterface<
+  TSignal extends Record<string, unknown>,
+  TRequest extends Record<string, unknown> = Record<string, unknown>
+> {
   /**
    * Get current signal detail.
    *
@@ -26,7 +29,7 @@ export interface SignalControllerInterface<T extends Record<string, unknown>> {
    * }
    * ```
    */
-  getDetail: OmitFirstParam<typeof _getSignalDetail<T>>,
+  getDetail: OmitFirstParam<typeof _getSignalDetail<TSignal>>;
 
   /**
    * Resolved with signal detail when new signal received.
@@ -37,7 +40,7 @@ export interface SignalControllerInterface<T extends Record<string, unknown>> {
    * const newContent = await signals.untilNext<ContentType>('content-change');
    * ```
    */
-  untilNext: OmitFirstParam<typeof _untilNextSignal<T>>,
+  untilNext: OmitFirstParam<typeof _untilNextSignal<TSignal>>;
 
   /**
    * Adds a new listener to a signal.
@@ -48,7 +51,7 @@ export interface SignalControllerInterface<T extends Record<string, unknown>> {
    * const listener = signals.addListener<ContentType>('content-change', (content) => console.log(content));
    * ```
    */
-  addListener: OmitFirstParam<typeof _addSignalListener<T>>,
+  addListener: OmitFirstParam<typeof _addSignalListener<TSignal>>;
 
   /**
    * Removes a listener from a signal.
@@ -61,7 +64,7 @@ export interface SignalControllerInterface<T extends Record<string, unknown>> {
    * signals.removeListener(listener);
    * ```
    */
-  removeListener: OmitFirstParam<typeof _removeSignalListener<T>>,
+  removeListener: OmitFirstParam<typeof _removeSignalListener>;
 
   /**
    * Dispatch (send) signal to all listeners.
@@ -72,7 +75,7 @@ export interface SignalControllerInterface<T extends Record<string, unknown>> {
    * signals.dispatch<ContentType>('content-change', newContent);
    * ```
    */
-  dispatch: OmitFirstParam<typeof _dispatchSignal<T>>,
+  dispatch: OmitFirstParam<typeof _dispatchSignal<TSignal>>;
 
   /**
    * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
@@ -91,7 +94,7 @@ export interface SignalControllerInterface<T extends Record<string, unknown>> {
    * });
    * ```
    */
-  setProvider: OmitFirstParam<typeof _setSignalProvider<T>>,
+  setProvider: OmitFirstParam<typeof _setSignalProvider<TSignal, TRequest>>;
 
   /**
    * Dispatch request signal.
@@ -103,14 +106,14 @@ export interface SignalControllerInterface<T extends Record<string, unknown>> {
    * const newContent = await signals.untilNext<ContentType>('content-change');
    * ```
    */
-  request: OmitFirstParam<typeof _requestSignal<T>>,
+  request: OmitFirstParam<typeof _requestSignal<TRequest>>;
 
   /**
    * Clear current signal detail without dispatch new signal
    *
    * note: receivePrevious not work until new signal
    */
-  expire: OmitFirstParam<typeof _expireSignal>,
+  expire: OmitFirstParam<typeof _expireSignal>;
 }
 
 export const signals = {
@@ -217,7 +220,9 @@ export const signals = {
   bind: _bindSignal,
 } as const;
 
-function _bindSignal<T extends Record<string, unknown>>(signalId: string): SignalControllerInterface<T> {
+function _bindSignal<TSignal extends Record<string, unknown>, TRequest extends Record<string, unknown>>(
+    signalId: string,
+): SignalControllerInterface<TSignal, TRequest> {
   return {
     getDetail: _getSignalDetail.bind(signals, signalId),
     untilNext: _untilNextSignal.bind(signals, signalId),
@@ -227,7 +232,7 @@ function _bindSignal<T extends Record<string, unknown>>(signalId: string): Signa
     setProvider: _setSignalProvider.bind(signals, signalId),
     request: _requestSignal.bind(signals, signalId),
     expire: _expireSignal.bind(signals, signalId),
-  } as SignalControllerInterface<T>;
+  } as SignalControllerInterface<TSignal, TRequest>;
 }
 
 /*
