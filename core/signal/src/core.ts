@@ -216,7 +216,9 @@ export function _dispatchSignal<T extends Record<string, unknown>>(
  * Get current signal detail
  */
 export function _getSignalDetail<T extends Record<string, unknown>>(signalId: string): T | undefined {
-  return _getSignalObject<T>(signalId).detail;
+  const detail = _getSignalObject<T>(signalId).detail;
+  logger.logMethodFull('_getSignalDetail', signalId, detail);
+  return detail;
 }
 
 /**
@@ -230,7 +232,7 @@ export function _getSignalDetail<T extends Record<string, unknown>>(signalId: st
  */
 export function _untilNextSignal<T extends Record<string, unknown>>(signal: string | SignalObject<T>): Promise<T> {
   const signalId = typeof signal === 'string' ? signal : signal.id;
-  logger.logMethodArgs('_untilNextSignal', {signalId});
+  logger.logMethodArgs('_untilNextSignal', signalId);
   return new Promise((resolve) => {
     _addSignalListener<T>(signal, resolve, {
       once: true,
@@ -302,4 +304,14 @@ export function _requestSignal<TRequest extends Record<string, unknown>>(
       requestParam,
       options,
   );
+}
+
+/**
+ * Clear current signal detail without dispatch new signal
+ *
+ * note: receivePrevious not work until new signal
+ */
+export function _expireSignal(signalId: string): void {
+  logger.logMethodArgs('_clearSignal', signalId);
+  delete _getSignalObject(signalId).detail;
 }

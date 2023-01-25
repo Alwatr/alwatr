@@ -1,6 +1,7 @@
 import {
   _addSignalListener,
   _dispatchSignal,
+  _expireSignal,
   _getSignalDetail,
   _removeSignalListener,
   _requestSignal,
@@ -103,6 +104,13 @@ export interface SignalControllerInterface<T extends Record<string, unknown>> {
    * ```
    */
   request: OmitFirstParam<typeof _requestSignal<T>>,
+
+  /**
+   * Clear current signal detail without dispatch new signal
+   *
+   * note: receivePrevious not work until new signal
+   */
+  expire: OmitFirstParam<typeof _expireSignal>,
 }
 
 export const signals = {
@@ -199,6 +207,13 @@ export const signals = {
    */
   request: _requestSignal,
 
+  /**
+   * Clear current signal detail without dispatch new signal
+   *
+   * note: receivePrevious not work until new signal
+   */
+  expire: _expireSignal,
+
   bind: _bindSignal,
 } as const;
 
@@ -211,5 +226,14 @@ function _bindSignal<T extends Record<string, unknown>>(signalId: string): Signa
     dispatch: _dispatchSignal.bind(signals, signalId),
     setProvider: _setSignalProvider.bind(signals, signalId),
     request: _requestSignal.bind(signals, signalId),
+    expire: _expireSignal.bind(signals, signalId),
   } as SignalControllerInterface<T>;
 }
+
+/*
+TODO:
+  1. change signal option like disable
+  2. Get signal value promise
+    (Get signal value from last dispatched signal (if any) or wait for new signal received.)
+  3. dispatched bool
+*/
