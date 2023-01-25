@@ -21,7 +21,7 @@ globalAlwatr.registeredList.push({
 /**
  * Listener `id`
  */
-let _lastListenerId = 0;
+let _lastListenerAutoId = 0;
 
 const debounceTimeout = 5;
 
@@ -66,8 +66,11 @@ function __callListeners<T extends Record<string, unknown>>(signal: SignalObject
     return;
   }
 
+  const removeList: Array<ListenerObject<T>> = [];
+
   for (const listener of signal.listenerList) {
     if (listener.disabled) continue;
+    if (listener.once) removeList.push(listener);
     try {
       const ret = listener.callback(signal.detail);
       if (ret instanceof Promise) {
@@ -85,9 +88,7 @@ function __callListeners<T extends Record<string, unknown>>(signal: SignalObject
     }
   }
 
-  signal.listenerList
-      .filter((listener) => !listener.disabled && listener.once)
-      .forEach((listener) => _removeSignalListener(listener));
+  removeList.forEach((listener) => _removeSignalListener(listener));
 }
 
 /**
@@ -114,7 +115,7 @@ export function _addSignalListener<T extends Record<string, unknown>>(
   logger.logMethodArgs('_addSignalListener', {signalId: _signal.id, options});
 
   const listener: ListenerObject<T> = {
-    id: ++_lastListenerId,
+    id: ++_lastListenerAutoId,
     signalId: _signal.id,
     once: options.once,
     disabled: options.disabled,
