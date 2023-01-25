@@ -111,7 +111,7 @@ export function _addSignalListener<T extends Record<string, unknown>>(
   options.receivePrevious ??= 'AnimationFrame';
   options.priority ??= false;
 
-  logger.logMethodArgs('_addSignalListener', {signal: _signal.id, options});
+  logger.logMethodArgs('_addSignalListener', {signalId: _signal.id, options});
 
   const listener: ListenerObject<T> = {
     id: ++_lastListenerId,
@@ -214,9 +214,8 @@ export function _dispatchSignal<T extends Record<string, unknown>>(
 /**
  * Get current signal detail
  */
-export function _getSignalDetail<T extends Record<string, unknown>>(signal: string | SignalObject<T>): T | undefined {
-  const _signal = typeof signal === 'string' ? _getSignalObject<T>(signal) : signal;
-  return _signal.detail;
+export function _getSignalDetail<T extends Record<string, unknown>>(signalId: string): T | undefined {
+  return _getSignalObject<T>(signalId).detail;
 }
 
 /**
@@ -229,7 +228,8 @@ export function _getSignalDetail<T extends Record<string, unknown>>(signal: stri
  * ```
  */
 export function _untilNextSignal<T extends Record<string, unknown>>(signal: string | SignalObject<T>): Promise<T> {
-  logger.logMethod('_untilNextSignal');
+  const signalId = typeof signal === 'string' ? signal : signal.id;
+  logger.logMethodArgs('_untilNextSignal', {signalId});
   return new Promise((resolve) => {
     _addSignalListener<T>(signal, resolve, {
       once: true,
@@ -243,14 +243,15 @@ export function _untilNextSignal<T extends Record<string, unknown>>(signal: stri
  * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
  */
 export function _setSignalProvider<TSignal extends Record<string, unknown>, TRequest extends Record<string, unknown>>(
-    signalId: string,
+    signal: string | SignalObject<T>,
     signalProvider: ProviderFunction<TSignal, TRequest>,
     options: ProviderOptions = {},
 ): ListenerObject<TRequest> {
+  const signalId = typeof signal === 'string' ? signal : signal.id;
   options.debounce ??= 'AnimationFrame';
   options.receivePrevious ??= 'AnimationFrame';
 
-  logger.logMethodArgs('_setSignalProvider', {signalId: signalId, options});
+  logger.logMethodArgs('_setSignalProvider', {signalId, options});
 
   const requestSignal = _getSignalObject<TRequest>('request-' + signalId);
 
@@ -270,11 +271,34 @@ export function _setSignalProvider<TSignal extends Record<string, unknown>, TReq
     const signalDetail = await signalProvider(requestParam);
     if (signalDetail !== undefined) {
       // null is a valid detail for signal.
-      _dispatchSignal<TSignal>(signalId, signalDetail, {debounce: options.debounce});
+      _dispatchSignal<TSignal>(signal, signalDetail, {debounce: options.debounce});
     }
   };
 
   return _addSignalListener<TRequest>(requestSignal, _callback, {
     receivePrevious: options.receivePrevious,
   });
+}
+
+/**
+ * Dispatch request signal
+ *
+ * Example:
+ *
+ * ```ts
+ * _requestSignal<RequestContentType>('content-change', {foo: 'bar'});
+ * const newContent = await _untilNextSignal<ContentType>('content-change');
+ * ```
+ */
+export function _requestSignal<TRequest extends Record<string, unknown>>(
+    signalId: string,
+    requestParam: TRequest,
+    options: DispatchOptions = {},
+): void {
+  logger.logMethodArgs('_requestSignal', {signalId, requestParam});
+  return _dispatchSignal<TRequest>(
+      signalId,
+      requestParam,
+      options,
+  );
 }

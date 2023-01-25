@@ -1,8 +1,10 @@
 import {
+  logger,
   _addSignalListener,
   _dispatchSignal,
   _getSignalDetail,
   _removeSignalListener,
+  _requestSignal,
   _setSignalProvider,
   _untilNextSignal,
 } from './core.js';
@@ -22,6 +24,17 @@ export const signal = {
    * ```
    */
   getDetail: _getSignalDetail,
+
+  /**
+   * Resolved with signal detail when new signal received.
+   *
+   * Example:
+   *
+   * ```ts
+   * const newContent = await signal.untilNext<ContentType>('content-change');
+   * ```
+   */
+  untilNext: _untilNextSignal,
 
   /**
    * Adds a new listener to a signal.
@@ -78,13 +91,14 @@ export const signal = {
   setProvider: _setSignalProvider,
 
   /**
-   * Resolved with signal detail when new signal received.
+   * Dispatch request signal
    *
    * Example:
    *
    * ```ts
+   * signal.request<RequestContentType>('content-change', {foo: 'bar'});
    * const newContent = await signal.untilNext<ContentType>('content-change');
    * ```
    */
-  untilNext: _untilNextSignal,
+  request: _requestSignal,
 } as const;
