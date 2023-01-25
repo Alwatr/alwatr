@@ -4,12 +4,22 @@ import {
   _getSignalDetail,
   _removeSignalListener,
   _setSignalProvider,
+  _untilNextSignal,
 } from './core.js';
 
 export const signal = {
   /**
-   * Get current signal value
+   * Get current signal detail
    * return undefined if signal not dispatched before (or expired).
+   *
+   * Example:
+   *
+   * ```ts
+   * const currentContent = await signal.getDetail<ContentType>('content-change');
+   * if (currentContent == null) {
+   *   // signal not dispatched yet
+   * }
+   * ```
    */
   getDetail: _getSignalDetail,
 
@@ -40,8 +50,11 @@ export const signal = {
   /**
    * Dispatch (send) signal to all listeners.
    *
-   * @example
-   * signal.dispatch<Content>('content-change', newContent);
+   * Example:
+   *
+   * ```ts
+   * signal.dispatch<ContentType>('content-change', newContent);
+   * ```
    */
   dispatch: _dispatchSignal,
 
@@ -63,4 +76,15 @@ export const signal = {
    * ```
    */
   setProvider: _setSignalProvider,
+
+  /**
+   * Resolved with signal detail when new signal received.
+   *
+   * Example:
+   *
+   * ```ts
+   * const newContent = await signal.untilNext<ContentType>('content-change');
+   * ```
+   */
+  untilNext: _untilNextSignal,
 } as const;

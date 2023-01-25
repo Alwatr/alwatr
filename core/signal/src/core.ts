@@ -198,13 +198,12 @@ export function _dispatchSignal<T extends Record<string, unknown>>(
 
   if (options.debounce === 'No') {
     // call listeners immediately.
-    __callListeners(_signal);
-    return;
+    return __callListeners<T>(_signal);
   }
   // else
   _signal.debounced = true;
   const callListeners = (): void => {
-    __callListeners(_signal);
+    __callListeners<T>(_signal);
     _signal.debounced = false;
   };
   options.debounce === 'AnimationFrame'
@@ -218,6 +217,26 @@ export function _dispatchSignal<T extends Record<string, unknown>>(
 export function _getSignalDetail<T extends Record<string, unknown>>(signal: string | SignalObject<T>): T | undefined {
   const _signal = typeof signal === 'string' ? _getSignalObject<T>(signal) : signal;
   return _signal.detail;
+}
+
+/**
+ * Resolved with signal value when new signal received.
+ *
+ * Example:
+ *
+ * ```ts
+ * const newContent = await _untilNextSignal<ContentType>('content-change');
+ * ```
+ */
+export function _untilNextSignal<T extends Record<string, unknown>>(signal: string | SignalObject<T>): Promise<T> {
+  logger.logMethod('_untilNextSignal');
+  return new Promise((resolve) => {
+    _addSignalListener<T>(signal, resolve, {
+      once: true,
+      priority: true,
+      receivePrevious: 'No',
+    });
+  });
 }
 
 /**
@@ -251,7 +270,7 @@ export function _setSignalProvider<TSignal extends Record<string, unknown>, TReq
     const signalDetail = await signalProvider(requestParam);
     if (signalDetail !== undefined) {
       // null is a valid detail for signal.
-      _dispatchSignal(signalId, signalDetail, {debounce: options.debounce});
+      _dispatchSignal<TSignal>(signalId, signalDetail, {debounce: options.debounce});
     }
   };
 
