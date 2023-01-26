@@ -12,7 +12,7 @@ import {
 
 import type {OmitFirstParam} from '@alwatr/type';
 
-export interface SignalInterface<> {
+export interface SignalInterface {
   /**
    * Get signal object by id, If not available, it will create a new signal with default options.
    *
@@ -136,6 +136,24 @@ export interface SignalInterface<> {
   readonly dispatch: typeof _dispatchSignal;
 
   /**
+   * Get current context value.
+   *
+   * alias for `signalConsumer.getDetail`.
+   *
+   * return undefined if context not provided before or expired.
+   *
+   * Example:
+   *
+   * ```ts
+   * const currentContent = await contextConsumer.getValue<ContentType>('content');
+   * if (currentContent == null) {
+   *   // signal not dispatched yet
+   * }
+   * ```
+   */
+  readonly setValue: typeof _dispatchSignal;
+
+  /**
    * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
    *
    * Example:
@@ -214,6 +232,24 @@ export interface BoundSignalInterface<
   readonly getDetail: OmitFirstParam<typeof _getSignalDetail<TSignal>>;
 
   /**
+   * Get current context value.
+   *
+   * alias for `signalConsumer.getDetail`.
+   *
+   * return undefined if context not provided before or expired.
+   *
+   * Example:
+   *
+   * ```ts
+   * const currentContent = await contextConsumer.getValue<ContentType>('content');
+   * if (currentContent == null) {
+   *   // signal not dispatched yet
+   * }
+   * ```
+   */
+  readonly getValue: typeof _getSignalDetail;
+
+  /**
    * Resolved with signal detail when new signal received.
    *
    * Example:
@@ -236,6 +272,19 @@ export interface BoundSignalInterface<
   readonly addListener: OmitFirstParam<typeof _addSignalListener<TSignal>>;
 
   /**
+   * Subscribe to a context changes.
+   *
+   * alias for `signalConsumer.addListener`.
+   *
+   * Example:
+   *
+   * ```ts
+   * const listener = contextConsumer.subscribe<ContentType>('content', (content) => console.log(content));
+   * ```
+   */
+  readonly subscribe: typeof _addSignalListener;
+
+  /**
    * Removes a listener from a signal.
    *
    * Example:
@@ -249,6 +298,21 @@ export interface BoundSignalInterface<
   readonly removeListener: OmitFirstParam<typeof _removeSignalListener>;
 
   /**
+   * Unsubscribe from a context changes.
+   *
+   * alias for `signalConsumer.removeListener`.
+   *
+   * Example:
+   *
+   * ```ts
+   * const listener = contextConsumer.unsubscribe<ContentType>('content', (content) => console.log(content));
+   * ...
+   * signals.removeListener(listener);
+   * ```
+   */
+  readonly unsubscribe: OmitFirstParam<typeof _removeSignalListener>;
+
+  /**
    * Dispatch (send) signal to all listeners.
    *
    * Example:
@@ -258,6 +322,24 @@ export interface BoundSignalInterface<
    * ```
    */
   readonly dispatch: OmitFirstParam<typeof _dispatchSignal<TSignal>>;
+
+  /**
+   * Get current context value.
+   *
+   * alias for `signalConsumer.getDetail`.
+   *
+   * return undefined if context not provided before or expired.
+   *
+   * Example:
+   *
+   * ```ts
+   * const currentContent = await contextConsumer.getValue<ContentType>('content');
+   * if (currentContent == null) {
+   *   // signal not dispatched yet
+   * }
+   * ```
+   */
+  readonly setValue: typeof _dispatchSignal;
 
   /**
    * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
