@@ -2,63 +2,6 @@
 # yarn lockfile v1
 
 
-"@alwatr/fetch@^0.27.0":
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.27.0.tgz#0662b222469181bbd3bd82b6fc36e0a73423278f"
-  integrity sha512-KeWPzE4ff32nB1/hrDdQNvKA8zu8qYhc/1gHJqixh5P+8F1ZBEdG7MpnAOpu0/i9OYeJPYllLhScpLY8LGqtKA==
-  dependencies:
-    "@alwatr/logger" "^0.27.0"
-    tslib "~2.4.1"
-
-"@alwatr/logger@^0.27.0":
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/logger/-/logger-0.27.0.tgz#0ad15b76f345cd856cbeb1573976fc495d39259c"
-  integrity sha512-3rI6nvH7JwfP5jMJOEqOGQFxYrogKYCKLI+Tcs7ZoU0ipczGj9zPobvkF4H4AAMA9mSZ1jlBc3AawtmRdrBQ0A==
-  dependencies:
-    tslib "~2.4.1"
-
-"@alwatr/math@^0.27.0":
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/math/-/math-0.27.0.tgz#5724e1a1ae8d89677ceff5d96995b1657bd2544c"
-  integrity sha512-SY1JfKzL7GXfTxipHgpvpI5usELYQcBPvcE4v1iNZSJ5YjZQYU1b08o00UfotzvIBDKPi4AHD661ZrgLkXfeKg==
-  dependencies:
-    tslib "~2.4.1"
-
-"@alwatr/nano-server@^0.27.0":
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/nano-server/-/nano-server-0.27.0.tgz#4e7e3552bffbaf545d576c8657a5142fdd13b4c7"
-  integrity sha512-uowWetUsxGQxPMPWreIBeuVnnWZogHkL8507fUGRNs2ja+ESW9BJ6369fWOoyxn+5ItTuP/t/CCym2ToFEYDhA==
-  dependencies:
-    "@alwatr/fetch" "^0.27.0"
-    "@alwatr/logger" "^0.27.0"
-    "@alwatr/math" "^0.27.0"
-    tslib "~2.4.1"
-
-"@alwatr/storage-client@^0.27.0":
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/storage-client/-/storage-client-0.27.0.tgz#12c343771b22d8861f12fe7b0eea2b290f6354f2"
-  integrity sha512-xZJlT/4F0UAfGLRhBJRxq80G2vsMXdpojYoZbE79cMnuVpFy1ADrw+rjGtq1FcyfUq2HIC/koOSW2uLPcqH3ZQ==
-  dependencies:
-    "@alwatr/fetch" "^0.27.0"
-    "@alwatr/logger" "^0.27.0"
-    "@alwatr/storage-engine" "^0.27.0"
-    tslib "~2.4.1"
-
-"@alwatr/storage-engine@^0.27.0":
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/storage-engine/-/storage-engine-0.27.0.tgz#305c1c2f7809e9d60ade67f88d277b6105c84b23"
-  integrity sha512-ZNRxK9B49bEkuo8nx5qS8LRBNeU248ZMC6QFuGLerstIw4RQRJBjlJhu36CGaqtCVC6gc5lQ+LlJBzlyiOCbYA==
-  dependencies:
-    "@alwatr/fetch" "^0.27.0"
-    "@alwatr/logger" "^0.27.0"
-    exit-hook "~3.1.4"
-    tslib "~2.4.1"
-
-"@alwatr/type@^0.27.0":
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/@alwatr/type/-/type-0.27.0.tgz#944d4489f8da22014b7d2dc5bcc8caeb2f19b8d1"
-  integrity sha512-xGX0bWn2vvrAaWIzVbfyU+fGLZlPPW3043JOjdloqZM606E8ajhLevqoyJoBHZ4DqhWEgs0cYtpPY/vsbaVc1Q==
-
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
@@ -4902,11 +4845,6 @@ exit-hook@^3.2.0:
   resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-3.2.0.tgz#7d86bc361a4d79278001b72a0509318a6f468f20"
   integrity sha512-aIQN7Q04HGAV/I5BszisuHTZHXNoC23WtLkxdCLuYZMdWviRD0TMIt2bnUBi9MrHaF/hH8b3gwG9iaAUHKnJGA==
 
-exit-hook@~3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-3.1.4.tgz#0207c03701fb18278096ca72346596e5b1608008"
-  integrity sha512-uw2D+5uwXP7ZIs2O5D+q2lJ3cNmP0p6sxmjf1gBPhpAjbFWT0v4XNrv5JlmfL0ulIJnPnfJgX/Zf4V4D9oYC7A==
-
 expand-brackets@^2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/expand-brackets/-/expand-brackets-2.1.4.tgz#b77735e315ce30f6b6eff0f83b04151a22449622"
@@ -9130,7 +9068,7 @@ tslib@^1.8.1:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.4.0, tslib@~2.4.1:
+tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.4.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.1.tgz#0d0bfbaac2880b91e22df0768e55be9753a5b17e"
   integrity sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==
