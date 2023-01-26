@@ -1,4 +1,4 @@
-import {MaybePromise} from '@alwatr/type';
+import {MaybePromise, Stringifyable} from '@alwatr/type';
 
 export type DebounceType = 'No' | 'AnimationFrame' | 'Timeout';
 
@@ -73,19 +73,19 @@ export interface ProviderOptions {
 /**
  * Signal listeners callback function type.
  */
-export type ListenerCallback<T extends Record<string, unknown>> = (detail: T) => void | Promise<void>;
+export type ListenerCallback<T extends Stringifyable> = (detail: T) => void | Promise<void>;
 
 /**
  * Context provider function.
  */
-export type ProviderFunction<TSignal extends Record<string, unknown>, TRequest extends Record<string, unknown>> = (
+export type ProviderFunction<TSignal extends Stringifyable, TRequest extends Stringifyable> = (
   requestDetail: TRequest
 ) => MaybePromise<TSignal | void>;
 
 /**
  * Signal listeners object in storage.
  */
-export type ListenerObject<T extends Record<string, unknown>> = {
+export type ListenerObject<T extends Stringifyable> = {
   /**
    * Unique listener id
    */
@@ -112,7 +112,7 @@ export type ListenerObject<T extends Record<string, unknown>> = {
 /**
  * Signal object in storage.
  */
-export type SignalObject<T extends Record<string, unknown>> = {
+export type SignalObject<T extends Stringifyable> = {
   /**
    * Signal id for direct access.
    */
@@ -143,4 +143,4 @@ export type SignalObject<T extends Record<string, unknown>> = {
 /**
  * Signal stack storage.
  */
-export type SignalStorage = Record<string, SignalObject<Record<string, unknown>> | undefined>;
+export type SignalStorage = Record<string, SignalObject<Stringifyable> | undefined>;

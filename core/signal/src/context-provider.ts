@@ -1,9 +1,11 @@
+import {Stringifyable} from '@alwatr/type';
+
 import {_dispatchSignal, _getSignalDetail, _setSignalProvider} from './core.js';
 
 import type {SignalInterface, BoundSignalInterface} from './signal-interface-type.js';
 
 export type AllowContextProviderMethods = 'getValue' | 'setValue' | 'setProvider';
-export type BoundContextProviderInterface<T extends Record<string, unknown>> = Pick<
+export type BoundContextProviderInterface<T extends Stringifyable> = Pick<
   BoundSignalInterface<T>,
   AllowContextProviderMethods & 'id'
 >;
@@ -11,7 +13,7 @@ export interface ContextProviderInterface extends Pick<SignalInterface, AllowCon
   /**
    * Bind signal provider to special signal id.
    */
-  readonly bind: <T extends Record<string, unknown>>(signalId: string) => BoundContextProviderInterface<T>;
+  readonly bind: <T extends Stringifyable>(signalId: string) => BoundContextProviderInterface<T>;
 }
 
 /**
@@ -21,7 +23,7 @@ export const contextProvider: ContextProviderInterface = {
   getValue: _getSignalDetail,
   setValue: _dispatchSignal,
   setProvider: _setSignalProvider,
-  bind: <T extends Record<string, unknown>>(signalId: string) =>
+  bind: <T extends Stringifyable>(signalId: string) =>
     <BoundContextProviderInterface<T>>{
       id: signalId,
       getValue: _getSignalDetail.bind(null, signalId),

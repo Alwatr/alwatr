@@ -1,4 +1,5 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
+import {Stringifyable} from '@alwatr/type';
 
 import type {
   DispatchOptions,
@@ -40,7 +41,7 @@ const _signalStorage: SignalStorage = {};
  * signal.disabled = true;
  * ```
  */
-export function _getSignalObject<T extends Record<string, unknown>>(id: string): SignalObject<T> {
+export function _getSignalObject<T extends Stringifyable>(id: string): SignalObject<T> {
   const signal = <SignalObject<T>>_signalStorage[id];
   if (signal == null) {
     _signalStorage[id] = {
@@ -56,7 +57,7 @@ export function _getSignalObject<T extends Record<string, unknown>>(id: string):
 /**
  * Call all listeners callback of special signal.
  */
-function __callListeners<T extends Record<string, unknown>>(signal: SignalObject<T>): void {
+function __callListeners<T extends Stringifyable>(signal: SignalObject<T>): void {
   logger.logMethodArgs('__callListeners', {signalId: signal.id, signalDetail: signal.detail});
   if (signal.detail === undefined) {
     // null is a valid detail for signal.
@@ -101,7 +102,7 @@ function __callListeners<T extends Record<string, unknown>>(signal: SignalObject
  * const listener = _addSignalListener(signal, (content) => console.log(content));
  * ```
  */
-export function _addSignalListener<T extends Record<string, unknown>>(
+export function _addSignalListener<T extends Stringifyable>(
     signal: string | SignalObject<T>,
     listenerCallback: ListenerCallback<T>,
     options: ListenerOptions = {},
@@ -162,7 +163,7 @@ export function _addSignalListener<T extends Record<string, unknown>>(
  * Removes a listener from the signal.
  */
 export function _removeSignalListener(
-    listener: Pick<ListenerObject<Record<string, unknown>>, 'id' | 'signalId'>,
+    listener: Pick<ListenerObject<Stringifyable>, 'id' | 'signalId'>,
 ): void {
   logger.logMethodArgs('_removeSignalListener', {signalId: listener.signalId, listenerId: listener.id});
   const signal = _getSignalObject(listener.signalId);
@@ -179,7 +180,7 @@ export function _removeSignalListener(
  * const signal = _getSignalObject('content-change')
  * _dispatchSignal(signal, content);
  */
-export function _dispatchSignal<T extends Record<string, unknown>>(
+export function _dispatchSignal<T extends Stringifyable>(
     signal: SignalObject<T> | string,
     detail: T,
     options: DispatchOptions = {},
@@ -215,7 +216,7 @@ export function _dispatchSignal<T extends Record<string, unknown>>(
 /**
  * Get current signal detail
  */
-export function _getSignalDetail<T extends Record<string, unknown>>(signalId: string): T | undefined {
+export function _getSignalDetail<T extends Stringifyable>(signalId: string): T | undefined {
   const detail = _getSignalObject<T>(signalId).detail;
   logger.logMethodFull('_getSignalDetail', signalId, detail);
   return detail;
@@ -230,7 +231,7 @@ export function _getSignalDetail<T extends Record<string, unknown>>(signalId: st
  * const newContent = await _untilNextSignal<ContentType>('content-change');
  * ```
  */
-export function _untilNextSignal<T extends Record<string, unknown>>(signal: string | SignalObject<T>): Promise<T> {
+export function _untilNextSignal<T extends Stringifyable>(signal: string | SignalObject<T>): Promise<T> {
   const signalId = typeof signal === 'string' ? signal : signal.id;
   logger.logMethodArgs('_untilNextSignal', signalId);
   return new Promise((resolve) => {
@@ -245,7 +246,7 @@ export function _untilNextSignal<T extends Record<string, unknown>>(signal: stri
 /**
  * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
  */
-export function _setSignalProvider<TSignal extends Record<string, unknown>, TRequest extends Record<string, unknown>>(
+export function _setSignalProvider<TSignal extends Stringifyable, TRequest extends Stringifyable>(
     signal: string | SignalObject<TSignal>,
     signalProvider: ProviderFunction<TSignal, TRequest>,
     options: ProviderOptions = {},
@@ -293,7 +294,7 @@ export function _setSignalProvider<TSignal extends Record<string, unknown>, TReq
  * const newContent = await _untilNextSignal<ContentType>('content-change');
  * ```
  */
-export function _requestSignal<TRequest extends Record<string, unknown>>(
+export function _requestSignal<TRequest extends Stringifyable>(
     signalId: string,
     requestParam: TRequest,
     options: DispatchOptions = {},

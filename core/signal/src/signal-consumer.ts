@@ -1,9 +1,11 @@
+import {Stringifyable} from '@alwatr/type';
+
 import {_addSignalListener, _getSignalDetail, _removeSignalListener, _untilNextSignal} from './core.js';
 
 import type {SignalInterface, BoundSignalInterface} from './signal-interface-type.js';
 
 export type AllowSignalConsumerMethods = 'addListener' | 'getDetail' | 'untilNext' | 'removeListener';
-export type BoundSignalConsumerInterface<T extends Record<string, unknown>> = Pick<
+export type BoundSignalConsumerInterface<T extends Stringifyable> = Pick<
   BoundSignalInterface<T>,
   AllowSignalConsumerMethods & 'id'
 >;
@@ -11,7 +13,7 @@ export interface SignalConsumerInterface extends Pick<SignalInterface, Exclude<A
   /**
    * Bind signal consumer to special signal id.
    */
-  readonly bind: <T extends Record<string, unknown>>(signalId: string) => BoundSignalConsumerInterface<T>;
+  readonly bind: <T extends Stringifyable>(signalId: string) => BoundSignalConsumerInterface<T>;
 }
 
 /**
@@ -22,7 +24,7 @@ export const signalConsumer: SignalConsumerInterface = {
   untilNext: _untilNextSignal,
   addListener: _addSignalListener,
   removeListener: _removeSignalListener,
-  bind: <T extends Record<string, unknown>>(signalId: string) =>
+  bind: <T extends Stringifyable>(signalId: string) =>
     <BoundSignalConsumerInterface<T>>{
       id: signalId,
       getDetail: _getSignalDetail.bind(null, signalId),

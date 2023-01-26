@@ -1,9 +1,11 @@
+import {Stringifyable} from '@alwatr/type';
+
 import {_dispatchSignal, _getSignalDetail} from './core.js';
 
 import type {SignalInterface, BoundSignalInterface} from './signal-interface-type.js';
 
 export type AllowSignalProviderMethods = 'getDetail' | 'dispatch';
-export type BoundSignalProviderInterface<T extends Record<string, unknown>> = Pick<
+export type BoundSignalProviderInterface<T extends Stringifyable> = Pick<
   BoundSignalInterface<T>,
   AllowSignalProviderMethods & 'id'
 >;
@@ -11,7 +13,7 @@ export interface SignalProviderInterface extends Pick<SignalInterface, AllowSign
   /**
    * Bind signal provider to special signal id.
    */
-  readonly bind: <T extends Record<string, unknown>>(signalId: string) => BoundSignalProviderInterface<T>;
+  readonly bind: <T extends Stringifyable>(signalId: string) => BoundSignalProviderInterface<T>;
 }
 
 /**
@@ -20,7 +22,7 @@ export interface SignalProviderInterface extends Pick<SignalInterface, AllowSign
 export const signalProvider: SignalProviderInterface = {
   getDetail: _getSignalDetail,
   dispatch: _dispatchSignal,
-  bind: <T extends Record<string, unknown>>(signalId: string) =>
+  bind: <T extends Stringifyable>(signalId: string) =>
     <BoundSignalProviderInterface<T>>{
       id: signalId,
       getDetail: _getSignalDetail.bind(null, signalId),

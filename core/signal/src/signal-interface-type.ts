@@ -11,7 +11,7 @@ import {
   _untilNextSignal,
 } from './core.js';
 
-import type {OmitFirstParam} from '@alwatr/type';
+import type {OmitFirstParam, Stringifyable} from '@alwatr/type';
 
 export interface SignalInterface {
   /**
@@ -198,8 +198,8 @@ export interface SignalInterface {
 }
 
 export interface BoundSignalInterface<
-  TSignal extends Record<string, unknown>,
-  TRequest extends Record<string, unknown> = Record<string, never>
+  TSignal extends Stringifyable,
+  TRequest extends Stringifyable = Record<string, never>
 > {
   /**
    * Bound Signal Id.

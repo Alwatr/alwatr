@@ -1,9 +1,11 @@
+import {Stringifyable} from '@alwatr/type';
+
 import {_addSignalListener, _getSignalDetail, _removeSignalListener, _requestSignal, _untilNextSignal} from './core.js';
 
 import type {SignalInterface, BoundSignalInterface} from './signal-interface-type.js';
 
 export type AllowContextConsumerMethods = 'getValue' | 'untilNext' | 'subscribe' | 'unsubscribe' | 'request';
-export type BoundContextConsumerInterface<T extends Record<string, unknown>> = Pick<
+export type BoundContextConsumerInterface<T extends Stringifyable> = Pick<
   BoundSignalInterface<T>,
   AllowContextConsumerMethods & 'id'
 >;
@@ -11,7 +13,7 @@ export interface ContextConsumerInterface extends Pick<SignalInterface, AllowCon
   /**
    * Bind signal consumer to special signal id.
    */
-  readonly bind: <T extends Record<string, unknown>>(signalId: string) => BoundContextConsumerInterface<T>;
+  readonly bind: <T extends Stringifyable>(signalId: string) => BoundContextConsumerInterface<T>;
 }
 
 /**
@@ -23,7 +25,7 @@ export const contextConsumer: ContextConsumerInterface = {
   subscribe: _addSignalListener,
   unsubscribe: _removeSignalListener,
   request: _requestSignal,
-  bind: <T extends Record<string, unknown>>(signalId: string) =>
+  bind: <T extends Stringifyable>(signalId: string) =>
     <BoundContextConsumerInterface<T>>{
       id: signalId,
       getValue: _getSignalDetail.bind(null, signalId),

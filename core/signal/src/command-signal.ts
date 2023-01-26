@@ -1,4 +1,4 @@
-import {MaybePromise} from '@alwatr/type';
+import {MaybePromise, Stringifyable} from '@alwatr/type';
 
 import {logger, _addSignalListener, _dispatchSignal, _getSignalObject} from './core.js';
 import {ProviderOptions} from './type.js';
@@ -6,7 +6,7 @@ import {ProviderOptions} from './type.js';
 import type {SignalInterface, BoundSignalInterface} from './signal-interface-type.js';
 
 export type AllowCommandSignalMethods = 'commandRequest' | 'commandProvider';
-export type BoundCommandSignalInterface<T extends Record<string, unknown>> = Pick<
+export type BoundCommandSignalInterface<T extends Stringifyable> = Pick<
   BoundSignalInterface<T>,
   AllowCommandSignalMethods & 'id'
 >;
@@ -14,7 +14,7 @@ export interface CommandSignalInterface extends Pick<SignalInterface, AllowComma
   /**
    * Bind signal consumer to special signal id.
    */
-  readonly bind: <T extends Record<string, unknown>>(commandId: string) => BoundCommandSignalInterface<T>;
+  readonly bind: <T extends Stringifyable>(commandId: string) => BoundCommandSignalInterface<T>;
 }
 
 let _callbackAutoId = 0;
@@ -23,11 +23,11 @@ let _callbackAutoId = 0;
  * Command provider function.
  */
 export type CommandProviderFunction<
-  TArgument extends Record<string, unknown>,
-  TReturn extends Record<string, unknown>
+  TArgument extends Stringifyable,
+  TReturn extends Stringifyable
 > = (argumentObject: TArgument) => MaybePromise<TReturn>;
 
-export function commandProvider<TArgument extends Record<string, unknown>, TReturn extends Record<string, unknown>>(
+export function commandProvider<TArgument extends Stringifyable, TReturn extends Stringifyable>(
     commandId: string,
     commandProvider: CommandProviderFunction<TArgument, TReturn>,
     options: Pick<ProviderOptions, 'debounce'> = {},
@@ -65,7 +65,7 @@ export function commandProvider<TArgument extends Record<string, unknown>, TRetu
   );
 }
 
-export function commandRequest<TArgument extends Record<string, unknown>, TReturn extends Record<string, unknown>>(
+export function commandRequest<TArgument extends Stringifyable, TReturn extends Stringifyable>(
     commandId: string,
     commandArgument: TArgument,
 ): Promise<TReturn> {
@@ -90,7 +90,7 @@ export function commandRequest<TArgument extends Record<string, unknown>, TRetur
 export const commandSignal: CommandSignalInterface = {
   commandProvider,
   commandRequest,
-  bind: <T extends Record<string, unknown>>(signalId: string) =>
+  bind: <T extends Stringifyable>(signalId: string) =>
     <BoundCommandSignalInterface<T>>{
       id: signalId,
       commandProvider: commandProvider.bind(null, signalId),
