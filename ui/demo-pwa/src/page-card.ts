@@ -2,6 +2,7 @@ import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
 import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/card/image-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -57,18 +58,36 @@ export class AlwatrPageCard extends AlwatrSmartElement {
   override render(): unknown {
     this._logger.logMethod('render');
     return html`
-      <alwatr-icon-box
+      <alwatr-icon-box elevated
         .content=${{icon: 'gift-outline', headline: 'قرعه کشی', description: loremText}}
       ></alwatr-icon-box>
-      <alwatr-icon-box
+      <alwatr-icon-box elevated
         .content=${{icon: 'download-outline', headline: 'کاتالوگ', description: loremText}}
       ></alwatr-icon-box>
-      <alwatr-icon-box
+      <alwatr-icon-box elevated
         .content=${{icon: 'earth-outline', headline: 'وب‌سایت', description: loremText, href: '/'}}
       ></alwatr-icon-box>
 
+      <alwatr-image-box
+        stated
+        elevated
+        .content=${{
+    image: 'https://www.dropbox.com/s/f6zlxzb766vu3h2/my-photo.jpg?dl=1',
+    headline: 'محصول شماره یک',
+    description: 'توضیحات نسبتا طولانی یک محصول بینظیر',
+  }}></alwatr-image-box>
+      <alwatr-image-box
+        stated
+        elevated
+        .content=${{
+    image: 'https://www.dropbox.com/s/f6zlxzb766vu3h2/my-photo.jpg?dl=1',
+    headline: 'محصول شماره یک',
+    description: 'توضیحات نسبتا طولانی یک محصول بینظیر',
+  }}></alwatr-image-box>
+
       <alwatr-surface stated elevated><input type="text" value="elevated" /></alwatr-surface>
       <alwatr-surface stated elevated><input type="text" value="elevated" /></alwatr-surface>
+
       <alwatr-surface stated elevated disabled><input type="text" value="elevated" disabled /></alwatr-surface>
 
       <alwatr-surface stated elevated="2"><input type="text" value="elevated 2" /></alwatr-surface>
