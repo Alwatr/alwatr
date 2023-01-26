@@ -42,6 +42,8 @@
     "@alwatr/type": "^0.27.0",
     "@alwatr/nano-server": "^0.27.0",
     "@alwatr/storage-client": "^0.27.0",
+    "moment-jalaali": "^0.9.6",
+    "@types/moment-jalaali": "^0.7.5",
     "@types/node": "^18.11.18",
     "esbuild": "^0.16.14",
     "nodemon": "^2.0.20",
