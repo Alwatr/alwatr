@@ -22,11 +22,12 @@ export const signalConsumer: SignalConsumerInterface = {
   untilNext: _untilNextSignal,
   addListener: _addSignalListener,
   removeListener: _removeSignalListener,
-  bind: <T extends Record<string, unknown>>(signalId: string) => <BoundSignalConsumerInterface<T>>{
-    id: signalId,
-    getDetail: _getSignalDetail.bind(null, signalId),
-    untilNext: _untilNextSignal.bind(null, signalId),
-    addListener: _addSignalListener.bind(null, signalId),
-    removeListener: _removeSignalListener,
-  },
+  bind: <T extends Record<string, unknown>>(signalId: string) =>
+    <BoundSignalConsumerInterface<T>>{
+      id: signalId,
+      getDetail: _getSignalDetail.bind(null, signalId),
+      untilNext: _untilNextSignal.bind(null, signalId),
+      addListener: _addSignalListener.bind(null, signalId),
+      removeListener: _removeSignalListener,
+    },
 };

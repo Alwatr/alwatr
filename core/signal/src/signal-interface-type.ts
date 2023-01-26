@@ -25,7 +25,7 @@ export interface SignalInterface<> {
    * signalObject.disabled = true;
    * ```
    */
-  readonly _getObject: typeof _getSignalObject,
+  readonly _getObject: typeof _getSignalObject;
 
   /**
    * Get current signal detail.
@@ -41,7 +41,7 @@ export interface SignalInterface<> {
    * }
    * ```
    */
-  readonly getDetail: typeof _getSignalDetail,
+  readonly getDetail: typeof _getSignalDetail;
 
   /**
    * Get current context value.
@@ -59,7 +59,7 @@ export interface SignalInterface<> {
    * }
    * ```
    */
-  readonly getValue: typeof _getSignalDetail,
+  readonly getValue: typeof _getSignalDetail;
 
   /**
    * Resolved with signal detail when new signal received.
@@ -70,7 +70,7 @@ export interface SignalInterface<> {
    * const newContent = await signals.untilNext<ContentType>('content-change');
    * ```
    */
-  readonly untilNext: typeof _untilNextSignal,
+  readonly untilNext: typeof _untilNextSignal;
 
   /**
    * Adds a new listener to a signal.
@@ -81,7 +81,7 @@ export interface SignalInterface<> {
    * const listener = signals.addListener<ContentType>('content-change', (content) => console.log(content));
    * ```
    */
-  readonly addListener: typeof _addSignalListener,
+  readonly addListener: typeof _addSignalListener;
 
   /**
    * Subscribe to a context changes.
@@ -94,7 +94,7 @@ export interface SignalInterface<> {
    * const listener = contextConsumer.subscribe<ContentType>('content', (content) => console.log(content));
    * ```
    */
-  readonly subscribe: typeof _addSignalListener,
+  readonly subscribe: typeof _addSignalListener;
 
   /**
    * Removes a listener from a signal.
@@ -107,7 +107,7 @@ export interface SignalInterface<> {
    * signals.removeListener(listener);
    * ```
    */
-  readonly removeListener: typeof _removeSignalListener,
+  readonly removeListener: typeof _removeSignalListener;
 
   /**
    * Unsubscribe from a context changes.
@@ -122,7 +122,7 @@ export interface SignalInterface<> {
    * signals.removeListener(listener);
    * ```
    */
-  readonly unsubscribe: typeof _removeSignalListener,
+  readonly unsubscribe: typeof _removeSignalListener;
 
   /**
    * Dispatch (send) signal to all listeners.
@@ -133,7 +133,7 @@ export interface SignalInterface<> {
    * signals.dispatch<ContentType>('content-change', newContent);
    * ```
    */
-  readonly dispatch: typeof _dispatchSignal,
+  readonly dispatch: typeof _dispatchSignal;
 
   /**
    * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
@@ -152,7 +152,7 @@ export interface SignalInterface<> {
    * });
    * ```
    */
-  readonly setProvider: typeof _setSignalProvider,
+  readonly setProvider: typeof _setSignalProvider;
 
   /**
    * Dispatch request signal.
@@ -164,16 +164,15 @@ export interface SignalInterface<> {
    * const newContent = await signals.untilNext<ContentType>('content-change');
    * ```
    */
-  readonly request: typeof _requestSignal,
+  readonly request: typeof _requestSignal;
 
   /**
    * Clear current signal detail without dispatch new signal
    *
    * note: receivePrevious not work until new signal
    */
-  readonly expire: typeof _expireSignal,
+  readonly expire: typeof _expireSignal;
 }
-
 
 export interface BoundSignalInterface<
   TSignal extends Record<string, unknown>,
@@ -182,7 +181,7 @@ export interface BoundSignalInterface<
   /**
    * Bound Signal Id.
    */
-  readonly id: string,
+  readonly id: string;
 
   /**
    * Get signal object by id, If not available, it will create a new signal with default options.
@@ -196,7 +195,7 @@ export interface BoundSignalInterface<
    * signalObject.disabled = true;
    * ```
    */
-  readonly _getObject: OmitFirstParam<typeof _getSignalObject<TSignal>>,
+  readonly _getObject: OmitFirstParam<typeof _getSignalObject<TSignal>>;
 
   /**
    * Get current signal detail.

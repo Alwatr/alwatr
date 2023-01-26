@@ -20,9 +20,10 @@ export interface SignalProviderInterface extends Pick<SignalInterface, AllowSign
 export const signalProvider: SignalProviderInterface = {
   getDetail: _getSignalDetail,
   dispatch: _dispatchSignal,
-  bind: <T extends Record<string, unknown>>(signalId: string) => <BoundSignalProviderInterface<T>>{
-    id: signalId,
-    getDetail: _getSignalDetail.bind(null, signalId),
-    dispatch: _dispatchSignal.bind(null, signalId),
-  },
+  bind: <T extends Record<string, unknown>>(signalId: string) =>
+    <BoundSignalProviderInterface<T>>{
+      id: signalId,
+      getDetail: _getSignalDetail.bind(null, signalId),
+      dispatch: _dispatchSignal.bind(null, signalId),
+    },
 };

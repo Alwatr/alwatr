@@ -299,11 +299,7 @@ export function _requestSignal<TRequest extends Record<string, unknown>>(
     options: DispatchOptions = {},
 ): void {
   logger.logMethodArgs('_requestSignal', {signalId, requestParam});
-  return _dispatchSignal<TRequest>(
-      signalId,
-      requestParam,
-      options,
-  );
+  return _dispatchSignal<TRequest>(signalId, requestParam, options);
 }
 
 /**

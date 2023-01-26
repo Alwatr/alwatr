@@ -8,4 +8,7 @@ TODO:
     (Get signal value from last dispatched signal (if any) or wait for new signal received.)
   3. dispatched bool
   4. command callback signal
+  5. remove all SignalObject
+  6. use Stringifyable
+  7. optional commandProvider debounce
 */

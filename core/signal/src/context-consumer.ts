@@ -23,12 +23,13 @@ export const contextConsumer: ContextConsumerInterface = {
   subscribe: _addSignalListener,
   unsubscribe: _removeSignalListener,
   request: _requestSignal,
-  bind: <T extends Record<string, unknown>>(signalId: string) => <BoundContextConsumerInterface<T>>{
-    id: signalId,
-    getValue: _getSignalDetail.bind(null, signalId),
-    untilNext: _untilNextSignal.bind(null, signalId),
-    subscribe: _addSignalListener.bind(null, signalId),
-    unsubscribe: _removeSignalListener,
-    request: _requestSignal.bind(null, signalId),
-  },
+  bind: <T extends Record<string, unknown>>(signalId: string) =>
+    <BoundContextConsumerInterface<T>>{
+      id: signalId,
+      getValue: _getSignalDetail.bind(null, signalId),
+      untilNext: _untilNextSignal.bind(null, signalId),
+      subscribe: _addSignalListener.bind(null, signalId),
+      unsubscribe: _removeSignalListener,
+      request: _requestSignal.bind(null, signalId),
+    },
 };

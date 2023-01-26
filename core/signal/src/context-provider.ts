@@ -21,10 +21,11 @@ export const contextProvider: ContextProviderInterface = {
   getValue: _getSignalDetail,
   setValue: _dispatchSignal,
   setProvider: _setSignalProvider,
-  bind: <T extends Record<string, unknown>>(signalId: string) => <BoundContextProviderInterface<T>>{
-    id: signalId,
-    getValue: _getSignalDetail.bind(null, signalId),
-    setValue: _dispatchSignal.bind(null, signalId),
-    setProvider: _setSignalProvider.bind(null, signalId),
-  },
+  bind: <T extends Record<string, unknown>>(signalId: string) =>
+    <BoundContextProviderInterface<T>>{
+      id: signalId,
+      getValue: _getSignalDetail.bind(null, signalId),
+      setValue: _dispatchSignal.bind(null, signalId),
+      setProvider: _setSignalProvider.bind(null, signalId),
+    },
 };

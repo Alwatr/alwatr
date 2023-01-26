@@ -1,3 +1,5 @@
+import {MaybePromise} from '@alwatr/type';
+
 export type DebounceType = 'No' | 'AnimationFrame' | 'Timeout';
 
 /**
@@ -74,11 +76,11 @@ export interface ProviderOptions {
 export type ListenerCallback<T extends Record<string, unknown>> = (detail: T) => void | Promise<void>;
 
 /**
- * Signal provider function type used to setSignalProvider.
+ * Context provider function.
  */
 export type ProviderFunction<TSignal extends Record<string, unknown>, TRequest extends Record<string, unknown>> = (
   requestDetail: TRequest
-) => TSignal | void | Promise<TSignal | void>;
+) => MaybePromise<TSignal | void>;
 
 /**
  * Signal listeners object in storage.
@@ -105,7 +107,7 @@ export type ListenerObject<T extends Record<string, unknown>> = {
   disabled: boolean;
 
   callback: ListenerCallback<T>;
-}
+};
 
 /**
  * Signal object in storage.
@@ -136,7 +138,7 @@ export type SignalObject<T extends Record<string, unknown>> = {
    * Signal listeners list.
    */
   listenerList: Array<ListenerObject<T>>;
-}
+};
 
 /**
  * Signal stack storage.
