@@ -42,16 +42,16 @@ const _signalStorage: SignalStorage = {};
  * ```
  */
 export function _getSignalObject<T extends Stringifyable>(id: string): SignalObject<T> {
-  const signal = <SignalObject<T>>_signalStorage[id];
+  let signal = _signalStorage[id] as SignalObject<T> | undefined;
   if (signal == null) {
-    _signalStorage[id] = {
+    signal = _signalStorage[id] = {
       id,
       disabled: false,
       debounced: false,
       listenerList: [],
     };
   }
-  return _signalStorage[id] as SignalObject<T>;
+  return signal;
 }
 
 /**
@@ -162,9 +162,7 @@ export function _addSignalListener<T extends Stringifyable>(
 /**
  * Removes a listener from the signal.
  */
-export function _removeSignalListener(
-    listener: Pick<ListenerObject<Stringifyable>, 'id' | 'signalId'>,
-): void {
+export function _removeSignalListener(listener: Pick<ListenerObject<Stringifyable>, 'id' | 'signalId'>): void {
   logger.logMethodArgs('_removeSignalListener', {signalId: listener.signalId, listenerId: listener.id});
   const signal = _getSignalObject(listener.signalId);
   const listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listener.id);
