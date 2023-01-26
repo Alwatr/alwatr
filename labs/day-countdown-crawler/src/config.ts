@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-export const logger = createLogger('day-countdown-api');
+export const logger = createLogger('day-countdown-crawler');
 
 export const config = {
   storage: {
@@ -9,10 +9,13 @@ export const config = {
     name: process.env.STORAGE_NAME ?? 'dayCountdown',
     token: process.env.STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
-  nanoServer: {
-    host: process.env.HOST ?? '0.0.0.0',
-    port: process.env.PORT != null ? +process.env.PORT : 8000,
-    accessToken: process.env.ACCESS_TOKEN ?? 'YOUR_SECRET_TOKEN',
+  api: {
+    domain: process.env.API_DOMAIN ?? 'http://127.0.0.1:8000',
+    token: process.env.API_TOKEN ?? 'YOUR_SECRET_TOKEN',
+  },
+  telegramNotifier: {
+    domain: process.env.TELEGRAM_NOTIFIER_DOMAIN ?? '127.0.0.1:8001',
+    token: process.env.TELEGRAM_NOTIFIER_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
 };
 
