@@ -1,3 +1,4 @@
+import {commandProvider, commandRequest} from './command-signal.js';
 import {
   _addSignalListener,
   _dispatchSignal,
@@ -172,6 +173,8 @@ export interface SignalInterface {
    */
   readonly setProvider: typeof _setSignalProvider;
 
+  readonly commandProvider: typeof commandProvider;
+
   /**
    * Dispatch request signal.
    *
@@ -183,6 +186,8 @@ export interface SignalInterface {
    * ```
    */
   readonly request: typeof _requestSignal;
+
+  readonly commandRequest: typeof commandRequest;
 
   /**
    * Clear current signal detail without dispatch new signal
@@ -360,6 +365,8 @@ export interface BoundSignalInterface<
    */
   readonly setProvider: OmitFirstParam<typeof _setSignalProvider<TSignal, TRequest>>;
 
+  readonly commandProvider: typeof commandProvider;
+
   /**
    * Dispatch request signal.
    *
@@ -371,6 +378,8 @@ export interface BoundSignalInterface<
    * ```
    */
   readonly request: OmitFirstParam<typeof _requestSignal<TRequest>>;
+
+  readonly commandRequest: typeof commandRequest;
 
   /**
    * Clear current signal detail without dispatch new signal

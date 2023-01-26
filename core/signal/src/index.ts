@@ -1,5 +1,6 @@
 export {signalConsumer} from './signal-consumer.js';
 export {signalProvider} from './signal-provider.js';
+export {commandSignal} from './command-signal.js';
 
 /*
 TODO:

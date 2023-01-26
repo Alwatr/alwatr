@@ -1,12 +1,21 @@
 import {MaybePromise} from '@alwatr/type';
 
-import {
-  logger,
-  _addSignalListener,
-  _dispatchSignal,
-  _getSignalObject,
-} from './core.js';
+import {logger, _addSignalListener, _dispatchSignal, _getSignalObject} from './core.js';
 import {ProviderOptions} from './type.js';
+
+import type {SignalInterface, BoundSignalInterface} from './signal-interface-type.js';
+
+export type AllowCommandSignalMethods = 'commandRequest' | 'commandProvider';
+export type BoundCommandSignalInterface<T extends Record<string, unknown>> = Pick<
+  BoundSignalInterface<T>,
+  AllowCommandSignalMethods & 'id'
+>;
+export interface CommandSignalInterface extends Pick<SignalInterface, AllowCommandSignalMethods> {
+  /**
+   * Bind signal consumer to special signal id.
+   */
+  readonly bind: <T extends Record<string, unknown>>(commandId: string) => BoundCommandSignalInterface<T>;
+}
 
 let _callbackAutoId = 0;
 
@@ -75,4 +84,16 @@ export function commandRequest<TArgument extends Record<string, unknown>, TRetur
   });
 }
 
-// TODO: bind
+/**
+ * Context consumer (signal consumer for context).
+ */
+export const commandSignal: CommandSignalInterface = {
+  commandProvider,
+  commandRequest,
+  bind: <T extends Record<string, unknown>>(signalId: string) =>
+    <BoundCommandSignalInterface<T>>{
+      id: signalId,
+      commandProvider: commandProvider.bind(null, signalId),
+      commandRequest: commandRequest.bind(null, signalId),
+    },
+};
