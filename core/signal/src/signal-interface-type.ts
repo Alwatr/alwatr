@@ -44,6 +44,24 @@ export interface SignalInterface<> {
   readonly getDetail: typeof _getSignalDetail,
 
   /**
+   * Get current context value.
+   *
+   * alias for `signalConsumer.getDetail`.
+   *
+   * return undefined if context not provided before or expired.
+   *
+   * Example:
+   *
+   * ```ts
+   * const currentContent = await contextConsumer.getValue<ContentType>('content');
+   * if (currentContent == null) {
+   *   // signal not dispatched yet
+   * }
+   * ```
+   */
+  readonly getValue: typeof _getSignalDetail,
+
+  /**
    * Resolved with signal detail when new signal received.
    *
    * Example:
@@ -66,6 +84,19 @@ export interface SignalInterface<> {
   readonly addListener: typeof _addSignalListener,
 
   /**
+   * Subscribe to a context changes.
+   *
+   * alias for `signalConsumer.addListener`.
+   *
+   * Example:
+   *
+   * ```ts
+   * const listener = contextConsumer.subscribe<ContentType>('content', (content) => console.log(content));
+   * ```
+   */
+  readonly subscribe: typeof _addSignalListener,
+
+  /**
    * Removes a listener from a signal.
    *
    * Example:
@@ -77,6 +108,21 @@ export interface SignalInterface<> {
    * ```
    */
   readonly removeListener: typeof _removeSignalListener,
+
+  /**
+   * Unsubscribe from a context changes.
+   *
+   * alias for `signalConsumer.removeListener`.
+   *
+   * Example:
+   *
+   * ```ts
+   * const listener = contextConsumer.unsubscribe<ContentType>('content', (content) => console.log(content));
+   * ...
+   * signals.removeListener(listener);
+   * ```
+   */
+  readonly unsubscribe: typeof _removeSignalListener,
 
   /**
    * Dispatch (send) signal to all listeners.

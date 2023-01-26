@@ -1,17 +1,17 @@
-import {_dispatchSignal, _expireSignal, _getSignalDetail} from './core.js';
+import {_dispatchSignal, _getSignalDetail} from './core.js';
 
 import type {SignalInterface, BoundSignalInterface} from './signal-interface-type.js';
 
-type AllowMethods = 'getDetail' | 'dispatch' | 'expire';
-export type BoundSignalConsumerInterface<T extends Record<string, unknown>> = Pick<
+export type AllowSignalProviderMethods = 'getDetail' | 'dispatch';
+export type BoundSignalProviderInterface<T extends Record<string, unknown>> = Pick<
   BoundSignalInterface<T>,
-  AllowMethods & 'id'
+  AllowSignalProviderMethods & 'id'
 >;
-export interface SignalProviderInterface extends Pick<SignalInterface, AllowMethods> {
+export interface SignalProviderInterface extends Pick<SignalInterface, AllowSignalProviderMethods> {
   /**
    * Bind signal provider to special signal id.
    */
-  readonly bind: <T extends Record<string, unknown>>(signalId: string) => BoundSignalConsumerInterface<T>;
+  readonly bind: <T extends Record<string, unknown>>(signalId: string) => BoundSignalProviderInterface<T>;
 }
 
 /**
@@ -20,18 +20,9 @@ export interface SignalProviderInterface extends Pick<SignalInterface, AllowMeth
 export const signalProvider: SignalProviderInterface = {
   getDetail: _getSignalDetail,
   dispatch: _dispatchSignal,
-  expire: _expireSignal,
-  bind: <T extends Record<string, unknown>>(signalId: string) => <BoundSignalConsumerInterface<T>>{
+  bind: <T extends Record<string, unknown>>(signalId: string) => <BoundSignalProviderInterface<T>>{
     id: signalId,
     getDetail: _getSignalDetail.bind(null, signalId),
     dispatch: _dispatchSignal.bind(null, signalId),
-    expire: _expireSignal.bind(null, signalId),
   },
 };
-
-/**
- * Bind signalProvider.dispatch to special signal id.
- */
-export const bindSignalDispatch = <T extends Record<string, unknown>>(
-  signalId: string,
-): OmitFirstParam<typeof _dispatchSignal<T>> => _dispatchSignal.bind(null, signalId);

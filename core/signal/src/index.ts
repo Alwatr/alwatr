@@ -1,4 +1,5 @@
-export * from './signal-manager.js';
+export {signalConsumer} from './signal-consumer.js';
+export {signalProvider} from './signal-provider.js';
 
 /*
 TODO:

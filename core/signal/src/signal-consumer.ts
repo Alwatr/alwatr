@@ -2,12 +2,12 @@ import {_addSignalListener, _getSignalDetail, _removeSignalListener, _untilNextS
 
 import type {SignalInterface, BoundSignalInterface} from './signal-interface-type.js';
 
-type AllowMethods = 'addListener' | 'getDetail' | 'untilNext' | 'removeListener';
+export type AllowSignalConsumerMethods = 'addListener' | 'getDetail' | 'untilNext' | 'removeListener';
 export type BoundSignalConsumerInterface<T extends Record<string, unknown>> = Pick<
   BoundSignalInterface<T>,
-  AllowMethods & 'id'
+  AllowSignalConsumerMethods & 'id'
 >;
-export interface SignalConsumerInterface extends Pick<SignalInterface, Exclude<AllowMethods, 'id'>> {
+export interface SignalConsumerInterface extends Pick<SignalInterface, Exclude<AllowSignalConsumerMethods, 'id'>> {
   /**
    * Bind signal consumer to special signal id.
    */

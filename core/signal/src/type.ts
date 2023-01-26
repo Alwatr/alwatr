@@ -1,19 +1,3 @@
-declare global {
-  /**
-   * Global signals value type registry.
-   */
-  interface AlwatrSignals {
-    readonly 'easter-egg': string;
-  }
-
-  /**
-   * Global request signal parameters types.
-   */
-  interface AlwatrRequestSignals {
-    readonly 'easter-egg': number;
-  }
-}
-
 export type DebounceType = 'No' | 'AnimationFrame' | 'Timeout';
 
 /**
