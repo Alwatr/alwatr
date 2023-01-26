@@ -5,10 +5,10 @@ import {storageClient} from '../lib/storage.js';
 import type {AlwatrConnection} from '@alwatr/nano-server';
 import type {AlwatrServiceResponse} from '@alwatr/type';
 
-nanoServer.route('PATCH', '/', newDayCountdownUser);
+nanoServer.route('PATCH', '/subscribe/', dayCountSubscribe);
 
-async function newDayCountdownUser(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
-  logger.logMethod('newDayCountdownUser');
+async function dayCountSubscribe(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
+  logger.logMethod('dayCountSubscribe');
 
   connection.requireToken(config.nanoServer.accessToken);
 

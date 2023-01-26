@@ -11,7 +11,7 @@ bot.action('daycountdown', async (ctx): Promise<void> => {
 
   try {
     const response = await serviceRequest<{message: string}>({
-      url: config.apiService.domain,
+      url: config.apiService.domain + '/subscribe/',
       method: 'PATCH',
       bodyJson: {
         chatId,

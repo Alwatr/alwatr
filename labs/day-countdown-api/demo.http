@@ -6,10 +6,10 @@
 GET {{apiUrl}}/
 
 ### New day downcount
-PATCH {{apiUrl}}/
+PATCH {{apiUrl}}/subscribe/
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "chatId": "23029323"
+  "chatId": "1234567890"
 }
