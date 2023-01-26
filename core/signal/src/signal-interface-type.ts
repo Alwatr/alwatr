@@ -3,6 +3,7 @@ import {
   _dispatchSignal,
   _expireSignal,
   _getSignalDetail,
+  _getSignalObject,
   _removeSignalListener,
   _requestSignal,
   _setSignalProvider,
@@ -11,112 +12,21 @@ import {
 
 import type {OmitFirstParam} from '@alwatr/type';
 
-export interface SignalControllerInterface<
-  TSignal extends Record<string, unknown>,
-  TRequest extends Record<string, unknown> = Record<string, unknown>
-> {
+export interface SignalInterface<> {
   /**
-   * Get current signal detail.
+   * Get signal object by id, If not available, it will create a new signal with default options.
    *
-   * return undefined if signal not dispatched before or expired.
+   * Use it with cation!
    *
    * Example:
    *
    * ```ts
-   * const currentContent = await signal.getDetail();
-   * if (currentContent == null) {
-   *   // signal not dispatched yet
-   * }
+   * const signalObject = signals._getObject('content-change');
+   * signalObject.disabled = true;
    * ```
    */
-  getDetail: OmitFirstParam<typeof _getSignalDetail<TSignal>>;
+  readonly _getObject: typeof _getSignalObject,
 
-  /**
-   * Resolved with signal detail when new signal received.
-   *
-   * Example:
-   *
-   * ```ts
-   * const newContent = await signals.untilNext<ContentType>('content-change');
-   * ```
-   */
-  untilNext: OmitFirstParam<typeof _untilNextSignal<TSignal>>;
-
-  /**
-   * Adds a new listener to a signal.
-   *
-   * Example:
-   *
-   * ```ts
-   * const listener = signals.addListener<ContentType>('content-change', (content) => console.log(content));
-   * ```
-   */
-  addListener: OmitFirstParam<typeof _addSignalListener<TSignal>>;
-
-  /**
-   * Removes a listener from a signal.
-   *
-   * Example:
-   *
-   * ```ts
-   * const listener = signals.addListener<ContentType>('content-change', (content) => console.log(content));
-   * ...
-   * signals.removeListener(listener);
-   * ```
-   */
-  removeListener: OmitFirstParam<typeof _removeSignalListener>;
-
-  /**
-   * Dispatch (send) signal to all listeners.
-   *
-   * Example:
-   *
-   * ```ts
-   * signals.dispatch<ContentType>('content-change', newContent);
-   * ```
-   */
-  dispatch: OmitFirstParam<typeof _dispatchSignal<TSignal>>;
-
-  /**
-   * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
-   *
-   * Example:
-   *
-   * ```ts
-   * signals.setProvider('content-change', async (requestParam) => {
-   *   const content = await fetchNewContent(requestParam);
-   *   if (content != null) {
-   *     return content; // Dispatch signal 'content-change' with content.
-   *   }
-   *   else {
-   *     signals.dispatch('content-not-found', {});
-   *   }
-   * });
-   * ```
-   */
-  setProvider: OmitFirstParam<typeof _setSignalProvider<TSignal, TRequest>>;
-
-  /**
-   * Dispatch request signal.
-   *
-   * Example:
-   *
-   * ```ts
-   * signals.request<RequestContentType>('content-change', {foo: 'bar'});
-   * const newContent = await signals.untilNext<ContentType>('content-change');
-   * ```
-   */
-  request: OmitFirstParam<typeof _requestSignal<TRequest>>;
-
-  /**
-   * Clear current signal detail without dispatch new signal
-   *
-   * note: receivePrevious not work until new signal
-   */
-  expire: OmitFirstParam<typeof _expireSignal>;
-}
-
-export const signals = {
   /**
    * Get current signal detail.
    *
@@ -131,7 +41,7 @@ export const signals = {
    * }
    * ```
    */
-  getDetail: _getSignalDetail,
+  readonly getDetail: typeof _getSignalDetail,
 
   /**
    * Resolved with signal detail when new signal received.
@@ -142,7 +52,7 @@ export const signals = {
    * const newContent = await signals.untilNext<ContentType>('content-change');
    * ```
    */
-  untilNext: _untilNextSignal,
+  readonly untilNext: typeof _untilNextSignal,
 
   /**
    * Adds a new listener to a signal.
@@ -153,7 +63,7 @@ export const signals = {
    * const listener = signals.addListener<ContentType>('content-change', (content) => console.log(content));
    * ```
    */
-  addListener: _addSignalListener,
+  readonly addListener: typeof _addSignalListener,
 
   /**
    * Removes a listener from a signal.
@@ -166,7 +76,7 @@ export const signals = {
    * signals.removeListener(listener);
    * ```
    */
-  removeListener: _removeSignalListener,
+  readonly removeListener: typeof _removeSignalListener,
 
   /**
    * Dispatch (send) signal to all listeners.
@@ -177,7 +87,7 @@ export const signals = {
    * signals.dispatch<ContentType>('content-change', newContent);
    * ```
    */
-  dispatch: _dispatchSignal,
+  readonly dispatch: typeof _dispatchSignal,
 
   /**
    * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
@@ -196,7 +106,7 @@ export const signals = {
    * });
    * ```
    */
-  setProvider: _setSignalProvider,
+  readonly setProvider: typeof _setSignalProvider,
 
   /**
    * Dispatch request signal.
@@ -208,37 +118,137 @@ export const signals = {
    * const newContent = await signals.untilNext<ContentType>('content-change');
    * ```
    */
-  request: _requestSignal,
+  readonly request: typeof _requestSignal,
 
   /**
    * Clear current signal detail without dispatch new signal
    *
    * note: receivePrevious not work until new signal
    */
-  expire: _expireSignal,
-
-  bind: _bindSignal,
-} as const;
-
-function _bindSignal<TSignal extends Record<string, unknown>, TRequest extends Record<string, unknown>>(
-    signalId: string,
-): SignalControllerInterface<TSignal, TRequest> {
-  return {
-    getDetail: _getSignalDetail.bind(signals, signalId),
-    untilNext: _untilNextSignal.bind(signals, signalId),
-    addListener: _addSignalListener.bind(signals, signalId),
-    removeListener: _removeSignalListener.bind(signals),
-    dispatch: _dispatchSignal.bind(signals, signalId),
-    setProvider: _setSignalProvider.bind(signals, signalId),
-    request: _requestSignal.bind(signals, signalId),
-    expire: _expireSignal.bind(signals, signalId),
-  } as SignalControllerInterface<TSignal, TRequest>;
+  readonly expire: typeof _expireSignal,
 }
 
-/*
-TODO:
-  1. change signal option like disable
-  2. Get signal value promise
-    (Get signal value from last dispatched signal (if any) or wait for new signal received.)
-  3. dispatched bool
-*/
+
+export interface BoundSignalInterface<
+  TSignal extends Record<string, unknown>,
+  TRequest extends Record<string, unknown> = Record<string, never>
+> {
+  /**
+   * Bound Signal Id.
+   */
+  readonly id: string,
+
+  /**
+   * Get signal object by id, If not available, it will create a new signal with default options.
+   *
+   * Use it with cation!
+   *
+   * Example:
+   *
+   * ```ts
+   * const signalObject = signal._getObject();
+   * signalObject.disabled = true;
+   * ```
+   */
+  readonly _getObject: OmitFirstParam<typeof _getSignalObject<TSignal>>,
+
+  /**
+   * Get current signal detail.
+   *
+   * return undefined if signal not dispatched before or expired.
+   *
+   * Example:
+   *
+   * ```ts
+   * const currentContent = await signal.getDetail();
+   * if (currentContent == null) {
+   *   // signal not dispatched yet
+   * }
+   * ```
+   */
+  readonly getDetail: OmitFirstParam<typeof _getSignalDetail<TSignal>>;
+
+  /**
+   * Resolved with signal detail when new signal received.
+   *
+   * Example:
+   *
+   * ```ts
+   * const newContent = await signals.untilNext<ContentType>('content-change');
+   * ```
+   */
+  readonly untilNext: OmitFirstParam<typeof _untilNextSignal<TSignal>>;
+
+  /**
+   * Adds a new listener to a signal.
+   *
+   * Example:
+   *
+   * ```ts
+   * const listener = signals.addListener<ContentType>('content-change', (content) => console.log(content));
+   * ```
+   */
+  readonly addListener: OmitFirstParam<typeof _addSignalListener<TSignal>>;
+
+  /**
+   * Removes a listener from a signal.
+   *
+   * Example:
+   *
+   * ```ts
+   * const listener = signals.addListener<ContentType>('content-change', (content) => console.log(content));
+   * ...
+   * signals.removeListener(listener);
+   * ```
+   */
+  readonly removeListener: OmitFirstParam<typeof _removeSignalListener>;
+
+  /**
+   * Dispatch (send) signal to all listeners.
+   *
+   * Example:
+   *
+   * ```ts
+   * signals.dispatch<ContentType>('content-change', newContent);
+   * ```
+   */
+  readonly dispatch: OmitFirstParam<typeof _dispatchSignal<TSignal>>;
+
+  /**
+   * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
+   *
+   * Example:
+   *
+   * ```ts
+   * signals.setProvider('content-change', async (requestParam) => {
+   *   const content = await fetchNewContent(requestParam);
+   *   if (content != null) {
+   *     return content; // Dispatch signal 'content-change' with content.
+   *   }
+   *   else {
+   *     signals.dispatch('content-not-found', {});
+   *   }
+   * });
+   * ```
+   */
+  readonly setProvider: OmitFirstParam<typeof _setSignalProvider<TSignal, TRequest>>;
+
+  /**
+   * Dispatch request signal.
+   *
+   * Example:
+   *
+   * ```ts
+   * signals.request<RequestContentType>('content-change', {foo: 'bar'});
+   * const newContent = await signals.untilNext<ContentType>('content-change');
+   * ```
+   */
+  readonly request: OmitFirstParam<typeof _requestSignal<TRequest>>;
+
+  /**
+   * Clear current signal detail without dispatch new signal
+   *
+   * note: receivePrevious not work until new signal
+   */
+  readonly expire: OmitFirstParam<typeof _expireSignal>;
+}
