@@ -10,7 +10,7 @@ import type {
   ProviderFunction,
   ProviderOptions,
   SignalStorage,
-} from './type.js';
+} from '../type.js';
 
 export const logger = createLogger('alwatr/signal');
 
