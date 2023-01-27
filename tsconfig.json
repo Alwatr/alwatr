@@ -45,6 +45,7 @@
     {"path": "./ui/demo-pwa"},
 
     // labs
-    {"path": "./labs/zx-example"}
+    {"path": "./labs/zx-example"},
+    {"path": "./labs/telegram-day-countdown"},
   ]
 }

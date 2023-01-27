@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.base",
+  "compilerOptions": {
+    "target": "ESNext",
+    "composite": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "rootDir": "src",
+    "outDir": "build",
+    // "noEmit": true
+  },
+
+  "include": ["src/**/*.ts"],
+  "exclude": [],
+  "references": [
+    {"path": "../../core/logger"},
+    {"path": "../../core/fetch"},
+    {"path": "../../core/nano-server"},
+    {"path": "../../core/type"},
+    {"path": "../../core/storage-engine"}
+  ]
+}
