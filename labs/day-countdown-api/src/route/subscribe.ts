@@ -9,9 +9,9 @@ nanoServer.route('PATCH', '/subscribe/', dayCountSubscribe);
 
 async function dayCountSubscribe(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('dayCountSubscribe');
-
   connection.requireToken(config.nanoServer.accessToken);
 
+  // TODO: validator
   const {chatId} = await connection.requireJsonBody<{chatId: number}>();
 
   if (await storageClient.has(chatId.toString()) === true) {
@@ -25,12 +25,8 @@ async function dayCountSubscribe(connection: AlwatrConnection): Promise<AlwatrSe
     };
   }
 
-  await storageClient.set({id: chatId.toString()});
-
   return {
     ok: true,
-    data: {
-      message: 'You have become a daily member!',
-    },
+    data: await storageClient.set({id: chatId.toString()}),
   };
 }

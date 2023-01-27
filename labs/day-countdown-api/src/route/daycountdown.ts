@@ -7,12 +7,12 @@ import type {AlwatrServiceResponse} from '@alwatr/type';
 nanoServer.route('GET', '/daycountdown/', dayCountDown);
 
 async function dayCountDown(): Promise<AlwatrServiceResponse> {
-  logger.logMethod('dayCountSubscribe');
+  logger.logMethod('dayCountDown');
 
   return {
     ok: true,
     data: {
-      timeToLeft: dateDistance(nime),
+      timeToLeft: dateDistance(nime.valueOf()),
     },
   };
 }

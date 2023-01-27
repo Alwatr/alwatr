@@ -1,7 +1,7 @@
-import moment, {type Moment} from 'moment-jalaali';
+import moment from 'moment-jalaali';
 
 export const nime = moment('1401/12/17', 'jYYYY/jM/jD');
 
-export function dateDistance(date: Moment): number {
-  return Math.ceil((date.valueOf() - Date.now()) / 60 / 60 / 24 / 1000);
+export function dateDistance(dateMiliseconds: number): number {
+  return Math.ceil((dateMiliseconds - Date.now()) / 60 / 60 / 24 / 1000);
 }
