@@ -39,7 +39,7 @@
     "format": "run-s format:prettier format:eslint",
     "format:eslint": "yarn lint:ts --fix",
     "format:prettier": "prettier . --ignore-path .gitignore --write",
-    "clean": "yarn build:ts --clean && lerna run clean",
+    "clean": "git clean -d -x -f --exclude=node_modules --exclude=*.env --exclude=*.ts",
     "serve": "wds",
     "watch": "run-p watch:* serve",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput",
@@ -66,7 +66,6 @@
     "lit-analyzer": "^1.2.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.3",
-    "rimraf": "^4.1.1",
     "ts-lit-plugin": "^1.2.1",
     "typescript": "^4.9.4"
   }
