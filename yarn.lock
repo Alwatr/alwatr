@@ -915,6 +915,11 @@
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.16.17.tgz#cf91e86df127aa3d141744edafcba0abdc577d23"
   integrity sha512-MIGl6p5sc3RDTLLkYL1MyL8BMRN4tLMRCn+yRJJmEDvYZ2M7tmAf80hx1kbNEUX2KJ50RRtxZ4JHLvCfuB6kBg==
 
+"@esbuild/android-arm64@0.16.17":
+  version "0.16.17"
+  resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.16.17.tgz#cf91e86df127aa3d141744edafcba0abdc577d23"
+  integrity sha512-MIGl6p5sc3RDTLLkYL1MyL8BMRN4tLMRCn+yRJJmEDvYZ2M7tmAf80hx1kbNEUX2KJ50RRtxZ4JHLvCfuB6kBg==
+
 "@esbuild/android-arm64@0.17.4":
   version "0.17.4"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.17.4.tgz#0a900a7e448cc038ae5a751255257fc67163ed32"
@@ -1009,6 +1014,11 @@
   version "0.17.4"
   resolved "https://registry.yarnpkg.com/@esbuild/linux-ia32/-/linux-ia32-0.17.4.tgz#3fc352bb54e0959fda273cd2253b1c72ca41b8c2"
   integrity sha512-3lqFi4VFo/Vwvn77FZXeLd0ctolIJH/uXkH3yNgEk89Eh6D3XXAC9/iTPEzeEpsNE5IqGIsFa5Z0iPeOh25IyA==
+
+"@esbuild/linux-loong64@0.16.17":
+  version "0.16.17"
+  resolved "https://registry.yarnpkg.com/@esbuild/linux-loong64/-/linux-loong64-0.16.17.tgz#d5ad459d41ed42bbd4d005256b31882ec52227d8"
+  integrity sha512-dTzNnQwembNDhd654cA4QhbS9uDdXC3TKqMJjgOWsC0yNCbpzfWoXdZvp0mY7HU6nzk5E0zpRGGx3qoQg8T2DQ==
 
 "@esbuild/linux-loong64@0.16.17":
   version "0.16.17"
@@ -4085,6 +4095,34 @@ es-to-primitive@^1.2.1:
     is-callable "^1.1.4"
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
+
+esbuild@^0.16.14:
+  version "0.16.17"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.16.17.tgz#fc2c3914c57ee750635fee71b89f615f25065259"
+  integrity sha512-G8LEkV0XzDMNwXKgM0Jwu3nY3lSTwSGY6XbxM9cr9+s0T/qSV1q1JVPBGzm3dcjhCic9+emZDmMffkwgPeOeLg==
+  optionalDependencies:
+    "@esbuild/android-arm" "0.16.17"
+    "@esbuild/android-arm64" "0.16.17"
+    "@esbuild/android-x64" "0.16.17"
+    "@esbuild/darwin-arm64" "0.16.17"
+    "@esbuild/darwin-x64" "0.16.17"
+    "@esbuild/freebsd-arm64" "0.16.17"
+    "@esbuild/freebsd-x64" "0.16.17"
+    "@esbuild/linux-arm" "0.16.17"
+    "@esbuild/linux-arm64" "0.16.17"
+    "@esbuild/linux-ia32" "0.16.17"
+    "@esbuild/linux-loong64" "0.16.17"
+    "@esbuild/linux-mips64el" "0.16.17"
+    "@esbuild/linux-ppc64" "0.16.17"
+    "@esbuild/linux-riscv64" "0.16.17"
+    "@esbuild/linux-s390x" "0.16.17"
+    "@esbuild/linux-x64" "0.16.17"
+    "@esbuild/netbsd-x64" "0.16.17"
+    "@esbuild/openbsd-x64" "0.16.17"
+    "@esbuild/sunos-x64" "0.16.17"
+    "@esbuild/win32-arm64" "0.16.17"
+    "@esbuild/win32-ia32" "0.16.17"
+    "@esbuild/win32-x64" "0.16.17"
 
 esbuild@^0.16.14:
   version "0.16.17"
