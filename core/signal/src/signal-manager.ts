@@ -10,7 +10,7 @@ import type {
   ProviderFunction,
   ProviderOptions,
   SignalStorage,
-} from '../type.js';
+} from './type.js';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/signal',
@@ -214,11 +214,7 @@ export const signalManager = {
    * x.dispatch<ContentType>('content-change', newContent);
    * ```
    */
-  dispatch: <T extends Stringifyable>(
-    signalId: string,
-    detail: T,
-    options: Partial<DispatchOptions> = {},
-  ): void => {
+  dispatch: <T extends Stringifyable>(signalId: string, detail: T, options: Partial<DispatchOptions> = {}): void => {
     options.debounce ??= 'AnimationFrame';
 
     signalManager._logger.logMethodArgs('dispatch', {signalId, detail, options});
@@ -281,6 +277,38 @@ export const signalManager = {
   },
 
   /**
+   * Defines the provider of the context signal that will be called when the context requested.
+   * Subscribe to `request-signalId`.
+   *
+   * Example:
+   *
+   * ```ts
+   * x.setContextProvider('content-change', async (requestParam) => await fetchNewContent(requestParam));
+   * ```
+   */
+  setContextProvider: <TArgument extends Stringifyable, TReturn extends Stringifyable>(
+    signalId: string,
+    signalProvider: ProviderFunction<TArgument, TReturn>,
+    options: Partial<ProviderOptions> = {},
+  ): void => {
+    options.debounce ??= 'AnimationFrame';
+    options.receivePrevious ??= 'AnimationFrame';
+    signalManager._logger.logMethodArgs('setContextProvider', {signalId, options});
+    const requestSignalId = 'request-' + signalId;
+    signalManager.removeAllListeners(requestSignalId);
+    signalManager.subscribe<TArgument>(
+        requestSignalId,
+        async (argumentObject): Promise<void> => {
+          const signalDetail = await signalProvider(argumentObject);
+          signalManager.dispatch<TReturn>(signalId, signalDetail, {debounce: options.debounce});
+        },
+        {
+          receivePrevious: options.receivePrevious,
+        },
+    );
+  },
+
+  /**
    * Defines the provider of the signal that will be called when the signal requested.
    * Subscribe to `request-signalId`.
    *
@@ -290,48 +318,77 @@ export const signalManager = {
    * x.setProvider('content-change', async (requestParam) => await fetchNewContent(requestParam));
    * ```
    */
-  setProvider: <TSignal extends Stringifyable, TRequest extends Stringifyable>(
+  setCommandProvider: <TArgument extends Stringifyable, TReturn extends Stringifyable>(
     signalId: string,
-    signalProvider: ProviderFunction<TSignal, TRequest>,
-    options: Partial<ProviderOptions> = {},
-  ): ListenerObject<TRequest> => {
+    signalProvider: ProviderFunction<TArgument & {_callbackSignalId: string}, TReturn>,
+    options: Partial<Pick<ProviderOptions, 'debounce'>> = {},
+  ): void => {
     options.debounce ??= 'AnimationFrame';
-    options.receivePrevious ??= 'AnimationFrame';
-
-    signalManager._logger.logMethodArgs('setProvider', {signalId, options});
-
-    const _callback = async (requestParam: TRequest): Promise<void> => {
-      const signalDetail = await signalProvider(requestParam);
-      if (signalDetail !== undefined) {
-        // null is a valid detail for signal.
-        signalManager.dispatch<TSignal>(signalId, signalDetail, {debounce: options.debounce});
-      }
-    };
-
+    signalManager._logger.logMethodArgs('setCommandProvider', {commandId: signalId, options});
     const requestSignalId = 'request-' + signalId;
     signalManager.removeAllListeners(requestSignalId);
-    return signalManager.subscribe<TRequest>(requestSignalId, _callback, {
-      receivePrevious: options.receivePrevious,
-    });
+    signalManager.subscribe<TArgument & {_callbackSignalId: string}>(
+        requestSignalId,
+        async (argumentObject) => {
+          const callbackSignalId = argumentObject._callbackSignalId;
+          // TODO: validate callbackSignalId
+          const commandReturn = await signalProvider(argumentObject);
+          signalManager.dispatch<TReturn>(callbackSignalId, commandReturn, {debounce: options.debounce});
+        },
+        {
+          receivePrevious: 'No', // Prevent to merge multiple previous requests
+        },
+    );
   },
 
   /**
-   * Dispatch request signal with requestParam as detail.
+   * Dispatch request context signal with requestParam as detail.
    *
    * Example:
    *
    * ```ts
-   * request<RequestParamType>('content-change', {foo: 'bar'});
+   * requestContext<RequestParamType>('content-change', {foo: 'bar'});
    * const newContent = await untilNext<ContentType>('content-change');
    * ```
    */
-  request: <TRequest extends Stringifyable>(
-    signalId: string,
+  requestContext: <TRequest extends Stringifyable>(
+    contextId: string,
     requestParam: TRequest,
     options: Partial<DispatchOptions> = {},
   ): void => {
-    signalManager._logger.logMethodArgs('request', {signalId, requestParam});
-    return signalManager.dispatch<TRequest>(signalId, requestParam, options);
+    signalManager._logger.logMethodArgs('requestContext', {contextId, requestParam});
+    return signalManager.dispatch<TRequest>(contextId, requestParam, options);
+  },
+
+  /**
+   * Dispatch request command signal with commandArgument as detail and await (subscribed) for command callback signal.
+   *
+   * Example:
+   *
+   * ```ts
+   * requestContext<RequestParamType>('content-change', {foo: 'bar'});
+   * const newContent = await untilNext<ContentType>('content-change');
+   * ```
+   */
+  requestCommand: <TArgument extends Record<string, Stringifyable>, TReturn extends Stringifyable>(
+    commandId: string,
+    commandArgument: TArgument,
+  ): Promise<TReturn> => {
+    return new Promise((resolve) => {
+      signalManager._logger.logMethodArgs('requestCommand', {commandId, commandArgument});
+
+      const requestSignalId = `request-${commandId}`;
+      const callbackSignalId = `callback-${commandId}-${++_lastListenerAutoId}`;
+
+      signalManager.subscribe<TReturn>(callbackSignalId, resolve, {once: true, priority: true, receivePrevious: 'No'});
+      // TODO: refactor _untilNextSignal with option and use it
+
+      signalManager.dispatch<TArgument & {_callbackSignalId: string}>(
+          requestSignalId,
+          {...commandArgument, _callbackSignalId: callbackSignalId},
+          {debounce: 'No'},
+      );
+    });
   },
 
   /**

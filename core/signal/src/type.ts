@@ -76,11 +76,11 @@ export interface ProviderOptions {
 export type ListenerFunction<T extends Stringifyable> = (detail: T) => void | Promise<void>;
 
 /**
- * Context provider function.
+ * Command/Context provider/handler function.
  */
-export type ProviderFunction<TSignal extends Stringifyable, TRequest extends Stringifyable> = (
-  requestDetail: TRequest
-) => MaybePromise<TSignal | void>;
+export type ProviderFunction<TArgument extends Stringifyable, TReturn extends Stringifyable> = (
+  argumentObject: TArgument
+) => MaybePromise<TReturn>;
 
 /**
  * Signal listeners object in storage.
