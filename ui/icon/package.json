@@ -16,9 +16,6 @@
   "type": "module",
   "types": "icon.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "contributors": [
-    "MohammadMahdi Zamanian <mm25zamanian@gmail.com> (https://mm25zamanian.ir)"
-  ],
   "license": "MIT",
   "files": [
     "**/*.{d.ts.map,d.ts,js.map,js,html,md,svg}"

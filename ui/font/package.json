@@ -16,10 +16,6 @@
   ],
   "main": "vazirmatn.css",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "contributors": [
-    "Godgiven <asmanp2012@gmail.com>",
-    "MohammadMahdi Zamanian <mm25zamanian@gmail.com> (mm25zamanian.ir)"
-  ],
   "license": "MIT",
   "files": [
     "**/*.woff*",

@@ -14,7 +14,6 @@
   "type": "module",
   "types": "router.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "contributors": [],
   "license": "MIT",
   "files": [
     "**/*.{d.ts.map,d.ts,js.map,js,html,md}"

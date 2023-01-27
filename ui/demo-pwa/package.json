@@ -4,9 +4,6 @@
   "description": "Alwatr Progressive Web Application Demo.",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "contributors": [
-    "S. MohammadMahdi Zamanian <mm25zamanian@gmail.com> (mm25zamanian.ir)"
-  ],
   "private": true,
   "engines": {
     "node": ">=19.0.0",
@@ -25,7 +22,7 @@
     "s": "yarn start",
     "w": "yarn watch",
     "start": "NODE_OPTIONS=--enable-source-maps run-s clean build serve",
-    "clean": "rimraf dist build .tsbuildinfo",
+    "clean": "rm -rf dist build .tsbuildinfo",
     "build": "./esbuild.mjs",
     "build:tsc": "tsc --build",
     "serve": "wds",
@@ -41,7 +38,6 @@
     "esbuild": "^0.17.4",
     "lit-analyzer": "^1.2.1",
     "npm-run-all": "^4.1.5",
-    "rimraf": "^4.1.1",
     "ts-lit-plugin": "^1.2.1",
     "tslib": "^2.4.1",
     "typescript": "^4.9.4",
