@@ -13,3 +13,6 @@ Content-Type: application/json
 {
   "chatId": "1234567890"
 }
+
+### get number for days to left
+GET {{apiUrl}}/daycountdown/
