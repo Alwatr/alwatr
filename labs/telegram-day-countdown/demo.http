@@ -4,3 +4,13 @@
 
 ### Home
 GET {{apiUrl}}/
+
+### Send message
+POST {{apiUrl}}/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "chatId": "7837384348",
+  "message": "salam"
+}
