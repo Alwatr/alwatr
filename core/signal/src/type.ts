@@ -5,25 +5,25 @@ export type DebounceType = 'No' | 'AnimationFrame' | 'Timeout';
 /**
  * addSignalListener options type
  */
-export interface ListenerOptions {
+export interface SubscribeOptions {
   /**
    * If true, the listener will be called only once.
    * @default false
    */
-  once?: boolean;
+  once: boolean;
 
   /**
    * If true, the listener will be called before other.
    * @default false
    */
-  priority?: boolean;
+  priority: boolean;
 
   /**
    * If true, the listener will be defined disabled by default.
    *
    * @default false
    */
-  disabled?: boolean;
+  disabled: boolean;
 
   /**
    * Calling this listener (callback) with preview signal value (if dispatched before).
@@ -31,7 +31,7 @@ export interface ListenerOptions {
    *
    * @default `AnimationFrame`
    */
-  receivePrevious?: DebounceType | 'NextCycle';
+  receivePrevious: DebounceType | 'NextCycle';
 }
 
 /**
@@ -45,7 +45,7 @@ export interface DispatchOptions {
    *
    * @default `AnimationFrame`
    */
-  debounce?: DebounceType;
+  debounce: DebounceType;
 }
 
 /**
@@ -58,7 +58,7 @@ export interface ProviderOptions {
    *
    * @default `NextCycle`
    */
-  receivePrevious?: DebounceType | 'NextCycle';
+  receivePrevious: DebounceType | 'NextCycle';
 
   /**
    * If true, the dispatch will be send after animation frame debounce.
@@ -67,13 +67,13 @@ export interface ProviderOptions {
    *
    * @default `AnimationFrame`
    */
-  debounce?: DebounceType;
+  debounce: DebounceType;
 }
 
 /**
- * Signal listeners callback function type.
+ * Subscribe callback function.
  */
-export type ListenerCallback<T extends Stringifyable> = (detail: T) => void | Promise<void>;
+export type ListenerFunction<T extends Stringifyable> = (detail: T) => void | Promise<void>;
 
 /**
  * Context provider function.
@@ -106,7 +106,7 @@ export type ListenerObject<T extends Stringifyable> = {
    */
   disabled: boolean;
 
-  callback: ListenerCallback<T>;
+  callback: ListenerFunction<T>;
 };
 
 /**
