@@ -8,7 +8,12 @@ const userKeyList = Object.keys(userList);
 const message = generateMessage(await getDayCountdown());
 
 for (let i = 0; i < userKeyList.length; i++) {
-  sendDayCountdown(userKeyList[i], message);
+  try {
+    sendDayCountdown(userKeyList[i], message);
+  }
+  catch (err) {
+    logger.error('crawler', (err as Error).message ?? 'sent_failed', {err});
+  }
 }
 
 function sendDayCountdown(chatId: string, message: string): Promise<AlwatrServiceResponse> {
@@ -27,7 +32,7 @@ function sendDayCountdown(chatId: string, message: string): Promise<AlwatrServic
 function generateMessage(dayCountdown: number): string {
   logger.logMethod('generateMessage');
   return `
-      ${dayCountdown} روز تا نیمه شعبان، ولادت مهربان‌ترین پدر ♥️
+      ${dayCountdown} روز تا ولادت مهربان‌ترین پدر ♥️
   `.replaceAll('      ', '');
 }
 

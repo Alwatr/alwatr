@@ -1,5 +1,5 @@
 import {logger} from './config.js';
 
-import './crawler.js';
+import './crawl.js';
 
 logger.logOther('..:: Alwatr Day Countdown Crawler ::..');
