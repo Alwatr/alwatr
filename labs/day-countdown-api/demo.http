@@ -5,3 +5,11 @@
 ### Home
 GET {{apiUrl}}/
 
+### New day downcount
+PATCH {{apiUrl}}/subscribe/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "chatId": "1234567890"
+}
