@@ -12,7 +12,6 @@
   "type": "module",
   "types": "zx-example.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "contributors": [],
   "license": "MIT",
   "private": true,
   "files": [

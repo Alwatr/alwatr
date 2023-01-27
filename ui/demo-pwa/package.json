@@ -4,9 +4,6 @@
   "description": "Alwatr Progressive Web Application Demo.",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "contributors": [
-    "S. MohammadMahdi Zamanian <mm25zamanian@gmail.com> (mm25zamanian.ir)"
-  ],
   "private": true,
   "engines": {
     "node": ">=19.0.0",

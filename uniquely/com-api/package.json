@@ -4,9 +4,6 @@
   "description": "Alwatr Customer Order Management API",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "contributors": [
-    "S. Amir Mohammad Najafi <njfamirm@gmail.com> (https://njfamirm.ir)"
-  ],
   "private": true,
   "engines": {
     "node": ">=19.0.0",

@@ -13,9 +13,6 @@
     "alwatr"
   ],
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "contributors": [
-    "S. Amir Mohammad Najafi <njfamirm@gmail.com> (https://njfamirm.ir)"
-  ],
   "license": "MIT",
   "private": true,
   "engines": {

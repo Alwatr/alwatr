@@ -5,10 +5,6 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "private": "true",
-  "contributors": [
-    "MohammadMahdi Zamanian <mm25zamanian@gmail.com>",
-    "S. Amir Mohammad Najafi <njfamirm@gmail.com> (https://njfamirm.ir)"
-  ],
   "dependencies": {
     "@alwatr/fetch": "^0.28.0",
     "@alwatr/icon": "^0.28.0",
