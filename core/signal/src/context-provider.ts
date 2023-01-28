@@ -104,5 +104,5 @@ export const contextProvider = {
      * ```
      */
     expire: signalManager.clearDetail.bind(null, contextId),
-  }),
+  } as const),
 } as const;

@@ -127,5 +127,5 @@ export const eventListener = {
      * ```
      */
     unsubscribe: signalManager.unsubscribe,
-  }),
+  } as const),
 } as const;

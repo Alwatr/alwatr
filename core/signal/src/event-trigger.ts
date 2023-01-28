@@ -78,5 +78,5 @@ export const eventTrigger = {
      * ```
      */
     dispatch: signalManager.dispatch.bind(null, eventId) as OmitFirstParam<typeof signalManager.dispatch<T>>,
-  }),
+  } as const),
 } as const;

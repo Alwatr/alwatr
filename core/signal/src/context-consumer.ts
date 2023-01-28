@@ -131,5 +131,5 @@ export const contextConsumer = {
      * ```
      */
     unsubscribe: signalManager.unsubscribe,
-  }),
+  } as const),
 } as const;
