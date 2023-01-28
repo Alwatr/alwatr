@@ -78,7 +78,7 @@ export type ListenerFunction<T extends Stringifyable> = (detail: T) => void | Pr
 /**
  * Command/Context provider/handler function.
  */
-export type ProviderFunction<TArgument extends Stringifyable, TReturn extends Stringifyable> = (
+export type ProviderFunction<TArgument, TReturn> = (
   argumentObject: TArgument
 ) => MaybePromise<TReturn>;
 

@@ -38,10 +38,12 @@ export const signalManager = {
   /**
    * Get signal object by id, If not available, it will create a new signal with default options.
    *
+   * Don't use it directly.
+   *
    * Example:
    *
    * ```ts
-   * const signal = x.getSignalObject<ContentType>('content-change');
+   * const signal = signalManager.getSignalObject<ContentType>('content-change');
    * signal.disabled = true;
    * ```
    */
@@ -104,7 +106,7 @@ export const signalManager = {
    * Example:
    *
    * ```ts
-   * const listener = x.subscribe<ContentType>('content-change', (content) => console.log(content));
+   * const listener = signalManager.subscribe<ContentType>('content-change', (content) => console.log(content));
    * ```
    */
   subscribe: <T extends Stringifyable>(
@@ -171,9 +173,9 @@ export const signalManager = {
    * Example:
    *
    * ```ts
-   * const listener = x.subscribe<ContentType>('content-change', (content) => console.log(content));
+   * const listener = signalManager.subscribe<ContentType>('content-change', (content) => console.log(content));
    * ...
-   * x.unsubscribe(listener);
+   * signalManager.unsubscribe(listener);
    * ```
    */
   unsubscribe: (listener: Pick<ListenerObject<Stringifyable>, 'id' | 'signalId'>): void => {
@@ -194,7 +196,7 @@ export const signalManager = {
    * Example:
    *
    * ```ts
-   * x.removeAllListeners('content-change');
+   * signalManager.removeAllListeners('content-change');
    * ```
    */
   removeAllListeners: (signalId: string): void => {
@@ -208,10 +210,12 @@ export const signalManager = {
   /**
    * Dispatch (send) signal to all listeners.
    *
+   * Signal detail changed immediately without any debounce.
+   *
    * Example:
    *
    * ```ts
-   * x.dispatch<ContentType>('content-change', newContent);
+   * signalManager.dispatch<ContentType>('content-change', newContent);
    * ```
    */
   dispatch: <T extends Stringifyable>(signalId: string, detail: T, options: Partial<DispatchOptions> = {}): void => {
@@ -246,10 +250,15 @@ export const signalManager = {
   /**
    * Get current signal detail/value.
    *
+   * Return undefined if signal not dispatched before or expired.
+   *
    * Example:
    *
    * ```ts
-   * const currentContent = x.getDetail<ContentType>('content-change');
+   * const currentContent = signalManager.getDetail<ContentType>('content-change');
+   * if (currentContent === undefined) {
+   *   // signal not dispatched yet
+   * }
    * ```
    */
   getDetail: <T extends Stringifyable>(signalId: string): T | undefined => {
@@ -262,7 +271,7 @@ export const signalManager = {
    * Example:
    *
    * ```ts
-   * const newContent = await x.untilNext<ContentType>('content-change');
+   * const newContent = await signalManager.untilNext<ContentType>('content-change');
    * ```
    */
   untilNext: <T extends Stringifyable>(signalId: string): Promise<T> => {
@@ -283,12 +292,12 @@ export const signalManager = {
    * Example:
    *
    * ```ts
-   * x.setContextProvider('content-change', async (requestParam) => await fetchNewContent(requestParam));
+   * signalManager.setContextProvider('content-change', async (requestParam) => await fetchNewContent(requestParam));
    * ```
    */
   setContextProvider: <TArgument extends Stringifyable, TReturn extends Stringifyable>(
     signalId: string,
-    signalProvider: ProviderFunction<TArgument, TReturn>,
+    signalProvider: ProviderFunction<TArgument, TReturn | void>,
     options: Partial<ProviderOptions> = {},
   ): void => {
     options.debounce ??= 'AnimationFrame';
@@ -300,7 +309,9 @@ export const signalManager = {
         requestSignalId,
         async (argumentObject): Promise<void> => {
           const signalDetail = await signalProvider(argumentObject);
-          signalManager.dispatch<TReturn>(signalId, signalDetail, {debounce: options.debounce});
+          if (signalDetail !== undefined) {
+            signalManager.dispatch<TReturn>(signalId, signalDetail, {debounce: options.debounce});
+          }
         },
         {
           receivePrevious: options.receivePrevious,
@@ -315,7 +326,7 @@ export const signalManager = {
    * Example:
    *
    * ```ts
-   * x.setProvider('content-change', async (requestParam) => await fetchNewContent(requestParam));
+   * signalManager.setProvider('content-change', async (requestParam) => await fetchNewContent(requestParam));
    * ```
    */
   setCommandProvider: <TArgument extends Stringifyable, TReturn extends Stringifyable>(
