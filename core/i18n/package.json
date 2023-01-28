@@ -11,9 +11,9 @@
     "esm",
     "alwatr"
   ],
-  "main": "i18n.js",
+  "main": "index.js",
   "type": "module",
-  "types": "i18n.d.ts",
+  "types": "index.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
