@@ -360,8 +360,8 @@ export const signalManager = {
    * Example:
    *
    * ```ts
-   * requestContext<RequestParamType>('content-change', {foo: 'bar'});
-   * const newContent = await untilNext<ContentType>('content-change');
+   * signalManager.requestContext<RequestParamType>('content-change', {foo: 'bar'});
+   * const newContent = await signalManager.untilNext<ContentType>('content-change');
    * ```
    */
   requestContext: <TRequest extends Stringifyable>(
@@ -374,13 +374,12 @@ export const signalManager = {
   },
 
   /**
-   * Dispatch request command signal with commandArgument as detail and await (subscribed) for command callback signal.
+   * Dispatch request command signal with commandArgument as detail and return untilNext of callback signal.
    *
    * Example:
    *
    * ```ts
-   * requestContext<RequestParamType>('content-change', {foo: 'bar'});
-   * const newContent = await untilNext<ContentType>('content-change');
+   * const returnObject = signalManager.requestCommand<ArgumentType, ReturnType>('show-dialog', {foo: 'bar'});
    * ```
    */
   requestCommand: <TArgument extends Record<string, Stringifyable>, TReturn extends Stringifyable>(
@@ -405,11 +404,17 @@ export const signalManager = {
   },
 
   /**
-   * Clear current signal detail without dispatch new signal
+   * Clear current signal detail without dispatch new signal.
    *
-   * note: receivePrevious not work until new signal
+   * new subscriber options.receivePrevious not work until new signal
+   *
+   * Example:
+   *
+   * ```ts
+   * signalManager.clearDetail('product-list');
+   * ```
    */
-  expire: (signalId: string): void => {
+  clearDetail: (signalId: string): void => {
     signalManager._logger.logMethodArgs('expire', signalId);
     delete signalManager.getSignalObject(signalId).detail;
   },
