@@ -74,7 +74,7 @@ export const eventTrigger = {
      * Example:
      *
      * ```ts
-     * eventTrigger.dispatch<ResizeType>(newSize);
+     * resizeEvent.dispatch(newSize);
      * ```
      */
     dispatch: signalManager.dispatch.bind(null, eventId) as OmitFirstParam<typeof signalManager.dispatch<T>>,
