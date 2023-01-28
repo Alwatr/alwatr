@@ -107,6 +107,8 @@ export const signalManager = {
    *
    * ```ts
    * const listener = signalManager.subscribe<ContentType>('content-change', (content) => console.log(content));
+   * ...
+   * signalManager.unsubscribe(listener);
    * ```
    */
   subscribe: <T extends Stringifyable>(
@@ -168,7 +170,7 @@ export const signalManager = {
   },
 
   /**
-   * Unsubscribe listener from a signal, work like removeEventListener.
+   * Unsubscribe listener from signal, work like removeEventListener.
    *
    * Example:
    *
