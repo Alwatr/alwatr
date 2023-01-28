@@ -1,6 +1,7 @@
-import {Stringifyable, OmitFirstParam} from '@alwatr/type';
-
 import {signalManager} from './signal-manager.js';
+
+import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
+
 
 /**
  * Event signal trigger/dispatcher interface.

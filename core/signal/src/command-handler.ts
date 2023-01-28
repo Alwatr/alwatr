@@ -1,7 +1,7 @@
 import {signalManager} from './signal-manager.js';
 
 /**
- * Command handler/provider interface.
+ * Command handler/define interface.
  */
 export const commandHandler = {
   /**

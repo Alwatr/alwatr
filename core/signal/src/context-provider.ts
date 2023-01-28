@@ -1,6 +1,7 @@
-import {Stringifyable, OmitFirstParam} from '@alwatr/type';
-
 import {signalManager} from './signal-manager.js';
+
+import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
+
 
 /**
  * Context provider interface.
@@ -59,7 +60,7 @@ export const contextProvider = {
    */
   bind: <T extends Stringifyable>(contextId: string) =>({
     /**
-     * Event signal Id.
+     * Context signal Id.
      */
     id: contextId,
 

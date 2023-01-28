@@ -1,5 +1,4 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
-import {Stringifyable} from '@alwatr/type';
 
 import type {
   DispatchOptions,
@@ -11,6 +10,8 @@ import type {
   ProviderOptions,
   SignalStorage,
 } from './type.js';
+import type {Stringifyable} from '@alwatr/type';
+
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/signal',
@@ -385,7 +386,7 @@ export const signalManager = {
    * Example:
    *
    * ```ts
-   * const returnObject = signalManager.requestCommand<ArgumentType, ReturnType>('show-dialog', {foo: 'bar'});
+   * const returnObject = await signalManager.requestCommand<ArgumentType, ReturnType>('show-dialog', {foo: 'bar'});
    * ```
    */
   requestCommand: <TArgument extends Record<string, Stringifyable>, TReturn extends Stringifyable>(

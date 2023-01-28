@@ -1,7 +1,7 @@
-import {Stringifyable, OmitFirstParam} from '@alwatr/type';
-
 import {contextConsumer} from './context-consumer.js';
 import {signalManager} from './signal-manager.js';
+
+import type{Stringifyable, OmitFirstParam} from '@alwatr/type';
 
 /**
  * Requestable context consumer interface.
