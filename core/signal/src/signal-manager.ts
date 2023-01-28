@@ -107,7 +107,7 @@ export const signalManager = {
    *
    * ```ts
    * const listener = signalManager.subscribe<ContentType>('content-change', (content) => console.log(content));
-   * ...
+   * // ...
    * signalManager.unsubscribe(listener);
    * ```
    */
@@ -176,7 +176,7 @@ export const signalManager = {
    *
    * ```ts
    * const listener = signalManager.subscribe<ContentType>('content-change', (content) => console.log(content));
-   * ...
+   * // ...
    * signalManager.unsubscribe(listener);
    * ```
    */

@@ -40,7 +40,7 @@ export const eventListener = {
    *
    * ```ts
    * const listener = eventTrigger.subscribe<ResizeType>('window-resize', (size) => console.log(size));
-   * ...
+   * // ...
    * eventTrigger.unsubscribe(listener);
    * ```
    */
@@ -53,7 +53,7 @@ export const eventListener = {
    *
    * ```ts
    * const listener = eventTrigger.subscribe<ResizeType>('window-resize', (size) => console.log(size));
-   * ...
+   * // ...
    * eventTrigger.unsubscribe(listener);
    * ```
    */
@@ -108,7 +108,7 @@ export const eventListener = {
      *
      * ```ts
      * const listener = resizeEvent.subscribe((size) => console.log(size));
-     * ...
+     * // ...
      * resizeEvent.unsubscribe(listener);
      * ```
      */
@@ -122,7 +122,7 @@ export const eventListener = {
      *
      * ```ts
      * const listener = resizeEvent.subscribe((size) => console.log(size));
-     * ...
+     * // ...
      * resizeEvent.unsubscribe(listener);
      * ```
      */
