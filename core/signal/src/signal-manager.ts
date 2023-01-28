@@ -297,9 +297,9 @@ export const signalManager = {
    * signalManager.setContextProvider('content-change', async (requestParam) => await fetchNewContent(requestParam));
    * ```
    */
-  setContextProvider: <TArgument extends Stringifyable, TReturn extends Stringifyable>(
+  setContextProvider: <TContext extends Stringifyable, TRquest extends Stringifyable>(
     signalId: string,
-    signalProvider: ProviderFunction<TArgument, TReturn | void>,
+    signalProvider: ProviderFunction<TRquest, TContext | void>,
     options: Partial<ProviderOptions> = {},
   ): void => {
     options.debounce ??= 'AnimationFrame';
@@ -307,12 +307,12 @@ export const signalManager = {
     signalManager._logger.logMethodArgs('setContextProvider', {signalId, options});
     const requestSignalId = 'request-' + signalId;
     signalManager.removeAllListeners(requestSignalId);
-    signalManager.subscribe<TArgument>(
+    signalManager.subscribe<TRquest>(
         requestSignalId,
         async (argumentObject): Promise<void> => {
           const signalDetail = await signalProvider(argumentObject);
           if (signalDetail !== undefined) {
-            signalManager.dispatch<TReturn>(signalId, signalDetail, {debounce: options.debounce});
+            signalManager.dispatch<TContext>(signalId, signalDetail, {debounce: options.debounce});
           }
         },
         {
