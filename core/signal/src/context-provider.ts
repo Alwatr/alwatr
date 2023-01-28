@@ -36,6 +36,19 @@ export const contextProvider = {
   setValue: signalManager.dispatch,
 
   /**
+   * Clear current context value without send signal to all consumers.
+   *
+   * new subscriber options.receivePrevious not work until new signal
+   *
+   * Example:
+   *
+   * ```ts
+   * signalManager.expire('product-list');
+   * ```
+   */
+  expire: signalManager.clearDetail,
+
+  /**
    * Bind this interface to special context.
    *
    * Example:
@@ -44,11 +57,11 @@ export const contextProvider = {
    * const productListProvider = contextProvider.bind<ProductListType>('product-list');
    * ```
    */
-  bind: <T extends Stringifyable>(eventId: string) =>({
+  bind: <T extends Stringifyable>(contextId: string) =>({
     /**
      * Event signal Id.
      */
-    id: eventId,
+    id: contextId,
 
     /**
      * Get context value.
@@ -64,7 +77,7 @@ export const contextProvider = {
      * }
      * ```
      */
-    getValue: signalManager.getDetail.bind(null, eventId) as OmitFirstParam<typeof signalManager.getDetail<T>>,
+    getValue: signalManager.getDetail.bind(null, contextId) as OmitFirstParam<typeof signalManager.getDetail<T>>,
 
     /**
      * Set context value and send signal to all consumers.
@@ -74,9 +87,22 @@ export const contextProvider = {
      * Example:
      *
      * ```ts
-     * contextProvider.setValue(newProductList);
+     * productListProvider.setValue(newProductList);
      * ```
      */
-    setValue: signalManager.dispatch.bind(null, eventId) as OmitFirstParam<typeof signalManager.dispatch<T>>,
+    setValue: signalManager.dispatch.bind(null, contextId) as OmitFirstParam<typeof signalManager.dispatch<T>>,
+
+    /**
+     * Clear current context value without send signal to all consumers.
+     *
+     * new subscriber options.receivePrevious not work until new signal
+     *
+     * Example:
+     *
+     * ```ts
+     * productListProvider.expire();
+     * ```
+     */
+    expire: signalManager.clearDetail.bind(null, contextId),
   }),
 } as const;
