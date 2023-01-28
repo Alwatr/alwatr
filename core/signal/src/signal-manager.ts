@@ -322,22 +322,28 @@ export const signalManager = {
   },
 
   /**
-   * Defines the provider of the signal that will be called when the signal requested.
-   * Subscribe to `request-signalId`.
+   * Defines the command and dispatch returned value.
+   *
+   * Subscribe commandFunction to request-command-signal and dispatch callback-signal with commandFunction return value.
    *
    * Example:
    *
    * ```ts
-   * signalManager.setProvider('content-change', async (requestParam) => await fetchNewContent(requestParam));
+   * signalManager.defineCommand<TArgument, TReturn>(
+   *   'show-prompt',
+   *   async (argumentObject) => {
+   *      return await showPrompt(argumentObject);
+   *   },
+   * );
    * ```
    */
-  setCommandProvider: <TArgument extends Stringifyable, TReturn extends Stringifyable>(
+  defineCommand: <TArgument extends Record<string, Stringifyable>, TReturn extends Stringifyable>(
     signalId: string,
     signalProvider: ProviderFunction<TArgument & {_callbackSignalId: string}, TReturn>,
     options: Partial<Pick<ProviderOptions, 'debounce'>> = {},
   ): void => {
     options.debounce ??= 'AnimationFrame';
-    signalManager._logger.logMethodArgs('setCommandProvider', {commandId: signalId, options});
+    signalManager._logger.logMethodArgs('defineCommand', {commandId: signalId, options});
     const requestSignalId = 'request-' + signalId;
     signalManager.removeAllListeners(requestSignalId);
     signalManager.subscribe<TArgument & {_callbackSignalId: string}>(
