@@ -1,15 +1,5 @@
-import {SignalInterface} from '@alwatr/signal';
+import type {Route} from './type.js';
 
-import type {RequestRouteParam, Route} from './type.js';
-
-declare global {
-  interface AlwatrSignals {
-    'route-change': Route;
-  }
-
-  interface AlwatrRequestSignals {
-    'route-change': RequestRouteParam;
-  }
+export interface AlwatrRouter {
+  'route-change': Route;
 }
-
-export const routeChangeSignal = new SignalInterface('route-change');

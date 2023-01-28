@@ -1,12 +1,13 @@
+import {requestableContextProvider} from '@alwatr/signal';
+
 import {joinParameterList, logger, routeSignalProvider} from './core.js';
-import {routeChangeSignal} from './signal.js';
+import {AlwatrRouter} from './signal.js';
 import {clickTrigger} from './trigger-click.js';
 import {popstateTrigger} from './trigger-popstate.js';
 
 import type {InitOptions, Route, RoutesConfig, RequestRouteParam} from './type.js';
-import type {SignalInterface} from '@alwatr/signal';
 
-export {type Route, type RequestRouteParam, type RoutesConfig, routeChangeSignal};
+export {type Route, type RequestRouteParam, type RoutesConfig};
 
 /**
  * Initial and config the Router.
@@ -20,13 +21,18 @@ function initial(options: InitOptions = {}): void {
   clickTrigger.enable = options.clickTrigger;
   popstateTrigger.enable = options.popstateTrigger;
 
-  routeChangeSignal.setProvider(routeSignalProvider, {debounce: true, receivePrevious: true});
+  // routeChangeSignal.setProvider(routeSignalProvider, {debounce: true, receivePrevious: true});
+  requestableContextProvider.setProvider<AlwatrRouter, Route>('', routeSignalProvider);
 
   // first route request.
-  if (!routeChangeSignal.dispatched) {
+  if (!requestableContextProvider.getValue('route-change')) {
     const {pathname, search, hash} = window.location;
     // Don't use `routeChangeSignal.request()` because we need set the route value immediately.
-    routeChangeSignal.dispatch(routeSignalProvider({pathname, search, hash, pushState: false}), {debounce: false});
+    // routeChangeSignal.dispatch(routeSignalProvider({pathname, search, hash, pushState: false}), {debounce: false});
+    requestableContextProvider.setValue(
+        'route-change',
+        routeSignalProvider({pathname, search, hash, pushState: false}),
+    );
   }
 }
 
@@ -107,7 +113,7 @@ function makeUrl(route: Partial<Route>): string {
 function outlet(routesConfig: RoutesConfig): unknown {
   logger.logMethodArgs('outlet', {routesConfig});
 
-  const currentRoute = routeChangeSignal.value;
+  const currentRoute = requestableContextProvider.getValue('route-change');
   if (currentRoute == null) {
     logger.accident('outlet', 'route_not_initialized', 'Signal "route-change" not dispatched yet');
     return;
@@ -167,7 +173,7 @@ function outlet(routesConfig: RoutesConfig): unknown {
  */
 export const router = {
   get currentRoute(): Route {
-    const route = routeChangeSignal.value;
+    const route = requestableContextProvider.getValue('route-change');
     if (route == null) {
       throw new Error('route_not_initialized');
     }
@@ -183,5 +189,5 @@ export const router = {
   /**
    * Signal interface of 'route-change' signal.
    */
-  signal: routeChangeSignal as SignalInterface<'route-change'>,
+  signal: requestableContextProvider,
 } as const;
