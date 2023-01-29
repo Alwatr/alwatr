@@ -567,7 +567,7 @@ export class AlwatrConnection {
    * ```
    */
   requireQueryParams<T extends QueryParameters = QueryParameters>(params: Record<string, ParamKeyType>): T {
-    const parsedParams: Record<string, ParamValueType> = {};
+    const parsedParams: Record<string, ParamValueType | null> = {};
 
     for (const paramName in params) {
       if (!Object.prototype.hasOwnProperty.call(params, paramName)) continue;
