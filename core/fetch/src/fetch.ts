@@ -224,6 +224,14 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
       }
     }
 
+    case 'update_cache': {
+      const networkResponse = await _handleRemoveDuplicate(options);
+      if (networkResponse.ok) {
+        cacheStorage.put(request, networkResponse.clone());
+      }
+      return networkResponse;
+    }
+
     case 'stale_while_revalidate': {
       const cachedResponse = await cacheStorage.match(request);
       const fetchedResponsePromise = _handleRemoveDuplicate(options).then((networkResponse) => {
