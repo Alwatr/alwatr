@@ -24,7 +24,7 @@ export type ToastContent = {
 export class AlwatrToast extends AlwatrSurface {
   constructor() {
     super();
-    this._hide = this._hide.bind(this);
+    this._toggleShow = this._toggleShow.bind(this);
   }
 
   static override styles = [
@@ -101,20 +101,16 @@ export class AlwatrToast extends AlwatrSurface {
   @property({type: Boolean, reflect: true})
     show = false;
 
-  protected _show(): void {
-    this._logger.logMethod('_show');
-    this.setAttribute('show', '');
-  }
-
-  protected _hide(): void {
-    this._logger.logMethod('_hide');
-    this.removeAttribute('show');
+  protected _toggleShow(): void {
+    this._logger.logMethod('_toggleShow');
+    this.show = !this.show;
   }
 
   protected _newMessage(options: ToastContent): void {
     this.content = options;
-    this._show();
-    if (this.content.autoHideDelay !== 0) setTimeout(this._hide, this.content.autoHideDelay);
+    this._toggleShow();
+    if (this.content.autoHideDelay !== 0) setTimeout(this._toggleShow, this.content.autoHideDelay);
+  }
   }
 
   override connectedCallback(): void {
@@ -134,7 +130,7 @@ export class AlwatrToast extends AlwatrSurface {
   protected _closeButtonTemplate(): TemplateResult | typeof nothing {
     this._logger.logMethod('_closeButtonTemplate');
     if (this.content.autoHideDelay !== 0) return nothing;
-    return html`<alwatr-icon @click=${this._hide} class="close-button" name="close"></alwatr-icon>`;
+    return html`<alwatr-icon @click=${this._toggleShow} class="close-button" name="close"></alwatr-icon>`;
   }
 
   protected _actionButtonTemplate(): TemplateResult | typeof nothing {
