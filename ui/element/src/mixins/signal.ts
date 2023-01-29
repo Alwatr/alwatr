@@ -1,4 +1,4 @@
-import {unsubscribe} from '@alwatr/signal/core2.js';
+import {unsubscribe} from '@alwatr/signal/core.js';
 
 import type {ListenerSpec} from '@alwatr/signal/type.js';
 import type {Constructor} from '@alwatr/type';
