@@ -1,7 +1,6 @@
 import {AlwatrDummyElement, css, customElement, html} from '@alwatr/element';
 import './chat-text-input.js';
 import '../button/icon-button.js';
-import {l10n} from '@alwatr/i18n';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -34,20 +33,8 @@ export class AlwatrChatFooter extends AlwatrDummyElement {
 
   override render(): unknown {
     return html`
-      <alwatr-icon-button .icon=${'happy-outline'} @click=${this._changeLocale}></alwatr-icon-button>
+      <alwatr-icon-button .icon=${'happy-outline'}></alwatr-icon-button>
       <alwatr-chat-text-input></alwatr-chat-text-input>
     `;
-  }
-
-  protected _changeLocale(): void {
-    l10n.setLocal(
-      l10n.locale?.code !== l10n.config.defaultLocale.code
-        ? l10n.config.defaultLocale
-        : {
-          code: 'fa-IR',
-          direction: 'rtl',
-          language: 'fa',
-        },
-    );
   }
 }

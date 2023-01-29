@@ -1,4 +1,4 @@
-import {AlwatrSmartElement, customElement, css, html} from '@alwatr/element';
+import {customElement, css, html} from '@alwatr/element';
 import {AlwatrPwaElement} from '@alwatr/element/pwa-element.js';
 import {type RoutesConfig, routerOutlet} from '@alwatr/router';
 
@@ -18,7 +18,7 @@ declare global {
  * alwatr-pwa PWA Root Element
  */
 @customElement('alwatr-pwa')
-export class AlwatrPWA extends AlwatrSmartElement {
+export class AlwatrPWA extends AlwatrPwaElement {
   static override styles = [
     ionNormalize,
     ionTheming,
@@ -33,24 +33,6 @@ export class AlwatrPWA extends AlwatrSmartElement {
     `,
   ];
 
-  constructor() {
-    super();
-
-    l10n.config.defaultLocale = {
-      code: 'fa-IR',
-      direction: 'rtl',
-      language: 'fa',
-    };
-    l10n.setLocal();
-
-    router.signal.addListener((route) => {
-      this._logger.logMethodArgs('routeChanged', {route});
-      this.requestUpdate();
-    });
-
-    router.initial();
-  }
-
   protected _activePage = 'home';
 
   protected override _routes: RoutesConfig = {
@@ -62,6 +44,6 @@ export class AlwatrPWA extends AlwatrSmartElement {
   };
 
   override render(): unknown {
-    return html` <main class="page-container">${router.outlet(this._routes)}</main>`;
     return html` <main class="page-container">${routerOutlet(this._routes)}</main>`;
+  }
 }

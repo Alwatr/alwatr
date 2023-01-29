@@ -1,5 +1,5 @@
 import {type TemplateResult, AlwatrSmartElement, map, customElement, query, css, html} from '@alwatr/element';
-import {l10n} from '@alwatr/i18n';
+import {message, number} from '@alwatr/i18n';
 import {SignalInterface} from '@alwatr/signal';
 import {modalController} from '@ionic/core';
 
@@ -69,7 +69,7 @@ export class PageFlightFinder extends AlwatrSmartElement {
 
     const time = Math.floor((Date.now() - this.__lastUpdate) / 6_000) / 10;
 
-    timer.innerText = l10n.formatNumber(time);
+    timer.innerText = number(time);
   }
 
   override connectedCallback(): void {
@@ -113,8 +113,8 @@ export class PageFlightFinder extends AlwatrSmartElement {
     return html`
       <ion-card class="job__list">
         <ion-card-header>
-          <ion-card-title>${l10n.localize('search_list')}</ion-card-title>
-          <ion-card-subtitle><span id="timer">-</span> ${l10n.localize('minutes_ago')}</ion-card-subtitle>
+          <ion-card-title>${message('search_list')}</ion-card-title>
+          <ion-card-subtitle><span id="timer">-</span> ${message('minutes_ago')}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-list lines="full">

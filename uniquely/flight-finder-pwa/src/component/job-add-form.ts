@@ -94,22 +94,22 @@ export class JobAddForm extends AlwatrSmartElement {
           <ion-list>
             <div class="form__input-row">
               <ion-item fill="solid">
-                <ion-label position="floating">${l10n.localize('origin')}</ion-label>
+                <ion-label position="floating">${message('origin')}</ion-label>
                 <ion-select
                   name="origin"
-                  ok-text="${l10n.localize('confirm')}"
-                  cancel-text=${l10n.localize('cancel')}
+                  ok-text="${message('confirm')}"
+                  cancel-text=${message('cancel')}
                   @ionChange=${this.__inputChanged}
                 >
                   ${JobAddForm.cityListTemplate}
                 </ion-select>
               </ion-item>
               <ion-item fill="solid">
-                <ion-label position="floating">${l10n.localize('destination')}</ion-label>
+                <ion-label position="floating">${message('destination')}</ion-label>
                 <ion-select
                   name="destination"
-                  ok-text=${l10n.localize('confirm')}
-                  cancel-text=${l10n.localize('cancel')}
+                  ok-text=${message('confirm')}
+                  cancel-text=${message('cancel')}
                   @ionChange=${this.__inputChanged}
                 >
                   ${JobAddForm.cityListTemplate}
@@ -117,25 +117,25 @@ export class JobAddForm extends AlwatrSmartElement {
               </ion-item>
             </div>
             <ion-item fill="solid">
-              <ion-label position="floating">${l10n.localize('description')}</ion-label>
+              <ion-label position="floating">${message('description')}</ion-label>
               <ion-input name="description" type="text" debounce="30" @ionChange=${this.__inputChanged}></ion-input>
             </ion-item>
             <div class="form__input-row">
               <ion-item fill="solid">
-                <ion-label position="floating">${l10n.localize('day')}</ion-label>
+                <ion-label position="floating">${message('day')}</ion-label>
                 <ion-select name="day" interface="popover" @ionChange=${this.__inputChanged}>
                   ${JobAddForm.dayListTemplate}
                 </ion-select>
               </ion-item>
               <ion-item fill="solid">
-                <ion-label position="floating">${l10n.localize('month')}</ion-label>
+                <ion-label position="floating">${message('month')}</ion-label>
                 <ion-select name="month" interface="popover" @ionChange=${this.__inputChanged}>
                   ${JobAddForm.monthListTemplate}
                 </ion-select>
               </ion-item>
             </div>
             <ion-item fill="solid">
-              <ion-label position="floating">${l10n.localize('seat_count')}</ion-label>
+              <ion-label position="floating">${message('seat_count')}</ion-label>
               <ion-select
                 name="seatCount"
                 interface="popover"
@@ -147,25 +147,25 @@ export class JobAddForm extends AlwatrSmartElement {
             </ion-item>
             <div class="form__input-row">
               <ion-item fill="solid">
-                <ion-label position="floating">${l10n.localize('from_hour')}</ion-label>
+                <ion-label position="floating">${message('from_hour')}</ion-label>
                 <ion-select name="minHour" interface="popover" @ionChange=${this.__inputChanged}>
                   ${JobAddForm.hourListTemplate}
                 </ion-select>
               </ion-item>
               <ion-item fill="solid">
-                <ion-label position="floating">${l10n.localize('to_hour')}</ion-label>
+                <ion-label position="floating">${message('to_hour')}</ion-label>
                 <ion-select name="maxHour" interface="popover" @ionChange=${this.__inputChanged}>
                   ${JobAddForm.hourListTemplate}
                 </ion-select>
               </ion-item>
             </div>
             <ion-item fill="solid">
-              <ion-label position="floating">${l10n.localize('maximum_price')}</ion-label>
+              <ion-label position="floating">${message('maximum_price')}</ion-label>
               <ion-input name="maxPrice" type="number" debounce="30" @ionChange=${this.__inputChanged}></ion-input>
               <ion-note slot="helper">${this.__maxPriceHelper}</ion-note>
             </ion-item>
             <ion-button class="form-btn" expand="block" ?disabled=${!this.__formValidate} @click=${this.__submit}>
-              ${l10n.localize('send')}
+              ${message('send')}
             </ion-button>
           </ion-list>
         </ion-card>
@@ -179,7 +179,7 @@ export class JobAddForm extends AlwatrSmartElement {
       event,
     });
 
-    const currentYear = new Date().toLocaleDateString(l10n.locale?.code, {
+    const currentYear = new Date().toLocaleDateString(localeConsumer.getValue()?.code, {
       numberingSystem: 'latn',
       year: 'numeric',
     });
@@ -226,9 +226,9 @@ export class JobAddForm extends AlwatrSmartElement {
   }
 
   private get __maxPriceHelper(): string {
-    const maxPrice = l10n.formatNumber(this.__newJob.maxPrice ?? 0);
+    const maxPrice = number(this.__newJob.maxPrice ?? 0);
 
-    return maxPrice + ' ' + l10n.localize('config_currency');
+    return maxPrice + ' ' + message('config_currency');
   }
   private get __formValidate(): boolean {
     return Object.keys(this.__newJob).length >= 4;
