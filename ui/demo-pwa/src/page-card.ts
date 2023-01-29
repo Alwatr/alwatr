@@ -72,17 +72,17 @@ export class AlwatrPageCard extends AlwatrSmartElement {
         stated
         elevated
         .content=${{
-    image: 'https://www.dropbox.com/s/f6zlxzb766vu3h2/my-photo.jpg?dl=1',
+    image: '/image/icon-512-maskable.png',
     headline: 'محصول شماره یک',
-    description: 'توضیحات نسبتا طولانی یک محصول بینظیر',
+    description: 'توضیحات نسبتا طولانی یک محصول بی‌نظیر',
   }}></alwatr-image-box>
       <alwatr-image-box
         stated
         elevated
         .content=${{
-    image: 'https://www.dropbox.com/s/f6zlxzb766vu3h2/my-photo.jpg?dl=1',
+    image: '/image/icon-512-maskable.png',
     headline: 'محصول شماره یک',
-    description: 'توضیحات نسبتا طولانی یک محصول بینظیر',
+    description: 'توضیحات نسبتا طولانی یک محصول بی‌نظیر',
   }}></alwatr-image-box>
 
       <alwatr-surface stated elevated><input type="text" value="elevated" /></alwatr-surface>
