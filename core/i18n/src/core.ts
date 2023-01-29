@@ -32,6 +32,9 @@ export const l10nResourceProvider = contextProvider.bind<L10nResource>('l10n-res
  */
 export const l10nResourceConsumer = contextConsumer.bind<L10nResource>('l10n-resource');
 
+/**
+ * Common useful locales.
+ */
 export const commonLocale = {
   en: {
     code: 'en-US',
@@ -54,6 +57,9 @@ let activeLocale: Locale | null = null;
 let activeNumberFormatter: Intl.NumberFormat | null = null;
 let activeL10nResource: L10nResource | null = null;
 
+/**
+ * Update activeLocale and activeNumberFormatter.
+ */
 localeConsumer.subscribe(
     (locale) => {
       activeLocale = locale;
@@ -68,6 +74,9 @@ localeConsumer.subscribe(
     {priority: true, receivePrevious: 'NextCycle'},
 );
 
+/**
+ * Update activeL10nResource.
+ */
 l10nResourceConsumer.subscribe(
     (l10nResource) => {
       activeL10nResource = l10nResource;
@@ -75,6 +84,17 @@ l10nResourceConsumer.subscribe(
     {priority: true, receivePrevious: 'NextCycle'},
 );
 
+/**
+ * Set global locale in the application.
+ *
+ * alias for localeProvider.setValue(localeObject)
+ *
+ * Example:
+ *
+ * ```ts
+ * setLocale('fa');
+ * ```
+ */
 export const setLocale = (locale: keyof typeof commonLocale | Locale): void => {
   const _locale = typeof locale === 'string' ? commonLocale[locale] : locale;
   logger.logMethodArgs('setLocale', _locale);
@@ -83,6 +103,17 @@ export const setLocale = (locale: keyof typeof commonLocale | Locale): void => {
   }
 };
 
+/**
+ * Set loader function for localization resource.
+ *
+ * Example:
+ *
+ * ```ts
+ * setL10nResourceLoader((locale) => {
+ *  return import(`/l10n/${locale.code}.js`);
+ * })
+ * ```
+ */
 export const setL10nResourceLoader = (l10nResourceLoader: (locale: Locale) => MaybePromise<L10nResource>): void => {
   logger.logMethod('setL10nResourceLoader');
 
@@ -100,8 +131,13 @@ export const setL10nResourceLoader = (l10nResourceLoader: (locale: Locale) => Ma
     activeL10nResource = null;
     l10nResourceProvider.expire();
 
-    l10nResourceProvider.setValue(await l10nResourceLoader(locale));
-    // const url =
+    try {
+      const l10nResource = await l10nResourceLoader(locale);
+      l10nResourceProvider.setValue(l10nResource);
+    }
+    catch (err) {
+      logger.error('l10nResourceLoader', 'loader_function_error', err);
+    }
   });
 };
 
@@ -135,7 +171,7 @@ export function message(key?: Lowercase<string> | null): string | null {
   if (msg == null) {
     logger.accident('message', 'l10n_key_not_found', 'Key not defined in the localization resource', {
       key,
-      local: activeL10nResource?.meta.code,
+      locale: activeL10nResource?.meta.code,
     });
     return `{${key}}`;
   }
@@ -144,7 +180,7 @@ export function message(key?: Lowercase<string> | null): string | null {
 }
 
 /**
- * Format number to active local string characters and digital group.
+ * Format number to active locale string characters and digital group.
  */
 export const number = (number: number): string => {
   if (activeNumberFormatter === null) return String(number);
