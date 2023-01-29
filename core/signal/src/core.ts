@@ -423,5 +423,6 @@ export const requestCommand = <TArgument extends Record<string, Stringifyable>, 
  */
 export const clearDetail = (signalId: string): void => {
   logger.logMethodArgs('expire', signalId);
-  delete getSignalObject(signalId).detail;
+  const signal = getSignalObject(signalId);
+  delete signal.detail;
 };
