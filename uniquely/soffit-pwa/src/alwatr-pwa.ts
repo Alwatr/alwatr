@@ -1,6 +1,5 @@
 import {html, customElement} from '@alwatr/element';
 import {AlwatrPwaElement} from '@alwatr/element/pwa-element.js';
-import {l10n} from '@alwatr/i18n';
 
 import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
@@ -23,20 +22,10 @@ declare global {
 @customElement('alwatr-pwa')
 class AlwatrPwa extends AlwatrPwaElement {
   protected override _routes: RoutesConfig = {
-    map: (route) => route.sectionList[0]?.toString(),
-    list: {
-      home: {
-        render: () => html`<alwatr-page-home></alwatr-page-home>`,
-      },
+    routeId: super._routes.routeId,
+    templates: {
+      home: () => html`<alwatr-page-home></alwatr-page-home>`,
+      _404: super._routes.templates._404,
     },
   };
-
-  protected override _initLocale(): void {
-    l10n.config.defaultLocale = {
-      code: 'fa-IR',
-      direction: 'rtl',
-      language: 'fa',
-    };
-    super._initLocale();
-  }
 }
