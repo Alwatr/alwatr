@@ -1,6 +1,13 @@
 import type {Methods, QueryParameters} from '@alwatr/type';
 
-export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'stale_while_revalidate';
+export type CacheStrategy =
+  | 'network_only'
+  | 'network_first'
+  | 'cache_only'
+  | 'cache_first'
+  | 'update_cache'
+  | 'stale_while_revalidate';
+
 export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
 
 export interface FetchOptions extends RequestInit {
@@ -59,6 +66,7 @@ export interface FetchOptions extends RequestInit {
    * - `network_first`: Network first, falling back to cache.
    * - `cache_only`: Cache only without any network request.
    * - `cache_first`: Cache first, falling back to network.
+   * - `update_cache`: Like `network_only` but with update cache.
    * - `stale_while_revalidate`: Fastest strategy, Use cached first but always request network to update the cache.
    *
    * @default 'network_only'
