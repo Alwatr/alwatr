@@ -525,10 +525,10 @@ export class AlwatrConnection {
   /**
    * Parse query param and validate with param type.
    */
-  protected _sanitizeParam(name: string, type: ParamKeyType): ParamValueType {
+  protected _sanitizeParam(name: string, type: ParamKeyType): ParamValueType | null {
     let value = this.url.searchParams.get(name);
 
-    if (value == null || value.length === 0) {
+    if (value == null || value === '') {
       return null;
     }
 
