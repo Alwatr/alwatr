@@ -1,6 +1,26 @@
 import {QueryParameters} from '@alwatr/type';
 
 /**
+ * Route context base type.
+ *
+ * Sample:
+ *
+ * ```js
+ * // http://example.com:8080/product/100/book?cart=1&color=white#description
+ * {
+ *   sectionList: [product, 100, book],
+ *   queryParamList: {cart: 1, color: 'white'},
+ *   hash: '#description',
+ * }
+ * ```
+ */
+export type RouteContextBase = {
+  sectionList: Array<string | number | boolean | null>;
+  queryParamList: QueryParameters;
+  hash: string;
+}
+
+/**
  * Global route context type.
  *
  * Sample:
@@ -19,16 +39,13 @@ import {QueryParameters} from '@alwatr/type';
  * }
  * ```
  */
-export type RouteContext = {
+export type RouteContext = RouteContextBase & {
   href: string;
   pathname: string;
   hostname: string;
   port: string;
   origin: string;
   protocol: 'http' | 'https';
-  sectionList: Array<string | number | boolean | null>;
-  queryParamList: QueryParameters;
-  hash: string;
 }
 
 // @TODO: description

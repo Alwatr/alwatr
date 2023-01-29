@@ -2,7 +2,7 @@ import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
 import {contextConsumer} from '@alwatr/signal';
 
-import {RouteContext, RoutesConfig} from './type.js';
+import {RouteContext, RouteContextBase, RoutesConfig} from './type.js';
 
 import type {ParamValueType, QueryParameters} from '@alwatr/type';
 
@@ -14,6 +14,8 @@ globalAlwatr.registeredList.push({
 export const logger = createLogger('alwatr/router');
 
 export const routeContextConsumer = contextConsumer.bind<RouteContext>('route-context');
+
+const documentBaseUrl = document.querySelector('base')?.href || '/';
 
 /**
  * The result of calling the current route's render() callback base on routesConfig.
@@ -78,12 +80,42 @@ export const routerOutlet = (routesConfig: RoutesConfig): unknown => {
   }
 };
 
+/**
+ * Make anchor valid href from RouteContext format.
+ *
+ * Example:
+ *
+ * ```html
+ * <a href=${ url({sectionList: ['product', 100]}) }>
+ * ```
+ */
+export const url = (route: Partial<RouteContextBase>): string => {
+  logger.logMethodArgs('url', {route});
+
+  let href = '';
+
+  if (Array.isArray(route.sectionList) && route.sectionList.length > 0) {
+    href += documentBaseUrl + route.sectionList.join('/');
+  }
+
+  href += toQueryParamString(route.queryParamList);
+
+  if (route.hash != null && route.hash !== '') {
+    if (route.hash.indexOf('#') !== 0) {
+      route.hash = '#' + route.hash;
+    }
+    href += route.hash;
+  }
+
+  return href;
+};
+
 // ----
 
 /**
  * Sanitize string value to valid parameters types.
  */
-export function sanitizeValue(value?: string | null): ParamValueType {
+export const sanitizeValue = (value?: string | null): ParamValueType => {
   if (value == null) {
     return null;
   }
@@ -103,48 +135,16 @@ export function sanitizeValue(value?: string | null): ParamValueType {
   }
   // else
   return value;
-}
-
-const documentBaseUrl = document.querySelector('base')?.href || '/';
-
-/**
- * Make anchor valid href from RouteContext format.
- *
- * Example:
- *
- * ```html
- * <a href=${ url({sectionList: ['product', 100]}) }>
- * ```
- */
-export function url(route: Partial<Pick<RouteContext, 'sectionList' | 'queryParamList' | 'hash'>>): string {
-  logger.logMethodArgs('url', {route});
-
-  let href = '';
-
-  if (Array.isArray(route.sectionList) && route.sectionList.length > 0) {
-    href += documentBaseUrl + route.sectionList.join('/');
-  }
-
-  href += toQueryParamString(route.queryParamList);
-
-  if (route.hash != null && route.hash !== '') {
-    if (route.hash.indexOf('#') !== 0) {
-      route.hash = '#' + route.hash;
-    }
-    href += route.hash;
-  }
-
-  return href;
-}
+};
 
 /**
  * Make query string from QueryParameters object.
  */
-export function toQueryParamString(parameterList?: QueryParameters): string {
+export const toQueryParamString = (parameterList?: QueryParameters): string => {
   if (parameterList == null) return '';
   const list: Array<string> = [];
   for (const key of Object.keys(parameterList)) {
     list.push(`${key}=${String(parameterList[key])}`);
   }
   return '?' + list.join('&');
-}
+};
