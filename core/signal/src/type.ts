@@ -3,7 +3,7 @@ import {MaybePromise, Stringifyable} from '@alwatr/type';
 export type DebounceType = 'No' | 'AnimationFrame' | 'Timeout';
 
 /**
- * addSignalListener options type
+ * Subscribe options type.
  */
 export interface SubscribeOptions {
   /**
@@ -124,7 +124,7 @@ export type SignalObject<T extends Stringifyable> = {
   id: string;
 
   /**
-   * Last dispatched value.
+   * Last dispatched detail.
    */
   detail?: T;
 

@@ -1,5 +1,5 @@
 import {contextProvider} from './context-provider.js';
-import {setContextProvider} from './core2.js';
+import {setContextProvider} from './core.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
 

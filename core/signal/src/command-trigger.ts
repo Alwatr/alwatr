@@ -1,4 +1,4 @@
-import {requestCommand} from './core2.js';
+import {requestCommand} from './core.js';
 
 import type {OmitFirstParam, Stringifyable} from '@alwatr/type';
 

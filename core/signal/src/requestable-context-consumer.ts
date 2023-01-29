@@ -1,5 +1,5 @@
 import {contextConsumer} from './context-consumer.js';
-import {requestContext} from './core2.js';
+import {requestContext} from './core.js';
 
 import type{Stringifyable, OmitFirstParam} from '@alwatr/type';
 
@@ -15,7 +15,7 @@ export const requestableContextConsumer = {
    * Example:
    *
    * ```ts
-   * requestableContextConsumer.requestContext<RequestParamType>('product-list', {foo: 'bar'});
+   * requestableContextConsumer.request<RequestParamType>('product-list', {foo: 'bar'});
    * const newProductList = await requestableContextConsumer.untilChange<ProductListType>('product-list');
    * ```
    */
@@ -39,7 +39,7 @@ export const requestableContextConsumer = {
      * Example:
      *
      * ```ts
-     * productListConsumer.requestContext({foo: 'bar'});
+     * productListConsumer.request({foo: 'bar'});
      * const newProductList = await productListConsumer.untilChange();
      * ```
      */

@@ -1,4 +1,4 @@
-import {getDetail, subscribe, unsubscribe, untilNext} from './core2.js';
+import {getDetail, subscribe, unsubscribe, untilNext} from './core.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
 

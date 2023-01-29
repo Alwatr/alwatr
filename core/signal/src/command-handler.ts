@@ -1,4 +1,4 @@
-import {defineCommand} from './core2.js';
+import {defineCommand} from './core.js';
 
 /**
  * Command handler/define interface.

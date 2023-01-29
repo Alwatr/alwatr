@@ -1,4 +1,4 @@
-import {clearDetail, dispatch, getDetail} from './core2.js';
+import {clearDetail, dispatch, getDetail} from './core.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
 
