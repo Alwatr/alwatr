@@ -1,1 +1,1 @@
-export {routerOutlet, routeContextConsumer, url} from './core.js';
+export {routerOutlet, routeContextConsumer, url, redirect} from './core.js';

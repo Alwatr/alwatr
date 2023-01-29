@@ -1,9 +1,8 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
-import {contextConsumer} from '@alwatr/signal';
+import {contextConsumer, contextProvider} from '@alwatr/signal';
 
-import {RouteContext, RouteContextBase, RoutesConfig} from './type.js';
-
+import type {PushState, RouteContext, RouteContextBase, RoutesConfig} from './type.js';
 import type {ParamValueType, QueryParameters} from '@alwatr/type';
 
 globalAlwatr.registeredList.push({
@@ -14,6 +13,7 @@ globalAlwatr.registeredList.push({
 export const logger = createLogger('alwatr/router');
 
 export const routeContextConsumer = contextConsumer.bind<RouteContext>('route-context');
+export const routeContextProvider = contextProvider.bind<RouteContext>('route-context');
 
 const documentBaseUrl = document.querySelector('base')?.href || '/';
 
@@ -44,7 +44,7 @@ const documentBaseUrl = document.querySelector('base')?.href || '/';
  *
  * routerOutlet(routeConfig);
  * ```
-*/
+ */
 export const routerOutlet = (routesConfig: RoutesConfig): unknown => {
   logger.logMethodArgs('routerOutlet', {routesConfig});
 
@@ -110,6 +110,26 @@ export const url = (route: Partial<RouteContextBase>): string => {
   return href;
 };
 
+/**
+ * Redirect to desire url.
+ *
+ * Example:
+ *
+ * ```ts
+ * redirect({
+ *   sectionList: ['product', 'book', 100],
+ *   queryParamList: {cart: 1},
+ *   hash: '#description',
+ * })
+ * ```
+ */
+export const redirect = (route: string | RouteContextBase | undefined, pushState: PushState = true): void => {
+  if (route == null) return;
+  const href = typeof route === 'string' ? route : url(route);
+  updateBrowserHistory(href, pushState);
+  routeContextProvider.setValue(makeRouteContext(href));
+};
+
 // ----
 
 /**
@@ -148,3 +168,14 @@ export const toQueryParamString = (parameterList?: QueryParameters): string => {
   }
   return '?' + list.join('&');
 };
+
+/**
+ * Update browser history state (history.pushState or history.replaceState).
+ */
+export const updateBrowserHistory = (href: string, pushState: PushState): void => {
+  if (pushState === false || globalThis.history == null) return;
+  logger.logMethodArgs('updateBrowserHistory', href);
+  if (globalThis.location.href === href) return;
+  (pushState === 'replace' ? globalThis.history.replaceState : globalThis.history.pushState)(null, '', href);
+};
+

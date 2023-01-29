@@ -48,19 +48,7 @@ export type RouteContext = RouteContextBase & {
   protocol: 'http' | 'https';
 }
 
-// @TODO: description
-export interface RequestRouteParam {
-  pathname: string;
-  search?: string;
-  hash?: string;
-
-  /**
-   * Update browser history state (history.pushState or history.replaceState).
-   *
-   * @default true
-   */
-  pushState?: boolean | 'replace';
-}
+export type PushState = boolean | 'replace';
 
 /**
  * Initial router options.
