@@ -8,9 +8,9 @@
     "esm",
     "alwatr"
   ],
-  "main": "signal.js",
+  "main": "index.js",
   "type": "module",
-  "types": "signal.d.ts",
+  "types": "index.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [

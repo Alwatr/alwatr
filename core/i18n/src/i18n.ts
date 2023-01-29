@@ -1,6 +1,6 @@
 import {fetch} from '@alwatr/fetch';
 import {createLogger, globalAlwatr} from '@alwatr/logger';
-import {SignalInterface} from '@alwatr/signal';
+import {signals, type SignalControllerInterface} from '@alwatr/signal';
 
 import type {I18nConfig, L10Resource, Locale} from './type.js';
 
@@ -37,12 +37,12 @@ export const l10n: {
   /**
    * `locale-change` signal interface
    */
-  localeChangeSignal: SignalInterface<'locale-change'>;
+  localeChangeSignal: SignalControllerInterface<Locale>;
 
   /**
    * `l10n-resource-change` signal interface
    */
-  resourceChangeSignal: SignalInterface<'l10n-resource-change'>;
+  resourceChangeSignal: SignalControllerInterface<L10Resource, Locale>;
 
   /**
    * Dispatch `locale-change` signal and initial the process.
@@ -63,14 +63,13 @@ export const l10n: {
     defaultLocale: {code: 'en-US', language: 'en', direction: 'ltr'},
   },
 
-  localeChangeSignal: new SignalInterface('locale-change'),
-
-  resourceChangeSignal: new SignalInterface('l10n-resource-change'),
-
   setLocal: (locale: Locale = l10n.config.defaultLocale): void => {
     logger.logMethodArgs('setLocal', locale);
     l10n.localeChangeSignal.dispatch(locale);
   },
+
+  localeChangeSignal: signals.bind('locale-change'),
+  resourceChangeSignal: signals.bind('l10n-resource-change'),
 
   localize,
 
@@ -86,7 +85,7 @@ l10n.localeChangeSignal.addListener(
       logger.logMethodArgs('localeChange', locale);
       l10n.locale = locale;
 
-      if (l10n.resourceChangeSignal.value?._code !== locale.code) {
+      if (l10n.resourceChangeSignal.getDetail()?._code !== locale.code) {
         l10n.resourceChangeSignal.expire();
         if (l10n.config.autoFetchResources) {
           l10n.resourceChangeSignal.request(locale);
@@ -110,7 +109,7 @@ l10n.resourceChangeSignal.addListener((l10nResource) => {
 l10n.resourceChangeSignal.setProvider(async (locale) => {
   logger.logMethodArgs('resourceProvider', locale);
 
-  if (l10n.resourceChangeSignal.value?._localCode === locale.code) {
+  if (l10n.resourceChangeSignal.getDetail()?._localCode === locale.code) {
     return;
   }
 

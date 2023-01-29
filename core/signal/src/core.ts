@@ -2,16 +2,16 @@ import {createLogger, globalAlwatr} from '@alwatr/logger';
 
 import type {
   DispatchOptions,
-  ListenerCallback,
+  ListenerFunction,
   ListenerObject,
-  ListenerOptions,
+  SubscribeOptions,
   SignalObject,
-  SignalProvider,
-  SignalProviderOptions,
-  SignalStack,
+  ProviderFunction,
+  ProviderOptions,
+  SignalStorage,
+  ListenerSpec,
 } from './type.js';
-
-export const logger = createLogger('alwatr/signal');
+import type {Stringifyable} from '@alwatr/type';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/signal',
@@ -21,129 +21,140 @@ globalAlwatr.registeredList.push({
 /**
  * Listener `id`
  */
-let _lastListenerId = 0;
+let _lastListenerAutoId = 0;
+
+const debounceTimeout = 5;
 
 /**
  * Signal stack database.
  */
-const _signalStack: SignalStack = {};
+const _signalStorage: SignalStorage = {};
+
+export const logger = createLogger('alwatr/signal');
 
 /**
- * Get signal object by name, If not available, it will create a new signal with default options.
+ * Get signal object by id, If not available, it will create a new signal with default options.
+ *
+ * Don't use it directly.
  *
  * Example:
  *
  * ```ts
- * const signal = _getSignalObject('content-change');
+ * const signal = getSignalObject<ContentType>('content-change');
  * signal.disabled = true;
  * ```
  */
-export function _getSignalObject<SignalName extends keyof AlwatrSignals>(
-    signalName: SignalName,
-): SignalObject<SignalName> {
-  if (!_signalStack[signalName]) {
-    _signalStack[signalName] = {
-      name: signalName,
+export const getSignalObject = <T extends Stringifyable>(id: string): SignalObject<T> => {
+  let signal = _signalStorage[id] as SignalObject<T> | undefined;
+  if (signal == null) {
+    signal = _signalStorage[id] = {
+      id,
       disabled: false,
       debounced: false,
       listenerList: [],
     };
   }
-  return _signalStack[signalName] as unknown as SignalObject<SignalName>;
-}
+  return signal;
+};
 
-function __callListeners<SignalName extends keyof AlwatrSignals>(signal: SignalObject<SignalName>): void {
-  logger.logMethodArgs('_callListeners', {signalName: signal.name, signalValue: signal.value});
-  if (signal.value === undefined) {
-    // null is a valid value for signal.
-    logger.accident('_callListeners', 'no_signal_value', 'signal must have a value', {
-      signalName: signal.name,
+/**
+ * Call all listeners callback of special signal.
+ *
+ * Used inside dispatch, Don't use it directly.
+ */
+export const _callListeners = <T extends Stringifyable>(signal: SignalObject<T>): void => {
+  logger.logMethodArgs('_callListeners', {signalId: signal.id, signalDetail: signal.detail});
+
+  if (signal.detail === undefined) {
+    logger.accident('_callListeners', 'no_signal_detail', 'signal must have a detail', {
+      signalId: signal.id,
     });
     return;
   }
 
+  const removeList: Array<ListenerObject<T>> = [];
+
   for (const listener of signal.listenerList) {
     if (listener.disabled) continue;
+    if (listener.once) removeList.push(listener);
     try {
-      const ret = listener.callback(signal.value);
+      const ret = listener.callback(signal.detail);
       if (ret instanceof Promise) {
         ret.catch((err) =>
           logger.error('_callListeners', 'call_listener_failed', err, {
-            signalName: signal.name,
+            signalId: signal.id,
           }),
         );
       }
     }
     catch (err) {
       logger.error('_callListeners', 'call_listener_failed', err, {
-        signalName: signal.name,
+        signalId: signal.id,
       });
     }
   }
 
-  signal.listenerList
-      .filter((listener) => !listener.disabled && listener.once)
-      .forEach((listener) => _removeSignalListener(signal, listener.id));
-}
+  removeList.forEach((listener) => unsubscribe(listener));
+};
 
 /**
- * Adds a new listener to the signal.
+ * Subscribe new signal listener to a signal, work like addEventListener.
  *
  * Example:
  *
  * ```ts
- * const signal = _getSignalObject('content-change')
- * const listener = _addSignalListener(signal, (content) => console.log(content));
+ * const listener = subscribe<ContentType>('content-change', (content) => console.log(content));
+ * // ...
+ * unsubscribe(listener);
  * ```
  */
-export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
-    signal: SignalObject<SignalName>,
-    listenerCallback: ListenerCallback<SignalName>,
-    options: ListenerOptions = {},
-): ListenerObject<SignalName> {
+export const subscribe = <T extends Stringifyable>(
+  signalId: string,
+  listenerCallback: ListenerFunction<T>,
+  options: Partial<SubscribeOptions> = {},
+): ListenerSpec => {
   options.once ??= false;
   options.disabled ??= false;
-  options.receivePrevious ??= true;
+  options.receivePrevious ??= 'AnimationFrame';
   options.priority ??= false;
 
-  logger.logMethodArgs('_addSignalListener', {signalName: signal.name, options});
+  logger.logMethodArgs('subscribe', {signalId, options});
 
-  const listener: ListenerObject<SignalName> = {
-    id: ++_lastListenerId,
+  const signal = getSignalObject<T>(signalId);
+
+  const listener: ListenerObject<T> = {
+    id: ++_lastListenerAutoId,
+    signalId: signal.id,
     once: options.once,
     disabled: options.disabled,
     callback: listenerCallback,
   };
 
-  let callbackCalled = false;
+  const callbackCall = signal.detail !== undefined && options.receivePrevious !== 'No';
+  if (callbackCall) {
+    // Run callback for old dispatch signal
 
-  // Run callback for old dispatch signal
-  if (signal.value !== undefined) {
-    // null is a valid value for signal.
-    if (options.receivePrevious === 'Immediate') {
+    const callback = (): void => {
       try {
-        listenerCallback(signal.value);
+        if (signal.detail !== undefined) listenerCallback(signal.detail);
       }
       catch (err) {
-        logger.error('_addSignalListener', 'call_signal_callback_failed', err, {
-          signalName: signal.name,
+        logger.error('subscribe', 'call_signal_callback_failed', err, {
+          signalId: signal.id,
         });
       }
-      callbackCalled = true;
+    };
+
+    if (options.receivePrevious === 'AnimationFrame') {
+      requestAnimationFrame(callback);
     }
-    else if (options.receivePrevious === true) {
-      requestAnimationFrame(() => {
-        if (signal.value !== undefined) {
-          // null is a valid value for signal.
-          listenerCallback(signal.value);
-        }
-      });
-      callbackCalled = true; // must be outside of requestAnimationFrame.
+    else {
+      setTimeout(callback, options.receivePrevious === 'NextCycle' ? 0 : debounceTimeout);
     }
   }
 
   // if once then must remove listener after fist callback called! then why push it to listenerList?!
-  if (!(options.once === true && callbackCalled === true)) {
+  if (!(callbackCall && options.once)) {
     if (options.priority === true) {
       signal.listenerList.unshift(listener);
     }
@@ -152,117 +163,266 @@ export function _addSignalListener<SignalName extends keyof AlwatrSignals>(
     }
   }
 
-  return listener;
-}
+  return {
+    id: listener.id,
+    signalId: listener.signalId,
+  };
+};
 
 /**
- * Removes a listener from the signal.
+ * Unsubscribe listener from signal, work like removeEventListener.
  *
  * Example:
  *
  * ```ts
- * const signal = _getSignalObject('content-change')
- * const listener = _addSignalListener(signal, ...);
- * _removeSignalListener(signal, listener);
+ * const listener = subscribe<ContentType>('content-change', (content) => console.log(content));
+ * // ...
+ * unsubscribe(listener);
  * ```
  */
-export function _removeSignalListener<SignalName extends keyof AlwatrSignals>(
-    signal: SignalObject<SignalName>,
-    listenerId: number,
-): void {
-  logger.logMethodArgs('_removeSignalListener', {signalName: signal.name, listenerId});
-  const listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listenerId);
+export const unsubscribe = (listener: ListenerSpec): void => {
+  logger.logMethodArgs('unsubscribe', listener);
+  const signal = getSignalObject(listener.signalId);
+  const listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listener.id);
   if (listenerIndex !== -1) {
-    signal.listenerList.splice(listenerIndex, 1);
+    void signal.listenerList.splice(listenerIndex, 1);
   }
-}
+};
+
+/**
+ * Unsubscribe all listener from a signal, clear all listeners.
+ *
+ * Example:
+ *
+ * ```ts
+ * removeAllListeners('content-change');
+ * ```
+ */
+export const removeAllListeners = (signalId: string): void => {
+  logger.logMethodArgs('removeAllListeners', signalId);
+  const signal = getSignalObject(signalId);
+  if (signal.listenerList.length === 0) return;
+  signal.listenerList.length = 0;
+  signal.listenerList = [];
+};
 
 /**
  * Dispatch (send) signal to all listeners.
  *
- * @example
- * const signal = _getSignalObject('content-change')
- * _dispatchSignal(signal, content);
- */
-export function _dispatchSignal<SignalName extends keyof AlwatrSignals>(
-    signal: SignalObject<SignalName>,
-    value: AlwatrSignals[SignalName],
-    options: DispatchOptions = {},
-): void {
-  options.debounce ??= true;
-
-  logger.logMethodArgs('dispatchSignal', {signalName: signal.name, value, options});
-
-  // set value before check signal.debounced for act like throttle (call listeners with last dispatch value).
-  signal.value = value;
-
-  if (signal.disabled) return; // signal is disabled.
-  if (options.debounce === true && signal.debounced === true) return; // last dispatch in progress.
-
-  if (options.debounce !== true) {
-    // call listeners immediately.
-    __callListeners(signal);
-    return;
-  }
-  // else: call listeners in next frame.
-  signal.debounced = true;
-  requestAnimationFrame(() => {
-    __callListeners(signal);
-    signal.debounced = false;
-  });
-}
-
-/**
- * Defines the provider of the signal that will be called when the signal requested (addRequestSignalListener).
+ * Signal detail changed immediately without any debounce.
  *
  * Example:
  *
  * ```ts
- * const signal = _getSignalObject('content-change');
- * const requestSignal = _getSignalObject('request-content-change');
- * _setSignalProvider(signal, requestSignal, async (requestParam) => {
- *   const content = await fetchNewContent(requestParam);
- *   if (content != null) {
- *     return content; // dispatchSignal('content-change', content);
- *   }
- *   else {
- *     dispatchSignal('content-not-found');
- *   }
+ * dispatch<ContentType>('content-change', newContent);
+ * ```
+ */
+export const dispatch = <T extends Stringifyable>(
+  signalId: string,
+  detail: T,
+  options: Partial<DispatchOptions> = {},
+): void => {
+  options.debounce ??= 'AnimationFrame';
+
+  logger.logMethodArgs('dispatch', {signalId, detail, options});
+
+  const signal = getSignalObject<T>(signalId);
+
+  // set detail before check signal.debounced for act like throttle (call listeners with last dispatch detail).
+  signal.detail = detail;
+
+  if (signal.disabled) return; // signal is disabled.
+
+  // Simple debounce noise filtering
+  if (options.debounce !== 'No' && signal.debounced === true) return; // last dispatch in progress.
+
+  if (options.debounce === 'No') {
+    return _callListeners(signal);
+  }
+  // else
+  signal.debounced = true;
+  const callListeners = (): void => {
+    _callListeners(signal);
+    signal.debounced = false;
+  };
+  options.debounce === 'AnimationFrame'
+    ? requestAnimationFrame(callListeners)
+    : setTimeout(callListeners, debounceTimeout);
+};
+
+/**
+ * Get current signal detail/value.
+ *
+ * Return undefined if signal not dispatched before or expired.
+ *
+ * Example:
+ *
+ * ```ts
+ * const currentContent = getDetail<ContentType>('content-change');
+ * if (currentContent === undefined) {
+ *   // signal not dispatched yet
  * }
  * ```
  */
-export function _setSignalProvider<SignalName extends keyof AlwatrSignals>(
-    signal: SignalObject<SignalName>,
-    requestSignal: SignalObject<SignalName>,
-    signalProvider: SignalProvider<SignalName>,
-    options: SignalProviderOptions = {},
-): ListenerObject<SignalName> {
-  options.debounce ??= true;
-  options.receivePrevious ??= true;
+export const getDetail = <T extends Stringifyable>(signalId: string): T | undefined => {
+  return getSignalObject<T>(signalId).detail;
+};
 
-  logger.logMethodArgs('_setSignalProvider', {signal: signal.name, requestSignal: requestSignal.name, options});
-
-  if (requestSignal.listenerList.length > 0) {
-    logger.accident(
-        '_setSignalProvider',
-        'another_signal_provider_exist',
-        'Another provider exist! It will be removed to fix the problem',
-        {
-          signalName: signal.name,
-        },
-    );
-    requestSignal.listenerList = [];
-  }
-
-  const _callback = async (requestParam: AlwatrRequestSignals[SignalName]): Promise<void> => {
-    const signalValue = await signalProvider(requestParam);
-    if (signalValue !== undefined) {
-      // null is a valid value for signal.
-      _dispatchSignal(signal, signalValue, {debounce: options.debounce});
-    }
-  };
-
-  return _addSignalListener(requestSignal, _callback as unknown as ListenerCallback<SignalName>, {
-    receivePrevious: options.receivePrevious,
+/**
+ * Get the detail/value of the next received signal.
+ *
+ * Example:
+ *
+ * ```ts
+ * const newContent = await untilNext<ContentType>('content-change');
+ * ```
+ */
+export const untilNext = <T extends Stringifyable>(signalId: string): Promise<T> => {
+  return new Promise((resolve) => {
+    logger.logMethodArgs('untilNext', signalId);
+    subscribe<T>(signalId, resolve, {
+      once: true,
+      priority: true,
+      receivePrevious: 'No',
+    });
   });
-}
+};
+
+/**
+ * Defines the provider of the context signal that will be called when the context requested.
+ * Subscribe to `request-signalId`.
+ *
+ * Example:
+ *
+ * ```ts
+ * setContextProvider('content-change', async (requestParam) => await fetchNewContent(requestParam));
+ * ```
+ */
+export const setContextProvider = <TContext extends Stringifyable, TRquest extends Stringifyable>(
+  signalId: string,
+  signalProvider: ProviderFunction<TRquest, TContext | void>,
+  options: Partial<ProviderOptions> = {},
+): void => {
+  options.debounce ??= 'AnimationFrame';
+  options.receivePrevious ??= 'AnimationFrame';
+  logger.logMethodArgs('setContextProvider', {signalId, options});
+  const requestSignalId = 'request-' + signalId;
+  removeAllListeners(requestSignalId);
+  subscribe<TRquest>(
+      requestSignalId,
+      async (argumentObject): Promise<void> => {
+        const signalDetail = await signalProvider(argumentObject);
+        if (signalDetail !== undefined) {
+          dispatch<TContext>(signalId, signalDetail, {debounce: options.debounce});
+        }
+      },
+      {
+        receivePrevious: options.receivePrevious,
+      },
+  );
+};
+
+/**
+ * Defines the command and dispatch returned value.
+ *
+ * Subscribe commandFunction to request-command-signal and dispatch callback-signal with commandFunction return value.
+ *
+ * Example:
+ *
+ * ```ts
+ * defineCommand<TArgument, TReturn>(
+ *   'show-prompt',
+ *   async (argumentObject) => {
+ *      return await showPrompt(argumentObject);
+ *   },
+ * );
+ * ```
+ */
+export const defineCommand = <TArgument extends Record<string, Stringifyable>, TReturn extends Stringifyable>(
+  signalId: string,
+  signalProvider: ProviderFunction<TArgument & {_callbackSignalId: string}, TReturn>,
+  options: Partial<Pick<ProviderOptions, 'debounce'>> = {},
+): void => {
+  options.debounce ??= 'AnimationFrame';
+  logger.logMethodArgs('defineCommand', {commandId: signalId, options});
+  const requestSignalId = 'request-' + signalId;
+  removeAllListeners(requestSignalId);
+  subscribe<TArgument & {_callbackSignalId: string}>(
+      requestSignalId,
+      async (argumentObject) => {
+        const callbackSignalId = argumentObject._callbackSignalId;
+        // TODO: validate callbackSignalId
+        const commandReturn = await signalProvider(argumentObject);
+        dispatch<TReturn>(callbackSignalId, commandReturn, {debounce: options.debounce});
+      },
+      {
+        receivePrevious: 'No', // Prevent to merge multiple previous requests
+      },
+  );
+};
+
+/**
+ * Dispatch request context signal with requestParam as detail.
+ *
+ * Example:
+ *
+ * ```ts
+ * requestContext<RequestParamType>('content-change', {foo: 'bar'});
+ * const newContent = await untilNext<ContentType>('content-change');
+ * ```
+ */
+export const requestContext = <TRequest extends Stringifyable>(
+  contextId: string,
+  requestParam: TRequest,
+  options: Partial<DispatchOptions> = {},
+): void => {
+  logger.logMethodArgs('requestContext', {contextId, requestParam});
+  return dispatch<TRequest>(contextId, requestParam, options);
+};
+
+/**
+ * Dispatch request command signal with commandArgument as detail and return untilNext of callback signal.
+ *
+ * Example:
+ *
+ * ```ts
+ * const returnObject = await requestCommand<ArgumentType, ReturnType>('show-dialog', {foo: 'bar'});
+ * ```
+ */
+export const requestCommand = <TArgument extends Record<string, Stringifyable>, TReturn extends Stringifyable>(
+  commandId: string,
+  commandArgument: TArgument,
+): Promise<TReturn> => {
+  return new Promise((resolve) => {
+    logger.logMethodArgs('requestCommand', {commandId, commandArgument});
+
+    const requestSignalId = `request-${commandId}`;
+    const callbackSignalId = `callback-${commandId}-${++_lastListenerAutoId}`;
+
+    subscribe<TReturn>(callbackSignalId, resolve, {once: true, priority: true, receivePrevious: 'No'});
+    // TODO: refactor _untilNextSignal with option and use it
+
+    dispatch<TArgument & {_callbackSignalId: string}>(
+        requestSignalId,
+        {...commandArgument, _callbackSignalId: callbackSignalId},
+        {debounce: 'No'},
+    );
+  });
+};
+
+/**
+ * Clear current signal detail without dispatch new signal.
+ *
+ * new subscriber options.receivePrevious not work until new signal
+ *
+ * Example:
+ *
+ * ```ts
+ * clearDetail('product-list');
+ * ```
+ */
+export const clearDetail = (signalId: string): void => {
+  logger.logMethodArgs('expire', signalId);
+  const signal = getSignalObject(signalId);
+  delete signal.detail;
+};

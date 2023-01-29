@@ -1,49 +1,37 @@
-declare global {
-  /**
-   * Global signals value type registry.
-   */
-  interface AlwatrSignals {
-    readonly 'easter-egg': string;
-  }
+import {MaybePromise, Stringifyable} from '@alwatr/type';
 
-  /**
-   * Global request signal parameters types.
-   */
-  interface AlwatrRequestSignals {
-    readonly 'easter-egg': number;
-  }
-}
+export type DebounceType = 'No' | 'AnimationFrame' | 'Timeout';
 
 /**
- * addSignalListener options type
+ * Subscribe options type.
  */
-export interface ListenerOptions {
+export interface SubscribeOptions {
   /**
    * If true, the listener will be called only once.
    * @default false
    */
-  once?: boolean;
+  once: boolean;
 
   /**
    * If true, the listener will be called before other.
    * @default false
    */
-  priority?: boolean;
+  priority: boolean;
 
   /**
    * If true, the listener will be defined disabled by default.
    *
    * @default false
    */
-  disabled?: boolean;
+  disabled: boolean;
 
   /**
    * Calling this listener (callback) with preview signal value (if dispatched before).
    * If Immediate, the listener will be called immediately without any debounce for preview signal.
    *
-   * @default true
+   * @default `AnimationFrame`
    */
-  receivePrevious?: boolean | 'Immediate';
+  receivePrevious: DebounceType | 'NextCycle';
 }
 
 /**
@@ -55,53 +43,64 @@ export interface DispatchOptions {
    * If false, every signal is matter and count.
    * tips: debounce work like throttle this means listeners call with last dispatch value.
    *
-   * @default true
+   * @default `AnimationFrame`
    */
-  debounce?: boolean;
+  debounce: DebounceType;
 }
 
-export interface SignalProviderOptions {
+/**
+ * setSignalProvider options type.
+ */
+export interface ProviderOptions {
   /**
    * Calling signal provider (request signal callback) with preview signal value (if dispatched before).
    * If Immediate, the listener will be called immediately without any debounce for preview signal.
    *
-   * @default true
+   * @default `NextCycle`
    */
-  receivePrevious?: boolean | 'Immediate';
+  receivePrevious: DebounceType | 'NextCycle';
 
   /**
    * If true, the dispatch will be send after animation frame debounce.
    * If false, every signal is matter and count.
-   * tips: debounce work like throttle this means listeners call with last dispatch value.
+   * tips: debounce true work like throttle this means listeners call with last dispatch value.
    *
-   * @default true
+   * @default `AnimationFrame`
    */
-  debounce?: boolean;
+  debounce: DebounceType;
 }
 
 /**
- * Signal listeners callback function type.
+ * Subscribe callback function.
  */
-export type ListenerCallback<SignalName extends keyof AlwatrSignals> = (
-  signalValue: AlwatrSignals[SignalName]
-) => void | Promise<void>;
+export type ListenerFunction<T extends Stringifyable> = (detail: T) => void | Promise<void>;
 
 /**
- * Signal provider function type used to setSignalProvider.
+ * Command/Context provider/handler function.
  */
-export type SignalProvider<SignalName extends keyof AlwatrRequestSignals> = (
-  requestParam: AlwatrRequestSignals[SignalName]
-) => AlwatrSignals[SignalName] | void | Promise<AlwatrSignals[SignalName] | void>;
+export type ProviderFunction<TArgument, TReturn> = (
+  argumentObject: TArgument
+) => MaybePromise<TReturn>;
 
 /**
- * Signal listeners object in database.
+ * Listener spec.
  */
-export interface ListenerObject<SignalName extends keyof AlwatrSignals> {
+export type ListenerSpec = {
   /**
    * Unique listener id
    */
   id: number;
 
+  /**
+   * Signal id
+   */
+  signalId: string;
+}
+
+/**
+ * Signal listeners object in storage.
+ */
+export type ListenerObject<T extends Stringifyable> = ListenerSpec & {
   /**
    * If true, the listener will be called only once and removed automatically after first call
    */
@@ -112,22 +111,22 @@ export interface ListenerObject<SignalName extends keyof AlwatrSignals> {
    */
   disabled: boolean;
 
-  callback: ListenerCallback<SignalName>;
-}
+  callback: ListenerFunction<T>;
+};
 
 /**
- * Signal object in database.
+ * Signal object in storage.
  */
-export interface SignalObject<SignalName extends keyof AlwatrSignals> {
+export type SignalObject<T extends Stringifyable> = {
   /**
-   * Signal name for direct access.
+   * Signal id for direct access.
    */
-  name: SignalName;
+  id: string;
 
   /**
-   * Last dispatched value.
+   * Last dispatched detail.
    */
-  value?: AlwatrSignals[SignalName];
+  detail?: T;
 
   /**
    * If true, the signal is disabled.
@@ -143,12 +142,10 @@ export interface SignalObject<SignalName extends keyof AlwatrSignals> {
   /**
    * Signal listeners list.
    */
-  listenerList: Array<ListenerObject<SignalName>>;
-}
+  listenerList: Array<ListenerObject<T>>;
+};
 
 /**
- * Signal stack database.
+ * Signal stack storage.
  */
-export type SignalStack = {
-  [SignalName in keyof AlwatrSignals]?: SignalObject<SignalName>;
-};
+export type SignalStorage = Record<string, SignalObject<Stringifyable> | undefined>;
