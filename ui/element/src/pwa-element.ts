@@ -1,5 +1,5 @@
-import {l10n} from '@alwatr/i18n';
-import {router, type RoutesConfig} from '@alwatr/router';
+import {setLocale} from '@alwatr/i18n';
+import {routerOutlet, type RoutesConfig} from '@alwatr/router';
 import {html, css, type CSSResultGroup, type PropertyValues} from 'lit';
 import {cache} from 'lit/directives/cache.js';
 
@@ -33,39 +33,26 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
   `;
 
   protected _routes: RoutesConfig = {
-    map: (route) => route.sectionList[0]?.toString(),
-    list: {
-      home: {
-        render: () => html`<h1>Page Home ;)</h1>`,
-      },
+    routeId: (route) => route.sectionList[0]?.toString(),
+    templates: {
+      home: () => html`<h1>Page Home ;)</h1>`,
+      _404: () => html`404, Not found!`,
     },
   };
 
   constructor() {
     super();
     this._initLocale();
-    this._initRouter();
   }
 
   protected _initLocale(): void {
     this._logger.logMethod('_initLocale');
-    l10n.setLocal();
-  }
-
-  protected _initRouter(): void {
-    this._logger.logMethod('_initRouter');
-    router.signal.addListener(this._routeChanged.bind(this));
-    router.initial();
-  }
-
-  protected _routeChanged(): void {
-    this._logger.logMethod('routeChanged');
-    this.requestUpdate();
+    setLocale('fa');
   }
 
   override render(): unknown {
     super.render();
-    return html`<div class="page-container">${cache(router.outlet(this._routes))}</div>`;
+    return html`<div class="page-container">${cache(routerOutlet(this._routes))}</div>`;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
