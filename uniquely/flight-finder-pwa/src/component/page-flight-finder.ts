@@ -1,11 +1,12 @@
 import {type TemplateResult, AlwatrSmartElement, map, customElement, query, css, html} from '@alwatr/element';
 import {message, number} from '@alwatr/i18n';
-import {SignalInterface} from '@alwatr/signal';
+import {requestableContextConsumer} from '@alwatr/signal';
 import {modalController} from '@ionic/core';
 
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 
+import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Job} from '@alwatr/type/flight-finder.js';
 
 import './job-item.js';
@@ -51,8 +52,9 @@ export class PageFlightFinder extends AlwatrSmartElement {
     `,
   ];
 
-  static jobDocumentStorageSignal = new SignalInterface('job-document-storage');
-  static jobAddSignal = new SignalInterface('job-add');
+  static jobDocumentStorageContextConsumer =
+    requestableContextConsumer.bind<AlwatrDocumentStorage<Job>, null>('job-document-storage');
+  // static jobAddEventTrigger = eventTrigger.bind<Job>('job-add');
 
   private __jobList?: Array<Job>;
   private __lastUpdate = 0;
@@ -74,12 +76,7 @@ export class PageFlightFinder extends AlwatrSmartElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-
-    l10n.resourceChangeSignal.addListener(() => {
-      this.requestUpdate();
-    });
-
-    PageFlightFinder.jobDocumentStorageSignal.addListener((jobList) => {
+    PageFlightFinder.jobDocumentStorageContextConsumer.subscribe((jobList) => {
       this.__jobList = Object.values(jobList.data);
       this.__lastUpdate = jobList.meta.lastUpdated;
       this.requestUpdate();
@@ -91,7 +88,7 @@ export class PageFlightFinder extends AlwatrSmartElement {
     return html`
       <ion-header>
         <ion-toolbar color="primary">
-          <ion-title>${l10n.localize('flight_finder')}</ion-title>
+          <ion-title>${message('flight_finder')}</ion-title>
         </ion-toolbar>
       </ion-header>
 

@@ -1,18 +1,13 @@
 import {type AlwatrServiceResponse, fetch} from '@alwatr/fetch';
-import {SignalInterface} from '@alwatr/signal';
+import {commandTrigger, eventListener, requestableContextConsumer} from '@alwatr/signal';
 
-import {jobDocumentStorageSignal} from './job-document-storage.js';
-import {showToastSignal} from './toast.js';
-
-export const jobDeleteSignal = new SignalInterface('job-delete');
-
-jobDeleteSignal.addListener(async (id) => {
+eventListener.subscribe<{id: string}>('job-delete', async (detail) => {
   try {
     const response = await fetch({
       url: window.appConfig?.api ? window.appConfig.api + '/job' : '/job',
       token: window.appConfig?.token,
       method: 'DELETE',
-      queryParameters: {id},
+      queryParameters: {id: detail.id},
     });
 
     if (response.ok !== true) {
@@ -26,10 +21,10 @@ jobDeleteSignal.addListener(async (id) => {
     }
   }
   catch (error) {
-    showToastSignal.dispatch({
+    commandTrigger.request('toast', {
       message: 'عملیات با خطا رو به رو شد',
     });
   }
 
-  jobDocumentStorageSignal.request(null);
+  requestableContextConsumer.request('job-delete', null);
 });

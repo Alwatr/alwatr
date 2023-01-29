@@ -1,6 +1,6 @@
 import {AlwatrSmartElement, customElement, css, html} from '@alwatr/element';
-import {l10n} from '@alwatr/i18n';
-import {SignalInterface} from '@alwatr/signal';
+import {message, localeConsumer, number} from '@alwatr/i18n';
+import {eventTrigger} from '@alwatr/signal';
 
 import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
@@ -48,7 +48,7 @@ export class JobAddForm extends AlwatrSmartElement {
     `,
   ];
 
-  static jobAddSignal = new SignalInterface('job-add');
+  static jobAddSignal = eventTrigger.bind('job-add');
   static cityListTemplate = Object.keys(cityList).map(
       (city) => html`<ion-select-option value=${city}>${city} - ${cityList[city]}</ion-select-option>`,
   );
