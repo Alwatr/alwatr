@@ -4,6 +4,7 @@ import {popstateTrigger} from './trigger-popstate.js';
 
 export {routerOutlet, routeContextConsumer, url, redirect} from './core.js';
 export {clickTrigger, popstateTrigger};
+export type {RouteContext, RoutesConfig} from './type.js';
 
 clickTrigger.enable = popstateTrigger.enable = true;
 
