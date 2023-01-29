@@ -1,6 +1,6 @@
 import {AlwatrSmartElement, customElement, css, html} from '@alwatr/element';
-import {l10n} from '@alwatr/i18n';
-import {type RoutesConfig, router} from '@alwatr/router';
+import {AlwatrPwaElement} from '@alwatr/element/pwa-element.js';
+import {type RoutesConfig, routerOutlet} from '@alwatr/router';
 
 import ionNormalize from './style/ionic.normalize.js';
 import ionTheming from './style/ionic.theming.js';
@@ -53,16 +53,15 @@ export class AlwatrPWA extends AlwatrSmartElement {
 
   protected _activePage = 'home';
 
-  protected _routes: RoutesConfig = {
-    map: (route) => route.sectionList[0]?.toString(),
-    list: {
-      home: {
-        render: () => html`<page-flight-finder class="ion-page"></page-flight-finder>`,
-      },
+  protected override _routes: RoutesConfig = {
+    routeId: (route) => route.sectionList[0]?.toString(),
+    templates: {
+      home: () => html`<page-flight-finder class="ion-page"></page-flight-finder>`,
+      _404: super._routes.templates._404,
     },
   };
 
   override render(): unknown {
     return html` <main class="page-container">${router.outlet(this._routes)}</main>`;
-  }
+    return html` <main class="page-container">${routerOutlet(this._routes)}</main>`;
 }
