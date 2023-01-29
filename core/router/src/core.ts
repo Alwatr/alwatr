@@ -127,17 +127,56 @@ export const redirect = (route: string | RouteContextBase | undefined, pushState
   if (route == null) return;
   const href = typeof route === 'string' ? route : url(route);
   updateBrowserHistory(href, pushState);
-  routeContextProvider.setValue(makeRouteContext(href));
+  routeContextProvider.setValue(makeRouteContext(), {debounce: 'Timeout'});
 };
 
 // ----
+
+/**
+ * Update browser history state (history.pushState or history.replaceState).
+ */
+export const updateBrowserHistory = (url: string, pushState: PushState): void => {
+  if (pushState === false || globalThis.history == null) return;
+  logger.logMethodArgs('updateBrowserHistory', url);
+  if (globalThis.location.href === url) return;
+  (pushState === 'replace' ? globalThis.history.replaceState : globalThis.history.pushState)(null, '', url);
+};
+
+/**
+ * Make route context from url.
+ */
+export function makeRouteContext(): RouteContext {
+  logger.logMethod('makeRouteContext');
+
+  const sectionList = location.pathname
+      .split('/')
+      .map(_decodeURIComponent) // decode must be after split because encoded '/' maybe include in values.
+      .filter((section) => section.trim() !== '')
+      .map(sanitizeValue);
+
+  const queryParamList = parseQueryParamString(location.search);
+
+  const protocol = location.protocol === 'https:' ? 'https' : 'http';
+
+  return {
+    href: location.href,
+    hostname: location.hostname,
+    origin: location.origin,
+    pathname: location.pathname,
+    port: location.port,
+    protocol,
+    sectionList,
+    queryParamList,
+    hash: location.hash,
+  };
+}
 
 /**
  * Sanitize string value to valid parameters types.
  */
 export const sanitizeValue = (value?: string | null): ParamValueType => {
   if (value == null) {
-    return null;
+    return '';
   }
   // else
   value = value.trim();
@@ -158,24 +197,45 @@ export const sanitizeValue = (value?: string | null): ParamValueType => {
 };
 
 /**
- * Make query string from QueryParameters object.
+ * Convert `QueryParameters` object to `queryParameter` string.
  */
-export const toQueryParamString = (parameterList?: QueryParameters): string => {
-  if (parameterList == null) return '';
+export const toQueryParamString = (queryParameterList?: QueryParameters): string => {
+  if (queryParameterList == null) return '';
   const list: Array<string> = [];
-  for (const key of Object.keys(parameterList)) {
-    list.push(`${key}=${String(parameterList[key])}`);
+  for (const key of Object.keys(queryParameterList)) {
+    list.push(`${key}=${String(queryParameterList[key])}`);
   }
   return '?' + list.join('&');
 };
 
 /**
- * Update browser history state (history.pushState or history.replaceState).
+ * Convert `queryParameter` string to `QueryParameters` object.
  */
-export const updateBrowserHistory = (href: string, pushState: PushState): void => {
-  if (pushState === false || globalThis.history == null) return;
-  logger.logMethodArgs('updateBrowserHistory', href);
-  if (globalThis.location.href === href) return;
-  (pushState === 'replace' ? globalThis.history.replaceState : globalThis.history.pushState)(null, '', href);
+export const parseQueryParamString = (queryParameter?: string): QueryParameters => {
+  logger.logMethodArgs('parseQueryParamString', {queryParamString: queryParameter});
+
+  const queryParamList: QueryParameters = {};
+
+  if (queryParameter == null) return queryParamList;
+  if (queryParameter.indexOf('?') === 0) queryParameter = queryParameter.substring(1);
+  if (queryParameter === '') return queryParamList;
+
+  for (const parameter of queryParameter.split('&')) {
+    const parameterArray = parameter.split('=');
+    queryParamList[parameterArray[0]] = sanitizeValue(parameterArray[1]);
+  }
+
+  return queryParamList;
 };
 
+/**
+ * decodeURIComponent without throwing error.
+ */
+export function _decodeURIComponent(val: string): string {
+  try {
+    return decodeURIComponent(val);
+  }
+  catch (err) {
+    return val;
+  }
+}
