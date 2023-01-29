@@ -111,6 +111,11 @@ export class AlwatrToast extends AlwatrSurface {
     this._toggleShow();
     if (this.content.autoHideDelay !== 0) setTimeout(this._toggleShow, this.content.autoHideDelay);
   }
+
+  protected _actionCallback(): void {
+    if (this.content.actionCallBack === undefined) return;
+    this.content.actionCallBack();
+    this._toggleShow();
   }
 
   override connectedCallback(): void {
@@ -137,11 +142,6 @@ export class AlwatrToast extends AlwatrSurface {
     this._logger.logMethod('_actionButtonTemplate');
 
     if (this.content.actionButtonLabel === undefined) return nothing;
-    return html`<span @click=${(): void => {
-      if (this.content.actionCallBack === undefined) return;
-      this.content.actionCallBack();
-      this._hide();
-    }} class="action-button"
-      >${this.content.actionButtonLabel}</span>`;
+    return html`<span @click=${this._actionCallback} class="action-button">${this.content.actionButtonLabel}</span>`;
   }
 }
