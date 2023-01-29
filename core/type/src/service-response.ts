@@ -1,7 +1,7 @@
 export type Methods = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'TRACE' | 'OPTIONS' | 'PATCH';
 
 export type ParamKeyType = 'string' | 'number' | 'boolean';
-export type ParamValueType = string | number | boolean | null;
+export type ParamValueType = string | number | boolean;
 export type QueryParameters = Record<string, string | number | boolean>;
 
 export type AlwatrServiceResponseFailed = {

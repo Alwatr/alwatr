@@ -1,25 +1,54 @@
-export type ParamList = Record<string, string | number | boolean>;
+import {QueryParameters} from '@alwatr/type';
 
-// @TODO: description
-export interface Route {
-  // href: https://example.com/product/100/book?cart=1&color=white#description
-  sectionList: Array<string | number | boolean>; // [product, 100, book]
-  queryParamList: ParamList; // {cart: 1, color: 'white'}
-  hash: string; // '#description'
+/**
+ * Route context base type.
+ *
+ * Sample:
+ *
+ * ```js
+ * // http://example.com:8080/product/100/book?cart=1&color=white#description
+ * {
+ *   sectionList: [product, 100, book],
+ *   queryParamList: {cart: 1, color: 'white'},
+ *   hash: '#description',
+ * }
+ * ```
+ */
+export type RouteContextBase = {
+  sectionList: Array<string | number | boolean | null>;
+  queryParamList: QueryParameters;
+  hash: string;
 }
 
-// @TODO: description
-export interface RequestRouteParam {
+/**
+ * Global route context type.
+ *
+ * Sample:
+ *
+ * ```js
+ * {
+ *   href: 'http://example.com:8080/product/100/book?cart=1&color=white#description'
+ *   pathname: '/product/100/book',
+ *   hostname: 'example.com',
+ *   port: 8080,
+ *   origin: http://example.com:8080,
+ *   protocol: 'http',
+ *   sectionList: [product, 100, book],
+ *   queryParamList: {cart: 1, color: 'white'},
+ *   hash: '#description',
+ * }
+ * ```
+ */
+export type RouteContext = RouteContextBase & {
+  href: string;
   pathname: string;
-  search?: string;
-  hash?: string;
-  /**
-   * Update browser history state (history.pushState or history.replaceState).
-   *
-   * @default true
-   */
-  pushState?: boolean | 'replace';
+  hostname: string;
+  port: string;
+  origin: string;
+  protocol: 'http' | 'https';
 }
+
+export type PushState = boolean | 'replace';
 
 /**
  * Initial router options.
@@ -44,90 +73,86 @@ export interface InitOptions {
 }
 
 /**
- * Routes config for router.outlet.
+ * Type of `routeConfig.templates` items.
+ */
+export type TemplateCallback = (routeContext: RouteContext) => unknown;
+
+/**
+ * Type of `routeConfig.templates`.
+ */
+export type RouterTemplates = {
+  [x: string]: TemplateCallback | undefined;
+  home: TemplateCallback;
+  _404: TemplateCallback;
+}
+
+/**
+ * Routes config for routerOutlet.
  *
- * The `router.outlet` return `list[map(currentRoute)].render(currentRoute)`.
+ * The `routerOutlet` return `list[map(currentRoute)].render(currentRoute)`.
  *
  * Example:
  *
  * ```ts
- * const routes: routesConfig = {
- *   map: (route) => route.sectionList[0]?.toString(),
- *
- *   list: {
- *     'about': {
- *       render: () => html`<page-about></page-about>`,
+ * const routeConfig = {
+ *   routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
+ *   templates: {
+ *     'about': () => html`<page-about></page-about>`,
+ *     'product-list': () => {
+ *       import('./page-product-list.js'); // lazy import
+ *       return html`<page-product-list></page-product-list>`,
  *     },
- *     'product-list': {
- *       render: () => {
- *         import('./page-product-list.js'); // lazy loading page
- *         html`<page-product-list></page-product-list>`,
- *       }
- *     },
- *     'contact': {
- *       render: () => html`<page-contact></page-contact>`,
- *     },
- *
- *     'home': {
- *       render: () => html`<page-home></page-home>`,
- *     },
- *     '404': {
- *       render: () => html`<page-404></page-404>`,
- *     },
+ *     'contact': () => html`<page-contact></page-contact>`,
+ *     'home': () => html`<page-home></page-home>`,
+ *     '_404': () => html`<page-404></page-404>`,
  *   },
  * };
  *
- * router.outlet(routes);
+ * routerOutlet(routeConfig);
  * ```
  */
 export interface RoutesConfig {
   /**
-   * Routes map for finding the target route name (page name).
+   * Define function to generate routeId (same as pageName) from current routeContext.
    *
-   * if the location is app root and `routesConfig.map()` return noting then redirect to home automatically
-   * if `map` return noting or not found in the list the "404" route will be used.
+   * if the location is app root and `routeId()` return noting then redirect to `home` automatically
+   * if `routeId()` return noting or render function not defined in the `templates` redirected to `_404` routeId.
    *
    * Example:
    *
    * ```ts
-   * map: (route) => route.sectionList[0]?.toString(),
+   * router.outlet({
+   *   routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
+   *   templates: {
+   *     // ...
+   *   },
+   * })
    * ```
    */
-  map: (route: Route) => string | undefined;
+  routeId: (routeContext: RouteContext) => string | undefined;
 
   /**
-   * Define list of routes.
+   * Define templates of the routes (pages).
    *
    * Example:
    *
    * ```ts
-   * list: {
-   *   'about': {
-   *     render: () => html`<page-about></page-about>`,
+   * const routeConfig = {
+   *   routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
+   *   templates: {
+   *     'about': () => html`<page-about></page-about>`,
+   *     'product-list': () => {
+   *       import('./page-product-list.js'); // lazy import
+   *       return html`<page-product-list></page-product-list>`,
+   *     },
+   *     'contact': () => html`<page-contact></page-contact>`,
+   *     'home': () => html`<page-home></page-home>`,
+   *     '_404': () => html`<page-404></page-404>`,
    *   },
-   *   'product-list': {
-   *     render: () => {
-   *       import('./page-product-list.js'); // lazy loading page
-   *       html`<page-product-list></page-product-list>`,
-   *     }
-   *   },
-   *   'contact': {
-   *     render: () => html`<page-contact></page-contact>`,
-   *   },
+   * };
    *
-   *   'home': {
-   *     render: () => html`<page-home></page-home>`,
-   *   },
-   *   '404': {
-   *     render: () => html`<page-404></page-404>`,
-   *   },
-   * },
+   * routerOutlet(routeConfig);
    * ```
    */
-  list: Record<
-    string,
-    {
-      render: (route: Route) => unknown;
-    }
-  >;
+  templates: RouterTemplates;
 }

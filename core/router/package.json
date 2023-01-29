@@ -10,9 +10,9 @@
     "esm",
     "alwatr"
   ],
-  "main": "router.js",
+  "main": "index.js",
   "type": "module",
-  "types": "router.d.ts",
+  "types": "index.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "license": "MIT",
   "files": [
@@ -33,6 +33,10 @@
   "dependencies": {
     "@alwatr/logger": "^0.28.0",
     "@alwatr/signal": "^0.28.0",
+    "@alwatr/math": "^0.28.0",
     "tslib": "^2.5.0"
+  },
+  "devDependencies": {
+    "@alwatr/type": "^0.28.0"
   }
 }
