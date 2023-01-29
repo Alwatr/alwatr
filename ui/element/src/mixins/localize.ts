@@ -1,34 +1,31 @@
-import {l10n} from '@alwatr/i18n';
+import {l10nResourceConsumer} from '@alwatr/i18n';
 
 import type {LoggerMixinInterface} from './logging.js';
+import type {ListenerSpec} from '@alwatr/signal';
 import type {Constructor} from '@alwatr/type';
 
 export declare class LocalizeMixinInterface extends LoggerMixinInterface {
-  protected _signalListenerList: Array<unknown>;
-  protected l10n: {
-    localize: typeof l10n.localize;
-    formatNumber: typeof l10n.formatNumber;
-  };
+  private __l10nResourceListener: ListenerSpec;
 }
 
 export function LocalizeMixin<T extends Constructor<LoggerMixinInterface>>(
     superClass: T,
 ): Constructor<LocalizeMixinInterface> & T {
   class LocalizeMixinClass extends superClass {
-    protected _signalListenerList: Array<unknown> = [];
-
-    protected l10n = {
-      localize: l10n.localize,
-      formatNumber: l10n.formatNumber,
-    };
+    private __l10nResourceListener?: ListenerSpec;
 
     override connectedCallback(): void {
       super.connectedCallback();
-      this._signalListenerList.push(
-          l10n.resourceChangeSignal.addListener(() => {
-            this._l10nResourceChanged();
-          }),
-      );
+      this.__l10nResourceListener = l10nResourceConsumer.subscribe(() => {
+        this._l10nResourceChanged();
+      });
+    }
+
+    override disconnectedCallback(): void {
+      if (this.__l10nResourceListener != null) {
+        l10nResourceConsumer.unsubscribe(this.__l10nResourceListener);
+      }
+      super.disconnectedCallback();
     }
 
     protected _l10nResourceChanged(): void {
