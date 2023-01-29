@@ -1,7 +1,6 @@
-import {signalManager} from './signal-manager.js';
+import {getDetail, subscribe, unsubscribe, untilNext} from './core2.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
-
 
 /**
  * Context consumer interface.
@@ -21,7 +20,7 @@ export const contextConsumer = {
    * }
    * ```
    */
-  getValue: signalManager.getDetail,
+  getValue: getDetail,
 
   /**
    * Waits until the context value changes.
@@ -32,7 +31,7 @@ export const contextConsumer = {
    * const newProductList = await contextConsumer.untilChange<ProductListType>('product-list');
    * ```
    */
-  untilChange: signalManager.untilNext,
+  untilChange: untilNext,
 
   /**
    * Subscribe to context changes, work like addEventListener.
@@ -47,7 +46,7 @@ export const contextConsumer = {
    * contextConsumer.unsubscribe(listener);
    * ```
    */
-  subscribe: signalManager.subscribe,
+  subscribe: subscribe,
 
   /**
    * Unsubscribe from context changes, work like removeEventListener.
@@ -62,7 +61,7 @@ export const contextConsumer = {
    * contextConsumer.unsubscribe(listener);
    * ```
    */
-  unsubscribe: signalManager.unsubscribe,
+  unsubscribe: unsubscribe,
 
   /**
    * Bind this interface to special context.
@@ -93,7 +92,7 @@ export const contextConsumer = {
      * }
      * ```
      */
-    getValue: signalManager.getDetail.bind(null, contextId) as OmitFirstParam<typeof signalManager.getDetail<T>>,
+    getValue: getDetail.bind(null, contextId) as OmitFirstParam<typeof getDetail<T>>,
 
     /**
      * Waits until the context value changes.
@@ -104,7 +103,7 @@ export const contextConsumer = {
      * const newProductList = await productListConsumer.untilChange();
      * ```
      */
-    untilChange: signalManager.untilNext.bind(null, contextId) as OmitFirstParam<typeof signalManager.untilNext<T>>,
+    untilChange: untilNext.bind(null, contextId) as OmitFirstParam<typeof untilNext<T>>,
 
     /**
      * Subscribe to context changes, work like addEventListener.
@@ -117,8 +116,8 @@ export const contextConsumer = {
      * productListConsumer.unsubscribe(listener);
      * ```
      */
-    subscribe: signalManager.subscribe.bind(null, contextId) as unknown as
-      OmitFirstParam<typeof signalManager.subscribe<T>>,
+    subscribe: subscribe.bind(null, contextId) as unknown as
+      OmitFirstParam<typeof subscribe<T>>,
 
     /**
      * Unsubscribe from context changes, work like removeEventListener.
@@ -131,6 +130,6 @@ export const contextConsumer = {
      * productListConsumer.unsubscribe(listener);
      * ```
      */
-    unsubscribe: signalManager.unsubscribe,
+    unsubscribe: unsubscribe,
   } as const),
 } as const;

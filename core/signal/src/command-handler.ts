@@ -1,4 +1,4 @@
-import {signalManager} from './signal-manager.js';
+import {defineCommand} from './core2.js';
 
 /**
  * Command handler/define interface.
@@ -20,5 +20,5 @@ export const commandHandler = {
    * );
    * ```
    */
-  define: signalManager.defineCommand,
+  define: defineCommand,
 } as const;

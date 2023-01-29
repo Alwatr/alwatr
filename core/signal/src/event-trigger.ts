@@ -1,7 +1,6 @@
-import {signalManager} from './signal-manager.js';
+import {dispatch, getDetail} from './core2.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
-
 
 /**
  * Event signal trigger/dispatcher interface.
@@ -21,7 +20,7 @@ export const eventTrigger = {
    * }
    * ```
    */
-  getLastDetail: signalManager.getDetail,
+  getLastDetail: getDetail,
 
   /**
    * Dispatch (send) signal to all listeners.
@@ -34,7 +33,7 @@ export const eventTrigger = {
    * eventTrigger.dispatch<ResizeType>('window-resize', newSize);
    * ```
    */
-  dispatch: signalManager.dispatch,
+  dispatch: dispatch,
 
   /**
    * Bind this interface to special event.
@@ -65,7 +64,7 @@ export const eventTrigger = {
      * }
      * ```
      */
-    getLastDetail: signalManager.getDetail.bind(null, eventId) as OmitFirstParam<typeof signalManager.getDetail<T>>,
+    getLastDetail: getDetail.bind(null, eventId) as OmitFirstParam<typeof getDetail<T>>,
 
     /**
      * Dispatch (send) signal to all listeners.
@@ -78,6 +77,6 @@ export const eventTrigger = {
      * resizeEvent.dispatch(newSize);
      * ```
      */
-    dispatch: signalManager.dispatch.bind(null, eventId) as OmitFirstParam<typeof signalManager.dispatch<T>>,
+    dispatch: dispatch.bind(null, eventId) as OmitFirstParam<typeof dispatch<T>>,
   } as const),
 } as const;

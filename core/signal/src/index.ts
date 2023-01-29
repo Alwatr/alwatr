@@ -6,6 +6,7 @@ export * from './event-listener.js';
 export * from './event-trigger.js';
 export * from './requestable-context-consumer.js';
 export * from './requestable-context-provider.js';
+export type {ListenerSpec} from './type.js';
 
 /*
 TODO:

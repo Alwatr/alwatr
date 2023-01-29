@@ -1,7 +1,6 @@
-import {signalManager} from './signal-manager.js';
+import {getDetail, subscribe, unsubscribe, untilNext} from './core2.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
-
 
 /**
  * Event signal listener/subscriber interface.
@@ -21,7 +20,7 @@ export const eventListener = {
    * }
    * ```
    */
-  getLastDetail: signalManager.getDetail,
+  getLastDetail: getDetail,
 
   /**
    * Wait until new event.
@@ -32,7 +31,7 @@ export const eventListener = {
    * const newSize = await eventTrigger.untilNext<ResizeType>('window-resize');
    * ```
    */
-  untilNext: signalManager.untilNext,
+  untilNext: untilNext,
 
   /**
    * Subscribe new listener to an event, work like addEventListener.
@@ -45,7 +44,7 @@ export const eventListener = {
    * eventTrigger.unsubscribe(listener);
    * ```
    */
-  subscribe: signalManager.subscribe,
+  subscribe: subscribe,
 
   /**
    * Unsubscribe listener from event, work like removeEventListener.
@@ -58,7 +57,7 @@ export const eventListener = {
    * eventTrigger.unsubscribe(listener);
    * ```
    */
-  unsubscribe: signalManager.unsubscribe,
+  unsubscribe: unsubscribe,
 
   /**
    * Bind this interface to special event.
@@ -89,7 +88,7 @@ export const eventListener = {
      * }
      * ```
      */
-    getLastDetail: signalManager.getDetail.bind(null, eventId) as OmitFirstParam<typeof signalManager.getDetail<T>>,
+    getLastDetail: getDetail.bind(null, eventId) as OmitFirstParam<typeof getDetail<T>>,
 
     /**
      * Wait until new event.
@@ -100,7 +99,7 @@ export const eventListener = {
      * const newSize = await resizeEvent.untilNext();
      * ```
      */
-    untilNext: signalManager.untilNext.bind(null, eventId) as OmitFirstParam<typeof signalManager.untilNext<T>>,
+    untilNext: untilNext.bind(null, eventId) as OmitFirstParam<typeof untilNext<T>>,
 
     /**
      * Subscribe new listener to an event, work like addEventListener.
@@ -113,8 +112,8 @@ export const eventListener = {
      * resizeEvent.unsubscribe(listener);
      * ```
      */
-    subscribe: signalManager.subscribe.bind(null, eventId) as unknown as
-      OmitFirstParam<typeof signalManager.subscribe<T>>,
+    subscribe: subscribe.bind(null, eventId) as unknown as
+      OmitFirstParam<typeof subscribe<T>>,
 
     /**
      * Unsubscribe listener from event, work like removeEventListener.
@@ -127,6 +126,6 @@ export const eventListener = {
      * resizeEvent.unsubscribe(listener);
      * ```
      */
-    unsubscribe: signalManager.unsubscribe,
+    unsubscribe: unsubscribe,
   } as const),
 } as const;

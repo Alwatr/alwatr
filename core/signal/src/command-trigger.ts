@@ -1,7 +1,6 @@
-import {signalManager} from './signal-manager.js';
+import {requestCommand} from './core2.js';
 
 import type {OmitFirstParam, Stringifyable} from '@alwatr/type';
-
 
 /**
  * Command trigger/request interface.
@@ -16,7 +15,7 @@ export const commandTrigger = {
    * const returnObject = await commandTrigger.request<ArgumentType, ReturnType>('show-dialog', {foo: 'bar'});
    * ```
    */
-  request: signalManager.requestCommand,
+  request: requestCommand,
 
   /**
    * Bind define command to special command.
@@ -42,7 +41,7 @@ export const commandTrigger = {
      * const returnObject = await showDialog.request({foo: 'bar'});
      * ```
      */
-    request: signalManager.requestCommand.bind(null, commandId) as unknown as
-      OmitFirstParam<typeof signalManager.setContextProvider<TArgument, TReturn>>,
+    request: requestCommand.bind(null, commandId) as unknown as
+      OmitFirstParam<typeof requestCommand<TArgument, TReturn>>,
   }),
 } as const;

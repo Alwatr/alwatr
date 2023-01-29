@@ -83,9 +83,9 @@ export type ProviderFunction<TArgument, TReturn> = (
 ) => MaybePromise<TReturn>;
 
 /**
- * Signal listeners object in storage.
+ * Listener spec.
  */
-export type ListenerObject<T extends Stringifyable> = {
+export type ListenerSpec = {
   /**
    * Unique listener id
    */
@@ -95,7 +95,12 @@ export type ListenerObject<T extends Stringifyable> = {
    * Signal id
    */
   signalId: string;
+}
 
+/**
+ * Signal listeners object in storage.
+ */
+export type ListenerObject<T extends Stringifyable> = ListenerSpec & {
   /**
    * If true, the listener will be called only once and removed automatically after first call
    */

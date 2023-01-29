@@ -1,7 +1,6 @@
-import {signalManager} from './signal-manager.js';
+import {clearDetail, dispatch, getDetail} from './core2.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
-
 
 /**
  * Context provider interface.
@@ -21,7 +20,7 @@ export const contextProvider = {
    * }
    * ```
    */
-  getValue: signalManager.getDetail,
+  getValue: getDetail,
 
   /**
    * Set context value and send signal to all consumers.
@@ -34,7 +33,7 @@ export const contextProvider = {
    * contextProvider.setValue<ProductListType>('product-list', newProductList);
    * ```
    */
-  setValue: signalManager.dispatch,
+  setValue: dispatch,
 
   /**
    * Clear current context value without send signal to all consumers.
@@ -44,10 +43,10 @@ export const contextProvider = {
    * Example:
    *
    * ```ts
-   * signalManager.expire('product-list');
+   * contextProvider.expire('product-list');
    * ```
    */
-  expire: signalManager.clearDetail,
+  expire: clearDetail,
 
   /**
    * Bind this interface to special context.
@@ -78,7 +77,7 @@ export const contextProvider = {
      * }
      * ```
      */
-    getValue: signalManager.getDetail.bind(null, contextId) as OmitFirstParam<typeof signalManager.getDetail<T>>,
+    getValue: getDetail.bind(null, contextId) as OmitFirstParam<typeof getDetail<T>>,
 
     /**
      * Set context value and send signal to all consumers.
@@ -91,7 +90,7 @@ export const contextProvider = {
      * productListProvider.setValue(newProductList);
      * ```
      */
-    setValue: signalManager.dispatch.bind(null, contextId) as OmitFirstParam<typeof signalManager.dispatch<T>>,
+    setValue: dispatch.bind(null, contextId) as OmitFirstParam<typeof dispatch<T>>,
 
     /**
      * Clear current context value without send signal to all consumers.
@@ -104,6 +103,6 @@ export const contextProvider = {
      * productListProvider.expire();
      * ```
      */
-    expire: signalManager.clearDetail.bind(null, contextId),
+    expire: clearDetail.bind(null, contextId),
   } as const),
 } as const;

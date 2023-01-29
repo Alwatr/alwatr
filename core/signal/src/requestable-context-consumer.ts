@@ -1,5 +1,5 @@
 import {contextConsumer} from './context-consumer.js';
-import {signalManager} from './signal-manager.js';
+import {requestContext} from './core2.js';
 
 import type{Stringifyable, OmitFirstParam} from '@alwatr/type';
 
@@ -19,7 +19,7 @@ export const requestableContextConsumer = {
    * const newProductList = await requestableContextConsumer.untilChange<ProductListType>('product-list');
    * ```
    */
-  request: signalManager.requestContext,
+  request: requestContext,
 
   /**
    * Bind this interface to special context.
@@ -43,7 +43,7 @@ export const requestableContextConsumer = {
      * const newProductList = await productListConsumer.untilChange();
      * ```
      */
-    request: signalManager.requestContext as
-      OmitFirstParam<typeof signalManager.requestContext<TRquest>>,
+    request: requestContext as
+      OmitFirstParam<typeof requestContext<TRquest>>,
   } as const),
 } as const;

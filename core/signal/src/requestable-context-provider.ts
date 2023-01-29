@@ -1,5 +1,5 @@
 import {contextProvider} from './context-provider.js';
-import {signalManager} from './signal-manager.js';
+import {setContextProvider} from './core2.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
 
@@ -25,7 +25,7 @@ export const requestableContextProvider = {
    * );
    * ```
    */
-  setProvider: signalManager.setContextProvider,
+  setProvider: setContextProvider,
 
   /**
    * Bind this interface to special context.
@@ -52,7 +52,7 @@ export const requestableContextProvider = {
      * });
      * ```
      */
-    setProvider: signalManager.setContextProvider.bind(null, contextId) as
-      OmitFirstParam<typeof signalManager.setContextProvider<TContext, TRquest>>,
+    setProvider: setContextProvider.bind(null, contextId) as
+      OmitFirstParam<typeof setContextProvider<TContext, TRquest>>,
   } as const),
 } as const;
