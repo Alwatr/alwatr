@@ -1,119 +1,100 @@
-import {createLogger, globalAlwatr} from '@alwatr/logger';
+import {createLogger} from '@alwatr/logger';
+import {isNumber} from '@alwatr/math';
+import {contextConsumer} from '@alwatr/signal';
+import {ParamValueType} from '@alwatr/type';
 
-import type {ParamList, RequestRouteParam, Route} from './type.js';
-
-globalAlwatr.registeredList.push({
-  name: '@alwatr/router',
-  version: _ALWATR_VERSION_,
-});
+import {RouteContext, RoutesConfig} from './type.js';
 
 export const logger = createLogger('alwatr/router');
-/**
- * Handle requests of 'route-change' signal.
- */
-export function routeSignalProvider(requestParam: RequestRouteParam): Route {
-  logger.logMethodArgs('routeSignalProvider', {requestParam});
 
-  updateBrowserHistory(requestParam);
-  return makeRouteObject(requestParam);
-}
+export const routeContextConsumer = contextConsumer.bind<RouteContext>('route-context');
 
 /**
- * Update browser history state (history.pushState or history.replaceState).
- */
-export function updateBrowserHistory(options: RequestRouteParam): void {
-  logger.logMethodArgs('updateBrowserHistory', {options});
+ * The result of calling the current route's render() callback base on routesConfig.
+ *
+ * alias for `routesConfig.templates[routesConfig.routeId(currentRoute)](currentRoute)`
+ *
+ * if the location is app root and `routeId()` return noting then redirect to `home` automatically
+ * if `routeId()` return noting or render function not defined in the `templates` redirected to `_404` routeId.
+ *
+ * Example:
+ *
+ * ```ts
+ * const routeConfig = {
+ *   routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
+ *   templates: {
+ *     'about': () => html`<page-about></page-about>`,
+ *     'product-list': () => {
+ *       import('./page-product-list.js'); // lazy import
+ *       return html`<page-product-list></page-product-list>`,
+ *     },
+ *     'contact': () => html`<page-contact></page-contact>`,
+ *     'home': () => html`<page-home></page-home>`,
+ *     '_404': () => html`<page-404></page-404>`,
+ *   },
+ * };
+ *
+ * routerOutlet(routeConfig);
+ * ```
+*/
+export const routerOutlet = (routesConfig: RoutesConfig): unknown => {
+  logger.logMethodArgs('routerOutlet', {routesConfig});
 
-  if (options.pushState === false) return; // default is true then undefined means true.
+  const routeContext = routeContextConsumer.getValue();
 
-  options.search ??= '';
-  options.hash ??= '';
-
-  if (
-    window.location.pathname === options.pathname &&
-    window.location.search === options.search &&
-    window.location.hash === options.hash
-  ) {
+  if (routeContext == null) {
+    logger.accident('routerOutlet', 'route_context_undefined', 'Route context not provided yet.');
     return;
   }
 
-  const changeState = options.pushState === 'replace' ? 'replaceState' : 'pushState';
-  window.history[changeState](null, document.title, options.pathname + options.search + options.hash);
-}
+  const routeId = routesConfig.routeId(routeContext) ?? '';
+  const render = routesConfig.templates[routeId];
 
-/**
- * Make Route from RequestRouteParam.
- */
-export function makeRouteObject(requestParam: RequestRouteParam): Route {
-  logger.logMethodArgs('makeRouteObject', {requestParam});
-
-  requestParam.search ??= '';
-  requestParam.hash ??= '';
-
-  const sectionList = requestParam.pathname
-      .split('/')
-      .map(_decodeURIComponent) // decode must be after split because encoded '/' maybe include in values.
-      .filter((section) => section.trim() !== '')
-      .map(parseValue);
-  return {
-    sectionList,
-    queryParamList: splitParameterString(requestParam.search.substring(1) /* remove first ? */),
-    hash: requestParam.hash,
-  };
-}
-
-// --- Utils ---
-
-/**
- * decodeURIComponent without throwing error.
- */
-export function _decodeURIComponent(val: string): string {
   try {
-    return decodeURIComponent(val);
+    if (typeof render === 'function') {
+      return render(routeContext);
+    }
+    // else
+    if (routeContext.pathname === '/' && routeId === '') {
+      return routesConfig.templates.home(routeContext);
+    }
+    // else
+    logger.incident('routerOutlet', 'page_not_found', 'Requested page not defined in routesConfig.templates', {
+      routeId,
+      routeContext,
+      routesConfig,
+    });
+    return routesConfig.templates._404(routeContext);
   }
   catch (err) {
-    return val;
+    logger.error('routerOutlet', 'render_failed', err);
+    return routesConfig.templates.home(routeContext);
   }
-}
+};
+
+// ----
 
 /**
- * Make query string from {key:val} object
+ * Sanitize string value to valid parameters types.
  */
-export function joinParameterList(parameterList: ParamList | null | undefined): string {
-  if (parameterList == null) return '';
-  const list: Array<string> = [];
-  for (const key in parameterList) {
-    if (Object.prototype.hasOwnProperty.call(parameterList, key)) {
-      list.push(`${key}=${String(parameterList[key])}`);
-    }
+export function sanitizeValue(value?: string | null): ParamValueType {
+  if (value == null) {
+    return null;
   }
-  return list.join('&');
-}
-
-/**
- * Make {key:val} object from query string
- */
-export function splitParameterString(parameterString: string | null | undefined): ParamList {
-  const parameterList: ParamList = {};
-  if (!parameterString) return parameterList;
-
-  parameterString.split('&').forEach((parameter) => {
-    const parameterArray = parameter.split('=');
-    parameterList[parameterArray[0]] = parameterArray[1] != null ? parseValue(parameterArray[1]) : '';
-  });
-
-  return parameterList;
-}
-
-/**
- * Check type of a value is `number` or not
- */
-export function parseValue(value: string): string | boolean | number {
-  const trimmedValue = value.trim().toLowerCase();
-  if (trimmedValue === '') return value;
-  if (trimmedValue === 'true' || trimmedValue === 'false') return trimmedValue === 'true';
-  const parsedValue = parseFloat(trimmedValue);
-  // note: `parseFloat('NaN').toString() === 'NaN'` is true, then always check isNaN
-  if (!isNaN(parsedValue) && parsedValue.toString() === trimmedValue) return parsedValue;
+  // else
+  value = value.trim();
+  if (value === '') {
+    return value;
+  }
+  // else
+  const lowerValue = value.toLocaleLowerCase();
+  if (lowerValue === 'true' || lowerValue === 'false') {
+    return lowerValue === 'true';
+  }
+  // else
+  if (isNumber(value)) {
+    return +value;
+  }
+  // else
   return value;
 }
