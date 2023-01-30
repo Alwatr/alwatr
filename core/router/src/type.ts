@@ -45,7 +45,7 @@ export type RouteContext = RouteContextBase & {
   hostname: string;
   port: string;
   origin: string;
-  protocol: 'http' | 'https';
+  protocol: 'HTTP' | 'HTTPS';
 }
 
 export type PushState = boolean | 'replace';
