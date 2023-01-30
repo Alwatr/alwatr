@@ -45,6 +45,12 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     :host([invisible]) * {
       opacity: 0;
     }
+
+    .button-container {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: var(--sys-spacing-track);
+    }
   `;
 
   @property({type: Boolean, reflect: true})
