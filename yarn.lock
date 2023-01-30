@@ -1074,10 +1074,10 @@
   resolved "https://registry.yarnpkg.com/@hutson/parse-repository-url/-/parse-repository-url-3.0.2.tgz#98c23c950a3d9b6c8f0daed06da6c3af06981340"
   integrity sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==
 
-"@ionic/core@^6.5.0":
-  version "6.5.0"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-6.5.0.tgz#60095211c15609218855a924117d65764db69334"
-  integrity sha512-vefrnd1WYZJnjSXwsY1sn3HJpBDKPGnwtO2US55Qrjz0d9HyUwocHgVvkvLAAKZG+LGErJbVeV8aTmdYEydRgg==
+"@ionic/core@^6.5.1":
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-6.5.1.tgz#36efef2d807d424ab5eae543555177044088ab16"
+  integrity sha512-O696r+4/f0Ly0XvPH1ZcsTBwiQLWf5gCDG1CoAn9W/F84DcvzGV9acV9nmpEDcrqaSLFYjJHGpeCec9y7L50iw==
   dependencies:
     "@stencil/core" "^2.18.0"
     ionicons "^6.1.1"
