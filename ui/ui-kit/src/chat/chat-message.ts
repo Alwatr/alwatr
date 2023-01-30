@@ -1,4 +1,13 @@
-import {AlwatrDummyElement, css, customElement, html, nothing, property, DirectionMixin} from '@alwatr/element';
+import {
+  AlwatrDummyElement,
+  css,
+  customElement,
+  html,
+  nothing,
+  property,
+  DirectionMixin,
+  SignalMixin,
+} from '@alwatr/element';
 
 import type {ChatMessage} from '@alwatr/type';
 
@@ -17,7 +26,7 @@ declare global {
  * @attr self
  */
 @customElement('alwatr-chat-message')
-export class AlwatrChatMessage extends DirectionMixin(AlwatrDummyElement) {
+export class AlwatrChatMessage extends DirectionMixin(SignalMixin(AlwatrDummyElement)) {
   static override styles = css`
     :host {
       display: flex;

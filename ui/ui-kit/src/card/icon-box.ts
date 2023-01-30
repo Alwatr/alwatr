@@ -38,7 +38,7 @@ export class AlwatrIconBox extends AlwatrSurface {
           var(--sys-motion-duration-small),
           var(--sys-motion-duration-small),
           var(--sys-motion-duration-small),
-          var(--sys-motion-duration-medium)
+          var(--sys-motion-duration-large)
         ;
         transition-timing-function: var(--sys-motion-easing-normal);
         font-family: var(--sys-typescale-body-small-font-family-name);

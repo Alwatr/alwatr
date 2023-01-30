@@ -9,6 +9,7 @@ import {
   html,
   css,
   DirectionMixin,
+  SignalMixin,
 } from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
 import {globalAlwatr} from '@alwatr/logger';
@@ -30,7 +31,7 @@ declare global {
  * @attr {Boolean} flip-rtl
  */
 @customElement('alwatr-icon')
-export class AlwatrIcon extends DirectionMixin(AlwatrDummyElement) {
+export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrDummyElement)) {
   static override styles = css`
     :host {
       display: inline-block;
