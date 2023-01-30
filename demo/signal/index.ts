@@ -1,26 +1,27 @@
-import {eventListener, eventTrigger} from '@alwatr/signal';
+import {commandHandler, commandTrigger} from '@alwatr/signal';
 
-const buttonEventTrigger = eventTrigger.bind<{id: number}>('easter-egg');
+commandHandler.define<{a: number; b: number}, number>(
+    'command-add',
+    (argumentObject) => argumentObject.a + argumentObject.b,
+);
 
-eventListener.subscribe<{id: number}>('easter-egg', (detail) => {
-  const newValue = detail.id * 10;
-  console.info('2. signal provider called', {detail, newValue});
-});
+// ----
+
+const commandAddTrigger = commandTrigger.bind<{a: number; b: number}, number>('command-add');
 
 document.getElementById('requestButton')?.addEventListener('click', async () => {
-  console.info('1. request with 1');
-  const value = await buttonEventTrigger.dispatch({id: 1});
-  console.info('3. new signal value', {value});
+  console.info('1. request command');
+  const value = await commandAddTrigger.request({a: 10, b: 20});
+  console.info('2. returned: ', value);
 });
 
 document.getElementById('requestButton2')?.addEventListener('click', async () => {
-  console.info('1. request with 1');
-  buttonEventTrigger.dispatch({id: 2});
-  const value1 = buttonEventTrigger.getLastDetail();
-  console.info('3. 2x request with 2,3');
-  buttonEventTrigger.dispatch({id: 2});
-  const value2p = buttonEventTrigger.getLastDetail();
-  buttonEventTrigger.dispatch({id: 3});
-  const value3p = buttonEventTrigger.getLastDetail();
-  console.info('4. new signal value', {value1, value2p, value3p});
+  console.info('1. request command (10+20)');
+  const value = await commandAddTrigger.request({a: 10, b: 20});
+  console.info('2. returned (10+20): ', value);
+
+  console.info('3. request command (10+30, 10+40)');
+  const value1p = commandAddTrigger.request({a: 10, b: 30});
+  const value2p = commandAddTrigger.request({a: 10, b: 40});
+  console.info('4. returned (%s)', (await Promise.all([value1p, value2p])).join(', '));
 });
