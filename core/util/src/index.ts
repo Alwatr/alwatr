@@ -1,1 +1,1 @@
-export * from './until.js';
+export * from './delay.js';
