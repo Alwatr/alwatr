@@ -10,49 +10,67 @@ export declare class DirectionMixinInterface extends SignalMixinInterface {
   protected _updateDir: () => void;
 }
 
+type ComputeMode = 'locale' | 'parents' | 'computed-style';
+const defaultComputeStyleMode: ComputeMode = 'parents';
+
 export function DirectionMixin<T extends Constructor<SignalMixinInterface>>(
     superClass: T,
+    computeMode: ComputeMode = defaultComputeStyleMode,
 ): Constructor<DirectionMixinInterface> & T {
   class DirectionMixinClass extends superClass {
-    protected _dirParent: HTMLElement | null = null;
+    /**
+     * Parent element for get direction in parents mode.
+     */
+    protected _parentEl: HTMLElement | null = null;
 
     override connectedCallback(): void {
       super.connectedCallback();
-      this._signalListenerList.push(localeContextConsumer.subscribe(this._localeChanged.bind(this)));
+      this._signalListenerList.push(localeContextConsumer.subscribe(() => this._updateDir()));
     }
 
     /**
      * Update direction from this._dirParent or l10n.locale
      */
-    protected _updateDir(): void {
-      this._logger.logMethod('_updateDir');
-      const dir = this._dirParent?.dir || localeContextConsumer.getValue()?.direction || document.documentElement.dir;
-      this.setAttribute('dir', dir === 'rtl' ? dir : 'ltr');
-    }
+    protected _updateDir(dir?: string): void {
+      this._logger.logMethodArgs('_updateDir', {dir, computeMode});
 
-    /**
-     * On locale context updated.
-     */
-    protected _localeChanged(localeContext: LocaleContext): void {
-      this._logger.logMethodArgs('_localeChanged', localeContext.code);
-      console.time('_localeChanged');
-      if (this._dirParent !== null) {
-        return this._updateDir();
+      if (typeof dir === 'string') {
+        // console.timeEnd('_updateDir');
+        return this.setAttribute('dir', dir === 'rtl' ? dir : 'ltr');
+      }
+
+      // console.time('_updateDir');
+      // else, calculate
+      if (computeMode === 'locale') {
+        return this._updateDir(localeContextConsumer.getValue()?.direction ?? document.documentElement.dir);
       }
       // else
-      let dirParent = (this.assignedSlot || this.parentNode) as HTMLElement | null;
-      while (dirParent != null && dirParent !== document.documentElement && !dirParent.dir) {
+      if (computeMode === 'computed-style') {
+        const dir = window.getComputedStyle(this).getPropertyValue('direction');
+        return this._updateDir(dir);
+      }
+      // else if (computeMode === 'parents')
+      if (this._parentEl !== null) {
+        return this._updateDir(this._parentEl.dir);
+      }
+      // else
+      let parentEl = (this.assignedSlot || this.parentNode) as HTMLElement | null;
+      while (parentEl != null && parentEl !== document.documentElement && !parentEl.dir) {
         // prettier-ignore
-        dirParent = (
-            dirParent.assignedSlot ||
-            dirParent.parentNode ||
-            (dirParent as unknown as ShadowRoot).host
+        parentEl = (
+            parentEl.assignedSlot ||
+            parentEl.parentNode ||
+            (parentEl as unknown as ShadowRoot).host
           ) as HTMLElement;
       }
 
-      this._dirParent = dirParent?.dir ? dirParent : null;
-      console.timeEnd('_localeChanged');
-      return this._updateDir();
+      if (parentEl?.dir) {
+        this._parentEl = parentEl;
+        return this._updateDir(parentEl.dir);
+      }
+      // else
+      computeMode = 'locale';
+      this._updateDir();
     }
   }
 
