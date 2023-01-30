@@ -1,20 +1,19 @@
 import {localeContextConsumer} from '@alwatr/i18n';
 
-import type {LoggerMixinInterface} from './logging.js';
-import type {Constructor} from '@alwatr/type';
+import {SignalMixinInterface} from './signal.js';
 
-export declare class DirectionMixinInterface extends LoggerMixinInterface {
-  protected _signalListenerList: Array<unknown>;
+import type {Constructor, LocaleContext} from '@alwatr/type';
+
+export declare class DirectionMixinInterface extends SignalMixinInterface {
   protected _dirParent: HTMLElement | null;
+  protected _localeChange: (localeContext: LocaleContext) => void;
   protected _updateDir: () => void;
-  protected _localeChange: () => void;
 }
 
-export function DirectionMixin<T extends Constructor<LoggerMixinInterface>>(
+export function DirectionMixin<T extends Constructor<SignalMixinInterface>>(
     superClass: T,
 ): Constructor<DirectionMixinInterface> & T {
   class DirectionMixinClass extends superClass {
-    protected _signalListenerList: Array<unknown> = [];
     protected _dirParent: HTMLElement | null = null;
 
     override connectedCallback(): void {
@@ -31,8 +30,12 @@ export function DirectionMixin<T extends Constructor<LoggerMixinInterface>>(
       this.setAttribute('dir', dir === 'rtl' ? dir : 'ltr');
     }
 
-    protected _localeChanged(): void {
-      this._logger.logMethod('_localeChanged');
+    /**
+     * On locale context updated.
+     */
+    protected _localeChanged(localeContext: LocaleContext): void {
+      this._logger.logMethodArgs('_localeChanged', localeContext.code);
+      console.time('_localeChanged');
       if (this._dirParent !== null) {
         return this._updateDir();
       }
@@ -48,6 +51,7 @@ export function DirectionMixin<T extends Constructor<LoggerMixinInterface>>(
       }
 
       this._dirParent = dirParent?.dir ? dirParent : null;
+      console.timeEnd('_localeChanged');
       return this._updateDir();
     }
   }
