@@ -23,11 +23,11 @@ export class AlwatrPWA extends AlwatrPwaElement {
 
   protected _activePage = 'home';
 
-  protected override _routes: RoutesConfig = {
-    routeId: super._routes.routeId,
+  protected override _routesConfig: RoutesConfig = {
+    routeId: super._routesConfig.routeId,
     templates: {
       home: () => html`<page-flight-finder class="ion-page"></page-flight-finder>`,
-      _404: super._routes.templates._404,
+      _404: super._routesConfig.templates._404,
     },
   };
 }

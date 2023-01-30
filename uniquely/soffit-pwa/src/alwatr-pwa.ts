@@ -21,11 +21,11 @@ declare global {
  */
 @customElement('alwatr-pwa')
 class AlwatrPwa extends AlwatrPwaElement {
-  protected override _routes: RoutesConfig = {
-    routeId: super._routes.routeId,
+  protected override _routesConfig: RoutesConfig = {
+    routeId: this._routesConfig.routeId,
     templates: {
       home: () => html`<alwatr-page-home></alwatr-page-home>`,
-      _404: super._routes.templates._404,
+      _404: (routeContext) => this._routesConfig.templates.home(routeContext),
     },
   };
 }
