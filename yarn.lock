@@ -2511,11 +2511,6 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@typescript/lib-dom@npm:@types/web":
-  version "0.0.89"
-  resolved "https://registry.yarnpkg.com/@types/web/-/web-0.0.89.tgz#c6e88317202dc748c698f8a096ba649dccc844f7"
-  integrity sha512-GmYzEKEi5I2aUVcGMcNDMLOZ3N5f6Vmaly9rr7ZL9b8zxc8KFZU5h2Wqzxgx6/ztj9+Eq2t4jDeWGW18N5UeOQ==
-
 "@web/config-loader@^0.1.3":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@web/config-loader/-/config-loader-0.1.3.tgz#8325ea54f75ef2ee7166783e64e66936db25bff7"
@@ -5821,7 +5816,7 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
-lit-analyzer@1.2.1, lit-analyzer@^1.2.1:
+lit-analyzer@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/lit-analyzer/-/lit-analyzer-1.2.1.tgz#725331a4019ae870dd631d4dd709d39a237161ea"
   integrity sha512-OEARBhDidyaQENavLbzpTKbEmu5rnAI+SdYsH4ia1BlGlLiqQXoym7uH1MaRPtwtUPbkhUfT4OBDZ+74VHc3Cg==
@@ -5834,6 +5829,21 @@ lit-analyzer@1.2.1, lit-analyzer@^1.2.1:
     vscode-css-languageservice "4.3.0"
     vscode-html-languageservice "3.1.0"
     web-component-analyzer "~1.1.1"
+
+lit-analyzer@2.0.0-pre.2:
+  version "2.0.0-pre.2"
+  resolved "https://registry.yarnpkg.com/lit-analyzer/-/lit-analyzer-2.0.0-pre.2.tgz#bc03c295c158f3c28dfb70e26d262f82817fa443"
+  integrity sha512-vKh+SzhGqq7covRgopFodzF3OmaYWoMrOtwFR5tnlZwPOthe162IWUgNph3MeEIEFZMagrsHrldlneCwKLDXfg==
+  dependencies:
+    chalk "^2.4.2"
+    didyoumean2 "4.1.0"
+    fast-glob "^3.2.11"
+    parse5 "5.1.0"
+    ts-simple-type "~2.0.0-next.0"
+    vscode-css-languageservice "4.3.0"
+    vscode-html-languageservice "3.1.0"
+    vscode-web-custom-data "^0.3.0"
+    web-component-analyzer "2.0.0-next.4"
 
 lit-element@^3.2.0:
   version "3.2.2"
@@ -8226,6 +8236,11 @@ ts-lit-plugin@^1.2.1:
   dependencies:
     lit-analyzer "1.2.1"
 
+ts-simple-type@2.0.0-next.0, ts-simple-type@~2.0.0-next.0:
+  version "2.0.0-next.0"
+  resolved "https://registry.yarnpkg.com/ts-simple-type/-/ts-simple-type-2.0.0-next.0.tgz#262a321ba2a17aa57f88ef31e30453beff5be246"
+  integrity sha512-A+hLX83gS+yH6DtzNAhzZbPfU+D9D8lHlTSd7GeoMRBjOt3GRylDqLTYbdmjA4biWvq2xSfpqfIDj2l0OA/BVg==
+
 ts-simple-type@~1.0.5:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/ts-simple-type/-/ts-simple-type-1.0.7.tgz#03930af557528dd40eaa121913c7035a0baaacf8"
@@ -8339,7 +8354,7 @@ typegram@^4.1.0:
   resolved "https://registry.yarnpkg.com/typegram/-/typegram-4.1.0.tgz#fb1c8f59d387c5b4966be9aac745aa9fcedc0a2d"
   integrity sha512-OejXXNRh3bb6TQKbUM0k1p1wnEYCrZd66TNLeZeV2S6s4XWkCmVHONXqBTPtWpaq+IUxSyQwKJ1XXyN17Lr0+w==
 
-"typescript@^3 || ^4", typescript@^4.9.4:
+"typescript@^3 || ^4":
   version "4.9.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.4.tgz#a2a3d2756c079abda241d75f149df9d561091e78"
   integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==
@@ -8348,6 +8363,16 @@ typescript@^3.8.3:
   version "3.9.10"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.10.tgz#70f3910ac7a51ed6bef79da7800690b19bf778b8"
   integrity sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==
+
+typescript@^5.0.0-beta:
+  version "5.0.0-beta"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.0-beta.tgz#791fa95411d6ff64ee77d677ed1e6f32a2eaabaf"
+  integrity sha512-+SSabbSXG5mtF+QGdV9uXXt9Saq1cSyI6hSG7znhaLoquleJpnmfkwSxFngK9c2fWWi1W/263TuzXQOsIcdjjA==
+
+typescript@~4.4.3:
+  version "4.4.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.4.tgz#2cd01a1a1f160704d3101fd5a58ff0f9fcb8030c"
+  integrity sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==
 
 typical@^4.0.0:
   version "4.0.0"
@@ -8573,6 +8598,11 @@ vscode-uri@^2.1.2:
   resolved "https://registry.yarnpkg.com/vscode-uri/-/vscode-uri-2.1.2.tgz#c8d40de93eb57af31f3c715dd650e2ca2c096f1c"
   integrity sha512-8TEXQxlldWAuIODdukIb+TR5s+9Ds40eSJrw+1iDDA9IFORPjMELarNQE3myz5XIkWWpdprmJjm1/SxMlWOC8A==
 
+vscode-web-custom-data@^0.3.0:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/vscode-web-custom-data/-/vscode-web-custom-data-0.3.6.tgz#7ff374bd39ee4a7c05c77c997d9410520e1d02bc"
+  integrity sha512-9r2DOv4YMXL/WBTBB6zxde93hmg6AM7thr7GMR6c5LvPxXe/lwD8gsrJGe0tha4CUvoz86ElUieThGVpM+4PLg==
+
 walk-up-path@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/walk-up-path/-/walk-up-path-1.0.0.tgz#d4745e893dd5fd0dbb58dd0a4c6a33d9c9fec53e"
@@ -8584,6 +8614,16 @@ wcwidth@^1.0.0, wcwidth@^1.0.1:
   integrity sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==
   dependencies:
     defaults "^1.0.3"
+
+web-component-analyzer@2.0.0-next.4:
+  version "2.0.0-next.4"
+  resolved "https://registry.yarnpkg.com/web-component-analyzer/-/web-component-analyzer-2.0.0-next.4.tgz#bf8f88f10f2baaf2d73bec30fc5c5f7526508287"
+  integrity sha512-XZ4JOibgp+3OKAQ6K9v4gJOoHAurfXztbfX6FwqXIh4cNLTwHz4QcLDOFav+2ddKGpshM4MQrJaPCPXZeCv5+A==
+  dependencies:
+    fast-glob "^3.2.2"
+    ts-simple-type "2.0.0-next.0"
+    typescript "~4.4.3"
+    yargs "^15.3.1"
 
 web-component-analyzer@~1.1.1:
   version "1.1.6"
