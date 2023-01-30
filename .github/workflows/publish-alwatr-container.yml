@@ -60,20 +60,21 @@ jobs:
             description: Alwatr Telegram Notify Microservice, Distributed simple and fast telegram notify nanoservice.
 
           # uniquely
+          - image: soffit-pwa
+            source: uniquely/soffit-pwa
+            dockerfile: cloud/container/alwatr-pwa.dockerfile
+            description: Soffit PWA.
+
           - image: flight-finder-api
             source: uniquely/flight-finder-api
             dockerfile: cloud/container/alwatr-services.dockerfile
             description: Alwatr Flight Finder Application API.
 
-          - image: flight-finder-pwa
-            source: uniquely/flight-finder-pwa
-            dockerfile: cloud/container/alwatr-pwa.dockerfile
-            description: Alwatr Flight Finder PWA.
+          # - image: flight-finder-pwa
+          #   source: uniquely/flight-finder-pwa
+          #   dockerfile: cloud/container/alwatr-pwa.dockerfile
+          #   description: Alwatr Flight Finder PWA.
 
-          - image: soffit-pwa
-            source: uniquely/soffit-pwa
-            dockerfile: cloud/container/alwatr-pwa.dockerfile
-            description: Soffit PWA.
 
     permissions:
       contents: read
