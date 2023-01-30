@@ -1,5 +1,5 @@
 import {customElement, AlwatrSmartElement, css, html, state, type PropertyValues} from '@alwatr/element';
-import {untilNextFrame} from '@alwatr/util';
+import {untilNextFrame, untilEvent, delay} from '@alwatr/util';
 
 import type {AlwatrIconBox} from '@alwatr/ui-kit/card/icon-box.js';
 
@@ -67,7 +67,11 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
 
   private _boxContentTemplate(): unknown {
     if (this.expanded) {
-      return html`<alwatr-lottery-form invisible @form-submitted=${this._formSubmitted}></alwatr-lottery-form>`;
+      return html`<alwatr-lottery-form
+        invisible
+        @form-submitted=${this._formSubmitted}
+        @form-canceled=${this._formCanceled}
+      ></alwatr-lottery-form>`;
     }
     else if (this.submitted) {
       return html`<span class="success">اطلاعات شما با موفقیت ذخیره شد.</span>`;
@@ -88,7 +92,13 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
   private async _formSubmitted(): Promise<void> {
     this._logger.logMethod('_formSubmitted');
     await this._currentAnimate;
-    this._currentAnimate = this._animateCollapse();
+    this._currentAnimate = this._animateCollapse(true);
+  }
+
+  private async _formCanceled(): Promise<void> {
+    this._logger.logMethod('_formCanceled');
+    await this._currentAnimate;
+    this._currentAnimate = this._animateCollapse(false);
   }
 
   private _currentAnimate?: Promise<void>;
@@ -114,36 +124,42 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
       this.style.height = 'auto';
       return;
     }
-    form.animateVisible();
+    form.animateExpand();
 
-    box.addEventListener('transitionend', () => {
-      this._logger.logMethod('_animateExpand_transitionend');
-      box.style.height = 'auto';
-    }, {once: true});
+    await untilEvent(box, 'transitionend');
+    box.style.height = 'auto';
   }
 
-  async _animateCollapse(): Promise<void> {
+  async _animateCollapse(submitted: boolean): Promise<void> {
     if (!this.expanded || this._box == null) return;
     this._logger.logMethod('_animateCollapse');
     const box = this._box;
+    box.style.height = 'auto';
     await untilNextFrame();
 
     box.style.height = box.scrollHeight + 'px';
     await untilNextFrame();
-    box.style.height = this._collapseHeight + 'px';
 
-    box.addEventListener('transitionend', async () => {
-      this._logger.logMethod('_animateCollapse_transitionend');
-      this.expanded = false;
-      this.submitted = true;
-      await this.updateComplete;
-      await box.updateComplete;
-      await untilNextFrame();
+    const form = this.renderRoot.querySelector('alwatr-lottery-form');
+    if (form != null) {
+      form.animateCollapse();
+      await delay(250);
+    }
+
+    box.style.height = this._collapseHeight + 'px';
+    await untilEvent(box, 'transitionend');
+
+    this.expanded = false;
+    this.submitted = submitted;
+    await this.updateComplete;
+    await box.updateComplete;
+    await untilNextFrame();
+
+    if (this._collapseHeight !== box.scrollHeight) {
       box.style.height = box.scrollHeight + 'px';
-      box.addEventListener('transitionend', () => {
-        this._logger.logMethod('_animateCollapse_transitionend2');
-        box.style.height = 'auto';
-      }, {once: true});
-    }, {once: true});
+      await untilEvent(box, 'transitionend');
+    }
+
+    box.style.height = 'auto';
   }
 }
