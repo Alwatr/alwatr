@@ -21,7 +21,7 @@
   "scripts": {
     "l": "yarn lint",
     "b": "yarn build",
-    "br": "run-s build:ts build:r",
+    "br": "run-s build build:r",
     "c": "yarn clean",
     "cb": "run-s clean build",
     "s": "run-s build serve",
