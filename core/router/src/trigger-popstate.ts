@@ -10,8 +10,10 @@ export const popstateTrigger = {
    * Alwatr router global popstate handler.
    */
   _popstateHandler(event: PopStateEvent): void {
+    const href = globalThis.location?.href;
+    logger.logMethodArgs('_popstateHandler', href);
     if (event.state === 'router-ignore') return;
-    redirect(globalThis.location?.href, false);
+    redirect(href, false);
   },
 
   set enable(enable: boolean) {

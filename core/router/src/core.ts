@@ -125,6 +125,7 @@ export const url = (route: Partial<RouteContextBase>): string => {
  */
 export const redirect = (route: string | RouteContextBase | undefined, pushState: PushState = true): void => {
   if (route == null) return;
+  logger.logMethodArgs('redirect', route);
   const href = typeof route === 'string' ? route : url(route);
   updateBrowserHistory(href, pushState);
   routeContextProvider.setValue(makeRouteContext(), {debounce: 'Timeout'});
@@ -137,9 +138,16 @@ export const redirect = (route: string | RouteContextBase | undefined, pushState
  */
 export const updateBrowserHistory = (url: string, pushState: PushState): void => {
   if (pushState === false || globalThis.history == null) return;
+
   logger.logMethodArgs('updateBrowserHistory', url);
-  if (globalThis.location.href === url) return;
-  (pushState === 'replace' ? globalThis.history.replaceState : globalThis.history.pushState)(null, '', url);
+  if (location.href === url) return;
+
+  if (pushState === 'replace') {
+    history.replaceState(null, '', url);
+  }
+  else {
+    history.pushState(null, '', url);
+  }
 };
 
 /**
@@ -156,7 +164,7 @@ export function makeRouteContext(): RouteContext {
 
   const queryParamList = parseQueryParamString(location.search);
 
-  const protocol = location.protocol === 'https:' ? 'https' : 'http';
+  const protocol = location.protocol === 'https:' ? 'HTTPS' : 'HTTP';
 
   return {
     href: location.href,

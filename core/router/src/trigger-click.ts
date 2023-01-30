@@ -13,6 +13,8 @@ export const clickTrigger = {
    * Alwatr router global click handler.
    */
   _clickHandler(event: MouseEvent): void {
+    logger.logMethod('_clickHandler');
+
     if (
       // ignore if the default action is prevented.
       event.defaultPrevented ||
