@@ -45,6 +45,12 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     :host([invisible]) * {
       opacity: 0;
     }
+
+    .button-container {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: var(--sys-spacing-track);
+    }
   `;
 
   @property({type: Boolean, reflect: true})
@@ -89,6 +95,10 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     this.dispatchEvent(new CustomEvent('form-submitted'));
   }
 
+  async cancel(): Promise<void> {
+    this.dispatchEvent(new CustomEvent('form-canceled'));
+  }
+
   getFormData(): Record<string, unknown> {
     this._logger.logMethod('getFormData');
     const data: Record<string, string> = {};
@@ -128,14 +138,24 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
         placeholder="شماره موبایل"
       ></alwatr-text-field>
       <alwatr-radio-group name="activity"></alwatr-radio-group>
-      <alwatr-button outlined @click=${this.submit}>ارسال فرم</alwatr-button>
+      <div class="button-container">
+        <alwatr-button elevated filled @click=${this.submit}>ارسال فرم</alwatr-button>
+        <alwatr-button @click=${this.cancel}>انصراف</alwatr-button>
+      </div>
     `;
   }
 
-  async animateVisible(): Promise<void> {
+  async animateExpand(): Promise<void> {
     for (const element of this.renderRoot.querySelectorAll<HTMLElement>('*')) {
       element.style.opacity = '1';
-      await new Promise((resolve) => setTimeout(resolve, 120));
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+  }
+
+  async animateCollapse(): Promise<void> {
+    for (const element of [...this.renderRoot.querySelectorAll<HTMLElement>('*')].reverse()) {
+      element.style.opacity = '0';
+      await new Promise((resolve) => setTimeout(resolve, 40));
     }
   }
 }

@@ -120,7 +120,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     return html`
       <header><img src="image/soffit.png" alt="SOFFIT Logo" /></header>
       <main>
-        <alwatr-icon-box .content=${_aboutContent} stated elevated="3" pre-line wide></alwatr-icon-box>
+        <alwatr-icon-box .content=${_aboutContent} stated elevated pre-line wide></alwatr-icon-box>
         <alwatr-lottery-box></alwatr-lottery-box>
         ${this._menuTemplate()}
       </main>
@@ -137,7 +137,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
         (item) => html`
           <alwatr-icon-box
             .content=${item}
-            highlight stated elevated="3"
+            highlight stated elevated="2"
             pre-line
             ?wide=${item.wide}
           ></alwatr-icon-box>`,
