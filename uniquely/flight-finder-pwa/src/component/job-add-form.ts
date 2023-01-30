@@ -1,5 +1,5 @@
 import {AlwatrSmartElement, customElement, css, html} from '@alwatr/element';
-import {message, localeConsumer, number} from '@alwatr/i18n';
+import {message, localeContextConsumer, number} from '@alwatr/i18n';
 import {eventTrigger} from '@alwatr/signal';
 
 import {cityList} from '../city-list.js';
@@ -180,7 +180,7 @@ export class JobAddForm extends AlwatrSmartElement {
       event,
     });
 
-    const currentYear = new Date().toLocaleDateString(localeConsumer.getValue()?.code, {
+    const currentYear = new Date().toLocaleDateString(localeContextConsumer.getValue()?.code, {
       numberingSystem: 'latn',
       year: 'numeric',
     });

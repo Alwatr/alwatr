@@ -1,4 +1,4 @@
-import {localeConsumer, setLocale} from '@alwatr/i18n';
+import {localeContextConsumer, setLocale} from '@alwatr/i18n';
 import {routerOutlet, type RoutesConfig} from '@alwatr/router';
 import {html, css, type CSSResultGroup, type PropertyValues} from 'lit';
 import {cache} from 'lit/directives/cache.js';
@@ -43,7 +43,7 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
   constructor() {
     super();
     this._initLocale();
-    localeConsumer.subscribe(this._routeChanged.bind(this));
+    localeContextConsumer.subscribe(this._routeChanged.bind(this));
   }
 
   protected _initLocale(): void {
