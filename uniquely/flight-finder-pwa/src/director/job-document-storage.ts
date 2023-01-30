@@ -35,4 +35,4 @@ requestableContextProvider.setProvider<AlwatrDocumentStorage<Job>, null>('job-do
 
 requestJobStorage('cache_only').then(() => requestJobStorage('network_first'));
 
-setInterval(() => requestableContextConsumer.request<null>('job-document-storage', null), 60_000);
+setInterval(() => requestableContextConsumer.request('job-document-storage', null), 60_000);

@@ -48,7 +48,8 @@ export class JobAddForm extends AlwatrSmartElement {
     `,
   ];
 
-  static jobAddSignal = eventTrigger.bind('job-add');
+  static jobAddEventTrigger = eventTrigger.bind('job-add');
+
   static cityListTemplate = Object.keys(cityList).map(
       (city) => html`<ion-select-option value=${city}>${city} - ${cityList[city]}</ion-select-option>`,
   );
@@ -184,7 +185,7 @@ export class JobAddForm extends AlwatrSmartElement {
       year: 'numeric',
     });
 
-    JobAddForm.jobAddSignal.dispatch({
+    JobAddForm.jobAddEventTrigger.dispatch({
       detail: {
         destination: this.__newJob.destination as string,
         origin: this.__newJob.origin as string,

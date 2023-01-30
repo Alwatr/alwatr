@@ -15,9 +15,12 @@ document.getElementById('requestButton')?.addEventListener('click', async () => 
 
 document.getElementById('requestButton2')?.addEventListener('click', async () => {
   console.info('1. request with 1');
-  const value1 = buttonEventTrigger.dispatch({id: 2});
+  buttonEventTrigger.dispatch({id: 2});
+  const value1 = buttonEventTrigger.getLastDetail();
   console.info('3. 2x request with 2,3');
-  const value2p = buttonEventTrigger.dispatch({id: 2});
-  const value3p = buttonEventTrigger.dispatch({id: 3});
-  console.info('4. new signal value', {value1, value2: await value2p, value3: await value3p});
+  buttonEventTrigger.dispatch({id: 2});
+  const value2p = buttonEventTrigger.getLastDetail();
+  buttonEventTrigger.dispatch({id: 3});
+  const value3p = buttonEventTrigger.getLastDetail();
+  console.info('4. new signal value', {value1, value2p, value3p});
 });

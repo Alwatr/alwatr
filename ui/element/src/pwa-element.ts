@@ -1,4 +1,4 @@
-import {setLocale} from '@alwatr/i18n';
+import {localeConsumer, setLocale} from '@alwatr/i18n';
 import {routerOutlet, type RoutesConfig} from '@alwatr/router';
 import {html, css, type CSSResultGroup, type PropertyValues} from 'lit';
 import {cache} from 'lit/directives/cache.js';
@@ -43,11 +43,17 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
   constructor() {
     super();
     this._initLocale();
+    localeConsumer.subscribe(this._routeChanged.bind(this));
   }
 
   protected _initLocale(): void {
     this._logger.logMethod('_initLocale');
     setLocale('fa');
+  }
+
+  protected _routeChanged(): void {
+    this._logger.logMethod('routeChanged');
+    this.requestUpdate();
   }
 
   override render(): unknown {

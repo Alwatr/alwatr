@@ -1,4 +1,4 @@
-import {l10nResourceConsumer, localeConsumer} from '@alwatr/i18n';
+import {localeConsumer} from '@alwatr/i18n';
 
 import type {LoggerMixinInterface} from './logging.js';
 import type {Constructor} from '@alwatr/type';
@@ -19,11 +19,7 @@ export function DirectionMixin<T extends Constructor<LoggerMixinInterface>>(
 
     override connectedCallback(): void {
       super.connectedCallback();
-      this._signalListenerList.push(
-          l10nResourceConsumer.subscribe(() => {
-            this._localeChanged();
-          }),
-      );
+      this._signalListenerList.push(localeConsumer.subscribe(this._localeChanged.bind(this)));
     }
 
     /**

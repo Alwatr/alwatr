@@ -96,7 +96,7 @@ export class JobItem extends AlwatrSmartElement {
   @property({attribute: false, type: Object}) job?: Job;
   @query('ion-item-sliding') private __ionItemSliding?: HTMLElement;
 
-  static jobDeleteSignal = eventTrigger.bind('job-delete');
+  static jobDeleteEventTrigger = eventTrigger.bind('job-delete');
 
   override render(): unknown {
     if (this.job == null || this.job.detail == null) return nothing;
@@ -179,7 +179,7 @@ export class JobItem extends AlwatrSmartElement {
       return;
     }
 
-    JobItem.jobDeleteSignal.dispatch(this.job.id);
+    JobItem.jobDeleteEventTrigger.dispatch(this.job.id);
   }
   private async __openSliding(): Promise<void> {
     if (this.__ionItemSliding == null) return;

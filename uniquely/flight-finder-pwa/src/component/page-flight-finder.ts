@@ -54,7 +54,6 @@ export class PageFlightFinder extends AlwatrSmartElement {
 
   static jobDocumentStorageContextConsumer =
     requestableContextConsumer.bind<AlwatrDocumentStorage<Job>, null>('job-document-storage');
-  // static jobAddEventTrigger = eventTrigger.bind<Job>('job-add');
 
   private __jobList?: Array<Job>;
   private __lastUpdate = 0;
