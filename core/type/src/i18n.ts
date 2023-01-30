@@ -2,12 +2,12 @@ import {AlwatrServiceResponseSuccessWithMeta} from './service-response.js';
 
 export type LocaleCode = `${Lowercase<string>}-${Uppercase<string>}`;
 
-export type L10nResource = AlwatrServiceResponseSuccessWithMeta<Record<Lowercase<string>, string>, {
+export type L18eContext = AlwatrServiceResponseSuccessWithMeta<Record<Lowercase<string>, string>, {
   code: LocaleCode;
   rev: number;
 }>;
 
-export type Locale = {
+export type LocaleContext = {
   /**
    * fa-IR, en-US, ...
    */
@@ -29,4 +29,4 @@ export type Locale = {
  *
  * {fa: 'سلام', en: 'hello'}
  */
-export type i18nString = Record<Lowercase<string>, string>;
+export type MultiLangStringObj = Record<Lowercase<string>, string>;
