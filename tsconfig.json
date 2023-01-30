@@ -41,7 +41,6 @@
 
     // uniquely
     {"path": "./uniquely/flight-finder-api"},
-    {"path": "./uniquely/flight-finder-pwa"},
     {"path": "./uniquely/soffit-pwa"},
     {"path": "./ui/demo-pwa"},
 
