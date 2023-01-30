@@ -66,5 +66,10 @@
     "prettier": "^2.8.3",
     "ts-lit-plugin": "^1.2.1",
     "typescript": "^5.0.0-beta"
+  },
+  "resolutions": {
+    "lit-analyzer": "2.0.0-pre.2",
+    "typescript": "5.0.0-beta",
+    "web-component-analyzer": "2.0.0-next.4"
   }
 }
