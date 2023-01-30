@@ -23,7 +23,7 @@
     "w": "yarn watch",
     "start": "NODE_OPTIONS=--enable-source-maps run-s clean build serve",
     "clean": "rm -rf dist build .tsbuildinfo",
-    "build": "run-s build:ts build:es",
+    "build_": "run-s build:ts build:es",
     "build:ts": "tsc --build",
     "build:es": "rm -rf dist && rollup -c",
     "serve": "wds",
