@@ -21,6 +21,7 @@
     {"path": "./core/storage-client"},
     {"path": "./core/token"},
     {"path": "./core/validator"},
+    {"path": "./core/util"},
     {"path": "./core/type"},
 
     // ui

@@ -1,6 +1,5 @@
 import {customElement, AlwatrSmartElement, css, html, state, type PropertyValues} from '@alwatr/element';
-
-import {delayFrame} from './tech-dep/util.js';
+import {untilNextFrame} from '@alwatr/util';
 
 import type {AlwatrIconBox} from '@alwatr/ui-kit/card/icon-box.js';
 
@@ -99,13 +98,13 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
     if (this.expanded || this._box == null) return;
     this._logger.logMethod('_animateExpand');
     const box = this._box;
-    await delayFrame();
+    await untilNextFrame();
 
     this._collapseHeight = box.scrollHeight;
     box.style.height = this._collapseHeight + 'px';
     this.expanded = true;
     await this.updateComplete;
-    await delayFrame();
+    await untilNextFrame();
 
     box.style.height = box.scrollHeight + 'px';
 
@@ -127,10 +126,10 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
     if (!this.expanded || this._box == null) return;
     this._logger.logMethod('_animateCollapse');
     const box = this._box;
-    await delayFrame();
+    await untilNextFrame();
 
     box.style.height = box.scrollHeight + 'px';
-    await delayFrame();
+    await untilNextFrame();
     box.style.height = this._collapseHeight + 'px';
 
     box.addEventListener('transitionend', async () => {
@@ -139,7 +138,7 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
       this.submitted = true;
       await this.updateComplete;
       await box.updateComplete;
-      await delayFrame();
+      await untilNextFrame();
       box.style.height = box.scrollHeight + 'px';
       box.addEventListener('transitionend', () => {
         this._logger.logMethod('_animateCollapse_transitionend2');
