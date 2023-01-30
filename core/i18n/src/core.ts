@@ -1,7 +1,7 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {contextProvider, contextConsumer} from '@alwatr/signal';
 
-import type {L10nResource, Locale, MaybePromise} from '@alwatr/type';
+import type {L18eContext, LocaleContext, MaybePromise} from '@alwatr/type';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/i18n',
@@ -15,22 +15,22 @@ export const logger = createLogger('alwatr/i18n');
 /**
  * Locale context provider.
  */
-export const localeProvider = contextProvider.bind<Locale>('locale');
+export const localeContextProvider = contextProvider.bind<LocaleContext>('locale_context');
 
 /**
  * Locale context consumer.
  */
-export const localeConsumer = contextConsumer.bind<Locale>('locale');
+export const localeContextConsumer = contextConsumer.bind<LocaleContext>('locale_context');
 
 /**
- * L10n resource context provider.
+ * LocalizationResource (L18e) context provider.
  */
-export const l10nResourceProvider = contextProvider.bind<L10nResource>('l10n-resource');
+export const l18eContextProvider = contextProvider.bind<L18eContext>('localization_resource_context');
 
 /**
- * L10n resource context consumer.
+ * LocalizationResource (L18e) context consumer.
  */
-export const l10nResourceConsumer = contextConsumer.bind<L10nResource>('l10n-resource');
+export const l18eContextConsumer = contextConsumer.bind<L18eContext>('localization_resource_context');
 
 /**
  * Common useful locales.
@@ -53,16 +53,16 @@ export const commonLocale = {
   },
 } as const;
 
-let activeLocale: Locale | null = null;
+let activeLocaleContext: LocaleContext | null = null;
 let activeNumberFormatter: Intl.NumberFormat | null = null;
-let activeL10nResource: L10nResource | null = null;
+let activeL18eContext: L18eContext | null = null;
 
 /**
- * Update activeLocale and activeNumberFormatter.
+ * Update activeLocaleContext and activeNumberFormatter.
  */
-localeConsumer.subscribe(
+localeContextConsumer.subscribe(
     (locale) => {
-      activeLocale = locale;
+      activeLocaleContext = locale;
       activeNumberFormatter = new Intl.NumberFormat(locale.code);
 
       // Update root meta in browser
@@ -75,11 +75,11 @@ localeConsumer.subscribe(
 );
 
 /**
- * Update activeL10nResource.
+ * Update activeL18eContext.
  */
-l10nResourceConsumer.subscribe(
-    (l10nResource) => {
-      activeL10nResource = l10nResource;
+l18eContextConsumer.subscribe(
+    (l18eContext) => {
+      activeL18eContext = l18eContext;
     },
     {priority: true, receivePrevious: 'NextCycle'},
 );
@@ -95,59 +95,64 @@ l10nResourceConsumer.subscribe(
  * setLocale('fa');
  * ```
  */
-export const setLocale = (locale: keyof typeof commonLocale | Locale): void => {
+export const setLocale = (locale: keyof typeof commonLocale | LocaleContext): void => {
   const _locale = typeof locale === 'string' ? commonLocale[locale] : locale;
   logger.logMethodArgs('setLocale', _locale);
-  if (activeLocale?.code !== _locale.code) {
-    localeProvider.setValue(_locale);
+  if (activeLocaleContext?.code !== _locale.code) {
+    localeContextProvider.setValue(_locale);
   }
 };
 
 /**
- * Set loader function for localization resource.
+ * Set loader function for provide l18e (LocalizationResource).
  *
  * Example:
  *
  * ```ts
- * setL10nResourceLoader((locale) => {
- *  return import(`/l10n/${locale.code}.js`);
+ * setL18eLoader((locale) => {
+ *  return import(`/l18r/${locale.code}.js`);
  * })
  * ```
  */
-export const setL10nResourceLoader = (l10nResourceLoader: (locale: Locale) => MaybePromise<L10nResource>): void => {
-  logger.logMethod('setL10nResourceLoader');
+export const setL18eLoader = (l18eLoader: (locale: LocaleContext) => MaybePromise<L18eContext>): void => {
+  logger.logMethod('setL18eLoader');
 
-  localeConsumer.subscribe(async (locale) => {
-    logger.logMethodArgs('l10nResourceLoader', locale);
+  localeContextConsumer.subscribe(async (locale) => {
+    logger.logMethodArgs('l18eLoader', locale);
 
-    if (activeL10nResource?.meta.code === locale.code) {
-      logger.incident('l10nResourceLoader', 'load_skipped', 'Request resource is same as active resource', {
-        request: locale.code,
-        active: activeL10nResource.meta.code,
-      });
+    if (activeL18eContext?.meta.code === locale.code) {
+      logger.incident(
+          'l18eLoader',
+          'load_skipped',
+          'Request l18e (LocalizationResource) is same as active l18n',
+          {
+            request: locale.code,
+            active: activeL18eContext.meta.code,
+          },
+      );
       return;
     }
 
-    activeL10nResource = null;
-    l10nResourceProvider.expire();
+    activeL18eContext = null;
+    l18eContextProvider.expire();
 
     try {
-      const l10nResource = await l10nResourceLoader(locale);
-      l10nResourceProvider.setValue(l10nResource);
+      const l18e = await l18eLoader(locale);
+      l18eContextProvider.setValue(l18e);
     }
     catch (err) {
-      logger.error('l10nResourceLoader', 'loader_function_error', err);
+      logger.error('l18eLoader', 'loader_function_error', err);
     }
   });
 };
 
 /**
  *
- * Get message by key from the localization resource context.
+ * Get message by key from the l18e (LocalizationResource) Context.
  *
- * return `i18nOptions.loadingStr` if the translation resource is not yet loaded.
+ * return `i18nOptions.loadingStr` if the l18e is not yet loaded.
  *
- * return "{key}" if the key not defined in the translation resource.
+ * return "{key}" if the key not defined in the l18e.
  *
  * return null if the key is null or undefined (for optional input).
  *
@@ -165,13 +170,13 @@ export function message(key?: Lowercase<string> | null): string | null {
   key = <Lowercase<string>>key.trim();
   if (key === '') return '';
 
-  if (activeL10nResource == null) return loadingStr;
+  if (activeL18eContext == null) return loadingStr;
 
-  const msg = activeL10nResource.data[key];
+  const msg = activeL18eContext.data[key];
   if (msg == null) {
     logger.accident('message', 'l10n_key_not_found', 'Key not defined in the localization resource', {
       key,
-      locale: activeL10nResource?.meta.code,
+      locale: activeL18eContext?.meta.code,
     });
     return `{${key}}`;
   }

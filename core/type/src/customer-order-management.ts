@@ -1,4 +1,4 @@
-import {i18nString} from './i18n.js';
+import {MultiLangStringObj} from './i18n.js';
 import {Photo} from './photo.js';
 
 import type {AlwatrDocumentObject} from './storage.js';
@@ -14,7 +14,7 @@ export type Product = AlwatrDocumentObject & {
   /**
    * Product title
    */
-  title: i18nString;
+  title: MultiLangStringObj;
 
   /**
    * Product image

@@ -1,11 +1,12 @@
 import {type TemplateResult, AlwatrSmartElement, map, customElement, query, css, html} from '@alwatr/element';
-import {l10n} from '@alwatr/i18n';
-import {SignalInterface} from '@alwatr/signal';
+import {message, number} from '@alwatr/i18n';
+import {requestableContextConsumer} from '@alwatr/signal';
 import {modalController} from '@ionic/core';
 
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 
+import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Job} from '@alwatr/type/flight-finder.js';
 
 import './job-item.js';
@@ -51,8 +52,8 @@ export class PageFlightFinder extends AlwatrSmartElement {
     `,
   ];
 
-  static jobDocumentStorageSignal = new SignalInterface('job-document-storage');
-  static jobAddSignal = new SignalInterface('job-add');
+  static jobDocumentStorageContextConsumer =
+    requestableContextConsumer.bind<AlwatrDocumentStorage<Job>, null>('job-document-storage');
 
   private __jobList?: Array<Job>;
   private __lastUpdate = 0;
@@ -69,17 +70,12 @@ export class PageFlightFinder extends AlwatrSmartElement {
 
     const time = Math.floor((Date.now() - this.__lastUpdate) / 6_000) / 10;
 
-    timer.innerText = l10n.formatNumber(time);
+    timer.innerText = number(time);
   }
 
   override connectedCallback(): void {
     super.connectedCallback();
-
-    l10n.resourceChangeSignal.addListener(() => {
-      this.requestUpdate();
-    });
-
-    PageFlightFinder.jobDocumentStorageSignal.addListener((jobList) => {
+    PageFlightFinder.jobDocumentStorageContextConsumer.subscribe((jobList) => {
       this.__jobList = Object.values(jobList.data);
       this.__lastUpdate = jobList.meta.lastUpdated;
       this.requestUpdate();
@@ -91,7 +87,7 @@ export class PageFlightFinder extends AlwatrSmartElement {
     return html`
       <ion-header>
         <ion-toolbar color="primary">
-          <ion-title>${l10n.localize('flight_finder')}</ion-title>
+          <ion-title>${message('flight_finder')}</ion-title>
         </ion-toolbar>
       </ion-header>
 
@@ -113,8 +109,8 @@ export class PageFlightFinder extends AlwatrSmartElement {
     return html`
       <ion-card class="job__list">
         <ion-card-header>
-          <ion-card-title>${l10n.localize('search_list')}</ion-card-title>
-          <ion-card-subtitle><span id="timer">-</span> ${l10n.localize('minutes_ago')}</ion-card-subtitle>
+          <ion-card-title>${message('search_list')}</ion-card-title>
+          <ion-card-subtitle><span id="timer">-</span> ${message('minutes_ago')}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-list lines="full">

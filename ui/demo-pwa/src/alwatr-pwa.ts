@@ -22,14 +22,11 @@ declare global {
 @customElement('alwatr-pwa')
 class AlwatrPwa extends AlwatrPwaElement {
   protected override _routes: RoutesConfig = {
-    map: (route) => route.sectionList[0]?.toString(),
-    list: {
-      home: {
-        render: () => html`<alwatr-page-chat></alwatr-page-chat>`,
-      },
-      card: {
-        render: () => html`<alwatr-page-card></alwatr-page-card>`,
-      },
+    routeId: super._routes.routeId,
+    templates: {
+      _404: super._routes.templates._404,
+      home: () => html`<alwatr-page-chat></alwatr-page-chat>`,
+      card: () => html`<alwatr-page-card></alwatr-page-card>`,
     },
   };
 }

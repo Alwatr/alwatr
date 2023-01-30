@@ -1,4 +1,4 @@
-import {l10n} from '@alwatr/i18n';
+import {localeContextConsumer} from '@alwatr/i18n';
 
 import type {LoggerMixinInterface} from './logging.js';
 import type {Constructor} from '@alwatr/type';
@@ -19,11 +19,7 @@ export function DirectionMixin<T extends Constructor<LoggerMixinInterface>>(
 
     override connectedCallback(): void {
       super.connectedCallback();
-      this._signalListenerList.push(
-          l10n.localeChangeSignal.addListener(() => {
-            this._localeChanged();
-          }),
-      );
+      this._signalListenerList.push(localeContextConsumer.subscribe(this._localeChanged.bind(this)));
     }
 
     /**
@@ -31,7 +27,7 @@ export function DirectionMixin<T extends Constructor<LoggerMixinInterface>>(
      */
     protected _updateDir(): void {
       this._logger.logMethod('_updateDir');
-      const dir = this._dirParent?.dir || l10n.locale?.direction || document.documentElement.dir;
+      const dir = this._dirParent?.dir || localeContextConsumer.getValue()?.direction || document.documentElement.dir;
       this.setAttribute('dir', dir === 'rtl' ? dir : 'ltr');
     }
 

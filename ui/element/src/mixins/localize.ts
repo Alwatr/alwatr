@@ -1,4 +1,4 @@
-import {l10nResourceConsumer} from '@alwatr/i18n';
+import {l18eContextConsumer} from '@alwatr/i18n';
 
 import type {LoggerMixinInterface} from './logging.js';
 import type {ListenerSpec} from '@alwatr/signal';
@@ -16,14 +16,14 @@ export function LocalizeMixin<T extends Constructor<LoggerMixinInterface>>(
 
     override connectedCallback(): void {
       super.connectedCallback();
-      this.__l10nResourceListener = l10nResourceConsumer.subscribe(() => {
+      this.__l10nResourceListener = l18eContextConsumer.subscribe(() => {
         this._l10nResourceChanged();
       });
     }
 
     override disconnectedCallback(): void {
       if (this.__l10nResourceListener != null) {
-        l10nResourceConsumer.unsubscribe(this.__l10nResourceListener);
+        l18eContextConsumer.unsubscribe(this.__l10nResourceListener);
       }
       super.disconnectedCallback();
     }

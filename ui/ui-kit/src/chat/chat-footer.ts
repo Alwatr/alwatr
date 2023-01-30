@@ -1,7 +1,7 @@
 import {AlwatrDummyElement, css, customElement, html} from '@alwatr/element';
 import './chat-text-input.js';
 import '../button/icon-button.js';
-import {l10n} from '@alwatr/i18n';
+import {setLocale, localeContextConsumer} from '@alwatr/i18n';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -40,14 +40,6 @@ export class AlwatrChatFooter extends AlwatrDummyElement {
   }
 
   protected _changeLocale(): void {
-    l10n.setLocal(
-      l10n.locale?.code !== l10n.config.defaultLocale.code
-        ? l10n.config.defaultLocale
-        : {
-          code: 'fa-IR',
-          direction: 'rtl',
-          language: 'fa',
-        },
-    );
+    setLocale(localeContextConsumer.getValue()?.language !== 'fa' ? 'fa' : 'en');
   }
 }

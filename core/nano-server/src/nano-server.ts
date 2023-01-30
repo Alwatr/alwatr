@@ -525,10 +525,10 @@ export class AlwatrConnection {
   /**
    * Parse query param and validate with param type.
    */
-  protected _sanitizeParam(name: string, type: ParamKeyType): ParamValueType {
+  protected _sanitizeParam(name: string, type: ParamKeyType): ParamValueType | null {
     let value = this.url.searchParams.get(name);
 
-    if (value == null || value.length === 0) {
+    if (value == null || value === '') {
       return null;
     }
 
@@ -567,7 +567,7 @@ export class AlwatrConnection {
    * ```
    */
   requireQueryParams<T extends QueryParameters = QueryParameters>(params: Record<string, ParamKeyType>): T {
-    const parsedParams: Record<string, ParamValueType> = {};
+    const parsedParams: Record<string, ParamValueType | null> = {};
 
     for (const paramName in params) {
       if (!Object.prototype.hasOwnProperty.call(params, paramName)) continue;

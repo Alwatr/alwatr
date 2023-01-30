@@ -1,9 +1,7 @@
-import {SignalInterface} from '@alwatr/signal';
+import {commandHandler} from '@alwatr/signal';
 import {toastController} from '@ionic/core';
 
-export const showToastSignal = new SignalInterface('toast');
-
-showToastSignal.addListener(async (ToastOptions) => {
+commandHandler.define<{message: string}, Record<string, never>>('toast', async (ToastOptions) => {
   const toast = await toastController.create({
     animated: true,
     position: 'bottom',
@@ -12,4 +10,6 @@ showToastSignal.addListener(async (ToastOptions) => {
   });
 
   await toast.present();
+
+  return {};
 });

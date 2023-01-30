@@ -1,8 +1,8 @@
 export {
   setLocale,
-  setL10nResourceLoader,
+  setL18eLoader,
   message,
   number,
-  localeConsumer,
-  l10nResourceConsumer,
+  localeContextConsumer,
+  l18eContextConsumer,
 } from './core.js';

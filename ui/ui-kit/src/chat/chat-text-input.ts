@@ -1,4 +1,5 @@
 import {type PropertyValues, AlwatrDummyElement, css, customElement, html, LocalizeMixin} from '@alwatr/element';
+import {message} from '@alwatr/i18n';
 
 import '../button/icon-button.js';
 
@@ -59,7 +60,7 @@ export class AlwatrChatTextInput extends LocalizeMixin(AlwatrDummyElement) {
     return html`
       <textarea
         rows="1"
-        placeholder=${this.l10n.localize('chat_text_input_placeholder')}
+        placeholder=${message('chat_text_input_placeholder')}
         @input=${this.__inputChange}
       ></textarea>
       <alwatr-icon-button .icon=${'send'} flip-rtl disabled></alwatr-icon-button>
