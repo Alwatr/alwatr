@@ -53,7 +53,6 @@
     "@microsoft/eslint-formatter-sarif": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
-    "@typescript/lib-dom": "npm:@types/web",
     "@web/dev-server": "^0.1.35",
     "eslint": "^8.33.0",
     "eslint-config-google": "^0.14.0",
@@ -62,10 +61,15 @@
     "eslint-plugin-lit": "^1.8.2",
     "eslint-plugin-wc": "^1.4.0",
     "lerna": "^6.4.1",
-    "lit-analyzer": "^1.2.1",
+    "lit-analyzer": "2.0.0-pre.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.3",
     "ts-lit-plugin": "^1.2.1",
-    "typescript": "^4.9.4"
+    "typescript": "^5.0.0-beta"
+  },
+  "resolutions": {
+    "lit-analyzer": "2.0.0-pre.2",
+    "typescript": "5.0.0-beta",
+    "web-component-analyzer": "2.0.0-next.4"
   }
 }
