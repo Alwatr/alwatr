@@ -9,7 +9,7 @@ export type {RouteContext, RoutesConfig} from './type.js';
 /**
  * Initial process when dom loaded.
  */
-globalThis.addEventListener?.('DOMContentLoaded', (): void => {
+((): void => {
   logger.logMethod('initialize');
 
   clickTrigger.enable = popstateTrigger.enable = true;
@@ -20,4 +20,4 @@ globalThis.addEventListener?.('DOMContentLoaded', (): void => {
   else {
     logger.incident('initialize', 'skip_route_context', 'Route context already have value');
   }
-});
+})();
