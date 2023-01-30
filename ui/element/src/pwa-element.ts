@@ -32,23 +32,20 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
     }
   `;
 
-  protected _routes: RoutesConfig = {
+  protected _routesConfig: RoutesConfig = {
     routeId: (route) => route.sectionList[0]?.toString(),
     templates: {
       home: () => html`<h1>Page Home ;)</h1>`,
-      _404: () => html`404, Not found!`,
+      _404: () => html`<h1>404, Not found!</h1>`,
     },
   };
 
-  constructor() {
-    super();
-    this._initLocale();
-    localeContextConsumer.subscribe(this._routeChanged.bind(this));
-  }
-
-  protected _initLocale(): void {
-    this._logger.logMethod('_initLocale');
-    setLocale('fa');
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this._signalListenerList.push(localeContextConsumer.subscribe(this._routeChanged.bind(this)));
+    if (localeContextConsumer.getValue() === undefined) {
+      setLocale('fa');
+    }
   }
 
   protected _routeChanged(): void {
@@ -58,7 +55,7 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
 
   override render(): unknown {
     super.render();
-    return html`<div class="page-container">${cache(routerOutlet(this._routes))}</div>`;
+    return html`<div class="page-container">${cache(routerOutlet(this._routesConfig))}</div>`;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {

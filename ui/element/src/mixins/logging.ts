@@ -1,7 +1,7 @@
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
 
+import type {LitElement, PropertyValues} from '../lit.js';
 import type {Constructor} from '@alwatr/type';
-import type {LitElement, PropertyValues} from 'lit';
 
 export declare class LoggerMixinInterface extends LitElement {
   protected _logger: AlwatrLogger;
