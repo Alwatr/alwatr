@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import {RouteContext, routerOutlet, RoutesConfig, routeContextConsumer} from '@alwatr/router';
+import {routerOutlet, routeContextConsumer, redirect, type RouteContext, type RoutesConfig} from '@alwatr/router';
 
 const routes: RoutesConfig = {
-  routeId: (route: RouteContext): string | undefined => route.sectionList[0]?.toString(),
+  routeId: (routeContext: RouteContext): string | undefined => routeContext.sectionList[0]?.toString(),
   templates: {
     'home': () => '<h1>Home Page</h1>',
     '_404': () => '<h1>404 Not Found!</h1>',
     'about': () => '<h1>About Page</h1>',
-    'product-list': () => '<h1>Product List ...</h1>',
+    'product-list': () => '<h1>Product List</h1>',
+    'product': (routeContext) => `<h1>Product ${routeContext.sectionList[1]}</h1>`,
     'contact': () => '<h1>Product Page</h1>',
   },
 };
@@ -25,3 +26,5 @@ function render(): void {
  * Request update in route change.
  */
 routeContextConsumer.subscribe(render);
+
+redirect('/');
