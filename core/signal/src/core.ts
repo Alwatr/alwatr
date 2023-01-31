@@ -355,9 +355,12 @@ export const defineCommand = <TArgument extends Record<string, Stringifyable>, T
           signalProvider(argumentObject);
         }
         else {
-          dispatch<TReturn>(argumentObject._callbackSignalId, await signalProvider(argumentObject), {
-            debounce: options.debounce,
-          });
+          // prettier-ignore
+          dispatch<TReturn>(
+              argumentObject._callbackSignalId,
+              await signalProvider(argumentObject),
+              {debounce: options.debounce},
+          );
         }
       },
       {receivePrevious: 'NextCycle'},
