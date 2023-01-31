@@ -3,12 +3,12 @@ import {AlwatrPwaElement} from '@alwatr/element/pwa-element.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 
-import './page-chat.js';
-import './page-card.js';
-
 import '@alwatr/ui-kit/style/theme/palette-300.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/font/vazirmatn.css';
+
+import './page-chat.js';
+import './page-card.js';
 
 declare global {
   interface HTMLElementTagNameMap {

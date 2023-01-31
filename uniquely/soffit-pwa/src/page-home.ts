@@ -3,6 +3,8 @@ import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 import '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/snackbar/snackbar.js';
+
 import './lottery-box.js';
 
 declare global {
@@ -46,7 +48,7 @@ const _menuList: Array<IconBoxContent & {wide?: boolean}> = [
     icon: 'call-outline',
     flipRtl: true,
     headline: 'تماس باما',
-    description: 'ارتباط مستقیم با دفتر مرکزی بازرگانی سافیت',
+    description: 'دفتر مرکزی: ۹۶۷۴ ۵۵۹ ۰۹۱۵',
     href: 'tel:+989155599674',
   },
 ];
@@ -128,6 +130,8 @@ export class AlwatrPageHome extends AlwatrSmartElement {
         <span>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</span>
         <span class="version">v${_ALWATR_VERSION_}</span>
       </footer>
+
+      <alwatr-snackbar></alwatr-snackbar>
     `;
   }
 

@@ -83,8 +83,6 @@ export class AlwatrPageCard extends AlwatrSmartElement {
       <alwatr-surface stated outlined><input type="text" value="outlined" /></alwatr-surface>
       <alwatr-surface stated outlined><input type="text" value="outlined" /></alwatr-surface>
       <alwatr-surface stated outlined disabled><input type="text" value="outlined" disabled /></alwatr-surface>
-
-      <alwatr-toast></alwatr-toast>
     `;
   }
 }
