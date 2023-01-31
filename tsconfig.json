@@ -55,6 +55,7 @@
     {"path": "./uniquely/keep-pwa"},
 
     // labs
-    {"path": "./labs/zx-example"}
+    {"path": "./labs/zx-example"},
+    {"path": "./labs/day-countdown-bot"}
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@alwatr/telegram-day-countdown",
+  "name": "@alwatr/day-countdown-bot",
   "version": "0.28.0",
   "description": "Alwatr Telegram Day Countdown bot",
   "type": "module",
@@ -16,7 +16,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "labs/telegram-day-countdown"
+    "directory": "labs/day-countdown-bot"
   },
   "scripts": {
     "b": "yarn build",
@@ -36,10 +36,10 @@
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "moment-jalaali": "^0.9.6",
     "telegraf": "^4.11.2"
   },
   "devDependencies": {
+    "moment-jalaali": "^0.9.6",
     "@alwatr/fetch": "^0.28.0",
     "@alwatr/i18n": "^0.28.0",
     "@alwatr/logger": "^0.28.0",
