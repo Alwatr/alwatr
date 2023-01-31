@@ -340,24 +340,27 @@ export const setContextProvider = <TContext extends Stringifyable, TRquest exten
  */
 export const defineCommand = <TArgument extends Record<string, Stringifyable>, TReturn extends Stringifyable>(
   signalId: string,
-  signalProvider: ProviderFunction<TArgument & {_callbackSignalId: string}, TReturn>,
+  signalProvider: ProviderFunction<TArgument & {_callbackSignalId?: string}, TReturn>,
   options: Partial<Pick<ProviderOptions, 'debounce'>> = {},
 ): void => {
   options.debounce ??= 'AnimationFrame';
   logger.logMethodArgs('defineCommand', {commandId: signalId, options});
   const requestSignalId = 'request-' + signalId;
   removeAllListeners(requestSignalId);
-  subscribe<TArgument & {_callbackSignalId: string}>(
+  subscribe<TArgument & {_callbackSignalId?: string}>(
       requestSignalId,
       async (argumentObject) => {
-        const callbackSignalId = argumentObject._callbackSignalId;
-        // TODO: validate callbackSignalId
-        const commandReturn = await signalProvider(argumentObject);
-        dispatch<TReturn>(callbackSignalId, commandReturn, {debounce: options.debounce});
+        clearDetail(requestSignalId); // clean argumentObject from memory
+        if (argumentObject._callbackSignalId == null) {
+          signalProvider(argumentObject);
+        }
+        else {
+          dispatch<TReturn>(argumentObject._callbackSignalId, await signalProvider(argumentObject), {
+            debounce: options.debounce,
+          });
+        }
       },
-      {
-        receivePrevious: 'No', // Prevent to merge multiple previous requests
-      },
+      {receivePrevious: 'NextCycle'},
   );
 };
 
@@ -381,33 +384,58 @@ export const requestContext = <TRequest extends Stringifyable>(
 };
 
 /**
- * Dispatch request command signal with commandArgument as detail and return untilNext of callback signal.
+ * Dispatch request command signal with commandArgument as detail.
  *
  * Example:
  *
  * ```ts
- * const returnObject = await requestCommand<ArgumentType, ReturnType>('show-dialog', {foo: 'bar'});
+ * requestCommand<ArgumentType>('show-dialog', {foo: 'bar'});
  * ```
  */
-export const requestCommand = <TArgument extends Record<string, Stringifyable>, TReturn extends Stringifyable>(
+export const requestCommand = <TArgument extends Record<string, Stringifyable>>(
+  commandId: string,
+  commandArgument: TArgument,
+): void => {
+  logger.logMethodArgs('requestCommand', {commandId, commandArgument});
+  dispatch<TArgument>(`request-${commandId}`, commandArgument, {debounce: 'No'});
+};
+
+/**
+ * Dispatch request command signal with commandArgument as detail and return untilNext of callback signal.
+ *
+ * Request command and wait for answer.
+ *
+ * Example:
+ *
+ * ```ts
+ * const response = await requestCommandWithResponse<ArgumentType, ReturnType>('show-dialog', {foo: 'bar'});
+ * ```
+ */
+export const requestCommandWithResponse = async <
+  TArgument extends Record<string, Stringifyable>,
+  TReturn extends Stringifyable
+>(
   commandId: string,
   commandArgument: TArgument,
 ): Promise<TReturn> => {
-  return new Promise((resolve) => {
-    logger.logMethodArgs('requestCommand', {commandId, commandArgument});
+  logger.logMethodArgs('requestCommand', {commandId, commandArgument});
 
-    const requestSignalId = `request-${commandId}`;
-    const callbackSignalId = `callback-${commandId}-${++_lastListenerAutoId}`;
+  const _requestSignalId = `request-${commandId}`;
+  const _callbackSignalId = `callback-${commandId}-${++_lastListenerAutoId}`;
+  const untilCallback = untilNext<TReturn>(_callbackSignalId);
 
-    subscribe<TReturn>(callbackSignalId, resolve, {once: true, priority: true, receivePrevious: 'No'});
-    // TODO: refactor _untilNextSignal with option and use it
+  dispatch<TArgument & {_callbackSignalId: string}>(
+      _requestSignalId,
+      {
+        ...commandArgument,
+        _callbackSignalId,
+      },
+      {debounce: 'No'},
+  );
 
-    dispatch<TArgument & {_callbackSignalId: string}>(
-        requestSignalId,
-        {...commandArgument, _callbackSignalId: callbackSignalId},
-        {debounce: 'No'},
-    );
-  });
+  const response = await untilCallback;
+  destroySignal(_callbackSignalId);
+  return response;
 };
 
 /**
@@ -425,4 +453,23 @@ export const clearDetail = (signalId: string): void => {
   logger.logMethodArgs('expire', signalId);
   const signal = getSignalObject(signalId);
   delete signal.detail;
+};
+
+/**
+ * Delete signal object with detail and listeners and options.
+ *
+ * new subscriber options.receivePrevious not work until new signal
+ *
+ * Example:
+ *
+ * ```ts
+ * destroySignal('product-list');
+ * ```
+ */
+export const destroySignal = (signalId: string): void => {
+  logger.logMethodArgs('destroySignal', signalId);
+  const signal = _signalStorage[signalId];
+  if (signal == null) return;
+  signal.listenerList.length = 0;
+  delete _signalStorage[signalId];
 };

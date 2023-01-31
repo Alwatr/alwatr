@@ -1,4 +1,4 @@
-import {requestCommand} from './core.js';
+import {requestCommand, requestCommandWithResponse} from './core.js';
 
 import type {OmitFirstParam, Stringifyable} from '@alwatr/type';
 
@@ -7,15 +7,28 @@ import type {OmitFirstParam, Stringifyable} from '@alwatr/type';
  */
 export const commandTrigger = {
   /**
-   * Dispatch request command signal with commandArgument as detail and return untilNext of callback signal.
+   * Dispatch request command signal with commandArgument as detail.
    *
    * Example:
    *
    * ```ts
-   * const returnObject = await commandTrigger.request<ArgumentType, ReturnType>('show-dialog', {foo: 'bar'});
+   * commandTrigger.request<ArgumentType>('show-dialog', {foo: 'bar'});
    * ```
    */
   request: requestCommand,
+
+  /**
+   * Dispatch request command signal with commandArgument as detail and return untilNext of callback signal.
+   *
+   * Request command and wait for answer.
+   *
+   * Example:
+   *
+   * ```ts
+   * const response = await commandTrigger.requestWithResponse<ArgumentType, ReturnType>('show-dialog', {foo: 'bar'});
+   * ```
+   */
+  requestWithResponse: requestCommandWithResponse,
 
   /**
    * Bind define command to special command.
@@ -38,10 +51,22 @@ export const commandTrigger = {
      * Example:
      *
      * ```ts
-     * const returnObject = await showDialog.request({foo: 'bar'});
+     * showDialog.request({foo: 'bar'});
      * ```
      */
     request: requestCommand.bind(null, commandId) as unknown as
-      OmitFirstParam<typeof requestCommand<TArgument, TReturn>>,
+      OmitFirstParam<typeof requestCommand<TArgument>>,
+
+    /**
+     * Dispatch request command signal with commandArgument as detail and return untilNext of callback signal.
+     *
+     * Example:
+     *
+     * ```ts
+     * const response = await showDialog.requestWithResponse({foo: 'bar'});
+     * ```
+     */
+    requestWithResponse: requestCommandWithResponse.bind(null, commandId) as unknown as
+      OmitFirstParam<typeof requestCommandWithResponse<TArgument, TReturn>>,
   }),
 } as const;
