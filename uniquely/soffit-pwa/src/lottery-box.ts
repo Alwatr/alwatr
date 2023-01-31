@@ -15,7 +15,7 @@ declare global {
 const _lotteryContent = {
   wide: true,
   icon: 'gift-outline',
-  headline: 'قرعه‌کشی میدکس',
+  headline: 'شرکت در قرعه‌کشی',
 };
 
 /**
@@ -77,7 +77,7 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
       return html`<span class="success">اطلاعات شما با موفقیت ذخیره شد.</span>`;
     }
     else {
-      return html`فرم شرکت در قرعه‌کشی میدکس`;
+      return html`فرم شرکت در قرعه‌کشی`;
     }
   }
 
