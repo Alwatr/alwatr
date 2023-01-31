@@ -15,12 +15,26 @@ const _aboutContent = {
   wide: true,
   icon: 'logo-microsoft',
   headline: 'بازرگانی سافیت',
-  description: `مجموعه تولیدی بازرگانی سافیت
-    تولید کننده عمده محصولات DRY WALL، سازه ۶۰ کلیک، تایل کچی 60*60 و روکش P.V.C
-    برند درجه یک صادراتی با فعالیت های بین المللی و ویژگی های ممتاز`,
+  description: `سافیت با هدف بهینه سازی در ساخت وساز و همچنین کاهش هزینه ها تامین و نگه داری ساختمان در بلند مدت اقدام به تولید محصولات گچی نمود.
+همچنین با توجه به گسترش بازار و نیاز مشتریان تنوع طرح و جنس محصولات خود را افزایش داده است.
+از مزایا سقف ها سافیت می‌توان به سرعت بالا در اجرا، عایق صوت، رطوبت و حرارت نام برد. همچنین می‌توان به راحتی در دسترسی به تاسیسات نیز اشاره کرد.
+سافیت در نظر دارد سهم خود را در استفاده از،مواد اولیه  تجدید پذیر در تولید جهت حفظ و نگهداری محیط زیست برای آیندگان افزایش دهد.`,
 };
 
 const _menuList: Array<IconBoxContent & {wide?: boolean}> = [
+  {
+    icon: 'grid-outline',
+    headline: 'سقف کاذب',
+    wide: true,
+  },
+  {
+    icon: 'git-commit-outline',
+    headline: 'سازه‌ و‌ اتصالات',
+  },
+  {
+    icon: 'bulb-outline',
+    headline: 'روشنایی',
+  },
   {
     icon: 'cloud-download-outline',
     headline: 'دانلود کاتالوگ',
@@ -29,25 +43,59 @@ const _menuList: Array<IconBoxContent & {wide?: boolean}> = [
     target: 'download',
   },
   {
+    icon: 'call-outline',
+    flipRtl: true,
+    headline: 'تماس با ما',
+    description: 'دفتر مرکزی: ۰۹۱۵۵۵۹۹۶۷۴',
+    href: 'tel:+989155599674',
+  },
+  {
+    icon: 'logo-linkedin',
+    headline: 'لینکدین',
+    description: 'صفحه‌ی لینکدین بازرگانی سافیت',
+    href: 'https://www.linkedin.com/company/soffit-co',
+    target: '_blank',
+  },
+  {
     icon: 'logo-instagram',
     headline: 'اینستاگرام',
-    description: 'کانال اینستاگرام بازرگانی سافیت',
+    description: 'صفحه‌ی اینستاگرام بازرگانی سافیت',
     href: 'https://instagram.com/soffit.co',
     target: '_blank',
   },
   {
     icon: 'send-outline',
-    headline: 'کانال تلگرام',
+    headline: 'تلگرام',
     description: 'کانال تلگرام بازرگانی سافیت',
     href: 'https://t.me/soffitcompany',
     target: '_blank',
   },
   {
-    icon: 'call-outline',
-    flipRtl: true,
-    headline: 'تماس باما',
-    description: 'دفتر مرکزی: ۹۶۷۴ ۵۵۹ ۰۹۱۵',
-    href: 'tel:+989155599674',
+    icon: 'videocam-outline',
+    headline: 'آپارات',
+    description: 'کانال آپارات بازرگانی سافیت',
+    href: 'https://www.aparat.com/soffit',
+    target: '_blank',
+  },
+  {
+    icon: 'ribbon-outline',
+    headline: 'نمایندگی ۱',
+    description: 'توضیحات نمایندگی شماره یک',
+  },
+  {
+    icon: 'ribbon-outline',
+    headline: 'نمایندگی ۲',
+    description: 'توضیحات نمایندگی شماره دو',
+  },
+  {
+    icon: 'ribbon-outline',
+    headline: 'نمایندگی ۳',
+    description: 'توضیحات نمایندگی شماره سه',
+  },
+  {
+    icon: 'ribbon-outline',
+    headline: 'نمایندگی ۴',
+    description: 'توضیحات نمایندگی شماره چهار',
   },
 ];
 
