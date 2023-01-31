@@ -1,4 +1,4 @@
 body {
-  max-width: 600px;
+  max-width: var(--sys-breakpoint-handset);
   margin: 0 auto;
 }
