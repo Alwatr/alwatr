@@ -28,8 +28,10 @@ export class AlwatrButton extends AlwatrSurface {
         font-weight: var(--sys-typescale-label-large-font-weight);
         font-size: var(--sys-typescale-label-large-font-size);
         letter-spacing: var(--sys-typescale-label-large-letter-spacing);
-        line-height: calc(3 * var(--sys-spacing-track));
+        line-height: var(--sys-typescale-label-large-line-height);
         border-radius: var(--sys-radius-xsmall);
+        white-space: nowrap;
+        user-select: none;
         cursor: pointer;
       }
     `,
