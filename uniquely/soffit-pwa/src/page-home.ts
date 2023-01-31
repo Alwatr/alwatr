@@ -82,9 +82,9 @@ const _menuList: Array<IconBoxContent & {wide?: boolean}> = [
   {
     icon: 'ribbon-outline',
     headline: 'شعبه مرکزی',
-    description: `تلفن‌‌های تماس: ۰۹۱۵۳۰۱۴۴۰۴`,
-    // wide: true,
+    description: `تلفن‌‌ تماس: ۰۹۱۵۳۰۱۴۴۰۴`,
     href: 'tel:+989153014404',
+    wide: true,
   },
   {
     icon: 'ribbon-outline',
