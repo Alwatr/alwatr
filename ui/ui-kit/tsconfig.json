@@ -20,6 +20,7 @@
     {"path": "../icon"},
     {"path": "../../core/type"},
     {"path": "../../core/i18n"},
+    {"path": "../../core/signal"},
     {"path": "../../core/math"},
   ]
 }
