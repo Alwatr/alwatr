@@ -2,6 +2,7 @@ import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element
 
 import '@alwatr/ui-kit/card/icon-box.js';
 import './lottery-box.js';
+import './supply-chain-box.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
@@ -289,10 +290,12 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     }
 
     alwatr-icon-box[wide],
-    alwatr-lottery-box {
+    alwatr-lottery-box,
+    alwatr-supply-chain-box {
       width: 100%;
     }
 
+    alwatr-supply-chain-form,
     alwatr-lottery-form {
       padding: 0 var(--sys-spacing-track);
     }
@@ -326,6 +329,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       <main>
         <alwatr-icon-box .content=${_aboutContent} stated elevated pre-line wide></alwatr-icon-box>
         <alwatr-lottery-box></alwatr-lottery-box>
+        <alwatr-supply-chain-box></alwatr-supply-chain-box>
         ${this._menuTemplate()}
       </main>
       <footer>
