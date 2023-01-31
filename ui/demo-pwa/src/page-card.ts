@@ -2,7 +2,6 @@ import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
 import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/toast/toast.js';
 
 declare global {
   interface HTMLElementTagNameMap {
