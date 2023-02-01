@@ -35,6 +35,7 @@ export class AlwatrSnackbar extends AlwatrSurface {
         bottom: calc(2 * var(--sys-spacing-track));
         left: calc(3 * var(--sys-spacing-track));
         right: calc(3 * var(--sys-spacing-track));
+        z-index: var(--sys-zindex-snackbar);
         border-radius: var(--sys-radius-xsmall);
 
         box-sizing: border-box;

@@ -9,6 +9,7 @@
   --sys-zindex-backdrop: 400;
   --sys-zindex-modal: 500;
   --sys-zindex-popover: 600;
-  --sys-zindex-tooltip: 700;
+  --sys-zindex-snackbar: 700;
+  --sys-zindex-tooltip: 800;
   --sys-zindex-topness: 900;
 }
