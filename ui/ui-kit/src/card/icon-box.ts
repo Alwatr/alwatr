@@ -104,9 +104,9 @@ export class AlwatrIconBox extends AlwatrSurface {
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
     if (changedProperties.has('content') && this.content != null) {
-      this.toggleAttribute('highlight', this.content.highlight);
-      this.toggleAttribute('stated', this.content.stated);
-      this.toggleAttribute('pre-line', this.content.preLine);
+      this.toggleAttribute('highlight', Boolean(this.content.highlight));
+      this.toggleAttribute('stated', Boolean(this.content.stated));
+      this.toggleAttribute('pre-line', Boolean(this.content.preLine));
       if (this.content.elevated != null && this.content.elevated > 0) {
         this.setAttribute('elevated', this.content.elevated + '');
       }
