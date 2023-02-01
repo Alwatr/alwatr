@@ -1,5 +1,6 @@
 import {customElement, AlwatrSmartElement, css, html, property} from '@alwatr/element';
 import {serviceRequest} from '@alwatr/fetch';
+import {showSnackbar} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator, type JsonSchema} from '@alwatr/validator';
 
 import {config} from './tech-dep/config.js';
@@ -72,7 +73,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     }
     catch (err) {
       this._logger.error('submit', 'invalid_form_data', (err as Error).cause);
-      alert('اطلاعات فرم صحیح نمی‌باشد.');
+      showSnackbar({message: 'اطلاعات فرم صحیح نمی‌باشد.'});
       return;
     }
 
@@ -88,7 +89,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     catch (err) {
       this._logger.error('submit', 'request_failed', (err as Error).cause);
       this.disabled = false;
-      alert('لطفا از اتصال خود به اینترنت اطمینان حاصل فرمایید و مجددا ارسال کنید.');
+      showSnackbar({message: 'لطفا از اتصال خود به اینترنت اطمینان حاصل فرمایید و مجددا ارسال کنید.'});
       return;
     }
 
