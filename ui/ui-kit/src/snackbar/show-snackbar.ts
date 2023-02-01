@@ -27,7 +27,7 @@ export const snackbarSignalTrigger = commandTrigger.bind<SnackbarOptions, Snackb
  * ```
  */
 export function showSnackbar(options: SnackbarOptions): MaybePromise<SnackbarResponse> {
-  if (!options.actionLabel) {
+  if (options.actionLabel) {
     return snackbarSignalTrigger.requestWithResponse(options);
   }
   // else
