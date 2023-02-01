@@ -1,7 +1,7 @@
 import {customElement, AlwatrSmartElement, css, html, state, type PropertyValues} from '@alwatr/element';
 import {untilNextFrame, untilEvent, delay} from '@alwatr/util';
 
-import type {AlwatrIconBox} from '@alwatr/ui-kit/card/icon-box.js';
+import type {AlwatrIconBox, IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 import '@alwatr/ui-kit/card/icon-box.js';
 import './supply-chain-form.js';
@@ -12,10 +12,10 @@ declare global {
   }
 }
 
-const _SupplyChainContent = {
-  wide: true,
+const _SupplyChainContent: IconBoxContent = {
   icon: 'infinite-outline',
   headline: 'زنجیره تامین',
+  elevated: 2,
 };
 
 /**
@@ -51,12 +51,14 @@ export class AlwatrSupplyChainBox extends AlwatrSmartElement {
     super.render();
     return html`
       <alwatr-icon-box
-        .content=${_SupplyChainContent}
-        elevated="3"
-        ?stated=${!this.expanded}
-        ?highlight=${!this.expanded && !this.submitted}
+        .content=${{
+    ..._SupplyChainContent,
+    stated: !this.expanded,
+    highlight: !this.expanded && !this.submitted,
+  }}
         @click=${this._click}
-      >${this._boxContentTemplate()}</alwatr-icon-box>
+        >${this._boxContentTemplate()}</alwatr-icon-box
+      >
     `;
   }
 

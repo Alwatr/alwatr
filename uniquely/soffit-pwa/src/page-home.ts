@@ -108,7 +108,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     yield html`<alwatr-lottery-box></alwatr-lottery-box>`;
     yield map(homePageContent.socialList, this._boxTemplate);
     yield this._boxTemplate(homePageContent.contact);
-    // yield html`<alwatr-supply-chain-box></alwatr-supply-chain-box>`;
+    yield html`<alwatr-supply-chain-box></alwatr-supply-chain-box>`;
     yield map(homePageContent.agencyList, this._boxTemplate);
   }
 
