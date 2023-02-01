@@ -9,6 +9,10 @@ declare global {
   interface HTMLElementTagNameMap {
     'alwatr-snackbar': AlwatrSnackbar;
   }
+
+  interface HTMLElementEventMap {
+    'action-button-click': CustomEvent;
+  }
 }
 
 /**
@@ -29,8 +33,8 @@ export class AlwatrSnackbar extends AlwatrSurface {
         gap: var(--sys-spacing-track);
         position: fixed;
         bottom: calc(2 * var(--sys-spacing-track));
-        left: calc(2 * var(--sys-spacing-track));
-        right: calc(2 * var(--sys-spacing-track));
+        left: calc(3 * var(--sys-spacing-track));
+        right: calc(3 * var(--sys-spacing-track));
         border-radius: var(--sys-radius-xsmall);
 
         box-sizing: border-box;
@@ -111,22 +115,16 @@ export class AlwatrSnackbar extends AlwatrSurface {
   override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('elevated', '3');
-
-    document.addEventListener('click', () => {
-      if (this.open) return;
-      this.message = 'سلام یره، چطوری؟';
-      this.actionLabel = 'خوب';
-      this.open = true;
-      setTimeout(() => {
-        this.open = false;
-      }, 30_000);
-    });
   }
 
   override render(): unknown {
     return html`<span class="message">${this.message}</span>${when(
         this.actionLabel,
-        () => html`<alwatr-button>${this.actionLabel}</alwatr-button>`,
+        () => html`<alwatr-button @click=${this._actionButtonClick}>${this.actionLabel}</alwatr-button>`,
     )}`;
+  }
+
+  protected _actionButtonClick(): void {
+    this.dispatchEvent(new CustomEvent('action-button-click'));
   }
 }
