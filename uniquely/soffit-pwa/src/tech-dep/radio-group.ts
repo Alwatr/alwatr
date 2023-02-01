@@ -50,7 +50,7 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
       border: 1px solid var(--sys-color-outline);
       border-radius: var(--sys-radius-small);
       background-color: transparent;
-      margin: var(--sys-spacing-track) 0;
+      margin: var(--sys-spacing-track) 0 0;
     }
 
     fieldset:active,

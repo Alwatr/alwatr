@@ -15,7 +15,7 @@ export const homePageContent = {
     wide: true,
     elevated: 1,
     stated: true,
-    icon: 'logo-microsoft',
+    // icon: 'logo-microsoft',
     headline: 'بازرگانی سافیت',
     content: html`
       سافیت با هدف بهینه سازی در ساخت وساز و همچنین کاهش هزینه ها تامین و نگه داری ساختمان در بلند مدت اقدام به تولید محصولات گچی نمود.<br/>
@@ -36,20 +36,21 @@ export const homePageContent = {
     target: 'download',
   },
 
-  contact: {
-    elevated: 2,
-    highlight: true,
-    stated: true,
-    icon: 'call-outline',
-    flipRtl: true,
-    headline: 'تماس با ما',
-    description: 'دفتر مرکزی: ۰۹۱۵۵۵۹۹۶۷۴',
-    href: 'tel:+989155599674',
-  },
+  // contact: {
+  //   elevated: 2,
+  //   highlight: true,
+  //   stated: true,
+  //   icon: 'call-outline',
+  //   flipRtl: true,
+  //   headline: 'تماس با ما',
+  //   description: 'دفتر مرکزی: ۰۹۱۵۵۵۹۹۶۷۴',
+  //   href: 'tel:+989155599674',
+  // },
 
   productList: [
     {
-      icon: 'grid-outline',
+      icon: 'logo-microsoft',
+      // icon: 'grid-outline',
       elevated: 2,
       highlight: true,
       stated: true,
@@ -58,19 +59,19 @@ export const homePageContent = {
       wide: true,
     },
     {
-      icon: 'git-commit-outline',
-      elevated: 2,
-      highlight: true,
-      stated: true,
-      headline: 'سازه‌ و‌ اتصالات',
-      description: 'متن توضیحات...',
-    },
-    {
       icon: 'bulb-outline',
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'روشنایی',
+      description: 'متن توضیحات...',
+    },
+    {
+      icon: 'git-commit-outline',
+      elevated: 2,
+      highlight: true,
+      stated: true,
+      headline: 'سازه‌ و‌ اتصالات',
       description: 'متن توضیحات...',
     },
   ],
@@ -127,229 +128,269 @@ export const homePageContent = {
       description: 'لیست نمایندگی‌ها سافیت در سراسر کشور',
       wide: true,
     },
-    // {
-    //   elevated: 2,
-    //   highlight: true,
-    //   stated: true,
-    //   headline: 'شعبه مرکزی',
-    //   description: `تلفن‌‌ تماس: ۰۹۱۵۳۰۱۴۴۰۴`,
-    //   href: 'tel:+989153014404',
-    // },
+    {
+      elevated: 2,
+      highlight: true,
+      stated: true,
+      headline: 'شعبه‌مرکزی',
+      content: html`
+        <div>دفتر مرکزی</div>
+        <div dir="ltr">0915 301 4404</div>
+      `,
+      href: 'tel:+989153014404',
+    },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'کردستان',
-      description: 'آقای صفایی: ۰۹۱۴۳۸۱۳۹۲۵',
+      content: html`
+        <div>آقای صفایی</div>
+        <div dir="ltr">0914 381 3925</div>
+      `,
       href: 'tel:+989143813925',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'گلستان',
-      description: 'آقای اقلچی: ۰۹۱۱۷۵۰۵۰۲۷',
+      content: html`
+        <div>آقای اقلچی</div>
+        <div dir="ltr">0911 750 5027</div>
+      `,
       href: 'tel:+989117505027',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'ایلام',
-      description: 'آقای صیدی: ۰۹۱۸۳۴۲۸۹۰۳',
+      content: html`
+        <div>آقای صیدی</div>
+        <div dir="ltr">0918 342 8903</div>
+      `,
       href: 'tel:+989183428903',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'آذربایجان‌غربی',
-      description: 'آقای صفایی: ۰۹۱۴۳۸۱۳۹۲۵',
+      content: html`
+        <div>آقای صفایی</div>
+        <div dir="ltr">0914 381 3925</div>
+      `,
       href: 'tel:+989143813925',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'خراسان‌جنوبی',
-      description: 'آقای محبی: ۰۹۱۵۵۰۶۹۲۰۸',
+      content: html`
+        <div>آقای محبی</div>
+        <div dir="ltr">0915 506 9208</div>
+      `,
       href: 'tel:+989155069208',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'زاهدان',
-      description: 'آقای قاسمی: ۰۹۱۵۵۴۰۹۶۲۰',
+      content: html`
+        <div>آقای قاسمی</div>
+        <div dir="ltr">0915 540 9620</div>
+      `,
       href: 'tel:+989155409620',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'کرمانشاه',
-      description: 'آقای حاجتی: ۰۹۱۸۵۵۹۰۴۳۱',
+      content: html`
+        <div>آقای حاجتی</div>
+        <div dir="ltr">0918 559 0431</div>
+      `,
       href: 'tel:+989185590431',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'کرمان',
-      description: 'آقای رضایی: ۰۹۱۳۵۶۳۱۷۱۱',
+      content: html`
+        <div>آقای رضایی</div>
+        <div dir="ltr">0913 563 1711</div>
+      `,
       href: 'tel:+989135631711',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'همدان',
-      description: 'آقای طهماسبی: ۰۹۱۸۵۴۴۰۵۲۷',
+      content: html`
+        <div>آقای طهماسبی</div>
+        <div dir="ltr">0918 554 0527</div>
+      `,
       href: 'tel:+989185540527',
-      // small: true,
-    },
-    {
-      elevated: 2,
-      highlight: true,
-      stated: true,
-      headline: 'همدان',
-      description: 'آقای طهماسبی: ۰۹۱۸۵۴۴۰۵۲۷',
-      href: 'tel:+989185540527',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'خراسان‌رضوی',
-      description: 'آقای محبی: ۰۹۱۵۵۰۶۹۲۰۸',
+      content: html`
+        <div>آقای محبی</div>
+        <div dir="ltr">0915 506 9208</div>
+      `,
       href: 'tel:+989155069208',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'خراسان‌شمالی',
-      description: 'آقای محبی: ۰۹۱۵۵۰۶۹۲۰۸',
+      content: html`
+        <div>آقای محبی</div>
+        <div dir="ltr">0915 506 9208</div>
+      `,
       href: 'tel:+989155069208',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'اصفهان',
-      description: 'آقای بهنام‌پور: ۰۹۱۳۳۳۹۱۸۲۸',
+      content: html`
+        <div>آقای بهنام‌پور</div>
+        <div dir="ltr">0913 339 1828</div>
+      `,
       href: 'tel:+989133391828',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'سمنان',
-      description: 'آقای حافظی: ۰۹۱۹۲۷۶۰۸۰۶',
+      content: html`
+        <div>آقای حافظی</div>
+        <div dir="ltr">0919 276 0806</div>
+      `,
       href: 'tel:+989192760806',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'کیش',
-      description: 'آقای سالاری: ۰۹۹۰۳۴۹۸۴۲۵',
+      content: html`
+        <div>آقای سالاری</div>
+        <div dir="ltr">0990 349 8425</div>
+      `,
       href: 'tel:+989903498425',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'زنجان',
-      description: 'آقای نقی‌لو: ۰۹۱۲۰۶۷۶۵۰۳',
+      content: html`
+        <div>آقای نقی‌لو</div>
+        <div dir="ltr">0912 067 6503</div>
+      `,
       href: 'tel:+989120676503',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'اردبیل',
-      description: 'آقای پاسبانی: ۰۹۱۴۱۵۰۴۲۰۳',
+      content: html`
+        <div>آقای پاسبانی</div>
+        <div dir="ltr">0914 150 4203</div>
+      `,
       href: 'tel:+989141504203',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'بندرعباس',
-      description: 'آقای کمالی‌پور: ۰۹۳۰۳۸۰۰۱۳۴',
+      content: html`
+        <div>آقای کمالی‌پور</div>
+        <div dir="ltr">0930 380 0134</div>
+      `,
       href: 'tel:+989303800134',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'چهارمحال‌ و‌ بختیاری',
-      description: 'آقای فروزنده: ۰۹۱۳۲۸۳۹۱۹۳',
+      content: html`
+        <div>آقای فروزنده</div>
+        <div dir="ltr">0913 283 9193</div>
+      `,
       href: 'tel:+989132839193',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'کهگیلویه‌ و‌ بویراحمد',
-      description: 'آقای عظیمی‌فر: ۰۹۱۷۴۳۲۶۱۳۲',
+      content: html`
+        <div>آقای عظیمی‌فر</div>
+        <div dir="ltr">0917 432 6132</div>
+      `,
       href: 'tel:+989174326132',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'آذربایجان‌شرقی',
-      description: 'آقای سلیمانی: ۰۹۳۵۷۰۷۱۹۰۴',
+      content: html`
+        <div>آقای سلیمانی</div>
+        <div dir="ltr">0935 707 1904</div>
+      `,
       href: 'tel:+989357071904',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'شیراز',
-      description: 'آقای خدامی: ۰۹۱۷۱۱۳۲۲۶۲',
+      content: html`
+        <div>آقای خدامی</div>
+        <div dir="ltr">0917 113 2262</div>
+      `,
       href: 'tel:+989171132262',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'خوزستان',
-      description: 'آقای شمس: ۰۹۱۶۶۰۳۳۶۱۲',
+      content: html`
+        <div>آقای شمس</div>
+        <div dir="ltr">0916 603 3612</div>
+      `,
       href: 'tel:+989166033612',
-      // small: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
       headline: 'ورامین',
-      description: 'آقای بیدگلی: ۰۹۹۰۳۷۳۰۳۷۷',
+      content: html`
+        <div>آقای بیدگلی</div>
+        <div dir="ltr">0990 373 0377</div>
+      `,
       href: 'tel:+989903730377',
-      // small: true,
     },
   ],
 } as const;

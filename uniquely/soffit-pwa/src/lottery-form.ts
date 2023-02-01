@@ -1,4 +1,4 @@
-import {customElement, AlwatrSmartElement, css, html, property} from '@alwatr/element';
+import {customElement, AlwatrDummyElement, css, html, property} from '@alwatr/element';
 import {serviceRequest} from '@alwatr/fetch';
 import {showSnackbar} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator, type JsonSchema} from '@alwatr/validator';
@@ -10,7 +10,6 @@ import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 import '@alwatr/ui-kit/button/button.js';
 import './tech-dep/radio-group.js';
-
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -24,7 +23,16 @@ declare global {
  * @attr {Boolean} invisible
  */
 @customElement('alwatr-lottery-form')
-export class AlwatrLotteryForm extends AlwatrSmartElement {
+export class AlwatrLotteryForm extends AlwatrDummyElement {
+  static storage = 'lottery';
+
+  static validSchema: JsonSchema = {
+    code: String,
+    name: String,
+    phone: Number,
+    activity: String,
+  };
+
   static override styles = css`
     :host {
       display: block;
@@ -51,28 +59,22 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
       display: flex;
       flex-direction: row-reverse;
       gap: var(--sys-spacing-track);
+      margin-top: var(--sys-spacing-track);
     }
   `;
 
   @property({type: Boolean, reflect: true})
     disabled = false;
 
-  static validSchema: JsonSchema = {
-    code: String,
-    name: String,
-    phone: Number,
-    activity: String,
-  };
-
   async submit(): Promise<void> {
     let bodyJson = this.getFormData();
     this._logger.logMethodArgs('submit', bodyJson);
 
     try {
-      bodyJson = validator(AlwatrLotteryForm.validSchema, bodyJson);
+      bodyJson = validator<Record<string, string | number>>(AlwatrLotteryForm.validSchema, bodyJson);
     }
     catch (err) {
-      this._logger.error('submit', 'invalid_form_data', (err as Error).cause);
+      this._logger.accident('submit', 'invalid_form_data', 'validator failed on form data', (err as Error).cause);
       showSnackbar({message: 'اطلاعات فرم صحیح نمی‌باشد.'});
       return;
     }
@@ -83,7 +85,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
         method: 'PUT',
         url: config.api + '/form/',
         queryParameters: {
-          storage: 'lottery',
+          storage: AlwatrLotteryForm.storage,
         },
         token: config.token,
         bodyJson,
@@ -103,7 +105,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
     this.dispatchEvent(new CustomEvent('form-canceled'));
   }
 
-  getFormData(): Record<string, unknown> {
+  getFormData(): Record<string, string | number | boolean | undefined> {
     this._logger.logMethod('getFormData');
     const data: Record<string, string> = {};
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>(
