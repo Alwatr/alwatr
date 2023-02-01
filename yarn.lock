@@ -7790,10 +7790,10 @@ typegram@^4.1.0:
   resolved "https://registry.yarnpkg.com/typegram/-/typegram-4.2.0.tgz#c3fdb8e7575a183e1994e214440aa8f12a468d43"
   integrity sha512-rObfoGpDlmWUhmggpWd2I/4xLsdGPDvfvrLpLxV4pBTBL2BBjm+7x7IOmTwJRV6Qe4UAkWdHq0ZYoTYAAPE5YA==
 
-typescript@5.0.0-beta, "typescript@^3 || ^4", typescript@^5.0.0-beta, typescript@~4.4.3:
-  version "5.0.0-beta"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.0-beta.tgz#791fa95411d6ff64ee77d677ed1e6f32a2eaabaf"
-  integrity sha512-+SSabbSXG5mtF+QGdV9uXXt9Saq1cSyI6hSG7znhaLoquleJpnmfkwSxFngK9c2fWWi1W/263TuzXQOsIcdjjA==
+typescript@5.0.0-dev.20230201, "typescript@^3 || ^4", typescript@^5.0.0-dev.20230201, typescript@~4.4.3:
+  version "5.0.0-dev.20230201"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.0-dev.20230201.tgz#045b8f21b0be91b2c4e38f26b6736e388b7e23e1"
+  integrity sha512-pm0yhjZLWOXF1eWp07qymk04I6IM8CUFAKgwFpilOqrD0y3ZDpi997Ah7I4vrRoH3YQzT1fCyuUUYOBZwZ0C1Q==
 
 typical@^4.0.0:
   version "4.0.0"
