@@ -189,7 +189,7 @@ const unitConversion = {
  * parseDuration('10d', 'h'); // 240
  * ```
  */
-export function parseDuration(duration: DurationString, toUnit: DurationUnit | 'ms' = 'ms'): number {
+export const parseDuration = (duration: DurationString, toUnit: DurationUnit | 'ms' = 'ms'): number => {
   duration = duration.trim() as DurationString;
   const durationNumberStr = duration.substring(0, duration.length - 1).trimEnd(); // trimEnd for `10 m`
   if (!isNumber(durationNumberStr)) {
@@ -201,4 +201,9 @@ export function parseDuration(duration: DurationString, toUnit: DurationUnit | '
     throw new Error(`invalid_init`);
   }
   return (durationNumber * unitConversion[durationUnit]) / (toUnit === 'ms' ? 1 : unitConversion[toUnit]);
-}
+};
+
+/**
+ * Limit number in range (min, max).
+ */
+export const clamp = (val: number, min: number, max: number): number => val > max ? max : val < min ? min : val;
