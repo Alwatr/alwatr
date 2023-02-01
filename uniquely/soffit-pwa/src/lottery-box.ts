@@ -1,7 +1,7 @@
 import {customElement, AlwatrSmartElement, css, html, state, type PropertyValues} from '@alwatr/element';
 import {untilNextFrame, untilEvent, delay} from '@alwatr/util';
 
-import type {AlwatrIconBox} from '@alwatr/ui-kit/card/icon-box.js';
+import type {AlwatrIconBox, IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 import '@alwatr/ui-kit/card/icon-box.js';
 import './lottery-form.js';
@@ -12,10 +12,10 @@ declare global {
   }
 }
 
-const _lotteryContent = {
-  wide: true,
+const _lotteryContent: IconBoxContent = {
   icon: 'gift-outline',
   headline: 'شرکت در قرعه‌کشی',
+  elevated: 2,
 };
 
 /**
@@ -51,10 +51,11 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
     super.render();
     return html`
       <alwatr-icon-box
-        .content=${_lotteryContent}
-        elevated="3"
-        ?stated=${!this.expanded}
-        ?highlight=${!this.expanded && !this.submitted}
+        .content=${{
+    ..._lotteryContent,
+    stated: !this.expanded,
+    highlight: !this.expanded && !this.submitted,
+  }}
         @click=${this._click}
       >${this._boxContentTemplate()}</alwatr-icon-box>
     `;
