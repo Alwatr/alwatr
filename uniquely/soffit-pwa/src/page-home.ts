@@ -93,7 +93,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
   override render(): unknown {
     super.render();
     return html`
-      <header><img src="image/soffit.png" alt="SOFFIT Logo" /></header>
+      <header><img src="image/soffit.svg" alt="SOFFIT Logo" /></header>
       <main>${this._menuTemplate()}</main>
       <footer>
         <span>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</span>
