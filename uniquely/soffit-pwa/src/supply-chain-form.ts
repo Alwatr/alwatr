@@ -3,7 +3,7 @@ import {serviceRequest} from '@alwatr/fetch';
 import {showSnackbar} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator, type JsonSchema} from '@alwatr/validator';
 
-import {config} from './tech-dep/config.js';
+import {config} from './config.js';
 
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
