@@ -8,13 +8,8 @@ if (debugConfig != null) {
   globalThis.appConfig = JSON.parse(debugConfig);
 }
 
-function getConfKey<T extends string | number | boolean>(key: string): T {
+export function getConfKey<T extends string | number | boolean>(key: string): T {
   const val = globalThis.appConfig?.[key];
   if (val == null) throw new Error('invalid_app_config', {cause: {key, val}});
   return val as T;
 }
-
-export const config = {
-  api: getConfKey<string>('api'),
-  token: getConfKey<string>('token'),
-};
