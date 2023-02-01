@@ -1,0 +1,44 @@
+{
+  "name": "@alwatr/pwa-helper",
+  "version": "0.28.0",
+  "description": "Alwatr PWA Helper",
+  "keywords": [
+    "element",
+    "lit",
+    "lit-element",
+    "web-component",
+    "mixin",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "main": "index.js",
+  "type": "module",
+  "types": "index.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "license": "MIT",
+  "files": [
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "ui/element"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui/pwa-helper#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "dependencies": {
+    "@alwatr/element": "^0.28.0",
+    "@alwatr/logger": "^0.28.0",
+    "@alwatr/ui-kit": "^0.28.0",
+    "tslib": "^2.5.0"
+  },
+  "devDependencies": {
+    "@alwatr/type": "^0.28.0"
+  }
+}

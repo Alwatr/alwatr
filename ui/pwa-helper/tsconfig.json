@@ -4,22 +4,20 @@
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "rootDir": "src",
-    "outDir": "build",
-    "noEmit": true,
+    "outDir": ".",
     "plugins": [
       {
         "name": "ts-lit-plugin",
         "strict": true
       }
-    ],
+    ]
   },
-
+  // files, include and exclude from the inheriting config are always overwritten.
   "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
-    {"path": "../../core/router"},
-    {"path": "../../ui/element"},
-    {"path": "../../ui/ui-kit"},
-    {"path": "../../ui/pwa-helper"},
+    {"path": "../../core/logger"},
+    {"path": "../element"},
+    {"path": "../ui-kit"},
   ]
 }

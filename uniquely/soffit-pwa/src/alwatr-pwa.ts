@@ -1,5 +1,5 @@
 import {html, customElement} from '@alwatr/element';
-import {AlwatrPwaElement} from '@alwatr/element/pwa-element.js';
+import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
 
 import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';

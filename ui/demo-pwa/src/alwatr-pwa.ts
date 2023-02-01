@@ -1,5 +1,5 @@
 import {html, customElement} from '@alwatr/element';
-import {AlwatrPwaElement} from '@alwatr/element/pwa-element.js';
+import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 

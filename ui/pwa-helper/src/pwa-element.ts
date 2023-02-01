@@ -1,11 +1,12 @@
+import {AlwatrSmartElement} from '@alwatr/element';
 import {localeContextConsumer, setLocale} from '@alwatr/i18n';
 import {routerOutlet, type RoutesConfig} from '@alwatr/router';
 import {html, css, type CSSResultGroup, type PropertyValues} from 'lit';
 import {cache} from 'lit/directives/cache.js';
 
-import {registerServiceWorker} from './helper/service-worker.js';
-import {AlwatrSmartElement} from './smart-element.js';
+import {registerServiceWorker} from './service-worker.js';
 
+import '@alwatr/ui-kit/snackbar/controller.js';
 import '@alwatr/ui-kit/style/token.css';
 import '@alwatr/ui-kit/style/pwa.css';
 
