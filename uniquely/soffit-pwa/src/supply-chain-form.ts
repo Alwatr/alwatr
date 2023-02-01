@@ -82,6 +82,9 @@ export class AlwatrSupplyChainForm extends AlwatrSmartElement {
       await serviceRequest({
         method: 'PUT',
         url: config.api + '/form/',
+        queryParameters: {
+          storage: 'supply-chain',
+        },
         token: config.token,
         bodyJson,
       });

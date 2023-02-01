@@ -82,6 +82,9 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
       await serviceRequest({
         method: 'PUT',
         url: config.api + '/form/',
+        queryParameters: {
+          storage: 'lottery',
+        },
         token: config.token,
         bodyJson,
       });
