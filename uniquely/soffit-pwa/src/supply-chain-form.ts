@@ -1,6 +1,6 @@
 import {customElement, AlwatrSmartElement, css, html, property} from '@alwatr/element';
 import {serviceRequest} from '@alwatr/fetch';
-import {showSnackbar} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
+import {showSnackbar} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator, type JsonSchema} from '@alwatr/validator';
 
 import {config} from './tech-dep/config.js';
