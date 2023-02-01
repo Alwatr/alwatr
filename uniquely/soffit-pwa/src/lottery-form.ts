@@ -139,7 +139,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
       ></alwatr-text-field>
       <alwatr-radio-group name="activity"></alwatr-radio-group>
       <div class="button-container">
-        <alwatr-button elevated filled @click=${this.submit}>ارسال فرم</alwatr-button>
+        <alwatr-button outlined @click=${this.submit}>ارسال فرم</alwatr-button>
         <alwatr-button @click=${this.cancel}>انصراف</alwatr-button>
       </div>
     `;
