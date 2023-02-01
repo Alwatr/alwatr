@@ -7,6 +7,7 @@ import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/font/vazirmatn.css';
 
 import './page-home.js';
+import './page-agency.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 
@@ -26,6 +27,7 @@ class AlwatrPwa extends AlwatrPwaElement {
     templates: {
       home: () => html`<alwatr-page-home></alwatr-page-home>`,
       _404: (routeContext) => this._routesConfig.templates.home(routeContext),
+      agency: () => html`<alwatr-page-agency></alwatr-page-agency>`,
     },
   };
 }
