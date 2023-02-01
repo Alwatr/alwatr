@@ -22,5 +22,6 @@
     {"path": "../../core/i18n"},
     {"path": "../../core/signal"},
     {"path": "../../core/math"},
+    {"path": "../../core/util"},
   ]
 }
