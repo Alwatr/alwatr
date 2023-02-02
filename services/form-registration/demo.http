@@ -1,11 +1,11 @@
-@apiUrl = http://127.0.0.1:8000
+@apiUrl = http://127.0.0.1:8000/api/v0
 @token = YOUR_SECRET_TOKEN
 
 ### home
-GET {{apiUrl}}/api/v0
+GET {{apiUrl}}/
 
 ### Add new form
-PUT {{apiUrl}}/api/v0/form/?storage=test
+PUT {{apiUrl}}/form/?storage=test
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -16,31 +16,31 @@ Content-Type: application/json
 }
 
 ### Get storage
-GET {{apiUrl}}/v0/form/storage?storage=test
+GET {{apiUrl}}/form/storage?storage=test
 Authorization: Bearer {{token}}
 
 
 ### === Test other routes and errors ===
 
 ### Page Home
-GET {{apiUrl}}/v0
+GET {{apiUrl}}/
 
 ### Page 404 (wrong path)
-GET {{apiUrl}}/v0/jafang
+GET {{apiUrl}}/jafang
 
 ### Page 404 (wrong method)
-POST {{apiUrl}}/v0
+POST {{apiUrl}}
 
 ### Page health
-GET {{apiUrl}}/v0/health
+GET {{apiUrl}}/health
 
 ### empty body
-PUT {{apiUrl}}/v0/form/?storage=test
+PUT {{apiUrl}}/form/?storage=test
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### invalid json
-PUT {{apiUrl}}/v0/form/?storage=test
+PUT {{apiUrl}}/form/?storage=test
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
