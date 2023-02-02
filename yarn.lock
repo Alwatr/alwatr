@@ -7790,10 +7790,10 @@ typegram@^4.1.0:
   resolved "https://registry.yarnpkg.com/typegram/-/typegram-4.2.0.tgz#c3fdb8e7575a183e1994e214440aa8f12a468d43"
   integrity sha512-rObfoGpDlmWUhmggpWd2I/4xLsdGPDvfvrLpLxV4pBTBL2BBjm+7x7IOmTwJRV6Qe4UAkWdHq0ZYoTYAAPE5YA==
 
-typescript@5.0.0-beta, "typescript@^3 || ^4", typescript@^5.0.0-beta, typescript@~4.4.3:
-  version "5.0.0-beta"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.0-beta.tgz#791fa95411d6ff64ee77d677ed1e6f32a2eaabaf"
-  integrity sha512-+SSabbSXG5mtF+QGdV9uXXt9Saq1cSyI6hSG7znhaLoquleJpnmfkwSxFngK9c2fWWi1W/263TuzXQOsIcdjjA==
+typescript@5.0.0-dev.20230202, "typescript@^3 || ^4", typescript@^5.0.0-dev.20230202, typescript@~4.4.3:
+  version "5.0.0-dev.20230202"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.0-dev.20230202.tgz#b06fee7bc69cd1bfa96c51b04059c54590dd6edf"
+  integrity sha512-uGAdYMTTn/t+7Gi8qRR5lMGQxa0bKByvbiEc5Dr4d/y4rSqKxO26bFu4SV1fUpzkZ91+O8Cnryj3+VOiR+Yuzw==
 
 typical@^4.0.0:
   version "4.0.0"

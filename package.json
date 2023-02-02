@@ -65,11 +65,11 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.3",
     "ts-lit-plugin": "^1.2.1",
-    "typescript": "^5.0.0-beta"
+    "typescript": "^5.0.0-dev.20230202"
   },
   "resolutions": {
     "lit-analyzer": "2.0.0-pre.2",
-    "typescript": "5.0.0-beta",
+    "typescript": "5.0.0-dev.20230202",
     "web-component-analyzer": "2.0.0-next.4"
   }
 }
