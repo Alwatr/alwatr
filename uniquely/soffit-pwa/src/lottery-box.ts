@@ -121,7 +121,7 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
 
     box.style.height = box.scrollHeight + 'px';
 
-    const form = this.renderRoot.querySelector('#form');
+    const form = this.renderRoot.querySelector<AlwatrLotteryForm>('#form');
     if (!form) {
       this._logger.error('_animateExpand', 'form_not_found');
       this.style.height = 'auto';
