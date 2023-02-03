@@ -32,7 +32,7 @@
   "devDependencies": {
     "@alwatr/element": "^0.28.0",
     "@alwatr/ui-kit": "^0.28.0",
-    "@alwatr/pwa-helper": "^0.28.0",
+    "@alwatr/pwa-helper": "^0.29.0-beta",
     "@alwatr/fetch": "^0.28.0",
     "@alwatr/math": "^0.28.0",
     "@alwatr/util": "^0.28.0",

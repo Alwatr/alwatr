@@ -1,14 +1,13 @@
-import {AlwatrSmartElement} from '@alwatr/element';
+import {AlwatrSmartElement, cache, html, css, type CSSResultGroup, type PropertyValues} from '@alwatr/element';
 import {localeContextConsumer, setLocale} from '@alwatr/i18n';
 import {routeContextConsumer, routerOutlet, type RoutesConfig} from '@alwatr/router';
-import {html, css, type CSSResultGroup, type PropertyValues} from 'lit';
-import {cache} from 'lit/directives/cache.js';
-
-import {registerServiceWorker} from './service-worker.js';
+import {commandTrigger} from '@alwatr/signal';
 
 import '@alwatr/ui-kit/snackbar/controller.js';
 import '@alwatr/ui-kit/style/token.css';
 import '@alwatr/ui-kit/style/pwa.css';
+
+import './signal/sw-user-notify.js';
 
 /**
  * Alwatr Root Base Element
@@ -44,7 +43,7 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
   override connectedCallback(): void {
     super.connectedCallback();
     if (localeContextConsumer.getValue() === undefined) {
-      setLocale('fa');
+      setLocale();
     }
     this._signalListenerList.push(routeContextConsumer.subscribe(this._routeChanged.bind(this)));
   }
@@ -62,6 +61,6 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
     this.removeAttribute('unresolved');
-    registerServiceWorker();
+    commandTrigger.request('register_service_worker_command', {});
   }
 }

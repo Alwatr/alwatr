@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/pwa-helper",
-  "version": "0.28.0",
+  "version": "0.29.0-beta2",
   "description": "Alwatr PWA Helper",
   "keywords": [
     "element",
@@ -12,9 +12,7 @@
     "esm",
     "alwatr"
   ],
-  "main": "index.js",
   "type": "module",
-  "types": "index.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
@@ -35,6 +33,7 @@
   "dependencies": {
     "@alwatr/element": "^0.28.0",
     "@alwatr/logger": "^0.28.0",
+    "@alwatr/i18n": "^0.28.0",
     "@alwatr/ui-kit": "^0.28.0",
     "tslib": "^2.5.0"
   },
