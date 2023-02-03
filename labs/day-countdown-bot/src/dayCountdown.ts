@@ -9,7 +9,10 @@ export async function notify(): Promise<void> {
   const dayToLeft = dateDistance(nime.valueOf());
   for (const user of storageEngine.allObject()) {
     try {
-      await sendMessage(user.id, `**${dayToLeft} روز مانده تا ولادت مهربان ترین پدر ♥️**`, {parse_mode: 'MarkdownV2'});
+      await sendMessage(user.id, `**${dayToLeft} روز مانده تا ولادت مهربان ترین پدر ♥️**`, {
+        parse_mode: 'MarkdownV2',
+        reply_markup: {inline_keyboard: [[{text: `${dayToLeft} روز تا نیمه‌شعبان`, callback_data: 'dayCountdown'}]]},
+      });
     }
     catch (err) {
       const _err = err as TelegramError;
