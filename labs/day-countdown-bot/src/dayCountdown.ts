@@ -7,7 +7,7 @@ export async function notify(): Promise<void> {
   const dayToLeft = dateDistance(nime.valueOf());
   for (const user of storageEngine.allObject()) {
     try {
-      await sendMessage(user.id, `${dayToLeft} day to left`);
+      await sendMessage(user.id, `**${dayToLeft} روز مانده تا ولادت مهربان ترین پدر ♥️**`, {parse_mode: 'MarkdownV2'});
     }
     catch (err) {
       logger.error('notify', 'send_message_failed', {err});

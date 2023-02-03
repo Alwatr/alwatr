@@ -11,7 +11,10 @@ function commandStart(ctx: Context): void {
   if (chatId == null) return;
   logger.logMethodArgs('command/start', {chatId});
 
-  ctx.reply('Salam');
+  ctx.reply(`
+    سلام ✌️
+    من ربات روزشمار هستم!
+`.replace('    ', ''));
 
   if (!storageEngine.has(chatId)) {
     storageEngine.set({id: chatId});
