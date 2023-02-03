@@ -1,23 +1,34 @@
+import {type TelegramError} from 'telegraf';
+
 import {logger} from './config.js';
+import {bot} from './lib/bot.js';
 import {dateDistance, nime} from './lib/calender.js';
 import {sendMessage} from './lib/send-message.js';
 import {storageEngine} from './lib/storage.js';
 
-import type {TelegramError} from 'telegraf';
 
 export async function notify(): Promise<void> {
   const dayToLeft = dateDistance(nime.valueOf());
-  for (const user of storageEngine.allObject()) {
+  for (const chat of storageEngine.allObject()) {
     try {
-      await sendMessage(user.id, `**${dayToLeft} روز مانده تا ولادت مهربان ترین پدر ♥️**`, {
+      const response = await sendMessage(chat.id, `**${dayToLeft} روز مانده تا ولادت مهربان ترین پدر ♥️**`, {
         parse_mode: 'MarkdownV2',
         reply_markup: {inline_keyboard: [[{text: `${dayToLeft} روز تا نیمه‌شعبان`, callback_data: 'dayCountdown'}]]},
       });
+
+      const lastBotMessageId = storageEngine.get(chat.id)?.lastBotMessageId;
+      storageEngine.set({
+        id: chat.id,
+        lastBotMessageId: response.message_id,
+      });
+
+      await bot.telegram.unpinChatMessage(chat.id, lastBotMessageId);
+      await bot.telegram.pinChatMessage(chat.id, response.message_id);
     }
     catch (err) {
       const _err = err as TelegramError;
       if (_err.code === 403) {
-        storageEngine.delete(user.id);
+        storageEngine.delete(chat.id);
       }
       else {
         logger.error('notify', _err.message, {_err});

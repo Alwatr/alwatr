@@ -7,4 +7,4 @@ import './command/start.js';
 logger.logOther('..:: Day Countdown Telegram Bot ::..');
 
 launchBot();
-setInterval(notify, 2000);
+setInterval(notify, 5_000);
