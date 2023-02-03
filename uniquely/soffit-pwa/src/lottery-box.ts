@@ -51,7 +51,7 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
   override render(): unknown {
     super.render();
     const content = {
-      ...AlwatrLotteryBox.iconBoxContent,
+      ...(this.constructor as typeof AlwatrLotteryBox).iconBoxContent,
       stated: !this.expanded,
       highlight: !this.expanded && !this.submitted,
     };
@@ -121,7 +121,7 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
 
     box.style.height = box.scrollHeight + 'px';
 
-    const form = this.renderRoot.querySelector('alwatr-lottery-form');
+    const form = this.renderRoot.querySelector('#form');
     if (!form) {
       this._logger.error('_animateExpand', 'form_not_found');
       this.style.height = 'auto';

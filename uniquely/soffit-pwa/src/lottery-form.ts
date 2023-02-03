@@ -71,7 +71,10 @@ export class AlwatrLotteryForm extends AlwatrDummyElement {
     this._logger.logMethodArgs('submit', bodyJson);
 
     try {
-      bodyJson = validator<Record<string, string | number>>(AlwatrLotteryForm.validSchema, bodyJson);
+      bodyJson = validator<Record<string, string | number>>(
+          (this.constructor as typeof AlwatrLotteryForm).validSchema,
+          bodyJson,
+      );
     }
     catch (err) {
       this._logger.accident('submit', 'invalid_form_data', 'validator failed on form data', (err as Error).cause);
@@ -85,7 +88,7 @@ export class AlwatrLotteryForm extends AlwatrDummyElement {
         method: 'PUT',
         url: config.api + '/form/',
         queryParameters: {
-          form: AlwatrLotteryForm.formId,
+          form: (this.constructor as typeof AlwatrLotteryForm).formId,
         },
         token: config.token,
         bodyJson,
