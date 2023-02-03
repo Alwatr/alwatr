@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/ui-demo-pwa",
-  "version": "0.29.0-prv1",
+  "version": "0.28.0",
   "description": "Alwatr Progressive Web Application Demo.",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
