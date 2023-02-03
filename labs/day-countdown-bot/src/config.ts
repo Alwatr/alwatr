@@ -14,7 +14,7 @@ export const config = {
   },
   storage: {
     name: process.env.STORAGE_NAME ?? 'dayCountdown',
-    debugNotifyToken: 'alw007',
+    path: process.env.STORAGE_PATH ?? 'storage',
   },
 };
 

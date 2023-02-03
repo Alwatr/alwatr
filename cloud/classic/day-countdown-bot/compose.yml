@@ -1,0 +1,37 @@
+networks:
+  internal:
+  alwatr-public-network:
+    name: alwatr-public-network
+    external: true
+
+services:
+  telegram-bot:
+    image: ghcr.io/alimd/day-countdown-bot:${TELEGRAM_BOT_VERSION:-next}
+
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    stop_grace_period: 30s
+
+    restart: unless-stopped
+
+    networks:
+      internal:
+
+    environment:
+      - STORAGE_PATH=/storage
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - ALWATR_DEBUG=${TELEGRAM_BOT_DEBUG:-}
+
+    volumes:
+      - type: bind
+        source: ./_data/storage
+        target: /storage
+        bind:
+          create_host_path: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
