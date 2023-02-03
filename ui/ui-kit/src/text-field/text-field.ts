@@ -5,7 +5,7 @@ import '@alwatr/icon';
 
 import {AlwatrSurface} from '../card/surface.js';
 
-const unicodeDigits = new UnicodeDigits('common', 'en');
+const unicodeDigits = new UnicodeDigits('en');
 
 declare global {
   interface HTMLElementTagNameMap {
