@@ -34,8 +34,8 @@ package-lock.json
 .yarn-integrity
 
 # dotenv environment variables file
-*.env
-!example.env
+# *.env
+# !example.env
 
 temp
 _data
