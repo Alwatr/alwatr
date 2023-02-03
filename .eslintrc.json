@@ -41,7 +41,6 @@
     "brace-style": ["error", "stroustrup", {"allowSingleLine": true}],
     "operator-linebreak": ["error", "after", {"overrides": {"?": "before", ":": "before"}}],
     "@typescript-eslint/explicit-function-return-type": "error",
-    "import/no-duplicates": ["error", {"prefer-inline": true}],
     "import/order": [
       "error",
       {
@@ -54,6 +53,7 @@
       }
     ],
     "import/no-unresolved": "off",
+    "import/no-duplicates": ["error", {"prefer-inline": true}],
     "wc/guard-super-call": "off",
     "require-jsdoc": "off",
     "valid-jsdoc": "off"

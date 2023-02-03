@@ -1,8 +1,8 @@
 import {AlwatrDummyElement, css, customElement, html} from '@alwatr/element';
+import {setLocale, localeContextConsumer, commonLocale} from '@alwatr/i18n';
+
 import './chat-text-input.js';
 import '../button/icon-button.js';
-import {setLocale, localeContextConsumer} from '@alwatr/i18n';
-import {commonLocale} from '@alwatr/i18n';
 
 declare global {
   interface HTMLElementTagNameMap {
