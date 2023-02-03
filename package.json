@@ -39,7 +39,7 @@
     "format": "run-s format:prettier format:eslint",
     "format:eslint": "yarn lint:ts --fix",
     "format:prettier": "prettier . --ignore-path .gitignore --write",
-    "clean": "git clean -d -x -f --exclude=node_modules --exclude=*.env --exclude=*.ts",
+    "clean": "git clean -d -x -f --exclude=node_modules --exclude=*.env",
     "serve": "wds",
     "watch": "run-p watch:* serve",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput",
@@ -61,15 +61,13 @@
     "eslint-plugin-lit": "^1.8.2",
     "eslint-plugin-wc": "^1.4.0",
     "lerna": "^6.4.1",
-    "lit-analyzer": "2.0.0-pre.2",
+    "lit-analyzer": "1.2.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.3",
     "ts-lit-plugin": "^1.2.1",
     "typescript": "^5.0.0-beta"
   },
   "resolutions": {
-    "lit-analyzer": "2.0.0-pre.2",
-    "typescript": "5.0.0-beta",
-    "web-component-analyzer": "2.0.0-next.4"
+    "typescript": "5.0.0-beta"
   }
 }

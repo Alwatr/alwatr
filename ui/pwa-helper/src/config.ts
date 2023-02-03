@@ -3,6 +3,8 @@ declare global {
   var appConfig: Record<string, string | number | boolean | undefined> | undefined;
 }
 
+// TODO: config-context with dynamic import like l18r
+
 const debugConfig = localStorage.getItem('DEBUG_CONFIG');
 if (debugConfig != null) {
   globalThis.appConfig = JSON.parse(debugConfig);

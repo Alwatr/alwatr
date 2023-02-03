@@ -83,6 +83,7 @@ services:
       - STORAGE_NAME=${FORM_REGISTRATION_STORAGE_NAME}
       - STORAGE_TOKEN=${STORAGE_TOKEN}
       - ACCESS_TOKEN=${FORM_REGISTRATION_TOKEN}
+      - FORM_LIST=${FORM_REGISTRATION_LIST}
       - ALWATR_DEBUG=${FORM_REGISTRATION_DEBUG:-}
 
     logging:
@@ -94,6 +95,6 @@ services:
     labels:
       traefik.enable: true
       traefik.port: 80
-      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/api
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/api/v0/form/
       traefik.frontend.entryPoints: http, https
       traefik.frontend.redirect.entryPoint: https

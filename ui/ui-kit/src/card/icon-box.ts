@@ -1,4 +1,4 @@
-import {css, customElement, html, property, nothing, ifDefined} from '@alwatr/element';
+import {css, customElement, html, property, nothing, ifDefined, PropertyValues, when} from '@alwatr/element';
 
 import '@alwatr/icon';
 
@@ -11,12 +11,16 @@ declare global {
 }
 
 export type IconBoxContent = {
-  icon: string;
+  icon?: string;
   headline: string;
   description?: string;
   href?: string;
   flipRtl?: boolean;
   target?: 'download' | '_blank';
+  highlight?: boolean;
+  stated?: boolean;
+  preLine?: boolean;
+  elevated?: number;
 };
 
 /**
@@ -34,12 +38,8 @@ export class AlwatrIconBox extends AlwatrSurface {
         display: block;
         padding: 0;
         transition-property: color, background-color, opacity, height;
-        transition-duration:
-          var(--sys-motion-duration-small),
-          var(--sys-motion-duration-small),
-          var(--sys-motion-duration-small),
-          var(--sys-motion-duration-large)
-        ;
+        transition-duration: var(--sys-motion-duration-small), var(--sys-motion-duration-small),
+          var(--sys-motion-duration-small), var(--sys-motion-duration-large);
         transition-timing-function: var(--sys-motion-easing-normal);
         font-family: var(--sys-typescale-body-small-font-family-name);
         font-weight: var(--sys-typescale-body-small-font-weight);
@@ -101,6 +101,21 @@ export class AlwatrIconBox extends AlwatrSurface {
   @property({type: Object})
     content?: IconBoxContent;
 
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+    if (changedProperties.has('content') && this.content != null) {
+      this.toggleAttribute('highlight', Boolean(this.content.highlight));
+      this.toggleAttribute('stated', Boolean(this.content.stated));
+      this.toggleAttribute('pre-line', Boolean(this.content.preLine));
+      if (this.content.elevated != null && this.content.elevated > 0) {
+        this.setAttribute('elevated', this.content.elevated + '');
+      }
+      else {
+        this.removeAttribute('elevated');
+      }
+    }
+  }
+
   override render(): unknown {
     this._logger.logMethod('render');
     const content = this.content;
@@ -109,7 +124,9 @@ export class AlwatrIconBox extends AlwatrSurface {
 
     const template = html`
       <h3 class="headline">
-        <alwatr-icon .name=${content.icon} ?flip-rtl=${content.flipRtl}></alwatr-icon>
+        ${when(content.icon, () => html`
+          <alwatr-icon .name=${content.icon} ?flip-rtl=${content.flipRtl}></alwatr-icon>
+        `)}
         <span>${content.headline}</span>
       </h3>
       <div class="description"><slot>${content.description}</slot></div>
@@ -122,6 +139,7 @@ export class AlwatrIconBox extends AlwatrSurface {
           href=${ifDefined(content.href)}
           target=${ifDefined(target)}
           ?download=${content.target === 'download'}
-        >${template}</a>`;
+          >${template}</a
+        >`;
   }
 }

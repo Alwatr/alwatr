@@ -1,7 +1,8 @@
 import {customElement, AlwatrSmartElement, css, html, state, type PropertyValues} from '@alwatr/element';
 import {untilNextFrame, untilEvent, delay} from '@alwatr/util';
 
-import type {AlwatrIconBox} from '@alwatr/ui-kit/card/icon-box.js';
+import type {AlwatrLotteryForm} from './lottery-form.js';
+import type {AlwatrIconBox, IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 import '@alwatr/ui-kit/card/icon-box.js';
 import './lottery-form.js';
@@ -12,17 +13,17 @@ declare global {
   }
 }
 
-const _lotteryContent = {
-  wide: true,
-  icon: 'gift-outline',
-  headline: 'قرعه‌کشی میدکس',
-};
-
 /**
  * Soffit lottery box element
  */
 @customElement('alwatr-lottery-box')
 export class AlwatrLotteryBox extends AlwatrSmartElement {
+  protected static iconBoxContent: IconBoxContent = {
+    icon: 'gift-outline',
+    headline: 'شرکت در قرعه‌کشی',
+    elevated: 2,
+  };
+
   static override styles = css`
     :host {
       display: block;
@@ -45,19 +46,18 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
   @state()
     submitted = false;
 
-  private _box: AlwatrIconBox | null = null;
+  protected _box: AlwatrIconBox | null = null;
 
   override render(): unknown {
     super.render();
-    return html`
-      <alwatr-icon-box
-        .content=${_lotteryContent}
-        elevated="3"
-        ?stated=${!this.expanded}
-        ?highlight=${!this.expanded && !this.submitted}
-        @click=${this._click}
-      >${this._boxContentTemplate()}</alwatr-icon-box>
-    `;
+    const content = {
+      ...(this.constructor as typeof AlwatrLotteryBox).iconBoxContent,
+      stated: !this.expanded,
+      highlight: !this.expanded && !this.submitted,
+    };
+    return html`<alwatr-icon-box .content=${content} @click=${this._click}>
+      ${this._boxContentTemplate()}
+    </alwatr-icon-box>`;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
@@ -65,23 +65,26 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
     this._box = this.renderRoot.querySelector('alwatr-icon-box');
   }
 
-  private _boxContentTemplate(): unknown {
+  protected _boxContentTemplate(): unknown {
     if (this.expanded) {
       return html`<alwatr-lottery-form
+        id="form"
         invisible
         @form-submitted=${this._formSubmitted}
         @form-canceled=${this._formCanceled}
       ></alwatr-lottery-form>`;
     }
+
     else if (this.submitted) {
       return html`<span class="success">اطلاعات شما با موفقیت ذخیره شد.</span>`;
     }
+
     else {
-      return html`فرم شرکت در قرعه‌کشی میدکس`;
+      return html`فرم شرکت در قرعه‌کشی`;
     }
   }
 
-  private async _click(): Promise<void> {
+  protected async _click(): Promise<void> {
     this._logger.logMethod('_click');
     if (!this.expanded && !this.submitted) {
       await this._currentAnimate;
@@ -89,21 +92,21 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
     }
   }
 
-  private async _formSubmitted(): Promise<void> {
+  protected async _formSubmitted(): Promise<void> {
     this._logger.logMethod('_formSubmitted');
     await this._currentAnimate;
     this._currentAnimate = this._animateCollapse(true);
   }
 
-  private async _formCanceled(): Promise<void> {
+  protected async _formCanceled(): Promise<void> {
     this._logger.logMethod('_formCanceled');
     await this._currentAnimate;
     this._currentAnimate = this._animateCollapse(false);
   }
 
-  private _currentAnimate?: Promise<void>;
+  protected _currentAnimate?: Promise<void>;
 
-  private _collapseHeight = 0;
+  protected _collapseHeight = 0;
   async _animateExpand(): Promise<void> {
     if (this.expanded || this._box == null) return;
     this._logger.logMethod('_animateExpand');
@@ -118,7 +121,7 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
 
     box.style.height = box.scrollHeight + 'px';
 
-    const form = this.renderRoot.querySelector('alwatr-lottery-form');
+    const form = this.renderRoot.querySelector<AlwatrLotteryForm>('#form');
     if (!form) {
       this._logger.error('_animateExpand', 'form_not_found');
       this.style.height = 'auto';
@@ -140,7 +143,7 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
     box.style.height = box.scrollHeight + 'px';
     await untilNextFrame();
 
-    const form = this.renderRoot.querySelector('alwatr-lottery-form');
+    const form = this.renderRoot.querySelector<AlwatrLotteryForm>('#form');
     if (form != null) {
       form.animateCollapse();
       await delay(250);

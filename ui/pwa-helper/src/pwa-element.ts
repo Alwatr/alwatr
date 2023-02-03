@@ -1,6 +1,6 @@
 import {AlwatrSmartElement} from '@alwatr/element';
 import {localeContextConsumer, setLocale} from '@alwatr/i18n';
-import {routerOutlet, type RoutesConfig} from '@alwatr/router';
+import {routeContextConsumer, routerOutlet, type RoutesConfig} from '@alwatr/router';
 import {html, css, type CSSResultGroup, type PropertyValues} from 'lit';
 import {cache} from 'lit/directives/cache.js';
 
@@ -43,10 +43,10 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this._signalListenerList.push(localeContextConsumer.subscribe(this._routeChanged.bind(this)));
     if (localeContextConsumer.getValue() === undefined) {
       setLocale('fa');
     }
+    this._signalListenerList.push(routeContextConsumer.subscribe(this._routeChanged.bind(this)));
   }
 
   protected _routeChanged(): void {

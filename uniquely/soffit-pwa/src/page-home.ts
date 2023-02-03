@@ -1,55 +1,24 @@
-import {customElement, AlwatrSmartElement, css, html, map} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html, map, ifDefined} from '@alwatr/element';
 
 import '@alwatr/ui-kit/card/icon-box.js';
 import './lottery-box.js';
+import './supply-chain-box.js';
+
+import {homePageContent} from './content.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+
+interface BoxType extends IconBoxContent {
+  content?: unknown;
+  wide?: boolean;
+  small?: boolean;
+}
 
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-page-home': AlwatrPageHome;
   }
 }
-
-const _aboutContent = {
-  wide: true,
-  icon: 'logo-microsoft',
-  headline: 'بازرگانی سافیت',
-  description: `مجموعه تولیدی بازرگانی سافیت
-    تولید کننده عمده محصولات DRY WALL، سازه ۶۰ کلیک، تایل کچی 60*60 و روکش P.V.C
-    برند درجه یک صادراتی با فعالیت های بین المللی و ویژگی های ممتاز`,
-};
-
-const _menuList: Array<IconBoxContent & {wide?: boolean}> = [
-  {
-    icon: 'cloud-download-outline',
-    headline: 'دانلود کاتالوگ',
-    description: 'دانلود کاتالوگ معرفی محصولات بازرگانی سافیت',
-    href: 'https://www.dropbox.com/s/6ywy23qql7iq31p/soffit-product-catalogue.pdf?dl=1',
-    target: 'download',
-  },
-  {
-    icon: 'logo-instagram',
-    headline: 'اینستاگرام',
-    description: 'کانال اینستاگرام بازرگانی سافیت',
-    href: 'https://instagram.com/soffit.co',
-    target: '_blank',
-  },
-  {
-    icon: 'send-outline',
-    headline: 'کانال تلگرام',
-    description: 'کانال تلگرام بازرگانی سافیت',
-    href: 'https://t.me/soffitcompany',
-    target: '_blank',
-  },
-  {
-    icon: 'call-outline',
-    flipRtl: true,
-    headline: 'تماس باما',
-    description: 'دفتر مرکزی: ۹۶۷۴ ۵۵۹ ۰۹۱۵',
-    href: 'tel:+989155599674',
-  },
-];
 
 /**
  * Alwatr Demo Home Page
@@ -85,10 +54,16 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     }
 
     alwatr-icon-box[wide],
-    alwatr-lottery-box {
+    alwatr-lottery-box,
+    alwatr-supply-chain-box {
       width: 100%;
     }
 
+    alwatr-icon-box[small] {
+      width: 26%;
+    }
+
+    alwatr-supply-chain-form,
     alwatr-lottery-form {
       padding: 0 var(--sys-spacing-track);
     }
@@ -118,12 +93,8 @@ export class AlwatrPageHome extends AlwatrSmartElement {
   override render(): unknown {
     super.render();
     return html`
-      <header><img src="image/soffit.png" alt="SOFFIT Logo" /></header>
-      <main>
-        <alwatr-icon-box .content=${_aboutContent} stated elevated pre-line wide></alwatr-icon-box>
-        <alwatr-lottery-box></alwatr-lottery-box>
-        ${this._menuTemplate()}
-      </main>
+      <header><img src="image/soffit.svg" alt="SOFFIT Logo" /></header>
+      <main>${this._menuTemplate()}</main>
       <footer>
         <span>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</span>
         <span class="version">v${_ALWATR_VERSION_}</span>
@@ -131,16 +102,18 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     `;
   }
 
-  protected _menuTemplate(): unknown {
-    return map(
-        _menuList,
-        (item) => html`
-          <alwatr-icon-box
-            .content=${item}
-            highlight stated elevated="2"
-            pre-line
-            ?wide=${item.wide}
-          ></alwatr-icon-box>`,
-    );
+  protected* _menuTemplate(): unknown {
+    yield this._boxTemplate(homePageContent.about);
+    yield map(homePageContent.productList, this._boxTemplate);
+    yield html`<alwatr-lottery-box></alwatr-lottery-box>`;
+    yield map(homePageContent.socialList, this._boxTemplate);
+    yield html`<alwatr-supply-chain-box></alwatr-supply-chain-box>`;
+    yield map(homePageContent.agencyList, this._boxTemplate);
+  }
+
+  protected _boxTemplate(box: BoxType): unknown {
+    return html`
+      <alwatr-icon-box .content=${box} ?wide=${box.wide} ?small=${box.small}>${ifDefined(box.content)}</alwatr-icon-box>
+    `;
   }
 }
