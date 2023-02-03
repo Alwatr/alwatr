@@ -16,21 +16,32 @@ export async function notify(): Promise<void> {
         reply_markup: {inline_keyboard: [[{text: `${dayToLeft} روز تا نیمه‌شعبان`, callback_data: 'dayCountdown'}]]},
       });
 
-      const lastBotMessageId = storageEngine.get(chat.id)?.lastBotMessageId;
-      storageEngine.set({
-        id: chat.id,
-        lastBotMessageId: response.message_id,
-      });
+    const lastBotMessageId = storageEngine.get(chat.id)?.lastBotMessageId;
+    storageEngine.set({
+      id: chat.id,
+      lastBotMessageId: response.message_id,
+    });
 
-      await bot.telegram.unpinChatMessage(chat.id, lastBotMessageId);
+    // 2. unpin last pinned message
+    if (lastBotMessageId != null) {
+      try {
+        await bot.telegram.unpinChatMessage(chat.id, lastBotMessageId);
+      }
+      catch (err) {
+        const _err = err as TelegramError;
+        if (_err.code !== 400) {
+          logger.error('notify', _err.message, {_err});
+        }
+      }
+    }
+
+    // 3. pin new message
+    try {
       await bot.telegram.pinChatMessage(chat.id, response.message_id);
     }
     catch (err) {
       const _err = err as TelegramError;
-      if (_err.code === 403) {
-        storageEngine.delete(chat.id);
-      }
-      else {
+      if (_err.code !== 400) {
         logger.error('notify', _err.message, {_err});
       }
     }
