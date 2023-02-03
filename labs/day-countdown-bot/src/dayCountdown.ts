@@ -10,11 +10,24 @@ import {storageEngine} from './lib/storage.js';
 export async function notify(): Promise<void> {
   const dayToLeft = dateDistance(nime.valueOf());
   for (const chat of storageEngine.allObject()) {
+    // 1. send message
+    let response;
     try {
-      const response = await sendMessage(chat.id, `**${dayToLeft} روز مانده تا ولادت مهربان ترین پدر ♥️**`, {
+      response = await sendMessage(chat.id, `**${dayToLeft} روز مانده تا ولادت مهربان ترین پدر ♥️**`, {
         parse_mode: 'MarkdownV2',
         reply_markup: {inline_keyboard: [[{text: `${dayToLeft} روز تا نیمه‌شعبان`, callback_data: 'dayCountdown'}]]},
       });
+    }
+    catch (err) {
+      const _err = err as TelegramError;
+      if (_err.code === 403) {
+        storageEngine.delete(chat.id);
+      }
+      else {
+        logger.error('notify', _err.message, {_err});
+      }
+      continue;
+    }
 
     const lastBotMessageId = storageEngine.get(chat.id)?.lastBotMessageId;
     storageEngine.set({
