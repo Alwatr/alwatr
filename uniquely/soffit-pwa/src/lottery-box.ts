@@ -49,16 +49,14 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
 
   override render(): unknown {
     super.render();
-    return html`
-      <alwatr-icon-box
-        .content=${{
-    ..._lotteryContent,
-    stated: !this.expanded,
-    highlight: !this.expanded && !this.submitted,
-  }}
-        @click=${this._click}
-      >${this._boxContentTemplate()}</alwatr-icon-box>
-    `;
+    const content = {
+      ..._lotteryContent,
+      stated: !this.expanded,
+      highlight: !this.expanded && !this.submitted,
+    };
+    return html`<alwatr-icon-box .content=${content} @click=${this._click}>
+      ${this._boxContentTemplate()}
+    </alwatr-icon-box>`;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
