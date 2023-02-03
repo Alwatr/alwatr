@@ -1,6 +1,6 @@
 import {UnicodeDigits} from '@alwatr/math';
 
-const unicodeDigits = new UnicodeDigits('all', 'fa');
+const unicodeDigits = new UnicodeDigits('fa', 'all');
 
 const list = [
   '0123456789',

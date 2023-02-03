@@ -60,7 +60,10 @@ const supportedLanguageList = {
   'fula': 0x1e950, // adlam script in fula lang
 } as const;
 
+
 export type UnicodeLangKeys = keyof typeof supportedLanguageList;
+
+const commonLangList: Array<UnicodeLangKeys> = ['en', 'fa', 'ar'];
 
 export class UnicodeDigits {
   protected _toLangZeroCode;
@@ -72,9 +75,6 @@ export class UnicodeDigits {
 
   /**
    * Translate number.
-   *
-   * @param {Array<UnicodeLangKeys> | 'all' | 'common'} fromLanguages - The source language to be translated.
-   * @param {UnicodeLangKeys} toLanguage - The destination language to be translated.
    *
    * Example:
    *
@@ -96,13 +96,13 @@ export class UnicodeDigits {
    * console.log(unicodeDigits.translate(list));
    * ```
    */
-  constructor(fromLanguages: Array<UnicodeLangKeys> | 'all' | 'common', toLanguage: UnicodeLangKeys) {
+  constructor(toLanguage: UnicodeLangKeys, fromLanguages: Array<UnicodeLangKeys> | 'all' = [...commonLangList]) {
     if (fromLanguages === 'all') {
       fromLanguages = Object.keys(supportedLanguageList) as Array<UnicodeLangKeys>;
     }
-    else if (fromLanguages === 'common') {
-      fromLanguages = ['en', 'fa', 'ar', 'hi'];
-    }
+
+    const removeSelf = fromLanguages.indexOf(toLanguage);
+    if (removeSelf !== -1) fromLanguages.splice(removeSelf, 1);
 
     this._toLangZeroCode = supportedLanguageList[toLanguage];
 

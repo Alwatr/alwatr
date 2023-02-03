@@ -1,4 +1,5 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
+import {UnicodeDigits, type UnicodeLangKeys} from '@alwatr/math';
 import {contextProvider, contextConsumer} from '@alwatr/signal';
 
 import type {L18eContext, LocaleContext, MaybePromise} from '@alwatr/type';
@@ -43,7 +44,7 @@ export const commonLocale = {
   },
   fa: {
     code: 'fa-IR',
-    language: 'en',
+    language: 'fa',
     direction: 'rtl',
   },
   ar: {
@@ -56,6 +57,7 @@ export const commonLocale = {
 let activeLocaleContext: LocaleContext | null = null;
 let activeNumberFormatter: Intl.NumberFormat | null = null;
 let activeL18eContext: L18eContext | null = null;
+let activeUnicodeDigits: UnicodeDigits | null = null;
 
 /**
  * Update activeLocaleContext and activeNumberFormatter.
@@ -64,6 +66,7 @@ localeContextConsumer.subscribe(
     (locale) => {
       activeLocaleContext = locale;
       activeNumberFormatter = new Intl.NumberFormat(locale.code);
+      activeUnicodeDigits = new UnicodeDigits(locale.language as UnicodeLangKeys);
 
       // Update root meta in browser
       if (typeof document !== 'undefined') {
@@ -95,11 +98,20 @@ l18eContextConsumer.subscribe(
  * setLocale('fa');
  * ```
  */
-export const setLocale = (locale: keyof typeof commonLocale | LocaleContext): void => {
-  const _locale = typeof locale === 'string' ? commonLocale[locale] : locale;
-  logger.logMethodArgs('setLocale', _locale);
-  if (activeLocaleContext?.code !== _locale.code) {
-    localeContextProvider.setValue(_locale);
+export const setLocale = (locale?: LocaleContext): void => {
+  if (locale == null) {
+    const lang = document.documentElement.lang;
+    locale = Object.values(commonLocale).find((l) => l.code === lang);
+
+    if (locale == null) {
+      throw new Error('document_lang_not_supported', {cause: {lang}});
+    }
+  }
+
+
+  logger.logMethodArgs('setLocale', locale);
+  if (activeLocaleContext?.code !== locale.code) {
+    localeContextProvider.setValue(locale);
   }
 };
 
@@ -185,9 +197,17 @@ export function message(key?: Lowercase<string> | null): string | null {
 }
 
 /**
- * Format number to active locale string characters and digital group.
+ * Format number to active locale string unicode and digital group.
  */
 export const number = (number: number): string => {
   if (activeNumberFormatter === null) return String(number);
   return activeNumberFormatter.format(number);
+};
+
+/**
+ * Replace all number in string to active locale number unicode.
+ */
+export const replaceNumber = (str: string): string => {
+  if (activeUnicodeDigits === null) return str;
+  return activeUnicodeDigits.translate(str);
 };
