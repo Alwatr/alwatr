@@ -10,11 +10,14 @@ export const config = {
     accessToken: process.env.ACCESS_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
   storage: {
-    name: process.env.STORAGE_NAME ?? 'form',
     host: process.env.STORAGE_HOST ?? '127.0.0.1',
     port: process.env.STORAGE_PORT != null ? +process.env.STORAGE_PORT : 9000,
     token: process.env.STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
+  formList: (process.env.FORM_LIST ?? 'temp')
+      .split(',')
+      .map((f) => f.trim())
+      .filter((f) => f != ''),
 };
 
 logger.logProperty('config', config);

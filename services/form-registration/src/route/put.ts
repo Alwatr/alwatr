@@ -10,12 +10,23 @@ nanoServer.route('PUT', '/form/', setForm);
 async function setForm(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
   logger.logMethod('setForm');
   connection.requireToken(config.nanoServer.accessToken);
-  const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
+  const params = connection.requireQueryParams<{form: string}>({form: 'string'});
+
+  if (config.formList.indexOf(params.form) === -1) {
+    return {
+      ok: false,
+      statusCode: 404,
+      errorCode: 'form_not_found',
+    };
+  }
 
   const bodyJson = await connection.requireJsonBody<AlwatrDocumentObject>();
-  bodyJson.id ??= 'auto_increment';
+  bodyJson.id = 'auto_increment';
+
+  await storageClient.set(bodyJson, 'form-' + params.form);
+
   return {
     ok: true,
-    data: await storageClient.set(bodyJson, params.storage),
+    data: {},
   };
 }
