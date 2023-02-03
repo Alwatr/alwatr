@@ -22,7 +22,7 @@ declare global {
  */
 @customElement('alwatr-supply-chain-form')
 export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
-  static override storage = 'supply-chain';
+  static override formId = 'supply-chain';
 
   static override validSchema: JsonSchema = {
     name: String,

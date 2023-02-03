@@ -24,7 +24,7 @@ declare global {
  */
 @customElement('alwatr-lottery-form')
 export class AlwatrLotteryForm extends AlwatrDummyElement {
-  static storage = 'lottery';
+  static formId = 'lottery';
 
   static validSchema: JsonSchema = {
     code: String,
@@ -85,7 +85,7 @@ export class AlwatrLotteryForm extends AlwatrDummyElement {
         method: 'PUT',
         url: config.api + '/form/',
         queryParameters: {
-          storage: AlwatrLotteryForm.storage,
+          form: AlwatrLotteryForm.formId,
         },
         token: config.token,
         bodyJson,
