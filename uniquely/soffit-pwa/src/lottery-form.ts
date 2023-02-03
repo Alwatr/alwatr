@@ -1,6 +1,6 @@
 import {customElement, AlwatrDummyElement, css, html, property} from '@alwatr/element';
 import {serviceRequest} from '@alwatr/fetch';
-import {showSnackbar} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator, type JsonSchema} from '@alwatr/validator';
 
 import {config} from './config.js';
@@ -78,7 +78,7 @@ export class AlwatrLotteryForm extends AlwatrDummyElement {
     }
     catch (err) {
       this._logger.accident('submit', 'invalid_form_data', 'validator failed on form data', (err as Error).cause);
-      showSnackbar({message: 'اطلاعات فرم صحیح نمی‌باشد.'});
+      snackbarSignalTrigger.request({message: 'اطلاعات فرم صحیح نمی‌باشد.'});
       return;
     }
 
@@ -97,7 +97,7 @@ export class AlwatrLotteryForm extends AlwatrDummyElement {
     catch (err) {
       this._logger.error('submit', 'request_failed', (err as Error).cause);
       this.disabled = false;
-      showSnackbar({message: 'لطفا از اتصال خود به اینترنت اطمینان حاصل فرمایید و مجددا ارسال کنید.'});
+      snackbarSignalTrigger.request({message: 'لطفا از اتصال خود به اینترنت اطمینان حاصل فرمایید و مجددا ارسال کنید.'});
       return;
     }
 
