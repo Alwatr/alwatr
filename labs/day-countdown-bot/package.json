@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/day-countdown-bot",
   "version": "0.28.0",
-  "description": "Alwatr Telegram Day Countdown bot",
+  "description": "Alwatr Telegram Day Countdown Bot",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "contributors": [
