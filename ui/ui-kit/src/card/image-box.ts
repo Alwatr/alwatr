@@ -1,4 +1,4 @@
-import {css, customElement, html, property, nothing, ifDefined} from '@alwatr/element';
+import {css, customElement, html, property, nothing, ifDefined, type PropertyValues} from '@alwatr/element';
 
 import {AlwatrSurface} from './surface.js';
 
@@ -8,12 +8,16 @@ declare global {
   }
 }
 
-export type IconBoxContent = {
+export type ImageBoxContent = {
   image: string;
   headline: string;
   description?: string;
   href?: string;
   target?: 'download' | '_blank';
+  highlight?: boolean;
+  stated?: boolean;
+  preLine?: boolean;
+  elevated?: number;
 };
 
 /**
@@ -27,15 +31,10 @@ export class AlwatrImageBox extends AlwatrSurface {
       :host {
         display: block;
         padding: 0;
-        width: 40%;
         flex-grow: 1;
         transition-property: color, background-color, opacity, height;
-        transition-duration:
-          var(--sys-motion-duration-small),
-          var(--sys-motion-duration-small),
-          var(--sys-motion-duration-small),
-          var(--sys-motion-duration-medium)
-        ;
+        transition-duration: var(--sys-motion-duration-small), var(--sys-motion-duration-small),
+          var(--sys-motion-duration-small), var(--sys-motion-duration-medium);
         transition-timing-function: var(--sys-motion-easing-normal);
         font-family: var(--sys-typescale-body-small-font-family-name);
         font-weight: var(--sys-typescale-body-small-font-weight);
@@ -75,7 +74,6 @@ export class AlwatrImageBox extends AlwatrSurface {
 
       .headline {
         margin: 0;
-        color: var(--sys-color-on-surface);
         font-family: var(--sys-typescale-headline-small-font-family-name);
         font-weight: var(--sys-typescale-headline-small-font-weight);
         font-size: var(--sys-typescale-headline-small-font-size);
@@ -85,13 +83,7 @@ export class AlwatrImageBox extends AlwatrSurface {
 
       .description {
         margin-top: calc(2 * var(--sys-spacing-track));
-        font-weight: var(--sys-typescale-body-medium-font-weight);
-        font-family: var(--sys-typescale-body-medium-font-family-name);
-        font-size: var(--sys-typescale-body-medium-font-size);
-        letter-spacing: var(--sys-typescale-body-medium-letter-spacing);
-        line-height: var(--sys-typescale-body-medium-line-height);
       }
-
       :host([pre-line]) .description {
         white-space: pre-line;
       }
@@ -99,11 +91,21 @@ export class AlwatrImageBox extends AlwatrSurface {
   ];
 
   @property({type: Object})
-    content?: IconBoxContent;
+    content?: ImageBoxContent;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.setAttribute('elevated', '3');
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+    if (changedProperties.has('content') && this.content != null) {
+      this.toggleAttribute('highlight', Boolean(this.content.highlight));
+      this.toggleAttribute('stated', Boolean(this.content.stated));
+      this.toggleAttribute('pre-line', Boolean(this.content.preLine));
+      if (this.content.elevated != null && this.content.elevated > 0) {
+        this.setAttribute('elevated', this.content.elevated + '');
+      }
+      else {
+        this.removeAttribute('elevated');
+      }
+    }
   }
 
   override render(): unknown {
@@ -116,7 +118,7 @@ export class AlwatrImageBox extends AlwatrSurface {
       <img class="image" src=${content.image} />
       <div class="content-container">
         <h3 class="headline">${content.headline}</h3>
-        <div class="description">${content.description}</div>
+        <div class="description"><slot>${content.description}</slot></div>
       </div>
     `;
 

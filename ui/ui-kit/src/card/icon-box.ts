@@ -27,10 +27,7 @@ export interface IconBoxContent extends StringifyableRecord {
 }
 
 /**
- * Alwatr standard icon button element.
- *
- * @attr {Boolean} highlight - Primary color on hover and active
- * @attr {Boolean} pre-line - Add `white-space: pre-line;` to description
+ * Alwatr icon box element.
  */
 @customElement('alwatr-icon-box')
 export class AlwatrIconBox extends AlwatrSurface {
@@ -71,12 +68,12 @@ export class AlwatrIconBox extends AlwatrSurface {
       }
 
       .headline {
+        margin: 0;
         font-family: var(--sys-typescale-headline-small-font-family-name);
         font-weight: var(--sys-typescale-headline-small-font-weight);
         font-size: var(--sys-typescale-headline-small-font-size);
         letter-spacing: var(--sys-typescale-headline-small-letter-spacing);
         line-height: var(--sys-typescale-headline-small-line-height);
-        margin: 0;
       }
 
       .headline alwatr-icon {

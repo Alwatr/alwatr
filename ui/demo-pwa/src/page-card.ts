@@ -69,16 +69,12 @@ export class AlwatrPageCard extends AlwatrSmartElement {
       ></alwatr-icon-box>
 
       <alwatr-image-box
-        stated
-        elevated
         .content=${{
     image: '/image/icon-512-maskable.png',
     headline: 'محصول شماره یک',
     description: 'توضیحات نسبتا طولانی یک محصول بی‌نظیر',
   }}></alwatr-image-box>
       <alwatr-image-box
-        stated
-        elevated
         .content=${{
     image: '/image/icon-512-maskable.png',
     headline: 'محصول شماره یک',
