@@ -5,6 +5,18 @@
     "rev": 0
   },
   "data": {
-    "invalid_form_data": "The form information is not correct."
+    "invalid_form_data": "The form information is not correct.",
+    "check_network_connection": "Please check net",
+
+    "slogan": "A good ceiling is vital. a SOFFIT ceiling can be an inspiration.",
+
+    "lottery_number": "Lottery number",
+    "first_and_last_name": "First/Last Name",
+    "phone_number": "Phone number",
+    "send_form": "Send form",
+    "cancel": "Cancel",
+    "lottery_form": "Participate in the lottery",
+    "information_saved": "Your information has been successfully saved.",
+    "activity_area": "Activity area"
   }
 }
