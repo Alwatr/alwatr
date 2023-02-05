@@ -13,10 +13,10 @@ const logger = createLogger('command-form-submit');
 
 const validSchema: Record<string, JsonSchema> = {
   'lottery': {code: String, name: String, phone: Number, activity: String},
-  'supply-chain': {code: String, name: String, phone: Number, activity: String},
+  'supply-chain': {name: String, phone: Number, activity: String},
 };
 
-async function submitForm(detail: FormData): Promise<null> {
+async function submitForm(detail: FormData): Promise<{ok: boolean}> {
   let bodyJson;
   try {
     bodyJson = validator<Record<string, string | number | null>>(validSchema[detail.id], detail.data);
@@ -24,6 +24,7 @@ async function submitForm(detail: FormData): Promise<null> {
   catch (err) {
     logger.accident('submitForm', 'invalid_form_data', 'validator failed on form data', (err as Error).cause);
     snackbarSignalTrigger.request({message: message('invalid_form_data')});
+    return {ok: false};
   }
 
   try {
@@ -40,9 +41,10 @@ async function submitForm(detail: FormData): Promise<null> {
   catch (err) {
     logger.error('submitForm', 'request_failed', (err as Error).cause);
     snackbarSignalTrigger.request({message: message('check_network_connection')});
+    return {ok: false};
   }
 
-  return null;
+  return {ok: true};
 }
 
-commandHandler.define<FormData, null>('form-submit', submitForm);
+commandHandler.define<FormData, {ok: boolean}>('form-submit', submitForm);
