@@ -1,4 +1,12 @@
-import {customElement, AlwatrSmartElement, css, html, state, type PropertyValues} from '@alwatr/element';
+import {
+  customElement,
+  AlwatrSmartElement,
+  css,
+  html,
+  state,
+  DirectionMixin,
+  type PropertyValues,
+} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {untilNextFrame, untilEvent, delay} from '@alwatr/util';
 
@@ -18,7 +26,7 @@ declare global {
  * Soffit lottery box element
  */
 @customElement('alwatr-lottery-box')
-export class AlwatrLotteryBox extends AlwatrSmartElement {
+export class AlwatrLotteryBox extends DirectionMixin(AlwatrSmartElement) {
   @state() iconBoxContent: IconBoxContent = {
     icon: 'gift-outline',
     headline: message('lottery_form'),
