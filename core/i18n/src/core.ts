@@ -1,6 +1,6 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {UnicodeDigits, type UnicodeLangKeys} from '@alwatr/math';
-import {contextProvider, contextConsumer} from '@alwatr/signal';
+import {contextProvider, contextConsumer, ListenerSpec} from '@alwatr/signal';
 
 import type {L18eContext, LocaleContext, MaybePromise} from '@alwatr/type';
 
@@ -104,16 +104,18 @@ export const setLocale = (locale?: LocaleContext): void => {
     locale = Object.values(commonLocale).find((l) => l.code === lang);
 
     if (locale == null) {
-      throw new Error('document_lang_not_supported', {cause: {lang}});
+      logger.error('setLocale', 'document_lang_not_supported', {lang});
+      locale = commonLocale.fa;
     }
   }
-
 
   logger.logMethodArgs('setLocale', locale);
   if (activeLocaleContext?.code !== locale.code) {
     localeContextProvider.setValue(locale);
   }
 };
+
+let _l18eLoaderListener: ListenerSpec | null = null;
 
 /**
  * Set loader function for provide l18e (LocalizationResource).
@@ -129,19 +131,23 @@ export const setLocale = (locale?: LocaleContext): void => {
 export const setL18eLoader = (l18eLoader: (locale: LocaleContext) => MaybePromise<L18eContext>): void => {
   logger.logMethod('setL18eLoader');
 
-  localeContextConsumer.subscribe(async (locale) => {
+  if (_l18eLoaderListener !== null) {
+    localeContextConsumer.unsubscribe(_l18eLoaderListener);
+    logger.accident(
+        'setL18eLoader',
+        'l18r_loader_exist',
+        'Multi l18r loader register, the previous one was removed to avoid errors.',
+    );
+  }
+
+  _l18eLoaderListener = localeContextConsumer.subscribe(async (locale) => {
     logger.logMethodArgs('l18eLoader', locale);
 
     if (activeL18eContext?.meta.code === locale.code) {
-      logger.incident(
-          'l18eLoader',
-          'load_skipped',
-          'Request l18e (LocalizationResource) is same as active l18n',
-          {
-            request: locale.code,
-            active: activeL18eContext.meta.code,
-          },
-      );
+      logger.incident('l18eLoader', 'load_skipped', 'Request l18e (LocalizationResource) is same as active l18n', {
+        request: locale.code,
+        active: activeL18eContext.meta.code,
+      });
       return;
     }
 
