@@ -13,3 +13,8 @@ export type PageHomeContent = {
   socialList: Array<BoxType>,
   agencyList: Array<BoxType>,
 }
+
+export type FormData = {
+  id: string,
+  data: Record<string, string | number | boolean | null>,
+}

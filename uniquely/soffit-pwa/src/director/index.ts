@@ -1,4 +1,5 @@
 import '@alwatr/pwa-helper/director.js';
 
-import './l18e';
-import './content-loader';
+import './l18e.js';
+import './content-loader.js';
+import './form-submit.js';

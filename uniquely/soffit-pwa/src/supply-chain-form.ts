@@ -7,9 +7,6 @@ import '@alwatr/ui-kit/text-field/text-field.js';
 import '@alwatr/ui-kit/button/button.js';
 import './tech-dep/radio-group.js';
 
-import type {JsonSchema} from '@alwatr/validator';
-
-
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-supply-chain-form': AlwatrSupplyChainForm;
@@ -24,12 +21,6 @@ declare global {
 @customElement('alwatr-supply-chain-form')
 export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
   static override formId = 'supply-chain';
-
-  static override validSchema: JsonSchema = {
-    name: String,
-    phone: Number,
-    activity: String,
-  };
 
   override render(): unknown {
     super.render();
