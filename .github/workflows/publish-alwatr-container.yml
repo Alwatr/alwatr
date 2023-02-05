@@ -85,14 +85,14 @@ jobs:
 
     steps:
       - name: ⤵️ Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: 🏗 Setup Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v2.4.0
 
       - name: 🏗 Log into registry ${{ env.REGISTRY }}
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v2
+        uses: docker/login-action@v2.1.0
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ env.USERNAME }}
@@ -100,7 +100,7 @@ jobs:
 
       - name: 🏗 Extract metadata
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v4.3.0
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           images: name=${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ matrix.image }},enable=true
@@ -119,7 +119,7 @@ jobs:
 
       - name: 🚀 Build and push container image
         id: build-and-push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4.0.0
         with:
           push: ${{ github.event_name != 'pull_request' }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
