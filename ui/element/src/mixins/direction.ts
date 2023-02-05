@@ -1,7 +1,6 @@
 import {localeContextConsumer} from '@alwatr/i18n';
 
-import {SignalMixinInterface} from './signal.js';
-
+import type {SignalMixinInterface} from './signal.js';
 import type {Constructor, LocaleContext} from '@alwatr/type';
 
 export declare class DirectionMixinInterface extends SignalMixinInterface {

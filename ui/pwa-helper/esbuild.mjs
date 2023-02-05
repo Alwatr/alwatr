@@ -76,7 +76,7 @@ const esbuildContext = await esbuild.context({
   outbase: srcDir,
   outdir: outDir,
   assetNames: 'asset/[name]-[hash]',
-  entryNames: watchMode ? '[name]' : '[dir]/[name]-[hash]',
+  // entryNames: watchMode ? '[name]' : '[dir]/[name]-[hash]',
   chunkNames: 'chunks/[name]-[hash]',
 });
 
