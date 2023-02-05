@@ -4,7 +4,7 @@ import {
   css,
   html,
   state,
-  DirectionMixin,
+  LocalizeMixin,
   type PropertyValues,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
@@ -26,7 +26,7 @@ declare global {
  * Soffit lottery box element
  */
 @customElement('alwatr-lottery-box')
-export class AlwatrLotteryBox extends DirectionMixin(AlwatrSmartElement) {
+export class AlwatrLotteryBox extends LocalizeMixin(AlwatrSmartElement) {
   @state() iconBoxContent: IconBoxContent = {
     icon: 'gift-outline',
     headline: message('lottery_form'),
