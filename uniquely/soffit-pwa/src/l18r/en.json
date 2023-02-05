@@ -16,7 +16,16 @@
     "send_form": "Send form",
     "cancel": "Cancel",
     "lottery_form": "Participate in the lottery",
+    "supply_chain_form": "Supply Chain Form",
     "information_saved": "Your information has been successfully saved.",
-    "activity_area": "Activity area"
+    "activity_area": "Activity area",
+
+    "activity_type": "activity type",
+    "tile_player": "Tile player",
+    "tile_installer": "Tile installer",
+    "seller_shopkeeper": "Seller and shopkeeper",
+    "contractor": "Contractor",
+    "manufacturer": "Manufacturer",
+    "other": "Other"
   }
 }

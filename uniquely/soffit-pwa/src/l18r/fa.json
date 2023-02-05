@@ -6,7 +6,7 @@
   },
   "data": {
     "invalid_form_data": "اطلاعات فرم صحیح نمی‌باشد.",
-    "check_network_connection": "Please make sure you are connected to the Internet and send again.",
+    "check_network_connection": "لطفا از اتصال خود به اینترنت اطمینان حاصل فرمایید و دوباره ارسال کنید.",
 
     "slogan": "یک سقف خوب حیاتی است. سقف سافیت می تواند الهام بخش باشد.",
 
@@ -18,6 +18,14 @@
     "lottery_form": "فرم شرکت در قرعه‌کشی",
     "supply_chain_form": "فرم زنجیره تامین",
     "information_saved": "اطلاعات شما با موفقیت ذخیره شد.",
-    "activity_area": "حوزه فعالیت"
+    "activity_area": "حوزه فعالیت",
+
+    "activity_type": "نوع فعالیت",
+    "tile_player": "پخش کننده تایل",
+    "tile_installer": "نصاب تایل",
+    "seller_shopkeeper": "فروشنده و مغازه‌دار",
+    "contractor": "پیمانکار",
+    "manufacturer": "سازنده",
+    "other": "سایر"
   }
 }

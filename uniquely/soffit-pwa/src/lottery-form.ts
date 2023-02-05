@@ -1,4 +1,4 @@
-import {customElement, css, html, property, AlwatrSmartElement} from '@alwatr/element';
+import {customElement, css, html, property, AlwatrSmartElement, state} from '@alwatr/element';
 import {serviceRequest} from '@alwatr/fetch';
 import {message} from '@alwatr/i18n';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
@@ -27,6 +27,18 @@ declare global {
 @customElement('alwatr-lottery-form')
 export class AlwatrLotteryForm extends AlwatrSmartElement {
   static formId = 'lottery';
+
+  @state() protected _radioGroupContent = {
+    title: message('activity_type'),
+    radioGroup: [
+      {label: message('tile_player')},
+      {label: message('tile_installer')},
+      {label: message('seller_shopkeeper')},
+      {label: message('contractor')},
+      {label: message('manufacturer')},
+      {label: message('other')},
+    ],
+  };
 
   static validSchema: JsonSchema = {
     code: String,
@@ -148,7 +160,7 @@ export class AlwatrLotteryForm extends AlwatrSmartElement {
         stated
         placeholder=${message('phone_number')}
       ></alwatr-text-field>
-      <alwatr-radio-group name="activity"></alwatr-radio-group>
+      <alwatr-radio-group name="activity" .content=${this._radioGroupContent}></alwatr-radio-group>
       <div class="button-container">
         <alwatr-button outlined @click=${this.submit}>${message('send_form')}</alwatr-button>
         <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
