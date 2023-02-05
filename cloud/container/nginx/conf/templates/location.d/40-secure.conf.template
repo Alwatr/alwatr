@@ -17,10 +17,12 @@ location ~* \.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|them
 
 location = /robots.txt {
   access_log off; log_not_found off;
+  expires epoch;
 }
 
 location = /favicon.ico {
   access_log off; log_not_found off;
+  expires epoch;
 }
 
 location ~ /\. {
