@@ -1,4 +1,4 @@
-import {LocalizeMixin, customElement, html, state} from '@alwatr/element';
+import {customElement, html, state} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 
 import {AlwatrLotteryBox} from './lottery-box.js';
@@ -17,7 +17,7 @@ declare global {
  * Soffit supply chain box element
  */
 @customElement('alwatr-supply-chain-box')
-export class AlwatrSupplyChainBox extends LocalizeMixin(AlwatrLotteryBox) {
+export class AlwatrSupplyChainBox extends AlwatrLotteryBox {
   @state() override iconBoxContent: IconBoxContent = {
     icon: 'infinite-outline',
     headline: message('supply_chain_form'),
