@@ -1,27 +1,20 @@
 /* eslint-disable max-len */
 import {html} from '@alwatr/element';
 
-import type {IconBoxContent} from '@alwatr/ui-kit/src/card/icon-box.js';
+import type {PageHomeContent} from '../type';
 
-export interface BoxType extends IconBoxContent {
-  wide?: boolean;
-  content?: unknown;
-  small?: boolean;
-}
-
-// Record<string, BoxType | Array<BoxType>>
-export const homePageContent = {
+export const homePageContent: PageHomeContent = {
   about: {
     wide: true,
     elevated: 1,
     stated: true,
     // icon: 'logo-microsoft',
-    headline: 'بازرگانی سافیت',
+    headline: 'Soffit Trading',
     content: html`
-      سافیت با هدف بهینه سازی در ساخت وساز و همچنین کاهش هزینه ها تامین و نگه داری ساختمان در بلند مدت اقدام به تولید محصولات گچی نمود.<br/>
-      همچنین با توجه به گسترش بازار و نیاز مشتریان تنوع طرح و جنس محصولات خود را افزایش داده است.
-      از مزایا سقف ها سافیت می‌توان به سرعت بالا در اجرا، عایق صوت، رطوبت و حرارت نام برد. همچنین می‌توان به راحتی در دسترسی به تاسیسات نیز اشاره کرد.<br/>
-      سافیت در نظر دارد سهم خود را در استفاده از،مواد اولیه  تجدید پذیر در تولید جهت حفظ و نگهداری محیط زیست برای آیندگان افزایش دهد.
+      Soffit started producing plaster products with the aim of optimizing the construction and also reducing the cost of supply and maintenance of the building in the long term.<br/>
+      Also, according to the expansion of the market and the needs of customers, it has increased the variety of designs and materials of its products.
+      Among the advantages of Soffit roofs, we can mention high speed of implementation, insulation of sound, humidity and heat. It can also be mentioned the ease of access to the facilities.<br/>
+      Soffit intends to increase its share in the use of renewable raw materials in production to preserve the environment for future generations.
     `,
   },
 
@@ -30,8 +23,8 @@ export const homePageContent = {
     highlight: true,
     stated: true,
     icon: 'cloud-download-outline',
-    headline: 'دانلود کاتالوگ',
-    description: 'دانلود کاتالوگ معرفی محصولات بازرگانی سافیت',
+    headline: 'Download Catalogue',
+    description: 'Download the introduction catalog of Soffit commercial products',
     href: 'https://www.dropbox.com/s/6ywy23qql7iq31p/soffit-product-catalogue.pdf?dl=1',
     target: 'download',
   },
@@ -54,8 +47,8 @@ export const homePageContent = {
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'سقف کاذب',
-      description: 'متن توضیحات...',
+      headline: 'Ceiling Tile',
+      description: 'All kinds of tiles to make your roofs more beautiful',
       wide: true,
     },
     {
@@ -63,16 +56,14 @@ export const homePageContent = {
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'روشنایی',
-      description: 'متن توضیحات...',
+      headline: 'Lighting',
     },
     {
       icon: 'git-commit-outline',
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'سازه‌ و‌ اتصالات',
-      description: 'متن توضیحات...',
+      headline: 'Structure & connections',
     },
   ],
 
@@ -82,8 +73,8 @@ export const homePageContent = {
       highlight: true,
       stated: true,
       icon: 'logo-instagram',
-      headline: 'اینستاگرام',
-      description: 'صفحه‌ی اینستاگرام بازرگانی سافیت',
+      headline: 'Instagram',
+      description: 'Instagram page of Soffit Trading.',
       href: 'https://instagram.com/soffit.co',
       target: '_blank',
     },
@@ -92,8 +83,8 @@ export const homePageContent = {
       highlight: true,
       stated: true,
       icon: 'send-outline',
-      headline: 'تلگرام',
-      description: 'کانال تلگرام بازرگانی سافیت',
+      headline: 'Telegram',
+      description: 'Telegram Channel of Soffit Trading.',
       href: 'https://t.me/soffitcompany',
       target: '_blank',
     },
@@ -102,8 +93,8 @@ export const homePageContent = {
       highlight: true,
       stated: true,
       icon: 'logo-linkedin',
-      headline: 'لینکدین',
-      description: 'صفحه‌ی لینکدین بازرگانی سافیت',
+      headline: 'Linkedin',
+      description: 'Linkedin page of Soffit Trading',
       href: 'https://www.linkedin.com/company/soffit-co',
       target: '_blank',
     },
@@ -112,8 +103,8 @@ export const homePageContent = {
       highlight: true,
       stated: true,
       icon: 'videocam-outline',
-      headline: 'آپارات',
-      description: 'کانال آپارات بازرگانی سافیت',
+      headline: 'Aparat',
+      description: 'Aparat page of Soffit Trading',
       href: 'https://www.aparat.com/soffit',
       target: '_blank',
     },
@@ -124,17 +115,17 @@ export const homePageContent = {
       elevated: 1,
       stated: true,
       icon: 'ribbon-outline',
-      headline: 'نمایندگی‌ها',
-      description: 'لیست نمایندگی‌ها سافیت در سراسر کشور',
+      headline: 'Agencies',
+      description: 'The list of Soffit agencies throughout Iran',
       wide: true,
     },
     {
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'شعبه‌مرکزی',
+      headline: 'Main Branch',
       content: html`
-        <div>دفتر مرکزی</div>
+        <div>central office</div>
         <div dir="ltr">0915 301 4404</div>
       `,
       href: 'tel:+989153014404',
@@ -393,4 +384,4 @@ export const homePageContent = {
       href: 'tel:+989903730377',
     },
   ],
-} as const;
+};
