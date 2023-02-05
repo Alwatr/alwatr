@@ -48,7 +48,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'سقف کاذب',
-      description: 'متن توضیحات...',
+      description: 'انواع تایل‌ها برا زیبا‌تر شدن سقف ها شما.',
       wide: true,
     },
     {
@@ -57,7 +57,6 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'روشنایی',
-      description: 'متن توضیحات...',
     },
     {
       icon: 'git-commit-outline',
@@ -65,7 +64,6 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'سازه‌ و‌ اتصالات',
-      description: 'متن توضیحات...',
     },
   ],
 

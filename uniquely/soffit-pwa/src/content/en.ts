@@ -48,7 +48,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'Ceiling Tile',
-      description: 'All kinds of tiles to make your roofs more beautiful',
+      description: 'All kinds of tiles to make your roofs more beautiful.',
       wide: true,
     },
     {
