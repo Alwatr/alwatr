@@ -3,6 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
+    "moduleResolution": "bundler",
     "rootDir": "src",
     "outDir": "build",
     "noEmit": true,
@@ -14,7 +15,7 @@
     ],
   },
 
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.json"],
   "exclude": [],
   "references": [
     {"path": "../../core/router"},
