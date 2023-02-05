@@ -1,5 +1,5 @@
 ARG NODE_VERSION=19
-ARG NGINX_VERSION=1.0.0-1.23-alpine
+ARG NGINX_VERSION=1.1.0-1.23-alpine
 
 FROM docker.io/library/node:${NODE_VERSION}-alpine as builder
 
