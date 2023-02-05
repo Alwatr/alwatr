@@ -1,7 +1,6 @@
 import {unsubscribe} from '@alwatr/signal/core.js';
 
-import {LoggerMixinInterface} from './logging.js';
-
+import type {LoggerMixinInterface} from './logging.js';
 import type {ListenerSpec} from '@alwatr/signal/type.js';
 import type {Constructor} from '@alwatr/type';
 
