@@ -19,6 +19,7 @@
   "references": [
     {"path": "../../core/router"},
     {"path": "../../core/fetch"},
+    {"path": "../../core/i18n"},
     {"path": "../../core/validator"},
     {"path": "../../core/util"},
     {"path": "../../ui/element"},

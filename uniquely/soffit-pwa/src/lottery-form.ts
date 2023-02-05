@@ -1,9 +1,11 @@
 import {customElement, AlwatrDummyElement, css, html, property} from '@alwatr/element';
 import {serviceRequest} from '@alwatr/fetch';
+import {message} from '@alwatr/i18n';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator, type JsonSchema} from '@alwatr/validator';
 
 import {config} from './config.js';
+
 
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
@@ -78,7 +80,7 @@ export class AlwatrLotteryForm extends AlwatrDummyElement {
     }
     catch (err) {
       this._logger.accident('submit', 'invalid_form_data', 'validator failed on form data', (err as Error).cause);
-      snackbarSignalTrigger.request({message: 'اطلاعات فرم صحیح نمی‌باشد.'});
+      snackbarSignalTrigger.request({message: message('invalid_form_data')});
       return;
     }
 
