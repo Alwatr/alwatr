@@ -1,4 +1,4 @@
-import {customElement, css, html, property, AlwatrSmartElement, state} from '@alwatr/element';
+import {customElement, css, html, property, AlwatrSmartElement, state, DirectionMixin} from '@alwatr/element';
 import {serviceRequest} from '@alwatr/fetch';
 import {message} from '@alwatr/i18n';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
@@ -25,7 +25,7 @@ declare global {
  * @attr {Boolean} invisible
  */
 @customElement('alwatr-lottery-form')
-export class AlwatrLotteryForm extends AlwatrSmartElement {
+export class AlwatrLotteryForm extends DirectionMixin(AlwatrSmartElement) {
   static formId = 'lottery';
 
   @state() protected _radioGroupContent = {
