@@ -1,12 +1,15 @@
-import {customElement, AlwatrSmartElement, css, html, map, ifDefined} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html, map, ifDefined, state} from '@alwatr/element';
+import {localeContextConsumer, message, setLocale} from '@alwatr/i18n';
+import {contextConsumer} from '@alwatr/signal';
 
 import '@alwatr/ui-kit/card/icon-box.js';
 import './lottery-box.js';
 import './supply-chain-box.js';
 
-import {homePageContent} from './content.js';
 
+import type {PageHomeContent} from './type.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+
 
 interface BoxType extends IconBoxContent {
   content?: unknown;
@@ -90,25 +93,52 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     }
   `;
 
+  @state() content?: PageHomeContent;
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    this._signalListenerList.push(contextConsumer.subscribe('home-page-content', this._contentChange.bind(this)));
+  }
+
+  protected _contentChange(content: unknown): void {
+    this._logger.logMethodArgs('contentChange', {content});
+    this.content = content as PageHomeContent;
+  }
+
+  protected _changeLocale(): void {
+    this._logger.logMethod('changeLocale');
+    localeContextConsumer.getValue()?.language === 'en' ? setLocale({
+      code: 'fa-IR',
+      language: 'fa',
+      direction: 'rtl',
+    }) : setLocale({
+      code: 'en-US',
+      language: 'en',
+      direction: 'ltr',
+    });
+  }
+
   override render(): unknown {
     super.render();
     return html`
-      <header><img src="image/soffit.svg" alt="SOFFIT Logo" /></header>
+      <header><img @click=${this._changeLocale.bind(this)} src="image/soffit.svg" alt="SOFFIT Logo" /></header>
       <main>${this._menuTemplate()}</main>
       <footer>
-        <span>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</span>
+        <span>${message('slogan')}</span>
         <span class="version">v${_ALWATR_VERSION_}</span>
       </footer>
     `;
   }
 
   protected* _menuTemplate(): unknown {
-    yield this._boxTemplate(homePageContent.about);
-    yield map(homePageContent.productList, this._boxTemplate);
+    if (this.content == null) return;
+    yield this._boxTemplate(this.content.about);
+    yield map(this.content.productList, this._boxTemplate);
     yield html`<alwatr-lottery-box></alwatr-lottery-box>`;
-    yield map(homePageContent.socialList, this._boxTemplate);
+    yield map(this.content.socialList, this._boxTemplate);
     yield html`<alwatr-supply-chain-box></alwatr-supply-chain-box>`;
-    yield map(homePageContent.agencyList, this._boxTemplate);
+    yield map(this.content.agencyList, this._boxTemplate);
   }
 
   protected _boxTemplate(box: BoxType): unknown {

@@ -1,4 +1,5 @@
 import {customElement, AlwatrSmartElement, css, html, state, type PropertyValues} from '@alwatr/element';
+import {message} from '@alwatr/i18n';
 import {untilNextFrame, untilEvent, delay} from '@alwatr/util';
 
 import type {AlwatrLotteryForm} from './lottery-form.js';
@@ -18,9 +19,9 @@ declare global {
  */
 @customElement('alwatr-lottery-box')
 export class AlwatrLotteryBox extends AlwatrSmartElement {
-  protected static iconBoxContent: IconBoxContent = {
+  @state() iconBoxContent: IconBoxContent = {
     icon: 'gift-outline',
-    headline: 'شرکت در قرعه‌کشی',
+    headline: message('lottery_form'),
     elevated: 2,
   };
 
@@ -51,7 +52,7 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
   override render(): unknown {
     super.render();
     const content = {
-      ...(this.constructor as typeof AlwatrLotteryBox).iconBoxContent,
+      ...this.iconBoxContent,
       stated: !this.expanded,
       highlight: !this.expanded && !this.submitted,
     };
@@ -74,13 +75,11 @@ export class AlwatrLotteryBox extends AlwatrSmartElement {
         @form-canceled=${this._formCanceled}
       ></alwatr-lottery-form>`;
     }
-
     else if (this.submitted) {
-      return html`<span class="success">اطلاعات شما با موفقیت ذخیره شد.</span>`;
+      return html`<span class="success">${message('information_saved')}</span>`;
     }
-
     else {
-      return html`فرم شرکت در قرعه‌کشی`;
+      return html`${message('lottery_form')}`;
     }
   }
 

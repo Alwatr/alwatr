@@ -5,6 +5,19 @@
     "rev": 0
   },
   "data": {
-    "invalid_form_data": "اطلاعات فرم صحیح نمی‌باشد."
+    "invalid_form_data": "اطلاعات فرم صحیح نمی‌باشد.",
+    "check_network_connection": "Please make sure you are connected to the Internet and send again.",
+
+    "slogan": "یک سقف خوب حیاتی است. سقف سافیت می تواند الهام بخش باشد.",
+
+    "lottery_number": "کد قرعه‌کشی",
+    "first_and_last_name": "نام و نام‌خانوادگی",
+    "phone_number": "شماره موبایل",
+    "send_form": "ارسال فرم",
+    "cancel": "انصراف",
+    "lottery_form": "فرم شرکت در قرعه‌کشی",
+    "supply_chain_form": "فرم زنجیره تامین",
+    "information_saved": "اطلاعات شما با موفقیت ذخیره شد.",
+    "activity_area": "حوزه فعالیت"
   }
 }

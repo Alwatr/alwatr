@@ -1,4 +1,5 @@
-import {customElement, html} from '@alwatr/element';
+import {customElement, html, state} from '@alwatr/element';
+import {message} from '@alwatr/i18n';
 
 import {AlwatrLotteryBox} from './lottery-box.js';
 
@@ -17,9 +18,9 @@ declare global {
  */
 @customElement('alwatr-supply-chain-box')
 export class AlwatrSupplyChainBox extends AlwatrLotteryBox {
-  protected static override iconBoxContent: IconBoxContent = {
+  @state() override iconBoxContent: IconBoxContent = {
     icon: 'infinite-outline',
-    headline: 'زنجیره تامین',
+    headline: message('supply_chain_form'),
     elevated: 2,
   };
 
@@ -34,11 +35,11 @@ export class AlwatrSupplyChainBox extends AlwatrLotteryBox {
     }
 
     else if (this.submitted) {
-      return html`<span class="success">اطلاعات شما با موفقیت ذخیره شد.</span>`;
+      return html`<span class="success">${message('information_saved')}</span>`;
     }
 
     else {
-      return html`فرم ثبت‌‌نام در زنجیره تامین`;
+      return html`${message('supply_chain_form')}`;
     }
   }
 }

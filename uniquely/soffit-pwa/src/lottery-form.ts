@@ -1,4 +1,4 @@
-import {customElement, AlwatrDummyElement, css, html, property} from '@alwatr/element';
+import {customElement, css, html, property, AlwatrSmartElement} from '@alwatr/element';
 import {serviceRequest} from '@alwatr/fetch';
 import {message} from '@alwatr/i18n';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
@@ -25,7 +25,7 @@ declare global {
  * @attr {Boolean} invisible
  */
 @customElement('alwatr-lottery-form')
-export class AlwatrLotteryForm extends AlwatrDummyElement {
+export class AlwatrLotteryForm extends AlwatrSmartElement {
   static formId = 'lottery';
 
   static validSchema: JsonSchema = {
@@ -99,7 +99,7 @@ export class AlwatrLotteryForm extends AlwatrDummyElement {
     catch (err) {
       this._logger.error('submit', 'request_failed', (err as Error).cause);
       this.disabled = false;
-      snackbarSignalTrigger.request({message: 'لطفا از اتصال خود به اینترنت اطمینان حاصل فرمایید و مجددا ارسال کنید.'});
+      snackbarSignalTrigger.request({message: message('check_network_connection')});
       return;
     }
 
@@ -130,7 +130,7 @@ export class AlwatrLotteryForm extends AlwatrDummyElement {
         outlined
         active-outline
         stated
-        placeholder="شماره قرعه‌کشی"
+        placeholder=${message('lottery_number')}
       ></alwatr-text-field>
       <alwatr-text-field
         name="name"
@@ -138,7 +138,7 @@ export class AlwatrLotteryForm extends AlwatrDummyElement {
         outlined
         active-outline
         stated
-        placeholder="نام و نام‌خانوادگی"
+        placeholder=${message('first_and_last_name')}
       ></alwatr-text-field>
       <alwatr-text-field
         name="phone"
@@ -146,12 +146,12 @@ export class AlwatrLotteryForm extends AlwatrDummyElement {
         outlined
         active-outline
         stated
-        placeholder="شماره موبایل"
+        placeholder=${message('phone_number')}
       ></alwatr-text-field>
       <alwatr-radio-group name="activity"></alwatr-radio-group>
       <div class="button-container">
-        <alwatr-button outlined @click=${this.submit}>ارسال فرم</alwatr-button>
-        <alwatr-button @click=${this.cancel}>انصراف</alwatr-button>
+        <alwatr-button outlined @click=${this.submit}>${message('send_form')}</alwatr-button>
+        <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
       </div>
     `;
   }
