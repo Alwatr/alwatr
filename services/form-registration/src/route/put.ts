@@ -17,7 +17,7 @@ nanoServer.route('PUT', '/form/', async (connection: AlwatrConnection): Promise<
     return {
       ok: false,
       statusCode: 401,
-      errorCode: 'device_id_header_required',
+      errorCode: 'client_id_header_required',
     };
   }
 

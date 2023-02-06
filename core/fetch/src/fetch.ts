@@ -43,7 +43,7 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
       ...options,
       headers: {
         ...options.headers,
-        clientId: getClientId(),
+        'client-id': getClientId(),
       },
     });
   }
