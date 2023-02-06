@@ -75,19 +75,15 @@ export class AlwatrPageHome extends DirectionMixin(AlwatrSmartElement) {
       direction: ltr;
       text-align: center;
       color: var(--sys-color-on-secondary-container);
-      padding: calc(2 * var(--sys-spacing-track));
+      padding: calc(2 * var(--sys-spacing-track)) var(--sys-spacing-track) var(--sys-spacing-track);
       background-color: var(--sys-color-secondary-container);
-      position: relative;
     }
 
     .version {
-      position: absolute;
-      right: var(--sys-spacing-track);
-      bottom: 0;
       font-size: var(--sys-typescale-label-small-font-size);
       line-height: var(--sys-typescale-label-small-line-height);
       letter-spacing: var(--sys-typescale-label-small-letter-spacing);
-      opacity: var(--sys-surface-disabled-opacity);
+      opacity: 0.4;
       user-select: none;
       -webkit-user-select: none;
     }
@@ -125,8 +121,8 @@ export class AlwatrPageHome extends DirectionMixin(AlwatrSmartElement) {
       <header><img @click=${this._changeLocale.bind(this)} src="image/soffit.svg" alt="SOFFIT Logo" /></header>
       <main>${this._menuTemplate()}</main>
       <footer>
-        <span>${message('slogan')}</span>
-        <span class="version">v${_ALWATR_VERSION_}</span>
+        <div>A good ceiling is vital.<br/>a SOFFIT ceiling can be an inspiration.</div>
+        <div class="version">Soffit PWA v${_ALWATR_VERSION_}</div>
       </footer>
     `;
   }
