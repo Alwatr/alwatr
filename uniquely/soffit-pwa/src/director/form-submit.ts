@@ -15,13 +15,15 @@ const validSchema: Record<string, JsonSchema | undefined> = {
 };
 
 commandHandler.define<FormData, boolean>('form-submit', async (form: FormData): Promise<boolean> => {
+  logger.logMethodArgs('formSubmit', {form});
+
   let bodyJson;
   try {
     const schema = validSchema[form.formId];
 
     if (schema == null) {
       logger.accident(
-          'submitForm',
+          'formSubmit',
           'invalid_form_id',
           'Please define form id in validSchema before use it',
           {formId: form.formId, validSchema: Object.keys(validSchema)},
@@ -32,7 +34,7 @@ commandHandler.define<FormData, boolean>('form-submit', async (form: FormData): 
     bodyJson = validator(schema, form.data);
   }
   catch (err) {
-    logger.accident('submitForm', 'invalid_form_data', 'validator failed on form data', (err as Error).cause);
+    logger.accident('formSubmit', 'invalid_form_data', 'validator failed on form data', (err as Error).cause);
     snackbarSignalTrigger.request({message: message('invalid_form_data')});
     return false;
   }
@@ -49,7 +51,7 @@ commandHandler.define<FormData, boolean>('form-submit', async (form: FormData): 
     });
   }
   catch (err) {
-    logger.error('submitForm', 'request_failed', (err as Error).cause);
+    logger.error('formSubmit', 'request_failed', (err as Error).cause);
     snackbarSignalTrigger.request({message: message('check_network_connection')});
     return false;
   }

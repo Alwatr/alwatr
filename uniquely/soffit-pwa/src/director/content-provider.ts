@@ -1,9 +1,9 @@
 import {localeContextConsumer} from '@alwatr/i18n';
 import {contextProvider} from '@alwatr/signal';
 
-import {logger} from './logger';
+import {logger} from './logger.js';
 
-import type {PageHomeContent} from '../type';
+import type {PageHomeContent} from '../type.js';
 
 localeContextConsumer.subscribe(async () => {
   const language = localeContextConsumer.getValue()?.language;
