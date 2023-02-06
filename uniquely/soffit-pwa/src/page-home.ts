@@ -6,16 +6,7 @@ import '@alwatr/ui-kit/card/icon-box.js';
 import './lottery-box.js';
 import './supply-chain-box.js';
 
-
-import type {PageHomeContent} from './type.js';
-import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
-
-
-interface BoxType extends IconBoxContent {
-  content?: unknown;
-  wide?: boolean;
-  small?: boolean;
-}
+import type {BoxType, PageHomeContent} from './type.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -139,7 +130,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
 
   protected _boxTemplate(box: BoxType): unknown {
     return html`
-      <alwatr-icon-box .content=${box} ?wide=${box.wide} ?small=${box.small}>${ifDefined(box.content)}</alwatr-icon-box>
+      <alwatr-icon-box .content=${box} ?wide=${box.wide} ?small=${box.small}>${ifDefined(box.slot)}</alwatr-icon-box>
     `;
   }
 }
