@@ -1,13 +1,11 @@
 import {customElement, html} from '@alwatr/element';
+import {message} from '@alwatr/i18n';
 
 import {AlwatrLotteryForm} from './lottery-form.js';
 
 import '@alwatr/ui-kit/text-field/text-field.js';
 import '@alwatr/ui-kit/button/button.js';
 import './tech-dep/radio-group.js';
-
-import type {JsonSchema} from '@alwatr/validator';
-
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -24,14 +22,8 @@ declare global {
 export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
   static override formId = 'supply-chain';
 
-  static override validSchema: JsonSchema = {
-    name: String,
-    phone: Number,
-    activity: String,
-  };
-
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`
       <alwatr-text-field
         name="name"
@@ -39,7 +31,7 @@ export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
         outlined
         active-outline
         stated
-        placeholder="نام و نام‌خانوادگی"
+        placeholder=${message('full_name')}
       ></alwatr-text-field>
       <alwatr-text-field
         name="phone"
@@ -47,7 +39,7 @@ export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
         outlined
         active-outline
         stated
-        placeholder="شماره تماس"
+        placeholder=${message('phone_number')}
       ></alwatr-text-field>
       <alwatr-text-field
         name="activity"
@@ -55,11 +47,11 @@ export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
         outlined
         active-outline
         stated
-        placeholder="حوزه فعالیت"
+        placeholder=${message('activity_area')}
       ></alwatr-text-field>
       <div class="button-container">
-        <alwatr-button outlined @click=${this.submit}>ارسال فرم</alwatr-button>
-        <alwatr-button @click=${this.cancel}>انصراف</alwatr-button>
+        <alwatr-button outlined @click=${this.submit}>${message('submit_form')}</alwatr-button>
+        <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
       </div>
     `;
   }

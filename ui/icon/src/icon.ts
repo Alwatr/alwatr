@@ -76,7 +76,7 @@ export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrDummyElement)) 
   protected _icon?: HTMLTemplateResult;
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return this._icon;
   }
 

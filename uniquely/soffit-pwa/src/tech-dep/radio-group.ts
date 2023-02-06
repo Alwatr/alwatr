@@ -1,4 +1,4 @@
-import {customElement, css, html, map, AlwatrDummyElement} from '@alwatr/element';
+import {customElement, css, html, map, AlwatrDummyElement, property, nothing} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -6,26 +6,14 @@ declare global {
   }
 }
 
-const _optionList: Array<{label: string, value?: string}> = [
-  {
-    label: 'پخش کننده تایل',
-  },
-  {
-    label: 'نصاب تایل',
-  },
-  {
-    label: 'فروشنده و مغازه‌دار',
-  },
-  {
-    label: 'پیمانکار',
-  },
-  {
-    label: 'سازنده',
-  },
-  {
-    label: 'سایر',
-  },
-];
+export type RadioOption = {label: string; value?: string}
+
+export type RadioGroupOptions = {
+  form: string;
+  name: string;
+  title: string;
+  radioGroup: Array<RadioOption>;
+};
 
 /**
  * Alwatr fieldset element
@@ -84,7 +72,8 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
     }
   `;
 
-  name = this.getAttribute('name') ?? 'unknown';
+  @property({type: Object})
+    options?: RadioGroupOptions;
 
   get value(): string {
     for (const inputElement of this.renderRoot.querySelectorAll('input')) {
@@ -94,21 +83,23 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
   }
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`
       <fieldset>
-        <legend>نوع فعالیت:</legend>
-        ${this._inputTemplate()}
+        <legend>${this.options?.title}</legend>
+        ${this._optionsTemplate()}
       </fieldset>
     `;
   }
 
-  protected _inputTemplate(): unknown {
-    return map(_optionList, (item, index) => {
+  protected _optionsTemplate(): unknown {
+    const options = this.options;
+    if (options == null) return nothing;
+    return map(options.radioGroup, (radioItem, index) => {
       const id: string = 'radioInput' + index;
       return html`<div>
-        <input type="radio" id=${id} name=${this.name} value="${item.value ?? item.label}" />
-        <label for=${id}>${item.label}</label>
+        <input type="radio" id=${id} name=${options.name} value="${radioItem.value ?? radioItem.label}" />
+        <label for=${id}>${radioItem.label}</label>
       </div>`;
     });
   }

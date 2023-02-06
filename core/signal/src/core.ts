@@ -11,7 +11,7 @@ import type {
   SignalStorage,
   ListenerSpec,
 } from './type.js';
-import type {Stringifyable} from '@alwatr/type';
+import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/signal',
@@ -338,7 +338,7 @@ export const setContextProvider = <TContext extends Stringifyable, TRquest exten
  * );
  * ```
  */
-export const defineCommand = <TArgument extends Record<string, Stringifyable>, TReturn extends Stringifyable>(
+export const defineCommand = <TArgument extends StringifyableRecord, TReturn extends Stringifyable>(
   signalId: string,
   signalProvider: ProviderFunction<TArgument & {_callbackSignalId?: string}, TReturn>,
   options: Partial<Pick<ProviderOptions, 'debounce'>> = {},
@@ -395,7 +395,7 @@ export const requestContext = <TRequest extends Stringifyable>(
  * requestCommand<ArgumentType>('show-dialog', {foo: 'bar'});
  * ```
  */
-export const requestCommand = <TArgument extends Record<string, Stringifyable>>(
+export const requestCommand = <TArgument extends StringifyableRecord>(
   commandId: string,
   commandArgument: TArgument,
 ): void => {
@@ -415,7 +415,7 @@ export const requestCommand = <TArgument extends Record<string, Stringifyable>>(
  * ```
  */
 export const requestCommandWithResponse = async <
-  TArgument extends Record<string, Stringifyable>,
+  TArgument extends StringifyableRecord,
   TReturn extends Stringifyable
 >(
   commandId: string,

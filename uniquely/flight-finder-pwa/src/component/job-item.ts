@@ -99,6 +99,7 @@ export class JobItem extends AlwatrSmartElement {
   static jobDeleteEventTrigger = eventTrigger.bind('job-delete');
 
   override render(): unknown {
+    this._logger.logMethod('render');
     if (this.job == null || this.job.detail == null) return nothing;
 
     return html`

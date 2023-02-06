@@ -4,13 +4,16 @@ import '@alwatr/icon';
 
 import {AlwatrSurface} from './surface.js';
 
+import type {StringifyableRecord} from '@alwatr/type';
+
+
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-icon-box': AlwatrIconBox;
   }
 }
 
-export type IconBoxContent = {
+export interface IconBoxContent extends StringifyableRecord {
   icon?: string;
   headline: string;
   description?: string;
@@ -21,7 +24,7 @@ export type IconBoxContent = {
   stated?: boolean;
   preLine?: boolean;
   elevated?: number;
-};
+}
 
 /**
  * Alwatr standard icon button element.

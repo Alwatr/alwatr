@@ -32,9 +32,9 @@ export class AlwatrSnackbar extends AlwatrSurface {
         padding: calc(0.5 * var(--sys-spacing-track));
         gap: var(--sys-spacing-track);
         position: fixed;
-        bottom: calc(4 * var(--sys-spacing-track));
-        left: calc(4 * var(--sys-spacing-track));
-        right: calc(4 * var(--sys-spacing-track));
+        bottom: calc(2 * var(--sys-spacing-track));
+        left: var(--sys-spacing-track);
+        right: var(--sys-spacing-track);
         z-index: var(--sys-zindex-snackbar);
         border-radius: var(--sys-radius-xsmall);
 
@@ -119,6 +119,7 @@ export class AlwatrSnackbar extends AlwatrSurface {
   }
 
   override render(): unknown {
+    this._logger.logMethod('render');
     return html`<span class="message">${this.message}</span>${when(
         this.actionLabel,
         () => html`<alwatr-button @click=${this._actionButtonClick}>${this.actionLabel}</alwatr-button>`,

@@ -124,7 +124,7 @@ async function buildServiceWorker() {
 
   const build = await generateSW({
     swDest: `${outDir}/service-worker.js`,
-    globDirectory: `${outDir}`,
+    globDirectory: `${outDir}/`,
     clientsClaim: true,
     skipWaiting: true,
     globPatterns: [
@@ -152,6 +152,8 @@ else {
 
 /*
   TODO:
+  - Input Config
+  - version
   - Workbox and sw
   - Res (all assets) hash
   - PostCSS css file

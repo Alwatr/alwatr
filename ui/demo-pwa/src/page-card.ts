@@ -55,7 +55,7 @@ export class AlwatrPageCard extends AlwatrSmartElement {
   `;
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`
       <alwatr-icon-box
         .content=${{icon: 'gift-outline', headline: 'قرعه کشی', description: loremText}}
