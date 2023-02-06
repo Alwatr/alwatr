@@ -17,3 +17,6 @@ export type Stringifyable =
     | undefined
     | { [x: string]: Stringifyable }
     | Array<Stringifyable>;
+
+
+export type StringifyableRecord = Record<string, Stringifyable>;
