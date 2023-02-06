@@ -10,7 +10,7 @@ nanoServer.route('PUT', '/form/', async (connection: AlwatrConnection): Promise<
   logger.logMethod('put');
 
   connection.requireToken(config.nanoServer.accessToken);
-  const params = connection.requireQueryParams<{form: string}>({form: 'string'});
+  const params = connection.requireQueryParams<{formId: string}>({formId: 'string'});
   const remoteAddress = connection.incomingMessage.socket.remoteAddress ?? 'unknown';
   const clientId = connection.incomingMessage.headers['client-id'];
 
@@ -22,7 +22,7 @@ nanoServer.route('PUT', '/form/', async (connection: AlwatrConnection): Promise<
     };
   }
 
-  if (config.formList.indexOf(params.form) === -1) {
+  if (config.formList.indexOf(params.formId) === -1) {
     return {
       ok: false,
       statusCode: 404,
@@ -39,7 +39,7 @@ nanoServer.route('PUT', '/form/', async (connection: AlwatrConnection): Promise<
         remoteAddress: remoteAddress,
         clientId: clientId,
       },
-      'form-' + params.form,
+      'form-' + params.formId,
   );
 
   return {

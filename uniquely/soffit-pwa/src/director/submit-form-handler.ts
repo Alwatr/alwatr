@@ -14,7 +14,7 @@ const validSchema: Record<string, JsonSchema | undefined> = {
   'supply-chain': {name: String, phone: Number, activity: String},
 };
 
-commandHandler.define<FormData, boolean>('form-submit', async (form: FormData): Promise<boolean> => {
+commandHandler.define<FormData, boolean>('submit-form', async (form: FormData): Promise<boolean> => {
   logger.logMethodArgs('formSubmit', {form});
 
   let bodyJson;
@@ -44,7 +44,7 @@ commandHandler.define<FormData, boolean>('form-submit', async (form: FormData): 
       method: 'PUT',
       url: config.api + '/form/',
       queryParameters: {
-        form: form.formId,
+        formId: form.formId,
       },
       token: config.token,
       bodyJson,

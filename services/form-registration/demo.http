@@ -5,7 +5,7 @@
 GET {{apiUrl}}
 
 ### Submit form data
-PUT {{apiUrl}}/form/?form=temp
+PUT {{apiUrl}}/form/?formId=temp
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -18,7 +18,7 @@ Content-Type: application/json
 ### === Test other routes and errors ===
 
 ### Invalid form id
-PUT {{apiUrl}}/form/?form=jafang
+PUT {{apiUrl}}/form/?formId=jafang
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
