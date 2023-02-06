@@ -75,6 +75,9 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
   @property({type: Object})
     options?: RadioGroupOptions;
 
+  @property({type: String})
+    name?: string;
+
   get value(): string {
     for (const inputElement of this.renderRoot.querySelectorAll('input')) {
       if (inputElement.checked) return inputElement.value;
@@ -94,11 +97,12 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
 
   protected _optionsTemplate(): unknown {
     const options = this.options;
-    if (options == null) return nothing;
+    const name = this.name;
+    if (options == null || name == null) return nothing;
     return map(options.radioGroup, (radioItem, index) => {
       const id: string = 'radioInput' + index;
       return html`<div>
-        <input type="radio" id=${id} name=${options.name} value="${radioItem.value ?? radioItem.label}" />
+        <input type="radio" id=${id} name=${name} value="${radioItem.value ?? radioItem.label}" />
         <label for=${id}>${radioItem.label}</label>
       </div>`;
     });

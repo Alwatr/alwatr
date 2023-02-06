@@ -133,7 +133,10 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
         stated
         placeholder=${message('phone_number')}
       ></alwatr-text-field>
-      <alwatr-radio-group .options=${this._radioGroupContent}></alwatr-radio-group>
+      <alwatr-radio-group
+        .name=${this._radioGroupContent.name}
+        .options=${this._radioGroupContent}
+      ></alwatr-radio-group>
       <div class="button-container">
         <alwatr-button outlined @click=${this.submit}>${message('send_form')}</alwatr-button>
         <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
