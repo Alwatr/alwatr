@@ -87,10 +87,10 @@ export const random = {
    * Example:
    *
    * ```js
-   * console.log(random.value); // 0.7124123
+   * console.log(random.number); // 0.7124123
    * ```
    */
-  get value(): number {
+  get number(): number {
     return Math.random();
   },
 
@@ -114,7 +114,7 @@ export const random = {
    * console.log(random.float(1, 10)); // somewhere between 1 and 10
    * ```
    */
-  float: (min: number, max: number): number => random.value * (max - min) + min,
+  float: (min: number, max: number): number => random.number * (max - min) + min,
 
   /**
    * Generate a random string with random length.
@@ -131,7 +131,7 @@ export const random = {
   string: (min: number, max?: number): string => {
     let result = '';
     for (let i = max != null ? random.integer(min, max) : min; i > 0; i--) {
-      result += characters.charAt(Math.floor(random.value * charactersLength));
+      result += characters.charAt(Math.floor(random.number * charactersLength));
     }
     return result;
   },
@@ -158,7 +158,44 @@ export const random = {
    * console.log(array); // [2, 4, 3, 1, 5]
    * ```
    */
-  shuffle: <T>(array: T[]): T[] => array.sort(() => random.value - 0.5),
+  shuffle: <T>(array: T[]): T[] => array.sort(() => random.number - 0.5),
+
+  getRandomValues: <T extends ArrayBufferView | null>(array: T): T => {
+    return globalThis.crypto.getRandomValues(array);
+    // TODO: check msCrypto
+  },
+
+  /**
+   * Generate Random UUID.
+   *
+   * Example:
+   *
+   * ```ts
+   * console.log(random.uuid);
+   * ```
+   */
+  get uuid(): `${string}-${string}-${string}-${string}-${string}` {
+    if (globalThis.crypto?.randomUUID) {
+      return globalThis.crypto.randomUUID();
+    }
+    // else
+    const bytes = random.getRandomValues(new Uint8Array(16));
+    bytes[6] = (bytes[6] & 0x0f) | 0x40; // version
+    bytes[8] = (bytes[8] & 0xbf) | 0x80; // variant
+
+    // prettier-ignore
+    return `${
+      hex(bytes.subarray(0, 4))
+    }-${
+      hex(bytes.subarray(4, 6))
+    }-${
+      hex(bytes.subarray(6, 8))
+    }-${
+      hex(bytes.subarray(8, 10))
+    }-${
+      hex(bytes.subarray(10, 16))
+    }`;
+  },
 } as const;
 
 export type DurationUnit = 's' | 'm' | 'h' | 'd' | 'w' | 'M' | 'y';
@@ -206,4 +243,21 @@ export const parseDuration = (duration: DurationString, toUnit: DurationUnit | '
 /**
  * Limit number in range (min, max).
  */
-export const clamp = (val: number, min: number, max: number): number => val > max ? max : val < min ? min : val;
+export const clamp = (val: number, min: number, max: number): number => (val > max ? max : val < min ? min : val);
+
+export const hex = (bytes: Uint8Array): string => {
+  let str = '';
+  for (let i = 0; i < bytes.length; i++) {
+    str += bytes[i].toString(16).padStart(2, '0');
+  }
+  return str;
+};
+
+export const getDeviceUuid = (): string => {
+  let uuid = localStorage.getItem('device-uuid');
+  if (uuid == null) {
+    uuid = random.uuid;
+    localStorage.setItem('device-uuid', uuid);
+  }
+  return uuid;
+};
