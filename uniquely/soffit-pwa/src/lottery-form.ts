@@ -27,8 +27,6 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
 
   get _radioGroupOptions(): RadioGroupOptions {
     return {
-      name: 'activity',
-      form: (this.constructor as typeof AlwatrLotteryForm).formId,
       title: message('activity_type'),
       radioGroup: [
         {label: message('tile_player')},
@@ -136,7 +134,8 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
         placeholder=${message('phone_number')}
       ></alwatr-text-field>
       <alwatr-radio-group
-        .name=${this._radioGroupOptions.name}
+        name="activity"
+        .form="${AlwatrLotteryForm.formId}"
         .options=${this._radioGroupOptions}
       ></alwatr-radio-group>
       <div class="button-container">

@@ -9,8 +9,6 @@ declare global {
 export type RadioOption = {label: string; value?: string}
 
 export type RadioGroupOptions = {
-  form: string;
-  name: string;
   title: string;
   radioGroup: Array<RadioOption>;
 };
@@ -75,8 +73,10 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
   @property({type: Object})
     options?: RadioGroupOptions;
 
+  name = this.getAttribute('name') ?? 'unknown';
+
   @property({type: String})
-    name?: string;
+    form?: string;
 
   get value(): string {
     for (const inputElement of this.renderRoot.querySelectorAll('input')) {
