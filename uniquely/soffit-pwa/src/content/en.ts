@@ -10,7 +10,7 @@ export const homePageContent: PageHomeContent = {
     stated: true,
     // icon: 'logo-microsoft',
     headline: 'Soffit Trading',
-    content: html`
+    slot: html`
       Soffit started producing plaster products with the aim of optimizing the construction and also reducing the cost of supply and maintenance of the building in the long term.<br/>
       Also, according to the expansion of the market and the needs of customers, it has increased the variety of designs and materials of its products.
       Among the advantages of Soffit roofs, we can mention high speed of implementation, insulation of sound, humidity and heat. It can also be mentioned the ease of access to the facilities.<br/>
@@ -124,7 +124,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'Main Branch',
-      content: html`
+      slot: html`
         <div>central office</div>
         <div dir="ltr">0915 301 4404</div>
       `,
@@ -135,7 +135,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'کردستان',
-      content: html`
+      slot: html`
         <div>آقای صفایی</div>
         <div dir="ltr">0914 381 3925</div>
       `,
@@ -146,7 +146,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'گلستان',
-      content: html`
+      slot: html`
         <div>آقای اقلچی</div>
         <div dir="ltr">0911 750 5027</div>
       `,
@@ -157,7 +157,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'ایلام',
-      content: html`
+      slot: html`
         <div>آقای صیدی</div>
         <div dir="ltr">0918 342 8903</div>
       `,
@@ -168,7 +168,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'آذربایجان‌غربی',
-      content: html`
+      slot: html`
         <div>آقای صفایی</div>
         <div dir="ltr">0914 381 3925</div>
       `,
@@ -179,7 +179,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'خراسان‌جنوبی',
-      content: html`
+      slot: html`
         <div>آقای محبی</div>
         <div dir="ltr">0915 506 9208</div>
       `,
@@ -190,7 +190,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'زاهدان',
-      content: html`
+      slot: html`
         <div>آقای قاسمی</div>
         <div dir="ltr">0915 540 9620</div>
       `,
@@ -201,7 +201,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'کرمانشاه',
-      content: html`
+      slot: html`
         <div>آقای حاجتی</div>
         <div dir="ltr">0918 559 0431</div>
       `,
@@ -212,7 +212,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'کرمان',
-      content: html`
+      slot: html`
         <div>آقای رضایی</div>
         <div dir="ltr">0913 563 1711</div>
       `,
@@ -223,7 +223,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'همدان',
-      content: html`
+      slot: html`
         <div>آقای طهماسبی</div>
         <div dir="ltr">0918 554 0527</div>
       `,
@@ -234,7 +234,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'خراسان‌رضوی',
-      content: html`
+      slot: html`
         <div>آقای محبی</div>
         <div dir="ltr">0915 506 9208</div>
       `,
@@ -245,7 +245,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'خراسان‌شمالی',
-      content: html`
+      slot: html`
         <div>آقای محبی</div>
         <div dir="ltr">0915 506 9208</div>
       `,
@@ -256,7 +256,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'اصفهان',
-      content: html`
+      slot: html`
         <div>آقای بهنام‌پور</div>
         <div dir="ltr">0913 339 1828</div>
       `,
@@ -267,7 +267,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'سمنان',
-      content: html`
+      slot: html`
         <div>آقای حافظی</div>
         <div dir="ltr">0919 276 0806</div>
       `,
@@ -278,7 +278,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'کیش',
-      content: html`
+      slot: html`
         <div>آقای سالاری</div>
         <div dir="ltr">0990 349 8425</div>
       `,
@@ -289,7 +289,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'زنجان',
-      content: html`
+      slot: html`
         <div>آقای نقی‌لو</div>
         <div dir="ltr">0912 067 6503</div>
       `,
@@ -300,7 +300,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'اردبیل',
-      content: html`
+      slot: html`
         <div>آقای پاسبانی</div>
         <div dir="ltr">0914 150 4203</div>
       `,
@@ -311,7 +311,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'بندرعباس',
-      content: html`
+      slot: html`
         <div>آقای کمالی‌پور</div>
         <div dir="ltr">0930 380 0134</div>
       `,
@@ -322,7 +322,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'چهارمحال‌ و‌ بختیاری',
-      content: html`
+      slot: html`
         <div>آقای فروزنده</div>
         <div dir="ltr">0913 283 9193</div>
       `,
@@ -333,7 +333,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'کهگیلویه‌ و‌ بویراحمد',
-      content: html`
+      slot: html`
         <div>آقای عظیمی‌فر</div>
         <div dir="ltr">0917 432 6132</div>
       `,
@@ -344,7 +344,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'آذربایجان‌شرقی',
-      content: html`
+      slot: html`
         <div>آقای سلیمانی</div>
         <div dir="ltr">0935 707 1904</div>
       `,
@@ -355,7 +355,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'شیراز',
-      content: html`
+      slot: html`
         <div>آقای خدامی</div>
         <div dir="ltr">0917 113 2262</div>
       `,
@@ -366,7 +366,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'خوزستان',
-      content: html`
+      slot: html`
         <div>آقای شمس</div>
         <div dir="ltr">0916 603 3612</div>
       `,
@@ -377,7 +377,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'ورامین',
-      content: html`
+      slot: html`
         <div>آقای بیدگلی</div>
         <div dir="ltr">0990 373 0377</div>
       `,
