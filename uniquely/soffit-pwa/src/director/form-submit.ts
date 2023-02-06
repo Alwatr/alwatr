@@ -1,15 +1,13 @@
 import {serviceRequest} from '@alwatr/fetch';
 import {message} from '@alwatr/i18n';
-import {createLogger} from '@alwatr/logger';
 import {commandHandler} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator, type JsonSchema} from '@alwatr/validator';
 
+import {logger} from './logger.js';
 import {config} from '../config.js';
 
 import type {FormData} from '../type.js';
-
-const logger = createLogger('command-form-submit');
 
 const validSchema: Record<string, JsonSchema | undefined> = {
   'lottery': {code: String, name: String, phone: Number, activity: String},
