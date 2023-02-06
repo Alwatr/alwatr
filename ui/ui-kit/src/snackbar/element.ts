@@ -119,6 +119,7 @@ export class AlwatrSnackbar extends AlwatrSurface {
   }
 
   override render(): unknown {
+    this._logger.logMethod('render');
     return html`<span class="message">${this.message}</span>${when(
         this.actionLabel,
         () => html`<alwatr-button @click=${this._actionButtonClick}>${this.actionLabel}</alwatr-button>`,

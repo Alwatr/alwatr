@@ -72,7 +72,7 @@ export class AlwatrChatList extends AlwatrDummyElement {
     currentUser?: string;
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     if (this.storage == null) return nothing;
     return html`${map(
         this.storage.data,

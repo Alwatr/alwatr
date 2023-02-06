@@ -34,6 +34,7 @@ export class AlwatrChatFooter extends AlwatrDummyElement {
   `;
 
   override render(): unknown {
+    this._logger.logMethod('render');
     return html`
       <alwatr-icon-button .icon=${'happy-outline'} @click=${this._changeLocale}></alwatr-icon-button>
       <alwatr-chat-text-input></alwatr-chat-text-input>

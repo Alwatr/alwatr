@@ -108,7 +108,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
   }
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`
       <header><img @click=${this._changeLocale.bind(this)} src="image/soffit.svg" alt="SOFFIT Logo" /></header>
       <main>${this._menuTemplate()}</main>

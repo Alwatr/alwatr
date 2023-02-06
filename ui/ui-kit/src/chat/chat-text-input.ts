@@ -65,6 +65,7 @@ export class AlwatrChatTextInput extends LocalizeMixin(SignalMixin(AlwatrDummyEl
   sendButtonElement: AlwatrStandardIconButton | null = null;
 
   override render(): unknown {
+    this._logger.logMethod('render');
     return html`
       <textarea
         rows="1"

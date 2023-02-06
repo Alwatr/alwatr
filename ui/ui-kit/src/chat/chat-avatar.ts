@@ -36,7 +36,7 @@ export class AlwatrChatAvatar extends AlwatrDummyElement {
     user?: string;
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`<img src="https://i.pravatar.cc/40?u=${this.user}" alt="User ${this.user} profile image" />`;
   }
 }

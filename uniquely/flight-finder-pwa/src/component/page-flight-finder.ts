@@ -84,6 +84,7 @@ export class PageFlightFinder extends AlwatrSmartElement {
     setInterval(this.__updateTimer, 3_000);
   }
   override render(): unknown {
+    this._logger.logMethod('render');
     return html`
       <ion-header>
         <ion-toolbar color="primary">

@@ -46,7 +46,7 @@ export class AlwatrChatBubble extends DirectionMixin(SignalMixin(AlwatrDummyElem
     text?: string;
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`${this.text ?? '...'}`;
   }
 }

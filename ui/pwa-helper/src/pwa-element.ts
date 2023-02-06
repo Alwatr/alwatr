@@ -54,7 +54,7 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
   }
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`<div class="page-container">${cache(routerOutlet(this._routesConfig))}</div>`;
   }
 

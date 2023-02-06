@@ -70,6 +70,7 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
   }
 
   override render(): unknown {
+    this._logger.logMethod('render');
     return html`<alwatr-icon
       part="icon"
       ?flip-rtl=${this.flipRtl}
