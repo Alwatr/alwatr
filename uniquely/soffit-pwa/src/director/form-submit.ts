@@ -1,8 +1,8 @@
-import {AlwatrServiceResponse, serviceRequest} from '@alwatr/fetch';
+import {serviceRequest} from '@alwatr/fetch';
 import {message} from '@alwatr/i18n';
 import {createLogger} from '@alwatr/logger';
 import {commandHandler} from '@alwatr/signal';
-import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator, type JsonSchema} from '@alwatr/validator';
 
 import {config} from '../config.js';
@@ -40,7 +40,7 @@ commandHandler.define<FormData, boolean>('form-submit', async (form: FormData): 
   }
 
   try {
-    await serviceRequest<AlwatrServiceResponse>({
+    await serviceRequest({
       method: 'PUT',
       url: config.api + '/form/',
       queryParameters: {
