@@ -26,7 +26,7 @@ export interface FetchOptions extends RequestInit {
   /**
    * A Headers object to set request's headers.
    */
-  headers: Record<string, string | undefined>;
+  headers?: Record<string, string>;
 
   /**
    * A timeout for the fetch request.
