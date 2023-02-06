@@ -1,4 +1,6 @@
 /* eslint-disable max-len */
+import {replaceNumber} from '@alwatr/i18n';
+
 import type {PageHomeContent} from '../type';
 
 export const homePageContent: PageHomeContent = {
@@ -64,7 +66,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'تماس با ما',
       slot: `
         <div>دفتر مرکزی</div>
-        <div dir="ltr">0915 559 9674</div>
+        <div dir="ltr">${replaceNumber('0915 559 9674')}</div>
       `,
       href: 'tel:+989155599674',
     },
@@ -136,7 +138,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'شعبه‌مرکزی',
       slot: `
         <div>دفتر مرکزی</div>
-        <div dir="ltr">0915 301 4404</div>
+        <div dir="ltr">${replaceNumber('0915 301 4404')}</div>
       `,
       href: 'tel:+989153014404',
     },
@@ -147,7 +149,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'کردستان',
       slot: `
         <div>آقای صفایی</div>
-        <div dir="ltr">0914 381 3925</div>
+        <div dir="ltr">${replaceNumber('0914 381 3925')}</div>
       `,
       href: 'tel:+989143813925',
     },
@@ -158,7 +160,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'گلستان',
       slot: `
         <div>آقای اقلچی</div>
-        <div dir="ltr">0911 750 5027</div>
+        <div dir="ltr">${replaceNumber('0911 750 5027')}</div>
       `,
       href: 'tel:+989117505027',
     },
@@ -169,7 +171,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'ایلام',
       slot: `
         <div>آقای صیدی</div>
-        <div dir="ltr">0918 342 8903</div>
+        <div dir="ltr">${replaceNumber('0918 342 8903')}</div>
       `,
       href: 'tel:+989183428903',
     },
@@ -180,7 +182,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'آذربایجان‌غربی',
       slot: `
         <div>آقای صفایی</div>
-        <div dir="ltr">0914 381 3925</div>
+        <div dir="ltr">${replaceNumber('0914 381 3925')}</div>
       `,
       href: 'tel:+989143813925',
     },
@@ -191,7 +193,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'خراسان‌جنوبی',
       slot: `
         <div>آقای محبی</div>
-        <div dir="ltr">0915 506 9208</div>
+        <div dir="ltr">${replaceNumber('0915 506 9208')}</div>
       `,
       href: 'tel:+989155069208',
     },
@@ -202,7 +204,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'زاهدان',
       slot: `
         <div>آقای قاسمی</div>
-        <div dir="ltr">0915 540 9620</div>
+        <div dir="ltr">${replaceNumber('0915 540 9620')}</div>
       `,
       href: 'tel:+989155409620',
     },
@@ -213,7 +215,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'کرمانشاه',
       slot: `
         <div>آقای حاجتی</div>
-        <div dir="ltr">0918 559 0431</div>
+        <div dir="ltr">${replaceNumber('0918 559 0431')}</div>
       `,
       href: 'tel:+989185590431',
     },
@@ -224,7 +226,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'کرمان',
       slot: `
         <div>آقای رضایی</div>
-        <div dir="ltr">0913 563 1711</div>
+        <div dir="ltr">${replaceNumber('0913 563 1711')}</div>
       `,
       href: 'tel:+989135631711',
     },
@@ -235,7 +237,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'همدان',
       slot: `
         <div>آقای طهماسبی</div>
-        <div dir="ltr">0918 554 0527</div>
+        <div dir="ltr">${replaceNumber('0918 554 0527')}</div>
       `,
       href: 'tel:+989185540527',
     },
@@ -246,7 +248,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'خراسان‌رضوی',
       slot: `
         <div>آقای محبی</div>
-        <div dir="ltr">0915 506 9208</div>
+        <div dir="ltr">${replaceNumber('0915 506 9208')}</div>
       `,
       href: 'tel:+989155069208',
     },
@@ -257,7 +259,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'خراسان‌شمالی',
       slot: `
         <div>آقای محبی</div>
-        <div dir="ltr">0915 506 9208</div>
+        <div dir="ltr">${replaceNumber('0915 506 9208')}</div>
       `,
       href: 'tel:+989155069208',
     },
@@ -268,7 +270,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'اصفهان',
       slot: `
         <div>آقای بهنام‌پور</div>
-        <div dir="ltr">0913 339 1828</div>
+        <div dir="ltr">${replaceNumber('0913 339 1828')}</div>
       `,
       href: 'tel:+989133391828',
     },
@@ -279,7 +281,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'سمنان',
       slot: `
         <div>آقای حافظی</div>
-        <div dir="ltr">0919 276 0806</div>
+        <div dir="ltr">${replaceNumber('0919 276 0806')}</div>
       `,
       href: 'tel:+989192760806',
     },
@@ -290,7 +292,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'کیش',
       slot: `
         <div>آقای سالاری</div>
-        <div dir="ltr">0990 349 8425</div>
+        <div dir="ltr">${replaceNumber('0990 349 8425')}</div>
       `,
       href: 'tel:+989903498425',
     },
@@ -301,7 +303,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'زنجان',
       slot: `
         <div>آقای نقی‌لو</div>
-        <div dir="ltr">0912 067 6503</div>
+        <div dir="ltr">${replaceNumber('0912 067 6503')}</div>
       `,
       href: 'tel:+989120676503',
     },
@@ -312,7 +314,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'اردبیل',
       slot: `
         <div>آقای پاسبانی</div>
-        <div dir="ltr">0914 150 4203</div>
+        <div dir="ltr">${replaceNumber('0914 150 4203')}</div>
       `,
       href: 'tel:+989141504203',
     },
@@ -323,7 +325,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'بندرعباس',
       slot: `
         <div>آقای کمالی‌پور</div>
-        <div dir="ltr">0930 380 0134</div>
+        <div dir="ltr">${replaceNumber('0930 380 0134')}</div>
       `,
       href: 'tel:+989303800134',
     },
@@ -334,7 +336,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'چهارمحال‌ و‌ بختیاری',
       slot: `
         <div>آقای فروزنده</div>
-        <div dir="ltr">0913 283 9193</div>
+        <div dir="ltr">${replaceNumber('0913 283 9193')}</div>
       `,
       href: 'tel:+989132839193',
     },
@@ -345,7 +347,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'کهگیلویه‌ و‌ بویراحمد',
       slot: `
         <div>آقای عظیمی‌فر</div>
-        <div dir="ltr">0917 432 6132</div>
+        <div dir="ltr">${replaceNumber('0917 432 6132')}</div>
       `,
       href: 'tel:+989174326132',
     },
@@ -356,7 +358,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'آذربایجان‌شرقی',
       slot: `
         <div>آقای سلیمانی</div>
-        <div dir="ltr">0935 707 1904</div>
+        <div dir="ltr">${replaceNumber('0935 707 1904')}</div>
       `,
       href: 'tel:+989357071904',
     },
@@ -367,7 +369,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'شیراز',
       slot: `
         <div>آقای خدامی</div>
-        <div dir="ltr">0917 113 2262</div>
+        <div dir="ltr">${replaceNumber('0917 113 2262')}</div>
       `,
       href: 'tel:+989171132262',
     },
@@ -378,7 +380,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'خوزستان',
       slot: `
         <div>آقای شمس</div>
-        <div dir="ltr">0916 603 3612</div>
+        <div dir="ltr">${replaceNumber('0916 603 3612')}</div>
       `,
       href: 'tel:+989166033612',
     },
@@ -389,7 +391,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'ورامین',
       slot: `
         <div>آقای بیدگلی</div>
-        <div dir="ltr">0990 373 0377</div>
+        <div dir="ltr">${replaceNumber('0990 373 0377')}</div>
       `,
       href: 'tel:+989903730377',
     },

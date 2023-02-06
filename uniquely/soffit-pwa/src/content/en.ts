@@ -64,7 +64,7 @@ export const homePageContent: PageHomeContent = {
       headline: 'Contact Us',
       slot: `
         <div>Main branch</div>
-        <div dir="ltr">+98 915 559 9674</div>
+        <div>+98 915 559 9674</div>
       `,
       href: 'tel:+989155599674',
     },
