@@ -19,7 +19,7 @@ export interface IconBoxContent extends StringifyableRecord {
   description?: string;
   href?: string;
   flipRtl?: boolean;
-  target?: string;
+  target?: 'download' | '_blank';
   highlight?: boolean;
   stated?: boolean;
   preLine?: boolean;
