@@ -29,17 +29,6 @@ export const homePageContent: PageHomeContent = {
     target: 'download',
   },
 
-  // contact: {
-  //   elevated: 2,
-  //   highlight: true,
-  //   stated: true,
-  //   icon: 'call-outline',
-  //   flipRtl: true,
-  //   headline: 'تماس با ما',
-  //   description: 'دفتر مرکزی: ۰۹۱۵۵۵۹۹۶۷۴',
-  //   href: 'tel:+989155599674',
-  // },
-
   productList: [
     {
       icon: 'logo-microsoft',
@@ -68,6 +57,19 @@ export const homePageContent: PageHomeContent = {
   ],
 
   socialList: [
+    {
+      elevated: 2,
+      highlight: true,
+      stated: true,
+      icon: 'call-outline',
+      flipRtl: true,
+      headline: 'Contact Us',
+      slot: html`
+        <div>Main branch</div>
+        <div dir="ltr">+98 915 559 9674</div>
+      `,
+      href: 'tel:+989155599674',
+    },
     {
       elevated: 2,
       highlight: true,
@@ -102,22 +104,11 @@ export const homePageContent: PageHomeContent = {
       elevated: 2,
       highlight: true,
       stated: true,
-      icon: 'videocam-outline',
-      headline: 'Aparat',
-      description: 'Aparat page of Soffit Trading',
-      href: 'https://www.aparat.com/soffit',
+      icon: 'logo-youtube',
+      headline: 'Youtube',
+      description: 'Youtube channel of Soffit Trading',
+      href: 'https://youtube.com/@SOFFITCO',
       target: '_blank',
-    },
-  ],
-
-  agencyList: [
-    {
-      elevated: 1,
-      stated: true,
-      icon: 'ribbon-outline',
-      headline: 'Agencies',
-      description: 'The list of Soffit agencies throughout Iran',
-      wide: true,
     },
     {
       elevated: 2,
