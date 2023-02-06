@@ -78,12 +78,12 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
 
     this.disabled = true;
 
-    const response = await commandTrigger.requestWithResponse<FormData, {ok: boolean}>('form-submit', {
-      id: (this.constructor as typeof AlwatrLotteryForm).formId,
+    const response = await commandTrigger.requestWithResponse<FormData, boolean>('form-submit', {
+      formId: (this.constructor as typeof AlwatrLotteryForm).formId,
       data: bodyJson,
     });
 
-    if (response.ok) {
+    if (response) {
       this.dispatchEvent(new CustomEvent('form-submitted'));
     }
     else {
