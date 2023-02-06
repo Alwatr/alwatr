@@ -1,6 +1,4 @@
 /* eslint-disable max-len */
-import {html} from '@alwatr/element';
-
 import type {PageHomeContent} from '../type';
 
 export const homePageContent: PageHomeContent = {
@@ -10,7 +8,7 @@ export const homePageContent: PageHomeContent = {
     stated: true,
     // icon: 'logo-microsoft',
     headline: 'Soffit Trading',
-    slot: html`
+    slot: `
       Soffit started producing plaster products with the aim of optimizing the construction and also reducing the cost of supply and maintenance of the building in the long term.<br/>
       Also, according to the expansion of the market and the needs of customers, it has increased the variety of designs and materials of its products.
       Among the advantages of Soffit roofs, we can mention high speed of implementation, insulation of sound, humidity and heat. It can also be mentioned the ease of access to the facilities.<br/>
@@ -64,7 +62,7 @@ export const homePageContent: PageHomeContent = {
       icon: 'call-outline',
       flipRtl: true,
       headline: 'Contact Us',
-      slot: html`
+      slot: `
         <div>Main branch</div>
         <div dir="ltr">+98 915 559 9674</div>
       `,

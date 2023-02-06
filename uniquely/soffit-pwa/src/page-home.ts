@@ -1,4 +1,4 @@
-import {customElement, AlwatrSmartElement, css, html, map, ifDefined, state} from '@alwatr/element';
+import {customElement, AlwatrSmartElement, css, html, unsafeHTML, map, state, nothing} from '@alwatr/element';
 import {localeContextConsumer, setLocale} from '@alwatr/i18n';
 import {contextConsumer} from '@alwatr/signal';
 
@@ -85,25 +85,26 @@ export class AlwatrPageHome extends AlwatrSmartElement {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._signalListenerList.push(contextConsumer.subscribe('home-page-content', this._contentChange.bind(this)));
-  }
-
-  protected _contentChange(content: unknown): void {
-    this._logger.logMethodArgs('contentChange', {content});
-    this.content = content as PageHomeContent;
+    this._signalListenerList.push(
+        contextConsumer.subscribe<PageHomeContent>('home_page_content', (content) => {
+          this.content = content;
+        }),
+    );
   }
 
   protected _changeLocale(): void {
     this._logger.logMethod('changeLocale');
-    localeContextConsumer.getValue()?.language === 'en' ? setLocale({
-      code: 'fa-IR',
-      language: 'fa',
-      direction: 'rtl',
-    }) : setLocale({
-      code: 'en-US',
-      language: 'en',
-      direction: 'ltr',
-    });
+    localeContextConsumer.getValue()?.language === 'en'
+      ? setLocale({
+        code: 'fa-IR',
+        language: 'fa',
+        direction: 'rtl',
+      })
+      : setLocale({
+        code: 'en-US',
+        language: 'en',
+        direction: 'ltr',
+      });
   }
 
   override render(): unknown {
@@ -112,7 +113,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       <header><img @click=${this._changeLocale.bind(this)} src="image/soffit.svg" alt="SOFFIT Logo" /></header>
       <main>${this._menuTemplate()}</main>
       <footer>
-        <div>A good ceiling is vital.<br/>a SOFFIT ceiling can be an inspiration.</div>
+        <div>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</div>
         <div class="version">Soffit PWA v${_ALWATR_VERSION_}</div>
       </footer>
     `;
@@ -129,8 +130,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
   }
 
   protected _boxTemplate(box: BoxType): unknown {
-    return html`
-      <alwatr-icon-box .content=${box} ?wide=${box.wide} ?small=${box.small}>${ifDefined(box.slot)}</alwatr-icon-box>
-    `;
+    const slot = box.slot == null ? nothing : unsafeHTML(box.slot);
+    return html`<alwatr-icon-box .content=${box} ?wide=${box.wide} ?small=${box.small}>${slot}</alwatr-icon-box>`;
   }
 }
