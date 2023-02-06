@@ -35,7 +35,7 @@ export class AlwatrSupplyChainBox extends AlwatrLotteryBox {
     }
 
     else if (this.submitted) {
-      return html`<span class="success">${message('information_saved')}</span>`;
+      return html`<span class="success">${message('form_submitted')}</span>`;
     }
 
     else {

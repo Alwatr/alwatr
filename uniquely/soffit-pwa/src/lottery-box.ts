@@ -84,7 +84,7 @@ export class AlwatrLotteryBox extends LocalizeMixin(AlwatrSmartElement) {
       ></alwatr-lottery-form>`;
     }
     else if (this.submitted) {
-      return html`<span class="success">${message('information_saved')}</span>`;
+      return html`<span class="success">${message('form_submitted')}</span>`;
     }
     else {
       return html`${message('lottery_form_description')}`;
