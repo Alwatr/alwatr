@@ -135,7 +135,6 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
       ></alwatr-text-field>
       <alwatr-radio-group
         name="activity"
-        .form="${AlwatrLotteryForm.formId}"
         .options=${this._radioGroupOptions}
       ></alwatr-radio-group>
       <div class="button-container">

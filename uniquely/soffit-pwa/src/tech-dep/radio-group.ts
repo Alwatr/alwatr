@@ -75,9 +75,6 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
 
   name = this.getAttribute('name') ?? 'unknown';
 
-  @property({type: String})
-    form?: string;
-
   get value(): string {
     for (const inputElement of this.renderRoot.querySelectorAll('input')) {
       if (inputElement.checked) return inputElement.value;
