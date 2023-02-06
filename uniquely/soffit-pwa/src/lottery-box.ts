@@ -29,7 +29,7 @@ declare global {
 export class AlwatrLotteryBox extends LocalizeMixin(AlwatrSmartElement) {
   @state() iconBoxContent: IconBoxContent = {
     icon: 'gift-outline',
-    headline: message('lottery_form'),
+    headline: message('lottery_form_title'),
     elevated: 2,
   };
 
@@ -87,7 +87,7 @@ export class AlwatrLotteryBox extends LocalizeMixin(AlwatrSmartElement) {
       return html`<span class="success">${message('information_saved')}</span>`;
     }
     else {
-      return html`${message('lottery_form')}`;
+      return html`${message('lottery_form_title')}`;
     }
   }
 
