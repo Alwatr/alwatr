@@ -29,17 +29,6 @@ export const homePageContent: PageHomeContent = {
     target: 'download',
   },
 
-  // contact: {
-  //   elevated: 2,
-  //   highlight: true,
-  //   stated: true,
-  //   icon: 'call-outline',
-  //   flipRtl: true,
-  //   headline: 'تماس با ما',
-  //   description: 'دفتر مرکزی: ۰۹۱۵۵۵۹۹۶۷۴',
-  //   href: 'tel:+989155599674',
-  // },
-
   productList: [
     {
       icon: 'logo-microsoft',
@@ -72,6 +61,19 @@ export const homePageContent: PageHomeContent = {
       elevated: 2,
       highlight: true,
       stated: true,
+      icon: 'call-outline',
+      flipRtl: true,
+      headline: 'تماس با ما',
+      slot: html`
+        <div>دفتر مرکزی</div>
+        <div dir="ltr">0915 559 9674</div>
+      `,
+      href: 'tel:+989155599674',
+    },
+    {
+      elevated: 2,
+      highlight: true,
+      stated: true,
       icon: 'logo-instagram',
       headline: 'اینستاگرام',
       description: 'صفحه‌ی اینستاگرام بازرگانی سافیت',
@@ -96,6 +98,16 @@ export const homePageContent: PageHomeContent = {
       headline: 'لینکدین',
       description: 'صفحه‌ی لینکدین بازرگانی سافیت',
       href: 'https://www.linkedin.com/company/soffit-co',
+      target: '_blank',
+    },
+    {
+      elevated: 2,
+      highlight: true,
+      stated: true,
+      icon: 'logo-youtube',
+      headline: 'یوتیوب',
+      description: 'کانال یوتیوب بازرگانی سافیت',
+      href: 'https://youtube.com/@SOFFITCO',
       target: '_blank',
     },
     {
