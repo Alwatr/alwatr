@@ -120,7 +120,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
   }
 
   protected* _menuTemplate(): unknown {
-    if (this.content == null) return;
+    if (this.content == null) return nothing;
     yield this._boxTemplate(this.content.about);
     yield map(this.content.productList, this._boxTemplate);
     yield html`<alwatr-lottery-box></alwatr-lottery-box>`;
