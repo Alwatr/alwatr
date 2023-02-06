@@ -152,6 +152,8 @@ else {
 
 /*
   TODO:
+  - Input Config
+  - version
   - Workbox and sw
   - Res (all assets) hash
   - PostCSS css file
