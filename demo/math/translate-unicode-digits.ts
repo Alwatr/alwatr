@@ -1,4 +1,4 @@
-import {UnicodeDigits} from '@alwatr/math';
+import {UnicodeDigits, getDeviceUuid} from '@alwatr/math';
 
 const unicodeDigits = new UnicodeDigits('fa', 'all');
 
@@ -27,3 +27,6 @@ for (let i = count; i > 0; i--) {
 }
 
 console.log((count / (Date.now() - start)) * 1000);
+
+console.log('device-uuid', getDeviceUuid());
+console.log('device-uuid', getDeviceUuid());
