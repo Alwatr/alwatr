@@ -74,6 +74,7 @@ export class JobAddForm extends AlwatrSmartElement {
   };
 
   override render(): unknown {
+    this._logger.logMethod('render');
     return html`
       <ion-header>
         <ion-toolbar color="secondary">

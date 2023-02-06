@@ -86,7 +86,7 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
   }
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`
       <fieldset>
         <legend>${this.options?.title}</legend>

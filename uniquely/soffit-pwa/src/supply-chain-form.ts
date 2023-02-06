@@ -23,7 +23,7 @@ export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
   static override formId = 'supply-chain';
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`
       <alwatr-text-field
         name="name"

@@ -1,4 +1,4 @@
-import {customElement, html, state} from '@alwatr/element';
+import {customElement, html} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 
 import {AlwatrLotteryBox} from './lottery-box.js';

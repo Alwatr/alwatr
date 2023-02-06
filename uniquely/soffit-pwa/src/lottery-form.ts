@@ -1,4 +1,4 @@
-import {customElement, css, html, property, AlwatrSmartElement, state, LocalizeMixin} from '@alwatr/element';
+import {customElement, css, html, property, AlwatrSmartElement, LocalizeMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {commandTrigger} from '@alwatr/signal';
 
@@ -109,7 +109,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
   }
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`
       <alwatr-text-field
         name="code"

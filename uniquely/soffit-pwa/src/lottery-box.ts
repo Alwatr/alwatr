@@ -52,7 +52,7 @@ export class AlwatrLotteryBox extends LocalizeMixin(AlwatrSmartElement) {
   protected _box: AlwatrIconBox | null = null;
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`<alwatr-icon-box .content=${this._iconBoxContent} @click=${this._click}>
       ${this._boxContentTemplate()}
     </alwatr-icon-box>`;
