@@ -12,9 +12,9 @@ async function setForm(connection: AlwatrConnection): Promise<AlwatrServiceRespo
   connection.requireToken(config.nanoServer.accessToken);
   const params = connection.requireQueryParams<{form: string}>({form: 'string'});
   const remoteAddress = connection.incomingMessage.socket.remoteAddress ?? 'unknown';
-  const deviceId = connection.incomingMessage.headers['device-id'];
+  const clientId = connection.incomingMessage.headers['client-id'] ?? 'unknown';
 
-  if (!(typeof deviceId === 'string' && deviceId !== '')) {
+  if (!(typeof clientId === 'string' && clientId !== '')) {
     return {
       ok: false,
       statusCode: 401,
@@ -33,7 +33,7 @@ async function setForm(connection: AlwatrConnection): Promise<AlwatrServiceRespo
   const bodyJson = await connection.requireJsonBody<Form>();
   bodyJson.id = 'auto_increment';
   bodyJson.remoteAddress = remoteAddress;
-  bodyJson.deviceId = deviceId;
+  bodyJson.clientId = clientId;
 
   await storageClient.set(bodyJson, 'form-' + params.form);
 
