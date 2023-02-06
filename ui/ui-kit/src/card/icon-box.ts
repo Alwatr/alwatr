@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-export type IconBoxContent = {
+export interface IconBoxContent {
   icon?: string;
   headline: string;
   description?: string;
@@ -21,7 +21,7 @@ export type IconBoxContent = {
   stated?: boolean;
   preLine?: boolean;
   elevated?: number;
-};
+}
 
 /**
  * Alwatr standard icon button element.
