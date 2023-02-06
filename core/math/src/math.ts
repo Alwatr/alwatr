@@ -253,11 +253,13 @@ export const hex = (bytes: Uint8Array): string => {
   return str;
 };
 
+let clientId = globalThis.localStorage?.getItem('client-id');
 export const getClientId = (): string => {
-  let uuid = localStorage.getItem('client-id');
-  if (uuid == null) {
-    uuid = random.uuid;
-    localStorage.setItem('client-id', uuid);
+  if (clientId != null) {
+    return clientId;
   }
-  return uuid;
+  // else
+  clientId = random.uuid;
+  localStorage.setItem('client-id', clientId);
+  return clientId;
 };
