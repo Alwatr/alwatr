@@ -39,7 +39,7 @@ export class AlwatrSupplyChainBox extends AlwatrLotteryBox {
     }
 
     else {
-      return html`${message('supply_chain_form_title')}`;
+      return html`${message('supply_chain_form_description')}`;
     }
   }
 }
