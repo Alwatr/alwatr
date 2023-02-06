@@ -9,8 +9,6 @@ declare global {
 export type RadioOption = {label: string; value?: string}
 
 export type RadioGroupOptions = {
-  form: string;
-  name: string;
   title: string;
   radioGroup: Array<RadioOption>;
 };
@@ -75,6 +73,8 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
   @property({type: Object})
     options?: RadioGroupOptions;
 
+  name = this.getAttribute('name') ?? 'unknown';
+
   get value(): string {
     for (const inputElement of this.renderRoot.querySelectorAll('input')) {
       if (inputElement.checked) return inputElement.value;
@@ -98,7 +98,7 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
     return map(options.radioGroup, (radioItem, index) => {
       const id: string = 'radioInput' + index;
       return html`<div>
-        <input type="radio" id=${id} name=${options.name} value="${radioItem.value ?? radioItem.label}" />
+        <input type="radio" id=${id} name=${this.name} value="${radioItem.value ?? radioItem.label}" />
         <label for=${id}>${radioItem.label}</label>
       </div>`;
     });

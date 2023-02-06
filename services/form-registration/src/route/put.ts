@@ -1,3 +1,4 @@
+
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageClient} from '../lib/storage.js';
@@ -5,14 +6,23 @@ import {storageClient} from '../lib/storage.js';
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 import type {AlwatrDocumentObject} from '@alwatr/type';
 
-nanoServer.route('PUT', '/form/', setForm);
+nanoServer.route('PUT', '/form/', async (connection: AlwatrConnection): Promise<AlwatrServiceResponse> => {
+  logger.logMethod('put');
 
-async function setForm(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
-  logger.logMethod('setForm');
   connection.requireToken(config.nanoServer.accessToken);
-  const params = connection.requireQueryParams<{form: string}>({form: 'string'});
+  const params = connection.requireQueryParams<{formId: string}>({formId: 'string'});
+  const remoteAddress = connection.incomingMessage.socket.remoteAddress ?? 'unknown';
+  const clientId = connection.incomingMessage.headers['client-id'];
 
-  if (config.formList.indexOf(params.form) === -1) {
+  if (!clientId) {
+    return {
+      ok: false,
+      statusCode: 401,
+      errorCode: 'client_id_header_required',
+    };
+  }
+
+  if (config.formList.indexOf(params.formId) === -1) {
     return {
       ok: false,
       statusCode: 404,
@@ -21,12 +31,19 @@ async function setForm(connection: AlwatrConnection): Promise<AlwatrServiceRespo
   }
 
   const bodyJson = await connection.requireJsonBody<AlwatrDocumentObject>();
-  bodyJson.id = 'auto_increment';
 
-  await storageClient.set(bodyJson, 'form-' + params.form);
+  await storageClient.set(
+      {
+        ...bodyJson,
+        id: 'auto_increment',
+        remoteAddress: remoteAddress,
+        clientId: clientId,
+      },
+      'form-' + params.formId,
+  );
 
   return {
     ok: true,
     data: {},
   };
-}
+});

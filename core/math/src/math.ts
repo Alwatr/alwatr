@@ -253,11 +253,16 @@ export const hex = (bytes: Uint8Array): string => {
   return str;
 };
 
-export const getDeviceUuid = (): string => {
-  let uuid = localStorage.getItem('device-uuid');
-  if (uuid == null) {
-    uuid = random.uuid;
-    localStorage.setItem('device-uuid', uuid);
+let clientId: string | null = null;
+export const getClientId = (): string => {
+  if (clientId != null) {
+    return clientId;
   }
-  return uuid;
+  // else
+  clientId = localStorage.getItem('client-id');
+  if (clientId == null) {
+    clientId = random.uuid;
+    localStorage.setItem('client-id', clientId);
+  }
+  return clientId;
 };

@@ -27,8 +27,6 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
 
   get _radioGroupOptions(): RadioGroupOptions {
     return {
-      name: 'activity',
-      form: (this.constructor as typeof AlwatrLotteryForm).formId,
       title: message('activity_type'),
       radioGroup: [
         {label: message('tile_player')},
@@ -80,7 +78,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
 
     this.disabled = true;
 
-    const response = await commandTrigger.requestWithResponse<FormData, boolean>('form-submit', {
+    const response = await commandTrigger.requestWithResponse<FormData, boolean>('submit-form', {
       formId: (this.constructor as typeof AlwatrLotteryForm).formId,
       data: bodyJson,
     });
@@ -135,7 +133,10 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
         stated
         placeholder=${message('phone_number')}
       ></alwatr-text-field>
-      <alwatr-radio-group .options=${this._radioGroupOptions}></alwatr-radio-group>
+      <alwatr-radio-group
+        name="activity"
+        .options=${this._radioGroupOptions}
+      ></alwatr-radio-group>
       <div class="button-container">
         <alwatr-button outlined @click=${this.submit}>${message('submit_form')}</alwatr-button>
         <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>

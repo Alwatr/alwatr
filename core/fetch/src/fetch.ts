@@ -1,4 +1,5 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
+import {getClientId} from '@alwatr/math';
 
 import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type.js';
 import type {
@@ -35,6 +36,11 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
     options: FetchOptions,
 ): Promise<AlwatrServiceResponseSuccess<TData> | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>> {
   logger.logMethod('serviceRequest');
+
+  options.headers ??= {};
+  if (!options.headers['client-id']) {
+    options.headers['client-id'] = getClientId();
+  }
 
   let response: Response;
   try {
@@ -116,6 +122,7 @@ function _processOptions(options: FetchOptions): Required<FetchOptions> {
   options.retryDelay ??= 1_000;
   options.cacheStrategy ??= 'network_only';
   options.removeDuplicate ??= 'never';
+  options.headers ??= {};
 
   if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
     logger.incident('fetch', 'fetch_cache_strategy_ignore', 'Cache storage not support in this browser', {
@@ -142,17 +149,11 @@ function _processOptions(options: FetchOptions): Required<FetchOptions> {
 
   if (options.bodyJson != null) {
     options.body = JSON.stringify(options.bodyJson);
-    options.headers = {
-      ...options.headers,
-      'Content-Type': 'application/json',
-    };
+    options.headers['Content-Type'] = 'application/json';
   }
 
   if (options.token != null) {
-    options.headers = {
-      ...options.headers,
-      Authorization: `Bearer ${options.token}`,
-    };
+    options.headers.Authorization = `Bearer ${options.token}`;
   }
 
   return options as Required<FetchOptions>;
