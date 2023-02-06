@@ -4,19 +4,22 @@ import '@alwatr/icon';
 
 import {AlwatrSurface} from './surface.js';
 
+import type {StringifyableRecord} from '@alwatr/type';
+
+
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-icon-box': AlwatrIconBox;
   }
 }
 
-export interface IconBoxContent {
+export interface IconBoxContent extends StringifyableRecord {
   icon?: string;
   headline: string;
   description?: string;
   href?: string;
   flipRtl?: boolean;
-  target?: 'download' | '_blank';
+  target?: string;
   highlight?: boolean;
   stated?: boolean;
   preLine?: boolean;

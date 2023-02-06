@@ -1,6 +1,6 @@
 import {requestCommand, requestCommandWithResponse} from './core.js';
 
-import type {OmitFirstParam, Stringifyable} from '@alwatr/type';
+import type {OmitFirstParam, Stringifyable, StringifyableRecord} from '@alwatr/type';
 
 /**
  * Command trigger/request interface.
@@ -39,7 +39,7 @@ export const commandTrigger = {
    * const showDialog = commandTrigger.bind<ArgumentType, ReturnType>('show-dialog');
    * ```
    */
-  bind: <TArgument extends Record<string, Stringifyable>, TReturn extends Stringifyable>(commandId: string) =>({
+  bind: <TArgument extends StringifyableRecord, TReturn extends Stringifyable>(commandId: string) =>({
     /**
      * Command signal Id.
      */
