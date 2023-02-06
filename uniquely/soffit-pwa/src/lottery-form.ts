@@ -25,19 +25,21 @@ declare global {
 export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
   static formId = 'lottery';
 
-  @state() protected _radioGroupContent: RadioGroupOptions = {
-    name: 'activity',
-    form: (this.constructor as typeof AlwatrLotteryForm).formId,
-    title: message('activity_type'),
-    radioGroup: [
-      {label: message('tile_player')},
-      {label: message('tile_installer')},
-      {label: message('seller_shopkeeper')},
-      {label: message('contractor')},
-      {label: message('manufacturer')},
-      {label: message('other')},
-    ],
-  };
+  get _radioGroupOptions(): RadioGroupOptions {
+    return {
+      name: 'activity',
+      form: (this.constructor as typeof AlwatrLotteryForm).formId,
+      title: message('activity_type'),
+      radioGroup: [
+        {label: message('tile_player')},
+        {label: message('tile_installer')},
+        {label: message('seller_shopkeeper')},
+        {label: message('contractor')},
+        {label: message('manufacturer')},
+        {label: message('other')},
+      ],
+    };
+  }
 
   static override styles = css`
     :host {
@@ -133,7 +135,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
         stated
         placeholder=${message('phone_number')}
       ></alwatr-text-field>
-      <alwatr-radio-group .options=${this._radioGroupContent}></alwatr-radio-group>
+      <alwatr-radio-group .options=${this._radioGroupOptions}></alwatr-radio-group>
       <div class="button-container">
         <alwatr-button outlined @click=${this.submit}>${message('submit_form')}</alwatr-button>
         <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
