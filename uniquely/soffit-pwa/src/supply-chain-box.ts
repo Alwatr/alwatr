@@ -18,11 +18,15 @@ declare global {
  */
 @customElement('alwatr-supply-chain-box')
 export class AlwatrSupplyChainBox extends AlwatrLotteryBox {
-  @state() override iconBoxContent: IconBoxContent = {
-    icon: 'infinite-outline',
-    headline: message('supply_chain_form_title'),
-    elevated: 2,
-  };
+  protected override get _iconBoxContent(): IconBoxContent {
+    return {
+      icon: 'gift-outline',
+      headline: message('supply_chain_form_title'),
+      elevated: 2,
+      stated: !this.expanded,
+      highlight: !this.expanded && !this.submitted,
+    };
+  }
 
   protected override _boxContentTemplate(): unknown {
     if (this.expanded) {

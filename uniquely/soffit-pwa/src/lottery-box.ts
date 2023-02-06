@@ -27,12 +27,6 @@ declare global {
  */
 @customElement('alwatr-lottery-box')
 export class AlwatrLotteryBox extends LocalizeMixin(AlwatrSmartElement) {
-  @state() iconBoxContent: IconBoxContent = {
-    icon: 'gift-outline',
-    headline: message('lottery_form_title'),
-    elevated: 2,
-  };
-
   static override styles = css`
     :host {
       display: block;
@@ -59,14 +53,19 @@ export class AlwatrLotteryBox extends LocalizeMixin(AlwatrSmartElement) {
 
   override render(): unknown {
     super.render();
-    const content = {
-      ...this.iconBoxContent,
+    return html`<alwatr-icon-box .content=${this._iconBoxContent} @click=${this._click}>
+      ${this._boxContentTemplate()}
+    </alwatr-icon-box>`;
+  }
+
+  protected get _iconBoxContent(): IconBoxContent {
+    return {
+      icon: 'gift-outline',
+      headline: message('lottery_form_title'),
+      elevated: 2,
       stated: !this.expanded,
       highlight: !this.expanded && !this.submitted,
     };
-    return html`<alwatr-icon-box .content=${content} @click=${this._click}>
-      ${this._boxContentTemplate()}
-    </alwatr-icon-box>`;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
