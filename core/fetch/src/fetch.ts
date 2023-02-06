@@ -1,4 +1,5 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
+import {getClientId} from '@alwatr/math';
 
 import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type.js';
 import type {
@@ -38,7 +39,13 @@ export async function serviceRequest<TData = Record<string, unknown>, TMeta = Re
 
   let response: Response;
   try {
-    response = await fetch(options);
+    response = await fetch({
+      ...options,
+      headers: {
+        ...options.headers,
+        clientId: getClientId(),
+      },
+    });
   }
   catch (err) {
     logger.error('serviceRequest', (err as Error).message || 'fetch_failed', err, options);

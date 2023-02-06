@@ -1,6 +1,5 @@
 import {serviceRequest} from '@alwatr/fetch';
 import {message} from '@alwatr/i18n';
-import {getDeviceUuid} from '@alwatr/math';
 import {commandHandler} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator, type JsonSchema} from '@alwatr/validator';
@@ -48,9 +47,6 @@ commandHandler.define<FormData, boolean>('form-submit', async (form: FormData): 
         form: form.formId,
       },
       token: config.token,
-      headers: {
-        'device-id': getDeviceUuid(),
-      },
       bodyJson,
     });
   }
