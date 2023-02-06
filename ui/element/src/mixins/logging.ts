@@ -3,17 +3,29 @@ import {createLogger, type AlwatrLogger} from '@alwatr/logger';
 import type {LitElement, PropertyValues} from '../lit.js';
 import type {Constructor} from '@alwatr/type';
 
+let _lastAli = 0;
+
 export declare class LoggerMixinInterface extends LitElement {
+  /**
+   * Alwatr logger index!
+   *
+   * Element index for logger ;)
+   */
+  ali: number;
+
   protected _logger: AlwatrLogger;
 }
 
 export function LoggerMixin<T extends Constructor<LitElement>>(superClass: T): Constructor<LoggerMixinInterface> & T {
   class LoggerMixinClass extends superClass {
-    protected _logger = createLogger(`<${this.tagName.toLowerCase()}>`);
+    ali: number;
+    protected _logger;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(...args: any[]) {
       super(...args);
+      this.ali = ++_lastAli;
+      this._logger = createLogger(`<${this.tagName.toLowerCase()}-${this.ali}>`);
       this._logger.logMethod('constructor');
     }
 
