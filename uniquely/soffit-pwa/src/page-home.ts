@@ -1,5 +1,5 @@
-import {customElement, AlwatrSmartElement, css, html, map, ifDefined, state, DirectionMixin} from '@alwatr/element';
-import {localeContextConsumer, message, setLocale} from '@alwatr/i18n';
+import {customElement, AlwatrSmartElement, css, html, map, ifDefined, state} from '@alwatr/element';
+import {localeContextConsumer, setLocale} from '@alwatr/i18n';
 import {contextConsumer} from '@alwatr/signal';
 
 import '@alwatr/ui-kit/card/icon-box.js';
@@ -27,7 +27,7 @@ declare global {
  * Alwatr Demo Home Page
  */
 @customElement('alwatr-page-home')
-export class AlwatrPageHome extends DirectionMixin(AlwatrSmartElement) {
+export class AlwatrPageHome extends AlwatrSmartElement {
   static override styles = css`
     :host {
       display: block;
