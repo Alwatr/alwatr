@@ -1,9 +1,10 @@
+
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageClient} from '../lib/storage.js';
 
-import type {RecordItem} from '../type.js';
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
+import type {AlwatrDocumentObject} from '@alwatr/type';
 
 nanoServer.route('PUT', '/form/', async (connection: AlwatrConnection): Promise<AlwatrServiceResponse> => {
   logger.logMethod('put');
@@ -29,12 +30,17 @@ nanoServer.route('PUT', '/form/', async (connection: AlwatrConnection): Promise<
     };
   }
 
-  const bodyJson = await connection.requireJsonBody<RecordItem>();
-  bodyJson.id = 'auto_increment';
-  bodyJson.remoteAddress = remoteAddress;
-  bodyJson.clientId = clientId;
+  const bodyJson = await connection.requireJsonBody<AlwatrDocumentObject>();
 
-  await storageClient.set(bodyJson, 'form-' + params.form);
+  await storageClient.set(
+      {
+        ...bodyJson,
+        id: 'auto_increment',
+        remoteAddress: remoteAddress,
+        clientId: clientId,
+      },
+      'form-' + params.form,
+  );
 
   return {
     ok: true,
