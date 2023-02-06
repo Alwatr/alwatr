@@ -20,7 +20,7 @@ declare global {
 export class AlwatrSupplyChainBox extends AlwatrLotteryBox {
   @state() override iconBoxContent: IconBoxContent = {
     icon: 'infinite-outline',
-    headline: message('supply_chain_form'),
+    headline: message('supply_chain_form_title'),
     elevated: 2,
   };
 
@@ -39,7 +39,7 @@ export class AlwatrSupplyChainBox extends AlwatrLotteryBox {
     }
 
     else {
-      return html`${message('supply_chain_form')}`;
+      return html`${message('supply_chain_form_title')}`;
     }
   }
 }

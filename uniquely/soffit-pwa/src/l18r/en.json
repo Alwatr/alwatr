@@ -8,13 +8,13 @@
     "invalid_form_data": "The form information is not correct.",
     "check_network_connection": "Please check internet, and send again.",
 
-    "lottery_number": "Lottery number",
-    "first_and_last_name": "First/Last Name",
+    "lottery_code": "Lottery number",
+    "full_name": "First/Last Name",
     "phone_number": "Phone number",
-    "send_form": "Send form",
+    "submit_form": "Submit",
     "cancel": "Cancel",
-    "lottery_form": "Participate in the lottery",
-    "supply_chain_form": "Supply Chain Form",
+    "lottery_form_title": "Participate in the lottery",
+    "supply_chain_form_title": "Supply Chain Form",
     "information_saved": "Your information has been successfully saved.",
     "activity_area": "Activity area",
 

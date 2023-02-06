@@ -31,7 +31,7 @@ export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
         outlined
         active-outline
         stated
-        placeholder=${message('first_and_last_name')}
+        placeholder=${message('full_name')}
       ></alwatr-text-field>
       <alwatr-text-field
         name="phone"
@@ -50,7 +50,7 @@ export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
         placeholder=${message('activity_area')}
       ></alwatr-text-field>
       <div class="button-container">
-        <alwatr-button outlined @click=${this.submit}>${message('send_form')}</alwatr-button>
+        <alwatr-button outlined @click=${this.submit}>${message('submit_form')}</alwatr-button>
         <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
       </div>
     `;

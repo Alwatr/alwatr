@@ -115,7 +115,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
         outlined
         active-outline
         stated
-        placeholder=${message('lottery_number')}
+        placeholder=${message('lottery_code')}
       ></alwatr-text-field>
       <alwatr-text-field
         name="name"
@@ -123,7 +123,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
         outlined
         active-outline
         stated
-        placeholder=${message('first_and_last_name')}
+        placeholder=${message('full_name')}
       ></alwatr-text-field>
       <alwatr-text-field
         name="phone"
@@ -135,7 +135,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
       ></alwatr-text-field>
       <alwatr-radio-group .options=${this._radioGroupContent}></alwatr-radio-group>
       <div class="button-container">
-        <alwatr-button outlined @click=${this.submit}>${message('send_form')}</alwatr-button>
+        <alwatr-button outlined @click=${this.submit}>${message('submit_form')}</alwatr-button>
         <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
       </div>
     `;
