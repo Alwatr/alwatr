@@ -94,12 +94,11 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
 
   protected _optionsTemplate(): unknown {
     const options = this.options;
-    const name = this.name;
-    if (options == null || name == null) return nothing;
+    if (options == null) return nothing;
     return map(options.radioGroup, (radioItem, index) => {
       const id: string = 'radioInput' + index;
       return html`<div>
-        <input type="radio" id=${id} name=${name} value="${radioItem.value ?? radioItem.label}" />
+        <input type="radio" id=${id} name=${this.name} value="${radioItem.value ?? radioItem.label}" />
         <label for=${id}>${radioItem.label}</label>
       </div>`;
     });
