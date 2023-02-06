@@ -15,10 +15,9 @@
     "cancel": "Cancel",
     "lottery_form_title": "Participate in the lottery",
     "supply_chain_form_title": "Supply Chain Form",
-    "information_saved": "Your information has been successfully saved.",
+    "form_submitted": "Your information has been successfully saved.",
     "activity_area": "Activity area",
-
-    "activity_type": "activity type",
+    "activity_type": "Activity type",
     "tile_player": "Tile player",
     "tile_installer": "Tile installer",
     "seller_shopkeeper": "Seller and shopkeeper",
