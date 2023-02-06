@@ -2,6 +2,7 @@ import {customElement, css, html, property, AlwatrSmartElement, state, LocalizeM
 import {message} from '@alwatr/i18n';
 import {commandTrigger} from '@alwatr/signal';
 
+import type {RadioGroupOptions} from './tech-dep/radio-group.js';
 import type {FormData} from './type.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
@@ -24,7 +25,9 @@ declare global {
 export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
   static formId = 'lottery';
 
-  @state() protected _radioGroupContent = {
+  @state() protected _radioGroupContent: RadioGroupOptions = {
+    name: 'activity',
+    form: (this.constructor as typeof AlwatrLotteryForm).formId,
     title: message('activity_type'),
     radioGroup: [
       {label: message('tile_player')},
@@ -130,7 +133,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
         stated
         placeholder=${message('phone_number')}
       ></alwatr-text-field>
-      <alwatr-radio-group name="activity" .content=${this._radioGroupContent}></alwatr-radio-group>
+      <alwatr-radio-group .options=${this._radioGroupContent}></alwatr-radio-group>
       <div class="button-container">
         <alwatr-button outlined @click=${this.submit}>${message('send_form')}</alwatr-button>
         <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
