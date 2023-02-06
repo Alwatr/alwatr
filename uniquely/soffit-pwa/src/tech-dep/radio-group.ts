@@ -1,4 +1,4 @@
-import {customElement, css, html, map, AlwatrDummyElement, property} from '@alwatr/element';
+import {customElement, css, html, map, AlwatrDummyElement, property, nothing} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -6,11 +6,13 @@ declare global {
   }
 }
 
-export type RadioContent = {label: string; value?: string}
+export type RadioOption = {label: string; value?: string}
 
-export type RadioGroupContent = {
-  radioGroup: Array<RadioContent>;
+export type RadioGroupOptions = {
+  form: string;
+  name: string;
   title: string;
+  radioGroup: Array<RadioOption>;
 };
 
 /**
@@ -71,9 +73,7 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
   `;
 
   @property({type: Object})
-    content?: RadioGroupContent;
-
-  name = this.getAttribute('name') ?? 'unknown';
+    options?: RadioGroupOptions;
 
   get value(): string {
     for (const inputElement of this.renderRoot.querySelectorAll('input')) {
@@ -84,23 +84,22 @@ export class AlwatrFieldSet extends AlwatrDummyElement {
 
   override render(): unknown {
     super.render();
-
-    if (this.content == null) return;
-    const content = this.content;
     return html`
       <fieldset>
-        <legend>${content.title}</legend>
-        ${this._inputTemplate(content.radioGroup)}
+        <legend>${this.options?.title}</legend>
+        ${this._optionsTemplate()}
       </fieldset>
     `;
   }
 
-  protected _inputTemplate(radioGroupContent: Array<RadioContent>): unknown {
-    return map(radioGroupContent, (item, index) => {
+  protected _optionsTemplate(): unknown {
+    const options = this.options;
+    if (options == null) return nothing;
+    return map(options.radioGroup, (radioItem, index) => {
       const id: string = 'radioInput' + index;
       return html`<div>
-        <input type="radio" id=${id} name=${this.name} value="${item.value ?? item.label}" />
-        <label for=${id}>${item.label}</label>
+        <input type="radio" id=${id} name=${options.name} value="${radioItem.value ?? radioItem.label}" />
+        <label for=${id}>${radioItem.label}</label>
       </div>`;
     });
   }
