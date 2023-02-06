@@ -37,7 +37,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'سقف کاذب',
-      description: 'انواع تایل‌ها برا زیبا‌تر شدن سقف ها شما.',
+      description: 'انواع تایل‌ها برا زیباتر شدن سقف ها شما.',
       wide: true,
     },
     {
@@ -52,7 +52,7 @@ export const homePageContent: PageHomeContent = {
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'سازه‌ و‌ اتصالات',
+      headline: 'سازه و اتصالات',
     },
   ],
 
@@ -65,7 +65,7 @@ export const homePageContent: PageHomeContent = {
       flipRtl: true,
       headline: 'تماس با ما',
       slot: `
-        <div>دفتر مرکزی</div>
+        <div>تلفن ارتباط مستقیم</div>
         <div dir="ltr">${replaceNumber('0915 559 9674')}</div>
       `,
       href: 'tel:+989155599674',
@@ -135,7 +135,7 @@ export const homePageContent: PageHomeContent = {
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'شعبه‌مرکزی',
+      headline: 'شعبه مرکزی',
       slot: `
         <div>دفتر مرکزی</div>
         <div dir="ltr">${replaceNumber('0915 301 4404')}</div>
@@ -179,7 +179,7 @@ export const homePageContent: PageHomeContent = {
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'آذربایجان‌غربی',
+      headline: 'آذربایجان غربی',
       slot: `
         <div>آقای صفایی</div>
         <div dir="ltr">${replaceNumber('0914 381 3925')}</div>
@@ -190,7 +190,7 @@ export const homePageContent: PageHomeContent = {
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'خراسان‌جنوبی',
+      headline: 'خراسان جنوبی',
       slot: `
         <div>آقای محبی</div>
         <div dir="ltr">${replaceNumber('0915 506 9208')}</div>
@@ -245,7 +245,7 @@ export const homePageContent: PageHomeContent = {
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'خراسان‌رضوی',
+      headline: 'خراسان رضوی',
       slot: `
         <div>آقای محبی</div>
         <div dir="ltr">${replaceNumber('0915 506 9208')}</div>
@@ -256,7 +256,7 @@ export const homePageContent: PageHomeContent = {
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'خراسان‌شمالی',
+      headline: 'خراسان شمالی',
       slot: `
         <div>آقای محبی</div>
         <div dir="ltr">${replaceNumber('0915 506 9208')}</div>
@@ -333,7 +333,7 @@ export const homePageContent: PageHomeContent = {
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'چهارمحال‌ و‌ بختیاری',
+      headline: 'چهارمحال و بختیاری',
       slot: `
         <div>آقای فروزنده</div>
         <div dir="ltr">${replaceNumber('0913 283 9193')}</div>
@@ -344,9 +344,9 @@ export const homePageContent: PageHomeContent = {
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'کهگیلویه‌ و‌ بویراحمد',
+      headline: 'کهگیلویه و بویراحمد',
       slot: `
-        <div>آقای عظیمی‌فر</div>
+        <div>آقای عظیمی فر</div>
         <div dir="ltr">${replaceNumber('0917 432 6132')}</div>
       `,
       href: 'tel:+989174326132',
@@ -355,7 +355,7 @@ export const homePageContent: PageHomeContent = {
       elevated: 2,
       highlight: true,
       stated: true,
-      headline: 'آذربایجان‌شرقی',
+      headline: 'آذربایجان شرقی',
       slot: `
         <div>آقای سلیمانی</div>
         <div dir="ltr">${replaceNumber('0935 707 1904')}</div>
