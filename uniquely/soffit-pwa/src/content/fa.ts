@@ -62,7 +62,7 @@ export const homePageContent: PageHomeContent = {
       icon: 'call-outline',
       flipRtl: true,
       headline: 'تماس با ما',
-      slot: html`
+      slot: `
         <div>دفتر مرکزی</div>
         <div dir="ltr">0915 559 9674</div>
       `,
