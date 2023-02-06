@@ -13,8 +13,10 @@
     "phone_number": "شماره تلفن",
     "submit_form": "ارسال فرم",
     "cancel": "انصراف",
-    "lottery_form_title": "فرم شرکت در قرعه‌کشی",
-    "supply_chain_form_title": "فرم زنجیره تامین",
+    "lottery_form_title": "قرعه‌کشی",
+    "lottery_form_description": "فرم شرکت در قرعه‌کشی ماهانه سافیت",
+    "supply_chain_form_title": "زنجیره تامین",
+    "supply_chain_form_description": "فرم ثبت نام در زنجیره تامین محصولات ساختمانی",
     "information_saved": "اطلاعات شما با موفقیت ذخیره شد.",
     "activity_area": "حوزه فعالیت",
 
