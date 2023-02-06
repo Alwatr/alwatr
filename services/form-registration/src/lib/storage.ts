@@ -2,6 +2,6 @@ import {AlwatrStorageClient} from '@alwatr/storage-client';
 
 import {config} from '../config.js';
 
-import type {AlwatrDocumentObject} from '@alwatr/type';
+import type {Form} from '../type.js';
 
-export const storageClient = new AlwatrStorageClient<AlwatrDocumentObject>(config.storage);
+export const storageClient = new AlwatrStorageClient<Form>(config.storage);
