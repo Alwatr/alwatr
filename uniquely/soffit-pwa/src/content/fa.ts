@@ -26,7 +26,7 @@ export const homePageContent: PageHomeContent = {
   },
 
   catalogue: {
-    elevated: 2,
+    elevated: 1,
     highlight: true,
     stated: true,
     icon: 'cloud-download-outline',
@@ -40,7 +40,7 @@ export const homePageContent: PageHomeContent = {
     {
       icon: 'logo-microsoft',
       // icon: 'grid-outline',
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'سقف کاذب',
@@ -49,14 +49,14 @@ export const homePageContent: PageHomeContent = {
     },
     {
       icon: 'bulb-outline',
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'روشنایی',
     },
     {
       icon: 'git-commit-outline',
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'سازه و اتصالات',
@@ -65,7 +65,7 @@ export const homePageContent: PageHomeContent = {
 
   socialList: [
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       icon: 'call-outline',
@@ -78,7 +78,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989155599674',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       icon: 'logo-instagram',
@@ -88,7 +88,7 @@ export const homePageContent: PageHomeContent = {
       target: '_blank',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       icon: 'send-outline',
@@ -98,7 +98,7 @@ export const homePageContent: PageHomeContent = {
       target: '_blank',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       icon: 'logo-linkedin',
@@ -108,7 +108,7 @@ export const homePageContent: PageHomeContent = {
       target: '_blank',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       icon: 'logo-youtube',
@@ -118,7 +118,7 @@ export const homePageContent: PageHomeContent = {
       target: '_blank',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       icon: 'videocam-outline',
@@ -139,7 +139,7 @@ export const homePageContent: PageHomeContent = {
       wide: true,
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'شعبه مرکزی',
@@ -150,7 +150,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989153014404',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'کردستان',
@@ -161,7 +161,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989143813925',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'گلستان',
@@ -172,7 +172,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989117505027',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'ایلام',
@@ -183,7 +183,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989183428903',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'آذربایجان غربی',
@@ -194,7 +194,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989143813925',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'خراسان جنوبی',
@@ -205,7 +205,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989155069208',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'زاهدان',
@@ -216,7 +216,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989155409620',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'کرمانشاه',
@@ -227,7 +227,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989185590431',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'کرمان',
@@ -238,7 +238,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989135631711',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'همدان',
@@ -249,7 +249,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989185540527',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'خراسان رضوی',
@@ -260,7 +260,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989155069208',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'خراسان شمالی',
@@ -271,7 +271,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989155069208',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'اصفهان',
@@ -282,7 +282,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989133391828',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'سمنان',
@@ -293,7 +293,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989192760806',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'کیش',
@@ -304,7 +304,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989903498425',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'زنجان',
@@ -315,7 +315,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989120676503',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'اردبیل',
@@ -326,7 +326,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989141504203',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'بندرعباس',
@@ -337,7 +337,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989303800134',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'چهارمحال و بختیاری',
@@ -348,7 +348,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989132839193',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'کهگیلویه و بویراحمد',
@@ -359,7 +359,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989174326132',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'آذربایجان شرقی',
@@ -370,7 +370,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989357071904',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'شیراز',
@@ -381,7 +381,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989171132262',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'خوزستان',
@@ -392,7 +392,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989166033612',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'ورامین',

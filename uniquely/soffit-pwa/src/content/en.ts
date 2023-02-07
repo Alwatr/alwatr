@@ -24,7 +24,7 @@ export const homePageContent: PageHomeContent = {
   },
 
   catalogue: {
-    elevated: 2,
+    elevated: 1,
     highlight: true,
     stated: true,
     icon: 'cloud-download-outline',
@@ -38,7 +38,7 @@ export const homePageContent: PageHomeContent = {
     {
       icon: 'logo-microsoft',
       // icon: 'grid-outline',
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'Ceiling Tile',
@@ -47,14 +47,14 @@ export const homePageContent: PageHomeContent = {
     },
     {
       icon: 'bulb-outline',
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'Lighting',
     },
     {
       icon: 'git-commit-outline',
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       headline: 'Structure & connections',
@@ -63,7 +63,7 @@ export const homePageContent: PageHomeContent = {
 
   socialList: [
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       icon: 'call-outline',
@@ -76,7 +76,7 @@ export const homePageContent: PageHomeContent = {
       href: 'tel:+989155599674',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       icon: 'logo-instagram',
@@ -86,7 +86,7 @@ export const homePageContent: PageHomeContent = {
       target: '_blank',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       icon: 'send-outline',
@@ -96,7 +96,7 @@ export const homePageContent: PageHomeContent = {
       target: '_blank',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       icon: 'logo-linkedin',
@@ -106,7 +106,7 @@ export const homePageContent: PageHomeContent = {
       target: '_blank',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       icon: 'logo-youtube',
@@ -116,7 +116,7 @@ export const homePageContent: PageHomeContent = {
       target: '_blank',
     },
     {
-      elevated: 2,
+      elevated: 1,
       highlight: true,
       stated: true,
       icon: 'videocam-outline',
