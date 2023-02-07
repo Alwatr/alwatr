@@ -29,7 +29,7 @@ export class AlwatrSnackbar extends AlwatrSurface {
 
         display: flex;
         align-items: center;
-        padding: var(--sys-spacing-track);
+        padding: calc(0.5 * var(--sys-spacing-track)) var(--sys-spacing-track);
         gap: var(--sys-spacing-track);
         position: fixed;
         bottom: calc(2 * var(--sys-spacing-track));
@@ -39,6 +39,7 @@ export class AlwatrSnackbar extends AlwatrSurface {
         border-radius: var(--sys-radius-xsmall);
 
         box-sizing: border-box;
+        min-height: calc(6 * var(--sys-spacing-track));
         max-width: calc(var(--sys-breakpoint-handset) - 8 * var(--sys-spacing-track));
         /* margin: 0 auto; */
 
