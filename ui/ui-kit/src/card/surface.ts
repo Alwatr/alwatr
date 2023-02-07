@@ -59,6 +59,7 @@ export class AlwatrSurface extends AlwatrDummyElement {
       transition-property: opacity;
       transition-duration: var(--sys-motion-duration-small);
       transition-timing-function: var(--sys-motion-easing-normal);
+      -webkit-tap-highlight-color: transparent;
     }
 
     :host([outlined]) {
@@ -138,7 +139,7 @@ export class AlwatrSurface extends AlwatrDummyElement {
     :host([disabled]) {
       pointer-events: none;
       box-shadow: var(--sys-surface-elevation-0) !important;
-      color: var(--sys-color-on-surface-variant) !important;
+      color: var(--sys-color-on-surface) !important;
       opacity: var(--sys-surface-disabled-opacity);
     }
 

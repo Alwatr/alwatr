@@ -12,12 +12,6 @@ declare global {
 /**
  * Alwatr standard icon button element.
  *
- * @prop {String} icon
- * @prop {String} urlPrefix
- * @prop {Boolean} flipRtl
- *
- * @attr {String} icon
- * @attr {String} url-prefix
  * @attr {Boolean} flip-rtl
  */
 @customElement('alwatr-icon-button')
@@ -27,30 +21,28 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
     css`
       :host {
         --_surface-color-on: var(--sys-color-on-surface-variant-hsl);
-        display: inline-flex;
+        --_surface-state-color: var(--sys-color-on-surface-variant-hsl);
+
+        display: inline-block;
+        padding: calc(0.5 * var(--sys-spacing-track));
+        font-size: calc(3 * var(--sys-spacing-track)); /* icon size */
+        background-image: none;
+        background-color: hsla(var(--_surface-state-color), var(--_surface-state-opacity));
+        background-clip: content-box;
+        border-radius: 50%;
+        box-shadow: none;
+
         user-select: none;
-        align-items: center;
-        justify-content: center;
+        cursor: pointer;
+        align-self: center;
         vertical-align: middle;
         flex-grow: 0;
         flex-shrink: 0;
-
-        cursor: pointer;
-        background-color: transparent;
-        width: calc(5 * var(--sys-spacing-track));
-        height: calc(5 * var(--sys-spacing-track));
-        border-radius: 50%;
-        outline: 0;
-        overflow: hidden;
-        overflow: clip;
-        z-index: var(--sys-zindex-default);
-        -webkit-tap-highlight-color: transparent;
-        box-shadow: none;
       }
 
       alwatr-icon {
-        width: calc(3 * var(--sys-spacing-track));
-        height: calc(3 * var(--sys-spacing-track));
+        display: block;
+        padding: var(--sys-spacing-track);
       }
     `,
   ];
@@ -58,24 +50,28 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
   @property()
     icon?: string;
 
-  @property({attribute: 'url-prefix'})
-    urlPrefix?: string;
-
   @property({type: Boolean, attribute: 'flip-rtl'})
     flipRtl = false;
 
   override connectedCallback(): void {
-    super.connectedCallback();
     this.setAttribute('stated', '');
+    super.connectedCallback();
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    super.render();
     return html`<alwatr-icon
-      part="icon"
-      ?flip-rtl=${this.flipRtl}
       .name=${this.icon}
-      .urlPrefix=${this.urlPrefix}
+      ?flip-rtl=${this.flipRtl}
     ></alwatr-icon>`;
   }
 }
+
+/*
+  TODO:
+    1. Filled icon button
+    2. Filled tonal icon button
+    3. Outlined icon button
+    4. toggle/selected mode
+    https://m3.material.io/components/icon-buttons/specs
+*/
