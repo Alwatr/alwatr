@@ -2,7 +2,7 @@ import {css, html, customElement, property, nothing, type PropertyValues, map} f
 
 import {AlwatrSurface} from '../card/surface.js';
 
-import '@alwatr/ui-kit/button/icon-button.js';
+import '../button/icon-button.js';
 
 import type {IconButtonContent} from '../button/icon-button.js';
 import type {StringifyableRecord} from '@alwatr/type';
