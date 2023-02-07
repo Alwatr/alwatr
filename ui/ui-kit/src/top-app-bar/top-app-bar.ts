@@ -31,64 +31,14 @@ export class AlwatrTopAppBar extends AlwatrSurface {
     AlwatrSurface.styles,
     css`
       :host {
-        color: var(--sys-color-surface);
         display: block;
         padding: var(--sys-spacing-track) calc(0.5 * var(--sys-spacing-track));
         z-index: var(--sys-zindex-sticky);
+        user-select: none;
       }
 
       .row {
         display: flex;
-      }
-
-      .title {
-        color: var(--sys-color-on-surface);
-        flex-grow: 1;
-        font-family: var(--sys-typescale-title-large-font-family-name);
-        font-weight: var(--sys-typescale-title-large-font-weight);
-        font-size: var(--sys-typescale-title-large-font-size);
-        letter-spacing: var(--sys-typescale-title-large-letter-spacing);
-        /* line-height: var(--sys-typescale-title-large-line-height); */
-        line-height: calc(6 * var(--sys-spacing-track) - 0.2em);
-      }
-
-      :host([type='center']) {
-        text-align: center;
-      }
-
-      :host([type='medium'][type='large']) .title {
-        display: none;
-      }
-
-      .headline {
-        color: var(--sys-color-on-surface);
-      }
-
-      :host([type='medium']) .headline {
-        padding: 0 calc(2 * var(--sys-spacing-track))
-          calc(2.5 * var(--sys-spacing-track)) calc(2 * var(--sys-spacing-track));
-        font-family: var(--sys-typescale-headline-small-font-family-name);
-        font-weight: var(--sys-typescale-headline-small-font-weight);
-        font-size: var(--sys-typescale-headline-small-font-size);
-        letter-spacing: var(--sys-typescale-headline-small-letter-spacing);
-        line-height: var(--sys-typescale-headline-small-line-height);
-        /* line-height: calc(6 * var(--sys-spacing-track) - 0.2em); */
-        }
-
-        :host([type='large']) .headline {
-          padding: 0 calc(2 * var(--sys-spacing-track))
-            calc(3.5 * var(--sys-spacing-track)) calc(2 * var(--sys-spacing-track));
-
-          font-family: var(--sys-typescale-headline-medium-font-family-name);
-          font-weight: var(--sys-typescale-headline-medium-font-weight);
-          font-size: var(--sys-typescale-headline-medium-font-size);
-          letter-spacing: var(--sys-typescale-headline-medium-letter-spacing);
-          line-height: var(--sys-typescale-headline-medium-line-height);
-          /* line-height: calc(6 * var(--sys-spacing-track) - 0.2em); */
-      }
-
-      :host([type='small'][type='center']) .headline {
-        display: none;
       }
 
       .leading-icon {
@@ -97,6 +47,63 @@ export class AlwatrTopAppBar extends AlwatrSurface {
 
       .trailing-icons {
         --comp-icon-button-color-hsl: var(--sys-color-on-surface-variant-hsl);
+      }
+
+      .title {
+        flex-grow: 1;
+      }
+
+      :host([type=small]) .title,
+      :host([type=center]) .title {
+        padding: 0 calc(0.5 * var(--sys-spacing-track));
+        font-family: var(--sys-typescale-title-large-font-family-name);
+        font-weight: var(--sys-typescale-title-large-font-weight);
+        font-size: var(--sys-typescale-title-large-font-size);
+        letter-spacing: var(--sys-typescale-title-large-letter-spacing);
+        /* line-height: var(--sys-typescale-title-large-line-height); */
+        line-height: calc(6 * var(--sys-spacing-track) - 0.364em); /* 8/22 */
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        overflow: clip;
+      }
+
+      :host([type=center]) .title {
+        text-align: center;
+      }
+
+      .headline { /* medium | large */
+        display: none;
+      }
+
+      :host([type=medium]) {
+        padding-bottom: calc(3 * var(--sys-spacing-track));
+      }
+      :host([type=large]) {
+        padding-bottom: calc(3.5 * var(--sys-spacing-track));
+      }
+
+      :host([type=medium]) .headline,
+      :host([type=large]) .headline {
+        display: block;
+        padding: 0 calc(1.5 * var(--sys-spacing-track));
+      }
+
+      :host([type=medium]) .headline {
+        font-family: var(--sys-typescale-headline-small-font-family-name);
+        font-weight: var(--sys-typescale-headline-small-font-weight);
+        font-size: var(--sys-typescale-headline-small-font-size);
+        letter-spacing: var(--sys-typescale-headline-small-letter-spacing);
+        line-height: var(--sys-typescale-headline-small-line-height);
+      }
+
+      :host([type=large]) .headline {
+        margin-top: calc(4 * var(--sys-spacing-track));
+        font-family: var(--sys-typescale-headline-medium-font-family-name);
+        font-weight: var(--sys-typescale-headline-medium-font-weight);
+        font-size: var(--sys-typescale-headline-medium-font-size);
+        letter-spacing: var(--sys-typescale-headline-medium-letter-spacing);
+        line-height: var(--sys-typescale-headline-medium-line-height);
       }
     `,
   ];
