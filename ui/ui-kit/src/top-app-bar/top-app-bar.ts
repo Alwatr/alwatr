@@ -142,12 +142,9 @@ export class AlwatrTopAppBar extends DirectionMixin(SignalMixin(AlwatrSurface)) 
       <div class="row">
         <alwatr-icon-button class="leading-icon" .content=${this.content.startIcon}></alwatr-icon-button>
         <div class="title">${title}</div>
-        ${map(
-      this.content.endIconList,
-      (iconContent) => html`
-            <alwatr-icon-button class="trailing-icons" .content=${iconContent}></alwatr-icon-button>
-          `,
-  )}
+        ${map(this.content.endIconList, (iconContent) => html`
+          <alwatr-icon-button class="trailing-icons" .content=${iconContent}></alwatr-icon-button>
+        `)}
       </div>
       <div class="headline">${headline}</div>
     `;
