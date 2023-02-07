@@ -99,7 +99,7 @@ export class AlwatrIconBox extends AlwatrSurface {
     `,
   ];
 
-  @property({type: Object})
+  @property({type: Object, attribute: false})
     content?: IconBoxContent;
 
   protected override update(changedProperties: PropertyValues<this>): void {

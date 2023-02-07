@@ -1,12 +1,33 @@
-import {css, customElement, html, property} from '@alwatr/element';
+import {css, customElement, html, property, type PropertyValues} from '@alwatr/element';
+import {eventTrigger} from '@alwatr/signal';
+
+import {AlwatrSurface} from '../card/surface.js';
+
+import type {StringifyableRecord, ClickSignalType} from '@alwatr/type';
 
 import '@alwatr/icon';
-import {AlwatrSurface} from '../card/surface.js';
 
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-icon-button': AlwatrStandardIconButton;
   }
+}
+
+export interface IconButtonContent extends StringifyableRecord {
+  /**
+   * Icon name.
+   */
+  icon: string;
+
+  /**
+   * Unique name for identify click event over signal.
+   */
+  clickSignalId?: string;
+
+  /**
+   * Flip icon on rtl
+   */
+  flipRtl?: true;
 }
 
 /**
@@ -47,23 +68,47 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
     `,
   ];
 
-  @property()
-    icon?: string;
+  @property({type: Object, attribute: false})
+    content?: IconButtonContent;
 
-  @property({type: Boolean, attribute: 'flip-rtl'})
-    flipRtl = false;
+  constructor() {
+    super();
+    this._click = this._click.bind(this);
+  }
 
   override connectedCallback(): void {
     this.setAttribute('stated', '');
     super.connectedCallback();
+    this.addEventListener('click', this._click);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('click', this._click);
+  }
+
+  protected override shouldUpdate(changedProperties: PropertyValues<this>): boolean {
+    return super.shouldUpdate(changedProperties) && this.content != null;
   }
 
   override render(): unknown {
-    super.render();
-    return html`<alwatr-icon
-      .name=${this.icon}
-      ?flip-rtl=${this.flipRtl}
-    ></alwatr-icon>`;
+    this._logger.logMethod('render');
+    if (this.content == null) return;
+    return html`<alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>`;
+  }
+
+  protected _click(event: MouseEvent): void {
+    const signalId = this.content?.clickSignalId;
+    this._logger.logMethodArgs('_click', {signalId});
+    if (signalId) {
+      eventTrigger.dispatch<ClickSignalType>(signalId, {
+        x: event.clientX,
+        y: event.clientY,
+        altKey: event.altKey,
+        ctrlKey: event.ctrlKey,
+        metaKey: event.metaKey,
+      });
+    }
   }
 }
 
