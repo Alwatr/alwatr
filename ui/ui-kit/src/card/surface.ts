@@ -139,7 +139,7 @@ export class AlwatrSurface extends AlwatrDummyElement {
     :host([disabled]) {
       pointer-events: none;
       box-shadow: var(--sys-surface-elevation-0) !important;
-      color: var(--sys-color-on-surface-variant) !important;
+      color: var(--sys-color-on-surface) !important;
       opacity: var(--sys-surface-disabled-opacity);
     }
 

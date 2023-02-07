@@ -13,8 +13,6 @@ declare global {
  * Alwatr standard icon button element.
  *
  * @attr {Boolean} flip-rtl
- *
- * @cssprop {String} [--comp-icon-button-color-hsl=var(--sys-color-on-surface-variant-hsl)]
  */
 @customElement('alwatr-icon-button')
 export class AlwatrStandardIconButton extends AlwatrSurface {
@@ -22,31 +20,29 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
     AlwatrSurface.styles,
     css`
       :host {
+        --_surface-color-on: var(--sys-color-on-surface-variant-hsl);
+        --_surface-state-color: var(--sys-color-on-surface-variant-hsl);
+
         display: inline-block;
         padding: calc(0.5 * var(--sys-spacing-track));
-        font-size: calc(3 * var(--sys-spacing-track)); // icon size
+        font-size: calc(3 * var(--sys-spacing-track)); /* icon size */
+        background-image: none;
+        background-color: hsla(var(--_surface-state-color), var(--_surface-state-opacity));
+        background-clip: content-box;
+        border-radius: 50%;
+        box-shadow: none;
 
+        user-select: none;
+        cursor: pointer;
         align-self: center;
         vertical-align: middle;
         flex-grow: 0;
         flex-shrink: 0;
-
-        user-select: none;
-        cursor: pointer;
-      }
-
-      alwatr-surface {
-        --_surface-color-on: var(--comp-icon-button-color-hsl, var(--sys-color-on-surface-variant-hsl));
-        --_surface-state-color: var(--comp-icon-button-color-hsl, var(--sys-color-on-surface-variant-hsl));
-        background-color: transparent;
-        border-radius: 50%;
-        box-shadow: none;
-        padding: var(--sys-spacing-track);
-        font-size: inherit;
       }
 
       alwatr-icon {
         display: block;
+        padding: var(--sys-spacing-track);
       }
     `,
   ];
@@ -57,14 +53,17 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
   @property({type: Boolean, attribute: 'flip-rtl'})
     flipRtl = false;
 
+  override connectedCallback(): void {
+    this.setAttribute('stated', '');
+    super.connectedCallback();
+  }
+
   override render(): unknown {
-    this._logger.logMethod('render');
-    return html`<alwatr-surface stated>
-      <alwatr-icon
-        .name=${this.icon}
-        ?flip-rtl=${this.flipRtl}
-      ></alwatr-icon>
-    </alwatr-surface>`;
+    super.render();
+    return html`<alwatr-icon
+      .name=${this.icon}
+      ?flip-rtl=${this.flipRtl}
+    ></alwatr-icon>`;
   }
 }
 
