@@ -13,9 +13,9 @@ export async function notify(): Promise<void> {
     // 1. send message
     let response;
     try {
-      response = await sendMessage(chat.id, `**${dayToLeft} روز مانده تا ولادت مهربان ترین پدر ♥️**`, {
+      response = await sendMessage(chat.id, `*${dayToLeft} قدم تا طلوع خورشید ♥️*`, {
         parse_mode: 'MarkdownV2',
-        reply_markup: {inline_keyboard: [[{text: `${dayToLeft} روز تا نیمه‌شعبان`, callback_data: 'dayCountdown'}]]},
+        reply_markup: {inline_keyboard: [[{text: `${dayToLeft} روز تا‌ نیمه‌شعبان`, callback_data: 'dayCountdown'}]]},
       });
     }
     catch (err) {
