@@ -1,4 +1,5 @@
 import {type TelegramError} from 'telegraf';
+import {Message} from 'telegraf/types';
 
 import {logger} from './config.js';
 import {bot} from './lib/bot.js';
@@ -13,10 +14,7 @@ export async function notify(): Promise<void> {
     // 1. send message
     let response;
     try {
-      response = await sendMessage(chat.id, `*${dayToLeft} قدم تا طلوع خورشید ♥️*`, {
-        parse_mode: 'MarkdownV2',
-        reply_markup: {inline_keyboard: [[{text: `${dayToLeft} روز تا‌ نیمه‌شعبان`, callback_data: 'dayCountdown'}]]},
-      });
+      response = await sendDayCountDown(chat.id, dayToLeft);
     }
     catch (err) {
       const _err = err as TelegramError;
@@ -59,4 +57,11 @@ export async function notify(): Promise<void> {
       }
     }
   }
+}
+
+export function sendDayCountDown(chatId: string, dayToLeft: number): Promise<Message> {
+  return sendMessage(chatId, `*${dayToLeft} قدم تا طلوع خورشید ♥️*`, {
+    parse_mode: 'MarkdownV2',
+    reply_markup: {inline_keyboard: [[{text: `${dayToLeft} روز تا‌ نیمه‌شعبان`, callback_data: 'dayCountdown'}]]},
+  });
 }

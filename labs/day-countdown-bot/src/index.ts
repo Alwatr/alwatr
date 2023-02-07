@@ -4,6 +4,7 @@ import {nextDayCountdownDuration} from './lib/calender.js';
 import {launchBot} from './lib/launch.js';
 
 import './command/start.js';
+import './command/rozshomar.js';
 
 logger.logOther('..:: Day Countdown Telegram Bot ::..');
 
