@@ -34,6 +34,8 @@ export interface IconButtonContent extends StringifyableRecord {
  * Alwatr standard icon button element.
  *
  * @attr {Boolean} flip-rtl
+ *
+ * @cssprop {String} [--comp-icon-button-color-hsl=var(--sys-color-on-surface-variant-hsl)]
  */
 @customElement('alwatr-icon-button')
 export class AlwatrStandardIconButton extends AlwatrSurface {
@@ -41,8 +43,8 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
     AlwatrSurface.styles,
     css`
       :host {
-        --_surface-color-on: var(--sys-color-on-surface-variant-hsl);
-        --_surface-state-color: var(--sys-color-on-surface-variant-hsl);
+        --_surface-color-on: var(--comp-icon-button-color-hsl, var(--sys-color-on-surface-variant-hsl));
+        --_surface-state-color: var(--comp-icon-button-color-hsl, var(--sys-color-on-surface-variant-hsl));
 
         display: inline-block;
         padding: calc(0.5 * var(--sys-spacing-track));
