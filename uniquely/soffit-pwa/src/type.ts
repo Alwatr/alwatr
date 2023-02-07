@@ -1,5 +1,5 @@
 import type {StringifyableRecord} from '@alwatr/type';
-import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box';
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 export interface BoxType extends IconBoxContent {
   wide?: boolean;

@@ -36,6 +36,7 @@
     "@alwatr/element": "^0.28.0",
     "@alwatr/fetch": "^0.28.0",
     "@alwatr/i18n": "^0.28.0",
+    "@alwatr/signal": "^0.28.0",
     "@alwatr/icon": "^0.28.0",
     "@alwatr/util": "^0.28.0",
     "tslib": "^2.5.0"
