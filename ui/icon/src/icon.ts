@@ -1,6 +1,4 @@
 import {
-  type PropertyValues,
-  type HTMLTemplateResult,
   AlwatrDummyElement,
   unsafeSVG,
   customElement,
@@ -10,9 +8,16 @@ import {
   css,
   DirectionMixin,
   SignalMixin,
+  PropertyDeclaration,
+  nothing,
+  type HTMLTemplateResult,
+  type PropertyValues,
 } from '@alwatr/element';
-import {fetch} from '@alwatr/fetch';
 import {globalAlwatr} from '@alwatr/logger';
+
+import {preloadIcon} from './preload.js';
+
+export {preloadIcon};
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/icon',
@@ -55,68 +60,54 @@ export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrDummyElement)) 
   `;
 
   protected static _fallback: HTMLTemplateResult = html`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-    <title>Square</title>
-    <path
-      d="M416 448H96a32.09 32.09 0 01-32-32V96a32.09 32.09 0
-    0132-32h320a32.09 32.09 0 0132 32v320a32.09 32.09 0 01-32 32z"
-      fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="32"
-    />
+    <circle cx="256" cy="256" r="48" />
+    <circle cx="416" cy="256" r="48" />
+    <circle cx="96" cy="256" r="48" />
   </svg>`;
 
   @property()
     name?: string;
 
-  @property({attribute: 'url-prefix'})
-    urlPrefix?: string;
-
   @state()
-  protected _icon?: HTMLTemplateResult;
+  protected _svg?: HTMLTemplateResult | null;
 
   override render(): unknown {
     this._logger.logMethod('render');
-    return this._icon;
+    return this._svg ?? nothing;
   }
 
-  override shouldUpdate(changedProperties: PropertyValues): boolean {
-    if (changedProperties.has('name') || changedProperties.has('urlPrefix')) {
+  override requestUpdate(propName?: PropertyKey, oldValue?: unknown, options?: PropertyDeclaration): void {
+    this._logger?.logMethodArgs('requestUpdate', {name: propName});
+    if (propName === 'name') {
       this._fetchIcon();
     }
-    return super.shouldUpdate(changedProperties) && changedProperties.has('_icon') && this._icon != null;
+    super.requestUpdate(propName, oldValue, options);
+  }
+
+  protected override shouldUpdate(changedProperties: PropertyValues<this>): boolean {
+    return super.shouldUpdate(changedProperties) && this._svg !== undefined;
   }
 
   protected async _fetchIcon(): Promise<void> {
-    this._logger.logMethodArgs('_fetchIcon', {name: this.name, urlPrefix: this.urlPrefix});
+    this._logger.logMethodArgs('_fetchIcon', {name: this.name});
 
-    if (!(this.name != null && this.name.length > 0)) return;
+    if (this.name == null || this.name === '') {
+      // if (this._svg != null) this._svg = null;
+      return;
+    }
+
+    let _timer: ReturnType<typeof setTimeout> | null = setTimeout(() => {
+      _timer = null;
+      this._svg = (this.constructor as typeof AlwatrIcon)._fallback;
+    }, 3_000);
 
     try {
-      this._icon = html`${unsafeSVG(await preloadIcon(this.name, this.urlPrefix))}`;
+      const svg = await preloadIcon(this.name);
+      if (_timer != null) clearTimeout(_timer);
+      this._svg = html`${unsafeSVG(svg)}`;
     }
     catch (err) {
       this._logger.error('_fetchIcon', 'fetch_failed', err);
-      this._icon = AlwatrIcon._fallback;
     }
   }
-}
-
-export async function preloadIcon(
-    name: string,
-    urlPrefix = 'https://cdn.jsdelivr.net/npm/@alwatr/icon@0/svg/',
-): Promise<string> {
-  const url = urlPrefix + name + '.svg';
-  const response = await fetch({
-    url,
-    removeDuplicate: 'auto',
-    cacheStrategy: 'cache_first',
-    cache: 'force-cache',
-  });
-
-  if (response.ok !== true) {
-    throw new Error('fetch_failed');
-  }
-
-  return await response.text();
 }
