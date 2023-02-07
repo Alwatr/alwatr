@@ -93,6 +93,9 @@ export class AlwatrImageBox extends AlwatrSurface {
   @property({type: Object})
     content?: ImageBoxContent;
 
+  @property({type: Boolean})
+    selected = false;
+
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
     if (changedProperties.has('content') && this.content != null) {
@@ -105,6 +108,29 @@ export class AlwatrImageBox extends AlwatrSurface {
       else {
         this.removeAttribute('elevated');
       }
+    }
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.renderRoot.addEventListener('click', this._toggleSelect.bind(this));
+  }
+
+  protected _toggleSelect(): void {
+    this.selected = !this.selected;
+
+    if (this.selected) {
+      this.setAttribute('selected', '');
+      this.setAttribute('outlined', '');
+      this.removeAttribute('highlight');
+      this.removeAttribute('elevated');
+      navigator.vibrate(30);
+    }
+    else {
+      this.removeAttribute('selected');
+      this.setAttribute('highlight', '');
+      this.removeAttribute('outlined');
+      this.setAttribute('elevated', '2');
     }
   }
 
