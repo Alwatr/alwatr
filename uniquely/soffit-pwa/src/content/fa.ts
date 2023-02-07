@@ -4,6 +4,13 @@ import {replaceNumber} from '@alwatr/i18n';
 import type {PageHomeContent} from '../type.js';
 
 export const homePageContent: PageHomeContent = {
+  topAppBar: {
+    type: 'center',
+    headline: 'بازرگانی سافیت',
+    startIcon: {icon: 'menu-outline', flipRtl: true},
+    endIconList: [{icon: 'globe-outline', clickSignalId: 'language-button-click-event'}],
+  },
+
   about: {
     wide: true,
     elevated: 1,

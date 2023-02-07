@@ -1,8 +1,8 @@
 import {customElement, AlwatrSmartElement, css, html, unsafeHTML, map, state, nothing} from '@alwatr/element';
-import {localeContextConsumer, setLocale} from '@alwatr/i18n';
 import {contextConsumer} from '@alwatr/signal';
 
 import '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 import './lottery-box.js';
 import './supply-chain-box.js';
 
@@ -30,7 +30,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       padding: calc(2 * var(--sys-spacing-track));
     }
 
-    header img {
+    .logo {
       display: block;
       width: 100%;
     }
@@ -92,26 +92,14 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     );
   }
 
-  protected _changeLocale(): void {
-    this._logger.logMethod('changeLocale');
-    localeContextConsumer.getValue()?.language === 'en'
-      ? setLocale({
-        code: 'fa-IR',
-        language: 'fa',
-        direction: 'rtl',
-      })
-      : setLocale({
-        code: 'en-US',
-        language: 'en',
-        direction: 'ltr',
-      });
-  }
-
   override render(): unknown {
     this._logger.logMethod('render');
     return html`
-      <header><img @click=${this._changeLocale.bind(this)} src="image/soffit.svg" alt="SOFFIT Logo" /></header>
-      <main>${this._menuTemplate()}</main>
+      <alwatr-top-app-bar .content=${this.content?.topAppBar}></alwatr-top-app-bar>
+      <main>
+        <img class="logo" src="image/soffit.svg" alt="SOFFIT Logo" />
+        ${this._menuTemplate()}
+      </main>
       <footer>
         <div>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</div>
         <div class="version">Soffit PWA v${_ALWATR_VERSION_}</div>
