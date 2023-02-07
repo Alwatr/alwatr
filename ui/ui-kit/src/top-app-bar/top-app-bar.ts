@@ -1,4 +1,14 @@
-import {css, html, customElement, property, nothing, type PropertyValues, map} from '@alwatr/element';
+import {
+  css,
+  html,
+  customElement,
+  property,
+  nothing,
+  map,
+  DirectionMixin,
+  SignalMixin,
+  type PropertyValues,
+} from '@alwatr/element';
 
 import {AlwatrSurface} from '../card/surface.js';
 
@@ -26,7 +36,7 @@ export interface TopAppBarContent extends StringifyableRecord {
  * @attr {center|small|medium|large} [type=small]
  */
 @customElement('alwatr-top-app-bar')
-export class AlwatrTopAppBar extends AlwatrSurface {
+export class AlwatrTopAppBar extends DirectionMixin(SignalMixin(AlwatrSurface)) {
   static override styles = [
     AlwatrSurface.styles,
     css`
@@ -61,11 +71,16 @@ export class AlwatrTopAppBar extends AlwatrSurface {
         font-size: var(--sys-typescale-title-large-font-size);
         letter-spacing: var(--sys-typescale-title-large-letter-spacing);
         /* line-height: var(--sys-typescale-title-large-line-height); */
-        line-height: calc(6 * var(--sys-spacing-track) - 0.364em); /* 8/22 */
+        line-height: calc(6 * var(--sys-spacing-track));
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
         overflow: clip;
+      }
+
+      :host([dir=rtl][type=small]) .title,
+      :host([dir=rtl][type=center]) .title {
+        line-height: calc(6 * var(--sys-spacing-track) - 0.18em); /* 0.5 * track / title-line-height */
       }
 
       :host([type=center]) .title {
