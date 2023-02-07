@@ -39,7 +39,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       display: flex;
       flex-wrap: wrap;
       padding: calc(2 * var(--sys-spacing-track));
-      gap: calc(2 * var(--sys-spacing-track));
+      gap: var(--sys-spacing-track);
     }
 
     alwatr-icon-box {

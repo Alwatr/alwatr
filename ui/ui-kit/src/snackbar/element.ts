@@ -29,7 +29,7 @@ export class AlwatrSnackbar extends AlwatrSurface {
 
         display: flex;
         align-items: center;
-        padding: calc(0.5 * var(--sys-spacing-track));
+        padding: var(--sys-spacing-track);
         gap: var(--sys-spacing-track);
         position: fixed;
         bottom: calc(2 * var(--sys-spacing-track));
@@ -72,7 +72,7 @@ export class AlwatrSnackbar extends AlwatrSurface {
       }
 
       .message {
-        padding: var(--sys-spacing-track);
+        padding: 0 var(--sys-spacing-track);
         flex-grow: 1;
         flex-shrink: 1;
         white-space: pre-line;
@@ -80,7 +80,6 @@ export class AlwatrSnackbar extends AlwatrSurface {
 
       alwatr-button {
         --_surface-color-on: var(--sys-color-inverse-primary-hsl);
-        padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
         flex-grow: 0;
         flex-shrink: 0;
         align-self: flex-end;

@@ -1,10 +1,10 @@
-import {localeContextConsumer, setLocale} from '@alwatr/i18n';
+import {localeContextConsumer, setLocale, l18eContextConsumer} from '@alwatr/i18n';
 import {eventListener} from '@alwatr/signal';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
 
 import {logger} from './logger.js';
 
 import type {ClickSignalType} from '@alwatr/type';
-
 
 eventListener.subscribe<ClickSignalType>('language-button-click-event', () => {
   logger.logMethod('changeLanguage');
@@ -19,4 +19,24 @@ eventListener.subscribe<ClickSignalType>('language-button-click-event', () => {
       language: 'en',
       direction: 'ltr',
     });
+});
+
+let rapidClickCount = 0;
+let lastClick = 0;
+l18eContextConsumer.subscribe(() => {
+  const now = Date.now();
+  if (now - lastClick < 1_000) {
+    rapidClickCount++;
+  }
+  lastClick = now;
+
+  if (rapidClickCount > 5 && localeContextConsumer.getValue()?.language === 'fa') {
+    rapidClickCount = 0;
+
+    snackbarSignalTrigger.request({
+      message: 'داداش چی از جون ما می‌خوای؟!\nولی جون ما با سرعت برنامه حال می‌کنی؟!',
+      duration: -1,
+      actionLabel: 'ایول',
+    });
+  }
 });
