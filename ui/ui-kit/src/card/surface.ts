@@ -59,6 +59,7 @@ export class AlwatrSurface extends AlwatrDummyElement {
       transition-property: opacity;
       transition-duration: var(--sys-motion-duration-small);
       transition-timing-function: var(--sys-motion-easing-normal);
+      -webkit-tap-highlight-color: transparent;
     }
 
     :host([outlined]) {
