@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import type {PageHomeContent} from '../type';
+import type {PageHomeContent} from '../type.js';
 
 export const homePageContent: PageHomeContent = {
   about: {

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
-    "moduleResolution": "bundler",
+    // "moduleResolution": "bundler",
     "rootDir": "src",
     "outDir": "build",
     "noEmit": true,

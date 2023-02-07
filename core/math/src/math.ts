@@ -176,7 +176,7 @@ export const random = {
    */
   get uuid(): `${string}-${string}-${string}-${string}-${string}` {
     if (globalThis.crypto?.randomUUID) {
-      return globalThis.crypto.randomUUID();
+      return globalThis.crypto.randomUUID() as `${string}-${string}-${string}-${string}-${string}`;
     }
     // else
     const bytes = random.getRandomValues(new Uint8Array(16));

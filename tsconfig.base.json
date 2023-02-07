@@ -7,6 +7,7 @@
     "target": "ES2019",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "resolveJsonModule": true, // temporary for fix import json issue
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     // "allowJs": true,
     // "checkJs": true,

@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import {replaceNumber} from '@alwatr/i18n';
 
-import type {PageHomeContent} from '../type';
+import type {PageHomeContent} from '../type.js';
 
 export const homePageContent: PageHomeContent = {
   about: {
