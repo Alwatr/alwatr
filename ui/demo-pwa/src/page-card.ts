@@ -29,9 +29,11 @@ export class AlwatrPageCard extends AlwatrSmartElement {
     }
 
     alwatr-surface,
-    alwatr-icon-box {
+    alwatr-icon-box,
+    alwatr-icon-box,
+    alwatr-image-box {
       flex-grow: 1;
-      width: 25%;
+      width: 35%;
       user-select: none;
       min-height: 15rem;
     }
@@ -58,14 +60,14 @@ export class AlwatrPageCard extends AlwatrSmartElement {
   override render(): unknown {
     this._logger.logMethod('render');
     return html`
-      <alwatr-icon-box elevated
-        .content=${{icon: 'gift-outline', headline: 'قرعه کشی', description: loremText}}
+      <alwatr-icon-box
+        .content=${{icon: 'gift-outline', headline: 'قرعه کشی', description: loremText, elevated: 2}}
       ></alwatr-icon-box>
-      <alwatr-icon-box elevated
-        .content=${{icon: 'download-outline', headline: 'کاتالوگ', description: loremText}}
+      <alwatr-icon-box
+        .content=${{icon: 'download-outline', headline: 'کاتالوگ', description: loremText, elevated: 2}}
       ></alwatr-icon-box>
-      <alwatr-icon-box elevated
-        .content=${{icon: 'earth-outline', headline: 'وب‌سایت', description: loremText, href: '/'}}
+      <alwatr-icon-box
+        .content=${{icon: 'earth-outline', headline: 'وب‌سایت', description: loremText, href: '/', elevated: 2}}
       ></alwatr-icon-box>
 
       <alwatr-image-box
@@ -73,12 +75,18 @@ export class AlwatrPageCard extends AlwatrSmartElement {
     image: '/image/icon-512-maskable.png',
     headline: 'محصول شماره یک',
     description: 'توضیحات نسبتا طولانی یک محصول بی‌نظیر',
+    elevated: 2,
+    stated: true,
+    highlight: true,
   }}></alwatr-image-box>
       <alwatr-image-box
         .content=${{
     image: '/image/icon-512-maskable.png',
     headline: 'محصول شماره یک',
     description: 'توضیحات نسبتا طولانی یک محصول بی‌نظیر',
+    elevated: 2,
+    stated: true,
+    highlight: true,
   }}></alwatr-image-box>
 
       <alwatr-surface stated elevated><input type="text" value="elevated" /></alwatr-surface>
