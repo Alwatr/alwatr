@@ -13,10 +13,10 @@ declare global {
 }
 
 const topBarContent: TopAppBarContent = {
-  headline: 'بازرگانی سافیت',
   type: 'center',
+  headline: 'یک عدد عنوان خوب',
   startIcon: {icon: 'arrow-back', flipRtl: true},
-  endIconList: [{icon: 'menu'}, {icon: 'home'}],
+  endIconList: [{icon: 'earth-outline'}, {icon: 'ellipsis-vertical'}],
 };
 
 /**
@@ -44,7 +44,9 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     this._logger.logMethod('render');
 
     return html`
-      <alwatr-top-app-bar .content=${topBarContent}></alwatr-top-app-bar>
+      <alwatr-top-app-bar .content=${<TopAppBarContent>{...topBarContent, type: 'center'}}></alwatr-top-app-bar>
+      <alwatr-top-app-bar .content=${<TopAppBarContent>{...topBarContent, type: 'small'}}></alwatr-top-app-bar>
+      <alwatr-top-app-bar .content=${<TopAppBarContent>{...topBarContent, type: 'large'}}></alwatr-top-app-bar>
       <main>
         <alwatr-icon-button .content=${<IconButtonContent>{icon: 'bulb'}}></alwatr-icon-button>
         <alwatr-icon-button .content=${<IconButtonContent>{icon: 'bulb'}}></alwatr-icon-button>
