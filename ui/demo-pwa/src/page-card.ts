@@ -2,7 +2,6 @@ import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
 import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/card/image-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -29,11 +28,9 @@ export class AlwatrPageCard extends AlwatrSmartElement {
     }
 
     alwatr-surface,
-    alwatr-icon-box,
-    alwatr-icon-box,
-    alwatr-image-box {
+    alwatr-icon-box {
       flex-grow: 1;
-      width: 35%;
+      width: 25%;
       user-select: none;
       min-height: 15rem;
     }
@@ -61,37 +58,17 @@ export class AlwatrPageCard extends AlwatrSmartElement {
     this._logger.logMethod('render');
     return html`
       <alwatr-icon-box
-        .content=${{icon: 'gift-outline', headline: 'قرعه کشی', description: loremText, elevated: 2}}
+        .content=${{icon: 'gift-outline', headline: 'قرعه کشی', description: loremText}}
       ></alwatr-icon-box>
       <alwatr-icon-box
-        .content=${{icon: 'download-outline', headline: 'کاتالوگ', description: loremText, elevated: 2}}
+        .content=${{icon: 'download-outline', headline: 'کاتالوگ', description: loremText}}
       ></alwatr-icon-box>
       <alwatr-icon-box
-        .content=${{icon: 'earth-outline', headline: 'وب‌سایت', description: loremText, href: '/', elevated: 2}}
+        .content=${{icon: 'earth-outline', headline: 'وب‌سایت', description: loremText, href: '/'}}
       ></alwatr-icon-box>
-
-      <alwatr-image-box
-        .content=${{
-    image: '/image/icon-512-maskable.png',
-    headline: 'محصول شماره یک',
-    description: 'توضیحات نسبتا طولانی یک محصول بی‌نظیر',
-    elevated: 2,
-    stated: true,
-    highlight: true,
-  }}></alwatr-image-box>
-      <alwatr-image-box
-        .content=${{
-    image: '/image/icon-512-maskable.png',
-    headline: 'محصول شماره یک',
-    description: 'توضیحات نسبتا طولانی یک محصول بی‌نظیر',
-    elevated: 2,
-    stated: true,
-    highlight: true,
-  }}></alwatr-image-box>
 
       <alwatr-surface stated elevated><input type="text" value="elevated" /></alwatr-surface>
       <alwatr-surface stated elevated><input type="text" value="elevated" /></alwatr-surface>
-
       <alwatr-surface stated elevated disabled><input type="text" value="elevated" disabled /></alwatr-surface>
 
       <alwatr-surface stated elevated="2"><input type="text" value="elevated 2" /></alwatr-surface>
