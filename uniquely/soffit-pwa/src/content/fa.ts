@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import {replaceNumber} from '@alwatr/i18n';
 
-import type {PageHomeContent} from '../type.js';
+import type {PageHomeContent, ProductPageContent} from '../type.js';
 
 export const homePageContent: PageHomeContent = {
   topAppBar: {
@@ -45,6 +45,7 @@ export const homePageContent: PageHomeContent = {
       stated: true,
       headline: 'سقف کاذب',
       description: 'انواع تایل‌ها برا زیباتر شدن سقف ها شما.',
+      href: '/product',
       wide: true,
     },
     {
@@ -401,6 +402,85 @@ export const homePageContent: PageHomeContent = {
         <div dir="ltr">${replaceNumber('0990 373 0377')}</div>
       `,
       href: 'tel:+989903730377',
+    },
+  ],
+};
+
+export const productPageContent: ProductPageContent = {
+  topAppBar: {
+    type: 'large',
+    headline: 'محصولات تایل سقفی',
+    startIcon: {icon: 'arrow-back-outline', flipRtl: true},
+    endIconList: [
+      {icon: 'globe-outline', clickSignalId: 'language-button-click-event'},
+      {icon: 'menu-outline', flipRtl: true},
+    ],
+  },
+
+  product: [
+    {
+      headline: 'محصول شماره یک',
+      image: 'image/ceiling_tile.jpg',
+      description: 'متن توضیحات یک محصول از برند سافیت',
+      elevated: 2,
+      highlight: true,
+      stated: true,
+    },
+    {
+      headline: 'محصول شماره یک',
+      image: 'image/ceiling_tile.jpg',
+      description: 'متن توضیحات یک محصول از برند سافیت',
+      elevated: 2,
+      highlight: true,
+      stated: true,
+    },
+    {
+      headline: 'محصول شماره یک',
+      image: 'image/ceiling_tile.jpg',
+      description: 'متن توضیحات یک محصول از برند سافیت',
+      elevated: 2,
+      highlight: true,
+      stated: true,
+    },
+    {
+      headline: 'محصول شماره یک',
+      image: 'image/ceiling_tile.jpg',
+      description: 'متن توضیحات یک محصول از برند سافیت',
+      elevated: 2,
+      highlight: true,
+      stated: true,
+    },
+    {
+      headline: 'محصول شماره یک',
+      image: 'image/ceiling_tile.jpg',
+      description: 'متن توضیحات یک محصول از برند سافیت',
+      elevated: 2,
+      highlight: true,
+      stated: true,
+    },
+    {
+      headline: 'محصول شماره یک',
+      image: 'image/ceiling_tile.jpg',
+      description: 'متن توضیحات یک محصول از برند سافیت',
+      elevated: 2,
+      highlight: true,
+      stated: true,
+    },
+    {
+      headline: 'محصول شماره یک',
+      image: 'image/ceiling_tile.jpg',
+      description: 'متن توضیحات یک محصول از برند سافیت',
+      elevated: 2,
+      highlight: true,
+      stated: true,
+    },
+    {
+      headline: 'محصول شماره یک',
+      image: 'image/ceiling_tile.jpg',
+      description: 'متن توضیحات یک محصول از برند سافیت',
+      elevated: 2,
+      highlight: true,
+      stated: true,
     },
   ],
 };
