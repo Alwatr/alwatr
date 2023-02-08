@@ -35,8 +35,6 @@ export class AlwatrImageBox extends AlwatrSurface {
         position: relative;
         display: block;
         padding: 0;
-        flex-grow: 1;
-        width: 40%;
         transition-property: color, background-color, opacity, height;
         transition-duration: var(--sys-motion-duration-small), var(--sys-motion-duration-small),
           var(--sys-motion-duration-small), var(--sys-motion-duration-medium);
@@ -130,7 +128,12 @@ export class AlwatrImageBox extends AlwatrSurface {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.renderRoot.addEventListener('click', this._toggleSelect.bind(this));
+    this.addEventListener('click', this._toggleSelect);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('click', this._toggleSelect);
   }
 
   protected _toggleSelect(): void {

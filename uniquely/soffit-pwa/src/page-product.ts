@@ -33,12 +33,12 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       gap: var(--sys-spacing-track);
     }
 
-    alwatr-icon-box {
+    alwatr-image-box {
       width: 40%;
       flex-grow: 1;
     }
 
-    alwatr-icon-box[wide] {
+    alwatr-image-box[wide] {
       width: 100%;
     }
   `;
@@ -65,11 +65,10 @@ export class AlwatrPageHome extends AlwatrSmartElement {
 
   protected* _menuTemplate(): unknown {
     this._logger.logMethodArgs('_menuTemplate', {...this.content});
-    if (this.content == null) return nothing;
-    yield map(this.content.product, this._boxTemplate);
+    yield map(this.content?.product, this._productBoxTemplate);
   }
 
-  protected _boxTemplate(box: ProductType): unknown {
+  protected _productBoxTemplate(box: ProductType): unknown {
     const slot = box.slot == null ? nothing : unsafeHTML(box.slot);
     return html`<alwatr-image-box .content=${box} ?wide=${box.wide}>${slot}</alwatr-image-box>`;
   }
