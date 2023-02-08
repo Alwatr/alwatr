@@ -46,8 +46,6 @@ export class AlwatrImageBox extends AlwatrSurface {
         line-height: var(--sys-typescale-body-small-line-height);
         user-select: none;
         -webkit-user-select: none;
-        overflow: hidden;
-        overflow: clip;
       }
 
       :host([highlight]) {
