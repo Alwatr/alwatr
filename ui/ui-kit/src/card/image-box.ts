@@ -32,9 +32,11 @@ export class AlwatrImageBox extends AlwatrSurface {
     AlwatrSurface.styles,
     css`
       :host {
+        position: relative;
         display: block;
         padding: 0;
         flex-grow: 1;
+        width: 40%;
         transition-property: color, background-color, opacity, height;
         transition-duration: var(--sys-motion-duration-small), var(--sys-motion-duration-small),
           var(--sys-motion-duration-small), var(--sys-motion-duration-medium);
@@ -82,6 +84,18 @@ export class AlwatrImageBox extends AlwatrSurface {
         font-size: var(--sys-typescale-headline-small-font-size);
         letter-spacing: var(--sys-typescale-headline-small-letter-spacing);
         line-height: var(--sys-typescale-headline-small-line-height);
+      }
+
+      .checkmark-icon {
+        display: none;
+        color: var(--sys-color-primary);
+        position: absolute;
+        font-size: var(--sys-typescale-headline-small-font-size);
+        padding: var(--sys-spacing-track);
+      }
+
+      :host([selected]) .checkmark-icon {
+        display: inline;
       }
 
       .description {
@@ -134,6 +148,7 @@ export class AlwatrImageBox extends AlwatrSurface {
       this.setAttribute('highlight', '');
       this.removeAttribute('outlined');
       this.setAttribute('elevated', '2');
+      navigator.vibrate(10);
     }
   }
 
@@ -144,6 +159,7 @@ export class AlwatrImageBox extends AlwatrSurface {
     const target = content.target !== 'download' ? content.target : undefined;
 
     const template = html`
+      <alwatr-icon class="checkmark-icon" name="checkmark-circle-sharp"></alwatr-icon>
       <img class="image" src=${content.image} />
       <div class="content-container">
         <h3 class="headline">${content.headline}</h3>
