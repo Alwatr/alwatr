@@ -1,4 +1,7 @@
 import {css, customElement, html, property, nothing, ifDefined, type PropertyValues} from '@alwatr/element';
+import {StringifyableRecord} from '@alwatr/type';
+
+import '@alwatr/icon';
 
 import {AlwatrSurface} from './surface.js';
 
@@ -8,7 +11,7 @@ declare global {
   }
 }
 
-export type ImageBoxContent = {
+export interface ImageBoxContent extends StringifyableRecord {
   image: string;
   headline: string;
   description?: string;
@@ -18,7 +21,7 @@ export type ImageBoxContent = {
   stated?: boolean;
   preLine?: boolean;
   elevated?: number;
-};
+}
 
 /**
  * Alwatr image box element.
