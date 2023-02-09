@@ -6,6 +6,7 @@ import type {
   AlwatrServiceResponse,
   AlwatrServiceResponseSuccessWithMeta,
   AlwatrServiceResponseSuccess,
+  StringifyableRecord,
 } from '@alwatr/type';
 
 export type {
@@ -32,7 +33,10 @@ const duplicateRequestStorage: Record<string, Promise<Response>> = {};
 /**
  * Fetch from alwatr services and return standard response.
  */
-export async function serviceRequest<TData = Record<string, unknown>, TMeta = Record<string, unknown>>(
+export async function serviceRequest<
+  TData extends StringifyableRecord = StringifyableRecord,
+  TMeta extends StringifyableRecord = StringifyableRecord,
+>(
     options: FetchOptions,
 ): Promise<AlwatrServiceResponseSuccess<TData> | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>> {
   logger.logMethod('serviceRequest');
