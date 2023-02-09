@@ -1,5 +1,5 @@
 import {logger} from './config.js';
-import {notify} from './dayCountdown.js';
+import {sendDayCountDownToAllChat} from './dayCountdown.js';
 import {nextDayCountdownDuration} from './lib/calender.js';
 import {launchBot} from './lib/launch.js';
 
@@ -13,11 +13,11 @@ import './bot/rozshomar-command.js';
 
 logger.logOther('..:: Day Countdown Telegram Bot ::..');
 
-launchBot();
+await launchBot();
 
 // run on 9:00am on every day!
 const duration = nextDayCountdownDuration(6);
 setTimeout(async () => {
-  await notify();
-  setInterval(notify, 86400000);
+  await sendDayCountDownToAllChat();
+  setInterval(sendDayCountDownToAllChat, 86400000);
 }, duration);

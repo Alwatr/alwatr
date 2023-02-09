@@ -1,5 +1,5 @@
 import {logger} from '../config.js';
-import {sendDayCountDown} from '../dayCountdown.js';
+import {sendDayCountDownMessage} from '../dayCountdown.js';
 import {bot} from '../lib/bot.js';
 import {dateDistance, nime} from '../lib/calender.js';
 
@@ -8,5 +8,5 @@ bot.command('rozshomar', (ctx): void => {
   if (chatId == null) return;
   logger.logMethodArgs('command/rozshomar', {chatId});
 
-  sendDayCountDown(chatId, dateDistance(nime.valueOf()));
+  sendDayCountDownMessage(chatId, dateDistance(nime.valueOf()));
 });
