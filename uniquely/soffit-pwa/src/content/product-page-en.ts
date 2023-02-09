@@ -1,21 +1,15 @@
 /* eslint-disable max-len */
 import type {ProductPageContent} from '../type.js';
 
-// https://picsum.photos/id/613/512/512
-// 620
-// 618
-// 43
-// 223
-// 221
-// 234
-// 249
-
 export const productPageContent: ProductPageContent = {
   topAppBar: {
     type: 'large',
     headline: 'Ceiling tile product',
     startIcon: {icon: 'arrow-back-outline'},
-    endIconList: [{icon: 'globe-outline', clickSignalId: 'language-button-click-event'}, {icon: 'menu-outline', flipRtl: true}],
+    endIconList: [
+      {icon: 'globe-outline', clickSignalId: 'language-button-click-event'},
+      {icon: 'menu-outline', flipRtl: true},
+    ],
   },
 
   product: [
