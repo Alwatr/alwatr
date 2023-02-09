@@ -24,6 +24,6 @@ export interface AlwatrStorageMeta extends StringifyableRecord {
 
 export interface AlwatrDocumentStorage<T extends AlwatrDocumentObject> extends StringifyableRecord {
   ok: true;
-  meta: AlwatrStorageMeta;
   data: Record<string, T>;
+  meta: AlwatrStorageMeta;
 }

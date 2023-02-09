@@ -19,5 +19,5 @@ function getStorage(
 
   const storageEngine = storageProvider.get({name: params.name});
 
-  return storageEngine._storage;
+  return {...storageEngine._storage}; // prevent to modify storage by reply
 }
