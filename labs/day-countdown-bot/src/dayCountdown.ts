@@ -6,12 +6,12 @@ import {message} from './director/l18e-loader.js';
 import {bot} from './lib/bot.js';
 import {dateDistance, nime} from './lib/calender.js';
 import {sendMessage} from './lib/send-message.js';
-import {storageEngine} from './lib/storage.js';
+import {userStorageEngine} from './lib/storage.js';
 
 export async function sendDayCountDownToAllChat(): Promise<void> {
   logger.logMethod('sendDayCountDownToAllChat');
   const dayToLeft = dateDistance(nime.valueOf());
-  for (const chat of storageEngine.allObject()) {
+  for (const chat of userStorageEngine.allObject()) {
     if (chat.lastDayCountdownSent !== dayToLeft) {
       await sendDayCountDown(chat.id, dayToLeft);
     }
@@ -34,7 +34,7 @@ export async function sendDayCountDown(chatId: string, dayToLeft?: number): Prom
   catch (err) {
     const _err = err as TelegramError;
     if (_err.code === 403) {
-      storageEngine.delete(chatId);
+      userStorageEngine.delete(chatId);
     }
     else {
       logger.error('sendDayCountDown', _err.message, {_err});
@@ -42,8 +42,8 @@ export async function sendDayCountDown(chatId: string, dayToLeft?: number): Prom
     return;
   }
 
-  const user = storageEngine.get(chatId);
-  storageEngine.set({
+  const user = userStorageEngine.get(chatId);
+  userStorageEngine.set({
     id: chatId,
     lastBotMessageId: response.message_id,
     lastDayCountdownSent: dayToLeft,

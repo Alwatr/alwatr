@@ -2,6 +2,7 @@ import {AlwatrStorageEngine} from '@alwatr/storage-engine';
 
 import {config} from '../config.js';
 
-import type {User} from '../type.js';
+import type {BotSetting, User} from '../type.js';
 
-export const storageEngine = new AlwatrStorageEngine<User>(config.storage);
+export const userStorageEngine = new AlwatrStorageEngine<User>(config.userStorage);
+export const configStorageEngine = new AlwatrStorageEngine<BotSetting>(config.configStorage);

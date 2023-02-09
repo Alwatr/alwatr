@@ -11,9 +11,14 @@ if (telegramBotToken == undefined) {
 export const config = {
   telegramBot: {
     token: telegramBotToken,
+    adminToken: process.env.ADMIN_TOKEN ?? 'admin-token',
   },
-  storage: {
+  userStorage: {
     name: process.env.STORAGE_NAME ?? 'dayCountdown',
+    path: process.env.STORAGE_PATH ?? 'storage',
+  },
+  configStorage: {
+    name: 'setting',
     path: process.env.STORAGE_PATH ?? 'storage',
   },
 };
