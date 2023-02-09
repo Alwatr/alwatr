@@ -1,9 +1,11 @@
 import {bot} from './bot.js';
+import {notifyToAdminList} from '../admin.js';
 import {logger} from '../config.js';
 
 export async function launchBot(): Promise<void> {
   logger.logMethod('launchBot');
   try {
+    bot.telegram.deleteWebhook({drop_pending_updates: true}); // delete all last updates
     bot.botInfo ??= await bot.telegram.getMe();
     logger.logProperty('botInfo', bot.botInfo);
 
@@ -11,7 +13,7 @@ export async function launchBot(): Promise<void> {
       logger.error('launchBot', 'launch_bot_failed', err);
     });
 
-    // await sendMessage(config.telegramBot.debugNotifyToken, '⚡️ Bot launched');
+    notifyToAdminList('بات شروع به کار کرد ⚡️');
   }
   catch (err) {
     logger.error('launchBot', 'launch_bot_failed', err);
