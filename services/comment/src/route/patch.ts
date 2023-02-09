@@ -3,11 +3,13 @@ import {nanoServer} from '../lib/nano-server.js';
 import {storageClient} from '../lib/storage.js';
 
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
-import type {ChatMessage} from '@alwatr/type';
+import type {ChatMessage, StringifyableRecord} from '@alwatr/type';
 
 nanoServer.route('PATCH', '/', setComment);
 
-async function setComment(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
+async function setComment(
+    connection: AlwatrConnection,
+): Promise<AlwatrServiceResponse<ChatMessage, StringifyableRecord>> {
   logger.logMethod('setComment');
 
   connection.requireToken(config.nanoServer.accessToken);
@@ -39,7 +41,7 @@ async function setComment(connection: AlwatrConnection): Promise<AlwatrServiceRe
       meta: {
         name: err.name,
         message: err.message,
-        cause: err.cause,
+        cause: <StringifyableRecord>err.cause,
       },
     };
   }

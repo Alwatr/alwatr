@@ -3,10 +3,13 @@ import {nanoServer} from '../lib/nano-server.js';
 import {storageClient} from '../lib/storage.js';
 
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
+import type {ChatMessage, StringifyableRecord} from '@alwatr/type';
 
 nanoServer.route('GET', '/storage', getStorage);
 
-async function getStorage(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
+async function getStorage(
+    connection: AlwatrConnection,
+): Promise<AlwatrServiceResponse<Record<string, ChatMessage>, StringifyableRecord>> {
   logger.logMethod('getStorage');
 
   connection.requireToken(config.nanoServer.accessToken);
@@ -26,7 +29,7 @@ async function getStorage(connection: AlwatrConnection): Promise<AlwatrServiceRe
       meta: {
         name: err.name,
         message: err.message,
-        cause: err.cause,
+        cause: <StringifyableRecord>err.cause,
       },
     };
   }
