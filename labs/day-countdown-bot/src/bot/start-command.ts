@@ -10,6 +10,9 @@ bot.command('start', (ctx): void => {
 
   sendMessage(chatId, message('command_start'), {
     parse_mode: 'MarkdownV2',
+    reply_to_message_id: ctx.message.message_id,
+    allow_sending_without_reply: true,
+
     reply_markup: {
       inline_keyboard: [[
         {text: message('button_subscribe'), callback_data: 'subscribe'},

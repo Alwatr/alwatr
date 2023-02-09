@@ -6,9 +6,9 @@ export function dateDistance(dateMilliseconds: number): number {
   return Math.ceil((dateMilliseconds - Date.now()) / 60 / 60 / 24 / 1000);
 }
 
-export function nextDayCountdownDuration(hour: number): number {
+export function nextDayCountdownDuration(hour: number, min: number): number {
   const now = new Date();
-  const sendTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, 0, 0, 0);
+  const sendTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, min, 0, 0);
 
   let duration = sendTime.valueOf() - now.valueOf();
   if (duration < 0) {

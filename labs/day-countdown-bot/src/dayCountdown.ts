@@ -78,6 +78,7 @@ export function sendDayCountDownMessage(chatId: string, dayToLeft: number): Prom
   logger.logMethod('sendDayCountDownMessage');
   return sendMessage(chatId, message('day_countdown').replace('__day_to_left__', dayToLeft.toString()), {
     parse_mode: 'MarkdownV2',
+
     reply_markup: {inline_keyboard: [[{
       text: message('button_day_countdown').replace('__day_to_left__', dayToLeft.toString()),
       callback_data: 'dayCountdown',

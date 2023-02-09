@@ -1,6 +1,6 @@
 import type {AlwatrDocumentObject} from '@alwatr/type';
 
-export type User = AlwatrDocumentObject & {
+export interface User extends AlwatrDocumentObject {
   lastBotMessageId?: number;
   lastDayCountdownSent?: number;
 }
