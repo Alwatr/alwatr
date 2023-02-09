@@ -11,10 +11,24 @@ bot.action('unsubscribe', (ctx) => {
 
   if (storageEngine.has(chatId)) {
     storageEngine.delete(chatId);
-    sendMessage(chatId, message('action_unsubscribe_success'), {parse_mode: 'MarkdownV2'});
+    sendMessage(chatId, message('action_unsubscribe_success'), {
+      parse_mode: 'MarkdownV2',
+      reply_markup: {
+        inline_keyboard: [[
+          {text: message('button_subscribe'), callback_data: 'subscribe'},
+        ]],
+      },
+    });
   }
   else {
-    sendMessage(chatId, message('action_unsubscribe_failed'), {parse_mode: 'MarkdownV2'});
+    sendMessage(chatId, message('action_unsubscribe_failed'), {
+      parse_mode: 'MarkdownV2',
+      reply_markup: {
+        inline_keyboard: [[
+          {text: message('button_subscribe'), callback_data: 'subscribe'},
+        ]],
+      },
+    });
   }
 
   ctx.answerCbQuery();
