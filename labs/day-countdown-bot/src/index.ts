@@ -5,6 +5,7 @@ import {launchBot} from './lib/launch.js';
 
 import './director/index.js';
 import './command/start.js';
+import './command/subscribe.js';
 import './command/rozshomar.js';
 
 logger.logOther('..:: Day Countdown Telegram Bot ::..');
@@ -12,7 +13,7 @@ logger.logOther('..:: Day Countdown Telegram Bot ::..');
 launchBot();
 
 // run on 9:00am on every day!
-const duration = nextDayCountdownDuration(9);
+const duration = nextDayCountdownDuration(6);
 setTimeout(async () => {
   await notify();
   setInterval(notify, 86400000);

@@ -2,11 +2,11 @@ import {type TelegramError} from 'telegraf';
 import {Message} from 'telegraf/types';
 
 import {logger} from './config.js';
+import {message} from './director/l18e-loader.js';
 import {bot} from './lib/bot.js';
 import {dateDistance, nime} from './lib/calender.js';
 import {sendMessage} from './lib/send-message.js';
 import {storageEngine} from './lib/storage.js';
-
 
 export async function notify(): Promise<void> {
   const dayToLeft = dateDistance(nime.valueOf());
@@ -60,8 +60,11 @@ export async function notify(): Promise<void> {
 }
 
 export function sendDayCountDown(chatId: string, dayToLeft: number): Promise<Message> {
-  return sendMessage(chatId, `*${dayToLeft} قدم تا طلوع خورشید ♥️*`, {
+  return sendMessage(chatId, message('day_countdown').replace('__day_to_left__', dayToLeft.toString()), {
     parse_mode: 'MarkdownV2',
-    reply_markup: {inline_keyboard: [[{text: `${dayToLeft} روز تا‌ نیمه‌شعبان`, callback_data: 'dayCountdown'}]]},
+    reply_markup: {inline_keyboard: [[{
+      text: message('button_day_countdown').replace('__day_to_left__', dayToLeft.toString()),
+      callback_data: 'dayCountdown',
+    }]]},
   });
 }
