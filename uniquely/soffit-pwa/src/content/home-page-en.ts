@@ -30,7 +30,7 @@ export const homePageContent: PageHomeContent = {
     icon: 'cloud-download-outline',
     headline: 'Download Catalogue',
     description: 'Download the introduction catalog of Soffit commercial products',
-    href: 'https://www.dropbox.com/s/6ywy23qql7iq31p/soffit-product-catalogue.pdf?dl=1',
+    href: 'https://www.dropbox.com/s/dl/6ywy23qql7iq31p/soffit-product-catalogue.pdf',
     target: 'download',
   },
 

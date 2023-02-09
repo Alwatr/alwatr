@@ -26,10 +26,6 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       overflow-y: auto;
     }
 
-    header {
-      padding: calc(2 * var(--sys-spacing-track));
-    }
-
     .logo {
       display: block;
       width: 100%;
@@ -111,6 +107,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     if (this.content == null) return nothing;
     yield this._boxTemplate(this.content.about);
     yield map(this.content.productList, this._boxTemplate);
+    yield this._boxTemplate(this.content.catalogue);
     yield html`<alwatr-lottery-box></alwatr-lottery-box>`;
     yield map(this.content.socialList, this._boxTemplate);
     yield html`<alwatr-supply-chain-box></alwatr-supply-chain-box>`;

@@ -1,24 +1,21 @@
-import {css, customElement, html, property, nothing, ifDefined, PropertyValues, when} from '@alwatr/element';
+import {css, customElement, html, property, nothing, ifDefined, type PropertyValues} from '@alwatr/element';
+import {StringifyableRecord} from '@alwatr/type';
 
 import '@alwatr/icon';
 
 import {AlwatrSurface} from './surface.js';
 
-import type {StringifyableRecord} from '@alwatr/type';
-
-
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-icon-box': AlwatrIconBox;
+    'alwatr-image-box': AlwatrImageBox;
   }
 }
 
-export interface IconBoxContent extends StringifyableRecord {
-  icon?: string;
+export interface ImageBoxContent extends StringifyableRecord {
+  image: string;
   headline: string;
   description?: string;
   href?: string;
-  flipRtl?: boolean;
   target?: 'download' | '_blank';
   highlight?: boolean;
   stated?: boolean;
@@ -27,19 +24,20 @@ export interface IconBoxContent extends StringifyableRecord {
 }
 
 /**
- * Alwatr icon box element.
+ * Alwatr image box element.
  */
-@customElement('alwatr-icon-box')
-export class AlwatrIconBox extends AlwatrSurface {
+@customElement('alwatr-image-box')
+export class AlwatrImageBox extends AlwatrSurface {
   static override styles = [
     AlwatrSurface.styles,
     css`
       :host {
+        position: relative;
         display: block;
         padding: 0;
         transition-property: color, background-color, opacity, height;
         transition-duration: var(--sys-motion-duration-small), var(--sys-motion-duration-small),
-          var(--sys-motion-duration-small), var(--sys-motion-duration-large);
+          var(--sys-motion-duration-small), var(--sys-motion-duration-medium);
         transition-timing-function: var(--sys-motion-easing-normal);
         font-family: var(--sys-typescale-body-small-font-family-name);
         font-weight: var(--sys-typescale-body-small-font-weight);
@@ -48,23 +46,28 @@ export class AlwatrIconBox extends AlwatrSurface {
         line-height: var(--sys-typescale-body-small-line-height);
         user-select: none;
         -webkit-user-select: none;
-      }
-
-      :host([highlight]) {
         cursor: pointer;
       }
 
-      :host([highlight]:hover) {
+      :host([selected]) {
         --_surface-color-on: var(--sys-color-on-primary-hsl);
         --_surface-color-bg: var(--sys-color-primary-hsl);
       }
 
       .container {
         display: block;
-        padding: calc(2 * var(--sys-spacing-track));
         border-radius: inherit;
         color: inherit;
-        text-decoration: inherit;
+      }
+
+      .content-container {
+        padding: calc(2 * var(--sys-spacing-track));
+      }
+
+      .image {
+        width: 100%;
+        height: auto;
+        border-radius: inherit;
       }
 
       .headline {
@@ -76,15 +79,17 @@ export class AlwatrIconBox extends AlwatrSurface {
         line-height: var(--sys-typescale-headline-small-line-height);
       }
 
-      .headline alwatr-icon {
-        display: block;
-        margin-bottom: var(--sys-spacing-track);
-        font-size: 1.5em;
+      .checkmark-icon {
+        display: none;
         color: var(--sys-color-primary);
-        transition: color var(--sys-motion-duration-small) var(--sys-motion-easing-normal);
+        position: absolute;
+        font-size: var(--sys-typescale-headline-small-font-size);
+        padding: var(--sys-spacing-track);
+        filter: drop-shadow(var(--sys-surface-elevation-1));
       }
-      :host([highlight]:hover) .headline alwatr-icon {
-        color: var(--sys-color-on-primary);
+
+      :host([selected]) .checkmark-icon {
+        display: inline;
       }
 
       .description {
@@ -96,8 +101,11 @@ export class AlwatrIconBox extends AlwatrSurface {
     `,
   ];
 
-  @property({type: Object, attribute: false})
-    content?: IconBoxContent;
+  @property({type: Object})
+    content?: ImageBoxContent;
+
+  @property({type: Boolean})
+    selected = false;
 
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
@@ -114,6 +122,29 @@ export class AlwatrIconBox extends AlwatrSurface {
     }
   }
 
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('click', this._toggleSelect);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('click', this._toggleSelect);
+  }
+
+  protected _toggleSelect(): void {
+    this.selected = !this.selected;
+
+    if (this.selected) {
+      this.setAttribute('selected', '');
+      navigator.vibrate(30);
+    }
+    else {
+      this.removeAttribute('selected');
+      navigator.vibrate(10);
+    }
+  }
+
   override render(): unknown {
     this._logger.logMethod('render');
     const content = this.content;
@@ -121,13 +152,12 @@ export class AlwatrIconBox extends AlwatrSurface {
     const target = content.target !== 'download' ? content.target : undefined;
 
     const template = html`
-      <h3 class="headline">
-        ${when(content.icon, () => html`
-          <alwatr-icon .name=${content.icon} ?flip-rtl=${content.flipRtl}></alwatr-icon>
-        `)}
-        <span>${content.headline}</span>
-      </h3>
-      <div class="description"><slot>${content.description}</slot></div>
+      <alwatr-icon class="checkmark-icon" .name=${'checkmark-circle-sharp'}></alwatr-icon>
+      <img class="image" src=${content.image} />
+      <div class="content-container">
+        <h3 class="headline">${content.headline}</h3>
+        <div class="description"><slot>${content.description}</slot></div>
+      </div>
     `;
 
     return content.href == null
@@ -137,7 +167,6 @@ export class AlwatrIconBox extends AlwatrSurface {
           href=${ifDefined(content.href)}
           target=${ifDefined(target)}
           ?download=${content.target === 'download'}
-          >${template}</a
-        >`;
+        >${template}</a>`;
   }
 }

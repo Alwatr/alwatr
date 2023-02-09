@@ -7,8 +7,6 @@ import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/font/vazirmatn.css';
 
 import './director/index.js';
-import './page-home.js';
-import './page-product.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 
@@ -26,8 +24,14 @@ class AlwatrPwa extends AlwatrPwaElement {
   protected override _routesConfig: RoutesConfig = {
     routeId: this._routesConfig.routeId,
     templates: {
-      home: () => html`<alwatr-page-home></alwatr-page-home>`,
-      product: () => html`<alwatr-page-product></alwatr-page-product>`,
+      home: () => {
+        import('./page-home.js');
+        return html`<alwatr-page-home>...</alwatr-page-home>`;
+      },
+      product: () => {
+        import('./page-product.js');
+        return html`<alwatr-page-product>...</alwatr-page-product>`;
+      },
       _404: (routeContext) => this._routesConfig.templates.home(routeContext),
     },
   };
