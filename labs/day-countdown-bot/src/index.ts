@@ -5,6 +5,7 @@ import {launchBot} from './lib/launch.js';
 
 import './director/index.js';
 import './bot/start-command.js';
+import './bot/menu-command.js';
 import './bot/subscribe-action.js';
 import './bot/rozshomar-command.js';
 
