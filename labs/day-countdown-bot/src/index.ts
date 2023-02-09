@@ -3,6 +3,7 @@ import {notify} from './dayCountdown.js';
 import {nextDayCountdownDuration} from './lib/calender.js';
 import {launchBot} from './lib/launch.js';
 
+import './director/index.js';
 import './command/start.js';
 import './command/rozshomar.js';
 
