@@ -21,6 +21,7 @@ services:
     environment:
       - STORAGE_PATH=/storage
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - ADMIN_TOKEN=${ADMIN_TOKEN}
       - ALWATR_DEBUG=${TELEGRAM_BOT_DEBUG:-}
 
     volumes:

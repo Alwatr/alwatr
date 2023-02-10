@@ -13,8 +13,8 @@ export const config = {
     token: telegramBotToken,
     adminToken: process.env.ADMIN_TOKEN ?? 'admin-token',
   },
-  userStorage: {
-    name: process.env.STORAGE_NAME ?? 'dayCountdown',
+  chatStorage: {
+    name: process.env.STORAGE_NAME ?? 'user',
     path: process.env.STORAGE_PATH ?? 'storage',
   },
   configStorage: {
