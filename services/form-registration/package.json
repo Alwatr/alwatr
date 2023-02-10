@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/form-registration",
-  "version": "0.28.0",
+  "version": "0.29.0",
   "description": "Alwatr Form Registration API Nanoservice, Distributed simple and fast nanoservice for registering form information.",
   "type": "module",
   "keywords": [
@@ -48,10 +48,10 @@
     "watch:es": "yarn build:es --watch"
   },
   "devDependencies": {
-    "@alwatr/logger": "^0.28.0",
-    "@alwatr/nano-server": "^0.28.0",
-    "@alwatr/storage-client": "^0.28.0",
-    "@alwatr/type": "^0.28.0",
+    "@alwatr/logger": "^0.29.0",
+    "@alwatr/nano-server": "^0.29.0",
+    "@alwatr/storage-client": "^0.29.0",
+    "@alwatr/type": "^0.29.0",
     "@types/node": "^18.13.0",
     "esbuild": "^0.17.7",
     "nodemon": "^2.0.20",

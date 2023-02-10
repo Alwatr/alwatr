@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
+
+### Bug Fixes
+
+- compatible with new element mixins ([d26e827](https://github.com/AliMD/alwatr/commit/d26e82731b2ae9c2483ba931c450c5a604633122))
+- compatible with new esbuild api ([e23638e](https://github.com/AliMD/alwatr/commit/e23638ed80a871fef12d5d75aa3eb3824c7cdabd))
+- demo-pwa and ui-kit surface element file name and imports ([9f9c382](https://github.com/AliMD/alwatr/commit/9f9c382cebd0d20d4b1bf9ae8490dfb960506ca1))
+- **demo-pwa:** import old toast ([4ebbb66](https://github.com/AliMD/alwatr/commit/4ebbb660323261502a5598999508822127c5a0e3))
+- **demo-ui:** move some property to content property ([e8dc738](https://github.com/AliMD/alwatr/commit/e8dc7389befee63d5cd0b3de4152c2f914de18e7))
+- lit-analyzer version ([199532d](https://github.com/AliMD/alwatr/commit/199532de48f0dc0e8470d11c6a6544da1c9ddf6c))
+- **pwa:** add blank service-worker.js for debug ([4894547](https://github.com/AliMD/alwatr/commit/4894547d9db9ccb548fd8f39add2c9777ebc23af))
+- **pwa:** clean old l10n resources ([7a48136](https://github.com/AliMD/alwatr/commit/7a4813665de64110baf4b4bc183b1a8a84012824))
+- **typescript:** rollback to 4.9.5 ([cc30f85](https://github.com/AliMD/alwatr/commit/cc30f8502bf95868ff41ba986120b2842acba36b))
+- versions ([f7549ac](https://github.com/AliMD/alwatr/commit/f7549acca75c249e435aaf8597655850eed43961))
+
+### Features
+
+- debug all renders ([73a0d34](https://github.com/AliMD/alwatr/commit/73a0d3483b7c42ab0a6247721073b81a01f7b258))
+- **demo-ui:** image-box demo ([a5b87ed](https://github.com/AliMD/alwatr/commit/a5b87edca97dff0d29483cd840d7e81d6158ee19))
+- **pwa-helper:** esbuild ([9694294](https://github.com/AliMD/alwatr/commit/9694294815203a86fbbfde8288371ab347c5ec11))
+- **pwa-helper:** new package ([a77c049](https://github.com/AliMD/alwatr/commit/a77c0491a6337cb48b42a667a0ee67c7f9f150fa))
+- **pwa/esbuild:** pretty mode ([61903f8](https://github.com/AliMD/alwatr/commit/61903f89a9ad478fe0376b3e6746623ec7bc5907))
+- **pwa:** demo snackbar ([bf031e1](https://github.com/AliMD/alwatr/commit/bf031e197406284d657c3e2abc0d8f6cbe1fe2a8))
+- review ([53726b7](https://github.com/AliMD/alwatr/commit/53726b77274be429c87b2fd322fe2d939b048c77))
+- **toast:** improve ui ([7015c8a](https://github.com/AliMD/alwatr/commit/7015c8a49b9ef5d7c6a69532b48923d76422ff90))
+- **ui-kit/image-box:** update image box based on alwatr-con ([342fb5d](https://github.com/AliMD/alwatr/commit/342fb5d705c776e392077ea44d5796d1ae5d95b1))
+
+### Reverts
+
+- **demo-ui:** image box demo ([a5fc9f0](https://github.com/AliMD/alwatr/commit/a5fc9f0f999e7ffaf0118ff1dacf83fc170fca5a))
+
 # [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
 
 ### Bug Fixes

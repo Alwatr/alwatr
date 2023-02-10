@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
+
+### Bug Fixes
+
+- clean ff old packages ([54df4b7](https://github.com/AliMD/alwatr/commit/54df4b7354abd9547a83cc3b09923cce81210c2c))
+- compatible with i18n ([89c4a90](https://github.com/AliMD/alwatr/commit/89c4a90444db12930b1d0211942c9b84185cbb32))
+- compatible with new esbuild api ([e23638e](https://github.com/AliMD/alwatr/commit/e23638ed80a871fef12d5d75aa3eb3824c7cdabd))
+- lit-analyzer version ([199532d](https://github.com/AliMD/alwatr/commit/199532de48f0dc0e8470d11c6a6544da1c9ddf6c))
+- remove ff from build process ([54445b6](https://github.com/AliMD/alwatr/commit/54445b6622891261f36364114327706c0fd2e4fd))
+- **soffit-pwa:** compatible with new route ([fbf3c56](https://github.com/AliMD/alwatr/commit/fbf3c560efd17b62d42e61f35de425ca09e758bc))
+- **typescript:** rollback to 4.9.5 ([cc30f85](https://github.com/AliMD/alwatr/commit/cc30f8502bf95868ff41ba986120b2842acba36b))
+
+### Features
+
+- debug all renders ([73a0d34](https://github.com/AliMD/alwatr/commit/73a0d3483b7c42ab0a6247721073b81a01f7b258))
+- review ([53726b7](https://github.com/AliMD/alwatr/commit/53726b77274be429c87b2fd322fe2d939b048c77))
+
 # [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
 
 ### Bug Fixes

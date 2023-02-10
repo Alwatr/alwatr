@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
+
+### Bug Fixes
+
+- **typescript:** rollback to 4.9.5 ([cc30f85](https://github.com/AliMD/alwatr/commit/cc30f8502bf95868ff41ba986120b2842acba36b))
+
+### Features
+
+- **i18n:** add replaceNumber and auto detect setLocale from html ([3413471](https://github.com/AliMD/alwatr/commit/341347149f8685bc259034f5593048aa7db0b927))
+- **math:** clamp function ([6fe4423](https://github.com/AliMD/alwatr/commit/6fe44236fc123a32837cfb4ea278b783f2bc2e7a))
+- **math:** getDeviceUuid ([946dad3](https://github.com/AliMD/alwatr/commit/946dad3544f2741462ff239edab8b4a9ea323bd6))
+- **math:** random uuid ([738f51e](https://github.com/AliMD/alwatr/commit/738f51eb323100fafca0a5f515b48d215dae5b3c))
+- **math:** rename deviceId to clientId ([b211fd4](https://github.com/AliMD/alwatr/commit/b211fd42245d51d7109186ddb2f41574d0f0b786))
+
+### Performance Improvements
+
+- **math:** enhance getClientId ([3187039](https://github.com/AliMD/alwatr/commit/3187039a9b87472bda16af6d4b0b71e31c17f272))
+- **math:** enhance getClientId ([af42959](https://github.com/AliMD/alwatr/commit/af429594950c7ded35af53414494dd2f6f4fe208))
+- **unicode-digits:** enhance translate ([104bdba](https://github.com/AliMD/alwatr/commit/104bdba948df11e62577f084b1e51fc4c78e0d9c))
+
 # [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
 
 ### Bug Fixes

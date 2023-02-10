@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
+
+### Bug Fixes
+
+- **route:** cleanup old api ([cf42205](https://github.com/AliMD/alwatr/commit/cf422055b96dbfd33a23732fe3e1def8b86e73c5))
+- **route:** export types ([551f4e3](https://github.com/AliMD/alwatr/commit/551f4e3509cd7b50477c3eefc72a34145e710aa0))
+- **router:** makeRouteContext as soon as posible ([f092b45](https://github.com/AliMD/alwatr/commit/f092b4584cc5fc424ac63cdf40b7c635053b9720))
+- **route:** RouteContextBase type ([9e9ee78](https://github.com/AliMD/alwatr/commit/9e9ee7861bebfe68990171799537d3664ac1a66e))
+- **router:** protocol type ([01fa523](https://github.com/AliMD/alwatr/commit/01fa52381d5ac9760c9af0d595826565548c6841))
+
+### Features
+
+- **route:** makeRouteContext ([16be581](https://github.com/AliMD/alwatr/commit/16be5815a4a44f22bd17c4a87f1b7ef30f9aec6c))
+- **route:** new url method ([580f2b3](https://github.com/AliMD/alwatr/commit/580f2b34396461389da0126d64c3c6ffde99e87b))
+- **route:** redirect with update browser history ([d6d64a0](https://github.com/AliMD/alwatr/commit/d6d64a0fc80284e279db4515d95ff99f530b447f))
+- **router:** enhance logging ([d5930ea](https://github.com/AliMD/alwatr/commit/d5930ea6117b4794c3771a8331c0d6ae063dd52e))
+- **router:** export main api in index and auto init ([58718eb](https://github.com/AliMD/alwatr/commit/58718ebaa10c784255b4a0faa467d35659a1b1df))
+- **router:** initialize process on DOMContentLoaded ([6b114e2](https://github.com/AliMD/alwatr/commit/6b114e2f64a50a40467bff20ecf562d1b7827632))
+- **router:** new api from scratch! ([2b26a8d](https://github.com/AliMD/alwatr/commit/2b26a8d9f95b5968dbda003edc9d540ea95fadd1))
+
 # [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
 
 **Note:** Version bump only for package @alwatr/router

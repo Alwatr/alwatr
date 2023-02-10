@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
+
+### Bug Fixes
+
+- **fetch:** device id to client id ([077e467](https://github.com/AliMD/alwatr/commit/077e4671d804d43c8f61a9d163d8d51d7a69134e))
+- **fetch:** headers type ([cd4b14e](https://github.com/AliMD/alwatr/commit/cd4b14e46b5090b6df8cb4f89d22b53966b9151e))
+
+### Features
+
+- **fetch:** add update_cache to CacheStrategy ([e1406b1](https://github.com/AliMD/alwatr/commit/e1406b12e1276de3295c47506c8102ab3f8bfa79))
+- **fetch:** clientId on service request ([9575a1d](https://github.com/AliMD/alwatr/commit/9575a1d595a0a4757581a29a66837cbe4be46ed3))
+
 # [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
 
 ### Bug Fixes
