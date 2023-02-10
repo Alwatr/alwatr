@@ -24,11 +24,6 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       overflow-y: auto;
     }
 
-    .logo {
-      display: block;
-      width: 100%;
-    }
-
     main {
       display: flex;
       flex-wrap: wrap;
@@ -41,19 +36,8 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       flex-grow: 1;
     }
 
-    alwatr-icon-box[wide],
-    alwatr-lottery-box,
-    alwatr-supply-chain-box {
+    alwatr-icon-box[wide]{
       width: 100%;
-    }
-
-    alwatr-icon-box[small] {
-      width: 26%;
-    }
-
-    alwatr-supply-chain-form,
-    alwatr-lottery-form {
-      padding: 0 var(--sys-spacing-track);
     }
 
     footer {
