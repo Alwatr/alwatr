@@ -52,12 +52,12 @@ const esbuildContext = await esbuild.context({
   sourcesContent: debugMode,
   bundle: true,
   splitting: true,
-  charset: 'ascii',
+  charset: 'utf8',
   legalComments: 'none',
   metafile: true,
 
   define: {
-    _ALWATR_VERSION_: `'${packageJson.version}'`,
+    _ALWATR_VERSION_: `'${packageJson.pwaVersion}'`,
   },
   // drop: ['debugger'],
 
