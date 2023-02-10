@@ -28,7 +28,10 @@ class AlwatrPwa extends AlwatrPwaElement {
         import('./page-home.js');
         return html`<alwatr-page-home>...</alwatr-page-home>`;
       },
-      _404: (routeContext) => this._routesConfig.templates.home(routeContext),
+      _404: () => {
+        import('./page-404.js');
+        return html`<alwatr-page-404>...</alwatr-page-404>`;
+      },
     },
   };
 }
