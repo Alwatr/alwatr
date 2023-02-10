@@ -5,8 +5,8 @@ import {sendMessage} from './lib/send-message.js';
 import {configStorageEngine} from './lib/storage.js';
 
 export async function notifyToAdminList(message: string): Promise<void> {
-  const adminChatIdList = configStorageEngine.get('admin_list')?.adminChatIdList;
-  if (adminChatIdList == null) return;
+  const adminChatIdList = getAdminChatIdList();
+
   for (let i = 0; adminChatIdList.length > i; i++) {
     try {
       await sendMessage(adminChatIdList[i], message);
@@ -50,3 +50,6 @@ export function deleteAdmin(chatId: string): void {
   }
 }
 
+export function getAdminChatIdList(): Array<string> {
+  return configStorageEngine.get('admin_list')?.adminChatIdList ?? [];
+}
