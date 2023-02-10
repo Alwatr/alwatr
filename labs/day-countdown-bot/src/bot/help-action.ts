@@ -13,7 +13,8 @@ bot.action('help', async (ctx) => {
   }
   catch (err) {
     logger.error('action/help', 'send_message_failed', {err});
+    return;
   }
 
-  ctx.answerCbQuery();
+  await ctx.answerCbQuery();
 });

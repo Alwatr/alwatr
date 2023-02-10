@@ -30,6 +30,6 @@ bot.command('deleteNotify', async (ctx) => {
   }
   catch (err) {
     logger.error('command/deleteNotify', 'send_message_failed', {err});
+    return;
   }
-  return;
 });

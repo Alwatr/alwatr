@@ -37,6 +37,7 @@ export function addAdmin(chatId: string): void {
 }
 
 export function deleteAdmin(chatId: string): void {
+  logger.logMethodArgs('deleteAdmin', {chatId});
   const adminList = configStorageEngine.get('admin_list');
 
   if (adminList == null) return;

@@ -15,13 +15,21 @@ bot.command('menu', async (ctx) => {
       allow_sending_without_reply: true,
 
       reply_markup: {
-        inline_keyboard: [[{
-          text: message('button_help'), callback_data: 'help',
-        }], [
-          {
-            text: message('button_unsubscribe'), callback_data: 'unsubscribe',
-          }],
-        ]},
+        inline_keyboard: [
+          [
+            {
+              text: message('button_help'),
+              callback_data: 'help',
+            },
+          ],
+          [
+            {
+              text: message('button_unsubscribe'),
+              callback_data: 'unsubscribe',
+            },
+          ],
+        ],
+      },
     });
   }
   catch (err) {

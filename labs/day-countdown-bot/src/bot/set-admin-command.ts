@@ -16,7 +16,7 @@ bot.command('setAdmin', async (ctx) => {
         await sendMessage(chatId, message('command_set_admin_added_before'));
       }
       catch (err) {
-        logger.error('command/notify', 'send_message_failed', {err});
+        logger.error('command/setAdmin', 'send_message_failed', {err});
         return;
       }
     }

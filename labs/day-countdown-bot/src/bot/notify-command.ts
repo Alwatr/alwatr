@@ -38,7 +38,7 @@ bot.command('notify', async (ctx) => {
         deleteUser(chatId);
       }
       logger.error('command/notify', 'send_message_failed', {err});
-      return;
+      continue;
     }
 
     const user = chatStorageEngine.get(chat.id) as User;
