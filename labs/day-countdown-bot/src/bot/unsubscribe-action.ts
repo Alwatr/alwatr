@@ -1,48 +1,31 @@
 import {logger} from '../config.js';
 import {message} from '../director/l18e-loader.js';
 import {bot} from '../lib/bot.js';
-import {sendMessage} from '../lib/send-message.js';
-import {chatStorageEngine} from '../lib/storage.js';
-import {deleteUser} from '../user.js';
+import {deleteUser, isSubscribed} from '../user.js';
 
 bot.action('unsubscribe', async (ctx) => {
-  const chatId = ctx.chat?.id.toString();
-  if (chatId == null) return;
-  logger.logMethodArgs('action/unsubscribe', {chatId});
+  if (ctx.chatId == null) return;
+  logger.logMethodArgs('action/unsubscribe', {chatId: ctx.chatId});
 
-  if (chatStorageEngine.has(chatId)) {
-    deleteUser(chatId);
-    try {
-      await sendMessage(chatId, message('action_unsubscribe_success'), {
-        parse_mode: 'MarkdownV2',
-        reply_markup: {
-          inline_keyboard: [[
-            {text: message('button_subscribe'), callback_data: 'subscribe'},
-          ]],
-        },
-      });
-    }
-    catch (err) {
-      logger.error('command/unsubscribe', 'send_message_failed', {err});
-      return;
-    }
+  if (isSubscribed(ctx.chatId)) {
+    deleteUser(ctx.chatId);
+    await ctx.sendMessageToChat(message('action_unsubscribe_success'), {
+      reply_markup: {
+        inline_keyboard: [[
+          {text: message('button_subscribe'), callback_data: 'subscribe'},
+        ]],
+      },
+    });
   }
   else {
-    try {
-      await sendMessage(chatId, message('action_unsubscribe_failed'), {
-        parse_mode: 'MarkdownV2',
-        reply_markup: {
-          inline_keyboard: [[
-            {text: message('button_subscribe'), callback_data: 'subscribe'},
-          ]],
-        },
-      });
-    }
-    catch (err) {
-      logger.error('command/unsubscribe', 'send_message_failed', {err});
-      return;
-    }
+    await ctx.sendMessageToChat(message('action_unsubscribe_failed'), {
+      reply_markup: {
+        inline_keyboard: [[
+          {text: message('button_subscribe'), callback_data: 'subscribe'},
+        ]],
+      },
+    });
   }
 
-  ctx.answerCbQuery();
+  await ctx.answerCbQuery();
 });

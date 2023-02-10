@@ -2,35 +2,23 @@ import {logger} from '../config.js';
 import {sendDayCountDown} from '../dayCountdown.js';
 import {message} from '../director/l18e-loader.js';
 import {bot} from '../lib/bot.js';
-import {sendMessage} from '../lib/send-message.js';
 import {chatStorageEngine} from '../lib/storage.js';
+import {isSubscribed} from '../user.js';
 
 bot.action('subscribe', async (ctx) => {
-  const chatId = ctx.chat?.id.toString();
-  if (chatId == null) return;
-  logger.logMethodArgs('action/subscribe', {chatId});
+  if (ctx.chatId == null) return;
+  logger.logMethodArgs('action/subscribe', {chatId: ctx.chatId});
 
-  if (!chatStorageEngine.has(chatId)) {
-    chatStorageEngine.set({id: chatId});
+  if (!isSubscribed(ctx.chatId)) {
+    chatStorageEngine.set({id: ctx.chatId});
+    const response = await ctx.sendMessageToChat(message('action_subscribe_success'));
+    if (response == null) return;
 
-    try {
-      await sendMessage(chatId, message('action_subscribe_success'), {parse_mode: 'MarkdownV2'});
-      await sendDayCountDown(chatId);
-    }
-    catch (err) {
-      logger.error('command/subscribe', 'send_message_failed', {err});
-      return;
-    }
+    await sendDayCountDown(ctx.chatId);
   }
   else {
-    try {
-      await sendMessage(chatId, message('action_subscribe_added_before'), {parse_mode: 'MarkdownV2'});
-    }
-    catch (err) {
-      logger.error('command/subscribe', 'send_message_failed', {err});
-      return;
-    }
+    await ctx.sendMessageToChat(message('action_subscribe_added_before'));
   }
 
-  ctx.answerCbQuery();
+  await ctx.answerCbQuery();
 });

@@ -105,4 +105,6 @@ export class AlwatrTelegrafContext extends Context {
 /**
  * TODO:
  *
+ * 1- admin command.
+ * 2- user command.
  */

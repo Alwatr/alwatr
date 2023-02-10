@@ -4,15 +4,8 @@ import {bot} from '../lib/bot.js';
 import {dateDistance, nime} from '../lib/calender.js';
 
 bot.command('rozshomar', async (ctx): Promise<void> => {
-  const chatId = ctx.chat?.id.toString();
-  if (chatId == null) return;
-  logger.logMethodArgs('command/rozshomar', {chatId});
+  if (ctx.chatId == null) return;
+  logger.logMethodArgs('command/rozshomar', {chatId: ctx.chatId});
 
-  try {
-    await sendDayCountdownMessage(chatId, dateDistance(nime.valueOf()));
-  }
-  catch (err) {
-    logger.error('command/rozshomar', 'send_message_failed', {err});
-    return;
-  }
+  await sendDayCountdownMessage(ctx.chatId, dateDistance(nime.valueOf()));
 });

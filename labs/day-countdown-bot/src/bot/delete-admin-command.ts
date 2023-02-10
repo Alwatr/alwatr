@@ -2,20 +2,15 @@ import {deleteAdmin, isAdmin} from '../admin.js';
 import {logger} from '../config.js';
 import {message} from '../director/l18e-loader.js';
 import {bot} from '../lib/bot.js';
-import {sendMessage} from '../lib/send-message.js';
 
 bot.command('deleteAdmin', async (ctx) => {
-  const chatId = ctx.chat?.id.toString();
-  if (chatId == null) return;
-  logger.logMethodArgs('command/deleteAdmin', {chatId});
+  if (ctx.chatId == null) return;
+  logger.logMethodArgs('command/deleteAdmin', {chatId: ctx.chatId});
 
-  if (isAdmin(chatId)) {
-    deleteAdmin(chatId);
-    try {
-      await sendMessage(chatId, message('command_delete_admin_success'));
-    }
-    catch (err) {
-      logger.error('command/deleteAdmin', 'send_message_failed', {err});
-    }
-  }
+  ctx.isAdminCallback = isAdmin;
+  ctx.onSendMessageForbidden = deleteAdmin;
+  if (!ctx.isAdmin) return;
+
+  deleteAdmin(ctx.chatId);
+  await ctx.replyToChat(message('command_delete_admin_success'));
 });

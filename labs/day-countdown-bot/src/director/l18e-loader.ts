@@ -5,4 +5,3 @@ export const i18r = (await import('../l18r/fa.json', {assert: {type: 'json'}}) a
 export function message(key: Lowercase<string>): string {
   return i18r[key] ?? '...';
 }
-
