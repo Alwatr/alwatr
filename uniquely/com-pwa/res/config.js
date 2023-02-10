@@ -1,4 +1,4 @@
 window.appConfig = {
   api: '/api/v0',
-  token: '4d8468355882232d116254446165063fe9db87e3fa33d0f2ee9d9da88930f3ed',
+  token: '3584fd6c82b5b76568a7f770846be94af9b7a879eb2274f2c0121ccc58d112ee',
 };
