@@ -3,11 +3,15 @@ import {nanoServer} from '../../lib/nano-server.js';
 import {storageClient} from '../../lib/storage.js';
 
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
+import type {StringifyableRecord} from '@alwatr/type';
+import type {Job} from '@alwatr/type/src/flight-finder.js';
 
 // Get current job object
 nanoServer.route('GET', '/job', getJob);
 
-async function getJob(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
+async function getJob(
+    connection: AlwatrConnection,
+): Promise<AlwatrServiceResponse<Record<string, Job>, StringifyableRecord>> {
   logger.logMethod('getJob');
 
   connection.requireToken(config.nanoServer.accessToken);
@@ -25,7 +29,7 @@ async function getJob(connection: AlwatrConnection): Promise<AlwatrServiceRespon
       meta: {
         name: err.name,
         message: err.message,
-        cause: err.cause,
+        cause: <StringifyableRecord>err.cause,
       },
     };
   }

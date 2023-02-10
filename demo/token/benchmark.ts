@@ -1,4 +1,5 @@
 import {type DigestAlgorithm, AlwatrTokenGenerator} from '@alwatr/token';
+import {delay} from '@alwatr/util';
 
 if (process.env.NODE_ENV !== 'production') {
   console.log('Please run node in production for benchmark. NODE_ENV=production node demo/token/benchmark.js');
@@ -7,9 +8,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 const tokenGenerator = new AlwatrTokenGenerator({
   secret: 'my-very-secret-key',
-  duration: '1h',
-  algorithm: 'sha512',
-  encoding: 'base64',
+  duration: null,
+  algorithm: 'md5',
+  encoding: 'base64url',
 });
 
 const sampleData = 'Lorem ipsum dolor sit amet consectetur adipisicing elit.';
@@ -27,8 +28,13 @@ function benchmark(algorithm: DigestAlgorithm): void {
 }
 
 benchmark('md5');
+await delay(500);
 benchmark('sha1');
+await delay(500);
 benchmark('sha224');
+await delay(500);
 benchmark('sha256');
+await delay(500);
 benchmark('sha384');
+await delay(500);
 benchmark('sha512');

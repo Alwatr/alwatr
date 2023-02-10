@@ -6,7 +6,7 @@ import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server'
 
 nanoServer.route('GET', '/keys', getStorageKeys);
 
-function getStorageKeys(connection: AlwatrConnection): AlwatrServiceResponse {
+function getStorageKeys(connection: AlwatrConnection): AlwatrServiceResponse<{keys: Array<string>}, never> {
   logger.logMethod('getStorageKeys');
 
   connection.requireToken(config.nanoServer.accessToken);

@@ -1,13 +1,32 @@
-import {MultiLangStringObj} from './i18n.js';
-import {Photo} from './photo.js';
-
+import type {MultiLangStringObj} from './i18n.js';
+import type {Photo} from './photo.js';
 import type {AlwatrDocumentObject} from './storage.js';
+import type {StringifyableRecord} from './type-helper.js';
 
-export type Product = AlwatrDocumentObject & {
+// -- Const value --
+
+export const shipmentTypeCS = ['x', 'y'] as const;
+export const carTypeCS = ['x', 'y'] as const;
+export const timePeriodCS = ['1-2w', '2-3w', '3-4w'] as const;
+export const discountTypeCS = ['number', 'percent'] as const;
+export const orderStatusCS = [
+  'draft',
+  'registered',
+  'processing',
+  'payment-pending',
+  'preparing',
+  'shipping',
+  'delayed',
+  'on-hold',
+  'canceled',
+  'refunded',
+] as const;
+
+// -- Document object --
+
+export interface Product extends AlwatrDocumentObject {
   /**
-   * Product global ID
-   *
-   * like product unique code
+   * Product global unique id.
    */
   id: string;
 
@@ -20,30 +39,21 @@ export type Product = AlwatrDocumentObject & {
    * Product image
    */
   image: Photo;
-};
+}
 
-export type ProductPrice = AlwatrDocumentObject & {
+export interface Order extends AlwatrDocumentObject {
   /**
-   * Displayed price before discount
+   * Order auto incremental unique id.
    */
-  price: number;
+  id: string;
 
   /**
-   * Final price after any discount
+   * Order Status
    */
-  finalPrice: number;
-};
-
-export type Order = AlwatrDocumentObject & {
-  /**
-   * Order unique code
-   *
-   * customerId-orderId
-   */
-  id: `${number}-${number}`;
+  status: (typeof orderStatusCS)[number];
 
   /**
-   * Products list with price and qty
+   * Order cart list.
    */
   itemList: Array<OrderItem>;
 
@@ -53,30 +63,48 @@ export type Order = AlwatrDocumentObject & {
   delivery: OrderDelivery;
 
   discount: number;
-  discountType: typeof discountTypeCS[number];
+  discountType: (typeof discountTypeCS)[number];
 
   totalPrice: number;
   shippingPrice: number;
   finalPrice: number;
-};
 
-// FIXME: name and values
-export const shipmentTypeCS = ['x', 'y'] as const;
-export const carTypeCS = ['x', 'y'] as const;
-export const timePeriodCS = ['1-2w', '2-3w', '3-4w'] as const;
-export const discountTypeCS = ['number', 'percent'] as const;
+  /**
+   * Customer device uuid.
+   */
+  clientId: string;
 
-export type OrderDelivery = {
-  recipientName: string;
-  recipientNationalCode: string;
-  address: string;
-  shipmentType: typeof shipmentTypeCS[number];
-  carType: typeof carTypeCS[number];
-  timePeriod: typeof timePeriodCS[number];
-};
+  /**
+   * Customer device ip address.
+   */
+  remoteAddress: string;
+}
 
-export type OrderItem = {
+// -- child types --
+
+export interface ProductPrice extends StringifyableRecord {
+  /**
+   * Displayed price before discount
+   */
+  price: number;
+
+  /**
+   * Final price after any discount
+   */
+  finalPrice: number;
+}
+
+export interface OrderItem extends StringifyableRecord {
   productId: string;
   price: ProductPrice;
   qty: number;
-};
+}
+
+export interface OrderDelivery extends StringifyableRecord {
+  recipientName: string;
+  recipientNationalCode: string;
+  address: string;
+  shipmentType: (typeof shipmentTypeCS)[number];
+  carType: (typeof carTypeCS)[number];
+  timePeriod: (typeof timePeriodCS)[number];
+}

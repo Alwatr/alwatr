@@ -1,12 +1,13 @@
 import {isNumber} from '@alwatr/math';
 
 import type {JsonSchema, ValidType} from './type.js';
+import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
 
 export type {JsonSchema};
 
 export function validator<T extends ValidType>(
     validSchema: JsonSchema,
-    targetObject: Record<string, unknown>,
+    targetObject: StringifyableRecord,
     additionalProperties = false,
     path = '.',
 ): T {
@@ -40,13 +41,13 @@ export function validator<T extends ValidType>(
 
     const itemPath = `${path}/${itemName}`;
     const itemSchema = validSchema[itemName];
-    const itemValue = targetObject[itemName] as string | number | boolean | Record<string, unknown>;
+    const itemValue = targetObject[itemName] as Stringifyable;
 
     if (typeof itemSchema === 'object' && itemSchema != null) {
       // nested object
       targetObject[itemName] = validator<ValidType>(
           itemSchema,
-        itemValue as Record<string, unknown>,
+        itemValue as StringifyableRecord,
         additionalProperties,
         itemPath,
       );
@@ -72,7 +73,7 @@ export function validator<T extends ValidType>(
     }
     else if (itemSchema === Number) {
       if (isNumber(itemValue)) {
-        targetObject[itemName] = +itemValue;
+        targetObject[itemName] = +<string>itemValue;
       }
       else {
         throw new Error('invalid_type', {

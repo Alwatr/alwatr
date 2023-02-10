@@ -3,11 +3,14 @@ import {nanoServer} from '../../lib/nano-server.js';
 import {storageClient} from '../../lib/storage.js';
 
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
+import type {StringifyableRecord} from '@alwatr/type';
 
 // Delete object
 nanoServer.route('DELETE', '/job', deleteJob);
 
-async function deleteJob(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
+async function deleteJob(
+    connection: AlwatrConnection,
+): Promise<AlwatrServiceResponse<Record<string, never>, StringifyableRecord>> {
   logger.logMethod('deleteJob');
 
   connection.requireToken(config.nanoServer.accessToken) == null;
@@ -38,7 +41,7 @@ async function deleteJob(connection: AlwatrConnection): Promise<AlwatrServiceRes
         meta: {
           name: err.name,
           message: err.message,
-          cause: err.cause,
+          cause: <StringifyableRecord>err.cause,
         },
       };
     }

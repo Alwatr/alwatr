@@ -1,12 +1,13 @@
-
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageClient} from '../lib/storage.js';
 
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
-import type {AlwatrDocumentObject} from '@alwatr/type';
+import type {AlwatrDocumentObject, StringifyableRecord} from '@alwatr/type';
 
-nanoServer.route('PUT', '/form/', async (connection: AlwatrConnection): Promise<AlwatrServiceResponse> => {
+nanoServer.route('PUT', '/form/', async (
+    connection: AlwatrConnection,
+): Promise<AlwatrServiceResponse<Record<string, never>, StringifyableRecord>> => {
   logger.logMethod('put');
 
   connection.requireToken(config.nanoServer.accessToken);

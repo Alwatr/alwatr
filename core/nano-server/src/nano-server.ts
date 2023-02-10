@@ -15,13 +15,15 @@ import type {
   ParamKeyType,
   ParamValueType,
   QueryParameters,
+  StringifyableRecord,
 } from '@alwatr/type';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
 
-export type RouteMiddleware<TData = Record<string, unknown>, TMeta = Record<string, unknown>> = (
-  connection: AlwatrConnection
-) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>;
+export type RouteMiddleware<
+  TData extends StringifyableRecord = StringifyableRecord,
+  TMeta extends StringifyableRecord = StringifyableRecord
+> = (connection: AlwatrConnection) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>;
 
 export type {
   NanoServerConfig,
@@ -147,11 +149,10 @@ export class AlwatrNanoServer {
    * };
    * ```
    */
-  route<TData = Record<string, unknown>, TMeta = Record<string, unknown>>(
-      method: 'ALL' | Methods,
-      route: 'all' | `/${string}`,
-      middleware: RouteMiddleware<TData, TMeta>,
-  ): void {
+  route<
+    TData extends StringifyableRecord = StringifyableRecord,
+    TMeta extends StringifyableRecord = StringifyableRecord
+  >(method: 'ALL' | Methods, route: 'all' | `/${string}`, middleware: RouteMiddleware<TData, TMeta>): void {
     this._logger.logMethodArgs('route', {method, route});
 
     if (this.middlewareList[method] == null) this.middlewareList[method] = {};
@@ -183,7 +184,10 @@ export class AlwatrNanoServer {
    * });
    * ```
    */
-  reply(serverResponse: ServerResponse, content: AlwatrServiceResponse<unknown, unknown>): void {
+  reply(
+      serverResponse: ServerResponse,
+      content: AlwatrServiceResponse<StringifyableRecord, StringifyableRecord>,
+  ): void {
     content.statusCode ??= 200;
     this._logger.logMethodArgs('reply', {ok: content.ok, statusCode: content.statusCode});
 
@@ -326,7 +330,7 @@ export class AlwatrNanoServer {
     }
     catch (errorObject) {
       if (typeof errorObject === 'object' && errorObject != null && 'ok' in errorObject) {
-        this.reply(serverResponse, <AlwatrServiceResponse>errorObject);
+        this.reply(serverResponse, <AlwatrServiceResponse<StringifyableRecord, StringifyableRecord>>errorObject);
       }
       else {
         const err = errorObject as Error;
@@ -342,7 +346,7 @@ export class AlwatrNanoServer {
           meta: {
             name: err?.name,
             message: err?.message,
-            cause: err?.cause,
+            cause: <StringifyableRecord>err?.cause,
           },
         });
       }
@@ -445,7 +449,7 @@ export class AlwatrConnection {
    * const bodyData = await connection.requireJsonBody();
    * ```
    */
-  async requireJsonBody<T>(): Promise<T> {
+  async requireJsonBody<T extends StringifyableRecord>(): Promise<T> {
     // if request content type is json
     if (this.incomingMessage.headers['content-type'] !== 'application/json') {
       // eslint-disable-next-line no-throw-literal

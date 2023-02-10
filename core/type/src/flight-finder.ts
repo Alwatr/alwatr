@@ -1,11 +1,12 @@
 import type {AlwatrDocumentObject} from './storage.js';
+import type {StringifyableRecord} from './type-helper.js';
 
-export type Job = AlwatrDocumentObject & {
+export interface Job extends AlwatrDocumentObject {
   detail: JobDetail;
   resultList: Array<JobResult>;
-};
+}
 
-export type JobDetail = {
+export interface JobDetail extends StringifyableRecord {
   origin: string;
   destination: string;
   date: string;
@@ -14,9 +15,9 @@ export type JobDetail = {
   description: string;
   minHour: number | null;
   maxHour: number | null;
-};
+}
 
-export type JobResult = {
+export interface JobResult extends StringifyableRecord {
   price: number;
   time: string;
   seatCount: number;
@@ -24,4 +25,4 @@ export type JobResult = {
   airplane: string;
   flightId: string;
   arrivalTime: string;
-};
+}
