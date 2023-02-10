@@ -5,9 +5,9 @@ export const logger = createLogger('com-api');
 
 export const config = {
   storage: {
-    host: process.env.ORDER_STORAGE_HOST ?? '127.0.0.1',
-    port: process.env.ORDER_STORAGE_PORT != null ? +process.env.ORDER_STORAGE_PORT : 9000,
-    token: process.env.ORDER_STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
+    host: process.env.STORAGE_HOST ?? '127.0.0.1',
+    port: process.env.STORAGE_PORT != null ? +process.env.STORAGE_PORT : 9000,
+    token: process.env.STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
     productStorageName: process.env.PRODUCT_STORAGE_NAME ?? 'product',
   },
   token: <TokenGeneratorConfig>{

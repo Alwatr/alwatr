@@ -1,6 +1,8 @@
+import type {StringifyableRecord} from '@alwatr/type';
+
 declare global {
   // eslint-disable-next-line no-var
-  var appConfig: Record<string, string | number | boolean | undefined> | undefined;
+  var appConfig: StringifyableRecord;
 }
 
 // TODO: config-context with dynamic import like l18r
