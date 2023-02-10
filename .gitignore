@@ -19,6 +19,7 @@ Desktop.ini
 *.d.ts
 *.js
 !*.config.js
+!**/res/*.js
 dist
 build
 
@@ -33,8 +34,9 @@ package-lock.json
 .yarn-integrity
 
 # dotenv environment variables file
-*.env
-!example.env
+.env
+# *.env
+# !example.env
 
 temp
 _data

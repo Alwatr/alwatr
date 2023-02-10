@@ -7,8 +7,9 @@
   "type": "module",
   "private": true,
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=7.0.0"
+    "node": ">=18.13.0",
+    "npm": ">=8.0.0",
+    "yarn": ">=1.22.0"
   },
   "workspaces": [
     "core/*",
@@ -21,7 +22,7 @@
   "scripts": {
     "l": "yarn lint",
     "b": "yarn build",
-    "br": "run-s build:ts build:r",
+    "br": "run-s build build:r",
     "c": "yarn clean",
     "cb": "run-s clean build",
     "s": "run-s build serve",
@@ -39,7 +40,7 @@
     "format": "run-s format:prettier format:eslint",
     "format:eslint": "yarn lint:ts --fix",
     "format:prettier": "prettier . --ignore-path .gitignore --write",
-    "clean": "yarn build:ts --clean && lerna run clean",
+    "clean": "git clean -d -x -f --exclude=node_modules --exclude=*.env",
     "serve": "wds",
     "watch": "run-p watch:* serve",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput",
@@ -51,26 +52,19 @@
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.48.2",
-    "@typescript-eslint/parser": "^5.48.2",
-    "@typescript/lib-dom": "npm:@types/web",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
     "@web/dev-server": "^0.1.35",
-    "@web/dev-server-esbuild": "^0.3.3",
-    "eslint": "^8.32.0",
+    "eslint": "^8.33.0",
     "eslint-config-google": "^0.14.0",
     "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-lit": "^1.8.2",
     "eslint-plugin-wc": "^1.4.0",
     "lerna": "^6.4.1",
-    "lit-analyzer": "^1.2.1",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.8.3",
-    "rimraf": "^4.1.1",
+    "prettier": "^2.8.4",
     "ts-lit-plugin": "^1.2.1",
-    "typescript": "^4.9.4"
-  },
-  "resolutions": {
-    "esbuild": "^0.16.4"
+    "typescript": "^4.9.5"
   }
 }

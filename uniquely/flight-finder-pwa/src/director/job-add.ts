@@ -1,14 +1,9 @@
 import {type AlwatrServiceResponse, fetch} from '@alwatr/fetch';
-import {SignalInterface} from '@alwatr/signal';
-
-import {jobDocumentStorageSignal} from './job-document-storage.js';
-import {showToastSignal} from './toast.js';
+import {commandTrigger, eventListener, requestableContextConsumer} from '@alwatr/signal';
 
 import type {Job} from '@alwatr/type/flight-finder.js';
 
-export const jobAddSignal = new SignalInterface('job-add');
-
-jobAddSignal.addListener(async (job) => {
+eventListener.subscribe<Job>('job-add', async (job) => {
   try {
     const response = await fetch({
       url: window.appConfig?.api ? window.appConfig.api + '/job' : '/job',
@@ -28,10 +23,10 @@ jobAddSignal.addListener(async (job) => {
     }
   }
   catch (error) {
-    showToastSignal.dispatch({
+    commandTrigger.request('toast', {
       message: 'عملیات با خطا رو به رو شد',
     });
   }
 
-  jobDocumentStorageSignal.request(null);
+  requestableContextConsumer.request('job-document-storage', null);
 });

@@ -1,5 +1,4 @@
-import {logger} from './core.js';
-import {routeChangeSignal} from './signal.js';
+import {logger, redirect} from './core.js';
 
 let _enabled = false;
 
@@ -14,6 +13,8 @@ export const clickTrigger = {
    * Alwatr router global click handler.
    */
   _clickHandler(event: MouseEvent): void {
+    logger.logMethod('_clickHandler');
+
     if (
       // ignore if the default action is prevented.
       event.defaultPrevented ||
@@ -45,7 +46,7 @@ export const clickTrigger = {
       // ignore if the anchor is not an <a> element.
       anchor.tagName?.toLowerCase() !== 'a' ||
       // ignore if the <a> element has a non-default target.
-      (typeof anchor.target === 'string' && anchor.target !== '' && anchor.target?.toLowerCase() !== '_self') ||
+      (typeof anchor.target === 'string' && anchor.target !== '' && anchor.target.toLowerCase() !== '_self') ||
       // ignore if the <a> element has a download attribute.
       anchor.hasAttribute('download') ||
       // ignore if the <a> element has a rel attribute.
@@ -68,8 +69,8 @@ export const clickTrigger = {
     }
 
     // if none of the above, convert the click into a navigation signal.
-    const {pathname, search, hash} = anchor;
-    routeChangeSignal.request({pathname, search, hash});
+    redirect(anchor.href, true);
+
     // for a click event, the scroll is reset to the top position.
     if (event.type === 'click') {
       window.scrollTo(0, 0);

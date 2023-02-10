@@ -1,8 +1,6 @@
-export type SepehrResponse = Record<string, unknown> & {
-  flightHeaderList: Array<SepehrFlightInformation>;
-};
+import type {StringifyableRecord} from '@alwatr/type';
 
-type SepehrFlightInformation = Record<string, unknown> & {
+interface SepehrFlightInformation extends StringifyableRecord {
   airlineName: string;
   airlineIataCode: string;
   airplaneName: string;
@@ -15,4 +13,9 @@ type SepehrFlightInformation = Record<string, unknown> & {
   formattedPrice: string;
   durationTotalMinutes: number;
   seatCount: number;
-};
+}
+
+export interface SepehrResponse extends StringifyableRecord {
+  flightHeaderList: Array<SepehrFlightInformation>;
+}
+

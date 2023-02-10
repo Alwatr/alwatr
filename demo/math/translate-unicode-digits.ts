@@ -1,6 +1,6 @@
-import {UnicodeDigits} from '@alwatr/math';
+import {UnicodeDigits, getClientId} from '@alwatr/math';
 
-const unicodeDigits = new UnicodeDigits('all', 'fa');
+const unicodeDigits = new UnicodeDigits('fa', 'all');
 
 const list = [
   '0123456789',
@@ -27,3 +27,6 @@ for (let i = count; i > 0; i--) {
 }
 
 console.log((count / (Date.now() - start)) * 1000);
+
+console.log('client-id', getClientId());
+console.log('client-id', getClientId());

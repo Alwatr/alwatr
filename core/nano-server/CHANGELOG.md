@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
+
+### Bug Fixes
+
+- **nano-server:** compatible with ParamValueType ([325d896](https://github.com/AliMD/alwatr/commit/325d89651aeba38079d6fb9184adb894df94f083))
+- **nano-server:** null parsedParams ([bb969b2](https://github.com/AliMD/alwatr/commit/bb969b23495f791003225b5c557e40e10e7f8124))
+- **nano-server:** type ([2586061](https://github.com/AliMD/alwatr/commit/25860611f765e67ecddd586d80169ebe7f75701b))
+
+### Features
+
+- **nano-server:** add client-id to IncomingHttpHeaders type ([a4a86c7](https://github.com/AliMD/alwatr/commit/a4a86c7e410edfe69e66cdab6b8ffdc0d9b95eb8))
+- **nano-service:** api prefix support ([21960dc](https://github.com/AliMD/alwatr/commit/21960dce5f25a587b19886e487f7d46af5ca087b))
+
 # [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
 
 ### Bug Fixes

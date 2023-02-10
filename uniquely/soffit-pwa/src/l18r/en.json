@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "meta": {
+    "code": "en-US",
+    "rev": 0
+  },
+  "data": {
+    "invalid_form_data": "The form information is not correct.",
+    "check_network_connection": "Please check internet, and send again.",
+
+    "lottery_code": "Lottery number",
+    "full_name": "First/Last Name",
+    "phone_number": "Phone number",
+    "submit_form": "Submit",
+    "cancel": "Cancel",
+    "lottery_form_title": "Lottery",
+    "lottery_form_description": "Soffit monthly lottery registration form.",
+    "supply_chain_form_title": "Supply Chain",
+    "supply_chain_form_description": "Supply chain of construction products registration form.",
+    "form_submitted": "Your information has been successfully saved.",
+    "activity_area": "Activity area",
+    "activity_type": "Activity type",
+    "tile_player": "Tile player",
+    "tile_installer": "Tile installer",
+    "seller_shopkeeper": "Seller and shopkeeper",
+    "contractor": "Contractor",
+    "manufacturer": "Manufacturer",
+    "other": "Other"
+  }
+}

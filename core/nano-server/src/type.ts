@@ -1,3 +1,12 @@
+declare module 'http' {
+  interface IncomingHttpHeaders {
+    /**
+     * Alwatr Client UUID
+     */
+    'client-id'?: string;
+  }
+}
+
 export interface NanoServerConfig {
   /**
    * The port number to listen on.

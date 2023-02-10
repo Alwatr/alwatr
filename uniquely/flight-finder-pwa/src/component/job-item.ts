@@ -9,8 +9,8 @@ import {
   html,
   nothing,
 } from '@alwatr/element';
-import {l10n} from '@alwatr/i18n';
-import {SignalInterface} from '@alwatr/signal';
+import {message, number} from '@alwatr/i18n';
+import {eventTrigger} from '@alwatr/signal';
 
 import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
@@ -96,17 +96,10 @@ export class JobItem extends AlwatrSmartElement {
   @property({attribute: false, type: Object}) job?: Job;
   @query('ion-item-sliding') private __ionItemSliding?: HTMLElement;
 
-  static jobDeleteSignal = new SignalInterface('job-delete');
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    l10n.resourceChangeSignal.addListener(() => {
-      this.requestUpdate();
-    });
-  }
+  static jobDeleteEventTrigger = eventTrigger.bind('job-delete');
 
   override render(): unknown {
+    this._logger.logMethod('render');
     if (this.job == null || this.job.detail == null) return nothing;
 
     return html`
@@ -164,16 +157,16 @@ export class JobItem extends AlwatrSmartElement {
       const lowestPrice = Math.min(...resultList.map((result) => result.price));
       return html`
         <div class="job__title">
-          <span>${l10n.formatNumber(resultList.length)}</span>
-          ${l10n.localize('flight')}
+          <span>${number(resultList.length)}</span>
+          ${message('flight')}
         </div>
         <div class="job__subtitle job__subtitle-founded">
-          <span class="job__subtitle-price ion-color-danger"> ${l10n.formatNumber(lowestPrice)} </span>
-          <span>${l10n.localize('config_currency')}</span>
+          <span class="job__subtitle-price ion-color-danger"> ${number(lowestPrice)} </span>
+          <span>${message('config_currency')}</span>
         </div>
       `;
     }
-    return html` <ion-note>${l10n.localize('not_found')}</ion-note> `;
+    return html` <ion-note>${message('not_found')}</ion-note> `;
   }
   private __renderDescription(description: string): TemplateResult | typeof nothing {
     if (description.trim() == '') return nothing;
@@ -187,7 +180,7 @@ export class JobItem extends AlwatrSmartElement {
       return;
     }
 
-    JobItem.jobDeleteSignal.dispatch(this.job.id);
+    JobItem.jobDeleteEventTrigger.dispatch(this.job.id);
   }
   private async __openSliding(): Promise<void> {
     if (this.__ionItemSliding == null) return;

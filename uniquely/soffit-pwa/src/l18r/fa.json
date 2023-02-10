@@ -1,0 +1,29 @@
+{
+  "ok": true,
+  "meta": {
+    "code": "fa-IR",
+    "rev": 0
+  },
+  "data": {
+    "invalid_form_data": "اطلاعات فرم صحیح نمی‌باشد.",
+    "check_network_connection": "لطفا از اتصال خود به اینترنت اطمینان حاصل فرمایید و دوباره ارسال کنید.",
+    "lottery_code": "کد قرعه‌کشی",
+    "full_name": "نام و نام‌خانوادگی",
+    "phone_number": "شماره تلفن",
+    "submit_form": "ارسال فرم",
+    "cancel": "انصراف",
+    "lottery_form_title": "قرعه‌کشی",
+    "lottery_form_description": "فرم شرکت در قرعه‌کشی ماهانه سافیت",
+    "supply_chain_form_title": "زنجیره تامین",
+    "supply_chain_form_description": "فرم ثبت نام در زنجیره تامین محصولات ساختمانی",
+    "form_submitted": "اطلاعات شما با موفقیت ذخیره شد.",
+    "activity_area": "حوزه فعالیت",
+    "activity_type": "نوع فعالیت",
+    "tile_player": "پخش کننده تایل",
+    "tile_installer": "نصاب تایل",
+    "seller_shopkeeper": "فروشنده و مغازه‌دار",
+    "contractor": "پیمانکار",
+    "manufacturer": "سازنده",
+    "other": "سایر"
+  }
+}

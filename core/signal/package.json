@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/signal",
-  "version": "0.28.0",
+  "version": "0.29.0",
   "description": "Elegant powerful event system for handle global signals and states written in tiny TypeScript module.",
   "keywords": [
     "signal",
@@ -8,13 +8,10 @@
     "esm",
     "alwatr"
   ],
-  "main": "signal.js",
+  "main": "index.js",
   "type": "module",
-  "types": "signal.d.ts",
+  "types": "index.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "contributors": [
-    "MohammadMahdi Zamanian <mm25zamanian@gmail.com>"
-  ],
   "license": "MIT",
   "files": [
     "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
@@ -32,7 +29,7 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.28.0",
-    "tslib": "^2.4.1"
+    "@alwatr/logger": "^0.29.0",
+    "tslib": "^2.5.0"
   }
 }

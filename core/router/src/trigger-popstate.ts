@@ -1,5 +1,4 @@
-import {logger} from './core.js';
-import {routeChangeSignal} from './signal.js';
+import {logger, redirect} from './core.js';
 
 let _enabled = false;
 
@@ -11,22 +10,20 @@ export const popstateTrigger = {
    * Alwatr router global popstate handler.
    */
   _popstateHandler(event: PopStateEvent): void {
-    if (event.state === 'alwatr-router-ignore') {
-      return;
-    }
-    // if none of the above, convert the click into a navigation signal.
-    const {pathname, search, hash} = window.location;
-    routeChangeSignal.request({pathname, search, hash, pushState: false});
+    const href = globalThis.location?.href;
+    logger.logMethodArgs('_popstateHandler', href);
+    if (event.state === 'router-ignore') return;
+    redirect(href, false);
   },
 
   set enable(enable: boolean) {
     logger.logProperty('popstateTrigger.enable', enable);
 
     if (enable && !_enabled) {
-      window.addEventListener('popstate', popstateTrigger._popstateHandler);
+      globalThis.addEventListener('popstate', popstateTrigger._popstateHandler);
     }
     if (!enable && _enabled) {
-      window.removeEventListener('popstate', popstateTrigger._popstateHandler);
+      globalThis.removeEventListener('popstate', popstateTrigger._popstateHandler);
     }
     _enabled = enable;
   },

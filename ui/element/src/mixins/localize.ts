@@ -1,38 +1,28 @@
-import {l10n} from '@alwatr/i18n';
+import {l18eContextConsumer} from '@alwatr/i18n';
 
-import type {LoggerMixinInterface} from './logging.js';
-import type {Constructor} from '@alwatr/type';
+import type {SignalMixinInterface} from './signal.js';
+import type {Constructor, L18eContext} from '@alwatr/type';
 
-export declare class LocalizeMixinInterface extends LoggerMixinInterface {
-  protected _signalListenerList: Array<unknown>;
-  protected l10n: {
-    localize: typeof l10n.localize;
-    formatNumber: typeof l10n.formatNumber;
-  };
+export declare class LocalizeMixinInterface extends SignalMixinInterface {
+  protected _l18eContextUpdated(_l18eContext: L18eContext): void;
 }
 
-export function LocalizeMixin<T extends Constructor<LoggerMixinInterface>>(
+export function LocalizeMixin<T extends Constructor<SignalMixinInterface>>(
     superClass: T,
 ): Constructor<LocalizeMixinInterface> & T {
   class LocalizeMixinClass extends superClass {
-    protected _signalListenerList: Array<unknown> = [];
-
-    protected l10n = {
-      localize: l10n.localize,
-      formatNumber: l10n.formatNumber,
-    };
-
     override connectedCallback(): void {
       super.connectedCallback();
       this._signalListenerList.push(
-          l10n.resourceChangeSignal.addListener(() => {
-            this._l10nResourceChanged();
-          }),
+          l18eContextConsumer.subscribe(this._l18eContextUpdated.bind(this)),
       );
     }
 
-    protected _l10nResourceChanged(): void {
-      this._logger.logMethod('_l10nResourceChange');
+    /**
+     * On localization resource context updated.
+     */
+    protected _l18eContextUpdated(l18eContext: L18eContext): void {
+      this._logger.logMethodArgs('_l18eContextUpdated', l18eContext.meta);
       this.requestUpdate();
     }
   }

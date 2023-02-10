@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
+
+### Bug Fixes
+
+- compatible with new element mixins ([d26e827](https://github.com/AliMD/alwatr/commit/d26e82731b2ae9c2483ba931c450c5a604633122))
+
+### Features
+
+- debug all renders ([73a0d34](https://github.com/AliMD/alwatr/commit/73a0d3483b7c42ab0a6247721073b81a01f7b258))
+- **icon:** enhance preload, support `icon-url-prefix` context signal ([b5a277c](https://github.com/AliMD/alwatr/commit/b5a277c1403177ba14de9434d908df0f4000a5a6))
+
 # [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
 
 ### Bug Fixes

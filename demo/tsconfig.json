@@ -18,6 +18,7 @@
     {"path": "../core/storage-client"},
     {"path": "../core/token"},
     {"path": "../core/math"},
+    {"path": "../core/util"},
     {"path": "../ui/icon"},
     {"path": "../core/storage-engine"},
     {"path": "../core/validator"}

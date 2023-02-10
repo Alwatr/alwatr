@@ -1,8 +1,11 @@
-import {css, customElement, html, property, nothing, ifDefined} from '@alwatr/element';
+import {css, customElement, html, property, nothing, ifDefined, PropertyValues, when} from '@alwatr/element';
 
 import '@alwatr/icon';
 
-import {AlwatrCard} from './card.js';
+import {AlwatrSurface} from './surface.js';
+
+import type {StringifyableRecord} from '@alwatr/type';
+
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -10,46 +13,62 @@ declare global {
   }
 }
 
-export type IconBoxContent = {
-  icon: string;
+export interface IconBoxContent extends StringifyableRecord {
+  icon?: string;
   headline: string;
   description?: string;
   href?: string;
   flipRtl?: boolean;
   target?: 'download' | '_blank';
-};
+  highlight?: boolean;
+  stated?: boolean;
+  preLine?: boolean;
+  elevated?: number;
+}
 
 /**
- * Alwatr standard icon button element.
+ * Alwatr icon box element.
  */
 @customElement('alwatr-icon-box')
-export class AlwatrIconBox extends AlwatrCard {
+export class AlwatrIconBox extends AlwatrSurface {
   static override styles = [
-    AlwatrCard.styles,
+    AlwatrSurface.styles,
     css`
       :host {
         display: block;
         padding: 0;
-        transition-property: color, background-color;
-        transition-duration: var(--sys-motion-duration-small);
-        transition-timing-function: var(--sys-motion-easing-linear);
+        transition-property: color, background-color, opacity, height;
+        transition-duration: var(--sys-motion-duration-small), var(--sys-motion-duration-small),
+          var(--sys-motion-duration-small), var(--sys-motion-duration-large);
+        transition-timing-function: var(--sys-motion-easing-normal);
+        font-family: var(--sys-typescale-body-small-font-family-name);
+        font-weight: var(--sys-typescale-body-small-font-weight);
+        font-size: var(--sys-typescale-body-small-font-size);
+        letter-spacing: var(--sys-typescale-body-small-letter-spacing);
+        line-height: var(--sys-typescale-body-small-line-height);
         user-select: none;
         -webkit-user-select: none;
       }
-      :host(:hover) {
+
+      :host([highlight]) {
+        cursor: pointer;
+      }
+
+      :host([highlight]:hover) {
         --_surface-color-on: var(--sys-color-on-primary-hsl);
         --_surface-color-bg: var(--sys-color-primary-hsl);
       }
 
-      a {
+      .container {
         display: block;
         padding: calc(2 * var(--sys-spacing-track));
         border-radius: inherit;
         color: inherit;
-        text-decoration: none;
+        text-decoration: inherit;
       }
 
       .headline {
+        margin: 0;
         font-family: var(--sys-typescale-headline-small-font-family-name);
         font-weight: var(--sys-typescale-headline-small-font-weight);
         font-size: var(--sys-typescale-headline-small-font-size);
@@ -62,54 +81,63 @@ export class AlwatrIconBox extends AlwatrCard {
         margin-bottom: var(--sys-spacing-track);
         font-size: 1.5em;
         color: var(--sys-color-primary);
-        transition: color var(--sys-motion-duration-small) var(--sys-motion-easing-linear);
+        transition: color var(--sys-motion-duration-small) var(--sys-motion-easing-normal);
       }
-      :host(:hover) .headline alwatr-icon {
+      :host([highlight]:hover) .headline alwatr-icon {
         color: var(--sys-color-on-primary);
       }
 
       .description {
-        font-family: var(--sys-typescale-body-small-font-family-name);
-        font-weight: var(--sys-typescale-body-small-font-weight);
-        font-size: var(--sys-typescale-body-small-font-size);
-        letter-spacing: var(--sys-typescale-body-small-letter-spacing);
-        line-height: var(--sys-typescale-body-small-line-height);
         margin-top: calc(2 * var(--sys-spacing-track));
-        white-space: pre-line;
       }
-
-      .description:empty {
-        display: none;
+      :host([pre-line]) .description {
+        white-space: pre-line;
       }
     `,
   ];
 
-  @property({type: Object})
+  @property({type: Object, attribute: false})
     content?: IconBoxContent;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.setAttribute('stated', '');
-    this.setAttribute('elevated', '3');
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+    if (changedProperties.has('content') && this.content != null) {
+      this.toggleAttribute('highlight', Boolean(this.content.highlight));
+      this.toggleAttribute('stated', Boolean(this.content.stated));
+      this.toggleAttribute('pre-line', Boolean(this.content.preLine));
+      if (this.content.elevated != null && this.content.elevated > 0) {
+        this.setAttribute('elevated', this.content.elevated + '');
+      }
+      else {
+        this.removeAttribute('elevated');
+      }
+    }
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
-    if (this.content == null) return nothing;
-    const target = this.content.target !== 'download' ? this.content.target : undefined;
+    const content = this.content;
+    if (content == null) return nothing;
+    const target = content.target !== 'download' ? content.target : undefined;
 
-    return html`
-      <a
-        href=${ifDefined(this.content.href)}
-        target=${ifDefined(target)}
-        ?download=${this.content.target === 'download'}
-      >
-        <div class="headline">
-          <alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>
-          <span>${this.content.headline}</span>
-        </div>
-        <div class="description">${this.content.description}</div>
-      </a>
+    const template = html`
+      <h3 class="headline">
+        ${when(content.icon, () => html`
+          <alwatr-icon .name=${content.icon} ?flip-rtl=${content.flipRtl}></alwatr-icon>
+        `)}
+        <span>${content.headline}</span>
+      </h3>
+      <div class="description"><slot>${content.description}</slot></div>
     `;
+
+    return content.href == null
+      ? html`<div class="container">${template}</div>`
+      : html`<a
+          class="container"
+          href=${ifDefined(content.href)}
+          target=${ifDefined(target)}
+          ?download=${content.target === 'download'}
+          >${template}</a
+        >`;
   }
 }

@@ -1,14 +1,17 @@
-export type LocalCode = `${Lowercase<string>}-${Uppercase<string>}`;
+import {AlwatrServiceResponseSuccessWithMeta} from './service-response.js';
 
-export type L10Resource = Record<string, string> & {
-  _code: LocalCode;
-};
+export type LocaleCode = `${Lowercase<string>}-${Uppercase<string>}`;
 
-export type Locale = {
+export type L18eContext = AlwatrServiceResponseSuccessWithMeta<Record<Lowercase<string>, string>, {
+  code: LocaleCode;
+  rev: number;
+}>;
+
+export type LocaleContext = {
   /**
    * fa-IR, en-US, ...
    */
-  code: LocalCode;
+  code: LocaleCode;
 
   /**
    * fa, en, ...
@@ -26,4 +29,4 @@ export type Locale = {
  *
  * {fa: 'سلام', en: 'hello'}
  */
-export type i18nString = Record<Lowercase<string>, string>;
+export type MultiLangStringObj = Record<Lowercase<string>, string>;

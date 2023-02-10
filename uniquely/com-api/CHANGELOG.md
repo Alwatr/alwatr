@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
+
+### Bug Fixes
+
+- build com-cpi ([6419e4f](https://github.com/AliMD/alwatr/commit/6419e4f543bdbfab3029d429d6ab30418498befa))
+- **com-api:** merge order and product storage client ([cd9ebbe](https://github.com/AliMD/alwatr/commit/cd9ebbebc45e5fa3c036264ed7b80cc919229bb0))
+- **com-api:** storage config ([c08d349](https://github.com/AliMD/alwatr/commit/c08d34982706996e6ff9d26a1290e1c3a813da56))
+- **typescript:** rollback to 4.9.5 ([cc30f85](https://github.com/AliMD/alwatr/commit/cc30f8502bf95868ff41ba986120b2842acba36b))
+
+### Features
+
+- **com-api:** htop auth on order routes ([4f399ec](https://github.com/AliMD/alwatr/commit/4f399ec6139416d1ff227199e882ccc516e6ccf6))
+- **com-api:** routes ([5900ac0](https://github.com/AliMD/alwatr/commit/5900ac01086075dc2c44e06f9c3e39302b94ce71))
+- **comp-api:** enhance and review ([38b680e](https://github.com/AliMD/alwatr/commit/38b680ed2192b7b53e4cb5002d80125607253b49))
+- update routes with new types ([76a2710](https://github.com/AliMD/alwatr/commit/76a271081ac0011ab0a7594127997806073b12d0))
+
 # [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
 
 ### Bug Fixes

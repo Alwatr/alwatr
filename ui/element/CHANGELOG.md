@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
+
+### Bug Fixes
+
+- compatible with i18n ([89c4a90](https://github.com/AliMD/alwatr/commit/89c4a90444db12930b1d0211942c9b84185cbb32))
+- **element:** compatible with new signal api ([020a083](https://github.com/AliMD/alwatr/commit/020a0837de496d8c4943fe5cdb659fee3dc0e051))
+- **element:** import issue ([87b3e12](https://github.com/AliMD/alwatr/commit/87b3e12a289fc477b072c1321aca160db46dc69c))
+- **element:** import type ([b125318](https://github.com/AliMD/alwatr/commit/b1253186036df3dcafca06f1bc4aca613c220f51))
+- **element:** logger mixin issue ([db5d96d](https://github.com/AliMD/alwatr/commit/db5d96d3a3b3cf5e07c60474e69ebf75a77978c4))
+
+### Features
+
+- **element/direction:** compute mode and improve performance ([9d3b2ed](https://github.com/AliMD/alwatr/commit/9d3b2ed4443585e0b2eb497dd24501d8753983c5))
+- **element:** ali ([25422c4](https://github.com/AliMD/alwatr/commit/25422c4dee951be8c8bd37ec709f1492946731ad))
+- **element:** rewrite all mixins with new api ([baa1e5e](https://github.com/AliMD/alwatr/commit/baa1e5e546654658f473622b148ceb7e7e8e3da6))
+- **pwa-helper:** new package ([a77c049](https://github.com/AliMD/alwatr/commit/a77c0491a6337cb48b42a667a0ee67c7f9f150fa))
+- review ([53726b7](https://github.com/AliMD/alwatr/commit/53726b77274be429c87b2fd322fe2d939b048c77))
+- **surface-element:** active-outline ([3261091](https://github.com/AliMD/alwatr/commit/3261091bdfbb3dd777aa2676f1bf0ce5d3aa7192))
+
 # [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
 
 ### Bug Fixes

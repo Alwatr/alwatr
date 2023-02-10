@@ -1,11 +1,12 @@
 import {html, customElement} from '@alwatr/element';
-import {AlwatrPwaElement} from '@alwatr/element/pwa-element.js';
-import {l10n} from '@alwatr/i18n';
+import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
 
+import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/font/vazirmatn.css';
-import './page-home.js';
+
+import './director/index.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 
@@ -20,21 +21,18 @@ declare global {
  */
 @customElement('alwatr-pwa')
 class AlwatrPwa extends AlwatrPwaElement {
-  protected override _routes: RoutesConfig = {
-    map: (route) => route.sectionList[0]?.toString(),
-    list: {
-      home: {
-        render: () => html`<alwatr-page-home></alwatr-page-home>`,
+  protected override _routesConfig: RoutesConfig = {
+    routeId: this._routesConfig.routeId,
+    templates: {
+      home: () => {
+        import('./page-home.js');
+        return html`<alwatr-page-home>...</alwatr-page-home>`;
       },
+      product: () => {
+        import('./page-product.js');
+        return html`<alwatr-page-product>...</alwatr-page-product>`;
+      },
+      _404: (routeContext) => this._routesConfig.templates.home(routeContext),
     },
   };
-
-  protected override _initLocale(): void {
-    l10n.config.defaultLocale = {
-      code: 'fa-IR',
-      direction: 'rtl',
-      language: 'fa',
-    };
-    super._initLocale();
-  }
 }

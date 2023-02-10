@@ -1,22 +1,26 @@
-import type {Constructor} from '@alwatr/type';
-import type {LitElement} from 'lit';
+import {unsubscribe} from '@alwatr/signal/core.js';
 
-export declare class SignalMixinInterface extends LitElement {
-  protected _signalListenerList: Array<unknown>;
+import type {LoggerMixinInterface} from './logging.js';
+import type {ListenerSpec} from '@alwatr/signal/type.js';
+import type {Constructor} from '@alwatr/type';
+
+export declare class SignalMixinInterface extends LoggerMixinInterface {
+  protected _signalListenerList: Array<ListenerSpec>;
 }
 
-export function SignalMixin<T extends Constructor<LitElement>>(superClass: T): Constructor<SignalMixinInterface> & T {
+export function SignalMixin<T extends Constructor<LoggerMixinInterface>>(
+    superClass: T,
+): Constructor<SignalMixinInterface> & T {
   class SignalMixinClass extends superClass {
-    protected _signalListenerList: Array<Record<string, unknown>> = [];
+    protected _signalListenerList: Array<ListenerSpec> = [];
 
     override disconnectedCallback(): void {
-      super.disconnectedCallback();
-
       for (const listener of this._signalListenerList) {
-        if (typeof listener.remove === 'function') {
-          listener.remove();
-        }
+        unsubscribe(listener);
       }
+      this._signalListenerList.length = 0;
+      this._signalListenerList = [];
+      super.disconnectedCallback();
     }
   }
 

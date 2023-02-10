@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
+
+### Bug Fixes
+
+- **signal/core:** \_getSignalObject ([1374188](https://github.com/AliMD/alwatr/commit/1374188bdc7e689ded11d04bf4588a1162cc6d86))
+- **signal:** alert [#1455](https://github.com/AliMD/alwatr/issues/1455) ([203307d](https://github.com/AliMD/alwatr/commit/203307df308a12e6c38cb9e0e2301b2015b6ff45))
+- **signal:** clean old interfaces ([b2987ad](https://github.com/AliMD/alwatr/commit/b2987add7bfe0cf609fa355403fb9fb5de3f6b8a))
+- **signal:** export all interfaces ([8704eac](https://github.com/AliMD/alwatr/commit/8704eac6ae7a8a45e77c24ef5e602e36af3fd21e))
+- **signal:** export listeners ([fb05bfb](https://github.com/AliMD/alwatr/commit/fb05bfb9b7eb30427442783677ce1d4da5401160))
+- **signal:** import types ([cc0b88b](https://github.com/AliMD/alwatr/commit/cc0b88be420b1fe057a8640bbffb1af3bf327cef))
+- **signal:** interface bind type ([7b6c820](https://github.com/AliMD/alwatr/commit/7b6c820da2ba216f36e089bf79bdeccf208df3b1))
+- **signal:** reported issues ([75f688f](https://github.com/AliMD/alwatr/commit/75f688faf96a056a256603d05276f5731db86aee))
+- **signal:** TSignal on SignalControllerInterface ([ac42b7c](https://github.com/AliMD/alwatr/commit/ac42b7c7023549e8dd07cd3d9e189f356ffa06ee))
+
+### Features
+
+- **signal-manager:** enhance provider, docs ([c4583a3](https://github.com/AliMD/alwatr/commit/c4583a3b0fcbf38b5e426aaa2bc6e0f52ccac5fd))
+- **signal:** alias in SignalInterface & BoundSignalInterface ([053030b](https://github.com/AliMD/alwatr/commit/053030b96c09d474794f32327d892f1d3690656c))
+- **signal:** bind signal ([de49a13](https://github.com/AliMD/alwatr/commit/de49a13eaffce31660849dfc63285d97e9098c0c))
+- **signal:** command handler/provider interface ([3d23683](https://github.com/AliMD/alwatr/commit/3d236837e13d8cfdcd44a1570bdc9659f48e7f47))
+- **signal:** command signals ([98c1d90](https://github.com/AliMD/alwatr/commit/98c1d90978329e4c5c584e19edb1aaa365632162))
+- **signal:** command trigger interface ([dda9466](https://github.com/AliMD/alwatr/commit/dda94666d9e8e490fea26038044df0e67c203583))
+- **signal:** commandSignal ([5a0d7e5](https://github.com/AliMD/alwatr/commit/5a0d7e5498087620d28548ea5d90036a7b17483a))
+- **signal:** context prover and consumer ([081a51a](https://github.com/AliMD/alwatr/commit/081a51a1ee88e66ebbcd0c58186c00a6aa9e1032))
+- **signal:** contextProvider.expire ([7d0ce93](https://github.com/AliMD/alwatr/commit/7d0ce937f0eadcd9019e6047fbe07aa1a3b579a7))
+- **signal:** event listener interface ([4ca4079](https://github.com/AliMD/alwatr/commit/4ca407938d444027cdbd435173c875fdd9ce8e28))
+- **signal:** event trigger interface ([9b90597](https://github.com/AliMD/alwatr/commit/9b905979a5065640981433ec7d120ba2494966bb))
+- **signal:** new contextConsumer interface ([9ee4a62](https://github.com/AliMD/alwatr/commit/9ee4a624211adb66d9c3d180470cca44ed7df382))
+- **signal:** new contextProvider interface ([e5d29eb](https://github.com/AliMD/alwatr/commit/e5d29ebaa75d71bb5a87bedddb2be7600e68b210))
+- **signal:** new manager interface ([f028306](https://github.com/AliMD/alwatr/commit/f028306f4d7932df65a1bbeade0d29377a370e2e))
+- **signal:** new requestable context consumer interface ([bf6845f](https://github.com/AliMD/alwatr/commit/bf6845f35a98bb63bcfa42196c2f977d64aea59e))
+- **signal:** new requestable context provider interface ([2c8d576](https://github.com/AliMD/alwatr/commit/2c8d57604dcb07a2831d85d4ef1e262863a5fae8))
+- **signal:** new signal dynamic types ([0f1a38e](https://github.com/AliMD/alwatr/commit/0f1a38e356ab73e4e2e1a8f852585e50e86cff0e))
+- **signal:** new simple api ([eb1e478](https://github.com/AliMD/alwatr/commit/eb1e47892d4478fb6c687f6d15e1a5c204b5666c))
+- **signal:** refactor all generic types with Stringifyable ([bdcef63](https://github.com/AliMD/alwatr/commit/bdcef632c81fa5e7c7ae595a7a77092c53821850))
+- **signal:** separate request command with response ([47a779e](https://github.com/AliMD/alwatr/commit/47a779e9a814d5d6a388f1a3e94c23e7fb977dce))
+- **signal:** signal.request ([d791b3e](https://github.com/AliMD/alwatr/commit/d791b3eef846697020b76bfecfbf25a3e31eb3a5))
+- **signal:** signal.untilNext ([9df78c0](https://github.com/AliMD/alwatr/commit/9df78c03dea243b467504fdf422388ab9d2b5660))
+- **signal:** signals.expire ([3591efd](https://github.com/AliMD/alwatr/commit/3591efd5e42f7a981814fd59d7189b5066735302))
+
 # [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
 
 **Note:** Version bump only for package @alwatr/signal

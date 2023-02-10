@@ -1,58 +1,75 @@
-import {l10n} from '@alwatr/i18n';
+import {localeContextConsumer} from '@alwatr/i18n';
 
-import type {LoggerMixinInterface} from './logging.js';
-import type {Constructor} from '@alwatr/type';
+import type {SignalMixinInterface} from './signal.js';
+import type {Constructor, LocaleContext} from '@alwatr/type';
 
-export declare class DirectionMixinInterface extends LoggerMixinInterface {
-  protected _signalListenerList: Array<unknown>;
+export declare class DirectionMixinInterface extends SignalMixinInterface {
   protected _dirParent: HTMLElement | null;
+  protected _localeChange: (localeContext: LocaleContext) => void;
   protected _updateDir: () => void;
-  protected _localeChange: () => void;
 }
 
-export function DirectionMixin<T extends Constructor<LoggerMixinInterface>>(
+type ComputeMode = 'locale' | 'parents' | 'computed-style';
+const defaultComputeStyleMode: ComputeMode = 'parents';
+
+export function DirectionMixin<T extends Constructor<SignalMixinInterface>>(
     superClass: T,
+    computeMode: ComputeMode = defaultComputeStyleMode,
 ): Constructor<DirectionMixinInterface> & T {
   class DirectionMixinClass extends superClass {
-    protected _signalListenerList: Array<unknown> = [];
-    protected _dirParent: HTMLElement | null = null;
+    /**
+     * Parent element for get direction in parents mode.
+     */
+    protected _parentEl: HTMLElement | null = null;
 
     override connectedCallback(): void {
       super.connectedCallback();
-      this._signalListenerList.push(
-          l10n.localeChangeSignal.addListener(() => {
-            this._localeChanged();
-          }),
-      );
+      this._signalListenerList.push(localeContextConsumer.subscribe(() => this._updateDir()));
     }
 
     /**
      * Update direction from this._dirParent or l10n.locale
      */
-    protected _updateDir(): void {
-      this._logger.logMethod('_updateDir');
-      const dir = this._dirParent?.dir || l10n.locale?.direction || document.documentElement.dir;
-      this.setAttribute('dir', dir === 'rtl' ? dir : 'ltr');
-    }
+    protected _updateDir(dir?: string): void {
+      this._logger.logMethodArgs('_updateDir', {dir, computeMode});
 
-    protected _localeChanged(): void {
-      this._logger.logMethod('_localeChanged');
-      if (this._dirParent !== null) {
-        return this._updateDir();
+      if (typeof dir === 'string') {
+        // console.timeEnd('_updateDir');
+        return this.setAttribute('dir', dir === 'rtl' ? dir : 'ltr');
+      }
+
+      // console.time('_updateDir');
+      // else, calculate
+      if (computeMode === 'locale') {
+        return this._updateDir(localeContextConsumer.getValue()?.direction ?? document.documentElement.dir);
       }
       // else
-      let dirParent = (this.assignedSlot || this.parentNode) as HTMLElement | null;
-      while (dirParent != null && dirParent !== document.documentElement && !dirParent.dir) {
+      if (computeMode === 'computed-style') {
+        const dir = window.getComputedStyle(this).getPropertyValue('direction');
+        return this._updateDir(dir);
+      }
+      // else if (computeMode === 'parents')
+      if (this._parentEl !== null) {
+        return this._updateDir(this._parentEl.dir);
+      }
+      // else
+      let parentEl = (this.assignedSlot || this.parentNode) as HTMLElement | null;
+      while (parentEl != null && parentEl !== document.documentElement && !parentEl.dir) {
         // prettier-ignore
-        dirParent = (
-            dirParent.assignedSlot ||
-            dirParent.parentNode ||
-            (dirParent as unknown as ShadowRoot).host
+        parentEl = (
+            parentEl.assignedSlot ||
+            parentEl.parentNode ||
+            (parentEl as unknown as ShadowRoot).host
           ) as HTMLElement;
       }
 
-      this._dirParent = dirParent?.dir ? dirParent : null;
-      return this._updateDir();
+      if (parentEl?.dir) {
+        this._parentEl = parentEl;
+        return this._updateDir(parentEl.dir);
+      }
+      // else
+      computeMode = 'locale';
+      this._updateDir();
     }
   }
 

@@ -31,10 +31,10 @@ jobs:
 
     steps:
       - name: ⤵️ Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: 🏗 Setup nodejs
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: yarn
@@ -43,7 +43,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: 🚀 Build Typescript
-        run: yarn build:ts && yarn lerna run build:ts
+        run: yarn build
 
       - name: 🚀 Extra Packages Build
         run: yarn lerna run build

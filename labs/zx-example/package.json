@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/zx-example",
-  "version": "0.28.0",
+  "version": "0.29.0",
   "description": "Test google zx with typescript in action.",
   "keywords": [
     "zx-example",
@@ -12,7 +12,6 @@
   "type": "module",
   "types": "zx-example.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "contributors": [],
   "license": "MIT",
   "private": true,
   "files": [
@@ -34,8 +33,8 @@
     "build": "chmod -v +x *.js"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.28.0",
-    "tslib": "^2.4.1",
+    "@alwatr/logger": "^0.29.0",
+    "tslib": "^2.5.0",
     "zx": "^7.1.1"
   }
 }

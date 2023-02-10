@@ -145,7 +145,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
     this._logger.logMethodArgs('has', {storage, documentId});
     if (storage == null) throw new Error('storage_not_defined');
 
-    const responseJson = await serviceRequest<{has: boolean | unknown}>({
+    const responseJson = await serviceRequest({
       ...this.fetchOption,
       url: this.fetchOption.url + 'has',
       queryParameters: {
@@ -273,7 +273,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
     this._logger.logMethod('keys');
     if (storage == null) throw new Error('storage_not_defined');
 
-    const responseJson = await serviceRequest<{keys: Array<string> | unknown}>({
+    const responseJson = await serviceRequest({
       ...this.fetchOption,
       url: this.fetchOption.url + 'keys',
       queryParameters: {
@@ -288,6 +288,6 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       throw new Error('invalid_response_data');
     }
 
-    return keys;
+    return keys as Array<string>;
   }
 }

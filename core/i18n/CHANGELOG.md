@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
+
+### Bug Fixes
+
+- **i18n:** prevent duplicate loader ([711cb56](https://github.com/AliMD/alwatr/commit/711cb5698a4b8887b684be79808b30a40f8e9e8a))
+- **i18n:** review and docs ([8574523](https://github.com/AliMD/alwatr/commit/85745235085e6957ab87a9c4e7fb836e73d649f6))
+
+### Features
+
+- **i18n:** add replaceNumber and auto detect setLocale from html ([3413471](https://github.com/AliMD/alwatr/commit/341347149f8685bc259034f5593048aa7db0b927))
+
 # [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
 
 **Note:** Version bump only for package @alwatr/i18n

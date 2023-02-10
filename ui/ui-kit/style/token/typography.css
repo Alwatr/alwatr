@@ -21,8 +21,8 @@
     'Segoe UI Emoji',
     'Segoe UI Symbol'
   ;
-  --sys-font-family-plain: var(--font-vazirmatn), var(--ref-font-family-system);
-  --sys-font-family-brand: var(--font-vazirmatn), var(--ref-font-family-system);
+  --sys-font-family-plain: var(--ref-font-family-vazirmatn), var(--ref-font-family-system);
+  --sys-font-family-brand: var(--ref-font-family-vazirmatn), var(--ref-font-family-system);
 
   /* display - large */
   --sys-typescale-display-large-font-family-name: var(--sys-font-family-brand);

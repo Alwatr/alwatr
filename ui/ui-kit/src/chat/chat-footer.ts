@@ -1,7 +1,8 @@
 import {AlwatrDummyElement, css, customElement, html} from '@alwatr/element';
+import {setLocale, localeContextConsumer, commonLocale} from '@alwatr/i18n';
+
 import './chat-text-input.js';
-import '../icon-button/standard-icon-button.js';
-import {l10n} from '@alwatr/i18n';
+import '../button/icon-button.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -26,28 +27,21 @@ export class AlwatrChatFooter extends AlwatrDummyElement {
       background-color: var(--sys-color-surface);
     }
 
-    alwatr-standard-icon-button {
+    alwatr-icon-button {
       width: calc(6 * var(--sys-spacing-track));
       height: calc(6 * var(--sys-spacing-track));
     }
   `;
 
   override render(): unknown {
+    this._logger.logMethod('render');
     return html`
-      <alwatr-standard-icon-button .icon=${'happy-outline'} @click=${this._changeLocale}></alwatr-standard-icon-button>
+      <alwatr-icon-button .icon=${'happy-outline'} @click=${this._changeLocale}></alwatr-icon-button>
       <alwatr-chat-text-input></alwatr-chat-text-input>
     `;
   }
 
   protected _changeLocale(): void {
-    l10n.setLocal(
-      l10n.locale?.code !== l10n.config.defaultLocale.code
-        ? l10n.config.defaultLocale
-        : {
-          code: 'fa-IR',
-          direction: 'rtl',
-          language: 'fa',
-        },
-    );
+    setLocale(localeContextConsumer.getValue()?.language !== 'fa' ? commonLocale.fa : commonLocale.en);
   }
 }

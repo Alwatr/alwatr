@@ -6,7 +6,7 @@ import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server'
 
 nanoServer.route('DELETE', 'all', deleteDocument);
 
-function deleteDocument(connection: AlwatrConnection): AlwatrServiceResponse {
+function deleteDocument(connection: AlwatrConnection): AlwatrServiceResponse<Record<string, never>, never> {
   logger.logMethodArgs('deleteDocument', {method: connection.method});
 
   connection.requireToken(config.nanoServer.accessToken);

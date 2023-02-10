@@ -137,7 +137,7 @@ export class AlwatrChat extends AlwatrSmartElement {
   `;
 
   override render(): unknown {
-    super.render();
+    this._logger.logMethod('render');
     return html`
       <alwatr-chat-list .storage=${chatStorage} .currentUser=${currentUser}></alwatr-chat-list>
       <alwatr-chat-footer></alwatr-chat-footer>

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
+
+### Features
+
+- **demo/router:** enhance demo ([3595b83](https://github.com/AliMD/alwatr/commit/3595b83b49e34b9d3d7b172bd12509b258839d0b))
+- **i18n:** add replaceNumber and auto detect setLocale from html ([3413471](https://github.com/AliMD/alwatr/commit/341347149f8685bc259034f5593048aa7db0b927))
+- **math:** getDeviceUuid ([946dad3](https://github.com/AliMD/alwatr/commit/946dad3544f2741462ff239edab8b4a9ea323bd6))
+- **math:** rename deviceId to clientId ([b211fd4](https://github.com/AliMD/alwatr/commit/b211fd42245d51d7109186ddb2f41574d0f0b786))
+- review ([53726b7](https://github.com/AliMD/alwatr/commit/53726b77274be429c87b2fd322fe2d939b048c77))
+- **signal:** new demo ([10ffc20](https://github.com/AliMD/alwatr/commit/10ffc2061a463b980da0dcd65d4afb2f850e2553))
+
 # [0.28.0](https://github.com/AliMD/alwatr/compare/v0.27.0...v0.28.0) (2023-01-20)
 
 ### Bug Fixes

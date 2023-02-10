@@ -20,5 +20,6 @@
     {"path": "../../core/router"},
     {"path": "../../ui/element"},
     {"path": "../../ui/ui-kit"},
+    {"path": "../../ui/pwa-helper"},
   ]
 }

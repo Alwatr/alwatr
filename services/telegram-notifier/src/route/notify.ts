@@ -7,7 +7,7 @@ import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server'
 // Send message to admin
 nanoServer.route('POST', '/', notify);
 
-async function notify(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
+async function notify(connection: AlwatrConnection): Promise<AlwatrServiceResponse<Record<string, never>, never>> {
   logger.logMethod('notify');
 
   connection.requireToken(config.nanoServer.accessToken);

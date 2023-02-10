@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/storage-server",
-  "version": "0.28.0",
+  "version": "0.29.0",
   "description": "Alwatr Storage Server, Elegant micro in-memory json-like storage nanoservice with disk backed, Fastest NoSQL Database.",
   "type": "module",
   "keywords": [
@@ -22,8 +22,8 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=7.0.0"
+    "node": ">=18.13.0",
+    "npm": ">=8.0.0"
   },
   "repository": {
     "type": "git",
@@ -44,7 +44,7 @@
     "build": "yarn build:es --analyze=verbose",
     "build:ts": "tsc --build",
     "build:es": "esbuild src/index.ts --platform=node --target=node19 --bundle --format=esm --minify --sourcemap --outdir=dist --out-extension:.js=.mjs",
-    "clean": "rimraf dist build .tsbuildinfo **/*.{d.ts,map} src/**/*.{js,cjs,mjs}",
+    "clean": "rm -rf dist build .tsbuildinfo",
     "serve": "node --enable-source-maps dist/index.mjs",
     "serve:debug": "node --inspect --enable-source-maps dist/index.mjs",
     "watch": "run-s clean build && run-p watch:es watch:node",
@@ -54,15 +54,14 @@
     "watch:es": "yarn build:es --watch"
   },
   "devDependencies": {
-    "@alwatr/logger": "^0.28.0",
-    "@alwatr/nano-server": "^0.28.0",
-    "@alwatr/storage-engine": "^0.28.0",
-    "@alwatr/type": "^0.28.0",
-    "@types/node": "^18.11.18",
-    "esbuild": "^0.17.3",
+    "@alwatr/logger": "^0.29.0",
+    "@alwatr/nano-server": "^0.29.0",
+    "@alwatr/storage-engine": "^0.29.0",
+    "@alwatr/type": "^0.29.0",
+    "@types/node": "^18.13.0",
+    "esbuild": "^0.17.7",
     "nodemon": "^2.0.20",
     "npm-run-all": "^4.1.5",
-    "rimraf": "^4.1.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   }
 }

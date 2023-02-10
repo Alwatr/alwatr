@@ -21,12 +21,14 @@
     {"path": "./core/storage-client"},
     {"path": "./core/token"},
     {"path": "./core/validator"},
+    {"path": "./core/util"},
     {"path": "./core/type"},
 
     // ui
     {"path": "./ui/element"},
     {"path": "./ui/icon"},
     {"path": "./ui/ui-kit"},
+    {"path": "./ui/pwa-helper"},
 
     // demo
     {"path": "./demo"},
@@ -39,10 +41,10 @@
     {"path": "./services/form-registration"},
 
     // uniquely
-    {"path": "./uniquely/flight-finder-api"},
-    {"path": "./uniquely/flight-finder-pwa"},
-    {"path": "./uniquely/soffit-pwa"},
     {"path": "./ui/demo-pwa"},
+    {"path": "./uniquely/flight-finder-api"},
+    {"path": "./uniquely/soffit-pwa"},
+    {"path": "./uniquely/com-api"},
 
     // labs
     {"path": "./labs/zx-example"}
