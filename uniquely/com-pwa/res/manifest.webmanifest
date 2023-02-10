@@ -1,0 +1,32 @@
+{
+  "short_name": "سفارشات سافیت",
+  "name": "سفارشات سافیت",
+  "description": "نرم‌افزار یکپارچه مدیریت سفارشات نمایندگی‌های سافیت",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#d0c5b4",
+  "background_color": "#faf8ff",
+  "orientation": "portrait",
+  "default_locale": "fa",
+  "icons": [
+    {"src": "/image/icon-192-maskable.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable"},
+    {"src": "/image/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable"},
+    {"src": "/image/favicon.ico", "type": "image/x-icon", "sizes": "32x32"},
+    {"src": "/image/icon-192.png", "type": "image/png", "sizes": "192x192"},
+    {"src": "/image/icon-512.png", "type": "image/png", "sizes": "512x512"}
+  ],
+  "screenshots": [
+    {
+      "src": "/image/screenshot-1.jpg",
+      "sizes": "414x896",
+      "type": "image/jpg",
+      "label": "Soffit PWA (Dark Theme)"
+    },
+    {
+      "src": "/image/screenshot-2.jpg",
+      "sizes": "414x896",
+      "type": "image/jpg",
+      "label": "Soffit PWA (Light Theme)"
+    }
+  ]
+}

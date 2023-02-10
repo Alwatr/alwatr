@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "meta": {
+    "code": "fa-IR",
+    "rev": 0
+  },
+  "data": {
+    "not_found": "پیدا نشد!",
+    "under_develope": "دردست ساخت",
+    "under_develope_description": "برنامه نویسان سخت مشغول کارند... اندکی صبر سحر نزدیک است..."
+  }
+}
