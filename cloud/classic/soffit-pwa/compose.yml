@@ -25,7 +25,7 @@ services:
     labels:
       traefik.enable: true
       traefik.port: 80
-      traefik.frontend.rule: Host:${DOMAIN}
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/
       traefik.frontend.entryPoints: http, https
       traefik.frontend.redirect.entryPoint: https
 
