@@ -15,15 +15,15 @@ bot.command('notify', async (ctx) => {
 
   const messageText = ctx.commandArgs;
   if (messageText == null) {
-    await ctx.replyToUser(message('command_notify_empty_message'));
+    await ctx.replyToChat(message('command_notify_empty_message'));
     return;
   }
 
   for (const chat of chatStorageEngine.allObject()) {
-    const response = await ctx.sendMessageToUser(messageText);
+    const response = await ctx.sendMessageToChat(messageText);
     if (response == null) return;
     setLastNotifyMessageId(chat.id, response.message_id);
   }
 
-  ctx.replyToUser(message('command_notify_success'));
+  ctx.replyToChat(message('command_notify_success'));
 });

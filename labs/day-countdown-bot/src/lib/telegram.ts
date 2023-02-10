@@ -57,7 +57,7 @@ export class AlwatrTelegrafContext extends Context {
     return this.sendMessage(text, options);
   }
 
-  async sendMessageToUser(
+  async sendMessageToChat(
       ...args: Parameters<AlwatrTelegrafContext['sendMessage']>
   ): Promise<ReturnType<Context['sendMessage']> | null> {
     try {
@@ -68,17 +68,20 @@ export class AlwatrTelegrafContext extends Context {
       this.ErrorObj = _err;
       this.failed = true;
 
-      if (_err.code === 403) {
-        if (this.onSendMessageForbidden != null) this.onSendMessageForbidden(this.chatId as string);
+      if (_err.code === 403 && this.onSendMessageForbidden != null) {
+        this.onSendMessageForbidden(this.chatId as string);
+      }
+      else {
+        logger.error('sendMessageToChat', _err.message, {_err});
       }
 
       return null;
     }
   }
 
-  async replyToUser(
+  async replyToChat(
       ...args: Parameters<AlwatrTelegrafContext['reply']>
-  ): Promise<ReturnType<Context['reply']> | void> {
+  ): Promise<ReturnType<Context['reply']> | null> {
     try {
       return await this.reply(...args);
     }
@@ -87,9 +90,14 @@ export class AlwatrTelegrafContext extends Context {
       this.ErrorObj = _err;
       this.failed = true;
 
-      if (_err.code === 403) {
-        if (this.onSendMessageForbidden != null) this.onSendMessageForbidden(this.chatId as string);
+      if (_err.code === 403 && this.onSendMessageForbidden != null) {
+        this.onSendMessageForbidden(this.chatId as string);
       }
+      else {
+        logger.error('replyToChat', _err.message, {_err});
+      }
+
+      return null;
     }
   }
 }
@@ -97,5 +105,4 @@ export class AlwatrTelegrafContext extends Context {
 /**
  * TODO:
  *
- * 1- command args
  */
