@@ -10,7 +10,7 @@ bot.action('subscribe', async (ctx) => {
   logger.logMethodArgs('action/subscribe', {chatId: ctx.chatId});
 
   if (!isSubscribed(ctx.chatId)) {
-    chatStorageEngine.set({id: ctx.chatId});
+    chatStorageEngine.set({id: ctx.chatId.toString()});
     const response = await ctx.sendMessageToChat(message('action_subscribe_success'));
     if (response == null) return;
 

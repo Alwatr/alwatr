@@ -7,5 +7,5 @@ export interface User extends AlwatrDocumentObject {
 }
 
 export interface BotSetting extends AlwatrDocumentObject {
-  adminChatIdList: Array<string>;
+  adminChatIdList: Array<number>;
 }

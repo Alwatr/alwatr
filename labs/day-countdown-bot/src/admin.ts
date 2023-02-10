@@ -22,11 +22,11 @@ export async function notifyToAdminList(message: string): Promise<void> {
   }
 }
 
-export function isAdmin(chatId: string): boolean {
+export function isAdmin(chatId: number): boolean {
   return configStorageEngine.get('admin_list')?.adminChatIdList.includes(chatId) ?? false;
 }
 
-export function addAdmin(chatId: string): void {
+export function addAdmin(chatId: number): void {
   const adminList = configStorageEngine.get('admin_list') ?? {
     id: 'admin_list',
     adminChatIdList: [],
@@ -36,7 +36,7 @@ export function addAdmin(chatId: string): void {
   configStorageEngine.set(adminList);
 }
 
-export function deleteAdmin(chatId: string): void {
+export function deleteAdmin(chatId: number): void {
   logger.logMethodArgs('deleteAdmin', {chatId});
   const adminList = configStorageEngine.get('admin_list');
 
@@ -50,6 +50,6 @@ export function deleteAdmin(chatId: string): void {
   }
 }
 
-export function getAdminChatIdList(): Array<string> {
+export function getAdminChatIdList(): Array<number> {
   return configStorageEngine.get('admin_list')?.adminChatIdList ?? [];
 }

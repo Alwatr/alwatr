@@ -6,19 +6,19 @@ import type {User} from './type.js';
 /**
  * Make disabled property in User true!
  */
-export function deleteUser(chatId: string): void {
+export function deleteUser(chatId: number): void {
   logger.logMethodArgs('deleteUser', {chatId});
-  chatStorageEngine.delete(chatId);
+  chatStorageEngine.delete(chatId.toString());
 }
 
-export function isSubscribed(chatId: string): boolean {
+export function isSubscribed(chatId: number): boolean {
   logger.logMethodArgs('isSubscribed', {chatId});
-  return chatStorageEngine.has(chatId);
+  return chatStorageEngine.has(chatId.toString());
 }
 
-export function setLastNotifyMessageId(chatId: string, messageId: number): void {
+export function setLastNotifyMessageId(chatId: number, messageId: number): void {
   logger.logMethodArgs('setLastNotifyMessageId', {chatId, messageId});
-  const user = chatStorageEngine.get(chatId) as User;
+  const user = chatStorageEngine.get(chatId.toString()) as User;
   user.lastNotifyMessageId = messageId;
   chatStorageEngine.set(user);
 }

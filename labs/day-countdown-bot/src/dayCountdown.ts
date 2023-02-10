@@ -15,12 +15,12 @@ export async function sendDayCountdownToAllChat(): Promise<void> {
   for (const chat of chatStorageEngine.allObject()) {
     if (chat.lastDayCountdownSent !== dayToLeft) {
       try {
-        await sendDayCountDown(chat.id, dayToLeft);
+        await sendDayCountDown(+chat.id, dayToLeft);
       }
       catch (err) {
         const _err = err as TelegramError;
         if (_err.code === 403) {
-          deleteUser(chat.id);
+          deleteUser(+chat.id);
           logger.error('sendDayCountdownToAllChat', _err.message, {_err});
         }
       }
@@ -28,7 +28,7 @@ export async function sendDayCountdownToAllChat(): Promise<void> {
   }
 }
 
-export async function sendDayCountDown(chatId: string, dayToLeft?: number): Promise<void> {
+export async function sendDayCountDown(chatId: number, dayToLeft?: number): Promise<void> {
   logger.logMethod('sendDayCountDown');
 
   // cache-able dateDistance!
@@ -39,9 +39,9 @@ export async function sendDayCountDown(chatId: string, dayToLeft?: number): Prom
   // 1. send message
   const response = await sendDayCountdownMessage(chatId, dayToLeft);
 
-  const user = chatStorageEngine.get(chatId);
+  const user = chatStorageEngine.get(chatId.toString());
   chatStorageEngine.set({
-    id: chatId,
+    id: chatId.toString(),
     lastBotMessageId: response.message_id,
     lastDayCountdownSent: dayToLeft,
   });
@@ -71,7 +71,7 @@ export async function sendDayCountDown(chatId: string, dayToLeft?: number): Prom
   }
 }
 
-export function sendDayCountdownMessage(chatId: string, dayToLeft: number): Promise<Message> {
+export function sendDayCountdownMessage(chatId: number, dayToLeft: number): Promise<Message> {
   logger.logMethod('sendDayCountdownMessage');
   return sendMessage(chatId, message('day_countdown').replace('__day_to_left__', dayToLeft.toString()), {
     parse_mode: 'MarkdownV2',
