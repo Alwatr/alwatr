@@ -1,12 +1,13 @@
-import {addAdmin} from '../admin.js';
-import {config, logger} from '../config.js';
+import {addAdmin, isAdmin} from '../admin.js';
+import {config} from '../config.js';
 import {message} from '../director/l18e-loader.js';
-import {bot} from '../lib/bot.js';
+import {userComposer} from '../lib/bot.js';
 
-bot.command('setAdmin', async (ctx) => {
+userComposer.command('setAdmin', async (ctx) => {
   const token = ctx.commandArgs;
   if (token == null || ctx.chatId == null) return;
-  logger.logMethodArgs('command/setAdmin', {chatId: ctx.chatId, token});
+
+  ctx.isAdminCallback = isAdmin;
 
   if (token == config.telegramBot.adminToken) {
     if (ctx.isAdmin) {

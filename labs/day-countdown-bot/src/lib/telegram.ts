@@ -1,28 +1,26 @@
 import {createLogger} from '@alwatr/logger';
-import {Telegram, Context, TelegramError, Telegraf} from 'telegraf';
+import {Context, TelegramError, Telegraf, Composer, Telegram} from 'telegraf';
 
-import type {Update, UserFromGetMe, Convenience, Message} from 'telegraf/types';
+import type {Convenience, Message, Update, UserFromGetMe} from 'telegraf/types';
 
 const logger = createLogger('alwatr/telegram');
 
-export class AlwatrTelegram<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Telegraf<C> {
-
-}
+export class AlwatrTelegram<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Telegraf<C> {}
 
 export class AlwatrTelegrafContext extends Context {
   /**
    * failed!
-  */
+   */
   failed?: true;
 
   ErrorObj?: TelegramError;
 
-  get chatId(): string | undefined {
-    return this.chat?.id.toString();
+  get chatId(): number | undefined {
+    return this.chat?.id;
   }
 
-  isAdminCallback?: (chatId: string) => boolean; // telegraf
-  onSendMessageForbidden?: (chatId: string) => unknown; // telegraf for admin and user;
+  isAdminCallback?: (chatId: number) => boolean;
+  onSendMessageForbidden?: (chatId: number) => unknown;
 
   get isAdmin(): boolean {
     if (this.isAdminCallback == null) throw new Error('as_admin_callback_required');
@@ -69,7 +67,7 @@ export class AlwatrTelegrafContext extends Context {
       this.failed = true;
 
       if (_err.code === 403 && this.onSendMessageForbidden != null) {
-        this.onSendMessageForbidden(this.chatId as string);
+        this.onSendMessageForbidden(this.chatId as number);
       }
       else {
         logger.error('sendMessageToChat', _err.message, {_err});
@@ -91,7 +89,7 @@ export class AlwatrTelegrafContext extends Context {
       this.failed = true;
 
       if (_err.code === 403 && this.onSendMessageForbidden != null) {
-        this.onSendMessageForbidden(this.chatId as string);
+        this.onSendMessageForbidden(this.chatId as number);
       }
       else {
         logger.error('replyToChat', _err.message, {_err});
@@ -102,9 +100,71 @@ export class AlwatrTelegrafContext extends Context {
   }
 }
 
+export class AlwatrTelegrafComposer<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Composer<C> {
+  constructor(protected onSendMessageForbidden: (chatId: number) => void) {
+    super();
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  override command(commandName: string, callback: (ctx: AlwatrTelegrafContext) => void) {
+    logger.logOther('register command/' + commandName);
+
+    return super.command(commandName, (ctx) =>
+      commandCallbackTemplate(ctx, commandName, callback, this.onSendMessageForbidden),
+    );
+  }
+}
+
+export class AlwatrTelegrafAdminComposer<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Composer<C> {
+  constructor(
+    protected isAdminCallback: (chatId: number) => boolean,
+    protected onSendMessageForbidden: (chatId: number) => void,
+  ) {
+    super();
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  override command(commandName: string, callback: (ctx: AlwatrTelegrafContext) => void) {
+    logger.logOther('register admin command/' + commandName);
+    return super.command(commandName, (ctx) =>
+      adminCommandCallbackTemplate(ctx, commandName, callback, this.isAdminCallback, this.onSendMessageForbidden),
+    );
+  }
+}
+
+export function commandCallbackTemplate(
+    ctx: AlwatrTelegrafContext,
+    commandName: string,
+    callback: (ctx: AlwatrTelegrafContext) => void,
+    onSendMessageForbidden: (chatId: number) => void,
+): void {
+  logger.logMethod('command/' + commandName);
+  console.log(ctx.chatId, ctx.chat?.id);
+
+  if (ctx.chatId == null) return;
+  ctx.onSendMessageForbidden = onSendMessageForbidden;
+  return callback(ctx);
+}
+
+export function adminCommandCallbackTemplate(
+    ctx: AlwatrTelegrafContext,
+    commandName: string,
+    callback: (ctx: AlwatrTelegrafContext) => void,
+    isAdminCallback: (chatId: number) => boolean,
+    onSendMessageForbidden: (chatId: number) => void,
+): void {
+  logger.logMethod('command/' + commandName);
+  if (ctx.chatId == null) return;
+
+  ctx.isAdminCallback = isAdminCallback;
+  ctx.onSendMessageForbidden = onSendMessageForbidden;
+
+  if (!ctx.isAdmin) return;
+  return callback(ctx);
+}
+
 /**
  * TODO:
- *
- * 1- admin command.
- * 2- user command.
+ * 1- Error handling on telegraf
+ * 2- logging on telegraf
  */

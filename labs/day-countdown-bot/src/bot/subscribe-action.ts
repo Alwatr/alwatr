@@ -1,11 +1,11 @@
 import {logger} from '../config.js';
 import {sendDayCountDown} from '../dayCountdown.js';
 import {message} from '../director/l18e-loader.js';
-import {bot} from '../lib/bot.js';
+import {userComposer} from '../lib/bot.js';
 import {chatStorageEngine} from '../lib/storage.js';
 import {isSubscribed} from '../user.js';
 
-bot.action('subscribe', async (ctx) => {
+userComposer.action('subscribe', async (ctx) => {
   if (ctx.chatId == null) return;
   logger.logMethodArgs('action/subscribe', {chatId: ctx.chatId});
 

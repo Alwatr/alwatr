@@ -1,9 +1,9 @@
 import {logger} from '../config.js';
 import {message} from '../director/l18e-loader.js';
-import {bot} from '../lib/bot.js';
+import {userComposer} from '../lib/bot.js';
 import {deleteUser, isSubscribed} from '../user.js';
 
-bot.action('unsubscribe', async (ctx) => {
+userComposer.action('unsubscribe', async (ctx) => {
   if (ctx.chatId == null) return;
   logger.logMethodArgs('action/unsubscribe', {chatId: ctx.chatId});
 
