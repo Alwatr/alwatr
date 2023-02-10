@@ -1,35 +1,38 @@
-import {logger} from '../../config.js';
-import {nanoServer} from '../../lib/nano-server.js';
-import {storageClient} from '../../lib/storage.js';
-import {tokenGenerator} from '../../token.js';
+import {logger} from '../lib/config.js';
+import {nanoServer} from '../lib/server.js';
+import {storageClient} from '../lib/storage.js';
+import {tokenGenerator} from '../lib/token.js';
 
-import type {AlwatrConnection} from '@alwatr/nano-server';
-import type {AlwatrServiceResponse} from '@alwatr/type';
 import type {Order} from '@alwatr/type/customer-order-management.js';
 
-// Add order
-nanoServer.route('PUT', '/order/', newOrder);
-
-async function newOrder(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
-  logger.logMethod('newOrder');
+// Insert new order
+nanoServer.route('PUT', '/order/', async (connection) => {
+  logger.logMethod('put-order');
 
   const params = connection.requireQueryParams<{userId: string}>({userId: 'string'});
   const token = connection.requireToken((token: string) => {
     return tokenGenerator.verify(params.userId, token) === 'valid';
   });
-  const order = await connection.requireJsonBody<Order>();
+  const remoteAddress = connection.incomingMessage.socket.remoteAddress ?? 'unknown';
+  const clientId = connection.incomingMessage.headers['client-id'];
 
-  if (await storageClient.has(order.id, token)) {
+  if (!clientId) {
     return {
       ok: false,
-      statusCode: 400,
-      errorCode: 'order_exist',
+      statusCode: 401,
+      errorCode: 'client_id_header_required',
     };
   }
 
-  // else
+  const order = await connection.requireJsonBody<Order>();
+
+  order.id = 'auto_increment';
+  order.status = 'registered';
+  order.clientId = clientId;
+  order.remoteAddress = remoteAddress;
+
   return {
     ok: true,
     data: await storageClient.set<Order>(order, params.userId),
   };
-}
+});

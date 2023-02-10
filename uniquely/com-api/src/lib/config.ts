@@ -1,4 +1,5 @@
 import {createLogger} from '@alwatr/logger';
+import {TokenGeneratorConfig} from '@alwatr/token';
 
 export const logger = createLogger('com-api');
 
@@ -9,8 +10,11 @@ export const config = {
     token: process.env.ORDER_STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
     productStorageName: process.env.PRODUCT_STORAGE_NAME ?? 'product',
   },
-  token: {
+  token: <TokenGeneratorConfig>{
     secret: process.env.SECRET ?? 'YOUR_SECRET',
+    algorithm: 'sha256',
+    encoding: 'base64url',
+    duration: null,
   },
   nanoServer: {
     host: process.env.HOST ?? '0.0.0.0',
@@ -18,6 +22,6 @@ export const config = {
     accessToken: process.env.ACCESS_TOKEN ?? 'YOUR_SECRET_TOKEN',
     allowAllOrigin: true,
   },
-};
+} as const;
 
 logger.logProperty('config', config);

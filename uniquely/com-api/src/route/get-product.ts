@@ -1,13 +1,10 @@
-import {config, logger} from '../../config.js';
-import {nanoServer} from '../../lib/nano-server.js';
-import {storageClient} from '../../lib/storage.js';
+import {config, logger} from '../lib/config.js';
+import {nanoServer} from '../lib/server.js';
+import {storageClient} from '../lib/storage.js';
 
-import type {AlwatrServiceResponse} from '@alwatr/type';
 import type {Product} from '@alwatr/type/src/customer-order-management.js';
 
-nanoServer.route('GET', '/product/', getProduct);
-
-async function getProduct(): Promise<AlwatrServiceResponse> {
-  logger.logMethod('getProduct');
+nanoServer.route('GET', '/product/', async () => {
+  logger.logMethod('get-product');
   return await storageClient.getStorage<Product>(config.storage.productStorageName);
-}
+});

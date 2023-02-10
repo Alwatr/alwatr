@@ -9,14 +9,12 @@ GET {{apiUrl}}/
 ### Get all product
 Get {{apiUrl}}/product/
 
-### New order
-PUT {{apiUrl}}/order/
+### New order of user
+PUT {{apiUrl}}/order/?userId=abc123
 Authorization: Bearer {{userToken}}
 Content-Type: application/json
 
 {
-  "id": "abc123-101",
-  "userId": "abc123",
   "itemList": [
     {
       "productId": "12345",
@@ -42,6 +40,6 @@ Content-Type: application/json
   "finalPrice": 900000
 }
 
-### Get user order list
-get {{apiUrl}}/order/?userId=njfamirm
+### Get all orders list of special user
+get {{apiUrl}}/order/?userId=abc123
 Authorization: Bearer {{userToken}}

@@ -1,17 +1,13 @@
-import {logger} from '../../config.js';
-import {nanoServer} from '../../lib/nano-server.js';
-import {storageClient} from '../../lib/storage.js';
-import {tokenGenerator} from '../../token.js';
+import {logger} from '../lib/config.js';
+import {nanoServer} from '../lib/server.js';
+import {storageClient} from '../lib/storage.js';
+import {tokenGenerator} from '../lib/token.js';
 
-import type {AlwatrConnection} from '@alwatr/nano-server';
-import type {AlwatrServiceResponse} from '@alwatr/type';
-import type {Order} from '@alwatr/type/src/customer-order-management.js';
+import type {Order} from '@alwatr/type/customer-order-management.js';
 
-// Get current order object
-nanoServer.route('GET', '/order/', getOrder);
-
-async function getOrder(connection: AlwatrConnection): Promise<AlwatrServiceResponse> {
-  logger.logMethod('getOrder');
+// Get all orders of special customer
+nanoServer.route('GET', '/order/', async (connection) => {
+  logger.logMethod('get-order');
 
   const params = connection.requireQueryParams<{userId: string}>({userId: 'string'});
   connection.requireToken((token: string) => {
@@ -19,4 +15,4 @@ async function getOrder(connection: AlwatrConnection): Promise<AlwatrServiceResp
   });
 
   return await storageClient.getStorage<Order>(params.userId);
-}
+});
