@@ -65,6 +65,16 @@ jobs:
             dockerfile: cloud/container/alwatr-pwa.dockerfile
             description: Soffit PWA.
 
+          - image: com-pwa
+            source: uniquely/com-pwa
+            dockerfile: cloud/container/alwatr-pwa.dockerfile
+            description: Customer Order Management PWA.
+
+          - image: com-api
+            source: uniquely/com-api
+            dockerfile: cloud/container/alwatr-services.dockerfile
+            description: Customer Order Management API.
+
           - image: flight-finder-api
             source: uniquely/flight-finder-api
             dockerfile: cloud/container/alwatr-services.dockerfile
