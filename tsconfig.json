@@ -41,9 +41,10 @@
     {"path": "./services/form-registration"},
 
     // uniquely
+    {"path": "./ui/demo-pwa"},
     {"path": "./uniquely/flight-finder-api"},
     {"path": "./uniquely/soffit-pwa"},
-    {"path": "./ui/demo-pwa"},
+    {"path": "./uniquely/com-api"},
 
     // labs
     {"path": "./labs/zx-example"}

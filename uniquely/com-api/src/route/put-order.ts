@@ -10,7 +10,7 @@ nanoServer.route('PUT', '/order/', async (connection) => {
   logger.logMethod('put-order');
 
   const params = connection.requireQueryParams<{userId: string}>({userId: 'string'});
-  const token = connection.requireToken((token: string) => {
+  connection.requireToken((token: string) => {
     return tokenGenerator.verify(params.userId, token) === 'valid';
   });
   const remoteAddress = connection.incomingMessage.socket.remoteAddress ?? 'unknown';
