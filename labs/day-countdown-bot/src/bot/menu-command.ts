@@ -3,22 +3,28 @@ import {message} from '../director/l18e-loader.js';
 import {bot} from '../lib/bot.js';
 import {sendMessage} from '../lib/send-message.js';
 
-bot.command('menu', (ctx) => {
+bot.command('menu', async (ctx) => {
   const chatId = ctx.chat?.id.toString();
   if (chatId == null) return;
   logger.logMethodArgs('command/menu', {chatId});
 
-  sendMessage(chatId, message('command_menu'), {
-    parse_mode: 'MarkdownV2',
-    reply_to_message_id: ctx.message.message_id,
-    allow_sending_without_reply: true,
+  try {
+    await sendMessage(chatId, message('command_menu'), {
+      parse_mode: 'MarkdownV2',
+      reply_to_message_id: ctx.message.message_id,
+      allow_sending_without_reply: true,
 
-    reply_markup: {inline_keyboard: [[{
-      text: message('button_help'), callback_data: 'help',
-    }], [
-      {
-        text: message('button_unsubscribe'), callback_data: 'unsubscribe',
-      }],
-    ]},
-  });
+      reply_markup: {
+        inline_keyboard: [[{
+          text: message('button_help'), callback_data: 'help',
+        }], [
+          {
+            text: message('button_unsubscribe'), callback_data: 'unsubscribe',
+          }],
+        ]},
+    });
+  }
+  catch (err) {
+    logger.error('command/menu', 'send_message_failed', {err});
+  }
 });

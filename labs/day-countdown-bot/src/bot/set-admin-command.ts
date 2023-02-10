@@ -1,29 +1,34 @@
-import {isAdmin} from '../admin.js';
+import {addAdmin, isAdmin} from '../admin.js';
 import {config, logger} from '../config.js';
 import {message} from '../director/l18e-loader.js';
 import {bot} from '../lib/bot.js';
 import {sendMessage} from '../lib/send-message.js';
-import {configStorageEngine} from '../lib/storage.js';
 
-bot.command('setAdmin', (ctx) => {
+bot.command('setAdmin', async (ctx) => {
   const chatId = ctx.chat?.id.toString();
   if (chatId == null) return;
   const token = ctx.message.text.split(' ')[1];
   logger.logMethodArgs('command/setAdmin', {chatId, token});
 
   if (token == config.telegramBot.adminToken) {
-    const adminList = configStorageEngine.get('admin_list') ?? {
-      id: 'admin_list',
-      adminChatIdList: [],
-    };
-
     if (isAdmin(chatId)) {
-      sendMessage(chatId, message('command_set_admin_added_before'));
+      try {
+        await sendMessage(chatId, message('command_set_admin_added_before'));
+      }
+      catch (err) {
+        logger.error('command/notify', 'send_message_failed', {err});
+        return;
+      }
     }
     else {
-      adminList.adminChatIdList.push(chatId);
-      configStorageEngine.set(adminList);
-      sendMessage(chatId, message('command_set_admin_success'));
+      addAdmin(chatId);
+      try {
+        await sendMessage(chatId, message('command_set_admin_success'));
+      }
+      catch (err) {
+        logger.error('command/setAdmin', 'send_message_failed', {err});
+        return;
+      }
     }
   }
 });

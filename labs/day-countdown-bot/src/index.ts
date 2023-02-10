@@ -1,5 +1,5 @@
 import {logger} from './config.js';
-import {sendDayCountDownToAllChat} from './dayCountdown.js';
+import {sendDayCountdownToAllChat} from './dayCountdown.js';
 import {bot} from './lib/bot.js';
 import {nextDayCountdownDuration} from './lib/calender.js';
 import {launchBot} from './lib/launch.js';
@@ -23,8 +23,8 @@ await launchBot();
 // run on 9:00am on every day!
 const duration = nextDayCountdownDuration(5, 30);
 setTimeout(async () => {
-  await sendDayCountDownToAllChat();
-  setInterval(sendDayCountDownToAllChat, 86400000);
+  await sendDayCountdownToAllChat();
+  setInterval(sendDayCountdownToAllChat, 86400000);
 }, duration);
 
 // Enable graceful stop
