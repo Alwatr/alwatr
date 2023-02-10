@@ -35,7 +35,7 @@ if (cleanMode) {
   await fs.rm(outDir, {recursive: true, force: true});
 }
 
-const copyPromise = fs.cp(resDir, outDir, {recursive: true, force: true, verbatimSymlinks: true});
+const copyPromise = fs.cp(resDir, outDir, {recursive: true, force: true, dereference: true});
 
 const esbuildContext = await esbuild.context({
   entryPoints: [`${srcDir}/${srcFilename}.ts`],
