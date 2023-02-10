@@ -449,7 +449,7 @@ export class AlwatrConnection {
    * const bodyData = await connection.requireJsonBody();
    * ```
    */
-  async requireJsonBody<T>(): Promise<T> {
+  async requireJsonBody<T extends StringifyableRecord>(): Promise<T> {
     // if request content type is json
     if (this.incomingMessage.headers['content-type'] !== 'application/json') {
       // eslint-disable-next-line no-throw-literal
