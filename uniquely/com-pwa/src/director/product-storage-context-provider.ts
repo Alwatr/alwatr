@@ -1,6 +1,5 @@
 import {fetchContext} from '@alwatr/fetch';
 import {message} from '@alwatr/i18n';
-import {contextConsumer} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
 
 import {logger} from './logger.js';
@@ -31,7 +30,3 @@ const provideProductStorageContext = async (): Promise<void> => {
 };
 
 provideProductStorageContext();
-
-contextConsumer.subscribe('product-storage-context', (value) => {
-  logger.logProperty('product-storage-context', value);
-});
