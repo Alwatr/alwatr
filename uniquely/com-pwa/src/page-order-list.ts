@@ -17,7 +17,7 @@ declare global {
 }
 
 /**
- * Soffit Order List Page
+ * Alwatr Customer Order Management Order List Page
  */
 @customElement('alwatr-page-order-list')
 export class AlwatrPageOrderList extends AlwatrSmartElement {
@@ -92,7 +92,7 @@ export class AlwatrPageOrderList extends AlwatrSmartElement {
     for (const orderListKey of Object.keys(this.orderList.data)) {
       const order = this.orderList.data[orderListKey];
       const headline = 'سفارش - ' + order.id;
-      const description = 'وضعیت:‌ ' + message('order_status_' + order.status as Lowercase<string>);
+      const description = 'وضعیت:‌ ' + message('order_status_' + order.status.replace('-', '_') as Lowercase<string>);
       yield this._boxTemplate({
         highlight: true,
         stated: true,

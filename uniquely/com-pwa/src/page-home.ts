@@ -14,7 +14,7 @@ declare global {
 }
 
 /**
- * Soffit Home Page
+ * Alwatr Customer Order Management Home Page
  */
 @customElement('alwatr-page-home')
 export class AlwatrPageHome extends AlwatrSmartElement {
