@@ -1,14 +1,24 @@
-import {customElement, AlwatrSmartElement, css, html, unsafeHTML, state, nothing} from '@alwatr/element';
-import {message} from '@alwatr/i18n';
+import {
+  customElement,
+  AlwatrSmartElement,
+  css,
+  html,
+  state,
+  LocalizeMixin,
+  map,
+} from '@alwatr/element';
+import {message, replaceNumber} from '@alwatr/i18n';
 
-import {orderStorageContextConsumer, orderListPageContentContextConsumer} from './context.js';
+import {orderStorageContextConsumer} from './context.js';
+
+import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {Order} from '@alwatr/type/src/customer-order-management.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
-
-import type {BoxType, PageOrderListContent} from './type.js';
-import type {AlwatrDocumentStorage} from '@alwatr/type';
-import type {Order} from '@alwatr/type/src/customer-order-management.js';
+import './app-footer';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -20,91 +30,77 @@ declare global {
  * Alwatr Customer Order Management Order List Page
  */
 @customElement('alwatr-page-order-list')
-export class AlwatrPageOrderList extends AlwatrSmartElement {
+export class AlwatrPageOrderList extends LocalizeMixin(AlwatrSmartElement) {
   static override styles = css`
     :host {
-      display: block;
+      display: flex;
+      flex-direction: column;
       height: 100%;
-      overflow-y: auto;
     }
 
     main {
-      display: flex;
-      flex-wrap: wrap;
-      padding: calc(2 * var(--sys-spacing-track));
-      gap: var(--sys-spacing-track);
+      display: block;
+      flex-grow: 1;
+      padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
+      overflow-y: auto;
     }
 
     alwatr-icon-box {
-      width: 40%;
-      flex-grow: 1;
-    }
-
-    alwatr-icon-box[wide] {
-      width: 100%;
-    }
-
-    footer {
-      direction: ltr;
-      text-align: center;
-      color: var(--sys-color-on-secondary-container);
-      padding: calc(2 * var(--sys-spacing-track)) var(--sys-spacing-track) var(--sys-spacing-track);
-      background-color: var(--sys-color-secondary-container);
-    }
-
-    .version {
-      font-size: var(--sys-typescale-label-small-font-size);
-      line-height: var(--sys-typescale-label-small-line-height);
-      letter-spacing: var(--sys-typescale-label-small-letter-spacing);
-      opacity: 0.4;
-      user-select: none;
-      -webkit-user-select: none;
+      margin-bottom: var(--sys-spacing-track);
     }
   `;
 
-  @state() content?: PageOrderListContent;
-  @state() orderList?: AlwatrDocumentStorage<Order>;
+  @state()
+    orderStorage?: AlwatrDocumentStorage<Order>;
+
+  constructor() {
+    super();
+    this._orderItemTemplate = this._orderItemTemplate.bind(this);
+  }
 
   override connectedCallback(): void {
     super.connectedCallback();
-
     this._signalListenerList.push(
-        orderListPageContentContextConsumer.subscribe((content) => {this.content = content;}),
-        orderStorageContextConsumer.subscribe((orderList) => {this.orderList = orderList;}),
+        orderStorageContextConsumer.subscribe((orderStorage) => {
+          this.orderStorage = orderStorage;
+          console.warn(orderStorage);
+        }),
     );
   }
 
+  protected content = {
+    topAppBar: <TopAppBarContent>{
+      type: 'medium',
+      headline: 'page_order_list_headline',
+      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+    },
+  } as const;
+
   override render(): unknown {
     this._logger.logMethod('render');
-    if (this.content == null) return nothing;
     return html`
-      <alwatr-top-app-bar .content=${this.content.topAppBar}></alwatr-top-app-bar>
-      <main>${this._orderListTemplate()}</main>
-      <footer>
-        <div>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</div>
-        <div class="version">Soffit Order Management v${_ALWATR_VERSION_}</div>
-      </footer>
+      <alwatr-top-app-bar
+        .content=${{...this.content.topAppBar, headline: message(this.content.topAppBar.headline)}}
+      ></alwatr-top-app-bar>
+      <main>${this.orderStorage == null
+          ? message('loading')
+          : map(Object.keys(this.orderStorage.data), this._orderItemTemplate)}</main>
+      <alwatr-app-footer></alwatr-app-footer>
     `;
   }
 
-  protected* _orderListTemplate(): unknown {
-    if (this.orderList == null) return;
-    for (const orderListKey of Object.keys(this.orderList.data)) {
-      const order = this.orderList.data[orderListKey];
-      const headline = 'سفارش - ' + order.id;
-      const description = 'وضعیت:‌ ' + message('order_status_' + order.status.replace('-', '_') as Lowercase<string>);
-      yield this._boxTemplate({
-        highlight: true,
-        stated: true,
-        elevated: 2,
-        headline: headline,
-        description: description,
-      });
-    }
-  }
-
-  protected _boxTemplate(box: BoxType): unknown {
-    const slot = box.slot == null ? nothing : unsafeHTML(box.slot);
-    return html`<alwatr-icon-box .content=${box} ?wide=${box.wide}>${slot}</alwatr-icon-box>`;
+  protected _orderItemTemplate(orderId: string): unknown {
+    if (this.orderStorage == null) return;
+    const order = this.orderStorage.data[orderId];
+    const content: IconBoxContent = {
+      stated: true,
+      elevated: 1,
+      icon: 'receipt-outline',
+      flipRtl: true,
+      headline: message('order_item_headline').replace('${orderId}', replaceNumber(order.id.padStart(2, '0'))),
+      description: message('order_item_status') + ': ' + message('order_status_' + order.status),
+      href: '/order/' + order.id,
+    };
+    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
   }
 }
