@@ -9,5 +9,5 @@ export async function sendMessage(
     options?: Convenience.ExtraReplyMessage,
 ): Promise<Message> {
   logger.logMethodArgs('sendMessage', {chatId, message});
-  return bot.telegram.sendMessage(chatId, message, options);
+  return bot.sendMessage(chatId, message, options);
 }

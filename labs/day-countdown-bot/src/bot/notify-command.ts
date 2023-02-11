@@ -11,7 +11,7 @@ adminComposer.command('notify', async (ctx) => {
   }
 
   for (const chat of chatStorageEngine.allObject()) {
-    const response = await bot.telegram.sendMessage(chat.id, messageText);
+    const response = await bot.sendMessage(chat.id, messageText);
     if (response == null) return;
     setLastNotifyMessageId(+chat.id, response.message_id);
   }

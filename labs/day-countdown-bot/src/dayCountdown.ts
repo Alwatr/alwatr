@@ -47,9 +47,9 @@ export async function sendDayCountDown(chatId: number, dayToLeft?: number): Prom
   });
 
   // 2. unpin last pinned message
-  if (user != null) {
+  if (user?.lastBotMessageId != null) {
     try {
-      await bot.telegram.unpinChatMessage(chatId, user.lastBotMessageId);
+      await bot.unpinChatMessage(chatId, user.lastBotMessageId);
     }
     catch (err) {
       const _err = err as TelegramError;
@@ -61,7 +61,7 @@ export async function sendDayCountDown(chatId: number, dayToLeft?: number): Prom
 
   // 3. pin new message
   try {
-    await bot.telegram.pinChatMessage(chatId, response.message_id);
+    await bot.pinChatMessage(chatId, response.message_id);
   }
   catch (err) {
     const _err = err as TelegramError;

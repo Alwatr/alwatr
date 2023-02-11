@@ -5,7 +5,27 @@ import type {Convenience, Message, Update, UserFromGetMe} from 'telegraf/types';
 
 const logger = createLogger('alwatr/telegram');
 
-export class AlwatrTelegram<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Telegraf<C> {}
+export class AlwatrTelegram<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Telegraf<C> {
+  sendMessage(chatId: string | number, text: string, options?: Convenience.ExtraReplyMessage): Promise<Message> {
+    logger.logMethodArgs('sendMessage', {chatId, text, options});
+    return this.telegram.sendMessage(chatId, text, options);
+  }
+
+  deleteMessage(chatId: string | number, messageId: number): Promise<true> {
+    logger.logMethodArgs('deleteMessage', {chatId, messageId});
+    return this.telegram.deleteMessage(chatId, messageId);
+  }
+
+  pinChatMessage(chatId: string | number, messageId: number): Promise<true> {
+    logger.logMethodArgs('pinChatMessage', {chatId, messageId});
+    return this.telegram.pinChatMessage(chatId, messageId);
+  }
+
+  unpinChatMessage(chatId: string | number, messageId: number): Promise<true> {
+    logger.logMethodArgs('unpinChatMessage', {chatId, messageId});
+    return this.telegram.unpinChatMessage(chatId, messageId);
+  }
+}
 
 export class AlwatrTelegrafContext extends Context {
   /**
