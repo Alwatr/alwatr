@@ -36,6 +36,7 @@ export async function fetchContext(
     fetchOption: FetchOptions,
     dispatchOptions?: Partial<DispatchOptions>,
 ): Promise<void> {
+  logger.logMethodArgs('fetchContext', {contextName});
   if (cacheSupported && contextProvider.getValue(contextName) == null) {
     try {
       fetchOption.cacheStrategy = 'cache_only';
@@ -58,8 +59,9 @@ export async function fetchContext(
     const response = await serviceRequest(fetchOption);
     if (
       response.meta?.lastUpdated === undefined || // skip lastUpdated check
-      response.meta?.lastUpdated !== contextProvider.getValue<typeof response>(contextName)?.meta?.reversion
+      response.meta?.lastUpdated !== contextProvider.getValue<typeof response>(contextName)?.meta?.lastUpdated
     ) {
+      logger.logOther('fetchContext:', 'contextProvider.setValue(new-received-context)', {contextName});
       contextProvider.setValue<typeof response>(contextName, response, dispatchOptions);
     }
   }
@@ -78,7 +80,7 @@ export async function serviceRequest<
 >(
     options: FetchOptions,
 ): Promise<AlwatrServiceResponseSuccess<TData> | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>> {
-  logger.logMethod('serviceRequest');
+  logger.logMethodArgs('serviceRequest', {url: options.url});
 
   if (isBrowser) {
     options.headers ??= {};
