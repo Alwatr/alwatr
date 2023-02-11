@@ -41,7 +41,7 @@ export const homePageContent: PageHomeContent = {
       stated: true,
       icon: 'list-outline',
       flipRtl: true,
-      headline: 'لیست سفارشات',
+      headline: 'سفارشات جاری',
       href: '/order-list',
       description: 'مشاهده وضعیت و پیگیری سفارشات جاری.',
     },
