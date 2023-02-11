@@ -383,7 +383,7 @@ export const requestContext = <TRequest extends Stringifyable>(
   options: Partial<DispatchOptions> = {},
 ): void => {
   logger.logMethodArgs('requestContext', {contextId, requestParam});
-  return dispatch<TRequest>(contextId, requestParam, options);
+  return dispatch<TRequest>(`request-${contextId}`, requestParam, options);
 };
 
 /**
