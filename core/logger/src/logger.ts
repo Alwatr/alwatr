@@ -4,7 +4,7 @@ import type {AlwatrLogger} from './type.js';
 
 export {type AlwatrLogger, globalAlwatr};
 
-const isBrowser = typeof process === 'undefined';
+export const isBrowser = typeof process === 'undefined';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/logger',
