@@ -78,7 +78,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
 
     this.disabled = true;
 
-    const response = await commandTrigger.requestWithResponse<FormData, boolean>('submit-form', {
+    const response = await commandTrigger.requestWithResponse<FormData, boolean>('submit-form-command', {
       formId: (this.constructor as typeof AlwatrLotteryForm).formId,
       data: bodyJson,
     });
