@@ -1,5 +1,6 @@
 @apiUrl = http://127.0.0.1:8000/api/v0
 @token = YOUR_SECRET_TOKEN
+@adminToken = ADMIN_SECRET_TOKEN
 
 @userToken = 8FanBtr0adx_Nmocgy_XkzaZ0-bRn59G9SO1I2bk2jo
 
@@ -7,12 +8,14 @@
 GET {{apiUrl}}/
 
 ### Get all product
-Get {{apiUrl}}/product/
+GET {{apiUrl}}/product/
+Authorization: Bearer {{token}}
 
 ### New order of user
 PUT {{apiUrl}}/order/?userId=abc123
-Authorization: Bearer {{userToken}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
+client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
 
 {
   "itemList": [
@@ -42,4 +45,4 @@ Content-Type: application/json
 
 ### Get all orders list of special user
 get {{apiUrl}}/order/?userId=abc123
-Authorization: Bearer {{userToken}}
+Authorization: Bearer {{token}}
