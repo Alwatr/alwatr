@@ -1,4 +1,4 @@
-import {clearDetail, dispatch, getDetail} from './core.js';
+import {clearDetail, dispatch, getDetail, untilNext} from './core.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
 
@@ -47,6 +47,17 @@ export const contextProvider = {
    * ```
    */
   expire: clearDetail,
+
+  /**
+   * Waits until the context value changes.
+   *
+   * Example:
+   *
+   * ```ts
+   * const newProductList = await contextProvider.untilChange<ProductListType>('product-list');
+   * ```
+   */
+  untilChange: untilNext,
 
   /**
    * Bind this interface to special context.
@@ -104,5 +115,16 @@ export const contextProvider = {
      * ```
      */
     expire: clearDetail.bind(null, contextId),
+
+    /**
+     * Waits until the context value changes.
+     *
+     * Example:
+     *
+     * ```ts
+     * const newProductList = await productListProvider.untilChange();
+     * ```
+     */
+    untilChange: untilNext.bind(null, contextId) as OmitFirstParam<typeof untilNext<T>>,
   } as const),
 } as const;
