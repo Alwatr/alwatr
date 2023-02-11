@@ -1,5 +1,6 @@
 import {createLogger, globalAlwatr, isBrowser} from '@alwatr/logger';
-import {getClientId} from '@alwatr/math';
+import {contextProvider} from '@alwatr/signal';
+import {getClientId} from '@alwatr/util';
 
 import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type.js';
 import type {
@@ -30,12 +31,46 @@ const cacheSupported = 'caches' in globalThis;
 
 const duplicateRequestStorage: Record<string, Promise<Response>> = {};
 
+export async function fetchContext(contextName: string, fetchOption: FetchOptions): Promise<void> {
+  if (cacheSupported) {
+    try {
+      fetchOption.cacheStrategy = 'cache_only';
+      const response = await serviceRequest(fetchOption);
+      contextProvider.setValue<typeof response>(contextName, response);
+    }
+    catch (err) {
+      if ((err as Error).message === 'fetch_cache_not_found') {
+        logger.logOther('fetchContext:', 'fetch_cache_not_found');
+      }
+      else {
+        logger.error('fetchContext', 'fetch_failed', err);
+        throw err;
+      }
+    }
+  }
+
+  try {
+    fetchOption.cacheStrategy = 'update_cache';
+    const response = await serviceRequest(fetchOption);
+    if (
+      response.meta?.lastUpdated === undefined || // skip lastUpdated check
+      response.meta?.lastUpdated !== contextProvider.getValue<typeof response>(contextName)?.meta?.reversion
+    ) {
+      contextProvider.setValue<typeof response>(contextName, response);
+    }
+  }
+  catch (err) {
+    logger.error('fetchContext', 'fetch_failed', err);
+    throw err;
+  }
+}
+
 /**
  * Fetch from alwatr services and return standard response.
  */
 export async function serviceRequest<
   TData extends StringifyableRecord = StringifyableRecord,
-  TMeta extends StringifyableRecord = StringifyableRecord,
+  TMeta extends StringifyableRecord = StringifyableRecord
 >(
     options: FetchOptions,
 ): Promise<AlwatrServiceResponseSuccess<TData> | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>> {
