@@ -44,6 +44,8 @@ export class AlwatrTopAppBar extends DirectionMixin(SignalMixin(AlwatrSurface)) 
     css`
       :host {
         display: block;
+        flex-grow: 0;
+        flex-shrink: 0;
         padding: var(--sys-spacing-track) calc(0.5 * var(--sys-spacing-track));
         z-index: var(--sys-zindex-sticky);
         border-radius: 0;
