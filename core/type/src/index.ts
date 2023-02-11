@@ -5,6 +5,8 @@ export * from './global.js';
 export * from './i18n.js';
 export * from './type-helper.js';
 export * from './event-signal.js';
+export * from './user.js';
+export * from './photo.js';
 
 Alwatr.registeredList.push({
   name: '@alwatr/type',
