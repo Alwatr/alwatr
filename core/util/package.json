@@ -32,6 +32,8 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "tslib": "^2.5.0"
+    "tslib": "^2.5.0",
+    "@alwatr/math": "^0.29.0",
+    "@alwatr/type": "^0.29.0"
   }
 }
