@@ -594,4 +594,14 @@ export class AlwatrConnection {
 
     return parsedParams as T;
   }
+  getRemoteAddress(): string {
+    return (
+      this.incomingMessage.headers['x-forwarded-for']
+          ?.split(',')
+          .pop()
+          ?.trim() ||
+      this.incomingMessage.socket.remoteAddress ||
+      'unknown'
+    );
+  }
 }
