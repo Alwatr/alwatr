@@ -1,6 +1,8 @@
 import {customElement, AlwatrSmartElement, css, html, LocalizeMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 
+import {submitOrderCommandTrigger} from './context.js';
+
 import type {BoxType} from './type.js';
 import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
@@ -78,10 +80,40 @@ export class AlwatrPage404 extends LocalizeMixin(AlwatrSmartElement) {
 
     return html`
       <alwatr-top-app-bar .content=${topAppBar}></alwatr-top-app-bar>
-      <main><alwatr-icon-box .content=${box}></alwatr-icon-box></main>
+      <main><alwatr-icon-box .content=${box} @click=${this._click}></alwatr-icon-box></main>
       <footer>
         <div>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</div>
       </footer>
     `;
+  }
+
+  protected _click(): void {
+    submitOrderCommandTrigger.request({
+      itemList: [
+        {
+          productId: '3232233323',
+          price: {
+            price: 1000000,
+            finalPrice: 950000,
+          },
+          qty: 20,
+        },
+      ],
+
+      delivery: {
+        recipientName: 'ali',
+        recipientNationalCode: '0934614566',
+        address: 'Mashhad, 29 dey, koche 29',
+        shipmentType: 'x',
+        carType: 'y',
+        timePeriod: '1-2w',
+      },
+
+      discountType: 'number',
+      totalPrice: 1000000,
+      shippingPrice: 1100000,
+      finalPrice: 900000,
+      discount: 0,
+    });
   }
 }

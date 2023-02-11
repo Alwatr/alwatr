@@ -2,89 +2,89 @@
 @adminToken = ADMIN_SECRET_TOKEN
 
 ### New product 1
-PUT {{apiUrl}}/product/
+PATCH {{apiUrl}}/product/
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
 {
   "id": "1",
   "title": {"fa": "تایل کد ۰۰۱"},
-  "image": "/image/sample-1.jpg"
+  "image": {"id": "/image/sample-1.jpg"}
 }
 
 ### New product 2
-PUT {{apiUrl}}/product/
+PATCH {{apiUrl}}/product/
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
 {
   "id": "2",
   "title": {"fa": "تایل کد ۰۰۲"},
-  "image": "/image/sample-2.jpg"
+  "image": {"id": "/image/sample-2.jpg"}
 }
 
 ### New product 3
-PUT {{apiUrl}}/product/
+PATCH {{apiUrl}}/product/
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
 {
   "id": "3",
   "title": {"fa": "تایل کد ۰۰۳"},
-  "image": "/image/sample-3.jpg"
+  "image": {"id": "/image/sample-3.jpg"}
 }
 
 ### New product 4
-PUT {{apiUrl}}/product/
+PATCH {{apiUrl}}/product/
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
 {
   "id": "4",
   "title": {"fa": "تایل کد ۰۰۴"},
-  "image": "/image/sample-4.jpg"
+  "image": {"id": "/image/sample-4.jpg"}
 }
 
 ### New product 5
-PUT {{apiUrl}}/product/
+PATCH {{apiUrl}}/product/
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
 {
   "id": "5",
   "title": {"fa": "تایل کد ۰۰۵"},
-  "image": "/image/sample-1.jpg"
+  "image": {"id": "/image/sample-1.jpg"}
 }
 
 ### New product 6
-PUT {{apiUrl}}/product/
+PATCH {{apiUrl}}/product/
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
 {
   "id": "6",
   "title": {"fa": "تایل کد ۰۰۶"},
-  "image": "/image/sample-2.jpg"
+  "image": {"id": "/image/sample-2.jpg"}
 }
 
 ### New product 7
-PUT {{apiUrl}}/product/
+PATCH {{apiUrl}}/product/
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
 {
   "id": "7",
   "title": {"fa": "تایل کد ۰۰۷"},
-  "image": "/image/sample-3.jpg"
+  "image": {"id": "/image/sample-3.jpg"}
 }
 
 ### New product 8
-PUT {{apiUrl}}/product/
+PATCH {{apiUrl}}/product/
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
 {
   "id": "8",
   "title": {"fa": "تایل کد ۰۰۸"},
-  "image": "/image/sample-3.jpg"
+  "image": {"id": "/image/sample-3.jpg"}
 }

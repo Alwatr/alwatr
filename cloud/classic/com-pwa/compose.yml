@@ -30,7 +30,7 @@ services:
       traefik.frontend.redirect.entryPoint: https
 
   api:
-    image: ghcr.io/alimd/form-registration:${COM_API_VERSION:-next}
+    image: ghcr.io/alimd/com-api:${COM_API_VERSION:-next}
 
     cpu_shares: 1024
     mem_limit: 256m

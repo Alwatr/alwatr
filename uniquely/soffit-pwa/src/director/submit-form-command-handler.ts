@@ -14,7 +14,7 @@ const validSchema: Record<string, JsonSchema | undefined> = {
   'supply-chain': {name: String, phone: Number, activity: String},
 };
 
-commandHandler.define<FormData, boolean>('submit-form', async (form: FormData): Promise<boolean> => {
+commandHandler.define<FormData, boolean>('submit-form-command', async (form: FormData): Promise<boolean> => {
   logger.logMethodArgs('formSubmit', {form});
 
   let bodyJson;
