@@ -10,6 +10,17 @@
     "under_develope_description": "برنامه نویسان سخت مشغول کارند... اندکی صبر سحر نزدیک است...",
 
     "fetch_failed": "دریافت اطلاعات از سرور با خطا روبرو شد.",
-    "retry": "تلاش مجدد"
+    "retry": "تلاش مجدد",
+
+    "order_status_draft": "پیش نویس",
+    "order_status_registered": "ثبت شده است",
+    "order_status_processing": "در حال پردازش",
+    "order_status_payment_pending": "پرداخت در انتظار",
+    "order_status_preparing": "آماده كردن",
+    "order_status_shipping": "حمل و نقل",
+    "order_status_delayed": "با تاخیر",
+    "order_status_on_hold": "در انتظار",
+    "order_status_canceled": "لغو شد",
+    "order_status_refunded": "بازپرداخت"
   }
 }
