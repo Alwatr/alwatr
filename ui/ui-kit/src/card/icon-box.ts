@@ -74,6 +74,10 @@ export class AlwatrIconBox extends AlwatrSurface {
         font-size: var(--sys-typescale-headline-small-font-size);
         letter-spacing: var(--sys-typescale-headline-small-letter-spacing);
         line-height: var(--sys-typescale-headline-small-line-height);
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .headline alwatr-icon {
