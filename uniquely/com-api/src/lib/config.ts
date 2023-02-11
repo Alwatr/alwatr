@@ -20,6 +20,7 @@ export const config = {
     host: process.env.HOST ?? '0.0.0.0',
     port: process.env.PORT != null ? +process.env.PORT : 8000,
     accessToken: process.env.ACCESS_TOKEN ?? 'YOUR_SECRET_TOKEN',
+    adminToken: process.env.ADMIN_TOKEN ?? 'ADMIN_SECRET_TOKEN',
     allowAllOrigin: true,
   },
 } as const;
