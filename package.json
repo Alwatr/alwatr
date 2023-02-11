@@ -40,7 +40,7 @@
     "format": "run-s format:prettier format:eslint",
     "format:eslint": "yarn lint:ts --fix",
     "format:prettier": "prettier . --ignore-path .gitignore --write",
-    "clean": "git clean -d -x -f --exclude=node_modules --exclude=*.env",
+    "clean": "git clean -d -x -f --exclude=node_modules --exclude=*.env --exclude=_data",
     "serve": "wds",
     "watch": "run-p watch:* serve",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput",
