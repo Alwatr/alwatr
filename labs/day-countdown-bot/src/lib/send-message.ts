@@ -4,7 +4,7 @@ import {logger} from '../config.js';
 import type {Message, Convenience} from 'telegraf/types';
 
 export async function sendMessage(
-    chatId: number,
+    chatId: string | number,
     message: string,
     options?: Convenience.ExtraReplyMessage,
 ): Promise<Message> {

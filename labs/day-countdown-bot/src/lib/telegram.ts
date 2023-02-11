@@ -40,7 +40,7 @@ export class AlwatrTelegrafContext extends Context {
   }
 
   isAdminCallback?: (chatId: number) => boolean;
-  onSendMessageForbidden?: (chatId: number) => unknown;
+  onSendMessageForbidden?: (chatId: string | number) => unknown;
 
   get isAdmin(): boolean {
     if (this.isAdminCallback == null) throw new Error('as_admin_callback_required');
@@ -121,7 +121,7 @@ export class AlwatrTelegrafContext extends Context {
 }
 
 export class AlwatrTelegrafComposer<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Composer<C> {
-  constructor(protected onSendMessageForbidden: (chatId: number) => void) {
+  constructor(protected onSendMessageForbidden: (chatId: string | number) => void) {
     super();
   }
 
@@ -137,8 +137,8 @@ export class AlwatrTelegrafComposer<C extends AlwatrTelegrafContext = AlwatrTele
 
 export class AlwatrTelegrafAdminComposer<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Composer<C> {
   constructor(
-    protected isAdminCallback: (chatId: number) => boolean,
-    protected onSendMessageForbidden: (chatId: number) => void,
+    protected isAdminCallback: (chatId: string | number) => boolean,
+    protected onSendMessageForbidden: (chatId: string | number) => void,
   ) {
     super();
   }
@@ -156,7 +156,7 @@ export function commandCallbackTemplate(
     ctx: AlwatrTelegrafContext,
     commandName: string,
     callback: (ctx: AlwatrTelegrafContext) => void,
-    onSendMessageForbidden: (chatId: number) => void,
+    onSendMessageForbidden: (chatId: string | number) => void,
 ): void {
   logger.logMethod('command/' + commandName);
   console.log(ctx.chatId, ctx.chat?.id);
@@ -170,8 +170,8 @@ export function adminCommandCallbackTemplate(
     ctx: AlwatrTelegrafContext,
     commandName: string,
     callback: (ctx: AlwatrTelegrafContext) => void,
-    isAdminCallback: (chatId: number) => boolean,
-    onSendMessageForbidden: (chatId: number) => void,
+    isAdminCallback: (chatId: string | number) => boolean,
+    onSendMessageForbidden: (chatId: string | number) => void,
 ): void {
   logger.logMethod('command/' + commandName);
   if (ctx.chatId == null) return;

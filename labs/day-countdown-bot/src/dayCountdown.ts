@@ -28,7 +28,7 @@ export async function sendDayCountdownToAllChat(): Promise<void> {
   }
 }
 
-export async function sendDayCountDown(chatId: number, dayToLeft?: number): Promise<void> {
+export async function sendDayCountDown(chatId: string | number, dayToLeft?: number): Promise<void> {
   logger.logMethod('sendDayCountDown');
 
   // cache-able dateDistance!
@@ -71,7 +71,7 @@ export async function sendDayCountDown(chatId: number, dayToLeft?: number): Prom
   }
 }
 
-export function sendDayCountdownMessage(chatId: number, dayToLeft: number): Promise<Message> {
+export function sendDayCountdownMessage(chatId: string | number, dayToLeft: number): Promise<Message> {
   logger.logMethod('sendDayCountdownMessage');
   return sendMessage(chatId, message('day_countdown').replace('__day_to_left__', dayToLeft.toString()), {
     parse_mode: 'MarkdownV2',
