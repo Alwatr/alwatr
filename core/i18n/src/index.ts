@@ -7,4 +7,5 @@ export {
   localeContextConsumer,
   l18eContextConsumer,
   commonLocale,
+  l18eReadyPromise,
 } from './core.js';

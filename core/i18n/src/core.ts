@@ -34,6 +34,13 @@ export const l18eContextProvider = contextProvider.bind<L18eContext>('localizati
 export const l18eContextConsumer = contextConsumer.bind<L18eContext>('localization_resource_context');
 
 /**
+ * Promise resolved after LocalizationResource context ready.
+ */
+export const l18eReadyPromise = l18eContextConsumer.untilChange().then(()=>{
+  logger.logMethod('readyPromise');
+});
+
+/**
  * Common useful locales.
  */
 export const commonLocale = {
@@ -180,12 +187,13 @@ export const setL18eLoader = (l18eLoader: (locale: LocaleContext) => MaybePromis
  * message('hello_world'); // Hello world!
  * ```
  */
-export function message(key: Lowercase<string>): string;
-export function message(key?: null): null;
-export function message(key?: Lowercase<string> | null): string | null {
-  if (key == null) return null;
+export function message(key: string): string;
+export function message(key?: null): undefined;
+export function message(key?: string | null): string | undefined
+export function message(key?: string | null): string | undefined {
+  if (key == null) return;
 
-  key = <Lowercase<string>>key.trim();
+  key = key.trim();
   if (key === '') return '';
 
   if (activeL18eContext == null) return loadingStr;
