@@ -9,5 +9,8 @@
 
   "include": ["src/**/*.ts"],
   "exclude": [],
-  "references": [{"path": "../math"}]
+  "references": [
+    {"path": "../type"},
+    {"path": "../math"},
+  ]
 }
