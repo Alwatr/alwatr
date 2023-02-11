@@ -1,4 +1,4 @@
-import {UnicodeDigits, getClientId} from '@alwatr/math';
+import {UnicodeDigits} from '@alwatr/math';
 
 const unicodeDigits = new UnicodeDigits('fa', 'all');
 
@@ -27,6 +27,3 @@ for (let i = count; i > 0; i--) {
 }
 
 console.log((count / (Date.now() - start)) * 1000);
-
-console.log('client-id', getClientId());
-console.log('client-id', getClientId());
