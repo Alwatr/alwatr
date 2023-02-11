@@ -11,3 +11,7 @@ export interface PageHomeContent extends StringifyableRecord {
   topAppBar: TopAppBarContent;
   boxList: Array<BoxType>;
 }
+
+export interface PageOrderListContent extends StringifyableRecord {
+  topAppBar: TopAppBarContent;
+}
