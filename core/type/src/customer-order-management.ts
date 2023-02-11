@@ -13,11 +13,11 @@ export const orderStatusCS = [
   'draft',
   'registered',
   'processing',
-  'payment-pending',
+  'payment_pending',
   'preparing',
   'shipping',
   'delayed',
-  'on-hold',
+  'on_hold',
   'canceled',
   'refunded',
 ] as const;
