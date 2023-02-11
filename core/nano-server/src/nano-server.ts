@@ -594,6 +594,7 @@ export class AlwatrConnection {
 
     return parsedParams as T;
   }
+
   getRemoteAddress(): string {
     return (
       this.incomingMessage.headers['x-forwarded-for']
@@ -603,5 +604,20 @@ export class AlwatrConnection {
       this.incomingMessage.socket.remoteAddress ||
       'unknown'
     );
+  }
+
+  requireClientId(): string {
+    const clientId = this.incomingMessage.headers['client-id'];
+
+    if (!clientId) {
+      // eslint-disable-next-line no-throw-literal
+      throw {
+        ok: false,
+        statusCode: 401,
+        errorCode: 'client_denied',
+      };
+    }
+
+    return clientId;
   }
 }

@@ -4,6 +4,8 @@ declare module 'http' {
      * Alwatr Client UUID
      */
     'client-id'?: string;
+
+    'x-forwarded-for'?: string;
   }
 }
 
