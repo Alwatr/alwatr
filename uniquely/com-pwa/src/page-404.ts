@@ -3,12 +3,12 @@ import {message} from '@alwatr/i18n';
 
 import {submitOrderCommandTrigger} from './context.js';
 
-import type {BoxType} from './type.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
-
+import './app-footer';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -50,40 +50,42 @@ export class AlwatrPage404 extends LocalizeMixin(AlwatrSmartElement) {
     alwatr-supply-chain-box {
       width: 100%;
     }
-
-    footer {
-      direction: ltr;
-      text-align: center;
-      color: var(--sys-color-on-secondary-container);
-      padding: calc(2 * var(--sys-spacing-track)) var(--sys-spacing-track) var(--sys-spacing-track);
-      background-color: var(--sys-color-secondary-container);
-    }
   `;
+
+  protected content = {
+    topAppBar: <TopAppBarContent>{
+      type: 'small',
+      headline: 'not_found',
+      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+    },
+    box: <IconBoxContent>{
+      stated: true,
+      elevated: 1,
+      icon: 'construct-outline',
+      flipRtl: true,
+      headline: 'under_develope',
+      description: 'under_develope_description',
+    },
+  } as const;
 
   override render(): unknown {
     this._logger.logMethod('render');
 
     const topAppBar: TopAppBarContent = {
-      type: 'small',
-      headline: message('not_found'),
-      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+      ...this.content.topAppBar,
+      headline: message(this.content.topAppBar.headline),
     };
 
-    const box: BoxType = {
-      stated: true,
-      elevated: 1,
-      icon: 'construct-outline',
-      flipRtl: true,
-      headline: message('under_develope'),
-      description: message('under_develope_description'),
+    const box: IconBoxContent = {
+      ...this.content.box,
+      headline: message(this.content.box.headline),
+      description: message(this.content.box.description),
     };
 
     return html`
       <alwatr-top-app-bar .content=${topAppBar}></alwatr-top-app-bar>
       <main><alwatr-icon-box .content=${box} @click=${this._click}></alwatr-icon-box></main>
-      <footer>
-        <div>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</div>
-      </footer>
+      <alwatr-app-footer></alwatr-app-footer>
     `;
   }
 
