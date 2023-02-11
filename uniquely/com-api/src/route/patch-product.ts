@@ -4,10 +4,11 @@ import {storageClient} from '../lib/storage.js';
 
 import type {Product} from '@alwatr/type/src/customer-order-management.js';
 
-nanoServer.route('PUT', '/product/', async (connection) => {
-  logger.logMethod('put-product');
+nanoServer.route('PATCH', '/product/', async (connection) => {
+  logger.logMethod('patch-product');
   connection.requireToken(config.nanoServer.adminToken);
   const bodyJson = await connection.requireJsonBody<Product>();
+  bodyJson.id ??= 'auto_increment';
 
   return {
     ok: true,
