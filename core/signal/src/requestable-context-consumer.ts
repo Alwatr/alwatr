@@ -43,7 +43,7 @@ export const requestableContextConsumer = {
      * const newProductList = await productListConsumer.untilChange();
      * ```
      */
-    request: requestContext as
+    request: requestContext.bind(null, contextId) as
       OmitFirstParam<typeof requestContext<TRquest>>,
   } as const),
 } as const;
