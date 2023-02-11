@@ -1,10 +1,9 @@
-import {contextProvider} from '@alwatr/signal';
 import {getLocalStorageItem} from '@alwatr/util';
 
-import type {User} from '@alwatr/type';
+import {userContextProvider} from '../context.js';
 
 // demo
-contextProvider.setValue<User>('user-context', getLocalStorageItem('user-context', {
+userContextProvider.setValue(getLocalStorageItem('user-context', {
   id: 'demo-123',
   fullName: 'Demo User',
 }));
