@@ -7,8 +7,8 @@ export const homePageContent: PageHomeContent = {
   topAppBar: {
     type: 'center',
     headline: 'مدیریت سفارشات سافیت',
-    startIcon: {icon: 'person-circle-outline', clickSignalId: 'user-avatar-click-event'},
-    endIconList: [{icon: 'menu-outline', clickSignalId: 'app-menu-click-event'}],
+    startIcon: {icon: 'menu-outline', clickSignalId: 'app-menu-click-event'},
+    endIconList: [{icon: 'person-circle-outline', clickSignalId: 'user-avatar-click-event'}],
   },
 
   boxList: [
