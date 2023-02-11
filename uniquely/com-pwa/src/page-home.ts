@@ -1,6 +1,8 @@
 import {customElement, AlwatrSmartElement, css, html, unsafeHTML, map, state, nothing} from '@alwatr/element';
 import {contextConsumer} from '@alwatr/signal';
 
+import {productStorageContextConsumer, orderStorageContextConsumer} from './context.js';
+
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
@@ -68,6 +70,13 @@ export class AlwatrPageHome extends AlwatrSmartElement {
           this.content = content;
         }),
     );
+
+    productStorageContextConsumer.subscribe((value) => {
+      this._logger.logProperty(productStorageContextConsumer.id, value);
+    });
+    orderStorageContextConsumer.subscribe((value) => {
+      this._logger.logProperty(orderStorageContextConsumer.id, value);
+    });
   }
 
   override render(): unknown {
