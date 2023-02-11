@@ -6,7 +6,7 @@ import {logger} from './logger.js';
 import {config} from '../config.js';
 import {orderStorageContextProvider, orderStorageContextConsumer, userContextConsumer} from '../context.js';
 
-orderStorageContextProvider.setProvider(async (args) => {
+orderStorageContextProvider.setProvider(async (args): Promise<void> => {
   logger.logMethod('orderStorageContextProvider');
 
   const userContext = userContextConsumer.getValue() ?? await userContextConsumer.untilChange();

@@ -74,6 +74,7 @@ export class AlwatrPageHome extends AlwatrSmartElement {
     productStorageContextConsumer.subscribe((value) => {
       this._logger.logProperty(productStorageContextConsumer.id, value);
     });
+
     orderStorageContextConsumer.subscribe((value) => {
       this._logger.logProperty(orderStorageContextConsumer.id, value);
     });

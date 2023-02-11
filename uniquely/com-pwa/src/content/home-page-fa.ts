@@ -50,6 +50,7 @@ export const homePageContent: PageHomeContent = {
       elevated: 1,
       stated: true,
       icon: 'cloud-download-outline',
+      flipRtl: true,
       headline: 'دانلود کاتالوگ',
       description: 'دانلود کاتالوگ معرفی محصولات بازرگانی سافیت',
       href: 'https://www.dropbox.com/s/dl/6ywy23qql7iq31p/soffit-product-catalogue.pdf',
