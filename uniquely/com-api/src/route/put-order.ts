@@ -13,16 +13,8 @@ nanoServer.route('PUT', '/order/', async (connection) => {
   connection.requireToken((token: string) => {
     return tokenGenerator.verify(params.userId, token) === 'valid';
   });
-  const remoteAddress = connection.incomingMessage.socket.remoteAddress ?? 'unknown';
-  const clientId = connection.incomingMessage.headers['client-id'];
-
-  if (!clientId) {
-    return {
-      ok: false,
-      statusCode: 401,
-      errorCode: 'client_id_header_required',
-    };
-  }
+  const remoteAddress = connection.getRemoteAddress();
+  const clientId = connection.requireClientId();
 
   const order = await connection.requireJsonBody<Order>();
 

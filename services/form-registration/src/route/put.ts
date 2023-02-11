@@ -12,16 +12,8 @@ nanoServer.route('PUT', '/form/', async (
 
   connection.requireToken(config.nanoServer.accessToken);
   const params = connection.requireQueryParams<{formId: string}>({formId: 'string'});
-  const remoteAddress = connection.incomingMessage.socket.remoteAddress ?? 'unknown';
-  const clientId = connection.incomingMessage.headers['client-id'];
-
-  if (!clientId) {
-    return {
-      ok: false,
-      statusCode: 401,
-      errorCode: 'client_id_header_required',
-    };
-  }
+  const clientId = connection.requireClientId();
+  const remoteAddress = connection.getRemoteAddress();
 
   if (config.formList.indexOf(params.formId) === -1) {
     return {
