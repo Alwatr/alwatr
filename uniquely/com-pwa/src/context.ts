@@ -6,7 +6,7 @@ import {
   commandTrigger,
 } from '@alwatr/signal';
 
-import {PageHomeContent, PageOrderListContent} from './type.js';
+import {PageHomeContent} from './type.js';
 
 import type {AlwatrDocumentStorage, User} from '@alwatr/type';
 import type {Product, Order} from '@alwatr/type/customer-order-management.js';
@@ -27,10 +27,5 @@ export const homePageContentContextProvider =
   contextProvider.bind<PageHomeContent>('home-page-content-context');
 export const homePageContentContextConsumer =
   contextConsumer.bind<PageHomeContent>('home-page-content-context');
-
-export const orderListPageContentContextProvider =
-  contextProvider.bind<PageOrderListContent>('home-order-list-content-context');
-export const orderListPageContentContextConsumer =
-  contextConsumer.bind<PageOrderListContent>('home-order-list-content-context');
 
 export const submitOrderCommandTrigger = commandTrigger.bind<Partial<Order>, Order>('submit-order-command');
