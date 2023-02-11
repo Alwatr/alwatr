@@ -1,5 +1,5 @@
 import {createLogger, globalAlwatr, isBrowser} from '@alwatr/logger';
-import {contextProvider} from '@alwatr/signal';
+import {contextProvider, type DispatchOptions} from '@alwatr/signal';
 import {getClientId} from '@alwatr/util';
 
 import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type.js';
@@ -31,12 +31,16 @@ const cacheSupported = 'caches' in globalThis;
 
 const duplicateRequestStorage: Record<string, Promise<Response>> = {};
 
-export async function fetchContext(contextName: string, fetchOption: FetchOptions): Promise<void> {
-  if (cacheSupported) {
+export async function fetchContext(
+    contextName: string,
+    fetchOption: FetchOptions,
+    dispatchOptions?: Partial<DispatchOptions>,
+): Promise<void> {
+  if (cacheSupported && contextProvider.getValue(contextName) == null) {
     try {
       fetchOption.cacheStrategy = 'cache_only';
       const response = await serviceRequest(fetchOption);
-      contextProvider.setValue<typeof response>(contextName, response);
+      contextProvider.setValue<typeof response>(contextName, response, dispatchOptions);
     }
     catch (err) {
       if ((err as Error).message === 'fetch_cache_not_found') {
@@ -56,7 +60,7 @@ export async function fetchContext(contextName: string, fetchOption: FetchOption
       response.meta?.lastUpdated === undefined || // skip lastUpdated check
       response.meta?.lastUpdated !== contextProvider.getValue<typeof response>(contextName)?.meta?.reversion
     ) {
-      contextProvider.setValue<typeof response>(contextName, response);
+      contextProvider.setValue<typeof response>(contextName, response, dispatchOptions);
     }
   }
   catch (err) {
