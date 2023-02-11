@@ -1,4 +1,4 @@
-import {createLogger, globalAlwatr} from '@alwatr/logger';
+import {createLogger, globalAlwatr, isBrowser} from '@alwatr/logger';
 import {getClientId} from '@alwatr/math';
 
 import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type.js';
@@ -41,9 +41,11 @@ export async function serviceRequest<
 ): Promise<AlwatrServiceResponseSuccess<TData> | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>> {
   logger.logMethod('serviceRequest');
 
-  options.headers ??= {};
-  if (!options.headers['client-id']) {
-    options.headers['client-id'] = getClientId();
+  if (isBrowser) {
+    options.headers ??= {};
+    if (!options.headers['client-id']) {
+      options.headers['client-id'] = getClientId();
+    }
   }
 
   let response: Response;
