@@ -11,17 +11,6 @@ GET {{apiUrl}}/
 GET {{apiUrl}}/product/
 Authorization: Bearer {{token}}
 
-### New product
-PUT {{apiUrl}}/product/
-Authorization: Bearer {{adminToken}}
-Content-Type: application/json
-
-{
-  "id": "1",
-  "title": {"fa": "تایل کد ۰۰۱"},
-  "image": "/image/sample-1.jpg"
-}
-
 ### New order of user
 PUT {{apiUrl}}/order/?userId=abc123
 Authorization: Bearer {{token}}
