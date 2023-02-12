@@ -41,6 +41,10 @@ class AlwatrPwa extends AlwatrPwaElement {
           .storageName=${routeContext.sectionList[1]?.toString()}
         ></alwatr-page-product-list>`;
       },
+      'order-form': () => {
+        import('./page-order-form.js');
+        return html`<alwatr-page-order-form></alwatr-page-order-form>`;
+      },
     },
   };
 }
