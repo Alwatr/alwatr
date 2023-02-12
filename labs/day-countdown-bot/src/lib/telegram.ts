@@ -145,8 +145,8 @@ export class AlwatrTelegrafComposer<C extends AlwatrTelegrafContext = AlwatrTele
 
 export class AlwatrTelegrafAdminComposer<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Composer<C> {
   constructor(
-    protected isAdminCallback: (chatId: string | number) => boolean,
-    protected onSendMessageForbidden: (chatId: string | number) => void,
+    protected isAdminCallback: (chatId: number) => boolean,
+    protected onSendMessageForbidden: (chatId: number) => void,
   ) {
     super();
   }
@@ -165,11 +165,11 @@ export function actionCallbackTemplate(
     actionName: string,
     callback: (ctx: AlwatrTelegrafContext
 ) => void,
-    onSendMessageForbidden: (chatId: string | number) => void,
+    onSendMessageForbidden: (chatId: number) => void,
 ): void {
   logger.logMethod('action/' + actionName);
   if (ctx.chatId == null) return;
-  ctx.onSendMessageForbidden = onSendMessageForbidden;
+  ctx.onSendMessageForbidden = onSendMessageForbidden as (chatId: string | number) => unknown;
   return callback(ctx);
 }
 
@@ -189,14 +189,14 @@ export function adminCommandCallbackTemplate(
     ctx: AlwatrTelegrafContext,
     commandName: string,
     callback: (ctx: AlwatrTelegrafContext) => void,
-    isAdminCallback: (chatId: string | number) => boolean,
-    onSendMessageForbidden: (chatId: string | number) => void,
+    isAdminCallback: (chatId: number) => boolean,
+    onSendMessageForbidden: (chatId: number) => void,
 ): void {
   logger.logMethod('command/' + commandName);
   if (ctx.chatId == null) return;
 
   ctx.isAdminCallback = isAdminCallback;
-  ctx.onSendMessageForbidden = onSendMessageForbidden;
+  ctx.onSendMessageForbidden = onSendMessageForbidden as (chatId: string | number) => unknown;
 
   if (!ctx.isAdmin) return;
   return callback(ctx);
