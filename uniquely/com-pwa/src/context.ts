@@ -26,6 +26,6 @@ export const userContextConsumer = contextConsumer.bind<User>(userContextProvide
 export const homePageContentContextProvider =
   contextProvider.bind<PageHomeContent>('home-page-content-context');
 export const homePageContentContextConsumer =
-  contextConsumer.bind<PageHomeContent>('home-page-content-context');
+  contextConsumer.bind<PageHomeContent>(homePageContentContextProvider.id);
 
 export const submitOrderCommandTrigger = commandTrigger.bind<Partial<Order>, Order>('submit-order-command');
