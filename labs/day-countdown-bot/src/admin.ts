@@ -1,7 +1,7 @@
 import {TelegramError} from 'telegraf';
 
 import {logger} from './config.js';
-import {sendMessage} from './lib/send-message.js';
+import {bot} from './lib/bot.js';
 import {configStorageEngine} from './lib/storage.js';
 
 export async function notifyToAdminList(message: string): Promise<void> {
@@ -9,7 +9,7 @@ export async function notifyToAdminList(message: string): Promise<void> {
 
   for (let i = 0; adminChatIdList.length > i; i++) {
     try {
-      await sendMessage(adminChatIdList[i], message);
+      await bot.sendMessage(adminChatIdList[i], message, undefined, deleteAdmin as (chatId: string | number) => void);
     }
     catch (err) {
       const _err = err as TelegramError;

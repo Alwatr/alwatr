@@ -6,9 +6,27 @@ import type {Convenience, Message, Update, UserFromGetMe} from 'telegraf/types';
 const logger = createLogger('alwatr/telegram');
 
 export class AlwatrTelegram<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Telegraf<C> {
-  sendMessage(chatId: string | number, text: string, options?: Convenience.ExtraReplyMessage): Promise<Message> {
+  sendMessage(
+      chatId: string | number,
+      text: string,
+      options?: Convenience.ExtraReplyMessage,
+      onSendMessageForbidden?: (chatId: string | number) => void,
+  ): Promise<Message> | null {
     logger.logMethodArgs('sendMessage', {chatId, text, options});
-    return this.telegram.sendMessage(chatId, text, options);
+    try {
+      return this.telegram.sendMessage(chatId, text, options);
+    }
+    catch (err) {
+      const _err = err as TelegramError;
+      if (_err.code === 403 && onSendMessageForbidden != null) {
+        onSendMessageForbidden(chatId as number);
+      }
+      else {
+        logger.error('sendMessageToChat', _err.message, {_err});
+      }
+
+      return null;
+    }
   }
 
   deleteMessage(chatId: string | number, messageId: number): Promise<true> {
@@ -97,9 +115,7 @@ export class AlwatrTelegrafContext extends Context {
     }
   }
 
-  async replyToChat(
-      ...args: Parameters<AlwatrTelegrafContext['reply']>
-  ): Promise<ReturnType<Context['reply']> | null> {
+  async replyToChat(...args: Parameters<AlwatrTelegrafContext['reply']>): Promise<ReturnType<Context['reply']> | null> {
     try {
       return await this.reply(...args);
     }
@@ -136,7 +152,7 @@ export class AlwatrTelegrafComposer<C extends AlwatrTelegrafContext = AlwatrTele
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   override action(actionName: string, callback: (ctx: AlwatrTelegrafContext) => void) {
-    logger.logOther('register admin action/' + actionName);
+    logger.logOther('register action/' + actionName);
     return super.action(actionName, (ctx) =>
       actionCallbackTemplate(ctx, actionName, callback, this.onSendMessageForbidden),
     );
@@ -163,8 +179,7 @@ export class AlwatrTelegrafAdminComposer<C extends AlwatrTelegrafContext = Alwat
 export function actionCallbackTemplate(
     ctx: AlwatrTelegrafContext,
     actionName: string,
-    callback: (ctx: AlwatrTelegrafContext
-) => void,
+    callback: (ctx: AlwatrTelegrafContext) => void,
     onSendMessageForbidden: (chatId: number) => void,
 ): void {
   logger.logMethod('action/' + actionName);
@@ -204,5 +219,4 @@ export function adminCommandCallbackTemplate(
 
 /**
  * TODO:
- * 1- Error handling on telegraf
  */

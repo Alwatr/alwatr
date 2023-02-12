@@ -5,7 +5,6 @@ import {logger} from './config.js';
 import {message} from './director/l18e-loader.js';
 import {bot} from './lib/bot.js';
 import {dateDistance, nime} from './lib/calender.js';
-import {sendMessage} from './lib/send-message.js';
 import {chatStorageEngine} from './lib/storage.js';
 import {deleteUser} from './user.js';
 
@@ -38,6 +37,7 @@ export async function sendDayCountDown(chatId: string | number, dayToLeft?: numb
 
   // 1. send message
   const response = await sendDayCountdownMessage(chatId, dayToLeft);
+  if (response == null) return;
 
   const user = chatStorageEngine.get(chatId.toString());
   chatStorageEngine.set({
@@ -71,14 +71,14 @@ export async function sendDayCountDown(chatId: string | number, dayToLeft?: numb
   }
 }
 
-export function sendDayCountdownMessage(chatId: string | number, dayToLeft: number): Promise<Message> {
+export function sendDayCountdownMessage(chatId: string | number, dayToLeft: number): Promise<Message> | null {
   logger.logMethod('sendDayCountdownMessage');
-  return sendMessage(chatId, message('day_countdown').replace('__day_to_left__', dayToLeft.toString()), {
+  return bot.sendMessage(chatId, message('day_countdown').replace('__day_to_left__', dayToLeft.toString()), {
     parse_mode: 'MarkdownV2',
 
     reply_markup: {inline_keyboard: [[{
       text: message('button_day_countdown').replace('__day_to_left__', dayToLeft.toString()),
       callback_data: 'dayCountdown',
     }]]},
-  });
+  }, deleteUser);
 }
