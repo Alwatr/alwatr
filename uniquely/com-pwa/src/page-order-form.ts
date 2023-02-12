@@ -30,7 +30,6 @@ export class AlwatrPageOrderForm extends LocalizeMixin(AlwatrSmartElement) {
       flex-wrap: wrap;
       flex-grow: 1;
       overflow-y: auto;
-      padding: calc(2 * var(--sys-spacing-track));
       gap: var(--sys-spacing-track);
     }
 

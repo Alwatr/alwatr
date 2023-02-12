@@ -10,6 +10,7 @@ import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
+import '@alwatr/ui-kit/card/surface.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -65,6 +66,10 @@ export class AlwatrOrderForm extends LocalizeMixin(AlwatrSmartElement) {
     :host([disabled]) {
       pointer-events: none;
       opacity: var(--sys-surface-disabled-opacity);
+    }
+
+    alwatr-surface {
+      padding: calc(2 * var(--sys-spacing-track));
     }
 
     alwatr-text-field {
@@ -138,6 +143,7 @@ export class AlwatrOrderForm extends LocalizeMixin(AlwatrSmartElement) {
   override render(): unknown {
     this._logger.logMethod('render');
     return html`
+    <alwatr-surface elevated>
       <alwatr-text-field
         name="recipient-name"
         type="string"
@@ -170,6 +176,7 @@ export class AlwatrOrderForm extends LocalizeMixin(AlwatrSmartElement) {
         <alwatr-button outlined @click=${this.submit}>${message('order_form_submit_form')}</alwatr-button>
         <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
       </div>
+      </alwatr-surface>
     `;
   }
 }
