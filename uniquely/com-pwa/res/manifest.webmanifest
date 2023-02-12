@@ -17,16 +17,16 @@
   ],
   "screenshots": [
     {
-      "src": "/image/screenshot-1.jpg",
-      "sizes": "414x896",
-      "type": "image/jpg",
-      "label": "Soffit PWA (Dark Theme)"
+      "src": "/image/screenshot-1.png",
+      "sizes": "393x786",
+      "type": "image/png",
+      "label": "مدیریت سفارشات سافیت، صفحه اصلی، طرح روشن"
     },
     {
-      "src": "/image/screenshot-2.jpg",
-      "sizes": "414x896",
-      "type": "image/jpg",
-      "label": "Soffit PWA (Light Theme)"
+      "src": "/image/screenshot-2.png",
+      "sizes": "393x786",
+      "type": "image/png",
+      "label": "مدیریت سفارشات سافیت، صفحه اصلی، طرح تیره"
     }
   ]
 }
