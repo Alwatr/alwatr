@@ -1,8 +1,7 @@
-import {deleteAdmin} from '../admin.js';
 import {message} from '../director/l18e-loader.js';
 import {adminComposer, bot} from '../lib/bot.js';
 import {chatStorageEngine} from '../lib/storage.js';
-import {setLastNotifyMessageId} from '../user.js';
+import {deleteUser, setLastNotifyMessageId} from '../user.js';
 
 adminComposer.command('notify', async (ctx) => {
   const messageText = ctx.commandArgs;
@@ -16,9 +15,9 @@ adminComposer.command('notify', async (ctx) => {
         chat.id,
         messageText,
         undefined,
-        deleteAdmin as (chatId: string | number) => void,
+        deleteUser,
     );
-    if (response == null) return;
+    if (response == null) continue;
     setLastNotifyMessageId(+chat.id, response.message_id);
   }
 
