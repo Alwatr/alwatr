@@ -1,5 +1,6 @@
 import {message} from '../director/l18e-loader.js';
 import {userComposer} from '../lib/bot.js';
+import {isSubscribed} from '../user.js';
 
 userComposer.command('menu', async (ctx) => {
   await ctx.replyToChat(message('command_menu'), {
@@ -12,9 +13,12 @@ userComposer.command('menu', async (ctx) => {
           },
         ],
         [
-          {
+          isSubscribed(ctx.chatId as string | number) ? {
             text: message('button_unsubscribe'),
             callback_data: 'unsubscribe',
+          } : {
+            text: message('button_subscribe'),
+            callback_data: 'subscribe',
           },
         ],
       ],
