@@ -22,7 +22,7 @@ export class AlwatrSupplyChainBox extends AlwatrLotteryBox {
     return {
       icon: 'gift-outline',
       headline: message('supply_chain_form_title'),
-      elevated: 2,
+      elevated: 1,
       stated: !this.expanded,
       highlight: !this.expanded && !this.submitted,
     };

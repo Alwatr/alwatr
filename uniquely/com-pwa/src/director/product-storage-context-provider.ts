@@ -1,5 +1,5 @@
 import {fetchContext} from '@alwatr/fetch';
-import {message} from '@alwatr/i18n';
+import {l18eReadyPromise, message} from '@alwatr/i18n';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
 
 import {logger} from './logger.js';
@@ -13,11 +13,14 @@ const provideProductStorageContext = async (): Promise<void> => {
       method: 'GET',
       url: config.api + '/product/',
       token: config.token,
+      removeDuplicate: 'auto',
+      retry: 10,
+      retryDelay: 3_000,
     });
   }
   catch (err) {
     logger.error('provideProductStorageContext', 'fetch_failed', err);
-
+    await l18eReadyPromise;
     const response = await snackbarSignalTrigger.requestWithResponse({
       message: message('fetch_failed'),
       actionLabel: message('retry'),

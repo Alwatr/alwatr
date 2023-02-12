@@ -24,13 +24,17 @@ class AlwatrPwa extends AlwatrPwaElement {
   protected override _routesConfig: RoutesConfig = {
     routeId: this._routesConfig.routeId,
     templates: {
-      home: () => {
+      'home': () => {
         import('./page-home.js');
         return html`<alwatr-page-home>...</alwatr-page-home>`;
       },
-      _404: () => {
+      '_404': () => {
         import('./page-404.js');
         return html`<alwatr-page-404>...</alwatr-page-404>`;
+      },
+      'order-list': () => {
+        import('./page-order-list.js');
+        return html`<alwatr-page-order-list></alwatr-page-order-list>`;
       },
     },
   };
