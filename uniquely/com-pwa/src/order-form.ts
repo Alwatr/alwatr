@@ -1,8 +1,8 @@
 import {customElement, css, html, property, LocalizeMixin, AlwatrSmartElement} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import {commandTrigger} from '@alwatr/signal';
 
-import type {Order} from '@alwatr/type/src/customer-order-management.js';
+import {submitOrderCommandTrigger} from './context.js';
+
 import type {RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
@@ -70,19 +70,18 @@ export class AlwatrOrderForm extends LocalizeMixin(AlwatrSmartElement) {
     disabled = false;
 
   async submit(): Promise<void> {
-    const bodyJson = this.getFormData();
-    this._logger.logMethodArgs('submit', bodyJson);
+    const formData = this.getFormData();
+    this._logger.logMethodArgs('submit', formData);
 
     this.disabled = true;
 
-    const response = await commandTrigger.requestWithResponse<Partial<Order>, boolean>('submit-form-command', {});
+    const response = await submitOrderCommandTrigger.requestWithResponse(formData);
 
     if (response) {
-      this.dispatchEvent(new CustomEvent('form-submitted'));
+      this.resetForm();
     }
-    else {
-      this.disabled = false;
-    }
+
+    this.disabled = false;
   }
 
   async cancel(): Promise<void> {
@@ -98,6 +97,16 @@ export class AlwatrOrderForm extends LocalizeMixin(AlwatrSmartElement) {
       data[inputElement.name] = inputElement.value;
     }
     return data;
+  }
+
+  resetForm(): void {
+    // TODO: reset radio group
+    this._logger.logMethod('clearForm');
+    for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>(
+        'alwatr-text-field',
+    )) {
+      inputElement.value = '';
+    }
   }
 
   override render(): unknown {
