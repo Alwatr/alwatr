@@ -28,6 +28,15 @@
     "order_status_canceled": "لغو شده",
     "order_status_refunded": "بازپرداخت",
 
-    "product_not_found": "هیچ محصولی یافت نشد!"
+    "product_not_found": "هیچ محصولی یافت نشد!",
+    "page_order_form_headline": "ثبت سفارش",
+
+    "order_form_receiver_name": "نام تحویل گیرنده",
+    "order_form_receiver_national_code": "کد ملی تحویل گیرنده",
+    "order_form_address": "آدرس تحویل",
+    "order_form_lading_title": "نحوه بارگیری",
+    "order_form_trolley": "تریلی",
+    "order_form_submit_form": "ثبت سفارش",
+    "cancel": "لغو"
   }
 }
