@@ -20,27 +20,29 @@ declare global {
 export class AlwatrPageOrderForm extends LocalizeMixin(AlwatrSmartElement) {
   static override styles = css`
     :host {
-      display: block;
+      display: flex;
+      flex-direction: column;
       height: 100%;
-      overflow-y: auto;
     }
 
     main {
       display: flex;
       flex-wrap: wrap;
+      flex-grow: 1;
+      overflow-y: auto;
       padding: calc(2 * var(--sys-spacing-track));
       gap: var(--sys-spacing-track);
     }
 
     alwatr-order-form {
-      flex-grow: 1;
+      width: 100%;
     }
   `;
 
   protected content = {
     topAppBar: <TopAppBarContent>{
       type: 'medium',
-      headline: message('page_order_form_headline'),
+      headline: 'page_order_form_headline',
       startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
       tinted: 2,
     },
@@ -48,8 +50,14 @@ export class AlwatrPageOrderForm extends LocalizeMixin(AlwatrSmartElement) {
 
   override render(): unknown {
     this._logger.logMethod('render');
+
+    const topAppBar: TopAppBarContent = {
+      ...this.content.topAppBar,
+      headline: message(this.content.topAppBar.headline),
+    };
+
     return html`
-      <alwatr-top-app-bar .content=${this.content.topAppBar}></alwatr-top-app-bar>
+      <alwatr-top-app-bar .content=${topAppBar}></alwatr-top-app-bar>
       <main>
         <alwatr-order-form></alwatr-order-form>
       </main>
