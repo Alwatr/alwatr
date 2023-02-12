@@ -133,6 +133,14 @@ export class AlwatrTelegrafComposer<C extends AlwatrTelegrafContext = AlwatrTele
       commandCallbackTemplate(ctx, commandName, callback, this.onSendMessageForbidden),
     );
   }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  override action(actionName: string, callback: (ctx: AlwatrTelegrafContext) => void) {
+    logger.logOther('register admin action/' + actionName);
+    return super.action(actionName, (ctx) =>
+      actionCallbackTemplate(ctx, actionName, callback, this.onSendMessageForbidden),
+    );
+  }
 }
 
 export class AlwatrTelegrafAdminComposer<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Composer<C> {
@@ -152,6 +160,19 @@ export class AlwatrTelegrafAdminComposer<C extends AlwatrTelegrafContext = Alwat
   }
 }
 
+export function actionCallbackTemplate(
+    ctx: AlwatrTelegrafContext,
+    actionName: string,
+    callback: (ctx: AlwatrTelegrafContext
+) => void,
+    onSendMessageForbidden: (chatId: string | number) => void,
+): void {
+  logger.logMethod('action/' + actionName);
+  if (ctx.chatId == null) return;
+  ctx.onSendMessageForbidden = onSendMessageForbidden;
+  return callback(ctx);
+}
+
 export function commandCallbackTemplate(
     ctx: AlwatrTelegrafContext,
     commandName: string,
@@ -159,8 +180,6 @@ export function commandCallbackTemplate(
     onSendMessageForbidden: (chatId: string | number) => void,
 ): void {
   logger.logMethod('command/' + commandName);
-  console.log(ctx.chatId, ctx.chat?.id);
-
   if (ctx.chatId == null) return;
   ctx.onSendMessageForbidden = onSendMessageForbidden;
   return callback(ctx);
@@ -186,5 +205,4 @@ export function adminCommandCallbackTemplate(
 /**
  * TODO:
  * 1- Error handling on telegraf
- * 2- logging on telegraf
  */
