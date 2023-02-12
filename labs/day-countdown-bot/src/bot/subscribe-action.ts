@@ -6,7 +6,8 @@ import {isSubscribed} from '../user.js';
 
 userComposer.action('subscribe', async (ctx) => {
   if (isSubscribed(ctx.chatId as number | string)) {
-    await ctx.sendMessageToChat(message('action_subscribe_added_before'));
+    await ctx.answerCbQuery(message('action_subscribe_added_before'));
+    return;
   }
   else {
     chatStorageEngine.set({id: (ctx.chatId as number | string).toString()});
