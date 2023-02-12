@@ -1,12 +1,12 @@
 import {type TelegramError} from 'telegraf';
 import {Message} from 'telegraf/types';
 
+import {deleteChat} from './chat.js';
 import {logger} from './config.js';
 import {message} from './director/l18e-loader.js';
 import {bot} from './lib/bot.js';
 import {dateDistance, nime} from './lib/calender.js';
 import {chatStorageEngine} from './lib/storage.js';
-import {deleteUser} from './user.js';
 
 export async function sendDayCountdownToAllChat(): Promise<void> {
   logger.logMethod('sendDayCountdownToAllChat');
@@ -19,7 +19,7 @@ export async function sendDayCountdownToAllChat(): Promise<void> {
       catch (err) {
         const _err = err as TelegramError;
         if (_err.code === 403) {
-          deleteUser(+chat.id);
+          deleteChat(+chat.id);
         }
         logger.error('sendDayCountdownToAllChat', _err.message);
       }
@@ -27,7 +27,7 @@ export async function sendDayCountdownToAllChat(): Promise<void> {
   }
 }
 
-export async function sendDayCountDown(chatId: string | number, dayToLeft?: number): Promise<void> {
+export async function sendDayCountDown(chatId: number, dayToLeft?: number): Promise<void> {
   logger.logMethod('sendDayCountDown');
 
   // cache-able dateDistance!
@@ -71,7 +71,7 @@ export async function sendDayCountDown(chatId: string | number, dayToLeft?: numb
   }
 }
 
-export async function sendDayCountdownMessage(chatId: string | number, dayToLeft: number): Promise<Message | null> {
+export async function sendDayCountdownMessage(chatId: number, dayToLeft: number): Promise<Message | null> {
   logger.logMethod('sendDayCountdownMessage');
   return await bot.sendMessage(chatId, message('day_countdown').replace('__day_to_left__', dayToLeft.toString()), {
     parse_mode: 'MarkdownV2',
@@ -80,5 +80,5 @@ export async function sendDayCountdownMessage(chatId: string | number, dayToLeft
       text: message('button_day_countdown').replace('__day_to_left__', dayToLeft.toString()),
       callback_data: 'dayCountdown',
     }]]},
-  }, deleteUser);
+  }, deleteChat);
 }
