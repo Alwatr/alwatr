@@ -46,7 +46,15 @@ export const homePageContent: PageHomeContent = {
       href: '/orders',
       description: 'مشاهده وضعیت و پیگیری سفارشات جاری.',
     },
-
+    {
+      elevated: 1,
+      stated: true,
+      icon: 'bag-handle-outline',
+      flipRtl: true,
+      headline: 'تکمیل سفارش',
+      href: '/order-form',
+      description: 'تکمیل اطلاعات سفارش.',
+    },
     {
       elevated: 1,
       stated: true,
