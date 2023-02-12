@@ -28,6 +28,8 @@ export interface TopAppBarContent extends StringifyableRecord {
   headline: string;
   startIcon: IconButtonContent;
   endIconList?: Array<IconButtonContent>;
+  elevated?: number;
+  tinted?: number;
 }
 
 /**
@@ -44,6 +46,7 @@ export class AlwatrTopAppBar extends DirectionMixin(SignalMixin(AlwatrSurface)) 
         display: block;
         padding: var(--sys-spacing-track) calc(0.5 * var(--sys-spacing-track));
         z-index: var(--sys-zindex-sticky);
+        border-radius: 0;
         user-select: none;
       }
 
@@ -128,6 +131,24 @@ export class AlwatrTopAppBar extends DirectionMixin(SignalMixin(AlwatrSurface)) 
 
   protected override shouldUpdate(changedProperties: PropertyValues<this>): boolean {
     return super.shouldUpdate(changedProperties) && this.content != null;
+  }
+
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+    if (changedProperties.has('content') && this.content != null) {
+      if (this.content.elevated != null && this.content.elevated > 0) {
+        this.setAttribute('elevated', this.content.elevated + '');
+      }
+      else {
+        this.removeAttribute('elevated');
+      }
+      if (this.content.tinted != null && this.content.tinted > 0) {
+        this.setAttribute('tinted', this.content.tinted + '');
+      }
+      else {
+        this.removeAttribute('tinted');
+      }
+    }
   }
 
   override render(): unknown {

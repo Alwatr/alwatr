@@ -72,19 +72,35 @@ export class AlwatrSurface extends AlwatrDummyElement {
 
     :host([elevated]) {
       --_surface-elevation: var(--sys-surface-elevation-1);
-      --_surface-tint-opacity: var(--sys-surface-tint-opacity-1);
     }
     :host([elevated='2']) {
       --_surface-elevation: var(--sys-surface-elevation-2);
-      --_surface-tint-opacity: var(--sys-surface-tint-opacity-2);
     }
     :host([elevated='3']) {
       --_surface-elevation: var(--sys-surface-elevation-3);
-      --_surface-tint-opacity: var(--sys-surface-tint-opacity-3);
     }
     :host([elevated='4']) {
       --_surface-elevation: var(--sys-surface-elevation-4);
+    }
+
+    :host([tinted]),
+    :host([elevated]) {
+      --_surface-tint-opacity: var(--sys-surface-tint-opacity-1);
+    }
+    :host([tinted='2']),
+    :host([elevated='2']) {
+      --_surface-tint-opacity: var(--sys-surface-tint-opacity-2);
+    }
+    :host([tinted='3']),
+    :host([elevated='3']) {
+      --_surface-tint-opacity: var(--sys-surface-tint-opacity-3);
+    }
+    :host([tinted='4']),
+    :host([elevated='4']) {
       --_surface-tint-opacity: var(--sys-surface-tint-opacity-4);
+    }
+    :host([tinted='5']) {
+      --_surface-tint-opacity: var(--sys-surface-tint-opacity-5);
     }
 
     :host([stated]:hover) {

@@ -24,6 +24,7 @@ export interface IconBoxContent extends StringifyableRecord {
   stated?: boolean;
   preLine?: boolean;
   elevated?: number;
+  tinted?: number;
 }
 
 /**
@@ -114,6 +115,12 @@ export class AlwatrIconBox extends AlwatrSurface {
       }
       else {
         this.removeAttribute('elevated');
+      }
+      if (this.content.tinted != null && this.content.tinted > 0) {
+        this.setAttribute('tinted', this.content.tinted + '');
+      }
+      else {
+        this.removeAttribute('tinted');
       }
     }
   }
