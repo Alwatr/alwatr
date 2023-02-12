@@ -21,9 +21,9 @@ declare global {
 export class AlwatrPageHome extends AlwatrSmartElement {
   static override styles = css`
     :host {
-      display: block;
+      display: flex;
+      flex-direction: column;
       height: 100%;
-      overflow-y: auto;
     }
 
     main {
@@ -31,6 +31,8 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       flex-wrap: wrap;
       padding: calc(2 * var(--sys-spacing-track));
       gap: var(--sys-spacing-track);
+      flex-grow: 1;
+      overflow-y: auto;
     }
 
     alwatr-icon-box {
