@@ -1,9 +1,9 @@
 import {message} from '../director/l18e-loader.js';
-import {adminComposer, bot} from '../lib/bot.js';
+import {botAdminComposer, bot} from '../lib/bot.js';
 import {chatStorageEngine} from '../lib/storage.js';
 import {deleteUser, setLastNotifyMessageId} from '../user.js';
 
-adminComposer.command('notify', async (ctx) => {
+botAdminComposer.command('notify', async (ctx) => {
   const messageText = ctx.commandArgs;
   if (messageText == null) {
     await ctx.replyToChat(message('command_notify_empty_message'));

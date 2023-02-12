@@ -1,5 +1,6 @@
 import {
-  AlwatrTelegrafAdminComposer,
+  AlwatrTelegrafBotAdminComposer,
+  AlwatrTelegrafChatAdminComposer,
   AlwatrTelegrafComposer,
   AlwatrTelegrafContext,
   AlwatrTelegram,
@@ -11,8 +12,14 @@ import {deleteUser} from '../user.js';
 export const bot = new AlwatrTelegram<AlwatrTelegrafContext>(config.telegramBot.token, {
   contextType: AlwatrTelegrafContext,
 });
-export const adminComposer = new AlwatrTelegrafAdminComposer(isAdmin, deleteAdmin);
+export const botAdminComposer = new AlwatrTelegrafBotAdminComposer(isAdmin, deleteAdmin);
+export const chatAdminComposer = new AlwatrTelegrafChatAdminComposer(
+    bot.isChatAdmin.bind(bot),
+    bot.isGroup.bind(bot),
+    deleteAdmin,
+);
 export const userComposer = new AlwatrTelegrafComposer(deleteUser);
 
-bot.use(adminComposer);
+bot.use(botAdminComposer);
+bot.use(chatAdminComposer);
 bot.use(userComposer);

@@ -1,8 +1,8 @@
 import {message} from '../director/l18e-loader.js';
-import {adminComposer, bot} from '../lib/bot.js';
+import {botAdminComposer, bot} from '../lib/bot.js';
 import {chatStorageEngine} from '../lib/storage.js';
 
-adminComposer.command('deleteNotify', async (ctx) => {
+botAdminComposer.command('deleteNotify', async (ctx) => {
   for (const chat of chatStorageEngine.allObject()) {
     const lastNotifyMessageId = chat.lastNotifyMessageId;
     if (lastNotifyMessageId == null) continue;

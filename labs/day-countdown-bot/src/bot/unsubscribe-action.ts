@@ -1,8 +1,8 @@
 import {message} from '../director/l18e-loader.js';
-import {userComposer} from '../lib/bot.js';
+import {chatAdminComposer} from '../lib/bot.js';
 import {deleteUser, isSubscribed} from '../user.js';
 
-userComposer.action('unsubscribe', async (ctx) => {
+chatAdminComposer.action('unsubscribe', async (ctx) => {
   if (isSubscribed(ctx.chatId as string | number)) {
     deleteUser(ctx.chatId as string | number);
     await ctx.sendMessageToChat(message('action_unsubscribe_success'), {

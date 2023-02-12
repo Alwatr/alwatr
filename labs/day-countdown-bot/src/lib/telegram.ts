@@ -1,6 +1,8 @@
 import {createLogger} from '@alwatr/logger';
 import {Context, TelegramError, Telegraf, Composer, Telegram} from 'telegraf';
 
+import {message} from '../director/l18e-loader.js';
+
 import type {Convenience, Message, Update, UserFromGetMe} from 'telegraf/types';
 
 const logger = createLogger('alwatr/telegram');
@@ -42,6 +44,23 @@ export class AlwatrTelegram<C extends AlwatrTelegrafContext = AlwatrTelegrafCont
   async unpinChatMessage(chatId: string | number, messageId: number): Promise<true> {
     logger.logMethodArgs('unpinChatMessage', {chatId, messageId});
     return await this.telegram.unpinChatMessage(chatId, messageId);
+  }
+
+  async isChatAdmin(chatId: number, userId: number): Promise<boolean> {
+    logger.logMethodArgs('isChatAdmin', {chatId, userId});
+    const adminList = await this.telegram.getChatAdministrators(chatId);
+
+    const admin = adminList.find((admin) => {
+      return admin.user.id === userId;
+    });
+
+    if (admin == null) return false;
+    return true;
+  }
+
+  async isGroup(chatId: number): Promise<boolean> {
+    logger.logMethod('isGroup');
+    return chatId < 0;
   }
 }
 
@@ -159,9 +178,12 @@ export class AlwatrTelegrafComposer<C extends AlwatrTelegrafContext = AlwatrTele
   }
 }
 
-export class AlwatrTelegrafAdminComposer<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Composer<C> {
+export class AlwatrTelegrafChatAdminComposer<
+  C extends AlwatrTelegrafContext = AlwatrTelegrafContext
+> extends Composer<C> {
   constructor(
-    protected isAdminCallback: (chatId: number) => boolean,
+    protected isChatAdminCallback: (chatId: number, userId: number) => Promise<boolean>,
+    protected isGroupCallback: (chatId: number) => Promise<boolean>,
     protected onSendMessageForbidden: (chatId: number) => void,
   ) {
     super();
@@ -169,9 +191,50 @@ export class AlwatrTelegrafAdminComposer<C extends AlwatrTelegrafContext = Alwat
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   override command(commandName: string, callback: (ctx: AlwatrTelegrafContext) => void) {
-    logger.logOther('register admin command/' + commandName);
+    logger.logOther('register bot admin command/' + commandName);
     return super.command(commandName, (ctx) =>
-      adminCommandCallbackTemplate(ctx, commandName, callback, this.isAdminCallback, this.onSendMessageForbidden),
+      chatAdminCommandCallbackTemplate(
+          ctx,
+          commandName,
+          callback,
+          this.isChatAdminCallback,
+          this.isGroupCallback,
+          this.onSendMessageForbidden,
+      ),
+    );
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  override action(actionName: string, callback: (ctx: AlwatrTelegrafContext) => void) {
+    logger.logOther('register chat admin action/' + actionName);
+    return super.action(actionName, (ctx) =>
+      chatAdminActionCallbackTemplate(
+          ctx,
+          actionName,
+          callback,
+          this.isChatAdminCallback,
+          this.isGroupCallback,
+          this.onSendMessageForbidden,
+      ),
+    );
+  }
+}
+
+export class AlwatrTelegrafBotAdminComposer<
+  C extends AlwatrTelegrafContext = AlwatrTelegrafContext
+> extends Composer<C> {
+  constructor(
+    protected isBotAdminCallback: (chatId: number) => boolean,
+    protected onSendMessageForbidden: (chatId: number) => void,
+  ) {
+    super();
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  override command(commandName: string, callback: (ctx: AlwatrTelegrafContext) => void) {
+    logger.logOther('register chat admin command/' + commandName);
+    return super.command(commandName, (ctx) =>
+      botAdminCommandCallbackTemplate(ctx, commandName, callback, this.isBotAdminCallback, this.onSendMessageForbidden),
     );
   }
 }
@@ -188,6 +251,25 @@ export function actionCallbackTemplate(
   return callback(ctx);
 }
 
+export async function chatAdminActionCallbackTemplate(
+    ctx: AlwatrTelegrafContext,
+    actionName: string,
+    callback: (ctx: AlwatrTelegrafContext) => void,
+    isChatAdminCallback: (chatId: number, userId: number) => Promise<boolean>,
+    isGroupCallback: (chatId: number) => Promise<boolean>,
+    onSendMessageForbidden: (chatId: number) => void,
+): Promise<void> {
+  logger.logMethod('action/' + actionName);
+  if (ctx.chatId == null || ctx.from?.id == null) return;
+
+  if ((await isGroupCallback(ctx.chatId)) && !(await isChatAdminCallback(ctx.chatId, ctx.from.id))) {
+    ctx.answerCbQuery(message('permission_denied'));
+    return;
+  }
+  ctx.onSendMessageForbidden = onSendMessageForbidden as (chatId: string | number) => unknown;
+  return callback(ctx);
+}
+
 export function commandCallbackTemplate(
     ctx: AlwatrTelegrafContext,
     commandName: string,
@@ -200,7 +282,7 @@ export function commandCallbackTemplate(
   return callback(ctx);
 }
 
-export function adminCommandCallbackTemplate(
+export function botAdminCommandCallbackTemplate(
     ctx: AlwatrTelegrafContext,
     commandName: string,
     callback: (ctx: AlwatrTelegrafContext) => void,
@@ -211,6 +293,28 @@ export function adminCommandCallbackTemplate(
   if (ctx.chatId == null) return;
 
   ctx.isAdminCallback = isAdminCallback;
+  ctx.onSendMessageForbidden = onSendMessageForbidden as (chatId: string | number) => unknown;
+
+  if (!ctx.isAdmin) return;
+  return callback(ctx);
+}
+
+export async function chatAdminCommandCallbackTemplate(
+    ctx: AlwatrTelegrafContext,
+    commandName: string,
+    callback: (ctx: AlwatrTelegrafContext) => void,
+    isChatAdminCallback: (chatId: number, userId: number) => Promise<boolean>,
+    isGroupCallback: (chatId: number) => Promise<boolean>,
+    onSendMessageForbidden: (chatId: number) => void,
+): Promise<void> {
+  logger.logMethod('command/' + commandName);
+  if (ctx.chatId == null || ctx.from?.id == null) return;
+
+  if ((await isGroupCallback(ctx.chatId)) && !(await isChatAdminCallback(ctx.chatId, ctx.from.id))) {
+    ctx.answerCbQuery(message('permission_denied'));
+    return;
+  }
+
   ctx.onSendMessageForbidden = onSendMessageForbidden as (chatId: string | number) => unknown;
 
   if (!ctx.isAdmin) return;
