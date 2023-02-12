@@ -30,15 +30,22 @@
 
     "product_not_found": "هیچ محصولی یافت نشد!",
     "page_order_form_headline": "ثبت سفارش",
-
-    "order_form_receiver_name": "نام تحویل گیرنده",
-    "order_form_receiver_national_code": "کد ملی تحویل گیرنده",
+    "order_form_recipient_name": "نام تحویل گیرنده",
+    "order_form_recipient_national_code": "کد ملی تحویل گیرنده",
     "order_form_address": "آدرس تحویل",
     "order_form_lading_title": "نحوه بارگیری",
     "order_form_trolley": "تریلی",
+    "order_form_car_type_title": "نوع ماشین",
+    "order_form_shipment_type_title": "نوع حمل‌ و‌ نقل",
+    "order_form_time_period_title": "بازه زمانی",
+    "order_form_time_period_1_2w": "یک تا دو هفته",
+    "order_form_time_period_2_3w": "دو تا سه هفته",
+    "order_form_time_period_3_4w": "سه تا چهار هفته",
+
     "order_form_submit_form": "ثبت سفارش",
     "cancel": "لغو",
     "order_form_submit_success": "سفارش با موفقیت ثبت شد.",
-    "order_form_submit_failed": "خطایی در ثبت سفارش رخ داد!"
+    "order_form_submit_failed": "خطایی در ثبت سفارش رخ داد!",
+    "order_form_invalid_detail": "اطلاعات فرم نادرست است."
   }
 }

@@ -3,7 +3,8 @@ import {message} from '@alwatr/i18n';
 
 import {submitOrderCommandTrigger} from './context.js';
 
-import type {RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
+import type {OrderDelivery} from '@alwatr/type/src/customer-order-management.js';
+import type {AlwatrFieldSet, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 import '@alwatr/ui-kit/text-field/text-field.js';
@@ -23,14 +24,33 @@ declare global {
 export class AlwatrOrderForm extends LocalizeMixin(AlwatrSmartElement) {
   static formId = 'order';
 
-  get _radioGroupOptions(): RadioGroupOptions {
+  get _carTypeRadioGroupOptions(): RadioGroupOptions {
     return {
-      title: message('order_form_lading_title'),
+      title: message('order_form_car_type_title'),
       radioGroup: [
-        {label: message('order_form_trolley')},
-        {label: message('order_form_trolley')},
-        {label: message('order_form_trolley')},
-        {label: message('order_form_trolley')},
+        {label: message('order_form_trolley'), value: 'y'},
+        {label: message('order_form_trolley'), value: 'x'},
+      ],
+    };
+  }
+
+  get _shipmentTypeRadioGroupOptions(): RadioGroupOptions {
+    return {
+      title: message('order_form_shipment_type_title'),
+      radioGroup: [
+        {label: message('order_form_trolley'), value: 'y'},
+        {label: message('order_form_trolley'), value: 'x'},
+      ],
+    };
+  }
+
+  get _timePeriodRadioGroupOptions(): RadioGroupOptions {
+    return {
+      title: message('order_form_time_period_title'),
+      radioGroup: [
+        {label: message('order_form_time_period_1_2w'), value: '1-2w'},
+        {label: message('order_form_time_period_2_3w'), value: '2-3w'},
+        {label: message('order_form_time_period_3_4w'), value: '3-4w'},
       ],
     };
   }
@@ -39,7 +59,7 @@ export class AlwatrOrderForm extends LocalizeMixin(AlwatrSmartElement) {
     :host {
       display: block;
       transition: opacity var(--sys-motion-duration-medium) var(--sys-motion-easing-normal);
-      padding: calc(4 * var(--sys-spacing-track))
+      padding: calc(4 * var(--sys-spacing-track));
     }
 
     :host([disabled]) {
@@ -71,11 +91,12 @@ export class AlwatrOrderForm extends LocalizeMixin(AlwatrSmartElement) {
 
   async submit(): Promise<void> {
     const formData = this.getFormData();
+
     this._logger.logMethodArgs('submit', formData);
 
     this.disabled = true;
 
-    const response = await submitOrderCommandTrigger.requestWithResponse(formData);
+    const response = await submitOrderCommandTrigger.requestWithResponse({delivery: formData as OrderDelivery});
 
     if (response) {
       this.resetForm();
@@ -88,23 +109,28 @@ export class AlwatrOrderForm extends LocalizeMixin(AlwatrSmartElement) {
     this.dispatchEvent(new CustomEvent('form-canceled'));
   }
 
-  getFormData(): Record<string, string | number | boolean> {
+  getFormData(): Partial<OrderDelivery> {
     this._logger.logMethod('getFormData');
-    const data: Record<string, string> = {};
-    for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>(
-        'alwatr-text-field,alwatr-radio-group',
-    )) {
-      data[inputElement.name] = inputElement.value;
-    }
-    return data;
+    return {
+      recipientName: this.renderRoot.querySelector<AlwatrTextField>('alwatr-text-field[name="recipient-name"]')?.value,
+      recipientNationalCode: this.renderRoot.querySelector<AlwatrTextField>(
+          'alwatr-text-field[name="recipient-national-code"]',
+      )?.value,
+      address: this.renderRoot.querySelector<AlwatrTextField>('alwatr-text-field[name="address"]')?.value,
+      carType: this.renderRoot.querySelector<AlwatrFieldSet>('alwatr-radio-group[name="car-type"]')?.value as 'x' | 'y',
+      shipmentType: this.renderRoot.querySelector<AlwatrFieldSet>(
+          'alwatr-radio-group[name="shipment-type"]',
+      )?.value as | 'x' | 'y',
+      timePeriod: this.renderRoot.querySelector<AlwatrFieldSet>(
+          'alwatr-radio-group[name="car-type"]',
+      )?.value as '1-2w' | '2-3w' | '3-4w',
+    };
   }
 
   resetForm(): void {
     // TODO: reset radio group
     this._logger.logMethod('clearForm');
-    for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>(
-        'alwatr-text-field',
-    )) {
+    for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>('alwatr-text-field')) {
       inputElement.value = '';
     }
   }
@@ -113,33 +139,33 @@ export class AlwatrOrderForm extends LocalizeMixin(AlwatrSmartElement) {
     this._logger.logMethod('render');
     return html`
       <alwatr-text-field
-        name="receiver"
+        name="recipient-name"
         type="string"
         outlined
         active-outline
         stated
-        placeholder=${message('order_form_receiver_name')}
+        placeholder=${message('order_form_recipient_name')}
       ></alwatr-text-field>
       <alwatr-text-field
-        name="receiver-national-code"
+        name="recipient-national-code"
         type="number"
         outlined
         active-outline
         stated
-        placeholder=${message('order_form_receiver_national_code')}
+        placeholder=${message('order_form_recipient_national_code')}
       ></alwatr-text-field>
       <alwatr-text-field
-        name="receiver-address"
+        name="address"
         type="text"
         outlined
         active-outline
         stated
         placeholder=${message('order_form_address')}
       ></alwatr-text-field>
-      <alwatr-radio-group
-        name="activity"
-        .options=${this._radioGroupOptions}
-      ></alwatr-radio-group>
+      <alwatr-radio-group name="car-type" .options=${this._carTypeRadioGroupOptions}></alwatr-radio-group>
+      <alwatr-radio-group name="shipment-type" .options=${this._shipmentTypeRadioGroupOptions}></alwatr-radio-group>
+      <alwatr-radio-group name="time-period" .options=${this._timePeriodRadioGroupOptions}></alwatr-radio-group>
+
       <div class="button-container">
         <alwatr-button outlined @click=${this.submit}>${message('order_form_submit_form')}</alwatr-button>
         <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
