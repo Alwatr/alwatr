@@ -18,7 +18,7 @@ export const config = {
     path: process.env.STORAGE_PATH ?? 'storage',
   },
   configStorage: {
-    name: 'setting',
+    name: 'config',
     path: process.env.STORAGE_PATH ?? 'storage',
   },
 };

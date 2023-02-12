@@ -73,11 +73,9 @@ export async function sendDayCountDown(chatId: number, dayToLeft?: number): Prom
 
 export async function sendDayCountdownMessage(chatId: number, dayToLeft: number): Promise<Message | null> {
   logger.logMethod('sendDayCountdownMessage');
-  return await bot.sendMessage(chatId, message('day_countdown').replace('__day_to_left__', dayToLeft.toString()), {
-    parse_mode: 'MarkdownV2',
-
+  return await bot.sendMessage(chatId, message('day_countdown').replace('${dayToLeft}', dayToLeft.toString()), {
     reply_markup: {inline_keyboard: [[{
-      text: message('button_day_countdown').replace('__day_to_left__', dayToLeft.toString()),
+      text: message('button_day_countdown').replace('${dayToLeft}', dayToLeft.toString()),
       callback_data: 'dayCountdown',
     }]]},
   }, handleSendMessageError);

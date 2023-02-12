@@ -1,6 +1,7 @@
 import {bot} from './bot.js';
 import {notifyToAdminList} from '../admin.js';
 import {logger} from '../config.js';
+import {message} from '../director/l18e-loader.js';
 
 export async function launchBot(): Promise<void> {
   logger.logMethod('launchBot');
@@ -13,7 +14,7 @@ export async function launchBot(): Promise<void> {
       logger.error('launchBot', 'launch_bot_failed', err);
     });
 
-    notifyToAdminList('بات شروع به کار کرد ⚡️');
+    notifyToAdminList(message('bot_start_admin_notify'));
   }
   catch (err) {
     logger.error('launchBot', 'launch_bot_failed', err);

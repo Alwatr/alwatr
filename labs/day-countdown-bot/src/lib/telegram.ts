@@ -11,10 +11,12 @@ export class AlwatrTelegram<C extends AlwatrTelegrafContext = AlwatrTelegrafCont
   async sendMessage(
       chatId: number,
       text: string,
-      options?: Convenience.ExtraReplyMessage,
+      options: Convenience.ExtraReplyMessage = {},
       onSendMessageForbidden?: (chatId: number, error: TelegramError) => void,
   ): Promise<Message | null> {
     logger.logMethodArgs('sendMessage', {chatId, text, options});
+
+    options.parse_mode ??= 'MarkdownV2';
     try {
       return await this.telegram.sendMessage(chatId, text, options);
     }

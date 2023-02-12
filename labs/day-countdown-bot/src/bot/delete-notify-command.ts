@@ -3,6 +3,7 @@ import {botAdminComposer, bot} from '../lib/bot.js';
 import {chatStorageEngine} from '../lib/storage.js';
 
 botAdminComposer.command('deleteNotify', async (ctx) => {
+  let removedChatCount = 0;
   for (const chat of chatStorageEngine.allObject()) {
     const lastNotifyMessageId = chat.lastNotifyMessageId;
     if (lastNotifyMessageId == null) continue;
@@ -10,6 +11,7 @@ botAdminComposer.command('deleteNotify', async (ctx) => {
     try {
       await bot.deleteMessage(+chat.id, lastNotifyMessageId);
       delete chat.lastNotifyMessageId;
+      removedChatCount += 1;
     }
     catch {
       // no matter now!
@@ -17,5 +19,5 @@ botAdminComposer.command('deleteNotify', async (ctx) => {
     }
   }
 
-  await ctx.replyToChat(message('command_delete_notify_success'));
+  await ctx.replyToChat(message('command_delete_notify_success').replace('${chat_count}', removedChatCount.toString()));
 });

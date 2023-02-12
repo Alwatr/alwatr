@@ -9,11 +9,11 @@ chatAdminComposer.action('subscribe', async (ctx) => {
     await ctx.answerCbQuery(message('action_subscribe_added_before'));
     return;
   }
-  else {
-    chatStorageEngine.set({id: (ctx.chatId).toString()});
-    const response = await ctx.sendMessageToChat(message('action_subscribe_success'));
-    if (response == null) return; // cannot send message!
-  }
+
+  // else
+  chatStorageEngine.set({id: ctx.chatId.toString()});
+  const response = await ctx.sendMessageToChat(message('action_subscribe_success'));
+  if (response == null) return; // cannot send message!
 
   await sendDayCountDown(ctx.chatId);
   await ctx.answerCbQuery();

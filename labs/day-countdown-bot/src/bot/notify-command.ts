@@ -10,16 +10,13 @@ botAdminComposer.command('notify', async (ctx) => {
     return;
   }
 
+  let removedChatCount = 0;
   for (const chat of chatStorageEngine.allObject()) {
-    const response = await bot.sendMessage(
-        +chat.id,
-        messageText,
-        undefined,
-        handleSendMessageError,
-    );
+    const response = await bot.sendMessage(+chat.id, messageText, undefined, handleSendMessageError);
     if (response == null) continue;
     setLastNotifyMessageId(+chat.id, response.message_id);
+    removedChatCount += 1;
   }
 
-  ctx.replyToChat(message('command_notify_success'));
+  ctx.replyToChat(message('command_notify_success').replace('${chat_count}', removedChatCount.toString()));
 });
