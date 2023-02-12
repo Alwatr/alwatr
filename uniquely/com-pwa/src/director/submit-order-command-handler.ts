@@ -3,15 +3,42 @@ import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
 import {commandHandler} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
+import {JsonSchema, validator} from '@alwatr/validator';
 
 import {config} from '../config.js';
 import {userContextConsumer, orderStorageContextProvider, submitOrderCommandTrigger} from '../context.js';
 
-import type {Order} from '@alwatr/type/customer-order-management.js';
+import type {Order, OrderDelivery} from '@alwatr/type/customer-order-management.js';
 
-commandHandler.define<Partial<Order>, Order>(submitOrderCommandTrigger.id, async (order) => {
+const validSchema: JsonSchema = {
+  recipientName: String,
+  recipientNationalCode: Number,
+  address: String,
+  carType: String,
+  shipmentType: String,
+  timePeriod: String,
+};
+
+commandHandler.define<Partial<Order>, Order | null>(submitOrderCommandTrigger.id, async (order) => {
   const userContext = userContextConsumer.getValue() ?? await userContextConsumer.untilChange();
 
+  // TODO: get product list
+
+  // 1. validate
+  let validOrder;
+  try {
+    validOrder = validator(validSchema, order.delivery as OrderDelivery) as Partial<Order>;
+  }
+  catch {
+    snackbarSignalTrigger.request({
+      message: message('order_form_invalid_detail'),
+      duration: 5,
+    });
+
+    return null;
+  }
+
+  // 2. send to server
   let response;
   try {
     response = await serviceRequest<Order>({
@@ -21,13 +48,15 @@ commandHandler.define<Partial<Order>, Order>(submitOrderCommandTrigger.id, async
         userId: userContext.id,
       },
       token: config.token,
-      bodyJson: order,
+      bodyJson: {
+        delivery: validOrder.delivery,
+      },
     });
   }
   catch {
     await snackbarSignalTrigger.requestWithResponse({
       message: message('order_form_submit_failed'),
-      actionLabel: 'retry',
+      actionLabel: message('retry'),
       duration: -1,
     });
 
