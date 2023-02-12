@@ -9,6 +9,7 @@ export const homePageContent: PageHomeContent = {
     headline: 'مدیریت سفارشات سافیت',
     startIcon: {icon: 'menu-outline', clickSignalId: 'app-menu-click-event'},
     endIconList: [{icon: 'person-circle-outline', clickSignalId: 'user-avatar-click-event'}],
+    tinted: 1,
   },
 
   boxList: [

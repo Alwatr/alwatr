@@ -63,7 +63,6 @@ export class AlwatrPageOrderList extends LocalizeMixin(AlwatrSmartElement) {
     this._signalListenerList.push(
         orderStorageContextConsumer.subscribe((orderStorage) => {
           this.orderStorage = orderStorage;
-          console.warn(orderStorage);
         }),
     );
   }
@@ -73,18 +72,23 @@ export class AlwatrPageOrderList extends LocalizeMixin(AlwatrSmartElement) {
       type: 'medium',
       headline: 'page_order_list_headline',
       startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+      tinted: 2,
     },
   } as const;
 
   override render(): unknown {
     this._logger.logMethod('render');
+    const orderIdList = this.orderStorage == null ? [] : Object.keys(this.orderStorage.data);
+    const topAppBar:TopAppBarContent = {
+      ...this.content.topAppBar,
+      type: orderIdList.length < 5 ? this.content.topAppBar.type : 'small',
+      headline: message(this.content.topAppBar.headline),
+    };
     return html`
-      <alwatr-top-app-bar
-        .content=${{...this.content.topAppBar, headline: message(this.content.topAppBar.headline)}}
-      ></alwatr-top-app-bar>
+      <alwatr-top-app-bar .content=${topAppBar}></alwatr-top-app-bar>
       <main>${this.orderStorage == null
           ? message('loading')
-          : map(Object.keys(this.orderStorage.data), this._orderItemTemplate)}</main>
+          : map(orderIdList, this._orderItemTemplate)}</main>
       <alwatr-app-footer></alwatr-app-footer>
     `;
   }
@@ -94,7 +98,7 @@ export class AlwatrPageOrderList extends LocalizeMixin(AlwatrSmartElement) {
     const order = this.orderStorage.data[orderId];
     const content: IconBoxContent = {
       stated: true,
-      elevated: 1,
+      tinted: 1,
       icon: 'receipt-outline',
       flipRtl: true,
       headline: message('order_item_headline').replace('${orderId}', replaceNumber(order.id.padStart(2, '0'))),

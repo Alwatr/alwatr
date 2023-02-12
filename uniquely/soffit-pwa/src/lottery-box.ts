@@ -62,7 +62,7 @@ export class AlwatrLotteryBox extends LocalizeMixin(AlwatrSmartElement) {
     return {
       icon: 'gift-outline',
       headline: message('lottery_form_title'),
-      elevated: 2,
+      elevated: 1,
       stated: !this.expanded,
       highlight: !this.expanded && !this.submitted,
     };
