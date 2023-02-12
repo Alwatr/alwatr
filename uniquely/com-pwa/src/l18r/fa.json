@@ -37,6 +37,8 @@
     "order_form_lading_title": "نحوه بارگیری",
     "order_form_trolley": "تریلی",
     "order_form_submit_form": "ثبت سفارش",
-    "cancel": "لغو"
+    "cancel": "لغو",
+    "order_form_submit_success": "سفارش با موفقیت ثبت شد.",
+    "order_form_submit_failed": "خطایی در ثبت سفارش رخ داد!"
   }
 }
