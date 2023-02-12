@@ -20,8 +20,8 @@ export async function sendDayCountdownToAllChat(): Promise<void> {
         const _err = err as TelegramError;
         if (_err.code === 403) {
           deleteUser(+chat.id);
-          logger.error('sendDayCountdownToAllChat', _err.message, {_err});
         }
+        logger.error('sendDayCountdownToAllChat', _err.message);
       }
     }
   }
@@ -71,9 +71,9 @@ export async function sendDayCountDown(chatId: string | number, dayToLeft?: numb
   }
 }
 
-export function sendDayCountdownMessage(chatId: string | number, dayToLeft: number): Promise<Message> | null {
+export async function sendDayCountdownMessage(chatId: string | number, dayToLeft: number): Promise<Message | null> {
   logger.logMethod('sendDayCountdownMessage');
-  return bot.sendMessage(chatId, message('day_countdown').replace('__day_to_left__', dayToLeft.toString()), {
+  return await bot.sendMessage(chatId, message('day_countdown').replace('__day_to_left__', dayToLeft.toString()), {
     parse_mode: 'MarkdownV2',
 
     reply_markup: {inline_keyboard: [[{

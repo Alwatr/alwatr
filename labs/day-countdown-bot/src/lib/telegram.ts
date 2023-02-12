@@ -6,15 +6,15 @@ import type {Convenience, Message, Update, UserFromGetMe} from 'telegraf/types';
 const logger = createLogger('alwatr/telegram');
 
 export class AlwatrTelegram<C extends AlwatrTelegrafContext = AlwatrTelegrafContext> extends Telegraf<C> {
-  sendMessage(
+  async sendMessage(
       chatId: string | number,
       text: string,
       options?: Convenience.ExtraReplyMessage,
       onSendMessageForbidden?: (chatId: string | number) => void,
-  ): Promise<Message> | null {
+  ): Promise<Message | null> {
     logger.logMethodArgs('sendMessage', {chatId, text, options});
     try {
-      return this.telegram.sendMessage(chatId, text, options);
+      return await this.telegram.sendMessage(chatId, text, options);
     }
     catch (err) {
       const _err = err as TelegramError;
@@ -22,26 +22,26 @@ export class AlwatrTelegram<C extends AlwatrTelegrafContext = AlwatrTelegrafCont
         onSendMessageForbidden(chatId as number);
       }
       else {
-        logger.error('sendMessageToChat', _err.message, {_err});
+        logger.error('sendMessageToChat', _err.message);
       }
 
       return null;
     }
   }
 
-  deleteMessage(chatId: string | number, messageId: number): Promise<true> {
+  async deleteMessage(chatId: string | number, messageId: number): Promise<true> {
     logger.logMethodArgs('deleteMessage', {chatId, messageId});
-    return this.telegram.deleteMessage(chatId, messageId);
+    return await this.telegram.deleteMessage(chatId, messageId);
   }
 
-  pinChatMessage(chatId: string | number, messageId: number): Promise<true> {
+  async pinChatMessage(chatId: string | number, messageId: number): Promise<true> {
     logger.logMethodArgs('pinChatMessage', {chatId, messageId});
-    return this.telegram.pinChatMessage(chatId, messageId);
+    return await this.telegram.pinChatMessage(chatId, messageId);
   }
 
-  unpinChatMessage(chatId: string | number, messageId: number): Promise<true> {
+  async unpinChatMessage(chatId: string | number, messageId: number): Promise<true> {
     logger.logMethodArgs('unpinChatMessage', {chatId, messageId});
-    return this.telegram.unpinChatMessage(chatId, messageId);
+    return await this.telegram.unpinChatMessage(chatId, messageId);
   }
 }
 
@@ -108,7 +108,7 @@ export class AlwatrTelegrafContext extends Context {
         this.onSendMessageForbidden(this.chatId as number);
       }
       else {
-        logger.error('sendMessageToChat', _err.message, {_err});
+        logger.error('sendMessageToChat', _err.message);
       }
 
       return null;
@@ -128,7 +128,7 @@ export class AlwatrTelegrafContext extends Context {
         this.onSendMessageForbidden(this.chatId as number);
       }
       else {
-        logger.error('replyToChat', _err.message, {_err});
+        logger.error('replyToChat', _err.message);
       }
 
       return null;
