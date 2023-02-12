@@ -22,7 +22,7 @@ const provideProductStorageContext = async (): Promise<void> => {
     logger.error('provideProductStorageContext', 'fetch_failed', err);
     await l18eReadyPromise;
     const response = await snackbarSignalTrigger.requestWithResponse({
-      message: message('fetch_failed') + '1',
+      message: message('fetch_failed'),
       actionLabel: message('retry'),
       duration: -1,
     });
