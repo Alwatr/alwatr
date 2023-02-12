@@ -23,9 +23,9 @@ declare global {
 export class AlwatrPage404 extends LocalizeMixin(AlwatrSmartElement) {
   static override styles = css`
     :host {
-      display: block;
+      display: flex;
+      flex-direction: column;
       height: 100%;
-      overflow-y: auto;
     }
 
     .logo {
@@ -34,21 +34,10 @@ export class AlwatrPage404 extends LocalizeMixin(AlwatrSmartElement) {
     }
 
     main {
-      display: flex;
-      flex-wrap: wrap;
+      display: block;
       padding: calc(2 * var(--sys-spacing-track));
-      gap: var(--sys-spacing-track);
-    }
-
-    alwatr-icon-box {
-      width: 40%;
       flex-grow: 1;
-    }
-
-    alwatr-icon-box[wide],
-    alwatr-lottery-box,
-    alwatr-supply-chain-box {
-      width: 100%;
+      overflow-y: auto;
     }
   `;
 
