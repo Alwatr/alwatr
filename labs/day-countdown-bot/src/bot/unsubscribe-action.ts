@@ -3,10 +3,8 @@ import {userComposer} from '../lib/bot.js';
 import {deleteUser, isSubscribed} from '../user.js';
 
 userComposer.action('unsubscribe', async (ctx) => {
-  if (ctx.chatId == null) return;
-
-  if (isSubscribed(ctx.chatId)) {
-    deleteUser(ctx.chatId);
+  if (isSubscribed(ctx.chatId as string | number)) {
+    deleteUser(ctx.chatId as string | number);
     await ctx.sendMessageToChat(message('action_unsubscribe_success'), {
       reply_markup: {
         inline_keyboard: [[

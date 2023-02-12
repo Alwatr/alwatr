@@ -41,13 +41,11 @@ export function deleteAdmin(chatId: number): void {
   const adminList = configStorageEngine.get('admin_list');
 
   if (adminList == null) return;
-
   const adminChatIdIndex = adminList.adminChatIdList.findIndex((adminChatId) => adminChatId === chatId);
+  if (adminChatIdIndex === -1) return;
 
-  if (adminChatIdIndex !== -1) {
-    adminList.adminChatIdList.splice(adminChatIdIndex, 1);
-    configStorageEngine.set(adminList);
-  }
+  adminList.adminChatIdList.splice(adminChatIdIndex, 1);
+  configStorageEngine.set(adminList);
 }
 
 export function getAdminChatIdList(): Array<number> {

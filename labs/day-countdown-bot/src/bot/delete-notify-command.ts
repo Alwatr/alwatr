@@ -3,8 +3,6 @@ import {adminComposer, bot} from '../lib/bot.js';
 import {chatStorageEngine} from '../lib/storage.js';
 
 adminComposer.command('deleteNotify', async (ctx) => {
-  if (ctx.chatId == null) return;
-
   for (const chat of chatStorageEngine.allObject()) {
     const lastNotifyMessageId = chat.lastNotifyMessageId;
     if (lastNotifyMessageId == null) continue;

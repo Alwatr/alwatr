@@ -3,7 +3,5 @@ import {userComposer} from '../lib/bot.js';
 import {dateDistance, nime} from '../lib/calender.js';
 
 userComposer.command('rozshomar', async (ctx): Promise<void> => {
-  if (ctx.chatId == null) return;
-
-  await sendDayCountdownMessage(ctx.chatId, dateDistance(nime.valueOf()));
+  await sendDayCountdownMessage(ctx.chatId as string | number, dateDistance(nime.valueOf()));
 });

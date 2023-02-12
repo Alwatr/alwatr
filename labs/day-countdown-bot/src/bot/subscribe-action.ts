@@ -5,18 +5,15 @@ import {chatStorageEngine} from '../lib/storage.js';
 import {isSubscribed} from '../user.js';
 
 userComposer.action('subscribe', async (ctx) => {
-  if (ctx.chatId == null) return;
-
-  if (!isSubscribed(ctx.chatId)) {
-    chatStorageEngine.set({id: ctx.chatId.toString()});
-    const response = await ctx.sendMessageToChat(message('action_subscribe_success'));
-    if (response == null) return;
-
-    await sendDayCountDown(ctx.chatId);
-  }
-  else {
+  if (isSubscribed(ctx.chatId as number | string)) {
     await ctx.sendMessageToChat(message('action_subscribe_added_before'));
   }
+  else {
+    chatStorageEngine.set({id: (ctx.chatId as number | string).toString()});
+    const response = await ctx.sendMessageToChat(message('action_subscribe_success'));
+    if (response == null) return; // cannot send message!
+  }
 
+  await sendDayCountDown(ctx.chatId as number | string);
   await ctx.answerCbQuery();
 });

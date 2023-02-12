@@ -5,17 +5,14 @@ import {userComposer} from '../lib/bot.js';
 
 userComposer.command('setAdmin', async (ctx) => {
   const token = ctx.commandArgs;
-  if (token == null || ctx.chatId == null) return;
+  if (token == null || token !== config.telegramBot.adminToken) return; // incorrect token
 
   ctx.isAdminCallback = isAdmin;
-
-  if (token == config.telegramBot.adminToken) {
-    if (ctx.isAdmin) {
-      await ctx.replyToChat(message('command_set_admin_added_before'));
-    }
-    else {
-      addAdmin(ctx.chatId);
-      await ctx.replyToChat(message('command_set_admin_success'));
-    }
+  if (ctx.isAdmin) {
+    await ctx.replyToChat(message('command_set_admin_added_before'));
+  }
+  else {
+    addAdmin(ctx.chatId as number);
+    await ctx.replyToChat(message('command_set_admin_success'));
   }
 });
