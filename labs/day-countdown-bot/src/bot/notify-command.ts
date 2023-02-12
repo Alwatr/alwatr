@@ -1,7 +1,7 @@
+import {setLastNotifyMessageId} from '../chat.js';
 import {message} from '../director/l18e-loader.js';
-import {botAdminComposer, bot} from '../lib/bot.js';
+import {botAdminComposer, bot, handleSendMessageError} from '../lib/bot.js';
 import {chatStorageEngine} from '../lib/storage.js';
-import {deleteUser, setLastNotifyMessageId} from '../user.js';
 
 botAdminComposer.command('notify', async (ctx) => {
   const messageText = ctx.commandArgs;
@@ -12,10 +12,10 @@ botAdminComposer.command('notify', async (ctx) => {
 
   for (const chat of chatStorageEngine.allObject()) {
     const response = await bot.sendMessage(
-        chat.id,
+        +chat.id,
         messageText,
         undefined,
-        deleteUser,
+        handleSendMessageError,
     );
     if (response == null) continue;
     setLastNotifyMessageId(+chat.id, response.message_id);

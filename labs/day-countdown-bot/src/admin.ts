@@ -1,15 +1,15 @@
-import {TelegramError} from 'telegraf';
-
 import {logger} from './config.js';
-import {bot} from './lib/bot.js';
+import {bot, handleAdminSendMessageError} from './lib/bot.js';
 import {configStorageEngine} from './lib/storage.js';
+
+import type {TelegramError} from 'telegraf';
 
 export async function notifyToAdminList(message: string): Promise<void> {
   const adminChatIdList = getAdminChatIdList();
 
   for (let i = 0; adminChatIdList.length > i; i++) {
     try {
-      await bot.sendMessage(adminChatIdList[i], message, undefined, deleteAdmin as (chatId: string | number) => void);
+      await bot.sendMessage(adminChatIdList[i], message, undefined, handleAdminSendMessageError);
     }
     catch (err) {
       const _err = err as TelegramError;
@@ -22,26 +22,26 @@ export async function notifyToAdminList(message: string): Promise<void> {
   }
 }
 
-export function isAdmin(chatId: number): boolean {
-  return configStorageEngine.get('admin_list')?.adminChatIdList.includes(chatId) ?? false;
+export function isAdmin(userId: number): boolean {
+  return configStorageEngine.get('admin_list')?.adminChatIdList.includes(userId) ?? false;
 }
 
-export function addAdmin(chatId: number): void {
+export function addAdmin(userId: number): void {
   const adminList = configStorageEngine.get('admin_list') ?? {
     id: 'admin_list',
     adminChatIdList: [],
   };
 
-  adminList.adminChatIdList.push(chatId);
+  adminList.adminChatIdList.push(userId);
   configStorageEngine.set(adminList);
 }
 
-export function deleteAdmin(chatId: number): void {
-  logger.logMethodArgs('deleteAdmin', {chatId});
+export function deleteAdmin(userId: number): void {
+  logger.logMethodArgs('deleteAdmin', {chatId: userId});
   const adminList = configStorageEngine.get('admin_list');
 
   if (adminList == null) return;
-  const adminChatIdIndex = adminList.adminChatIdList.findIndex((adminChatId) => adminChatId === chatId);
+  const adminChatIdIndex = adminList.adminChatIdList.findIndex((adminChatId) => adminChatId === userId);
   if (adminChatIdIndex === -1) return;
 
   adminList.adminChatIdList.splice(adminChatIdIndex, 1);

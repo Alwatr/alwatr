@@ -8,7 +8,7 @@ botAdminComposer.command('deleteNotify', async (ctx) => {
     if (lastNotifyMessageId == null) continue;
 
     try {
-      await bot.deleteMessage(chat.id, lastNotifyMessageId);
+      await bot.deleteMessage(+chat.id, lastNotifyMessageId);
       delete chat.lastNotifyMessageId;
     }
     catch {

@@ -1,10 +1,10 @@
+import {deleteChat, isSubscribed} from '../chat.js';
 import {message} from '../director/l18e-loader.js';
 import {chatAdminComposer} from '../lib/bot.js';
-import {deleteUser, isSubscribed} from '../user.js';
 
 chatAdminComposer.action('unsubscribe', async (ctx) => {
-  if (isSubscribed(ctx.chatId as string | number)) {
-    deleteUser(ctx.chatId as string | number);
+  if (isSubscribed(ctx.chatId)) {
+    deleteChat(ctx.chatId);
     await ctx.sendMessageToChat(message('action_unsubscribe_success'), {
       reply_markup: {
         inline_keyboard: [[

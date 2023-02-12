@@ -4,7 +4,7 @@ import {Message} from 'telegraf/types';
 import {deleteChat} from './chat.js';
 import {logger} from './config.js';
 import {message} from './director/l18e-loader.js';
-import {bot} from './lib/bot.js';
+import {bot, handleSendMessageError} from './lib/bot.js';
 import {dateDistance, nime} from './lib/calender.js';
 import {chatStorageEngine} from './lib/storage.js';
 
@@ -80,5 +80,5 @@ export async function sendDayCountdownMessage(chatId: number, dayToLeft: number)
       text: message('button_day_countdown').replace('__day_to_left__', dayToLeft.toString()),
       callback_data: 'dayCountdown',
     }]]},
-  }, deleteChat);
+  }, handleSendMessageError);
 }
