@@ -13,6 +13,7 @@
     "@alwatr/router": "^0.29.0",
     "@alwatr/signal": "^0.29.0",
     "@alwatr/storage-client": "^0.29.0",
+    "@alwatr/util": "^0.29.0",
     "@alwatr/storage-engine": "^0.29.0",
     "@alwatr/token": "^0.29.0",
     "@alwatr/type": "^0.29.0",
