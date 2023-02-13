@@ -1,25 +1,26 @@
 import {type TelegramError} from 'telegraf';
 import {Message} from 'telegraf/types';
 
-import {deleteChat} from './chat.js';
+import {unsubscribeChat} from './chat.js';
 import {logger} from './config.js';
 import {message} from './director/l18e-loader.js';
 import {bot, handleSendMessageError} from './lib/bot.js';
 import {dateDistance, nime} from './lib/calender.js';
 import {chatStorageEngine} from './lib/storage.js';
+import {Chat} from './type.js';
 
 export async function sendDayCountdownToAllChat(): Promise<void> {
   logger.logMethod('sendDayCountdownToAllChat');
   const dayToLeft = dateDistance(nime.valueOf());
   for (const chat of chatStorageEngine.allObject()) {
-    if (chat.lastDayCountdownSent !== dayToLeft) {
+    if (chat.isSubscribe && chat.lastDayCountdownSent !== dayToLeft) {
       try {
         await sendDayCountDown(+chat.id, dayToLeft);
       }
       catch (err) {
         const _err = err as TelegramError;
         if (_err.code === 403) {
-          deleteChat(+chat.id);
+          unsubscribeChat(+chat.id);
         }
         logger.error('sendDayCountdownToAllChat', _err.message);
       }
@@ -39,17 +40,17 @@ export async function sendDayCountDown(chatId: number, dayToLeft?: number): Prom
   const response = await sendDayCountdownMessage(chatId, dayToLeft);
   if (response == null) return;
 
-  const user = chatStorageEngine.get(chatId.toString());
-  chatStorageEngine.set({
-    id: chatId.toString(),
-    lastBotMessageId: response.message_id,
-    lastDayCountdownSent: dayToLeft,
-  });
+  const chat = chatStorageEngine.get(chatId.toString()) as Chat;
+  const lastBotMessageId = chat.lastBotMessageId;
+
+  chat.lastBotMessageId = response.message_id;
+  chat.lastDayCountdownSent = dayToLeft;
+  chatStorageEngine.set(chat);
 
   // 2. unpin last pinned message
-  if (user?.lastBotMessageId != null) {
+  if (lastBotMessageId != null) {
     try {
-      await bot.unpinChatMessage(chatId, user.lastBotMessageId);
+      await bot.unpinChatMessage(chatId, lastBotMessageId);
     }
     catch (err) {
       const _err = err as TelegramError;
@@ -66,7 +67,7 @@ export async function sendDayCountDown(chatId: number, dayToLeft?: number): Prom
   catch (err) {
     const _err = err as TelegramError;
     if (_err.code !== 400) {
-      logger.error('notify', _err.message, {_err});
+      logger.error('sendDayCountDown', _err.message, {_err});
     }
   }
 }

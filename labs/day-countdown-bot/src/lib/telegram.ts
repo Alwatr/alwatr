@@ -3,6 +3,7 @@ import {Context, TelegramError, Telegraf, Composer} from 'telegraf';
 
 import {message} from '../director/l18e-loader.js';
 
+import type {ChatDetail} from '../type.js';
 import type {Convenience, Message} from 'telegraf/types';
 
 const logger = createLogger('alwatr/telegram');
@@ -59,6 +60,35 @@ export class AlwatrTelegram<C extends AlwatrTelegrafContext = AlwatrTelegrafCont
   async isGroup(chatId: number): Promise<boolean> {
     logger.logMethod('isGroup');
     return chatId < 0;
+  }
+
+  async getChatDetail(
+      ctx: AlwatrTelegrafContext,
+  ): Promise<ChatDetail> {
+    const chat = await ctx.getChat();
+    if (chat.type === 'private') {
+      return {
+        chatId: chat.id,
+        type: chat.type,
+        username: chat.username,
+        name: chat.first_name + ' ' + chat.last_name,
+      };
+    }
+    else if (chat.type === 'group') {
+      return {
+        chatId: chat.id,
+        type: chat.type,
+        title: chat.title,
+      };
+    }
+    else {
+      return {
+        type: chat.type,
+        title: chat.title,
+        chatId: chat.id,
+        username: chat.username,
+      };
+    }
   }
 }
 
