@@ -1,8 +1,11 @@
-import {isSubscribed} from '../chat.js';
+import {addChat, isSubscribed} from '../chat.js';
 import {message} from '../director/l18e-loader.js';
-import {userComposer} from '../lib/bot.js';
+import {bot, userComposer} from '../lib/bot.js';
 
 userComposer.command('menu', async (ctx) => {
+  // if (!isChatExists(ctx.chatId)) addChat(await bot.getChatDetail(ctx));
+  addChat(await bot.getChatDetail(ctx));
+
   await ctx.replyToChat(message('command_menu'), {
     reply_markup: {
       inline_keyboard: [

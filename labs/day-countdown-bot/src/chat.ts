@@ -30,6 +30,7 @@ export function subscribeChat(chatId: number): void {
 export function addChat(chat: ChatDetail): void {
   logger.logMethodArgs('addChat', {chat});
   chatStorageEngine.set({
+    ...chatStorageEngine.get(chat.chatId.toString()), // tmp
     id: chat.chatId.toString(),
     chatDetail: chat,
   });
