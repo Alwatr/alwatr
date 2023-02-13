@@ -15,8 +15,9 @@ export function unsubscribeChat(chatId: number): void {
 }
 
 export function isSubscribed(chatId: number): boolean {
-  logger.logMethodArgs('isSubscribed', {chatId});
-  return chatStorageEngine.get(chatId.toString())?.isSubscribe === true;
+  const isSubscribe = chatStorageEngine.get(chatId.toString())?.isSubscribe === true;
+  logger.logMethodArgs('isSubscribed', {chatId, isSubscribe});
+  return isSubscribe;
 }
 
 export function subscribeChat(chatId: number): void {
