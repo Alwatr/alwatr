@@ -5,7 +5,7 @@ import {
   html,
   state,
   LocalizeMixin,
-  map,
+  mapObject,
 } from '@alwatr/element';
 import {message, replaceNumber} from '@alwatr/i18n';
 
@@ -53,11 +53,6 @@ export class AlwatrPageOrderList extends LocalizeMixin(AlwatrSmartElement) {
   @state()
     orderStorage?: AlwatrDocumentStorage<Order>;
 
-  constructor() {
-    super();
-    this._orderItemTemplate = this._orderItemTemplate.bind(this);
-  }
-
   override connectedCallback(): void {
     super.connectedCallback();
     this._signalListenerList.push(
@@ -67,35 +62,23 @@ export class AlwatrPageOrderList extends LocalizeMixin(AlwatrSmartElement) {
     );
   }
 
-  protected content = {
-    topAppBar: <TopAppBarContent>{
-      type: 'medium',
-      headline: 'page_order_list_headline',
-      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
-      tinted: 2,
-    },
-  } as const;
-
   override render(): unknown {
     this._logger.logMethod('render');
-    const orderIdList = this.orderStorage == null ? [] : Object.keys(this.orderStorage.data);
     const topAppBar:TopAppBarContent = {
-      ...this.content.topAppBar,
-      type: orderIdList.length < 5 ? this.content.topAppBar.type : 'small',
-      headline: message(this.content.topAppBar.headline),
+      type: 'medium',
+      headline: message('page_order_list_headline'),
+      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+      tinted: 2,
     };
+
     return html`
       <alwatr-top-app-bar .content=${topAppBar}></alwatr-top-app-bar>
-      <main>${this.orderStorage == null
-          ? message('loading')
-          : map(orderIdList, this._orderItemTemplate)}</main>
+      <main>${mapObject(this, this.orderStorage?.data, this._orderItemTemplate, message('loading'))}</main>
       <alwatr-app-footer></alwatr-app-footer>
     `;
   }
 
-  protected _orderItemTemplate(orderId: string): unknown {
-    if (this.orderStorage == null) return;
-    const order = this.orderStorage.data[orderId];
+  protected _orderItemTemplate(order: Order): unknown {
     const content: IconBoxContent = {
       stated: true,
       tinted: 1,
