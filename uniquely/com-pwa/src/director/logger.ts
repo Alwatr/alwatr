@@ -1,3 +1,3 @@
 import {createLogger} from '@alwatr/logger';
 
-export const logger = createLogger('soffit-director');
+export const logger = createLogger('com-director');

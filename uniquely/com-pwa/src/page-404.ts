@@ -41,34 +41,22 @@ export class AlwatrPage404 extends LocalizeMixin(AlwatrSmartElement) {
     }
   `;
 
-  protected content = {
-    topAppBar: <TopAppBarContent>{
-      type: 'small',
-      headline: 'not_found',
-      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
-    },
-    box: <IconBoxContent>{
-      stated: true,
-      elevated: 1,
-      icon: 'construct-outline',
-      flipRtl: true,
-      headline: 'under_develope',
-      description: 'under_develope_description',
-    },
-  } as const;
-
   override render(): unknown {
     this._logger.logMethod('render');
 
     const topAppBar: TopAppBarContent = {
-      ...this.content.topAppBar,
-      headline: message(this.content.topAppBar.headline),
+      type: 'small',
+      headline: message('not_found'),
+      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
     };
 
     const box: IconBoxContent = {
-      ...this.content.box,
-      headline: message(this.content.box.headline),
-      description: message(this.content.box.description),
+      stated: true,
+      elevated: 1,
+      icon: 'construct-outline',
+      flipRtl: true,
+      headline: message('under_develope'),
+      description: message('under_develope_description'),
     };
 
     return html`
