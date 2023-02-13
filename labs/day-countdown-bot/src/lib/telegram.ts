@@ -71,7 +71,7 @@ export class AlwatrTelegram<C extends AlwatrTelegrafContext = AlwatrTelegrafCont
         chatId: chat.id,
         type: chat.type,
         username: chat.username,
-        name: chat.first_name + ' ' + chat.last_name,
+        name: chat.first_name + ' ' + String(chat.last_name ?? ''),
       };
     }
     else if (chat.type === 'group') {
