@@ -8,6 +8,8 @@ export * from './mixins/direction.js';
 export * from './mixins/logging.js';
 export * from './mixins/signal.js';
 
+export * from './directives/map.js';
+
 export * from './lit.js';
 
 globalAlwatr.registeredList.push({
