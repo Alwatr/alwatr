@@ -1,14 +1,14 @@
 import {customElement, css, html, property, AlwatrSmartElement, LocalizeMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {commandTrigger} from '@alwatr/signal';
+import '@alwatr/ui-kit/button/button.js';
+import '@alwatr/ui-kit/text-field/text-field.js';
+
+import './tech-dep/radio-group.js';
 
 import type {RadioGroupOptions} from './tech-dep/radio-group.js';
 import type {FormData} from './type.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
-
-import '@alwatr/ui-kit/text-field/text-field.js';
-import '@alwatr/ui-kit/button/button.js';
-import './tech-dep/radio-group.js';
 
 declare global {
   interface HTMLElementTagNameMap {

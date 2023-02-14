@@ -10,16 +10,15 @@ import {
   nothing,
 } from '@alwatr/element';
 import {message, number} from '@alwatr/i18n';
+import '@alwatr/icon';
 import {eventTrigger} from '@alwatr/signal';
 
+import './ionic-components.js';
 import {cityList} from '../city-list.js';
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 
 import type {Job, JobResult} from '@alwatr/type/flight-finder.js';
-
-import '@alwatr/icon';
-import './ionic-components.js';
 
 declare global {
   interface HTMLElementTagNameMap {

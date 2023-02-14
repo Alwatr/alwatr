@@ -1,10 +1,9 @@
 import {html, customElement} from '@alwatr/element';
-import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
-
-import '@alwatr/ui-kit/style/mobile-only.css';
-import '@alwatr/ui-kit/style/theme/palette-85.css';
-import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/font/vazirmatn.css';
+import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
+import '@alwatr/ui-kit/style/mobile-only.css';
+import '@alwatr/ui-kit/style/theme/color.css';
+import '@alwatr/ui-kit/style/theme/palette-85.css';
 
 import './director/index.js';
 

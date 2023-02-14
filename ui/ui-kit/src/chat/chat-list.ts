@@ -1,4 +1,5 @@
 import {AlwatrDummyElement, css, customElement, html, nothing, property} from '@alwatr/element';
+
 import './chat-message.js';
 
 import type {ChatStorage} from '@alwatr/type';

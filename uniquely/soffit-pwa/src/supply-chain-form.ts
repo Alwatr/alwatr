@@ -1,10 +1,9 @@
 import {customElement, html} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import '@alwatr/ui-kit/button/button.js';
+import '@alwatr/ui-kit/text-field/text-field.js';
 
 import {AlwatrLotteryForm} from './lottery-form.js';
-
-import '@alwatr/ui-kit/text-field/text-field.js';
-import '@alwatr/ui-kit/button/button.js';
 import './tech-dep/radio-group.js';
 
 declare global {

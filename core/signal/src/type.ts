@@ -1,4 +1,4 @@
-import {MaybePromise, Stringifyable} from '@alwatr/type';
+import type {MaybePromise, Stringifyable} from '@alwatr/type';
 
 export type DebounceType = 'No' | 'AnimationFrame' | 'Timeout';
 

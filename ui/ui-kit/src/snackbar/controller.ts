@@ -1,6 +1,7 @@
 import {createLogger} from '@alwatr/logger';
 import {clamp} from '@alwatr/math';
 import {commandHandler} from '@alwatr/signal';
+
 import './element.js';
 
 import type {SnackbarOptions, SnackbarResponse} from './type.js';

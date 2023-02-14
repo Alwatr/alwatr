@@ -9,10 +9,10 @@ import {
   SignalMixin,
 } from '@alwatr/element';
 
-import type {ChatMessage} from '@alwatr/type';
-
 import './chat-avatar.js';
 import './chat-bubble.js';
+
+import type {ChatMessage} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {

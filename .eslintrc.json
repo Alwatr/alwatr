@@ -26,7 +26,8 @@
         "alwaysTryTypes": true,
         "project": ["**/tsconfig.json"],
         "projectFolderIgnoreList": ["**/node_modules/**"]
-      }
+      },
+      "node": true
     },
     "wc": {
       "elementBaseClasses": ["LitElement"]
@@ -44,8 +45,9 @@
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"], "type"],
+        "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"], "object", "unknown", "type"],
         "newlines-between": "always",
+        "warnOnUnassignedImports": true,
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true

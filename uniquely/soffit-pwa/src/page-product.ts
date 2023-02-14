@@ -1,6 +1,5 @@
 import {customElement, AlwatrSmartElement, css, html, state, map, nothing, unsafeHTML} from '@alwatr/element';
 import {contextConsumer} from '@alwatr/signal';
-
 import '@alwatr/ui-kit/button/icon-button.js';
 import '@alwatr/ui-kit/card/image-box.js';
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';

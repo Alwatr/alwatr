@@ -1,5 +1,4 @@
 import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
-
 import '@alwatr/ui-kit/chat/chat.js';
 
 declare global {

@@ -8,13 +8,14 @@ import {
   type PropertyValues,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import '@alwatr/ui-kit/card/icon-box.js';
 import {untilNextFrame, untilEvent, delay} from '@alwatr/util';
+
+import './lottery-form.js';
 
 import type {AlwatrLotteryForm} from './lottery-form.js';
 import type {AlwatrIconBox, IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
-import '@alwatr/ui-kit/card/icon-box.js';
-import './lottery-form.js';
 
 declare global {
   interface HTMLElementTagNameMap {

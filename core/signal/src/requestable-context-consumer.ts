@@ -1,7 +1,7 @@
 import {contextConsumer} from './context-consumer.js';
 import {requestContext} from './core.js';
 
-import type{Stringifyable, OmitFirstParam} from '@alwatr/type';
+import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
 
 /**
  * Requestable context consumer interface.

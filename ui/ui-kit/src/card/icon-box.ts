@@ -1,5 +1,4 @@
 import {css, customElement, html, property, nothing, ifDefined, PropertyValues, when} from '@alwatr/element';
-
 import '@alwatr/icon';
 
 import {AlwatrSurface} from './surface.js';

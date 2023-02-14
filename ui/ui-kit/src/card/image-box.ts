@@ -1,9 +1,10 @@
 import {css, customElement, html, property, nothing, ifDefined, type PropertyValues} from '@alwatr/element';
-import {StringifyableRecord} from '@alwatr/type';
-
 import '@alwatr/icon';
 
 import {AlwatrSurface} from './surface.js';
+
+import type {StringifyableRecord} from '@alwatr/type';
+
 
 declare global {
   interface HTMLElementTagNameMap {

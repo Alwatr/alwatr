@@ -1,9 +1,8 @@
 import {html, css, customElement, property, when} from '@alwatr/element';
 import {untilEvent} from '@alwatr/util';
 
-import {AlwatrSurface} from '../card/surface.js';
-
 import '../button/button.js';
+import {AlwatrSurface} from '../card/surface.js';
 
 declare global {
   interface HTMLElementTagNameMap {

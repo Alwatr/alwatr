@@ -3,14 +3,14 @@ import {message, number} from '@alwatr/i18n';
 import {requestableContextConsumer} from '@alwatr/signal';
 import {modalController} from '@ionic/core';
 
+import './job-add-form.js';
+import './job-item.js';
 import ionNormalize from '../style/ionic.normalize.js';
 import ionTheming from '../style/ionic.theming.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Job} from '@alwatr/type/flight-finder.js';
 
-import './job-item.js';
-import './job-add-form.js';
 
 declare global {
   interface HTMLElementTagNameMap {
