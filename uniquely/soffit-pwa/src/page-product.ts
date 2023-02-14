@@ -1,4 +1,14 @@
-import {customElement, AlwatrSmartElement, css, html, state, map, nothing, unsafeHTML} from '@alwatr/element';
+import {
+  customElement,
+  css,
+  html,
+  state,
+  map,
+  nothing,
+  unsafeHTML,
+  SignalMixin,
+  AlwatrBaseElement,
+} from '@alwatr/element';
 import {contextConsumer} from '@alwatr/signal';
 import '@alwatr/ui-kit/button/icon-button.js';
 import '@alwatr/ui-kit/card/image-box.js';
@@ -14,9 +24,9 @@ declare global {
 
 /**
  * Soffit Product Page
-*/
+ */
 @customElement('alwatr-page-product')
-export class AlwatrPageHome extends AlwatrSmartElement {
+export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
   static override styles = css`
     :host {
       display: flex;

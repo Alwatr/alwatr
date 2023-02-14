@@ -1,7 +1,7 @@
 import {
   customElement,
-  AlwatrDummyElement,
   SignalMixin,
+  AlwatrBaseElement,
   LocalizeMixin,
   css,
   html,
@@ -34,7 +34,7 @@ declare global {
  * Soffit Product Page
  */
 @customElement('alwatr-page-product-list')
-export class AlwatrPageProductList extends LocalizeMixin(SignalMixin(AlwatrDummyElement)) {
+export class AlwatrPageProductList extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       display: flex;

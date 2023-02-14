@@ -1,4 +1,4 @@
-import {AlwatrDummyElement, css, customElement, html} from '@alwatr/element';
+import {AlwatrBaseElement, css, customElement, html} from '@alwatr/element';
 import {setLocale, localeContextConsumer, commonLocale} from '@alwatr/i18n';
 
 import './chat-text-input.js';
@@ -14,7 +14,7 @@ declare global {
  * Alwatr chat footer element.
  */
 @customElement('alwatr-chat-footer')
-export class AlwatrChatFooter extends AlwatrDummyElement {
+export class AlwatrChatFooter extends AlwatrBaseElement {
   static override styles = css`
     :host {
       display: flex;

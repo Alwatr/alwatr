@@ -1,6 +1,4 @@
 import {
-  type TemplateResult,
-  AlwatrSmartElement,
   customElement,
   property,
   query,
@@ -8,6 +6,9 @@ import {
   css,
   html,
   nothing,
+  SignalMixin,
+  AlwatrBaseElement,
+  type TemplateResult,
 } from '@alwatr/element';
 import {message, number} from '@alwatr/i18n';
 import '@alwatr/icon';
@@ -27,7 +28,7 @@ declare global {
 }
 
 @customElement('job-item')
-export class JobItem extends AlwatrSmartElement {
+export class JobItem extends SignalMixin(AlwatrBaseElement) {
   static override styles = [
     ionNormalize,
     ionTheming,

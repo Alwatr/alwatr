@@ -1,4 +1,4 @@
-import {AlwatrSmartElement, customElement, css, html} from '@alwatr/element';
+import {customElement, css, html} from '@alwatr/element';
 import {message, localeContextConsumer, number} from '@alwatr/i18n';
 import {eventTrigger} from '@alwatr/signal';
 
@@ -17,7 +17,7 @@ declare global {
 }
 
 @customElement('job-add-form')
-export class JobAddForm extends AlwatrSmartElement {
+export class JobAddForm extends SignalMixin(AlwatrBaseElement) {
   static override styles = [
     ionNormalize,
     ionTheming,

@@ -1,4 +1,4 @@
-import {AlwatrDummyElement, css, customElement, html, property} from '@alwatr/element';
+import {AlwatrBaseElement, css, customElement, html, property} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -10,7 +10,7 @@ declare global {
  * Alwatr chat message avatar element.
  */
 @customElement('alwatr-chat-avatar')
-export class AlwatrChatAvatar extends AlwatrDummyElement {
+export class AlwatrChatAvatar extends AlwatrBaseElement {
   static override styles = css`
     :host {
       display: inline-block;

@@ -1,4 +1,13 @@
-import {type TemplateResult, AlwatrSmartElement, map, customElement, query, css, html} from '@alwatr/element';
+import {
+  map,
+  customElement,
+  query,
+  css,
+  html,
+  SignalMixin,
+  AlwatrBaseElement,
+  type TemplateResult,
+} from '@alwatr/element';
 import {message, number} from '@alwatr/i18n';
 import {requestableContextConsumer} from '@alwatr/signal';
 import {modalController} from '@ionic/core';
@@ -19,7 +28,7 @@ declare global {
 }
 
 @customElement('page-flight-finder')
-export class PageFlightFinder extends AlwatrSmartElement {
+export class PageFlightFinder extends SignalMixin(AlwatrBaseElement) {
   static override styles = [
     ionNormalize,
     ionTheming,

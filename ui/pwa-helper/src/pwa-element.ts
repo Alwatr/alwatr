@@ -1,4 +1,12 @@
-import {AlwatrSmartElement, cache, html, css, type CSSResultGroup, type PropertyValues} from '@alwatr/element';
+import {
+  cache,
+  html,
+  css,
+  AlwatrBaseElement,
+  SignalMixin,
+  type PropertyValues,
+  type CSSResultGroup,
+} from '@alwatr/element';
 import {localeContextConsumer, setLocale} from '@alwatr/i18n';
 import {routeContextConsumer, routerOutlet, type RoutesConfig} from '@alwatr/router';
 import {commandTrigger} from '@alwatr/signal';
@@ -15,7 +23,7 @@ import './signal/sw-user-notify.js';
  *
  * Include: AlwatrPwaElement, root styles, router config, multi-page render
  */
-export class AlwatrPwaElement extends AlwatrSmartElement {
+export class AlwatrPwaElement extends SignalMixin(AlwatrBaseElement) {
   static override styles: CSSResultGroup = css`
     :host {
       contain: layout size style;

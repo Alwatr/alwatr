@@ -1,6 +1,6 @@
 import {
   type PropertyValues,
-  AlwatrDummyElement,
+  AlwatrBaseElement,
   css,
   customElement,
   html,
@@ -23,7 +23,7 @@ declare global {
  * Alwatr chat text input element.
  */
 @customElement('alwatr-chat-text-input')
-export class AlwatrChatTextInput extends LocalizeMixin(SignalMixin(AlwatrDummyElement)) {
+export class AlwatrChatTextInput extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       --_height: calc(6 * var(--sys-spacing-track));
