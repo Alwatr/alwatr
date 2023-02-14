@@ -36,6 +36,10 @@ class AlwatrPwa extends AlwatrPwaElement {
         import('./page-order-list.js');
         return html`<alwatr-page-order-list></alwatr-page-order-list>`;
       },
+      'product-list': () => {
+        import('./page-product-list.js');
+        return html`<alwatr-page-product-list></alwatr-page-product-list>`;
+      },
     },
   };
 }
