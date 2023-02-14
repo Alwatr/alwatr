@@ -1,4 +1,4 @@
-import {customElement, AlwatrDummyElement, css, html} from '@alwatr/element';
+import {customElement, AlwatrBaseElement, css, html} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -10,7 +10,7 @@ declare global {
  * Alwatr Customer Order Management Home Page
  */
 @customElement('alwatr-app-footer')
-export class AlwatrPageHome extends AlwatrDummyElement {
+export class AlwatrPageHome extends AlwatrBaseElement {
   static override styles = css`
     :host {
       display: block;

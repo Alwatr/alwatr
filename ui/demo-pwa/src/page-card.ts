@@ -1,4 +1,4 @@
-import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
+import {customElement, css, html, SignalMixin, AlwatrBaseElement} from '@alwatr/element';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
 
@@ -14,7 +14,7 @@ const loremText = `مداد رنگی ها مشغول بودند به جز مدا
  * Alwatr Demo Home Page
  */
 @customElement('alwatr-page-card')
-export class AlwatrPageCard extends AlwatrSmartElement {
+export class AlwatrPageCard extends SignalMixin(AlwatrBaseElement) {
   static override styles = css`
     :host {
       display: flex;

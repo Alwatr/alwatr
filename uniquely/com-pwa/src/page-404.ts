@@ -1,4 +1,4 @@
-import {customElement, AlwatrSmartElement, css, html, LocalizeMixin} from '@alwatr/element';
+import {customElement, css, html, LocalizeMixin, SignalMixin, AlwatrBaseElement} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
@@ -19,7 +19,7 @@ declare global {
  * Alwatr Demo Home Page
  */
 @customElement('alwatr-page-404')
-export class AlwatrPage404 extends LocalizeMixin(AlwatrSmartElement) {
+export class AlwatrPage404 extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       display: flex;

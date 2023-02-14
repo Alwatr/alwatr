@@ -1,4 +1,4 @@
-import {AlwatrDummyElement, css, customElement, html, nothing, property} from '@alwatr/element';
+import {AlwatrBaseElement, css, customElement, html, nothing, property} from '@alwatr/element';
 
 import './chat-message.js';
 
@@ -28,7 +28,7 @@ export function* map<T>(
  * @attr end-side
  */
 @customElement('alwatr-chat-list')
-export class AlwatrChatList extends AlwatrDummyElement {
+export class AlwatrChatList extends AlwatrBaseElement {
   static override styles = css`
     :host {
       display: flex;

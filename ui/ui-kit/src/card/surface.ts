@@ -1,4 +1,4 @@
-import {AlwatrDummyElement, customElement, html, css, type CSSResultGroup} from '@alwatr/element';
+import {AlwatrBaseElement, customElement, html, css, type CSSResultGroup} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -9,7 +9,7 @@ declare global {
 /**
  * Alwatr Surface Element
  *
- * @extends AlwatrDummyElement
+ * @extends AlwatrBaseElement
  *
  * @attr {Boolean} stated
  * @attr {Number|Boolean} elevated - tinted by default
@@ -27,7 +27,7 @@ declare global {
  * @cssprop {Number} [--_surface-state-opacity=0]
  */
 @customElement('alwatr-surface')
-export class AlwatrSurface extends AlwatrDummyElement {
+export class AlwatrSurface extends AlwatrBaseElement {
   static override styles: CSSResultGroup = css`
     :host {
       --_surface-color-on: var(--sys-color-on-surface-hsl);

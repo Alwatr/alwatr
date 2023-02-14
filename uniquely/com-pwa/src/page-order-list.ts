@@ -1,12 +1,12 @@
 import {
   customElement,
-  AlwatrDummyElement,
   css,
   html,
   state,
   LocalizeMixin,
   mapObject,
   SignalMixin,
+  AlwatrBaseElement,
 } from '@alwatr/element';
 import {message, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
@@ -30,7 +30,7 @@ declare global {
  * Alwatr Customer Order Management Order List Page
  */
 @customElement('alwatr-page-order-list')
-export class AlwatrPageOrderList extends LocalizeMixin(SignalMixin(AlwatrDummyElement)) {
+export class AlwatrPageOrderList extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       display: flex;

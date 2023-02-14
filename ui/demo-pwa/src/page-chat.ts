@@ -1,4 +1,4 @@
-import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
+import {customElement, css, html, SignalMixin, AlwatrBaseElement} from '@alwatr/element';
 import '@alwatr/ui-kit/chat/chat.js';
 
 declare global {
@@ -11,7 +11,7 @@ declare global {
  * Alwatr Demo Home Page
  */
 @customElement('alwatr-page-chat')
-export class AlwatrPageHome extends AlwatrSmartElement {
+export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
   static override styles = css`
     :host {
       display: block;

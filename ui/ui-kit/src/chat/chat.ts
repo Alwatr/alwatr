@@ -1,4 +1,4 @@
-import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
+import {customElement, css, html, AlwatrBaseElement, SignalMixin} from '@alwatr/element';
 
 import './chat-footer.js';
 import './chat-list.js';
@@ -112,7 +112,7 @@ const chatStorage: ChatStorage = {
  * Alwatr Demo Home Page
  */
 @customElement('alwatr-chat')
-export class AlwatrChat extends AlwatrSmartElement {
+export class AlwatrChat extends SignalMixin(AlwatrBaseElement) {
   static override styles = css`
     :host {
       display: block;
