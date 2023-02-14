@@ -1,16 +1,15 @@
-@apiUrl = http://127.0.0.1:9000
-@apiVersion = v0
+@apiUrl = http://127.0.0.1:9000/v0
 @token = YOUR_SECRET_TOKEN
 
-### Get a public storage over nginx serve
-# GET {{apiUrl}}/{{apiVersion}}/public/comments/page1.json
+### Get a public storage over nginx serve.
+# GET {{apiUrl}}/public/comments/page1.json
 
-### Get a document by storageName and docId
-GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=0
+### Get a document by storageName and docId.
+GET {{apiUrl}}/?storage=comments/page1&id=0
 Authorization: Bearer {{token}}
 
-### Insert document
-PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+### Insert a document.
+PATCH {{apiUrl}}/?storage=comments/page1
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -21,7 +20,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+PATCH {{apiUrl}}/?storage=comments/page1
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -31,8 +30,8 @@ Content-Type: application/json
   "message": "علیک سلام"
 }
 
-### Edit document
-PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+### Edit a document.
+PATCH {{apiUrl}}/?storage=comments/page1
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -42,52 +41,92 @@ Content-Type: application/json
   "message": "Salam ;)"
 }
 
-### Check document exists by storageName and docId
-GET {{apiUrl}}/{{apiVersion}}/has?storage=comments/page1&id=0
+### Insert/edit multi documents.
+PATCH {{apiUrl}}/batch?storage=comments/page1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "data": [
+    {
+      "id": "10",
+      "from": "Ali Mihandoost",
+      "message": "Edited message."
+    },
+    {
+      "id": "auto_increment",
+      "from": "Ali Mihandoost",
+      "message": "New message."
+    }
+  ]
+}
+
+### Check document exists by storageName and docId.
+GET {{apiUrl}}/has?storage=comments/page1&id=0
 Authorization: Bearer {{token}}
 
-### Delete document
-DELETE {{apiUrl}}/{{apiVersion}}/?storage=comments/page1&id=0
+### Delete document.
+DELETE {{apiUrl}}/?storage=comments/page1&id=0
 Authorization: Bearer {{token}}
 
-### Get keys
-GET {{apiUrl}}/{{apiVersion}}/keys?storage=comments/page1
+### Delete multi documents.
+DELETE {{apiUrl}}/batch?storage=comments/page1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "data": [
+    {
+      "id": "10",
+      "from": "Ali Mihandoost",
+      "message": "Edited message."
+    },
+    {
+      "id": "auto_increment",
+      "from": "Ali Mihandoost",
+      "message": "New message."
+    }
+  ]
+}
+
+### Get all keys.
+GET {{apiUrl}}/keys?storage=comments/page1
 Authorization: Bearer {{token}}
 
-### Get all data
-GET {{apiUrl}}/{{apiVersion}}/storage?name=comments/page1
+### Get complete storage data.
+GET {{apiUrl}}/storage?name=comments/page1
 Authorization: Bearer {{token}}
 
 ### === Test other routes and errors ===
 
 ### Page Home
-GET {{apiUrl}}/{{apiVersion}}
+GET {{apiUrl}}
 
 ### Page health
-GET {{apiUrl}}/{{apiVersion}}/health
+GET {{apiUrl}}/health
 
 ### Get a document without token
-GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1/page1&id=0
+GET {{apiUrl}}/?storage=comments/page1/page1&id=0
 
 ### Page 404 (wrong method)
-TRACE {{apiUrl}}/{{apiVersion}}
+TRACE {{apiUrl}}
 
 ### Document not exists
-GET {{apiUrl}}/{{apiVersion}}/has?storage=comments/page1&id=foo
+GET {{apiUrl}}/has?storage=comments/page1&id=foo
 Authorization: Bearer {{token}}
 
 
 ### Get a document by storageName without id
-GET {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+GET {{apiUrl}}/?storage=comments/page1
 Authorization: Bearer {{token}}
 
 ### empty body
-PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+PATCH {{apiUrl}}/?storage=comments/page1
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 ### invalid json
-PATCH {{apiUrl}}/{{apiVersion}}/?storage=comments/page1
+PATCH {{apiUrl}}/?storage=comments/page1
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
