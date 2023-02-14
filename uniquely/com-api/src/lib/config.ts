@@ -9,6 +9,7 @@ export const config = {
     port: process.env.STORAGE_PORT != null ? +process.env.STORAGE_PORT : 9000,
     token: process.env.STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
     productStorageName: process.env.PRODUCT_STORAGE_NAME ?? 'product',
+    priceStorageName: process.env.PRICE_STORAGE_NAME ?? 'price',
   },
   token: <TokenGeneratorConfig>{
     secret: process.env.SECRET ?? 'YOUR_SECRET',
