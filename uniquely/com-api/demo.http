@@ -7,11 +7,48 @@
 ### Home
 GET {{apiUrl}}/
 
-### Get all product
-GET {{apiUrl}}/product/
+### Get all product.
+GET {{apiUrl}}/product-list/?name=tile
 Authorization: Bearer {{token}}
 
-### New order of user
+### Insert/edit a product.
+PATCH {{apiUrl}}/product-list/?name=tile
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+[
+  {
+    "id": "1",
+    "title": {"fa": "تایل کد ۰۰۱"},
+    "image": {"id": "/image/sample-1.jpg"}
+  },
+  {
+    "id": "2",
+    "title": {"fa": "تایل کد ۰۰۲"},
+    "image": {"id": "/image/sample-2.jpg"}
+  }
+]
+
+### Get product-price-list-agency.json
+GET {{apiUrl}}/price-list/?name=tile-agency-ir
+Authorization: Bearer {{token}}
+
+### Insert/edit a product price of special list.
+PATCH {{apiUrl}}/price-list/?name=tile-agency-ir
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+[
+  {
+    "id": "1",
+    "price": 1100,
+  },
+  {
+    "id": "2",
+    "price": 1200,
+  }
+]
+
+### New order of user.
 PUT {{apiUrl}}/order/?userId=abc123
 Authorization: Bearer {{token}}
 Content-Type: application/json
