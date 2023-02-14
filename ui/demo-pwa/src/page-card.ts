@@ -1,7 +1,6 @@
 import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
-
-import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/card/surface.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -49,7 +48,7 @@ export class AlwatrPageCard extends AlwatrSmartElement {
     }
 
     input:focus {
-      border-bottom-color: currentColor;
+      border-bottom-color: currentcolor;
       outline: 0;
     }
   `;

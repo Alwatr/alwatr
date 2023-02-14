@@ -2,14 +2,13 @@ import {AlwatrSmartElement, cache, html, css, type CSSResultGroup, type Property
 import {localeContextConsumer, setLocale} from '@alwatr/i18n';
 import {routeContextConsumer, routerOutlet, type RoutesConfig} from '@alwatr/router';
 import {commandTrigger} from '@alwatr/signal';
-
 import '@alwatr/ui-kit/snackbar/controller.js';
-import '@alwatr/ui-kit/style/token.css';
 import '@alwatr/ui-kit/style/pwa.css';
+import '@alwatr/ui-kit/style/token.css';
 
-import './signal/sw-user-notify.js';
-import './signal/register-service-worker-command.js';
 import './signal/back-click-event.js';
+import './signal/register-service-worker-command.js';
+import './signal/sw-user-notify.js';
 
 /**
  * Alwatr Root Base Element

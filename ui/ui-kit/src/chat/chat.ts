@@ -1,9 +1,9 @@
 import {customElement, AlwatrSmartElement, css, html} from '@alwatr/element';
 
-import type {ChatStorage} from '@alwatr/type';
-
 import './chat-footer.js';
 import './chat-list.js';
+
+import type {ChatStorage} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -1,4 +1,4 @@
-import {QueryParameters} from '@alwatr/type';
+import type {QueryParameters} from '@alwatr/type';
 
 /**
  * Route context base type.

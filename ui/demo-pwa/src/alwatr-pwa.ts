@@ -1,14 +1,13 @@
 import {html, customElement} from '@alwatr/element';
+import '@alwatr/font/vazirmatn.css';
 import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
+import '@alwatr/ui-kit/style/theme/color.css';
+import '@alwatr/ui-kit/style/theme/palette-300.css';
+
+import './page-card.js';
+import './page-chat.js';
 
 import type {RoutesConfig} from '@alwatr/router';
-
-import '@alwatr/ui-kit/style/theme/palette-300.css';
-import '@alwatr/ui-kit/style/theme/color.css';
-import '@alwatr/font/vazirmatn.css';
-
-import './page-chat.js';
-import './page-card.js';
 
 declare global {
   interface HTMLElementTagNameMap {

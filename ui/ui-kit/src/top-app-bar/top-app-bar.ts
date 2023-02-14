@@ -10,9 +10,8 @@ import {
   type PropertyValues,
 } from '@alwatr/element';
 
-import {AlwatrSurface} from '../card/surface.js';
-
 import '../button/icon-button.js';
+import {AlwatrSurface} from '../card/surface.js';
 
 import type {IconButtonContent} from '../button/icon-button.js';
 import type {StringifyableRecord} from '@alwatr/type';

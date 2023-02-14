@@ -1,12 +1,13 @@
 import {customElement, html} from '@alwatr/element';
-import {AlwatrPwaElement} from '@alwatr/element/pwa-element.js';
-import {type RoutesConfig} from '@alwatr/router';
+import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
 
+import './component/ionic-components.js';
+import './component/page-flight-finder.js';
 import ionNormalize from './style/ionic.normalize.js';
 import ionTheming from './style/ionic.theming.js';
 
-import './component/page-flight-finder.js';
-import './component/ionic-components.js';
+import type {RoutesConfig} from '@alwatr/router';
+
 
 declare global {
   interface HTMLElementTagNameMap {

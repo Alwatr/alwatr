@@ -1,7 +1,6 @@
 import {css, customElement, html, property, ifDefined, type PropertyValues} from '@alwatr/element';
-import {UnicodeDigits} from '@alwatr/math';
-
 import '@alwatr/icon';
+import {UnicodeDigits} from '@alwatr/math';
 
 import {AlwatrSurface} from '../card/surface.js';
 

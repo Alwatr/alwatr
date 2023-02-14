@@ -1,11 +1,10 @@
 import {css, customElement, html, property, type PropertyValues} from '@alwatr/element';
+import '@alwatr/icon';
 import {eventTrigger} from '@alwatr/signal';
 
 import {AlwatrSurface} from '../card/surface.js';
 
 import type {StringifyableRecord, ClickSignalType} from '@alwatr/type';
-
-import '@alwatr/icon';
 
 declare global {
   interface HTMLElementTagNameMap {

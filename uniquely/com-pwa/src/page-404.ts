@@ -1,14 +1,13 @@
 import {customElement, AlwatrSmartElement, css, html, LocalizeMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
+import './app-footer';
 import {submitOrderCommandTrigger} from './context.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
-
-import '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
-import './app-footer';
 
 declare global {
   interface HTMLElementTagNameMap {
