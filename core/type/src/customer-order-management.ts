@@ -41,6 +41,18 @@ export interface Product extends AlwatrDocumentObject {
   image: Photo;
 }
 
+export interface ProductPrice extends AlwatrDocumentObject {
+  /**
+   * Product global unique id.
+   */
+  id: string;
+
+  /**
+   * Product price in this list.
+   */
+  price: number;
+}
+
 export interface Order extends AlwatrDocumentObject {
   /**
    * Order auto incremental unique id.
@@ -82,7 +94,13 @@ export interface Order extends AlwatrDocumentObject {
 
 // -- child types --
 
-export interface ProductPrice extends StringifyableRecord {
+export interface OrderItem extends StringifyableRecord {
+  productId: string;
+  price: OrderItemPrice;
+  qty: number;
+}
+
+export interface OrderItemPrice extends StringifyableRecord {
   /**
    * Displayed price before discount
    */
@@ -92,12 +110,6 @@ export interface ProductPrice extends StringifyableRecord {
    * Final price after any discount
    */
   finalPrice: number;
-}
-
-export interface OrderItem extends StringifyableRecord {
-  productId: string;
-  price: ProductPrice;
-  qty: number;
 }
 
 export interface OrderDelivery extends StringifyableRecord {
