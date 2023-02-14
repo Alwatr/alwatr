@@ -43,7 +43,6 @@ export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrDummyElement)) 
       width: 1em;
       height: 1em;
       contain: strict;
-      fill: currentcolor;
       box-sizing: content-box;
     }
 
@@ -56,6 +55,7 @@ export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrDummyElement)) 
       height: 100%;
       width: 100%;
       stroke: currentcolor;
+      fill: currentcolor;
     }
   `;
 
