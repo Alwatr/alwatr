@@ -45,8 +45,7 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       headline: 'سقف کاذب',
-      description: 'انواع تایل‌ها برا زیباتر شدن سقف ها شما.',
-      href: '/product',
+      description: 'انواع تایل برای زیباتر شدن سقف‌های شما.',
       wide: true,
     },
     {
