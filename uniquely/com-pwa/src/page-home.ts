@@ -1,12 +1,11 @@
 import {customElement, AlwatrSmartElement, css, html, unsafeHTML, map, state, nothing} from '@alwatr/element';
+import '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
+import './app-footer';
 import {productStorageContextConsumer, orderStorageContextConsumer, homePageContentContextConsumer} from './context.js';
 
 import type {BoxType, PageHomeContent} from './type.js';
-
-import '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
-import './app-footer';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -35,12 +34,12 @@ export class AlwatrPageHome extends AlwatrSmartElement {
       overflow-y: auto;
     }
 
-    alwatr-icon-box {
+    main > * {
       width: 40%;
       flex-grow: 1;
     }
 
-    alwatr-icon-box[wide]{
+    main > [wide] {
       width: 100%;
     }
   `;

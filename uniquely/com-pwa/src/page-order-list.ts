@@ -1,24 +1,24 @@
 import {
   customElement,
-  AlwatrSmartElement,
+  AlwatrDummyElement,
   css,
   html,
   state,
   LocalizeMixin,
   mapObject,
+  SignalMixin,
 } from '@alwatr/element';
 import {message, replaceNumber} from '@alwatr/i18n';
+import '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
+import './app-footer';
 import {orderStorageContextConsumer} from './context.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
-import type {Order} from '@alwatr/type/src/customer-order-management.js';
+import type {Order} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
-
-import '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
-import './app-footer';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -30,7 +30,7 @@ declare global {
  * Alwatr Customer Order Management Order List Page
  */
 @customElement('alwatr-page-order-list')
-export class AlwatrPageOrderList extends LocalizeMixin(AlwatrSmartElement) {
+export class AlwatrPageOrderList extends LocalizeMixin(SignalMixin(AlwatrDummyElement)) {
   static override styles = css`
     :host {
       display: flex;
@@ -39,13 +39,13 @@ export class AlwatrPageOrderList extends LocalizeMixin(AlwatrSmartElement) {
     }
 
     main {
-      display: block;
       flex-grow: 1;
+      display: block;
       padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
       overflow-y: auto;
     }
 
-    alwatr-icon-box {
+    main > * {
       margin-bottom: var(--sys-spacing-track);
     }
   `;
@@ -64,7 +64,7 @@ export class AlwatrPageOrderList extends LocalizeMixin(AlwatrSmartElement) {
 
   override render(): unknown {
     this._logger.logMethod('render');
-    const topAppBar:TopAppBarContent = {
+    const topAppBar: TopAppBarContent = {
       type: 'medium',
       headline: message('page_order_list_headline'),
       startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
