@@ -1,6 +1,6 @@
 import {localeContextConsumer, setLocale, l18eContextConsumer} from '@alwatr/i18n';
 import {eventListener} from '@alwatr/signal';
-import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
 import {logger} from './logger.js';
 
