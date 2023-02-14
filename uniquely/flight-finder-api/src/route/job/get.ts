@@ -4,7 +4,7 @@ import {storageClient} from '../../lib/storage.js';
 
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 import type {StringifyableRecord} from '@alwatr/type';
-import type {Job} from '@alwatr/type/src/flight-finder.js';
+import type {Job} from '@alwatr/type/flight-finder.js';
 
 // Get current job object
 nanoServer.route('GET', '/job', getJob);
