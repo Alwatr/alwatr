@@ -77,8 +77,19 @@ export interface Order extends AlwatrDocumentObject {
   discount: number;
   discountType: (typeof discountTypeCS)[number];
 
+  /**
+   * The cost of sending the order
+   */
   totalPrice: number;
+
+  /**
+   * The selling price of a order after any discounts to this buyer.
+   */
   shippingPrice: number;
+
+  /**
+   * The selling price of a order after any discounts to this buyer.
+   */
   finalPrice: number;
 
   /**
@@ -96,9 +107,17 @@ export interface Order extends AlwatrDocumentObject {
 
 export interface OrderItem extends StringifyableRecord {
   productId: string;
-  qty: number;
+
+  /**
+   * The selling price of single product in the market.
+   */
   price: number;
+
+  /**
+   * The selling price of a product after any discounts to this buyer.
+   */
   finalPrice: number;
+  qty: number;
 }
 
 export interface OrderDelivery extends StringifyableRecord {
