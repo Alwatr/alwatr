@@ -83,10 +83,8 @@ export class AlwatrPage404 extends LocalizeMixin(AlwatrSmartElement) {
       itemList: [
         {
           productId: '3232233323',
-          price: {
-            price: 1000000,
-            finalPrice: 950000,
-          },
+          price: 1000000,
+          finalPrice: 950000,
           qty: 20,
         },
       ],

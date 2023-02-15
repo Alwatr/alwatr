@@ -96,19 +96,8 @@ export interface Order extends AlwatrDocumentObject {
 
 export interface OrderItem extends StringifyableRecord {
   productId: string;
-  price: OrderItemPrice;
   qty: number;
-}
-
-export interface OrderItemPrice extends StringifyableRecord {
-  /**
-   * Displayed price before discount
-   */
   price: number;
-
-  /**
-   * Final price after any discount
-   */
   finalPrice: number;
 }
 

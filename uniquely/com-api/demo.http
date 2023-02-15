@@ -64,10 +64,8 @@ client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
   "itemList": [
     {
       "productId": "12345",
-      "price": {
-        "price": 1000000,
-        "finalPrice": 950000
-      },
+      "price": 1000000,
+      "finalPrice": 950000
       "qty": 20
     }
   ],
