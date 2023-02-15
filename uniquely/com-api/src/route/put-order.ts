@@ -8,11 +8,8 @@ import type {Order} from '@alwatr/type/customer-order-management.js';
 nanoServer.route('PUT', '/order/', async (connection) => {
   logger.logMethod('put-order');
 
-  const params = connection.requireQueryParams<{userId: string}>({userId: 'string'});
-  // connection.requireToken((token: string) => {
-  //   return tokenGenerator.verify(params.userId, token) === 'valid';
-  // });
   connection.requireToken(config.nanoServer.accessToken);
+  const params = connection.requireQueryParams<{userId: string}>({userId: 'string'});
   const remoteAddress = connection.getRemoteAddress();
   const clientId = connection.requireClientId();
 

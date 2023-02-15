@@ -11,7 +11,7 @@ nanoServer.route('PATCH', '/product-list/', async (connection) => {
   const bodyJson = await connection.requireJsonBody<{data: Array<Product>}>();
 
   for (const price of bodyJson.data) {
-    await storageClient.set(price, config.storage.productStorageName + '-' + params.name);
+    await storageClient.set(price, config.productStoragePrefix + params.name);
   }
 
   return {

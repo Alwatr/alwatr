@@ -56,7 +56,6 @@ PATCH {{apiUrl}}/price-list/?name=tile-market-ir
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
-
 {
   "data": [
     {
@@ -98,7 +97,6 @@ Content-Type: application/json
 PATCH {{apiUrl}}/price-list/?name=tile-agency-ir
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
-
 
 {
   "data": [
