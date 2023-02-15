@@ -26,6 +26,8 @@
     "order_status_delayed": "همراه با تاخیر",
     "order_status_on_hold": "متوقف شده",
     "order_status_canceled": "لغو شده",
-    "order_status_refunded": "بازپرداخت"
+    "order_status_refunded": "بازپرداخت",
+
+    "product_not_found": "هیچ محصولی یافت نشد!"
   }
 }

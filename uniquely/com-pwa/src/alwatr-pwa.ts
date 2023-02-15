@@ -21,7 +21,7 @@ declare global {
 @customElement('alwatr-pwa')
 class AlwatrPwa extends AlwatrPwaElement {
   protected override _routesConfig: RoutesConfig = {
-    routeId: this._routesConfig.routeId,
+    routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
     templates: {
       'home': () => {
         import('./page-home.js');
@@ -31,13 +31,15 @@ class AlwatrPwa extends AlwatrPwaElement {
         import('./page-404.js');
         return html`<alwatr-page-404>...</alwatr-page-404>`;
       },
-      'order-list': () => {
+      'orders': () => {
         import('./page-order-list.js');
         return html`<alwatr-page-order-list></alwatr-page-order-list>`;
       },
-      'product-list': () => {
+      'products': (routeContext) => {
         import('./page-product-list.js');
-        return html`<alwatr-page-product-list></alwatr-page-product-list>`;
+        return html`<alwatr-page-product-list
+          .storageName=${routeContext.sectionList[1]?.toString()}
+        ></alwatr-page-product-list>`;
       },
     },
   };

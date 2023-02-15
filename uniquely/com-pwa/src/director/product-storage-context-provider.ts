@@ -7,16 +7,26 @@ import {config} from '../config.js';
 
 const provideProductStorageContext = async (): Promise<void> => {
   logger.logMethod('provideProductStorageContext');
-
   try {
-    await fetchContext('product-storage-context', {
-      method: 'GET',
-      url: config.api + '/product/',
-      token: config.token,
-      removeDuplicate: 'auto',
-      retry: 10,
-      retryDelay: 3_000,
-    });
+    const fetchPromiseList = [];
+
+    for (const productStorageName of config.productStorageList) {
+      fetchPromiseList.push(
+          fetchContext(`product-storage-${productStorageName}-context`, {
+            method: 'GET',
+            url: config.api + '/product/',
+            queryParameters: {
+              storage: productStorageName,
+            },
+            token: config.token,
+            removeDuplicate: 'auto',
+            retry: 10,
+            retryDelay: 3_000,
+          }),
+      );
+    }
+
+    await Promise.all(fetchPromiseList);
   }
   catch (err) {
     logger.error('provideProductStorageContext', 'fetch_failed', err);
