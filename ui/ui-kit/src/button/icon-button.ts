@@ -73,11 +73,6 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
   @property({type: Object, attribute: false})
     content?: IconButtonContent;
 
-  constructor() {
-    super();
-    this._click = this._click.bind(this);
-  }
-
   override connectedCallback(): void {
     this.setAttribute('stated', '');
     super.connectedCallback();
