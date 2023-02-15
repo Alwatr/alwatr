@@ -63,7 +63,7 @@ client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
     {
       "productId": "12345",
       "price": 1000000,
-      "finalPrice": 950000
+      "finalPrice": 950000,
       "qty": 20
     }
   ],
@@ -83,5 +83,5 @@ client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
 }
 
 ### Get all orders list of special user
-get {{apiUrl}}/order-list/?userId=abc123
+GET {{apiUrl}}/order-list/?userId=abc123
 Authorization: Bearer {{userToken}}
