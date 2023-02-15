@@ -78,17 +78,17 @@ export interface Order extends AlwatrDocumentObject {
   discountType: (typeof discountTypeCS)[number];
 
   /**
-   * The cost of sending the order
+   * The total price of this order exclude shipping and discounts.
    */
   totalPrice: number;
 
   /**
-   * The selling price of a order after any discounts to this buyer.
+   * The cost of shipping the order.
    */
   shippingPrice: number;
 
   /**
-   * The selling price of a order after any discounts to this buyer.
+   * The final total price of this order include shipping and discounts.
    */
   finalPrice: number;
 
