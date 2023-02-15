@@ -1,0 +1,136 @@
+@apiUrl = http://127.0.0.1:8000/api/v0
+@adminToken = ADMIN_SECRET_TOKEN
+
+### New product 1
+PATCH {{apiUrl}}/product-list/?name="agency"
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "data": [
+    {
+      "id": "1",
+      "title": { "fa": "تایل کد ۰۰۱" },
+      "image": { "id": "sample-1.jpg" }
+    },
+    {
+      "id": "2",
+      "title": { "fa": "تایل کد ۰۰۲" },
+      "image": { "id": "sample-2.jpg" }
+    },
+    {
+      "id": "3",
+      "title": { "fa": "تایل کد ۰۰۳" },
+      "image": { "id": "sample-3.jpg" }
+    },
+    {
+      "id": "4",
+      "title": { "fa": "تایل کد ۰۰۴" },
+      "image": { "id": "sample-4.jpg" }
+    },
+    {
+      "id": "5",
+      "title": { "fa": "تایل کد ۰۰۵" },
+      "image": { "id": "sample-1.jpg" }
+    },
+    {
+      "id": "6",
+      "title": { "fa": "تایل کد ۰۰۶" },
+      "image": { "id": "sample-2.jpg" }
+    },
+    {
+      "id": "7",
+      "title": { "fa": "تایل کد ۰۰۷" },
+      "image": { "id": "sample-3.jpg" }
+    },
+    {
+      "id": "8",
+      "title": { "fa": "تایل کد ۰۰۸" },
+      "image": { "id": "sample-3.jpg" }
+    }
+  ]
+}
+
+### Insert/edit a product price of special list.
+PATCH {{apiUrl}}/price-list/?name=tile-market-ir
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "data": [
+    {
+      "id": "1",
+      "price": 77000
+    },
+    {
+      "id": "2",
+      "price": 75000
+    },
+    {
+      "id": "3",
+      "price": 68500
+    },
+    {
+      "id": "4",
+      "price": 62530
+    },
+    {
+      "id": "5",
+      "price": 79000
+    },
+    {
+      "id": "6",
+      "price": 75050
+    },
+    {
+      "id": "7",
+      "price": 64000
+    },
+    {
+      "id": "8",
+      "price": 80000
+    }
+  ]
+}
+
+### Insert/edit a product price of special list.
+PATCH {{apiUrl}}/price-list/?name=tile-agency-ir
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "data": [
+    {
+      "id": "1",
+      "price": 66990
+    },
+    {
+      "id": "2",
+      "price": 65250
+    },
+    {
+      "id": "3",
+      "price": 59595
+    },
+    {
+      "id": "4",
+      "price": 54401
+    },
+    {
+      "id": "5",
+      "price": 68730
+    },
+    {
+      "id": "6",
+      "price": 65293.5
+    },
+    {
+      "id": "7",
+      "price": 55680
+    },
+    {
+      "id": "8",
+      "price": 69600
+    }
+  ]
+}
