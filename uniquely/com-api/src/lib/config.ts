@@ -25,6 +25,10 @@ export const config = {
   productStoragePrefix: 'product-list-',
   priceStoragePrefix: 'price-list-',
   orderStoragePrefix: 'order-list-',
+  productStorageList: (process.env.PRODUCT_STORAGE_LIST ?? 'temp')
+      .split(',')
+      .map((f) => f.trim())
+      .filter((f) => f != ''),
 } as const;
 
 logger.logProperty('config', config);

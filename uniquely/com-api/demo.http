@@ -7,11 +7,11 @@
 GET {{apiUrl}}/
 
 ### Get all product.
-GET {{apiUrl}}/product-list/?name=tile
+GET {{apiUrl}}/product-list/?storage=tile
 Authorization: Bearer {{userToken}}
 
 ### Insert/edit a product.
-PATCH {{apiUrl}}/product-list/?name=tile
+PATCH {{apiUrl}}/product-list/?storage=tile
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
