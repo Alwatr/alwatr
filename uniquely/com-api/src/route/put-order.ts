@@ -22,6 +22,6 @@ nanoServer.route('PUT', '/order/', async (connection) => {
 
   return {
     ok: true,
-    data: await storageClient.set<Order>(order, params.userId),
+    data: await storageClient.set<Order>(order, config.orderStoragePrefix + params.userId),
   };
 });

@@ -65,27 +65,27 @@ Content-Type: application/json
     {
       "id": "2",
       "price": 75000
-    }
+    },
     {
       "id": "3",
       "price": 68500
-    }
+    },
     {
       "id": "4",
       "price": 62530
-    }
+    },
     {
       "id": "5",
       "price": 79000
-    }
+    },
     {
       "id": "6",
       "price": 75050
-    }
+    },
     {
       "id": "7",
       "price": 64000
-    }
+    },
     {
       "id": "8",
       "price": 80000
@@ -107,27 +107,27 @@ Content-Type: application/json
     {
       "id": "2",
       "price": 65250
-    }
+    },
     {
       "id": "3",
       "price": 59595
-    }
+    },
     {
       "id": "4",
       "price": 54401
-    }
+    },
     {
       "id": "5",
       "price": 68730
-    }
+    },
     {
       "id": "6",
       "price": 65293.5
-    }
+    },
     {
       "id": "7",
       "price": 55680
-    }
+    },
     {
       "id": "8",
       "price": 69600
