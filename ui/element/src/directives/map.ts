@@ -15,11 +15,11 @@
  */
 export function* mapIterable<T>(
     _this: unknown,
-    items: Iterable<T> | undefined,
+    items: Iterable<T> | undefined | null,
     f: (value: T) => unknown,
     loading?: unknown,
 ): unknown {
-  if (items === undefined) {
+  if (items == null) {
     return loading;
   }
   for (const value of items) {
