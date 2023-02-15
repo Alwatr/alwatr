@@ -4,12 +4,10 @@ import {TokenGeneratorConfig} from '@alwatr/token';
 export const logger = createLogger('com-api');
 
 export const config = {
-  storage: {
+  storageClient: {
     host: process.env.STORAGE_HOST ?? '127.0.0.1',
     port: process.env.STORAGE_PORT != null ? +process.env.STORAGE_PORT : 9000,
     token: process.env.STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
-    productStorageName: process.env.PRODUCT_STORAGE_NAME ?? 'product',
-    priceStorageName: process.env.PRICE_STORAGE_NAME ?? 'price',
   },
   token: <TokenGeneratorConfig>{
     secret: process.env.SECRET ?? 'YOUR_SECRET',
@@ -24,6 +22,9 @@ export const config = {
     adminToken: process.env.ADMIN_TOKEN ?? 'ADMIN_SECRET_TOKEN',
     allowAllOrigin: true,
   },
+  productStoragePrefix: 'product-list-',
+  priceStoragePrefix: 'price-list-',
+  orderStoragePrefix: 'order-list-',
 } as const;
 
 logger.logProperty('config', config);
