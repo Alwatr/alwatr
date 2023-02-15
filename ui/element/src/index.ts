@@ -4,6 +4,7 @@ export * from './dummy-element.js';
 export * from './smart-element.js';
 
 export * from './mixins/localize.js';
+export * from './mixins/router.js';
 export * from './mixins/direction.js';
 export * from './mixins/logging.js';
 export * from './mixins/signal.js';
