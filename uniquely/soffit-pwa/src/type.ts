@@ -1,6 +1,6 @@
 import type {StringifyableRecord} from '@alwatr/type';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
-import type {ImageBoxContent} from '@alwatr/ui-kit/src/card/image-box.js';
+import type {ImageBoxContent} from '@alwatr/ui-kit/card/image-box.js';
 import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 export interface BoxType extends IconBoxContent {
