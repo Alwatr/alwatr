@@ -1,5 +1,7 @@
 import {serviceRequest} from '@alwatr/fetch';
+import {redirect} from '@alwatr/router';
 import {commandHandler} from '@alwatr/signal';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
 
 import {config} from '../config.js';
 import {userContextConsumer, orderStorageContextProvider, submitOrderCommandTrigger} from '../context.js';
@@ -26,6 +28,12 @@ commandHandler.define<Partial<Order>, Order>(submitOrderCommandTrigger.id, async
     orderStorage.data[newOrder.id] = newOrder;
     orderStorageContextProvider.setValue(orderStorage);
   }
+
+  snackbarSignalTrigger.request({
+    message: 'اع زدی که! یک سفارش جدید الکی ثبت شد!',
+  });
+
+  redirect('/orders');
 
   return response.data;
 });
