@@ -213,7 +213,8 @@ export function message(key?: string | null): string | undefined {
 /**
  * Format number to active locale string unicode and digital group.
  */
-export const number = (number: number): string => {
+export const number = (number?: number | null): string => {
+  if (number == null) return loadingStr;
   if (activeNumberFormatter === null) return String(number);
   return activeNumberFormatter.format(number);
 };

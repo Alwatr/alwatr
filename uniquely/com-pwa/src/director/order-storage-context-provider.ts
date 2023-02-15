@@ -18,7 +18,7 @@ orderStorageContextProvider.setProvider(async (args): Promise<void> => {
   try {
     await fetchContext('order-storage-context', {
       method: 'GET',
-      url: config.api + '/order/',
+      url: config.api + '/order-list/',
       queryParameters: {
         userId: userContext.id,
       },

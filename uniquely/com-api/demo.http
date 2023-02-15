@@ -30,7 +30,7 @@ Content-Type: application/json
   ]
 }
 
-### Get product-price-list-agency.json
+### Get product-price-list-agency-ir.json
 GET {{apiUrl}}/price-list/?name=tile-agency-ir
 Authorization: Bearer {{userToken}}
 

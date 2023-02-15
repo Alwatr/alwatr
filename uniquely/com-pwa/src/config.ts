@@ -5,4 +5,6 @@ export const config = {
   cdn: getConfKey<string>('cdn'),
   token: getConfKey<string>('token'),
   productStorageList: getConfKey<Array<string>>('productStorageList'),
+  priceListName: '${productStorage}-market-ir',
+  finalPriceListName: '${productStorage}-agency-ir',
 };
