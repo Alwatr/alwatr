@@ -39,7 +39,6 @@ PATCH {{apiUrl}}/price-list/?name=tile-agency-ir
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
-
 {
   "data": [
     {
@@ -84,5 +83,5 @@ client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
 }
 
 ### Get all orders list of special user
-get {{apiUrl}}/order/?userId=abc123
+get {{apiUrl}}/order-list/?userId=abc123
 Authorization: Bearer {{userToken}}

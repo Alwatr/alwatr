@@ -8,5 +8,5 @@ nanoServer.route('GET', '/product-list/', async (connection) => {
   logger.logMethod('get-product-list');
   connection.requireToken(config.nanoServer.accessToken);
   const params = connection.requireQueryParams<{name: string}>({name: 'string'});
-  return await storageClient.getStorage<Product>(config.storage.productStorageName + '-' + params.name);
+  return await storageClient.getStorage<Product>(config.productStoragePrefix + params.name);
 });
