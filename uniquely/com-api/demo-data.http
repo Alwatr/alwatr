@@ -2,7 +2,7 @@
 @adminToken = ADMIN_SECRET_TOKEN
 
 ### New product 1
-PATCH {{apiUrl}}/product-list/?name="agency"
+PATCH {{apiUrl}}/product-list/?name=tile
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
