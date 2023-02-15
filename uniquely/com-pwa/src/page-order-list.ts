@@ -1,24 +1,24 @@
 import {
   customElement,
-  AlwatrSmartElement,
+  AlwatrDummyElement,
   css,
   html,
   state,
   LocalizeMixin,
-  map,
+  mapObject,
+  SignalMixin,
 } from '@alwatr/element';
 import {message, replaceNumber} from '@alwatr/i18n';
+import '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
+import './app-footer';
 import {orderStorageContextConsumer} from './context.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
-import type {Order} from '@alwatr/type/src/customer-order-management.js';
+import type {Order} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
-
-import '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
-import './app-footer';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -30,7 +30,7 @@ declare global {
  * Alwatr Customer Order Management Order List Page
  */
 @customElement('alwatr-page-order-list')
-export class AlwatrPageOrderList extends LocalizeMixin(AlwatrSmartElement) {
+export class AlwatrPageOrderList extends LocalizeMixin(SignalMixin(AlwatrDummyElement)) {
   static override styles = css`
     :host {
       display: flex;
@@ -39,24 +39,19 @@ export class AlwatrPageOrderList extends LocalizeMixin(AlwatrSmartElement) {
     }
 
     main {
-      display: block;
       flex-grow: 1;
+      display: block;
       padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
       overflow-y: auto;
     }
 
-    alwatr-icon-box {
+    main > * {
       margin-bottom: var(--sys-spacing-track);
     }
   `;
 
   @state()
     orderStorage?: AlwatrDocumentStorage<Order>;
-
-  constructor() {
-    super();
-    this._orderItemTemplate = this._orderItemTemplate.bind(this);
-  }
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -67,35 +62,23 @@ export class AlwatrPageOrderList extends LocalizeMixin(AlwatrSmartElement) {
     );
   }
 
-  protected content = {
-    topAppBar: <TopAppBarContent>{
-      type: 'medium',
-      headline: 'page_order_list_headline',
-      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
-      tinted: 2,
-    },
-  } as const;
-
   override render(): unknown {
     this._logger.logMethod('render');
-    const orderIdList = this.orderStorage == null ? [] : Object.keys(this.orderStorage.data);
-    const topAppBar:TopAppBarContent = {
-      ...this.content.topAppBar,
-      type: orderIdList.length < 5 ? this.content.topAppBar.type : 'small',
-      headline: message(this.content.topAppBar.headline),
+    const topAppBar: TopAppBarContent = {
+      type: 'medium',
+      headline: message('page_order_list_headline'),
+      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+      tinted: 2,
     };
+
     return html`
       <alwatr-top-app-bar .content=${topAppBar}></alwatr-top-app-bar>
-      <main>${this.orderStorage == null
-          ? message('loading')
-          : map(orderIdList, this._orderItemTemplate)}</main>
+      <main>${mapObject(this, this.orderStorage?.data, this._orderItemTemplate, message('loading'))}</main>
       <alwatr-app-footer></alwatr-app-footer>
     `;
   }
 
-  protected _orderItemTemplate(orderId: string): unknown {
-    if (this.orderStorage == null) return;
-    const order = this.orderStorage.data[orderId];
+  protected _orderItemTemplate(order: Order): unknown {
     const content: IconBoxContent = {
       stated: true,
       tinted: 1,
