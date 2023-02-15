@@ -56,6 +56,7 @@ export class AlwatrPage404 extends LocalizeMixin(AlwatrSmartElement) {
       flipRtl: true,
       headline: message('under_develope'),
       description: message('under_develope_description'),
+      preLine: true,
     };
 
     return html`
