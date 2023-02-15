@@ -34,7 +34,7 @@ export class AlwatrPwaElement extends AlwatrSmartElement {
   `;
 
   protected _routesConfig: RoutesConfig = {
-    routeId: (route) => route.sectionList[0]?.toString(),
+    routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
     templates: {
       home: () => html`<h1>Page Home ;)</h1>`,
       _404: () => html`<h1>404, Not found!</h1>`,
