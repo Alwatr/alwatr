@@ -20,12 +20,12 @@ Content-Type: application/json
     {
       "id": "1",
       "title": {"fa": "تایل کد ۰۰۱"},
-      "image": {"id": "/image/sample-1.jpg"}
+      "image": {"id": "sample-1.jpg"}
     },
     {
       "id": "2",
       "title": {"fa": "تایل کد ۰۰۲"},
-      "image": {"id": "/image/sample-2.jpg"}
+      "image": {"id": "sample-2.jpg"}
     }
   ]
 }
