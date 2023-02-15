@@ -19,7 +19,7 @@ export function LocalizeMixin<T extends Constructor<SignalMixinInterface>>(
     }
 
     /**
-     * On localization resource context updated.
+     * On localization resource context update.
      */
     protected _l18eContextUpdated(l18eContext: L18eContext): void {
       this._logger.logMethodArgs('_l18eContextUpdated', l18eContext.meta);
