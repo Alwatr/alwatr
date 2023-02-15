@@ -8,6 +8,8 @@ import '@alwatr/ui-kit/style/token.css';
 import '@alwatr/ui-kit/style/pwa.css';
 
 import './signal/sw-user-notify.js';
+import './signal/register-service-worker-command.js';
+import './signal/back-click-event.js';
 
 /**
  * Alwatr Root Base Element
