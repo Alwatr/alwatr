@@ -1,5 +1,10 @@
-import {customElement, css, html, property, LocalizeMixin, AlwatrSmartElement} from '@alwatr/element';
+import {customElement, css, html, property, LocalizeMixin, SignalMixin, AlwatrBaseElement} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import '@alwatr/ui-kit/button/button.js';
+import '@alwatr/ui-kit/card/surface.js';
+import '@alwatr/ui-kit/radio-group/radio-group.js';
+import '@alwatr/ui-kit/text-field/text-field.js';
+
 
 import {submitOrderCommandTrigger} from './context.js';
 
@@ -7,10 +12,6 @@ import type {OrderDelivery} from '@alwatr/type/src/customer-order-management.js'
 import type {AlwatrFieldSet, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
-import '@alwatr/ui-kit/text-field/text-field.js';
-import '@alwatr/ui-kit/button/button.js';
-import '@alwatr/ui-kit/radio-group/radio-group.js';
-import '@alwatr/ui-kit/card/surface.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -22,7 +23,7 @@ declare global {
  * Alwatr Customer Order Management Order Form
  */
 @customElement('alwatr-order-form')
-export class AlwatrOrderForm extends LocalizeMixin(AlwatrSmartElement) {
+export class AlwatrOrderForm extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static formId = 'order';
 
   get _carTypeRadioGroupOptions(): RadioGroupOptions {
