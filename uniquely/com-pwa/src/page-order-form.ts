@@ -5,7 +5,6 @@ import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 import './app-footer.js';
 import './order-form.js';
 
-
 import type {TopAppBarContent} from '@alwatr/ui-kit/src/top-app-bar/top-app-bar.js';
 
 declare global {
@@ -39,21 +38,14 @@ export class AlwatrPageOrderForm extends LocalizeMixin(SignalMixin(AlwatrBaseEle
     }
   `;
 
-  protected content = {
-    topAppBar: <TopAppBarContent>{
-      type: 'medium',
-      headline: 'page_order_form_headline',
-      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
-      tinted: 2,
-    },
-  } as const;
-
   override render(): unknown {
     this._logger.logMethod('render');
 
     const topAppBar: TopAppBarContent = {
-      ...this.content.topAppBar,
-      headline: message(this.content.topAppBar.headline),
+      type: 'medium',
+      headline: message('page_order_form_headline'),
+      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+      tinted: 2,
     };
 
     return html`
