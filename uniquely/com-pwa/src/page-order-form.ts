@@ -1,11 +1,12 @@
-import {customElement, css, html, LocalizeMixin, AlwatrSmartElement} from '@alwatr/element';
+import {customElement, css, html, LocalizeMixin, AlwatrBaseElement, SignalMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-
-import type {TopAppBarContent} from '@alwatr/ui-kit/src/top-app-bar/top-app-bar.js';
-
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
+
 import './app-footer.js';
 import './order-form.js';
+
+
+import type {TopAppBarContent} from '@alwatr/ui-kit/src/top-app-bar/top-app-bar.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -17,7 +18,7 @@ declare global {
  * Alwatr Customer Order Management Order Form Page
  */
 @customElement('alwatr-page-order-form')
-export class AlwatrPageOrderForm extends LocalizeMixin(AlwatrSmartElement) {
+export class AlwatrPageOrderForm extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       display: flex;
