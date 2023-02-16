@@ -97,17 +97,9 @@ export class AlwatrOrderForm extends LocalizeMixin(SignalMixin(AlwatrBaseElement
 
   async submit(): Promise<void> {
     const formData = this.getFormData();
-
     this._logger.logMethodArgs('submit', formData);
-
     this.disabled = true;
-
-    const response = await submitOrderCommandTrigger.requestWithResponse({delivery: formData as OrderDelivery});
-
-    if (response) {
-      this.resetForm();
-    }
-
+    await submitOrderCommandTrigger.requestWithResponse({delivery: formData as OrderDelivery});
     this.disabled = false;
   }
 
