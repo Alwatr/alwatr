@@ -1,4 +1,4 @@
-import {customElement, css, html, map, AlwatrDummyElement, property, nothing} from '@alwatr/element';
+import {customElement, css, html, map, AlwatrBaseElement, property, nothing} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -19,7 +19,7 @@ export type RadioGroupOptions = {
  * @attr {String} name
  */
 @customElement('alwatr-radio-group')
-export class AlwatrFieldSet extends AlwatrDummyElement {
+export class AlwatrFieldSet extends AlwatrBaseElement {
   static override styles = css`
     :host {
       display: block;

@@ -1,4 +1,15 @@
-import {customElement, AlwatrSmartElement, css, html, unsafeHTML, map, state, nothing} from '@alwatr/element';
+
+import {
+  customElement,
+  css,
+  html,
+  unsafeHTML,
+  map,
+  state,
+  nothing,
+  SignalMixin,
+  AlwatrBaseElement,
+} from '@alwatr/element';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
@@ -17,7 +28,7 @@ declare global {
  * Alwatr Customer Order Management Home Page
  */
 @customElement('alwatr-page-home')
-export class AlwatrPageHome extends AlwatrSmartElement {
+export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
   static override styles = css`
     :host {
       display: flex;

@@ -1,7 +1,6 @@
 import {globalAlwatr} from '@alwatr/logger';
 
-export * from './dummy-element.js';
-export * from './smart-element.js';
+export * from './base-element.js';
 
 export * from './mixins/localize.js';
 export * from './mixins/router.js';

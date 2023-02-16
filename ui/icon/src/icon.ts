@@ -1,5 +1,5 @@
 import {
-  AlwatrDummyElement,
+  AlwatrBaseElement,
   unsafeSVG,
   customElement,
   property,
@@ -36,7 +36,7 @@ declare global {
  * @attr {Boolean} flip-rtl
  */
 @customElement('alwatr-icon')
-export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrDummyElement)) {
+export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       display: inline-block;

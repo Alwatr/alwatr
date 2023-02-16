@@ -1,4 +1,4 @@
-import {customElement, css, html, property, AlwatrSmartElement, LocalizeMixin} from '@alwatr/element';
+import {customElement, css, html, property, LocalizeMixin, SignalMixin, AlwatrBaseElement} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {commandTrigger} from '@alwatr/signal';
 import '@alwatr/ui-kit/button/button.js';
@@ -22,7 +22,7 @@ declare global {
  * @attr {Boolean} invisible
  */
 @customElement('alwatr-lottery-form')
-export class AlwatrLotteryForm extends LocalizeMixin(AlwatrSmartElement) {
+export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static formId = 'lottery';
 
   get _radioGroupOptions(): RadioGroupOptions {
