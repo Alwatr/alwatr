@@ -4,9 +4,9 @@ import type {PageHomeContent} from '../type.js';
 export const homePageContent: PageHomeContent = {
   topAppBar: {
     type: 'center',
-    headline: 'همایش‌ گامی‌به‌سوی‌آرامش',
+    headline: 'همایش‌ گامی‌ به‌ سوی‌ آرامش',
     startIcon: {icon: 'menu-outline', clickSignalId: 'app-menu-click-event'},
-    endIconList: [{icon: 'person-circle-outline', clickSignalId: 'user-avatar-click-event'}],
+    endIconList: [],
     tinted: 1,
   },
 

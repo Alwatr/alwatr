@@ -44,11 +44,6 @@ export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
       overflow-y: auto;
     }
 
-    main > * {
-      /* width: 40%; */
-      /* flex-grow: 1; */
-    }
-
     main > [wide] {
       width: 100%;
     }

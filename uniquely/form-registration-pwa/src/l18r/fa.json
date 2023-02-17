@@ -23,7 +23,8 @@
     "cancel_form_button": "پاک کردن",
 
     "form_submit_successful": "ثبت نام با موفقیت انجام شد.",
-    "form_submit_fail": "ایجاد مشکل در ارتباط با سرور!"
+    "form_submit_fail": "ایجاد مشکل در ارتباط با سرور!",
+    "form_submit_invalid": "اطلاعات فرم صحیح نمی‌باشد!"
 
   }
 }
