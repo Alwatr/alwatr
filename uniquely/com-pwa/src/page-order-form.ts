@@ -5,7 +5,7 @@ import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 import './app-footer.js';
 import './order-form.js';
 
-import type {TopAppBarContent} from '@alwatr/ui-kit/src/top-app-bar/top-app-bar.js';
+import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -26,15 +26,8 @@ export class AlwatrPageOrderForm extends LocalizeMixin(SignalMixin(AlwatrBaseEle
     }
 
     main {
-      display: flex;
-      flex-wrap: wrap;
       flex-grow: 1;
       overflow-y: auto;
-      gap: var(--sys-spacing-track);
-    }
-
-    alwatr-order-form {
-      width: 100%;
     }
   `;
 
