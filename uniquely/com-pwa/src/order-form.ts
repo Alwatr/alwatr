@@ -5,11 +5,9 @@ import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
-
-import {submitOrderCommandTrigger} from './context.js';
-
-import type {OrderDelivery} from '@alwatr/type/src/customer-order-management.js';
-import type {AlwatrFieldSet, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
+import type {StringifyableRecord} from '@alwatr/type';
+import type {OrderDelivery} from '@alwatr/type/customer-order-management.js';
+import type {RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 
@@ -80,10 +78,6 @@ export class AlwatrOrderForm extends LocalizeMixin(SignalMixin(AlwatrBaseElement
       margin-top: 0;
     }
 
-    :host([invisible]) * {
-      opacity: 0;
-    }
-
     .button-container {
       display: flex;
       flex-direction: row-reverse;
@@ -96,36 +90,34 @@ export class AlwatrOrderForm extends LocalizeMixin(SignalMixin(AlwatrBaseElement
     disabled = false;
 
   async submit(): Promise<void> {
-    const formData = this.getFormData();
+    const formData = this.getFormData() as OrderDelivery;
     this._logger.logMethodArgs('submit', formData);
     this.disabled = true;
-    await submitOrderCommandTrigger.requestWithResponse({delivery: formData as OrderDelivery});
+    // TODO: get order context and add delivery property to it.
     this.disabled = false;
   }
 
   async cancel(): Promise<void> {
     this.dispatchEvent(new CustomEvent('form-canceled'));
+    this.reset();
   }
 
-  getFormData(): Partial<OrderDelivery> {
+  getFormData(): StringifyableRecord {
     this._logger.logMethod('getFormData');
+    const data: StringifyableRecord = {};
+    for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>('alwatr-text-field')) {
+      data[inputElement.name] = inputElement.value;
+    }
     return {
-      recipientName: this.renderRoot.querySelector<AlwatrTextField>('alwatr-text-field[name="recipient-name"]')?.value,
-      recipientNationalCode: this.renderRoot.querySelector<AlwatrTextField>(
-          'alwatr-text-field[name="recipient-national-code"]',
-      )?.value,
-      address: this.renderRoot.querySelector<AlwatrTextField>('alwatr-text-field[name="address"]')?.value,
-      carType: this.renderRoot.querySelector<AlwatrFieldSet>('alwatr-radio-group[name="car-type"]')?.value as 'x' | 'y',
-      shipmentType: this.renderRoot.querySelector<AlwatrFieldSet>(
-          'alwatr-radio-group[name="shipment-type"]',
-      )?.value as | 'x' | 'y',
-      timePeriod: this.renderRoot.querySelector<AlwatrFieldSet>(
-          'alwatr-radio-group[name="car-type"]',
-      )?.value as '1-2w' | '2-3w' | '3-4w',
+      recipientName: data['recipient-name'],
+      address: data['address'],
+      carType: data['car-type'],
+      shipmentType: data['shipment-type'],
+      timePeriod: data['shipment-type'],
     };
   }
 
-  resetForm(): void {
+  reset(): void {
     // TODO: reset radio group
     this._logger.logMethod('clearForm');
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>('alwatr-text-field')) {

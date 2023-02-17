@@ -51,9 +51,9 @@ export const homePageContent: PageHomeContent = {
       stated: true,
       icon: 'bag-handle-outline',
       flipRtl: true,
-      headline: 'تکمیل سفارش',
+      headline: 'اطلاعات بارگیری و ارسال',
       href: '/order-form',
-      description: 'تکمیل اطلاعات سفارش.',
+      description: 'ثبت اطلاعات بارگیری و ارسال.',
     },
     {
       elevated: 1,

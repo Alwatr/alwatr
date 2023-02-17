@@ -29,7 +29,7 @@
     "order_status_refunded": "بازپرداخت",
 
     "product_not_found": "هیچ محصولی یافت نشد!",
-    "page_order_form_headline": "ثبت سفارش",
+    "page_order_form_headline": " اطلاعات بارگیری و ارسال",
     "order_form_recipient_name": "نام تحویل گیرنده",
     "order_form_recipient_national_code": "کد ملی تحویل گیرنده",
     "order_form_address": "آدرس تحویل",
@@ -42,7 +42,7 @@
     "order_form_time_period_2_3w": "دو تا سه هفته",
     "order_form_time_period_3_4w": "سه تا چهار هفته",
 
-    "order_form_submit_form": "ثبت سفارش",
+    "order_form_submit_form": "ثبت اطلاعات",
     "cancel": "لغو",
     "order_form_submit_success": "سفارش با موفقیت ثبت شد.",
     "order_form_submit_failed": "خطایی در ثبت سفارش رخ داد!",
