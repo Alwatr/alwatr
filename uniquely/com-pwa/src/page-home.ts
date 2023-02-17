@@ -4,17 +4,18 @@ import {
   css,
   html,
   unsafeHTML,
-  map,
+  mapIterable,
   state,
   nothing,
   SignalMixin,
   AlwatrBaseElement,
 } from '@alwatr/element';
+import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 import './app-footer';
-import {productStorageContextConsumer, orderStorageContextConsumer, homePageContentContextConsumer} from './context.js';
+import {homePageContentContextConsumer, topAppBarContextProvider} from './context.js';
 
 import type {BoxType, PageHomeContent} from './type.js';
 
@@ -31,31 +32,26 @@ declare global {
 export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
   static override styles = css`
     :host {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    main {
+      box-sizing: border-box;
+      min-height: 100%;
       display: flex;
       flex-wrap: wrap;
       padding: calc(2 * var(--sys-spacing-track));
       gap: var(--sys-spacing-track);
-      flex-grow: 1;
-      overflow-y: auto;
     }
 
-    main > * {
+    :host > * {
       width: 40%;
       flex-grow: 1;
     }
 
-    main > [wide] {
+    :host > [wide] {
       width: 100%;
     }
   `;
 
-  @state() content?: PageHomeContent;
+  @state()
+    content?: PageHomeContent;
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -63,26 +59,15 @@ export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
     this._signalListenerList.push(
         homePageContentContextConsumer.subscribe((content) => {
           this.content = content;
+          topAppBarContextProvider.setValue(content.topAppBar);
         }),
     );
-
-    productStorageContextConsumer.subscribe((value) => {
-      this._logger.logProperty(productStorageContextConsumer.id, value);
-    });
-
-    orderStorageContextConsumer.subscribe((value) => {
-      this._logger.logProperty(orderStorageContextConsumer.id, value);
-    });
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
     if (this.content == null) return nothing;
-    return html`
-      <alwatr-top-app-bar .content=${this.content.topAppBar}></alwatr-top-app-bar>
-      <main>${map(this.content.boxList, this._boxTemplate)}</main>
-      <alwatr-app-footer></alwatr-app-footer>
-    `;
+    return mapIterable(this, this.content.boxList, this._boxTemplate, message('loading'));
   }
 
   protected _boxTemplate(box: BoxType): unknown {

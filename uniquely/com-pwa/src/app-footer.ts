@@ -32,6 +32,7 @@ export class AlwatrPageHome extends AlwatrBaseElement {
       -webkit-user-select: none;
     }
   `;
+
   override render(): unknown {
     this._logger.logMethod('render');
     return html`
