@@ -46,6 +46,9 @@
     "cancel": "لغو",
     "order_form_submit_success": "سفارش با موفقیت ثبت شد.",
     "order_form_submit_failed": "خطایی در ثبت سفارش رخ داد!",
-    "order_form_invalid_detail": "اطلاعات فرم نادرست است."
+    "order_form_invalid_detail": "اطلاعات فرم نادرست است.",
+
+    "submit_order_success": "سفارش شما با موفقیت ثبت شد.",
+    "submit_order_failed": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید."
   }
 }
