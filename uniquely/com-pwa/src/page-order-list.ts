@@ -13,12 +13,11 @@ import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 import './app-footer';
-import {orderStorageContextConsumer} from './context.js';
+import {orderStorageContextConsumer, topAppBarContextProvider} from './context.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
-import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -33,19 +32,13 @@ declare global {
 export class AlwatrPageOrderList extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    main {
-      flex-grow: 1;
       display: block;
       padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
-      overflow-y: auto;
+      box-sizing: border-box;
+      min-height: 100%;
     }
 
-    main > * {
+    :host > * {
       margin-bottom: var(--sys-spacing-track);
     }
   `;
@@ -58,24 +51,21 @@ export class AlwatrPageOrderList extends LocalizeMixin(SignalMixin(AlwatrBaseEle
     this._signalListenerList.push(
         orderStorageContextConsumer.subscribe((orderStorage) => {
           this.orderStorage = orderStorage;
+          this.requestUpdate();
         }),
     );
+
+    topAppBarContextProvider.setValue({
+      type: 'small',
+      headline: message('page_order_list_headline'),
+      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+      tinted: 2,
+    });
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
-    const topAppBar: TopAppBarContent = {
-      type: 'medium',
-      headline: message('page_order_list_headline'),
-      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
-      tinted: 2,
-    };
-
-    return html`
-      <alwatr-top-app-bar .content=${topAppBar}></alwatr-top-app-bar>
-      <main>${mapObject(this, this.orderStorage?.data, this._orderItemTemplate, message('loading'))}</main>
-      <alwatr-app-footer></alwatr-app-footer>
-    `;
+    return mapObject(this, this.orderStorage?.data, this._orderItemTemplate, message('loading'));
   }
 
   protected _orderItemTemplate(order: Order): unknown {

@@ -4,10 +4,9 @@ import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 import './app-footer';
-import {submitOrderCommandTrigger} from './context.js';
+import {submitOrderCommandTrigger, topAppBarContextProvider} from './context.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
-import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -22,32 +21,25 @@ declare global {
 export class AlwatrPage404 extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .logo {
-      display: block;
-      width: 100%;
-    }
-
-    main {
       display: block;
       padding: calc(2 * var(--sys-spacing-track));
-      flex-grow: 1;
-      overflow-y: auto;
+      box-sizing: border-box;
+      min-height: 100%;
     }
   `;
 
-  override render(): unknown {
-    this._logger.logMethod('render');
-
-    const topAppBar: TopAppBarContent = {
+  override connectedCallback(): void {
+    super.connectedCallback();
+    topAppBarContextProvider.setValue({
       type: 'small',
       headline: message('not_found'),
       startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
-    };
+      tinted: 2,
+    });
+  }
+
+  override render(): unknown {
+    this._logger.logMethod('render');
 
     const box: IconBoxContent = {
       stated: true,
@@ -59,11 +51,7 @@ export class AlwatrPage404 extends LocalizeMixin(SignalMixin(AlwatrBaseElement))
       preLine: true,
     };
 
-    return html`
-      <alwatr-top-app-bar .content=${topAppBar}></alwatr-top-app-bar>
-      <main><alwatr-icon-box .content=${box} @click=${this._click}></alwatr-icon-box></main>
-      <alwatr-app-footer></alwatr-app-footer>
-    `;
+    return html`<alwatr-icon-box .content=${box} @click=${this._click}></alwatr-icon-box>`;
   }
 
   protected _click(): void {

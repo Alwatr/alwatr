@@ -11,6 +11,8 @@ import {PageHomeContent} from './type.js';
 import type {AlwatrDocumentStorage, User} from '@alwatr/type';
 import type {Product, Order} from '@alwatr/type/customer-order-management.js';
 
+export * from '@alwatr/pwa-helper/context.js';
+
 export const productStorageContextConsumer =
   contextConsumer.bind<AlwatrDocumentStorage<Product>>('product-storage-context');
 
