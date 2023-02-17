@@ -42,7 +42,7 @@ export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrBaseElement)) {
       display: inline-block;
       width: 1em;
       height: 1em;
-      contain: strict;
+      contain: size layout paint style;
       box-sizing: content-box;
     }
 
