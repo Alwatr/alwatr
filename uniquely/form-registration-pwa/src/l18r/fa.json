@@ -1,0 +1,29 @@
+{
+  "ok": true,
+  "meta": {
+    "code": "fa-IR",
+    "rev": 0
+  },
+  "data": {
+    "not_found": "پیدا نشد!",
+    "under_develope": "دردست ساخت",
+
+    "description": "سری همایش‌های گامی به سوی آرامش در زندگی همسران از نگاه دین. با سخنرانی آقای دکتر مومنی",
+    "under_develope_description": "برنامه نویسان سخت مشغول کارند...\nاندکی صبر سحر نزدیک است...\nدرضمن اگر رو من بزنی یک سفارش الکی ثبت می‌شود\nپس لطفا نزن!",
+
+    "fetch_failed": "خطا در دریافت اطلاعات از اینترنت!",
+    "retry": "تلاش مجدد",
+    "loading": "درحال بارگذاری...",
+
+    "register_page_headline": "ثبت‌نام در همایش",
+
+    "register_form_name": "نام شرکت کننده",
+    "register_form_phone_number": "شماره موبایل",
+    "register_form_submit_button": "ثبت نام",
+    "cancel_form_button": "پاک کردن",
+
+    "form_submit_successful": "ثبت نام با موفقیت انجام شد.",
+    "form_submit_fail": "ایجاد مشکل در ارتباط با سرور!"
+
+  }
+}
