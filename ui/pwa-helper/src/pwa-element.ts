@@ -4,15 +4,17 @@ import {
   css,
   AlwatrBaseElement,
   SignalMixin,
+  RouterMixin,
   type PropertyValues,
   type CSSResultGroup,
 } from '@alwatr/element';
 import {localeContextConsumer, setLocale} from '@alwatr/i18n';
-import {routeContextConsumer, routerOutlet, type RoutesConfig} from '@alwatr/router';
+import {routerOutlet, type RoutesConfig} from '@alwatr/router';
 import {commandTrigger} from '@alwatr/signal';
 import '@alwatr/ui-kit/snackbar/controller.js';
 import '@alwatr/ui-kit/style/pwa.css';
 import '@alwatr/ui-kit/style/token.css';
+import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 import './signal/back-click-event.js';
 import './signal/register-service-worker-command.js';
@@ -23,23 +25,32 @@ import './signal/sw-user-notify.js';
  *
  * Include: AlwatrPwaElement, root styles, router config, multi-page render
  */
-export class AlwatrPwaElement extends SignalMixin(AlwatrBaseElement) {
+export class AlwatrPwaElement extends RouterMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles: CSSResultGroup = css`
     :host {
-      contain: layout size style;
+      contain: size layout paint style;
+      box-sizing: border-box;
+      height: 100%;
       display: flex;
       flex-direction: column;
-      box-sizing: border-box;
+      flex-wrap: nowrap;
+      align-items: stretch;
       overflow: hidden;
       overflow: clip;
-      height: 100%;
     }
 
-    .page-container {
+    main {
+      contain: size layout paint style;
       flex-grow: 1;
-      contain: size layout style;
+      flex-shrink: 0;
+      overflow-y: auto;
     }
   `;
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    if (!localeContextConsumer.getValue()) {setLocale();}
+  }
 
   protected _routesConfig: RoutesConfig = {
     routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
@@ -49,27 +60,32 @@ export class AlwatrPwaElement extends SignalMixin(AlwatrBaseElement) {
     },
   };
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    if (localeContextConsumer.getValue() === undefined) {
-      setLocale();
-    }
-    this._signalListenerList.push(routeContextConsumer.subscribe(this._routeChanged.bind(this)));
-  }
-
-  protected _routeChanged(): void {
-    this._logger.logMethod('routeChanged');
-    this.requestUpdate();
-  }
-
   override render(): unknown {
     this._logger.logMethod('render');
-    return html`<div class="page-container">${cache(routerOutlet(this._routesConfig))}</div>`;
+    return [
+      this._topAppBarTemplate(),
+      this._mainTemplate(),
+      this._navigationBarTemplate(),
+    ];
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
-    this.removeAttribute('unresolved');
     commandTrigger.request('register_service_worker_command', {});
+    if (this.hasAttribute('unresolved')) {
+      this.removeAttribute('unresolved');
+    }
+  }
+
+  protected _topAppBarTemplate(): unknown {
+    return html`<alwatr-top-app-bar context-signal="top-app-bar-context"></alwatr-top-app-bar>`;
+  }
+
+  protected _mainTemplate(): unknown {
+    return html`<main>${cache(routerOutlet(this._routesConfig))}</main>`;
+  }
+
+  protected _navigationBarTemplate(): unknown {
+    return html`<footer>Navigation bar...</footer>`;
   }
 }
