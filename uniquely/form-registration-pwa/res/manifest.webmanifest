@@ -1,0 +1,32 @@
+{
+  "short_name": "همایش گامی‌به‌سوی‌آرامش",
+  "name": "همایش گامی‌به‌سوی‌آرامش",
+  "description": "سری همایش‌های گامی به سوی آرامش در زندگی همسران از نگاه دین. با سخنرانی آقای دکتر مومنی",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#d0c5b4",
+  "background_color": "#faf8ff",
+  "orientation": "portrait",
+  "default_locale": "fa",
+  "icons": [
+    {"src": "/image/icon-192-maskable.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable"},
+    {"src": "/image/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable"},
+    {"src": "/image/favicon.ico", "type": "image/x-icon", "sizes": "32x32"},
+    {"src": "/image/icon-192.png", "type": "image/png", "sizes": "192x192"},
+    {"src": "/image/icon-512.png", "type": "image/png", "sizes": "512x512"}
+  ],
+  "screenshots": [
+    {
+      "src": "/image/screenshot-1.png",
+      "sizes": "393x786",
+      "type": "image/png",
+      "label": "همایش گامی‌به‌سوی‌آرامش، صفحه اصلی، طرح روشن"
+    },
+    {
+      "src": "/image/screenshot-2.png",
+      "sizes": "393x786",
+      "type": "image/png",
+      "label": "همایش گامی‌به‌سوی‌آرامش، صفحه اصلی، طرح تیره"
+    }
+  ]
+}

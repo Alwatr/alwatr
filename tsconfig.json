@@ -46,6 +46,7 @@
     {"path": "./uniquely/soffit-pwa"},
     {"path": "./uniquely/com-api"},
     {"path": "./uniquely/com-pwa"},
+    {"path": "./uniquely/form-registration-pwa"},
 
     // labs
     {"path": "./labs/zx-example"}
