@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  contain: layout size style;
+  contain: size layout paint style;
   text-rendering: optimizeLegibility;
   font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
