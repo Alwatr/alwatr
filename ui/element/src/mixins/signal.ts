@@ -19,7 +19,6 @@ export function SignalMixin<T extends Constructor<LoggerMixinInterface>>(
         unsubscribe(listener);
       }
       this._signalListenerList.length = 0;
-      this._signalListenerList = [];
       super.disconnectedCallback();
     }
   }
