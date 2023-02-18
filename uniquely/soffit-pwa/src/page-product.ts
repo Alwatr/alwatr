@@ -10,12 +10,10 @@ import {
   mapIterable,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import {contextConsumer} from '@alwatr/signal';
 import '@alwatr/ui-kit/button/icon-button.js';
 import '@alwatr/ui-kit/card/image-box.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
-import {topAppBarContextProvider} from './context.js';
+import {productPageContentContextConsumer, topAppBarContextProvider} from './context.js';
 
 import type {ProductType, ProductPageContent} from './type.js';
 
@@ -52,7 +50,7 @@ export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
     super.connectedCallback();
 
     this._signalListenerList.push(
-        contextConsumer.subscribe<ProductPageContent>('product_page_content', (content) => {
+        productPageContentContextConsumer.subscribe((content) => {
           this.content = content;
           topAppBarContextProvider.setValue(content.topAppBar);
         }),

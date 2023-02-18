@@ -1,12 +1,10 @@
 import {localeContextConsumer, setLocale, l18eContextConsumer} from '@alwatr/i18n';
-import {eventListener} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
 import {logger} from './logger.js';
+import {languageButtonClickEventListener} from '../context.js';
 
-import type {ClickSignalType} from '@alwatr/type';
-
-eventListener.subscribe<ClickSignalType>('language-button-click-event', () => {
+languageButtonClickEventListener.subscribe(() => {
   logger.logMethod('changeLanguage');
   localeContextConsumer.getValue()?.language === 'en'
     ? setLocale({
