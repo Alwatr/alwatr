@@ -1,9 +1,7 @@
 import {customElement, css, html, LocalizeMixin, SignalMixin, AlwatrBaseElement} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
-import './app-footer';
 import {submitOrderCommandTrigger, topAppBarContextProvider} from './context.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';

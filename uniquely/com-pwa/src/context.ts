@@ -21,7 +21,6 @@ export const orderStorageContextProvider =
 export const orderStorageContextConsumer =
   requestableContextConsumer.bind<AlwatrDocumentStorage<Order>, null>(orderStorageContextProvider.id);
 
-
 export const userContextProvider = contextProvider.bind<User>('user-context');
 export const userContextConsumer = contextConsumer.bind<User>(userContextProvider.id);
 
