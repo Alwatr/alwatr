@@ -5,11 +5,10 @@ import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
-import {topAppBarContextProvider} from './context.js';
+import {submitOrderShippingCommandTrigger, topAppBarContextProvider} from './context.js';
 
-import type {StringifyableRecord} from '@alwatr/type';
 import type {OrderDelivery} from '@alwatr/type/customer-order-management.js';
-import type {RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
+import type {AlwatrFieldSet, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
@@ -101,19 +100,22 @@ export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(AlwatrBas
     });
   }
 
-  getFormData(): StringifyableRecord {
+  getFormData(): Partial<OrderDelivery> {
     this._logger.logMethod('getFormData');
-    const data: StringifyableRecord = {};
-    for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>('alwatr-text-field')) {
+    const data: Partial<OrderDelivery> = {};
+    for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField | AlwatrFieldSet>(
+        'alwatr-text-field,alwatr-radio-group',
+    )) {
       data[inputElement.name] = inputElement.value;
     }
     return {
       recipientName: data['recipient-name'],
+      recipientNationalCode: data['recipient-national-code'],
       address: data['address'],
       carType: data['car-type'],
       shipmentType: data['shipment-type'],
       timePeriod: data['shipment-type'],
-    };
+    } as Partial<OrderDelivery>;
   }
 
   reset(): void {
@@ -132,9 +134,7 @@ export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(AlwatrBas
   async submit(): Promise<void> {
     const formData = this.getFormData() as OrderDelivery;
     this._logger.logMethodArgs('submit', formData);
-    this.disabled = true;
-    // TODO: get order context and add delivery property to it.
-    this.disabled = false;
+    submitOrderShippingCommandTrigger.request(formData);
   }
 
   override render(): unknown {
