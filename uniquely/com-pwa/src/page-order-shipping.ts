@@ -4,15 +4,13 @@ import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
-import './app-footer.js';
+import {topAppBarContextProvider} from './context.js';
 
 import type {StringifyableRecord} from '@alwatr/type';
-import type {OrderDelivery} from '@alwatr/type/src/customer-order-management.js';
+import type {OrderDelivery} from '@alwatr/type/customer-order-management.js';
 import type {RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
-import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -29,46 +27,39 @@ export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(AlwatrBas
 
   get _carTypeRadioGroupOptions(): RadioGroupOptions {
     return {
-      title: message('order_form_car_type_title'),
+      title: message('order_shipping_car_type_title'),
       radioGroup: [
-        {label: message('order_form_trolley'), value: 'y'},
-        {label: message('order_form_trolley'), value: 'x'},
+        {label: message('order_shipping_trolley'), value: 'y'},
+        {label: message('order_shipping_trolley'), value: 'x'},
       ],
     };
   }
 
   get _shipmentTypeRadioGroupOptions(): RadioGroupOptions {
     return {
-      title: message('order_form_shipment_type_title'),
+      title: message('order_shipping_shipment_type_title'),
       radioGroup: [
-        {label: message('order_form_trolley'), value: 'y'},
-        {label: message('order_form_trolley'), value: 'x'},
+        {label: message('order_shipping_trolley'), value: 'y'},
+        {label: message('order_shipping_trolley'), value: 'x'},
       ],
     };
   }
 
   get _timePeriodRadioGroupOptions(): RadioGroupOptions {
     return {
-      title: message('order_form_time_period_title'),
+      title: message('order_shipping_time_period_title'),
       radioGroup: [
-        {label: message('order_form_time_period_1_2w'), value: '1-2w'},
-        {label: message('order_form_time_period_2_3w'), value: '2-3w'},
-        {label: message('order_form_time_period_3_4w'), value: '3-4w'},
+        {label: message('order_shipping_time_period_1_2w'), value: '1-2w'},
+        {label: message('order_shipping_time_period_2_3w'), value: '2-3w'},
+        {label: message('order_shipping_time_period_3_4w'), value: '3-4w'},
       ],
     };
   }
 
   static override styles = css`
     :host {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    main {
       display: block;
       padding: calc(2 * var(--sys-spacing-track));
-      flex-grow: 1;
       overflow-y: auto;
     }
 
@@ -98,6 +89,17 @@ export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(AlwatrBas
 
   @property({type: Boolean, reflect: true})
     disabled = false;
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    topAppBarContextProvider.setValue({
+      type: 'medium',
+      headline: message('page_order_shipping_headline'),
+      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+      tinted: 2,
+    });
+  }
 
   getFormData(): StringifyableRecord {
     this._logger.logMethod('getFormData');
@@ -137,53 +139,41 @@ export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(AlwatrBas
 
   override render(): unknown {
     this._logger.logMethod('render');
-
-    const topAppBar: TopAppBarContent = {
-      type: 'medium',
-      headline: message('page_order_form_headline'),
-      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
-      tinted: 2,
-    };
-
     return html`
-      <alwatr-top-app-bar .content=${topAppBar}></alwatr-top-app-bar>
-      <main>
-        <alwatr-surface class="form" elevated>
-          <alwatr-text-field
-            name="recipient-name"
-            type="string"
-            outlined
-            active-outline
-            stated
-            placeholder=${message('order_form_recipient_name')}
-          ></alwatr-text-field>
-          <alwatr-text-field
-            name="recipient-national-code"
-            type="number"
-            outlined
-            active-outline
-            stated
-            placeholder=${message('order_form_recipient_national_code')}
-          ></alwatr-text-field>
-          <alwatr-text-field
-            name="address"
-            type="text"
-            outlined
-            active-outline
-            stated
-            placeholder=${message('order_form_address')}
-          ></alwatr-text-field>
-          <alwatr-radio-group name="car-type" .options=${this._carTypeRadioGroupOptions}></alwatr-radio-group>
-          <alwatr-radio-group name="shipment-type" .options=${this._shipmentTypeRadioGroupOptions}></alwatr-radio-group>
-          <alwatr-radio-group name="time-period" .options=${this._timePeriodRadioGroupOptions}></alwatr-radio-group>
+      <alwatr-surface class="form" elevated>
+        <alwatr-text-field
+          name="recipient-name"
+          type="string"
+          outlined
+          active-outline
+          stated
+          placeholder=${message('order_shipping_recipient_name')}
+        ></alwatr-text-field>
+        <alwatr-text-field
+          name="recipient-national-code"
+          type="number"
+          outlined
+          active-outline
+          stated
+          placeholder=${message('order_shipping_recipient_national_code')}
+        ></alwatr-text-field>
+        <alwatr-text-field
+          name="address"
+          type="text"
+          outlined
+          active-outline
+          stated
+          placeholder=${message('order_shipping_address')}
+        ></alwatr-text-field>
+        <alwatr-radio-group name="car-type" .options=${this._carTypeRadioGroupOptions}></alwatr-radio-group>
+        <alwatr-radio-group name="shipment-type" .options=${this._shipmentTypeRadioGroupOptions}></alwatr-radio-group>
+        <alwatr-radio-group name="time-period" .options=${this._timePeriodRadioGroupOptions}></alwatr-radio-group>
 
-          <div class="button-container">
-            <alwatr-button outlined @click=${this.submit}>${message('order_form_submit_form')}</alwatr-button>
-            <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
-          </div>
-        </alwatr-surface>
-      </main>
-      <alwatr-app-footer></alwatr-app-footer>
+        <div class="button-container">
+          <alwatr-button outlined @click=${this.submit}>${message('order_shipping_submit_form')}</alwatr-button>
+          <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
+        </div>
+      </alwatr-surface>
     `;
   }
 }

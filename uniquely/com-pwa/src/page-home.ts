@@ -12,9 +12,7 @@ import {
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
-import './app-footer';
 import {homePageContentContextConsumer, topAppBarContextProvider} from './context.js';
 
 import type {BoxType, PageHomeContent} from './type.js';

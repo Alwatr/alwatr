@@ -13,9 +13,7 @@ import {
 import {message} from '@alwatr/i18n';
 import {contextConsumer, type ListenerSpec} from '@alwatr/signal';
 import '@alwatr/ui-kit/card/product-card.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
-import './app-footer';
 import {config} from './config.js';
 import {productStorageContextConsumer, topAppBarContextProvider} from './context.js';
 

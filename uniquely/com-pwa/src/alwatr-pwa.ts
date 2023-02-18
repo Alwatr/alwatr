@@ -5,6 +5,7 @@ import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-85.css';
 
+import './app-footer.js';
 import './director/index.js';
 
 import type {RoutesConfig} from '@alwatr/router';
