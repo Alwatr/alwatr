@@ -11,3 +11,12 @@ export interface PageHomeContent extends StringifyableRecord {
   topAppBar: TopAppBarContent;
   boxList: Array<BoxType>;
 }
+
+export const orderDeliverySchema = {
+  recipientName: String,
+  recipientNationalCode: String,
+  address: String,
+  carType: String,
+  shipmentType: String,
+  timePeriod: String,
+};
