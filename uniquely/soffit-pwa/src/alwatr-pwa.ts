@@ -5,6 +5,8 @@ import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 
+
+import './app-footer.js';
 import './director/index.js';
 
 import type {RoutesConfig} from '@alwatr/router';
@@ -34,4 +36,9 @@ class AlwatrPwa extends AlwatrPwaElement {
       _404: (routeContext) => this._routesConfig.templates.home(routeContext),
     },
   };
+
+
+  protected override _navigationBarTemplate(): unknown {
+    return html`<alwatr-app-footer></alwatr-app-footer>`;
+  }
 }
