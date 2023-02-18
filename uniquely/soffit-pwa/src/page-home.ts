@@ -10,11 +10,9 @@ import {
   mapIterable,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import {contextConsumer} from '@alwatr/signal';
 import '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
-import {topAppBarContextProvider} from './context.js';
+import {homePageContentContextConsumer, topAppBarContextProvider} from './context.js';
 import './lottery-box.js';
 import './supply-chain-box.js';
 
@@ -68,7 +66,7 @@ export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
     super.connectedCallback();
 
     this._signalListenerList.push(
-        contextConsumer.subscribe<PageHomeContent>('home_page_content', (content) => {
+        homePageContentContextConsumer.subscribe((content) => {
           this.content = content;
           topAppBarContextProvider.setValue(content.topAppBar);
         }),
@@ -81,7 +79,7 @@ export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
   }
 
   protected* _menuTemplate(): unknown {
-    yield html`<img class="logo" src="image/soffit.svg" alt="SOFFIT Logo" />`;
+    yield html`<img class="logo" src="image/soffit.svg" alt="Soffit Company Logo" />`;
     if (this.content == null) return nothing;
     yield this._boxTemplate(this.content.about);
     yield mapIterable(this, this.content.productList, this._boxTemplate, message('loading'));

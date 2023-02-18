@@ -1,11 +1,11 @@
 import {customElement, css, html, property, LocalizeMixin, SignalMixin, AlwatrBaseElement} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import {commandTrigger} from '@alwatr/signal';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
-import type {FormData} from './type.js';
+import {submitFormCommandTrigger} from './context.js';
+
 import type {RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
@@ -77,7 +77,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
 
     this.disabled = true;
 
-    const response = await commandTrigger.requestWithResponse<FormData, boolean>('submit-form-command', {
+    const response = await submitFormCommandTrigger.requestWithResponse({
       formId: (this.constructor as typeof AlwatrLotteryForm).formId,
       data: bodyJson,
     });
