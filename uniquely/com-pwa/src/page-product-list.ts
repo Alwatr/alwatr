@@ -36,13 +36,7 @@ declare global {
 export class AlwatrPageProductList extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    main {
-      flex-grow: 1;
+      box-sizing: border-box;
       display: flex;
       flex-wrap: wrap;
       padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
@@ -50,7 +44,7 @@ export class AlwatrPageProductList extends LocalizeMixin(SignalMixin(AlwatrBaseE
       overflow-y: scroll;
     }
 
-    main > * {
+    alwatr-product-card {
       width: 40%;
       flex-grow: 1;
     }
