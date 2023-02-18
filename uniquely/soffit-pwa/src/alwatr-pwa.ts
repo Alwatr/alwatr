@@ -5,7 +5,6 @@ import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 
-
 import './app-footer.js';
 import './director/index.js';
 
@@ -29,11 +28,14 @@ class AlwatrPwa extends AlwatrPwaElement {
         import('./page-home.js');
         return html`<alwatr-page-home>...</alwatr-page-home>`;
       },
+      _404: () => {
+        import('./page-404.js');
+        return html`<alwatr-page-404>...</alwatr-page-404>`;
+      },
       product: () => {
         import('./page-product.js');
         return html`<alwatr-page-product>...</alwatr-page-product>`;
       },
-      _404: (routeContext) => this._routesConfig.templates.home(routeContext),
     },
   };
 
