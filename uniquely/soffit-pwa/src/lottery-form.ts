@@ -9,7 +9,6 @@ import type {FormData} from './type.js';
 import type {RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
-
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-lottery-form': AlwatrLotteryForm;
