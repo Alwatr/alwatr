@@ -15,13 +15,14 @@ commandHandler.define<Partial<Order>, Order | null>(submitOrderCommandTrigger.id
 
   try {
     const response = await serviceRequest<Order>({
+      ...config.fetchContextOptions,
       method: 'PUT',
       url: config.api + '/order/',
       queryParameters: {
         userId: userContext.id,
       },
-      token: config.token,
       bodyJson: order,
+      retry: 3,
     });
 
     const newOrder = response.data;

@@ -17,14 +17,11 @@ orderStorageContextProvider.setProvider(async (args): Promise<void> => {
 
   try {
     await fetchContext('order-storage-context', {
-      method: 'GET',
+      ...config.fetchContextOptions,
       url: config.api + '/order-list/',
       queryParameters: {
         userId: userContext.id,
       },
-      token: config.token,
-      retry: 10,
-      retryDelay: 3_000,
     });
   }
   catch (err) {
@@ -42,4 +39,4 @@ orderStorageContextProvider.setProvider(async (args): Promise<void> => {
   }
 });
 
-orderStorageContextConsumer.request(null);
+orderStorageContextConsumer.request(null, {debounce: 'Timeout'});
