@@ -32,15 +32,9 @@ class AlwatrPwa extends AlwatrPwaElement {
         import('./page-404.js');
         return html`<alwatr-page-404>...</alwatr-page-404>`;
       },
-      'orders': () => {
-        import('./page-order-list.js');
-        return html`<alwatr-page-order-list></alwatr-page-order-list>`;
-      },
-      'products': (routeContext) => {
-        import('./page-product-list.js');
-        return html`<alwatr-page-product-list
-          .storageName=${routeContext.sectionList[1]?.toString()}
-        ></alwatr-page-product-list>`;
+      'order': () => {
+        import('./page-order/page-order.js');
+        return html`<alwatr-page-order></alwatr-page-order>`;
       },
     },
   };

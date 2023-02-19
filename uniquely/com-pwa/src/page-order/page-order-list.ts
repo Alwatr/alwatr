@@ -11,7 +11,7 @@ import {
 import {message, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import {orderStorageContextConsumer, topAppBarContextProvider} from './context.js';
+import {orderStorageContextConsumer, topAppBarContextProvider} from '../context.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order} from '@alwatr/type/customer-order-management.js';
@@ -24,7 +24,7 @@ declare global {
 }
 
 /**
- * Alwatr Customer Order Management Order List Page
+ * List of all orders
  */
 @customElement('alwatr-page-order-list')
 export class AlwatrPageOrderList extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
@@ -74,7 +74,7 @@ export class AlwatrPageOrderList extends LocalizeMixin(SignalMixin(AlwatrBaseEle
       flipRtl: true,
       headline: message('order_item_headline').replace('${orderId}', replaceNumber(order.id.padStart(2, '0'))),
       description: message('order_item_status') + ': ' + message('order_status_' + order.status),
-      href: '/order/' + order.id,
+      href: `/order/${order.id}/tracking`,
     };
     return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
   }

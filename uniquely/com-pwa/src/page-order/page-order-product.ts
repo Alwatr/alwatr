@@ -14,8 +14,8 @@ import {message} from '@alwatr/i18n';
 import {contextConsumer, type ListenerSpec} from '@alwatr/signal';
 import '@alwatr/ui-kit/card/product-card.js';
 
-import {config} from './config.js';
-import {productStorageContextConsumer, topAppBarContextProvider} from './context.js';
+import {config} from '../config.js';
+import {productStorageContextConsumer, topAppBarContextProvider} from '../context.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Product, ProductPrice} from '@alwatr/type/customer-order-management.js';
@@ -23,15 +23,15 @@ import type {ProductCartContent} from '@alwatr/ui-kit/card/product-card.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-page-product-list': AlwatrPageProductList;
+    'alwatr-page-product-list': AlwatrPageOrderProduct;
   }
 }
 
 /**
  * Soffit Product Page
  */
-@customElement('alwatr-page-product-list')
-export class AlwatrPageProductList extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
+@customElement('alwatr-page-order-product')
+export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       box-sizing: border-box;
@@ -39,7 +39,8 @@ export class AlwatrPageProductList extends LocalizeMixin(SignalMixin(AlwatrBaseE
       flex-wrap: wrap;
       padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
       gap: var(--sys-spacing-track);
-      overflow-y: scroll;
+      box-sizing: border-box;
+      min-height: 100%;
     }
 
     alwatr-product-card {
@@ -49,7 +50,7 @@ export class AlwatrPageProductList extends LocalizeMixin(SignalMixin(AlwatrBaseE
   `;
 
   @property()
-    storageName?: string;
+    storageName?: string = 'tile';
 
   @state()
   protected _productStorage?: AlwatrDocumentStorage<Product> | null;

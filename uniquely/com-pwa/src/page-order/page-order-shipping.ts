@@ -5,7 +5,7 @@ import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
-import {submitOrderShippingCommandTrigger, topAppBarContextProvider} from './context.js';
+import {submitOrderShippingCommandTrigger, topAppBarContextProvider} from '../context.js';
 
 import type {OrderDelivery} from '@alwatr/type/customer-order-management.js';
 import type {AlwatrFieldSet, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
@@ -59,7 +59,8 @@ export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(AlwatrBas
     :host {
       display: block;
       padding: calc(2 * var(--sys-spacing-track));
-      overflow-y: auto;
+      box-sizing: border-box;
+      min-height: 100%;
     }
 
     .form {
