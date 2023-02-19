@@ -1,4 +1,4 @@
-import {fetchContext, type FetchOptions} from '@alwatr/fetch';
+import {fetchContext} from '@alwatr/fetch';
 import {l18eReadyPromise, message} from '@alwatr/i18n';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
@@ -8,14 +8,6 @@ import {config} from '../config.js';
 const provideProductStorageContext = async (): Promise<void> => {
   logger.logMethod('provideProductStorageContext');
 
-  const fetchOption: Partial<FetchOptions> = {
-    method: 'GET',
-    token: config.token,
-    removeDuplicate: 'auto',
-    retry: 10,
-    retryDelay: 3_000,
-  };
-
   try {
     const fetchPromiseList = [];
 
@@ -23,7 +15,7 @@ const provideProductStorageContext = async (): Promise<void> => {
       fetchPromiseList.push(fetchContext(
           `product-storage-${productStorageName}-context`,
           {
-            ...fetchOption,
+            ...config.fetchContextOptions,
             url: config.api + '/product-list/',
             queryParameters: {
               storage: productStorageName,
@@ -33,7 +25,7 @@ const provideProductStorageContext = async (): Promise<void> => {
       fetchPromiseList.push(fetchContext(
           `price-list-storage-${productStorageName}-context`,
           {
-            ...fetchOption,
+            ...config.fetchContextOptions,
             url: config.api + '/price-list/',
             queryParameters: {
               name: config.priceListName.replace('${productStorage}', productStorageName),
@@ -43,7 +35,7 @@ const provideProductStorageContext = async (): Promise<void> => {
       fetchPromiseList.push(fetchContext(
           `final-price-list-storage-${productStorageName}-context`,
           {
-            ...fetchOption,
+            ...config.fetchContextOptions,
             url: config.api + '/price-list/',
             queryParameters: {
               name: config.finalPriceListName.replace('${productStorage}', productStorageName),
