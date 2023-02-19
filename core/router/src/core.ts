@@ -123,9 +123,19 @@ export const url = (route: Partial<RouteContextBase>): string => {
  * })
  * ```
  */
-export const redirect = (route: string | RouteContextBase | undefined, pushState: PushState = true): void => {
+export const redirect = (
+    route: string | Partial<RouteContextBase> | undefined,
+    pushState: PushState = true,
+    keepSectionSlice = 0,
+): void => {
   if (route == null) return;
   logger.logMethodArgs('redirect', route);
+  if (keepSectionSlice > 0 && typeof route === 'object' && Array.isArray(route.sectionList)) {
+    const routeContext = routeContextConsumer.getValue();
+    if (routeContext != null) {
+      route.sectionList = [...routeContext.sectionList.slice(0, keepSectionSlice), ...route.sectionList];
+    }
+  }
   const href = typeof route === 'string' ? route : url(route);
   updateBrowserHistory(href, pushState);
   routeContextProvider.setValue(makeRouteContext(), {debounce: 'Timeout'});
