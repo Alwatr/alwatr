@@ -102,7 +102,7 @@ l18eContextConsumer.subscribe(
  * Example:
  *
  * ```ts
- * setLocale('fa');
+ * setLocale();
  * ```
  */
 export const setLocale = (locale?: LocaleContext): void => {
@@ -118,7 +118,7 @@ export const setLocale = (locale?: LocaleContext): void => {
 
   logger.logMethodArgs('setLocale', locale);
   if (activeLocaleContext?.code !== locale.code) {
-    localeContextProvider.setValue(locale);
+    localeContextProvider.setValue(locale, {debounce: 'No'});
   }
 };
 
@@ -158,17 +158,19 @@ export const setL18eLoader = (l18eLoader: (locale: LocaleContext) => MaybePromis
       return;
     }
 
-    activeL18eContext = null;
-    l18eContextProvider.expire();
+    if (l18eContextProvider.getValue()) {
+      l18eContextProvider.expire();
+      activeL18eContext = null;
+    }
 
     try {
       const l18e = await l18eLoader(locale);
-      l18eContextProvider.setValue(l18e);
+      l18eContextProvider.setValue(l18e, {debounce: 'No'});
     }
     catch (err) {
       logger.error('l18eLoader', 'loader_function_error', err);
     }
-  });
+  }, {receivePrevious: 'NextCycle'});
 };
 
 /**
