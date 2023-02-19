@@ -103,6 +103,11 @@ export interface Order extends AlwatrDocumentObject {
   remoteAddress: string;
 }
 
+export interface OrderDraft extends Partial<Order> {
+  id: 'new';
+  status: 'draft';
+}
+
 // -- child types --
 
 export interface OrderItem extends StringifyableRecord {
@@ -128,3 +133,14 @@ export interface OrderDelivery extends StringifyableRecord {
   carType: (typeof carTypeCS)[number];
   timePeriod: (typeof timePeriodCS)[number];
 }
+
+// -- Schema --
+
+export const orderDeliverySchema = {
+  recipientName: String,
+  recipientNationalCode: String,
+  address: String,
+  carType: String,
+  shipmentType: String,
+  timePeriod: String,
+};
