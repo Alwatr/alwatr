@@ -9,7 +9,3 @@ export type JsonSchema = {
     | boolean
     | null;
 };
-
-export type ValidType = {
-  [key: string]: ValidType | string | number | boolean | null;
-};
