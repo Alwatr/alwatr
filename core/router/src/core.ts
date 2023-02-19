@@ -56,7 +56,11 @@ export const routerOutlet = (routesConfig: RoutesConfig): unknown => {
   }
 
   const routeId = routesConfig.routeId(routeContext) ?? '';
-  const render = routesConfig.templates[routeId];
+  let render = routesConfig.templates[routeId];
+
+  while (typeof render === 'string') {
+    render = routesConfig.templates[render];
+  }
 
   try {
     if (typeof render === 'function') {
