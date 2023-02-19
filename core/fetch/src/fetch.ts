@@ -54,6 +54,12 @@ export async function fetchContext(
     }
   }
 
+  if (navigator.onLine === false) {
+    logger.logOther('fetchContext:', 'offline');
+    // retry on online
+    return;
+  }
+
   try {
     fetchOption.cacheStrategy = 'update_cache';
     const response = await serviceRequest(fetchOption);
