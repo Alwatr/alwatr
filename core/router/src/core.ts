@@ -67,7 +67,7 @@ export const routerOutlet = (routesConfig: RoutesConfig): unknown => {
       return render(routeContext);
     }
     // else
-    if (routeContext.pathname === '/' && routeId === '') {
+    if (routeId === '') {
       return routesConfig.templates.home(routeContext);
     }
     // else
