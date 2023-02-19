@@ -4,7 +4,6 @@ import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
 import {AlwatrLotteryForm} from './lottery-form.js';
-import './tech-dep/radio-group.js';
 
 declare global {
   interface HTMLElementTagNameMap {
