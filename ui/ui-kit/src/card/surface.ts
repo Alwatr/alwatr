@@ -56,7 +56,7 @@ export class AlwatrSurface extends AlwatrBaseElement {
       border-radius: var(--sys-radius-medium);
       overflow: hidden;
       overflow: clip;
-      transition-property: opacity, background-color, color;
+      transition-property: opacity, background-color, color, border-radius, border-color, outline-color;
       transition-duration: var(--sys-motion-duration-small);
       transition-timing-function: var(--sys-motion-easing-normal);
       -webkit-tap-highlight-color: transparent;
