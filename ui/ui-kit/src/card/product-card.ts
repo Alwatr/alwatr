@@ -24,6 +24,7 @@ declare global {
 }
 
 export interface ProductCartContent extends StringifyableRecord {
+  id?: string;
   title: string;
   imagePath: string;
   price?: number;
