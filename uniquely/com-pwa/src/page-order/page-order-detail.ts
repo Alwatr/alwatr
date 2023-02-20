@@ -1,4 +1,4 @@
-import {customElement, css, html, LocalizeMixin, AlwatrBaseElement, SignalMixin} from '@alwatr/element';
+import {customElement, css, html, LocalizeMixin, AlwatrBaseElement, SignalMixin, property} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
@@ -6,6 +6,8 @@ import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
 import {topAppBarContextProvider} from '../context.js';
+
+import type {Order, OrderDraft} from '@alwatr/type/customer-order-management.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -29,6 +31,9 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
     }
   `;
 
+  @property({attribute: false})
+    order?: Order | OrderDraft | null;
+
   override connectedCallback(): void {
     super.connectedCallback();
 
@@ -42,8 +47,6 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
   override render(): unknown {
     this._logger.logMethod('render');
-    return html`
-      order tracking
-    `;
+    return html`${JSON.stringify(this.order)}`;
   }
 }

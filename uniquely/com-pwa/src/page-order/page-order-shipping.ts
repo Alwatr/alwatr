@@ -7,7 +7,7 @@ import '@alwatr/ui-kit/text-field/text-field.js';
 
 import {submitOrderShippingCommandTrigger, topAppBarContextProvider} from '../context.js';
 
-import type {OrderDelivery} from '@alwatr/type/customer-order-management.js';
+import type {OrderDelivery, OrderDraft} from '@alwatr/type/customer-order-management.js';
 import type {AlwatrFieldSet, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
@@ -89,6 +89,9 @@ export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(AlwatrBas
 
   @property({type: Boolean, reflect: true})
     disabled = false;
+
+  @property({attribute: false})
+    order?: OrderDraft | null;
 
   override connectedCallback(): void {
     super.connectedCallback();
