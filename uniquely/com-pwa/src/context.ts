@@ -21,11 +21,8 @@ export const orderStorageContextProvider =
 export const orderStorageContextConsumer =
   requestableContextConsumer.bind<AlwatrDocumentStorage<Order>, null>(orderStorageContextProvider.id);
 
-export const currentOrderContextProvider = contextProvider.bind<Partial<Order>>('current-order-context');
-
 export const userContextProvider = contextProvider.bind<User>('user-context');
 export const userContextConsumer = contextConsumer.bind<User>(userContextProvider.id);
-
 
 export const homePageContentContextProvider =
   contextProvider.bind<PageHomeContent>('home-page-content-context');
