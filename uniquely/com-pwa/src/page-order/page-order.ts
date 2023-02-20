@@ -4,7 +4,6 @@ import {
   html,
   state,
   LocalizeMixin,
-  RouterMixin,
   SignalMixin,
   AlwatrBaseElement,
   property,
@@ -30,7 +29,7 @@ declare global {
  * Alwatr Customer Order Management Order List Page
  */
 @customElement('alwatr-page-order')
-export class AlwatrPageOrder extends LocalizeMixin(RouterMixin(SignalMixin(AlwatrBaseElement))) {
+export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       display: block;
@@ -42,10 +41,8 @@ export class AlwatrPageOrder extends LocalizeMixin(RouterMixin(SignalMixin(Alwat
   @property({type: Number, attribute: 'route-slice'})
     routeSlice = 1;
 
-  get _newOrder(): OrderDraft {
-    // TODO: handle last uncompleted order from localStorage
-    return {id: 'new', status: 'draft'};
-  }
+  @property({attribute: false})
+    routeContext?: RouteContext;
 
   @state()
     orderId?: string | null;
@@ -53,20 +50,21 @@ export class AlwatrPageOrder extends LocalizeMixin(RouterMixin(SignalMixin(Alwat
   @state()
     order?: Order | OrderDraft | null;
 
-  protected override async _routeContextUpdated(routeContext: RouteContext): Promise<void> {
-    super._routeContextUpdated(routeContext);
-    const orderId = routeContext.sectionList[1]?.toString();
-    if (orderId != null) {
-      this.orderId = orderId;
-    }
-    else {
-      redirect({sectionList: ['list']}, 'replace', this.routeSlice);
-    }
+  get _newOrder(): OrderDraft {
+    // TODO: handle last uncompleted order from localStorage
+    return {id: 'new', status: 'draft'};
   }
 
   protected override update(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('orderId')) {
-      this._orderIdUpdated();
+    if (changedProperties.has('routeContext') && this.routeContext != null) {
+      const orderId = this.routeContext.sectionList[1]?.toString();
+      if (orderId != null) {
+        this.orderId = orderId;
+        this._orderIdUpdated();
+      }
+      else {
+        redirect({sectionList: ['list']}, 'replace', this.routeSlice);
+      }
     }
     super.update(changedProperties);
   }
