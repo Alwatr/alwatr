@@ -153,8 +153,8 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement
          * `/order/new/edit`
          */
 
-        if (this.orderId && this.order?.status === 'draft' && this.order.itemList?.length) {
-          redirect({sectionList: [this.orderId, 'product']}, 'replace', this.routeSlice);
+        if (this.orderId && this.order?.status === 'draft' && !this.order.itemList?.length) {
+          redirect({sectionList: [this.orderId, 'product']}, true, this.routeSlice);
           return nothing;
         }
 
