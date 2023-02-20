@@ -34,7 +34,7 @@ export const homePageContent: PageHomeContent = {
       icon: 'cart-outline',
       flipRtl: true,
       headline: 'سفارش جدید',
-      href: '/products/tile',
+      href: '/order/new/edit',
       description: 'فرآیند ثبت سفارش جدید.',
     },
     {
@@ -43,7 +43,7 @@ export const homePageContent: PageHomeContent = {
       icon: 'list-outline',
       flipRtl: true,
       headline: 'سفارشات جاری',
-      href: '/orders',
+      href: '/order/list',
       description: 'مشاهده وضعیت و پیگیری سفارشات جاری.',
     },
 
