@@ -8,7 +8,7 @@ import {
   state,
   mapObject,
   property,
-  PropertyDeclaration,
+  type PropertyValues,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {contextConsumer, type ListenerSpec} from '@alwatr/signal';
@@ -18,8 +18,8 @@ import {config} from '../config.js';
 import {productStorageContextConsumer, topAppBarContextProvider} from '../context.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
-import type {Product, ProductPrice} from '@alwatr/type/customer-order-management.js';
-import type {ProductCartContent} from '@alwatr/ui-kit/card/product-card.js';
+import type {OrderDraft, Product, ProductPrice} from '@alwatr/type/customer-order-management.js';
+import type {AlwatrProductCard, ProductCartContent} from '@alwatr/ui-kit/card/product-card.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -52,12 +52,17 @@ export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBase
   @property()
     storageName?: string = 'tile';
 
+  @property({attribute: false})
+    order?: OrderDraft | null;
+
   @state()
   protected _productStorage?: AlwatrDocumentStorage<Product> | null;
   @state()
   protected _priceList?: AlwatrDocumentStorage<ProductPrice>;
   @state()
   protected _finalPriceList?: AlwatrDocumentStorage<ProductPrice>;
+
+  selectedRecord?: Record<string, true>;
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -75,11 +80,11 @@ export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBase
     });
   }
 
-  override requestUpdate(name?: PropertyKey | undefined, oldValue?: unknown, options?: PropertyDeclaration): void {
-    if (name === 'storageName') {
+  override update(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('storageName') && this.storageName != null) {
       this._storageNameUpdated();
     }
-    super.requestUpdate(name, oldValue, options);
+    super.update(changedProperties);
   }
 
   private __storageListenerList?: Array<ListenerSpec>;
@@ -107,18 +112,21 @@ export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBase
           (productStorage) => {
             this._productStorage = productStorage;
           },
+          {receivePrevious: 'NextCycle'},
       ),
       contextConsumer.subscribe<AlwatrDocumentStorage<ProductPrice>>(
           `price-list-storage-${storageName}-context`,
           (priceList) => {
             this._priceList = priceList;
           },
+          {receivePrevious: 'NextCycle'},
       ),
       contextConsumer.subscribe<AlwatrDocumentStorage<ProductPrice>>(
           `final-price-list-storage-${storageName}-context`,
           (finalPriceList) => {
             this._finalPriceList = finalPriceList;
           },
+          {receivePrevious: 'NextCycle'},
       ),
     ];
   }
@@ -126,21 +134,54 @@ export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBase
   override render(): unknown {
     this._logger.logMethod('render');
 
-    if (this._productStorage == null || this._priceList == null || this._finalPriceList == null) {
+    if (this._productStorage == null || this._priceList == null || this._finalPriceList == null || this.order == null) {
       return message(this._productStorage === null ? 'product_not_found' : 'loading');
     }
-    else {
-      return mapObject(this, this._productStorage?.data, this._productItemTemplate);
+    // else
+
+    this.selectedRecord = {};
+    if (this.order.itemList?.length) {
+      for (const item of this.order.itemList) {
+        this.selectedRecord[item.productId] = true;
+      }
     }
+
+    return mapObject(this, this._productStorage?.data, this._productItemTemplate);
   }
 
   protected _productItemTemplate(product: Product): unknown {
     const content: ProductCartContent = {
+      id: product.id,
       title: product.title.fa,
       imagePath: config.cdn + product.image.id,
       price: this._priceList?.data[product.id].price,
       finalPrice: this._finalPriceList?.data[product.id].price,
     };
-    return html`<alwatr-product-card .content=${content}></alwatr-product-card>`;
+    return html`<alwatr-product-card
+      .content=${content}
+      .selected=${this.selectedRecord?.[product.id] !== undefined}
+      @selected-change=${this._selectedChanged}
+    ></alwatr-product-card>`;
+  }
+
+  protected _selectedChanged(event: CustomEvent): void {
+    const target = <AlwatrProductCard | null>event.target;
+    const productId = target?.content?.id;
+    this._logger.logMethodArgs('_selectedChanged', {productId});
+    if (
+      this.order != null &&
+      this._priceList != null &&
+      this._finalPriceList != null &&
+      productId != null &&
+      this.selectedRecord?.[productId] !== true
+    ) {
+      this.order.itemList ??= [];
+      this.order.itemList.push({
+        productId,
+        qty: 1,
+        price: this._priceList.data[productId].price,
+        finalPrice: this._finalPriceList.data[productId].price,
+      });
+    }
   }
 }
