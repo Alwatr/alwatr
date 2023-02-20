@@ -48,9 +48,9 @@ export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(AlwatrBas
     return {
       title: message('order_shipping_time_period_title'),
       radioGroup: [
-        {label: message('order_shipping_time_period_1_2w'), value: '1-2w'},
-        {label: message('order_shipping_time_period_2_3w'), value: '2-3w'},
-        {label: message('order_shipping_time_period_3_4w'), value: '3-4w'},
+        {label: message('time_period_1_2w'), value: '1-2w'},
+        {label: message('time_period_2_3w'), value: '2-3w'},
+        {label: message('time_period_3_4w'), value: '3-4w'},
       ],
     };
   }
