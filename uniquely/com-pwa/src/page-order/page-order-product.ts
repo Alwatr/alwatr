@@ -75,7 +75,7 @@ export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBase
     topAppBarContextProvider.setValue({
       type: 'small',
       headline: message('page_product_list_headline'),
-      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+      startIcon: {icon: 'checkmark-done', flipRtl: true, clickSignalId: 'back-click-event'},
       tinted: 2,
     });
   }
