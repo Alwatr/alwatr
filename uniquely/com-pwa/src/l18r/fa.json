@@ -39,9 +39,9 @@
     "order_shipping_car_type_title": "نوع ماشین",
     "order_shipping_shipment_type_title": "نوع حمل‌ و‌ نقل",
     "order_shipping_time_period_title": "بازه زمانی",
-    "order_shipping_time_period_1_2w": "یک تا دو هفته",
-    "order_shipping_time_period_2_3w": "دو تا سه هفته",
-    "order_shipping_time_period_3_4w": "سه تا چهار هفته",
+    "time_period_1_2w": "یک تا دو هفته",
+    "time_period_2_3w": "دو تا سه هفته",
+    "time_period_3_4w": "سه تا چهار هفته",
     "order_shipping_invalid": "اطلاعات فرم صحیح نمی‌باشد!",
     "order_shipping_submit_success": "سفارش با موفقیت ثبت شد.",
 
