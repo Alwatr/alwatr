@@ -7,7 +7,7 @@ import {
   SignalMixin,
   property,
   PropertyValues,
-  nothing,
+  mapIterable,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
@@ -73,7 +73,7 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
   override render(): unknown {
     this._logger.logMethod('render');
     return html`
-      ${this.order?.itemList?.map((item) => this._itemDetailTemplate(item)) ?? nothing}
+      ${mapIterable(this, this.order?.itemList, this._itemDetailTemplate, message('loading'))}
       <button @click=${this._addNewItem}>Add new product</button>
     `;
   }
