@@ -2,8 +2,14 @@ import {bot} from './bot.js';
 import {logger} from '../config.js';
 import {storage} from '../lib/storage.js';
 
+const escapeCharacter = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
+
 export async function sendMessage(to: string, message: string): Promise<void> {
   logger.logMethodArgs('sendMessage', {to, message});
+
+  for (const character of escapeCharacter) {
+    message.replaceAll(character, `\\${character}`);
+  }
 
   const target = storage.get(to);
   if (target === null) {
