@@ -31,7 +31,6 @@ export class AlwatrButton extends AlwatrSurface {
         letter-spacing: var(--sys-typescale-label-large-letter-spacing);
         line-height: var(--sys-typescale-label-large-line-height);
         line-height: calc(5 * var(--sys-spacing-track));
-        box-shadow: none;
         border-radius: var(--sys-radius-xlarge);
         white-space: nowrap;
         user-select: none;
