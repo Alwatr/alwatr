@@ -45,6 +45,11 @@
     "order_shipping_invalid": "اطلاعات فرم صحیح نمی‌باشد!",
     "order_shipping_submit_success": "سفارش با موفقیت ثبت شد.",
 
+    "order_detail_product_id": "کد محصول",
+    "order_detail_qty": "تعداد",
+    "order_detail_price": "قیمت",
+    "order_detail_final_price": "قیمت نهایی",
+
     "cancel": "لغو",
 
     "submit_order_success": "سفارش شما با موفقیت ثبت شد.",
