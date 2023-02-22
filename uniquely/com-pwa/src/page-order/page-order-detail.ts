@@ -7,6 +7,7 @@ import {
   SignalMixin,
   property,
   PropertyValues,
+  nothing,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
@@ -16,7 +17,7 @@ import '@alwatr/ui-kit/text-field/text-field.js';
 
 import {topAppBarContextProvider} from '../context.js';
 
-import type {Order, OrderDraft} from '@alwatr/type/customer-order-management.js';
+import type {Order, OrderDraft, OrderItem} from '@alwatr/type/customer-order-management.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -37,6 +38,17 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
       padding: calc(2 * var(--sys-spacing-track));
       box-sizing: border-box;
       min-height: 100%;
+    }
+
+    alwatr-surface {
+      margin-bottom: var(--sys-spacing-track);
+    }
+
+    alwatr-surface > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
     }
   `;
 
@@ -61,7 +73,7 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
   override render(): unknown {
     this._logger.logMethod('render');
     return html`
-      <pre dir="ltr">${JSON.stringify(this.order, undefined, 4)}</pre>
+      ${this.order?.itemList?.map((item) => this._itemDetailTemplate(item)) ?? nothing}
       <button @click=${this._addNewItem}>Add new product</button>
     `;
   }
@@ -69,5 +81,28 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
   protected _addNewItem(): void {
     this._logger.logMethod('_addNewItem');
     this.dispatchEvent(new CustomEvent('request-redirect', {detail: {page: 'product'}}));
+  }
+
+  protected _itemDetailTemplate(item: OrderItem): unknown {
+    return html`
+      <alwatr-surface elevated>
+        <div>
+          <span>${message('order_detail_product_id')}:</span>
+          <span><b>${item.productId}</b></span>
+        </div>
+        <div>
+          <span>${message('order_detail_qty')}:</span>
+          <span><b>${item.qty}</b></span>
+        </div>
+        <div>
+          <span>${message('order_detail_price')}:</span>
+          <span><b>${item.price}</b></span>
+        </div>
+        <div>
+          <span>${message('order_detail_final_price')}:</span>
+          <span><b>${item.finalPrice}</b></span>
+        </div>
+      </alwatr-surface>
+    `;
   }
 }
