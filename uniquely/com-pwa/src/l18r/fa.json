@@ -12,6 +12,8 @@
     "order_item_status": "وضعیت سفارش",
     "page_order_list_headline": "لیست سفارشات جاری",
     "page_product_list_headline": "انتخاب محصولات",
+    "order_detail_headline": "سفارش ${orderId}",
+    "order_detail_headline_new": "سفارش جدید",
 
     "fetch_failed": "خطا در دریافت اطلاعات از اینترنت!",
     "retry": "تلاش مجدد",

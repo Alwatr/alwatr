@@ -11,9 +11,10 @@ import {
   state,
   nothing,
 } from '@alwatr/element';
-import {message, number} from '@alwatr/i18n';
+import {message, number, message, replaceNumber} from '@alwatr/i18n';
 import {contextConsumer, ListenerSpec} from '@alwatr/signal';
 import '@alwatr/ui-kit/button/button.js';
+import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
@@ -22,7 +23,8 @@ import {config} from '../config.js';
 import {topAppBarContextProvider} from '../context.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
-import type {Order, OrderDraft, OrderItem, Product} from '@alwatr/type/customer-order-management.js';
+import type {Order, OrderDraft, OrderItem, Product, type Order, OrderDraft, OrderItem} from '@alwatr/type/customer-order-management.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/src/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -49,14 +51,17 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
       display: flex;
       flex-direction: row;
       align-items: center;
+    }
+
+    alwatr-surface,
+    alwatr-icon-box {
       margin-bottom: var(--sys-spacing-track);
       gap: var(--sys-spacing-track);
     }
 
     alwatr-surface > img {
-      width: 6em;
       display: block;
-      box-sizing: border-box;
+      width: 6rem;
       border-radius: var(--sys-radius-medium);
     }
 
@@ -85,8 +90,8 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
       vertical-align: middle;
     }
 
-    alwatr-button {
-      float: left;
+    :host(:not([edit-mode])) .add-button {
+      display: none;
     }
   `;
 
@@ -96,19 +101,23 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
   @state()
   protected _productStorage?: AlwatrDocumentStorage<Product> | null;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    topAppBarContextProvider.setValue({
-      type: 'small',
-      headline: message('page_order_detail_headline'),
-      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
-      tinted: 2,
-    });
-  }
-
   @property()
     storageName?: string = 'tile';
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.updateComplete.then(() => {
+      topAppBarContextProvider.setValue({
+        type: 'small',
+        headline:
+          this.order != null && this.order.status !== 'draft'
+          ? message('order_detail_headline').replace('${orderId}', this.order.id)
+          : message('order_detail_headline_new'),
+        startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+        tinted: 2,
+      });
+    });
+  }
 
   private __storageListenerList?: Array<ListenerSpec>;
   protected _storageNameUpdated(): void {
@@ -147,9 +156,29 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
   override render(): unknown {
     this._logger.logMethod('render');
+    if (this.order == null) return message('loading');
+    const editMode = this.order?.status === 'draft';
+    if (this.hasAttribute('edit-mode') !== editMode) {
+      this.toggleAttribute('edit-mode', editMode);
+    }
+
+    const iconBoxContent: IconBoxContent = {
+      stated: true,
+      tinted: 1,
+      icon: 'receipt-outline',
+      flipRtl: true,
+      headline: editMode
+      ? message('order_detail_headline_new')
+      : message('order_item_headline').replace('${orderId}', replaceNumber(this.order.id.padStart(2, '0'))),
+      description: message('order_item_status') + ': ' + message('order_status_' + this.order.status),
+      href: `/order/${this.order.id}/tracking`,
+    };
     return html`
+      <alwatr-icon-box .content=${iconBoxContent}></alwatr-icon-box>
       ${mapIterable(this, this.order?.itemList, this._itemDetailTemplate, message('loading'))}
-      <alwatr-button elevated @click=${this._addNewItem}>${message('order_detail_add_product_button')}</alwatr-button>
+      <alwatr-button tinted class="add-button" @click=${this._addNewItem}>
+        ${message('order_detail_add_product_button')}
+      </alwatr-button>
     `;
   }
 

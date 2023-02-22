@@ -129,7 +129,8 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement
           return nothing;
         }
       },
-      tracking: () => {
+      tracking: 'detail',
+      tracking2: () => {
         /**
          * `/order/1/tracking`
          * `/order/new/tracking`
