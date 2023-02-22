@@ -180,10 +180,17 @@ export class JobAddForm extends SignalMixin(AlwatrBaseElement) {
       event,
     });
 
-    const currentYear = new Date().toLocaleDateString(localeContextConsumer.getValue()?.code, {
+    let currentYear = +new Date().toLocaleDateString(localeContextConsumer.getValue()?.code, {
       numberingSystem: 'latn',
       year: 'numeric',
     });
+
+    const currentMonth = +new Date().toLocaleDateString(localeContextConsumer.getValue()?.code, {
+      numberingSystem: 'latn',
+      month: 'numeric',
+    });
+
+    if (this.__newJob.month as number < currentMonth) currentYear += 1;
 
     JobAddForm.jobAddEventTrigger.dispatch({
       detail: {
