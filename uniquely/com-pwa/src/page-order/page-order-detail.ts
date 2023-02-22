@@ -50,6 +50,10 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
       justify-content: space-between;
       align-items: center;
     }
+
+    alwatr-button {
+      float: left;
+    }
   `;
 
   @property({attribute: false})
@@ -74,7 +78,7 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
     this._logger.logMethod('render');
     return html`
       ${mapIterable(this, this.order?.itemList, this._itemDetailTemplate, message('loading'))}
-      <button @click=${this._addNewItem}>Add new product</button>
+      <alwatr-button elevated @click=${this._addNewItem}>${message('order_detail_add_product_button')}</alwatr-button>
     `;
   }
 
