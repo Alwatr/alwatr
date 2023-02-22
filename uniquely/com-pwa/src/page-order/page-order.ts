@@ -159,8 +159,10 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement
         }
 
         import('./page-order-detail.js');
-        return html`<alwatr-page-order-detail .order=${this.order}></alwatr-page-order-detail>`;
-        // return html`alwatr-page-order-detail, ${String(this.orderId)}, ${String(this.order?.id)}`;
+        return html`<alwatr-page-order-detail
+          .order=${this.order}
+          @request-redirect=${this._requestRedirect}
+        ></alwatr-page-order-detail>`;
       },
       product: () => {
         /**
@@ -174,8 +176,10 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement
         }
 
         import('./page-order-product.js');
-        return html`<alwatr-page-order-product .order=${this.order}></alwatr-page-order-product>`;
-        // return html`alwatr-page-select-product, ${String(this.orderId)}, ${String(this.order?.id)}`;
+        return html`<alwatr-page-order-product
+          .order=${this.order}
+          @request-redirect=${this._requestRedirect}
+        ></alwatr-page-order-product>`;
       },
       shipping: () => {
         /**
@@ -190,7 +194,6 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement
 
         import('./page-order-shipping.js');
         return html`<alwatr-page-order-shipping .order=${this.order}></alwatr-page-order-shipping>`;
-        // return html`alwatr-page-shipping, ${String(this.orderId)}, ${String(this.order?.id)}`;
       },
     },
   };
@@ -216,5 +219,12 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement
       tinted: 2,
     });
     return nothing;
+  }
+
+  protected _requestRedirect(event: CustomEvent<Record<string, unknown>>): void {
+    const detail = event.detail;
+    this._logger.logMethodArgs('_requestRedirect', detail);
+    if (this.orderId == null || typeof detail.page !== 'string') return;
+    redirect({sectionList: [this.orderId, detail.page]}, true, this.routeSlice);
   }
 }

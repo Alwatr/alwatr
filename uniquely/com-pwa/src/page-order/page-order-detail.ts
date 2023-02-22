@@ -1,4 +1,13 @@
-import {customElement, css, html, LocalizeMixin, AlwatrBaseElement, SignalMixin, property} from '@alwatr/element';
+import {
+  customElement,
+  css,
+  html,
+  LocalizeMixin,
+  AlwatrBaseElement,
+  SignalMixin,
+  property,
+  PropertyValues,
+} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
@@ -45,8 +54,20 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
     });
   }
 
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+  }
+
   override render(): unknown {
     this._logger.logMethod('render');
-    return html`${JSON.stringify(this.order)}`;
+    return html`
+      <pre dir="ltr">${JSON.stringify(this.order, undefined, 4)}</pre>
+      <button @click=${this._addNewItem}>Add new product</button>
+    `;
+  }
+
+  protected _addNewItem(): void {
+    this._logger.logMethod('_addNewItem');
+    this.dispatchEvent(new CustomEvent('request-redirect', {detail: {page: 'product'}}));
   }
 }
