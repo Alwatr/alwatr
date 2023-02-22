@@ -12,6 +12,7 @@ import {
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {contextConsumer, type ListenerSpec} from '@alwatr/signal';
+import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/product-card.js';
 
 import {config} from '../config.js';
@@ -41,11 +42,17 @@ export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBase
       gap: var(--sys-spacing-track);
       box-sizing: border-box;
       min-height: 100%;
+      justify-content: flex-end;
     }
 
     alwatr-product-card {
       width: 40%;
       flex-grow: 1;
+    }
+
+    .break {
+      width: 100%;
+      visibility: hidden;
     }
   `;
 
@@ -75,7 +82,7 @@ export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBase
     topAppBarContextProvider.setValue({
       type: 'small',
       headline: message('page_product_list_headline'),
-      startIcon: {icon: 'checkmark-done', flipRtl: true, clickSignalId: 'back-click-event'},
+      startIcon: {icon: 'checkmark', clickSignalId: 'back-click-event'},
       tinted: 2,
     });
   }
@@ -140,13 +147,18 @@ export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBase
     // else
 
     this.selectedRecord = {};
+    this._logger.logProperty('order', this.order);
     if (this.order.itemList?.length) {
       for (const item of this.order.itemList) {
         this.selectedRecord[item.productId] = true;
       }
     }
 
-    return mapObject(this, this._productStorage?.data, this._productItemTemplate);
+    return html`
+      ${mapObject(this, this._productStorage?.data, this._productItemTemplate)}
+      <div class="break"></div>
+      <alwatr-button elevated @click=${this._orderClick} ?disabled=${!this.order.itemList?.length}>Order</alwatr-button>
+    `;
   }
 
   protected _productItemTemplate(product: Product): unknown {
@@ -157,6 +169,7 @@ export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBase
       price: this._priceList?.data[product.id].price,
       finalPrice: this._finalPriceList?.data[product.id].price,
     };
+    this._logger.logProperty('selected', !!this.selectedRecord?.[product.id]);
     return html`<alwatr-product-card
       .content=${content}
       .selected=${this.selectedRecord?.[product.id] !== undefined}
@@ -182,6 +195,12 @@ export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBase
         price: this._priceList.data[productId].price,
         finalPrice: this._finalPriceList.data[productId].price,
       });
+      this.renderRoot.querySelector('alwatr-button')?.removeAttribute('disabled');
     }
+  }
+
+  protected _orderClick(): void {
+    this._logger.logMethod('_orderClick');
+    this.dispatchEvent(new CustomEvent('request-redirect', {detail: {page: 'edit'}}));
   }
 }
