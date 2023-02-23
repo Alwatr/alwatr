@@ -22,6 +22,7 @@
     {"path": "./core/token"},
     {"path": "./core/validator"},
     {"path": "./core/util"},
+    {"path": "./core/fsm"},
     {"path": "./core/type"},
 
     // ui
