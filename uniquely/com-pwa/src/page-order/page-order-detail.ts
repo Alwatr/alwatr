@@ -11,7 +11,7 @@ import {
   state,
   nothing,
 } from '@alwatr/element';
-import {message, number, message, replaceNumber} from '@alwatr/i18n';
+import {message, number, replaceNumber} from '@alwatr/i18n';
 import {contextConsumer, ListenerSpec} from '@alwatr/signal';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/icon-box.js';
@@ -23,7 +23,7 @@ import {config} from '../config.js';
 import {topAppBarContextProvider} from '../context.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
-import type {Order, OrderDraft, OrderItem, Product, type Order, OrderDraft, OrderItem} from '@alwatr/type/customer-order-management.js';
+import type {Order, OrderDraft, OrderItem, Product} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/src/card/icon-box.js';
 
 declare global {
@@ -111,8 +111,8 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
         type: 'small',
         headline:
           this.order != null && this.order.status !== 'draft'
-          ? message('order_detail_headline').replace('${orderId}', this.order.id)
-          : message('order_detail_headline_new'),
+            ? message('order_detail_headline').replace('${orderId}', this.order.id)
+            : message('order_detail_headline_new'),
         startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
         tinted: 2,
       });
@@ -168,8 +168,8 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseE
       icon: 'receipt-outline',
       flipRtl: true,
       headline: editMode
-      ? message('order_detail_headline_new')
-      : message('order_item_headline').replace('${orderId}', replaceNumber(this.order.id.padStart(2, '0'))),
+        ? message('order_detail_headline_new')
+        : message('order_item_headline').replace('${orderId}', replaceNumber(this.order.id.padStart(2, '0'))),
       description: message('order_item_status') + ': ' + message('order_status_' + this.order.status),
       href: `/order/${this.order.id}/tracking`,
     };
