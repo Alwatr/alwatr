@@ -1,4 +1,5 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
+import {requestAnimationFrame} from '@alwatr/util';
 
 import type {
   DispatchOptions,
