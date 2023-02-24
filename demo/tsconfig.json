@@ -19,6 +19,7 @@
     {"path": "../core/token"},
     {"path": "../core/math"},
     {"path": "../core/util"},
+    {"path": "../core/fsm"},
     {"path": "../ui/icon"},
     {"path": "../core/storage-engine"},
     {"path": "../core/validator"}
