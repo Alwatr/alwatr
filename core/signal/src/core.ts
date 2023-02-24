@@ -116,7 +116,7 @@ export const subscribe = <T extends Stringifyable>(
 ): ListenerSpec => {
   options.once ??= false;
   options.disabled ??= false;
-  options.receivePrevious ??= 'AnimationFrame';
+  options.receivePrevious ??= 'NextCycle';
   options.priority ??= false;
 
   logger.logMethodArgs('subscribe', {signalId, options});
