@@ -9,13 +9,6 @@ globalAlwatr.registeredList.push({
   version: _ALWATR_VERSION_,
 });
 
-export interface StateConfig<TEventId extends string, TState extends string> extends StringifyableRecord {
-  /**
-   * An object mapping eventId (keys) to state.
-   */
-  on?: Record<TEventId, TState | undefined>;
-}
-
 export interface MachineConfig<TState extends string, TEventId extends string, TContext extends Stringifyable>
   extends StringifyableRecord {
   /**
@@ -36,13 +29,22 @@ export interface MachineConfig<TState extends string, TEventId extends string, T
   /**
    * States list
    */
-  states: Record<TState | '_', StateConfig<TEventId, TState> | undefined>;
+  states: {
+    [S in TState | '_']: {
+      /**
+       * An object mapping eventId (keys) to state.
+       */
+      on: {
+        [E in TEventId]?: TState;
+      }
+    };
+  };
 }
 
 export class FiniteStateMachine<
-  TState extends string = string,
-  TEventId extends string = string,
-  TContext extends Stringifyable = StringifyableRecord
+TState extends string,
+TEventId extends string,
+TContext extends Stringifyable,
 > {
   stateConsumer;
   context: TContext;
@@ -96,4 +98,5 @@ export class FiniteStateMachine<
 
     this.setState(nextState, options);
     return nextState;
+  }
 }

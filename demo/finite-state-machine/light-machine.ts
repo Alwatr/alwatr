@@ -3,38 +3,43 @@ import {FiniteStateMachine} from '@alwatr/fsm';
 const lightMachine = new FiniteStateMachine({
   id: 'light-machine',
   initial: 'green',
+  context: <number>0,
   states: {
     _: {
       on: {
-        power_lost: 'flashingRed',
+        POWER_LOST: 'flashingRed',
       },
     },
     green: {
       on: {
-        timer: 'yellow',
+        TIMER: 'yellow',
       },
     },
     yellow: {
       on: {
-        timer: 'red',
+        TIMER: 'red',
       },
     },
     red: {
       on: {
-        timer: 'green',
+        TIMER: 'green',
       },
     },
     flashingRed: {
       on: {
-        power_back: 'green',
+        POWER_BACK: 'green',
       },
     },
   },
 });
 
-lightMachine.transition('timer');
-lightMachine.transition('timer');
-lightMachine.transition('timer');
-lightMachine.transition('power_lost');
-lightMachine.transition('timer');
-lightMachine.transition('power_back');
+lightMachine.stateConsumer.subscribe((state) => {
+  console.log('****\nstate: %s, context: %s\n****', state, lightMachine.context);
+}, {receivePrevious: 'No'});
+
+lightMachine.transition('TIMER', 1);
+lightMachine.transition('TIMER', 2);
+lightMachine.transition('TIMER', 3);
+lightMachine.transition('POWER_LOST', 4, {debounce: 'No'});
+lightMachine.transition('TIMER', 5);
+lightMachine.transition('POWER_BACK', 6);
