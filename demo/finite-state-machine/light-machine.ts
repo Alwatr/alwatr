@@ -1,9 +1,14 @@
 import {FiniteStateMachine} from '@alwatr/fsm';
 
 const lightMachine = new FiniteStateMachine({
-  id: 'light',
+  id: 'light-machine',
   initial: 'green',
   states: {
+    _: {
+      on: {
+        power_lost: 'flashingRed',
+      },
+    },
     green: {
       on: {
         timer: 'yellow',
@@ -19,13 +24,17 @@ const lightMachine = new FiniteStateMachine({
         timer: 'green',
       },
     },
+    flashingRed: {
+      on: {
+        power_back: 'green',
+      },
+    },
   },
 });
 
-console.log('lightMachine.currentState: %s', lightMachine.currentState);
 lightMachine.transition('timer');
-console.log('lightMachine.currentState: %s', lightMachine.currentState);
 lightMachine.transition('timer');
-console.log('lightMachine.currentState: %s', lightMachine.currentState);
 lightMachine.transition('timer');
-console.log('lightMachine.currentState: %s', lightMachine.currentState);
+lightMachine.transition('power_lost');
+lightMachine.transition('timer');
+lightMachine.transition('power_back');

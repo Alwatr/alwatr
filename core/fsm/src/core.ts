@@ -11,7 +11,7 @@ export interface StateConfig extends StringifyableRecord {
   /**
    * An object mapping event name (keys) to state name
    */
-  on: Record<string, string | undefined>;
+  on?: Record<string, string | undefined>;
 }
 
 export interface MachineConfig extends StringifyableRecord {
@@ -36,7 +36,7 @@ export class FiniteStateMachine {
   protected _logger: AlwatrLogger;
 
   constructor(public config: MachineConfig) {
-    this._logger = createLogger(`alwatr/fsm ${config.id}`);
+    this._logger = createLogger(`alwatr/fsm:${config.id}`);
     this._logger.logMethodArgs('constructor', config);
     this.currentState = config.initial;
     if (this.currentState in config.states === false) {
@@ -49,23 +49,26 @@ export class FiniteStateMachine {
    * @param eventName
    */
   transition(eventName: string): string {
-    this._logger.logMethodArgs('transition', eventName);
-    const nextState = this.config.states[this.currentState]?.on[eventName];
+    const nextState = this.config.states[this.currentState]?.on?.[eventName] ??
+      this.config.states._?.on?.[eventName];
+
+    this._logger.logMethodFull('transition', eventName, nextState);
+
     if (nextState) {
       this.currentState = nextState;
     }
     else {
-      this._logger.accident(
+      this._logger.incident(
           'transition',
           'invalid_target_state',
           'Defined target state for this event not found in state config',
           {
-            currentState: this.currentState,
             eventName,
-            stateConfig: this.config.states[this.currentState],
+            [this.currentState]: {...this.config.states._?.on, ...this.config.states[this.currentState]?.on},
           },
       );
     }
+
     return this.currentState;
   }
 }
