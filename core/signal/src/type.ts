@@ -29,7 +29,7 @@ export interface SubscribeOptions {
    * Calling this listener (callback) with preview signal value (if dispatched before).
    * If Immediate, the listener will be called immediately without any debounce for preview signal.
    *
-   * @default `AnimationFrame`
+   * @default `NextCycle`
    */
   receivePrevious: DebounceType | 'NextCycle';
 }
