@@ -189,13 +189,21 @@ export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBase
       this.selectedRecord?.[productId] !== true
     ) {
       this.order.itemList ??= [];
-      this.order.itemList.push({
+      const item = {
         productId,
         qty: 1,
         price: this._priceList.data[productId].price,
         finalPrice: this._finalPriceList.data[productId].price,
-      });
-      this.renderRoot.querySelector('alwatr-button')?.removeAttribute('disabled');
+      };
+
+      if (target?.selected === true) {
+        this.order.itemList.push(item);
+        this.renderRoot.querySelector('alwatr-button')?.removeAttribute('disabled');
+      }
+      else {
+        this.order.itemList.splice(this.order.itemList.indexOf(item), 1);
+        this.renderRoot.querySelector('alwatr-button')?.setAttribute('disabled', '');
+      }
     }
   }
 
