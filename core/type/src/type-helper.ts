@@ -15,8 +15,10 @@ export type Stringifyable =
     | boolean
     | null
     | undefined
-    | { [x: string]: Stringifyable }
+    | { [P: string]: Stringifyable }
     | Array<Stringifyable>;
 
 
-export type StringifyableRecord = Record<string, Stringifyable>;
+export interface StringifyableRecord {
+  [P: string]: Stringifyable;
+}
