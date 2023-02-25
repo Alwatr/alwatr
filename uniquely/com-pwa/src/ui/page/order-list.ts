@@ -11,7 +11,7 @@ import {
 import {message, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import {orderStorageContextConsumer, topAppBarContextProvider} from '../context.js';
+import {orderStorageContextConsumer, topAppBarContextProvider} from '../../context.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order} from '@alwatr/type/customer-order-management.js';
