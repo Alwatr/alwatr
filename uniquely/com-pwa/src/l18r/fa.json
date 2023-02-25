@@ -52,6 +52,9 @@
     "order_detail_price": "قیمت",
     "order_detail_final_price": "قیمت نهایی",
     "order_detail_add_product_button": "اضافه کردن محصول",
+    "order_detail_confirm_button": "تایید",
+    "order_detail_total_price": "قیمت کل",
+    "order_detail_shipping_price": "هزینه ارسال",
 
     "cancel": "لغو",
 
