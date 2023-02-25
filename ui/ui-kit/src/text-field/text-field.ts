@@ -77,13 +77,19 @@ export class AlwatrTextField extends AlwatrSurface {
         font: inherit;
         color: var(--sys-color-on-surface-variant);
       }
-      input::-moz-placeholder{
+      input::-moz-placeholder {
         font: inherit;
         color: var(--sys-color-on-surface-variant);
       }
 
       input[type=number] {
         -moz-appearance: textfield;
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
       }
     `,
   ];

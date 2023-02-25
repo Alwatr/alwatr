@@ -24,6 +24,7 @@ declare global {
 }
 
 export interface ProductCartContent extends StringifyableRecord {
+  id?: string;
   title: string;
   imagePath: string;
   price?: number;
@@ -46,15 +47,19 @@ export class AlwatrProductCard extends ToggleMixin(LocalizeMixin(SignalMixin(Alw
         -webkit-user-select: none;
         --_surface-color-on: var(--sys-color-on-surface-hsl);
         --_surface-color-bg: var(--sys-color-surface-hsl);
+        outline: 2px solid transparent;
       }
 
       :host([selected]) {
         --_surface-color-on: var(--sys-color-inverse-on-surface-hsl);
         --_surface-color-bg: var(--sys-color-inverse-surface-hsl);
+        border-radius: var(--sys-radius-xlarge);
+        outline: 2px solid var(--sys-color-inverse-surface);
       }
 
       img {
         display: block;
+        box-sizing: border-box;
         width: 100%;
         min-height: 50px;
         height: auto;
