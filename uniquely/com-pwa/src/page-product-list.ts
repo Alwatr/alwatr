@@ -17,12 +17,11 @@ import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 import './app-footer';
 import {config} from './config.js';
-import {productStorageContextConsumer} from './context.js';
+import {productStorageContextConsumer, topAppBarContextProvider} from './context.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Product, ProductPrice} from '@alwatr/type/customer-order-management.js';
 import type {ProductCartContent} from '@alwatr/ui-kit/card/product-card.js';
-import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -37,13 +36,7 @@ declare global {
 export class AlwatrPageProductList extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    main {
-      flex-grow: 1;
+      box-sizing: border-box;
       display: flex;
       flex-wrap: wrap;
       padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
@@ -51,7 +44,7 @@ export class AlwatrPageProductList extends LocalizeMixin(SignalMixin(AlwatrBaseE
       overflow-y: scroll;
     }
 
-    main > * {
+    alwatr-product-card {
       width: 40%;
       flex-grow: 1;
     }
@@ -74,6 +67,13 @@ export class AlwatrPageProductList extends LocalizeMixin(SignalMixin(AlwatrBaseE
           this._productStorage = productStorage;
         }),
     );
+
+    topAppBarContextProvider.setValue({
+      type: 'small',
+      headline: message('page_product_list_headline'),
+      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+      tinted: 2,
+    });
   }
 
   override requestUpdate(name?: PropertyKey | undefined, oldValue?: unknown, options?: PropertyDeclaration): void {
@@ -127,26 +127,12 @@ export class AlwatrPageProductList extends LocalizeMixin(SignalMixin(AlwatrBaseE
   override render(): unknown {
     this._logger.logMethod('render');
 
-    const topAppBar: TopAppBarContent = {
-      type: 'medium',
-      headline: message('page_product_list_headline'),
-      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
-      tinted: 2,
-    };
-
-    let mainContent;
     if (this._productStorage == null || this._priceList == null || this._finalPriceList == null) {
-      mainContent = message(this._productStorage === null ? 'product_not_found' : 'loading');
+      return message(this._productStorage === null ? 'product_not_found' : 'loading');
     }
     else {
-      mainContent = mapObject(this, this._productStorage?.data, this._productItemTemplate);
+      return mapObject(this, this._productStorage?.data, this._productItemTemplate);
     }
-
-    return html`
-      <alwatr-top-app-bar .content=${topAppBar}></alwatr-top-app-bar>
-      <main>${mainContent}</main>
-      <alwatr-app-footer></alwatr-app-footer>
-    `;
   }
 
   protected _productItemTemplate(product: Product): unknown {
