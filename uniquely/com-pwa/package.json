@@ -44,6 +44,7 @@
     "@alwatr/signal": "^0.29.0",
     "@alwatr/ui-kit": "^0.29.0",
     "@alwatr/util": "^0.29.0",
+    "@alwatr/fsm": "^0.29.0",
     "@alwatr/validator": "^0.29.0",
     "@web/dev-server": "^0.1.35",
     "@webcomponents/webcomponentsjs": "^2.7.0",

@@ -25,6 +25,7 @@
     {"path": "../../core/validator"},
     {"path": "../../core/signal"},
     {"path": "../../core/util"},
+    {"path": "../../core/fsm"},
     {"path": "../../ui/element"},
     {"path": "../../ui/ui-kit"},
     {"path": "../../ui/pwa-helper"},
