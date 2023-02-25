@@ -9,6 +9,7 @@ import {
   SignalMixin,
   type PropertyValues,
 } from '@alwatr/element';
+import {contextConsumer} from '@alwatr/signal';
 
 import '../button/icon-button.js';
 import {AlwatrSurface} from '../card/surface.js';
@@ -35,6 +36,7 @@ export interface TopAppBarContent extends StringifyableRecord {
  * Alwatr top app bar.
  *
  * @attr {center|small|medium|large} [type=small]
+ * @attr {String} context-signal - context signal name
  */
 @customElement('alwatr-top-app-bar')
 export class AlwatrTopAppBar extends DirectionMixin(SignalMixin(AlwatrSurface)) {
@@ -129,6 +131,20 @@ export class AlwatrTopAppBar extends DirectionMixin(SignalMixin(AlwatrSurface)) 
 
   @property({type: Object, attribute: false})
     content?: TopAppBarContent;
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    const contextSignal = this.getAttribute('context-signal');
+    if (contextSignal) {
+      this._signalListenerList.push(
+          contextConsumer.subscribe<TopAppBarContent>(contextSignal, (context) => {
+            this.content = context;
+            this.requestUpdate(); // Ensure update on child properties changes.
+          },
+          {receivePrevious: 'NextCycle'}),
+      );
+    }
+  }
 
   protected override shouldUpdate(changedProperties: PropertyValues<this>): boolean {
     return super.shouldUpdate(changedProperties) && this.content != null;
