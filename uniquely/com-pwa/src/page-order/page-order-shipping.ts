@@ -1,4 +1,13 @@
-import {customElement, css, html, LocalizeMixin, AlwatrBaseElement, SignalMixin, property} from '@alwatr/element';
+import {
+  customElement,
+  css,
+  html,
+  LocalizeMixin,
+  AlwatrBaseElement,
+  SignalMixin,
+  property,
+  UnresolvedMixin,
+} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
@@ -21,7 +30,7 @@ declare global {
  * Alwatr Customer Order Management Order Form Page
  */
 @customElement('alwatr-page-order-shipping')
-export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
+export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(UnresolvedMixin(AlwatrBaseElement))) {
   static formId = 'order';
 
   get _carTypeRadioGroupOptions(): RadioGroupOptions {

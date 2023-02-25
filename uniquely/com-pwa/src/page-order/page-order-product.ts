@@ -8,6 +8,7 @@ import {
   state,
   mapObject,
   property,
+  UnresolvedMixin,
   type PropertyValues,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
@@ -32,7 +33,7 @@ declare global {
  * Soffit Product Page
  */
 @customElement('alwatr-page-order-product')
-export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
+export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(UnresolvedMixin(AlwatrBaseElement))) {
   static override styles = css`
     :host {
       box-sizing: border-box;

@@ -10,6 +10,7 @@ import {
   PropertyValues,
   cache,
   nothing,
+  UnresolvedMixin,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {redirect, routerOutlet, type RouteContext, type RoutesConfig} from '@alwatr/router';
@@ -29,7 +30,7 @@ declare global {
  * Alwatr Customer Order Management Order List Page
  */
 @customElement('alwatr-page-order')
-export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
+export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(UnresolvedMixin(AlwatrBaseElement))) {
   static override styles = css`
     :host {
       display: block;
@@ -116,7 +117,7 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement
          */
 
         if (this.orderId == null || this.orderId === 'list') {
-          import('../ui/page/page-order-list.js');
+          import('../ui/page/order-list.js');
           return html`<alwatr-page-order-list>...</alwatr-page-order-list>`;
           // return html`alwatr-page-order-list, ${String(this.orderId)}, ${String(this.order?.id)}`;
         }

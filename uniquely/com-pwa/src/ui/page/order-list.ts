@@ -7,6 +7,7 @@ import {
   mapObject,
   SignalMixin,
   AlwatrBaseElement,
+  UnresolvedMixin,
 } from '@alwatr/element';
 import {message, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
@@ -27,7 +28,7 @@ declare global {
  * List of all orders
  */
 @customElement('alwatr-page-order-list')
-export class AlwatrPageOrderList extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
+export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
   static override styles = css`
     :host {
       display: block;
