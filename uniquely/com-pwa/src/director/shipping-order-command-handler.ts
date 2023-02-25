@@ -4,7 +4,7 @@ import {orderDeliverySchema, type OrderDelivery} from '@alwatr/type/customer-ord
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator} from '@alwatr/validator';
 
-import {logger} from './logger.js';
+import {logger} from '../manager/logger.js';
 import {submitOrderShippingCommandTrigger} from '../context.js';
 
 

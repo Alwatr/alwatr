@@ -104,7 +104,7 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement
     routeId: (routeContext) => routeContext.sectionList[this.routeSlice + 1]?.toString(),
     templates: {
       _404: () => {
-        import('../page-404.js');
+        import('../ui/page/page-404.js');
         return html`<alwatr-page-404>...</alwatr-page-404>`;
       },
       home: () => {
@@ -116,7 +116,7 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement
          */
 
         if (this.orderId == null || this.orderId === 'list') {
-          import('./page-order-list.js');
+          import('../ui/page/page-order-list.js');
           return html`<alwatr-page-order-list>...</alwatr-page-order-list>`;
           // return html`alwatr-page-order-list, ${String(this.orderId)}, ${String(this.order?.id)}`;
         }

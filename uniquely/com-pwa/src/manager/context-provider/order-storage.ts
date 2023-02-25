@@ -2,13 +2,13 @@ import {fetchContext} from '@alwatr/fetch';
 import {message, l18eReadyPromise} from '@alwatr/i18n';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
-import {logger} from './logger.js';
-import {config} from '../config.js';
+import {config} from '../../config.js';
 import {
   orderStorageContextProvider,
   orderStorageContextConsumer,
   userContextConsumer,
-} from '../context.js';
+} from '../../context.js';
+import {logger} from '../logger.js';
 
 orderStorageContextProvider.setProvider(async (args): Promise<void> => {
   logger.logMethod('orderStorageContextProvider');
@@ -16,7 +16,7 @@ orderStorageContextProvider.setProvider(async (args): Promise<void> => {
   const userContext = userContextConsumer.getValue() ?? (await userContextConsumer.untilChange());
 
   try {
-    await fetchContext('order-storage-context', {
+    await fetchContext(orderStorageContextProvider.id, {
       ...config.fetchContextOptions,
       url: config.api + '/order-list/',
       queryParameters: {
@@ -38,5 +38,3 @@ orderStorageContextProvider.setProvider(async (args): Promise<void> => {
     }
   }
 });
-
-orderStorageContextConsumer.request(null, {debounce: 'Timeout'});
