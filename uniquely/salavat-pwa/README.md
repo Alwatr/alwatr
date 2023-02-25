@@ -1,1 +1,1 @@
-# Salav.at PWA
+# Salav.at Progressive Web App
