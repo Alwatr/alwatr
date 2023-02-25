@@ -60,8 +60,13 @@ body.no-scroll {
   overflow: hidden;
 }
 
-alwatr-pwa[unresolved] {
+[unresolved] {
   display: block;
   text-align: center;
+  font-family: var(--sys-typescale-headline-small-font-family-name);
+  font-weight: var(--sys-typescale-headline-small-font-weight);
+  font-size: var(--sys-typescale-headline-small-font-size);
+  letter-spacing: var(--sys-typescale-headline-small-letter-spacing);
+  line-height: var(--sys-typescale-headline-small-line-height);
   /* TODO: skeleton */
 }
