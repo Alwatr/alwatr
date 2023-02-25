@@ -1,11 +1,11 @@
 import {isNumber} from '@alwatr/math';
 
-import type {JsonSchema, ValidType} from './type.js';
+import type {JsonSchema} from './type.js';
 import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
 
 export type {JsonSchema};
 
-export function validator<T extends ValidType>(
+export function validator<T extends StringifyableRecord>(
     validSchema: JsonSchema,
     targetObject: StringifyableRecord,
     additionalProperties = false,
@@ -45,7 +45,7 @@ export function validator<T extends ValidType>(
 
     if (typeof itemSchema === 'object' && itemSchema != null) {
       // nested object
-      targetObject[itemName] = validator<ValidType>(
+      targetObject[itemName] = validator<StringifyableRecord>(
           itemSchema,
         itemValue as StringifyableRecord,
         additionalProperties,
