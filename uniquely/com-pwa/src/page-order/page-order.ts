@@ -142,7 +142,7 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement
         }
 
         import('./page-order-tracking.js');
-        return html`<alwatr-page-order-tracking .order=${this.order}>...</alwatr-page-order-tracking>`;
+        return html`<alwatr-page-order-tracking .order=${this.order as OrderDraft}>...</alwatr-page-order-tracking>`;
         // return html`alwatr-page-order-tracking, ${String(this.orderId)}, ${String(this.order?.id)}`;
       },
       edit: 'detail', // Same page element.
@@ -194,7 +194,10 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(AlwatrBaseElement
         }
 
         import('./page-order-shipping.js');
-        return html`<alwatr-page-order-shipping .order=${this.order}></alwatr-page-order-shipping>`;
+        return html`<alwatr-page-order-shipping
+          .order=${this.order as OrderDraft}
+          @request-redirect=${this._requestRedirect}
+        ></alwatr-page-order-shipping>`;
       },
     },
   };

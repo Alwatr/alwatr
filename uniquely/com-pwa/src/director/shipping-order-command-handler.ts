@@ -11,7 +11,6 @@ import {submitOrderShippingCommandTrigger} from '../context.js';
 commandHandler.define<OrderDelivery, OrderDelivery | null>(submitOrderShippingCommandTrigger.id, (orderDelivery) => {
   logger.logMethodArgs('submit-order-shipping', orderDelivery);
   delete orderDelivery._callbackSignalId; // FIXME: !
-  console.log(orderDelivery);
 
   let validOrderDelivery: OrderDelivery;
   try {
