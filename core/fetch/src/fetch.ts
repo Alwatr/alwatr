@@ -34,7 +34,7 @@ const duplicateRequestStorage: Record<string, Promise<Response>> = {};
 export async function fetchContext(
     contextName: string,
     fetchOption: FetchOptions,
-    dispatchOptions?: Partial<DispatchOptions>,
+    dispatchOptions: Partial<DispatchOptions> = {debounce: 'Timeout'},
 ): Promise<void> {
   logger.logMethodArgs('fetchContext', {contextName});
   if (cacheSupported && contextProvider.getValue(contextName) == null) {
@@ -52,6 +52,12 @@ export async function fetchContext(
         throw err;
       }
     }
+  }
+
+  if (navigator.onLine === false) {
+    logger.logOther('fetchContext:', 'offline');
+    // retry on online
+    return;
   }
 
   try {
