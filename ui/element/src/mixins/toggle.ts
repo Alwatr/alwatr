@@ -1,10 +1,10 @@
+import {property} from 'lit/decorators.js';
+
 import type {LoggerMixinInterface} from './logging.js';
 import type {Constructor} from '@alwatr/type';
 
 export declare class ToggleMixinInterface extends LoggerMixinInterface {
-  private _selected: boolean;
-  get selected(): boolean;
-  set selected(value: boolean);
+  selected: boolean;
   protected _click(event: MouseEvent): void
 }
 
@@ -12,22 +12,8 @@ export function ToggleMixin<T extends Constructor<LoggerMixinInterface>>(
     superClass: T,
 ): Constructor<ToggleMixinInterface> & T {
   class ToggleMixinClass extends superClass {
-    private _selected = false;
-
-    get selected(): boolean {
-      return this._selected;
-    }
-    set selected(value: boolean) {
-      if (this._selected === value) return;
-      this._logger.logProperty('selected', value);
-      this._selected = value;
-      if (value) {
-        this.setAttribute('selected', '');
-      }
-      else {
-        this.removeAttribute('selected');
-      }
-    }
+    @property({type: Boolean, reflect: true})
+      selected = false;
 
     override connectedCallback(): void {
       super.connectedCallback();
@@ -45,6 +31,7 @@ export function ToggleMixin<T extends Constructor<LoggerMixinInterface>>(
       this._logger.logMethod('_click');
       if (event.metaKey || event.altKey || event.shiftKey) return;
       this.selected = !this.selected;
+      this.dispatchEvent(new CustomEvent('selected-change'));
     }
   }
 
