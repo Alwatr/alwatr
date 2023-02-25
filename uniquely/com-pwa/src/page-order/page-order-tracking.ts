@@ -1,4 +1,13 @@
-import {customElement, css, html, LocalizeMixin, AlwatrBaseElement, SignalMixin, property} from '@alwatr/element';
+import {
+  customElement,
+  css,
+  html,
+  LocalizeMixin,
+  AlwatrBaseElement,
+  SignalMixin,
+  property,
+  UnresolvedMixin,
+} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
@@ -19,7 +28,7 @@ declare global {
  * Tracking an order with support chat.
  */
 @customElement('alwatr-page-order-tracking')
-export class AlwatrPageOrderTracking extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
+export class AlwatrPageOrderTracking extends LocalizeMixin(SignalMixin(UnresolvedMixin(AlwatrBaseElement))) {
   static override styles = css`
     :host {
       display: block;
@@ -45,8 +54,6 @@ export class AlwatrPageOrderTracking extends LocalizeMixin(SignalMixin(AlwatrBas
 
   override render(): unknown {
     this._logger.logMethod('render');
-    return html`
-      order tracking
-    `;
+    return html` order tracking `;
   }
 }

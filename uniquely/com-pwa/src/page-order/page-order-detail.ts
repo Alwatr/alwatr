@@ -11,6 +11,7 @@ import {
   state,
   nothing,
   svg,
+  UnresolvedMixin,
 } from '@alwatr/element';
 import {message, number, replaceNumber} from '@alwatr/i18n';
 import {contextConsumer, ListenerSpec} from '@alwatr/signal';
@@ -37,7 +38,7 @@ declare global {
  * Alwatr Customer Order Management Order Form Page
  */
 @customElement('alwatr-page-order-detail')
-export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
+export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(UnresolvedMixin(AlwatrBaseElement))) {
   static formId = 'order';
 
   static override styles = css`
