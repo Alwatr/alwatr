@@ -1,7 +1,10 @@
-import {css, customElement, html} from '@alwatr/element';
+import {css, customElement, html, property} from '@alwatr/element';
 import '@alwatr/icon';
+import {eventTrigger} from '@alwatr/signal';
 
 import {AlwatrSurface} from '../card/surface.js';
+
+import type {ClickSignalType} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -39,13 +42,35 @@ export class AlwatrButton extends AlwatrSurface {
     `,
   ];
 
+  @property({attribute: 'signal-id'})
+    signalId?: string;
+
   override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('stated', '');
+    this.addEventListener('click', this._click);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('click', this._click);
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
     return html`<slot>button</slot>`;
+  }
+
+  protected _click(event: MouseEvent): void {
+    this._logger.logMethodArgs('_click', {signalId: this.signalId});
+    if (this.signalId) {
+      eventTrigger.dispatch<ClickSignalType>(this.signalId, {
+        x: event.clientX,
+        y: event.clientY,
+        altKey: event.altKey,
+        ctrlKey: event.ctrlKey,
+        metaKey: event.metaKey,
+      });
+    }
   }
 }
