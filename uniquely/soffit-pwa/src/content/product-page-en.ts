@@ -5,7 +5,7 @@ export const productPageContent: ProductPageContent = {
   topAppBar: {
     type: 'large',
     headline: 'Ceiling tile product',
-    startIcon: {icon: 'arrow-back-outline'},
+    startIcon: {icon: 'arrow-back-outline', clickSignalId: 'back-click-event'},
     endIconList: [
       {icon: 'globe-outline', clickSignalId: 'language-button-click-event'},
       {icon: 'menu-outline', flipRtl: true},

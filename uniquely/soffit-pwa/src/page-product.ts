@@ -3,16 +3,17 @@ import {
   css,
   html,
   state,
-  map,
   nothing,
   unsafeHTML,
   SignalMixin,
   AlwatrBaseElement,
+  mapIterable,
 } from '@alwatr/element';
-import {contextConsumer} from '@alwatr/signal';
+import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/icon-button.js';
 import '@alwatr/ui-kit/card/image-box.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
+
+import {productPageContentContextConsumer, topAppBarContextProvider} from './context.js';
 
 import type {ProductType, ProductPageContent} from './type.js';
 
@@ -29,26 +30,17 @@ declare global {
 export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
   static override styles = css`
     :host {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      overflow-y: auto;
-    }
-
-    main {
+      box-sizing: border-box;
       display: flex;
       flex-wrap: wrap;
-      padding: calc(2 * var(--sys-spacing-track));
+      padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
       gap: var(--sys-spacing-track);
+      overflow-y: scroll;
     }
 
     alwatr-image-box {
       width: 40%;
       flex-grow: 1;
-    }
-
-    alwatr-image-box[wide] {
-      width: 100%;
     }
   `;
 
@@ -58,23 +50,16 @@ export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
     super.connectedCallback();
 
     this._signalListenerList.push(
-        contextConsumer.subscribe<ProductPageContent>('product_page_content', (content) => {
+        productPageContentContextConsumer.subscribe((content) => {
           this.content = content;
+          topAppBarContextProvider.setValue(content.topAppBar);
         }),
     );
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
-    return html`
-      <alwatr-top-app-bar .content=${this.content?.topAppBar}></alwatr-top-app-bar>
-      <main>${this._menuTemplate()}</main>
-    `;
-  }
-
-  protected* _menuTemplate(): unknown {
-    this._logger.logMethodArgs('_menuTemplate', {...this.content});
-    yield map(this.content?.product, this._productBoxTemplate);
+    return mapIterable(this, this.content?.product, this._productBoxTemplate, message('loading'));
   }
 
   protected _productBoxTemplate(box: ProductType): unknown {

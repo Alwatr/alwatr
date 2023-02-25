@@ -5,7 +5,7 @@ export const productPageContent: ProductPageContent = {
   topAppBar: {
     type: 'large',
     headline: 'محصولات تایل سقفی',
-    startIcon: {icon: 'arrow-back-outline', flipRtl: true},
+    startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
     endIconList: [
       {icon: 'globe-outline', clickSignalId: 'language-button-click-event'},
       {icon: 'menu-outline', flipRtl: true},
