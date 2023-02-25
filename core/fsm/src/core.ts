@@ -36,35 +36,46 @@ export interface MachineConfig<TState extends string, TEventId extends string, T
        */
       on: {
         [E in TEventId]?: TState;
-      }
+      };
     };
   };
 }
 
-export class FiniteStateMachine<
-TState extends string,
-TEventId extends string,
-TContext extends Stringifyable,
-> {
-  stateConsumer;
+export interface StateContext<TState extends string, TEventId extends string> {
+  [T: string]: string;
+  to: TState;
+  from: TState | 'init';
+  by: TEventId | 'INIT';
+}
+
+export class FiniteStateMachine<TState extends string, TEventId extends string, TContext extends Stringifyable> {
+  signal;
   context: TContext;
 
   protected _logger: AlwatrLogger;
 
   get gotState(): TState {
-    return this.stateConsumer.getValue() ?? this.config.initial;
+    return this.signal.getValue()?.to ?? this.config.initial;
   }
 
-  protected setState(value: TState, options?: DispatchOptions): void {
-    dispatch(this.stateConsumer.id, value, options);
+  protected setState(to: TState, by: TEventId | 'INIT', options?: DispatchOptions): void {
+    dispatch<StateContext<TState, TEventId>>(
+        this.signal.id,
+        {
+          to,
+          from: this.signal.getValue()?.to ?? 'init',
+          by,
+        },
+        options,
+    );
   }
 
   constructor(public readonly config: Readonly<MachineConfig<TState, TEventId, TContext>>) {
     this._logger = createLogger(`alwatr/fsm:${config.id}`);
     this._logger.logMethodArgs('constructor', config);
     this.context = config.context;
-    this.stateConsumer = contextConsumer.bind<TState>('finite-state-machine-' + this.config.id);
-    this.setState(config.initial);
+    this.signal = contextConsumer.bind<StateContext<TState, TEventId>>('finite-state-machine-' + this.config.id);
+    this.setState(config.initial, 'INIT');
     if (!config.states[config.initial]) {
       this._logger.error('constructor', 'invalid_initial_state', config);
     }
@@ -73,30 +84,30 @@ TContext extends Stringifyable,
   /**
    * Machine transition.
    */
-  transition(toEventId: TEventId, newContext?: TContext, options?: DispatchOptions): TState | null {
-    const state = this.gotState;
-    const nextState = this.config.states[state]?.on?.[toEventId] ?? this.config.states._?.on?.[toEventId];
+  transition(event: TEventId, context?: TContext, options?: DispatchOptions): TState | null {
+    const fromState = this.gotState;
+    const toState = this.config.states[fromState]?.on?.[event] ?? this.config.states._?.on?.[event];
 
-    this._logger.logMethodFull('transition', {toEventId, newContext}, nextState);
+    this._logger.logMethodFull('transition', {toEventId: event, newContext: context}, toState);
 
-    if (newContext !== undefined) {
-      this.context = newContext;
+    if (context !== undefined) {
+      this.context = context;
     }
 
-    if (nextState == null) {
+    if (toState == null) {
       this._logger.incident(
           'transition',
           'invalid_target_state',
           'Defined target state for this event not found in state config',
           {
-            eventName: toEventId,
-            [state]: {...this.config.states._?.on, ...this.config.states[state]?.on},
+            event,
+            [fromState]: {...this.config.states._?.on, ...this.config.states[fromState]?.on},
           },
       );
       return null;
     }
 
-    this.setState(nextState, options);
-    return nextState;
+    this.setState(toState, event, options);
+    return toState;
   }
 }
