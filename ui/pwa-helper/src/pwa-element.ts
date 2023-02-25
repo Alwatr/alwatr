@@ -5,6 +5,7 @@ import {
   AlwatrBaseElement,
   SignalMixin,
   RouterMixin,
+  UnresolvedMixin,
   type PropertyValues,
   type CSSResultGroup,
 } from '@alwatr/element';
@@ -25,7 +26,7 @@ import './signal/sw-user-notify.js';
  *
  * Include: AlwatrPwaElement, root styles, router config, multi-page render
  */
-export class AlwatrPwaElement extends RouterMixin(SignalMixin(AlwatrBaseElement)) {
+export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(AlwatrBaseElement))) {
   static override styles: CSSResultGroup = css`
     :host {
       contain: size layout paint style;
@@ -44,6 +45,16 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(AlwatrBaseElement)
       flex-grow: 1;
       flex-shrink: 0;
       overflow-y: auto;
+    }
+
+    [unresolved] {
+      display: block;
+      text-align: center;
+      font-family: var(--sys-typescale-headline-small-font-family-name);
+      font-weight: var(--sys-typescale-headline-small-font-weight);
+      font-size: var(--sys-typescale-headline-small-font-size);
+      letter-spacing: var(--sys-typescale-headline-small-letter-spacing);
+      line-height: var(--sys-typescale-headline-small-line-height);
     }
   `;
 
@@ -72,9 +83,6 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(AlwatrBaseElement)
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
     commandTrigger.request('register_service_worker_command', {});
-    if (this.hasAttribute('unresolved')) {
-      this.removeAttribute('unresolved');
-    }
   }
 
   protected _topAppBarTemplate(): unknown {
