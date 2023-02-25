@@ -33,7 +33,7 @@ const lightMachine = new FiniteStateMachine({
   },
 });
 
-lightMachine.stateConsumer.subscribe((state) => {
+lightMachine.signal.subscribe((state) => {
   console.log('****\nstate: %s, context: %s\n****', state, lightMachine.context);
 }, {receivePrevious: 'No'});
 
