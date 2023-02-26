@@ -13,7 +13,7 @@ import {message, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import {pageOrderListFsm} from '../../manager/state-machine/order-list.js';
+import {pageOrderListFsm} from '../../manager/controller/order-list.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 

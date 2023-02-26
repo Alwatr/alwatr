@@ -6,7 +6,7 @@ import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-85.css';
 
 import './stuff/app-footer.js';
-import {pageOrderListFsm} from '../manager/state-machine/order-list.js';
+import {pageOrderListFsm} from '../manager/controller/order-list.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 
