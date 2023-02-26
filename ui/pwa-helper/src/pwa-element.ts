@@ -16,6 +16,7 @@ import '@alwatr/ui-kit/snackbar/controller.js';
 import '@alwatr/ui-kit/style/pwa.css';
 import '@alwatr/ui-kit/style/token.css';
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
+import {untilNextFrame} from '@alwatr/util';
 
 import './signal/back-click-event.js';
 import './signal/register-service-worker-command.js';
@@ -70,6 +71,11 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
       _404: () => html`<h1>404, Not found!</h1>`,
     },
   };
+
+  protected override async scheduleUpdate(): Promise<void> {
+    await untilNextFrame();
+    super.scheduleUpdate();
+  }
 
   override render(): unknown {
     this._logger.logMethod('render');
