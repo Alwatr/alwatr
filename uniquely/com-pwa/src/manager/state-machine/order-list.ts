@@ -1,6 +1,7 @@
 import {FiniteStateMachine} from '@alwatr/fsm';
 
 import {orderStorageContextConsumer, topAppBarContextProvider} from '../context.js';
+import {logger} from '../logger.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order} from '@alwatr/type/src/customer-order-management.js';
@@ -38,24 +39,22 @@ export const pageOrderListFsm = new FiniteStateMachine({
 } as const);
 
 pageOrderListFsm.signal.subscribe((state) => {
+  logger.logMethodArgs('pageOrderListFsm.changed', state);
   switch (state.by) {
     case 'IMPORT':
       // just in unresolved
       topAppBarContextProvider.setValue({
         headlineKey: 'loading',
       });
+      if (orderStorageContextConsumer.getValue() == null) {
+        orderStorageContextConsumer.request(null, {debounce: 'Timeout'});
+      }
       break;
 
     case 'CONNECTED':
       topAppBarContextProvider.setValue({
         headlineKey: 'page_order_list_headline',
       });
-      break;
-
-    case 'INIT':
-      if (orderStorageContextConsumer.getValue() == null) {
-        orderStorageContextConsumer.request(null, {debounce: 'Timeout'});
-      }
       break;
 
     case 'REQUEST_UPDATE':
