@@ -20,8 +20,12 @@ export const pageOrderListFsm = new FiniteStateMachine({
     },
     unresolved: {
       on: {
-        IMPORT: '$self',
-        FIRST_UPDATED: 'loading',
+        IMPORT: 'resolving',
+      },
+    },
+    resolving: {
+      on: {
+        CONNECTED: 'loading',
         LOADED: 'list',
       },
     },
@@ -38,7 +42,7 @@ export const pageOrderListFsm = new FiniteStateMachine({
   },
 } as const);
 
-pageOrderListFsm.signal.subscribe((state) => {
+pageOrderListFsm.signal.subscribe(async (state) => {
   logger.logMethodArgs('pageOrderListFsm.changed', state);
   switch (state.by) {
     case 'IMPORT':
@@ -48,6 +52,7 @@ pageOrderListFsm.signal.subscribe((state) => {
       });
       if (orderStorageContextConsumer.getValue() == null) {
         orderStorageContextConsumer.request(null, {debounce: 'Timeout'});
+        pageOrderListFsm.transition('LOADED', {orderStorage: await orderStorageContextConsumer.untilChange()});
       }
       break;
 
@@ -59,10 +64,7 @@ pageOrderListFsm.signal.subscribe((state) => {
 
     case 'REQUEST_UPDATE':
       orderStorageContextConsumer.request(null, {debounce: 'Timeout'});
+      pageOrderListFsm.transition('LOADED', {orderStorage: await orderStorageContextConsumer.untilChange()});
       break;
   }
-});
-
-orderStorageContextConsumer.subscribe((orderStorage) => {
-  pageOrderListFsm.transition('LOADED', {orderStorage});
 });

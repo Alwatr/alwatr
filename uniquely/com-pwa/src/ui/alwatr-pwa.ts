@@ -33,8 +33,10 @@ class AlwatrPwa extends AlwatrPwaElement {
         return html`<alwatr-page-404 unresolved>...</alwatr-page-404>`;
       },
       'order-list': () => {
-        import('./page/order-list.js');
-        pageOrderListFsm.transition('IMPORT');
+        if (pageOrderListFsm.gotState === 'unresolved') {
+          pageOrderListFsm.transition('IMPORT');
+          import('./page/order-list.js');
+        }
         return html`<alwatr-page-order-list unresolved>...</alwatr-page-order-list>`;
       },
       'order': (routeContext) => {
