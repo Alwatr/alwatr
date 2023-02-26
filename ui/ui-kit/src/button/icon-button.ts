@@ -73,8 +73,8 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
     content?: IconButtonContent;
 
   override connectedCallback(): void {
-    this.setAttribute('stated', '');
     super.connectedCallback();
+    this.setAttribute('stated', '');
     this.addEventListener('click', this._click);
   }
 
