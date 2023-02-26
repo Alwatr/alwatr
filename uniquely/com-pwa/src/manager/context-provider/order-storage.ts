@@ -7,7 +7,7 @@ import {
   orderStorageContextProvider,
   orderStorageContextConsumer,
   userContextConsumer,
-} from '../../context.js';
+} from '../context.js';
 import {logger} from '../logger.js';
 
 orderStorageContextProvider.setProvider(async (args): Promise<void> => {

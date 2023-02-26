@@ -22,7 +22,7 @@ import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
 import {config} from '../config.js';
-import {topAppBarContextProvider} from '../context.js';
+import {topAppBarContextProvider} from '../manager/context.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order, OrderDraft, OrderItem, Product} from '@alwatr/type/customer-order-management.js';

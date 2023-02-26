@@ -10,7 +10,7 @@ import {
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import {submitOrderCommandTrigger, topAppBarContextProvider} from '../../context.js';
+import {submitOrderCommandTrigger, topAppBarContextProvider} from '../../manager/context.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 

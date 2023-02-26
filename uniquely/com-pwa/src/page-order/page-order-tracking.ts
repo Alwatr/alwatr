@@ -14,7 +14,7 @@ import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
-import {topAppBarContextProvider} from '../context.js';
+import {topAppBarContextProvider} from '../manager/context.js';
 
 import type {OrderDraft} from '@alwatr/type/customer-order-management.js';
 

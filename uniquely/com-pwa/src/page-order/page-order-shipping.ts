@@ -14,7 +14,7 @@ import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
-import {submitOrderShippingCommandTrigger, topAppBarContextProvider} from '../context.js';
+import {submitOrderShippingCommandTrigger, topAppBarContextProvider} from '../manager/context.js';
 
 import type {OrderDelivery, OrderDraft} from '@alwatr/type/customer-order-management.js';
 import type {AlwatrFieldSet, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';

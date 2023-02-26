@@ -17,7 +17,7 @@ import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/product-card.js';
 
 import {config} from '../config.js';
-import {productStorageContextConsumer, topAppBarContextProvider} from '../context.js';
+import {productStorageContextConsumer, topAppBarContextProvider} from '../manager/context.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {OrderDraft, Product, ProductPrice} from '@alwatr/type/customer-order-management.js';
