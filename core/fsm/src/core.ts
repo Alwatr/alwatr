@@ -1,5 +1,5 @@
 import {createLogger, globalAlwatr, type AlwatrLogger} from '@alwatr/logger';
-import {contextConsumer, type DispatchOptions} from '@alwatr/signal';
+import {contextConsumer} from '@alwatr/signal';
 import {dispatch} from '@alwatr/signal/core.js';
 
 import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
@@ -30,41 +30,56 @@ export interface MachineConfig<TState extends string, TEventId extends string, T
    * States list
    */
   states: {
-    [S in TState | '_']: {
+    [S in TState | '$all']: {
       /**
        * An object mapping eventId (keys) to state.
        */
       on: {
-        [E in TEventId]?: TState;
-      }
+        [E in TEventId]?: TState | '$self';
+      };
     };
   };
 }
 
+export interface StateContext<TState extends string, TEventId extends string> {
+  [T: string]: string;
+  to: TState;
+  from: TState | 'init';
+  by: TEventId | 'INIT';
+}
+
 export class FiniteStateMachine<
-TState extends string,
-TEventId extends string,
-TContext extends Stringifyable,
+  TState extends string = string,
+  TEventId extends string = string,
+  TContext extends Stringifyable = Stringifyable
 > {
-  stateConsumer;
+  signal;
   context: TContext;
 
   protected _logger: AlwatrLogger;
 
   get gotState(): TState {
-    return this.stateConsumer.getValue() ?? this.config.initial;
+    return this.signal.getValue()?.to ?? this.config.initial;
   }
 
-  protected setState(value: TState, options?: DispatchOptions): void {
-    dispatch(this.stateConsumer.id, value, options);
+  protected setState(to: TState, by: TEventId | 'INIT'): void {
+    dispatch<StateContext<TState, TEventId>>(
+        this.signal.id,
+        {
+          to,
+          from: this.signal.getValue()?.to ?? 'init',
+          by,
+        },
+        {debounce: 'No'},
+    );
   }
 
   constructor(public readonly config: Readonly<MachineConfig<TState, TEventId, TContext>>) {
     this._logger = createLogger(`alwatr/fsm:${config.id}`);
     this._logger.logMethodArgs('constructor', config);
     this.context = config.context;
-    this.stateConsumer = contextConsumer.bind<TState>('finite-state-machine-' + this.config.id);
-    this.setState(config.initial);
+    this.signal = contextConsumer.bind<StateContext<TState, TEventId>>('finite-state-machine-' + this.config.id);
+    this.setState(config.initial, 'INIT');
     if (!config.states[config.initial]) {
       this._logger.error('constructor', 'invalid_initial_state', config);
     }
@@ -73,30 +88,36 @@ TContext extends Stringifyable,
   /**
    * Machine transition.
    */
-  transition(toEventId: TEventId, newContext?: TContext, options?: DispatchOptions): TState | null {
-    const state = this.gotState;
-    const nextState = this.config.states[state]?.on?.[toEventId] ?? this.config.states._?.on?.[toEventId];
+  transition(event: TEventId, context?: TContext): TState | null {
+    const fromState = this.gotState;
 
-    this._logger.logMethodFull('transition', {toEventId, newContext}, nextState);
+    let toState: TState | '$self' | undefined =
+      this.config.states[fromState]?.on?.[event] ?? this.config.states.$all?.on?.[event];
 
-    if (newContext !== undefined) {
-      this.context = newContext;
+    if (toState === '$self') {
+      toState = fromState;
     }
 
-    if (nextState == null) {
+    this._logger.logMethodFull('transition', {toEventId: event, newContext: context}, toState);
+
+    if (context !== undefined) {
+      this.context = context;
+    }
+
+    if (toState == null) {
       this._logger.incident(
           'transition',
           'invalid_target_state',
           'Defined target state for this event not found in state config',
           {
-            eventName: toEventId,
-            [state]: {...this.config.states._?.on, ...this.config.states[state]?.on},
+            event,
+            [fromState]: {...this.config.states.$all?.on, ...this.config.states[fromState]?.on},
           },
       );
       return null;
     }
 
-    this.setState(nextState, options);
-    return nextState;
+    this.setState(toState, event);
+    return toState;
   }
 }

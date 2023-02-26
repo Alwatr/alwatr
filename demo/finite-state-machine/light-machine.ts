@@ -5,7 +5,7 @@ const lightMachine = new FiniteStateMachine({
   initial: 'green',
   context: <number>0,
   states: {
-    _: {
+    $all: {
       on: {
         POWER_LOST: 'flashingRed',
       },
@@ -33,13 +33,13 @@ const lightMachine = new FiniteStateMachine({
   },
 });
 
-lightMachine.stateConsumer.subscribe((state) => {
+lightMachine.signal.subscribe((state) => {
   console.log('****\nstate: %s, context: %s\n****', state, lightMachine.context);
 }, {receivePrevious: 'No'});
 
 lightMachine.transition('TIMER', 1);
 lightMachine.transition('TIMER', 2);
 lightMachine.transition('TIMER', 3);
-lightMachine.transition('POWER_LOST', 4, {debounce: 'No'});
+lightMachine.transition('POWER_LOST', 4);
 lightMachine.transition('TIMER', 5);
 lightMachine.transition('POWER_BACK', 6);
