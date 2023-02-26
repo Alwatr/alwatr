@@ -2,8 +2,8 @@ import {fetchContext} from '@alwatr/fetch';
 import {l18eReadyPromise, message} from '@alwatr/i18n';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
-import {logger} from '../manager/logger.js';
 import {config} from '../config.js';
+import {logger} from '../manager/logger.js';
 
 const provideProductStorageContext = async (): Promise<void> => {
   logger.logMethod('provideProductStorageContext');
