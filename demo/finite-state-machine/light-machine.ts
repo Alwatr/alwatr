@@ -40,6 +40,6 @@ lightMachine.signal.subscribe((state) => {
 lightMachine.transition('TIMER', 1);
 lightMachine.transition('TIMER', 2);
 lightMachine.transition('TIMER', 3);
-lightMachine.transition('POWER_LOST', 4, {debounce: 'No'});
+lightMachine.transition('POWER_LOST', 4);
 lightMachine.transition('TIMER', 5);
 lightMachine.transition('POWER_BACK', 6);
