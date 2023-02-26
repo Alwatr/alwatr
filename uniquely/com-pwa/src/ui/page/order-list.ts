@@ -53,10 +53,6 @@ export class AlwatrPageOrderList extends StateMachineMixin(
     return message('loading');
   }
 
-  render_unresolved(): unknown {
-    return this.render_loading();
-  }
-
   render_list(): unknown {
     // prettier-ignore
     return [
