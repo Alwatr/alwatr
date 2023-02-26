@@ -69,11 +69,19 @@ export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrBaseElement)) {
   @property()
     name?: string;
 
+  @property({attribute: false})
+    svg?: string;
+
   @state()
   protected _svg?: HTMLTemplateResult | null;
 
   override render(): unknown {
     this._logger.logMethod('render');
+
+    if (this.svg != null) {
+      return html`${unsafeSVG(this.svg)}`;
+    }
+
     return this._svg ?? nothing;
   }
 
@@ -86,7 +94,7 @@ export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrBaseElement)) {
   }
 
   protected override shouldUpdate(changedProperties: PropertyValues<this>): boolean {
-    return super.shouldUpdate(changedProperties) && this._svg !== undefined;
+    return super.shouldUpdate(changedProperties) && (this._svg !== undefined || this.svg != null);
   }
 
   protected async _fetchIcon(): Promise<void> {
