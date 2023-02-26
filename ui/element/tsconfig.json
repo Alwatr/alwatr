@@ -19,6 +19,7 @@
     {"path": "../../core/logger"},
     {"path": "../../core/type"},
     {"path": "../../core/i18n"},
-    {"path": "../../core/router"}
+    {"path": "../../core/router"},
+    {"path": "../../core/fsm"}
   ]
 }

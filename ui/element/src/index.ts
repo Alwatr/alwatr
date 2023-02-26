@@ -9,6 +9,7 @@ export * from './mixins/logging.js';
 export * from './mixins/signal.js';
 export * from './mixins/toggle.js';
 export * from './mixins/unresolved.js';
+export * from './mixins/state-machine.js';
 
 export * from './directives/map.js';
 
