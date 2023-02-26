@@ -1,10 +1,13 @@
+import {nothing, PropertyValues} from '../lit.js';
+
 import type {SignalMixinInterface} from './signal.js';
-import type {PropertyValues} from '../lit.js';
 import type {FiniteStateMachine} from '@alwatr/fsm';
 import type {Constructor} from '@alwatr/type';
 
 export declare class StateMachineMixinInterface<TMachine extends FiniteStateMachine> extends SignalMixinInterface {
-  stateMachine: TMachine;
+  protected stateMachine: TMachine;
+  protected render_unresolved(): unknown;
+  protected render_resolving(): unknown;
 }
 
 export function StateMachineMixin<T extends Constructor<SignalMixinInterface>, TMachine extends FiniteStateMachine>(
@@ -12,7 +15,14 @@ export function StateMachineMixin<T extends Constructor<SignalMixinInterface>, T
     superClass: T,
 ): Constructor<StateMachineMixinInterface<TMachine>> & T {
   class StateMachineMixinClass extends superClass {
-    stateMachine = stateMachine;
+    protected stateMachine = stateMachine;
+
+    protected render_unresolved(): unknown {
+      return nothing;
+    }
+    protected render_resolving(): unknown {
+      return nothing;
+    }
 
     override connectedCallback(): void {
       super.connectedCallback();
