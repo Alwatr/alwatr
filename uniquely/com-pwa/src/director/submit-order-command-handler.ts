@@ -4,9 +4,9 @@ import {redirect} from '@alwatr/router';
 import {commandHandler} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
-import {logger} from '../manager/logger.js';
 import {config} from '../config.js';
 import {userContextConsumer, orderStorageContextProvider, submitOrderCommandTrigger} from '../manager/context.js';
+import {logger} from '../manager/logger.js';
 
 import type {Order} from '@alwatr/type/customer-order-management.js';
 
