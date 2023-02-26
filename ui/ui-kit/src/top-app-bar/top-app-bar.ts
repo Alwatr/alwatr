@@ -7,8 +7,10 @@ import {
   map,
   DirectionMixin,
   SignalMixin,
+  LocalizeMixin,
   type PropertyValues,
 } from '@alwatr/element';
+import {message} from '@alwatr/i18n';
 import {contextConsumer} from '@alwatr/signal';
 
 import '../button/icon-button.js';
@@ -24,12 +26,34 @@ declare global {
 }
 
 export interface TopAppBarContent extends StringifyableRecord {
-  type: 'center' | 'small' | 'medium' | 'large';
-  headline: string;
-  startIcon: IconButtonContent;
+  /**
+   * @default ```'small'```
+   */
+  type?: 'center' | 'small' | 'medium' | 'large';
+  /**
+   * @default ```""```
+   */
+  headline?: string;
+  /**
+   * @default ```'loading'```
+   */
+  headlineKey?: string;
+  /**
+   * @default ```{icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'}```
+   */
+  startIcon?: IconButtonContent;
+  /**
+   * @default ```[]```
+   */
   endIconList?: Array<IconButtonContent>;
-  elevated?: number;
+  /**
+   * @default ```2```
+   */
   tinted?: number;
+  /**
+   * @default ```0```
+   */
+  elevated?: number;
 }
 
 /**
@@ -39,7 +63,7 @@ export interface TopAppBarContent extends StringifyableRecord {
  * @attr {String} context-signal - context signal name
  */
 @customElement('alwatr-top-app-bar')
-export class AlwatrTopAppBar extends DirectionMixin(SignalMixin(AlwatrSurface)) {
+export class AlwatrTopAppBar extends LocalizeMixin(DirectionMixin(SignalMixin(AlwatrSurface))) {
   static override styles = [
     AlwatrSurface.styles,
     css`
@@ -130,7 +154,15 @@ export class AlwatrTopAppBar extends DirectionMixin(SignalMixin(AlwatrSurface)) 
   ];
 
   @property({type: Object, attribute: false})
-    content?: TopAppBarContent;
+    content: Required<TopAppBarContent> = {
+      type: 'center',
+      headline: '',
+      headlineKey: 'loading',
+      startIcon: {icon: ''},
+      endIconList: [],
+      tinted: 2,
+      elevated: 0,
+    };
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -138,7 +170,16 @@ export class AlwatrTopAppBar extends DirectionMixin(SignalMixin(AlwatrSurface)) 
     if (contextSignal) {
       this._signalListenerList.push(
           contextConsumer.subscribe<TopAppBarContent>(contextSignal, (context) => {
-            this.content = context;
+            this.content = {
+              type: 'small',
+              headline: '',
+              headlineKey: 'loading',
+              startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+              endIconList: [],
+              tinted: 2,
+              elevated: 0,
+              ...context,
+            };
             this.requestUpdate(); // Ensure update on child properties changes.
           },
           {receivePrevious: 'NextCycle'}),
@@ -173,18 +214,20 @@ export class AlwatrTopAppBar extends DirectionMixin(SignalMixin(AlwatrSurface)) 
     if (this.content == null) return nothing;
 
     this.setAttribute('type', this.content.type);
-    const title = this.content.type === 'center' || this.content.type === 'small' ? this.content.headline : nothing;
-    const headline = this.content.type === 'medium' || this.content.type === 'large' ? this.content.headline : nothing;
+
+    const headline = this.content.headline || message(this.content.headlineKey);
+    const headlineTemplate = this.content.type === 'medium' || this.content.type === 'large' ? headline : nothing;
+    const titleTemplate = this.content.type === 'center' || this.content.type === 'small' ? headline : nothing;
 
     return html`
       <div class="row">
         <alwatr-icon-button class="leading-icon" .content=${this.content.startIcon}></alwatr-icon-button>
-        <div class="title">${title}</div>
+        <div class="title">${titleTemplate}</div>
         ${map(this.content.endIconList, (iconContent) => html`
           <alwatr-icon-button class="trailing-icons" .content=${iconContent}></alwatr-icon-button>
         `)}
       </div>
-      <div class="headline">${headline}</div>
+      <div class="headline">${headlineTemplate}</div>
     `;
   }
 }
