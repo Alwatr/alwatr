@@ -1,5 +1,5 @@
 import {createLogger, globalAlwatr, type AlwatrLogger} from '@alwatr/logger';
-import {contextConsumer, type DispatchOptions} from '@alwatr/signal';
+import {contextConsumer} from '@alwatr/signal';
 import {dispatch} from '@alwatr/signal/core.js';
 
 import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
@@ -62,7 +62,7 @@ export class FiniteStateMachine<
     return this.signal.getValue()?.to ?? this.config.initial;
   }
 
-  protected setState(to: TState, by: TEventId | 'INIT', options?: DispatchOptions): void {
+  protected setState(to: TState, by: TEventId | 'INIT'): void {
     dispatch<StateContext<TState, TEventId>>(
         this.signal.id,
         {
@@ -70,7 +70,7 @@ export class FiniteStateMachine<
           from: this.signal.getValue()?.to ?? 'init',
           by,
         },
-        options,
+        {debounce: 'No'},
     );
   }
 
@@ -88,7 +88,7 @@ export class FiniteStateMachine<
   /**
    * Machine transition.
    */
-  transition(event: TEventId, context?: TContext, options?: DispatchOptions): TState | null {
+  transition(event: TEventId, context?: TContext): TState | null {
     const fromState = this.gotState;
 
     let toState: TState | '$self' | undefined =
@@ -117,7 +117,7 @@ export class FiniteStateMachine<
       return null;
     }
 
-    this.setState(toState, event, options);
+    this.setState(toState, event);
     return toState;
   }
 }
