@@ -30,12 +30,12 @@ export interface MachineConfig<TState extends string, TEventId extends string, T
    * States list
    */
   states: {
-    [S in TState | '_']: {
+    [S in TState | '$all']: {
       /**
        * An object mapping eventId (keys) to state.
        */
       on: {
-        [E in TEventId]?: TState;
+        [E in TEventId]?: TState | '$self';
       };
     };
   };
@@ -48,7 +48,11 @@ export interface StateContext<TState extends string, TEventId extends string> {
   by: TEventId | 'INIT';
 }
 
-export class FiniteStateMachine<TState extends string, TEventId extends string, TContext extends Stringifyable> {
+export class FiniteStateMachine<
+  TState extends string = string,
+  TEventId extends string = string,
+  TContext extends Stringifyable = Stringifyable
+> {
   signal;
   context: TContext;
 
@@ -86,7 +90,13 @@ export class FiniteStateMachine<TState extends string, TEventId extends string, 
    */
   transition(event: TEventId, context?: TContext, options?: DispatchOptions): TState | null {
     const fromState = this.gotState;
-    const toState = this.config.states[fromState]?.on?.[event] ?? this.config.states._?.on?.[event];
+
+    let toState: TState | '$self' | undefined =
+      this.config.states[fromState]?.on?.[event] ?? this.config.states.$all?.on?.[event];
+
+    if (toState === '$self') {
+      toState = fromState;
+    }
 
     this._logger.logMethodFull('transition', {toEventId: event, newContext: context}, toState);
 
@@ -101,7 +111,7 @@ export class FiniteStateMachine<TState extends string, TEventId extends string, 
           'Defined target state for this event not found in state config',
           {
             event,
-            [fromState]: {...this.config.states._?.on, ...this.config.states[fromState]?.on},
+            [fromState]: {...this.config.states.$all?.on, ...this.config.states[fromState]?.on},
           },
       );
       return null;

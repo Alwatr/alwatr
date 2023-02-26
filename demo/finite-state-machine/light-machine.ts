@@ -5,7 +5,7 @@ const lightMachine = new FiniteStateMachine({
   initial: 'green',
   context: <number>0,
   states: {
-    _: {
+    $all: {
       on: {
         POWER_LOST: 'flashingRed',
       },
