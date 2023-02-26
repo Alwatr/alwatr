@@ -6,7 +6,7 @@ import {
   commandTrigger,
 } from '@alwatr/signal';
 
-import {PageHomeContent} from './type.js';
+import {PageHomeContent} from '../type.js';
 
 import type {AlwatrDocumentStorage, User} from '@alwatr/type';
 import type {Product, Order, OrderDelivery} from '@alwatr/type/customer-order-management.js';

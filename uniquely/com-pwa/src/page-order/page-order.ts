@@ -16,7 +16,7 @@ import {message} from '@alwatr/i18n';
 import {redirect, routerOutlet, type RouteContext, type RoutesConfig} from '@alwatr/router';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import {orderStorageContextConsumer, topAppBarContextProvider} from '../context.js';
+import {orderStorageContextConsumer, topAppBarContextProvider} from '../manager/context.js';
 
 import type {Order, OrderDraft} from '@alwatr/type/customer-order-management.js';
 
@@ -105,7 +105,7 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(UnresolvedMixin(A
     routeId: (routeContext) => routeContext.sectionList[this.routeSlice + 1]?.toString(),
     templates: {
       _404: () => {
-        import('../ui/page/page-404.js');
+        import('../ui/page/404.js');
         return html`<alwatr-page-404>...</alwatr-page-404>`;
       },
       home: () => {

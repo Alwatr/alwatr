@@ -14,7 +14,7 @@ import {
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import {homePageContentContextConsumer, topAppBarContextProvider} from '../../context.js';
+import {homePageContentContextConsumer, topAppBarContextProvider} from '../../manager/context.js';
 
 import type {BoxType, PageHomeContent} from '../../type.js';
 

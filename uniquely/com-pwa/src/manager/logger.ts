@@ -1,3 +1,3 @@
 import {createLogger} from '@alwatr/logger';
 
-export const logger = createLogger('manager');
+export const logger = createLogger('com-manager');

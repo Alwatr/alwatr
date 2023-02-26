@@ -5,7 +5,7 @@ import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator} from '@alwatr/validator';
 
 import {logger} from '../manager/logger.js';
-import {submitOrderShippingCommandTrigger} from '../context.js';
+import {submitOrderShippingCommandTrigger} from '../manager/context.js';
 
 
 commandHandler.define<OrderDelivery, OrderDelivery | null>(submitOrderShippingCommandTrigger.id, (orderDelivery) => {
