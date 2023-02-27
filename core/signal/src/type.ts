@@ -1,6 +1,6 @@
 import type {MaybePromise, Stringifyable} from '@alwatr/type';
 
-export type DebounceType = 'No' | 'AnimationFrame' | 'Timeout';
+export type DebounceType = 'No' | 'NextCycle' | 'AnimationFrame' | 'Timeout';
 
 /**
  * Subscribe options type.
@@ -31,7 +31,7 @@ export interface SubscribeOptions {
    *
    * @default `NextCycle`
    */
-  receivePrevious: DebounceType | 'NextCycle';
+  receivePrevious: DebounceType;
 }
 
 /**
@@ -39,9 +39,9 @@ export interface SubscribeOptions {
  */
 export interface DispatchOptions {
   /**
-   * If true, the dispatch will be send after animation frame debounce.
-   * If false, every signal is matter and count.
-   * tips: debounce work like throttle this means listeners call with last dispatch value.
+   * If 'AnimationFrame' or 'Timeout', the dispatch will be debounced (single dispatch for all changes).
+   * If 'No' or 'NextCycle', every signal is matter and count without debounced (every changes dispatched).
+   * tips: debounce work like throttle this means listeners call with latest dispatch value.
    *
    * @default `AnimationFrame`
    */
@@ -58,12 +58,12 @@ export interface ProviderOptions {
    *
    * @default `NextCycle`
    */
-  receivePrevious: DebounceType | 'NextCycle';
+  receivePrevious: DebounceType;
 
   /**
-   * If true, the dispatch will be send after animation frame debounce.
-   * If false, every signal is matter and count.
-   * tips: debounce true work like throttle this means listeners call with last dispatch value.
+   * If 'AnimationFrame' or 'Timeout', the dispatch will be debounced (single dispatch for all changes).
+   * If 'No' or 'NextCycle', every signal is matter and count without debounced (every changes dispatched).
+   * tips: debounce work like throttle this means listeners call with latest dispatch value.
    *
    * @default `AnimationFrame`
    */
