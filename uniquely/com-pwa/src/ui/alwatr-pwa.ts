@@ -33,7 +33,7 @@ class AlwatrPwa extends AlwatrPwaElement {
         return html`<alwatr-page-404 unresolved>...</alwatr-page-404>`;
       },
       'order-list': () => {
-        if (pageOrderListFsm.gotState === 'unresolved') {
+        if (pageOrderListFsm.state.to === 'unresolved') {
           pageOrderListFsm.transition('IMPORT');
           import('./page/order-list.js');
         }
