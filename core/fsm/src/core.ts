@@ -1,4 +1,4 @@
-import {createLogger, globalAlwatr, type AlwatrLogger} from '@alwatr/logger';
+import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {contextConsumer} from '@alwatr/signal';
 import {dispatch} from '@alwatr/signal/core.js';
 
@@ -53,33 +53,28 @@ export class FiniteStateMachine<
   TEventId extends string = string,
   TContext extends Stringifyable = Stringifyable
 > {
-  signal;
-  context: TContext;
+  state: StateContext<TState, TEventId> = {
+    to: this.config.initial,
+    from: 'init',
+    by: 'INIT',
+  };
+  context = this.config.context;
+  signal = contextConsumer.bind<StateContext<TState, TEventId>>('finite-state-machine-' + this.config.id);
 
-  protected _logger: AlwatrLogger;
-
-  get gotState(): TState {
-    return this.signal.getValue()?.to ?? this.config.initial;
-  }
+  protected _logger = createLogger(`alwatr/fsm:${this.config.id}`);
 
   protected setState(to: TState, by: TEventId | 'INIT'): void {
-    dispatch<StateContext<TState, TEventId>>(
-        this.signal.id,
-        {
-          to,
-          from: this.signal.getValue()?.to ?? 'init',
-          by,
-        },
-        {debounce: 'No'},
-    );
+    this.state = {
+      to,
+      from: this.signal.getValue()?.to ?? 'init',
+      by,
+    };
+    dispatch<StateContext<TState, TEventId>>(this.signal.id, this.state, {debounce: 'NextCycle'});
   }
 
   constructor(public readonly config: Readonly<MachineConfig<TState, TEventId, TContext>>) {
-    this._logger = createLogger(`alwatr/fsm:${config.id}`);
     this._logger.logMethodArgs('constructor', config);
-    this.context = config.context;
-    this.signal = contextConsumer.bind<StateContext<TState, TEventId>>('finite-state-machine-' + this.config.id);
-    this.setState(config.initial, 'INIT');
+    dispatch<StateContext<TState, TEventId>>(this.signal.id, this.state, {debounce: 'NextCycle'});
     if (!config.states[config.initial]) {
       this._logger.error('constructor', 'invalid_initial_state', config);
     }
@@ -89,7 +84,7 @@ export class FiniteStateMachine<
    * Machine transition.
    */
   transition(event: TEventId, context?: TContext): TState | null {
-    const fromState = this.gotState;
+    const fromState = this.state.to;
 
     let toState: TState | '$self' | undefined =
       this.config.states[fromState]?.on?.[event] ?? this.config.states.$all?.on?.[event];
@@ -98,7 +93,7 @@ export class FiniteStateMachine<
       toState = fromState;
     }
 
-    this._logger.logMethodFull('transition', {toEventId: event, newContext: context}, toState);
+    this._logger.logMethodFull('transition', {event, context}, toState);
 
     if (context !== undefined) {
       this.context = context;
