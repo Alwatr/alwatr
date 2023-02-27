@@ -5,7 +5,7 @@ import {fetchOrderStorage} from '../context-provider/order-storage.js';
 import {orderStorageContextConsumer, topAppBarContextProvider} from '../context.js';
 
 import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
-import type {Order} from '@alwatr/type/src/customer-order-management.js';
+import type {Order} from '@alwatr/type/customer-order-management.js';
 
 export const pageOrderListFsm = new FiniteStateMachine({
   id: 'page-order-list',
