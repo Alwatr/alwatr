@@ -234,12 +234,21 @@ export const dispatch = <T extends Stringifyable>(
 
   if (signal.disabled) return; // signal is disabled.
 
-  // Simple debounce noise filtering
-  if (options.debounce !== 'No' && signal.debounced === true) return; // last dispatch in progress.
-
   if (options.debounce === 'No') {
     return _callListeners(signal);
   }
+
+  // else
+  if (options.debounce === 'NextCycle') {
+    setTimeout(_callListeners, 0, signal);
+    return;
+  }
+
+  // else
+  if (signal.debounced === true) {
+    return; // last dispatch in progress.
+  }
+
   // else
   signal.debounced = true;
   const callListeners = (): void => {
@@ -434,7 +443,7 @@ export const requestCommandWithResponse = async <
         ...commandArgument,
         _callbackSignalId,
       },
-      {debounce: 'No'},
+      {debounce: 'NextCycle'},
   );
 
   const response = await untilCallback;
