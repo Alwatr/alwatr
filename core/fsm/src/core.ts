@@ -1,4 +1,4 @@
-import {createLogger, globalAlwatr, type AlwatrLogger} from '@alwatr/logger';
+import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {contextConsumer} from '@alwatr/signal';
 import {dispatch} from '@alwatr/signal/core.js';
 
