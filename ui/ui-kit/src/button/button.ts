@@ -42,6 +42,9 @@ export class AlwatrButton extends AlwatrSurface {
     `,
   ];
 
+  @property()
+    icon?: string;
+
   @property({attribute: 'signal-id'})
     signalId?: string;
 
@@ -58,7 +61,15 @@ export class AlwatrButton extends AlwatrSurface {
 
   override render(): unknown {
     this._logger.logMethod('render');
-    return html`<slot>button</slot>`;
+    if (this.icon) {
+      return html`
+        <alwatr-icon .name=${this.icon} ?flip-rtl=${this.hasAttribute('flip-rtl')}></alwatr-icon>
+        <slot>button</slot>
+      `;
+    }
+    else {
+      return html`<slot>button</slot>`;
+    }
   }
 
   protected _click(event: MouseEvent): void {
