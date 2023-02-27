@@ -44,6 +44,7 @@ export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrBaseElement)) {
       height: 1em;
       contain: size layout paint style;
       box-sizing: content-box;
+      vertical-align: middle;
     }
 
     :host([flip-rtl][dir='rtl']) svg {
