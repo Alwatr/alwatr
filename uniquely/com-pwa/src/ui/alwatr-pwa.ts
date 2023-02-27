@@ -6,6 +6,7 @@ import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-85.css';
 
 import './stuff/app-footer.js';
+import {pageOrderDetailFsm} from '../manager/controller/order-detail.js';
 import {pageOrderListFsm} from '../manager/controller/order-list.js';
 
 import type {RoutesConfig} from '@alwatr/router';
@@ -39,9 +40,13 @@ class AlwatrPwa extends AlwatrPwaElement {
         }
         return html`<alwatr-page-order-list unresolved>...</alwatr-page-order-list>`;
       },
-      'order': (routeContext) => {
-        import('../page-order/page-order.js');
-        return html`<alwatr-page-order unresolved .routeContext=${routeContext}>...</alwatr-page-order>`;
+      'order-detail': (routeContext) => {
+        if (pageOrderDetailFsm.state.to === 'unresolved') {
+          pageOrderDetailFsm.transition('IMPORT');
+          import('./page/order-detail.js');
+        }
+        pageOrderDetailFsm.transition('SHOW_DETAIL', {orderId: +routeContext.sectionList[1]});
+        return html`<alwatr-page-order-detail unresolved>...</alwatr-page-order-detail>`;
       },
     },
   };
