@@ -2,10 +2,11 @@ import {FiniteStateMachine} from '@alwatr/fsm';
 import {eventListener} from '@alwatr/signal';
 
 import {fetchOrderStorage} from '../context-provider/order-storage.js';
-import {orderStorageContextConsumer, topAppBarContextProvider} from '../context.js';
+import {fetchProductStorage} from '../context-provider/product-storage.js';
+import {orderStorageContextConsumer, productStorageContextConsumer, topAppBarContextProvider} from '../context.js';
 
 import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
-import type {Order} from '@alwatr/type/customer-order-management.js';
+import type {Order, Product} from '@alwatr/type/customer-order-management.js';
 
 export const pageOrderDetailFsm = new FiniteStateMachine({
   id: 'page-order-detail',
@@ -14,6 +15,7 @@ export const pageOrderDetailFsm = new FiniteStateMachine({
     order: <Order | null>null,
     orderId: <number | null>null,
     orderStorage: <AlwatrDocumentStorage<Order> | null>null,
+    productStorage: <AlwatrDocumentStorage<Product> | null> null,
   },
   states: {
     $all: {
@@ -49,7 +51,7 @@ export const pageOrderDetailFsm = new FiniteStateMachine({
       on: {},
     },
   },
-} as const);
+});
 
 pageOrderDetailFsm.signal.subscribe(async (state) => {
   // logger.logMethodArgs('pageOrderDetailFsm.changed', state);
@@ -59,9 +61,15 @@ pageOrderDetailFsm.signal.subscribe(async (state) => {
       topAppBarContextProvider.setValue({
         headlineKey: 'loading',
       });
-      if (orderStorageContextConsumer.getValue() == null) {
-        fetchOrderStorage();
+      const fetchList = [];
+      if (productStorageContextConsumer.getValue() == null) {
+        fetchList.push(fetchProductStorage());
       }
+      if (orderStorageContextConsumer.getValue() == null) {
+        fetchList.push(fetchOrderStorage());
+      }
+      await Promise.all(fetchList);
+      pageOrderDetailFsm.transition('CONTEXT_LOADED');
       break;
     }
 
@@ -86,8 +94,14 @@ pageOrderDetailFsm.signal.subscribe(async (state) => {
   }
 });
 
+productStorageContextConsumer.subscribe((productStorage) => {
+  pageOrderDetailFsm.context.productStorage = productStorage;
+  // pageOrderDetailFsm.transition('PRODUCT_LOADED', {productStorage});
+});
+
 orderStorageContextConsumer.subscribe((orderStorage) => {
-  pageOrderDetailFsm.transition('CONTEXT_LOADED', {orderStorage});
+  pageOrderDetailFsm.context.orderStorage = orderStorage;
+  // pageOrderDetailFsm.transition('ORDER_LOADED', {orderStorage});
 });
 
 eventListener.subscribe<ClickSignalType>('page_order_detail_reload_click_event', () => {
