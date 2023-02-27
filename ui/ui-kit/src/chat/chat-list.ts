@@ -1,4 +1,4 @@
-import {AlwatrBaseElement, css, customElement, html, nothing, property} from '@alwatr/element';
+import {AlwatrBaseElement, css, customElement, html, mapObject, nothing, property} from '@alwatr/element';
 
 import './chat-message.js';
 
@@ -75,7 +75,8 @@ export class AlwatrChatList extends AlwatrBaseElement {
   override render(): unknown {
     this._logger.logMethod('render');
     if (this.storage == null) return nothing;
-    return html`${map(
+    return html`${mapObject(
+        this,
         this.storage.data,
         (message) => html`
         <alwatr-chat-message .message=${message} ?self=${message.from === this.currentUser}></alwatr-chat-message>

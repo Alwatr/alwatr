@@ -1,8 +1,9 @@
 import {AlwatrBaseElement, css, customElement, html} from '@alwatr/element';
-import {setLocale, localeContextConsumer, commonLocale} from '@alwatr/i18n';
 
 import './chat-text-input.js';
 import '../button/icon-button.js';
+
+import type {IconButtonContent} from '../button/icon-button.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -36,12 +37,15 @@ export class AlwatrChatFooter extends AlwatrBaseElement {
   override render(): unknown {
     this._logger.logMethod('render');
     return html`
-      <alwatr-icon-button .icon=${'happy-outline'} @click=${this._changeLocale}></alwatr-icon-button>
+      <alwatr-icon-button
+        .content=${<IconButtonContent>{icon: 'happy-outline'}}
+        @click=${this._sendMessage}
+      ></alwatr-icon-button>
       <alwatr-chat-text-input></alwatr-chat-text-input>
     `;
   }
 
-  protected _changeLocale(): void {
-    setLocale(localeContextConsumer.getValue()?.language !== 'fa' ? commonLocale.fa : commonLocale.en);
+  protected _sendMessage(): void {
+    this._logger.logMethod('_sendMessage');
   }
 }
