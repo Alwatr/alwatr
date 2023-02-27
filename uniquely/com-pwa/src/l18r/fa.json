@@ -15,6 +15,7 @@
     "order_detail_headline": "سفارش ${orderId}",
     "order_detail_headline_new": "سفارش جدید",
     "new_order_button": "سفارش جدید",
+    "reload": "به‌روزرسانی",
 
     "fetch_failed": "خطا در دریافت اطلاعات از اینترنت!",
     "retry": "تلاش مجدد",

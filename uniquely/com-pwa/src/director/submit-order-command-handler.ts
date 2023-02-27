@@ -5,7 +5,7 @@ import {commandHandler} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
 import {config} from '../config.js';
-import {userContextConsumer, orderStorageContextProvider, submitOrderCommandTrigger} from '../manager/context.js';
+import {userContextConsumer, submitOrderCommandTrigger} from '../manager/context.js';
 import {logger} from '../manager/logger.js';
 
 import type {Order} from '@alwatr/type/customer-order-management.js';
@@ -27,11 +27,11 @@ commandHandler.define<Partial<Order>, Order | null>(submitOrderCommandTrigger.id
 
     const newOrder = response.data;
 
-    const orderStorage = orderStorageContextProvider.getValue();
-    if (orderStorage != null) {
-      orderStorage.data[newOrder.id] = newOrder;
-      orderStorageContextProvider.setValue(orderStorage);
-    }
+    // const orderStorage = orderStorageContextProvider.getValue();
+    // if (orderStorage != null) {
+    //   orderStorage.data[newOrder.id] = newOrder;
+    //   orderStorageContextProvider.setValue(orderStorage);
+    // }
 
     snackbarSignalTrigger.request({
       message: message('submit_order_success'),
