@@ -46,7 +46,7 @@ export class AlwatrPageOrderList extends StateMachineMixin(
 
   override render(): unknown {
     this._logger.logMethod('render');
-    return this[`render_${this.stateMachine.gotState}`]?.();
+    return this[`render_${this.stateMachine.state.to}`]?.();
   }
 
   render_loading(): unknown {
@@ -61,7 +61,7 @@ export class AlwatrPageOrderList extends StateMachineMixin(
 
   render_list(): unknown {
     this._logger.logMethod('render_list');
-    const gotState = this.stateMachine.gotState;
+    const gotState = this.stateMachine.state.to;
     // prettier-ignore
     return [
       mapObject(this, this.stateMachine.context.orderStorage?.data, (order) => {
