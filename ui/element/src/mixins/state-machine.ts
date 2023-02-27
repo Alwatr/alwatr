@@ -6,6 +6,7 @@ import type {Constructor} from '@alwatr/type';
 
 export declare class StateMachineMixinInterface<TMachine extends FiniteStateMachine> extends SignalMixinInterface {
   protected stateMachine: TMachine;
+  protected stateUpdated(state: TMachine['state']): void;
   protected render_unresolved(): unknown;
   protected render_resolving(): unknown;
 }
@@ -28,13 +29,16 @@ export function StateMachineMixin<T extends Constructor<SignalMixinInterface>, T
       super.connectedCallback();
       this.stateMachine.transition('CONNECTED');
       this._signalListenerList.push(
-          this.stateMachine.signal.subscribe(
-              () => {
-                this.requestUpdate();
-              },
-              {receivePrevious: 'No'},
-          ),
+          this.stateMachine.signal.subscribe((state) => this.stateUpdated(state), {receivePrevious: 'NextCycle'}),
       );
+    }
+
+    /**
+     * Subscribe to this.stateMachine.signal event.
+    */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    protected stateUpdated(_state: TMachine['state']): void {
+      this.requestUpdate();
     }
 
     protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
