@@ -80,7 +80,7 @@ export class AlwatrPageOrderList extends StateMachineMixin(
         <div>
           <alwatr-button
             icon="reload-outline"
-            signal-id="reload_order_click_event"
+            signal-id="page_order_list_reload_click_event"
             elevated
             ?disabled=${gotState === 'reloading'}
           >${message(gotState === 'reloading' ? 'loading' : 'reload')}</alwatr-button>
