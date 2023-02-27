@@ -98,7 +98,7 @@ export class FiniteStateMachine<
       toState = fromState;
     }
 
-    this._logger.logMethodFull('transition', {toEventId: event, newContext: context}, toState);
+    this._logger.logMethodFull('transition', {event, context}, toState);
 
     if (context !== undefined) {
       this.context = context;
