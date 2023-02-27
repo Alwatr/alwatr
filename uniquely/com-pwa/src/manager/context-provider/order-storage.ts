@@ -4,19 +4,18 @@ import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
 import {config} from '../../config.js';
 import {
-  orderStorageContextProvider,
   orderStorageContextConsumer,
   userContextConsumer,
 } from '../context.js';
 import {logger} from '../logger.js';
 
-orderStorageContextProvider.setProvider(async (args): Promise<void> => {
-  logger.logMethod('orderStorageContextProvider');
+export const fetchOrderStorage = async (): Promise<void> => {
+  logger.logMethod('fetchOrderStorage');
 
   const userContext = userContextConsumer.getValue() ?? (await userContextConsumer.untilChange());
 
   try {
-    await fetchContext(orderStorageContextProvider.id, {
+    await fetchContext(orderStorageContextConsumer.id, {
       ...config.fetchContextOptions,
       url: config.api + '/order-list/',
       queryParameters: {
@@ -25,16 +24,15 @@ orderStorageContextProvider.setProvider(async (args): Promise<void> => {
     });
   }
   catch (err) {
-    logger.error('orderStorageContextProvider', 'fetch_failed', err);
-
+    logger.error('fetchOrderStorage', 'fetch_failed', err);
     await l18eReadyPromise;
     const response = await snackbarSignalTrigger.requestWithResponse({
       message: message('fetch_failed'),
       actionLabel: message('retry'),
-      duration: -1,
+      duration: orderStorageContextConsumer.getValue() == null ? -1 : 5_000,
     });
     if (response.actionButton) {
-      orderStorageContextConsumer.request(args);
+      await fetchOrderStorage();
     }
   }
-});
+};

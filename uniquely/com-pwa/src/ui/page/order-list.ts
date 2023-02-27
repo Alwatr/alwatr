@@ -50,10 +50,18 @@ export class AlwatrPageOrderList extends StateMachineMixin(
   }
 
   render_loading(): unknown {
+    this._logger.logMethod('render_loading');
     return message('loading');
   }
 
+  render_reloading(): unknown {
+    this._logger.logMethod('render_reloading');
+    return this.render_list();
+  }
+
   render_list(): unknown {
+    this._logger.logMethod('render_list');
+    const gotState = this.stateMachine.gotState;
     // prettier-ignore
     return [
       mapObject(this, this.stateMachine.context.orderStorage?.data, (order) => {
@@ -68,11 +76,21 @@ export class AlwatrPageOrderList extends StateMachineMixin(
         };
         return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
       }),
-      html`<alwatr-button
-        icon="add-outline"
-        signal-id="new-order-click-event"
-        elevated
-      >${message('new_order_button')}</alwatr-button>`,
+      html`
+        <div>
+          <alwatr-button
+            icon="reload-outline"
+            signal-id="reload_order_click_event"
+            elevated
+            ?disabled=${gotState === 'reloading'}
+          >${message(gotState === 'reloading' ? 'loading' : 'reload')}</alwatr-button>
+          <alwatr-button
+            icon="add-outline"
+            signal-id="new_order_click_event"
+            elevated
+          >${message('new_order_button')}</alwatr-button>
+        </div>
+      `,
     ];
   }
 }

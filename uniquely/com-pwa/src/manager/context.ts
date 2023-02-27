@@ -1,8 +1,6 @@
 import {
   contextConsumer,
   contextProvider,
-  requestableContextConsumer,
-  requestableContextProvider,
   commandTrigger,
 } from '@alwatr/signal';
 
@@ -16,10 +14,8 @@ export * from '@alwatr/pwa-helper/context.js';
 export const productStorageContextConsumer =
   contextConsumer.bind<AlwatrDocumentStorage<Product>>('product-storage-context');
 
-export const orderStorageContextProvider =
-    requestableContextProvider.bind<AlwatrDocumentStorage<Order>, null>('order-storage-context');
 export const orderStorageContextConsumer =
-  requestableContextConsumer.bind<AlwatrDocumentStorage<Order>, null>(orderStorageContextProvider.id);
+  contextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
 
 export const userContextProvider = contextProvider.bind<User>('user-context');
 export const userContextConsumer = contextConsumer.bind<User>(userContextProvider.id);
