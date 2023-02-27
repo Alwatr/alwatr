@@ -1,6 +1,6 @@
 import {getLocalStorageItem} from '@alwatr/util';
 
-import {userContextProvider} from '../manager/context.js';
+import {userContextProvider} from '../context.js';
 
 // demo
 userContextProvider.setValue(getLocalStorageItem('user-context', {

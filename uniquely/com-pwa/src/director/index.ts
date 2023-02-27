@@ -1,6 +1,4 @@
-import './content-provider.js';
-import './l18e-loader.js';
 import './product-storage-context-provider.js';
 import './shipping-order-command-handler.js';
 import './submit-order-command-handler.js';
-import './user-context-provider.js';
+import '../manager/context-provider/user.js';
