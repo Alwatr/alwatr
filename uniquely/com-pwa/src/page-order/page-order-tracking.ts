@@ -8,7 +8,6 @@ import {
   property,
   UnresolvedMixin,
 } from '@alwatr/element';
-import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/chat/chat.js';

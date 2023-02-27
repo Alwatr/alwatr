@@ -11,7 +11,7 @@ import {message} from '@alwatr/i18n';
 
 import '../button/icon-button.js';
 
-import type {AlwatrStandardIconButton} from '../button/icon-button.js';
+import type {AlwatrStandardIconButton, IconButtonContent} from '../button/icon-button.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -67,12 +67,11 @@ export class AlwatrChatTextInput extends LocalizeMixin(SignalMixin(AlwatrBaseEle
   override render(): unknown {
     this._logger.logMethod('render');
     return html`
-      <textarea
-        rows="1"
-        placeholder=${message('chat_text_input_placeholder')}
-        @input=${this.__inputChange}
-      ></textarea>
-      <alwatr-icon-button .icon=${'send'} flip-rtl disabled></alwatr-icon-button>
+      <textarea rows="1" placeholder=${message('chat_text_input_placeholder')} @input=${this.__inputChange}></textarea>
+      <alwatr-icon-button
+        .content=${<IconButtonContent>{icon: 'send-outline', flipRtl: true}}
+        disabled
+      ></alwatr-icon-button>
     `;
   }
 
