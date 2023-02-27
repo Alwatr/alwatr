@@ -11,7 +11,7 @@ import {generateSW} from 'workbox-build';
 import packageJson from './package.json' assert {type: 'json'};
 
 const logger = createLogger('alwatr-pwa-build');
-const banner = '/* ..:: Alwatr UI Demo ::.. */\n';
+const banner = '/* ..:: Alwatr PWA ::.. */\n';
 
 const srcDir = 'src';
 const resDir = 'res';
