@@ -11,6 +11,7 @@ import {
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
+import '@alwatr/ui-kit/chat/chat.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
@@ -45,15 +46,12 @@ export class AlwatrPageOrderTracking extends LocalizeMixin(SignalMixin(Unresolve
     super.connectedCallback();
 
     topAppBarContextProvider.setValue({
-      type: 'medium',
-      headline: message('page_order_tracking_headline'),
-      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
-      tinted: 2,
+      headlineKey: 'page_order_tracking_headline',
     });
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
-    return html` order tracking `;
+    return html`<alwatr-chat></alwatr-chat>`;
   }
 }

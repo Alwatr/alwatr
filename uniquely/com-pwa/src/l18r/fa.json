@@ -20,6 +20,7 @@
     "fetch_failed": "خطا در دریافت اطلاعات از اینترنت!",
     "retry": "تلاش مجدد",
     "loading": "درحال بارگذاری...",
+    "cancel": "لغو",
 
     "order_status_draft": "پیش نویس",
     "order_status_registered": "ثبت شده",
@@ -58,7 +59,8 @@
     "order_detail_total_price": "قیمت کل",
     "order_detail_shipping_price": "هزینه ارسال",
 
-    "cancel": "لغو",
+    "page_order_tracking_headline": "پیگیری سفارش",
+    "chat_text_input_placeholder": "پیام را بنویسید",
 
     "submit_order_success": "سفارش شما با موفقیت ثبت شد.",
     "submit_order_failed": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید."
