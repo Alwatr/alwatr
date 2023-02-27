@@ -199,11 +199,16 @@ export class AlwatrPageOrderProduct extends LocalizeMixin(SignalMixin(Unresolved
 
       if (target?.selected === true) {
         this.order.itemList.push(item);
-        this.renderRoot.querySelector('alwatr-button')?.removeAttribute('disabled');
       }
       else {
         this.order.itemList.splice(this.order.itemList.indexOf(item), 1);
+      }
+
+      if (this.order.itemList.length === 0) {
         this.renderRoot.querySelector('alwatr-button')?.setAttribute('disabled', '');
+      }
+      else if (this.order.itemList.length === 1) {
+        this.renderRoot.querySelector('alwatr-button')?.removeAttribute('disabled');
       }
     }
   }
