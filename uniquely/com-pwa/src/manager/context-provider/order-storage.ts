@@ -24,6 +24,7 @@ export const fetchOrderStorage = async (): Promise<void> => {
     });
   }
   catch (err) {
+    // TODO: refactor
     logger.error('fetchOrderStorage', 'fetch_failed', err);
     await l18eReadyPromise;
     const response = await snackbarSignalTrigger.requestWithResponse({

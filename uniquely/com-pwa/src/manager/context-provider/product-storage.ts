@@ -5,7 +5,7 @@ import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {config} from '../../config.js';
 import {logger} from '../logger.js';
 
-export const fetchProductStorage = async (productStorageName: string): Promise<void> => {
+export const fetchProductStorage = async (productStorageName = 'tile'): Promise<void> => {
   logger.logMethod('fetchProductStorages');
 
   try {
