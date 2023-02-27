@@ -6,6 +6,7 @@
   },
   "data": {
     "not_found": "پیدا نشد!",
+    "order_not_found": "سفارش پیدا نشد!",
     "under_develope": "دردست ساخت",
     "under_develope_description": "برنامه نویسان سخت مشغول کارند...\nاندکی صبر سحر نزدیک است...\nدرضمن اگر رو من بزنی یک سفارش الکی ثبت می‌شود\nپس لطفا نزن!",
     "order_item_headline": "سفارش ${orderId}",
