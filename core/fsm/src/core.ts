@@ -51,7 +51,7 @@ export interface StateContext<TState extends string, TEventId extends string> {
 export class FiniteStateMachine<
   TState extends string = string,
   TEventId extends string = string,
-  TContext extends Stringifyable = Stringifyable
+  TContext extends StringifyableRecord = StringifyableRecord
 > {
   state: StateContext<TState, TEventId> = {
     to: this.config.initial,
@@ -83,7 +83,7 @@ export class FiniteStateMachine<
   /**
    * Machine transition.
    */
-  transition(event: TEventId, context?: TContext): TState | null {
+  transition(event: TEventId, context?: Partial<TContext>): TState | null {
     const fromState = this.state.to;
 
     let toState: TState | '$self' | undefined =
@@ -96,7 +96,10 @@ export class FiniteStateMachine<
     this._logger.logMethodFull('transition', {event, context}, toState);
 
     if (context !== undefined) {
-      this.context = context;
+      this.context = {
+        ...this.context,
+        context,
+      };
     }
 
     if (toState == null) {
