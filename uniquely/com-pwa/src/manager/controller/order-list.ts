@@ -17,7 +17,7 @@ export const pageOrderListFsm = new FiniteStateMachine({
     $all: {
       on: {
         CONNECTED: '$self',
-        CONTEXT_LOADED: 'list',
+        CONTEXT_LOADED: '$self',
       },
     },
     unresolved: {
@@ -31,7 +31,9 @@ export const pageOrderListFsm = new FiniteStateMachine({
       },
     },
     loading: {
-      on: {},
+      on: {
+        CONTEXT_LOADED: 'list',
+      },
     },
     list: {
       on: {
@@ -39,7 +41,9 @@ export const pageOrderListFsm = new FiniteStateMachine({
       },
     },
     reloading: {
-      on: {},
+      on: {
+        CONTEXT_LOADED: 'list',
+      },
     },
   },
 } as const);
@@ -67,6 +71,12 @@ pageOrderListFsm.signal.subscribe(async (state) => {
       await fetchOrderStorage();
       pageOrderListFsm.transition('CONTEXT_LOADED');
       break;
+  }
+
+  if (state.to === 'loading') {
+    if (pageOrderListFsm.context.orderStorage != null) {
+      pageOrderListFsm.transition('CONTEXT_LOADED');
+    }
   }
 });
 

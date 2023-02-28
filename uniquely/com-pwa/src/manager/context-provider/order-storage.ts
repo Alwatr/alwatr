@@ -15,13 +15,17 @@ export const fetchOrderStorage = async (): Promise<void> => {
   const userContext = userContextConsumer.getValue() ?? (await userContextConsumer.untilChange());
 
   try {
-    await fetchContext(orderStorageContextConsumer.id, {
-      ...config.fetchContextOptions,
-      url: config.api + '/order-list/',
-      queryParameters: {
-        userId: userContext.id,
-      },
-    });
+    await fetchContext(
+        orderStorageContextConsumer.id,
+        {
+          ...config.fetchContextOptions,
+          url: config.api + '/order-list/',
+          queryParameters: {
+            userId: userContext.id,
+          },
+        },
+        {debounce: 'NextCycle'},
+    );
   }
   catch (err) {
     // TODO: refactor

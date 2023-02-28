@@ -97,11 +97,11 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
 
   protected render_detail(): unknown {
     this._logger.logMethod('render_detail');
-    const order = this.stateMachine.context.order;
-    const orderId = this.stateMachine.context.orderId;
 
-    if (orderId == null || order == null) {
-      this._logger.error;
+    // validate order id
+    const order = this.stateMachine.context.orderStorage?.data[this.stateMachine.context.orderId ?? ''] ?? null;
+    if (order === null) {
+      this.stateMachine.transition('INVALID_ORDER');
       return;
     }
 
@@ -112,10 +112,10 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
       flipRtl: true,
       headline: message('order_item_headline').replace(
           '${orderId}',
-          replaceNumber(`${orderId}`.padStart(2, '0')),
+          replaceNumber(`${order.id}`.padStart(2, '0')),
       ),
       description: message('order_item_status') + ': ' + message('order_status_' + order.status),
-      href: `/order/${orderId}/tracking`,
+      href: `/order/${order.id}/tracking`,
     };
     return html`
       <alwatr-icon-box .content=${iconBoxContent}></alwatr-icon-box>

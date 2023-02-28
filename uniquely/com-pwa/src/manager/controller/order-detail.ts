@@ -12,7 +12,6 @@ export const pageOrderDetailFsm = new FiniteStateMachine({
   id: 'page-order-detail',
   initial: 'unresolved',
   context: {
-    order: <Order | null>null,
     orderId: <number | null>null,
     orderStorage: <AlwatrDocumentStorage<Order> | null>null,
     productStorage: <AlwatrDocumentStorage<Product> | null> null,
@@ -22,7 +21,7 @@ export const pageOrderDetailFsm = new FiniteStateMachine({
       on: {
         SHOW_DETAIL: '$self',
         CONNECTED: '$self',
-        CONTEXT_LOADED: 'detail',
+        CONTEXT_LOADED: '$self',
       },
     },
     unresolved: {
@@ -36,7 +35,9 @@ export const pageOrderDetailFsm = new FiniteStateMachine({
       },
     },
     loading: {
-      on: {},
+      on: {
+        CONTEXT_LOADED: 'detail',
+      },
     },
     detail: {
       on: {
@@ -45,10 +46,14 @@ export const pageOrderDetailFsm = new FiniteStateMachine({
       },
     },
     reloading: {
-      on: {},
+      on: {
+        CONTEXT_LOADED: 'detail',
+      },
     },
     notFound: {
-      on: {},
+      on: {
+        CONTEXT_LOADED: 'detail',
+      },
     },
   },
 });
@@ -61,15 +66,12 @@ pageOrderDetailFsm.signal.subscribe(async (state) => {
       topAppBarContextProvider.setValue({
         headlineKey: 'loading',
       });
-      const fetchList = [];
       if (productStorageContextConsumer.getValue() == null) {
-        fetchList.push(fetchProductStorage());
+        fetchProductStorage();
       }
       if (orderStorageContextConsumer.getValue() == null) {
-        fetchList.push(fetchOrderStorage());
+        fetchOrderStorage();
       }
-      await Promise.all(fetchList);
-      pageOrderDetailFsm.transition('CONTEXT_LOADED');
       break;
     }
 
@@ -81,27 +83,31 @@ pageOrderDetailFsm.signal.subscribe(async (state) => {
     }
 
     case 'REQUEST_UPDATE': {
-      await fetchOrderStorage();
+      await fetchOrderStorage(); // if not changed signal not fired!
       pageOrderDetailFsm.transition('CONTEXT_LOADED');
       break;
     }
   }
 
-  if (state.to === 'detail') {
-    // validate order id
-    const order = pageOrderDetailFsm.context.orderStorage?.data[pageOrderDetailFsm.context.orderId ?? ''] ?? null;
-    pageOrderDetailFsm.transition('INVALID_ORDER', {order});
+  if (state.to === 'loading') {
+    if (pageOrderDetailFsm.context.orderStorage != null && pageOrderDetailFsm.context.productStorage != null) {
+      pageOrderDetailFsm.transition('CONTEXT_LOADED');
+    }
   }
 });
 
 productStorageContextConsumer.subscribe((productStorage) => {
   pageOrderDetailFsm.context.productStorage = productStorage;
-  // pageOrderDetailFsm.transition('PRODUCT_LOADED', {productStorage});
+  if (pageOrderDetailFsm.context.orderStorage != null) {
+    pageOrderDetailFsm.transition('CONTEXT_LOADED');
+  }
 });
 
 orderStorageContextConsumer.subscribe((orderStorage) => {
   pageOrderDetailFsm.context.orderStorage = orderStorage;
-  // pageOrderDetailFsm.transition('ORDER_LOADED', {orderStorage});
+  if (pageOrderDetailFsm.context.productStorage != null) {
+    pageOrderDetailFsm.transition('CONTEXT_LOADED');
+  }
 });
 
 eventListener.subscribe<ClickSignalType>('page_order_detail_reload_click_event', () => {
