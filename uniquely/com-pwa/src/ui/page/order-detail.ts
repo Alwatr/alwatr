@@ -75,24 +75,24 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
     }
   `;
 
-  override render(): unknown {
+  protected override render(): unknown {
     this._logger.logMethod('render');
     return this[`render_${this.stateMachine.state.to}`]?.();
   }
 
-  render_loading(): unknown {
+  protected render_loading(): unknown {
     this._logger.logMethod('render_loading');
     return message('loading');
   }
 
-  render_reloading(): unknown {
-    this._logger.logMethod('render_reloading');
-    return this.render_detail();
-  }
-
-  render_notFound(): unknown {
+  protected render_notFound(): unknown {
     this._logger.logMethod('render_notFound');
     return message('order_not_found');
+  }
+
+  protected render_reloading(): unknown {
+    this._logger.logMethod('render_reloading');
+    return this.render_detail();
   }
 
   protected render_detail(): unknown {
@@ -115,8 +115,8 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
           replaceNumber(`${order.id}`.padStart(2, '0')),
       ),
       description: message('order_item_status') + ': ' + message('order_status_' + order.status),
-      href: `/order/${order.id}/tracking`,
     };
+
     return html`
       <alwatr-icon-box .content=${iconBoxContent}></alwatr-icon-box>
       ${mapIterable(this, order?.itemList, this._itemDetailTemplate, message('loading'))}
@@ -184,22 +184,29 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
           </div>
         </div>
       </alwatr-surface>
-      <alwatr-button tinted class="add-button" @click=${this._addNewItem}
-        >${message('order_detail_add_product_button')}
-      </alwatr-button>
+      <div>
+        <alwatr-button
+          .icon=${'reload-outline'}
+          signal-id="page_order_detail_reload_click_event"
+          elevated
+          ?disabled=${this.stateMachine.state.to === 'reloading'}
+        >${message(this.stateMachine.state.to === 'reloading' ? 'loading' : 'reload')}</alwatr-button>
+        <alwatr-button
+          .icon=${'add-outline'}
+          signal-id="new_order_click_event"
+          elevated
+        >${message('new_order_button')}</alwatr-button>
+      </div>
     `;
-  }
-
-  protected _addNewItem(): void {
-    this._logger.logMethod('_addNewItem');
-    this.dispatchEvent(new CustomEvent('request-redirect', {detail: {page: 'product'}}));
   }
 
   protected _itemDetailTemplate(item: OrderItem): unknown {
     const product = this.stateMachine.context.productStorage?.data[item.productId];
     if (product == null) {
       this._logger.error('itemDetailTemplate', 'product_not_found', {productId: item.productId});
-      return nothing;
+      return html`
+        <alwatr-surface elevated>${message('product_not_exist')}</alwatr-surface>
+      `;
     }
 
     return html`
