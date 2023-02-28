@@ -3,7 +3,6 @@ import {
   css,
   html,
   mapIterable,
-  nothing,
   StateMachineMixin,
   UnresolvedMixin,
   LocalizeMixin,
@@ -117,10 +116,10 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
       description: message('order_item_status') + ': ' + message('order_status_' + order.status),
     };
 
-    return html`
-      <alwatr-icon-box .content=${iconBoxContent}></alwatr-icon-box>
-      ${mapIterable(this, order?.itemList, this._itemDetailTemplate, message('loading'))}
-      <alwatr-surface elevated>
+    return [
+      html`<alwatr-icon-box .content=${iconBoxContent}></alwatr-icon-box>`,
+      mapIterable(this, order?.itemList, this._itemDetailTemplate, message('loading')),
+      html`<alwatr-surface elevated>
         <div class="detail-container">
           <div>
             <span>${message('order_shipping_recipient_name')}:</span>
@@ -157,34 +156,43 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
             </span>
           </div>
         </div>
-      </alwatr-surface>
-
-      <alwatr-surface elevated>
+      </alwatr-surface>`,
+      html`<alwatr-surface elevated>
         <div class="detail-container">
           <div>
-            <span>${message('order_detail_shipping_price')}:</span>
-            <span>
-              <b>${number(order.shippingPrice)}</b>
-              <alwatr-icon .name=${'toman'}></alwatr-icon>
-            </span>
-          </div>
-          <div>
-            <span>${message('order_detail_total_price')}:</span>
+            <span>${message('order_total_price')}:</span>
             <span>
               <b>${number(order.totalPrice)}</b>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
           <div>
-            <span>${message('order_detail_final_price')}:</span>
+            <span>${message('order_discount')}:</span>
+            <span>
+              <b>
+                (${number(((order.totalPrice - order.finalPrice) / order.totalPrice) * 100)}%)
+                ${number(order.totalPrice - order.finalPrice)}
+              </b>
+              <alwatr-icon .name=${'toman'}></alwatr-icon>
+            </span>
+          </div>
+          <div>
+            <span>${message('order_shipping_price')}:</span>
+            <span>
+              <b>${number(order.shippingPrice)}</b>
+              <alwatr-icon .name=${'toman'}></alwatr-icon>
+            </span>
+          </div>
+          <div>
+            <span>${message('order_final_total_price')}:</span>
             <span>
               <b>${number(order.finalPrice)}</b>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
         </div>
-      </alwatr-surface>
-      <div>
+      </alwatr-surface>`,
+      html`<div>
         <alwatr-button
           .icon=${'reload-outline'}
           signal-id="page_order_detail_reload_click_event"
@@ -196,8 +204,8 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
           signal-id="new_order_click_event"
           elevated
         >${message('new_order_button')}</alwatr-button>
-      </div>
-    `;
+      </div>`,
+    ];
   }
 
   protected _itemDetailTemplate(item: OrderItem): unknown {
@@ -215,22 +223,46 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
         <div class="detail-container">
           <b>${product.title.fa}</b>
           <div>
-            <span>${message('order_detail_price')}:</span>
+            <span>${message('order_item_price')}:</span>
             <span>
               <b>${number(item.price)}</b>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
           <div>
-            <span>${message('order_detail_final_price')}:</span>
+            <span>${message('order_item_final_price')}:</span>
             <span>
               <b>${number(item.finalPrice)}</b>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
           <div>
-            <span>${message('order_detail_qty')}:</span>
-            <span><b>${item.qty}</b></span>
+            <span>${message('order_item_qty')}:</span>
+            <span><b>${number(item.qty)}</b></span>
+          </div>
+          <div>
+            <span>${message('order_item_total_price')}:</span>
+            <span>
+              <b>${number(item.qty * item.price)}</b>
+              <alwatr-icon .name=${'toman'}></alwatr-icon>
+            </span>
+          </div>
+          <div>
+            <span>${message('order_item_final_total_price')}:</span>
+            <span>
+              <b>${number(item.qty * item.finalPrice)}</b>
+              <alwatr-icon .name=${'toman'}></alwatr-icon>
+            </span>
+          </div>
+          <div>
+            <span>${message('order_item_discount')}:</span>
+            <span>
+              <b>
+                (${number(((item.price - item.finalPrice) / item.price) * 100)}%)
+                ${number(item.price - item.finalPrice)}
+              </b>
+              <alwatr-icon .name=${'toman'}></alwatr-icon>
+            </span>
           </div>
         </div>
       </alwatr-surface>
