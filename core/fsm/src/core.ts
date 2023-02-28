@@ -98,7 +98,7 @@ export class FiniteStateMachine<
     if (context !== undefined) {
       this.context = {
         ...this.context,
-        context,
+        ...context,
       };
     }
 
