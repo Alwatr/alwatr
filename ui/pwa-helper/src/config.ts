@@ -5,7 +5,7 @@ declare global {
   var appConfig: StringifyableRecord;
 }
 
-// TODO: config-context with dynamic import like l18r
+// TODO: config-context with dynamic import like l18e
 
 const debugConfig = localStorage.getItem('DEBUG_CONFIG');
 if (debugConfig != null) {
