@@ -131,7 +131,7 @@ let _l18eLoaderListener: ListenerSpec | null = null;
  *
  * ```ts
  * setL18eLoader((locale) => {
- *  return import(`/l18r/${locale.code}.js`);
+ *  return import(`/l18e/${locale.code}.js`);
  * })
  * ```
  */
@@ -142,8 +142,8 @@ export const setL18eLoader = (l18eLoader: (locale: LocaleContext) => MaybePromis
     localeContextConsumer.unsubscribe(_l18eLoaderListener);
     logger.accident(
         'setL18eLoader',
-        'l18r_loader_exist',
-        'Multi l18r loader register, the previous one was removed to avoid errors.',
+        'l18e_loader_exist',
+        'Multi l18e loader register, the previous one was removed to avoid errors.',
     );
   }
 
