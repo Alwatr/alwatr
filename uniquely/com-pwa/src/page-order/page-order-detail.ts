@@ -1,5 +1,4 @@
 import {
-  customElement,
   css,
   html,
   LocalizeMixin,
@@ -28,16 +27,16 @@ import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order, OrderDraft, OrderItem, Product} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'alwatr-page-order-detail': AlwatrPageOrderDetail;
-  }
-}
+// declare global {
+//   interface HTMLElementTagNameMap {
+//     'alwatr-page-order-detail': AlwatrPageOrderDetail;
+//   }
+// }
 
 /**
  * Alwatr Customer Order Management Order Form Page
  */
-@customElement('alwatr-page-order-detail')
+// @customElement('alwatr-page-order-detail')
 export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(UnresolvedMixin(AlwatrBaseElement))) {
   static formId = 'order';
 

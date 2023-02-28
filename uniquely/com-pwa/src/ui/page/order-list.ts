@@ -72,7 +72,7 @@ export class AlwatrPageOrderList extends StateMachineMixin(
           flipRtl: true,
           headline: message('order_item_headline').replace('${orderId}', replaceNumber(order.id.padStart(2, '0'))),
           description: message('order_item_status') + ': ' + message('order_status_' + order.status),
-          href: `/order/${order.id}/tracking`,
+          href: `/order-detail/${order.id}`,
         };
         return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
       }),

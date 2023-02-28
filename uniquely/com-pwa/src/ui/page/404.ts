@@ -64,7 +64,13 @@ export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(Alw
     submitOrderCommandTrigger.request({
       itemList: [
         {
-          productId: '3232233323',
+          productId: '2',
+          price: 1000000,
+          finalPrice: 950000,
+          qty: 20,
+        },
+        {
+          productId: '4',
           price: 1000000,
           finalPrice: 950000,
           qty: 20,

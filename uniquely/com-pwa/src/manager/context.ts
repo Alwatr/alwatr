@@ -12,7 +12,7 @@ import type {Product, Order, OrderDelivery} from '@alwatr/type/customer-order-ma
 export * from '@alwatr/pwa-helper/context.js';
 
 export const productStorageContextConsumer =
-  contextConsumer.bind<AlwatrDocumentStorage<Product>>('`product-storage-tile-context`');
+  contextConsumer.bind<AlwatrDocumentStorage<Product>>('product-storage-tile-context');
 
 export const orderStorageContextConsumer =
   contextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');

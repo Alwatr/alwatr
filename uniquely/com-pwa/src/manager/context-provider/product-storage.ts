@@ -20,6 +20,7 @@ export const fetchProductStorage = async (productStorageName = 'tile'): Promise<
             storage: productStorageName,
           },
         },
+        {debounce: 'NextCycle'},
     ));
     fetchPromiseList.push(fetchContext(
         `price-list-storage-${productStorageName}-context`,
@@ -30,6 +31,7 @@ export const fetchProductStorage = async (productStorageName = 'tile'): Promise<
             name: config.priceListName.replace('${productStorage}', productStorageName),
           },
         },
+        {debounce: 'NextCycle'},
     ));
     fetchPromiseList.push(fetchContext(
         `final-price-list-storage-${productStorageName}-context`,
@@ -40,6 +42,7 @@ export const fetchProductStorage = async (productStorageName = 'tile'): Promise<
             name: config.finalPriceListName.replace('${productStorage}', productStorageName),
           },
         },
+        {debounce: 'NextCycle'},
     ));
 
     (await Promise.all(fetchPromiseList)).length = 0;
