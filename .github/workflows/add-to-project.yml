@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Add To GitHub projects
-        uses: actions/add-to-project@v0.4.0
+        uses: actions/add-to-project@v0.4.1
         with:
           project-url: https://github.com/users/AliMD/projects/3
           github-token: ${{secrets.ADD_TO_PROJECT}}
