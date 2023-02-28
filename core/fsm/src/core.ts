@@ -93,7 +93,7 @@ export class FiniteStateMachine<
       toState = fromState;
     }
 
-    this._logger.logMethodFull('transition', {event, context}, toState);
+    this._logger.logMethodFull('transition', {fromState, event, context}, toState);
 
     if (context !== undefined) {
       this.context = {
@@ -108,8 +108,9 @@ export class FiniteStateMachine<
           'invalid_target_state',
           'Defined target state for this event not found in state config',
           {
+            fromState,
             event,
-            [fromState]: {...this.config.states.$all?.on, ...this.config.states[fromState]?.on},
+            events: {...this.config.states.$all?.on, ...this.config.states[fromState]?.on},
           },
       );
       return null;
