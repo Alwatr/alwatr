@@ -1,3 +1,5 @@
+import {untilNextFrame} from '@alwatr/util';
+
 import {nothing, PropertyValues} from '../lit.js';
 
 import type {SignalMixinInterface} from './signal.js';
@@ -25,11 +27,17 @@ export function StateMachineMixin<T extends Constructor<SignalMixinInterface>, T
       return nothing;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    constructor(...args: any[]) {
+      super(...args);
+      this.stateUpdated = this.stateUpdated.bind(this);
+    }
+
     override connectedCallback(): void {
       super.connectedCallback();
       this.stateMachine.transition('CONNECTED');
       this._signalListenerList.push(
-          this.stateMachine.signal.subscribe((state) => this.stateUpdated(state), {receivePrevious: 'NextCycle'}),
+          this.stateMachine.signal.subscribe(this.stateUpdated, {receivePrevious: 'NextCycle'}),
       );
     }
 
@@ -37,8 +45,13 @@ export function StateMachineMixin<T extends Constructor<SignalMixinInterface>, T
      * Subscribe to this.stateMachine.signal event.
     */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected stateUpdated(_state: TMachine['state']): void {
+    protected stateUpdated(): void {
       this.requestUpdate();
+    }
+
+    protected override async scheduleUpdate(): Promise<void> {
+      await untilNextFrame();
+      super.scheduleUpdate();
     }
 
     protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
