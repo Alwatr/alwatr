@@ -63,15 +63,8 @@ export const getSignalObject = <T extends Stringifyable>(id: string): SignalObje
  *
  * Used inside dispatch, Don't use it directly.
  */
-export const _callListeners = <T extends Stringifyable>(signal: SignalObject<T>): void => {
-  logger.logMethodArgs('_callListeners', {signalId: signal.id, signalDetail: signal.detail});
-
-  if (signal.detail === undefined) {
-    logger.accident('_callListeners', 'no_signal_detail', 'signal must have a detail', {
-      signalId: signal.id,
-    });
-    return;
-  }
+export const _callListeners = <T extends Stringifyable>(signal: SignalObject<T>, detail: T): void => {
+  logger.logMethodArgs('_callListeners', {signalId: signal.id, signalDetail: detail});
 
   const removeList: Array<ListenerObject<T>> = [];
 
@@ -79,7 +72,7 @@ export const _callListeners = <T extends Stringifyable>(signal: SignalObject<T>)
     if (listener.disabled) continue;
     if (listener.once) removeList.push(listener);
     try {
-      const ret = listener.callback(signal.detail);
+      const ret = listener.callback(detail);
       if (ret instanceof Promise) {
         ret.catch((err) =>
           logger.error('_callListeners', 'call_listener_failed', err, {
@@ -235,12 +228,12 @@ export const dispatch = <T extends Stringifyable>(
   if (signal.disabled) return; // signal is disabled.
 
   if (options.debounce === 'No') {
-    return _callListeners(signal);
+    return _callListeners(signal, detail);
   }
 
   // else
   if (options.debounce === 'NextCycle') {
-    setTimeout(_callListeners, 0, signal);
+    setTimeout(_callListeners, 0, signal, detail);
     return;
   }
 
@@ -252,7 +245,7 @@ export const dispatch = <T extends Stringifyable>(
   // else
   signal.debounced = true;
   const callListeners = (): void => {
-    _callListeners(signal);
+    _callListeners(signal, signal.detail ?? detail);
     signal.debounced = false;
   };
   options.debounce === 'AnimationFrame'
