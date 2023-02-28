@@ -6,7 +6,7 @@ import type {PageHomeContent} from '../type.js';
 export const homePageContent: PageHomeContent = {
   topAppBar: {
     type: 'center',
-    headline: 'بازرگانی سافیت',
+    headline: 'مجموعه سافیت',
     startIcon: {icon: 'menu-outline', flipRtl: true},
     endIconList: [{icon: 'globe-outline', clickSignalId: 'language-button-click-event'}],
   },
@@ -16,7 +16,7 @@ export const homePageContent: PageHomeContent = {
     elevated: 1,
     stated: true,
     // icon: 'logo-microsoft',
-    headline: 'بازرگانی سافیت',
+    headline: 'درباره سافیت',
     slot: `
       سافیت با هدف بهینه سازی در ساخت وساز و همچنین کاهش هزینه ها تامین و نگه داری ساختمان در بلند مدت اقدام به تولید محصولات گچی نمود.<br/>
       همچنین با توجه به گسترش بازار و نیاز مشتریان تنوع طرح و جنس محصولات خود را افزایش داده است.
@@ -32,7 +32,7 @@ export const homePageContent: PageHomeContent = {
     icon: 'cloud-download-outline',
     flipRtl: true,
     headline: 'دانلود کاتالوگ',
-    description: 'دانلود کاتالوگ معرفی محصولات بازرگانی سافیت',
+    description: 'دانلود کاتالوگ معرفی محصولات سافیت',
     href: 'https://www.dropbox.com/s/dl/6ywy23qql7iq31p/soffit-product-catalogue.pdf',
     target: 'download',
   },
@@ -84,7 +84,7 @@ export const homePageContent: PageHomeContent = {
       stated: true,
       icon: 'send-outline',
       headline: 'تلگرام',
-      description: 'کانال تلگرام بازرگانی سافیت',
+      description: 'کانال تلگرام سافیت',
       href: 'https://t.me/soffitcompany',
       target: '_blank',
     },
@@ -94,7 +94,7 @@ export const homePageContent: PageHomeContent = {
       stated: true,
       icon: 'logo-instagram',
       headline: 'اینستاگرام',
-      description: 'صفحه‌ی اینستاگرام بازرگانی سافیت',
+      description: 'صفحه‌ی اینستاگرام سافیت',
       href: 'https://instagram.com/soffit.co',
       target: '_blank',
     },
@@ -105,7 +105,7 @@ export const homePageContent: PageHomeContent = {
       icon: 'videocam-outline',
       flipRtl: true,
       headline: 'آپارات',
-      description: 'کانال آپارات بازرگانی سافیت',
+      description: 'کانال آپارات سافیت',
       href: 'https://www.aparat.com/soffit',
       target: '_blank',
     },
@@ -115,7 +115,7 @@ export const homePageContent: PageHomeContent = {
       stated: true,
       icon: 'logo-linkedin',
       headline: 'لینکدین',
-      description: 'صفحه‌ی لینکدین بازرگانی سافیت',
+      description: 'صفحه‌ی لینکدین سافیت',
       href: 'https://www.linkedin.com/company/soffit-co',
       target: '_blank',
     },
@@ -125,7 +125,7 @@ export const homePageContent: PageHomeContent = {
       stated: true,
       icon: 'logo-youtube',
       headline: 'یوتیوب',
-      description: 'کانال یوتیوب بازرگانی سافیت',
+      description: 'کانال یوتیوب سافیت',
       href: 'https://youtube.com/@SOFFITCO',
       target: '_blank',
     },
@@ -210,7 +210,7 @@ export const homePageContent: PageHomeContent = {
       elevated: 1,
       highlight: true,
       stated: true,
-      headline: 'زاهدان',
+      headline: 'سیستان بلوچستان',
       slot: `
         <div>آقای قاسمی</div>
         <div dir="ltr">${replaceNumber('0915 540 9620')}</div>
@@ -331,17 +331,6 @@ export const homePageContent: PageHomeContent = {
       elevated: 1,
       highlight: true,
       stated: true,
-      headline: 'بندرعباس',
-      slot: `
-        <div>آقای کمالی‌پور</div>
-        <div dir="ltr">${replaceNumber('0930 380 0134')}</div>
-      `,
-      href: 'tel:+989303800134',
-    },
-    {
-      elevated: 1,
-      highlight: true,
-      stated: true,
       headline: 'چهارمحال و بختیاری',
       slot: `
         <div>آقای فروزنده</div>
@@ -375,34 +364,12 @@ export const homePageContent: PageHomeContent = {
       elevated: 1,
       highlight: true,
       stated: true,
-      headline: 'شیراز',
-      slot: `
-        <div>آقای خدامی</div>
-        <div dir="ltr">${replaceNumber('0917 113 2262')}</div>
-      `,
-      href: 'tel:+989171132262',
-    },
-    {
-      elevated: 1,
-      highlight: true,
-      stated: true,
       headline: 'خوزستان',
       slot: `
         <div>آقای شمس</div>
         <div dir="ltr">${replaceNumber('0916 603 3612')}</div>
       `,
       href: 'tel:+989166033612',
-    },
-    {
-      elevated: 1,
-      highlight: true,
-      stated: true,
-      headline: 'ورامین',
-      slot: `
-        <div>آقای بیدگلی</div>
-        <div dir="ltr">${replaceNumber('0990 373 0377')}</div>
-      `,
-      href: 'tel:+989903730377',
     },
   ],
 };
