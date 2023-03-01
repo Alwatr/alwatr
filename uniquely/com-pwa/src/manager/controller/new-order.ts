@@ -50,7 +50,7 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
       on: {
         SELECT_PRODUCT: 'productList',
         EDIT_SHIPPING: 'shippingForm',
-        SUBMIT: 'review',
+        SUBMIT: 'shippingForm',
       },
     },
     productList: {
@@ -60,11 +60,12 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
     },
     shippingForm: {
       on: {
-        SUBMIT: 'edit',
+        SUBMIT: 'review',
       },
     },
     review: {
       on: {
+        BACK: 'edit',
         SUBMIT: 'submitting',
       },
     },
@@ -147,12 +148,21 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
 pageNewOrderStateMachine.signal.subscribe(async (state) => {
   localStorage.setItem('draft-order-x1', JSON.stringify(pageNewOrderStateMachine.context.order));
 
-  switch (state.to) {
-    case 'edit': {
-      if (!pageNewOrderStateMachine.context.order?.itemList?.length && state.from != 'productList') {
-        pageNewOrderStateMachine.transition('SELECT_PRODUCT');
-      }
-      break;
+  if (
+    state.to === 'edit' &&
+    state.from != 'productList' &&
+    !pageNewOrderStateMachine.context.order?.itemList?.length
+  ) {
+    pageNewOrderStateMachine.transition('SELECT_PRODUCT');
+  }
+
+  else if (state.to === 'edit' || state.to === 'review') {
+    const order = pageNewOrderStateMachine.context.order;
+    order.totalPrice = 0;
+    order.finalPrice = order.shippingPrice ?? 0;
+    for (const item of order.itemList ?? []) {
+      order.totalPrice += item.price;
+      order.finalPrice += item.finalPrice;
     }
   }
 });
@@ -163,8 +173,8 @@ productStorageContextConsumer.subscribe((productStorage) => {
 priceStorageContextConsumer.subscribe((priceStorage) => {
   pageNewOrderStateMachine.transition('PARTIAL_LOAD', {priceStorage});
 });
-finalPriceStorageContextConsumer.subscribe((priceStorage) => {
-  pageNewOrderStateMachine.transition('PARTIAL_LOAD', {priceStorage});
+finalPriceStorageContextConsumer.subscribe((finalPriceStorage) => {
+  pageNewOrderStateMachine.transition('PARTIAL_LOAD', {finalPriceStorage});
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.submit.clickSignalId, () => {

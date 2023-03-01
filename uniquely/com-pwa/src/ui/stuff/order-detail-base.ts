@@ -3,13 +3,13 @@ import {message, number, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/icon';
 import {calcDiscount} from '@alwatr/math';
 import '@alwatr/ui-kit/card/surface.js';
-import '@alwatr/ui-kit/radio-group/radio-group.js';
+import '@alwatr/ui-kit/text-field/text-field.js';
 
 import './order-status-box.js';
 import {config} from '../../config.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
-import type {Order, OrderDelivery, OrderItem, Product} from '@alwatr/type/customer-order-management.js';
+import type {Order, OrderShippingInfo, OrderDraft, OrderItem, Product} from '@alwatr/type/customer-order-management.js';
 
 export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
@@ -52,6 +52,14 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       justify-content: space-between;
       align-items: center;
     }
+
+    alwatr-text-field {
+      /* width: 5em; */
+      /* padding: 0 var(--sys-spacing-track); */
+      /* border-radius: 0; */
+      /* border: none; */
+      /* border-bottom: 1px solid var(--sys-color-outline); */
+    }
   `;
 
   protected render_part_message(key: string): unknown {
@@ -60,7 +68,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     return html`<div class="message">${message(key)}</div>`;
   }
 
-  protected render_part_status(order: Order): unknown {
+  protected render_part_status(order: Order | OrderDraft): unknown {
     this._logger.logMethod('render_part_status');
     return html`<alwatr-order-status-box .content=${order}></alwatr-order-status-box>`;
   }
@@ -68,6 +76,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
   protected render_part_item_list(
       itemList: Array<OrderItem>,
       productStorage: AlwatrDocumentStorage<Product> | null,
+      editable = false,
   ): unknown {
     this._logger.logMethod('render_part_item_list');
     return mapIterable(this, itemList, (item) => {
@@ -76,6 +85,11 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
         this._logger.error('itemDetailTemplate', 'product_not_found', {productId: item.productId});
         return html`<alwatr-surface elevated>${message('product_not_exist')}</alwatr-surface>`;
       }
+
+      const itemQtyTemplate = editable
+        ? html`<alwatr-text-field .type=${'number'} .value=${(item.qty ?? 0) + ''}></alwatr-text-field>`
+        : html`<span><b>${number(item.qty)}</b> m²</span>`;
+
       return html`<alwatr-surface elevated>
         <img src="${config.cdn + product.image.id}" />
         <div class="detail-container">
@@ -96,7 +110,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           </div>
           <div>
             <span>${message('order_item_qty')}:</span>
-            <span><b>${number(item.qty)}</b> m²</span>
+            ${itemQtyTemplate}
           </div>
           <div>
             <span>${message('order_item_final_total_price')}:</span>
@@ -124,80 +138,81 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     });
   }
 
-  protected render_part_delivery(delivery: OrderDelivery): unknown {
-    this._logger.logMethod('render_part_delivery');
+  protected render_part_shipping_info(shippingInfo: OrderShippingInfo): unknown {
+    this._logger.logMethod('render_part_shipping_info');
     return html`<alwatr-surface elevated>
       <div class="detail-container">
         <div>
           <span>${message('order_shipping_recipient_name')}:</span>
           <span>
-            <b>${delivery.recipientName}</b>
+            <b>${shippingInfo.recipientName}</b>
           </span>
         </div>
         <div>
           <span>${message('order_shipping_recipient_national_code')}:</span>
           <span>
-            <b>${replaceNumber(delivery.recipientNationalCode)}</b>
+            <b>${replaceNumber(shippingInfo.recipientNationalCode)}</b>
           </span>
         </div>
         <div>
           <span>${message('order_shipping_address')}:</span>
-          <span><b>${replaceNumber(delivery.address)}</b></span>
+          <span><b>${replaceNumber(shippingInfo.address)}</b></span>
         </div>
         <div>
           <span>${message('order_shipping_car_type_title')}:</span>
           <span>
-            <b>${delivery.carType}</b>
+            <b>${shippingInfo.carType}</b>
           </span>
         </div>
         <div>
           <span>${message('order_shipping_shipment_type_title')}:</span>
           <span>
-            <b>${delivery.shipmentType}</b>
+            <b>${shippingInfo.shipmentType}</b>
           </span>
         </div>
         <div>
           <span>${message('order_shipping_time_period_title')}:</span>
           <span>
-            <b>${message('time_period_' + delivery.timePeriod.replace('-', '_'))}</b>
+            <b>${message('time_period_' + shippingInfo.timePeriod)}</b>
           </span>
         </div>
       </div>
     </alwatr-surface>`;
   }
 
-  protected render_part_summary(order: Order): unknown {
+  protected render_part_summary(order: Order | OrderDraft): unknown {
     this._logger.logMethod('render_part_summary');
+
+    const totalPrice = order.totalPrice ?? 0;
+    const finalPrice = order.finalPrice ?? 0;
+    const shippingPriceTemplate = order.shippingPrice
+      ? html`<b>${number(order.shippingPrice)}</b><alwatr-icon .name=${'toman'}></alwatr-icon>`
+      : message('no_shipping_price_yet');
+
     return html`<alwatr-surface elevated>
       <div class="detail-container">
         <div>
           <span>${message('order_total_price')}:</span>
           <span>
-            <b>${number(order.totalPrice)}</b>
+            <b>${number(totalPrice)}</b>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
         <div>
           <span>${message('order_discount')}:</span>
           <span>
-            <b>
-              (${number(calcDiscount(order.totalPrice, order.finalPrice))}%)
-              ${number(order.totalPrice - order.finalPrice)}
-            </b>
+            <b> (${number(calcDiscount(totalPrice, finalPrice))}%) ${number(totalPrice - finalPrice)} </b>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
         <div>
           <span>${message('order_shipping_price')}:</span>
-          <span>
-            <b>${number(order.shippingPrice)}</b>
-            <alwatr-icon .name=${'toman'}></alwatr-icon>
-          </span>
+          <span>${shippingPriceTemplate}</span>
         </div>
         <div>
           <span>${message('order_final_total_price')}:</span>
           <span>
-            <b>${number(order.finalPrice)}</b>
+            <b>${number(finalPrice)}</b>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
