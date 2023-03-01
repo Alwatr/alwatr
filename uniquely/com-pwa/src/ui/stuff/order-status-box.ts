@@ -1,10 +1,11 @@
-import {customElement, AlwatrBaseElement, html, property, nothing, css} from '@alwatr/element';
+import {customElement, AlwatrBaseElement, html, property, css, type PropertyValues} from '@alwatr/element';
 import {message, replaceNumber} from '@alwatr/i18n';
 import {eventTrigger} from '@alwatr/signal';
 import '@alwatr/ui-kit/card/icon-box.js';
 
 import type {ClickSignalType} from '@alwatr/type';
 import type {OrderDraft, Order} from '@alwatr/type/customer-order-management.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -53,17 +54,21 @@ export class AlwatrOrderStatusBox extends AlwatrBaseElement {
     }
   }
 
+  protected override shouldUpdate(changedProperties: PropertyValues<this>): boolean {
+    return super.shouldUpdate(changedProperties) && this.content != null;
+  }
+
   override render(): unknown {
     this._logger.logMethod('render');
-    if (this.content == null) return nothing;
+    if (this.content == null) return;
 
-    const iconBoxContent = {
-      stated: true,
-      elevated: 1,
-      icon: 'receipt-outline',
-      flipRtl: true,
+    const iconBoxContent: IconBoxContent = {
       headline: message('order_item_headline').replace('${orderId}', replaceNumber(this.content.id.padStart(2, '0'))),
       description: message('order_item_status') + ': ' + message('order_status_' + this.content.status),
+      icon: 'receipt-outline',
+      flipRtl: true,
+      stated: Boolean(this.clickSignalId),
+      elevated: 1,
     };
 
     return html` <alwatr-icon-box .content=${iconBoxContent}></alwatr-icon-box> `;
