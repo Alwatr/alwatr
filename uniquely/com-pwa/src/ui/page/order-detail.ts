@@ -17,10 +17,10 @@ import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 
 import {config} from '../../config.js';
-import {pageOrderDetailFsm} from '../../manager/controller/order-detail.js';
+import {pageOrderDetailStateMachine} from '../../manager/controller/order-detail.js';
 import '../stuff/order-item-box.js';
 
-import type {OrderItem} from '@alwatr/type/customer-order-management.js';
+import type {Order, OrderDelivery, OrderItem} from '@alwatr/type/customer-order-management.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -33,7 +33,7 @@ declare global {
  */
 @customElement('alwatr-page-order-detail')
 export class AlwatrPageOrderDetail extends StateMachineMixin(
-    pageOrderDetailFsm,
+    pageOrderDetailStateMachine,
     UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))),
 ) {
   static override styles = css`
@@ -81,26 +81,26 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
 
   protected override render(): unknown {
     this._logger.logMethod('render');
-    return this[`render_${this.stateMachine.state.to}`]?.();
+    return this[`render_state_${this.stateMachine.state.to}`]?.();
   }
 
-  protected render_loading(): unknown {
-    this._logger.logMethod('render_loading');
-    return message('loading');
+  protected render_state_loading(): unknown {
+    this._logger.logMethod('render_state_loading');
+    return this.render_part_message('loading');
   }
 
-  protected render_notFound(): unknown {
-    this._logger.logMethod('render_notFound');
-    return message('order_not_found');
+  protected render_state_notFound(): unknown {
+    this._logger.logMethod('render_state_notFound');
+    return this.render_part_message('order_not_found');
   }
 
-  protected render_reloading(): unknown {
-    this._logger.logMethod('render_reloading');
-    return this.render_detail();
+  protected render_state_reloading(): unknown {
+    this._logger.logMethod('render_state_reloading');
+    return this.render_state_detail();
   }
 
-  protected render_detail(): unknown {
-    this._logger.logMethod('render_detail');
+  protected render_state_detail(): unknown {
+    this._logger.logMethod('render_state_detail');
 
     // validate order id
     const order = this.stateMachine.context.orderStorage?.data[this.stateMachine.context.orderId ?? ''] ?? null;
@@ -110,108 +110,33 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
     }
 
     return [
-      html`<alwatr-order-item-box click-signal-id="test" .order=${order}></alwatr-order-item-box>`,
-      mapIterable(this, order?.itemList, this._itemDetailTemplate, message('loading')),
-      html`<alwatr-surface elevated>
-        <div class="detail-container">
-          <div>
-            <span>${message('order_shipping_recipient_name')}:</span>
-            <span>
-              <b>${order.delivery?.recipientName}</b>
-            </span>
-          </div>
-          <div>
-            <span>${message('order_shipping_recipient_national_code')}:</span>
-            <span>
-              <b>${replaceNumber(order.delivery?.recipientNationalCode)}</b>
-            </span>
-          </div>
-          <div>
-            <span>${message('order_shipping_address')}:</span>
-            <span><b>${replaceNumber(order.delivery?.address)}</b></span>
-          </div>
-          <div>
-            <span>${message('order_shipping_car_type_title')}:</span>
-            <span>
-              <b>${order.delivery?.carType}</b>
-            </span>
-          </div>
-          <div>
-            <span>${message('order_shipping_shipment_type_title')}:</span>
-            <span>
-              <b>${order.delivery?.shipmentType}</b>
-            </span>
-          </div>
-          <div>
-            <span>${message('order_shipping_time_period_title')}:</span>
-            <span>
-              <b>${message('time_period_' + order.delivery?.timePeriod.replace('-', '_'))}</b>
-            </span>
-          </div>
-        </div>
-      </alwatr-surface>`,
-      html`<alwatr-surface elevated>
-        <div class="detail-container">
-          <div>
-            <span>${message('order_total_price')}:</span>
-            <span>
-              <b>${number(order.totalPrice)}</b>
-              <alwatr-icon .name=${'toman'}></alwatr-icon>
-            </span>
-          </div>
-          <div>
-            <span>${message('order_discount')}:</span>
-            <span>
-              <b>
-                (${number(((order.totalPrice - order.finalPrice) / order.totalPrice) * 100)}%)
-                ${number(order.totalPrice - order.finalPrice)}
-              </b>
-              <alwatr-icon .name=${'toman'}></alwatr-icon>
-            </span>
-          </div>
-          <div>
-            <span>${message('order_shipping_price')}:</span>
-            <span>
-              <b>${number(order.shippingPrice)}</b>
-              <alwatr-icon .name=${'toman'}></alwatr-icon>
-            </span>
-          </div>
-          <div>
-            <span>${message('order_final_total_price')}:</span>
-            <span>
-              <b>${number(order.finalPrice)}</b>
-              <alwatr-icon .name=${'toman'}></alwatr-icon>
-            </span>
-          </div>
-        </div>
-      </alwatr-surface>`,
-      html`<div>
-        <alwatr-button
-          .icon=${'reload-outline'}
-          signal-id="page_order_detail_reload_click_event"
-          elevated
-          ?disabled=${this.stateMachine.state.to === 'reloading'}
-        >${message(this.stateMachine.state.to === 'reloading' ? 'loading' : 'reload')}</alwatr-button>
-        <alwatr-button
-          .icon=${'add-outline'}
-          signal-id="new_order_click_event"
-          elevated
-        >${message('new_order_button')}</alwatr-button>
-      </div>`,
+      this.render_part_status(order),
+      this.render_part_item_list(order.itemList),
+      this.render_part_delivery(order.delivery),
+      this.render_part_summary(order),
     ];
   }
 
-  protected _itemDetailTemplate(item: OrderItem): unknown {
-    const product = this.stateMachine.context.productStorage?.data[item.productId];
-    if (product == null) {
-      this._logger.error('itemDetailTemplate', 'product_not_found', {productId: item.productId});
-      return html`
-        <alwatr-surface elevated>${message('product_not_exist')}</alwatr-surface>
-      `;
-    }
+  protected render_part_message(key: string): unknown {
+    this._logger.logMethod('render_part_message');
+    // TODO: add icon
+    return html`<div class="message">${message(key)}</div>`;
+  }
 
-    return html`
-      <alwatr-surface elevated>
+  protected render_part_status(order: Order): unknown {
+    this._logger.logMethod('render_part_status');
+    return html`<alwatr-order-item-box .order=${order}></alwatr-order-item-box>`;
+  }
+
+  protected render_part_item_list(itemList: Array<OrderItem>): unknown {
+    this._logger.logMethod('render_part_item_list');
+    return mapIterable(this, itemList, (item) => {
+      const product = this.stateMachine.context.productStorage?.data[item.productId];
+      if (product == null) {
+        this._logger.error('itemDetailTemplate', 'product_not_found', {productId: item.productId});
+        return html`<alwatr-surface elevated>${message('product_not_exist')}</alwatr-surface>`;
+      }
+      return html`<alwatr-surface elevated>
         <img src="${config.cdn + product.image.id}" />
         <div class="detail-container">
           <b>${product.title.fa}</b>
@@ -258,7 +183,88 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
             </span>
           </div>
         </div>
-      </alwatr-surface>
-    `;
+      </alwatr-surface>`;
+    });
+  }
+
+  protected render_part_delivery(delivery: OrderDelivery): unknown {
+    this._logger.logMethod('render_part_delivery');
+    return html`<alwatr-surface elevated>
+      <div class="detail-container">
+        <div>
+          <span>${message('order_shipping_recipient_name')}:</span>
+          <span>
+            <b>${delivery.recipientName}</b>
+          </span>
+        </div>
+        <div>
+          <span>${message('order_shipping_recipient_national_code')}:</span>
+          <span>
+            <b>${replaceNumber(delivery.recipientNationalCode)}</b>
+          </span>
+        </div>
+        <div>
+          <span>${message('order_shipping_address')}:</span>
+          <span><b>${replaceNumber(delivery.address)}</b></span>
+        </div>
+        <div>
+          <span>${message('order_shipping_car_type_title')}:</span>
+          <span>
+            <b>${delivery.carType}</b>
+          </span>
+        </div>
+        <div>
+          <span>${message('order_shipping_shipment_type_title')}:</span>
+          <span>
+            <b>${delivery.shipmentType}</b>
+          </span>
+        </div>
+        <div>
+          <span>${message('order_shipping_time_period_title')}:</span>
+          <span>
+            <b>${message('time_period_' + delivery.timePeriod.replace('-', '_'))}</b>
+          </span>
+        </div>
+      </div>
+    </alwatr-surface>`;
+  }
+
+  protected render_part_summary(order: Order): unknown {
+    this._logger.logMethod('render_part_summary');
+    return html`<alwatr-surface elevated>
+      <div class="detail-container">
+        <div>
+          <span>${message('order_total_price')}:</span>
+          <span>
+            <b>${number(order.totalPrice)}</b>
+            <alwatr-icon .name=${'toman'}></alwatr-icon>
+          </span>
+        </div>
+        <div>
+          <span>${message('order_discount')}:</span>
+          <span>
+            <b>
+              (${number(((order.totalPrice - order.finalPrice) / order.totalPrice) * 100)}%)
+              ${number(order.totalPrice - order.finalPrice)}
+            </b>
+            <alwatr-icon .name=${'toman'}></alwatr-icon>
+          </span>
+        </div>
+        <div>
+          <span>${message('order_shipping_price')}:</span>
+          <span>
+            <b>${number(order.shippingPrice)}</b>
+            <alwatr-icon .name=${'toman'}></alwatr-icon>
+          </span>
+        </div>
+        <div>
+          <span>${message('order_final_total_price')}:</span>
+          <span>
+            <b>${number(order.finalPrice)}</b>
+            <alwatr-icon .name=${'toman'}></alwatr-icon>
+          </span>
+        </div>
+      </div>
+    </alwatr-surface>`;
   }
 }
