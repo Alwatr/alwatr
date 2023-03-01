@@ -8,7 +8,7 @@ import {
   SignalMixin,
   AlwatrBaseElement,
 } from '@alwatr/element';
-import {message, replaceNumber} from '@alwatr/i18n';
+import {message} from '@alwatr/i18n';
 import '@alwatr/icon';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/icon-box.js';
@@ -17,8 +17,7 @@ import '@alwatr/ui-kit/chat/chat.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 
 import {pageOrderTrackingFsm} from '../../manager/controller/order-tracking.js';
-
-import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+import '../stuff/order-item-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -41,6 +40,10 @@ export class AlwatrPageOrderTracking extends StateMachineMixin(
       padding: calc(2 * var(--sys-spacing-track));
       box-sizing: border-box;
       min-height: 100%;
+    }
+
+    alwatr-order-item-box {
+      margin-bottom: var(--sys-spacing-track);
     }
 
     alwatr-chat {
@@ -78,21 +81,8 @@ export class AlwatrPageOrderTracking extends StateMachineMixin(
       return;
     }
 
-    const iconBoxContent: IconBoxContent = {
-      stated: true,
-      tinted: 1,
-      icon: 'receipt-outline',
-      flipRtl: true,
-      headline: message('order_item_headline').replace(
-          '${orderId}',
-          replaceNumber(`${order.id}`.padStart(2, '0')),
-      ),
-      description: message('order_item_status') + ': ' + message('order_status_' + order.status),
-      href: '/order-detail/' + order.id,
-    };
-
     return [
-      html`<alwatr-icon-box .content=${iconBoxContent}></alwatr-icon-box>`,
+      html`<alwatr-order-item-box .order=${order}></alwatr-order-item-box>`,
       html`<alwatr-chat></alwatr-chat>`,
     ];
   }

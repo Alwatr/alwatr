@@ -9,13 +9,13 @@ import {
   UnresolvedMixin,
   StateMachineMixin,
 } from '@alwatr/element';
-import {message, replaceNumber} from '@alwatr/i18n';
+import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 
 import {pageOrderListFsm} from '../../manager/controller/order-list.js';
+import '../stuff/order-item-box.js';
 
-import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -65,16 +65,7 @@ export class AlwatrPageOrderList extends StateMachineMixin(
     // prettier-ignore
     return [
       mapObject(this, this.stateMachine.context.orderStorage?.data, (order) => {
-        const content: IconBoxContent = {
-          stated: true,
-          tinted: 1,
-          icon: 'receipt-outline',
-          flipRtl: true,
-          headline: message('order_item_headline').replace('${orderId}', replaceNumber(order.id.padStart(2, '0'))),
-          description: message('order_item_status') + ': ' + message('order_status_' + order.status),
-          href: `/order-detail/${order.id}`,
-        };
-        return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+        return html`<alwatr-order-item-box .order=${order}></alwatr-order-item-box>`;
       }),
       html`
         <div>

@@ -18,9 +18,9 @@ import '@alwatr/ui-kit/radio-group/radio-group.js';
 
 import {config} from '../../config.js';
 import {pageOrderDetailFsm} from '../../manager/controller/order-detail.js';
+import '../stuff/order-item-box.js';
 
 import type {OrderItem} from '@alwatr/type/customer-order-management.js';
-import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -42,6 +42,10 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
       padding: calc(2 * var(--sys-spacing-track));
       box-sizing: border-box;
       min-height: 100%;
+    }
+
+    alwatr-order-item-box {
+      margin-bottom: var(--sys-spacing-track);
     }
 
     alwatr-surface {
@@ -105,20 +109,8 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
       return;
     }
 
-    const iconBoxContent: IconBoxContent = {
-      stated: true,
-      tinted: 1,
-      icon: 'receipt-outline',
-      flipRtl: true,
-      headline: message('order_item_headline').replace(
-          '${orderId}',
-          replaceNumber(`${order.id}`.padStart(2, '0')),
-      ),
-      description: message('order_item_status') + ': ' + message('order_status_' + order.status),
-    };
-
     return [
-      html`<alwatr-icon-box .content=${iconBoxContent}></alwatr-icon-box>`,
+      html`<alwatr-order-item-box click-signal-id="test" .order=${order}></alwatr-order-item-box>`,
       mapIterable(this, order?.itemList, this._itemDetailTemplate, message('loading')),
       html`<alwatr-surface elevated>
         <div class="detail-container">
