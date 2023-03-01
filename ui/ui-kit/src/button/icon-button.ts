@@ -32,6 +32,8 @@ export interface IconButtonContent extends StringifyableRecord {
    * Dispatched signal with ClickSignalType and this detail.
    */
   clickDetail?: Stringifyable;
+
+  disabled?: true;
 }
 
 /**
@@ -95,6 +97,12 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
   override render(): unknown {
     this._logger.logMethod('render');
     if (this.content == null) return;
+
+    const disabled = Boolean(this.content.disabled);
+    if (this.hasAttribute('disabled') === disabled) {
+      this.toggleAttribute('disabled', disabled);
+    }
+
     return html`<alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>`;
   }
 
