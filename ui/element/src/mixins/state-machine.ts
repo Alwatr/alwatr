@@ -44,7 +44,6 @@ export function StateMachineMixin<T extends Constructor<SignalMixinInterface>, T
     /**
      * Subscribe to this.stateMachine.signal event.
     */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected stateUpdated(): void {
       this.requestUpdate();
     }
@@ -52,11 +51,6 @@ export function StateMachineMixin<T extends Constructor<SignalMixinInterface>, T
     protected override async scheduleUpdate(): Promise<void> {
       await untilNextFrame();
       super.scheduleUpdate();
-    }
-
-    protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
-      super.firstUpdated(_changedProperties);
-      this.stateMachine.transition('FIRST_UPDATED');
     }
   }
 
