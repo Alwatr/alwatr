@@ -1,6 +1,8 @@
 import {customElement, AlwatrBaseElement, html, property, nothing, css, mapObject, ifDefined} from '@alwatr/element';
 import '@alwatr/ui-kit/card/icon-box.js';
 
+import './order-status-box.js';
+
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order} from '@alwatr/type/customer-order-management.js';
 
@@ -36,10 +38,10 @@ export class AlwatrOrderList extends AlwatrBaseElement {
     if (this.orderStorage == null) return nothing;
 
     return mapObject(this, this.orderStorage.data, (order) => {
-      return html`<alwatr-order-item-box
+      return html`<alwatr-order-status-box
         order-click-signal-id=${ifDefined(this.orderClickSignalId)}
         .order=${order}
-      ></alwatr-order-item-box>`;
+      ></alwatr-order-status-box>`;
     });
   }
 }

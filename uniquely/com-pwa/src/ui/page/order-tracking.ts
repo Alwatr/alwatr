@@ -17,7 +17,7 @@ import '@alwatr/ui-kit/chat/chat.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 
 import {pageOrderTrackingFsm} from '../../manager/controller/order-tracking.js';
-import '../stuff/order-item-box.js';
+import '../stuff/order-status-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -42,7 +42,7 @@ export class AlwatrPageOrderTracking extends StateMachineMixin(
       min-height: 100%;
     }
 
-    alwatr-order-item-box {
+    alwatr-order-status-box {
       margin-bottom: var(--sys-spacing-track);
     }
 
@@ -82,7 +82,7 @@ export class AlwatrPageOrderTracking extends StateMachineMixin(
     }
 
     return [
-      html`<alwatr-order-item-box .order=${order}></alwatr-order-item-box>`,
+      html`<alwatr-order-status-box .order=${order}></alwatr-order-status-box>`,
       html`<alwatr-chat></alwatr-chat>`,
     ];
   }
