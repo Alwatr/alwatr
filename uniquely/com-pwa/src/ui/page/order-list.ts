@@ -40,21 +40,21 @@ export class AlwatrPageOrderList extends StateMachineMixin(
 
   override render(): unknown {
     this._logger.logMethod('render');
-    return this[`render_${this.stateMachine.state.to}`]?.();
+    return this[`render_state_${this.stateMachine.state.to}`]?.();
   }
 
-  render_loading(): unknown {
-    this._logger.logMethod('render_loading');
+  render_state_loading(): unknown {
+    this._logger.logMethod('render_state_loading');
     return message('loading');
   }
 
-  render_reloading(): unknown {
-    this._logger.logMethod('render_reloading');
-    return this.render_list();
+  render_state_reloading(): unknown {
+    this._logger.logMethod('render_state_reloading');
+    return this.render_state_list();
   }
 
-  render_list(): unknown {
-    this._logger.logMethod('render_list');
+  render_state_list(): unknown {
+    this._logger.logMethod('render_state_list');
     const gotState = this.stateMachine.state.to;
 
     return html`<alwatr-order-list .storage=${this.stateMachine.context.orderStorage}></alwatr-order-list>
