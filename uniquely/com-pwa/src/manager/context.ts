@@ -7,12 +7,18 @@ import {
 import {PageHomeContent} from '../type.js';
 
 import type {AlwatrDocumentStorage, User} from '@alwatr/type';
-import type {Product, Order, OrderDelivery} from '@alwatr/type/customer-order-management.js';
+import type {Product, Order, OrderDelivery, ProductPrice} from '@alwatr/type/customer-order-management.js';
 
 export * from '@alwatr/pwa-helper/context.js';
 
 export const productStorageContextConsumer =
   contextConsumer.bind<AlwatrDocumentStorage<Product>>('product-storage-tile-context');
+
+export const priceStorageContextConsumer =
+  contextConsumer.bind<AlwatrDocumentStorage<ProductPrice>>('price-storage-tile-context');
+
+export const finalPriceStorageContextConsumer =
+  contextConsumer.bind<AlwatrDocumentStorage<ProductPrice>>('final-price-storage-tile-context');
 
 export const orderStorageContextConsumer =
   contextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
