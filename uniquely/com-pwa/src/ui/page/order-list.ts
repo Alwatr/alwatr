@@ -3,7 +3,6 @@ import {
   css,
   html,
   LocalizeMixin,
-  mapObject,
   SignalMixin,
   AlwatrBaseElement,
   UnresolvedMixin,
@@ -15,7 +14,7 @@ import '@alwatr/ui-kit/card/icon-box.js';
 
 import {pageOrderListFsm} from '../../manager/controller/order-list.js';
 import '../stuff/order-item-box.js';
-
+import '../stuff/order-list.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -24,7 +23,7 @@ declare global {
 }
 
 /**
- * List of all orders
+ * List of all orders.
  */
 @customElement('alwatr-page-order-list')
 export class AlwatrPageOrderList extends StateMachineMixin(
@@ -37,10 +36,6 @@ export class AlwatrPageOrderList extends StateMachineMixin(
       padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
       box-sizing: border-box;
       min-height: 100%;
-    }
-
-    :host > * {
-      margin-bottom: var(--sys-spacing-track);
     }
   `;
 
@@ -62,12 +57,8 @@ export class AlwatrPageOrderList extends StateMachineMixin(
   render_list(): unknown {
     this._logger.logMethod('render_list');
     const gotState = this.stateMachine.state.to;
-    // prettier-ignore
-    return [
-      mapObject(this, this.stateMachine.context.orderStorage?.data, (order) => {
-        return html`<alwatr-order-item-box .order=${order}></alwatr-order-item-box>`;
-      }),
-      html`
+
+    return html`<alwatr-order-list .orderStorage=${this.stateMachine.context.orderStorage}></alwatr-order-list>
         <div>
           <alwatr-button
             .icon=${'reload-outline'}
@@ -81,7 +72,6 @@ export class AlwatrPageOrderList extends StateMachineMixin(
             elevated
           >${message('new_order_button')}</alwatr-button>
         </div>
-      `,
-    ];
+      `;
   }
 }
