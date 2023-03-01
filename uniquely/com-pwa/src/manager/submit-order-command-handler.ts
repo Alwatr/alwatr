@@ -1,12 +1,12 @@
 import {serviceRequest} from '@alwatr/fetch';
-import {message} from '@alwatr/i18n';
+import {message, replaceNumber} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
-import {commandHandler} from '@alwatr/signal';
+import {commandHandler, contextProvider} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
+import {userContextConsumer, submitOrderCommandTrigger, orderStorageContextConsumer} from './context.js';
+import {logger} from './logger.js';
 import {config} from '../config.js';
-import {userContextConsumer, submitOrderCommandTrigger} from '../manager/context.js';
-import {logger} from '../manager/logger.js';
 
 import type {Order} from '@alwatr/type/customer-order-management.js';
 
@@ -27,17 +27,18 @@ commandHandler.define<Partial<Order>, Order | null>(submitOrderCommandTrigger.id
 
     const newOrder = response.data;
 
-    // const orderStorage = orderStorageContextProvider.getValue();
-    // if (orderStorage != null) {
-    //   orderStorage.data[newOrder.id] = newOrder;
-    //   orderStorageContextProvider.setValue(orderStorage);
-    // }
+    const orderStorage = orderStorageContextConsumer.getValue();
+    if (orderStorage != null) {
+      orderStorage.data[newOrder.id] = newOrder;
+      orderStorage.meta.lastUpdated = Date.now();
+      contextProvider.setValue(orderStorageContextConsumer.id, orderStorage);
+    }
 
     snackbarSignalTrigger.request({
-      message: message('submit_order_success'),
+      message: message('submit_order_success').replace('${orderId}', replaceNumber(newOrder.id.padStart(2, '0'))),
     });
 
-    redirect('/order/' + newOrder.id);
+    redirect('/order-detail/' + newOrder.id);
 
     return newOrder;
   }

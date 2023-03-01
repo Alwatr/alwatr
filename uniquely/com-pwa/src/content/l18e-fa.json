@@ -13,7 +13,7 @@
     "order_item_headline": "سفارش ${orderId}",
     "order_item_status": "وضعیت سفارش",
     "page_order_list_headline": "لیست سفارشات جاری",
-    "page_product_list_headline": "انتخاب محصولات",
+    "select_product_headline": "انتخاب محصولات",
     "order_detail_headline": "سفارش ${orderId}",
     "order_detail_headline_new": "سفارش جدید",
     "new_order_button": "سفارش جدید",
@@ -52,7 +52,7 @@
     "order_shipping_invalid": "اطلاعات فرم صحیح نمی‌باشد!",
     "order_shipping_submit_success": "سفارش با موفقیت ثبت شد.",
 
-    "order_item_qty": "تعداد (m²)",
+    "order_item_qty": "مقدار",
     "order_item_price": "قیمت فروش (m²)",
     "order_item_final_price": "قیمت نمایندگی (m²)",
     "order_item_total_price": "جمع قیمت فروش",
@@ -67,7 +67,7 @@
     "page_order_tracking_headline": "پیگیری سفارش",
     "chat_text_input_placeholder": "پیام را بنویسید",
 
-    "submit_order_success": "سفارش شما با موفقیت ثبت شد.",
+    "submit_order_success": "سفارش شماره ${orderId} با موفقیت ثبت شد.",
     "submit_order_failed": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید."
   }
 }

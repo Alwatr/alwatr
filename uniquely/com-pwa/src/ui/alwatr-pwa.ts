@@ -7,7 +7,7 @@ import '@alwatr/ui-kit/style/theme/palette-85.css';
 
 import './stuff/app-footer.js';
 import {pageOrderDetailStateMachine} from '../manager/controller/order-detail.js';
-import {pageOrderListFsm} from '../manager/controller/order-list.js';
+import {pageOrderListStateMachine} from '../manager/controller/order-list.js';
 import {pageOrderTrackingFsm} from '../manager/controller/order-tracking.js';
 
 import type {RoutesConfig} from '@alwatr/router';
@@ -35,8 +35,8 @@ class AlwatrPwa extends AlwatrPwaElement {
         return html`<alwatr-page-404 unresolved>...</alwatr-page-404>`;
       },
       'order-list': () => {
-        if (pageOrderListFsm.state.to === 'unresolved') {
-          pageOrderListFsm.transition('IMPORT');
+        if (pageOrderListStateMachine.state.to === 'unresolved') {
+          pageOrderListStateMachine.transition('IMPORT');
           import('./page/order-list.js');
         }
         return html`<alwatr-page-order-list unresolved>...</alwatr-page-order-list>`;
@@ -58,8 +58,8 @@ class AlwatrPwa extends AlwatrPwaElement {
         return html`<alwatr-page-order-tracking unresolved>...</alwatr-page-order-tracking>`;
       },
       'new-order': () => {
-        if (pageOrderListFsm.state.to === 'unresolved') {
-          pageOrderListFsm.transition('IMPORT');
+        if (pageOrderListStateMachine.state.to === 'unresolved') {
+          pageOrderListStateMachine.transition('IMPORT');
           import('./page/new-order.js');
         }
         return html`<alwatr-page-new-order unresolved>...</alwatr-page-new-order>`;
