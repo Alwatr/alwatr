@@ -18,9 +18,9 @@ declare global {
 @customElement('alwatr-order-item-box')
 export class AlwatrOrderIconBox extends AlwatrBaseElement {
   static override styles = css`
-  :host {
-    display: block;
-  }
+    :host {
+      display: block;
+    }
   `;
 
   @property({attribute: false})
@@ -41,7 +41,7 @@ export class AlwatrOrderIconBox extends AlwatrBaseElement {
 
   protected _click(event: MouseEvent): void {
     if (this.order == null) return;
-    this._logger.logMethodArgs('_click', {signalId: this.clickSignalId, click: this.clickSignalId});
+    this._logger.logMethodArgs('click', {clickSignalId: this.clickSignalId});
     if (this.clickSignalId) {
       eventTrigger.dispatch<ClickSignalType<Order | OrderDraft>>(this.clickSignalId, {
         x: event.clientX,
@@ -58,16 +58,16 @@ export class AlwatrOrderIconBox extends AlwatrBaseElement {
     this._logger.logMethod('render');
     if (this.order == null) return nothing;
 
-    return html`
-    <alwatr-icon-box .content=${{
-    stated: true,
-    tinted: 1,
-    elevated: 1,
-    icon: 'receipt-outline',
-    flipRtl: true,
-    headline: message('order_item_headline').replace('${orderId}', replaceNumber(this.order.id.padStart(2, '0'))),
-    description: message('order_item_status') + ': ' + message('order_status_' + this.order.status),
-  }}></alwatr-icon-box>
-    `;
+    const content = {
+      stated: true,
+      tinted: 1,
+      elevated: 1,
+      icon: 'receipt-outline',
+      flipRtl: true,
+      headline: message('order_item_headline').replace('${orderId}', replaceNumber(this.order.id.padStart(2, '0'))),
+      description: message('order_item_status') + ': ' + message('order_status_' + this.order.status),
+    };
+
+    return html` <alwatr-icon-box .content=${content}></alwatr-icon-box> `;
   }
 }
