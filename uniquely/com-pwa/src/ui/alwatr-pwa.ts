@@ -48,6 +48,13 @@ class AlwatrPwa extends AlwatrPwaElement {
         pageOrderDetailFsm.transition('SHOW_DETAIL', {orderId: +routeContext.sectionList[1]});
         return html`<alwatr-page-order-detail unresolved>...</alwatr-page-order-detail>`;
       },
+      'new-order': () => {
+        if (pageOrderListFsm.state.to === 'unresolved') {
+          pageOrderListFsm.transition('IMPORT');
+          import('./page/new-order.js');
+        }
+        return html`<alwatr-page-new-order unresolved>...</alwatr-page-new-order>`;
+      },
     },
   };
 
