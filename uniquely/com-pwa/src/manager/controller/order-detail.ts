@@ -93,7 +93,7 @@ pageOrderDetailStateMachine.signal.subscribe(async (state) => {
       topAppBarContextProvider.setValue({
         headlineKey: 'page_order_list_headline',
         startIcon: buttons.backToOrderList,
-        endIconList: [],
+        endIconList: [buttons.reload],
       });
       break;
     }
@@ -106,7 +106,10 @@ pageOrderDetailStateMachine.signal.subscribe(async (state) => {
   }
 
   if (state.to === 'loading') {
-    if (pageOrderDetailStateMachine.context.orderStorage != null && pageOrderDetailStateMachine.context.productStorage != null) {
+    if (
+      pageOrderDetailStateMachine.context.orderStorage != null &&
+      pageOrderDetailStateMachine.context.productStorage != null
+    ) {
       pageOrderDetailStateMachine.transition('CONTEXT_LOADED');
     }
   }
