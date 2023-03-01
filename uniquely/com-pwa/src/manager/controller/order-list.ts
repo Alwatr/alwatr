@@ -1,4 +1,5 @@
 import {FiniteStateMachine} from '@alwatr/fsm';
+import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
 
 import {fetchOrderStorage} from '../context-provider/order-storage.js';
@@ -7,7 +8,7 @@ import {orderStorageContextConsumer, topAppBarContextProvider} from '../context.
 import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
 import type {Order} from '@alwatr/type/customer-order-management.js';
 
-export const pageOrderListFsm = new FiniteStateMachine({
+export const pageOrderListStateMachine = new FiniteStateMachine({
   id: 'page-order-list',
   initial: 'unresolved',
   context: {
@@ -48,10 +49,30 @@ export const pageOrderListFsm = new FiniteStateMachine({
   },
 } as const);
 
-pageOrderListFsm.signal.subscribe(async (state) => {
+export const buttons = {
+  backToHome: {
+    icon: 'arrow-back-outline',
+    flipRtl: true,
+    clickSignalId: 'back_to_home_click_event',
+  },
+  reload: {
+    icon: 'reload-outline',
+    // flipRtl: true,
+    clickSignalId: pageOrderListStateMachine.config.id + '_reload_click_event',
+  },
+  newOrder: {
+    icon: 'add-outline',
+    clickSignalId: pageOrderListStateMachine.config.id + '_new_order_click_event',
+  },
+  orderDetail: {
+    clickSignalId: pageOrderListStateMachine.config.id + '_order_detail_click_event',
+  },
+} as const;
+
+pageOrderListStateMachine.signal.subscribe(async (state) => {
   // logger.logMethodArgs('pageOrderListFsm.changed', state);
   switch (state.by) {
-    case 'IMPORT':
+    case 'IMPORT': {
       // just in unresolved
       topAppBarContextProvider.setValue({
         headlineKey: 'loading',
@@ -60,34 +81,58 @@ pageOrderListFsm.signal.subscribe(async (state) => {
         fetchOrderStorage();
       }
       break;
+    }
 
-    case 'CONNECTED':
+    case 'CONNECTED': {
       topAppBarContextProvider.setValue({
         headlineKey: 'page_order_list_headline',
+        startIcon: buttons.backToHome,
+        endIconList: [buttons.newOrder, buttons.reload],
       });
       break;
+    }
 
-    case 'REQUEST_UPDATE':
+    case 'REQUEST_UPDATE': {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      topAppBarContextProvider.setValue({
+        headlineKey: 'loading',
+        startIcon: buttons.backToHome,
+        endIconList: [buttons.newOrder, buttons.reload],
+      });
       await fetchOrderStorage();
-      pageOrderListFsm.transition('CONTEXT_LOADED');
+      topAppBarContextProvider.setValue({
+        headlineKey: 'page_order_list_headline',
+        startIcon: buttons.backToHome,
+        endIconList: [buttons.newOrder, buttons.reload],
+      });
+      pageOrderListStateMachine.transition('CONTEXT_LOADED');
       break;
+    }
   }
 
   if (state.to === 'loading') {
-    if (pageOrderListFsm.context.orderStorage != null) {
-      pageOrderListFsm.transition('CONTEXT_LOADED');
+    if (pageOrderListStateMachine.context.orderStorage != null) {
+      pageOrderListStateMachine.transition('CONTEXT_LOADED');
     }
   }
 });
 
 orderStorageContextConsumer.subscribe((orderStorage) => {
-  pageOrderListFsm.transition('CONTEXT_LOADED', {orderStorage});
+  pageOrderListStateMachine.transition('CONTEXT_LOADED', {orderStorage});
 });
 
-eventListener.subscribe<ClickSignalType>('page_order_list_reload_click_event', () => {
-  pageOrderListFsm.transition('REQUEST_UPDATE');
+eventListener.subscribe<ClickSignalType>(buttons.reload.clickSignalId, () => {
+  pageOrderListStateMachine.transition('REQUEST_UPDATE');
 });
 
-eventListener.subscribe<ClickSignalType>('new_order_click_event', () => {
-  // TODO: redirect
+eventListener.subscribe<ClickSignalType>(buttons.newOrder.clickSignalId, () => {
+  redirect({
+    sectionList: ['new-order'],
+  });
+});
+
+eventListener.subscribe<ClickSignalType<Order>>(buttons.orderDetail.clickSignalId, (event) => {
+  redirect({
+    sectionList: ['order-detail', event.detail.id],
+  });
 });

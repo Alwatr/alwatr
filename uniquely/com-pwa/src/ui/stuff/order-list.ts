@@ -1,4 +1,12 @@
-import {customElement, AlwatrBaseElement, html, property, nothing, css, mapObject, ifDefined} from '@alwatr/element';
+import {
+  customElement,
+  AlwatrBaseElement,
+  html,
+  property,
+  css,
+  mapObject,
+  type PropertyValues,
+} from '@alwatr/element';
 import '@alwatr/ui-kit/card/icon-box.js';
 
 import './order-status-box.js';
@@ -28,19 +36,23 @@ export class AlwatrOrderList extends AlwatrBaseElement {
   `;
 
   @property({attribute: false})
-    storage?: AlwatrDocumentStorage<Order> | null;
+    content?: AlwatrDocumentStorage<Order> | null;
 
   @property({attribute: 'order-click-signal-id'})
     orderClickSignalId?: string;
 
+  protected override shouldUpdate(changedProperties: PropertyValues<this>): boolean {
+    return super.shouldUpdate(changedProperties) && this.content != null;
+  }
+
   override render(): unknown {
     this._logger.logMethod('render');
-    if (this.storage == null) return nothing;
+    if (this.content == null) return;
 
-    return mapObject(this, this.storage.data, (order) => {
+    return mapObject(this, this.content.data, (order) => {
       return html`<alwatr-order-status-box
-        click-signal-id=${ifDefined(this.orderClickSignalId)}
         .content=${order}
+        .clickSignalId=${this.orderClickSignalId}
       ></alwatr-order-status-box>`;
     });
   }
