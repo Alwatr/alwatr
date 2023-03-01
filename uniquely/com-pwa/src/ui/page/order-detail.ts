@@ -60,6 +60,7 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
       display: block;
       width: 6rem;
       border-radius: var(--sys-radius-medium);
+      align-self: flex-start;
     }
 
     .detail-container {
@@ -130,12 +131,12 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
           <div>
             <span>${message('order_shipping_recipient_national_code')}:</span>
             <span>
-              <b>${order.delivery?.recipientNationalCode}</b>
+              <b>${replaceNumber(order.delivery?.recipientNationalCode)}</b>
             </span>
           </div>
           <div>
             <span>${message('order_shipping_address')}:</span>
-            <span><b>${order.delivery?.address}</b></span>
+            <span><b>${replaceNumber(order.delivery?.address)}</b></span>
           </div>
           <div>
             <span>${message('order_shipping_car_type_title')}:</span>
