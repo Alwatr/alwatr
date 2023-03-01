@@ -98,7 +98,7 @@ export const url = (route: Partial<RouteContextBase>): string => {
 
   let href = '';
 
-  if (Array.isArray(route.sectionList) && route.sectionList.length > 0) {
+  if (Array.isArray(route.sectionList)) {
     href += documentBaseUrl + route.sectionList.join('/');
   }
 
