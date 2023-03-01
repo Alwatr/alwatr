@@ -131,21 +131,6 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(UnresolvedMixin(A
         }
       },
       tracking: 'detail',
-      tracking2: () => {
-        /**
-         * `/order/1/tracking`
-         * `/order/new/tracking`
-         */
-
-        if (this.orderId && this.order?.status === 'draft') {
-          redirect({sectionList: [this.orderId, 'edit']}, 'replace', this.routeSlice);
-          return nothing;
-        }
-
-        import('./page-order-tracking.js');
-        return html`<alwatr-page-order-tracking .order=${this.order as OrderDraft}>...</alwatr-page-order-tracking>`;
-        // return html`alwatr-page-order-tracking, ${String(this.orderId)}, ${String(this.order?.id)}`;
-      },
       edit: 'detail', // Same page element.
       detail: () => {
         /**
