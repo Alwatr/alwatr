@@ -13,7 +13,6 @@ import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 
 import {pageOrderListFsm} from '../../manager/controller/order-list.js';
-import '../stuff/order-item-box.js';
 import '../stuff/order-list.js';
 
 declare global {
@@ -58,7 +57,7 @@ export class AlwatrPageOrderList extends StateMachineMixin(
     this._logger.logMethod('render_list');
     const gotState = this.stateMachine.state.to;
 
-    return html`<alwatr-order-list .orderStorage=${this.stateMachine.context.orderStorage}></alwatr-order-list>
+    return html`<alwatr-order-list .storage=${this.stateMachine.context.orderStorage}></alwatr-order-list>
         <div>
           <alwatr-button
             .icon=${'reload-outline'}

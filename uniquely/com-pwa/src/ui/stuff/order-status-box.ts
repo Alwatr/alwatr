@@ -8,15 +8,15 @@ import type {OrderDraft, Order} from '@alwatr/type/customer-order-management.js'
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-order-item-box': AlwatrOrderItemBox;
+    'alwatr-order-status-box': AlwatrOrderStatusBox;
   }
 }
 
 /**
  * Alwatr Order Item Box Element.
  */
-@customElement('alwatr-order-item-box')
-export class AlwatrOrderItemBox extends AlwatrBaseElement {
+@customElement('alwatr-order-status-box')
+export class AlwatrOrderStatusBox extends AlwatrBaseElement {
   static override styles = css`
     :host {
       display: block;
