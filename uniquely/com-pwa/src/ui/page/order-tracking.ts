@@ -32,7 +32,7 @@ declare global {
 @customElement('alwatr-page-order-tracking')
 export class AlwatrPageOrderTracking extends StateMachineMixin(
     pageOrderTrackingFsm,
-    UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement)))),
+    UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))),
 ) {
   static override styles = css`
     :host {
