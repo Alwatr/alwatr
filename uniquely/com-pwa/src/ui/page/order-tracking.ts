@@ -53,26 +53,26 @@ export class AlwatrPageOrderTracking extends StateMachineMixin(
 
   protected override render(): unknown {
     this._logger.logMethod('render');
-    return this[`render_${this.stateMachine.state.to}`]?.();
+    return this[`render_state_${this.stateMachine.state.to}`]?.();
   }
 
-  protected render_loading(): unknown {
-    this._logger.logMethod('render_loading');
+  protected render_state_loading(): unknown {
+    this._logger.logMethod('render_state_loading');
     return message('loading');
   }
 
-  protected render_notFound(): unknown {
-    this._logger.logMethod('render_notFound');
+  protected render_state_notFound(): unknown {
+    this._logger.logMethod('render_state_notFound');
     return message('order_not_found');
   }
 
-  protected render_reloading(): unknown {
-    this._logger.logMethod('render_reloading');
-    return this.render_tracking();
+  protected render_state_reloading(): unknown {
+    this._logger.logMethod('render_state_reloading');
+    return this.render_state_tracking();
   }
 
-  protected render_tracking(): unknown {
-    this._logger.logMethod('render_tracking');
+  protected render_state_tracking(): unknown {
+    this._logger.logMethod('render_state_tracking');
 
     // validate order id
     const order = this.stateMachine.context.orderStorage?.data[this.stateMachine.context.orderId ?? ''] ?? null;
