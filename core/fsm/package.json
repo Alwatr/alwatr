@@ -15,7 +15,6 @@
   "types": "core.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "license": "MIT",
-  "private": true,
   "files": [
     "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
   ],
