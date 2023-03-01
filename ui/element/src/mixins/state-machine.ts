@@ -1,6 +1,6 @@
 import {untilNextFrame} from '@alwatr/util';
 
-import {nothing, PropertyValues} from '../lit.js';
+import {nothing} from '../lit.js';
 
 import type {SignalMixinInterface} from './signal.js';
 import type {FiniteStateMachine} from '@alwatr/fsm';
