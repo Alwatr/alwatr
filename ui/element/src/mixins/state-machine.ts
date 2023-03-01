@@ -44,7 +44,8 @@ export function StateMachineMixin<T extends Constructor<SignalMixinInterface>, T
     /**
      * Subscribe to this.stateMachine.signal event.
     */
-    protected stateUpdated(): void {
+    protected stateUpdated(state: TMachine['state']): void {
+      this.setAttribute('state', state.to);
       this.requestUpdate();
     }
 
