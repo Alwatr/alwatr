@@ -72,7 +72,7 @@ pageOrderTrackingFsm.signal.subscribe(async (state) => {
 
     case 'CONNECTED': {
       topAppBarContextProvider.setValue({
-        headlineKey: 'page_order_list_headline',
+        headlineKey: 'page_order_tracking_headline',
       });
       break;
     }
