@@ -14,7 +14,7 @@ import {
 import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
 import type {Product, ProductPrice, OrderDraft} from '@alwatr/type/customer-order-management.js';
 
-export const pageNewOrderFsm = new FiniteStateMachine({
+export const pageNewOrderStateMachine = new FiniteStateMachine({
   id: 'page-order-detail',
   initial: 'unresolved',
   context: {
@@ -87,7 +87,24 @@ export const pageNewOrderFsm = new FiniteStateMachine({
   },
 });
 
-pageNewOrderFsm.signal.subscribe(async (state) => {
+export const buttons = {
+  back: {
+    icon: 'arrow-back-outline',
+    flipRtl: true,
+    clickSignalId: pageNewOrderStateMachine.config.id + '_back_click_event',
+  },
+  backToHome: {
+    icon: 'arrow-back-outline',
+    flipRtl: true,
+    clickSignalId: 'back_to_home_click_event',
+  },
+  submit: {
+    icon: 'checkmark',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_submit_click_event',
+  },
+} as const;
+
+pageNewOrderStateMachine.signal.subscribe(async (state) => {
   switch (state.by) {
     case 'IMPORT': {
       // just in unresolved
@@ -107,8 +124,8 @@ pageNewOrderFsm.signal.subscribe(async (state) => {
     }
 
     case 'PARTIAL_LOAD': {
-      if (Object.values(pageNewOrderFsm.context).indexOf(null) === -1) {
-        pageNewOrderFsm.transition('CONTEXT_LOADED');
+      if (Object.values(pageNewOrderStateMachine.context).indexOf(null) === -1) {
+        pageNewOrderStateMachine.transition('CONTEXT_LOADED');
       }
       break;
     }
@@ -116,23 +133,24 @@ pageNewOrderFsm.signal.subscribe(async (state) => {
     case 'CONNECTED': {
       topAppBarContextProvider.setValue({
         headlineKey: 'page_new_order_headline',
+        startIcon: buttons.backToHome,
       });
       break;
     }
 
     case 'NEW_ORDER': {
-      pageNewOrderFsm.context.order = getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'});
+      pageNewOrderStateMachine.context.order = getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'});
     }
   }
 });
 
-pageNewOrderFsm.signal.subscribe(async (state) => {
-  localStorage.setItem('draft-order-x1', JSON.stringify(pageNewOrderFsm.context.order));
+pageNewOrderStateMachine.signal.subscribe(async (state) => {
+  localStorage.setItem('draft-order-x1', JSON.stringify(pageNewOrderStateMachine.context.order));
 
   switch (state.to) {
     case 'edit': {
-      if (!pageNewOrderFsm.context.order?.itemList?.length && state.from != 'productList') {
-        pageNewOrderFsm.transition('SELECT_PRODUCT');
+      if (!pageNewOrderStateMachine.context.order?.itemList?.length && state.from != 'productList') {
+        pageNewOrderStateMachine.transition('SELECT_PRODUCT');
       }
       break;
     }
@@ -140,14 +158,15 @@ pageNewOrderFsm.signal.subscribe(async (state) => {
 });
 
 productStorageContextConsumer.subscribe((productStorage) => {
-  pageNewOrderFsm.transition('PARTIAL_LOAD', {productStorage});
+  pageNewOrderStateMachine.transition('PARTIAL_LOAD', {productStorage});
 });
 priceStorageContextConsumer.subscribe((priceStorage) => {
-  pageNewOrderFsm.transition('PARTIAL_LOAD', {priceStorage});
+  pageNewOrderStateMachine.transition('PARTIAL_LOAD', {priceStorage});
 });
 finalPriceStorageContextConsumer.subscribe((priceStorage) => {
-  pageNewOrderFsm.transition('PARTIAL_LOAD', {priceStorage});
+  pageNewOrderStateMachine.transition('PARTIAL_LOAD', {priceStorage});
 });
 
-eventListener.subscribe<ClickSignalType>('page_order_list_reload_click_event', () => {
+eventListener.subscribe<ClickSignalType>(buttons.submit.clickSignalId, () => {
+  pageNewOrderStateMachine.transition('SUBMIT');
 });
