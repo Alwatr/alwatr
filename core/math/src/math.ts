@@ -252,3 +252,8 @@ export const hex = (bytes: Uint8Array): string => {
   }
   return str;
 };
+
+export const calcDiscount = (price: number, finalPrice: number, decimal = 2, upSide = true): number => {
+  decimal = Math.pow(10, decimal);
+  return Math.round((price - finalPrice) / (upSide ? finalPrice : price) * 100 * decimal) / decimal;
+};
