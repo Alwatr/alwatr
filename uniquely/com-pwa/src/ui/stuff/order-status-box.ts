@@ -31,18 +31,17 @@ export class AlwatrOrderStatusBox extends AlwatrBaseElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener('click', this._click);
+    this.addEventListener('click', this._onClickEvent);
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.removeEventListener('click', this._click);
+    this.removeEventListener('click', this._onClickEvent);
   }
 
-  protected _click(event: MouseEvent): void {
-    if (this.content == null) return;
+  private _onClickEvent(event: MouseEvent): void {
     this._logger.logMethodArgs('click', {clickSignalId: this.clickSignalId});
-    if (this.clickSignalId) {
+    if (this.content && this.clickSignalId) {
       eventTrigger.dispatch<ClickSignalType<Order | OrderDraft>>(this.clickSignalId, {
         x: event.clientX,
         y: event.clientY,
@@ -60,7 +59,6 @@ export class AlwatrOrderStatusBox extends AlwatrBaseElement {
 
     const iconBoxContent = {
       stated: true,
-      tinted: 1,
       elevated: 1,
       icon: 'receipt-outline',
       flipRtl: true,
