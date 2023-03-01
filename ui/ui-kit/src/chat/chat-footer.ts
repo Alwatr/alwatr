@@ -27,11 +27,6 @@ export class AlwatrChatFooter extends AlwatrBaseElement {
       color: var(--sys-color-on-surface);
       background-color: var(--sys-color-surface);
     }
-
-    alwatr-icon-button {
-      width: calc(6 * var(--sys-spacing-track));
-      height: calc(6 * var(--sys-spacing-track));
-    }
   `;
 
   override render(): unknown {
