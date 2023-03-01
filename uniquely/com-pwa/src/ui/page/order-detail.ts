@@ -34,7 +34,7 @@ declare global {
 @customElement('alwatr-page-order-detail')
 export class AlwatrPageOrderDetail extends StateMachineMixin(
     pageOrderDetailFsm,
-    UnresolvedMixin(LocalizeMixin(SignalMixin(UnresolvedMixin(AlwatrBaseElement)))),
+    UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))),
 ) {
   static override styles = css`
     :host {
