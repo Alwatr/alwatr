@@ -24,7 +24,7 @@ export class AlwatrOrderStatusBox extends AlwatrBaseElement {
   `;
 
   @property({attribute: false})
-    order?: Order | OrderDraft | null;
+    content?: Order | OrderDraft | null;
 
   @property({attribute: 'click-signal-id'})
     clickSignalId?: string;
@@ -40,7 +40,7 @@ export class AlwatrOrderStatusBox extends AlwatrBaseElement {
   }
 
   protected _click(event: MouseEvent): void {
-    if (this.order == null) return;
+    if (this.content == null) return;
     this._logger.logMethodArgs('click', {clickSignalId: this.clickSignalId});
     if (this.clickSignalId) {
       eventTrigger.dispatch<ClickSignalType<Order | OrderDraft>>(this.clickSignalId, {
@@ -49,25 +49,25 @@ export class AlwatrOrderStatusBox extends AlwatrBaseElement {
         altKey: event.altKey,
         ctrlKey: event.ctrlKey,
         metaKey: event.metaKey,
-        detail: this.order,
+        detail: this.content,
       });
     }
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
-    if (this.order == null) return nothing;
+    if (this.content == null) return nothing;
 
-    const content = {
+    const iconBoxContent = {
       stated: true,
       tinted: 1,
       elevated: 1,
       icon: 'receipt-outline',
       flipRtl: true,
-      headline: message('order_item_headline').replace('${orderId}', replaceNumber(this.order.id.padStart(2, '0'))),
-      description: message('order_item_status') + ': ' + message('order_status_' + this.order.status),
+      headline: message('order_item_headline').replace('${orderId}', replaceNumber(this.content.id.padStart(2, '0'))),
+      description: message('order_item_status') + ': ' + message('order_status_' + this.content.status),
     };
 
-    return html` <alwatr-icon-box .content=${content}></alwatr-icon-box> `;
+    return html` <alwatr-icon-box .content=${iconBoxContent}></alwatr-icon-box> `;
   }
 }

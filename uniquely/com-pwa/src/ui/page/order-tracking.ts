@@ -82,7 +82,7 @@ export class AlwatrPageOrderTracking extends StateMachineMixin(
     }
 
     return [
-      html`<alwatr-order-status-box .order=${order}></alwatr-order-status-box>`,
+      html`<alwatr-order-status-box .content=${order}></alwatr-order-status-box>`,
       html`<alwatr-chat></alwatr-chat>`,
     ];
   }

@@ -28,19 +28,19 @@ export class AlwatrOrderList extends AlwatrBaseElement {
   `;
 
   @property({attribute: false})
-    orderStorage?: AlwatrDocumentStorage<Order> | null;
+    storage?: AlwatrDocumentStorage<Order> | null;
 
   @property({attribute: 'order-click-signal-id'})
     orderClickSignalId?: string;
 
   override render(): unknown {
     this._logger.logMethod('render');
-    if (this.orderStorage == null) return nothing;
+    if (this.storage == null) return nothing;
 
-    return mapObject(this, this.orderStorage.data, (order) => {
+    return mapObject(this, this.storage.data, (order) => {
       return html`<alwatr-order-status-box
-        order-click-signal-id=${ifDefined(this.orderClickSignalId)}
-        .order=${order}
+        click-signal-id=${ifDefined(this.orderClickSignalId)}
+        .content=${order}
       ></alwatr-order-status-box>`;
     });
   }
