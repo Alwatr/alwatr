@@ -98,14 +98,14 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
             <span>${message('order_item_price')}:</span>
             <span>
               <b>${number(item.price)}</b>
-              <alwatr-icon .name=${'toman'}></alwatr-icon>
+              <alwatr-icon name="toman"></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_final_price')}:</span>
             <span>
               <b>${number(item.finalPrice)}</b>
-              <alwatr-icon .name=${'toman'}></alwatr-icon>
+              <alwatr-icon name="toman"></alwatr-icon>
             </span>
           </div>
           <div>
@@ -116,21 +116,21 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
             <span>${message('order_item_final_total_price')}:</span>
             <span>
               <b>${number(item.qty * item.finalPrice)}</b>
-              <alwatr-icon .name=${'toman'}></alwatr-icon>
+              <alwatr-icon name="toman"></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_total_price')}:</span>
             <span>
               <b>${number(item.qty * item.price)}</b>
-              <alwatr-icon .name=${'toman'}></alwatr-icon>
+              <alwatr-icon name="toman"></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_discount')}:</span>
             <span>
               <b> (${number(calcDiscount(item.price, item.finalPrice))}%) ${number(item.price - item.finalPrice)} </b>
-              <alwatr-icon .name=${'toman'}></alwatr-icon>
+              <alwatr-icon name="toman"></alwatr-icon>
             </span>
           </div>
         </div>
@@ -186,7 +186,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     const totalPrice = order.totalPrice ?? 0;
     const finalPrice = order.finalPrice ?? 0;
     const shippingPriceTemplate = order.shippingPrice
-      ? html`<b>${number(order.shippingPrice)}</b><alwatr-icon .name=${'toman'}></alwatr-icon>`
+      ? html`<b>${number(order.shippingPrice)}</b><alwatr-icon name="toman"></alwatr-icon>`
       : message('no_shipping_price_yet');
 
     return html`<alwatr-surface elevated>
@@ -195,14 +195,14 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           <span>${message('order_total_price')}:</span>
           <span>
             <b>${number(totalPrice)}</b>
-            <alwatr-icon .name=${'toman'}></alwatr-icon>
+            <alwatr-icon name="toman"></alwatr-icon>
           </span>
         </div>
         <div>
           <span>${message('order_discount')}:</span>
           <span>
             <b> (${number(calcDiscount(totalPrice, finalPrice))}%) ${number(totalPrice - finalPrice)} </b>
-            <alwatr-icon .name=${'toman'}></alwatr-icon>
+            <alwatr-icon name="toman"></alwatr-icon>
           </span>
         </div>
         <div>
