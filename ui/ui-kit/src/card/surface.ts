@@ -12,7 +12,8 @@ declare global {
  * @extends AlwatrBaseElement
  *
  * @attr {Boolean} stated
- * @attr {Number|Boolean} elevated - tinted by default
+ * @attr {Number|Boolean} elevated
+ * @attr {Number|Boolean} tinted
  * @attr {Boolean} filled
  * @attr {Boolean} outlined
  * @attr {Boolean} active-outline - outline on active and focus
