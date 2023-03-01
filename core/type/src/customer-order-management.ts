@@ -7,7 +7,7 @@ import type {StringifyableRecord} from './type-helper.js';
 
 export const shipmentTypeCS = ['x', 'y'] as const;
 export const carTypeCS = ['x', 'y'] as const;
-export const timePeriodCS = ['1-2w', '2-3w', '3-4w'] as const;
+export const timePeriodCS = ['1_2w', '2_3w', '3_4w'] as const;
 export const discountTypeCS = ['number', 'percent'] as const;
 export const orderStatusCS = [
   'draft',
@@ -72,7 +72,7 @@ export interface Order extends AlwatrDocumentObject {
   /**
    * Delivery info
    */
-  delivery: OrderDelivery;
+  shippingInfo: OrderShippingInfo;
 
   discount: number;
   discountType: (typeof discountTypeCS)[number];
@@ -122,10 +122,14 @@ export interface OrderItem extends StringifyableRecord {
    * The selling price of a product after any discounts to this buyer.
    */
   finalPrice: number;
+
+  /**
+   * Quantity of this item.
+   */
   qty: number;
 }
 
-export interface OrderDelivery extends StringifyableRecord {
+export interface OrderShippingInfo extends StringifyableRecord {
   recipientName: string;
   recipientNationalCode: string;
   address: string;
