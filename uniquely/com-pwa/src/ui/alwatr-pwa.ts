@@ -6,6 +6,7 @@ import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-85.css';
 
 import './stuff/app-footer.js';
+import {pageNewOrderStateMachine} from '../manager/controller/new-order.js';
 import {pageOrderDetailStateMachine} from '../manager/controller/order-detail.js';
 import {pageOrderListStateMachine} from '../manager/controller/order-list.js';
 import {pageOrderTrackingFsm} from '../manager/controller/order-tracking.js';
@@ -58,8 +59,8 @@ class AlwatrPwa extends AlwatrPwaElement {
         return html`<alwatr-page-order-tracking unresolved>...</alwatr-page-order-tracking>`;
       },
       'new-order': () => {
-        if (pageOrderListStateMachine.state.to === 'unresolved') {
-          pageOrderListStateMachine.transition('IMPORT');
+        if (pageNewOrderStateMachine.state.to === 'unresolved') {
+          pageNewOrderStateMachine.transition('IMPORT');
           import('./page/new-order.js');
         }
         return html`<alwatr-page-new-order unresolved>...</alwatr-page-new-order>`;

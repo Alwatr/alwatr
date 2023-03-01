@@ -34,7 +34,7 @@ export const homePageContent: PageHomeContent = {
       icon: 'cart-outline',
       flipRtl: true,
       headline: 'سفارش جدید',
-      href: '/order/new/edit',
+      href: '/new-order/',
       description: 'فرآیند ثبت سفارش جدید.',
     },
     {

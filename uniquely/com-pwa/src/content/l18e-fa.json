@@ -15,9 +15,10 @@
     "page_order_list_headline": "لیست سفارشات جاری",
     "select_product_headline": "انتخاب محصولات",
     "order_detail_headline": "سفارش ${orderId}",
-    "order_detail_headline_new": "سفارش جدید",
+    "page_new_order_headline": "سفارش جدید",
     "new_order_button": "سفارش جدید",
     "reload": "به‌روزرسانی",
+    "no_shipping_price_yet": "هنوز محاسبه نشده است.",
 
     "fetch_failed": "خطا در دریافت اطلاعات از اینترنت!",
     "retry": "تلاش مجدد",
