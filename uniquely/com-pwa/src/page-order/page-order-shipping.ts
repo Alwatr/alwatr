@@ -16,7 +16,7 @@ import '@alwatr/ui-kit/text-field/text-field.js';
 
 import {submitOrderShippingCommandTrigger, topAppBarContextProvider} from '../manager/context.js';
 
-import type {OrderDelivery, OrderDraft} from '@alwatr/type/customer-order-management.js';
+import type {OrderShippingInfo, OrderDraft} from '@alwatr/type/customer-order-management.js';
 import type {AlwatrFieldSet, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
@@ -113,9 +113,9 @@ export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(Unresolve
     });
   }
 
-  getFormData(): Partial<OrderDelivery> {
+  getFormData(): Partial<OrderShippingInfo> {
     this._logger.logMethod('getFormData');
-    const data: Partial<OrderDelivery> = {};
+    const data: Partial<OrderShippingInfo> = {};
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField | AlwatrFieldSet>(
         'alwatr-text-field,alwatr-radio-group',
     )) {
@@ -128,7 +128,7 @@ export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(Unresolve
       carType: data['car-type'],
       shipmentType: data['shipment-type'],
       timePeriod: data['shipment-type'],
-    } as Partial<OrderDelivery>;
+    } as Partial<OrderShippingInfo>;
   }
 
   reset(): void {
@@ -145,7 +145,7 @@ export class AlwatrPageOrderShopping extends LocalizeMixin(SignalMixin(Unresolve
   }
 
   async submit(): Promise<void> {
-    const formData = this.getFormData() as OrderDelivery;
+    const formData = this.getFormData() as OrderShippingInfo;
     this._logger.logMethodArgs('submit', formData);
     submitOrderShippingCommandTrigger.request(formData);
   }

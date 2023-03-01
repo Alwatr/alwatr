@@ -191,35 +191,35 @@ export class AlwatrPageOrderDetail extends LocalizeMixin(SignalMixin(UnresolvedM
           <div>
             <span>${message('order_shipping_recipient_name')}:</span>
             <span>
-              <b>${this.order.delivery?.recipientName}</b>
+              <b>${this.order.shippingInfo?.recipientName}</b>
             </span>
           </div>
           <div>
             <span>${message('order_shipping_recipient_national_code')}:</span>
             <span>
-              <b>${this.order.delivery?.recipientNationalCode}</b>
+              <b>${this.order.shippingInfo?.recipientNationalCode}</b>
             </span>
           </div>
           <div>
             <span>${message('order_shipping_address')}:</span>
-            <span><b>${this.order.delivery?.address}</b></span>
+            <span><b>${this.order.shippingInfo?.address}</b></span>
           </div>
           <div>
             <span>${message('order_shipping_car_type_title')}:</span>
             <span>
-              <b>${this.order.delivery?.carType}</b>
+              <b>${this.order.shippingInfo?.carType}</b>
             </span>
           </div>
           <div>
             <span>${message('order_shipping_shipment_type_title')}:</span>
             <span>
-              <b>${this.order.delivery?.shipmentType}</b>
+              <b>${this.order.shippingInfo?.shipmentType}</b>
             </span>
           </div>
           <div>
             <span>${message('order_shipping_time_period_title')}:</span>
             <span>
-              <b>${message('time_period_' + this.order.delivery?.timePeriod.replace('-', '_'))}</b>
+              <b>${message('time_period_' + this.order.shippingInfo?.timePeriod.replace('-', '_'))}</b>
             </span>
           </div>
         </div>
