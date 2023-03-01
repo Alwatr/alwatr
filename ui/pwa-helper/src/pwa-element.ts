@@ -18,7 +18,8 @@ import '@alwatr/ui-kit/style/token.css';
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 import {untilNextFrame} from '@alwatr/util';
 
-import './signal/back-click-event.js';
+import './signal/back-to-home-click.js';
+import './signal/browser-back-click.js';
 import './signal/register-service-worker-command.js';
 import './signal/sw-user-notify.js';
 
