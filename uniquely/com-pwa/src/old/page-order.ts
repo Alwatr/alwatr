@@ -162,7 +162,7 @@ export class AlwatrPageOrder extends LocalizeMixin(SignalMixin(UnresolvedMixin(A
           return nothing;
         }
 
-        import('./page-order-product.js');
+        import('../ui/stuff/select-product.js');
         return html`<alwatr-page-order-product
           .order=${this.order}
           @request-redirect=${this._requestRedirect}
