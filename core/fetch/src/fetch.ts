@@ -42,6 +42,11 @@ export async function fetchContext(
       fetchOption.cacheStrategy = 'cache_only';
       const response = await serviceRequest(fetchOption);
       contextProvider.setValue<typeof response>(contextName, response, dispatchOptions);
+      if (navigator.onLine === false) {
+        logger.logOther('fetchContext:', 'offline');
+        // retry on online
+        return;
+      }
     }
     catch (err) {
       if ((err as Error).message === 'fetch_cache_not_found') {
@@ -52,12 +57,6 @@ export async function fetchContext(
         throw err;
       }
     }
-  }
-
-  if (navigator.onLine === false) {
-    logger.logOther('fetchContext:', 'offline');
-    // retry on online
-    return;
   }
 
   try {
@@ -361,6 +360,10 @@ async function _handleRetryPattern(options: Required<FetchOptions>): Promise<Res
   }
   catch (err) {
     logger.accident('fetch', 'fetch_failed_retry', (err as Error)?.message || 'fetch failed and retry', err);
+
+    if (navigator.onLine === false) {
+      throw new Error('offline');
+    }
 
     await _wait(options.retryDelay);
 
