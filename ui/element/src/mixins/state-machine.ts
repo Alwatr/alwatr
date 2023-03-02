@@ -1,4 +1,6 @@
-import {nothing, PropertyValues} from '../lit.js';
+import {untilNextFrame} from '@alwatr/util';
+
+import {nothing} from '../lit.js';
 
 import type {SignalMixinInterface} from './signal.js';
 import type {FiniteStateMachine} from '@alwatr/fsm';
@@ -7,8 +9,8 @@ import type {Constructor} from '@alwatr/type';
 export declare class StateMachineMixinInterface<TMachine extends FiniteStateMachine> extends SignalMixinInterface {
   protected stateMachine: TMachine;
   protected stateUpdated(state: TMachine['state']): void;
-  protected render_unresolved(): unknown;
-  protected render_resolving(): unknown;
+  protected render_state_unresolved(): unknown;
+  protected render_state_resolving(): unknown;
 }
 
 export function StateMachineMixin<T extends Constructor<SignalMixinInterface>, TMachine extends FiniteStateMachine>(
@@ -18,32 +20,38 @@ export function StateMachineMixin<T extends Constructor<SignalMixinInterface>, T
   class StateMachineMixinClass extends superClass {
     protected stateMachine = stateMachine;
 
-    protected render_unresolved(): unknown {
+    protected render_state_unresolved(): unknown {
       return nothing;
     }
-    protected render_resolving(): unknown {
+    protected render_state_resolving(): unknown {
       return nothing;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    constructor(...args: any[]) {
+      super(...args);
+      this.stateUpdated = this.stateUpdated.bind(this);
     }
 
     override connectedCallback(): void {
       super.connectedCallback();
       this.stateMachine.transition('CONNECTED');
       this._signalListenerList.push(
-          this.stateMachine.signal.subscribe((state) => this.stateUpdated(state), {receivePrevious: 'NextCycle'}),
+          this.stateMachine.signal.subscribe(this.stateUpdated, {receivePrevious: 'NextCycle'}),
       );
     }
 
     /**
      * Subscribe to this.stateMachine.signal event.
     */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected stateUpdated(_state: TMachine['state']): void {
+    protected stateUpdated(state: TMachine['state']): void {
+      this.setAttribute('state', state.to);
       this.requestUpdate();
     }
 
-    protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
-      super.firstUpdated(_changedProperties);
-      this.stateMachine.transition('FIRST_UPDATED');
+    protected override async scheduleUpdate(): Promise<void> {
+      await untilNextFrame();
+      super.scheduleUpdate();
     }
   }
 
