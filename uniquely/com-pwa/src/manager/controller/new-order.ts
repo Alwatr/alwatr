@@ -48,12 +48,12 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
     },
     edit: {
       on: {
-        SELECT_PRODUCT: 'productList',
+        SELECT_PRODUCT: 'selectProduct',
         EDIT_SHIPPING: 'shippingForm',
         SUBMIT: 'shippingForm',
       },
     },
-    productList: {
+    selectProduct: {
       on: {
         SUBMIT: 'edit',
       },
@@ -150,7 +150,7 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
 
   if (
     state.to === 'edit' &&
-    state.from != 'productList' &&
+    state.from != 'selectProduct' &&
     !pageNewOrderStateMachine.context.order?.itemList?.length
   ) {
     pageNewOrderStateMachine.transition('SELECT_PRODUCT');

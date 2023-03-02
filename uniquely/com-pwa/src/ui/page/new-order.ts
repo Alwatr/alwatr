@@ -8,6 +8,7 @@ import {
 
 import {pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
+import '../stuff/select-product.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -60,9 +61,9 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
     ];
   }
 
-  protected render_state_productList(): unknown {
-    this._logger.logMethod('render_state_productList');
-    return html`render_state_productList`;
+  protected render_state_selectProduct(): unknown {
+    this._logger.logMethod('render_state_selectProduct');
+    return html`<alwatr-select-product></alwatr-select-product>`;
   }
 
   protected render_state_shippingForm(): unknown {

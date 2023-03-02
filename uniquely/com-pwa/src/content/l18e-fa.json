@@ -14,6 +14,7 @@
     "order_item_status": "وضعیت سفارش",
     "page_order_list_headline": "لیست سفارشات جاری",
     "select_product_headline": "انتخاب محصولات",
+    "select_product_submit": "سفارش محصولات",
     "order_detail_headline": "سفارش ${orderId}",
     "page_new_order_headline": "سفارش جدید",
     "new_order_button": "سفارش جدید",
