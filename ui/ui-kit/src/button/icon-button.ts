@@ -4,7 +4,7 @@ import {eventTrigger} from '@alwatr/signal';
 
 import {AlwatrSurface} from '../card/surface.js';
 
-import type {StringifyableRecord, ClickSignalType} from '@alwatr/type';
+import type {StringifyableRecord, ClickSignalType, Stringifyable} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -19,14 +19,21 @@ export interface IconButtonContent extends StringifyableRecord {
   icon: string;
 
   /**
+   * Flip icon on rtl
+   */
+  flipRtl?: true;
+
+  /**
    * Unique name for identify click event over signal.
    */
   clickSignalId?: string;
 
   /**
-   * Flip icon on rtl
+   * Dispatched signal with ClickSignalType and this detail.
    */
-  flipRtl?: true;
+  clickDetail?: Stringifyable;
+
+  disabled?: true;
 }
 
 /**
@@ -90,19 +97,26 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
   override render(): unknown {
     this._logger.logMethod('render');
     if (this.content == null) return;
+
+    const disabled = Boolean(this.content.disabled);
+    if (this.hasAttribute('disabled') === disabled) {
+      this.toggleAttribute('disabled', disabled);
+    }
+
     return html`<alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>`;
   }
 
   protected _click(event: MouseEvent): void {
-    const signalId = this.content?.clickSignalId;
-    this._logger.logMethodArgs('_click', {signalId});
-    if (signalId) {
-      eventTrigger.dispatch<ClickSignalType>(signalId, {
+    const clickSignalId = this.content?.clickSignalId;
+    this._logger.logMethodArgs('_click', {signalId: clickSignalId});
+    if (clickSignalId) {
+      eventTrigger.dispatch<ClickSignalType>(clickSignalId, {
         x: event.clientX,
         y: event.clientY,
         altKey: event.altKey,
         ctrlKey: event.ctrlKey,
         metaKey: event.metaKey,
+        detail: this.content?.clickDetail,
       });
     }
   }

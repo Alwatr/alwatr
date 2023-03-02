@@ -4,7 +4,7 @@ import {eventTrigger} from '@alwatr/signal';
 
 import {AlwatrSurface} from '../card/surface.js';
 
-import type {ClickSignalType} from '@alwatr/type';
+import type {ClickSignalType, Stringifyable} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -48,6 +48,9 @@ export class AlwatrButton extends AlwatrSurface {
   @property({attribute: 'signal-id'})
     signalId?: string;
 
+  @property({attribute: false})
+    detail?: Stringifyable;
+
   override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('stated', '');
@@ -81,6 +84,7 @@ export class AlwatrButton extends AlwatrSurface {
         altKey: event.altKey,
         ctrlKey: event.ctrlKey,
         metaKey: event.metaKey,
+        detail: this.detail,
       });
     }
   }
