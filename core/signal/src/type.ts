@@ -40,7 +40,9 @@ export interface SubscribeOptions {
 export interface DispatchOptions {
   /**
    * If 'AnimationFrame' or 'Timeout', the dispatch will be debounced (single dispatch for all changes).
+   *
    * If 'No' or 'NextCycle', every signal is matter and count without debounced (every changes dispatched).
+   *
    * tips: debounce work like throttle this means listeners call with latest dispatch value.
    *
    * @default `AnimationFrame`
@@ -62,7 +64,9 @@ export interface ProviderOptions {
 
   /**
    * If 'AnimationFrame' or 'Timeout', the dispatch will be debounced (single dispatch for all changes).
+   *
    * If 'No' or 'NextCycle', every signal is matter and count without debounced (every changes dispatched).
+   *
    * tips: debounce work like throttle this means listeners call with latest dispatch value.
    *
    * @default `AnimationFrame`
