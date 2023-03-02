@@ -108,7 +108,7 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
 
   protected _click(event: MouseEvent): void {
     const clickSignalId = this.content?.clickSignalId;
-    this._logger.logMethodArgs('_click', {signalId: clickSignalId});
+    this._logger.logMethodArgs('click', {clickSignalId: clickSignalId});
     if (clickSignalId) {
       eventTrigger.dispatch<ClickSignalType>(clickSignalId, {
         x: event.clientX,
