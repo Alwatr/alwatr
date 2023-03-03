@@ -164,12 +164,14 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
 
   else if (state.to === 'edit' || state.to === 'review') {
     const order = pageNewOrderStateMachine.context.order;
-    order.totalPrice = 0;
-    order.finalPrice = order.shippingPrice ?? 0;
+    let totalPrice = 0;
+    let finalPrice = 0;
     for (const item of order.itemList ?? []) {
-      order.totalPrice += item.price;
-      order.finalPrice += item.finalPrice;
+      totalPrice += item.price * item.qty;
+      finalPrice += item.finalPrice * item.qty;
     }
+    order.totalPrice = Math.round(totalPrice);
+    order.finalPrice = Math.round(finalPrice);
   }
 });
 
