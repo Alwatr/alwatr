@@ -14,7 +14,7 @@ import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-page-order-shipping-form': AlwatrPageOrderShoppingForm;
+    'alwatr-order-shipping-form': AlwatrPageOrderShoppingForm;
   }
 }
 
