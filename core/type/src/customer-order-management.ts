@@ -72,7 +72,7 @@ export interface Order extends AlwatrDocumentObject {
   /**
    * Delivery info
    */
-  shippingInfo: OrderShippingInfo;
+  shippingInfo: Partial<OrderShippingInfo>;
 
   discount: number;
   discountType: (typeof discountTypeCS)[number];
