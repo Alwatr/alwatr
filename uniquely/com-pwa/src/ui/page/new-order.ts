@@ -1,7 +1,6 @@
 import {
   customElement,
   html,
-  nothing,
   StateMachineMixin,
   UnresolvedMixin,
 } from '@alwatr/element';
@@ -9,7 +8,6 @@ import {message} from '@alwatr/i18n';
 
 import {buttons, pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
-import '../stuff/order-shipping-form.js';
 import '../stuff/select-product.js';
 
 declare global {
@@ -42,10 +40,11 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
     return [
       // this.render_part_status(order),
       this.render_part_item_list(order.itemList ?? [], this.stateMachine.context.productStorage, true),
-      order.shippingInfo ? this.render_part_shipping_info(order.shippingInfo) : nothing,
-      order.itemList?.length ? this.render_part_summary(order) : nothing,
-      this.render_part_submit(),
-
+      this.render_part_btn_product(),
+      this.render_part_shipping_info(order.shippingInfo),
+      this.render_part_btn_shipping_edit(),
+      this.render_part_summary(order),
+      this.render_part_btn_submit(),
     ];
   }
 
@@ -62,7 +61,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
       this.render_part_item_list(order.itemList, this.stateMachine.context.productStorage),
       this.render_part_shipping_info(order.shippingInfo),
       this.render_part_summary(order),
-      this.render_part_submit(),
+      this.render_part_btn_submit(),
     ];
   }
 
@@ -73,7 +72,12 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
 
   protected render_state_shippingForm(): unknown {
     this._logger.logMethod('render_state_shippingForm');
-    return html`<alwatr-order-shipping-form></alwatr-order-shipping-form>`;
+    const order = this.stateMachine.context.order;
+    return [
+      this.render_part_item_list(order.itemList ?? [], this.stateMachine.context.productStorage, false),
+      this.render_part_shipping_form(order.shippingInfo),
+      this.render_part_btn_shipping_submit(),
+    ];
   }
 
   protected render_state_submitting(): unknown {
@@ -91,20 +95,41 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
     return html`render_state_submitFailed`;
   }
 
-  protected render_part_submit(): unknown {
-    return html`
-      <div class="btn-container">
+  protected render_part_btn_product(): unknown {
+    return html`<div class="btn-container">
       <alwatr-button
-          elevated
-          .icon=${buttons.editItems.icon}
-          .clickSignalId=${buttons.editItems.clickSignalId}
-        >${message('page_new_order_edit_items')}</alwatr-button>
+        .icon=${buttons.editItems.icon}
+        .clickSignalId=${buttons.editItems.clickSignalId}
+      >${message('page_new_order_edit_items')}</alwatr-button>
+    </div>`;
+  }
+
+  protected render_part_btn_shipping_edit(): unknown {
+    return html`<div class="btn-container">
+      <alwatr-button
+        .icon=${buttons.editShippingForm.icon}
+        .clickSignalId=${buttons.editShippingForm.clickSignalId}
+      >${message('page_new_order_shipping_edit')}</alwatr-button>
+    </div>`;
+  }
+
+  protected render_part_btn_shipping_submit(): unknown {
+    return html`<div class="btn-container">
+      <alwatr-button
+        .icon=${buttons.submitShippingForm.icon}
+        .clickSignalId=${buttons.submitShippingForm.clickSignalId}
+      >${message('page_new_order_shipping_submit')}</alwatr-button>
+    </div>`;
+  }
+
+  protected render_part_btn_submit(): unknown {
+    return html`
+      <div class="submit-container">
         <alwatr-button
-          elevated
           .icon=${buttons.submit.icon}
           .clickSignalId=${buttons.submit.clickSignalId}
           ?disabled=${!pageNewOrderStateMachine.context.order.itemList?.length}
-        >${message('page_new_order_next')}</alwatr-button>
+        >${message('page_new_order_submit')}</alwatr-button>
       </div>
     `;
   }
