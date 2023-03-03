@@ -1,20 +1,19 @@
 import {customElement, css, html, LocalizeMixin, SignalMixin, UnresolvedMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import {orderShippingSchema, type OrderShippingInfo} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
-import {validator} from '@alwatr/validator';
 
-import {pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
+import {buttons, pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 
+import type {OrderShippingInfo} from '@alwatr/type/customer-order-management.js';
 import type {AlwatrFieldSet, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-order-shipping-form': AlwatrPageOrderShoppingForm;
+    'alwatr-order-shipping-form': AlwatrOrderShoppingForm;
   }
 }
 
@@ -22,7 +21,7 @@ declare global {
  * Alwatr Order Shipping Form.
  */
 @customElement('alwatr-order-shipping-form')
-export class AlwatrPageOrderShoppingForm extends LocalizeMixin(SignalMixin(UnresolvedMixin(AlwatrSurface))) {
+export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(UnresolvedMixin(AlwatrSurface))) {
   get _carTypeRadioGroupOptions(): RadioGroupOptions {
     return {
       title: message('order_shipping_car_type_title'),
@@ -52,11 +51,6 @@ export class AlwatrPageOrderShoppingForm extends LocalizeMixin(SignalMixin(Unres
   }
 
   static override styles = css`
-    /* :host([disabled]) {
-      pointer-events: none;
-      opacity: var(--sys-surface-disabled-opacity);
-    } */
-
     alwatr-text-field {
       margin-top: var(--sys-spacing-track);
     }
@@ -64,7 +58,7 @@ export class AlwatrPageOrderShoppingForm extends LocalizeMixin(SignalMixin(Unres
       margin-top: 0;
     }
 
-    .button-container {
+    .btn-container {
       display: flex;
       flex-direction: row-reverse;
       gap: var(--sys-spacing-track);
@@ -72,8 +66,7 @@ export class AlwatrPageOrderShoppingForm extends LocalizeMixin(SignalMixin(Unres
     }
   `;
 
-  getShippingInfo(): Partial<OrderShippingInfo> {
-    this._logger.logMethod('getShippingInfo');
+  get getShippingInfo(): Partial<OrderShippingInfo> {
     const data: Partial<OrderShippingInfo> = {};
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField | AlwatrFieldSet>(
         'alwatr-text-field,alwatr-radio-group',
@@ -97,10 +90,9 @@ export class AlwatrPageOrderShoppingForm extends LocalizeMixin(SignalMixin(Unres
 
   // TODO: handle not valid shipping info
   submit(): void {
-    const shippingInfo = validator<OrderShippingInfo>(orderShippingSchema, this.getShippingInfo());
-    this._logger.logMethodArgs('submit', shippingInfo);
+    this._logger.logMethod('submit');
 
-    pageNewOrderStateMachine.context.order.shippingInfo = shippingInfo;
+    pageNewOrderStateMachine.context.order.shippingInfo = this.getShippingInfo as OrderShippingInfo;
     pageNewOrderStateMachine.transition('SUBMIT');
   }
 
@@ -135,10 +127,14 @@ export class AlwatrPageOrderShoppingForm extends LocalizeMixin(SignalMixin(Unres
       <alwatr-radio-group name="shipment-type" .options=${this._shipmentTypeRadioGroupOptions}></alwatr-radio-group>
       <alwatr-radio-group name="time-period" .options=${this._timePeriodRadioGroupOptions}></alwatr-radio-group>
 
-      <div class="button-container">
-        <alwatr-button outlined @click=${this.submit}>${message('order_shipping_submit_form')}</alwatr-button>
-        <!-- TODO: handle cancel transition  -->
-        <alwatr-button>${message('cancel')}</alwatr-button>
+      <div class="btn-container">
+        <alwatr-button .icon=${buttons.cancel.icon} outlined>${message('cancel')}</alwatr-button>
+        <alwatr-button
+          click-signal-id=${buttons.submitShippingForm.clickSignalId}
+          .icon=${buttons.submitShippingForm.icon}
+          elevated
+          >${message('order_shipping_submit_form')}</alwatr-button
+        >
       </div>
     `;
   }
