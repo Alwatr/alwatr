@@ -5,7 +5,7 @@ import {
   StateMachineMixin,
   UnresolvedMixin,
 } from '@alwatr/element';
-import { message } from '@alwatr/i18n';
+import {message} from '@alwatr/i18n';
 
 import {buttons, pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
@@ -73,7 +73,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
 
   protected render_state_shippingForm(): unknown {
     this._logger.logMethod('render_state_shippingForm');
-    return html`<alwatr-page-order-shipping-form></alwatr-page-order-shipping-form>`;
+    return html`<alwatr-order-shipping-form></alwatr-order-shipping-form>`;
   }
 
   protected render_state_submitting(): unknown {
