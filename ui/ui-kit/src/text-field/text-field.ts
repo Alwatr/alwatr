@@ -39,7 +39,7 @@ export class AlwatrTextField extends AlwatrSurface {
     css`
       :host {
         --_surface-color-on: var(--sys-color-on-surface-variant-hsl);
-        display: block;
+        display: inline-block;
         padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
         font-family: var(--sys-typescale-body-large-font-family-name);
         font-weight: var(--sys-typescale-body-large-font-weight);

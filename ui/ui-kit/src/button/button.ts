@@ -23,7 +23,9 @@ export class AlwatrButton extends AlwatrSurface {
       :host {
         --_surface-color-on: var(--sys-color-primary-hsl);
         background-color: transparent;
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sys-spacing-track);
         min-width: calc(6 * var(--sys-spacing-track));
         text-align: center;
         vertical-align: middle;
@@ -38,6 +40,10 @@ export class AlwatrButton extends AlwatrSurface {
         white-space: nowrap;
         user-select: none;
         cursor: pointer;
+      }
+
+      alwatr-icon {
+        font-size: calc(2.5 * var(--sys-spacing-track));
       }
     `,
   ];
