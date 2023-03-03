@@ -113,8 +113,9 @@ export const buttons = {
     icon: 'checkmark',
     clickSignalId: pageNewOrderStateMachine.config.id + '_submit_shipping_form_click_event',
   },
-  cancel: {
-    icon: 'close',
+  editShippingForm: {
+    icon: 'checkmark',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_edit_shipping_form_click_event',
   },
 } as const;
 
@@ -198,6 +199,14 @@ eventListener.subscribe<ClickSignalType>(buttons.submit.clickSignalId, () => {
 
 eventListener.subscribe<ClickSignalType>(buttons.editItems.clickSignalId, () => {
   pageNewOrderStateMachine.transition('SELECT_PRODUCT');
+});
+
+eventListener.subscribe<ClickSignalType>(buttons.editShippingForm.clickSignalId, () => {
+  pageNewOrderStateMachine.transition('EDIT_SHIPPING');
+});
+
+eventListener.subscribe<ClickSignalType>(buttons.submitShippingForm.clickSignalId, () => {
+  pageNewOrderStateMachine.transition('SUBMIT');
 });
 
 

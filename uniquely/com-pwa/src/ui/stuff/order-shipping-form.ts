@@ -5,7 +5,7 @@ import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
-import {buttons, pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
+import {pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 
 import type {OrderShippingInfo} from '@alwatr/type/customer-order-management.js';
 import type {AlwatrFieldSet, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
@@ -51,11 +51,12 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
   }
 
   static override styles = css`
-    alwatr-text-field {
-      margin-top: var(--sys-spacing-track);
+    :host {
+      display: block;
     }
-    alwatr-text-field:first-of-type {
-      margin-top: 0;
+
+    alwatr-text-field {
+      margin-bottom: var(--sys-spacing-track);
     }
 
     .btn-container {
@@ -66,7 +67,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
     }
   `;
 
-  get getShippingInfo(): Partial<OrderShippingInfo> {
+  getShippingInfo(): Partial<OrderShippingInfo> {
     const data: Partial<OrderShippingInfo> = {};
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField | AlwatrFieldSet>(
         'alwatr-text-field,alwatr-radio-group',
@@ -74,33 +75,19 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
       data[inputElement.name] = inputElement.value;
     }
 
-    return {
-      recipientName: data['recipient-name'],
-      recipientNationalCode: data['recipient-national-code'],
-      address: data['address'],
-      carType: data['car-type'],
-      shipmentType: data['shipment-type'],
-      timePeriod: data['shipment-type'],
-    } as Partial<OrderShippingInfo>;
+    return data;
   }
 
-  async cancel(): Promise<void> {
-    pageNewOrderStateMachine.transition('BACK');
-  }
-
-  // TODO: handle not valid shipping info
-  submit(): void {
-    this._logger.logMethod('submit');
-
-    pageNewOrderStateMachine.context.order.shippingInfo = this.getShippingInfo as OrderShippingInfo;
-    pageNewOrderStateMachine.transition('SUBMIT');
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    pageNewOrderStateMachine.context.order.shippingInfo = this.getShippingInfo();
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
     return html`
       <alwatr-text-field
-        name="recipient-name"
+        name="recipientName"
         .type="text"
         .placeholder=${message('order_shipping_recipient_name')}
         outlined
@@ -108,7 +95,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         stated
       ></alwatr-text-field>
       <alwatr-text-field
-        name="recipient-national-code"
+        name="recipientNationalCode"
         .type="number"
         .placeholder=${message('order_shipping_recipient_national_code')}
         outlined
@@ -123,19 +110,10 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         active-outline
         stated
       ></alwatr-text-field>
-      <alwatr-radio-group name="car-type" .options=${this._carTypeRadioGroupOptions}></alwatr-radio-group>
-      <alwatr-radio-group name="shipment-type" .options=${this._shipmentTypeRadioGroupOptions}></alwatr-radio-group>
-      <alwatr-radio-group name="time-period" .options=${this._timePeriodRadioGroupOptions}></alwatr-radio-group>
 
-      <div class="btn-container">
-        <alwatr-button .icon=${buttons.cancel.icon} outlined>${message('cancel')}</alwatr-button>
-        <alwatr-button
-          click-signal-id=${buttons.submitShippingForm.clickSignalId}
-          .icon=${buttons.submitShippingForm.icon}
-          elevated
-          >${message('order_shipping_submit_form')}</alwatr-button
-        >
-      </div>
+      <alwatr-radio-group name="carType" .options=${this._carTypeRadioGroupOptions}></alwatr-radio-group>
+      <alwatr-radio-group name="shipmentType" .options=${this._shipmentTypeRadioGroupOptions}></alwatr-radio-group>
+      <alwatr-radio-group name="timePeriod" .options=${this._timePeriodRadioGroupOptions}></alwatr-radio-group>
     `;
   }
 }

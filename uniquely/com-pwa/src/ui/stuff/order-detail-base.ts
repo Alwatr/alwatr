@@ -6,6 +6,7 @@ import {
   SignalMixin,
   AlwatrBaseElement,
   type CSSResultGroup,
+  nothing,
 } from '@alwatr/element';
 import {message, number, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/icon';
@@ -13,6 +14,7 @@ import {calcDiscount} from '@alwatr/math';
 import '@alwatr/ui-kit/button/icon-button.js';
 import '@alwatr/ui-kit/card/surface.js';
 
+import './order-shipping-form.js';
 import './order-status-box.js';
 import {config} from '../../config.js';
 
@@ -23,14 +25,12 @@ import type {IconButtonContent} from '@alwatr/ui-kit/button/icon-button.js';
 export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles: CSSResultGroup = css`
     :host {
-      display: block;
+      display: flex;
+      flex-direction: column;
       padding: calc(2 * var(--sys-spacing-track));
       box-sizing: border-box;
       min-height: 100%;
-    }
-
-    alwatr-order-status-box {
-      margin-bottom: var(--sys-spacing-track);
+      gap: var(--sys-spacing-track);
     }
 
     alwatr-surface {
@@ -38,7 +38,6 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       display: flex;
       flex-direction: row;
       align-items: center;
-      margin-bottom: var(--sys-spacing-track);
       gap: var(--sys-spacing-track);
     }
 
@@ -64,10 +63,8 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       margin-bottom: 0;
     }
 
-    .btn-container {
-      display: flex;
+    .submit-container {
       text-align: end;
-      justify-content: space-between;
     }
 
     /* ----- */
@@ -147,6 +144,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       editable = false,
   ): unknown {
     this._logger.logMethod('render_part_item_list');
+
     return mapIterable(this, itemList, (item) => {
       const product = productStorage?.data[item.productId];
       if (product == null) {
@@ -245,33 +243,36 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     `;
   }
 
-  protected render_part_shipping_info(shippingInfo: OrderShippingInfo): unknown {
+  protected render_part_shipping_info(shippingInfo?: Partial<OrderShippingInfo>): unknown {
     this._logger.logMethod('render_part_shipping_info');
+
+    const nullStr = '…' as const;
+
     return html`<alwatr-surface tinted>
-      <div class="detail-container">
+      <div>
         <div>
           <span>${message('order_shipping_recipient_name')}:</span>
-          <span>${shippingInfo.recipientName}</span>
+          <span>${shippingInfo?.recipientName ?? nullStr}</span>
         </div>
         <div>
           <span>${message('order_shipping_recipient_national_code')}:</span>
-          <span>${replaceNumber(shippingInfo.recipientNationalCode)}</span>
+          <span>${replaceNumber(shippingInfo?.recipientNationalCode ?? nullStr)}</span>
         </div>
         <div>
           <span>${message('order_shipping_address')}:</span>
-          <span>${replaceNumber(shippingInfo.address)}</span>
+          <span>${replaceNumber(shippingInfo?.address ?? nullStr)}</span>
         </div>
         <div>
           <span>${message('order_shipping_car_type_title')}:</span>
-          <span>${shippingInfo.carType}</span>
+          <span>${shippingInfo?.carType ?? nullStr}</span>
         </div>
         <div>
           <span>${message('order_shipping_shipment_type_title')}:</span>
-          <span>${shippingInfo.shipmentType}</span>
+          <span>${shippingInfo?.shipmentType ?? nullStr}</span>
         </div>
         <div>
           <span>${message('order_shipping_time_period_title')}:</span>
-          <span>${message('time_period_' + shippingInfo.timePeriod)}</span>
+          <span>${shippingInfo?.timePeriod ? message('time_period_' + shippingInfo.timePeriod) : nullStr}</span>
         </div>
       </div>
     </alwatr-surface>`;
@@ -279,6 +280,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
   protected render_part_summary(order: Order | OrderDraft): unknown {
     this._logger.logMethod('render_part_summary');
+    if (!order.itemList?.length) return nothing;
 
     const totalPrice = order.totalPrice ?? 0;
     const finalPrice = order.finalPrice ?? 0;
@@ -334,5 +336,11 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
         </div>
       </div>
     </alwatr-surface>`;
+  }
+
+  protected render_part_shipping_form(shippingInfo?: Partial<OrderShippingInfo>): unknown {
+    this._logger.logMethod('render_part_summary');
+
+    return html`<alwatr-surface tinted><alwatr-order-shipping-form></alwatr-order-shipping-form></alwatr-surface>`;
   }
 }

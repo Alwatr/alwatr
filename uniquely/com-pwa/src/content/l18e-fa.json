@@ -19,6 +19,8 @@
     "page_new_order_submit": "ثبت سفارش",
     "page_new_order_next": "مرحله بعد",
     "page_new_order_edit_items": "ویرایش لیست محصولات",
+    "page_new_order_shipping_edit": "ویرایش اطلاعات بارگیری و ارسال",
+    "page_new_order_shipping_submit": "ثبت اطلاعات",
     "order_detail_headline": "سفارش ${orderId}",
     "page_new_order_headline": "سفارش جدید",
     "new_order_button": "سفارش جدید",
@@ -43,7 +45,7 @@
 
     "order_shipping_address": "آدرس تحویل",
     "product_not_found": "هیچ محصولی یافت نشد!",
-    "page_order_shipping_headline": " اطلاعات بارگیری و ارسال",
+    "page_order_shipping_headline": "اطلاعات بارگیری و ارسال",
     "order_shipping_recipient_name": "نام تحویل گیرنده",
     "order_shipping_recipient_national_code": "کد ملی تحویل گیرنده",
     "order_shipping_submit_form": "ثبت اطلاعات بارگیری",
