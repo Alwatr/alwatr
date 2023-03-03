@@ -12,7 +12,7 @@ import {
 } from '../context.js';
 
 import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
-import type {Product, ProductPrice, OrderDraft} from '@alwatr/type/customer-order-management.js';
+import type {Product, ProductPrice, OrderDraft, OrderItem} from '@alwatr/type/customer-order-management.js';
 
 export const pageNewOrderStateMachine = new FiniteStateMachine({
   id: 'page-order-detail',
@@ -28,17 +28,18 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
       on: {
         CONNECTED: '$self',
         PARTIAL_LOAD: '$self',
-        CONTEXT_LOADED: '$self',
       },
     },
     unresolved: {
       on: {
         IMPORT: 'resolving',
+        CONTEXT_LOADED: 'edit',
       },
     },
     resolving: {
       on: {
         CONNECTED: 'loading',
+        CONTEXT_LOADED: 'edit',
       },
     },
     loading: {
@@ -51,6 +52,7 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
         SELECT_PRODUCT: 'selectProduct',
         EDIT_SHIPPING: 'shippingForm',
         SUBMIT: 'shippingForm',
+        QTY_UPDATE: '$self',
       },
     },
     selectProduct: {
@@ -98,6 +100,10 @@ export const buttons = {
     icon: 'arrow-back-outline',
     flipRtl: true,
     clickSignalId: 'back_to_home_click_event',
+  },
+  editItems: {
+    icon: 'create-outline',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_edit_items_click_event',
   },
   submit: {
     icon: 'checkmark',
@@ -179,4 +185,28 @@ finalPriceStorageContextConsumer.subscribe((finalPriceStorage) => {
 
 eventListener.subscribe<ClickSignalType>(buttons.submit.clickSignalId, () => {
   pageNewOrderStateMachine.transition('SUBMIT');
+});
+
+eventListener.subscribe<ClickSignalType>(buttons.editItems.clickSignalId, () => {
+  pageNewOrderStateMachine.transition('SELECT_PRODUCT');
+});
+
+
+const qtyStep = 3.6;
+const qtyUpdate = (orderItem: OrderItem, add: number): void => {
+  // debugger;
+  const qty = (orderItem.qty + qtyStep * add);
+  // if (qty % qtyStep !== 0) { // khak bar sarat js
+  //   console.warn(qty % qtyStep);
+  //   qty = (Math.floor(qty / qtyStep) + 1) * qtyStep;
+  // }
+  if (qty <= 0) return;
+  orderItem.qty = Math.round(qty * 100) / 100;
+  pageNewOrderStateMachine.transition('QTY_UPDATE');
+};
+eventListener.subscribe<ClickSignalType<OrderItem>>('order_item_qty_add', (event) => {
+  qtyUpdate(event.detail, 1);
+});
+eventListener.subscribe<ClickSignalType<OrderItem>>('order_item_qty_remove', (event) => {
+  qtyUpdate(event.detail, -1);
 });

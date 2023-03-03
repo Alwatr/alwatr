@@ -5,8 +5,9 @@ import {
   StateMachineMixin,
   UnresolvedMixin,
 } from '@alwatr/element';
+import { message } from '@alwatr/i18n';
 
-import {pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
+import {buttons, pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
 import '../stuff/order-shipping-form.js';
 import '../stuff/select-product.js';
@@ -39,10 +40,12 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
     this._logger.logMethod('render_state_detail');
     const order = this.stateMachine.context.order;
     return [
-      this.render_part_status(order),
+      // this.render_part_status(order),
       this.render_part_item_list(order.itemList ?? [], this.stateMachine.context.productStorage, true),
       order.shippingInfo ? this.render_part_shipping_info(order.shippingInfo) : nothing,
       order.itemList?.length ? this.render_part_summary(order) : nothing,
+      this.render_part_submit(),
+
     ];
   }
 
@@ -59,6 +62,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
       this.render_part_item_list(order.itemList, this.stateMachine.context.productStorage),
       this.render_part_shipping_info(order.shippingInfo),
       this.render_part_summary(order),
+      this.render_part_submit(),
     ];
   }
 
@@ -85,5 +89,23 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
   protected render_state_submitFailed(): unknown {
     this._logger.logMethod('render_state_submitFailed');
     return html`render_state_submitFailed`;
+  }
+
+  protected render_part_submit(): unknown {
+    return html`
+      <div class="btn-container">
+      <alwatr-button
+          elevated
+          .icon=${buttons.editItems.icon}
+          .clickSignalId=${buttons.editItems.clickSignalId}
+        >${message('page_new_order_edit_items')}</alwatr-button>
+        <alwatr-button
+          elevated
+          .icon=${buttons.submit.icon}
+          .clickSignalId=${buttons.submit.clickSignalId}
+          ?disabled=${!pageNewOrderStateMachine.context.order.itemList?.length}
+        >${message('page_new_order_next')}</alwatr-button>
+      </div>
+    `;
   }
 }

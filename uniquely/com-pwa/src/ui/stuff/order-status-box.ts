@@ -62,8 +62,13 @@ export class AlwatrOrderStatusBox extends AlwatrBaseElement {
     this._logger.logMethod('render');
     if (this.content == null) return;
 
+    const headline =
+      this.content.status === 'draft'
+        ? message('order_item_headline_new')
+        : message('order_item_headline').replace('${orderId}', replaceNumber(this.content.id.padStart(2, '0')));
+
     const iconBoxContent: IconBoxContent = {
-      headline: message('order_item_headline').replace('${orderId}', replaceNumber(this.content.id.padStart(2, '0'))),
+      headline,
       description: message('order_item_status') + ': ' + message('order_status_' + this.content.status),
       icon: 'receipt-outline',
       flipRtl: true,
