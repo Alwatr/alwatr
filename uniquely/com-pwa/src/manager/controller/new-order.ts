@@ -109,6 +109,13 @@ export const buttons = {
     icon: 'checkmark',
     clickSignalId: pageNewOrderStateMachine.config.id + '_submit_click_event',
   },
+  submitShippingForm: {
+    icon: 'checkmark',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_submit_shipping_form_click_event',
+  },
+  cancel: {
+    icon: 'close',
+  },
 } as const;
 
 pageNewOrderStateMachine.signal.subscribe(async (state) => {
