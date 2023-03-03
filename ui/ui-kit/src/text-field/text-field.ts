@@ -40,6 +40,7 @@ export class AlwatrTextField extends AlwatrSurface {
       :host {
         --_surface-color-on: var(--sys-color-on-surface-variant-hsl);
         display: inline-block;
+        box-sizing: border-box;
         padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
         font-family: var(--sys-typescale-body-large-font-family-name);
         font-weight: var(--sys-typescale-body-large-font-weight);
@@ -59,6 +60,7 @@ export class AlwatrTextField extends AlwatrSurface {
         padding: 0;
         font: inherit;
         width: 100%;
+        box-sizing: border-box;
         border-radius: inherit;
         border: none;
         outline: transparent;
