@@ -14,6 +14,8 @@ declare global {
 
 /**
  * Alwatr outlined text field.
+ *
+ * @attr click-signal-id
  */
 @customElement('alwatr-button')
 export class AlwatrButton extends AlwatrSurface {
