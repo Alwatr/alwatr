@@ -211,7 +211,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
             <span>${message('order_item_discount')}:</span>
             <span>
               <span>
-                (${number(calcDiscount(item.price, item.finalPrice))}%)
+                (٪${number(calcDiscount(item.price, item.finalPrice))})
                 ${number(item.qty * (item.price - item.finalPrice))}
               </span>
               <alwatr-icon name="toman"></alwatr-icon>
@@ -282,9 +282,11 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
     const totalPrice = order.totalPrice ?? 0;
     const finalPrice = order.finalPrice ?? 0;
-    const shippingPriceTemplate = order.shippingPrice
-      ? html`<b>${number(order.shippingPrice)}</b><alwatr-icon name="toman"></alwatr-icon>`
-      : message('no_shipping_price_yet');
+    const shippingPrice = order.shippingPrice ?? 1_850_000;
+    const shippingPriceTemplate =
+      shippingPrice > 0
+        ? html`${number(shippingPrice)}<alwatr-icon name="toman"></alwatr-icon>`
+        : message('no_shipping_price_yet');
 
     return html`<alwatr-surface tinted>
       <div class="detail-container">
@@ -296,9 +298,16 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           </span>
         </div>
         <div>
+          <span>${message('order_total_final_price')}:</span>
+          <span>
+            <span>${number(finalPrice)}</span>
+            <alwatr-icon name="toman"></alwatr-icon>
+          </span>
+        </div>
+        <div>
           <span>${message('order_discount')}:</span>
           <span>
-            <span> (${number(calcDiscount(totalPrice, finalPrice))}%) ${number(totalPrice - finalPrice)} </span>
+            <span> (٪${number(calcDiscount(totalPrice, finalPrice))}) ${number(totalPrice - finalPrice)} </span>
             <alwatr-icon name="toman"></alwatr-icon>
           </span>
         </div>
@@ -307,9 +316,19 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           <span>${shippingPriceTemplate}</span>
         </div>
         <div>
+          <span>${message('order_discount_after_shipping')}:</span>
+          <span>
+            <span>
+              (٪${number(calcDiscount(totalPrice, finalPrice + shippingPrice))})
+              ${number(totalPrice - finalPrice - shippingPrice)}
+            </span>
+            <alwatr-icon name="toman"></alwatr-icon>
+          </span>
+        </div>
+        <div>
           <span>${message('order_final_total_price')}:</span>
           <span>
-            <span>${number(finalPrice)}</span>
+            <span>${number(finalPrice + shippingPrice)}</span>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
