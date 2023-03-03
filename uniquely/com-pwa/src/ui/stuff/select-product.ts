@@ -52,10 +52,6 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
 
   selectedRecord: Record<string, true> = {};
 
-  // override connectedCallback(): void {
-  //   super.connectedCallback();
-  // }
-
   override render(): unknown {
     this._logger.logMethod('render');
     this._updateSelectedRecord();

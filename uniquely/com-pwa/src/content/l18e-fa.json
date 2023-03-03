@@ -70,7 +70,7 @@
     "order_item_discount": "سود نمایندگی",
     "order_total_price": "سرجمع فروش",
     "order_total_final_price": "سرجمع خرید نمایندگی",
-    "order_shipping_price": "هزینه ارسال",
+    "order_shipping_price": "هزینه ارسال تخمینی",
     "order_final_total_price": "مبلغ قابل پرداخت",
     "order_discount": "سود نمایندگی",
     "order_discount_after_shipping": "سود بعد ارسال",

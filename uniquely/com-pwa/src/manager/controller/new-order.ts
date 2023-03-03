@@ -8,6 +8,7 @@ import {
   finalPriceStorageContextConsumer,
   priceStorageContextConsumer,
   productStorageContextConsumer,
+  scrollToTopCommand,
   topAppBarContextProvider,
 } from '../context.js';
 
@@ -51,7 +52,7 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
       on: {
         SELECT_PRODUCT: 'selectProduct',
         EDIT_SHIPPING: 'shippingForm',
-        SUBMIT: 'shippingForm',
+        SUBMIT: 'review',
         QTY_UPDATE: '$self',
       },
     },
@@ -62,13 +63,13 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
     },
     shippingForm: {
       on: {
-        SUBMIT: 'review',
+        SUBMIT: 'edit',
       },
     },
     review: {
       on: {
         BACK: 'edit',
-        SUBMIT: 'submitting',
+        FINAL_SUBMIT: 'submitting',
       },
     },
     submitting: {
@@ -108,6 +109,10 @@ export const buttons = {
   submit: {
     icon: 'checkmark',
     clickSignalId: pageNewOrderStateMachine.config.id + '_submit_click_event',
+  },
+  submitFinal: {
+    icon: 'checkmark',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_submit_final_click_event',
   },
   submitShippingForm: {
     icon: 'checkmark',
@@ -162,6 +167,10 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
 pageNewOrderStateMachine.signal.subscribe(async (state) => {
   localStorage.setItem('draft-order-x1', JSON.stringify(pageNewOrderStateMachine.context.order));
 
+  if (state.to != 'shippingForm') {
+    scrollToTopCommand.request({});
+  }
+
   if (
     state.to === 'edit' &&
     state.from != 'selectProduct' &&
@@ -195,6 +204,10 @@ finalPriceStorageContextConsumer.subscribe((finalPriceStorage) => {
 
 eventListener.subscribe<ClickSignalType>(buttons.submit.clickSignalId, () => {
   pageNewOrderStateMachine.transition('SUBMIT');
+});
+
+eventListener.subscribe<ClickSignalType>(buttons.submitFinal.clickSignalId, () => {
+  pageNewOrderStateMachine.transition('FINAL_SUBMIT');
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.editItems.clickSignalId, () => {

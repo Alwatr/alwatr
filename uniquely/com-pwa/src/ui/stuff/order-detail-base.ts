@@ -35,13 +35,15 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
     alwatr-surface {
       --_surface-color-on: var(--sys-color-on-surface-variant-hsl);
+    }
+
+    .product-item {
       display: flex;
       flex-direction: row;
-      align-items: center;
       gap: var(--sys-spacing-track);
     }
 
-    alwatr-surface > img {
+    .product-item > img {
       display: block;
       width: calc(6 * var(--sys-spacing-track));
       border-radius: var(--sys-radius-small);
@@ -155,7 +157,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       const qtyStep = 3.6;
       item.qty ||= qtyStep * 100;
 
-      return html`<alwatr-surface tinted>
+      return html`<alwatr-surface tinted class="product-item">
         <img src="${config.cdn + product.image.id}" />
         <div class="detail-container">
           <div>${product.title.fa}</div>
@@ -340,7 +342,8 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
   protected render_part_shipping_form(shippingInfo?: Partial<OrderShippingInfo>): unknown {
     this._logger.logMethod('render_part_summary');
-
-    return html`<alwatr-surface tinted><alwatr-order-shipping-form></alwatr-order-shipping-form></alwatr-surface>`;
+    return html`<alwatr-surface tinted>
+      <alwatr-order-shipping-form .shippingInfo=${shippingInfo}></alwatr-order-shipping-form>
+    </alwatr-surface>`;
   }
 }
