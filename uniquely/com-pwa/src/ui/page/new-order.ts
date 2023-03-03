@@ -8,6 +8,7 @@ import {
 
 import {pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
+import '../stuff/order-shipping-form.js';
 import '../stuff/select-product.js';
 
 declare global {
@@ -68,7 +69,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
 
   protected render_state_shippingForm(): unknown {
     this._logger.logMethod('render_state_shippingForm');
-    return html`render_state_shippingForm`;
+    return html`<alwatr-page-order-shipping-form></alwatr-page-order-shipping-form>`;
   }
 
   protected render_state_submitting(): unknown {
