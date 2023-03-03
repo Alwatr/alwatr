@@ -80,6 +80,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
       <div class="break"></div>
       <alwatr-button
         elevated
+        .icon=${buttons.submit.icon}
         .clickSignalId=${buttons.submit.clickSignalId}
         ?disabled=${!pageNewOrderStateMachine.context.order.itemList?.length}
       >${message('select_product_submit')}</alwatr-button>
@@ -137,7 +138,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
     if (target.selected === true) {
       order.itemList.push({
         productId,
-        qty: 1,
+        qty: 0,
         price: priceStorage.data[productId].price,
         finalPrice: finalPriceStorage.data[productId].price,
       });
