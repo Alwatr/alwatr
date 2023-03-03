@@ -10,14 +10,15 @@ import {
   type CSSResultGroup,
 } from '@alwatr/element';
 import {localeContextConsumer, setLocale} from '@alwatr/i18n';
-import {routerOutlet, type RoutesConfig} from '@alwatr/router';
-import {commandTrigger} from '@alwatr/signal';
+import {RouteContext, routerOutlet, type RoutesConfig} from '@alwatr/router';
+import {commandHandler, commandTrigger} from '@alwatr/signal';
 import '@alwatr/ui-kit/snackbar/controller.js';
 import '@alwatr/ui-kit/style/pwa.css';
 import '@alwatr/ui-kit/style/token.css';
 import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 import {untilNextFrame} from '@alwatr/util';
 
+import {scrollToTopCommand, topAppBarContextProvider} from './context.js';
 import './signal/back-to-home-click.js';
 import './signal/browser-back-click.js';
 import './signal/register-service-worker-command.js';
@@ -46,6 +47,9 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
       contain: size layout paint style;
       flex-grow: 1;
       flex-shrink: 0;
+    }
+
+    .scroll-area {
       overflow-y: auto;
     }
 
@@ -62,7 +66,19 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
 
   override connectedCallback(): void {
     super.connectedCallback();
-    if (!localeContextConsumer.getValue()) {setLocale();}
+    if (!localeContextConsumer.getValue()) {
+      setLocale();
+    }
+    this._signalListenerList.push(
+        commandHandler.define<{smooth?: boolean}, undefined>(scrollToTopCommand.id, (option): undefined => {
+          this.renderRoot.querySelector('.scroll-area')?.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: option.smooth ? 'smooth' : 'auto',
+          });
+          return;
+        }),
+    );
   }
 
   protected _routesConfig: RoutesConfig = {
@@ -73,6 +89,11 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
     },
   };
 
+  protected override _routeContextUpdated(routeContext: RouteContext): void {
+    super._routeContextUpdated(routeContext);
+    scrollToTopCommand.request({});
+  }
+
   protected override async scheduleUpdate(): Promise<void> {
     await untilNextFrame();
     super.scheduleUpdate();
@@ -80,11 +101,7 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
 
   override render(): unknown {
     this._logger.logMethod('render');
-    return [
-      this._topAppBarTemplate(),
-      this._mainTemplate(),
-      this._navigationBarTemplate(),
-    ];
+    return [this._topAppBarTemplate(), this._mainTemplate(), this._navigationBarTemplate()];
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
@@ -93,11 +110,11 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
   }
 
   protected _topAppBarTemplate(): unknown {
-    return html`<alwatr-top-app-bar context-signal="top-app-bar-context"></alwatr-top-app-bar>`;
+    return html`<alwatr-top-app-bar context-signal=${topAppBarContextProvider.id}></alwatr-top-app-bar>`;
   }
 
   protected _mainTemplate(): unknown {
-    return html`<main>${cache(routerOutlet(this._routesConfig))}</main>`;
+    return html`<main class="scroll-area">${cache(routerOutlet(this._routesConfig))}</main>`;
   }
 
   protected _navigationBarTemplate(): unknown {
