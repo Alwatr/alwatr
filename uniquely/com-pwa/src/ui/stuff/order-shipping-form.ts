@@ -23,30 +23,31 @@ declare global {
  */
 @customElement('alwatr-order-shipping-form')
 export class AlwatrPageOrderShoppingForm extends LocalizeMixin(SignalMixin(UnresolvedMixin(AlwatrSurface))) {
-  get _radioGroupOptions(): Record<string, RadioGroupOptions> {
+  get _carTypeRadioGroupOptions(): RadioGroupOptions {
     return {
-      carType: {
-        title: message('order_shipping_car_type_title'),
-        radioGroup: [
-          {label: message('order_shipping_trolley'), value: 'y'},
-          {label: message('order_shipping_trolley'), value: 'x'},
-        ],
-      },
-      shipmentType: {
-        title: message('order_shipping_shipment_type_title'),
-        radioGroup: [
-          {label: message('order_shipping_trolley'), value: 'y'},
-          {label: message('order_shipping_trolley'), value: 'x'},
-        ],
-      },
-      timePeriod: {
-        title: message('order_shipping_time_period_title'),
-        radioGroup: [
-          {label: message('time_period_1_2w'), value: '1-2w'},
-          {label: message('time_period_2_3w'), value: '2-3w'},
-          {label: message('time_period_3_4w'), value: '3-4w'},
-        ],
-      },
+      title: message('order_shipping_car_type_title'),
+      radioGroup: [
+        {label: message('order_shipping_trolley'), value: 'y'},
+        {label: message('order_shipping_trolley'), value: 'x'},
+      ],
+    };
+  }
+  get _shipmentTypeRadioGroupOptions(): RadioGroupOptions {
+    return {
+      title: message('order_shipping_shipment_type_title'),
+      radioGroup: [
+        {label: message('order_shipping_trolley'), value: 'y'},
+        {label: message('order_shipping_trolley'), value: 'x'}],
+    };
+  }
+  get _timePeriodRadioGroupOptions(): RadioGroupOptions {
+    return {
+      title: message('order_shipping_time_period_title'),
+      radioGroup: [
+        {label: message('time_period_1_2w'), value: '1-2w'},
+        {label: message('time_period_2_3w'), value: '2-3w'},
+        {label: message('time_period_3_4w'), value: '3-4w'},
+      ],
     };
   }
 
@@ -130,9 +131,9 @@ export class AlwatrPageOrderShoppingForm extends LocalizeMixin(SignalMixin(Unres
         active-outline
         stated
       ></alwatr-text-field>
-      <alwatr-radio-group name="car-type" .options=${this._radioGroupOptions.carType}></alwatr-radio-group>
-      <alwatr-radio-group name="shipment-type" .options=${this._radioGroupOptions.shipmentType}></alwatr-radio-group>
-      <alwatr-radio-group name="time-period" .options=${this._radioGroupOptions.timePeriod}></alwatr-radio-group>
+      <alwatr-radio-group name="car-type" .options=${this._carTypeRadioGroupOptions}></alwatr-radio-group>
+      <alwatr-radio-group name="shipment-type" .options=${this._shipmentTypeRadioGroupOptions}></alwatr-radio-group>
+      <alwatr-radio-group name="time-period" .options=${this._timePeriodRadioGroupOptions}></alwatr-radio-group>
 
       <div class="button-container">
         <alwatr-button outlined @click=${this.submit}>${message('order_shipping_submit_form')}</alwatr-button>
