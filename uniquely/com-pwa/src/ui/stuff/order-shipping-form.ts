@@ -11,6 +11,8 @@ import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
+import {pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
+
 import type {AlwatrFieldSet, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
@@ -50,7 +52,9 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    localStorage.setItem('shipping-info', JSON.stringify(this.getShippingInfo()));
+    const shippingInfo = this.getShippingInfo();
+    localStorage.setItem('shipping-info', JSON.stringify(shippingInfo));
+    pageNewOrderStateMachine.context.order.shippingInfo = shippingInfo;
   }
 
   getShippingInfo(): Partial<OrderShippingInfo> {
