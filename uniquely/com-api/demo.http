@@ -72,13 +72,13 @@ client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
     "recipientName": "ali",
     "recipientNationalCode": "0934614566",
     "address": "Mashhad, 29 dey, koche 29",
-    "shipmentType": "x",
+    "ladingType": "x",
     "carType": "y"
   },
 
   "discountType": "number",
   "totalPrice": 1000000,
-  "shippingPrice": 1100000,
+  "ladingPrice": 1100000,
   "finalPrice": 900000
 }
 

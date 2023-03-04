@@ -106,7 +106,7 @@ export class PageFlightFinder extends SignalMixin(AlwatrBaseElement) {
 
         <ion-fab slot="fixed" vertical="bottom" horizontal="end">
           <ion-fab-button @click=${this.__addJobModal}>
-            <alwatr-icon name="add-outline"></alwatr-icon>
+            <alwatr-icon .name=${'add-outline'}></alwatr-icon>
           </ion-fab-button>
         </ion-fab>
 

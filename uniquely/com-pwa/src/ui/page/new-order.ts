@@ -41,8 +41,8 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
       // this.render_part_status(order),
       this.render_part_item_list(order.itemList ?? [], this.stateMachine.context.productStorage, true),
       this.render_part_btn_product(),
-      this.render_part_shipping_info(order.shippingInfo),
-      this.render_part_btn_shipping_edit(),
+      this.render_part_lading_info(order.ladingInfo),
+      this.render_part_btn_lading_edit(),
       this.render_part_summary(order),
       this.render_part_btn_submit(),
     ];
@@ -51,7 +51,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
   protected render_state_review(): unknown {
     this._logger.logMethod('render_state_review');
     const order = this.stateMachine.context.order;
-    if (!(order.itemList?.length && order.shippingInfo)) {
+    if (!(order.itemList?.length && order.ladingInfo)) {
       this.stateMachine.transition('BACK');
       return;
     }
@@ -59,7 +59,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
     return [
       this.render_part_status(order),
       this.render_part_item_list(order.itemList, this.stateMachine.context.productStorage),
-      this.render_part_shipping_info(order.shippingInfo),
+      this.render_part_lading_info(order.ladingInfo),
       this.render_part_summary(order),
       this.render_part_btn_submit(),
     ];
@@ -70,13 +70,13 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
     return html`<alwatr-select-product></alwatr-select-product>`;
   }
 
-  protected render_state_shippingForm(): unknown {
-    this._logger.logMethod('render_state_shippingForm');
+  protected render_state_ladingForm(): unknown {
+    this._logger.logMethod('render_state_ladingForm');
     const order = this.stateMachine.context.order;
     return [
       this.render_part_item_list(order.itemList ?? [], this.stateMachine.context.productStorage, false),
-      this.render_part_shipping_form(order.shippingInfo),
-      this.render_part_btn_shipping_submit(),
+      this.render_part_lading_form(order.ladingInfo),
+      this.render_part_btn_lading_submit(),
     ];
   }
 
@@ -104,21 +104,21 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
     </div>`;
   }
 
-  protected render_part_btn_shipping_edit(): unknown {
+  protected render_part_btn_lading_edit(): unknown {
     return html`<div class="btn-container">
       <alwatr-button
-        .icon=${buttons.editShippingForm.icon}
-        .clickSignalId=${buttons.editShippingForm.clickSignalId}
-      >${message('page_new_order_shipping_edit')}</alwatr-button>
+        .icon=${buttons.editLadingForm.icon}
+        .clickSignalId=${buttons.editLadingForm.clickSignalId}
+      >${message('page_new_order_lading_edit')}</alwatr-button>
     </div>`;
   }
 
-  protected render_part_btn_shipping_submit(): unknown {
+  protected render_part_btn_lading_submit(): unknown {
     return html`<div class="btn-container">
       <alwatr-button
-        .icon=${buttons.submitShippingForm.icon}
-        .clickSignalId=${buttons.submitShippingForm.clickSignalId}
-      >${message('page_new_order_shipping_submit')}</alwatr-button>
+        .icon=${buttons.submitLadingForm.icon}
+        .clickSignalId=${buttons.submitLadingForm.clickSignalId}
+      >${message('page_new_order_lading_submit')}</alwatr-button>
     </div>`;
   }
 
