@@ -1,10 +1,10 @@
 import {customElement, css, html, LocalizeMixin, SignalMixin, UnresolvedMixin, property} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {
-  shipmentTypeCS,
+  ladingTypeCS,
   carTypeCS,
   timePeriodCS,
-  type OrderShippingInfo,
+  type OrderLadingInfo,
 } from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
@@ -18,14 +18,14 @@ import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-order-shipping-form': AlwatrOrderShoppingForm;
+    'alwatr-order-lading-form': AlwatrOrderShoppingForm;
   }
 }
 
 /**
- * Alwatr Order Shipping Form.
+ * Alwatr Order Lading Form.
  */
-@customElement('alwatr-order-shipping-form')
+@customElement('alwatr-order-lading-form')
 export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(UnresolvedMixin(AlwatrSurface))) {
   static override styles = css`
     :host {
@@ -46,10 +46,10 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
   `;
 
   @property()
-    shippingInfo?: OrderShippingInfo;
+    ladingInfo?: OrderLadingInfo;
 
-  getShippingInfo(): Partial<OrderShippingInfo> {
-    const data: Partial<OrderShippingInfo> = {};
+  getLadingInfo(): Partial<OrderLadingInfo> {
+    const data: Partial<OrderLadingInfo> = {};
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField | AlwatrFieldSet>(
         'alwatr-text-field,alwatr-radio-group',
     )) {
@@ -61,7 +61,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    pageNewOrderStateMachine.context.order.shippingInfo = this.getShippingInfo();
+    pageNewOrderStateMachine.context.order.ladingInfo = this.getLadingInfo();
   }
 
   override render(): unknown {
@@ -69,29 +69,29 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
 
     const radioGroupOptions = {
       carType: <RadioGroupOptions>{
-        title: message('order_shipping_car_type_title'),
+        title: message('order_lading_car_type_title'),
         radioGroup: carTypeCS.map((value) => {
           return {
             value,
-            label: message('order_shipping_car_type_' + value),
+            label: message('order_lading_car_type_key_' + value),
           };
         }),
       },
-      shipmentType: <RadioGroupOptions>{
-        title: message('order_shipping_shipment_type_title'),
-        radioGroup: shipmentTypeCS.map((value) => {
+      ladingType: <RadioGroupOptions>{
+        title: message('order_lading_lading_type_title'),
+        radioGroup: ladingTypeCS.map((value) => {
           return {
             value,
-            label: message('order_shipping_shipment_type_' + value),
+            label: message('order_lading_lading_type_key_' + value),
           };
         }),
       },
       timePeriod: <RadioGroupOptions>{
-        title: message('order_shipping_time_period_title'),
+        title: message('order_lading_time_period_title'),
         radioGroup: timePeriodCS.map((value) => {
           return {
             value,
-            label: message('order_shipping_time_period_' + value),
+            label: message('order_lading_time_period_key_' + value),
           };
         }),
       },
@@ -100,24 +100,33 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
     return html`
       <alwatr-text-field
         name="recipientName"
-        .type="text"
-        .placeholder=${message('order_shipping_recipient_name')}
+        .type=${'text'}
+        .placeholder=${message('order_lading_recipient_name_title')}
         outlined
         active-outline
         stated
       ></alwatr-text-field>
       <alwatr-text-field
         name="recipientNationalCode"
-        .type="number"
-        .placeholder=${message('order_shipping_recipient_national_code')}
+        .type=${'number'}
+        .placeholder=${message('order_lading_recipient_national_code_title')}
         outlined
         active-outline
         stated
       ></alwatr-text-field>
       <alwatr-text-field
         name="address"
-        .type="text"
-        .placeholder=${message('order_shipping_address')}
+        .type=${'text'}
+        .placeholder=${message('order_lading_address_title')}
+        outlined
+        active-outline
+        stated
+        style="width: 100%;"
+      ></alwatr-text-field>
+      <alwatr-text-field
+        name="description"
+        .type=${'text'}
+        .placeholder=${message('order_lading_description_title')}
         outlined
         active-outline
         stated
@@ -125,7 +134,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
       ></alwatr-text-field>
 
       <alwatr-radio-group name="carType" .options=${radioGroupOptions.carType}></alwatr-radio-group>
-      <alwatr-radio-group name="shipmentType" .options=${radioGroupOptions.shipmentType}></alwatr-radio-group>
+      <alwatr-radio-group name="ladingType" .options=${radioGroupOptions.ladingType}></alwatr-radio-group>
       <alwatr-radio-group name="timePeriod" .options=${radioGroupOptions.timePeriod}></alwatr-radio-group>
     `;
   }

@@ -7,7 +7,7 @@ import {
 import {PageHomeContent} from '../type.js';
 
 import type {AlwatrDocumentStorage, User} from '@alwatr/type';
-import type {Product, Order, OrderShippingInfo, ProductPrice} from '@alwatr/type/customer-order-management.js';
+import type {Product, Order, ProductPrice} from '@alwatr/type/customer-order-management.js';
 
 export * from '@alwatr/pwa-helper/context.js';
 
@@ -32,6 +32,3 @@ export const homePageContentContextConsumer =
   contextConsumer.bind<PageHomeContent>(homePageContentContextProvider.id);
 
 export const submitOrderCommandTrigger = commandTrigger.bind<Partial<Order>, Order | null>('submit-order-command');
-
-export const submitOrderShippingCommandTrigger =
-  commandTrigger.bind<OrderShippingInfo, OrderShippingInfo | null>('submit-order-shipping');

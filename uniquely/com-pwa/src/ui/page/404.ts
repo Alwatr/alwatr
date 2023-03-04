@@ -77,12 +77,12 @@ export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(Alw
         },
       ],
 
-      shippingInfo: {
+      ladingInfo: {
         recipientName: 'ali',
         recipientNationalCode: '0934614566',
         address: 'Mashhad, 29 dey, koche 29',
         ladingType: 'pallet',
-        carType: 'tenWheel',
+        carType: 'ten_wheel',
         timePeriod: '1_2w',
       },
 

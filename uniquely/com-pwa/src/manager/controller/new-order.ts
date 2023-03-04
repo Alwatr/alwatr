@@ -51,7 +51,7 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
     edit: {
       on: {
         SELECT_PRODUCT: 'selectProduct',
-        EDIT_SHIPPING: 'shippingForm',
+        EDIT_LADING: 'ladingForm',
         SUBMIT: 'review',
         QTY_UPDATE: '$self',
       },
@@ -61,7 +61,7 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
         SUBMIT: 'edit',
       },
     },
-    shippingForm: {
+    ladingForm: {
       on: {
         SUBMIT: 'edit',
       },
@@ -114,13 +114,13 @@ export const buttons = {
     icon: 'checkmark',
     clickSignalId: pageNewOrderStateMachine.config.id + '_submit_final_click_event',
   },
-  submitShippingForm: {
+  submitLadingForm: {
     icon: 'checkmark',
-    clickSignalId: pageNewOrderStateMachine.config.id + '_submit_shipping_form_click_event',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_submit_lading_form_click_event',
   },
-  editShippingForm: {
+  editLadingForm: {
     icon: 'checkmark',
-    clickSignalId: pageNewOrderStateMachine.config.id + '_edit_shipping_form_click_event',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_edit_lading_form_click_event',
   },
 } as const;
 
@@ -167,7 +167,7 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
 pageNewOrderStateMachine.signal.subscribe(async (state) => {
   localStorage.setItem('draft-order-x1', JSON.stringify(pageNewOrderStateMachine.context.order));
 
-  if (state.to != 'shippingForm') {
+  if (state.to != 'ladingForm') {
     scrollToTopCommand.request({});
   }
 
@@ -214,11 +214,11 @@ eventListener.subscribe<ClickSignalType>(buttons.editItems.clickSignalId, () => 
   pageNewOrderStateMachine.transition('SELECT_PRODUCT');
 });
 
-eventListener.subscribe<ClickSignalType>(buttons.editShippingForm.clickSignalId, () => {
-  pageNewOrderStateMachine.transition('EDIT_SHIPPING');
+eventListener.subscribe<ClickSignalType>(buttons.editLadingForm.clickSignalId, () => {
+  pageNewOrderStateMachine.transition('EDIT_LADING');
 });
 
-eventListener.subscribe<ClickSignalType>(buttons.submitShippingForm.clickSignalId, () => {
+eventListener.subscribe<ClickSignalType>(buttons.submitLadingForm.clickSignalId, () => {
   pageNewOrderStateMachine.transition('SUBMIT');
 });
 

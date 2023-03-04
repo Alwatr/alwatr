@@ -6,7 +6,7 @@ import type {StringifyableRecord} from './type-helper.js';
 // -- Const value --
 
 export const ladingTypeCS = ['hand', 'pallet'] as const;
-export const carTypeCS = ['nissan', 'oneWheel', 'tenWheel', 'trolley'] as const;
+export const carTypeCS = ['nissan', 'one_wheel', 'ten_wheel', 'trolley'] as const;
 export const carTypePriceCS = [110_000, 140_000, 170_000, 200_000] as const;
 export const timePeriodCS = ['auto', '1_2w', '2_3w', '3_4w'] as const;
 export const discountTypeCS = ['number', 'percent'] as const;
@@ -73,23 +73,23 @@ export interface Order extends AlwatrDocumentObject {
   /**
    * Delivery info
    */
-  shippingInfo: Partial<OrderShippingInfo>;
+  ladingInfo: Partial<OrderLadingInfo>;
 
   discount: number;
   discountType: (typeof discountTypeCS)[number];
 
   /**
-   * The total price of this order exclude shipping and discounts.
+   * The total price of this order exclude lading and discounts.
    */
   totalPrice: number;
 
   /**
-   * The cost of shipping the order.
+   * The cost of lading the order.
    */
-  shippingPrice: number;
+  ladingPrice: number;
 
   /**
-   * The final total price of this order include shipping and discounts.
+   * The final total price of this order include lading and discounts.
    */
   finalPrice: number;
 
@@ -130,7 +130,7 @@ export interface OrderItem extends StringifyableRecord {
   qty: number;
 }
 
-export interface OrderShippingInfo extends StringifyableRecord {
+export interface OrderLadingInfo extends StringifyableRecord {
   recipientName: string;
   recipientNationalCode: string;
   address: string;
@@ -142,11 +142,11 @@ export interface OrderShippingInfo extends StringifyableRecord {
 
 // -- Schema --
 
-export const orderShippingSchema = {
+export const orderLadingSchema = {
   recipientName: String,
   recipientNationalCode: String,
   address: String,
   carType: String,
-  shipmentType: String,
+  ladingType: String,
   timePeriod: String,
 };
