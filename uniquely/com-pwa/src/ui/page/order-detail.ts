@@ -33,7 +33,7 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
 
   protected render_state_notFound(): unknown {
     this._logger.logMethod('render_state_notFound');
-    return this.render_part_message('order_not_found');
+    return this.render_part_message('page_order_detail_not_found');
   }
 
   protected render_state_reloading(): unknown {

@@ -38,7 +38,7 @@ export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(Alw
     super.connectedCallback();
     topAppBarContextProvider.setValue({
       type: 'small',
-      headline: message('not_found'),
+      headline: message('page_404_not_found'),
       startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back_to_home_click_event'},
       tinted: 2,
     });
@@ -52,8 +52,8 @@ export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(Alw
       elevated: 1,
       icon: 'construct-outline',
       flipRtl: true,
-      headline: message('under_develope'),
-      description: message('under_develope_description'),
+      headline: message('page_404_under_develope'),
+      description: message('page_404_under_develope_description'),
       preLine: true,
     };
 
