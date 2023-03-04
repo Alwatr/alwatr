@@ -266,15 +266,21 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
         </div>
         <div>
           <span>${message('order_shipping_car_type_title')}:</span>
-          <span>${shippingInfo?.carType ?? nullStr}</span>
+          <span>${shippingInfo?.carType
+            ? message('order_shipping_car_type_key_' + shippingInfo?.carType)
+            : nullStr}</span>
         </div>
         <div>
           <span>${message('order_shipping_lading_type_title')}:</span>
-          <span>${shippingInfo?.ladingType ?? nullStr}</span>
+          <span>${shippingInfo?.ladingType
+          ? message('order_shipping_lading_type_key_' + shippingInfo?.ladingType)
+          : nullStr}</span>
         </div>
         <div>
           <span>${message('order_shipping_time_period_title')}:</span>
-          <span>${shippingInfo?.timePeriod ? message('time_period_' + shippingInfo.timePeriod) : nullStr}</span>
+          <span>${shippingInfo?.timePeriod
+            ? message('order_shipping_time_period_key_' + shippingInfo.timePeriod)
+            : nullStr}</span>
         </div>
         <div>
           <span>${message('order_shipping_shipment_price_title')}:</span>
