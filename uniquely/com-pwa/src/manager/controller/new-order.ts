@@ -192,6 +192,12 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
       break;
     }
 
+    case 'SUBMIT_SUCCESS': {
+      pageNewOrderStateMachine.context.order = {id: 'new', status: 'draft'};
+      localStorage.removeItem('draft-order-x1');
+      break;
+    }
+
     case 'RETRY': {
     }
   }
