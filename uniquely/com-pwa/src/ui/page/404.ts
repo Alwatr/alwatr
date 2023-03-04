@@ -81,14 +81,14 @@ export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(Alw
         recipientName: 'ali',
         recipientNationalCode: '0934614566',
         address: 'Mashhad, 29 dey, koche 29',
-        shipmentType: 'x',
-        carType: 'y',
+        ladingType: 'pallet',
+        carType: 'tenWheel',
         timePeriod: '1_2w',
       },
 
       discountType: 'number',
       totalPrice: 1000000,
-      shippingPrice: 1100000,
+      ladingPrice: 1100000,
       finalPrice: 900000,
       discount: 0,
     });

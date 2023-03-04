@@ -5,9 +5,10 @@ import type {StringifyableRecord} from './type-helper.js';
 
 // -- Const value --
 
-export const shipmentTypeCS = ['x', 'y'] as const;
-export const carTypeCS = ['x', 'y'] as const;
-export const timePeriodCS = ['1_2w', '2_3w', '3_4w'] as const;
+export const ladingTypeCS = ['hand', 'pallet'] as const;
+export const carTypeCS = ['nissan', 'oneWheel', 'tenWheel', 'trolley'] as const;
+export const carTypePriceCS = [110_000, 140_000, 170_000, 200_000] as const;
+export const timePeriodCS = ['auto', '1_2w', '2_3w', '3_4w'] as const;
 export const discountTypeCS = ['number', 'percent'] as const;
 export const orderStatusCS = [
   'draft',
@@ -133,7 +134,8 @@ export interface OrderShippingInfo extends StringifyableRecord {
   recipientName: string;
   recipientNationalCode: string;
   address: string;
-  shipmentType: (typeof shipmentTypeCS)[number];
+  description: string,
+  ladingType: (typeof ladingTypeCS)[number];
   carType: (typeof carTypeCS)[number];
   timePeriod: (typeof timePeriodCS)[number];
 }
