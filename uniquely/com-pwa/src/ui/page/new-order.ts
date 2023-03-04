@@ -75,7 +75,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
     const order = this.stateMachine.context.order;
     return [
       this.render_part_item_list(order.itemList ?? [], this.stateMachine.context.productStorage, false),
-      this.render_part_lading_form(order.ladingInfo),
+      this.render_part_lading_form(),
       this.render_part_btn_lading_submit(),
     ];
   }
