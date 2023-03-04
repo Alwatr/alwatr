@@ -289,7 +289,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     if (!order.itemList?.length) return nothing;
 
     const totalPrice = order.totalPrice ?? 0;
-    const finalPrice = order.finalPrice ?? 0;
+    const finalTotalPrice = order.finalTotalPrice ?? 0;
     const ladingPrice = order.ladingPrice ?? 1_850_000;
     const ladingPriceTemplate =
       ladingPrice > 0
@@ -308,14 +308,14 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
         <div>
           <span>${message('order_total_final_price')}:</span>
           <span>
-            <span>${number(finalPrice)}</span>
+            <span>${number(finalTotalPrice)}</span>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
         <div>
           <span>${message('order_discount')}:</span>
           <span>
-            <span> (٪${number(calcDiscount(totalPrice, finalPrice))}) ${number(totalPrice - finalPrice)} </span>
+            <span> (٪${number(calcDiscount(totalPrice, finalTotalPrice))}) ${number(totalPrice - finalTotalPrice)} </span>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
@@ -327,8 +327,8 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           <span>${message('order_discount_after_lading')}:</span>
           <span>
             <span>
-              (٪${number(calcDiscount(totalPrice, finalPrice + ladingPrice))})
-              ${number(totalPrice - finalPrice - ladingPrice)}
+              (٪${number(calcDiscount(totalPrice, finalTotalPrice + ladingPrice))})
+              ${number(totalPrice - finalTotalPrice - ladingPrice)}
             </span>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
@@ -336,7 +336,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
         <div>
           <span>${message('order_final_total_price')}:</span>
           <span>
-            <span>${number(finalPrice + ladingPrice)}</span>
+            <span>${number(finalTotalPrice + ladingPrice)}</span>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>

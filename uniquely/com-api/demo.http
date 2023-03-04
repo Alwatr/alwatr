@@ -79,7 +79,7 @@ client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
   "discountType": "number",
   "totalPrice": 1000000,
   "ladingPrice": 1100000,
-  "finalPrice": 900000
+  "finalTotalPrice": 900000
 }
 
 ### Get all orders list of special user

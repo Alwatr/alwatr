@@ -89,7 +89,7 @@ export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(Alw
       discountType: 'number',
       totalPrice: 1000000,
       ladingPrice: 1100000,
-      finalPrice: 900000,
+      finalTotalPrice: 900000,
       discount: 0,
     });
   }
