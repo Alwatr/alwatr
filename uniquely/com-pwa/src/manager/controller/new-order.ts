@@ -262,13 +262,20 @@ eventListener.subscribe<ClickSignalType>(buttons.submitShippingForm.clickSignalI
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.tracking.clickSignalId, () => {
-  redirect('/order-tracking/' + pageNewOrderStateMachine.context.order.id);
+  const orderId = pageNewOrderStateMachine.context.order.id;
   pageNewOrderStateMachine.transition('NEW_ORDER');
+  redirect('/order-tracking/' + orderId);
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.detail.clickSignalId, () => {
-  redirect('/order-detail/' + pageNewOrderStateMachine.context.order.id);
+  const orderId = pageNewOrderStateMachine.context.order.id;
   pageNewOrderStateMachine.transition('NEW_ORDER');
+  redirect('/order-detail/' + orderId);
+});
+
+eventListener.subscribe<ClickSignalType>(buttons.newOrder.clickSignalId, () => {
+  pageNewOrderStateMachine.transition('NEW_ORDER');
+  redirect('/new-order/');
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.retry.clickSignalId, async () => {
