@@ -79,7 +79,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
         .icon=${buttons.submit.icon}
         .clickSignalId=${buttons.submit.clickSignalId}
         ?disabled=${!pageNewOrderStateMachine.context.order.itemList?.length}
-      >${message('select_product_submit')}</alwatr-button>
+      >${message('select_product_submit_button')}</alwatr-button>
     `;
   }
 

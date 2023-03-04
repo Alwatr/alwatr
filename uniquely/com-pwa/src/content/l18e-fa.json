@@ -5,32 +5,34 @@
     "rev": 0
   },
   "data": {
-    "not_found": "پیدا نشد!",
-    "order_not_found": "سفارش پیدا نشد!",
-    "product_not_exist": "محصول پیدا نشد!",
-    "under_develope": "دردست ساخت",
-    "under_develope_description": "برنامه نویسان سخت مشغول کارند...\nاندکی صبر سحر نزدیک است...\nدرضمن اگر رو من بزنی یک سفارش الکی ثبت می‌شود\nپس لطفا نزن!",
-    "order_item_headline": "سفارش ${orderId}",
-    "order_item_headline_new": "سفارش جدید",
-    "order_item_status": "وضعیت سفارش",
-    "page_order_list_headline": "لیست سفارشات جاری",
-    "select_product_headline": "انتخاب محصولات",
-    "select_product_submit": "سفارش محصولات",
-    "page_new_order_submit": "ثبت سفارش",
-    "page_new_order_next": "مرحله بعد",
-    "page_new_order_edit_items": "ویرایش لیست محصولات",
-    "page_new_order_lading_edit": "ویرایش اطلاعات بارگیری",
-    "page_new_order_lading_submit": "ثبت اطلاعات",
-    "order_detail_headline": "سفارش ${orderId}",
-    "page_new_order_headline": "سفارش جدید",
-    "new_order_button": "سفارش جدید",
-    "reload": "به‌روزرسانی",
-    "no_lading_price_yet": "هنوز محاسبه نشده است.",
-
     "fetch_failed": "خطا در دریافت اطلاعات از اینترنت!",
     "retry": "تلاش مجدد",
     "loading": "درحال بارگذاری...",
     "cancel": "لغو",
+
+    "page_404_not_found": "پیدا نشد!",
+    "page_404_under_develope": "دردست ساخت",
+    "page_404_under_develope_description": "برنامه نویسان سخت مشغول کارند...\nاندکی صبر سحر نزدیک است...\nدرضمن اگر رو من بزنی یک سفارش الکی ثبت می‌شود\nپس لطفا نزن!",
+
+    "page_order_detail_not_found": "سفارش پیدا نشد!",
+
+    "page_order_tracking_not_found": "سفارش پیدا نشد!",
+
+    "page_order_list_headline": "لیست سفارشات جاری",
+
+    "page_new_order_headline": "سفارش جدید",
+    "page_new_order_edit_items": "ویرایش لیست محصولات",
+    "page_new_order_lading_edit": "ویرایش اطلاعات بارگیری",
+    "page_new_order_submit": "ثبت سفارش",
+    "page_new_order_lading_submit": "ثبت اطلاعات",
+
+    "page_order_tracking_headline": "پیگیری سفارش",
+
+    "order_status_box_headline": "سفارش ${orderId}",
+    "order_status_box_headline_new": "سفارش جدید",
+    "order_status_box_status": "وضعیت سفارش",
+
+    "select_product_submit_button": "سفارش محصولات",
 
     "order_status_draft": "پیش نویس",
     "order_status_registered": "ثبت شده",
@@ -42,8 +44,6 @@
     "order_status_on_hold": "متوقف شده",
     "order_status_canceled": "لغو شده",
     "order_status_refunded": "بازپرداخت",
-
-    "product_not_found": "هیچ محصولی یافت نشد!",
 
     "order_lading_address_title": "آدرس تحویل",
     "order_lading_recipient_name_title": "نام تحویل گیرنده",
@@ -65,6 +65,7 @@
     "order_lading_time_period_key_2_3w": "دو تا سه هفته",
     "order_lading_time_period_key_3_4w": "سه تا چهار هفته",
 
+    "order_item_not_exist": "محصول پیدا نشد!",
     "order_item_qty_m2": "متراژ (m²)",
     "order_item_qty_tile": "تعداد (تایل)",
     "order_item_qty_box": "تعداد (بسته)",
@@ -73,18 +74,18 @@
     "order_item_total_price": "جمع قیمت فروش",
     "order_item_final_total_price": "جمع قیمت نمایندگی",
     "order_item_discount": "سود نمایندگی",
-    "order_total_price": "سرجمع فروش",
-    "order_total_final_price": "سرجمع خرید نمایندگی",
-    "order_lading_price": "هزینه بارگیری",
-    "order_final_total_price": "مبلغ قابل پرداخت",
-    "order_discount": "سود نمایندگی",
-    "order_discount_after_lading": "سود بعد بارگیری",
-    "order_detail_add_product_button": "اضافه کردن محصول",
 
-    "page_order_tracking_headline": "پیگیری سفارش",
+    "order_summary_no_lading_price_yet": "هنوز محاسبه نشده است.",
+    "order_summary_total_price": "سرجمع فروش",
+    "order_summary_total_final_price": "سرجمع خرید نمایندگی",
+    "order_summary_discount": "سود نمایندگی",
+    "order_summary_lading_price": "هزینه بارگیری",
+    "order_summary_discount_after_lading": "سود بعد بارگیری",
+    "order_summary_final_total_price": "مبلغ قابل پرداخت",
+
     "chat_text_input_placeholder": "پیام را بنویسید",
 
-    "submit_order_success": "سفارش شماره ${orderId} با موفقیت ثبت شد.",
-    "submit_order_failed": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید."
+    "submit_order_success_message": "سفارش شماره ${orderId} با موفقیت ثبت شد.",
+    "submit_order_failed_message": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید."
   }
 }

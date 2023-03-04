@@ -35,7 +35,8 @@ commandHandler.define<Partial<Order>, Order | null>(submitOrderCommandTrigger.id
     }
 
     snackbarSignalTrigger.request({
-      message: message('submit_order_success').replace('${orderId}', replaceNumber(newOrder.id.padStart(2, '0'))),
+      message:
+        message('submit_order_success_message').replace('${orderId}', replaceNumber(newOrder.id.padStart(2, '0'))),
     });
 
     redirect('/order-detail/' + newOrder.id);
@@ -46,7 +47,7 @@ commandHandler.define<Partial<Order>, Order | null>(submitOrderCommandTrigger.id
     logger.error('submitOrderCommand', 'submit_failed', err, order);
 
     await snackbarSignalTrigger.requestWithResponse({
-      message: message('submit_order_failed'),
+      message: message('submit_order_failed_message'),
     });
 
     return null;

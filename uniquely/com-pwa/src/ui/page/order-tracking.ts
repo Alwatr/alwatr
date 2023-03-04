@@ -63,7 +63,7 @@ export class AlwatrPageOrderTracking extends StateMachineMixin(
 
   protected render_state_notFound(): unknown {
     this._logger.logMethod('render_state_notFound');
-    return message('order_not_found');
+    return message('page_order_tracking_not_found');
   }
 
   protected render_state_reloading(): unknown {
