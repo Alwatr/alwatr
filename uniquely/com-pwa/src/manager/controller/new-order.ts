@@ -1,4 +1,5 @@
 import {FiniteStateMachine} from '@alwatr/fsm';
+import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
 import {getLocalStorageItem} from '@alwatr/util';
 
@@ -9,6 +10,7 @@ import {
   priceStorageContextConsumer,
   productStorageContextConsumer,
   scrollToTopCommand,
+  submitOrderCommandTrigger,
   topAppBarContextProvider,
 } from '../context.js';
 
@@ -85,7 +87,7 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
     },
     submitFailed: {
       on: {
-        RETRY: 'submitSuccess',
+        RETRY: 'submitting',
       },
     },
   },
@@ -121,6 +123,22 @@ export const buttons = {
   editShippingForm: {
     icon: 'checkmark',
     clickSignalId: pageNewOrderStateMachine.config.id + '_edit_shipping_form_click_event',
+  },
+  newOrder: {
+    icon: 'add',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_new_order_click_event',
+  },
+  detail: {
+    icon: 'information',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_detail_click_event',
+  },
+  tracking: {
+    icon: 'chatbox',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_tracking_click_event',
+  },
+  retry: {
+    icon: 'reload',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_retry_click_event',
   },
 } as const;
 
@@ -160,6 +178,21 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
 
     case 'NEW_ORDER': {
       pageNewOrderStateMachine.context.order = getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'});
+      break;
+    }
+
+    case 'FINAL_SUBMIT': {
+      const order = await submitOrderCommandTrigger.requestWithResponse(pageNewOrderStateMachine.context.order);
+      if (order == null) {
+        pageNewOrderStateMachine.transition('SUBMIT_FAILED');
+        break;
+      }
+
+      pageNewOrderStateMachine.transition('SUBMIT_SUCCESS');
+      break;
+    }
+
+    case 'RETRY': {
     }
   }
 });
@@ -220,6 +253,20 @@ eventListener.subscribe<ClickSignalType>(buttons.editShippingForm.clickSignalId,
 
 eventListener.subscribe<ClickSignalType>(buttons.submitShippingForm.clickSignalId, () => {
   pageNewOrderStateMachine.transition('SUBMIT');
+});
+
+eventListener.subscribe<ClickSignalType>(buttons.tracking.clickSignalId, () => {
+  redirect('/order-tracking/' + pageNewOrderStateMachine.context.order.id);
+  pageNewOrderStateMachine.transition('NEW_ORDER');
+});
+
+eventListener.subscribe<ClickSignalType>(buttons.detail.clickSignalId, () => {
+  redirect('/order-detail/' + pageNewOrderStateMachine.context.order.id);
+  pageNewOrderStateMachine.transition('NEW_ORDER');
+});
+
+eventListener.subscribe<ClickSignalType>(buttons.retry.clickSignalId, async () => {
+  pageNewOrderStateMachine.transition('RETRY');
 });
 
 
