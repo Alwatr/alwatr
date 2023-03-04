@@ -1,4 +1,4 @@
-import {customElement, css, html, LocalizeMixin, SignalMixin, UnresolvedMixin, property} from '@alwatr/element';
+import {customElement, css, html, LocalizeMixin, SignalMixin, UnresolvedMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {
   ladingTypeCS,
@@ -44,9 +44,6 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
       margin-top: var(--sys-spacing-track);
     }
   `;
-
-  @property()
-    ladingInfo?: OrderLadingInfo;
 
   getLadingInfo(): Partial<OrderLadingInfo> {
     const data: Partial<OrderLadingInfo> = {};
