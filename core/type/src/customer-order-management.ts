@@ -91,7 +91,7 @@ export interface Order extends AlwatrDocumentObject {
   /**
    * The final total price of this order include lading and discounts.
    */
-  finalPrice: number;
+  finalTotalPrice: number;
 
   /**
    * Customer device uuid.
