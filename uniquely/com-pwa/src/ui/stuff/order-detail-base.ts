@@ -14,12 +14,12 @@ import {calcDiscount} from '@alwatr/math';
 import '@alwatr/ui-kit/button/icon-button.js';
 import '@alwatr/ui-kit/card/surface.js';
 
-import './order-lading-form.js';
+import './order-shipping-form.js';
 import './order-status-box.js';
 import {config} from '../../config.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
-import type {Order, OrderLadingInfo, OrderDraft, OrderItem, Product} from '@alwatr/type/customer-order-management.js';
+import type {Order, OrderShippingInfo, OrderDraft, OrderItem, Product} from '@alwatr/type/customer-order-management.js';
 import type {IconButtonContent} from '@alwatr/ui-kit/button/icon-button.js';
 
 export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
@@ -245,40 +245,40 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     `;
   }
 
-  protected render_part_lading_info(ladingInfo?: Partial<OrderLadingInfo>): unknown {
-    this._logger.logMethod('render_part_lading_info');
+  protected render_part_shipping_info(shippingInfo?: Partial<OrderShippingInfo>): unknown {
+    this._logger.logMethod('render_part_shipping_info');
 
     const nullStr = '…' as const;
 
     return html`<alwatr-surface tinted>
       <div>
         <div>
-          <span>${message('order_lading_recipient_name_title')}:</span>
-          <span>${ladingInfo?.recipientName ?? nullStr}</span>
+          <span>${message('order_shipping_recipient_name_title')}:</span>
+          <span>${shippingInfo?.recipientName ?? nullStr}</span>
         </div>
         <div>
-          <span>${message('order_lading_recipient_national_code_title')}:</span>
-          <span>${replaceNumber(ladingInfo?.recipientNationalCode ?? nullStr)}</span>
+          <span>${message('order_shipping_recipient_national_code_title')}:</span>
+          <span>${replaceNumber(shippingInfo?.recipientNationalCode ?? nullStr)}</span>
         </div>
         <div>
-          <span>${message('order_lading_address_title')}:</span>
-          <span>${replaceNumber(ladingInfo?.address ?? nullStr)}</span>
+          <span>${message('order_shipping_address_title')}:</span>
+          <span>${replaceNumber(shippingInfo?.address ?? nullStr)}</span>
         </div>
         <div>
-          <span>${message('order_lading_car_type_title')}:</span>
-          <span>${ladingInfo?.carType ?? nullStr}</span>
+          <span>${message('order_shipping_car_type_title')}:</span>
+          <span>${shippingInfo?.carType ?? nullStr}</span>
         </div>
         <div>
-          <span>${message('order_lading_lading_type_title')}:</span>
-          <span>${ladingInfo?.ladingType ?? nullStr}</span>
+          <span>${message('order_shipping_lading_type_title')}:</span>
+          <span>${shippingInfo?.ladingType ?? nullStr}</span>
         </div>
         <div>
-          <span>${message('order_lading_time_period_title')}:</span>
-          <span>${ladingInfo?.timePeriod ? message('time_period_' + ladingInfo.timePeriod) : nullStr}</span>
+          <span>${message('order_shipping_time_period_title')}:</span>
+          <span>${shippingInfo?.timePeriod ? message('time_period_' + shippingInfo.timePeriod) : nullStr}</span>
         </div>
         <div>
-          <span>${message('order_lading_shipment_price_title')}:</span>
-          <span>${message('order_lading_shipment_price_value')}</span>
+          <span>${message('order_shipping_shipment_price_title')}:</span>
+          <span>${message('order_shipping_shipment_price_value')}</span>
         </div>
       </div>
     </alwatr-surface>`;
@@ -326,7 +326,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           <span>${ladingPriceTemplate}</span>
         </div>
         <div>
-          <span>${message('order_summary_discount_after_lading')}:</span>
+          <span>${message('order_summary_discount_after_lading_price')}:</span>
           <span>
             <span>
               (٪${number(calcDiscount(totalPrice, finalTotalPrice + ladingPrice))})
@@ -346,10 +346,10 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     </alwatr-surface>`;
   }
 
-  protected render_part_lading_form(): unknown {
+  protected render_part_shipping_form(): unknown {
     this._logger.logMethod('render_part_summary');
     return html`<alwatr-surface tinted>
-      <alwatr-order-lading-form></alwatr-order-lading-form>
+      <alwatr-order-shipping-form></alwatr-order-shipping-form>
     </alwatr-surface>`;
   }
 }

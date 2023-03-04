@@ -54,7 +54,7 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
     return [
       this.render_part_status(order),
       this.render_part_item_list(order.itemList, this.stateMachine.context.productStorage),
-      this.render_part_lading_info(order.ladingInfo),
+      this.render_part_shipping_info(order.shippingInfo),
       this.render_part_summary(order),
     ];
   }

@@ -73,7 +73,7 @@ export interface Order extends AlwatrDocumentObject {
   /**
    * Delivery info
    */
-  ladingInfo: Partial<OrderLadingInfo>;
+  shippingInfo: Partial<OrderShippingInfo>;
 
   discount: number;
   discountType: (typeof discountTypeCS)[number];
@@ -130,7 +130,7 @@ export interface OrderItem extends StringifyableRecord {
   qty: number;
 }
 
-export interface OrderLadingInfo extends StringifyableRecord {
+export interface OrderShippingInfo extends StringifyableRecord {
   recipientName: string;
   recipientNationalCode: string;
   address: string;

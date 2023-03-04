@@ -68,7 +68,7 @@ client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
     }
   ],
 
-  "delivery": {
+  "shippingInfo": {
     "recipientName": "ali",
     "recipientNationalCode": "0934614566",
     "address": "Mashhad, 29 dey, koche 29",

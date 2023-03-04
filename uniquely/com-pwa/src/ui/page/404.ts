@@ -77,7 +77,7 @@ export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(Alw
         },
       ],
 
-      ladingInfo: {
+      shippingInfo: {
         recipientName: 'ali',
         recipientNationalCode: '0934614566',
         address: 'Mashhad, 29 dey, koche 29',
