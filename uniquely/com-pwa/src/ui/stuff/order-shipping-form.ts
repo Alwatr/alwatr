@@ -10,6 +10,7 @@ import '@alwatr/ui-kit/button/button.js';
 import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
+import {getLocalStorageItem} from '@alwatr/util';
 
 import {pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 
@@ -47,7 +48,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
 
   override connectedCallback(): void {
     super.connectedCallback();
-    JSON.parse(localStorage.getItem('shipping-info') ?? '{}');
+    this.loadShippingInfo();
   }
 
   override disconnectedCallback(): void {
@@ -66,6 +67,18 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
     }
 
     return data;
+  }
+
+  protected async loadShippingInfo(): Promise<void> {
+    const shippingInfo = getLocalStorageItem('shipping-info', <Partial<OrderShippingInfo>>{});
+    this._logger.logMethodArgs('loadShippingInfo', shippingInfo);
+
+    await this.updateComplete;
+    for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField | AlwatrFieldSet>(
+        'alwatr-text-field,alwatr-radio-group',
+    )) {
+      inputElement.value = shippingInfo[inputElement.name]?.toString() ?? '';
+    }
   }
 
   override render(): unknown {

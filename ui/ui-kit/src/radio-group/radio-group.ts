@@ -81,6 +81,16 @@ export class AlwatrFieldSet extends AlwatrBaseElement {
     }
     return '';
   }
+  set value(name: string) {
+    for (const inputElement of this.renderRoot.querySelectorAll('input')) {
+      if (inputElement.name === name) {
+        inputElement.checked = true;
+      }
+      else {
+        inputElement.checked = false;
+      }
+    }
+  }
 
   override render(): unknown {
     this._logger.logMethod('render');
