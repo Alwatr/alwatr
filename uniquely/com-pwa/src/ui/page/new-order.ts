@@ -6,7 +6,6 @@ import {
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {IconBoxContent} from '@alwatr/ui-kit/src/card/icon-box.js';
-import {getLocalStorageItem} from '@alwatr/util';
 
 import {buttons, pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
@@ -75,7 +74,8 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
   protected render_state_shippingForm(): unknown {
     this._logger.logMethod('render_state_shippingForm');
     const order = this.stateMachine.context.order;
-    order.shippingInfo ??= getLocalStorageItem('shipping_form_data_x1', {});
+    // order.shippingInfo ??= getLocalStorageItem('shipping_form_data_x1', {});
+    order.shippingInfo ??= {};
     return [
       this.render_part_item_list(order.itemList ?? [], this.stateMachine.context.productStorage, false),
       this.render_part_shipping_form(order.shippingInfo),
