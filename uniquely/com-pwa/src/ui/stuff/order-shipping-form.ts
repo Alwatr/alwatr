@@ -27,7 +27,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
     }
 
     alwatr-text-field,
-    alwatr-text-area {
+    alwatr-radio-group {
       display: block;
       margin-bottom: var(--sys-spacing-track);
     }
@@ -87,7 +87,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
 
     return html`
       <alwatr-text-field
-        name="recipientName"
+        .name=${'recipientName'}
         .type=${'text'}
         .placeholder=${message('order_shipping_recipient_name_title')}
         .value=${this.formData.recipientName}
@@ -97,7 +97,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         stated
       ></alwatr-text-field>
       <alwatr-text-field
-        name="recipientNationalCode"
+        .name=${'recipientNationalCode'}
         .type=${'number'}
         .placeholder=${message('order_shipping_recipient_national_code_title')}
         .value=${this.formData.recipientNationalCode}
@@ -107,7 +107,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         stated
       ></alwatr-text-field>
       <alwatr-text-field
-        name="address"
+        .name=${'address'}
         .type=${'textarea'}
         .placeholder=${message('order_shipping_address_title')}
         .value=${this.formData.address}
@@ -118,26 +118,26 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
       ></alwatr-text-field>
 
       <alwatr-radio-group
-        name="carType"
+        .name=${'carType'}
         .options=${radioGroupOptions.carType}
         .value=${this.formData.carType}
         @input-change=${this._inputChanged}
       ></alwatr-radio-group>
       <alwatr-radio-group
-        name="ladingType"
+        .name=${'ladingType'}
         .options=${radioGroupOptions.ladingType}
         .value=${this.formData.ladingType}
         @input-change=${this._inputChanged}
       ></alwatr-radio-group>
       <alwatr-radio-group
-        name="timePeriod"
+        .name=${'timePeriod'}
         .options=${radioGroupOptions.timePeriod}
         .value=${this.formData.timePeriod}
         @input-change=${this._inputChanged}
       ></alwatr-radio-group>
 
       <alwatr-text-field
-        name="description"
+        .name=${'description'}
         .type=${'textarea'}
         .placeholder=${message('order_shipping_description_title')}
         .value=${this.formData.description}
