@@ -14,6 +14,7 @@ declare global {
 
 export type InputType =
   | 'text'
+  | 'textarea'
   | 'search'
   | 'tel'
   | 'url'
@@ -55,7 +56,8 @@ export class AlwatrTextField extends AlwatrSurface {
         --_surface-elevation: var(--sys-surface-elevation-0);
       }
 
-      input {
+      input,
+      textarea {
         display: block;
         padding: 0;
         font: inherit;
@@ -64,10 +66,21 @@ export class AlwatrTextField extends AlwatrSurface {
         border-radius: inherit;
         border: none;
         outline: transparent;
+        resize: none;
         text-align: inherit;
         background-color: transparent;
         color: var(--sys-color-on-surface);
         caret-color: var(--sys-color-primary);
+      }
+
+      input[type='number'] {
+        -moz-appearance: textfield;
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
       }
 
       /* So not group these selectors! */
@@ -83,31 +96,34 @@ export class AlwatrTextField extends AlwatrSurface {
         font: inherit;
         color: var(--sys-color-on-surface-variant);
       }
-
-      input[type='number'] {
-        -moz-appearance: textfield;
+      textarea::placeholder {
+        font: inherit;
+        color: var(--sys-color-on-surface-variant);
       }
-
-      input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+      textarea::-webkit-input-placeholder {
+        font: inherit;
+        color: var(--sys-color-on-surface-variant);
+      }
+      textarea::-moz-placeholder {
+        font: inherit;
+        color: var(--sys-color-on-surface-variant);
       }
     `,
   ];
 
-  name = this.getAttribute('name') ?? 'unknown';
+  @property({type: Object})
+    name = 'unknown';
 
   @property({type: String})
     type: InputType = 'text';
 
   @property({type: String})
-    value = '';
+    value?: string;
 
   @property({type: String})
     placeholder = '';
 
-  inputElement: HTMLInputElement | null = null;
+  inputElement: HTMLInputElement | HTMLTextAreaElement | null = null;
 
   constructor() {
     super();
@@ -116,7 +132,19 @@ export class AlwatrTextField extends AlwatrSurface {
 
   override render(): unknown {
     this._logger.logMethod('render');
+    this.value ??= '';
+    if (this.type === 'textarea') {
+      return html`<textarea
+        .name=${this.name}
+        .placeholder=${this.placeholder}
+        .value=${live(this.value)}
+        .rows=${3}
+        @change=${this._inputChanged}
+      ></textarea>`;
+    }
+    // else
     return html`<input
+      .name=${this.name}
       .type=${this.type}
       .placeholder=${this.placeholder}
       .value=${live(this.value)}
@@ -126,12 +154,13 @@ export class AlwatrTextField extends AlwatrSurface {
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
-    this.inputElement = this.renderRoot.querySelector('input');
+    this.inputElement = this.renderRoot.querySelector('input, textarea');
     this.addEventListener('click', () => this.inputElement?.focus());
   }
 
   private _inputChanged(event: Event): void {
-    const target = event.target as HTMLInputElement;
+    this._logger.logMethod('_inputChanged');
+    const target = event.target as HTMLInputElement | HTMLTextAreaElement;
     if (target == null) return;
     let inputValue = unicodeDigits.translate(target.value ?? '');
     if (this.type === 'number' || this.type === 'tel') {
