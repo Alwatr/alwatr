@@ -19,7 +19,7 @@ commandHandler.define<Order, Order | null>(submitOrderCommandTrigger.id, async (
         userId: userContext.id,
       },
       bodyJson: order,
-      retry: 5,
+      retry: 3,
     });
 
     const newOrder = response.data;
