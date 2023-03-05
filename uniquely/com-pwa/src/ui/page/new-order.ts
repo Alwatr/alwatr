@@ -158,10 +158,10 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
           .icon=${buttons.detail.icon}
           .clickSignalId=${buttons.detail.clickSignalId}
         >${message('page_new_order_detail_button')}</alwatr-button>
-        <alwatr-button
+        <!-- <alwatr-button
           .icon=${buttons.tracking.icon}
           .clickSignalId=${buttons.tracking.clickSignalId}
-        >${message('page_new_order_tracking_button')}</alwatr-button>
+        >${message('page_new_order_tracking_button')}</alwatr-button> -->
         <alwatr-button
           .icon=${buttons.newOrder.icon}
           .clickSignalId=${buttons.newOrder.clickSignalId}
