@@ -1,4 +1,4 @@
-import {css, customElement, html, property, ifDefined, type PropertyValues} from '@alwatr/element';
+import {css, customElement, html, property, live, type PropertyValues} from '@alwatr/element';
 import '@alwatr/icon';
 import {UnicodeDigits} from '@alwatr/math';
 
@@ -84,7 +84,7 @@ export class AlwatrTextField extends AlwatrSurface {
         color: var(--sys-color-on-surface-variant);
       }
 
-      input[type=number] {
+      input[type='number'] {
         -moz-appearance: textfield;
       }
 
@@ -102,34 +102,42 @@ export class AlwatrTextField extends AlwatrSurface {
     type: InputType = 'text';
 
   @property({type: String})
-    placeholder?: string;
+    value = '';
+
+  @property({type: String})
+    placeholder = '';
 
   inputElement: HTMLInputElement | null = null;
 
-  get value(): string {
-    let val = unicodeDigits.translate(this.inputElement?.value ?? '');
-    if (this.type === 'number' || this.type === 'tel') {
-      val = val.replaceAll(' ', '');
-    }
-    return val;
-  }
-  set value(val: string) {
-    if (this.inputElement != null) {
-      this.inputElement.value = val;
-    }
-    else {
-      this.updateComplete.then(() => {this.value = val;});
-    }
+  constructor() {
+    super();
+    this._inputChanged = this._inputChanged.bind(this);
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
-    return html`<input type=${this.type} placeholder=${ifDefined(this.placeholder)}></input>`;
+    return html`<input
+      .type=${this.type}
+      .placeholder=${this.placeholder}
+      .value=${live(this.value)}
+      @change=${this._inputChanged}
+    ></input>`;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
     this.inputElement = this.renderRoot.querySelector('input');
     this.addEventListener('click', () => this.inputElement?.focus());
+  }
+
+  private _inputChanged(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target == null) return;
+    let inputValue = unicodeDigits.translate(target.value ?? '');
+    if (this.type === 'number' || this.type === 'tel') {
+      inputValue = inputValue.replaceAll(' ', '');
+    }
+    this.value = inputValue;
+    this.dispatchEvent(new CustomEvent('input-change'));
   }
 }
