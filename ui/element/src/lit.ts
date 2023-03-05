@@ -2,6 +2,7 @@ export * from 'lit';
 export * from 'lit/decorators.js';
 export {map} from 'lit/directives/map.js';
 export {when} from 'lit/directives/when.js';
+export {live} from 'lit/directives/live.js';
 export {repeat} from 'lit/directives/repeat.js';
 export {ifDefined} from 'lit/directives/if-defined.js';
 export {unsafeSVG} from 'lit/directives/unsafe-svg.js';
