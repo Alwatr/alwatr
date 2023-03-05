@@ -74,9 +74,10 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
   protected render_state_shippingForm(): unknown {
     this._logger.logMethod('render_state_shippingForm');
     const order = this.stateMachine.context.order;
+    order.shippingInfo ??= {};
     return [
       this.render_part_item_list(order.itemList ?? [], this.stateMachine.context.productStorage, false),
-      this.render_part_shipping_form(),
+      this.render_part_shipping_form(order.shippingInfo),
       this.render_part_btn_shipping_submit(),
     ];
   }

@@ -1,22 +1,13 @@
-import {customElement, css, html, LocalizeMixin, SignalMixin, UnresolvedMixin} from '@alwatr/element';
+import {customElement, css, html, LocalizeMixin, SignalMixin, UnresolvedMixin, property} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import {
-  ladingTypeCS,
-  carTypeCS,
-  timePeriodCS,
-  type OrderShippingInfo,
-} from '@alwatr/type/customer-order-management.js';
+import {ladingTypeCS, carTypeCS, timePeriodCS, type OrderShippingInfo} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
-import '@alwatr/ui-kit/text-area/text-area.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 import {getLocalStorageItem} from '@alwatr/util';
 
-import {pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
-
-import type {AlwatrFieldSet, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
-import type {AlwatrTextArea} from '@alwatr/ui-kit/text-area/text-area.js';
+import type {AlwatrRadioGroup, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
@@ -40,48 +31,25 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
       display: block;
       margin-bottom: var(--sys-spacing-track);
     }
-
-    .btn-container {
-      display: flex;
-      flex-direction: row-reverse;
-      gap: var(--sys-spacing-track);
-      margin-top: var(--sys-spacing-track);
-    }
   `;
+
+  @property()
+    formData: Partial<OrderShippingInfo> = {};
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.loadShippingInfo();
+    this._loadFormData();
   }
 
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    const shippingInfo = this.getShippingInfo();
-    localStorage.setItem('shipping-info', JSON.stringify(shippingInfo));
-    pageNewOrderStateMachine.context.order.shippingInfo = shippingInfo;
+  private _saveFormData(): void {
+    this._logger.logMethod('_saveFormData');
+    localStorage.setItem('shipping_form_data_x1', JSON.stringify(this.formData));
   }
 
-  getShippingInfo(): Partial<OrderShippingInfo> {
-    const data: Partial<OrderShippingInfo> = {};
-    for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField | AlwatrTextArea | AlwatrFieldSet>(
-        'alwatr-text-field,alwatr-text-area,alwatr-radio-group',
-    )) {
-      data[inputElement.name] = inputElement.value;
-    }
-
-    return data;
-  }
-
-  protected async loadShippingInfo(): Promise<void> {
-    const shippingInfo = getLocalStorageItem('shipping-info', <Partial<OrderShippingInfo>>{});
-    this._logger.logMethodArgs('loadShippingInfo', shippingInfo);
-
-    await this.updateComplete;
-    for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField | AlwatrTextArea | AlwatrFieldSet>(
-        'alwatr-text-field,alwatr-text-area,alwatr-radio-group',
-    )) {
-      inputElement.value = shippingInfo[inputElement.name]?.toString() ?? '';
-    }
+  private _loadFormData(): void {
+    if (Object.values(this.formData).length !== 0) return;
+    this._logger.logMethod('_loadFormData');
+    this.formData = getLocalStorageItem('shipping_form_data_x1', this.formData);
   }
 
   override render(): unknown {
@@ -122,6 +90,8 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         name="recipientName"
         .type=${'text'}
         .placeholder=${message('order_shipping_recipient_name_title')}
+        .value=${this.formData.recipientName}
+        @input-change=${this._inputChanged}
         outlined
         active-outline
         stated
@@ -130,28 +100,60 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         name="recipientNationalCode"
         .type=${'number'}
         .placeholder=${message('order_shipping_recipient_national_code_title')}
+        .value=${this.formData.recipientNationalCode}
+        @input-change=${this._inputChanged}
         outlined
         active-outline
         stated
       ></alwatr-text-field>
-      <alwatr-text-area
-        name="address"        .placeholder=${message('order_shipping_address_title')}
+      <alwatr-text-field
+        name="address"
+        .type=${'textarea'}
+        .placeholder=${message('order_shipping_address_title')}
+        .value=${this.formData.address}
+        @input-change=${this._inputChanged}
         outlined
         active-outline
         stated
-        style="width: 100%;"
-      ></alwatr-text-area>
-      <alwatr-text-area
-        name="description"        .placeholder=${message('order_shipping_description_title')}
-        outlined
-        active-outline
-        stated
-        style="width: 100%;"
-      ></alwatr-text-area>
+      ></alwatr-text-field>
 
-      <alwatr-radio-group name="carType" .options=${radioGroupOptions.carType}></alwatr-radio-group>
-      <alwatr-radio-group name="ladingType" .options=${radioGroupOptions.ladingType}></alwatr-radio-group>
-      <alwatr-radio-group name="timePeriod" .options=${radioGroupOptions.timePeriod}></alwatr-radio-group>
+      <alwatr-radio-group
+        name="carType"
+        .options=${radioGroupOptions.carType}
+        .value=${this.formData.carType}
+        @input-change=${this._inputChanged}
+      ></alwatr-radio-group>
+      <alwatr-radio-group
+        name="ladingType"
+        .options=${radioGroupOptions.ladingType}
+        .value=${this.formData.ladingType}
+        @input-change=${this._inputChanged}
+      ></alwatr-radio-group>
+      <alwatr-radio-group
+        name="timePeriod"
+        .options=${radioGroupOptions.timePeriod}
+        .value=${this.formData.timePeriod}
+        @input-change=${this._inputChanged}
+      ></alwatr-radio-group>
+
+      <alwatr-text-field
+        name="description"
+        .type=${'textarea'}
+        .placeholder=${message('order_shipping_description_title')}
+        .value=${this.formData.description}
+        @input-change=${this._inputChanged}
+        outlined
+        active-outline
+        stated
+      ></alwatr-text-field>
     `;
+  }
+
+  private _inputChanged(event: CustomEvent): void {
+    this._logger.logMethod('_inputChanged');
+    const target = event.target as AlwatrTextField | AlwatrRadioGroup;
+    if (target == null) return;
+    this.formData[target.name] = target.value;
+    this._saveFormData();
   }
 }

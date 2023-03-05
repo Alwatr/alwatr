@@ -352,10 +352,10 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     </alwatr-surface>`;
   }
 
-  protected render_part_shipping_form(): unknown {
+  protected render_part_shipping_form(formData: Partial<OrderShippingInfo>): unknown {
     this._logger.logMethod('render_part_summary');
     return html`<alwatr-surface tinted>
-      <alwatr-order-shipping-form></alwatr-order-shipping-form>
+      <alwatr-order-shipping-form .formData=${formData}></alwatr-order-shipping-form>
     </alwatr-surface>`;
   }
 }
