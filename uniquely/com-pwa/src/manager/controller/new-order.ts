@@ -214,7 +214,7 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
 pageNewOrderStateMachine.signal.subscribe(async (state) => {
   localStorage.setItem('draft-order-x1', JSON.stringify(pageNewOrderStateMachine.context.order));
 
-  if (state.to != 'shippingForm') {
+  if (state.to != 'shippingForm' && state.to != state.from) {
     scrollToTopCommand.request({});
   }
 
