@@ -87,7 +87,7 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
     },
     submitFailed: {
       on: {
-        RETRY: 'submitting',
+        FINAL_SUBMIT: 'submitting',
       },
     },
   },
@@ -195,17 +195,6 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
     case 'SUBMIT_SUCCESS': {
       pageNewOrderStateMachine.context.order = {id: 'new', status: 'draft'};
       localStorage.removeItem('draft-order-x1');
-      break;
-    }
-
-    case 'RETRY': {
-      const order = await submitOrderCommandTrigger.requestWithResponse(pageNewOrderStateMachine.context.order);
-      if (order == null) {
-        pageNewOrderStateMachine.transition('SUBMIT_FAILED');
-        break;
-      }
-
-      pageNewOrderStateMachine.transition('SUBMIT_SUCCESS');
       break;
     }
   }
