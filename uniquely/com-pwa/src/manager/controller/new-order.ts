@@ -199,6 +199,14 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
     }
 
     case 'RETRY': {
+      const order = await submitOrderCommandTrigger.requestWithResponse(pageNewOrderStateMachine.context.order);
+      if (order == null) {
+        pageNewOrderStateMachine.transition('SUBMIT_FAILED');
+        break;
+      }
+
+      pageNewOrderStateMachine.transition('SUBMIT_SUCCESS');
+      break;
     }
   }
 });
@@ -279,7 +287,7 @@ eventListener.subscribe<ClickSignalType>(buttons.newOrder.clickSignalId, () => {
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.retry.clickSignalId, async () => {
-  pageNewOrderStateMachine.transition('RETRY');
+  pageNewOrderStateMachine.transition('FINAL_SUBMIT');
 });
 
 
