@@ -28,12 +28,12 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     return {
       title: message('activity_type'),
       radioGroup: [
-        {label: message('tile_player')},
-        {label: message('tile_installer')},
-        {label: message('seller_shopkeeper')},
-        {label: message('contractor')},
-        {label: message('manufacturer')},
-        {label: message('other')},
+        {label: message('tile_player'), value: 'tile_player'},
+        {label: message('tile_installer'), value: 'tile_installer'},
+        {label: message('seller_shopkeeper'), value: 'seller_shopkeeper'},
+        {label: message('contractor'), value: 'contractor'},
+        {label: message('manufacturer'), value: 'manufacturer'},
+        {label: message('other'), value: 'other'},
       ],
     };
   }
@@ -100,7 +100,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>(
         'alwatr-text-field,alwatr-radio-group',
     )) {
-      data[inputElement.name] = inputElement.value;
+      data[inputElement.name] = inputElement.value as string;
     }
     return data;
   }
