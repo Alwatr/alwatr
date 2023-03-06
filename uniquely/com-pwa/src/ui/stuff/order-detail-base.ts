@@ -155,7 +155,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       }
 
       const qtyStep = 3.6;
-      item.qty ||= qtyStep * 100;
+      item.qty ||= 100;
 
       return html`<alwatr-surface tinted class="product-item">
         <img src="${config.cdn + product.image.id}" />
@@ -177,33 +177,33 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           </div>
           <div>
             <span>${message('order_item_qty_m2')}:</span>
-            <span><span>${number(item.qty)}</span> m²</span>
+            <span><span>${number(item.qty * qtyStep)}</span> m²</span>
           </div>
           <div>
             <span>${message('order_item_qty_tile')}:</span>
             <span>
-              <span>${number((item.qty / qtyStep) * 10)}</span>
+              <span>${number(item.qty * 10)}</span>
               <alwatr-icon .name=${'stop-outline'}></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_qty_box')}:</span>
             <span>
-              <span>${number(item.qty / qtyStep)}</span>
+              <span>${number(item.qty)}</span>
               <alwatr-icon .name=${'cube-outline'}></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_final_total_price')}:</span>
             <span>
-              <span>${number(item.qty * item.finalPrice)}</span>
+              <span>${number(item.qty * qtyStep * item.finalPrice)}</span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_total_price')}:</span>
             <span>
-              <span>${number(item.qty * item.price)}</span>
+              <span>${number(item.qty * qtyStep * item.price)}</span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
@@ -212,7 +212,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
             <span>
               <span>
                 (٪${number(calcDiscount(item.price, item.finalPrice))})
-                ${number(item.qty * (item.price - item.finalPrice))}
+                ${number(item.qty * qtyStep * (item.price - item.finalPrice))}
               </span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>

@@ -280,16 +280,10 @@ eventListener.subscribe<ClickSignalType>(buttons.retry.clickSignalId, async () =
 });
 
 
-const qtyStep = 3.6;
 const qtyUpdate = (orderItem: OrderItem, add: number): void => {
-  // debugger;
-  const qty = (orderItem.qty + qtyStep * add);
-  // if (qty % qtyStep !== 0) { // khak bar sarat js
-  //   console.warn(qty % qtyStep);
-  //   qty = (Math.floor(qty / qtyStep) + 1) * qtyStep;
-  // }
+  const qty = orderItem.qty + add;
   if (qty <= 0) return;
-  orderItem.qty = Math.round(qty * 100) / 100;
+  orderItem.qty = qty;
   pageNewOrderStateMachine.transition('QTY_UPDATE');
 };
 eventListener.subscribe<ClickSignalType<OrderItem>>('order_item_qty_add', (event) => {
