@@ -281,7 +281,7 @@ eventListener.subscribe<ClickSignalType>(buttons.retry.clickSignalId, async () =
 });
 
 
-const qtyUpdate = (orderItem: OrderItem, add: number): void => {
+export const qtyUpdate = (orderItem: OrderItem, add: number): void => {
   const qty = orderItem.qty + add;
   if (qty <= 0) return;
   orderItem.qty = qty;
