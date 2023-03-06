@@ -259,15 +259,15 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       <div>
         <div>
           <span>${message('order_shipping_recipient_name_title')}:</span>
-          <span>${shippingInfo?.recipientName ?? nullStr}</span>
+          <span>${shippingInfo?.recipientName || nullStr}</span>
         </div>
         <div>
           <span>${message('order_shipping_recipient_national_code_title')}:</span>
-          <span>${replaceNumber(shippingInfo?.recipientNationalCode ?? nullStr)}</span>
+          <span>${replaceNumber(shippingInfo?.recipientNationalCode || nullStr)}</span>
         </div>
         <div>
           <span>${message('order_shipping_address_title')}:</span>
-          <span>${replaceNumber(shippingInfo?.address ?? nullStr)}</span>
+          <span>${replaceNumber(shippingInfo?.address || nullStr)}</span>
         </div>
         <div>
           <span>${message('order_shipping_car_type_title')}:</span>
@@ -293,7 +293,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
         </div>
         <div>
           <span>${message('order_shipping_description_title')}:</span>
-          <span>${shippingInfo?.description ?? ''}</span>
+          <span>${shippingInfo?.description || message('order_shipping_info_empty_description')}</span>
         </div>
       </div>
     </alwatr-surface>`;
