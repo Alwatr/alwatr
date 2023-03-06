@@ -22,6 +22,7 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
   id: 'page-order-detail',
   initial: 'unresolved',
   context: {
+    orderId: 'new',
     order: <OrderDraft>getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'}),
     productStorage: <AlwatrDocumentStorage<Product> | null>null,
     priceStorage: <AlwatrDocumentStorage<ProductPrice> | null>null,
@@ -179,6 +180,7 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
 
     case 'NEW_ORDER': {
       pageNewOrderStateMachine.context.order = getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'});
+      pageNewOrderStateMachine.context.orderId = 'new';
       break;
     }
 
@@ -188,7 +190,7 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
         pageNewOrderStateMachine.transition('SUBMIT_FAILED');
         break;
       }
-
+      pageNewOrderStateMachine.context.orderId = order.id;
       pageNewOrderStateMachine.transition('SUBMIT_SUCCESS');
       break;
     }
@@ -260,13 +262,13 @@ eventListener.subscribe<ClickSignalType>(buttons.submitShippingForm.clickSignalI
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.tracking.clickSignalId, () => {
-  const orderId = pageNewOrderStateMachine.context.order.id;
+  const orderId = pageNewOrderStateMachine.context.orderId;
   pageNewOrderStateMachine.transition('NEW_ORDER');
   redirect('/order-tracking/' + orderId);
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.detail.clickSignalId, () => {
-  const orderId = pageNewOrderStateMachine.context.order.id;
+  const orderId = pageNewOrderStateMachine.context.orderId;
   pageNewOrderStateMachine.transition('NEW_ORDER');
   redirect('/order-detail/' + orderId);
 });
