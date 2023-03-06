@@ -23,6 +23,8 @@ export const orderStatusCS = [
   'refunded',
 ] as const;
 
+export const tileQtyStep = 3.6;
+
 // -- Document object --
 
 export interface Product extends AlwatrDocumentObject {

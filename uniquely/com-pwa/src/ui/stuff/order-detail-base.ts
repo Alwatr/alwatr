@@ -11,16 +11,19 @@ import {
 import {message, number, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/icon';
 import {calcDiscount} from '@alwatr/math';
+import {tileQtyStep} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/icon-button.js';
 import '@alwatr/ui-kit/card/surface.js';
 
 import './order-shipping-form.js';
 import './order-status-box.js';
 import {config} from '../../config.js';
+import {qtyUpdate} from '../../manager/controller/new-order.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order, OrderShippingInfo, OrderDraft, OrderItem, Product} from '@alwatr/type/customer-order-management.js';
 import type {IconButtonContent} from '@alwatr/ui-kit/button/icon-button.js';
+import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles: CSSResultGroup = css`
@@ -89,19 +92,12 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       width: calc(20 * var(--sys-spacing-track));
       margin-right: auto;
     }
-    input {
+    alwatr-text-field {
       display: block;
       padding: 0;
-      font: inherit;
       width: 100%;
       flex-grow: 1;
       border-radius: inherit;
-      border: none;
-      outline: transparent;
-      text-align: inherit;
-      background-color: transparent;
-      color: inherit;
-      caret-color: var(--sys-color-primary);
     }
 
     /* So not group these selectors! */
@@ -154,8 +150,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
         return html`<alwatr-surface tinted>${message('order_item_not_exist')}</alwatr-surface>`;
       }
 
-      const qtyStep = 3.6;
-      item.qty ||= qtyStep * 100;
+      item.qty ||= 100;
 
       return html`<alwatr-surface tinted class="product-item">
         <img src="${config.cdn + product.image.id}" />
@@ -177,33 +172,33 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           </div>
           <div>
             <span>${message('order_item_qty_m2')}:</span>
-            <span><span>${number(item.qty)}</span> m²</span>
+            <span><span>${number(item.qty * tileQtyStep)}</span> m²</span>
           </div>
           <div>
             <span>${message('order_item_qty_tile')}:</span>
             <span>
-              <span>${number((item.qty / qtyStep) * 10)}</span>
+              <span>${number(item.qty * 10)}</span>
               <alwatr-icon .name=${'stop-outline'}></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_qty_box')}:</span>
             <span>
-              <span>${number(item.qty / qtyStep)}</span>
+              <span>${number(item.qty)}</span>
               <alwatr-icon .name=${'cube-outline'}></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_final_total_price')}:</span>
             <span>
-              <span>${number(item.qty * item.finalPrice)}</span>
+              <span>${number(item.qty * tileQtyStep * item.finalPrice)}</span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_total_price')}:</span>
             <span>
-              <span>${number(item.qty * item.price)}</span>
+              <span>${number(item.qty * tileQtyStep * item.price)}</span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
@@ -212,7 +207,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
             <span>
               <span>
                 (٪${number(calcDiscount(item.price, item.finalPrice))})
-                ${number(item.qty * (item.price - item.finalPrice))}
+                ${number(item.qty * tileQtyStep * (item.price - item.finalPrice))}
               </span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
@@ -239,7 +234,17 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     return html`
       <alwatr-surface class="number-field" stated tinted="2">
         <alwatr-icon-button .content=${addBtn}></alwatr-icon-button>
-        <input .type=${'number'} .value=${(orderItem.qty ?? 0) + ''}></input>
+        <alwatr-text-field
+        .type=${'number'}
+        .value=${(orderItem.qty ?? 0) + ''}
+        @input-change=${(event: CustomEvent): void => {
+    const target = event.target as AlwatrTextField;
+    if (target == null) return;
+    const qty = target.value && +target.value ? +target.value : 100;
+    qtyUpdate(orderItem, qty - orderItem.qty);
+    target.value = qty + '';
+    this.requestUpdate();
+  }}></alwatr-text-field>
         <alwatr-icon-button .content=${removeBtn}></alwatr-icon-button>
       </alwatr-surface>
     `;

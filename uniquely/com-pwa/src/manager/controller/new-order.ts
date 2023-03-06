@@ -1,6 +1,7 @@
 import {FiniteStateMachine} from '@alwatr/fsm';
 import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
+import {tileQtyStep} from '@alwatr/type/customer-order-management.js';
 import {getLocalStorageItem} from '@alwatr/util';
 
 import {fetchPriceStorage} from '../context-provider/price-storage.js';
@@ -220,8 +221,8 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
     let totalPrice = 0;
     let finalTotalPrice = 0;
     for (const item of order.itemList ?? []) {
-      totalPrice += item.price * item.qty;
-      finalTotalPrice += item.finalPrice * item.qty;
+      totalPrice += item.price * item.qty * tileQtyStep;
+      finalTotalPrice += item.finalPrice * item.qty * tileQtyStep;
     }
     order.totalPrice = Math.round(totalPrice);
     order.finalTotalPrice = Math.round(finalTotalPrice);
@@ -280,16 +281,10 @@ eventListener.subscribe<ClickSignalType>(buttons.retry.clickSignalId, async () =
 });
 
 
-const qtyStep = 3.6;
-const qtyUpdate = (orderItem: OrderItem, add: number): void => {
-  // debugger;
-  const qty = (orderItem.qty + qtyStep * add);
-  // if (qty % qtyStep !== 0) { // khak bar sarat js
-  //   console.warn(qty % qtyStep);
-  //   qty = (Math.floor(qty / qtyStep) + 1) * qtyStep;
-  // }
+export const qtyUpdate = (orderItem: OrderItem, add: number): void => {
+  const qty = orderItem.qty + add;
   if (qty <= 0) return;
-  orderItem.qty = Math.round(qty * 100) / 100;
+  orderItem.qty = qty;
   pageNewOrderStateMachine.transition('QTY_UPDATE');
 };
 eventListener.subscribe<ClickSignalType<OrderItem>>('order_item_qty_add', (event) => {
