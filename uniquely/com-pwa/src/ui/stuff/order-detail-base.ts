@@ -97,6 +97,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       padding: 0;
       width: 100%;
       flex-grow: 1;
+      border-radius: inherit;
     }
 
     /* So not group these selectors! */
