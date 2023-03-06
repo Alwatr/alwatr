@@ -291,6 +291,10 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           <span>${message('order_shipping_shipment_price_title')}:</span>
           <span>${message('order_shipping_shipment_price_value')}</span>
         </div>
+        <div>
+          <span>${message('order_shipping_description_title')}:</span>
+          <span>${shippingInfo?.description ?? ''}</span>
+        </div>
       </div>
     </alwatr-surface>`;
   }
