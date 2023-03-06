@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/flight-finder/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **telegram-notifier:** escaping special characters on sendMessage ([5507d6d](https://github.com/AliMD/flight-finder/commit/5507d6dd460201979b7ee3bb1ae255e572b7cf0d))
+
 # [0.29.0](https://github.com/AliMD/flight-finder/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes

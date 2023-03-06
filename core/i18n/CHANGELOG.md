@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Features
+
+- **i18n:** l18eReadyPromise ([85c7570](https://github.com/AliMD/alwatr/commit/85c7570d71c3d5b9ec87b0e357ecf41f47f96227))
+- **i18n:** make number with fixed decimal ([86e60ec](https://github.com/AliMD/alwatr/commit/86e60ec4c89b8bd485bd32674df286885366ee1b))
+- **i18n:** optional number args ([b571385](https://github.com/AliMD/alwatr/commit/b5713853a035e78b06bd4b97cb703e74de0e86ce))
+- **i18n:** work background without delay ([2876d00](https://github.com/AliMD/alwatr/commit/2876d009a96e586544fa00798ec35574209ae2a9))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes

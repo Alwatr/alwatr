@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Features
+
+- **util:** add getClientId ([f9c1008](https://github.com/AliMD/alwatr/commit/f9c1008da682555e22178aa8d23cf742937b76a4))
+- **util:** add getLocalStorageItem ([dc5fa8b](https://github.com/AliMD/alwatr/commit/dc5fa8b9620a9add1aa3c838d38fb9ed9d364010))
+- **util:** add parseJson ([543da2c](https://github.com/AliMD/alwatr/commit/543da2cbb7079f74fe3f280f9c07b8fe6fc8e987))
+- **util:** polyfil requestAnimationFrame, requestIdleCallbackFallback ([6dc4b73](https://github.com/AliMD/alwatr/commit/6dc4b7347b97d2d2fdd562917e02cbe4d6d1328b))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Features

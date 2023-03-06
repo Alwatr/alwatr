@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Features
+
+- **logger:** export isBrowser ([5b5be8b](https://github.com/AliMD/alwatr/commit/5b5be8b2312ca67f186d1614506423f1fdb90877))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 **Note:** Version bump only for package @alwatr/logger

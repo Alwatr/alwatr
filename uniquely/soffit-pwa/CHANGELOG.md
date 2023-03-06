@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **com-pwa:** web-dev-server config ([67963a1](https://github.com/AliMD/alwatr/commit/67963a1f84f50a08b98dbd284a0d26c670d6ab96))
+- configs ([00f85f5](https://github.com/AliMD/alwatr/commit/00f85f525f07334544cc9e007c49f2343ba8cec3))
+- **soffit-pwa:** dependencies ([8bc3eee](https://github.com/AliMD/alwatr/commit/8bc3eeebb7e04ca9041239d545db3804268f2282))
+- **soffit-pwa:** import path ([ed03cf9](https://github.com/AliMD/alwatr/commit/ed03cf99e413e6060fad1215bafd86f97e127caa))
+- **soffit-pwa:** issues ([09f0b8a](https://github.com/AliMD/alwatr/commit/09f0b8a0fcfff37ee1e163fd679a3fc4830e90a8))
+- **soffit-pwa:** remove some import ([efb1af9](https://github.com/AliMD/alwatr/commit/efb1af99ba760aba723d11cc9e5c9b5a8df9a792))
+- **soffit-pwa:** set name prop ([2ddb008](https://github.com/AliMD/alwatr/commit/2ddb008510438f9e80642ae72eb28df796629fb6))
+- **soffit-pwa:** set value on radio group option ([17a691a](https://github.com/AliMD/alwatr/commit/17a691ae702400982f56e0167483066e4b34c251))
+- **soffit, com:** tint and elevate ([cb49f18](https://github.com/AliMD/alwatr/commit/cb49f18ecd9ea57918f54a513627e1cb9a58afa6))
+- **soffit:** home page logo ([95868da](https://github.com/AliMD/alwatr/commit/95868da89b55df0f8a46e2dd28ce743542a72d22))
+
+### Features
+
+- **com-pwa:** manifest screenshots ([a060fb5](https://github.com/AliMD/alwatr/commit/a060fb518a926890dba865f9e758fff0a20a98ef))
+- **pwa-helper:** central pwa-dev-server.config.js ([147c7e7](https://github.com/AliMD/alwatr/commit/147c7e7bac17179619cfca153463db74f134ba7b))
+- **soffit-pwa:** about page content ([94a1aea](https://github.com/AliMD/alwatr/commit/94a1aeaab15b4986569416e499d39338234717a7))
+- **soffit-pwa:** context ([d7b9a04](https://github.com/AliMD/alwatr/commit/d7b9a04b3af2fd0e4390f26d89d17dceb8cb5adf))
+- **soffit-pwa:** navigation bar ([7cfa16c](https://github.com/AliMD/alwatr/commit/7cfa16cb366a6386abc61c7e2596d7891fee6fa9))
+- **soffit-pwa:** page 404 ([ec6eb42](https://github.com/AliMD/alwatr/commit/ec6eb42e483dc6d0d0493cdbb7f73d285cd613bd))
+- **soffit:** add sample images ([3b9c146](https://github.com/AliMD/alwatr/commit/3b9c14669054b52ae7adacfe1b0b878b493d0727))
+- **ui-kit:** move radio group from soffit-pwa ([0d5786f](https://github.com/AliMD/alwatr/commit/0d5786f4f7cfc950e988e8f35c9c9e80f53cac23))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes

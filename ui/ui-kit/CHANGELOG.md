@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **text-field:** make it inline ([72320b7](https://github.com/AliMD/alwatr/commit/72320b74608902c1ee9525b5b93e3774732d7492))
+- **top-app-bar:** style shrink ([a398821](https://github.com/AliMD/alwatr/commit/a398821690ae6d81814b5920a3d4496ccef5fe32))
+- **ui-kit/button:** elevated ([2865804](https://github.com/AliMD/alwatr/commit/2865804b6c5970492ef490deba9f867ed5eddad5))
+- **ui-kit/chat:** footer icon button height ([8353fbc](https://github.com/AliMD/alwatr/commit/8353fbcec9cd2f982468ebf2bd949a76cb8f5e1d))
+- **ui-kit:** rename signalId to clickSignalId ([d8addc7](https://github.com/AliMD/alwatr/commit/d8addc7776e2f002f81207d6bcdc1c28d1568400))
+- **ui/icon-button:** remove bind \_click ([b678434](https://github.com/AliMD/alwatr/commit/b6784340e8dc669fe8b572c3d8c4fdb604f2f42a))
+- **ui/product-card:** toman icon ([8a6ddae](https://github.com/AliMD/alwatr/commit/8a6ddae2000639223d505fc67cf2d5f3738fa80e))
+- **ui/text-field:** width problem ([baf53a2](https://github.com/AliMD/alwatr/commit/baf53a279e311dba91bfbf029744993c8f8754e4))
+- **ui:** surface tinted attrib ([56310b0](https://github.com/AliMD/alwatr/commit/56310b04734d51841863cd03eb37e3b5c51957fc))
+
+### Features
+
+- **button:** add icon ([476a14f](https://github.com/AliMD/alwatr/commit/476a14fea2cbab4bef5b0fd764fa83e82784c358))
+- **button:** add signalId for click event ([fdde714](https://github.com/AliMD/alwatr/commit/fdde714b40ca24526d60f7c590dcce3861e4a97d))
+- **button:** click signal with detail ([03c2dc1](https://github.com/AliMD/alwatr/commit/03c2dc1e64562815505b468c761ac245554470ed))
+- **button:** icon style ([11b736d](https://github.com/AliMD/alwatr/commit/11b736d8c518ff773e2dcb4ab34e8a20641960ff))
+- **com-pwa:** set default value on shipping form ([bbcdfcb](https://github.com/AliMD/alwatr/commit/bbcdfcbed84384711e1d6d81e0173106704d502d))
+- **icon-box:** headline ellipsis overflow ([935b49b](https://github.com/AliMD/alwatr/commit/935b49b50b947af3cc5b1e39123d6c05de05eabf))
+- **icon-box:** tinted ([436f989](https://github.com/AliMD/alwatr/commit/436f98960a6ea89be6153e9122ce94c20220332d))
+- **icon-button:** IconButtonContent.disabled ([a6c1ee9](https://github.com/AliMD/alwatr/commit/a6c1ee985d9e20bfd6f2586dade27f394fac35e0))
+- **product-card:** optional price ([a554ee5](https://github.com/AliMD/alwatr/commit/a554ee510af66e336b2a66173536b0bbb197f4d2))
+- **surface:** tinted ([129031a](https://github.com/AliMD/alwatr/commit/129031a2e4da66a3f6ecd303f787a98f60db77fe))
+- **text-field:** refactor with value prop and input-change event ([7bc0414](https://github.com/AliMD/alwatr/commit/7bc041438c032e224f0c84e849e38b2bf411bf0c))
+- **top-app-bar:** connect to context ([e690f08](https://github.com/AliMD/alwatr/commit/e690f088717ca9225e4e7d8bedfe160b61029715))
+- **top-app-bar:** tinted ([c943915](https://github.com/AliMD/alwatr/commit/c9439154adc40588361fdc140ba0dd8fde65bce0))
+- **ui-kit/card:** enhance toggle animation ([9950353](https://github.com/AliMD/alwatr/commit/99503532938349f3d1df93d87e2c0156b880670d))
+- **ui-kit/chat:** update ([3c51a71](https://github.com/AliMD/alwatr/commit/3c51a71682511affc3bdb20ce7fa21523e77011e))
+- **ui-kit/text-area:** new component ([e5a3ffb](https://github.com/AliMD/alwatr/commit/e5a3ffb342dfdf96b48bbea08b95dbd0c76f6a6a))
+- **ui-kit/text-field:** hide arrow on number input ([ce69ecf](https://github.com/AliMD/alwatr/commit/ce69ecfd4a30bbd06ce690d0c045613314d16fad))
+- **ui-kit:** enhance root unresolved styles ([ee0b581](https://github.com/AliMD/alwatr/commit/ee0b5816e202570acf836743bdea631694162c87))
+- **ui-kit:** move radio group from soffit-pwa ([0d5786f](https://github.com/AliMD/alwatr/commit/0d5786f4f7cfc950e988e8f35c9c9e80f53cac23))
+- **ui-kit:** selectable product card ([1a8d219](https://github.com/AliMD/alwatr/commit/1a8d219695677d8841f1fbbfb7b10a5a67ad3c24))
+- **ui/field:** refactor with new prop and change event ([e78821d](https://github.com/AliMD/alwatr/commit/e78821de09f27c470e15e502be19c79e04153a65))
+- **ui/product-card:** add id ([3d7cc2f](https://github.com/AliMD/alwatr/commit/3d7cc2f416b5630c15fc140d9a01295b776e42ae))
+- **ui/style:** color theme hct 85deg ([9be16f4](https://github.com/AliMD/alwatr/commit/9be16f43fc4e7037604afcd09edb8d6e7857c11d))
+- **ui/surface:** color animation ([ade9229](https://github.com/AliMD/alwatr/commit/ade9229b1bd34c5c87910db17bcf2f55f8dc0a47))
+- **ui/top-app-bar:** headlineKey and default values ([327c04e](https://github.com/AliMD/alwatr/commit/327c04e1bef597a058396b171055d981523c14f3))
+
+### Performance Improvements
+
+- **ui-kit/style:** body render ([ef4ed24](https://github.com/AliMD/alwatr/commit/ef4ed24f165e92d335e96d98cf3b5252fb9173b6))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes

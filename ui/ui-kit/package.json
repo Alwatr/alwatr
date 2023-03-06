@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/ui-kit",
-  "version": "0.29.0",
+  "version": "0.30.0",
   "description": "Alwatr UI Elements Kit",
   "private": true,
   "keywords": [
@@ -33,15 +33,15 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/element": "^0.29.0",
-    "@alwatr/fetch": "^0.29.0",
-    "@alwatr/i18n": "^0.29.0",
-    "@alwatr/icon": "^0.29.0",
-    "@alwatr/signal": "^0.29.0",
-    "@alwatr/util": "^0.29.0",
+    "@alwatr/element": "^0.30.0",
+    "@alwatr/fetch": "^0.30.0",
+    "@alwatr/i18n": "^0.30.0",
+    "@alwatr/icon": "^0.30.0",
+    "@alwatr/signal": "^0.30.0",
+    "@alwatr/util": "^0.30.0",
     "tslib": "^2.5.0"
   },
   "devDependencies": {
-    "@alwatr/type": "^0.29.0"
+    "@alwatr/type": "^0.30.0"
   }
 }

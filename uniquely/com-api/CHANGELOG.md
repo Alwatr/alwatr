@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **com-api:** add product method on demo.http ([2d67d67](https://github.com/AliMD/alwatr/commit/2d67d67faa806f1fb89dd5279757852f57d7114b))
+- **com-api:** demo.http ([a2eba5c](https://github.com/AliMD/alwatr/commit/a2eba5ce13e14eeb58e3efefbbda764c4166251d))
+- **com-api:** demo.http tokens ([f5c27ca](https://github.com/AliMD/alwatr/commit/f5c27ca7190baf2e0a05d33b3e4fbeca18ad804d))
+- **com-api:** imports path ([4120038](https://github.com/AliMD/alwatr/commit/4120038483e9f89fb23c00ea6042df65140beb8d))
+- **com-api:** improve demo-http data ([71debc0](https://github.com/AliMD/alwatr/commit/71debc0838595878fe11f6b42f423dd2c8abcf69))
+- **com-api:** name of product list on demo-data.http ([9340b3c](https://github.com/AliMD/alwatr/commit/9340b3c578a4340ec6b4a0a4ef1adb6bb67e16b1))
+- **com-api:** patch-product-list storage param ([20ef97e](https://github.com/AliMD/alwatr/commit/20ef97eb20840e91f12c80798bd26b227239518a))
+- **com-api:** put order storage path prefix ([63b4179](https://github.com/AliMD/alwatr/commit/63b41799d09a19d8b75474f9d3a1ce7b40a97f48))
+- **com-api:** remove image cdn path ([659485e](https://github.com/AliMD/alwatr/commit/659485ece4dcaa084474a6b80ed943cbb9ce090b))
+- **com-pwa:** request-redirect for shipping page ([4a421e5](https://github.com/AliMD/alwatr/commit/4a421e5e153fe1ca602e5e926d83654053754f56))
+- configs ([00f85f5](https://github.com/AliMD/alwatr/commit/00f85f525f07334544cc9e007c49f2343ba8cec3))
+
+### Features
+
+- **com-api:** add product route ([487a2c0](https://github.com/AliMD/alwatr/commit/487a2c0fa46933ce8efa9325fbc6802e372ff236))
+- **com-api:** change api in demo.http ([b9d2602](https://github.com/AliMD/alwatr/commit/b9d2602fbf11fa5316276a990e6fc271ed8120f2))
+- **com-api:** enhance config with prefixes ([2cd9443](https://github.com/AliMD/alwatr/commit/2cd944345f2bfab09f8dddd4596442290adad960))
+- **com-api:** get price list route ([39d870b](https://github.com/AliMD/alwatr/commit/39d870b1bc7c30a6a9cd2e1f5f79db3860b6ac8b))
+- **com-api:** multi storage support for product route ([0979d42](https://github.com/AliMD/alwatr/commit/0979d42c6516781b645ded1c004f74b82ac4b82a))
+- **com-api:** patch price list route ([df60e91](https://github.com/AliMD/alwatr/commit/df60e91433b3457860b0a08bb62616372291dfeb))
+- **com-api:** review and update all routes ([957eca9](https://github.com/AliMD/alwatr/commit/957eca96a8c8a64cbd7775c460b587424d103b48))
+- **com-api:** seprate http file for add product ([fd9bb5e](https://github.com/AliMD/alwatr/commit/fd9bb5e6696621619df6bd8f96b051f811f13381))
+- **cop-api:** requireToken ([d1e3c61](https://github.com/AliMD/alwatr/commit/d1e3c617954eaa125afb20e1b22c9e3f7f69721b))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes
