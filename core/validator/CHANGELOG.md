@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **validator:** change ValidType to StringifyableRecord ([ca1e191](https://github.com/AliMD/alwatr/commit/ca1e19166edfd206a3901a2a3390d4be3daaa7bc))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **signal:** NextCycle with own detail ([01f3c79](https://github.com/AliMD/alwatr/commit/01f3c79500927f6384a33abcc9b0cb2355794b3e))
+- **signal:** nodejs compatibility ([69d8a60](https://github.com/AliMD/alwatr/commit/69d8a60ad64d44ee7c3ced002e702f13408a5a50))
+- **signal:** requestableContextConsumer bind issue ([66467f6](https://github.com/AliMD/alwatr/commit/66467f6e5681d84d7f2e0b353206d4bb579b26f2))
+- **signal:** requestContext dispatch issue ([e937ebd](https://github.com/AliMD/alwatr/commit/e937ebd3a90fc6a9946f5c35ef4f6f40b6ab4b00))
+
+### Features
+
+- **signal:** add untilChange for contextProvider ([cb44916](https://github.com/AliMD/alwatr/commit/cb4491698fd5ddfbe055032fc2cb50691de31194))
+- **signal:** defineCommand return ListenerSpec ([21fecac](https://github.com/AliMD/alwatr/commit/21fecacb6aa9423da9e3c177a4bbc59952d94e35))
+- **signal:** dispatch NextCycle option ([b30eb31](https://github.com/AliMD/alwatr/commit/b30eb316d92f594034fc40d195c4033e38e4d2e2))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes

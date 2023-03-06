@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **demo/fsm:** context object ([1fa8aac](https://github.com/AliMD/alwatr/commit/1fa8aac30ca6b1e15fd29309384466962b4b9f64))
+- **demo/math:** remove getClientId ([8be5a4a](https://github.com/AliMD/alwatr/commit/8be5a4a5c85c1129387667f4f6ceab56ebfb97e6))
+- **fsm:** demo ([079abf9](https://github.com/AliMD/alwatr/commit/079abf9b46bd0a271a30b942dcb0405993010be6))
+- **fsm:** every signal mather ([0dc504d](https://github.com/AliMD/alwatr/commit/0dc504dacbb1ec68f154244619d644ff8e43cc04))
+
+### Features
+
+- Alwatr Finite State Machines ([d5900b4](https://github.com/AliMD/alwatr/commit/d5900b4ee8685b120188888871405853f5a69417))
+- **demo:** fsm light machine ([fe168e3](https://github.com/AliMD/alwatr/commit/fe168e373fa0463124acb5f9b3bf971d1d64a596))
+- es bench ([a6ec86b](https://github.com/AliMD/alwatr/commit/a6ec86bc71dba2aec4dc6c4b42a64af75bb2b012))
+- **fsm:** $all and $self state ([69adf41](https://github.com/AliMD/alwatr/commit/69adf41064ca0f55497484c50e298ebc26c42dcc))
+- **fsm:** enhance types ([3b13046](https://github.com/AliMD/alwatr/commit/3b130463a102f59c38603b0de470be5c87ee88c9))
+- **fsm:** share state events ([de42522](https://github.com/AliMD/alwatr/commit/de42522a97fdf6be8bee73d91a35820e2a5e6efb))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Features

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **type:** com orderStatusCS ([b789640](https://github.com/AliMD/alwatr/commit/b789640b01165e403e9e12a014c9c777b61689b7))
+- **type:** export user and photo ([27e352e](https://github.com/AliMD/alwatr/commit/27e352e231aed966d4d049cc2f1f93781f386952))
+
+### Features
+
+- **button:** click signal with detail ([03c2dc1](https://github.com/AliMD/alwatr/commit/03c2dc1e64562815505b468c761ac245554470ed))
+- **com-pwa:** carType/ladingType ([94a2e96](https://github.com/AliMD/alwatr/commit/94a2e969465c20f7b52b7f18050b9ae0d3fec62d))
+- **i18n:** l18eReadyPromise ([85c7570](https://github.com/AliMD/alwatr/commit/85c7570d71c3d5b9ec87b0e357ecf41f47f96227))
+- **type/com:** OrderDraft, orderDeliverySchema ([4417877](https://github.com/AliMD/alwatr/commit/44178779fbeba5d14a465380541c64ffb3f4f597))
+- **type:** ProductPrice ([7fe7b32](https://github.com/AliMD/alwatr/commit/7fe7b321c0ab94c8abc4527b4aa33191cf5a9213))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes

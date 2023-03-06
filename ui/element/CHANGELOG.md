@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **element/router-mixin:** prevent to duplicate first render ([453403e](https://github.com/AliMD/alwatr/commit/453403e8d42902ff2fe5391513dbecb8cc8a9948))
+- **element:** null able mapIterable items ([7bb7f01](https://github.com/AliMD/alwatr/commit/7bb7f01a5381389a9264005927e460725e4db842))
+- **element:** router mixin error ([c890b69](https://github.com/AliMD/alwatr/commit/c890b69feb6f7ea68d1a565bf9fadb55a55da90e))
+- **element:** state machine tender names ([c9b806a](https://github.com/AliMD/alwatr/commit/c9b806a983f38f7c438f709b8929f23d9c8164fb))
+- **router:** add \_routeContextUpdated to interface ([72865b8](https://github.com/AliMD/alwatr/commit/72865b808db4c2267dac07347e26dc8914f7c3f0))
+
+### Features
+
+- **element/fsm:** add render_unresolved, render_resolving ([5b8674c](https://github.com/AliMD/alwatr/commit/5b8674cd15558280bf2ad3d39bcd2ab89ab72508))
+- **element/state-machine-mixin:** add stateUpdated method ([d599282](https://github.com/AliMD/alwatr/commit/d599282c4056cafa3e68817e4697c11721ccf09b))
+- **element/StateMachineMixin:** reflect state to host attrib ([b054b50](https://github.com/AliMD/alwatr/commit/b054b5052b8ce452470e80838cdd49c26fdc533b))
+- **element/toggle:** selected property ([5d6c0a9](https://github.com/AliMD/alwatr/commit/5d6c0a9e08abe933932943c842a0d6766a311076))
+- **element:** add live directive ([4a95b0f](https://github.com/AliMD/alwatr/commit/4a95b0fef0e3c3fdc3a79396e7c8f749d0e380f3))
+- **element:** mapIterable, mapObject directives ([8958655](https://github.com/AliMD/alwatr/commit/89586552a9294b167462d025080e1b93c9088845))
+- **element:** router mixin ([5e80f82](https://github.com/AliMD/alwatr/commit/5e80f82882e930675e15ecc0448e7451708a36d5))
+- **element:** StateMachineMixin ([b395b79](https://github.com/AliMD/alwatr/commit/b395b795e4d115fd74632e25a4373db2c36fdad0))
+- **element:** toggle mixin ([5140b22](https://github.com/AliMD/alwatr/commit/5140b226f5b8330f2e930f3e125d73a0c6791b90))
+- **element:** UnresolvedMixin ([4a1c89a](https://github.com/AliMD/alwatr/commit/4a1c89aa41d7479b5b9f8e33252a11e5d372206c))
+
+### Performance Improvements
+
+- **element/StateMachineMixin:** limit scheduleUpdate to animation frame ([e23317e](https://github.com/AliMD/alwatr/commit/e23317e2bc5efeeb6f0198b3f49f12d682bcc8e1))
+- **element:** clear signal listeners memory cost ([fe20757](https://github.com/AliMD/alwatr/commit/fe2075730436becf8642dcabd44116b40d33a4c7))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes

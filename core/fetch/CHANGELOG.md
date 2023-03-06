@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **fetch:** fetchContext duplicate setSignalValue ([8aa9b00](https://github.com/AliMD/alwatr/commit/8aa9b003a2d7b7ffc8243ff7092d9560763d7273))
+- **fetch:** getClientId in nodejs ([c99e41c](https://github.com/AliMD/alwatr/commit/c99e41c9e9a979ca50cc01aeb5371a3487d9da2e))
+
+### Features
+
+- **fetch:** enhance fetchContext with dispatchOptions and only cache_only request in first time ([1f6b575](https://github.com/AliMD/alwatr/commit/1f6b575437104d64ede8a2c23d141160360d2cd5))
+- **fetch:** fetchContext ([d63d17e](https://github.com/AliMD/alwatr/commit/d63d17ecb58221159dc45a473fdd1c992d306d2b))
+- **fetch:** fetchContext skip online request when offline ([7c2b649](https://github.com/AliMD/alwatr/commit/7c2b6491f78acb961cdc0583112e3c709a177b79))
+- **fetch:** fetchContext work on background ([2e12bfd](https://github.com/AliMD/alwatr/commit/2e12bfde0a0636c30e60906c4812ec66b2d36742))
+- **fetch:** handle offline for all requests ([6a8d7b7](https://github.com/AliMD/alwatr/commit/6a8d7b7159732d834be052191935580331e36962))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **icon:** fill color ([fa1c280](https://github.com/AliMD/alwatr/commit/fa1c280e0385f3acbf456204f47d6e627371e130))
+- **icon:** fix all svg currentcolor ([f06c795](https://github.com/AliMD/alwatr/commit/f06c795f36c5b05c8c2e17e8b80e1e5dd72613c6))
+- **icon:** vertical-align style ([d449498](https://github.com/AliMD/alwatr/commit/d4494981d00a46aa512b6d892286f9f24aeaa0ff))
+
+### Features
+
+- **icon:** add toman icon ;) ([fbebf5b](https://github.com/AliMD/alwatr/commit/fbebf5b5051fc92c634455bb1ba6e5447720bbe1))
+- **icon:** update and compress all icons ([8ded731](https://github.com/AliMD/alwatr/commit/8ded731ef6da34a1f66d1fce80a92c77929b8144))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes

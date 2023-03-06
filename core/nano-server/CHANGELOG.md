@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Features
+
+- **nano-server:** getRemoteAddress ([eff82cb](https://github.com/AliMD/alwatr/commit/eff82cbdba5a35a88d95f6997365210683163d62))
+- **nano-server:** requireClientId ([fccd734](https://github.com/AliMD/alwatr/commit/fccd734f0c08cc624492b30e14c451143706cc00))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes

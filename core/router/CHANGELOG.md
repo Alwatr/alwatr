@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **router:** home page for sub page routes ([af737f3](https://github.com/AliMD/alwatr/commit/af737f3451fd057f0a2a574be05c34bd06c0f7c0))
+- **router:** make url from router respect empty sectionList ([1fb62f7](https://github.com/AliMD/alwatr/commit/1fb62f774bf5e9e6b68c04d756b32177697e55e8))
+
+### Features
+
+- **router:** internal redirect render template to another route ([de92671](https://github.com/AliMD/alwatr/commit/de9267126935b73dd561d8817346410f00960234))
+- **router:** keepSectionSlice for redirect ([1c3b370](https://github.com/AliMD/alwatr/commit/1c3b370c41f96a8ad612ea9fd5ab9963f6a3b27b))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes

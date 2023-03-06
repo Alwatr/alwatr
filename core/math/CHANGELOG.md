@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **math:** remove getClientId ([b5894d6](https://github.com/AliMD/alwatr/commit/b5894d6cf75798d35773dcc048e9dd21fa44199d))
+
+### Features
+
+- **math:** calcDiscount ([ac7c18b](https://github.com/AliMD/alwatr/commit/ac7c18bc0f0e008b8db9fd4b69451a89e7fb069b))
+
 # [0.29.0](https://github.com/AliMD/alwatr/compare/v0.28.0...v0.29.0) (2023-02-10)
 
 ### Bug Fixes
