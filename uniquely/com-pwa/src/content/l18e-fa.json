@@ -53,6 +53,8 @@
     "order_status_canceled": "لغو شده",
     "order_status_refunded": "بازپرداخت",
 
+    "order_shipping_info_empty_description": "ندارد.",
+
     "order_shipping_address_title": "آدرس تحویل",
     "order_shipping_recipient_name_title": "نام تحویل گیرنده",
     "order_shipping_recipient_national_code_title": "کد ملی تحویل گیرنده",

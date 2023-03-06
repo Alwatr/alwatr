@@ -144,7 +144,7 @@ export interface OrderShippingInfo extends StringifyableRecord {
 
 // -- Schema --
 
-export const orderLadingSchema = {
+export const orderShippingInfoSchema = {
   recipientName: String,
   recipientNationalCode: String,
   address: String,

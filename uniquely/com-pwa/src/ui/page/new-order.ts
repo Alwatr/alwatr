@@ -5,7 +5,9 @@ import {
   UnresolvedMixin,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import {orderShippingInfoSchema} from '@alwatr/type/src/customer-order-management.js';
 import {IconBoxContent} from '@alwatr/ui-kit/src/card/icon-box.js';
+import {validator} from '@alwatr/validator';
 
 import {buttons, pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
@@ -74,7 +76,6 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
   protected render_state_shippingForm(): unknown {
     this._logger.logMethod('render_state_shippingForm');
     const order = this.stateMachine.context.order;
-    // order.shippingInfo ??= getLocalStorageItem('shipping_form_data_x1', {});
     order.shippingInfo ??= {};
     return [
       this.render_part_item_list(order.itemList ?? [], this.stateMachine.context.productStorage, false),
@@ -147,7 +148,8 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
         <alwatr-button
           .icon=${buttons.submit.icon}
           .clickSignalId=${buttons.submit.clickSignalId}
-          ?disabled=${!pageNewOrderStateMachine.context.order.itemList?.length}
+          elevated
+          ?disabled=${!this.isSubmitAble()}
         >${message('page_new_order_submit')}</alwatr-button>
       </div>
     `;
@@ -188,5 +190,24 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
         >${message('page_new_order_submit_final')}</alwatr-button>
       </div>
     `;
+  }
+
+  protected isSubmitAble(): boolean {
+    this._logger.logMethod('isSubmitAble');
+    const shippingInfo = pageNewOrderStateMachine.context.order.shippingInfo;
+    if (
+      pageNewOrderStateMachine.context.order.itemList?.length === 0 ||
+      shippingInfo == null
+    ) return false;
+
+    try {
+      validator(orderShippingInfoSchema, shippingInfo, true);
+    }
+    catch (err) {
+      this._logger.error('isSubmitAble', (err as Error).message, {err});
+      return false;
+    }
+
+    return true;
   }
 }
