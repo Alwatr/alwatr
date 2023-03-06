@@ -1,4 +1,4 @@
-import {css, customElement, html, property, ifDefined, type PropertyValues} from '@alwatr/element';
+import {css, customElement, html, property, live, type PropertyValues} from '@alwatr/element';
 import '@alwatr/icon';
 import {UnicodeDigits} from '@alwatr/math';
 
@@ -14,6 +14,7 @@ declare global {
 
 export type InputType =
   | 'text'
+  | 'textarea'
   | 'search'
   | 'tel'
   | 'url'
@@ -40,6 +41,7 @@ export class AlwatrTextField extends AlwatrSurface {
       :host {
         --_surface-color-on: var(--sys-color-on-surface-variant-hsl);
         display: inline-block;
+        box-sizing: border-box;
         padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
         font-family: var(--sys-typescale-body-large-font-family-name);
         font-weight: var(--sys-typescale-body-large-font-weight);
@@ -54,18 +56,31 @@ export class AlwatrTextField extends AlwatrSurface {
         --_surface-elevation: var(--sys-surface-elevation-0);
       }
 
-      input {
+      input,
+      textarea {
         display: block;
         padding: 0;
         font: inherit;
         width: 100%;
+        box-sizing: border-box;
         border-radius: inherit;
         border: none;
         outline: transparent;
+        resize: none;
         text-align: inherit;
         background-color: transparent;
         color: var(--sys-color-on-surface);
         caret-color: var(--sys-color-primary);
+      }
+
+      input[type='number'] {
+        -moz-appearance: textfield;
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
       }
 
       /* So not group these selectors! */
@@ -81,53 +96,77 @@ export class AlwatrTextField extends AlwatrSurface {
         font: inherit;
         color: var(--sys-color-on-surface-variant);
       }
-
-      input[type=number] {
-        -moz-appearance: textfield;
+      textarea::placeholder {
+        font: inherit;
+        color: var(--sys-color-on-surface-variant);
       }
-
-      input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+      textarea::-webkit-input-placeholder {
+        font: inherit;
+        color: var(--sys-color-on-surface-variant);
+      }
+      textarea::-moz-placeholder {
+        font: inherit;
+        color: var(--sys-color-on-surface-variant);
       }
     `,
   ];
 
-  name = this.getAttribute('name') ?? 'unknown';
+  @property({type: Object})
+    name = 'unknown';
 
   @property({type: String})
     type: InputType = 'text';
 
   @property({type: String})
-    placeholder?: string;
+    value?: string;
 
-  inputElement: HTMLInputElement | null = null;
+  @property({type: String})
+    placeholder = '';
 
-  get value(): string {
-    let val = unicodeDigits.translate(this.inputElement?.value ?? '');
-    if (this.type === 'number' || this.type === 'tel') {
-      val = val.replaceAll(' ', '');
-    }
-    return val;
-  }
-  set value(val: string) {
-    if (this.inputElement != null) {
-      this.inputElement.value = val;
-    }
-    else {
-      this.updateComplete.then(() => {this.value = val;});
-    }
+  inputElement: HTMLInputElement | HTMLTextAreaElement | null = null;
+
+  constructor() {
+    super();
+    this._inputChanged = this._inputChanged.bind(this);
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
-    return html`<input type=${this.type} placeholder=${ifDefined(this.placeholder)}></input>`;
+    this.value ??= '';
+    if (this.type === 'textarea') {
+      return html`<textarea
+        .name=${this.name}
+        .placeholder=${this.placeholder}
+        .value=${live(this.value)}
+        .rows=${3}
+        @change=${this._inputChanged}
+      ></textarea>`;
+    }
+    // else
+    return html`<input
+      .name=${this.name}
+      .type=${this.type}
+      .placeholder=${this.placeholder}
+      .value=${live(this.value)}
+      @change=${this._inputChanged}
+    ></input>`;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
-    this.inputElement = this.renderRoot.querySelector('input');
+    this.inputElement = this.renderRoot.querySelector('input, textarea');
     this.addEventListener('click', () => this.inputElement?.focus());
+  }
+
+  private _inputChanged(event: Event): void {
+    this._logger.logMethod('_inputChanged');
+    const target = event.target as HTMLInputElement | HTMLTextAreaElement;
+    if (target == null) return;
+    let inputValue = unicodeDigits.translate(target.value ?? '');
+    if (this.type === 'number' || this.type === 'tel') {
+      inputValue = inputValue.replaceAll(' ', '');
+    }
+    this.value = inputValue;
+    this.dispatchEvent(new CustomEvent('input-change'));
   }
 }

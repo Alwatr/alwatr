@@ -162,7 +162,7 @@ export class AlwatrProductCard extends ToggleMixin(LocalizeMixin(SignalMixin(Alw
         <div class="price">
           <del>${number(this.content.price)}</del>
           <ins>${number(this.content.finalPrice)}</ins>
-          <alwatr-icon name="toman"></alwatr-icon>
+          <alwatr-icon .name=${'toman'}></alwatr-icon>
         </div>
     </div>
     `;

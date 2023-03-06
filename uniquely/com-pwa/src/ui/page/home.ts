@@ -9,15 +9,14 @@ import {
   nothing,
   SignalMixin,
   AlwatrBaseElement,
+  UnresolvedMixin,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
-import './app-footer';
-import {homePageContentContextConsumer, topAppBarContextProvider} from './context.js';
+import {homePageContentContextConsumer, topAppBarContextProvider} from '../../manager/context.js';
 
-import type {BoxType, PageHomeContent} from './type.js';
+import type {BoxType, PageHomeContent} from '../../type.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -29,7 +28,7 @@ declare global {
  * Alwatr Customer Order Management Home Page
  */
 @customElement('alwatr-page-home')
-export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
+export class AlwatrPageHome extends UnresolvedMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       box-sizing: border-box;

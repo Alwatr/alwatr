@@ -53,7 +53,7 @@ Content-Type: application/json
 }
 
 ### New order of user.
-PUT {{apiUrl}}/order/?userId=abc123
+PUT {{apiUrl}}/order/?userId=demo-123
 Authorization: Bearer {{userToken}}
 Content-Type: application/json
 client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
@@ -61,27 +61,27 @@ client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
 {
   "itemList": [
     {
-      "productId": "12345",
+      "productId": "1",
       "price": 1000000,
       "finalPrice": 950000,
       "qty": 20
     }
   ],
 
-  "delivery": {
+  "shippingInfo": {
     "recipientName": "ali",
     "recipientNationalCode": "0934614566",
     "address": "Mashhad, 29 dey, koche 29",
-    "shipmentType": "x",
+    "ladingType": "x",
     "carType": "y"
   },
 
   "discountType": "number",
   "totalPrice": 1000000,
-  "shippingPrice": 1100000,
-  "finalPrice": 900000
+  "ladingPrice": 1100000,
+  "finalTotalPrice": 900000
 }
 
 ### Get all orders list of special user
-GET {{apiUrl}}/order-list/?userId=abc123
+GET {{apiUrl}}/order-list/?userId=demo-123
 Authorization: Bearer {{userToken}}

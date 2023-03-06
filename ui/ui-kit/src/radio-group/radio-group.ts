@@ -1,12 +1,12 @@
-import {customElement, css, html, map, AlwatrBaseElement, property, nothing} from '@alwatr/element';
+import {customElement, css, html, map, AlwatrBaseElement, property, nothing, live} from '@alwatr/element';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-radio-group': AlwatrFieldSet;
+    'alwatr-radio-group': AlwatrRadioGroup;
   }
 }
 
-export type RadioOption = {label: string; value?: string}
+export type RadioOption = {label: string; value: string};
 
 export type RadioGroupOptions = {
   title: string;
@@ -19,7 +19,7 @@ export type RadioGroupOptions = {
  * @attr {String} name
  */
 @customElement('alwatr-radio-group')
-export class AlwatrFieldSet extends AlwatrBaseElement {
+export class AlwatrRadioGroup extends AlwatrBaseElement {
   static override styles = css`
     :host {
       display: block;
@@ -71,16 +71,13 @@ export class AlwatrFieldSet extends AlwatrBaseElement {
   `;
 
   @property({type: Object})
+    name = 'unknown';
+
+  @property({type: Object})
     options?: RadioGroupOptions;
 
-  name = this.getAttribute('name') ?? 'unknown';
-
-  get value(): string {
-    for (const inputElement of this.renderRoot.querySelectorAll('input')) {
-      if (inputElement.checked) return inputElement.value;
-    }
-    return '';
-  }
+  @property({type: String})
+    value?: string;
 
   override render(): unknown {
     this._logger.logMethod('render');
@@ -96,11 +93,25 @@ export class AlwatrFieldSet extends AlwatrBaseElement {
     const options = this.options;
     if (options == null) return nothing;
     return map(options.radioGroup, (radioItem, index) => {
-      const id: string = 'radioInput' + index;
+      const id: string = 'radioInput_' + index;
       return html`<div>
-        <input type="radio" id=${id} name=${this.name} value="${radioItem.value ?? radioItem.label}" />
+        <input
+          type="radio"
+          id=${id}
+          .name=${this.name}
+          .value=${radioItem.value}
+          .checked=${live(radioItem.value === this.value)}
+          @change=${this._inputChanged}
+        />
         <label for=${id}>${radioItem.label}</label>
       </div>`;
     });
+  }
+
+  private _inputChanged(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target == null) return;
+    this.value = target.value;
+    this.dispatchEvent(new CustomEvent('input-change'));
   }
 }

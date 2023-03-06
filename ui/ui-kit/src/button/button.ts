@@ -14,6 +14,8 @@ declare global {
 
 /**
  * Alwatr outlined text field.
+ *
+ * @attr click-signal-id
  */
 @customElement('alwatr-button')
 export class AlwatrButton extends AlwatrSurface {
@@ -51,8 +53,8 @@ export class AlwatrButton extends AlwatrSurface {
   @property()
     icon?: string;
 
-  @property({attribute: 'signal-id'})
-    signalId?: string;
+  @property({attribute: 'click-signal-id'})
+    clickSignalId?: string;
 
   @property({attribute: false})
     detail?: Stringifyable;
@@ -82,9 +84,9 @@ export class AlwatrButton extends AlwatrSurface {
   }
 
   protected _click(event: MouseEvent): void {
-    this._logger.logMethodArgs('_click', {signalId: this.signalId});
-    if (this.signalId) {
-      eventTrigger.dispatch<ClickSignalType>(this.signalId, {
+    this._logger.logMethodArgs('click', {clickSignalId: this.clickSignalId});
+    if (this.clickSignalId) {
+      eventTrigger.dispatch<ClickSignalType>(this.clickSignalId, {
         x: event.clientX,
         y: event.clientY,
         altKey: event.altKey,

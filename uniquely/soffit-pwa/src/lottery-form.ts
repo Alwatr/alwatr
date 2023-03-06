@@ -28,12 +28,12 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     return {
       title: message('activity_type'),
       radioGroup: [
-        {label: message('tile_player')},
-        {label: message('tile_installer')},
-        {label: message('seller_shopkeeper')},
-        {label: message('contractor')},
-        {label: message('manufacturer')},
-        {label: message('other')},
+        {label: message('tile_player'), value: 'tile_player'},
+        {label: message('tile_installer'), value: 'tile_installer'},
+        {label: message('seller_shopkeeper'), value: 'seller_shopkeeper'},
+        {label: message('contractor'), value: 'contractor'},
+        {label: message('manufacturer'), value: 'manufacturer'},
+        {label: message('other'), value: 'other'},
       ],
     };
   }
@@ -100,7 +100,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>(
         'alwatr-text-field,alwatr-radio-group',
     )) {
-      data[inputElement.name] = inputElement.value;
+      data[inputElement.name] = inputElement.value as string;
     }
     return data;
   }
@@ -109,31 +109,31 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     this._logger.logMethod('render');
     return html`
       <alwatr-text-field
-        name="code"
-        type="number"
+        .name=${'code'}
+        .type=${'number'}
+        .placeholder=${message('lottery_code')}
         outlined
         active-outline
         stated
-        placeholder=${message('lottery_code')}
       ></alwatr-text-field>
       <alwatr-text-field
-        name="name"
-        type="text"
+        .name=${'name'}
+        .type=${'text'}
+        .placeholder=${message('full_name')}
         outlined
         active-outline
         stated
-        placeholder=${message('full_name')}
       ></alwatr-text-field>
       <alwatr-text-field
-        name="phone"
-        type="tel"
+        .name=${'phone'}
+        .type=${'tel'}
         outlined
         active-outline
         stated
-        placeholder=${message('phone_number')}
+        .placeholder=${message('phone_number')}
       ></alwatr-text-field>
       <alwatr-radio-group
-        name="activity"
+        .name=${'activity'}
         .options=${this._radioGroupOptions}
       ></alwatr-radio-group>
       <div class="button-container">

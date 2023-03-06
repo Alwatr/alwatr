@@ -1,10 +1,16 @@
-import {customElement, css, html, LocalizeMixin, SignalMixin, AlwatrBaseElement} from '@alwatr/element';
+import {
+  customElement,
+  css,
+  html,
+  LocalizeMixin,
+  SignalMixin,
+  AlwatrBaseElement,
+  UnresolvedMixin,
+} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
-import './app-footer';
-import {submitOrderCommandTrigger, topAppBarContextProvider} from './context.js';
+import {submitOrderCommandTrigger, topAppBarContextProvider} from '../../manager/context.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
@@ -18,7 +24,7 @@ declare global {
  * Alwatr Demo Home Page
  */
 @customElement('alwatr-page-404')
-export class AlwatrPage404 extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
+export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
   static override styles = css`
     :host {
       display: block;
@@ -32,8 +38,8 @@ export class AlwatrPage404 extends LocalizeMixin(SignalMixin(AlwatrBaseElement))
     super.connectedCallback();
     topAppBarContextProvider.setValue({
       type: 'small',
-      headline: message('not_found'),
-      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'},
+      headline: message('page_404_not_found'),
+      startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back_to_home_click_event'},
       tinted: 2,
     });
   }
@@ -46,8 +52,8 @@ export class AlwatrPage404 extends LocalizeMixin(SignalMixin(AlwatrBaseElement))
       elevated: 1,
       icon: 'construct-outline',
       flipRtl: true,
-      headline: message('under_develope'),
-      description: message('under_develope_description'),
+      headline: message('page_404_under_develope'),
+      description: message('page_404_under_develope_description'),
       preLine: true,
     };
 
@@ -58,26 +64,32 @@ export class AlwatrPage404 extends LocalizeMixin(SignalMixin(AlwatrBaseElement))
     submitOrderCommandTrigger.request({
       itemList: [
         {
-          productId: '3232233323',
+          productId: '2',
+          price: 1000000,
+          finalPrice: 950000,
+          qty: 20,
+        },
+        {
+          productId: '4',
           price: 1000000,
           finalPrice: 950000,
           qty: 20,
         },
       ],
 
-      delivery: {
+      shippingInfo: {
         recipientName: 'ali',
         recipientNationalCode: '0934614566',
         address: 'Mashhad, 29 dey, koche 29',
-        shipmentType: 'x',
-        carType: 'y',
-        timePeriod: '1-2w',
+        ladingType: 'pallet',
+        carType: 'ten_wheel',
+        timePeriod: '1_2w',
       },
 
       discountType: 'number',
       totalPrice: 1000000,
-      shippingPrice: 1100000,
-      finalPrice: 900000,
+      ladingPrice: 1100000,
+      finalTotalPrice: 900000,
       discount: 0,
     });
   }
