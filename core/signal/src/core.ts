@@ -345,12 +345,12 @@ export const defineCommand = <TArgument extends StringifyableRecord, TReturn ext
   signalId: string,
   signalProvider: ProviderFunction<TArgument & {_callbackSignalId?: string}, TReturn>,
   options: Partial<Pick<ProviderOptions, 'debounce'>> = {},
-): void => {
+): ListenerSpec => {
   options.debounce ??= 'AnimationFrame';
   logger.logMethodArgs('defineCommand', {commandId: signalId, options});
   const requestSignalId = 'request-' + signalId;
   removeAllListeners(requestSignalId);
-  subscribe<TArgument & {_callbackSignalId?: string}>(
+  return subscribe<TArgument & {_callbackSignalId?: string}>(
       requestSignalId,
       async (argumentObject) => {
         clearDetail(requestSignalId); // clean argumentObject from memory
