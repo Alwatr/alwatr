@@ -11,6 +11,7 @@ import {
 import {message, number, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/icon';
 import {calcDiscount} from '@alwatr/math';
+import {tileQtyStep} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/icon-button.js';
 import '@alwatr/ui-kit/card/surface.js';
 
@@ -147,7 +148,6 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
         return html`<alwatr-surface tinted>${message('order_item_not_exist')}</alwatr-surface>`;
       }
 
-      const qtyStep = 3.6;
       item.qty ||= 100;
 
       return html`<alwatr-surface tinted class="product-item">
@@ -170,7 +170,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           </div>
           <div>
             <span>${message('order_item_qty_m2')}:</span>
-            <span><span>${number(item.qty * qtyStep)}</span> m²</span>
+            <span><span>${number(item.qty * tileQtyStep)}</span> m²</span>
           </div>
           <div>
             <span>${message('order_item_qty_tile')}:</span>
@@ -189,14 +189,14 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           <div>
             <span>${message('order_item_final_total_price')}:</span>
             <span>
-              <span>${number(item.qty * qtyStep * item.finalPrice)}</span>
+              <span>${number(item.qty * tileQtyStep * item.finalPrice)}</span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_total_price')}:</span>
             <span>
-              <span>${number(item.qty * qtyStep * item.price)}</span>
+              <span>${number(item.qty * tileQtyStep * item.price)}</span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
@@ -205,7 +205,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
             <span>
               <span>
                 (٪${number(calcDiscount(item.price, item.finalPrice))})
-                ${number(item.qty * qtyStep * (item.price - item.finalPrice))}
+                ${number(item.qty * tileQtyStep * (item.price - item.finalPrice))}
               </span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
