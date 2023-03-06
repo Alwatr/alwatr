@@ -21,6 +21,7 @@ import {config} from '../../config.js';
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order, OrderShippingInfo, OrderDraft, OrderItem, Product} from '@alwatr/type/customer-order-management.js';
 import type {IconButtonContent} from '@alwatr/ui-kit/button/icon-button.js';
+import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles: CSSResultGroup = css`
@@ -89,19 +90,11 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       width: calc(20 * var(--sys-spacing-track));
       margin-right: auto;
     }
-    input {
+    alwatr-text-field {
       display: block;
       padding: 0;
-      font: inherit;
       width: 100%;
       flex-grow: 1;
-      border-radius: inherit;
-      border: none;
-      outline: transparent;
-      text-align: inherit;
-      background-color: transparent;
-      color: inherit;
-      caret-color: var(--sys-color-primary);
     }
 
     /* So not group these selectors! */
@@ -239,7 +232,17 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     return html`
       <alwatr-surface class="number-field" stated tinted="2">
         <alwatr-icon-button .content=${addBtn}></alwatr-icon-button>
-        <input .type=${'number'} .value=${(orderItem.qty ?? 0) + ''}></input>
+        <alwatr-text-field
+        .type=${'number'}
+        .value=${(orderItem.qty ?? 0) + ''}
+        @input-change=${(event: CustomEvent): void => {
+    const target = event.target as AlwatrTextField;
+    if (target == null) return;
+    const qty = target.value && +target.value ? +target.value : 100;
+    orderItem.qty = qty;
+    target.value = qty + '';
+    this.requestUpdate();
+  }}></alwatr-text-field>
         <alwatr-icon-button .content=${removeBtn}></alwatr-icon-button>
       </alwatr-surface>
     `;
