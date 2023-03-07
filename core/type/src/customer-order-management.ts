@@ -146,7 +146,7 @@ export interface OrderShippingInfo extends StringifyableRecord {
 
 export const orderInfoSchema = {
   id: String,
-  status: String,
+  // status: String,
   itemList: [{
     productId: String,
     price: Number,
@@ -161,11 +161,11 @@ export const orderInfoSchema = {
     ladingType: String,
     timePeriod: String,
   },
-  discount: Number,
-  discountType: String,
-  totalPrice: Number,
-  ladingPrice: Number,
-  finalTotalPrice: Number,
+  // discount: Number,
+  // discountType: String,
+  // totalPrice: Number,
+  // ladingPrice: Number,
+  // finalTotalPrice: Number,
 };
 
 export const orderShippingInfoSchema = orderInfoSchema.shippingInfo;

@@ -26,8 +26,8 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
   id: 'page-order-detail',
   initial: 'unresolved',
   context: {
-    registeredOrderId: <null | string>null,
-    order: <OrderDraft>getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'}),
+    registeredOrderId: '',
+    order: <OrderDraft>getLocalStorageItem('draft-order-x2', {id: 'new', status: 'draft'}),
     productStorage: <AlwatrDocumentStorage<Product> | null>null,
     priceStorage: <AlwatrDocumentStorage<ProductPrice> | null>null,
     finalPriceStorage: <AlwatrDocumentStorage<ProductPrice> | null>null,
@@ -77,6 +77,7 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
     review: {
       on: {
         BACK: 'edit',
+        VALIDATION_FAILED: 'edit',
         FINAL_SUBMIT: 'submitting',
       },
     },
@@ -183,8 +184,8 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
     }
 
     case 'NEW_ORDER': {
-      pageNewOrderStateMachine.context.registeredOrderId = null;
-      pageNewOrderStateMachine.context.order = getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'});
+      pageNewOrderStateMachine.context.registeredOrderId = '';
+      pageNewOrderStateMachine.context.order = getLocalStorageItem('draft-order-x2', {id: 'new', status: 'draft'});
       break;
     }
 
@@ -193,8 +194,9 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
         validator(orderInfoSchema, pageNewOrderStateMachine.context.order, true);
       }
       catch (err) {
+        pageNewOrderStateMachine.transition('VALIDATION_FAILED');
         const _err = err as (Error & {cause?: Record<string, string | undefined>});
-        logger.incident('SUBMIT', _err.name, _err.message);
+        logger.incident('SUBMIT', _err.name, 'validation failed', _err);
         if (_err.cause?.itemPath?.indexOf('shippingInfo') !== -1) {
           snackbarSignalTrigger.request({
             message: message('page_new_order_shipping_info_not_valid_message'),
@@ -223,14 +225,14 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
     }
 
     case 'SUBMIT_SUCCESS': {
-      localStorage.removeItem('draft-order-x1');
+      localStorage.removeItem('draft-order-x2');
       break;
     }
   }
 });
 
 pageNewOrderStateMachine.signal.subscribe(async (state) => {
-  localStorage.setItem('draft-order-x1', JSON.stringify(pageNewOrderStateMachine.context.order));
+  localStorage.setItem('draft-order-x2', JSON.stringify(pageNewOrderStateMachine.context.order));
 
   if (state.to != 'shippingForm' && state.to != state.from) {
     scrollToTopCommand.request({});
@@ -288,13 +290,13 @@ eventListener.subscribe<ClickSignalType>(buttons.submitShippingForm.clickSignalI
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.tracking.clickSignalId, () => {
-  const orderId = pageNewOrderStateMachine.context.registeredOrderId as string;
+  const orderId = pageNewOrderStateMachine.context.registeredOrderId;
   pageNewOrderStateMachine.transition('NEW_ORDER');
   redirect({sectionList: ['order-tracking', orderId]});
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.detail.clickSignalId, () => {
-  const orderId = pageNewOrderStateMachine.context.registeredOrderId as string;
+  const orderId = pageNewOrderStateMachine.context.registeredOrderId;
   pageNewOrderStateMachine.transition('NEW_ORDER');
   redirect({sectionList: ['order-detail', orderId]});
 });
