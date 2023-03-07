@@ -27,7 +27,7 @@ export class AlwatrPageHome extends AlwatrBaseElement {
       font-size: var(--sys-typescale-label-small-font-size);
       line-height: var(--sys-typescale-label-small-line-height);
       letter-spacing: var(--sys-typescale-label-small-letter-spacing);
-      opacity: 0.4;
+      opacity: 0.6;
       user-select: none;
       -webkit-user-select: none;
     }
