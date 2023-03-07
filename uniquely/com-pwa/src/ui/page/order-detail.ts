@@ -1,5 +1,4 @@
 import {
-  css,
   customElement,
   StateMachineMixin,
   UnresolvedMixin,
@@ -22,15 +21,6 @@ export class AlwatrPageOrderDetail extends StateMachineMixin(
     pageOrderDetailStateMachine,
     UnresolvedMixin(AlwatrOrderDetailBase),
 ) {
-  static override styles = [
-    AlwatrOrderDetailBase.styles,
-    css`
-    :host([state=reloading]) > * {
-      opacity: var(--sys-surface-disabled-opacity);
-    }
-    `,
-  ];
-
   protected override render(): unknown {
     this._logger.logMethod('render');
     return this[`render_state_${this.stateMachine.state.to}`]?.();

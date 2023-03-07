@@ -36,6 +36,10 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       gap: var(--sys-spacing-track);
     }
 
+    :host([state=reloading]) > * {
+      opacity: var(--sys-surface-disabled-opacity);
+    }
+
     alwatr-surface {
       --_surface-color-on: var(--sys-color-on-surface-variant-hsl);
     }
