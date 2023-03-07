@@ -166,6 +166,10 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
     return html`
       <div class="submit-container">
         <alwatr-button
+          .icon=${buttons.edit.icon}
+          .clickSignalId=${buttons.edit.clickSignalId}
+        >${message('page_new_order_edit')}</alwatr-button>
+        <alwatr-button
           .icon=${buttons.submitFinal.icon}
           .clickSignalId=${buttons.submitFinal.clickSignalId}
         >${message('page_new_order_submit_final')}</alwatr-button>

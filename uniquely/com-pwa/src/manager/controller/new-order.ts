@@ -116,35 +116,39 @@ export const buttons = {
     clickSignalId: pageNewOrderStateMachine.config.id + '_edit_items_click_event',
   },
   submit: {
-    icon: 'checkmark',
+    icon: 'checkmark-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_submit_click_event',
   },
+  edit: {
+    icon: 'create-outline',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_edit_click_event',
+  },
   submitFinal: {
-    icon: 'checkmark',
+    icon: 'checkmark-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_submit_final_click_event',
   },
   submitShippingForm: {
-    icon: 'checkmark',
+    icon: 'checkmark-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_submit_shipping_form_click_event',
   },
   editShippingForm: {
-    icon: 'checkmark',
+    icon: 'checkmark-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_edit_shipping_form_click_event',
   },
   newOrder: {
-    icon: 'add',
+    icon: 'add-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_new_order_click_event',
   },
   detail: {
-    icon: 'information',
+    icon: 'information-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_detail_click_event',
   },
   tracking: {
-    icon: 'chatbox',
+    icon: 'chatbox-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_tracking_click_event',
   },
   retry: {
-    icon: 'reload',
+    icon: 'reload-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_retry_click_event',
   },
 } as const;
@@ -269,6 +273,10 @@ finalPriceStorageContextConsumer.subscribe((finalPriceStorage) => {
 
 eventListener.subscribe<ClickSignalType>(buttons.submit.clickSignalId, () => {
   pageNewOrderStateMachine.transition('SUBMIT');
+});
+
+eventListener.subscribe<ClickSignalType>(buttons.edit.clickSignalId, () => {
+  pageNewOrderStateMachine.transition('BACK');
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.submitFinal.clickSignalId, () => {

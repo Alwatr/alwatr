@@ -24,6 +24,7 @@
     "page_new_order_edit_items": "ویرایش لیست محصولات",
     "page_new_order_shipping_edit": "ویرایش اطلاعات بارگیری",
     "page_new_order_submit": "بازبینی سفارش",
+    "page_new_order_edit": "بازبینی سفارش",
     "page_new_order_submit_final": "ثبت نهایی سفارش",
     "page_new_order_shipping_submit": "ثبت اطلاعات",
     "page_new_order_submitting_message": "در حال ثبت سفارش...",
