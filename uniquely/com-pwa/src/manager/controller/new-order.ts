@@ -185,30 +185,6 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
 
     case 'NEW_ORDER': {
       pageNewOrderStateMachine.context.registeredOrderId = '';
-      pageNewOrderStateMachine.context.order = getLocalStorageItem('draft-order-x2', {id: 'new', status: 'draft'});
-      break;
-    }
-
-    case 'SUBMIT': {
-      try {
-        validator(orderInfoSchema, pageNewOrderStateMachine.context.order, true);
-      }
-      catch (err) {
-        pageNewOrderStateMachine.transition('VALIDATION_FAILED');
-        const _err = err as (Error & {cause?: Record<string, string | undefined>});
-        logger.incident('SUBMIT', _err.name, 'validation failed', _err);
-        if (_err.cause?.itemPath?.indexOf('shippingInfo') !== -1) {
-          snackbarSignalTrigger.request({
-            message: message('page_new_order_shipping_info_not_valid_message'),
-          });
-        }
-        else {
-          snackbarSignalTrigger.request({
-            message: message('page_new_order_order_not_valid_message'),
-          });
-        }
-      }
-
       break;
     }
 
@@ -226,6 +202,7 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
 
     case 'SUBMIT_SUCCESS': {
       localStorage.removeItem('draft-order-x2');
+      pageNewOrderStateMachine.context.order = getLocalStorageItem('draft-order-x2', {id: 'new', status: 'draft'});
       break;
     }
   }
@@ -256,6 +233,27 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
     }
     order.totalPrice = Math.round(totalPrice);
     order.finalTotalPrice = Math.round(finalTotalPrice);
+  }
+
+  if (state.to === 'review') {
+    try {
+      validator(orderInfoSchema, pageNewOrderStateMachine.context.order, true);
+    }
+    catch (err) {
+      pageNewOrderStateMachine.transition('VALIDATION_FAILED');
+      const _err = err as (Error & {cause?: Record<string, string | undefined>});
+      logger.incident('SUBMIT', _err.name, 'validation failed', _err);
+      if (_err.cause?.itemPath?.indexOf('shippingInfo') !== -1) {
+        snackbarSignalTrigger.request({
+          message: message('page_new_order_shipping_info_not_valid_message'),
+        });
+      }
+      else {
+        snackbarSignalTrigger.request({
+          message: message('page_new_order_order_not_valid_message'),
+        });
+      }
+    }
   }
 });
 
