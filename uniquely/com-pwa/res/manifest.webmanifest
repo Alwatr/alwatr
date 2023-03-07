@@ -4,7 +4,7 @@
   "description": "نرم‌افزار یکپارچه مدیریت سفارشات نمایندگی‌های سافیت",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#d0c5b4",
+  "theme_color": "#2b4f9c",
   "background_color": "#faf8ff",
   "orientation": "portrait",
   "default_locale": "fa",
