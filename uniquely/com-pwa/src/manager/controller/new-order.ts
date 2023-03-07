@@ -183,20 +183,19 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
     }
 
     case 'NEW_ORDER': {
-      pageNewOrderStateMachine.context.order = getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'});
       pageNewOrderStateMachine.context.registeredOrderId = null;
+      pageNewOrderStateMachine.context.order = getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'});
       break;
     }
 
     case 'SUBMIT': {
-      // TODO: validate form by own.
       try {
         validator(orderInfoSchema, pageNewOrderStateMachine.context.order, true);
       }
       catch (err) {
-        const _err = err as Error;
+        const _err = err as (Error & {cause?: Record<string, string | undefined>});
         logger.incident('SUBMIT', _err.name, _err.message);
-        if ('shippingInfo' in (_err.cause as any).itemPath) {
+        if (_err.cause?.itemPath?.indexOf('shippingInfo') !== -1) {
           snackbarSignalTrigger.request({
             message: message('page_new_order_shipping_info_not_valid_message'),
           });
@@ -217,13 +216,13 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
         pageNewOrderStateMachine.transition('SUBMIT_FAILED');
         return;
       }
+      // else
       pageNewOrderStateMachine.context.registeredOrderId = order.id;
       pageNewOrderStateMachine.transition('SUBMIT_SUCCESS');
       break;
     }
 
     case 'SUBMIT_SUCCESS': {
-      pageNewOrderStateMachine.context.order = {id: 'new', status: 'draft'};
       localStorage.removeItem('draft-order-x1');
       break;
     }
