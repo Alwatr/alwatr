@@ -7,7 +7,7 @@ export type {JsonSchema};
 
 export function validator<T extends StringifyableRecord>(
     validSchema: JsonSchema,
-    targetObject: StringifyableRecord,
+    targetObject?: StringifyableRecord | Array<StringifyableRecord> | null,
     additionalProperties = false,
     path = '.',
 ): T {
@@ -43,7 +43,20 @@ export function validator<T extends StringifyableRecord>(
     const itemSchema = validSchema[itemName];
     const itemValue = targetObject[itemName] as Stringifyable;
 
-    if (typeof itemSchema === 'object' && itemSchema != null) {
+    if (Array.isArray(itemSchema)) {
+      // array
+      for (const index in itemSchema) {
+        if (!Object.prototype.hasOwnProperty.call(itemSchema, index)) continue;
+        const item = itemSchema[index];
+        targetObject[index] = validator<StringifyableRecord>(
+            item,
+            itemValue[index] as Array<StringifyableRecord>,
+            additionalProperties,
+            itemPath[index],
+        );
+      }
+    }
+    else if (typeof itemSchema === 'object' && itemSchema != null) {
       // nested object
       targetObject[itemName] = validator<StringifyableRecord>(
           itemSchema,
