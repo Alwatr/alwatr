@@ -7,14 +7,14 @@ export type {JsonSchema};
 
 export function validator<T extends StringifyableRecord>(
     validSchema: JsonSchema,
-    targetObject?: StringifyableRecord | Array<StringifyableRecord> | null,
+    targetObject?: StringifyableRecord | null,
     additionalProperties = false,
     path = '.',
 ): T {
-  if (typeof targetObject !== 'object' || targetObject == null) {
+  if (targetObject == null || typeof targetObject !== 'object') {
     throw new Error('invalid_type', {
       cause: {
-        message: 'targetObject is not a function or null',
+        message: 'targetObject root not valid',
         itemPath: path,
         itemSchema: 'JsonSchema',
         itemValue: String(targetObject),
@@ -45,14 +45,26 @@ export function validator<T extends StringifyableRecord>(
 
     if (Array.isArray(itemSchema)) {
       // array
-      for (const index in itemSchema) {
+      if (!Array.isArray(itemValue)) {
+        throw new Error('invalid_type', {
+          cause: {
+            message: 'invalid type',
+            itemPath,
+            itemSchema: 'Array',
+            itemValue: String(itemValue),
+          },
+        });
+      }
+      // else
+      const schema = itemSchema[0];
+      for (const index in itemValue) {
         if (!Object.prototype.hasOwnProperty.call(itemSchema, index)) continue;
-        const item = itemSchema[index];
+        const item = itemValue[index];
         targetObject[index] = validator<StringifyableRecord>(
+            schema,
             item,
-            itemValue[index] as Array<StringifyableRecord>,
             additionalProperties,
-            itemPath[index],
+            `${itemPath}[${index}]`,
         );
       }
     }
@@ -60,9 +72,9 @@ export function validator<T extends StringifyableRecord>(
       // nested object
       targetObject[itemName] = validator<StringifyableRecord>(
           itemSchema,
-        itemValue as StringifyableRecord,
-        additionalProperties,
-        itemPath,
+          itemValue as StringifyableRecord,
+          additionalProperties,
+          itemPath,
       );
     }
     else if (itemSchema === Boolean) {
@@ -86,7 +98,7 @@ export function validator<T extends StringifyableRecord>(
     }
     else if (itemSchema === Number) {
       if (isNumber(itemValue)) {
-        targetObject[itemName] = +<string>itemValue;
+        targetObject[itemName] = +(<string>itemValue);
       }
       else {
         throw new Error('invalid_type', {
