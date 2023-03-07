@@ -1,5 +1,6 @@
 export type JsonSchema = {
   [key: string]:
+    | Array<JsonSchema>
     | JsonSchema
     | StringConstructor
     | NumberConstructor

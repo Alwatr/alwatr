@@ -1,11 +1,5 @@
-import {
-  customElement,
-  html,
-  StateMachineMixin,
-  UnresolvedMixin,
-} from '@alwatr/element';
+import {customElement, html, StateMachineMixin, UnresolvedMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import {IconBoxContent} from '@alwatr/ui-kit/src/card/icon-box.js';
 
 import {buttons, pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
@@ -32,7 +26,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
 
   protected render_state_loading(): unknown {
     this._logger.logMethod('render_state_loading');
-    return this.render_part_message('loading');
+    return this.render_part_message('loading', 'cloud-download-outline');
   }
 
   protected render_state_edit(): unknown {
@@ -74,7 +68,6 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
   protected render_state_shippingForm(): unknown {
     this._logger.logMethod('render_state_shippingForm');
     const order = this.stateMachine.context.order;
-    // order.shippingInfo ??= getLocalStorageItem('shipping_form_data_x1', {});
     order.shippingInfo ??= {};
     return [
       this.render_part_item_list(order.itemList ?? [], this.stateMachine.context.productStorage, false),
@@ -85,31 +78,21 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
 
   protected render_state_submitting(): unknown {
     this._logger.logMethod('render_state_submitting');
-    return this.render_part_message('page_new_order_submitting_message');
+    return this.render_part_message('page_new_order_submitting_message', 'cloud-upload-outline');
   }
 
   protected render_state_submitSuccess(): unknown {
     this._logger.logMethod('render_state_submitSuccess');
-    const content: IconBoxContent = {
-      headline: message('page_new_order_submit_success_message'),
-      icon: 'checkmark-done',
-      elevated: 1,
-    };
     return [
-      html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
+      this.render_part_message('page_new_order_submit_success_message', 'cloud-done-outline'),
       this.render_part_btn_submit_success(),
     ];
   }
 
   protected render_state_submitFailed(): unknown {
     this._logger.logMethod('render_state_submitFailed');
-    const content: IconBoxContent = {
-      headline: message('page_new_order_submit_failed_message'),
-      icon: 'close',
-      elevated: 1,
-    };
     return [
-      html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
+      this.render_part_message('page_new_order_submit_failed_message', 'cloud-offline-outline'),
       this.render_part_btn_submit_failed(),
     ];
   }
@@ -182,6 +165,10 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
   protected render_part_btn_final_submit(): unknown {
     return html`
       <div class="submit-container">
+        <alwatr-button
+          .icon=${buttons.edit.icon}
+          .clickSignalId=${buttons.edit.clickSignalId}
+        >${message('page_new_order_edit')}</alwatr-button>
         <alwatr-button
           .icon=${buttons.submitFinal.icon}
           .clickSignalId=${buttons.submitFinal.clickSignalId}

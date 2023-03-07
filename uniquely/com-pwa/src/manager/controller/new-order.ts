@@ -1,8 +1,11 @@
 import {FiniteStateMachine} from '@alwatr/fsm';
+import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
-import {tileQtyStep} from '@alwatr/type/customer-order-management.js';
+import {orderInfoSchema, tileQtyStep} from '@alwatr/type/customer-order-management.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {getLocalStorageItem} from '@alwatr/util';
+import {validator} from '@alwatr/validator';
 
 import {fetchPriceStorage} from '../context-provider/price-storage.js';
 import {fetchProductStorage} from '../context-provider/product-storage.js';
@@ -14,6 +17,7 @@ import {
   submitOrderCommandTrigger,
   topAppBarContextProvider,
 } from '../context.js';
+import {logger} from '../logger.js';
 
 import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
 import type {Product, ProductPrice, OrderDraft, OrderItem} from '@alwatr/type/customer-order-management.js';
@@ -22,7 +26,8 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
   id: 'page-order-detail',
   initial: 'unresolved',
   context: {
-    order: <OrderDraft>getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'}),
+    registeredOrderId: '',
+    order: <OrderDraft>getLocalStorageItem('draft-order-x2', {id: 'new', status: 'draft'}),
     productStorage: <AlwatrDocumentStorage<Product> | null>null,
     priceStorage: <AlwatrDocumentStorage<ProductPrice> | null>null,
     finalPriceStorage: <AlwatrDocumentStorage<ProductPrice> | null>null,
@@ -72,6 +77,7 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
     review: {
       on: {
         BACK: 'edit',
+        VALIDATION_FAILED: 'edit',
         FINAL_SUBMIT: 'submitting',
       },
     },
@@ -110,35 +116,39 @@ export const buttons = {
     clickSignalId: pageNewOrderStateMachine.config.id + '_edit_items_click_event',
   },
   submit: {
-    icon: 'checkmark',
+    icon: 'checkmark-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_submit_click_event',
   },
+  edit: {
+    icon: 'create-outline',
+    clickSignalId: pageNewOrderStateMachine.config.id + '_edit_click_event',
+  },
   submitFinal: {
-    icon: 'checkmark',
+    icon: 'checkmark-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_submit_final_click_event',
   },
   submitShippingForm: {
-    icon: 'checkmark',
+    icon: 'checkmark-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_submit_shipping_form_click_event',
   },
   editShippingForm: {
-    icon: 'checkmark',
+    icon: 'checkmark-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_edit_shipping_form_click_event',
   },
   newOrder: {
-    icon: 'add',
+    icon: 'add-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_new_order_click_event',
   },
   detail: {
-    icon: 'information',
+    icon: 'information-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_detail_click_event',
   },
   tracking: {
-    icon: 'chatbox',
+    icon: 'chatbox-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_tracking_click_event',
   },
   retry: {
-    icon: 'reload',
+    icon: 'reload-outline',
     clickSignalId: pageNewOrderStateMachine.config.id + '_retry_click_event',
   },
 } as const;
@@ -178,7 +188,7 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
     }
 
     case 'NEW_ORDER': {
-      pageNewOrderStateMachine.context.order = getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'});
+      pageNewOrderStateMachine.context.registeredOrderId = '';
       break;
     }
 
@@ -186,23 +196,24 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
       const order = await submitOrderCommandTrigger.requestWithResponse(pageNewOrderStateMachine.context.order);
       if (order == null) {
         pageNewOrderStateMachine.transition('SUBMIT_FAILED');
-        break;
+        return;
       }
-
+      // else
+      pageNewOrderStateMachine.context.registeredOrderId = order.id;
       pageNewOrderStateMachine.transition('SUBMIT_SUCCESS');
       break;
     }
 
     case 'SUBMIT_SUCCESS': {
-      pageNewOrderStateMachine.context.order = {id: 'new', status: 'draft'};
-      localStorage.removeItem('draft-order-x1');
+      localStorage.removeItem('draft-order-x2');
+      pageNewOrderStateMachine.context.order = getLocalStorageItem('draft-order-x2', {id: 'new', status: 'draft'});
       break;
     }
   }
 });
 
 pageNewOrderStateMachine.signal.subscribe(async (state) => {
-  localStorage.setItem('draft-order-x1', JSON.stringify(pageNewOrderStateMachine.context.order));
+  localStorage.setItem('draft-order-x2', JSON.stringify(pageNewOrderStateMachine.context.order));
 
   if (state.to != 'shippingForm' && state.to != state.from) {
     scrollToTopCommand.request({});
@@ -227,6 +238,27 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
     order.totalPrice = Math.round(totalPrice);
     order.finalTotalPrice = Math.round(finalTotalPrice);
   }
+
+  if (state.to === 'review') {
+    try {
+      validator(orderInfoSchema, pageNewOrderStateMachine.context.order, true);
+    }
+    catch (err) {
+      pageNewOrderStateMachine.transition('VALIDATION_FAILED');
+      const _err = err as (Error & {cause?: Record<string, string | undefined>});
+      logger.incident('SUBMIT', _err.name, 'validation failed', _err);
+      if (_err.cause?.itemPath?.indexOf('shippingInfo') !== -1) {
+        snackbarSignalTrigger.request({
+          message: message('page_new_order_shipping_info_not_valid_message'),
+        });
+      }
+      else {
+        snackbarSignalTrigger.request({
+          message: message('page_new_order_order_not_valid_message'),
+        });
+      }
+    }
+  }
 });
 
 productStorageContextConsumer.subscribe((productStorage) => {
@@ -241,6 +273,10 @@ finalPriceStorageContextConsumer.subscribe((finalPriceStorage) => {
 
 eventListener.subscribe<ClickSignalType>(buttons.submit.clickSignalId, () => {
   pageNewOrderStateMachine.transition('SUBMIT');
+});
+
+eventListener.subscribe<ClickSignalType>(buttons.edit.clickSignalId, () => {
+  pageNewOrderStateMachine.transition('BACK');
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.submitFinal.clickSignalId, () => {
@@ -260,15 +296,15 @@ eventListener.subscribe<ClickSignalType>(buttons.submitShippingForm.clickSignalI
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.tracking.clickSignalId, () => {
-  const orderId = pageNewOrderStateMachine.context.order.id;
+  const orderId = pageNewOrderStateMachine.context.registeredOrderId;
   pageNewOrderStateMachine.transition('NEW_ORDER');
-  redirect('/order-tracking/' + orderId);
+  redirect({sectionList: ['order-tracking', orderId]});
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.detail.clickSignalId, () => {
-  const orderId = pageNewOrderStateMachine.context.order.id;
+  const orderId = pageNewOrderStateMachine.context.registeredOrderId;
   pageNewOrderStateMachine.transition('NEW_ORDER');
-  redirect('/order-detail/' + orderId);
+  redirect({sectionList: ['order-detail', orderId]});
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.newOrder.clickSignalId, () => {

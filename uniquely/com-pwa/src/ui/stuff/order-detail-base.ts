@@ -23,6 +23,7 @@ import {qtyUpdate} from '../../manager/controller/new-order.js';
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order, OrderShippingInfo, OrderDraft, OrderItem, Product} from '@alwatr/type/customer-order-management.js';
 import type {IconButtonContent} from '@alwatr/ui-kit/button/icon-button.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
@@ -34,6 +35,10 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       box-sizing: border-box;
       min-height: 100%;
       gap: var(--sys-spacing-track);
+    }
+
+    :host([state=reloading]) > * {
+      opacity: var(--sys-surface-disabled-opacity);
     }
 
     alwatr-surface {
@@ -125,10 +130,15 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     }
   `;
 
-  protected render_part_message(key: string): unknown {
+  protected render_part_message(key: string, icon: string): unknown {
     this._logger.logMethod('render_part_message');
-    // TODO: add icon
-    return html`<div class="message">${message(key)}</div>`;
+    const content: IconBoxContent = {
+      headline: message(key),
+      icon: icon,
+      tinted: 1,
+    };
+
+    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
   }
 
   protected render_part_status(order: Order | OrderDraft): unknown {
@@ -259,15 +269,15 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       <div>
         <div>
           <span>${message('order_shipping_recipient_name_title')}:</span>
-          <span>${shippingInfo?.recipientName ?? nullStr}</span>
+          <span>${shippingInfo?.recipientName || nullStr}</span>
         </div>
         <div>
           <span>${message('order_shipping_recipient_national_code_title')}:</span>
-          <span>${replaceNumber(shippingInfo?.recipientNationalCode ?? nullStr)}</span>
+          <span>${replaceNumber(shippingInfo?.recipientNationalCode || nullStr)}</span>
         </div>
         <div>
           <span>${message('order_shipping_address_title')}:</span>
-          <span>${replaceNumber(shippingInfo?.address ?? nullStr)}</span>
+          <span>${replaceNumber(shippingInfo?.address || nullStr)}</span>
         </div>
         <div>
           <span>${message('order_shipping_car_type_title')}:</span>
@@ -290,6 +300,10 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
         <div>
           <span>${message('order_shipping_shipment_price_title')}:</span>
           <span>${message('order_shipping_shipment_price_value')}</span>
+        </div>
+        <div>
+          <span>${message('order_shipping_description_title')}:</span>
+          <span>${shippingInfo?.description || message('order_shipping_info_empty_description')}</span>
         </div>
       </div>
     </alwatr-surface>`;

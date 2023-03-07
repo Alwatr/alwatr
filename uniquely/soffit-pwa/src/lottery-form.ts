@@ -50,6 +50,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     }
 
     alwatr-text-field {
+      display: block;
       margin-top: var(--sys-spacing-track);
     }
     alwatr-text-field:first-of-type {

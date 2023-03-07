@@ -18,7 +18,6 @@ export type Stringifyable =
     | { [P: string]: Stringifyable }
     | Array<Stringifyable>;
 
-
 export interface StringifyableRecord {
   [P: string]: Stringifyable;
 }
