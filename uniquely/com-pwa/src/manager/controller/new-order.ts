@@ -3,7 +3,7 @@ import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
 import {orderInfoSchema, tileQtyStep} from '@alwatr/type/customer-order-management.js';
-import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {getLocalStorageItem} from '@alwatr/util';
 import {validator} from '@alwatr/validator';
 
