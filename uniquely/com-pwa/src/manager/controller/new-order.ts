@@ -1,8 +1,11 @@
 import {FiniteStateMachine} from '@alwatr/fsm';
+import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
-import {tileQtyStep} from '@alwatr/type/customer-order-management.js';
+import {orderInfoSchema, tileQtyStep} from '@alwatr/type/customer-order-management.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
 import {getLocalStorageItem} from '@alwatr/util';
+import {validator} from '@alwatr/validator';
 
 import {fetchPriceStorage} from '../context-provider/price-storage.js';
 import {fetchProductStorage} from '../context-provider/product-storage.js';
@@ -14,6 +17,7 @@ import {
   submitOrderCommandTrigger,
   topAppBarContextProvider,
 } from '../context.js';
+import {logger} from '../logger.js';
 
 import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
 import type {Product, ProductPrice, OrderDraft, OrderItem} from '@alwatr/type/customer-order-management.js';
@@ -22,7 +26,7 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
   id: 'page-order-detail',
   initial: 'unresolved',
   context: {
-    orderId: 'new',
+    registeredOrderId: <null | string>null,
     order: <OrderDraft>getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'}),
     productStorage: <AlwatrDocumentStorage<Product> | null>null,
     priceStorage: <AlwatrDocumentStorage<ProductPrice> | null>null,
@@ -180,7 +184,30 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
 
     case 'NEW_ORDER': {
       pageNewOrderStateMachine.context.order = getLocalStorageItem('draft-order-x1', {id: 'new', status: 'draft'});
-      pageNewOrderStateMachine.context.orderId = 'new';
+      pageNewOrderStateMachine.context.registeredOrderId = null;
+      break;
+    }
+
+    case 'SUBMIT': {
+      // TODO: validate form by own.
+      try {
+        validator(orderInfoSchema, pageNewOrderStateMachine.context.order, true);
+      }
+      catch (err) {
+        const _err = err as Error;
+        logger.incident('SUBMIT', _err.name, _err.message);
+        if ('shippingInfo' in (_err.cause as any).itemPath) {
+          snackbarSignalTrigger.request({
+            message: message('page_new_order_shipping_info_not_valid_message'),
+          });
+        }
+        else {
+          snackbarSignalTrigger.request({
+            message: message('page_new_order_order_not_valid_message'),
+          });
+        }
+      }
+
       break;
     }
 
@@ -188,9 +215,9 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
       const order = await submitOrderCommandTrigger.requestWithResponse(pageNewOrderStateMachine.context.order);
       if (order == null) {
         pageNewOrderStateMachine.transition('SUBMIT_FAILED');
-        break;
+        return;
       }
-      pageNewOrderStateMachine.context.orderId = order.id;
+      pageNewOrderStateMachine.context.registeredOrderId = order.id;
       pageNewOrderStateMachine.transition('SUBMIT_SUCCESS');
       break;
     }
@@ -262,15 +289,15 @@ eventListener.subscribe<ClickSignalType>(buttons.submitShippingForm.clickSignalI
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.tracking.clickSignalId, () => {
-  const orderId = pageNewOrderStateMachine.context.orderId;
+  const orderId = pageNewOrderStateMachine.context.registeredOrderId as string;
   pageNewOrderStateMachine.transition('NEW_ORDER');
-  redirect('/order-tracking/' + orderId);
+  redirect({sectionList: ['order-tracking', orderId]});
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.detail.clickSignalId, () => {
-  const orderId = pageNewOrderStateMachine.context.orderId;
+  const orderId = pageNewOrderStateMachine.context.registeredOrderId as string;
   pageNewOrderStateMachine.transition('NEW_ORDER');
-  redirect('/order-detail/' + orderId);
+  redirect({sectionList: ['order-detail', orderId]});
 });
 
 eventListener.subscribe<ClickSignalType>(buttons.newOrder.clickSignalId, () => {

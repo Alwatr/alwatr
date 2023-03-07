@@ -5,9 +5,7 @@ import {
   UnresolvedMixin,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import {orderShippingInfoSchema} from '@alwatr/type/src/customer-order-management.js';
-import {IconBoxContent} from '@alwatr/ui-kit/src/card/icon-box.js';
-import {validator} from '@alwatr/validator';
+import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 import {buttons, pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
@@ -148,8 +146,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
         <alwatr-button
           .icon=${buttons.submit.icon}
           .clickSignalId=${buttons.submit.clickSignalId}
-          elevated
-          ?disabled=${!this.isSubmitAble()}
+          ?disabled=${!pageNewOrderStateMachine.context.order.itemList?.length}
         >${message('page_new_order_submit')}</alwatr-button>
       </div>
     `;
@@ -190,24 +187,5 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
         >${message('page_new_order_submit_final')}</alwatr-button>
       </div>
     `;
-  }
-
-  protected isSubmitAble(): boolean {
-    this._logger.logMethod('isSubmitAble');
-    const shippingInfo = pageNewOrderStateMachine.context.order.shippingInfo;
-    if (
-      pageNewOrderStateMachine.context.order.itemList?.length === 0 ||
-      shippingInfo == null
-    ) return false;
-
-    try {
-      validator(orderShippingInfoSchema, shippingInfo, true);
-    }
-    catch (err) {
-      this._logger.error('isSubmitAble', (err as Error).message, {err});
-      return false;
-    }
-
-    return true;
   }
 }

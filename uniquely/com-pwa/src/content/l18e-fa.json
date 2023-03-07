@@ -32,7 +32,8 @@
     "page_new_order_tracking_button": "پیگیری سفارش",
     "page_new_order_submit_failed_message": "ثبت سفارش با خطا روبرو شد!",
     "page_new_order_retry_button": "تلاش مجدد",
-
+    "page_new_order_shipping_info_not_valid_message": "لطفا اطلاعات بارگیری را تکمیل کنید.",
+    "page_new_order_order_not_valid_message": "لطفا مقادیر سفارش رو بازبینی و اصلاح کنید.",
 
     "page_order_tracking_headline": "پیگیری سفارش",
 
