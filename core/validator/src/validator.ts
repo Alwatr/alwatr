@@ -62,7 +62,7 @@ export function validator<T extends StringifyableRecord>(
         const item = itemValue[index];
         targetObject[index] = validator<StringifyableRecord>(
             schema,
-            item,
+            item as StringifyableRecord, // @FIXME: DeMastmalize
             additionalProperties,
             `${itemPath}[${index}]`,
         );

@@ -16,8 +16,7 @@ export type Stringifyable =
     | null
     | undefined
     | { [P: string]: Stringifyable }
-    | Array<StringifyableRecord>;
-
+    | Array<Stringifyable>;
 
 export interface StringifyableRecord {
   [P: string]: Stringifyable;
