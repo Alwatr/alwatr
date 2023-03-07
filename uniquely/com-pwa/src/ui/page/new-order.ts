@@ -26,7 +26,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
 
   protected render_state_loading(): unknown {
     this._logger.logMethod('render_state_loading');
-    return this.render_part_message('loading', 'ellipsis-horizontal');
+    return this.render_part_message('loading', 'cloud-download-outline');
   }
 
   protected render_state_edit(): unknown {
@@ -78,13 +78,13 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
 
   protected render_state_submitting(): unknown {
     this._logger.logMethod('render_state_submitting');
-    return this.render_part_message('page_new_order_submitting_message', 'cloud-upload');
+    return this.render_part_message('page_new_order_submitting_message', 'cloud-upload-outline');
   }
 
   protected render_state_submitSuccess(): unknown {
     this._logger.logMethod('render_state_submitSuccess');
     return [
-      this.render_part_message('page_new_order_submit_success_message', 'checkmark-done'),
+      this.render_part_message('page_new_order_submit_success_message', 'cloud-done-outline'),
       this.render_part_btn_submit_success(),
     ];
   }
@@ -92,7 +92,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
   protected render_state_submitFailed(): unknown {
     this._logger.logMethod('render_state_submitFailed');
     return [
-      this.render_part_message('page_new_order_submit_failed_message', 'cloud-offline'),
+      this.render_part_message('page_new_order_submit_failed_message', 'cloud-offline-outline'),
       this.render_part_btn_submit_failed(),
     ];
   }

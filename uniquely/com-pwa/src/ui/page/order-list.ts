@@ -10,7 +10,7 @@ import {
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
-import '@alwatr/ui-kit/card/icon-box.js';
+import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 import {pageOrderListStateMachine, buttons} from '../../manager/controller/order-list.js';
 import '../stuff/order-list.js';
@@ -53,7 +53,7 @@ export class AlwatrPageOrderList extends StateMachineMixin(
 
   render_state_loading(): unknown {
     this._logger.logMethod('render_state_loading');
-    return this.render_part_message('loading');
+    return this.render_part_message('loading', 'cloud-download-outline');
   }
 
   render_state_reloading(): unknown {
@@ -69,9 +69,14 @@ export class AlwatrPageOrderList extends StateMachineMixin(
     ></alwatr-order-list>`;
   }
 
-  protected render_part_message(key: string): unknown {
+  protected render_part_message(key: string, icon: string): unknown {
     this._logger.logMethod('render_part_message');
-    // TODO: add icon
-    return html`<div class="message">${message(key)}</div>`;
+    const content: IconBoxContent = {
+      headline: message(key),
+      icon: icon,
+      tinted: 1,
+    };
+
+    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
   }
 }
