@@ -5,6 +5,7 @@ import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 
+import './page/home.js'; // for perf
 import './stuff/app-footer.js';
 import {pageNewOrderStateMachine} from '../manager/controller/new-order.js';
 import {pageOrderDetailStateMachine} from '../manager/controller/order-detail.js';
@@ -28,7 +29,7 @@ class AlwatrPwa extends AlwatrPwaElement {
     routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
     templates: {
       'home': () => {
-        import('./page/home.js');
+        // import('./page/home.js');
         return html`<alwatr-page-home unresolved>...</alwatr-page-home>`;
       },
       '_404': () => {

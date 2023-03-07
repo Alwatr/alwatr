@@ -21,7 +21,7 @@ export const localeContextProvider = contextProvider.bind<LocaleContext>('locale
 /**
  * Locale context consumer.
  */
-export const localeContextConsumer = contextConsumer.bind<LocaleContext>('locale_context');
+export const localeContextConsumer = contextConsumer.bind<LocaleContext>(localeContextProvider.id);
 
 /**
  * LocalizationResource (L18e) context provider.
@@ -31,7 +31,7 @@ export const l18eContextProvider = contextProvider.bind<L18eContext>('localizati
 /**
  * LocalizationResource (L18e) context consumer.
  */
-export const l18eContextConsumer = contextConsumer.bind<L18eContext>('localization_resource_context');
+export const l18eContextConsumer = contextConsumer.bind<L18eContext>(l18eContextProvider.id);
 
 /**
  * Promise resolved after LocalizationResource context ready.
