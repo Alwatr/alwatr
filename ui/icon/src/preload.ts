@@ -11,7 +11,6 @@ export async function preloadIcon(name: string): Promise<string> {
     url,
     removeDuplicate: 'auto',
     cacheStrategy: 'cache_first',
-    cache: 'force-cache',
   });
 
   if (response.ok !== true) {
