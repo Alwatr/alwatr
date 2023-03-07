@@ -1,11 +1,5 @@
-import {
-  customElement,
-  html,
-  StateMachineMixin,
-  UnresolvedMixin,
-} from '@alwatr/element';
+import {customElement, html, StateMachineMixin, UnresolvedMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 import {buttons, pageNewOrderStateMachine} from '../../manager/controller/new-order.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
@@ -32,7 +26,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
 
   protected render_state_loading(): unknown {
     this._logger.logMethod('render_state_loading');
-    return this.render_part_message('loading');
+    return this.render_part_message('loading', 'ellipsis-horizontal');
   }
 
   protected render_state_edit(): unknown {
@@ -84,31 +78,21 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
 
   protected render_state_submitting(): unknown {
     this._logger.logMethod('render_state_submitting');
-    return this.render_part_message('page_new_order_submitting_message');
+    return this.render_part_message('page_new_order_submitting_message', 'cloud-upload');
   }
 
   protected render_state_submitSuccess(): unknown {
     this._logger.logMethod('render_state_submitSuccess');
-    const content: IconBoxContent = {
-      headline: message('page_new_order_submit_success_message'),
-      icon: 'checkmark-done',
-      elevated: 1,
-    };
     return [
-      html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
+      this.render_part_message('page_new_order_submit_success_message', 'checkmark-done'),
       this.render_part_btn_submit_success(),
     ];
   }
 
   protected render_state_submitFailed(): unknown {
     this._logger.logMethod('render_state_submitFailed');
-    const content: IconBoxContent = {
-      headline: message('page_new_order_submit_failed_message'),
-      icon: 'close',
-      elevated: 1,
-    };
     return [
-      html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
+      this.render_part_message('page_new_order_submit_failed_message', 'cloud-offline'),
       this.render_part_btn_submit_failed(),
     ];
   }
