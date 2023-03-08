@@ -87,7 +87,6 @@ export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
     yield html`<alwatr-lottery-box></alwatr-lottery-box>`;
     yield mapIterable(this, this.content.socialList, this._boxTemplate, message('loading'));
     yield html`<alwatr-supply-chain-box></alwatr-supply-chain-box>`;
-    yield mapIterable(this, this.content.agencyList, this._boxTemplate, message('loading'));
   }
 
   protected _boxTemplate(box: BoxType): unknown {

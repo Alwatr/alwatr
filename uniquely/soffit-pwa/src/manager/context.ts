@@ -1,6 +1,6 @@
 import {commandTrigger, contextConsumer, contextProvider, eventListener} from '@alwatr/signal';
 
-import type {FormData, PageHomeContent, ProductPageContent} from '../type.js';
+import type {FormData, PageAgencyContent, PageHomeContent, ProductPageContent} from '../type.js';
 import type {ClickSignalType} from '@alwatr/type';
 
 export * from '@alwatr/pwa-helper/context.js';
@@ -11,6 +11,11 @@ export const homePageContentContextProvider =
   contextProvider.bind<PageHomeContent>('home-page-content');
 export const homePageContentContextConsumer =
   contextConsumer.bind<PageHomeContent>(homePageContentContextProvider.id);
+
+export const agencyPageContentContextProvider =
+  contextProvider.bind<PageAgencyContent>('agency-page-content');
+export const agencyPageContentContextConsumer =
+  contextConsumer.bind<PageAgencyContent>(agencyPageContentContextProvider.id);
 
 export const productPageContentContextProvider =
   contextProvider.bind<ProductPageContent>('product-page-content');

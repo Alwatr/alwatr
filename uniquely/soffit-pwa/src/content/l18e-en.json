@@ -5,6 +5,7 @@
     "rev": 0
   },
   "data": {
+    "loading": "Loading...",
     "invalid_form_data": "The form information is not correct.",
     "check_network_connection": "Please check internet, and send again.",
 

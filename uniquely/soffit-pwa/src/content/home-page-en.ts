@@ -126,6 +126,4 @@ export const homePageContent: PageHomeContent = {
       target: '_blank',
     },
   ],
-
-  agencyList: [],
 };

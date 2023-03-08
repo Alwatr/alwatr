@@ -35,6 +35,10 @@ class AlwatrPwa extends AlwatrPwaElement {
         import('./page/product.js');
         return html`<alwatr-page-product>...</alwatr-page-product>`;
       },
+      agency: () => {
+        import('./page/agency.js');
+        return html`<alwatr-page-agency>...</alwatr-page-agency>`;
+      },
     },
   };
 
