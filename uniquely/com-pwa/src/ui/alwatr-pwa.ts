@@ -1,12 +1,13 @@
 import {html, customElement} from '@alwatr/element';
 import '@alwatr/font/vazirmatn.css';
 import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
+import '@alwatr/ui-kit/navigation-bar/navigation-bar.js';
 import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 
 import './stuff/app-footer.js';
-import {topAppBarContextProvider} from '../manager/context.js';
+import {navigationBarContextProvider, topAppBarContextProvider} from '../manager/context.js';
 
 import type {RouteContext, RoutesConfig} from '@alwatr/router';
 
@@ -58,6 +59,9 @@ class AlwatrPwa extends AlwatrPwaElement {
   }
 
   protected override _navigationBarTemplate(): unknown {
-    return html`<alwatr-app-footer></alwatr-app-footer>`;
+    return html`<alwatr-navigation-bar
+      active-item-id-signal="active_item_id_signal"
+      context-signal=${navigationBarContextProvider.id}>
+    </alwatr-navigation-bar>`;
   }
 }
