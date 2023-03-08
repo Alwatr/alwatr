@@ -2,7 +2,7 @@ import {localeContextConsumer, setLocale, l18eContextConsumer} from '@alwatr/i18
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
 import {logger} from './logger.js';
-import {languageButtonClickEventListener} from '../context.js';
+import {languageButtonClickEventListener} from './context.js';
 
 languageButtonClickEventListener.subscribe(() => {
   logger.logMethod('changeLanguage');

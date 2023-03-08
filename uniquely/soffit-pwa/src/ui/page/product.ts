@@ -13,9 +13,9 @@ import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/icon-button.js';
 import '@alwatr/ui-kit/card/image-box.js';
 
-import {productPageContentContextConsumer, topAppBarContextProvider} from './context.js';
+import {productPageContentContextConsumer, topAppBarContextProvider} from '../../manager/context.js';
 
-import type {ProductType, ProductPageContent} from './type.js';
+import type {ProductType, ProductPageContent} from '../../type.js';
 
 declare global {
   interface HTMLElementTagNameMap {

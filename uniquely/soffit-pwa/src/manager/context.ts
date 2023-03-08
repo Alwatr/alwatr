@@ -1,6 +1,6 @@
 import {commandTrigger, contextConsumer, contextProvider, eventListener} from '@alwatr/signal';
 
-import type {FormData, PageHomeContent, ProductPageContent} from './type.js';
+import type {FormData, PageHomeContent, ProductPageContent} from '../type.js';
 import type {ClickSignalType} from '@alwatr/type';
 
 export * from '@alwatr/pwa-helper/context.js';

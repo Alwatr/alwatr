@@ -5,7 +5,7 @@ import {validator, type JsonSchema} from '@alwatr/validator';
 
 import {logger} from './logger.js';
 import {config} from '../config.js';
-import {submitFormCommandTrigger} from '../context.js';
+import {submitFormCommandTrigger} from './context.js';
 
 import type {FormData} from '../type.js';
 

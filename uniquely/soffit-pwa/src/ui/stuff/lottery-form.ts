@@ -4,7 +4,7 @@ import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
-import {submitFormCommandTrigger} from './context.js';
+import {submitFormCommandTrigger} from '../../manager/context.js';
 
 import type {RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';

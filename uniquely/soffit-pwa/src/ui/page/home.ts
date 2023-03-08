@@ -12,11 +12,11 @@ import {
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import {homePageContentContextConsumer, topAppBarContextProvider} from './context.js';
-import './lottery-box.js';
-import './supply-chain-box.js';
+import {homePageContentContextConsumer, topAppBarContextProvider} from '../../manager/context.js';
+import '../stuff/lottery-box.js';
+import '../stuff/supply-chain-box.js';
 
-import type {BoxType, PageHomeContent} from './type.js';
+import type {BoxType, PageHomeContent} from '../../type.js';
 
 declare global {
   interface HTMLElementTagNameMap {

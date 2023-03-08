@@ -1,6 +1,6 @@
 import {localeContextConsumer} from '@alwatr/i18n';
 
-import {productPageContentContextProvider} from '../../context.js';
+import {productPageContentContextProvider} from '../context.js';
 import {logger} from '../logger.js';
 
 localeContextConsumer.subscribe(async () => {
