@@ -5,6 +5,7 @@ import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 
+import './page/home.js'; // for perf
 import './stuff/app-footer.js';
 
 import type {RoutesConfig} from '@alwatr/router';
@@ -24,7 +25,6 @@ class AlwatrPwa extends AlwatrPwaElement {
     routeId: this._routesConfig.routeId,
     templates: {
       home: () => {
-        import('./page/home.js');
         return html`<alwatr-page-home>...</alwatr-page-home>`;
       },
       _404: () => {
