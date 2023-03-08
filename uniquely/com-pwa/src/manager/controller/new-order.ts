@@ -31,7 +31,7 @@ export const pageNewOrderStateMachine = new FiniteStateMachine({
     priceStorage: <AlwatrDocumentStorage<ProductPrice> | null>null,
     finalPriceStorage: <AlwatrDocumentStorage<ProductPrice> | null>null,
   },
-  states: {
+  stateRecord: {
     $all: {
       on: {
         CONNECTED: '$self',
@@ -214,19 +214,19 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
 pageNewOrderStateMachine.signal.subscribe(async (state) => {
   localStorage.setItem('draft-order-x2', JSON.stringify(pageNewOrderStateMachine.context.order));
 
-  if (state.to != 'shippingForm' && state.to != state.from) {
+  if (state.target != 'shippingForm' && state.target != state.from) {
     scrollToTopCommand.request({});
   }
 
   if (
-    state.to === 'edit' &&
+    state.target === 'edit' &&
     state.from != 'selectProduct' &&
     !pageNewOrderStateMachine.context.order?.itemList?.length
   ) {
     pageNewOrderStateMachine.transition('SELECT_PRODUCT');
   }
 
-  else if (state.to === 'edit' || state.to === 'review') {
+  else if (state.target === 'edit' || state.target === 'review') {
     const order = pageNewOrderStateMachine.context.order;
     let totalPrice = 0;
     let finalTotalPrice = 0;
@@ -238,7 +238,7 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
     order.finalTotalPrice = Math.round(finalTotalPrice);
   }
 
-  if (state.to === 'review') {
+  if (state.target === 'review') {
     try {
       validator(orderInfoSchema, pageNewOrderStateMachine.context.order, true);
     }

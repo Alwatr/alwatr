@@ -21,7 +21,7 @@ export class AlwatrPageNewOrder extends StateMachineMixin(
 ) {
   protected override render(): unknown {
     this._logger.logMethod('render');
-    return this[`render_state_${this.stateMachine.state.to}`]?.();
+    return this[`render_state_${this.stateMachine.state.target}`]?.();
   }
 
   protected render_state_loading(): unknown {
