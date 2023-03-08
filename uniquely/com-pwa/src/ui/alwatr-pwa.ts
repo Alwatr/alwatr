@@ -60,7 +60,7 @@ class AlwatrPwa extends AlwatrPwaElement {
 
   protected override _navigationBarTemplate(): unknown {
     return html`<alwatr-navigation-bar
-      active-item-id-signal="active_item_id_signal"
+      active-item-id-signal=${navigationBarActiveItemIdEventTrigger.id}
       context-signal=${navigationBarContextProvider.id}>
     </alwatr-navigation-bar>`;
   }
