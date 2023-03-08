@@ -6,14 +6,18 @@ import {
   SignalMixin,
   AlwatrBaseElement,
   UnresolvedMixin,
-  StateMachineMixin,
+  FiniteStateMachineController,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import {Order} from '@alwatr/type/src/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
-import {pageOrderListStateMachine, buttons} from '../../manager/controller/order-list.js';
+import {fetchOrderStorage} from '../../manager/context-provider/order-storage.js';
+import {orderStorageContextConsumer, topAppBarContextProvider} from '../../manager/context.js';
 import '../stuff/order-list.js';
+
+import type {AlwatrDocumentStorage} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -21,14 +25,31 @@ declare global {
   }
 }
 
+export const buttons = {
+  backToHome: {
+    icon: 'arrow-back-outline',
+    flipRtl: true,
+    clickSignalId: 'back_to_home_click_event',
+  },
+  reload: {
+    icon: 'reload-outline',
+    // flipRtl: true,
+    clickSignalId: 'config.id' + '_reload_click_event',
+  },
+  newOrder: {
+    icon: 'add-outline',
+    clickSignalId: 'config.id' + '_new_order_click_event',
+  },
+  orderDetail: {
+    clickSignalId: 'config.id' + '_order_detail_click_event',
+  },
+} as const;
+
 /**
  * List of all orders.
  */
 @customElement('alwatr-page-order-list')
-export class AlwatrPageOrderList extends StateMachineMixin(
-    pageOrderListStateMachine,
-    UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))),
-) {
+export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
   static override styles = css`
     :host {
       display: block;
@@ -46,37 +67,74 @@ export class AlwatrPageOrderList extends StateMachineMixin(
     }
   `;
 
+  private _stateMachine = new FiniteStateMachineController(this, {
+    id: 'fsm-order-list-' + this.ali,
+    initial: 'pending',
+    context: {
+      orderStorage: <AlwatrDocumentStorage<Order> | null>null,
+    },
+    stateRecord: {
+      $all: {
+        on: {
+        },
+      },
+      pending: {
+        on: {
+          CONTEXT_LOADED: 'list',
+        },
+      },
+      list: {
+        on: {
+          REQUEST_UPDATE: 'reloading',
+        },
+      },
+      reloading: {
+        on: {
+          CONTEXT_LOADED: 'list',
+        },
+      },
+    },
+  } as const);
+
+  stateUpdate(): void {
+    this.requestUpdate();
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    topAppBarContextProvider.setValue({
+      headlineKey: 'page_order_list_headline',
+      startIcon: buttons.backToHome,
+      endIconList: [buttons.newOrder, buttons.reload],
+    });
+
+    if (orderStorageContextConsumer.getValue() == null) {
+      fetchOrderStorage();
+    }
+  }
+
   override render(): unknown {
     this._logger.logMethod('render');
-    return this[`render_state_${this.stateMachine.state.to}`]?.();
-  }
+    this._stateMachine.state.target;
+    return this._stateMachine.render({
+      'pending': () => {
+        const content: IconBoxContent = {
+          tinted: 1,
+          icon: 'cloud-download-outline',
+          headline: message('loading'),
+        };
+        return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+      },
 
-  render_state_loading(): unknown {
-    this._logger.logMethod('render_state_loading');
-    return this.render_part_message('loading', 'cloud-download-outline');
-  }
+      'reloading': 'list',
 
-  render_state_reloading(): unknown {
-    this._logger.logMethod('render_state_reloading');
-    return this.render_state_list();
-  }
-
-  render_state_list(): unknown {
-    this._logger.logMethod('render_state_list');
-    return html`<alwatr-order-list
-      .content=${this.stateMachine.context.orderStorage}
-      .orderClickSignalId=${buttons.orderDetail.clickSignalId}
-    ></alwatr-order-list>`;
-  }
-
-  protected render_part_message(key: string, icon: string): unknown {
-    this._logger.logMethod('render_part_message');
-    const content: IconBoxContent = {
-      headline: message(key),
-      icon: icon,
-      tinted: 1,
-    };
-
-    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+      'list': () => {
+        return html`<alwatr-order-list
+          .content=${this._stateMachine.context.orderStorage}
+          .orderClickSignalId=${buttons.orderDetail.clickSignalId}
+        ></alwatr-order-list>`;
+      },
+    });
   }
 }

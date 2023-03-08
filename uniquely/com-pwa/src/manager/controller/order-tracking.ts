@@ -14,7 +14,7 @@ export const pageOrderTrackingFsm = new FiniteStateMachine({
     orderId: <number | null>null,
     orderStorage: <AlwatrDocumentStorage<Order> | null>null,
   },
-  states: {
+  stateRecord: {
     $all: {
       on: {
         SHOW_TRACKING: '$self',
@@ -84,7 +84,7 @@ pageOrderTrackingFsm.signal.subscribe(async (state) => {
     }
   }
 
-  if (state.to === 'loading') {
+  if (state.target === 'loading') {
     if (pageOrderTrackingFsm.context.orderStorage != null) {
       pageOrderTrackingFsm.transition('CONTEXT_LOADED');
     }

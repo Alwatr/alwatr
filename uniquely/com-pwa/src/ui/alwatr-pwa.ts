@@ -7,9 +7,9 @@ import '@alwatr/ui-kit/style/theme/palette-270.css';
 
 import './page/home.js'; // for perf
 import './stuff/app-footer.js';
+import {topAppBarContextProvider} from '../manager/context.js';
 import {pageNewOrderStateMachine} from '../manager/controller/new-order.js';
 import {pageOrderDetailStateMachine} from '../manager/controller/order-detail.js';
-import {pageOrderListStateMachine} from '../manager/controller/order-list.js';
 import {pageOrderTrackingFsm} from '../manager/controller/order-tracking.js';
 
 import type {RoutesConfig} from '@alwatr/router';
@@ -37,14 +37,14 @@ class AlwatrPwa extends AlwatrPwaElement {
         return html`<alwatr-page-404 unresolved>...</alwatr-page-404>`;
       },
       'order-list': () => {
-        if (pageOrderListStateMachine.state.to === 'unresolved') {
-          pageOrderListStateMachine.transition('IMPORT');
-          import('./page/order-list.js');
-        }
+        topAppBarContextProvider.setValue({
+          headlineKey: 'loading',
+        });
+        import('./page/order-list.js');
         return html`<alwatr-page-order-list unresolved>...</alwatr-page-order-list>`;
       },
       'order-detail': (routeContext) => {
-        if (pageOrderDetailStateMachine.state.to === 'unresolved') {
+        if (pageOrderDetailStateMachine.state.target === 'unresolved') {
           pageOrderDetailStateMachine.transition('IMPORT');
           import('./page/order-detail.js');
         }
@@ -52,7 +52,7 @@ class AlwatrPwa extends AlwatrPwaElement {
         return html`<alwatr-page-order-detail unresolved>...</alwatr-page-order-detail>`;
       },
       'order-tracking': (routeContext) => {
-        if (pageOrderTrackingFsm.state.to === 'unresolved') {
+        if (pageOrderTrackingFsm.state.target === 'unresolved') {
           pageOrderTrackingFsm.transition('IMPORT');
           import('./page/order-tracking.js');
         }
@@ -60,7 +60,7 @@ class AlwatrPwa extends AlwatrPwaElement {
         return html`<alwatr-page-order-tracking unresolved>...</alwatr-page-order-tracking>`;
       },
       'new-order': () => {
-        if (pageNewOrderStateMachine.state.to === 'unresolved') {
+        if (pageNewOrderStateMachine.state.target === 'unresolved') {
           pageNewOrderStateMachine.transition('IMPORT');
           import('./page/new-order.js');
         }

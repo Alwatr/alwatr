@@ -17,7 +17,7 @@ export const pageOrderDetailStateMachine = new FiniteStateMachine({
     orderStorage: <AlwatrDocumentStorage<Order> | null>null,
     productStorage: <AlwatrDocumentStorage<Product> | null> null,
   },
-  states: {
+  stateRecord: {
     $all: {
       on: {
         SHOW_DETAIL: '$self',
@@ -105,7 +105,7 @@ pageOrderDetailStateMachine.signal.subscribe(async (state) => {
     }
   }
 
-  if (state.to === 'loading') {
+  if (state.target === 'loading') {
     if (
       pageOrderDetailStateMachine.context.orderStorage != null &&
       pageOrderDetailStateMachine.context.productStorage != null
