@@ -3,6 +3,7 @@
 export type Constructor<T> = new (...args: any[]) => T;
 
 export type MaybePromise<T> = T | Promise<T>;
+export type MaybeArray<T> = T | Array<T>;
 
 export type OmitFirstParam<F> = F extends (x: any, ...args: infer A) => infer R ? (...args: A) => R : never;
 
