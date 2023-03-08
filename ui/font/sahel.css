@@ -4,7 +4,7 @@
   font-weight: 300 900;
   src: url('sahel/sahel[wght].woff2') format('woff2 supports variations'),
     url('sahel/sahel[wght].woff2') format('woff2-variations');
-  font-display: block;
+  font-display: swap;
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+1EE00-1EEFF;
 }
 
@@ -13,35 +13,35 @@
   font-family: 'sahel';
   font-weight: 300;
   src: url('sahel/sahel-300.woff') format('woff');
-  font-display: block;
+  font-display: swap;
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+1EE00-1EEFF;
 }
 @font-face {
   font-family: 'sahel';
   font-weight: 400;
   src: url('sahel/sahel-400.woff') format('woff');
-  font-display: block;
+  font-display: swap;
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+1EE00-1EEFF;
 }
 @font-face {
   font-family: 'sahel';
   font-weight: 600;
   src: url('sahel/sahel-600.woff') format('woff');
-  font-display: block;
+  font-display: swap;
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+1EE00-1EEFF;
 }
 @font-face {
   font-family: 'sahel';
   font-weight: 700;
   src: url('sahel/sahel-700.woff') format('woff');
-  font-display: block;
+  font-display: swap;
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+1EE00-1EEFF;
 }
 @font-face {
   font-family: 'sahel';
   font-weight: 900;
   src: url('sahel/sahel-900.woff') format('woff');
-  font-display: block;
+  font-display: swap;
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+1EE00-1EEFF;
 }
 

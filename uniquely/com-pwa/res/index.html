@@ -6,7 +6,12 @@
   <meta charset="utf-8" />
   <title>مدیریت سفارشات نمایندگی‌های سافیت</title>
 
-  <link rel="stylesheet" href="alwatr-pwa.css" />
+  <link
+    media="print"
+    rel="stylesheet"
+    href="alwatr-pwa.css"
+    onload="this.media='all';this.onload=null;"
+  />
   <script type="module" src="config.js"></script>
   <script type="module" src="alwatr-pwa.js"></script>
 
@@ -41,9 +46,26 @@
   <meta name="og:description" content="نرم‌افزار یکپارچه مدیریت سفارشات نمایندگی‌های سافیت" />
 
   <link rel="canonical" href="https://order.soffit.co" />
+
+  <style>
+    html,
+    body {
+      margin: 0 auto;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    [unresolved] {
+      display: block;
+      text-align: center;
+      padding-top: 64px;
+      font-size: 22px;
+    }
+  </style>
 </head>
 <body>
-  <alwatr-pwa unresolved>Loading ...</alwatr-pwa>
+  <alwatr-pwa unresolved>درحال بارگذاری...</alwatr-pwa>
 
   <noscript>
     <div class="noscript">
