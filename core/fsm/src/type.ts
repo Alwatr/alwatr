@@ -1,3 +1,5 @@
+import {DebounceType} from '@alwatr/signal';
+
 import type {SingleOrArray, MaybePromise, StringifyableRecord} from '@alwatr/type';
 
 export type FsmConfig<TState extends string, TEventId extends string, TContext extends StringifyableRecord> = {
@@ -24,13 +26,26 @@ export type FsmConfig<TState extends string, TEventId extends string, TContext e
   /**
    * A list of signals ...
    */
-  signalRecord?: {
-    [signalId: string]: {
-      actions?: SingleOrArray<(signalDetail: unknown) => MaybePromise<void>>;
-      transition?: keyof StateRecord<TState, TEventId>[TState]['on'];
-    }
-  },
-}
+  signalList?: Array<
+    {
+      signalId: string;
+      receivePrevious?: DebounceType;
+    } & (
+      | {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          actions: SingleOrArray<(signalDetail: any) => MaybePromise<void>>;
+          transition?: never;
+        }
+      | {
+          transition: keyof StateRecord<TState, TEventId>[TState]['on'];
+          contextName?: keyof TContext;
+          actions?: never;
+        }
+    )
+  >;
+
+  autoSignalUnsubscribe?: boolean;
+};
 
 export type StateRecord<TState extends string, TEventId extends string> = {
   [S in TState | '$all']: {
@@ -65,7 +80,7 @@ export type StateRecord<TState extends string, TEventId extends string> = {
       [E in TEventId]?: TransitionConfig<TState> | undefined;
     };
   };
-}
+};
 
 export type StateContext<TState extends string, TEventId extends string> = {
   /**
@@ -80,7 +95,7 @@ export type StateContext<TState extends string, TEventId extends string> = {
    * Transition event
    */
   by: TEventId | 'INIT';
-}
+};
 
 export interface TransitionConfig<TState extends string> {
   target?: TState;
