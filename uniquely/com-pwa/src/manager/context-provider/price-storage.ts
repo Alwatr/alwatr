@@ -1,5 +1,5 @@
 import {fetchContext} from '@alwatr/fetch';
-import {l18eReadyPromise, message} from '@alwatr/i18n';
+import {l18eReadyPromise} from '@alwatr/i18n';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
 import {config} from '../../config.js';
@@ -39,8 +39,8 @@ export const fetchPriceStorage = async (productStorageName = 'tile'): Promise<vo
     logger.error('provideProductStorageContext', 'fetch_failed', err);
     await l18eReadyPromise;
     const response = await snackbarSignalTrigger.requestWithResponse({
-      message: message('fetch_failed'),
-      actionLabel: message('retry'),
+      messageKey: 'fetch_failed',
+      actionLabelKey: 'retry',
       duration: -1,
     });
     if (response.actionButton) {

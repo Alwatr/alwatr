@@ -1,5 +1,4 @@
 import {serviceRequest} from '@alwatr/fetch';
-import {message} from '@alwatr/i18n';
 import {commandHandler} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator, type JsonSchema} from '@alwatr/validator';
@@ -36,7 +35,7 @@ commandHandler.define<FormData, boolean>(submitFormCommandTrigger.id, async (for
   }
   catch (err) {
     logger.accident('formSubmit', 'invalid_form_data', 'validator failed on form data', (err as Error).cause);
-    snackbarSignalTrigger.request({message: message('invalid_form_data')});
+    snackbarSignalTrigger.request({messageKey: 'invalid_form_data'});
     return false;
   }
 
@@ -53,7 +52,7 @@ commandHandler.define<FormData, boolean>(submitFormCommandTrigger.id, async (for
   }
   catch (err) {
     logger.error('formSubmit', 'request_failed', (err as Error).cause);
-    snackbarSignalTrigger.request({message: message('check_network_connection')});
+    snackbarSignalTrigger.request({messageKey: 'check_network_connection'});
     return false;
   }
 

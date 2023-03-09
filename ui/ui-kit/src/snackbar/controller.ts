@@ -1,3 +1,4 @@
+import {message} from '@alwatr/i18n';
 import {createLogger} from '@alwatr/logger';
 import {clamp} from '@alwatr/math';
 import {commandHandler} from '@alwatr/signal';
@@ -30,9 +31,9 @@ commandHandler.define<SnackbarOptions, SnackbarResponse>('show-snackbar-command'
       }, 500);
     };
 
-    element.message = options.message;
+    element.message = options.messageKey != null ? message(options.messageKey) : options.message;
     if (options.actionLabel) {
-      element.actionLabel = options.actionLabel;
+      element.actionLabel = options.actionLabelKey != null ? message(options.actionLabelKey) : options.actionLabel;
       element.addEventListener('action-button-click', () => _closeSnackbar?.({actionButton: true}), {once: true});
     }
 

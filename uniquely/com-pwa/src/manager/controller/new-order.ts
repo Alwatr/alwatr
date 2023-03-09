@@ -1,5 +1,4 @@
 import {FiniteStateMachine} from '@alwatr/fsm';
-import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
 import {orderInfoSchema, tileQtyStep} from '@alwatr/type/customer-order-management.js';
@@ -249,12 +248,12 @@ pageNewOrderStateMachine.signal.subscribe(async (state) => {
       logger.incident('SUBMIT', _err.name, 'validation failed', _err);
       if (_err.cause?.itemPath?.indexOf('shippingInfo') !== -1) {
         snackbarSignalTrigger.request({
-          message: message('page_new_order_shipping_info_not_valid_message'),
+          messageKey: 'page_new_order_shipping_info_not_valid_message',
         });
       }
       else {
         snackbarSignalTrigger.request({
-          message: message('page_new_order_order_not_valid_message'),
+          messageKey: 'page_new_order_order_not_valid_message',
         });
       }
     }
