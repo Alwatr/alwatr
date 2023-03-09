@@ -1,6 +1,5 @@
 import type {MaybeArray, MaybePromise, StringifyableRecord} from '@alwatr/type';
 
-
 export interface FsmConfig<TState extends string, TEventId extends string, TContext extends StringifyableRecord> {
   /**
    * Machine ID (It is used in the state change signal identifier, so it must be unique).
@@ -54,6 +53,18 @@ export interface FsmConfig<TState extends string, TEventId extends string, TCont
       };
     };
   };
+
+  /**
+   * A list of signals ...
+   */
+  signalRecord?: {
+    [signalId: string]: {
+      actions?: MaybeArray<(...args: any[]) => MaybePromise<void>>;
+      transition?: keyof FsmConfig<TState, TEventId, TContext>['stateRecord'][
+        keyof FsmConfig<TState, TEventId, TContext>['stateRecord']
+      ]['on'];
+    }
+  }
 }
 
 export interface StateContext<TState extends string, TEventId extends string> {

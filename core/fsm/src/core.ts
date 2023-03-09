@@ -31,7 +31,7 @@ export class FiniteStateMachine<
 
   protected async setState(target: TState, by: TEventId): Promise<void> {
     const state = (this.state = {
-      target: target,
+      target,
       from: this.signal.getValue()?.target ?? target,
       by,
     });
