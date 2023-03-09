@@ -9,7 +9,6 @@ import './page/home.js'; // for perf
 import './stuff/app-footer.js';
 import {topAppBarContextProvider} from '../manager/context.js';
 import {pageNewOrderStateMachine} from '../manager/controller/new-order.js';
-import {pageOrderDetailStateMachine} from '../manager/controller/order-detail.js';
 import {pageOrderTrackingFsm} from '../manager/controller/order-tracking.js';
 
 import type {RoutesConfig} from '@alwatr/router';
@@ -44,12 +43,13 @@ class AlwatrPwa extends AlwatrPwaElement {
         return html`<alwatr-page-order-list unresolved>...</alwatr-page-order-list>`;
       },
       'order-detail': (routeContext) => {
-        if (pageOrderDetailStateMachine.state.target === 'unresolved') {
-          pageOrderDetailStateMachine.transition('IMPORT');
-          import('./page/order-detail.js');
-        }
-        pageOrderDetailStateMachine.transition('SHOW_DETAIL', {orderId: +routeContext.sectionList[1]});
-        return html`<alwatr-page-order-detail unresolved>...</alwatr-page-order-detail>`;
+        topAppBarContextProvider.setValue({
+          headlineKey: 'loading',
+        });
+        import('./page/order-detail.js');
+        return html`<alwatr-page-order-detail
+          .orderId=${+routeContext.sectionList[1]}
+          unresolved>...</alwatr-page-order-detail>`;
       },
       'order-tracking': (routeContext) => {
         if (pageOrderTrackingFsm.state.target === 'unresolved') {
