@@ -59,6 +59,12 @@ const lightMachine = new FiniteStateMachine({
       },
     },
   },
+  signalList: [
+    {
+      signalId: 'ali',
+      actions: (a): void => console.log(a),
+    },
+  ],
 });
 
 
