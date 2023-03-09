@@ -60,7 +60,9 @@ export class FiniteStateMachineController<
       if ('actions' in this.config.signalRecord![signalId]) {
         // TODO: Check array type of `actions`
 
-        listenerCallback = this.config.signalRecord?.[signalId].actions as ListenerFunction<Stringifyable>;
+        if (!Array.isArray(this.config.signalRecord?.[signalId].actions)) {
+          listenerCallback = this.config.signalRecord?.[signalId].actions as ListenerFunction<Stringifyable>;
+        }
       }
 
       if (listenerCallback) {
