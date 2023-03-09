@@ -11,7 +11,6 @@ import {
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
-import {eventListener} from '@alwatr/signal';
 import {Order} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
@@ -119,11 +118,25 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
         },
       },
     },
-    // signalRecord: {
-    //   'order_list_reload': {
-    //     translate: 'REQUEST_UPDATE'
-    //   }
-    // },
+    signalRecord: {
+      [buttons.reload.clickSignalId]: {
+        transition: 'REQUEST_UPDATE',
+      },
+      [buttons.newOrder.clickSignalId]: {
+        actions: () => {
+          redirect({
+            sectionList: ['new-order'],
+          });
+        },
+      },
+      [buttons.orderDetail.clickSignalId]: {
+        actions: (event: ClickSignalType<Order>) => {
+          redirect({
+            sectionList: ['order-detail', event.detail.id],
+          });
+        },
+      },
+    },
   } as const);
 
   @state()
@@ -141,28 +154,6 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
     this._signalListenerList.push(
         orderStorageContextConsumer.subscribe((orderStorage) => {
           this._stateMachine.transition('LOADED_SUCCESS', {orderStorage});
-        }),
-    );
-
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.reload.clickSignalId, () => {
-          this._stateMachine.transition('REQUEST_UPDATE');
-        }),
-    );
-
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.newOrder.clickSignalId, () => {
-          redirect({
-            sectionList: ['new-order'],
-          });
-        }),
-    );
-
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType<Order>>(buttons.orderDetail.clickSignalId, (event) => {
-          redirect({
-            sectionList: ['order-detail', event.detail.id],
-          });
         }),
     );
   }
