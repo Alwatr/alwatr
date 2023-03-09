@@ -112,8 +112,8 @@ async function makeHtml() {
   }
 
   htmlContent = htmlContent
-      .replace('alwatr-pwa.css', cssFilename)
-      .replace('alwatr-pwa.js', jsFilename);
+      .replaceAll('alwatr-pwa.css', cssFilename)
+      .replaceAll('alwatr-pwa.js', jsFilename);
 
   await copyPromise; // wait to cp done
   await fs.writeFile(`${outDir}/index.html`, htmlContent, {encoding: 'utf-8', flag: 'w'});
