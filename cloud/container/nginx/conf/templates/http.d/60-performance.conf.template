@@ -17,3 +17,7 @@ open_file_cache_min_uses 2;
 open_file_cache_errors   on;
 # We need `open_log_file_cache` becouse https://serverfault.com/questions/547421
 open_log_file_cache      max=10000 inactive=60s min_uses=2;
+
+keepalive_timeout   300;
+keepalive_requests 10000;
+types_hash_max_size 2048;

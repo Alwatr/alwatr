@@ -6,14 +6,14 @@
   <meta charset="utf-8" />
   <title>مدیریت سفارشات نمایندگی‌های سافیت</title>
 
+  <link rel="preload" as="style" href="alwatr-pwa.css" fetchpriority="high" />
+  <link rel="preload" as="script" href="alwatr-pwa.js" fetchpriority="high" />
   <link
     media="print"
     rel="stylesheet"
     href="alwatr-pwa.css"
     onload="this.media='all';this.onload=null;"
   />
-  <script type="module" src="config.js"></script>
-  <script type="module" src="alwatr-pwa.js"></script>
 
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#2b4f9c" />
@@ -66,6 +66,9 @@
 </head>
 <body>
   <alwatr-pwa unresolved>درحال بارگذاری...</alwatr-pwa>
+
+  <script type="module" src="config.js"></script>
+  <script type="module" src="alwatr-pwa.js"></script>
 
   <noscript>
     <div class="noscript">
