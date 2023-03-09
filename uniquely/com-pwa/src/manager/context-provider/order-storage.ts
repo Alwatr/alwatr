@@ -1,5 +1,5 @@
 import {fetchContext} from '@alwatr/fetch';
-import {message, l18eReadyPromise} from '@alwatr/i18n';
+import {l18eReadyPromise} from '@alwatr/i18n';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
 import {config} from '../../config.js';
@@ -32,8 +32,8 @@ export const fetchOrderStorage = async (): Promise<void> => {
     logger.error('fetchOrderStorage', 'fetch_failed', err);
     await l18eReadyPromise;
     const response = await snackbarSignalTrigger.requestWithResponse({
-      message: message('fetch_failed'),
-      actionLabel: message('retry'),
+      messageKey: 'fetch_failed',
+      actionLabelKey: 'retry',
       duration: orderStorageContextConsumer.getValue() == null ? -1 : 5_000,
     });
     if (response.actionButton) {
