@@ -12,7 +12,7 @@ import {
 import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
-import {Order} from '@alwatr/type/src/customer-order-management.js';
+import {Order} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 

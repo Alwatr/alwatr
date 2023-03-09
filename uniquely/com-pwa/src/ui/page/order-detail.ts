@@ -7,17 +7,18 @@ import {
   UnresolvedMixin,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import {topAppBarContextProvider} from '@alwatr/pwa-helper/src/context.js';
+import {topAppBarContextProvider} from '@alwatr/pwa-helper/context.js';
 import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
-import {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
-import {Order, Product} from '@alwatr/type/src/customer-order-management.js';
-import {IconBoxContent} from '@alwatr/ui-kit/src/card/icon-box.js';
 
 import {fetchOrderStorage} from '../../manager/context-provider/order-storage.js';
 import {fetchProductStorage} from '../../manager/context-provider/product-storage.js';
 import {orderStorageContextConsumer, productStorageContextConsumer} from '../../manager/context.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
+
+import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
+import type {Order, Product} from '@alwatr/type/customer-order-management.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -53,20 +54,15 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
     },
     stateRecord: {
       '$all': {
-        entry: (): void => {
+        entry: () => {
           this.gotState = this._stateMachine.state.target;
         },
-        on: {
-        },
+        on: {},
       },
       'pending': {
-        entry: (): void => {
-          if (productStorageContextConsumer.getValue() == null) {
-            fetchProductStorage();
-          }
-          if (orderStorageContextConsumer.getValue() == null) {
-            fetchOrderStorage();
-          }
+        entry: () => {
+          if (productStorageContextConsumer.getValue() == null) fetchProductStorage();
+          if (orderStorageContextConsumer.getValue() == null) fetchOrderStorage();
         },
         on: {
           LOADED_SUCCESS: {
