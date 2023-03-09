@@ -1,6 +1,6 @@
-import type {MaybeArray, MaybePromise, StringifyableRecord} from '@alwatr/type';
+import type {SingleOrArray, MaybePromise, StringifyableRecord} from '@alwatr/type';
 
-export interface FsmConfig<TState extends string, TEventId extends string, TContext extends StringifyableRecord> {
+export type FsmConfig<TState extends string, TEventId extends string, TContext extends StringifyableRecord> = {
   /**
    * Machine ID (It is used in the state change signal identifier, so it must be unique).
    */
@@ -19,56 +19,55 @@ export interface FsmConfig<TState extends string, TEventId extends string, TCont
   /**
    * Define state list
    */
-  stateRecord: {
-    [S in TState | '$all']: {
-      /**
-       * On state exit actions
-       */
-      exit?: MaybeArray<() => MaybePromise<void>>;
-
-      /**
-       * On state entry actions
-       */
-      entry?: MaybeArray<() => MaybePromise<void>>;
-
-      /**
-       * An object mapping eventId to state.
-       *
-       * Example:
-       *
-       * ```ts
-       * stateRecord: {
-       *   on: {
-       *     TIMER: {
-       *       target: 'green',
-       *       condition: () => car.gas > 0,
-       *       actions: () => car.go(),
-       *     }
-       *   }
-       * }
-       * ```
-       */
-      on: {
-        [E in TEventId]?: TransitionConfig<TState>;
-      };
-    };
-  };
+  stateRecord: StateRecord<TState, TEventId>;
 
   /**
    * A list of signals ...
    */
   signalRecord?: {
     [signalId: string]: {
-      actions?: MaybeArray<(signalDetail: unknown) => MaybePromise<void>>;
-      transition?: keyof FsmConfig<TState, TEventId, TContext>['stateRecord'][
-        keyof FsmConfig<TState, TEventId, TContext>['stateRecord']
-      ]['on'];
+      actions?: SingleOrArray<(signalDetail: unknown) => MaybePromise<void>>;
+      transition?: keyof StateRecord<TState, TEventId>[TState]['on'];
     }
-  }
+  },
 }
 
-export interface StateContext<TState extends string, TEventId extends string> {
-  [T: string]: string | undefined;
+export type StateRecord<TState extends string, TEventId extends string> = {
+  [S in TState | '$all']: {
+    /**
+     * On state exit actions
+     */
+    exit?: SingleOrArray<() => MaybePromise<void>>;
+
+    /**
+     * On state entry actions
+     */
+    entry?: SingleOrArray<() => MaybePromise<void>>;
+
+    /**
+     * An object mapping eventId to state.
+     *
+     * Example:
+     *
+     * ```ts
+     * stateRecord: {
+     *   on: {
+     *     TIMER: {
+     *       target: 'green',
+     *       condition: () => car.gas > 0,
+     *       actions: () => car.go(),
+     *     }
+     *   }
+     * }
+     * ```
+     */
+    on: {
+      [E in TEventId]?: TransitionConfig<TState> | undefined;
+    };
+  };
+}
+
+export type StateContext<TState extends string, TEventId extends string> = {
   /**
    * Current state
    */
@@ -86,5 +85,5 @@ export interface StateContext<TState extends string, TEventId extends string> {
 export interface TransitionConfig<TState extends string> {
   target?: TState;
   condition?: () => MaybePromise<boolean>;
-  actions?: MaybeArray<() => MaybePromise<void>>;
+  actions?: SingleOrArray<() => MaybePromise<void>>;
 }
