@@ -115,7 +115,6 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
     return this.orderId;
   }
   set orderId(orderId: number) {
-    this.orderId = orderId;
     this._stateMachine.transition('LOADED_SUCCESS', {orderId});
   }
 
