@@ -8,7 +8,6 @@ import '@alwatr/ui-kit/style/theme/palette-270.css';
 import './page/home.js'; // for perf
 import './stuff/app-footer.js';
 import {topAppBarContextProvider} from '../manager/context.js';
-import {pageNewOrderStateMachine} from '../manager/controller/new-order.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 
@@ -35,35 +34,27 @@ class AlwatrPwa extends AlwatrPwaElement {
         return html`<alwatr-page-404 unresolved>...</alwatr-page-404>`;
       },
       'order-list': () => {
-        topAppBarContextProvider.setValue({
-          headlineKey: 'loading',
-        });
+        topAppBarContextProvider.setValue({headlineKey: 'loading'});
         import('./page/order-list.js');
         return html`<alwatr-page-order-list unresolved>...</alwatr-page-order-list>`;
       },
       'order-detail': (routeContext) => {
-        topAppBarContextProvider.setValue({
-          headlineKey: 'loading',
-        });
+        topAppBarContextProvider.setValue({headlineKey: 'loading'});
         import('./page/order-detail.js');
         return html`<alwatr-page-order-detail
           .orderId=${+routeContext.sectionList[1]}
           unresolved>...</alwatr-page-order-detail>`;
       },
       'order-tracking': (routeContext) => {
-        topAppBarContextProvider.setValue({
-          headlineKey: 'loading',
-        });
+        topAppBarContextProvider.setValue({headlineKey: 'loading'});
         import('./page/order-tracking.js');
         return html`<alwatr-page-order-tracking
           .orderId=${+routeContext.sectionList[1]}
           unresolved>...</alwatr-page-order-tracking>`;
       },
       'new-order': () => {
-        if (pageNewOrderStateMachine.state.target === 'unresolved') {
-          pageNewOrderStateMachine.transition('IMPORT');
-          import('./page/new-order.js');
-        }
+        topAppBarContextProvider.setValue({headlineKey: 'loading'});
+        import('./page/new-order.js');
         return html`<alwatr-page-new-order unresolved>...</alwatr-page-new-order>`;
       },
     },
