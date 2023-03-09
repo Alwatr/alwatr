@@ -229,7 +229,8 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
             target: 'submitSuccess',
             actions: () => {
               localStorage.removeItem(newOrderLocalStorageKey);
-              // TODO: this._stateMachine.context.order = getLocalStorageItem(newOrderLocalStorageKey, {id: 'new', status: 'draft'});
+              // TODO: this._stateMachine.context.order =
+              // getLocalStorageItem(newOrderLocalStorageKey, {id: 'new', status: 'draft'});
             },
           },
           SUBMIT_FAILED: {

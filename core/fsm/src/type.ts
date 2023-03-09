@@ -59,7 +59,7 @@ export interface FsmConfig<TState extends string, TEventId extends string, TCont
    */
   signalRecord?: {
     [signalId: string]: {
-      actions?: MaybeArray<(...args: any[]) => MaybePromise<void>>;
+      actions?: MaybeArray<(signalDetail: unknown) => MaybePromise<void>>;
       transition?: keyof FsmConfig<TState, TEventId, TContext>['stateRecord'][
         keyof FsmConfig<TState, TEventId, TContext>['stateRecord']
       ]['on'];
