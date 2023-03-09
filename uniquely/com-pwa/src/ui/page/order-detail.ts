@@ -197,6 +197,7 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
       endIconList: [buttons.reload],
     });
     await fetchOrderStorage();
+    await fetchProductStorage();
     topAppBarContextProvider.setValue({
       headlineKey: 'page_order_list_headline',
       startIcon: buttons.backToOrderList,
