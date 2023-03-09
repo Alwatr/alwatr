@@ -2,12 +2,22 @@ export type SnackbarOptions = {
   /**
    * Snackbar message.
    */
-  message: string;
+  message?: string;
+
+  /**
+   * Snackbar L10n message.
+   */
+  messageKey?: string;
 
   /**
    * Snackbar action button label text.
    */
   actionLabel?: string;
+
+  /**
+   * Snackbar action button label L10n key.
+   */
+  actionLabelKey?: string;
 
   /**
    * Snackbar automatically disappear from the screen after a minimum of 4,000ms, and a maximum of 10,000ms.
