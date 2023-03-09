@@ -9,7 +9,6 @@ import './page/home.js'; // for perf
 import './stuff/app-footer.js';
 import {topAppBarContextProvider} from '../manager/context.js';
 import {pageNewOrderStateMachine} from '../manager/controller/new-order.js';
-import {pageOrderTrackingFsm} from '../manager/controller/order-tracking.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 
@@ -52,12 +51,13 @@ class AlwatrPwa extends AlwatrPwaElement {
           unresolved>...</alwatr-page-order-detail>`;
       },
       'order-tracking': (routeContext) => {
-        if (pageOrderTrackingFsm.state.target === 'unresolved') {
-          pageOrderTrackingFsm.transition('IMPORT');
-          import('./page/order-tracking.js');
-        }
-        pageOrderTrackingFsm.transition('SHOW_TRACKING', {orderId: +routeContext.sectionList[1]});
-        return html`<alwatr-page-order-tracking unresolved>...</alwatr-page-order-tracking>`;
+        topAppBarContextProvider.setValue({
+          headlineKey: 'loading',
+        });
+        import('./page/order-tracking.js');
+        return html`<alwatr-page-order-tracking
+          .orderId=${+routeContext.sectionList[1]}
+          unresolved>...</alwatr-page-order-tracking>`;
       },
       'new-order': () => {
         if (pageNewOrderStateMachine.state.target === 'unresolved') {
