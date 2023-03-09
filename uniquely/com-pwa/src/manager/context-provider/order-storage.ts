@@ -28,16 +28,10 @@ export const fetchOrderStorage = async (): Promise<void> => {
     );
   }
   catch (err) {
-    // TODO: refactor
     logger.error('fetchOrderStorage', 'fetch_failed', err);
     await l18eReadyPromise;
-    const response = await snackbarSignalTrigger.requestWithResponse({
+    await snackbarSignalTrigger.requestWithResponse({
       messageKey: 'fetch_failed',
-      actionLabelKey: 'retry',
-      duration: orderStorageContextConsumer.getValue() == null ? -1 : 5_000,
     });
-    if (response.actionButton) {
-      await fetchOrderStorage();
-    }
   }
 };
