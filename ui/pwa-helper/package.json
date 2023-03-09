@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/pwa-helper",
   "version": "0.30.0",
-  "pwaVersion": "0.31.0-beta.2",
+  "pwaVersion": "0.31.0-beta.3",
   "description": "Alwatr PWA Helper",
   "keywords": [
     "element",
