@@ -1,7 +1,6 @@
 import {customElement, FiniteStateMachineController, html, state, UnresolvedMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
-import {eventListener} from '@alwatr/signal';
 import {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
 import {
   Order,
@@ -256,6 +255,59 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
         },
       },
     },
+    signalRecord: {
+      [buttons.submit.clickSignalId]: {
+        transition: 'SUBMIT',
+      },
+      [buttons.submitShippingForm.clickSignalId]: {
+        transition: 'SUBMIT',
+      },
+      [buttons.edit.clickSignalId]: {
+        transition: 'BACK',
+      },
+      [buttons.submitFinal.clickSignalId]: {
+        transition: 'FINAL_SUBMIT',
+      },
+      [buttons.editItems.clickSignalId]: {
+        transition: 'FINAL_SUBMIT',
+      },
+      [buttons.retry.clickSignalId]: {
+        transition: 'FINAL_SUBMIT',
+      },
+      [buttons.editShippingForm.clickSignalId]: {
+        transition: 'EDIT_SHIPPING',
+      },
+      [buttons.tracking.clickSignalId]: {
+        actions: () => {
+          const orderId = this._stateMachine.context.registeredOrderId as string;
+          this._stateMachine.transition('NEW_ORDER');
+          redirect({sectionList: ['order-tracking', orderId]});
+        },
+      },
+      [buttons.detail.clickSignalId]: {
+        actions: () => {
+          const orderId = this._stateMachine.context.registeredOrderId as string;
+          this._stateMachine.transition('NEW_ORDER');
+          redirect({sectionList: ['order-detail', orderId]});
+        },
+      },
+      [buttons.newOrder.clickSignalId]: {
+        actions: () => {
+          this._stateMachine.transition('NEW_ORDER');
+          redirect('/new-order/');
+        },
+      },
+      'order_item_qty_add': {
+        actions: (event) => {
+          this.qtyUpdate((event as ClickSignalType<OrderItem>).detail, 1); // TODO: set type with action
+        },
+      },
+      'order_item_qty_remove': {
+        actions: (event) => {
+          this.qtyUpdate((event as ClickSignalType<OrderItem>).detail, -1);
+        },
+      },
+    },
   } as const);
 
   @state()
@@ -284,74 +336,6 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
     this._signalListenerList.push(
         finalPriceStorageContextConsumer.subscribe((finalPriceStorage) => {
           this._stateMachine.transition('LOADED_SUCCESS', {finalPriceStorage});
-        }),
-    );
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.submit.clickSignalId, () => {
-          this._stateMachine.transition('SUBMIT');
-        }),
-    );
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.edit.clickSignalId, () => {
-          this._stateMachine.transition('BACK');
-        }),
-    );
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.submitFinal.clickSignalId, () => {
-          this._stateMachine.transition('FINAL_SUBMIT');
-        }),
-    );
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.editItems.clickSignalId, () => {
-          this._stateMachine.transition('SELECT_PRODUCT');
-        }),
-    );
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.editShippingForm.clickSignalId, () => {
-          this._stateMachine.transition('EDIT_SHIPPING');
-        }),
-    );
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.submitShippingForm.clickSignalId, () => {
-          this._stateMachine.transition('SUBMIT');
-        }),
-    );
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.tracking.clickSignalId, () => {
-          const orderId = this._stateMachine.context.registeredOrderId as string;
-          this._stateMachine.transition('NEW_ORDER');
-          redirect({sectionList: ['order-tracking', orderId]});
-        }),
-    );
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.detail.clickSignalId, () => {
-          const orderId = this._stateMachine.context.registeredOrderId as string;
-          this._stateMachine.transition('NEW_ORDER');
-          redirect({sectionList: ['order-detail', orderId]});
-        }),
-    );
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.newOrder.clickSignalId, () => {
-          this._stateMachine.transition('NEW_ORDER');
-          redirect('/new-order/');
-        }),
-    );
-
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.retry.clickSignalId, async () => {
-          this._stateMachine.transition('FINAL_SUBMIT');
-        }),
-    );
-
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType<OrderItem>>('order_item_qty_add', (event) => {
-          this.qtyUpdate(event.detail, 1);
-        }),
-    );
-
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType<OrderItem>>('order_item_qty_remove', (event) => {
-          this.qtyUpdate(event.detail, -1);
         }),
     );
   }

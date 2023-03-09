@@ -130,9 +130,9 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
         },
       },
       [buttons.orderDetail.clickSignalId]: {
-        actions: (event: ClickSignalType<Order>) => {
+        actions: (event) => {
           redirect({
-            sectionList: ['order-detail', event.detail.id],
+            sectionList: ['order-detail', (event as ClickSignalType<Order>).detail.id],
           });
         },
       },
