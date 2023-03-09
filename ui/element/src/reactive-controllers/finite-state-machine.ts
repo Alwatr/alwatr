@@ -13,7 +13,6 @@ export class FiniteStateMachineController<
     TContext extends StringifyableRecord
   > extends FiniteStateMachine<TState, TEventId, TContext> implements ReactiveController {
   // FIXME: Choose a proper name
-  private _listenerList: ListenerSpec[] = [];
 
   constructor(
     private _host: LoggerMixinInterface,
@@ -21,6 +20,9 @@ export class FiniteStateMachineController<
   ) {
     super(config);
     this._host.addController(this);
+    if (!this.config.autoSignalUnsubscribe) {
+      this.subscribeSignals();
+    }
   }
 
   render(states: {[P in TState]?: (() => unknown) | TState}): unknown {
@@ -46,37 +48,14 @@ export class FiniteStateMachineController<
   }
 
   hostConnected(): void {
-    const signalRecord = this.config.signalRecord;
-    if (signalRecord == null) return;
-
-    for (const signalId of Object.keys(signalRecord)) {
-      let listenerCallback: ListenerFunction<Stringifyable> | null = null;
-
-      if ('transition' in signalRecord[signalId]) {
-        listenerCallback = (): void => {
-          this.transition(signalRecord[signalId].transition as TEventId);
-        };
-      }
-
-      if ('actions' in signalRecord[signalId]) {
-        // TODO: Check array type of `actions`
-
-        if (!Array.isArray(signalRecord?.[signalId].actions)) {
-          listenerCallback = signalRecord?.[signalId].actions as ListenerFunction<Stringifyable>;
-        }
-      }
-
-      if (listenerCallback) {
-        this._listenerList.push(
-            eventListener.subscribe(signalId, listenerCallback),
-        );
-      }
+    if (this.config.autoSignalUnsubscribe) {
+      this.subscribeSignals();
     }
   }
 
   hostDisconnected(): void {
-    for (const listener of this._listenerList) {
-      eventListener.unsubscribe(listener);
+    if (this.config.autoSignalUnsubscribe) {
+      this.unsubscribeSignals();
     }
   }
 }
