@@ -77,14 +77,14 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
     },
     stateRecord: {
       $all: {
-        entry: () => {
+        entry: (): void => {
           this.gotState = this._stateMachine.state.target;
         },
         on: {
         },
       },
       pending: {
-        entry: () => {
+        entry: (): void => {
           this._logger.logMethod('state.pending.entry');
           if (orderStorageContextConsumer.getValue() == null) {
             fetchOrderStorage();
@@ -118,26 +118,34 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
         },
       },
     },
-    signalRecord: {
-      [buttons.reload.clickSignalId]: {
+    signalList: [
+      {
+        signalId: buttons.reload.clickSignalId,
         transition: 'REQUEST_UPDATE',
       },
-      [buttons.newOrder.clickSignalId]: {
-        actions: () => {
+      {
+        signalId: buttons.newOrder.clickSignalId,
+        actions: (): void => {
           redirect({
             sectionList: ['new-order'],
           });
         },
       },
-      [buttons.orderDetail.clickSignalId]: {
-        actions: (event) => {
+      {
+        signalId: buttons.orderDetail.clickSignalId,
+        actions: (event: ClickSignalType<Order>): void => {
           redirect({
             sectionList: ['order-detail', (event as ClickSignalType<Order>).detail.id],
           });
         },
       },
-    },
-  } as const);
+      {
+        signalId: orderStorageContextConsumer.id,
+        transition: 'LOADED_SUCCESS',
+        contextName: 'orderStorage',
+      },
+    ],
+  });
 
   @state()
     gotState = this._stateMachine.state.target;
@@ -150,12 +158,6 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
       startIcon: buttons.backToHome,
       endIconList: [buttons.newOrder, buttons.reload],
     });
-
-    this._signalListenerList.push(
-        orderStorageContextConsumer.subscribe((orderStorage) => {
-          this._stateMachine.transition('LOADED_SUCCESS', {orderStorage});
-        }),
-    );
   }
 
   override render(): unknown {
