@@ -1,8 +1,9 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
-import {contextConsumer} from '@alwatr/signal';
+import {contextConsumer, eventListener} from '@alwatr/signal';
 import {dispatch} from '@alwatr/signal/core.js';
 
 import type {FsmConfig, StateContext} from './type.js';
+import type {ListenerSpec} from '@alwatr/signal/src/type.js';
 import type {SingleOrArray, MaybePromise, StringifyableRecord} from '@alwatr/type';
 
 export type {FsmConfig, StateContext};
@@ -26,11 +27,11 @@ export class FiniteStateMachine<
   protected _logger = createLogger(`alwatr/fsm:${this.config.id}`);
 
   protected setState(target: TState, by: TEventId | 'INIT'): StateContext<TState, TEventId> {
-    const state: StateContext<TState, TEventId> = this.state = {
+    const state: StateContext<TState, TEventId> = (this.state = {
       target,
       from: this.signal.getValue()?.target ?? target,
       by,
-    };
+    });
 
     dispatch<StateContext<TState, TEventId>>(this.signal.id, state, {debounce: 'NextCycle'});
 
@@ -76,12 +77,12 @@ export class FiniteStateMachine<
       return;
     }
 
-    if (await this.callFunction(transitionConfig.condition) === false) {
+    if ((await this.callFunction(transitionConfig.condition)) === false) {
       return;
     }
 
     transitionConfig.target ??= fromState;
-    await this.setState(transitionConfig.target, event);
+    this.setState(transitionConfig.target, event);
   }
 
   protected async execAllActions(): Promise<void> {
@@ -100,12 +101,8 @@ export class FiniteStateMachine<
       await this.execActions(stateRecord.$all.entry);
       await this.execActions(stateRecord[state.target]?.entry);
     }
-    await this.execActions(
-        stateRecord[state.from]?.on[state.by]?.actions ??
-        stateRecord.$all.on[state.by]?.actions,
-    );
+    await this.execActions(stateRecord[state.from]?.on[state.by]?.actions ?? stateRecord.$all.on[state.by]?.actions);
   }
-
 
   protected async execActions(actions?: SingleOrArray<() => MaybePromise<void>>): Promise<void> {
     if (actions == null) return;
@@ -129,5 +126,52 @@ export class FiniteStateMachine<
   protected callFunction<T>(fn?: () => T): T | void {
     if (typeof fn !== 'function') return;
     return fn();
+  }
+
+  private _listenerList: Array<ListenerSpec> = [];
+
+  protected subscribeSignals(): void {
+    this.unsubscribeSignals();
+    const signalList = this.config.signalList;
+    if (signalList == null) return;
+
+    for (const signalConfig of signalList) {
+      const actions =
+        signalConfig.actions ??
+        ((signalDetail: unknown): void => {
+          let context = undefined;
+          if (signalConfig.contextName) {
+            context = <Partial<TContext>>{
+              [signalConfig.contextName]: signalDetail,
+            };
+          }
+          this.transition(signalConfig.transition as TEventId, context);
+        });
+
+      if (Array.isArray(actions)) {
+        for (const action of actions) {
+          this._listenerList.push(
+              eventListener.subscribe(signalConfig.signalId, action, {
+                receivePrevious: signalConfig.receivePrevious ?? 'No',
+              }),
+          );
+        }
+      }
+      else {
+        this._listenerList.push(
+            eventListener.subscribe(signalConfig.signalId, actions, {
+              receivePrevious: signalConfig.receivePrevious ?? 'No',
+            }),
+        );
+      }
+    }
+  }
+
+  protected unsubscribeSignals(): void {
+    if (this._listenerList.length === 0) return;
+    for (const listener of this._listenerList) {
+      eventListener.unsubscribe(listener);
+    }
+    this._listenerList.length = 0;
   }
 }
