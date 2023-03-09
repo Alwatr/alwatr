@@ -7,15 +7,16 @@ import {
   html,
   mapObject,
   UnresolvedMixin,
+  property,
 } from '@alwatr/element';
-import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/product-card.js';
 
 import {config} from '../../config.js';
-import {pageNewOrderStateMachine, buttons} from '../../manager/controller/new-order.js';
 
+import type {OrderDraft} from '@alwatr/type/customer-order-management.js';
 import type {AlwatrProductCard, ProductCartContent} from '@alwatr/ui-kit/card/product-card.js';
+
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -50,37 +51,25 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
     }
   `;
 
+  @property()
+  protected order?: OrderDraft;
+
   selectedRecord: Record<string, true> = {};
 
   override render(): unknown {
     this._logger.logMethod('render');
+
     this._updateSelectedRecord();
-    return [
-      this.render_part_product_list(),
-      this.render_part_submit(),
-    ];
+    return this.render_part_product_list();
   }
 
   private _updateSelectedRecord(): void {
     this._logger.logMethod('_updateSelectedRecord');
-    const order = pageNewOrderStateMachine.context.order;
     this.selectedRecord = {};
-    if (!order?.itemList?.length) return;
-    for (const item of order.itemList) {
+    if (!this.order?.itemList?.length) return;
+    for (const item of this.order.itemList) {
       this.selectedRecord[item.productId] = true;
     }
-  }
-
-  protected render_part_submit(): unknown {
-    return html`
-      <div class="break"></div>
-      <alwatr-button
-        elevated
-        .icon=${buttons.submit.icon}
-        .clickSignalId=${buttons.submit.clickSignalId}
-        ?disabled=${!pageNewOrderStateMachine.context.order.itemList?.length}
-      >${message('select_product_submit_button')}</alwatr-button>
-    `;
   }
 
   protected render_part_product_list(): unknown {
@@ -91,9 +80,9 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
     if (productStorage == null || priceStorage == null || finalPriceStorage == null) {
       return this._logger.accident(
           'render_part_product_list',
-          'contenx_not_valid',
+          'context_not_valid',
           'Some context not valid',
-          pageNewOrderStateMachine.context,
+          this.order,
       );
     }
 
