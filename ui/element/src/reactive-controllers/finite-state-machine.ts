@@ -1,15 +1,20 @@
 import {FiniteStateMachine, type FsmConfig} from '@alwatr/fsm';
+import {eventListener, ListenerSpec} from '@alwatr/signal';
 
 import {nothing, type ReactiveController} from '../lit.js';
 
 import type {LoggerMixinInterface} from '../mixins/logging.js';
-import type {StringifyableRecord} from '@alwatr/type';
+import type {ListenerFunction} from '@alwatr/signal/src/type.js';
+import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
 
 export class FiniteStateMachineController<
     TState extends string,
     TEventId extends string,
     TContext extends StringifyableRecord
   > extends FiniteStateMachine<TState, TEventId, TContext> implements ReactiveController {
+  // FIXME: Choose a proper name
+  private _listenerList: ListenerSpec[] = [];
+
   constructor(
     private _host: LoggerMixinInterface,
     config: Readonly<FsmConfig<TState, TEventId, TContext>>,
@@ -38,5 +43,37 @@ export class FiniteStateMachineController<
   protected override callFunction<T>(fn?: () => T): T | void {
     if (typeof fn !== 'function') return;
     return fn.call(this._host);
+  }
+
+  hostConnected(): void {
+    if (this.config.signalRecord == null) return;
+
+    for (const signalId of Object.keys(this.config.signalRecord)) {
+      let listenerCallback: ListenerFunction<Stringifyable> | null = null;
+
+      if ('transition' in this.config.signalRecord![signalId]) {
+        listenerCallback = (): void => {
+          this.transition(this.config.signalRecord![signalId].transition as TEventId);
+        };
+      }
+
+      if ('actions' in this.config.signalRecord![signalId]) {
+        // TODO: Check array type of `actions`
+
+        listenerCallback = this.config.signalRecord?.[signalId].actions as ListenerFunction<Stringifyable>;
+      }
+
+      if (listenerCallback) {
+        this._listenerList.push(
+            eventListener.subscribe(signalId, listenerCallback),
+        );
+      }
+    }
+  }
+
+  hostDisconnected(): void {
+    for (const listener of this._listenerList) {
+      eventListener.unsubscribe(listener);
+    }
   }
 }
