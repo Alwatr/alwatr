@@ -3,7 +3,7 @@ import {contextConsumer} from '@alwatr/signal';
 import {dispatch} from '@alwatr/signal/core.js';
 
 import type {FsmConfig, StateContext} from './type.js';
-import type {MaybeArray, MaybePromise, StringifyableRecord} from '@alwatr/type';
+import type {SingleOrArray, MaybePromise, StringifyableRecord} from '@alwatr/type';
 
 export type {FsmConfig, StateContext};
 
@@ -17,11 +17,7 @@ export class FiniteStateMachine<
   TEventId extends string = string,
   TContext extends StringifyableRecord = StringifyableRecord
 > {
-  state: StateContext<TState, TEventId> = {
-    target: this.config.initial,
-    from: this.config.initial,
-    by: 'INIT',
-  };
+  state: StateContext<TState, TEventId> = this.setState(this.config.initial, 'INIT');
 
   context = this.config.context;
 
@@ -29,30 +25,23 @@ export class FiniteStateMachine<
 
   protected _logger = createLogger(`alwatr/fsm:${this.config.id}`);
 
-  protected async setState(target: TState, by: TEventId): Promise<void> {
-    const state = (this.state = {
+  protected setState(target: TState, by: TEventId | 'INIT'): StateContext<TState, TEventId> {
+    const state: StateContext<TState, TEventId> = this.state = {
       target,
       from: this.signal.getValue()?.target ?? target,
       by,
-    });
+    };
 
     dispatch<StateContext<TState, TEventId>>(this.signal.id, state, {debounce: 'NextCycle'});
 
-    if (state.from !== state.target) {
-      await this.execActions(this.config.stateRecord.$all.exit);
-      await this.execActions(this.config.stateRecord[state.from]?.exit);
-      await this.execActions(this.config.stateRecord.$all.entry);
-      await this.execActions(this.config.stateRecord[state.target]?.entry);
-    }
-    await this.execActions(
-        this.config.stateRecord[state.from]?.on[state.by]?.actions ??
-        this.config.stateRecord.$all.on[state.by]?.actions,
-    );
+    this.execAllActions().catch((err) => this._logger.error('myMethod', 'error_code', err));
+
+    return state;
   }
 
   constructor(public readonly config: Readonly<FsmConfig<TState, TEventId, TContext>>) {
     this._logger.logMethodArgs('constructor', config);
-    dispatch<StateContext<TState, TEventId>>(this.signal.id, this.state, {debounce: 'NextCycle'});
+
     if (!config.stateRecord[config.initial]) {
       this._logger.error('constructor', 'invalid_initial_state', config);
     }
@@ -95,7 +84,30 @@ export class FiniteStateMachine<
     await this.setState(transitionConfig.target, event);
   }
 
-  protected async execActions(actions?: MaybeArray<() => MaybePromise<void>>): Promise<void> {
+  protected async execAllActions(): Promise<void> {
+    const state = this.state;
+    const stateRecord = this.config.stateRecord;
+
+    if (state.by === 'INIT') {
+      await this.execActions(stateRecord.$all.entry);
+      await this.execActions(stateRecord[state.target]?.entry);
+      return;
+    }
+    // else
+    if (state.from !== state.target) {
+      await this.execActions(stateRecord.$all.exit);
+      await this.execActions(stateRecord[state.from]?.exit);
+      await this.execActions(stateRecord.$all.entry);
+      await this.execActions(stateRecord[state.target]?.entry);
+    }
+    await this.execActions(
+        stateRecord[state.from]?.on[state.by]?.actions ??
+        stateRecord.$all.on[state.by]?.actions,
+    );
+  }
+
+
+  protected async execActions(actions?: SingleOrArray<() => MaybePromise<void>>): Promise<void> {
     if (actions == null) return;
 
     try {
