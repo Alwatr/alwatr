@@ -46,22 +46,23 @@ export class FiniteStateMachineController<
   }
 
   hostConnected(): void {
-    if (this.config.signalRecord == null) return;
+    const signalRecord = this.config.signalRecord;
+    if (signalRecord == null) return;
 
-    for (const signalId of Object.keys(this.config.signalRecord)) {
+    for (const signalId of Object.keys(signalRecord)) {
       let listenerCallback: ListenerFunction<Stringifyable> | null = null;
 
-      if ('transition' in this.config.signalRecord![signalId]) {
+      if ('transition' in signalRecord[signalId]) {
         listenerCallback = (): void => {
-          this.transition(this.config.signalRecord![signalId].transition as TEventId);
+          this.transition(signalRecord[signalId].transition as TEventId);
         };
       }
 
-      if ('actions' in this.config.signalRecord![signalId]) {
+      if ('actions' in signalRecord[signalId]) {
         // TODO: Check array type of `actions`
 
-        if (!Array.isArray(this.config.signalRecord?.[signalId].actions)) {
-          listenerCallback = this.config.signalRecord?.[signalId].actions as ListenerFunction<Stringifyable>;
+        if (!Array.isArray(signalRecord?.[signalId].actions)) {
+          listenerCallback = signalRecord?.[signalId].actions as ListenerFunction<Stringifyable>;
         }
       }
 
