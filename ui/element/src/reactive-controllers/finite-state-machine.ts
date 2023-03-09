@@ -4,7 +4,7 @@ import {eventListener, ListenerSpec} from '@alwatr/signal';
 import {nothing, type ReactiveController} from '../lit.js';
 
 import type {LoggerMixinInterface} from '../mixins/logging.js';
-import type {ListenerFunction} from '@alwatr/signal/src/type.js';
+import type {ListenerFunction} from '@alwatr/signal/type.js';
 import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
 
 export class FiniteStateMachineController<

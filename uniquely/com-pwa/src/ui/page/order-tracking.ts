@@ -12,7 +12,7 @@ import {
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/icon';
-import {topAppBarContextProvider} from '@alwatr/pwa-helper/src/context.js';
+import {topAppBarContextProvider} from '@alwatr/pwa-helper/context.js';
 import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
 import '@alwatr/ui-kit/button/button.js';
@@ -26,7 +26,7 @@ import {orderStorageContextConsumer} from '../../manager/context.js';
 import '../stuff/order-status-box.js';
 
 import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
-import type {Order} from '@alwatr/type/src/customer-order-management.js';
+import type {Order} from '@alwatr/type/customer-order-management.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -93,7 +93,6 @@ export class AlwatrPageOrderTracking extends UnresolvedMixin(LocalizeMixin(Signa
           LOADED_SUCCESS: {
             target: 'tracking',
             condition: () => {
-              this._logger.logMethod('state-pending-condition');
               if (this._stateMachine.context.orderStorage == null) return false;
               return true;
             },
