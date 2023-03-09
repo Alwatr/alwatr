@@ -86,6 +86,7 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
       },
       pending: {
         entry: () => {
+          this._logger.logMethod('state.pending.entry');
           if (orderStorageContextConsumer.getValue() == null) {
             fetchOrderStorage();
           }
@@ -118,6 +119,11 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
         },
       },
     },
+    // signalRecord: {
+    //   'order_list_reload': {
+    //     translate: 'REQUEST_UPDATE'
+    //   }
+    // },
   } as const);
 
   @state()
