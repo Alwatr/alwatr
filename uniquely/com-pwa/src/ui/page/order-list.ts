@@ -70,7 +70,7 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
   `;
 
   private _stateMachine = new FiniteStateMachineController(this, {
-    id: 'fsm-order-list-' + this.ali,
+    id: 'order_list_' + this.ali,
     initial: 'pending',
     context: {
       orderStorage: <AlwatrDocumentStorage<Order> | null>null,
