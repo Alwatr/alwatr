@@ -18,24 +18,24 @@ export class FiniteStateMachine<
   TEventId extends string = string,
   TContext extends StringifyableRecord = StringifyableRecord
 > {
-  state: StateContext<TState, TEventId> = this.setState(this.config.initial, 'INIT');
-
   context = this.config.context;
 
-  signal = contextConsumer.bind<StateContext<TState, TEventId>>('finite-state-machine-' + this.config.id);
+  signal = contextConsumer.bind<StateContext<TState, TEventId>>('finite_state_machine_' + this.config.id);
 
   protected _logger = createLogger(`alwatr/fsm:${this.config.id}`);
+
+  state: StateContext<TState, TEventId> = this.setState(this.config.initial, 'INIT');
 
   protected setState(target: TState, by: TEventId | 'INIT'): StateContext<TState, TEventId> {
     const state: StateContext<TState, TEventId> = (this.state = {
       target,
-      from: this.signal.getValue()?.target ?? target,
+      from: this.signal?.getValue()?.target ?? target,
       by,
     });
 
     dispatch<StateContext<TState, TEventId>>(this.signal.id, state, {debounce: 'NextCycle'});
 
-    this.execAllActions().catch((err) => this._logger.error('myMethod', 'error_code', err));
+    setTimeout(() => this.execAllActions(), 0);
 
     return state;
   }
