@@ -1,19 +1,15 @@
 import {FiniteStateMachine, type FsmConfig} from '@alwatr/fsm';
-import {eventListener, ListenerSpec} from '@alwatr/signal';
 
 import {nothing, type ReactiveController} from '../lit.js';
 
 import type {LoggerMixinInterface} from '../mixins/logging.js';
-import type {ListenerFunction} from '@alwatr/signal/type.js';
-import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
+import type {StringifyableRecord} from '@alwatr/type';
 
 export class FiniteStateMachineController<
     TState extends string,
     TEventId extends string,
     TContext extends StringifyableRecord
   > extends FiniteStateMachine<TState, TEventId, TContext> implements ReactiveController {
-  // FIXME: Choose a proper name
-
   constructor(
     private _host: LoggerMixinInterface,
     config: Readonly<FsmConfig<TState, TEventId, TContext>>,
