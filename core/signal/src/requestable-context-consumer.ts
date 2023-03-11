@@ -1,5 +1,6 @@
 import {contextConsumer} from './context-consumer.js';
-import {requestContext} from './core.js';
+import {getDetail, requestContext} from './core.js';
+import {RequestableContext} from './type.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
 
@@ -16,7 +17,7 @@ export const requestableContextConsumer = {
    *
    * ```ts
    * requestableContextConsumer.request<RequestParamType>('product-list', {foo: 'bar'});
-   * const newProductList = await requestableContextConsumer.untilChange<ProductListType>('product-list');
+   * TODO: update me
    * ```
    */
   request: requestContext,
@@ -30,8 +31,21 @@ export const requestableContextConsumer = {
    * const productListConsumer = requestableContextConsumer.bind<ProductListType>('product-list');
    * ```
    */
-  bind: <TContext extends Stringifyable, TRquest extends Stringifyable>(contextId: string) =>({
-    ...contextConsumer.bind<TContext>(contextId),
+  bind: <TContextContent extends Stringifyable, TRquest extends Stringifyable = null>(contextId: string) =>({
+    ...contextConsumer.bind<RequestableContext<TContextContent>>(contextId),
+
+    /**
+     * Get context value.
+     *
+     * Example:
+     *
+     * ```ts
+     * const currentProductList = productListConsumer.getValue();
+     * TODO: update me
+     * ```
+     */
+    getValue: (): RequestableContext<TContextContent> =>
+      getDetail<RequestableContext<TContextContent>>(contextId) ?? {state: 'initial'},
 
     /**
      * Send new context request to the provider.
@@ -40,7 +54,7 @@ export const requestableContextConsumer = {
      *
      * ```ts
      * productListConsumer.request({foo: 'bar'});
-     * const newProductList = await productListConsumer.untilChange();
+     * TODO: update me
      * ```
      */
     request: requestContext.bind(null, contextId) as

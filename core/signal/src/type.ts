@@ -82,9 +82,7 @@ export type ListenerFunction<T extends Stringifyable> = (detail: T) => void | Pr
 /**
  * Command/Context provider/handler function.
  */
-export type ProviderFunction<TArgument, TReturn> = (
-  argumentObject: TArgument
-) => MaybePromise<TReturn>;
+export type ProviderFunction<TArgument, TReturn> = (argumentObject: TArgument) => MaybePromise<TReturn>;
 
 /**
  * Listener spec.
@@ -99,7 +97,7 @@ export type ListenerSpec = {
    * Signal id
    */
   signalId: string;
-}
+};
 
 /**
  * Signal listeners object in storage.
@@ -153,3 +151,20 @@ export type SignalObject<T extends Stringifyable> = {
  * Signal stack storage.
  */
 export type SignalStorage = Record<string, SignalObject<Stringifyable> | undefined>;
+
+/**
+ * Requestable context value type.
+ */
+export type RequestableContext<T extends Stringifyable> =
+  | {
+      state: 'initial' | 'pending';
+      content?: never;
+    }
+  | {
+      state: 'error';
+      content?: T; // last data
+    }
+  | {
+      state: 'complete' | 'reloading';
+      content: T;
+    };

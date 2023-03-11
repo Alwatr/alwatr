@@ -1,5 +1,6 @@
 import {contextProvider} from './context-provider.js';
 import {setContextProvider} from './core.js';
+import {RequestableContext} from './type.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
 
@@ -36,8 +37,8 @@ export const requestableContextProvider = {
    * const productListProvider = requestableContextProvider.bind<ProductListType>('product-list');
    * ```
    */
-  bind: <TContext extends Stringifyable, TRquest extends Stringifyable>(contextId: string) =>({
-    ...contextProvider.bind<TContext>(contextId),
+  bind: <TContextContent extends Stringifyable, TRquest extends Stringifyable>(contextId: string) =>({
+    ...contextProvider.bind<RequestableContext<TContextContent>>(contextId),
 
     /**
      * Defines the provider of the context signal that will be called when the context requested.
@@ -53,6 +54,6 @@ export const requestableContextProvider = {
      * ```
      */
     setProvider: setContextProvider.bind(null, contextId) as
-      OmitFirstParam<typeof setContextProvider<TContext, TRquest>>,
+      OmitFirstParam<typeof setContextProvider<RequestableContext<TContextContent>, TRquest>>,
   } as const),
 } as const;
