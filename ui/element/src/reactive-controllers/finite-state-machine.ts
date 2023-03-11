@@ -1,6 +1,6 @@
 import {FiniteStateMachine, type FsmConfig} from '@alwatr/fsm';
 
-import {nothing, type ReactiveController} from '../lit.js';
+import {type ReactiveController} from '../lit.js';
 
 import type {LoggerMixinInterface} from '../mixins/logging.js';
 import type {StringifyableRecord} from '@alwatr/type';
@@ -21,17 +21,19 @@ export class FiniteStateMachineController<
     }
   }
 
-  render(states: {[P in TState]?: (() => unknown) | TState}): unknown {
+  render(states: {[P in TState]: (() => unknown) | TState}): unknown {
     this._logger.logMethodArgs('render', this.state.target);
     let renderFn = states[this.state.target];
+
     if (typeof renderFn === 'string') {
       renderFn = states[<TState>renderFn];
     }
+
     if (typeof renderFn === 'function') {
       return renderFn?.call(this._host);
     }
-    // else
-    return nothing;
+
+    return;
   }
 
   hostUpdate(): void {
