@@ -11,12 +11,12 @@ import {
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
+import {requestableContextConsumer} from '@alwatr/signal';
 import {Order} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
-import {fetchOrderStorage} from '../../manager/context-provider/order-storage.js';
-import {orderStorageContextConsumer, topAppBarContextProvider} from '../../manager/context.js';
+import {topAppBarContextProvider} from '../../manager/context.js';
 import '../stuff/order-list.js';
 
 import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
@@ -27,7 +27,11 @@ declare global {
   }
 }
 
-export const buttons = {
+const orderStorageContextConsumer = requestableContextConsumer.bind<AlwatrDocumentStorage<Order>>(
+    'order-storage-context',
+);
+
+const buttons = {
   backToHome: {
     icon: 'arrow-back-outline',
     flipRtl: true,
@@ -64,7 +68,7 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
       transform: opacity var(--sys-motion-duration-small);
     }
 
-    :host([state=reloading]) alwatr-order-list {
+    :host([state='reloading']) alwatr-order-list {
       opacity: var(--sys-surface-disabled-opacity);
     }
   `;
@@ -80,48 +84,61 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
         entry: (): void => {
           this.gotState = this._stateMachine.state.target;
         },
-        on: {
-        },
+        on: {},
       },
       pending: {
         entry: (): void => {
-          this._logger.logMethod('state.pending.entry');
-          if (orderStorageContextConsumer.getValue() == null) {
-            fetchOrderStorage();
-          }
-          if (this._stateMachine.context.orderStorage != null) {
-            this._stateMachine.transition('LOADED_SUCCESS');
+          const orderContext = orderStorageContextConsumer.getValue();
+          if (orderContext.state === 'initial') {
+            orderStorageContextConsumer.request(null);
           }
         },
         on: {
-          LOADED_SUCCESS: {
+          context_request_initial: {},
+          context_request_pending: {},
+          context_request_error: {
+            target: 'contextError',
+          },
+          context_request_complete: {
             target: 'list',
+          },
+          context_request_reloading: {
+            target: 'reloading',
+          },
+        },
+      },
+      contextError: {
+        on: {
+          request_context: {
+            target: 'pending',
+            actions: (): void => orderStorageContextConsumer.request(null),
           },
         },
       },
       list: {
         on: {
-          REQUEST_UPDATE: {
+          request_context: {
             target: 'reloading',
-            actions: this._requestUpdateAction,
+            actions: (): void => orderStorageContextConsumer.request(null),
           },
         },
       },
       reloading: {
         on: {
-          LOADED_SUCCESS: {
+          context_request_error: {
+            target: 'list',
+            actions: (): void => alert('context_request_error'),
+          },
+          context_request_complete: {
             target: 'list',
           },
-          // LOAD_FAILED: {
-          //   target: 'list',
-          // },
         },
       },
     },
     signalList: [
       {
         signalId: buttons.reload.clickSignalId,
-        transition: 'REQUEST_UPDATE',
+        transition: 'request_context',
       },
       {
         signalId: buttons.newOrder.clickSignalId,
@@ -135,14 +152,9 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
         signalId: buttons.orderDetail.clickSignalId,
         actions: (event: ClickSignalType<Order>): void => {
           redirect({
-            sectionList: ['order-detail', (event as ClickSignalType<Order>).detail.id],
+            sectionList: ['order-detail', event.detail.id],
           });
         },
-      },
-      {
-        signalId: orderStorageContextConsumer.id,
-        transition: 'LOADED_SUCCESS',
-        contextName: 'orderStorage',
       },
     ],
   });
@@ -152,6 +164,15 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
 
   override connectedCallback(): void {
     super.connectedCallback();
+
+    this._signalListenerList.push(
+        orderStorageContextConsumer.subscribe(
+            (context) => {
+              this._stateMachine.transition(`context_request_${context.state}`, {orderStorage: context.content});
+            },
+            {receivePrevious: 'NextCycle'},
+        ),
+    );
 
     topAppBarContextProvider.setValue({
       headlineKey: 'page_order_list_headline',
@@ -163,7 +184,7 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
   override render(): unknown {
     this._logger.logMethod('render');
     return this._stateMachine.render({
-      'pending': () => {
+      pending: () => {
         const content: IconBoxContent = {
           tinted: 1,
           icon: 'cloud-download-outline',
@@ -172,29 +193,19 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
         return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
       },
 
-      'reloading': 'list',
+      contextError: () => {
+        // TODO: update me with alwatr-icon-box and retry button
+        return 'error!';
+      },
 
-      'list': () => {
+      reloading: 'list',
+
+      list: () => {
         return html`<alwatr-order-list
           .content=${this._stateMachine.context.orderStorage}
           .orderClickSignalId=${buttons.orderDetail.clickSignalId}
         ></alwatr-order-list>`;
       },
     });
-  }
-
-  private async _requestUpdateAction(): Promise<void> {
-    topAppBarContextProvider.setValue({
-      headlineKey: 'loading',
-      startIcon: buttons.backToHome,
-      endIconList: [buttons.newOrder, buttons.reload],
-    });
-    await fetchOrderStorage();
-    topAppBarContextProvider.setValue({
-      headlineKey: 'page_order_list_headline',
-      startIcon: buttons.backToHome,
-      endIconList: [buttons.newOrder, buttons.reload],
-    });
-    this._stateMachine.transition('LOADED_SUCCESS');
   }
 }
