@@ -91,6 +91,7 @@ export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrBaseElement)) {
 
   protected async _fetchIcon(): Promise<void> {
     this._logger.logMethodArgs('_fetchIcon', {name: this.name});
+    this._svg = null;
 
     if (this.name == null || this.name === '') {
       // if (this._svg != null) this._svg = null;
