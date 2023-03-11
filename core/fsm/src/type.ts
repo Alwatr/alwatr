@@ -44,7 +44,7 @@ export type FsmConfig<TState extends string, TEventId extends string, TContext e
     )
   >;
 
-  autoSignalUnsubscribe?: boolean;
+  autoSignalUnsubscribe?: true;
 };
 
 export type StateRecord<TState extends string, TEventId extends string> = {
