@@ -1,5 +1,5 @@
 import {contextProvider} from './context-provider.js';
-import {setContextProvider} from './core.js';
+import {getDetail, setContextProvider} from './core.js';
 import {RequestableContext} from './type.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
@@ -37,8 +37,22 @@ export const requestableContextProvider = {
    * const productListProvider = requestableContextProvider.bind<ProductListType>('product-list');
    * ```
    */
-  bind: <TContextContent extends Stringifyable, TRquest extends Stringifyable>(contextId: string) =>({
+  bind: <TContextContent extends Stringifyable, TRquest extends Stringifyable = null>(contextId: string) =>({
     ...contextProvider.bind<RequestableContext<TContextContent>>(contextId),
+
+    /**
+     * Get context value.
+     *
+     * Example:
+     *
+     * ```ts
+     * const currentProductList = productListConsumer.getValue();
+     * TODO: update me
+     * ```
+     */
+    getValue: (): RequestableContext<TContextContent> =>
+      getDetail<RequestableContext<TContextContent>>(contextId) ?? {state: 'initial'},
+
 
     /**
      * Defines the provider of the context signal that will be called when the context requested.
