@@ -33,7 +33,7 @@ export interface IconButtonContent extends StringifyableRecord {
    */
   clickDetail?: Stringifyable;
 
-  disabled?: true;
+  disabled?: boolean;
 }
 
 /**
@@ -99,7 +99,7 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
     if (this.content == null) return;
 
     const disabled = Boolean(this.content.disabled);
-    if (this.hasAttribute('disabled') === disabled) {
+    if (this.hasAttribute('disabled') !== disabled) {
       this.toggleAttribute('disabled', disabled);
     }
 
