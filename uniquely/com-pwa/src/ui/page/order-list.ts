@@ -15,6 +15,7 @@ import {requestableContextConsumer} from '@alwatr/signal';
 import {Order} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
 import {topAppBarContextProvider} from '../../manager/context.js';
 import '../stuff/order-list.js';
@@ -127,7 +128,9 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
         on: {
           context_request_error: {
             target: 'list',
-            actions: (): void => alert('context_request_error'),
+            actions: (): void => snackbarSignalTrigger.request({
+              messageKey: 'fetch_failed_description',
+            }),
           },
           context_request_complete: {
             target: 'list',
@@ -194,8 +197,20 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
       },
 
       contextError: () => {
-        // TODO: update me with alwatr-icon-box and retry button
-        return 'error!';
+        const content: IconBoxContent = {
+          icon: 'cloud-offline-outline',
+          tinted: 1,
+          headline: message('fetch_failed_headline'),
+          description: message('fetch_failed_description'),
+        };
+        return html`
+          <alwatr-icon-box .content=${content}></alwatr-icon-box>
+          <alwatr-button
+            elevated
+            .icon=${buttons.reload.icon}
+            .clickSignalId=${buttons.reload.clickSignalId}
+          >${message('retry')}</alwatr-button
+        `;
       },
 
       reloading: 'list',
