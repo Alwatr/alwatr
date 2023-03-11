@@ -8,6 +8,7 @@ import {
   UnresolvedMixin,
   FiniteStateMachineController,
   state,
+  ScheduleUpdateToFrameMixin,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
@@ -28,9 +29,8 @@ declare global {
   }
 }
 
-const orderStorageContextConsumer = requestableContextConsumer.bind<AlwatrDocumentStorage<Order>>(
-    'order-storage-context',
-);
+const orderStorageContextConsumer =
+  requestableContextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
 
 const buttons = {
   backToHome: {
@@ -56,7 +56,9 @@ const buttons = {
  * List of all orders.
  */
 @customElement('alwatr-page-order-list')
-export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
+export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
+    UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))),
+) {
   static override styles = css`
     :host {
       display: block;
@@ -128,9 +130,10 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
         on: {
           context_request_error: {
             target: 'list',
-            actions: (): void => snackbarSignalTrigger.request({
-              messageKey: 'fetch_failed_description',
-            }),
+            actions: (): void =>
+              snackbarSignalTrigger.request({
+                messageKey: 'fetch_failed_description',
+              }),
           },
           context_request_complete: {
             target: 'list',
@@ -176,18 +179,16 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
             {receivePrevious: 'NextCycle'},
         ),
     );
-
-    topAppBarContextProvider.setValue({
-      headlineKey: 'page_order_list_headline',
-      startIcon: buttons.backToHome,
-      endIconList: [buttons.newOrder, buttons.reload],
-    });
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
     return this._stateMachine.render({
       pending: () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'loading',
+          startIcon: buttons.backToHome,
+        });
         const content: IconBoxContent = {
           tinted: 1,
           icon: 'cloud-download-outline',
@@ -197,6 +198,11 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
       },
 
       contextError: () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'page_order_list_headline',
+          startIcon: buttons.backToHome,
+          endIconList: [buttons.reload],
+        });
         const content: IconBoxContent = {
           icon: 'cloud-offline-outline',
           tinted: 1,
@@ -205,17 +211,20 @@ export class AlwatrPageOrderList extends UnresolvedMixin(LocalizeMixin(SignalMix
         };
         return html`
           <alwatr-icon-box .content=${content}></alwatr-icon-box>
-          <alwatr-button
-            elevated
-            .icon=${buttons.reload.icon}
-            .clickSignalId=${buttons.reload.clickSignalId}
-          >${message('retry')}</alwatr-button
+          <alwatr-button .icon=${buttons.reload.icon} .clickSignalId=${buttons.reload.clickSignalId}>
+            ${message('retry')}
+          </alwatr-button>
         `;
       },
 
       reloading: 'list',
 
       list: () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'page_order_list_headline',
+          startIcon: buttons.backToHome,
+          endIconList: [buttons.newOrder, {...buttons.reload, disabled: this.gotState === 'reloading'}],
+        });
         return html`<alwatr-order-list
           .content=${this._stateMachine.context.orderStorage}
           .orderClickSignalId=${buttons.orderDetail.clickSignalId}
