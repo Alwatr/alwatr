@@ -1,38 +1,35 @@
 import {
   customElement,
-  css,
-  html,
-  UnresolvedMixin,
-  AlwatrBaseElement,
   FiniteStateMachineController,
-  state,
+  html,
   property,
-  SignalMixin,
-  LocalizeMixin,
+  state,
+  UnresolvedMixin,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import '@alwatr/icon';
 import {topAppBarContextProvider} from '@alwatr/pwa-helper/context.js';
 import {redirect} from '@alwatr/router';
-import {eventListener} from '@alwatr/signal';
-import '@alwatr/ui-kit/button/button.js';
-import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/card/surface.js';
+import {requestableContextConsumer} from '@alwatr/signal';
 import '@alwatr/ui-kit/chat/chat.js';
-import '@alwatr/ui-kit/radio-group/radio-group.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
 
-import {fetchOrderStorage} from '../../manager/context-provider/order-storage.js';
-import {orderStorageContextConsumer} from '../../manager/context.js';
-import '../stuff/order-status-box.js';
+import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
 
-import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
-import type {Order} from '@alwatr/type/customer-order-management.js';
+import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {Order, Product} from '@alwatr/type/customer-order-management.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-page-order-tracking': AlwatrPageOrderTracking;
+    'alwatr-page-order-tracking': AlwatrPageOrderDetail;
   }
 }
+
+const orderStorageContextConsumer =
+  requestableContextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
+
+const productStorageContextConsumer =
+  requestableContextConsumer.bind<AlwatrDocumentStorage<Product>>('product-storage-tile-context');
 
 const buttons = {
   backToOrderList: {
@@ -47,88 +44,119 @@ const buttons = {
   },
 } as const;
 
-
 /**
- * Alwatr Customer Order Management Order Form Page
+ * Alwatr Customer Order Management Order Tracking Page.
  */
 @customElement('alwatr-page-order-tracking')
-export class AlwatrPageOrderTracking extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
-  static override styles = css`
-    :host {
-      display: flex;
-      flex-direction: column;
-      padding: calc(2 * var(--sys-spacing-track));
-      box-sizing: border-box;
-      min-height: 100%;
-    }
-
-    alwatr-order-status-box {
-      margin-bottom: var(--sys-spacing-track);
-    }
-
-    alwatr-chat {
-      flex-grow: 1;
-    }
-  `;
-
+export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase) {
   private _stateMachine = new FiniteStateMachineController(this, {
-    id: 'fsm-order-tracking-' + this.ali,
+    id: 'order_tracking_' + this.ali,
     initial: 'pending',
     context: {
       orderId: <number | null> null,
       orderStorage: <AlwatrDocumentStorage<Order> | null> null,
+      productStorage: <AlwatrDocumentStorage<Product> | null> null,
     },
     stateRecord: {
       '$all': {
-        entry: () => {
+        entry: (): void => {
           this.gotState = this._stateMachine.state.target;
         },
         on: {},
       },
       'pending': {
-        entry: () => {
-          if (orderStorageContextConsumer.getValue() == null) fetchOrderStorage();
+        entry: (): void => {
+          const orderContext = orderStorageContextConsumer.getValue();
+          const productContext = productStorageContextConsumer.getValue();
+          if (orderContext.state === 'initial') {
+            orderStorageContextConsumer.request(null);
+          }
+          if (productContext.state === 'initial') {
+            productStorageContextConsumer.request(null);
+          }
         },
         on: {
-          LOADED_SUCCESS: {
+          context_request_initial: {},
+          context_request_pending: {},
+          context_request_error: {
+            target: 'contextError',
+          },
+          context_request_complete: {
             target: 'tracking',
-            condition: () => {
-              if (this._stateMachine.context.orderStorage == null) return false;
-              return true;
+            condition: (): boolean => {
+              if (this.orderId == null) {
+                this._stateMachine.transition('not_found');
+                return false;
+              }
+              if (orderStorageContextConsumer.getValue().state === 'complete' &&
+                  productStorageContextConsumer.getValue().state === 'complete'
+              ) return true;
+              return false;
             },
-            actions: () => {
-              if (this._stateMachine.context.orderId == null ||
-              this._stateMachine.context.orderStorage?.data[this._stateMachine.context.orderId] == null
-              ) this._stateMachine.transition('NOT_FOUND');
+          },
+          context_request_reloading: {
+            target: 'reloading',
+          },
+        },
+      },
+      'contextError': {
+        on: {
+          request_context: {
+            target: 'pending',
+            actions: (): void => {
+              orderStorageContextConsumer.request(null);
+              productStorageContextConsumer.request(null);
             },
           },
         },
       },
       'tracking': {
         on: {
-          REQUEST_UPDATE: {
+          request_context: {
             target: 'reloading',
-            actions: this._requestUpdateAction,
+            actions: (): void => {
+              orderStorageContextConsumer.request(null);
+              productStorageContextConsumer.request(null);
+            },
           },
-          NOT_FOUND: {
+          not_found: {
             target: 'notFound',
           },
-        },
-      },
-      'reloading': {
-        on: {
-          LOADED_SUCCESS: {
-            target: 'tracking',
-          },
-        // LOAD_FAILED: {
-        //   target: 'tracking',
-        // },
         },
       },
       'notFound': {
         on: {},
       },
-    }} as const);
+      'reloading': {
+        on: {
+          context_request_error: {
+            target: 'tracking',
+            actions: (): void =>
+              snackbarSignalTrigger.request({messageKey: 'fetch_failed_description'}),
+          },
+          context_request_complete: {
+            target: 'tracking',
+            condition: (): boolean => {
+              if (orderStorageContextConsumer.getValue().state === 'complete' &&
+                  productStorageContextConsumer.getValue().state === 'complete'
+              ) return true;
+              return false;
+            },
+          },
+        },
+      },
+    },
+    signalList: [
+      {
+        signalId: buttons.backToOrderList.clickSignalId,
+        actions: (): void => {redirect({sectionList: ['order-list']});},
+      },
+      {
+        signalId: buttons.reload.clickSignalId,
+        transition:
+        'request_context',
+      },
+    ]});
 
   @state()
     gotState = this._stateMachine.state.target;
@@ -138,42 +166,35 @@ export class AlwatrPageOrderTracking extends UnresolvedMixin(LocalizeMixin(Signa
     return this.orderId;
   }
   set orderId(orderId: number) {
-    this._stateMachine.transition('LOADED_SUCCESS', {orderId});
+    this._stateMachine.transition('context_request_complete', {orderId});
   }
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    topAppBarContextProvider.setValue({
-      headlineKey: 'page_order_tracking_headline',
-      startIcon: buttons.backToOrderList,
-      endIconList: [buttons.reload],
-    });
-
     this._signalListenerList.push(
-        orderStorageContextConsumer.subscribe((orderStorage) => {
-          this._stateMachine.transition('LOADED_SUCCESS', {orderStorage});
-        }),
+        orderStorageContextConsumer.subscribe((context) => {
+          this._stateMachine.transition(`context_request_${context.state}`, {orderStorage: context.content});
+        }, {receivePrevious: 'NextCycle'}),
     );
 
     this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.backToOrderList.clickSignalId, () => {
-          redirect({sectionList: ['order-list']});
-        }),
-    );
-
-    this._signalListenerList.push(
-        eventListener.subscribe<ClickSignalType>(buttons.reload.clickSignalId, () => {
-          this._stateMachine.transition('REQUEST_UPDATE');
-        }),
+        productStorageContextConsumer.subscribe((context) => {
+          this._stateMachine.transition(`context_request_${context.state}`, {productStorage: context.content});
+        }, {receivePrevious: 'NextCycle'}),
     );
   }
 
-
   protected override render(): unknown {
     this._logger.logMethod('render');
+
     return this._stateMachine.render({
-      pending: () => {
+      'pending': () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'page_order_tracking_headline',
+          startIcon: buttons.backToOrderList,
+          endIconList: [buttons.reload],
+        });
         const content: IconBoxContent = {
           headline: message('loading'),
           icon: 'cloud-download-outline',
@@ -182,9 +203,34 @@ export class AlwatrPageOrderTracking extends UnresolvedMixin(LocalizeMixin(Signa
         return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
       },
 
-      reloading: 'tracking',
+      'contextError': () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'page_order_tracking_headline',
+          startIcon: buttons.backToOrderList,
+          endIconList: [buttons.reload],
+        });
+        const content: IconBoxContent = {
+          icon: 'cloud-offline-outline',
+          tinted: 1,
+          headline: message('fetch_failed_headline'),
+          description: message('fetch_failed_description'),
+        };
+        return html`
+          <alwatr-icon-box .content=${content}></alwatr-icon-box>
+          <alwatr-button .icon=${buttons.reload.icon} .clickSignalId=${buttons.reload.clickSignalId}>
+            ${message('retry')}
+          </alwatr-button>
+        `;
+      },
 
-      tracking: () => {
+      'reloading': 'tracking',
+
+      'tracking': () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'page_order_tracking_headline',
+          startIcon: buttons.backToOrderList,
+          endIconList: [{...buttons.reload, disabled: this.gotState === 'reloading'}],
+        });
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const order = this._stateMachine.context.orderStorage!.data[this._stateMachine.context.orderId!];
         return [
@@ -193,29 +239,14 @@ export class AlwatrPageOrderTracking extends UnresolvedMixin(LocalizeMixin(Signa
         ];
       },
 
-      notFound: () => {
+      'notFound': () => {
         const content: IconBoxContent = {
-          headline: message('page_order_detail_not_found'),
+          headline: message('page_order_tracking_not_found'),
           icon: 'close',
           tinted: 1,
         };
         return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
       },
     });
-  }
-
-  private async _requestUpdateAction(): Promise<void> {
-    topAppBarContextProvider.setValue({
-      headlineKey: 'loading',
-      startIcon: buttons.backToOrderList,
-      endIconList: [buttons.reload],
-    });
-    await fetchOrderStorage();
-    topAppBarContextProvider.setValue({
-      headlineKey: 'page_order_tracking_headline',
-      startIcon: buttons.backToOrderList,
-      endIconList: [buttons.reload],
-    });
-    this._stateMachine.transition('LOADED_SUCCESS');
   }
 }
