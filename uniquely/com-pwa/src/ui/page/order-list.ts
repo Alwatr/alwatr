@@ -157,9 +157,7 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
       {
         signalId: buttons.orderDetail.clickSignalId,
         actions: (event: ClickSignalType<Order>): void => {
-          redirect({
-            sectionList: ['order-detail', event.detail.id],
-          });
+          redirect({sectionList: ['order-detail', event.detail.id]});
         },
       },
     ],
