@@ -29,9 +29,6 @@ declare global {
   }
 }
 
-const orderStorageContextConsumer =
-  requestableContextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
-
 const buttons = {
   backToHome: {
     icon: 'arrow-back-outline',
@@ -51,6 +48,9 @@ const buttons = {
     clickSignalId: 'order_list_order_detail_click_event',
   },
 } as const;
+
+const orderStorageContextConsumer =
+  requestableContextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
 
 /**
  * List of all orders.

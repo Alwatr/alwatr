@@ -11,7 +11,7 @@ import {topAppBarContextProvider} from '@alwatr/pwa-helper/context.js';
 import {redirect} from '@alwatr/router';
 import {requestableContextConsumer} from '@alwatr/signal';
 import '@alwatr/ui-kit/chat/chat.js';
-import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
 
