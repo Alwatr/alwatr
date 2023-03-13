@@ -1,39 +1,42 @@
 import {customElement, FiniteStateMachineController, html, state, UnresolvedMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
+import {requestableContextConsumer} from '@alwatr/signal';
 import {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
-import {
-  Order,
-  OrderDraft,
-  orderInfoSchema,
-  OrderItem,
-  Product,
-  ProductPrice,
-  tileQtyStep,
-} from '@alwatr/type/customer-order-management.js';
+import {tileQtyStep, orderInfoSchema} from '@alwatr/type/customer-order-management.js';
 import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {getLocalStorageItem} from '@alwatr/util';
 import {validator} from '@alwatr/validator';
 
-import {fetchPriceStorage} from '../../manager/context-provider/price-storage.js';
-import {fetchProductStorage} from '../../manager/context-provider/product-storage.js';
-import {
-  finalPriceStorageContextConsumer,
-  priceStorageContextConsumer,
-  productStorageContextConsumer,
-  scrollToTopCommand,
-  submitOrderCommandTrigger,
-  topAppBarContextProvider,
-} from '../../manager/context.js';
+import {scrollToTopCommand, submitOrderCommandTrigger, topAppBarContextProvider} from '../../manager/context.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
 import '../stuff/select-product.js';
+
+import type {
+  Order,
+  OrderDraft,
+  OrderShippingInfo,
+  OrderItem,
+  Product,
+  ProductPrice,
+} from '@alwatr/type/customer-order-management.js';
 
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-page-new-order': AlwatrPageNewOrder;
   }
 }
+
+const productStorageContextConsumer =
+  requestableContextConsumer.bind<AlwatrDocumentStorage<Product>>('product-storage-tile-context');
+
+const priceStorageContextConsumer =
+  requestableContextConsumer.bind<AlwatrDocumentStorage<ProductPrice>>('price-storage-tile-context');
+
+const finalPriceStorageContextConsumer = requestableContextConsumer.bind<AlwatrDocumentStorage<ProductPrice>>(
+    'final-price-storage-tile-context',
+);
 
 const newOrderLocalStorageKey = 'draft-order-x2';
 
@@ -84,6 +87,11 @@ const buttons = {
     icon: 'chatbox-outline',
     clickSignalId: 'page_new_order_tracking_click_event',
   },
+  reload: {
+    icon: 'reload-outline',
+    // flipRtl: true,
+    clickSignalId: 'order_list_reload_click_event',
+  },
   retry: {
     icon: 'reload-outline',
     clickSignalId: 'page_new_order_retry_click_event',
@@ -96,7 +104,7 @@ const buttons = {
 @customElement('alwatr-page-new-order')
 export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   private _stateMachine = new FiniteStateMachineController(this, {
-    id: 'fsm-new-order-' + this.ali,
+    id: 'new_order_' + this.ali,
     initial: 'pending',
     context: {
       registeredOrderId: <string | null>null,
@@ -107,77 +115,76 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
     },
     stateRecord: {
       $all: {
-        entry: () => {
+        entry: (): void => {
           this.gotState = this._stateMachine.state.target;
           localStorage.setItem(newOrderLocalStorageKey, JSON.stringify(this._stateMachine.context.order));
-
-          if (
-            this._stateMachine.state.target != 'shippingForm' &&
-            this._stateMachine.state.target != this._stateMachine.state.from
-          ) {
-            scrollToTopCommand.request({});
-          }
-
-          if (
-            this._stateMachine.state.target === 'edit' &&
-            this._stateMachine.state.from != 'selectProduct' &&
-            !this._stateMachine.context.order?.itemList?.length
-          ) {
-            this._stateMachine.transition('SELECT_PRODUCT');
-          }
-          else if (this._stateMachine.state.target === 'edit' || this._stateMachine.state.target === 'review') {
-            const order = this._stateMachine.context.order;
-            let totalPrice = 0;
-            let finalTotalPrice = 0;
-            for (const item of order.itemList ?? []) {
-              totalPrice += item.price * item.qty * tileQtyStep;
-              finalTotalPrice += item.finalPrice * item.qty * tileQtyStep;
-            }
-            order.totalPrice = Math.round(totalPrice);
-            order.finalTotalPrice = Math.round(finalTotalPrice);
-          }
         },
         on: {},
       },
       pending: {
-        entry: () => {
-          if (productStorageContextConsumer.getValue() == null) {
-            fetchProductStorage();
-          }
-          if (priceStorageContextConsumer.getValue() == null || finalPriceStorageContextConsumer.getValue() == null) {
-            fetchPriceStorage();
-          }
+        entry: (): void => {
+          const productStorage = productStorageContextConsumer.getValue();
+          const priceStorage = priceStorageContextConsumer.getValue();
+          const finalPriceStorage = finalPriceStorageContextConsumer.getValue();
+          if (productStorage.state == 'initial') productStorageContextConsumer.request(null);
+          if (priceStorage.state == 'initial') priceStorageContextConsumer.request(null);
+          if (finalPriceStorage.state == 'initial') finalPriceStorageContextConsumer.request(null);
         },
         on: {
-          LOADED_SUCCESS: {
+          context_request_initial: {},
+          context_request_pending: {},
+          context_request_error: {
+            target: 'contextError',
+          },
+          context_request_complete: {
             target: 'edit',
-            condition: () => {
+            condition: (): boolean => {
               if (
-                this._stateMachine.context.finalPriceStorage == null ||
-                this._stateMachine.context.priceStorage == null ||
-                this._stateMachine.context.productStorage == null
+                productStorageContextConsumer.getValue().state === 'complete' &&
+                priceStorageContextConsumer.getValue().state === 'complete' &&
+                finalPriceStorageContextConsumer.getValue().state === 'complete'
               ) {
-                return false;
+                return true;
               }
-              return true;
+              return false;
+            },
+          },
+          context_request_reloading: {
+            target: 'reloading',
+          },
+        },
+      },
+      contextError: {
+        on: {
+          request_context: {
+            target: 'pending',
+            actions: (): void => {
+              productStorageContextConsumer.request(null);
+              priceStorageContextConsumer.request(null);
+              finalPriceStorageContextConsumer.request(null);
             },
           },
         },
       },
       edit: {
+        entry: (): void => {
+          if (this._stateMachine.state.from != 'selectProduct' && !this._stateMachine.context.order?.itemList?.length) {
+            this._stateMachine.transition('select_product');
+          }
+        },
         on: {
-          SELECT_PRODUCT: {
+          select_product: {
             target: 'selectProduct',
           },
-          EDIT_SHIPPING: {
+          edit_shipping: {
             target: 'shippingForm',
-            actions: () => {
+            actions: (): void => {
               this._stateMachine.context.order.shippingInfo ??= {};
             },
           },
-          SUBMIT: {
+          submit: {
             target: 'review',
-            condition: () => {
+            condition: (): boolean => {
               if (
                 !this._stateMachine.context.order.itemList?.length &&
                 this._stateMachine.context.order.shippingInfo == null
@@ -188,127 +195,155 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
               return this.validateOrder();
             },
           },
-          QTY_UPDATE: {},
+          qty_update: {},
         },
       },
       selectProduct: {
+        entry: (): void => {
+          if (this._stateMachine.state.target != this._stateMachine.state.from) {
+            scrollToTopCommand.request({});
+          }
+        },
         on: {
-          SUBMIT: {
+          submit: {
+            target: 'edit',
+          },
+        },
+      },
+      reloading: {
+        on: {
+          context_request_error: {
+            target: 'edit',
+            actions: (): void => snackbarSignalTrigger.request({messageKey: 'fetch_failed_description'}),
+          },
+          context_request_complete: {
             target: 'edit',
           },
         },
       },
       shippingForm: {
         on: {
-          SUBMIT: {
+          submit: {
             target: 'edit',
           },
         },
       },
       review: {
         on: {
-          BACK: {},
-          FINAL_SUBMIT: {
+          back: {},
+          final_submit: {
             target: 'submitting',
-            actions: async () => {
+            actions: async (): Promise<void> => {
               const order = await submitOrderCommandTrigger.requestWithResponse(this._stateMachine.context.order);
               if (order == null) {
-                this._stateMachine.transition('SUBMIT_FAILED');
+                this._stateMachine.transition('submit_failed');
                 return;
               }
               // else
-              this._stateMachine.transition('SUBMIT_SUCCESS', {registeredOrderId: order.id});
+              this._stateMachine.transition('submit_success', {registeredOrderId: order.id});
             },
           },
         },
       },
       submitting: {
         on: {
-          SUBMIT_SUCCESS: {
+          submit_success: {
             target: 'submitSuccess',
-            actions: () => {
+            actions: (): void => {
               localStorage.removeItem(newOrderLocalStorageKey);
-              // TODO: this._stateMachine.context.order =
-              // getLocalStorageItem(newOrderLocalStorageKey, {id: 'new', status: 'draft'});
+              this._stateMachine.context.order =
+                getLocalStorageItem(newOrderLocalStorageKey, {id: 'new', status: 'draft'});
             },
           },
-          SUBMIT_FAILED: {
+          submit_failed: {
             target: 'submitFailed',
           },
         },
       },
       submitSuccess: {
         on: {
-          NEW_ORDER: {
+          new_order: {
             target: 'edit',
-            actions: () => {
-              // TODO: registeredOrderId = ''
+            actions: (): void => {
+              this._stateMachine.context.registeredOrderId = null;
             },
           },
         },
       },
       submitFailed: {
         on: {
-          FINAL_SUBMIT: {
+          final_submit: {
             target: 'submitting',
           },
         },
       },
     },
-    signalRecord: {
-      [buttons.submit.clickSignalId]: {
-        transition: 'SUBMIT',
+    signalList: [
+      {
+        signalId: buttons.submit.clickSignalId,
+        transition: 'submit',
       },
-      [buttons.submitShippingForm.clickSignalId]: {
-        transition: 'SUBMIT',
+      {
+        signalId: buttons.submitShippingForm.clickSignalId,
+        transition: 'submit',
       },
-      [buttons.edit.clickSignalId]: {
-        transition: 'BACK',
+      {
+        signalId: buttons.edit.clickSignalId,
+        transition: 'back',
       },
-      [buttons.submitFinal.clickSignalId]: {
-        transition: 'FINAL_SUBMIT',
+      {
+        signalId: buttons.submitFinal.clickSignalId,
+        transition: 'final_submit',
       },
-      [buttons.editItems.clickSignalId]: {
-        transition: 'FINAL_SUBMIT',
+      {
+        signalId: buttons.editItems.clickSignalId,
+        transition: 'final_submit',
       },
-      [buttons.retry.clickSignalId]: {
-        transition: 'FINAL_SUBMIT',
+      {
+        signalId: buttons.retry.clickSignalId,
+        transition: 'final_submit',
       },
-      [buttons.editShippingForm.clickSignalId]: {
-        transition: 'EDIT_SHIPPING',
+      {
+        signalId: buttons.editShippingForm.clickSignalId,
+        transition: 'edit_shipping',
       },
-      [buttons.tracking.clickSignalId]: {
-        actions: () => {
+      {
+        signalId: buttons.tracking.clickSignalId,
+        actions: (): void => {
           const orderId = this._stateMachine.context.registeredOrderId as string;
-          this._stateMachine.transition('NEW_ORDER');
+          this._stateMachine.transition('new_order');
           redirect({sectionList: ['order-tracking', orderId]});
         },
       },
-      [buttons.detail.clickSignalId]: {
-        actions: () => {
+      {
+        signalId: buttons.detail.clickSignalId,
+        actions: (): void => {
           const orderId = this._stateMachine.context.registeredOrderId as string;
-          this._stateMachine.transition('NEW_ORDER');
+          this._stateMachine.transition('new_order');
           redirect({sectionList: ['order-detail', orderId]});
         },
       },
-      [buttons.newOrder.clickSignalId]: {
-        actions: () => {
-          this._stateMachine.transition('NEW_ORDER');
+      {
+        signalId: buttons.newOrder.clickSignalId,
+        actions: (): void => {
+          this._stateMachine.transition('new_order');
           redirect('/new-order/');
         },
       },
-      'order_item_qty_add': {
-        actions: (event) => {
-          this.qtyUpdate((event as ClickSignalType<OrderItem>).detail, 1); // TODO: set type with action
+      {
+        signalId: 'order_item_qty_add',
+        actions: (event: ClickSignalType<OrderItem>): void => {
+          this.qtyUpdate(event.detail, 1); // TODO: set type with action
         },
       },
-      'order_item_qty_remove': {
-        actions: (event) => {
-          this.qtyUpdate((event as ClickSignalType<OrderItem>).detail, -1);
+      {
+        signalId: 'order_item_qty_remove',
+        actions: (event: ClickSignalType<OrderItem>): void => {
+          this.qtyUpdate(event.detail, -1);
         },
       },
-    },
-  } as const);
+    ],
+  });
 
   @state()
     gotState = this._stateMachine.state.target;
@@ -316,57 +351,147 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    topAppBarContextProvider.setValue({
-      headlineKey: 'page_new_order_headline',
-      startIcon: buttons.backToHome,
-    });
-
     this._signalListenerList.push(
-        productStorageContextConsumer.subscribe((productStorage) => {
-          this._stateMachine.transition('LOADED_SUCCESS', {productStorage});
-        }),
+        productStorageContextConsumer.subscribe(
+            (context) => {
+              this._stateMachine.transition(`context_request_${context.state}`, {productStorage: context.content});
+            },
+            {receivePrevious: 'NextCycle'},
+        ),
     );
 
     this._signalListenerList.push(
-        priceStorageContextConsumer.subscribe((priceStorage) => {
-          this._stateMachine.transition('LOADED_SUCCESS', {priceStorage});
-        }),
+        priceStorageContextConsumer.subscribe(
+            (context) => {
+              this._stateMachine.transition(`context_request_${context.state}`, {priceStorage: context.content});
+            },
+            {receivePrevious: 'NextCycle'},
+        ),
     );
 
     this._signalListenerList.push(
-        finalPriceStorageContextConsumer.subscribe((finalPriceStorage) => {
-          this._stateMachine.transition('LOADED_SUCCESS', {finalPriceStorage});
-        }),
+        finalPriceStorageContextConsumer.subscribe(
+            (context) => {
+              this._stateMachine.transition(`context_request_${context.state}`, {finalPriceStorage: context.content});
+            },
+            {receivePrevious: 'NextCycle'},
+        ),
     );
   }
 
   protected override render(): unknown {
     this._logger.logMethod('render');
     return this._stateMachine.render({
+      pending: () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'loading',
+          startIcon: buttons.backToHome,
+        });
+        const content: IconBoxContent = {
+          tinted: 1,
+          icon: 'cloud-download-outline',
+          headline: message('loading'),
+        };
+        return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+      },
+
       edit: () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'page_new_order_headline',
+          startIcon: buttons.backToHome,
+        });
         const order = this._stateMachine.context.order;
         return [
-          // this.render_part_status(order),
           this.render_part_item_list(order.itemList ?? [], this._stateMachine.context.productStorage, true),
-          this.render_part_btn_product(),
+          html`
+            <div class="btn-container">
+              <alwatr-button .icon=${buttons.editItems.icon} .clickSignalId=${buttons.editItems.clickSignalId}>
+                ${message('page_new_order_edit_items')}
+              </alwatr-button>
+            </div>
+          `,
           this.render_part_shipping_info(order.shippingInfo),
-          this.render_part_btn_shipping_edit(),
+          html`
+            <div class="btn-container">
+              <alwatr-button
+                .icon=${buttons.editShippingForm.icon}
+                .clickSignalId=${buttons.editShippingForm.clickSignalId}
+              >
+                ${message('page_new_order_shipping_edit')}
+              </alwatr-button>
+            </div>
+          `,
           this.render_part_summary(order),
-          this.render_part_btn_submit(),
+          html`
+            <div class="submit-container">
+              <alwatr-button
+                .icon=${buttons.submit.icon}
+                .clickSignalId=${buttons.submit.clickSignalId}
+                ?disabled=${!this._stateMachine.context.order.itemList?.length}
+                >${message('page_new_order_submit')}
+              </alwatr-button>
+            </div>
+          `,
         ];
       },
 
+      contextError: () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'page_order_list_headline',
+          startIcon: buttons.backToHome,
+          endIconList: [buttons.reload],
+        });
+        const content: IconBoxContent = {
+          icon: 'cloud-offline-outline',
+          tinted: 1,
+          headline: message('fetch_failed_headline'),
+          description: message('fetch_failed_description'),
+        };
+        return html`
+          <alwatr-icon-box .content=${content}></alwatr-icon-box>
+          <alwatr-button .icon=${buttons.reload.icon} .clickSignalId=${buttons.reload.clickSignalId}>
+            ${message('retry')}
+          </alwatr-button>
+        `;
+      },
+
+      reloading: 'selectProduct',
       selectProduct: () => {
-        return [html`<alwatr-select-product></alwatr-select-product>`];
+        topAppBarContextProvider.setValue({
+          headlineKey: 'page_new_order_headline',
+          startIcon: buttons.backToHome,
+        });
+        return [
+          html`<alwatr-select-product></alwatr-select-product>`,
+          html`
+            <div class="btn-container">
+              <alwatr-button
+                elevated
+                .icon=${buttons.submit.icon}
+                .clickSignalId=${buttons.submit.clickSignalId}
+                ?disabled=${!this._stateMachine.context.order.itemList?.length}
+                >${message('select_product_submit_button')}
+              </alwatr-button>
+            </div>
+          `,
+        ];
       },
 
       shippingForm: () => {
         const order = this._stateMachine.context.order;
         return [
           this.render_part_item_list(order.itemList ?? [], this._stateMachine.context.productStorage, false),
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          this.render_part_shipping_form(order.shippingInfo!),
-          this.render_part_btn_shipping_submit(),
+          this.render_part_shipping_form(order.shippingInfo as Partial<OrderShippingInfo>),
+          html`
+            <div class="btn-container">
+              <alwatr-button
+                .icon=${buttons.submitShippingForm.icon}
+                .clickSignalId=${buttons.submitShippingForm.clickSignalId}
+              >
+                ${message('page_new_order_shipping_submit')}
+              </alwatr-button>
+            </div>
+          `,
         ];
       },
 
@@ -377,7 +502,16 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           this.render_part_item_list(order.itemList, this._stateMachine.context.productStorage),
           this.render_part_shipping_info(order.shippingInfo),
           this.render_part_summary(order),
-          this.render_part_btn_final_submit(),
+          html`
+            <div class="submit-container">
+              <alwatr-button .icon=${buttons.edit.icon} .clickSignalId=${buttons.edit.clickSignalId}>
+                ${message('page_new_order_edit')}
+              </alwatr-button>
+              <alwatr-button .icon=${buttons.submitFinal.icon} .clickSignalId=${buttons.submitFinal.clickSignalId}>
+                ${message('page_new_order_submit_final')}
+              </alwatr-button>
+            </div>
+          `,
         ];
       },
 
@@ -396,7 +530,19 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           icon: 'cloud-done-outline',
           tinted: 1,
         };
-        return [html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`, this.render_part_btn_submit_success()];
+        return [
+          html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
+          html`
+            <div class="submit-container">
+              <alwatr-button .icon=${buttons.detail.icon} .clickSignalId=${buttons.detail.clickSignalId}>
+                ${message('page_new_order_detail_button')}
+              </alwatr-button>
+              <alwatr-button .icon=${buttons.newOrder.icon} .clickSignalId=${buttons.newOrder.clickSignalId}>
+                ${message('page_new_order_headline')}
+              </alwatr-button>
+            </div>
+          `,
+        ];
       },
 
       submitFailed: () => {
@@ -405,98 +551,30 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           icon: 'cloud-offline-outline',
           tinted: 1,
         };
-        return [html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`, this.render_part_btn_submit_failed()];
+        return [
+          html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
+          html`
+            <div class="submit-container">
+              <alwatr-button .icon=${buttons.retry.icon} .clickSignalId=${buttons.retry.clickSignalId}>
+                ${message('page_new_order_retry_button')}
+              </alwatr-button>
+            </div>
+          `,
+        ];
       },
     });
   }
 
-  protected render_part_btn_select_product(): unknown {
-    return html`
-      <div class="btn-container">
-        <alwatr-button
-          elevated
-          .icon=${buttons.submit.icon}
-          .clickSignalId=${buttons.submit.clickSignalId}
-          ?disabled=${!this._stateMachine.context.order.itemList?.length}
-          >${message('select_product_submit_button')}</alwatr-button
-        >
-      </div>
-    `;
-  }
-
-  protected render_part_btn_product(): unknown {
-    return html`
-      <div class="btn-container">
-        <alwatr-button .icon=${buttons.editItems.icon} .clickSignalId=${buttons.editItems.clickSignalId}>
-          ${message('page_new_order_edit_items')}
-        </alwatr-button>
-      </div>
-    `;
-  }
-
-  protected render_part_btn_shipping_edit(): unknown {
-    return html`<div class="btn-container">
-      <alwatr-button .icon=${buttons.editShippingForm.icon} .clickSignalId=${buttons.editShippingForm.clickSignalId}
-        >${message('page_new_order_shipping_edit')}</alwatr-button
-      >
-    </div>`;
-  }
-
-  protected render_part_btn_shipping_submit(): unknown {
-    return html`<div class="btn-container">
-      <alwatr-button .icon=${buttons.submitShippingForm.icon} .clickSignalId=${buttons.submitShippingForm.clickSignalId}
-        >${message('page_new_order_shipping_submit')}</alwatr-button
-      >
-    </div>`;
-  }
-
-  protected render_part_btn_submit(): unknown {
-    return html`
-      <div class="submit-container">
-        <alwatr-button
-          .icon=${buttons.submit.icon}
-          .clickSignalId=${buttons.submit.clickSignalId}
-          ?disabled=${!this._stateMachine.context.order.itemList?.length}
-          >${message('page_new_order_submit')}</alwatr-button
-        >
-      </div>
-    `;
-  }
-
-  protected render_part_btn_submit_success(): unknown {
-    return html`
-      <div class="submit-container">
-        <alwatr-button .icon=${buttons.detail.icon} .clickSignalId=${buttons.detail.clickSignalId}
-          >${message('page_new_order_detail_button')}</alwatr-button
-        >
-        <alwatr-button .icon=${buttons.newOrder.icon} .clickSignalId=${buttons.newOrder.clickSignalId}
-          >${message('page_new_order_headline')}</alwatr-button
-        >
-      </div>
-    `;
-  }
-
-  protected render_part_btn_submit_failed(): unknown {
-    return html`
-      <div class="submit-container">
-        <alwatr-button .icon=${buttons.retry.icon} .clickSignalId=${buttons.retry.clickSignalId}
-          >${message('page_new_order_retry_button')}</alwatr-button
-        >
-      </div>
-    `;
-  }
-
-  protected render_part_btn_final_submit(): unknown {
-    return html`
-      <div class="submit-container">
-        <alwatr-button .icon=${buttons.edit.icon} .clickSignalId=${buttons.edit.clickSignalId}
-          >${message('page_new_order_edit')}</alwatr-button
-        >
-        <alwatr-button .icon=${buttons.submitFinal.icon} .clickSignalId=${buttons.submitFinal.clickSignalId}
-          >${message('page_new_order_submit_final')}</alwatr-button
-        >
-      </div>
-    `;
+  protected calculateOrderPrice(): void {
+    const order = this._stateMachine.context.order;
+    let totalPrice = 0;
+    let finalTotalPrice = 0;
+    for (const item of order.itemList ?? []) {
+      totalPrice += item.price * item.qty * tileQtyStep;
+      finalTotalPrice += item.finalPrice * item.qty * tileQtyStep;
+    }
+    order.totalPrice = Math.round(totalPrice);
+    order.finalTotalPrice = Math.round(finalTotalPrice);
   }
 
   protected validateOrder(): boolean {
@@ -525,6 +603,6 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
     const qty = orderItem.qty + add;
     if (qty <= 0) return;
     orderItem.qty = qty;
-    this._stateMachine.transition('QTY_UPDATE');
+    this._stateMachine.transition('qty_update');
   }
 }

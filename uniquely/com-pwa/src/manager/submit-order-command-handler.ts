@@ -1,11 +1,19 @@
 import {serviceRequest} from '@alwatr/fetch';
-import {commandHandler, contextProvider} from '@alwatr/signal';
+import {commandHandler, contextConsumer, contextProvider, requestableContextConsumer} from '@alwatr/signal';
 
-import {userContextConsumer, submitOrderCommandTrigger, orderStorageContextConsumer} from './context.js';
+
+import {submitOrderCommandTrigger} from './context.js';
 import {logger} from './logger.js';
 import {config} from '../config.js';
 
+import type {AlwatrDocumentStorage, User} from '@alwatr/type';
 import type {Order} from '@alwatr/type/customer-order-management.js';
+
+
+const orderStorageContextConsumer =
+  requestableContextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
+
+const userContextConsumer = contextConsumer.bind<User>('user-context');
 
 commandHandler.define<Order, Order | null>(submitOrderCommandTrigger.id, async (order) => {
   const userContext = userContextConsumer.getValue() ?? await userContextConsumer.untilChange();
@@ -24,7 +32,7 @@ commandHandler.define<Order, Order | null>(submitOrderCommandTrigger.id, async (
 
     const newOrder = response.data;
 
-    const orderStorage = orderStorageContextConsumer.getValue();
+    const orderStorage = orderStorageContextConsumer.getValue().content;
     if (orderStorage != null) {
       orderStorage.data[newOrder.id] = newOrder;
       orderStorage.meta.lastUpdated = Date.now();
