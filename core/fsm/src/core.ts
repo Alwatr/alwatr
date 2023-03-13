@@ -3,7 +3,7 @@ import {contextConsumer, eventListener} from '@alwatr/signal';
 import {dispatch} from '@alwatr/signal/core.js';
 
 import type {FsmConfig, StateContext} from './type.js';
-import type {ListenerSpec} from '@alwatr/signal/src/type.js';
+import type {ListenerSpec} from '@alwatr/signal/type.js';
 import type {SingleOrArray, MaybePromise, StringifyableRecord} from '@alwatr/type';
 
 export type {FsmConfig, StateContext};
