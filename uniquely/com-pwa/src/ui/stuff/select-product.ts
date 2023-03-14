@@ -8,6 +8,7 @@ import {
   mapObject,
   UnresolvedMixin,
   property,
+  nothing,
 } from '@alwatr/element';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/product-card.js';
@@ -25,7 +26,7 @@ declare global {
 }
 
 /**
- * Alwatr Select Product.
+ * Alwatr Select Product Element.
  */
 @customElement('alwatr-select-product')
 export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMixin(AlwatrBaseElement))) {
@@ -65,11 +66,9 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
 
   selectedRecord: Record<string, true> = {};
 
-  override render(): unknown {
-    this._logger.logMethod('render');
-
+  override connectedCallback(): void {
+    super.connectedCallback();
     this._updateSelectedRecord();
-    return this.render_part_product_list();
   }
 
   private _updateSelectedRecord(): void {
@@ -81,55 +80,41 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
     }
   }
 
-  protected render_part_product_list(): unknown {
-    this._logger.logMethod('render_part_product_list');
+  override render(): unknown {
+    this._logger.logMethod('render');
 
     if (this.productStorage == null || this.priceStorage == null || this.finalPriceStorage == null) {
-      return this._logger.accident(
-          'render_part_product_list',
-          'context_not_valid',
-          'Some context not valid',
-          this.order,
-      );
+      this._logger.accident('render_part_product_list', 'context_not_valid', 'Some context not valid', this.order);
+      return nothing;
     }
 
-    return mapObject(this, this.productStorage?.data, (product) => {
-      const content: ProductCartContent = {
-        id: product.id,
-        title: product.title.fa,
-        imagePath: config.cdn + product.image.id,
-        price: this.priceStorage?.data[product.id]?.price ?? 0,
-        finalPrice: this.finalPriceStorage?.data[product.id]?.price ?? 0,
-      };
-      // this._logger.logProperty('selected', !!this.selectedRecord[product.id]);
-      return html`<alwatr-product-card
-        .content=${content}
-        .selected=${Boolean(this.selectedRecord[product.id])}
-        @selected-change=${this._selectedChanged}
-      ></alwatr-product-card>`;
-    });
+    return mapObject(this, this.productStorage?.data, this.render_part_product_card);
+  }
+
+  protected render_part_product_card(product: Product): unknown {
+    if (this.productStorage == null || this.priceStorage == null || this.finalPriceStorage == null) return;
+    const content: ProductCartContent = {
+      id: product.id,
+      title: product.title.fa,
+      imagePath: config.cdn + product.image.id,
+      price: this.priceStorage?.data[product.id]?.price ?? 0,
+      finalPrice: this.finalPriceStorage?.data[product.id]?.price ?? 0,
+    };
+    return html`<alwatr-product-card
+      .content=${content}
+      .selected=${Boolean(this.selectedRecord[product.id])}
+      @selected-change=${this._selectedChanged}
+    ></alwatr-product-card>`;
   }
 
   private _selectedChanged(event: CustomEvent): void {
+    if (this.order == null || this.priceStorage == null || this.finalPriceStorage == null) return;
     const target = <AlwatrProductCard | null>event.target;
     const productId = target?.content?.id;
 
     this._logger.logMethodArgs('_selectedChanged', {productId});
 
-    if (
-      target == null ||
-      productId == null ||
-      this.priceStorage == null ||
-      this.finalPriceStorage == null ||
-      this.order == null
-    ) {
-      return this._logger.accident(
-          'render_part_product_list',
-          'context_not_valid',
-          'Some context not valid',
-          {productId, priceStorage: this.priceStorage, finalPriceStorage: this.finalPriceStorage},
-      );
-    }
+    if (target == null || productId == null) return;
 
     this.order.itemList ??= [];
     if (target.selected === true) {
