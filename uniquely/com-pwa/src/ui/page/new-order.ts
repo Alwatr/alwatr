@@ -28,15 +28,20 @@ declare global {
   }
 }
 
-const productStorageContextConsumer =
-  requestableContextConsumer.bind<AlwatrDocumentStorage<Product>>('product-storage-tile-context');
+const productStorageContextConsumer = requestableContextConsumer.bind<
+  AlwatrDocumentStorage<Product>,
+  {productStorageName: string}
+>('product-storage-context');
 
-const priceStorageContextConsumer =
-  requestableContextConsumer.bind<AlwatrDocumentStorage<ProductPrice>>('price-storage-tile-context');
+const productPriceStorageContextProvider = requestableContextConsumer.bind<
+  AlwatrDocumentStorage<ProductPrice>,
+  {productPriceStorageName: string}
+>('product-price-context');
 
-const finalPriceStorageContextConsumer = requestableContextConsumer.bind<AlwatrDocumentStorage<ProductPrice>>(
-    'final-price-storage-tile-context',
-);
+const finalProductPriceStorageContextProvider = requestableContextConsumer.bind<
+  AlwatrDocumentStorage<ProductPrice>,
+  {productPriceStorageName: string}
+>('final-product-price-context');
 
 const newOrderLocalStorageKey = 'draft-order-x2';
 
@@ -124,11 +129,15 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
       pending: {
         entry: (): void => {
           const productStorage = productStorageContextConsumer.getValue();
-          const priceStorage = priceStorageContextConsumer.getValue();
-          const finalPriceStorage = finalPriceStorageContextConsumer.getValue();
-          if (productStorage.state == 'initial') productStorageContextConsumer.request(null);
-          if (priceStorage.state == 'initial') priceStorageContextConsumer.request(null);
-          if (finalPriceStorage.state == 'initial') finalPriceStorageContextConsumer.request(null);
+          const priceStorage = productPriceStorageContextProvider.getValue();
+          const finalPriceStorage = finalProductPriceStorageContextProvider.getValue();
+          if (productStorage.state == 'initial') productStorageContextConsumer.request({productStorageName: 'tile'});
+          if (priceStorage.state == 'initial') {
+            productPriceStorageContextProvider.request({productPriceStorageName: 'tile'});
+          }
+          if (finalPriceStorage.state == 'initial') {
+            finalProductPriceStorageContextProvider.request({productPriceStorageName: 'tile'});
+          }
         },
         on: {
           context_request_initial: {},
@@ -141,8 +150,8 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
             condition: (): boolean => {
               if (
                 productStorageContextConsumer.getValue().state === 'complete' &&
-                priceStorageContextConsumer.getValue().state === 'complete' &&
-                finalPriceStorageContextConsumer.getValue().state === 'complete'
+                productPriceStorageContextProvider.getValue().state === 'complete' &&
+                finalProductPriceStorageContextProvider.getValue().state === 'complete'
               ) {
                 return true;
               }
@@ -159,9 +168,9 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           request_context: {
             target: 'pending',
             actions: (): void => {
-              productStorageContextConsumer.request(null);
-              priceStorageContextConsumer.request(null);
-              finalPriceStorageContextConsumer.request(null);
+              productStorageContextConsumer.request({productStorageName: 'tile'});
+              productPriceStorageContextProvider.request({productPriceStorageName: 'tile'});
+              finalProductPriceStorageContextProvider.request({productPriceStorageName: 'tile'});
             },
           },
         },
@@ -361,7 +370,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
     );
 
     this._signalListenerList.push(
-        priceStorageContextConsumer.subscribe(
+        productPriceStorageContextProvider.subscribe(
             (context) => {
               this._stateMachine.transition(`context_request_${context.state}`, {priceStorage: context.content});
             },
@@ -370,7 +379,16 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
     );
 
     this._signalListenerList.push(
-        finalPriceStorageContextConsumer.subscribe(
+        finalProductPriceStorageContextProvider.subscribe(
+            (context) => {
+              this._stateMachine.transition(`context_request_${context.state}`, {finalPriceStorage: context.content});
+            },
+            {receivePrevious: 'NextCycle'},
+        ),
+    );
+
+    this._signalListenerList.push(
+        finalProductPriceStorageContextProvider.subscribe(
             (context) => {
               this._stateMachine.transition(`context_request_${context.state}`, {finalPriceStorage: context.content});
             },
