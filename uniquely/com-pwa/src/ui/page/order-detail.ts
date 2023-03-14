@@ -1,11 +1,4 @@
-import {
-  customElement,
-  FiniteStateMachineController,
-  html,
-  property,
-  state,
-  UnresolvedMixin,
-} from '@alwatr/element';
+import {customElement, FiniteStateMachineController, html, property, state, UnresolvedMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {topAppBarContextProvider} from '@alwatr/pwa-helper/context.js';
 import {redirect} from '@alwatr/router';
@@ -27,8 +20,10 @@ declare global {
 const orderStorageContextConsumer =
   requestableContextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
 
-const productStorageContextConsumer =
-  requestableContextConsumer.bind<AlwatrDocumentStorage<Product>>('product-storage-tile-context');
+const productStorageContextConsumer = requestableContextConsumer.bind<
+  AlwatrDocumentStorage<Product>,
+  {productStorageName: string}
+>('product-storage-context');
 
 const buttons = {
   backToOrderList: {
@@ -57,22 +52,18 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
       productStorage: <AlwatrDocumentStorage<Product> | null> null,
     },
     stateRecord: {
-      '$all': {
+      $all: {
         entry: (): void => {
           this.gotState = this._stateMachine.state.target;
         },
         on: {},
       },
-      'pending': {
+      pending: {
         entry: (): void => {
           const orderContext = orderStorageContextConsumer.getValue();
           const productContext = productStorageContextConsumer.getValue();
-          if (orderContext.state === 'initial') {
-            orderStorageContextConsumer.request(null);
-          }
-          if (productContext.state === 'initial') {
-            productStorageContextConsumer.request(null);
-          }
+          if (orderContext.state === 'initial') orderStorageContextConsumer.request(null);
+          if (productContext.state === 'initial') productStorageContextConsumer.request({productStorageName: 'tile'});
         },
         on: {
           context_request_initial: {},
@@ -83,14 +74,21 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
           context_request_complete: {
             target: 'detail',
             condition: (): boolean => {
-              if (this.orderId == null) {
+              const orderStorage = orderStorageContextConsumer.getValue();
+              const productStorage = productStorageContextConsumer.getValue();
+              if (orderStorage.state !== 'complete' || productStorage.state !== 'complete') {
+                return false;
+              }
+
+              if (this.orderId == null || orderStorage.content.data[this.orderId] == null) {
                 this._stateMachine.transition('not_found');
                 return false;
               }
-              if (orderStorageContextConsumer.getValue().state === 'complete' &&
-                  productStorageContextConsumer.getValue().state === 'complete'
-              ) return true;
-              return false;
+              else {
+                this._stateMachine.context.orderId = this.orderId;
+              }
+
+              return true;
             },
           },
           context_request_reloading: {
@@ -98,24 +96,24 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
           },
         },
       },
-      'contextError': {
+      contextError: {
         on: {
           request_context: {
             target: 'pending',
             actions: (): void => {
               orderStorageContextConsumer.request(null);
-              productStorageContextConsumer.request(null);
+              productStorageContextConsumer.request({productStorageName: 'tile'});
             },
           },
         },
       },
-      'detail': {
+      detail: {
         on: {
           request_context: {
             target: 'reloading',
             actions: (): void => {
               orderStorageContextConsumer.request(null);
-              productStorageContextConsumer.request(null);
+              productStorageContextConsumer.request({productStorageName: 'tile'});
             },
           },
           not_found: {
@@ -123,24 +121,38 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
           },
         },
       },
-      'notFound': {
+      notFound: {
         on: {},
       },
-      'reloading': {
+      reloading: {
         on: {
-          context_request_error: {
-            target: 'detail',
-            actions: (): void =>
-              snackbarSignalTrigger.request({messageKey: 'fetch_failed_description'}),
-          },
           context_request_complete: {
             target: 'detail',
             condition: (): boolean => {
-              if (orderStorageContextConsumer.getValue().state === 'complete' &&
-                  productStorageContextConsumer.getValue().state === 'complete'
-              ) return true;
-              return false;
+              const orderStorage = orderStorageContextConsumer.getValue();
+              const productStorage = productStorageContextConsumer.getValue();
+              if (orderStorage.state !== 'complete' || productStorage.state !== 'complete') {
+                return false;
+              }
+
+              if (this.orderId == null || orderStorage.content.data[this.orderId] == null) {
+                this._stateMachine.transition('not_found');
+                return false;
+              }
+              else {
+                this._stateMachine.context.orderId = this.orderId;
+              }
+
+              return true;
             },
+          },
+          context_request_reloading: {},
+          context_request_error: {
+            target: 'detail',
+            actions: (): void => snackbarSignalTrigger.request({messageKey: 'fetch_failed_description'}),
+          },
+          not_found: {
+            target: 'notFound',
           },
         },
       },
@@ -148,39 +160,42 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
     signalList: [
       {
         signalId: buttons.backToOrderList.clickSignalId,
-        actions: (): void => {redirect({sectionList: ['order-list']});},
+        actions: (): void => {
+          redirect({sectionList: ['order-list']});
+        },
       },
       {
         signalId: buttons.reload.clickSignalId,
-        transition:
-        'request_context',
+        transition: 'request_context',
       },
-    ]});
+    ],
+  });
 
   @state()
     gotState = this._stateMachine.state.target;
 
   @property({type: Number})
-  get orderId(): number {
-    return this.orderId;
-  }
-  set orderId(orderId: number) {
-    this._stateMachine.transition('context_request_complete', {orderId});
-  }
+    orderId?: number;
 
   override connectedCallback(): void {
     super.connectedCallback();
 
     this._signalListenerList.push(
-        orderStorageContextConsumer.subscribe((context) => {
-          this._stateMachine.transition(`context_request_${context.state}`, {orderStorage: context.content});
-        }, {receivePrevious: 'NextCycle'}),
+        orderStorageContextConsumer.subscribe(
+            (context) => {
+              this._stateMachine.transition(`context_request_${context.state}`, {orderStorage: context.content});
+            },
+            {receivePrevious: 'NextCycle'},
+        ),
     );
 
     this._signalListenerList.push(
-        productStorageContextConsumer.subscribe((context) => {
-          this._stateMachine.transition(`context_request_${context.state}`, {productStorage: context.content});
-        }, {receivePrevious: 'NextCycle'}),
+        productStorageContextConsumer.subscribe(
+            (context) => {
+              this._stateMachine.transition(`context_request_${context.state}`, {productStorage: context.content});
+            },
+            {receivePrevious: 'NextCycle'},
+        ),
     );
   }
 
@@ -188,7 +203,7 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
     this._logger.logMethod('render');
 
     return this._stateMachine.render({
-      'pending': () => {
+      pending: () => {
         topAppBarContextProvider.setValue({
           headlineKey: 'page_order_detail_headline',
           startIcon: buttons.backToOrderList,
@@ -202,7 +217,7 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
         return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
       },
 
-      'contextError': () => {
+      contextError: () => {
         topAppBarContextProvider.setValue({
           headlineKey: 'page_order_detail_headline',
           startIcon: buttons.backToOrderList,
@@ -222,9 +237,9 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
         `;
       },
 
-      'reloading': 'detail',
+      reloading: 'detail',
 
-      'detail': () => {
+      detail: () => {
         topAppBarContextProvider.setValue({
           headlineKey: 'page_order_detail_headline',
           startIcon: buttons.backToOrderList,
@@ -240,7 +255,7 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
         ];
       },
 
-      'notFound': () => {
+      notFound: () => {
         const content: IconBoxContent = {
           headline: message('page_order_detail_not_found'),
           icon: 'close',
