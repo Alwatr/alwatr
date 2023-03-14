@@ -14,9 +14,9 @@ import '@alwatr/ui-kit/card/product-card.js';
 
 import {config} from '../../config.js';
 
-import type {OrderDraft} from '@alwatr/type/customer-order-management.js';
+import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {OrderDraft, Product, ProductPrice} from '@alwatr/type/customer-order-management.js';
 import type {AlwatrProductCard, ProductCartContent} from '@alwatr/ui-kit/card/product-card.js';
-
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -54,6 +54,15 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
   @property()
   protected order?: OrderDraft;
 
+  @property()
+  protected productStorage?: AlwatrDocumentStorage<Product>;
+
+  @property()
+  protected finalPriceStorage?: AlwatrDocumentStorage<ProductPrice>;
+
+  @property()
+  protected priceStorage?: AlwatrDocumentStorage<ProductPrice>;
+
   selectedRecord: Record<string, true> = {};
 
   override render(): unknown {
@@ -75,9 +84,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
   protected render_part_product_list(): unknown {
     this._logger.logMethod('render_part_product_list');
 
-    const {productStorage, priceStorage, finalPriceStorage} = pageNewOrderStateMachine.context;
-
-    if (productStorage == null || priceStorage == null || finalPriceStorage == null) {
+    if (this.productStorage == null || this.priceStorage == null || this.finalPriceStorage == null) {
       return this._logger.accident(
           'render_part_product_list',
           'context_not_valid',
@@ -86,13 +93,13 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
       );
     }
 
-    return mapObject(this, productStorage?.data, (product) => {
+    return mapObject(this, this.productStorage?.data, (product) => {
       const content: ProductCartContent = {
         id: product.id,
         title: product.title.fa,
         imagePath: config.cdn + product.image.id,
-        price: priceStorage?.data[product.id]?.price ?? 0,
-        finalPrice: finalPriceStorage?.data[product.id]?.price ?? 0,
+        price: this.priceStorage?.data[product.id]?.price ?? 0,
+        finalPrice: this.finalPriceStorage?.data[product.id]?.price ?? 0,
       };
       // this._logger.logProperty('selected', !!this.selectedRecord[product.id]);
       return html`<alwatr-product-card
@@ -106,38 +113,43 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
   private _selectedChanged(event: CustomEvent): void {
     const target = <AlwatrProductCard | null>event.target;
     const productId = target?.content?.id;
-    const {order, priceStorage, finalPriceStorage} = pageNewOrderStateMachine.context;
 
     this._logger.logMethodArgs('_selectedChanged', {productId});
 
-    if (target == null || productId == null || priceStorage == null || finalPriceStorage == null) {
+    if (
+      target == null ||
+      productId == null ||
+      this.priceStorage == null ||
+      this.finalPriceStorage == null ||
+      this.order == null
+    ) {
       return this._logger.accident(
           'render_part_product_list',
           'context_not_valid',
           'Some context not valid',
-          {productId, priceStorage, finalPriceStorage},
+          {productId, priceStorage: this.priceStorage, finalPriceStorage: this.finalPriceStorage},
       );
     }
 
-    order.itemList ??= [];
+    this.order.itemList ??= [];
     if (target.selected === true) {
-      order.itemList.push({
+      this.order.itemList.push({
         productId,
         qty: 0,
-        price: priceStorage.data[productId].price,
-        finalPrice: finalPriceStorage.data[productId].price,
+        price: this.priceStorage.data[productId].price,
+        finalPrice: this.finalPriceStorage.data[productId].price,
       });
     }
     else {
-      const itemIndex = order.itemList.findIndex((item) => item.productId === productId);
+      const itemIndex = this.order.itemList.findIndex((item) => item.productId === productId);
       if (itemIndex !== -1) {
-        order.itemList.splice(itemIndex, 1);
+        this.order.itemList.splice(itemIndex, 1);
       }
     }
 
     const submitButton = this.renderRoot.querySelector('alwatr-button');
-    if (submitButton && order.itemList.length < 2) {
-      submitButton.toggleAttribute('disabled', !order.itemList.length);
+    if (submitButton && this.order.itemList.length < 2) {
+      submitButton.toggleAttribute('disabled', !this.order.itemList.length);
     }
   }
 }

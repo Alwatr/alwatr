@@ -250,7 +250,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     const target = event.target as AlwatrTextField;
     if (target == null) return;
     const qty = target.value && +target.value ? +target.value : 100;
-    qtyUpdate(orderItem, qty - orderItem.qty);
+    // qtyUpdate(orderItem, qty - orderItem.qty); // FIXME:
     target.value = qty + '';
     this.requestUpdate();
   }}></alwatr-text-field>
