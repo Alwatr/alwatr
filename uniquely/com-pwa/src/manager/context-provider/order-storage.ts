@@ -7,9 +7,8 @@ import {logger} from '../logger.js';
 import type {AlwatrDocumentStorage, User} from '@alwatr/type';
 import type {Order} from '@alwatr/type/customer-order-management.js';
 
-const orderStorageContextProvider = requestableContextProvider.bind<AlwatrDocumentStorage<Order>>(
-    'order-storage-context',
-);
+const orderStorageContextProvider =
+  requestableContextProvider.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
 
 const userContextConsumer = contextConsumer.bind<User>('user-context');
 
