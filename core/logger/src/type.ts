@@ -1,3 +1,5 @@
+import type {Stringifyable} from '@alwatr/type';
+
 export interface AlwatrLogger {
   /**
    * Debug state for current scope base on localStorage `ALWATR_LOG` pattern.
@@ -49,7 +51,7 @@ export interface AlwatrLogger {
    * }
    * ```
    */
-  logMethodArgs(method: string, args: Record<string, unknown> | string | number | boolean): void;
+  logMethodArgs(method: string, args: Stringifyable): void;
 
   /**
    * `console.debug` function or method calls with arguments.
@@ -64,7 +66,7 @@ export interface AlwatrLogger {
    * }
    * ```
    */
-  logMethodFull(method: string, args: Record<string, unknown> | string | number | boolean, result: unknown): void;
+  logMethodFull(method: string, args: Stringifyable, result: unknown): void;
 
   /**
    * `console.log` an event or expected accident.
