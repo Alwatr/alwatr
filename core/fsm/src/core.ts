@@ -40,11 +40,12 @@ export const defineConstructor = <
     id,
     config,
     actionRecord: {},
+    signalList: [],
   };
   return config;
 };
 
-export const _getFsmInstance = <
+export const getFsmInstance = <
   TState extends string = string,
   TEventId extends string = string,
   TContext extends StringifyableRecord = StringifyableRecord
@@ -57,7 +58,7 @@ export const _getFsmInstance = <
   return fsmInstance;
 };
 
-export const _getFsmConstructor = (constructorId: string): FsmConstructor => {
+export const getFsmConstructor = (constructorId: string): FsmConstructor => {
   logger.logMethodArgs('_getFsmConstructor', constructorId);
   const fsmConstructor = fsmConstructorStorage[constructorId];
   if (fsmConstructor == null) throw new Error('fsm_undefined', {cause: {constructorId: constructorId}});
@@ -68,14 +69,14 @@ export const getState = <TState extends string = string, TEventId extends string
   instanceId: string,
 ): FsmState<TState, TEventId> => {
   logger.logMethodArgs('getState', instanceId);
-  return _getFsmInstance<TState, TEventId>(instanceId).state;
+  return getFsmInstance<TState, TEventId>(instanceId).state;
 };
 
 export const getContext = <TContext extends StringifyableRecord = StringifyableRecord>(
   instanceId: string,
 ): TContext => {
   logger.logMethodArgs('getContext', instanceId);
-  return _getFsmInstance(instanceId).context as TContext;
+  return getFsmInstance<string, string, TContext>(instanceId).context;
 };
 
 export const setContext = <TContext extends StringifyableRecord = StringifyableRecord>(
@@ -84,14 +85,14 @@ export const setContext = <TContext extends StringifyableRecord = StringifyableR
   notify?: boolean,
 ): void => {
   logger.logMethodArgs('setContext', {instanceId, context});
-  const fsmInstance = _getFsmInstance(instanceId);
+  const fsmInstance = getFsmInstance(instanceId);
   fsmInstance.context = {
     ...fsmInstance.context,
     ...context,
   };
 
   if (notify) {
-    contextProvider.setValue(instanceId, fsmInstance, {debounce: 'NextCycle'});
+    contextProvider.setValue(instanceId, fsmInstance, {debounce: 'Timeout'});
   }
 };
 
@@ -103,8 +104,8 @@ export const transition = <
     event: TEventId,
     context?: Partial<TContext>,
   ): void => {
-  const fsmInstance = _getFsmInstance(instanceId);
-  const fsmConstructor = _getFsmConstructor(fsmInstance.constructorId);
+  const fsmInstance = getFsmInstance(instanceId);
+  const fsmConstructor = getFsmConstructor(fsmInstance.constructorId);
   const fromState = fsmInstance.state.target;
   const stateRecord = fsmConstructor.config.stateRecord;
   const transitionConfig = stateRecord[fromState]?.on[event] ?? stateRecord.$all.on[event];
@@ -147,16 +148,16 @@ export const transition = <
     by: event,
   };
 
-  contextProvider.setValue(instanceId, fsmInstance, {debounce: 'NextCycle'});
+  contextProvider.setValue(instanceId, fsmInstance, {debounce: 'Timeout'});
 
   _execAllActions(fsmConstructor, fsmInstance.state, consumerInterface);
 };
 
 export const defineActions = <T extends FsmTypeHelper>(constructorId: string, actionRecord: ActionRecord<T>): void => {
   logger.logMethodArgs('defineActions', {constructorId, actionRecord});
-  const constructor = _getFsmConstructor(constructorId);
-  constructor.actionRecord = {
-    ...constructor.actionRecord,
+  const fmsConstructor = getFsmConstructor(constructorId);
+  fmsConstructor.actionRecord = {
+    ...fmsConstructor.actionRecord,
     ...actionRecord,
   };
 };
@@ -197,14 +198,13 @@ export const _execAction = (
     constructor: FsmConstructor,
     actionNames: SingleOrArray<string> | undefined,
     finiteStateMachine: FsmConsumerInterface,
-    signalDetail?: unknown,
 ): boolean | void => {
   if (actionNames == null) return;
   logger.logMethodArgs('execAction', actionNames);
 
   if (Array.isArray(actionNames)) {
     return actionNames
-        .map((actionName) => _execAction(constructor, actionName, finiteStateMachine, signalDetail))
+        .map((actionName) => _execAction(constructor, actionName, finiteStateMachine))
         .every((r) => r === true);
   }
 
@@ -217,7 +217,7 @@ export const _execAction = (
         instanceId: finiteStateMachine.id,
       });
     }
-    return actionFn(finiteStateMachine, signalDetail);
+    return actionFn(finiteStateMachine);
   }
   catch (error) {
     return logger.error('execAction', 'action_error', error, {
@@ -230,7 +230,7 @@ export const _execAction = (
 
 export const initFsmInstance = (instanceId: string, constructorId: string): void => {
   logger.logMethodArgs('initializeMachine', {constructorId, instanceId});
-  const {initial, context} = _getFsmConstructor(constructorId).config;
+  const {initial, context} = getFsmConstructor(constructorId).config;
   contextProvider.setValue<FsmInstance>(
       instanceId,
       {
@@ -247,39 +247,32 @@ export const initFsmInstance = (instanceId: string, constructorId: string): void
   );
 };
 
-export const subscribeSignals = (instanceId: string): Array<ListenerSpec> => {
-  logger.logMethodArgs('subscribeSignals', instanceId);
-  const fsmInstance = _getFsmInstance(instanceId);
-  const fsmConstructor = _getFsmConstructor(fsmInstance.constructorId);
-  const consumerInterface = finiteStateMachineConsumer(instanceId);
+export const subscribeSignals = (
+    instanceId: string,
+    signalList: Array<SignalConfig>,
+    subscribeConstructorSignals = true,
+): Array<ListenerSpec> => {
+  logger.logMethodArgs('subscribeSignals', {instanceId, signalList});
   const listenerList: Array<ListenerSpec> = [];
 
-  for (const signalConfig of fsmInstance.signalList) {
-    if (signalConfig.actions == null) {
-      listenerList.push(
-          contextConsumer.subscribe(
-              signalConfig.signalId,
-              (signalDetail: Partial<typeof fsmInstance.context>): void => {
-                transition(
-                    instanceId,
-                    signalConfig.transition,
-              signalConfig.contextName
-                ? {
-                  [signalConfig.contextName]: signalDetail,
-                }
-                : undefined,
-                );
-              },
-              {receivePrevious: signalConfig.receivePrevious ?? 'No'},
-          ),
-      );
-    }
-    // else
+  if (subscribeConstructorSignals) {
+    signalList = getFsmConstructor(getFsmInstance(instanceId).constructorId).signalList.concat(signalList);
+  }
+
+  for (const signalConfig of signalList) {
     listenerList.push(
         contextConsumer.subscribe(
             signalConfig.signalId,
-            (signalDetail) => {
-              _execAction(fsmConstructor, signalConfig.actions, consumerInterface, signalDetail);
+            (signalDetail: StringifyableRecord): void => {
+              transition(
+                  instanceId,
+                  signalConfig.transition,
+            signalConfig.contextName
+              ? {
+                [signalConfig.contextName]: signalDetail,
+              }
+              : undefined,
+              );
             },
             {receivePrevious: signalConfig.receivePrevious ?? 'No'},
         ),
@@ -297,20 +290,29 @@ export const subscribeSignals = (instanceId: string): Array<ListenerSpec> => {
 //   this._listenerList.length = 0;
 // }
 
-export const defineSignals = <T extends FsmTypeHelper>(
-  instanceId: string,
-  signalList: SingleOrArray<SignalConfig<T['TEventId'], T['TActionName'], T['TContext']>>,
+export const defineConstructorSignals = <T extends FsmTypeHelper>(
+  constructorId: string,
+  signalList: Array<SignalConfig<T['TEventId'], T['TContext']>>,
 ): void => {
-  logger.logMethodArgs('defineSignals', {instanceId, signalList});
-  const instance = _getFsmInstance(instanceId);
-  instance.signalList = instance.signalList.concat(signalList as Array<SignalConfig>);
+  logger.logMethodArgs('defineSignals', {constructorId, signalList: signalList});
+  const fsmConstructor = getFsmConstructor(constructorId);
+  fsmConstructor.signalList = fsmConstructor.signalList.concat(signalList);
+};
+
+export const defineInstanceSignals = <T extends FsmTypeHelper>(
+  instanceId: string,
+  signalList: Array<SignalConfig<T['TEventId'], T['TContext']>>,
+  subscribeConstructorSignals = true,
+): Array<ListenerSpec> => {
+  logger.logMethodArgs('defineSignals', {instanceId, signals: signalList});
+  return subscribeSignals(instanceId, signalList, subscribeConstructorSignals);
 };
 
 export const render = <TState extends string = string>(
   instanceId: string,
   states: {[P in TState]: (() => unknown) | TState},
 ): unknown => {
-  const state = _getFsmInstance(instanceId).state;
+  const state = getFsmInstance(instanceId).state;
   logger.logMethodArgs('render', {instanceId, state: state.target});
   let renderFn = states[state.target as TState];
 
@@ -349,7 +351,6 @@ export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext ext
     getContext: getContext.bind(null, instanceId) as OmitFirstParam<typeof getContext<TContext>>,
     setContext: setContext.bind(null, instanceId) as OmitFirstParam<typeof setContext<TContext>>,
     transition: transition.bind(null, instanceId) as OmitFirstParam<typeof transition<T['TEventId'], TContext>>,
-    defineSignals: defineSignals.bind(null, instanceId) as OmitFirstParam<typeof defineSignals<T>>,
-    subscribeSignals: subscribeSignals.bind(null, instanceId) as OmitFirstParam<typeof subscribeSignals>,
+    defineSignals: defineInstanceSignals.bind(null, instanceId) as OmitFirstParam<typeof defineInstanceSignals<T>>,
   } as const;
 };

@@ -9,6 +9,7 @@ export interface FsmConstructor {
   readonly id: string;
   readonly config: FsmConstructorConfig;
   actionRecord: ActionRecord;
+  signalList: Array<SignalConfig>;
 }
 
 export interface FsmConstructorConfig<
@@ -103,35 +104,25 @@ export interface FsmInstance<
   readonly constructorId: string;
   state: FsmState<TState, TEventId>;
   context: TContext;
-  signalList: Array<SignalConfig>;
 }
 
 export type ActionRecord<T extends FsmTypeHelper = FsmTypeHelper> = {
-  readonly [P in T['TActionName']]?: (
-    finiteStateMachine: FsmConsumerInterface<T>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    signalDetail?: any
-  ) => void | boolean;
+  readonly [P in T['TActionName']]?: (finiteStateMachine: FsmConsumerInterface<T>) => void | boolean;
 };
 
 export type SignalConfig<
   TEventId extends string = string,
-  TActionName extends string = string,
   TContext extends StringifyableRecord = StringifyableRecord
 > = {
   signalId: string;
+  /**
+   * @default `No`
+   */
   receivePrevious?: DebounceType;
-} & (
-  | {
-      transition: TEventId;
-      contextName?: keyof TContext;
-      actions?: never;
-    }
-  | {
-      actions: SingleOrArray<TActionName>;
-      transition?: never;
-    }
-);
+  transition: TEventId;
+  contextName?: keyof TContext;
+  actions?: never;
+};
 
 // type helper
 export type FsmTypeHelper<T extends FsmConstructorConfig = FsmConstructorConfig> = Readonly<{
