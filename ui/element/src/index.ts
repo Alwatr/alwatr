@@ -13,8 +13,6 @@ export * from './mixins/schedule-update-to-frame.js';
 
 export * from './directives/map.js';
 
-export * from './reactive-controllers/finite-state-machine.js';
-
 export * from './lit.js';
 
 globalAlwatr.registeredList.push({
