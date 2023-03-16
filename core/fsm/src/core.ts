@@ -25,7 +25,7 @@ const logger = createLogger(`alwatr/fsm`);
  */
 const fsmConstructorStorage: Record<string, FsmConstructor | undefined> = {};
 
-export function defineConstructor<
+export const defineConstructor = <
   TState extends string = string,
   TEventId extends string = string,
   TActionName extends string = string,
@@ -33,7 +33,8 @@ export function defineConstructor<
 >(
     id: string,
     config: FsmConstructorConfig<TState, TEventId, TActionName, TContext>,
-): FsmConstructorConfig<TState, TEventId, TActionName, TContext> {
+  ): FsmConstructorConfig<TState, TEventId, TActionName, TContext> => {
+  logger.logMethodArgs('defineConstructor', {id, config});
   if (fsmConstructorStorage[id] != null) throw new Error('fsm_exist', {cause: {id}});
   fsmConstructorStorage[id] = {
     id,
@@ -41,7 +42,7 @@ export function defineConstructor<
     actionRecord: {},
   };
   return config;
-}
+};
 
 export const _getFsmInstance = <
   TState extends string = string,
@@ -153,13 +154,14 @@ export const transition = <
   _execAllActions(fsmConstructor, fsmInstance.state, consumerInterface);
 };
 
-export function defineActions<T extends FsmTypeHelper>(constructorId: string, actionRecord: ActionRecord<T>): void {
+export const defineActions = <T extends FsmTypeHelper>(constructorId: string, actionRecord: ActionRecord<T>): void => {
+  logger.logMethodArgs('defineActions', {constructorId, actionRecord});
   const constructor = _getFsmConstructor(constructorId);
   constructor.actionRecord = {
     ...constructor.actionRecord,
     ...actionRecord,
   };
-}
+};
 
 export const _execAllActions = (
     constructor: FsmConstructor,
@@ -200,7 +202,6 @@ export const _execAction = (
     signalDetail?: unknown,
 ): boolean | void => {
   if (actionNames == null) return;
-
   logger.logMethodArgs('execAction', actionNames);
 
   if (Array.isArray(actionNames)) {
@@ -249,6 +250,7 @@ export const initFsmInstance = (constructorId: string, instanceId: string): void
 };
 
 export const subscribeSignals = (instanceId: string): Array<ListenerSpec> => {
+  logger.logMethodArgs('subscribeSignals', instanceId);
   const fsmInstance = _getFsmInstance(instanceId);
   const fsmConstructor = _getFsmConstructor(fsmInstance.constructorId);
   const consumerInterface = finiteStateMachineConsumer(instanceId);
@@ -297,20 +299,21 @@ export const subscribeSignals = (instanceId: string): Array<ListenerSpec> => {
 //   this._listenerList.length = 0;
 // }
 
-export function defineSignals<T extends FsmTypeHelper>(
-    instanceId: string,
-    signalList: SingleOrArray<SignalConfig<T['TEventId'], T['TActionName'], T['TContext']>>,
-): void {
+export const defineSignals = <T extends FsmTypeHelper>(
+  instanceId: string,
+  signalList: SingleOrArray<SignalConfig<T['TEventId'], T['TActionName'], T['TContext']>>,
+): void => {
+  logger.logMethodArgs('defineSignals', {instanceId, signalList});
   const instance = _getFsmInstance(instanceId);
   instance.signalList = instance.signalList.concat(signalList as Array<SignalConfig>);
-}
+};
 
 export const render = <TState extends string = string>(
   instanceId: string,
   states: {[P in TState]: (() => unknown) | TState},
 ): unknown => {
   const state = _getFsmInstance(instanceId).state;
-  logger.logMethodArgs('render', state.target);
+  logger.logMethodArgs('render', {instanceId, state: state.target});
   let renderFn = states[state.target as TState];
 
   if (typeof renderFn === 'string') {
