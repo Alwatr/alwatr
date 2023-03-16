@@ -1,7 +1,6 @@
-import {FiniteStateMachine} from '@alwatr/fsm';
+import {finiteStateMachineConsumer, finiteStateMachineProvider} from '@alwatr/fsm';
 
-const lightMachine = new FiniteStateMachine({
-  id: 'light-machine',
+const config = {
   initial: 'green',
   context: {
     a: <number> 0,
@@ -9,74 +8,100 @@ const lightMachine = new FiniteStateMachine({
   },
   stateRecord: {
     $all: {
-      entry: (): void => console.log('$all entry called'),
-      exit: (): void => console.log('$all exit called'),
+      entry: 'action_all_entry',
+      exit: 'action_all_exit',
       on: {
         POWER_LOST: {
           target: 'flashingRed',
-          actions: (): void => console.log('$all.POWER_LOST actions called'),
+          actions: 'action_all_POWER_LOST',
         },
       },
     },
     green: {
-      entry: (): void => console.log('green entry called'),
-      exit: (): void => console.log('green exit called'),
+      entry: 'action_green_entry',
+      exit: 'action_green_exit',
       on: {
         TIMER: {
           target: 'yellow',
-          actions: (): void => console.log('green.TIMER actions called'),
+          actions: 'action_GREEN_TIMER',
         },
       },
     },
     yellow: {
-      entry: (): void => console.log('yellow entry called'),
-      exit: (): void => console.log('yellow exit called'),
+      entry: 'action_yellow_entry',
+      exit: 'action_yellow_exit',
       on: {
         TIMER: {
           target: 'red',
-          actions: (): void => console.log('yellow.TIMER actions called'),
+          actions: 'action_yellow_TIMER',
         },
       },
     },
     red: {
-      entry: (): void => console.log('red entry called'),
-      exit: (): void => console.log('red exit called'),
+      entry: 'action_red_entry',
+      exit: 'action_red_exit',
       on: {
         TIMER: {
           target: 'green',
-          actions: (): void => console.log('red.TIMER actions called'),
+          actions: 'action_red_TIMER',
         },
       },
     },
     flashingRed: {
-      entry: (): void => console.log('flashingRed entry called'),
-      exit: (): void => console.log('flashingRed exit called'),
+      entry: 'action_flashingRed_entry',
+      exit: 'action_flashingRed_exit',
       on: {
         POWER_BACK: {
           target: 'green',
-          actions: (): void => console.log('flashingRed.POWER_BACK actions called'),
+          actions: 'action_flashingRed_POWER_BACK',
         },
       },
     },
   },
-  signalList: [
-    {
-      signalId: 'ali',
-      actions: (a): void => console.log(a),
-    },
-  ],
+};
+
+finiteStateMachineProvider.defineConstructor('light-machine', config);
+
+finiteStateMachineProvider.defineActions('light-machine', {
+  // entries
+  'action_all_entry': (): void => console.log('$all entry called'),
+  'action_green_entry': (): void => console.log('green entry called'),
+  'action_yellow_entry': (): void => console.log('yellow entry called'),
+  'action_red_entry': (): void => console.log('red entry called'),
+  'action_flashingRed_entry': (): void => console.log('flashingRed entry called'),
+
+  // on actions
+  'action_all_POWER_LOST': (): void => console.log('$all.POWER_LOST actions called'),
+  'action_GREEN_TIMER': (): void => console.log('green.TIMER actions called'),
+  'action_yellow_TIMER': (): void => console.log('yellow.TIMER actions called'),
+  'action_red_TIMER': (): void => console.log('red.TIMER actions called'),
+  'action_flashingRed_POWER_BACK': (): void => console.log('flashingRed.POWER_BACK actions called'),
+
+  // exits
+  'action_all_exit': (): void => console.log('$all exit called'),
+  'action_green_exit': (): void => console.log('green exit called'),
+  'action_yellow_exit': (): void => console.log('yellow exit called'),
+  'action_red_exit': (): void => console.log('red exit called'),
+  'action_flashingRed_exit': (): void => console.log('flashingRed exit called'),
+
+  // signals
+  'action_ali_signal': (a): void => console.log('ali signal ', a),
+
 });
 
+const lightMachineConsumer = finiteStateMachineConsumer('light-machine-50', 'light-machine');
+lightMachineConsumer.defineSignals([
+  {
+    signalId: 'ali',
+    actions: 'test',
+  },
+]);
 
-lightMachine.signal.subscribe((state) => {
-  console.log('****\nstate: %s, context: %s\n****', state, lightMachine.context);
-}, {receivePrevious: 'No'});
+console.log('start ', lightMachineConsumer);
 
-console.log('start');
-
-await lightMachine.transition('TIMER', {a: 1});
-await lightMachine.transition('TIMER', {b: 2});
-await lightMachine.transition('TIMER');
-await lightMachine.transition('POWER_LOST', {a: 4});
-await lightMachine.transition('TIMER', {a: 5, b: 5});
-await lightMachine.transition('POWER_BACK', {a: 6});
+lightMachineConsumer.transition('TIMER', {a: 1});
+lightMachineConsumer.transition('TIMER', {b: 2});
+lightMachineConsumer.transition('TIMER');
+lightMachineConsumer.transition('POWER_LOST', {a: 4});
+lightMachineConsumer.transition('TIMER', {a: 5, b: 5});
+lightMachineConsumer.transition('POWER_BACK', {a: 6});
