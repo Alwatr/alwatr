@@ -304,3 +304,22 @@ export function defineSignals<T extends FsmTypeHelper>(
   const instance = _getFsmInstance(instanceId);
   instance.signalList = instance.signalList.concat(signalList as Array<SignalConfig>);
 }
+
+export const render = <TState extends string = string>(
+  instanceId: string,
+  states: {[P in TState]: (() => unknown) | TState},
+): unknown => {
+  const state = _getFsmInstance(instanceId).state;
+  logger.logMethodArgs('render', state.target);
+  let renderFn = states[state.target as TState];
+
+  if (typeof renderFn === 'string') {
+    renderFn = states[renderFn as TState];
+  }
+
+  if (typeof renderFn === 'function') {
+    return renderFn();
+  }
+
+  return;
+};
