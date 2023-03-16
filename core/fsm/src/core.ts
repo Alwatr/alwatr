@@ -42,3 +42,16 @@ export function defineConstructor<
   };
   return config;
 }
+
+export const _getFsmInstance = <
+  TState extends string = string,
+  TEventId extends string = string,
+  TContext extends StringifyableRecord = StringifyableRecord
+>(
+    instanceId: string,
+  ): FsmInstance<TState, TEventId, TContext> => {
+  logger.logMethodArgs('_getFsmInstance', instanceId);
+  const machineInstance = contextConsumer.getValue<FsmInstance<TState, TEventId, TContext>>(instanceId);
+  if (machineInstance == null) throw new Error('fsm_undefined', {cause: {instanceId}});
+  return machineInstance;
+};
