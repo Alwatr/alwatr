@@ -193,3 +193,38 @@ export const _execAllActions = (
   );
 };
 
+export const _execAction = (
+    constructor: FsmConstructor,
+    actionNames: SingleOrArray<string> | undefined,
+    finiteStateMachine: FsmConsumerInterface,
+    signalDetail?: unknown,
+): boolean | void => {
+  if (actionNames == null) return;
+
+  logger.logMethodArgs('execAction', actionNames);
+
+  if (Array.isArray(actionNames)) {
+    return actionNames
+        .map((actionName) => _execAction(constructor, actionName, finiteStateMachine, signalDetail))
+        .every((r) => r === true);
+  }
+
+  try {
+    const actionFn = constructor.actionRecord[actionNames];
+    if (actionFn == null) {
+      return logger.error('execAction', 'action_not_found', {
+        actionNames,
+        constructorId: constructor.id,
+        instanceId: finiteStateMachine.id,
+      });
+    }
+    return actionFn(finiteStateMachine, signalDetail);
+  }
+  catch (error) {
+    return logger.error('execAction', 'action_error', error, {
+      actionNames,
+      constructorId: constructor.id,
+      instanceId: finiteStateMachine.id,
+    });
+  }
+};
