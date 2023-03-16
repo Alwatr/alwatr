@@ -1,63 +1,53 @@
-import {DebounceType} from '@alwatr/signal';
+import type {finiteStateMachineConsumer} from './core.js';
+import type {DebounceType} from '@alwatr/signal';
+import type {ArrayItems, SingleOrArray, StringifyableRecord} from '@alwatr/type';
 
-import type {SingleOrArray, MaybePromise, StringifyableRecord} from '@alwatr/type';
-
-export type FsmConfig<TState extends string, TEventId extends string, TContext extends StringifyableRecord> = {
+export interface FsmConstructor {
   /**
-   * Machine ID (It is used in the state change signal identifier, so it must be unique).
+   * Constructor id.
    */
-  id: string;
+  readonly id: string;
+  readonly config: FsmConstructorConfig;
+  actionRecord: ActionRecord;
+}
+
+export interface FsmConstructorConfig<
+  TState extends string = string,
+  TEventId extends string = string,
+  TActionName extends string = string,
+  TContext extends StringifyableRecord = StringifyableRecord
+> extends StringifyableRecord {
+  /**
+   * Initial context.
+   */
+  readonly context: TContext;
 
   /**
    * Initial state.
    */
-  initial: TState;
-
-  /**
-   * Initial context.
-   */
-  context: TContext;
+  readonly initial: TState;
 
   /**
    * Define state list
    */
-  stateRecord: StateRecord<TState, TEventId>;
+  readonly stateRecord: StateRecord<TState, TEventId, TActionName>;
+}
 
-  /**
-   * A list of signals ...
-   */
-  signalList?: Array<
-    {
-      signalId: string;
-      receivePrevious?: DebounceType;
-    } & (
-      | {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          actions: SingleOrArray<(signalDetail: any) => MaybePromise<void>>;
-          transition?: never;
-        }
-      | {
-          transition: keyof StateRecord<TState, TEventId>[TState]['on'];
-          contextName?: keyof TContext;
-          actions?: never;
-        }
-    )
-  >;
-
-  autoSignalUnsubscribe?: true;
-};
-
-export type StateRecord<TState extends string, TEventId extends string> = {
-  [S in TState | '$all']: {
+export type StateRecord<
+  TState extends string = string,
+  TEventId extends string = string,
+  TActionName extends string = string
+> = {
+  readonly [S in TState | '$all']: {
     /**
      * On state exit actions
      */
-    exit?: SingleOrArray<() => MaybePromise<void>>;
+    readonly exit?: SingleOrArray<TActionName>;
 
     /**
      * On state entry actions
      */
-    entry?: SingleOrArray<() => MaybePromise<void>>;
+    readonly entry?: SingleOrArray<TActionName>;
 
     /**
      * An object mapping eventId to state.
@@ -76,13 +66,14 @@ export type StateRecord<TState extends string, TEventId extends string> = {
      * }
      * ```
      */
-    on: {
-      [E in TEventId]?: TransitionConfig<TState> | undefined;
+    readonly on: {
+      readonly [E in TEventId]?: TransitionConfig<TState, TActionName> | undefined;
     };
   };
 };
 
-export type StateContext<TState extends string, TEventId extends string> = {
+export interface FsmState<TState extends string = string, TEventId extends string = string>
+  extends StringifyableRecord {
   /**
    * Current state
    */
@@ -95,10 +86,68 @@ export type StateContext<TState extends string, TEventId extends string> = {
    * Transition event
    */
   by: TEventId | 'INIT';
+}
+
+export interface TransitionConfig<TState extends string = string, TActionName extends string = string>
+  extends StringifyableRecord {
+  readonly target?: TState;
+  readonly condition?: TActionName;
+  readonly actions?: SingleOrArray<TActionName>;
+}
+
+export interface FsmInstance<
+  TState extends string = string,
+  TEventId extends string = string,
+  TContext extends StringifyableRecord = StringifyableRecord
+> extends StringifyableRecord {
+  readonly constructorId: string;
+  state: FsmState<TState, TEventId>;
+  context: TContext;
+  signalList: Array<SignalConfig>;
+}
+
+export type ActionRecord<T extends FsmTypeHelper = FsmTypeHelper> = {
+  readonly [P in T['TActionName']]?: (
+    finiteStateMachine: FsmConsumerInterface<T>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    signalDetail?: any
+  ) => void | boolean;
 };
 
-export interface TransitionConfig<TState extends string> {
-  target?: TState;
-  condition?: () => MaybePromise<boolean>;
-  actions?: SingleOrArray<() => MaybePromise<void>>;
-}
+export type SignalConfig<
+  TEventId extends string = string,
+  TActionName extends string = string,
+  TContext extends StringifyableRecord = StringifyableRecord
+> = {
+  signalId: string;
+  receivePrevious?: DebounceType;
+} & (
+  | {
+      transition: TEventId;
+      contextName?: keyof TContext;
+      actions?: never;
+    }
+  | {
+      actions: SingleOrArray<TActionName>;
+      transition?: never;
+    }
+);
+
+// type helper
+
+export type TState<T extends FsmConstructorConfig> = Exclude<keyof T['stateRecord'], '$all'>;
+export type TEventId<T extends FsmConstructorConfig> = keyof T['stateRecord'][TState<T>]['on'];
+export type TActionName<T extends FsmConstructorConfig> = T['stateRecord'][TState<T>]['entry'];
+export type TContext<T extends FsmConstructorConfig> = T['context'];
+
+export type FsmTypeHelper<T extends FsmConstructorConfig = FsmConstructorConfig> = Readonly<{
+  TState: Exclude<keyof T['stateRecord'], '$all'>;
+  TEventId: keyof T['stateRecord'][FsmTypeHelper<T>['TState']]['on'];
+  TActionName: NonNullable<ArrayItems<T['stateRecord'][FsmTypeHelper<T>['TState']]['entry']>>;
+  TContext: T['context'];
+}>;
+
+export type FsmConsumerInterface<
+  T extends FsmTypeHelper = FsmTypeHelper,
+  TContext extends T['TContext'] = T['TContext']
+> = ReturnType<typeof finiteStateMachineConsumer<T, TContext>>;
