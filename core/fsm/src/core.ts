@@ -52,25 +52,23 @@ export const _getFsmInstance = <
     instanceId: string,
   ): FsmInstance<TState, TEventId, TContext> => {
   logger.logMethodArgs('_getFsmInstance', instanceId);
-  const machineInstance = contextConsumer.getValue<FsmInstance<TState, TEventId, TContext>>(instanceId);
-  if (machineInstance == null) throw new Error('fsm_undefined', {cause: {instanceId}});
-  return machineInstance;
+  const fsmInstance = contextConsumer.getValue<FsmInstance<TState, TEventId, TContext>>(instanceId);
+  if (fsmInstance == null) throw new Error('fsm_undefined', {cause: {instanceId}});
+  return fsmInstance;
 };
 
 export const _getFsmConstructor = (constructorId: string): FsmConstructor => {
   logger.logMethodArgs('_getFsmConstructor', constructorId);
-  const machineConstructor = fsmConstructorStorage[constructorId];
-  if (machineConstructor == null) throw new Error('fsm_undefined', {cause: {constructorId: constructorId}});
-  return machineConstructor;
+  const fsmConstructor = fsmConstructorStorage[constructorId];
+  if (fsmConstructor == null) throw new Error('fsm_undefined', {cause: {constructorId: constructorId}});
+  return fsmConstructor;
 };
 
 export const getState = <TState extends string = string, TEventId extends string = string>(
   instanceId: string,
 ): FsmState<TState, TEventId> => {
   logger.logMethodArgs('getState', instanceId);
-  const detail = contextConsumer.getValue<FsmInstance<TState, TEventId>>(instanceId);
-  if (detail == null) throw new Error('fsm_undefined', {cause: {instanceId}});
-  return detail.state;
+  return _getFsmInstance<TState, TEventId>(instanceId).state;
 };
 
 export const getContext = <TContext extends StringifyableRecord = StringifyableRecord>(
@@ -86,14 +84,14 @@ export const setContext = <TContext extends StringifyableRecord = StringifyableR
   notify?: boolean,
 ): void => {
   logger.logMethodArgs('setContext', {instanceId, context});
-  const detail = _getFsmInstance(instanceId);
-  detail.context = {
-    ...detail.context,
+  const fsmInstance = _getFsmInstance(instanceId);
+  fsmInstance.context = {
+    ...fsmInstance.context,
     ...context,
   };
 
   if (notify) {
-    contextProvider.setValue(instanceId, detail, {debounce: 'NextCycle'});
+    contextProvider.setValue(instanceId, fsmInstance, {debounce: 'NextCycle'});
   }
 };
 
