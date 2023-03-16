@@ -152,3 +152,12 @@ export const transition = <
 
   _execAllActions(fsmConstructor, fsmInstance.state, consumerInterface);
 };
+
+export function defineActions<T extends FsmTypeHelper>(constructorId: string, actionRecord: ActionRecord<T>): void {
+  const constructor = _getFsmConstructor(constructorId);
+  constructor.actionRecord = {
+    ...constructor.actionRecord,
+    ...actionRecord,
+  };
+}
+
