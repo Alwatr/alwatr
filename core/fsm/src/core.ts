@@ -95,3 +95,60 @@ export const setContext = <TContext extends StringifyableRecord = StringifyableR
     contextProvider.setValue(instanceId, detail, {debounce: 'NextCycle'});
   }
 };
+
+export const transition = <
+  TEventId extends string = string,
+  TContext extends StringifyableRecord = StringifyableRecord
+>(
+    instanceId: string,
+    event: TEventId,
+    context?: Partial<TContext>,
+  ): void => {
+  const fsmInstance = _getFsmInstance(instanceId);
+  const fsmConstructor = _getFsmConstructor(fsmInstance.constructorId);
+  const fromState = fsmInstance.state.target;
+  const stateRecord = fsmConstructor.config.stateRecord;
+  const transitionConfig = stateRecord[fromState]?.on[event] ?? stateRecord.$all.on[event];
+
+  logger.logMethodArgs('transition', {instanceId, fromState, event, context, target: transitionConfig?.target});
+
+  if (context !== undefined) {
+    fsmInstance.context = {
+      ...fsmInstance.context,
+      ...context,
+    };
+  }
+
+  if (transitionConfig == null) {
+    logger.incident(
+        'transition',
+        'invalid_target_state',
+        'Defined target state for this event not found in state config',
+        {
+          fromState,
+          event,
+          events: {
+            ...stateRecord.$all?.on,
+            ...stateRecord[fromState]?.on,
+          },
+        },
+    );
+    return;
+  }
+
+  const consumerInterface = finiteStateMachineConsumer(instanceId);
+
+  if (transitionConfig.condition) {
+    if (_execAction(fsmConstructor, transitionConfig.condition, consumerInterface) === false) return;
+  }
+
+  fsmInstance.state = {
+    target: transitionConfig.target ?? fromState,
+    from: fromState,
+    by: event,
+  };
+
+  contextProvider.setValue(instanceId, fsmInstance, {debounce: 'NextCycle'});
+
+  _execAllActions(fsmConstructor, fsmInstance.state, consumerInterface);
+};
