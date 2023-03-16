@@ -247,3 +247,44 @@ export const initFsmInstance = (constructorId: string, instanceId: string): void
       {debounce: 'NextCycle'},
   );
 };
+
+export const subscribeSignals = (instanceId: string): Array<ListenerSpec> => {
+  const fsmInstance = _getFsmInstance(instanceId);
+  const fsmConstructor = _getFsmConstructor(fsmInstance.constructorId);
+  const consumerInterface = finiteStateMachineConsumer(instanceId);
+  const listenerList: Array<ListenerSpec> = [];
+
+  for (const signalConfig of fsmInstance.signalList) {
+    if (signalConfig.actions == null) {
+      listenerList.push(
+          contextConsumer.subscribe(
+              signalConfig.signalId,
+              (signalDetail: Partial<typeof fsmInstance.context>): void => {
+                transition(
+                    instanceId,
+                    signalConfig.transition,
+              signalConfig.contextName
+                ? {
+                  [signalConfig.contextName]: signalDetail,
+                }
+                : undefined,
+                );
+              },
+              {receivePrevious: signalConfig.receivePrevious ?? 'No'},
+          ),
+      );
+    }
+    // else
+    listenerList.push(
+        contextConsumer.subscribe(
+            signalConfig.signalId,
+            (signalDetail) => {
+              _execAction(fsmConstructor, signalConfig.actions, consumerInterface, signalDetail);
+            },
+            {receivePrevious: signalConfig.receivePrevious ?? 'No'},
+        ),
+    );
+  }
+
+  return listenerList;
+};
