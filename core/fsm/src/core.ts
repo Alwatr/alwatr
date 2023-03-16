@@ -228,3 +228,22 @@ export const _execAction = (
     });
   }
 };
+
+export const initFsmInstance = (constructorId: string, instanceId: string): void => {
+  logger.logMethodArgs('initializeMachine', {constructorId, instanceId});
+  const {initial, context} = _getFsmConstructor(constructorId).config;
+  contextProvider.setValue<FsmInstance>(
+      instanceId,
+      {
+        constructorId,
+        state: {
+          target: initial,
+          from: initial,
+          by: 'INIT',
+        },
+        context,
+        signalList: [],
+      },
+      {debounce: 'NextCycle'},
+  );
+};
