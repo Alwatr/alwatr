@@ -134,12 +134,6 @@ export type SignalConfig<
 );
 
 // type helper
-
-export type TState<T extends FsmConstructorConfig> = Exclude<keyof T['stateRecord'], '$all'>;
-export type TEventId<T extends FsmConstructorConfig> = keyof T['stateRecord'][TState<T>]['on'];
-export type TActionName<T extends FsmConstructorConfig> = T['stateRecord'][TState<T>]['entry'];
-export type TContext<T extends FsmConstructorConfig> = T['context'];
-
 export type FsmTypeHelper<T extends FsmConstructorConfig = FsmConstructorConfig> = Readonly<{
   TState: Exclude<keyof T['stateRecord'], '$all'>;
   TEventId: keyof T['stateRecord'][FsmTypeHelper<T>['TState']]['on'];
