@@ -71,3 +71,10 @@ export const getState = <TState extends string = string, TEventId extends string
   if (detail == null) throw new Error('fsm_undefined', {cause: {instanceId}});
   return detail.state;
 };
+
+export const getContext = <TContext extends StringifyableRecord = StringifyableRecord>(
+  instanceId: string,
+): TContext => {
+  logger.logMethodArgs('getContext', instanceId);
+  return _getFsmInstance(instanceId).context as TContext;
+};
