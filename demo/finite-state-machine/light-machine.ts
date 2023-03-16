@@ -90,6 +90,15 @@ finiteStateMachineProvider.defineActions<LightMachine>('light_machine', {
   'action_flashingRed_POWER_BACK': (): void => console.log('flashingRed.POWER_BACK actions called'),
 });
 
+finiteStateMachineProvider.defineSignals<LightMachine>('light_machine', [
+  {
+    signalId: 'new_content_received',
+    transition: 'POWER_BACK',
+    contextName: 'a',
+    receivePrevious: 'NextCycle',
+  },
+]);
+
 // signals
 // 'action_ali_signal': (a): void => console.log('ali signal ', a),
 
@@ -98,13 +107,18 @@ const lightMachineConsumer = finiteStateMachineConsumer<LightMachine>('light_mac
 
 lightMachineConsumer.defineSignals([
   {
-    signalId: 'ali',
+    signalId: 'power_button_click_event',
     transition: 'POWER_BACK',
-    // contextName: 'a',
+    receivePrevious: 'No',
+  },
+  {
+    signalId: 'jafang',
+    callback: (signalDetail) => {
+      console.log(signalDetail);
+    },
+    receivePrevious: 'NextCycle',
   },
 ]);
-
-lightMachineConsumer.subscribeSignals();
 
 console.log('start', lightMachineConsumer.getState());
 
