@@ -296,3 +296,11 @@ export const subscribeSignals = (instanceId: string): Array<ListenerSpec> => {
 //   }
 //   this._listenerList.length = 0;
 // }
+
+export function defineSignals<T extends FsmTypeHelper>(
+    instanceId: string,
+    signalList: SingleOrArray<SignalConfig<T['TEventId'], T['TActionName'], T['TContext']>>,
+): void {
+  const instance = _getFsmInstance(instanceId);
+  instance.signalList = instance.signalList.concat(signalList as Array<SignalConfig>);
+}
