@@ -62,3 +62,12 @@ export const _getFsmConstructor = (constructorId: string): FsmConstructor => {
   if (machineConstructor == null) throw new Error('fsm_undefined', {cause: {constructorId: constructorId}});
   return machineConstructor;
 };
+
+export const getState = <TState extends string = string, TEventId extends string = string>(
+  instanceId: string,
+): FsmState<TState, TEventId> => {
+  logger.logMethodArgs('getState', instanceId);
+  const detail = contextConsumer.getValue<FsmInstance<TState, TEventId>>(instanceId);
+  if (detail == null) throw new Error('fsm_undefined', {cause: {instanceId}});
+  return detail.state;
+};
