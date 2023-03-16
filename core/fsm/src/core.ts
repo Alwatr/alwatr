@@ -25,3 +25,20 @@ const logger = createLogger(`alwatr/fsm`);
  */
 const fsmConstructorStorage: Record<string, FsmConstructor | undefined> = {};
 
+export function defineConstructor<
+  TState extends string = string,
+  TEventId extends string = string,
+  TActionName extends string = string,
+  TContext extends StringifyableRecord = StringifyableRecord
+>(
+    id: string,
+    config: FsmConstructorConfig<TState, TEventId, TActionName, TContext>,
+): FsmConstructorConfig<TState, TEventId, TActionName, TContext> {
+  if (fsmConstructorStorage[id] != null) throw new Error('fsm_exist', {cause: {id}});
+  fsmConstructorStorage[id] = {
+    id,
+    config,
+    actionRecord: {},
+  };
+  return config;
+}
