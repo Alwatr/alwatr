@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 
 import {random} from '@alwatr/math';
+import {delay} from '@alwatr/util';
 
 import {bench} from './bench.js';
 
@@ -40,9 +41,15 @@ function test_for_of_keys(): void {
 }
 
 prepare();
-await bench('for-in', test_for_in);
-await bench('for-of-values', test_for_of_values);
-await bench('for-of-keys', test_for_of_keys);
+
+gc?.(); await delay(1500);
+bench('for-of-values', test_for_of_values);
+
+gc?.(); await delay(1500);
+bench('for-of-keys', test_for_of_keys);
+
+gc?.(); await delay(1500);
+bench('for-in', test_for_in);
 
 globalThis.document?.body.append(' Done. Check the console.');
 

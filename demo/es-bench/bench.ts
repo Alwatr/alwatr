@@ -1,12 +1,13 @@
-import {delay} from '@alwatr/util';
-
 import type {MaybePromise} from '@alwatr/type';
 
-export async function bench(name: string, func: () => MaybePromise<void>): Promise<void> {
-  await delay(1_000);
-  console.time(name);
-  for (let i = 100_000; i; i--) {
-    await func();
+export function bench(name: string, func: () => MaybePromise<void>): void {
+  const startMemory = process.memoryUsage.rss();
+  const startTime = performance.now();
+  for (let i = 1_000_000; i; i--) {
+    func();
   }
-  console.timeEnd(name);
+  const duration = Math.round((performance.now() - startTime) * 100) / 100;
+  const memoryUsage = Math.round((process.memoryUsage.rss() - startMemory) / 10) / 100;
+
+  console.log(`run ${name} 1,000,000 time in ${duration}ms with ${memoryUsage}kb`);
 }
