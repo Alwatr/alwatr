@@ -55,3 +55,10 @@ export const _getFsmInstance = <
   if (machineInstance == null) throw new Error('fsm_undefined', {cause: {instanceId}});
   return machineInstance;
 };
+
+export const _getFsmConstructor = (constructorId: string): FsmConstructor => {
+  logger.logMethodArgs('_getFsmConstructor', constructorId);
+  const machineConstructor = fsmConstructorStorage[constructorId];
+  if (machineConstructor == null) throw new Error('fsm_undefined', {cause: {constructorId: constructorId}});
+  return machineConstructor;
+};
