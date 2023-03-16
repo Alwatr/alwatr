@@ -288,3 +288,11 @@ export const subscribeSignals = (instanceId: string): Array<ListenerSpec> => {
 
   return listenerList;
 };
+
+// protected unsubscribeSignals(): void {
+//   if (this._listenerList.length === 0) return;
+//   for (const listener of this._listenerList) {
+//     eventListener.unsubscribe(listener);
+//   }
+//   this._listenerList.length = 0;
+// }
