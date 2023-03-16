@@ -323,3 +323,32 @@ export const render = <TState extends string = string>(
 
   return;
 };
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext extends T['TContext'] = T['TContext']>(
+  instanceId: string,
+  makeFromConstructor?: string,
+) => {
+  logger.logMethodArgs('stateMachineLookup', instanceId);
+
+  const machineInstance = contextConsumer.getValue<FsmInstance>(instanceId);
+  if (machineInstance == null) {
+    // instance not initialized.
+    if (makeFromConstructor == null) {
+      throw new Error('fsm_undefined', {cause: {instanceId}});
+    }
+    initFsmInstance(instanceId, makeFromConstructor);
+  }
+
+  return {
+    id: instanceId,
+    constructorId: <string>machineInstance?.constructorId ?? makeFromConstructor,
+    render: render.bind(null, instanceId) as OmitFirstParam<typeof render<T['TState']>>,
+    getState: getState.bind(null, instanceId) as OmitFirstParam<typeof getState<T['TState'], T['TEventId']>>,
+    getContext: getContext.bind(null, instanceId) as OmitFirstParam<typeof getContext<TContext>>,
+    setContext: setContext.bind(null, instanceId) as OmitFirstParam<typeof setContext<TContext>>,
+    transition: transition.bind(null, instanceId) as OmitFirstParam<typeof transition<T['TEventId'], TContext>>,
+    defineSignals: defineSignals.bind(null, instanceId) as OmitFirstParam<typeof defineSignals<T>>,
+    subscribeSignals: subscribeSignals.bind(null, instanceId) as OmitFirstParam<typeof subscribeSignals>,
+  } as const;
+};
