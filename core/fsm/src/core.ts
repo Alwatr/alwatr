@@ -78,3 +78,20 @@ export const getContext = <TContext extends StringifyableRecord = StringifyableR
   logger.logMethodArgs('getContext', instanceId);
   return _getFsmInstance(instanceId).context as TContext;
 };
+
+export const setContext = <TContext extends StringifyableRecord = StringifyableRecord>(
+  instanceId: string,
+  context: Partial<TContext>,
+  notify?: boolean,
+): void => {
+  logger.logMethodArgs('setContext', {instanceId, context});
+  const detail = _getFsmInstance(instanceId);
+  detail.context = {
+    ...detail.context,
+    ...context,
+  };
+
+  if (notify) {
+    contextProvider.setValue(instanceId, detail, {debounce: 'NextCycle'});
+  }
+};
