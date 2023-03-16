@@ -230,7 +230,7 @@ export const _execAction = (
   }
 };
 
-export const initFsmInstance = (constructorId: string, instanceId: string): void => {
+export const initFsmInstance = (instanceId: string, constructorId: string): void => {
   logger.logMethodArgs('initializeMachine', {constructorId, instanceId});
   const {initial, context} = _getFsmConstructor(constructorId).config;
   contextProvider.setValue<FsmInstance>(
