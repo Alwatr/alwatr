@@ -161,3 +161,35 @@ export function defineActions<T extends FsmTypeHelper>(constructorId: string, ac
   };
 }
 
+export const _execAllActions = (
+    constructor: FsmConstructor,
+    state: FsmState,
+    consumerInterface: FsmConsumerInterface,
+): void => {
+  logger.logMethodArgs('_execAllActions', consumerInterface.id);
+
+  const stateRecord = constructor.config.stateRecord;
+
+  if (state.by === 'INIT') {
+    _execAction(constructor, stateRecord.$all.entry, consumerInterface);
+    _execAction(constructor, stateRecord[state.target]?.entry, consumerInterface);
+    return;
+  }
+
+  // else
+  if (state.from !== state.target) {
+    _execAction(constructor, stateRecord.$all.exit, consumerInterface);
+    _execAction(constructor, stateRecord[state.from]?.exit, consumerInterface);
+    _execAction(constructor, stateRecord.$all.entry, consumerInterface);
+    _execAction(constructor, stateRecord[state.target]?.entry, consumerInterface);
+  }
+
+  _execAction(
+      constructor,
+    stateRecord[state.from]?.on[state.by] != null
+      ? stateRecord[state.from].on[state.by]?.actions
+      : stateRecord.$all.on[state.by]?.actions,
+    consumerInterface,
+  );
+};
+
