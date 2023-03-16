@@ -301,7 +301,7 @@ export const untilNext = <T extends Stringifyable>(signalId: string): Promise<T>
  * setContextProvider('content-change', async (requestParam) => await fetchNewContent(requestParam));
  * ```
  */
-export const setContextProvider = <TContext extends Stringifyable, TRquest extends Stringifyable>(
+export const setContextProvider = <TContext extends Stringifyable, TRquest extends Stringifyable = null>(
   signalId: string,
   signalProvider: ProviderFunction<TRquest, TContext | void>,
   options: Partial<ProviderOptions> = {},
