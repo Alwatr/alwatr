@@ -113,7 +113,7 @@ lightMachineConsumer.defineSignals([
   },
   {
     signalId: 'jafang',
-    callback: (signalDetail) => {
+    callback: (signalDetail: Record<string, string>): void => {
       console.log(signalDetail);
     },
     receivePrevious: 'NextCycle',

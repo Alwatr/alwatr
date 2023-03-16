@@ -3,13 +3,14 @@ import {ListenerSpec, contextProvider, contextConsumer} from '@alwatr/signal';
 
 import type {
   ActionRecord,
+  ConstructorSignalConfig,
   FsmConstructor,
   FsmConstructorConfig,
   FsmConsumerInterface,
   FsmInstance,
   FsmState,
   FsmTypeHelper,
-  SignalConfig,
+  InstanceSignalConfig,
 } from './type.js';
 import type {OmitFirstParam, SingleOrArray, StringifyableRecord} from '@alwatr/type';
 
@@ -249,31 +250,33 @@ export const initFsmInstance = (instanceId: string, constructorId: string): void
 
 export const subscribeSignals = (
     instanceId: string,
-    signalList: Array<SignalConfig>,
+    signalList: Array<InstanceSignalConfig>,
     subscribeConstructorSignals = true,
 ): Array<ListenerSpec> => {
   logger.logMethodArgs('subscribeSignals', {instanceId, signalList});
   const listenerList: Array<ListenerSpec> = [];
 
   if (subscribeConstructorSignals) {
-    signalList = getFsmConstructor(getFsmInstance(instanceId).constructorId).signalList.concat(signalList);
+    signalList = signalList.concat(getFsmConstructor(getFsmInstance(instanceId).constructorId).signalList);
   }
 
   for (const signalConfig of signalList) {
     listenerList.push(
         contextConsumer.subscribe(
             signalConfig.signalId,
-            (signalDetail: StringifyableRecord): void => {
-              transition(
-                  instanceId,
-                  signalConfig.transition,
-            signalConfig.contextName
-              ? {
-                [signalConfig.contextName]: signalDetail,
-              }
-              : undefined,
-              );
-            },
+            signalConfig.callback
+              ? signalConfig.callback
+              : (signalDetail: StringifyableRecord): void => {
+                transition(
+                    instanceId,
+                    signalConfig.transition,
+                    signalConfig.contextName
+                      ? {
+                        [signalConfig.contextName]: signalDetail,
+                      }
+                      : undefined,
+                );
+              },
             {receivePrevious: signalConfig.receivePrevious ?? 'No'},
         ),
     );
@@ -292,7 +295,7 @@ export const subscribeSignals = (
 
 export const defineConstructorSignals = <T extends FsmTypeHelper>(
   constructorId: string,
-  signalList: Array<SignalConfig<T['TEventId'], T['TContext']>>,
+  signalList: Array<ConstructorSignalConfig<T['TEventId'], T['TContext']>>,
 ): void => {
   logger.logMethodArgs('defineSignals', {constructorId, signalList: signalList});
   const fsmConstructor = getFsmConstructor(constructorId);
@@ -301,11 +304,11 @@ export const defineConstructorSignals = <T extends FsmTypeHelper>(
 
 export const defineInstanceSignals = <T extends FsmTypeHelper>(
   instanceId: string,
-  signalList: Array<SignalConfig<T['TEventId'], T['TContext']>>,
+  signalList: Array<InstanceSignalConfig<T['TEventId'], T['TContext']>>,
   subscribeConstructorSignals = true,
 ): Array<ListenerSpec> => {
   logger.logMethodArgs('defineSignals', {instanceId, signals: signalList});
-  return subscribeSignals(instanceId, signalList, subscribeConstructorSignals);
+  return subscribeSignals(instanceId, signalList as Array<InstanceSignalConfig>, subscribeConstructorSignals);
 };
 
 export const render = <TState extends string = string>(
