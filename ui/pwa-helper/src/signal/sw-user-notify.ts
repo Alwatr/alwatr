@@ -12,7 +12,7 @@ eventListener.subscribe('service_worker_registered', async () => {
     }
     localStorage.removeItem('notify_new_version');
     snackbarSignalTrigger.request({
-      message: `به نسخه ${replaceNumber(_ALWATR_VERSION_.replace('-beta', ' بتا '))} خوش‌آمدید.`,
+      message: `به نسخه ${replaceNumber(_ALWATR_VERSION_.replace('-beta.', ' بتا '))} خوش‌آمدید.`,
     });
   }
 });
