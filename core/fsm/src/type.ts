@@ -9,7 +9,7 @@ export interface FsmConstructor {
   readonly id: string;
   readonly config: FsmConstructorConfig;
   actionRecord: ActionRecord;
-  signalList: Array<ConstructorSignalConfig>;
+  signalList: Array<SignalConfig>;
 }
 
 export interface FsmConstructorConfig<
@@ -110,23 +110,7 @@ export type ActionRecord<T extends FsmTypeHelper = FsmTypeHelper> = {
   readonly [P in T['TActionName']]?: (finiteStateMachine: FsmConsumerInterface<T>) => void | boolean;
 };
 
-export type ConstructorSignalConfig<
-  TEventId extends string = string,
-  TContext extends StringifyableRecord = StringifyableRecord
-> = {
-  signalId: string;
-  /**
-   * @default `No`
-   */
-  receivePrevious?: DebounceType;
-  transition: TEventId;
-  contextName?: keyof TContext;
-};
-
-export type InstanceSignalConfig<
-  TEventId extends string = string,
-  TContext extends StringifyableRecord = StringifyableRecord
-> = {
+export type SignalConfig<T extends FsmTypeHelper = FsmTypeHelper> = {
   signalId?: string;
   /**
    * @default `No`
@@ -134,13 +118,13 @@ export type InstanceSignalConfig<
   receivePrevious?: DebounceType;
 } & (
   | {
-      transition: TEventId;
-      contextName?: keyof TContext;
+      transition: T['TEventId'];
+      contextName?: keyof T['TContext'];
       callback?: never;
     }
   | {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      callback: (detail: any) => void;
+      callback: (detail: any, fsmInstance: FsmConsumerInterface<T>) => void;
       transition?: never;
     }
 );
