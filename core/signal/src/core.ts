@@ -124,8 +124,8 @@ export const subscribe = <T extends Stringifyable>(
     callback: listenerCallback,
   };
 
-  const callbackCall = signal.detail !== undefined && options.receivePrevious !== 'No';
-  if (callbackCall) {
+  const execCallback = signal.detail !== undefined && options.receivePrevious !== 'No' && options.disabled !== true;
+  if (execCallback) {
     // Run callback for old dispatch signal
 
     const callback = (): void => {
@@ -148,7 +148,7 @@ export const subscribe = <T extends Stringifyable>(
   }
 
   // if once then must remove listener after fist callback called! then why push it to listenerList?!
-  if (!(callbackCall && options.once)) {
+  if (!(execCallback && options.once)) {
     if (options.priority === true) {
       signal.listenerList.unshift(listener);
     }
