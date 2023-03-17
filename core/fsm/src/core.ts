@@ -1,5 +1,6 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {ListenerSpec, contextProvider, contextConsumer} from '@alwatr/signal';
+import {SubscribeOptions} from '@alwatr/signal/type.js';
 
 import type {
   ActionRecord,
@@ -263,7 +264,7 @@ export const subscribeSignals = (
   for (const signalConfig of signalList) {
     listenerList.push(
         contextConsumer.subscribe(
-            signalConfig.signalId,
+            signalConfig.signalId ?? instanceId,
             signalConfig.callback
               ? signalConfig.callback
               : (signalDetail: StringifyableRecord): void => {
@@ -330,6 +331,15 @@ export const render = <TState extends string = string>(
   return;
 };
 
+export const subscribe = (
+    instanceId: string,
+    callback: () => void,
+    options?: Partial<SubscribeOptions>,
+): ListenerSpec => {
+  logger.logMethodArgs('subscribe', instanceId);
+  return contextConsumer.subscribe(instanceId, callback, options);
+};
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext extends T['TContext'] = T['TContext']>(
   instanceId: string,
@@ -350,6 +360,7 @@ export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext ext
     id: instanceId,
     constructorId: <string>machineInstance?.constructorId ?? makeFromConstructor,
     render: render.bind(null, instanceId) as OmitFirstParam<typeof render<T['TState']>>,
+    subscribe: subscribe.bind(null, instanceId) as OmitFirstParam<typeof subscribe>,
     getState: getState.bind(null, instanceId) as OmitFirstParam<typeof getState<T['TState'], T['TEventId']>>,
     getContext: getContext.bind(null, instanceId) as OmitFirstParam<typeof getContext<TContext>>,
     setContext: setContext.bind(null, instanceId) as OmitFirstParam<typeof setContext<TContext>>,

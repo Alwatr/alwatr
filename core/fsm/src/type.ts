@@ -127,7 +127,7 @@ export type InstanceSignalConfig<
   TEventId extends string = string,
   TContext extends StringifyableRecord = StringifyableRecord
 > = {
-  signalId: string;
+  signalId?: string;
   /**
    * @default `No`
    */
