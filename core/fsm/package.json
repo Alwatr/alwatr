@@ -1,18 +1,21 @@
 {
   "name": "@alwatr/fsm",
   "version": "0.30.0",
-  "description": "Managing invocations finite-state machines as actors written in tiny TypeScript module.",
+  "description": "Managing invocations finite-state machines for lit-element written in tiny TypeScript module.",
   "keywords": [
     "state",
     "finite",
     "machine",
+    "lit",
+    "lit-element",
+    "lit-html",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "core.js",
+  "main": "index.js",
   "type": "module",
-  "types": "core.d.ts",
+  "types": "index.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "license": "MIT",
   "files": [

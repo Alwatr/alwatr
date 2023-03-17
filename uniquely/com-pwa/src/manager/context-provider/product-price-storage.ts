@@ -1,53 +1,52 @@
 import {serviceRequest, type FetchOptions} from '@alwatr/fetch';
-import {contextConsumer, DispatchOptions, requestableContextProvider} from '@alwatr/signal';
+import {DispatchOptions, requestableContextProvider} from '@alwatr/signal';
+import {Product} from '@alwatr/type/src/customer-order-management.js';
 
 import {config} from '../../config.js';
 import {logger} from '../logger.js';
 
-import type {AlwatrDocumentStorage, User} from '@alwatr/type';
-import type {Order} from '@alwatr/type/customer-order-management.js';
+import type {AlwatrDocumentStorage} from '@alwatr/type';
 
-const orderStorageContextProvider =
-  requestableContextProvider.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
+const productStorageContextProvider = requestableContextProvider.bind<
+  AlwatrDocumentStorage<Product>,
+  {productStorageName: string}
+>('product-storage-context');
 
-const userContextConsumer = contextConsumer.bind<User>('user-context');
-
-orderStorageContextProvider.setProvider(async () => {
-  logger.logMethod('requestOrderStorageContext');
-  let context = orderStorageContextProvider.getValue();
+productStorageContextProvider.setProvider(async (args) => {
+  logger.logMethod('requestProductStorageContext');
+  let context = productStorageContextProvider.getValue();
 
   if (context.state === 'pending' || context.state === 'reloading') return;
 
-  const userContext = userContextConsumer.getValue() ?? (await userContextConsumer.untilChange());
   const dispatchOptions: Partial<DispatchOptions> = {debounce: 'NextCycle'};
   const fetchOption: FetchOptions = {
     ...config.fetchContextOptions,
-    url: config.api + '/order-list/',
+    url: config.api + '/product-list/',
     queryParameters: {
-      userId: userContext.id,
+      storage: args.productStorageName,
     },
   };
 
   if (context.state === 'initial') {
     context = {state: 'pending'};
-    orderStorageContextProvider.setValue(context, dispatchOptions);
+    productStorageContextProvider.setValue(context, dispatchOptions);
     try {
       fetchOption.cacheStrategy = 'cache_only';
-      const response = await serviceRequest(fetchOption) as AlwatrDocumentStorage<Order>;
+      const response = (await serviceRequest(fetchOption)) as AlwatrDocumentStorage<Product>;
       context = {
         state: 'reloading',
         content: response,
       };
-      orderStorageContextProvider.setValue(context, dispatchOptions);
+      productStorageContextProvider.setValue(context, dispatchOptions);
     }
     catch (err) {
       if ((err as Error).message === 'fetch_cache_not_found') {
-        logger.logOther('requestOrderStorageContext:', 'fetch_cache_not_found');
+        logger.logOther('requestProductStorageContext:', 'fetch_cache_not_found');
       }
       else {
-        logger.error('requestOrderStorageContext', 'fetch_failed', err);
+        logger.error('requestProductStorageContext', 'fetch_failed', err);
         context = {state: 'error'};
-        orderStorageContextProvider.setValue(context, dispatchOptions);
+        productStorageContextProvider.setValue(context, dispatchOptions);
         return;
       }
     }
@@ -58,13 +57,13 @@ orderStorageContextProvider.setProvider(async () => {
       state: 'error',
       content: context.content, // maybe offline exist
     };
-    orderStorageContextProvider.setValue(context, dispatchOptions);
+    productStorageContextProvider.setValue(context, dispatchOptions);
     return;
   }
 
   try {
     fetchOption.cacheStrategy = 'update_cache';
-    const response = await serviceRequest(fetchOption) as AlwatrDocumentStorage<Order>;
+    const response = (await serviceRequest(fetchOption)) as AlwatrDocumentStorage<Product>;
     if (
       context.content != null &&
       response.meta?.lastUpdated != undefined &&
@@ -82,7 +81,7 @@ orderStorageContextProvider.setProvider(async () => {
         content: response,
       };
     }
-    orderStorageContextProvider.setValue(context, dispatchOptions);
+    productStorageContextProvider.setValue(context, dispatchOptions);
   }
   catch (err) {
     logger.error('fetchContext', 'fetch_failed', err);
@@ -90,7 +89,7 @@ orderStorageContextProvider.setProvider(async () => {
       state: 'error',
       content: context.content, // maybe offline exist
     };
-    orderStorageContextProvider.setValue(context, dispatchOptions);
+    productStorageContextProvider.setValue(context, dispatchOptions);
     return;
   }
 });

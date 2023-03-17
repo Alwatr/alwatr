@@ -7,10 +7,7 @@ import '@alwatr/ui-kit/style/theme/palette-270.css';
 
 import './page/home.js'; // for perf
 import './stuff/app-footer.js';
-import {pageNewOrderStateMachine} from '../manager/controller/new-order.js';
-import {pageOrderDetailStateMachine} from '../manager/controller/order-detail.js';
-import {pageOrderListStateMachine} from '../manager/controller/order-list.js';
-import {pageOrderTrackingFsm} from '../manager/controller/order-tracking.js';
+import {topAppBarContextProvider} from '../manager/context.js';
 
 import type {RoutesConfig} from '@alwatr/router';
 
@@ -37,33 +34,27 @@ class AlwatrPwa extends AlwatrPwaElement {
         return html`<alwatr-page-404 unresolved>...</alwatr-page-404>`;
       },
       'order-list': () => {
-        if (pageOrderListStateMachine.state.to === 'unresolved') {
-          pageOrderListStateMachine.transition('IMPORT');
-          import('./page/order-list.js');
-        }
+        topAppBarContextProvider.setValue({headlineKey: 'loading'});
+        import('./page/order-list.js');
         return html`<alwatr-page-order-list unresolved>...</alwatr-page-order-list>`;
       },
       'order-detail': (routeContext) => {
-        if (pageOrderDetailStateMachine.state.to === 'unresolved') {
-          pageOrderDetailStateMachine.transition('IMPORT');
-          import('./page/order-detail.js');
-        }
-        pageOrderDetailStateMachine.transition('SHOW_DETAIL', {orderId: +routeContext.sectionList[1]});
-        return html`<alwatr-page-order-detail unresolved>...</alwatr-page-order-detail>`;
+        topAppBarContextProvider.setValue({headlineKey: 'loading'});
+        import('./page/order-detail.js');
+        return html`<alwatr-page-order-detail
+          .orderId=${+routeContext.sectionList[1]}
+          unresolved>...</alwatr-page-order-detail>`;
       },
       'order-tracking': (routeContext) => {
-        if (pageOrderTrackingFsm.state.to === 'unresolved') {
-          pageOrderTrackingFsm.transition('IMPORT');
-          import('./page/order-tracking.js');
-        }
-        pageOrderTrackingFsm.transition('SHOW_TRACKING', {orderId: +routeContext.sectionList[1]});
-        return html`<alwatr-page-order-tracking unresolved>...</alwatr-page-order-tracking>`;
+        topAppBarContextProvider.setValue({headlineKey: 'loading'});
+        import('./page/order-tracking.js');
+        return html`<alwatr-page-order-tracking
+          .orderId=${+routeContext.sectionList[1]}
+          unresolved>...</alwatr-page-order-tracking>`;
       },
       'new-order': () => {
-        if (pageNewOrderStateMachine.state.to === 'unresolved') {
-          pageNewOrderStateMachine.transition('IMPORT');
-          import('./page/new-order.js');
-        }
+        topAppBarContextProvider.setValue({headlineKey: 'loading'});
+        import('./page/new-order.js');
         return html`<alwatr-page-new-order unresolved>...</alwatr-page-new-order>`;
       },
     },

@@ -18,7 +18,6 @@ import '@alwatr/ui-kit/card/surface.js';
 import './order-shipping-form.js';
 import './order-status-box.js';
 import {config} from '../../config.js';
-import {qtyUpdate} from '../../manager/controller/new-order.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order, OrderShippingInfo, OrderDraft, OrderItem, Product} from '@alwatr/type/customer-order-management.js';
@@ -251,7 +250,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     const target = event.target as AlwatrTextField;
     if (target == null) return;
     const qty = target.value && +target.value ? +target.value : 100;
-    qtyUpdate(orderItem, qty - orderItem.qty);
+    // qtyUpdate(orderItem, qty - orderItem.qty); // FIXME:
     target.value = qty + '';
     this.requestUpdate();
   }}></alwatr-text-field>
