@@ -1,4 +1,5 @@
 import {finiteStateMachineConsumer, finiteStateMachineProvider, type FsmTypeHelper} from '@alwatr/fsm';
+import {delay} from '@alwatr/util';
 
 // Provider
 const lightMachineConstructor = finiteStateMachineProvider.defineConstructor('light_machine', {
@@ -118,15 +119,25 @@ lightMachineConsumer.defineSignals([
     },
     receivePrevious: 'NextCycle',
   },
+  {
+    callback: (): void => {
+      console.log('subscribe_callback', lightMachineConsumer.getState());
+    },
+    receivePrevious: 'NextCycle',
+  },
 ]);
 
 console.log('start', lightMachineConsumer.getState());
 
-// lightMachineConsumer
-
+await delay(1000);
 lightMachineConsumer.transition('TIMER', {a: 1});
+await delay(1000);
 lightMachineConsumer.transition('TIMER', {b: 2});
+await delay(1000);
 lightMachineConsumer.transition('TIMER');
+await delay(1000);
 lightMachineConsumer.transition('POWER_LOST', {a: 4});
+await delay(1000);
 lightMachineConsumer.transition('TIMER', {a: 5, b: 5});
+await delay(1000);
 lightMachineConsumer.transition('POWER_BACK', {a: 6});
