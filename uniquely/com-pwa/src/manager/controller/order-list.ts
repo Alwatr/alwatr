@@ -86,10 +86,9 @@ finiteStateMachineProvider.defineActions<OrderListFsm>('order_list_fsm', {
 finiteStateMachineProvider.defineSignals<OrderListFsm>('order_list_fsm', [
   {
     signalId: orderStorageContextConsumer.id,
-    receivePrevious: 'NextCycle',
     callback: (context: RequestableContext<AlwatrDocumentStorage<Order>>, fsmInstance): void => {
-      fsmInstance.getState().target;
       fsmInstance.transition(`context_request_${context.state}`, {orderStorage: context.content});
     },
+    receivePrevious: 'NextCycle',
   },
 ]);

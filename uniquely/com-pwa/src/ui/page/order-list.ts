@@ -60,8 +60,8 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
   static override styles = css`
     :host {
       display: block;
-      padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
       box-sizing: border-box;
+      padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
       min-height: 100%;
     }
 
