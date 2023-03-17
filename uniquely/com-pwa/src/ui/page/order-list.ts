@@ -8,6 +8,9 @@ import {
   UnresolvedMixin,
   state,
   ScheduleUpdateToFrameMixin,
+  mapObject,
+  guard,
+  type PropertyValues,
 } from '@alwatr/element';
 import {finiteStateMachineConsumer} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
@@ -18,11 +21,9 @@ import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 import {topAppBarContextProvider} from '../../manager/context.js';
 import {OrderListFsm} from '../../manager/controller/order-list.js';
-import '../stuff/order-list.js';
-
+import '../stuff/order-status-box.js';
 
 import type {ClickSignalType} from '@alwatr/type';
-
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -63,19 +64,19 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
       box-sizing: border-box;
       padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
       min-height: 100%;
-    }
-
-    alwatr-order-list {
       transform: opacity var(--sys-motion-duration-small);
     }
 
-    :host([state='reloading']) alwatr-order-list {
+    :host([state='reloading']) {
       opacity: var(--sys-surface-disabled-opacity);
+    }
+
+    alwatr-order-status-box {
+      margin-bottom: var(--sys-spacing-track);
     }
   `;
 
-  protected fsm =
-    finiteStateMachineConsumer<OrderListFsm>('order_list_fsm_' + this.ali, 'order_list_fsm');
+  protected fsm = finiteStateMachineConsumer<OrderListFsm>('order_list_fsm_' + this.ali, 'order_list_fsm');
 
   @state()
     gotState = this.fsm.getState().target;
@@ -88,6 +89,7 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
         callback: (): void => {
           this.gotState = this.fsm.getState().target;
         },
+        receivePrevious: 'NextCycle',
       },
       {
         signalId: buttons.reload.clickSignalId,
@@ -108,6 +110,13 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
         },
       },
     ]));
+  }
+
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+    if (changedProperties.has('gotState')) {
+      this.setAttribute('state', this.gotState);
+    }
   }
 
   override render(): unknown {
@@ -154,10 +163,16 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
           startIcon: buttons.backToHome,
           endIconList: [buttons.newOrder, {...buttons.reload, disabled: this.gotState === 'reloading'}],
         });
-        return html`<alwatr-order-list
-          .content=${this.fsm.getContext().orderStorage}
-          .orderClickSignalId=${buttons.orderDetail.clickSignalId}
-        ></alwatr-order-list>`;
+        const orderStorage = this.fsm.getContext().orderStorage;
+        if (orderStorage == null) return;
+        return guard(orderStorage.meta.lastUpdated, () =>
+          mapObject(this, orderStorage.data, (order) => {
+            return html`<alwatr-order-status-box
+              .content=${order}
+              .clickSignalId=${buttons.orderDetail.clickSignalId}
+            ></alwatr-order-status-box>`;
+          }),
+        );
       },
     });
   }
