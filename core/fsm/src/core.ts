@@ -201,7 +201,7 @@ export const _execAction = (
     finiteStateMachine: FsmConsumerInterface,
 ): boolean | void => {
   if (actionNames == null) return;
-  logger.logMethodArgs('execAction', actionNames);
+  logger.logMethodArgs('execAction', {constructorId: constructor.id, actionNames});
 
   if (Array.isArray(actionNames)) {
     return actionNames
@@ -231,21 +231,21 @@ export const _execAction = (
 
 export const initFsmInstance = (instanceId: string, constructorId: string): void => {
   logger.logMethodArgs('initializeMachine', {constructorId, instanceId});
-  const {initial, context} = getFsmConstructor(constructorId).config;
-  contextProvider.setValue<FsmInstance>(
-      instanceId,
-      {
-        constructorId,
-        state: {
-          target: initial,
-          from: initial,
-          by: 'INIT',
-        },
-        context,
-        signalList: [],
-      },
-      {debounce: 'NextCycle'},
-  );
+  const constructor = getFsmConstructor(constructorId);
+  const {initial, context} = constructor.config;
+  const newInstance: FsmInstance = {
+    constructorId,
+    state: {
+      target: initial,
+      from: initial,
+      by: 'INIT',
+    },
+    context,
+    signalList: [],
+  };
+  contextProvider.setValue<FsmInstance>(instanceId, newInstance, {debounce: 'NextCycle'});
+
+  _execAllActions(constructor, newInstance.state, finiteStateMachineConsumer(instanceId));
 };
 
 export const subscribeSignals = (
@@ -261,10 +261,12 @@ export const subscribeSignals = (
   }
 
   for (const signalConfig of signalList) {
+    signalConfig.signalId ??= instanceId;
     listenerList.push(
         contextConsumer.subscribe(
-            signalConfig.signalId ?? instanceId,
+            signalConfig.signalId,
             (signalDetail: StringifyableRecord): void => {
+              logger.logMethodArgs('execSignalCallback', {instanceId, signalId: signalConfig.signalId, signalDetail});
               if (signalConfig.callback) {
                 signalConfig.callback(signalDetail, finiteStateMachineConsumer(instanceId));
               }
@@ -273,11 +275,9 @@ export const subscribeSignals = (
                 transition(
                     instanceId,
                     signalConfig.transition,
-                    signalConfig.contextName
-                      ? {
-                        [signalConfig.contextName]: signalDetail,
-                      }
-                      : undefined,
+                    signalConfig.contextName == null ? undefined : {
+                      [signalConfig.contextName]: signalDetail,
+                    },
                 );
               }
             },
