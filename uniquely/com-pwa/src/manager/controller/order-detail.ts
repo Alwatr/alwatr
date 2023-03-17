@@ -1,140 +1,159 @@
-// import {FiniteStateMachine} from '@alwatr/fsm';
-// import {redirect} from '@alwatr/router';
-// import {eventListener} from '@alwatr/signal';
+import {finiteStateMachineProvider, type FsmTypeHelper} from '@alwatr/fsm';
+import {requestableContextConsumer} from '@alwatr/signal';
+import {RequestableContext} from '@alwatr/signal/src/type.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
 
-// import {fetchOrderStorage} from '../context-provider/order-storage.js';
-// import {fetchProductStorage} from '../context-provider/product-storage.js';
-// import {orderStorageContextConsumer, productStorageContextConsumer, topAppBarContextProvider} from '../context.js';
+import {config} from '../../config.js';
 
-// import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
-// import type {Order, Product} from '@alwatr/type/customer-order-management.js';
+import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {Order, Product} from '@alwatr/type/src/customer-order-management.js';
 
-// export const pageOrderDetailStateMachine = new FiniteStateMachine({
-//   id: 'page_order_detail',
-//   initial: 'unresolved',
-//   context: {
-//     orderId: <number | null>null,
-//     orderStorage: <AlwatrDocumentStorage<Order> | null>null,
-//     productStorage: <AlwatrDocumentStorage<Product> | null> null,
-//   },
-//   stateRecord: {
-//     $all: {
-//       on: {
-//         SHOW_DETAIL: '$self',
-//         CONNECTED: '$self',
-//         CONTEXT_LOADED: '$self',
-//       },
-//     },
-//     unresolved: {
-//       on: {
-//         IMPORT: 'resolving',
-//       },
-//     },
-//     resolving: {
-//       on: {
-//         CONNECTED: 'loading',
-//       },
-//     },
-//     loading: {
-//       on: {
-//         CONTEXT_LOADED: 'detail',
-//       },
-//     },
-//     detail: {
-//       on: {
-//         REQUEST_UPDATE: 'reloading',
-//         INVALID_ORDER: 'notFound',
-//       },
-//     },
-//     reloading: {
-//       on: {
-//         CONTEXT_LOADED: 'detail',
-//       },
-//     },
-//     notFound: {
-//       on: {
-//         CONTEXT_LOADED: 'detail',
-//       },
-//     },
-//   },
-// });
+const orderStorageContextConsumer =
+  requestableContextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
 
-// const buttons = {
-//   backToOrderList: {
-//     icon: 'arrow-back-outline',
-//     flipRtl: true,
-//     clickSignalId: pageOrderDetailStateMachine.config.id + '_back_to_order_list_click_event',
-//   },
-//   reload: {
-//     icon: 'reload-outline',
-//     flipRtl: true,
-//     clickSignalId: pageOrderDetailStateMachine.config.id + '_reload_click_event',
-//   },
-// } as const;
+const productStorageContextConsumer = requestableContextConsumer.bind<
+  AlwatrDocumentStorage<Product>,
+  {productStorageName: string}
+>('product-storage-context');
 
-// pageOrderDetailStateMachine.signal.subscribe(async (state) => {
-// logger.logMethodArgs('pageOrderDetailFsm.changed', state);
-// switch (state.by) {
-// case 'IMPORT': {
-//   // just in unresolved
-//   topAppBarContextProvider.setValue({
-//     headlineKey: 'loading',
-//   });
-//   if (productStorageContextConsumer.getValue() == null) {
-//     fetchProductStorage();
-//   }
-//   if (orderStorageContextConsumer.getValue() == null) {
-//     fetchOrderStorage();
-//   }
-//   break;
-// }
+export const orderDetailFsmConstructor = finiteStateMachineProvider.defineConstructor('order_detail_fsm', {
+  initial: 'pending',
+  context: {
+    orderId: <number | null> null,
+    orderStorage: <AlwatrDocumentStorage<Order> | null> null,
+    productStorage: <AlwatrDocumentStorage<Product> | null> null,
+  },
+  stateRecord: {
+    $all: {
+      on: {},
+    },
+    pending: {
+      entry: ['initial_request_order_storage', 'initial_request_product_storage'],
+      on: {
+        context_request_initial: {},
+        context_request_pending: {},
+        context_request_error: {
+          target: 'contextError',
+        },
+        context_request_complete: {
+          target: 'detail',
+          condition: 'check_all_context_load_complete',
+        },
+        context_request_reloading: {
+          target: 'reloading',
+        },
+      },
+    },
+    // TODO: Only load context that have not been loaded.
+    contextError: {
+      on: {
+        request_context: {
+          target: 'pending',
+          actions: ['reload_request_order_storage', 'reload_request_product_storage'],
+        },
+      },
+    },
+    detail: {
+      on: {
+        request_context: {
+          target: 'reloading',
+          actions: ['reload_request_order_storage', 'reload_request_product_storage'],
+        },
+        not_found: {
+          target: 'notFound',
+        },
+      },
+    },
+    notFound: {
+      on: {},
+    },
+    reloading: {
+      on: {
+        context_request_complete: {
+          target: 'detail',
+          condition: 'check_all_context_load_complete',
+        },
+        context_request_reloading: {},
+        context_request_error: {
+          target: 'detail',
+          actions: 'reloading_failed',
+        },
+        not_found: {
+          target: 'notFound',
+        },
+      },
+    },
+  },
+});
 
-// case 'CONNECTED': {
-//   topAppBarContextProvider.setValue({
-//     headlineKey: 'page_order_list_headline',
-//     startIcon: buttons.backToOrderList,
-//     endIconList: [buttons.reload],
-//   });
-//   break;
-// }
+export type OrderDetailFsm = FsmTypeHelper<typeof orderDetailFsmConstructor>;
 
-//   case 'REQUEST_UPDATE': {
-//     await fetchOrderStorage(); // if not changed signal not fired!
-//     pageOrderDetailStateMachine.transition('CONTEXT_LOADED');
-//     break;
-//   }
-// }
+// entries actions
+finiteStateMachineProvider.defineActions<OrderDetailFsm>('order_detail_fsm', {
+  initial_request_order_storage: () => {
+    if (orderStorageContextConsumer.getValue().state === 'initial') {
+      orderStorageContextConsumer.request(null);
+    }
+  },
+  initial_request_product_storage: () => {
+    if (productStorageContextConsumer.getValue().state === 'initial') {
+      for (const productStorageName of config.productStorageList) {
+        productStorageContextConsumer.request({productStorageName: productStorageName});
+      }
+    }
+  },
 
-//   if (state.target === 'loading') {
-//     if (
-//       pageOrderDetailStateMachine.context.orderStorage != null &&
-//       pageOrderDetailStateMachine.context.productStorage != null
-//     ) {
-//       pageOrderDetailStateMachine.transition('CONTEXT_LOADED');
-//     }
-//   }
-// });
+  reload_request_order_storage: () => {
+    if (orderStorageContextConsumer.getValue().state === 'reloading') return;
+    // else
+    orderStorageContextConsumer.request(null);
+  },
 
-// productStorageContextConsumer.subscribe((productStorage) => {
-//   pageOrderDetailStateMachine.context.productStorage = productStorage;
-//   if (pageOrderDetailStateMachine.context.orderStorage != null) {
-//     pageOrderDetailStateMachine.transition('CONTEXT_LOADED');
-//   }
-// });
+  reload_request_product_storage: () => {
+    if (productStorageContextConsumer.getValue().state !== 'reloading') return;
+    // else
+    for (const productStorageName of config.productStorageList) {
+      productStorageContextConsumer.request({productStorageName: productStorageName});
+    }
+  },
 
-// orderStorageContextConsumer.subscribe((orderStorage) => {
-//   pageOrderDetailStateMachine.context.orderStorage = orderStorage;
-//   if (pageOrderDetailStateMachine.context.productStorage != null) {
-//     pageOrderDetailStateMachine.transition('CONTEXT_LOADED');
-//   }
-// });
+  reloading_failed: () => {
+    snackbarSignalTrigger.request({messageKey: 'fetch_failed_description'});
+  },
+});
 
-// eventListener.subscribe<ClickSignalType>(buttons.backToOrderList.clickSignalId, () => {
-//   redirect({
-//     sectionList: ['order-list'],
-//   });
-// });
+// condition
+finiteStateMachineProvider.defineActions<OrderDetailFsm>('order_detail_fsm', {
+  check_all_context_load_complete: (fsmInstance): boolean => {
+    const orderStorage = orderStorageContextConsumer.getValue();
+    const productStorage = productStorageContextConsumer.getValue();
+    if (orderStorage.state !== 'complete' || productStorage.state !== 'complete') {
+      return false;
+    }
 
-// eventListener.subscribe<ClickSignalType>(buttons.reload.clickSignalId, () => {
-//   pageOrderDetailStateMachine.transition('REQUEST_UPDATE');
-// });
+    const orderId = fsmInstance.getContext().orderId;
+    if (orderId == null || orderStorage.content.data[orderId] == null) {
+      fsmInstance.transition('not_found');
+      return false;
+    }
+
+    return true;
+  },
+});
+
+finiteStateMachineProvider.defineSignals<OrderDetailFsm>('order_detail_fsm', [
+  {
+    signalId: orderStorageContextConsumer.id,
+    callback: (context: RequestableContext<AlwatrDocumentStorage<Order>>, fsmInstance): void => {
+      fsmInstance.transition(`context_request_${context.state}`, {orderStorage: context.content});
+    },
+    receivePrevious: 'NextCycle',
+  },
+  {
+    signalId: productStorageContextConsumer.id,
+    callback: (context: RequestableContext<AlwatrDocumentStorage<Product>>, fsmInstance): void => {
+      fsmInstance.transition(`context_request_${context.state}`, {productStorage: context.content});
+    },
+    receivePrevious: 'NextCycle',
+  },
+]);
