@@ -49,7 +49,7 @@ export interface AlwatrLogger {
    * }
    * ```
    */
-  logMethodArgs(method: string, args: Record<string, unknown> | string | number | boolean): void;
+  logMethodArgs(method: string, args: unknown): void;
 
   /**
    * `console.debug` function or method calls with arguments.
@@ -64,7 +64,7 @@ export interface AlwatrLogger {
    * }
    * ```
    */
-  logMethodFull(method: string, args: Record<string, unknown> | string | number | boolean, result: unknown): void;
+  logMethodFull(method: string, args: unknown, result: unknown): void;
 
   /**
    * `console.log` an event or expected accident.
