@@ -50,5 +50,6 @@
     "xlarge",
     "xsmall",
     "zindex"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

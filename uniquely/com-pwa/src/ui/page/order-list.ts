@@ -6,22 +6,24 @@ import {
   SignalMixin,
   AlwatrBaseElement,
   UnresolvedMixin,
-  FiniteStateMachineController,
   state,
   ScheduleUpdateToFrameMixin,
+  mapObject,
+  guard,
+  type PropertyValues,
 } from '@alwatr/element';
+import {finiteStateMachineConsumer} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
-import {requestableContextConsumer} from '@alwatr/signal';
 import {Order} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
-import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
 import {topAppBarContextProvider} from '../../manager/context.js';
-import '../stuff/order-list.js';
+import {OrderListFsm} from '../../manager/controller/order-list.js';
+import '../stuff/order-status-box.js';
 
-import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
+import type {ClickSignalType} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -49,9 +51,6 @@ const buttons = {
   },
 } as const;
 
-const orderStorageContextConsumer =
-  requestableContextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
-
 /**
  * List of all orders.
  */
@@ -62,93 +61,43 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
   static override styles = css`
     :host {
       display: block;
-      padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
       box-sizing: border-box;
+      padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
       min-height: 100%;
-    }
-
-    alwatr-order-list {
       transform: opacity var(--sys-motion-duration-small);
     }
 
-    :host([state='reloading']) alwatr-order-list {
+    :host([state='reloading']) {
       opacity: var(--sys-surface-disabled-opacity);
+    }
+
+    alwatr-order-status-box {
+      margin-bottom: var(--sys-spacing-track);
     }
   `;
 
-  private _stateMachine = new FiniteStateMachineController(this, {
-    id: 'order_list_' + this.ali,
-    initial: 'pending',
-    context: {
-      orderStorage: <AlwatrDocumentStorage<Order> | null>null,
-    },
-    stateRecord: {
-      $all: {
-        entry: (): void => {
-          this.gotState = this._stateMachine.state.target;
+  protected fsm = finiteStateMachineConsumer<OrderListFsm>('order_list_fsm_' + this.ali, 'order_list_fsm');
+
+  @state()
+    gotState = this.fsm.getState().target;
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    this._addSignalListener(this.fsm.defineSignals([
+      {
+        callback: (): void => {
+          this.gotState = this.fsm.getState().target;
         },
-        on: {},
+        receivePrevious: 'NextCycle',
       },
-      pending: {
-        entry: (): void => {
-          const orderContext = orderStorageContextConsumer.getValue();
-          if (orderContext.state === 'initial') {
-            orderStorageContextConsumer.request(null);
-          }
-        },
-        on: {
-          context_request_initial: {},
-          context_request_pending: {},
-          context_request_error: {
-            target: 'contextError',
-          },
-          context_request_complete: {
-            target: 'list',
-          },
-          context_request_reloading: {
-            target: 'reloading',
-          },
-        },
-      },
-      contextError: {
-        on: {
-          request_context: {
-            target: 'pending',
-            actions: (): void => orderStorageContextConsumer.request(null),
-          },
-        },
-      },
-      list: {
-        on: {
-          request_context: {
-            target: 'reloading',
-            actions: (): void => orderStorageContextConsumer.request(null),
-          },
-        },
-      },
-      reloading: {
-        on: {
-          context_request_error: {
-            target: 'list',
-            actions: (): void =>
-              snackbarSignalTrigger.request({
-                messageKey: 'fetch_failed_description',
-              }),
-          },
-          context_request_complete: {
-            target: 'list',
-          },
-        },
-      },
-    },
-    signalList: [
       {
         signalId: buttons.reload.clickSignalId,
         transition: 'request_context',
       },
       {
         signalId: buttons.newOrder.clickSignalId,
-        actions: (): void => {
+        callback: (): void => {
           redirect({
             sectionList: ['new-order'],
           });
@@ -156,32 +105,23 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
       },
       {
         signalId: buttons.orderDetail.clickSignalId,
-        actions: (event: ClickSignalType<Order>): void => {
+        callback: (event: ClickSignalType<Order>): void => {
           redirect({sectionList: ['order-detail', event.detail.id]});
         },
       },
-    ],
-  });
+    ]));
+  }
 
-  @state()
-    gotState = this._stateMachine.state.target;
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    this._signalListenerList.push(
-        orderStorageContextConsumer.subscribe(
-            (context) => {
-              this._stateMachine.transition(`context_request_${context.state}`, {orderStorage: context.content});
-            },
-            {receivePrevious: 'NextCycle'},
-        ),
-    );
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+    if (changedProperties.has('gotState')) {
+      this.setAttribute('state', this.gotState);
+    }
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
-    return this._stateMachine.render({
+    return this.fsm.render({
       pending: () => {
         topAppBarContextProvider.setValue({
           headlineKey: 'loading',
@@ -223,10 +163,16 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
           startIcon: buttons.backToHome,
           endIconList: [buttons.newOrder, {...buttons.reload, disabled: this.gotState === 'reloading'}],
         });
-        return html`<alwatr-order-list
-          .content=${this._stateMachine.context.orderStorage}
-          .orderClickSignalId=${buttons.orderDetail.clickSignalId}
-        ></alwatr-order-list>`;
+        const orderStorage = this.fsm.getContext().orderStorage;
+        if (orderStorage == null) return;
+        return guard(orderStorage.meta.lastUpdated, () =>
+          mapObject(this, orderStorage.data, (order) => {
+            return html`<alwatr-order-status-box
+              .content=${order}
+              .clickSignalId=${buttons.orderDetail.clickSignalId}
+            ></alwatr-order-status-box>`;
+          }),
+        );
       },
     });
   }
