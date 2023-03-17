@@ -13,7 +13,7 @@ export function LocalizeMixin<T extends Constructor<SignalMixinInterface>>(
   class LocalizeMixinClass extends superClass {
     override connectedCallback(): void {
       super.connectedCallback();
-      this._signalListenerList.push(
+      this._addSignalListener(
           l18eContextConsumer.subscribe(this._l18eContextUpdated.bind(this)),
       );
     }

@@ -180,7 +180,7 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._signalListenerList.push(
+    this._addSignalListener(
         orderStorageContextConsumer.subscribe(
             (context) => {
               this._stateMachine.transition(`context_request_${context.state}`, {orderStorage: context.content});
@@ -189,7 +189,7 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
         ),
     );
 
-    this._signalListenerList.push(
+    this._addSignalListener(
         productStorageContextConsumer.subscribe(
             (context) => {
               this._stateMachine.transition(`context_request_${context.state}`, {productStorage: context.content});

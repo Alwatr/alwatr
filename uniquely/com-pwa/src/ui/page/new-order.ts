@@ -360,7 +360,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._signalListenerList.push(
+    this._addSignalListener(
         productStorageContextConsumer.subscribe(
             (context) => {
               this._stateMachine.transition(`context_request_${context.state}`, {productStorage: context.content});
@@ -369,7 +369,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
         ),
     );
 
-    this._signalListenerList.push(
+    this._addSignalListener(
         productPriceStorageContextProvider.subscribe(
             (context) => {
               this._stateMachine.transition(`context_request_${context.state}`, {priceStorage: context.content});
@@ -378,7 +378,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
         ),
     );
 
-    this._signalListenerList.push(
+    this._addSignalListener(
         finalProductPriceStorageContextProvider.subscribe(
             (context) => {
               this._stateMachine.transition(`context_request_${context.state}`, {finalPriceStorage: context.content});
@@ -387,7 +387,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
         ),
     );
 
-    this._signalListenerList.push(
+    this._addSignalListener(
         finalProductPriceStorageContextProvider.subscribe(
             (context) => {
               this._stateMachine.transition(`context_request_${context.state}`, {finalPriceStorage: context.content});
