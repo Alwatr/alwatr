@@ -242,7 +242,6 @@ export const initFsmInstance = (instanceId: string, constructorId: string): void
       by: 'INIT',
     },
     context,
-    signalList: [],
   };
   contextProvider.setValue<FsmInstance>(instanceId, newInstance, {debounce: 'NextCycle'});
 
@@ -289,14 +288,6 @@ export const subscribeSignals = (
 
   return listenerList;
 };
-
-// protected unsubscribeSignals(): void {
-//   if (this._listenerList.length === 0) return;
-//   for (const listener of this._listenerList) {
-//     eventListener.unsubscribe(listener);
-//   }
-//   this._listenerList.length = 0;
-// }
 
 export const defineConstructorSignals = <T extends FsmTypeHelper>(
   constructorId: string,
@@ -352,7 +343,7 @@ export const destroy = (instanceId: string): void => {
 export const reset = (instanceId: string): void => {
   logger.logMethodArgs('reset', instanceId);
   const constructorId = getFsmInstance(instanceId).constructorId;
-  contextProvider.expire(instanceId);
+  // contextProvider.expire(instanceId);
   initFsmInstance(instanceId, constructorId);
 };
 
