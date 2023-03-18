@@ -1,4 +1,4 @@
-import {clearDetail, dispatch, getDetail, untilNext} from './core.js';
+import {clearDetail, dispatch, getDetail, untilNext, subscribe, unsubscribe} from '@alwatr/signal/core.js';
 
 import type {Stringifyable, OmitFirstParam} from '@alwatr/type';
 
@@ -60,71 +60,96 @@ export const contextProvider = {
   untilChange: untilNext,
 
   /**
-   * Bind this interface to special context.
+   * Subscribe to context changes, work like addEventListener.
    *
    * Example:
    *
    * ```ts
-   * const productListProvider = contextProvider.bind<ProductListType>('product-list');
+   * const listener = contextProvider.subscribe<ProductListType>('product-list', (productList) => {
+   *   console.log(productList);
+   * });
+   * // ...
+   * contextProvider.unsubscribe(listener);
    * ```
    */
-  bind: <T extends Stringifyable>(contextId: string) =>({
-    /**
-     * Context signal Id.
-     */
-    id: contextId,
+  subscribe: subscribe,
 
-    /**
-     * Get context value.
-     *
-     * Return undefined if context not set before or expired.
-     *
-     * Example:
-     *
-     * ```ts
-     * const currentProductList = productListProvider.getValue();
-     * if (currentProductList === undefined) {
-     *   // productList not set before or expired.
-     * }
-     * ```
-     */
-    getValue: getDetail.bind(null, contextId) as OmitFirstParam<typeof getDetail<T>>,
-
-    /**
-     * Set context value and send signal to all consumers.
-     *
-     * Signal detail changed immediately without any debounce.
-     *
-     * Example:
-     *
-     * ```ts
-     * productListProvider.setValue(newProductList);
-     * ```
-     */
-    setValue: dispatch.bind(null, contextId) as OmitFirstParam<typeof dispatch<T>>,
-
-    /**
-     * Clear current context value without send signal to all consumers.
-     *
-     * new subscriber options.receivePrevious not work until new signal
-     *
-     * Example:
-     *
-     * ```ts
-     * productListProvider.expire();
-     * ```
-     */
-    expire: clearDetail.bind(null, contextId),
-
-    /**
-     * Waits until the context value changes.
-     *
-     * Example:
-     *
-     * ```ts
-     * const newProductList = await productListProvider.untilChange();
-     * ```
-     */
-    untilChange: untilNext.bind(null, contextId) as OmitFirstParam<typeof untilNext<T>>,
-  } as const),
+  /**
+   * Unsubscribe from context changes, work like removeEventListener.
+   *
+   * Example:
+   *
+   * ```ts
+   * const listener = contextProvider.subscribe<ProductListType>('product-list', (productList) => {
+   *   console.log(productList);
+   * });
+   * // ...
+   * contextProvider.unsubscribe(listener);
+   * ```
+   */
+  unsubscribe: unsubscribe,
 } as const;
+
+/**
+ * Context consumer interface.
+ */
+export const contextConsumer = <T extends Stringifyable>(contextId: string) =>({
+  /**
+   * Context signal Id.
+   */
+  id: contextId,
+
+  /**
+   * Get context value.
+   *
+   * Return undefined if context not set before or expired.
+   *
+   * Example:
+   *
+   * ```ts
+   * const currentProductList = productListConsumer.getValue();
+   * if (currentProductList === undefined) {
+   *   // productList not set before or expired.
+   * }
+   * ```
+   */
+  getValue: getDetail.bind(null, contextId) as OmitFirstParam<typeof getDetail<T>>,
+
+  /**
+   * Waits until the context value changes.
+   *
+   * Example:
+   *
+   * ```ts
+   * const newProductList = await productListConsumer.untilChange();
+   * ```
+   */
+  untilChange: untilNext.bind(null, contextId) as OmitFirstParam<typeof untilNext<T>>,
+
+  /**
+   * Subscribe to context changes, work like addEventListener.
+   *
+   * Example:
+   *
+   * ```ts
+   * const listener = productListConsumer.subscribe((productList) => console.log(productList));
+   * // ...
+   * productListConsumer.unsubscribe(listener);
+   * ```
+   */
+  subscribe: subscribe.bind(null, contextId) as unknown as
+    OmitFirstParam<typeof subscribe<T>>,
+
+  /**
+   * Unsubscribe from context changes, work like removeEventListener.
+   *
+   * Example:
+   *
+   * ```ts
+   * const listener = productListConsumer.subscribe((productList) => console.log(productList));
+   * // ...
+   * productListConsumer.unsubscribe(listener);
+   * ```
+   */
+  unsubscribe: unsubscribe,
+} as const);
