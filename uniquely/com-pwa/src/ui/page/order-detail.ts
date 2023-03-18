@@ -38,12 +38,20 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
   @state()
     gotState = this.fsm.getState().target;
 
+
+  private _orderId: number | null = null;
+  set orderId(orderId) {
+    this._orderId = orderId;
+    this.fsm.setContext({orderId: this._orderId});
+  }
+
   @property({type: Number})
-    orderId?: number;
+  get orderId(): number | null {
+    return this._orderId;
+  }
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.fsm.setContext({orderId: this.orderId});
 
     this._addSignalListener(this.fsm.defineSignals([
       {
@@ -69,7 +77,7 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
     return this.fsm.render({
       pending: () => {
         topAppBarContextProvider.setValue({
-          headlineKey: 'page_order_detail_headline',
+          headlineKey: 'page_order_list_headline',
           startIcon: buttons.backToOrderList,
           endIconList: [buttons.reload],
         });
@@ -84,7 +92,7 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
 
       contextError: () => {
         topAppBarContextProvider.setValue({
-          headlineKey: 'page_order_detail_headline',
+          headlineKey: 'page_order_list_headline',
           startIcon: buttons.backToOrderList,
           endIconList: [buttons.reload],
         });
@@ -107,7 +115,7 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
 
       detail: () => {
         topAppBarContextProvider.setValue({
-          headlineKey: 'page_order_detail_headline',
+          headlineKey: 'page_order_list_headline',
           startIcon: buttons.backToOrderList,
           endIconList: [{...buttons.reload, disabled: this.gotState === 'reloading'}],
         });
