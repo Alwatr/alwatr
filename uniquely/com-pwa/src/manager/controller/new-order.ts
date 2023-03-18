@@ -279,22 +279,32 @@ finiteStateMachineProvider.defineActions('new_order_fsm', {
   },
 });
 
-finiteStateMachineProvider.defineSignals('new_order_fsm', [{
-  signalId: 'order_item_qty_add',
-  callback: (event: ClickSignalType<OrderItem>): void => {
-    qtyUpdate(event.detail, 1); // TODO: set type with action
+finiteStateMachineProvider.defineSignals('new_order_fsm', [
+  {
+    signalId: 'order_item_qty_add',
+    callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
+      const qty = event.detail.qty + 1;
+      if (qty <= 0) return;
+      event.detail.qty = qty;
+      fsmInstance.transition('qty_update');
+    },
   },
-},
-{
-  signalId: 'order_item_qty_remove',
-  callback: (event: ClickSignalType<OrderItem>): void => {
-    qtyUpdate(event.detail, -1);
+  {
+    signalId: 'order_item_qty_remove',
+    callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
+      const qty = event.detail.qty - 1;
+      if (qty <= 0) return;
+      event.detail.qty = qty;
+      fsmInstance.transition('qty_update');
+    },
   },
-}]);
+  {
+    signalId: 'order_item_qty_update',
+    callback: (detail: {item: OrderItem, qty: number}, fsmInstance): void => {
+      if (detail.qty <= 0) return;
+      detail.item.qty = detail.qty;
+      fsmInstance.transition('qty_update');
+    },
+  },
+]);
 
-function qtyUpdate(orderItem: OrderItem, add: number): void {
-  const qty = orderItem.qty + add;
-  if (qty <= 0) return;
-  orderItem.qty = qty;
-  // this.fsm.transition('qty_update');
-}
