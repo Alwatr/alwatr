@@ -1,5 +1,6 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {ListenerSpec, contextProvider, contextConsumer} from '@alwatr/signal';
+import {destroySignal, unsubscribe} from '@alwatr/signal/core.js';
 import {SubscribeOptions} from '@alwatr/signal/type.js';
 
 import type {
@@ -12,7 +13,7 @@ import type {
   FsmTypeHelper,
   SignalConfig,
 } from './type.js';
-import type {OmitFirstParam, SingleOrArray, StringifyableRecord} from '@alwatr/type';
+import type {MaybePromise, OmitFirstParam, SingleOrArray, StringifyableRecord} from '@alwatr/type';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/fsm',
@@ -199,7 +200,7 @@ export const _execAction = (
     constructor: FsmConstructor,
     actionNames: SingleOrArray<string> | undefined,
     finiteStateMachine: FsmConsumerInterface,
-): boolean | void => {
+): boolean | MaybePromise<void> => {
   if (actionNames == null) return;
   logger.logMethodArgs('execAction', {constructorId: constructor.id, actionNames});
 
@@ -241,7 +242,6 @@ export const initFsmInstance = (instanceId: string, constructorId: string): void
       by: 'INIT',
     },
     context,
-    signalList: [],
   };
   contextProvider.setValue<FsmInstance>(instanceId, newInstance, {debounce: 'NextCycle'});
 
@@ -289,14 +289,6 @@ export const subscribeSignals = (
   return listenerList;
 };
 
-// protected unsubscribeSignals(): void {
-//   if (this._listenerList.length === 0) return;
-//   for (const listener of this._listenerList) {
-//     eventListener.unsubscribe(listener);
-//   }
-//   this._listenerList.length = 0;
-// }
-
 export const defineConstructorSignals = <T extends FsmTypeHelper>(
   constructorId: string,
   signalList: Array<SignalConfig<T>>,
@@ -343,6 +335,18 @@ export const subscribe = (
   return contextConsumer.subscribe(instanceId, callback, options);
 };
 
+export const destroy = (instanceId: string): void => {
+  logger.logMethodArgs('destroy', instanceId);
+  destroySignal(instanceId);
+};
+
+export const reset = (instanceId: string): void => {
+  logger.logMethodArgs('reset', instanceId);
+  const constructorId = getFsmInstance(instanceId).constructorId;
+  // contextProvider.expire(instanceId);
+  initFsmInstance(instanceId, constructorId);
+};
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext extends T['TContext'] = T['TContext']>(
   instanceId: string,
@@ -364,10 +368,13 @@ export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext ext
     constructorId: <string>machineInstance?.constructorId ?? makeFromConstructor,
     render: render.bind(null, instanceId) as OmitFirstParam<typeof render<T['TState']>>,
     subscribe: subscribe.bind(null, instanceId) as OmitFirstParam<typeof subscribe>,
+    unsubscribe: unsubscribe,
     getState: getState.bind(null, instanceId) as OmitFirstParam<typeof getState<T['TState'], T['TEventId']>>,
     getContext: getContext.bind(null, instanceId) as OmitFirstParam<typeof getContext<TContext>>,
     setContext: setContext.bind(null, instanceId) as OmitFirstParam<typeof setContext<TContext>>,
     transition: transition.bind(null, instanceId) as OmitFirstParam<typeof transition<T['TEventId'], TContext>>,
     defineSignals: defineInstanceSignals.bind(null, instanceId) as OmitFirstParam<typeof defineInstanceSignals<T>>,
+    reset: reset.bind(null, instanceId) as OmitFirstParam<typeof reset>,
+    destroy: destroy.bind(null, instanceId) as OmitFirstParam<typeof destroy>,
   } as const;
 };

@@ -8,4 +8,4 @@ export const finiteStateMachineProvider = {
   subscribe,
 } as const;
 
-export type {FsmTypeHelper, FsmConstructorConfig} from './type.js';
+export type {FsmTypeHelper, FsmConstructorConfig, FsmConsumerInterface} from './type.js';
