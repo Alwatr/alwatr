@@ -1,5 +1,6 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {ListenerSpec, contextProvider, contextConsumer} from '@alwatr/signal';
+import {destroySignal} from '@alwatr/signal/core.js';
 import {SubscribeOptions} from '@alwatr/signal/type.js';
 
 import type {
@@ -343,6 +344,18 @@ export const subscribe = (
   return contextConsumer.subscribe(instanceId, callback, options);
 };
 
+export const destroy = (instanceId: string): void => {
+  logger.logMethodArgs('destroy', instanceId);
+  destroySignal(instanceId);
+};
+
+export const reset = (instanceId: string): void => {
+  logger.logMethodArgs('reset', instanceId);
+  const constructorId = getFsmInstance(instanceId).constructorId;
+  contextProvider.expire(instanceId);
+  initFsmInstance(instanceId, constructorId);
+};
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext extends T['TContext'] = T['TContext']>(
   instanceId: string,
@@ -369,5 +382,7 @@ export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext ext
     setContext: setContext.bind(null, instanceId) as OmitFirstParam<typeof setContext<TContext>>,
     transition: transition.bind(null, instanceId) as OmitFirstParam<typeof transition<T['TEventId'], TContext>>,
     defineSignals: defineInstanceSignals.bind(null, instanceId) as OmitFirstParam<typeof defineInstanceSignals<T>>,
+    reset: reset.bind(null, instanceId) as OmitFirstParam<typeof reset>,
+    destroy: destroy.bind(null, instanceId) as OmitFirstParam<typeof destroy>,
   } as const;
 };
