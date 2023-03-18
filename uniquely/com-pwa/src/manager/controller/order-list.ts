@@ -3,16 +3,18 @@ import {requestableContextConsumer} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
 
 import type {RequestableContext} from '@alwatr/signal/type.js';
-import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order} from '@alwatr/type/src/customer-order-management.js';
 
 const orderStorageContextConsumer =
   requestableContextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
 
+export type OrderStorageContext<T extends AlwatrDocumentObject = Order> = {
+  orderStorage?: AlwatrDocumentStorage<T>;
+};
+
 export const orderListFsmConstructor = finiteStateMachineProvider.defineConstructor('order_list_fsm', {
-  context: {
-    orderStorage: <AlwatrDocumentStorage<Order> | null>null,
-  },
+  context: <OrderStorageContext>{},
   initial: 'pending',
   stateRecord: {
     $all: {
