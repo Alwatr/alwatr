@@ -12,7 +12,7 @@ import type {
   FsmTypeHelper,
   SignalConfig,
 } from './type.js';
-import type {OmitFirstParam, SingleOrArray, StringifyableRecord} from '@alwatr/type';
+import type {MaybePromise, OmitFirstParam, SingleOrArray, StringifyableRecord} from '@alwatr/type';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/fsm',
@@ -199,7 +199,7 @@ export const _execAction = (
     constructor: FsmConstructor,
     actionNames: SingleOrArray<string> | undefined,
     finiteStateMachine: FsmConsumerInterface,
-): boolean | void => {
+): boolean | MaybePromise<void> => {
   if (actionNames == null) return;
   logger.logMethodArgs('execAction', {constructorId: constructor.id, actionNames});
 

@@ -1,6 +1,6 @@
 import type {finiteStateMachineConsumer} from './core.js';
 import type {DebounceType} from '@alwatr/signal';
-import type {ArrayItems, SingleOrArray, StringifyableRecord} from '@alwatr/type';
+import type {ArrayItems, MaybePromise, SingleOrArray, StringifyableRecord} from '@alwatr/type';
 
 export interface FsmConstructor {
   /**
@@ -107,7 +107,7 @@ export interface FsmInstance<
 }
 
 export type ActionRecord<T extends FsmTypeHelper = FsmTypeHelper> = {
-  readonly [P in T['TActionName']]?: (finiteStateMachine: FsmConsumerInterface<T>) => void | boolean;
+  readonly [P in T['TActionName']]?: (finiteStateMachine: FsmConsumerInterface<T>) => MaybePromise<void> | boolean;
 };
 
 export type SignalConfig<T extends FsmTypeHelper = FsmTypeHelper> = {
