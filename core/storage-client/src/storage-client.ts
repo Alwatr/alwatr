@@ -2,7 +2,7 @@ import {type FetchOptions, serviceRequest} from '@alwatr/fetch';
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 
 import type {AlwatrStorageClientConfig} from './type.js';
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
+import type {AlwatrDocumentObject, AlwatrDocumentStorage, AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
 
 export {type AlwatrStorageClientConfig};
 
@@ -113,7 +113,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
     this._logger.logMethodArgs('get', {storage, documentId});
     if (storage == null) throw new Error('storage_not_defined');
 
-    const responseJson = await serviceRequest<T>({
+    const responseJson = await serviceRequest<AlwatrServiceResponseSuccessWithMeta<T>>({
       ...this.fetchOption,
       queryParameters: {
         storage,
@@ -185,7 +185,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
     this._logger.logMethodArgs('set', {documentId: documentObject.id});
     if (storage == null) throw new Error('storage_not_defined');
 
-    const responseJson = await serviceRequest<T>({
+    const responseJson = await serviceRequest<AlwatrServiceResponseSuccessWithMeta<T>>({
       ...this.fetchOption,
       method: 'PATCH',
       queryParameters: {
