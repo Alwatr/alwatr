@@ -1,6 +1,6 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {ListenerSpec, contextProvider, contextConsumer} from '@alwatr/signal';
-import {destroySignal} from '@alwatr/signal/core.js';
+import {destroySignal, unsubscribe} from '@alwatr/signal/core.js';
 import {SubscribeOptions} from '@alwatr/signal/type.js';
 
 import type {
@@ -368,6 +368,7 @@ export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext ext
     constructorId: <string>machineInstance?.constructorId ?? makeFromConstructor,
     render: render.bind(null, instanceId) as OmitFirstParam<typeof render<T['TState']>>,
     subscribe: subscribe.bind(null, instanceId) as OmitFirstParam<typeof subscribe>,
+    unsubscribe: unsubscribe,
     getState: getState.bind(null, instanceId) as OmitFirstParam<typeof getState<T['TState'], T['TEventId']>>,
     getContext: getContext.bind(null, instanceId) as OmitFirstParam<typeof getContext<TContext>>,
     setContext: setContext.bind(null, instanceId) as OmitFirstParam<typeof setContext<TContext>>,
