@@ -4,13 +4,14 @@
   "description": "Elegant powerful context manager base on alwatr signal, written in tiny TypeScript, ES module.",
   "keywords": [
     "context",
+    "signal",
     "typescript",
     "esm",
     "alwatr"
   ],
-  "main": "context.js",
+  "main": "index.js",
   "type": "module",
-  "types": "context.d.ts",
+  "types": "index.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
