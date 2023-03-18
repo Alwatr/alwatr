@@ -3,12 +3,7 @@ import {contextProvider, type DispatchOptions} from '@alwatr/signal';
 import {getClientId} from '@alwatr/util';
 
 import type {FetchOptions} from './type.js';
-import type {
-  AlwatrServiceResponse,
-  AlwatrServiceResponseSuccessWithMeta,
-  AlwatrServiceResponseSuccess,
-  StringifyableRecord,
-} from '@alwatr/type';
+import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
 
 export type * from './type.js';
 
@@ -73,11 +68,8 @@ export async function fetchContext(
  * Fetch from alwatr services and return standard response.
  */
 export async function serviceRequest<
-  TData extends StringifyableRecord = StringifyableRecord,
-  TMeta extends StringifyableRecord = StringifyableRecord
->(
-    options: FetchOptions,
-): Promise<AlwatrServiceResponseSuccess<TData> | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>> {
+  T extends AlwatrServiceResponseSuccessWithMeta = AlwatrServiceResponseSuccessWithMeta
+>(options: FetchOptions): Promise<T> {
   logger.logMethodArgs('serviceRequest', {url: options.url});
 
   if (isBrowser) {
@@ -107,7 +99,7 @@ export async function serviceRequest<
     throw err;
   }
 
-  let responseJson: AlwatrServiceResponse<TData, TMeta>;
+  let responseJson: T;
   try {
     responseJson = JSON.parse(responseText);
   }
