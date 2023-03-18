@@ -54,7 +54,7 @@ export const orderListFsmConstructor = finiteStateMachineProvider.defineConstruc
       on: {
         context_request_error: {
           target: 'list',
-          actions: 'show_snackbar_request_error',
+          actions: 'notify_error',
         },
         context_request_complete: {
           target: 'list',
@@ -77,7 +77,7 @@ finiteStateMachineProvider.defineActions<OrderListFsm>('order_list_fsm', {
   request_order_storage: (): void => {
     orderStorageContextConsumer.request(null);
   },
-  show_snackbar_request_error: (): void =>
+  notify_error: (): void =>
     snackbarSignalTrigger.request({
       messageKey: 'fetch_failed_description',
     }),
