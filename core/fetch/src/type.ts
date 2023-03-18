@@ -1,4 +1,4 @@
-import type {Methods, QueryParameters} from '@alwatr/type';
+import type {Methods, QueryParameters, StringifyableRecord} from '@alwatr/type';
 
 export type CacheStrategy =
   | 'network_only'
@@ -91,7 +91,7 @@ export interface FetchOptions extends RequestInit {
   /**
    * Body as JS Object.
    */
-  bodyJson?: Record<string | number, unknown>;
+  bodyJson?: StringifyableRecord;
 
   /**
    * URL Query Parameters as JS Object.
@@ -103,3 +103,25 @@ export interface FetchOptions extends RequestInit {
    */
   token?: string;
 }
+
+export type StringifyableFetchOptions = Pick<
+  FetchOptions,
+  | 'url'
+  | 'bodyJson'
+  | 'cache'
+  | 'cacheStorageName'
+  | 'cacheStrategy'
+  | 'headers'
+  | 'credentials'
+  | 'keepalive'
+  | 'method'
+  | 'mode'
+  | 'queryParameters'
+  | 'removeDuplicate'
+  | 'timeout'
+  | 'token'
+  | 'retry'
+  | 'retryDelay'
+  | 'referrer'
+  | 'referrerPolicy'
+>;
