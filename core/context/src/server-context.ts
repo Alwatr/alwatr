@@ -1,7 +1,6 @@
-import {type StringifyableFetchOptions} from '@alwatr/fetch';
 import {finiteStateMachineConsumer, type FsmConsumerInterface} from '@alwatr/fsm';
 
-import {getResponse, request, setOptions} from './core.js';
+import {request, serverContextFsmConstructorId, setOptions} from './core.js';
 
 import type {ServerContextFsm, ServerContextFsmContext} from './type.js';
 import type {AlwatrDocumentStorage, AlwatrServiceResponseSuccessWithMeta, OmitFirstParam} from '@alwatr/type';
@@ -9,11 +8,11 @@ import type {AlwatrDocumentStorage, AlwatrServiceResponseSuccessWithMeta, OmitFi
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const serverContextConsumer = <TResponse extends AlwatrServiceResponseSuccessWithMeta = AlwatrDocumentStorage>(
   instanceId: string,
-  options?: StringifyableFetchOptions,
+  options?: ServerContextFsm['TContext']['options'],
 ) => {
   const fsm = finiteStateMachineConsumer<ServerContextFsm, ServerContextFsmContext<TResponse>>(
       instanceId,
-      'request_service_fsm',
+      serverContextFsmConstructorId,
   );
 
   if (options != null) {
@@ -24,11 +23,10 @@ export const serverContextConsumer = <TResponse extends AlwatrServiceResponseSuc
     id: instanceId,
     request: request.bind(null, fsm as FsmConsumerInterface<ServerContextFsm>) as OmitFirstParam<typeof request>,
     setOptions: setOptions.bind(null, fsm as FsmConsumerInterface<ServerContextFsm>) as OmitFirstParam<
-    typeof setOptions
+      typeof setOptions
     >,
-    getResponse: getResponse.bind(null, fsm as FsmConsumerInterface<ServerContextFsm>) as OmitFirstParam<
-      typeof getResponse<TResponse>
-    >,
+    getOptions: () => fsm.getContext().options,
+    getResponse: () => fsm.getContext().response,
     getState: fsm.getState,
     subscribe: fsm.subscribe,
     unsubscribe: fsm.unsubscribe,

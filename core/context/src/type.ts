@@ -6,7 +6,7 @@ import type {AlwatrServiceResponseSuccessWithMeta, StringifyableRecord} from '@a
 export interface ServerContextFsmContext<
   TResponse extends AlwatrServiceResponseSuccessWithMeta = AlwatrServiceResponseSuccessWithMeta
 > extends StringifyableRecord {
-  options?: Partial<StringifyableFetchOptions>;
+  options: Partial<StringifyableFetchOptions>;
   response?: TResponse;
 }
 
