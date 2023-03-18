@@ -2,7 +2,7 @@ import {serviceRequest, type StringifyableFetchOptions} from '@alwatr/fetch';
 import {finiteStateMachineProvider, type FsmConsumerInterface} from '@alwatr/fsm';
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 
-import type {RequestServiceFsm, RequestServiceFsmContext} from './type.js';
+import type {ServerContextFsm, ServerContextFsmContext} from './type.js';
 import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
 
 export const logger = createLogger('alwatr/context');
@@ -12,9 +12,9 @@ globalAlwatr.registeredList.push({
   version: _ALWATR_VERSION_,
 });
 
-export const requestServiceFsmConstructor = finiteStateMachineProvider.defineConstructor('request_service_fsm', {
+export const serverContextFsmConstructor = finiteStateMachineProvider.defineConstructor('server_context_fsm', {
   initial: 'initial',
-  context: <RequestServiceFsmContext>{},
+  context: <ServerContextFsmContext>{},
   stateRecord: {
     $all: {
       on: {},
@@ -98,28 +98,28 @@ export const requestServiceFsmConstructor = finiteStateMachineProvider.defineCon
   },
 });
 
-finiteStateMachineProvider.defineActions<RequestServiceFsm>('request_service_fsm', {
-  offline_mode: (fsmInstance) => {
+finiteStateMachineProvider.defineActions<ServerContextFsm>('server_context_fsm', {
+  offline_mode: (fsm) => {
     logger.logMethod('action_offline_mode');
-    const {fetchOptions} = fsmInstance.getContext();
-    if (fetchOptions == null) return logger.error('action_offline_mode', 'invalid_fetch_options', {id: fsmInstance.id});
+    const {options: fetchOptions} = fsm.getContext();
+    if (fetchOptions == null) return logger.error('action_offline_mode', 'invalid_fetch_options', {id: fsm.id});
     fetchOptions.cacheStrategy = 'cache_only';
   },
 
-  online_mode: (fsmInstance) => {
+  online_mode: (fsm) => {
     logger.logMethod('action_online_mode');
-    const {fetchOptions} = fsmInstance.getContext();
-    if (fetchOptions == null) return logger.error('action_online_mode', 'invalid_fetch_options', {id: fsmInstance.id});
+    const {options: fetchOptions} = fsm.getContext();
+    if (fetchOptions == null) return logger.error('action_online_mode', 'invalid_fetch_options', {id: fsm.id});
     fetchOptions.cacheStrategy = 'update_cache';
   },
 
-  request: async (fsmInstance) => {
+  request: async (fsm) => {
     logger.logMethod('action_request');
 
     try {
-      const {response, fetchOptions} = fsmInstance.getContext();
-      if (fetchOptions == null) return logger.error('action_request', 'invalid_fetch_options', {id: fsmInstance.id});
-      const newResponse = await serviceRequest<NonNullable<RequestServiceFsmContext['response']>>(
+      const {response, options: fetchOptions} = fsm.getContext();
+      if (fetchOptions == null) return logger.error('action_request', 'invalid_fetch_options', {id: fsm.id});
+      const newResponse = await serviceRequest<NonNullable<ServerContextFsmContext['response']>>(
         fetchOptions as StringifyableFetchOptions,
       );
 
@@ -129,26 +129,26 @@ finiteStateMachineProvider.defineActions<RequestServiceFsm>('request_service_fsm
         newResponse.meta.lastUpdated === response.meta?.lastUpdated
       ) {
         // no changed
-        fsmInstance.transition('request_success');
+        fsm.transition('request_success');
       }
       else {
-        fsmInstance.transition('request_success', {response: newResponse});
+        fsm.transition('request_success', {response: newResponse});
       }
     }
     catch (err) {
       if ((err as Error).message === 'fetch_cache_not_found') {
-        fsmInstance.transition('cache_not_found');
+        fsm.transition('cache_not_found');
       }
       else {
         logger.error('requestOrderStorageContext', 'fetch_failed', err);
-        fsmInstance.transition('request_failed');
+        fsm.transition('request_failed');
       }
     }
   },
 });
 
 export const request = (
-    fsm: FsmConsumerInterface<RequestServiceFsm>,
+    fsm: FsmConsumerInterface<ServerContextFsm>,
     options?: Partial<StringifyableFetchOptions>,
     mergeOption = true,
 ): void => {
@@ -158,15 +158,15 @@ export const request = (
 };
 
 export const setOptions = (
-    fsm: FsmConsumerInterface<RequestServiceFsm>,
+    fsm: FsmConsumerInterface<ServerContextFsm>,
     options: Partial<StringifyableFetchOptions>,
     merge = true,
 ): void => {
   logger.logMethodArgs('setOptions', fsm.id);
-  const {fetchOptions} = fsm.getContext();
+  const {options: fetchOptions} = fsm.getContext();
   // prettier-ignore
   fsm.setContext({
-    fetchOptions: merge === false ? options : {
+    options: merge === false ? options : {
       ...options,
       queryParameters: {
         ...fetchOptions?.queryParameters,
@@ -177,7 +177,7 @@ export const setOptions = (
 };
 
 export const getResponse = <TResponse extends AlwatrServiceResponseSuccessWithMeta>(
-  fsm: FsmConsumerInterface<RequestServiceFsm, RequestServiceFsmContext<TResponse>>,
+  fsm: FsmConsumerInterface<ServerContextFsm, ServerContextFsmContext<TResponse>>,
 ): TResponse | undefined => {
   logger.logMethodArgs('getResponse', fsm.id);
   return fsm.getContext().response;

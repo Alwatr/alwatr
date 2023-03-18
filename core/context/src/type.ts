@@ -1,13 +1,13 @@
-import type {requestServiceFsmConstructor} from './core.js';
+import type {serverContextFsmConstructor} from './core.js';
 import type {StringifyableFetchOptions} from '@alwatr/fetch';
 import type {FsmTypeHelper} from '@alwatr/fsm';
 import type {AlwatrServiceResponseSuccessWithMeta, StringifyableRecord} from '@alwatr/type';
 
-export interface RequestServiceFsmContext<
+export interface ServerContextFsmContext<
   TResponse extends AlwatrServiceResponseSuccessWithMeta = AlwatrServiceResponseSuccessWithMeta
 > extends StringifyableRecord {
-  fetchOptions?: Partial<StringifyableFetchOptions>;
+  options?: Partial<StringifyableFetchOptions>;
   response?: TResponse;
 }
 
-export type RequestServiceFsm = FsmTypeHelper<typeof requestServiceFsmConstructor>;
+export type ServerContextFsm = FsmTypeHelper<typeof serverContextFsmConstructor>;
