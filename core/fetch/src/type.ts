@@ -103,3 +103,25 @@ export interface FetchOptions extends RequestInit {
    */
   token?: string;
 }
+
+export type StringifyableFetchOptions = Pick<
+  FetchOptions,
+  | 'url'
+  | 'bodyJson'
+  | 'cache'
+  | 'cacheStorageName'
+  | 'cacheStrategy'
+  | 'headers'
+  | 'credentials'
+  | 'keepalive'
+  | 'method'
+  | 'mode'
+  | 'queryParameters'
+  | 'removeDuplicate'
+  | 'timeout'
+  | 'token'
+  | 'retry'
+  | 'retryDelay'
+  | 'referrer'
+  | 'referrerPolicy'
+>;

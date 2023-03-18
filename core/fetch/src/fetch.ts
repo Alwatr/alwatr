@@ -2,7 +2,7 @@ import {createLogger, globalAlwatr, isBrowser} from '@alwatr/logger';
 import {contextProvider, type DispatchOptions} from '@alwatr/signal';
 import {getClientId} from '@alwatr/util';
 
-import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type.js';
+import type {FetchOptions} from './type.js';
 import type {
   AlwatrServiceResponse,
   AlwatrServiceResponseSuccessWithMeta,
@@ -10,14 +10,7 @@ import type {
   StringifyableRecord,
 } from '@alwatr/type';
 
-export type {
-  FetchOptions,
-  CacheDuplicate,
-  CacheStrategy,
-  AlwatrServiceResponse,
-  AlwatrServiceResponseSuccessWithMeta,
-  AlwatrServiceResponseSuccess,
-};
+export type * from './type.js';
 
 const logger = createLogger('alwatr/fetch');
 
