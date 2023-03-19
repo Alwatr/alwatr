@@ -1,11 +1,11 @@
 import {serviceRequest, type FetchOptions} from '@alwatr/fetch';
-import {DispatchOptions, requestableContextProvider} from '@alwatr/signal';
-import {Product} from '@alwatr/type/src/customer-order-management.js';
+import {requestableContextProvider, type DispatchOptions} from '@alwatr/signal';
 
 import {config} from '../../config.js';
 import {logger} from '../logger.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {Product} from '@alwatr/type/customer-order-management.js';
 
 const productStorageContextProvider = requestableContextProvider.bind<
   AlwatrDocumentStorage<Product>,
