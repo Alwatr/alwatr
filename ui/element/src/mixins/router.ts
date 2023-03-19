@@ -13,7 +13,7 @@ export function RouterMixin<T extends Constructor<SignalMixinInterface>>(
   class RouterMixinClass extends superClass {
     override connectedCallback(): void {
       super.connectedCallback();
-      this._addSignalListener(
+      this._addSignalListeners(
           routeContextConsumer.subscribe((routeContext) => this._routeContextUpdated(routeContext), {
             receivePrevious: 'No',
           }),

@@ -6,7 +6,7 @@ import type {Constructor, SingleOrArray} from '@alwatr/type';
 
 export declare class SignalMixinInterface extends LoggerMixinInterface {
   private _signalListenerList: Array<ListenerSpec>;
-  protected _addSignalListener(listeners: SingleOrArray<ListenerSpec>): void;
+  protected _addSignalListeners(listeners: SingleOrArray<ListenerSpec>): void;
 }
 
 export function SignalMixin<T extends Constructor<LoggerMixinInterface>>(
@@ -15,7 +15,7 @@ export function SignalMixin<T extends Constructor<LoggerMixinInterface>>(
   class SignalMixinClass extends superClass {
     private _signalListenerList: Array<ListenerSpec> = [];
 
-    protected _addSignalListener(listeners: SingleOrArray<ListenerSpec>): void {
+    protected _addSignalListeners(listeners: SingleOrArray<ListenerSpec>): void {
       if (Array.isArray(listeners)) {
         this._signalListenerList = this._signalListenerList.concat(listeners);
       }

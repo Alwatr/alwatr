@@ -24,7 +24,7 @@ export function DirectionMixin<T extends Constructor<SignalMixinInterface>>(
 
     override connectedCallback(): void {
       super.connectedCallback();
-      this._addSignalListener(localeContextConsumer.subscribe(() => this._updateDir()));
+      this._addSignalListeners(localeContextConsumer.subscribe(() => this._updateDir()));
     }
 
     /**
