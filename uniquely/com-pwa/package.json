@@ -37,6 +37,7 @@
     "@alwatr/element": "^0.30.0",
     "@alwatr/fetch": "^0.30.0",
     "@alwatr/fsm": "^0.30.0",
+    "@alwatr/context": "^0.30.0",
     "@alwatr/i18n": "^0.30.0",
     "@alwatr/math": "^0.30.0",
     "@alwatr/pwa-helper": "^0.30.0",
