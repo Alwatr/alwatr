@@ -12,6 +12,8 @@
   "references": [
     {"path": "../logger"},
     {"path": "../signal"},
+    {"path": "../fetch"},
+    {"path": "../fsm"},
     {"path": "../type"}
   ]
 }
