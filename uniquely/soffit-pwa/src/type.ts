@@ -20,6 +20,7 @@ export interface PageHomeContent extends StringifyableRecord {
   catalogue: BoxType;
   productList: Array<BoxType>;
   socialList: Array<BoxType>;
+  agency?: BoxType; // just available in fa.
 }
 
 export interface PageAgencyContent extends StringifyableRecord {

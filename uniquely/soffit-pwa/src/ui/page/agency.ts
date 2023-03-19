@@ -51,7 +51,8 @@ export class AlwatrPageAgency extends SignalMixin(AlwatrBaseElement) {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._signalListenerList.push(
+
+    this._addSignalListener(
         agencyPageContentContextConsumer.subscribe((content) => {
           this.content = content;
           topAppBarContextProvider.setValue(content.topAppBar);

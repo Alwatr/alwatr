@@ -132,4 +132,13 @@ export const homePageContent: PageHomeContent = {
       target: '_blank',
     },
   ],
+  agency: {
+    elevated: 1,
+    stated: true,
+    icon: 'ribbon-outline',
+    headline: 'نمایندگی‌ها',
+    description: 'لیست نمایندگی‌ها سافیت در سراسر کشور',
+    href: '/agency',
+    wide: true,
+  },
 };
