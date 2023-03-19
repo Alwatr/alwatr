@@ -112,12 +112,7 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
         };
         return html`
           <alwatr-icon-box .content=${content}></alwatr-icon-box>
-          <alwatr-button
-            .icon=${buttons.reloadOrderStorage.icon}
-            .clickSignalId=${buttons.reloadOrderStorage.clickSignalId}
-          >
-            ${message('retry')}
-          </alwatr-button>
+          <alwatr-button .content=${buttons.retry}></alwatr-button>
         `;
       },
 

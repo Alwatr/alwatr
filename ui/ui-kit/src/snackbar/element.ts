@@ -121,7 +121,11 @@ export class AlwatrSnackbar extends AlwatrSurface {
     this._logger.logMethod('render');
     return html`<span class="message">${this.message}</span>${when(
         this.actionLabel,
-        () => html`<alwatr-button @click=${this._actionButtonClick}>${this.actionLabel}</alwatr-button>`,
+        () =>
+          html`<alwatr-button
+            .content=${{labelKey: this.actionLabel}}
+            @click=${this._actionButtonClick}
+          ></alwatr-button>`,
     )}`;
   }
 
