@@ -121,7 +121,9 @@ finiteStateMachineProvider.defineActions<ServerContextFsm>(serverContextFsmConst
 
     try {
       const {response, options} = fsm.getContext();
-      if (options == null) return logger.error('action_request', 'invalid_fetch_options', {id: fsm.id});
+      if (options == null || options.url == null) {
+        return logger.error('action_request', 'invalid_fetch_options', {id: fsm.id, options});
+      }
       const newResponse = await serviceRequest<NonNullable<ServerContextFsmContext['response']>>(
         options as StringifyableFetchOptions,
       );
@@ -170,6 +172,7 @@ export const setOptions = (
   // prettier-ignore
   fsm.setContext({
     options: merge === false ? options : {
+      ...oldOptions,
       ...options,
       queryParameters: {
         ...oldOptions?.queryParameters,
