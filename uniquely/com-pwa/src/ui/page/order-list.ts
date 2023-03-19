@@ -8,8 +8,8 @@ import {
   UnresolvedMixin,
   state,
   ScheduleUpdateToFrameMixin,
-  mapObject,
   guard,
+  repeat,
   type PropertyValues,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
@@ -129,23 +129,29 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
           startIcon: buttons.backToHome,
           endIconList: [buttons.newOrder, {...buttons.reloadOrderStorage, disabled: this.gotState === 'reloading'}],
         });
-        return [this.reloadingFailedTemplate(), this.orderListTemplate()];
+        return [
+          this.reloadingFailedTemplate(),
+          guard(orderStorageContextConsumer.getResponse()?.meta.lastUpdated, () => this.orderListTemplate()),
+        ];
       },
     });
   }
 
   private orderListTemplate(): unknown {
+    this._logger.logMethod('orderListTemplate');
     const orderStorage = orderStorageContextConsumer.getResponse();
     if (orderStorage == null) return;
-    return guard(orderStorage.data, () =>
-      mapObject(this, orderStorage.data, (order) => {
-        console.warn(1);
-        return html`<alwatr-order-status-box
-          .content=${order}
-          .clickSignalId=${buttons.showOrderDetail.clickSignalId}
-        ></alwatr-order-status-box>`;
-      }),
-    );
+    const orderList = Object.values(orderStorage.data)
+        .sort(
+            (o1, o2) => (o2.meta?.updated || 0) - (o1.meta?.updated || 0),
+        )
+        .slice(0, 15);
+    return repeat(orderList, (order) => order.id, (order) => {
+      return html`<alwatr-order-status-box
+        .content=${order}
+        .clickSignalId=${buttons.showOrderDetail.clickSignalId}
+      ></alwatr-order-status-box>`;
+    });
   }
 
   private reloadingFailedTemplate(): unknown {
