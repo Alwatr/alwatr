@@ -69,7 +69,7 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
     if (!localeContextConsumer.getValue()) {
       setLocale();
     }
-    this._addSignalListener(
+    this._addSignalListeners(
         commandHandler.define<{smooth?: boolean}, undefined>(scrollToTopCommand.id, (option): undefined => {
           this.renderRoot.querySelector('.scroll-area')?.scrollTo({
             top: 0,

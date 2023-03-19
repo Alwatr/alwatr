@@ -168,7 +168,7 @@ export class AlwatrTopAppBar extends LocalizeMixin(DirectionMixin(SignalMixin(Al
     super.connectedCallback();
     const contextSignal = this.getAttribute('context-signal');
     if (contextSignal) {
-      this._addSignalListener(
+      this._addSignalListeners(
           contextConsumer.subscribe<TopAppBarContent>(contextSignal, (context) => {
             this.content = {
               type: 'small',
