@@ -116,26 +116,30 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
         `;
       },
 
-      reloading: 'complete',
       reloadingFailed: 'complete',
+      reloading: 'complete',
       complete: () => {
         topAppBarContextProvider.setValue({
           headlineKey: 'page_order_list_headline',
           startIcon: buttons.backToHome,
           endIconList: [buttons.newOrder, {...buttons.reloadOrderStorage, disabled: this.gotState === 'reloading'}],
         });
-        const orderStorage = orderStorageContextConsumer.getResponse();
-        if (orderStorage == null) return;
-        const orderListTemplate = guard(orderStorage.meta.lastUpdated, () =>
-          mapObject(this, orderStorage.data, (order) => {
-            return html`<alwatr-order-status-box
-              .content=${order}
-              .clickSignalId=${buttons.showOrderDetail.clickSignalId}
-            ></alwatr-order-status-box>`;
-          }),
-        );
-        return [html`<div class="reloadingFailed">reloading failed</div>`, orderListTemplate];
+        return [html`<div class="reloadingFailed">reloading failed</div>`, this.orderListTemplate()];
       },
     });
+  }
+
+  private orderListTemplate(): unknown {
+    const orderStorage = orderStorageContextConsumer.getResponse();
+    if (orderStorage == null) return;
+    return guard(orderStorage.data, () =>
+      mapObject(this, orderStorage.data, (order) => {
+        console.warn(1);
+        return html`<alwatr-order-status-box
+          .content=${order}
+          .clickSignalId=${buttons.showOrderDetail.clickSignalId}
+        ></alwatr-order-status-box>`;
+      }),
+    );
   }
 }
