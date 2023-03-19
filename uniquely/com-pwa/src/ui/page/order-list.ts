@@ -15,6 +15,7 @@ import {
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
 import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/card/surface.js';
 
 import {buttons} from '../../manager/buttons.js';
 import {orderStorageContextConsumer} from '../../manager/context-provider/order-storage.js';
@@ -48,6 +49,10 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
     }
 
     alwatr-order-status-box {
+      margin-bottom: var(--sys-spacing-track);
+    }
+
+    .reloadingFailed {
       margin-bottom: var(--sys-spacing-track);
     }
 
@@ -124,7 +129,7 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
           startIcon: buttons.backToHome,
           endIconList: [buttons.newOrder, {...buttons.reloadOrderStorage, disabled: this.gotState === 'reloading'}],
         });
-        return [html`<div class="reloadingFailed">reloading failed</div>`, this.orderListTemplate()];
+        return [this.reloadingFailedTemplate(), this.orderListTemplate()];
       },
     });
   }
@@ -141,5 +146,11 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
         ></alwatr-order-status-box>`;
       }),
     );
+  }
+
+  private reloadingFailedTemplate(): unknown {
+    return html`<alwatr-surface tinted class="reloadingFailed">
+      ${message('page_order_list_reloading_failed')}
+    </alwatr-surface>`;
   }
 }

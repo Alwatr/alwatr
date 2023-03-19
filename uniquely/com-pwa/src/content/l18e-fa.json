@@ -22,6 +22,7 @@
     "page_order_tracking_not_found": "سفارش پیدا نشد!",
 
     "page_order_list_headline": "لیست سفارشات جاری",
+    "page_order_list_reloading_failed": "بارگیری مجدد با خطا روبرو شد! دوباره امتحان کنید.",
 
     "page_new_order_headline": "سفارش جدید",
     "page_new_order_edit_items": "ویرایش لیست محصولات",
