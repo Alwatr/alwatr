@@ -1,10 +1,10 @@
 // import {finiteStateMachineProvider, type FsmTypeHelper} from '@alwatr/fsm';
 // import {requestableContextConsumer} from '@alwatr/signal';
-// import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
+// import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
 // import type {RequestableContext} from '@alwatr/signal/type.js';
 // import type {AlwatrDocumentObject, AlwatrDocumentStorage} from '@alwatr/type';
-// import type {Order} from '@alwatr/type/src/customer-order-management.js';
+// import type {Order} from '@alwatr/type/customer-order-management.js';
 
 // const orderStorageContextConsumer =
 //   requestableContextConsumer.bind<AlwatrDocumentStorage<Order>>('order-storage-context');
