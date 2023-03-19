@@ -24,7 +24,7 @@ export const serverContextFsmConstructor = finiteStateMachineProvider.defineCons
     },
     initial: {
       on: {
-        request_service: {
+        REQUEST: {
           target: 'offlineLoading',
         },
       },
@@ -65,7 +65,7 @@ export const serverContextFsmConstructor = finiteStateMachineProvider.defineCons
      */
     loadingFailed: {
       on: {
-        request_service: {
+        REQUEST: {
           target: 'offlineLoading',
         },
       },
@@ -86,14 +86,14 @@ export const serverContextFsmConstructor = finiteStateMachineProvider.defineCons
      */
     reloadingFailed: {
       on: {
-        request_service: {
+        REQUEST: {
           target: 'reloading',
         },
       },
     },
     complete: {
       on: {
-        request_service: {
+        REQUEST: {
           target: 'reloading',
         },
       },
@@ -157,7 +157,7 @@ export const request = (
 ): void => {
   logger.logMethodArgs('request', fsm.id);
   if (options != null) setOptions(fsm, options, mergeOption);
-  fsm.transition('request_service');
+  fsm.transition('REQUEST');
 };
 
 export const setOptions = (
