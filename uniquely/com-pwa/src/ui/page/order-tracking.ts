@@ -172,13 +172,13 @@
 //   override connectedCallback(): void {
 //     super.connectedCallback();
 
-//     this._addSignalListener(
+//     this._addSignalListeners(
 //         orderStorageContextConsumer.subscribe((context) => {
 //           this._stateMachine.transition(`context_request_${context.state}`, {orderStorage: context.content});
 //         }, {receivePrevious: 'NextCycle'}),
 //     );
 
-//     this._addSignalListener(
+//     this._addSignalListeners(
 //         productStorageContextConsumer.subscribe((context) => {
 //           this._stateMachine.transition(`context_request_${context.state}`, {productStorage: context.content});
 //         }, {receivePrevious: 'NextCycle'}),

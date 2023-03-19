@@ -53,7 +53,7 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._addSignalListener(this.fsm.defineSignals([
+    this._addSignalListeners(this.fsm.defineSignals([
       {
         callback: (): void => {
           this.gotState = this.fsm.getState().target;
