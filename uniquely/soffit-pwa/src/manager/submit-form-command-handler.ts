@@ -3,9 +3,9 @@ import {commandHandler} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {validator, type JsonSchema} from '@alwatr/validator';
 
+import {submitFormCommandTrigger} from './context.js';
 import {logger} from './logger.js';
 import {config} from '../config.js';
-import {submitFormCommandTrigger} from '../context.js';
 
 import type {FormData} from '../type.js';
 

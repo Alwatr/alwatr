@@ -9,14 +9,14 @@ import {
   AlwatrBaseElement,
   mapIterable,
 } from '@alwatr/element';
-import {message} from '@alwatr/i18n';
+import {localeContextConsumer, message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import {homePageContentContextConsumer, topAppBarContextProvider} from './context.js';
-import './lottery-box.js';
-import './supply-chain-box.js';
+import {homePageContentContextConsumer, topAppBarContextProvider} from '../../manager/context.js';
+import '../stuff/lottery-box.js';
+import '../stuff/supply-chain-box.js';
 
-import type {BoxType, PageHomeContent} from './type.js';
+import type {BoxType, PageHomeContent} from '../../type.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -87,7 +87,9 @@ export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
     yield html`<alwatr-lottery-box></alwatr-lottery-box>`;
     yield mapIterable(this, this.content.socialList, this._boxTemplate, message('loading'));
     yield html`<alwatr-supply-chain-box></alwatr-supply-chain-box>`;
-    yield mapIterable(this, this.content.agencyList, this._boxTemplate, message('loading'));
+    if (localeContextConsumer.getValue()?.language === 'fa') {
+      yield this._boxTemplate(this.content.agency as BoxType);
+    }
   }
 
   protected _boxTemplate(box: BoxType): unknown {

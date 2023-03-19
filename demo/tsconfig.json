@@ -20,6 +20,7 @@
     {"path": "../core/math"},
     {"path": "../core/util"},
     {"path": "../core/fsm"},
+    {"path": "../core/context"},
     {"path": "../ui/icon"},
     {"path": "../core/storage-engine"},
     {"path": "../core/validator"}

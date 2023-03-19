@@ -2,7 +2,7 @@ import {customElement, css, html, LocalizeMixin, SignalMixin, AlwatrBaseElement}
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import {topAppBarContextProvider} from './context.js';
+import {topAppBarContextProvider} from '../../manager/context.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 

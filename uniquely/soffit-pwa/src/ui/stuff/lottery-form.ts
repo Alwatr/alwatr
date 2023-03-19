@@ -4,7 +4,7 @@ import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
-import {submitFormCommandTrigger} from './context.js';
+import {submitFormCommandTrigger} from '../../manager/context.js';
 
 import type {RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
@@ -72,7 +72,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
   @property({type: Boolean, reflect: true})
     disabled = false;
 
-  async submit(): Promise<void> {
+  protected async submit(): Promise<void> {
     const bodyJson = this.getFormData();
     this._logger.logMethodArgs('submit', bodyJson);
 
@@ -91,11 +91,11 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     }
   }
 
-  async cancel(): Promise<void> {
+  protected async cancel(): Promise<void> {
     this.dispatchEvent(new CustomEvent('form-canceled'));
   }
 
-  getFormData(): Record<string, string | number | boolean> {
+  protected getFormData(): Record<string, string | number | boolean> {
     this._logger.logMethod('getFormData');
     const data: Record<string, string> = {};
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>(
@@ -107,6 +107,14 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
   }
 
   override render(): unknown {
+    this._logger.logMethod('render');
+    return [
+      this.inputTemplate(),
+      this.partButtonTemplate(),
+    ];
+  }
+
+  protected inputTemplate(): unknown {
     this._logger.logMethod('render');
     return html`
       <alwatr-text-field
@@ -128,18 +136,28 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
       <alwatr-text-field
         .name=${'phone'}
         .type=${'tel'}
+        .placeholder=${message('phone_number')}
         outlined
         active-outline
         stated
-        .placeholder=${message('phone_number')}
       ></alwatr-text-field>
       <alwatr-radio-group
         .name=${'activity'}
         .options=${this._radioGroupOptions}
       ></alwatr-radio-group>
+    `;
+  }
+
+  protected partButtonTemplate(): unknown {
+    return html`
       <div class="button-container">
-        <alwatr-button outlined @click=${this.submit}>${message('submit_form')}</alwatr-button>
-        <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
+        <alwatr-button
+          .icon=${'checkmark-done-outline'}
+          @click=${this.submit}
+          outlined
+        >${message('submit_form')}
+        </alwatr-button>
+        <alwatr-button .icon=${'close-outline'} @click=${this.cancel}>${message('cancel')}</alwatr-button>
       </div>
     `;
   }

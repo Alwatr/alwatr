@@ -20,7 +20,7 @@ declare global {
 export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
   static override formId = 'supply-chain';
 
-  override render(): unknown {
+  override inputTemplate(): unknown {
     this._logger.logMethod('render');
     return html`
       <alwatr-text-field
@@ -47,10 +47,6 @@ export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
         active-outline
         stated
       ></alwatr-text-field>
-      <div class="button-container">
-        <alwatr-button outlined @click=${this.submit}>${message('submit_form')}</alwatr-button>
-        <alwatr-button @click=${this.cancel}>${message('cancel')}</alwatr-button>
-      </div>
     `;
   }
 }
