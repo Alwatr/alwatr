@@ -151,13 +151,8 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
   protected partButtonTemplate(): unknown {
     return html`
       <div class="button-container">
-        <alwatr-button
-          .icon=${'checkmark-done-outline'}
-          @click=${this.submit}
-          outlined
-        >${message('submit_form')}
-        </alwatr-button>
-        <alwatr-button .icon=${'close-outline'} @click=${this.cancel}>${message('cancel')}</alwatr-button>
+        <alwatr-button .content=${{labelKey: 'submit_form'}} @click=${this.submit} outlined></alwatr-button>
+        <alwatr-button .content=${{labelKey: 'cancel'}} @click=${this.cancel}></alwatr-button>
       </div>
     `;
   }
