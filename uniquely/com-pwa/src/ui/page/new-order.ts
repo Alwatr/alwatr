@@ -89,7 +89,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._addSignalListener(
+    this._addSignalListeners(
         this.fsm.defineSignals([
           {
             signalId: buttons.submit.clickSignalId,
