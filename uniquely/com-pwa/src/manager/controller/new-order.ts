@@ -5,6 +5,11 @@ import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {getLocalStorageItem} from '@alwatr/util';
 import {validator} from '@alwatr/validator';
 
+import {
+  productFinalPriceStorageContextConsumer,
+  productPriceStorageContextConsumer,
+} from '../context-provider/price-storage.js';
+import {productStorageContextConsumer} from '../context-provider/product-storage.js';
 import {scrollToTopCommand} from '../context.js';
 
 import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
@@ -26,8 +31,10 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
       on: {},
     },
     pending: {
+      entry: 'request_all_context',
       on: {
         context_request_complete: {
+          actions: 'set_context',
           target: 'edit',
         },
       },
@@ -105,6 +112,50 @@ export type NewOrderFsm = FsmTypeHelper<typeof newOrderFsmConstructor>;
 
 // entries actions
 finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
+  // tmp
+  request_all_context: (fsmInstance) => {
+    productStorageContextConsumer.request();
+    productPriceStorageContextConsumer.request();
+    productFinalPriceStorageContextConsumer.request();
+
+    productStorageContextConsumer.subscribe(() => {
+      if (
+        productPriceStorageContextConsumer.getState().target === 'complete' &&
+        productFinalPriceStorageContextConsumer.getState().target === 'complete'
+      ) {
+        fsmInstance.transition('context_request_complete');
+      }
+    });
+    productPriceStorageContextConsumer.subscribe(() => {
+      if (
+        productStorageContextConsumer.getState().target === 'complete' &&
+        productFinalPriceStorageContextConsumer.getState().target === 'complete'
+      ) {
+        fsmInstance.transition('context_request_complete');
+      }
+    });
+    productFinalPriceStorageContextConsumer.subscribe(() => {
+      if (
+        productStorageContextConsumer.getState().target === 'complete' &&
+        productPriceStorageContextConsumer.getState().target === 'complete'
+      ) {
+        fsmInstance.transition('context_request_complete');
+      }
+    });
+  },
+
+  set_context: (fsmInstance) => {
+    fsmInstance.setContext({
+      finalPriceStorage: productFinalPriceStorageContextConsumer.getResponse() as AlwatrDocumentStorage<ProductPrice>,
+    });
+    fsmInstance.setContext({
+      priceStorage: productPriceStorageContextConsumer.getResponse() as AlwatrDocumentStorage<ProductPrice>,
+    });
+    fsmInstance.setContext({
+      productStorage: productStorageContextConsumer.getResponse() as AlwatrDocumentStorage<Product>,
+    });
+  },
+
   set_order_local_storage: (fsmInstance) => {
     localStorage.setItem(newOrderLocalStorageKey, JSON.stringify(fsmInstance.getContext().order));
   },
@@ -195,11 +246,10 @@ finiteStateMachineProvider.defineSignals('new_order_fsm', [
   },
   {
     signalId: 'order_item_qty_update',
-    callback: (detail: {item: OrderItem, qty: number}, fsmInstance): void => {
+    callback: (detail: {item: OrderItem; qty: number}, fsmInstance): void => {
       if (detail.qty <= 0) return;
       detail.item.qty = detail.qty;
       fsmInstance.transition('qty_update');
     },
   },
 ]);
-
