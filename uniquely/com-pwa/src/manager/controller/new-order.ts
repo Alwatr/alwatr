@@ -1,32 +1,13 @@
 import {FsmTypeHelper, finiteStateMachineProvider} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
-import {requestableContextConsumer} from '@alwatr/signal';
-import {RequestableContext} from '@alwatr/signal/src/type.js';
 import {OrderDraft, OrderItem, Product, ProductPrice, orderInfoSchema} from '@alwatr/type/customer-order-management.js';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {getLocalStorageItem} from '@alwatr/util';
 import {validator} from '@alwatr/validator';
 
-import {config} from '../../config.js';
 import {scrollToTopCommand} from '../context.js';
 
 import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
-
-
-const productStorageContextConsumer = requestableContextConsumer.bind<
-  AlwatrDocumentStorage<Product>,
-  {productStorageName: string}
->('product-storage-context');
-
-const productPriceStorageContextConsumer = requestableContextConsumer.bind<
-  AlwatrDocumentStorage<ProductPrice>,
-  {productPriceStorageName: string}
->('product-price-context');
-
-const finalProductPriceStorageContextConsumer = requestableContextConsumer.bind<
-  AlwatrDocumentStorage<ProductPrice>,
-  {productPriceStorageName: string}
->('final-product-price-context');
 
 const newOrderLocalStorageKey = 'draft-order-x2';
 
@@ -45,35 +26,9 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
       on: {},
     },
     pending: {
-      entry: [
-        'initial_request_product_storage',
-        'initial_request_product_price_storage',
-        'initial_request_product_final_price_storage',
-      ],
       on: {
-        context_request_initial: {},
-        context_request_pending: {},
-        context_request_error: {
-          target: 'contextError',
-        },
         context_request_complete: {
           target: 'edit',
-          condition: 'check_all_context_load_complete',
-        },
-        context_request_reloading: {
-          target: 'reloading',
-        },
-      },
-    },
-    contextError: {
-      on: {
-        request_context: {
-          target: 'pending',
-          actions: [
-            'reload_request_product_storage',
-            'reload_request_product_price_storage',
-            'reload_request_product_final_price_storage',
-          ],
         },
       },
     },
@@ -97,17 +52,6 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
       entry: 'scroll_to_top',
       on: {
         submit: {
-          target: 'edit',
-        },
-      },
-    },
-    reloading: {
-      on: {
-        context_request_error: {
-          target: 'edit',
-          actions: 'show_fetch_failed_snackbar',
-        },
-        context_request_complete: {
           target: 'edit',
         },
       },
@@ -165,74 +109,9 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
     localStorage.setItem(newOrderLocalStorageKey, JSON.stringify(fsmInstance.getContext().order));
   },
 
-  initial_request_product_storage: () => {
-    if (productStorageContextConsumer.getValue().state === 'initial') {
-      for (const productStorageName of config.productStorageList) {
-        productStorageContextConsumer.request({productStorageName: productStorageName});
-      }
-    }
-  },
-  initial_request_product_price_storage: () => {
-    if (productPriceStorageContextConsumer.getValue().state === 'initial') {
-      productPriceStorageContextConsumer.request({productPriceStorageName: config.finalPriceListName});
-    }
-  },
-  initial_request_product_final_price_storage: () => {
-    if (finalProductPriceStorageContextConsumer.getValue().state === 'initial') {
-      finalProductPriceStorageContextConsumer.request({productPriceStorageName: config.finalPriceListName});
-    }
-  },
-
-  reload_request_product_storage: () => {
-    if (productStorageContextConsumer.getValue().state === 'reloading') return;
-    // else
-    for (const productStorageName of config.productStorageList) {
-      productStorageContextConsumer.request({productStorageName: productStorageName});
-    }
-  },
-  reload_request_product_price_storage: () => {
-    if (productPriceStorageContextConsumer.getValue().state === 'reloading') return;
-    // else
-    productPriceStorageContextConsumer.request({productPriceStorageName: config.finalPriceListName});
-  },
-  reload_request_product_final_price_storage: () => {
-    if (finalProductPriceStorageContextConsumer.getValue().state === 'reloading') return;
-    // else
-    finalProductPriceStorageContextConsumer.request({productPriceStorageName: config.finalPriceListName});
-  },
-
   check_item_list: (fsmInstance) => {
     if (fsmInstance.getState().from != 'selectProduct' && !fsmInstance.getContext().order?.itemList?.length) {
       fsmInstance.transition('select_product');
-    }
-  },
-
-  validate_order: (fsmInstance) => {
-    if (
-      !fsmInstance.getContext().order.itemList?.length &&
-        fsmInstance.getContext().order.shippingInfo == null
-    ) {
-      return false;
-    }
-    // else
-    try {
-      validator(orderInfoSchema, fsmInstance.getContext().order, true);
-      return true;
-    }
-    catch (err) {
-      const _err = err as Error & {cause?: Record<string, string | undefined>};
-      // this._logger.incident('validateOrder', _err.name, 'validation failed', _err);
-      if (_err.cause?.itemPath?.indexOf('shippingInfo') !== -1) {
-        snackbarSignalTrigger.request({
-          message: message('page_new_order_shipping_info_not_valid_message'),
-        });
-      }
-      else {
-        snackbarSignalTrigger.request({
-          message: message('page_new_order_order_not_valid_message'),
-        });
-      }
-      return false;
     }
   },
 
@@ -241,8 +120,6 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
       scrollToTopCommand.request({});
     }
   },
-
-  show_fetch_failed_snackbar: (): void => snackbarSignalTrigger.request({messageKey: 'fetch_failed_description'}),
 
   set_empty_shipping_info: (fsmInstance) => {
     if (fsmInstance.getState().from != 'selectProduct' && !fsmInstance.getContext().order?.itemList?.length) {
@@ -267,38 +144,37 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
 });
 
 // condition
-finiteStateMachineProvider.defineActions('new_order_fsm', {
-  check_all_context_load_complete: (): boolean => {
-    return (
-      finalProductPriceStorageContextConsumer.getValue().state === 'complete' &&
-      productPriceStorageContextConsumer.getValue().state === 'complete' &&
-      productPriceStorageContextConsumer.getValue().state === 'complete'
-    );
+finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
+  validate_order: (fsmInstance) => {
+    if (
+      !fsmInstance.getContext().order.itemList?.length &&
+        fsmInstance.getContext().order.shippingInfo == null
+    ) {
+      return false;
+    }
+    // else
+    try {
+      validator(orderInfoSchema, fsmInstance.getContext().order, true);
+      return true;
+    }
+    catch (err) {
+      const _err = err as Error & {cause?: Record<string, string | undefined>};
+      if (_err.cause?.itemPath?.indexOf('shippingInfo') !== -1) {
+        snackbarSignalTrigger.request({
+          message: message('page_new_order_shipping_info_not_valid_message'),
+        });
+      }
+      else {
+        snackbarSignalTrigger.request({
+          message: message('page_new_order_order_not_valid_message'),
+        });
+      }
+      return false;
+    }
   },
 });
 
 finiteStateMachineProvider.defineSignals('new_order_fsm', [
-  {
-    signalId: productStorageContextConsumer.id,
-    callback: (context: RequestableContext<AlwatrDocumentStorage<Product>>, fsmInstance): void => {
-      fsmInstance.transition(`context_request_${context.state}`, {productStorage: context.content});
-    },
-    receivePrevious: 'NextCycle',
-  },
-  {
-    signalId: productPriceStorageContextConsumer.id,
-    callback: (context: RequestableContext<AlwatrDocumentStorage<ProductPrice>>, fsmInstance): void => {
-      fsmInstance.transition(`context_request_${context.state}`, {priceStorage: context.content});
-    },
-    receivePrevious: 'NextCycle',
-  },
-  {
-    signalId: finalProductPriceStorageContextConsumer.id,
-    callback: (context: RequestableContext<AlwatrDocumentStorage<ProductPrice>>, fsmInstance): void => {
-      fsmInstance.transition(`context_request_${context.state}`, {finalPriceStorage: context.content});
-    },
-    receivePrevious: 'NextCycle',
-  },
   {
     signalId: 'order_item_qty_add',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {

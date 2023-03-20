@@ -202,27 +202,28 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
         ];
       },
 
-      contextError: () => {
-        topAppBarContextProvider.setValue({
-          headlineKey: 'page_order_list_headline',
-          startIcon: buttons.backToHome,
-          endIconList: [buttons.reload],
-        });
-        const content: IconBoxContent = {
-          icon: 'cloud-offline-outline',
-          tinted: 1,
-          headline: message('fetch_failed_headline'),
-          description: message('fetch_failed_description'),
-        };
-        return html`
-          <alwatr-icon-box .content=${content}></alwatr-icon-box>
-          <alwatr-button .icon=${buttons.reload.icon} .clickSignalId=${buttons.reload.clickSignalId}>
-            ${message('retry')}
-          </alwatr-button>
-        `;
-      },
+      // contextError: () => {
+      //   topAppBarContextProvider.setValue({
+      //     headlineKey: 'page_order_list_headline',
+      //     startIcon: buttons.backToHome,
+      //     endIconList: [buttons.reload],
+      //   });
+      //   const content: IconBoxContent = {
+      //     icon: 'cloud-offline-outline',
+      //     tinted: 1,
+      //     headline: message('fetch_failed_headline'),
+      //     description: message('fetch_failed_description'),
+      //   };
+      //   return html`
+      //     <alwatr-icon-box .content=${content}></alwatr-icon-box>
+      //     <alwatr-button .icon=${buttons.reload.icon} .clickSignalId=${buttons.reload.clickSignalId}>
+      //       ${message('retry')}
+      //     </alwatr-button>
+      //   `;
+      // },
 
-      reloading: 'selectProduct',
+      // reloading: 'selectProduct',
+
       selectProduct: () => {
         topAppBarContextProvider.setValue({
           headlineKey: 'page_new_order_headline',
