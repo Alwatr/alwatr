@@ -83,11 +83,16 @@ const buttons = {
 @customElement('alwatr-page-new-order')
 export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   protected fsm = finiteStateMachineConsumer<NewOrderFsm>('new_order_fsm_' + this.ali, 'new_order_fsm');
+
   @state()
     gotState = this.fsm.getState().target;
 
   override connectedCallback(): void {
     super.connectedCallback();
+
+    this._addSignalListeners(this.fsm.subscribe(() => {
+      this.gotState = this.fsm.getState().target;
+    }, {receivePrevious: 'NextCycle'}));
 
     this._addSignalListeners(
         this.fsm.defineSignals([
