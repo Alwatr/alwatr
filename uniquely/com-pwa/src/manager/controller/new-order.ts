@@ -173,9 +173,7 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
   },
 
   set_empty_shipping_info: (fsmInstance) => {
-    if (fsmInstance.getState().from != 'selectProduct' && !fsmInstance.getContext().order?.itemList?.length) {
-      fsmInstance.transition('select_product');
-    }
+    fsmInstance.getContext().order.shippingInfo ??= {};
   },
 
   submit_order: () => {
