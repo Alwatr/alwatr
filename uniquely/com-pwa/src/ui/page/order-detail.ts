@@ -38,7 +38,6 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
   @state()
     gotState = this.fsm.getState().target;
 
-
   private _orderId: number | null = null;
   set orderId(orderId) {
     this._orderId = orderId;
@@ -53,16 +52,16 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
   override connectedCallback(): void {
     super.connectedCallback();
 
+    this._addSignalListeners(this.fsm.subscribe(() => {
+      this.gotState = this.fsm.getState().target;
+    }, {receivePrevious: 'NextCycle'}));
+
     this._addSignalListeners(this.fsm.defineSignals([
       {
         callback: (): void => {
           this.gotState = this.fsm.getState().target;
         },
         receivePrevious: 'NextCycle',
-      },
-      {
-        signalId: buttons.reload.clickSignalId,
-        transition: 'request_context',
       },
       {
         signalId: buttons.backToOrderList.clickSignalId,
@@ -90,34 +89,11 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
         return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
       },
 
-      contextError: () => {
-        topAppBarContextProvider.setValue({
-          headlineKey: 'page_order_list_headline',
-          startIcon: buttons.backToOrderList,
-          endIconList: [buttons.reload],
-        });
-
-        const content: IconBoxContent = {
-          icon: 'cloud-offline-outline',
-          tinted: 1,
-          headline: message('fetch_failed_headline'),
-          description: message('fetch_failed_description'),
-        };
-        return html`
-          <alwatr-icon-box .content=${content}></alwatr-icon-box>
-          <alwatr-button .icon=${buttons.reload.icon} .clickSignalId=${buttons.reload.clickSignalId}>
-            ${message('retry')}
-          </alwatr-button>
-        `;
-      },
-
-      reloading: 'detail',
-
       detail: () => {
         topAppBarContextProvider.setValue({
           headlineKey: 'page_order_list_headline',
           startIcon: buttons.backToOrderList,
-          endIconList: [{...buttons.reload, disabled: this.gotState === 'reloading'}],
+          endIconList: [buttons.reload],
         });
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const order = this.fsm.getContext().orderStorage!.data[this.fsm.getContext().orderId!];
