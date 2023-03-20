@@ -45,13 +45,6 @@ class AlwatrPwa extends AlwatrPwaElement {
           .orderId=${+routeContext.sectionList[1]}
           unresolved>...</alwatr-page-order-detail>`;
       },
-      'order-tracking': (routeContext) => {
-        topAppBarContextProvider.setValue({headlineKey: 'loading'});
-        import('./page/order-tracking.js');
-        return html`<alwatr-page-order-tracking
-          .orderId=${+routeContext.sectionList[1]}
-          unresolved>...</alwatr-page-order-tracking>`;
-      },
       'new-order': () => {
         topAppBarContextProvider.setValue({headlineKey: 'loading'});
         import('./page/new-order.js');
