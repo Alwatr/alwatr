@@ -16,6 +16,8 @@ declare global {
   }
 }
 
+const localStorageId = 'shipping_form_data_x2';
+
 /**
  * Alwatr Order Shipping Form.
  */
@@ -43,13 +45,13 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
 
   private _saveFormData(): void {
     this._logger.logMethod('_saveFormData');
-    localStorage.setItem('shipping_form_data_x2', JSON.stringify(this.formData));
+    localStorage.setItem(localStorageId, JSON.stringify(this.formData));
   }
 
   private _loadFormData(): void {
     if (Object.values(this.formData).length !== 0) return;
     this._logger.logMethod('_loadFormData');
-    const formData = getLocalStorageItem('shipping_form_data_x2', this.formData);
+    const formData = getLocalStorageItem(localStorageId, this.formData);
     for (const prop in formData) {
       if (!Object.prototype.hasOwnProperty.call(formData, prop)) continue;
       this.formData[prop] = formData[prop];
