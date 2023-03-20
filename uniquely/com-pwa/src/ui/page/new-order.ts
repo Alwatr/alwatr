@@ -114,7 +114,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           },
           {
             signalId: buttons.editItems.clickSignalId,
-            transition: 'final_submit',
+            transition: 'select_product',
           },
           {
             signalId: buttons.retry.clickSignalId,
@@ -199,8 +199,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
               <alwatr-button
                 .icon=${buttons.submit.icon}
                 .clickSignalId=${buttons.submit.clickSignalId}
-                ?disabled=${!this.fsm.getContext().order.itemList?.length}
-                >${message('page_new_order_submit')}
+              >${message('page_new_order_submit')}
               </alwatr-button>
             </div>
           `,
@@ -235,14 +234,18 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           startIcon: buttons.backToHome,
         });
         return [
-          html`<alwatr-select-product></alwatr-select-product>`,
+          html`<alwatr-select-product
+            .order=${this.fsm.getContext().order}
+            .productStorage=${this.fsm.getContext().productStorage}
+            .finalPriceStorage=${this.fsm.getContext().finalPriceStorage}
+            .priceStorage=${this.fsm.getContext().priceStorage}
+          ></alwatr-select-product>`,
           html`
             <div class="btn-container">
               <alwatr-button
                 elevated
                 .icon=${buttons.submit.icon}
                 .clickSignalId=${buttons.submit.clickSignalId}
-                ?disabled=${!this.fsm.getContext().order.itemList?.length}
                 >${message('select_product_submit_button')}
               </alwatr-button>
             </div>
