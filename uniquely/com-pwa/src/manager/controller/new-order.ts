@@ -10,7 +10,7 @@ import {
   productPriceStorageContextConsumer,
 } from '../context-provider/price-storage.js';
 import {productStorageContextConsumer} from '../context-provider/product-storage.js';
-import {scrollToTopCommand} from '../context.js';
+import {scrollToTopCommand, submitOrderCommandTrigger} from '../context.js';
 
 import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
 
@@ -176,14 +176,14 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
     fsmInstance.getContext().order.shippingInfo ??= {};
   },
 
-  submit_order: () => {
-    // const order = await submitOrderCommandTrigger.requestWithResponse(fsmInstance.getContext().order);
-    // if (order == null) {
-    //   fsmInstance.transition('submit_failed');
-    //   return;
-    // }
-    // // else
-    // fsmInstance.transition('submit_success', {registeredOrderId: order.id});
+  submit_order: async (fsmInstance) => {
+    const order = await submitOrderCommandTrigger.requestWithResponse(fsmInstance.getContext().order);
+    if (order == null) {
+      fsmInstance.transition('submit_failed');
+      return;
+    }
+    // else
+    fsmInstance.transition('submit_success', {registeredOrderId: order.id});
   },
 
   reset_new_order: (fsmInstance): void => {
