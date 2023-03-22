@@ -1,8 +1,11 @@
 import {css, customElement, html, property, live, type PropertyValues} from '@alwatr/element';
 import '@alwatr/icon';
 import {UnicodeDigits} from '@alwatr/math';
+import {eventTrigger} from '@alwatr/signal';
 
 import {AlwatrSurface} from '../card/surface.js';
+
+import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
 
 const unicodeDigits = new UnicodeDigits('en');
 
@@ -28,10 +31,17 @@ export type InputType =
   | 'datetime-local'
   | 'number';
 
+export interface TextFiledContent extends StringifyableRecord {
+  name: string;
+  type: InputType;
+  value: string;
+  placeholder?: string;
+  inputChangeSignalName?: string;
+  inputChangeSignalDetail?: Stringifyable;
+}
+
 /**
  * Alwatr outlined text field.
- *
- * @attr {String} name
  */
 @customElement('alwatr-text-field')
 export class AlwatrTextField extends AlwatrSurface {
@@ -111,56 +121,14 @@ export class AlwatrTextField extends AlwatrSurface {
     `,
   ];
 
-  @property({type: Object})
-    name = 'unknown';
-
-  @property({type: String})
-    type: InputType = 'text';
-
-  @property({type: String})
-    value = '';
-
-  @property({type: String})
-    placeholder = '';
+  @property()
+    content?: TextFiledContent;
 
   inputElement: HTMLInputElement | HTMLTextAreaElement | null = null;
 
   constructor() {
     super();
     this._inputChanged = this._inputChanged.bind(this);
-  }
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener('click', this._click);
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.removeEventListener('click', this._click);
-  }
-
-  override render(): unknown {
-    this._logger.logMethod?.('render');
-    this.value ??= '';
-
-    if (this.type === 'textarea') {
-      return html`<textarea
-        .name=${this.name}
-        .placeholder=${this.placeholder}
-        .value=${live(this.value)}
-        .rows=${3}
-        @change=${this._inputChanged}
-      ></textarea>`;
-    }
-    // else
-    return html`<input
-      .name=${this.name}
-      .type=${this.type}
-      .placeholder=${this.placeholder}
-      .value=${live(this.value)}
-      @change=${this._inputChanged}
-    ></input>`;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
@@ -172,15 +140,45 @@ export class AlwatrTextField extends AlwatrSurface {
     this.inputElement?.focus();
   }
 
+  override render(): unknown {
+    this._logger.logMethod?.('render');
+    const content = this.content || {type: 'text', name: '', placeholder: '', value: ''};
+    if (content.type === 'textarea') {
+      return html`<textarea
+        .name=${content.name}
+        .placeholder=${content.placeholder}
+        .value=${live(content.value)}
+        .rows=${3}
+        @change=${this._inputChanged}
+      ></textarea>`;
+    }
+    // else
+    return html`<input
+      .name=${content.name}
+      .type=${content.type}
+      .placeholder=${content.placeholder}
+      .value=${live(content.value)}
+      @change=${this._inputChanged}
+    ></input>`;
+  }
+
   private _inputChanged(event: Event): void {
     this._logger.logMethod?.('_inputChanged');
     const target = event.target as HTMLInputElement | HTMLTextAreaElement;
     if (target == null) return;
-    let inputValue = unicodeDigits.translate(target.value ?? '');
-    if (this.type === 'number' || this.type === 'tel') {
+    const content = this.content || {type: 'text', name: '', value: ''};
+
+    let inputValue = unicodeDigits.translate(target.value);
+    if (content.type === 'number' || content.type === 'tel') {
       inputValue = inputValue.replaceAll(' ', '');
     }
-    this.value = inputValue;
-    this.dispatchEvent(new CustomEvent('input-change'));
+    content.value = inputValue;
+
+    if (content.inputChangeSignalName) {
+      eventTrigger.dispatch<{value: string; detail: Stringifyable}>(content.inputChangeSignalName, {
+        value: content.value,
+        detail: content.inputChangeSignalDetail,
+      });
+    }
   }
 }
