@@ -26,7 +26,6 @@ productPriceStorageContextConsumer.fsm.defineSignals([
   },
 ]);
 
-
 /**
  * Product Final Price.
  */
@@ -43,7 +42,7 @@ export const productFinalPriceStorageContextConsumer = serverContextConsumer<Alw
 
 productFinalPriceStorageContextConsumer.fsm.defineSignals([
   {
-    signalId: 'reload_product_final_price_storage',
+    signalId: 'reload_product_price_storage',
     transition: 'REQUEST',
   },
 ]);
