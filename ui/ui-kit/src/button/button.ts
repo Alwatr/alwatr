@@ -80,8 +80,13 @@ export class AlwatrButton extends AlwatrSurface {
     `,
   ];
 
-  @property()
+  @property({type: Object})
     content?: ButtonContent;
+
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(_changedProperties);
+    this.setAttribute('stated', '');
+  }
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -114,23 +119,16 @@ export class AlwatrButton extends AlwatrSurface {
     ];
   }
 
-  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
-    super.firstUpdated(_changedProperties);
-    this.setAttribute('stated', '');
-  }
-
   protected _click(event: MouseEvent): void {
-    if (this.content == null) return;
+    if (this.content?.clickSignalId == null) return;
     this._logger.logMethodArgs('click', {clickSignalId: this.content.clickSignalId});
-    if (this.content.clickSignalId) {
-      eventTrigger.dispatch<ClickSignalType>(this.content.clickSignalId, {
-        x: event.clientX,
-        y: event.clientY,
-        altKey: event.altKey,
-        ctrlKey: event.ctrlKey,
-        metaKey: event.metaKey,
-        detail: this.content.clickDetail,
-      });
-    }
+    eventTrigger.dispatch<ClickSignalType>(this.content.clickSignalId, {
+      x: event.clientX,
+      y: event.clientY,
+      altKey: event.altKey,
+      ctrlKey: event.ctrlKey,
+      metaKey: event.metaKey,
+      detail: this.content.clickDetail,
+    });
   }
 }
