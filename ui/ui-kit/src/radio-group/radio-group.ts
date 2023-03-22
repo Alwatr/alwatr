@@ -1,4 +1,6 @@
-import {customElement, css, html, map, AlwatrBaseElement, property, nothing, live} from '@alwatr/element';
+import {customElement, css, html, map, AlwatrBaseElement, property, live} from '@alwatr/element';
+import {eventTrigger} from '@alwatr/signal';
+import {Stringifyable} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -8,9 +10,13 @@ declare global {
 
 export type RadioOption = {label: string; value: string};
 
-export type RadioGroupOptions = {
+export type RadioGroupContent = {
+  name: string;
   title: string;
   radioGroup: Array<RadioOption>;
+  value?: string;
+  inputChangeSignalName?: string;
+  inputChangeSignalDetail?: Stringifyable;
 };
 
 /**
@@ -71,36 +77,30 @@ export class AlwatrRadioGroup extends AlwatrBaseElement {
   `;
 
   @property({type: Object})
-    name = 'unknown';
-
-  @property({type: Object})
-    options?: RadioGroupOptions;
-
-  @property({type: String})
-    value?: string;
+    content?: RadioGroupContent;
 
   override render(): unknown {
     this._logger.logMethod?.('render');
     return html`
       <fieldset>
-        <legend>${this.options?.title}</legend>
+        <legend>${this.content?.title}</legend>
         ${this._optionsTemplate()}
       </fieldset>
     `;
   }
 
   protected _optionsTemplate(): unknown {
-    const options = this.options;
-    if (options == null) return nothing;
-    return map(options.radioGroup, (radioItem, index) => {
+    const content = this.content || {radioGroup: [], name: '', value: ''};
+
+    return map(content.radioGroup, (radioItem, index) => {
       const id: string = 'radioInput_' + index;
       return html`<div>
         <input
-          type="radio"
           id=${id}
-          .name=${this.name}
+          .type="radio"
+          .name=${content.name}
           .value=${radioItem.value}
-          .checked=${live(radioItem.value === this.value)}
+          .checked=${live(radioItem.value === content.value)}
           @change=${this._inputChanged}
         />
         <label for=${id}>${radioItem.label}</label>
@@ -109,9 +109,24 @@ export class AlwatrRadioGroup extends AlwatrBaseElement {
   }
 
   private _inputChanged(event: Event): void {
-    const target = event.target as HTMLInputElement;
+    this._logger.logMethod('_inputChanged');
+    const target = event.target as HTMLInputElement | HTMLTextAreaElement;
     if (target == null) return;
-    this.value = target.value;
-    this.dispatchEvent(new CustomEvent('input-change'));
+    const content = this.content || {
+      type: 'text',
+      name: '',
+      value: '',
+      inputChangeSignalName: '',
+      inputChangeSignalDetail: {},
+    };
+
+    content.value = target.value;
+    if (content.inputChangeSignalName) {
+      eventTrigger.dispatch<{name: string; value: string; detail: Stringifyable}>(content.inputChangeSignalName, {
+        name: content.name,
+        value: content.value,
+        detail: content.inputChangeSignalDetail,
+      });
+    }
   }
 }
