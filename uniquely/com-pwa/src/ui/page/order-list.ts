@@ -45,7 +45,7 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
     }
 
     :host([state='reloading']) {
-      opacity: var(--sys-surface-disabled-opacity);
+      opacity: var(--sys-surface-reloading-opacity);
     }
 
     alwatr-order-status-box {
