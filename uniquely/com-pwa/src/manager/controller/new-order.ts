@@ -105,6 +105,7 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
         submit: {
           target: 'review',
           condition: 'validate_order',
+          actions: 'scroll_to_top',
         },
       },
     },
