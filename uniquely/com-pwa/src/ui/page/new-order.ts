@@ -5,7 +5,8 @@ import {redirect} from '@alwatr/router';
 import '@alwatr/ui-kit/card/icon-box.js';
 
 
-import {scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
+import {buttons} from '../../manager/buttons.js';
+import {topAppBarContextProvider} from '../../manager/context.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
 import '../stuff/select-product.js';
 
@@ -13,75 +14,11 @@ import type {NewOrderFsm} from '../../manager/controller/new-order.js';
 import type {Order, OrderShippingInfo} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
-
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-page-new-order': AlwatrPageNewOrder;
   }
 }
-
-const buttons = {
-  back: {
-    icon: 'arrow-back-outline',
-    flipRtl: true,
-    clickSignalId: 'page_new_order_back_click_event',
-  },
-  backToHome: {
-    icon: 'arrow-back-outline',
-    flipRtl: true,
-    clickSignalId: 'back_to_home_click_event',
-  },
-  editItems: {
-    icon: 'create-outline',
-    clickSignalId: 'page_new_order_edit_items_click_event',
-  },
-  submit: {
-    icon: 'checkmark-outline',
-    clickSignalId: 'page_new_order_submit_click_event',
-  },
-  edit: {
-    icon: 'create-outline',
-    clickSignalId: 'page_new_order_edit_click_event',
-  },
-  submitFinal: {
-    icon: 'checkmark-outline',
-    clickSignalId: 'page_new_order_submit_final_click_event',
-  },
-  submitShippingForm: {
-    icon: 'checkmark-outline',
-    clickSignalId: 'page_new_order_submit_shipping_form_click_event',
-  },
-  editShippingForm: {
-    icon: 'checkmark-outline',
-    clickSignalId: 'page_new_order_edit_shipping_form_click_event',
-  },
-  newOrder: {
-    icon: 'add-outline',
-    clickSignalId: 'page_new_order_new_order_click_event',
-  },
-  detail: {
-    icon: 'information-outline',
-    clickSignalId: 'page_new_order_detail_click_event',
-  },
-  tracking: {
-    icon: 'chatbox-outline',
-    clickSignalId: 'page_new_order_tracking_click_event',
-  },
-  reload: {
-    icon: 'reload-outline',
-    // flipRtl: true,
-    clickSignalId: 'order_list_reload_click_event',
-  },
-  retry: {
-    icon: 'reload-outline',
-    clickSignalId: 'page_new_order_retry_click_event',
-  },
-  backToOrderList: {
-    icon: 'arrow-back-outline',
-    flipRtl: true,
-    clickSignalId: 'order_detail_back_to_order_list_event',
-  },
-} as const;
 
 /**
  * Alwatr Customer Order Management Order Form Page
@@ -223,18 +160,13 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           this.render_part_item_list(order.itemList ?? [], this.fsm.getContext().productStorage, true),
           html`
             <div class="btn-container">
-              <alwatr-button .icon=${buttons.editItems.icon} .clickSignalId=${buttons.editItems.clickSignalId}>
-                ${message('page_new_order_edit_items')}
-              </alwatr-button>
+              <alwatr-button .content=${buttons.editItems}>${message('page_new_order_edit_items')}</alwatr-button>
             </div>
           `,
           this.render_part_shipping_info(order.shippingInfo),
           html`
             <div class="btn-container">
-              <alwatr-button
-                .icon=${buttons.editShippingForm.icon}
-                .clickSignalId=${buttons.editShippingForm.clickSignalId}
-              >
+              <alwatr-button .content=${buttons.editShippingForm}>
                 ${message('page_new_order_shipping_edit')}
               </alwatr-button>
             </div>
@@ -242,11 +174,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           this.render_part_summary(order),
           html`
             <div class="submit-container">
-              <alwatr-button
-                .icon=${buttons.submit.icon}
-                .clickSignalId=${buttons.submit.clickSignalId}
-              >${message('page_new_order_submit')}
-              </alwatr-button>
+              <alwatr-button .content=${buttons.submit}>${message('page_new_order_submit')}</alwatr-button>
             </div>
           `,
         ];
@@ -287,11 +215,8 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           ></alwatr-select-product>`,
           html`
             <div class="btn-container">
-              <alwatr-button
-                elevated
-                .icon=${buttons.submit.icon}
-                .clickSignalId=${buttons.submit.clickSignalId}
-                >${message('select_product_submit_button')}
+              <alwatr-button .content=${buttons.submit} elevated>
+                ${message('select_product_submit_button')}
               </alwatr-button>
             </div>
           `,
@@ -305,10 +230,9 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           this.render_part_shipping_form(order.shippingInfo as Partial<OrderShippingInfo>),
           html`
             <div class="btn-container">
-              <alwatr-button
-                .icon=${buttons.submitShippingForm.icon}
-                .clickSignalId=${buttons.submitShippingForm.clickSignalId}
-              >${message('page_new_order_shipping_submit')}</alwatr-button>
+              <alwatr-button .content=${buttons.submitShippingForm}>
+                ${message('page_new_order_shipping_submit')}
+              </alwatr-button>
             </div>
           `,
         ];
@@ -323,12 +247,8 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           this.render_part_summary(order),
           html`
             <div class="submit-container">
-              <alwatr-button .icon=${buttons.edit.icon} .clickSignalId=${buttons.edit.clickSignalId}>
-                ${message('page_new_order_edit')}
-              </alwatr-button>
-              <alwatr-button .icon=${buttons.submitFinal.icon} .clickSignalId=${buttons.submitFinal.clickSignalId}>
-                ${message('page_new_order_submit_final')}
-              </alwatr-button>
+              <alwatr-button .content=${buttons.editOrder}>${message('page_new_order_edit')}</alwatr-button>
+              <alwatr-button .content=${buttons.submitFinal}>${message('page_new_order_submit_final')}</alwatr-button>
             </div>
           `,
         ];
@@ -353,12 +273,10 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
           html`
             <div class="submit-container">
-              <alwatr-button .icon=${buttons.detail.icon} .clickSignalId=${buttons.detail.clickSignalId}>
+              <alwatr-button .content=${buttons.showOrderDetail}>
                 ${message('page_new_order_detail_button')}
               </alwatr-button>
-              <alwatr-button .icon=${buttons.newOrder.icon} .clickSignalId=${buttons.newOrder.clickSignalId}>
-                ${message('page_new_order_headline')}
-              </alwatr-button>
+              <alwatr-button .content=${buttons.newOrder}>${message('page_new_order_headline')}</alwatr-button>
             </div>
           `,
         ];
@@ -374,9 +292,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
           html`
             <div class="submit-container">
-              <alwatr-button .icon=${buttons.retry.icon} .clickSignalId=${buttons.retry.clickSignalId}>
-                ${message('page_new_order_retry_button')}
-              </alwatr-button>
+              <alwatr-button .content=${buttons.retry}>${message('page_new_order_retry_button')}</alwatr-button>
             </div>
           `,
         ];
