@@ -15,7 +15,7 @@ import '@alwatr/ui-kit/text-field/text-field.js';
 
 import {submitFormCommandTrigger} from '../../manager/context.js';
 
-import type {RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
+import type {RadioGroupContent} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
@@ -32,20 +32,6 @@ declare global {
 @customElement('alwatr-lottery-form')
 export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static formId = 'lottery';
-
-  get _radioGroupOptions(): RadioGroupOptions {
-    return {
-      title: message('activity_type'),
-      radioGroup: [
-        {label: message('tile_player'), value: 'tile_player'},
-        {label: message('tile_installer'), value: 'tile_installer'},
-        {label: message('seller_shopkeeper'), value: 'seller_shopkeeper'},
-        {label: message('contractor'), value: 'contractor'},
-        {label: message('manufacturer'), value: 'manufacturer'},
-        {label: message('other'), value: 'other'},
-      ],
-    };
-  }
 
   static override styles = css`
     :host {
@@ -111,7 +97,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
         'alwatr-text-field,alwatr-radio-group',
     )) {
       if (inputElement.content == null) continue;
-      data[inputElement.content.name] = inputElement.content.value;
+      data[inputElement.content.name] = inputElement.content.value ?? '';
     }
     return data;
   }
@@ -141,13 +127,25 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
         placeholder: message('phone_number'),
       },
     };
+    const activityRadioGroupContent: RadioGroupContent = {
+      name: 'activity',
+      title: message('activity_type'),
+      radioGroup: [
+        {label: message('tile_player'), value: 'tile_player'},
+        {label: message('tile_installer'), value: 'tile_installer'},
+        {label: message('seller_shopkeeper'), value: 'seller_shopkeeper'},
+        {label: message('contractor'), value: 'contractor'},
+        {label: message('manufacturer'), value: 'manufacturer'},
+        {label: message('other'), value: 'other'},
+      ],
+    };
     return [
       mapObject(this, textFieldContentRecord, (textFieldContent) => {
         return html`
           <alwatr-text-field .content=${textFieldContent} outlined active-outline stated></alwatr-text-field>
         `;
       }),
-      html` <alwatr-radio-group .name=${'activity'} .options=${this._radioGroupOptions}></alwatr-radio-group> `,
+      html` <alwatr-radio-group .content=${activityRadioGroupContent}></alwatr-radio-group> `,
     ];
   }
 
