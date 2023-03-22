@@ -1,4 +1,13 @@
-import {customElement, css, html, property, LocalizeMixin, SignalMixin, AlwatrBaseElement} from '@alwatr/element';
+import {
+  customElement,
+  css,
+  html,
+  property,
+  LocalizeMixin,
+  SignalMixin,
+  AlwatrBaseElement,
+  mapObject,
+} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
@@ -101,51 +110,45 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>(
         'alwatr-text-field,alwatr-radio-group',
     )) {
-      data[inputElement.name] = inputElement.value as string;
+      if (inputElement.content == null) continue;
+      data[inputElement.content.name] = inputElement.content.value;
     }
     return data;
   }
 
   override render(): unknown {
-    this._logger.logMethod?.('render');
-    return [
-      this.inputTemplate(),
-      this.partButtonTemplate(),
-    ];
+    this._logger.logMethod('render');
+    return [this.inputTemplate(), this.partButtonTemplate()];
   }
 
   protected inputTemplate(): unknown {
     this._logger.logMethod?.('render');
-    return html`
-      <alwatr-text-field
-        .name=${'code'}
-        .type=${'number'}
-        .placeholder=${message('lottery_code')}
-        outlined
-        active-outline
-        stated
-      ></alwatr-text-field>
-      <alwatr-text-field
-        .name=${'name'}
-        .type=${'text'}
-        .placeholder=${message('full_name')}
-        outlined
-        active-outline
-        stated
-      ></alwatr-text-field>
-      <alwatr-text-field
-        .name=${'phone'}
-        .type=${'tel'}
-        .placeholder=${message('phone_number')}
-        outlined
-        active-outline
-        stated
-      ></alwatr-text-field>
-      <alwatr-radio-group
-        .name=${'activity'}
-        .options=${this._radioGroupOptions}
-      ></alwatr-radio-group>
-    `;
+
+    const textFieldContentRecord = {
+      code: {
+        type: 'number',
+        name: 'code',
+        placeholder: message('lottery_code'),
+      },
+      name: {
+        type: 'text',
+        name: 'name',
+        placeholder: message('full_name'),
+      },
+      phone: {
+        type: 'tel',
+        name: 'phone',
+        placeholder: message('phone_number'),
+      },
+    };
+    return [
+      mapObject(this, textFieldContentRecord, (textFieldContent) => {
+        return html`
+          <alwatr-text-field .content=${textFieldContent} outlined active-outline stated></alwatr-text-field>
+        `;
+      }),
+      html` <alwatr-radio-group .name=${'activity'} .options=${this._radioGroupOptions}></alwatr-radio-group> `,
+    ];
   }
 
   protected partButtonTemplate(): unknown {
