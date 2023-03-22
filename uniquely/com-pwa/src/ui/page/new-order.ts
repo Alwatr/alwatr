@@ -6,7 +6,7 @@ import '@alwatr/ui-kit/card/icon-box.js';
 
 
 import {buttons} from '../../manager/buttons.js';
-import {topAppBarContextProvider} from '../../manager/context.js';
+import {scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
 import '../stuff/select-product.js';
 
@@ -164,21 +164,19 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           this.render_part_item_list(order.itemList ?? [], this.fsm.getContext().productStorage, true),
           html`
             <div class="btn-container">
-              <alwatr-button .content=${buttons.editItems}>${message('page_new_order_edit_items')}</alwatr-button>
+              <alwatr-button .content=${buttons.editItems}></alwatr-button>
             </div>
           `,
           this.render_part_shipping_info(order.shippingInfo),
           html`
             <div class="btn-container">
-              <alwatr-button .content=${buttons.editShippingForm}>
-                ${message('page_new_order_shipping_edit')}
-              </alwatr-button>
+              <alwatr-button .content=${buttons.editShippingForm}></alwatr-button>
             </div>
           `,
           this.render_part_summary(order),
           html`
             <div class="submit-container">
-              <alwatr-button .content=${buttons.submit}>${message('page_new_order_submit')}</alwatr-button>
+              <alwatr-button .content=${buttons.submit}></alwatr-button>
             </div>
           `,
         ];
@@ -219,9 +217,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           ></alwatr-select-product>`,
           html`
             <div class="btn-container">
-              <alwatr-button .content=${buttons.submit} elevated>
-                ${message('select_product_submit_button')}
-              </alwatr-button>
+              <alwatr-button .content=${buttons.selectProductSubmit} elevated></alwatr-button>
             </div>
           `,
         ];
@@ -234,9 +230,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           this.render_part_shipping_form(order.shippingInfo as Partial<OrderShippingInfo>),
           html`
             <div class="btn-container">
-              <alwatr-button .content=${buttons.submitShippingForm}>
-                ${message('page_new_order_shipping_submit')}
-              </alwatr-button>
+              <alwatr-button .content=${buttons.submitShippingForm}></alwatr-button>
             </div>
           `,
         ];
@@ -251,8 +245,8 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           this.render_part_summary(order),
           html`
             <div class="submit-container">
-              <alwatr-button .content=${buttons.editOrder}>${message('page_new_order_edit')}</alwatr-button>
-              <alwatr-button .content=${buttons.submitFinal}>${message('page_new_order_submit_final')}</alwatr-button>
+              <alwatr-button .content=${buttons.editOrder}></alwatr-button>
+              <alwatr-button .content=${buttons.submitFinal}></alwatr-button>
             </div>
           `,
         ];
@@ -277,9 +271,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
           html`
             <div class="submit-container">
-              <alwatr-button .content=${buttons.showOrderDetail}>
-                ${message('page_new_order_detail_button')}
-              </alwatr-button>
+              <alwatr-button .content=${buttons.showRegisteredOrderDetail}></alwatr-button>
               <alwatr-button .content=${buttons.newOrder}>${message('page_new_order_headline')}</alwatr-button>
             </div>
           `,
@@ -296,7 +288,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
           html`
             <div class="submit-container">
-              <alwatr-button .content=${buttons.retry}>${message('page_new_order_retry_button')}</alwatr-button>
+              <alwatr-button .content=${buttons.retry}></alwatr-button>
             </div>
           `,
         ];
