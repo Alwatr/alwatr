@@ -139,8 +139,8 @@ export class AlwatrProductCard extends ToggleMixin(LocalizeMixin(SignalMixin(Alw
   @property({type: Object, attribute: false})
     content?: ProductCartContent;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
+  protected override firstUpdated(_changedProperties: PropertyValueMap<this>): void {
+    super.firstUpdated(_changedProperties);
     this.setAttribute('stated', '');
     this.setAttribute('elevated', '');
   }
