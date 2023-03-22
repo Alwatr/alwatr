@@ -1,4 +1,4 @@
-import {html, css, customElement, property, when} from '@alwatr/element';
+import {html, css, customElement, property, when, PropertyValueMap} from '@alwatr/element';
 import {untilEvent} from '@alwatr/util';
 
 import '../button/button.js';
