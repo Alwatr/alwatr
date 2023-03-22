@@ -148,25 +148,25 @@ export class AlwatrImageBox extends AlwatrSurface {
 
   override render(): unknown {
     this._logger.logMethod('render');
-    const content = this.content;
-    const target = content?.target !== 'download' ? content?.target : undefined;
+    const content = this.content || {image: '', headline: ''};
+    const target = content.target !== 'download' ? content.target : undefined;
 
     const template = html`
       <alwatr-icon class="checkmark-icon" .name=${'checkmark-circle-sharp'}></alwatr-icon>
-      <img class="image" src=${content?.image} />
+      <img class="image" src=${content.image} />
       <div class="content-container">
-        <h3 class="headline">${content?.headline}</h3>
-        <div class="description"><slot>${content?.description}</slot></div>
+        <h3 class="headline">${content.headline}</h3>
+        <div class="description"><slot>${content.description}</slot></div>
       </div>
     `;
 
-    return content?.href == null
+    return content.href == null
       ? html`<div class="container">${template}</div>`
       : html`<a
           class="container"
-          href=${ifDefined(content?.href)}
+          href=${ifDefined(content.href)}
           target=${ifDefined(target)}
-          ?download=${content?.target === 'download'}
+          ?download=${content.target === 'download'}
         >${template}</a>`;
   }
 }

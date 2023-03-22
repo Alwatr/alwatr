@@ -146,17 +146,17 @@ export class AlwatrProductCard extends ToggleMixin(LocalizeMixin(SignalMixin(Alw
 
   override render(): unknown {
     this._logger.logMethod('render');
-    const content = this.content;
+    const content: ProductCartContent = this.content || {imagePath: '', title: ''};
 
     // const icon = this.selected ? 'radio-button-on-outline' : 'radio-button-off-outline';
 
     return html`
-      <img src=${content?.imagePath} alt=${content?.title} />
+      <img src=${content.imagePath} alt=${content.title} />
       <div class="content">
-        <h2 class="title">${content?.title}</h2>
+        <h2 class="title">${content.title}</h2>
         <div class="price">
-          <del>${number(content?.price)}</del>
-          <ins>${number(content?.finalPrice)}</ins>
+          <del>${number(content.price)}</del>
+          <ins>${number(content.finalPrice)}</ins>
           <alwatr-icon .name=${'toman'}></alwatr-icon>
         </div>
     </div>

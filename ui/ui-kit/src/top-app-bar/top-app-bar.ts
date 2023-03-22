@@ -207,20 +207,20 @@ export class AlwatrTopAppBar extends LocalizeMixin(DirectionMixin(SignalMixin(Al
 
   override render(): unknown {
     this._logger.logMethod('render');
-    const content = this.content;
-    if (this.getAttribute('type') !== content?.type) {
-      this.setAttribute('type', content?.type);
+    const content = this.content || {};
+    if (this.getAttribute('type') !== content.type) {
+      this.setAttribute('type', content.type);
     }
 
-    const headline = content?.headline || message(content?.headlineKey);
-    const headlineTemplate = content?.type === 'medium' || content?.type === 'large' ? headline : nothing;
-    const titleTemplate = content?.type === 'center' || content?.type === 'small' ? headline : nothing;
+    const headline = content.headline || message(content.headlineKey);
+    const headlineTemplate = content.type === 'medium' || content.type === 'large' ? headline : nothing;
+    const titleTemplate = content.type === 'center' || content.type === 'small' ? headline : nothing;
 
     return html`
       <div class="row">
-        <alwatr-icon-button class="leading-icon" .content=${content?.startIcon}></alwatr-icon-button>
+        <alwatr-icon-button class="leading-icon" .content=${content.startIcon}></alwatr-icon-button>
         <div class="title">${titleTemplate}</div>
-        ${map(content?.endIconList, (iconContent) => html`
+        ${map(content.endIconList, (iconContent) => html`
           <alwatr-icon-button class="trailing-icons" .content=${iconContent}></alwatr-icon-button>
         `)}
       </div>
