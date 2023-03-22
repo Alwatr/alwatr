@@ -1,4 +1,4 @@
-import {customElement, html} from '@alwatr/element';
+import {customElement, html, mapObject} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
@@ -22,31 +22,29 @@ export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
 
   override inputTemplate(): unknown {
     this._logger.logMethod?.('render');
-    return html`
-      <alwatr-text-field
-        .name=${'name'}
-        .type=${'text'}
-        .placeholder=${message('full_name')}
-        outlined
-        active-outline
-        stated
-      ></alwatr-text-field>
-      <alwatr-text-field
-        .name=${'phone'}
-        .type=${'tel'}
-        .placeholder=${message('phone_number')}
-        outlined
-        active-outline
-        stated
-      ></alwatr-text-field>
-      <alwatr-text-field
-        .name=${'activity'}
-        .type=${'text'}
-        .placeholder=${message('activity_area')}
-        outlined
-        active-outline
-        stated
-      ></alwatr-text-field>
-    `;
+
+    const textFieldContentRecord = {
+      name: {
+        type: 'text',
+        name: 'name',
+        placeholder: message('full_name'),
+      },
+      phone: {
+        type: 'tel',
+        name: 'phone',
+        placeholder: message('phone_number'),
+      },
+      code: {
+        type: 'text',
+        name: 'activity',
+        placeholder: message('activity_area'),
+      },
+    };
+    return [
+      mapObject(this, textFieldContentRecord, (textFieldContent) => {
+        return html`
+          <alwatr-text-field .content=${textFieldContent} outlined active-outline stated></alwatr-text-field>
+        `;
+      })];
   }
 }
