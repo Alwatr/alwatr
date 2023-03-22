@@ -11,7 +11,6 @@ import {
 import {message, number, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/icon';
 import {calcDiscount} from '@alwatr/math';
-import {eventTrigger} from '@alwatr/signal';
 import {tileQtyStep} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/icon-button.js';
 import '@alwatr/ui-kit/card/surface.js';
@@ -148,7 +147,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
   protected render_part_item_list(
       itemList: Array<OrderItem>,
-      productStorage: AlwatrDocumentStorage<Product> | null,
+      productStorage: AlwatrDocumentStorage<Product> | null | undefined,
       editable = false,
   ): unknown {
     this._logger.logMethod('render_part_item_list');
@@ -245,9 +244,10 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       <alwatr-surface class="number-field" stated tinted="2">
         <alwatr-icon-button .content=${addBtn}></alwatr-icon-button>
         <alwatr-text-field
-        .type=${'number'}
-        .value=${orderItem.qty + ''}
-        @input-change=${(event: CustomEvent): void => this.qtyInputChange(event, orderItem)}></alwatr-text-field>
+          .type=${'number'}
+          .value=${orderItem.qty + ''}
+          @input-change=${(event: CustomEvent): void => this.qtyInputChange(event, orderItem)}
+        ></alwatr-text-field>
         <alwatr-icon-button .content=${removeBtn}></alwatr-icon-button>
       </alwatr-surface>
     `;
@@ -373,11 +373,9 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
   protected qtyInputChange(event: CustomEvent, orderItem: OrderItem): void {
     const target = event.target as AlwatrTextField;
-    if (target == null) return;
-    const qty = target.value && +target.value ? +target.value : 100;
+    this._logger.logMethodArgs('qtyInputChange', target.value);
+    const qty = +target.value || 100;
     orderItem.qty = qty;
-    target.value = qty + '';
-    eventTrigger.dispatch<{item: OrderItem, qty: number}>('order_item_qty_update', {item: orderItem, qty: qty});
     this.requestUpdate();
   }
 }
