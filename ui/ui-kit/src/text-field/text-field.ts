@@ -34,7 +34,7 @@ export type InputType =
 export interface TextFiledContent extends StringifyableRecord {
   name: string;
   type: InputType;
-  value: string;
+  value?: string;
   placeholder?: string;
   inputChangeSignalName?: string;
   inputChangeSignalDetail?: Stringifyable;
@@ -166,7 +166,7 @@ export class AlwatrTextField extends AlwatrSurface {
     this._logger.logMethod('_inputChanged');
     const target = event.target as HTMLInputElement | HTMLTextAreaElement;
     if (target == null) return;
-    const content = this.content || {type: 'text', name: '', value: ''};
+    const content = this.content || {type: 'text', name: ''};
 
     let inputValue = unicodeDigits.translate(target.value);
     if (content.type === 'number' || content.type === 'tel') {
@@ -175,7 +175,8 @@ export class AlwatrTextField extends AlwatrSurface {
     content.value = inputValue;
 
     if (content.inputChangeSignalName) {
-      eventTrigger.dispatch<{value: string; detail: Stringifyable}>(content.inputChangeSignalName, {
+      eventTrigger.dispatch<{name: string; value: string; detail: Stringifyable}>(content.inputChangeSignalName, {
+        name: content.name,
         value: content.value,
         detail: content.inputChangeSignalDetail,
       });
