@@ -1,4 +1,13 @@
-import {customElement, css, html, LocalizeMixin, SignalMixin, UnresolvedMixin, property} from '@alwatr/element';
+import {
+  customElement,
+  css,
+  html,
+  LocalizeMixin,
+  SignalMixin,
+  UnresolvedMixin,
+  property,
+  mapObject,
+} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {ladingTypeCS, carTypeCS, timePeriodCS, type OrderShippingInfo} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
@@ -91,68 +100,63 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
       },
     };
 
-    return html`
-      <alwatr-text-field
-        .name=${'recipientName'}
-        .type=${'text'}
-        .placeholder=${message('order_shipping_recipient_name_title')}
-        .value=${this.formData.recipientName}
-        @input-change=${this._inputChanged}
-        outlined
-        active-outline
-        stated
-      ></alwatr-text-field>
-      <alwatr-text-field
-        .name=${'recipientNationalCode'}
-        .type=${'number'}
-        .placeholder=${message('order_shipping_recipient_national_code_title')}
-        .value=${this.formData.recipientNationalCode}
-        @input-change=${this._inputChanged}
-        outlined
-        active-outline
-        stated
-      ></alwatr-text-field>
-      <alwatr-text-field
-        .name=${'address'}
-        .type=${'textarea'}
-        .placeholder=${message('order_shipping_address_title')}
-        .value=${this.formData.address}
-        @input-change=${this._inputChanged}
-        outlined
-        active-outline
-        stated
-      ></alwatr-text-field>
+    const textFieldContentRecord = {
+      recipientName: {
+        type: 'text',
+        name: 'recipientName',
+        placeholder: message('order_shipping_recipient_name_title'),
+        value: this.formData.recipientName,
+      },
+      recipientNationalCode: {
+        type: 'number',
+        name: 'recipientNationalCode',
+        placeholder: message('order_shipping_recipient_national_code_title'),
+        value: this.formData.recipientNationalCode,
+      },
+      address: {
+        type: 'textarea',
+        name: 'address',
+        placeholder: message('order_shipping_address_title'),
+        value: this.formData.address,
+      },
+    };
+    const descriptionTextFieldContent = {
+      type: 'textarea',
+      name: 'description',
+      placeholder: message('order_shipping_description_title'),
+      value: this.formData.description,
+    };
 
-      <alwatr-radio-group
-        .name=${'carType'}
-        .options=${radioGroupOptions.carType}
-        .value=${this.formData.carType}
-        @input-change=${this._inputChanged}
-      ></alwatr-radio-group>
-      <alwatr-radio-group
-        .name=${'ladingType'}
-        .options=${radioGroupOptions.ladingType}
-        .value=${this.formData.ladingType}
-        @input-change=${this._inputChanged}
-      ></alwatr-radio-group>
-      <alwatr-radio-group
-        .name=${'timePeriod'}
-        .options=${radioGroupOptions.timePeriod}
-        .value=${this.formData.timePeriod}
-        @input-change=${this._inputChanged}
-      ></alwatr-radio-group>
+    return [
+      mapObject(this, textFieldContentRecord, (textFieldContent) => {
+        return html`
+          <alwatr-text-field .content=${textFieldContent} outlined active-outline stated></alwatr-text-field>
+        `;
+      }),
 
-      <alwatr-text-field
-        .name=${'description'}
-        .type=${'textarea'}
-        .placeholder=${message('order_shipping_description_title')}
-        .value=${this.formData.description}
-        @input-change=${this._inputChanged}
-        outlined
-        active-outline
-        stated
-      ></alwatr-text-field>
-    `;
+      html`
+        <alwatr-radio-group
+          .name=${'carType'}
+          .options=${radioGroupOptions.carType}
+          .value=${this.formData.carType}
+          @input-change=${this._inputChanged}
+        ></alwatr-radio-group>
+        <alwatr-radio-group
+          .name=${'ladingType'}
+          .options=${radioGroupOptions.ladingType}
+          .value=${this.formData.ladingType}
+          @input-change=${this._inputChanged}
+        ></alwatr-radio-group>
+        <alwatr-radio-group
+          .name=${'timePeriod'}
+          .options=${radioGroupOptions.timePeriod}
+          .value=${this.formData.timePeriod}
+          @input-change=${this._inputChanged}
+        ></alwatr-radio-group>
+
+        <alwatr-text-field .content=${descriptionTextFieldContent} outlined active-outline stated></alwatr-text-field>
+      `,
+    ];
   }
 
   private _inputChanged(event: CustomEvent): void {
