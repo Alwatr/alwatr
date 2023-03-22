@@ -1,11 +1,11 @@
-import {customElement, html, state, UnresolvedMixin} from '@alwatr/element';
+import {customElement, html, PropertyValues, state, UnresolvedMixin} from '@alwatr/element';
 import {finiteStateMachineConsumer} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
 import {tileQtyStep} from '@alwatr/type/customer-order-management.js';
 import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
-import {topAppBarContextProvider} from '../../manager/context.js';
+import {scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
 import '../stuff/select-product.js';
 
@@ -90,65 +90,61 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._addSignalListeners(this.fsm.subscribe(() => {
-      this.gotState = this.fsm.getState().target;
-    }, {receivePrevious: 'NextCycle'}));
+    this._addSignalListeners(this.fsm.defineSignals([
+      {
+        callback: (): void => {
+          this.gotState = this.fsm.getState().target;
+        },
+        receivePrevious: 'NextCycle',
+      },
+      {
+        signalId: buttons.submit.clickSignalId,
+        transition: 'submit',
+      },
+      {
+        signalId: buttons.submitShippingForm.clickSignalId,
+        transition: 'submit',
+      },
+      {
+        signalId: buttons.edit.clickSignalId,
+        transition: 'back',
+      },
+      {
+        signalId: buttons.submitFinal.clickSignalId,
+        transition: 'final_submit',
+      },
+      {
+        signalId: buttons.editItems.clickSignalId,
+        transition: 'select_product',
+      },
+      {
+        signalId: buttons.retry.clickSignalId,
+        transition: 'retry',
+      },
+      {
+        signalId: buttons.editShippingForm.clickSignalId,
+        transition: 'edit_shipping',
+      },
+      {
+        signalId: buttons.detail.clickSignalId,
+        callback: (): void => {
+          redirect({sectionList: ['order-detail', this.fsm.getContext().registeredOrderId ?? '']});
+        },
+      },
+      {
+        signalId: buttons.newOrder.clickSignalId,
+        callback: (): void => {
+          this.fsm.transition('new_order');
+        },
+      },
+    ]));
+  }
 
-    this._addSignalListeners(
-        this.fsm.defineSignals([
-          {
-            signalId: buttons.submit.clickSignalId,
-            transition: 'submit',
-          },
-          {
-            signalId: buttons.submitShippingForm.clickSignalId,
-            transition: 'submit',
-          },
-          {
-            signalId: buttons.edit.clickSignalId,
-            transition: 'back',
-          },
-          {
-            signalId: buttons.submitFinal.clickSignalId,
-            transition: 'final_submit',
-          },
-          {
-            signalId: buttons.editItems.clickSignalId,
-            transition: 'select_product',
-          },
-          {
-            signalId: buttons.retry.clickSignalId,
-            transition: 'final_submit',
-          },
-          {
-            signalId: buttons.editShippingForm.clickSignalId,
-            transition: 'edit_shipping',
-          },
-          {
-            signalId: buttons.tracking.clickSignalId,
-            callback: (): void => {
-              const orderId = this.fsm.getContext().registeredOrderId as string;
-              this.fsm.transition('new_order');
-              redirect({sectionList: ['order-tracking', orderId]});
-            },
-          },
-          {
-            signalId: buttons.detail.clickSignalId,
-            callback: (): void => {
-              const orderId = this.fsm.getContext().registeredOrderId as string;
-              this.fsm.transition('new_order');
-              redirect({sectionList: ['order-detail', orderId]});
-            },
-          },
-          {
-            signalId: buttons.newOrder.clickSignalId,
-            callback: (): void => {
-              this.fsm.transition('new_order');
-              redirect('/new-order/');
-            },
-          },
-        ]),
-    );
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+    if (changedProperties.has('gotState')) {
+      scrollToTopCommand.request({smooth: true});
+    }
   }
 
   protected override render(): unknown {
@@ -206,25 +202,24 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
         ];
       },
 
-      // contextError: () => {
-      //   topAppBarContextProvider.setValue({
-      //     headlineKey: 'page_order_list_headline',
-      //     startIcon: buttons.backToHome,
-      //     endIconList: [buttons.reload],
-      //   });
-      //   const content: IconBoxContent = {
-      //     icon: 'cloud-offline-outline',
-      //     tinted: 1,
-      //     headline: message('fetch_failed_headline'),
-      //     description: message('fetch_failed_description'),
-      //   };
-      //   return html`
-      //     <alwatr-icon-box .content=${content}></alwatr-icon-box>
-      //     <alwatr-button .icon=${buttons.reload.icon} .clickSignalId=${buttons.reload.clickSignalId}>
-      //       ${message('retry')}
-      //     </alwatr-button>
-      //   `;
-      // },
+      contextError: () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'page_order_list_headline',
+          startIcon: buttons.backToHome,
+        });
+        const content: IconBoxContent = {
+          icon: 'cloud-offline-outline',
+          tinted: 1,
+          headline: message('fetch_failed_headline'),
+          description: message('fetch_failed_description'),
+        };
+        return html`
+          <alwatr-icon-box .content=${content}></alwatr-icon-box>
+          <alwatr-button .icon=${buttons.retry.icon} .clickSignalId=${buttons.retry.clickSignalId}>
+            ${message('retry')}
+          </alwatr-button>
+        `;
+      },
 
       // reloading: 'selectProduct',
 
@@ -263,9 +258,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
               <alwatr-button
                 .icon=${buttons.submitShippingForm.icon}
                 .clickSignalId=${buttons.submitShippingForm.clickSignalId}
-              >
-                ${message('page_new_order_shipping_submit')}
-              </alwatr-button>
+              >${message('page_new_order_shipping_submit')}</alwatr-button>
             </div>
           `,
         ];
