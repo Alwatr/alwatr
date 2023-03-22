@@ -85,7 +85,6 @@ export class AlwatrButton extends AlwatrSurface {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.setAttribute('stated', '');
     this.addEventListener('click', this._click);
   }
 
@@ -96,27 +95,28 @@ export class AlwatrButton extends AlwatrSurface {
 
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
-    if (this.content?.clickSignalId != null && changedProperties.has('content')) {
-      this.setAttribute('click-signal-id', this.content?.clickSignalId);
+
+    const disabled = Boolean(this.content?.disabled);
+    if (this.hasAttribute('disabled') !== disabled) {
+      this.toggleAttribute('disabled', disabled);
     }
   }
 
   override render(): unknown {
     this._logger.logMethod('render');
+    const content = this.content || {};
 
-    if (this.content == null) return nothing;
-    if (this.content.icon) {
-      return html`
-        <alwatr-icon
-          .name=${this.content.icon}
-          ?flip-rtl=${this.hasAttribute('flip-rtl') || this.content.flipRtl}
-        ></alwatr-icon>
-        <slot>${message(this.content.labelKey)}</slot>
-      `;
-    }
-    else {
-      return html`<slot>${message(this.content.labelKey)}</slot>`;
-    }
+    return [
+      content.icon
+        ? html`<alwatr-icon .name=${content.icon} ?flip-rtl=${content.flipRtl}></alwatr-icon>`
+        : nothing,
+      html`<slot>${message(content.labelKey)}</slot>`,
+    ];
+  }
+
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(_changedProperties);
+    this.setAttribute('stated', '');
   }
 
   protected _click(event: MouseEvent): void {
