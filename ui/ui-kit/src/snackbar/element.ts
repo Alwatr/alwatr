@@ -112,8 +112,8 @@ export class AlwatrSnackbar extends AlwatrSurface {
   @property({type: String})
     actionLabel?: string;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
+  protected override firstUpdated(_changedProperties: PropertyValueMap<this>): void {
+    super.firstUpdated(_changedProperties);
     this.setAttribute('elevated', '3');
   }
 
