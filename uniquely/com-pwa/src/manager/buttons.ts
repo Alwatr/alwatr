@@ -18,6 +18,7 @@ export const buttons = {
 
   reloadOrderStorage: {
     icon: 'reload-outline',
+    flipRtl: true,
     clickSignalId: 'reload_order_storage',
   },
 
@@ -28,6 +29,11 @@ export const buttons = {
   showOrderDetail: {
     clickSignalId: 'show_order_detail_click_event',
   },
+  backToOrderList: {
+    icon: 'arrow-back-outline',
+    flipRtl: true,
+    clickSignalId: 'back_to_order_list_event',
+  },
 } as const;
 
 eventListener.subscribe('new_order_click_event', () => {
@@ -36,6 +42,10 @@ eventListener.subscribe('new_order_click_event', () => {
   });
 });
 
-eventListener.subscribe('show_order_detail_click_event', (event: ClickSignalType<Order>): void => {
+eventListener.subscribe(buttons.showOrderDetail.clickSignalId, (event: ClickSignalType<Order>): void => {
   redirect({sectionList: ['order-detail', event.detail.id]});
+});
+
+eventListener.subscribe(buttons.backToOrderList.clickSignalId, (): void => {
+  redirect({sectionList: ['order-list']});
 });
