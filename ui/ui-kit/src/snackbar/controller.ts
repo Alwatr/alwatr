@@ -32,7 +32,7 @@ commandHandler.define<SnackbarOptions, SnackbarResponse>('show-snackbar-command'
     };
 
     element.message = options.messageKey != null ? message(options.messageKey) : options.message;
-    if (options.actionLabel) {
+    if (options.actionLabel || options.actionLabelKey) {
       element.actionLabel = options.actionLabelKey != null ? message(options.actionLabelKey) : options.actionLabel;
       element.addEventListener('action-button-click', () => _closeSnackbar?.({actionButton: true}), {once: true});
     }
