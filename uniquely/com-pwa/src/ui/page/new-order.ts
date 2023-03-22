@@ -1,8 +1,7 @@
-import {customElement, html, PropertyValues, state, UnresolvedMixin} from '@alwatr/element';
+import {customElement, html, property, PropertyValues, state, UnresolvedMixin} from '@alwatr/element';
 import {finiteStateMachineConsumer} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
-import {tileQtyStep} from '@alwatr/type/customer-order-management.js';
 import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 import {scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
@@ -75,6 +74,11 @@ const buttons = {
     icon: 'reload-outline',
     clickSignalId: 'page_new_order_retry_click_event',
   },
+  backToOrderList: {
+    icon: 'arrow-back-outline',
+    flipRtl: true,
+    clickSignalId: 'order_detail_back_to_order_list_event',
+  },
 } as const;
 
 /**
@@ -87,13 +91,26 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   @state()
     gotState = this.fsm.getState().target;
 
+  set orderId(orderId: string) {
+    this.fsm.transition('change_order_id', {orderId});
+  }
+
+  @property({type: String})
+  get orderId(): string {
+    return this.fsm.getContext().orderId;
+  }
+
   override connectedCallback(): void {
     super.connectedCallback();
 
     this._addSignalListeners(this.fsm.defineSignals([
       {
         callback: (): void => {
-          this.gotState = this.fsm.getState().target;
+          const state = this.fsm.getState();
+          this.gotState = state.target;
+          if (state.by === 'request_update') {
+            this.requestUpdate();
+          }
         },
         receivePrevious: 'NextCycle',
       },
@@ -128,8 +145,12 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
       {
         signalId: buttons.detail.clickSignalId,
         callback: (): void => {
-          redirect({sectionList: ['order-detail', this.fsm.getContext().registeredOrderId ?? '']});
+          redirect({sectionList: ['order-detail', this.fsm.getContext().orderId ?? '']});
         },
+      },
+      {
+        signalId: buttons.backToOrderList.clickSignalId,
+        callback: (): void => redirect({sectionList: ['order-list']}),
       },
       {
         signalId: buttons.newOrder.clickSignalId,
@@ -162,13 +183,31 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
         };
         return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
       },
-
-      edit: () => {
+      routing: 'pending',
+      notFound: () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'page_order_list_headline',
+          startIcon: buttons.backToOrderList,
+        });
+        return html`Order not found!`;
+      },
+      orderDetail: () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'page_order_list_headline',
+          startIcon: buttons.backToOrderList,
+          endIconList: [buttons.reload],
+        });
+        const {orderId, orderStorage} = this.fsm.getContext();
+        const order = orderStorage?.data[orderId];
+        if (order == null) return;
+        return html`${JSON.stringify(order)}`;
+      },
+      newOrder: () => {
         topAppBarContextProvider.setValue({
           headlineKey: 'page_new_order_headline',
           startIcon: buttons.backToHome,
         });
-        const order = this.fsm.getContext().order;
+        const order = this.fsm.getContext().newOrder;
         return [
           this.render_part_item_list(order.itemList ?? [], this.fsm.getContext().productStorage, true),
           html`
@@ -230,7 +269,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
         });
         return [
           html`<alwatr-select-product
-            .order=${this.fsm.getContext().order}
+            .order=${this.fsm.getContext().newOrder}
             .productStorage=${this.fsm.getContext().productStorage}
             .finalPriceStorage=${this.fsm.getContext().finalPriceStorage}
             .priceStorage=${this.fsm.getContext().priceStorage}
@@ -249,7 +288,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
       },
 
       shippingForm: () => {
-        const order = this.fsm.getContext().order;
+        const order = this.fsm.getContext().newOrder;
         return [
           this.render_part_item_list(order.itemList ?? [], this.fsm.getContext().productStorage, false),
           this.render_part_shipping_form(order.shippingInfo as Partial<OrderShippingInfo>),
@@ -265,7 +304,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
       },
 
       review: () => {
-        const order = this.fsm.getContext().order as Order;
+        const order = this.fsm.getContext().newOrder as Order;
         return [
           this.render_part_status(order),
           this.render_part_item_list(order.itemList, this.fsm.getContext().productStorage),
@@ -332,17 +371,5 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
         ];
       },
     });
-  }
-
-  protected calculateOrderPrice(): void {
-    const order = this.fsm.getContext().order;
-    let totalPrice = 0;
-    let finalTotalPrice = 0;
-    for (const item of order.itemList ?? []) {
-      totalPrice += item.price * item.qty * tileQtyStep;
-      finalTotalPrice += item.finalPrice * item.qty * tileQtyStep;
-    }
-    order.totalPrice = Math.round(totalPrice);
-    order.finalTotalPrice = Math.round(finalTotalPrice);
   }
 }

@@ -1,10 +1,11 @@
 import {FsmTypeHelper, finiteStateMachineProvider} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
-import {OrderDraft, OrderItem, orderInfoSchema} from '@alwatr/type/customer-order-management.js';
+import {OrderDraft, OrderItem, orderInfoSchema, tileQtyStep} from '@alwatr/type/customer-order-management.js';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {getLocalStorageItem} from '@alwatr/util';
 import {validator} from '@alwatr/validator';
 
+import {orderStorageContextConsumer} from '../context-provider/order-storage.js';
 import {
   productPriceStorageContextConsumer,
   productFinalPriceStorageContextConsumer,
@@ -19,10 +20,11 @@ const newOrderLocalStorageKey = 'draft-order-x2';
 export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstructor('new_order_fsm', {
   initial: 'pending',
   context: {
-    registeredOrderId: <string | null>null,
-    order: <OrderDraft>(
+    orderId: '',
+    newOrder: <OrderDraft>(
       getLocalStorageItem(newOrderLocalStorageKey, {id: 'new', status: 'draft', shippingInfo: {}, itemList: []})
     ),
+    orderStorage: orderStorageContextConsumer.getResponse(),
     productStorage: productStorageContextConsumer.getResponse(),
     priceStorage: productPriceStorageContextConsumer.getResponse(),
     finalPriceStorage: productFinalPriceStorageContextConsumer.getResponse(),
@@ -38,11 +40,16 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
           actions: 'request_server_contexts',
         },
         context_request_complete: {},
+        request_update: {},
+        change_order_id: {
+          target: 'routing',
+        },
       },
     },
     pending: {
       entry: 'request_server_contexts',
       on: {
+        change_order_id: {},
         context_request_initial: {},
         context_request_offlineLoading: {},
         context_request_onlineLoading: {},
@@ -50,11 +57,11 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
           target: 'contextError',
         },
         context_request_reloading: {
-          target: 'edit',
+          target: 'routing',
           condition: 'is_all_context_ready',
         },
         context_request_complete: {
-          target: 'edit',
+          target: 'routing',
           condition: 'is_all_context_ready',
         },
       },
@@ -66,7 +73,27 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
         },
       },
     },
-    edit: {
+    routing: {
+      entry: 'routing',
+      on: {
+        new_order: {
+          target: 'newOrder',
+        },
+        show_detail: {
+          target: 'orderDetail',
+        },
+        not_found: {
+          target: 'notFound',
+        },
+      },
+    },
+    orderDetail: {
+      on: {},
+    },
+    notFound: {
+      on: {},
+    },
+    newOrder: {
       entry: 'check_item_list',
       on: {
         select_product: {
@@ -79,27 +106,26 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
           target: 'review',
           condition: 'validate_order',
         },
-        qty_update: {},
       },
     },
     selectProduct: {
       on: {
         submit: {
-          target: 'edit',
+          target: 'newOrder',
         },
       },
     },
     shippingForm: {
       on: {
         submit: {
-          target: 'edit',
+          target: 'newOrder',
         },
       },
     },
     review: {
       on: {
         back: {
-          target: 'edit',
+          target: 'newOrder',
         },
         final_submit: {
           target: 'submitting',
@@ -121,7 +147,7 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
       entry: 'reset_new_order',
       on: {
         new_order: {
-          target: 'edit',
+          target: 'newOrder',
         },
       },
     },
@@ -142,6 +168,7 @@ const serverContextList = [
   productStorageContextConsumer,
   productPriceStorageContextConsumer,
   productFinalPriceStorageContextConsumer,
+  orderStorageContextConsumer, // FIXME: require need param
 ] as const;
 
 // entries actions
@@ -150,29 +177,43 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
     serverContextList.forEach((contextConsumer) => contextConsumer.require());
   },
 
+  routing: (fsmInstance) => {
+    const {orderId, orderStorage} = fsmInstance.getContext();
+    console.warn({orderId, orderStorage});
+    if (orderId === 'new') {
+      fsmInstance.transition('new_order');
+    }
+    else if (orderStorage?.data[orderId] != null) {
+      fsmInstance.transition('show_detail');
+    }
+    else {
+      fsmInstance.transition('not_found');
+    }
+  },
+
   save_local_storage: (fsmInstance) => {
-    localStorage.setItem(newOrderLocalStorageKey, JSON.stringify(fsmInstance.getContext().order));
+    localStorage.setItem(newOrderLocalStorageKey, JSON.stringify(fsmInstance.getContext().newOrder));
   },
 
   check_item_list: (fsmInstance) => {
-    if (!fsmInstance.getContext().order.itemList?.length) {
+    if (!fsmInstance.getContext().newOrder.itemList?.length) {
       fsmInstance.transition('select_product');
     }
   },
 
   submit_order: async (fsmInstance) => {
-    const order = await submitOrderCommandTrigger.requestWithResponse(fsmInstance.getContext().order);
+    const order = await submitOrderCommandTrigger.requestWithResponse(fsmInstance.getContext().newOrder);
     if (order == null) {
       fsmInstance.transition('submit_failed');
       return;
     }
     // else
-    fsmInstance.transition('submit_success', {registeredOrderId: order.id});
+    fsmInstance.transition('submit_success', {orderId: order.id});
   },
 
   reset_new_order: (fsmInstance): void => {
     localStorage.removeItem(newOrderLocalStorageKey);
-    fsmInstance.setContext({order: {id: 'new', status: 'draft', shippingInfo: {}, itemList: []}});
+    fsmInstance.setContext({newOrder: {id: 'new', status: 'draft', shippingInfo: {}, itemList: []}});
   },
 
   notify_context_reloadingFailed: async (fsmInstance) => {
@@ -189,9 +230,9 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
 
 // condition
 finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
-  validate_order: (fsmInstance) => {
+  validate_order: (fsmInstance): boolean => {
     try {
-      const order = fsmInstance.getContext().order;
+      const order = fsmInstance.getContext().newOrder;
       if (!order.itemList?.length) throw new Error('invalid_type');
       // else
       validator(orderInfoSchema, order, true);
@@ -214,18 +255,32 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
     }
   },
 
-  is_all_context_ready: () => {
+  is_all_context_ready: (): boolean => {
     return serverContextList.every((serverContext) => serverContext.getResponse() != null);
   },
 });
 
 finiteStateMachineProvider.defineSignals<NewOrderFsm>('new_order_fsm', [
   {
+    callback: (_, fsmInstance): void => {
+      // calculateOrderPrice
+      const order = fsmInstance.getContext().newOrder;
+      let totalPrice = 0;
+      let finalTotalPrice = 0;
+      for (const item of order.itemList ?? []) {
+        totalPrice += item.price * item.qty * tileQtyStep;
+        finalTotalPrice += item.finalPrice * item.qty * tileQtyStep;
+      }
+      order.totalPrice = Math.round(totalPrice);
+      order.finalTotalPrice = Math.round(finalTotalPrice);
+    },
+  },
+  {
     signalId: 'order_item_qty_add',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
       const orderItem = event.detail;
       orderItem.qty++;
-      fsmInstance.transition('qty_update');
+      fsmInstance.transition('request_update');
     },
   },
   {
@@ -234,7 +289,7 @@ finiteStateMachineProvider.defineSignals<NewOrderFsm>('new_order_fsm', [
       const orderItem = event.detail;
       orderItem.qty--;
       if (orderItem.qty < 1) orderItem.qty = 1;
-      fsmInstance.transition('qty_update');
+      fsmInstance.transition('request_update');
     },
   },
   {
@@ -245,25 +300,41 @@ finiteStateMachineProvider.defineSignals<NewOrderFsm>('new_order_fsm', [
     // },
     signalId: productStorageContextConsumer.id,
     callback: (_, fsmInstance): void => {
+      const productStorage = productStorageContextConsumer.getResponse();
       fsmInstance.transition(`context_request_${productStorageContextConsumer.getState().target}`, {
-        productStorage: productStorageContextConsumer.getResponse(),
+        productStorage,
       });
     },
+    receivePrevious: 'NextCycle',
   },
   {
     signalId: productPriceStorageContextConsumer.id,
     callback: (_, fsmInstance): void => {
+      const priceStorage = productPriceStorageContextConsumer.getResponse();
       fsmInstance.transition(`context_request_${productPriceStorageContextConsumer.getState().target}`, {
-        priceStorage: productPriceStorageContextConsumer.getResponse(),
+        priceStorage,
       });
     },
+    receivePrevious: 'NextCycle',
   },
   {
     signalId: productFinalPriceStorageContextConsumer.id,
     callback: (_, fsmInstance): void => {
+      const finalPriceStorage = productFinalPriceStorageContextConsumer.getResponse();
       fsmInstance.transition(`context_request_${productFinalPriceStorageContextConsumer.getState().target}`, {
-        finalPriceStorage: productFinalPriceStorageContextConsumer.getResponse(),
+        finalPriceStorage,
       });
     },
+    receivePrevious: 'NextCycle',
+  },
+  {
+    signalId: orderStorageContextConsumer.id,
+    callback: (_, fsmInstance): void => {
+      const orderStorage = orderStorageContextConsumer.getResponse();
+      fsmInstance.transition(`context_request_${orderStorageContextConsumer.getState().target}`, {
+        orderStorage,
+      });
+    },
+    receivePrevious: 'NextCycle',
   },
 ]);
