@@ -187,10 +187,6 @@ export class AlwatrTopAppBar extends LocalizeMixin(DirectionMixin(SignalMixin(Al
     }
   }
 
-  protected override shouldUpdate(changedProperties: PropertyValues<this>): boolean {
-    return super.shouldUpdate(changedProperties) && this.content != null;
-  }
-
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
     if (changedProperties.has('content') && this.content != null) {
@@ -211,19 +207,18 @@ export class AlwatrTopAppBar extends LocalizeMixin(DirectionMixin(SignalMixin(Al
 
   override render(): unknown {
     this._logger.logMethod?.('render');
-    if (this.content == null) return nothing;
+    const content = this.content;
+    this.setAttribute('type', content?.type);
 
-    this.setAttribute('type', this.content.type);
-
-    const headline = this.content.headline || message(this.content.headlineKey);
-    const headlineTemplate = this.content.type === 'medium' || this.content.type === 'large' ? headline : nothing;
-    const titleTemplate = this.content.type === 'center' || this.content.type === 'small' ? headline : nothing;
+    const headline = content?.headline || message(content?.headlineKey);
+    const headlineTemplate = content?.type === 'medium' || content?.type === 'large' ? headline : nothing;
+    const titleTemplate = content?.type === 'center' || content?.type === 'small' ? headline : nothing;
 
     return html`
       <div class="row">
-        <alwatr-icon-button class="leading-icon" .content=${this.content.startIcon}></alwatr-icon-button>
+        <alwatr-icon-button class="leading-icon" .content=${content?.startIcon}></alwatr-icon-button>
         <div class="title">${titleTemplate}</div>
-        ${map(this.content.endIconList, (iconContent) => html`
+        ${map(content?.endIconList, (iconContent) => html`
           <alwatr-icon-button class="trailing-icons" .content=${iconContent}></alwatr-icon-button>
         `)}
       </div>

@@ -4,10 +4,9 @@ import {
   SignalMixin,
   LocalizeMixin,
   ToggleMixin,
-  nothing,
   html,
   property,
-  type PropertyValues,
+  PropertyValueMap,
 } from '@alwatr/element';
 import {number} from '@alwatr/i18n';
 import '@alwatr/icon';
@@ -145,23 +144,19 @@ export class AlwatrProductCard extends ToggleMixin(LocalizeMixin(SignalMixin(Alw
     this.setAttribute('elevated', '');
   }
 
-  protected override shouldUpdate(changedProperties: PropertyValues<this>): boolean {
-    return super.shouldUpdate(changedProperties) && this.content != null;
-  }
-
   override render(): unknown {
     this._logger.logMethod?.('render');
-    if (this.content == null) return nothing;
+    const content = this.content;
 
     // const icon = this.selected ? 'radio-button-on-outline' : 'radio-button-off-outline';
 
     return html`
-      <img src=${this.content.imagePath} alt=${this.content.title} />
+      <img src=${content?.imagePath} alt=${content?.title} />
       <div class="content">
-        <h2 class="title">${this.content.title}</h2>
+        <h2 class="title">${content?.title}</h2>
         <div class="price">
-          <del>${number(this.content.price)}</del>
-          <ins>${number(this.content.finalPrice)}</ins>
+          <del>${number(content?.price)}</del>
+          <ins>${number(content?.finalPrice)}</ins>
           <alwatr-icon .name=${'toman'}></alwatr-icon>
         </div>
     </div>
