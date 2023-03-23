@@ -24,6 +24,10 @@ export const buttons = {
     icon: 'reload-outline',
   },
 
+  reload: {
+    icon: 'reload-outline',
+  },
+
   reloadOrderStorage: {
     icon: 'reload-outline',
     flipRtl: true,
