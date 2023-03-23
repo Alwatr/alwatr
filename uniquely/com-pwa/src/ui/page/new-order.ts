@@ -62,7 +62,11 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
         transition: 'submit',
       },
       {
-        signalId: buttons.edit.clickSignalId,
+        signalId: buttons.selectProductSubmit.clickSignalId,
+        transition: 'submit',
+      },
+      {
+        signalId: buttons.editOrder.clickSignalId,
         transition: 'back',
       },
       {
@@ -82,7 +86,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
         transition: 'edit_shipping',
       },
       {
-        signalId: buttons.detail.clickSignalId,
+        signalId: buttons.showRegisteredOrderDetail.clickSignalId,
         callback: (): void => {
           redirect({sectionList: ['order-detail', this.fsm.getContext().orderId ?? '']});
         },
