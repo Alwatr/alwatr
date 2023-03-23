@@ -14,6 +14,7 @@ import {productStorageContextConsumer} from '../context-provider/product-storage
 import {submitOrderCommandTrigger} from '../context.js';
 
 import type {ClickSignalType} from '@alwatr/type';
+import type {TextFieldSignalDetail} from '@alwatr/ui-kit/src/text-field/text-field.js';
 
 const newOrderLocalStorageKey = 'draft-order-x3';
 
@@ -304,6 +305,15 @@ finiteStateMachineProvider.defineSignals<NewOrderFsm>('new_order_fsm', [
       fsmInstance.transition(`context_request_${productStorageContextConsumer.getState().target}`, {
         productStorage,
       });
+    },
+  },
+  {
+    signalId: 'qty_text_field_input_change_event',
+    callback: (detail: TextFieldSignalDetail<OrderItem>, fsmInstance): void => {
+      const qty = detail.value && +detail.value ? +detail.value : 100;
+      detail.detail.qty = qty; // TODO: better name
+      detail.value = qty + '';
+      fsmInstance.transition('qty_update');
     },
     receivePrevious: 'NextCycle',
   },

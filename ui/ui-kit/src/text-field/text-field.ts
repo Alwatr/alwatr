@@ -31,6 +31,12 @@ export type InputType =
   | 'datetime-local'
   | 'number';
 
+export type TextFieldSignalDetail<T extends Stringifyable = Stringifyable> = Stringifyable & {
+  name: string;
+  value: string;
+  detail: T;
+}
+
 export interface TextFiledContent extends StringifyableRecord {
   name: string;
   type: InputType;
@@ -175,7 +181,8 @@ export class AlwatrTextField extends AlwatrSurface {
     content.value = inputValue;
 
     if (content.inputChangeSignalName) {
-      eventTrigger.dispatch<{value: string; detail: Stringifyable}>(content.inputChangeSignalName, {
+      eventTrigger.dispatch<TextFieldSignalDetail>(content.inputChangeSignalName, {
+        name: content.name,
         value: content.value,
         detail: content.inputChangeSignalDetail,
       });
