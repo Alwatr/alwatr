@@ -16,6 +16,10 @@ export const buttons = {
     clickSignalId: 'browser_back_click_event',
   },
 
+  reload: {
+    icon: 'reload-outline',
+  },
+
   reloadOrderStorage: {
     icon: 'reload-outline',
     flipRtl: true,
