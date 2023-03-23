@@ -94,10 +94,12 @@ export class AlwatrRadioGroup extends AlwatrBaseElement {
 
     return map(content.radioGroup, (radioItem, index) => {
       const id: string = 'radioInput_' + index;
+      content.value ??= '';
+
       return html`<div>
         <input
           id=${id}
-          .type="radio"
+          type="radio"
           .name=${content.name}
           .value=${radioItem.value}
           .checked=${live(radioItem.value === content.value)}

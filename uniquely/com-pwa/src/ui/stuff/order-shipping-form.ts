@@ -14,10 +14,11 @@ import {Stringifyable} from '@alwatr/type';
 import {ladingTypeCS, carTypeCS, timePeriodCS, type OrderShippingInfo} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
-import {RadioGroupContent} from '@alwatr/ui-kit/radio-group/radio-group.js';
+import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 import {getLocalStorageItem} from '@alwatr/util';
 
+import type {RadioGroupContent} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {TextFiledContent} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
@@ -74,42 +75,6 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
   override render(): unknown {
     this._logger.logMethod?.('render');
 
-    const radioGroupContentRecord: Record<string, RadioGroupContent> = {
-      carType: {
-        name: 'carType',
-        title: message('order_shipping_car_type_title'),
-        radioGroup: carTypeCS.map((value) => {
-          return {
-            value,
-            label: message('order_shipping_car_type_key_' + value),
-          };
-        }),
-        inputChangeSignalName: 'order_shipping_input_change',
-      },
-      ladingType: {
-        name: 'ladingType',
-        title: message('order_shipping_lading_type_title'),
-        radioGroup: ladingTypeCS.map((value) => {
-          return {
-            value,
-            label: message('order_shipping_lading_type_key_' + value),
-          };
-        }),
-        inputChangeSignalName: 'order_shipping_input_change',
-      },
-      timePeriod: {
-        name: 'timePeriod',
-        title: message('order_shipping_time_period_title'),
-        radioGroup: timePeriodCS.map((value) => {
-          return {
-            value,
-            label: message('order_shipping_time_period_key_' + value),
-          };
-        }),
-        inputChangeSignalName: 'order_shipping_input_change',
-      },
-    };
-
     const textFieldContentRecord: Record<string, TextFiledContent> = {
       recipientName: {
         type: 'text',
@@ -133,6 +98,46 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         inputChangeSignalName: 'order_shipping_input_change',
       },
     };
+
+    const radioGroupContentRecord: Record<string, RadioGroupContent> = {
+      carType: {
+        name: 'carType',
+        title: message('order_shipping_car_type_title'),
+        radioGroup: carTypeCS.map((value) => {
+          return {
+            value,
+            label: message('order_shipping_car_type_key_' + value),
+          };
+        }),
+        value: this.formData.carType,
+        inputChangeSignalName: 'order_shipping_input_change',
+      },
+      ladingType: {
+        name: 'ladingType',
+        title: message('order_shipping_lading_type_title'),
+        radioGroup: ladingTypeCS.map((value) => {
+          return {
+            value,
+            label: message('order_shipping_lading_type_key_' + value),
+          };
+        }),
+        value: this.formData.ladingType,
+        inputChangeSignalName: 'order_shipping_input_change',
+      },
+      timePeriod: {
+        name: 'timePeriod',
+        title: message('order_shipping_time_period_title'),
+        radioGroup: timePeriodCS.map((value) => {
+          return {
+            value,
+            label: message('order_shipping_time_period_key_' + value),
+          };
+        }),
+        value: this.formData.timePeriod,
+        inputChangeSignalName: 'order_shipping_input_change',
+      },
+    };
+
     const descriptionTextFieldContent = {
       type: 'textarea',
       name: 'description',
@@ -148,9 +153,8 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         `;
       }),
       mapObject(this, radioGroupContentRecord, (radioGroupContent) => {
-        return html` <alwatr-radio-group .content=${radioGroupContent}></alwatr-radio-group> `;
+        return html`<alwatr-radio-group .content=${radioGroupContent}></alwatr-radio-group>`;
       }),
-
       html`
         <alwatr-text-field .content=${descriptionTextFieldContent} outlined active-outline stated></alwatr-text-field>
       `,

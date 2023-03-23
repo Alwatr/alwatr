@@ -149,6 +149,7 @@ export class AlwatrTextField extends AlwatrSurface {
   override render(): unknown {
     this._logger.logMethod?.('render');
     const content = this.content || {type: 'text', name: '', placeholder: '', value: ''};
+    content.value ??= '';
     if (content.type === 'textarea') {
       return html`<textarea
         .name=${content.name}
