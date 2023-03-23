@@ -60,6 +60,7 @@ export const buttons = {
     clickSignalId: 'page_new_order_edit_shipping_form_click_event',
   },
   showRegisteredOrderDetail: {
+    labelKey: 'page_new_order_detail_button',
     icon: 'information-outline',
     clickSignalId: 'page_new_order_detail_click_event',
   },
