@@ -10,6 +10,12 @@ declare global {
 
 export type RadioOption = {label: string; value: string};
 
+export type RadioGroupSignalDetail<T extends Stringifyable = null> = Stringifyable & {
+  name: string;
+  value: string;
+  detail: T;
+}
+
 export type RadioGroupContent = {
   name: string;
   title: string;
@@ -113,18 +119,12 @@ export class AlwatrRadioGroup extends AlwatrBaseElement {
   private _inputChanged(event: Event): void {
     this._logger.logMethod('_inputChanged');
     const target = event.target as HTMLInputElement | HTMLTextAreaElement;
-    if (target == null) return;
-    const content = this.content || {
-      type: 'text',
-      name: '',
-      value: '',
-      inputChangeSignalName: '',
-      inputChangeSignalDetail: {},
-    };
+    const content = this.content;
+    if (target == null || content == null) return;
 
     content.value = target.value;
     if (content.inputChangeSignalName) {
-      eventTrigger.dispatch<{name: string; value: string; detail: Stringifyable}>(content.inputChangeSignalName, {
+      eventTrigger.dispatch<RadioGroupSignalDetail<Stringifyable>>(content.inputChangeSignalName, {
         name: content.name,
         value: content.value,
         detail: content.inputChangeSignalDetail,

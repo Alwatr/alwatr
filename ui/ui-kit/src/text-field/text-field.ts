@@ -31,7 +31,7 @@ export type InputType =
   | 'datetime-local'
   | 'number';
 
-export type TextFieldSignalDetail<T extends Stringifyable = Stringifyable> = Stringifyable & {
+export type TextFieldSignalDetail<T extends Stringifyable = undefined> = Stringifyable & {
   name: string;
   value: string;
   detail: T;
@@ -172,8 +172,8 @@ export class AlwatrTextField extends AlwatrSurface {
   private _inputChanged(event: Event): void {
     this._logger.logMethod?.('_inputChanged');
     const target = event.target as HTMLInputElement | HTMLTextAreaElement;
-    if (target == null) return;
-    const content = this.content || {type: 'text', name: ''};
+    const content = this.content;
+    if (target == null || content == null) return;
 
     let inputValue = unicodeDigits.translate(target.value);
     if (content.type === 'number' || content.type === 'tel') {
@@ -182,7 +182,7 @@ export class AlwatrTextField extends AlwatrSurface {
     content.value = inputValue;
 
     if (content.inputChangeSignalName) {
-      eventTrigger.dispatch<TextFieldSignalDetail>(content.inputChangeSignalName, {
+      eventTrigger.dispatch<TextFieldSignalDetail<Stringifyable>>(content.inputChangeSignalName, {
         name: content.name,
         value: content.value,
         detail: content.inputChangeSignalDetail,
