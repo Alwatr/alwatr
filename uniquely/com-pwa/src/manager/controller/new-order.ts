@@ -14,7 +14,7 @@ import {productStorageContextConsumer} from '../context-provider/product-storage
 import {submitOrderCommandTrigger} from '../context.js';
 
 import type {ClickSignalType} from '@alwatr/type';
-import type {TextFieldSignalDetail} from '@alwatr/ui-kit/src/text-field/text-field.js';
+import type {TextFieldSignalDetail} from '@alwatr/ui-kit/text-field/text-field.js';
 
 const newOrderLocalStorageKey = 'draft-order-x3';
 
