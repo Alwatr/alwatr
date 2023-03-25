@@ -1,4 +1,13 @@
-import {customElement, property, html, mapIterable, css, SignalMixin, LocalizeMixin} from '@alwatr/element';
+import {
+  customElement,
+  property,
+  html,
+  mapIterable,
+  css,
+  SignalMixin,
+  LocalizeMixin,
+  type PropertyValueMap,
+} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/icon';
 import {url} from '@alwatr/router';
@@ -8,7 +17,6 @@ import {AlwatrSurface} from '../card/surface.js';
 
 import type {RouteContextBase} from '@alwatr/router/src/type.js';
 import type {StringifyableRecord} from '@alwatr/type';
-
 
 export interface NavigationBarItemContent extends StringifyableRecord {
   id: string;
@@ -99,10 +107,14 @@ export class AlwatrNavigationBar extends LocalizeMixin(SignalMixin(AlwatrSurface
   @property()
     activeItemId?: string;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
+  protected override firstUpdated(_changedProperties: PropertyValueMap<this>): void {
+    super.firstUpdated(_changedProperties);
     this.setAttribute('elevated', '2');
     this.setAttribute('tinted', '');
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
 
     const contextSignal = this.getAttribute('context-signal');
     if (contextSignal) {
@@ -129,9 +141,7 @@ export class AlwatrNavigationBar extends LocalizeMixin(SignalMixin(AlwatrSurface
 
   override render(): unknown {
     this._logger.logMethod('render');
-    if (this.content?.itemList == null) return;
-
-    return mapIterable(this, this.content.itemList, this.navigationItem);
+    return mapIterable(this, this.content?.itemList, this.navigationItem);
   }
 
   protected navigationItem(content: NavigationBarItemContent): unknown {
