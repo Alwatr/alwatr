@@ -6,12 +6,15 @@ import {
   html,
   LocalizeMixin,
   SignalMixin,
+  property,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import {eventTrigger} from '@alwatr/signal';
 
 import '../button/icon-button.js';
 
 import type {AlwatrStandardIconButton, IconButtonContent} from '../button/icon-button.js';
+
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -28,13 +31,13 @@ export class AlwatrChatTextInput extends LocalizeMixin(SignalMixin(AlwatrBaseEle
     :host {
       --_height: calc(6 * var(--sys-spacing-track));
       display: flex;
-      user-select: none;
       align-items: flex-end;
       vertical-align: middle;
       border-radius: calc(var(--_height) / 2);
       color: var(--sys-color-on-surface-variant);
       background-color: var(--sys-color-surface-variant);
       flex-grow: 1;
+      user-select: none;
     }
 
     alwatr-icon-button {
@@ -59,24 +62,33 @@ export class AlwatrChatTextInput extends LocalizeMixin(SignalMixin(AlwatrBaseEle
     }
   `;
 
+  @property({type: String})
+    sendButtonClickSignalId?: string;
+
   inputElement: HTMLTextAreaElement | null = null;
   sendButtonElement: AlwatrStandardIconButton | null = null;
 
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(_changedProperties);
+    this.inputElement = this.renderRoot.querySelector('textarea');
+    this.sendButtonElement = this.renderRoot.querySelector('alwatr-icon-button');
+  }
+
   override render(): unknown {
     this._logger.logMethod?.('render');
+    const sendButtonContent: IconButtonContent = {icon: 'send-outline', flipRtl: true};
+
     return html`
-      <textarea rows="1" placeholder=${message('chat_text_input_placeholder')} @input=${this.__inputChange}></textarea>
-      <alwatr-icon-button
-        .content=${<IconButtonContent>{icon: 'send-outline', flipRtl: true, clickSignalId: 'send-message'}}
-        disabled
-      ></alwatr-icon-button>
+      <textarea placeholder=${message('chat_text_input_placeholder')} @input=${this.__inputChange} rows="1"></textarea>
+      <alwatr-icon-button .content=${sendButtonContent} @click=${this.sendMessage} disabled></alwatr-icon-button>
     `;
   }
 
-  protected override firstUpdated(changedProperties: PropertyValues<this>): void {
-    super.firstUpdated(changedProperties);
-    this.inputElement = this.renderRoot.querySelector('textarea');
-    this.sendButtonElement = this.renderRoot.querySelector('alwatr-icon-button');
+  protected sendMessage(): void {
+    this._logger.logMethod('sendMessage');
+    if (!this.sendButtonClickSignalId) return;
+    const value = this.inputElement?.value ?? '';
+    eventTrigger.dispatch<{value: string}>(this.sendButtonClickSignalId, {value});
   }
 
   private __inputChange(event: InputEvent): void {

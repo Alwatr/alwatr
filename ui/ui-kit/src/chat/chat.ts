@@ -3,6 +3,7 @@ import {customElement, css, html, AlwatrBaseElement, SignalMixin, property} from
 import './chat-footer.js';
 import './chat-list.js';
 
+import type {ChatListContent} from './chat-list.js';
 import type {AlwatrDocumentStorage, ChatMessage, StringifyableRecord} from '@alwatr/type';
 
 declare global {
@@ -14,6 +15,7 @@ declare global {
 export interface ChatContent extends StringifyableRecord {
   chatStorage: AlwatrDocumentStorage<ChatMessage>;
   currentUserId: string;
+  sendButtonClickSignalId?: string;
 }
 
 /**
@@ -49,10 +51,26 @@ export class AlwatrChat extends SignalMixin(AlwatrBaseElement) {
 
   override render(): unknown {
     this._logger.logMethod?.('render');
+    const content: ChatContent = this.content ?? {
+      chatStorage: {
+        ok: true,
+        meta: {
+          id: '',
+          formatVersion: 0,
+          reversion: 0,
+          lastAutoId: 1,
+          lastUpdated: 0,
+        },
+        data: {},
+      },
+      currentUserId: '',
+    };
 
     return html`
-      <alwatr-chat-list .content=${this.content}></alwatr-chat-list>
-      <alwatr-chat-footer></alwatr-chat-footer>
+      <alwatr-chat-list
+        .content=${<ChatListContent>{chatStorage: content.chatStorage, currentUserId: content.currentUserId}}
+      ></alwatr-chat-list>
+      <alwatr-chat-footer .sendButtonClickSignalId=${content.sendButtonClickSignalId}></alwatr-chat-footer>
     `;
   }
 }

@@ -1,4 +1,4 @@
-import {AlwatrBaseElement, css, customElement, html} from '@alwatr/element';
+import {AlwatrBaseElement, css, customElement, html, property} from '@alwatr/element';
 
 import './chat-text-area.js';
 import '../button/icon-button.js';
@@ -29,18 +29,14 @@ export class AlwatrChatFooter extends AlwatrBaseElement {
     }
   `;
 
+  @property({type: String})
+    sendButtonClickSignalId?: string;
+
   override render(): unknown {
     this._logger.logMethod?.('render');
     return html`
-      <alwatr-icon-button
-        .content=${<IconButtonContent>{icon: 'happy-outline'}}
-        @click=${this._sendMessage}
-      ></alwatr-icon-button>
-      <alwatr-chat-text-input></alwatr-chat-text-input>
+      <alwatr-icon-button .content=${<IconButtonContent>{icon: 'happy-outline'}}></alwatr-icon-button>
+      <alwatr-chat-text-input .sendButtonClickSignalId=${this.sendButtonClickSignalId}></alwatr-chat-text-input>
     `;
-  }
-
-  protected _sendMessage(): void {
-    this._logger.logMethod?.('_sendMessage');
   }
 }
