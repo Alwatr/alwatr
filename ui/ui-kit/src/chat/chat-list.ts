@@ -1,8 +1,8 @@
-import {AlwatrBaseElement, css, customElement, html, mapObject, nothing, property} from '@alwatr/element';
+import {AlwatrBaseElement, css, customElement, html, mapObject, property} from '@alwatr/element';
 
 import './chat-message.js';
 
-import type {ChatStorage} from '@alwatr/type';
+import type {ChatContent} from './chat.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -66,21 +66,31 @@ export class AlwatrChatList extends AlwatrBaseElement {
     }
   `;
 
-  @property({type: Object, attribute: false})
-    storage?: ChatStorage;
-
-  @property({type: String, attribute: false})
-    currentUser?: string;
+  @property()
+    content?: ChatContent;
 
   override render(): unknown {
     this._logger.logMethod?.('render');
-    if (this.storage == null) return nothing;
-    return html`${mapObject(
-        this,
-        this.storage.data,
-        (message) => html`
-        <alwatr-chat-message .message=${message} ?self=${message.from === this.currentUser}></alwatr-chat-message>
-      `,
-    )}`;
+    const content = this.content ?? {
+      chatStorage: {
+        ok: true,
+        meta: {
+          id: '',
+          formatVersion: 0,
+          reversion: 0,
+          lastAutoId: 1,
+          lastUpdated: 0,
+        },
+        data: {},
+      },
+      currentUserId: '',
+    };
+
+    return html`${mapObject(this, content.chatStorage.data, (message) => html`
+      <alwatr-chat-message
+        .message=${message}
+        ?self=${message.from === content.currentUserId}
+      ></alwatr-chat-message>
+    `)}`;
   }
 }
