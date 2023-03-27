@@ -87,13 +87,13 @@ export class AlwatrChatTextInput extends LocalizeMixin(SignalMixin(AlwatrBaseEle
   protected sendMessage(): void {
     this._logger.logMethod('sendMessage');
     if (!this.sendButtonClickSignalId) return;
-    const value = this.inputElement?.value ?? '';
+    const value = this.inputElement?.value.trim() ?? '';
     eventTrigger.dispatch<{value: string}>(this.sendButtonClickSignalId, {value});
   }
 
   private __inputChange(event: InputEvent): void {
     const textarea = event.target as HTMLTextAreaElement;
-    const value = textarea.value;
+    const value = textarea.value.trim();
     textarea.rows = Math.min(value.split('\n').length, 6);
     this.sendButtonElement?.toggleAttribute('disabled', value.length === 0);
   }
