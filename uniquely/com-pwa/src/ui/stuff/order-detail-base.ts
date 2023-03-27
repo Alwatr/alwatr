@@ -127,6 +127,12 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       -webkit-appearance: none;
       margin: 0;
     }
+
+    @media print {
+      .product-item > img {
+          display: none;
+      }
+    }
   `;
 
   protected render_part_message(key: string, icon: string): unknown {
@@ -162,7 +168,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       item.qty ||= 100;
 
       return html`<alwatr-surface tinted class="product-item">
-        <img src="${config.cdn + product.image.id}" />
+        <img class="tests" src="${config.cdn + product.image.id}" />
         <div class="detail-container">
           <div>${product.title.fa}</div>
           <div>
