@@ -1,4 +1,4 @@
-import type {AlwatrDocumentObject, AlwatrDocumentStorage} from './storage.js';
+import type {AlwatrDocumentObject} from './storage.js';
 
 type CommonMessage = AlwatrDocumentObject & {
   from: string;
@@ -16,5 +16,3 @@ export type ChatPhotoMessage = CommonMessage & {
 };
 
 export type ChatMessage = ChatTextMessage | ChatPhotoMessage;
-
-export type ChatStorage = AlwatrDocumentStorage<ChatTextMessage>;
