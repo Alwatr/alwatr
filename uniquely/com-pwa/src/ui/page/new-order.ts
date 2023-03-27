@@ -189,7 +189,12 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           headlineKey: 'page_order_list_headline',
           startIcon: buttons.backToOrderList,
         });
-        return html`Order not found!`;
+        const content: IconBoxContent = {
+          headline: message('page_order_detail_not_found'),
+          icon: 'close',
+          tinted: 1,
+        };
+        return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
       },
       orderDetail: () => {
         topAppBarContextProvider.setValue({
@@ -197,10 +202,14 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
           startIcon: buttons.backToOrderList,
           endIconList: [buttons.reload],
         });
-        const {orderId, orderStorage} = this.fsm.getContext();
-        const order = orderStorage?.data[orderId];
-        if (order == null) return;
-        return html`${JSON.stringify(order)}`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const order = this.fsm.getContext().orderStorage!.data[this.fsm.getContext().orderId];
+        return [
+          this.render_part_status(order),
+          this.render_part_item_list(order.itemList, this.fsm.getContext().productStorage),
+          this.render_part_shipping_info(order.shippingInfo),
+          this.render_part_summary(order),
+        ];
       },
       newOrder: () => {
         topAppBarContextProvider.setValue({
