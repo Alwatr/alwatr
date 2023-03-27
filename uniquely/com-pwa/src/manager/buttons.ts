@@ -15,6 +15,10 @@ export const buttons = {
     flipRtl: true,
     clickSignalId: 'browser_back_click_event',
   },
+  print: {
+    icon: 'print-outline',
+    clickSignalId: 'order_detail_print',
+  },
 
   reload: {
     icon: 'reload-outline',
@@ -94,6 +98,10 @@ export const buttons = {
 
 eventListener.subscribe(buttons.newOrder.clickSignalId, () => {
   redirect({sectionList: ['new-order']});
+});
+
+eventListener.subscribe(buttons.print.clickSignalId, () => {
+  window.print();
 });
 
 eventListener.subscribe(buttons.showOrderDetail.clickSignalId, (event: ClickSignalType<Order>): void => {
