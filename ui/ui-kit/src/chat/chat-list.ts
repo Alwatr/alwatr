@@ -10,18 +10,6 @@ declare global {
   }
 }
 
-export function* map<T>(
-    items: Record<string, T> | undefined,
-    func: (value: T, index: string) => unknown,
-): Generator<unknown, void, unknown> {
-  if (items !== undefined) {
-    for (const key in items) {
-      if (!Object.prototype.hasOwnProperty.call(items, key)) continue;
-      yield func(items[key], key);
-    }
-  }
-}
-
 /**
  * Alwatr chat message box element.
  *
