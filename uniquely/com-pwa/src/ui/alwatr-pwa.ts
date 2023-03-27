@@ -26,10 +26,6 @@ class AlwatrPwa extends AlwatrPwaElement {
     AlwatrPwaElement.styles,
     css`
       @media print {
-        :host {
-          filter: grayscale(1)
-        }
-
         alwatr-top-app-bar,
         alwatr-app-footer {
           display: none;
