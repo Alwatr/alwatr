@@ -2,6 +2,7 @@ import {AlwatrBaseElement, css, customElement, html, mapObject, property} from '
 
 import './chat-message.js';
 
+import type {ChatMessageContent} from './chat-message.js';
 import type {ChatContent} from './chat.js';
 
 declare global {
@@ -59,7 +60,7 @@ export class AlwatrChatList extends AlwatrBaseElement {
 
   override render(): unknown {
     this._logger.logMethod?.('render');
-    const content = this.content ?? {
+    const content: ChatContent = this.content ?? {
       chatStorage: {
         ok: true,
         meta: {
@@ -74,11 +75,16 @@ export class AlwatrChatList extends AlwatrBaseElement {
       currentUserId: '',
     };
 
-    return html`${mapObject(this, content.chatStorage.data, (message) => html`
+    return html`${mapObject(this, content.chatStorage.data, (message) => {
+      const messageContent: ChatMessageContent = {
+        message,
+        self: message.from === content.currentUserId,
+      };
+      return html`
       <alwatr-chat-message
-        .message=${message}
-        ?self=${message.from === content.currentUserId}
+        .content=${messageContent}
       ></alwatr-chat-message>
-    `)}`;
+    `;
+    })}`;
   }
 }
