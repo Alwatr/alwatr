@@ -3,21 +3,26 @@ import {
   css,
   customElement,
   html,
-  nothing,
   property,
   DirectionMixin,
   SignalMixin,
+  type PropertyValues,
 } from '@alwatr/element';
 
 import './chat-avatar.js';
 import './chat-bubble.js';
 
-import type {ChatMessage} from '@alwatr/type';
+import type {ChatMessage, StringifyableRecord} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-chat-message': AlwatrChatMessage;
   }
+}
+
+export interface ChatMessageContent extends StringifyableRecord {
+  message: ChatMessage;
+  self: boolean;
 }
 
 /**
@@ -66,24 +71,33 @@ export class AlwatrChatMessage extends DirectionMixin(SignalMixin(AlwatrBaseElem
     }
   `;
 
-  @property({type: Object, attribute: false})
-    message?: ChatMessage;
+  protected override update(_changedProperties: PropertyValues<this>): void {
+    super.update(_changedProperties);
 
-  @property({type: Boolean, attribute: 'self', reflect: true})
-    self = false;
+    const self = this.content?.self ?? false;
+    if (this.hasAttribute('self') !== self) {
+      this.toggleAttribute('self', self);
+    }
+  }
+
+  @property()
+    content?: ChatMessageContent;
 
   override render(): unknown {
     this._logger.logMethod?.('render');
-    if (this.message == null || this.message.type !== 'text') return nothing;
+    const content: ChatMessageContent = this.content ?? {
+      message: {type: 'text', id: '', from: '', text: ''},
+      self: false,
+    };
 
     const bubble = html`<alwatr-chat-bubble
-      .text=${this.message.text}
-      side=${this.self ? 'end' : 'start'}
+      .text=${content.message.text}
+      side=${content.self ? 'end' : 'start'}
     ></alwatr-chat-bubble>`;
 
     // prettier-ignore
-    return this.self
+    return content.self
       ? bubble
-      : [html`<alwatr-chat-avatar .user=${this.message.from}></alwatr-chat-avatar>`, bubble];
+      : [html`<alwatr-chat-avatar .user=${content.message.from}></alwatr-chat-avatar>`, bubble];
   }
 }
