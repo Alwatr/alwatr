@@ -127,6 +127,12 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       -webkit-appearance: none;
       margin: 0;
     }
+
+    @media print {
+      .product-item > img {
+          display: none;
+      }
+    }
   `;
 
   protected render_part_message(key: string, icon: string): unknown {

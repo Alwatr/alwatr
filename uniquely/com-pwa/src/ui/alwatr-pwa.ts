@@ -1,4 +1,4 @@
-import {html, customElement} from '@alwatr/element';
+import {html, customElement, css} from '@alwatr/element';
 import '@alwatr/font/vazirmatn.css';
 import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
 import '@alwatr/ui-kit/style/mobile-only.css';
@@ -22,6 +22,22 @@ declare global {
  */
 @customElement('alwatr-pwa')
 class AlwatrPwa extends AlwatrPwaElement {
+  static override styles = [
+    AlwatrPwaElement.styles,
+    css`
+      @media print {
+        :host {
+          filter: grayscale(1)
+        }
+
+        alwatr-top-app-bar,
+        alwatr-app-footer {
+          display: none;
+        }
+      }
+    `,
+  ];
+
   protected override _routesConfig: RoutesConfig = {
     routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
     templates: {
