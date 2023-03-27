@@ -1,6 +1,6 @@
 import {AlwatrBaseElement, css, customElement, html} from '@alwatr/element';
 
-import './chat-text-input.js';
+import './chat-text-area.js';
 import '../button/icon-button.js';
 
 import type {IconButtonContent} from '../button/icon-button.js';
