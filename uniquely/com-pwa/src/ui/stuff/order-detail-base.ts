@@ -132,6 +132,10 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       .product-item > img {
           display: none;
       }
+
+      .bold-text {
+        font-weight: var(--ref-font-weight-bold);
+      }
     }
   `;
 
@@ -199,14 +203,14 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           <div>
             <span>${message('order_item_qty_box')}:</span>
             <span>
-              <span>${number(item.qty)}</span>
+              <span class="bold-text">${number(item.qty)}</span>
               <alwatr-icon .name=${'cube-outline'}></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_final_total_price')}:</span>
             <span>
-              <span>${number(item.qty * tileQtyStep * item.finalPrice)}</span>
+              <span class="bold-text">${number(item.qty * tileQtyStep * item.finalPrice)}</span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
@@ -220,7 +224,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
           <div>
             <span>${message('order_item_discount')}:</span>
             <span>
-              <span>
+              <span class="bold-text">
                 (٪${number(calcDiscount(item.price, item.finalPrice))})
                 ${number(item.qty * tileQtyStep * (item.price - item.finalPrice))}
               </span>
@@ -362,7 +366,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
         <div>
           <span>${message('order_summary_final_total_price')}:</span>
           <span>
-            <span>${number(finalTotalPrice + ladingPrice)}</span>
+            <span class="bold-text">${number(finalTotalPrice + ladingPrice)}</span>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
