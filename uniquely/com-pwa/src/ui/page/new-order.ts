@@ -2,7 +2,8 @@ import {customElement, html, property, PropertyValues, state, UnresolvedMixin} f
 import {finiteStateMachineConsumer} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
-import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/card/icon-box.js';
+
 
 import {scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
@@ -10,6 +11,7 @@ import '../stuff/select-product.js';
 
 import type {NewOrderFsm} from '../../manager/controller/new-order.js';
 import type {Order, OrderShippingInfo} from '@alwatr/type/customer-order-management.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 
 declare global {
