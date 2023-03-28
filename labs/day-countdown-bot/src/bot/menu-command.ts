@@ -1,9 +1,9 @@
-import {addChat, isSubscribed} from '../chat.js';
+import {addChat, isChatExists, isSubscribed} from '../chat.js';
 import {message} from '../director/l18e-loader.js';
 import {bot, userComposer} from '../lib/bot.js';
 
 userComposer.command('menu', async (ctx) => {
-  // if (!isChatExists(ctx.chatId)) addChat(await bot.getChatDetail(ctx));
+  if (!isChatExists(ctx.chatId)) addChat(await bot.getChatDetail(ctx));
   addChat(await bot.getChatDetail(ctx));
 
   await ctx.replyToChat(message('command_menu'), {
