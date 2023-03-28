@@ -18,8 +18,8 @@ bot.use(chatAdminComposer);
 bot.use(userComposer);
 
 async function isGroupAdmin(userId: number, chatId: number): Promise<boolean> {
-  if (await bot.isGroup(chatId) && !await bot.isChatAdmin(chatId, userId)) return false;
-  return true;
+  if (!await bot.isGroup(chatId)) return true;
+  return await bot.isChatAdmin(chatId, userId);
 }
 
 export function handleSendMessageError(chatId: number, err: TelegramError): void {
