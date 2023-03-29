@@ -1,0 +1,87 @@
+@apiUrl = http://127.0.0.1:8000/api/v0
+@userToken = YOUR_SECRET_TOKEN
+# @userToken = USER_GENERATED_SECRET_TOKEN
+@adminToken = ADMIN_SECRET_TOKEN
+
+### Home
+GET {{apiUrl}}/
+
+### Get all product.
+GET {{apiUrl}}/product-list/?storage=tile
+Authorization: Bearer {{userToken}}
+
+### Insert/edit a product.
+PATCH {{apiUrl}}/product-list/?storage=tile
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "data": [
+    {
+      "id": "1",
+      "title": {"fa": "تایل کد ۰۰۱"},
+      "image": {"id": "sample-1.jpg"}
+    },
+    {
+      "id": "2",
+      "title": {"fa": "تایل کد ۰۰۲"},
+      "image": {"id": "sample-2.jpg"}
+    }
+  ]
+}
+
+### Get product-price-list-agency-ir.json
+GET {{apiUrl}}/price-list/?name=tile-agency-ir
+Authorization: Bearer {{userToken}}
+
+### Insert/edit a product price of special list.
+PATCH {{apiUrl}}/price-list/?name=tile-agency-ir
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "data": [
+    {
+      "id": "1",
+      "price": 1100
+    },
+    {
+      "id": "2",
+      "price": 1200
+    }
+  ]
+}
+
+### New order of user.
+PUT {{apiUrl}}/order/?userId=demo-123
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
+
+{
+  "itemList": [
+    {
+      "productId": "1",
+      "price": 1000000,
+      "finalPrice": 950000,
+      "qty": 20
+    }
+  ],
+
+  "shippingInfo": {
+    "recipientName": "ali",
+    "recipientNationalCode": "0934614566",
+    "address": "Mashhad, 29 dey, koche 29",
+    "ladingType": "x",
+    "carType": "y"
+  },
+
+  "discountType": "number",
+  "totalPrice": 1000000,
+  "ladingPrice": 1100000,
+  "finalTotalPrice": 900000
+}
+
+### Get all orders list of special user
+GET {{apiUrl}}/order-list/?userId=demo-123
+Authorization: Bearer {{userToken}}

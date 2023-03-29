@@ -27,6 +27,8 @@
     "datetime",
     "esbuild",
     "Fatemeh",
+    "Gecut",
+    "hami",
     "kubernetes",
     "mastmalize",
     "metafile",
@@ -49,6 +51,7 @@
     "videocam",
     "xlarge",
     "xsmall",
+    "Zamanian",
     "zindex"
   ],
   "typescript.tsdk": "node_modules/typescript/lib"
