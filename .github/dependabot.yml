@@ -4,10 +4,9 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 5
     reviewers:
-      - AliMD
-      - njfamirm
+      - MM25Zamanian
     schedule:
       interval: daily
     labels:
@@ -18,10 +17,9 @@ updates:
   - package-ecosystem: npm
     directory: /
     versioning-strategy: increase
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 5
     reviewers:
-      - AliMD
-      - njfamirm
+      - MM25Zamanian
     schedule:
       interval: daily
     labels:
