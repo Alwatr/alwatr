@@ -77,6 +77,11 @@ export function LoggerMixin<T extends Constructor<LitElement>>(superClass: T): C
       });
       return super.dispatchEvent(event);
     }
+
+    override remove(): void {
+      this._logger.logMethod('remove');
+      super.remove();
+    }
   }
 
   return LoggerMixinClass as unknown as Constructor<LoggerMixinInterface> & T;
