@@ -115,4 +115,26 @@ export interface AlwatrLogger {
    * ```
    */
   logOther(...args: unknown[]): void;
+
+  /**
+   * Simple `console.time` with scope.
+   *
+   * Example:
+   *
+   * ```ts
+   * logger.time('foo');
+   * ```
+   */
+  time?(label: string): void;
+
+  /**
+   * Simple `console.timeEnd` with scope.
+   *
+   * Example:
+   *
+   * ```ts
+   * logger.timeEnd('foo');
+   * ```
+   */
+  timeEnd?(label: string): void;
 }
