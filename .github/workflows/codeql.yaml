@@ -9,10 +9,6 @@ on:
     paths:
       - '**.ts'
       - '**.js'
-    branches:
-      - next*
-      - main
-      - release/*
 
   push:
     paths:
