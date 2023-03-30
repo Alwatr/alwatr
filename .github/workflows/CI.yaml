@@ -1,21 +1,23 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: Lint
+name: CI
 
 on:
   workflow_dispatch:
 
   pull_request:
     branches:
-      - next*
-      - main
-      - release/*
+      - '*'
 
   push:
+    paths: '**.ts'
+    paths-ignore: '**.md'
     branches:
-      - next*
+      - next
       - main
       - release/*
+      - dependabot/*
+      - feat/*
 
   schedule:
     - cron: '0 7 * * 4'
@@ -31,7 +33,7 @@ env:
   NODE_VERSION: latest
 
 jobs:
-  lint-ts:
+  lint:
     name: ESLint Scanning
     runs-on: ubuntu-latest
 
@@ -42,10 +44,10 @@ jobs:
 
     steps:
       - name: ⤵️ Checkout repository
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3
 
       - name: 🏗 Setup nodejs
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: yarn
@@ -53,14 +55,32 @@ jobs:
       - name: 🏗 Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: 🚀 Run ESLint
-        run: yarn lint:ts
-          --format @microsoft/eslint-formatter-sarif
-          --output-file eslint-results.sarif
-        continue-on-error: true
+      - name: 🚀 Lint All Projects
+        run: yarn lint
 
-      - name: 🏗 Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v2.2.7
+  build:
+    name: Build Typescript
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: ⤵️ Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🏗 Setup nodejs
+        uses: actions/setup-node@v3
         with:
-          sarif_file: eslint-results.sarif
-          wait-for-processing: true
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+
+      - name: 🏗 Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: 🚀 Build TypeScript
+        run: yarn build:ts
+
+      - name: 🚀 Build All Project
+        run: yarn build:r
