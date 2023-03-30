@@ -21,6 +21,8 @@ export function LoggerMixin<T extends Constructor<LitElement>>(superClass: T): C
     ali: number = ++_lastAli;
     protected _logger = createLogger(`<${this.tagName.toLowerCase()}-${this.ali}>`);
 
+    private _$firstUpdated?: true;
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(...args: any[]) {
       super(...args);
@@ -39,12 +41,28 @@ export function LoggerMixin<T extends Constructor<LitElement>>(superClass: T): C
 
     protected override update(changedProperties: PropertyValues): void {
       this._logger.logMethodArgs('update', {changedProperties});
+      this._logger.time?.(this._$firstUpdated ? 'update-time' : 'first-update-time');
       super.update(changedProperties);
     }
 
     protected override firstUpdated(changedProperties: PropertyValues): void {
       this._logger.logMethodArgs('firstUpdated', {changedProperties});
+      this._logger.timeEnd?.('first-update-time');
       super.firstUpdated(changedProperties);
+    }
+
+    protected override updated(changedProperties: PropertyValues): void {
+      // this._logger.logMethodArgs('updated', {changedProperties});
+      if (this._logger.debug) {
+        if (this._$firstUpdated) {
+          this._logger.timeEnd?.('update-time');
+        }
+        else {
+          this._$firstUpdated = true;
+        }
+      }
+
+      super.updated(changedProperties);
     }
 
     protected override render(): unknown {

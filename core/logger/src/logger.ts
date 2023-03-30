@@ -101,9 +101,8 @@ export const style = {
  */
 export const createLogger = (scope: string, color?: string | null, debug?: boolean): AlwatrLogger => {
   scope = scope.trim();
-  color ??= getNextColor();
+  color ||= getNextColor();
   debug ??= getDebugState(scope);
-
   const first = scope.charAt(0);
   if (first !== '[' && first !== '{' && first !== '(' && first !== '<') {
     scope = '[' + scope + ']';
@@ -161,5 +160,8 @@ export const createLogger = (scope: string, color?: string | null, debug?: boole
     incident: isBrowser
       ? console.log.bind(console, '%c%s%c.%s() Incident `%s` %s!', styleScope, scope, 'color: orange;')
       : console.log.bind(console, `${styleScope}🚸\n%s${style.reset}.%s() Incident \`%s\` %s!${style.reset}`, scope),
+
+    time: (label: string) => console.time(scope + '.' + label),
+    timeEnd: (label: string) => console.timeEnd(scope + '.' + label),
   };
 };
