@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import {bench} from './bench.js';
 
 function test1(id: string): void {

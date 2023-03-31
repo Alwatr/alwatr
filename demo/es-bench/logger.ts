@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import {createLogger} from '@alwatr/logger';
 // import {delay} from '@alwatr/util';
 

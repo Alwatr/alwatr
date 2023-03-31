@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable camelcase */
-
 import {bench} from './bench.js';
 
 const size = 1_000;
