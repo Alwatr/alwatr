@@ -123,7 +123,7 @@ export class AlwatrSnackbar extends AlwatrSurface {
         this.actionLabel,
         () =>
           html`<alwatr-button
-            .content=${{labelKey: this.actionLabel}}
+            .content=${{label: this.actionLabel}}
             @click=${this._actionButtonClick}
           ></alwatr-button>`,
     )}`;
