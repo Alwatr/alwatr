@@ -7,8 +7,11 @@ on:
 
   pull_request:
     branches:
-      - '*'
-
+      - next
+      - main
+      - release/*
+      - dependabot/*
+      - feat/*
   push:
     paths: '**.ts'
     paths-ignore: '**.md'
