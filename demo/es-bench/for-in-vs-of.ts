@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import {random} from '@alwatr/math';
 
 import {bench} from './bench.js';

@@ -33,7 +33,7 @@
     "pm": "run-s pull clean build:ts build:r ver-minor push",
     "pp": "run-s pull clean build:ts build:r ver-patch push",
     "lint": "run-s lint:*",
-    "lint:ts": "eslint . --config .eslintrc.json --ext .ts --ignore-path .gitignore",
+    "lint:ts": "eslint . --config .eslintrc.json --ext .ts",
     "build": "yarn build:ts",
     "build:ts": "tsc --build",
     "build:r": "lerna run build",
