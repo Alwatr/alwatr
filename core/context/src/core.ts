@@ -162,6 +162,17 @@ export const request = (
   fsm.transition('REQUEST');
 };
 
+export const requestIfNotComplete = (
+    fsm: FsmConsumerInterface<ServerContextFsm>,
+    options?: ServerContextFsm['TContext']['options'],
+    mergeOption = true,
+): void => {
+  logger.logMethodArgs('requestIfNotComplete', fsm.id);
+  if (fsm.getState().target !== 'complete') {
+    request(fsm, options, mergeOption);
+  }
+};
+
 export const setOptions = (
     fsm: FsmConsumerInterface<ServerContextFsm>,
     options: ServerContextFsm['TContext']['options'],

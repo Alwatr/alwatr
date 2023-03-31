@@ -40,22 +40,19 @@ class AlwatrPwa extends AlwatrPwaElement {
       },
       'order-detail': (routeContext) => {
         topAppBarContextProvider.setValue({headlineKey: 'loading'});
-        import('./page/order-detail.js');
-        return html`<alwatr-page-order-detail
-          .orderId=${+routeContext.sectionList[1]}
-          unresolved>...</alwatr-page-order-detail>`;
-      },
-      'order-tracking': (routeContext) => {
-        topAppBarContextProvider.setValue({headlineKey: 'loading'});
-        import('./page/order-tracking.js');
-        return html`<alwatr-page-order-tracking
-          .orderId=${+routeContext.sectionList[1]}
-          unresolved>...</alwatr-page-order-tracking>`;
+        import('./page/new-order.js');
+        return html`<alwatr-page-new-order
+          .orderId=${routeContext.sectionList[1] + ''}
+          unresolved
+        >...</alwatr-page-new-order>`;
       },
       'new-order': () => {
         topAppBarContextProvider.setValue({headlineKey: 'loading'});
         import('./page/new-order.js');
-        return html`<alwatr-page-new-order unresolved>...</alwatr-page-new-order>`;
+        return html`<alwatr-page-new-order
+          .orderId=${'new'}
+          unresolved
+        >...</alwatr-page-new-order>`;
       },
     },
   };

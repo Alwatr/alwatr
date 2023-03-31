@@ -76,6 +76,6 @@ export class AlwatrOrderStatusBox extends AlwatrBaseElement {
       elevated: 1,
     };
 
-    return html` <alwatr-icon-box .content=${iconBoxContent}></alwatr-icon-box> `;
+    return html`<alwatr-icon-box .content=${iconBoxContent}></alwatr-icon-box>`;
   }
 }

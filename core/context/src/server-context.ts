@@ -1,6 +1,6 @@
 import {finiteStateMachineConsumer, type FsmConsumerInterface} from '@alwatr/fsm';
 
-import {request, serverContextFsmConstructorId, setOptions} from './core.js';
+import {request, requestIfNotComplete, serverContextFsmConstructorId, setOptions} from './core.js';
 
 import type {ServerContextFsm, ServerContextFsmContext} from './type.js';
 import type {AlwatrDocumentStorage, AlwatrServiceResponseSuccessWithMeta, OmitFirstParam} from '@alwatr/type';
@@ -22,6 +22,9 @@ export const serverContextConsumer = <TResponse extends AlwatrServiceResponseSuc
   return {
     id: instanceId,
     request: request.bind(null, fsm as FsmConsumerInterface<ServerContextFsm>) as OmitFirstParam<typeof request>,
+    require: requestIfNotComplete.bind(null, fsm as FsmConsumerInterface<ServerContextFsm>) as OmitFirstParam<
+      typeof requestIfNotComplete
+    >,
     setOptions: setOptions.bind(null, fsm as FsmConsumerInterface<ServerContextFsm>) as OmitFirstParam<
       typeof setOptions
     >,

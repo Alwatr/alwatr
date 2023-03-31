@@ -147,7 +147,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
   protected render_part_item_list(
       itemList: Array<OrderItem>,
-      productStorage: AlwatrDocumentStorage<Product> | null,
+      productStorage: AlwatrDocumentStorage<Product> | null | undefined,
       editable = false,
   ): unknown {
     this._logger.logMethod('render_part_item_list');
@@ -244,16 +244,10 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       <alwatr-surface class="number-field" stated tinted="2">
         <alwatr-icon-button .content=${addBtn}></alwatr-icon-button>
         <alwatr-text-field
-        .type=${'number'}
-        .value=${(orderItem.qty ?? 0) + ''}
-        @input-change=${(event: CustomEvent): void => {
-    const target = event.target as AlwatrTextField;
-    if (target == null) return;
-    const qty = target.value && +target.value ? +target.value : 100;
-    // qtyUpdate(orderItem, qty - orderItem.qty); // FIXME:
-    target.value = qty + '';
-    this.requestUpdate();
-  }}></alwatr-text-field>
+          .type=${'number'}
+          .value=${orderItem.qty + ''}
+          @input-change=${(event: CustomEvent): void => this.qtyInputChange(event, orderItem)}
+        ></alwatr-text-field>
         <alwatr-icon-button .content=${removeBtn}></alwatr-icon-button>
       </alwatr-surface>
     `;
@@ -375,5 +369,13 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     return html`<alwatr-surface tinted>
       <alwatr-order-shipping-form .formData=${formData}></alwatr-order-shipping-form>
     </alwatr-surface>`;
+  }
+
+  protected qtyInputChange(event: CustomEvent, orderItem: OrderItem): void {
+    const target = event.target as AlwatrTextField;
+    this._logger.logMethodArgs('qtyInputChange', target.value);
+    const qty = +target.value || 100;
+    orderItem.qty = qty;
+    this.requestUpdate();
   }
 }

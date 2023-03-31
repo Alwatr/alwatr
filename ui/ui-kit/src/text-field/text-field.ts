@@ -118,7 +118,7 @@ export class AlwatrTextField extends AlwatrSurface {
     type: InputType = 'text';
 
   @property({type: String})
-    value?: string;
+    value = '';
 
   @property({type: String})
     placeholder = '';
@@ -130,9 +130,18 @@ export class AlwatrTextField extends AlwatrSurface {
     this._inputChanged = this._inputChanged.bind(this);
   }
 
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('click', this._click);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('click', this._click);
+  }
+
   override render(): unknown {
     this._logger.logMethod('render');
-    this.value ??= '';
     if (this.type === 'textarea') {
       return html`<textarea
         .name=${this.name}
@@ -155,7 +164,10 @@ export class AlwatrTextField extends AlwatrSurface {
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
     this.inputElement = this.renderRoot.querySelector('input, textarea');
-    this.addEventListener('click', () => this.inputElement?.focus());
+  }
+
+  protected _click(): void {
+    this.inputElement?.focus();
   }
 
   private _inputChanged(event: Event): void {
