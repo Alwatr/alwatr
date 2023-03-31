@@ -15,6 +15,11 @@ declare global {
 
 export interface ButtonContent extends StringifyableRecord {
   /**
+   * Label.
+   */
+  label?: string
+
+  /**
    * Label i18n key.
    */
   labelKey?: string;
@@ -115,7 +120,7 @@ export class AlwatrButton extends AlwatrSurface {
       content.icon
         ? html`<alwatr-icon .name=${content.icon} ?flip-rtl=${content.flipRtl}></alwatr-icon>`
         : nothing,
-      html`<slot>${message(content.labelKey)}</slot>`,
+      html`<slot>${content.label ?? message(content.labelKey)}</slot>`,
     ];
   }
 
