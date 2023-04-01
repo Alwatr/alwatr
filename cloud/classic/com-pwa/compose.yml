@@ -66,6 +66,41 @@ services:
       traefik.frontend.entryPoints: http, https
       traefik.frontend.redirect.entryPoint: https
 
+  comment:
+    image: ghcr.io/alimd/comment:${COMMENT_VERSION:-next}
+
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      internal:
+      alwatr-public-network:
+
+    depends_on:
+      - storage-server
+
+    environment:
+      - STORAGE_HOST=${APP_ID}-storage-server
+      - STORAGE_PORT=80
+      - STORAGE_TOKEN=${STORAGE_TOKEN}
+      - ACCESS_TOKEN=${COMMENT_TOKEN}
+      - ALWATR_DEBUG=${COMMENT_DEBUG:-}
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/comment/v0/
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+
   storage-server:
     image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION:-next}
 
