@@ -2,8 +2,8 @@ import {customElement, html, property, state, UnresolvedMixin} from '@alwatr/ele
 import {finiteStateMachineConsumer} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
 import {topAppBarContextProvider} from '@alwatr/pwa-helper/context.js';
-import {redirect} from '@alwatr/router';
 
+import {buttons} from '../../manager/buttons.js';
 import {OrderDetailFsm} from '../../manager/controller/order-detail.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
 
@@ -14,19 +14,6 @@ declare global {
     'alwatr-page-order-detail': AlwatrPageOrderDetail;
   }
 }
-
-const buttons = {
-  backToOrderList: {
-    icon: 'arrow-back-outline',
-    flipRtl: true,
-    clickSignalId: 'order_detail_back_to_order_list_event',
-  },
-  reload: {
-    icon: 'reload-outline',
-    flipRtl: true,
-    clickSignalId: 'order_detail_reload_event',
-  },
-} as const;
 
 /**
  * Alwatr Customer Order Management Order Detail Page.
@@ -60,8 +47,8 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
         receivePrevious: 'NextCycle',
       },
       {
-        signalId: buttons.backToOrderList.clickSignalId,
-        callback: (): void => redirect({sectionList: ['order-list']}),
+        signalId: buttons.reloadOrderStorage.clickSignalId,
+        transition: 'context_request_complete', // FIXME: set correct transition for reloading
       },
     ]));
   }
@@ -74,7 +61,7 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
         topAppBarContextProvider.setValue({
           headlineKey: 'page_order_list_headline',
           startIcon: buttons.backToOrderList,
-          endIconList: [buttons.reload],
+          endIconList: [buttons.reloadOrderStorage],
         });
 
         const content: IconBoxContent = {
@@ -89,7 +76,7 @@ export class AlwatrPageOrderDetail extends UnresolvedMixin(AlwatrOrderDetailBase
         topAppBarContextProvider.setValue({
           headlineKey: 'page_order_list_headline',
           startIcon: buttons.backToOrderList,
-          endIconList: [buttons.reload],
+          endIconList: [buttons.reloadOrderStorage],
         });
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const order = this.fsm.getContext().orderStorage!.data[this.fsm.getContext().orderId!];

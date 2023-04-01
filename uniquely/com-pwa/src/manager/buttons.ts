@@ -15,9 +15,18 @@ export const buttons = {
     flipRtl: true,
     clickSignalId: 'browser_back_click_event',
   },
+  print: {
+    icon: 'print-outline',
+    clickSignalId: 'order_detail_print',
+  },
+
+  reload: {
+    icon: 'reload-outline',
+  },
 
   reloadOrderStorage: {
     icon: 'reload-outline',
+    flipRtl: true,
     clickSignalId: 'reload_order_storage',
   },
 
@@ -26,16 +35,79 @@ export const buttons = {
     clickSignalId: 'new_order_click_event',
   },
   showOrderDetail: {
+    labelKey: 'page_new_order_detail_button',
+    icon: 'information-outline',
     clickSignalId: 'show_order_detail_click_event',
+  },
+  backToOrderList: {
+    icon: 'arrow-back-outline',
+    flipRtl: true,
+    clickSignalId: 'back_to_order_list_event',
+  },
+
+  editItems: {
+    labelKey: 'page_new_order_edit_items',
+    icon: 'create-outline',
+    clickSignalId: 'edit_items_click_event',
+  },
+  submit: {
+    labelKey: 'page_new_order_submit',
+    icon: 'checkmark-outline',
+    clickSignalId: 'submit_click_event',
+  },
+  selectProductSubmit: {
+    labelKey: 'select_product_submit_button',
+    icon: 'checkmark-outline',
+    clickSignalId: 'select_product_submit_click_event',
+  },
+  editOrder: {
+    labelKey: 'page_new_order_edit',
+    icon: 'create-outline',
+    clickSignalId: 'edit_order_click_event',
+  },
+  submitFinal: {
+    labelKey: 'page_new_order_submit_final',
+    icon: 'checkmark-outline',
+    clickSignalId: 'submit_final_click_event',
+  },
+  submitShippingForm: {
+    labelKey: 'page_new_order_shipping_submit',
+    icon: 'checkmark-outline',
+    clickSignalId: 'submit_shipping_form_click_event',
+  },
+  editShippingForm: {
+    labelKey: 'page_new_order_shipping_edit',
+    icon: 'create-outline',
+    clickSignalId: 'edit_shipping_form_click_event',
+  },
+  showRegisteredOrderDetail: {
+    labelKey: 'page_new_order_detail_button',
+    icon: 'information-outline',
+    clickSignalId: 'show_registered_order_detail_click_event',
+  },
+  showRegisteredOrderTracking: {
+    icon: 'chatbox-outline',
+    clickSignalId: 'show_registered_order_tracking_click_event',
+  },
+  retry: {
+    labelKey: 'page_new_order_retry_button',
+    icon: 'reload-outline',
+    clickSignalId: 'retry_click_event',
   },
 } as const;
 
-eventListener.subscribe('new_order_click_event', () => {
-  redirect({
-    sectionList: ['new-order'],
-  });
+eventListener.subscribe(buttons.newOrder.clickSignalId, () => {
+  redirect({sectionList: ['new-order']});
 });
 
-eventListener.subscribe('show_order_detail_click_event', (event: ClickSignalType<Order>): void => {
+eventListener.subscribe(buttons.print.clickSignalId, () => {
+  window.print();
+});
+
+eventListener.subscribe(buttons.showOrderDetail.clickSignalId, (event: ClickSignalType<Order>): void => {
   redirect({sectionList: ['order-detail', event.detail.id]});
+});
+
+eventListener.subscribe(buttons.backToOrderList.clickSignalId, (): void => {
+  redirect({sectionList: ['order-list']});
 });
