@@ -20,14 +20,4 @@ chatStorageContextConsumer.fsm.defineSignals([
     },
     receivePrevious: 'NextCycle',
   },
-  {
-    signalId: 'get_chat_storage',
-    callback: (storage: string): void => {
-      chatStorageContextConsumer.request({
-        queryParameters: {
-          storage,
-        },
-      });
-    },
-  },
 ]);
