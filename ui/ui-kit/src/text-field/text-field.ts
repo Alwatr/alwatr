@@ -142,6 +142,8 @@ export class AlwatrTextField extends AlwatrSurface {
 
   override render(): unknown {
     this._logger.logMethod('render');
+    this.value ??= '';
+
     if (this.type === 'textarea') {
       return html`<textarea
         .name=${this.name}
