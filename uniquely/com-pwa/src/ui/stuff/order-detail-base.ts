@@ -162,7 +162,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       item.qty ||= 100;
 
       return html`<alwatr-surface tinted class="product-item">
-        <img src="${config.cdn + product.image.id}" />
+        <img src="${config.cdn + 'medium/' + product.image.id}" />
         <div class="detail-container">
           <div>${product.title.fa}</div>
           <div>

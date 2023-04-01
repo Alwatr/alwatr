@@ -1,4 +1,4 @@
-@apiUrl = http://127.0.0.1:8000/api/v0
+@apiUrl = http://order.soffit.co/api/v0
 @adminToken = ADMIN_SECRET_TOKEN
 
 ### New product 1
@@ -11,42 +11,42 @@ Content-Type: application/json
     {
       "id": "1",
       "title": { "fa": "تایل کد ۰۰۱" },
-      "image": { "id": "sample-1.jpg" }
-    },
-    {
-      "id": "2",
-      "title": { "fa": "تایل کد ۰۰۲" },
-      "image": { "id": "sample-2.jpg" }
-    },
-    {
-      "id": "3",
-      "title": { "fa": "تایل کد ۰۰۳" },
-      "image": { "id": "sample-3.jpg" }
-    },
-    {
-      "id": "4",
-      "title": { "fa": "تایل کد ۰۰۴" },
-      "image": { "id": "sample-4.jpg" }
+      "image": { "id": "soffit-tile-1-0.jpg" }
     },
     {
       "id": "5",
-      "title": { "fa": "تایل کد ۰۰۵" },
-      "image": { "id": "sample-1.jpg" }
+      "title": { "fa": "تایل کد ۲۳۸" },
+      "image": { "id": "soffit-tile-238-0.jpg" }
+    },
+    {
+      "id": "2",
+      "title": { "fa": "تایل کد ۲۳۸G" },
+      "image": { "id": "soffit-tile-238g-0.jpg" }
+    },
+    {
+      "id": "3",
+      "title": { "fa": "تایل کد ۹۹۶G" },
+      "image": { "id": "soffit-tile-996g-0.jpg" }
+    },
+    {
+      "id": "4",
+      "title": { "fa": "تایل کد ۳۳۳" },
+      "image": { "id": "soffit-tile-333-0.jpg" }
     },
     {
       "id": "6",
-      "title": { "fa": "تایل کد ۰۰۶" },
-      "image": { "id": "sample-2.jpg" }
+      "title": { "fa": "تایل کد ۲۳۹" },
+      "image": { "id": "soffit-tile-239-0.jpg" }
     },
     {
       "id": "7",
-      "title": { "fa": "تایل کد ۰۰۷" },
-      "image": { "id": "sample-3.jpg" }
+      "title": { "fa": "تایل کد ۹۹۳" },
+      "image": { "id": "soffit-tile-993-0.jpg" }
     },
     {
       "id": "8",
-      "title": { "fa": "تایل کد ۰۰۸" },
-      "image": { "id": "sample-3.jpg" }
+      "title": { "fa": "تایل کد ۹۹۶" },
+      "image": { "id": "soffit-tile-996-0.jpg" }
     }
   ]
 }
@@ -60,35 +60,35 @@ Content-Type: application/json
   "data": [
     {
       "id": "1",
-      "price": 77000
+      "price": 79599
     },
     {
       "id": "2",
-      "price": 75000
+      "price": 81599
     },
     {
       "id": "3",
-      "price": 68500
+      "price": 81599
     },
     {
       "id": "4",
-      "price": 62530
+      "price": 81599
     },
     {
       "id": "5",
-      "price": 79000
+      "price": 73599
     },
     {
       "id": "6",
-      "price": 75050
+      "price": 73599
     },
     {
       "id": "7",
-      "price": 64000
+      "price": 73599
     },
     {
       "id": "8",
-      "price": 80000
+      "price": 73599
     }
   ]
 }
@@ -102,35 +102,35 @@ Content-Type: application/json
   "data": [
     {
       "id": "1",
-      "price": 66990
+      "price": 69251
     },
     {
       "id": "2",
-      "price": 65250
+      "price": 70991
     },
     {
       "id": "3",
-      "price": 59595
+      "price": 70991
     },
     {
       "id": "4",
-      "price": 54401
+      "price": 70991
     },
     {
       "id": "5",
-      "price": 68730
+      "price": 63295
     },
     {
       "id": "6",
-      "price": 65293.5
+      "price": 63295
     },
     {
       "id": "7",
-      "price": 55680
+      "price": 63295
     },
     {
       "id": "8",
-      "price": 69600
+      "price": 63295
     }
   ]
 }
