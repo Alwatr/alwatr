@@ -50,27 +50,13 @@ export class AlwatrChat extends SignalMixin(AlwatrBaseElement) {
 
   override render(): unknown {
     this._logger.logMethod?.('render');
-    const content: ChatContent = this.content ?? {
-      chatStorage: {
-        ok: true,
-        meta: {
-          id: '',
-          formatVersion: 0,
-          reversion: 0,
-          lastAutoId: 1,
-          lastUpdated: 0,
-        },
-        data: {},
-      },
-      currentUserId: '',
-    };
 
     return html`
       <alwatr-chat-list
-        .chatStorage=${content.chatStorage}
-        .currentUserId=${content.currentUserId}
+        .chatStorage=${this.content?.chatStorage}
+        .currentUserId=${this.content?.currentUserId}
       ></alwatr-chat-list>
-      <alwatr-chat-footer .sendButtonClickSignalId=${content.sendButtonClickSignalId}></alwatr-chat-footer>
+      <alwatr-chat-footer .sendButtonClickSignalId=${this.content?.sendButtonClickSignalId}></alwatr-chat-footer>
     `;
   }
 }
