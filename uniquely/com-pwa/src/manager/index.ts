@@ -1,3 +1,4 @@
+import './context-provider/chat-storage.js';
 import './context-provider/home-page-content.js';
 import './context-provider/l18e.js';
 import './context-provider/order-storage.js';
