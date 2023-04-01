@@ -15,7 +15,7 @@ import {contextConsumer, eventListener, eventTrigger} from '@alwatr/signal';
 
 import {AlwatrSurface} from '../card/surface.js';
 
-import type {RouteContextBase} from '@alwatr/router/src/type.js';
+import type {RouteContextBase} from '@alwatr/router/type.js';
 import type {StringifyableRecord} from '@alwatr/type';
 
 export interface NavigationBarItemContent extends StringifyableRecord {
@@ -152,7 +152,8 @@ export class AlwatrNavigationBar extends LocalizeMixin(SignalMixin(AlwatrSurface
         href=${url({sectionList: content.link})}
         data-id=${content.id}
         ?data-active=${this.activeItemId === content.id}
-        @click=${this.itemClickHandler}>
+        @click=${this.itemClickHandler}
+      >
         <div class="indicator">
           <alwatr-icon .name=${iconName} ?flip-rtl=${content.iconFlipRtl}></alwatr-icon>
         </div>
