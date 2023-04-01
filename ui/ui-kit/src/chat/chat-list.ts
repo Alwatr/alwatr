@@ -3,17 +3,12 @@ import {AlwatrBaseElement, css, customElement, html, mapObject, property} from '
 import './chat-message.js';
 
 import type {ChatMessageContent} from './chat-message.js';
-import type {AlwatrDocumentStorage, ChatMessage, StringifyableRecord} from '@alwatr/type';
+import type {AlwatrDocumentStorage, ChatMessage} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-chat-list': AlwatrChatList;
   }
-}
-
-export interface ChatListContent extends StringifyableRecord {
-  chatStorage: AlwatrDocumentStorage<ChatMessage>;
-  currentUserId: string;
 }
 
 /**
@@ -61,29 +56,19 @@ export class AlwatrChatList extends AlwatrBaseElement {
   `;
 
   @property()
-    content?: ChatListContent;
+    chatStorage?: AlwatrDocumentStorage<ChatMessage>;
+
+  @property()
+    currentUserId?: string;
+
 
   override render(): unknown {
     this._logger.logMethod?.('render');
-    const content: ChatListContent = this.content ?? {
-      chatStorage: {
-        ok: true,
-        meta: {
-          id: '',
-          formatVersion: 0,
-          reversion: 0,
-          lastAutoId: 1,
-          lastUpdated: 0,
-        },
-        data: {},
-      },
-      currentUserId: '',
-    };
 
-    return html`${mapObject(this, content.chatStorage.data, (message) => {
+    return html`${mapObject(this, this.chatStorage?.data, (message) => {
       const messageContent: ChatMessageContent = {
         message,
-        self: message.from === content.currentUserId,
+        self: message.from === this.currentUserId,
       };
       return html`
       <alwatr-chat-message
