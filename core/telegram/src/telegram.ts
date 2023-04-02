@@ -3,23 +3,22 @@ import {createLogger} from '@alwatr/logger';
 import {AlwatrNanoServer} from '@alwatr/nano-server';
 
 import {AlwatrTelegramApi} from './api.js';
+import {AlwatrTelegramContext} from './context.js';
 
 import type {
   MiddlewareRecord,
   AlwatrTelegramConfig,
   CommandHandlerFunction,
-  TextMessageContext,
-  DataCallbackQueryContext,
   CallbackQueryHandlerFunction,
 } from './type.js';
 import type {QueryParameters} from '@alwatr/type';
-import type {ApiResponse, Update} from 'typegram';
+import type {ApiResponse, CallbackQuery, Message, Update} from 'typegram';
 
 export * from './type.js';
 export * from './api.js';
 
 export class AlwatrTelegram {
-  protected logger = createLogger('alwatr/telegram:bot-' + this.config.username);
+  protected logger = createLogger('alwatr/telegram');
 
   /**
    * API Base URL.
@@ -63,7 +62,7 @@ export class AlwatrTelegram {
 
     nanoServer.route('POST', '/', async (connection) => {
       const body = (await connection.requireJsonBody()) as unknown as Update;
-      this.handleUpdate(body as unknown as TextMessageContext);
+      this.handleUpdate(body as Update.MessageUpdate<Message.TextMessage>);
       return {
         ok: true,
         data: {},
@@ -96,44 +95,36 @@ export class AlwatrTelegram {
     });
   }
 
-  protected handleUpdate(context: TextMessageContext | Update.CallbackQueryUpdate): void {
-    this.logger.logMethodArgs('handleUpdate', context);
-    if ('message' in context) {
-      this.handleMessageUpdate(context);
+  protected handleUpdate(update: Update.MessageUpdate<Message.TextMessage> | Update.CallbackQueryUpdate): void {
+    this.logger.logMethodArgs('handleUpdate', update);
+    if ('message' in update) {
+      this.handleMessageUpdate(update);
     }
-    else if ('callback_query' in context) {
-      if ('data' in context.callback_query) {
-        this.handleCallbackQueryUpdate(context as DataCallbackQueryContext);
+    else if ('callback_query' in update) {
+      if ('data' in update.callback_query) {
+        this.handleCallbackQueryUpdate(update as Update.CallbackQueryUpdate<CallbackQuery.DataQuery>);
       }
     }
   }
 
-  protected handleCallbackQueryUpdate(context: DataCallbackQueryContext): void {
+  protected handleCallbackQueryUpdate(update: Update.CallbackQueryUpdate<CallbackQuery.DataQuery>): void {
     this.logger.logMethod('handleCallbackQueryUpdate');
     for (const middleware of this.middlewareRecord.callbackQuery) {
-      if (middleware.name === context.callback_query.data) {
-        const api = new AlwatrTelegramApi({
-          chatId: context.callback_query.from.id,
-          token: this.config.token,
-          username: this.config.username,
-        });
-        middleware.handler(context, api);
+      if (middleware.name === update.callback_query.data) {
+        const context = new AlwatrTelegramContext(update, this.api);
+        middleware.handler(context);
         break;
       }
     }
   }
 
-  protected handleMessageUpdate(context: TextMessageContext): void {
+  protected handleMessageUpdate(update: Update.MessageUpdate<Message.TextMessage>): void {
     this.logger.logMethod('handleMessageUpdate');
     for (const middleware of this.middlewareRecord.message) {
       const regex = new RegExp(middleware.regex); // js bug, must create new instance!
-      if (regex.test(context.message.text)) {
-        const api = new AlwatrTelegramApi({
-          chatId: context.message.chat.id,
-          token: this.config.token,
-          username: this.config.username,
-        });
-        middleware.handler(context, api);
+      if (regex.test(update.message.text)) {
+        const context = new AlwatrTelegramContext(update, this.api);
+        middleware.handler(context);
         break;
       }
     }

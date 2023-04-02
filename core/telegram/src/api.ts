@@ -8,18 +8,19 @@ import type {Message, User} from 'typegram';
 export class AlwatrTelegramApi {
   protected baseApiUrl = `https://api.telegram.org/bot${this.config.token}/`;
 
-  protected logger = createLogger('alwatr/telegram-api:bot-' + this.config.username);
+  protected logger = createLogger('alwatr/telegram-api');
 
   constructor(protected readonly config: AlwatrTelegramApiConfig) {
     this.logger.logMethodArgs('constructor', config);
   }
 
   protected escapeText(message: string): string {
-    return message.replace(/(_|\*|\[|\]|\(|\)|~|`|>|#|\+|-|=|\||\{|\}|\.|!)/g, '\\$1');
+    // eslint-disable-next-line no-useless-escape
+    return message.replace(/(_|\*|\[|\]|\(|\)|~|`|>|#|\+|-|=|\||\{|\}|\.|!)/g, '\$1');
   }
 
   async sendMessage(
-      chatId: number| string,
+      chatId: number | string,
       text: string,
       option?: SendMessageOption,
   ): Promise<Message.TextMessage | null> {

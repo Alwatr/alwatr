@@ -1,27 +1,26 @@
-import type {AlwatrTelegramApi} from './api.js';
+import type {AlwatrTelegramContext} from './context.js';
 import type {StringifyableRecord} from '@alwatr/type';
 import type {CallbackQuery, Message, Update} from 'typegram';
 
 export interface AlwatrTelegramConfig extends StringifyableRecord {
   token: string;
-  username?: string;
   webhookDomain: string;
-}
-
-export type TextMessageContext = Update.MessageUpdate<Message.TextMessage>
-export type DataCallbackQueryContext = Update.CallbackQueryUpdate<CallbackQuery.DataQuery>
-
-export type CommandHandlerFunction = (context: TextMessageContext, api: AlwatrTelegramApi) => void;
-export type CallbackQueryHandlerFunction = (context: Update.CallbackQueryUpdate, api: AlwatrTelegramApi) => void;
-
-export type MiddlewareRecord = StringifyableRecord & {
-  message: Array<{regex: RegExp, handler: CommandHandlerFunction}>
-  callbackQuery: Array<{name: string, handler: CallbackQueryHandlerFunction}>
+  username?: string;
 }
 
 export interface AlwatrTelegramApiConfig extends StringifyableRecord {
   token: string;
   username?: string;
+}
+
+export type CommandHandlerFunction =
+ (context: AlwatrTelegramContext<Update.MessageUpdate<Message.TextMessage>>) => void;
+export type CallbackQueryHandlerFunction =
+ (context: AlwatrTelegramContext<Update.CallbackQueryUpdate<CallbackQuery.DataQuery>>) => void;
+
+export type MiddlewareRecord = StringifyableRecord & {
+  message: Array<{regex: RegExp, handler: CommandHandlerFunction}>
+  callbackQuery: Array<{name: string, handler: CallbackQueryHandlerFunction}>
 }
 
 // API
