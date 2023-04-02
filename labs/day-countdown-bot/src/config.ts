@@ -3,16 +3,21 @@ import {createLogger} from '@alwatr/logger';
 export const logger = createLogger('telegram-notifier');
 
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
+const telegramBotWebhookDomain = process.env.TELEGRAM_BOT_WEBHOOK_DOMAIN;
 
 if (telegramBotToken == undefined) {
   throw new Error('telegram bot token required, TELEGRAM_BOT_TOKEN="YOUR_SECRET_TOKEN" yarn start');
+}
+if (telegramBotWebhookDomain == null) {
+  throw new Error('telegram bot webhook url required, TELEGRAM_BOT_WEBHOOK_DOMAIN="YOUR_WEBHOOK_DOMAIN" yarn start');
 }
 
 export const config = {
   telegramBot: {
     token: telegramBotToken,
     username: process.env.TELEGRAM_BOT_USERNAME,
-    webhookDomain: 'https://89c2-2a01-7e00-00-f03c-93ff-fe88-9fb9.eu.ngrok.io/',
+    webhookDomain: telegramBotWebhookDomain,
+    debugMode: process.env.TELEGRAM_BOT_DEBUG_MODE ? true : undefined,
   },
   adminToken: process.env.ADMIN_TOKEN ?? 'admin-token',
   chatStorage: {
