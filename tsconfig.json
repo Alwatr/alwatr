@@ -28,6 +28,7 @@
     {"path": "./core/util"},
     {"path": "./core/fsm"},
     {"path": "./core/fsm2"},
+    {"path": "./core/telegram"},
     {"path": "./core/type"},
 
     // ui
@@ -57,6 +58,5 @@
     // labs
     {"path": "./labs/zx-example"},
     {"path": "./labs/day-countdown-bot"},
-    {"path": "./labs/telegram"}
   ]
 }
