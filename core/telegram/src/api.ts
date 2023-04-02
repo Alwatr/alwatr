@@ -40,6 +40,17 @@ export class AlwatrTelegramApi {
     return responseJson;
   }
 
+  async getMe(): Promise<User | null> {
+    this.logger.logMethod('getMe');
+    const response = await this.callApi('getMe');
+
+    const responseJson = await response.json();
+    if (response.status != 200) {
+      this.logger.error('getMe', 'get_bot_info_failed', responseJson);
+      return null;
+    }
+    return responseJson;
+  }
 
   protected async callApi(method: string, queryParameters?: QueryParameters): Promise<Response> {
     this.logger.logMethodArgs('callApi', {method, queryParameters});
