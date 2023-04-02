@@ -11,8 +11,10 @@ if (telegramBotToken == undefined) {
 export const config = {
   telegramBot: {
     token: telegramBotToken,
-    adminToken: process.env.ADMIN_TOKEN ?? 'admin-token',
+    username: process.env.TELEGRAM_BOT_USERNAME,
+    webhookDomain: 'https://89c2-2a01-7e00-00-f03c-93ff-fe88-9fb9.eu.ngrok.io/',
   },
+  adminToken: process.env.ADMIN_TOKEN ?? 'admin-token',
   chatStorage: {
     name: process.env.STORAGE_NAME ?? 'user',
     path: process.env.STORAGE_PATH ?? 'storage',
