@@ -26,6 +26,11 @@ export class AlwatrTelegram {
    */
   protected baseApiUrl = `https://api.telegram.org/bot${this.config.token}/`;
 
+  api = new AlwatrTelegramApi({
+    token: this.config.token,
+    username: this.config.username,
+  });
+
   protected middlewareRecord: MiddlewareRecord = {
     message: [],
     callbackQuery: [],
