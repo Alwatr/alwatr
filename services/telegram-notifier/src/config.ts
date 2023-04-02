@@ -3,9 +3,13 @@ import {createLogger} from '@alwatr/logger';
 export const logger = createLogger('telegram-notifier');
 
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
+const telegramBotWebhookDomain = process.env.TELEGRAM_BOT_WEBHOOK_DOMAIN;
 
-if (telegramBotToken == undefined) {
+if (telegramBotToken == null) {
   throw new Error('telegram bot token required, TELEGRAM_BOT_TOKEN="YOUR_SECRET_TOKEN" yarn start');
+}
+if (telegramBotWebhookDomain == null) {
+  throw new Error('telegram bot webhook url required, TELEGRAM_BOT_WEBHOOK_DOMAIN="YOUR_WEBHOOK_DOMAIN" yarn start');
 }
 
 export const config = {
@@ -18,9 +22,12 @@ export const config = {
     path: process.env.STORAGE_PATH ?? 'db',
     name: 'notifier-storage',
   },
-  telegramBot: {
+  telegramAdmin: {
     debugNotifyToken: 'debug007',
+  },
+  telegramBot: {
     token: telegramBotToken,
+    webhookDomain: telegramBotWebhookDomain,
   },
 };
 

@@ -1,5 +1,5 @@
-import {Telegraf} from 'telegraf';
+import {AlwatrTelegram} from '@alwatr/telegram';
 
 import {config} from '../config.js';
 
-export const bot = new Telegraf(config.telegramBot.token);
+export const bot = new AlwatrTelegram(config.telegramBot);

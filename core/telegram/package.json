@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/telegram",
-  "version": "0.30.0",
+  "version": "0.31.0",
   "description": "Elegant micro telegram api.",
   "keywords": [
     "telegram",
@@ -32,13 +32,13 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.30.0",
-    "@alwatr/fetch": "^0.30.0",
-    "@alwatr/nano-server": "^0.30.0",
+    "@alwatr/logger": "^0.31.0",
+    "@alwatr/fetch": "^0.31.0",
+    "@alwatr/nano-server": "^0.31.0",
     "typegram": "^4.3.0",
     "tslib": "^2.5.0"
   },
   "devDependencies": {
-    "@alwatr/type": "^0.30.0"
+    "@alwatr/type": "^0.31.0"
   }
 }

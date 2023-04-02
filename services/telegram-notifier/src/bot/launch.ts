@@ -5,14 +5,13 @@ import {config, logger} from '../config.js';
 export async function launchBot(): Promise<void> {
   logger.logMethod?.('launchBot');
   try {
-    bot.botInfo ??= await bot.telegram.getMe();
-    logger.logProperty?.('botInfo', bot.botInfo);
+    bot.setWebhook();
 
-    bot.launch().catch((err) => {
-      logger.error('launchBot', 'launch_bot_failed', err);
-    });
+    const botInfo = await bot.api.getMe();
+    if (botInfo == null) throw new Error('authentication_failed');
+    logger.logProperty?.('botInfo', botInfo);
 
-    await sendMessage(config.telegramBot.debugNotifyToken, '⚡️ Bot launched');
+    await sendMessage(config.telegramAdmin.debugNotifyToken, '⚡️ Bot launched');
   }
   catch (err) {
     logger.error('launchBot', 'launch_bot_failed', err);

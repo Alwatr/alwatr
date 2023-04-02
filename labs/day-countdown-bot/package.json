@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/day-countdown-bot",
-  "version": "0.30.0",
+  "version": "0.31.0",
   "description": "Alwatr Telegram Day Countdown Bot",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -36,13 +36,13 @@
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
   },
   "devDependencies": {
-    "@alwatr/fetch": "^0.30.0",
-    "@alwatr/telegram": "^0.30.0",
-    "@alwatr/i18n": "^0.30.0",
-    "@alwatr/logger": "^0.30.0",
-    "@alwatr/nano-server": "^0.30.0",
-    "@alwatr/storage-engine": "^0.30.0",
-    "@alwatr/type": "^0.30.0",
+    "@alwatr/fetch": "^0.31.0",
+    "@alwatr/telegram": "^0.31.0",
+    "@alwatr/i18n": "^0.31.0",
+    "@alwatr/logger": "^0.31.0",
+    "@alwatr/nano-server": "^0.31.0",
+    "@alwatr/storage-engine": "^0.31.0",
+    "@alwatr/type": "^0.31.0",
     "@types/moment-jalaali": "^0.7.5",
     "@types/node": "^18.16.2",
     "esbuild": "^0.18.2",
