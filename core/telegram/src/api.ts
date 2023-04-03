@@ -1,9 +1,9 @@
 import {fetch} from '@alwatr/fetch';
 import {createLogger} from '@alwatr/logger';
 
-import type {AlwatrTelegramApiConfig, SendMessageOption} from './type.js';
-import type {QueryParameters} from '@alwatr/type';
-import type {Message, User} from 'typegram';
+import type {AlwatrTelegramApiConfig, SendMessageOption, answerCallbackQueryOption} from './type.js';
+import type {StringifyableRecord} from '@alwatr/type';
+import type {ApiResponse, Message, User} from 'typegram';
 
 export class AlwatrTelegramApi {
   protected baseApiUrl = `https://api.telegram.org/bot${this.config.token}/`;
@@ -22,7 +22,7 @@ export class AlwatrTelegramApi {
   async sendMessage(
       chatId: number | string,
       text: string,
-      option?: SendMessageOption,
+      option: SendMessageOption = {},
   ): Promise<Message.TextMessage | null> {
     this.logger.logMethodArgs('sendMessage', {text, option});
 
@@ -31,7 +31,7 @@ export class AlwatrTelegramApi {
       chat_id: chatId,
       text,
       ...option,
-    });
+    } as unknown as StringifyableRecord);
 
     const responseJson = await response.json();
     if (response.status != 200) {

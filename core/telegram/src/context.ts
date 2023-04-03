@@ -1,8 +1,8 @@
 import {createLogger} from '@alwatr/logger';
 
 import type {AlwatrTelegramApi} from './api.js';
-import type {SendMessageOption} from './type.js';
-import type {Message, Update} from 'typegram';
+import type {SendMessageOption, answerCallbackQueryOption} from './type.js';
+import type {ApiResponse, Message, Update} from 'typegram';
 
 export class AlwatrTelegramContext<C extends Update> {
   protected logger = createLogger('alwatr/telegram-context');
