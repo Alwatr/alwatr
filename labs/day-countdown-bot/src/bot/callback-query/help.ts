@@ -4,6 +4,6 @@ import {bot} from '../../lib/bot.js';
 
 bot.defineCallbackQueryHandler('help', async (context) => {
   logger.logMethod('callback-query-help');
-  context.sendMessage(message('help_callback_query'));
+  context.sendMessage(message('help_message'));
   context.answerCallbackQuery();
 });

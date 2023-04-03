@@ -5,7 +5,7 @@ import {bot} from '../../lib/bot.js';
 
 bot.defineCommandHandler('setting', (context) => {
   logger.logMethod('command-setting');
-  context.reply(message('start_setting'), {
+  context.reply(message('setting_message'), {
     reply_markup: {
       inline_keyboard: subscribedSettingInlineKeyboard,
     },

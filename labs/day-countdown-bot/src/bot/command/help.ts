@@ -4,5 +4,5 @@ import {bot} from '../../lib/bot.js';
 
 bot.defineCommandHandler('help', (context) => {
   logger.logMethod('command-help');
-  context.reply(message('help_command'));
+  context.reply(message('help_message'));
 });
