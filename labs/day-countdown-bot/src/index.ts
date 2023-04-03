@@ -1,3 +1,4 @@
+import './bot/callback-query/help.js';
 import './bot/command/help.js';
 import './bot/command/setting.js';
 import './bot/command/start.js';
