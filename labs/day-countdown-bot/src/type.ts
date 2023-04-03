@@ -1,6 +1,6 @@
 import type {AlwatrDocumentObject, StringifyableRecord} from '@alwatr/type';
 
-export interface Chat extends AlwatrDocumentObject {
+export interface DayCountdownChat extends AlwatrDocumentObject {
   chatDetail: ChatDetail;
   isSubscribe?: boolean;
   lastBotMessageId?: number;
