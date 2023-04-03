@@ -1,7 +1,13 @@
 import {fetch} from '@alwatr/fetch';
 import {createLogger} from '@alwatr/logger';
 
-import type {AlwatrTelegramApiConfig, SendMessageOption, answerCallbackQueryOption} from './type.js';
+import type {
+  AlwatrTelegramApiConfig,
+  EditMessageReplyMarkupOption,
+  EditTextMessageOption,
+  SendMessageOption,
+  AnswerCallbackQueryOption,
+} from './type.js';
 import type {StringifyableRecord} from '@alwatr/type';
 import type {ApiResponse, Message, User} from '@grammyjs/types';
 
@@ -16,7 +22,7 @@ export class AlwatrTelegramApi {
 
   protected escapeText(message: string): string {
     // eslint-disable-next-line no-useless-escape
-    return message.replace(/(_|\*|\[|\]|\(|\)|~|`|>|#|\+|-|=|\||\{|\}|\.|!)/g, '\$1');
+    return message.replace(/(_|\*|\[|\]|\(|\)|~|`|>|#|\+|-|=|\||\{|\}|\.|!)/g, '$1');
   }
 
   async sendMessage(
@@ -41,6 +47,37 @@ export class AlwatrTelegramApi {
     return responseJson;
   }
 
+  async editTextMessage(option: EditTextMessageOption): Promise<Message | ApiResponse<true> | null> {
+    this.logger.logMethodArgs('editTextMessage', {option});
+
+    option.text = this.escapeText(option.text);
+    const response = await this.callApi('editTextMessage', {...option} as unknown as StringifyableRecord);
+
+    const responseJson = await response.json();
+    if (response.status != 200) {
+      this.logger.error('editTextMessage', 'edit_text_message_failed', responseJson);
+      return null;
+    }
+    return responseJson;
+  }
+
+  async editMessageReplyMarkup(
+      option: EditMessageReplyMarkupOption = {},
+  ): Promise<Message | ApiResponse<true> | null> {
+    this.logger.logMethodArgs('editMessageReplyMarkup', {option});
+
+    const response = await this.callApi('editMessageReplyMarkup', {
+      ...option,
+    } as unknown as StringifyableRecord);
+
+    const responseJson = await response.json();
+    if (response.status != 200) {
+      this.logger.error('editMessageReplyMarkup', 'edit_message_reply_markup_failed', responseJson);
+      return null;
+    }
+    return responseJson;
+  }
+
   async getMe(): Promise<User | null> {
     this.logger.logMethod('getMe');
     const response = await this.callApi('getMe');
@@ -55,7 +92,7 @@ export class AlwatrTelegramApi {
 
   async answerCallbackQuery(
       callbackQueryId: string,
-      option?: answerCallbackQueryOption,
+      option?: AnswerCallbackQueryOption,
   ): Promise<ApiResponse<boolean> | null> {
     this.logger.logMethodArgs('answerCallbackQuery', {callbackQueryId, option});
     const response = await this.callApi('answerCallbackQuery', {

@@ -1,7 +1,12 @@
 import {createLogger} from '@alwatr/logger';
 
 import type {AlwatrTelegramApi} from './api.js';
-import type {SendMessageOption, answerCallbackQueryOption} from './type.js';
+import type {
+  SendMessageOption,
+  AnswerCallbackQueryOption,
+  EditMessageReplyMarkupOption,
+  EditTextMessageOption,
+} from './type.js';
 import type {ApiResponse, Message, Update} from '@grammyjs/types';
 
 export class AlwatrTelegramContext<U extends Omit<Update, 'update_id'>> {
@@ -44,10 +49,30 @@ export class AlwatrTelegramContext<U extends Omit<Update, 'update_id'>> {
     return this.api.sendMessage(this.chatId, text, option);
   }
 
-  async answerCallbackQuery(option?: answerCallbackQueryOption): Promise<ApiResponse<boolean> | null> {
-    if ('callback_query' in this.update && this.update.callback_query) {
-      return this.api.answerCallbackQuery(this.update.callback_query?.id, option);
-    }
-    return null;
+  async answerCallbackQuery(option?: AnswerCallbackQueryOption): Promise<ApiResponse<boolean> | null> {
+    if (!('callback_query' in this.update && this.update.callback_query)) return null;
+    return this.api.answerCallbackQuery(this.update.callback_query?.id, option);
+  }
+
+  async editTextMessage(
+      option: Omit<EditTextMessageOption, 'chat_id' | 'message_id' | 'inline_message_id'>,
+  ): Promise<Message | ApiResponse<true> | null> {
+    if (!('message' in this.update)) return null;
+    return this.api.editTextMessage({
+      chat_id: this.chatId,
+      message_id: this.update.message?.message_id,
+      ...option,
+    });
+  }
+
+  async editMessageReplyMarkup(
+      option: Omit<EditMessageReplyMarkupOption, 'chat_id' | 'message_id' | 'inline_message_id'>,
+  ): Promise<Message | ApiResponse<true> | null> {
+    if (!('callback_query' in this.update)) return null;
+    return this.api.editMessageReplyMarkup({
+      chat_id: this.chatId,
+      message_id: this.update.callback_query?.message?.message_id,
+      ...option,
+    });
   }
 }

@@ -6,6 +6,7 @@ import type {
   ReplyKeyboardMarkup,
   ReplyKeyboardRemove,
   Update,
+  MessageEntity,
 } from '@grammyjs/types';
 
 export interface AlwatrTelegramConfig extends StringifyableRecord {
@@ -35,9 +36,10 @@ export type MiddlewareRecord = StringifyableRecord & {
 
 // API
 
-export interface SendMessageOption {
-  // TODO: extends StringifyableRecord
-  parse_mode?: 'MarkdownV2' | 'Markdown' | 'HTML';
+export type ParseMode = 'MarkdownV2' | 'Markdown' | 'HTML'
+
+export interface SendMessageOption { // TODO: extends StringifyableRecord
+  parse_mode?: ParseMode;
   reply_to_message_id?: number;
   allow_sending_without_reply?: boolean;
   disable_web_page_preview?: boolean;
@@ -45,7 +47,25 @@ export interface SendMessageOption {
   reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
 }
 
-export interface answerCallbackQueryOption extends StringifyableRecord {
+export interface EditTextMessageOption {
+  text: string;
+  chat_id?: string | number;
+  message_id?: number;
+  inline_message_id?: string;
+  parse_mode?: string;
+  entities?: Array<MessageEntity>;
+  disable_web_page_preview?: boolean;
+  reply_markup?: InlineKeyboardMarkup;
+}
+
+export interface EditMessageReplyMarkupOption {
+  chat_id?: string | number;
+  message_id?: number;
+  inline_message_id?: string;
+  reply_markup?: InlineKeyboardMarkup;
+}
+
+export interface AnswerCallbackQueryOption extends StringifyableRecord {
   text?: string;
   show_alert?: boolean;
   url?: string;
