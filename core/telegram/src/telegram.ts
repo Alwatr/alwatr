@@ -133,8 +133,10 @@ export class AlwatrTelegram {
   protected async callApi(method: string, queryParameters?: QueryParameters): Promise<Response> {
     this.logger.logMethodArgs('callApi', {method, queryParameters});
     return fetch({
+      retry: 1,
+      method: 'POST',
       url: this.baseApiUrl + method,
-      queryParameters: queryParameters,
+      bodyJson: queryParameters,
     });
   }
 }
