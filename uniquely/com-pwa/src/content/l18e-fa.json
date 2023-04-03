@@ -71,7 +71,7 @@
     "order_shipping_lading_type_key_hand": "دستی",
     "order_shipping_lading_type_key_pallet": "پالتی",
     "order_shipping_car_type_key_nissan": "نیسان",
-    "order_shipping_car_type_key_one_wheel": "تک چرخ",
+    "order_shipping_car_type_key_one": "تک",
     "order_shipping_car_type_key_ten_wheel": "ده چرخ",
     "order_shipping_car_type_key_trolley": "تریلی",
     "order_shipping_car_type_title": "نوع ماشین",

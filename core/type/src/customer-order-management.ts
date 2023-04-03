@@ -6,7 +6,7 @@ import type {StringifyableRecord} from './type-helper.js';
 // -- Const value --
 
 export const ladingTypeCS = ['hand', 'pallet'] as const;
-export const carTypeCS = ['nissan', 'one_wheel', 'ten_wheel', 'trolley'] as const;
+export const carTypeCS = ['nissan', 'one', 'ten_wheel', 'trolley'] as const;
 export const carTypePriceCS = [110_000, 140_000, 170_000, 200_000] as const;
 export const timePeriodCS = ['auto', '1_2w', '2_3w', '3_4w'] as const;
 export const discountTypeCS = ['number', 'percent'] as const;
