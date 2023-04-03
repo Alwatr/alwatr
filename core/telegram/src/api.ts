@@ -3,7 +3,7 @@ import {createLogger} from '@alwatr/logger';
 
 import type {AlwatrTelegramApiConfig, SendMessageOption, answerCallbackQueryOption} from './type.js';
 import type {StringifyableRecord} from '@alwatr/type';
-import type {ApiResponse, Message, User} from 'typegram';
+import type {ApiResponse, Message, User} from '@grammyjs/types';
 
 export class AlwatrTelegramApi {
   protected baseApiUrl = `https://api.telegram.org/bot${this.config.token}/`;

@@ -4,9 +4,10 @@ import {MemberList} from '../../lib/type.js';
 import {bot} from '../bot.js';
 
 bot.defineCommandHandler('start', async (context): Promise<void> => {
-  const chatId = context.update.message.chat.id;
-  const token = context.update.message.text.split(' ')[1];
+  const chatId = context.update.message?.chat.id;
+  const token = context.update.message?.text?.split(' ')[1];
   logger.logMethodArgs?.('command/start', {chatId, token});
+  if (chatId == null) return;
 
   if (token == null) {
     context.reply('این یک بات خصوصی هستش! لطفا مزاحم نشوید.');

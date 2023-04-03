@@ -2,36 +2,31 @@ import {createLogger} from '@alwatr/logger';
 
 import type {AlwatrTelegramApi} from './api.js';
 import type {SendMessageOption, answerCallbackQueryOption} from './type.js';
-import type {ApiResponse, Message, Update} from 'typegram';
+import type {ApiResponse, Message, Update} from '@grammyjs/types';
 
-export class AlwatrTelegramContext<C extends Update> {
+export class AlwatrTelegramContext<U extends Omit<Update, 'update_id'>> {
   protected logger = createLogger('alwatr/telegram-context');
 
   get messageId(): number | null {
-    let messageId: number | null = null;
-    if ('message' in this.update) {
-      messageId = this.update.message.message_id;
-    }
-    return messageId;
+    return this.update.message?.message_id ?? null;
   }
 
   get chatId(): number {
     let chatId: number | null = null;
     if ('message' in this.update) {
-      chatId = this.update.message.chat.id;
+      chatId = this.update.message?.chat.id ?? null;
     }
     else if ('callback_query' in this.update) {
-      chatId = this.update.callback_query.from.id;
+      chatId = this.update.callback_query?.from.id ?? null;
     }
 
     if (chatId == null) {
       throw new Error('null_chatId');
     }
-
     return chatId;
   }
 
-  constructor(public readonly update: C, protected api: AlwatrTelegramApi) {
+  constructor(public readonly update: U, protected api: AlwatrTelegramApi) {
     this.logger.logMethod('constructor');
   }
 
@@ -50,7 +45,9 @@ export class AlwatrTelegramContext<C extends Update> {
   }
 
   async answerCallbackQuery(option?: answerCallbackQueryOption): Promise<ApiResponse<boolean> | null> {
-    if (!('callback_query' in this.update)) return null;
-    return this.api.answerCallbackQuery(this.update.callback_query.id, option);
+    if ('callback_query' in this.update && this.update.callback_query) {
+      return this.api.answerCallbackQuery(this.update.callback_query?.id, option);
+    }
+    return null;
   }
 }

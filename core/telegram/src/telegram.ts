@@ -10,9 +10,10 @@ import type {
   AlwatrTelegramConfig,
   CommandHandlerFunction,
   CallbackQueryHandlerFunction,
+  UpdateType,
 } from './type.js';
 import type {QueryParameters} from '@alwatr/type';
-import type {ApiResponse, CallbackQuery, Message, Update} from 'typegram';
+import type {ApiResponse, Update} from '@grammyjs/types';
 
 export * from './type.js';
 export * from './api.js';
@@ -42,7 +43,7 @@ export class AlwatrTelegram {
   /**
    * Set Webhook.
    *
-   * {@link https://core.telegram.org/bots/api#setwebhook}
+   * @see https://core.telegram.org/bots/api#setwebhook
    */
   async setWebhook(listenHost = '0.0.0.0', listenPort = 8000): Promise<void> {
     this.logger.logMethod('setWebhook');
@@ -62,7 +63,7 @@ export class AlwatrTelegram {
 
     nanoServer.route('POST', '/', async (connection) => {
       const body = (await connection.requireJsonBody()) as unknown as Update;
-      this.handleUpdate(body as Update.MessageUpdate<Message.TextMessage>);
+      this.handleUpdate(body as Update);
       return {
         ok: true,
         data: {},
@@ -95,35 +96,42 @@ export class AlwatrTelegram {
     });
   }
 
-  protected handleUpdate(update: Update.MessageUpdate<Message.TextMessage> | Update.CallbackQueryUpdate): void {
+  protected handleUpdate(update: Update): void {
     this.logger.logMethodArgs('handleUpdate', update);
-    if ('message' in update) {
-      this.handleMessageUpdate(update);
+    if ('message' in update && update.message != null) {
+      if ('chat_shared' in update.message && update.message.chat_shared != null) {
+        return this.handleChatSharedUpdate(update);
+      }
+      return this.handleTextMessageUpdate(update);
     }
-    else if ('callback_query' in update) {
-      if ('data' in update.callback_query) {
-        this.handleCallbackQueryUpdate(update as Update.CallbackQueryUpdate<CallbackQuery.DataQuery>);
+    else if ('callback_query' in update && update.callback_query) {
+      if ('data' in update.callback_query && update.callback_query.data) {
+        return this.handleCallbackQueryUpdate(update);
       }
     }
   }
 
-  protected handleCallbackQueryUpdate(update: Update.CallbackQueryUpdate<CallbackQuery.DataQuery>): void {
+  protected handleCallbackQueryUpdate(update: UpdateType<'callback_query'>): void {
     this.logger.logMethod('handleCallbackQueryUpdate');
     for (const middleware of this.middlewareRecord.callbackQuery) {
-      if (middleware.name === update.callback_query.data) {
-        const context = new AlwatrTelegramContext(update, this.api);
+      if (middleware.name === update.callback_query?.data) {
+        const context = new AlwatrTelegramContext<UpdateType<'callback_query'>>(update, this.api);
         middleware.handler(context);
         break;
       }
     }
   }
 
-  protected handleMessageUpdate(update: Update.MessageUpdate<Message.TextMessage>): void {
+  protected handleChatSharedUpdate(_update: UpdateType<'message'>): void {
+  }
+
+  protected handleTextMessageUpdate(update: UpdateType<'message'>): void {
     this.logger.logMethod('handleMessageUpdate');
+    if (update.message?.text == null) return;
     for (const middleware of this.middlewareRecord.message) {
       const regex = new RegExp(middleware.regex); // js bug, must create new instance!
-      if (regex.test(update.message.text)) {
-        const context = new AlwatrTelegramContext(update, this.api);
+      if (regex.test(update.message?.text)) {
+        const context = new AlwatrTelegramContext<UpdateType<'message'>>(update, this.api);
         middleware.handler(context);
         break;
       }

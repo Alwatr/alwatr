@@ -1,6 +1,6 @@
 import {message} from '../director/l18e-loader.js';
 
-import type {InlineKeyboardButton} from 'typegram';
+import type {InlineKeyboardButton} from '@grammyjs/types';
 
 
 export const subscribedSettingInlineKeyboard: InlineKeyboardButton[][] = [
