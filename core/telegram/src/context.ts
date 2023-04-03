@@ -48,4 +48,9 @@ export class AlwatrTelegramContext<C extends Update> {
     option.allow_sending_without_reply ??= true;
     return this.api.sendMessage(this.chatId, text, option);
   }
+
+  async answerCallbackQuery(option?: answerCallbackQueryOption): Promise<ApiResponse<boolean> | null> {
+    if (!('callback_query' in this.update)) return null;
+    return this.api.answerCallbackQuery(this.update.callback_query.id, option);
+  }
 }

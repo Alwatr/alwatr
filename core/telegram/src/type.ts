@@ -31,4 +31,10 @@ export interface SendMessageOption extends StringifyableRecord {
   allow_sending_without_reply?: boolean;
   disable_web_page_preview?: boolean;
   disable_notification?: boolean;
+
+export interface answerCallbackQueryOption extends StringifyableRecord {
+  text?: string;
+  show_alert?: boolean;
+  url?: string;
+  cache_time?: number;
 }

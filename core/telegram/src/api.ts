@@ -53,6 +53,28 @@ export class AlwatrTelegramApi {
     return responseJson;
   }
 
+  async answerCallbackQuery(
+      callbackQueryId: string,
+      option?: answerCallbackQueryOption,
+  ): Promise<ApiResponse<boolean> | null> {
+    this.logger.logMethodArgs('answerCallbackQuery', {callbackQueryId, option});
+    const response = await this.callApi('answerCallbackQuery', {
+      callback_query_id: callbackQueryId,
+      text: option?.text,
+      show_alert: option?.show_alert,
+      url: option?.url,
+      cache_time: option?.cache_time,
+    });
+    const responseJson = await response.json();
+
+    if (response.status != 200) {
+      this.logger.error('answerCallbackQuery', 'answer_callback_query_failed', responseJson);
+      return null;
+    }
+
+    return responseJson as ApiResponse<boolean>;
+  }
+
   protected async callApi(method: string, bodyJson?: StringifyableRecord): Promise<Response> {
     this.logger.logMethodArgs('callApi', {method, queryParameters: bodyJson});
     return fetch({
