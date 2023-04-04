@@ -18,6 +18,7 @@
     "admin_added_successfully": "شما با موفقیت به لیست ادمین‌ها اضافه شدید!",
     "send_notify_message": "پیام مورد نظر برای ارسال به تمام کاربران را ارسال کنید.",
     "approval_notify_message": "پیام برای تمامی کاربران ارسال شود؟",
+    "reset_notify_message": "عملیات کنسل شد!",
 
     "day_countdown": "*${dayToLeft} قدم تا طلوع خورشید ♥️*",
     "button_day_countdown": "${dayToLeft} روز تا نیمه شعبان",

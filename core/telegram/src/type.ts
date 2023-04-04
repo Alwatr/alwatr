@@ -26,15 +26,25 @@ export interface AlwatrConversationConfig extends StringifyableRecord {
   currentState: 'initial' | string;
 }
 
-export interface ConversationStateRecord {
-  initial: (
-    context: AlwatrTelegramContext<UpdateType<'message'>>,
-    conversationConfig: AlwatrConversationConfig
-  ) => void;
-  [state: string]: (
-    context: AlwatrTelegramContext<UpdateType<'message'>>,
-    conversationConfig: AlwatrConversationConfig
-  ) => void;
+export interface ConversationOption {
+  stateRecord: {
+    initial: <U extends Exclude<keyof Update, 'update_id'>>(
+      context: AlwatrTelegramContext<UpdateType<U>>,
+      conversationConfig: AlwatrConversationConfig
+    ) => void;
+    reset: <U extends Exclude<keyof Update, 'update_id'>>(
+      context: AlwatrTelegramContext<UpdateType<U>>,
+      conversationConfig: AlwatrConversationConfig
+    ) => void;
+    [state: string]: <U extends Exclude<keyof Update, 'update_id'>>(
+      context: AlwatrTelegramContext<UpdateType<U>>,
+      conversationConfig: AlwatrConversationConfig
+    ) => void;
+  };
+  resetOption?: {
+    TextMessageValue?: string;
+    callbackDataValue?: string;
+  }
 }
 
 export interface ConversationStorageRecord {

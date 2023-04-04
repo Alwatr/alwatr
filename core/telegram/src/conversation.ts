@@ -3,13 +3,13 @@ import {createLogger} from '@alwatr/logger';
 import {AlwatrTelegramContext} from './context.js';
 
 import type {AlwatrTelegramApi} from './api.js';
-import type {AlwatrConversationConfig, ConversationStateRecord, ConversationStorageRecord, UpdateType} from './type.js';
+import type {AlwatrConversationConfig, ConversationOption, ConversationStorageRecord, UpdateType} from './type.js';
 import type {Update} from '@grammyjs/types';
 
 export class AlwatrTelegramConversation {
   protected logger = createLogger('alwatr/telegram-conversation');
   constructor(
-    public readonly stateRecord: ConversationStateRecord,
+    public readonly option: ConversationOption,
     protected readonly storage: ConversationStorageRecord,
     protected readonly api: AlwatrTelegramApi,
     public readonly config: AlwatrConversationConfig,
@@ -26,8 +26,19 @@ export class AlwatrTelegramConversation {
     const conversationConfig = this.storage.get(chatId + '');
     if (conversationConfig == null || conversationConfig.currentState === 'initial') return false;
 
-    const handler = this.stateRecord[conversationConfig.currentState];
-    if (handler == null) return false;
+    let handler;
+
+    if (
+      (update.callback_query?.data != null &&
+        update.callback_query.data === this.option.resetOption?.callbackDataValue) ||
+      (update.message.text != null && update.message.text === this.option.resetOption?.TextMessageValue)
+    ) {
+      handler = this.option.stateRecord.reset;
+    }
+    else {
+      handler = this.option.stateRecord[conversationConfig.currentState];
+      if (handler == null) return false;
+    }
     const context = new AlwatrTelegramContext<UpdateType<'message'>>(update, this.api);
     handler(context, conversationConfig);
     return true;
