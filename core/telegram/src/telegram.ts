@@ -11,12 +11,15 @@ import type {
   CommandHandlerFunction,
   CallbackQueryHandlerFunction,
   UpdateType,
+  UpdateHandlerFunction,
+  UpdateHandlerRecord,
 } from './type.js';
 import type {QueryParameters} from '@alwatr/type';
-import type {ApiResponse, Update} from '@grammyjs/types';
+import type {Update} from '@grammyjs/types';
 
 export * from './type.js';
 export * from './api.js';
+export * from './conversation.js';
 
 export class AlwatrTelegram {
   protected logger = createLogger('alwatr/telegram');
@@ -36,8 +39,17 @@ export class AlwatrTelegram {
     callbackQuery: [],
   };
 
+  protected updateHandlerRecord: Partial<UpdateHandlerRecord> = {
+    all: [],
+    dataCallbackQuery: [],
+    textMessage: [],
+  };
+
   constructor(protected readonly config: AlwatrTelegramConfig) {
     this.logger.logMethodArgs('constructor', config);
+
+    this.defineUpdateHandler<'callback_query'>('dataCallbackQuery', this.handleDataCallbackQueryUpdate.bind(this));
+    this.defineUpdateHandler<'message'>('textMessage', this.handleTextMessageUpdate.bind(this));
   }
 
   /**
@@ -48,7 +60,7 @@ export class AlwatrTelegram {
   async setWebhook(listenHost = '0.0.0.0', listenPort = 8000): Promise<void> {
     this.logger.logMethod('setWebhook');
     const response = await this.callApi('setWebhook', {url: this.config.webhookDomain});
-    const responseJson = await response.json() as ApiResponse<boolean>;
+    const responseJson = await response.json();
 
     if (!responseJson.ok) {
       this.logger.error('setWebhook', 'set_webhook_failed', responseJson.error_code, responseJson.description);
@@ -87,7 +99,6 @@ export class AlwatrTelegram {
     });
   }
 
-
   defineCommandHandler(commandName: string, handler: CommandHandlerFunction): void {
     this.logger.logMethodArgs('defineCommandHandler', commandName);
     this.middlewareRecord.message.push({
@@ -96,46 +107,70 @@ export class AlwatrTelegram {
     });
   }
 
-  protected handleUpdate(update: Update): void {
-    this.logger.logMethodArgs('handleUpdate', update);
-    if ('message' in update && update.message != null) {
-      if ('chat_shared' in update.message && update.message.chat_shared != null) {
-        return this.handleChatSharedUpdate(update);
-      }
-      return this.handleTextMessageUpdate(update);
+  defineUpdateHandler<U extends Exclude<keyof Update, 'update_id'>>(
+      updateType: keyof UpdateHandlerRecord,
+      handler: UpdateHandlerFunction<UpdateType<U>>,
+      priority?: 'high',
+  ): void {
+    this.logger.logMethodArgs('defineUpdateHandler', {updateType});
+    if (priority === 'high') {
+      this.updateHandlerRecord[updateType]?.unshift(handler as any); // TODO: better way?
     }
-    else if ('callback_query' in update && update.callback_query) {
-      if ('data' in update.callback_query && update.callback_query.data) {
-        return this.handleCallbackQueryUpdate(update);
+    else {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      this.updateHandlerRecord[updateType]?.push(handler as any); // TODO: better way?
+    }
+  }
+
+  protected handleUpdate(update: Update): void {
+    this.logger.logMethod('handleUpdate');
+    if (this.updateHandlerRecord.all != null) {
+      for (const handler of this.updateHandlerRecord.all) {
+        if (handler(update)) return;
+      }
+    }
+    if (update.message != null) {
+      if (this.updateHandlerRecord.textMessage != null) {
+        for (const handler of this.updateHandlerRecord.textMessage) {
+          if (handler(update)) return;
+        }
+      }
+    }
+    else if (update.callback_query != null) {
+      if (update.callback_query.data != null) {
+        if (this.updateHandlerRecord.dataCallbackQuery != null) {
+          for (const handler of this.updateHandlerRecord.dataCallbackQuery) {
+            if (handler(update)) return;
+          }
+        }
       }
     }
   }
 
-  protected handleCallbackQueryUpdate(update: UpdateType<'callback_query'>): void {
+  protected handleDataCallbackQueryUpdate(update: UpdateType<'callback_query'>): boolean {
     this.logger.logMethod('handleCallbackQueryUpdate');
     for (const middleware of this.middlewareRecord.callbackQuery) {
       if (middleware.name === update.callback_query?.data) {
         const context = new AlwatrTelegramContext<UpdateType<'callback_query'>>(update, this.api);
         middleware.handler(context);
-        break;
+        return true;
       }
     }
+    return false;
   }
 
-  protected handleChatSharedUpdate(_update: UpdateType<'message'>): void {
-  }
-
-  protected handleTextMessageUpdate(update: UpdateType<'message'>): void {
+  protected handleTextMessageUpdate(update: UpdateType<'message'>): boolean {
     this.logger.logMethod('handleMessageUpdate');
-    if (update.message?.text == null) return;
+    if (update.message?.text == null) return false;
     for (const middleware of this.middlewareRecord.message) {
       const regex = new RegExp(middleware.regex); // js bug, must create new instance!
       if (regex.test(update.message?.text)) {
         const context = new AlwatrTelegramContext<UpdateType<'message'>>(update, this.api);
         middleware.handler(context);
-        break;
+        return true;
       }
     }
+    return false;
   }
 
   protected async callApi(method: string, queryParameters?: QueryParameters): Promise<Response> {
