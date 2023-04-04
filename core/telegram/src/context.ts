@@ -16,6 +16,18 @@ export class AlwatrTelegramContext<U extends Omit<Update, 'update_id'>> {
     return this.update.message?.message_id ?? null;
   }
 
+  get commandParams(): Array<string> | null {
+    if (this.update.message && this.update.message.text) {
+      if (this.update.message.text.startsWith('/')) {
+        const params = this.update.message.text.split(' ');
+        params.shift();
+        return params;
+      }
+    }
+
+    return null;
+  }
+
   get chatId(): number {
     let chatId: number | null = null;
     if ('message' in this.update) {
