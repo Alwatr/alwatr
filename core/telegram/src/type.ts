@@ -20,14 +20,41 @@ export interface AlwatrTelegramApiConfig extends StringifyableRecord {
   username?: string;
 }
 
-export type UpdateType<U extends keyof Update> = Pick<Update, U>
+export interface AlwatrConversationConfig extends StringifyableRecord {
+  id: string;
+  context: StringifyableRecord;
+  currentState: 'initial' | string;
+}
 
-export type CommandHandlerFunction = (
-  context: AlwatrTelegramContext<UpdateType<'message'>>
-) => void;
-export type CallbackQueryHandlerFunction = (
-  context: AlwatrTelegramContext<UpdateType<'callback_query'>>
-) => void;
+export interface ConversationStateRecord {
+  initial: (
+    context: AlwatrTelegramContext<UpdateType<'message'>>,
+    conversationConfig: AlwatrConversationConfig
+  ) => void;
+  [state: string]: (
+    context: AlwatrTelegramContext<UpdateType<'message'>>,
+    conversationConfig: AlwatrConversationConfig
+  ) => void;
+}
+
+export interface ConversationStorageRecord {
+  get: (chatId: string) => AlwatrConversationConfig | null;
+  set: (chatId: string, config: AlwatrConversationConfig) => void;
+  reset: (chatId: string) => void;
+}
+
+export type UpdateType<U extends Exclude<keyof Update, 'update_id'>> = Pick<Update, U>;
+
+export type UpdateHandlerFunction<U extends Omit<Update, 'update_id'>> = (update: U) => boolean;
+
+export type CommandHandlerFunction = (context: AlwatrTelegramContext<UpdateType<'message'>>) => void;
+export type CallbackQueryHandlerFunction = (context: AlwatrTelegramContext<UpdateType<'callback_query'>>) => void;
+
+export type UpdateHandlerRecord = {
+  all: Array<UpdateHandlerFunction<UpdateType<Exclude<keyof Update, 'update_id'>>>>;
+  textMessage: Array<UpdateHandlerFunction<UpdateType<'message'>>>;
+  dataCallbackQuery: Array<UpdateHandlerFunction<UpdateType<'callback_query'>>>;
+};
 
 export type MiddlewareRecord = StringifyableRecord & {
   message: Array<{regex: RegExp; handler: CommandHandlerFunction}>;
@@ -36,9 +63,10 @@ export type MiddlewareRecord = StringifyableRecord & {
 
 // API
 
-export type ParseMode = 'MarkdownV2' | 'Markdown' | 'HTML'
+export type ParseMode = 'MarkdownV2' | 'Markdown' | 'HTML';
 
-export interface SendMessageOption { // TODO: extends StringifyableRecord
+export interface SendMessageOption {
+  // TODO: extends StringifyableRecord
   parse_mode?: ParseMode;
   reply_to_message_id?: number;
   allow_sending_without_reply?: boolean;
