@@ -87,4 +87,8 @@ export class AlwatrTelegramContext<U extends Omit<Update, 'update_id'>> {
       ...option,
     });
   }
+
+  requireAccess(validator: (chatId: string | number) => boolean): boolean {
+    return validator(this.chatId);
+  }
 }
