@@ -14,6 +14,10 @@
     "subscribed_successfully_message": "عضویت با موفقیت انجام شد",
     "unsubscribed_successfully_message": "عضویت شما با موفقیت لغو شد",
     "sign_in_successfully": "با موفقیت در ربات ثبت نام کردید",
+    "admin_added_yet": "شما قبلا به لیست ادمین‌ها اضافه شده اید!",
+    "admin_added_successfully": "شما با موفقیت به لیست ادمین‌ها اضافه شدید!",
+    "send_notify_message": "پیام مورد نظر برای ارسال به تمام کاربران را ارسال کنید.",
+    "approval_notify_message": "پیام برای تمامی کاربران ارسال شود؟",
 
     "day_countdown": "*${dayToLeft} قدم تا طلوع خورشید ♥️*",
     "button_day_countdown": "${dayToLeft} روز تا نیمه شعبان",

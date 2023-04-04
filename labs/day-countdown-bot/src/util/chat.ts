@@ -21,6 +21,10 @@ export function toggleSubscribe(chatId: string | number): boolean | null {
   return chat.isSubscribe;
 }
 
+export function isChatExists(chatId: string | number): boolean {
+  return chatStorageEngine.get(chatId + '') != null;
+}
+
 export function addChat(chat: Chat): ChatDetail | null {
   let chatDetail: ChatDetail | null = null;
 

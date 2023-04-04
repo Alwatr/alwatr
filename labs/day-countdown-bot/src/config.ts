@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-export const logger = createLogger('telegram-notifier');
+export const logger = createLogger('telegram-day-countdown');
 
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
 const telegramBotWebhookDomain = process.env.TELEGRAM_BOT_WEBHOOK_DOMAIN;
@@ -19,7 +19,9 @@ export const config = {
     webhookDomain: telegramBotWebhookDomain,
     debugMode: process.env.TELEGRAM_BOT_DEBUG_MODE ? true : undefined,
   },
-  adminToken: process.env.ADMIN_TOKEN ?? 'admin-token',
+  admin: {
+    adminToken: process.env.ADMIN_TOKEN ?? 'admin-token',
+  },
   chatStorage: {
     name: process.env.STORAGE_NAME ?? 'user',
     path: process.env.STORAGE_PATH ?? 'storage',
