@@ -76,8 +76,7 @@ const _sanitizeDomain = (domain: string): string => {
  * const logger = createLogger('logger/demo');
  * ```
  */
-export const createLogger = (domain: string, force?: true): AlwatrLogger => {
-  const devMode = force || DEV_MODE;
+export const createLogger = (domain: string, devMode = DEV_MODE): AlwatrLogger => {
   const color = _getNextColor();
   const styleScope = _style.scope.replaceAll('{{color}}', color);
   domain = _sanitizeDomain(domain);
