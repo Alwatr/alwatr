@@ -24,7 +24,7 @@ export function RouterMixin<T extends Constructor<SignalMixinInterface>>(
      * On route context update.
      */
     protected _routeContextUpdated(routeContext: RouteContext): void {
-      this._logger.logMethodArgs('_routeContextUpdated', routeContext);
+      this._logger.logMethodArgs?.('_routeContextUpdated', routeContext);
       this.requestUpdate();
     }
   }

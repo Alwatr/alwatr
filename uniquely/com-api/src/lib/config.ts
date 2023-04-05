@@ -31,4 +31,4 @@ export const config = {
       .filter((f) => f != ''),
 } as const;
 
-logger.logProperty('config', config);
+logger.logProperty?.('config', config);

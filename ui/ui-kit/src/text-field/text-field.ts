@@ -141,7 +141,7 @@ export class AlwatrTextField extends AlwatrSurface {
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     this.value ??= '';
 
     if (this.type === 'textarea') {
@@ -173,7 +173,7 @@ export class AlwatrTextField extends AlwatrSurface {
   }
 
   private _inputChanged(event: Event): void {
-    this._logger.logMethod('_inputChanged');
+    this._logger.logMethod?.('_inputChanged');
     const target = event.target as HTMLInputElement | HTMLTextAreaElement;
     if (target == null) return;
     let inputValue = unicodeDigits.translate(target.value ?? '');

@@ -54,7 +54,7 @@ export class AlwatrPageCard extends SignalMixin(AlwatrBaseElement) {
   `;
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return html`
       <alwatr-icon-box
         .content=${{icon: 'gift-outline', headline: 'قرعه کشی', description: loremText}}

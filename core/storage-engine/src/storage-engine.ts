@@ -143,8 +143,8 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   }
 
   constructor(config: AlwatrStorageEngineConfig) {
-    this._logger = createLogger(`alwatr-storage:${config.name}`, undefined, config.debug);
-    this._logger.logMethodArgs('constructor', config);
+    this._logger = createLogger(`alwatr-storage:${config.name}`, config.devMode);
+    this._logger.logMethodArgs?.('constructor', config);
     this.forceSave = this.forceSave.bind(this);
 
     this.name = config.name;
@@ -164,12 +164,12 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    * load storage file.
    */
   protected load(): AlwatrDocumentStorage<DocumentType> {
-    this._logger.logMethodArgs('load', {name: this.name, path: this.storagePath});
+    this._logger.logMethodArgs?.('load', {name: this.name, path: this.storagePath});
 
     const storage = readJsonFile<AlwatrDocumentStorage<DocumentType>>(this.storagePath);
 
     if (storage === null) {
-      this._logger.incident('load', 'file_not_found', 'Storage path not found, empty storage loaded', {
+      this._logger.incident?.('load', 'file_not_found', 'Storage path not found, empty storage loaded', {
         path: this.storagePath,
       });
       return this._newStorage;
@@ -235,7 +235,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    * ```
    */
   get(documentId: string, fastInstance?: boolean): DocumentType | null {
-    this._logger.logMethodArgs('get', documentId);
+    this._logger.logMethodArgs?.('get', documentId);
 
     const documentObject = this._storage.data[documentId] as DocumentType | undefined;
     if (typeof documentObject === 'string') {
@@ -270,7 +270,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    * ```
    */
   set(documentObject: DocumentType, fastInstance?: boolean): DocumentType {
-    this._logger.logMethodArgs('set', documentObject.id);
+    this._logger.logMethodArgs?.('set', documentObject.id);
 
     if (fastInstance !== true) {
       documentObject = JSON.parse(JSON.stringify(documentObject));
@@ -314,7 +314,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    * ```
    */
   delete(documentId: string): boolean {
-    this._logger.logMethodArgs('delete', documentId);
+    this._logger.logMethodArgs?.('delete', documentId);
 
     if (this._storage.data[documentId] == null) {
       return false;
@@ -355,7 +355,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    * Save the storage to disk.
    */
   save(): void {
-    this._logger.logMethod('save');
+    this._logger.logMethod?.('save');
     this._storage.meta.reversion++;
     if (this._saveTimer != null) return; // save already requested
     this.hasUnsavedChanges = true;
@@ -366,7 +366,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    * Save the storage to disk without any debounce.
    */
   forceSave(): void {
-    this._logger.logMethodArgs('forceSave', {hasUnsavedChanges: this.hasUnsavedChanges});
+    this._logger.logMethodArgs?.('forceSave', {hasUnsavedChanges: this.hasUnsavedChanges});
 
     if (this._saveTimer != null) {
       clearTimeout(this._saveTimer);
@@ -390,7 +390,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    * ```
    */
   unload(): void {
-    this._logger.logMethod('unload');
+    this._logger.logMethod?.('unload');
     this.forceSave();
     this._keys = null;
     this._storage = this._newStorage;

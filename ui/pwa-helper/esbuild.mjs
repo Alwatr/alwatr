@@ -23,15 +23,15 @@ const watchMode = process.argv.includes('--watch');
 const debugMode = process.argv.includes('--debug');
 const prettyMode = process.argv.includes('--pretty');
 
-logger.logOther(banner);
+logger.logOther?.(banner);
 
-logger.logProperty('cleanMode', cleanMode);
-logger.logProperty('watchMode', watchMode);
-logger.logProperty('debugMode', debugMode);
-logger.logProperty('prettyMode', prettyMode);
+logger.logProperty?.('cleanMode', cleanMode);
+logger.logProperty?.('watchMode', watchMode);
+logger.logProperty?.('debugMode', debugMode);
+logger.logProperty?.('prettyMode', prettyMode);
 
 if (cleanMode) {
-  logger.logMethod('cleanDist');
+  logger.logMethod?.('cleanDist');
   await fs.rm(outDir, {recursive: true, force: true});
 }
 
@@ -83,7 +83,7 @@ const esbuildContext = await esbuild.context({
 const esBuildPromise = esbuildContext.rebuild();
 
 async function makeHtml() {
-  logger.logMethod('makeHtml');
+  logger.logMethod?.('makeHtml');
 
   let htmlContent = await fs.readFile(`${resDir}/index.html`, {encoding: 'utf-8'});
 
@@ -98,8 +98,8 @@ async function makeHtml() {
       .find((filename) => filename.includes(srcFilename) && filename.endsWith('.css'))
       .substring(outDir.length + 1);
 
-  logger.logProperty('jsFilename', jsFilename);
-  logger.logProperty('cssFilename', cssFilename);
+  logger.logProperty?.('jsFilename', jsFilename);
+  logger.logProperty?.('cssFilename', cssFilename);
 
   if (!existsSync(`${outDir}/${jsFilename}`)) {
     logger.error('makeHtml', 'js_filename_not_found', {jsFilename});
@@ -120,7 +120,7 @@ async function makeHtml() {
 }
 
 async function buildServiceWorker() {
-  logger.logMethod('buildServiceWorker');
+  logger.logMethod?.('buildServiceWorker');
 
   const build = await generateSW({
     swDest: `${outDir}/service-worker.js`,
@@ -132,7 +132,7 @@ async function buildServiceWorker() {
     ],
   });
 
-  logger.logOther('serviceWorkerPath', build);
+  logger.logOther?.('serviceWorkerPath', build);
 }
 
 if (watchMode) {

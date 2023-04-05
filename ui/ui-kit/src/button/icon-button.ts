@@ -104,7 +104,7 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     const content = this.content || {icon: ''};
 
     return html`<alwatr-icon .name=${content.icon} ?flip-rtl=${content.flipRtl}></alwatr-icon>`;
@@ -112,7 +112,7 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
 
   protected _click(event: MouseEvent): void {
     const clickSignalId = this.content?.clickSignalId;
-    this._logger.logMethodArgs('click', {clickSignalId: clickSignalId});
+    this._logger.logMethodArgs?.('click', {clickSignalId: clickSignalId});
     if (clickSignalId) {
       eventTrigger.dispatch<ClickSignalType>(clickSignalId, {
         x: event.clientX,

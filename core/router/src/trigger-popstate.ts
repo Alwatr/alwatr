@@ -11,13 +11,13 @@ export const popstateTrigger = {
    */
   _popstateHandler(event: PopStateEvent): void {
     const href = globalThis.location?.href;
-    logger.logMethodArgs('_popstateHandler', href);
+    logger.logMethodArgs?.('_popstateHandler', href);
     if (event.state === 'router-ignore') return;
     redirect(href, false);
   },
 
   set enable(enable: boolean) {
-    logger.logProperty('popstateTrigger.enable', enable);
+    logger.logProperty?.('popstateTrigger.enable', enable);
 
     if (enable && !_enabled) {
       globalThis.addEventListener('popstate', popstateTrigger._popstateHandler);

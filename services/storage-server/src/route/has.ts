@@ -8,7 +8,7 @@ import type {StringifyableRecord} from '@alwatr/type';
 nanoServer.route('GET', '/has', has);
 
 function has(connection: AlwatrConnection): AlwatrServiceResponse<StringifyableRecord, StringifyableRecord> {
-  logger.logMethod('has');
+  logger.logMethod?.('has');
 
   connection.requireToken(config.nanoServer.accessToken);
 

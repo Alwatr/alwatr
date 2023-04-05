@@ -54,7 +54,7 @@ export class AlwatrLotteryBox extends LocalizeMixin(SignalMixin(AlwatrBaseElemen
   protected _box: AlwatrIconBox | null = null;
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return html`<alwatr-icon-box .content=${this._iconBoxContent} @click=${this._click}>
       ${this._boxContentTemplate()}
     </alwatr-icon-box>`;
@@ -93,7 +93,7 @@ export class AlwatrLotteryBox extends LocalizeMixin(SignalMixin(AlwatrBaseElemen
   }
 
   protected async _click(): Promise<void> {
-    this._logger.logMethod('_click');
+    this._logger.logMethod?.('_click');
     if (!this.expanded && !this.submitted) {
       await this._currentAnimate;
       this._currentAnimate = this._animateExpand();
@@ -101,13 +101,13 @@ export class AlwatrLotteryBox extends LocalizeMixin(SignalMixin(AlwatrBaseElemen
   }
 
   protected async _formSubmitted(): Promise<void> {
-    this._logger.logMethod('_formSubmitted');
+    this._logger.logMethod?.('_formSubmitted');
     await this._currentAnimate;
     this._currentAnimate = this._animateCollapse(true);
   }
 
   protected async _formCanceled(): Promise<void> {
-    this._logger.logMethod('_formCanceled');
+    this._logger.logMethod?.('_formCanceled');
     await this._currentAnimate;
     this._currentAnimate = this._animateCollapse(false);
   }
@@ -117,7 +117,7 @@ export class AlwatrLotteryBox extends LocalizeMixin(SignalMixin(AlwatrBaseElemen
   protected _collapseHeight = 0;
   async _animateExpand(): Promise<void> {
     if (this.expanded || this._box == null) return;
-    this._logger.logMethod('_animateExpand');
+    this._logger.logMethod?.('_animateExpand');
     const box = this._box;
     await untilNextFrame();
 
@@ -143,7 +143,7 @@ export class AlwatrLotteryBox extends LocalizeMixin(SignalMixin(AlwatrBaseElemen
 
   async _animateCollapse(submitted: boolean): Promise<void> {
     if (!this.expanded || this._box == null) return;
-    this._logger.logMethod('_animateCollapse');
+    this._logger.logMethod?.('_animateCollapse');
     const box = this._box;
     box.style.height = 'auto';
     await untilNextFrame();

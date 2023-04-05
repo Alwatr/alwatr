@@ -14,7 +14,7 @@ const db = new AlwatrStorageEngine<User>({
   name: 'junk-data',
   path: 'db',
   saveBeautiful: false,
-  debug: false,
+  devMode: false,
 });
 
 console.time('set all items');

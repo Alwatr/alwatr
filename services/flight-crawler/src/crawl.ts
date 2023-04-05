@@ -8,7 +8,7 @@ import type {SepehrResponse} from './lib/type.js';
 import type {Job, JobDetail, JobResult} from '@alwatr/type/flight-finder.js';
 
 export async function crawlAllJobs(): Promise<void> {
-  logger.logMethod('crawlAllJobs');
+  logger.logMethod?.('crawlAllJobs');
   const jobList = (await storageClient.getStorage()).data;
   const jobKeyList = Object.keys(jobList);
   let updated = false;
@@ -22,7 +22,7 @@ export async function crawlAllJobs(): Promise<void> {
       if (differentObject(job.resultList, oldResultList)) {
         const message = makeMessage(job);
         await notify(config.notifier.to, message);
-        logger.logOther(`Notified to ${config.notifier.to}!`);
+        logger.logOther?.(`Notified to ${config.notifier.to}!`);
         await storageClient.set(job);
         updated = true;
       }
@@ -36,7 +36,7 @@ export async function crawlAllJobs(): Promise<void> {
 }
 
 async function crawl(detail: JobDetail): Promise<Array<JobResult>> {
-  logger.logMethodArgs('crawl', detail);
+  logger.logMethodArgs?.('crawl', detail);
   const fetchOption = makeRequestOption(detail);
   const response = await makeRequest(fetchOption);
   let resultList = await translateResponse(response);
@@ -49,7 +49,7 @@ function differentObject(obj1: unknown, obj2: unknown): boolean {
 }
 
 function makeRequestOption(detail: JobDetail): Partial<FetchOptions> & {url: string} {
-  logger.logMethod('makeRequest');
+  logger.logMethod?.('makeRequest');
   const fetchOptions: Partial<FetchOptions> & {url: string} = {
     url: 'https://api.sepehr360.ir//fa/FlightAvailability/Api/B2cOnewayFlightApi/Search',
     method: 'POST',
@@ -84,7 +84,7 @@ async function makeRequest(option: Partial<FetchOptions> & {url: string}): Promi
 }
 
 async function translateResponse(response: Response): Promise<Array<JobResult>> {
-  logger.logMethod('translateResponse');
+  logger.logMethod?.('translateResponse');
   const responseJson = (await response.json()) as SepehrResponse;
 
   const jobResult: Array<JobResult> = [];
@@ -120,7 +120,7 @@ async function translateResponse(response: Response): Promise<Array<JobResult>> 
 }
 
 function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): Array<JobResult> {
-  logger.logMethod('extraFilterResult');
+  logger.logMethod?.('extraFilterResult');
   let filteredJobResultList: Array<JobResult> = jobResultList;
 
   if (detail.maxPrice != null) {
@@ -147,7 +147,7 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
 }
 
 function makeMessage(job: Job): string {
-  logger.logMethod('makeMessage');
+  logger.logMethod?.('makeMessage');
 
   // prettier-ignore
   const resultListStr = job.resultList.length === 0 ? 'هیچ پروازی یافت نشد!'

@@ -64,7 +64,7 @@ export class AlwatrPageHome extends UnresolvedMixin(SignalMixin(AlwatrBaseElemen
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     if (this.content == null) return nothing;
     return mapIterable(this, this.content.boxList, this._boxTemplate, message('loading'));
   }

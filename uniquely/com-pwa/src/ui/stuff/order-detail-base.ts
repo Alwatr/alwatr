@@ -130,7 +130,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
   `;
 
   protected render_part_message(key: string, icon: string): unknown {
-    this._logger.logMethod('render_part_message');
+    this._logger.logMethod?.('render_part_message');
     const content: IconBoxContent = {
       headline: message(key),
       icon: icon,
@@ -141,7 +141,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
   }
 
   protected render_part_status(order: Order | OrderDraft): unknown {
-    this._logger.logMethod('render_part_status');
+    this._logger.logMethod?.('render_part_status');
     return html`<alwatr-order-status-box .content=${order}></alwatr-order-status-box>`;
   }
 
@@ -150,7 +150,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       productStorage: AlwatrDocumentStorage<Product> | null | undefined,
       editable = false,
   ): unknown {
-    this._logger.logMethod('render_part_item_list');
+    this._logger.logMethod?.('render_part_item_list');
 
     return mapIterable(this, itemList, (item) => {
       const product = productStorage?.data[item.productId];
@@ -254,7 +254,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
   }
 
   protected render_part_shipping_info(shippingInfo?: Partial<OrderShippingInfo>): unknown {
-    this._logger.logMethod('render_part_shipping_info');
+    this._logger.logMethod?.('render_part_shipping_info');
 
     const nullStr = '…' as const;
 
@@ -303,7 +303,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
   }
 
   protected render_part_summary(order: Order | OrderDraft): unknown {
-    this._logger.logMethod('render_part_summary');
+    this._logger.logMethod?.('render_part_summary');
     if (!order.itemList?.length) return nothing;
 
     const totalPrice = order.totalPrice ?? 0;
@@ -365,7 +365,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
   }
 
   protected render_part_shipping_form(formData: Partial<OrderShippingInfo>): unknown {
-    this._logger.logMethod('render_part_summary');
+    this._logger.logMethod?.('render_part_summary');
     return html`<alwatr-surface tinted>
       <alwatr-order-shipping-form .formData=${formData}></alwatr-order-shipping-form>
     </alwatr-surface>`;
@@ -373,7 +373,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
   protected qtyInputChange(event: CustomEvent, orderItem: OrderItem): void {
     const target = event.target as AlwatrTextField;
-    this._logger.logMethodArgs('qtyInputChange', target.value);
+    this._logger.logMethodArgs?.('qtyInputChange', target.value);
     const qty = +target.value || 100;
     orderItem.qty = qty;
     this.requestUpdate();

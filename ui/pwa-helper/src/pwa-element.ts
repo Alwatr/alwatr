@@ -100,7 +100,7 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return [this._topAppBarTemplate(), this._mainTemplate(), this._navigationBarTemplate()];
   }
 

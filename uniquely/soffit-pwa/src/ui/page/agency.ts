@@ -61,7 +61,7 @@ export class AlwatrPageAgency extends SignalMixin(AlwatrBaseElement) {
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     if (this.content == null) return;
 
     return [

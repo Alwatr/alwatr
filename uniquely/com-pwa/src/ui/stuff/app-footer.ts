@@ -34,7 +34,7 @@ export class AlwatrPageHome extends AlwatrBaseElement {
   `;
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return html`
       <div>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</div>
       <div class="version">Soffit Order Management PWA v${_ALWATR_VERSION_}</div>

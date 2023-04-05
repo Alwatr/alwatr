@@ -13,7 +13,7 @@ export const clickTrigger = {
    * Alwatr router global click handler.
    */
   _clickHandler(event: MouseEvent): void {
-    logger.logMethod('_clickHandler');
+    logger.logMethod?.('_clickHandler');
 
     if (
       // ignore if the default action is prevented.
@@ -78,7 +78,7 @@ export const clickTrigger = {
   },
 
   set enable(enable: boolean) {
-    logger.logProperty('clickTrigger.enable', enable);
+    logger.logProperty?.('clickTrigger.enable', enable);
 
     if (enable && !_enabled) {
       window.document.addEventListener('click', clickTrigger._clickHandler);

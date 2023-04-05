@@ -72,7 +72,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
   }
 
   private _updateSelectedRecord(): void {
-    this._logger.logMethod('_updateSelectedRecord');
+    this._logger.logMethod?.('_updateSelectedRecord');
     this.selectedRecord = {};
     if (!this.order?.itemList?.length) return;
     for (const item of this.order.itemList) {
@@ -81,7 +81,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
 
     if (this.productStorage == null || this.priceStorage == null || this.finalPriceStorage == null) {
       this._logger.accident('render_part_product_list', 'context_not_valid', 'Some context not valid', this.order);
@@ -112,7 +112,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
     const target = <AlwatrProductCard | null>event.target;
     const productId = target?.content?.id;
 
-    this._logger.logMethodArgs('_selectedChanged', {productId});
+    this._logger.logMethodArgs?.('_selectedChanged', {productId});
 
     if (target == null || productId == null) return;
 

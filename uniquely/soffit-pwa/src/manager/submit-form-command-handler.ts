@@ -15,7 +15,7 @@ const validSchema: Record<string, JsonSchema | undefined> = {
 };
 
 commandHandler.define<FormData, boolean>(submitFormCommandTrigger.id, async (form: FormData): Promise<boolean> => {
-  logger.logMethodArgs('formSubmit', {form});
+  logger.logMethodArgs?.('formSubmit', {form});
 
   let bodyJson;
   try {

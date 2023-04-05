@@ -13,7 +13,7 @@ let closeLastSnackbar: ((response: SnackbarResponse) => void) | null = null;
 
 commandHandler.define<SnackbarOptions, SnackbarResponse>('show-snackbar-command', (options) => {
   if (options.duration === -1 && !options.actionLabel) delete options.duration;
-  logger.logMethodArgs('showSnackbar', options);
+  logger.logMethodArgs?.('showSnackbar', options);
   return new Promise((resolve) => {
     const element = document.body.appendChild(document.createElement('alwatr-snackbar'));
 
@@ -21,7 +21,7 @@ commandHandler.define<SnackbarOptions, SnackbarResponse>('show-snackbar-command'
     const _closeSnackbar = (response: SnackbarResponse): void => {
       if (closed) return;
       if (!response.actionButton && options.duration === -1) return; // keep it!
-      logger.logMethodArgs('closeSnackbar', response);
+      logger.logMethodArgs?.('closeSnackbar', response);
       closed = true;
       closeLastSnackbar = null;
       element.open = false;

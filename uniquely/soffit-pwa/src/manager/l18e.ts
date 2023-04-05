@@ -7,7 +7,7 @@ import type {L18eContext} from '@alwatr/type';
 
 setL18eLoader((locale) => {
   const language = locale.language;
-  logger.logMethodArgs('l18eLoader', {language});
+  logger.logMethodArgs?.('l18eLoader', {language});
   return language === 'en'
     ? import('../content/l18e-en.json', {assert: {type: 'json'}}) as unknown as Promise<L18eContext>
     : l18eFa as unknown as Promise<L18eContext>;

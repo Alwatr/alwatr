@@ -13,7 +13,7 @@ const db = new AlwatrStorageEngine<User>({
   name: 'user-list',
   path: 'db',
   saveBeautiful: true,
-  debug: true,
+  devMode: true,
 });
 
 console.log('db loaded and ready to access.');

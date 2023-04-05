@@ -7,4 +7,4 @@ import './route/patch-price-list.js';
 import './route/patch-product-list.js';
 import './route/put-order.js';
 
-logger.logOther('..:: Alwatr Customer Order Management API ::..');
+logger.logOther?.('..:: Alwatr Customer Order Management API ::..');

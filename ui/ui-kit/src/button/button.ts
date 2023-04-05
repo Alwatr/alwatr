@@ -113,7 +113,7 @@ export class AlwatrButton extends AlwatrSurface {
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     const content = this.content || {};
 
     return [
@@ -126,7 +126,7 @@ export class AlwatrButton extends AlwatrSurface {
 
   protected _click(event: MouseEvent): void {
     if (this.content?.clickSignalId == null) return;
-    this._logger.logMethodArgs('click', {clickSignalId: this.content.clickSignalId});
+    this._logger.logMethodArgs?.('click', {clickSignalId: this.content.clickSignalId});
     eventTrigger.dispatch<ClickSignalType>(this.content.clickSignalId, {
       x: event.clientX,
       y: event.clientY,

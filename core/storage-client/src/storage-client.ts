@@ -61,13 +61,12 @@ globalAlwatr.registeredList.push({
  */
 export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = AlwatrDocumentObject> {
   protected _logger = createLogger(
-      'alwatr-storage-client' + (this.config.name == null ? '' : ':' + this.config.name),
-      undefined,
-      this.config.debug,
+      'alwatr/storage-client' + (this.config.name == null ? '' : ':' + this.config.name),
+      this.config.devMode,
   );
 
   /**
-   * Default fetch options.
+   * Default fetch options for service request.
    */
   fetchOption: FetchOptions = {
     url: 'http://' + this.config.host + ':' + this.config.port + '/',
@@ -81,7 +80,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
   };
 
   constructor(public readonly config: AlwatrStorageClientConfig) {
-    this._logger.logMethodArgs('constructor', config);
+    this._logger.logMethodArgs?.('constructor', config);
   }
 
   /**
@@ -110,7 +109,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       documentId: string,
       storage: string | undefined = this.config.name,
   ): Promise<T> {
-    this._logger.logMethodArgs('get', {storage, documentId});
+    this._logger.logMethodArgs?.('get', {storage, documentId});
     if (storage == null) throw new Error('storage_not_defined');
 
     const responseJson = await serviceRequest<AlwatrServiceResponseSuccessWithMeta<T>>({
@@ -142,7 +141,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * ```
    */
   async has(documentId: string, storage: string | undefined = this.config.name): Promise<boolean> {
-    this._logger.logMethodArgs('has', {storage, documentId});
+    this._logger.logMethodArgs?.('has', {storage, documentId});
     if (storage == null) throw new Error('storage_not_defined');
 
     const responseJson = await serviceRequest({
@@ -182,7 +181,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       documentObject: T,
       storage: string | undefined = this.config.name,
   ): Promise<T> {
-    this._logger.logMethodArgs('set', {documentId: documentObject.id});
+    this._logger.logMethodArgs?.('set', {documentId: documentObject.id});
     if (storage == null) throw new Error('storage_not_defined');
 
     const responseJson = await serviceRequest<AlwatrServiceResponseSuccessWithMeta<T>>({
@@ -212,7 +211,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * ```
    */
   async delete(documentId: string, storage: string | undefined = this.config.name): Promise<void> {
-    this._logger.logMethodArgs('delete', {storage, documentId});
+    this._logger.logMethodArgs?.('delete', {storage, documentId});
     if (storage == null) throw new Error('storage_not_defined');
 
     await serviceRequest({
@@ -237,7 +236,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
   async getStorage<T extends DocumentType = DocumentType>(
       name: string | undefined = this.config.name,
   ): Promise<AlwatrDocumentStorage<T>> {
-    this._logger.logMethod('getStorage');
+    this._logger.logMethod?.('getStorage');
     if (name == null) throw new Error('storage_not_defined');
 
     const responseJson = (await serviceRequest({
@@ -270,7 +269,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * ```
    */
   async keys(storage: string | undefined = this.config.name): Promise<Array<string>> {
-    this._logger.logMethod('keys');
+    this._logger.logMethod?.('keys');
     if (storage == null) throw new Error('storage_not_defined');
 
     const responseJson = await serviceRequest({

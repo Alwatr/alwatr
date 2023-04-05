@@ -63,7 +63,7 @@ export class AlwatrChatTextInput extends LocalizeMixin(SignalMixin(AlwatrBaseEle
   sendButtonElement: AlwatrStandardIconButton | null = null;
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return html`
       <textarea rows="1" placeholder=${message('chat_text_input_placeholder')} @input=${this.__inputChange}></textarea>
       <alwatr-icon-button

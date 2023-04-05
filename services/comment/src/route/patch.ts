@@ -10,7 +10,7 @@ nanoServer.route('PATCH', '/', setComment);
 async function setComment(
     connection: AlwatrConnection,
 ): Promise<AlwatrServiceResponse<ChatMessage, StringifyableRecord>> {
-  logger.logMethod('setComment');
+  logger.logMethod?.('setComment');
 
   connection.requireToken(config.nanoServer.accessToken);
 

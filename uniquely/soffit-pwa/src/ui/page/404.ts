@@ -37,7 +37,7 @@ export class AlwatrPage404 extends LocalizeMixin(SignalMixin(AlwatrBaseElement))
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
 
     const box: IconBoxContent = {
       stated: true,

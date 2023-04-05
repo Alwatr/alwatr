@@ -81,7 +81,7 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return orderStorageContextConsumer.fsm.render({
       initial: 'onlineLoading',
       offlineLoading: 'onlineLoading',
@@ -133,7 +133,7 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
   }
 
   private orderListTemplate(): unknown {
-    this._logger.logMethod('orderListTemplate');
+    this._logger.logMethod?.('orderListTemplate');
     const orderStorage = orderStorageContextConsumer.getResponse();
     if (orderStorage == null) return;
     const orderList = Object.values(orderStorage.data)

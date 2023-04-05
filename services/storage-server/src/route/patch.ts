@@ -12,7 +12,7 @@ nanoServer.route('PATCH', 'all', updateDocument);
 async function updateDocument(
     connection: AlwatrConnection,
 ): Promise<AlwatrServiceResponse<StringifyableRecord, StringifyableRecord>> {
-  logger.logMethod('updateDocument');
+  logger.logMethod?.('updateDocument');
 
   connection.requireToken(config.nanoServer.accessToken);
 

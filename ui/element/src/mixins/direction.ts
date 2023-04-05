@@ -31,7 +31,7 @@ export function DirectionMixin<T extends Constructor<SignalMixinInterface>>(
      * Update direction from this._dirParent or l10n.locale
      */
     protected _updateDir(dir?: string): void {
-      this._logger.logMethodArgs('_updateDir', {dir, computeMode});
+      this._logger.logMethodArgs?.('_updateDir', {dir, computeMode});
 
       if (typeof dir === 'string') {
         // console.timeEnd('_updateDir');
