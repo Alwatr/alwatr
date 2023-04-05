@@ -73,7 +73,7 @@ export class AlwatrChatMessage extends DirectionMixin(SignalMixin(AlwatrBaseElem
     self = false;
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     if (this.message == null || this.message.type !== 'text') return nothing;
 
     const bubble = html`<alwatr-chat-bubble

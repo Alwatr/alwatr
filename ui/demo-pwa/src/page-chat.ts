@@ -25,7 +25,7 @@ export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
   `;
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return html`<alwatr-chat></alwatr-chat>`;
   }
 }

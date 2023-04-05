@@ -210,7 +210,7 @@ export class AlwatrTopAppBar extends LocalizeMixin(DirectionMixin(SignalMixin(Al
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     if (this.content == null) return nothing;
 
     this.setAttribute('type', this.content.type);

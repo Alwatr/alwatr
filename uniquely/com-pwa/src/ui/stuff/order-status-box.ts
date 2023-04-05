@@ -41,7 +41,7 @@ export class AlwatrOrderStatusBox extends AlwatrBaseElement {
   }
 
   private _onClickEvent(event: MouseEvent): void {
-    this._logger.logMethodArgs('click', {clickSignalId: this.clickSignalId});
+    this._logger.logMethodArgs?.('click', {clickSignalId: this.clickSignalId});
     if (this.content && this.clickSignalId) {
       eventTrigger.dispatch<ClickSignalType<Order | OrderDraft>>(this.clickSignalId, {
         x: event.clientX,
@@ -59,7 +59,7 @@ export class AlwatrOrderStatusBox extends AlwatrBaseElement {
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     if (this.content == null) return;
 
     const headline =

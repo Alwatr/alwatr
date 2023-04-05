@@ -10,7 +10,7 @@ import {createLogger} from 'https://esm.run/@alwatr/logger';
 const logger = createLogger('demo');
 
 function sayHello(name: string) {
-  logger.logMethodArgs('sayHello', {name});
+  logger.logMethodArgs?.('sayHello', {name});
 }
 ```
 
@@ -85,7 +85,7 @@ Example:
 
 ```ts
 function myMethod() {
-  logger.logMethod('myMethod');
+  logger.logMethod?.('myMethod');
 }
 ```
 

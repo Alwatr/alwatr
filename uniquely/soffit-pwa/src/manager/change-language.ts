@@ -5,7 +5,7 @@ import {languageButtonClickEventListener} from './context.js';
 import {logger} from './logger.js';
 
 languageButtonClickEventListener.subscribe(() => {
-  logger.logMethod('changeLanguage');
+  logger.logMethod?.('changeLanguage');
   localeContextConsumer.getValue()?.language === 'en'
     ? setLocale({
       code: 'fa-IR',

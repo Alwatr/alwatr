@@ -29,14 +29,14 @@ const user: User = {
 // For example when user authenticated we send user data contain valid auth token.
 function login(): User {
   user.auth = tokenGenerator.generate(`${user.id}-${user.role}`);
-  logger.logMethodFull('login', {}, {user});
+  logger.logMethodFull?.('login', {}, {user});
   return user;
 }
 
 // Now request received and we want to validate the token to ensure that the user is authenticated.
 function userValidate(user: User): TokenStatus {
   const validateStatus = tokenGenerator.verify(`${user.id}-${user.role}`, user.auth);
-  logger.logMethodFull('userValidate', {user}, {validateStatus});
+  logger.logMethodFull?.('userValidate', {user}, {validateStatus});
   return validateStatus;
 }
 

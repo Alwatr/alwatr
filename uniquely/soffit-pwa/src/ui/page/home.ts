@@ -74,7 +74,7 @@ export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return this._menuTemplate();
   }
 

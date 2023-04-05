@@ -6,4 +6,4 @@ import './route/keys.js';
 import './route/patch.js';
 import './route/storage.js';
 
-logger.logOther('..:: Alwatr Storage Server ::..');
+logger.logOther?.('..:: Alwatr Storage Server ::..');

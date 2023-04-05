@@ -74,7 +74,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
 
   protected async submit(): Promise<void> {
     const bodyJson = this.getFormData();
-    this._logger.logMethodArgs('submit', bodyJson);
+    this._logger.logMethodArgs?.('submit', bodyJson);
 
     this.disabled = true;
 
@@ -96,7 +96,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
   }
 
   protected getFormData(): Record<string, string | number | boolean> {
-    this._logger.logMethod('getFormData');
+    this._logger.logMethod?.('getFormData');
     const data: Record<string, string> = {};
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>(
         'alwatr-text-field,alwatr-radio-group',
@@ -107,7 +107,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return [
       this.inputTemplate(),
       this.partButtonTemplate(),
@@ -115,7 +115,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
   }
 
   protected inputTemplate(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return html`
       <alwatr-text-field
         .name=${'code'}

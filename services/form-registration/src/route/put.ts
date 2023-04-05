@@ -8,7 +8,7 @@ import type {AlwatrDocumentObject, StringifyableRecord} from '@alwatr/type';
 nanoServer.route('PUT', '/form/', async (
     connection: AlwatrConnection,
 ): Promise<AlwatrServiceResponse<Record<string, never>, StringifyableRecord>> => {
-  logger.logMethod('put');
+  logger.logMethod?.('put');
 
   connection.requireToken(config.nanoServer.accessToken);
   const params = connection.requireQueryParams<{formId: string}>({formId: 'string'});

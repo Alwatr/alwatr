@@ -103,21 +103,21 @@ export const serverContextFsmConstructor = finiteStateMachineProvider.defineCons
 
 finiteStateMachineProvider.defineActions<ServerContextFsm>(serverContextFsmConstructorId, {
   offline_mode: (fsm) => {
-    logger.logMethod('action_offline_mode');
+    logger.logMethod?.('action_offline_mode');
     const {options} = fsm.getContext();
     if (options == null) return logger.error('action_offline_mode', 'invalid_fetch_options', {id: fsm.id});
     options.cacheStrategy = 'cache_only';
   },
 
   online_mode: (fsm) => {
-    logger.logMethod('action_online_mode');
+    logger.logMethod?.('action_online_mode');
     const {options} = fsm.getContext();
     if (options == null) return logger.error('action_online_mode', 'invalid_fetch_options', {id: fsm.id});
     options.cacheStrategy = 'update_cache';
   },
 
   request: async (fsm) => {
-    logger.logMethod('action_request');
+    logger.logMethod?.('action_request');
 
     try {
       const {response, options} = fsm.getContext();
@@ -157,7 +157,7 @@ export const request = (
     options?: ServerContextFsm['TContext']['options'],
     mergeOption = true,
 ): void => {
-  logger.logMethodArgs('request', fsm.id);
+  logger.logMethodArgs?.('request', fsm.id);
   if (options != null) setOptions(fsm, options, mergeOption);
   fsm.transition('REQUEST');
 };
@@ -167,7 +167,7 @@ export const requestIfNotComplete = (
     options?: ServerContextFsm['TContext']['options'],
     mergeOption = true,
 ): void => {
-  logger.logMethodArgs('requestIfNotComplete', fsm.id);
+  logger.logMethodArgs?.('requestIfNotComplete', fsm.id);
   if (fsm.getState().target !== 'complete') {
     request(fsm, options, mergeOption);
   }
@@ -178,7 +178,7 @@ export const setOptions = (
     options: ServerContextFsm['TContext']['options'],
     merge = true,
 ): void => {
-  logger.logMethodArgs('setOptions', fsm.id);
+  logger.logMethodArgs?.('setOptions', fsm.id);
   const oldOptions = fsm.getContext().options;
   // prettier-ignore
   fsm.setContext({

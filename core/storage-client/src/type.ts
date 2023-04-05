@@ -33,5 +33,5 @@ export type AlwatrStorageClientConfig = {
    *
    * @default undefined Auto detect base on `NODE_ENV`
    */
-  debug?: boolean;
+  debug?: true;
 };

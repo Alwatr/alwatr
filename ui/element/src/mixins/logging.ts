@@ -26,34 +26,34 @@ export function LoggerMixin<T extends Constructor<LitElement>>(superClass: T): C
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(...args: any[]) {
       super(...args);
-      this._logger.logMethod('constructor');
+      this._logger.logMethod?.('constructor');
     }
 
     override connectedCallback(): void {
-      this._logger.logMethod('connectedCallback');
+      this._logger.logMethod?.('connectedCallback');
       super.connectedCallback();
     }
 
     override disconnectedCallback(): void {
-      this._logger.logMethod('disconnectedCallback');
+      this._logger.logMethod?.('disconnectedCallback');
       super.disconnectedCallback();
     }
 
     protected override update(changedProperties: PropertyValues): void {
-      this._logger.logMethodArgs('update', {changedProperties});
+      this._logger.logMethodArgs?.('update', {changedProperties});
       this._logger.time?.(this._$firstUpdated ? 'update-time' : 'first-update-time');
       super.update(changedProperties);
     }
 
     protected override firstUpdated(changedProperties: PropertyValues): void {
-      this._logger.logMethodArgs('firstUpdated', {changedProperties});
+      this._logger.logMethodArgs?.('firstUpdated', {changedProperties});
       this._logger.timeEnd?.('first-update-time');
       super.firstUpdated(changedProperties);
     }
 
     protected override updated(changedProperties: PropertyValues): void {
       // this._logger.logMethodArgs('updated', {changedProperties});
-      if (this._logger.debug) {
+      if (this._logger.devMode) {
         if (this._$firstUpdated) {
           this._logger.timeEnd?.('update-time');
         }
@@ -66,12 +66,12 @@ export function LoggerMixin<T extends Constructor<LitElement>>(superClass: T): C
     }
 
     protected override render(): unknown {
-      this._logger.logMethod('render');
+      this._logger.logMethod?.('render');
       return;
     }
 
     override dispatchEvent(event: Event): boolean {
-      this._logger.logMethodArgs('dispatchEvent', {
+      this._logger.logMethodArgs?.('dispatchEvent', {
         type: event.type,
         detail: (event as Event & {detail?: unknown}).detail,
       });
@@ -79,7 +79,7 @@ export function LoggerMixin<T extends Constructor<LitElement>>(superClass: T): C
     }
 
     override remove(): void {
-      this._logger.logMethod('remove');
+      this._logger.logMethod?.('remove');
       super.remove();
     }
   }

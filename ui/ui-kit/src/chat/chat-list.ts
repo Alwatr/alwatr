@@ -73,7 +73,7 @@ export class AlwatrChatList extends AlwatrBaseElement {
     currentUser?: string;
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     if (this.storage == null) return nothing;
     return html`${mapObject(
         this,

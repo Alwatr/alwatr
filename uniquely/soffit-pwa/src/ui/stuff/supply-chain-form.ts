@@ -21,7 +21,7 @@ export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
   static override formId = 'supply-chain';
 
   override inputTemplate(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return html`
       <alwatr-text-field
         .name=${'name'}

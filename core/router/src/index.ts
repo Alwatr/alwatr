@@ -10,7 +10,7 @@ export type {RouteContext, RoutesConfig} from './type.js';
  * Initial process when dom loaded.
  */
 ((): void => {
-  logger.logMethod('initialize');
+  logger.logMethod?.('initialize');
 
   clickTrigger.enable = popstateTrigger.enable = true;
 
@@ -18,6 +18,6 @@ export type {RouteContext, RoutesConfig} from './type.js';
     routeContextProvider.setValue(makeRouteContext(), {debounce: 'Timeout'});
   }
   else {
-    logger.incident('initialize', 'skip_route_context', 'Route context already have value');
+    logger.incident?.('initialize', 'skip_route_context', 'Route context already have value');
   }
 })();

@@ -21,17 +21,17 @@ export type Options = {
 commandHandler.define<Options, boolean>('register_service_worker_command', async (options = {}) => {
   options.path ??= 'service-worker.js';
   options.scope ??= '/';
-  logger.logMethodArgs('registerServiceWorker', options);
+  logger.logMethodArgs?.('registerServiceWorker', options);
 
   if (!('serviceWorker' in navigator)) {
-    logger.incident('registerServiceWorker', 'sw_unsupported', 'Service worker not supported in this browser');
+    logger.incident?.('registerServiceWorker', 'sw_unsupported', 'Service worker not supported in this browser');
     return false;
   }
 
   try {
     const swRegistration = await navigator.serviceWorker.register(options.path);
     swRegistration.addEventListener('updatefound', () => swUpdateFound(swRegistration.installing));
-    logger.logOther('Service worker registered');
+    logger.logOther?.('Service worker registered');
     eventTrigger.dispatch('service_worker_registered', null);
   }
   catch (err) {
@@ -45,12 +45,12 @@ commandHandler.define<Options, boolean>('register_service_worker_command', async
 
 function swUpdateFound(sw: ServiceWorker | null): void {
   if (sw == null) return;
-  logger.logMethod('swUpdateFound');
+  logger.logMethod?.('swUpdateFound');
   sw.addEventListener('statechange', () => swStateChange(sw));
 }
 
 function swStateChange(sw: ServiceWorker): void {
-  logger.logMethodArgs('swStateChange', sw.state);
+  logger.logMethodArgs?.('swStateChange', sw.state);
   if (sw.state === 'installed') {
     // if old controller available then its update else its new install
     if (navigator.serviceWorker.controller) {

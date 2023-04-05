@@ -112,7 +112,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   }
 
   protected override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return this.fsm.render({
       pending: () => {
         topAppBarContextProvider.setValue({

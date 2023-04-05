@@ -24,16 +24,16 @@ export class AlwatrStorageEngineProvider {
   protected _list: Record<string, AlwatrStorageEngine> = {};
 
   constructor(protected _config: AlwatrStorageEngineProviderConfig) {
-    this._logger.logMethodArgs('constructor', _config);
+    this._logger.logMethodArgs?.('constructor', _config);
   }
 
   // TODO: update all jsdoc and readme.
   get<T extends AlwatrDocumentObject = AlwatrDocumentObject>(
       config: AlwatrStorageEngineConfig,
   ): AlwatrStorageEngine<T> {
-    this._logger.logMethodArgs('get', {name: config.name});
+    this._logger.logMethodArgs?.('get', {name: config.name});
     if (!this._list[config.name]) {
-      this._logger.incident('get', 'new_storage', 'Create new storage engine', {name: config.name});
+      this._logger.incident?.('get', 'new_storage', 'Create new storage engine', {name: config.name});
       this._list[config.name] = new AlwatrStorageEngine<T>({
         ...this._config,
         ...config,
@@ -44,7 +44,7 @@ export class AlwatrStorageEngineProvider {
   }
 
   unload(name: string): void {
-    this._logger.logMethodArgs('unload', {name});
+    this._logger.logMethodArgs?.('unload', {name});
     if (this._list[name] == null) {
       this._logger.accident('unload', 'storage_not_found', 'Storage not defined or unloaded before', {name});
       return;

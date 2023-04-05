@@ -3,7 +3,7 @@ import {createLogger} from '@alwatr/logger';
 
 import {bench} from './bench.js';
 
-const logger = createLogger('logger-bench', null, false);
+const logger = createLogger('logger-bench');
 
 const getUserList = (): Record<string, Record<string, string>> => {
   const userList: Record<string, Record<string, string>> = {};
@@ -25,7 +25,7 @@ function test_without_logger(obj: Record<string, unknown>): number {
 }
 
 function test_with_logger(obj: Record<string, unknown>): number {
-  logger.logMethodArgs('test_with_logger', obj);
+  logger.logMethodArgs?.('test_with_logger', obj);
   return Object.values(obj).length;
 }
 

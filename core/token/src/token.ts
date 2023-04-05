@@ -23,7 +23,7 @@ export class AlwatrTokenGenerator {
   }
 
   constructor(public config: TokenGeneratorConfig) {
-    this._logger.logMethodArgs('constructor', config);
+    this._logger.logMethodArgs?.('constructor', config);
     this._duration = config.duration == null ? null : parseDuration(config.duration);
   }
 

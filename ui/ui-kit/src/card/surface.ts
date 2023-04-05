@@ -166,7 +166,7 @@ export class AlwatrSurface extends AlwatrBaseElement {
   `;
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return html`<slot></slot>`;
   }
 }

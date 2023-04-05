@@ -5,7 +5,7 @@ import {logger} from '../logger.js';
 
 localeContextConsumer.subscribe(async () => {
   const language = localeContextConsumer.getValue()?.language;
-  logger.logMethodArgs('homePageContentProvider', {language});
+  logger.logMethodArgs?.('homePageContentProvider', {language});
   if (language == null) return;
 
   const homePageContent =

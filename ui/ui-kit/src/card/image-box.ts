@@ -147,7 +147,7 @@ export class AlwatrImageBox extends AlwatrSurface {
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     const content = this.content;
     if (content == null) return nothing;
     const target = content.target !== 'download' ? content.target : undefined;
