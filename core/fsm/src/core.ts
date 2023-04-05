@@ -47,6 +47,9 @@ export const defineConstructor = <
   return config;
 };
 
+/**
+ * Get finite state machine instance by id.
+ */
 export const getFsmInstance = <
   TState extends string = string,
   TEventId extends string = string,
@@ -60,6 +63,9 @@ export const getFsmInstance = <
   return fsmInstance;
 };
 
+/**
+ * Get finite state machine constructor by id.
+ */
 export const getFsmConstructor = (constructorId: string): FsmConstructor => {
   logger.logMethodArgs?.('_getFsmConstructor', constructorId);
   const fsmConstructor = fsmConstructorStorage[constructorId];
@@ -67,6 +73,9 @@ export const getFsmConstructor = (constructorId: string): FsmConstructor => {
   return fsmConstructor;
 };
 
+/**
+ * Get current state of finite state machine instance.
+ */
 export const getState = <TState extends string = string, TEventId extends string = string>(
   instanceId: string,
 ): FsmState<TState, TEventId> => {
@@ -74,6 +83,9 @@ export const getState = <TState extends string = string, TEventId extends string
   return getFsmInstance<TState, TEventId>(instanceId).state;
 };
 
+/**
+ * Get current context of finite state machine instance.
+ */
 export const getContext = <TContext extends StringifyableRecord = StringifyableRecord>(
   instanceId: string,
 ): TContext => {
@@ -81,6 +93,9 @@ export const getContext = <TContext extends StringifyableRecord = StringifyableR
   return getFsmInstance<string, string, TContext>(instanceId).context;
 };
 
+/**
+ * Set context of finite state machine instance.
+ */
 export const setContext = <TContext extends StringifyableRecord = StringifyableRecord>(
   instanceId: string,
   context: Partial<TContext>,
@@ -98,6 +113,9 @@ export const setContext = <TContext extends StringifyableRecord = StringifyableR
   }
 };
 
+/**
+ * Transition finite state machine instance to new state.
+ */
 export const transition = <
   TEventId extends string = string,
   TContext extends StringifyableRecord = StringifyableRecord
@@ -155,6 +173,9 @@ export const transition = <
   _execAllActions(fsmConstructor, fsmInstance.state, consumerInterface);
 };
 
+/**
+ * Define actions for finite state machine constructor.
+ */
 export const defineActions = <T extends FsmTypeHelper>(constructorId: string, actionRecord: ActionRecord<T>): void => {
   logger.logMethodArgs?.('defineActions', {constructorId, actionRecord});
   const fmsConstructor = getFsmConstructor(constructorId);
@@ -164,6 +185,9 @@ export const defineActions = <T extends FsmTypeHelper>(constructorId: string, ac
   };
 };
 
+/**
+ * Execute all actions for current state.
+ */
 export const _execAllActions = (
     constructor: FsmConstructor,
     state: FsmState,
@@ -196,6 +220,9 @@ export const _execAllActions = (
   );
 };
 
+/**
+ * Execute single action.
+ */
 export const _execAction = (
     constructor: FsmConstructor,
     actionNames: SingleOrArray<string> | undefined,
@@ -230,6 +257,9 @@ export const _execAction = (
   }
 };
 
+/**
+ * Initialize new finite state machine instance.
+ */
 export const initFsmInstance = (instanceId: string, constructorId: string): void => {
   logger.logMethodArgs?.('initializeMachine', {constructorId, instanceId});
   const constructor = getFsmConstructor(constructorId);
@@ -248,6 +278,9 @@ export const initFsmInstance = (instanceId: string, constructorId: string): void
   _execAllActions(constructor, newInstance.state, finiteStateMachineConsumer(instanceId));
 };
 
+/**
+ * Subscribe to all defined signals for finite state machine instance.
+ */
 export const subscribeSignals = (
     instanceId: string,
     signalList: Array<SignalConfig>,
@@ -289,6 +322,9 @@ export const subscribeSignals = (
   return listenerList;
 };
 
+/**
+ * Define signals for finite state machine constructor.
+ */
 export const defineConstructorSignals = <T extends FsmTypeHelper>(
   constructorId: string,
   signalList: Array<SignalConfig<T>>,
@@ -298,6 +334,9 @@ export const defineConstructorSignals = <T extends FsmTypeHelper>(
   fsmConstructor.signalList = fsmConstructor.signalList.concat(signalList as Array<SignalConfig>);
 };
 
+/**
+ * Define signals for finite state machine instance.
+ */
 export const defineInstanceSignals = <T extends FsmTypeHelper>(
   instanceId: string,
   signalList: Array<SignalConfig<T>>,
@@ -307,6 +346,19 @@ export const defineInstanceSignals = <T extends FsmTypeHelper>(
   return subscribeSignals(instanceId, signalList as Array<SignalConfig>, subscribeConstructorSignals);
 };
 
+/**
+ * Render helper for use finite state machine instance in UI.
+ *
+ * Example:
+ *
+ * ```ts
+ * render('myFsm', {
+ *   state1: () => html`<div>State 1 Render...</div>`,
+ *   state2: () => html`<div>State 2 Render...</div>`,
+ *   state3: 'state1',
+ * });
+ * ```
+ */
 export const render = <TState extends string = string>(
   instanceId: string,
   states: {[P in TState]: (() => unknown) | TState},
@@ -326,6 +378,9 @@ export const render = <TState extends string = string>(
   return;
 };
 
+/**
+ * Subscribe to finite state machine instance state changes.
+ */
 export const subscribe = (
     instanceId: string,
     callback: () => void,
@@ -335,11 +390,17 @@ export const subscribe = (
   return contextConsumer.subscribe(instanceId, callback, options);
 };
 
+/**
+ * Destroy finite state machine instance object to clear memory.
+ */
 export const destroy = (instanceId: string): void => {
   logger.logMethodArgs?.('destroy', instanceId);
   destroySignal(instanceId);
 };
 
+/**
+ * Reset finite state machine instance to initial state and context.
+ */
 export const reset = (instanceId: string): void => {
   logger.logMethodArgs?.('reset', instanceId);
   const constructorId = getFsmInstance(instanceId).constructorId;
@@ -347,6 +408,10 @@ export const reset = (instanceId: string): void => {
   initFsmInstance(instanceId, constructorId);
 };
 
+/**
+ * Finite state machine instance consumer.
+ * Lookup current finite state machine instance or initialize new one and return consumer object .
+ */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext extends T['TContext'] = T['TContext']>(
   instanceId: string,
@@ -364,17 +429,64 @@ export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext ext
   }
 
   return {
+    /**
+     * Finite state machine instance id.
+     */
     id: instanceId,
+
+    /**
+     * Finite state machine constructor id.
+     */
     constructorId: <string>machineInstance?.constructorId ?? makeFromConstructor,
+
+    /**
+     * Render helper for use finite state machine instance in UI.
+     */
     render: render.bind(null, instanceId) as OmitFirstParam<typeof render<T['TState']>>,
+
+    /**
+     * Subscribe to finite state machine instance state changes.
+     */
     subscribe: subscribe.bind(null, instanceId) as OmitFirstParam<typeof subscribe>,
+
+    /**
+     * Unsubscribe from finite state machine instance state changes.
+     */
     unsubscribe: unsubscribe,
+
+    /**
+     * Get current state of finite state machine instance.
+     */
     getState: getState.bind(null, instanceId) as OmitFirstParam<typeof getState<T['TState'], T['TEventId']>>,
+
+    /**
+     * Get current context of finite state machine instance.
+     */
     getContext: getContext.bind(null, instanceId) as OmitFirstParam<typeof getContext<TContext>>,
+
+    /**
+     * Set context of finite state machine instance.
+     */
     setContext: setContext.bind(null, instanceId) as OmitFirstParam<typeof setContext<TContext>>,
+
+    /**
+     * Transition finite state machine instance to new state.
+     */
     transition: transition.bind(null, instanceId) as OmitFirstParam<typeof transition<T['TEventId'], TContext>>,
+
+    /**
+     * Define signals for finite state machine instance.
+     */
     defineSignals: defineInstanceSignals.bind(null, instanceId) as OmitFirstParam<typeof defineInstanceSignals<T>>,
+
+    /**
+     * Reset finite state machine instance to initial state and context.
+     */
     reset: reset.bind(null, instanceId) as OmitFirstParam<typeof reset>,
+
+    /**
+     * Destroy finite state machine instance object to clear memory.
+     */
     destroy: destroy.bind(null, instanceId) as OmitFirstParam<typeof destroy>,
   } as const;
 };
