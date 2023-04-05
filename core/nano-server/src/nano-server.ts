@@ -374,7 +374,7 @@ export class AlwatrNanoServer {
  */
 export class AlwatrConnection {
   static versionPattern = new RegExp('^/v[0-9]+');
-  protected prefixPattern = this.config.prefixPattern ?? new RegExp('^/api');
+  protected prefixPattern = new RegExp('^/' + (this.config.prefixPattern ?? 'api'));
 
   /**
    * Request URL.

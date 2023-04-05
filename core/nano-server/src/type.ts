@@ -73,9 +73,9 @@ export interface ConnectionConfig {
   /**
    * API URL prefix pattern.
    *
-   * @default `^/api`
+   * @default `api`
    */
-  prefixPattern?: RegExp | string;
+  prefixPattern?: string;
 }
 
 export type ParamKeyType = 'string' | 'number' | 'boolean';
