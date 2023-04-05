@@ -54,7 +54,7 @@
     "@microsoft/eslint-formatter-sarif": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
-    "@web/dev-server": "^0.1.37",
+    "@web/dev-server": "^0.1.38",
     "eslint": "^8.37.0",
     "eslint-config-google": "^0.14.0",
     "eslint-import-resolver-typescript": "^3.5.4",
