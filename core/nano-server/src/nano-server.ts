@@ -76,10 +76,11 @@ export class AlwatrNanoServer {
       keepAliveTimeout: 120_000,
       healthRoute: true,
       allowAllOrigin: false,
+      prefixPattern: 'api',
       ...config,
     };
 
-    this._logger = createLogger('alwatr-nano-server:' + this._config.port);
+    this._logger = createLogger('alwatr/nano-server' + (this._config.port !== 80 ? ':' + this._config.port : ''));
     this._logger.logMethodArgs('constructor', {config: this._config});
 
     this._requestListener = this._requestListener.bind(this);
@@ -310,6 +311,7 @@ export class AlwatrNanoServer {
 
     const connection = new AlwatrConnection(incomingMessage, serverResponse, {
       allowAllOrigin: this._config.allowAllOrigin,
+      prefixPattern: this._config.prefixPattern,
     });
     const route = connection.url.pathname;
 
@@ -373,16 +375,15 @@ export class AlwatrNanoServer {
  * Alwatr Connection
  */
 export class AlwatrConnection {
-  static versionPattern = new RegExp('^/v[0-9]+');
-  protected prefixPattern = new RegExp('^/' + (this.config.prefixPattern ?? 'api'));
+  static _versionPattern = new RegExp('^/v[0-9]+');
 
   /**
    * Request URL.
    */
   readonly url = new URL(
       (this.incomingMessage.url ?? '')
-          .replace(this.prefixPattern, '')
-          .replace(AlwatrConnection.versionPattern, ''),
+          .replace(new RegExp('^/' + this._config.prefixPattern), '')
+          .replace(AlwatrConnection._versionPattern, ''),
       'http://localhost/',
   );
 
@@ -391,14 +392,14 @@ export class AlwatrConnection {
    */
   readonly method = (this.incomingMessage.method ?? 'GET').toUpperCase() as Methods;
 
-  protected _logger = createLogger('alwatr-nano-server-connection');
+  protected _logger = createLogger('alwatr/nano-server-connection');
 
   constructor(
     public incomingMessage: IncomingMessage,
     public serverResponse: ServerResponse,
-    public config: ConnectionConfig,
+    protected _config: ConnectionConfig,
   ) {
-    this._logger.logMethodArgs('new', {method: incomingMessage.method, url: incomingMessage.url});
+    this._logger.logMethodArgs('constructor', {method: incomingMessage.method, url: incomingMessage.url});
   }
 
   /**
