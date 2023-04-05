@@ -1,5 +1,5 @@
 import type {AlwatrTelegramContext} from './context.js';
-import type {StringifyableRecord} from '@alwatr/type';
+import type {MaybePromise, StringifyableRecord} from '@alwatr/type';
 import type {
   ForceReply,
   InlineKeyboardMarkup,
@@ -44,18 +44,12 @@ export interface ConversationOption {
   resetOption?: {
     TextMessageValue?: string;
     callbackDataValue?: string;
-  }
-}
-
-export interface ConversationStorageRecord {
-  get: (chatId: string) => AlwatrConversationConfig | null;
-  set: (chatId: string, config: AlwatrConversationConfig) => void;
-  reset: (chatId: string) => void;
+  };
 }
 
 export type UpdateType<U extends Exclude<keyof Update, 'update_id'>> = Pick<Update, U>;
 
-export type UpdateHandlerFunction<U extends Omit<Update, 'update_id'>> = (update: U) => boolean;
+export type UpdateHandlerFunction<U extends Omit<Update, 'update_id'>> = (update: U) => MaybePromise<boolean>;
 
 export type CommandHandlerFunction = (context: AlwatrTelegramContext<UpdateType<'message'>>) => void;
 export type CallbackQueryHandlerFunction = (context: AlwatrTelegramContext<UpdateType<'callback_query'>>) => void;
@@ -101,6 +95,21 @@ export interface EditMessageReplyMarkupOption {
   message_id?: number;
   inline_message_id?: string;
   reply_markup?: InlineKeyboardMarkup;
+}
+
+export interface CopyMessageOption {
+  chat_id: number | string;
+  message_thread_id?: number;
+  from_chat_id: number | string;
+  message_id: number;
+  caption?: string;
+  parse_mode?: string;
+  caption_entities?: MessageEntity[];
+  disable_notification?: boolean;
+  protect_content?: boolean;
+  reply_to_message_id?: number;
+  allow_sending_without_reply?: boolean;
+  reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
 }
 
 export interface AnswerCallbackQueryOption extends StringifyableRecord {

@@ -12,6 +12,8 @@
   "references": [
     {"path": "../logger"},
     {"path": "../nano-server"},
+    {"path": "../storage-client"},
+    {"path": "../storage-engine"},
     {"path": "../fetch"},
     {"path": "../type"}
   ]

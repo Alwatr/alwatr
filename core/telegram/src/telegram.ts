@@ -19,6 +19,7 @@ import type {Update} from '@grammyjs/types';
 
 export * from './type.js';
 export * from './api.js';
+export * from './storage.js';
 export * from './conversation.js';
 
 export class AlwatrTelegram {
@@ -122,17 +123,17 @@ export class AlwatrTelegram {
     }
   }
 
-  protected handleUpdate(update: Update): void {
+  protected async handleUpdate(update: Update): Promise<void> {
     this.logger.logMethod('handleUpdate');
     if (this.updateHandlerRecord.all != null) {
       for (const handler of this.updateHandlerRecord.all) {
-        if (handler(update)) return;
+        if (await handler(update)) return;
       }
     }
     if (update.message != null) {
       if (this.updateHandlerRecord.textMessage != null) {
         for (const handler of this.updateHandlerRecord.textMessage) {
-          if (handler(update)) return;
+          if (await handler(update)) return;
         }
       }
     }
@@ -140,7 +141,7 @@ export class AlwatrTelegram {
       if (update.callback_query.data != null) {
         if (this.updateHandlerRecord.dataCallbackQuery != null) {
           for (const handler of this.updateHandlerRecord.dataCallbackQuery) {
-            if (handler(update)) return;
+            if (await handler(update)) return;
           }
         }
       }

@@ -35,7 +35,9 @@
     "@alwatr/logger": "^0.31.0",
     "@alwatr/fetch": "^0.31.0",
     "@alwatr/nano-server": "^0.31.0",
-    "typegram": "^4.3.0",
+    "@alwatr/storage-client": "^0.30.0",
+    "@alwatr/storage-engine": "^0.30.0",
+    "@grammyjs/types": "^3.0.3",
     "tslib": "^2.5.0"
   },
   "devDependencies": {

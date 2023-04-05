@@ -3,14 +3,21 @@ import {createLogger} from '@alwatr/logger';
 import {AlwatrTelegramContext} from './context.js';
 
 import type {AlwatrTelegramApi} from './api.js';
-import type {AlwatrConversationConfig, ConversationOption, ConversationStorageRecord, UpdateType} from './type.js';
+import type {AlwatrTelegramStorage} from './storage.js';
+import type {AlwatrConversationConfig, ConversationOption, UpdateType} from './type.js';
+import type {AlwatrDocumentObject, StringifyableRecord} from '@alwatr/type';
 import type {Update} from '@grammyjs/types';
+
+export interface ConversationChat extends AlwatrDocumentObject {
+  conversationRecord: Record<string, AlwatrConversationConfig>;
+}
 
 export class AlwatrTelegramConversation {
   protected logger = createLogger('alwatr/telegram-conversation');
+
   constructor(
     public readonly option: ConversationOption,
-    protected readonly storage: ConversationStorageRecord,
+    protected readonly storage: AlwatrTelegramStorage,
     protected readonly api: AlwatrTelegramApi,
     public readonly config: AlwatrConversationConfig,
   ) {
@@ -18,16 +25,15 @@ export class AlwatrTelegramConversation {
     config.currentState = 'initial';
   }
 
-  updateHandler(update: Omit<Update, 'update_id'>): boolean {
+  async updateHandler(update: Omit<Update, 'update_id'>): Promise<boolean> {
     this.logger.logMethod('updateHandler');
     if (update.message?.text == null) return false;
 
     const chatId = update.message.chat.id;
-    const conversationConfig = this.storage.get(chatId + '');
+    const conversationConfig = (await this.storage.get<ConversationChat>(chatId))?.conversationRecord[this.config.id];
     if (conversationConfig == null || conversationConfig.currentState === 'initial') return false;
 
     let handler;
-
     if (
       (update.callback_query?.data != null &&
         update.callback_query.data === this.option.resetOption?.callbackDataValue) ||
@@ -44,26 +50,48 @@ export class AlwatrTelegramConversation {
     return true;
   }
 
-  getConfig(chatId: string | number): AlwatrConversationConfig {
+  async getConfig(chatId: string | number): Promise<AlwatrConversationConfig | null> {
     this.logger.logMethod('getConfig');
-    let config = this.storage.get(chatId + '');
-    this.logger.logProperty('config', config);
+    const chat = await this.storage.get<ConversationChat>(chatId);
+    if (chat == null) return null;
+
+    let config = chat?.conversationRecord[this.config.id];
     if (config == null) {
       config = this.config;
-      this.storage.set(chatId + '', config);
+      chat.conversationRecord[this.config.id] = config;
+      await this.storage.set<ConversationChat>(chat);
     }
-    this.logger.logProperty('config2', config);
     return config;
   }
 
-  setState(chatId: string | number, conversationConfig: AlwatrConversationConfig, state: string): void {
-    this.logger.logMethodArgs('setState', {chatId, conversationConfig, state});
-    conversationConfig.currentState = state;
-    this.storage.set(chatId + '', conversationConfig);
+  async setState(chatId: string | number, state: string): Promise<void | null> {
+    this.logger.logMethodArgs('setState', {chatId, state});
+    const chat = await this.storage.get<ConversationChat>(chatId);
+    if (chat == null) return null;
+    chat.conversationRecord[this.config.id].currentState = state;
+    await this.storage.set(chat);
   }
 
-  reset(chatId: string | number): void {
+  async setContext(
+      chatId: string | number,
+      context: StringifyableRecord,
+  ): Promise<null | void> {
+    this.logger.logMethodArgs('setState', {chatId});
+    const chat = await this.storage.get<ConversationChat>(chatId);
+    if (chat == null) return null;
+    chat.conversationRecord[this.config.id].context = {
+      ...chat.conversationRecord[this.config.id].context,
+      ...context,
+    };
+    await this.storage.set(chat);
+    console.log('fuck', JSON.stringify(this.storage.get(chat.id)), JSON.stringify(chat));
+  }
+
+  async reset(chatId: string | number): Promise<void | null> {
     this.logger.logMethodArgs('reset', {chatId});
-    this.storage.reset(chatId + '');
+    const chat = await this.storage.get<ConversationChat>(chatId);
+    if (chat == null) return null;
+    delete chat.conversationRecord[this.config.id];
+    this.storage.set<ConversationChat>(chat);
   }
 }

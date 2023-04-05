@@ -7,9 +7,10 @@ import type {
   EditTextMessageOption,
   SendMessageOption,
   AnswerCallbackQueryOption,
+  CopyMessageOption,
 } from './type.js';
 import type {StringifyableRecord} from '@alwatr/type';
-import type {ApiResponse, Message, User} from '@grammyjs/types';
+import type {ApiResponse, Message, MessageId, User} from '@grammyjs/types';
 
 export class AlwatrTelegramApi {
   protected baseApiUrl = `https://api.telegram.org/bot${this.config.token}/`;
@@ -73,6 +74,23 @@ export class AlwatrTelegramApi {
     const responseJson = await response.json();
     if (response.status != 200) {
       this.logger.error('editMessageReplyMarkup', 'edit_message_reply_markup_failed', responseJson);
+      return null;
+    }
+    return responseJson;
+  }
+
+  async copyMessage(
+      option: CopyMessageOption,
+  ): Promise<MessageId | null> {
+    this.logger.logMethodArgs('copyMessage', {option});
+
+    const response = await this.callApi('copyMessage', {
+      ...option,
+    } as unknown as StringifyableRecord);
+
+    const responseJson = await response.json();
+    if (response.status != 200) {
+      this.logger.error('copyMessage', 'copy_message_failed', responseJson);
       return null;
     }
     return responseJson;

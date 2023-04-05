@@ -8,7 +8,7 @@ export interface DayCountdownChat extends AlwatrDocumentObject {
   lastBotMessageId?: number;
   lastDayCountdownSent?: number;
   lastNotifyMessageId?: number;
-  conversationRecord?: Record<string, AlwatrConversationConfig>
+  conversationRecord: Record<string, AlwatrConversationConfig>
 }
 
 export type ChatDetail = ChannelDetail | GroupDetail | PrivateChatDetail | SuperGroupDetail;

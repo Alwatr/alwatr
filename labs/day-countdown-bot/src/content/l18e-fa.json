@@ -19,6 +19,7 @@
     "send_notify_message": "پیام مورد نظر برای ارسال به تمام کاربران را ارسال کنید.",
     "approval_notify_message": "پیام برای تمامی کاربران ارسال شود؟",
     "reset_notify_message": "عملیات کنسل شد!",
+    "notified_successfully_message": "پیام برای ${userCount} نفر با موفقیت ارسال شد",
 
     "day_countdown": "*${dayToLeft} قدم تا طلوع خورشید ♥️*",
     "button_day_countdown": "${dayToLeft} روز تا نیمه شعبان",

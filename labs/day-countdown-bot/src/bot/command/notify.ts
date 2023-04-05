@@ -1,10 +1,10 @@
-import {AlwatrConversationConfig, AlwatrTelegramConversation} from '@alwatr/telegram';
+import {AlwatrTelegramConversation} from '@alwatr/telegram';
 
 import {logger} from '../../config.js';
 import {message} from '../../director/l18e-loader.js';
-import {bot} from '../../lib/bot.js';
-import {chatStorageEngine} from '../../lib/storage.js';
+import {bot, botStorage} from '../../lib/bot.js';
 import {isAdmin} from '../../util/admin.js';
+import {actionAllChat} from '../../util/chat.js';
 
 const notifyConversation = new AlwatrTelegramConversation(
     {
@@ -12,31 +12,36 @@ const notifyConversation = new AlwatrTelegramConversation(
         initial: (context, conversationConfig): void => {
           logger.logMethodArgs(notifyConversation.config.id + '-initial', {conversationConfig});
           context.reply(message('send_notify_message'));
-          notifyConversation.setState(context.chatId, conversationConfig, 'getMessage');
+          notifyConversation.setState(context.chatId, 'getMessage');
         },
         reset: (context, conversationConfig): void => {
           logger.logMethodArgs(notifyConversation.config.id + '-reset', {conversationConfig});
           context.reply(message('reset_notify_message'));
           notifyConversation.reset(context.chatId);
         },
-        getMessage: (context, conversationConfig): void => {
-          context.reply(message('approval_notify_message')); // reply markup
-          notifyConversation.setState(context.chatId, conversationConfig, 'notify');
+        getMessage: async (context, conversationConfig): Promise<void> => {
+          logger.logMethodArgs(notifyConversation.config.id + '-getMessage', {conversationConfig});
+          context.reply(message('approval_notify_message'));
+          await notifyConversation.setContext(context.chatId, {messageId: context.messageId});
+          await notifyConversation.setState(context.chatId, 'notify');
         },
-        notify: (context): void => {
-          // TODO: notify
-          notifyConversation.reset(context.chatId);
+        notify: async (context, conversationConfig): Promise<void> => {
+          logger.logMethodArgs(notifyConversation.config.id + '-notify', {conversationConfig});
+          let i = 0;
+          await actionAllChat(async (chatId) => {
+            const messageId = (await notifyConversation.getConfig(context.chatId))?.context.messageId as number;
+            bot.api.copyMessage({chat_id: chatId, from_chat_id: context.chatId, message_id: messageId});
+            i += 1;
+          });
+          context.reply(message('notified_successfully_message').replace('${userCount}', i + ''));
+          await notifyConversation.reset(context.chatId);
         },
       },
       resetOption: {
         TextMessageValue: '/reset',
       },
     },
-    {
-      get: getStorageHandler,
-      reset: resetStorageHandler,
-      set: setStorageHandler,
-    },
+    botStorage,
     bot.api,
     {
       id: 'notify',
@@ -45,33 +50,15 @@ const notifyConversation = new AlwatrTelegramConversation(
     },
 );
 
-function getStorageHandler(chatId: string): AlwatrConversationConfig | null {
-  const chat = chatStorageEngine.get(chatId);
-  if (chat == null) return null;
-  chat.conversationRecord ??= {};
-  return chat.conversationRecord[notifyConversation.config.id];
-}
-function resetStorageHandler(chatId: string): void {
-  const chat = chatStorageEngine.get(chatId);
-  if (chat == null || chat.conversationRecord == null) return;
-  delete chat.conversationRecord[notifyConversation.config.id];
-  chatStorageEngine.set(chat);
-}
-function setStorageHandler(chatId: string, config: AlwatrConversationConfig): void {
-  const chat = chatStorageEngine.get(chatId);
-  if (chat == null) return;
-  chatStorageEngine.set({
-    ...chat,
-    conversationRecord: {
-      [notifyConversation.config.id]: config,
-    },
-  });
-}
-
 // initial
-bot.defineCommandHandler('notify', (context) => {
+bot.defineCommandHandler('notify', async (context) => {
   if (!context.requireAccess(isAdmin)) return;
-  const config = notifyConversation.getConfig(context.chatId);
+  const config = await notifyConversation.getConfig(context.chatId);
+  if (config == null) {
+    context.reply('sign_in_first');
+    return;
+  }
+
   notifyConversation.option.stateRecord.initial(context, config);
 });
 

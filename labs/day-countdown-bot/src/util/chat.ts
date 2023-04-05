@@ -1,28 +1,23 @@
 import {Chat} from '@grammyjs/types';
 
 import {logger} from '../config.js';
-import {chatStorageEngine} from '../lib/storage.js';
+import {botStorage} from '../lib/bot.js';
 
-import type {ChatDetail} from '../type.js';
+import type {ChatDetail, DayCountdownChat} from '../type.js';
 
-export function isSubscribed(chatId: string | number): boolean {
-  const chat = chatStorageEngine.get(chatId + '');
+export async function isSubscribed(chatId: string | number): Promise<boolean> {
+  const chat = await botStorage.get<DayCountdownChat>(chatId);
   return chat != null && chat.isSubscribe === true;
 }
 
-export function toggleSubscribe(chatId: string | number): boolean | null {
-  const chat = chatStorageEngine.get(chatId + '');
+export async function toggleSubscribe(chatId: string | number): Promise<boolean | null> {
+  const chat = await botStorage.get<DayCountdownChat>(chatId);
   logger.logMethodArgs('toggleSubscribe', {chat});
   if (chat == null) return null;
 
   chat.isSubscribe = !chat.isSubscribe;
-  // TODO: check saved
-  chatStorageEngine.set(chat);
+  botStorage.set<DayCountdownChat>(chat);
   return chat.isSubscribe;
-}
-
-export function isChatExists(chatId: string | number): boolean {
-  return chatStorageEngine.get(chatId + '') != null;
 }
 
 export function addChat(chat: Chat): ChatDetail | null {
@@ -46,10 +41,17 @@ export function addChat(chat: Chat): ChatDetail | null {
     return null;
   }
 
-  chatStorageEngine.set({
+  botStorage.set<DayCountdownChat>({
     chatDetail: chatDetail as ChatDetail,
     id: chat.id + '',
+    conversationRecord: {},
   });
 
   return chatDetail;
+}
+
+export async function actionAllChat(action: (chatId: string) => void): Promise<void> {
+  for await (const chat of botStorage.forEach()) {
+    action(chat.id);
+  }
 }
