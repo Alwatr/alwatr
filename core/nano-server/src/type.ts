@@ -68,7 +68,14 @@ export interface ConnectionConfig {
    *
    * @default false
    */
-  allowAllOrigin: boolean;
+  allowAllOrigin?: boolean;
+
+  /**
+   * API URL prefix pattern.
+   *
+   * @default `api`
+   */
+  prefixPattern?: string;
 }
 
 export type ParamKeyType = 'string' | 'number' | 'boolean';
