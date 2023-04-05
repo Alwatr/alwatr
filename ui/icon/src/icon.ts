@@ -3,7 +3,6 @@ import {
   unsafeSVG,
   customElement,
   property,
-  state,
   html,
   css,
   DirectionMixin,
@@ -66,55 +65,42 @@ export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrBaseElement)) {
     <circle cx="96" cy="256" r="48" />
   </svg>`;
 
-  @property()
-    name?: string;
-
   @property({attribute: false})
-    svg?: string;
+    svg: HTMLTemplateResult | null = null;
 
-  @state()
-  protected _svg?: HTMLTemplateResult | null;
+  private _name = '';
+  set name(val: string) {
+    this._name = val;
+    if (val) this._fetchIcon(val);
+  }
+
+  @property()
+  get name(): string {
+    return this._name;
+  }
 
   override render(): unknown {
     this._logger.logMethod('render');
-
-    if (this.svg != null) {
-      return html`${unsafeSVG(this.svg)}`;
-    }
-
-    return this._svg ?? nothing;
+    return this.svg ?? nothing;
   }
 
-  override requestUpdate(propName?: PropertyKey, oldValue?: unknown, options?: PropertyDeclaration): void {
-    this._logger?.logMethodArgs('requestUpdate', {name: propName});
-    if (propName === 'name') {
-      this._fetchIcon();
-    }
-    super.requestUpdate(propName, oldValue, options);
-  }
+  protected async _fetchIcon(name: string): Promise<void> {
+    this._logger.logMethodArgs?.('_fetchIcon', {name});
+    if (!name) return;
 
-  protected override shouldUpdate(changedProperties: PropertyValues<this>): boolean {
-    return super.shouldUpdate(changedProperties) && (this._svg !== undefined || this.svg != null);
-  }
-
-  protected async _fetchIcon(): Promise<void> {
-    this._logger.logMethodArgs('_fetchIcon', {name: this.name});
-    this._svg = null;
-
-    if (this.name == null || this.name === '') {
-      // if (this._svg != null) this._svg = null;
-      return;
-    }
+    this.svg = null;
 
     let _timer: ReturnType<typeof setTimeout> | null = setTimeout(() => {
+      if (name !== this._name) return;
       _timer = null;
-      this._svg = (this.constructor as typeof AlwatrIcon)._fallback;
+      this.svg = (this.constructor as typeof AlwatrIcon)._fallback;
     }, 3_000);
 
     try {
       const svg = await preloadIcon(this.name);
+      if (name !== this._name) return;
       if (_timer != null) clearTimeout(_timer);
-      this._svg = html`${unsafeSVG(svg)}`;
+      this.svg = html`${unsafeSVG(svg)}`;
     }
     catch (err) {
       this._logger.error('_fetchIcon', 'fetch_failed', err);
