@@ -2,17 +2,12 @@ export interface AlwatrLogger {
   /**
    * Debug state for current scope base on localStorage `ALWATR_LOG` pattern.
    */
-  readonly debug: boolean;
+  readonly devMode: boolean;
 
   /**
-   * Color picked for current scope.
+   * Domain scope defined for this logger.
    */
-  readonly color: string;
-
-  /**
-   * Scope defined for this logger.
-   */
-  readonly scope: string;
+  readonly domain: string;
 
   /**
    * `console.debug` property change.
@@ -20,10 +15,10 @@ export interface AlwatrLogger {
    * Example:
    *
    * ```ts
-   * logger.logProperty('name', 'ali');
+   * logger.logProperty?.('name', 'ali');
    * ```
    */
-  logProperty(property: string, value: unknown): void;
+  logProperty?(property: string, value: unknown): void;
 
   /**
    * `console.debug` function or method calls.
@@ -32,11 +27,11 @@ export interface AlwatrLogger {
    *
    * ```ts
    * function myMethod () {
-   *   logger.logMethod('myMethod');
+   *   logger.logMethod?.('myMethod');
    * }
    * ```
    */
-  logMethod(method: string): void;
+  logMethod?(method: string): void;
 
   /**
    * `console.debug` function or method calls with arguments.
@@ -45,11 +40,11 @@ export interface AlwatrLogger {
    *
    * ```ts
    * function myMethod (a: number, b: number) {
-   *   logger.logMethodArgs('myMethod', {a, b});
+   *   logger.logMethodArgs?.('myMethod', {a, b});
    * }
    * ```
    */
-  logMethodArgs(method: string, args: unknown): void;
+  logMethodArgs?(method: string, args: unknown): void;
 
   /**
    * `console.debug` function or method calls with arguments.
@@ -59,12 +54,12 @@ export interface AlwatrLogger {
    * ```ts
    * function add (a: number, b: number): number {
    *   const result = a + b;
-   *   logger.logMethodFull('add', {a, b}, result);
+   *   logger.logMethodFull?.('add', {a, b}, result);
    *   return result;
    * }
    * ```
    */
-  logMethodFull(method: string, args: unknown, result: unknown): void;
+  logMethodFull?(method: string, args: unknown, result: unknown): void;
 
   /**
    * `console.log` an event or expected accident.
@@ -73,10 +68,10 @@ export interface AlwatrLogger {
    * Example:
    *
    * ```ts
-   * logger.incident('fetch', 'abort_signal', 'aborted signal received', {url: '/test.json'});
+   * logger.incident?.('fetch', 'abort_signal', 'aborted signal received', {url: '/test.json'});
    * ```
    */
-  incident(method: string, code: string, desc: string, ...args: unknown[]): void;
+  incident?(method: string, code: string, desc: string, ...args: unknown[]): void;
 
   /**
    * `console.warn` an unexpected accident or error that you handled like warning.
@@ -111,10 +106,10 @@ export interface AlwatrLogger {
    * Example:
    *
    * ```ts
-   * logger.logOther('foo:', 'bar', {a: 1});
+   * logger.logOther?.('foo:', 'bar', {a: 1});
    * ```
    */
-  logOther(...args: unknown[]): void;
+  logOther?(...args: unknown[]): void;
 
   /**
    * Simple `console.time` with scope.
@@ -122,7 +117,7 @@ export interface AlwatrLogger {
    * Example:
    *
    * ```ts
-   * logger.time('foo');
+   * logger.time?.('foo');
    * ```
    */
   time?(label: string): void;
@@ -133,7 +128,7 @@ export interface AlwatrLogger {
    * Example:
    *
    * ```ts
-   * logger.timeEnd('foo');
+   * logger.timeEnd?.('foo');
    * ```
    */
   timeEnd?(label: string): void;
