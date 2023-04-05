@@ -8,6 +8,7 @@ import type {
   SendMessageOption,
   AnswerCallbackQueryOption,
   CopyMessageOption,
+  SendChatActionOption,
 } from './type.js';
 import type {StringifyableRecord} from '@alwatr/type';
 import type {ApiResponse, Message, MessageId, User} from '@grammyjs/types';
@@ -32,6 +33,7 @@ export class AlwatrTelegramApi {
       option: SendMessageOption = {},
   ): Promise<Message.TextMessage | null> {
     this.logger.logMethodArgs('sendMessage', {text, option});
+    this.sendChatAction({chat_id: chatId, action: 'typing'});
 
     text = this.escapeText(text);
     const response = await this.callApi('sendMessage', {
@@ -49,6 +51,7 @@ export class AlwatrTelegramApi {
   }
 
   async editTextMessage(option: EditTextMessageOption): Promise<Message | ApiResponse<true> | null> {
+    this.sendChatAction({chat_id: option.chat_id, action: 'typing'});
     this.logger.logMethodArgs('editTextMessage', {option});
 
     option.text = this.escapeText(option.text);
@@ -83,6 +86,7 @@ export class AlwatrTelegramApi {
       option: CopyMessageOption,
   ): Promise<MessageId | null> {
     this.logger.logMethodArgs('copyMessage', {option});
+    this.sendChatAction({chat_id: option.chat_id, action: 'typing'});
 
     const response = await this.callApi('copyMessage', {
       ...option,
@@ -95,6 +99,23 @@ export class AlwatrTelegramApi {
     }
     return responseJson;
   }
+  async sendChatAction(
+      option: SendChatActionOption,
+  ): Promise<MessageId | null> {
+    this.logger.logMethodArgs('sendChatAction', {option});
+
+    const response = await this.callApi('sendChatAction', {
+      ...option,
+    } as unknown as StringifyableRecord);
+
+    const responseJson = await response.json();
+    if (response.status != 200) {
+      this.logger.error('sendChatAction', 'send_chat_action_failed', responseJson);
+      return null;
+    }
+    return responseJson;
+  }
+
 
   async getMe(): Promise<User | null> {
     this.logger.logMethod('getMe');

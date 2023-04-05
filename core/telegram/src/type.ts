@@ -28,16 +28,16 @@ export interface AlwatrConversationConfig extends StringifyableRecord {
 
 export interface ConversationOption {
   stateRecord: {
-    initial: <U extends Exclude<keyof Update, 'update_id'>>(
-      context: AlwatrTelegramContext<UpdateType<U>>,
+    initial: (
+      context: AlwatrTelegramContext<UpdateType<'message'>>,
       conversationConfig: AlwatrConversationConfig
     ) => void;
-    reset: <U extends Exclude<keyof Update, 'update_id'>>(
-      context: AlwatrTelegramContext<UpdateType<U>>,
+    reset: (
+      context: AlwatrTelegramContext<UpdateType<'message'>>,
       conversationConfig: AlwatrConversationConfig
     ) => void;
-    [state: string]: <U extends Exclude<keyof Update, 'update_id'>>(
-      context: AlwatrTelegramContext<UpdateType<U>>,
+    [state: string]: (
+      context: AlwatrTelegramContext<UpdateType<'message'>>,
       conversationConfig: AlwatrConversationConfig
     ) => void;
   };
@@ -95,6 +95,23 @@ export interface EditMessageReplyMarkupOption {
   message_id?: number;
   inline_message_id?: string;
   reply_markup?: InlineKeyboardMarkup;
+}
+
+export interface SendChatActionOption {
+  chat_id?: string | number;
+  action:
+    | 'typing'
+    | 'upload_photo'
+    | 'record_video'
+    | 'upload_video'
+    | 'record_voice'
+    | 'upload_voice'
+    | 'upload_document'
+    | 'choose_sticker'
+    | 'find_location'
+    | 'record_video_note'
+    | 'upload_video_note';
+  message_thread_id?: number;
 }
 
 export interface CopyMessageOption {

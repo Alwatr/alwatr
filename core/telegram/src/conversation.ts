@@ -27,9 +27,9 @@ export class AlwatrTelegramConversation {
 
   async updateHandler(update: Omit<Update, 'update_id'>): Promise<boolean> {
     this.logger.logMethod('updateHandler');
-    if (update.message?.text == null) return false;
+    if (update.message == null) return false;
 
-    const chatId = update.message.chat.id;
+    const chatId = update.message?.chat.id;
     const conversationConfig = (await this.storage.get<ConversationChat>(chatId))?.conversationRecord[this.config.id];
     if (conversationConfig == null || conversationConfig.currentState === 'initial') return false;
 
@@ -37,7 +37,7 @@ export class AlwatrTelegramConversation {
     if (
       (update.callback_query?.data != null &&
         update.callback_query.data === this.option.resetOption?.callbackDataValue) ||
-      (update.message.text != null && update.message.text === this.option.resetOption?.TextMessageValue)
+      (update.message?.text != null && update.message.text === this.option.resetOption?.TextMessageValue)
     ) {
       handler = this.option.stateRecord.reset;
     }
@@ -84,7 +84,6 @@ export class AlwatrTelegramConversation {
       ...context,
     };
     await this.storage.set(chat);
-    console.log('fuck', JSON.stringify(this.storage.get(chat.id)), JSON.stringify(chat));
   }
 
   async reset(chatId: string | number): Promise<void | null> {

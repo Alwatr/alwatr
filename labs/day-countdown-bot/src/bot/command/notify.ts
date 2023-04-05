@@ -27,9 +27,13 @@ const notifyConversation = new AlwatrTelegramConversation(
         },
         notify: async (context, conversationConfig): Promise<void> => {
           logger.logMethodArgs(notifyConversation.config.id + '-notify', {conversationConfig});
+          if (context.update.message?.text != 'yes') {
+            await notifyConversation.setState(context.chatId, 'getMessage');
+            return;
+          }
           let i = 0;
           await actionAllChat(async (chatId) => {
-            const messageId = (await notifyConversation.getConfig(context.chatId))?.context.messageId as number;
+            const messageId = conversationConfig.context.messageId as number;
             bot.api.copyMessage({chat_id: chatId, from_chat_id: context.chatId, message_id: messageId});
             i += 1;
           });
@@ -62,4 +66,4 @@ bot.defineCommandHandler('notify', async (context) => {
   notifyConversation.option.stateRecord.initial(context, config);
 });
 
-bot.defineUpdateHandler<'message'>('textMessage', notifyConversation.updateHandler.bind(notifyConversation), 'high');
+bot.defineUpdateHandler('all', notifyConversation.updateHandler.bind(notifyConversation), 'high');
