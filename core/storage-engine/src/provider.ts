@@ -20,7 +20,7 @@ import type {AlwatrDocumentObject} from '@alwatr/type';
  * ```
  */
 export class AlwatrStorageEngineProvider {
-  protected _logger = createLogger('alwatr-storage-provider');
+  protected _logger = createLogger('alwatr/storage-provider', this._config.devMode);
   protected _list: Record<string, AlwatrStorageEngine> = {};
 
   constructor(protected _config: AlwatrStorageEngineProviderConfig) {

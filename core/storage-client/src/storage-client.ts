@@ -61,12 +61,12 @@ globalAlwatr.registeredList.push({
  */
 export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = AlwatrDocumentObject> {
   protected _logger = createLogger(
-      'alwatr-storage-client' + (this.config.name == null ? '' : ':' + this.config.name),
-      this.config.debug,
+      'alwatr/storage-client' + (this.config.name == null ? '' : ':' + this.config.name),
+      this.config.devMode,
   );
 
   /**
-   * Default fetch options.
+   * Default fetch options for service request.
    */
   fetchOption: FetchOptions = {
     url: 'http://' + this.config.host + ':' + this.config.port + '/',

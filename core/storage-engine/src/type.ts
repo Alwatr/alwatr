@@ -56,9 +56,9 @@ export type AlwatrStorageEngineProviderConfig = {
   saveBeautiful?: boolean;
 
   /**
-   * Debug output logs
+   * Enable or disable debug mode.
    *
    * @default undefined Auto detect base in NODE_ENV
    */
-  debug?: boolean;
+  devMode?: boolean;
 };
