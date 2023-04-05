@@ -143,7 +143,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   }
 
   constructor(config: AlwatrStorageEngineConfig) {
-    this._logger = createLogger(`alwatr-storage:${config.name}`);
+    this._logger = createLogger(`alwatr-storage:${config.name}`, config.devMode);
     this._logger.logMethodArgs?.('constructor', config);
     this.forceSave = this.forceSave.bind(this);
 

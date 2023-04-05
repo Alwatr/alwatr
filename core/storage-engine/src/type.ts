@@ -30,7 +30,7 @@ export type AlwatrStorageEngineConfig = {
    *
    * @default undefined Auto detect base on `NODE_ENV`
    */
-  debug?: boolean;
+  devMode?: boolean;
 };
 
 export type AlwatrStorageEngineProviderConfig = {
