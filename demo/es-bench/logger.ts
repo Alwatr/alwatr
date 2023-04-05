@@ -3,7 +3,7 @@ import {createLogger} from '@alwatr/logger';
 
 import {bench} from './bench.js';
 
-const logger = createLogger('logger-bench');
+const logger = createLogger('logger-bench', false);
 
 const getUserList = (): Record<string, Record<string, string>> => {
   const userList: Record<string, Record<string, string>> = {};
