@@ -7,10 +7,8 @@ import {
   css,
   DirectionMixin,
   SignalMixin,
-  PropertyDeclaration,
   nothing,
   type HTMLTemplateResult,
-  type PropertyValues,
 } from '@alwatr/element';
 import {globalAlwatr} from '@alwatr/logger';
 
