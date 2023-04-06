@@ -18,6 +18,7 @@ import '@alwatr/ui-kit/text-field/text-field.js';
 import {getLocalStorageItem} from '@alwatr/util';
 
 import type {RadioGroupContent} from '@alwatr/ui-kit/radio-group/radio-group.js';
+import type {TextFiledContent} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {

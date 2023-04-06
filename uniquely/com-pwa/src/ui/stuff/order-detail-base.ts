@@ -23,7 +23,7 @@ import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {Order, OrderShippingInfo, OrderDraft, OrderItem, Product} from '@alwatr/type/customer-order-management.js';
 import type {IconButtonContent} from '@alwatr/ui-kit/button/icon-button.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
-import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
+import type {TextFiledContent} from '@alwatr/ui-kit/text-field/text-field.js';
 
 export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles: CSSResultGroup = css`
@@ -240,14 +240,17 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
       clickSignalId: 'order_item_qty_remove',
       clickDetail: orderItem,
     };
+    const textFieldContent: TextFiledContent = {
+      type: 'number',
+      name: 'qty-input',
+      value: orderItem.qty + '',
+      inputChangeSignalName: 'qty_text_field_input_change_event',
+      inputChangeSignalDetail: orderItem,
+    };
     return html`
       <alwatr-surface class="number-field" stated tinted="2">
         <alwatr-icon-button .content=${addBtn}></alwatr-icon-button>
-        <alwatr-text-field
-          .type=${'number'}
-          .value=${orderItem.qty + ''}
-          @input-change=${(event: CustomEvent): void => this.qtyInputChange(event, orderItem)}
-        ></alwatr-text-field>
+        <alwatr-text-field .content=${textFieldContent}></alwatr-text-field>
         <alwatr-icon-button .content=${removeBtn}></alwatr-icon-button>
       </alwatr-surface>
     `;
@@ -369,13 +372,5 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     return html`<alwatr-surface tinted>
       <alwatr-order-shipping-form .formData=${formData}></alwatr-order-shipping-form>
     </alwatr-surface>`;
-  }
-
-  protected qtyInputChange(event: CustomEvent, orderItem: OrderItem): void {
-    const target = event.target as AlwatrTextField;
-    this._logger.logMethodArgs?.('qtyInputChange', target.value);
-    const qty = +target.value || 100;
-    orderItem.qty = qty;
-    this.requestUpdate();
   }
 }
