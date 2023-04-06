@@ -134,7 +134,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
       },
     };
     const activityRadioGroupContent: RadioGroupContent = {
-      name: 'activity-type',
+      name: 'activity',
       title: message('activity_type'),
       radioGroup: [
         {label: message('tile_player'), value: 'tile_player'},
@@ -151,7 +151,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
           <alwatr-text-field .content=${textFieldContent} outlined active-outline stated></alwatr-text-field>
         `;
       }),
-      html` <alwatr-radio-group .name=${'activity'} .options=${activityRadioGroupContent}></alwatr-radio-group> `,
+      html` <alwatr-radio-group .name=${'activity'} .content=${activityRadioGroupContent}></alwatr-radio-group> `,
     ];
   }
 
