@@ -111,7 +111,7 @@ export class AlwatrRadioGroup extends AlwatrBaseElement {
   }
 
   private _inputChanged(event: Event): void {
-    this._logger.logMethod('_inputChanged');
+    this._logger.logMethod?.('_inputChanged');
     const target = event.target as HTMLInputElement | HTMLTextAreaElement;
     if (target == null) return;
     const content = this.content || {
