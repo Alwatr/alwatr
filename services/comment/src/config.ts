@@ -8,6 +8,7 @@ export const config = {
     port: process.env.PORT != null ? +process.env.PORT : 8000,
     allowAllOrigin: true,
     accessToken: process.env.ACCESS_TOKEN ?? 'YOUR_SECRET_TOKEN',
+    prefixPattern: 'comment',
   },
   storage: {
     host: process.env.STORAGE_HOST ?? '127.0.0.1',
