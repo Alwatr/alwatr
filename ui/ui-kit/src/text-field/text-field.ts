@@ -40,7 +40,7 @@ export type TextFieldSignalDetail<T extends Stringifyable = Stringifyable> = Str
 export interface TextFiledContent extends StringifyableRecord {
   name: string;
   type: InputType;
-  value: string;
+  value?: string;
   placeholder?: string;
   inputChangeSignalName?: string;
   inputChangeSignalDetail?: Stringifyable;
