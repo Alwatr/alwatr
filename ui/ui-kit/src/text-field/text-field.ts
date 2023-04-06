@@ -1,4 +1,4 @@
-import {css, customElement, html, property, live, type PropertyValues} from '@alwatr/element';
+import {css, customElement, html, property, live, type PropertyValues, ifDefined} from '@alwatr/element';
 import '@alwatr/icon';
 import {UnicodeDigits} from '@alwatr/math';
 import {eventTrigger} from '@alwatr/signal';
@@ -17,7 +17,6 @@ declare global {
 
 export type InputType =
   | 'text'
-  | 'textarea'
   | 'search'
   | 'tel'
   | 'url'
@@ -37,14 +36,18 @@ export type TextFieldSignalDetail<T extends Stringifyable = Stringifyable> = Str
   detail: T;
 }
 
-export interface TextFiledContent extends StringifyableRecord {
+export type TextFiledContent = StringifyableRecord & {
   name: string;
-  type: InputType;
   value?: string;
   placeholder?: string;
   inputChangeSignalName?: string;
   inputChangeSignalDetail?: Stringifyable;
-}
+} & ({
+  type: 'textarea';
+  rows?: number;
+} | {
+  type: InputType;
+})
 
 /**
  * Alwatr outlined text field.
@@ -152,18 +155,18 @@ export class AlwatrTextField extends AlwatrSurface {
     content.value ??= '';
     if (content.type === 'textarea') {
       return html`<textarea
-        .name=${content.name}
-        .placeholder=${content.placeholder}
-        .value=${live(content.value)}
-        .rows=${3}
+        name=${content.name}
+        placeholder=${ifDefined(content.placeholder)}
+        value=${live(content.value)}
+        rows=${ifDefined(content.rows) ?? 3}
         @change=${this._inputChanged}
       ></textarea>`;
     }
     // else
     return html`<input
-      .name=${content.name}
-      .type=${content.type}
-      .placeholder=${content.placeholder}
+      name=${content.name}
+      type=${content.type}
+      placeholder=${ifDefined(content.placeholder)}
       .value=${live(content.value)}
       @change=${this._inputChanged}
     ></input>`;
