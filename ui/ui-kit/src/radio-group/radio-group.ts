@@ -103,24 +103,18 @@ export class AlwatrRadioGroup extends AlwatrBaseElement {
           .name=${content.name}
           .value=${radioItem.value}
           .checked=${live(radioItem.value === content.value)}
-          @change=${this._inputChanged}
+          @change=${this._$inputChanged}
         />
         <label for=${id}>${radioItem.label}</label>
       </div>`;
     });
   }
 
-  private _inputChanged(event: Event): void {
-    this._logger.logMethod?.('_inputChanged');
+  private _$inputChanged(event: Event): void {
+    this._logger.logMethod?.('inputChanged');
     const target = event.target as HTMLInputElement | HTMLTextAreaElement;
-    if (target == null) return;
-    const content = this.content || {
-      type: 'text',
-      name: '',
-      value: '',
-      inputChangeSignalName: '',
-      inputChangeSignalDetail: {},
-    };
+    if (target == null || this.content == null) return;
+    const content = this.content;
 
     content.value = target.value;
     if (content.inputChangeSignalName) {
