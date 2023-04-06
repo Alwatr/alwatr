@@ -102,6 +102,12 @@
     "chat_text_input_placeholder": "پیام را بنویسید",
 
     "submit_order_success_message": "سفارش شماره ${orderId} با موفقیت ثبت شد.",
-    "submit_order_failed_message": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید."
+    "submit_order_failed_message": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید.",
+
+    "page_login_title": "فرم ورود",
+    "page_login_phone_number_placeholder": "شماره همراه",
+    "page_login_password_placeholder": "رمز عبور",
+    "page_login_submit": "ورود",
+    "login_headline": "ورود نمایندگی"
   }
 }
