@@ -20,7 +20,7 @@ declare global {
 export class AlwatrSupplyChainForm extends AlwatrLotteryForm {
   static override formId = 'supply-chain';
 
-  override inputTemplate(): unknown {
+  protected override _inputTemplate(): unknown {
     this._logger.logMethod?.('render');
 
     const textFieldContentRecord = {
