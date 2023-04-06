@@ -9,6 +9,7 @@ import {
   mapObject,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import {eventListener} from '@alwatr/signal';
 import {Stringifyable} from '@alwatr/type';
 import {ladingTypeCS, carTypeCS, timePeriodCS, type OrderShippingInfo} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
@@ -51,6 +52,9 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
   override connectedCallback(): void {
     super.connectedCallback();
     this._loadFormData();
+    this._addSignalListeners(
+        eventListener.subscribe('order_shipping_input_change', this.updateData.bind(this)),
+    );
   }
 
   private _saveFormData(): void {
@@ -77,21 +81,23 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         name: 'recipientName',
         placeholder: message('order_shipping_recipient_name_title'),
         value: this.formData.recipientName,
+        inputChangeSignalName: 'order_shipping_input_change',
       },
       recipientNationalCode: {
         type: 'number',
         name: 'recipientNationalCode',
         placeholder: message('order_shipping_recipient_national_code_title'),
         value: this.formData.recipientNationalCode,
+        inputChangeSignalName: 'order_shipping_input_change',
       },
       address: {
         type: 'textarea',
         name: 'address',
         placeholder: message('order_shipping_address_title'),
         value: this.formData.address,
+        inputChangeSignalName: 'order_shipping_input_change',
       },
     };
-
     const radioGroupContentRecord: Record<string, RadioGroupContent> = {
       carType: {
         name: 'carType',
@@ -130,12 +136,12 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         inputChangeSignalName: 'order_shipping_input_change',
       },
     };
-
     const descriptionTextFieldContent = {
       type: 'textarea',
       name: 'description',
       placeholder: message('order_shipping_description_title'),
       value: this.formData.description,
+      inputChangeSignalName: 'order_shipping_input_change',
     };
 
     return [
