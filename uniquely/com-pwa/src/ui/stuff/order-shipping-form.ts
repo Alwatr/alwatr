@@ -9,6 +9,7 @@ import {
   mapObject,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import {Stringifyable} from '@alwatr/type';
 import {ladingTypeCS, carTypeCS, timePeriodCS, type OrderShippingInfo} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
@@ -16,8 +17,7 @@ import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 import {getLocalStorageItem} from '@alwatr/util';
 
-import type {AlwatrRadioGroup} from '@alwatr/ui-kit/radio-group/radio-group.js';
-import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
+import type {RadioGroupContent} from '@alwatr/ui-kit/radio-group/radio-group.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -146,36 +146,17 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
       mapObject(this, radioGroupContentRecord, (radioGroupContent) => {
         return html`<alwatr-radio-group .content=${radioGroupContent}></alwatr-radio-group>`;
       }),
-      html`
-        <alwatr-radio-group
-          .name=${'carType'}
-          .options=${radioGroupOptions.carType}
-          .value=${this.formData.carType}
-          @input-change=${this._inputChanged}
-        ></alwatr-radio-group>
-        <alwatr-radio-group
-          .name=${'ladingType'}
-          .options=${radioGroupOptions.ladingType}
-          .value=${this.formData.ladingType}
-          @input-change=${this._inputChanged}
-        ></alwatr-radio-group>
-        <alwatr-radio-group
-          .name=${'timePeriod'}
-          .options=${radioGroupOptions.timePeriod}
-          .value=${this.formData.timePeriod}
-          @input-change=${this._inputChanged}
-        ></alwatr-radio-group>
-
-        <alwatr-text-field .content=${descriptionTextFieldContent} outlined active-outline stated></alwatr-text-field>
-      `,
+      html`<alwatr-text-field
+        .content=${descriptionTextFieldContent}
+        outlined
+        active-outline
+        stated
+      ></alwatr-text-field>`,
     ];
   }
 
-  private _inputChanged(event: CustomEvent): void {
-    this._logger.logMethod?.('_inputChanged');
-    const target = event.target as AlwatrTextField | AlwatrRadioGroup;
-    if (target == null) return;
-    this.formData[target.name] = target.value;
+  protected updateData(detail: {name: string; value: string; detail: Stringifyable}): void {
+    this.formData[detail.name] = detail.value;
     this._saveFormData();
   }
 }
