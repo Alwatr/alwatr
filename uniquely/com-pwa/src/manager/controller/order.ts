@@ -317,11 +317,10 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
   },
   {
     signalId: 'qty_text_field_input_change_event',
-    callback: (detail: TextFieldSignalDetail<OrderItem>, fsmInstance): void => {
+    callback: (detail: TextFieldSignalDetail<OrderItem>): void => {
       const qty = detail.value && +detail.value ? +detail.value : 100;
       detail.detail.qty = qty; // TODO: better name
       detail.value = qty + '';
-      fsmInstance.transition('qty_update');
     },
     receivePrevious: 'NextCycle',
   },
