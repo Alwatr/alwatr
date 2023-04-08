@@ -85,7 +85,7 @@ export class AlwatrChatTextInput extends LocalizeMixin(SignalMixin(AlwatrBaseEle
   }
 
   protected sendMessage(): void {
-    this._logger.logMethod('sendMessage');
+    this._logger.logMethod?.('sendMessage');
     if (!this.sendButtonClickSignalId) return;
     const value = this.inputElement?.value.trim() ?? '';
     eventTrigger.dispatch<{value: string}>(this.sendButtonClickSignalId, {value});
