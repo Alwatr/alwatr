@@ -86,6 +86,10 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
         transition: 'edit_shipping',
       },
       {
+        signalId: buttons.backToNewOrder.clickSignalId,
+        transition: 'submit',
+      },
+      {
         signalId: buttons.showRegisteredOrderDetail.clickSignalId,
         callback: (): void => {
           redirect({sectionList: ['order-detail', this.fsm.getContext().orderId ?? '']});
@@ -224,6 +228,10 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
       },
 
       shippingForm: () => {
+        topAppBarContextProvider.setValue({
+          headlineKey: 'page_new_order_headline',
+          startIcon: buttons.backToNewOrder,
+        });
         const order = this.fsm.getContext().newOrder;
         return [
           this.render_part_item_list(order.itemList ?? [], this.fsm.getContext().productStorage, false),

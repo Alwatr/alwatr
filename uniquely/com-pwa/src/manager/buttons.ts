@@ -44,6 +44,11 @@ export const buttons = {
     flipRtl: true,
     clickSignalId: 'back_to_order_list_event',
   },
+  backToNewOrder: {
+    icon: 'arrow-back-outline',
+    flipRtl: true,
+    clickSignalId: 'back_to_new_order_event',
+  },
 
   editItems: {
     labelKey: 'page_new_order_edit_items',
