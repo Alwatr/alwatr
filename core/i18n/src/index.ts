@@ -3,6 +3,7 @@ export {
   setL18eLoader,
   message,
   number,
+  date,
   replaceNumber,
   localeContextConsumer,
   l18eContextConsumer,

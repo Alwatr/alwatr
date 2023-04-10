@@ -230,3 +230,11 @@ export const replaceNumber = (str: string): string => {
   if (activeUnicodeDigits === null) return str;
   return activeUnicodeDigits.translate(str);
 };
+
+/**
+ * Format date to active locale string.
+ */
+export const date = (date: number | Date): string => {
+  if (activeLocaleContext === null) return loadingStr;
+  return new Intl.DateTimeFormat(activeLocaleContext.code).format(date);
+};
