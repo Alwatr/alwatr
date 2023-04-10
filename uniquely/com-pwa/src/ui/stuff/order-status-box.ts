@@ -8,8 +8,7 @@ import {
   LocalizeMixin,
   type PropertyValues,
 } from '@alwatr/element';
-import {message, replaceNumber} from '@alwatr/i18n';
-import {date} from '@alwatr/i18n/core.js';
+import {message, replaceNumber, date} from '@alwatr/i18n';
 import {eventTrigger} from '@alwatr/signal';
 import '@alwatr/ui-kit/card/icon-box.js';
 
