@@ -84,12 +84,12 @@ export class AlwatrOrderStatusBox extends LocalizeMixin(SignalMixin(AlwatrBaseEl
       elevated: 1,
     };
 
-    const createdAt = date(new Date(content?.meta?.created ?? 0));
+    const createdAt = content?.meta?.created ? date(new Date(content.meta.created)) : null;
 
     return html`
       <alwatr-icon-box .content=${iconBoxContent}>
         ${message('order_status_box_status') + ': ' + message('order_status_' + content?.status)} <br />
-        ${message('order_status_box_created') + ': ' + createdAt}
+        ${message('order_status_box_created') + ': ' + (createdAt ?? '')}
       </alwatr-icon-box>
     `;
   }
