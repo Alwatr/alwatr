@@ -58,6 +58,7 @@
     "order_status_box_headline": "سفارش ${orderId}",
     "order_status_box_headline_new": "سفارش جدید",
     "order_status_box_status": "وضعیت سفارش",
+    "order_status_box_created": "تاریخ ثبت سفارش",
 
     "select_product_submit_button": "سفارش محصولات",
 
