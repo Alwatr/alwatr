@@ -71,14 +71,14 @@ export class AlwatrAgencyInfoForm extends LocalizeMixin(SignalMixin(UnresolvedMi
         type: 'number',
         name: 'phoneNumber',
         placeholder: message('agency_info_phone_number_title'),
-        value: this.formData.phoneNumber,
+        value: this.formData.phoneNumber + '',
         inputChangeSignalName: 'agency_info_form_input_change',
       },
       tel: {
         type: 'number',
         name: 'tel',
         placeholder: message('agency_info_tel_title'),
-        value: this.formData.tel,
+        value: this.formData.tel + '',
         inputChangeSignalName: 'agency_info_form_input_change',
       },
       province: {
@@ -106,7 +106,7 @@ export class AlwatrAgencyInfoForm extends LocalizeMixin(SignalMixin(UnresolvedMi
         type: 'number',
         name: 'postalCode',
         placeholder: message('agency_info_postal_code_title'),
-        value: this.formData.postalCode,
+        value: this.formData.postalCode + '',
         inputChangeSignalName: 'agency_info_form_input_change',
       },
       description: {

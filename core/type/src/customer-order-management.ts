@@ -146,12 +146,12 @@ export interface AgencyInfo extends AlwatrDocumentObject {
   name: string;
   token: string;
   shopName: string;
-  phoneNumber: string;
-  tel: string;
+  phoneNumber: number;
+  tel: number;
   province: string;
   city: string;
   address: string;
-  postalCode: string;
+  postalCode: number;
   description?: string;
 }
 
