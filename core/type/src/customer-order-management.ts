@@ -142,6 +142,20 @@ export interface OrderShippingInfo extends StringifyableRecord {
   timePeriod: (typeof timePeriodCS)[number];
 }
 
+export interface AgencyInfo extends AlwatrDocumentObject {
+  name: string;
+  token: string;
+  shopName: string;
+  phoneNumber: string;
+  tel: string;
+  province: string;
+  city: string;
+  address: string;
+  postalCode: string;
+  description?: string;
+}
+
+
 // -- Schema --
 
 export const orderInfoSchema = {
@@ -170,15 +184,13 @@ export const orderInfoSchema = {
 
 export const orderShippingInfoSchema = orderInfoSchema.shippingInfo;
 
-export interface AgencyInfo extends AlwatrDocumentObject {
-  name: string;
-  token: string;
-  shopName: string;
-  phoneNumber: string;
-  tel: string;
-  province: string;
-  city: string;
-  address: string;
-  postalCode: string;
-  description?: string;
-}
+export const agencyInfoSchema = {
+  name: String,
+  shopName: String,
+  phoneNumber: Number,
+  tel: Number,
+  province: String,
+  city: String,
+  address: String,
+  postalCode: Number,
+};

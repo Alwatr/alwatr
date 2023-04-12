@@ -19,6 +19,4 @@ export interface User extends AlwatrDocumentObject {
   email?: string;
 
   phoneNumber?: string;
-
-  token: string;
 }
