@@ -102,6 +102,19 @@
     "chat_text_input_placeholder": "پیام را بنویسید",
 
     "submit_order_success_message": "سفارش شماره ${orderId} با موفقیت ثبت شد.",
-    "submit_order_failed_message": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید."
+    "submit_order_failed_message": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید.",
+
+    "page_agency_info_submit_button": "ثبت نمایندگی",
+    "agency_info_name_title": "نام نماینده",
+    "agency_info_shop_name_title": "نام فروشگاه",
+    "agency_info_phone_number_title": "شماره تلفن",
+    "agency_info_tel_title": "شماره تلفن ثابت",
+    "agency_info_province_title": "نام استان",
+    "agency_info_city_title": "نام شهر",
+    "agency_info_address_title": "آدرس پستی",
+    "agency_info_postal_code_title": "کد پستی",
+    "agency_info_description_title": "توضیحات",
+    "page_agency_info_submitted_successfully": "اطلاعات نمایندگی با موفقیت ثبت شد.",
+    "page_agency_info_submitting_failed": "ثبت اطلاعات نمایندگی با مشکل روبرو شد، لطفا دوباره امتحان کنید!"
   }
 }

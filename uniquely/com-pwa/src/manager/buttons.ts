@@ -94,6 +94,12 @@ export const buttons = {
     icon: 'reload-outline',
     clickSignalId: 'retry_click_event',
   },
+
+  submitAgencyInfoForm: {
+    labelKey: 'page_agency_info_submit_button',
+    icon: 'checkmark-outline',
+    clickSignalId: 'submit_agency_info_form_click_event',
+  },
 } as const;
 
 eventListener.subscribe(buttons.newOrder.clickSignalId, () => {

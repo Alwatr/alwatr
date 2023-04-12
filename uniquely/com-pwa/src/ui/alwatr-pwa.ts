@@ -54,6 +54,11 @@ class AlwatrPwa extends AlwatrPwaElement {
           unresolved
         >...</alwatr-page-new-order>`;
       },
+      'agency-info': () => {
+        topAppBarContextProvider.setValue({headlineKey: 'loading'});
+        import('./page/agency-info.js');
+        return html`<alwatr-page-agency-info unresolved>...</alwatr-page-agency-info>`;
+      },
     },
   };
 
