@@ -170,3 +170,15 @@ export const orderInfoSchema = {
 
 export const orderShippingInfoSchema = orderInfoSchema.shippingInfo;
 
+export interface AgencyInfo extends AlwatrDocumentObject {
+  name: string;
+  token: string;
+  shopName: string;
+  phoneNumber: string;
+  tel: string;
+  province: string;
+  city: string;
+  address: string;
+  postalCode: string;
+  description?: string;
+}
