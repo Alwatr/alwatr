@@ -5,4 +5,5 @@ import {getLocalStorageItem} from '@alwatr/util';
 contextProvider.setValue<User>('user_context', getLocalStorageItem('user_context', {
   id: 'demo-123',
   fullName: 'Demo User',
+  token: 'ADMIN_SECRET_TOKEN',
 }));

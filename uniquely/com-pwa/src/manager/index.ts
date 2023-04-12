@@ -7,4 +7,5 @@ import './context-provider/product-storage.js';
 import './context-provider/user.js';
 import './controller/new-order.js';
 import './controller/order-detail.js';
+import './submit-agency-info-command-handler.js';
 import './submit-order-command-handler.js';
