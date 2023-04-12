@@ -13,7 +13,7 @@ export const config = {
     secret: process.env.SECRET ?? 'YOUR_SECRET',
     algorithm: 'sha256',
     encoding: 'base64url',
-    duration: null,
+    duration: '1y',
   },
   nanoServer: {
     host: process.env.HOST ?? '0.0.0.0',
@@ -25,6 +25,7 @@ export const config = {
   productStoragePrefix: 'product-list-',
   priceStoragePrefix: 'price-list-',
   orderStoragePrefix: 'order-list-',
+  agencyStoragePrefix: 'agency-info/',
   productStorageList: (process.env.PRODUCT_STORAGE_LIST ?? 'temp')
       .split(',')
       .map((f) => f.trim())

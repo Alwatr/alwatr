@@ -85,3 +85,20 @@ client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
 ### Get all orders list of special user
 GET {{apiUrl}}/order-list/?userId=demo-123
 Authorization: Bearer {{userToken}}
+
+### New agecny info
+PATCH {{apiUrl}}/agency/
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+Client-ID: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
+
+{
+  "name": "نماینده سافیت",
+  "shopName": "فروشگاه الوتر",
+  "phone": "0915000000",
+  "tel": "051323455678",
+  "province": "خراسان رضوی",
+  "city": "مشهد",
+  "address": "خیابان ۱۷ شهریور، پلاک ۱۱۲",
+  "postalCode": "3023092392"
+}
