@@ -28,6 +28,10 @@ export class AlwatrPageAgencyInfo extends UnresolvedMixin(SignalMixin(AlwatrBase
       padding: calc(2 * var(--sys-spacing-track));
       gap: var(--sys-spacing-track);
     }
+
+    .btn-container {
+      text-align: end;
+    }
   `;
 
   protected fsm = finiteStateMachineConsumer<AgencyInfoFsm>('agency_info_fsm_' + this.ali, 'agency_info_fsm');
@@ -66,7 +70,9 @@ export class AlwatrPageAgencyInfo extends UnresolvedMixin(SignalMixin(AlwatrBase
           <alwatr-surface tinted>
             <alwatr-agency-info-form .formData=${this.fsm.getContext().agencyInfo}></alwatr-agency-info-form>
           </alwatr-surface>
-          <alwatr-button .content=${buttons.submitAgencyInfoForm}></alwatr-button>
+          <div class="btn-container">
+            <alwatr-button .content=${buttons.submitAgencyInfoForm}></alwatr-button>
+          </div>
         `;
       },
 
@@ -99,7 +105,7 @@ export class AlwatrPageAgencyInfo extends UnresolvedMixin(SignalMixin(AlwatrBase
         return [
           html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
           html`
-            <div class="submit-container">
+            <div class="btn-container">
               <alwatr-button .content=${buttons.retry}></alwatr-button>
             </div>
           `,

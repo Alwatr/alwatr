@@ -10,13 +10,12 @@ import {
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {eventListener} from '@alwatr/signal';
-import {Stringifyable} from '@alwatr/type';
 import '@alwatr/ui-kit/button/button.js';
 import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
 import type {AgencyInfo} from '@alwatr/type/customer-order-management.js';
-import type {TextFiledContent} from '@alwatr/ui-kit/text-field/text-field.js';
+import type {TextFieldSignalDetail, TextFiledContent} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -128,7 +127,7 @@ export class AlwatrAgencyInfoForm extends LocalizeMixin(SignalMixin(UnresolvedMi
     ];
   }
 
-  protected updateData(detail: {name: string; value: string; detail: Stringifyable}): void {
+  protected updateData(detail: TextFieldSignalDetail): void {
     this.formData[detail.name] = detail.value;
   }
 }
