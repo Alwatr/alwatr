@@ -90,7 +90,7 @@ export const buttons = {
     clickSignalId: 'show_registered_order_tracking_click_event',
   },
   retry: {
-    labelKey: 'page_new_order_retry_button',
+    labelKey: 'retry',
     icon: 'reload-outline',
     clickSignalId: 'retry_click_event',
   },

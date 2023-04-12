@@ -1,7 +1,9 @@
 import {FsmTypeHelper, finiteStateMachineProvider} from '@alwatr/fsm';
+import {message} from '@alwatr/i18n';
 import {commandTrigger} from '@alwatr/signal';
-import {AgencyInfo} from '@alwatr/type/src/customer-order-management.js';
+import {AgencyInfo, agencyInfoSchema} from '@alwatr/type/src/customer-order-management.js';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
+import {validator} from '@alwatr/validator';
 
 export const submitAgencyInfoCommandTrigger = commandTrigger.bind<Partial<AgencyInfo>, AgencyInfo | null>(
     'submit-agency-info-command',
@@ -11,6 +13,7 @@ export const agencyInfoFsmConstructor = finiteStateMachineProvider.defineConstru
   initial: 'agencyInfoForm',
   context: {
     agencyInfo: {},
+    registeredAgencyInfo: <AgencyInfo | null> null,
   },
   stateRecord: {
     $all: {
@@ -19,21 +22,31 @@ export const agencyInfoFsmConstructor = finiteStateMachineProvider.defineConstru
     agencyInfoForm: {
       on: {
         submit: {
-          target: 'submittingAgencyInfo',
-          // condition: 'validate_agency_form_info',
+          target: 'submitting',
+          condition: 'validate_agency_form_info',
         },
       },
     },
-    submittingAgencyInfo: {
-      entry: 'submit_agency_info_form',
+    submitting: {
+      entry: 'submit_agency_info',
       on: {
         submit_success: {
-          actions: ['notify_agency_info_submitted_successfully', 'reset_agency_info_form'],
-          target: 'agencyInfoForm',
+          target: 'submitSuccess',
         },
         submit_failed: {
-          actions: ['notify_agency_info_submitting_failed'],
-          target: 'agencyInfoForm',
+          target: 'submitFailed',
+        },
+      },
+    },
+    submitSuccess: {
+      entry: 'reset_agency_info_form',
+      on: {},
+    },
+    submitFailed: {
+      entry: 'notify_agency_info_submitting_failed',
+      on: {
+        retry: {
+          target: 'submitting',
         },
       },
     },
@@ -48,7 +61,7 @@ finiteStateMachineProvider.defineActions<AgencyInfoFsm>('agency_info_fsm', {
     fsmInstance.setContext({agencyInfo: {}});
   },
 
-  submit_agency_info_form: async (fsmInstance) => {
+  submit_agency_info: async (fsmInstance) => {
     const response = await submitAgencyInfoCommandTrigger.requestWithResponse(fsmInstance.getContext().agencyInfo);
     if (response == null) {
       fsmInstance.transition('submit_failed');
@@ -57,18 +70,22 @@ finiteStateMachineProvider.defineActions<AgencyInfoFsm>('agency_info_fsm', {
       fsmInstance.transition('submit_success', {agencyInfo: response});
     }
   },
-
-  notify_agency_info_submitted_successfully: () => {
-    snackbarSignalTrigger.request({
-      messageKey: 'page_agency_info_submitted_successfully',
-    });
-  },
-  notify_agency_info_submitting_failed: () => {
-    snackbarSignalTrigger.request({
-      messageKey: 'page_agency_info_submitting_failed',
-    });
-  },
 });
 
 // condition
-finiteStateMachineProvider.defineActions<AgencyInfoFsm>('agency_info_fsm', {});
+finiteStateMachineProvider.defineActions<AgencyInfoFsm>('agency_info_fsm', {
+  validate_agency_form_info: (fsmInstance) => {
+    try {
+      const agencyInfo = fsmInstance.getContext().agencyInfo;
+      const response = validator<AgencyInfo>(agencyInfoSchema, agencyInfo, true);
+      fsmInstance.setContext({registeredAgencyInfo: response});
+      return true;
+    }
+    catch (err) {
+      snackbarSignalTrigger.request({
+        message: message('page_agency_info_info_not_valid_message'),
+      });
+      return false;
+    }
+  },
+});

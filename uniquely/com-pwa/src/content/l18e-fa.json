@@ -36,7 +36,6 @@
     "page_new_order_detail_button": "مشاهده اطلاعات سفارش",
     "page_new_order_tracking_button": "پیگیری سفارش",
     "page_new_order_submit_failed_message": "خطا در اتصال به اینترنت! لطفا مجدد تلاش کنید.",
-    "page_new_order_retry_button": "تلاش مجدد",
     "page_new_order_shipping_info_not_valid_message": "لطفا اطلاعات بارگیری را تکمیل کنید.",
     "page_new_order_order_not_valid_message": "لطفا مقادیر سفارش رو بازبینی و اصلاح کنید.",
 
@@ -115,6 +114,10 @@
     "agency_info_postal_code_title": "کد پستی",
     "agency_info_description_title": "توضیحات",
     "page_agency_info_submitted_successfully": "اطلاعات نمایندگی با موفقیت ثبت شد.",
-    "page_agency_info_submitting_failed": "ثبت اطلاعات نمایندگی با مشکل روبرو شد، لطفا دوباره امتحان کنید!"
+    "page_agency_info_submitting_failed": "ثبت اطلاعات نمایندگی با مشکل روبرو شد، لطفا دوباره امتحان کنید!",
+    "page_agency_info_info_not_valid_message": "لطفا اطلاعات نمایندگی را پر کنید.",
+    "page_agency_info_submitting_message": "در حال ثبت نمایندگی...",
+    "page_agency_info_submit_success_message": "اطلاعات نمایندگی با موفقیت ثبت شد.",
+    "page_agency_info_submit_failed_message": "خطا در اتصال به اینترنت! لطفا مجدد تلاش کنید."
   }
 }
