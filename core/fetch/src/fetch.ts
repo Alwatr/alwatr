@@ -346,7 +346,7 @@ async function _handleRetryPattern(options: Required<FetchOptions>): Promise<Res
   catch (err) {
     logger.accident('fetch', 'fetch_failed_retry', (err as Error)?.message || 'fetch failed and retry', err);
 
-    if (navigator.onLine === false) {
+    if (globalThis.navigator != null && navigator.onLine === false) {
       throw new Error('offline');
     }
 
