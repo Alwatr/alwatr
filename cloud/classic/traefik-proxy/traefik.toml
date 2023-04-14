@@ -69,7 +69,7 @@
 #
 # Accepted values, in order of severity: "DEBUG", "INFO", "WARN", "ERROR", "FATAL", "PANIC"
 # Messages at and above the selected level will be logged.
-logLevel = "INFO"
+logLevel = "WARN"
 
 [traefikLog]
   # By default the Traefik log is written to stdout in text format.
