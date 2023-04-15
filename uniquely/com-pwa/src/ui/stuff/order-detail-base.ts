@@ -246,7 +246,7 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
         <alwatr-text-field
           .type=${'number'}
           .value=${orderItem.qty + ''}
-          @input-change=${(event: CustomEvent): void => this.qtyInputChange(event, orderItem)}
+          @input-change=${(event: CustomEvent): void => this._onQtyInputChange(event, orderItem)}
         ></alwatr-text-field>
         <alwatr-icon-button .content=${removeBtn}></alwatr-icon-button>
       </alwatr-surface>
@@ -371,9 +371,9 @@ export class AlwatrOrderDetailBase extends LocalizeMixin(SignalMixin(AlwatrBaseE
     </alwatr-surface>`;
   }
 
-  protected qtyInputChange(event: CustomEvent, orderItem: OrderItem): void {
+  protected _onQtyInputChange(event: CustomEvent, orderItem: OrderItem): void {
     const target = event.target as AlwatrTextField;
-    this._logger.logMethodArgs?.('qtyInputChange', target.value);
+    this._logger.logMethodArgs?.('_onQtyInputChange', target.value);
     const qty = +target.value || 100;
     orderItem.qty = qty;
     this.requestUpdate();

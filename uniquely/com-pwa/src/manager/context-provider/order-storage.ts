@@ -17,7 +17,6 @@ orderStorageContextConsumer.fsm.defineSignals([
   {
     signalId: 'user_context',
     callback: (user: User): void => {
-      // (orderStorageContextConsumer.getOptions().queryParameters ??= {}).userId = user.id;
       orderStorageContextConsumer.request({
         queryParameters: {
           userId: user.id,

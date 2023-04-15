@@ -11,6 +11,7 @@ import {
   guard,
   repeat,
   type PropertyValues,
+  when,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/button/button.js';
@@ -54,10 +55,6 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
 
     .reloadingFailed {
       margin-bottom: var(--sys-spacing-track);
-    }
-
-    :host(:not([state='reloadingFailed'])) .reloadingFailed {
-      display: none;
     }
   `;
 
@@ -112,7 +109,7 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
         };
         return html`
           <alwatr-icon-box .content=${content}></alwatr-icon-box>
-          <alwatr-button .content=${buttons.retry}></alwatr-button>
+          <alwatr-button .content=${buttons.reloadOrderStorage}></alwatr-button>
         `;
       },
 
@@ -124,32 +121,34 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
           startIcon: buttons.backToHome,
           endIconList: [buttons.newOrder, {...buttons.reloadOrderStorage, disabled: this.gotState === 'reloading'}],
         });
-        return [
-          this.reloadingFailedTemplate(),
-          guard(orderStorageContextConsumer.getResponse()?.meta.lastUpdated, () => this.orderListTemplate()),
-        ];
+        return html`
+          ${when(this.gotState !== 'complete', this._renderReloadingFailed)}
+          ${guard(orderStorageContextConsumer.getResponse()?.meta.lastUpdated, () => this._renderOrderList())}
+        `;
       },
     });
   }
 
-  private orderListTemplate(): unknown {
-    this._logger.logMethod?.('orderListTemplate');
+  private _renderOrderList(): unknown {
     const orderStorage = orderStorageContextConsumer.getResponse();
+    this._logger.logMethodArgs?.('orderListTemplate', {orderStorage});
     if (orderStorage == null) return;
+
     const orderList = Object.values(orderStorage.data)
-        .sort(
-            (o1, o2) => (o2.meta?.updated || 0) - (o1.meta?.updated || 0),
-        )
+        .sort((o1, o2) => (o2.meta?.updated || 0) - (o1.meta?.updated || 0))
         .slice(0, 15);
-    return repeat(orderList, (order) => order.id, (order) => {
-      return html`<alwatr-order-status-box
-        .content=${order}
-        .clickSignalId=${buttons.showOrderDetail.clickSignalId}
-      ></alwatr-order-status-box>`;
-    });
+
+    return repeat(
+        orderList,
+        (order) => order.id,
+        (order) => html`<alwatr-order-status-box
+          .content=${order}
+          .clickSignalId=${buttons.showOrderDetail.clickSignalId}
+        ></alwatr-order-status-box>`,
+    );
   }
 
-  private reloadingFailedTemplate(): unknown {
+  private _renderReloadingFailed(): unknown {
     return html`<alwatr-surface tinted class="reloadingFailed">
       ${message('page_order_list_reloading_failed')}
     </alwatr-surface>`;
