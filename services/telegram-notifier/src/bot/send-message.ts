@@ -8,7 +8,7 @@ export async function sendMessage(to: string, message: string): Promise<void> {
   logger.logMethodArgs?.('sendMessage', {to, message});
 
   for (const character of escapeCharacter) {
-    message.replaceAll(character, `\\${character}`);
+    message = message.replaceAll(character, `\\${character}`);
   }
 
   const target = storage.get(to);
