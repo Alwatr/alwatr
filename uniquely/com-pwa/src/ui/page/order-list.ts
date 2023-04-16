@@ -122,7 +122,7 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
           endIconList: [buttons.newOrder, {...buttons.reloadOrderStorage, disabled: this.gotState === 'reloading'}],
         });
         return html`
-          ${when(this.gotState !== 'complete', this._renderReloadingFailed)}
+          ${when(this.gotState === 'reloadingFailed', this._renderReloadingFailed)}
           ${guard(orderStorageContextConsumer.getResponse()?.meta.lastUpdated, () => this._renderOrderList())}
         `;
       },
