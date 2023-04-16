@@ -1,5 +1,5 @@
 import {serviceRequest} from '@alwatr/fetch';
-import {commandHandler, contextConsumer, contextProvider, requestableContextConsumer} from '@alwatr/signal';
+import {commandHandler, contextConsumer} from '@alwatr/signal';
 
 
 import {orderStorageContextConsumer} from './context-provider/order-storage.js';

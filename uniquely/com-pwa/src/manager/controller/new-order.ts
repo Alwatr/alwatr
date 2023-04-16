@@ -50,7 +50,7 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
       entry: 'require_server_contexts',
       on: {
         change_order_id: {
-          // prevent tp transition to routing.
+          // prevent to transition to routing.
         },
         context_request_initial: {},
         context_request_offlineLoading: {},
