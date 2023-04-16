@@ -148,14 +148,15 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
       startIcon: buttons.backToOrderList,
       endIconList: [buttons.print, buttons.reload],
     });
+
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const order = this.fsm.getContext().orderStorage!.data[this.fsm.getContext().orderId];
-    return [
-      this.render_part_status(order),
-      this.render_part_item_list(order.itemList, this.fsm.getContext().productStorage),
-      this.render_part_shipping_info(order.shippingInfo),
-      this.render_part_summary(order),
-    ];
+    return html`
+      ${this.render_part_status(order)}
+      ${this.render_part_item_list(order.itemList, this.fsm.getContext().productStorage)}
+      ${this.render_part_shipping_info(order.shippingInfo)}
+      ${this.render_part_summary(order)}
+    `;
   }
 
   protected _render_newOrder(): unknown {
@@ -164,26 +165,21 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
       startIcon: buttons.backToHome,
     });
     const order = this.fsm.getContext().newOrder;
-    return [
-      this.render_part_item_list(order.itemList ?? [], this.fsm.getContext().productStorage, true),
-      html`
-        <div class="btn-container">
-          <alwatr-button .content=${buttons.editItems}></alwatr-button>
-        </div>
-      `,
-      this.render_part_shipping_info(order.shippingInfo),
-      html`
-        <div class="btn-container">
-          <alwatr-button .content=${buttons.editShippingForm}></alwatr-button>
-        </div>
-      `,
-      this.render_part_summary(order),
-      html`
-        <div class="submit-container">
-          <alwatr-button .content=${buttons.submit}></alwatr-button>
-        </div>
-      `,
-    ];
+
+    return html`
+      ${this.render_part_item_list(order.itemList ?? [], this.fsm.getContext().productStorage, true)}
+      <div class="btn-container">
+        <alwatr-button .content=${buttons.editItems}></alwatr-button>
+      </div>
+      ${this.render_part_shipping_info(order.shippingInfo)}
+      <div class="btn-container">
+        <alwatr-button .content=${buttons.editShippingForm}></alwatr-button>
+      </div>
+      ${this.render_part_summary(order)}
+      <div class="submit-container">
+        <alwatr-button .content=${buttons.submit}></alwatr-button>
+      </div>
+    `;
   }
 
   protected _render_contextError(): unknown {
@@ -197,6 +193,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
       headline: message('fetch_failed_headline'),
       description: message('fetch_failed_description'),
     };
+
     return html`
       <alwatr-icon-box .content=${content}></alwatr-icon-box>
       <alwatr-button .icon=${buttons.retry.icon} .clickSignalId=${buttons.retry.clickSignalId}>
@@ -210,48 +207,43 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
       headlineKey: 'page_new_order_headline',
       startIcon: buttons.backToHome,
     });
-    return [
-      html`<alwatr-select-product
+
+    return html`
+      <alwatr-select-product
         .order=${this.fsm.getContext().newOrder}
         .productStorage=${this.fsm.getContext().productStorage}
         .finalPriceStorage=${this.fsm.getContext().finalPriceStorage}
         .priceStorage=${this.fsm.getContext().priceStorage}
-      ></alwatr-select-product>`,
-      html`
-        <div class="btn-container">
-          <alwatr-button .content=${buttons.selectProductSubmit} elevated></alwatr-button>
-        </div>
-      `,
-    ];
+      ></alwatr-select-product>
+      <div class="btn-container">
+        <alwatr-button .content=${buttons.selectProductSubmit} elevated></alwatr-button>
+      </div>
+    `;
   }
 
   protected _render_shippingForm(): unknown {
     const order = this.fsm.getContext().newOrder;
-    return [
-      this.render_part_item_list(order.itemList ?? [], this.fsm.getContext().productStorage, false),
-      this.render_part_shipping_form(order.shippingInfo as Partial<OrderShippingInfo>),
-      html`
-        <div class="btn-container">
-          <alwatr-button .content=${buttons.submitShippingForm}></alwatr-button>
-        </div>
-      `,
-    ];
+    return html`
+      ${this.render_part_item_list(order.itemList ?? [], this.fsm.getContext().productStorage, false)}
+      ${this.render_part_shipping_form(order.shippingInfo as Partial<OrderShippingInfo>)}
+      <div class="btn-container">
+        <alwatr-button .content=${buttons.submitShippingForm}></alwatr-button>
+      </div>
+    `;
   }
 
   protected _render_review(): unknown {
     const order = this.fsm.getContext().newOrder as Order;
-    return [
-      this.render_part_status(order),
-      this.render_part_item_list(order.itemList, this.fsm.getContext().productStorage),
-      this.render_part_shipping_info(order.shippingInfo),
-      this.render_part_summary(order),
-      html`
-        <div class="submit-container">
-          <alwatr-button .content=${buttons.editOrder}></alwatr-button>
-          <alwatr-button .content=${buttons.submitFinal}></alwatr-button>
-        </div>
-      `,
-    ];
+    return html`
+      ${this.render_part_status(order)}
+      ${this.render_part_item_list(order.itemList, this.fsm.getContext().productStorage)}
+      ${this.render_part_shipping_info(order.shippingInfo)}
+      ${this.render_part_summary(order)}
+      <div class="submit-container">
+        <alwatr-button .content=${buttons.editOrder}></alwatr-button>
+        <alwatr-button .content=${buttons.submitFinal}></alwatr-button>
+      </div>
+    `;
   }
 
   protected _render_submitting(): unknown {
@@ -269,15 +261,13 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
       icon: 'cloud-done-outline',
       tinted: 1,
     };
-    return [
-      html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
-      html`
-        <div class="submit-container">
-          <alwatr-button .content=${buttons.showRegisteredOrderDetail}></alwatr-button>
-          <alwatr-button .content=${buttons.newOrder}>${message('page_new_order_headline')}</alwatr-button>
-        </div>
-      `,
-    ];
+    return html`
+      <alwatr-icon-box .content=${content}></alwatr-icon-box>
+      <div class="submit-container">
+        <alwatr-button .content=${buttons.showRegisteredOrderDetail}></alwatr-button>
+        <alwatr-button .content=${buttons.newOrder}>${message('page_new_order_headline')}</alwatr-button>
+      </div>
+    `;
   }
 
   protected _render_submitFailed(): unknown {
@@ -286,14 +276,12 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
       icon: 'cloud-offline-outline',
       tinted: 1,
     };
-    return [
-      html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`,
-      html`
-        <div class="submit-container">
-          <alwatr-button .content=${buttons.retry}></alwatr-button>
-        </div>
-      `,
-    ];
+    return html`
+      <alwatr-icon-box .content=${content}></alwatr-icon-box>
+      <div class="submit-container">
+        <alwatr-button .content=${buttons.retry}></alwatr-button>
+      </div>
+    `;
   }
 
   protected _render_pending(): unknown {
