@@ -362,6 +362,7 @@ export const defineInstanceSignals = <T extends FsmTypeHelper>(
 export const render = <TState extends string = string>(
   instanceId: string,
   states: {[P in TState]: (() => unknown) | TState},
+  thisArg: unknown = null,
 ): unknown => {
   const state = getFsmInstance(instanceId).state;
   logger.logMethodArgs?.('render', {instanceId, state: state.target});
@@ -372,7 +373,7 @@ export const render = <TState extends string = string>(
   }
 
   if (typeof renderFn === 'function') {
-    return renderFn();
+    return renderFn.call(thisArg);
   }
 
   return;
