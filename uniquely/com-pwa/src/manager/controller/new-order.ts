@@ -37,7 +37,7 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
           actions: 'notify_context_reloadingFailed',
         },
         retry: {
-          actions: 'request_server_contexts',
+          actions: 'require_server_contexts',
         },
         context_request_complete: {},
         request_update: {},
@@ -47,9 +47,11 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
       },
     },
     pending: {
-      entry: 'request_server_contexts',
+      entry: 'require_server_contexts',
       on: {
-        change_order_id: {},
+        change_order_id: {
+          // prevent tp transition to routing.
+        },
         context_request_initial: {},
         context_request_offlineLoading: {},
         context_request_onlineLoading: {},
@@ -129,11 +131,11 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
         },
         final_submit: {
           target: 'submitting',
-          actions: 'submit_order',
         },
       },
     },
     submitting: {
+      entry: 'submit_order',
       on: {
         submit_success: {
           target: 'submitSuccess',
@@ -155,7 +157,6 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
       on: {
         retry: {
           target: 'submitting',
-          actions: 'submit_order',
         },
       },
     },
@@ -173,7 +174,7 @@ const serverContextList = [
 
 // entries actions
 finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
-  request_server_contexts: () => {
+  require_server_contexts: () => {
     serverContextList.forEach((contextConsumer) => contextConsumer.require());
   },
 
@@ -235,7 +236,7 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
       const order = fsmInstance.getContext().newOrder;
       if (!order.itemList?.length) throw new Error('invalid_type');
       // else
-      validator(orderInfoSchema, order, true);
+      fsmInstance.getContext().newOrder = validator(orderInfoSchema, order, true);
       return true;
     }
     catch (err) {
