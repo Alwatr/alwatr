@@ -93,7 +93,12 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
       on: {},
     },
     notFound: {
-      on: {},
+      on: {
+        context_request_complete: {
+          target: 'routing',
+          condition: 'is_all_context_ready',
+        },
+      },
     },
     newOrder: {
       entry: 'check_item_list',
@@ -180,7 +185,6 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
 
   routing: (fsmInstance) => {
     const {orderId, orderStorage} = fsmInstance.getContext();
-    console.warn({orderId, orderStorage});
     if (orderId === 'new') {
       fsmInstance.transition('new_order');
     }
@@ -331,6 +335,12 @@ finiteStateMachineProvider.defineSignals<NewOrderFsm>('new_order_fsm', [
   {
     signalId: orderStorageContextConsumer.id,
     callback: (_, fsmInstance): void => {
+      /**
+       * FIXME: When we click on  `showOrderDetail` button(after registering a new order)
+       *  this `callback` will run twice, why?
+       * It that's why the state will change to `notFound` at the first time and then
+       *  will change to 'orderDetail'
+       */
       const orderStorage = orderStorageContextConsumer.getResponse();
       fsmInstance.transition(`context_request_${orderStorageContextConsumer.getState().target}`, {
         orderStorage,
