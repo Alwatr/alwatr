@@ -1,18 +1,39 @@
-import {customElement, html, property, PropertyValues, state, UnresolvedMixin} from '@alwatr/element';
+import {
+  customElement,
+  html,
+  mapIterable,
+  nothing,
+  property,
+  PropertyValues,
+  state,
+  UnresolvedMixin,
+} from '@alwatr/element';
 import {finiteStateMachineConsumer} from '@alwatr/fsm';
-import {message} from '@alwatr/i18n';
+import {message, number, replaceNumber} from '@alwatr/i18n';
+import {calcDiscount} from '@alwatr/math';
 import {redirect} from '@alwatr/router';
+import {AlwatrDocumentStorage} from '@alwatr/type';
+import {
+  Order,
+  OrderDraft,
+  OrderItem,
+  OrderShippingInfo,
+  Product,
+  tileQtyStep,
+} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/card/icon-box.js';
+import {IconButtonContent} from '@alwatr/ui-kit/src/button/icon-button.js';
+import {AlwatrTextField} from '@alwatr/ui-kit/src/text-field/text-field.js';
 
-
+import {config} from '../../config.js';
 import {buttons} from '../../manager/buttons.js';
 import {scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
 import {AlwatrOrderDetailBase} from '../stuff/order-detail-base.js';
 import '../stuff/select-product.js';
 
 import type {NewOrderFsm} from '../../manager/controller/new-order.js';
-import type {Order, OrderShippingInfo} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -31,77 +52,82 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
     gotState = this.fsm.getState().target;
 
   set orderId(orderId: string) {
+    debugger;
     this.fsm.transition('change_order_id', {orderId});
   }
 
   @property({type: String})
   get orderId(): string {
+    debugger;
+
     return this.fsm.getContext().orderId;
   }
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._addSignalListeners(this.fsm.defineSignals([
-      {
-        callback: (): void => {
-          const state = this.fsm.getState();
-          this.gotState = state.target;
-          if (state.by === 'request_update') {
-            this.requestUpdate();
-          }
-        },
-        receivePrevious: 'NextCycle',
-      },
-      {
-        signalId: buttons.submit.clickSignalId,
-        transition: 'submit',
-      },
-      {
-        signalId: buttons.submitShippingForm.clickSignalId,
-        transition: 'submit',
-      },
-      {
-        signalId: buttons.selectProductSubmit.clickSignalId,
-        transition: 'submit',
-      },
-      {
-        signalId: buttons.editOrder.clickSignalId,
-        transition: 'back',
-      },
-      {
-        signalId: buttons.submitFinal.clickSignalId,
-        transition: 'final_submit',
-      },
-      {
-        signalId: buttons.editItems.clickSignalId,
-        transition: 'select_product',
-      },
-      {
-        signalId: buttons.retry.clickSignalId,
-        transition: 'retry',
-      },
-      {
-        signalId: buttons.editShippingForm.clickSignalId,
-        transition: 'edit_shipping',
-      },
-      {
-        signalId: buttons.showRegisteredOrderDetail.clickSignalId,
-        callback: (): void => {
-          redirect({sectionList: ['order-detail', this.fsm.getContext().orderId ?? '']});
-        },
-      },
-      {
-        signalId: buttons.backToOrderList.clickSignalId,
-        callback: (): void => redirect({sectionList: ['order-list']}),
-      },
-      {
-        signalId: buttons.newOrder.clickSignalId,
-        callback: (): void => {
-          this.fsm.transition('new_order');
-        },
-      },
-    ]));
+    this._addSignalListeners(
+        this.fsm.defineSignals([
+          {
+            callback: (): void => {
+              const state = this.fsm.getState();
+              this.gotState = state.target;
+              if (state.by === 'request_update') {
+                this.requestUpdate();
+              }
+            },
+            receivePrevious: 'NextCycle',
+          },
+          {
+            signalId: buttons.submit.clickSignalId,
+            transition: 'submit',
+          },
+          {
+            signalId: buttons.submitShippingForm.clickSignalId,
+            transition: 'submit',
+          },
+          {
+            signalId: buttons.selectProductSubmit.clickSignalId,
+            transition: 'submit',
+          },
+          {
+            signalId: buttons.editOrder.clickSignalId,
+            transition: 'back',
+          },
+          {
+            signalId: buttons.submitFinal.clickSignalId,
+            transition: 'final_submit',
+          },
+          {
+            signalId: buttons.editItems.clickSignalId,
+            transition: 'select_product',
+          },
+          {
+            signalId: buttons.retry.clickSignalId,
+            transition: 'retry',
+          },
+          {
+            signalId: buttons.editShippingForm.clickSignalId,
+            transition: 'edit_shipping',
+          },
+          {
+            signalId: buttons.showRegisteredOrderDetail.clickSignalId,
+            callback: (): void => {
+              redirect({sectionList: ['order-detail', this.fsm.getContext().orderId ?? '']});
+            },
+          },
+          {
+            signalId: buttons.backToOrderList.clickSignalId,
+            callback: (): void => redirect({sectionList: ['order-list']}),
+          },
+          {
+            signalId: buttons.newOrder.clickSignalId,
+            callback: (): void => {
+              this.fsm.transition('new_order');
+            },
+          },
+        ]),
+    );
   }
 
   protected override update(changedProperties: PropertyValues<this>): void {
@@ -113,23 +139,28 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
 
   protected override render(): unknown {
     this._logger.logMethod?.('render');
-    return this.fsm.render({
-      routing: 'pending',
-      pending: this._render_pending,
-      notFound: this._render_notFound,
-      orderDetail: this._render_orderDetail,
-      newOrder: this._render_newOrder,
-      contextError: this._render_contextError,
-      selectProduct: this._render_selectProduct,
-      shippingForm: this._render_shippingForm,
-      review: this._render_review,
-      submitting: this._render_submitting,
-      submitSuccess: this._render_submitSuccess,
-      submitFailed: this._render_submitFailed,
-    }, this);
+    return this.fsm.render(
+        {
+          routing: 'pending',
+          pending: this._render_pending,
+          notFound: this._render_notFound,
+          orderDetail: this._render_orderDetail,
+          newOrder: this._render_newOrder,
+          contextError: this._render_contextError,
+          selectProduct: this._render_selectProduct,
+          shippingForm: this._render_shippingForm,
+          review: this._render_review,
+          submitting: this._render_submitting,
+          submitSuccess: this._render_submitSuccess,
+          submitFailed: this._render_submitFailed,
+        },
+        this,
+    );
   }
 
   protected _render_notFound(): unknown {
+    this._logger.logMethod?.('_render_notFound');
+
     topAppBarContextProvider.setValue({
       headlineKey: 'page_order_list_headline',
       startIcon: buttons.backToOrderList,
@@ -143,6 +174,8 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   }
 
   protected _render_orderDetail(): unknown {
+    this._logger.logMethod?.('_render_orderDetail');
+
     topAppBarContextProvider.setValue({
       headlineKey: 'page_order_list_headline',
       startIcon: buttons.backToOrderList,
@@ -151,15 +184,17 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const order = this.fsm.getContext().orderStorage!.data[this.fsm.getContext().orderId];
-    return html`
-      ${this.render_part_status(order)}
-      ${this.render_part_item_list(order.itemList, this.fsm.getContext().productStorage)}
-      ${this.render_part_shipping_info(order.shippingInfo)}
-      ${this.render_part_summary(order)}
-    `;
+    return [
+      this._render_status(order),
+      this._render_itemList(order.itemList, this.fsm.getContext().productStorage),
+      this._render_shippingInfo(order.shippingInfo),
+      this._render_summary(order),
+    ];
   }
 
   protected _render_newOrder(): unknown {
+    this._logger.logMethod?.('_render_newOrder');
+
     topAppBarContextProvider.setValue({
       headlineKey: 'page_new_order_headline',
       startIcon: buttons.backToHome,
@@ -167,15 +202,15 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
     const order = this.fsm.getContext().newOrder;
 
     return html`
-      ${this.render_part_item_list(order.itemList ?? [], this.fsm.getContext().productStorage, true)}
+      ${this._render_itemList(order.itemList ?? [], this.fsm.getContext().productStorage, true)}
       <div class="btn-container">
         <alwatr-button .content=${buttons.editItems}></alwatr-button>
       </div>
-      ${this.render_part_shipping_info(order.shippingInfo)}
+      ${this._render_shippingInfo(order.shippingInfo)}
       <div class="btn-container">
         <alwatr-button .content=${buttons.editShippingForm}></alwatr-button>
       </div>
-      ${this.render_part_summary(order)}
+      ${this._render_summary(order)}
       <div class="submit-container">
         <alwatr-button .content=${buttons.submit}></alwatr-button>
       </div>
@@ -183,6 +218,8 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   }
 
   protected _render_contextError(): unknown {
+    this._logger.logMethod?.('_render_contextError');
+
     topAppBarContextProvider.setValue({
       headlineKey: 'page_order_list_headline',
       startIcon: buttons.backToHome,
@@ -203,6 +240,8 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   }
 
   protected _render_selectProduct(): unknown {
+    this._logger.logMethod?.('_render_selectProduct');
+
     topAppBarContextProvider.setValue({
       headlineKey: 'page_new_order_headline',
       startIcon: buttons.backToHome,
@@ -222,10 +261,13 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   }
 
   protected _render_shippingForm(): unknown {
+    this._logger.logMethod?.('_render_shippingForm');
+
     const order = this.fsm.getContext().newOrder;
     return html`
-      ${this.render_part_item_list(order.itemList ?? [], this.fsm.getContext().productStorage, false)}
-      ${this.render_part_shipping_form(order.shippingInfo as Partial<OrderShippingInfo>)}
+      <alwatr-surface tinted>
+        <alwatr-order-shipping-form .formData=${order.shippingInfo}></alwatr-order-shipping-form>
+      </alwatr-surface>
       <div class="btn-container">
         <alwatr-button .content=${buttons.submitShippingForm}></alwatr-button>
       </div>
@@ -233,20 +275,26 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   }
 
   protected _render_review(): unknown {
+    this._logger.logMethod?.('_render_review');
+
     const order = this.fsm.getContext().newOrder as Order;
-    return html`
-      ${this.render_part_status(order)}
-      ${this.render_part_item_list(order.itemList, this.fsm.getContext().productStorage)}
-      ${this.render_part_shipping_info(order.shippingInfo)}
-      ${this.render_part_summary(order)}
-      <div class="submit-container">
-        <alwatr-button .content=${buttons.editOrder}></alwatr-button>
-        <alwatr-button .content=${buttons.submitFinal}></alwatr-button>
-      </div>
-    `;
+    return [
+      this._render_status(order),
+      this._render_itemList(order.itemList, this.fsm.getContext().productStorage),
+      this._render_shippingInfo(order.shippingInfo),
+      this._render_summary(order),
+      html`
+        <div class="submit-container">
+          <alwatr-button .content=${buttons.editOrder}></alwatr-button>
+          <alwatr-button .content=${buttons.submitFinal}></alwatr-button>
+        </div>
+      `,
+    ];
   }
 
   protected _render_submitting(): unknown {
+    this._logger.logMethod?.('_render_submitting');
+
     const content: IconBoxContent = {
       headline: message('page_new_order_submitting_message'),
       icon: 'cloud-upload-outline',
@@ -271,6 +319,8 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   }
 
   protected _render_submitFailed(): unknown {
+    this._logger.logMethod?.('_render_submitFailed');
+
     const content: IconBoxContent = {
       headline: message('page_new_order_submit_failed_message'),
       icon: 'cloud-offline-outline',
@@ -285,6 +335,8 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
   }
 
   protected _render_pending(): unknown {
+    this._logger.logMethod?.('_render_pending');
+
     topAppBarContextProvider.setValue({
       headlineKey: 'loading',
       startIcon: buttons.backToHome,
@@ -297,5 +349,256 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(AlwatrOrderDetailBase) {
     };
 
     return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+  }
+
+  protected _render_message(key: string, icon: string): unknown {
+    this._logger.logMethod?.('_render_message');
+    const content: IconBoxContent = {
+      headline: message(key),
+      icon: icon,
+      tinted: 1,
+    };
+
+    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+  }
+
+  protected _render_status(order: Order | OrderDraft): unknown {
+    this._logger.logMethod?.('_render_status');
+    return html`<alwatr-order-status-box .content=${order}></alwatr-order-status-box>`;
+  }
+
+  protected _render_itemList(
+      itemList: Array<OrderItem>,
+      productStorage: AlwatrDocumentStorage<Product> | null | undefined,
+      editable = false,
+  ): unknown {
+    this._logger.logMethod?.('_render_itemList');
+
+    return mapIterable(this, itemList, (item) => {
+      const product = productStorage?.data[item.productId];
+      if (product == null) {
+        this._logger.error('itemDetailTemplate', 'product_not_found', {productId: item.productId});
+        return html`<alwatr-surface tinted>${message('order_item_not_exist')}</alwatr-surface>`;
+      }
+
+      item.qty ||= 100;
+
+      return html`<alwatr-surface tinted class="product-item">
+        <img src="${config.cdn + 'medium/' + product.image.id}" />
+        <div class="detail-container">
+          <div>${product.title.fa}</div>
+          <div>
+            <span>${message('order_item_price')}:</span>
+            <span>
+              <span>${number(item.price)}</span>
+              <alwatr-icon .name=${'toman'}></alwatr-icon>
+            </span>
+          </div>
+          <div>
+            <span>${message('order_item_final_price')}:</span>
+            <span>
+              <span>${number(item.finalPrice)}</span>
+              <alwatr-icon .name=${'toman'}></alwatr-icon>
+            </span>
+          </div>
+          <div>
+            <span>${message('order_item_qty_m2')}:</span>
+            <span><span>${number(item.qty * tileQtyStep)}</span> m²</span>
+          </div>
+          <div>
+            <span>${message('order_item_qty_tile')}:</span>
+            <span>
+              <span>${number(item.qty * 10)}</span>
+              <alwatr-icon .name=${'stop-outline'}></alwatr-icon>
+            </span>
+          </div>
+          <div>
+            <span>${message('order_item_qty_box')}:</span>
+            <span>
+              <span>${number(item.qty)}</span>
+              <alwatr-icon .name=${'cube-outline'}></alwatr-icon>
+            </span>
+          </div>
+          <div>
+            <span>${message('order_item_final_total_price')}:</span>
+            <span>
+              <span>${number(item.qty * tileQtyStep * item.finalPrice)}</span>
+              <alwatr-icon .name=${'toman'}></alwatr-icon>
+            </span>
+          </div>
+          <div>
+            <span>${message('order_item_total_price')}:</span>
+            <span>
+              <span>${number(item.qty * tileQtyStep * item.price)}</span>
+              <alwatr-icon .name=${'toman'}></alwatr-icon>
+            </span>
+          </div>
+          <div>
+            <span>${message('order_item_discount')}:</span>
+            <span>
+              <span>
+                (٪${number(calcDiscount(item.price, item.finalPrice))})
+                ${number(item.qty * tileQtyStep * (item.price - item.finalPrice))}
+              </span>
+              <alwatr-icon .name=${'toman'}></alwatr-icon>
+            </span>
+          </div>
+          ${this._render_itemQtyInput(item, editable)}
+        </div>
+      </alwatr-surface>`;
+    });
+  }
+
+  protected _render_itemQtyInput(orderItem: OrderItem, editable: boolean): unknown {
+    this._logger.logMethod?.('_render_itemQtyInput');
+
+    if (!editable) return;
+
+    // TODO: new element
+    const addBtn: IconButtonContent = {
+      icon: 'add-outline',
+      clickSignalId: 'order_item_qty_add',
+      clickDetail: orderItem,
+    };
+    const removeBtn: IconButtonContent = {
+      icon: 'remove-outline',
+      clickSignalId: 'order_item_qty_remove',
+      clickDetail: orderItem,
+    };
+
+    return html`
+      <alwatr-surface class="number-field" stated tinted="2">
+        <alwatr-icon-button .content=${addBtn}></alwatr-icon-button>
+        <alwatr-text-field
+          .type=${'number'}
+          .value=${orderItem.qty + ''}
+          @input-change=${(event: CustomEvent): void => this._onQtyInputChange(event, orderItem)}
+        ></alwatr-text-field>
+        <alwatr-icon-button .content=${removeBtn}></alwatr-icon-button>
+      </alwatr-surface>
+    `;
+  }
+
+  protected _render_shippingInfo(shippingInfo?: Partial<OrderShippingInfo>): unknown {
+    this._logger.logMethod?.('_render_shippingInfo');
+
+    const nullStr = '…' as const;
+
+    return html`<alwatr-surface tinted>
+      <div>
+        <div>
+          <span>${message('order_shipping_recipient_name_title')}:</span>
+          <span>${shippingInfo?.recipientName || nullStr}</span>
+        </div>
+        <div>
+          <span>${message('order_shipping_recipient_national_code_title')}:</span>
+          <span>${replaceNumber(shippingInfo?.recipientNationalCode || nullStr)}</span>
+        </div>
+        <div>
+          <span>${message('order_shipping_address_title')}:</span>
+          <span>${replaceNumber(shippingInfo?.address || nullStr)}</span>
+        </div>
+        <div>
+          <span>${message('order_shipping_car_type_title')}:</span>
+          <span
+            >${shippingInfo?.carType ? message('order_shipping_car_type_key_' + shippingInfo?.carType) : nullStr}</span
+          >
+        </div>
+        <div>
+          <span>${message('order_shipping_lading_type_title')}:</span>
+          <span
+            >${shippingInfo?.ladingType
+              ? message('order_shipping_lading_type_key_' + shippingInfo?.ladingType)
+              : nullStr}</span
+          >
+        </div>
+        <div>
+          <span>${message('order_shipping_time_period_title')}:</span>
+          <span
+            >${shippingInfo?.timePeriod
+              ? message('order_shipping_time_period_key_' + shippingInfo.timePeriod)
+              : nullStr}</span
+          >
+        </div>
+        <div>
+          <span>${message('order_shipping_shipment_price_title')}:</span>
+          <span>${message('order_shipping_shipment_price_value')}</span>
+        </div>
+        <div>
+          <span>${message('order_shipping_description_title')}:</span>
+          <span>${shippingInfo?.description || message('order_shipping_info_empty_description')}</span>
+        </div>
+      </div>
+    </alwatr-surface>`;
+  }
+
+  protected _render_summary(order: Order | OrderDraft): unknown {
+    this._logger.logMethod?.('_render_summary');
+    if (!order.itemList?.length) return nothing;
+
+    const totalPrice = order.totalPrice ?? 0;
+    const finalTotalPrice = order.finalTotalPrice ?? 0;
+    const ladingPrice = order.ladingPrice ?? 1_850_000;
+    const ladingPriceTemplate =
+      ladingPrice > 0
+        ? html`${number(ladingPrice)}<alwatr-icon .name=${'toman'}></alwatr-icon>`
+        : message('order_summary_no_lading_price_yet');
+
+    return html`<alwatr-surface tinted>
+      <div class="detail-container">
+        <div>
+          <span>${message('order_summary_total_price')}:</span>
+          <span>
+            <span>${number(totalPrice)}</span>
+            <alwatr-icon .name=${'toman'}></alwatr-icon>
+          </span>
+        </div>
+        <div>
+          <span>${message('order_summary_total_final_price')}:</span>
+          <span>
+            <span>${number(finalTotalPrice)}</span>
+            <alwatr-icon .name=${'toman'}></alwatr-icon>
+          </span>
+        </div>
+        <div>
+          <span>${message('order_summary_discount')}:</span>
+          <span>
+            <span>
+              (٪${number(calcDiscount(totalPrice, finalTotalPrice))}) ${number(totalPrice - finalTotalPrice)}
+            </span>
+            <alwatr-icon .name=${'toman'}></alwatr-icon>
+          </span>
+        </div>
+        <div>
+          <span>${message('order_summary_lading_price')}:</span>
+          <span>${ladingPriceTemplate}</span>
+        </div>
+        <div>
+          <span>${message('order_summary_discount_after_lading_price')}:</span>
+          <span>
+            <span>
+              (٪${number(calcDiscount(totalPrice, finalTotalPrice + ladingPrice))})
+              ${number(totalPrice - finalTotalPrice - ladingPrice)}
+            </span>
+            <alwatr-icon .name=${'toman'}></alwatr-icon>
+          </span>
+        </div>
+        <div>
+          <span>${message('order_summary_final_total_price')}:</span>
+          <span>
+            <span>${number(finalTotalPrice + ladingPrice)}</span>
+            <alwatr-icon .name=${'toman'}></alwatr-icon>
+          </span>
+        </div>
+      </div>
+    </alwatr-surface>`;
+  }
+
+  protected _onQtyInputChange(event: CustomEvent, orderItem: OrderItem): void {
+    const target = event.target as AlwatrTextField;
+    this._logger.logMethodArgs?.('_onQtyInputChange', target.value);
+    const qty = +target.value || 100;
+    orderItem.qty = qty;
+    this.requestUpdate();
   }
 }
