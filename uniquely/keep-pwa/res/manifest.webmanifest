@@ -1,0 +1,19 @@
+{
+  "short_name": "تولید‌کننده اسکوپ سنگ‌نما",
+  "name": "تولید‌کننده اسکوپ سنگ‌نما",
+  "description": "نرم‌افزار یکپارچه اسکوپ سنگ‌نما",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#2b4f9c",
+  "background_color": "#faf8ff",
+  "orientation": "portrait",
+  "default_locale": "fa",
+  "icons": [
+    {"src": "/image/icon-192-maskable.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable"},
+    {"src": "/image/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable"},
+    {"src": "/image/favicon.ico", "type": "image/x-icon", "sizes": "32x32"},
+    {"src": "/image/icon-192.png", "type": "image/png", "sizes": "192x192"},
+    {"src": "/image/icon-512.png", "type": "image/png", "sizes": "512x512"}
+  ],
+  "screenshots": []
+}
