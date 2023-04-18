@@ -4,8 +4,8 @@
   "description": "نرم‌افزار یکپارچه اسکوپ سنگ‌نما",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#2b4f9c",
-  "background_color": "#faf8ff",
+  "theme_color": "#c24000",
+  "background_color": "#fffcfa",
   "orientation": "portrait",
   "default_locale": "fa",
   "icons": [
