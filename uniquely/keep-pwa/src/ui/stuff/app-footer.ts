@@ -1,4 +1,5 @@
 import {customElement, AlwatrBaseElement, css, html} from '@alwatr/element';
+import {message} from '@alwatr/i18n';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -36,6 +37,7 @@ export class AlwatrPageHome extends AlwatrBaseElement {
   override render(): unknown {
     this._logger.logMethod?.('render');
     return html`
+      <div>${message('app_footer_description')}</div>
       <div class="version">Keep v${_ALWATR_VERSION_}</div>
     `;
   }
