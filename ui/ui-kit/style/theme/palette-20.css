@@ -1,0 +1,111 @@
+:root {
+  /* HCT 20 */
+
+  /* primary */
+  --ref-palette-primary0: 20, 48%, 0%;
+  --ref-palette-primary10: 20, 48%, 10%;
+  --ref-palette-primary20: 20, 48%, 20%;
+  --ref-palette-primary25: 20, 48%, 25%;
+  --ref-palette-primary30: 20, 48%, 30%;
+  --ref-palette-primary35: 20, 48%, 35%;
+  --ref-palette-primary40: 20, 48%, 40%;
+  --ref-palette-primary50: 20, 48%, 50%;
+  --ref-palette-primary60: 20, 48%, 60%;
+  --ref-palette-primary70: 20, 48%, 70%;
+  --ref-palette-primary80: 20, 48%, 80%;
+  --ref-palette-primary90: 20, 48%, 90%;
+  --ref-palette-primary95: 20, 48%, 95%;
+  --ref-palette-primary98: 20, 48%, 98%;
+  --ref-palette-primary99: 20, 48%, 99%;
+  --ref-palette-primary100: 20, 48%, 100%;
+
+  /* secondary */
+  --ref-palette-secondary0: 20, 16%, 0%;
+  --ref-palette-secondary10: 20, 16%, 10%;
+  --ref-palette-secondary20: 20, 16%, 20%;
+  --ref-palette-secondary25: 20, 16%, 25%;
+  --ref-palette-secondary30: 20, 16%, 30%;
+  --ref-palette-secondary35: 20, 16%, 35%;
+  --ref-palette-secondary40: 20, 16%, 40%;
+  --ref-palette-secondary50: 20, 16%, 50%;
+  --ref-palette-secondary60: 20, 16%, 60%;
+  --ref-palette-secondary70: 20, 16%, 70%;
+  --ref-palette-secondary80: 20, 16%, 80%;
+  --ref-palette-secondary90: 20, 16%, 90%;
+  --ref-palette-secondary95: 20, 16%, 95%;
+  --ref-palette-secondary98: 20, 16%, 98%;
+  --ref-palette-secondary99: 20, 16%, 99%;
+  --ref-palette-secondary100: 20, 16%, 100%;
+
+  /* tertiary */
+  --ref-palette-tertiary0: 80, 24%, 0%;
+  --ref-palette-tertiary10: 80, 24%, 10%;
+  --ref-palette-tertiary20: 80, 24%, 20%;
+  --ref-palette-tertiary25: 80, 24%, 25%;
+  --ref-palette-tertiary30: 80, 24%, 30%;
+  --ref-palette-tertiary35: 80, 24%, 35%;
+  --ref-palette-tertiary40: 80, 24%, 40%;
+  --ref-palette-tertiary50: 80, 24%, 50%;
+  --ref-palette-tertiary60: 80, 24%, 60%;
+  --ref-palette-tertiary70: 80, 24%, 70%;
+  --ref-palette-tertiary80: 80, 24%, 80%;
+  --ref-palette-tertiary90: 80, 24%, 90%;
+  --ref-palette-tertiary95: 80, 24%, 95%;
+  --ref-palette-tertiary98: 80, 24%, 98%;
+  --ref-palette-tertiary99: 80, 24%, 99%;
+  --ref-palette-tertiary100: 80, 24%, 100%;
+
+  /* neutral */
+  --ref-palette-neutral0: 20, 4%, 0%;
+  --ref-palette-neutral10: 20, 4%, 10%;
+  --ref-palette-neutral20: 20, 4%, 20%;
+  --ref-palette-neutral25: 20, 4%, 25%;
+  --ref-palette-neutral30: 20, 4%, 30%;
+  --ref-palette-neutral35: 20, 4%, 35%;
+  --ref-palette-neutral40: 20, 4%, 40%;
+  --ref-palette-neutral50: 20, 4%, 50%;
+  --ref-palette-neutral60: 20, 4%, 60%;
+  --ref-palette-neutral70: 20, 4%, 70%;
+  --ref-palette-neutral80: 20, 4%, 80%;
+  --ref-palette-neutral90: 20, 4%, 90%;
+  --ref-palette-neutral95: 20, 4%, 95%;
+  --ref-palette-neutral98: 20, 4%, 98%;
+  --ref-palette-neutral99: 20, 4%, 99%;
+  --ref-palette-neutral100: 20, 4%, 100%;
+
+  /* neutral-variant */
+  --ref-palette-neutral-variant0: 20, 8%, 0%;
+  --ref-palette-neutral-variant10: 20, 8%, 10%;
+  --ref-palette-neutral-variant20: 20, 8%, 20%;
+  --ref-palette-neutral-variant25: 20, 8%, 25%;
+  --ref-palette-neutral-variant30: 20, 8%, 30%;
+  --ref-palette-neutral-variant35: 20, 8%, 35%;
+  --ref-palette-neutral-variant40: 20, 8%, 40%;
+  --ref-palette-neutral-variant50: 20, 8%, 50%;
+  --ref-palette-neutral-variant60: 20, 8%, 60%;
+  --ref-palette-neutral-variant70: 20, 8%, 70%;
+  --ref-palette-neutral-variant80: 20, 8%, 80%;
+  --ref-palette-neutral-variant90: 20, 8%, 90%;
+  --ref-palette-neutral-variant95: 20, 8%, 95%;
+  --ref-palette-neutral-variant98: 20, 8%, 98%;
+  --ref-palette-neutral-variant99: 20, 8%, 99%;
+  --ref-palette-neutral-variant100: 20, 8%, 100%;
+
+  /* error */
+  --ref-palette-error0: 25, 84%, 0%;
+  --ref-palette-error10: 25, 84%, 10%;
+  --ref-palette-error20: 25, 84%, 20%;
+  --ref-palette-error25: 25, 84%, 25%;
+  --ref-palette-error30: 25, 84%, 30%;
+  --ref-palette-error35: 25, 84%, 35%;
+  --ref-palette-error40: 25, 84%, 40%;
+  --ref-palette-error50: 25, 84%, 50%;
+  --ref-palette-error60: 25, 84%, 60%;
+  --ref-palette-error70: 25, 84%, 70%;
+  --ref-palette-error80: 25, 84%, 80%;
+  --ref-palette-error90: 25, 84%, 90%;
+  --ref-palette-error95: 25, 84%, 95%;
+  --ref-palette-error98: 25, 84%, 98%;
+  --ref-palette-error99: 25, 84%, 99%;
+  --ref-palette-error100: 25, 84%, 100%;
+}
