@@ -234,7 +234,8 @@ export const replaceNumber = (str: string): string => {
 /**
  * Format date to active locale string.
  */
-export const date = (date: number | Date): string => {
+export const date = (date: number | Date, options?: Intl.DateTimeFormatOptions): string => {
   if (activeLocaleContext === null) return loadingStr;
-  return new Intl.DateTimeFormat(activeLocaleContext.code).format(date);
+  if (typeof date === 'number') date = new Date(date);
+  return date.toLocaleDateString(activeLocaleContext.code, options);
 };
