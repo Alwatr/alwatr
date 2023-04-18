@@ -31,7 +31,7 @@ export interface LoginInfo extends StringifyableRecord {
 }
 
 /**
- * Alwatr Customer Order Management Home Page
+ * Alwatr Login Page
  */
 @customElement('alwatr-page-login')
 export class AlwatrPageLogin extends UnresolvedMixin(SignalMixin(AlwatrBaseElement)) {
@@ -56,11 +56,7 @@ export class AlwatrPageLogin extends UnresolvedMixin(SignalMixin(AlwatrBaseEleme
       align-items: center;
       justify-content: center;
       width: 100%;
-    }
-
-    h3 {
-      margin: 0;
-      margin-bottom: calc(2 * var(--sys-spacing-track));
+      gap: var(--sys-spacing-track);
     }
 
     .input-container {
@@ -68,7 +64,6 @@ export class AlwatrPageLogin extends UnresolvedMixin(SignalMixin(AlwatrBaseEleme
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: var(--sys-spacing-track);
       gap: var(--sys-spacing-track);
     }
 
@@ -76,11 +71,9 @@ export class AlwatrPageLogin extends UnresolvedMixin(SignalMixin(AlwatrBaseEleme
       font-size: calc(3 * var(--sys-spacing-track));
     }
 
-    alwatr-text-field,
-    alwatr-radio-group {
+    alwatr-text-field {
       flex-grow: 1;
       display: block;
-      margin-bottom: var(--sys-spacing-track);
     }
   `;
 
@@ -96,7 +89,7 @@ export class AlwatrPageLogin extends UnresolvedMixin(SignalMixin(AlwatrBaseEleme
 
     this._addSignalListeners(
         eventListener.subscribe('login_form_input_change', (detail: TextFieldSignalDetail) => {
-          this.formData[detail?.name] = detail?.value;
+          this.formData[detail?.name] = detail?.value ?? '';
         }),
     );
   }
@@ -128,7 +121,6 @@ export class AlwatrPageLogin extends UnresolvedMixin(SignalMixin(AlwatrBaseEleme
 
     return html`
       <alwatr-surface tinted>
-        <h3>${message('page_login_title')}</h3>
         ${this._inputTemplate(textFieldContent)}
       </alwatr-surface>
       <div>
