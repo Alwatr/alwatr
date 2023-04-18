@@ -1,6 +1,7 @@
 import {customElement, css, html, map, AlwatrBaseElement, property, live} from '@alwatr/element';
 import {eventTrigger} from '@alwatr/signal';
-import {Stringifyable} from '@alwatr/type';
+
+import type {Stringifyable} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -20,9 +21,7 @@ export type RadioGroupContent = {
 };
 
 /**
- * Alwatr fieldset element
- *
- * @attr {String} name
+ * Alwatr radio-group element
  */
 @customElement('alwatr-radio-group')
 export class AlwatrRadioGroup extends AlwatrBaseElement {
@@ -113,8 +112,8 @@ export class AlwatrRadioGroup extends AlwatrBaseElement {
   private _$inputChanged(event: Event): void {
     this._logger.logMethod?.('inputChanged');
     const target = event.target as HTMLInputElement | HTMLTextAreaElement;
-    if (target == null || this.content == null) return;
     const content = this.content;
+    if (target == null || content == null) return;
 
     content.value = target.value;
     if (content.inputChangeSignalName) {

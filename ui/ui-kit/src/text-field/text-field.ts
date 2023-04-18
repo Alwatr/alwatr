@@ -168,7 +168,7 @@ export class AlwatrTextField extends AlwatrSurface {
         .name=${content.name}
         .placeholder=${ifDefined(content.placeholder)}
         .value=${live(content.value)}
-        rows=${ifDefined(content.rows) ?? 3}
+        rows=${content.rows ?? 3}
         @change=${this._inputChanged}
       ></textarea>`;
     }
