@@ -53,7 +53,7 @@
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
-    "@typescript-eslint/parser": "^5.57.0",
+    "@typescript-eslint/parser": "^5.59.0",
     "@web/dev-server": "^0.1.38",
     "eslint": "^8.38.0",
     "eslint-config-google": "^0.14.0",
