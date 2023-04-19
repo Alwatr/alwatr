@@ -17,7 +17,7 @@ import type {ClickSignalType} from '@alwatr/type';
 
 const newOrderLocalStorageKey = 'draft-order-x3';
 
-export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstructor('new_order_fsm', {
+export const orderFsmConstructor = finiteStateMachineProvider.defineConstructor('order_fsm', {
   initial: 'pending',
   context: {
     orderId: '',
@@ -166,7 +166,7 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
   },
 });
 
-export type NewOrderFsm = FsmTypeHelper<typeof newOrderFsmConstructor>;
+export type OrderFsm = FsmTypeHelper<typeof orderFsmConstructor>;
 
 const serverContextList = [
   productStorageContextConsumer,
@@ -176,7 +176,7 @@ const serverContextList = [
 ] as const;
 
 // entries actions
-finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
+finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
   require_server_contexts: () => {
     serverContextList.forEach((contextConsumer) => contextConsumer.require());
   },
@@ -237,7 +237,7 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
 });
 
 // condition
-finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
+finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
   validate_order: (fsmInstance): boolean => {
     try {
       const order = fsmInstance.getContext().newOrder;
@@ -250,13 +250,13 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
       const _err = err as Error & {cause?: Record<string, string | undefined>};
       if (_err.cause?.itemPath?.indexOf('shippingInfo') !== -1) {
         snackbarSignalTrigger.request({
-          message: message('page_new_order_shipping_info_not_valid_message'),
+          message: message('page_order_shipping_info_not_valid_message'),
         });
         fsmInstance.transition('edit_shipping');
       }
       else {
         snackbarSignalTrigger.request({
-          message: message('page_new_order_order_not_valid_message'),
+          message: message('page_order_order_not_valid_message'),
         });
       }
       return false;
@@ -268,7 +268,7 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
   },
 });
 
-finiteStateMachineProvider.defineSignals<NewOrderFsm>('new_order_fsm', [
+finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
   {
     callback: (_, fsmInstance): void => {
       // calculateOrderPrice

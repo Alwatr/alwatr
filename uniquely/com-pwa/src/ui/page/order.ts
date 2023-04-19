@@ -8,6 +8,7 @@ import {
   mapIterable,
   nothing,
   property,
+  PropertyValues,
   SignalMixin,
   state,
   UnresolvedMixin,
@@ -34,24 +35,24 @@ import {AlwatrTextField} from '@alwatr/ui-kit/src/text-field/text-field.js';
 
 import {config} from '../../config.js';
 import {buttons} from '../../manager/buttons.js';
-import {topAppBarContextProvider} from '../../manager/context.js';
+import {scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
 import '../stuff/order-shipping-form.js';
 import '../stuff/order-status-box.js';
 import '../stuff/select-product.js';
 
-import type {NewOrderFsm} from '../../manager/controller/new-order.js';
+import type {OrderFsm} from '../../manager/controller/order.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-page-new-order': AlwatrPageNewOrder;
+    'alwatr-page-order': AlwatrPageNewOrder;
   }
 }
 
 /**
  * Alwatr Customer Order Management Order Form Page
  */
-@customElement('alwatr-page-new-order')
+@customElement('alwatr-page-order')
 export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
   static override styles: CSSResultGroup = css`
     :host {
@@ -156,7 +157,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     }
   `;
 
-  protected fsm = finiteStateMachineConsumer<NewOrderFsm>('new_order_fsm_' + this.ali, 'new_order_fsm');
+  protected fsm = finiteStateMachineConsumer<OrderFsm>('order_fsm_' + this.ali, 'order_fsm');
 
   @state()
     gotState = this.fsm.getState().target;
@@ -220,7 +221,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
           {
             signalId: buttons.showRegisteredOrderDetail.clickSignalId,
             callback: (): void => {
-              redirect({sectionList: ['order-detail', this.fsm.getContext().orderId ?? '']});
+              redirect({sectionList: ['order', this.fsm.getContext().orderId ?? '']});
             },
           },
           {
@@ -237,12 +238,12 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     );
   }
 
-  // protected override update(changedProperties: PropertyValues<this>): void {
-  //   super.update(changedProperties);
-  //   if (changedProperties.has('gotState')) {
-  //     scrollToTopCommand.request({smooth: true});
-  //   }
-  // }
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+    if (changedProperties.has('gotState')) {
+      scrollToTopCommand.request({smooth: true});
+    }
+  }
 
   protected override render(): unknown {
     this._logger.logMethod?.('render');
@@ -303,7 +304,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     this._logger.logMethod?.('_render_newOrder');
 
     topAppBarContextProvider.setValue({
-      headlineKey: 'page_new_order_headline',
+      headlineKey: 'page_order_headline',
       startIcon: buttons.backToHome,
     });
     const order = this.fsm.getContext().newOrder;
@@ -350,7 +351,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     this._logger.logMethod?.('_render_selectProduct');
 
     topAppBarContextProvider.setValue({
-      headlineKey: 'page_new_order_headline',
+      headlineKey: 'page_order_headline',
       startIcon: buttons.backToHome,
     });
 
@@ -403,7 +404,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     this._logger.logMethod?.('_render_submitting');
 
     const content: IconBoxContent = {
-      headline: message('page_new_order_submitting_message'),
+      headline: message('page_order_submitting_message'),
       icon: 'cloud-upload-outline',
       tinted: 1,
     };
@@ -412,7 +413,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
 
   protected _renderStateSubmitSuccess(): unknown {
     const content: IconBoxContent = {
-      headline: message('page_new_order_submit_success_message'),
+      headline: message('page_order_submit_success_message'),
       icon: 'cloud-done-outline',
       tinted: 1,
     };
@@ -420,7 +421,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
       <alwatr-icon-box .content=${content}></alwatr-icon-box>
       <div class="submit-container">
         <alwatr-button .content=${buttons.showRegisteredOrderDetail}></alwatr-button>
-        <alwatr-button .content=${buttons.newOrder}>${message('page_new_order_headline')}</alwatr-button>
+        <alwatr-button .content=${buttons.newOrder}>${message('page_order_headline')}</alwatr-button>
       </div>
     `;
   }
@@ -429,7 +430,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     this._logger.logMethod?.('_render_submitFailed');
 
     const content: IconBoxContent = {
-      headline: message('page_new_order_submit_failed_message'),
+      headline: message('page_order_submit_failed_message'),
       icon: 'cloud-offline-outline',
       tinted: 1,
     };

@@ -35,7 +35,7 @@ export const buttons = {
     clickSignalId: 'new_order_click_event',
   },
   showOrderDetail: {
-    labelKey: 'page_new_order_detail_button',
+    labelKey: 'page_order_detail_button',
     icon: 'information-outline',
     clickSignalId: 'show_order_detail_click_event',
   },
@@ -46,12 +46,12 @@ export const buttons = {
   },
 
   editItems: {
-    labelKey: 'page_new_order_edit_items',
+    labelKey: 'page_order_edit_items',
     icon: 'create-outline',
     clickSignalId: 'edit_items_click_event',
   },
   submit: {
-    labelKey: 'page_new_order_submit',
+    labelKey: 'page_order_submit',
     icon: 'checkmark-outline',
     clickSignalId: 'submit_click_event',
   },
@@ -61,27 +61,27 @@ export const buttons = {
     clickSignalId: 'select_product_submit_click_event',
   },
   editOrder: {
-    labelKey: 'page_new_order_edit',
+    labelKey: 'page_order_edit',
     icon: 'create-outline',
     clickSignalId: 'edit_order_click_event',
   },
   submitFinal: {
-    labelKey: 'page_new_order_submit_final',
+    labelKey: 'page_order_submit_final',
     icon: 'checkmark-outline',
     clickSignalId: 'submit_final_click_event',
   },
   submitShippingForm: {
-    labelKey: 'page_new_order_shipping_submit',
+    labelKey: 'page_order_shipping_submit',
     icon: 'checkmark-outline',
     clickSignalId: 'submit_shipping_form_click_event',
   },
   editShippingForm: {
-    labelKey: 'page_new_order_shipping_edit',
+    labelKey: 'page_order_shipping_edit',
     icon: 'create-outline',
     clickSignalId: 'edit_shipping_form_click_event',
   },
   showRegisteredOrderDetail: {
-    labelKey: 'page_new_order_detail_button',
+    labelKey: 'page_order_detail_button',
     icon: 'information-outline',
     clickSignalId: 'show_registered_order_detail_click_event',
   },
@@ -90,14 +90,14 @@ export const buttons = {
     clickSignalId: 'show_registered_order_tracking_click_event',
   },
   retry: {
-    labelKey: 'page_new_order_retry_button',
+    labelKey: 'page_order_retry_button',
     icon: 'reload-outline',
     clickSignalId: 'retry_click_event',
   },
 } as const;
 
 eventListener.subscribe(buttons.newOrder.clickSignalId, () => {
-  redirect({sectionList: ['new-order']});
+  redirect({sectionList: ['order', 'new']});
 });
 
 eventListener.subscribe(buttons.print.clickSignalId, () => {
@@ -105,7 +105,7 @@ eventListener.subscribe(buttons.print.clickSignalId, () => {
 });
 
 eventListener.subscribe(buttons.showOrderDetail.clickSignalId, (event: ClickSignalType<Order>): void => {
-  redirect({sectionList: ['order-detail', event.detail.id]});
+  redirect({sectionList: ['order', event.detail.id]});
 });
 
 eventListener.subscribe(buttons.backToOrderList.clickSignalId, (): void => {

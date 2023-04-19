@@ -21,7 +21,7 @@ declare global {
 }
 
 /**
- * Alwatr Demo Home Page
+ * Alwatr 404 page.
  */
 @customElement('alwatr-page-404')
 export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {

@@ -27,8 +27,7 @@ class AlwatrPwa extends AlwatrPwaElement {
       'home': this._renderPageHome,
       '_404': this._renderPage404,
       'order-list': this._renderPageOrderList,
-      'order-detail': 'new-order',
-      'new-order': this._renderPageOrder,
+      'order': this._renderPageOrder,
     },
   };
 
@@ -49,13 +48,13 @@ class AlwatrPwa extends AlwatrPwaElement {
   }
 
   protected _renderPageOrder(routeContext: RouteContext): unknown {
-    import('./page/new-order.js');
+    import('./page/order.js');
     topAppBarContextProvider.setValue({headlineKey: 'loading'});
     const orderId = routeContext.sectionList[1] || 'new';
-    return html`<alwatr-page-new-order
+    return html`<alwatr-page-order
       .orderId=${orderId}
       unresolved
-    >...</alwatr-page-new-order>`;
+    >...</alwatr-page-order>`;
   }
 
   protected override _navigationBarTemplate(): unknown {
