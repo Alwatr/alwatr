@@ -1,4 +1,4 @@
-ARG NGINX_VERSION=1.23
+ARG NGINX_VERSION=1.24
 
 FROM docker.io/library/nginx:${NGINX_VERSION}-alpine
 

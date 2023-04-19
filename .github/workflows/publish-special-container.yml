@@ -45,7 +45,7 @@ jobs:
             description: High performance, optimized NGINX for server web applications and api proxy with fast cache.
             version:
               short: 1
-              full: 1.1.0-1.23-alpine
+              full: 1.2.0-1.24-alpine
 
           # - image: tdlib
           #   path: cloud/container/tdlib
