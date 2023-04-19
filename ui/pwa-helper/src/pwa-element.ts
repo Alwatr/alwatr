@@ -66,19 +66,23 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
 
   override connectedCallback(): void {
     super.connectedCallback();
+
     if (!localeContextConsumer.getValue()) {
       setLocale();
     }
-    this._addSignalListeners(
-        commandHandler.define<{smooth?: boolean}, undefined>(scrollToTopCommand.id, (option): undefined => {
+
+    this._addSignalListeners(commandHandler.define<{smooth?: boolean}, undefined>(
+        scrollToTopCommand.id,
+        async (option): Promise<undefined> => {
+          await untilNextFrame();
           this.renderRoot.querySelector('.scroll-area')?.scrollTo({
             top: 0,
             left: 0,
             behavior: option.smooth ? 'smooth' : 'auto',
           });
           return;
-        }),
-    );
+        },
+    ));
   }
 
   protected _routesConfig: RoutesConfig = {
@@ -91,7 +95,7 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
 
   protected override _routeContextUpdated(routeContext: RouteContext): void {
     super._routeContextUpdated(routeContext);
-    scrollToTopCommand.request({});
+    scrollToTopCommand.request({smooth: true});
   }
 
   protected override async scheduleUpdate(): Promise<void> {

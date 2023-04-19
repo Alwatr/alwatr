@@ -84,7 +84,10 @@ export async function serviceRequest<
     response = await fetch(options);
   }
   catch (err) {
-    logger.error('serviceRequest', (err as Error).message || 'fetch_failed', err, options);
+    const errMessage = (err as Error).message;
+    if (errMessage !== 'fetch_cache_not_found') {
+      logger.error('serviceRequest', (err as Error).message || 'fetch_failed', err, options);
+    }
     throw err;
   }
 

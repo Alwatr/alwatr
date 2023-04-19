@@ -17,7 +17,7 @@ import type {ClickSignalType} from '@alwatr/type';
 
 const newOrderLocalStorageKey = 'draft-order-x3';
 
-export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstructor('new_order_fsm', {
+export const orderFsmConstructor = finiteStateMachineProvider.defineConstructor('order_fsm', {
   initial: 'pending',
   context: {
     orderId: '',
@@ -37,7 +37,7 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
           actions: 'notify_context_reloadingFailed',
         },
         retry: {
-          actions: 'request_server_contexts',
+          actions: 'require_server_contexts',
         },
         context_request_complete: {},
         request_update: {},
@@ -47,9 +47,11 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
       },
     },
     pending: {
-      entry: 'request_server_contexts',
+      entry: 'require_server_contexts',
       on: {
-        change_order_id: {},
+        change_order_id: {
+          // prevent to transition to routing.
+        },
         context_request_initial: {},
         context_request_offlineLoading: {},
         context_request_onlineLoading: {},
@@ -81,6 +83,9 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
         },
         show_detail: {
           target: 'orderDetail',
+        },
+        not_found_in_loading: {
+          target: 'pending',
         },
         not_found: {
           target: 'notFound',
@@ -129,11 +134,11 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
         },
         final_submit: {
           target: 'submitting',
-          actions: 'submit_order',
         },
       },
     },
     submitting: {
+      entry: 'submit_order',
       on: {
         submit_success: {
           target: 'submitSuccess',
@@ -155,14 +160,13 @@ export const newOrderFsmConstructor = finiteStateMachineProvider.defineConstruct
       on: {
         retry: {
           target: 'submitting',
-          actions: 'submit_order',
         },
       },
     },
   },
 });
 
-export type NewOrderFsm = FsmTypeHelper<typeof newOrderFsmConstructor>;
+export type OrderFsm = FsmTypeHelper<typeof orderFsmConstructor>;
 
 const serverContextList = [
   productStorageContextConsumer,
@@ -172,19 +176,22 @@ const serverContextList = [
 ] as const;
 
 // entries actions
-finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
-  request_server_contexts: () => {
+finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
+  require_server_contexts: () => {
     serverContextList.forEach((contextConsumer) => contextConsumer.require());
   },
 
   routing: (fsmInstance) => {
-    const {orderId, orderStorage} = fsmInstance.getContext();
-    console.warn({orderId, orderStorage});
+    const orderId = fsmInstance.getContext().orderId;
+    const orderStorage = orderStorageContextConsumer.getResponse();
     if (orderId === 'new') {
       fsmInstance.transition('new_order');
     }
     else if (orderStorage?.data[orderId] != null) {
-      fsmInstance.transition('show_detail');
+      fsmInstance.transition('show_detail', {orderStorage});
+    }
+    else if (orderStorageContextConsumer.getState().target !== 'complete') {
+      fsmInstance.transition('not_found_in_loading');
     }
     else {
       fsmInstance.transition('not_found');
@@ -208,6 +215,7 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
       return;
     }
     // else
+    // TODO: update context directly
     fsmInstance.transition('submit_success', {orderId: order.id});
   },
 
@@ -229,26 +237,26 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
 });
 
 // condition
-finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
+finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
   validate_order: (fsmInstance): boolean => {
     try {
       const order = fsmInstance.getContext().newOrder;
       if (!order.itemList?.length) throw new Error('invalid_type');
       // else
-      validator(orderInfoSchema, order, true);
+      fsmInstance.getContext().newOrder = validator(orderInfoSchema, order, true);
       return true;
     }
     catch (err) {
       const _err = err as Error & {cause?: Record<string, string | undefined>};
       if (_err.cause?.itemPath?.indexOf('shippingInfo') !== -1) {
         snackbarSignalTrigger.request({
-          message: message('page_new_order_shipping_info_not_valid_message'),
+          message: message('page_order_shipping_info_not_valid_message'),
         });
         fsmInstance.transition('edit_shipping');
       }
       else {
         snackbarSignalTrigger.request({
-          message: message('page_new_order_order_not_valid_message'),
+          message: message('page_order_order_not_valid_message'),
         });
       }
       return false;
@@ -260,7 +268,7 @@ finiteStateMachineProvider.defineActions<NewOrderFsm>('new_order_fsm', {
   },
 });
 
-finiteStateMachineProvider.defineSignals<NewOrderFsm>('new_order_fsm', [
+finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
   {
     callback: (_, fsmInstance): void => {
       // calculateOrderPrice
@@ -331,6 +339,7 @@ finiteStateMachineProvider.defineSignals<NewOrderFsm>('new_order_fsm', [
     signalId: orderStorageContextConsumer.id,
     callback: (_, fsmInstance): void => {
       const orderStorage = orderStorageContextConsumer.getResponse();
+      console.warn('orderStorage', {state: orderStorageContextConsumer.getState().target, orderStorage});
       fsmInstance.transition(`context_request_${orderStorageContextConsumer.getState().target}`, {
         orderStorage,
       });
