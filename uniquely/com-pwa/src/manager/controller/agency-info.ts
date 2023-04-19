@@ -43,7 +43,6 @@ export const agencyInfoFsmConstructor = finiteStateMachineProvider.defineConstru
       on: {},
     },
     submitFailed: {
-      entry: 'notify_agency_info_submitting_failed',
       on: {
         retry: {
           target: 'submitting',
