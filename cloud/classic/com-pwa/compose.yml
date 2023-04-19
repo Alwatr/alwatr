@@ -135,7 +135,7 @@ services:
         max-file: '2'
 
   cdn:
-    image: ghcr.io/alimd/nginx:${CDN_VERSION:-latest}
+    image: ghcr.io/alimd/nginx:${CDN_VERSION:-1}
 
     cpu_shares: 1024
     mem_limit: 256m
