@@ -72,5 +72,13 @@ export const homePageContent: PageHomeContent = {
       `,
       href: 'tel:+989155599674',
     },
+    {
+      elevated: 1,
+      stated: true,
+      icon: 'add-circle-outline',
+      headline: 'ثبت نمایندگی',
+      description: 'از این بخض نمایندگی خود را ثبت کنید',
+      href: '/agency-info',
+    },
   ],
 };
