@@ -45,7 +45,7 @@ const documentBaseUrl = document.querySelector('base')?.href || '/';
  * routerOutlet(routeConfig);
  * ```
  */
-export const routerOutlet = (routesConfig: RoutesConfig): unknown => {
+export const routerOutlet = (routesConfig: RoutesConfig, thisArg: unknown = null): unknown => {
   logger.logMethodArgs?.('routerOutlet', {routesConfig});
 
   const routeContext = routeContextConsumer.getValue();
@@ -64,7 +64,7 @@ export const routerOutlet = (routesConfig: RoutesConfig): unknown => {
 
   try {
     if (typeof render === 'function') {
-      return render(routeContext);
+      return render.call(thisArg, routeContext);
     }
     // else
     if (routeId === '') {
