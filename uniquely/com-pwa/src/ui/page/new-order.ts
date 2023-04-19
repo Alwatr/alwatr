@@ -250,23 +250,23 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     return this.fsm.render(
         {
           routing: 'pending',
-          pending: this._render_pending,
-          notFound: this._render_notFound,
-          orderDetail: this._render_orderDetail,
-          newOrder: this._render_newOrder,
-          contextError: this._render_contextError,
-          selectProduct: this._render_selectProduct,
-          shippingForm: this._render_shippingForm,
-          review: this._render_review,
-          submitting: this._render_submitting,
-          submitSuccess: this._render_submitSuccess,
-          submitFailed: this._render_submitFailed,
+          pending: this._renderStatePending,
+          notFound: this._renderStateNotFound,
+          orderDetail: this._renderStateOrderDetail,
+          newOrder: this._renderStateNewOrder,
+          contextError: this._renderStateContextError,
+          selectProduct: this._renderStateSelectProduct,
+          shippingForm: this._renderStateShippingForm,
+          review: this._renderStateReview,
+          submitting: this._renderStateSubmitting,
+          submitSuccess: this._renderStateSubmitSuccess,
+          submitFailed: this._renderStateSubmitFailed,
         },
         this,
     );
   }
 
-  protected _render_notFound(): unknown {
+  protected _renderStateNotFound(): unknown {
     this._logger.logMethod?.('_render_notFound');
 
     topAppBarContextProvider.setValue({
@@ -281,7 +281,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
   }
 
-  protected _render_orderDetail(): unknown {
+  protected _renderStateOrderDetail(): unknown {
     this._logger.logMethod?.('_render_orderDetail');
 
     topAppBarContextProvider.setValue({
@@ -300,7 +300,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     ];
   }
 
-  protected _render_newOrder(): unknown {
+  protected _renderStateNewOrder(): unknown {
     this._logger.logMethod?.('_render_newOrder');
 
     topAppBarContextProvider.setValue({
@@ -325,7 +325,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     `;
   }
 
-  protected _render_contextError(): unknown {
+  protected _renderStateContextError(): unknown {
     this._logger.logMethod?.('_render_contextError');
 
     topAppBarContextProvider.setValue({
@@ -347,7 +347,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     `;
   }
 
-  protected _render_selectProduct(): unknown {
+  protected _renderStateSelectProduct(): unknown {
     this._logger.logMethod?.('_render_selectProduct');
 
     topAppBarContextProvider.setValue({
@@ -368,7 +368,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     `;
   }
 
-  protected _render_shippingForm(): unknown {
+  protected _renderStateShippingForm(): unknown {
     this._logger.logMethod?.('_render_shippingForm');
 
     const order = this.fsm.getContext().newOrder;
@@ -382,7 +382,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     `;
   }
 
-  protected _render_review(): unknown {
+  protected _renderStateReview(): unknown {
     this._logger.logMethod?.('_render_review');
 
     const order = this.fsm.getContext().newOrder as Order;
@@ -400,7 +400,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     ];
   }
 
-  protected _render_submitting(): unknown {
+  protected _renderStateSubmitting(): unknown {
     this._logger.logMethod?.('_render_submitting');
 
     const content: IconBoxContent = {
@@ -411,7 +411,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
   }
 
-  protected _render_submitSuccess(): unknown {
+  protected _renderStateSubmitSuccess(): unknown {
     const content: IconBoxContent = {
       headline: message('page_new_order_submit_success_message'),
       icon: 'cloud-done-outline',
@@ -426,7 +426,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     `;
   }
 
-  protected _render_submitFailed(): unknown {
+  protected _renderStateSubmitFailed(): unknown {
     this._logger.logMethod?.('_render_submitFailed');
 
     const content: IconBoxContent = {
@@ -442,7 +442,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     `;
   }
 
-  protected _render_pending(): unknown {
+  protected _renderStatePending(): unknown {
     this._logger.logMethod?.('_render_pending');
 
     topAppBarContextProvider.setValue({
