@@ -8,7 +8,6 @@ import {
   mapIterable,
   nothing,
   property,
-  PropertyValues,
   SignalMixin,
   state,
   UnresolvedMixin,
@@ -35,7 +34,7 @@ import {AlwatrTextField} from '@alwatr/ui-kit/src/text-field/text-field.js';
 
 import {config} from '../../config.js';
 import {buttons} from '../../manager/buttons.js';
-import {scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
+import {topAppBarContextProvider} from '../../manager/context.js';
 import '../stuff/order-shipping-form.js';
 import '../stuff/order-status-box.js';
 import '../stuff/select-product.js';
@@ -238,12 +237,12 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     );
   }
 
-  protected override update(changedProperties: PropertyValues<this>): void {
-    super.update(changedProperties);
-    if (changedProperties.has('gotState')) {
-      scrollToTopCommand.request({smooth: true});
-    }
-  }
+  // protected override update(changedProperties: PropertyValues<this>): void {
+  //   super.update(changedProperties);
+  //   if (changedProperties.has('gotState')) {
+  //     scrollToTopCommand.request({smooth: true});
+  //   }
+  // }
 
   protected override render(): unknown {
     this._logger.logMethod?.('render');
