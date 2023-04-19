@@ -91,7 +91,7 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
 
   protected override _routeContextUpdated(routeContext: RouteContext): void {
     super._routeContextUpdated(routeContext);
-    scrollToTopCommand.request({});
+    // scrollToTopCommand.request({smooth: true});
   }
 
   protected override async scheduleUpdate(): Promise<void> {
