@@ -1,3 +1,5 @@
+import {User} from './user.js';
+
 import type {MultiLangStringObj} from './i18n.js';
 import type {Photo} from './photo.js';
 import type {AlwatrDocumentObject} from './storage.js';
@@ -140,6 +142,16 @@ export interface OrderShippingInfo extends StringifyableRecord {
   ladingType: (typeof ladingTypeCS)[number];
   carType: (typeof carTypeCS)[number];
   timePeriod: (typeof timePeriodCS)[number];
+}
+
+export interface ComUser extends User {
+  shopName: string;
+  tel: string;
+  province: string;
+  city: string;
+  address: string;
+  postalCode: string;
+  description?: string;
 }
 
 // -- Schema --

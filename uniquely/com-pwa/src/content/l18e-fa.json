@@ -42,6 +42,8 @@
 
     "page_order_tracking_headline": "پیگیری سفارش",
 
+    "page_sing_in_headline": "ورود",
+
     "order_status_box_headline": "سفارش ${orderId}",
     "order_status_box_headline_new": "سفارش جدید",
     "order_status_box_status": "وضعیت سفارش",

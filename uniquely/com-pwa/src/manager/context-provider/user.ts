@@ -1,8 +1,20 @@
-import {contextProvider} from '@alwatr/context';
-import {User} from '@alwatr/type';
-import {getLocalStorageItem} from '@alwatr/util';
+import {serverContextConsumer} from '@alwatr/context';
 
-contextProvider.setValue<User>('user_context', getLocalStorageItem('user_context', {
-  id: 'demo-123',
-  fullName: 'Demo User',
-}));
+import {config} from '../../config.js';
+
+import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {ComUser} from '@alwatr/type/customer-order-management.js';
+
+export const userStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<ComUser>>(
+    'user_storage_context',
+    {
+      ...config.fetchContextOptions,
+      url: config.authApi,
+    },
+);
+
+export const signIn = (userId: string, token: string): void => {
+  userStorageContextConsumer.request({
+    url: `${config.authApi}/${userId}-${token}`,
+  });
+};
