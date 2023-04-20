@@ -194,3 +194,8 @@ export const agencyInfoSchema = {
   address: String,
   postalCode: Number,
 };
+
+export const agencyInfoLoginSchema = {
+  phoneNumber: Number,
+  token: String,
+};
