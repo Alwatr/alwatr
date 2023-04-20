@@ -91,6 +91,10 @@ export class AlwatrPageLogin extends UnresolvedMixin(SignalMixin(AlwatrBaseEleme
             signalId: 'login_submit_click_event',
             transition: 'login',
           },
+          {
+            signalId: buttons.retry.clickSignalId,
+            transition: 'retry',
+          },
         ]),
     );
   }
