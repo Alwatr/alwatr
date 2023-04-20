@@ -1,23 +1,28 @@
 import {
   AlwatrBaseElement,
-  PropertyValues,
+  Ref,
   SignalMixin,
   UnresolvedMixin,
+  createRef,
   css,
   customElement,
   html,
+  nothing,
+  property,
+  ref,
   state,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import {redirect} from '@alwatr/router';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
 import {buttons} from '../../manager/buttons.js';
-import {userStorageContextConsumer} from '../../manager/context-provider/user.js';
+import {signIn, userStorageContextConsumer} from '../../manager/context-provider/user.js';
 import {topAppBarContextProvider} from '../../manager/context.js';
 
-import type {ButtonContent} from '@alwatr/ui-kit/button/button.js';
-import type {IconBoxContent} from '@alwatr/ui-kit/src/card/icon-box.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -26,7 +31,7 @@ declare global {
 }
 
 /**
- * Alwatr Login Page
+ * Alwatr Sing In Page
  */
 @customElement('alwatr-page-sing-in')
 export class AlwatrPageLogin extends UnresolvedMixin(SignalMixin(AlwatrBaseElement)) {
@@ -54,82 +59,120 @@ export class AlwatrPageLogin extends UnresolvedMixin(SignalMixin(AlwatrBaseEleme
       gap: var(--sys-spacing-track);
     }
 
+    .sign-in-error {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* color: var(); */
+    }
+
     alwatr-text-field {
       width: 100%;
     }
   `;
 
+  @property()
+    linkPass: string | null = null;
+
   @state()
-    gotState = userStorageContextConsumer.getState().target;
+    userState = userStorageContextConsumer.getState().target;
+
+  textInputRef: Ref<AlwatrTextField> = createRef();
 
   override connectedCallback(): void {
     super.connectedCallback();
 
+    this.linkPass = localStorage.getItem('link-pass');
     topAppBarContextProvider.setValue({headlineKey: 'sign_in_headline'});
 
     // prettier-ignore
     this._addSignalListeners(userStorageContextConsumer.subscribe(() => {
-      this.gotState = userStorageContextConsumer.getState().target;
+      this.userState = userStorageContextConsumer.getState().target;
     }, {receivePrevious: 'NextCycle'}));
+
+    this._addSignalListeners(userStorageContextConsumer.fsm.defineSignals([
+      {
+        signalId: buttons.singIn.clickSignalId,
+        callback: (): void => {
+          const {value: textInput} = this.textInputRef;
+          const phoneNumber = textInput?.value;
+          this._logger.logMethodArgs?.('_onSignIn', {phoneNumber});
+
+          if (phoneNumber == null || this.linkPass == null) {
+            this._logger.accident('_onSignIn', 'invalid_sign_in_params', 'invalid sign in params', {
+              phoneNumber,
+              userToken: this.linkPass,
+            });
+            return;
+          }
+
+          signIn(phoneNumber, this.linkPass);
+        },
+      },
+    ]));
   }
 
-  protected override update(changedProperties: PropertyValues<this>): void {
-    super.update(changedProperties);
-    if (changedProperties.has('gotState')) {
-      this.setAttribute('state', this.gotState);
-    }
-  }
-
-
-  override render(): unknown {
+  protected override render(): unknown {
     this._logger.logMethod?.('render');
 
-    // return userStorageContextConsumer.fsm.render({
-    //   ''
-    // });
+    if (this.userState === 'complete') {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      localStorage.setItem('user-token', this.linkPass!);
+      localStorage.removeItem('link-pass');
+      redirect({});
+      return;
+    }
+
+    return this._renderSingInForm();
   }
 
-  protected _renderStateForm = (): unknown => {
-    const loginButtonContent: ButtonContent = {
-      labelKey: 'page_login_submit',
-      icon: 'checkmark-outline',
-      clickSignalId: 'login_submit_click_event',
+  protected _renderStateLogin(): unknown {
+    this._logger.logMethod?.('_render_login');
+    const content: IconBoxContent = {
+      headline: message('page_sign_in_message'),
+      icon: 'cloud-upload-outline',
+      tinted: 1,
     };
+    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+  }
 
-    return html`
-      <alwatr-surface tinted>
+  protected _renderSingInForm(): unknown {
+    this._logger.logMethod?.('_renderSingInForm');
+
+    const message = this.getMessage();
+    const signInButtonIsDisabled = ['offlineLoading', 'reloading', 'onlineLoading'].includes(this.userState);
+
+    return html` <alwatr-surface tinted>
         <alwatr-text-field
           .name=${'phoneNumber'}
           .type=${'tel'}
-          .placeholder=${'page_login_phone_number_placeholder'}
+          .placeholder=${'page_sign_in_phone_number_placeholder'}
           outlined
           active-outline
           stated
+          ${ref(this.textInputRef)}
         ></alwatr-text-field>
         <alwatr-text-field
-          .name=${'token'}
           .type=${'password'}
-          .placeholder=${'page_login_password_placeholder'}
+          .value=${'داداش، مارو چی فرض کردی؟'}
           outlined
           active-outline
           stated
         ></alwatr-text-field>
       </alwatr-surface>
+      ${message
+        ? html`
+            <div class="sign-in-error">
+              <p>${message}</p>
+            </div>
+          `
+        : nothing}
       <div>
-        <alwatr-button .content=${loginButtonContent}></alwatr-button>
-      </div>
-    `;
-  };
-
-  protected _renderStateLogin(): unknown {
-    this._logger.logMethod?.('_render_login');
-
-    const content: IconBoxContent = {
-      headline: message('page_login_login_message'),
-      icon: 'cloud-upload-outline',
-      tinted: 1,
-    };
-    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+        <alwatr-button
+          .content=${buttons.singIn}
+          ?disabled=${signInButtonIsDisabled}
+        ></alwatr-button>
+      </div>`;
   }
 
   protected _renderStateLoginFailed(): unknown {
@@ -146,5 +189,21 @@ export class AlwatrPageLogin extends UnresolvedMixin(SignalMixin(AlwatrBaseEleme
         <alwatr-button .content=${buttons.retry}></alwatr-button>
       </div>
     `;
+  }
+
+  private getMessage(): string {
+    this._logger.logMethod?.('getMessage');
+
+    const signInMessages = {
+      initial: '',
+      loadingFailed: '',
+      offlineLoading: '',
+      onlineLoading: '',
+      reloading: '',
+      reloadingFailed: '',
+      complete: '',
+    };
+
+    return signInMessages[this.userState];
   }
 }

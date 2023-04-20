@@ -7,10 +7,7 @@ import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
 export const userStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<ComUser>>(
     'user_storage_context',
-    {
-      ...config.fetchContextOptions,
-      url: config.authApi,
-    },
+    config.fetchContextOptions,
 );
 
 export const signIn = (userId: string, token: string): void => {

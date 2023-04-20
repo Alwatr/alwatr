@@ -1,6 +1,7 @@
-import {html, customElement} from '@alwatr/element';
+import {html, customElement, nothing} from '@alwatr/element';
 import '@alwatr/font/vazirmatn.css';
 import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
+import {RouteContext, RoutesConfig, redirect} from '@alwatr/router';
 import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
@@ -8,7 +9,6 @@ import '@alwatr/ui-kit/style/theme/palette-270.css';
 import './stuff/app-footer.js';
 import {topAppBarContextProvider} from '../manager/context.js';
 
-import type {RouteContext, RoutesConfig} from '@alwatr/router';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -28,6 +28,8 @@ class AlwatrPwa extends AlwatrPwaElement {
       '_404': this._renderPage404,
       'order-list': this._renderPageOrderList,
       'order': this._renderPageOrder,
+      'sign-in': this._renderPageSingIn,
+      's': this._saveLinkPass,
     },
   };
 
@@ -55,6 +57,21 @@ class AlwatrPwa extends AlwatrPwaElement {
       .orderId=${orderId}
       unresolved
     >...</alwatr-page-order>`;
+  }
+
+  protected _renderPageSingIn(): unknown {
+    import('./page/sign-in.js');
+    topAppBarContextProvider.setValue({headlineKey: 'loading'});
+    return html`<alwatr-page-sing-in></alwatr-page-sing-in>`;
+  }
+
+  protected _saveLinkPass(routeContext: RouteContext): unknown {
+    const linkPass = routeContext.sectionList[1];
+    if (linkPass) {
+      localStorage.setItem('link-pass', linkPass + '');
+    }
+    redirect({sectionList: ['sign-in']}, 'replace');
+    return nothing;
   }
 
   protected override _navigationBarTemplate(): unknown {
