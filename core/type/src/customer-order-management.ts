@@ -145,13 +145,12 @@ export interface OrderShippingInfo extends StringifyableRecord {
 }
 
 export interface ComUser extends User {
-  shopName: string;
-  tel: string;
+  landlinePhone: string;
   province: string;
   city: string;
   address: string;
   postalCode: string;
-  description?: string;
+  shopName?: string;
 }
 
 // -- Schema --
