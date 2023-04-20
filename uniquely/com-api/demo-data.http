@@ -85,55 +85,55 @@ Content-Type: application/json
   "data": [
     {
       "id": "1",
-      "price": 83000
+      "price": 87580
     },
     {
       "id": "2",
-      "price": 85000
+      "price": 89599
     },
     {
       "id": "3",
-      "price": 85000
+      "price": 89599
     },
     {
       "id": "4",
-      "price": 85000
+      "price": 89599
     },
     {
       "id": "5",
-      "price": 77100
+      "price": 81999
     },
     {
       "id": "6",
-      "price": 77100
+      "price": 81999
     },
     {
       "id": "7",
-      "price": 77100
+      "price": 81999
     },
     {
       "id": "8",
-      "price": 77100
+      "price": 81999
     },
     {
       "id": "9",
-      "price": 83000
+      "price": 87580
     },
     {
       "id": "10",
-      "price": 83000
+      "price": 87580
     },
     {
       "id": "11",
-      "price": 85000
+      "price": 90500
     },
     {
       "id": "12",
-      "price": 85000
+      "price": 90500
     },
     {
       "id": "13",
-      "price": 77100
+      "price": 81999
     }
   ]
 }
@@ -147,55 +147,55 @@ Content-Type: application/json
   "data": [
     {
       "id": "1",
-      "price": 72210
+      "price": 76195
     },
     {
       "id": "2",
-      "price": 73950
+      "price": 77951
     },
     {
       "id": "3",
-      "price": 73950
+      "price": 77951
     },
     {
       "id": "4",
-      "price": 73950
+      "price": 77951
     },
     {
       "id": "5",
-      "price": 66306
+      "price": 70519
     },
     {
       "id": "6",
-      "price": 66306
+      "price": 70519
     },
     {
       "id": "7",
-      "price": 66306
+      "price": 70519
     },
     {
       "id": "8",
-      "price": 66306
+      "price": 70519
     },
     {
       "id": "9",
-      "price": 72210
+      "price": 76195
     },
     {
       "id": "10",
-      "price": 72210
+      "price": 76195
     },
     {
       "id": "11",
-      "price": 73950
+      "price": 78735
     },
     {
       "id": "12",
-      "price": 73950
+      "price": 78735
     },
     {
       "id": "13",
-      "price": 66306
+      "price": 70519
     }
   ]
 }
