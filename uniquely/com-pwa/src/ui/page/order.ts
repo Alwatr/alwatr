@@ -30,8 +30,7 @@ import {
 import '@alwatr/ui-kit/button/icon-button.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
-import {IconButtonContent} from '@alwatr/ui-kit/src/button/icon-button.js';
-import {AlwatrTextField} from '@alwatr/ui-kit/src/text-field/text-field.js';
+import '@alwatr/ui-kit/text-field/text-field.js';
 
 import {config} from '../../config.js';
 import {buttons} from '../../manager/buttons.js';
@@ -41,7 +40,9 @@ import '../stuff/order-status-box.js';
 import '../stuff/select-product.js';
 
 import type {OrderFsm} from '../../manager/controller/order.js';
+import type {IconButtonContent} from '@alwatr/ui-kit/button/icon-button.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+import type {TextFiledContent} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -559,10 +560,16 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
 
   protected _render_itemQtyInput(orderItem: OrderItem, editable: boolean): unknown {
     this._logger.logMethod?.('_render_itemQtyInput');
-
     if (!editable) return;
 
     // TODO: new element
+    const textFieldContent: TextFiledContent = {
+      type: 'number',
+      name: 'qty',
+      value: orderItem.qty + '',
+      inputChangeSignalName: 'order_item_qty_change',
+      inputChangeSignalDetail: orderItem,
+    };
     const addBtn: IconButtonContent = {
       icon: 'add-outline',
       clickSignalId: 'order_item_qty_add',
@@ -577,11 +584,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     return html`
       <alwatr-surface class="number-field" stated tinted="2">
         <alwatr-icon-button .content=${addBtn}></alwatr-icon-button>
-        <alwatr-text-field
-          .type=${'number'}
-          .value=${orderItem.qty + ''}
-          @input-change=${(event: CustomEvent): void => this._onQtyInputChange(event, orderItem)}
-        ></alwatr-text-field>
+        <alwatr-text-field .content=${textFieldContent}></alwatr-text-field>
         <alwatr-icon-button .content=${removeBtn}></alwatr-icon-button>
       </alwatr-surface>
     `;
@@ -700,13 +703,5 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
         </div>
       </div>
     </alwatr-surface>`;
-  }
-
-  protected _onQtyInputChange(event: CustomEvent, orderItem: OrderItem): void {
-    const target = event.target as AlwatrTextField;
-    this._logger.logMethodArgs?.('_onQtyInputChange', target.value);
-    const qty = +target.value || 100;
-    orderItem.qty = qty;
-    this.requestUpdate();
   }
 }
