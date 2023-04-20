@@ -28,6 +28,7 @@ class AlwatrPwa extends AlwatrPwaElement {
       '_404': this._renderPage404,
       'order-list': this._renderPageOrderList,
       'order': this._renderPageOrder,
+      'login': this._renderPageLogin,
     },
   };
 
@@ -55,6 +56,12 @@ class AlwatrPwa extends AlwatrPwaElement {
       .orderId=${orderId}
       unresolved
     >...</alwatr-page-order>`;
+  }
+
+  protected _renderPageLogin(): unknown {
+    import('./page/login.js');
+    topAppBarContextProvider.setValue({headlineKey: 'loading'});
+    return html`<alwatr-page-login unresolved>...</alwatr-page-login>`;
   }
 
   protected override _navigationBarTemplate(): unknown {

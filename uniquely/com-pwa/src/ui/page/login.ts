@@ -6,28 +6,26 @@ import {
   customElement,
   html,
   mapObject,
-  property,
+  nothing,
+  state,
 } from '@alwatr/element';
+import {finiteStateMachineConsumer} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
-import '@alwatr/icon';
-import {topAppBarContextProvider} from '@alwatr/pwa-helper/src/context.js';
-import {eventListener} from '@alwatr/signal';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
-import type {StringifyableRecord} from '@alwatr/type';
-import type {ButtonContent} from '@alwatr/ui-kit/src/button/button.js';
-import type {TextFieldSignalDetail, TextFiledContent} from '@alwatr/ui-kit/text-field/text-field.js';
+import {buttons} from '../../manager/buttons.js';
+import {topAppBarContextProvider} from '../../manager/context.js';
+import {LoginFsm} from '../../manager/controller/login.js';
+
+import type {ButtonContent} from '@alwatr/ui-kit/button/button.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/src/card/icon-box.js';
+import type {TextFiledContent} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-page-login': AlwatrPageLogin;
   }
-}
-
-export interface LoginInfo extends StringifyableRecord {
-  username: string;
-  password: string;
 }
 
 /**
@@ -59,84 +57,117 @@ export class AlwatrPageLogin extends UnresolvedMixin(SignalMixin(AlwatrBaseEleme
       gap: var(--sys-spacing-track);
     }
 
-    .input-container {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--sys-spacing-track);
-    }
-
-    alwatr-icon {
-      font-size: calc(3 * var(--sys-spacing-track));
-    }
-
     alwatr-text-field {
-      flex-grow: 1;
-      display: block;
+      width: 100%;
     }
   `;
 
-  @property()
-    formData: Partial<LoginInfo> = {};
+  protected fsm = finiteStateMachineConsumer<LoginFsm>('login_fsm_' + this.ali, 'login_fsm');
+
+  @state()
+    gotState = this.fsm.getState().target;
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    topAppBarContextProvider.setValue({
-      headlineKey: 'login_headline',
-    });
+    topAppBarContextProvider.setValue({headlineKey: 'login_headline'});
 
     this._addSignalListeners(
-        eventListener.subscribe('login_form_input_change', (detail: TextFieldSignalDetail) => {
-          this.formData[detail?.name] = detail?.value ?? '';
-        }),
+        this.fsm.defineSignals([
+          {
+            callback: (): void => {
+              const state = this.fsm.getState();
+              this.gotState = state.target;
+            },
+            receivePrevious: 'NextCycle',
+          },
+          {
+            signalId: 'login_form_input_change',
+            callback: (detail, fsmInstance): void => {
+              fsmInstance.getContext().agencyInfo[detail.name] = detail?.value ?? '';
+            },
+          },
+          {
+            signalId: 'login_submit_click_event',
+            transition: 'login',
+          },
+        ]),
     );
   }
 
   override render(): unknown {
     this._logger.logMethod?.('render');
 
-    const textFieldContent: Record<string, TextFiledContent & {iconName: string}> = {
+    return this.fsm.render(
+        {
+          login: this._renderStateLogin,
+          loginSuccess: () => nothing,
+          loginFailed: this._renderStateLoginFailed,
+          form: this._renderStateForm,
+        },
+        this,
+    );
+  }
+
+  protected _renderStateForm = (): unknown => {
+    const textFieldContent: Record<string, TextFiledContent> = {
       phoneNumber: {
         name: 'phoneNumber',
         type: 'tel',
         placeholder: message('page_login_phone_number_placeholder'),
-        iconName: 'call-outline',
         inputChangeSignalName: 'login_form_input_change',
       },
-      password: {
-        name: 'password',
+      token: {
+        name: 'token',
         type: 'password',
         placeholder: message('page_login_password_placeholder'),
-        iconName: 'key-outline',
         inputChangeSignalName: 'login_form_input_change',
       },
     };
     const loginButtonContent: ButtonContent = {
       labelKey: 'page_login_submit',
       icon: 'checkmark-outline',
-      clickSignalId: 'click_form_click_event',
+      clickSignalId: 'login_submit_click_event',
     };
 
     return html`
       <alwatr-surface tinted>
-        ${this._inputTemplate(textFieldContent)}
+        ${mapObject(this, textFieldContent, (textFieldContent) => {
+    return html`
+            <alwatr-text-field .content=${textFieldContent} outlined active-outline stated></alwatr-text-field>
+          `;
+  })}
       </alwatr-surface>
       <div>
         <alwatr-button .content=${loginButtonContent}></alwatr-button>
       </div>
     `;
+  };
+
+  protected _renderStateLogin(): unknown {
+    this._logger.logMethod?.('_render_login');
+
+    const content: IconBoxContent = {
+      headline: message('page_login_login_message'),
+      icon: 'cloud-upload-outline',
+      tinted: 1,
+    };
+    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
   }
 
-  protected _inputTemplate(textFieldContentRecord: Record<string, TextFiledContent & {iconName: string}>): unknown {
-    return mapObject(this, textFieldContentRecord, (textFieldContent) => {
-      return html`
-        <div class="input-container">
-          <alwatr-icon name=${textFieldContent.iconName}></alwatr-icon>
-          <alwatr-text-field .content=${textFieldContent} outlined active-outline stated></alwatr-text-field>
-        </div>
-      `;
-    });
+  protected _renderStateLoginFailed(): unknown {
+    this._logger.logMethod?.('_render_login_failed');
+
+    const content: IconBoxContent = {
+      headline: message('page_order_login_failed_message'),
+      icon: 'cloud-offline-outline',
+      tinted: 1,
+    };
+    return html`
+      <alwatr-icon-box .content=${content}></alwatr-icon-box>
+      <div>
+        <alwatr-button .content=${buttons.retry}></alwatr-button>
+      </div>
+    `;
   }
 }
