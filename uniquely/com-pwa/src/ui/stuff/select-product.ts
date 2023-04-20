@@ -96,7 +96,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
     const content: ProductCartContent = {
       id: product.id,
       title: product.title.fa,
-      imagePath: config.cdn + 'medium/' + product.image.id,
+      imagePath: config.cdn + '/medium/' + product.image.id,
       price: this.priceStorage?.data[product.id]?.price ?? 0,
       finalPrice: this.finalPriceStorage?.data[product.id]?.price ?? 0,
     };
