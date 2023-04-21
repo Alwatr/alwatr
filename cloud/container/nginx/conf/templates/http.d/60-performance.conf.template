@@ -8,7 +8,7 @@ ignore_invalid_headers on;
 
 # File Cache
 # Removed from the cache if it has not been accessed during `inactive` time
-open_file_cache          max=10000 inactive=NGINX_OPEN_FILE_CACHE_INACTIVE;
+open_file_cache          max=10000 inactive=$NGINX_OPEN_FILE_CACHE_INACTIVE;
 # Sets a time after which open_file_cache elements should be validated.
 open_file_cache_valid    $NGINX_OPEN_FILE_CACHE_VALID;
 # Sets the minimum number of file accesses during the period configured by the inactive parameter
