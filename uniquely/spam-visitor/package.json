@@ -36,7 +36,7 @@
     "start": "NODE_OPTIONS=--enable-source-maps run-s clean build serve",
     "build": "yarn build:es --analyze=verbose",
     "build:ts": "tsc --build",
-    "build:es": "esbuild src/index.ts --platform=node --target=node19 --bundle --format=esm --minify --sourcemap --outdir=dist --out-extension:.js=.mjs",
+    "build:es": "esbuild src/index.ts --platform=node --target=node19 --external:puppeteer-core --bundle --format=esm --minify --sourcemap --outdir=dist --out-extension:.js=.mjs",
     "clean": "rm -rf dist build .tsbuildinfo",
     "serve": "node --enable-source-maps dist/index.mjs",
     "serve:debug": "node --inspect --enable-source-maps dist/index.mjs",
