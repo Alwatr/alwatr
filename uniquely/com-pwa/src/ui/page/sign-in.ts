@@ -26,15 +26,15 @@ import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-page-login': AlwatrPageLogin;
+    'alwatr-page-login': AlwatrPageSignIn;
   }
 }
 
 /**
- * Alwatr Sing In Page
+ * Alwatr Sign In Page
  */
-@customElement('alwatr-page-sing-in')
-export class AlwatrPageLogin extends UnresolvedMixin(SignalMixin(AlwatrBaseElement)) {
+@customElement('alwatr-page-sign-in')
+export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       box-sizing: border-box;

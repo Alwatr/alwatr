@@ -28,7 +28,7 @@ class AlwatrPwa extends AlwatrPwaElement {
       '_404': this._renderPage404,
       'order-list': this._renderPageOrderList,
       'order': this._renderPageOrder,
-      'sign-in': this._renderPageSingIn,
+      'sign-in': this._renderPageSignIn,
       's': this._saveLinkPass,
     },
   };
@@ -59,10 +59,10 @@ class AlwatrPwa extends AlwatrPwaElement {
     >...</alwatr-page-order>`;
   }
 
-  protected _renderPageSingIn(): unknown {
+  protected _renderPageSignIn(): unknown {
     import('./page/sign-in.js');
     topAppBarContextProvider.setValue({headlineKey: 'loading'});
-    return html`<alwatr-page-sing-in></alwatr-page-sing-in>`;
+    return html`<alwatr-page-sign-in></alwatr-page-sign-in>`;
   }
 
   protected _saveLinkPass(routeContext: RouteContext): unknown {
