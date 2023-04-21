@@ -1,6 +1,6 @@
-# Alwatr Accelerated PWA Server
+# Alwatr Accelerated Storage Server
 
-High performance Accelerated NGINX optimized for serve progressive web applications.
+High performance Accelerated NGINX optimized for serve alwatr storage server json.
 
 ## Usage
 

@@ -51,7 +51,14 @@ jobs:
 
           - image: nginx-pwa
             path: cloud/container/nginx-pwa
-            description: High performance Accelerated NGINX optimized NGINX for serve progressive web applications.
+            description: High performance Accelerated NGINX optimized for serve progressive web applications.
+            version:
+              short: 1
+              full: 1.3.0-1.24-alpine
+
+          - image: nginx-storage
+            path: cloud/container/nginx-storage
+            description: High performance Accelerated NGINX optimized for serve alwatr storage server json.
             version:
               short: 1
               full: 1.3.0-1.24-alpine
