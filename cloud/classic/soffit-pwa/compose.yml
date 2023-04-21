@@ -8,6 +8,7 @@ services:
   pwa:
     image: ghcr.io/alimd/soffit-pwa:${PWA_VERSION:-next}
 
+    cpu_count: 1
     cpu_shares: 1024
     mem_limit: 256m
 
@@ -32,6 +33,7 @@ services:
   storage-server:
     image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION:-next}
 
+    cpu_count: 1
     cpu_shares: 1024
     mem_limit: 256m
 
@@ -65,6 +67,7 @@ services:
   form-registration:
     image: ghcr.io/alimd/form-registration:${FORM_REGISTRATION_VERSION:-next}
 
+    cpu_count: 1
     cpu_shares: 1024
     mem_limit: 256m
 
