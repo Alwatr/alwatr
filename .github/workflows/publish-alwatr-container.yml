@@ -10,6 +10,7 @@ on:
       - 'v*.*.*'
     branches:
       - next
+      - main
 
   pull_request:
     paths:

@@ -1,7 +1,0 @@
-location ~ /(config\.js|service-worker\.js|manifest\.webmanifest) {
-  expires epoch;
-}
-
-location / {
-  try_files $uri /index.html =404;
-}
