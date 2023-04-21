@@ -1,6 +1,6 @@
 # Alwatr Accelerated PWA Server
 
-High performance Accelerated NGINX optimized NGINX for serve progressive web applications.
+High performance Accelerated NGINX optimized for serve progressive web applications.
 
 ## Usage
 
