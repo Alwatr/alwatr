@@ -1,5 +1,5 @@
 import {createLogger} from '@alwatr/logger';
-import {launch, type Page, type WaitForOptions, type Browser} from 'puppeteer';
+import {launch, type Page, type WaitForOptions, type Browser} from 'puppeteer-core';
 
 import type {PuppeteerOption} from '../type.js';
 
