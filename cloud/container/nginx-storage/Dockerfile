@@ -11,4 +11,5 @@ ENV NGINX_OPEN_FILE_CACHE_INACTIVE=1s \
 
 RUN rm -fv index.html
 COPY index.json ./
+COPY _error.json /var/www/
 COPY conf/ /etc/nginx/templates/
