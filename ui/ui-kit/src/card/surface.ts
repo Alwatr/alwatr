@@ -40,6 +40,7 @@ export class AlwatrSurface extends AlwatrBaseElement {
       --_surface-state-opacity: 0;
 
       display: block;
+      box-sizing: border-box;
       padding: calc(2 * var(--sys-spacing-track));
       color: hsl(var(--_surface-color-on));
       background-color: hsl(var(--_surface-color-bg));
