@@ -1,0 +1,8 @@
+{
+  "ok": false,
+  "statusCode": $status,
+  "errorCode": "error_$status",
+  "data": {
+    "status": "$status_text"
+  }
+}
