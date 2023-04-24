@@ -5,7 +5,8 @@ FROM $NGINX_IMAGE
 
 # Default environment for nginx template
 # ENV NGINX_ACCESS_LOG="/var/log/nginx/access.log json"
-ENV NGINX_ERROR_LOG_LEVEL=notice \
+ENV NGINX_ACCESS_LOG=off \
+    NGINX_ERROR_LOG_LEVEL=notice \
     NGINX_WORKER_CONNECTIONS=2048 \
     NGINX_CLIENT_MAX_BODY_SIZE=10m \
     NGINX_SENDFILE=on \
