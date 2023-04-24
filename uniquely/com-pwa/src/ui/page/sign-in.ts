@@ -12,6 +12,7 @@ import {
   state,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import '@alwatr/icon';
 import {redirect} from '@alwatr/router';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
@@ -49,6 +50,13 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       flex-direction: column;
       padding: calc(3 * var(--sys-spacing-track));
       gap: calc(3 * var(--sys-spacing-track));
+    }
+
+    alwatr-icon {
+      display: block;
+      margin: 0 auto;
+      color: var(--sys-color-primary);
+      font-size: calc(4 * var(--sys-spacing-track));
     }
 
     .error-message {
@@ -121,7 +129,10 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       'complete': () => nothing,
     });
 
-    return html`<alwatr-surface elevated>${content}</alwatr-surface>`;
+    return html`<alwatr-surface elevated>
+        <alwatr-icon .name=${'person'}></alwatr-icon>
+        ${content}
+      </alwatr-surface>`;
   }
 
   protected _renderTextField(loading = false): unknown {
