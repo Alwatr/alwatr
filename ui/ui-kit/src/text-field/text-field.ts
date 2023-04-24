@@ -117,6 +117,9 @@ export class AlwatrTextField extends AlwatrSurface {
   @property({type: String})
     type: InputType = 'text';
 
+  @property({type: Boolean})
+    readonly = false;
+
   @property({type: String})
     value = '';
 
@@ -150,6 +153,7 @@ export class AlwatrTextField extends AlwatrSurface {
         .placeholder=${this.placeholder}
         .value=${live(this.value)}
         .rows=${3}
+        ?readonly=${this.readonly}
         @change=${this._inputChanged}
       ></textarea>`;
     }
@@ -159,6 +163,7 @@ export class AlwatrTextField extends AlwatrSurface {
       .type=${this.type}
       .placeholder=${this.placeholder}
       .value=${live(this.value)}
+      ?readonly=${this.readonly}
       @change=${this._inputChanged}
     ></input>`;
   }

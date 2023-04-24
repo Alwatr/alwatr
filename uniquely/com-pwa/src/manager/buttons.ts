@@ -29,7 +29,6 @@ export const buttons = {
     flipRtl: true,
     clickSignalId: 'reload_order_storage',
   },
-
   newOrder: {
     icon: 'add-outline',
     clickSignalId: 'new_order_click_event',
@@ -93,6 +92,11 @@ export const buttons = {
     labelKey: 'page_order_retry_button',
     icon: 'reload-outline',
     clickSignalId: 'retry_click_event',
+  },
+  signIn: {
+    labelKey: 'page_sign_in_submit',
+    icon: 'checkmark-outline',
+    clickSignalId: 'sign_in_submit_click_event',
   },
 } as const;
 

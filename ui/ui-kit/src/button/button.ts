@@ -106,9 +106,8 @@ export class AlwatrButton extends AlwatrSurface {
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
-    const disabled = Boolean(this.content?.disabled);
-    if (this.hasAttribute('disabled') !== disabled) {
-      this.toggleAttribute('disabled', disabled);
+    if (this.content?.disabled != null && this.hasAttribute('disabled') !== this.content.disabled) {
+      this.toggleAttribute('disabled', this.content.disabled);
     }
   }
 

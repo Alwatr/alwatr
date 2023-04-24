@@ -118,7 +118,7 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
   }
 
   protected _mainTemplate(): unknown {
-    return html`<main class="scroll-area">${cache(routerOutlet(this._routesConfig))}</main>`;
+    return html`<main class="scroll-area">${cache(routerOutlet(this._routesConfig, this))}</main>`;
   }
 
   protected _navigationBarTemplate(): unknown {

@@ -42,6 +42,14 @@
 
     "page_order_tracking_headline": "پیگیری سفارش",
 
+    "page_sign_in_headline": "ورود",
+    "page_sign_sign_in_failed": "ورود با خطا روبرو شد! لطفا دوباره امتحان کنید.",
+    "page_sign_in_phone_number_placeholder": "شماره موبایل",
+    "page_sign_in_submit": "ورود",
+
+    "sign_in_error_user_not_found": "کاربری با این مشخصات یافت نشد!",
+    "sign_in_error_unknown": "خطا در اتصال به اینترنت، لطفا مجددا تلاش کنید.",
+
     "order_status_box_headline": "سفارش ${orderId}",
     "order_status_box_headline_new": "سفارش جدید",
     "order_status_box_status": "وضعیت سفارش",

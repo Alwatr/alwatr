@@ -9,14 +9,35 @@ export interface User extends AlwatrDocumentObject {
    */
   id: string;
 
-  /**
-   * User full name
-   */
   fullName: string;
 
-  gender?: Gender;
+  phoneNumber: string;
+
+  gender: Gender;
 
   email?: string;
 
-  phoneNumber?: string;
+  landlinePhone?: string;
+
+  /**
+   * Country Code.
+   */
+  country: string;
+
+  /**
+   * Province Code.
+   */
+  province?: string;
+
+  /**
+   * City Code.
+   */
+  city?: string;
+
+  /**
+   * User full address.
+   */
+  address?: string;
+
+  postalCode?: string;
 }
