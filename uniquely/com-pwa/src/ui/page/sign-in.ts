@@ -13,7 +13,7 @@ import {
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
-import '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
 import {buttons} from '../../manager/buttons.js';
@@ -35,13 +35,21 @@ declare global {
 export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
-      display: block;
-      padding: calc(2 * var(--sys-spacing-track));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-wrap: nowrap;
+      padding: calc(2 * var(--sys-spacing-track)) calc(5 * var(--sys-spacing-track));
+      box-sizing: border-box;
       min-height: 100%;
     }
 
     alwatr-surface {
-      --_surface-color-on: var(--sys-color-on-surface-variant-hsl);
+      padding: 0;
+    }
+
+    alwatr-surface > * {
+      margin: calc(3 * var(--sys-spacing-track));
     }
 
     .error-message {
@@ -49,7 +57,14 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
     }
 
     alwatr-text-field {
-      width: 100%;
+      display: block;
+    }
+
+    alwatr-button {
+      display: block;
+      margin: calc(3 * var(--sys-spacing-track)) calc(6 * var(--sys-spacing-track));
+      --_surface-color-on: var(--sys-color-on-primary-hsl);
+      background-color: var(--sys-color-primary);
     }
   `;
 
@@ -122,7 +137,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       'complete': () => nothing,
     });
 
-    return html`<alwatr-surface tinted>${content}</alwatr-surface>`;
+    return html`<alwatr-surface elevated>${content}</alwatr-surface>`;
   }
 
   protected _renderTextField(loading = false): unknown {
@@ -154,6 +169,6 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
 
   protected _renderErrorMessage(): unknown {
     this._logger.logMethod?.('_renderErrorMessage');
-    return html`<div>${message('page_sign_sign_in_failed')}</div>`;
+    return html`<div class="error-message">${message('page_sign_sign_in_failed')}</div>`;
   }
 }
