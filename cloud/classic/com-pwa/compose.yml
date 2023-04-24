@@ -22,6 +22,13 @@ services:
         max-size: '10m'
         max-file: '2'
 
+    volumes:
+      - type: bind
+        source: ./_data/cdn/
+        target: /var/www/html/cdn
+        bind:
+          create_host_path: true
+
     labels:
       traefik.enable: true
       traefik.port: 80
