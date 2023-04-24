@@ -94,27 +94,6 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
         redirect({});
       }
     }, {receivePrevious: 'NextCycle'}));
-
-    this._addSignalListeners(userStorageContextConsumer.fsm.defineSignals([
-      {
-        signalId: buttons.signIn.clickSignalId,
-        callback: (): void => {
-          const {value: textInput} = this._textInputRef;
-          const phoneNumber = textInput?.value;
-          this._logger.logMethodArgs?.('_onSignIn', {phoneNumber});
-
-          if (phoneNumber == null || this._linkPass == null) {
-            this._logger.accident('_onSignIn', 'invalid_sign_in_params', 'invalid sign in params', {
-              phoneNumber,
-              userToken: this._linkPass,
-            });
-            return;
-          }
-
-          signIn(phoneNumber, this._linkPass);
-        },
-      },
-    ]));
   }
 
   protected override render(): unknown {
@@ -170,7 +149,11 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
 
   protected _renderSignInButton(loading = false): unknown {
     this._logger.logMethodArgs?.('_renderSignInButton', {loading});
-    return html`<alwatr-button .content=${buttons.signIn} ?disabled=${loading}></alwatr-button>`;
+    return html`<alwatr-button
+        .content=${buttons.signIn}
+        ?disabled=${loading}
+        @click=${this._onSignInClick}
+      ></alwatr-button>`;
   }
 
   protected _renderErrorMessage(): unknown {
@@ -179,5 +162,21 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       ? 'sign_in_error_user_not_found'
       : 'sign_in_error_unknown';
     return html`<div class="error-message">${message(errorKey)}</div>`;
+  }
+
+  protected _onSignInClick(): void {
+    const {value: textInput} = this._textInputRef;
+    const phoneNumber = textInput?.value;
+    this._logger.logMethodArgs?.('_onSignInClick', {phoneNumber});
+
+    if (phoneNumber == null || this._linkPass == null) {
+      this._logger.accident('_onSignInClick', 'invalid_sign_in_params', 'invalid sign in params', {
+        phoneNumber,
+        userToken: this._linkPass,
+      });
+      return;
+    }
+
+    signIn(phoneNumber, this._linkPass);
   }
 }
