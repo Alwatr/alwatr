@@ -157,7 +157,7 @@ export class AlwatrSurface extends AlwatrBaseElement {
     :host([disabled]) {
       pointer-events: none;
       box-shadow: var(--sys-surface-elevation-0) !important;
-      color: var(--sys-color-on-surface) !important;
+      /* color: var(--sys-color-on-surface) !important; */
       opacity: var(--sys-surface-disabled-opacity);
     }
 
