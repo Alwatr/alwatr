@@ -10,8 +10,8 @@ export const userStorageContextConsumer = serverContextConsumer<AlwatrDocumentSt
     config.fetchContextOptions,
 );
 
-export const signIn = (userId: string, token: string): void => {
+export const signIn = (phoneNumber: string, token: string): void => {
   userStorageContextConsumer.request({
-    url: `${config.authApi}/${userId}-${token}`,
+    url: `${config.api}/auth/${phoneNumber}-${token}`,
   });
 };
