@@ -114,7 +114,6 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
   protected override render(): unknown {
     this._logger.logMethod?.('render');
 
-
     let content;
     if (this._linkPass == null) {
       content = [
@@ -136,13 +135,11 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
           this._renderSignInButton(true),
         ],
         'reloadingFailed': 'loadingFailed',
-        'loadingFailed': () => {
-          [
-            this._renderTextField(),
-            this._renderSignInErrorMessage(),
-            this._renderSignInButton(),
-          ];
-        },
+        'loadingFailed': () => [
+          this._renderTextField(),
+          this._renderSignInErrorMessage(),
+          this._renderSignInButton(),
+        ],
         'complete': () => nothing,
       });
     }
