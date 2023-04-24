@@ -134,8 +134,8 @@ services:
         max-size: '10m'
         max-file: '2'
 
-  cdn:
-    image: ghcr.io/alimd/nginx:${CDN_VERSION:-1}
+  user:
+    image: ghcr.io/alimd/nginx-storage:${NGINX_STORAGE_VERSION:-1}
 
     cpu_shares: 1024
     mem_limit: 256m
@@ -146,15 +146,10 @@ services:
       internal:
       alwatr-public-network:
 
-    environment:
-      - NGINX_TCP_NODELAY=on
-      - NGINX_OPEN_FILE_CACHE_VALID=24h
-      - NGINX_EXPIRES_DEFAULT=max
-
     volumes:
       - type: bind
-        source: ./_data/cdn
-        target: /var/www/html/cdn
+        source: ./_data/user
+        target: /var/www/html/
         bind:
           create_host_path: true
 
@@ -167,6 +162,6 @@ services:
     labels:
       traefik.enable: true
       traefik.port: 80
-      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/cdn/
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/user/
       traefik.frontend.entryPoints: http, https
       traefik.frontend.redirect.entryPoint: https
