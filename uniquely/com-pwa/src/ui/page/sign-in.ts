@@ -38,22 +38,26 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       display: flex;
       flex-direction: column;
       justify-content: center;
-      flex-wrap: nowrap;
       padding: calc(2 * var(--sys-spacing-track)) calc(5 * var(--sys-spacing-track));
       box-sizing: border-box;
       min-height: 100%;
     }
 
     alwatr-surface {
-      padding: 0;
-    }
-
-    alwatr-surface > * {
-      margin: calc(3 * var(--sys-spacing-track));
+      display: flex;
+      flex-direction: column;
+      padding: calc(3 * var(--sys-spacing-track));
+      gap: calc(3 * var(--sys-spacing-track));
     }
 
     .error-message {
+      text-align: center;
       color: var(--sys-color-error);
+      font-family: var(--sys-typescale-body-small-font-family-name);
+      font-weight: var(--sys-typescale-body-small-font-weight);
+      font-size: var(--sys-typescale-body-small-font-size);
+      letter-spacing: var(--sys-typescale-body-small-letter-spacing);
+      line-height: var(--sys-typescale-body-small-line-height);
     }
 
     alwatr-text-field {
