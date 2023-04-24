@@ -103,9 +103,8 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
     // prettier-ignore
     this._addSignalListeners(userStorageContextConsumer.subscribe(() => {
       this._userState = userStorageContextConsumer.getState().target;
-      if (this._userState === 'complete') {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        localStorage.setItem('user-token', this._linkPass!);
+      if (this._linkPass != null && this._userState === 'complete') {
+        localStorage.setItem('user-token', this._linkPass);
         localStorage.removeItem('link-pass');
         redirect({});
       }
@@ -115,27 +114,38 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
   protected override render(): unknown {
     this._logger.logMethod?.('render');
 
-    topAppBarContextProvider.setValue({headlineKey: 'page_sign_in_headline'});
 
-    const content = userStorageContextConsumer.fsm.render({
-      'initial': () => [
-        this._renderTextField(),
-        this._renderSignInButton(),
-      ],
-      'offlineLoading': 'onlineLoading',
-      'reloading': 'onlineLoading',
-      'onlineLoading': () => [
+    let content;
+    if (this._linkPass == null) {
+      content = [
         this._renderTextField(true),
+        this._renderErrorMessage('page_sign_in_login_with_link_pass'),
         this._renderSignInButton(true),
-      ],
-      'reloadingFailed': 'loadingFailed',
-      'loadingFailed': () => [
-        this._renderTextField(),
-        this._renderErrorMessage(),
-        this._renderSignInButton(),
-      ],
-      'complete': () => nothing,
-    });
+      ];
+    }
+    else {
+      content = userStorageContextConsumer.fsm.render({
+        'initial': () => [
+          this._renderTextField(),
+          this._renderSignInButton(),
+        ],
+        'offlineLoading': 'onlineLoading',
+        'reloading': 'onlineLoading',
+        'onlineLoading': () => [
+          this._renderTextField(true),
+          this._renderSignInButton(true),
+        ],
+        'reloadingFailed': 'loadingFailed',
+        'loadingFailed': () => {
+          [
+            this._renderTextField(),
+            this._renderSignInErrorMessage(),
+            this._renderSignInButton(),
+          ];
+        },
+        'complete': () => nothing,
+      });
+    }
 
     return html`<alwatr-surface elevated>
         <alwatr-icon .name=${'person'}></alwatr-icon>
@@ -175,12 +185,18 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       ></alwatr-button>`;
   }
 
-  protected _renderErrorMessage(): unknown {
-    this._logger.logMethod?.('_renderErrorMessage');
+  protected _renderSignInErrorMessage(): unknown {
+    this._logger.logMethod?.('_renderSignInErrorMessage');
     const errorKey = userStorageContextConsumer.getResponse()?.statusCode === 404
       ? 'sign_in_error_user_not_found'
       : 'sign_in_error_unknown';
+
     return html`<div class="error-message">${message(errorKey)}</div>`;
+  }
+
+  protected _renderErrorMessage(key: string): unknown {
+    this._logger.logMethod?.('_renderErrorMessage');
+    return html`<div class="error-message">${message(key)}</div>`;
   }
 
   protected _onSignInClick(): void {
