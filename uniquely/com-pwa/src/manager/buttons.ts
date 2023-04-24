@@ -29,7 +29,6 @@ export const buttons = {
     flipRtl: true,
     clickSignalId: 'reload_order_storage',
   },
-
   newOrder: {
     icon: 'add-outline',
     clickSignalId: 'new_order_click_event',

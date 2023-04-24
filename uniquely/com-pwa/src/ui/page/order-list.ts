@@ -109,7 +109,7 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
         };
         return html`
           <alwatr-icon-box .content=${content}></alwatr-icon-box>
-          <alwatr-button .content=${buttons.reloadOrderStorage}></alwatr-button>
+          <alwatr-button .content=${buttons.retry}></alwatr-button>
         `;
       },
 
