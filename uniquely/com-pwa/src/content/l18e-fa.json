@@ -43,6 +43,9 @@
     "page_order_tracking_headline": "پیگیری سفارش",
 
     "page_sign_in_headline": "ورود",
+    "page_sign_sign_in_failed": "ورود با خطا روبرو شد! لطفا دوباره امتحان کنید.",
+    "page_sign_in_phone_number_placeholder": "شماره موبایل",
+    "page_sign_in_submit": "ورود",
 
     "order_status_box_headline": "سفارش ${orderId}",
     "order_status_box_headline_new": "سفارش جدید",

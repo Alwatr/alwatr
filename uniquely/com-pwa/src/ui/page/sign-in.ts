@@ -100,7 +100,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
   protected override render(): unknown {
     this._logger.logMethod?.('render');
 
-    topAppBarContextProvider.setValue({headlineKey: 'sign_in_headline'});
+    topAppBarContextProvider.setValue({headlineKey: 'page_sign_in_headline'});
 
     const content = userStorageContextConsumer.fsm.render({
       'initial': () => [
@@ -131,7 +131,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       ${ref(this._textInputRef)}
       .name=${'phoneNumber'}
       .type=${'tel'}
-      .placeholder=${'page_sign_in_phone_number_placeholder'}
+      .placeholder=${message('page_sign_in_phone_number_placeholder')}
       ?disabled=${loading}
       outlined
       active-outline
@@ -154,6 +154,6 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
 
   protected _renderErrorMessage(): unknown {
     this._logger.logMethod?.('_renderErrorMessage');
-    return html`<div>${message('sign_in_failed')}</div>`;
+    return html`<div>${message('page_sign_sign_in_failed')}</div>`;
   }
 }
