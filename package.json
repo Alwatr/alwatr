@@ -57,7 +57,7 @@
     "@web/dev-server": "^0.2.0",
     "eslint": "^8.38.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-import-resolver-typescript": "^3.5.4",
+    "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-lit": "^1.8.3",
     "eslint-plugin-wc": "^1.4.0",
