@@ -1265,12 +1265,13 @@
   dependencies:
     "@lit-labs/ssr-dom-shim" "^1.0.0"
 
-"@material/web@^1.0.0-pre.5":
-  version "1.0.0-pre.5"
-  resolved "https://registry.yarnpkg.com/@material/web/-/web-1.0.0-pre.5.tgz#46b474ba6e28ff89665f6edaa9e014a7590de759"
-  integrity sha512-vwFJmg/VpdPe+KbUen8/msNIc7/jdJs0MtITdxnjIvkglx8Gt8Pi6S4pdbHA/lfnqXFEy7Is9bmR0fh5Yk5DEA==
+"@material/web@^1.0.0-pre.6":
+  version "1.0.0-pre.6"
+  resolved "https://registry.yarnpkg.com/@material/web/-/web-1.0.0-pre.6.tgz#191d94edbdcaeadb95a674f785be95e2896cea34"
+  integrity sha512-85tAr793HCp9ObwcZ7TPoAblOjSSAYov5Fx7RLE/uzq9eSsBrZI4L8BX4oobJOikp3hV47acOsK5+STgnHi3yw==
   dependencies:
     lit "^2.3.0"
+    safevalues "^0.4.3"
     tslib "^2.4.0"
 
 "@microsoft/eslint-formatter-sarif@^3.0.0":
@@ -7686,6 +7687,11 @@ safe-regex@^1.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
+
+safevalues@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/safevalues/-/safevalues-0.4.3.tgz#b1969cd3199c01a0295dadac54b6162da3944d22"
+  integrity sha512-pNCNTkx3xs7G5YJ/9CoeZZVUSPRjH0SEPM0QI5Z1FZRlLBviTFWlNKPs8PTvZvERV0gO7ie/t/Zc0S96JS4Xew==
 
 sandwich-stream@^2.0.2:
   version "2.0.2"
