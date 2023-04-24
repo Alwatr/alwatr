@@ -5,7 +5,6 @@ const token = getConfKey<string>('token');
 export const config = {
   api: getConfKey<string>('api'),
   cdn: getConfKey<string>('cdn'),
-  authApi: getConfKey<string>('authApi'),
   token,
   productStorageList: getConfKey<Array<string>>('productStorageList'),
   priceListName: '${productStorage}-market-ir',
