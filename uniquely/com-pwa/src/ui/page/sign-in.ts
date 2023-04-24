@@ -35,7 +35,9 @@ declare global {
 export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
+      display: block;
       padding: calc(2 * var(--sys-spacing-track));
+      min-height: 100%;
     }
 
     alwatr-surface {
