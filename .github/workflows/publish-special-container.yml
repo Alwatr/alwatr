@@ -83,7 +83,7 @@ jobs:
 
       - name: 🏗 Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v4.3.0
+        uses: docker/metadata-action@v4.4.0
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           images: |
