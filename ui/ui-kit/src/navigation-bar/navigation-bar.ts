@@ -118,7 +118,7 @@ export class AlwatrNavigationBar extends LocalizeMixin(SignalMixin(AlwatrSurface
 
     const contextSignal = this.getAttribute('context-signal');
     if (contextSignal) {
-      this._signalListenerList.push(
+      this._addSignalListeners(
           contextConsumer.subscribe<NavigationBarContent>(contextSignal, (context) => {
             this.content = context;
             this.requestUpdate(); // Ensure update on child properties changes.
@@ -129,7 +129,7 @@ export class AlwatrNavigationBar extends LocalizeMixin(SignalMixin(AlwatrSurface
 
     const activeItemIdSignal = this.getAttribute('active-item-id-signal');
     if (activeItemIdSignal) {
-      this._signalListenerList.push(
+      this._addSignalListeners(
           eventListener.subscribe<{id: string}>(activeItemIdSignal, (detail) => {
             this.activeItemId = detail.id;
             this.requestUpdate(); // Ensure update on child properties changes.
@@ -140,7 +140,7 @@ export class AlwatrNavigationBar extends LocalizeMixin(SignalMixin(AlwatrSurface
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return mapIterable(this, this.content?.itemList, this.navigationItem);
   }
 
@@ -163,7 +163,7 @@ export class AlwatrNavigationBar extends LocalizeMixin(SignalMixin(AlwatrSurface
   }
 
   protected itemClickHandler(event: MouseEvent): void {
-    this._logger.logMethod('itemClickHandler');
+    this._logger.logMethod?.('itemClickHandler');
     const target = event.currentTarget as HTMLDivElement;
     const id = target.getAttribute('data-id');
     const activeItemIdSignal = this.getAttribute('active-item-id-signal');

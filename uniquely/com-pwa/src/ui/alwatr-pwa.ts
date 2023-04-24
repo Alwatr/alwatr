@@ -59,6 +59,6 @@ class AlwatrPwa extends AlwatrPwaElement {
   }
 
   protected override _navigationBarTemplate(): unknown {
-    return html`<alwatr-app-footer></alwatr-app-footer>`;
+    return html`<alwatr-navigation-bar></alwatr-navigation-bar>`;
   }
 }
