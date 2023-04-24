@@ -17,6 +17,7 @@ import {redirect} from '@alwatr/router';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
+import {sanitizePhoneNumber} from '@alwatr/validator';
 
 import {buttons} from '../../manager/buttons.js';
 import {signIn, userStorageContextConsumer} from '../../manager/context-provider/user.js';
@@ -199,9 +200,12 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
   protected _onSignInClick(): void {
     const {value: textInput} = this._textInputRef;
     const phoneNumber = textInput?.value;
+    if (!phoneNumber) return;
     this._logger.logMethodArgs?.('_onSignInClick', {phoneNumber});
 
-    if (phoneNumber == null || this._linkPass == null) {
+    const sanitizedPhoneNumber = sanitizePhoneNumber(phoneNumber);
+
+    if (sanitizedPhoneNumber == null || this._linkPass == null) {
       this._logger.accident('_onSignInClick', 'invalid_sign_in_params', 'invalid sign in params', {
         phoneNumber,
         userToken: this._linkPass,
@@ -209,6 +213,6 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       return;
     }
 
-    signIn(phoneNumber, this._linkPass);
+    signIn(sanitizedPhoneNumber, this._linkPass);
   }
 }
