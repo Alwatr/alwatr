@@ -13,6 +13,7 @@ import {
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {redirect} from '@alwatr/router';
+import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 
@@ -66,7 +67,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
 
     alwatr-button {
       display: block;
-      margin: calc(3 * var(--sys-spacing-track)) calc(6 * var(--sys-spacing-track));
+      margin: 0 calc(3 * var(--sys-spacing-track));
       --_surface-color-on: var(--sys-color-on-primary-hsl);
       background-color: var(--sys-color-primary);
     }
@@ -159,7 +160,8 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
     <alwatr-text-field
       .type=${'password'}
       .value=${'داداش، مارو چی فرض کردی؟'}
-      disabled
+      ?disabled=${loading}
+      readonly
       outlined
       active-outline
       stated
@@ -173,6 +175,9 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
 
   protected _renderErrorMessage(): unknown {
     this._logger.logMethod?.('_renderErrorMessage');
-    return html`<div class="error-message">${message('page_sign_sign_in_failed')}</div>`;
+    const errorKey = userStorageContextConsumer.getResponse()?.statusCode === 404
+      ? 'sign_in_error_user_not_found'
+      : 'sign_in_error_unknown';
+    return html`<div class="error-message">${message(errorKey)}</div>`;
   }
 }
