@@ -1,14 +1,13 @@
 import {html, customElement, nothing} from '@alwatr/element';
 import '@alwatr/font/vazirmatn.css';
 import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
-import {RouteContext, RoutesConfig, redirect} from '@alwatr/router';
+import {redirect, type RouteContext, type RoutesConfig} from '@alwatr/router';
 import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 
 import './stuff/app-footer.js';
 import {topAppBarContextProvider} from '../manager/context.js';
-
 
 declare global {
   interface HTMLElementTagNameMap {
