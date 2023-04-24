@@ -139,3 +139,9 @@ export function validator<T extends StringifyableRecord>(
 
   return targetObject as T;
 }
+
+export function sanitizePhoneNumber(phoneNumber: string): number | null {
+  phoneNumber = phoneNumber.replace(/ /g, '');
+  if (isNumber(phoneNumber)) return +phoneNumber;
+  return null;
+}
