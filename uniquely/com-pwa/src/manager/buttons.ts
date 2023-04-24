@@ -94,7 +94,7 @@ export const buttons = {
     icon: 'reload-outline',
     clickSignalId: 'retry_click_event',
   },
-  singIn: {
+  signIn: {
     labelKey: 'page_sign_in_submit',
     icon: 'checkmark-outline',
     clickSignalId: 'sign_in_submit_click_event',

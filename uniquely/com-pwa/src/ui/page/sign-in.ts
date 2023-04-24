@@ -24,7 +24,7 @@ import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-page-login': AlwatrPageSignIn;
+    'alwatr-page-sign-in': AlwatrPageSignIn;
   }
 }
 
@@ -75,7 +75,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
 
     this._addSignalListeners(userStorageContextConsumer.fsm.defineSignals([
       {
-        signalId: buttons.singIn.clickSignalId,
+        signalId: buttons.signIn.clickSignalId,
         callback: (): void => {
           const {value: textInput} = this._textInputRef;
           const phoneNumber = textInput?.value;
@@ -147,7 +147,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
 
   protected _renderSignInButton(loading = false): unknown {
     this._logger.logMethodArgs?.('_renderSignInButton', {loading});
-    return html`<alwatr-button .content=${buttons.singIn} ?disabled=${loading}></alwatr-button>`;
+    return html`<alwatr-button .content=${buttons.signIn} ?disabled=${loading}></alwatr-button>`;
   }
 
   protected _renderErrorMessage(): unknown {
