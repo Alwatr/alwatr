@@ -92,6 +92,14 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
 
     this._linkPass = localStorage.getItem('link-pass');
 
+    topAppBarContextProvider.setValue({
+      type: 'center',
+      headlineKey: 'page_sign_in_headline',
+      startIcon: {icon: 'menu-outline', clickSignalId: 'app-menu-click-event'},
+      endIconList: [{icon: 'person-circle-outline', clickSignalId: 'user-avatar-click-event'}],
+      tinted: 1,
+    });
+
     // prettier-ignore
     this._addSignalListeners(userStorageContextConsumer.subscribe(() => {
       this._userState = userStorageContextConsumer.getState().target;
