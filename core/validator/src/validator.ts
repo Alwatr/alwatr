@@ -1,4 +1,4 @@
-import {isNumber} from '@alwatr/math';
+import {UnicodeDigits, isNumber, type UnicodeLangKeys} from '@alwatr/math';
 
 import type {JsonSchema} from './type.js';
 import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
@@ -140,9 +140,37 @@ export function validator<T extends StringifyableRecord>(
   return targetObject as T;
 }
 
+/**
+ * Removes extra spaces and translates digits of the its input
+ */
+export const sanitizeString = (str: string, replaceNumberToLang: UnicodeLangKeys = 'fa'): string => {
+  if (!str) return '';
+  const unicodeDigits = new UnicodeDigits(replaceNumberToLang, 'all');
+  str = unicodeDigits.translate(str);
+  return str.replace(/\s/g, '');
+};
+
+const phoneJungRegExp = /^98|^0098|^00989|^0|^\+98/;
+/**
+ * Coverts an input to a valid and sanitized phone number
+ */
 export const sanitizePhoneNumber = (input?: string | number | null): number | null => {
   if (input == null) return null;
+
   if (typeof input === 'number') input = input + '';
-  input = input.replace(/ /g, '');
-  return +('98' + +input);
+  input = sanitizeString(input);
+  input = '98' + input.replace(phoneJungRegExp, '');
+
+  return +input;
+};
+
+const validPhoneRegExp = /\+989(9[0-9]|0[1-2]|1[0-9]|3[0-9]|2[0-1])-?[0-9]{3}-?[0-9]{4}$/;
+/**
+ * Checks an input is a valid phone number or not
+ */
+export const validatePhone = (phone: string, skipSanitize = false): boolean => {
+  if (!skipSanitize) {
+    phone = sanitizePhoneNumber(phone) + '';
+  }
+  return validPhoneRegExp.test(phone);
 };
