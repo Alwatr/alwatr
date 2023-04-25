@@ -1,5 +1,6 @@
 import {contextProvider, serverContextConsumer} from '@alwatr/context';
 
+import {userContextConsumer} from './user.js';
 import {config} from '../../config.js';
 
 import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
@@ -14,7 +15,7 @@ signInContextConsumer.subscribe(() => {
   if (signInContextConsumer.getState().target === 'complete') {
     const user = signInContextConsumer.getResponse()?.data;
     if (user != null) {
-      contextProvider.setValue<ComUser>('user_context', user);
+      contextProvider.setValue<ComUser>(userContextConsumer.id, user);
     }
   }
 });

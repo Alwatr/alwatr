@@ -1,5 +1,6 @@
 import {serverContextConsumer} from '@alwatr/context';
 
+import {userContextConsumer} from './user.js';
 import {config} from '../../config.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
@@ -15,7 +16,7 @@ export const orderStorageContextConsumer = serverContextConsumer<AlwatrDocumentS
 
 orderStorageContextConsumer.fsm.defineSignals([
   {
-    signalId: 'user_context',
+    signalId: userContextConsumer.id,
     callback: (user: ComUser): void => {
       orderStorageContextConsumer.request({
         queryParameters: {
