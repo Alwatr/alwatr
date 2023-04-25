@@ -1,4 +1,4 @@
-import {UnicodeDigits, isNumber, type UnicodeLangKeys} from '@alwatr/math';
+import {UnicodeDigits, isNumber} from '@alwatr/math';
 
 import type {JsonSchema} from './type.js';
 import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
