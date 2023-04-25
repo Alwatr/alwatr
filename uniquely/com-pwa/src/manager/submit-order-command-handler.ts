@@ -7,10 +7,10 @@ import {submitOrderCommandTrigger} from './context.js';
 import {logger} from './logger.js';
 import {config} from '../config.js';
 
-import type {AlwatrServiceResponseSuccessWithMeta, User} from '@alwatr/type';
-import type {Order} from '@alwatr/type/customer-order-management.js';
+import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
+import type {ComUser, Order} from '@alwatr/type/customer-order-management.js';
 
-const userContextConsumer = contextConsumer.bind<User>('user_context');
+const userContextConsumer = contextConsumer.bind<ComUser>('user_context');
 
 commandHandler.define<Order, Order | null>(submitOrderCommandTrigger.id, async (order) => {
   const userContext = userContextConsumer.getValue() ?? await userContextConsumer.untilChange();
