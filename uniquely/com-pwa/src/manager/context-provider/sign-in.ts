@@ -10,6 +10,14 @@ export const signInContextConsumer = serverContextConsumer<AlwatrServiceResponse
     config.fetchContextOptions,
 );
 
+signInContextConsumer.subscribe(() => {
+  if (signInContextConsumer.getState().target === 'complete') {
+    const user = signInContextConsumer.getResponse()?.data;
+    if (user != null) {
+      contextProvider.setValue<ComUser>('user_context', user);
+    }
+  }
+});
 
 export const signIn = (phoneNumber: number, token: string): void => {
   signInContextConsumer.request({
