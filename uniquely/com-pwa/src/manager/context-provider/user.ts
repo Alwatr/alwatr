@@ -5,7 +5,7 @@ import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
 export const userContextConsumer = contextConsumer<ComUser>('user-context');
 
-const user = getLocalStorageItem<ComUser | null>('user-context', null);
+const user = getLocalStorageItem<ComUser | null>('user-info', null);
 if (user != null) {
   contextProvider.setValue<ComUser>(userContextConsumer.id, user);
 }

@@ -217,6 +217,11 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
             signalId: buttons.editShippingForm.clickSignalId,
             transition: 'edit_shipping',
           },
+          // FIXME: handle `reload` state
+          // {
+          //   signalId: buttons.reload.clickSignalId,
+          //   transition: ''
+          // },
           {
             signalId: buttons.showRegisteredOrderDetail.clickSignalId,
             callback: (): void => {
