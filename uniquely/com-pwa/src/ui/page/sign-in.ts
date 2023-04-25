@@ -16,6 +16,7 @@ import '@alwatr/icon';
 import {redirect} from '@alwatr/router';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 import {sanitizePhoneNumber} from '@alwatr/validator';
 
@@ -201,20 +202,22 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
 
   protected _onSignInClick(): void {
     const {value: textInput} = this._textInputRef;
-    const phoneNumber = textInput?.value;
-    if (!phoneNumber) return;
+    const phoneNumber = sanitizePhoneNumber(textInput?.value);
     this._logger.logMethodArgs?.('_onSignInClick', {phoneNumber});
 
-    const sanitizedPhoneNumber = sanitizePhoneNumber(phoneNumber);
+    if (phoneNumber == null) {
+      return snackbarSignalTrigger.request({
+        messageKey: 'invalid_phone_number',
+      });
+    }
 
-    if (sanitizedPhoneNumber == null || this._linkPass == null) {
-      this._logger.accident('_onSignInClick', 'invalid_sign_in_params', 'invalid sign in params', {
-        phoneNumber,
-        userToken: this._linkPass,
+    if (this._linkPass == null) {
+      this._logger.accident('_onSignInClick', 'invalid_link_pass', 'invalid link pass', {
+        linkPass: this._linkPass,
       });
       return;
     }
 
-    signIn(sanitizedPhoneNumber, this._linkPass);
+    signIn(phoneNumber, this._linkPass);
   }
 }
