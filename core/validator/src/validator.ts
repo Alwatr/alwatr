@@ -143,7 +143,7 @@ export function validator<T extends StringifyableRecord>(
 /**
  * Removes extra spaces and translates digits of the its input
  */
-export const sanitizeString = (str: string, replaceNumberToLang: UnicodeLangKeys = 'fa'): string => {
+export const sanitizeString = (str: string, replaceNumberToLang: UnicodeLangKeys = 'en'): string => {
   if (!str) return '';
   const unicodeDigits = new UnicodeDigits(replaceNumberToLang, 'all');
   str = unicodeDigits.translate(str);
