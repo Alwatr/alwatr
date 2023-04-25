@@ -1,4 +1,5 @@
 import {contextProvider, serverContextConsumer} from '@alwatr/context';
+import {simpleHashNumber} from '@alwatr/math';
 
 import {config} from '../../config.js';
 
@@ -10,9 +11,17 @@ export const signInContextConsumer = serverContextConsumer<AlwatrServiceResponse
     config.fetchContextOptions,
 );
 
+signInContextConsumer.subscribe(() => {
+  if (signInContextConsumer.getState().target === 'complete') {
+    const user = signInContextConsumer.getResponse()?.data;
+    if (user != null) {
+      contextProvider.setValue<ComUser>('user_context', user);
+    }
+  }
+});
 
 export const signIn = (phoneNumber: number, token: string): void => {
   signInContextConsumer.request({
-    url: `${config.api}/auth/${phoneNumber}-${token}`,
+    url: `${config.api}/storage/${simpleHashNumber(phoneNumber)}-${token}`,
   });
 };
