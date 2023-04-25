@@ -1,4 +1,3 @@
-import {contextConsumer} from '@alwatr/context';
 import {html, customElement, nothing} from '@alwatr/element';
 import '@alwatr/font/vazirmatn.css';
 import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
@@ -8,9 +7,8 @@ import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 
 import './stuff/app-footer.js';
+import {userContextConsumer} from '../manager/context-provider/user.js';
 import {topAppBarContextProvider} from '../manager/context.js';
-
-import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -91,7 +89,7 @@ class AlwatrPwa extends AlwatrPwaElement {
     const routeId = this._routesConfig.routeId(routeContext);
     this._logger.logMethodArgs?.('_checkSignedIn', {routeId});
     if (
-      contextConsumer<ComUser>('user_context').getValue() == null &&
+      userContextConsumer.getValue() == null &&
       routeId !== 'sign-in' &&
       routeId !== 's' &&
       routeId !== ''
