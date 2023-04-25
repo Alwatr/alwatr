@@ -47,7 +47,7 @@
     "page_sign_sign_in_failed": "ورود با خطا روبرو شد! لطفا دوباره امتحان کنید.",
     "page_sign_in_phone_number_placeholder": "شماره موبایل",
     "page_sign_in_submit": "ورود",
-    "page_sign_in_login_with_link_pass": "لطفا با رمز لینک ارسال شده وارد شوید.",
+    "page_sign_in_login_with_link_pass": "لطفا با رمز آدرس ارسال شده وارد شوید.",
 
     "sign_in_error_user_not_found": "کاربری با این مشخصات یافت نشد!",
     "sign_in_error_unknown": "خطا در اتصال به اینترنت، لطفا مجددا تلاش کنید.",
