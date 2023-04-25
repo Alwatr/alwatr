@@ -14,6 +14,7 @@ import {
   when,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import {eventListener} from '@alwatr/signal';
 import '@alwatr/ui-kit/button/button.js';
 import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
@@ -38,10 +39,12 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
 ) {
   static override styles = css`
     :host {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      padding: calc(2 * var(--sys-spacing-track));
       box-sizing: border-box;
-      padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
       min-height: 100%;
+      gap: var(--sys-spacing-track);
       transform: opacity var(--sys-motion-duration-small);
     }
 
@@ -68,6 +71,12 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
     this._addSignalListeners(orderStorageContextConsumer.subscribe(() => {
       this.gotState = orderStorageContextConsumer.getState().target;
     }, {receivePrevious: 'NextCycle'}));
+
+    this._addSignalListeners(
+        eventListener.subscribe(buttons.retry.clickSignalId, () => {
+          orderStorageContextConsumer.request();
+        }),
+    );
   }
 
   protected override update(changedProperties: PropertyValues<this>): void {
@@ -109,7 +118,9 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
         };
         return html`
           <alwatr-icon-box .content=${content}></alwatr-icon-box>
-          <alwatr-button .content=${buttons.retry}></alwatr-button>
+          <div>
+            <alwatr-button .content=${buttons.retry}></alwatr-button>
+          </div>
         `;
       },
 
