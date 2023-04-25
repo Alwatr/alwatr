@@ -141,28 +141,20 @@ export function validator<T extends StringifyableRecord>(
 }
 
 /**
- * Removes extra spaces and translates digits of the its input
- */
-export const sanitizeString = (str: string, replaceNumberToLang: UnicodeLangKeys = 'en'): string => {
-  if (!str) return '';
-  const unicodeDigits = new UnicodeDigits(replaceNumberToLang);
-  str = unicodeDigits.translate(str);
-  return str.replace(/\s/g, '');
-};
-
-/**
  * Coverts an input to a valid and sanitized phone number
  */
-export const sanitizePhoneNumber = (input?: string | number | null): number | null => {
+export const sanitizePhoneNumber = (input?: string | number | null, countryCode = '98'): number | null => {
   if (input == null) return null;
 
   if (typeof input === 'number') input = input + '';
-  input = input.replace(/[ )(+-]+/g, '');
 
-  if (!input.startsWith('98')) {
-    input = '98' + input;
-  }
-  if (!isNumber(input)) return null;
+  input = input.replace(/[ )(-]+/g, '');
+  input = input.replace(new RegExp(`^(\\+${countryCode}|${countryCode}|\\+|0)`), '');
+  input = countryCode + input;
 
+  const unicodeDigits = new UnicodeDigits('en');
+  input = unicodeDigits.translate(input);
+
+  if (input.length !== 12 || !isNumber(input)) return null;
   return +input;
 };
