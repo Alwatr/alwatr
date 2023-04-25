@@ -80,7 +80,7 @@ class AlwatrPwa extends AlwatrPwaElement {
   }
 
   protected _checkSignedIn(routeContext: RouteContext): void {
-    const route = routeContext.sectionList[0] + '';
+    const route = routeContext.sectionList[0].toString();
     if (localStorage.getItem('user-token') == null && route !== 'sign-in' && route !== 's' && route !== '') {
       redirect({sectionList: ['sign-in']});
     }
