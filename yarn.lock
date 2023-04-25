@@ -2180,17 +2180,17 @@
     "@typescript-eslint/types" "5.59.1"
     eslint-visitor-keys "^3.3.0"
 
-"@web/config-loader@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@web/config-loader/-/config-loader-0.2.0.tgz#fe9159a97125b05aee50d9f3b14e1eb57f7c3678"
-  integrity sha512-xNqIQDPWQT9H6FwDCqJ5Gqf74CMuOaxxCPbIS8a5kUTtW+R/1/nT9CREZ6w8Tdf/+DsIyagyfH2hbz+lhwh/2w==
+"@web/config-loader@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@web/config-loader/-/config-loader-0.2.1.tgz#a5ff416922994d698e1df8c3613715bde47ecf79"
+  integrity sha512-cQvTYA5lWLyyO8/R2aOReiudLa8r0LFHvMNYCwSAjzvrghb+AHxaW3BJWP9ORx6OaDcI7g5X8OATA81LSJce4A==
   dependencies:
     semver "^7.3.4"
 
-"@web/dev-server-core@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.5.0.tgz#13f97029a674a450976173a6ebebb708b31730fb"
-  integrity sha512-Ffr54H/XwNGH/8ZHp37hHSzyzpd0Zb7HtYcjjgu4ydUAbCvYMwu9MXqEXF2/TtkNU8/nSpQJwBnK19P8YNSSpA==
+"@web/dev-server-core@^0.5.0", "@web/dev-server-core@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.5.1.tgz#80e5a059f2abf5d1d40bd123c2b539ae86640e2c"
+  integrity sha512-pXgb4bjDmPIaIQT9luixTSqTvRQxttUEzSKOZqLNl6pVgrl4n47ZtmZte936G2tM7nHmpT+oaMDDtCM0CgbQNQ==
   dependencies:
     "@types/koa" "^2.11.6"
     "@types/ws" "^7.4.0"
@@ -2223,15 +2223,15 @@
     rollup "^3.15.0"
     whatwg-url "^11.0.0"
 
-"@web/dev-server@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.2.0.tgz#8edfca4ec5310cf6296bfd84c20fe32d1d707f90"
-  integrity sha512-y5N/LOFCnUDUhPDTh344mUZFDUsEHuZANEvkRLjmBNid1qmD8XkODw98gUpu7kS7Uv4OvRmWIsFCimnuvNg/CA==
+"@web/dev-server@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.2.1.tgz#b0d56c6cc2a3a13ab99edac8e4672d485c760b36"
+  integrity sha512-gIiED5tzMv+0fHFMfxzNTPGyrkYQbSpOlM7mfOUh7b1Qftw4rj8l/vfAIUHUNlqLUh4MqFhwcvtzj7dg05h9qA==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@types/command-line-args" "^5.0.0"
-    "@web/config-loader" "^0.2.0"
-    "@web/dev-server-core" "^0.5.0"
+    "@web/config-loader" "^0.2.1"
+    "@web/dev-server-core" "^0.5.1"
     "@web/dev-server-rollup" "^0.5.0"
     camelcase "^6.2.0"
     command-line-args "^5.1.1"
