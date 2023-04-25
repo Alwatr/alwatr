@@ -20,6 +20,11 @@ declare global {
  */
 @customElement('alwatr-pwa')
 class AlwatrPwa extends AlwatrPwaElement {
+  constructor() {
+    super();
+    this._checkSignedIn = this._checkSignedIn.bind(this);
+  }
+
   protected override _routesConfig: RoutesConfig = {
     routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
     templates: {
@@ -80,8 +85,9 @@ class AlwatrPwa extends AlwatrPwaElement {
   }
 
   protected _checkSignedIn(routeContext: RouteContext): void {
-    const route = routeContext.sectionList[0].toString();
-    if (localStorage.getItem('user-token') == null && route !== 'sign-in' && route !== 's' && route !== '') {
+    const routeId = this._routesConfig.routeId(routeContext);
+    this._logger.logMethodArgs?.('_checkSignedIn', {routeId});
+    if (localStorage.getItem('user-token') == null && routeId !== 'sign-in' && routeId !== 's' && routeId !== '') {
       redirect({sectionList: ['sign-in']});
     }
   }
