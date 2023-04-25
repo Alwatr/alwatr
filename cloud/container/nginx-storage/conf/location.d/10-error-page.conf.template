@@ -2,6 +2,7 @@ error_page 400 401 402 403 404 405 406 407 408 409 410 411 412 413 414 415 416 4
 
 location = /_error.json {
   ssi on;
+  ssi_types *;
   internal;
   auth_basic off;
   root /var/www;
