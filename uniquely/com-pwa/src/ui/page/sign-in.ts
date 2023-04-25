@@ -9,11 +9,9 @@ import {
   html,
   nothing,
   ref,
-  state,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/icon';
-import {redirect} from '@alwatr/router';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
@@ -83,9 +81,6 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
     }
   `;
 
-  @state()
-  private _userState = signInContextConsumer.getState().target;
-
   private _linkPass: string | null = null;
   private _textInputRef: Ref<AlwatrTextField> = createRef();
 
@@ -104,14 +99,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
 
     // prettier-ignore
     this._addSignalListeners(signInContextConsumer.subscribe(() => {
-      this._userState = signInContextConsumer.getState().target;
-      if (this._userState === 'complete') {
-        if (this._linkPass != null) {
-          localStorage.setItem('user-token', this._linkPass);
-          localStorage.removeItem('link-pass');
-        }
-        redirect({});
-      }
+      this.requestUpdate();
     }, {receivePrevious: 'NextCycle'}));
   }
 
@@ -187,12 +175,12 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
   }
 
   protected _renderErrorMessage(): unknown {
-    this._logger.logMethod?.('_renderErrorMessage');
-    const errorKey = signInContextConsumer.getResponse()?.statusCode === 404
-      ? 'sign_in_error_user_not_found'
-      : 'sign_in_error_unknown';
+    this._logger.logMethodArgs?.('_renderErrorMessage', signInContextConsumer.getResponse());
+    // const errorKey = signInContextConsumer.getResponse()?.statusCode === 404
+    //   ? 'sign_in_error_user_not_found'
+    //   : 'sign_in_error_unknown';
 
-    return html`<div class="error-message">${message(errorKey)}</div>`;
+    return html`<div class="error-message">${message('sign_in_error_user_not_found')}</div>`;
   }
 
   protected _renderAuthErrorMessage(): unknown {

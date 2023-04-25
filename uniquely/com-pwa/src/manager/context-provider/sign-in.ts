@@ -1,4 +1,5 @@
 import {contextProvider, serverContextConsumer} from '@alwatr/context';
+import {redirect} from '@alwatr/router';
 
 import {userContextConsumer} from './user.js';
 import {config} from '../../config.js';
@@ -15,8 +16,12 @@ signInContextConsumer.subscribe(() => {
   if (signInContextConsumer.getState().target === 'complete') {
     const user = signInContextConsumer.getResponse()?.data;
     if (user != null) {
+      localStorage.setItem('user-info', JSON.stringify(user));
+      localStorage.removeItem('link-pass');
       contextProvider.setValue<ComUser>(userContextConsumer.id, user);
     }
+
+    redirect({});
   }
 });
 
