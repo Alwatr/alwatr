@@ -119,7 +119,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
     if (this._linkPass == null) {
       content = [
         this._renderTextField(true),
-        this._renderErrorMessage('page_sign_in_login_with_link_pass'),
+        this._renderAuthErrorMessage(),
         this._renderSignInButton(true),
       ];
     }
@@ -138,7 +138,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
         'reloadingFailed': 'loadingFailed',
         'loadingFailed': () => [
           this._renderTextField(),
-          this._renderSignInErrorMessage(),
+          this._renderErrorMessage(),
           this._renderSignInButton(),
         ],
         'complete': () => nothing,
@@ -183,8 +183,8 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       ></alwatr-button>`;
   }
 
-  protected _renderSignInErrorMessage(): unknown {
-    this._logger.logMethod?.('_renderSignInErrorMessage');
+  protected _renderErrorMessage(): unknown {
+    this._logger.logMethod?.('_renderErrorMessage');
     const errorKey = userStorageContextConsumer.getResponse()?.statusCode === 404
       ? 'sign_in_error_user_not_found'
       : 'sign_in_error_unknown';
@@ -192,9 +192,9 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
     return html`<div class="error-message">${message(errorKey)}</div>`;
   }
 
-  protected _renderErrorMessage(key: string): unknown {
-    this._logger.logMethod?.('_renderErrorMessage');
-    return html`<div class="error-message">${message(key)}</div>`;
+  protected _renderAuthErrorMessage(): unknown {
+    this._logger.logMethod?.('_renderAuthErrorMessage');
+    return html`<div class="error-message">${message('page_sign_in_login_with_link_pass')}</div>`;
   }
 
   protected _onSignInClick(): void {
