@@ -140,8 +140,9 @@ export function validator<T extends StringifyableRecord>(
   return targetObject as T;
 }
 
-export function sanitizePhoneNumber(phoneNumber: string): number | null {
-  phoneNumber = phoneNumber.replace(/ /g, '');
-  if (isNumber(phoneNumber)) return +('98' + phoneNumber);
-  return null;
-}
+export const sanitizePhoneNumber = (input?: string | number | null): number | null => {
+  if (input == null) return null;
+  if (typeof input === 'number') input = input + '';
+  input = input.replace(/ /g, '');
+  return +('98' + +input);
+};
