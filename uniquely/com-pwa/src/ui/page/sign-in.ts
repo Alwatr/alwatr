@@ -104,9 +104,11 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
     // prettier-ignore
     this._addSignalListeners(userStorageContextConsumer.subscribe(() => {
       this._userState = userStorageContextConsumer.getState().target;
-      if (this._linkPass != null && this._userState === 'complete') {
-        localStorage.setItem('user-token', this._linkPass);
-        localStorage.removeItem('link-pass');
+      if (this._userState === 'complete') {
+        if (this._linkPass != null) {
+          localStorage.setItem('user-token', this._linkPass);
+          localStorage.removeItem('link-pass');
+        }
         redirect({});
       }
     }, {receivePrevious: 'NextCycle'}));
