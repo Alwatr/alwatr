@@ -145,12 +145,11 @@ export function validator<T extends StringifyableRecord>(
  */
 export const sanitizeString = (str: string, replaceNumberToLang: UnicodeLangKeys = 'en'): string => {
   if (!str) return '';
-  const unicodeDigits = new UnicodeDigits(replaceNumberToLang, 'all');
+  const unicodeDigits = new UnicodeDigits(replaceNumberToLang);
   str = unicodeDigits.translate(str);
   return str.replace(/\s/g, '');
 };
 
-const phoneJungRegExp = /^98|^0098|^00989|^0|^\+98/;
 /**
  * Coverts an input to a valid and sanitized phone number
  */
@@ -158,19 +157,12 @@ export const sanitizePhoneNumber = (input?: string | number | null): number | nu
   if (input == null) return null;
 
   if (typeof input === 'number') input = input + '';
-  input = sanitizeString(input);
-  input = '98' + input.replace(phoneJungRegExp, '');
+  input = input.replace(/[ )(+-]+/g, '');
+
+  if (!input.startsWith('98')) {
+    input = '98' + input;
+  }
+  if (!isNumber(input)) return null;
 
   return +input;
-};
-
-const validPhoneRegExp = /\+989(9[0-9]|0[1-2]|1[0-9]|3[0-9]|2[0-1])-?[0-9]{3}-?[0-9]{4}$/;
-/**
- * Checks an input is a valid phone number or not
- */
-export const validatePhone = (phone: string, skipSanitize = false): boolean => {
-  if (!skipSanitize) {
-    phone = sanitizePhoneNumber(phone) + '';
-  }
-  return validPhoneRegExp.test(phone);
 };
