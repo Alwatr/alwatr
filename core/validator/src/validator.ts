@@ -142,6 +142,6 @@ export function validator<T extends StringifyableRecord>(
 
 export function sanitizePhoneNumber(phoneNumber: string): number | null {
   phoneNumber = phoneNumber.replace(/ /g, '');
-  if (isNumber(phoneNumber)) return +phoneNumber;
+  if (isNumber(phoneNumber)) return +('98' + phoneNumber);
   return null;
 }
