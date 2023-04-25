@@ -34,9 +34,7 @@ class AlwatrPwa extends AlwatrPwaElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    routeContextConsumer.subscribe((routerContext) => {
-      this._checkSignedIn(routerContext.sectionList[0] + '');
-    });
+    this._addSignalListeners(routeContextConsumer.subscribe(this._checkSignedIn));
   }
 
   protected _renderPageHome(): unknown {
@@ -81,9 +79,10 @@ class AlwatrPwa extends AlwatrPwaElement {
     return html`<alwatr-app-footer></alwatr-app-footer>`;
   }
 
-  protected _checkSignedIn(route: string): void {
-    this._logger.logMethodArgs?.('_checkSignedIn', {route});
-    if (localStorage.getItem('user-token') != null || route === 'sign-in' || route === 's' || route === '') return;
-    redirect({sectionList: ['sign-in']});
+  protected _checkSignedIn(routeContext: RouteContext): void {
+    const route = routeContext.sectionList[0] + '';
+    if (localStorage.getItem('user-token') == null && route !== 'sign-in' && route !== 's' && route !== '') {
+      redirect({sectionList: ['sign-in']});
+    }
   }
 }
