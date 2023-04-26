@@ -12,10 +12,13 @@ import {
   state,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import '@alwatr/icon';
 import {redirect} from '@alwatr/router';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
+import {sanitizePhoneNumber} from '@alwatr/validator';
 
 import {buttons} from '../../manager/buttons.js';
 import {signIn, userStorageContextConsumer} from '../../manager/context-provider/user.js';
@@ -51,6 +54,13 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       gap: calc(3 * var(--sys-spacing-track));
     }
 
+    alwatr-icon {
+      display: block;
+      margin: 0 auto;
+      color: var(--sys-color-primary);
+      font-size: calc(4 * var(--sys-spacing-track));
+    }
+
     .error-message {
       text-align: center;
       color: var(--sys-color-error);
@@ -84,13 +94,22 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
 
     this._linkPass = localStorage.getItem('link-pass');
 
+    topAppBarContextProvider.setValue({
+      type: 'center',
+      headlineKey: 'page_sign_in_headline',
+      startIcon: {icon: 'menu-outline', clickSignalId: 'app-menu-click-event'},
+      endIconList: [{icon: 'person-circle-outline', clickSignalId: 'user-avatar-click-event'}],
+      tinted: 1,
+    });
+
     // prettier-ignore
     this._addSignalListeners(userStorageContextConsumer.subscribe(() => {
       this._userState = userStorageContextConsumer.getState().target;
       if (this._userState === 'complete') {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        localStorage.setItem('user-token', this._linkPass!);
-        localStorage.removeItem('link-pass');
+        if (this._linkPass != null) {
+          localStorage.setItem('user-token', this._linkPass);
+          localStorage.removeItem('link-pass');
+        }
         redirect({});
       }
     }, {receivePrevious: 'NextCycle'}));
@@ -99,29 +118,40 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
   protected override render(): unknown {
     this._logger.logMethod?.('render');
 
-    topAppBarContextProvider.setValue({headlineKey: 'page_sign_in_headline'});
-
-    const content = userStorageContextConsumer.fsm.render({
-      'initial': () => [
-        this._renderTextField(),
-        this._renderSignInButton(),
-      ],
-      'offlineLoading': 'onlineLoading',
-      'reloading': 'onlineLoading',
-      'onlineLoading': () => [
+    let content;
+    if (this._linkPass == null) {
+      content = [
         this._renderTextField(true),
+        this._renderAuthErrorMessage(),
         this._renderSignInButton(true),
-      ],
-      'reloadingFailed': 'loadingFailed',
-      'loadingFailed': () => [
-        this._renderTextField(),
-        this._renderErrorMessage(),
-        this._renderSignInButton(),
-      ],
-      'complete': () => nothing,
-    });
+      ];
+    }
+    else {
+      content = userStorageContextConsumer.fsm.render({
+        'initial': () => [
+          this._renderTextField(),
+          this._renderSignInButton(),
+        ],
+        'offlineLoading': 'onlineLoading',
+        'reloading': 'onlineLoading',
+        'onlineLoading': () => [
+          this._renderTextField(true),
+          this._renderSignInButton(true),
+        ],
+        'reloadingFailed': 'loadingFailed',
+        'loadingFailed': () => [
+          this._renderTextField(),
+          this._renderErrorMessage(),
+          this._renderSignInButton(),
+        ],
+        'complete': () => nothing,
+      });
+    }
 
-    return html`<alwatr-surface elevated>${content}</alwatr-surface>`;
+    return html`<alwatr-surface elevated>
+        <alwatr-icon .name=${'person'}></alwatr-icon>
+        ${content}
+      </alwatr-surface>`;
   }
 
   protected _renderTextField(loading = false): unknown {
@@ -161,18 +191,29 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
     const errorKey = userStorageContextConsumer.getResponse()?.statusCode === 404
       ? 'sign_in_error_user_not_found'
       : 'sign_in_error_unknown';
+
     return html`<div class="error-message">${message(errorKey)}</div>`;
+  }
+
+  protected _renderAuthErrorMessage(): unknown {
+    this._logger.logMethod?.('_renderAuthErrorMessage');
+    return html`<div class="error-message">${message('page_sign_in_login_with_link_pass')}</div>`;
   }
 
   protected _onSignInClick(): void {
     const {value: textInput} = this._textInputRef;
-    const phoneNumber = textInput?.value;
+    const phoneNumber = sanitizePhoneNumber(textInput?.value);
     this._logger.logMethodArgs?.('_onSignInClick', {phoneNumber});
 
-    if (phoneNumber == null || this._linkPass == null) {
-      this._logger.accident('_onSignInClick', 'invalid_sign_in_params', 'invalid sign in params', {
-        phoneNumber,
-        userToken: this._linkPass,
+    if (phoneNumber == null) {
+      return snackbarSignalTrigger.request({
+        messageKey: 'invalid_phone_number',
+      });
+    }
+
+    if (this._linkPass == null) {
+      this._logger.accident('_onSignInClick', 'invalid_link_pass', 'invalid link pass', {
+        linkPass: this._linkPass,
       });
       return;
     }

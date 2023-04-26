@@ -9,6 +9,7 @@
     "retry": "تلاش مجدد",
     "loading": "درحال بارگذاری...",
     "cancel": "لغو",
+    "invalid_phone_number": "شماره تلفن صحیح نمی‌باشد.",
 
     "page_404_not_found": "پیدا نشد!",
     "page_404_under_develope": "دردست ساخت",
@@ -42,10 +43,11 @@
 
     "page_order_tracking_headline": "پیگیری سفارش",
 
-    "page_sign_in_headline": "ورود",
+    "page_sign_in_headline": "مدیریت سفارشات سافیت",
     "page_sign_sign_in_failed": "ورود با خطا روبرو شد! لطفا دوباره امتحان کنید.",
     "page_sign_in_phone_number_placeholder": "شماره موبایل",
     "page_sign_in_submit": "ورود",
+    "page_sign_in_login_with_link_pass": "لطفا با رمز لینک ارسال شده وارد شوید.",
 
     "sign_in_error_user_not_found": "کاربری با این مشخصات یافت نشد!",
     "sign_in_error_unknown": "خطا در اتصال به اینترنت، لطفا مجددا تلاش کنید.",

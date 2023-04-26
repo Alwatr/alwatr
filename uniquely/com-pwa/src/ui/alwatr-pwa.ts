@@ -1,7 +1,7 @@
 import {html, customElement, nothing} from '@alwatr/element';
 import '@alwatr/font/vazirmatn.css';
 import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
-import {redirect, type RouteContext, type RoutesConfig} from '@alwatr/router';
+import {redirect, routeContextConsumer, type RouteContext, type RoutesConfig} from '@alwatr/router';
 import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
@@ -20,6 +20,11 @@ declare global {
  */
 @customElement('alwatr-pwa')
 class AlwatrPwa extends AlwatrPwaElement {
+  constructor() {
+    super();
+    this._checkSignedIn = this._checkSignedIn.bind(this);
+  }
+
   protected override _routesConfig: RoutesConfig = {
     routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
     templates: {
@@ -31,6 +36,11 @@ class AlwatrPwa extends AlwatrPwaElement {
       's': this._saveLinkPass,
     },
   };
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this._addSignalListeners(routeContextConsumer.subscribe(this._checkSignedIn));
+  }
 
   protected _renderPageHome(): unknown {
     import('./page/home.js');
@@ -52,10 +62,7 @@ class AlwatrPwa extends AlwatrPwaElement {
     import('./page/order.js');
     topAppBarContextProvider.setValue({headlineKey: 'loading'});
     const orderId = routeContext.sectionList[1] || 'new';
-    return html`<alwatr-page-order
-      .orderId=${orderId}
-      unresolved
-    >...</alwatr-page-order>`;
+    return html`<alwatr-page-order .orderId=${orderId} unresolved>...</alwatr-page-order>`;
   }
 
   protected _renderPageSignIn(): unknown {
@@ -75,5 +82,13 @@ class AlwatrPwa extends AlwatrPwaElement {
 
   protected override _navigationBarTemplate(): unknown {
     return html`<alwatr-app-footer></alwatr-app-footer>`;
+  }
+
+  protected _checkSignedIn(routeContext: RouteContext): void {
+    const routeId = this._routesConfig.routeId(routeContext);
+    this._logger.logMethodArgs?.('_checkSignedIn', {routeId});
+    if (localStorage.getItem('user-token') == null && routeId !== 'sign-in' && routeId !== 's' && routeId !== '') {
+      redirect({sectionList: ['sign-in']});
+    }
   }
 }
