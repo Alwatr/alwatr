@@ -9,6 +9,11 @@ export interface User extends AlwatrDocumentObject {
    */
   id: string;
 
+  /**
+   * Link pass epoch number, started from 1 and increased by token revoke.
+   */
+  lpe: number;
+
   fullName: string;
 
   phoneNumber: string;
