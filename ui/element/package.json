@@ -37,7 +37,7 @@
     "@alwatr/i18n": "^0.30.0",
     "@alwatr/logger": "^0.30.0",
     "@alwatr/router": "^0.30.0",
-    "lit": "^2.7.2",
+    "lit": "^2.7.3",
     "tslib": "^2.5.0"
   },
   "devDependencies": {
