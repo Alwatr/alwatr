@@ -146,13 +146,14 @@ export function validator<T extends StringifyableRecord>(
 export const sanitizePhoneNumber = (input?: string | number | null, countryCode = '98'): number | null => {
   if (input == null) return null;
 
+  const unicodeDigits = new UnicodeDigits('en');
+  input = unicodeDigits.translate(input + '');
+
   input =
     countryCode +
-    (input + '').replace(/[ )(-]+/g, '').replace(new RegExp(`^(\\+${countryCode}|${countryCode}|\\+|0)`), '');
+    input.replace(/[ )(-]+/g, '').replace(new RegExp(`^(\\+${countryCode}|${countryCode}|\\+|0)`), '');
 
-  const unicodeDigits = new UnicodeDigits('en');
-  input = unicodeDigits.translate(input);
+  if (input.length !== countryCode.length + 10 || !isNumber(input)) return null;
 
-  if (input.length !== 12 || !isNumber(input)) return null;
   return +input;
 };
