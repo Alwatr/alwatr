@@ -5,7 +5,7 @@ import '@alwatr/ui-kit/button/button.js';
 import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
-import {getLocalStorageItem} from '@alwatr/util';
+import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 
 import type {AlwatrRadioGroup, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
@@ -45,7 +45,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
 
   private _saveFormData(): void {
     this._logger.logMethod?.('_saveFormData');
-    localStorage.setItem(localStorageId, JSON.stringify(this.formData));
+    setLocalStorageItem(localStorageId, this.formData);
   }
 
   private _loadFormData(): void {

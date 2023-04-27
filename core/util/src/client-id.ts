@@ -1,5 +1,7 @@
 import {random} from '@alwatr/math';
 
+import {setLocalStorageItem} from './local-storage.js';
+
 let clientId: string | null = null;
 
 export const getClientId = (): string => {
@@ -10,7 +12,7 @@ export const getClientId = (): string => {
   clientId = localStorage.getItem('client-id');
   if (clientId == null) {
     clientId = random.uuid;
-    localStorage.setItem('client-id', clientId);
+    setLocalStorageItem('client-id', clientId);
   }
   return clientId;
 };
