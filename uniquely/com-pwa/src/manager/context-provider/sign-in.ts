@@ -19,14 +19,8 @@ export const signInServerContext = serverContextConsumer<AlwatrServiceResponseSu
 
 signInServerContext.subscribe(() => {
   if (signInServerContext.getState().target === 'complete') {
-    const userProfile = signInServerContext.getResponse()!.data;
-    contextProvider.setValue<ComUser>(userProfileContextConsumer.id, userProfile);
-
-    const linkPass = linkPassTokenContextConsumer.getValue();
-    if (linkPass) {
-      contextProvider.setValue<string>(userTokenContextConsumer.id, linkPass);
-    }
-
+    contextProvider.setValue<ComUser>(userProfileContextConsumer.id, signInServerContext.getResponse()!.data);
+    contextProvider.setValue<string>(userTokenContextConsumer.id, linkPassTokenContextConsumer.getValue()!);
     redirect({});
   }
 });
