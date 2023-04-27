@@ -19,7 +19,7 @@ import '@alwatr/ui-kit/text-field/text-field.js';
 import {sanitizePhoneNumber} from '@alwatr/validator';
 
 import {buttons} from '../../manager/buttons.js';
-import {signIn, signInContextConsumer} from '../../manager/context-provider/sign-in.js';
+import {signIn, signInServerContext} from '../../manager/context-provider/sign-in.js';
 import {topAppBarContextProvider} from '../../manager/context.js';
 
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
@@ -98,7 +98,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
     });
 
     // prettier-ignore
-    this._addSignalListeners(signInContextConsumer.subscribe(() => {
+    this._addSignalListeners(signInServerContext.subscribe(() => {
       this.requestUpdate();
     }, {receivePrevious: 'NextCycle'}));
   }
@@ -115,7 +115,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       ];
     }
     else {
-      content = signInContextConsumer.fsm.render({
+      content = signInServerContext.fsm.render({
         'initial': () => [
           this._renderTextField(),
           this._renderSignInButton(),
@@ -175,7 +175,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
   }
 
   protected _renderErrorMessage(): unknown {
-    this._logger.logMethodArgs?.('_renderErrorMessage', signInContextConsumer.getResponse());
+    this._logger.logMethodArgs?.('_renderErrorMessage', signInServerContext.getResponse());
     // const errorKey = signInContextConsumer.getResponse()?.statusCode === 404
     //   ? 'sign_in_error_user_not_found'
     //   : 'sign_in_error_unknown';
