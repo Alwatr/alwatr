@@ -4,9 +4,7 @@ import {redirect} from '@alwatr/router';
 import {
   linkPassTokenContextConsumer,
   userProfileContextConsumer,
-  userProfileLocalStorageKey,
   userTokenContextConsumer,
-  userTokenLocalStorageKey,
 } from './user.js';
 import {config} from '../../config.js';
 
@@ -21,12 +19,10 @@ export const signInServerContext = serverContextConsumer<AlwatrServiceResponseSu
 signInServerContext.subscribe(() => {
   if (signInServerContext.getState().target === 'complete') {
     const userProfile = signInServerContext.getResponse()!.data;
-    localStorage.setItem(userProfileLocalStorageKey, JSON.stringify(userProfile));
     contextProvider.setValue<ComUser>(userProfileContextConsumer.id, userProfile);
 
     const linkPass = linkPassTokenContextConsumer.getValue();
     if (linkPass) {
-      localStorage.setItem(userTokenLocalStorageKey, linkPass);
       contextProvider.setValue<string>(userTokenContextConsumer.id, linkPass);
     }
 
