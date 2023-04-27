@@ -1,12 +1,12 @@
 import {replaceNumber, localeContextConsumer} from '@alwatr/i18n';
 import {eventListener} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
-import {delay, setLocalStorageItem} from '@alwatr/util';
+import {delay, getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 
 // FIXME: i18n
 
 eventListener.subscribe('service_worker_registered', async () => {
-  if (localStorage.getItem('notify_new_version') !== null) {
+  if (getLocalStorageItem('notify_new_version', null) !== null) {
     if (localeContextConsumer.getValue() == null) {
       await localeContextConsumer.untilChange();
     }

@@ -19,7 +19,7 @@ userProfileContextConsumer.subscribe((userProfile) => {
 export const userTokenContextConsumer = contextConsumer<string>('user-token');
 export const userTokenLocalStorageKey = userTokenContextConsumer + '-x1';
 
-const userToken = localStorage.getItem(userTokenLocalStorageKey);
+const userToken = getLocalStorageItem(userTokenLocalStorageKey, null);
 if (userToken != null) {
   contextProvider.setValue<string>(userTokenContextConsumer.id, userToken);
 }

@@ -16,7 +16,7 @@ declare global {
   }
 }
 
-const localStorageId = 'shipping_form_data_x2';
+const localStorageId = 'shipping_form_data_x3';
 
 /**
  * Alwatr Order Shipping Form.

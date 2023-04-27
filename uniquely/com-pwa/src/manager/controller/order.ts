@@ -15,7 +15,7 @@ import {submitOrderCommandTrigger} from '../context.js';
 
 import type {ClickSignalType} from '@alwatr/type';
 
-const newOrderLocalStorageKey = 'draft-order-x3';
+const newOrderLocalStorageKey = 'draft_order_x4';
 
 export const orderFsmConstructor = finiteStateMachineProvider.defineConstructor('order_fsm', {
   initial: 'pending',
