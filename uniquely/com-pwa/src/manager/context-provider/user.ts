@@ -4,8 +4,8 @@ import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
 // user profile
-export const userProfileContextConsumer = contextConsumer<ComUser>('user-profile');
-export const userProfileLocalStorageKey = userProfileContextConsumer.id + '-x1';
+export const userProfileContextConsumer = contextConsumer<ComUser>('user_profile');
+export const userProfileLocalStorageKey = userProfileContextConsumer.id + '_x1';
 
 const userProfile = getLocalStorageItem<ComUser | null>(userProfileLocalStorageKey, null);
 if (userProfile != null) {
@@ -16,8 +16,8 @@ userProfileContextConsumer.subscribe((userProfile) => {
 });
 
 // user token
-export const userTokenContextConsumer = contextConsumer<string>('user-token');
-export const userTokenLocalStorageKey = userTokenContextConsumer + '-x1';
+export const userTokenContextConsumer = contextConsumer<string>('user_token');
+export const userTokenLocalStorageKey = userTokenContextConsumer + '_x1';
 
 const userToken = getLocalStorageItem(userTokenLocalStorageKey, null);
 if (userToken != null) {
@@ -28,4 +28,4 @@ userTokenContextConsumer.subscribe((userToken) => {
 });
 
 // link-pass token
-export const linkPassTokenContextConsumer = contextConsumer<string>('link-pass-token');
+export const linkPassTokenContextConsumer = contextConsumer<string>('link_pass_token');
