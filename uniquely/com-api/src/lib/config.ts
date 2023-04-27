@@ -13,7 +13,7 @@ export const config = {
     secret: process.env.SECRET ?? 'YOUR_SECRET',
     algorithm: 'sha224',
     encoding: 'base64url',
-    duration: null,
+    duration: '6M',
   },
   nanoServer: {
     host: process.env.HOST ?? '0.0.0.0',
