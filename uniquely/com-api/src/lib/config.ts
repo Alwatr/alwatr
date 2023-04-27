@@ -11,7 +11,7 @@ export const config = {
   },
   token: <TokenGeneratorConfig>{
     secret: process.env.SECRET ?? 'YOUR_SECRET',
-    algorithm: 'sha256',
+    algorithm: 'sha224',
     encoding: 'base64url',
     duration: null,
   },
