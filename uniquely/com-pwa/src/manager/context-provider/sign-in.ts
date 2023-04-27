@@ -1,12 +1,10 @@
 import {contextProvider, serverContextConsumer} from '@alwatr/context';
+import {message} from '@alwatr/i18n';
 import {simpleHashNumber} from '@alwatr/math';
 import {redirect} from '@alwatr/router';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
 
-import {
-  linkPassTokenContextConsumer,
-  userProfileContextConsumer,
-  userTokenContextConsumer,
-} from './user.js';
+import {linkPassTokenContextConsumer, userProfileContextConsumer, userTokenContextConsumer} from './user.js';
 import {config} from '../../config.js';
 
 import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
@@ -19,14 +17,19 @@ export const signInServerContext = serverContextConsumer<AlwatrServiceResponseSu
 
 signInServerContext.subscribe(() => {
   if (signInServerContext.getState().target === 'complete') {
-    contextProvider.setValue<ComUser>(userProfileContextConsumer.id, signInServerContext.getResponse()!.data);
+    const userProfile = signInServerContext.getResponse()!.data;
+    contextProvider.setValue<ComUser>(userProfileContextConsumer.id, userProfile);
     contextProvider.setValue<string>(userTokenContextConsumer.id, linkPassTokenContextConsumer.getValue()!);
     redirect({});
+
+    snackbarSignalTrigger.request({
+      message: message('sign_in_welcome_message').replace('${fullName}', userProfile.fullName),
+    });
   }
 });
 
 export const signIn = (phoneNumber: number, token: string): void => {
-  signInContextConsumer.request({
+  signInServerContext.request({
     url: `${config.api}/storage/${simpleHashNumber(phoneNumber)}-${token}`,
   });
 };
