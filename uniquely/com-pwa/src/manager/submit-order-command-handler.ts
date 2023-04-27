@@ -3,7 +3,7 @@ import {commandHandler} from '@alwatr/signal';
 
 
 import {orderStorageContextConsumer} from './context-provider/order-storage.js';
-import {userContextConsumer} from './context-provider/user.js';
+import {userProfileContextConsumer} from './context-provider/user.js';
 import {submitOrderCommandTrigger} from './context.js';
 import {logger} from './logger.js';
 import {config} from '../config.js';
@@ -12,7 +12,7 @@ import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
 import type {Order} from '@alwatr/type/customer-order-management.js';
 
 commandHandler.define<Order, Order | null>(submitOrderCommandTrigger.id, async (order) => {
-  const userContext = userContextConsumer.getValue() ?? await userContextConsumer.untilChange();
+  const userContext = userProfileContextConsumer.getValue() ?? await userProfileContextConsumer.untilChange();
 
   try {
     const response = await serviceRequest<AlwatrServiceResponseSuccessWithMeta<Order>>({
