@@ -11,6 +11,9 @@ const userProfile = getLocalStorageItem<ComUser | null>(userProfileLocalStorageK
 if (userProfile != null) {
   contextProvider.setValue<ComUser>(userProfileContextConsumer.id, userProfile);
 }
+userProfileContextConsumer.subscribe((userProfile) => {
+  localStorage.setItem(userProfileLocalStorageKey, JSON.stringify(userProfile));
+});
 
 // user token
 export const userTokenContextConsumer = contextConsumer<string>('user-token');
@@ -20,6 +23,9 @@ const userToken = localStorage.getItem(userTokenLocalStorageKey);
 if (userToken != null) {
   contextProvider.setValue<string>(userTokenContextConsumer.id, userToken);
 }
+userTokenContextConsumer.subscribe((userToken) => {
+  localStorage.setItem(userTokenLocalStorageKey, userToken);
+});
 
 // link-pass token
 export const linkPassTokenContextConsumer = contextConsumer<string>('link-pass-token');
