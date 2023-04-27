@@ -294,7 +294,6 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
       endIconList: [buttons.print, buttons.reload],
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const order = this.fsm.getContext().orderStorage!.data[this.fsm.getContext().orderId];
     return [
       this._render_status(order),

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {routerOutlet, routeContextConsumer, redirect, type RouteContext, type RoutesConfig} from '@alwatr/router';
 
 const routes: RoutesConfig = {
