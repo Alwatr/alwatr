@@ -1,7 +1,13 @@
 import {contextProvider, serverContextConsumer} from '@alwatr/context';
 import {redirect} from '@alwatr/router';
 
-import {userProfileContextConsumer, userProfileLocalStorageKey} from './user.js';
+import {
+  linkPassTokenContextConsumer,
+  userProfileContextConsumer,
+  userProfileLocalStorageKey,
+  userTokenContextConsumer,
+  userTokenLocalStorageKey,
+} from './user.js';
 import {config} from '../../config.js';
 
 import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
@@ -14,11 +20,14 @@ export const signInServerContext = serverContextConsumer<AlwatrServiceResponseSu
 
 signInServerContext.subscribe(() => {
   if (signInServerContext.getState().target === 'complete') {
-    const user = signInServerContext.getResponse()?.data;
-    if (user != null) {
-      localStorage.setItem(userProfileLocalStorageKey, JSON.stringify(user));
-      localStorage.removeItem('link-pass');
-      contextProvider.setValue<ComUser>(userProfileContextConsumer.id, user);
+    const userProfile = signInServerContext.getResponse()!.data;
+    localStorage.setItem(userProfileLocalStorageKey, JSON.stringify(userProfile));
+    contextProvider.setValue<ComUser>(userProfileContextConsumer.id, userProfile);
+
+    const linkPass = linkPassTokenContextConsumer.getValue();
+    if (linkPass) {
+      localStorage.setItem(userTokenLocalStorageKey, linkPass);
+      contextProvider.setValue<string>(userTokenContextConsumer.id, linkPass);
     }
 
     redirect({});
