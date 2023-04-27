@@ -2,7 +2,7 @@ import {FsmTypeHelper, finiteStateMachineProvider} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
 import {OrderDraft, OrderItem, orderInfoSchema, tileQtyStep} from '@alwatr/type/customer-order-management.js';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
-import {getLocalStorageItem} from '@alwatr/util';
+import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 import {validator} from '@alwatr/validator';
 
 import {orderStorageContextConsumer} from '../context-provider/order-storage.js';
@@ -199,7 +199,7 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
   },
 
   save_local_storage: (fsmInstance) => {
-    localStorage.setItem(newOrderLocalStorageKey, JSON.stringify(fsmInstance.getContext().newOrder));
+    setLocalStorageItem(newOrderLocalStorageKey, fsmInstance.getContext().newOrder);
   },
 
   check_item_list: (fsmInstance) => {

@@ -1,7 +1,7 @@
 import {replaceNumber, localeContextConsumer} from '@alwatr/i18n';
 import {eventListener} from '@alwatr/signal';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
-import {delay} from '@alwatr/util';
+import {delay, setLocalStorageItem} from '@alwatr/util';
 
 // FIXME: i18n
 
@@ -22,7 +22,7 @@ eventListener.subscribe('service_worker_installed', () => void snackbarSignalTri
 }));
 
 eventListener.subscribe('service_worker_updated', async () => {
-  localStorage.setItem('notify_new_version', '');
+  setLocalStorageItem('notify_new_version', '');
   const response = await snackbarSignalTrigger.requestWithResponse({
     message: 'نسخه جدید این برنامه نصب و هم‌اکنون در دسترس است.',
     actionLabel: 'به‌روزرسانی',
