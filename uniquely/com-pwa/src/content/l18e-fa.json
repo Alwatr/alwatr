@@ -51,7 +51,7 @@
 
     "sign_in_error_user_not_found": "کاربری با این مشخصات یافت نشد!",
     "sign_in_error_unknown": "خطا در اتصال به اینترنت، لطفا مجددا تلاش کنید.",
-    "sign_in_welcome_message": "عزیز، خوش آمدید ${fullName}",
+    "sign_in_welcome_message": "عزیز، خوش آمدید ${fullName}.",
 
     "order_status_box_headline": "سفارش ${orderId}",
     "order_status_box_headline_new": "سفارش جدید",
@@ -92,7 +92,7 @@
     "order_shipping_time_period_key_2_3w": "دو تا سه هفته",
     "order_shipping_time_period_key_3_4w": "سه تا چهار هفته",
 
-    "order_item_not_exist": "محصول پیدا نشد!",
+    "order_item_not_exist": "محصولی پیدا نشد!",
     "order_item_qty_m2": "متراژ (m²)",
     "order_item_qty_tile": "تعداد (تایل)",
     "order_item_qty_box": "تعداد (بسته)",
@@ -110,7 +110,7 @@
     "order_summary_discount_after_lading_price": "سود بعد بارگیری",
     "order_summary_final_total_price": "مبلغ قابل پرداخت",
 
-    "chat_text_input_placeholder": "پیام را بنویسید",
+    "chat_text_input_placeholder": "متن پیام",
 
     "submit_order_success_message": "سفارش شماره ${orderId} با موفقیت ثبت شد.",
     "submit_order_failed_message": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید."
