@@ -20,3 +20,6 @@ const userToken = localStorage.getItem(userTokenLocalStorageKey);
 if (userToken != null) {
   contextProvider.setValue<string>(userTokenContextConsumer.id, userToken);
 }
+
+// link-pass token
+export const linkPassTokenContextConsumer = contextConsumer<string>('link-pass-token');

@@ -1,3 +1,4 @@
+import {contextProvider} from '@alwatr/context';
 import {html, customElement, nothing} from '@alwatr/element';
 import '@alwatr/font/vazirmatn.css';
 import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
@@ -7,7 +8,7 @@ import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 
 import './stuff/app-footer.js';
-import {userTokenContextConsumer} from '../manager/context-provider/user.js';
+import {linkPassTokenContextConsumer, userTokenContextConsumer} from '../manager/context-provider/user.js';
 import {topAppBarContextProvider} from '../manager/context.js';
 
 declare global {
@@ -75,7 +76,7 @@ class AlwatrPwa extends AlwatrPwaElement {
   protected _saveLinkPass(routeContext: RouteContext): unknown {
     const linkPass = routeContext.sectionList[1];
     if (linkPass) {
-      localStorage.setItem('link-pass', linkPass + '');
+      contextProvider.setValue(linkPassTokenContextConsumer.id, linkPass + '');
     }
     redirect({sectionList: ['sign-in']}, 'replace');
     return nothing;

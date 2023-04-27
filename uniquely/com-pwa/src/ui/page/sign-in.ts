@@ -20,6 +20,7 @@ import {sanitizePhoneNumber} from '@alwatr/validator';
 
 import {buttons} from '../../manager/buttons.js';
 import {signIn, signInServerContext} from '../../manager/context-provider/sign-in.js';
+import {linkPassTokenContextConsumer} from '../../manager/context-provider/user.js';
 import {topAppBarContextProvider} from '../../manager/context.js';
 
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
@@ -87,7 +88,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._linkPass = localStorage.getItem('link-pass');
+    this._linkPass = linkPassTokenContextConsumer.getValue() ?? null;
 
     topAppBarContextProvider.setValue({
       type: 'center',
