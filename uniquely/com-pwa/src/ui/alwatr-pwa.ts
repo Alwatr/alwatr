@@ -7,7 +7,7 @@ import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 
 import './stuff/app-footer.js';
-import {userProfileContextConsumer} from '../manager/context-provider/user.js';
+import {userTokenContextConsumer} from '../manager/context-provider/user.js';
 import {topAppBarContextProvider} from '../manager/context.js';
 
 declare global {
@@ -89,7 +89,7 @@ class AlwatrPwa extends AlwatrPwaElement {
     const routeId = this._routesConfig.routeId(routeContext);
     this._logger.logMethodArgs?.('_checkSignedIn', {routeId});
     if (
-      userProfileContextConsumer.getValue() == null &&
+      userTokenContextConsumer.getValue() == null &&
       routeId !== 'sign-in' &&
       routeId !== 's' &&
       routeId !== ''
