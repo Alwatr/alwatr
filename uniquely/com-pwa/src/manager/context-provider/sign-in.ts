@@ -2,7 +2,7 @@ import {contextProvider, serverContextConsumer} from '@alwatr/context';
 import {simpleHashNumber} from '@alwatr/math';
 import {redirect} from '@alwatr/router';
 
-import {userContextConsumer} from './user.js';
+import {userProfileContextConsumer, userProfileLocalStorageKey} from './user.js';
 import {config} from '../../config.js';
 
 import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
@@ -17,9 +17,9 @@ signInContextConsumer.subscribe(() => {
   if (signInContextConsumer.getState().target === 'complete') {
     const user = signInContextConsumer.getResponse()?.data;
     if (user != null) {
-      localStorage.setItem('user-info', JSON.stringify(user));
+      localStorage.setItem(userProfileLocalStorageKey, JSON.stringify(user));
       localStorage.removeItem('link-pass');
-      contextProvider.setValue<ComUser>(userContextConsumer.id, user);
+      contextProvider.setValue<ComUser>(userProfileContextConsumer.id, user);
     }
 
     redirect({});

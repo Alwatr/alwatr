@@ -1,6 +1,6 @@
 import {serverContextConsumer} from '@alwatr/context';
 
-import {userContextConsumer} from './user.js';
+import {userProfileContextConsumer} from './user.js';
 import {config} from '../../config.js';
 
 import type {AlwatrDocumentStorage, User, ChatMessage} from '@alwatr/type';
@@ -15,7 +15,7 @@ export const chatStorageContextConsumer = serverContextConsumer<AlwatrDocumentSt
 
 chatStorageContextConsumer.fsm.defineSignals([
   {
-    signalId: userContextConsumer.id,
+    signalId: userProfileContextConsumer.id,
     callback: (user: User): void => {
       (chatStorageContextConsumer.getOptions().queryParameters ??= {}).userId = user.id;
     },
