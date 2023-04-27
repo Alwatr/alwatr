@@ -14,7 +14,7 @@ import {message} from '@alwatr/i18n';
 import '@alwatr/icon';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
-import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 import {sanitizePhoneNumber} from '@alwatr/validator';
 
