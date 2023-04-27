@@ -1,5 +1,5 @@
 import {contextConsumer, contextProvider} from '@alwatr/context';
-import {getLocalStorageItem} from '@alwatr/util';
+import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 
 import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
@@ -12,7 +12,7 @@ if (userProfile != null) {
   contextProvider.setValue<ComUser>(userProfileContextConsumer.id, userProfile);
 }
 userProfileContextConsumer.subscribe((userProfile) => {
-  localStorage.setItem(userProfileLocalStorageKey, JSON.stringify(userProfile));
+  setLocalStorageItem<ComUser>(userProfileLocalStorageKey, userProfile);
 });
 
 // user token
@@ -24,7 +24,7 @@ if (userToken != null) {
   contextProvider.setValue<string>(userTokenContextConsumer.id, userToken);
 }
 userTokenContextConsumer.subscribe((userToken) => {
-  localStorage.setItem(userTokenLocalStorageKey, userToken);
+  setLocalStorageItem<string>(userTokenLocalStorageKey, userToken);
 });
 
 // link-pass token
