@@ -59,6 +59,10 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
     .reloadingFailed {
       margin-bottom: var(--sys-spacing-track);
     }
+
+    .order-list-empty-message {
+      text-align: center;
+    }
   `;
 
   @state()
@@ -148,6 +152,14 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
     const orderList = Object.values(orderStorage.data)
         .sort((o1, o2) => (o2.meta?.updated || 0) - (o1.meta?.updated || 0))
         .slice(0, 15);
+
+    if (orderList.length === 0) {
+      return html`
+        <alwatr-surface tinted class="order-list-empty-message">
+          ${message('order_list_is_empty')}
+        </alwatr-surface>
+      `;
+    }
 
     return repeat(
         orderList,
