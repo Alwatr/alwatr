@@ -25,6 +25,8 @@
     "page_order_list_headline": "لیست سفارشات جاری",
     "page_order_list_reloading_failed": "بارگیری مجدد با خطا روبرو شد! دوباره امتحان کنید.",
 
+    "order_list_is_empty": "سفارشی ثبت نشده است.",
+
     "page_order_headline": "سفارش جدید",
     "page_order_edit_items": "ویرایش لیست محصولات",
     "page_order_shipping_edit": "ویرایش اطلاعات بارگیری",
@@ -51,7 +53,7 @@
 
     "sign_in_error_user_not_found": "کاربری با این مشخصات یافت نشد!",
     "sign_in_error_unknown": "خطا در اتصال به اینترنت، لطفا مجددا تلاش کنید.",
-    "sign_in_welcome_message": "عزیز، خوش آمدید ${fullName}.",
+    "sign_in_welcome_message": "${fullName} عزیز، خوش آمدید.",
 
     "order_status_box_headline": "سفارش ${orderId}",
     "order_status_box_headline_new": "سفارش جدید",
