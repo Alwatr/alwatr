@@ -1,7 +1,11 @@
 import type {DurationString} from '@alwatr/math';
-import type {CryptoAlgorithm, CryptoEncoding} from '@alwatr/type';
+
+export type CryptoAlgorithm = 'md5' | 'sha1' | 'sha224' | 'sha256' | 'sha384' | 'sha512';
+export type CryptoEncoding = 'base64' | 'base64url' | 'hex' | 'binary';
 
 export type TokenStatus = 'valid' | 'invalid' | 'expired';
+export type HashStatus = 'valid' | 'invalid';
+
 
 export interface TokenGeneratorConfig {
   /**
@@ -27,4 +31,24 @@ export interface TokenGeneratorConfig {
   encoding: CryptoEncoding;
 }
 
-export type UserFactoryConfig = TokenGeneratorConfig
+export interface HashGeneratorConfig {
+  /**
+   * OpenSSl digest algorithm.
+   */
+  algorithm: CryptoAlgorithm;
+
+  /**
+   * Encoding of hash.
+   */
+  encoding: CryptoEncoding;
+
+  /**
+   * Output length in bytes.
+   */
+  outputLength: number;
+}
+
+export interface UserFactoryConfig {
+  tokenConfig: TokenGeneratorConfig;
+  hashConfig: HashGeneratorConfig;
+}
