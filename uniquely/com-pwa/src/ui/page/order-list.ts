@@ -61,10 +61,6 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
     .reloadingFailed {
       margin-bottom: var(--sys-spacing-track);
     }
-
-    .order-list-empty-message {
-      text-align: center;
-    }
   `;
 
   @state()
