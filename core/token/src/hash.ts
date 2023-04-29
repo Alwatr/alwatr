@@ -2,9 +2,7 @@ import {createHash, type BinaryLike} from 'node:crypto';
 
 import {createLogger} from '@alwatr/logger';
 
-import type {HashGeneratorConfig, HashStatus} from './type.js';
-
-export type {HashGeneratorConfig, HashStatus};
+import type {HashGeneratorConfig} from './type.js';
 
 export class AlwatrHashGenerator {
   protected _logger = createLogger('alwatr-hash-generator');

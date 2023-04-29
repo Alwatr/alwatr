@@ -1,16 +1,9 @@
 import {createHmac} from 'node:crypto';
 
-import {createLogger, globalAlwatr} from '@alwatr/logger';
+import {createLogger} from '@alwatr/logger';
 import {parseDuration} from '@alwatr/math';
 
 import type {TokenGeneratorConfig, TokenStatus} from './type.js';
-
-export type {TokenGeneratorConfig, TokenStatus};
-
-globalAlwatr.registeredList.push({
-  name: '@alwatr/token',
-  version: _ALWATR_VERSION_,
-});
 
 export class AlwatrTokenGenerator {
   protected _logger = createLogger('alwatr-token-generator');
