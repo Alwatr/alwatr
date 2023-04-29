@@ -10,19 +10,21 @@ import {
   ScheduleUpdateToFrameMixin,
   guard,
   repeat,
-  type PropertyValues,
   when,
+  type PropertyValues,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {eventListener} from '@alwatr/signal';
 import '@alwatr/ui-kit/button/button.js';
-import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
 
 import {buttons} from '../../manager/buttons.js';
 import {orderStorageContextConsumer} from '../../manager/context-provider/order-storage.js';
 import {topAppBarContextProvider} from '../../manager/context.js';
 import '../stuff/order-status-box.js';
+
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -154,11 +156,12 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
         .slice(0, 15);
 
     if (orderList.length === 0) {
-      return html`
-        <alwatr-surface tinted class="order-list-empty-message">
-          ${message('order_list_is_empty')}
-        </alwatr-surface>
-      `;
+      const content: IconBoxContent = {
+        icon: 'cart-outline',
+        headline: message('order_list_is_empty'),
+        tinted: 1,
+      };
+      return html` <alwatr-icon-box .content=${content}></alwatr-icon-box> `;
     }
 
     return repeat(
