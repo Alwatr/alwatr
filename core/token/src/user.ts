@@ -1,34 +1,70 @@
-import {createLogger} from '@alwatr/logger';
-
 import {AlwatrHashGenerator} from './hash.js';
 import {AlwatrTokenGenerator} from './token.js';
 
-import type {UserFactoryConfig} from './type.js';
-import type {User} from '@alwatr/type';
+import type {TokenStatus, UserFactoryConfig} from './type.js';
 
+/**
+ * Secure User ID/Token Factory (generate and validate authentication process).
+ */
 export class AlwatrUserFactory {
-  protected _logger = createLogger('alwatr-user-factory');
+  constructor(public config: UserFactoryConfig) {}
 
-  private _$hashGenerator = new AlwatrHashGenerator(this.config.hashConfig);
-  private _$tokenGenerator = new AlwatrTokenGenerator(this.config.tokenConfig);
+  protected _hashGenerator = new AlwatrHashGenerator(this.config.hashConfig);
+  protected _tokenGenerator = new AlwatrTokenGenerator(this.config.tokenConfig);
 
-  constructor(public config: UserFactoryConfig) {
-    this._logger.logMethodArgs?.('constructor', config);
-  }
-
+  /**
+   * Generate new self-verifiable user-id.
+   *
+   * Example:
+   *
+   * ```ts
+   * const newUser = {
+   *   id: userFactory.generateId(),
+   *   ...
+   * }
+   * ```
+   */
   generateId(): string {
-    return this._$hashGenerator.random2();
+    return this._hashGenerator.randomSelfValidate();
   }
 
+  /**
+   * Validate user-id without token.
+   *
+   * Example:
+   *
+   * ```ts
+   * const newUser = {
+   *   id: userFactory.generateId(),
+   *   ...
+   * }
+   * ```
+   */
   verifyId(id: string): boolean {
-    return this._$hashGenerator.verify2(id);
+    return this._hashGenerator.verifySelfValidate(id);
   }
 
-  generateToken(user: User): string {
-    return this._$tokenGenerator.generate(user.id + '-' + user.lpe);
+  /**
+   * Generate user auth token.
+   *
+   * Example:
+   *
+   * ```ts
+   * ```
+   */
+  generateToken(uniquelyList: Array<string | number | boolean>): string {
+    return this._tokenGenerator.generate(uniquelyList.join());
   }
 
-  verifyToken(user: User, token: string): boolean {
-    return this.generateToken(user) === token;
+  /**
+   * Verify user auth token.
+   *
+   * Example:
+   *
+   * ```ts
+   * ```
+   */
+  verifyToken(uniquelyList: Array<string | number | boolean>, token: string): TokenStatus {
+    return this._tokenGenerator.verify(uniquelyList.join(), token);
   }
 }
