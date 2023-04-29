@@ -1,6 +1,5 @@
 import type {DurationString} from '@alwatr/math';
-
-export type DigestAlgorithm = 'md5' | 'sha1' | 'sha224' | 'sha256' | 'sha384' | 'sha512';
+import type {CryptoAlgorithm, CryptoEncoding} from '@alwatr/type';
 
 export type TokenStatus = 'valid' | 'invalid' | 'expired';
 
@@ -20,12 +19,12 @@ export interface TokenGeneratorConfig {
   /**
    * OpenSSl digest algorithm.
    */
-  algorithm: DigestAlgorithm;
+  algorithm: CryptoAlgorithm;
 
   /**
    * Encoding of token.
    */
-  encoding: 'base64' | 'base64url' | 'hex' | 'binary';
-};
+  encoding: CryptoEncoding;
+}
 
-export interface UserFactoryConfig extends TokenGeneratorConfig {}
+export type UserFactoryConfig = TokenGeneratorConfig
