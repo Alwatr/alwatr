@@ -2,9 +2,8 @@ import {AlwatrHashGenerator} from '@alwatr/token';
 
 const hashGenerator = new AlwatrHashGenerator({
   algorithm: 'sha1',
-  mainSize: 12,
-  crcSize: 4,
   encoding: 'base64url',
+  crcLength: 8,
 });
 
 const test = (): void => {

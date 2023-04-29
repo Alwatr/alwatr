@@ -43,14 +43,9 @@ export interface HashGeneratorConfig {
   encoding: CryptoEncoding;
 
   /**
-   * Main hash length in bytes.
+   * CRC hash max length.
    */
-  mainSize: number;
-
-  /**
-   * Validation hash length in bytes.
-   */
-  crcSize: number;
+  crcLength?: number;
 }
 
 export interface UserFactoryConfig {

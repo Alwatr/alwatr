@@ -18,7 +18,7 @@ export class AlwatrHashGenerator {
    * ```
    */
   random(): string {
-    return this.generate(randomBytes(this.config.mainSize), this.config.mainSize);
+    return this.generate(randomBytes(16));
   }
 
   /**
@@ -31,7 +31,7 @@ export class AlwatrHashGenerator {
    * ```
    */
   randomSelfValidate(): string {
-    return this.generateSelfValidate(randomBytes(this.config.mainSize));
+    return this.generateSelfValidate(randomBytes(16));
   }
 
   /**
@@ -43,10 +43,16 @@ export class AlwatrHashGenerator {
    * const crcHash = hashGenerator.generate(downloadedData);
    * ```
    */
-  generate(data: BinaryLike, size: number = this.config.mainSize): string {
-    return createHash(this.config.algorithm, {outputLength: size})
-        .update(data)
-        .digest(this.config.encoding);
+  generate(data: BinaryLike): string {
+    return createHash(this.config.algorithm).update(data).digest(this.config.encoding);
+  }
+
+  /**
+   * Generate crc hash.
+   */
+  _generateCrc(data: BinaryLike): string {
+    const crc = this.generate(data);
+    return this.config.crcLength == null || this.config.crcLength < 1 ? crc : crc.substring(0, this.config.crcLength);
   }
 
   /**
@@ -59,8 +65,8 @@ export class AlwatrHashGenerator {
    * ```
    */
   generateSelfValidate(data: BinaryLike): string {
-    const mainHash = this.generate(data, this.config.mainSize);
-    const crcHash = this.generate(mainHash, this.config.crcSize);
+    const mainHash = this.generate(data);
+    const crcHash = this._generateCrc(mainHash);
     return mainHash + crcHash;
   }
 
@@ -91,9 +97,12 @@ export class AlwatrHashGenerator {
    * ```
    */
   verifySelfValidate(hash: string): boolean {
-    const crcLen = this.generate('', this.config.crcSize).length;
-    const part1 = hash.substring(0, hash.length - crcLen);
-    const part2 = hash.substring(hash.length - crcLen, hash.length);
-    return this.verify(part1, part2);
+    const gapPos =
+      this.config.crcLength == null || this.config.crcLength < 1
+        ? hash.length / 2
+        : hash.length - this.config.crcLength;
+    const mainHash = hash.substring(0, gapPos);
+    const crcHash = hash.substring(gapPos);
+    return crcHash === this._generateCrc(mainHash);
   }
 }
