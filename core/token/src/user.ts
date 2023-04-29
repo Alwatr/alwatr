@@ -1,16 +1,22 @@
 import {AlwatrHashGenerator} from './hash.js';
 import {AlwatrTokenGenerator} from './token.js';
 
-import type {TokenStatus, UserFactoryConfig} from './type.js';
+import type {HashGeneratorConfig, TokenGeneratorConfig, TokenStatus} from './type.js';
 
 /**
  * Secure User ID/Token Factory (generate and validate authentication process).
  */
 export class AlwatrUserFactory {
-  constructor(public config: UserFactoryConfig) {}
+  protected _tokenGenerator;
+  protected _hashGenerator;
 
-  protected _hashGenerator = new AlwatrHashGenerator(this.config.hashConfig);
-  protected _tokenGenerator = new AlwatrTokenGenerator(this.config.tokenConfig);
+  constructor(
+      tokenConfig: TokenGeneratorConfig,
+      hashConfig: HashGeneratorConfig = {algorithm: 'sha1', encoding: 'base64url', crcLength: 8},
+  ) {
+    this._tokenGenerator = new AlwatrTokenGenerator(tokenConfig);
+    this._hashGenerator = new AlwatrHashGenerator(hashConfig);
+  }
 
   /**
    * Generate new self-verifiable user-id.
