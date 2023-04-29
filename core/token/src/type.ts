@@ -4,7 +4,7 @@ export type DigestAlgorithm = 'md5' | 'sha1' | 'sha224' | 'sha256' | 'sha384' | 
 
 export type TokenStatus = 'valid' | 'invalid' | 'expired';
 
-export type TokenGeneratorConfig = {
+export interface TokenGeneratorConfig {
   /**
    * Secret string data to generate token.
    */
@@ -27,3 +27,5 @@ export type TokenGeneratorConfig = {
    */
   encoding: 'base64' | 'base64url' | 'hex' | 'binary';
 };
+
+export interface UserFactoryConfig extends TokenGeneratorConfig {}
