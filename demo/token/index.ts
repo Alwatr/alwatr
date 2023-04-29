@@ -1,7 +1,7 @@
 import {createLogger} from '@alwatr/logger';
 import {type TokenStatus, AlwatrTokenGenerator} from '@alwatr/token';
 
-const logger = createLogger('token/demo');
+const logger = createLogger('token/demo', true);
 
 const tokenGenerator = new AlwatrTokenGenerator({
   secret: 'my-very-secret-key',

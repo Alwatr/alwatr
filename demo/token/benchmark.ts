@@ -1,7 +1,7 @@
 import {AlwatrTokenGenerator} from '@alwatr/token';
 import {delay} from '@alwatr/util';
 
-import type {CryptoAlgorithm} from '@alwatr/type';
+import type {CryptoAlgorithm} from '@alwatr/token/type.js';
 
 if (process.env.NODE_ENV !== 'production') {
   console.log('Please run node in production for benchmark. NODE_ENV=production node demo/token/benchmark.js');
