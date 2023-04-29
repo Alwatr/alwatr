@@ -120,7 +120,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
     if (target.selected === true) {
       this.order.itemList.push({
         productId,
-        qty: 1,
+        qty: 0,
         price: this.priceStorage.data[productId].price,
         finalPrice: this.finalPriceStorage.data[productId].price,
       });
