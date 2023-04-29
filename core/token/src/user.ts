@@ -9,15 +9,15 @@ import type {User} from '@alwatr/type';
 export class AlwatrUserFactory {
   protected _logger = createLogger('alwatr-user-factory');
 
-  private _$tokenGenerator = new AlwatrTokenGenerator(this.config.tokenConfig);
   private _$hashGenerator = new AlwatrHashGenerator(this.config.hashConfig);
+  private _$tokenGenerator = new AlwatrTokenGenerator(this.config.tokenConfig);
 
   constructor(public config: UserFactoryConfig) {
     this._logger.logMethodArgs?.('constructor', config);
   }
 
   generateId(): string {
-    return this._$hashGenerator.generate2();
+    return this._$hashGenerator.random2();
   }
 
   verifyId(id: string): boolean {

@@ -1,4 +1,4 @@
-import {createHash, type BinaryLike} from 'node:crypto';
+import {createHash, randomBytes, type BinaryLike} from 'node:crypto';
 
 import {createLogger} from '@alwatr/logger';
 
@@ -11,14 +11,13 @@ export class AlwatrHashGenerator {
     this._logger.logMethodArgs?.('constructor', config);
   }
 
-  /**
-   * Generate random bytes in nodejs
-   */
+  random1(): string {
+    return this.generate1(randomBytes(32));
+  }
 
-
-  // random1(): string {
-  //   return this.generate1();
-  // }
+  random2(): string {
+    return this.generate2(randomBytes(32));
+  }
 
   /**
    * Generate hash from data.
