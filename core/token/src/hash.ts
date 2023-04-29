@@ -29,7 +29,7 @@ export class AlwatrHashGenerator {
    *
    * ```js
    * const username = 'test';
-   * const hash = generate(username);
+   * const hash = generate1(username);
    * ```
    */
   generate1(data: BinaryLike): string {
@@ -39,16 +39,16 @@ export class AlwatrHashGenerator {
   }
 
   /**
-   * Verify hash with data and token
+   * Verify hash with data and hash.
    *
    * Example:
    *
    * ```js
    * const username = 'test';
-   * const hash = generate(username);
+   * const userId = generate1(username);
    *
-   * if (verify(username, hash)) {
-   *   console.log(username, 'is valid');
+   * if (verify1(username, userId)) {
+   *   console.log(userId, 'is valid');
    * }
    * ```
    */
@@ -57,13 +57,13 @@ export class AlwatrHashGenerator {
   }
 
   /**
-   * Generate hash from data.
+   * Generate `self-verified` hash from data.
    *
    * Example:
    *
    * ```js
    * const username = 'test';
-   * const hash = generate(username);
+   * const hash = generate2(username);
    * ```
    */
   generate2(data: BinaryLike): string {
@@ -73,16 +73,16 @@ export class AlwatrHashGenerator {
   }
 
   /**
-   * Verify hash with data.
+   * Verify `self-verified` hash.
    *
    * Example:
    *
    * ```js
    * const username = 'test';
-   * const hash = generate(username);
+   * const userId = generate2(username);
    *
-   * if (verify(username, hash) === 'valid') {
-   *   console.log(username, 'is valid');
+   * if (verify2(username, userId)) {
+   *   console.log(userId, 'is valid');
    * }
    * ```
    */
