@@ -43,9 +43,14 @@ export interface HashGeneratorConfig {
   encoding: CryptoEncoding;
 
   /**
-   * Output length in bytes.
+   * Main hash length in bytes.
    */
-  outputLength: number;
+  mainSize: number;
+
+  /**
+   * Validation hash length in bytes.
+   */
+  crcSize: number;
 }
 
 export interface UserFactoryConfig {
