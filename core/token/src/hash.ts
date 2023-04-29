@@ -17,8 +17,8 @@ export class AlwatrHashGenerator {
    * const clientId = hashGenerator.random();
    * ```
    */
-  random(size: number = this.config.mainSize): string {
-    return this.generate(randomBytes(size), size);
+  random(): string {
+    return this.generate(randomBytes(this.config.mainSize), this.config.mainSize);
   }
 
   /**
@@ -30,8 +30,8 @@ export class AlwatrHashGenerator {
    * const userId = hashGenerator.randomSelfValidate();
    * ```
    */
-  randomSelfValidate(size: number = this.config.mainSize): string {
-    return this.generateSelfValidate(randomBytes(size), size);
+  randomSelfValidate(): string {
+    return this.generateSelfValidate(randomBytes(this.config.mainSize));
   }
 
   /**
