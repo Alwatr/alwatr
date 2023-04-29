@@ -6,7 +6,7 @@ import type {HashGeneratorConfig} from './type.js';
  * Secure **self-validate** hash generator.
  */
 export class AlwatrHashGenerator {
-  constructor(public config: HashGeneratorConfig) {}
+  constructor(public config: HashGeneratorConfig = {algorithm: 'sha1', encoding: 'base64url', crcLength: 8}) {}
 
   /**
    * Generate simple hash from random data.

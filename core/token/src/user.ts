@@ -12,7 +12,7 @@ export class AlwatrUserFactory {
 
   constructor(
       tokenConfig: TokenGeneratorConfig,
-      hashConfig: HashGeneratorConfig = {algorithm: 'sha1', encoding: 'base64url', crcLength: 8},
+      hashConfig?: HashGeneratorConfig,
   ) {
     this._tokenGenerator = new AlwatrTokenGenerator(tokenConfig);
     this._hashGenerator = new AlwatrHashGenerator(hashConfig);
