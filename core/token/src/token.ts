@@ -36,7 +36,7 @@ export class AlwatrTokenGenerator {
   }
 
   /**
-   * Token validation.
+   * Token verification.
    *
    * ```ts
    * const validateStatus = tokenGenerator.verify(`${user.id}-${user.role}`, user.auth);

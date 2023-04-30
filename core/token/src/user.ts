@@ -40,8 +40,9 @@ export class AlwatrUserFactory {
    * Example:
    *
    * ```ts
-   * const newUser = {
-   *   id: userFactory.generateId(),
+   * const newId = userFactory.generateId();
+   * ...
+   * if (userFactory.verifyId(newId)) {
    *   ...
    * }
    * ```
@@ -56,6 +57,7 @@ export class AlwatrUserFactory {
    * Example:
    *
    * ```ts
+   * const userToken = userFactory.generateToken(['userId', 1])
    * ```
    */
   generateToken(uniquelyList: Array<string | number | boolean>): string {
@@ -68,6 +70,11 @@ export class AlwatrUserFactory {
    * Example:
    *
    * ```ts
+   * const userToken = userFactory.generateToken(['userId', 1]);
+   * ...
+   * if (userFactory.verifyToken(userToken)) {
+   *   ...
+   * }
    * ```
    */
   verifyToken(uniquelyList: Array<string | number | boolean>, token: string): TokenStatus {
