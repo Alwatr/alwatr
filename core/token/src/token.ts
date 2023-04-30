@@ -1,29 +1,20 @@
 import {createHmac} from 'node:crypto';
 
-import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {parseDuration} from '@alwatr/math';
 
-import type {TokenGeneratorConfig, TokenStatus, DigestAlgorithm} from './type.js';
+import type {TokenGeneratorConfig, TokenStatus} from './type.js';
 
-export type {TokenGeneratorConfig, TokenStatus, DigestAlgorithm};
-
-globalAlwatr.registeredList.push({
-  name: '@alwatr/token',
-  version: _ALWATR_VERSION_,
-});
-
+/**
+ * Secure authentication HOTP token generator (HMAC-based One-Time Password algorithm).
+ */
 export class AlwatrTokenGenerator {
-  protected _logger = createLogger('alwatr-token-generator');
-  private _duration: number | null;
+  protected _duration: number | null;
 
   get epoch(): number {
-    return this._duration == null
-      ? 0
-      : Math.floor(Date.now() / this._duration);
+    return this._duration == null ? 0 : Math.floor(Date.now() / this._duration);
   }
 
   constructor(public config: TokenGeneratorConfig) {
-    this._logger.logMethodArgs?.('constructor', config);
     this._duration = config.duration == null ? null : parseDuration(config.duration);
   }
 
@@ -33,10 +24,24 @@ export class AlwatrTokenGenerator {
         .digest(this.config.encoding);
   }
 
+  /**
+   * Generate HOTP token from data base on special duration.
+   *
+   * ```ts
+   * user.auth = tokenGenerator.generate(`${user.id}-${user.role}`);
+   * ```
+   */
   generate(data: string): string {
     return this._generate(data, this.epoch);
   }
 
+  /**
+   * Token verification.
+   *
+   * ```ts
+   * const validateStatus = tokenGenerator.verify(`${user.id}-${user.role}`, user.auth);
+   * ```
+   */
   verify(data: string, token: string): TokenStatus {
     const epoch = this.epoch;
     if (token === this._generate(data, epoch)) {
