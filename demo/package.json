@@ -14,7 +14,7 @@
     "@alwatr/signal": "^0.30.0",
     "@alwatr/storage-client": "^0.30.0",
     "@alwatr/storage-engine": "^0.30.0",
-    "@alwatr/token": "^0.30.0",
+    "@alwatr/crypto": "^0.30.0",
     "@alwatr/type": "^0.30.0",
     "@alwatr/util": "^0.30.0",
     "@alwatr/validator": "^0.30.0",

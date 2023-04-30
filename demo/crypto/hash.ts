@@ -1,4 +1,4 @@
-import {AlwatrHashGenerator} from '@alwatr/token';
+import {AlwatrHashGenerator} from '@alwatr/crypto';
 
 const hashGenerator = new AlwatrHashGenerator({
   algorithm: 'sha1',
