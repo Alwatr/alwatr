@@ -6,6 +6,6 @@ export * from './user.js';
 export * from './type.js';
 
 globalAlwatr.registeredList.push({
-  name: '@alwatr/token',
+  name: '@alwatr/crypto',
   version: _ALWATR_VERSION_,
 });

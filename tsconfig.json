@@ -20,7 +20,7 @@
     {"path": "./core/nano-server"},
     {"path": "./core/storage-engine"},
     {"path": "./core/storage-client"},
-    {"path": "./core/token"},
+    {"path": "./core/crypto"},
     {"path": "./core/validator"},
     {"path": "./core/util"},
     {"path": "./core/fsm"},

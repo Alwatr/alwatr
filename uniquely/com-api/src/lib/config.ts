@@ -1,5 +1,5 @@
+import {TokenGeneratorConfig} from '@alwatr/crypto';
 import {createLogger} from '@alwatr/logger';
-import {TokenGeneratorConfig} from '@alwatr/token';
 
 export const logger = createLogger('com-api');
 

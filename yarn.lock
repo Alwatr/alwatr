@@ -10,6 +10,15 @@
     lodash.assignwith "^4.2.0"
     typical "^7.1.1"
 
+"@alwatr/token@^0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/token/-/token-0.30.0.tgz#9699227ce118e51e253fc6beabe8203cbb5e5fe3"
+  integrity sha512-9yZDU1Ha14act6ADm4kJ315wYHKf9t3UWf4IrOCjwBdIJMltwB5/v4M1BYsmVEIO7pjxJ7UGmJ9IpHYOjVDPtA==
+  dependencies:
+    "@alwatr/logger" "^0.30.0"
+    "@alwatr/math" "^0.30.0"
+    tslib "^2.5.0"
+
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
