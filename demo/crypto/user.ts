@@ -27,7 +27,7 @@ console.log('user token %s', userToken);
 
 const userTokenValidation = (): void => {
   const tokenValidationStatus = userFactory.verifyToken([user.id, user.lpe], userToken);
-  console.log('user id validation: %s', tokenValidationStatus);
+  console.log('user token validation status: %s', tokenValidationStatus);
 };
 
 userTokenValidation();
