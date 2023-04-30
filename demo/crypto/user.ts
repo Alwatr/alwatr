@@ -1,7 +1,10 @@
 import {AlwatrUserFactory} from '@alwatr/crypto';
+import {createLogger} from '@alwatr/logger';
 import {delay} from '@alwatr/util';
 
 import type {User} from '@alwatr/type';
+
+const logger = createLogger('crypto/user', true);
 
 const userFactory = new AlwatrUserFactory({
   secret: 'my-very-secret-key',
@@ -20,14 +23,14 @@ const user: User = {
 };
 
 const userIdValidation = userFactory.verifyId(user.id);
-console.log('user id validation: %s', userIdValidation);
+logger.logOther?.('user id validation:', userIdValidation);
 
 const userToken = userFactory.generateToken([user.id, user.lpe]);
-console.log('user token %s', userToken);
+logger.logOther?.('user token:', userToken);
 
 const userTokenValidation = (): void => {
   const tokenValidationStatus = userFactory.verifyToken([user.id, user.lpe], userToken);
-  console.log('user token validation status: %s', tokenValidationStatus);
+  logger.logOther?.('user token validation status:', tokenValidationStatus);
 };
 
 userTokenValidation();
