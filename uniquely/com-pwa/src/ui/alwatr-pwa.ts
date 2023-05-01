@@ -8,7 +8,12 @@ import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 
 import './stuff/app-footer.js';
-import {linkPassTokenContextConsumer, userTokenContextConsumer} from '../manager/context-provider/user.js';
+import {config} from '../config.js';
+import {
+  linkPassTokenContextConsumer,
+  userProfileContextConsumer,
+  userTokenContextConsumer,
+} from '../manager/context-provider/user.js';
 import {topAppBarContextProvider} from '../manager/context.js';
 
 declare global {
@@ -24,7 +29,7 @@ declare global {
 class AlwatrPwa extends AlwatrPwaElement {
   constructor() {
     super();
-    this._checkSignedIn = this._checkSignedIn.bind(this);
+    this._checkAuthorization = this._checkAuthorization.bind(this);
   }
 
   protected override _routesConfig: RoutesConfig = {
@@ -41,7 +46,7 @@ class AlwatrPwa extends AlwatrPwaElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this._addSignalListeners(routeContextConsumer.subscribe(this._checkSignedIn));
+    this._addSignalListeners(routeContextConsumer.subscribe(this._checkAuthorization));
   }
 
   protected _renderPageHome(): unknown {
@@ -86,16 +91,63 @@ class AlwatrPwa extends AlwatrPwaElement {
     return html`<alwatr-app-footer></alwatr-app-footer>`;
   }
 
-  protected _checkSignedIn(routeContext: RouteContext): void {
+  protected _checkAuthorization(routeContext: RouteContext): void {
     const routeId = this._routesConfig.routeId(routeContext);
-    this._logger.logMethodArgs?.('_checkSignedIn', {routeId});
-    if (
-      userTokenContextConsumer.getValue() == null &&
-      routeId !== 'sign-in' &&
-      routeId !== 's' &&
-      routeId !== ''
-    ) {
+    this._logger.logMethodArgs?.('_checkAuthorization', {routeId});
+
+    const _routeId = routeId ?? 'home'; // FIXME:  'home' or ''?
+
+    // To be sign-in
+    if (!this._checkSignedIn(_routeId)) {
       redirect({sectionList: ['sign-in']});
+      return;
     }
+
+    // To be a valid route
+    if (this._routesConfig.templates[_routeId] == null) {
+      redirect({sectionList: ['_404']});
+      return;
+    }
+
+    // Authorization
+    if (!this._checkAuthorizedAccess(_routeId)) {
+      redirect({sectionList: ['_403']});
+      return;
+    }
+
+    // Can see the requested route by a valid token & role
+    redirect({sectionList: [_routeId]});
+  }
+
+  protected _checkSignedIn(routeId: string): boolean {
+    this._logger.logMethodArgs?.('_checkSignedIn', {routeId});
+    return !(userTokenContextConsumer.getValue() == null && routeId !== 'sign-in' && routeId !== 's' && routeId !== '');
+  }
+
+  protected _checkAuthorizedAccess(routeId: string): boolean {
+    this._logger.logMethodArgs?.('_checkAuthorizedAccess', {routeId});
+
+    /**
+     * FIXME: Do we have to check `userProfileContextConsumer.getValue()` has been set?
+     *  Or when we have `userTokenContextConsumer.getValue` means we have `userProfile`?
+     */
+    const userRole = userProfileContextConsumer.getValue()?.role ?? 'user';
+    const authorizedRouteIdList = config.authorizedRouteIdRecord[userRole] ?? [];
+
+    if (authorizedRouteIdList.length === 0) {
+      this._logger.incident?.(
+          '_checkAuthorizedAccess',
+          'invalid_access',
+          'Please set a properly list of routes for the current user role',
+          {
+            routeId,
+            userRole,
+            authorizedRouteIdList,
+          },
+      );
+      return false;
+    }
+
+    return authorizedRouteIdList === '*' || authorizedRouteIdList.indexOf(routeId) > -1;
   }
 }

@@ -3,6 +3,9 @@ import type {AlwatrDocumentObject} from './storage.js';
 export const genderCS = ['male', 'female'] as const;
 export type Gender = typeof genderCS[number];
 
+export const role = ['user', 'admin'] as const;
+export type Role = typeof role[number];
+
 export interface User extends AlwatrDocumentObject {
   /**
    * User global unique id (verifiable)
@@ -44,5 +47,13 @@ export interface User extends AlwatrDocumentObject {
    */
   address?: string;
 
+  /**
+   * Postal code
+   */
   postalCode?: string;
+
+  /**
+   * User role (e.g. `user`, `admin`, `superAdmin` and etc...)
+   */
+  role?: Role;
 }
