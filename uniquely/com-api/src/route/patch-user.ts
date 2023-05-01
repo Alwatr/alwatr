@@ -29,13 +29,11 @@ nanoServer.route('PATCH', '/user-list/', async (connection) => {
     };
   }
 
-  userStorage.set(user);
-
   saveSeparateUserProfile(user);
 
   return {
     ok: true,
-    data: {},
+    data: await userStorage.set(user),
   };
 });
 
