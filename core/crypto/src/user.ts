@@ -31,7 +31,7 @@ export class AlwatrUserFactory {
    * ```
    */
   generateId(): string {
-    return this._hashGenerator.randomSelfValidate();
+    return 'U' + this._hashGenerator.randomSelfValidate();
   }
 
   /**
@@ -46,7 +46,7 @@ export class AlwatrUserFactory {
    * ```
    */
   verifyId(id: string): boolean {
-    return this._hashGenerator.verifySelfValidate(id);
+    return this._hashGenerator.verifySelfValidate(id.substring(1));
   }
 
   /**
