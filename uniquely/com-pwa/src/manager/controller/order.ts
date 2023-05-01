@@ -1,6 +1,6 @@
 import {FsmTypeHelper, finiteStateMachineProvider} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
-import {OrderDraft, OrderItem, orderInfoSchema, tileQtyStep} from '@alwatr/type/customer-order-management.js';
+import {orderInfoSchema, orderShippingInfoSchema, tileQtyStep} from '@alwatr/type/customer-order-management.js';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 import {validator} from '@alwatr/validator';
@@ -14,6 +14,7 @@ import {productStorageContextConsumer} from '../context-provider/product-storage
 import {submitOrderCommandTrigger} from '../context.js';
 
 import type {ClickSignalType} from '@alwatr/type';
+import type {OrderDraft, OrderItem} from '@alwatr/type/customer-order-management.js';
 
 const newOrderLocalStorageKey = 'draft_order_x4';
 
@@ -124,6 +125,7 @@ export const orderFsmConstructor = finiteStateMachineProvider.defineConstructor(
       on: {
         submit: {
           target: 'newOrder',
+          condition: 'validate_shipping_info',
         },
       },
     },
@@ -259,6 +261,21 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
           message: message('page_order_order_not_valid_message'),
         });
       }
+      return false;
+    }
+  },
+
+  validate_shipping_info: (fsmInstance): boolean => {
+    try {
+      const order = fsmInstance.getContext().newOrder;
+      // else
+      fsmInstance.getContext().newOrder.shippingInfo = validator(orderShippingInfoSchema, order.shippingInfo, true);
+      return true;
+    }
+    catch (err) {
+      snackbarSignalTrigger.request({
+        message: message('page_order_shipping_info_not_valid_message'),
+      });
       return false;
     }
   },

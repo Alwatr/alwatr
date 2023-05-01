@@ -2,7 +2,7 @@ import {contextProvider, serverContextConsumer} from '@alwatr/context';
 import {message} from '@alwatr/i18n';
 import {simpleHashNumber} from '@alwatr/math';
 import {redirect} from '@alwatr/router';
-import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
 import {linkPassTokenContextConsumer, userProfileContextConsumer, userTokenContextConsumer} from './user.js';
 import {config} from '../../config.js';
