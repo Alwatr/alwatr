@@ -1,9 +1,8 @@
-import {User} from './user.js';
-
 import type {MultiLangStringObj} from './i18n.js';
 import type {Photo} from './photo.js';
 import type {AlwatrDocumentObject} from './storage.js';
 import type {StringifyableRecord} from './type-helper.js';
+import type {User} from './user.js';
 
 // -- Const value --
 
