@@ -1,8 +1,7 @@
-import {AlwatrTokenGenerator} from '@alwatr/crypto';
+import {type TokenStatus, AlwatrTokenGenerator} from '@alwatr/crypto';
 import {createLogger} from '@alwatr/logger';
-import {delay} from '@alwatr/util';
 
-const logger = createLogger('crypto/token', true);
+const logger = createLogger('token/demo', true);
 
 const tokenGenerator = new AlwatrTokenGenerator({
   secret: 'my-very-secret-key',
@@ -11,18 +10,46 @@ const tokenGenerator = new AlwatrTokenGenerator({
   encoding: 'base64url',
 });
 
-const userId = 'test_user';
-
-const token = tokenGenerator.generate(userId);
-logger.logOther?.('token:', token);
-
-const userTokenValidation = (): void => {
-  const tokenValidationStatus = tokenGenerator.verify(userId, token);
-  logger.logOther?.('user token validation status:', tokenValidationStatus);
+type User = {
+  id: string;
+  name: string;
+  role: 'admin' | 'user';
+  auth: string;
 };
 
-userTokenValidation();
-await delay(2000);
-userTokenValidation();
-await delay(2000);
-userTokenValidation();
+const user: User = {
+  id: 'alimd',
+  name: 'Ali Mihandoost',
+  role: 'admin',
+  auth: '', // Generated in first login
+};
+
+// ------
+
+// For example when user authenticated we send user data contain valid auth token.
+function login(): User {
+  user.auth = tokenGenerator.generate(`${user.id}-${user.role}`);
+  logger.logMethodFull?.('login', {}, {user});
+  return user;
+}
+
+// Now request received and we want to validate the token to ensure that the user is authenticated.
+function userValidate(user: User): TokenStatus {
+  const validateStatus = tokenGenerator.verify(`${user.id}-${user.role}`, user.auth);
+  logger.logMethodFull?.('userValidate', {user}, {validateStatus});
+  return validateStatus;
+}
+
+// demo
+const userData = login();
+userValidate(userData); // { validateStatus: 'valid' }
+
+setTimeout(() => {
+  // 2s later
+  userValidate(user); // { validateStatus: 'expired' }
+}, 2001);
+
+setTimeout(() => {
+  // 4s later
+  userValidate(user);
+}, 4001); // { validateStatus: 'invalid' }
