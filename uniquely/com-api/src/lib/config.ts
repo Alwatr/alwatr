@@ -22,6 +22,8 @@ export const config = {
     adminToken: process.env.ADMIN_TOKEN ?? 'ADMIN_SECRET_TOKEN',
     allowAllOrigin: true,
   },
+  publicStoragePath: process.env.PUBLIC_STORAGE_PATH ?? 'public-storage',
+  userStorageName: 'private/user-list',
   productStoragePrefix: 'public/product-list-',
   priceStoragePrefix: 'public/price-list-',
   orderStoragePrefix: 'public/order-list-',

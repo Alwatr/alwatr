@@ -16,6 +16,7 @@
     {"path": "../../core/type"},
     {"path": "../../core/crypto"},
     {"path": "../../core/logger"},
+    {"path": "../../core/math"},
     {"path": "../../core/storage-client"}
   ]
 }
