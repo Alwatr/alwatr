@@ -37,6 +37,7 @@ class AlwatrPwa extends AlwatrPwaElement {
     templates: {
       'home': this._renderPageHome,
       '_404': this._renderPage404,
+      '_403': this._renderPage403,
       'order-list': this._renderPageOrderList,
       'order': this._renderPageOrder,
       'sign-in': this._renderPageSignIn,
@@ -57,6 +58,11 @@ class AlwatrPwa extends AlwatrPwaElement {
   protected _renderPage404(): unknown {
     import('./page/404.js');
     return html`<alwatr-page-404 unresolved>...</alwatr-page-404>`;
+  }
+
+  protected _renderPage403(): unknown {
+    import('./page/403.js');
+    return html`<alwatr-page-403 unresolved>...</alwatr-page-403>`;
   }
 
   protected _renderPageOrderList(): unknown {
