@@ -1,6 +1,6 @@
 # Alwatr Crypto - `@alwatr/crypto`
 
-Secure, Simple and powerful crypto concepts written in tine TypeScript module.
+Secure authentication HOTP token generator (the HMAC-based One-Time Password algorithm) and crypto utils written in tiny TypeScript module.
 
 ## References
 

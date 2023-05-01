@@ -1,15 +1,16 @@
 {
   "name": "@alwatr/crypto",
   "version": "0.30.0",
-  "description": "Secure, Simple and powerful crypto concepts written in tine TypeScript module.",
+  "description": "Secure authentication HOTP token generator (the HMAC-based One-Time Password algorithm) and crypto utils written in tiny TypeScript module.",
   "keywords": [
+    "crypto",
+    "hash",
     "token",
     "authentication",
     "auth",
     "access",
     "token",
     "hmac",
-    "hash",
     "time",
     "otp",
     "hotp",
