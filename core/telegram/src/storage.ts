@@ -9,7 +9,7 @@ export class AlwatrTelegramStorage {
   protected logger = createLogger('alwatr/telegram-storage');
 
   constructor(protected storage: AlwatrStorageClient | AlwatrStorageEngine) {
-    this.logger.logMethod('constructor');
+    this.logger.logMethod?.('constructor');
   }
 
   get<T extends AlwatrDocumentObject>(chatId: string | number): MaybePromise<T | null> {

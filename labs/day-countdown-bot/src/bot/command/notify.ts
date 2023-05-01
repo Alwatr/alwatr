@@ -10,23 +10,23 @@ const notifyConversation = new AlwatrTelegramConversation(
     {
       stateRecord: {
         initial: (context, conversationConfig): void => {
-          logger.logMethodArgs(notifyConversation.config.id + '-initial', {conversationConfig});
+          logger.logMethodArgs?.(notifyConversation.config.id + '-initial', {conversationConfig});
           context.reply(message('send_notify_message'));
           notifyConversation.setState(context.chatId, 'getMessage');
         },
         reset: (context, conversationConfig): void => {
-          logger.logMethodArgs(notifyConversation.config.id + '-reset', {conversationConfig});
+          logger.logMethodArgs?.(notifyConversation.config.id + '-reset', {conversationConfig});
           context.reply(message('reset_notify_message'));
           notifyConversation.reset(context.chatId);
         },
         getMessage: async (context, conversationConfig): Promise<void> => {
-          logger.logMethodArgs(notifyConversation.config.id + '-getMessage', {conversationConfig});
+          logger.logMethodArgs?.(notifyConversation.config.id + '-getMessage', {conversationConfig});
           context.reply(message('approval_notify_message'));
           await notifyConversation.setContext(context.chatId, {messageId: context.messageId});
           await notifyConversation.setState(context.chatId, 'notify');
         },
         notify: async (context, conversationConfig): Promise<void> => {
-          logger.logMethodArgs(notifyConversation.config.id + '-notify', {conversationConfig});
+          logger.logMethodArgs?.(notifyConversation.config.id + '-notify', {conversationConfig});
           if (context.update.message?.text != 'yes') {
             await notifyConversation.setState(context.chatId, 'getMessage');
             return;

@@ -44,7 +44,7 @@ export class AlwatrTelegramContext<U extends Omit<Update, 'update_id'>> {
   }
 
   constructor(public readonly update: U, protected api: AlwatrTelegramApi) {
-    this.logger.logMethod('constructor');
+    this.logger.logMethod?.('constructor');
   }
 
   async sendMessage(text: string, option?: SendMessageOption): Promise<Message.TextMessage | null> {

@@ -5,7 +5,7 @@ import {bot} from '../../lib/bot.js';
 import {isSubscribed} from '../../util/chat.js';
 
 bot.defineCommandHandler('setting', async (context) => {
-  logger.logMethod('command-setting');
+  logger.logMethod?.('command-setting');
   context.reply(message('setting_message'), {
     reply_markup: {
       inline_keyboard: await isSubscribed(context.chatId) ? subscribedSettingInlineKeyboard : settingInlineKeyboard,

@@ -21,12 +21,12 @@ export class AlwatrTelegramConversation {
     protected readonly api: AlwatrTelegramApi,
     public readonly config: AlwatrConversationConfig,
   ) {
-    this.logger.logMethod('constructor');
+    this.logger.logMethod?.('constructor');
     config.currentState = 'initial';
   }
 
   async updateHandler(update: Omit<Update, 'update_id'>): Promise<boolean> {
-    this.logger.logMethod('updateHandler');
+    this.logger.logMethod?.('updateHandler');
     if (update.message == null) return false;
 
     const chatId = update.message?.chat.id;
@@ -51,7 +51,7 @@ export class AlwatrTelegramConversation {
   }
 
   async getConfig(chatId: string | number): Promise<AlwatrConversationConfig | null> {
-    this.logger.logMethod('getConfig');
+    this.logger.logMethod?.('getConfig');
     const chat = await this.storage.get<ConversationChat>(chatId);
     if (chat == null) return null;
 
@@ -65,7 +65,7 @@ export class AlwatrTelegramConversation {
   }
 
   async setState(chatId: string | number, state: string): Promise<void | null> {
-    this.logger.logMethodArgs('setState', {chatId, state});
+    this.logger.logMethodArgs?.('setState', {chatId, state});
     const chat = await this.storage.get<ConversationChat>(chatId);
     if (chat == null) return null;
     chat.conversationRecord[this.config.id].currentState = state;
@@ -76,7 +76,7 @@ export class AlwatrTelegramConversation {
       chatId: string | number,
       context: StringifyableRecord,
   ): Promise<null | void> {
-    this.logger.logMethodArgs('setState', {chatId});
+    this.logger.logMethodArgs?.('setState', {chatId});
     const chat = await this.storage.get<ConversationChat>(chatId);
     if (chat == null) return null;
     chat.conversationRecord[this.config.id].context = {
@@ -87,7 +87,7 @@ export class AlwatrTelegramConversation {
   }
 
   async reset(chatId: string | number): Promise<void | null> {
-    this.logger.logMethodArgs('reset', {chatId});
+    this.logger.logMethodArgs?.('reset', {chatId});
     const chat = await this.storage.get<ConversationChat>(chatId);
     if (chat == null) return null;
     delete chat.conversationRecord[this.config.id];

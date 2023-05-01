@@ -12,7 +12,7 @@ export async function isSubscribed(chatId: string | number): Promise<boolean> {
 
 export async function toggleSubscribe(chatId: string | number): Promise<boolean | null> {
   const chat = await botStorage.get<DayCountdownChat>(chatId);
-  logger.logMethodArgs('toggleSubscribe', {chat});
+  logger.logMethodArgs?.('toggleSubscribe', {chat});
   if (chat == null) return null;
 
   chat.isSubscribe = !chat.isSubscribe;

@@ -19,7 +19,7 @@ export class AlwatrTelegramApi {
   protected logger = createLogger('alwatr/telegram-api');
 
   constructor(protected readonly config: AlwatrTelegramApiConfig) {
-    this.logger.logMethodArgs('constructor', config);
+    this.logger.logMethodArgs?.('constructor', config);
   }
 
   protected escapeText(message: string): string {
@@ -32,7 +32,7 @@ export class AlwatrTelegramApi {
       text: string,
       option: SendMessageOption = {},
   ): Promise<Message.TextMessage | null> {
-    this.logger.logMethodArgs('sendMessage', {text, option});
+    this.logger.logMethodArgs?.('sendMessage', {text, option});
     this.sendChatAction({chat_id: chatId, action: 'typing'});
 
     text = this.escapeText(text);
@@ -52,7 +52,7 @@ export class AlwatrTelegramApi {
 
   async editTextMessage(option: EditTextMessageOption): Promise<Message | ApiResponse<true> | null> {
     this.sendChatAction({chat_id: option.chat_id, action: 'typing'});
-    this.logger.logMethodArgs('editTextMessage', {option});
+    this.logger.logMethodArgs?.('editTextMessage', {option});
 
     option.text = this.escapeText(option.text);
     const response = await this.callApi('editTextMessage', {...option} as unknown as StringifyableRecord);
@@ -68,7 +68,7 @@ export class AlwatrTelegramApi {
   async editMessageReplyMarkup(
       option: EditMessageReplyMarkupOption = {},
   ): Promise<Message | ApiResponse<true> | null> {
-    this.logger.logMethodArgs('editMessageReplyMarkup', {option});
+    this.logger.logMethodArgs?.('editMessageReplyMarkup', {option});
 
     const response = await this.callApi('editMessageReplyMarkup', {
       ...option,
@@ -85,7 +85,7 @@ export class AlwatrTelegramApi {
   async copyMessage(
       option: CopyMessageOption,
   ): Promise<MessageId | null> {
-    this.logger.logMethodArgs('copyMessage', {option});
+    this.logger.logMethodArgs?.('copyMessage', {option});
     this.sendChatAction({chat_id: option.chat_id, action: 'typing'});
 
     const response = await this.callApi('copyMessage', {
@@ -102,7 +102,7 @@ export class AlwatrTelegramApi {
   async sendChatAction(
       option: SendChatActionOption,
   ): Promise<MessageId | null> {
-    this.logger.logMethodArgs('sendChatAction', {option});
+    this.logger.logMethodArgs?.('sendChatAction', {option});
 
     const response = await this.callApi('sendChatAction', {
       ...option,
@@ -118,7 +118,7 @@ export class AlwatrTelegramApi {
 
 
   async getMe(): Promise<User | null> {
-    this.logger.logMethod('getMe');
+    this.logger.logMethod?.('getMe');
     const response = await this.callApi('getMe');
 
     const responseJson = await response.json();
@@ -133,7 +133,7 @@ export class AlwatrTelegramApi {
       callbackQueryId: string,
       option?: AnswerCallbackQueryOption,
   ): Promise<ApiResponse<boolean> | null> {
-    this.logger.logMethodArgs('answerCallbackQuery', {callbackQueryId, option});
+    this.logger.logMethodArgs?.('answerCallbackQuery', {callbackQueryId, option});
     const response = await this.callApi('answerCallbackQuery', {
       callback_query_id: callbackQueryId,
       text: option?.text,
@@ -152,7 +152,7 @@ export class AlwatrTelegramApi {
   }
 
   protected async callApi(method: string, bodyJson?: StringifyableRecord): Promise<Response> {
-    this.logger.logMethodArgs('callApi', {method, queryParameters: bodyJson});
+    this.logger.logMethodArgs?.('callApi', {method, queryParameters: bodyJson});
     return fetch({
       retry: 1,
       method: 'POST',

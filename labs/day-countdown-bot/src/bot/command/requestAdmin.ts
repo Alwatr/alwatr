@@ -4,11 +4,11 @@ import {bot} from '../../lib/bot.js';
 import {addAdmin, isAdmin} from '../../util/admin.js';
 
 bot.defineCommandHandler('requestAdmin', (context) => {
-  logger.logMethod('command-requestAdmin');
+  logger.logMethod?.('command-requestAdmin');
   const params = context.commandParams ?? [];
   const token = params[0];
   if (token !== config.admin.adminToken) {
-    logger.incident('command-requestAdmin', 'invalid_token', 'invalid admin token');
+    logger.incident?.('command-requestAdmin', 'invalid_token', 'invalid admin token');
     return;
   }
 

@@ -47,7 +47,7 @@ export class AlwatrTelegram {
   };
 
   constructor(protected readonly config: AlwatrTelegramConfig) {
-    this.logger.logMethodArgs('constructor', config);
+    this.logger.logMethodArgs?.('constructor', config);
 
     this.defineUpdateHandler<'callback_query'>('dataCallbackQuery', this.handleDataCallbackQueryUpdate.bind(this));
     this.defineUpdateHandler<'message'>('textMessage', this.handleTextMessageUpdate.bind(this));
@@ -59,7 +59,7 @@ export class AlwatrTelegram {
    * @see https://core.telegram.org/bots/api#setwebhook
    */
   async setWebhook(listenHost = '0.0.0.0', listenPort = 8000): Promise<void> {
-    this.logger.logMethod('setWebhook');
+    this.logger.logMethod?.('setWebhook');
     const response = await this.callApi('setWebhook', {url: this.config.webhookDomain});
     const responseJson = await response.json();
 
@@ -85,7 +85,7 @@ export class AlwatrTelegram {
   }
 
   defineTextMessageHandler(regex: RegExp, handler: CommandHandlerFunction): void {
-    this.logger.logMethodArgs('defineTextMessageHandler', regex);
+    this.logger.logMethodArgs?.('defineTextMessageHandler', regex);
     this.middlewareRecord.message.push({
       regex: regex,
       handler,
@@ -93,7 +93,7 @@ export class AlwatrTelegram {
   }
 
   defineCallbackQueryHandler(callbackDataName: string, handler: CallbackQueryHandlerFunction): void {
-    this.logger.logMethodArgs('defineCallbackQueryHandler', {callbackDataName});
+    this.logger.logMethodArgs?.('defineCallbackQueryHandler', {callbackDataName});
     this.middlewareRecord.callbackQuery.push({
       name: callbackDataName,
       handler,
@@ -101,7 +101,7 @@ export class AlwatrTelegram {
   }
 
   defineCommandHandler(commandName: string, handler: CommandHandlerFunction): void {
-    this.logger.logMethodArgs('defineCommandHandler', commandName);
+    this.logger.logMethodArgs?.('defineCommandHandler', commandName);
     this.middlewareRecord.message.push({
       regex: new RegExp(`/${commandName} ?(.|\n)*`, 'gmi'),
       handler,
@@ -113,7 +113,7 @@ export class AlwatrTelegram {
       handler: UpdateHandlerFunction<UpdateType<U>>,
       priority?: 'high',
   ): void {
-    this.logger.logMethodArgs('defineUpdateHandler', {updateType});
+    this.logger.logMethodArgs?.('defineUpdateHandler', {updateType});
     if (priority === 'high') {
       this.updateHandlerRecord[updateType]?.unshift(handler as any); // TODO: better way?
     }
@@ -124,7 +124,7 @@ export class AlwatrTelegram {
   }
 
   protected async handleUpdate(update: Update): Promise<void> {
-    this.logger.logMethod('handleUpdate');
+    this.logger.logMethod?.('handleUpdate');
     if (this.updateHandlerRecord.all != null) {
       for (const handler of this.updateHandlerRecord.all) {
         if (await handler(update)) return;
@@ -149,7 +149,7 @@ export class AlwatrTelegram {
   }
 
   protected handleDataCallbackQueryUpdate(update: UpdateType<'callback_query'>): boolean {
-    this.logger.logMethod('handleCallbackQueryUpdate');
+    this.logger.logMethod?.('handleCallbackQueryUpdate');
     for (const middleware of this.middlewareRecord.callbackQuery) {
       if (middleware.name === update.callback_query?.data) {
         const context = new AlwatrTelegramContext<UpdateType<'callback_query'>>(update, this.api);
@@ -161,7 +161,7 @@ export class AlwatrTelegram {
   }
 
   protected handleTextMessageUpdate(update: UpdateType<'message'>): boolean {
-    this.logger.logMethod('handleMessageUpdate');
+    this.logger.logMethod?.('handleMessageUpdate');
     if (update.message?.text == null) return false;
     for (const middleware of this.middlewareRecord.message) {
       const regex = new RegExp(middleware.regex); // js bug, must create new instance!
@@ -175,7 +175,7 @@ export class AlwatrTelegram {
   }
 
   protected async callApi(method: string, queryParameters?: QueryParameters): Promise<Response> {
-    this.logger.logMethodArgs('callApi', {method, queryParameters});
+    this.logger.logMethodArgs?.('callApi', {method, queryParameters});
     return fetch({
       retry: 1,
       method: 'POST',
