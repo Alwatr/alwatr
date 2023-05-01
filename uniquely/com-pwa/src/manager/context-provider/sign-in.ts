@@ -30,6 +30,6 @@ signInServerContext.subscribe(() => {
 
 export const signIn = (phoneNumber: number, token: string): void => {
   signInServerContext.request({
-    url: `${config.api}/storage/${simpleHashNumber(phoneNumber)}-${token}`,
+    url: `${config.api}/storage/user/${simpleHashNumber(phoneNumber)}-${token}`,
   });
 };
