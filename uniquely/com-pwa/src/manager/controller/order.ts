@@ -287,7 +287,7 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     signalId: 'order_item_qty_add',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
       const orderItem = event.detail;
-      orderItem.qty++;
+      orderItem.qty += 80;
       fsmInstance.transition('request_update');
     },
   },
@@ -295,7 +295,7 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     signalId: 'order_item_qty_remove',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
       const orderItem = event.detail;
-      orderItem.qty--;
+      orderItem.qty -= 80;
       if (orderItem.qty < 1) orderItem.qty = 1;
       fsmInstance.transition('request_update');
     },
