@@ -217,6 +217,11 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
             signalId: buttons.editShippingForm.clickSignalId,
             transition: 'edit_shipping',
           },
+          // FIXME: handle `reload` state
+          // {
+          //   signalId: buttons.reload.clickSignalId,
+          //   transition: ''
+          // },
           {
             signalId: buttons.showRegisteredOrderDetail.clickSignalId,
             callback: (): void => {
@@ -289,7 +294,6 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
       endIconList: [buttons.print, buttons.reload],
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const order = this.fsm.getContext().orderStorage!.data[this.fsm.getContext().orderId];
     return [
       this._render_status(order),
@@ -488,7 +492,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
         return html`<alwatr-surface tinted>${message('order_item_not_exist')}</alwatr-surface>`;
       }
 
-      item.qty ||= 100;
+      item.qty ||= 80;
 
       return html`<alwatr-surface tinted class="product-item">
         <img src="${config.cdn + '/medium/' + product.image.id}" />
@@ -704,7 +708,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
   protected _onQtyInputChange(event: CustomEvent, orderItem: OrderItem): void {
     const target = event.target as AlwatrTextField;
     this._logger.logMethodArgs?.('_onQtyInputChange', target.value);
-    const qty = +target.value || 100;
+    const qty = +target.value || 80;
     orderItem.qty = qty;
     this.requestUpdate();
   }

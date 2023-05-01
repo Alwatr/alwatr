@@ -1,18 +1,31 @@
-import {serverContextConsumer} from '@alwatr/context';
-import {simpleHashNumber} from '@alwatr/math';
+import {contextConsumer, contextProvider} from '@alwatr/context';
+import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 
-import {config} from '../../config.js';
-
-import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
-export const userStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<ComUser>>(
-    'user_storage_context',
-    config.fetchContextOptions,
-);
+const localStorageSuffixKey = '_x1';
 
-export const signIn = (phoneNumber: number, token: string): void => {
-  userStorageContextConsumer.request({
-    url: `${config.api}/storage/${simpleHashNumber(phoneNumber)}-${token}`,
-  });
-};
+// user profile
+export const userProfileContextConsumer = contextConsumer<ComUser>('user_profile');
+
+const userProfile = getLocalStorageItem<ComUser | null>(userProfileContextConsumer.id + localStorageSuffixKey, null);
+if (userProfile != null) {
+  contextProvider.setValue<ComUser>(userProfileContextConsumer.id, userProfile);
+}
+userProfileContextConsumer.subscribe((userProfile) => {
+  setLocalStorageItem<ComUser>(userProfileContextConsumer.id + localStorageSuffixKey, userProfile);
+});
+
+// user token
+export const userTokenContextConsumer = contextConsumer<string>('user_token');
+
+const userToken = getLocalStorageItem(userTokenContextConsumer.id + localStorageSuffixKey, null);
+if (userToken != null) {
+  contextProvider.setValue<string>(userTokenContextConsumer.id, userToken);
+}
+userTokenContextConsumer.subscribe((userToken) => {
+  setLocalStorageItem<string>(userTokenContextConsumer.id + localStorageSuffixKey, userToken);
+});
+
+// link-pass token
+export const linkPassTokenContextConsumer = contextConsumer<string>('link_pass_token');

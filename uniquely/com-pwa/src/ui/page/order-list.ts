@@ -10,18 +10,21 @@ import {
   ScheduleUpdateToFrameMixin,
   guard,
   repeat,
-  type PropertyValues,
   when,
+  type PropertyValues,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import {eventListener} from '@alwatr/signal';
 import '@alwatr/ui-kit/button/button.js';
-import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
 
 import {buttons} from '../../manager/buttons.js';
 import {orderStorageContextConsumer} from '../../manager/context-provider/order-storage.js';
 import {topAppBarContextProvider} from '../../manager/context.js';
 import '../stuff/order-status-box.js';
+
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -38,10 +41,12 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
 ) {
   static override styles = css`
     :host {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      padding: calc(2 * var(--sys-spacing-track));
       box-sizing: border-box;
-      padding: var(--sys-spacing-track) calc(2 * var(--sys-spacing-track));
       min-height: 100%;
+      gap: var(--sys-spacing-track);
       transform: opacity var(--sys-motion-duration-small);
     }
 
@@ -68,6 +73,12 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
     this._addSignalListeners(orderStorageContextConsumer.subscribe(() => {
       this.gotState = orderStorageContextConsumer.getState().target;
     }, {receivePrevious: 'NextCycle'}));
+
+    this._addSignalListeners(
+        eventListener.subscribe(buttons.retry.clickSignalId, () => {
+          orderStorageContextConsumer.request();
+        }),
+    );
   }
 
   protected override update(changedProperties: PropertyValues<this>): void {
@@ -109,7 +120,9 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
         };
         return html`
           <alwatr-icon-box .content=${content}></alwatr-icon-box>
-          <alwatr-button .content=${buttons.retry}></alwatr-button>
+          <div>
+            <alwatr-button .content=${buttons.retry}></alwatr-button>
+          </div>
         `;
       },
 
@@ -137,6 +150,15 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
     const orderList = Object.values(orderStorage.data)
         .sort((o1, o2) => (o2.meta?.updated || 0) - (o1.meta?.updated || 0))
         .slice(0, 15);
+
+    if (orderList.length === 0) {
+      const content: IconBoxContent = {
+        icon: 'cart-outline',
+        headline: message('order_list_is_empty'),
+        tinted: 1,
+      };
+      return html` <alwatr-icon-box .content=${content}></alwatr-icon-box> `;
+    }
 
     return repeat(
         orderList,

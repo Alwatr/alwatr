@@ -9,19 +9,18 @@ import {
   html,
   nothing,
   ref,
-  state,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/icon';
-import {redirect} from '@alwatr/router';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
-import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 import {sanitizePhoneNumber} from '@alwatr/validator';
 
 import {buttons} from '../../manager/buttons.js';
-import {signIn, userStorageContextConsumer} from '../../manager/context-provider/user.js';
+import {signIn, signInServerContext} from '../../manager/context-provider/sign-in.js';
+import {linkPassTokenContextConsumer} from '../../manager/context-provider/user.js';
 import {topAppBarContextProvider} from '../../manager/context.js';
 
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
@@ -83,16 +82,13 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
     }
   `;
 
-  @state()
-  private _userState = userStorageContextConsumer.getState().target;
-
   private _linkPass: string | null = null;
   private _textInputRef: Ref<AlwatrTextField> = createRef();
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._linkPass = localStorage.getItem('link-pass');
+    this._linkPass = linkPassTokenContextConsumer.getValue() ?? null;
 
     topAppBarContextProvider.setValue({
       type: 'center',
@@ -103,15 +99,8 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
     });
 
     // prettier-ignore
-    this._addSignalListeners(userStorageContextConsumer.subscribe(() => {
-      this._userState = userStorageContextConsumer.getState().target;
-      if (this._userState === 'complete') {
-        if (this._linkPass != null) {
-          localStorage.setItem('user-token', this._linkPass);
-          localStorage.removeItem('link-pass');
-        }
-        redirect({});
-      }
+    this._addSignalListeners(signInServerContext.subscribe(() => {
+      this.requestUpdate();
     }, {receivePrevious: 'NextCycle'}));
   }
 
@@ -127,7 +116,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       ];
     }
     else {
-      content = userStorageContextConsumer.fsm.render({
+      content = signInServerContext.fsm.render({
         'initial': () => [
           this._renderTextField(),
           this._renderSignInButton(),
@@ -187,12 +176,12 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
   }
 
   protected _renderErrorMessage(): unknown {
-    this._logger.logMethod?.('_renderErrorMessage');
-    const errorKey = userStorageContextConsumer.getResponse()?.statusCode === 404
-      ? 'sign_in_error_user_not_found'
-      : 'sign_in_error_unknown';
+    this._logger.logMethodArgs?.('_renderErrorMessage', signInServerContext.getResponse());
+    // const errorKey = signInContextConsumer.getResponse()?.statusCode === 404
+    //   ? 'sign_in_error_user_not_found'
+    //   : 'sign_in_error_unknown';
 
-    return html`<div class="error-message">${message(errorKey)}</div>`;
+    return html`<div class="error-message">${message('sign_in_error_user_not_found')}</div>`;
   }
 
   protected _renderAuthErrorMessage(): unknown {

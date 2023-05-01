@@ -1,19 +1,18 @@
 import {serviceRequest} from '@alwatr/fetch';
-import {commandHandler, contextConsumer} from '@alwatr/signal';
+import {commandHandler} from '@alwatr/signal';
 
 
 import {orderStorageContextConsumer} from './context-provider/order-storage.js';
+import {userProfileContextConsumer} from './context-provider/user.js';
 import {submitOrderCommandTrigger} from './context.js';
 import {logger} from './logger.js';
 import {config} from '../config.js';
 
-import type {AlwatrServiceResponseSuccessWithMeta, User} from '@alwatr/type';
+import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
 import type {Order} from '@alwatr/type/customer-order-management.js';
 
-const userContextConsumer = contextConsumer.bind<User>('user_context');
-
 commandHandler.define<Order, Order | null>(submitOrderCommandTrigger.id, async (order) => {
-  const userContext = userContextConsumer.getValue() ?? await userContextConsumer.untilChange();
+  const userContext = userProfileContextConsumer.getValue() ?? await userProfileContextConsumer.untilChange();
 
   try {
     const response = await serviceRequest<AlwatrServiceResponseSuccessWithMeta<Order>>({

@@ -1,3 +1,4 @@
+import {contextProvider} from '@alwatr/context';
 import {html, customElement, nothing} from '@alwatr/element';
 import '@alwatr/font/vazirmatn.css';
 import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
@@ -7,6 +8,7 @@ import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 
 import './stuff/app-footer.js';
+import {linkPassTokenContextConsumer, userTokenContextConsumer} from '../manager/context-provider/user.js';
 import {topAppBarContextProvider} from '../manager/context.js';
 
 declare global {
@@ -61,7 +63,7 @@ class AlwatrPwa extends AlwatrPwaElement {
   protected _renderPageOrder(routeContext: RouteContext): unknown {
     import('./page/order.js');
     topAppBarContextProvider.setValue({headlineKey: 'loading'});
-    const orderId = routeContext.sectionList[1] || 'new';
+    const orderId = routeContext.sectionList[1] ?? 'new';
     return html`<alwatr-page-order .orderId=${orderId} unresolved>...</alwatr-page-order>`;
   }
 
@@ -74,7 +76,7 @@ class AlwatrPwa extends AlwatrPwaElement {
   protected _saveLinkPass(routeContext: RouteContext): unknown {
     const linkPass = routeContext.sectionList[1];
     if (linkPass) {
-      localStorage.setItem('link-pass', linkPass + '');
+      contextProvider.setValue(linkPassTokenContextConsumer.id, linkPass + '');
     }
     redirect({sectionList: ['sign-in']}, 'replace');
     return nothing;
@@ -87,7 +89,12 @@ class AlwatrPwa extends AlwatrPwaElement {
   protected _checkSignedIn(routeContext: RouteContext): void {
     const routeId = this._routesConfig.routeId(routeContext);
     this._logger.logMethodArgs?.('_checkSignedIn', {routeId});
-    if (localStorage.getItem('user-token') == null && routeId !== 'sign-in' && routeId !== 's' && routeId !== '') {
+    if (
+      userTokenContextConsumer.getValue() == null &&
+      routeId !== 'sign-in' &&
+      routeId !== 's' &&
+      routeId !== ''
+    ) {
       redirect({sectionList: ['sign-in']});
     }
   }

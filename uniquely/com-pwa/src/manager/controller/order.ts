@@ -2,7 +2,7 @@ import {FsmTypeHelper, finiteStateMachineProvider} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
 import {OrderDraft, OrderItem, orderInfoSchema, tileQtyStep} from '@alwatr/type/customer-order-management.js';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
-import {getLocalStorageItem} from '@alwatr/util';
+import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 import {validator} from '@alwatr/validator';
 
 import {orderStorageContextConsumer} from '../context-provider/order-storage.js';
@@ -15,7 +15,7 @@ import {submitOrderCommandTrigger} from '../context.js';
 
 import type {ClickSignalType} from '@alwatr/type';
 
-const newOrderLocalStorageKey = 'draft-order-x3';
+const newOrderLocalStorageKey = 'draft_order_x4';
 
 export const orderFsmConstructor = finiteStateMachineProvider.defineConstructor('order_fsm', {
   initial: 'pending',
@@ -199,7 +199,7 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
   },
 
   save_local_storage: (fsmInstance) => {
-    localStorage.setItem(newOrderLocalStorageKey, JSON.stringify(fsmInstance.getContext().newOrder));
+    setLocalStorageItem(newOrderLocalStorageKey, fsmInstance.getContext().newOrder);
   },
 
   check_item_list: (fsmInstance) => {
@@ -287,7 +287,7 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     signalId: 'order_item_qty_add',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
       const orderItem = event.detail;
-      orderItem.qty++;
+      orderItem.qty += 80;
       fsmInstance.transition('request_update');
     },
   },
@@ -295,7 +295,7 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     signalId: 'order_item_qty_remove',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
       const orderItem = event.detail;
-      orderItem.qty--;
+      orderItem.qty -= 80;
       if (orderItem.qty < 1) orderItem.qty = 1;
       fsmInstance.transition('request_update');
     },

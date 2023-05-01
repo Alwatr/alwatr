@@ -19,7 +19,7 @@ export const homePageContent: PageHomeContent = {
       stated: true,
       icon: 'logo-microsoft',
       headline: 'مجموعه سافیت',
-      href: 'https://beta.soffit.co',
+      href: 'https://soffit.co',
       target: '_blank',
       slot: `
         مجموعه تولیدی بازرگانی سافیت<br/>
