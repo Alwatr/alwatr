@@ -38,7 +38,7 @@
     "@alwatr/logger": "^0.30.0",
     "@alwatr/nano-server": "^0.30.0",
     "@alwatr/storage-client": "^0.30.0",
-    "@alwatr/token": "^0.30.0",
+    "@alwatr/crypto": "^0.30.0",
     "@alwatr/type": "^0.30.0",
     "@types/node": "^18.16.2",
     "esbuild": "^0.17.18",

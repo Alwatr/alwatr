@@ -1,4 +1,4 @@
-import {AlwatrTokenGenerator} from '@alwatr/token';
+import {AlwatrTokenGenerator} from '@alwatr/crypto';
 
 import {config} from './config.js';
 

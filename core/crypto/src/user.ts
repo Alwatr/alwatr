@@ -40,10 +40,8 @@ export class AlwatrUserFactory {
    * Example:
    *
    * ```ts
-   * const newId = userFactory.generateId();
-   * ...
-   * if (userFactory.verifyId(newId)) {
-   *   ...
+   * if (!userFactory.verifyId(user.id)) {
+   *   new Error('invalid_user');
    * }
    * ```
    */
@@ -57,7 +55,7 @@ export class AlwatrUserFactory {
    * Example:
    *
    * ```ts
-   * const userToken = userFactory.generateToken(['userId', 1])
+   * const userToken = userFactory.generateToken([user.id, user.lpe]);
    * ```
    */
   generateToken(uniquelyList: Array<string | number | boolean>): string {
@@ -70,10 +68,8 @@ export class AlwatrUserFactory {
    * Example:
    *
    * ```ts
-   * const userToken = userFactory.generateToken(['userId', 1]);
-   * ...
-   * if (userFactory.verifyToken(userToken)) {
-   *   ...
+   * if (!userFactory.verifyToken([user.id, user.lpe], userToken)) {
+   *   new error('invalid_token');
    * }
    * ```
    */
