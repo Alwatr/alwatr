@@ -22,13 +22,9 @@ export const config = {
     adminToken: process.env.ADMIN_TOKEN ?? 'ADMIN_SECRET_TOKEN',
     allowAllOrigin: true,
   },
-  productStoragePrefix: 'product-list-',
-  priceStoragePrefix: 'price-list-',
-  orderStoragePrefix: 'order-list-',
-  productStorageList: (process.env.PRODUCT_STORAGE_LIST ?? 'temp')
-      .split(',')
-      .map((f) => f.trim())
-      .filter((f) => f != ''),
+  productStoragePrefix: 'public/product-list-',
+  priceStoragePrefix: 'public/price-list-',
+  orderStoragePrefix: 'public/order-list-',
 } as const;
 
 logger.logProperty?.('config', config);
