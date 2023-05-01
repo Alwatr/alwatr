@@ -344,9 +344,11 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
 
     return html`
       <alwatr-icon-box .content=${content}></alwatr-icon-box>
-      <alwatr-button .icon=${buttons.retry.icon} .clickSignalId=${buttons.retry.clickSignalId}>
-        ${message('retry')}
-      </alwatr-button>
+      <div>
+        <alwatr-button .icon=${buttons.retry.icon} .clickSignalId=${buttons.retry.clickSignalId}>
+          ${message('retry')}
+        </alwatr-button>
+      </div>
     `;
   }
 
