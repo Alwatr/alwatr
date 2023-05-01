@@ -1,4 +1,5 @@
 import {serverContextConsumer} from '@alwatr/context';
+import {simpleHashNumber} from '@alwatr/math';
 
 import {config} from '../../config.js';
 
@@ -11,7 +12,8 @@ export const userStorageContextConsumer = serverContextConsumer<AlwatrDocumentSt
 );
 
 export const signIn = (phoneNumber: number, token: string): void => {
+  const phoneNumberHash = simpleHashNumber(phoneNumber);
   userStorageContextConsumer.request({
-    url: `${config.api}/auth/${phoneNumber}-${token}`,
+    url: `${config.api}/auth/${phoneNumberHash}-${token}`,
   });
 };
