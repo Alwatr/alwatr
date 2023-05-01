@@ -40,6 +40,7 @@ nanoServer.route('PATCH', '/user-list/', async (connection) => {
 });
 
 const saveSeparateUserProfile = (user: ComUser): void => {
+  const token = userFactory.generateToken([user.id, user.lpe]);
   const path = `${config.publicStoragePath}/user/${simpleHashNumber(user.phoneNumber)}-${token}.json`;
 
   if (existsSync(path)) {
@@ -59,7 +60,6 @@ const saveSeparateUserProfile = (user: ComUser): void => {
     }
   }
 
-  const token = userFactory.generateToken([user.id, user.lpe]);
   const content: AlwatrServiceResponseSuccess<ComUser> = {
     ok: true,
     statusCode: 200,
