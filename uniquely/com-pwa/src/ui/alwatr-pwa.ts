@@ -28,7 +28,7 @@ class AlwatrPwa extends AlwatrPwaElement {
   }
 
   protected override _routesConfig: RoutesConfig = {
-    routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
+    routeId: (routeContext) => routeContext.sectionList[0]?.toString() ?? '',
     templates: {
       'home': this._renderPageHome,
       '_404': this._renderPage404,
@@ -88,7 +88,7 @@ class AlwatrPwa extends AlwatrPwaElement {
 
   protected _checkSignedIn(routeContext: RouteContext): void {
     const routeId = this._routesConfig.routeId(routeContext);
-    this._logger.logMethodArgs?.('_checkSignedIn', {routeId});
+    this._logger.logMethodArgs?.('_checkSignedIn', {routeId}) ?? '';
     if (
       userTokenContextConsumer.getValue() == null &&
       routeId !== 'sign-in' &&
