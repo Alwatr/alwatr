@@ -11,9 +11,9 @@ export const config = {
   },
   token: <TokenGeneratorConfig>{
     secret: process.env.SECRET ?? 'YOUR_SECRET',
-    algorithm: 'sha256',
+    algorithm: 'sha224',
     encoding: 'base64url',
-    duration: null,
+    duration: '6M',
   },
   nanoServer: {
     host: process.env.HOST ?? '0.0.0.0',
@@ -22,13 +22,11 @@ export const config = {
     adminToken: process.env.ADMIN_TOKEN ?? 'ADMIN_SECRET_TOKEN',
     allowAllOrigin: true,
   },
-  productStoragePrefix: 'product-list-',
-  priceStoragePrefix: 'price-list-',
-  orderStoragePrefix: 'order-list-',
-  productStorageList: (process.env.PRODUCT_STORAGE_LIST ?? 'temp')
-      .split(',')
-      .map((f) => f.trim())
-      .filter((f) => f != ''),
+  publicStoragePath: process.env.PUBLIC_STORAGE_PATH ?? 'public-storage',
+  userStorageName: 'private/user-list',
+  productStoragePrefix: 'public/product-list-',
+  priceStoragePrefix: 'public/price-list-',
+  orderStoragePrefix: 'public/order-list-',
 } as const;
 
 logger.logProperty?.('config', config);

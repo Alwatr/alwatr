@@ -257,3 +257,7 @@ export const calcDiscount = (price: number, finalPrice: number, decimal = 2, upS
   decimal = Math.pow(10, decimal);
   return Math.round((price - finalPrice) / (upSide ? finalPrice : price) * 100 * decimal) / decimal;
 };
+
+export const simpleHashNumber = (num: number): string => {
+  return (num >>> 0).toString(36);
+};

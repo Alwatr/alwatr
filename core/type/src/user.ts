@@ -16,7 +16,7 @@ export interface User extends AlwatrDocumentObject {
 
   fullName: string;
 
-  phoneNumber: string;
+  phoneNumber: number;
 
   gender: Gender;
 

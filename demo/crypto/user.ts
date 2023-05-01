@@ -19,7 +19,7 @@ const user: User = {
   fullName: 'امیرمحمد نجفی',
   gender: 'male',
   lpe: 1,
-  phoneNumber: '989151234567',
+  phoneNumber: 989151234567,
 };
 
 const userIdValidation = userFactory.verifyId(user.id);

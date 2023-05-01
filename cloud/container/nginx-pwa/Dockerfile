@@ -9,4 +9,4 @@ ENV NGINX_OPEN_FILE_CACHE_INACTIVE=15m \
     NGINX_EXPIRES_STATIC=max \
     NGINX_EXPIRES_DEFAULT=epoch
 
-COPY conf/ /etc/nginx/templates/
+COPY conf/ /etc/nginx/
