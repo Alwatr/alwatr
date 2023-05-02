@@ -8,9 +8,7 @@ import type {ComUser, Order} from '@alwatr/type/customer-order-management.js';
 
 export const orderStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<Order>>(
     'order_storage_context',
-    {
-      ...config.fetchContextOptions,
-    },
+    config.fetchContextOptions,
 );
 
 orderStorageContextConsumer.fsm.defineSignals([
