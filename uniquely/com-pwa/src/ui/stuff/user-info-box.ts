@@ -1,3 +1,4 @@
+import {serverContextConsumer} from '@alwatr/context';
 import {
   customElement,
   AlwatrBaseElement,
@@ -11,9 +12,12 @@ import {
 import {eventTrigger} from '@alwatr/signal';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import type {ClickSignalType} from '@alwatr/type';
-import type {ComUser} from '@alwatr/type/customer-order-management.js';
+import {config} from '../../config.js';
+
+import type {AlwatrDocumentStorage, ClickSignalType} from '@alwatr/type';
+import type {ComUser, Order} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -31,6 +35,13 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
       display: block;
     }
   `;
+
+  protected orderListFsm = serverContextConsumer<AlwatrDocumentStorage<Order>>(
+      'order_storage_context_' + this.content?.id,
+      {
+        url: config.api + '/storage/order-list/' + this.content?.id,
+      },
+  );
 
   @property({attribute: false})
     content?: ComUser | null;
@@ -69,12 +80,6 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
   override render(): unknown {
     this._logger.logMethod?.('render');
     if (!this.content) return;
-
-    // const headline =
-    //   this.content.status === 'draft'
-    //     ? message('order_status_box_headline_new')
-    //     : message('order_status_box_headline')
-    //         .replace('${orderId}', replaceNumber(this.content.id.padStart(2, '0') ?? ''));
 
     const iconBoxContent: IconBoxContent = {
       headline: `نماینده ${this.content.phoneNumber}`,
