@@ -9,10 +9,7 @@ export const productStorageContextConsumer = serverContextConsumer<AlwatrDocumen
     'product_storage_context',
     {
       ...config.fetchContextOptions,
-      url: config.api + '/product-list/',
-      queryParameters: {
-        storage: 'tile',
-      },
+      url: config.api + '/storage/product-list-tile',
     },
 );
 

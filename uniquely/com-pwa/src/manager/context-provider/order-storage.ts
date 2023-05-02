@@ -10,7 +10,6 @@ export const orderStorageContextConsumer = serverContextConsumer<AlwatrDocumentS
     'order_storage_context',
     {
       ...config.fetchContextOptions,
-      url: config.api + '/order-list/',
     },
 );
 
@@ -19,9 +18,7 @@ orderStorageContextConsumer.fsm.defineSignals([
     signalId: userProfileContextConsumer.id,
     callback: (user: ComUser): void => {
       orderStorageContextConsumer.request({
-        queryParameters: {
-          userId: user.id,
-        },
+        url: config.api + '/storage/order-list-' + user.id,
       });
     },
     receivePrevious: 'NextCycle',
