@@ -28,7 +28,7 @@ class AlwatrPwa extends AlwatrPwaElement {
   }
 
   protected override _routesConfig: RoutesConfig = {
-    routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
+    routeId: (routeContext) => routeContext.sectionList[0]?.toString() ?? '',
     templates: {
       'home': this._renderPageHome,
       '_404': this._renderPage404,

@@ -8,10 +8,7 @@ import type {ComUser, Order} from '@alwatr/type/customer-order-management.js';
 
 export const orderStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<Order>>(
     'order_storage_context',
-    {
-      ...config.fetchContextOptions,
-      url: config.api + '/order-list/',
-    },
+    config.fetchContextOptions,
 );
 
 orderStorageContextConsumer.fsm.defineSignals([
@@ -19,9 +16,7 @@ orderStorageContextConsumer.fsm.defineSignals([
     signalId: userProfileContextConsumer.id,
     callback: (user: ComUser): void => {
       orderStorageContextConsumer.request({
-        queryParameters: {
-          userId: user.id,
-        },
+        url: config.api + '/storage/order-list-' + user.id,
       });
     },
     receivePrevious: 'NextCycle',
