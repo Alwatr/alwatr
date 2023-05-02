@@ -26,7 +26,7 @@ export const config = {
   userStorageName: 'private/user-list',
   productStoragePrefix: 'public/product-list-',
   priceStoragePrefix: 'public/price-list-',
-  orderStoragePrefix: 'public/order-list-',
+  orderStoragePrefix: 'public/order-list/',
 } as const;
 
 logger.logProperty?.('config', config);
