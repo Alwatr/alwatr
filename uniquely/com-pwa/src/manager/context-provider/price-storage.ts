@@ -30,7 +30,7 @@ export const productFinalPriceStorageContextConsumer = serverContextConsumer<Alw
     'product_final_price_storage_context',
     {
       ...config.fetchContextOptions,
-      url: config.api + '/storage/price-list-' + config.priceListName.replace('${productStorage}', 'tile') + '.json',
+      url: config.api + '/storage/price-list-' + config.finalPriceListName.replace('${productStorage}', 'tile'),
     },
 );
 
