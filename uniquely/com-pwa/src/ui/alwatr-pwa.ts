@@ -33,6 +33,7 @@ class AlwatrPwa extends AlwatrPwaElement {
       'home': this._renderPageHome,
       '_404': this._renderPage404,
       'order-list': this._renderPageOrderList,
+      'user-list': this._renderPageUserList,
       'order': this._renderPageOrder,
       'sign-in': this._renderPageSignIn,
       's': this._saveLinkPass,
@@ -58,6 +59,12 @@ class AlwatrPwa extends AlwatrPwaElement {
     import('./page/order-list.js');
     topAppBarContextProvider.setValue({headlineKey: 'loading'});
     return html`<alwatr-page-order-list unresolved>...</alwatr-page-order-list>`;
+  }
+
+  protected _renderPageUserList(): unknown {
+    import('./page/user-list.js');
+    topAppBarContextProvider.setValue({headlineKey: 'loading'});
+    return html`<alwatr-page-user-list unresolved>...</alwatr-page-user-list>`;
   }
 
   protected _renderPageOrder(routeContext: RouteContext): unknown {
