@@ -4,5 +4,6 @@ import './route/patch-price-list.js';
 import './route/patch-product-list.js';
 import './route/patch-user.js';
 import './route/put-order.js';
+import './route/user-list.js';
 
 logger.logOther?.('..:: Alwatr Customer Order Management API ::..');
