@@ -15,8 +15,8 @@ config_js_envsubst() {
     return 0
   fi
   echo >&3 "$ME: Running envsubst on $config_js_path"
-  envsubst "$defined_envs" < "$config_js_path" > "$config_js_path.tmp"
-  mv "$config_js_path.tmp" "$config_js_path"
+  envsubst "$defined_envs" < "$config_js_path" > "${config_js_path}.tmp"
+  mv -f "${config_js_path}.tmp" "$config_js_path"
 }
 
 config_js_envsubst
