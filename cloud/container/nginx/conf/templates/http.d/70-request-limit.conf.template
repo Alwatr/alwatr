@@ -1,3 +1,5 @@
-limit_req_zone $binary_remote_addr zone=req_zone:10m rate=200r/s;
+limit_req_zone $binary_remote_addr zone=req_zone:10m rate=$NGINX_LIMIT_REQ_RATEr/s;
+limit_req_status $NGINX_LIMIT_REQ_ERROR;
+limit_req_log_level $NGINX_LIMIT_REQ_LOG;
 
-limit_req zone=req_zone burst=30 nodelay;
+limit_req zone=req_zone burst=$NGINX_LIMIT_REQ_BURST;
