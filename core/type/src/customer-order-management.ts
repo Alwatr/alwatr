@@ -151,7 +151,7 @@ export interface ComUser extends User {
 
 export const orderInfoSchema = {
   id: String,
-  // status: String,
+  status: String,
   itemList: [{
     productId: String,
     price: Number,
@@ -168,9 +168,9 @@ export const orderInfoSchema = {
   },
   // discount: Number,
   // discountType: String,
-  // totalPrice: Number,
+  totalPrice: Number,
   // ladingPrice: Number,
-  // finalTotalPrice: Number,
+  finalTotalPrice: Number,
 };
 
 export const orderShippingInfoSchema = orderInfoSchema.shippingInfo;

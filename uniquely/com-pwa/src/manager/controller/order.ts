@@ -245,7 +245,9 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
       const order = fsmInstance.getContext().newOrder;
       if (!order.itemList?.length) throw new Error('invalid_type');
       // else
-      fsmInstance.getContext().newOrder = validator(orderInfoSchema, order, true);
+      fsmInstance.setContext({
+        newOrder: validator<OrderDraft>(orderInfoSchema, order),
+      });
       return true;
     }
     catch (err) {
@@ -267,9 +269,7 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
 
   validate_shipping_info: (fsmInstance): boolean => {
     try {
-      const order = fsmInstance.getContext().newOrder;
-      // else
-      fsmInstance.getContext().newOrder.shippingInfo = validator(orderShippingInfoSchema, order.shippingInfo, true);
+      validator(orderShippingInfoSchema, fsmInstance.getContext().newOrder.shippingInfo);
       return true;
     }
     catch (err) {
