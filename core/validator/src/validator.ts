@@ -57,10 +57,9 @@ export function validator<T extends StringifyableRecord>(
       }
       // else
       const schema = itemSchema[0];
-      for (const index in itemValue) {
-        if (!Object.prototype.hasOwnProperty.call(itemSchema, index)) continue;
+      for (let index = itemValue.length - 1; index >= 0; index--) {
         const item = itemValue[index];
-        targetObject[index] = validator<StringifyableRecord>(
+        itemValue[index] = validator<StringifyableRecord>(
             schema,
             item as StringifyableRecord, // @FIXME: DeMastmalize
             additionalProperties,
