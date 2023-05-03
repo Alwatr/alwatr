@@ -1,3 +1,5 @@
+import {getLocalStorageItem} from '@alwatr/util';
+
 import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
 
 declare global {
@@ -7,9 +9,18 @@ declare global {
 
 // TODO: config-context with dynamic import like l18e
 
-const debugConfig = localStorage.getItem('DEBUG_CONFIG');
+/**
+ * Debug app config.
+ *
+ * Example:
+ *
+ * ```ts
+ * localStorage.setItem('DEBUG_CONFIG', JSON.stringify(globalThis.appConfig))
+ * ```
+ */
+const debugConfig = getLocalStorageItem('DEBUG_CONFIG', null);
 if (debugConfig != null) {
-  globalThis.appConfig = JSON.parse(debugConfig);
+  globalThis.appConfig = debugConfig;
 }
 
 export function getConfKey<T extends Stringifyable>(key: string): T {
