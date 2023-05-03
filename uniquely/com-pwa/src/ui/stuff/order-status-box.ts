@@ -75,7 +75,7 @@ export class AlwatrOrderStatusBox extends LocalizeMixin(SignalMixin(AlwatrBaseEl
       this.content.status === 'draft'
         ? message('order_status_box_headline_new')
         : message('order_status_box_headline')
-            .replace('${orderId}', replaceNumber(this.content.id.padStart(2, '0') ?? ''));
+            .replace('${orderId}', replaceNumber(this.content.id.padStart(2, '0')));
 
     const iconBoxContent: IconBoxContent = {
       headline,
@@ -88,7 +88,7 @@ export class AlwatrOrderStatusBox extends LocalizeMixin(SignalMixin(AlwatrBaseEl
     return html`
       <alwatr-icon-box .content=${iconBoxContent}>
         ${message('order_status_box_status') + ': ' + message('order_status_' + this.content.status)} <br />
-        ${message('order_status_box_created') + ': ' + date(this.content.meta?.created ?? 0)}
+        ${message('order_status_box_created') + ': ' + date(this.content.meta?.created ?? Date.now())}
       </alwatr-icon-box>
     `;
   }
