@@ -1,2 +1,3 @@
 cloud/classic/lib/*  filter=crypt diff=crypt merge=crypt
 *.env  filter=crypt diff=crypt merge=crypt
+uniquely/com-api/demo-user.http  filter=crypt diff=crypt merge=crypt
