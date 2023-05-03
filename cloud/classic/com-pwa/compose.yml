@@ -159,6 +159,9 @@ services:
     networks:
       alwatr-public-network:
 
+    environment:
+      - NGINX_ACCESS_LOG=${NGINX_ACCESS_LOG:-}
+
     volumes:
       - type: bind
         source: ./_data/storage/public
@@ -190,6 +193,9 @@ services:
 
     networks:
       alwatr-public-network:
+
+    environment:
+      - NGINX_ACCESS_LOG=${NGINX_ACCESS_LOG:-}
 
     volumes:
       - type: bind
