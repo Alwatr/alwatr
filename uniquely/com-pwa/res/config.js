@@ -1,6 +1,7 @@
 window.appConfig = {
-  domain: '$DOMAIN',
+  // old version compatibility.
   api: '/api/v0',
   cdn: '/cdn',
-  productStorageList: ['tile'],
+  token: 'old-version',
+  productStorageList: [],
 };
