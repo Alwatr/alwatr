@@ -9,9 +9,9 @@ import {
   state,
   ScheduleUpdateToFrameMixin,
   guard,
-  repeat,
   when,
   type PropertyValues,
+  mapObject,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {eventListener} from '@alwatr/signal';
@@ -145,27 +145,11 @@ export class AlwatrPageUserList extends ScheduleUpdateToFrameMixin(
   private _renderUsersList(): unknown {
     const userStorage = userListStorageContextConsumer.getResponse();
     this._logger.logMethodArgs?.('_renderUsersList', {userStorage});
-    if (userStorage == null) return;
 
-    const userList = Object.values(userStorage.data)
-        .sort((o1, o2) => (o2.meta?.updated || 0) - (o1.meta?.updated || 0))
-        .slice(0, 15);
-
-    if (userList.length === 0) {
-      const content: IconBoxContent = {
-        icon: 'cart-outline',
-        headline: message('user_list_is_empty'),
-        tinted: 1,
-      };
-      return html` <alwatr-icon-box .content=${content}></alwatr-icon-box> `;
-    }
-
-    return repeat(
-        userList,
-        (user) => user.id,
-        (user) => html`<alwatr-user-info-box
-          .content=${user}
-        ></alwatr-order-info-box>`,
+    return mapObject(
+        this,
+        userStorage?.data,
+        (user) => html`<alwatr-user-info-box .content=${user}></alwatr-order-info-box>`,
     );
   }
 
