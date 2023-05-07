@@ -46,18 +46,10 @@ services:
       internal:
       alwatr-public-network:
 
-    volumes:
-      - type: bind
-        source: ./_data/storage/public
-        target: /public-storage
-        bind:
-          create_host_path: true
-
     depends_on:
       - storage-server
 
     environment:
-      - PUBLIC_STORAGE_PATH=/public-storage
       - STORAGE_HOST=${APP_ID}-storage-server
       - STORAGE_PORT=80
       - STORAGE_TOKEN=${STORAGE_ACCESS_TOKEN}
