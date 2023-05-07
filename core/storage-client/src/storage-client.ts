@@ -225,6 +225,31 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
   }
 
   /**
+   * Make a symbolic link
+   *
+   * **CAUTION: the destination path will be removed if exists**
+   *
+   * Example:
+   *
+   * ```ts
+   * await userStorage.link('private/user-50/order-list', 'public/token/oder-list');
+   * ```
+   */
+  async link(src: string, dest: string): Promise<void> {
+    this._logger.logMethodArgs?.('link', {src, dest});
+
+    await serviceRequest({
+      ...this.fetchOption,
+      method: 'GET',
+      url: this.fetchOption.url + 'link',
+      queryParameters: {
+        src,
+        dest,
+      },
+    });
+  }
+
+  /**
    * Delete a document object from the storage.
    *
    * Example:
