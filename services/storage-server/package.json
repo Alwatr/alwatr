@@ -57,6 +57,7 @@
     "@alwatr/logger": "^0.30.0",
     "@alwatr/nano-server": "^0.30.0",
     "@alwatr/storage-engine": "^0.30.0",
+    "@alwatr/util": "^0.30.0",
     "@alwatr/type": "^0.30.0",
     "@types/node": "^20.1.0",
     "esbuild": "^0.17.18",
