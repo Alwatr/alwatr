@@ -1,9 +1,9 @@
 import {resolve} from 'node:path';
 
 import {createLogger, globalAlwatr, type AlwatrLogger} from '@alwatr/logger';
+import {readJsonFileSync, writeJsonFile, writeJsonFileSync} from '@alwatr/util/node';
 import exitHook from 'exit-hook';
 
-import {readJsonFile, writeJsonFile} from './util.js';
 
 import type {AlwatrStorageEngineConfig} from './type.js';
 import type {AlwatrDocumentStorage, AlwatrDocumentObject} from '@alwatr/type';
@@ -146,13 +146,14 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     this._logger = createLogger(`alwatr-storage:${config.name}`, config.devMode);
     this._logger.logMethodArgs?.('constructor', config);
     this.forceSave = this.forceSave.bind(this);
+    this._writeFileSync = this._writeFileSync.bind(this);
 
     this.name = config.name;
     this.storagePath = resolve(`${config.path ?? './db'}/${config.name}.json`);
     this.saveDebounce = config.saveDebounce ?? 1000;
     this.saveBeautiful = config.saveBeautiful || false;
 
-    exitHook(this.forceSave);
+    exitHook(this._writeFileSync);
     this._storage = this.load();
 
     if (this._storage.meta?.formatVersion !== AlwatrStorageEngine.formatVersion) {
@@ -166,7 +167,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   protected load(): AlwatrDocumentStorage<DocumentType> {
     this._logger.logMethodArgs?.('load', {name: this.name, path: this.storagePath});
 
-    const storage = readJsonFile<AlwatrDocumentStorage<DocumentType>>(this.storagePath);
+    const storage = readJsonFileSync<AlwatrDocumentStorage<DocumentType>>(this.storagePath);
 
     if (storage === null) {
       this._logger.incident?.('load', 'file_not_found', 'Storage path not found, empty storage loaded', {
@@ -353,30 +354,40 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   private _saveTimer: NodeJS.Timeout | null = null;
 
   /**
-   * Save the storage to disk.
+   * Save the storage to disk (debounced and none blocking).
    */
   save(): void {
     this._logger.logMethod?.('save');
     this._storage.meta.reversion++;
-    if (this._saveTimer != null) return; // save already requested
     this.hasUnsavedChanges = true;
+    if (this._saveTimer != null) return; // save already requested
     this._saveTimer = setTimeout(this.forceSave, this.saveDebounce);
   }
 
   /**
-   * Save the storage to disk without any debounce.
+   * Save the storage to disk without any debounce (none blocking).
    */
-  forceSave(): void {
+  forceSave(): Promise<void> {
     this._logger.logMethodArgs?.('forceSave', {hasUnsavedChanges: this.hasUnsavedChanges});
 
     if (this._saveTimer != null) {
       clearTimeout(this._saveTimer);
       this._saveTimer = null;
     }
+    return this._writeFile();
+  }
 
+  protected async _writeFile(): Promise<void> {
     if (this.hasUnsavedChanges) {
-      writeJsonFile(this.storagePath, this._storage, this.saveBeautiful ? 2 : 0);
       this.hasUnsavedChanges = false;
+      await writeJsonFile(this.storagePath, this._storage, this.saveBeautiful ? 2 : 0);
+    }
+  }
+
+  protected _writeFileSync(): void {
+    if (this.hasUnsavedChanges) {
+      this.hasUnsavedChanges = false;
+      writeJsonFileSync(this.storagePath, this._storage, this.saveBeautiful ? 2 : 0);
     }
   }
 
