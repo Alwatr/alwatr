@@ -79,3 +79,52 @@ export const readJsonFile = async <T>(path: string): Promise<T | null> => {
   return data;
 };
 
+/**
+ * Enhanced write json file.
+ * @example
+ * writeJsonFileSync('./file.json', { a:1, b:2, c:3 });
+ */
+export const writeJsonFileSync = (path: string, data: unknown, space?: string | number): void => {
+  logger.logMethodArgs?.('writeJsonFileSync', path);
+
+  const timeKey = path.substring(path.lastIndexOf('/') + 1);
+  logger.time?.(`writeJsonFileSync(${timeKey})`);
+
+  let jsonContent;
+  try {
+    jsonContent = JSON.stringify(data, null, space);
+  }
+  catch (err) {
+    logger.error('writeJsonFileSync', 'stringify_failed', err);
+    throw new Error('stringify_failed');
+  }
+
+  if (existsSync(path)) {
+    try {
+      renameSync(path, path + '.bk');
+    }
+    catch (err) {
+      logger.error('writeJsonFileSync', 'rename_failed', err);
+    }
+  }
+  else {
+    try {
+      mkdirSync(dirname(path), {recursive: true});
+    }
+    catch (err) {
+      logger.error('writeJsonFileSync', 'make_dir_failed', err);
+      throw new Error('make_dir_failed');
+    }
+  }
+
+  try {
+    writeFileSync(path, jsonContent, {encoding: 'utf-8', flag: 'w'});
+  }
+  catch (err) {
+    logger.error('writeJsonFileSync', 'write_file_failed', err);
+    throw new Error('write_file_failed');
+  }
+
+  logger.timeEnd?.(`writeJsonFileSync(${timeKey})`);
+};
+
