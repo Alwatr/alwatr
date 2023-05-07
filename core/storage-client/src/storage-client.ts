@@ -181,7 +181,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       documentObject: T,
       storage: string | undefined = this.config.name,
   ): Promise<T> {
-    this._logger.logMethodArgs?.('set', {documentId: documentObject.id});
+    this._logger.logMethodArgs?.('set', {storage, documentId: documentObject.id});
     if (storage == null) throw new Error('storage_not_defined');
 
     const responseJson = await serviceRequest<AlwatrServiceResponseSuccessWithMeta<T>>({
@@ -199,6 +199,29 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
     }
 
     return responseJson.data;
+  }
+
+  /**
+   * Touch the storage to make sure storage file exist.
+   *
+   * Example:
+   *
+   * ```ts
+   * await userStorage.touch();
+   * ```
+   */
+  async touch(storage: string | undefined = this.config.name): Promise<void> {
+    this._logger.logMethodArgs?.('touch', {storage});
+    if (storage == null) throw new Error('storage_not_defined');
+
+    await serviceRequest({
+      ...this.fetchOption,
+      method: 'GET',
+      url: this.fetchOption.url + 'touch',
+      queryParameters: {
+        storage,
+      },
+    });
   }
 
   /**
@@ -236,7 +259,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
   async getStorage<T extends DocumentType = DocumentType>(
       name: string | undefined = this.config.name,
   ): Promise<AlwatrDocumentStorage<T>> {
-    this._logger.logMethod?.('getStorage');
+    this._logger.logMethodArgs?.('getStorage', {name});
     if (name == null) throw new Error('storage_not_defined');
 
     const responseJson = (await serviceRequest({
@@ -269,7 +292,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * ```
    */
   async keys(storage: string | undefined = this.config.name): Promise<Array<string>> {
-    this._logger.logMethod?.('keys');
+    this._logger.logMethodArgs?.('keys', {storage});
     if (storage == null) throw new Error('storage_not_defined');
 
     const responseJson = await serviceRequest({
