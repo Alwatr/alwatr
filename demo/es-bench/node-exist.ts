@@ -18,7 +18,6 @@ function access(): boolean {
 
 console.log('exist(%s) => %s', filePath, exist())
 console.log('access(%s) => %s', filePath, access())
-console.log('stat(%s) => %s', filePath, stat())
 
 bench('exist', exist);
 bench('access', access);
