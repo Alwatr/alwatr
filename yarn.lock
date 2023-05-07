@@ -31,6 +31,16 @@
     lit "^2.7.4"
     tslib "^2.5.0"
 
+"@alwatr/fetch@^0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.30.0.tgz#0be7e0a4647aeadd952165c80856e38f3597cbd6"
+  integrity sha512-BAkJEdQr6mJuWfAXwB72l7w9O0CANdGCkvBxARW5MKqC+csJ4uFn0GEOj/luK1IPICZvIH8gLiFVAnGi6jhiXQ==
+  dependencies:
+    "@alwatr/logger" "^0.30.0"
+    "@alwatr/signal" "^0.30.0"
+    "@alwatr/util" "^0.30.0"
+    tslib "^2.5.0"
+
 "@alwatr/fetch@^0.31.0":
   version "0.31.0"
   resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.31.0.tgz#c304837ec237e4bb136790b9f4f73b8c4c88b08c"
@@ -91,6 +101,14 @@
     "@alwatr/logger" "^0.32.0"
     tslib "^2.5.0"
 
+"@alwatr/logger@^0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/logger/-/logger-0.30.0.tgz#954c28238f835cd716da80ab5bc0bf57e451c4a2"
+  integrity sha512-znL3hU8xs+oyjtECfwQzu7AI8ojs6rnt8BaT2H5FOKGxW6nYG4cORL+glZ5JFwPRkdkD8z+shS2GqX1JlVDM1w==
+  dependencies:
+    "@alwatr/type" "^0.30.0"
+    tslib "^2.5.0"
+
 "@alwatr/logger@^0.31.0":
   version "0.31.0"
   resolved "https://registry.yarnpkg.com/@alwatr/logger/-/logger-0.31.0.tgz#91ec05e81e7c4c0257e853bc17692a60b8747439"
@@ -105,6 +123,14 @@
   integrity sha512-H4mQWIOKLC5Bu/xnr12IK4yo00eB/AX/hlRbv1NX7LyaYgiq3NvI572Y92pgX7oY2qYvLGuWiL/Gibf7AmDaBA==
   dependencies:
     "@alwatr/type" "^0.32.0"
+    tslib "^2.5.0"
+
+"@alwatr/math@^0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/math/-/math-0.30.0.tgz#65cf5e15c8b3c9b70eb471a8bbbd071b89ea82a0"
+  integrity sha512-KsPpXg9eso9IB0jqGjcXtfiKdEjsmxZkH9X//22EUOL4NuSoEVAlzMyv9SHFC4SVW5aH/DPiSvOhcPRnpb5rDw==
+  dependencies:
+    "@alwatr/logger" "^0.30.0"
     tslib "^2.5.0"
 
 "@alwatr/math@^0.31.0":
@@ -142,6 +168,16 @@
     "@alwatr/signal" "^0.32.0"
     tslib "^2.5.0"
 
+"@alwatr/signal@^0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/signal/-/signal-0.30.0.tgz#63f8a06dec906e82b79e864ec20c2a28566d9799"
+  integrity sha512-HfmV2uJ/yeSfXBJotJxK6ks2UBHe4f/LO95t/vf9sgJueynjrf/4NO9dSfvoudq8Zyx7S90ZRnTC1EUGoWZYqw==
+  dependencies:
+    "@alwatr/logger" "^0.30.0"
+    "@alwatr/type" "^0.30.0"
+    "@alwatr/util" "^0.30.0"
+    tslib "^2.5.0"
+
 "@alwatr/signal@^0.31.0":
   version "0.31.0"
   resolved "https://registry.yarnpkg.com/@alwatr/signal/-/signal-0.31.0.tgz#1cef972b3e2b6967e7effaea05dab4ace73fb13f"
@@ -162,6 +198,15 @@
     "@alwatr/util" "^0.32.0"
     tslib "^2.5.0"
 
+"@alwatr/storage-client@^0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/storage-client/-/storage-client-0.30.0.tgz#9f43ed52a360ddc546e37b8e3f5e956ecf1cb919"
+  integrity sha512-3RcbYvQGApXCl+DiEfm5vxDsAR+LfUrBC+1PkTYP8Q8gMVwPYnO1ZezOUZA61cxYEo7OJWzpmrlIdKp8cIZduA==
+  dependencies:
+    "@alwatr/fetch" "^0.30.0"
+    "@alwatr/logger" "^0.30.0"
+    tslib "^2.5.0"
+
 "@alwatr/storage-client@^0.32.0":
   version "0.32.0"
   resolved "https://registry.yarnpkg.com/@alwatr/storage-client/-/storage-client-0.32.0.tgz#eee063fe1ef3ec941dac99b298c9a41864ce25e9"
@@ -169,6 +214,15 @@
   dependencies:
     "@alwatr/fetch" "^0.32.0"
     "@alwatr/logger" "^0.32.0"
+    tslib "^2.5.0"
+
+"@alwatr/storage-engine@^0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/storage-engine/-/storage-engine-0.30.0.tgz#75a56ba16a027db4e85841c3739b3b50e1592afb"
+  integrity sha512-kFG9u+H/cSYeSSaL1qdn5kzCZlyXXp6FYVmJX15Ty5zXxW+WTrgMRTc1sWwcnPMJj2rSis6SP4f2I8/JFBixGA==
+  dependencies:
+    "@alwatr/logger" "^0.30.0"
+    exit-hook "^3.2.0"
     tslib "^2.5.0"
 
 "@alwatr/storage-engine@^0.31.0":
@@ -193,6 +247,11 @@
     exit-hook "^3.2.0"
     tslib "^2.5.0"
 
+"@alwatr/type@^0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/type/-/type-0.30.0.tgz#fc6ec1cc7556571610ab034b71631910ceca0f1a"
+  integrity sha512-Cnz5zku/1S2TMRJ0Pedxyh5EodJA6Nush9Br2pRqSAxY5iszolaF0/fuz85OUMZxLPJPyEJCRumDM+qpkCk/Pw==
+
 "@alwatr/type@^0.31.0":
   version "0.31.0"
   resolved "https://registry.yarnpkg.com/@alwatr/type/-/type-0.31.0.tgz#790b281f6258f6c4bb4617d0cbec68096aaac255"
@@ -202,6 +261,15 @@
   version "0.32.0"
   resolved "https://registry.yarnpkg.com/@alwatr/type/-/type-0.32.0.tgz#a2bde2a6ffeb8fddae7d834a5e272c995a857e9e"
   integrity sha512-QGDLKZV4u+jRr7sSi6jpJu76ICLe9n5TfqhLgIMFg8+EdDJlNQ5zGa6DCpQK2jNig6c7iErF4hNHScihgREprQ==
+
+"@alwatr/util@^0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/util/-/util-0.30.0.tgz#58b70747d61fde28632f151f0357dd02f28a6948"
+  integrity sha512-OsCElBCpl1gPkb9cxLdZ9UUFTRsT/6xdHzfS2RtCKRwp/ocIpAyGCmZy3ANxMcshC2yH6b4M+TpZFz+gxDFBMQ==
+  dependencies:
+    "@alwatr/math" "^0.30.0"
+    "@alwatr/type" "^0.30.0"
+    tslib "^2.5.0"
 
 "@alwatr/util@^0.31.0":
   version "0.31.0"
@@ -2057,9 +2125,9 @@
   integrity sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==
 
 "@types/node@^18.16.2":
-  version "18.16.16"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.16.16.tgz#3b64862856c7874ccf7439e6bab872d245c86d8e"
-  integrity sha512-NpaM49IGQQAUlBhHMF82QH80J08os4ZmyF9MkpCzWAGuOHqE4gTEbhzd7L3l5LmWuZ6E0OiC1FweQ4tsiW35+g==
+  version "18.16.12"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.16.12.tgz#f11e19055c5b3daeb79dc6eb7ccdd3d036313034"
+  integrity sha512-tIRrjbY9C277MOfP8M3zjMIhtMlUJ6YVqkGgLjz+74jVsdf4/UjC6Hku4+1N0BS0qyC0JAS6tJLUk9H6JUKviQ==
 
 "@types/node@^18.16.3":
   version "18.16.18"
@@ -8390,11 +8458,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
-
-typegram@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/typegram/-/typegram-4.3.0.tgz#690ec1287f771608070e149c92de4fca42e54db0"
-  integrity sha512-pS4STyOZoJ++Mwa9GPMTNjOwEzMkxFfFt1By6IbMOJfheP0utMP/H1ga6J9R4DTjAYBr0UDn4eQg++LpWBvcAg==
 
 "typescript@>=3 < 6", typescript@^5.0.4, typescript@^5.1.3:
   version "5.1.3"

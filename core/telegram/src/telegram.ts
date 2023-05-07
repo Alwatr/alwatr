@@ -19,8 +19,6 @@ import type {Update} from '@grammyjs/types';
 
 export * from './type.js';
 export * from './api.js';
-export * from './storage.js';
-export * from './conversation.js';
 
 export class AlwatrTelegram {
   protected logger = createLogger('alwatr/telegram');
