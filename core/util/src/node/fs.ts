@@ -40,3 +40,42 @@ export const readJsonFileSync = <T>(path: string): T | null => {
   console.timeEnd(`readJsonFileSync(${timeKey})`);
   return data;
 };
+
+/**
+ * Enhanced read json file.
+ * @example
+ * const fileContent = await readJsonFile('./file.json');
+ */
+export const readJsonFile = async <T>(path: string): Promise<T | null> => {
+  logger.logMethodArgs?.('readJsonFileSync', path);
+
+  if (!existsSync(path)) {
+    // existsSync is much faster than access.
+    return null;
+  }
+
+  const timeKey = path.substring(path.lastIndexOf('/') + 1);
+  logger.time?.(`readJsonFile(${timeKey})`);
+
+  let fileContent: string;
+  try {
+    fileContent = await readFile(path, {encoding: 'utf-8', flag: 'r'});
+  }
+  catch (err) {
+    logger.error('readJsonFile', 'read_file_failed', err);
+    throw new Error('read_file_failed');
+  }
+
+  let data;
+  try {
+    data = JSON.parse(fileContent) as T;
+  }
+  catch (err) {
+    logger.error('readJsonFile', 'invalid_json', err);
+    throw new Error('invalid_json');
+  }
+
+  console.timeEnd(`readJsonFile(${timeKey})`);
+  return data;
+};
+
