@@ -4,12 +4,14 @@ import {dirname} from 'node:path';
 
 import {logger} from './_logger.js';
 
+import type {StringifyableRecord} from '@alwatr/type';
+
 /**
  * Enhanced read json file.
  * @example
  * const fileContent = readJsonFileSync('./file.json');
  */
-export const readJsonFileSync = <T>(path: string): T | null => {
+export const readJsonFileSync = <T extends StringifyableRecord = StringifyableRecord>(path: string): T | null => {
   logger.logMethodArgs?.('readJsonFileSync', path);
 
   if (!existsSync(path)) {
@@ -46,7 +48,9 @@ export const readJsonFileSync = <T>(path: string): T | null => {
  * @example
  * const fileContent = await readJsonFile('./file.json');
  */
-export const readJsonFile = async <T>(path: string): Promise<T | null> => {
+export const readJsonFile = async <T extends StringifyableRecord = StringifyableRecord>(
+  path: string,
+): Promise<T | null> => {
   logger.logMethodArgs?.('readJsonFileSync', path);
 
   if (!existsSync(path)) {
@@ -84,7 +88,11 @@ export const readJsonFile = async <T>(path: string): Promise<T | null> => {
  * @example
  * writeJsonFileSync('./file.json', { a:1, b:2, c:3 });
  */
-export const writeJsonFileSync = (path: string, data: unknown, space?: string | number): void => {
+export const writeJsonFileSync = <T extends StringifyableRecord = StringifyableRecord>(
+  path: string,
+  data: T,
+  space?: string | number,
+): void => {
   logger.logMethodArgs?.('writeJsonFileSync', path);
 
   const timeKey = path.substring(path.lastIndexOf('/') + 1);
@@ -133,7 +141,11 @@ export const writeJsonFileSync = (path: string, data: unknown, space?: string | 
  * @example
  * await writeJsonFile('./file.json', { a:1, b:2, c:3 });
  */
-export const writeJsonFile = async (path: string, data: unknown, space?: string | number): Promise<void> => {
+export const writeJsonFile = async <T extends StringifyableRecord = StringifyableRecord>(
+  path: string,
+  data: T,
+  space?: string | number,
+): Promise<void> => {
   logger.logMethodArgs?.('writeJsonFile', path);
 
   const timeKey = path.substring(path.lastIndexOf('/') + 1);
