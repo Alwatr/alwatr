@@ -1,6 +1,7 @@
 import {config, logger} from '../lib/config.js';
 import {nanoServer} from '../lib/server.js';
 import {storageClient} from '../lib/storage.js';
+import {validateUserAuth} from '../lib/validate-user-auth.js';
 
 import type {Order} from '@alwatr/type/customer-order-management.js';
 
@@ -8,7 +9,7 @@ import type {Order} from '@alwatr/type/customer-order-management.js';
 nanoServer.route('PUT', '/order/', async (connection) => {
   logger.logMethod?.('put-order');
 
-  const params = connection.requireQueryParams<{userId: string}>({userId: 'string'});
+  const userAuth = await validateUserAuth(connection.getUserAuth());
   const remoteAddress = connection.getRemoteAddress();
   const clientId = connection.requireClientId();
 
@@ -23,7 +24,7 @@ nanoServer.route('PUT', '/order/', async (connection) => {
     ok: true,
     data: await storageClient.set<Order>(
         order,
-        config.privateStorage.userOrderList.replace('${userId}', params.userId),
+        config.privateStorage.userOrderList.replace('${userId}', userAuth.id),
     ),
   };
 });
