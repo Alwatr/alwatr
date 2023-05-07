@@ -172,6 +172,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
       this._logger.incident?.('load', 'file_not_found', 'Storage path not found, empty storage loaded', {
         path: this.storagePath,
       });
+      this.save();
       return this._newStorage;
     }
 
