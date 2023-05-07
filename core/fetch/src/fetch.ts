@@ -196,6 +196,10 @@ function _processOptions(options: FetchOptions): Required<FetchOptions> {
     options.headers.Authorization = `Bearer ${options.token}`;
   }
 
+  if (options.userAuth != null) {
+    options.headers.Authorization = `Bearer ${options.userAuth.id}/${options.userAuth.token}`;
+  }
+
   return options as Required<FetchOptions>;
 }
 
