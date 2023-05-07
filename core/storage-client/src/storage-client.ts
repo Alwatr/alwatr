@@ -2,7 +2,12 @@ import {type FetchOptions, serviceRequest} from '@alwatr/fetch';
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 
 import type {AlwatrStorageClientConfig} from './type.js';
-import type {AlwatrDocumentObject, AlwatrDocumentStorage, AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
+import type {
+  AlwatrDocumentObject,
+  AlwatrDocumentStorage,
+  AlwatrServiceResponseSuccessWithMeta,
+  StringifyableRecord,
+} from '@alwatr/type';
 
 export {type AlwatrStorageClientConfig};
 
@@ -245,6 +250,34 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       queryParameters: {
         src,
         dest,
+      },
+    });
+  }
+
+  /**
+   * Make a symbolic link
+   *
+   * **CAUTION: the destination path will be removed if exists**
+   *
+   * Example:
+   *
+   * ```ts
+   * await userStorage.link('private/user-50/order-list', 'public/token/oder-list');
+   * ```
+   */
+  async cacheApiResponse<T extends StringifyableRecord>(
+      path: string,
+      data: T,
+  ): Promise<void> {
+    this._logger.logMethodArgs?.('cacheApiResponse', {path, data});
+
+    await serviceRequest({
+      ...this.fetchOption,
+      method: 'PUT',
+      url: this.fetchOption.url + 'cache-api-response',
+      bodyJson: {
+        path,
+        data,
       },
     });
   }
