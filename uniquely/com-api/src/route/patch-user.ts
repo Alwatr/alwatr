@@ -1,26 +1,27 @@
-import {existsSync, mkdirSync, renameSync, writeFileSync} from 'node:fs';
+import {existsSync, mkdirSync, renameSync, writeFileSync, linkSync} from 'node:fs';
 import {dirname} from 'node:path';
 
 import {simpleHashNumber} from '@alwatr/math';
-import {AlwatrServiceResponseSuccess} from '@alwatr/type';
+import {AlwatrServiceResponseSuccess, StringifyableRecord, User, UserAuth} from '@alwatr/type';
 
 import {config, logger} from '../lib/config.js';
 import {userFactory} from '../lib/crypto.js';
 import {nanoServer} from '../lib/server.js';
-import {userStorage} from '../lib/storage.js';
+import {storageClient, userStorage} from '../lib/storage.js';
 
-import type {ComUser} from '@alwatr/type/customer-order-management.js';
+import type {ComUser, UserPermission} from '@alwatr/type/customer-order-management.js';
 
 nanoServer.route('PATCH', '/user-list/', async (connection) => {
   logger.logMethod?.('patch-user-list');
-  connection.requireToken(config.nanoServer.adminToken);
 
-  const user = await connection.requireJsonBody<ComUser>();
+  await validateUserAuth(connection.getUserAuth(), '*');
 
-  if (user.id === 'new') {
-    user.id = userFactory.generateId();
+  const userData = await connection.requireJsonBody<ComUser>();
+
+  if (userData.id === 'new') {
+    userData.id = userFactory.generateId();
   }
-  else if (!user.id || !userFactory.verifyId(user.id)) {
+  else if (!userData.id || !userFactory.verifyId(userData.id)) {
     // TODO: better validate user data.
     return {
       ok: false,
@@ -29,40 +30,49 @@ nanoServer.route('PATCH', '/user-list/', async (connection) => {
     };
   }
 
-  saveSeparateUserProfile(user);
+  const user = await userStorage.set(userData);
+
+  const privateUserOrderListStorageName = config.privateStorage.userOrderList.replace('${userId}', user.id);
+  await storageClient.touch(privateUserOrderListStorageName);
+
+  const authHash = `${simpleHashNumber(user.phoneNumber)}-${userFactory.generateToken([user.id, user.lpe])}`;
+
+  await storageClient.cacheApiResponse(config.publicStorage.userProfile.replace('${auth}', authHash), user);
+
+  await storageClient.link(
+      privateUserOrderListStorageName,
+      config.publicStorage.userOrderList.replace('${auth}', authHash),
+  );
 
   return {
     ok: true,
-    data: await userStorage.set(user),
+    data: user,
   };
 });
 
-const saveSeparateUserProfile = (user: ComUser): void => {
-  const token = userFactory.generateToken([user.id, user.lpe]);
-  const path = `${config.publicStoragePath}/user/${simpleHashNumber(user.phoneNumber)}-${token}.json`;
 
-  if (existsSync(path)) {
-    try {
-      renameSync(path, path + '.bk');
-    }
-    catch (err) {
-      console.error('cannot rename file!');
-    }
-  }
-  else {
-    try {
-      mkdirSync(dirname(path), {recursive: true});
-    }
-    catch (err) {
-      throw new Error('make_dir_failed');
-    }
+const validateUserAuth = async (userAuth: UserAuth | null, permission?: UserPermission): Promise<User> => {
+  if (userAuth == null) {
+    throw {
+      ok: false,
+      statusCode: 401,
+      errorCode: 'authorization_required',
+    };
   }
 
-  const content: AlwatrServiceResponseSuccess<ComUser> = {
-    ok: true,
-    statusCode: 200,
-    data: user,
-  };
+  const error403 = {
+    ok: false,
+    statusCode: 403,
+    errorCode: 'access_denied',
+  } as const;
 
-  writeFileSync(path, JSON.stringify(content), {encoding: 'utf-8', flag: 'w'});
+  const user = await userStorage.get(userAuth.id);
+
+  if (user == null) throw error403;
+
+  if (!userFactory.verifyToken([user.id, user.lpe], userAuth.token)) throw error403;
+
+  if (permission && user.permissions?.includes(permission) !== true) throw error403;
+
+  return user;
 };
