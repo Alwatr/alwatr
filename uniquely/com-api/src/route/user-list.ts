@@ -6,7 +6,7 @@ nanoServer.route('GET', '/user-list/', async (connection) => {
   logger.logMethod?.('get-user-list');
   connection.requireToken(config.nanoServer.adminToken);
 
-  const userList = await storageClient.getStorage(config.userStorageName);
+  const userList = await storageClient.getStorage(config.privateStorage.userList);
 
   return {
     ok: true,
