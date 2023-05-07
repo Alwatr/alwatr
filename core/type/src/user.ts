@@ -14,6 +14,11 @@ export interface User extends AlwatrDocumentObject {
    */
   lpe: number;
 
+  /**
+   * User authorization permissions list.
+   */
+  permissions?: Array<string>;
+
   fullName: string;
 
   phoneNumber: number;
@@ -44,5 +49,13 @@ export interface User extends AlwatrDocumentObject {
    */
   address?: string;
 
+  /**
+   * Postal code
+   */
   postalCode?: string;
+}
+
+export interface UserAuth {
+  id: string;
+  token: string;
 }
