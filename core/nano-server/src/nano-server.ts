@@ -16,6 +16,7 @@ import type {
   ParamValueType,
   QueryParameters,
   StringifyableRecord,
+  UserAuth,
 } from '@alwatr/type';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
@@ -405,7 +406,7 @@ export class AlwatrConnection {
   /**
    * Get the token placed in the request header.
    */
-  getToken(): string | null {
+  getAuthBearer(): string | null {
     const auth = this.incomingMessage.headers.authorization?.split(' ');
 
     if (auth == null || auth[0].toLowerCase() !== 'bearer') {
@@ -497,10 +498,9 @@ export class AlwatrConnection {
    * ```
    */
   requireToken(validator?: ((token: string) => boolean) | Array<string> | string): string {
-    const token = this.getToken();
+    const token = this.getAuthBearer();
 
     if (token == null) {
-      // eslint-disable-next-line no-throw-literal
       throw {
         ok: false,
         statusCode: 401,
@@ -519,12 +519,32 @@ export class AlwatrConnection {
     else if (typeof validator === 'function') {
       if (validator(token) === true) return token;
     }
-    // eslint-disable-next-line no-throw-literal
     throw {
       ok: false,
       statusCode: 403,
       errorCode: 'access_denied',
     };
+  }
+
+  /**
+   * Parse and get request user auth (include id and token).
+   *
+   * Example:
+   * ```ts
+   * const userAuth = connection.requireUserAuth();
+   * ```
+   */
+  getUserAuth(): UserAuth | null {
+    const auth = this.getAuthBearer()
+        ?.split('/')
+        .filter((item) => item.trim() !== '');
+
+    return auth == null || auth.length !== 2
+      ? null
+      : {
+        id: auth[0],
+        token: auth[1],
+      };
   }
 
   /**
