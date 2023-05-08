@@ -118,7 +118,7 @@ export const createLogger = (domain: string, devMode = DEV_MODE): AlwatrLogger =
       ? console.log.bind(console, `${styleScope}🚸\n%s${_style.reset}.%s() Incident \`%s\` %s!${_style.reset}`, domain)
       : console.log.bind(console, '%c%s%c.%s() Incident `%s` %s!', styleScope, domain, 'color: orange;'),
 
-    time: (label: string) => console.time(domain + '.' + label),
-    timeEnd: (label: string) => console.timeEnd(domain + '.' + label),
+    time: (label: string) => console.time(domain + '.' + label + ' duration time'),
+    timeEnd: (label: string) => console.timeEnd(domain + '.' + label + ' duration time'),
   } as const;
 };
