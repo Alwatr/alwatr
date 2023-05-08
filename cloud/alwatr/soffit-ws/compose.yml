@@ -6,7 +6,7 @@ networks:
 
 services:
   pwa:
-    image: ghcr.io/alimd/soffit-pwa:${PWA_VERSION:-next}
+    image: ghcr.io/alimd/soffit-pwa:${PWA_VERSION}
 
     cpu_count: 1
     cpu_shares: 1024
@@ -16,6 +16,9 @@ services:
 
     networks:
       alwatr-public-network:
+
+    environment:
+      - NGINX_ACCESS_LOG=${PWA_ACCESS_LOG:-off}
 
     logging:
       driver: json-file
@@ -31,7 +34,7 @@ services:
       traefik.frontend.redirect.entryPoint: https
 
   storage-server:
-    image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION:-next}
+    image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION}
 
     cpu_count: 1
     cpu_shares: 1024
@@ -65,7 +68,7 @@ services:
         max-file: '2'
 
   form-registration:
-    image: ghcr.io/alimd/form-registration:${FORM_REGISTRATION_VERSION:-next}
+    image: ghcr.io/alimd/form-registration:${FORM_REGISTRATION_VERSION}
 
     cpu_count: 1
     cpu_shares: 1024

@@ -6,7 +6,7 @@ networks:
 
 services:
   storage-server:
-    image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION:-next}
+    image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION}
 
     cpu_shares: 512
     mem_limit: 256m
@@ -39,7 +39,7 @@ services:
         max-file: '2'
 
   telegram-notifier:
-    image: ghcr.io/alimd/telegram-notifier:${TELEGRAM_NOTIFIER_VERSION:-next}
+    image: ghcr.io/alimd/telegram-notifier:${TELEGRAM_NOTIFIER_VERSION}
 
     cpu_shares: 512
     mem_limit: 256m
@@ -72,7 +72,7 @@ services:
         max-file: '2'
 
   flight-crawler:
-    image: ghcr.io/alimd/flight-crawler:${FLIGHT_CRAWLER_VERSION:-next}
+    image: ghcr.io/alimd/flight-crawler:${FLIGHT_CRAWLER_VERSION}
 
     cpu_shares: 256
     mem_limit: 256m
@@ -103,7 +103,7 @@ services:
         max-file: '2'
 
   api:
-    image: ghcr.io/alimd/flight-finder-api:${API_VERSION:-next}
+    image: ghcr.io/alimd/flight-finder-api:${API_VERSION}
 
     cpu_shares: 512
     mem_limit: 256m
@@ -139,7 +139,7 @@ services:
       traefik.frontend.redirect.entryPoint: https
 
   pwa:
-    image: ghcr.io/alimd/flight-finder-pwa:${PWA_VERSION:-next}
+    image: ghcr.io/alimd/flight-finder-pwa:${PWA_VERSION}
 
     cpu_shares: 512
     mem_limit: 256m
@@ -161,4 +161,3 @@ services:
       traefik.frontend.rule: Host:${PWA_DOMAIN}
       traefik.frontend.entryPoints: http, https
       traefik.frontend.redirect.entryPoint: https
-      # traefik.frontend.auth.basic.users: $PWA_AUTH
