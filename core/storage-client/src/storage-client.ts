@@ -2,7 +2,12 @@ import {type FetchOptions, serviceRequest} from '@alwatr/fetch';
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 
 import type {AlwatrStorageClientConfig} from './type.js';
-import type {AlwatrDocumentObject, AlwatrDocumentStorage, AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
+import type {
+  AlwatrDocumentObject,
+  AlwatrDocumentStorage,
+  AlwatrServiceResponseSuccessWithMeta,
+  StringifyableRecord,
+} from '@alwatr/type';
 
 export {type AlwatrStorageClientConfig};
 
@@ -232,7 +237,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * Example:
    *
    * ```ts
-   * await userStorage.link('private/user-50/order-list', 'public/token/oder-list');
+   * await storageClient.link('private/user-50/order-list', 'public/token/oder-list');
    * ```
    */
   async link(src: string, dest: string): Promise<void> {
@@ -245,6 +250,32 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       queryParameters: {
         src,
         dest,
+      },
+    });
+  }
+
+  /**
+   * Make a cache from the api response.
+   *
+   * Example:
+   *
+   * ```ts
+   * await storageClient.cacheApiResponse('public/token/user-profile', {id: 'test', ...});
+   * ```
+   */
+  async cacheApiResponse<T extends StringifyableRecord>(
+      path: string,
+      data: T,
+  ): Promise<void> {
+    this._logger.logMethodArgs?.('cacheApiResponse', {path, data});
+
+    await serviceRequest({
+      ...this.fetchOption,
+      method: 'PUT',
+      url: this.fetchOption.url + 'cache-api-response',
+      bodyJson: {
+        path,
+        data,
       },
     });
   }
