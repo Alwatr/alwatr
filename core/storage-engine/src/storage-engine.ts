@@ -4,9 +4,8 @@ import {createLogger, globalAlwatr, type AlwatrLogger} from '@alwatr/logger';
 import {readJsonFileSync, writeJsonFile, writeJsonFileSync} from '@alwatr/util/node';
 import exitHook from 'exit-hook';
 
-
 import type {AlwatrStorageEngineConfig} from './type.js';
-import type {AlwatrDocumentStorage, AlwatrDocumentObject} from '@alwatr/type';
+import type {AlwatrDocumentStorage, AlwatrDocumentObject, MaybePromise} from '@alwatr/type';
 
 export type {AlwatrDocumentObject, AlwatrDocumentStorage};
 
@@ -145,19 +144,19 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   constructor(config: AlwatrStorageEngineConfig) {
     this._logger = createLogger(`alwatr-storage:${config.name}`, config.devMode);
     this._logger.logMethodArgs?.('constructor', config);
-    this.forceSave = this.forceSave.bind(this);
-    this._writeFileSync = this._writeFileSync.bind(this);
+    this._$save = this._$save.bind(this);
 
     this.name = config.name;
     this.storagePath = resolve(`${config.path ?? './db'}/${config.name}.json`);
     this.saveDebounce = config.saveDebounce ?? 1000;
     this.saveBeautiful = config.saveBeautiful || false;
 
-    exitHook(this._writeFileSync);
+    exitHook(() => this._$save(true));
     this._storage = this.load();
 
     if (this._storage.meta?.formatVersion !== AlwatrStorageEngine.formatVersion) {
       this._migrateStorage();
+      this.save();
     }
   }
 
@@ -205,8 +204,6 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
       this._logger.error('load', 'storage_version_incompatible', {storageMeta: this._storage.meta});
       throw new Error('storage_version_incompatible');
     }
-
-    this.save();
   }
 
   /**
@@ -358,36 +355,28 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    */
   save(): void {
     this._logger.logMethod?.('save');
-    this._storage.meta.reversion++;
     this.hasUnsavedChanges = true;
     if (this._saveTimer != null) return; // save already requested
-    this._saveTimer = setTimeout(this.forceSave, this.saveDebounce);
+    this._saveTimer = setTimeout(this._$save, this.saveDebounce);
   }
 
   /**
-   * Save the storage to disk without any debounce (none blocking).
+   * Save the storage to disk without any debounce (none blocking) when `this.hasUnsavedChanges` is true.
+   *
+   * @param [sync=false] - Recommend to ignore it (default is false) for none blocking IO.
    */
-  forceSave(): Promise<void> {
-    this._logger.logMethodArgs?.('forceSave', {hasUnsavedChanges: this.hasUnsavedChanges});
+  private _$save(sync = false): MaybePromise<void> {
+    this._logger.logMethod?.('_$save');
 
     if (this._saveTimer != null) {
       clearTimeout(this._saveTimer);
       this._saveTimer = null;
     }
-    return this._writeFile();
-  }
 
-  protected async _writeFile(): Promise<void> {
     if (this.hasUnsavedChanges) {
       this.hasUnsavedChanges = false;
-      await writeJsonFile(this.storagePath, this._storage, this.saveBeautiful ? 2 : 0);
-    }
-  }
-
-  protected _writeFileSync(): void {
-    if (this.hasUnsavedChanges) {
-      this.hasUnsavedChanges = false;
-      writeJsonFileSync(this.storagePath, this._storage, this.saveBeautiful ? 2 : 0);
+      this._storage.meta.reversion++;
+      return (sync ? writeJsonFile : writeJsonFileSync)(this.storagePath, this._storage, this.saveBeautiful ? 2 : 0);
     }
   }
 
@@ -403,7 +392,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    */
   unload(): void {
     this._logger.logMethod?.('unload');
-    this.forceSave();
+    this._$save();
     this._keys = null;
     this._storage = this._newStorage;
   }
