@@ -1,6 +1,7 @@
 import {existsSync} from 'node:fs';
-import {symlink, rm, mkdir} from 'node:fs/promises';
-import {dirname, resolve} from 'node:path';
+import {resolve} from 'node:path';
+
+import {makeLinkForce} from '@alwatr/util/node';
 
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
@@ -15,9 +16,9 @@ nanoServer.route('GET', '/link', async (connection) => {
     dest: 'string',
   });
 
-  const base = resolve(config.storage.path);
-  src = resolve(config.storage.path, src + '.json');
-  dest = resolve(config.storage.path, dest + '.json');
+  const base = config.storage.path;
+  src = resolve(base, src + '.json');
+  dest = resolve(base, dest + '.json');
 
   if (!src.startsWith(base) || !dest.startsWith(base)) {
     // Prevent to access outside storage path by '../' in address.
@@ -45,29 +46,3 @@ nanoServer.route('GET', '/link', async (connection) => {
     data: {},
   };
 });
-
-/**
- * Make a symbolic link
- *
- * **CAUTION: the destination path will be removed if exists**
- */
-const makeLinkForce = async (src: string, dest: string): Promise<void> => {
-  logger.logMethodArgs?.('makeLink', {src, dest});
-
-  try {
-    if (existsSync(dest)) {
-      await rm(dest, {recursive: false, force: true});
-    }
-    else {
-      const destDir = dirname(dest);
-      if (!existsSync(destDir)) {
-        await mkdir(dirname(dest), {recursive: true});
-      }
-    }
-
-    await symlink(src, dest);
-  }
-  catch (error) {
-    logger.error('makeLink', 'symlink_failed', error);
-  }
-};
