@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-
+import {execSync} from 'child_process';
 import {promises as fs, existsSync} from 'node:fs';
 
 import {createLogger} from '@alwatr/logger';
@@ -22,6 +22,8 @@ const cleanMode = process.argv.includes('--clean');
 const watchMode = process.argv.includes('--watch');
 const debugMode = process.argv.includes('--debug');
 const prettyMode = process.argv.includes('--pretty');
+
+const gitShortSha = execSync('git rev-parse --short HEAD').toString().trim();
 
 logger.logOther?.(banner);
 
@@ -57,7 +59,7 @@ const esbuildContext = await esbuild.context({
   metafile: true,
 
   define: {
-    _ALWATR_VERSION_: `'${packageJson.pwaVersion}'`,
+    _ALWATR_VERSION_: `'${packageJson.version}+${gitShortSha}'`,
   },
   // drop: ['debugger'],
 
