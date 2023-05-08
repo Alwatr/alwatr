@@ -2,7 +2,6 @@
   "name": "@alwatr/ui-kit",
   "version": "0.30.0",
   "description": "Alwatr UI Elements Kit",
-  "private": true,
   "keywords": [
     "element",
     "ui-kit",
