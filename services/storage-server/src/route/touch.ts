@@ -7,7 +7,7 @@ nanoServer.route('GET', '/touch', (connection) => {
 
   connection.requireToken(config.nanoServer.accessToken);
 
-  const params = connection.requireQueryParams<{storage: string; id: string}>({storage: 'string', id: 'string'});
+  const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
 
   storageProvider.get({name: params.storage});
 
