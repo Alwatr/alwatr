@@ -12,7 +12,7 @@ nanoServer.route('GET', '/job', getJob);
 async function getJob(
     connection: AlwatrConnection,
 ): Promise<AlwatrServiceResponse<Record<string, Job>, StringifyableRecord>> {
-  logger.logMethod('getJob');
+  logger.logMethod?.('getJob');
 
   connection.requireToken(config.nanoServer.accessToken);
 

@@ -6,7 +6,7 @@ import {bot} from '../bot.js';
 bot.command('start', async (ctx): Promise<void> => {
   const chatId = ctx.chat.id;
   const token = ctx.message.text.split(' ')[1];
-  logger.logMethodArgs('command/start', {chatId, token});
+  logger.logMethodArgs?.('command/start', {chatId, token});
 
   if (token == null) {
     ctx.reply('این یک بات خصوصی هستش! لطفا مزاحم نشوید.');

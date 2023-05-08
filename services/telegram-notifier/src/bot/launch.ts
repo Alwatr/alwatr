@@ -3,10 +3,10 @@ import {sendMessage} from './send-message.js';
 import {config, logger} from '../config.js';
 
 export async function launchBot(): Promise<void> {
-  logger.logMethod('launchBot');
+  logger.logMethod?.('launchBot');
   try {
     bot.botInfo ??= await bot.telegram.getMe();
-    logger.logProperty('botInfo', bot.botInfo);
+    logger.logProperty?.('botInfo', bot.botInfo);
 
     bot.launch().catch((err) => {
       logger.error('launchBot', 'launch_bot_failed', err);

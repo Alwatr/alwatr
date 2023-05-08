@@ -12,7 +12,7 @@ services:
     build:
       context: ./nginx
       args:
-        - NGINX_VERSION=${NGINX_VERSION:-1.23}
+        - NGINX_VERSION=${NGINX_VERSION:-1.24}
 
     networks:
       - internal

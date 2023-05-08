@@ -29,9 +29,9 @@ export type AlwatrStorageClientConfig = {
   timeout?: number;
 
   /**
-   * Debug output logs
+   * Enable or disable debug mode.
    *
    * @default undefined Auto detect base on `NODE_ENV`
    */
-  debug?: boolean;
+  devMode?: boolean;
 };

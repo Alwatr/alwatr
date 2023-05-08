@@ -2,11 +2,12 @@ import type {MultiLangStringObj} from './i18n.js';
 import type {Photo} from './photo.js';
 import type {AlwatrDocumentObject} from './storage.js';
 import type {StringifyableRecord} from './type-helper.js';
+import type {User} from './user.js';
 
 // -- Const value --
 
 export const ladingTypeCS = ['hand', 'pallet'] as const;
-export const carTypeCS = ['nissan', 'one_wheel', 'ten_wheel', 'trolley'] as const;
+export const carTypeCS = ['nissan', 'one', 'ten_wheel', 'trolley'] as const;
 export const carTypePriceCS = [110_000, 140_000, 170_000, 200_000] as const;
 export const timePeriodCS = ['auto', '1_2w', '2_3w', '3_4w'] as const;
 export const discountTypeCS = ['number', 'percent'] as const;
@@ -22,6 +23,8 @@ export const orderStatusCS = [
   'canceled',
   'refunded',
 ] as const;
+
+export const tileQtyStep = 3.6;
 
 // -- Document object --
 
@@ -140,13 +143,39 @@ export interface OrderShippingInfo extends StringifyableRecord {
   timePeriod: (typeof timePeriodCS)[number];
 }
 
+export const userPermissionsCS = ['*', 'user/patch'] as const;
+export type UserPermission = typeof userPermissionsCS[number];
+
+export interface ComUser extends User {
+  permissions?: Array<UserPermission>;
+  shopName?: string;
+}
+
 // -- Schema --
 
-export const orderLadingSchema = {
-  recipientName: String,
-  recipientNationalCode: String,
-  address: String,
-  carType: String,
-  ladingType: String,
-  timePeriod: String,
+export const orderInfoSchema = {
+  id: String,
+  status: String,
+  itemList: [{
+    productId: String,
+    price: Number,
+    finalPrice: Number,
+    qty: Number,
+  }],
+  shippingInfo: {
+    recipientName: String,
+    recipientNationalCode: String,
+    address: String,
+    carType: String,
+    ladingType: String,
+    timePeriod: String,
+  },
+  // discount: Number,
+  // discountType: String,
+  totalPrice: Number,
+  // ladingPrice: Number,
+  finalTotalPrice: Number,
 };
+
+export const orderShippingInfoSchema = orderInfoSchema.shippingInfo;
+

@@ -1,50 +1,42 @@
-import {fetchContext} from '@alwatr/fetch';
-import {l18eReadyPromise, message} from '@alwatr/i18n';
-import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
+import {serverContextConsumer} from '@alwatr/context';
 
 import {config} from '../../config.js';
-import {logger} from '../logger.js';
 
-export const fetchPriceStorage = async (productStorageName = 'tile'): Promise<void> => {
-  logger.logMethod('fetchPriceStorage');
+import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {ProductPrice} from '@alwatr/type/customer-order-management.js';
 
-  try {
-    void await Promise.all([
-      fetchContext(
-          `price-storage-${productStorageName}-context`,
-          {
-            ...config.fetchContextOptions,
-            url: config.api + '/price-list/',
-            queryParameters: {
-              name: config.priceListName.replace('${productStorage}', productStorageName),
-            },
-          },
-          {debounce: 'NextCycle'},
-      ),
-      fetchContext(
-          `final-price-storage-${productStorageName}-context`,
-          {
-            ...config.fetchContextOptions,
-            url: config.api + '/price-list/',
-            queryParameters: {
-              name: config.finalPriceListName.replace('${productStorage}', productStorageName),
-            },
-          },
-          {debounce: 'NextCycle'},
-      ),
-    ]);
-  }
-  catch (err) {
-    // TODO: refactor
-    logger.error('provideProductStorageContext', 'fetch_failed', err);
-    await l18eReadyPromise;
-    const response = await snackbarSignalTrigger.requestWithResponse({
-      message: message('fetch_failed'),
-      actionLabel: message('retry'),
-      duration: -1,
-    });
-    if (response.actionButton) {
-      await fetchPriceStorage(productStorageName);
-    }
-  }
-};
+/**
+ * Product Price.
+ */
+export const productPriceStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<ProductPrice>>(
+    'product_price_storage_context',
+    {
+      ...config.fetchContextOptions,
+      url: config.api + '/storage/price-list-' + config.priceListName.replace('${productStorage}', 'tile'),
+    },
+);
+
+productPriceStorageContextConsumer.fsm.defineSignals([
+  {
+    signalId: 'reload_product_price_storage',
+    transition: 'REQUEST',
+  },
+]);
+
+/**
+ * Product Final Price.
+ */
+export const productFinalPriceStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<ProductPrice>>(
+    'product_final_price_storage_context',
+    {
+      ...config.fetchContextOptions,
+      url: config.api + '/storage/price-list-' + config.finalPriceListName.replace('${productStorage}', 'tile'),
+    },
+);
+
+productFinalPriceStorageContextConsumer.fsm.defineSignals([
+  {
+    signalId: 'reload_product_price_storage',
+    transition: 'REQUEST',
+  },
+]);

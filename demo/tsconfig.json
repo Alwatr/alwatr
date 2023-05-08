@@ -16,10 +16,11 @@
     {"path": "../core/router"},
     {"path": "../core/type"},
     {"path": "../core/storage-client"},
-    {"path": "../core/token"},
+    {"path": "../core/crypto"},
     {"path": "../core/math"},
     {"path": "../core/util"},
     {"path": "../core/fsm"},
+    {"path": "../core/context"},
     {"path": "../ui/icon"},
     {"path": "../core/storage-engine"},
     {"path": "../core/validator"}

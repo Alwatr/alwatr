@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import {random} from '@alwatr/math';
 
 import {bench} from './bench.js';
@@ -40,9 +38,10 @@ function test_for_of_keys(): void {
 }
 
 prepare();
-await bench('for-in', test_for_in);
-await bench('for-of-values', test_for_of_values);
-await bench('for-of-keys', test_for_of_keys);
+
+bench('for-of-values', test_for_of_values);
+bench('for-of-keys', test_for_of_keys);
+bench('for-in', test_for_in);
 
 globalThis.document?.body.append(' Done. Check the console.');
 

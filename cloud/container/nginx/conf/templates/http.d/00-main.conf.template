@@ -2,10 +2,14 @@ server_tokens off;
 
 index index.html index.htm;
 
-tcp_nopush          $NGINX_TCP_NOPUSH;
-tcp_nodelay         $NGINX_TCP_NODELAY;
+# By default, NGINX handles file transmission itself and copies the file into the buffer before sending it. Enabling the sendfile directive eliminates the step of copying the data into the buffer and enables direct copying data from one file descriptor to another.
 sendfile            $NGINX_SENDFILE;
-sendfile_max_chunk  512k;
+# Alternatively, to prevent one fast connection from entirely occupying the worker process, you can use the sendfile_max_chunk directive to limit the amount of data transferred in a single sendfile() call
+sendfile_max_chunk  $NGINX_SENDFILE_MAX_CHUNK;
+# Use the tcp_nopush directive together with the sendfile on;directive. This enables NGINX to send HTTP response headers in one packet right after the chunk of data has been obtained by sendfile().
+tcp_nopush          $NGINX_TCP_NOPUSH;
+# The tcp_nodelay directive allows override of Nagle’s algorithm, originally designed to solve problems with small packets in slow networks. The algorithm consolidates a number of small packets into a larger one and sends the packet with a 200 ms delay. Nowadays, when serving large static files, the data can be sent immediately regardless of the packet size. The delay also affects online applications (ssh, online games, online trading, and so on). By default, the tcp_nodelay directive is set to on which means that the Nagle’s algorithm is disabled. Use this directive only for keepalive connections:
+tcp_nodelay         $NGINX_TCP_NODELAY;
 
 # fix dns for docker and ssl
 resolver         127.0.0.11 ipv6=off valid=10s;

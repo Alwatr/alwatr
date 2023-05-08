@@ -8,6 +8,7 @@ services:
   pwa:
     image: ghcr.io/alimd/com-pwa:${COM_PWA_VERSION:-next}
 
+    cpu_count: 1
     cpu_shares: 1024
     mem_limit: 256m
 
@@ -22,6 +23,9 @@ services:
         max-size: '10m'
         max-file: '2'
 
+    environment:
+      - DOMAIN=${DOMAIN}
+
     labels:
       traefik.enable: true
       traefik.port: 80
@@ -32,6 +36,7 @@ services:
   api:
     image: ghcr.io/alimd/com-api:${COM_API_VERSION:-next}
 
+    cpu_count: 1
     cpu_shares: 1024
     mem_limit: 256m
 
@@ -41,16 +46,22 @@ services:
       internal:
       alwatr-public-network:
 
+    volumes:
+      - type: bind
+        source: ./_data/storage/public
+        target: /public-storage
+        bind:
+          create_host_path: true
+
     depends_on:
       - storage-server
 
     environment:
+      - PUBLIC_STORAGE_PATH=/public-storage
       - STORAGE_HOST=${APP_ID}-storage-server
       - STORAGE_PORT=80
-      - STORAGE_TOKEN=${STORAGE_TOKEN}
-      - ACCESS_TOKEN=${COM_API_TOKEN}
+      - STORAGE_TOKEN=${STORAGE_ACCESS_TOKEN}
       - ADMIN_TOKEN=${COM_API_ADMIN_TOKEN}
-      - PRODUCT_STORAGE_LIST=${PRODUCT_STORAGE_LIST}
       - ALWATR_DEBUG=${COM_API_DEBUG:-}
 
     logging:
@@ -66,9 +77,46 @@ services:
       traefik.frontend.entryPoints: http, https
       traefik.frontend.redirect.entryPoint: https
 
+  comment:
+    image: ghcr.io/alimd/comment:${COMMENT_API_VERSION:-next}
+
+    cpu_count: 1
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      internal:
+      alwatr-public-network:
+
+    depends_on:
+      - storage-server
+
+    environment:
+      - STORAGE_HOST=${APP_ID}-storage-server
+      - STORAGE_PORT=80
+      - STORAGE_TOKEN=${STORAGE_ACCESS_TOKEN}
+      - ACCESS_TOKEN=${COMMENT_API_ACCESS_TOKEN}
+      - ALWATR_DEBUG=${COMMENT_DEBUG:-}
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/api/v0/comment/
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+
   storage-server:
     image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION:-next}
 
+    cpu_count: 1
     cpu_shares: 1024
     mem_limit: 256m
 
@@ -83,7 +131,7 @@ services:
 
     environment:
       - STORAGE_PATH=/storage
-      - ACCESS_TOKEN=${STORAGE_TOKEN}
+      - ACCESS_TOKEN=${STORAGE_ACCESS_TOKEN}
       - ALWATR_DEBUG=${STORAGE_SERVER_DEBUG:-}
 
     volumes:
@@ -98,3 +146,74 @@ services:
       options:
         max-size: '10m'
         max-file: '2'
+
+  nginx-storage:
+    image: ghcr.io/alimd/nginx-storage:${NGINX_STORAGE_VERSION:-1}
+
+    cpu_count: 1
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      alwatr-public-network:
+
+    environment:
+      - NGINX_ACCESS_LOG=${NGINX_ACCESS_LOG:-}
+
+    volumes:
+      - type: bind
+        source: ./_data/storage/public
+        target: /var/www/html/api/v0/storage
+        bind:
+          create_host_path: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/api/v0/storage/
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+
+  cdn:
+    image: ghcr.io/alimd/nginx:${CDN_VERSION:-1}
+
+    cpu_count: 1
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      alwatr-public-network:
+
+    environment:
+      - NGINX_ACCESS_LOG=${NGINX_ACCESS_LOG:-}
+
+    volumes:
+      - type: bind
+        source: ./_data/cdn
+        target: /var/www/html/cdn
+        bind:
+          create_host_path: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/cdn/
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+

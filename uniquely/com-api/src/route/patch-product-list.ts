@@ -5,7 +5,7 @@ import {storageClient} from '../lib/storage.js';
 import type {Product} from '@alwatr/type/customer-order-management.js';
 
 nanoServer.route('PATCH', '/product-list/', async (connection) => {
-  logger.logMethod('patch-product-list');
+  logger.logMethod?.('patch-product-list');
   connection.requireToken(config.nanoServer.adminToken);
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
   const bodyJson = await connection.requireJsonBody<{data: Array<Product>}>();

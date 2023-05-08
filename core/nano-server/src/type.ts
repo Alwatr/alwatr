@@ -60,6 +60,13 @@ export interface NanoServerConfig {
    * @default false
    */
   allowAllOrigin: boolean;
+
+  /**
+   * API URL prefix pattern.
+   *
+   * @default `api`
+   */
+  prefixPattern: string;
 }
 
 export interface ConnectionConfig {
@@ -69,6 +76,13 @@ export interface ConnectionConfig {
    * @default false
    */
   allowAllOrigin: boolean;
+
+  /**
+   * API URL prefix pattern.
+   *
+   * @default `api`
+   */
+  prefixPattern: string;
 }
 
 export type ParamKeyType = 'string' | 'number' | 'boolean';

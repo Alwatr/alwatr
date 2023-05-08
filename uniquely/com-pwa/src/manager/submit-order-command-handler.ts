@@ -1,17 +1,21 @@
 import {serviceRequest} from '@alwatr/fetch';
-import {commandHandler, contextProvider} from '@alwatr/signal';
+import {commandHandler} from '@alwatr/signal';
 
-import {userContextConsumer, submitOrderCommandTrigger, orderStorageContextConsumer} from './context.js';
+
+import {orderStorageContextConsumer} from './context-provider/order-storage.js';
+import {userProfileContextConsumer} from './context-provider/user.js';
+import {submitOrderCommandTrigger} from './context.js';
 import {logger} from './logger.js';
 import {config} from '../config.js';
 
+import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
 import type {Order} from '@alwatr/type/customer-order-management.js';
 
 commandHandler.define<Order, Order | null>(submitOrderCommandTrigger.id, async (order) => {
-  const userContext = userContextConsumer.getValue() ?? await userContextConsumer.untilChange();
+  const userContext = userProfileContextConsumer.getValue() ?? await userProfileContextConsumer.untilChange();
 
   try {
-    const response = await serviceRequest<Order>({
+    const response = await serviceRequest<AlwatrServiceResponseSuccessWithMeta<Order>>({
       ...config.fetchContextOptions,
       method: 'PUT',
       url: config.api + '/order/',
@@ -24,12 +28,14 @@ commandHandler.define<Order, Order | null>(submitOrderCommandTrigger.id, async (
 
     const newOrder = response.data;
 
-    const orderStorage = orderStorageContextConsumer.getValue();
-    if (orderStorage != null) {
-      orderStorage.data[newOrder.id] = newOrder;
-      orderStorage.meta.lastUpdated = Date.now();
-      contextProvider.setValue(orderStorageContextConsumer.id, orderStorage);
-    }
+    orderStorageContextConsumer.request();
+
+    // const orderStorage = orderStorageContextConsumer.getValue().content;
+    // if (orderStorage != null) {
+    //   orderStorage.data[newOrder.id] = newOrder;
+    //   orderStorage.meta.lastUpdated = Date.now();
+    //   contextProvider.setValue(orderStorageContextConsumer.id, orderStorage);
+    // }
 
     return newOrder;
   }

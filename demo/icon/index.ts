@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import {preloadIcon} from '@alwatr/icon';
+import '@alwatr/icon';
+// import {preloadIcon} from '@alwatr/icon';
 import {random} from '@alwatr/math';
 
 const iconList = [
@@ -430,6 +430,6 @@ function addIcon(): void {
 document.addEventListener('click', addIcon);
 addIcon();
 
-for (const iconName of iconList) {
-  preloadIcon(iconName + '-outline');
-}
+// for (const iconName of iconList) {
+//   preloadIcon(iconName + '-outline');
+// }

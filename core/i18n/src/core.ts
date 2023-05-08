@@ -21,7 +21,7 @@ export const localeContextProvider = contextProvider.bind<LocaleContext>('locale
 /**
  * Locale context consumer.
  */
-export const localeContextConsumer = contextConsumer.bind<LocaleContext>('locale_context');
+export const localeContextConsumer = contextConsumer.bind<LocaleContext>(localeContextProvider.id);
 
 /**
  * LocalizationResource (L18e) context provider.
@@ -31,13 +31,13 @@ export const l18eContextProvider = contextProvider.bind<L18eContext>('localizati
 /**
  * LocalizationResource (L18e) context consumer.
  */
-export const l18eContextConsumer = contextConsumer.bind<L18eContext>('localization_resource_context');
+export const l18eContextConsumer = contextConsumer.bind<L18eContext>(l18eContextProvider.id);
 
 /**
  * Promise resolved after LocalizationResource context ready.
  */
 export const l18eReadyPromise = l18eContextConsumer.untilChange().then(()=>{
-  logger.logMethod('readyPromise');
+  logger.logMethod?.('readyPromise');
 });
 
 /**
@@ -116,7 +116,7 @@ export const setLocale = (locale?: LocaleContext): void => {
     }
   }
 
-  logger.logMethodArgs('setLocale', locale);
+  logger.logMethodArgs?.('setLocale', locale);
   if (activeLocaleContext?.code !== locale.code) {
     localeContextProvider.setValue(locale, {debounce: 'No'});
   }
@@ -136,7 +136,7 @@ let _l18eLoaderListener: ListenerSpec | null = null;
  * ```
  */
 export const setL18eLoader = (l18eLoader: (locale: LocaleContext) => MaybePromise<L18eContext>): void => {
-  logger.logMethod('setL18eLoader');
+  logger.logMethod?.('setL18eLoader');
 
   if (_l18eLoaderListener !== null) {
     localeContextConsumer.unsubscribe(_l18eLoaderListener);
@@ -148,10 +148,10 @@ export const setL18eLoader = (l18eLoader: (locale: LocaleContext) => MaybePromis
   }
 
   _l18eLoaderListener = localeContextConsumer.subscribe(async (locale) => {
-    logger.logMethodArgs('l18eLoader', locale);
+    logger.logMethodArgs?.('l18eLoader', locale);
 
     if (activeL18eContext?.meta.code === locale.code) {
-      logger.incident('l18eLoader', 'load_skipped', 'Request l18e (LocalizationResource) is same as active l18n', {
+      logger.incident?.('l18eLoader', 'load_skipped', 'Request l18e (LocalizationResource) is same as active l18n', {
         request: locale.code,
         active: activeL18eContext.meta.code,
       });
@@ -229,4 +229,13 @@ export const number = (number?: number | null, decimal = 2): string => {
 export const replaceNumber = (str: string): string => {
   if (activeUnicodeDigits === null) return str;
   return activeUnicodeDigits.translate(str);
+};
+
+/**
+ * Format date to active locale string.
+ */
+export const date = (date: number | Date, options?: Intl.DateTimeFormatOptions): string => {
+  if (activeLocaleContext === null) return loadingStr;
+  if (typeof date === 'number') date = new Date(date);
+  return date.toLocaleDateString(activeLocaleContext.code, options);
 };

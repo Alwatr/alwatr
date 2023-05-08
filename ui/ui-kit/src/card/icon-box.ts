@@ -1,4 +1,4 @@
-import {css, customElement, html, property, nothing, ifDefined, PropertyValues, when} from '@alwatr/element';
+import {css, customElement, html, property, nothing, ifDefined, when, PropertyValues} from '@alwatr/element';
 import '@alwatr/icon';
 
 import {AlwatrSurface} from './surface.js';
@@ -125,29 +125,27 @@ export class AlwatrIconBox extends AlwatrSurface {
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     const content = this.content;
     if (content == null) return nothing;
     const target = content.target !== 'download' ? content.target : undefined;
 
-    const template = html`
-      <h3 class="headline">
-        ${when(content.icon, () => html`
-          <alwatr-icon .name=${content.icon} ?flip-rtl=${content.flipRtl}></alwatr-icon>
-        `)}
-        <span>${content.headline}</span>
-      </h3>
-      <div class="description"><slot>${content.description}</slot></div>
-    `;
+    const template = html`<h3 class="headline">
+      ${when(content.icon, () => html`
+        <alwatr-icon .name=${content.icon} ?flip-rtl=${content.flipRtl}></alwatr-icon>
+      `)}
+      <span>${content.headline}</span>
+    </h3>
+    <div class="description"><slot>${content.description}</slot></div>`;
 
-    return content.href == null
-      ? html`<div class="container">${template}</div>`
-      : html`<a
+    return when(content.href == null,
+        () => html`<div class="container">${template}</div>`,
+        () => html`<a
           class="container"
           href=${ifDefined(content.href)}
           target=${ifDefined(target)}
           ?download=${content.target === 'download'}
-          >${template}</a
-        >`;
+          >${template}</a>`,
+    );
   }
 }

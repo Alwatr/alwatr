@@ -24,14 +24,14 @@ export function DirectionMixin<T extends Constructor<SignalMixinInterface>>(
 
     override connectedCallback(): void {
       super.connectedCallback();
-      this._signalListenerList.push(localeContextConsumer.subscribe(() => this._updateDir()));
+      this._addSignalListeners(localeContextConsumer.subscribe(() => this._updateDir()));
     }
 
     /**
      * Update direction from this._dirParent or l10n.locale
      */
     protected _updateDir(dir?: string): void {
-      this._logger.logMethodArgs('_updateDir', {dir, computeMode});
+      this._logger.logMethodArgs?.('_updateDir', {dir, computeMode});
 
       if (typeof dir === 'string') {
         // console.timeEnd('_updateDir');

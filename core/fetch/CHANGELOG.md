@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- **fetch.ts:** compatible with node ([c3acb53](https://github.com/AliMD/alwatr/commit/c3acb53effd4a79e389bc4de1567b0285c03d71d))
+- **fetch:** bodyJson type ([5740467](https://github.com/AliMD/alwatr/commit/57404673e7f031a73d1cf23501e6fa8d89759769))
+- **fetch:** check node_mode before use navigator.online ([a688f48](https://github.com/AliMD/alwatr/commit/a688f48e9ce4b103c25ffd50f1b8c96e89c205d1))
+- **fetch:** serviceRequest generic type ([074ef38](https://github.com/AliMD/alwatr/commit/074ef3876086f93486753559d8e3db0b60c52a0e))
+- **fetch:** suppress fetch_cache_not_found extra error ([c04f609](https://github.com/AliMD/alwatr/commit/c04f60944106dbd8d1bf2fb5ce0e7be644c3abc6))
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+- **fetch:** add user auth ([811fbc0](https://github.com/AliMD/alwatr/commit/811fbc018c2b4e3b808704e8623bd5dff2b2f3f7))
+- **fetch:** StringifyableFetchOptions type ([e13fdb2](https://github.com/AliMD/alwatr/commit/e13fdb2550cf3a2102c331aa7980234ca6f86e08))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Bug Fixes

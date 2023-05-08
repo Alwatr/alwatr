@@ -1,11 +1,13 @@
 ARG NODE_VERSION=19
-ARG NGINX_VERSION=1.1.0-1.23-alpine
+ARG ALWATR_NGINX_VERSION=1.3.3-1.24-alpine
 
 FROM docker.io/library/node:${NODE_VERSION}-alpine as builder
 
 WORKDIR /app
 
 ENV NODE_ENV production
+
+RUN apk add --no-cache git
 
 # Install dependencies
 COPY package.json *.lock ./
@@ -37,21 +39,7 @@ RUN set -ex;\
 
 # ---
 
-FROM ghcr.io/alimd/nginx:${NGINX_VERSION} as nginx
-
-EXPOSE 80
-# Config nginx template
-ENV NGINX_ERROR_LOG_LEVEL=notice \
-    NGINX_ACCESS_LOG="/var/log/nginx/access.log json" \
-    NGINX_CLIENT_MAX_BODY_SIZE=10m \
-    NGINX_SENDFILE=on \
-    NGINX_TCP_NOPUSH=off \
-    NGINX_TCP_NODELAY=on \
-    NGINX_OPEN_FILE_CACHE_VALID=24h \
-    NGINX_EXPIRES_HTML=epoch \
-    NGINX_EXPIRES_STATIC=max \
-    NGINX_EXPIRES_DEFAULT=5m
-
+FROM ghcr.io/alimd/nginx-pwa:${ALWATR_NGINX_VERSION} as nginx
 # Copy builded files from last stage
 ARG PACKAGE_SOURCE
 COPY --from=builder /app/${PACKAGE_SOURCE}/dist/ ./

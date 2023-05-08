@@ -14,7 +14,8 @@ export interface AlwatrServiceResponseFailed extends StringifyableRecord {
   data?: never;
 }
 
-export interface AlwatrServiceResponseSuccess<TData extends StringifyableRecord> extends StringifyableRecord {
+export interface AlwatrServiceResponseSuccess<TData extends StringifyableRecord = StringifyableRecord>
+  extends StringifyableRecord {
   ok: true;
   statusCode?: number;
   errorCode?: never;
@@ -23,8 +24,8 @@ export interface AlwatrServiceResponseSuccess<TData extends StringifyableRecord>
 }
 
 export interface AlwatrServiceResponseSuccessWithMeta<
-  TData extends StringifyableRecord,
-  TMeta extends StringifyableRecord
+  TData extends StringifyableRecord = StringifyableRecord,
+  TMeta extends StringifyableRecord = StringifyableRecord
 > extends StringifyableRecord {
   ok: true;
   statusCode?: number;
@@ -33,7 +34,10 @@ export interface AlwatrServiceResponseSuccessWithMeta<
   data: TData;
 }
 
-export type AlwatrServiceResponse<TData extends StringifyableRecord, TMeta extends StringifyableRecord> =
+export type AlwatrServiceResponse<
+  TData extends StringifyableRecord = StringifyableRecord,
+  TMeta extends StringifyableRecord = StringifyableRecord
+> =
   | AlwatrServiceResponseSuccess<TData>
   | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>
   | AlwatrServiceResponseFailed;

@@ -4,19 +4,22 @@ import type {AlwatrLogger} from './type.js';
 
 export {type AlwatrLogger, globalAlwatr};
 
-export const isBrowser = typeof process === 'undefined';
-
 globalAlwatr.registeredList.push({
   name: '@alwatr/logger',
   version: _ALWATR_VERSION_,
 });
 
+export const NODE_MODE = typeof process !== 'undefined';
+export const DEV_MODE = NODE_MODE
+  ? process.env.ALWATR_DEBUG === '1'
+  : globalThis.localStorage?.getItem('ALWATR_DEBUG') === '1';
+
 /**
  * Color list storage for logger.
  */
-let colorIndex = 0;
-const colorList = isBrowser
-  ? [
+const colorList = NODE_MODE
+  ? ['0;36', '0;35', '0;34', '0;33', '0;32'] // red and white omitted
+  : [
     '#35b997',
     '#f05561',
     '#ee224a',
@@ -32,58 +35,32 @@ const colorList = isBrowser
     '#1da2dc',
     '#f05123',
     '#ee2524',
-  ]
-  : ['0;36', '0;35', '0;34', '0;33', '0;32']; // red and white omitted
+  ];
 
-const getNextColor = (): string => {
-  const color = colorList[colorIndex];
-  colorIndex++;
-  if (colorIndex >= colorList.length) {
-    colorIndex = 0;
+let _colorIndex = 0;
+const _getNextColor = (): string => {
+  const color = colorList[_colorIndex];
+  _colorIndex++;
+  if (_colorIndex >= colorList.length) {
+    _colorIndex = 0;
   }
   return color;
 };
 
-const debugString = isBrowser
-  ? globalThis.localStorage?.getItem('ALWATR_DEBUG')?.trim()
-  : process?.env?.ALWATR_DEBUG?.trim();
-
-const getDebugState = (scope: string): boolean => {
-  if (debugString == null && isBrowser === false && process.env.NODE_ENV !== 'production') {
-    return true;
-  }
-
-  // prettier-ignore
-  if (
-    debugString == null ||
-    debugString == ''
-  ) {
-    return false;
-  }
-
-  // prettier-ignore
-  if (
-    debugString === scope ||
-    debugString === '*' ||
-    (
-      debugString.indexOf('*') === 0 && // starts with `*` for example: `*alwatr*`
-      scope.indexOf(debugString.replaceAll('*', '')) !== -1
-    ) ||
-    (
-      debugString.indexOf('*') === debugString.length - 1 && // ends with `*` for example: `alwatr/*`
-      scope.indexOf(debugString.replaceAll('*', '')) === 0
-    )
-  ) {
-    return true;
-  }
-
-  // else
-  return false;
+const _style = {
+  scope: NODE_MODE ? '\x1b[{{color}}m' : 'color: {{color}};',
+  reset: NODE_MODE ? '\x1b[0m' : 'color: inherit;',
 };
 
-export const style = {
-  scope: isBrowser ? 'color: {{color}};' : '\x1b[{{color}}m',
-  reset: isBrowser ? 'color: inherit;' : '\x1b[0m',
+const _keySection = NODE_MODE ? '%s%s%s' : '%c%s%c';
+
+const _sanitizeDomain = (domain: string): string => {
+  domain = domain.trim();
+  const first = domain.charAt(0);
+  if (first !== '[' && first !== '{' && first !== '<') {
+    domain = '[' + domain + ']';
+  }
+  return domain;
 };
 
 /**
@@ -99,67 +76,49 @@ export const style = {
  * const logger = createLogger('logger/demo');
  * ```
  */
-export const createLogger = (scope: string, color?: string | null, debug?: boolean): AlwatrLogger => {
-  scope = scope.trim();
-  color ??= getNextColor();
-  debug ??= getDebugState(scope);
-
-  const first = scope.charAt(0);
-  if (first !== '[' && first !== '{' && first !== '(' && first !== '<') {
-    scope = '[' + scope + ']';
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const empty = (): void => {};
-
-  const keySection = isBrowser ? '%c%s%c' : '%s%s%s';
-  const styleScope = style.scope.replaceAll('{{color}}', color);
+export const createLogger = (domain: string, devMode = DEV_MODE): AlwatrLogger => {
+  const color = _getNextColor();
+  const styleScope = _style.scope.replaceAll('{{color}}', color);
+  domain = _sanitizeDomain(domain);
 
   /**
-   * Required logger object, accident, error always reported even when the debug is false.
+   * Required logger object, accident, error always reported even when the devMode is false.
    */
   const requiredItems = {
-    debug,
-    color,
-    scope,
+    devMode,
+    domain,
 
-    accident: isBrowser
-      ? console.warn.bind(console, '%c%s%c.%s() Accident `%s` %s!', styleScope, scope, style.reset)
-      : console.warn.bind(console, `${styleScope}⚠️\n%s\x1b[33m.%s() Accident \`%s\` %s!${style.reset}`, scope),
+    accident: NODE_MODE
+      ? console.warn.bind(console, `${styleScope}⚠️\n%s\x1b[33m.%s() Accident \`%s\` %s!${_style.reset}`, domain)
+      : console.warn.bind(console, '%c%s%c.%s() Accident `%s` %s!', styleScope, domain, _style.reset),
 
-    error: isBrowser
-      ? console.error.bind(console, '%c%s%c.%s() Error `%s`\n', styleScope, scope, style.reset)
-      : console.error.bind(console, `${styleScope}❌\n%s\x1b[31m.%s() Error \`%s\`${style.reset}\n`, scope),
-  };
+    error: NODE_MODE
+      ? console.error.bind(console, `${styleScope}❌\n%s\x1b[31m.%s() Error \`%s\`${_style.reset}\n`, domain)
+      : console.error.bind(console, '%c%s%c.%s() Error `%s`\n', styleScope, domain, _style.reset),
+  } as const;
 
-  if (!debug) {
-    return {
-      ...requiredItems,
-      logProperty: empty,
-      logMethod: empty,
-      logMethodArgs: empty,
-      logMethodFull: empty,
-      logOther: empty,
-      incident: empty,
-    };
+  if (!devMode) {
+    return requiredItems;
   }
-
-  // else if debug is true for this scope
+  // else
   return {
     ...requiredItems,
 
-    logProperty: console.debug.bind(console, keySection + '.%s = %o;', styleScope, scope, style.reset),
+    logProperty: console.debug.bind(console, _keySection + '.%s = %o;', styleScope, domain, _style.reset),
 
-    logMethod: console.debug.bind(console, keySection + '.%s();', styleScope, scope, style.reset),
+    logMethod: console.debug.bind(console, _keySection + '.%s();', styleScope, domain, _style.reset),
 
-    logMethodArgs: console.debug.bind(console, keySection + '.%s(%o);', styleScope, scope, style.reset),
+    logMethodArgs: console.debug.bind(console, _keySection + '.%s(%o);', styleScope, domain, _style.reset),
 
-    logMethodFull: console.debug.bind(console, keySection + '.%s(%o) => %o', styleScope, scope, style.reset),
+    logMethodFull: console.debug.bind(console, _keySection + '.%s(%o) => %o', styleScope, domain, _style.reset),
 
-    logOther: console.debug.bind(console, keySection, styleScope, scope, style.reset),
+    logOther: console.debug.bind(console, _keySection, styleScope, domain, _style.reset),
 
-    incident: isBrowser
-      ? console.log.bind(console, '%c%s%c.%s() Incident `%s` %s!', styleScope, scope, 'color: orange;')
-      : console.log.bind(console, `${styleScope}🚸\n%s${style.reset}.%s() Incident \`%s\` %s!${style.reset}`, scope),
-  };
+    incident: NODE_MODE
+      ? console.log.bind(console, `${styleScope}🚸\n%s${_style.reset}.%s() Incident \`%s\` %s!${_style.reset}`, domain)
+      : console.log.bind(console, '%c%s%c.%s() Incident `%s` %s!', styleScope, domain, 'color: orange;'),
+
+    time: (label: string) => console.time(domain + '.' + label + ' duration time'),
+    timeEnd: (label: string) => console.timeEnd(domain + '.' + label + ' duration time'),
+  } as const;
 };

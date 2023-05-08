@@ -33,7 +33,7 @@ export interface IconButtonContent extends StringifyableRecord {
    */
   clickDetail?: Stringifyable;
 
-  disabled?: true;
+  disabled?: boolean;
 }
 
 /**
@@ -76,12 +76,16 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
     `,
   ];
 
-  @property({type: Object, attribute: false})
+  @property({type: Object})
     content?: IconButtonContent;
+
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(_changedProperties);
+    this.setAttribute('stated', '');
+  }
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.setAttribute('stated', '');
     this.addEventListener('click', this._click);
   }
 
@@ -90,25 +94,25 @@ export class AlwatrStandardIconButton extends AlwatrSurface {
     this.removeEventListener('click', this._click);
   }
 
-  protected override shouldUpdate(changedProperties: PropertyValues<this>): boolean {
-    return super.shouldUpdate(changedProperties) && this.content != null;
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+
+    const disabled = Boolean(this.content?.disabled);
+    if (this.hasAttribute('disabled') !== disabled) {
+      this.toggleAttribute('disabled', disabled);
+    }
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
-    if (this.content == null) return;
+    this._logger.logMethod?.('render');
+    const content = this.content || {icon: ''};
 
-    const disabled = Boolean(this.content.disabled);
-    if (this.hasAttribute('disabled') === disabled) {
-      this.toggleAttribute('disabled', disabled);
-    }
-
-    return html`<alwatr-icon .name=${this.content.icon} ?flip-rtl=${this.content.flipRtl}></alwatr-icon>`;
+    return html`<alwatr-icon .name=${content.icon} ?flip-rtl=${content.flipRtl}></alwatr-icon>`;
   }
 
   protected _click(event: MouseEvent): void {
     const clickSignalId = this.content?.clickSignalId;
-    this._logger.logMethodArgs('click', {clickSignalId: clickSignalId});
+    this._logger.logMethodArgs?.('click', {clickSignalId: clickSignalId});
     if (clickSignalId) {
       eventTrigger.dispatch<ClickSignalType>(clickSignalId, {
         x: event.clientX,

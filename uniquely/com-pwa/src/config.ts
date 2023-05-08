@@ -1,18 +1,23 @@
-import {getConfKey} from '@alwatr/pwa-helper/config.js';
+import {FetchOptions} from '@alwatr/fetch';
+import {getLocalStorageItem} from '@alwatr/util';
 
-const token = getConfKey<string>('token');
+/**
+ * Debug API.
+ *
+ * ```ts
+ * localStorage.setItem('DEBUG_API', '"https://canary.order.soffit.co"');
+ * ```
+ */
+const apiPrefix = getLocalStorageItem('DEBUG_API', '');
 export const config = {
-  api: getConfKey<string>('api'),
-  cdn: getConfKey<string>('cdn'),
-  token,
-  productStorageList: getConfKey<Array<string>>('productStorageList'),
+  api: apiPrefix + '/api/v0',
+  cdn: apiPrefix + '/cdn',
   priceListName: '${productStorage}-market-ir',
   finalPriceListName: '${productStorage}-agency-ir',
-  fetchContextOptions: {
+  fetchContextOptions: <Partial<FetchOptions>>{
     method: 'GET',
-    token,
     removeDuplicate: 'auto',
-    retry: 10,
-    retryDelay: 3_000,
+    retry: 2,
+    retryDelay: 2_000,
   },
 } as const;

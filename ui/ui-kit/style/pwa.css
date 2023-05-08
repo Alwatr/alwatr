@@ -1,3 +1,8 @@
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
 html,
 body {
   margin: 0;
@@ -30,11 +35,10 @@ body {
   -ms-content-zooming: none;
   -ms-touch-action: pan-x pan-y pinch-zoom;
   touch-action: pan-x pan-y pinch-zoom;
-  -webkit-tap-highlight-color: transparent;
   transform: translateZ(0);
   overflow: hidden;
   overflow: clip;
-  overscroll-behavior-y: none;
+  overscroll-behavior: contain;
 
   /* Theme */
   color: var(--sys-color-on-background);
@@ -62,6 +66,7 @@ body.no-scroll {
 
 [unresolved] {
   display: block;
+  padding: calc(2 * var(--sys-spacing-track));
   text-align: center;
   font-family: var(--sys-typescale-headline-small-font-family-name);
   font-weight: var(--sys-typescale-headline-small-font-weight);

@@ -11,7 +11,7 @@ nanoServer.route('GET', '/storage', getStorage);
 function getStorage(
     connection: AlwatrConnection,
 ): AlwatrServiceResponse<Record<string, StringifyableRecord>, StringifyableRecord> {
-  logger.logMethod('getStorage');
+  logger.logMethod?.('getStorage');
 
   connection.requireToken(config.nanoServer.accessToken);
 

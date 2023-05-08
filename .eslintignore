@@ -1,4 +1,3 @@
-# Build
 *.js
-*.map
 *.d.ts
+/demo/es-bench/

@@ -16,4 +16,4 @@ export const config = {
   },
 };
 
-logger.logProperty('config', config);
+logger.logProperty?.('config', config);

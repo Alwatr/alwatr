@@ -1,0 +1,8 @@
+{
+  "ok": false,
+  "statusCode": <!--# echo var="status" default="500" -->,
+  "errorCode": "error_<!--# echo var="status" default="500" -->",
+  "data": {
+    "status": "<!--# echo var="status_text" default="Something goes wrong" -->"
+  }
+}

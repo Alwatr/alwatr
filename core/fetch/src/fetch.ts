@@ -1,23 +1,11 @@
-import {createLogger, globalAlwatr, isBrowser} from '@alwatr/logger';
+import {createLogger, globalAlwatr, NODE_MODE} from '@alwatr/logger';
 import {contextProvider, type DispatchOptions} from '@alwatr/signal';
 import {getClientId} from '@alwatr/util';
 
-import type {FetchOptions, CacheDuplicate, CacheStrategy} from './type.js';
-import type {
-  AlwatrServiceResponse,
-  AlwatrServiceResponseSuccessWithMeta,
-  AlwatrServiceResponseSuccess,
-  StringifyableRecord,
-} from '@alwatr/type';
+import type {FetchOptions} from './type.js';
+import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
 
-export type {
-  FetchOptions,
-  CacheDuplicate,
-  CacheStrategy,
-  AlwatrServiceResponse,
-  AlwatrServiceResponseSuccessWithMeta,
-  AlwatrServiceResponseSuccess,
-};
+export type * from './type.js';
 
 const logger = createLogger('alwatr/fetch');
 
@@ -36,21 +24,21 @@ export async function fetchContext(
     fetchOption: FetchOptions,
     dispatchOptions: Partial<DispatchOptions> = {debounce: 'Timeout'},
 ): Promise<void> {
-  logger.logMethodArgs('fetchContext', {contextName});
+  logger.logMethodArgs?.('fetchContext', {contextName});
   if (cacheSupported && contextProvider.getValue(contextName) == null) {
     try {
       fetchOption.cacheStrategy = 'cache_only';
       const response = await serviceRequest(fetchOption);
       contextProvider.setValue<typeof response>(contextName, response, dispatchOptions);
       if (navigator.onLine === false) {
-        logger.logOther('fetchContext:', 'offline');
+        logger.logOther?.('fetchContext:', 'offline');
         // retry on online
         return;
       }
     }
     catch (err) {
       if ((err as Error).message === 'fetch_cache_not_found') {
-        logger.logOther('fetchContext:', 'fetch_cache_not_found');
+        logger.logOther?.('fetchContext:', 'fetch_cache_not_found');
       }
       else {
         logger.error('fetchContext', 'fetch_failed', err);
@@ -66,7 +54,7 @@ export async function fetchContext(
       response.meta?.lastUpdated === undefined || // skip lastUpdated check
       response.meta?.lastUpdated !== contextProvider.getValue<typeof response>(contextName)?.meta?.lastUpdated
     ) {
-      logger.logOther('fetchContext:', 'contextProvider.setValue(new-received-context)', {contextName});
+      logger.logOther?.('fetchContext:', 'contextProvider.setValue(new-received-context)', {contextName});
       contextProvider.setValue<typeof response>(contextName, response, dispatchOptions);
     }
   }
@@ -80,14 +68,11 @@ export async function fetchContext(
  * Fetch from alwatr services and return standard response.
  */
 export async function serviceRequest<
-  TData extends StringifyableRecord = StringifyableRecord,
-  TMeta extends StringifyableRecord = StringifyableRecord
->(
-    options: FetchOptions,
-): Promise<AlwatrServiceResponseSuccess<TData> | AlwatrServiceResponseSuccessWithMeta<TData, TMeta>> {
-  logger.logMethodArgs('serviceRequest', {url: options.url});
+  T extends AlwatrServiceResponseSuccessWithMeta = AlwatrServiceResponseSuccessWithMeta
+>(options: FetchOptions): Promise<T> {
+  logger.logMethodArgs?.('serviceRequest', {url: options.url});
 
-  if (isBrowser) {
+  if (!NODE_MODE) {
     options.headers ??= {};
     if (!options.headers['client-id']) {
       options.headers['client-id'] = getClientId();
@@ -99,7 +84,10 @@ export async function serviceRequest<
     response = await fetch(options);
   }
   catch (err) {
-    logger.error('serviceRequest', (err as Error).message || 'fetch_failed', err, options);
+    const errMessage = (err as Error).message;
+    if (errMessage !== 'fetch_cache_not_found') {
+      logger.error('serviceRequest', (err as Error).message || 'fetch_failed', err, options);
+    }
     throw err;
   }
 
@@ -114,7 +102,7 @@ export async function serviceRequest<
     throw err;
   }
 
-  let responseJson: AlwatrServiceResponse<TData, TMeta>;
+  let responseJson: T;
   try {
     responseJson = JSON.parse(responseText);
   }
@@ -158,7 +146,7 @@ export async function serviceRequest<
  */
 export function fetch(options: FetchOptions): Promise<Response> {
   options = _processOptions(options);
-  logger.logMethodArgs('fetch', {options});
+  logger.logMethodArgs?.('fetch', {options});
   return _handleCacheStrategy(options as Required<FetchOptions>);
 }
 
@@ -177,7 +165,7 @@ function _processOptions(options: FetchOptions): Required<FetchOptions> {
   options.headers ??= {};
 
   if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
-    logger.incident('fetch', 'fetch_cache_strategy_ignore', 'Cache storage not support in this browser', {
+    logger.incident?.('fetch', 'fetch_cache_strategy_ignore', 'Cache storage not support in this browser', {
       cacheSupported,
     });
     options.cacheStrategy = 'network_only';
@@ -208,6 +196,10 @@ function _processOptions(options: FetchOptions): Required<FetchOptions> {
     options.headers.Authorization = `Bearer ${options.token}`;
   }
 
+  if (options.userAuth != null) {
+    options.headers.Authorization = `Bearer ${options.userAuth.id}/${options.userAuth.token}`;
+  }
+
   return options as Required<FetchOptions>;
 }
 
@@ -219,7 +211,7 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
     return _handleRemoveDuplicate(options);
   }
   // else handle cache strategies!
-  logger.logMethod('_handleCacheStrategy');
+  logger.logMethod?.('_handleCacheStrategy');
 
   if (alwatrCacheStorage == null && options.cacheStorageName == null) {
     alwatrCacheStorage = await caches.open('alwatr_fetch_cache');
@@ -312,7 +304,7 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
 async function _handleRemoveDuplicate(options: Required<FetchOptions>): Promise<Response> {
   if (options.removeDuplicate === 'never') return _handleRetryPattern(options);
 
-  logger.logMethod('_handleRemoveDuplicate');
+  logger.logMethod?.('_handleRemoveDuplicate');
 
   const cacheKey = options.method + ' ' + options.url;
 
@@ -344,7 +336,7 @@ async function _handleRemoveDuplicate(options: Required<FetchOptions>): Promise<
 async function _handleRetryPattern(options: Required<FetchOptions>): Promise<Response> {
   if (!(options.retry > 1)) return _handleTimeout(options);
 
-  logger.logMethod('_handleRetryPattern');
+  logger.logMethod?.('_handleRetryPattern');
   options.retry--;
 
   const externalAbortSignal = options.signal;
@@ -361,7 +353,7 @@ async function _handleRetryPattern(options: Required<FetchOptions>): Promise<Res
   catch (err) {
     logger.accident('fetch', 'fetch_failed_retry', (err as Error)?.message || 'fetch failed and retry', err);
 
-    if (navigator.onLine === false) {
+    if (globalThis.navigator?.onLine === false) {
       throw new Error('offline');
     }
 
@@ -380,7 +372,7 @@ function _handleTimeout(options: FetchOptions): Promise<Response> {
     return globalThis.fetch(options.url, options);
   }
   // else
-  logger.logMethod('_handleTimeout');
+  logger.logMethod?.('_handleTimeout');
   return new Promise((resolved, reject) => {
     // TODO: AbortController polyfill
     const abortController = new AbortController();

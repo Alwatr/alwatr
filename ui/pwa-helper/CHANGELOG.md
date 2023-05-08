@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- compatible with new \_addSignalListener signal mixin ([e2be863](https://github.com/AliMD/alwatr/commit/e2be863acd9b99c4fc8f0a81c4efe2ac6db50c39))
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+- **pwa-element:** scroll issue ([136dbd0](https://github.com/AliMD/alwatr/commit/136dbd07592fdae28bbe0969a38e82fd2f49c144))
+- **pwa-helper/esbuild:** hash entryNames ([0394a26](https://github.com/AliMD/alwatr/commit/0394a26d9f72d21ca762af3c04f5521e6e600f28))
+- **pwa-helper:** disable auto scroll on page changes temporary ([d2cc128](https://github.com/AliMD/alwatr/commit/d2cc12889664fbd324c53ecc00582995fd2ab552))
+- **pwa-helper:** render routerOutlet to this ([e06bc3a](https://github.com/AliMD/alwatr/commit/e06bc3ac95a9f640ff7e8d912328e4c2e3a64b21))
+- **pwa-helper:** show user notify version ([7a01234](https://github.com/AliMD/alwatr/commit/7a01234a5e05cbc66438c589c8783be2e2d8adf4))
+
+### Features
+
+- **pwa-helper:** add build short sha to alwatr version ([0411b9c](https://github.com/AliMD/alwatr/commit/0411b9c7e92b243ed4f24337432c2f0412817920))
+
+### Performance Improvements
+
+- **pwa:** optimize downloading performance ([39ef8b4](https://github.com/AliMD/alwatr/commit/39ef8b45065cbfff45273441cca527a1195d9750))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Bug Fixes

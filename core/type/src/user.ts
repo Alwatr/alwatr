@@ -10,13 +10,52 @@ export interface User extends AlwatrDocumentObject {
   id: string;
 
   /**
-   * User full name
+   * Link pass epoch number, started from 1 and increased by token revoke.
    */
+  lpe: number;
+
+  /**
+   * User authorization permissions list.
+   */
+  permissions?: Array<string>;
+
   fullName: string;
 
-  gender?: Gender;
+  phoneNumber: number;
+
+  gender: Gender;
 
   email?: string;
 
-  phoneNumber?: string;
+  landlinePhone?: string;
+
+  /**
+   * Country Code.
+   */
+  country: string;
+
+  /**
+   * Province Code.
+   */
+  province?: string;
+
+  /**
+   * City Code.
+   */
+  city?: string;
+
+  /**
+   * User full address.
+   */
+  address?: string;
+
+  /**
+   * Postal code
+   */
+  postalCode?: string;
+}
+
+export interface UserAuth {
+  id: string;
+  token: string;
 }

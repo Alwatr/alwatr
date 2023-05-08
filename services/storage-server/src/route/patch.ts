@@ -7,12 +7,12 @@ import {storageProvider} from '../lib/storage-provider.js';
 import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 import type {AlwatrDocumentObject} from '@alwatr/storage-engine';
 
-nanoServer.route('PATCH', 'all', updateDocument);
+nanoServer.route('PATCH', '/', updateDocument);
 
 async function updateDocument(
     connection: AlwatrConnection,
 ): Promise<AlwatrServiceResponse<StringifyableRecord, StringifyableRecord>> {
-  logger.logMethod('updateDocument');
+  logger.logMethod?.('updateDocument');
 
   connection.requireToken(config.nanoServer.accessToken);
 

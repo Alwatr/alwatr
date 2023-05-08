@@ -80,7 +80,7 @@ export class AlwatrRadioGroup extends AlwatrBaseElement {
     value?: string;
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return html`
       <fieldset>
         <legend>${this.options?.title}</legend>

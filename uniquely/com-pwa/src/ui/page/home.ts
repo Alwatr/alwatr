@@ -55,7 +55,7 @@ export class AlwatrPageHome extends UnresolvedMixin(SignalMixin(AlwatrBaseElemen
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._signalListenerList.push(
+    this._addSignalListeners(
         homePageContentContextConsumer.subscribe((content) => {
           this.content = content;
           topAppBarContextProvider.setValue(content.topAppBar);
@@ -64,7 +64,7 @@ export class AlwatrPageHome extends UnresolvedMixin(SignalMixin(AlwatrBaseElemen
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     if (this.content == null) return nothing;
     return mapIterable(this, this.content.boxList, this._boxTemplate, message('loading'));
   }

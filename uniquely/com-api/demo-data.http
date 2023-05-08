@@ -1,7 +1,7 @@
-@apiUrl = http://127.0.0.1:8000/api/v0
+@apiUrl = http://order.soffit.co/api/v0
 @adminToken = ADMIN_SECRET_TOKEN
 
-### New product 1
+### Soffit product list
 PATCH {{apiUrl}}/product-list/?storage=tile
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
@@ -11,42 +11,72 @@ Content-Type: application/json
     {
       "id": "1",
       "title": { "fa": "تایل کد ۰۰۱" },
-      "image": { "id": "sample-1.jpg" }
+      "image": { "id": "soffit-tile-1-1.jpg" }
     },
     {
-      "id": "2",
+      "id": "9",
       "title": { "fa": "تایل کد ۰۰۲" },
-      "image": { "id": "sample-2.jpg" }
+      "image": { "id": "soffit-tile-2-1.jpg" }
     },
     {
-      "id": "3",
-      "title": { "fa": "تایل کد ۰۰۳" },
-      "image": { "id": "sample-3.jpg" }
+      "id": "10",
+      "title": { "fa": "تایل کد ۰۰۵" },
+      "image": { "id": "soffit-tile-5-1.jpg" }
     },
     {
-      "id": "4",
-      "title": { "fa": "تایل کد ۰۰۴" },
-      "image": { "id": "sample-4.jpg" }
+      "id": "11",
+      "title": { "fa": "تایل کد ۰۰۶" },
+      "image": { "id": "soffit-tile-6-1.jpg" }
+    },
+    {
+      "id": "12",
+      "title": { "fa": "تایل کد ۰۰۷" },
+      "image": { "id": "soffit-tile-7-1.jpg" }
+    },
+    {
+      "id": "14",
+      "title": { "fa": "تایل کد ۰۰۸" },
+      "image": { "id": "soffit-tile-8-1.jpg" }
     },
     {
       "id": "5",
-      "title": { "fa": "تایل کد ۰۰۵" },
-      "image": { "id": "sample-1.jpg" }
+      "title": { "fa": "تایل کد ۲۳۸" },
+      "image": { "id": "soffit-tile-238-1.jpg" }
+    },
+    {
+      "id": "2",
+      "title": { "fa": "تایل کد ۲۳۸G" },
+      "image": { "id": "soffit-tile-238G-1.jpg" }
     },
     {
       "id": "6",
-      "title": { "fa": "تایل کد ۰۰۶" },
-      "image": { "id": "sample-2.jpg" }
+      "title": { "fa": "تایل کد ۲۳۹" },
+      "image": { "id": "soffit-tile-239-1.jpg" }
+    },
+    {
+      "id": "13",
+      "title": { "fa": "تایل کد ۹۷۵" },
+      "image": { "id": "soffit-tile-975-1.jpg" }
     },
     {
       "id": "7",
-      "title": { "fa": "تایل کد ۰۰۷" },
-      "image": { "id": "sample-3.jpg" }
+      "title": { "fa": "تایل کد ۹۹۳" },
+      "image": { "id": "soffit-tile-993-1.jpg" }
     },
     {
       "id": "8",
-      "title": { "fa": "تایل کد ۰۰۸" },
-      "image": { "id": "sample-3.jpg" }
+      "title": { "fa": "تایل کد ۹۹۶" },
+      "image": { "id": "soffit-tile-996-1.jpg" }
+    },
+    {
+      "id": "3",
+      "title": { "fa": "تایل کد ۹۹۶G" },
+      "image": { "id": "soffit-tile-996G-1.jpg" }
+    },
+    {
+      "id": "4",
+      "title": { "fa": "تایل کد ۳۳۳" },
+      "image": { "id": "soffit-tile-333-1.jpg" }
     }
   ]
 }
@@ -60,35 +90,59 @@ Content-Type: application/json
   "data": [
     {
       "id": "1",
-      "price": 77000
+      "price": 87580
     },
     {
       "id": "2",
-      "price": 75000
+      "price": 89599
     },
     {
       "id": "3",
-      "price": 68500
+      "price": 89599
     },
     {
       "id": "4",
-      "price": 62530
+      "price": 89599
     },
     {
       "id": "5",
-      "price": 79000
+      "price": 81999
     },
     {
       "id": "6",
-      "price": 75050
+      "price": 81999
     },
     {
       "id": "7",
-      "price": 64000
+      "price": 81999
     },
     {
       "id": "8",
-      "price": 80000
+      "price": 81999
+    },
+    {
+      "id": "9",
+      "price": 87580
+    },
+    {
+      "id": "10",
+      "price": 87580
+    },
+    {
+      "id": "11",
+      "price": 90500
+    },
+    {
+      "id": "12",
+      "price": 90500
+    },
+    {
+      "id": "13",
+      "price": 81999
+    },
+    {
+      "id": "14",
+      "price": 90500
     }
   ]
 }
@@ -102,35 +156,59 @@ Content-Type: application/json
   "data": [
     {
       "id": "1",
-      "price": 66990
+      "price": 76195
     },
     {
       "id": "2",
-      "price": 65250
+      "price": 77951
     },
     {
       "id": "3",
-      "price": 59595
+      "price": 77951
     },
     {
       "id": "4",
-      "price": 54401
+      "price": 77951
     },
     {
       "id": "5",
-      "price": 68730
+      "price": 70519
     },
     {
       "id": "6",
-      "price": 65293.5
+      "price": 70519
     },
     {
       "id": "7",
-      "price": 55680
+      "price": 70519
     },
     {
       "id": "8",
-      "price": 69600
+      "price": 70519
+    },
+    {
+      "id": "9",
+      "price": 76195
+    },
+    {
+      "id": "10",
+      "price": 76195
+    },
+    {
+      "id": "11",
+      "price": 78735
+    },
+    {
+      "id": "12",
+      "price": 78735
+    },
+    {
+      "id": "13",
+      "price": 70519
+    },
+    {
+      "id": "14",
+      "price": 78735
     }
   ]
 }

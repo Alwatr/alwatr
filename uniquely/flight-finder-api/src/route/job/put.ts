@@ -10,7 +10,7 @@ import type {Job} from '@alwatr/type/flight-finder.js';
 nanoServer.route('PUT', '/job', newJob);
 
 async function newJob(connection: AlwatrConnection): Promise<AlwatrServiceResponse<Job, StringifyableRecord>> {
-  logger.logMethod('newJob');
+  logger.logMethod?.('newJob');
 
   connection.requireToken(config.nanoServer.accessToken);
 

@@ -117,8 +117,11 @@ export class AlwatrTextField extends AlwatrSurface {
   @property({type: String})
     type: InputType = 'text';
 
+  @property({type: Boolean})
+    readonly = false;
+
   @property({type: String})
-    value?: string;
+    value = '';
 
   @property({type: String})
     placeholder = '';
@@ -130,15 +133,27 @@ export class AlwatrTextField extends AlwatrSurface {
     this._inputChanged = this._inputChanged.bind(this);
   }
 
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('click', this._click);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('click', this._click);
+  }
+
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     this.value ??= '';
+
     if (this.type === 'textarea') {
       return html`<textarea
         .name=${this.name}
         .placeholder=${this.placeholder}
         .value=${live(this.value)}
         .rows=${3}
+        ?readonly=${this.readonly}
         @change=${this._inputChanged}
       ></textarea>`;
     }
@@ -148,6 +163,7 @@ export class AlwatrTextField extends AlwatrSurface {
       .type=${this.type}
       .placeholder=${this.placeholder}
       .value=${live(this.value)}
+      ?readonly=${this.readonly}
       @change=${this._inputChanged}
     ></input>`;
   }
@@ -155,11 +171,14 @@ export class AlwatrTextField extends AlwatrSurface {
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
     this.inputElement = this.renderRoot.querySelector('input, textarea');
-    this.addEventListener('click', () => this.inputElement?.focus());
+  }
+
+  protected _click(): void {
+    this.inputElement?.focus();
   }
 
   private _inputChanged(event: Event): void {
-    this._logger.logMethod('_inputChanged');
+    this._logger.logMethod?.('_inputChanged');
     const target = event.target as HTMLInputElement | HTMLTextAreaElement;
     if (target == null) return;
     let inputValue = unicodeDigits.translate(target.value ?? '');

@@ -61,6 +61,27 @@ Content-Type: application/json
   ]
 }
 
+### Touch the storage to make sure storage file exist.
+GET {{apiUrl}}/touch?storage=comments/page3
+Authorization: Bearer {{token}}
+
+### Make a symbolic link
+GET {{apiUrl}}/link?src=comments/page1&dest=public/comments/page4
+Authorization: Bearer {{token}}
+
+### Make a cache from the api response.
+PUT {{apiUrl}}/cache-api-response
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "path": "public/user/profile",
+  "data": {
+    "id":"test",
+    "name": "user_1"
+  }
+}
+
 ### Check document exists by storageName and docId.
 GET {{apiUrl}}/has?storage=comments/page1&id=0
 Authorization: Bearer {{token}}

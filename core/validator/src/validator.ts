@@ -1,4 +1,4 @@
-import {isNumber} from '@alwatr/math';
+import {UnicodeDigits, isNumber} from '@alwatr/math';
 
 import type {JsonSchema} from './type.js';
 import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
@@ -7,14 +7,14 @@ export type {JsonSchema};
 
 export function validator<T extends StringifyableRecord>(
     validSchema: JsonSchema,
-    targetObject: StringifyableRecord,
+    targetObject?: StringifyableRecord | null,
     additionalProperties = false,
     path = '.',
 ): T {
-  if (typeof targetObject !== 'object' || targetObject == null) {
+  if (targetObject == null || typeof targetObject !== 'object') {
     throw new Error('invalid_type', {
       cause: {
-        message: 'targetObject is not a function or null',
+        message: 'targetObject root not valid',
         itemPath: path,
         itemSchema: 'JsonSchema',
         itemValue: String(targetObject),
@@ -43,13 +43,37 @@ export function validator<T extends StringifyableRecord>(
     const itemSchema = validSchema[itemName];
     const itemValue = targetObject[itemName] as Stringifyable;
 
-    if (typeof itemSchema === 'object' && itemSchema != null) {
+    if (Array.isArray(itemSchema)) {
+      // array
+      if (!Array.isArray(itemValue)) {
+        throw new Error('invalid_type', {
+          cause: {
+            message: 'invalid type',
+            itemPath,
+            itemSchema: 'Array',
+            itemValue: String(itemValue),
+          },
+        });
+      }
+      // else
+      const schema = itemSchema[0];
+      for (let index = itemValue.length - 1; index >= 0; index--) {
+        const item = itemValue[index];
+        itemValue[index] = validator<StringifyableRecord>(
+            schema,
+            item as StringifyableRecord, // @FIXME: DeMastmalize
+            additionalProperties,
+            `${itemPath}[${index}]`,
+        );
+      }
+    }
+    else if (typeof itemSchema === 'object' && itemSchema != null) {
       // nested object
       targetObject[itemName] = validator<StringifyableRecord>(
           itemSchema,
-        itemValue as StringifyableRecord,
-        additionalProperties,
-        itemPath,
+          itemValue as StringifyableRecord,
+          additionalProperties,
+          itemPath,
       );
     }
     else if (itemSchema === Boolean) {
@@ -73,7 +97,7 @@ export function validator<T extends StringifyableRecord>(
     }
     else if (itemSchema === Number) {
       if (isNumber(itemValue)) {
-        targetObject[itemName] = +<string>itemValue;
+        targetObject[itemName] = +(<string>itemValue);
       }
       else {
         throw new Error('invalid_type', {
@@ -114,3 +138,21 @@ export function validator<T extends StringifyableRecord>(
 
   return targetObject as T;
 }
+
+/**
+ * Validate a phone number and return it in a standard format with country code.
+ */
+export const sanitizePhoneNumber = (input?: string | number | null, countryCode = '98'): number | null => {
+  if (input == null) return null;
+
+  const unicodeDigits = new UnicodeDigits('en');
+  input = unicodeDigits.translate(input + '');
+
+  input =
+    countryCode +
+    input.replace(/[ )(-]+/g, '').replace(new RegExp(`^(\\+${countryCode}|${countryCode}|\\+|0)`), '');
+
+  if (input.length !== countryCode.length + 10 || !isNumber(input)) return null;
+
+  return +input;
+};

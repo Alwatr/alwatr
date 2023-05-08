@@ -27,14 +27,14 @@ export class AlwatrPageHome extends AlwatrBaseElement {
       font-size: var(--sys-typescale-label-small-font-size);
       line-height: var(--sys-typescale-label-small-line-height);
       letter-spacing: var(--sys-typescale-label-small-letter-spacing);
-      opacity: 0.4;
+      opacity: 0.6;
       user-select: none;
       -webkit-user-select: none;
     }
   `;
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return html`
       <div>A good ceiling is vital.<br />a SOFFIT ceiling can be an inspiration.</div>
       <div class="version">Soffit Order Management PWA v${_ALWATR_VERSION_}</div>

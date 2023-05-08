@@ -10,7 +10,7 @@ import {
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import {submitOrderCommandTrigger, topAppBarContextProvider} from '../../manager/context.js';
+import {topAppBarContextProvider} from '../../manager/context.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
@@ -21,7 +21,7 @@ declare global {
 }
 
 /**
- * Alwatr Demo Home Page
+ * Alwatr 404 page.
  */
 @customElement('alwatr-page-404')
 export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
@@ -45,7 +45,7 @@ export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(Alw
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
 
     const box: IconBoxContent = {
       stated: true,
@@ -57,40 +57,6 @@ export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(Alw
       preLine: true,
     };
 
-    return html`<alwatr-icon-box .content=${box} @click=${this._click}></alwatr-icon-box>`;
-  }
-
-  protected _click(): void {
-    submitOrderCommandTrigger.request({
-      itemList: [
-        {
-          productId: '2',
-          price: 1000000,
-          finalPrice: 950000,
-          qty: 20,
-        },
-        {
-          productId: '4',
-          price: 1000000,
-          finalPrice: 950000,
-          qty: 20,
-        },
-      ],
-
-      shippingInfo: {
-        recipientName: 'ali',
-        recipientNationalCode: '0934614566',
-        address: 'Mashhad, 29 dey, koche 29',
-        ladingType: 'pallet',
-        carType: 'ten_wheel',
-        timePeriod: '1_2w',
-      },
-
-      discountType: 'number',
-      totalPrice: 1000000,
-      ladingPrice: 1100000,
-      finalTotalPrice: 900000,
-      discount: 0,
-    });
+    return html`<alwatr-icon-box .content=${box}></alwatr-icon-box>`;
   }
 }

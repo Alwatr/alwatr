@@ -1,3 +1,4 @@
+import {AlwatrServiceResponseSuccessWithMeta} from './service-response.js';
 import {StringifyableRecord} from './type-helper.js';
 
 export interface AlwatrDocumentObject extends StringifyableRecord {
@@ -22,8 +23,5 @@ export interface AlwatrStorageMeta extends StringifyableRecord {
 //   'statusCode' | 'errorCode'
 // >;
 
-export interface AlwatrDocumentStorage<T extends AlwatrDocumentObject> extends StringifyableRecord {
-  ok: true;
-  data: Record<string, T>;
-  meta: AlwatrStorageMeta;
-}
+export type AlwatrDocumentStorage<T extends AlwatrDocumentObject = AlwatrDocumentObject> =
+  AlwatrServiceResponseSuccessWithMeta<Record<string, T>, AlwatrStorageMeta>;

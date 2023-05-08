@@ -15,6 +15,7 @@
     {"path": "../../core/logger"},
     {"path": "../../core/type"},
     {"path": "../../core/nano-server"},
-    {"path": "../../core/storage-engine"}
+    {"path": "../../core/storage-engine"},
+    {"path": "../../core/util"},
   ]
 }

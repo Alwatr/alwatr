@@ -16,6 +16,7 @@ import type {
   ParamValueType,
   QueryParameters,
   StringifyableRecord,
+  UserAuth,
 } from '@alwatr/type';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
@@ -76,11 +77,12 @@ export class AlwatrNanoServer {
       keepAliveTimeout: 120_000,
       healthRoute: true,
       allowAllOrigin: false,
+      prefixPattern: 'api',
       ...config,
     };
 
-    this._logger = createLogger('alwatr-nano-server:' + this._config.port);
-    this._logger.logMethodArgs('constructor', {config: this._config});
+    this._logger = createLogger('alwatr/nano-server' + (this._config.port !== 80 ? ':' + this._config.port : ''));
+    this._logger.logMethodArgs?.('constructor', {config: this._config});
 
     this._requestListener = this._requestListener.bind(this);
     this._errorListener = this._errorListener.bind(this);
@@ -110,7 +112,7 @@ export class AlwatrNanoServer {
     }
 
     this.httpServer.listen(this._config.port, this._config.host, () => {
-      this._logger.logOther(`listening on ${this._config.host}:${this._config.port}`);
+      this._logger.logOther?.(`listening on ${this._config.host}:${this._config.port}`);
     });
   }
 
@@ -124,7 +126,7 @@ export class AlwatrNanoServer {
    * ```
    */
   close(): void {
-    this._logger.logMethod('close');
+    this._logger.logMethod?.('close');
     this.httpServer.close();
   }
 
@@ -153,7 +155,7 @@ export class AlwatrNanoServer {
     TData extends StringifyableRecord = StringifyableRecord,
     TMeta extends StringifyableRecord = StringifyableRecord
   >(method: 'ALL' | Methods, route: 'all' | `/${string}`, middleware: RouteMiddleware<TData, TMeta>): void {
-    this._logger.logMethodArgs('route', {method, route});
+    this._logger.logMethodArgs?.('route', {method, route});
 
     if (this.middlewareList[method] == null) this.middlewareList[method] = {};
 
@@ -189,7 +191,7 @@ export class AlwatrNanoServer {
       content: AlwatrServiceResponse<StringifyableRecord, StringifyableRecord>,
   ): void {
     content.statusCode ??= 200;
-    this._logger.logMethodArgs('reply', {ok: content.ok, statusCode: content.statusCode});
+    this._logger.logMethodArgs?.('reply', {ok: content.ok, statusCode: content.statusCode});
 
     if (serverResponse.headersSent) {
       this._logger.error('reply', 'http_header_sent', 'Response headers already sent');
@@ -197,7 +199,7 @@ export class AlwatrNanoServer {
       throw new Error('http_header_sent');
     }
 
-    if (!this._logger.debug && !content.ok && content.meta) {
+    if (!this._logger.devMode && !content.ok && content.meta) {
       // clear debug info from client for security reasons.
       delete content.meta;
     }
@@ -246,11 +248,11 @@ export class AlwatrNanoServer {
 
   protected _errorListener(err: NodeJS.ErrnoException): void {
     if (err.code === 'EADDRINUSE') {
-      this._logger.incident('server.onError', 'address_in_use', 'Address in use, retrying...', err);
+      this._logger.incident?.('server.onError', 'address_in_use', 'Address in use, retrying...', err);
       setTimeout(() => {
         this.httpServer.close();
         this.httpServer.listen(this._config.port, this._config.host, () => {
-          this._logger.logOther(`listening on ${this._config.host}:${this._config.port}`);
+          this._logger.logOther?.(`listening on ${this._config.host}:${this._config.port}`);
         });
       }, 2000);
     }
@@ -296,7 +298,7 @@ export class AlwatrNanoServer {
   };
 
   protected async _requestListener(incomingMessage: IncomingMessage, serverResponse: ServerResponse): Promise<void> {
-    this._logger.logMethod('handleRequest');
+    this._logger.logMethod?.('handleRequest');
 
     if (incomingMessage.url == null) {
       this._logger.accident('handleRequest', 'http_server_url_undefined', 'incomingMessage.url is undefined');
@@ -310,6 +312,7 @@ export class AlwatrNanoServer {
 
     const connection = new AlwatrConnection(incomingMessage, serverResponse, {
       allowAllOrigin: this._config.allowAllOrigin,
+      prefixPattern: this._config.prefixPattern,
     });
     const route = connection.url.pathname;
 
@@ -373,16 +376,15 @@ export class AlwatrNanoServer {
  * Alwatr Connection
  */
 export class AlwatrConnection {
-  static versionPattern = new RegExp('^/v[0-9]+');
-  static apiPattern = new RegExp('^/api');
+  static _versionPattern = new RegExp('^/v[0-9]+');
 
   /**
    * Request URL.
    */
   readonly url = new URL(
       (this.incomingMessage.url ?? '')
-          .replace(AlwatrConnection.apiPattern, '')
-          .replace(AlwatrConnection.versionPattern, ''),
+          .replace(new RegExp('^/' + this._config.prefixPattern), '')
+          .replace(AlwatrConnection._versionPattern, ''),
       'http://localhost/',
   );
 
@@ -391,20 +393,20 @@ export class AlwatrConnection {
    */
   readonly method = (this.incomingMessage.method ?? 'GET').toUpperCase() as Methods;
 
-  protected _logger = createLogger('alwatr-nano-server-connection');
+  protected _logger = createLogger('alwatr/nano-server-connection');
 
   constructor(
     public incomingMessage: IncomingMessage,
     public serverResponse: ServerResponse,
-    public config: ConnectionConfig,
+    protected _config: ConnectionConfig,
   ) {
-    this._logger.logMethodArgs('new', {method: incomingMessage.method, url: incomingMessage.url});
+    this._logger.logMethodArgs?.('constructor', {method: incomingMessage.method, url: incomingMessage.url});
   }
 
   /**
    * Get the token placed in the request header.
    */
-  getToken(): string | null {
+  getAuthBearer(): string | null {
     const auth = this.incomingMessage.headers.authorization?.split(' ');
 
     if (auth == null || auth[0].toLowerCase() !== 'bearer') {
@@ -496,10 +498,9 @@ export class AlwatrConnection {
    * ```
    */
   requireToken(validator?: ((token: string) => boolean) | Array<string> | string): string {
-    const token = this.getToken();
+    const token = this.getAuthBearer();
 
     if (token == null) {
-      // eslint-disable-next-line no-throw-literal
       throw {
         ok: false,
         statusCode: 401,
@@ -518,12 +519,32 @@ export class AlwatrConnection {
     else if (typeof validator === 'function') {
       if (validator(token) === true) return token;
     }
-    // eslint-disable-next-line no-throw-literal
     throw {
       ok: false,
       statusCode: 403,
       errorCode: 'access_denied',
     };
+  }
+
+  /**
+   * Parse and get request user auth (include id and token).
+   *
+   * Example:
+   * ```ts
+   * const userAuth = connection.requireUserAuth();
+   * ```
+   */
+  getUserAuth(): UserAuth | null {
+    const auth = this.getAuthBearer()
+        ?.split('/')
+        .filter((item) => item.trim() !== '');
+
+    return auth == null || auth.length !== 2
+      ? null
+      : {
+        id: auth[0],
+        token: auth[1],
+      };
   }
 
   /**

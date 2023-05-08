@@ -1,15 +1,50 @@
-import {css, customElement, html, property} from '@alwatr/element';
+import {PropertyValues, css, customElement, html, nothing, property} from '@alwatr/element';
+import {message} from '@alwatr/i18n';
 import '@alwatr/icon';
 import {eventTrigger} from '@alwatr/signal';
 
 import {AlwatrSurface} from '../card/surface.js';
 
-import type {ClickSignalType, Stringifyable} from '@alwatr/type';
+import type {ClickSignalType, Stringifyable, StringifyableRecord} from '@alwatr/type';
 
 declare global {
   interface HTMLElementTagNameMap {
     'alwatr-button': AlwatrButton;
   }
+}
+
+export interface ButtonContent extends StringifyableRecord {
+  /**
+   * Label.
+   */
+  label?: string
+
+  /**
+   * Label i18n key.
+   */
+  labelKey?: string;
+
+  /**
+   * Icon name.
+   */
+  icon?: string;
+
+  /**
+   * Flip icon on rtl
+   */
+  flipRtl?: true;
+
+  /**
+   * Unique name for identify click event over signal.
+   */
+  clickSignalId?: string;
+
+  /**
+   * Dispatched signal with ClickSignalType and this detail.
+   */
+  clickDetail?: Stringifyable;
+
+  disabled?: boolean;
 }
 
 /**
@@ -50,18 +85,16 @@ export class AlwatrButton extends AlwatrSurface {
     `,
   ];
 
-  @property()
-    icon?: string;
+  @property({type: Object})
+    content?: ButtonContent;
 
-  @property({attribute: 'click-signal-id'})
-    clickSignalId?: string;
-
-  @property({attribute: false})
-    detail?: Stringifyable;
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(_changedProperties);
+    this.setAttribute('stated', '');
+  }
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.setAttribute('stated', '');
     this.addEventListener('click', this._click);
   }
 
@@ -70,30 +103,36 @@ export class AlwatrButton extends AlwatrSurface {
     this.removeEventListener('click', this._click);
   }
 
-  override render(): unknown {
-    this._logger.logMethod('render');
-    if (this.icon) {
-      return html`
-        <alwatr-icon .name=${this.icon} ?flip-rtl=${this.hasAttribute('flip-rtl')}></alwatr-icon>
-        <slot>button</slot>
-      `;
-    }
-    else {
-      return html`<slot>button</slot>`;
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+
+    if (this.content?.disabled != null && this.hasAttribute('disabled') !== this.content.disabled) {
+      this.toggleAttribute('disabled', this.content.disabled);
     }
   }
 
+  override render(): unknown {
+    this._logger.logMethod?.('render');
+    const content = this.content || {};
+
+    return [
+      content.icon
+        ? html`<alwatr-icon .name=${content.icon} ?flip-rtl=${content.flipRtl}></alwatr-icon>`
+        : nothing,
+      html`<slot>${content.label ?? message(content.labelKey)}</slot>`,
+    ];
+  }
+
   protected _click(event: MouseEvent): void {
-    this._logger.logMethodArgs('click', {clickSignalId: this.clickSignalId});
-    if (this.clickSignalId) {
-      eventTrigger.dispatch<ClickSignalType>(this.clickSignalId, {
-        x: event.clientX,
-        y: event.clientY,
-        altKey: event.altKey,
-        ctrlKey: event.ctrlKey,
-        metaKey: event.metaKey,
-        detail: this.detail,
-      });
-    }
+    if (this.content?.clickSignalId == null) return;
+    this._logger.logMethodArgs?.('click', {clickSignalId: this.content.clickSignalId});
+    eventTrigger.dispatch<ClickSignalType>(this.content.clickSignalId, {
+      x: event.clientX,
+      y: event.clientY,
+      altKey: event.altKey,
+      ctrlKey: event.ctrlKey,
+      metaKey: event.metaKey,
+      detail: this.content.clickDetail,
+    });
   }
 }

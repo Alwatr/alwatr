@@ -64,7 +64,7 @@ export const getSignalObject = <T extends Stringifyable>(id: string): SignalObje
  * Used inside dispatch, Don't use it directly.
  */
 export const _callListeners = <T extends Stringifyable>(signal: SignalObject<T>, detail: T): void => {
-  logger.logMethodArgs('_callListeners', {signalId: signal.id, signalDetail: detail});
+  logger.logMethodArgs?.('_callListeners', {signalId: signal.id, signalDetail: detail});
 
   const removeList: Array<ListenerObject<T>> = [];
 
@@ -112,7 +112,7 @@ export const subscribe = <T extends Stringifyable>(
   options.receivePrevious ??= 'NextCycle';
   options.priority ??= false;
 
-  logger.logMethodArgs('subscribe', {signalId, options});
+  logger.logMethodArgs?.('subscribe', {signalId, options});
 
   const signal = getSignalObject<T>(signalId);
 
@@ -124,8 +124,8 @@ export const subscribe = <T extends Stringifyable>(
     callback: listenerCallback,
   };
 
-  const callbackCall = signal.detail !== undefined && options.receivePrevious !== 'No';
-  if (callbackCall) {
+  const execCallback = signal.detail !== undefined && options.receivePrevious !== 'No' && options.disabled !== true;
+  if (execCallback) {
     // Run callback for old dispatch signal
 
     const callback = (): void => {
@@ -148,7 +148,7 @@ export const subscribe = <T extends Stringifyable>(
   }
 
   // if once then must remove listener after fist callback called! then why push it to listenerList?!
-  if (!(callbackCall && options.once)) {
+  if (!(execCallback && options.once)) {
     if (options.priority === true) {
       signal.listenerList.unshift(listener);
     }
@@ -175,7 +175,7 @@ export const subscribe = <T extends Stringifyable>(
  * ```
  */
 export const unsubscribe = (listener: ListenerSpec): void => {
-  logger.logMethodArgs('unsubscribe', listener);
+  logger.logMethodArgs?.('unsubscribe', listener);
   const signal = getSignalObject(listener.signalId);
   const listenerIndex = signal.listenerList.findIndex((_listener) => _listener.id === listener.id);
   if (listenerIndex !== -1) {
@@ -193,7 +193,7 @@ export const unsubscribe = (listener: ListenerSpec): void => {
  * ```
  */
 export const removeAllListeners = (signalId: string): void => {
-  logger.logMethodArgs('removeAllListeners', signalId);
+  logger.logMethodArgs?.('removeAllListeners', signalId);
   const signal = getSignalObject(signalId);
   if (signal.listenerList.length === 0) return;
   signal.listenerList.length = 0;
@@ -218,7 +218,7 @@ export const dispatch = <T extends Stringifyable>(
 ): void => {
   options.debounce ??= 'AnimationFrame';
 
-  logger.logMethodArgs('dispatch', {signalId, detail, options});
+  logger.logMethodArgs?.('dispatch', {signalId, detail, options});
 
   const signal = getSignalObject<T>(signalId);
 
@@ -282,7 +282,7 @@ export const getDetail = <T extends Stringifyable>(signalId: string): T | undefi
  */
 export const untilNext = <T extends Stringifyable>(signalId: string): Promise<T> => {
   return new Promise((resolve) => {
-    logger.logMethodArgs('untilNext', signalId);
+    logger.logMethodArgs?.('untilNext', signalId);
     subscribe<T>(signalId, resolve, {
       once: true,
       priority: true,
@@ -301,14 +301,14 @@ export const untilNext = <T extends Stringifyable>(signalId: string): Promise<T>
  * setContextProvider('content-change', async (requestParam) => await fetchNewContent(requestParam));
  * ```
  */
-export const setContextProvider = <TContext extends Stringifyable, TRquest extends Stringifyable>(
+export const setContextProvider = <TContext extends Stringifyable, TRquest extends Stringifyable = null>(
   signalId: string,
   signalProvider: ProviderFunction<TRquest, TContext | void>,
   options: Partial<ProviderOptions> = {},
 ): void => {
   options.debounce ??= 'AnimationFrame';
   options.receivePrevious ??= 'AnimationFrame';
-  logger.logMethodArgs('setContextProvider', {signalId, options});
+  logger.logMethodArgs?.('setContextProvider', {signalId, options});
   const requestSignalId = 'request-' + signalId;
   removeAllListeners(requestSignalId);
   subscribe<TRquest>(
@@ -347,7 +347,7 @@ export const defineCommand = <TArgument extends StringifyableRecord, TReturn ext
   options: Partial<Pick<ProviderOptions, 'debounce'>> = {},
 ): ListenerSpec => {
   options.debounce ??= 'AnimationFrame';
-  logger.logMethodArgs('defineCommand', {commandId: signalId, options});
+  logger.logMethodArgs?.('defineCommand', {commandId: signalId, options});
   const requestSignalId = 'request-' + signalId;
   removeAllListeners(requestSignalId);
   return subscribe<TArgument & {_callbackSignalId?: string}>(
@@ -385,7 +385,7 @@ export const requestContext = <TRequest extends Stringifyable>(
   requestParam: TRequest,
   options: Partial<DispatchOptions> = {},
 ): void => {
-  logger.logMethodArgs('requestContext', {contextId, requestParam});
+  logger.logMethodArgs?.('requestContext', {contextId, requestParam});
   return dispatch<TRequest>(`request-${contextId}`, requestParam, options);
 };
 
@@ -402,7 +402,7 @@ export const requestCommand = <TArgument extends StringifyableRecord>(
   commandId: string,
   commandArgument: TArgument,
 ): void => {
-  logger.logMethodArgs('requestCommand', {commandId, commandArgument});
+  logger.logMethodArgs?.('requestCommand', {commandId, commandArgument});
   dispatch<TArgument>(`request-${commandId}`, commandArgument, {debounce: 'No'});
 };
 
@@ -424,7 +424,7 @@ export const requestCommandWithResponse = async <
   commandId: string,
   commandArgument: TArgument,
 ): Promise<TReturn> => {
-  logger.logMethodArgs('requestCommand', {commandId, commandArgument});
+  logger.logMethodArgs?.('requestCommand', {commandId, commandArgument});
 
   const _requestSignalId = `request-${commandId}`;
   const _callbackSignalId = `callback-${commandId}-${++_lastListenerAutoId}`;
@@ -456,7 +456,7 @@ export const requestCommandWithResponse = async <
  * ```
  */
 export const clearDetail = (signalId: string): void => {
-  logger.logMethodArgs('expire', signalId);
+  logger.logMethodArgs?.('expire', signalId);
   const signal = getSignalObject(signalId);
   delete signal.detail;
 };
@@ -473,7 +473,7 @@ export const clearDetail = (signalId: string): void => {
  * ```
  */
 export const destroySignal = (signalId: string): void => {
-  logger.logMethodArgs('destroySignal', signalId);
+  logger.logMethodArgs?.('destroySignal', signalId);
   const signal = _signalStorage[signalId];
   if (signal == null) return;
   signal.listenerList.length = 0;

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- build issues ([d3708e3](https://github.com/AliMD/alwatr/commit/d3708e34330871daea85851b54f37462c6773fc4))
+- compatible with new \_addSignalListener signal mixin ([e2be863](https://github.com/AliMD/alwatr/commit/e2be863acd9b99c4fc8f0a81c4efe2ac6db50c39))
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+- **soffit-pwa:** text-field width ([ca3d03b](https://github.com/AliMD/alwatr/commit/ca3d03babe4f2428414819cde884e696ecbed3b1))
+
+### Features
+
+- **soffit-pwa:** add agency card in homePage ([423c71a](https://github.com/AliMD/alwatr/commit/423c71afce1ea66c567a49c960c7199e0f981bd9))
+- **soffit-pwa:** page agency list ([8a4c18f](https://github.com/AliMD/alwatr/commit/8a4c18f7f5163b7c6699b23b09193deca7295d2b))
+- use button content ([a3f3872](https://github.com/AliMD/alwatr/commit/a3f3872c16e2bf5ad99c90cd03563007271fc530))
+
+### Performance Improvements
+
+- make google lighthouse happy ([c025dea](https://github.com/AliMD/alwatr/commit/c025dea4a937ee07411b1605ced8d51cd3bc4ce0))
+- **pwa:** optimize index.html ([e9c2613](https://github.com/AliMD/alwatr/commit/e9c2613d1526f2bc0f2cf4fdd34d276286995197))
+- **soffit-pwa:** import home page without lazy ([f1b37a2](https://github.com/AliMD/alwatr/commit/f1b37a2107eff7a93a6eff4398c08b88159fb84b))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Bug Fixes

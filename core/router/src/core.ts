@@ -45,8 +45,8 @@ const documentBaseUrl = document.querySelector('base')?.href || '/';
  * routerOutlet(routeConfig);
  * ```
  */
-export const routerOutlet = (routesConfig: RoutesConfig): unknown => {
-  logger.logMethodArgs('routerOutlet', {routesConfig});
+export const routerOutlet = (routesConfig: RoutesConfig, thisArg: unknown = null): unknown => {
+  logger.logMethodArgs?.('routerOutlet', {routesConfig});
 
   const routeContext = routeContextConsumer.getValue();
 
@@ -64,14 +64,14 @@ export const routerOutlet = (routesConfig: RoutesConfig): unknown => {
 
   try {
     if (typeof render === 'function') {
-      return render(routeContext);
+      return render.call(thisArg, routeContext);
     }
     // else
     if (routeId === '') {
       return routesConfig.templates.home(routeContext);
     }
     // else
-    logger.incident('routerOutlet', 'page_not_found', 'Requested page not defined in routesConfig.templates', {
+    logger.incident?.('routerOutlet', 'page_not_found', 'Requested page not defined in routesConfig.templates', {
       routeId,
       routeContext,
       routesConfig,
@@ -94,7 +94,7 @@ export const routerOutlet = (routesConfig: RoutesConfig): unknown => {
  * ```
  */
 export const url = (route: Partial<RouteContextBase>): string => {
-  logger.logMethodArgs('url', {route});
+  logger.logMethodArgs?.('url', {route});
 
   let href = '';
 
@@ -133,7 +133,7 @@ export const redirect = (
     keepSectionSlice = 0,
 ): void => {
   if (route == null) return;
-  logger.logMethodArgs('redirect', route);
+  logger.logMethodArgs?.('redirect', route);
   if (keepSectionSlice > 0 && typeof route === 'object' && Array.isArray(route.sectionList)) {
     const routeContext = routeContextConsumer.getValue();
     if (routeContext != null) {
@@ -153,7 +153,7 @@ export const redirect = (
 export const updateBrowserHistory = (url: string, pushState: PushState): void => {
   if (pushState === false || globalThis.history == null) return;
 
-  logger.logMethodArgs('updateBrowserHistory', url);
+  logger.logMethodArgs?.('updateBrowserHistory', url);
   if (location.href === url) return;
 
   if (pushState === 'replace') {
@@ -168,7 +168,7 @@ export const updateBrowserHistory = (url: string, pushState: PushState): void =>
  * Make route context from url.
  */
 export function makeRouteContext(): RouteContext {
-  logger.logMethod('makeRouteContext');
+  logger.logMethod?.('makeRouteContext');
 
   const sectionList = location.pathname
       .split('/')
@@ -234,7 +234,7 @@ export const toQueryParamString = (queryParameterList?: QueryParameters): string
  * Convert `queryParameter` string to `QueryParameters` object.
  */
 export const parseQueryParamString = (queryParameter?: string): QueryParameters => {
-  logger.logMethodArgs('parseQueryParamString', {queryParamString: queryParameter});
+  logger.logMethodArgs?.('parseQueryParamString', {queryParamString: queryParameter});
 
   const queryParamList: QueryParameters = {};
 

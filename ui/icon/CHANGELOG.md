@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- **icon:** 404 cache issue ([5fbc7d8](https://github.com/AliMD/alwatr/commit/5fbc7d87dcb6a82e8cb72e689730db1660c7aa58))
+- **icon:** build issue ([42d3914](https://github.com/AliMD/alwatr/commit/42d39140ca43602c8e30d676bcd9af4b4f62998e))
+- **icon:** render delay on icon change ([9b4bafb](https://github.com/AliMD/alwatr/commit/9b4bafbb23c613c32c35ae3a0c83c1fdd38b8ac4))
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+- **ui/icon:** svg property ([7815917](https://github.com/AliMD/alwatr/commit/7815917546be016387d9c0a30a60821d541a0bce))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Bug Fixes

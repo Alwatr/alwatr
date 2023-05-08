@@ -19,7 +19,7 @@ export const homePageContent: PageHomeContent = {
       stated: true,
       icon: 'logo-microsoft',
       headline: 'مجموعه سافیت',
-      href: 'https://beta.soffit.co',
+      href: 'https://soffit.co',
       target: '_blank',
       slot: `
         مجموعه تولیدی بازرگانی سافیت<br/>
@@ -46,7 +46,7 @@ export const homePageContent: PageHomeContent = {
       icon: 'cart-outline',
       flipRtl: true,
       headline: 'سفارش جدید',
-      href: '/new-order/',
+      href: '/order/new',
       description: 'فرآیند ثبت سفارش جدید.',
     },
 

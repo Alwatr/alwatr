@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {type CacheStrategy, type CacheDuplicate, fetch} from '@alwatr/fetch';
 
 const buttons = document.querySelectorAll('button') as NodeListOf<HTMLButtonElement>;

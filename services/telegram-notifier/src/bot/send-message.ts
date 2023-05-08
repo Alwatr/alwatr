@@ -5,15 +5,15 @@ import {storage} from '../lib/storage.js';
 const escapeCharacter = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
 
 export async function sendMessage(to: string, message: string): Promise<void> {
-  logger.logMethodArgs('sendMessage', {to, message});
+  logger.logMethodArgs?.('sendMessage', {to, message});
 
   for (const character of escapeCharacter) {
-    message.replaceAll(character, `\\${character}`);
+    message = message.replaceAll(character, `\\${character}`);
   }
 
   const target = storage.get(to);
   if (target === null) {
-    logger.incident('sendMessage', 'target_not_found', 'no one registered to this toke', {to});
+    logger.incident?.('sendMessage', 'target_not_found', 'no one registered to this toke', {to});
     return;
   }
 

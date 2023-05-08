@@ -6,12 +6,17 @@
   <meta charset="utf-8" />
   <title>مدیریت سفارشات نمایندگی‌های سافیت</title>
 
-  <link rel="stylesheet" href="alwatr-pwa.css" />
-  <script type="module" src="config.js"></script>
-  <script type="module" src="alwatr-pwa.js"></script>
+  <link rel="preload" as="style" href="alwatr-pwa.css" fetchpriority="high" />
+  <link rel="preload" as="script" href="alwatr-pwa.js" fetchpriority="high" crossorigin />
+  <link
+    media="print"
+    rel="stylesheet"
+    href="alwatr-pwa.css"
+    onload="this.media='all';this.onload=null;"
+  />
 
   <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#d0c5b4" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#2b4f9c" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#665d4f" />
   <meta
     name="viewport"
@@ -32,7 +37,7 @@
   <link rel="apple-touch-icon" href="image/icon-180.png" />
   <!-- Tile icon for Windows 8 (144x144 + tile color) -->
   <meta name="msapplication-TileImage" content="image/icon-512.png" />
-  <meta name="msapplication-TileColor" content="#d0c5b4" />
+  <meta name="msapplication-TileColor" content="#2b4f9c" />
   <meta name="msapplication-tap-highlight" content="no" />
 
   <meta name="description" content="نرم‌افزار یکپارچه مدیریت سفارشات نمایندگی‌های سافیت" />
@@ -41,9 +46,28 @@
   <meta name="og:description" content="نرم‌افزار یکپارچه مدیریت سفارشات نمایندگی‌های سافیت" />
 
   <link rel="canonical" href="https://order.soffit.co" />
+
+  <style>
+    html,
+    body {
+      margin: 0 auto;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    [unresolved] {
+      display: block;
+      text-align: center;
+      padding-top: 64px;
+      font-size: 22px;
+    }
+  </style>
 </head>
 <body>
-  <alwatr-pwa unresolved>Loading ...</alwatr-pwa>
+  <alwatr-pwa unresolved>درحال بارگذاری...</alwatr-pwa>
+
+  <script type="module" src="alwatr-pwa.js"></script>
 
   <noscript>
     <div class="noscript">

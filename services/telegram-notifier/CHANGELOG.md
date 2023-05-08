@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/AliMD/flight-finder/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- new logger api ([9d83a7d](https://github.com/AliMD/flight-finder/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+- **telegram-notifier:** escaping send message ([a9814bf](https://github.com/AliMD/flight-finder/commit/a9814bfca41c1260d5de7ec75e2356b3cdcbbc9d))
+
 # [0.30.0](https://github.com/AliMD/flight-finder/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Bug Fixes

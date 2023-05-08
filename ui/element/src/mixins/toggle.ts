@@ -28,7 +28,7 @@ export function ToggleMixin<T extends Constructor<LoggerMixinInterface>>(
      * On host click event.
      */
     protected _click(event: MouseEvent): void {
-      this._logger.logMethod('_click');
+      this._logger.logMethod?.('_click');
       if (event.metaKey || event.altKey || event.shiftKey) return;
       this.selected = !this.selected;
       this.dispatchEvent(new CustomEvent('selected-change'));

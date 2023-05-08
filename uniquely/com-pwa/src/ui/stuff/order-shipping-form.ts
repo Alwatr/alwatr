@@ -5,7 +5,7 @@ import '@alwatr/ui-kit/button/button.js';
 import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
-import {getLocalStorageItem} from '@alwatr/util';
+import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 
 import type {AlwatrRadioGroup, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
@@ -15,6 +15,8 @@ declare global {
     'alwatr-order-shipping-form': AlwatrOrderShoppingForm;
   }
 }
+
+const localStorageId = 'shipping_form_data_x3';
 
 /**
  * Alwatr Order Shipping Form.
@@ -42,14 +44,14 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
   }
 
   private _saveFormData(): void {
-    this._logger.logMethod('_saveFormData');
-    localStorage.setItem('shipping_form_data_x1', JSON.stringify(this.formData));
+    this._logger.logMethod?.('_saveFormData');
+    setLocalStorageItem(localStorageId, this.formData);
   }
 
   private _loadFormData(): void {
     if (Object.values(this.formData).length !== 0) return;
-    this._logger.logMethod('_loadFormData');
-    const formData = getLocalStorageItem('shipping_form_data_x1', this.formData);
+    this._logger.logMethod?.('_loadFormData');
+    const formData = getLocalStorageItem(localStorageId, this.formData);
     for (const prop in formData) {
       if (!Object.prototype.hasOwnProperty.call(formData, prop)) continue;
       this.formData[prop] = formData[prop];
@@ -57,7 +59,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
 
     const radioGroupOptions = {
       carType: <RadioGroupOptions>{
@@ -154,7 +156,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
   }
 
   private _inputChanged(event: CustomEvent): void {
-    this._logger.logMethod('_inputChanged');
+    this._logger.logMethod?.('_inputChanged');
     const target = event.target as AlwatrTextField | AlwatrRadioGroup;
     if (target == null) return;
     this.formData[target.name] = target.value;

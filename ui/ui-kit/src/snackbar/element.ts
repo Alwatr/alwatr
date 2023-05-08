@@ -89,7 +89,7 @@ export class AlwatrSnackbar extends AlwatrSurface {
 
   private _opened = false;
   set open(open: boolean) {
-    this._logger.logProperty('open', open);
+    this._logger.logProperty?.('open', open);
     if (this._opened === open) return;
     this._opened = open;
     this.updateComplete.then(async () => {
@@ -118,10 +118,14 @@ export class AlwatrSnackbar extends AlwatrSurface {
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     return html`<span class="message">${this.message}</span>${when(
         this.actionLabel,
-        () => html`<alwatr-button @click=${this._actionButtonClick}>${this.actionLabel}</alwatr-button>`,
+        () =>
+          html`<alwatr-button
+            .content=${{label: this.actionLabel}}
+            @click=${this._actionButtonClick}
+          ></alwatr-button>`,
     )}`;
   }
 

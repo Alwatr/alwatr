@@ -150,7 +150,7 @@ export class AlwatrProductCard extends ToggleMixin(LocalizeMixin(SignalMixin(Alw
   }
 
   override render(): unknown {
-    this._logger.logMethod('render');
+    this._logger.logMethod?.('render');
     if (this.content == null) return nothing;
 
     // const icon = this.selected ? 'radio-button-on-outline' : 'radio-button-off-outline';

@@ -11,7 +11,7 @@ nanoServer.route('DELETE', '/job', deleteJob);
 async function deleteJob(
     connection: AlwatrConnection,
 ): Promise<AlwatrServiceResponse<Record<string, never>, StringifyableRecord>> {
-  logger.logMethod('deleteJob');
+  logger.logMethod?.('deleteJob');
 
   connection.requireToken(config.nanoServer.accessToken) == null;
 
