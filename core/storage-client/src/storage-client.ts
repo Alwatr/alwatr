@@ -237,7 +237,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * Example:
    *
    * ```ts
-   * await userStorage.link('private/user-50/order-list', 'public/token/oder-list');
+   * await storageClient.link('private/user-50/order-list', 'public/token/oder-list');
    * ```
    */
   async link(src: string, dest: string): Promise<void> {
@@ -255,14 +255,12 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
   }
 
   /**
-   * Make a symbolic link
-   *
-   * **CAUTION: the destination path will be removed if exists**
+   * Make a cache from the api response.
    *
    * Example:
    *
    * ```ts
-   * await userStorage.link('private/user-50/order-list', 'public/token/oder-list');
+   * await storageClient.cacheApiResponse('public/token/user-profile', {id: 'test', ...});
    * ```
    */
   async cacheApiResponse<T extends StringifyableRecord>(
