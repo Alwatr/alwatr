@@ -7,6 +7,8 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
+RUN apk add --no-cache git
+
 # Install dependencies
 COPY package.json *.lock ./
 RUN if [ -f *.lock ]; then \
