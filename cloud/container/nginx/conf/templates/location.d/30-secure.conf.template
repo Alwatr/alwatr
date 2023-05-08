@@ -1,3 +1,5 @@
+disable_symlinks $NGINX_DISABLE_SYMLINKS;
+
 location ~* (?:\.(?:bak|conf|dist|fla|in[ci]|log|psd|sh|sql|sw[op]|lock)|~)$ {
   deny all;
   access_log off; log_not_found off;
