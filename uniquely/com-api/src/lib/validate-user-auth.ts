@@ -2,7 +2,7 @@ import {userFactory} from './crypto.js';
 import {userStorage} from './storage.js';
 
 import type {User, UserAuth} from '@alwatr/type';
-import type {UserPermission} from '@alwatr/type/src/customer-order-management.js';
+import type {UserPermission} from '@alwatr/type/customer-order-management.js';
 
 export const validateUserAuth = async (userAuth: UserAuth | null, permission?: UserPermission): Promise<User> => {
   if (userAuth == null) {
