@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- **crypto:** package ([866c5f4](https://github.com/AliMD/alwatr/commit/866c5f490ea2eaa75bf177f35b3f4711931e13d2))
+
+### Features
+
+- **crypto:** make prefix for userId ([5baa00a](https://github.com/AliMD/alwatr/commit/5baa00aafb16a4c6ed1d77913edddd090f732dad))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 **Note:** Version bump only for package @alwatr/crypto

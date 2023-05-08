@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+- **storage-server/cache-api-response:** resolve path ([dba3a76](https://github.com/AliMD/alwatr/commit/dba3a76bdcb4ec1732d71fb1ca7e94e44e3458fb))
+- **storage-server/cache-api-response:** resolve path ([ae10ebd](https://github.com/AliMD/alwatr/commit/ae10ebd584ff0047508aa175b3dc46e1cfc585e1))
+- **storage-server/cache-api-response:** resolve path and check not outside of base ([5f80d61](https://github.com/AliMD/alwatr/commit/5f80d6128d55fea52c2a5a28debfe8039ebd0e44))
+- **storage-server/link:** resolve and security check paths ([c4db8f4](https://github.com/AliMD/alwatr/commit/c4db8f4f0aabb7a83a6081776e992bc75a34f5f7))
+- **storage-server/touch:** remove id query params ([f6c9671](https://github.com/AliMD/alwatr/commit/f6c96719b00d8d6014a566396e06cfd6ef950454))
+- **storage-server:** import cache-api-response ([1ffa5b3](https://github.com/AliMD/alwatr/commit/1ffa5b3b8fb276b2af99af41af8270182f7de0b0))
+- **storage-server:** import route ([78fff6e](https://github.com/AliMD/alwatr/commit/78fff6e464535cadcd28411f82b1a8e0b370fa2e))
+- **storage-server:** routes ([3e162d1](https://github.com/AliMD/alwatr/commit/3e162d10daabdfbe91f4273bdc032031bd87cdf9))
+
+### Features
+
+- **service:** `link` route ([eeb3275](https://github.com/AliMD/alwatr/commit/eeb3275160df0f5a307aa21d3406930d3ec24506))
+- **storage-server/cache-api-response:** demo ([8ad9193](https://github.com/AliMD/alwatr/commit/8ad9193cdacf7806486ead9e00da1bf0c199b932))
+- **storage-server/link:** make dest folder if not exist ([a68a442](https://github.com/AliMD/alwatr/commit/a68a442423e42dd1820c7e95140c05581accf380))
+- **storage-server:** `cache-api-response` route ([666b255](https://github.com/AliMD/alwatr/commit/666b2557aaccc256c7f8e89f117207fa1da21b81))
+- **storage-server:** add touch method ([a99ae5d](https://github.com/AliMD/alwatr/commit/a99ae5df13f909eba4ad5cbf6d7d04cb2a98b6f6))
+- **storage-server:** demo for link and touch ([4a59530](https://github.com/AliMD/alwatr/commit/4a595305bfde7127f32ee8096479d55c9d3b4490))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Features

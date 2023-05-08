@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- **logger:** logMethod args type ([66338b7](https://github.com/AliMD/alwatr/commit/66338b7ba1d4b15af78f9f604f7be0a7e483413d))
+- **logger:** logMethod args type ([1983b3d](https://github.com/AliMD/alwatr/commit/1983b3d2fe260226ca2660e33b9bd924facdf776))
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+- **logger:** add `duration time` to logger time label ([ef188c4](https://github.com/AliMD/alwatr/commit/ef188c41a02789e1b35ab424bab24a393a03a3b0))
+- **logger:** add `time` & `timeEnd` ([0bd4ec5](https://github.com/AliMD/alwatr/commit/0bd4ec5dbd185b17cfb8656a84a782e848ade138))
+- **logger:** optional devMode per package ([cc1eb87](https://github.com/AliMD/alwatr/commit/cc1eb879832807d55ad4cf268a54b2d5e4346fff))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Features

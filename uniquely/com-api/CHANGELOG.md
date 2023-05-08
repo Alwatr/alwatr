@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- **com-api:** build issue ([0fd8e35](https://github.com/AliMD/alwatr/commit/0fd8e35546ebb5f45155286fd89270d2dc07bcb7))
+- **com-api:** import route ([4f6f9e0](https://github.com/AliMD/alwatr/commit/4f6f9e01777ef89db2e0e7b623a17da00154f0fe))
+- **com-api:** remove require token ([08a741e](https://github.com/AliMD/alwatr/commit/08a741ef925cf3d13d788cca33143d3a212bb5d3))
+- **com-api:** set duration for token ([b26f0c4](https://github.com/AliMD/alwatr/commit/b26f0c404130b11f8871bf8b51347b4b3ababeeb))
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+- **com-api:** add some new functions & edit config ([09e887b](https://github.com/AliMD/alwatr/commit/09e887b608f5ffc97b2ac52d9196a8756125a9c8))
+- **com-api:** demo user ([64c3909](https://github.com/AliMD/alwatr/commit/64c3909f53fd6a363e5523560abc0250feb4c396))
+- **com-api:** make user by admin ([9fc8b98](https://github.com/AliMD/alwatr/commit/9fc8b987cc32a29e1b4de273694a592a8acec1ff))
+- **com-api:** set user info in user-list patch ([4530d98](https://github.com/AliMD/alwatr/commit/4530d982459a2ac10e51c73d5306ae8424fff07b))
+- **com-api:** update price ([4b8eb4e](https://github.com/AliMD/alwatr/commit/4b8eb4e17a2aa562c0ad856bfc957a2099583c2f))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Bug Fixes
