@@ -1,5 +1,5 @@
 import {existsSync, readFileSync, writeFileSync, renameSync, mkdirSync} from 'node:fs';
-import {rename, mkdir, writeFile, readFile} from 'node:fs/promises';
+import {rename, mkdir, writeFile, readFile, rm, symlink} from 'node:fs/promises';
 import {dirname} from 'node:path';
 
 import {logger} from './_logger.js';
@@ -187,4 +187,30 @@ export const writeJsonFile = async <T extends StringifyableRecord = Stringifyabl
   }
 
   logger.timeEnd?.(`writeJsonFile(${timeKey})`);
+};
+
+/**
+ * Make a symbolic link
+ *
+ * **CAUTION: the destination path will be removed if exists**
+ */
+export const makeLinkForce = async (src: string, dest: string): Promise<void> => {
+  logger.logMethodArgs?.('makeLink', {src, dest});
+
+  try {
+    if (existsSync(dest)) {
+      await rm(dest, {recursive: false, force: true});
+    }
+    else {
+      const destDir = dirname(dest);
+      if (!existsSync(destDir)) {
+        await mkdir(dirname(dest), {recursive: true});
+      }
+    }
+
+    await symlink(src, dest);
+  }
+  catch (error) {
+    logger.error('makeLink', 'symlink_failed', error);
+  }
 };
