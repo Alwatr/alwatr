@@ -24,7 +24,7 @@ services:
         max-file: '2'
 
     environment:
-      - NGINX_ACCESS_LOG=${PWA_ACCESS_LOG:-}
+      - NGINX_ACCESS_LOG=${PWA_ACCESS_LOG:-off}
 
     labels:
       traefik.enable: true
@@ -124,7 +124,7 @@ services:
       alwatr-public-network:
 
     environment:
-      - NGINX_ACCESS_LOG=${NGINX_STORAGE_ACCESS_LOG:-}
+      - NGINX_ACCESS_LOG=${NGINX_STORAGE_ACCESS_LOG:-off}
 
     volumes:
       - type: bind
@@ -159,7 +159,7 @@ services:
       alwatr-public-network:
 
     environment:
-      - NGINX_ACCESS_LOG=${CDN_ACCESS_LOG:-}
+      - NGINX_ACCESS_LOG=${CDN_ACCESS_LOG:-off}
 
     volumes:
       - type: bind
