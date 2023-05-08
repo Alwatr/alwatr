@@ -1,6 +1,6 @@
 import {existsSync} from 'node:fs';
-import {symlink, rm} from 'node:fs/promises';
-import {resolve} from 'node:path';
+import {symlink, rm, mkdir} from 'node:fs/promises';
+import {dirname, resolve} from 'node:path';
 
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
@@ -57,6 +57,12 @@ const makeLinkForce = async (src: string, dest: string): Promise<void> => {
   try {
     if (existsSync(dest)) {
       await rm(dest, {recursive: false, force: true});
+    }
+    else {
+      const destDir = dirname(dest);
+      if (!existsSync(destDir)) {
+        await mkdir(dirname(dest), {recursive: true});
+      }
     }
 
     await symlink(src, dest);
