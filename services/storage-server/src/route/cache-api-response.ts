@@ -15,7 +15,7 @@ nanoServer.route('PUT', '/cache-api-response', async (connection) => {
   const bodyJson = await connection.requireJsonBody<{ path: string; data: StringifyableRecord }>();
 
   const base = config.storage.path;
-  const path = resolve(base, bodyJson.path, '/.json');
+  const path = resolve(base, bodyJson.path + '.json');
 
   if (!path.startsWith(base)) {
     return {
