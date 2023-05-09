@@ -1,9 +1,17 @@
 import {FetchOptions} from '@alwatr/fetch';
-import {getConfKey} from '@alwatr/pwa-helper/config.js';
+import {getLocalStorageItem} from '@alwatr/util';
 
+/**
+ * Debug API.
+ *
+ * ```ts
+ * localStorage.setItem('DEBUG_API', '"https://canary.keeperco.ir"');
+ * ```
+ */
+const apiPrefix = getLocalStorageItem('DEBUG_API', '');
 export const config = {
-  cdn: getConfKey<string>('cdn'),
-  fetchContextOptions: <Partial<FetchOptions>> {
+  cdn: apiPrefix + '/cdn',
+  fetchContextOptions: <Partial<FetchOptions>>{
     method: 'GET',
     removeDuplicate: 'auto',
     retry: 2,

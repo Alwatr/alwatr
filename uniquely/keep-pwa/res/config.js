@@ -1,3 +1,0 @@
-window.appConfig = {
-  cdn: '/cdn',
-};
