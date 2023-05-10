@@ -14,6 +14,14 @@ export const homePageContent = {
     description:
       'Keep is an Iranian holding company in the field of building materials and stone veneer manufacturing. It is engaged in the production and distribution of construction services. The factory operates with the aim of distributing construction products in Iranian and international markets. The products produced by this collection are of high quality and are accompanied by experienced staff committed to customer satisfaction.',
   },
+  product: {
+    elevated: 1,
+    highlight: true,
+    stated: true,
+    wide: true,
+    icon: 'cart-outline',
+    headline: 'View Products',
+  },
   catalogue: {
     elevated: 1,
     highlight: true,
@@ -24,13 +32,6 @@ export const homePageContent = {
     description: 'Download the catalogue introducing Keep products',
     href: 'https://www.dropbox.com/s/dl/k1jct7jc7netmsq/keep-product-brochure.pdf',
     target: 'download',
-  },
-  product: {
-    elevated: 1,
-    highlight: true,
-    stated: true,
-    icon: 'cart-outline',
-    headline: 'View Products',
   },
   socialList: [
     {
@@ -72,26 +73,6 @@ export const homePageContent = {
       headline: 'Aparat',
       description: 'Keep Aparat Channel',
       href: 'https://www.aparat.com/keeperco',
-      target: '_blank',
-    },
-    {
-      elevated: 1,
-      highlight: true,
-      stated: true,
-      icon: 'logo-linkedin',
-      headline: 'LinkedIn',
-      description: 'Keep LinkedIn Page',
-      href: 'https://www.linkedin.com/company/keeperco',
-      target: '_blank',
-    },
-    {
-      elevated: 1,
-      highlight: true,
-      stated: true,
-      icon: 'logo-youtube',
-      headline: 'YouTube',
-      description: 'Keep YouTube Channel',
-      href: 'https://youtube.com/@keeperco',
       target: '_blank',
     },
   ],
