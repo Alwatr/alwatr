@@ -1,10 +1,8 @@
 /* eslint-disable max-len */
-import {replaceNumber} from '@alwatr/i18n';
-
 export const homePageContent = {
   topAppBar: {
     type: 'center',
-    headline: 'مجموعه کیپ',
+    headline: 'Keep Collection',
     startIcon: {icon: 'menu-outline', flipRtl: true},
     endIconList: [{icon: 'globe-outline', clickSignalId: 'language-button-click-event'}],
   },
@@ -12,8 +10,9 @@ export const homePageContent = {
     elevated: 1,
     stated: true,
     wide: true,
-    headline: 'درباره ما',
-    description: 'شرکت تولیدی keep مصالح ساختمانی و اسکوپ  سنگ‌نما هلدینگی ایرانی است که در زمینه تولید و توزیع خدمات ساختمانی فعالیت دارد. این کارخانه با هدف توزیع محصولات ساختمانی در بازارهای ایرانی و خارجی مشغول به فعالیت می‌باشد. محصولات تولیدی این مجموعه با کیفیت بالا و کادری مجرب و تعهد به اصول جلب رضایت مشتری می‌باشد.',
+    headline: 'About Us',
+    description:
+      'Keep is an Iranian holding company in the field of building materials and stone veneer manufacturing. It is engaged in the production and distribution of construction services. The factory operates with the aim of distributing construction products in Iranian and international markets. The products produced by this collection are of high quality and are accompanied by experienced staff committed to customer satisfaction.',
   },
   catalogue: {
     elevated: 1,
@@ -21,8 +20,8 @@ export const homePageContent = {
     stated: true,
     icon: 'cloud-download-outline',
     flipRtl: true,
-    headline: 'دانلود کاتالوگ',
-    description: 'دانلود کاتالوگ معرفی محصولات کیپ',
+    headline: 'Download Catalogue',
+    description: 'Download the catalogue introducing Keep products',
     href: 'https://www.dropbox.com/s/dl/k1jct7jc7netmsq/keep-product-brochure.pdf',
     target: 'download',
   },
@@ -31,7 +30,7 @@ export const homePageContent = {
     highlight: true,
     stated: true,
     icon: 'cart-outline',
-    headline: 'مشاهده محصولات',
+    headline: 'View Products',
   },
   socialList: [
     {
@@ -40,11 +39,8 @@ export const homePageContent = {
       stated: true,
       icon: 'call-outline',
       flipRtl: true,
-      headline: 'تماس با ما',
-      slot: `
-        <div>تلفن ارتباط مستقیم</div>
-        <div dir="ltr">${replaceNumber('0915 101 1507')}</div>
-      `,
+      headline: 'Contact Us',
+      slot: '<div>Direct Contact Number</div><div dir="ltr">0915 101 1507</div>',
       href: 'tel:+989151011507',
     },
     {
@@ -52,8 +48,8 @@ export const homePageContent = {
       highlight: true,
       stated: true,
       icon: 'send-outline',
-      headline: 'تلگرام',
-      description: 'کانال تلگرام کیپ',
+      headline: 'Telegram',
+      description: 'Keep Telegram Channel',
       href: 'https://t.me/keeperco',
       target: '_blank',
     },
@@ -62,8 +58,8 @@ export const homePageContent = {
       highlight: true,
       stated: true,
       icon: 'logo-instagram',
-      headline: 'اینستاگرام',
-      description: 'صفحه‌ی اینستاگرام کیپ',
+      headline: 'Instagram',
+      description: 'Keep Instagram Page',
       href: 'https://instagram.com/keeperco',
       target: '_blank',
     },
@@ -73,8 +69,8 @@ export const homePageContent = {
       stated: true,
       icon: 'videocam-outline',
       flipRtl: true,
-      headline: 'آپارات',
-      description: 'کانال آپارات کیپ',
+      headline: 'Aparat',
+      description: 'Keep Aparat Channel',
       href: 'https://www.aparat.com/keeperco',
       target: '_blank',
     },
@@ -83,8 +79,8 @@ export const homePageContent = {
       highlight: true,
       stated: true,
       icon: 'logo-linkedin',
-      headline: 'لینکدین',
-      description: 'صفحه‌ی لینکدین کیپ',
+      headline: 'LinkedIn',
+      description: 'Keep LinkedIn Page',
       href: 'https://www.linkedin.com/company/keeperco',
       target: '_blank',
     },
@@ -93,8 +89,8 @@ export const homePageContent = {
       highlight: true,
       stated: true,
       icon: 'logo-youtube',
-      headline: 'یوتیوب',
-      description: 'کانال یوتیوب کیپ',
+      headline: 'YouTube',
+      description: 'Keep YouTube Channel',
       href: 'https://youtube.com/@keeperco',
       target: '_blank',
     },
