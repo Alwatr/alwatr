@@ -1,5 +1,5 @@
 import type {StringifyableRecord} from '@alwatr/type';
-import type {IconBoxContent} from '@alwatr/ui-kit/src/card/icon-box.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 import type {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 
