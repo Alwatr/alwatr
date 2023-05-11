@@ -1,8 +1,8 @@
 import {userFactory} from './crypto.js';
 import {userStorage} from './storage.js';
 
-import type {AlwatrServiceResponseFailed, User, UserAuth} from '@alwatr/type';
-import type {UserPermission} from '@alwatr/type/customer-order-management.js';
+import type {AlwatrServiceResponseFailed, UserAuth} from '@alwatr/type';
+import type {ComUser, UserPermission} from '@alwatr/type/customer-order-management.js';
 
 const error403 = (): AlwatrServiceResponseFailed => ({
   ok: false,
@@ -10,7 +10,7 @@ const error403 = (): AlwatrServiceResponseFailed => ({
   errorCode: 'access_denied',
 });
 
-export const validateUserAuth = async (userAuth: UserAuth | null, permission?: UserPermission): Promise<User> => {
+export const validateUserAuth = async (userAuth: UserAuth | null, permission?: UserPermission): Promise<ComUser> => {
   if (userAuth == null) {
     throw {
       ok: false,
