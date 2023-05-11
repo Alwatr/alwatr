@@ -153,6 +153,7 @@ function makeMessage(job: Job): string {
   logger.logMethod?.('makeMessage');
 
   if (job.resultList.length === 0) {
+    // return 'هیچ پروازی یافت نشد!';
     return '';
   }
 
