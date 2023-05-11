@@ -2,12 +2,7 @@ import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
-import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
-import type {StringifyableRecord} from '@alwatr/type';
-
-nanoServer.route('GET', '/has', has);
-
-function has(connection: AlwatrConnection): AlwatrServiceResponse<StringifyableRecord, StringifyableRecord> {
+nanoServer.route<boolean>('GET', '/has', (connection) => {
   logger.logMethod?.('has');
 
   connection.requireToken(config.nanoServer.accessToken);
@@ -18,6 +13,6 @@ function has(connection: AlwatrConnection): AlwatrServiceResponse<StringifyableR
 
   return {
     ok: true,
-    data: {has: storageEngine.has(params.id)},
+    data: storageEngine.has(params.id),
   };
-}
+});
