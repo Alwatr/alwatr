@@ -1,17 +1,10 @@
-import {StringifyableRecord} from '@alwatr/type';
-
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
-import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
 import type {AlwatrDocumentObject} from '@alwatr/storage-engine';
 
-nanoServer.route('PATCH', '/', updateDocument);
-
-async function updateDocument(
-    connection: AlwatrConnection,
-): Promise<AlwatrServiceResponse<StringifyableRecord, StringifyableRecord>> {
+nanoServer.route<AlwatrDocumentObject>('PATCH', '/', async (connection) => {
   logger.logMethod?.('updateDocument');
 
   connection.requireToken(config.nanoServer.accessToken);
@@ -34,4 +27,4 @@ async function updateDocument(
     ok: true,
     data: storageEngine.set(document, true),
   };
-}
+});
