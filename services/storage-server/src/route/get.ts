@@ -1,14 +1,10 @@
-
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
-import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
-import type {StringifyableRecord} from '@alwatr/type';
+import type {Stringifyable} from '@alwatr/type';
 
-nanoServer.route('GET', '/', getDocument);
-
-function getDocument(connection: AlwatrConnection): AlwatrServiceResponse<StringifyableRecord, StringifyableRecord> {
+nanoServer.route<Stringifyable>('GET', '/', (connection) => {
   logger.logMethod?.('getDocument');
 
   if (!connection.url.search) {
@@ -29,16 +25,8 @@ function getDocument(connection: AlwatrConnection): AlwatrServiceResponse<String
 
   const document = storageEngine.get(params.id, true);
 
-  if (document == null) {
-    return {
-      ok: false,
-      statusCode: 404,
-      errorCode: 'document_not_found',
-    };
-  }
-
   return {
     ok: true,
     data: document,
   };
-}
+});
