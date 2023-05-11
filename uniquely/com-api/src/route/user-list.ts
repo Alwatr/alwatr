@@ -3,16 +3,18 @@ import {nanoServer} from '../lib/server.js';
 import {storageClient} from '../lib/storage.js';
 import {validateUserAuth} from '../lib/validate-user-auth.js';
 
-nanoServer.route('GET', '/user-list/', async (connection) => {
+import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {ComUser} from '@alwatr/type/customer-order-management.js';
+
+nanoServer.route<AlwatrDocumentStorage<ComUser>>('GET', '/user-list/', async (connection) => {
   logger.logMethod?.('get-user-list');
 
-  await validateUserAuth(connection.getUserAuth(), '*');
+  await validateUserAuth(connection.getUserAuth(), 'user-list/read');
 
-  const userList = await storageClient.getStorage(config.privateStorage.userList);
+  const userList = await storageClient.getStorage<ComUser>(config.privateStorage.userList);
 
   return {
     ok: true,
-    statusCode: 200,
     data: userList,
   };
 });
