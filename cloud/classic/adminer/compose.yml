@@ -21,6 +21,9 @@ services:
       - alwatr-private-network
       - alwatr-public-network
 
+    environment:
+      - PHP_MAX_EXECUTION_TIME=600
+
     env_file: .env
 
     labels:
