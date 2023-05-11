@@ -5,15 +5,17 @@ import {validateUserAuth} from '../lib/validate-user-auth.js';
 
 import type {Product} from '@alwatr/type/customer-order-management.js';
 
-nanoServer.route('PATCH', '/product-list/', async (connection) => {
+nanoServer.route<Record<string, never>>('PATCH', '/product-list', async (connection) => {
   logger.logMethod?.('patch-product-list');
 
-  await validateUserAuth(connection.getUserAuth());
+  await validateUserAuth(connection.getUserAuth(), 'product/patch');
+
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
   const bodyJson = await connection.requireJsonBody<{data: Array<Product>}>();
 
+  const storage = config.publicStorage.productList.replace('${name}', params.storage);
   for (const price of bodyJson.data) {
-    await storageClient.set(price, config.publicStorage.productList.replace('${name}', params.storage));
+    await storageClient.set<Product>(price, storage);
   }
 
   return {
