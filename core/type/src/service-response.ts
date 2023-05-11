@@ -1,4 +1,4 @@
-import {StringifyableRecord} from './type-helper.js';
+import {Stringifyable, StringifyableRecord} from './type-helper.js';
 
 export type Methods = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'TRACE' | 'OPTIONS' | 'PATCH';
 
@@ -14,7 +14,7 @@ export interface AlwatrServiceResponseFailed extends StringifyableRecord {
   data?: never;
 }
 
-export interface AlwatrServiceResponseSuccess<TData extends StringifyableRecord = StringifyableRecord>
+export interface AlwatrServiceResponseSuccess<TData extends Stringifyable = Stringifyable>
   extends StringifyableRecord {
   ok: true;
   statusCode?: number;
@@ -24,7 +24,7 @@ export interface AlwatrServiceResponseSuccess<TData extends StringifyableRecord 
 }
 
 export interface AlwatrServiceResponseSuccessWithMeta<
-  TData extends StringifyableRecord = StringifyableRecord,
+  TData extends Stringifyable = Stringifyable,
   TMeta extends StringifyableRecord = StringifyableRecord
 > extends StringifyableRecord {
   ok: true;
@@ -35,7 +35,7 @@ export interface AlwatrServiceResponseSuccessWithMeta<
 }
 
 export type AlwatrServiceResponse<
-  TData extends StringifyableRecord = StringifyableRecord,
+  TData extends Stringifyable = Stringifyable,
   TMeta extends StringifyableRecord = StringifyableRecord
 > =
   | AlwatrServiceResponseSuccess<TData>
