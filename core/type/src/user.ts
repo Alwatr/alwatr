@@ -17,7 +17,7 @@ export interface User extends AlwatrDocumentObject {
   /**
    * User authorization permissions list.
    */
-  permissions?: Array<string>;
+  permissions?: Array<string> | 'root';
 
   fullName: string;
 
