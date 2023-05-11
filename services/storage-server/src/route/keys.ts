@@ -2,11 +2,7 @@ import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
-import type {AlwatrConnection, AlwatrServiceResponse} from '@alwatr/nano-server';
-
-nanoServer.route('GET', '/keys', getStorageKeys);
-
-function getStorageKeys(connection: AlwatrConnection): AlwatrServiceResponse<{keys: Array<string>}, never> {
+nanoServer.route<Array<string>>('GET', '/keys', (connection) => {
   logger.logMethod?.('getStorageKeys');
 
   connection.requireToken(config.nanoServer.accessToken);
@@ -17,6 +13,6 @@ function getStorageKeys(connection: AlwatrConnection): AlwatrServiceResponse<{ke
 
   return {
     ok: true,
-    data: {keys: storageEngine.keys},
+    data: storageEngine.keys,
   };
-}
+});
