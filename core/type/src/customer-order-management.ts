@@ -143,11 +143,11 @@ export interface OrderShippingInfo extends StringifyableRecord {
   timePeriod: (typeof timePeriodCS)[number];
 }
 
-export const userPermissionsCS = ['*', 'user/patch'] as const;
+export const userPermissionsCS = ['user/patch', 'price/patch', 'product/patch'] as const;
 export type UserPermission = typeof userPermissionsCS[number];
 
 export interface ComUser extends User {
-  permissions?: Array<UserPermission>;
+  permissions?: Array<UserPermission> | 'root';
   shopName?: string;
 }
 
