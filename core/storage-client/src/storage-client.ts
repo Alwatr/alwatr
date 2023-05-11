@@ -113,22 +113,17 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
   async get<T extends DocumentType = DocumentType>(
       documentId: string,
       storage: string | undefined = this.config.name,
-  ): Promise<T> {
+  ): Promise<T | null> {
     this._logger.logMethodArgs?.('get', {storage, documentId});
     if (storage == null) throw new Error('storage_not_defined');
 
-    const responseJson = await serviceRequest<AlwatrServiceResponseSuccessWithMeta<T>>({
+    const responseJson = await serviceRequest<AlwatrServiceResponseSuccessWithMeta<T | null>>({
       ...this.fetchOption,
       queryParameters: {
         storage,
         id: documentId,
       },
     });
-
-    if (typeof responseJson.data !== 'object' || typeof responseJson.data.id !== 'string') {
-      this._logger.error('get', 'invalid_response_data', {responseJson});
-      throw new Error('invalid_response_data');
-    }
 
     return responseJson.data;
   }
