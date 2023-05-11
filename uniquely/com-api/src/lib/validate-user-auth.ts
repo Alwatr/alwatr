@@ -1,8 +1,14 @@
 import {userFactory} from './crypto.js';
 import {userStorage} from './storage.js';
 
-import type {User, UserAuth} from '@alwatr/type';
+import type {AlwatrServiceResponseFailed, User, UserAuth} from '@alwatr/type';
 import type {UserPermission} from '@alwatr/type/customer-order-management.js';
+
+const error403 = (): AlwatrServiceResponseFailed => ({
+  ok: false,
+  statusCode: 403,
+  errorCode: 'access_denied',
+});
 
 export const validateUserAuth = async (userAuth: UserAuth | null, permission?: UserPermission): Promise<User> => {
   if (userAuth == null) {
@@ -13,19 +19,18 @@ export const validateUserAuth = async (userAuth: UserAuth | null, permission?: U
     };
   }
 
-  const error403 = {
-    ok: false,
-    statusCode: 403,
-    errorCode: 'access_denied',
-  } as const;
 
   const user = await userStorage.get(userAuth.id);
 
-  if (user == null) throw error403;
+  if (user == null) throw error403();
 
-  if (!userFactory.verifyToken([user.id, user.lpe], userAuth.token)) throw error403;
+  if (!userFactory.verifyToken([user.id, user.lpe], userAuth.token)) throw error403();
 
-  if (permission && user.permissions?.includes(permission) !== true) throw error403;
+  if (permission && user.permissions !== 'root') {
+    if (!Array.isArray(user.permissions) || user.permissions.includes(permission) !== true) {
+      throw error403();
+    }
+  }
 
   return user;
 };
