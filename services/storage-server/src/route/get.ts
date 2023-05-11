@@ -2,12 +2,11 @@ import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
-import type {Stringifyable} from '@alwatr/type';
+import type {AlwatrDocumentObject, StringifyableRecord} from '@alwatr/type';
 
-nanoServer.route<Stringifyable>('GET', '/', (connection) => {
-  logger.logMethod?.('getDocument');
-
+nanoServer.route<AlwatrDocumentObject | StringifyableRecord | null>('GET', '/', (connection) => {
   if (!connection.url.search) {
+    logger.logMethod?.('home');
     return {
       ok: true,
       data: {
@@ -16,6 +15,9 @@ nanoServer.route<Stringifyable>('GET', '/', (connection) => {
       },
     };
   }
+
+  // else
+  logger.logMethod?.('getDocument');
 
   connection.requireToken(config.nanoServer.accessToken);
 
