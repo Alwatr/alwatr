@@ -137,14 +137,19 @@ export interface OrderShippingInfo extends StringifyableRecord {
   recipientName: string;
   recipientNationalCode: string;
   address: string;
-  description: string,
+  description: string;
   ladingType: (typeof ladingTypeCS)[number];
   carType: (typeof carTypeCS)[number];
   timePeriod: (typeof timePeriodCS)[number];
 }
 
-export const userPermissionsCS = ['user/patch', 'price/patch', 'product/patch'] as const;
-export type UserPermission = typeof userPermissionsCS[number];
+export const userPermissionsCS = [
+  'user/patch',
+  'price/patch',
+  'product/patch',
+  'user-list/read',
+] as const;
+export type UserPermission = (typeof userPermissionsCS)[number];
 
 export interface ComUser extends User {
   permissions?: Array<UserPermission> | 'root';
@@ -156,12 +161,14 @@ export interface ComUser extends User {
 export const orderInfoSchema = {
   id: String,
   status: String,
-  itemList: [{
-    productId: String,
-    price: Number,
-    finalPrice: Number,
-    qty: Number,
-  }],
+  itemList: [
+    {
+      productId: String,
+      price: Number,
+      finalPrice: Number,
+      qty: Number,
+    },
+  ],
   shippingInfo: {
     recipientName: String,
     recipientNationalCode: String,
@@ -178,4 +185,3 @@ export const orderInfoSchema = {
 };
 
 export const orderShippingInfoSchema = orderInfoSchema.shippingInfo;
-
