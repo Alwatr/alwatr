@@ -33,7 +33,7 @@ nanoServer.route('GET', '/link', async (connection) => {
   if (!existsSync(src)) {
     return {
       ok: false,
-      statusCode: 404,
+      statusCode: 400,
       errorCode: 'src_not_found',
       meta: {base, src, dest},
     };
