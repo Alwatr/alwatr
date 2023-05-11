@@ -3,7 +3,7 @@ import {contextProvider, type DispatchOptions} from '@alwatr/signal';
 import {getClientId, delay} from '@alwatr/util';
 
 import type {FetchOptions} from './type.js';
-import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
+import type {AlwatrServiceResponse} from '@alwatr/type';
 
 export type * from './type.js';
 
@@ -68,7 +68,7 @@ export async function fetchContext(
  * Fetch from alwatr services and return standard response.
  */
 export async function serviceRequest<
-  T extends AlwatrServiceResponseSuccessWithMeta = AlwatrServiceResponseSuccessWithMeta
+  T extends AlwatrServiceResponse = AlwatrServiceResponse
 >(options: FetchOptions): Promise<T> {
   logger.logMethodArgs?.('serviceRequest', {url: options.url});
 
