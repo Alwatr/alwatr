@@ -7,14 +7,14 @@ import {
   css,
   SignalMixin,
   LocalizeMixin,
-  type PropertyValues,
   mapObject,
   when,
+  type PropertyValues,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import {simpleHashNumber} from '@alwatr/math';
-import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
-import {IconButtonContent} from '@alwatr/ui-kit/src/button/icon-button.js';
+import '@alwatr/ui-kit/card/icon-box.js';
+import '@alwatr/ui-kit/src/button/icon-button.js';
+
 
 import {config} from '../../config.js';
 import {buttons} from '../../manager/buttons.js';
@@ -22,6 +22,8 @@ import {userTokenContextConsumer} from '../../manager/context-provider/user.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {ComUser, Order} from '@alwatr/type/customer-order-management.js';
+import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+import type {IconButtonContent} from '@alwatr/ui-kit/src/button/icon-button.js';
 
 declare global {
   interface HTMLElementTagNameMap {
