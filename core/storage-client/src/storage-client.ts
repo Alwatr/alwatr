@@ -282,9 +282,14 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * await userStorage.delete('user-1');
    * ```
    */
-  async delete(documentId: string, storage: string | undefined = this.config.name): Promise<boolean> {
+  async delete(
+      documentId: string,
+      storage: string | undefined = this.config.name,
+  ): Promise<boolean> {
     this._logger.logMethodArgs?.('delete', {storage, documentId});
-    if (storage == null) throw new Error('storage_not_defined');
+    if (storage == null) {
+      throw new Error('storage_not_defined');
+    }
 
     const responseJson = await serviceRequest<AlwatrServiceResponseSuccess<boolean>>({
       ...this.fetchOption,
@@ -316,7 +321,9 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       name: string | undefined = this.config.name,
   ): Promise<AlwatrDocumentStorage<T>> {
     this._logger.logMethodArgs?.('getStorage', {name});
-    if (name == null) throw new Error('storage_not_defined');
+    if (name == null) {
+      throw new Error('storage_not_defined');
+    }
 
     const responseJson = await serviceRequest<AlwatrDocumentStorage<T>>({
       ...this.fetchOption,
@@ -326,10 +333,14 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
       },
     });
 
+    const responseJsonHasData = typeof responseJson.data === 'object';
+    const responseJsonHasMeta = typeof responseJson.meta === 'object';
+    const responseJsonHasLastUpdated =
+      typeof responseJson.meta.lastUpdated === 'number';
     if (
-      typeof responseJson.data !== 'object' ||
-      typeof responseJson.meta !== 'object' ||
-      typeof responseJson.meta.lastUpdated !== 'number'
+      !responseJsonHasData ||
+      !responseJsonHasMeta ||
+      !responseJsonHasLastUpdated
     ) {
       this._logger.error('getStorage', 'invalid_response_data', {responseJson});
       throw new Error('invalid_response_data');
@@ -349,7 +360,10 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    */
   async keys(storage: string | undefined = this.config.name): Promise<Array<string>> {
     this._logger.logMethodArgs?.('keys', {storage});
-    if (storage == null) throw new Error('storage_not_defined');
+
+    if (storage == null) {
+      throw new Error('storage_not_defined');
+    }
 
     const responseJson = await serviceRequest<AlwatrServiceResponseSuccess<Array<string>>>({
       ...this.fetchOption,
