@@ -129,4 +129,5 @@ export type StringifyableFetchOptions = Pick<
   | 'retryDelay'
   | 'referrer'
   | 'referrerPolicy'
+  | 'userAuth'
 >;
