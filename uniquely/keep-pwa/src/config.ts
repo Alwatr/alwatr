@@ -11,6 +11,7 @@ import {getLocalStorageItem} from '@alwatr/util';
 const apiPrefix = getLocalStorageItem('DEBUG_API', '');
 export const config = {
   cdn: apiPrefix + '/cdn',
+  api: apiPrefix + '/api/v0',
   fetchContextOptions: <Partial<FetchOptions>>{
     method: 'GET',
     removeDuplicate: 'auto',
