@@ -1,4 +1,4 @@
-import {customElement, AlwatrBaseElement, css, html} from '@alwatr/element';
+import {customElement, AlwatrBaseElement, css, html, SignalMixin, LocalizeMixin} from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 
 declare global {
@@ -11,7 +11,7 @@ declare global {
  * Alwatr Keep App Footer
  */
 @customElement('alwatr-app-footer')
-export class AlwatrPageHome extends AlwatrBaseElement {
+export class AlwatrPageHome extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       display: block;
