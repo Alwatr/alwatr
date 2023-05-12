@@ -3,8 +3,6 @@ import {createLogger} from '@alwatr/logger';
 
 export const logger = createLogger('com-api');
 
-const publicUserDirectory = 'public/user/${auth}' as const;
-
 export const config = {
   storageClient: {
     host: process.env.STORAGE_HOST ?? '127.0.0.1',
@@ -36,8 +34,8 @@ export const config = {
     productList: 'public/product-list/${name}',
     priceList: 'public/price-list/${name}',
 
-    userProfile: `${publicUserDirectory}/profile`,
-    userOrderList: `${publicUserDirectory}/order-list`,
+    userProfile: 'public/user/${auth}/profile',
+    userOrderList: 'public/user/${auth}/order-list',
   },
 } as const;
 
