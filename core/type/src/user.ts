@@ -55,7 +55,7 @@ export interface User extends AlwatrDocumentObject {
   postalCode?: string;
 }
 
-export interface UserAuth {
+export type UserAuth = {
   id: string;
   token: string;
 }
