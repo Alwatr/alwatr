@@ -6,7 +6,7 @@ import {validateUserAuth} from '../lib/validate-user-auth.js';
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
-nanoServer.route<AlwatrDocumentStorage<ComUser>>('GET', '/user-list/', async (connection) => {
+nanoServer.route<AlwatrDocumentStorage<ComUser>>('GET', '/user-list', async (connection) => {
   logger.logMethod?.('get-user-list');
 
   await validateUserAuth(connection.getUserAuth(), 'user-list/read');
