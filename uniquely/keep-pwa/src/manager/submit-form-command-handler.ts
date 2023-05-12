@@ -45,7 +45,7 @@ commandHandler.define<FormData, boolean>(submitFormCommandTrigger.id, async (for
       queryParameters: {
         formId: form.formId,
       },
-      // token: config.token,
+      token: config.token,
       bodyJson,
     });
   }
