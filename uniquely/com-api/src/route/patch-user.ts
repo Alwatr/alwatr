@@ -32,13 +32,13 @@ nanoServer.route<ComUser>('PATCH', '/user', async (connection) => {
   const privateUserOrderListStorageName = config.privateStorage.userOrderList.replace('${userId}', user.id);
   await storageClient.touch(privateUserOrderListStorageName);
 
-  const authHash = `${simpleHashNumber(user.phoneNumber)}-${userFactory.generateToken([user.id, user.lpe])}`;
+  const userToken = userFactory.generateToken([user.id, user.lpe]);
 
-  await storageClient.cacheApiResponse(config.publicStorage.userProfile.replace('${auth}', authHash), user);
+  await storageClient.cacheApiResponse(config.publicStorage.userProfile.replace('${token}', userToken), user);
 
   await storageClient.link(
       privateUserOrderListStorageName,
-      config.publicStorage.userOrderList.replace('${auth}', authHash),
+      config.publicStorage.userOrderList.replace('${token}', userToken),
   );
 
   return {
