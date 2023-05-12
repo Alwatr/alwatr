@@ -1,7 +1,7 @@
 {
-  "short_name": "تولید‌کننده اسکوپ سنگ‌نما",
-  "name": "تولید‌کننده اسکوپ سنگ‌نما",
-  "description": "نرم‌افزار یکپارچه اسکوپ سنگ‌نما",
+  "short_name": "Keep",
+  "name": "Keep Collection",
+  "description": "Keep Collection Official PWA",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#c24000",
