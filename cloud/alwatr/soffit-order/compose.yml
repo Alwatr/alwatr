@@ -65,7 +65,7 @@ services:
     labels:
       traefik.enable: true
       traefik.port: 80
-      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/api/v0/
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/api/v1/
       traefik.frontend.entryPoints: http, https
       traefik.frontend.redirect.entryPoint: https
 
@@ -120,8 +120,8 @@ services:
 
     volumes:
       - type: bind
-        source: ./_data/storage/public
-        target: /var/www/html/api/v0/storage
+        source: ./_data/storage/publistore
+        target: /var/www/html
         bind:
           create_host_path: true
 
@@ -134,7 +134,7 @@ services:
     labels:
       traefik.enable: true
       traefik.port: 80
-      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/api/v0/storage/
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefixStrip:/api/v1/publistore/
       traefik.frontend.entryPoints: http, https
       traefik.frontend.redirect.entryPoint: https
 
