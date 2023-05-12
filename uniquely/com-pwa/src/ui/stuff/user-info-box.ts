@@ -12,11 +12,13 @@ import {
   when,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import {simpleHashNumber} from '@alwatr/math';
 import {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 import {IconButtonContent} from '@alwatr/ui-kit/src/button/icon-button.js';
 
 import {config} from '../../config.js';
 import {buttons} from '../../manager/buttons.js';
+import {userTokenContextConsumer} from '../../manager/context-provider/user.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {ComUser, Order} from '@alwatr/type/customer-order-management.js';
@@ -42,15 +44,17 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     }
   `;
 
+  @property({attribute: false})
+    user: Partial<ComUser> = {};
+
+  protected userToken = userTokenContextConsumer.getValue();
+
   protected orderListStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<Order>>(
-      'order_list_storage_context_' + this.user?.id,
+      'order_list_storage_context_' + this.user.id,
       {
-        url: config.api + '/storage/order-list/' + this.user?.id,
+        url: config.serverContext.userOrderList,
       },
   );
-
-  @property({attribute: false})
-    user?: ComUser;
 
   override connectedCallback(): void {
     // prettier-ignore
