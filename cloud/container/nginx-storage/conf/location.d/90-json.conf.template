@@ -1,5 +1,0 @@
-index index.json;
-
-location / {
-  try_files $uri $uri.json =404;
-}

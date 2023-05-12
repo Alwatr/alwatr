@@ -1,0 +1,20 @@
+location / {
+  try_files $uri.json /_404.json =404;
+}
+
+location /auth/ {
+  set $bearer_token "";
+  if ($http_authorization ~* "^Bearer (.+)$") {
+      set $bearer_token $1;
+  }
+
+  if ($bearer_token = "") {
+    return 401;
+  }
+
+  if (!-d $document_root/auth/$bearer_token) {
+    return 403;
+  }
+
+  try_files $bearer_token$uri.json /_404.json =404;
+}

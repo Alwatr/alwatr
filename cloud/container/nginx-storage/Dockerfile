@@ -10,7 +10,7 @@ ENV NGINX_OPEN_FILE_CACHE_INACTIVE=1s \
     NGINX_EXPIRES_DEFAULT=epoch \
     NGINX_LIMIT_REQ_RATE=400
 
-RUN rm -fv index.html
-COPY index.json ./
+RUN rm -fv index.html /var/www/_error.html
+COPY _404.json ./
 COPY _error.json /var/www/
 COPY conf/ /etc/nginx/templates/
