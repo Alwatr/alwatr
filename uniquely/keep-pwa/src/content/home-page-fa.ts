@@ -2,6 +2,8 @@
 
 import {replaceNumber} from '@alwatr/i18n';
 
+import {languageButtonClickEventListener} from '../manager/context.js';
+
 import type {PageHomeContent} from '../type.js';
 
 export const homePageContent: PageHomeContent = {
@@ -9,14 +11,18 @@ export const homePageContent: PageHomeContent = {
     type: 'center',
     headline: 'مجموعه کیپ',
     startIcon: {icon: 'menu-outline', flipRtl: true},
-    endIconList: [{icon: 'globe-outline', clickSignalId: 'language-button-click-event'}],
+    endIconList: [{icon: 'globe-outline', clickSignalId: languageButtonClickEventListener.id}],
   },
   about: {
     elevated: 1,
     stated: true,
     wide: true,
     headline: 'درباره ما',
-    description: 'شرکت تولیدی keep مصالح ساختمانی و اسکوپ  سنگ‌نما هلدینگی ایرانی است که در زمینه تولید و توزیع خدمات ساختمانی فعالیت دارد. این کارخانه با هدف توزیع محصولات ساختمانی در بازارهای ایرانی و خارجی مشغول به فعالیت می‌باشد. محصولات تولیدی این مجموعه با کیفیت بالا و کادری مجرب و تعهد به اصول جلب رضایت مشتری می‌باشد.',
+    slot: `
+      شرکت تولیدی کیپ مصالح ساختمانی و اسکوپ  سنگ‌نما هلدینگی ایرانی است که در زمینه تولید و توزیع خدمات ساختمانی فعالیت دارد.<br />
+      این کارخانه با هدف توزیع محصولات ساختمانی در بازارهای ایرانی و خارجی مشغول به فعالیت می‌باشد.<br />
+      محصولات تولیدی این مجموعه با کیفیت بالا و کادری مجرب و تعهد به اصول جلب رضایت مشتری می‌باشد.
+    `,
   },
   product: {
     elevated: 1,

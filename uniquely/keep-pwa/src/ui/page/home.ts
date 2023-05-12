@@ -10,7 +10,7 @@ import {
   mapIterable,
   UnresolvedMixin,
 } from '@alwatr/element';
-import {localeContextConsumer, message} from '@alwatr/i18n';
+import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 
 import {homePageContentContextConsumer, topAppBarContextProvider} from '../../manager/context.js';
@@ -74,15 +74,12 @@ export class AlwatrPageHome extends UnresolvedMixin(SignalMixin(AlwatrBaseElemen
   }
 
   protected* _menuTemplate(): unknown {
-    yield html`<img class="logo" src="image/keep.svg" alt="Keep Company Logo" />`;
+    yield html`<img class="logo" src="image/keep.svg" alt="Keep Collection Logo" />`;
     yield this._boxTemplate(this?.content?.about);
     yield this._boxTemplate(this?.content?.product);
     yield html`<alwatr-collaboration-box></alwatr-collaboration-box>`;
     yield this._boxTemplate(this?.content?.catalogue);
     yield mapIterable(this, this?.content?.socialList, this._boxTemplate, message('loading'));
-    if (localeContextConsumer.getValue()?.language === 'fa') {
-      yield this._boxTemplate(this?.content?.agency as BoxType);
-    }
   }
 
   protected _boxTemplate(box?: BoxType): unknown {

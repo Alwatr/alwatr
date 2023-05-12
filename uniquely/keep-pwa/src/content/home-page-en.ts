@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+import {languageButtonClickEventListener} from '../manager/context.js';
 
 import type {PageHomeContent} from '../type.js';
 
@@ -7,15 +8,18 @@ export const homePageContent: PageHomeContent = {
     type: 'center',
     headline: 'Keep Collection',
     startIcon: {icon: 'menu-outline', flipRtl: true},
-    endIconList: [{icon: 'globe-outline', clickSignalId: 'language-button-click-event'}],
+    endIconList: [{icon: 'globe-outline', clickSignalId: languageButtonClickEventListener.id}],
   },
   about: {
     elevated: 1,
     stated: true,
     wide: true,
     headline: 'About Us',
-    description:
-      'Keep is an Iranian holding company in the field of building materials and stone veneer manufacturing. It is engaged in the production and distribution of construction services. The factory operates with the aim of distributing construction products in Iranian and international markets. The products produced by this collection are of high quality and are accompanied by experienced staff committed to customer satisfaction.',
+    slot: `
+      Keep is an Iranian holding company in the field of building materials and stone veneer manufacturing. It is engaged in the production and distribution of construction services.<br />
+      The factory operates with the aim of distributing construction products in Iranian and international markets.<br />
+      The products produced by this collection are of high quality and are accompanied by experienced staff committed to customer satisfaction.
+    `,
   },
   product: {
     elevated: 1,
