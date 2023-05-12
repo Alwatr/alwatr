@@ -14,6 +14,7 @@ import {localeContextConsumer, message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 
 import {homePageContentContextConsumer, topAppBarContextProvider} from '../../manager/context.js';
+import '../stuff/collaboration-box.js';
 
 import type {BoxType, PageHomeContent} from '../../type.js';
 
@@ -48,7 +49,8 @@ export class AlwatrPageHome extends UnresolvedMixin(SignalMixin(AlwatrBaseElemen
       margin-bottom: var(--sys-spacing-track);
     }
 
-    alwatr-icon-box[wide] {
+    alwatr-icon-box[wide],
+    alwatr-collaboration-box {
       width: 100%;
     }
   `;
@@ -75,6 +77,7 @@ export class AlwatrPageHome extends UnresolvedMixin(SignalMixin(AlwatrBaseElemen
     yield html`<img class="logo" src="image/keep.svg" alt="Keep Company Logo" />`;
     yield this._boxTemplate(this?.content?.about);
     yield this._boxTemplate(this?.content?.product);
+    yield html`<alwatr-collaboration-box></alwatr-collaboration-box>`;
     yield this._boxTemplate(this?.content?.catalogue);
     yield mapIterable(this, this?.content?.socialList, this._boxTemplate, message('loading'));
     if (localeContextConsumer.getValue()?.language === 'fa') {
