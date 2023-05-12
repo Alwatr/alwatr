@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "meta": {
+    "code": "en-US",
+    "rev": 0
+  },
+  "data": {
+    "loading": "Loading...",
+    "app_footer_description": "The largest stone scope manufacturer in the eastern part of the country",
+    "page_404_not_found": "Not Found!",
+    "page_404_not_found_description": "Sorry, the requested page was not found!",
+    "full_name": "Full Name",
+    "phone_number": "Phone Number",
+    "city": "City",
+    "activity_field": "Activity Field",
+    "tool_distribution": "Tool Distributor",
+    "sales_tools": "Sales Tools",
+    "stonemason": "Stonemason",
+    "contractor": "Contractor",
+    "submit_form": "Submit Form",
+    "cancel": "Cancel",
+    "collaboration_form_title": "Collaboration Request",
+    "form_submitted": "Your request has been submitted.",
+    "collaboration_form_description": "Collaboration request form with Keep"
+  }
+}
