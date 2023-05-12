@@ -26,16 +26,16 @@ export const config = {
   },
 
   privateStorage: {
-    userList: 'private/user-list',
-    userOrderList: 'private/order-list/${userId}',
+    userList: 'securage/user-list',
+    userOrderList: 'securage/order-list/${userId}',
   },
 
   publicStorage: {
-    productList: 'public/product-list/${name}',
-    priceList: 'public/price-list/${name}',
+    productList: 'publistore/product-list/${name}',
+    priceList: 'publistore/price-list/${name}',
 
-    userProfile: 'public/user/${auth}/profile',
-    userOrderList: 'public/user/${auth}/order-list',
+    userProfile: 'publistore/auth/${token}/profile',
+    userOrderList: 'publistore/auth/${token}/order-list',
   },
 } as const;
 
