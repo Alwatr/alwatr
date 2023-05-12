@@ -74,7 +74,17 @@ export const homePageContent: PageHomeContent = {
       icon: 'logo-instagram',
       headline: 'اینستاگرام',
       description: 'صفحه‌ی اینستاگرام کیپ',
-      href: 'https://instagram.com/keeperco',
+      href: 'https://instagram.com/keep_scope/',
+      target: '_blank',
+    },
+    {
+      elevated: 1,
+      highlight: true,
+      stated: true,
+      icon: 'logo-youtube',
+      headline: 'یوتیوب',
+      description: 'کانال یوتیوب کیپ',
+      href: 'https://www.youtube.com/keeperco',
       target: '_blank',
     },
     {
