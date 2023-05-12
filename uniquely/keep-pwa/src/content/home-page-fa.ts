@@ -1,7 +1,10 @@
 /* eslint-disable max-len */
+
 import {replaceNumber} from '@alwatr/i18n';
 
-export const homePageContent = {
+import type {PageHomeContent} from '../type.js';
+
+export const homePageContent: PageHomeContent = {
   topAppBar: {
     type: 'center',
     headline: 'مجموعه کیپ',
@@ -80,4 +83,4 @@ export const homePageContent = {
       target: '_blank',
     },
   ],
-} as const;
+};
