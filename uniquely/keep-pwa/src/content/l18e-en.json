@@ -21,6 +21,8 @@
     "cancel": "Cancel",
     "collaboration_form_title": "Collaboration Request",
     "form_submitted": "Your request has been submitted.",
-    "collaboration_form_description": "Collaboration request form with Keep"
+    "collaboration_form_description": "Collaboration request form with Keep",
+    "invalid_form_data": "The form information is not correct.",
+    "check_network_connection": "Please check internet, and send again."
   }
 }

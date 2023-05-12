@@ -76,7 +76,6 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       icon: 'videocam-outline',
-      flipRtl: true,
       headline: 'آپارات',
       description: 'کانال آپارات کیپ',
       href: 'https://www.aparat.com/keeperco',

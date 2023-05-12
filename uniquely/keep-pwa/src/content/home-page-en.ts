@@ -72,7 +72,6 @@ export const homePageContent: PageHomeContent = {
       highlight: true,
       stated: true,
       icon: 'videocam-outline',
-      flipRtl: true,
       headline: 'Aparat',
       description: 'Keep Aparat Channel',
       href: 'https://www.aparat.com/keeperco',
