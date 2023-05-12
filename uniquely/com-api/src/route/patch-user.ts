@@ -1,5 +1,3 @@
-import {simpleHashNumber} from '@alwatr/math';
-
 import {config, logger} from '../lib/config.js';
 import {userFactory} from '../lib/crypto.js';
 import {nanoServer} from '../lib/server.js';
