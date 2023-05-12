@@ -26,6 +26,7 @@ import {
   OrderShippingInfo,
   Product,
 } from '@alwatr/type/customer-order-management.js';
+import '@alwatr/ui-kit/button/fab.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
 
@@ -376,9 +377,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
         .finalPriceStorage=${this.fsm.getContext().finalPriceStorage}
         .priceStorage=${this.fsm.getContext().priceStorage}
       ></alwatr-select-product>
-      <div class="btn-container">
-        <alwatr-button .content=${buttons.selectProductSubmit} elevated></alwatr-button>
-      </div>
+      <alwatr-fab .content=${{label: message('select_product_submit_button'), icon: 'checkmark-outline'}}></alwatr-fab>
     `;
   }
 
