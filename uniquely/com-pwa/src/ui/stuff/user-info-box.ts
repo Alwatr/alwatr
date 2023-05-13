@@ -12,8 +12,8 @@ import {
   type PropertyValues,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import '@alwatr/ui-kit/button/icon-button.js';
 import '@alwatr/ui-kit/card/icon-box.js';
-import '@alwatr/ui-kit/src/button/icon-button.js';
 
 
 import {config} from '../../config.js';
@@ -22,8 +22,8 @@ import {userTokenContextConsumer} from '../../manager/context-provider/user.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {ComUser, Order} from '@alwatr/type/customer-order-management.js';
+import type {IconButtonContent} from '@alwatr/ui-kit/button/icon-button.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
-import type {IconButtonContent} from '@alwatr/ui-kit/src/button/icon-button.js';
 
 declare global {
   interface HTMLElementTagNameMap {
