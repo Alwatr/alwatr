@@ -1,36 +1,15 @@
-@apiUrl = http://127.0.0.1:8000
-@apiVersion = v0
-@token = YOUR_SECRET_TOKEN
-
-### home
-GET {{apiUrl}}/
-
-### Add new comment
-PATCH {{apiUrl}}/?storage=product/test
-Authorization: Bearer {{token}}
-Content-Type: application/json
-
-{
-  "id": "auto_increment",
-  "user": "njfamirm",
-  "type": "text",
-  "text": "سلام ;)"
-}
-
-### Add new reply
-PATCH {{apiUrl}}/?storage=product/test
-Authorization: Bearer {{token}}
-Content-Type: application/json
-
-{
-  "id": "auto_increment",
-  "user": "alimd",
-  "type": "text",
-  "text": "علیک سلام :)",
-  "replyId": "1"
-}
-
-### Get all comment
-GET {{apiUrl}}/storage?name=product/test
-Authorization: Bearer {{token}}
-Content-Type: application/json
+U2FsdGVkX18aF0k6ldWMz5HiiVjwFAuTToSH1/pQOjZjxHgqd6CfR9r83CJUVGbv
+f8QaNzRuaM/4ixoR6S+i2U+sIFY1WjWe+/DFmyZXtAiwwR/JT1GHVyQwCNwj6bog
+kOKACZGSFkbm8qTkW79Ptd5dDJ/nptJkQ37hIkWWOhD+0k5pSU/0AREOHy9+vKgE
+mryg55Rw9XpskVfUGMgmuSi64ZdBGBAHwwsmhUDcdzp9sqbUREjSXxfnp8mi2tzB
+GRJgLWCu2LrhOcCyXnmGAvRKf6PkHrIT/vmsyIFjeHk90Gs7qt2YcVgi0DHaivmh
+ZT1oKGfj0A2pA7qvI7ypRC0TGicGRp2tUl2gWU+iisKjCZNro1awhcMSvRwvI05y
+KdnajGg1cSSNPBCW7MyY+ReKxRCe8JrMjzPwwWHOIZW2jINipdTjfu+azteE1dOR
+OytRbzjfvwPrGUOKddjGJXv7NtmpVK4/xMlW9K4k+vZSbHN1fT45MEuTEwtYFfWZ
+Zl2hqDzWmgMbvOHD+L+mfj5n0wlq/+EopeukCl1HMNstYJTETFDKgaynoMgH/ugI
+3fePlDqDMIYTqlElRbu6PXlHuW0F3qCCDmz0mc5jZ8PzDa3Z39hR3jXnCphyNPxn
+fZwc1mVWymSmdXH95Twx3ZB/OAyxEM33ZU71bvDyF+qhrv4Tq5s2LloJ6p89kLgo
+KceBF5YiVaqTM00Vxx5+TNCCLQu28Mc7wENdvAqk3huUeNg5bnfXviSMmMb5uzy4
+Bf5SBig3VSEPBBte4YMW7zLSehOMLvDBKpctMVpj3QimvyLHBjnEfejhgzo+FqRn
+oCJCyyzeBtpEtG5cnSZcwY2ZwsEHvnZav0/eG766oWkI7pMwqp/n5pnDaZZ34h3g
+VOtRWw0z6dEXGynvmxpXpE3kuum6bd70hdbryZOPFA8=

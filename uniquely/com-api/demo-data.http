@@ -1,214 +1,81 @@
-@apiUrl = http://order.soffit.co/api/v0
-@adminToken = ADMIN_SECRET_TOKEN
-
-### Soffit product list
-PATCH {{apiUrl}}/product-list/?storage=tile
-Authorization: Bearer {{adminToken}}
-Content-Type: application/json
-
-{
-  "data": [
-    {
-      "id": "1",
-      "title": { "fa": "تایل کد ۰۰۱" },
-      "image": { "id": "soffit-tile-1-1.jpg" }
-    },
-    {
-      "id": "9",
-      "title": { "fa": "تایل کد ۰۰۲" },
-      "image": { "id": "soffit-tile-2-1.jpg" }
-    },
-    {
-      "id": "10",
-      "title": { "fa": "تایل کد ۰۰۵" },
-      "image": { "id": "soffit-tile-5-1.jpg" }
-    },
-    {
-      "id": "11",
-      "title": { "fa": "تایل کد ۰۰۶" },
-      "image": { "id": "soffit-tile-6-1.jpg" }
-    },
-    {
-      "id": "12",
-      "title": { "fa": "تایل کد ۰۰۷" },
-      "image": { "id": "soffit-tile-7-1.jpg" }
-    },
-    {
-      "id": "14",
-      "title": { "fa": "تایل کد ۰۰۸" },
-      "image": { "id": "soffit-tile-8-1.jpg" }
-    },
-    {
-      "id": "5",
-      "title": { "fa": "تایل کد ۲۳۸" },
-      "image": { "id": "soffit-tile-238-1.jpg" }
-    },
-    {
-      "id": "2",
-      "title": { "fa": "تایل کد ۲۳۸G" },
-      "image": { "id": "soffit-tile-238G-1.jpg" }
-    },
-    {
-      "id": "6",
-      "title": { "fa": "تایل کد ۲۳۹" },
-      "image": { "id": "soffit-tile-239-1.jpg" }
-    },
-    {
-      "id": "13",
-      "title": { "fa": "تایل کد ۹۷۵" },
-      "image": { "id": "soffit-tile-975-1.jpg" }
-    },
-    {
-      "id": "7",
-      "title": { "fa": "تایل کد ۹۹۳" },
-      "image": { "id": "soffit-tile-993-1.jpg" }
-    },
-    {
-      "id": "8",
-      "title": { "fa": "تایل کد ۹۹۶" },
-      "image": { "id": "soffit-tile-996-1.jpg" }
-    },
-    {
-      "id": "3",
-      "title": { "fa": "تایل کد ۹۹۶G" },
-      "image": { "id": "soffit-tile-996G-1.jpg" }
-    },
-    {
-      "id": "4",
-      "title": { "fa": "تایل کد ۳۳۳" },
-      "image": { "id": "soffit-tile-333-1.jpg" }
-    }
-  ]
-}
-
-### Insert/edit a product price of special list.
-PATCH {{apiUrl}}/price-list/?name=tile-market-ir
-Authorization: Bearer {{adminToken}}
-Content-Type: application/json
-
-{
-  "data": [
-    {
-      "id": "1",
-      "price": 87580
-    },
-    {
-      "id": "2",
-      "price": 89599
-    },
-    {
-      "id": "3",
-      "price": 89599
-    },
-    {
-      "id": "4",
-      "price": 89599
-    },
-    {
-      "id": "5",
-      "price": 81999
-    },
-    {
-      "id": "6",
-      "price": 81999
-    },
-    {
-      "id": "7",
-      "price": 81999
-    },
-    {
-      "id": "8",
-      "price": 81999
-    },
-    {
-      "id": "9",
-      "price": 87580
-    },
-    {
-      "id": "10",
-      "price": 87580
-    },
-    {
-      "id": "11",
-      "price": 90500
-    },
-    {
-      "id": "12",
-      "price": 90500
-    },
-    {
-      "id": "13",
-      "price": 81999
-    },
-    {
-      "id": "14",
-      "price": 90500
-    }
-  ]
-}
-
-### Insert/edit a product price of special list.
-PATCH {{apiUrl}}/price-list/?name=tile-agency-ir
-Authorization: Bearer {{adminToken}}
-Content-Type: application/json
-
-{
-  "data": [
-    {
-      "id": "1",
-      "price": 76195
-    },
-    {
-      "id": "2",
-      "price": 77951
-    },
-    {
-      "id": "3",
-      "price": 77951
-    },
-    {
-      "id": "4",
-      "price": 77951
-    },
-    {
-      "id": "5",
-      "price": 70519
-    },
-    {
-      "id": "6",
-      "price": 70519
-    },
-    {
-      "id": "7",
-      "price": 70519
-    },
-    {
-      "id": "8",
-      "price": 70519
-    },
-    {
-      "id": "9",
-      "price": 76195
-    },
-    {
-      "id": "10",
-      "price": 76195
-    },
-    {
-      "id": "11",
-      "price": 78735
-    },
-    {
-      "id": "12",
-      "price": 78735
-    },
-    {
-      "id": "13",
-      "price": 70519
-    },
-    {
-      "id": "14",
-      "price": 78735
-    }
-  ]
-}
+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
+ENU2OpwdH6UgHpuSmDjATQ==
