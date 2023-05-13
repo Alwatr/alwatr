@@ -6,12 +6,19 @@ import type {User} from '@alwatr/type';
 
 const logger = createLogger('crypto/user', true);
 
-const userFactory = new AlwatrUserFactory({
-  secret: 'my-very-secret-key',
-  duration: '2s',
-  algorithm: 'sha512',
-  encoding: 'base64url',
-});
+const userFactory = new AlwatrUserFactory(
+    {
+      algorithm: 'sha1',
+      encoding: 'base64url',
+      crcLength: 4,
+    },
+    {
+      secret: 'my-very-secret-key',
+      duration: '2s',
+      algorithm: 'sha512',
+      encoding: 'base64url',
+    },
+);
 
 const user: User = {
   id: userFactory.generateId(),
