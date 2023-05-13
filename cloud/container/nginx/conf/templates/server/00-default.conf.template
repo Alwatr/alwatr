@@ -1,7 +1,7 @@
 server {
   listen 80 default_server;
   server_name _;
-  root /var/www/html;
+  root $NGINX_DOCUMENT_ROOT;
 
   include /etc/nginx/conf.d/location.d/*.conf;
 }
