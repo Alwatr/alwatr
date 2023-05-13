@@ -12,7 +12,7 @@ export const productPriceStorageContextConsumer = serverContextConsumer<AlwatrDo
     'product_price_storage_context',
     {
       ...config.fetchContextOptions,
-      url: config.api + '/storage/price-list-' + config.priceListName.replace('${productStorage}', 'tile'),
+      url: config.serverContext.marketPriceList.replace('${productStorageName}', 'tile'),
     },
 );
 
@@ -30,7 +30,7 @@ export const productFinalPriceStorageContextConsumer = serverContextConsumer<Alw
     'product_final_price_storage_context',
     {
       ...config.fetchContextOptions,
-      url: config.api + '/storage/price-list-' + config.finalPriceListName.replace('${productStorage}', 'tile'),
+      url: config.serverContext.agencyPriceList.replace('${productStorageName}', 'tile'),
     },
 );
 

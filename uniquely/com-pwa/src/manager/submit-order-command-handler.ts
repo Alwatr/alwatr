@@ -18,7 +18,7 @@ commandHandler.define<Order, Order | null>(submitOrderCommandTrigger.id, async (
     const response = await serviceRequest<AlwatrServiceResponseSuccessWithMeta<Order>>({
       ...config.fetchContextOptions,
       method: 'PUT',
-      url: config.api + '/order/',
+      url: config.serverContext.newOrder,
       queryParameters: {
         userId: userContext.id,
       },
