@@ -1,6 +1,7 @@
 import {existsSync} from 'node:fs';
 import {resolve} from 'node:path';
 
+import {delay} from '@alwatr/util';
 import {makeLinkForce} from '@alwatr/util/node';
 
 import {config, logger} from '../config.js';
@@ -31,15 +32,18 @@ nanoServer.route('GET', '/link', async (connection) => {
   }
 
   if (!existsSync(src)) {
-    return {
-      ok: false,
-      statusCode: 400,
-      errorCode: 'src_not_found',
-      meta: {base, src, dest},
-    };
+    await delay(config.storage.saveDebounce + 100); // ensure storage saved
+    if (!existsSync(src)) {
+      return {
+        ok: false,
+        statusCode: 400,
+        errorCode: 'src_not_found',
+        meta: {base, src, dest},
+      };
+    }
   }
 
-  makeLinkForce(src, dest);
+  await makeLinkForce(src, dest);
 
   return {
     ok: true,
