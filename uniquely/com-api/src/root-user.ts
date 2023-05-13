@@ -1,12 +1,10 @@
-/**
- * Create first root user when user storage is empty at the first time.
- */
-
 import {logger} from './lib/config.js';
-import {userFactory} from './lib/crypto.js';
 import {patchUser} from './lib/patch-user.js';
 import {userStorage} from './lib/storage.js';
 
+/**
+ * Create first root user when user storage is empty at the first time.
+ */
 const initRootUser = async (): Promise<void> => {
   if ((await userStorage.keys()).length === 0) {
     logger.logMethod?.('init-root-user');
@@ -21,10 +19,7 @@ const initRootUser = async (): Promise<void> => {
       permissions: 'root',
     });
 
-    logger.logProperty?.('rootUserAuth', {
-      id: rootUser.id,
-      token: userFactory.generateToken([rootUser.id, rootUser.lpe]),
-    });
+    logger.logProperty?.('rootUser', rootUser);
   }
 };
 

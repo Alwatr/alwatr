@@ -28,6 +28,6 @@ nanoServer.route<ComUser>('PATCH', '/user', async (connection) => {
 
   return {
     ok: true,
-    data: user,
+    data: user, // include token
   };
 });
