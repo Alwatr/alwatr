@@ -9,18 +9,20 @@ export const patchUser = async (user: ComUser): Promise<ComUser> => {
     user.id = userFactory.generateId();
   }
 
+  delete user.token;
+
   user = await userStorage.set(user);
+
+  user.token = userFactory.generateToken([user.id, user.lpe]);
 
   const privateUserOrderListStorageName = config.privateStorage.userOrderList.replace('${userId}', user.id);
   await storageClient.touch(privateUserOrderListStorageName);
 
-  const userToken = userFactory.generateToken([user.id, user.lpe]);
-
-  await storageClient.cacheApiResponse(config.publicStorage.userProfile.replace('${token}', userToken), user);
+  await storageClient.cacheApiResponse(config.publicStorage.userProfile.replace('${token}', user.token), user);
 
   await storageClient.link(
       privateUserOrderListStorageName,
-      config.publicStorage.userOrderList.replace('${token}', userToken),
+      config.publicStorage.userOrderList.replace('${token}', user.token),
   );
 
   return user;
