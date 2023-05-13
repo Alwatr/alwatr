@@ -20,7 +20,7 @@ userListStorageContextConsumer.fsm.defineSignals([
 
       userListStorageContextConsumer.request({
         userAuth: {
-          id: userId,
+          id: userId!,
           token: userToken,
         },
       });
