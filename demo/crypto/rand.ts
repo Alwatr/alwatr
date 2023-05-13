@@ -1,6 +1,6 @@
-import {AlwatrHashGenerator} from '@alwatr/crypto';
+import {AlwatrHashGenerator, secretGeneratorPreConfig} from '@alwatr/crypto';
 
-const hashGenerator = new AlwatrHashGenerator({algorithm: 'sha256', encoding: 'base64url', crcLength: 4});
+const hashGenerator = new AlwatrHashGenerator(secretGeneratorPreConfig);
 
 for (let i = 0; i <= 10; i++) {
   console.log('hash: %s', hashGenerator.randomSelfValidate());
