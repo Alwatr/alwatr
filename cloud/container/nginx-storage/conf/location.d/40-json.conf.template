@@ -1,5 +1,11 @@
+# return static json for home page
+location = / {
+  default_type application/json;
+  return       200 '{"ok": true, "data": "..:: Alwatr Accelerated Storage Server ::.."}';
+}
+
 location / {
-  try_files $uri.json /_404.json =404;
+  try_files $uri.json @not_found;
 }
 
 location /auth/ {
@@ -16,5 +22,10 @@ location /auth/ {
     return 403;
   }
 
-  try_files $bearer_token$uri.json /_404.json =404;
+  try_files $bearer_token$uri.json @not_found;
+}
+
+location @not_found {
+  default_type application/json;
+  return       200 '{"ok": true, "data": null}';
 }
