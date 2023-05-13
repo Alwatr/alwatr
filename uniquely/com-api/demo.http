@@ -1,87 +1,38 @@
-@apiUrl = http://127.0.0.1:8000/api/v0
-@userToken = YOUR_SECRET_TOKEN
-# @userToken = USER_GENERATED_SECRET_TOKEN
-@adminToken = ADMIN_SECRET_TOKEN
-
-### Home
-GET {{apiUrl}}/
-
-### Get all product.
-GET {{apiUrl}}/product-list/?storage=tile
-Authorization: Bearer {{userToken}}
-
-### Insert/edit a product.
-PATCH {{apiUrl}}/product-list/?storage=tile
-Authorization: Bearer {{adminToken}}
-Content-Type: application/json
-
-{
-  "data": [
-    {
-      "id": "1",
-      "title": {"fa": "تایل کد ۰۰۱"},
-      "image": {"id": "sample-1.jpg"}
-    },
-    {
-      "id": "2",
-      "title": {"fa": "تایل کد ۰۰۲"},
-      "image": {"id": "sample-2.jpg"}
-    }
-  ]
-}
-
-### Get product-price-list-agency-ir.json
-GET {{apiUrl}}/price-list/?name=tile-agency-ir
-Authorization: Bearer {{userToken}}
-
-### Insert/edit a product price of special list.
-PATCH {{apiUrl}}/price-list/?name=tile-agency-ir
-Authorization: Bearer {{adminToken}}
-Content-Type: application/json
-
-{
-  "data": [
-    {
-      "id": "1",
-      "price": 1100
-    },
-    {
-      "id": "2",
-      "price": 1200
-    }
-  ]
-}
-
-### New order of user.
-PUT {{apiUrl}}/order/?userId=demo-123
-Authorization: Bearer {{userToken}}
-Content-Type: application/json
-client-id: 2b6861f4-a8d7-4065-a5a5-3caa54b71a20
-
-{
-  "itemList": [
-    {
-      "productId": "1",
-      "price": 1000000,
-      "finalPrice": 950000,
-      "qty": 80
-    }
-  ],
-
-  "shippingInfo": {
-    "recipientName": "ali",
-    "recipientNationalCode": "0934614566",
-    "address": "Mashhad, 29 dey, koche 29",
-    "ladingType": "x",
-    "carType": "y"
-  },
-
-  "discountType": "number",
-  "totalPrice": 1000000,
-  "ladingPrice": 1100000,
-  "finalTotalPrice": 900000
-}
-
-### Get all orders list of special user
-GET {{apiUrl}}/order-list/?userId=demo-123
-Authorization: Bearer {{userToken}}
+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
