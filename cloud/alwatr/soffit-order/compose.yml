@@ -120,8 +120,8 @@ services:
 
     volumes:
       - type: bind
-        source: ./_data/storage/publistore
-        target: /var/www/html
+        source: ./_data/storage
+        target: /storage
         bind:
           create_host_path: true
 
