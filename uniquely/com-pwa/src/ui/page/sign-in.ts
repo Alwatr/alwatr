@@ -207,6 +207,6 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       return;
     }
 
-    signIn(phoneNumber, this._linkPass);
+    signIn(this._linkPass);
   }
 }

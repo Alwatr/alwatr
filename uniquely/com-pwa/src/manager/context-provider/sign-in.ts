@@ -1,10 +1,9 @@
 import {contextProvider, serverContextConsumer} from '@alwatr/context';
 import {message} from '@alwatr/i18n';
-import {simpleHashNumber} from '@alwatr/math';
 import {redirect} from '@alwatr/router';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 
-import {linkPassTokenContextConsumer, userProfileContextConsumer, userTokenContextConsumer} from './user.js';
+import {userProfileContextConsumer} from './user.js';
 import {config} from '../../config.js';
 
 import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
@@ -19,7 +18,6 @@ signInServerContext.subscribe(() => {
   if (signInServerContext.getState().target === 'complete') {
     const userProfile = signInServerContext.getResponse()!.data;
     contextProvider.setValue<ComUser>(userProfileContextConsumer.id, userProfile);
-    contextProvider.setValue<string>(userTokenContextConsumer.id, linkPassTokenContextConsumer.getValue()!);
     redirect({});
 
     snackbarSignalTrigger.request({
@@ -28,8 +26,9 @@ signInServerContext.subscribe(() => {
   }
 });
 
-export const signIn = (phoneNumber: number, token: string): void => {
+export const signIn = (token: string): void => {
   signInServerContext.request({
-    url: `${config.serverContext.api}/storage/user/${simpleHashNumber(phoneNumber)}-${token}`,
+    url: config.serverContext.userProfile,
+    token,
   });
 };

@@ -1,6 +1,6 @@
 import {serverContextConsumer} from '@alwatr/context';
 
-import {userProfileContextConsumer, userTokenContextConsumer} from './user.js';
+import {userProfileContextConsumer} from './user.js';
 import {config} from '../../config.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
@@ -11,20 +11,11 @@ export const userListStorageContextConsumer = serverContextConsumer<AlwatrDocume
     config.fetchContextOptions,
 );
 
-userListStorageContextConsumer.fsm.defineSignals([
-  {
-    signalId: userTokenContextConsumer.id,
-    callback: (userToken: string): void => {
-      const userId = userProfileContextConsumer.getValue()?.id;
-      // TODO: Handle a situation that `userId` equals `undefined`
-
-      userListStorageContextConsumer.request({
-        userAuth: {
-          id: userId!,
-          token: userToken,
-        },
-      });
+userProfileContextConsumer.subscribe((userProfile) => {
+  userListStorageContextConsumer.request({
+    userAuth: {
+      id: userProfile.id,
+      token: userProfile.token as string,
     },
-    receivePrevious: 'NextCycle',
-  },
-]);
+  });
+});
