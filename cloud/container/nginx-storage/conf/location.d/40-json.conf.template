@@ -1,28 +1,23 @@
-# return static json for home page
 location = / {
+  # return static json for home page
   default_type application/json;
   return       200 '{"ok": true, "data": "..:: Alwatr Accelerated Storage Server ::.."}';
 }
 
 location / {
+  # server all request as json files or data: null on 404
   try_files $uri.json @not_found;
 }
 
-location /auth/ {
-  set $bearer_token "";
-  if ($http_authorization ~* "^Bearer (.+)$") {
-      set $bearer_token $1;
-  }
-
+location ~ ^/auth/(?<doc_path>.*)$ {
   if ($bearer_token = "") {
     return 401;
   }
-
   if (!-d $document_root/auth/$bearer_token) {
     return 403;
   }
 
-  try_files $bearer_token$uri.json @not_found;
+  try_files /auth/$bearer_token/$doc_path.json @not_found;
 }
 
 location @not_found {
