@@ -1,54 +1,35 @@
-import {createLogger} from '@alwatr/logger';
-import {launch, type Page, type WaitForOptions, type Browser} from 'puppeteer-core';
+import {type Page} from 'puppeteer-core';
 
-import type {PuppeteerOption} from '../type.js';
+import {browser} from './browser.js';
 
-export class AlwatrPuppeteer {
-  readyStatePromise?: Promise<void>;
-  pages: Record<string, Page> = {};
+export async function openUrl(url: string): Promise<Page> {
+  const page = await browser.newPage();
+  page.goto(url);
+  return page;
+}
 
-  browser?: Browser;
-  protected _readyState = false;
-  protected _activePages: Array<Page> = [];
-  protected _logger = createLogger(`${this.option.name}-browser`);
+export async function clearCookies(page: Page): Promise<void> {
+  const client = await page.target().createCDPSession();
+  client.send('Network.clearBrowserCookies');
+}
 
-  private _$freePage: Page | null = null;
+export async function clearLocalStorage(page: Page): Promise<void> {
+  page.evaluate(() => {
+    window.localStorage.clear();
+  });
+}
 
-  constructor(protected option: PuppeteerOption) {
-    this.readyStatePromise = this._init();
-  }
+export async function clearSessionStorage(page: Page): Promise<void> {
+  page.evaluate(() => {
+    window.sessionStorage.clear();
+  });
+}
 
-  protected async _init(): Promise<void> {
-    this._logger.logMethod?.('init');
-    try {
-      this.browser = await launch(this.option);
-    }
-    catch (err) {
-      this._logger.error('init', 'launch_browser_failed', err);
-      throw new Error((err as Error).message);
-    }
-
-    this._readyState = true;
-    this._$freePage = (await this.activePages())[0] ?? null;
-  }
-
-  async activePages(): Promise<Array<Page>> {
-    this._logger.logMethod?.('activePages');
-    this._activePages = (await this.browser?.pages()) ?? [];
-    return this._activePages;
-  }
-
-  async close(): Promise<void> {
-    this._logger.logMethod?.('close');
-    this.browser?.close();
-  }
-
-  async openPage(name: string, url: string, w4option?: WaitForOptions): Promise<Page | null> {
-    if (this.browser == null) return null;
-    this._logger.logMethodArgs?.('openPage', {name, url, w4option});
-    const page = this._$freePage || await this.browser.newPage();
-    await page.goto(url, w4option);
-    this.pages[name] = page;
-    return page;
+// function that's close all page just keep blank page
+export async function closeAllPage(): Promise<void> {
+  const pages = await browser.pages();
+  for (const page of pages) {
+    if (page.url() === 'about:blank') continue;
+    await page.close();
   }
 }
