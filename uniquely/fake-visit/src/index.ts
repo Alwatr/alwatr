@@ -1,9 +1,9 @@
 import {config} from './config.js';
+import {spamVisitor} from './fake-visit.js';
 import {AlwatrPuppeteer} from './lib/puppeteer.js';
-import {spamVisitor} from './spam-visitor.js';
 
 const puppeteer = new AlwatrPuppeteer({
-  name: 'spam-visitor',
+  name: 'fake-visit',
   ...config.puppeteer,
   product: 'chrome',
   channel: 'chrome',

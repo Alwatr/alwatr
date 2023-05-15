@@ -55,11 +55,8 @@
     {"path": "./uniquely/soffit-pwa"},
     {"path": "./uniquely/com-api"},
     {"path": "./uniquely/com-pwa"},
-<<<<<<< HEAD
     {"path": "./uniquely/keep-pwa"},
-=======
-    {"path": "./uniquely/spam-visitor"},
->>>>>>> 9dc8ca43 (feat(spam-visitor): base package)
+    {"path": "./uniquely/fake-visit"},
 
     // labs
     {"path": "./labs/zx-example"}

@@ -1,5 +1,5 @@
 {
-  "name": "@alwatr/spam-visitor",
+  "name": "@alwatr/fake-visit",
   "version": "0.31.0",
   "description": "Spam website visitor for increase visit rate",
   "type": "module",
@@ -21,9 +21,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "labs/spam-visitor"
+    "directory": "labs/fake-visit"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/uniquely/spam-visitor#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/uniquely/fake-visit#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },

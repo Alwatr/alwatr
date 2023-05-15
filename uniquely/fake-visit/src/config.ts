@@ -7,6 +7,6 @@ export const config = {
   },
 };
 
-export const logger = createLogger('spam-visitor');
+export const logger = createLogger('fake-visit');
 
 logger.logProperty?.('config', config);
