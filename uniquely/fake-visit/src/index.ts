@@ -1,15 +1,16 @@
-import {config} from './config.js';
-import {spamVisitor} from './fake-visit.js';
-import {AlwatrPuppeteer} from './lib/puppeteer.js';
+import {config, logger} from './config.js';
+import {clear, visit} from './init.js';
+import {closeAllPage, openUrl} from './lib/puppeteer.js';
 
-const puppeteer = new AlwatrPuppeteer({
-  name: 'fake-visit',
-  ...config.puppeteer,
-  product: 'chrome',
-  channel: 'chrome',
-  slowMo: 100,
-  args: [],
-});
-
-await puppeteer.readyStatePromise;
-spamVisitor(puppeteer, 'github', 'https://github.com');
+for (;;) {
+  try {
+    await closeAllPage();
+    const page = await openUrl(config.browser.url);
+    await clear(page);
+    await page.reload();
+    await visit(page);
+  }
+  catch (err) {
+    logger.error('init', 'Error in main loop', err);
+  }
+}
