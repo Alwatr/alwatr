@@ -18,9 +18,9 @@ export const config = {
     api: apiBaseUrl,
 
     // public access
-    productList: apiBaseUrl + 'publistore/product-list/${productStorageName}',
-    marketPriceList: apiBaseUrl + 'publistore/price-list/${productStorageName}-market-ir',
-    agencyPriceList: apiBaseUrl + 'publistore/price-list/${productStorageName}-agency-ir',
+    productList: apiBaseUrl + 'publistore/hub/product-list/${productStorageName}',
+    marketPriceList: apiBaseUrl + 'publistore/vault/price-list/${productStorageName}-market-ir',
+    agencyPriceList: apiBaseUrl + 'publistore/vault/price-list/${productStorageName}-${priceListName}-ir',
 
     // user access
     userProfile: apiBaseUrl + 'publistore/auth/profile',
