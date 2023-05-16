@@ -36,8 +36,8 @@ export const config = {
   },
 
   publicStorage: {
-    productList: 'publistore/product-list/${name}',
-    priceList: 'publistore/price-list/${name}',
+    productList: 'publistore/hub/product-list/${name}',
+    priceList: 'publistore/vault/price-list/${name}',
 
     userProfile: 'publistore/auth/${token}/profile',
     userOrderList: 'publistore/auth/${token}/order-list',
