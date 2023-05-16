@@ -53,6 +53,7 @@ services:
       - STORAGE_HOST=${APP_ID}-storage-server
       - STORAGE_PORT=80
       - STORAGE_TOKEN=${STORAGE_ACCESS_TOKEN}
+      - TOKEN_GENERATOR_SECRET=${TOKEN_GENERATOR_SECRET}
       - ALWATR_DEBUG=${API_DEBUG:-}
 
     logging:
