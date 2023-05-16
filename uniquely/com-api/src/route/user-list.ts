@@ -13,8 +13,5 @@ nanoServer.route<AlwatrDocumentStorage<ComUser>>('GET', '/user-list', async (con
 
   const userList = await storageClient.getStorage<ComUser>(config.privateStorage.userList);
 
-  return {
-    ok: true,
-    data: userList,
-  };
+  return userList;
 });
