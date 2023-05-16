@@ -4,11 +4,24 @@ location = / {
   return       200 '{"ok": true, "data": "..:: Alwatr Accelerated Storage Server ::.."}';
 }
 
-location / {
-  # server all request as json files or data: null on 404
+# Serve all data for publics without any token.
+location /hub {
   try_files $uri.json @not_found;
 }
 
+# Serve privated data that in a secure valud that can accessable only by a valid user token.
+location /vault {
+  if ($bearer_token = "") {
+    return 401;
+  }
+  if (!-d $document_root/auth/$bearer_token) {
+    return 403;
+  }
+
+  try_files $uri.json @not_found;
+}
+
+# Serve privated user data that is different for each token.
 location ~ ^/auth/(?<doc_path>.*)$ {
   if ($bearer_token = "") {
     return 401;
