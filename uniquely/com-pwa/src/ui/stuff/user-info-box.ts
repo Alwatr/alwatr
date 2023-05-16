@@ -18,7 +18,6 @@ import '@alwatr/ui-kit/card/icon-box.js';
 
 import {config} from '../../config.js';
 import {buttons} from '../../manager/buttons.js';
-import {userTokenContextConsumer} from '../../manager/context-provider/user.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {ComUser, Order} from '@alwatr/type/customer-order-management.js';
@@ -48,8 +47,6 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
 
   @property({attribute: false})
     user: Partial<ComUser> = {};
-
-  protected userToken = userTokenContextConsumer.getValue();
 
   protected orderListStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<Order>>(
       'order_list_storage_context_' + this.user.id,
@@ -137,9 +134,9 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
 
     return html`
       <alwatr-icon-box .content=${userProfileIconButton}></alwatr-icon-box>
-      <span>${this.user!.fullName}</span>
-      <span>${this.user!.phoneNumber}</span>
-      <span>${this.user!.province}${this.user!.city}</span>
+      <span>${this.user.fullName}</span>
+      <span>${this.user.phoneNumber}</span>
+      <span>${this.user.province}${this.user!.city}</span>
       ${when(this.orderListStorageContextConsumer.getState().target !== 'complete', () => html`...`)}
       ${when(
       this.orderListStorageContextConsumer.getState().target === 'complete',
