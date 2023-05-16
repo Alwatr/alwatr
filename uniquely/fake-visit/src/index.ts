@@ -1,16 +1,19 @@
-import {config, logger} from './config.js';
-import {clear, visit} from './init.js';
-import {closeAllPage, openUrl} from './lib/puppeteer.js';
+import {logger} from './config.js';
+import {cleanup, visit} from './core.js';
+import './lib/browser.js';
 
-for (;;) {
+logger.logOther?.('..:: Alwatr Fake Visit Service ::..');
+
+async function init(): Promise<void> {
   try {
-    await closeAllPage();
-    const page = await openUrl(config.browser.url);
-    await clear(page);
-    await page.reload();
+    const page = await cleanup();
     await visit(page);
   }
-  catch (err) {
-    logger.error('init', 'Error in main loop', err);
+  catch (error) {
+    logger.error?.('init', 'init_failed', error);
   }
+}
+
+for (;;) {
+  await init();
 }

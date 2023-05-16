@@ -20,6 +20,7 @@ export const config = {
     channel: 'chrome-beta',
     typeDelay: Number(process.env.PUPPETEER_TYPE_DELAY) || 100,
     clickDelay: Number(process.env.PUPPETEER_CLICK_DELAY) || 100,
+    stepDelay: Number(process.env.PUPPETEER_STEP_DELAY) || 2000,
   },
   browser: {
     url,
