@@ -3,14 +3,13 @@ import {storage} from '../../lib/storage.js';
 import {MemberList} from '../../lib/type.js';
 import {bot} from '../bot.js';
 
-bot.defineCommandHandler('start', async (context): Promise<void> => {
-  const chatId = context.update.message?.chat.id;
-  const token = context.update.message?.text?.split(' ')[1];
+bot.command('start', async (ctx): Promise<void> => {
+  const chatId = ctx.chat.id;
+  const token = ctx.message.text.split(' ')[1];
   logger.logMethodArgs?.('command/start', {chatId, token});
-  if (chatId == null) return;
 
   if (token == null) {
-    context.reply('این یک بات خصوصی هستش! لطفا مزاحم نشوید.');
+    ctx.reply('این یک بات خصوصی هستش! لطفا مزاحم نشوید.');
     return;
   }
 
@@ -20,12 +19,12 @@ bot.defineCommandHandler('start', async (context): Promise<void> => {
   };
 
   if (target.memberList.indexOf(chatId) !== -1) {
-    context.reply('شما درحال حاضر عضو این لیست هستید!');
+    ctx.reply('شما درحال حاضر عضو این لیست هستید!');
     return;
   }
 
   target.memberList.push(chatId);
   storage.set(target, true);
 
-  context.reply('شما با موفقیت در لیست ثبت شدید.');
+  await ctx.reply('شما با موفقیت در لیست ثبت شدید.');
 });

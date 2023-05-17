@@ -2,8 +2,14 @@ import {bot} from './bot.js';
 import {logger} from '../config.js';
 import {storage} from '../lib/storage.js';
 
+const escapeCharacter = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
+
 export async function sendMessage(to: string, message: string): Promise<void> {
   logger.logMethodArgs?.('sendMessage', {to, message});
+
+  for (const character of escapeCharacter) {
+    message = message.replaceAll(character, `\\${character}`);
+  }
 
   const target = storage.get(to);
   if (target === null) {
@@ -13,7 +19,7 @@ export async function sendMessage(to: string, message: string): Promise<void> {
 
   for (const chatId of target.memberList) {
     try {
-      await bot.api.sendMessage(chatId, message, {parse_mode: 'MarkdownV2'});
+      await bot.telegram.sendMessage(chatId, message, {parse_mode: 'MarkdownV2'});
     }
     catch (err) {
       // TODO: handle blocked user
