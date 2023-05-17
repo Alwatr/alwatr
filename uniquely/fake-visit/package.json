@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/fake-visit",
   "version": "0.31.0",
-  "description": "Spam website visitor for increase visit rate",
+  "description": "Fake website visitor for increase visit rate",
   "type": "module",
   "keywords": [
     "puppeteer",

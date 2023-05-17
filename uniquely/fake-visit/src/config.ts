@@ -17,7 +17,7 @@ export const config = {
     devtools: process.env.PUPPETEER_DEVTOOLS === '1',
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH ?? undefined,
     product: 'chrome',
-    channel: 'chrome-beta',
+    channel: 'chrome',
     typeDelay: Number(process.env.PUPPETEER_TYPE_DELAY) || 100,
     clickDelay: Number(process.env.PUPPETEER_CLICK_DELAY) || 100,
     stepDelay: Number(process.env.PUPPETEER_STEP_DELAY) || 2000,

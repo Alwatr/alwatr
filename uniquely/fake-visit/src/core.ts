@@ -19,7 +19,7 @@ export async function visit(page: Page): Promise<void> {
   await page.keyboard.press('Enter');
 
   await page.waitForNavigation({waitUntil: 'networkidle2', timeout: 10000});
-  await page.waitForSelector('a[href*=dkp-10685037]', {timeout: 2000});
+  await page.waitForSelector('a[href*=dkp-10685037]', {timeout: 5000});
   const productLink = await page.$('a[href*=dkp-10685037]');
   if (productLink == null) {
     throw new Error('product_link_not_found');
