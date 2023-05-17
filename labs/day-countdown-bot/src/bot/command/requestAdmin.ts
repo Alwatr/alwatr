@@ -3,7 +3,7 @@ import {message} from '../../director/l18e-loader.js';
 import {bot} from '../../lib/bot.js';
 import {addAdmin, isAdmin} from '../../util/admin.js';
 
-bot.defineCommandHandler('requestAdmin', (context) => {
+bot.defineCommandHandler('requestAdmin', async (context) => {
   logger.logMethod?.('command-requestAdmin');
   const params = context.commandParams ?? [];
   const token = params[0];
@@ -12,7 +12,7 @@ bot.defineCommandHandler('requestAdmin', (context) => {
     return;
   }
 
-  if (isAdmin(context.chatId) === true) {
+  if (await isAdmin(context.chatId) === true) {
     context.reply(message('admin_added_yet'));
   }
   else {

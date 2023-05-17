@@ -5,7 +5,7 @@ export const logger = createLogger('telegram-day-countdown');
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
 const telegramBotWebhookDomain = process.env.TELEGRAM_BOT_WEBHOOK_DOMAIN;
 
-if (telegramBotToken == undefined) {
+if (telegramBotToken == null) {
   throw new Error('telegram bot token required, TELEGRAM_BOT_TOKEN="YOUR_SECRET_TOKEN" yarn start');
 }
 if (telegramBotWebhookDomain == null) {
@@ -26,9 +26,10 @@ export const config = {
     name: process.env.STORAGE_NAME ?? 'user',
     path: process.env.STORAGE_PATH ?? 'storage',
   },
-  configStorage: {
-    name: 'config',
-    path: process.env.STORAGE_PATH ?? 'storage',
+  storageClient: {
+    host: process.env.STORAGE_HOST ?? '127.0.0.1',
+    port: process.env.STORAGE_PORT != null ? +process.env.STORAGE_PORT : 9000,
+    token: process.env.STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
 };
 

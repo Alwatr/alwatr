@@ -1,17 +1,32 @@
 import {logger} from '../config.js';
-import {configStorageEngine} from '../lib/storage.js';
+import {configStorageClient} from '../lib/storage.js';
 
-export function isAdmin(chatId: number | string): boolean {
+export async function isAdmin(chatId: number | string): Promise<boolean> {
   logger.logMethodArgs?.('isAdmin', {chatId});
-  const adminChatIdList = configStorageEngine.get('admin_list')?.adminChatIdList;
+
+  let adminChatIdList: Array<number> = [];
+  try {
+    adminChatIdList = (await configStorageClient.get('admin_list')).adminChatIdList;
+  }
+  catch {
+    return false;
+  }
   return adminChatIdList?.includes(+chatId) === true;
 }
 
-export function addAdmin(chatId: number | string): void {
+export async function addAdmin(chatId: number | string): Promise<void> {
   logger.logMethodArgs?.('addAdmin', {chatId});
-  const adminChatIdList = configStorageEngine.get('admin_list')?.adminChatIdList ?? [];
+
+  let adminChatIdList: Array<number> = [];
+  try {
+    adminChatIdList = (await configStorageClient.get('admin_list')).adminChatIdList;
+  }
+  catch {
+    //
+  }
+
   adminChatIdList.push(+chatId);
-  configStorageEngine.set({
+  configStorageClient.set({
     id: 'admin_list',
     adminChatIdList: adminChatIdList,
   });

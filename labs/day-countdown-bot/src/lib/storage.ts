@@ -1,8 +1,9 @@
-import {AlwatrStorageEngine} from '@alwatr/storage-engine';
+import {AlwatrStorageClient} from '@alwatr/storage-client';
 
 import {config} from '../config.js';
 
 import type {BotSetting, DayCountdownChat} from '../type.js';
 
-export const chatStorageEngine = new AlwatrStorageEngine<DayCountdownChat>(config.chatStorage);
-export const configStorageEngine = new AlwatrStorageEngine<BotSetting>(config.configStorage);
+export const chatStorageClient = new AlwatrStorageClient<DayCountdownChat>({name: 'chat', ...config.storageClient});
+export const configStorageClient = new AlwatrStorageClient<BotSetting>({name: 'config', ...config.storageClient});
+export const conversationStorageClient = new AlwatrStorageClient(config.storageClient);
