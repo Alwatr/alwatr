@@ -10,9 +10,10 @@ export async function notify(count: number): Promise<void> {
     try {
       const message = makeMessage(count);
       await serviceRequest({
+        method: 'POST',
         url: config.notifier.url,
         token: config.notifier.token,
-        queryParameters: {
+        bodyJson: {
           to: config.notifier.to,
           message,
         },
