@@ -21,6 +21,7 @@
     {"path": "../core/math"},
     {"path": "../core/util"},
     {"path": "../core/fsm"},
+    {"path": "../core/fsm2"},
     {"path": "../core/context"},
     {"path": "../ui/icon"},
     {"path": "../core/storage-engine"},

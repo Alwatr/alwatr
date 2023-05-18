@@ -1,80 +1,64 @@
 import {FiniteStateMachine} from '@alwatr/fsm2';
-// import {delay} from '@alwatr/util';
+import {delay} from '@alwatr/util';
 
 
-const lightMachine = new FiniteStateMachine(
-    {
-      $all: {
-        on: {},
+const lightMachine = new FiniteStateMachine({
+  initial: 'green',
+  context: {
+    a: 0,
+    b: 0,
+  },
+  states: {
+    $all: {
+      entry(): void {console.log('$all entry called');},
+      exit(): void {console.log('$all exit called');},
+      on: {
+        POWER_LOST: {
+          target: 'flashingRed',
+          actions(): void {console.log('$all.POWER_LOST actions called');},
+        },
       },
     },
-    '$all',
-    {
-      a: 0,
-      b: 0,
+    green: {
+      entry(): void {console.log('green entry called');},
+      exit(): void {console.log('green exit called');},
+      on: {
+        TIMER: {
+          target: 'yellow',
+        },
+      },
     },
-);
-
-// Provider
-// const lightMachineConstructor = finiteStateMachineProvider.defineConstructor('light_machine', {
-//   initial: 'green',
-//   context: {
-//     a: <number> 0,
-//     b: <number> 0,
-//   },
-//   stateRecord: {
-//     $all: {
-//       entry: 'action_all_entry',
-//       exit: 'action_all_exit',
-//       on: {
-//         POWER_LOST: {
-//           target: 'flashingRed',
-//           actions: 'action_all_POWER_LOST',
-//         },
-//       },
-//     },
-//     green: {
-//       entry: 'action_green_entry',
-//       exit: 'action_green_exit',
-//       on: {
-//         TIMER: {
-//           target: 'yellow',
-//           actions: 'action_green_TIMER',
-//         },
-//       },
-//     },
-//     yellow: {
-//       entry: 'action_yellow_entry',
-//       exit: 'action_yellow_exit',
-//       on: {
-//         TIMER: {
-//           target: 'red',
-//           actions: 'action_yellow_TIMER',
-//         },
-//       },
-//     },
-//     red: {
-//       entry: 'action_red_entry',
-//       exit: 'action_red_exit',
-//       on: {
-//         TIMER: {
-//           target: 'green',
-//           actions: 'action_red_TIMER',
-//         },
-//       },
-//     },
-//     flashingRed: {
-//       entry: 'action_flashingRed_entry',
-//       exit: 'action_flashingRed_exit',
-//       on: {
-//         POWER_BACK: {
-//           target: 'green',
-//           actions: 'action_flashingRed_POWER_BACK',
-//         },
-//       },
-//     },
-//   },
-// });
+    yellow: {
+      entry(): void {console.log('yellow entry called');},
+      exit(): void {console.log('yellow exit called');},
+      on: {
+        TIMER: {
+          target: 'red',
+        },
+      },
+    },
+    red: {
+      entry(): void {console.log('red entry called');},
+      exit(): void {console.log('red exit called');},
+      on: {
+        TIMER: {
+          target: 'green',
+          actions(): void {console.log('red.TIMER actions called');},
+        },
+      },
+    },
+    flashingRed: {
+      entry(): void {console.log('flashingRed entry called');},
+      exit(): void {console.log('flashingRed exit called');},
+      on: {
+        POWER_BACK: {
+          target: 'green',
+          actions(): void {console.log('flashingRed.POWER_BACK actions called');},
+        },
+      },
+    },
+  },
+});
 
 // type LightMachine = FsmTypeHelper<typeof lightMachineConstructor>;
 
@@ -141,17 +125,30 @@ const lightMachine = new FiniteStateMachine(
 //   },
 // ]);
 
-// console.log('start', lightMachineConsumer.getState());
+console.log('start', lightMachine.state);
 
-// await delay(1000);
-// lightMachineConsumer.transition('TIMER', {a: 1});
-// await delay(1000);
-// lightMachineConsumer.transition('TIMER', {b: 2});
-// await delay(1000);
-// lightMachineConsumer.transition('TIMER');
-// await delay(1000);
-// lightMachineConsumer.transition('POWER_LOST', {a: 4});
-// await delay(1000);
-// lightMachineConsumer.transition('TIMER', {a: 5, b: 5});
-// await delay(1000);
-// lightMachineConsumer.transition('POWER_BACK', {a: 6});
+await delay(1000);
+lightMachine.context.a = 1;
+lightMachine.transition('TIMER');
+
+await delay(1000);
+lightMachine.context.b = 2;
+lightMachine.transition('TIMER');
+
+await delay(1000);
+lightMachine.transition('TIMER');
+
+await delay(1000);
+lightMachine.context.a = 4;
+lightMachine.transition('POWER_LOST');
+
+await delay(1000);
+lightMachine.context = {
+  a: 5,
+  b: 5,
+};
+lightMachine.transition('TIMER');
+
+await delay(1000);
+lightMachine.context.a = 6;
+lightMachine.transition('POWER_BACK');
