@@ -1,22 +1,26 @@
 import {serviceRequest} from '@alwatr/fetch';
 
-import {config} from './config.js';
+import {config, logger} from './config.js';
 import {storageClient} from './lib/storage.js';
 
 import type {Count} from './type.js';
 
-export async function notify(): Promise<void> {
-  const count = await incrementCount();
+export async function notify(count: number): Promise<void> {
   if (count % config.crawl.notifyCount === 0) {
-    const message = makeMessage(count);
-    await serviceRequest({
-      url: config.notifier.url,
-      token: config.notifier.token,
-      queryParameters: {
-        to: config.notifier.to,
-        message,
-      },
-    });
+    try {
+      const message = makeMessage(count);
+      await serviceRequest({
+        url: config.notifier.url,
+        token: config.notifier.token,
+        queryParameters: {
+          to: config.notifier.to,
+          message,
+        },
+      });
+    }
+    catch (err) {
+      logger.error?.('notify', 'notify_failed', err);
+    }
   }
 }
 

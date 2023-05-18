@@ -2,7 +2,7 @@ import {cleanup} from './cleanup.js';
 import {logger} from './config.js';
 import {visit} from './fake-visit.js';
 import './lib/browser.js';
-import {notify} from './report.js';
+import {notify, incrementCount} from './report.js';
 
 logger.logOther?.('..:: Alwatr Fake Visit Service ::..');
 
@@ -12,7 +12,8 @@ logger.logOther?.('..:: Alwatr Fake Visit Service ::..');
     try {
       await cleanup();
       await visit();
-      await notify();
+      const count = await incrementCount();
+      await notify(count);
     }
     catch (error) {
       logger.error?.('init', 'init_failed', error);
