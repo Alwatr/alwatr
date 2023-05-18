@@ -1,8 +1,6 @@
-
 import {config} from './config.js';
 import {browser} from './lib/browser.js';
 import {clearCookies, clearLocalStorage, clearSessionStorage, closeAllPage, openUrl} from './lib/puppeteer.js';
-
 
 export async function cleanup(): Promise<void> {
   await closeAllPage();

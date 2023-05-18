@@ -27,9 +27,10 @@ export const config = {
     productLinkSelector: process.env.FAKE_VISIT_PRODUCT_LINK_SELECTOR as string,
     timeout: Number(process.env.FAKE_VISIT_TYPE_DELAY) || 60_000,
     typeDelay: Number(process.env.FAKE_VISIT_TYPE_DELAY) || 15,
+    navigationDelay: Number(process.env.FAKE_VISIT_NAVIGATION_DELAY) || 10_000,
     clickDelay: Number(process.env.FAKE_VISIT_CLICK_DELAY) || 20,
     finalDelay: Number(process.env.FAKE_VISIT_STEP_DELAY) || 30_000,
-    notifyCount: Number(process.env.FAKE_VISIT_NOTIFY_COUNT) || 100,
+    notifyCount: Number(process.env.FAKE_VISIT_NOTIFY_COUNT) || 1000,
   },
   storage: {
     host: process.env.STORAGE_HOST ?? '127.0.0.1',
