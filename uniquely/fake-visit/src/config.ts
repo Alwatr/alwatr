@@ -40,7 +40,7 @@ export const config = {
   },
   notifier: {
     url: process.env.NOTIFIER_HOST ?? 'http://127.0.0.1:8001',
-    to: process.env.NOTIFIER_TO ?? 'fake-visit',
+    to: process.env.NOTIFIER_TO ?? 'all',
     token: process.env.NOTIFIER_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
 } as const;
