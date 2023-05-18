@@ -26,10 +26,8 @@ export async function notify(count: number): Promise<void> {
 
 export async function incrementCount(): Promise<number> {
   let count;
-  try {
-    count = await storageClient.get('count');
-  }
-  catch {
+  count = await storageClient.get('count');
+  if (count == null) {
     count = <Count>{id: 'count', value: 0};
   }
   count.value++;
