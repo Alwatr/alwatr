@@ -1,8 +1,8 @@
 import {cleanup} from './cleanup.js';
 import {logger} from './config.js';
-// import {report} from './report.js';
 import {visit} from './fake-visit.js';
 import './lib/browser.js';
+import {notify} from './report.js';
 
 logger.logOther?.('..:: Alwatr Fake Visit Service ::..');
 
@@ -12,7 +12,7 @@ logger.logOther?.('..:: Alwatr Fake Visit Service ::..');
     try {
       await cleanup();
       await visit();
-      // await report();
+      await notify();
     }
     catch (error) {
       logger.error?.('init', 'init_failed', error);

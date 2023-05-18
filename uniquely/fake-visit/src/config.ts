@@ -8,7 +8,7 @@ export const config = {
   launchOption: <PuppeteerLaunchOptions>{
     product: 'chrome',
     channel: 'chrome',
-    userDataDir: '../chrome-profile/',
+    userDataDir: './chrome-profile/',
     headless: process.env.FAKE_VISIT_HEADLESS === '1',
     devtools: process.env.FAKE_VISIT_DEVTOOLS === '1',
     slowMo: Number(process.env.FAKE_VISIT_SLOWMO) ?? 10,
@@ -29,6 +29,7 @@ export const config = {
     typeDelay: Number(process.env.FAKE_VISIT_TYPE_DELAY) || 15,
     clickDelay: Number(process.env.FAKE_VISIT_CLICK_DELAY) || 20,
     finalDelay: Number(process.env.FAKE_VISIT_STEP_DELAY) || 30_000,
+    notifyCount: Number(process.env.FAKE_VISIT_NOTIFY_COUNT) || 100,
   },
   storage: {
     host: process.env.STORAGE_HOST ?? '127.0.0.1',
@@ -36,6 +37,10 @@ export const config = {
     name: process.env.STORAGE_NAME ?? 'count',
     token: process.env.STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
+  notifier: {
+    url: process.env.NOTIFIER_HOST ?? 'http://127.0.0.1:8001',
+    to: process.env.NOTIFIER_TO ?? 'fake-visit',
+    token: process.env.NOTIFIER_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
 } as const;
 
