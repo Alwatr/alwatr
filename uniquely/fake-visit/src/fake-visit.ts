@@ -1,5 +1,4 @@
-import {delay} from '@alwatr/util';
-import {generateRandomUserAgent} from '@alwatr/util/userAgent.js';
+import {delay, generateRandomUserAgent} from '@alwatr/util';
 
 import {config, logger} from './config.js';
 import {getCurrentPage, openUrl} from './lib/puppeteer.js';
