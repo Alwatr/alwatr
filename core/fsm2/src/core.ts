@@ -1,0 +1,238 @@
+import {createLogger, globalAlwatr} from '@alwatr/logger';
+
+import type {MaybePromise, SingleOrArray, Stringifyable} from '@alwatr/type';
+
+globalAlwatr.registeredList.push({
+  name: '@alwatr/fsm',
+  version: _ALWATR_VERSION_,
+});
+
+export type ActionFn = () => MaybePromise<void>;
+export type ConditionFn = () => boolean;
+
+export type State<StateName extends string, EventName extends string> = {
+  /**
+   * Current state name.
+   */
+  target: StateName;
+
+  /**
+   * Last state name.
+   */
+  from: StateName;
+
+  /**
+   * Transition event name.
+   */
+  by: EventName | 'INIT';
+};
+
+/**
+ * State Configurations.
+ */
+export type StateConfig<StateName extends string, EventName extends string> = {
+  readonly [S in StateName | '$all']: {
+    /**
+     * On state exit actions
+     */
+    readonly exit?: SingleOrArray<ActionFn>;
+
+    /**
+     * On state entry actions
+     */
+    readonly entry?: SingleOrArray<ActionFn>;
+
+    /**
+     * An object mapping eventId to state.
+     *
+     * Example:
+     *
+     * ```ts
+     * stateRecord: {
+     *   on: {
+     *     TIMER: {
+     *       target: 'green',
+     *       condition: () => car.gas > 0,
+     *       actions: () => car.go(),
+     *     }
+     *   }
+     * }
+     * ```
+     */
+    readonly on: {
+      readonly [E in EventName]?: TransitionConfig<StateName> | undefined;
+    };
+  };
+};
+
+export type TransitionConfig<StateName extends string> = {
+  readonly target?: StateName;
+  readonly conditions?: SingleOrArray<ConditionFn>;
+  readonly actions?: SingleOrArray<ActionFn>;
+};
+
+/**
+ * Finite State Machine Class
+ */
+export class FiniteStateMachine<Context extends Stringifyable, StateName extends string, EventName extends string> {
+  protected _logger = createLogger(`alwatr/fsm`);
+
+  /**
+   * Current state
+   */
+  state: State<StateName, EventName>;
+
+  constructor(
+    /**
+     * Finite State Machine state configs
+     */
+    protected _stateConfig: StateConfig<StateName, EventName>,
+
+    protected _initial: StateName,
+
+    /**
+     * Fsm context object.
+     */
+    public context: Context,
+  ) {
+    this._logger.logMethodArgs?.('constructor', {_initial, context, _stateConfig});
+
+    this.state = {
+      target: _initial,
+      from: _initial,
+      by: 'INIT',
+    };
+
+    this._execTransitionActions();
+  }
+
+  /**
+   * Transition finite state machine instance to new state.
+   */
+  transition(event: EventName): void {
+    const fromState = this.state.target;
+    const transition = this._stateConfig[fromState]?.on[event] ?? this._stateConfig.$all.on[event];
+
+    this._logger.logMethodArgs?.('transition', {fromState, event, target: transition?.target});
+
+    if (transition == null) {
+      this._logger.incident?.(
+          'transition',
+          'invalid_target_state',
+          'Defined target state for this event not found in state config',
+          {
+            fromState,
+            event,
+            events: {
+              ...this._stateConfig.$all?.on,
+              ...this._stateConfig[fromState]?.on,
+            },
+          },
+      );
+      return;
+    }
+
+    if (this._execConditions(transition.conditions) !== true) return;
+
+    this.state = {
+      target: transition.target ?? fromState,
+      from: fromState,
+      by: event,
+    };
+
+    this._execTransitionActions();
+
+    // TODO: call subscribers
+  }
+
+  // subscribe(callback: () => void): number {}
+
+  // unsubscribe(listenerId: number): void {}
+
+  /**
+   * Reset finite state machine instance to initial state and context.
+   */
+  reset(): void {
+    this.state = {
+      target: this._initial,
+      from: this._initial,
+      by: 'INIT',
+    };
+  }
+
+  /**
+   * Execute all actions for current state.
+   */
+  protected async _execTransitionActions(): Promise<void> {
+    this._logger.logMethodArgs?.('_execTransitionActions', {state: this.state});
+
+    if (this.state.by === 'INIT') {
+      await this._execActions(this._stateConfig.$all.entry);
+      await this._execActions(this._stateConfig[this.state.target]?.entry);
+      return;
+    }
+    // else
+
+    if (this.state.from !== this.state.target) {
+      await this._execActions(this._stateConfig.$all.exit);
+      await this._execActions(this._stateConfig[this.state.from]?.exit);
+      await this._execActions(this._stateConfig.$all.entry);
+      await this._execActions(this._stateConfig[this.state.target]?.entry);
+    }
+
+    await this._execActions(
+      this._stateConfig[this.state.from]?.on[this.state.by] != null
+        ? this._stateConfig[this.state.from].on[this.state.by]?.actions
+        : this._stateConfig.$all.on[this.state.by]?.actions,
+    );
+  }
+
+  _execConditions(conditions: SingleOrArray<ConditionFn> | undefined): boolean {
+    if (conditions == null) return true;
+
+    if (Array.isArray(conditions)) {
+      this._logger.logMethodArgs?.(
+          '_execConditions',
+          conditions.map((c) => c.name),
+      );
+      return conditions.map((condition) => this._execConditions(condition)).every((r) => r === true);
+    }
+    // else
+
+    this._logger.logMethodArgs?.('_execConditions', conditions.name);
+
+    try {
+      return conditions();
+    }
+    catch (error) {
+      this._logger.error('_execConditions', 'exec_condition_failed', error, conditions);
+      return false;
+    }
+  }
+
+  async _execActions(actions: SingleOrArray<ActionFn> | undefined): Promise<void> {
+    if (actions == null) return;
+
+    if (Array.isArray(actions)) {
+      this._logger.logMethodArgs?.(
+          '_execActions',
+          actions.map((a) => a.name),
+      );
+      // exec all actions
+      for (const action of actions) {
+        await this._execActions(action);
+      }
+      return;
+    }
+    // else
+
+    this._logger.logMethodArgs?.('_execActions', actions.name);
+
+    try {
+      await actions();
+    }
+    catch (error) {
+      return this._logger.error('_execActions', 'exec_action_failed', error, actions);
+    }
+  }
+}
