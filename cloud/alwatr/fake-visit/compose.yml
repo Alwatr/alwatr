@@ -35,7 +35,7 @@ services:
         max-size: '10m'
         max-file: '2'
 
-  crawler:
+  fake-visit:
     image: ghcr.io/alimd/fake-visit:${FAKE_VISIT_VERSION}
 
     cpu_shares: 256
@@ -59,7 +59,7 @@ services:
       - STORAGE_PORT=80
       - STORAGE_NAME=${STORAGE_NAME}
       - STORAGE_TOKEN=${STORAGE_TOKEN}
-      - NOTIFIER_HOST=${NOTIFIER_HOST}
+      - NOTIFIER_HOST=${TELEGRAM_NOTIFIER_HOST}
       - NOTIFIER_TOKEN=${TELEGRAM_NOTIFIER_TOKEN}
       - NOTIFIER_TO=${TELEGRAM_NOTIFIER_TO}
       - ALWATR_DEBUG=${FAKE_VISIT_DEBUG:-}

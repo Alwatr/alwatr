@@ -1,5 +1,4 @@
 networks:
-  internal:
   alwatr-public-network:
     name: alwatr-public-network
     external: true
@@ -21,7 +20,6 @@ services:
       - ACCESS_TOKEN=${TELEGRAM_NOTIFIER_TOKEN}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - ALWATR_DEBUG=${TELEGRAM_NOTIFIER_DEBUG:-}
-      - DEBUG=${TELEGRAM_NOTIFIER_DEBUG:-}
 
     volumes:
       - type: bind
