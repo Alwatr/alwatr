@@ -1,22 +1,22 @@
 import {browser} from './browser.js';
-import {logger} from '../config.js';
+import {config, logger} from '../config.js';
 
-import type {Page} from 'puppeteer-core';
+import type {Page, PuppeteerLifeCycleEvent} from 'puppeteer-core';
 
-export async function openUrl(url: string): Promise<Page> {
-  logger.logMethodArgs?.('openUrl', {url});
-
-  // check if there is a blank page, if not create one
-  const pages = await browser.pages();
-  let page;
-  if (pages[0].url() === 'about:blank') {
-    page = pages[0];
+export async function getCurrentPage(): Promise<Page> {
+  const pageList = await browser.pages();
+  for (const page of pageList) {
+    if (await page.evaluate(() => document.visibilityState) === 'visible') {
+      return page;
+    }
   }
-  else {
-    page = await browser.newPage();
-  }
+  return await browser.newPage();
+}
+
+export async function openUrl(page: Page, url: string, waitUntil: PuppeteerLifeCycleEvent = 'load'): Promise<void> {
+  logger.logMethodArgs?.('openUrl', {url, waitUntil});
   page.goto(url);
-  return page;
+  await page.waitForNavigation({waitUntil, timeout: config.crawl.timeout});
 }
 
 export async function clearCookies(page: Page): Promise<void> {
@@ -43,9 +43,8 @@ export async function clearSessionStorage(page: Page): Promise<void> {
 export async function closeAllPage(): Promise<void> {
   logger.logMethod?.('closeAllPage');
   const pages = await browser.pages();
-  for (let i = 0; i < pages.length - 1; i++) {
-    await pages[i].close();
+  await browser.newPage();
+  for (const page of pages) {
+    await page.close();
   }
-  // goto blank page
-  await pages[pages.length - 1].goto('about:blank');
 }
