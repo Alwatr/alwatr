@@ -1,29 +1,43 @@
 import {createLogger} from '@alwatr/logger';
 
+import type {PuppeteerLaunchOptions} from 'puppeteer-core';
+
 export const logger = createLogger('fake-visit');
 
-const url = process.env.BROWSER_URL;
-const searchText = process.env.BROWSER_SEARCH_TEXT;
-if (!url) {
-  throw new Error('url required, BROWSER_URL="YOUR_URL" yarn start');
-}
-if (!searchText) {
-  throw new Error('searchText required, BROWSER_SEARCH_TEXT="YOUR_SEARCH_TEXT" yarn start');
-}
-
 export const config = {
-  puppeteer: {
-    headless: process.env.PUPPETEER_HEADLESS === '1',
-    devtools: process.env.PUPPETEER_DEVTOOLS === '1',
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH ?? undefined,
+  launchOption: <PuppeteerLaunchOptions>{
     product: 'chrome',
     channel: 'chrome',
-    typeDelay: Number(process.env.PUPPETEER_TYPE_DELAY) || 100,
-    clickDelay: Number(process.env.PUPPETEER_CLICK_DELAY) || 100,
-    stepDelay: Number(process.env.PUPPETEER_STEP_DELAY) || 2000,
+    userDataDir: '../chrome-profile/',
+    headless: process.env.FAKE_VISIT_HEADLESS === '1',
+    devtools: process.env.FAKE_VISIT_DEVTOOLS === '1',
+    slowMo: Number(process.env.FAKE_VISIT_SLOWMO) ?? 10,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-infobars',
+      '--window-position=0,0',
+      '--ignore-certifcate-errors',
+      '--ignore-certifcate-errors-spki-list',
+    ],
   },
-  browser: {
-    url,
-    searchText,
+  crawl: {
+    home: process.env.FAKE_VISIT_HOME as string,
+    searchUrl: process.env.FAKE_VISIT_SEARCH_URL as string,
+    productLinkSelector: process.env.FAKE_VISIT_PRODUCT_LINK_SELECTOR as string,
+    timeout: Number(process.env.FAKE_VISIT_TYPE_DELAY) || 60_000,
+    typeDelay: Number(process.env.FAKE_VISIT_TYPE_DELAY) || 15,
+    clickDelay: Number(process.env.FAKE_VISIT_CLICK_DELAY) || 20,
+    finalDelay: Number(process.env.FAKE_VISIT_STEP_DELAY) || 30_000,
   },
 } as const;
+
+if (!config.crawl.home) {
+  throw new Error('Home url required, FAKE_VISIT_HOME="YOUR_URL"');
+}
+if (!config.crawl.searchUrl) {
+  throw new Error('Search URL required, FAKE_VISIT_SEARCH_URL="YOUR_SEARCH_URL"');
+}
+if (!config.crawl.productLinkSelector) {
+  throw new Error('Product selector required, FAKE_VISIT_PRODUCT_LINK_SELECTOR="YOUR_PRODUCT_LINK_SELECTOR"');
+}
