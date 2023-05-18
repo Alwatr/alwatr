@@ -2,7 +2,7 @@ import {existsSync} from 'node:fs';
 import {resolve} from 'node:path';
 
 import {delay} from '@alwatr/util';
-import {makeLinkForce} from '@alwatr/util/node';
+import {makeLinkForce} from '@alwatr/util/node.js';
 
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
