@@ -30,6 +30,13 @@ export const config = {
     clickDelay: Number(process.env.FAKE_VISIT_CLICK_DELAY) || 20,
     finalDelay: Number(process.env.FAKE_VISIT_STEP_DELAY) || 30_000,
   },
+  storage: {
+    host: process.env.STORAGE_HOST ?? '127.0.0.1',
+    port: process.env.STORAGE_PORT != null ? +process.env.STORAGE_PORT : 9000,
+    name: process.env.STORAGE_NAME ?? 'count',
+    token: process.env.STORAGE_TOKEN ?? 'YOUR_SECRET_TOKEN',
+  },
+  },
 } as const;
 
 if (!config.crawl.home) {

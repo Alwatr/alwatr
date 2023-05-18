@@ -53,6 +53,7 @@
     "@alwatr/logger": "^0.31.0",
     "@alwatr/type": "^0.31.0",
     "@alwatr/util": "^0.31.0",
+    "@alwatr/storage-client": "^0.31.0",
     "puppeteer": "^18.0.4",
     "@types/node": "^20.1.0",
     "esbuild": "^0.18.6",
