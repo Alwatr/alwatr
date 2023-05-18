@@ -16,7 +16,8 @@ orderStorageContextConsumer.fsm.defineSignals([
     signalId: userProfileContextConsumer.id,
     callback: (user: ComUser): void => {
       orderStorageContextConsumer.request({
-        url: config.serverContext.userOrderList + '/' + user.id,
+        url: config.serverContext.userOrderList,
+        token: user.token!,
       });
     },
     receivePrevious: 'NextCycle',

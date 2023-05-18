@@ -23,6 +23,7 @@ import {buttons} from '../../manager/buttons.js';
 import {userListStorageContextConsumer} from '../../manager/context-provider/user-list-storage.js';
 import {topAppBarContextProvider} from '../../manager/context.js';
 import '../stuff/order-status-box.js';
+import '../stuff/user-info-box.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 

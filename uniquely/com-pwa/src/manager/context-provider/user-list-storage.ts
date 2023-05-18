@@ -13,6 +13,7 @@ export const userListStorageContextConsumer = serverContextConsumer<AlwatrDocume
 
 userProfileContextConsumer.subscribe((userProfile) => {
   userListStorageContextConsumer.request({
+    url: config.serverContext.userList,
     userAuth: {
       id: userProfile.id,
       token: userProfile.token as string,
