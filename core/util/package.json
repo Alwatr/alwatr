@@ -31,9 +31,20 @@
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    },
+    "./node.js": {
+      "default": "./node/index.js"
+    }
+  },
   "dependencies": {
     "@alwatr/math": "^0.31.0",
     "@alwatr/type": "^0.31.0",
     "tslib": "^2.5.0"
+  },
+  "devDependencies": {
+    "flatstr": "^1.0.12"
   }
 }
