@@ -7,8 +7,8 @@ globalAlwatr.registeredList.push({
   version: _ALWATR_VERSION_,
 });
 
-export type ActionFn = () => MaybePromise<void>;
-export type ConditionFn = () => boolean;
+export type ActionFn = (this: unknown) => MaybePromise<void>;
+export type ConditionFn = (this: unknown) => boolean;
 
 export type State<StateName extends string, EventName extends string> = {
   /**
@@ -72,6 +72,18 @@ export type TransitionConfig<StateName extends string> = {
 };
 
 /**
+ * Finite State Machine state configs
+ */
+export type MachineConfig<StateName extends string, EventName extends string, Context extends Stringifyable> = {
+  initial: StateName;
+  /**
+   * Fsm context object.
+   */
+  context: Context;
+  states: StateConfig<StateName, EventName>;
+};
+
+/**
  * Finite State Machine Class
  */
 export class FiniteStateMachine<Context extends Stringifyable, StateName extends string, EventName extends string> {
@@ -82,24 +94,24 @@ export class FiniteStateMachine<Context extends Stringifyable, StateName extends
    */
   state: State<StateName, EventName>;
 
+  /**
+   * Fsm context object.
+   */
+  public context: Context;
+
   constructor(
     /**
      * Finite State Machine state configs
      */
-    protected _stateConfig: StateConfig<StateName, EventName>,
-
-    protected _initial: StateName,
-
-    /**
-     * Fsm context object.
-     */
-    public context: Context,
+    protected _config: MachineConfig<StateName, EventName, Context>,
   ) {
-    this._logger.logMethodArgs?.('constructor', {_initial, context, _stateConfig});
+    this._logger.logMethodArgs?.('constructor', {_config});
+
+    this.context = _config.context;
 
     this.state = {
-      target: _initial,
-      from: _initial,
+      target: _config.initial,
+      from: _config.initial,
       by: 'INIT',
     };
 
@@ -111,7 +123,7 @@ export class FiniteStateMachine<Context extends Stringifyable, StateName extends
    */
   transition(event: EventName): void {
     const fromState = this.state.target;
-    const transition = this._stateConfig[fromState]?.on[event] ?? this._stateConfig.$all.on[event];
+    const transition = this._config.states[fromState]?.on[event] ?? this._config.states.$all.on[event];
 
     this._logger.logMethodArgs?.('transition', {fromState, event, target: transition?.target});
 
@@ -124,8 +136,8 @@ export class FiniteStateMachine<Context extends Stringifyable, StateName extends
             fromState,
             event,
             events: {
-              ...this._stateConfig.$all?.on,
-              ...this._stateConfig[fromState]?.on,
+              ...this._config.states.$all?.on,
+              ...this._config.states[fromState]?.on,
             },
           },
       );
@@ -154,8 +166,8 @@ export class FiniteStateMachine<Context extends Stringifyable, StateName extends
    */
   reset(): void {
     this.state = {
-      target: this._initial,
-      from: this._initial,
+      target: this._config.initial,
+      from: this._config.initial,
       by: 'INIT',
     };
   }
@@ -167,23 +179,23 @@ export class FiniteStateMachine<Context extends Stringifyable, StateName extends
     this._logger.logMethodArgs?.('_execTransitionActions', {state: this.state});
 
     if (this.state.by === 'INIT') {
-      await this._execActions(this._stateConfig.$all.entry);
-      await this._execActions(this._stateConfig[this.state.target]?.entry);
+      await this._execActions(this._config.states.$all.entry);
+      await this._execActions(this._config.states[this.state.target]?.entry);
       return;
     }
     // else
 
     if (this.state.from !== this.state.target) {
-      await this._execActions(this._stateConfig.$all.exit);
-      await this._execActions(this._stateConfig[this.state.from]?.exit);
-      await this._execActions(this._stateConfig.$all.entry);
-      await this._execActions(this._stateConfig[this.state.target]?.entry);
+      await this._execActions(this._config.states.$all.exit);
+      await this._execActions(this._config.states[this.state.from]?.exit);
+      await this._execActions(this._config.states.$all.entry);
+      await this._execActions(this._config.states[this.state.target]?.entry);
     }
 
     await this._execActions(
-      this._stateConfig[this.state.from]?.on[this.state.by] != null
-        ? this._stateConfig[this.state.from].on[this.state.by]?.actions
-        : this._stateConfig.$all.on[this.state.by]?.actions,
+      this._config.states[this.state.from]?.on[this.state.by] != null
+        ? this._config.states[this.state.from].on[this.state.by]?.actions
+        : this._config.states.$all.on[this.state.by]?.actions,
     );
   }
 
@@ -202,7 +214,7 @@ export class FiniteStateMachine<Context extends Stringifyable, StateName extends
     this._logger.logMethodArgs?.('_execConditions', conditions.name);
 
     try {
-      return conditions();
+      return conditions.call(this);
     }
     catch (error) {
       this._logger.error('_execConditions', 'exec_condition_failed', error, conditions);
@@ -229,7 +241,7 @@ export class FiniteStateMachine<Context extends Stringifyable, StateName extends
     this._logger.logMethodArgs?.('_execActions', actions.name);
 
     try {
-      await actions();
+      await actions.call(this);
     }
     catch (error) {
       return this._logger.error('_execActions', 'exec_action_failed', error, actions);
