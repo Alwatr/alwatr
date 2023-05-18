@@ -1,5 +1,3 @@
-// yarn build && NODE_ENV=production TOKEN=YOUR_SECRET_TOKEN node demo/storage-client/benchmark.js
-
 import {random} from '@alwatr/math';
 import {AlwatrStorageClient} from '@alwatr/storage-client';
 
