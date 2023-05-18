@@ -36,6 +36,6 @@
     "@alwatr/element": "^0.31.0",
     "@alwatr/fetch": "^0.31.0",
     "@alwatr/logger": "^0.31.0",
-    "tslib": "^2.5.0"
+    "tslib": "^2.5.1"
   }
 }

@@ -32,6 +32,6 @@
     "@alwatr/logger": "^0.31.0",
     "@alwatr/type": "^0.31.0",
     "@alwatr/util": "^0.31.0",
-    "tslib": "^2.5.0"
+    "tslib": "^2.5.1"
   }
 }
