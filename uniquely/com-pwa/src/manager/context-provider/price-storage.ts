@@ -50,6 +50,9 @@ userProfileContextConsumer.subscribe((user) => {
   });
 
   productFinalPriceStorageContextConsumer.setOptions({
+    url: config.serverContext.agencyPriceList
+        .replace('${productStorageName}', 'tile')
+        .replace('${priceListName}', user.priceListName ?? 'agency'),
     token: user.token!,
   });
 });
