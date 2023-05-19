@@ -1,3 +1,4 @@
+# Use if_not_owner to serve the content of symbolic links based on the last modified time of the original file.
 disable_symlinks $NGINX_DISABLE_SYMLINKS;
 
 location ~* (?:\.(?:bak|conf|dist|fla|in[ci]|log|psd|sh|sql|sw[op]|lock)|~)$ {

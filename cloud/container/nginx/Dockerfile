@@ -24,7 +24,7 @@ ENV NGINX_ACCESS_LOG=off \
     NGINX_LIMIT_REQ_LOG=notice \
     NGINX_AUTOINDEX=off \
     NGINX_DOCUMENT_ROOT=/var/www/html \
-    NGINX_DISABLE_SYMLINKS=off \
+    NGINX_DISABLE_SYMLINKS=if_not_owner \
     NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE=1
 
 RUN apk add --no-cache curl
