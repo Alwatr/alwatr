@@ -19,8 +19,9 @@ commandHandler.define<Order, Order | null>(submitOrderCommandTrigger.id, async (
       ...config.fetchContextOptions,
       method: 'PUT',
       url: config.serverContext.newOrder,
-      queryParameters: {
-        userId: userContext.id,
+      userAuth: {
+        id: userContext.id,
+        token: userContext.token!,
       },
       bodyJson: order,
       retry: 3,
