@@ -9,7 +9,7 @@ export const chatStorageContextConsumer = serverContextConsumer<AlwatrDocumentSt
     'chat_storage_context',
     {
       ...config.fetchContextOptions,
-      url: config.api + '/chat/',
+      url: config.serverContext.api + '/chat/',
     },
 );
 

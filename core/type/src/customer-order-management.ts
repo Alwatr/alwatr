@@ -177,6 +177,7 @@ export const orderInfoSchema = {
     carType: String,
     ladingType: String,
     timePeriod: String,
+    description: String,
   },
   // discount: Number,
   // discountType: String,

@@ -116,6 +116,8 @@
     "chat_text_input_placeholder": "متن پیام",
 
     "submit_order_success_message": "سفارش شماره ${orderId} با موفقیت ثبت شد.",
-    "submit_order_failed_message": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید."
+    "submit_order_failed_message": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید.",
+
+    "user_order_list_reloading_failed": "خطا در بارگذاری سفارشات کاربر، لطفا مجدد تلاش کنید"
   }
 }

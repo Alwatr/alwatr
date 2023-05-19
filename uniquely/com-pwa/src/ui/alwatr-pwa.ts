@@ -8,7 +8,7 @@ import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-270.css';
 
 import './stuff/app-footer.js';
-import {linkPassTokenContextConsumer, userTokenContextConsumer} from '../manager/context-provider/user.js';
+import {linkPassTokenContextConsumer, userProfileContextConsumer} from '../manager/context-provider/user.js';
 import {topAppBarContextProvider} from '../manager/context.js';
 
 declare global {
@@ -33,6 +33,7 @@ class AlwatrPwa extends AlwatrPwaElement {
       'home': this._renderPageHome,
       '_404': this._renderPage404,
       'order-list': this._renderPageOrderList,
+      'user-list': this._renderPageUserList,
       'order': this._renderPageOrder,
       'sign-in': this._renderPageSignIn,
       's': this._saveLinkPass,
@@ -58,6 +59,12 @@ class AlwatrPwa extends AlwatrPwaElement {
     import('./page/order-list.js');
     topAppBarContextProvider.setValue({headlineKey: 'loading'});
     return html`<alwatr-page-order-list unresolved>...</alwatr-page-order-list>`;
+  }
+
+  protected _renderPageUserList(): unknown {
+    import('./page/user-list.js');
+    topAppBarContextProvider.setValue({headlineKey: 'loading'});
+    return html`<alwatr-page-user-list unresolved>...</alwatr-page-user-list>`;
   }
 
   protected _renderPageOrder(routeContext: RouteContext): unknown {
@@ -89,8 +96,12 @@ class AlwatrPwa extends AlwatrPwaElement {
   protected _checkSignedIn(routeContext: RouteContext): void {
     const routeId = this._routesConfig.routeId(routeContext);
     this._logger.logMethodArgs?.('_checkSignedIn', {routeId});
+    if (userProfileContextConsumer.getValue()?.token) {
+      // user is signed-in and its ok
+      return;
+    }
+    // else
     if (
-      userTokenContextConsumer.getValue() == null &&
       routeId !== 'sign-in' &&
       routeId !== 's' &&
       routeId !== ''

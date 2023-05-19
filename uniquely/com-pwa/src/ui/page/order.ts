@@ -498,7 +498,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
       item.qty ||= 80;
 
       return html`<alwatr-surface tinted class="product-item">
-        <img src="${config.cdn + '/medium/' + product.image.id}" />
+        <img src="${config.serverContext.cdn + '/medium/' + product.image.id}" />
         <div class="detail-container">
           <div>${product.title.fa}</div>
           <div>
