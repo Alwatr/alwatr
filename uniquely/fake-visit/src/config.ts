@@ -9,6 +9,7 @@ export const config = {
     product: 'chrome',
     channel: 'chrome',
     userDataDir: './chrome-profile/',
+    executablePath: process.env.CHROME_BIN || null,
     headless: process.env.FAKE_VISIT_HEADLESS === '1',
     devtools: process.env.FAKE_VISIT_DEVTOOLS === '1',
     slowMo: Number(process.env.FAKE_VISIT_SLOWMO) ?? 10,
