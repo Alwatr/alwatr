@@ -4,7 +4,7 @@ import {userProfileContextConsumer} from './user.js';
 import {config} from '../../config.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
-import type {ComUser, ProductPrice} from '@alwatr/type/customer-order-management.js';
+import type {ProductPrice} from '@alwatr/type/customer-order-management.js';
 
 
 /**
@@ -19,15 +19,6 @@ export const productPriceStorageContextConsumer = serverContextConsumer<AlwatrDo
 );
 
 productPriceStorageContextConsumer.fsm.defineSignals([
-  {
-    signalId: userProfileContextConsumer.id,
-    callback: (user: ComUser): void => {
-      productPriceStorageContextConsumer.setOptions({
-        token: user.token!,
-      });
-    },
-    receivePrevious: 'NextCycle',
-  },
   {
     signalId: 'reload_product_price_storage',
     transition: 'REQUEST',
@@ -48,16 +39,17 @@ export const productFinalPriceStorageContextConsumer = serverContextConsumer<Alw
 
 productFinalPriceStorageContextConsumer.fsm.defineSignals([
   {
-    signalId: userProfileContextConsumer.id,
-    callback: (user: ComUser): void => {
-      productFinalPriceStorageContextConsumer.setOptions({
-        token: user.token!,
-      });
-    },
-    receivePrevious: 'NextCycle',
-  },
-  {
     signalId: 'reload_product_price_storage',
     transition: 'REQUEST',
   },
 ]);
+
+userProfileContextConsumer.subscribe((user) => {
+  productPriceStorageContextConsumer.setOptions({
+    token: user.token!,
+  });
+
+  productFinalPriceStorageContextConsumer.setOptions({
+    token: user.token!,
+  });
+});
