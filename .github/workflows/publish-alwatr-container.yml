@@ -47,7 +47,7 @@ jobs:
 
           - image: fake-visit
             source: uniquely/fake-visit
-            dockerfile: cloud/container/alwatr-services.dockerfile
+            dockerfile: cloud/container/alwatr-puppeteer.dockerfile
             description: Fake website visitor for increase visit rate.
 
           - image: form-registration
