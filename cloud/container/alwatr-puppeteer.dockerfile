@@ -57,6 +57,7 @@ CMD ["yarn", "serve"]
 
 ENV NODE_ENV production
 ENV NODE_OPTIONS --enable-source-maps
+ENV CHROME_BIN="/usr/bin/chromium-browser"
 ENV ALWATR_DEBUG 1
 ENV HOST 0.0.0.0
 ENV PORT 80
