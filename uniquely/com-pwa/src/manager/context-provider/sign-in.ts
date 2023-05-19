@@ -15,15 +15,14 @@ export const signInServerContext = serverContextConsumer<AlwatrServiceResponseSu
 );
 
 signInServerContext.subscribe(() => {
-  if (signInServerContext.getState().target === 'complete') {
-    const userProfile = signInServerContext.getResponse()!.data;
-    contextProvider.setValue<ComUser>(userProfileContextConsumer.id, userProfile);
-    redirect({});
+  if (signInServerContext.getState().target !== 'complete') return;
+  const userProfile = signInServerContext.getResponse()!.data;
+  contextProvider.setValue<ComUser>(userProfileContextConsumer.id, userProfile);
+  redirect({});
 
-    snackbarSignalTrigger.request({
-      message: message('sign_in_welcome_message').replace('${fullName}', userProfile.fullName),
-    });
-  }
+  snackbarSignalTrigger.request({
+    message: message('sign_in_welcome_message').replace('${fullName}', userProfile.fullName),
+  });
 });
 
 export const signIn = (token: string): void => {

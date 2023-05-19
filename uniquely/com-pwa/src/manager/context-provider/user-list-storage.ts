@@ -8,15 +8,17 @@ import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
 export const userListStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<ComUser>>(
     'user_list_storage_context',
-    config.fetchContextOptions,
+    {
+      ...config.fetchContextOptions,
+      url: config.serverContext.userList,
+    },
 );
 
 userProfileContextConsumer.subscribe((userProfile) => {
   userListStorageContextConsumer.request({
-    url: config.serverContext.userList,
     userAuth: {
       id: userProfile.id,
-      token: userProfile.token as string,
+      token: userProfile.token!,
     },
   });
 });
