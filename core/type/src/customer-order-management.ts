@@ -154,6 +154,7 @@ export type UserPermission = (typeof userPermissionsCS)[number];
 export interface ComUser extends User {
   permissions?: Array<UserPermission> | 'root';
   shopName?: string;
+  priceListName?: string;
 }
 
 // -- Schema --
