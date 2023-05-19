@@ -32,8 +32,6 @@ export const productFinalPriceStorageContextConsumer = serverContextConsumer<Alw
     'product_final_price_storage_context',
     {
       ...config.fetchContextOptions,
-      url: config.serverContext.agencyPriceList.replace('${productStorageName}', 'tile')
-          .replace('${priceListName}', 'agency'), // FIXME: use `priceNameList` in `user`s profile
     },
 );
 
