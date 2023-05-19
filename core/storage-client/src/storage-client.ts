@@ -112,7 +112,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    */
   async get<T extends DocumentType = DocumentType>(
       documentId: string,
-      storage: string | undefined = this.config.name,
+      storage = this.config.name,
   ): Promise<T | null> {
     this._logger.logMethodArgs?.('get', {storage, documentId});
     if (storage == null) throw new Error('storage_not_defined');
@@ -140,7 +140,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * if (!userExist) console.log('user_not_found');
    * ```
    */
-  async has(documentId: string, storage: string | undefined = this.config.name): Promise<boolean> {
+  async has(documentId: string, storage = this.config.name): Promise<boolean> {
     this._logger.logMethodArgs?.('has', {storage, documentId});
     if (storage == null) throw new Error('storage_not_defined');
 
@@ -177,7 +177,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    */
   async set<T extends DocumentType = DocumentType>(
       documentObject: T,
-      storage: string | undefined = this.config.name,
+      storage = this.config.name,
   ): Promise<T> {
     this._logger.logMethodArgs?.('set', {storage, documentId: documentObject.id});
     if (storage == null) throw new Error('storage_not_defined');
@@ -208,7 +208,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * await userStorage.touch();
    * ```
    */
-  async touch(storage: string | undefined = this.config.name): Promise<void> {
+  async touch(storage = this.config.name): Promise<void> {
     this._logger.logMethodArgs?.('touch', {storage});
     if (storage == null) throw new Error('storage_not_defined');
 
@@ -284,7 +284,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    */
   async delete(
       documentId: string,
-      storage: string | undefined = this.config.name,
+      storage = this.config.name,
   ): Promise<boolean> {
     this._logger.logMethodArgs?.('delete', {storage, documentId});
     if (storage == null) {
@@ -318,7 +318,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * ```
    */
   async getStorage<T extends DocumentType = DocumentType>(
-      name: string | undefined = this.config.name,
+      name = this.config.name,
   ): Promise<AlwatrDocumentStorage<T>> {
     this._logger.logMethodArgs?.('getStorage', {name});
     if (name == null) {
@@ -358,7 +358,7 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * const userIdArray = await userStorage.keys();
    * ```
    */
-  async keys(storage: string | undefined = this.config.name): Promise<Array<string>> {
+  async keys(storage = this.config.name): Promise<Array<string>> {
     this._logger.logMethodArgs?.('keys', {storage});
 
     if (storage == null) {
