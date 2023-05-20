@@ -18,8 +18,12 @@
     "admin_added_successfully": "شما با موفقیت به لیست ادمین‌ها اضافه شدید!",
     "send_notify_message": "پیام مورد نظر برای ارسال به تمام کاربران را ارسال کنید.",
     "approval_notify_message": "پیام برای تمامی کاربران ارسال شود؟",
-    "reset_notify_message": "عملیات کنسل شد!",
+    "reset_message": "عملیات کنسل شد!",
     "notified_successfully_message": "پیام برای ${userCount} نفر با موفقیت ارسال شد",
+    "send_set_content_message": "برای ثبت محتوا، پیام مورد نظر خود را ارسال کنید.",
+    "set_day_set_content_message": "محتوا دریافت شد، لطفا روز مورد نظر را ارسال کنید.",
+    "invalid_day_set_content_message": "روز مورد نظر معتبر نیست!",
+    "ok_set_content_message": "محتوا با موفقیت ثبت شد.",
 
     "day_countdown": "*${dayToLeft} قدم تا طلوع خورشید ♥️*",
     "button_day_countdown": "${dayToLeft} روز تا نیمه شعبان",
