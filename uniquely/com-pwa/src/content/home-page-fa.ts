@@ -34,20 +34,20 @@ export const homePageContent: PageHomeContent = {
     {
       elevated: 1,
       stated: true,
-      icon: 'list-outline',
-      flipRtl: true,
-      headline: 'سفارشات جاری',
-      href: '/order-list',
-      description: 'مشاهده وضعیت و پیگیری سفارشات جاری.',
-    },
-    {
-      elevated: 1,
-      stated: true,
       icon: 'cart-outline',
       flipRtl: true,
       headline: 'سفارش جدید',
       href: '/order/new',
       description: 'فرآیند ثبت سفارش جدید.',
+    },
+    {
+      elevated: 1,
+      stated: true,
+      icon: 'list-outline',
+      flipRtl: true,
+      headline: 'سفارشات جاری',
+      href: '/order-list',
+      description: 'مشاهده وضعیت و پیگیری سفارشات جاری.',
     },
 
     {
