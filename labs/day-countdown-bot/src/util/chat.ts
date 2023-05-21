@@ -4,6 +4,7 @@ import {logger} from '../config.js';
 import {chatStorageClient} from '../lib/storage.js';
 
 import type {ChatDetail, DayCountdownChat} from '../type.js';
+import type {MaybePromise} from '@alwatr/type';
 
 export async function isSubscribed(chatId: string | number): Promise<boolean> {
   const chat = await chatStorageClient.get<DayCountdownChat>(chatId + '');
@@ -50,10 +51,10 @@ export function addChat(chat: Chat): ChatDetail | null {
   return chatDetail;
 }
 
-export async function actionAllChat(action: (chatId: string) => void): Promise<void> {
+export async function actionAllChat(action: (chatId: string) => MaybePromise<void>): Promise<void> {
   const chatList = (await chatStorageClient.getStorage()).data;
   for (const chat in chatList) {
     if (!Object.prototype.hasOwnProperty.call(chatList, chat)) continue;
-    action(chatList[chat].id);
+    await action(chatList[chat].id);
   }
 }

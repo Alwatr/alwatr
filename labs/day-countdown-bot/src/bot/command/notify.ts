@@ -51,11 +51,13 @@ async function notifyConversationHandler(update: UpdateType<'message'>): Promise
   else if (conversation.state === 'notify') {
     // notify
     if (text === 'yes') {
+      await conversationStorageClient.delete(chatId);
       const notifyMessageId = conversation.context!.notifyMessageId!;
       let i = 0;
 
-      await actionAllChat(async (chatId) => {
-        await bot.api.copyMessage({chat_id: chatId, from_chat_id: chatId, message_id: notifyMessageId});
+
+      await actionAllChat(async (userChatId) => {
+        await bot.api.copyMessage({chat_id: userChatId, from_chat_id: chatId, message_id: notifyMessageId});
         i++;
       });
 
@@ -63,8 +65,6 @@ async function notifyConversationHandler(update: UpdateType<'message'>): Promise
         reply_to_message_id: messageId,
         message_thread_id: messageThreadId,
       });
-
-      await conversationStorageClient.delete(chatId);
     }
     else {
       await bot.api.sendMessage(chatId, message('cancel_notify_message'), {
