@@ -73,6 +73,7 @@ export interface SendMessageOption {
   // TODO: extends StringifyableRecord
   parse_mode?: ParseMode;
   reply_to_message_id?: number;
+  message_thread_id?: number;
   allow_sending_without_reply?: boolean;
   disable_web_page_preview?: boolean;
   disable_notification?: boolean;

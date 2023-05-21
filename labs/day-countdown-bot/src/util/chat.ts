@@ -7,7 +7,7 @@ import type {ChatDetail, DayCountdownChat} from '../type.js';
 
 export async function isSubscribed(chatId: string | number): Promise<boolean> {
   const chat = await chatStorageClient.get<DayCountdownChat>(chatId + '');
-  return chat != null && chat.isSubscribe === true;
+  return chat != null && chat.isSubscribed === true;
 }
 
 export async function toggleSubscribe(chatId: string | number): Promise<boolean | null> {
@@ -15,9 +15,9 @@ export async function toggleSubscribe(chatId: string | number): Promise<boolean 
   logger.logMethodArgs?.('toggleSubscribe', {chat});
   if (chat == null) return null;
 
-  chat.isSubscribe = !chat.isSubscribe;
+  chat.isSubscribed = !chat.isSubscribed;
   chatStorageClient.set<DayCountdownChat>(chat);
-  return chat.isSubscribe;
+  return chat.isSubscribed;
 }
 
 export function addChat(chat: Chat): ChatDetail | null {

@@ -24,6 +24,9 @@
     "set_day_set_content_message": "محتوا دریافت شد، لطفا روز مورد نظر را ارسال کنید.",
     "invalid_day_set_content_message": "روز مورد نظر معتبر نیست!",
     "ok_set_content_message": "محتوا با موفقیت ثبت شد.",
+    "send_get_content_message": "روز مورد نظر خود را برای دریافت محتوا ارسال کنید.",
+    "not_found_content_message": "محتوایی برای روز مورد نظر یافت نشد!",
+    "cancel_notify_message": "برای لغو ارسال پیام، /reset را ارسال کنید.",
 
     "day_countdown": "*${dayToLeft} قدم تا طلوع خورشید ♥️*",
     "button_day_countdown": "${dayToLeft} روز تا نیمه شعبان",

@@ -12,8 +12,12 @@ import type {ApiResponse, Message, Update} from '@grammyjs/types';
 export class AlwatrTelegramContext<U extends Omit<Update, 'update_id'>> {
   protected logger = createLogger('alwatr/telegram-context');
 
-  get messageId(): number | null {
-    return this.update.message?.message_id ?? null;
+  get messageId(): number | undefined {
+    return this.update.message?.message_id;
+  }
+
+  get messageThreadId(): number | undefined {
+    return this.update.message?.message_thread_id;
   }
 
   get commandParams(): Array<string> | null {
@@ -57,6 +61,7 @@ export class AlwatrTelegramContext<U extends Omit<Update, 'update_id'>> {
       return null;
     }
     option.reply_to_message_id = this.messageId;
+    option.message_thread_id = this.messageThreadId;
     option.allow_sending_without_reply ??= true;
     return this.api.sendMessage(this.chatId, text, option);
   }

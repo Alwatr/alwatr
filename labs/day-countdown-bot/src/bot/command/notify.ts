@@ -1,128 +1,104 @@
 import {UpdateType} from '@alwatr/telegram';
-import {AlwatrDocumentObject} from '@alwatr/type';
 
 import {logger} from '../../config.js';
 import {message} from '../../director/l18e-loader.js';
 import {bot} from '../../lib/bot.js';
 import {conversationStorageClient} from '../../lib/storage.js';
+import {isAdmin} from '../../util/admin.js';
 import {actionAllChat} from '../../util/chat.js';
 
-// const notifyConversation = new AlwatrTelegramConversation(
-//     {
-//       stateRecord: {
-//         initial: (context, conversationConfig): void => {
-//           logger.logMethodArgs?.(notifyConversation.config.id + '-initial', {conversationConfig});
-//           context.reply(message('send_notify_message'));
-//           notifyConversation.setState(context.chatId, 'getMessage');
-//         },
-//         reset: (context, conversationConfig): void => {
-//           logger.logMethodArgs?.(notifyConversation.config.id + '-reset', {conversationConfig});
-//           context.reply(message('reset_notify_message'));
-//           notifyConversation.reset(context.chatId);
-//         },
-//         getMessage: async (context, conversationConfig): Promise<void> => {
-//           logger.logMethodArgs?.(notifyConversation.config.id + '-getMessage', {conversationConfig});
-//           context.reply(message('approval_notify_message'));
-//           await notifyConversation.setContext(context.chatId, {messageId: context.messageId});
-//           await notifyConversation.setState(context.chatId, 'notify');
-//         },
-//         notify: async (context, conversationConfig): Promise<void> => {
-//           logger.logMethodArgs?.(notifyConversation.config.id + '-notify', {conversationConfig});
-//           if (context.update.message?.text != 'yes') {
-//             await notifyConversation.setState(context.chatId, 'getMessage');
-//             return;
-//           }
-//           let i = 0;
-//           await actionAllChat(async (chatId) => {
-//             const messageId = conversationConfig.context.messageId as number;
-//             bot.api.copyMessage({chat_id: chatId, from_chat_id: context.chatId, message_id: messageId});
-//             i += 1;
-//           });
-//           context.reply(message('notified_successfully_message').replace('${userCount}', i + ''));
-//           await notifyConversation.reset(context.chatId);
-//         },
-//       },
-//       resetOption: {
-//         TextMessageValue: '/reset',
-//       },
-//     },
-//     botStorage,
-//     bot.api,
-//     {
-//       id: 'notify',
-//       currentState: 'initial',
-//       context: {},
-//     },
-// );
+import type {Conversation} from '../../type.js';
 
-interface NotifyConversationContext extends AlwatrDocumentObject {
-  notifyMessageId?: number;
-  state: 'initial' | 'getMessage' | 'notify';
-}
-
-const conversationName = 'notify';
+type NotifyConversationContext = Conversation & {
+  name: 'notify';
+  state: 'getMessage' | 'notify';
+  context?: {
+    notifyMessageId?: number;
+  };
+};
 
 async function notifyConversationHandler(update: UpdateType<'message'>): Promise<boolean> {
   const chatId = update.message!.chat.id.toString();
+  if (!(await isAdmin(chatId))) return false;
+
   const text = update.message!.text;
   const messageId = update.message!.message_id;
+  const messageThreadId = update.message!.message_thread_id ? +update.message!.message_thread_id! : undefined;
 
-  if (text === '/notify') {
-    // initial
-    bot.api.sendMessage(chatId, message('send_notify_message'), {reply_to_message_id: messageId});
-    conversationStorageClient.set<NotifyConversationContext>({
-      id: chatId,
-      state: 'getMessage',
-    }, conversationName);
-    return true;
-  }
-  let conversation;
-
-  try {
-    conversation = await conversationStorageClient.get<NotifyConversationContext>(chatId, conversationName);
-  }
-  catch {
-    return false;
-  }
+  const conversation = await conversationStorageClient.get<NotifyConversationContext>(chatId);
+  if (conversation == null || conversation.name !== 'notify') return false;
 
   if (text === '/reset') {
-    conversationStorageClient.delete(chatId, conversationName);
-    await bot.api.sendMessage(chatId, 'reset_notify_message');
+    await conversationStorageClient.delete(chatId);
+    await bot.api.sendMessage(chatId, message('reset_notify_message'), {
+      message_thread_id: messageThreadId,
+      reply_to_message_id: messageId,
+    });
   }
   else if (conversation.state === 'getMessage') {
-    bot.api.sendMessage(chatId, message('approval_notify_message'));
+    await bot.api.sendMessage(chatId, message('approval_notify_message'), {
+      message_thread_id: messageThreadId,
+      reply_to_message_id: messageId,
+    });
     await conversationStorageClient.set<NotifyConversationContext>({
-      id: chatId,
-      notifyMessageId: messageId,
+      ...conversation,
+      context: {
+        notifyMessageId: messageId,
+      },
       state: 'notify',
-    }, conversationName);
+    });
   }
   else if (conversation.state === 'notify') {
     // notify
     if (text === 'yes') {
-      const notifyMessageId = conversation.notifyMessageId!;
+      const notifyMessageId = conversation.context!.notifyMessageId!;
       let i = 0;
 
-      actionAllChat(async (chatId) => {
+      await actionAllChat(async (chatId) => {
         await bot.api.copyMessage({chat_id: chatId, from_chat_id: chatId, message_id: notifyMessageId});
         i++;
       });
 
       await bot.api.sendMessage(chatId, message('notified_successfully_message').replace('${userCount}', i + ''), {
         reply_to_message_id: messageId,
+        message_thread_id: messageThreadId,
       });
-      conversationStorageClient.delete(chatId, conversationName);
+
+      await conversationStorageClient.delete(chatId);
     }
     else {
-      await bot.api.sendMessage(chatId, message('approval_notify_message'));
+      await bot.api.sendMessage(chatId, message('cancel_notify_message'), {
+        message_thread_id: messageThreadId,
+        reply_to_message_id: messageId,
+      });
     }
   }
   else {
     // error
-    logger.error('notifyConversationHandler', conversationName, chatId, conversation);
+    logger.error('notifyConversationHandler', chatId, conversation);
+    await conversationStorageClient.delete(chatId);
   }
 
   return true;
 }
+
+bot.defineCommandHandler('notify', async (context) => {
+  logger.logMethodArgs?.('notify', context);
+  if (!(await isAdmin(context.chatId))) return;
+
+  const messageId = context.messageId;
+  const messageThreadId = context.messageThreadId;
+
+  await bot.api.sendMessage(context.chatId, message('send_notify_message'), {
+    message_thread_id: messageThreadId,
+    reply_to_message_id: messageId,
+  });
+
+  await conversationStorageClient.set<NotifyConversationContext>({
+    name: 'notify',
+    id: context.chatId + '',
+    state: 'getMessage',
+  });
+});
 
 bot.defineUpdateHandler('textMessage', notifyConversationHandler);
