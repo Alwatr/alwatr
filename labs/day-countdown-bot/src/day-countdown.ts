@@ -33,8 +33,12 @@ async function sendNextDayCountdownContent(day: number): Promise<void> {
         message_thread_id: chatThreadId,
       });
 
+      if (response?.result?.message_id == null) {
+        throw new Error('Message id is null');
+      }
+
       await bot.api.sendMessage(chatId, message('send_next_day_countdown_day').replace('${day}', day + ''), {
-        reply_to_message_id: response?.message_id,
+        reply_to_message_id: response?.result?.message_id,
         allow_sending_without_reply: true,
         message_thread_id: chatThreadId,
       });
@@ -60,6 +64,7 @@ async function sendDayCountdownContent(day: number): Promise<void> {
 
     return;
   }
+
   await actionAllChat(async (chatId) => {
     try {
       const chat = await chatStorageClient.get(chatId)!;

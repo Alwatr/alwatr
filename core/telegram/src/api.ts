@@ -11,7 +11,7 @@ import type {
   SendChatActionOption,
 } from './type.js';
 import type {StringifyableRecord} from '@alwatr/type';
-import type {ApiResponse, Message, MessageId, User} from '@grammyjs/types';
+import type {ApiResponse, Message, User} from '@grammyjs/types';
 
 export class AlwatrTelegramApi {
   protected baseApiUrl = `https://api.telegram.org/bot${this.config.token}/`;
@@ -84,7 +84,7 @@ export class AlwatrTelegramApi {
 
   async copyMessage(
       option: CopyMessageOption,
-  ): Promise<MessageId | null> {
+  ): Promise<{ok: boolean, result: {message_id: number}} | null> {
     this.logger.logMethodArgs?.('copyMessage', {option});
     this.sendChatAction({chat_id: option.chat_id, action: 'typing'});
 
@@ -101,7 +101,7 @@ export class AlwatrTelegramApi {
   }
   async sendChatAction(
       option: SendChatActionOption,
-  ): Promise<MessageId | null> {
+  ): Promise<{ok: boolean, result: {message_id: number}} | null> {
     this.logger.logMethodArgs?.('sendChatAction', {option});
 
     const response = await this.callApi('sendChatAction', {
