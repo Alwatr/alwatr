@@ -1,43 +1,35 @@
 import {logger} from '../config.js';
 import {configStorageClient} from '../lib/storage.js';
 
-export let adminChatIdList: Array<number> = [];
+import type {AdminChatInfo} from '../type.js';
+
+export let adminInfoList: Array<AdminChatInfo> = [];
 
 try {
-  adminChatIdList = (await configStorageClient.get('admin_list'))?.adminChatIdList ?? [];
+  adminInfoList = (await configStorageClient.get('admin_list'))?.adminInfoList ?? [];
 }
 catch (err) {
-  adminChatIdList = [];
+  adminInfoList = [];
 }
 
-export async function isAdmin(chatId: number | string): Promise<boolean> {
-  logger.logMethodArgs?.('isAdmin', {chatId});
+export async function isAdmin(chatId: number | string, chatThreadId?: number): Promise<boolean> {
+  console.log('fuckumer', adminInfoList);
 
-  // let adminChatIdList: Array<number> = [];
-  // try {
-  //   adminChatIdList = (await configStorageClient.get('admin_list')).adminChatIdList;
-  // }
-  // catch {
-  //   return false;
-  // }
-  // return adminChatIdList?.includes(+chatId) === true;
-  return adminChatIdList.includes(+chatId) === true;
+  const isAdmin = adminInfoList.some((info) =>
+    (info.chatId === +chatId) && (info.chatThreadId ? info.chatThreadId === chatThreadId : true),
+  );
+  logger.logMethodArgs?.('isAdmin', {chatId, isAdmin});
+  return isAdmin;
 }
 
-export async function addAdmin(chatId: number | string): Promise<void> {
+export async function addAdmin(chatId: number | string, chatThreadId?: number): Promise<void> {
   logger.logMethodArgs?.('addAdmin', {chatId});
 
-  // let adminChatIdList: Array<number> = [];
-  // try {
-  //   adminChatIdList = (await configStorageClient.get('admin_list')).adminChatIdList;
-  // }
-  // catch {
-  //   //
-  // }
-
-  adminChatIdList.push(+chatId);
+  adminInfoList.push({chatId: +chatId, chatThreadId});
   configStorageClient.set({
     id: 'admin_list',
-    adminChatIdList: adminChatIdList,
+    adminInfoList: adminInfoList,
   });
 }
+
+// TODO: use storage client

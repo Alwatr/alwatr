@@ -15,5 +15,6 @@ import {launchBot} from './lib/launch.js';
 import './util/admin.js';
 
 logger.logOther?.('..:: Day Countdown Telegram Bot ::..');
-launchBot();
+
+await launchBot();
 await dayCountdown();

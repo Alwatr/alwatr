@@ -7,16 +7,16 @@ bot.defineCommandHandler('requestAdmin', async (context) => {
   logger.logMethod?.('command-requestAdmin');
   const params = context.commandParams ?? [];
   const token = params[0];
-  if (token !== config.admin.adminToken) {
+  if (token !== config.bot.adminToken) {
     logger.incident?.('command-requestAdmin', 'invalid_token', 'invalid admin token');
     return;
   }
 
-  if (await isAdmin(context.chatId) === true) {
+  if (await isAdmin(context.chatId, context.messageThreadId) === true) {
     context.reply(message('admin_added_yet'));
   }
   else {
-    addAdmin(context.chatId);
+    addAdmin(context.chatId, context.messageThreadId);
     context.reply(message('admin_added_successfully'));
   }
 });

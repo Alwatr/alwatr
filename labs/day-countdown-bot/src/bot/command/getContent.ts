@@ -5,6 +5,7 @@ import {message} from '../../director/l18e-loader.js';
 import {bot} from '../../lib/bot.js';
 import {contentStorageClient, conversationStorageClient} from '../../lib/storage.js';
 import {isAdmin} from '../../util/admin.js';
+
 import type {Conversation} from '../../type.js';
 
 type GetContentConversationContext = Conversation & {
@@ -15,13 +16,13 @@ type GetContentConversationContext = Conversation & {
 
 async function getContentConversationHandler(update: UpdateType<'message'>): Promise<boolean> {
   const chatId = update.message!.chat.id.toString();
-  if (!(await isAdmin(chatId))) return false;
-
   const text = update.message!.text;
   const messageThreadId = update.message!.message_thread_id;
   const messageId = update.message!.message_id;
 
-  let conversation = await conversationStorageClient.get<GetContentConversationContext>(chatId);
+  if (!(await isAdmin(chatId, messageThreadId))) return false;
+
+  const conversation = await conversationStorageClient.get<GetContentConversationContext>(chatId);
   if (conversation == null || conversation.name !== 'get-content') return false;
 
   if (text === '/reset') {
@@ -30,7 +31,8 @@ async function getContentConversationHandler(update: UpdateType<'message'>): Pro
       reply_to_message_id: messageId,
       message_thread_id: messageThreadId,
     });
-  } else if (conversation.state === 'getDay') {
+  }
+  else if (conversation.state === 'getDay') {
     const day = text?.match(/\d+/)?.[0];
     if (day == null) {
       await bot.api.sendMessage(chatId, message('invalid_day_set_content_message'), {
@@ -56,7 +58,8 @@ async function getContentConversationHandler(update: UpdateType<'message'>): Pro
       message_id: content.messageId,
       message_thread_id: messageThreadId,
     });
-  } else {
+  }
+  else {
     // error
     logger.error('notifyConversationHandler', chatId, conversation);
     await conversationStorageClient.delete(chatId);
@@ -66,8 +69,8 @@ async function getContentConversationHandler(update: UpdateType<'message'>): Pro
 }
 
 bot.defineCommandHandler('getContent', async (context) => {
-  logger.logMethodArgs?.('getContent', context);
-  if (!(await isAdmin(context.chatId))) return;
+  logger.logMethodArgs?.('getContent', {chatId: context.chatId});
+  if (!(await isAdmin(context.chatId, context.messageThreadId))) return;
 
   await bot.api.sendMessage(context.chatId, message('send_get_content_message'), {
     reply_to_message_id: context.messageId,
@@ -75,10 +78,10 @@ bot.defineCommandHandler('getContent', async (context) => {
   });
 
   await conversationStorageClient.set<GetContentConversationContext>({
-      id: context.chatId + '',
-      name: 'get-content',
-      state: 'getDay',
-    });
+    id: context.chatId + '',
+    name: 'get-content',
+    state: 'getDay',
+  });
 });
 
 bot.defineUpdateHandler('textMessage', getContentConversationHandler);

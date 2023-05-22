@@ -13,18 +13,15 @@ if (telegramBotWebhookDomain == null) {
 }
 
 export const config = {
-  telegramBot: {
+  telegram: {
     token: telegramBotToken,
     username: process.env.TELEGRAM_BOT_USERNAME,
     webhookDomain: telegramBotWebhookDomain,
     debugMode: process.env.TELEGRAM_BOT_DEBUG_MODE ? true : undefined,
   },
-  admin: {
+  bot: {
     adminToken: process.env.ADMIN_TOKEN ?? 'admin-token',
-  },
-  chatStorage: {
-    name: process.env.STORAGE_NAME ?? 'user',
-    path: process.env.STORAGE_PATH ?? 'storage',
+    notifyTimestamp: 9,
   },
   storageClient: {
     host: process.env.STORAGE_HOST ?? '127.0.0.1',

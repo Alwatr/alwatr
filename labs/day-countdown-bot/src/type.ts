@@ -1,5 +1,3 @@
-import {AlwatrConversationConfig} from '@alwatr/telegram';
-
 import type {AlwatrDocumentObject, StringifyableRecord} from '@alwatr/type';
 
 export interface DayCountdownChat extends AlwatrDocumentObject {
@@ -8,7 +6,6 @@ export interface DayCountdownChat extends AlwatrDocumentObject {
   lastBotMessageId?: number;
   lastDayCountdownSent?: number;
   lastNotifyMessageId?: number;
-  conversationRecord: Record<string, AlwatrConversationConfig>
 }
 
 export type ChatDetail = ChannelDetail | GroupDetail | PrivateChatDetail | SuperGroupDetail;
@@ -24,6 +21,7 @@ export interface SuperGroupDetail extends StringifyableRecord {
   type: 'supergroup',
   title: string
   username?: string,
+  chatThreadId?: number
 }
 
 export interface GroupDetail extends StringifyableRecord {
@@ -40,8 +38,13 @@ export interface ChannelDetail extends StringifyableRecord {
   username?: string,
 }
 
+export interface AdminChatInfo extends StringifyableRecord {
+  chatId: number,
+  chatThreadId?: number
+}
+
 export interface BotSetting extends AlwatrDocumentObject {
-  adminChatIdList: Array<number>;
+  adminInfoList: Array<AdminChatInfo>;
 }
 
 export interface Content extends AlwatrDocumentObject {

@@ -19,11 +19,11 @@ type NotifyConversationContext = Conversation & {
 
 async function notifyConversationHandler(update: UpdateType<'message'>): Promise<boolean> {
   const chatId = update.message!.chat.id.toString();
-  if (!(await isAdmin(chatId))) return false;
-
   const text = update.message!.text;
   const messageId = update.message!.message_id;
   const messageThreadId = update.message!.message_thread_id ? +update.message!.message_thread_id! : undefined;
+
+  if (!(await isAdmin(chatId, messageThreadId))) return false;
 
   const conversation = await conversationStorageClient.get<NotifyConversationContext>(chatId);
   if (conversation == null || conversation.name !== 'notify') return false;
@@ -84,7 +84,7 @@ async function notifyConversationHandler(update: UpdateType<'message'>): Promise
 
 bot.defineCommandHandler('notify', async (context) => {
   logger.logMethodArgs?.('notify', context);
-  if (!(await isAdmin(context.chatId))) return;
+  if (!(await isAdmin(context.chatId, context.messageThreadId))) return;
 
   const messageId = context.messageId;
   const messageThreadId = context.messageThreadId;
