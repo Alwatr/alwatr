@@ -18,11 +18,12 @@ type SetContentConversationContext = Conversation & {
 
 async function setContentConversationHandler(update: UpdateType<'message'>): Promise<boolean> {
   const chatId = update.message!.chat.id.toString();
-  if (!(await isAdmin(chatId))) return false;
 
   const text = update.message!.text;
   const messageId = update.message!.message_id;
   const messageThreadId = update.message!.message_thread_id;
+
+  if (!(await isAdmin(chatId, messageThreadId))) return false;
 
   const conversation = await conversationStorageClient.get<SetContentConversationContext>(chatId);
   if (conversation == null || conversation.name !== 'set-content') return false;
@@ -78,7 +79,7 @@ async function setContentConversationHandler(update: UpdateType<'message'>): Pro
 
 bot.defineCommandHandler('setContent', async (context) => {
   logger.logMethodArgs?.('setContent', context.chatId);
-  if (!(await isAdmin(context.chatId))) return;
+  if (!(await isAdmin(context.chatId, context.messageThreadId))) return;
   await bot.api.sendMessage(context.chatId, message('send_set_content_message'), {
     reply_to_message_id: context.messageId,
   });
