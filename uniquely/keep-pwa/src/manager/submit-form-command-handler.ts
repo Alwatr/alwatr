@@ -41,7 +41,7 @@ commandHandler.define<FormData, boolean>(submitFormCommandTrigger.id, async (for
   try {
     await serviceRequest({
       method: 'PUT',
-      url: config.api + '/form/',
+      url: config.api + 'form/',
       queryParameters: {
         formId: form.formId,
       },
