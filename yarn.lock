@@ -51,6 +51,7 @@
     "@alwatr/util" "^0.31.0"
     tslib "^2.5.0"
 
+<<<<<<< HEAD
 "@alwatr/fetch@^0.32.0":
   version "0.32.0"
   resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.32.0.tgz#3dbbdf2bb2610fb85394698e8cfb567df0402e16"
@@ -101,6 +102,8 @@
     "@alwatr/logger" "^0.32.0"
     tslib "^2.5.0"
 
+=======
+>>>>>>> fc0a324a (feat(dcd-bot): rewrite day countdown)
 "@alwatr/logger@^0.30.0":
   version "0.30.0"
   resolved "https://registry.yarnpkg.com/@alwatr/logger/-/logger-0.30.0.tgz#954c28238f835cd716da80ab5bc0bf57e451c4a2"
@@ -225,6 +228,7 @@
     exit-hook "^3.2.0"
     tslib "^2.5.0"
 
+<<<<<<< HEAD
 "@alwatr/storage-engine@^0.31.0":
   version "0.31.0"
   resolved "https://registry.yarnpkg.com/@alwatr/storage-engine/-/storage-engine-0.31.0.tgz#4c69e5289b49edec0cdde4cb24fa74dee950fcac"
@@ -247,6 +251,8 @@
     exit-hook "^3.2.0"
     tslib "^2.5.0"
 
+=======
+>>>>>>> fc0a324a (feat(dcd-bot): rewrite day countdown)
 "@alwatr/type@^0.30.0":
   version "0.30.0"
   resolved "https://registry.yarnpkg.com/@alwatr/type/-/type-0.30.0.tgz#fc6ec1cc7556571610ab034b71631910ceca0f1a"
@@ -2123,11 +2129,6 @@
   version "18.11.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.18.tgz#8dfb97f0da23c2293e554c5a50d61ef134d7697f"
   integrity sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==
-
-"@types/node@^18.16.2":
-  version "18.16.12"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.16.12.tgz#f11e19055c5b3daeb79dc6eb7ccdd3d036313034"
-  integrity sha512-tIRrjbY9C277MOfP8M3zjMIhtMlUJ6YVqkGgLjz+74jVsdf4/UjC6Hku4+1N0BS0qyC0JAS6tJLUk9H6JUKviQ==
 
 "@types/node@^18.16.3":
   version "18.16.18"

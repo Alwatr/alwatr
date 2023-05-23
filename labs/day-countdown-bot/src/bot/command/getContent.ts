@@ -1,87 +1,61 @@
-import {UpdateType} from '@alwatr/telegram';
+import {isNumber} from '@alwatr/math';
 
 import {logger} from '../../config.js';
 import {message} from '../../director/l18e-loader.js';
 import {bot} from '../../lib/bot.js';
-import {contentStorageClient, conversationStorageClient} from '../../lib/storage.js';
+import {contentStorageClient} from '../../lib/storage.js';
 import {isAdmin} from '../../util/admin.js';
 
-import type {Conversation} from '../../type.js';
-
-type GetContentConversationContext = Conversation & {
-  name: 'get-content';
-  state: 'getDay';
-  context?: never;
-};
-
-async function getContentConversationHandler(update: UpdateType<'message'>): Promise<boolean> {
-  const chatId = update.message!.chat.id.toString();
-  const text = update.message!.text;
-  const messageThreadId = update.message!.message_thread_id;
-  const messageId = update.message!.message_id;
-
-  if (!(await isAdmin(chatId, messageThreadId))) return false;
-
-  const conversation = await conversationStorageClient.get<GetContentConversationContext>(chatId);
-  if (conversation == null || conversation.name !== 'get-content') return false;
-
-  if (text === '/reset') {
-    await conversationStorageClient.delete(chatId);
-    await bot.api.sendMessage(chatId, message('reset_message'), {
-      reply_to_message_id: messageId,
-      message_thread_id: messageThreadId,
-    });
-  }
-  else if (conversation.state === 'getDay') {
-    const day = text?.match(/\d+/)?.[0];
-    if (day == null) {
-      await bot.api.sendMessage(chatId, message('invalid_day_set_content_message'), {
-        reply_to_message_id: messageId,
-        message_thread_id: messageThreadId,
-      });
-      return true;
-    }
-    await conversationStorageClient.delete(chatId);
-
-    const content = await contentStorageClient.get(day, 'ghadir');
-    if (content == null) {
-      await bot.api.sendMessage(chatId, message('not_found_content_message'), {
-        reply_to_message_id: messageId,
-        message_thread_id: messageThreadId,
-      });
-      return true;
-    }
-
-    await bot.api.copyMessage({
-      chat_id: chatId,
-      from_chat_id: content.chatId,
-      message_id: content.messageId,
-      message_thread_id: messageThreadId,
-    });
-  }
-  else {
-    // error
-    logger.error('notifyConversationHandler', chatId, conversation);
-    await conversationStorageClient.delete(chatId);
-  }
-
-  return true;
-}
-
 bot.defineCommandHandler('getContent', async (context) => {
-  logger.logMethodArgs?.('getContent', {chatId: context.chatId});
-  if (!(await isAdmin(context.chatId, context.messageThreadId))) return;
+  logger.logMethodArgs?.('command-getContent', {chatId: context.chatId});
+  if (!isAdmin(context.chatId)) return;
 
-  await bot.api.sendMessage(context.chatId, message('send_get_content_message'), {
-    reply_to_message_id: context.messageId,
-    message_thread_id: context.messageThreadId,
-  });
+  const day = context.commandParams ? context.commandParams[0] : null;
 
-  await conversationStorageClient.set<GetContentConversationContext>({
-    id: context.chatId + '',
-    name: 'get-content',
-    state: 'getDay',
-  });
+  if (day == null || !isNumber(day)) {
+    await bot.api.sendMessage(context.chatId, message('content_command_param_error'), {
+      message_thread_id: context.messageThreadId,
+    });
+    return;
+  }
+
+  return sendContent(+day, context.chatId, context.messageThreadId);
 });
 
-bot.defineUpdateHandler('textMessage', getContentConversationHandler);
+export async function sendContent(day: number, chatId: number, chatThreadId?: number): Promise<void> {
+  logger.logMethodArgs?.('sendContent', {day, chatId, chatThreadId});
+  const content = await contentStorageClient.get(day + '', 'ghadir');
+  if (content == null) {
+    logger.accident('sendContentToAdmin', 'content_is_null', 'Content is null', day);
+    await bot.api.sendMessage(chatId, message('get_content_null').replace('${day}', day + ''), {
+      message_thread_id: chatThreadId,
+    });
+
+    return;
+  }
+
+  // else
+
+  const response = await bot.api.copyMessage({
+    chat_id: chatId,
+    from_chat_id: content.chatId,
+    message_id: content.messageId,
+    message_thread_id: chatThreadId,
+  });
+
+  if (response?.ok !== true) {
+    logger.accident('sendContentToAdmin', 'copy_message_error', 'Copy Message Error', day, chatId);
+    if (response?.error_code === 400) {
+      await bot.api.sendMessage(chatId, message('send_content_message_not_exists').replace('${day}', day + ''), {
+        message_thread_id: chatThreadId,
+      });
+    }
+    return;
+  }
+
+  await bot.api.sendMessage(chatId, message('send_next_day_countdown_day').replace('${day}', day + ''), {
+    reply_to_message_id: response.result.message_id,
+    allow_sending_without_reply: true,
+    message_thread_id: chatThreadId,
+  });
+}

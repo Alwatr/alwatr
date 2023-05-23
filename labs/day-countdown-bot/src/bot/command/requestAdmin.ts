@@ -1,7 +1,7 @@
 import {config, logger} from '../../config.js';
 import {message} from '../../director/l18e-loader.js';
 import {bot} from '../../lib/bot.js';
-import {addAdmin, isAdmin} from '../../util/admin.js';
+import {addAdmin} from '../../util/admin.js';
 
 bot.defineCommandHandler('requestAdmin', async (context) => {
   logger.logMethod?.('command-requestAdmin');
@@ -12,11 +12,6 @@ bot.defineCommandHandler('requestAdmin', async (context) => {
     return;
   }
 
-  if (await isAdmin(context.chatId, context.messageThreadId) === true) {
-    context.reply(message('admin_added_yet'));
-  }
-  else {
-    addAdmin(context.chatId, context.messageThreadId);
-    context.reply(message('admin_added_successfully'));
-  }
+  addAdmin(context.chatId, context.messageThreadId);
+  context.reply(message('admin_added_successfully'));
 });

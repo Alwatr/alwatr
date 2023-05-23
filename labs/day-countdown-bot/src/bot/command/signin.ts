@@ -4,6 +4,6 @@ import {addChat} from '../../util/chat.js';
 
 bot.defineCommandHandler('signin', (context) => {
   if (context.update.message?.chat == null) return;
-  addChat(context.update.message?.chat);
+  addChat(context.update.message?.chat, context.messageThreadId);
   context.reply(message('sign_in_successfully'));
 });

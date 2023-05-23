@@ -23,7 +23,7 @@ async function notifyConversationHandler(update: UpdateType<'message'>): Promise
   const messageId = update.message!.message_id;
   const messageThreadId = update.message!.message_thread_id ? +update.message!.message_thread_id! : undefined;
 
-  if (!(await isAdmin(chatId, messageThreadId))) return false;
+  if (!isAdmin(chatId)) return false;
 
   const conversation = await conversationStorageClient.get<NotifyConversationContext>(chatId);
   if (conversation == null || conversation.name !== 'notify') return false;
@@ -56,8 +56,8 @@ async function notifyConversationHandler(update: UpdateType<'message'>): Promise
       let i = 0;
 
 
-      await actionAllChat(async (userChatId) => {
-        await bot.api.copyMessage({chat_id: userChatId, from_chat_id: chatId, message_id: notifyMessageId});
+      await actionAllChat(async (chat) => {
+        await bot.api.copyMessage({chat_id: chat.id, from_chat_id: chatId, message_id: notifyMessageId});
         i++;
       });
 
@@ -84,7 +84,7 @@ async function notifyConversationHandler(update: UpdateType<'message'>): Promise
 
 bot.defineCommandHandler('notify', async (context) => {
   logger.logMethodArgs?.('notify', context);
-  if (!(await isAdmin(context.chatId, context.messageThreadId))) return;
+  if (!isAdmin(context.chatId)) return;
 
   const messageId = context.messageId;
   const messageThreadId = context.messageThreadId;

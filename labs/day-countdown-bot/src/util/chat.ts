@@ -11,24 +11,33 @@ export async function isSubscribed(chatId: string | number): Promise<boolean> {
   return chat != null && chat.isSubscribed === true;
 }
 
-export async function toggleSubscribe(chatId: string | number): Promise<boolean | null> {
+export async function toggleSubscribe(chatId: number, messageThreadId?: number): Promise<boolean | null> {
   const chat = await chatStorageClient.get<DayCountdownChat>(chatId + '');
   logger.logMethodArgs?.('toggleSubscribe', {chat});
   if (chat == null) return null;
 
   chat.isSubscribed = !chat.isSubscribed;
+  chat.chatDetail.messageThreadId = messageThreadId;
   chatStorageClient.set<DayCountdownChat>(chat);
   return chat.isSubscribed;
 }
 
-export function addChat(chat: Chat): ChatDetail | null {
+export function addChat(chat: Chat, messageThreadId?: number): ChatDetail | null {
   let chatDetail: ChatDetail | null = null;
 
-  if (chat.type === 'group' || chat.type === 'supergroup') {
+  if (chat.type === 'group') {
     chatDetail = {
       type: chat.type,
       chatId: chat.id,
       title: chat.title,
+    };
+  }
+  else if (chat.type === 'supergroup') {
+    chatDetail = {
+      type: chat.type,
+      chatId: chat.id,
+      title: chat.title,
+      messageThreadId,
     };
   }
   else if (chat.type === 'private') {
@@ -51,10 +60,10 @@ export function addChat(chat: Chat): ChatDetail | null {
   return chatDetail;
 }
 
-export async function actionAllChat(action: (chatId: string) => MaybePromise<void>): Promise<void> {
+export async function actionAllChat(action: (chat: DayCountdownChat) => MaybePromise<void>): Promise<void> {
   const chatList = (await chatStorageClient.getStorage()).data;
   for (const chat in chatList) {
     if (!Object.prototype.hasOwnProperty.call(chatList, chat)) continue;
-    await action(chatList[chat].id);
+    await action(chatList[chat]);
   }
 }

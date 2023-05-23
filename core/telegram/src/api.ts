@@ -84,7 +84,7 @@ export class AlwatrTelegramApi {
 
   async copyMessage(
       option: CopyMessageOption,
-  ): Promise<{ok: boolean, result: {message_id: number}} | null> {
+  ): Promise<ApiResponse<{message_id: number}> | null> {
     this.logger.logMethodArgs?.('copyMessage', {option});
     this.sendChatAction({chat_id: option.chat_id, action: 'typing'});
 
@@ -92,10 +92,10 @@ export class AlwatrTelegramApi {
       ...option,
     } as unknown as StringifyableRecord);
 
-    const responseJson = await response.json();
+    const responseJson = await response.json() as ApiResponse<{message_id: number}>;
     if (response.status != 200) {
       this.logger.error('copyMessage', 'copy_message_failed', responseJson);
-      return null;
+      return responseJson;
     }
     return responseJson;
   }

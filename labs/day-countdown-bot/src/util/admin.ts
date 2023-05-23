@@ -12,21 +12,20 @@ catch (err) {
   adminInfoList = [];
 }
 
-export async function isAdmin(chatId: number | string, chatThreadId?: number): Promise<boolean> {
-  console.log('fuckumer', adminInfoList);
-
-  const isAdmin = adminInfoList.some((info) =>
-    (info.chatId === +chatId) && (info.chatThreadId ? info.chatThreadId === chatThreadId : true),
-  );
+export function isAdmin(chatId: number | string): boolean {
+  const isAdmin = adminInfoList.some((info) => info.chatId === +chatId);
   logger.logMethodArgs?.('isAdmin', {chatId, isAdmin});
   return isAdmin;
 }
 
-export async function addAdmin(chatId: number | string, chatThreadId?: number): Promise<void> {
+export async function addAdmin(chatId: number | string, messageThreadId?: number): Promise<void> {
   logger.logMethodArgs?.('addAdmin', {chatId});
 
-  adminInfoList.push({chatId: +chatId, chatThreadId});
-  configStorageClient.set({
+  // remove if exists yet
+  adminInfoList = adminInfoList.filter((info) => info.chatId !== +chatId);
+
+  adminInfoList.push({chatId: +chatId, messageThreadId});
+  await configStorageClient.set({
     id: 'admin_list',
     adminInfoList: adminInfoList,
   });

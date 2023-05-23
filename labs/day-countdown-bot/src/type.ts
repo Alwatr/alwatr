@@ -18,29 +18,29 @@ export interface PrivateChatDetail extends StringifyableRecord {
 
 export interface SuperGroupDetail extends StringifyableRecord {
   chatId: number;
-  type: 'supergroup',
-  title: string
-  username?: string,
-  chatThreadId?: number
+  type: 'supergroup';
+  title: string;
+  username?: string;
+  messageThreadId?: number;
 }
 
 export interface GroupDetail extends StringifyableRecord {
   chatId: number;
-  type: 'group',
-  title: string
-  username?: string,
+  type: 'group';
+  title: string;
+  username?: string;
 }
 
 export interface ChannelDetail extends StringifyableRecord {
   chatId: number;
-  type: 'channel',
-  title: string
-  username?: string,
+  type: 'channel';
+  title: string;
+  username?: string;
 }
 
 export interface AdminChatInfo extends StringifyableRecord {
-  chatId: number,
-  chatThreadId?: number
+  chatId: number;
+  messageThreadId?: number;
 }
 
 export interface BotSetting extends AlwatrDocumentObject {
@@ -56,4 +56,4 @@ export type Conversation = AlwatrDocumentObject & {
   name: string;
   state: string;
   context?: StringifyableRecord;
-}
+};
