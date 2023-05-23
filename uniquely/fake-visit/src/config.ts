@@ -20,6 +20,7 @@ export const config = {
       '--window-position=0,0',
       '--ignore-certifcate-errors',
       '--ignore-certifcate-errors-spki-list',
+      '--disable-gpu',
     ],
   },
   crawl: {

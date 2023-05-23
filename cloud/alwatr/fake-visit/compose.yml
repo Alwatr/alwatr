@@ -39,7 +39,7 @@ services:
     image: ghcr.io/alimd/fake-visit:${FAKE_VISIT_VERSION}
 
     cpu_shares: 256
-    mem_limit: 256m
+    mem_limit: 2048m
 
     restart: unless-stopped
 
