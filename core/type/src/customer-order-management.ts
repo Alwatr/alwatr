@@ -187,8 +187,8 @@ export const orderInfoSchema = {
   itemList: [
     {
       productId: String,
-      price: Number,
-      finalPrice: Number,
+      marketPrice: Number,
+      agencyPrice: Number,
       qty: Number,
     },
   ],
