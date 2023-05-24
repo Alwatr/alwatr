@@ -2,7 +2,7 @@ import {config} from './config.js';
 import {userFactory} from './crypto.js';
 import {storageClient, userStorage} from './storage.js';
 
-import type {ComUser} from '@alwatr/type/src/customer-order-management.js';
+import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
 export const patchUser = async (user: ComUser): Promise<ComUser> => {
   if (user.id === 'new') {

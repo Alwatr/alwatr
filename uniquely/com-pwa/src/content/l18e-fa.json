@@ -42,6 +42,7 @@
     "page_order_retry_button": "تلاش مجدد",
     "page_order_shipping_info_not_valid_message": "لطفا اطلاعات بارگیری را تکمیل کنید.",
     "page_order_order_not_valid_message": "لطفا مقادیر سفارش رو بازبینی و اصلاح کنید.",
+    "order_summary_palette_price": "هزینه پالت (${paletteCount} عدد)",
 
     "page_order_tracking_headline": "پیگیری سفارش",
 
@@ -105,7 +106,6 @@
     "order_item_final_total_price": "جمع قیمت نمایندگی",
     "order_item_discount": "سود نمایندگی",
 
-    "order_summary_no_lading_price_yet": "هنوز محاسبه نشده است.",
     "order_summary_total_price": "سرجمع فروش",
     "order_summary_total_final_price": "سرجمع خرید نمایندگی",
     "order_summary_discount": "سود نمایندگی",

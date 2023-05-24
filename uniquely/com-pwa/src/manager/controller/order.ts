@@ -1,10 +1,11 @@
 import {FsmTypeHelper, finiteStateMachineProvider} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
-import {orderInfoSchema, orderShippingInfoSchema, tileQtyStep} from '@alwatr/type/customer-order-management.js';
+import {orderInfoSchema, orderShippingInfoSchema} from '@alwatr/type/customer-order-management.js';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 import {validator} from '@alwatr/validator';
 
+import {config} from '../../config.js';
 import {orderStorageContextConsumer} from '../context-provider/order-storage.js';
 import {
   productPriceStorageContextConsumer,
@@ -286,25 +287,25 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
 });
 
 finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
-  {
-    callback: (_, fsmInstance): void => {
-      // calculateOrderPrice
-      const order = fsmInstance.getContext().newOrder;
-      let totalPrice = 0;
-      let finalTotalPrice = 0;
-      for (const item of order.itemList ?? []) {
-        totalPrice += item.price * item.qty * tileQtyStep;
-        finalTotalPrice += item.finalPrice * item.qty * tileQtyStep;
-      }
-      order.totalPrice = Math.round(totalPrice);
-      order.finalTotalPrice = Math.round(finalTotalPrice);
-    },
-  },
+  // {
+  //   callback: (_, fsmInstance): void => {
+  //     // calculateOrderPrice
+  //     const order = fsmInstance.getContext().newOrder;
+  //     let totalPrice = 0;
+  //     let finalTotalPrice = 0;
+  //     for (const item of order.itemList ?? []) {
+  //       totalPrice += item.price * item.qty * tileQtyStep;
+  //       finalTotalPrice += item.finalPrice * item.qty * tileQtyStep;
+  //     }
+  //     order.totalPrice = Math.round(totalPrice);
+  //     order.finalTotalPrice = Math.round(finalTotalPrice);
+  //   },
+  // },
   {
     signalId: 'order_item_qty_add',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
       const orderItem = event.detail;
-      orderItem.qty += 80;
+      orderItem.qty += config.order.pallet.boxSize;
       fsmInstance.transition('request_update');
     },
   },
@@ -312,7 +313,7 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     signalId: 'order_item_qty_remove',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
       const orderItem = event.detail;
-      orderItem.qty -= 80;
+      orderItem.qty -= config.order.pallet.boxSize;
       if (orderItem.qty < 1) orderItem.qty = 1;
       fsmInstance.transition('request_update');
     },
@@ -364,3 +365,37 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     receivePrevious: 'NextCycle',
   },
 ]);
+
+export function updateOrderCalculate(order: OrderDraft): void {
+  order.subTotalMarket = 0;
+  order.subTotalAgency = 0;
+  order.palletCost = 0;
+  order.shippingFee = 0;
+  order.ladingFee = 0;
+  order.itemList ??= [];
+
+  let itemListCount = 0;
+  for (const item of order.itemList) {
+    if (!item.qty) item.qty = config.order.pallet.boxSize;
+    order.subTotalMarket += item.marketPrice * item.qty;
+    order.subTotalAgency += item.agencyPrice * item.qty;
+    itemListCount += item.qty;
+  }
+  order.subTotalMarket = Math.round(order.subTotalMarket * config.order.factor.box2m2);
+  order.subTotalAgency = Math.round(order.subTotalAgency * config.order.factor.box2m2);
+
+  if (
+    itemListCount > 0 &&
+    order.shippingInfo?.ladingType === 'pallet' &&
+    order.shippingInfo?.carType === 'trailer_truck'
+  ) {
+    order.palletCost = Math.ceil(itemListCount / config.order.pallet.boxSize) * config.order.pallet.price;
+  }
+
+  if (itemListCount > 0 && order.shippingInfo?.carType) {
+    const ladingConfig = config.order.lading[order.shippingInfo.carType];
+    order.ladingFee = Math.ceil(itemListCount / ladingConfig.capacity) * ladingConfig.fee;
+  }
+
+  order.totalShippingFee = order.palletCost + order.ladingFee + order.shippingFee;
+}
