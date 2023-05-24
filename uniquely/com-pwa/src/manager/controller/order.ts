@@ -13,11 +13,12 @@ import {
 } from '../context-provider/price-storage.js';
 import {productStorageContextConsumer} from '../context-provider/product-storage.js';
 import {submitOrderCommandTrigger} from '../context.js';
+import {logger} from '../logger.js';
 
 import type {ClickSignalType} from '@alwatr/type';
 import type {OrderDraft, OrderItem} from '@alwatr/type/customer-order-management.js';
 
-const newOrderLocalStorageKey = 'draft_order_x4';
+const newOrderLocalStorageKey = 'draft_order_x5';
 
 export const orderFsmConstructor = finiteStateMachineProvider.defineConstructor('order_fsm', {
   initial: 'pending',
@@ -253,6 +254,7 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
     }
     catch (err) {
       const _err = err as Error & {cause?: Record<string, string | undefined>};
+      logger.accident('validate_order', 'order_invalid', 'order is invalid', _err.cause);
       if (_err.cause?.itemPath?.indexOf('shippingInfo') !== -1) {
         snackbarSignalTrigger.request({
           message: message('page_order_shipping_info_not_valid_message'),
@@ -274,6 +276,8 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
       return true;
     }
     catch (err) {
+      const _err = err as Error & {cause?: Record<string, string | undefined>};
+      logger.accident('validate_shipping_info', 'order_invalid', 'order shipping onfo is invalid', _err.cause);
       snackbarSignalTrigger.request({
         message: message('page_order_shipping_info_not_valid_message'),
       });
@@ -357,7 +361,6 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     signalId: orderStorageContextConsumer.id,
     callback: (_, fsmInstance): void => {
       const orderStorage = orderStorageContextConsumer.getResponse();
-      console.warn('orderStorage', {state: orderStorageContextConsumer.getState().target, orderStorage});
       fsmInstance.transition(`context_request_${orderStorageContextConsumer.getState().target}`, {
         orderStorage,
       });

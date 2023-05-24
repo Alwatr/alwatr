@@ -155,7 +155,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     }
 
     .bold-text {
-      font-weight: var(--ref-font-weight-medium);
+      font-weight: var(--ref-font-weight-bold);
     }
 
     [hidden] {
@@ -604,8 +604,12 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
 
     const nullStr = '…' as const;
 
+    // if (!shippingInfo) {
+    //   return html`<alwatr-surface tinted><div>
+    // }
+
     return html`<alwatr-surface tinted>
-      <div>
+      <div class="detail-container">
         <div>
           <span>${message('order_shipping_recipient_name_title')}:</span>
           <span>${shippingInfo?.recipientName || nullStr}</span>
@@ -628,7 +632,10 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
           <span>${message('order_shipping_lading_type_title')}:</span>
           <span>
             ${shippingInfo?.ladingType
-              ? message('order_shipping_lading_type_key_' + shippingInfo?.ladingType)
+              ? message(
+                  'order_shipping_lading_type_key_' +
+                (shippingInfo?.carType != 'trailer_truck' ? 'hand' : shippingInfo?.ladingType),
+              )
               : nullStr}
           </span>
         </div>
@@ -640,13 +647,9 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
               : nullStr}
           </span>
         </div>
-        <div>
-          <span>${message('order_shipping_shipment_price_title')}:</span>
-          <span>${message('order_shipping_shipment_price_value')}</span>
-        </div>
-        <div>
+        <div ?hidden=${!shippingInfo?.description}>
           <span>${message('order_shipping_description_title')}:</span>
-          <span>${shippingInfo?.description || message('order_shipping_info_empty_description')}</span>
+          <span>${shippingInfo?.description}</span>
         </div>
       </div>
     </alwatr-surface>`;
@@ -683,17 +686,27 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
           </span>
         </div>
         <div ?hidden=${order.ladingFee === 0}>
-          <span>${message('order_summary_lading_price').replace('${paletteCount}',
+          <span>${message('order_summary_lading_price').replace('${carCount}',
       number(order.ladingFee / (config.order.lading[order.shippingInfo.carType!]?.fee ?? order.ladingFee)))}:
           </span>
-          <span>${number(order.ladingFee)}<alwatr-icon .name=${'toman'}></alwatr-icon></span>
+          <span>
+            <span>${number(order.ladingFee)}</span>
+            <alwatr-icon .name=${'toman'}></alwatr-icon>
+          </span>
         </div>
         <div ?hidden=${order.palletCost === 0}>
           <span>
             ${message('order_summary_palette_price')
       .replace('${paletteCount}', number(order.palletCost / config.order.pallet.price))}:
           </span>
-          <span>${number(order.palletCost)}<alwatr-icon .name=${'toman'}></alwatr-icon></span>
+          <span>
+            <span>${number(order.palletCost)}</span>
+            <alwatr-icon .name=${'toman'}></alwatr-icon>
+          </span>
+        </div>
+        <div>
+          <span>${message('order_shipping_shipment_price_title')}:</span>
+          <span>${message('order_shipping_shipment_price_value')}</span>
         </div>
         <div>
           <span>${message('order_summary_discount_after_lading_price')}:</span>
@@ -706,13 +719,9 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
           </span>
         </div>
         <div>
-          <span>${message('order_shipping_shipment_price_title')}:</span>
-          <span>${message('order_shipping_shipment_price_value')}</span>
-        </div>
-        <div>
           <span>${message('order_summary_final_total_price')}:</span>
           <span>
-            <span>${number(order.subTotalAgency + order.ladingFee + order.palletCost)}</span>
+            <span class="bold-text">${number(order.subTotalAgency + order.ladingFee + order.palletCost)}</span>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>

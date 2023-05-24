@@ -3,7 +3,7 @@ import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 
 import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
-const localStorageSuffixKey = '_x1';
+const localStorageSuffixKey = '_x2';
 
 // user profile
 export const userProfileContextConsumer = contextConsumer<ComUser>('user_profile');
