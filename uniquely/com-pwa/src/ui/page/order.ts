@@ -25,7 +25,6 @@ import {
   OrderItem,
   OrderShippingInfo,
   Product,
-  tileQtyStep,
 } from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
@@ -33,11 +32,11 @@ import '@alwatr/ui-kit/card/surface.js';
 import {config} from '../../config.js';
 import {buttons} from '../../manager/buttons.js';
 import {scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
+import {OrderFsm, updateOrderCalculate} from '../../manager/controller/order.js';
 import '../stuff/order-shipping-form.js';
 import '../stuff/order-status-box.js';
 import '../stuff/select-product.js';
 
-import type {OrderFsm} from '../../manager/controller/order.js';
 import type {IconButtonContent} from '@alwatr/ui-kit/button/icon-button.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
@@ -63,7 +62,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
       gap: var(--sys-spacing-track);
     }
 
-    :host([state=reloading]) > * {
+    :host([state='reloading']) > * {
       opacity: var(--sys-surface-disabled-opacity);
     }
 
@@ -153,6 +152,14 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     input::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
+    }
+
+    .bold-text {
+      font-weight: var(--ref-font-weight-medium);
+    }
+
+    [hidden] {
+      display: none;
     }
   `;
 
@@ -310,10 +317,12 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
       headlineKey: 'page_order_headline',
       startIcon: buttons.backToHome,
     });
-    const order = this.fsm.getContext().newOrder;
+    let order: Order | OrderDraft = this.fsm.getContext().newOrder;
+    updateOrderCalculate(order);
+    order = order as Order;
 
     return html`
-      ${this._render_itemList(order.itemList ?? [], this.fsm.getContext().productStorage, true)}
+      ${this._render_itemList(order.itemList, this.fsm.getContext().productStorage, true)}
       <div class="btn-container">
         <alwatr-button .content=${buttons.editItems}></alwatr-button>
       </div>
@@ -345,9 +354,8 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     return html`
       <alwatr-icon-box .content=${content}></alwatr-icon-box>
       <div>
-        <alwatr-button
-          .content=${{icon: buttons.retry.icon, clickSignalId: buttons.retry.clickSignalId}}
-        > ${message('retry')}
+        <alwatr-button .content=${{icon: buttons.retry.icon, clickSignalId: buttons.retry.clickSignalId}}>
+          ${message('retry')}
         </alwatr-button>
       </div>
     `;
@@ -495,8 +503,6 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
         return html`<alwatr-surface tinted>${message('order_item_not_exist')}</alwatr-surface>`;
       }
 
-      item.qty ||= 80;
-
       return html`<alwatr-surface tinted class="product-item">
         <img src="${config.serverContext.cdn + '/medium/' + product.image.id}" />
         <div class="detail-container">
@@ -504,25 +510,25 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
           <div>
             <span>${message('order_item_price')}:</span>
             <span>
-              <span>${number(item.price)}</span>
+              <span>${number(item.marketPrice)}</span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_final_price')}:</span>
             <span>
-              <span>${number(item.finalPrice)}</span>
+              <span class="bold-text">${number(item.agencyPrice)}</span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_qty_m2')}:</span>
-            <span><span>${number(item.qty * tileQtyStep)}</span> m²</span>
+            <span><span>${number(item.qty * config.order.factor.box2m2)}</span> m²</span>
           </div>
           <div>
             <span>${message('order_item_qty_tile')}:</span>
             <span>
-              <span>${number(item.qty * 10)}</span>
+              <span>${number(item.qty * config.order.factor.box2tile)}</span>
               <alwatr-icon .name=${'stop-outline'}></alwatr-icon>
             </span>
           </div>
@@ -536,14 +542,14 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
           <div>
             <span>${message('order_item_final_total_price')}:</span>
             <span>
-              <span>${number(item.qty * tileQtyStep * item.finalPrice)}</span>
+              <span class="bold-text">${number(item.qty * config.order.factor.box2m2 * item.agencyPrice)}</span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
           <div>
             <span>${message('order_item_total_price')}:</span>
             <span>
-              <span>${number(item.qty * tileQtyStep * item.price)}</span>
+              <span>${number(item.qty * config.order.factor.box2m2 * item.marketPrice)}</span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
@@ -551,8 +557,8 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
             <span>${message('order_item_discount')}:</span>
             <span>
               <span>
-                (٪${number(calcDiscount(item.price, item.finalPrice))})
-                ${number(item.qty * tileQtyStep * (item.price - item.finalPrice))}
+                (٪${number(calcDiscount(item.marketPrice, item.agencyPrice))})
+                ${number(item.qty * config.order.factor.box2m2 * (item.marketPrice - item.agencyPrice))}
               </span>
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
@@ -566,7 +572,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
   protected _render_itemQtyInput(orderItem: OrderItem, editable: boolean): unknown {
     this._logger.logMethod?.('_render_itemQtyInput');
 
-    if (!editable) return;
+    if (!editable) return nothing;
 
     // TODO: new element
     const addBtn: IconButtonContent = {
@@ -614,25 +620,25 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
         </div>
         <div>
           <span>${message('order_shipping_car_type_title')}:</span>
-          <span
-            >${shippingInfo?.carType ? message('order_shipping_car_type_key_' + shippingInfo?.carType) : nullStr}</span
-          >
+          <span>
+            ${shippingInfo?.carType ? message('order_shipping_car_type_key_' + shippingInfo?.carType) : nullStr}
+          </span>
         </div>
         <div>
           <span>${message('order_shipping_lading_type_title')}:</span>
-          <span
-            >${shippingInfo?.ladingType
+          <span>
+            ${shippingInfo?.ladingType
               ? message('order_shipping_lading_type_key_' + shippingInfo?.ladingType)
-              : nullStr}</span
-          >
+              : nullStr}
+          </span>
         </div>
         <div>
           <span>${message('order_shipping_time_period_title')}:</span>
-          <span
-            >${shippingInfo?.timePeriod
+          <span>
+            ${shippingInfo?.timePeriod
               ? message('order_shipping_time_period_key_' + shippingInfo.timePeriod)
-              : nullStr}</span
-          >
+              : nullStr}
+          </span>
         </div>
         <div>
           <span>${message('order_shipping_shipment_price_title')}:</span>
@@ -646,31 +652,23 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
     </alwatr-surface>`;
   }
 
-  protected _render_summary(order: Order | OrderDraft): unknown {
+  protected _render_summary(order: Order): unknown {
     this._logger.logMethod?.('_render_summary');
     if (!order.itemList?.length) return nothing;
-
-    const totalPrice = order.totalPrice ?? 0;
-    const finalTotalPrice = order.finalTotalPrice ?? 0;
-    const ladingPrice = order.ladingPrice ?? 1_850_000;
-    const ladingPriceTemplate =
-      ladingPrice > 0
-        ? html`${number(ladingPrice)}<alwatr-icon .name=${'toman'}></alwatr-icon>`
-        : message('order_summary_no_lading_price_yet');
 
     return html`<alwatr-surface tinted>
       <div class="detail-container">
         <div>
           <span>${message('order_summary_total_price')}:</span>
           <span>
-            <span>${number(totalPrice)}</span>
+            <span>${number(order.subTotalMarket)}</span>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
         <div>
           <span>${message('order_summary_total_final_price')}:</span>
           <span>
-            <span>${number(finalTotalPrice)}</span>
+            <span class="bold-text">${number(order.subTotalAgency)}</span>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
@@ -678,29 +676,41 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
           <span>${message('order_summary_discount')}:</span>
           <span>
             <span>
-              (٪${number(calcDiscount(totalPrice, finalTotalPrice))}) ${number(totalPrice - finalTotalPrice)}
+              (٪${number(calcDiscount(order.subTotalMarket, order.subTotalAgency))})
+              ${number(order.subTotalMarket - order.subTotalAgency)}
             </span>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
-        <div>
+        <div ?hidden=${order.ladingFee === 0}>
           <span>${message('order_summary_lading_price')}:</span>
-          <span>${ladingPriceTemplate}</span>
+          <span>${number(order.ladingFee)}<alwatr-icon .name=${'toman'}></alwatr-icon></span>
+        </div>
+        <div ?hidden=${order.palletCost === 0}>
+          <span>
+            ${message('order_summary_palette_price')
+      .replace('${paletteCount}', (order.palletCost / config.order.pallet.price) + '')}:
+          </span>
+          <span>${number(order.palletCost)}<alwatr-icon .name=${'toman'}></alwatr-icon></span>
         </div>
         <div>
           <span>${message('order_summary_discount_after_lading_price')}:</span>
           <span>
             <span>
-              (٪${number(calcDiscount(totalPrice, finalTotalPrice + ladingPrice))})
-              ${number(totalPrice - finalTotalPrice - ladingPrice)}
+              (٪${number(calcDiscount(order.subTotalMarket, order.subTotalAgency + order.totalShippingFee))})
+              ${number(order.subTotalMarket - order.subTotalAgency - order.totalShippingFee)}
             </span>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
         <div>
+          <span>${message('order_shipping_shipment_price_title')}:</span>
+          <span>${message('order_shipping_shipment_price_value')}</span>
+        </div>
+        <div>
           <span>${message('order_summary_final_total_price')}:</span>
           <span>
-            <span>${number(finalTotalPrice + ladingPrice)}</span>
+            <span>${number(order.subTotalAgency + order.ladingFee + order.palletCost)}</span>
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
