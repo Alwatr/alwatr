@@ -21,7 +21,7 @@ export const carTypeCS = [
 ] as const;
 export type CarType = (typeof carTypeCS)[number];
 
-export const timePeriodCS = ['auto', '1_2w', '2_3w', '3_4w'] as const;
+export const timePeriodCS = ['auto', '3_4w', '2_3w', '1_2w'] as const;
 export type TimePeriod = (typeof timePeriodCS)[number];
 
 export const discountTypeCS = ['number', 'percent'] as const;
@@ -199,7 +199,7 @@ export const orderInfoSchema = {
     carType: String,
     ladingType: String,
     timePeriod: String,
-    description: String,
+    // description: String,
   },
   // discount: Number,
   // discountType: String,
