@@ -1,10 +1,11 @@
 import {FsmTypeHelper, finiteStateMachineProvider} from '@alwatr/fsm';
 import {message} from '@alwatr/i18n';
-import {orderInfoSchema, orderShippingInfoSchema, tileQtyStep} from '@alwatr/type/customer-order-management.js';
+import {orderInfoSchema, orderShippingInfoSchema} from '@alwatr/type/customer-order-management.js';
 import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 import {validator} from '@alwatr/validator';
 
+import {config} from '../../config.js';
 import {orderStorageContextConsumer} from '../context-provider/order-storage.js';
 import {
   productPriceStorageContextConsumer,
@@ -12,11 +13,12 @@ import {
 } from '../context-provider/price-storage.js';
 import {productStorageContextConsumer} from '../context-provider/product-storage.js';
 import {submitOrderCommandTrigger} from '../context.js';
+import {logger} from '../logger.js';
 
 import type {ClickSignalType} from '@alwatr/type';
 import type {OrderDraft, OrderItem} from '@alwatr/type/customer-order-management.js';
 
-const newOrderLocalStorageKey = 'draft_order_x4';
+const newOrderLocalStorageKey = 'draft_order_x5';
 
 export const orderFsmConstructor = finiteStateMachineProvider.defineConstructor('order_fsm', {
   initial: 'pending',
@@ -246,12 +248,13 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
       if (!order.itemList?.length) throw new Error('invalid_type');
       // else
       fsmInstance.setContext({
-        newOrder: validator<OrderDraft>(orderInfoSchema, order),
+        newOrder: validator<OrderDraft>(orderInfoSchema, order, true),
       });
       return true;
     }
     catch (err) {
       const _err = err as Error & {cause?: Record<string, string | undefined>};
+      logger.accident('validate_order', 'order_invalid', 'order is invalid', _err.cause);
       if (_err.cause?.itemPath?.indexOf('shippingInfo') !== -1) {
         snackbarSignalTrigger.request({
           message: message('page_order_shipping_info_not_valid_message'),
@@ -269,10 +272,12 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
 
   validate_shipping_info: (fsmInstance): boolean => {
     try {
-      validator(orderShippingInfoSchema, fsmInstance.getContext().newOrder.shippingInfo);
+      validator(orderShippingInfoSchema, fsmInstance.getContext().newOrder.shippingInfo, true);
       return true;
     }
     catch (err) {
+      const _err = err as Error & {cause?: Record<string, string | undefined>};
+      logger.accident('validate_shipping_info', 'order_invalid', 'order shipping onfo is invalid', _err.cause);
       snackbarSignalTrigger.request({
         message: message('page_order_shipping_info_not_valid_message'),
       });
@@ -286,25 +291,25 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
 });
 
 finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
-  {
-    callback: (_, fsmInstance): void => {
-      // calculateOrderPrice
-      const order = fsmInstance.getContext().newOrder;
-      let totalPrice = 0;
-      let finalTotalPrice = 0;
-      for (const item of order.itemList ?? []) {
-        totalPrice += item.price * item.qty * tileQtyStep;
-        finalTotalPrice += item.finalPrice * item.qty * tileQtyStep;
-      }
-      order.totalPrice = Math.round(totalPrice);
-      order.finalTotalPrice = Math.round(finalTotalPrice);
-    },
-  },
+  // {
+  //   callback: (_, fsmInstance): void => {
+  //     // calculateOrderPrice
+  //     const order = fsmInstance.getContext().newOrder;
+  //     let totalPrice = 0;
+  //     let finalTotalPrice = 0;
+  //     for (const item of order.itemList ?? []) {
+  //       totalPrice += item.price * item.qty * tileQtyStep;
+  //       finalTotalPrice += item.finalPrice * item.qty * tileQtyStep;
+  //     }
+  //     order.totalPrice = Math.round(totalPrice);
+  //     order.finalTotalPrice = Math.round(finalTotalPrice);
+  //   },
+  // },
   {
     signalId: 'order_item_qty_add',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
       const orderItem = event.detail;
-      orderItem.qty += 80;
+      orderItem.qty += config.order.pallet.boxSize;
       fsmInstance.transition('request_update');
     },
   },
@@ -312,7 +317,7 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     signalId: 'order_item_qty_remove',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
       const orderItem = event.detail;
-      orderItem.qty -= 80;
+      orderItem.qty -= config.order.pallet.boxSize;
       if (orderItem.qty < 1) orderItem.qty = 1;
       fsmInstance.transition('request_update');
     },
@@ -356,7 +361,6 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     signalId: orderStorageContextConsumer.id,
     callback: (_, fsmInstance): void => {
       const orderStorage = orderStorageContextConsumer.getResponse();
-      console.warn('orderStorage', {state: orderStorageContextConsumer.getState().target, orderStorage});
       fsmInstance.transition(`context_request_${orderStorageContextConsumer.getState().target}`, {
         orderStorage,
       });
@@ -364,3 +368,37 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     receivePrevious: 'NextCycle',
   },
 ]);
+
+export function updateOrderCalculate(order: OrderDraft): void {
+  order.subTotalMarket = 0;
+  order.subTotalAgency = 0;
+  order.palletCost = 0;
+  order.shippingFee = 0;
+  order.ladingFee = 0;
+  order.itemList ??= [];
+
+  let itemListCount = 0;
+  for (const item of order.itemList) {
+    if (!item.qty) item.qty = config.order.pallet.boxSize;
+    order.subTotalMarket += item.marketPrice * item.qty;
+    order.subTotalAgency += item.agencyPrice * item.qty;
+    itemListCount += item.qty;
+  }
+  order.subTotalMarket = Math.round(order.subTotalMarket * config.order.factor.box2m2);
+  order.subTotalAgency = Math.round(order.subTotalAgency * config.order.factor.box2m2);
+
+  if (
+    itemListCount > 0 &&
+    order.shippingInfo?.ladingType === 'pallet' &&
+    order.shippingInfo?.carType === 'trailer_truck'
+  ) {
+    order.palletCost = Math.ceil(itemListCount / config.order.pallet.boxSize) * config.order.pallet.price;
+  }
+
+  if (itemListCount > 0 && order.shippingInfo?.carType) {
+    const ladingConfig = config.order.lading[order.shippingInfo.carType];
+    order.ladingFee = Math.ceil(itemListCount / ladingConfig.capacity) * ladingConfig.fee;
+  }
+
+  order.totalShippingFee = order.palletCost + order.ladingFee + order.shippingFee;
+}
