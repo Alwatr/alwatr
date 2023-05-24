@@ -11,15 +11,17 @@ import {getLocalStorageItem} from '@alwatr/util';
  * ```
  */
 const srvBaseUrl = getLocalStorageItem('DEBUG_API', '/');
-const apiBaseUrl = srvBaseUrl + 'api/v1/';
+const apiBaseUrl = srvBaseUrl + 'api/v0/';
 
 export const config = {
-  base: srvBaseUrl,
-  api: apiBaseUrl,
-  cdn: apiBaseUrl + 'cdn',
-  token: getConfKey<string>('token'),
+  serverContext: {
+    base: srvBaseUrl,
+    api: apiBaseUrl,
+    cdn: apiBaseUrl + 'cdn',
+    token: getConfKey<string>('token'),
+  },
+
   fetchContextOptions: <Partial<FetchOptions>>{
-    method: 'GET',
     removeDuplicate: 'auto',
     retry: 2,
     retryDelay: 2_000,

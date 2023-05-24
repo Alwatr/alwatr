@@ -10,7 +10,7 @@ import {
 import {message} from '@alwatr/i18n';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import {topAppBarContextProvider} from '../../manager/context.js';
+import {languageButtonClickEventListener, topAppBarContextProvider} from '../../manager/context.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
@@ -38,8 +38,9 @@ export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(Alw
     super.connectedCallback();
     topAppBarContextProvider.setValue({
       type: 'small',
-      headline: message('page_404_not_found'),
+      headlineKey: 'page_404_not_found',
       startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back_to_home_click_event'},
+      endIconList: [{icon: 'globe-outline', clickSignalId: languageButtonClickEventListener.id}],
       tinted: 2,
     });
   }

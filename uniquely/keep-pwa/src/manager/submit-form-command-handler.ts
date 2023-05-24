@@ -41,11 +41,11 @@ commandHandler.define<FormData, boolean>(submitFormCommandTrigger.id, async (for
   try {
     await serviceRequest({
       method: 'PUT',
-      url: config.api + 'form/',
+      url: config.serverContext.api + 'form/',
       queryParameters: {
         formId: form.formId,
       },
-      token: config.token,
+      token: config.serverContext.token,
       bodyJson,
     });
   }
