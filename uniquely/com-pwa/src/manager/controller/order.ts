@@ -309,7 +309,12 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     signalId: 'order_item_qty_add',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
       const orderItem = event.detail;
-      orderItem.qty += config.order.pallet.boxSize;
+      if (orderItem.qty === 1) {
+        orderItem.qty = config.order.pallet.boxSize;
+      }
+      else {
+        orderItem.qty += config.order.pallet.boxSize;
+      }
       fsmInstance.transition('request_update');
     },
   },
