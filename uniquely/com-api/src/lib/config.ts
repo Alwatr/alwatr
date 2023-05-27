@@ -12,6 +12,8 @@ if (process.env.NODE_ENV === 'production') {
   }
 }
 
+const userDir = 'securage/auth/${userId}' as const;
+
 export const config = {
   storageClient: {
     host: process.env.STORAGE_HOST ?? '127.0.0.1',
@@ -30,17 +32,17 @@ export const config = {
     // allowAllOrigin: true,
   },
 
-  privateStorage: {
-    userList: 'securage/user-list',
-    userOrderList: 'securage/order-list/${userId}',
+  secureStorage: {
+    userList: 'securage/vault/user-list',
+    userDir,
+    userOrderList: `${userDir}/order-list`,
+    userProfile: `${userDir}/profile`,
   },
 
   publicStorage: {
     productList: 'publistore/hub/product-list/${name}',
     priceList: 'publistore/vault/price-list/${name}',
-
-    userProfile: 'publistore/auth/${token}/profile',
-    userOrderList: 'publistore/auth/${token}/order-list',
+    userDir: 'publistore/auth/${userToken}',
   },
 } as const;
 

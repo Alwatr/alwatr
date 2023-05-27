@@ -1,6 +1,7 @@
 import {config} from './config.js';
 import {userFactory} from './crypto.js';
 import {storageClient, userStorage} from './storage.js';
+import {touchUserOrder} from './user-order.js';
 
 import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
@@ -15,14 +16,13 @@ export const patchUser = async (user: ComUser): Promise<ComUser> => {
 
   user.token = userFactory.generateToken([user.id, user.lpe]);
 
-  const privateUserOrderListStorageName = config.privateStorage.userOrderList.replace('${userId}', user.id);
-  await storageClient.touch(privateUserOrderListStorageName);
+  await storageClient.cacheApiResponse(config.secureStorage.userProfile.replace('${userId}', user.id), user);
 
-  await storageClient.cacheApiResponse(config.publicStorage.userProfile.replace('${token}', user.token), user);
+  await touchUserOrder(user.id);
 
   await storageClient.link(
-      privateUserOrderListStorageName,
-      config.publicStorage.userOrderList.replace('${token}', user.token),
+      config.secureStorage.userDir.replace('${userId}', user.id),
+      config.publicStorage.userDir.replace('${userToken}', user.token),
   );
 
   return user;
