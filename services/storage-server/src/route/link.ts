@@ -1,5 +1,6 @@
 import {existsSync} from 'node:fs';
-import {resolve} from 'node:path';
+import {mkdir} from 'node:fs/promises';
+import {dirname, resolve} from 'node:path';
 
 import {delay} from '@alwatr/util';
 import {makeLinkForce} from '@alwatr/util/node.js';
@@ -29,6 +30,11 @@ nanoServer.route('GET', '/link', async (connection) => {
       errorCode: 'path_outside_base',
       meta: {base, src, dest},
     };
+  }
+
+  const destDir = dirname(dest);
+  if (!existsSync(destDir)) {
+    mkdir(destDir, {recursive: true});
   }
 
   if (!existsSync(src)) {
