@@ -35,7 +35,7 @@
     "@alwatr/i18n": "^0.32.0",
     "@alwatr/logger": "^0.32.0",
     "@alwatr/ui-kit": "^0.32.0",
-    "tslib": "^2.5.0"
+    "tslib": "^2.5.2"
   },
   "devDependencies": {
     "@alwatr/type": "^0.32.0"

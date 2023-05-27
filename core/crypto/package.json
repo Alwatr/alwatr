@@ -42,6 +42,6 @@
   "dependencies": {
     "@alwatr/logger": "^0.32.0",
     "@alwatr/math": "^0.32.0",
-    "tslib": "^2.5.0"
+    "tslib": "^2.5.2"
   }
 }
