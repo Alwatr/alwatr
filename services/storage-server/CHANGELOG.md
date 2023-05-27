@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Bug Fixes
+
+- import util/node ([ca9e995](https://github.com/AliMD/alwatr/commit/ca9e995567ad267c1730e1c98f9dbbd03ab90331))
+- **storage-server:** link delay issue ([6498852](https://github.com/AliMD/alwatr/commit/6498852e406252b387f7e8ecaea1c9e74501f53d))
+- **storage-server:** return value ([6e31502](https://github.com/AliMD/alwatr/commit/6e3150296af8b0e6f45969686c21fba6c5a98d80))
+
+### Features
+
+- **storage-server:** nre api response types ([8bb9408](https://github.com/AliMD/alwatr/commit/8bb94085584acf6b6a86b0a9bd82e060ae5b7f33))
+
 # [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
 
 ### Bug Fixes

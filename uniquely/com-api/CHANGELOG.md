@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Bug Fixes
+
+- **com-api:** `patch-user`route ([d8523ec](https://github.com/AliMD/alwatr/commit/d8523ec469d69ea7eb487ff278a858f7329530a9))
+- **com-api:** build issue ([4e02a3b](https://github.com/AliMD/alwatr/commit/4e02a3beae16eebdada7c9a9b88b2fa1eeb1601b))
+- **com-api:** new `api` side effects ([877534e](https://github.com/AliMD/alwatr/commit/877534e2e685afaf4afa81e63b816b85caba67b9))
+- **com-api:** remove admin/access token ([f56e2c2](https://github.com/AliMD/alwatr/commit/f56e2c2a2c3eb2edefa61135e1bab4c181d1a27b))
+- **com-api:** remove allowAllOrigin ([9f478ad](https://github.com/AliMD/alwatr/commit/9f478adb00808cf213c2a486d6599ee71833c524))
+- **com-api:** use 'validateUserAuth' to check the user authentication & authorization ([49223f5](https://github.com/AliMD/alwatr/commit/49223f5c642448789b6d7bdc39ec59f9042acba2))
+- **com-api:** use `validateUserAuth` when getting the list of users ([297f71e](https://github.com/AliMD/alwatr/commit/297f71e74ebb4e2fa46221ddf999a0e4a9e0ed0a))
+- **com-api:** user list return data ([163a122](https://github.com/AliMD/alwatr/commit/163a122fe806383a3dc4dd86fd845a7f91c9ae5e))
+- **com-api:** user list return data ([490d7ea](https://github.com/AliMD/alwatr/commit/490d7ea1215120b929fe52919ad90304a985a5a8))
+- **com-api:** user new crypto pre configs and new env names ([244b418](https://github.com/AliMD/alwatr/commit/244b418edc01561f43860eb90aaf111a12dc8a7d))
+- **com-api:** user-list permission ([e622354](https://github.com/AliMD/alwatr/commit/e622354924dd7a8e8dc8ff69bab9bc827aec103d))
+- **com-api:** user-list route ([4cccd35](https://github.com/AliMD/alwatr/commit/4cccd3580f9ada0e4262072dddc483d5c204b170))
+- **type/com:** import issue ([2523ed4](https://github.com/AliMD/alwatr/commit/2523ed440a71cf9a2804e519785314cb78ff5b12))
+
+### Features
+
+- **com-api:** `user-list` route ([c2481b7](https://github.com/AliMD/alwatr/commit/c2481b765544c3b3dbbbc4ff5314c35c63fd798d))
+- **com-api:** compatible with nginx-storage 1.6 ([3220f5d](https://github.com/AliMD/alwatr/commit/3220f5d6804119b6457c7aa9c6d9e110a893f138))
+- **com-api:** make root user in first time ([3e15c35](https://github.com/AliMD/alwatr/commit/3e15c3509b59152892d692cf0c8b5b37068460ad))
+- **com-api:** refactor new patch user and admin strategy ([e38c9ae](https://github.com/AliMD/alwatr/commit/e38c9aead8102d66557f3ec4a2960a0459646bab))
+- **com-api:** refactor storage path and auth ([a8e79c5](https://github.com/AliMD/alwatr/commit/a8e79c5b58a6a1f35b1e9f77933b59ef2327c54b))
+- **com-api:** review and refactor type and admin permission ([3689d2b](https://github.com/AliMD/alwatr/commit/3689d2b2cbd31bf39f24e3209c7101f148f9c527))
+- **com-pwa:** updateOrderCalculate ([4c17096](https://github.com/AliMD/alwatr/commit/4c17096f9fa5c429ccba4895fab29526409a8bc9))
+- **com-pwa:** validateUserAuth root support ([5f7d058](https://github.com/AliMD/alwatr/commit/5f7d05866e0b162d262b08363e33bca6bd6657b0))
+
 # [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
 
 ### Bug Fixes

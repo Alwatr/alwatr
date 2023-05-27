@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Features
+
+- **util:** flatStr ([09462ec](https://github.com/AliMD/alwatr/commit/09462ec88082a2339e633975c346f2fa17997400))
+
 # [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
 
 ### Features

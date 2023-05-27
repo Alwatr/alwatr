@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Bug Fixes
+
+- **com-pwa/user0info-box:** import issues ([1390b6a](https://github.com/AliMD/alwatr/commit/1390b6a097270635e24975aa79cd9b48d8584297))
+- **com-pwa:** `productFinalPriceStorageContextConsumer` ([390ebfb](https://github.com/AliMD/alwatr/commit/390ebfb9890af75c1148264d2778628caa320bc4))
+- **com-pwa:** `url`s based on latest `api` ([a9d95cb](https://github.com/AliMD/alwatr/commit/a9d95cbec0e8fb3caae976de688618bca71d26dc))
+- **com-pwa:** a temporary solution to prevent compile error ([8135e21](https://github.com/AliMD/alwatr/commit/8135e21d20b25fb0385b84aa813404ee70eb7bde))
+- **com-pwa:** add `serverContextConsumer` to get `order`s(not completed) ([2cb5fb0](https://github.com/AliMD/alwatr/commit/2cb5fb0400aba4b8849bb34f06e14a38007a9712))
+- **com-pwa:** fix some issues based on latest `api` changes(not completed) ([1363794](https://github.com/AliMD/alwatr/commit/1363794b0b3e9f7b6db0b82d8d4a9713b63bf204))
+- **com-pwa:** import src ([641159b](https://github.com/AliMD/alwatr/commit/641159b55fbeafbc61923390edab036c4afd1aba))
+- **com-pwa:** order_item_qty_add round to 80 ([3a43034](https://github.com/AliMD/alwatr/commit/3a430340c1f81581f66ca34d263fa97e3e3a40c0))
+- **com-pwa:** pre-load images of products ([698305d](https://github.com/AliMD/alwatr/commit/698305dc28d64ec2b42dcd691ed1312076a3243e))
+- **com-pwa:** remove an incorrect `import` ([82f7bc7](https://github.com/AliMD/alwatr/commit/82f7bc7ac953054a70f1abc1a16e28d1ad8d0500))
+- **com-pwa:** remove extra `url` ([1876166](https://github.com/AliMD/alwatr/commit/1876166bb135dface2873d1ea22be97336ccf504))
+- **com-pwa:** update `config`s based on last `api` changes ([535c08b](https://github.com/AliMD/alwatr/commit/535c08b2945579346d2b740f87efc380ece44167))
+- **com-pwa:** use `userProfileContext` only & fix some `path`s based on latest `api` changes ([1443e83](https://github.com/AliMD/alwatr/commit/1443e83ca58e4a14cddfb9652ad0c14f979f4fad))
+- **com-pwa:** use `userProfileContextConsumer` to update options of some requests ([025507a](https://github.com/AliMD/alwatr/commit/025507a0a5499330067b8c4a72a848c6dc2fae4e))
+- **com-pwa:** use correct config for api ([ea5c463](https://github.com/AliMD/alwatr/commit/ea5c463348345290948b39639225a49d91744fec))
+
+### Features
+
+- **com-pwa:** `user-list` page(not-completed) ([203d9bb](https://github.com/AliMD/alwatr/commit/203d9bb5a3b26e11e7cf50e1049f4a78c77e7248))
+- **com-pwa:** car count ([d2ea9c1](https://github.com/AliMD/alwatr/commit/d2ea9c12863d214afe5daa7d07997175c19ca859))
+- **com-pwa:** order config ([5de4545](https://github.com/AliMD/alwatr/commit/5de454521012419a7dae9599f4274b98469015aa))
+- **com-pwa:** review and fix issues ([b78d679](https://github.com/AliMD/alwatr/commit/b78d6790836853839e937aa26e71a43b24bb59e0))
+- **com-pwa:** updateOrderCalculate ([4c17096](https://github.com/AliMD/alwatr/commit/4c17096f9fa5c429ccba4895fab29526409a8bc9))
+
 # [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
 
 ### Bug Fixes
