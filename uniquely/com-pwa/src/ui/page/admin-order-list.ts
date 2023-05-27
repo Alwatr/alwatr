@@ -8,7 +8,6 @@ import {
   UnresolvedMixin,
   state,
   ScheduleUpdateToFrameMixin,
-  guard,
   when,
   type PropertyValues,
   mapObject,
@@ -20,7 +19,7 @@ import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
 
 import {buttons} from '../../manager/buttons.js';
-import {userListStorageContextConsumer} from '../../manager/context-provider/user-list-storage.js';
+import {userListIncOrderStorageContextConsumer} from '../../manager/context-provider/user-list-storage.js';
 import {topAppBarContextProvider} from '../../manager/context.js';
 import '../stuff/order-status-box.js';
 import '../stuff/user-info-box.js';
@@ -29,15 +28,15 @@ import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-page-user-list': AlwatrPageUserList;
+    'alwatr-page-admin-order-list': AlwatrPageAdminOrderList;
   }
 }
 
 /**
  * List of all users.
  */
-@customElement('alwatr-page-user-list')
-export class AlwatrPageUserList extends ScheduleUpdateToFrameMixin(
+@customElement('alwatr-page-admin-order-list')
+export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
     UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))),
 ) {
   static override styles = css`
@@ -65,19 +64,19 @@ export class AlwatrPageUserList extends ScheduleUpdateToFrameMixin(
   `;
 
   @state()
-    gotState = userListStorageContextConsumer.getState().target;
+    gotState = userListIncOrderStorageContextConsumer.getState().target;
 
   override connectedCallback(): void {
     super.connectedCallback();
 
     // prettier-ignore
-    this._addSignalListeners(userListStorageContextConsumer.subscribe(() => {
-      this.gotState = userListStorageContextConsumer.getState().target;
+    this._addSignalListeners(userListIncOrderStorageContextConsumer.subscribe(() => {
+      this.gotState = userListIncOrderStorageContextConsumer.getState().target;
     }, {receivePrevious: 'NextCycle'}));
 
     this._addSignalListeners(
         eventListener.subscribe(buttons.retry.clickSignalId, () => {
-          userListStorageContextConsumer.request();
+          userListIncOrderStorageContextConsumer.request();
         }),
     );
   }
@@ -91,7 +90,7 @@ export class AlwatrPageUserList extends ScheduleUpdateToFrameMixin(
 
   override render(): unknown {
     this._logger.logMethod?.('render');
-    return userListStorageContextConsumer.fsm.render({
+    return userListIncOrderStorageContextConsumer.fsm.render({
       initial: 'onlineLoading',
       offlineLoading: 'onlineLoading',
       onlineLoading: () => {
@@ -137,20 +136,23 @@ export class AlwatrPageUserList extends ScheduleUpdateToFrameMixin(
         });
         return html`
           ${when(this.gotState === 'reloadingFailed', this._renderReloadingFailed)}
-          ${guard(userListStorageContextConsumer.getResponse()?.meta.lastUpdated, () => this._renderUsersList())}
+          ${this._renderUsersList()}
         `;
       },
     });
   }
 
   private _renderUsersList(): unknown {
-    const userStorage = userListStorageContextConsumer.getResponse();
+    const userStorage = userListIncOrderStorageContextConsumer.getResponse();
     this._logger.logMethodArgs?.('_renderUsersList', {userStorage});
 
     return mapObject(
         this,
         userStorage?.data,
-        (user) => html`<alwatr-user-info-box .content=${user}></alwatr-order-info-box>`,
+        (userIncOrder) => {
+          // if (userIncOrder.fullName === 'Alwatr Admin') return;
+          return html`<alwatr-user-info-box .userIncOrder=${userIncOrder}></alwatr-order-info-box>`;
+        },
     );
   }
 

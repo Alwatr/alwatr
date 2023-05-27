@@ -10,6 +10,9 @@
     "loading": "درحال بارگذاری...",
     "cancel": "لغو",
     "invalid_phone_number": "شماره تلفن صحیح نمی‌باشد.",
+    "phone_number": "شماره تلفن",
+    "province": "استان",
+    "city": "شهر",
 
     "page_404_not_found": "پیدا نشد!",
     "page_404_under_develope": "دردست ساخت",
