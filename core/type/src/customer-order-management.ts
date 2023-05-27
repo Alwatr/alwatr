@@ -179,6 +179,10 @@ export interface ComUser extends User {
   priceListName?: string;
 }
 
+export interface ComUserIncOrder extends ComUser {
+  orderList: Record<string, Order>;
+}
+
 // -- Schema --
 
 export const orderInfoSchema = {
