@@ -25,3 +25,7 @@ keepalive_timeout   300;
 keepalive_requests  1000;
 
 types_hash_max_size 2048;
+
+# The output_buffers directive in nginx controls the size and number of buffers used to store the response data before it is sent to the client.
+# Increasing the number of buffers can improve performance for clients with slow connections, while decreasing the number of buffers can reduce memory usage for clients with fast connections.
+output_buffers $NGINX_OUTPUT_BUFFERS;
