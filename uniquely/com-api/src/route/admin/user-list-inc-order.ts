@@ -1,7 +1,7 @@
-import {logger} from '../lib/config.js';
-import {nanoServer} from '../lib/server.js';
-import {getUserListIncOrder} from '../lib/user-order.js';
-import {validateUserAuth} from '../lib/validate-user-auth.js';
+import {logger} from '../../lib/config.js';
+import {nanoServer} from '../../lib/server.js';
+import {getUserListIncOrder} from '../../lib/user-order.js';
+import {validateUserAuth} from '../../lib/validate-user-auth.js';
 
 import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
