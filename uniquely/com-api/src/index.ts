@@ -1,6 +1,6 @@
 import {logger} from './lib/config.js';
 import './root-user.js';
-import './route/admin-user-list-inc-order.js';
+import './route/admin/user-list-inc-order.js';
 import './route/home.js';
 import './route/patch-price-list.js';
 import './route/patch-product-list.js';
