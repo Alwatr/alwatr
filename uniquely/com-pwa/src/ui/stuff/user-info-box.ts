@@ -1,37 +1,26 @@
-import {serverContextConsumer} from '@alwatr/context';
 import {
-  customElement,
   AlwatrBaseElement,
+  LocalizeMixin,
+  SignalMixin,
+  css,
+  customElement,
   html,
   property,
-  css,
-  SignalMixin,
-  LocalizeMixin,
-  mapObject,
-  when,
-  type PropertyValues,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
-import '@alwatr/ui-kit/button/icon-button.js';
-import '@alwatr/ui-kit/card/icon-box.js';
 
-
-import {config} from '../../config.js';
-import {buttons} from '../../manager/buttons.js';
-
-import type {AlwatrDocumentStorage} from '@alwatr/type';
-import type {ComUser, Order} from '@alwatr/type/customer-order-management.js';
-import type {IconButtonContent} from '@alwatr/ui-kit/button/icon-button.js';
+import type {ComUserIncOrder} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
+
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-user-info-box': AlwatrUserInfoBox;
+    'alwatr-user-inc-order-box': AlwatrUserInfoBox;
   }
 }
 
 /**
- * Alwatr User Item Box Element.
+ * Alwatr User Include Order Box Element.
  */
 @customElement('alwatr-user-info-box')
 export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
@@ -40,113 +29,39 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
       display: block;
     }
 
-    :host([state='reloading']) {
-      opacity: var(--sys-surface-reloading-opacity);
+    .bold-text {
+      font-weight: var(--ref-font-weight-bold);
     }
   `;
 
-  @property({attribute: false})
-    user: Partial<ComUser> = {};
-
-  protected orderListStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<Order>>(
-      'order_list_storage_context_' + this.user.id,
-      {
-        url: config.serverContext.userOrderList,
-      },
-  );
-
-  override connectedCallback(): void {
-    // prettier-ignore
-    this._addSignalListeners(this.orderListStorageContextConsumer.subscribe(() => {
-      const fsmStorageState = this.orderListStorageContextConsumer.getState().target;
-      const hasReloadingAttribute = this.hasAttribute('reloading');
-
-      if ((fsmStorageState === 'complete' || fsmStorageState === 'reloadingFailed') && hasReloadingAttribute) {
-        this.removeAttribute('reloading');
-        return;
-      }
-
-      if (fsmStorageState === 'reloading' && !hasReloadingAttribute) {
-        this.setAttribute('reloading', '');
-      }
-    }, {receivePrevious: 'NextCycle'}));
-  }
-
-  protected override shouldUpdate(changedProperties: PropertyValues<this>): boolean {
-    return super.shouldUpdate(changedProperties) && this.user != null;
-  }
+  @property()
+    userIncOrder?: ComUserIncOrder;
 
   override render(): unknown {
     this._logger.logMethod?.('render');
+    if (this.userIncOrder == null) return;
 
-    return this.orderListStorageContextConsumer.fsm.render({
-      initial: 'onlineLoading',
-      offlineLoading: 'onlineLoading',
-      onlineLoading: () => {
-        const content: IconBoxContent = {
-          tinted: 1,
-          icon: 'cloud-download-outline',
-          headline: message('loading'),
-        };
-        return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
-      },
-      loadingFailed: () => {
-        const content: IconBoxContent = {
-          icon: 'cloud-offline-outline',
-          tinted: 1,
-          headline: message('fetch_failed_headline'),
-          description: message('fetch_failed_description'),
-        };
-        return html`
-          <alwatr-icon-box .content=${content}></alwatr-icon-box>
-          <div>
-            <alwatr-button .content=${buttons.retry}></alwatr-button>
-          </div>
-        `;
-      },
-      reloadingFailed: this._renderReloadingFailed,
-      reloading: 'complete',
-      complete: this._renderUserOrders,
-    });
-  }
-
-  private _renderUserOrders(): unknown {
-    this._logger.logMethod?.('_renderUserOrders');
-
-    return html`
-      <div class="user-info-section">${this._renderUserInfo()}</div>
-      <div class="orders-section">
-        ${mapObject(
-      this,
-      this.orderListStorageContextConsumer.getResponse()?.data,
-      (order) => html`<alwatr-order-status-box .content=${order}></alwatr-order-status-box>`,
-  )}
-      </div>
-    `;
-  }
-
-  private _renderUserInfo(): unknown {
-    this._logger.logMethod?.('_renderUserInfo');
-
-    const userProfileIconButton: IconButtonContent = {
+    const userProfileIconBox: IconBoxContent = {
+      tinted: 1,
+      headline: this.userIncOrder.fullName,
       icon: 'person-circle-outline',
     };
 
     return html`
-      <alwatr-icon-box .content=${userProfileIconButton}></alwatr-icon-box>
-      <span>${this.user.fullName}</span>
-      <span>${this.user.phoneNumber}</span>
-      <span>${this.user.province}${this.user!.city}</span>
-      ${when(this.orderListStorageContextConsumer.getState().target !== 'complete', () => html`...`)}
-      ${when(
-      this.orderListStorageContextConsumer.getState().target === 'complete',
-      () => html`<span>${Object.keys(this.orderListStorageContextConsumer.getResponse()?.data ?? {}).length}</span>`,
-  )}
+      <alwatr-icon-box .content=${userProfileIconBox}>
+        <span>${message('phone_number')}:‌
+          <span class="bold-text" dir="ltr">+${this.userIncOrder.phoneNumber}</span>
+        </span><br />
+        <span>${message('province')}:‌ ${this.userIncOrder.province}</span><br />
+        <span>${message('city')}:‌ ${this.userIncOrder.city}</span><br />
+        <div class="break"></div>
+
+        ${this._renderOrderListIncOrder()}
+      </alwatr-icon-box>
     `;
   }
 
-  private _renderReloadingFailed(): unknown {
-    this._logger.logMethod?.('_renderReloadingFailed');
-    return html`<alwatr-surface tinted> ${message('user_order_list_reloading_failed')} </alwatr-surface>`;
+  protected _renderOrderListIncOrder(): unknown {
+    return html``;
   }
 }
