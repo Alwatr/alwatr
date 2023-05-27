@@ -8,7 +8,7 @@ import type {ComUser} from '@alwatr/type/customer-order-management.js';
 nanoServer.route<Record<string, ComUser>>('GET', '/admin/user-list-inc-order', async (connection) => {
   logger.logMethod?.('get-admin-user-list-inc-order');
 
-  await validateUserAuth(connection.getUserAuth(), 'user-list/read');
+  await validateUserAuth(connection.getUserAuth(), 'user-list-inc-order/read');
 
   return {
     ok: true,

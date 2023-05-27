@@ -41,7 +41,7 @@ export const orderStatusCS = [
 ] as const;
 export type OrderStatus = (typeof orderStatusCS)[number];
 
-export const userPermissionsCS = ['user/patch', 'price/patch', 'product/patch', 'user-list/read'] as const;
+export const userPermissionsCS = ['user/patch', 'price/patch', 'product/patch', 'user-list-inc-order/read'] as const;
 export type UserPermission = (typeof userPermissionsCS)[number];
 
 // -- Document object --
