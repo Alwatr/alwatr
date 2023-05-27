@@ -1,6 +1,6 @@
-import {config, logger} from '../lib/config.js';
+import {logger} from '../lib/config.js';
 import {nanoServer} from '../lib/server.js';
-import {storageClient} from '../lib/storage.js';
+import {patchUserOrder} from '../lib/user-order.js';
 import {validateUserAuth} from '../lib/validate-user-auth.js';
 
 import type {Order} from '@alwatr/type/customer-order-management.js';
@@ -20,7 +20,7 @@ nanoServer.route<Order>('PUT', '/order', async (connection) => {
   order.clientId = clientId;
   order.remoteAddress = remoteAddress;
 
-  order = await storageClient.set<Order>(order, config.privateStorage.userOrderList.replace('${userId}', userAuth.id));
+  order = await patchUserOrder(userAuth.id, order);
 
   return {
     ok: true,
