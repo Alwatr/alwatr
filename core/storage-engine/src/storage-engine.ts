@@ -363,9 +363,9 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   /**
    * Save the storage to disk without any debounce (none blocking) when `this.hasUnsavedChanges` is true.
    *
-   * @param [sync=false] - Recommend to ignore it (default is false) for none blocking IO.
+   * @param [emergency=false] - Recommend to ignore it (default is false) for none blocking IO.
    */
-  private _$save(sync = false): MaybePromise<void> {
+  private _$save(emergency = false): MaybePromise<void> {
     this._logger.logMethod?.('_$save');
 
     if (this._saveTimer != null) {
@@ -376,7 +376,11 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     if (this.hasUnsavedChanges) {
       this.hasUnsavedChanges = false;
       this._storage.meta.reversion++;
-      return (sync ? writeJsonFileSync : writeJsonFile)(this.storagePath, this._storage, this.saveBeautiful ? 2 : 0);
+      if (emergency) {
+        return writeJsonFileSync(this.storagePath, this._storage, 'rename', this.saveBeautiful ? 2 : undefined);
+      }
+      // else
+      return writeJsonFile(this.storagePath, this._storage, 'replace', this.saveBeautiful ? 2 : undefined);
     }
   }
 
