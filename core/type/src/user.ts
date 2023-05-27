@@ -15,9 +15,15 @@ export interface User extends AlwatrDocumentObject {
   lpe: number;
 
   /**
+   * User token, used for user authorization.
+   * DANGER: This field should not be save in public storage.
+   */
+  token?: string;
+
+  /**
    * User authorization permissions list.
    */
-  permissions?: Array<string>;
+  permissions?: Array<string> | 'root';
 
   fullName: string;
 
@@ -55,7 +61,7 @@ export interface User extends AlwatrDocumentObject {
   postalCode?: string;
 }
 
-export interface UserAuth {
+export type UserAuth = {
   id: string;
   token: string;
 }

@@ -69,20 +69,19 @@
 #
 # Accepted values, in order of severity: "DEBUG", "INFO", "WARN", "ERROR", "FATAL", "PANIC"
 # Messages at and above the selected level will be logged.
-logLevel = "WARN"
+logLevel = "INFO"
 
 [traefikLog]
   # By default the Traefik log is written to stdout in text format.
   # filePath = "/path/to/traefik.log"
   # format   = "json"
 
-[accessLog]
+# [accessLog]
   # By default it will write to stdout and produce logs in the textual Common Log Format (CLF), extended with additional fields.
   # filePath = "/path/to/access.log"
   # format = "json"
-  [accessLog.filters]
-    statusCodes = ["300-302", "400-410"]
-
+  # [accessLog.filters]
+  #   statusCodes = ["300-302", "400-410"]
 
 # Entrypoints to be used by frontends that do not specify any entrypoint.
 # Each frontend can specify its own entrypoints.
@@ -272,6 +271,13 @@ defaultEntryPoints = ["http", "https"]
   #
   # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
 
+  # Preferred chain to use.
+  #
+  # Optional
+  # Default: empty
+  #
+  preferredChain = "ISRG Root X1"
+
   # KeyType to use.
   #
   # Optional
@@ -279,8 +285,13 @@ defaultEntryPoints = ["http", "https"]
   #
   # Available values : "EC256", "EC384", "RSA2048", "RSA4096", "RSA8192"
   #
-  # KeyType = "RSA4096"
+  KeyType = "RSA2048"
 
+  # Use a TLS-ALPN-01 ACME challenge.
+  #
+  # Optional (but recommended)
+  #
+  [acme.tlsChallenge]
 
   # Use a HTTP-01 ACME challenge.
   #

@@ -2,9 +2,13 @@ import {existsSync, readFileSync, writeFileSync, renameSync, mkdirSync} from 'no
 import {rename, mkdir, writeFile, readFile, rm, symlink} from 'node:fs/promises';
 import {dirname} from 'node:path';
 
-import {logger} from './_logger.js';
+import {createLogger} from '@alwatr/logger';
+
+import {flatStr} from '../flat-str.js';
 
 import type {StringifyableRecord} from '@alwatr/type';
+
+const logger = createLogger('alwatr/util/fs', true);
 
 /**
  * Enhanced read json file.
@@ -19,18 +23,20 @@ export const readJsonFileSync = <T extends StringifyableRecord = StringifyableRe
   }
 
   const timeKey = path.substring(path.lastIndexOf('/') + 1);
-  logger.time?.(`readJsonFileSync(${timeKey})`);
 
   let fileContent: string;
+  logger.time?.(`readFileSync ${timeKey}`);
   try {
-    fileContent = readFileSync(path, {encoding: 'utf-8', flag: 'r'});
+    fileContent = flatStr(readFileSync(path, {encoding: 'utf-8', flag: 'r'}));
   }
   catch (err) {
     logger.error('readJsonFileSync', 'read_file_failed', err);
     throw new Error('read_file_failed');
   }
+  logger.timeEnd?.(`readFileSync ${timeKey}`);
 
   let data;
+  logger.time?.(`jsonParse ${timeKey}`);
   try {
     data = JSON.parse(fileContent) as T;
   }
@@ -38,8 +44,8 @@ export const readJsonFileSync = <T extends StringifyableRecord = StringifyableRe
     logger.error('readJsonFileSync', 'invalid_json', err);
     throw new Error('invalid_json');
   }
+  logger.timeEnd?.(`jsonParse ${timeKey}`);
 
-  console.timeEnd(`readJsonFileSync(${timeKey})`);
   return data;
 };
 
@@ -59,18 +65,20 @@ export const readJsonFile = async <T extends StringifyableRecord = Stringifyable
   }
 
   const timeKey = path.substring(path.lastIndexOf('/') + 1);
-  logger.time?.(`readJsonFile(${timeKey})`);
 
   let fileContent: string;
+  logger.time?.(`readFile ${timeKey}`);
   try {
-    fileContent = await readFile(path, {encoding: 'utf-8', flag: 'r'});
+    fileContent = flatStr(await readFile(path, {encoding: 'utf-8', flag: 'r'}));
   }
   catch (err) {
     logger.error('readJsonFile', 'read_file_failed', err);
     throw new Error('read_file_failed');
   }
+  logger.timeEnd?.(`readFile ${timeKey}`);
 
   let data;
+  logger.time?.(`jsonParse ${timeKey}`);
   try {
     data = JSON.parse(fileContent) as T;
   }
@@ -78,8 +86,8 @@ export const readJsonFile = async <T extends StringifyableRecord = Stringifyable
     logger.error('readJsonFile', 'invalid_json', err);
     throw new Error('invalid_json');
   }
+  logger.timeEnd?.(`jsonParse ${timeKey}`);
 
-  console.timeEnd(`readJsonFile(${timeKey})`);
   return data;
 };
 
@@ -96,16 +104,17 @@ export const writeJsonFileSync = <T extends StringifyableRecord = StringifyableR
   logger.logMethodArgs?.('writeJsonFileSync', path);
 
   const timeKey = path.substring(path.lastIndexOf('/') + 1);
-  logger.time?.(`writeJsonFileSync(${timeKey})`);
 
   let jsonContent;
+  logger.time?.(`jsonParse ${timeKey}`);
   try {
-    jsonContent = JSON.stringify(data, null, space);
+    jsonContent = flatStr(JSON.stringify(data, null, space));
   }
   catch (err) {
     logger.error('writeJsonFileSync', 'stringify_failed', err);
     throw new Error('stringify_failed');
   }
+  logger.timeEnd?.(`jsonParse ${timeKey}`);
 
   if (existsSync(path)) {
     try {
@@ -125,6 +134,7 @@ export const writeJsonFileSync = <T extends StringifyableRecord = StringifyableR
     }
   }
 
+  logger.time?.(`writeFileSync ${timeKey}`);
   try {
     writeFileSync(path, jsonContent, {encoding: 'utf-8', flag: 'w'});
   }
@@ -132,8 +142,7 @@ export const writeJsonFileSync = <T extends StringifyableRecord = StringifyableR
     logger.error('writeJsonFileSync', 'write_file_failed', err);
     throw new Error('write_file_failed');
   }
-
-  logger.timeEnd?.(`writeJsonFileSync(${timeKey})`);
+  logger.timeEnd?.(`writeFileSync ${timeKey}`);
 };
 
 /**
@@ -152,13 +161,15 @@ export const writeJsonFile = async <T extends StringifyableRecord = Stringifyabl
   logger.time?.(`writeJsonFile(${timeKey})`);
 
   let jsonContent;
+  logger.time?.(`jsonParse ${timeKey}`);
   try {
-    jsonContent = JSON.stringify(data, null, space);
+    jsonContent = flatStr(JSON.stringify(data, null, space));
   }
   catch (err) {
     logger.error('writeJsonFile', 'stringify_failed', err);
     throw new Error('stringify_failed');
   }
+  logger.timeEnd?.(`jsonParse ${timeKey}`);
 
   if (existsSync(path)) {
     try {
@@ -178,6 +189,7 @@ export const writeJsonFile = async <T extends StringifyableRecord = Stringifyabl
     }
   }
 
+  logger.time?.(`writeFile ${timeKey}`);
   try {
     await writeFile(path, jsonContent, {encoding: 'utf-8', flag: 'w'});
   }
@@ -185,8 +197,7 @@ export const writeJsonFile = async <T extends StringifyableRecord = Stringifyabl
     logger.error('writeJsonFile', 'write_file_failed', err);
     throw new Error('write_file_failed');
   }
-
-  logger.timeEnd?.(`writeJsonFile(${timeKey})`);
+  logger.timeEnd?.(`writeFile ${timeKey}`);
 };
 
 /**

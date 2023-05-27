@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/flight-finder/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Features
+
+- **flight-crawler:** don't notify if flight not found ([c6b17d5](https://github.com/AliMD/flight-finder/commit/c6b17d5f091cd7914cc64ef023eb2923587e6dd6))
+
 # [0.31.0](https://github.com/AliMD/flight-finder/compare/v0.30.0...v0.31.0) (2023-05-08)
 
 ### Bug Fixes

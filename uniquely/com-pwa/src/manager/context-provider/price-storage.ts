@@ -1,9 +1,11 @@
 import {serverContextConsumer} from '@alwatr/context';
 
+import {userProfileContextConsumer} from './user.js';
 import {config} from '../../config.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {ProductPrice} from '@alwatr/type/customer-order-management.js';
+
 
 /**
  * Product Price.
@@ -12,7 +14,7 @@ export const productPriceStorageContextConsumer = serverContextConsumer<AlwatrDo
     'product_price_storage_context',
     {
       ...config.fetchContextOptions,
-      url: config.api + '/storage/price-list-' + config.priceListName.replace('${productStorage}', 'tile'),
+      url: config.serverContext.marketPriceList.replace('${productStorageName}', 'tile'),
     },
 );
 
@@ -30,7 +32,6 @@ export const productFinalPriceStorageContextConsumer = serverContextConsumer<Alw
     'product_final_price_storage_context',
     {
       ...config.fetchContextOptions,
-      url: config.api + '/storage/price-list-' + config.finalPriceListName.replace('${productStorage}', 'tile'),
     },
 );
 
@@ -40,3 +41,16 @@ productFinalPriceStorageContextConsumer.fsm.defineSignals([
     transition: 'REQUEST',
   },
 ]);
+
+userProfileContextConsumer.subscribe((user) => {
+  productPriceStorageContextConsumer.setOptions({
+    token: user.token!,
+  });
+
+  productFinalPriceStorageContextConsumer.setOptions({
+    url: config.serverContext.agencyPriceList
+        .replace('${productStorageName}', 'tile')
+        .replace('${priceListName}', user.priceListName ?? 'agency'),
+    token: user.token!,
+  });
+});

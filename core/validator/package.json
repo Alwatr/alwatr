@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/validator",
-  "version": "0.31.0",
+  "version": "0.32.0",
   "description": "Simple useful validator library written in tiny TypeScript module.",
   "keywords": [
     "validator",
@@ -29,8 +29,8 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/math": "^0.31.0",
-    "@alwatr/type": "^0.31.0",
+    "@alwatr/math": "^0.32.0",
+    "@alwatr/type": "^0.32.0",
     "tslib": "^2.5.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/logger",
-  "version": "0.31.0",
+  "version": "0.32.0",
   "description": "Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.",
   "keywords": [
     "log",
@@ -32,7 +32,7 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/type": "^0.31.0",
+    "@alwatr/type": "^0.32.0",
     "tslib": "^2.5.0"
   }
 }

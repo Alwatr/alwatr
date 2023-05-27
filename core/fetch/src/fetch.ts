@@ -1,9 +1,9 @@
 import {createLogger, globalAlwatr, NODE_MODE} from '@alwatr/logger';
 import {contextProvider, type DispatchOptions} from '@alwatr/signal';
-import {getClientId} from '@alwatr/util';
+import {getClientId, delay} from '@alwatr/util';
 
 import type {FetchOptions} from './type.js';
-import type {AlwatrServiceResponseSuccessWithMeta} from '@alwatr/type';
+import type {AlwatrServiceResponse} from '@alwatr/type';
 
 export type * from './type.js';
 
@@ -68,7 +68,7 @@ export async function fetchContext(
  * Fetch from alwatr services and return standard response.
  */
 export async function serviceRequest<
-  T extends AlwatrServiceResponseSuccessWithMeta = AlwatrServiceResponseSuccessWithMeta
+  T extends AlwatrServiceResponse = AlwatrServiceResponse
 >(options: FetchOptions): Promise<T> {
   logger.logMethodArgs?.('serviceRequest', {url: options.url});
 
@@ -357,7 +357,7 @@ async function _handleRetryPattern(options: Required<FetchOptions>): Promise<Res
       throw new Error('offline');
     }
 
-    await _wait(options.retryDelay);
+    await delay(options.retryDelay);
 
     options.signal = externalAbortSignal;
     return _handleRetryPattern(options);
@@ -405,5 +405,3 @@ function _handleTimeout(options: FetchOptions): Promise<Response> {
         });
   });
 }
-
-const _wait = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));

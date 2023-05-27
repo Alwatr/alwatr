@@ -1,11 +1,13 @@
 import {customElement, css, html, LocalizeMixin, SignalMixin, UnresolvedMixin, property} from '@alwatr/element';
-import {message} from '@alwatr/i18n';
+import {message, number} from '@alwatr/i18n';
 import {ladingTypeCS, carTypeCS, timePeriodCS, type OrderShippingInfo} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import {AlwatrSurface} from '@alwatr/ui-kit/card/surface.js';
 import '@alwatr/ui-kit/radio-group/radio-group.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
 import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
+
+import {config} from '../../config.js';
 
 import type {AlwatrRadioGroup, RadioGroupOptions} from '@alwatr/ui-kit/radio-group/radio-group.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
@@ -16,7 +18,7 @@ declare global {
   }
 }
 
-const localStorageId = 'shipping_form_data_x3';
+const localStorageId = 'shipping_form_data_x4';
 
 /**
  * Alwatr Order Shipping Form.
@@ -67,7 +69,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         radioGroup: carTypeCS.map((value) => {
           return {
             value,
-            label: message('order_shipping_car_type_key_' + value),
+            label: `${message('order_shipping_car_type_key_' + value)} (${number(config.order.lading[value].fee)}+)`,
           };
         }),
       },
@@ -76,7 +78,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         radioGroup: ladingTypeCS.map((value) => {
           return {
             value,
-            label: message('order_shipping_lading_type_key_' + value),
+            label: `${message('order_shipping_lading_type_key_' + value)}`,
           };
         }),
       },

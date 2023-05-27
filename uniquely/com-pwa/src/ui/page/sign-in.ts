@@ -1,29 +1,22 @@
 import {
   AlwatrBaseElement,
-  Ref,
   SignalMixin,
   UnresolvedMixin,
-  createRef,
   css,
   customElement,
   html,
   nothing,
-  ref,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import '@alwatr/icon';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/surface.js';
-import {snackbarSignalTrigger} from '@alwatr/ui-kit/snackbar/show-snackbar.js';
 import '@alwatr/ui-kit/text-field/text-field.js';
-import {sanitizePhoneNumber} from '@alwatr/validator';
 
 import {buttons} from '../../manager/buttons.js';
 import {signIn, signInServerContext} from '../../manager/context-provider/sign-in.js';
 import {linkPassTokenContextConsumer} from '../../manager/context-provider/user.js';
 import {topAppBarContextProvider} from '../../manager/context.js';
-
-import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -83,7 +76,7 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
   `;
 
   private _linkPass: string | null = null;
-  private _textInputRef: Ref<AlwatrTextField> = createRef();
+  // private _textInputRef: Ref<AlwatrTextField> = createRef();
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -145,17 +138,17 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
 
   protected _renderTextField(loading = false): unknown {
     this._logger.logMethodArgs?.('_renderTextField', {loading});
+    // <alwatr-text-field
+    //   ${ref(this._textInputRef)}
+    //   .name=${'phoneNumber'}
+    //   .type=${'tel'}
+    //   .placeholder=${message('page_sign_in_phone_number_placeholder')}
+    //   ?disabled=${loading}
+    //   outlined
+    //   active-outline
+    //   stated
+    // ></alwatr-text-field>
     return html`<alwatr-text-field
-      ${ref(this._textInputRef)}
-      .name=${'phoneNumber'}
-      .type=${'tel'}
-      .placeholder=${message('page_sign_in_phone_number_placeholder')}
-      ?disabled=${loading}
-      outlined
-      active-outline
-      stated
-    ></alwatr-text-field>
-    <alwatr-text-field
       .type=${'password'}
       .value=${'داداش، مارو چی فرض کردی؟'}
       ?disabled=${loading}
@@ -190,15 +183,15 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
   }
 
   protected _onSignInClick(): void {
-    const {value: textInput} = this._textInputRef;
-    const phoneNumber = sanitizePhoneNumber(textInput?.value);
-    this._logger.logMethodArgs?.('_onSignInClick', {phoneNumber});
+    // const {value: textInput} = this._textInputRef;
+    // const phoneNumber = sanitizePhoneNumber(textInput?.value);
+    this._logger.logMethod?.('_onSignInClick');
 
-    if (phoneNumber == null) {
-      return snackbarSignalTrigger.request({
-        messageKey: 'invalid_phone_number',
-      });
-    }
+    // if (phoneNumber == null) {
+    //   return snackbarSignalTrigger.request({
+    //     messageKey: 'invalid_phone_number',
+    //   });
+    // }
 
     if (this._linkPass == null) {
       this._logger.accident('_onSignInClick', 'invalid_link_pass', 'invalid link pass', {
@@ -207,6 +200,6 @@ export class AlwatrPageSignIn extends UnresolvedMixin(SignalMixin(AlwatrBaseElem
       return;
     }
 
-    signIn(phoneNumber, this._linkPass);
+    signIn(this._linkPass);
   }
 }

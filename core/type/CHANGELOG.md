@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Bug Fixes
+
+- **fetch:** userAuth in StringifyableFetchOptions ([f554b57](https://github.com/AliMD/alwatr/commit/f554b575584cb1464d48fbe8a8c4006125365853))
+- **type/com:** orderInfoSchema ([b90d872](https://github.com/AliMD/alwatr/commit/b90d87268429fc802fb9966fd6efd43912bc851a))
+- **type:** `data` type ([0601384](https://github.com/AliMD/alwatr/commit/06013843612fb2400d664a4dd084f70278a5eaa4))
+- **type:** `orderInfoSchema` ([47ca524](https://github.com/AliMD/alwatr/commit/47ca5243f6de3c966c3fb3bd10256134d100e4e9))
+
+### Features
+
+- **com-pwa:** car count ([d2ea9c1](https://github.com/AliMD/alwatr/commit/d2ea9c12863d214afe5daa7d07997175c19ca859))
+- **type/com:** rewrite ([1829673](https://github.com/AliMD/alwatr/commit/1829673cf63746d4356aaa3673aefc001b042258))
+- **type/user:** add token! ([de23795](https://github.com/AliMD/alwatr/commit/de237957a7a045c1998cf43b585125027fad5d7d))
+- **type:** add `priceListName` to `ComUser` ([b22555e](https://github.com/AliMD/alwatr/commit/b22555ebe508cc0d732e6af0e1bbf99f99eaca16))
+- **type:** user permissions ([e3d7091](https://github.com/AliMD/alwatr/commit/e3d70916fb7e93f8daf51a8c4aaf856f109b01be))
+- **type:** user permissions ([6bb0aac](https://github.com/AliMD/alwatr/commit/6bb0aacb991e11a930a30dc9071a5de0edf77368))
+
 # [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
 
 ### Bug Fixes

@@ -1,0 +1,4 @@
+map $http_authorization $bearer_token {
+  ~*^Bearer\s+(?<token>\S+)$ $token;
+  default '';
+}

@@ -1,13 +1,13 @@
 import {resolve} from 'node:path';
 
-import {writeJsonFile} from '@alwatr/util/node';
+import {writeJsonFile} from '@alwatr/util/node.js';
 
 import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 
 import type {AlwatrServiceResponseSuccess, StringifyableRecord} from '@alwatr/type';
 
-nanoServer.route('PUT', '/cache-api-response', async (connection) => {
+nanoServer.route<Record<string, never>>('PUT', '/cache-api-response', async (connection) => {
   logger.logMethod?.('cache-api-response');
 
   connection.requireToken(config.nanoServer.accessToken);

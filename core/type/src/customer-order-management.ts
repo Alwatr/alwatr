@@ -7,10 +7,26 @@ import type {User} from './user.js';
 // -- Const value --
 
 export const ladingTypeCS = ['hand', 'pallet'] as const;
-export const carTypeCS = ['nissan', 'one', 'ten_wheel', 'trolley'] as const;
-export const carTypePriceCS = [110_000, 140_000, 170_000, 200_000] as const;
-export const timePeriodCS = ['auto', '1_2w', '2_3w', '3_4w'] as const;
+export type LadingType = (typeof ladingTypeCS)[number];
+
+export const carTypeCS = [
+  'trailer_truck',
+  'camion_dual',
+  'camion_solo',
+  'camion_911',
+  'camion_800',
+  'camion_600',
+  'camion_mini',
+  'nissan',
+] as const;
+export type CarType = (typeof carTypeCS)[number];
+
+export const timePeriodCS = ['auto', '3_4w', '2_3w', '1_2w'] as const;
+export type TimePeriod = (typeof timePeriodCS)[number];
+
 export const discountTypeCS = ['number', 'percent'] as const;
+export type DiscountType = (typeof discountTypeCS)[number];
+
 export const orderStatusCS = [
   'draft',
   'registered',
@@ -23,8 +39,10 @@ export const orderStatusCS = [
   'canceled',
   'refunded',
 ] as const;
+export type OrderStatus = (typeof orderStatusCS)[number];
 
-export const tileQtyStep = 3.6;
+export const userPermissionsCS = ['user/patch', 'price/patch', 'product/patch', 'user-list/read'] as const;
+export type UserPermission = (typeof userPermissionsCS)[number];
 
 // -- Document object --
 
@@ -66,7 +84,7 @@ export interface Order extends AlwatrDocumentObject {
   /**
    * Order Status
    */
-  status: (typeof orderStatusCS)[number];
+  status: OrderStatus;
 
   /**
    * Order cart list.
@@ -78,23 +96,35 @@ export interface Order extends AlwatrDocumentObject {
    */
   shippingInfo: Partial<OrderShippingInfo>;
 
-  discount: number;
-  discountType: (typeof discountTypeCS)[number];
+  // discount: number;
+  // discountType: DiscountType;
 
   /**
-   * The total price of this order exclude lading and discounts.
+   * The total price of this order exclude shippings.
    */
-  totalPrice: number;
+  subTotalMarket: number;
+
+  subTotalAgency: number;
 
   /**
    * The cost of lading the order.
    */
-  ladingPrice: number;
+  ladingFee: number;
 
   /**
-   * The final total price of this order include lading and discounts.
+   * The cost of pallet.
    */
-  finalTotalPrice: number;
+  palletCost: number;
+
+  /**
+   * The cost of shipping price.
+   */
+  shippingFee: number;
+
+  /**
+   * Total shipping const.
+   */
+  totalShippingFee: number;
 
   /**
    * Customer device uuid.
@@ -120,12 +150,12 @@ export interface OrderItem extends StringifyableRecord {
   /**
    * The selling price of single product in the market.
    */
-  price: number;
+  marketPrice: number;
 
   /**
    * The selling price of a product after any discounts to this buyer.
    */
-  finalPrice: number;
+  agencyPrice: number;
 
   /**
    * Quantity of this item.
@@ -137,18 +167,16 @@ export interface OrderShippingInfo extends StringifyableRecord {
   recipientName: string;
   recipientNationalCode: string;
   address: string;
-  description: string,
-  ladingType: (typeof ladingTypeCS)[number];
-  carType: (typeof carTypeCS)[number];
-  timePeriod: (typeof timePeriodCS)[number];
+  description: string;
+  ladingType: LadingType;
+  carType: CarType;
+  timePeriod: TimePeriod;
 }
 
-export const userPermissionsCS = ['*', 'user/patch'] as const;
-export type UserPermission = typeof userPermissionsCS[number];
-
 export interface ComUser extends User {
-  permissions?: Array<UserPermission>;
+  permissions?: Array<UserPermission> | 'root';
   shopName?: string;
+  priceListName?: string;
 }
 
 // -- Schema --
@@ -156,12 +184,14 @@ export interface ComUser extends User {
 export const orderInfoSchema = {
   id: String,
   status: String,
-  itemList: [{
-    productId: String,
-    price: Number,
-    finalPrice: Number,
-    qty: Number,
-  }],
+  itemList: [
+    {
+      productId: String,
+      marketPrice: Number,
+      agencyPrice: Number,
+      qty: Number,
+    },
+  ],
   shippingInfo: {
     recipientName: String,
     recipientNationalCode: String,
@@ -169,13 +199,16 @@ export const orderInfoSchema = {
     carType: String,
     ladingType: String,
     timePeriod: String,
+    // description: String,
   },
   // discount: Number,
   // discountType: String,
-  totalPrice: Number,
-  // ladingPrice: Number,
-  finalTotalPrice: Number,
+  subTotalMarket: Number,
+  subTotalAgency: Number,
+  ladingFee: Number,
+  palletCost: Number,
+  shippingFee: Number,
+  totalShippingFee: Number,
 };
 
 export const orderShippingInfoSchema = orderInfoSchema.shippingInfo;
-

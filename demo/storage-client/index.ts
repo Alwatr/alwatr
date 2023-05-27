@@ -18,24 +18,12 @@ const db = new AlwatrStorageClient<User>({
   token,
 });
 
-let ali: User;
+let ali: User | null;
 
 try {
   ali = await db.get('alimd');
-  console.log('ali found: %o', ali);
-  /**
-   * {
-   *   id: 'alimd',
-   *   fname: 'Ali',
-   *   lname: 'MM',
-   *   email: 'i@ali.md',
-   * }
-   */
 
-  ali.token = Math.random().toString(36).substring(2, 15);
-}
-catch (err) {
-  if ((err as Error).message === 'document_not_found') {
+  if (ali == null ) {
     console.log('ali not found');
     const ali = {
       id: 'alimd',
@@ -46,8 +34,12 @@ catch (err) {
     await db.set(ali);
   }
   else {
-    console.error(err);
+    console.log('ali found: %o', ali);
+    ali.token = Math.random().toString(36).substring(2, 15);
   }
+}
+catch (err) {
+  console.error(err);
 }
 
 await db.set({

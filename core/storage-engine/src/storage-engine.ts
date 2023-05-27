@@ -1,7 +1,7 @@
 import {resolve} from 'node:path';
 
 import {createLogger, globalAlwatr, type AlwatrLogger} from '@alwatr/logger';
-import {readJsonFileSync, writeJsonFile, writeJsonFileSync} from '@alwatr/util/node';
+import {readJsonFileSync, writeJsonFile, writeJsonFileSync} from '@alwatr/util/node.js';
 import exitHook from 'exit-hook';
 
 import type {AlwatrStorageEngineConfig} from './type.js';
@@ -376,7 +376,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     if (this.hasUnsavedChanges) {
       this.hasUnsavedChanges = false;
       this._storage.meta.reversion++;
-      return (sync ? writeJsonFile : writeJsonFileSync)(this.storagePath, this._storage, this.saveBeautiful ? 2 : 0);
+      return (sync ? writeJsonFileSync : writeJsonFile)(this.storagePath, this._storage, this.saveBeautiful ? 2 : 0);
     }
   }
 

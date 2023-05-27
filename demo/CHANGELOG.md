@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Bug Fixes
+
+- import util/node ([ca9e995](https://github.com/AliMD/alwatr/commit/ca9e995567ad267c1730e1c98f9dbbd03ab90331))
+
+### Features
+
+- **es-bench:** enhance with optional count and warning ([0d21ee7](https://github.com/AliMD/alwatr/commit/0d21ee79210cf86b6b94904afdac09d5698c3cec))
+- **es-bench:** test flatStr ([961fe4e](https://github.com/AliMD/alwatr/commit/961fe4edb9bb686cc5da8325726eb19099149173))
+
 # [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
 
 ### Bug Fixes

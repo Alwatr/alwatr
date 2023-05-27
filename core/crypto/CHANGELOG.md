@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Features
+
+- **crypto:** add some pre config ([4b960c5](https://github.com/AliMD/alwatr/commit/4b960c5cb3f7495c0689adcb65c62a1032ae2650))
+
+### Performance Improvements
+
+- **crypto/hash:** enhance crc generator ([ba8c4bc](https://github.com/AliMD/alwatr/commit/ba8c4bcf8f9ec9767b0bd3b6c3fd5c4f503a84dd))
+
 # [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
 
 ### Bug Fixes

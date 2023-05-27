@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Bug Fixes
+
+- **storage-client:** `get` return type ([dfe9728](https://github.com/AliMD/alwatr/commit/dfe9728b033d74f25891cab02fc19a153f760896))
+- **storage-client:** remove some extra types ([017b8ed](https://github.com/AliMD/alwatr/commit/017b8ed262cf009a7ce3eeb9c141761d3d32ba81))
+
+### Features
+
+- **storage-client:** compatibel with new storage server response types ([9b88472](https://github.com/AliMD/alwatr/commit/9b88472ce4f037010c291f5e15b2a480a8439fdf))
+
 # [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
 
 ### Bug Fixes

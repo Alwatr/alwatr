@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Bug Fixes
+
+- **fetch:** serviceRequest type ([44c1086](https://github.com/AliMD/alwatr/commit/44c10866e1c630bc3cf85b3e9be38b268b5b0c31))
+- **fetch:** userAuth in StringifyableFetchOptions ([f554b57](https://github.com/AliMD/alwatr/commit/f554b575584cb1464d48fbe8a8c4006125365853))
+
 # [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
 
 ### Bug Fixes

@@ -3,3 +3,4 @@ export * from './json.js';
 export * from './local-storage.js';
 export * from './client-id.js';
 export * from './polyfill.js';
+export * from './flat-str.js';

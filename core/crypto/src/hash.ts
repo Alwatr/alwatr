@@ -6,7 +6,7 @@ import type {HashGeneratorConfig} from './type.js';
  * Secure **self-validate** hash generator.
  */
 export class AlwatrHashGenerator {
-  constructor(public config: HashGeneratorConfig = {algorithm: 'sha1', encoding: 'base64url', crcLength: 8}) {}
+  constructor(public config: HashGeneratorConfig) {}
 
   /**
    * Generate simple hash from random data.
@@ -51,7 +51,7 @@ export class AlwatrHashGenerator {
    * Generate crc hash.
    */
   _generateCrc(data: BinaryLike): string {
-    const crc = this.generate(data);
+    const crc = createHash('sha1').update(data).digest(this.config.encoding);
     return this.config.crcLength == null || this.config.crcLength < 1 ? crc : crc.substring(0, this.config.crcLength);
   }
 
