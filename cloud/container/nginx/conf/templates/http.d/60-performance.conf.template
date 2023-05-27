@@ -8,15 +8,15 @@ ignore_invalid_headers on;
 
 # File Cache
 # Removed from the cache if it has not been accessed during `inactive` time
-open_file_cache          max=10000 inactive=$NGINX_OPEN_FILE_CACHE_INACTIVE;
+open_file_cache          $NGINX_OPEN_FILE_CACHE;
 # Sets a time after which open_file_cache elements should be validated.
 open_file_cache_valid    $NGINX_OPEN_FILE_CACHE_VALID;
 # Sets the minimum number of file accesses during the period configured by the inactive parameter
-open_file_cache_min_uses 1;
+open_file_cache_min_uses $NGINX_OPEN_FILE_CACHE_MIN_USES;
 # Enables or disables caching of file lookup errors by open_file_cache.
 open_file_cache_errors   on;
 # We need `open_log_file_cache` becouse https://serverfault.com/questions/547421
-open_log_file_cache      max=10000 inactive=60s min_uses=2;
+open_log_file_cache      max=10000 inactive=30s valid=1m min_uses=2;
 
 # During which a keep-alive client connection will stay open on the server side.
 keepalive_timeout   300;
@@ -25,3 +25,7 @@ keepalive_timeout   300;
 keepalive_requests  1000;
 
 types_hash_max_size 2048;
+
+# The output_buffers directive in nginx controls the size and number of buffers used to store the response data before it is sent to the client.
+# Increasing the number of buffers can improve performance for clients with slow connections, while decreasing the number of buffers can reduce memory usage for clients with fast connections.
+output_buffers $NGINX_OUTPUT_BUFFERS;
