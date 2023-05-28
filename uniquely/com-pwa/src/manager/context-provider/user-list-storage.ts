@@ -8,7 +8,7 @@ import type {ComUserIncOrder} from '@alwatr/type/customer-order-management.js';
 
 export const userListIncOrderStorageContextConsumer =
   serverContextConsumer<AlwatrServiceResponseSuccessWithMeta<Record<string, ComUserIncOrder>>>(
-      'user_list_storage_context',
+      'admin_order_list_storage_context',
       {
         ...config.fetchContextOptions,
         url: config.serverContext.adminUserListIncOrder,
