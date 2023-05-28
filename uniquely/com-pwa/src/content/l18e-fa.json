@@ -10,14 +10,6 @@
     "loading": "درحال بارگذاری...",
     "cancel": "لغو",
     "invalid_phone_number": "شماره تلفن صحیح نمی‌باشد.",
-    "phone_number": "شماره تلفن",
-    "province": "استان",
-    "city": "شهر",
-    "order_id": "کد سفارش",
-    "order_list": "لیست سفارشات",
-    "order_status": "وضعیت سفارش",
-    "order_date": "تاریخ ثبت سفارش",
-    "empty_order_list": "سفارشی ثبت نشده است.",
 
     "page_404_not_found": "پیدا نشد!",
     "page_404_under_develope": "دردست ساخت",
@@ -52,7 +44,17 @@
     "page_order_order_not_valid_message": "لطفا مقادیر سفارش رو بازبینی و اصلاح کنید.",
     "order_summary_palette_price": "هزینه پالت (${paletteCount} عدد)",
 
-    "page_order_tracking_headline": "پیگیری سفارش",
+    "page_admin_order_list_headline": "لیست سفارشات کاربران",
+    "page_admin_order_list_phone_number": "شماره تلفن",
+    "page_admin_order_list_province": "استان",
+    "page_admin_order_list_city": "شهر",
+    "page_admin_order_list_order_id": "کد سفارش",
+    "page_admin_order_list_order_list": "لیست سفارشات",
+    "page_admin_order_list_order_status": "وضعیت سفارش",
+    "page_admin_order_list_order_date": "تاریخ ثبت سفارش",
+    "page_admin_order_list_empty_order_list": "سفارشی ثبت نشده است.",
+
+    "page_admin_order_list_reloading_failed": "بارگذاری با خطا روبرو شد، لطفا مجدد تلاش کنید.",
 
     "page_sign_in_headline": "مدیریت سفارشات سافیت",
     "page_sign_sign_in_failed": "ورود با خطا روبرو شد! لطفا دوباره امتحان کنید.",
