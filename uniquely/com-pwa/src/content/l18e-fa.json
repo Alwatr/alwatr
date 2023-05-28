@@ -13,6 +13,11 @@
     "phone_number": "شماره تلفن",
     "province": "استان",
     "city": "شهر",
+    "order_id": "کد سفارش",
+    "order_list": "لیست سفارشات",
+    "order_status": "وضعیت سفارش",
+    "order_date": "تاریخ ثبت سفارش",
+    "empty_order_list": "سفارشی ثبت نشده است.",
 
     "page_404_not_found": "پیدا نشد!",
     "page_404_under_develope": "دردست ساخت",

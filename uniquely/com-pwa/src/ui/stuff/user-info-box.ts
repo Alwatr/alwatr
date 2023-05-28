@@ -5,13 +5,13 @@ import {
   css,
   customElement,
   html,
+  mapObject,
   property,
 } from '@alwatr/element';
-import {message} from '@alwatr/i18n';
+import {date, message} from '@alwatr/i18n';
 
-import type {ComUserIncOrder} from '@alwatr/type/customer-order-management.js';
+import type {ComUserIncOrder, Order} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
-
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -32,6 +32,30 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     .bold-text {
       font-weight: var(--ref-font-weight-bold);
     }
+
+    .detail-container {
+      flex-grow: 1;
+    }
+
+    .detail-container > * {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--sys-spacing-track);
+    }
+
+    .detail-container > *:last-child {
+      margin-bottom: 0;
+    }
+
+    .order-info {
+      /* background-color: ; */
+      cursor: pointer;
+    }
+
+    .order-info:hover {
+
+    }
   `;
 
   @property()
@@ -49,19 +73,59 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
 
     return html`
       <alwatr-icon-box .content=${userProfileIconBox}>
-        <span>${message('phone_number')}:‌
-          <span class="bold-text" dir="ltr">+${this.userIncOrder.phoneNumber}</span>
-        </span><br />
-        <span>${message('province')}:‌ ${this.userIncOrder.province}</span><br />
-        <span>${message('city')}:‌ ${this.userIncOrder.city}</span><br />
-        <div class="break"></div>
-
-        ${this._renderOrderListIncOrder()}
+        <div class="detail-container">
+          <div>
+            <span>${message('phone_number')}:‌</span>
+            <span dir="ltr">+${this.userIncOrder.phoneNumber}</span>
+          </div>
+          <div>
+            <span>${message('province')}:‌</span>
+            <span>${this.userIncOrder.province}</span>
+          </div>
+          <div>
+            <span>${message('city')}:‌</span>
+            <span>${this.userIncOrder.city}</span>
+          </div>
+          <div class="break"></div>
+        </div>
+        ${this._renderOrderBox()}
       </alwatr-icon-box>
     `;
   }
 
-  protected _renderOrderListIncOrder(): unknown {
-    return html``;
+  protected _renderOrderBox(): unknown {
+    let orderList;
+    if (Object.keys(this.userIncOrder!.orderList).length === 0) {
+      orderList = html`${message('empty_order_list')}`;
+    }
+    else {
+      orderList = mapObject(this, this.userIncOrder!.orderList, (order) => this._renderOrder(order));
+    }
+
+    return html`
+      <h3>${message('order_list')}</h3>
+      <alwatr-surface class="detail-container">
+        ${orderList}
+      </alwatr-surface>
+    `;
+  }
+
+  protected _renderOrder(order: Order): unknown {
+    return html`
+      <div class="order-info">
+        <div>
+          <span>${message('order_id')}:‌</span>
+          <span>${order.id}</span>
+        </div>
+        <div>
+          <span>${message('order_date')}:‌</span>
+          <span>${date(order.meta?.created ?? Date.now())}</span>
+        </div>
+        <div>
+          <span>${message('order_status')}:‌</span>
+          <span>${message('order_status_' + order.status)}</span>
+        </div>
+      </div>
+    `;
   }
 }
