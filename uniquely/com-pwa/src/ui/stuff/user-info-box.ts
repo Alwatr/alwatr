@@ -29,10 +29,6 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
       display: block;
     }
 
-    .bold-text {
-      font-weight: var(--ref-font-weight-bold);
-    }
-
     .detail-container {
       flex-grow: 1;
     }
@@ -48,13 +44,22 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
       margin-bottom: 0;
     }
 
+    .order-container {
+      padding: 0;
+    }
+
     .order-info {
-      /* background-color: ; */
+      padding: calc(2 * var(--sys-spacing-track));
       cursor: pointer;
     }
 
     .order-info:hover {
+      background-color: var(--sys-color-surface-variant);
+      color: var(--sys-color-on-surface-variant);
+    }
 
+    .empty-order {
+      padding: calc(2 * var(--sys-spacing-track));
     }
   `;
 
@@ -75,15 +80,15 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
       <alwatr-icon-box .content=${userProfileIconBox}>
         <div class="detail-container">
           <div>
-            <span>${message('phone_number')}:‌</span>
+            <span>${message('page_admin_order_list_phone_number')}:‌</span>
             <span dir="ltr">+${this.userIncOrder.phoneNumber}</span>
           </div>
           <div>
-            <span>${message('province')}:‌</span>
+            <span>${message('page_admin_order_list_province')}:‌</span>
             <span>${this.userIncOrder.province}</span>
           </div>
           <div>
-            <span>${message('city')}:‌</span>
+            <span>${message('page_admin_order_list_city')}:‌</span>
             <span>${this.userIncOrder.city}</span>
           </div>
           <div class="break"></div>
@@ -96,15 +101,15 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
   protected _renderOrderBox(): unknown {
     let orderList;
     if (Object.keys(this.userIncOrder!.orderList).length === 0) {
-      orderList = html`${message('empty_order_list')}`;
+      orderList = html`<span class="empty-order">${message('page_admin_order_list_empty_order_list')}<span>`;
     }
     else {
       orderList = mapObject(this, this.userIncOrder!.orderList, (order) => this._renderOrder(order));
     }
 
     return html`
-      <h3>${message('order_list')}</h3>
-      <alwatr-surface class="detail-container">
+      <h3>${message('page_admin_order_list_order_list')}</h3>
+      <alwatr-surface class="order-container detail-container">
         ${orderList}
       </alwatr-surface>
     `;
@@ -114,15 +119,15 @@ export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     return html`
       <div class="order-info">
         <div>
-          <span>${message('order_id')}:‌</span>
+          <span>${message('page_admin_order_list_order_id')}:‌</span>
           <span>${order.id}</span>
         </div>
         <div>
-          <span>${message('order_date')}:‌</span>
+          <span>${message('page_admin_order_list_order_date')}:‌</span>
           <span>${date(order.meta?.created ?? Date.now())}</span>
         </div>
         <div>
-          <span>${message('order_status')}:‌</span>
+          <span>${message('page_admin_order_list_order_status')}:‌</span>
           <span>${message('order_status_' + order.status)}</span>
         </div>
       </div>
