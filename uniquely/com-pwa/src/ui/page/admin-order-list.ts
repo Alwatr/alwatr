@@ -9,8 +9,8 @@ import {
   state,
   ScheduleUpdateToFrameMixin,
   when,
-  type PropertyValues,
   mapObject,
+  type PropertyValues,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
 import {eventListener} from '@alwatr/signal';
@@ -58,7 +58,7 @@ export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
       margin-bottom: var(--sys-spacing-track);
     }
 
-    .reloadingFailed {
+    .reloading-failed {
       margin-bottom: var(--sys-spacing-track);
     }
   `;
@@ -69,16 +69,16 @@ export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
   override connectedCallback(): void {
     super.connectedCallback();
 
-    // prettier-ignore
     this._addSignalListeners(userListIncOrderStorageContextConsumer.subscribe(() => {
       this.gotState = userListIncOrderStorageContextConsumer.getState().target;
     }, {receivePrevious: 'NextCycle'}));
 
-    this._addSignalListeners(
-        eventListener.subscribe(buttons.retry.clickSignalId, () => {
-          userListIncOrderStorageContextConsumer.request();
-        }),
-    );
+    this._addSignalListeners(eventListener.subscribe(buttons.retry.clickSignalId, () => {
+      userListIncOrderStorageContextConsumer.request();
+    }));
+    this._addSignalListeners(eventListener.subscribe(buttons.reloadAdminOrderListStorage.clickSignalId, () => {
+      userListIncOrderStorageContextConsumer.request();
+    }));
   }
 
   protected override update(changedProperties: PropertyValues<this>): void {
@@ -130,9 +130,11 @@ export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
       reloading: 'complete',
       complete: () => {
         topAppBarContextProvider.setValue({
-          headlineKey: 'page_order_list_headline',
+          headlineKey: 'page_admin_order_list_headline',
           startIcon: buttons.backToHome,
-          endIconList: [buttons.newOrder, {...buttons.reloadOrderStorage, disabled: this.gotState === 'reloading'}],
+          endIconList: [
+            buttons.newOrder, {...buttons.reloadAdminOrderListStorage, disabled: this.gotState === 'reloading'},
+          ],
         });
         return html`
           ${when(this.gotState === 'reloadingFailed', this._renderReloadingFailed)}
@@ -144,21 +146,21 @@ export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
 
   private _renderUsersList(): unknown {
     const userStorage = userListIncOrderStorageContextConsumer.getResponse();
-    this._logger.logMethodArgs?.('_renderUsersList', {userStorage});
+    this._logger.logMethodArgs?.('renderUsersList', {userStorage});
 
     return mapObject(
         this,
         userStorage?.data,
         (userIncOrder) => {
-          // if (userIncOrder.fullName === 'Alwatr Admin') return;
+          if (userIncOrder.fullName === 'Alwatr Admin') return;
           return html`<alwatr-user-info-box .userIncOrder=${userIncOrder}></alwatr-order-info-box>`;
         },
     );
   }
 
   private _renderReloadingFailed(): unknown {
-    return html`<alwatr-surface tinted class="reloadingFailed">
-      ${message('page_user_list_reloading_failed')}
+    return html`<alwatr-surface tinted class="reloading-failed">
+      ${message('page_admin_order_list_reloading_failed')}
     </alwatr-surface>`;
   }
 }
