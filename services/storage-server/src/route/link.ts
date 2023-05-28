@@ -19,8 +19,8 @@ nanoServer.route('GET', '/link', async (connection) => {
   });
 
   const base = config.storage.path;
-  src = resolve(base, src + '.json');
-  dest = resolve(base, dest + '.json');
+  src = resolve(base, src);
+  dest = resolve(base, dest);
 
   if (!src.startsWith(base) || !dest.startsWith(base)) {
     // Prevent to access outside storage path by '../' in address.
