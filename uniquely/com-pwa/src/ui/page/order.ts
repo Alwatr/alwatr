@@ -43,7 +43,7 @@ import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-page-order': AlwatrPageNewOrder;
+    'alwatr-page-order': AlwatrPageOrder;
   }
 }
 
@@ -51,7 +51,7 @@ declare global {
  * Alwatr Customer Order Management Order Form Page
  */
 @customElement('alwatr-page-order')
-export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
+export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
   static override styles: CSSResultGroup = css`
     :host {
       display: flex;
