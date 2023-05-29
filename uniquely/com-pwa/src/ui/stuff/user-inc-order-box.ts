@@ -68,11 +68,9 @@ export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
   override render(): unknown {
     this._logger.logMethod?.('render');
-    if (this.userIncOrder == null) return;
-
     const userProfileIconBox: IconBoxContent = {
       tinted: 1,
-      headline: this.userIncOrder.fullName,
+      headline: this.userIncOrder?.fullName ?? '',
       icon: 'person-circle-outline',
     };
 
@@ -81,17 +79,16 @@ export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseE
         <div class="detail-container">
           <div>
             <span>${message('page_admin_order_list_phone_number')}:‌</span>
-            <span dir="ltr">+${this.userIncOrder.phoneNumber}</span>
+            <span dir="ltr">+${this.userIncOrder?.phoneNumber}</span>
           </div>
           <div>
             <span>${message('page_admin_order_list_province')}:‌</span>
-            <span>${this.userIncOrder.province}</span>
+            <span>${this.userIncOrder?.province}</span>
           </div>
           <div>
             <span>${message('page_admin_order_list_city')}:‌</span>
-            <span>${this.userIncOrder.city}</span>
+            <span>${this.userIncOrder?.city}</span>
           </div>
-          <div class="break"></div>
         </div>
         ${this._renderOrderBox()}
       </alwatr-icon-box>
@@ -104,18 +101,18 @@ export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseE
       orderList = html`<span class="empty-order">${message('page_admin_order_list_empty_order_list')}<span>`;
     }
     else {
-      orderList = mapObject(this, this.userIncOrder!.orderList, (order) => this._renderOrder(order));
+      orderList = mapObject(this, this.userIncOrder!.orderList, (order) => this._renderOrderInfo(order));
     }
 
     return html`
-      <h3>${message('page_admin_order_list_order_list')}</h3>
-      <alwatr-surface class="order-container detail-container">
+      <h3>${message('page_admin_order_list_order_list')}:</h3>
+      <alwatr-surface class="detail-container order-container">
         ${orderList}
       </alwatr-surface>
     `;
   }
 
-  protected _renderOrder(order: Order): unknown {
+  protected _renderOrderInfo(order: Order): unknown {
     return html`
       <div class="order-info">
         <div>
@@ -124,7 +121,7 @@ export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseE
         </div>
         <div>
           <span>${message('page_admin_order_list_order_date')}:‌</span>
-          <span>${date(order.meta?.created ?? Date.now())}</span>
+          <span>${order.meta?.created ? date(order.meta?.created) : ''}</span>
         </div>
         <div>
           <span>${message('page_admin_order_list_order_status')}:‌</span>
