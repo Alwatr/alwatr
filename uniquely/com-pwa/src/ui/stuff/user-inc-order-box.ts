@@ -9,6 +9,7 @@ import {
   property,
 } from '@alwatr/element';
 import {date, message} from '@alwatr/i18n';
+import {url} from '@alwatr/router';
 
 import type {ComUserIncOrder, Order} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
@@ -98,7 +99,9 @@ export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseE
   protected _renderOrderBox(): unknown {
     let orderList;
     if (Object.keys(this.userIncOrder!.orderList).length === 0) {
-      orderList = html`<span class="empty-order">${message('page_admin_order_list_empty_order_list')}<span>`;
+      orderList = html`<span class="empty-order"
+        >${message('page_admin_order_list_empty_order_list')}<span></span
+      ></span>`;
     }
     else {
       orderList = mapObject(this, this.userIncOrder!.orderList, (order) => this._renderOrderInfo(order));
@@ -106,28 +109,26 @@ export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
     return html`
       <h3>${message('page_admin_order_list_order_list')}:</h3>
-      <alwatr-surface class="detail-container order-container">
-        ${orderList}
-      </alwatr-surface>
+      <alwatr-surface class="detail-container order-container"> ${orderList} </alwatr-surface>
     `;
   }
 
   protected _renderOrderInfo(order: Order): unknown {
     return html`
-      <div class="order-info">
+      <a class="order-info" href=${url({sectionList: ['admin-order', this.userIncOrder!.id, order.id]})}>
         <div>
-          <span>${message('page_admin_order_list_order_id')}:‌</span>
+          <span>${message('page_admin_order_list_order_id')}:</span>
           <span>${order.id}</span>
         </div>
         <div>
-          <span>${message('page_admin_order_list_order_date')}:‌</span>
+          <span>${message('page_admin_order_list_order_date')}:</span>
           <span>${order.meta?.created ? date(order.meta?.created) : ''}</span>
         </div>
         <div>
-          <span>${message('page_admin_order_list_order_status')}:‌</span>
+          <span>${message('page_admin_order_list_order_status')}:</span>
           <span>${message('order_status_' + order.status)}</span>
         </div>
-      </div>
+      </a>
     `;
   }
 }
