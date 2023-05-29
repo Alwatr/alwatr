@@ -27,7 +27,7 @@
     "ok_set_content_message": "محتوا با موفقیت ثبت شد.",
     "send_get_content_message": "روز مورد نظر خود را برای دریافت محتوا ارسال کنید.",
     "not_found_content_message": "محتوایی برای روز مورد نظر یافت نشد!",
-    "cancel_notify_message": "برای لغو ارسال پیام، /reset را ارسال کنید.",
+    "cancel_notify_message": "برای لغو ارسال پیام، /cancel را ارسال کنید.",
     "send_next_day_countdown_day": "روزشمار ${day} روز مانده به غدیر این محتوا می‌باشد.",
     "send_get_content_null_message": "محتوایی برای ${day} روز مانده به غدیر (امروز) یافت نشد!",
     "get_content_null": "محتوایی برای ${day} روز مانده به غدیر یافت نشد!",

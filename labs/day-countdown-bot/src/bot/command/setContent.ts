@@ -28,7 +28,7 @@ async function setContentConversationHandler(update: UpdateType<'message'>): Pro
   const conversation = await conversationStorageClient.get<SetContentConversationContext>(chatId);
   if (conversation == null || conversation.name !== 'set-content') return false;
 
-  if (text === '/reset') {
+  if (text === '/cancel') {
     await conversationStorageClient.delete(chatId);
     await bot.api.sendMessage(chatId, message('reset_message'), {
       message_thread_id: messageThreadId,
