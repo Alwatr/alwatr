@@ -32,7 +32,7 @@ async function sendDayCountdownContent(day: number): Promise<void> {
         chat_id: chat.id,
         from_chat_id: content.chatId,
         message_id: content.messageId,
-        message_thread_id: chat.chatDetail.messageThreadId as number | undefined,
+        message_thread_id: chat.chatDetail!.messageThreadId as number | undefined,
       });
     }
     catch {
@@ -52,6 +52,7 @@ function scheduleDailyTask(targetTime: Date, callback: () => MaybePromise<void>)
     timeToWait = targetTime.getTime() - now.getTime();
   }
 
+  logger.logProperty?.('scheduleDailyTask', {targetTime, timeToWait: (timeToWait / 60 / 1000) + 'm'});
   setTimeout(async () => {
     scheduleDailyTask(targetTime, callback);
     await callback();
@@ -61,7 +62,7 @@ function scheduleDailyTask(targetTime: Date, callback: () => MaybePromise<void>)
 export async function dayCountdown(): Promise<void> {
   const targetTime = new Date();
   targetTime.setHours(config.bot.notifyTimestamp, 0, 0, 0);
-  targetTime.setHours(18, 48, 0, 0);
+  targetTime.setHours(9, 0, 0, 0);
   scheduleDailyTask(targetTime, async () => {
     let day = dateDistance(ghadir.valueOf());
     if (day < 1) return; // TODO: notify to admin for remove it.
@@ -72,12 +73,3 @@ export async function dayCountdown(): Promise<void> {
     });
   });
 }
-
-// tmp
-bot.defineCommandHandler('dayCountdown', async (context) => {
-  let day = dateDistance(ghadir.valueOf());
-  if (day < 1) return;
-
-  await sendDayCountdownContent(day);
-  await sendContent(--day, context.chatId, context.messageThreadId);
-});

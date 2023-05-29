@@ -1,5 +1,5 @@
 import {logger} from '../../config.js';
-import {settingInlineKeyboard, subscribedSettingInlineKeyboard} from '../../content/buttons.js';
+import {NotStartInlineKeyboard, subscribedStartInlineKeyboard} from '../../content/buttons.js';
 import {message} from '../../director/l18e-loader.js';
 import {bot} from '../../lib/bot.js';
 import {toggleSubscribe} from '../../util/chat.js';
@@ -13,7 +13,8 @@ bot.defineCallbackQueryHandler('toggleSubscribe', async (context) => {
   const isSubscribed = await toggleSubscribe(chatId, messageThreadId);
 
   if (isSubscribed == null) {
-    context.answerCallbackQuery({text: message('sign_in_first_message'), show_alert: true});
+    logger.error('command-toggleSubscribe', 'chat_not_found');
+    return;
   }
   else if (isSubscribed === true) {
     context.answerCallbackQuery({text: message('subscribed_successfully_message')});
@@ -26,7 +27,7 @@ bot.defineCallbackQueryHandler('toggleSubscribe', async (context) => {
     chat_id: chatId,
     message_id: messageId,
     reply_markup: {
-      inline_keyboard: isSubscribed ? subscribedSettingInlineKeyboard : settingInlineKeyboard,
+      inline_keyboard: isSubscribed ? subscribedStartInlineKeyboard : NotStartInlineKeyboard,
     },
   });
 });

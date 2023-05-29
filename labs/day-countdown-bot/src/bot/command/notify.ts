@@ -28,9 +28,9 @@ async function notifyConversationHandler(update: UpdateType<'message'>): Promise
   const conversation = await conversationStorageClient.get<NotifyConversationContext>(chatId);
   if (conversation == null || conversation.name !== 'notify') return false;
 
-  if (text === '/reset') {
+  if (text === '/cancel') {
     await conversationStorageClient.delete(chatId);
-    await bot.api.sendMessage(chatId, message('reset_notify_message'), {
+    await bot.api.sendMessage(chatId, message('cancel_notify_message'), {
       message_thread_id: messageThreadId,
       reply_to_message_id: messageId,
     });
@@ -55,9 +55,18 @@ async function notifyConversationHandler(update: UpdateType<'message'>): Promise
       const notifyMessageId = conversation.context!.notifyMessageId!;
       let i = 0;
 
-
       await actionAllChat(async (chat) => {
-        await bot.api.copyMessage({chat_id: chat.id, from_chat_id: chatId, message_id: notifyMessageId});
+        let messageThreadId;
+        if (chat.chatDetail?.type === 'supergroup') {
+          messageThreadId = chat.chatDetail?.messageThreadId;
+        }
+
+        await bot.api.copyMessage({
+          chat_id: chat.id,
+          from_chat_id: chatId,
+          message_id: notifyMessageId,
+          message_thread_id: messageThreadId,
+        });
         i++;
       });
 
@@ -75,7 +84,7 @@ async function notifyConversationHandler(update: UpdateType<'message'>): Promise
   }
   else {
     // error
-    logger.error('notifyConversationHandler', chatId, conversation);
+    logger.error('notifyConversationHandler', 'unhandled_state', chatId, conversation);
     await conversationStorageClient.delete(chatId);
   }
 

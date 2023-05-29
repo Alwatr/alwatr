@@ -36,16 +36,16 @@ async function setContentConversationHandler(update: UpdateType<'message'>): Pro
     });
   }
   else if (conversation.state === 'getMessage') {
-    await bot.api.sendMessage(chatId, message('set_day_set_content_message'), {
-      reply_to_message_id: messageId,
-      message_thread_id: messageThreadId,
-    });
     await conversationStorageClient.set<SetContentConversationContext>({
       ...conversation,
       context: {
         contentMessageId: messageId,
       },
       state: 'getDay',
+    });
+    await bot.api.sendMessage(chatId, message('set_day_set_content_message'), {
+      reply_to_message_id: messageId,
+      message_thread_id: messageThreadId,
     });
   }
   else if (conversation.state === 'getDay') {

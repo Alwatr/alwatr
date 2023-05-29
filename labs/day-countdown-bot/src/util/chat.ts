@@ -17,12 +17,12 @@ export async function toggleSubscribe(chatId: number, messageThreadId?: number):
   if (chat == null) return null;
 
   chat.isSubscribed = !chat.isSubscribed;
-  chat.chatDetail.messageThreadId = messageThreadId;
+  chat.chatDetail!.messageThreadId = messageThreadId;
   chatStorageClient.set<DayCountdownChat>(chat);
   return chat.isSubscribed;
 }
 
-export function addChat(chat: Chat, messageThreadId?: number): ChatDetail | null {
+export async function addChat(chat: Chat, messageThreadId?: number): Promise<ChatDetail | null> {
   let chatDetail: ChatDetail | null = null;
 
   if (chat.type === 'group') {
@@ -51,7 +51,7 @@ export function addChat(chat: Chat, messageThreadId?: number): ChatDetail | null
     return null;
   }
 
-  chatStorageClient.set<DayCountdownChat>({
+  await chatStorageClient.set<DayCountdownChat>({
     chatDetail: chatDetail as ChatDetail,
     id: chat.id + '',
     conversationRecord: {},

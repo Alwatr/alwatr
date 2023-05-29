@@ -33,7 +33,7 @@ export class AlwatrTelegramApi {
       option: SendMessageOption = {},
   ): Promise<Message.TextMessage | null> {
     this.logger.logMethodArgs?.('sendMessage', {text, option});
-    this.sendChatAction({chat_id: chatId, action: 'typing'});
+    this.sendChatAction({chat_id: chatId, action: 'typing', message_thread_id: option.message_thread_id});
 
     text = this.escapeText(text);
     const response = await this.callApi('sendMessage', {
@@ -51,7 +51,6 @@ export class AlwatrTelegramApi {
   }
 
   async editTextMessage(option: EditTextMessageOption): Promise<Message | ApiResponse<true> | null> {
-    this.sendChatAction({chat_id: option.chat_id, action: 'typing'});
     this.logger.logMethodArgs?.('editTextMessage', {option});
 
     option.text = this.escapeText(option.text);
@@ -86,7 +85,7 @@ export class AlwatrTelegramApi {
       option: CopyMessageOption,
   ): Promise<ApiResponse<{message_id: number}> | null> {
     this.logger.logMethodArgs?.('copyMessage', {option});
-    this.sendChatAction({chat_id: option.chat_id, action: 'typing'});
+    this.sendChatAction({chat_id: option.chat_id, action: 'typing', message_thread_id: option.message_thread_id});
 
     const response = await this.callApi('copyMessage', {
       ...option,

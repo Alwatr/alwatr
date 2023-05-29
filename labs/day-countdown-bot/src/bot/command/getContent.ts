@@ -26,7 +26,6 @@ export async function sendContent(day: number, chatId: number, chatThreadId?: nu
   logger.logMethodArgs?.('sendContent', {day, chatId, chatThreadId});
   const content = await contentStorageClient.get(day + '', 'ghadir');
   if (content == null) {
-    logger.accident('sendContentToAdmin', 'content_is_null', 'Content is null', day);
     await bot.api.sendMessage(chatId, message('get_content_null').replace('${day}', day + ''), {
       message_thread_id: chatThreadId,
     });
@@ -35,7 +34,6 @@ export async function sendContent(day: number, chatId: number, chatThreadId?: nu
   }
 
   // else
-
   const response = await bot.api.copyMessage({
     chat_id: chatId,
     from_chat_id: content.chatId,
@@ -44,7 +42,6 @@ export async function sendContent(day: number, chatId: number, chatThreadId?: nu
   });
 
   if (response?.ok !== true) {
-    logger.accident('sendContentToAdmin', 'copy_message_error', 'Copy Message Error', day, chatId);
     if (response?.error_code === 400) {
       await bot.api.sendMessage(chatId, message('send_content_message_not_exists').replace('${day}', day + ''), {
         message_thread_id: chatThreadId,
