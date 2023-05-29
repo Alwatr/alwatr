@@ -21,7 +21,7 @@ export const patchUser = async (user: ComUser): Promise<ComUser> => {
   await touchUserOrder(user.id);
 
   await storageClient.link(
-      config.secureStorage.userDir.replace('${userId}', user.id),
+      config.secureStorage.userDir.replace('${userId}', user.id) + '/', // append '/' to detect as folder
       config.publicStorage.userDir.replace('${userToken}', user.token),
   );
 
