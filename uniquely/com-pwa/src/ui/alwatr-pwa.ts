@@ -34,6 +34,7 @@ class AlwatrPwa extends AlwatrPwaElement {
       '_404': this._renderPage404,
       'order-list': this._renderPageOrderList,
       'admin-order-list': this._renderPageAdminOrderList,
+      'admin-order': this._renderPageAdminOrder,
       'order': this._renderPageOrder,
       'sign-in': this._renderPageSignIn,
       's': this._saveLinkPass,
@@ -65,6 +66,17 @@ class AlwatrPwa extends AlwatrPwaElement {
     import('./page/admin-order-list.js');
     topAppBarContextProvider.setValue({headlineKey: 'loading'});
     return html`<alwatr-page-admin-order-list unresolved>...</alwatr-page-admin-order-list>`;
+  }
+
+  protected _renderPageAdminOrder(routeContext: RouteContext): unknown {
+    import('./page/admin-order.js');
+    topAppBarContextProvider.setValue({headlineKey: 'loading'});
+    return html`<alwatr-page-admin-order
+      .userId=${routeContext.sectionList[1]}
+      .orderId=${routeContext.sectionList[2]}
+      unresolved
+      >...</alwatr-page-admin-order
+    >`;
   }
 
   protected _renderPageOrder(routeContext: RouteContext): unknown {
@@ -101,11 +113,7 @@ class AlwatrPwa extends AlwatrPwaElement {
       return;
     }
     // else
-    if (
-      routeId !== 'sign-in' &&
-      routeId !== 's' &&
-      routeId !== ''
-    ) {
+    if (routeId !== 'sign-in' && routeId !== 's' && routeId !== '') {
       redirect({sectionList: ['sign-in']});
     }
   }
