@@ -93,58 +93,68 @@ export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
     return userListIncOrderStorageContextConsumer.fsm.render({
       initial: 'onlineLoading',
       offlineLoading: 'onlineLoading',
-      onlineLoading: () => {
-        topAppBarContextProvider.setValue({
-          headlineKey: 'loading',
-          startIcon: buttons.backToHome,
-        });
-        const content: IconBoxContent = {
-          tinted: 1,
-          icon: 'cloud-download-outline',
-          headline: message('loading'),
-        };
-        return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
-      },
-
-      loadingFailed: () => {
-        topAppBarContextProvider.setValue({
-          headlineKey: 'page_order_list_headline',
-          startIcon: buttons.backToHome,
-          endIconList: [buttons.reloadOrderStorage],
-        });
-        const content: IconBoxContent = {
-          icon: 'cloud-offline-outline',
-          tinted: 1,
-          headline: message('fetch_failed_headline'),
-          description: message('fetch_failed_description'),
-        };
-        return html`
-          <alwatr-icon-box .content=${content}></alwatr-icon-box>
-          <div>
-            <alwatr-button .content=${buttons.retry}></alwatr-button>
-          </div>
-        `;
-      },
-
+      onlineLoading: this._renderStateLoading,
+      loadingFailed: this._renderStateLoadingFailed,
       reloadingFailed: 'complete',
       reloading: 'complete',
-      complete: () => {
-        topAppBarContextProvider.setValue({
-          headlineKey: 'page_admin_order_list_headline',
-          startIcon: buttons.backToHome,
-          endIconList: [
-            buttons.newOrder, {...buttons.reloadAdminOrderListStorage, disabled: this.gotState === 'reloading'},
-          ],
-        });
-        return html`
-          ${when(this.gotState === 'reloadingFailed', this._renderReloadingFailed)}
-          ${this._renderUsersList()}
-        `;
-      },
+      complete: this._renderStateComplete,
     });
   }
 
-  private _renderUsersList(): unknown {
+  protected _renderStateLoading(): unknown {
+    this._logger.logMethod?.('_renderStateLoading');
+
+    topAppBarContextProvider.setValue({
+      headlineKey: 'loading',
+      startIcon: buttons.backToHome,
+    });
+    const content: IconBoxContent = {
+      tinted: 1,
+      icon: 'cloud-download-outline',
+      headline: message('loading'),
+    };
+    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+  }
+
+  protected _renderStateLoadingFailed(): unknown {
+    this._logger.logMethod?.('_renderStateLoadingFailed');
+
+    topAppBarContextProvider.setValue({
+      headlineKey: 'page_order_list_headline',
+      startIcon: buttons.backToHome,
+      endIconList: [buttons.reloadOrderStorage],
+    });
+    const content: IconBoxContent = {
+      icon: 'cloud-offline-outline',
+      tinted: 1,
+      headline: message('fetch_failed_headline'),
+      description: message('fetch_failed_description'),
+    };
+    return html`
+      <alwatr-icon-box .content=${content}></alwatr-icon-box>
+      <div>
+        <alwatr-button .content=${buttons.retry}></alwatr-button>
+      </div>
+    `;
+  }
+
+  protected _renderStateComplete(): unknown {
+    this._logger.logMethod?.('_renderStateComplete');
+
+    topAppBarContextProvider.setValue({
+      headlineKey: 'page_admin_order_list_headline',
+      startIcon: buttons.backToHome,
+      endIconList: [
+        buttons.newOrder, {...buttons.reloadAdminOrderListStorage, disabled: this.gotState === 'reloading'},
+      ],
+    });
+    return html`
+      ${when(this.gotState === 'reloadingFailed', this._render_reloadingFailed)}
+      ${this._render_usersList()}
+    `;
+  }
+
+  private _render_usersList(): unknown {
     const userStorage = userListIncOrderStorageContextConsumer.getResponse();
     this._logger.logMethodArgs?.('renderUsersList', {userStorage});
 
@@ -158,7 +168,7 @@ export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
     );
   }
 
-  private _renderReloadingFailed(): unknown {
+  private _render_reloadingFailed(): unknown {
     return html`<alwatr-surface tinted class="reloading-failed">
       ${message('page_admin_order_list_reloading_failed')}
     </alwatr-surface>`;
