@@ -15,15 +15,15 @@ import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-user-inc-order-box': AlwatrUserInfoBox;
+    'alwatr-user-inc-order-box': alwatrUserIncOrderBox;
   }
 }
 
 /**
  * Alwatr User Include Order Box Element.
  */
-@customElement('alwatr-user-info-box')
-export class AlwatrUserInfoBox extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
+@customElement('alwatr-user-inc-order-box')
+export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       display: block;

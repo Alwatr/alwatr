@@ -22,7 +22,7 @@ import {buttons} from '../../manager/buttons.js';
 import {userListIncOrderStorageContextConsumer} from '../../manager/context-provider/user-list-storage.js';
 import {topAppBarContextProvider} from '../../manager/context.js';
 import '../stuff/order-status-box.js';
-import '../stuff/user-info-box.js';
+import '../stuff/user-inc-order-box.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
@@ -153,7 +153,7 @@ export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
         userStorage?.data,
         (userIncOrder) => {
           if (userIncOrder.fullName === 'Alwatr Admin') return;
-          return html`<alwatr-user-info-box .userIncOrder=${userIncOrder}></alwatr-order-info-box>`;
+          return html`<alwatr-user-inc-order-box .userIncOrder=${userIncOrder}></alwatr-user-inc-order-box>`;
         },
     );
   }
