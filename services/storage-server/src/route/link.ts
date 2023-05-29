@@ -19,6 +19,12 @@ nanoServer.route('GET', '/link', async (connection) => {
   });
 
   const base = config.storage.path;
+
+  if (src[src.length - 1] !== '/') {
+    src += '.json';
+    dest += '.json';
+  }
+
   src = resolve(base, src);
   dest = resolve(base, dest);
 
