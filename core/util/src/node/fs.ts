@@ -235,5 +235,6 @@ export const makeLinkForce = async (src: string, dest: string): Promise<void> =>
   }
   catch (error) {
     logger.error('makeLink', 'symlink_failed', error);
+    throw error;
   }
 };
