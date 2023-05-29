@@ -17,7 +17,7 @@ import {message, number, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/icon';
 import {calcDiscount} from '@alwatr/math';
 import {redirect} from '@alwatr/router';
-import {subscribe} from '@alwatr/signal/src/core.js';
+import {eventListener} from '@alwatr/signal';
 import {AlwatrDocumentStorage} from '@alwatr/type';
 import {Order, OrderDraft, OrderItem, OrderShippingInfo, Product} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/card/icon-box.js';
@@ -169,7 +169,9 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
     super.connectedCallback();
 
     this._addSignalListeners(
-        subscribe(buttons.backToOrderList.clickSignalId, (): void => redirect({sectionList: ['admin-order-list']})),
+        eventListener.subscribe(buttons.backToOrderList.clickSignalId, (): void => {
+          redirect({sectionList: ['admin-order-list']});
+        }),
     );
   }
 
@@ -190,7 +192,7 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
       reloadingFailed: 'complete',
       reloading: 'complete',
       complete: this._renderStateComplete,
-    });
+    }, this);
   }
 
   protected _renderStateLoading(): unknown {

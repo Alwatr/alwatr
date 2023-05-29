@@ -62,6 +62,12 @@ export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseE
     .empty-order {
       padding: calc(2 * var(--sys-spacing-track));
     }
+
+    a {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
   `;
 
   @property()
@@ -79,15 +85,15 @@ export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseE
       <alwatr-icon-box .content=${userProfileIconBox}>
         <div class="detail-container">
           <div>
-            <span>${message('page_admin_order_list_phone_number')}:‌</span>
+            <span>${message('page_admin_order_list_phone_number')}: </span>
             <span dir="ltr">+${this.userIncOrder?.phoneNumber}</span>
           </div>
           <div>
-            <span>${message('page_admin_order_list_province')}:‌</span>
+            <span>${message('page_admin_order_list_province')}: </span>
             <span>${this.userIncOrder?.province}</span>
           </div>
           <div>
-            <span>${message('page_admin_order_list_city')}:‌</span>
+            <span>${message('page_admin_order_list_city')}: </span>
             <span>${this.userIncOrder?.city}</span>
           </div>
         </div>

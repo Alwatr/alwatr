@@ -98,7 +98,7 @@ export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
       reloadingFailed: 'complete',
       reloading: 'complete',
       complete: this._renderStateComplete,
-    });
+    }, this);
   }
 
   protected _renderStateLoading(): unknown {
