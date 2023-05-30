@@ -18,8 +18,6 @@ import '@alwatr/icon';
 import {calcDiscount} from '@alwatr/math';
 import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
-import {AlwatrDocumentStorage} from '@alwatr/type';
-import {Order, OrderDraft, OrderItem, OrderShippingInfo, Product} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
 
@@ -28,10 +26,10 @@ import {buttons} from '../../manager/buttons.js';
 import {productStorageContextConsumer} from '../../manager/context-provider/product-storage.js';
 import {userListIncOrderStorageContextConsumer} from '../../manager/context-provider/user-list-storage.js';
 import {scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
-import '../stuff/order-shipping-form.js';
 import '../stuff/order-status-box.js';
-import '../stuff/select-product.js';
 
+import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {Order, OrderDraft, OrderItem, OrderShippingInfo, Product} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
@@ -168,11 +166,9 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._addSignalListeners(
-        eventListener.subscribe(buttons.backToOrderList.clickSignalId, (): void => {
-          redirect({sectionList: ['admin-order-list']});
-        }),
-    );
+    this._addSignalListeners(eventListener.subscribe(buttons.backToOrderList.clickSignalId, (): void => {
+      redirect({sectionList: ['admin-order-list']});
+    }));
   }
 
   protected override update(changedProperties: PropertyValues<this>): void {

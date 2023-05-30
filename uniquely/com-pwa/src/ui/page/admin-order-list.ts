@@ -21,7 +21,6 @@ import '@alwatr/ui-kit/card/surface.js';
 import {buttons} from '../../manager/buttons.js';
 import {userListIncOrderStorageContextConsumer} from '../../manager/context-provider/user-list-storage.js';
 import {topAppBarContextProvider} from '../../manager/context.js';
-import '../stuff/order-status-box.js';
 import '../stuff/user-inc-order-box.js';
 
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
@@ -52,10 +51,6 @@ export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
 
     :host([state='reloading']) {
       opacity: var(--sys-surface-reloading-opacity);
-    }
-
-    alwatr-order-status-box {
-      margin-bottom: var(--sys-spacing-track);
     }
 
     .reloading-failed {
