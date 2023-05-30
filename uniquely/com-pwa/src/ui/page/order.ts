@@ -377,7 +377,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
         .finalPriceStorage=${this.fsm.getContext().finalPriceStorage}
         .priceStorage=${this.fsm.getContext().priceStorage}
       ></alwatr-select-product>
-      <alwatr-fab .content=${{label: message('select_product_submit_button'), icon: 'checkmark-outline'}}></alwatr-fab>
+      <alwatr-fab .content=${buttons.selectProductSubmit}></alwatr-fab>
     `;
   }
 
