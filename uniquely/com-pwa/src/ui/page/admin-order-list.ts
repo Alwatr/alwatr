@@ -70,10 +70,11 @@ export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
 
     this._addSignalListeners(eventListener.subscribe(buttons.retry.clickSignalId, () => {
       userListIncOrderStorageContextConsumer.request();
-    }));
+    }, {receivePrevious: 'No'}));
+
     this._addSignalListeners(eventListener.subscribe(buttons.reloadAdminOrderListStorage.clickSignalId, () => {
       userListIncOrderStorageContextConsumer.request();
-    }));
+    }, {receivePrevious: 'No'}));
   }
 
   protected override update(changedProperties: PropertyValues<this>): void {

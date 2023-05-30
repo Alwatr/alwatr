@@ -8,10 +8,10 @@ import {
   mapIterable,
   nothing,
   property,
-  PropertyValues,
   SignalMixin,
   state,
   UnresolvedMixin,
+  type PropertyValues,
 } from '@alwatr/element';
 import {message, number, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/icon';
@@ -179,7 +179,7 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
 
     this._addSignalListeners(eventListener.subscribe(buttons.backToAdminOrderList.clickSignalId, () => {
       redirect({sectionList: ['admin-order-list']});
-    }));
+    }, {receivePrevious: 'No'}));
 
     this._addSignalListeners(eventListener.subscribe(buttons.retry.clickSignalId, () => {
       if (userListIncOrderStorageContextConsumer.getState().target !== 'complete') {
@@ -188,12 +188,12 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
       if (productStorageContextConsumer.getState().target !== 'complete') {
         productStorageContextConsumer.request();
       }
-    }));
+    }, {receivePrevious: 'No'}));
 
     this._addSignalListeners(eventListener.subscribe(buttons.reloadAdminOrderListStorage.clickSignalId, () => {
       userListIncOrderStorageContextConsumer.request();
       productStorageContextConsumer.request();
-    }));
+    }, {receivePrevious: 'No'}));
   }
 
   protected override update(changedProperties: PropertyValues<this>): void {
