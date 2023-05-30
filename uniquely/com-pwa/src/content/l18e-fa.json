@@ -11,9 +11,9 @@
     "cancel": "لغو",
     "invalid_phone_number": "شماره تلفن صحیح نمی‌باشد.",
 
-    "page_404_not_found": "پیدا نشد!",
-    "page_404_under_develope": "دردست ساخت",
-    "page_404_under_develope_description": "برنامه نویسان سخت مشغول کارند...\nاندکی صبر سحر نزدیک است...\nدرضمن اگر رو من بزنی یک سفارش الکی ثبت می‌شود\nپس لطفا نزن!",
+    "page_404_not_found_headline": "یافت نشد",
+    "page_404_not_found": "صفحه مورد نظر یافت نشد!",
+    "page_404_not_found_description": "می‌توانید از منوی صفحه اصلی مجدداً برای پیدا کردن صفحه مورد نظر اقدام کنید.",
 
     "fetch_failed_headline": "خطا!",
     "fetch_failed_description": "خطا در اتصال به اینترنت! لطفا مجدد تلاش کنید.",
