@@ -166,7 +166,17 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._addSignalListeners(eventListener.subscribe(buttons.backToOrderList.clickSignalId, (): void => {
+    this._addSignalListeners(userListIncOrderStorageContextConsumer.subscribe(() => {
+      this.gotState = userListIncOrderStorageContextConsumer.getState().target;
+    }, {receivePrevious: 'NextCycle'}));
+
+    this._addSignalListeners(productStorageContextConsumer.subscribe(() => {
+      if (productStorageContextConsumer.getState().target === 'complete') {
+        this.requestUpdate();
+      }
+    }, {receivePrevious: 'NextCycle'}));
+
+    this._addSignalListeners(eventListener.subscribe(buttons.backToAdminOrderList.clickSignalId, () => {
       redirect({sectionList: ['admin-order-list']});
     }));
   }
@@ -247,16 +257,23 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
       startIcon: buttons.backToOrderList,
     });
 
-    const productStorage = productStorageContextConsumer.getResponse();
-
-    if (this.userId == null || this.orderId == null || productStorage == null) {
+    if (this.userId == null || this.orderId == null) {
       return this._render_notFound();
     }
-
     const order = userListIncOrderStorageContextConsumer.getResponse()?.data[this.userId]?.orderList[this.orderId];
     if (order == null) {
       return this._render_notFound();
     }
+
+    const productStorageStateTarget = productStorageContextConsumer.getState().target;
+    if (productStorageStateTarget === 'reloadingFailed') {
+      return this._renderStateLoadingFailed();
+    }
+    else if (productStorageStateTarget !== 'complete') {
+      return this._renderStateLoading();
+    }
+    const productStorage = productStorageContextConsumer.getResponse();
+
 
     return [
       this._render_status(order),
