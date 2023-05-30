@@ -156,9 +156,8 @@ export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
     return mapObject(
         this,
         userStorage?.data,
-        (userIncOrder) => {
-          if (userIncOrder.fullName === 'Alwatr Admin') return;
-          return html`<alwatr-user-inc-order-box .userIncOrder=${userIncOrder}></alwatr-user-inc-order-box>`;
+        (user) => {
+          return html`<alwatr-user-inc-order-box .userIncOrder=${user}></alwatr-user-inc-order-box>`;
         },
     );
   }
