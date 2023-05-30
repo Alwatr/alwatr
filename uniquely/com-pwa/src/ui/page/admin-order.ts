@@ -18,6 +18,7 @@ import '@alwatr/icon';
 import {calcDiscount} from '@alwatr/math';
 import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
+import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
 
@@ -179,10 +180,27 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
     this._addSignalListeners(eventListener.subscribe(buttons.backToAdminOrderList.clickSignalId, () => {
       redirect({sectionList: ['admin-order-list']});
     }));
+
+    this._addSignalListeners(eventListener.subscribe(buttons.retry.clickSignalId, () => {
+      if (userListIncOrderStorageContextConsumer.getState().target !== 'complete') {
+        userListIncOrderStorageContextConsumer.request();
+      }
+      if (productStorageContextConsumer.getState().target !== 'complete') {
+        productStorageContextConsumer.request();
+      }
+    }));
+
+    this._addSignalListeners(eventListener.subscribe(buttons.reloadAdminOrderListStorage.clickSignalId, () => {
+      userListIncOrderStorageContextConsumer.request();
+      productStorageContextConsumer.request();
+    }));
   }
 
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
+    if (changedProperties.has('gotState')) {
+      this.setAttribute('state', this.gotState);
+    }
     if (changedProperties.has('orderId')) {
       scrollToTopCommand.request({smooth: true});
     }
@@ -207,6 +225,7 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
     topAppBarContextProvider.setValue({
       headlineKey: 'loading',
       startIcon: buttons.backToAdminOrderList,
+      endIconList: [buttons.reloadAdminOrderListStorage],
     });
     const content: IconBoxContent = {
       tinted: 1,
@@ -222,7 +241,7 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
     topAppBarContextProvider.setValue({
       headlineKey: 'page_order_list_headline',
       startIcon: buttons.backToAdminOrderList,
-      endIconList: [buttons.reloadOrderStorage],
+      endIconList: [buttons.reloadAdminOrderListStorage],
     });
     const content: IconBoxContent = {
       icon: 'cloud-offline-outline',
@@ -231,7 +250,12 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
       description: message('fetch_failed_description'),
     };
 
-    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+    return html`
+      <alwatr-icon-box .content=${content}></alwatr-icon-box>
+      <div>
+        <alwatr-button .content=${buttons.retry}></alwatr-button>
+      </div>
+    `;
   }
 
   protected _render_notFound(): unknown {
@@ -240,6 +264,7 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
     topAppBarContextProvider.setValue({
       headlineKey: 'page_order_list_headline',
       startIcon: buttons.backToAdminOrderList,
+      endIconList: [buttons.reloadAdminOrderListStorage],
     });
     const content: IconBoxContent = {
       headline: message('page_order_detail_not_found'),
@@ -255,6 +280,7 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
     topAppBarContextProvider.setValue({
       headlineKey: 'page_order_list_headline',
       startIcon: buttons.backToAdminOrderList,
+      endIconList: [buttons.reloadAdminOrderListStorage],
     });
 
     if (this.userId == null || this.orderId == null) {
@@ -269,11 +295,10 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
     if (productStorageStateTarget === 'reloadingFailed') {
       return this._renderStateLoadingFailed();
     }
-    else if (productStorageStateTarget !== 'complete') {
+    else if (productStorageStateTarget !== 'complete' && productStorageStateTarget !== 'reloading') {
       return this._renderStateLoading();
     }
     const productStorage = productStorageContextConsumer.getResponse();
-
 
     return [
       this._render_status(order),
