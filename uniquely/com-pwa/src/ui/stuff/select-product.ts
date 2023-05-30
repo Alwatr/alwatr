@@ -131,10 +131,5 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
         this.order.itemList.splice(itemIndex, 1);
       }
     }
-
-    const submitButton = this.renderRoot.querySelector('alwatr-button');
-    if (submitButton && this.order.itemList.length < 2) {
-      submitButton.toggleAttribute('disabled', !this.order.itemList.length);
-    }
   }
 }
