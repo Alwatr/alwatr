@@ -15,7 +15,8 @@ export class AlwatrFab extends AlwatrButton {
     css`
       :host {
         --_surface-color-on: var(--sys-color-on-primary-hsl);
-        background-color: var(--sys-color-primary);
+        --_surface-color: var(--sys-color-primary-hsl);
+        background-color: hsl(var(--_surface-color));
         position: fixed;
         bottom: calc(2 * var(--sys-spacing-track));
         z-index: var(--sys-zindex-fixed);
