@@ -18,6 +18,7 @@ import '@alwatr/icon';
 import {calcDiscount} from '@alwatr/math';
 import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
+import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
 
@@ -166,13 +167,40 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._addSignalListeners(eventListener.subscribe(buttons.backToOrderList.clickSignalId, (): void => {
+    this._addSignalListeners(userListIncOrderStorageContextConsumer.subscribe(() => {
+      this.gotState = userListIncOrderStorageContextConsumer.getState().target;
+    }, {receivePrevious: 'NextCycle'}));
+
+    this._addSignalListeners(productStorageContextConsumer.subscribe(() => {
+      if (productStorageContextConsumer.getState().target === 'complete') {
+        this.requestUpdate();
+      }
+    }, {receivePrevious: 'NextCycle'}));
+
+    this._addSignalListeners(eventListener.subscribe(buttons.backToAdminOrderList.clickSignalId, () => {
       redirect({sectionList: ['admin-order-list']});
+    }));
+
+    this._addSignalListeners(eventListener.subscribe(buttons.retry.clickSignalId, () => {
+      if (userListIncOrderStorageContextConsumer.getState().target !== 'complete') {
+        userListIncOrderStorageContextConsumer.request();
+      }
+      if (productStorageContextConsumer.getState().target !== 'complete') {
+        productStorageContextConsumer.request();
+      }
+    }));
+
+    this._addSignalListeners(eventListener.subscribe(buttons.reloadAdminOrderListStorage.clickSignalId, () => {
+      userListIncOrderStorageContextConsumer.request();
+      productStorageContextConsumer.request();
     }));
   }
 
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
+    if (changedProperties.has('gotState')) {
+      this.setAttribute('state', this.gotState);
+    }
     if (changedProperties.has('orderId')) {
       scrollToTopCommand.request({smooth: true});
     }
@@ -196,7 +224,8 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
 
     topAppBarContextProvider.setValue({
       headlineKey: 'loading',
-      startIcon: buttons.backToHome,
+      startIcon: buttons.backToAdminOrderList,
+      endIconList: [buttons.reloadAdminOrderListStorage],
     });
     const content: IconBoxContent = {
       tinted: 1,
@@ -211,8 +240,8 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
 
     topAppBarContextProvider.setValue({
       headlineKey: 'page_order_list_headline',
-      startIcon: buttons.backToHome,
-      endIconList: [buttons.reloadOrderStorage],
+      startIcon: buttons.backToAdminOrderList,
+      endIconList: [buttons.reloadAdminOrderListStorage],
     });
     const content: IconBoxContent = {
       icon: 'cloud-offline-outline',
@@ -221,7 +250,12 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
       description: message('fetch_failed_description'),
     };
 
-    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+    return html`
+      <alwatr-icon-box .content=${content}></alwatr-icon-box>
+      <div>
+        <alwatr-button .content=${buttons.retry}></alwatr-button>
+      </div>
+    `;
   }
 
   protected _render_notFound(): unknown {
@@ -229,7 +263,8 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
 
     topAppBarContextProvider.setValue({
       headlineKey: 'page_order_list_headline',
-      startIcon: buttons.backToOrderList,
+      startIcon: buttons.backToAdminOrderList,
+      endIconList: [buttons.reloadAdminOrderListStorage],
     });
     const content: IconBoxContent = {
       headline: message('page_order_detail_not_found'),
@@ -244,19 +279,26 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
 
     topAppBarContextProvider.setValue({
       headlineKey: 'page_order_list_headline',
-      startIcon: buttons.backToOrderList,
+      startIcon: buttons.backToAdminOrderList,
+      endIconList: [buttons.reloadAdminOrderListStorage],
     });
 
-    const productStorage = productStorageContextConsumer.getResponse();
-
-    if (this.userId == null || this.orderId == null || productStorage == null) {
+    if (this.userId == null || this.orderId == null) {
       return this._render_notFound();
     }
-
     const order = userListIncOrderStorageContextConsumer.getResponse()?.data[this.userId]?.orderList[this.orderId];
     if (order == null) {
       return this._render_notFound();
     }
+
+    const productStorageStateTarget = productStorageContextConsumer.getState().target;
+    if (productStorageStateTarget === 'reloadingFailed') {
+      return this._renderStateLoadingFailed();
+    }
+    else if (productStorageStateTarget !== 'complete' && productStorageStateTarget !== 'reloading') {
+      return this._renderStateLoading();
+    }
+    const productStorage = productStorageContextConsumer.getResponse();
 
     return [
       this._render_status(order),

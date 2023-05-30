@@ -48,6 +48,11 @@ export const buttons = {
     flipRtl: true,
     clickSignalId: 'back_to_order_list_event',
   },
+  backToAdminOrderList: {
+    icon: 'arrow-back-outline',
+    flipRtl: true,
+    clickSignalId: 'back_to_admin_order_list_event',
+  },
 
   editItems: {
     labelKey: 'page_order_edit_items',
