@@ -55,12 +55,10 @@ export class AlwatrPageHome extends UnresolvedMixin(SignalMixin(AlwatrBaseElemen
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._addSignalListeners(
-        homePageContentContextConsumer.subscribe((content) => {
-          this.content = content;
-          topAppBarContextProvider.setValue(content.topAppBar);
-        }),
-    );
+    this._addSignalListeners(homePageContentContextConsumer.subscribe((content) => {
+      this.content = content;
+      topAppBarContextProvider.setValue(content.topAppBar);
+    }));
   }
 
   override render(): unknown {
