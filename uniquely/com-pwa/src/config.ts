@@ -30,7 +30,7 @@ export const config = {
     newOrder: apiBaseUrl + 'order',
 
     // admin access
-    userList: apiBaseUrl + 'user-list',
+    adminUserListIncOrder: apiBaseUrl + 'admin/user-list-inc-order',
   },
 
   fetchContextOptions: <Partial<FetchOptions>>{

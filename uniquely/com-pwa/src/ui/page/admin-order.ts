@@ -13,45 +13,36 @@ import {
   state,
   UnresolvedMixin,
 } from '@alwatr/element';
-import {finiteStateMachineConsumer} from '@alwatr/fsm';
 import {message, number, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/icon';
 import {calcDiscount} from '@alwatr/math';
 import {redirect} from '@alwatr/router';
-import {AlwatrDocumentStorage} from '@alwatr/type';
-import {
-  Order,
-  OrderDraft,
-  OrderItem,
-  OrderShippingInfo,
-  Product,
-} from '@alwatr/type/customer-order-management.js';
+import {eventListener} from '@alwatr/signal';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
 
 import {config} from '../../config.js';
 import {buttons} from '../../manager/buttons.js';
+import {productStorageContextConsumer} from '../../manager/context-provider/product-storage.js';
+import {userListIncOrderStorageContextConsumer} from '../../manager/context-provider/user-list-storage.js';
 import {scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
-import {OrderFsm, updateOrderCalculate} from '../../manager/controller/order.js';
-import '../stuff/order-shipping-form.js';
 import '../stuff/order-status-box.js';
-import '../stuff/select-product.js';
 
-import type {IconButtonContent} from '@alwatr/ui-kit/button/icon-button.js';
+import type {AlwatrDocumentStorage} from '@alwatr/type';
+import type {Order, OrderDraft, OrderItem, OrderShippingInfo, Product} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
-import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-page-order': AlwatrPageOrder;
+    'alwatr-page-admin-order': AlwatrPageAdminOrder;
   }
 }
 
 /**
  * Alwatr Customer Order Management Order Form Page
  */
-@customElement('alwatr-page-order')
-export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
+@customElement('alwatr-page-admin-order')
+export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
   static override styles: CSSResultGroup = css`
     :host {
       display: flex;
@@ -163,121 +154,77 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
     }
   `;
 
-  protected fsm = finiteStateMachineConsumer<OrderFsm>('order_fsm_' + this.ali, 'order_fsm');
-
   @state()
-    gotState = this.fsm.getState().target;
-
-  set orderId(orderId: string) {
-    this.fsm.transition('change_order_id', {orderId});
-  }
+    gotState = userListIncOrderStorageContextConsumer.getState().target;
 
   @property({type: String})
-  get orderId(): string {
-    return this.fsm.getContext().orderId;
-  }
+    orderId?: string;
+
+  @property({type: String})
+    userId?: string;
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._addSignalListeners(
-        this.fsm.defineSignals([
-          {
-            callback: (): void => {
-              const state = this.fsm.getState();
-              this.gotState = state.target;
-              if (state.by === 'request_update') {
-                this.requestUpdate();
-              }
-            },
-            receivePrevious: 'NextCycle',
-          },
-          {
-            signalId: buttons.submit.clickSignalId,
-            transition: 'submit',
-          },
-          {
-            signalId: buttons.submitShippingForm.clickSignalId,
-            transition: 'submit',
-          },
-          {
-            signalId: buttons.selectProductSubmit.clickSignalId,
-            transition: 'submit',
-          },
-          {
-            signalId: buttons.editOrder.clickSignalId,
-            transition: 'back',
-          },
-          {
-            signalId: buttons.submitFinal.clickSignalId,
-            transition: 'final_submit',
-          },
-          {
-            signalId: buttons.editItems.clickSignalId,
-            transition: 'select_product',
-          },
-          {
-            signalId: buttons.retry.clickSignalId,
-            transition: 'retry',
-          },
-          {
-            signalId: buttons.editShippingForm.clickSignalId,
-            transition: 'edit_shipping',
-          },
-          // FIXME: handle `reload` state
-          // {
-          //   signalId: buttons.reload.clickSignalId,
-          //   transition: ''
-          // },
-          {
-            signalId: buttons.showRegisteredOrderDetail.clickSignalId,
-            callback: (): void => {
-              redirect({sectionList: ['order', this.fsm.getContext().orderId ?? '']});
-            },
-          },
-          {
-            signalId: buttons.backToOrderList.clickSignalId,
-            callback: (): void => redirect({sectionList: ['order-list']}),
-          },
-          {
-            signalId: buttons.newOrder.clickSignalId,
-            callback: (): void => {
-              this.fsm.transition('new_order');
-            },
-          },
-        ]),
-    );
+    this._addSignalListeners(eventListener.subscribe(buttons.backToOrderList.clickSignalId, (): void => {
+      redirect({sectionList: ['admin-order-list']});
+    }));
   }
 
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
-    if (changedProperties.has('gotState')) {
+    if (changedProperties.has('orderId')) {
       scrollToTopCommand.request({smooth: true});
     }
   }
 
   protected override render(): unknown {
     this._logger.logMethod?.('render');
-    return this.fsm.render(
-        {
-          routing: 'pending',
-          pending: this._renderStatePending,
-          notFound: this._renderStateNotFound,
-          orderDetail: this._renderStateOrderDetail,
-          newOrder: this._renderStateNewOrder,
-          contextError: this._renderStateContextError,
-          selectProduct: this._renderStateSelectProduct,
-          shippingForm: this._renderStateShippingForm,
-          review: this._renderStateReview,
-          submitting: this._renderStateSubmitting,
-          submitSuccess: this._renderStateSubmitSuccess,
-          submitFailed: this._renderStateSubmitFailed,
-        },
-        this,
-    );
+    return userListIncOrderStorageContextConsumer.fsm.render({
+      initial: 'onlineLoading',
+      offlineLoading: 'onlineLoading',
+      onlineLoading: this._renderStateLoading,
+      loadingFailed: this._renderStateLoadingFailed,
+      reloadingFailed: 'complete',
+      reloading: 'complete',
+      complete: this._renderStateComplete,
+    }, this);
   }
 
-  protected _renderStateNotFound(): unknown {
+  protected _renderStateLoading(): unknown {
+    this._logger.logMethod?.('_renderStateLoading');
+
+    topAppBarContextProvider.setValue({
+      headlineKey: 'loading',
+      startIcon: buttons.backToHome,
+    });
+    const content: IconBoxContent = {
+      tinted: 1,
+      icon: 'cloud-download-outline',
+      headline: message('loading'),
+    };
+    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+  }
+
+  protected _renderStateLoadingFailed(): unknown {
+    this._logger.logMethod?.('_renderStateLoadingFailed');
+
+    topAppBarContextProvider.setValue({
+      headlineKey: 'page_order_list_headline',
+      startIcon: buttons.backToHome,
+      endIconList: [buttons.reloadOrderStorage],
+    });
+    const content: IconBoxContent = {
+      icon: 'cloud-offline-outline',
+      tinted: 1,
+      headline: message('fetch_failed_headline'),
+      description: message('fetch_failed_description'),
+    };
+
+    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
+  }
+
+  protected _render_notFound(): unknown {
     this._logger.logMethod?.('_render_notFound');
 
     topAppBarContextProvider.setValue({
@@ -292,196 +239,31 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
     return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
   }
 
-  protected _renderStateOrderDetail(): unknown {
-    this._logger.logMethod?.('_render_orderDetail');
+  protected _renderStateComplete(): unknown {
+    this._logger.logMethod?.('_renderStateComplete');
 
     topAppBarContextProvider.setValue({
       headlineKey: 'page_order_list_headline',
       startIcon: buttons.backToOrderList,
-      endIconList: [buttons.print, buttons.reload],
     });
 
-    const order = this.fsm.getContext().orderStorage!.data[this.fsm.getContext().orderId];
+    const productStorage = productStorageContextConsumer.getResponse();
+
+    if (this.userId == null || this.orderId == null || productStorage == null) {
+      return this._render_notFound();
+    }
+
+    const order = userListIncOrderStorageContextConsumer.getResponse()?.data[this.userId]?.orderList[this.orderId];
+    if (order == null) {
+      return this._render_notFound();
+    }
+
     return [
       this._render_status(order),
-      this._render_itemList(order.itemList, this.fsm.getContext().productStorage),
+      this._render_itemList(order.itemList, productStorage),
       this._render_shippingInfo(order.shippingInfo),
       this._render_summary(order),
     ];
-  }
-
-  protected _renderStateNewOrder(): unknown {
-    this._logger.logMethod?.('_render_newOrder');
-
-    topAppBarContextProvider.setValue({
-      headlineKey: 'page_order_headline',
-      startIcon: buttons.backToHome,
-    });
-    let order: Order | OrderDraft = this.fsm.getContext().newOrder;
-    updateOrderCalculate(order);
-    order = order as Order;
-
-    return html`
-      ${this._render_itemList(order.itemList, this.fsm.getContext().productStorage, true)}
-      <div class="btn-container">
-        <alwatr-button .content=${buttons.editItems}></alwatr-button>
-      </div>
-      ${this._render_shippingInfo(order.shippingInfo)}
-      <div class="btn-container">
-        <alwatr-button .content=${buttons.editShippingForm}></alwatr-button>
-      </div>
-      ${this._render_summary(order)}
-      <div class="submit-container">
-        <alwatr-button .content=${buttons.submit}></alwatr-button>
-      </div>
-    `;
-  }
-
-  protected _renderStateContextError(): unknown {
-    this._logger.logMethod?.('_render_contextError');
-
-    topAppBarContextProvider.setValue({
-      headlineKey: 'page_order_list_headline',
-      startIcon: buttons.backToHome,
-    });
-    const content: IconBoxContent = {
-      icon: 'cloud-offline-outline',
-      tinted: 1,
-      headline: message('fetch_failed_headline'),
-      description: message('fetch_failed_description'),
-    };
-
-    return html`
-      <alwatr-icon-box .content=${content}></alwatr-icon-box>
-      <div>
-        <alwatr-button .content=${{icon: buttons.retry.icon, clickSignalId: buttons.retry.clickSignalId}}>
-          ${message('retry')}
-        </alwatr-button>
-      </div>
-    `;
-  }
-
-  protected _renderStateSelectProduct(): unknown {
-    this._logger.logMethod?.('_render_selectProduct');
-
-    topAppBarContextProvider.setValue({
-      headlineKey: 'page_order_headline',
-      startIcon: buttons.backToHome,
-    });
-
-    return html`
-      <alwatr-select-product
-        .order=${this.fsm.getContext().newOrder}
-        .productStorage=${this.fsm.getContext().productStorage}
-        .finalPriceStorage=${this.fsm.getContext().finalPriceStorage}
-        .priceStorage=${this.fsm.getContext().priceStorage}
-      ></alwatr-select-product>
-      <div class="btn-container">
-        <alwatr-button .content=${buttons.selectProductSubmit} elevated></alwatr-button>
-      </div>
-    `;
-  }
-
-  protected _renderStateShippingForm(): unknown {
-    this._logger.logMethod?.('_render_shippingForm');
-
-    const order = this.fsm.getContext().newOrder;
-    return html`
-      <alwatr-surface tinted>
-        <alwatr-order-shipping-form .formData=${order.shippingInfo}></alwatr-order-shipping-form>
-      </alwatr-surface>
-      <div class="btn-container">
-        <alwatr-button .content=${buttons.submitShippingForm}></alwatr-button>
-      </div>
-    `;
-  }
-
-  protected _renderStateReview(): unknown {
-    this._logger.logMethod?.('_render_review');
-
-    const order = this.fsm.getContext().newOrder as Order;
-    return [
-      this._render_status(order),
-      this._render_itemList(order.itemList, this.fsm.getContext().productStorage),
-      this._render_shippingInfo(order.shippingInfo),
-      this._render_summary(order),
-      html`
-        <div class="submit-container">
-          <alwatr-button .content=${buttons.editOrder}></alwatr-button>
-          <alwatr-button .content=${buttons.submitFinal}></alwatr-button>
-        </div>
-      `,
-    ];
-  }
-
-  protected _renderStateSubmitting(): unknown {
-    this._logger.logMethod?.('_render_submitting');
-
-    const content: IconBoxContent = {
-      headline: message('page_order_submitting_message'),
-      icon: 'cloud-upload-outline',
-      tinted: 1,
-    };
-    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
-  }
-
-  protected _renderStateSubmitSuccess(): unknown {
-    const content: IconBoxContent = {
-      headline: message('page_order_submit_success_message'),
-      icon: 'cloud-done-outline',
-      tinted: 1,
-    };
-    return html`
-      <alwatr-icon-box .content=${content}></alwatr-icon-box>
-      <div class="submit-container">
-        <alwatr-button .content=${buttons.showRegisteredOrderDetail}></alwatr-button>
-        <alwatr-button .content=${buttons.newOrder}>${message('page_order_headline')}</alwatr-button>
-      </div>
-    `;
-  }
-
-  protected _renderStateSubmitFailed(): unknown {
-    this._logger.logMethod?.('_render_submitFailed');
-
-    const content: IconBoxContent = {
-      headline: message('page_order_submit_failed_message'),
-      icon: 'cloud-offline-outline',
-      tinted: 1,
-    };
-    return html`
-      <alwatr-icon-box .content=${content}></alwatr-icon-box>
-      <div class="submit-container">
-        <alwatr-button .content=${buttons.retry}></alwatr-button>
-      </div>
-    `;
-  }
-
-  protected _renderStatePending(): unknown {
-    this._logger.logMethod?.('_render_pending');
-
-    topAppBarContextProvider.setValue({
-      headlineKey: 'loading',
-      startIcon: buttons.backToHome,
-    });
-
-    const content: IconBoxContent = {
-      tinted: 1,
-      icon: 'cloud-download-outline',
-      headline: message('loading'),
-    };
-
-    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
-  }
-
-  protected _render_message(key: string, icon: string): unknown {
-    this._logger.logMethod?.('_render_message');
-    const content: IconBoxContent = {
-      headline: message(key),
-      icon: icon,
-      tinted: 1,
-    };
-
-    return html`<alwatr-icon-box .content=${content}></alwatr-icon-box>`;
   }
 
   protected _render_status(order: Order | OrderDraft): unknown {
@@ -492,7 +274,6 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
   protected _render_itemList(
       itemList: Array<OrderItem>,
       productStorage: AlwatrDocumentStorage<Product> | null | undefined,
-      editable = false,
   ): unknown {
     this._logger.logMethod?.('_render_itemList');
 
@@ -563,40 +344,9 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
               <alwatr-icon .name=${'toman'}></alwatr-icon>
             </span>
           </div>
-          ${this._render_itemQtyInput(item, editable)}
         </div>
       </alwatr-surface>`;
     });
-  }
-
-  protected _render_itemQtyInput(orderItem: OrderItem, editable: boolean): unknown {
-    this._logger.logMethod?.('_render_itemQtyInput');
-
-    if (!editable) return nothing;
-
-    // TODO: new element
-    const addBtn: IconButtonContent = {
-      icon: 'add-outline',
-      clickSignalId: 'order_item_qty_add',
-      clickDetail: orderItem,
-    };
-    const removeBtn: IconButtonContent = {
-      icon: 'remove-outline',
-      clickSignalId: 'order_item_qty_remove',
-      clickDetail: orderItem,
-    };
-
-    return html`
-      <alwatr-surface class="number-field" stated tinted="2">
-        <alwatr-icon-button .content=${addBtn}></alwatr-icon-button>
-        <alwatr-text-field
-          .type=${'number'}
-          .value=${orderItem.qty + ''}
-          @input-change=${(event: CustomEvent): void => this._onQtyInputChange(event, orderItem)}
-        ></alwatr-text-field>
-        <alwatr-icon-button .content=${removeBtn}></alwatr-icon-button>
-      </alwatr-surface>
-    `;
   }
 
   protected _render_shippingInfo(shippingInfo?: Partial<OrderShippingInfo>): unknown {
@@ -634,7 +384,7 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
             ${shippingInfo?.ladingType
               ? message(
                   'order_shipping_lading_type_key_' +
-                (shippingInfo?.carType != 'trailer_truck' ? 'hand' : shippingInfo?.ladingType),
+                    (shippingInfo?.carType != 'trailer_truck' ? 'hand' : shippingInfo?.ladingType),
               )
               : nullStr}
           </span>
@@ -642,9 +392,7 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
         <div>
           <span>${message('order_shipping_time_period_title')}:</span>
           <span>
-            ${shippingInfo?.timePeriod
-              ? message('order_shipping_time_period_key_' + shippingInfo.timePeriod)
-              : nullStr}
+            ${shippingInfo?.timePeriod ? message('order_shipping_time_period_key_' + shippingInfo.timePeriod) : nullStr}
           </span>
         </div>
         <div ?hidden=${!shippingInfo?.description}>
@@ -686,8 +434,11 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
           </span>
         </div>
         <div ?hidden=${order.ladingFee === 0}>
-          <span>${message('order_summary_lading_price').replace('${carCount}',
-      number(order.ladingFee / (config.order.lading[order.shippingInfo.carType!]?.fee ?? order.ladingFee)))}:
+          <span
+            >${message('order_summary_lading_price').replace(
+      '${carCount}',
+      number(order.ladingFee / (config.order.lading[order.shippingInfo.carType!]?.fee ?? order.ladingFee)),
+  )}:
           </span>
           <span>
             <span>${number(order.ladingFee)}</span>
@@ -696,8 +447,10 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
         </div>
         <div ?hidden=${order.palletCost === 0}>
           <span>
-            ${message('order_summary_palette_price')
-      .replace('${paletteCount}', number(order.palletCost / config.order.pallet.price))}:
+            ${message('order_summary_palette_price').replace(
+      '${paletteCount}',
+      number(order.palletCost / config.order.pallet.price),
+  )}:
           </span>
           <span>
             <span>${number(order.palletCost)}</span>
@@ -727,13 +480,5 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
         </div>
       </div>
     </alwatr-surface>`;
-  }
-
-  protected _onQtyInputChange(event: CustomEvent, orderItem: OrderItem): void {
-    const target = event.target as AlwatrTextField;
-    this._logger.logMethodArgs?.('_onQtyInputChange', target.value);
-    const qty = +target.value || 80;
-    orderItem.qty = qty;
-    this.requestUpdate();
   }
 }
