@@ -90,7 +90,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
     const content: ProductCartContent = {
       id: product.id,
       title: product.title[langCode] ?? product.title.fa,
-      imagePath: config.serverContext.cdn + '/medium/' + product.image.id,
+      imagePath: config.serverContext.cdn + '/large/' + product.image.id,
       price: product.price,
     };
     return html`<alwatr-product-card2 .content=${content}></alwatr-product-card2>`;

@@ -17,7 +17,7 @@ export const config = {
   serverContext: {
     base: srvBaseUrl,
     api: apiBaseUrl,
-    cdn: apiBaseUrl + 'cdn',
+    cdn: srvBaseUrl + 'cdn',
     token: getConfKey<string>('token'),
   },
 
