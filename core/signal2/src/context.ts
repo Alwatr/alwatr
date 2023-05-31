@@ -1,14 +1,18 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
-import {MaybePromise} from '@alwatr/type';
+
+import type {MaybePromise} from '@alwatr/type';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/signal2',
   version: _ALWATR_VERSION_,
 });
 
-export interface SignalConfig {
+export type SignalConfig<T> = {
   debugName: string;
+  initialValue?: T
 }
+
+export type Listener<T> = (detail: T) => MaybePromise<void>
 
 /**
  * Subscribe options type.
@@ -58,18 +62,31 @@ export class AlwatrContext<TValue> {
 
   protected _logger;
 
-  protected _value: TValue;
+  protected _value?: TValue;
 
-  constructor(protected _config: SignalConfig) {
+  protected _listenerList: Array<Listener<TValue>> = [];
+
+  constructor(protected _config: SignalConfig<TValue>) {
     this._logger = createLogger(`{signal: ${_config.debugName} index: ${this._ali}}`);
+    this._value = _config.initialValue;
   }
 
-  getValue(): TValue {
-
+  getValue(): TValue | undefined {
+    this._logger.logMethod?.('getValue');
+    return this._value;
   }
 
   setValue(value: TValue): void {
+    this._logger.logMethodArgs?.('setValue', {value});
+    this._value = value;
+    this._dispatch(value);
+  }
 
+  protected async _dispatch(value: TValue): Promise<void> {
+    this._logger.logMethodArgs?.('dispatch', {value});
+    for (let i = this._listenerList.length - 1; i >= 0; i--) {
+      await this._listenerList[i](value);
+    }
   }
 
   /**
@@ -78,52 +95,32 @@ export class AlwatrContext<TValue> {
   subscribe(callback: (detail: TValue) => MaybePromise<void>, options?: SignalSubscribeOptions): void {
     this._logger.logMethodArgs?.('subscribe', {options});
 
-    const signal = getSignalObject<T>(signalId);
-
-    const listener2: ListenerObject<T> = {
-      callback,
-      options,
+    const secureCallback = async (): Promise<void> => {
+      try {
+        if (this._value !== undefined) await callback(this._value);
+      }
+      catch (err) {
+        this._logger.error('subscribe', 'call_signal_callback_failed', err, {ali: this._ali});
+      }
     };
 
-    const execCallback = signal.detail !== undefined && options?.receivePrevious && !options.disabled;
-    if (execCallback) {
-      // Run callback for old dispatch signal
-      setTimeout(callback, 0);
-
-      const callback = (): void => {
-        try {
-          if (signal.detail !== undefined) callback(signal.detail);
-        }
-        catch (err) {
-          logger.error('subscribe', 'call_signal_callback_failed', err, {
-            signalId: signal.id,
-          });
-        }
-      };
-
-      if (options.receivePrevious === 'AnimationFrame') {
-        requestAnimationFrame(callback);
+    const receivePrevious = options?.receivePrevious && !options.disabled;
+    if (receivePrevious && this._value !== null) {
+      if (options?.debounce === 'AnimationFrame') {
+        requestAnimationFrame(secureCallback.bind(this));
       }
       else {
-        setTimeout(callback, options.receivePrevious === 'NextCycle' ? 0 : debounceTimeout);
+        setTimeout(secureCallback.bind(this), options.debounce ?? 0);
       }
     }
 
-    // if once then must remove listener after fist callback called! then why push it to listenerList?!
-    if (!(execCallback && options.once)) {
-      if (options.priority === true) {
-        signal.listenerList.unshift(callback);
+    if (!(receivePrevious && options.once)) {
+      if (options?.priority === true) {
+        this._listenerList.unshift(callback);
       }
       else {
-        signal.listenerList.push(callback);
+        this._listenerList.push(callback);
       }
     }
-
-    return {
-      id: callback.id,
-      signalId: callback.signalId,
-    };
   }
-
-  // unsubscribe
 }
