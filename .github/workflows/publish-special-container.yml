@@ -71,6 +71,13 @@ jobs:
               short: 1
               full: 1.7.0-1.24-alpine
 
+          - image: adminer
+            path: cloud/container/adminer
+            description: Clone of Adminer.
+            version:
+              short: 4
+              full: 4
+
           # - image: tdlib
           #   path: cloud/container/tdlib
           #   description: Cross-platform library for building Telegram clients.
