@@ -91,7 +91,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
       id: product.id,
       title: product.title[langCode] ?? product.title.fa,
       imagePath: config.serverContext.cdn + '/medium/' + product.image.id,
-      finalPrice: product.price,
+      price: product.price,
     };
     return html`<alwatr-product-card2 .content=${content}></alwatr-product-card2>`;
   }
