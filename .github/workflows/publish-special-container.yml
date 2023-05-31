@@ -36,6 +36,13 @@ jobs:
       max-parallel: 1
       matrix:
         include:
+          - image: traefik
+            path: cloud/container/traefik
+            description: Clone of Traefik.
+            version:
+              short: 1
+              full: 1.7-alpine
+
           - image: alpine
             path: cloud/container/alpine
             description: A minimal Docker image based on Alpine Linux with a complete package index and only 5 MB in size!
