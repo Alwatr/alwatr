@@ -78,6 +78,13 @@ jobs:
               short: 4
               full: 4
 
+          - image: mariadb
+            path: cloud/container/mariadb
+            description: Clone of Mariadb.
+            version:
+              short: 10
+              full: 1.9
+
           # - image: tdlib
           #   path: cloud/container/tdlib
           #   description: Cross-platform library for building Telegram clients.
