@@ -31,6 +31,7 @@ export const homePageContent: PageHomeContent = {
     wide: true,
     icon: 'cart-outline',
     headline: 'مشاهده محصولات',
+    href: '/product',
   },
   catalogue: {
     elevated: 1,

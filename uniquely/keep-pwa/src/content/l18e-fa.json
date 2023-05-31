@@ -26,6 +26,7 @@
     "form_submitted": "درخواست شما ثبت شد.",
     "collaboration_form_description": "فرم درخواست همکاری با کیپ",
     "invalid_form_data": "اطلاعات فرم صحیح نمی‌باشد.",
-    "check_network_connection": "لطفا از اتصال خود به اینترنت اطمینان حاصل فرمایید و دوباره ارسال کنید."
+    "check_network_connection": "لطفا از اتصال خود به اینترنت اطمینان حاصل فرمایید و دوباره ارسال کنید.",
+    "page_product_headline": "محصولات"
   }
 }
