@@ -13,6 +13,7 @@
     {"path": "./core/logger"},
     {"path": "./core/fetch"},
     {"path": "./core/signal"},
+    {"path": "./core/signal2"},
     {"path": "./core/context"},
     {"path": "./core/router"},
     {"path": "./core/i18n"},
