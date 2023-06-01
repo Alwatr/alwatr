@@ -7,17 +7,10 @@ globalAlwatr.registeredList.push({
   version: _ALWATR_VERSION_,
 });
 
-export type SignalConfig<T> = {
-  debugName: string;
-  initialValue?: T
-}
-
-export type Listener<T> = (detail: T) => MaybePromise<void>
-
 /**
  * Subscribe options type.
  */
-export interface SignalSubscribeOptions {
+export interface ContextSubscribeOptions {
   /**
    * If true, the listener will be called only once.
    */
@@ -41,86 +34,157 @@ export interface SignalSubscribeOptions {
   /**
    * If defined, calls the listener (callback) with debounce.
    */
-  debounce?: 'AnimationFrame' | number;
+  // debounce?: 'AnimationFrame' | number;
+}
+
+export type ListenerCallback<TValue> = (value: TValue) => MaybePromise<void>;
+
+export interface ListenerObject<TValue> {
+  callback: ListenerCallback<TValue>;
+  options: ContextSubscribeOptions;
+}
+
+export interface ContextSubscribeResult {
+  unsubscribe: () => void;
 }
 
 /**
- * Last alwatr logger index!
- */
-let _lastAli = 0;
-
-/**
- * Alwatr Event Signal.
+ * Alwatr multithread context signal.
  */
 export class AlwatrContext<TValue> {
-  /**
-   * Alwatr logger index!
-   *
-   * Signal index for logger ;)
-   */
-  protected _ali: number = ++_lastAli;
-
   protected _logger;
 
   protected _value?: TValue;
 
-  protected _listenerList: Array<Listener<TValue>> = [];
+  protected _listenerList: Array<ListenerObject<TValue>> = [];
 
-  constructor(protected _config: SignalConfig<TValue>) {
-    this._logger = createLogger(`{signal: ${_config.debugName} index: ${this._ali}}`);
-    this._value = _config.initialValue;
+  constructor(public name: string) {
+    this._logger = createLogger(`{signal: ${name}}`);
   }
 
+  /**
+   * Get context value.
+   *
+   * Return undefined if context not set before or expired.
+   */
   getValue(): TValue | undefined {
-    this._logger.logMethod?.('getValue');
+    this._logger.logMethodFull?.('getValue', {}, this._value);
     return this._value;
   }
 
+  /**
+   * Set context value and notify all subscribers.
+   */
   setValue(value: TValue): void {
     this._logger.logMethodArgs?.('setValue', {value});
     this._value = value;
-    this._dispatch(value);
+    this._executeListeners();
   }
 
-  protected async _dispatch(value: TValue): Promise<void> {
-    this._logger.logMethodArgs?.('dispatch', {value});
-    for (let i = this._listenerList.length - 1; i >= 0; i--) {
-      await this._listenerList[i](value);
+  /**
+   * Execute all listeners callback.
+  */
+  protected _executeListeners(): void {
+    this._logger.logMethod?.('_executeListeners');
+    if (this._value === undefined) return;
+
+    const removeList: Array<ListenerObject<TValue>> = [];
+
+    for (const listener of this._listenerList) {
+      if (listener.options.disabled) continue;
+      if (listener.options.once) removeList.push(listener);
+
+      try {
+        const ret = listener.callback(this._value);
+        if (ret instanceof Promise) {
+          ret.catch((err) =>
+            this._logger.error('_callListeners', 'call_listener_failed', err),
+          );
+        }
+      }
+      catch (err) {
+        this._logger.error('_callListeners', 'call_listener_failed', err);
+      }
+    }
+
+    for (const listener of removeList) {
+      this.unsubscribe(listener.callback);
     }
   }
 
   /**
-   * Subscribe new listener to the signal, work like addEventListener.
+   * Subscribe to context changes.
    */
-  subscribe(callback: (detail: TValue) => MaybePromise<void>, options?: SignalSubscribeOptions): void {
+  subscribe(listenerCallback: ListenerCallback<TValue>, options: ContextSubscribeOptions = {}): ContextSubscribeResult {
     this._logger.logMethodArgs?.('subscribe', {options});
 
-    const secureCallback = async (): Promise<void> => {
-      try {
-        if (this._value !== undefined) await callback(this._value);
-      }
-      catch (err) {
-        this._logger.error('subscribe', 'call_signal_callback_failed', err, {ali: this._ali});
-      }
+    const _listenerObject: ListenerObject<TValue> = {
+      callback: listenerCallback,
+      options,
     };
 
-    const receivePrevious = options?.receivePrevious && !options.disabled;
-    if (receivePrevious && this._value !== null) {
-      if (options?.debounce === 'AnimationFrame') {
-        requestAnimationFrame(secureCallback.bind(this));
+    let callbackExecuted = false;
+    const value = this._value;
+    if (value !== undefined && options.receivePrevious === true && options.disabled !== true) {
+      // Run callback for old dispatch signal
+      callbackExecuted = true;
+      setTimeout(() => {
+        try {
+          listenerCallback(value);
+        }
+        catch (err) {
+          this._logger.error('subscribe.receivePrevious', 'call_signal_callback_failed', err);
+        }
+      }, 0);
+    }
+
+    // if once then must remove listener after fist callback called! then why push it to listenerList?!
+    if (options.once !== true || callbackExecuted === true) {
+      if (options.priority === true) {
+        this._listenerList.unshift(_listenerObject);
       }
       else {
-        setTimeout(secureCallback.bind(this), options.debounce ?? 0);
+        this._listenerList.push(_listenerObject);
       }
     }
 
-    if (!(receivePrevious && options.once)) {
-      if (options?.priority === true) {
-        this._listenerList.unshift(callback);
-      }
-      else {
-        this._listenerList.push(callback);
-      }
+    return {
+      unsubscribe: this.unsubscribe.bind(this, listenerCallback),
+    };
+  }
+
+  /**
+   * Unsubscribe from context.
+   */
+  unsubscribe(listenerCallback: ListenerCallback<TValue>): void {
+    this._logger.logMethod?.('unsubscribe');
+    const listenerIndex = this._listenerList.findIndex((listener) => listener.callback === listenerCallback);
+    if (listenerIndex !== -1) {
+      void this._listenerList.splice(listenerIndex, 1);
     }
+  }
+
+  /**
+   * Clear current context value without notify subscribers.
+   *
+   * new subscriber options.receivePrevious not work until new signalvider.expire('product-list');
+   */
+  expire(): void {
+    this._logger.logMethod?.('expire');
+    this._value = undefined;
+  }
+
+  /**
+   * Get the value of the next context changes.
+   */
+  untilChange(): Promise<TValue> {
+    this._logger.logMethod?.('untilNext');
+    return new Promise((resolve) => {
+      this.subscribe<T>(resolve, {
+        once: true,
+        priority: true,
+        receivePrevious: 'No',
+      });
+    });
   }
 }
