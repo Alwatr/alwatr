@@ -14,7 +14,7 @@ type AlwatrContextChangedMessage = {
 export class AlwatrMultithreadContextSignal<TValue> extends AlwatrContextSignal<TValue> {
   protected static _logger = createLogger(`alwatr/mt-context`);
   protected static _worker?: Worker;
-  protected static _registry: Record<string, AlwatrMultithreadContextSignal<unknown>> = {};
+  protected static _registry: Record<string, AlwatrMultithreadContextSignal<unknown> | undefined> = {};
 
   static setupChannel(worker: Worker = self as unknown as Worker): void {
     AlwatrMultithreadContextSignal._worker = worker;
@@ -26,6 +26,9 @@ export class AlwatrMultithreadContextSignal<TValue> extends AlwatrContextSignal<
     if (message.type !== 'alwatr_context_changed') return;
     AlwatrMultithreadContextSignal._logger.logMethodArgs?.('_onMessage', {message});
     const context = AlwatrMultithreadContextSignal._registry[message.name];
+    if (context === undefined) {
+      throw new Error('context_not_define', {cause: 'context not define in this thread yet!'});
+    }
     context._dispatch(message.payload);
   }
 
