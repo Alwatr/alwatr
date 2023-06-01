@@ -3,7 +3,7 @@ import {createLogger, globalAlwatr} from '@alwatr/logger';
 import type {MaybePromise} from '@alwatr/type';
 
 globalAlwatr.registeredList.push({
-  name: '@alwatr/signal2',
+  name: '@alwatr/signal2/context',
   version: _ALWATR_VERSION_,
 });
 
@@ -48,51 +48,16 @@ export interface ContextSubscribeResult {
   unsubscribe: () => void;
 }
 
-type AlwatrContextChangedMessage = {
-  type: 'alwatr_context_changed',
-  name: string,
-  payload: unknown,
-}
-
 /**
- * Alwatr multithread context signal.
+ * Alwatr context signal.
  */
 export class AlwatrContext<TValue> {
-  protected static _worker: Worker;
-  protected static _registry: Record<string, AlwatrContext<unknown>> = {};
-
-  static setupChannel(worker?: Worker): void {
-    AlwatrContext._worker = worker ?? self as unknown as Worker;
-    AlwatrContext._worker.addEventListener('message', AlwatrContext._onMessage);
-  }
-
-  static _onMessage(event: MessageEvent): void {
-    const message = event.data as AlwatrContextChangedMessage;
-    if (message.type !== 'alwatr_context_changed') return;
-    const context = AlwatrContext._registry[message.name];
-    context._dispatch(message.payload);
-  }
-
-  static _postMessage(name: string, payload: unknown): void {
-    AlwatrContext._worker.postMessage(<AlwatrContextChangedMessage>{
-      type: 'alwatr_context_changed',
-      name,
-      payload,
-    });
-  }
-
   protected _logger;
-
   protected _value?: TValue;
-
   protected _listenerList: Array<ListenerObject<TValue>> = [];
 
   constructor(public name: string) {
-    this._logger = createLogger(`{signal: ${name}}`);
-    if (AlwatrContext._registry[name] !== undefined) {
-      throw new Error('context_name_exist');
-    }
-    AlwatrContext._registry[name] = this as AlwatrContext<unknown>;
+    this._logger = createLogger(`{context/signal: ${name}}`);
   }
 
   /**
@@ -111,7 +76,6 @@ export class AlwatrContext<TValue> {
   setValue(value: TValue): void {
     this._logger.logMethodArgs?.('setValue', {value});
     this._dispatch(value);
-    AlwatrContext._postMessage(this.name, value);
   }
 
   /**
