@@ -62,7 +62,7 @@ export class AlwatrPageHome extends UnresolvedMixin(SignalMixin(AlwatrBaseElemen
       if (userProfileContextConsumer.getValue()?.permissions === 'root') {
         redirect({sectionList: ['admin-order-list']});
       }
-    }));
+    }, {receivePrevious: 'No'}));
 
     this._addSignalListeners(homePageContentContextConsumer.subscribe((content) => {
       this.content = content;
