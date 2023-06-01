@@ -1,4 +1,4 @@
-import {AlwatrContext} from '@alwatr/signal2';
+import {AlwatrMultithreadContext} from '@alwatr/signal2';
 
 import type {Stringifyable} from '@alwatr/type';
 
@@ -6,4 +6,4 @@ type Message = {
   type: string;
   payload: Stringifyable
 }
-export const messageContext = new AlwatrContext<Message>('demo.message');
+export const messageContext = new AlwatrMultithreadContext<Message>('demo.message');

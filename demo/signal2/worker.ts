@@ -1,7 +1,7 @@
 import {createLogger} from '@alwatr/logger';
-import {AlwatrContext} from '@alwatr/signal2';
+import {AlwatrMultithreadContext} from '@alwatr/signal2';
 
-AlwatrContext.setupChannel();
+AlwatrMultithreadContext.setupChannel();
 
 import {messageContext} from './share-context.js';
 
