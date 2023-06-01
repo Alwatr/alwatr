@@ -157,11 +157,11 @@ export class AlwatrPageAdminOrderList extends ScheduleUpdateToFrameMixin(
 
     const orderStorageList = Object.values(userStorage.data).sort((u1, u2) => {
       const lastU1Order = Object.values(u1.orderList).sort((o1, o2) => {
-        return (o1.meta?.updated || 0) - (o2.meta?.updated || 0);
+        return (o2.meta?.updated || 0) - (o1.meta?.updated || 0);
       })[0];
 
       const lastU2Order = Object.values(u2.orderList).sort((o1, o2) => {
-        return (o1.meta?.updated || 0) - (o2.meta?.updated || 0);
+        return (o2.meta?.updated || 0) - (o1.meta?.updated || 0);
       })[0];
 
       return (lastU2Order?.meta?.updated || 0) - (lastU1Order?.meta?.updated || 0);
