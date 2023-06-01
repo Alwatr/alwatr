@@ -7,9 +7,11 @@ export const bench = (name: string, func: () => void, count = 1_000_000): void =
   let i = count;
   const startMemory = globalThis.process?.memoryUsage.rss() ?? 0;
   const startTime = performance.now();
+
   while (i--) {
     func();
   }
+
   const duration = performance.now() - startTime;
   const runPerSec = Math.ceil(count / duration * 1000);
   const memoryUsage = Math.round((globalThis.process?.memoryUsage.rss() ?? 0 - startMemory) / 10) / 100;
