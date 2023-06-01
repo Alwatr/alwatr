@@ -180,10 +180,10 @@ export class AlwatrContext<TValue> {
   untilChange(): Promise<TValue> {
     this._logger.logMethod?.('untilNext');
     return new Promise((resolve) => {
-      this.subscribe<T>(resolve, {
+      this.subscribe(resolve, {
         once: true,
         priority: true,
-        receivePrevious: 'No',
+        receivePrevious: false,
       });
     });
   }
