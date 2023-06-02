@@ -1,6 +1,6 @@
 import {AlwatrBaseSignal} from '@alwatr/signal2';
 
-import type {MaybePromise, SingleOrArray, Stringifyable} from '@alwatr/type';
+import type {MaybePromise, SingleOrArray} from '@alwatr/type';
 
 export type ActionFn = (this: unknown) => MaybePromise<void>;
 export type ConditionFn = (this: unknown) => boolean;
@@ -69,43 +69,31 @@ export type TransitionConfig<StateName extends string> = {
 /**
  * Finite State Machine state configs
  */
-export type MachineConfig<StateName extends string, EventName extends string, Context extends Stringifyable> = {
+export type MachineConfig<StateName extends string, EventName extends string> = {
+  name: string;
   initial: StateName;
-  /**
-   * Fsm context object.
-   */
-  context: Context;
   states: StateConfig<StateName, EventName>;
 };
 
 /**
  * Finite State Machine Class
  */
-export class FiniteStateMachine<
-  Context extends Stringifyable,
-  StateName extends string,
-  EventName extends string
-> extends AlwatrBaseSignal<StateConfig<StateName, EventName>> {
+export class FiniteStateMachine<StateName extends string, EventName extends string> extends AlwatrBaseSignal<
+  StateConfig<StateName, EventName>
+> {
   /**
    * Current state
    */
   state: State<StateName, EventName>;
 
-  /**
-   * Fsm context object.
-   */
-  public context: Context;
-
   constructor(
     /**
      * Finite State Machine state configs
      */
-    protected _config: MachineConfig<StateName, EventName, Context>,
+    protected _config: MachineConfig<StateName, EventName>,
   ) {
-    super('FiniteStateMachine', 'fsm');
+    super(_config.name, 'fsm');
     this._logger.logMethodArgs?.('constructor', {_config});
-
-    this.context = _config.context;
 
     this.state = {
       target: _config.initial,
