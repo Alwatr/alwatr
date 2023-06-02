@@ -10,6 +10,46 @@
     lodash.assignwith "^4.2.0"
     typical "^7.1.1"
 
+"@alwatr/logger@^0.31.0":
+  version "0.31.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/logger/-/logger-0.31.0.tgz#91ec05e81e7c4c0257e853bc17692a60b8747439"
+  integrity sha512-g0Ra2vObJXWH1Vn9wg0WYKtA7jWDy5jfyF4ab8ESZZFndOhlbTrG/8Of9CI80uBk8yQkmGW80WkpfmcK8Qeidg==
+  dependencies:
+    "@alwatr/type" "^0.31.0"
+    tslib "^2.5.0"
+
+"@alwatr/math@^0.31.0":
+  version "0.31.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/math/-/math-0.31.0.tgz#3e9dd7313b1e05efaf9d6f180e49a54329ed4a6f"
+  integrity sha512-Eva+cbU0nr99JXnAsygciUYpgl+5Vebp49s3u/h9uQYzXrMYXVs9flhhKjPnK9bzcOtzTakovNxNfxoAGzmHYA==
+  dependencies:
+    "@alwatr/logger" "^0.31.0"
+    tslib "^2.5.0"
+
+"@alwatr/signal@^0.31.0":
+  version "0.31.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/signal/-/signal-0.31.0.tgz#1cef972b3e2b6967e7effaea05dab4ace73fb13f"
+  integrity sha512-EaUJX9YiDPuysaN3fYLKV2QdjLNiOGGxFR7s+kQ6fOISLYfygXeQjqDg61G8VZm90HatYKaEZUK2uzkR8FL1Ig==
+  dependencies:
+    "@alwatr/logger" "^0.31.0"
+    "@alwatr/type" "^0.31.0"
+    "@alwatr/util" "^0.31.0"
+    tslib "^2.5.0"
+
+"@alwatr/type@^0.31.0":
+  version "0.31.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/type/-/type-0.31.0.tgz#790b281f6258f6c4bb4617d0cbec68096aaac255"
+  integrity sha512-AyghvcXcVUheACcSYWrqa31vFAQMcOOvQabdDKPv1QjowwfYqHfprarndJSesePFf8nIFQyNZLvKQ1+b6d6IEg==
+
+"@alwatr/util@^0.31.0":
+  version "0.31.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/util/-/util-0.31.0.tgz#a3cbfd4cc52275ed6581e7a4b01a33e9d66970f6"
+  integrity sha512-IXkHiuu3dR5tOzlA6Ql5WnYR8fP9C5oD9t15WLXkLmYNlKSoEA7cHzW5rG4B8LwrGCEVar8qNFSlEeSg1Q3Lsg==
+  dependencies:
+    "@alwatr/math" "^0.31.0"
+    "@alwatr/type" "^0.31.0"
+    tslib "^2.5.0"
+
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
