@@ -1,11 +1,6 @@
-import {createLogger, globalAlwatr} from '@alwatr/logger';
+import {AlwatrBaseSignal} from '@alwatr/signal2';
 
 import type {MaybePromise, SingleOrArray, Stringifyable} from '@alwatr/type';
-
-globalAlwatr.registeredList.push({
-  name: '@alwatr/fsm',
-  version: _ALWATR_VERSION_,
-});
 
 export type ActionFn = (this: unknown) => MaybePromise<void>;
 export type ConditionFn = (this: unknown) => boolean;
@@ -86,9 +81,11 @@ export type MachineConfig<StateName extends string, EventName extends string, Co
 /**
  * Finite State Machine Class
  */
-export class FiniteStateMachine<Context extends Stringifyable, StateName extends string, EventName extends string> {
-  protected _logger = createLogger(`alwatr/fsm`);
-
+export class FiniteStateMachine<
+  Context extends Stringifyable,
+  StateName extends string,
+  EventName extends string
+> extends AlwatrBaseSignal<StateConfig<StateName, EventName>> {
   /**
    * Current state
    */
@@ -105,6 +102,7 @@ export class FiniteStateMachine<Context extends Stringifyable, StateName extends
      */
     protected _config: MachineConfig<StateName, EventName, Context>,
   ) {
+    super('FiniteStateMachine', 'fsm');
     this._logger.logMethodArgs?.('constructor', {_config});
 
     this.context = _config.context;

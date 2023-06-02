@@ -12,6 +12,6 @@
   "references": [
     {"path": "../logger"},
     {"path": "../type"},
-    {"path": "../signal"},
+    {"path": "../signal2"},
   ]
 }
