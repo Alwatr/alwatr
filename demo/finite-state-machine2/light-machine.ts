@@ -3,11 +3,8 @@ import {delay} from '@alwatr/util';
 
 
 const lightMachine = new FiniteStateMachine({
+  name: 'light-machine',
   initial: 'green',
-  context: {
-    a: 0,
-    b: 0,
-  },
   states: {
     $all: {
       entry(): void {console.log('$all entry called');},
@@ -128,27 +125,19 @@ const lightMachine = new FiniteStateMachine({
 console.log('start', lightMachine.state);
 
 await delay(1000);
-lightMachine.context.a = 1;
-lightMachine.transition('TIMER');
-
-await delay(1000);
-lightMachine.context.b = 2;
 lightMachine.transition('TIMER');
 
 await delay(1000);
 lightMachine.transition('TIMER');
 
 await delay(1000);
-lightMachine.context.a = 4;
+lightMachine.transition('TIMER');
+
+await delay(1000);
 lightMachine.transition('POWER_LOST');
 
 await delay(1000);
-lightMachine.context = {
-  a: 5,
-  b: 5,
-};
 lightMachine.transition('TIMER');
 
 await delay(1000);
-lightMachine.context.a = 6;
 lightMachine.transition('POWER_BACK');
