@@ -43,14 +43,14 @@ function test_access_obj() {
   if (userListRecord['user_' + size / 2]['user'] !== 'user_' + size / 2) throw new Error('not_match');
 }
 
-bench('test_make_map_1st', test_make_map);
-bench('test_make_obj_1st', test_make_obj);
-bench('test_access_map_1st', test_access_map);
-bench('test_access_obj_1st', test_access_obj);
+bench('test_make_map_1st', test_make_map, 10_000);
+bench('test_make_obj_1st', test_make_obj, 10_000);
+bench('test_access_map_1st', test_access_map, 10_000);
+bench('test_access_obj_1st', test_access_obj, 10_000);
 
-bench('test_make_map_2nd', test_make_map);
-bench('test_make_obj_2nd', test_make_obj);
-bench('test_access_map_2nd', test_access_map);
-bench('test_access_obj_2nd', test_access_obj);
+bench('test_make_map_2nd', test_make_map, 10_000);
+bench('test_make_obj_2nd', test_make_obj, 10_000);
+bench('test_access_map_2nd', test_access_map, 10_000);
+bench('test_access_obj_2nd', test_access_obj, 10_000);
 
 globalThis.document?.body.append(' Done. Check the console.');
