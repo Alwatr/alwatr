@@ -1,5 +1,6 @@
 import {fetch} from '@alwatr/fetch';
 import {createLogger} from '@alwatr/logger';
+import {random} from '@alwatr/math';
 import {AlwatrNanoServer} from '@alwatr/nano-server';
 
 import {AlwatrTelegramApi} from './api.js';
@@ -57,8 +58,9 @@ export class AlwatrTelegram {
    * @see https://core.telegram.org/bots/api#setwebhook
    */
   async setWebhook(listenHost = '0.0.0.0', listenPort = 8000): Promise<void> {
-    this.logger.logMethod?.('setWebhook');
-    const response = await this.callApi('setWebhook', {url: this.config.webhookDomain});
+    this.logger.logMethodArgs?.('setWebhook', {listenHost, listenPort});
+    const secretToken = random.uuid;
+    const response = await this.callApi('setWebhook', {url: this.config.webhookDomain, secret_token: secretToken});
     const responseJson = await response.json();
 
     if (!responseJson.ok) {
@@ -72,7 +74,17 @@ export class AlwatrTelegram {
       allowAllOrigin: true,
     });
 
-    nanoServer.route('POST', '/', async (connection) => {
+    nanoServer.route('ALL', 'all', async (connection) => {
+      const telegramSecretToken = connection.incomingMessage.headers['x-telegram-bot-api-secret-token'];
+
+      if (telegramSecretToken !== secretToken) {
+        return {
+          ok: false,
+          statusCode: 403,
+          errorCode: 'access_denied',
+        };
+      }
+
       const body = (await connection.requireJsonBody()) as unknown as Update;
       this.handleUpdate(body as Update);
       return {

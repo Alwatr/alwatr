@@ -12,6 +12,6 @@ bot.defineCommandHandler('requestAdmin', async (context) => {
     return;
   }
 
-  addAdmin(context.chatId, context.messageThreadId);
+  await addAdmin(context.chatId, context.messageThreadId);
   context.reply(message('admin_added_successfully'));
 });

@@ -17,7 +17,9 @@ export const config = {
     token: telegramBotToken,
     username: process.env.TELEGRAM_BOT_USERNAME,
     webhookDomain: telegramBotWebhookDomain,
-    debugMode: process.env.TELEGRAM_BOT_DEBUG_MODE ? true : undefined,
+    debugMode: process.env.TELEGRAM_BOT_DEBUG_MODE === '1' ? true : undefined,
+    host: process.env.HOST ?? '0.0.0.0',
+    port: process.env.PORT ? +process.env.PORT : 8080,
   },
   bot: {
     adminToken: process.env.ADMIN_TOKEN ?? 'admin-token',

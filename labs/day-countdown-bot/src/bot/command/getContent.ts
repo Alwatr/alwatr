@@ -24,7 +24,7 @@ bot.defineCommandHandler('getContent', async (context) => {
 
 export async function sendContent(day: number, chatId: number, chatThreadId?: number): Promise<void> {
   logger.logMethodArgs?.('sendContent', {day, chatId, chatThreadId});
-  const content = await contentStorageClient.get(day + '', 'ghadir');
+  const content = await contentStorageClient.get(day + '', 'mobaheleh');
   if (content == null) {
     await bot.api.sendMessage(chatId, message('get_content_null').replace('${day}', day + ''), {
       message_thread_id: chatThreadId,

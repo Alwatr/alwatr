@@ -5,14 +5,14 @@ import {message} from './director/l18e-loader.js';
 import {bot} from './lib/bot.js';
 import {contentStorageClient} from './lib/storage.js';
 import {adminInfoList} from './util/admin.js';
-import {dateDistance, ghadir} from './util/calender.js';
+import {dateDistance, mobaheleh} from './util/calender.js';
 import {actionAllChat} from './util/chat.js';
 
 import type {MaybePromise} from '@alwatr/type';
 
 async function sendDayCountdownContent(day: number): Promise<void> {
   logger.logMethodArgs?.('sendDayCountdownContent', {day});
-  const content = await contentStorageClient.get(day + '', 'ghadir');
+  const content = await contentStorageClient.get(day + '', 'mobaheleh');
   if (content == null) {
     logger.accident('dayCountdown', 'content_is_null', 'Content is Null', day);
     adminInfoList.forEach(async (info) => {
@@ -62,10 +62,9 @@ function scheduleDailyTask(targetTime: Date, callback: () => MaybePromise<void>)
 export async function dayCountdown(): Promise<void> {
   const targetTime = new Date();
   targetTime.setHours(config.bot.notifyTimestamp, 0, 0, 0);
-  targetTime.setHours(9, 0, 0, 0);
   scheduleDailyTask(targetTime, async () => {
-    let day = dateDistance(ghadir.valueOf());
-    if (day < 1) return; // TODO: notify to admin for remove it.
+    let day = dateDistance(mobaheleh.valueOf());
+    if (day < 0) return; // TODO: notify to admin for remove it.
 
     await sendDayCountdownContent(day);
     adminInfoList.forEach(async (info) => {
@@ -73,3 +72,13 @@ export async function dayCountdown(): Promise<void> {
     });
   });
 }
+
+bot.defineCommandHandler('dayCountdown', async () => {
+  let day = dateDistance(mobaheleh.valueOf());
+  if (day < 0) return; // TODO: notify to admin for remove it.
+
+  await sendDayCountdownContent(day);
+  adminInfoList.forEach(async (info) => {
+    await sendContent(--day, info.chatId, info.messageThreadId);
+  });
+});
