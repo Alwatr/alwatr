@@ -69,39 +69,38 @@ export type TransitionConfig<StateName extends string> = {
 /**
  * Finite State Machine state configs
  */
-export type MachineConfig<StateName extends string, EventName extends string> = {
+export type MachineConfig<StateName extends string> = {
   name: string;
   initial: StateName;
-  states: StateConfig<StateName, EventName>;
 };
 
 /**
  * Finite State Machine Class
  */
-export class FiniteStateMachine<StateName extends string, EventName extends string> extends AlwatrBaseSignal<
-  StateConfig<StateName, EventName>
-> {
+export abstract class FiniteStateMachine<StateName extends string, EventName extends string>
+  extends AlwatrBaseSignal<StateConfig<StateName, EventName>> {
   /**
    * Current state
    */
   state: State<StateName, EventName>;
 
+  abstract statesRecord: StateConfig<StateName, EventName>;
+
   constructor(
     /**
      * Finite State Machine state configs
      */
-    protected _config: MachineConfig<StateName, EventName>,
+    protected _config: MachineConfig<StateName>,
   ) {
     super(_config.name, 'fsm');
-    this._logger.logMethodArgs?.('constructor', {_config});
-
     this.state = {
       target: _config.initial,
       from: _config.initial,
       by: 'INIT',
     };
 
-    this._execTransitionActions();
+    // must call after child class's constructor done.
+    setTimeout(this._execTransitionActions.bind(this), 0);
   }
 
   /**
@@ -109,7 +108,7 @@ export class FiniteStateMachine<StateName extends string, EventName extends stri
    */
   transition(event: EventName): void {
     const fromState = this.state.target;
-    const transition = this._config.states[fromState]?.on[event] ?? this._config.states.$all.on[event];
+    const transition = this.statesRecord[fromState]?.on[event] ?? this.statesRecord.$all.on[event];
 
     this._logger.logMethodArgs?.('transition', {fromState, event, target: transition?.target});
 
@@ -122,8 +121,8 @@ export class FiniteStateMachine<StateName extends string, EventName extends stri
             fromState,
             event,
             events: {
-              ...this._config.states.$all?.on,
-              ...this._config.states[fromState]?.on,
+              ...this.statesRecord.$all?.on,
+              ...this.statesRecord[fromState]?.on,
             },
           },
       );
@@ -165,23 +164,23 @@ export class FiniteStateMachine<StateName extends string, EventName extends stri
     this._logger.logMethodArgs?.('_execTransitionActions', {state: this.state});
 
     if (this.state.by === 'INIT') {
-      await this._execActions(this._config.states.$all.entry);
-      await this._execActions(this._config.states[this.state.target]?.entry);
+      await this._execActions(this.statesRecord.$all.entry);
+      await this._execActions(this.statesRecord[this.state.target]?.entry);
       return;
     }
     // else
 
     if (this.state.from !== this.state.target) {
-      await this._execActions(this._config.states.$all.exit);
-      await this._execActions(this._config.states[this.state.from]?.exit);
-      await this._execActions(this._config.states.$all.entry);
-      await this._execActions(this._config.states[this.state.target]?.entry);
+      await this._execActions(this.statesRecord.$all.exit);
+      await this._execActions(this.statesRecord[this.state.from]?.exit);
+      await this._execActions(this.statesRecord.$all.entry);
+      await this._execActions(this.statesRecord[this.state.target]?.entry);
     }
 
     await this._execActions(
-      this._config.states[this.state.from]?.on[this.state.by] != null
-        ? this._config.states[this.state.from].on[this.state.by]?.actions
-        : this._config.states.$all.on[this.state.by]?.actions,
+      this.statesRecord[this.state.from]?.on[this.state.by] != null
+        ? this.statesRecord[this.state.from].on[this.state.by]?.actions
+        : this.statesRecord.$all.on[this.state.by]?.actions,
     );
   }
 
