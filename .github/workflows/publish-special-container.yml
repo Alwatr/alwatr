@@ -83,7 +83,7 @@ jobs:
             description: Clone of Mariadb.
             version:
               short: 10
-              full: 1.9
+              full: 10.9
 
           # - image: tdlib
           #   path: cloud/container/tdlib
