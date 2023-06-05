@@ -1,118 +1,48 @@
-import {AlwatrBaseSignal} from '@alwatr/signal2';
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {AlwatrBaseSignal} from '@alwatr/signal2/base.js';
+import {capitalize} from '@alwatr/util';
 
-import type {MaybePromise, SingleOrArray} from '@alwatr/type';
+import type {MaybePromise} from '@alwatr/type';
 
-export type ActionFn = (this: unknown) => MaybePromise<void>;
-export type ConditionFn = (this: unknown) => boolean;
-
-export type State<StateName extends string, EventName extends string> = {
-  /**
-   * Current state name.
-   */
-  target: StateName;
-
-  /**
-   * Last state name.
-   */
-  from: StateName;
-
-  /**
-   * Transition event name.
-   */
-  by: EventName | 'INIT';
+type StateEventDetail<S, E> = {
+  from: S;
+  event: E;
+  to: S;
 };
 
 /**
- * State Configurations.
+ * Finite State Machine Base Class
  */
-export type StateConfig<StateName extends string, EventName extends string> = {
-  readonly [S in StateName | '$all']: {
-    /**
-     * On state exit actions
-     */
-    readonly exit?: SingleOrArray<ActionFn>;
-
-    /**
-     * On state entry actions
-     */
-    readonly entry?: SingleOrArray<ActionFn>;
-
-    /**
-     * An object mapping eventId to state.
-     *
-     * Example:
-     *
-     * ```ts
-     * stateRecord: {
-     *   on: {
-     *     TIMER: {
-     *       target: 'green',
-     *       condition: () => car.gas > 0,
-     *       actions: () => car.go(),
-     *     }
-     *   }
-     * }
-     * ```
-     */
-    readonly on: {
-      readonly [E in EventName]?: TransitionConfig<StateName> | undefined;
-    };
-  };
-};
-
-export type TransitionConfig<StateName extends string> = {
-  readonly target?: StateName;
-  readonly conditions?: SingleOrArray<ConditionFn>;
-  readonly actions?: SingleOrArray<ActionFn>;
-};
-
-/**
- * Finite State Machine state configs
- */
-export type MachineConfig<StateName extends string> = {
-  name: string;
-  initial: StateName;
-};
-
-/**
- * Finite State Machine Class
- */
-export abstract class FiniteStateMachine<StateName extends string, EventName extends string>
-  extends AlwatrBaseSignal<StateConfig<StateName, EventName>> {
+export abstract class FiniteStateMachineBase<S extends string, E extends string> extends AlwatrBaseSignal<S> {
   /**
    * Current state
    */
-  state: State<StateName, EventName>;
+  protected get state(): S {
+    return this._getDetail()!;
+  }
 
-  abstract statesRecord: StateConfig<StateName, EventName>;
+  protected abstract stateRecord: Record<S | '_all', undefined | Record<E, undefined | S>>;
 
-  constructor(
-    /**
-     * Finite State Machine state configs
-     */
-    protected _config: MachineConfig<StateName>,
-  ) {
-    super(_config.name, 'fsm');
-    this.state = {
-      target: _config.initial,
-      from: _config.initial,
-      by: 'INIT',
-    };
+  constructor(name: string, protected _initial: S) {
+    super(name, 'fsm');
+    this._$detail = _initial;
+  }
 
-    // must call after child class's constructor done.
-    setTimeout(this._execTransitionActions.bind(this), 0);
+  protected _shouldTransition(_eventDetail: StateEventDetail<S, E>): MaybePromise<boolean> {
+    return true;
   }
 
   /**
    * Transition finite state machine instance to new state.
    */
-  transition(event: EventName): void {
-    const fromState = this.state.target;
-    const transition = this.statesRecord[fromState]?.on[event] ?? this.statesRecord.$all.on[event];
+  protected async _transition(event: E): Promise<void> {
+    const fromState = this.state;
+    const toState = this.stateRecord[fromState]?.[event] ?? this.stateRecord._all?.[event];
 
-    this._logger.logMethodArgs?.('transition', {fromState, event, target: transition?.target});
+    this._logger.logMethodArgs?.('transition', {fromState, event, toState});
 
-    if (transition == null) {
+    if (toState == null) {
       this._logger.incident?.(
           'transition',
           'invalid_target_state',
@@ -120,116 +50,53 @@ export abstract class FiniteStateMachine<StateName extends string, EventName ext
           {
             fromState,
             event,
-            events: {
-              ...this.statesRecord.$all?.on,
-              ...this.statesRecord[fromState]?.on,
-            },
           },
       );
       return;
     }
 
-    if (this._execConditions(transition.conditions) !== true) return;
+    const eventDetail: StateEventDetail<S, E> = {from: fromState, event, to: toState};
 
-    this.state = {
-      target: transition.target ?? fromState,
-      from: fromState,
-      by: event,
-    };
+    if ((await this._shouldTransition(eventDetail)) !== true) return;
 
-    this._execTransitionActions();
+    this._dispatch(toState);
 
-    // TODO: call subscribers
-  }
-
-  // subscribe(callback: () => void): number {}
-
-  // unsubscribe(listenerId: number): void {}
-
-  /**
-   * Reset finite state machine instance to initial state and context.
-   */
-  reset(): void {
-    this.state = {
-      target: this._config.initial,
-      from: this._config.initial,
-      by: 'INIT',
-    };
+    this._transitioned(eventDetail);
   }
 
   /**
    * Execute all actions for current state.
    */
-  protected async _execTransitionActions(): Promise<void> {
-    this._logger.logMethodArgs?.('_execTransitionActions', {state: this.state});
+  protected async _transitioned(eventDetail: StateEventDetail<S, E>): Promise<void> {
+    this._logger.logMethodArgs?.('eventDetail', eventDetail);
 
-    if (this.state.by === 'INIT') {
-      await this._execActions(this.statesRecord.$all.entry);
-      await this._execActions(this.statesRecord[this.state.target]?.entry);
-      return;
+    const from = capitalize(eventDetail.from);
+    const event = capitalize(eventDetail.event);
+    const to = capitalize(eventDetail.to);
+
+    await this._$execMethod(`_onEvent${event}`, eventDetail);
+
+    if (eventDetail.from !== eventDetail.to) {
+      await this._onStateExit(eventDetail);
+      await this._$execMethod(`_on${from}Exit`, eventDetail);
+      await this._onStateEnter(eventDetail);
+      await this._$execMethod(`_on${to}Enter`, eventDetail);
     }
-    // else
 
-    if (this.state.from !== this.state.target) {
-      await this._execActions(this.statesRecord.$all.exit);
-      await this._execActions(this.statesRecord[this.state.from]?.exit);
-      await this._execActions(this.statesRecord.$all.entry);
-      await this._execActions(this.statesRecord[this.state.target]?.entry);
+    if (`_on${from}${event}}` in this) {
+      this._$execMethod(`_on${from}${event}}`, eventDetail);
     }
-
-    await this._execActions(
-      this.statesRecord[this.state.from]?.on[this.state.by] != null
-        ? this.statesRecord[this.state.from].on[this.state.by]?.actions
-        : this.statesRecord.$all.on[this.state.by]?.actions,
-    );
-  }
-
-  _execConditions(conditions: SingleOrArray<ConditionFn> | undefined): boolean {
-    if (conditions == null) return true;
-
-    if (Array.isArray(conditions)) {
-      this._logger.logMethodArgs?.(
-          '_execConditions',
-          conditions.map((c) => c.name),
-      );
-      return conditions.map((condition) => this._execConditions(condition)).every((r) => r === true);
-    }
-    // else
-
-    this._logger.logMethodArgs?.('_execConditions', conditions.name);
-
-    try {
-      return conditions.call(this);
-    }
-    catch (error) {
-      this._logger.error('_execConditions', 'exec_condition_failed', error, conditions);
-      return false;
+    else {
+      this._$execMethod(`_onAll${event}}`, eventDetail);
     }
   }
 
-  async _execActions(actions: SingleOrArray<ActionFn> | undefined): Promise<void> {
-    if (actions == null) return;
-
-    if (Array.isArray(actions)) {
-      this._logger.logMethodArgs?.(
-          '_execActions',
-          actions.map((a) => a.name),
-      );
-      // exec all actions
-      for (const action of actions) {
-        await this._execActions(action);
-      }
-      return;
-    }
-    // else
-
-    this._logger.logMethodArgs?.('_execActions', actions.name);
-
-    try {
-      await actions.call(this);
-    }
-    catch (error) {
-      return this._logger.error('_execActions', 'exec_action_failed', error, actions);
-    }
+  protected _$execMethod(name: string, eventDetail: StateEventDetail<S, E>): MaybePromise<void> {
+    const _method = name as '_onStateExit'; // ts cheating ;)
+    return this[_method]?.(eventDetail);
   }
+
+  protected _onStateExit(_eventDetail: StateEventDetail<S, E>): MaybePromise<void> {}
+
+  protected _onStateEnter(_eventDetail: StateEventDetail<S, E>): MaybePromise<void> {}
 }
