@@ -1,17 +1,30 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {AlwatrBaseSignal} from '@alwatr/signal2/base.js';
-import {capitalize} from '@alwatr/util';
 
 import type {MaybePromise} from '@alwatr/type';
 
-type StateEventDetail<S, E> = {
+export type StateEventDetail<S, E> = {
   from: S;
   event: E;
   to: S;
 };
 
-export type StateRecord<S, E> = Record<S | '_all', undefined | Record<E, undefined | S>>;
+export type StateRecord<S extends string, E extends string> = Partial<Record<S | '_all', Partial<Record<E, S>>>>;
+
+export interface Action<S extends string, E extends string> {
+  (): MaybePromise<void>;
+  (eventDetail: StateEventDetail<S, E>): MaybePromise<void>;
+}
+
+export type ActionName<S extends string, E extends string> =
+  | `_on_${E}`
+  | `_on_${S}_exit`
+  | `_on_${S}_enter`
+  | `_on_${S}_${E}`
+  | `_on_all_${E}`;
+
+export type ActionRecord<S extends string, E extends string> = Partial<Record<ActionName<S, E>, Action<S, E>>>;
 
 /**
  * Finite State Machine Base Class
@@ -25,6 +38,8 @@ export abstract class FiniteStateMachineBase<S extends string, E extends string>
   }
 
   protected abstract stateRecord: StateRecord<S, E>;
+
+  protected abstract actionRecord: ActionRecord<S, E>;
 
   constructor(name: string, protected _initial: S) {
     super(name, 'fsm');
@@ -72,30 +87,25 @@ export abstract class FiniteStateMachineBase<S extends string, E extends string>
   protected async _transitioned(eventDetail: StateEventDetail<S, E>): Promise<void> {
     this._logger.logMethodArgs?.('eventDetail', eventDetail);
 
-    const from = capitalize(eventDetail.from);
-    const event = capitalize(eventDetail.event);
-    const to = capitalize(eventDetail.to);
-
-    await this._$execMethod(`_onEvent${event}`, eventDetail);
+    await this._$execMethod(`_on_${eventDetail.event}`, eventDetail);
 
     if (eventDetail.from !== eventDetail.to) {
       await this._onStateExit(eventDetail);
-      await this._$execMethod(`_on${from}Exit`, eventDetail);
+      await this._$execMethod(`_on_${eventDetail.from}_exit`, eventDetail);
       await this._onStateEnter(eventDetail);
-      await this._$execMethod(`_on${to}Enter`, eventDetail);
+      await this._$execMethod(`_on_${eventDetail.to}_enter`, eventDetail);
     }
 
-    if (`_on${from}${event}}` in this) {
-      this._$execMethod(`_on${from}${event}}`, eventDetail);
+    if (`_on_${eventDetail.from}_${eventDetail.event}` in this) {
+      this._$execMethod(`_on_${eventDetail.from}_${eventDetail.event}`, eventDetail);
     }
     else {
-      this._$execMethod(`_onAll${event}}`, eventDetail);
+      this._$execMethod(`_on_all_${eventDetail.event}`, eventDetail);
     }
   }
 
-  protected _$execMethod(name: string, eventDetail: StateEventDetail<S, E>): MaybePromise<void> {
-    const _method = name as '_onStateExit'; // ts cheating ;)
-    return this[_method]?.(eventDetail);
+  protected _$execMethod(name: ActionName<S, E>, eventDetail: StateEventDetail<S, E>): MaybePromise<void> {
+    return this.actionRecord[name]?.(eventDetail);
   }
 
   protected _onStateExit(_eventDetail: StateEventDetail<S, E>): MaybePromise<void> {}
