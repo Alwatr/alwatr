@@ -8,9 +8,9 @@ import type {SubscribeOptions, ListenerCallback, ListenerObject, SubscribeResult
 export abstract class AlwatrBaseSignal<TDetail> {
   protected _logger;
   protected _$detail?: TDetail;
-  protected _$listenerList: Array<ListenerObject<TDetail>> = [];
+  protected _$listenerList: Array<ListenerObject> = [];
 
-  constructor(protected name: string, loggerPrefix: string) {
+  constructor(loggerPrefix: string, protected name: string) {
     this._logger = createLogger(`{${loggerPrefix}: ${name}}`);
     this._logger.logMethod?.('constructor');
   }
@@ -41,14 +41,14 @@ export abstract class AlwatrBaseSignal<TDetail> {
     this._logger.logMethod?.('_$executeListeners');
     if (this._$detail === undefined) return;
 
-    const removeList: Array<ListenerObject<TDetail>> = [];
+    const removeList: Array<ListenerObject> = [];
 
     for (const listener of this._$listenerList) {
       if (listener.options.disabled) continue;
       if (listener.options.once) removeList.push(listener);
 
       try {
-        const ret = listener.callback(this._$detail);
+        const ret = listener.callback();
         if (ret instanceof Promise) {
           ret.catch((err) => this._logger.error('_executeListeners', 'call_listener_failed', err));
         }
@@ -66,11 +66,12 @@ export abstract class AlwatrBaseSignal<TDetail> {
   /**
    * Subscribe to context changes.
    */
-  subscribe(listenerCallback: ListenerCallback<TDetail>, options: SubscribeOptions = {}): SubscribeResult {
+  subscribe(listenerCallback: ListenerCallback, options: SubscribeOptions = {}): SubscribeResult {
     this._logger.logMethodArgs?.('subscribe', {options});
 
-    const _listenerObject: ListenerObject<TDetail> = {
-      callback: listenerCallback,
+    const _listenerCallbackOverThis = listenerCallback.call(this);
+    const _listenerObject: ListenerObject = {
+      callback: () => _listenerCallbackOverThis,
       options,
     };
 
@@ -81,7 +82,7 @@ export abstract class AlwatrBaseSignal<TDetail> {
       callbackExecuted = true;
       setTimeout(() => {
         try {
-          listenerCallback(detail);
+          _listenerCallbackOverThis;
         }
         catch (err) {
           this._logger.error('subscribe.receivePrevious', 'call_signal_callback_failed', err);
@@ -107,7 +108,7 @@ export abstract class AlwatrBaseSignal<TDetail> {
   /**
    * Unsubscribe from context.
    */
-  unsubscribe(listenerCallback: ListenerCallback<TDetail>): void {
+  unsubscribe(listenerCallback: ListenerCallback): void {
     this._logger.logMethod?.('unsubscribe');
     const listenerIndex = this._$listenerList.findIndex((listener) => listener.callback === listenerCallback);
     if (listenerIndex !== -1) {
@@ -128,7 +129,7 @@ export abstract class AlwatrBaseSignal<TDetail> {
   /**
    * Get the detail of the next context changes.
    */
-  protected _untilChange(): Promise<TDetail> {
+  protected _untilChange(): Promise<void> {
     this._logger.logMethod?.('untilNext');
     return new Promise((resolve) => {
       this.subscribe(resolve, {
