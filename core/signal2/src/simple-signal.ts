@@ -5,7 +5,7 @@ import {AlwatrBaseSignal} from './base.js';
  */
 export class AlwatrSimpleSignal extends AlwatrBaseSignal<undefined> {
   constructor(public override name: string) {
-    super(name, 'event-signal');
+    super('event-signal', name);
   }
 
   /**

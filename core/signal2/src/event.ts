@@ -5,7 +5,7 @@ import {AlwatrBaseSignal} from './base.js';
  */
 export class AlwatrEventSignal<TDetail> extends AlwatrBaseSignal<TDetail> {
   constructor(public override name: string) {
-    super(name, 'event-signal');
+    super('event-signal', name);
   }
 
   /**

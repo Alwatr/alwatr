@@ -5,7 +5,7 @@ import {AlwatrBaseSignal} from './base.js';
  */
 export class AlwatrContextSignal<TValue> extends AlwatrBaseSignal<TValue> {
   constructor(public override name: string) {
-    super(name, 'context-signal');
+    super('context-signal', name);
   }
 
   /**
@@ -37,7 +37,7 @@ export class AlwatrContextSignal<TValue> extends AlwatrBaseSignal<TValue> {
   /**
    * Get the value of the next context changes.
    */
-  untilChange(): Promise<TValue> {
+  untilChange(): Promise<void> {
     return this._untilChange();
   }
 }
