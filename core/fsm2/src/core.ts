@@ -11,6 +11,8 @@ type StateEventDetail<S, E> = {
   to: S;
 };
 
+export type StateRecord<S, E> = Record<S | '_all', undefined | Record<E, undefined | S>>;
+
 /**
  * Finite State Machine Base Class
  */
@@ -22,7 +24,7 @@ export abstract class FiniteStateMachineBase<S extends string, E extends string>
     return this._getDetail()!;
   }
 
-  protected abstract stateRecord: Record<S | '_all', undefined | Record<E, undefined | S>>;
+  protected abstract stateRecord: StateRecord<S, E>;
 
   constructor(name: string, protected _initial: S) {
     super(name, 'fsm');
