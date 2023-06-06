@@ -17,7 +17,7 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
-    "**/**/*.{d.ts.map,d.ts,js.map,js,md}"
+    "**/**/*.{d.ts.map,d.ts,js.map,js,md,css}"
   ],
   "publishConfig": {
     "access": "public"
