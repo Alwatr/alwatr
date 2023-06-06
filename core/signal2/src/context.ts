@@ -1,11 +1,14 @@
 import {AlwatrBaseSignal} from './base.js';
 
+import type {ListenerCallback, SubscribeOptions, SubscribeResult} from './type.js';
+
 /**
  * Alwatr context signal.
  */
 export class AlwatrContextSignal<TValue> extends AlwatrBaseSignal<TValue> {
-  constructor(public override name: string) {
-    super(name, 'context-signal');
+  constructor(config: {name: string, loggerPrefix?: string}) {
+    config.loggerPrefix ??= 'context-signal';
+    super(config);
   }
 
   /**
@@ -14,7 +17,7 @@ export class AlwatrContextSignal<TValue> extends AlwatrBaseSignal<TValue> {
    * Return undefined if context not set before or expired.
    */
   getValue(): TValue | undefined {
-    return this._getDetail();
+    return super._getDetail();
   }
 
   /**
@@ -22,7 +25,7 @@ export class AlwatrContextSignal<TValue> extends AlwatrBaseSignal<TValue> {
    */
   setValue(value: TValue): void {
     this._logger.logMethodArgs?.('setValue', {value});
-    this._dispatch(value);
+    super._dispatch(value);
   }
 
   /**
@@ -31,13 +34,27 @@ export class AlwatrContextSignal<TValue> extends AlwatrBaseSignal<TValue> {
    * `receivePrevious` in new subscribers not work until new context changes.
    */
   expire(): void {
-    this._expire();
+    super._expire();
   }
 
   /**
    * Get the value of the next context changes.
    */
   untilChange(): Promise<TValue> {
-    return this._untilChange();
+    return super._untilChange();
+  }
+
+  /**
+   * Subscribe to context changes.
+   */
+  subscribe(listenerCallback: ListenerCallback<this, TValue>, options?: SubscribeOptions): SubscribeResult {
+    return super._subscribe(listenerCallback, options);
+  }
+
+  /**
+   * Unsubscribe from context.
+   */
+  unsubscribe(listenerCallback: ListenerCallback<this, TValue>): void {
+    return super._unsubscribe(listenerCallback);
   }
 }

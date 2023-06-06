@@ -25,9 +25,13 @@ export abstract class FiniteStateMachineBase<S extends string, E extends string>
    */
   protected _actionRecord: ActionRecord<S, E> = {};
 
-  constructor(name: string, protected _initial: S) {
-    super(name, 'fsm');
-    this._$detail = _initial;
+  protected _initialState: S;
+
+  constructor(config: {name: string, loggerPrefix?: string, initialState: S}) {
+    config.loggerPrefix ??= 'fsm';
+    super(config);
+    this._initialState = config.initialState;
+    this._reset();
   }
 
   /**
@@ -101,5 +105,12 @@ export abstract class FiniteStateMachineBase<S extends string, E extends string>
       this._logger.logMethodArgs?.('_$execAction', name);
       return this._actionRecord[name]?.call(this, eventDetail);
     }
+  }
+
+  /**
+   * Reset machine to initial state.
+   */
+  protected _reset(): void {
+    this._$detail = this._initialState;
   }
 }

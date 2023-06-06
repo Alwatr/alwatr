@@ -1,9 +1,9 @@
 import {AlwatrContextSignal} from '@alwatr/signal2';
 
-const context = new AlwatrContextSignal<{name: string; age: number}>('user-info-context');
+const context = new AlwatrContextSignal<{name: string; age: number}>({name: 'user-info-context'});
 
-function subscribeHandler(context: {name: string; age: number}): void {
-  console.log('subscribe: a new context signal received', context);
+function subscribeHandler(): void {
+  console.log('subscribe: a new context signal received', context.getValue());
 }
 context.subscribe(subscribeHandler);
 

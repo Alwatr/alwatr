@@ -44,12 +44,14 @@ export class AlwatrMultithreadContextSignal<TValue> extends AlwatrContextSignal<
     });
   }
 
-  constructor(name: string) {
-    super(name);
-    if (AlwatrMultithreadContextSignal._registry[name] !== undefined) {
+  constructor(config: {name: string, loggerPrefix?: string}) {
+    super(config);
+
+    if (AlwatrMultithreadContextSignal._registry[this._name] !== undefined) {
       throw new Error('context_name_exist');
     }
-    AlwatrMultithreadContextSignal._registry[name] = this as AlwatrMultithreadContextSignal<unknown>;
+
+    AlwatrMultithreadContextSignal._registry[this._name] = this as AlwatrMultithreadContextSignal<unknown>;
   }
 
   /**
@@ -57,6 +59,6 @@ export class AlwatrMultithreadContextSignal<TValue> extends AlwatrContextSignal<
    */
   override setValue(value: TValue): void {
     super.setValue(value);
-    AlwatrMultithreadContextSignal._postMessage(this.name, value);
+    AlwatrMultithreadContextSignal._postMessage(this._name, value);
   }
 }
