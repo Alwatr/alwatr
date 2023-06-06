@@ -9,11 +9,11 @@ class LightMachine extends FiniteStateMachineBase<State, Event> {
     super('light-machine', 'green');
   }
 
-  override get state(): State {
-    return this.state;
+  get state(): State {
+    return super._state;
   }
 
-  protected override stateRecord: StateRecord<State, Event> = {
+  protected override _stateRecord: StateRecord<State, Event> = {
     _all: {
       powerLost: 'flashingRed',
     },
@@ -31,20 +31,12 @@ class LightMachine extends FiniteStateMachineBase<State, Event> {
     },
   };
 
-  protected override actionRecord: ActionRecord<State, Event> = {
+  protected override _actionRecord: ActionRecord<State, Event> = {
     '_on_flashingRed_powerBack': this._on_flashingRed_powerBack,
   };
 
   transition(event: Event): void {
     this._transition(event);
-  }
-
-  protected override _onStateEnter(): void {
-    console.log('_all enter called', this.state);
-  }
-
-  protected override _onStateExit(): void {
-    console.log('_all exit called');
   }
 
   _onAllPowerLost(): void {
