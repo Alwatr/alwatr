@@ -25,6 +25,7 @@
     {"path": "./core/validator"},
     {"path": "./core/util"},
     {"path": "./core/fsm"},
+    {"path": "./core/fsm2"},
     {"path": "./core/type"},
 
     // ui

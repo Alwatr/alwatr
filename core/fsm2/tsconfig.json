@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base",
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "rootDir": "src",
+    "outDir": "."
+  },
+
+  "include": ["src/**/*.ts"],
+  "exclude": [],
+  "references": [
+    {"path": "../logger"},
+    {"path": "../type"},
+    {"path": "../signal2"}
+  ]
+}
