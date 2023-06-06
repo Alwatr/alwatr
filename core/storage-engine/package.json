@@ -40,7 +40,7 @@
     "@alwatr/type": "^0.32.0",
     "@alwatr/util": "^0.32.0",
     "exit-hook": "^3.2.0",
-    "tslib": "^2.5.2"
+    "tslib": "^2.5.3"
   },
   "devDependencies": {
     "@alwatr/type": "^0.30.0"

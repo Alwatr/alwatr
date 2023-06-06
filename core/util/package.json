@@ -42,7 +42,7 @@
   "dependencies": {
     "@alwatr/math": "^0.32.0",
     "@alwatr/type": "^0.32.0",
-    "tslib": "^2.5.2"
+    "tslib": "^2.5.3"
   },
   "devDependencies": {
     "flatstr": "^1.0.12"
