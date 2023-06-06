@@ -42,6 +42,6 @@
     "ts-lit-plugin": "^1.2.1",
     "tslib": "^2.5.3",
     "typescript": "^5.0.4",
-    "workbox-build": "^6.5.4"
+    "workbox-build": "^7.0.0"
   }
 }
