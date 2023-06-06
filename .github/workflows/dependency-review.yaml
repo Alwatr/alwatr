@@ -3,7 +3,11 @@
 name: Dependency Review
 
 on:
-  pull_request:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - next
 
 jobs:
   dependency-review:

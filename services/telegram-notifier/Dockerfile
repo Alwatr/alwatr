@@ -1,4 +1,4 @@
-ARG NODE_VERSION=19
+ARG NODE_VERSION=20
 FROM docker.io/library/node:${NODE_VERSION}-alpine as builder
 
 WORKDIR /app

@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: Lint
+name: Build & Lint
 
 on:
   workflow_dispatch:
@@ -9,9 +9,8 @@ on:
 
   push:
     branches:
-      - next*
+      - next
       - main
-      - release/*
 
   schedule:
     - cron: '0 7 * * 4'
@@ -24,17 +23,15 @@ on:
     #        └───────────── minute (0 - 59)
 
 env:
-  NODE_VERSION: latest
+  NODE_VERSION: lts/*
 
 jobs:
-  lint-ts:
-    name: ESLint Scanning
+  build-list-ts:
+    name: Build Typescript
     runs-on: ubuntu-latest
 
     permissions:
-      actions: read
       contents: read
-      security-events: write
 
     steps:
       - name: ⤵️ Checkout repository
@@ -49,14 +46,11 @@ jobs:
       - name: 🏗 Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: 🚀 Build Typescript
+        run: yarn build
+
+      - name: 🚀 Extra Packages Build
+        run: yarn lerna run build
+
       - name: 🚀 Run ESLint
         run: yarn lint:ts
-          --format @microsoft/eslint-formatter-sarif
-          --output-file eslint-results.sarif
-        continue-on-error: true
-
-      - name: 🏗 Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v2.3.6
-        with:
-          sarif_file: eslint-results.sarif
-          wait-for-processing: true
