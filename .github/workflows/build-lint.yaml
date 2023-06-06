@@ -9,9 +9,8 @@ on:
 
   push:
     branches:
-      - next*
+      - next
       - main
-      - release/*
 
   schedule:
     - cron: '0 7 * * 4'
@@ -24,16 +23,15 @@ on:
     #        └───────────── minute (0 - 59)
 
 env:
-  NODE_VERSION: latest
+  NODE_VERSION: lts
 
 jobs:
-  build-ts:
+  build-list-ts:
     name: Build Typescript
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
-      security-events: write
 
     steps:
       - name: ⤵️ Checkout repository
