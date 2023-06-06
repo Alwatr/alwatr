@@ -23,7 +23,7 @@ on:
     #        └───────────── minute (0 - 59)
 
 env:
-  NODE_VERSION: lts
+  NODE_VERSION: lts/*
 
 jobs:
   build-list-ts:
