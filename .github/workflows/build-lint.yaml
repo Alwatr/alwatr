@@ -26,8 +26,8 @@ env:
   NODE_VERSION: lts/*
 
 jobs:
-  build-list-ts:
-    name: Build Typescript
+  build-lint-ts:
+    name: Build & Lint Typescript
     runs-on: ubuntu-latest
 
     permissions:
