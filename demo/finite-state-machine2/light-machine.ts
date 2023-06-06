@@ -1,54 +1,48 @@
-import {ActionRecord, FiniteStateMachineBase, StateRecord} from '@alwatr/fsm2';
+import {FiniteStateMachine} from '@alwatr/fsm2';
 import {delay} from '@alwatr/util';
 
 type State = 'green' | 'yellow' | 'red' | 'flashingRed';
 type Event = 'timer' | 'powerBack' | 'powerLost';
 
-class LightMachine extends FiniteStateMachineBase<State, Event> {
-  constructor() {
-    super('light-machine', 'green');
+class LightMachine extends FiniteStateMachine<State, Event> {
+  constructor(name: string) {
+    super(name, 'green');
+
+    this._stateRecord = {
+      _all: {
+        powerLost: 'flashingRed',
+      },
+      green: {
+        timer: 'yellow',
+      },
+      yellow: {
+        timer: 'red',
+      },
+      red: {
+        timer: 'green',
+      },
+      flashingRed: {
+        powerBack: 'green',
+      },
+    };
+
+    this._actionRecord = {
+      '_on_powerLost': this._onPowerLost,
+    };
   }
 
-  get state(): State {
-    return super._state;
-  }
-
-  protected override _stateRecord: StateRecord<State, Event> = {
-    _all: {
-      powerLost: 'flashingRed',
-    },
-    green: {
-      timer: 'yellow',
-    },
-    yellow: {
-      timer: 'red',
-    },
-    red: {
-      timer: 'green',
-    },
-    flashingRed: {
-      powerBack: 'green',
-    },
-  };
-
-  protected override _actionRecord: ActionRecord<State, Event> = {
-    '_on_flashingRed_powerBack': this._on_flashingRed_powerBack,
-  };
-
-  transition(event: Event): void {
-    this._transition(event);
-  }
-
-  _onAllPowerLost(): void {
-    console.log('_all.POWER_LOST actions called');
-  }
-
-  _on_flashingRed_powerBack(): void {
-    console.log('_on_flashingRed_powerBack');
+  protected _onPowerLost(): void {
+    console.warn('_onPowerLost');
   }
 }
 
-const lightMachine = new LightMachine();
+// ----
+
+const lightMachine = new LightMachine('light_machine_1');
+
+lightMachine.subscribe(() => {
+  console.log('state changed: %s', lightMachine.state);
+});
 
 console.log('start', lightMachine.state);
 
