@@ -11,6 +11,6 @@ document.getElementById('changeContext')?.addEventListener('click', () => {
   messageContext.setValue({type: 'demo.signal', payload: {i: ++i}});
 });
 
-messageContext.subscribe((message) => {
-  logger.logMethodArgs?.('main/subscribe', message);
+messageContext.subscribe(() => {
+  logger.logMethodArgs?.('main/subscribe', messageContext.getValue());
 });

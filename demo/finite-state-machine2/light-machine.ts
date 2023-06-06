@@ -6,7 +6,7 @@ type Event = 'timer' | 'powerBack' | 'powerLost';
 
 class LightMachine extends FiniteStateMachine<State, Event> {
   constructor(name: string) {
-    super(name, 'green');
+    super({name, initialState: 'green'});
 
     this._stateRecord = {
       _all: {
@@ -27,7 +27,7 @@ class LightMachine extends FiniteStateMachine<State, Event> {
     };
 
     this._actionRecord = {
-      '_on_powerLost': this._onPowerLost,
+      _on_powerLost: this._onPowerLost,
     };
   }
 
@@ -38,10 +38,10 @@ class LightMachine extends FiniteStateMachine<State, Event> {
 
 // ----
 
-const lightMachine = new LightMachine('light_machine_1');
+const lightMachine = new LightMachine('demo.light-machine.1');
 
-lightMachine.subscribe(() => {
-  console.log('state changed: %s', lightMachine.state);
+lightMachine.subscribe(function StateChanged() {
+  console.log('state changed: %s', this.state);
 });
 
 console.log('start', lightMachine.state);

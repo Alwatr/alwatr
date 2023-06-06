@@ -6,12 +6,15 @@ import type {SubscribeOptions, ListenerCallback, ListenerObject, SubscribeResult
  * Alwatr base signal.
  */
 export abstract class AlwatrBaseSignal<TDetail> {
+  protected _name;
   protected _logger;
   protected _$detail?: TDetail;
-  protected _$listenerList: Array<ListenerObject<TDetail>> = [];
+  protected _$listenerList: Array<ListenerObject<this, TDetail>> = [];
 
-  constructor(protected name: string, loggerPrefix: string) {
-    this._logger = createLogger(`{${loggerPrefix}: ${name}}`);
+  constructor(config: {name: string; loggerPrefix?: string}) {
+    config.loggerPrefix ??= 'signal';
+    this._name = config.name;
+    this._logger = createLogger(`{${config.loggerPrefix}: ${this._name}}`);
     this._logger.logMethod?.('constructor');
   }
 
@@ -41,14 +44,14 @@ export abstract class AlwatrBaseSignal<TDetail> {
     this._logger.logMethod?.('_$executeListeners');
     if (this._$detail === undefined) return;
 
-    const removeList: Array<ListenerObject<TDetail>> = [];
+    const removeList: Array<ListenerObject<this, TDetail>> = [];
 
     for (const listener of this._$listenerList) {
       if (listener.options.disabled) continue;
       if (listener.options.once) removeList.push(listener);
 
       try {
-        const ret = listener.callback(this._$detail);
+        const ret = listener.callback.call(this, this._$detail);
         if (ret instanceof Promise) {
           ret.catch((err) => this._logger.error('_executeListeners', 'call_listener_failed', err));
         }
@@ -59,17 +62,20 @@ export abstract class AlwatrBaseSignal<TDetail> {
     }
 
     for (const listener of removeList) {
-      this.unsubscribe(listener.callback);
+      this._unsubscribe(listener.callback);
     }
   }
 
   /**
    * Subscribe to context changes.
    */
-  subscribe(listenerCallback: ListenerCallback<TDetail>, options: SubscribeOptions = {}): SubscribeResult {
+  protected _subscribe(
+      listenerCallback: ListenerCallback<this, TDetail>,
+      options: SubscribeOptions = {},
+  ): SubscribeResult {
     this._logger.logMethodArgs?.('subscribe', {options});
 
-    const _listenerObject: ListenerObject<TDetail> = {
+    const _listenerObject: ListenerObject<this, TDetail> = {
       callback: listenerCallback,
       options,
     };
@@ -81,7 +87,7 @@ export abstract class AlwatrBaseSignal<TDetail> {
       callbackExecuted = true;
       setTimeout(() => {
         try {
-          listenerCallback(detail);
+          listenerCallback.call(this, detail);
         }
         catch (err) {
           this._logger.error('subscribe.receivePrevious', 'call_signal_callback_failed', err);
@@ -100,14 +106,14 @@ export abstract class AlwatrBaseSignal<TDetail> {
     }
 
     return {
-      unsubscribe: this.unsubscribe.bind(this, listenerCallback),
+      unsubscribe: this._unsubscribe.bind(this, listenerCallback),
     };
   }
 
   /**
    * Unsubscribe from context.
    */
-  unsubscribe(listenerCallback: ListenerCallback<TDetail>): void {
+  protected _unsubscribe(listenerCallback: ListenerCallback<this, TDetail>): void {
     this._logger.logMethod?.('unsubscribe');
     const listenerIndex = this._$listenerList.findIndex((listener) => listener.callback === listenerCallback);
     if (listenerIndex !== -1) {
@@ -131,7 +137,7 @@ export abstract class AlwatrBaseSignal<TDetail> {
   protected _untilChange(): Promise<TDetail> {
     this._logger.logMethod?.('untilNext');
     return new Promise((resolve) => {
-      this.subscribe(resolve, {
+      this._subscribe(resolve, {
         once: true,
         priority: true,
         receivePrevious: false,

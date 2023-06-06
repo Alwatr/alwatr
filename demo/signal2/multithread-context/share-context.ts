@@ -6,4 +6,4 @@ type Message = {
   type: string;
   payload: Stringifyable
 }
-export const messageContext = new AlwatrMultithreadContextSignal<Message>('demo.message');
+export const messageContext = new AlwatrMultithreadContextSignal<Message>({name: 'demo.message'});
