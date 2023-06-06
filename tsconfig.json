@@ -13,6 +13,7 @@
     {"path": "./core/logger"},
     {"path": "./core/fetch"},
     {"path": "./core/signal"},
+    {"path": "./core/signal2"},
     {"path": "./core/context"},
     {"path": "./core/router"},
     {"path": "./core/i18n"},
@@ -20,10 +21,11 @@
     {"path": "./core/nano-server"},
     {"path": "./core/storage-engine"},
     {"path": "./core/storage-client"},
-    {"path": "./core/token"},
+    {"path": "./core/crypto"},
     {"path": "./core/validator"},
     {"path": "./core/util"},
     {"path": "./core/fsm"},
+    {"path": "./core/fsm2"},
     {"path": "./core/type"},
 
     // ui

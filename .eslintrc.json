@@ -57,6 +57,8 @@
     "import/no-unresolved": "off",
     "import/no-duplicates": ["error", {"prefer-inline": true}],
     "wc/guard-super-call": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "no-throw-literal": "off",
     "require-jsdoc": "off",
     "valid-jsdoc": "off"
   }

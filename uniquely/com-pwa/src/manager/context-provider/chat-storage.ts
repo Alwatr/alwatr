@@ -1,23 +1,22 @@
 import {serverContextConsumer} from '@alwatr/context';
 
+import {userProfileContextConsumer} from './user.js';
 import {config} from '../../config.js';
 
-import type {AlwatrDocumentStorage, User, ChatMessage} from '@alwatr/type';
+import type {AlwatrDocumentStorage, ChatMessage} from '@alwatr/type';
 
 export const chatStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<ChatMessage>>(
     'chat_storage_context',
     {
       ...config.fetchContextOptions,
-      url: config.api + '/chat/',
+      url: config.serverContext.api + '/chat/',
     },
 );
 
-chatStorageContextConsumer.fsm.defineSignals([
-  {
-    signalId: 'user_context',
-    callback: (user: User): void => {
-      (chatStorageContextConsumer.getOptions().queryParameters ??= {}).userId = user.id;
+userProfileContextConsumer.subscribe((userProfile) => {
+  chatStorageContextConsumer.setOptions({
+    queryParameters: {
+      userId: userProfile.id,
     },
-    receivePrevious: 'NextCycle',
-  },
-]);
+  });
+}, {receivePrevious: 'NextCycle'});

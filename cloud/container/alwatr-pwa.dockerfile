@@ -1,11 +1,13 @@
-ARG NODE_VERSION=19
-ARG ALWATR_NGINX_VERSION=1.3.2-1.24-alpine
+ARG NODE_VERSION=20
+ARG ALWATR_NGINX_VERSION=1.7.0-1.24-alpine
 
 FROM docker.io/library/node:${NODE_VERSION}-alpine as builder
 
 WORKDIR /app
 
 ENV NODE_ENV production
+
+RUN apk add --no-cache git
 
 # Install dependencies
 COPY package.json *.lock ./

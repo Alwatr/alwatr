@@ -14,8 +14,9 @@
   "references": [
     {"path": "../../core/nano-server"},
     {"path": "../../core/type"},
-    {"path": "../../core/token"},
+    {"path": "../../core/crypto"},
     {"path": "../../core/logger"},
+    {"path": "../../core/math"},
     {"path": "../../core/storage-client"}
   ]
 }

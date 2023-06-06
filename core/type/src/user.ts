@@ -9,9 +9,25 @@ export interface User extends AlwatrDocumentObject {
    */
   id: string;
 
+  /**
+   * Link pass epoch number, started from 1 and increased by token revoke.
+   */
+  lpe: number;
+
+  /**
+   * User token, used for user authorization.
+   * DANGER: This field should not be save in public storage.
+   */
+  token?: string;
+
+  /**
+   * User authorization permissions list.
+   */
+  permissions?: Array<string> | 'root';
+
   fullName: string;
 
-  phoneNumber: string;
+  phoneNumber: number;
 
   gender: Gender;
 
@@ -39,5 +55,13 @@ export interface User extends AlwatrDocumentObject {
    */
   address?: string;
 
+  /**
+   * Postal code
+   */
   postalCode?: string;
+}
+
+export type UserAuth = {
+  id: string;
+  token: string;
 }

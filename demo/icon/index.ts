@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import '@alwatr/icon';
 // import {preloadIcon} from '@alwatr/icon';
 import {random} from '@alwatr/math';

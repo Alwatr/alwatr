@@ -21,7 +21,10 @@ export async function crawlAllJobs(): Promise<void> {
       job.resultList = resultList;
       if (differentObject(job.resultList, oldResultList)) {
         const message = makeMessage(job);
-        await notify(config.notifier.to, message);
+        if (message !== '') {
+          await notify(config.notifier.to, message);
+        }
+
         logger.logOther?.(`Notified to ${config.notifier.to}!`);
         await storageClient.set(job);
         updated = true;
@@ -149,9 +152,12 @@ function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): 
 function makeMessage(job: Job): string {
   logger.logMethod?.('makeMessage');
 
-  // prettier-ignore
-  const resultListStr = job.resultList.length === 0 ? 'هیچ پروازی یافت نشد!'
-  : job.resultList.map((jobResult) => `
+  if (job.resultList.length === 0) {
+    // return 'هیچ پروازی یافت نشد!';
+    return '';
+  }
+
+  const resultListStr = job.resultList.map((jobResult) => `
     💰${jobResult.price.toLocaleString('en-US')} ⏰${jobResult.time} 💺${jobResult.seatCount} 🛫${jobResult.flightId}
   `).join('');
 

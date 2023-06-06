@@ -1,15 +1,18 @@
-ARG ALWATR_NGINX_VERSION=1.3.2-1.24-alpine
+ARG ALWATR_NGINX_VERSION=1.7.0-1.24-alpine
 
 FROM ghcr.io/alimd/nginx:$ALWATR_NGINX_VERSION
 
 # Default environment for nginx template
-ENV NGINX_OPEN_FILE_CACHE_INACTIVE=1s \
-    NGINX_OPEN_FILE_CACHE_VALID=2s \
+ENV NGINX_OPEN_FILE_CACHE="max=5000 inactive=1h" \
+    NGINX_OPEN_FILE_CACHE_VALID=1s \
+    NGINX_OPEN_FILE_CACHE_MIN_USES=2 \
+    NGINX_OUTPUT_BUFFERS="8 8k" \
+    NGINX_DOCUMENT_ROOT=/storage/publistore \
     NGINX_EXPIRES_DYNAMIC=epoch \
     NGINX_EXPIRES_STATIC=max \
-    NGINX_EXPIRES_DEFAULT=epoch
+    NGINX_EXPIRES_DEFAULT=epoch \
+    NGINX_DISABLE_SYMLINKS=if_not_owner \
+    NGINX_LIMIT_REQ_RATE=400
 
-RUN rm -fv index.html
-COPY index.json ./
 COPY _error.json /var/www/
 COPY conf/ /etc/nginx/templates/

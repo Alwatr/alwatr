@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Bug Fixes
+
+- **nano-server:** `data` type ([f629f3b](https://github.com/AliMD/alwatr/commit/f629f3b7952b775ead78119c699ce93c119b8164))
+
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- **nano-server:** path prefix ([83995f7](https://github.com/AliMD/alwatr/commit/83995f7bc9748ecb632d6f8dbea5e2f96fa59c41))
+- **nano-server:** prefixPattern, logger ([f9d203e](https://github.com/AliMD/alwatr/commit/f9d203e65955629f6dd5c468867f20ce578337eb))
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+- **nano-server:** add getUserAuth ([615266f](https://github.com/AliMD/alwatr/commit/615266f06ef47a7a5b36fe3d6abee1653703bf6f))
+- **nano-server:** prefix pattern ([ad5e1b5](https://github.com/AliMD/alwatr/commit/ad5e1b56651c96cb825187604f877fee396b3ec4))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Features

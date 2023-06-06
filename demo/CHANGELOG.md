@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Bug Fixes
+
+- import util/node ([ca9e995](https://github.com/AliMD/alwatr/commit/ca9e995567ad267c1730e1c98f9dbbd03ab90331))
+
+### Features
+
+- **es-bench:** enhance with optional count and warning ([0d21ee7](https://github.com/AliMD/alwatr/commit/0d21ee79210cf86b6b94904afdac09d5698c3cec))
+- **es-bench:** test flatStr ([961fe4e](https://github.com/AliMD/alwatr/commit/961fe4edb9bb686cc5da8325726eb19099149173))
+
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- build issues ([e1060bc](https://github.com/AliMD/alwatr/commit/e1060bccbfe3c775c32b85e9b8eb601e48b2998c))
+- **demo/crypto:** `logger`s & `token` ([3a777fb](https://github.com/AliMD/alwatr/commit/3a777fb8c7d4deba682c1a84c472c502604f1d2b))
+- **demo/crypto:** log ([0e12cfd](https://github.com/AliMD/alwatr/commit/0e12cfd5fc97a4099353bc12a32d1db179be4720))
+- **demo/crypto:** revert last demo ([8a350a5](https://github.com/AliMD/alwatr/commit/8a350a5554907329cf2c6efc61ea8fef23a0a548))
+- **demo/crypto:** use all token status ([66ae2b7](https://github.com/AliMD/alwatr/commit/66ae2b7286bd8b422e31296f2c17fc477656ab29))
+- **demo/fsm:** new demo for new fsm ([32fa215](https://github.com/AliMD/alwatr/commit/32fa2155d73be3c1328b4926273176ee47505c39))
+- **demo/icon:** remove preloadIcon in demo ([72fe224](https://github.com/AliMD/alwatr/commit/72fe224aeebe4abd6508d0132e4f1943efbd9123))
+- **demo/storage-engine:** use save ([b21408f](https://github.com/AliMD/alwatr/commit/b21408f430608249bb82c418fcaf08b35f4d166e))
+- **demo/token:** import type ([046403a](https://github.com/AliMD/alwatr/commit/046403ab5e3a01642e9a171e2953f087d35c15c5))
+- **demo:** fix demo based on latest `fsm`s changes ([551e5fe](https://github.com/AliMD/alwatr/commit/551e5fe75fa106bc3252bbbbf108a68bf0dc19e7))
+- **demo:** token ([ad03a19](https://github.com/AliMD/alwatr/commit/ad03a19fc4970c01c39ac1b40e8d933a8d0539a0))
+- **es-bench:** logger dev mode ([c2d6cf3](https://github.com/AliMD/alwatr/commit/c2d6cf3753d28cd3c760ab9cd34efa3d3cc50232))
+- **es-bench:** remove `stat` ([9dc52c7](https://github.com/AliMD/alwatr/commit/9dc52c7801cde62d90e962c69635162c416e55ee))
+- **fsm/demo:** signalList ([d53202c](https://github.com/AliMD/alwatr/commit/d53202c7daf3f55682e47e78f9a8a1b8bc70441d))
+- **lint:** ignore es-bench ([a6f59e4](https://github.com/AliMD/alwatr/commit/a6f59e433f6104b934b24ae90676fd0273eea3e8))
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+- **storage-engine:** dev mode ([65491ce](https://github.com/AliMD/alwatr/commit/65491ce7b7ff0756d8e475442d175b880b9894db))
+
+### Features
+
+- **bench:** improve bench mark logs ([8d3121b](https://github.com/AliMD/alwatr/commit/8d3121be52493440906c9788a90c69e4c8d05789))
+- **bench:** test logger benchmark impact ([8ed98d8](https://github.com/AliMD/alwatr/commit/8ed98d8764834431c6806545660ba3a77eadc9c6))
+- **bench:** test object vs map ([f60a9fc](https://github.com/AliMD/alwatr/commit/f60a9fce1ca9491e3916fd40fb7a1443927f9d65))
+- **com-pwa/sign-in:** use simple hash for phoneNumber ([4b88494](https://github.com/AliMD/alwatr/commit/4b884940a536f02928692fbf8686c5ca04dea23a))
+- **crypto/hash:** new crc length strategy ([7a6c27e](https://github.com/AliMD/alwatr/commit/7a6c27e2f1b78df4aaa03a764f1b57477f1220fc))
+- **crypto:** add `user factory` demo ([94236c8](https://github.com/AliMD/alwatr/commit/94236c8ece66a1ced6cbf3f35603d2716ab1d5c1))
+- **demo/crypto:** random ([d820445](https://github.com/AliMD/alwatr/commit/d8204451e356c60572df3862edbdb02c06bf6b9f))
+- **demo/fsm:** new demo for state machine ([136b563](https://github.com/AliMD/alwatr/commit/136b563220310d8ec637b4e776c48c1d3bb62ecc))
+- **demo/fsm:** update ([6080469](https://github.com/AliMD/alwatr/commit/60804694ccab53b5c22ea636992f54ef1dde6a4b))
+- **demo/fsm:** update with new api ([9170694](https://github.com/AliMD/alwatr/commit/917069457630eecfa24c6fe83b7d34fb281a9d2d))
+- **demo:** crypto hash ([445b865](https://github.com/AliMD/alwatr/commit/445b8650a1abd98696b7fe954bcfca23f76afba8))
+- **es-bench:** compare `bind` vs `class` ([b949f87](https://github.com/AliMD/alwatr/commit/b949f87234353cd7238730aa26c353422fb06951))
+- **es-bench:** date locale ([7591331](https://github.com/AliMD/alwatr/commit/7591331f08adf1cad855cfcaeca98122d3045009))
+- **es-bench:** new bench model ([3ef68b0](https://github.com/AliMD/alwatr/commit/3ef68b034562a96a927d969d35a54966997aff6e))
+- **es-bench:** test node exist methods ([73bb495](https://github.com/AliMD/alwatr/commit/73bb495deea5df537e42f7c604ab262dba17026a))
+- **fsm:** custom signal callback ([47c22e9](https://github.com/AliMD/alwatr/commit/47c22e92a8a8085148b44b316d649b695ff8071a))
+- **validator:** add `phone` validation ([e5c19ca](https://github.com/AliMD/alwatr/commit/e5c19ca67e7c804cf3e63841890e68c11620d796))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Bug Fixes

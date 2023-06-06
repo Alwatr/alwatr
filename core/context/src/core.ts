@@ -38,6 +38,9 @@ export const serverContextFsmConstructor = finiteStateMachineProvider.defineCons
         request_failed: {
           target: 'loadingFailed',
         },
+        request_failed_404: {
+          target: 'loadingFailed',
+        },
         request_success: {
           target: 'reloading',
         },
@@ -53,6 +56,9 @@ export const serverContextFsmConstructor = finiteStateMachineProvider.defineCons
       entry: ['online_mode', 'request'],
       on: {
         request_failed: {
+          target: 'loadingFailed',
+        },
+        request_failed_404: {
           target: 'loadingFailed',
         },
         request_success: {
@@ -74,6 +80,9 @@ export const serverContextFsmConstructor = finiteStateMachineProvider.defineCons
       entry: ['online_mode', 'request'],
       on: {
         request_failed: {
+          target: 'reloadingFailed',
+        },
+        request_failed_404: {
           target: 'reloadingFailed',
         },
         request_success: {
@@ -122,11 +131,18 @@ finiteStateMachineProvider.defineActions<ServerContextFsm>(serverContextFsmConst
     try {
       const {response, options} = fsm.getContext();
       if (options == null || options.url == null) {
-        return logger.error('action_request', 'invalid_fetch_options', {id: fsm.id, options});
+        logger.error('action_request', 'invalid_fetch_options', {id: fsm.id, options});
+        return;
       }
       const newResponse = await serviceRequest<NonNullable<ServerContextFsmContext['response']>>(
         options as StringifyableFetchOptions,
       );
+
+      if (newResponse.data == null) {
+        logger.accident('requestOrderStorageContext', 'context_not_found', 'Server request 404 not found');
+        fsm.transition('request_failed_404');
+        return;
+      }
 
       if (
         response != null &&

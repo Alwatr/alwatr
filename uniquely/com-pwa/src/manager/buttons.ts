@@ -24,6 +24,11 @@ export const buttons = {
     icon: 'reload-outline',
   },
 
+  reloadAdminOrderListStorage: {
+    icon: 'reload-outline',
+    flipRtl: true,
+    clickSignalId: 'reload_admin_order_list_storage',
+  },
   reloadOrderStorage: {
     icon: 'reload-outline',
     flipRtl: true,
@@ -42,6 +47,11 @@ export const buttons = {
     icon: 'arrow-back-outline',
     flipRtl: true,
     clickSignalId: 'back_to_order_list_event',
+  },
+  backToAdminOrderList: {
+    icon: 'arrow-back-outline',
+    flipRtl: true,
+    clickSignalId: 'back_to_admin_order_list_event',
   },
 
   editItems: {

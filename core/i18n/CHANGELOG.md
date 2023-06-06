@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+**Note:** Version bump only for package @alwatr/i18n
+
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+- **i18n:** date method for convert date to active locale ([8b51a97](https://github.com/AliMD/alwatr/commit/8b51a97c780ffd3ed653124f64c0752af779f41c))
+
+### Performance Improvements
+
+- **i18n:** use toLocaleDateString for convert date ([f1efcec](https://github.com/AliMD/alwatr/commit/f1efcecb2480e310d289333d840a0dd27fa3881d))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Features

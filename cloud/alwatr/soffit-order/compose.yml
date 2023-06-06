@@ -1,0 +1,175 @@
+networks:
+  internal:
+  alwatr-public-network:
+    name: alwatr-public-network
+    external: true
+
+services:
+  pwa:
+    image: ghcr.io/alimd/com-pwa:${PWA_VERSION}
+
+    cpu_count: 1
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      alwatr-public-network:
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    environment:
+      - NGINX_ACCESS_LOG=${PWA_ACCESS_LOG:-off}
+
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+
+  api:
+    image: ghcr.io/alimd/com-api:${API_VERSION}
+
+    cpu_count: 1
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      internal:
+      alwatr-public-network:
+
+    depends_on:
+      - storage-server
+
+    environment:
+      - STORAGE_HOST=${APP_ID}-storage-server
+      - STORAGE_PORT=80
+      - STORAGE_TOKEN=${STORAGE_ACCESS_TOKEN}
+      - TOKEN_GENERATOR_SECRET=${TOKEN_GENERATOR_SECRET}
+      - ALWATR_DEBUG=${API_DEBUG:-}
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/api/v1/
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+
+  storage-server:
+    image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION}
+
+    cpu_count: 1
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    stop_grace_period: 30s
+
+    restart: unless-stopped
+
+    networks:
+      internal:
+        aliases:
+          - '${APP_ID}-storage-server'
+
+    environment:
+      - STORAGE_PATH=/storage
+      - ACCESS_TOKEN=${STORAGE_ACCESS_TOKEN}
+      - ALWATR_DEBUG=${STORAGE_SERVER_DEBUG:-}
+
+    volumes:
+      - type: bind
+        source: ./_data/storage
+        target: /storage
+        bind:
+          create_host_path: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+  nginx-storage:
+    image: ghcr.io/alimd/nginx-storage:${NGINX_STORAGE_VERSION}
+
+    cpu_count: 1
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      alwatr-public-network:
+
+    environment:
+      - NGINX_ACCESS_LOG=${NGINX_STORAGE_ACCESS_LOG:-off}
+
+    volumes:
+      - type: bind
+        source: ./_data/storage
+        target: /storage
+        bind:
+          create_host_path: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefixStrip:/api/v1/publistore/
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+
+  cdn:
+    image: ghcr.io/alimd/nginx:${CDN_VERSION}
+
+    cpu_count: 1
+    cpu_shares: 1024
+    mem_limit: 256m
+
+    restart: unless-stopped
+
+    networks:
+      alwatr-public-network:
+
+    environment:
+      - NGINX_ACCESS_LOG=${CDN_ACCESS_LOG:-off}
+
+    volumes:
+      - type: bind
+        source: ./_data/cdn
+        target: /var/www/html/cdn
+        bind:
+          create_host_path: true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '2'
+
+    labels:
+      traefik.enable: true
+      traefik.port: 80
+      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/cdn/
+      traefik.frontend.entryPoints: http, https
+      traefik.frontend.redirect.entryPoint: https
+

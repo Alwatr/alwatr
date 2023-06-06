@@ -9,10 +9,11 @@
     "retry": "تلاش مجدد",
     "loading": "درحال بارگذاری...",
     "cancel": "لغو",
+    "invalid_phone_number": "شماره تلفن صحیح نمی‌باشد.",
 
-    "page_404_not_found": "پیدا نشد!",
-    "page_404_under_develope": "دردست ساخت",
-    "page_404_under_develope_description": "برنامه نویسان سخت مشغول کارند...\nاندکی صبر سحر نزدیک است...\nدرضمن اگر رو من بزنی یک سفارش الکی ثبت می‌شود\nپس لطفا نزن!",
+    "page_404_not_found_headline": "یافت نشد",
+    "page_404_not_found": "صفحه مورد نظر یافت نشد!",
+    "page_404_not_found_description": "می‌توانید از منوی صفحه اصلی مجدداً برای پیدا کردن صفحه مورد نظر اقدام کنید.",
 
     "fetch_failed_headline": "خطا!",
     "fetch_failed_description": "خطا در اتصال به اینترنت! لطفا مجدد تلاش کنید.",
@@ -23,6 +24,8 @@
 
     "page_order_list_headline": "لیست سفارشات جاری",
     "page_order_list_reloading_failed": "بارگیری مجدد با خطا روبرو شد! دوباره امتحان کنید.",
+
+    "order_list_is_empty": "سفارشی ثبت نشده است.",
 
     "page_order_headline": "سفارش جدید",
     "page_order_edit_items": "ویرایش لیست محصولات",
@@ -39,20 +42,34 @@
     "page_order_retry_button": "تلاش مجدد",
     "page_order_shipping_info_not_valid_message": "لطفا اطلاعات بارگیری را تکمیل کنید.",
     "page_order_order_not_valid_message": "لطفا مقادیر سفارش رو بازبینی و اصلاح کنید.",
+    "order_summary_palette_price": "هزینه پالت (${paletteCount} عدد)",
 
-    "page_order_tracking_headline": "پیگیری سفارش",
+    "page_admin_order_list_headline": "لیست سفارشات کاربران",
+    "page_admin_order_list_phone_number": "شماره تلفن",
+    "page_admin_order_list_province": "استان",
+    "page_admin_order_list_city": "شهر",
+    "page_admin_order_list_order_id": "کد سفارش",
+    "page_admin_order_list_order_list": "لیست سفارشات",
+    "page_admin_order_list_order_status": "وضعیت سفارش",
+    "page_admin_order_list_order_date": "تاریخ ثبت سفارش",
+    "page_admin_order_list_empty_order_list": "سفارشی ثبت نشده است.",
 
-    "page_sign_in_headline": "ورود",
+    "page_admin_order_list_reloading_failed": "بارگذاری با خطا روبرو شد، لطفا مجدد تلاش کنید.",
+
+    "page_sign_in_headline": "مدیریت سفارشات سافیت",
     "page_sign_sign_in_failed": "ورود با خطا روبرو شد! لطفا دوباره امتحان کنید.",
     "page_sign_in_phone_number_placeholder": "شماره موبایل",
     "page_sign_in_submit": "ورود",
+    "page_sign_in_login_with_link_pass": "لطفا با رمز آدرس ارسال شده وارد شوید.",
 
     "sign_in_error_user_not_found": "کاربری با این مشخصات یافت نشد!",
     "sign_in_error_unknown": "خطا در اتصال به اینترنت، لطفا مجددا تلاش کنید.",
+    "sign_in_welcome_message": "${fullName} عزیز، خوش آمدید.",
 
     "order_status_box_headline": "سفارش ${orderId}",
     "order_status_box_headline_new": "سفارش جدید",
     "order_status_box_status": "وضعیت سفارش",
+    "order_status_box_created": "تاریخ ثبت سفارش",
 
     "select_product_submit_button": "سفارش محصولات",
 
@@ -67,29 +84,31 @@
     "order_status_canceled": "لغو شده",
     "order_status_refunded": "بازپرداخت",
 
-    "order_shipping_info_empty_description": "-",
-
     "order_shipping_address_title": "آدرس تحویل",
     "order_shipping_recipient_name_title": "نام تحویل گیرنده",
     "order_shipping_recipient_national_code_title": "کد ملی تحویل گیرنده",
-    "order_shipping_shipment_price_title": "هزینه ارسال",
-    "order_shipping_shipment_price_value": "پس کرایه",
+    "order_shipping_shipment_price_title": "هزینه ارسال (پس‌کرایه)",
+    "order_shipping_shipment_price_value": "هنوز مشخص نشده",
     "order_shipping_description_title": "توضیحات",
     "order_shipping_lading_type_title": "نحوه بارگیری",
     "order_shipping_lading_type_key_hand": "دستی",
-    "order_shipping_lading_type_key_pallet": "پالتی",
+    "order_shipping_lading_type_key_pallet": "پالتی (برای تریلی)",
+    "order_shipping_car_type_key_trailer_truck": "تریلی",
+    "order_shipping_car_type_key_camion_dual": "کامیون جفت",
+    "order_shipping_car_type_key_camion_solo": "کامیون تک",
+    "order_shipping_car_type_key_camion_911": "کامیون ۹۱۱",
+    "order_shipping_car_type_key_camion_800": "کامیون ۸۰۰",
+    "order_shipping_car_type_key_camion_600": "کامیون ۶۰۰",
+    "order_shipping_car_type_key_camion_mini": "کامیون مینی",
     "order_shipping_car_type_key_nissan": "نیسان",
-    "order_shipping_car_type_key_one": "تک",
-    "order_shipping_car_type_key_ten_wheel": "ده چرخ",
-    "order_shipping_car_type_key_trolley": "تریلی",
     "order_shipping_car_type_title": "نوع ماشین",
     "order_shipping_time_period_title": "بازه زمانی",
-    "order_shipping_time_period_key_auto": "در اسرع وقت",
+    "order_shipping_time_period_key_auto": "مناسب‌ترین زمان",
     "order_shipping_time_period_key_1_2w": "یک تا دو هفته",
     "order_shipping_time_period_key_2_3w": "دو تا سه هفته",
     "order_shipping_time_period_key_3_4w": "سه تا چهار هفته",
 
-    "order_item_not_exist": "محصول پیدا نشد!",
+    "order_item_not_exist": "محصولی پیدا نشد!",
     "order_item_qty_m2": "متراژ (m²)",
     "order_item_qty_tile": "تعداد (تایل)",
     "order_item_qty_box": "تعداد (بسته)",
@@ -99,17 +118,18 @@
     "order_item_final_total_price": "جمع قیمت نمایندگی",
     "order_item_discount": "سود نمایندگی",
 
-    "order_summary_no_lading_price_yet": "هنوز محاسبه نشده است.",
     "order_summary_total_price": "سرجمع فروش",
     "order_summary_total_final_price": "سرجمع خرید نمایندگی",
     "order_summary_discount": "سود نمایندگی",
-    "order_summary_lading_price": "هزینه بارگیری",
-    "order_summary_discount_after_lading_price": "سود بعد بارگیری",
+    "order_summary_lading_price": "هزینه بارگیری (${carCount} ماشین)",
+    "order_summary_discount_after_lading_price": "سود نهایی بعد ارسال",
     "order_summary_final_total_price": "مبلغ قابل پرداخت",
 
-    "chat_text_input_placeholder": "پیام را بنویسید",
+    "chat_text_input_placeholder": "متن پیام",
 
     "submit_order_success_message": "سفارش شماره ${orderId} با موفقیت ثبت شد.",
-    "submit_order_failed_message": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید."
+    "submit_order_failed_message": "خطا در ثبت سفارش! لطفا مجدد تلاش کنید.",
+
+    "user_order_list_reloading_failed": "خطا در بارگذاری سفارشات کاربر، لطفا مجدد تلاش کنید"
   }
 }

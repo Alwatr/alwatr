@@ -15,13 +15,15 @@ import type {
   ParamKeyType,
   ParamValueType,
   QueryParameters,
+  Stringifyable,
   StringifyableRecord,
+  UserAuth,
 } from '@alwatr/type';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 import type {Duplex} from 'node:stream';
 
 export type RouteMiddleware<
-  TData extends StringifyableRecord = StringifyableRecord,
+  TData extends Stringifyable = Stringifyable,
   TMeta extends StringifyableRecord = StringifyableRecord
 > = (connection: AlwatrConnection) => MaybePromise<AlwatrServiceResponse<TData, TMeta> | null>;
 
@@ -151,7 +153,7 @@ export class AlwatrNanoServer {
    * ```
    */
   route<
-    TData extends StringifyableRecord = StringifyableRecord,
+    TData extends Stringifyable = Stringifyable,
     TMeta extends StringifyableRecord = StringifyableRecord
   >(method: 'ALL' | Methods, route: 'all' | `/${string}`, middleware: RouteMiddleware<TData, TMeta>): void {
     this._logger.logMethodArgs?.('route', {method, route});
@@ -187,7 +189,7 @@ export class AlwatrNanoServer {
    */
   reply(
       serverResponse: ServerResponse,
-      content: AlwatrServiceResponse<StringifyableRecord, StringifyableRecord>,
+      content: AlwatrServiceResponse<Stringifyable, StringifyableRecord>,
   ): void {
     content.statusCode ??= 200;
     this._logger.logMethodArgs?.('reply', {ok: content.ok, statusCode: content.statusCode});
@@ -405,7 +407,7 @@ export class AlwatrConnection {
   /**
    * Get the token placed in the request header.
    */
-  getToken(): string | null {
+  getAuthBearer(): string | null {
     const auth = this.incomingMessage.headers.authorization?.split(' ');
 
     if (auth == null || auth[0].toLowerCase() !== 'bearer') {
@@ -497,10 +499,9 @@ export class AlwatrConnection {
    * ```
    */
   requireToken(validator?: ((token: string) => boolean) | Array<string> | string): string {
-    const token = this.getToken();
+    const token = this.getAuthBearer();
 
     if (token == null) {
-      // eslint-disable-next-line no-throw-literal
       throw {
         ok: false,
         statusCode: 401,
@@ -519,12 +520,32 @@ export class AlwatrConnection {
     else if (typeof validator === 'function') {
       if (validator(token) === true) return token;
     }
-    // eslint-disable-next-line no-throw-literal
     throw {
       ok: false,
       statusCode: 403,
       errorCode: 'access_denied',
     };
+  }
+
+  /**
+   * Parse and get request user auth (include id and token).
+   *
+   * Example:
+   * ```ts
+   * const userAuth = connection.requireUserAuth();
+   * ```
+   */
+  getUserAuth(): UserAuth | null {
+    const auth = this.getAuthBearer()
+        ?.split('/')
+        .filter((item) => item.trim() !== '');
+
+    return auth == null || auth.length !== 2
+      ? null
+      : {
+        id: auth[0],
+        token: auth[1],
+      };
   }
 
   /**

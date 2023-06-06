@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+**Note:** Version bump only for package @alwatr/ui-kit
+
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- **button:** disabled issue ([7f9b457](https://github.com/AliMD/alwatr/commit/7f9b457dabec82636b7fb158206c70f2e150fefd))
+- compatible with new \_addSignalListener signal mixin ([e2be863](https://github.com/AliMD/alwatr/commit/e2be863acd9b99c4fc8f0a81c4efe2ac6db50c39))
+- **icon-button:** disable bug ([a92fee4](https://github.com/AliMD/alwatr/commit/a92fee48bfdf2cf92aa30e8b0fb506ac0fab5c64))
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+- **surface:** disabled color issue ([01a8140](https://github.com/AliMD/alwatr/commit/01a8140ef1f2f86920483e4ee4936dda5a155b9b))
+- **ui/icon-button:** default content value ([4303620](https://github.com/AliMD/alwatr/commit/4303620c26a34999db2ad7098c417e1c8f00414b))
+- **ui/snackbar:** check `actionLabelKey` ([9788f53](https://github.com/AliMD/alwatr/commit/9788f53a469db7cc677f30a5c62a68478018a832))
+- **ui/snackbar:** use label for action button content ([68beefa](https://github.com/AliMD/alwatr/commit/68beefa82532159225dbf5468255dff3adaba43a))
+- **ui/surface:** box sizing ([6ef9a45](https://github.com/AliMD/alwatr/commit/6ef9a45301a699875477f659447001ed5e4ab1c3))
+- **ui/text-field:** fix default of `value` & handle its `click` event ([a685899](https://github.com/AliMD/alwatr/commit/a685899f60f83ed26f43ec7a8f2ca16ec37c1078))
+- **ui/text-field:** set empty string for undefined value ([3efad6b](https://github.com/AliMD/alwatr/commit/3efad6b639ffad06bccb25d48de3fbe6fe2f7abb))
+
+### Features
+
+- **ui-kit/snackbar:** message/actionLabelMessage l10n key ([e09f3e1](https://github.com/AliMD/alwatr/commit/e09f3e170998902e218e1d23a0d3b5ceabc55dc9))
+- **ui-kit/style:** add --sys-surface-reloading-opacity ([2ba6367](https://github.com/AliMD/alwatr/commit/2ba6367058290f8bfdf1eabe1d0cd3a634a7d9db))
+- **ui/button:** label on content ([df010a8](https://github.com/AliMD/alwatr/commit/df010a8ccb49759e5638eb5992898549ce3f55b0))
+- **ui/text-field:** readonly prop ([02a785e](https://github.com/AliMD/alwatr/commit/02a785ef8f842cdb86aea259e8019f01d7ba9e4e))
+- use button content ([a3f3872](https://github.com/AliMD/alwatr/commit/a3f3872c16e2bf5ad99c90cd03563007271fc530))
+
+### Performance Improvements
+
+- **pwa:** optimize first load and rendering ([343d757](https://github.com/AliMD/alwatr/commit/343d757eefab6572df54fb4f7624698e9a9f9e11))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Bug Fixes

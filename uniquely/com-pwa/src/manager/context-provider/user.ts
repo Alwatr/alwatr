@@ -1,17 +1,20 @@
-import {serverContextConsumer} from '@alwatr/context';
+import {contextConsumer, contextProvider} from '@alwatr/context';
+import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 
-import {config} from '../../config.js';
-
-import type {AlwatrDocumentStorage} from '@alwatr/type';
 import type {ComUser} from '@alwatr/type/customer-order-management.js';
 
-export const userStorageContextConsumer = serverContextConsumer<AlwatrDocumentStorage<ComUser>>(
-    'user_storage_context',
-    config.fetchContextOptions,
-);
+const localStorageSuffixKey = '_x2';
 
-export const signIn = (phoneNumber: string, token: string): void => {
-  userStorageContextConsumer.request({
-    url: `${config.api}/auth/${phoneNumber}-${token}`,
-  });
-};
+// user profile
+export const userProfileContextConsumer = contextConsumer<ComUser>('user_profile');
+
+const userProfile = getLocalStorageItem<ComUser | null>(userProfileContextConsumer.id + localStorageSuffixKey, null);
+if (userProfile != null) {
+  contextProvider.setValue<ComUser>(userProfileContextConsumer.id, userProfile);
+}
+userProfileContextConsumer.subscribe((userProfile) => {
+  setLocalStorageItem<ComUser>(userProfileContextConsumer.id + localStorageSuffixKey, userProfile);
+});
+
+// link-pass token
+export const linkPassTokenContextConsumer = contextConsumer<string>('link_pass_token');

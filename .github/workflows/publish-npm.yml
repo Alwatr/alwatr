@@ -14,7 +14,7 @@ on:
       - 'v*.*.*'
 
 env:
-  NODE_VERSION: latest
+  NODE_VERSION: lts/*
 
 jobs:
   publish-npm:

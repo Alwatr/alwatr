@@ -12,8 +12,11 @@ import {
   UnresolvedMixin,
 } from '@alwatr/element';
 import {message} from '@alwatr/i18n';
+import {redirect} from '@alwatr/router';
+import {eventListener} from '@alwatr/signal';
 import '@alwatr/ui-kit/card/icon-box.js';
 
+import {userProfileContextConsumer} from '../../manager/context-provider/user.js';
 import {homePageContentContextConsumer, topAppBarContextProvider} from '../../manager/context.js';
 
 import type {BoxType, PageHomeContent} from '../../type.js';
@@ -55,12 +58,16 @@ export class AlwatrPageHome extends UnresolvedMixin(SignalMixin(AlwatrBaseElemen
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._addSignalListeners(
-        homePageContentContextConsumer.subscribe((content) => {
-          this.content = content;
-          topAppBarContextProvider.setValue(content.topAppBar);
-        }),
-    );
+    this._addSignalListeners(eventListener.subscribe('user-avatar-click-event', () => {
+      if (userProfileContextConsumer.getValue()?.permissions === 'root') {
+        redirect({sectionList: ['admin-order-list']});
+      }
+    }));
+
+    this._addSignalListeners(homePageContentContextConsumer.subscribe((content) => {
+      this.content = content;
+      topAppBarContextProvider.setValue(content.topAppBar);
+    }));
   }
 
   override render(): unknown {

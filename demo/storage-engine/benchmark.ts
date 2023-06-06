@@ -36,6 +36,3 @@ console.time('get item');
 const item = db.get('user_' + max / 2);
 console.timeEnd('get item');
 console.dir(item);
-
-db.forceSave();
-console.log('done');

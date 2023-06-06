@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Bug Fixes
+
+- import util/node ([ca9e995](https://github.com/AliMD/alwatr/commit/ca9e995567ad267c1730e1c98f9dbbd03ab90331))
+
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- logger new api ([fd86f32](https://github.com/AliMD/alwatr/commit/fd86f324b98dc1d22654f4597a033e8ff10c4dad))
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+- **storage-engine:** dev mode ([65491ce](https://github.com/AliMD/alwatr/commit/65491ce7b7ff0756d8e475442d175b880b9894db))
+- **storage-engine:** new \_$save method ([21cdf51](https://github.com/AliMD/alwatr/commit/21cdf5138bfced0177af4538d80f88fe2d415f67))
+
+### Features
+
+- **storage-engine:** none blocking save storage ([f668ba0](https://github.com/AliMD/alwatr/commit/f668ba0232c0b3372ee14c40d35b1f7e577b15c7))
+- **storage-engine:** save new empty storage after open ([85bb855](https://github.com/AliMD/alwatr/commit/85bb8551e2dfe976d191d7c7243c29fe71433e54))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 **Note:** Version bump only for package @alwatr/storage-engine

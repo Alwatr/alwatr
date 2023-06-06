@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+**Note:** Version bump only for package @alwatr/element
+
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- compatible with new \_addSignalListener signal mixin ([e2be863](https://github.com/AliMD/alwatr/commit/e2be863acd9b99c4fc8f0a81c4efe2ac6db50c39))
+- **element/fsmc:** all render state must defined ([93f8ea3](https://github.com/AliMD/alwatr/commit/93f8ea31b8fa4f8845871a795eb2de107797f669))
+- **element/fsm:** compatible old mixins ([fe4427e](https://github.com/AliMD/alwatr/commit/fe4427ef62c2fd1680bcb3212feed681add4c2d4))
+- **element:** build issue ([224799c](https://github.com/AliMD/alwatr/commit/224799c5c664bcc11dac8061048c85708b3ba5ef))
+- **element:** check type of `actions` ([f39d617](https://github.com/AliMD/alwatr/commit/f39d617f106e03748d8ed9f539a77f4e810765b5))
+- **element:** remove old fsm mixin ([23efdf2](https://github.com/AliMD/alwatr/commit/23efdf25d2bbb768b70fd65f45f9fed3affcbd15))
+- **fsm:** cleanup old ([aa43264](https://github.com/AliMD/alwatr/commit/aa432644d76a0f81ea6e5c3b93da63f998ab159c))
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+- **element/fsm:** rewrite state machine for lit ([592fc8d](https://github.com/AliMD/alwatr/commit/592fc8dd586255e719a31785d3989a348f63cce8))
+- **element/logger:** log remove ([f6dc4c6](https://github.com/AliMD/alwatr/commit/f6dc4c65292f7a491007f445749b798c4551ebfc))
+- **element/mixins/signal:** \_addSignalListener ([fc987b3](https://github.com/AliMD/alwatr/commit/fc987b32db20975354e406ae89d4b4c006bf798d))
+- **element:** add reactive controller ([7d7d6cb](https://github.com/AliMD/alwatr/commit/7d7d6cb6e473177aa2062d5a57490a57e6b027ff))
+- **element:** export from `ref` ([bbaaca4](https://github.com/AliMD/alwatr/commit/bbaaca4bb19efa29f80c4206eff5985a2d86f62c))
+- **element:** export lit guard ([b51627f](https://github.com/AliMD/alwatr/commit/b51627fbd63f401aa4404ebb1d59281216247d80))
+- **element:** refactor fsm controller with new fsm api ([e51aaa2](https://github.com/AliMD/alwatr/commit/e51aaa241ea21a91df4e7399a4c7801be41ded49))
+- **element:** register and remove necessary listeners ([833e9cc](https://github.com/AliMD/alwatr/commit/833e9cc58a5515edcc1c1c72b2761c124557201d))
+- **element:** ScheduleUpdateToFrameMixin ([8a4307d](https://github.com/AliMD/alwatr/commit/8a4307dd3a6cc58f826e6faaa261cb3cb9e13d22))
+- **element:** use the new logger functions(time & timeEnd) ([2c4d919](https://github.com/AliMD/alwatr/commit/2c4d9191e2b296e17e86f20eebcf61523f1e0e3b))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Bug Fixes

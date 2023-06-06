@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/flight-finder/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+### Features
+
+- **flight-crawler:** don't notify if flight not found ([c6b17d5](https://github.com/AliMD/flight-finder/commit/c6b17d5f091cd7914cc64ef023eb2923587e6dd6))
+
+# [0.31.0](https://github.com/AliMD/flight-finder/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- new logger api ([9d83a7d](https://github.com/AliMD/flight-finder/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
 # [0.30.0](https://github.com/AliMD/flight-finder/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 **Note:** Version bump only for package @alwatr/flight-finder-crawler

@@ -48,7 +48,7 @@ services:
       traefik.port: 80
       traefik.frontend.rule: Host:${DOMAIN}
       traefik.frontend.entryPoints: http, https
-      traefik.frontend.redirect.entryPoint: https
+      # traefik.frontend.redirect.entryPoint: https
 
   php:
     build:
@@ -70,7 +70,7 @@ services:
     restart: unless-stopped
 
     cpu_shares: 1024
-    mem_limit: ${PHP_MEMORY_LIMIT:-256m}
+    mem_limit: ${WP_MAX_MEMORY_LIMIT:-768M}
 
     volumes:
       - type: bind
@@ -80,7 +80,7 @@ services:
           create_host_path: true
 
     tmpfs:
-      - /tmp
+      - /var/cache
 
     env_file: .env
 
@@ -92,11 +92,11 @@ services:
 
     environment:
       WORDPRESS_CONFIG_EXTRA: |
-        /* Alwatr Setting */
         define('WP_CACHE', true);
         define('WP_POST_REVISIONS', 2);
         define('IMAGE_EDIT_OVERWRITE', true);
         define('FORCE_SSL_LOGIN', false);
         define('FORCE_SSL_ADMIN', false);
-        define('WP_MEMORY_LIMIT', '256M');
-        define('WP_MAX_MEMORY_LIMIT', '256M'); # admin dashboard
+        define('WP_MEMORY_LIMIT', '${WP_MEMORY_LIMIT:-256M}');
+        define('WP_MAX_MEMORY_LIMIT', '${WP_MAX_MEMORY_LIMIT:-768M}');
+        define('DISABLE_WP_CRON', true);

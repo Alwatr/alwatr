@@ -1,5 +1,14 @@
-import {customElement, AlwatrBaseElement, html, property, css, type PropertyValues} from '@alwatr/element';
-import {message, replaceNumber} from '@alwatr/i18n';
+import {
+  customElement,
+  AlwatrBaseElement,
+  html,
+  property,
+  css,
+  SignalMixin,
+  LocalizeMixin,
+  type PropertyValues,
+} from '@alwatr/element';
+import {message, replaceNumber, date} from '@alwatr/i18n';
 import {eventTrigger} from '@alwatr/signal';
 import '@alwatr/ui-kit/card/icon-box.js';
 
@@ -17,7 +26,7 @@ declare global {
  * Alwatr Order Item Box Element.
  */
 @customElement('alwatr-order-status-box')
-export class AlwatrOrderStatusBox extends AlwatrBaseElement {
+export class AlwatrOrderStatusBox extends LocalizeMixin(SignalMixin(AlwatrBaseElement)) {
   static override styles = css`
     :host {
       display: block;
@@ -60,22 +69,27 @@ export class AlwatrOrderStatusBox extends AlwatrBaseElement {
 
   override render(): unknown {
     this._logger.logMethod?.('render');
-    if (this.content == null) return;
+    if (!this.content) return;
 
     const headline =
       this.content.status === 'draft'
         ? message('order_status_box_headline_new')
-        : message('order_status_box_headline').replace('${orderId}', replaceNumber(this.content.id.padStart(2, '0')));
+        : message('order_status_box_headline')
+            .replace('${orderId}', replaceNumber(this.content.id.padStart(2, '0')));
 
     const iconBoxContent: IconBoxContent = {
       headline,
-      description: message('order_status_box_status') + ': ' + message('order_status_' + this.content.status),
       icon: 'receipt-outline',
       flipRtl: true,
       stated: Boolean(this.clickSignalId),
       elevated: 1,
     };
 
-    return html`<alwatr-icon-box .content=${iconBoxContent}></alwatr-icon-box>`;
+    return html`
+      <alwatr-icon-box .content=${iconBoxContent}>
+        ${message('order_status_box_status') + ': ' + message('order_status_' + this.content.status)} <br />
+        ${message('order_status_box_created') + ': ' + date(this.content.meta?.created ?? Date.now())}
+      </alwatr-icon-box>
+    `;
   }
 }

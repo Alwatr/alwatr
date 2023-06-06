@@ -1,0 +1,47 @@
+{
+  "name": "@alwatr/crypto",
+  "version": "0.32.0",
+  "description": "Secure authentication HOTP token generator (the HMAC-based One-Time Password algorithm) and crypto utils written in tiny TypeScript module.",
+  "keywords": [
+    "crypto",
+    "hash",
+    "token",
+    "authentication",
+    "auth",
+    "access",
+    "token",
+    "hmac",
+    "time",
+    "otp",
+    "hotp",
+    "otp-token",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "main": "index.js",
+  "type": "module",
+  "types": "index.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "core/crypto"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/core/crypto#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "dependencies": {
+    "@alwatr/logger": "^0.32.0",
+    "@alwatr/math": "^0.32.0",
+    "tslib": "^2.5.3"
+  }
+}

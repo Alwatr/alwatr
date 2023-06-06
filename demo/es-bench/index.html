@@ -3,14 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <title>ES Bench</title>
-    <script type="module" src="./memory-arrow-func.js"></script>
+    <script type="module">
+      new Worker('./object-vs-map.js', {type: 'module'});
+    </script>
     <style>
       html {
         color-scheme: light dark;
+      }
+      .box {
+        width: 10em;
+        height: 10em;
+        background-color: #a11;
+        transition: all 1s;
+      }
+      .box:hover {
+        transform: rotate(360deg);
       }
     </style>
   </head>
   <body>
     Waiting...
+    <div class="box"></div>
   </body>
 </html>

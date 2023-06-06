@@ -1,5 +1,5 @@
 services:
-  dockovpn:
+  wireguard:
     image: lscr.io/linuxserver/wireguard:latest
 
     cap_add:

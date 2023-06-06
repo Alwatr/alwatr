@@ -1,4 +1,4 @@
-import type {Methods, QueryParameters, StringifyableRecord} from '@alwatr/type';
+import type {Methods, QueryParameters, StringifyableRecord, UserAuth} from '@alwatr/type';
 
 export type CacheStrategy =
   | 'network_only'
@@ -102,6 +102,11 @@ export interface FetchOptions extends RequestInit {
    * Add token to Authentication bearer header.
    */
   token?: string;
+
+  /**
+   * Add user id and token to Authentication bearer header.
+   */
+  userAuth?: UserAuth;
 }
 
 export type StringifyableFetchOptions = Pick<
@@ -124,4 +129,5 @@ export type StringifyableFetchOptions = Pick<
   | 'retryDelay'
   | 'referrer'
   | 'referrerPolicy'
+  | 'userAuth'
 >;

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/ui-demo-pwa",
-  "version": "0.30.0",
+  "version": "0.32.0",
   "description": "Alwatr Progressive Web Application Demo.",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -30,18 +30,18 @@
     "watch:es": "yarn build --clean --watch --debug"
   },
   "devDependencies": {
-    "@alwatr/element": "^0.30.0",
-    "@alwatr/pwa-helper": "^0.30.0",
-    "@alwatr/ui-kit": "^0.30.0",
-    "@material/web": "^1.0.0-pre.7",
+    "@alwatr/element": "^0.32.0",
+    "@alwatr/pwa-helper": "^0.32.0",
+    "@alwatr/ui-kit": "^0.32.0",
+    "@material/web": "^1.0.0-pre.10",
     "@web/dev-server": "^0.2.1",
     "@webcomponents/webcomponentsjs": "^2.8.0",
-    "esbuild": "^0.17.18",
+    "esbuild": "^0.17.19",
     "lit-analyzer": "^1.2.1",
     "npm-run-all": "^4.1.5",
     "ts-lit-plugin": "^1.2.1",
-    "tslib": "^2.5.0",
-    "typescript": "^5.0.4",
-    "workbox-build": "^6.5.4"
+    "tslib": "^2.5.3",
+    "typescript": "^5.1.3",
+    "workbox-build": "^7.0.0"
   }
 }

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+**Note:** Version bump only for package @alwatr/signal
+
+# [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+- **signal:** dont receivePrevious when listener is disabled ([68ae207](https://github.com/AliMD/alwatr/commit/68ae207ce9ecf104922b24910d8dfcedb13acde7))
+- **signal:** requestableContextProvider.getValue ([0a7111d](https://github.com/AliMD/alwatr/commit/0a7111da7b8eb004566922dc9b35edfc02a55147))
+
+### Features
+
+- **signal:** new RequestableContext with state ([b8a8e55](https://github.com/AliMD/alwatr/commit/b8a8e550d3952863d85ba9d9d87513a668a9430d))
+
 # [0.30.0](https://github.com/AliMD/alwatr/compare/v0.29.0...v0.30.0) (2023-03-06)
 
 ### Bug Fixes
