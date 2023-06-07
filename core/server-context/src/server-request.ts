@@ -1,17 +1,18 @@
 import {fetch} from '@alwatr/fetch';
 import {FiniteStateMachineBase} from '@alwatr/fsm2';
 
-import type {FetchOptions} from '@alwatr/fetch/src/type.js';
+import type {FetchOptions} from '@alwatr/fetch/type.js';
+import type {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
 
 export interface ServerRequestConfig extends FetchOptions {
   name: string;
 }
 
-type State = 'initial' | 'loading' | 'failed' | 'complete';
+export type ServerRequestState = 'initial' | 'loading' | 'failed' | 'complete';
 
-type Event = 'request' | 'requestFailed' | 'requestSuccess';
+export type ServerRequestEvent = 'request' | 'requestFailed' | 'requestSuccess';
 
-export abstract class AlwatrServerRequestBase extends FiniteStateMachineBase<State, Event> {
+export abstract class AlwatrServerRequestBase extends FiniteStateMachineBase<ServerRequestState, ServerRequestEvent> {
   protected _fetchOptions: Partial<FetchOptions>;
   protected _response?: Response;
 
@@ -37,6 +38,14 @@ export abstract class AlwatrServerRequestBase extends FiniteStateMachineBase<Sta
     };
   }
 
+  protected async _$fetch(options: FetchOptions): Promise<void> {
+    this._response = await fetch(options);
+
+    if (!this._response.ok) {
+      throw new Error('fetch_nok');
+    }
+  }
+
   protected async _request(options: Partial<FetchOptions>): Promise<void> {
     this._logger.logMethod?.('_request');
 
@@ -47,11 +56,7 @@ export abstract class AlwatrServerRequestBase extends FiniteStateMachineBase<Sta
         throw new Error('invalid_fetch_options');
       }
 
-      this._response = await fetch(fetchOptions as FetchOptions);
-
-      if (!this._response.ok) {
-        throw new Error('fetch_nok');
-      }
+      await this._$fetch(fetchOptions as FetchOptions);
 
       this._transition('requestSuccess');
     }
@@ -75,11 +80,32 @@ export abstract class AlwatrServerRequestBase extends FiniteStateMachineBase<Sta
 }
 
 export class AlwatrServerRequest extends AlwatrServerRequestBase {
+  /**
+   * Current state.
+   */
+  get state(): ServerRequestState {
+    return super._state;
+  }
+
   get response(): Response | undefined {
     return super._response;
   }
 
   request(options: Partial<FetchOptions>): Promise<void> {
     return super._request(options);
+  }
+
+  /**
+   * Subscribe to state changes.
+   */
+  subscribe(listenerCallback: ListenerCallback<this, ServerRequestState>, options?: SubscribeOptions): SubscribeResult {
+    return super._subscribe(listenerCallback, options);
+  }
+
+  /**
+     * Unsubscribe from changes.
+     */
+  unsubscribe(listenerCallback: ListenerCallback<this, ServerRequestState>): void {
+    return super._unsubscribe(listenerCallback);
   }
 }
