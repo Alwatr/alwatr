@@ -104,13 +104,15 @@ export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseE
 
   protected _renderOrderBox(): unknown {
     let orderListTemplate;
-    if (Object.keys(this.userIncOrder!.orderList).length === 0) {
-      orderListTemplate = html`<span class="empty-order"
-        >${message('page_admin_order_list_empty_order_list')}<span></span
-        ></span>`;
+    const orderListValues = Object.values(this.userIncOrder?.orderList ?? {});
+    if (orderListValues.length === 0) {
+      orderListTemplate = html`
+      <span class="empty-order">
+        ${message('page_admin_order_list_empty_order_list')}
+      <span>`;
     }
     else {
-      const orderList = Object.values(this.userIncOrder!.orderList).sort((o1, o2) => {
+      const orderList = orderListValues.sort((o1, o2) => {
         return (o2.meta?.updated || 0) - (o1.meta?.updated || 0);
       });
 
