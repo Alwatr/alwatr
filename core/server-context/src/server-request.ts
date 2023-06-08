@@ -77,10 +77,10 @@ export abstract class AlwatrServerRequestBase extends FiniteStateMachineBase<Ser
     this._logger.logMethodArgs?.('_setOptions', {options});
 
     const fetchOptions = {
-      ...this._$fetchOptions,
+      ...this._config,
       ...options,
       queryParameters: {
-        ...this._$fetchOptions?.queryParameters,
+        ...this._config.queryParameters,
         ...options?.queryParameters,
       },
     };
@@ -91,6 +91,11 @@ export abstract class AlwatrServerRequestBase extends FiniteStateMachineBase<Ser
 
     this._$fetchOptions = fetchOptions as FetchOptions;
   }
+
+  protected override _reset(): void {
+    super._reset();
+    delete this._response;
+  }
 }
 
 export class AlwatrServerRequest extends AlwatrServerRequestBase {
@@ -98,28 +103,32 @@ export class AlwatrServerRequest extends AlwatrServerRequestBase {
    * Current state.
    */
   get state(): ServerRequestState {
-    return super._state;
+    return this._state;
   }
 
   get response(): Response | undefined {
-    return super._response;
+    return this._response;
   }
 
   request(options?: Partial<FetchOptions>): void {
-    return super._request(options);
+    return this._request(options);
   }
 
   /**
    * Subscribe to state changes.
    */
   subscribe(listenerCallback: ListenerCallback<this, ServerRequestState>, options?: SubscribeOptions): SubscribeResult {
-    return super._subscribe(listenerCallback, options);
+    return this._subscribe(listenerCallback, options);
   }
 
   /**
      * Unsubscribe from changes.
      */
   unsubscribe(listenerCallback: ListenerCallback<this, ServerRequestState>): void {
-    return super._unsubscribe(listenerCallback);
+    return this._unsubscribe(listenerCallback);
+  }
+
+  cleanup(): void {
+    this._reset();
   }
 }

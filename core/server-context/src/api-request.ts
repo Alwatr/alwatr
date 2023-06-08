@@ -22,7 +22,7 @@ export abstract class AlwatrApiRequestBase<
       }
     }
 
-    super._$fetch(options);
+    await super._$fetch(options);
 
     let responseText: string;
     try {
@@ -53,6 +53,11 @@ export abstract class AlwatrApiRequestBase<
       }
     }
   }
+
+  protected override _reset(): void {
+    super._reset();
+    delete this._responseJson;
+  }
 }
 
 export class AlwatrApiRequest<
@@ -63,26 +68,26 @@ export class AlwatrApiRequest<
    * Current state.
    */
   get state(): ServerRequestState {
-    return super._state;
+    return this._state;
   }
 
   get response(): AlwatrServiceResponse<TData, TMeta> | undefined {
-    return super._responseJson;
+    return this._responseJson;
   }
 
   get _fetchResponse(): Response | undefined {
-    return super._response;
+    return this._response;
   }
 
   request(options?: Partial<FetchOptions>): void {
-    return super._request(options);
+    return this._request(options);
   }
 
   /**
    * Subscribe to state changes.
    */
   subscribe(listenerCallback: ListenerCallback<this, ServerRequestState>, options?: SubscribeOptions): SubscribeResult {
-    return super._subscribe(listenerCallback, options);
+    return this._subscribe(listenerCallback, options);
   }
 
   /**
@@ -90,5 +95,9 @@ export class AlwatrApiRequest<
    */
   unsubscribe(listenerCallback: ListenerCallback<this, ServerRequestState>): void {
     return super._unsubscribe(listenerCallback);
+  }
+
+  cleanup(): void {
+    this._reset();
   }
 }
