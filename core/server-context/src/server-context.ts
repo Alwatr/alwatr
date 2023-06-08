@@ -1,13 +1,9 @@
 import {AlwatrApiRequestBase} from './api-request.js';
 
-import type {ServerRequestState, ServerRequestEvent} from './server-request.js';
+import type {ServerRequestState, ServerRequestEvent, ServerRequestConfig} from './server-request.js';
 import type {FetchOptions} from '@alwatr/fetch/type.js';
 import type {ListenerCallback, SubscribeResult, SubscribeOptions} from '@alwatr/signal2';
 import type {AlwatrServiceResponse} from '@alwatr/type';
-
-export interface ServerRequestConfig extends Partial<FetchOptions> {
-  name: string;
-}
 
 type ExtraState = 'offlineCheck' | 'reloading' | 'reloadingFailed';
 export type ServerContextState = ServerRequestState | ExtraState;
