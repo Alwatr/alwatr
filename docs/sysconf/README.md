@@ -34,6 +34,12 @@ Load changed
 sysctl -p
 ```
 
+### Sysconfig parameter reference
+
+- [Sysctl Explorer](https://sysctl-explorer.net/)
+- [IP sysconfig](https://www.kernel.org/doc/html/latest/networking/ip-sysctl.html)
+- [Official documentation](https://www.kernel.org/doc/Documentation/sysctl/)
+
 ---
 
 ### Useful link
