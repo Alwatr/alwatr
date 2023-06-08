@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-
 name: Build & Lint
 
 on:
@@ -16,31 +14,76 @@ env:
   NODE_VERSION: lts/*
 
 jobs:
-  build-lint-ts:
-    name: Build & Lint Typescript
+  install-deps:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-
     steps:
       - name: ⤵️ Checkout repository
         uses: actions/checkout@v3.5.2
+
+      - name: 🏗 Restore cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules/
+            ./
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: 🏗 Setup nodejs
         uses: actions/setup-node@v3.6.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: yarn
 
       - name: 🏗 Install dependencies
         run: yarn install --frozen-lockfile
 
+  build-typescript:
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Checkout repository
+        uses: actions/checkout@v3.5.2
+
+      - name: 🏗 Restore cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules/
+            ./
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: 🏗 Setup nodejs
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
       - name: 🚀 Build Typescript
         run: yarn build
 
-      - name: 🚀 Extra Packages Build
-        run: yarn lerna run build
+  run-tasks:
+    needs: build-typescript
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Checkout repository
+        uses: actions/checkout@v3.5.2
 
-      - name: 🚀 Run ESLint
-        run: yarn lint:ts
+      - name: 🏗 Restore cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules/
+            ./
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: 🏗 Setup nodejs
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 🚀 Run Task
+        run: yarn build:r
