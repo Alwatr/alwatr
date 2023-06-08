@@ -4,7 +4,7 @@ import {FiniteStateMachineBase} from '@alwatr/fsm2';
 import type {FetchOptions} from '@alwatr/fetch/type.js';
 import type {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
 
-export interface ServerRequestConfig extends FetchOptions {
+export interface ServerRequestConfig extends Partial<FetchOptions> {
   name: string;
 }
 
@@ -13,13 +13,11 @@ export type ServerRequestState = 'initial' | 'loading' | 'failed' | 'complete';
 export type ServerRequestEvent = 'request' | 'requestFailed' | 'requestSuccess';
 
 export abstract class AlwatrServerRequestBase extends FiniteStateMachineBase<ServerRequestState, ServerRequestEvent> {
-  protected _fetchOptions: Partial<FetchOptions>;
+  protected _$fetchOptions?: FetchOptions;
   protected _response?: Response;
 
-  constructor(config: ServerRequestConfig) {
-    super({name: config.name, initialState: 'initial'});
-
-    this._fetchOptions = this._mergeOptions(config);
+  constructor(protected _config: ServerRequestConfig) {
+    super({name: _config.name, initialState: 'initial'});
 
     this._stateRecord = {
       initial: {
@@ -36,9 +34,20 @@ export abstract class AlwatrServerRequestBase extends FiniteStateMachineBase<Ser
         request: 'loading',
       },
     };
+
+    this._actionRecord = {
+      _on_loading_enter: this._requestAction,
+    };
+  }
+
+  protected _request(options?: Partial<FetchOptions>): void {
+    this._logger.logMethodArgs?.('_request', options);
+    this._setOptions(options);
+    this._transition('request');
   }
 
   protected async _$fetch(options: FetchOptions): Promise<void> {
+    this._logger.logMethodArgs?.('_$fetch', options);
     this._response = await fetch(options);
 
     if (!this._response.ok) {
@@ -46,17 +55,15 @@ export abstract class AlwatrServerRequestBase extends FiniteStateMachineBase<Ser
     }
   }
 
-  protected async _request(options: Partial<FetchOptions>): Promise<void> {
-    this._logger.logMethod?.('_request');
-
-    const fetchOptions = this._mergeOptions(options);
+  protected async _requestAction(): Promise<void> {
+    this._logger.logMethod?.('_requestAction');
 
     try {
-      if (fetchOptions.url == null) {
+      if (this._$fetchOptions === undefined) {
         throw new Error('invalid_fetch_options');
       }
 
-      await this._$fetch(fetchOptions as FetchOptions);
+      await this._$fetch(this._$fetchOptions);
 
       this._transition('requestSuccess');
     }
@@ -66,16 +73,23 @@ export abstract class AlwatrServerRequestBase extends FiniteStateMachineBase<Ser
     }
   }
 
-  protected _mergeOptions(options: Partial<FetchOptions>): Partial<FetchOptions> {
-    this._logger.logMethodArgs?.('_mergeOptions', {options});
-    return {
-      ...this._fetchOptions,
+  protected _setOptions(options?: Partial<FetchOptions>): void {
+    this._logger.logMethodArgs?.('_setOptions', {options});
+
+    const fetchOptions = {
+      ...this._$fetchOptions,
       ...options,
       queryParameters: {
-        ...this._fetchOptions.queryParameters,
-        ...options.queryParameters,
+        ...this._$fetchOptions?.queryParameters,
+        ...options?.queryParameters,
       },
     };
+
+    if (fetchOptions.url == null) {
+      throw new Error('invalid_fetch_options');
+    }
+
+    this._$fetchOptions = fetchOptions as FetchOptions;
   }
 }
 
@@ -91,7 +105,7 @@ export class AlwatrServerRequest extends AlwatrServerRequestBase {
     return super._response;
   }
 
-  request(options: Partial<FetchOptions>): Promise<void> {
+  request(options?: Partial<FetchOptions>): void {
     return super._request(options);
   }
 
