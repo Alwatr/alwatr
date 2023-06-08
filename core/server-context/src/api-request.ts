@@ -92,7 +92,7 @@ export class AlwatrApiRequest<T extends AlwatrServiceResponse = AlwatrServiceRes
    * Unsubscribe from changes.
    */
   unsubscribe(listenerCallback: ListenerCallback<this, ServerRequestState>): void {
-    return super._unsubscribe(listenerCallback);
+    return this._unsubscribe(listenerCallback);
   }
 
   cleanup(): void {

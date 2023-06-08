@@ -84,6 +84,8 @@ export abstract class AlwatrServerContextBase<
       return;
     }
 
+    this._logger.logMethod?.('_$updateContextAction');
+
     if (
       this._context === undefined ||
       this._responseJson.meta?.lastUpdated === undefined ||
@@ -153,6 +155,6 @@ export class AlwatrServerContext<
    * Unsubscribe from changes.
    */
   unsubscribe(listenerCallback: ListenerCallback<this, ServerContextState>): void {
-    return super._unsubscribe(listenerCallback);
+    return this._unsubscribe(listenerCallback);
   }
 }
