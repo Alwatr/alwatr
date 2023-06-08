@@ -21,14 +21,14 @@ export abstract class FiniteStateMachine<S extends string, E extends string> ext
   }
 
   /**
-   * Subscribe to context changes.
+   * Subscribe to state changes.
    */
   subscribe(listenerCallback: ListenerCallback<this, S>, options?: SubscribeOptions): SubscribeResult {
     return super._subscribe(listenerCallback, options);
   }
 
   /**
-   * Unsubscribe from context.
+   * Unsubscribe from changes.
    */
   unsubscribe(listenerCallback: ListenerCallback<this, S>): void {
     return super._unsubscribe(listenerCallback);

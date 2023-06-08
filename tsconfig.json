@@ -15,6 +15,7 @@
     {"path": "./core/signal"},
     {"path": "./core/signal2"},
     {"path": "./core/context"},
+    {"path": "./core/server-context"},
     {"path": "./core/router"},
     {"path": "./core/i18n"},
     {"path": "./core/math"},
