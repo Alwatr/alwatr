@@ -74,7 +74,7 @@ export class AlwatrApiRequest<
     return super._response;
   }
 
-  request(options: Partial<FetchOptions>): Promise<void> {
+  request(options?: Partial<FetchOptions>): void {
     return super._request(options);
   }
 
