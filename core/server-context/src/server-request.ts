@@ -35,7 +35,7 @@ export abstract class AlwatrServerRequestBase<
   };
 
   protected override _actionRecord = <ActionRecord<ServerRequestState | ExtraState, ServerRequestEvent | ExtraEvent>>{
-    _on_loading_enter: this._requestAction,
+    _on_loading_enter: this._$requestAction,
   };
 
   constructor(protected _config: ServerRequestConfig) {
@@ -57,8 +57,8 @@ export abstract class AlwatrServerRequestBase<
     }
   }
 
-  protected async _requestAction(): Promise<void> {
-    this._logger.logMethod?.('_requestAction');
+  protected async _$requestAction(): Promise<void> {
+    this._logger.logMethod?.('_$requestAction');
 
     try {
       if (this._$fetchOptions === undefined) {
@@ -70,7 +70,7 @@ export abstract class AlwatrServerRequestBase<
       this._transition('requestSuccess');
     }
     catch (err) {
-      this._logger.error('_request', 'fetch_failed', err);
+      this._logger.error('_$requestAction', 'fetch_failed', err);
       this._transition('requestFailed');
     }
   }
