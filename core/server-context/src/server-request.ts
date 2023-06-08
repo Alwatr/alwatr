@@ -1,5 +1,5 @@
 import {fetch} from '@alwatr/fetch';
-import {FiniteStateMachineBase} from '@alwatr/fsm2';
+import {ActionRecord, FiniteStateMachineBase, StateRecord} from '@alwatr/fsm2';
 
 import type {FetchOptions} from '@alwatr/fetch/type.js';
 import type {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
@@ -9,35 +9,37 @@ export interface ServerRequestConfig extends Partial<FetchOptions> {
 }
 
 export type ServerRequestState = 'initial' | 'loading' | 'failed' | 'complete';
-
 export type ServerRequestEvent = 'request' | 'requestFailed' | 'requestSuccess';
 
-export abstract class AlwatrServerRequestBase extends FiniteStateMachineBase<ServerRequestState, ServerRequestEvent> {
+export abstract class AlwatrServerRequestBase<
+  ExtraState extends string = never,
+  ExtraEvent extends string = never
+> extends FiniteStateMachineBase<ServerRequestState | ExtraState, ServerRequestEvent | ExtraEvent> {
   protected _$fetchOptions?: FetchOptions;
   protected _response?: Response;
 
+  protected override _stateRecord = <StateRecord<ServerRequestState | ExtraState, ServerRequestEvent | ExtraEvent>>{
+    initial: {
+      request: 'loading',
+    },
+    loading: {
+      requestFailed: 'failed',
+      requestSuccess: 'complete',
+    },
+    failed: {
+      request: 'loading',
+    },
+    complete: {
+      request: 'loading',
+    },
+  };
+
+  protected override _actionRecord = <ActionRecord<ServerRequestState | ExtraState, ServerRequestEvent | ExtraEvent>>{
+    _on_loading_enter: this._requestAction,
+  };
+
   constructor(protected _config: ServerRequestConfig) {
     super({name: _config.name, initialState: 'initial'});
-
-    this._stateRecord = {
-      initial: {
-        request: 'loading',
-      },
-      loading: {
-        requestFailed: 'failed',
-        requestSuccess: 'complete',
-      },
-      failed: {
-        request: 'loading',
-      },
-      complete: {
-        request: 'loading',
-      },
-    };
-
-    this._actionRecord = {
-      _on_loading_enter: this._requestAction,
-    };
   }
 
   protected _request(options?: Partial<FetchOptions>): void {
@@ -122,8 +124,8 @@ export class AlwatrServerRequest extends AlwatrServerRequestBase {
   }
 
   /**
-     * Unsubscribe from changes.
-     */
+   * Unsubscribe from changes.
+   */
   unsubscribe(listenerCallback: ListenerCallback<this, ServerRequestState>): void {
     return this._unsubscribe(listenerCallback);
   }
