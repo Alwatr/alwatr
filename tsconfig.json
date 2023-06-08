@@ -24,6 +24,7 @@
     {"path": "./core/storage-client"},
     {"path": "./core/crypto"},
     {"path": "./core/validator"},
+    {"path": "./core/validator2"},
     {"path": "./core/util"},
     {"path": "./core/fsm"},
     {"path": "./core/fsm2"},
