@@ -13,7 +13,7 @@ globalAlwatr.registeredList.push({
   version: _ALWATR_VERSION_,
 });
 
-export class L10n extends AlwatrBaseSignal<LocaleCode> {
+export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
   protected _locale?: Locale;
   protected _resource?: L10nResource;
   protected _numberFormatter?: Intl.NumberFormat;
@@ -70,8 +70,34 @@ export class L10n extends AlwatrBaseSignal<LocaleCode> {
       return;
     }
 
+    if (this._resource?.meta.code === locale.code) {
+      this._logger.incident?.(
+          '_loadResource',
+          'load_skipped',
+          'Request l18e (LocalizationResource) is same as active l18n',
+          {
+            request: locale.code,
+            active: this._resource.meta.code,
+          },
+      );
+      return;
+    }
+
     try {
-      this._resource = await this._resourceLoader(locale);
+      const resource = await this._resourceLoader(locale);
+      if (resource.meta?.code !== locale.code) {
+        this._logger.error(
+            '_loadResource',
+            'invalid_localization',
+            {
+              request: locale.code,
+              active: resource.meta.code,
+            },
+        );
+      }
+      else {
+        this._resource = resource;
+      }
     }
     catch (err) {
       this._logger.error('_loadResource', 'loader_function_error', err);
@@ -182,9 +208,14 @@ export class L10n extends AlwatrBaseSignal<LocaleCode> {
    * setLocale();
    * ```
    */
-  setLocale(locale?: Locale): void {
+  setLocale(locale?: Locale | keyof typeof localeList): void {
+    this._logger.logMethodArgs?.('setLocale', locale);
+    if (typeof locale === 'string') {
+      locale = localeList[locale];
+    }
+
     if (locale == null) {
-      const lang = document.documentElement.lang;
+      const lang = globalThis.document?.documentElement.lang;
       locale = Object.values(localeList).find((l) => l.code === lang);
 
       if (locale == null) {
@@ -193,7 +224,6 @@ export class L10n extends AlwatrBaseSignal<LocaleCode> {
       }
     }
 
-    this._logger.logMethodArgs?.('setLocale', locale);
     if (this._locale?.code !== locale.code) {
       this._locale = locale;
       this._localeChanged();
