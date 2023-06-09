@@ -25,6 +25,7 @@
     {"path": "../core/context"},
     {"path": "../ui/icon"},
     {"path": "../core/storage-engine"},
-    {"path": "../core/validator"}
+    {"path": "../core/validator"},
+    {"path": "../core/i18n2"}
   ]
 }
