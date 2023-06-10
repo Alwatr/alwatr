@@ -1,0 +1,17 @@
+# Use SSH protocol version 2 (more secure than version 1)
+# Source: https://man.openbsd.org/ssh_config
+
+Host *
+  Protocol 2
+  IdentityFile ~/.ssh/id_ed25519
+  PubkeyAcceptedKeyTypes ssh-ed25519
+  PasswordAuthentication no
+  ChallengeResponseAuthentication no
+  PubkeyAuthentication yes
+  IdentitiesOnly yes
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityAgent ~/.ssh/ssh-agent
+  ForwardX11 no
+  Compression yes
+  AuthorizedKeysFile	.ssh/authorized_keys
