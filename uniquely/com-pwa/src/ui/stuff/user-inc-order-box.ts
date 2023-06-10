@@ -5,7 +5,7 @@ import {
   css,
   customElement,
   html,
-  mapObject,
+  mapIterable,
   property,
 } from '@alwatr/element';
 import {date, message} from '@alwatr/i18n';
@@ -103,19 +103,25 @@ export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseE
   }
 
   protected _renderOrderBox(): unknown {
-    let orderList;
-    if (Object.keys(this.userIncOrder!.orderList).length === 0) {
-      orderList = html`<span class="empty-order"
-        >${message('page_admin_order_list_empty_order_list')}<span></span
-      ></span>`;
+    let orderListTemplate;
+    const orderListValues = Object.values(this.userIncOrder?.orderList ?? {});
+    if (orderListValues.length === 0) {
+      orderListTemplate = html`
+      <span class="empty-order">
+        ${message('page_admin_order_list_empty_order_list')}
+      <span>`;
     }
     else {
-      orderList = mapObject(this, this.userIncOrder!.orderList, (order) => this._renderOrderInfo(order));
+      const orderList = orderListValues.sort((o1, o2) => {
+        return (o2.meta?.updated || 0) - (o1.meta?.updated || 0);
+      });
+
+      orderListTemplate = mapIterable(this, orderList, (order) => this._renderOrderInfo(order));
     }
 
     return html`
       <h3>${message('page_admin_order_list_order_list')}:</h3>
-      <alwatr-surface class="detail-container order-container"> ${orderList} </alwatr-surface>
+      <alwatr-surface class="detail-container order-container"> ${orderListTemplate} </alwatr-surface>
     `;
   }
 
