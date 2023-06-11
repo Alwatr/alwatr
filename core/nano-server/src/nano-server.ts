@@ -2,6 +2,7 @@ import {createServer} from 'node:http';
 
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {isNumber} from '@alwatr/math';
+export {httpStatusCode} from './http_status_code.js';
 
 import type {NanoServerConfig, ConnectionConfig} from './type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
