@@ -14,7 +14,9 @@ export async function launchBot(): Promise<void> {
 
     if (process.env.NODE_ENV === 'production') {
       for (let i = adminInfoList.length - 1; 0 <= i; i--) {
-        await bot.api.sendMessage(adminInfoList[i].chatId, message('startup_message'));
+        await bot.api.sendMessage(adminInfoList[i].chatId, message('startup_message'), {
+          message_thread_id: adminInfoList[i].messageThreadId,
+        });
       }
     }
   }
