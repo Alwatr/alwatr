@@ -8,7 +8,7 @@ bot.defineCommandHandler('help', async (context) => {
   logger.logMethodArgs?.('command-help', {chatId: context.chatId});
   context.reply(message('help_message'), {
     reply_markup: {
-      inline_keyboard: await isSubscribed(context.chatId) ? subscribedStartInlineKeyboard : NotStartInlineKeyboard,
+      inline_keyboard: (await isSubscribed(context.chatId)) ? subscribedStartInlineKeyboard : NotStartInlineKeyboard,
     },
   });
 });

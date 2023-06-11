@@ -13,7 +13,7 @@ bot.defineCommandHandler('invitation', async (context) => {
   await actionAllChat(async (chat) => {
     const response = await bot.api.sendMessage(chat.id, message('invitation_message'), {
       reply_markup: {
-        inline_keyboard: await isSubscribed(chat.id) ? subscribedStartInlineKeyboard : NotStartInlineKeyboard,
+        inline_keyboard: (await isSubscribed(chat.id)) ? subscribedStartInlineKeyboard : NotStartInlineKeyboard,
       },
       message_thread_id: chat.chatDetail?.messageThreadId as number | undefined,
     });

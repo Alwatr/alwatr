@@ -10,7 +10,7 @@ bot.defineCommandHandler('start', async (context) => {
 
   context.reply(message('start_message'), {
     reply_markup: {
-      inline_keyboard: await isSubscribed(context.chatId) ? subscribedStartInlineKeyboard : NotStartInlineKeyboard,
+      inline_keyboard: (await isSubscribed(context.chatId)) ? subscribedStartInlineKeyboard : NotStartInlineKeyboard,
     },
   });
 });
