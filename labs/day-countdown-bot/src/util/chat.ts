@@ -7,11 +7,13 @@ import type {ChatDetail, DayCountdownChat} from '../type.js';
 import type {MaybePromise} from '@alwatr/type';
 
 export async function isSubscribed(chatId: string | number): Promise<boolean> {
+  logger.logMethodArgs?.('isSubscribed', {chatId});
   const chat = await chatStorageClient.get<DayCountdownChat>(chatId + '');
   return chat != null && chat.isSubscribed === true;
 }
 
 export async function toggleSubscribe(chatId: number, messageThreadId?: number): Promise<boolean | null> {
+  logger.logMethodArgs?.('toggleSubscribe', {chatId});
   const chat = await chatStorageClient.get<DayCountdownChat>(chatId + '');
   logger.logMethodArgs?.('toggleSubscribe', {chat});
   if (chat == null) return null;

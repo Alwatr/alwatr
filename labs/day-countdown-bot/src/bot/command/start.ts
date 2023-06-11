@@ -5,7 +5,7 @@ import {bot} from '../../lib/bot.js';
 import {addChat, isSubscribed} from '../../util/chat.js';
 
 bot.defineCommandHandler('start', async (context) => {
-  logger.logMethod?.('command-start');
+  logger.logMethodArgs?.('command-start', {chatId: context.chatId});
   await addChat(context.update.message!.chat, context.messageThreadId);
 
   context.reply(message('start_message'), {

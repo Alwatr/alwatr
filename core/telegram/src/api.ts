@@ -24,7 +24,7 @@ export class AlwatrTelegramApi {
 
   protected escapeText(message: string): string {
     // eslint-disable-next-line no-useless-escape
-    return message.replace(/(_|\*|\[|\]|\(|\)|~|`|>|#|\+|-|=|\||\{|\}|\.|!)/g, '$1');
+    return message.replace(/(_|\[|\]|\(|\)|~|`|>|#|\+|-|=|\||\{|\}|\.|!)/g, '\\$1');
   }
 
   async sendMessage(
@@ -32,6 +32,7 @@ export class AlwatrTelegramApi {
       text: string,
       option: SendMessageOption = {},
   ): Promise<ApiResponse<Message.TextMessage>> {
+    option.parse_mode ??= 'MarkdownV2';
     this.logger.logMethodArgs?.('sendMessage', {text, option});
     await this.sendChatAction({chat_id: chatId, action: 'typing', message_thread_id: option.message_thread_id});
 
@@ -64,9 +65,7 @@ export class AlwatrTelegramApi {
     return responseJson;
   }
 
-  async editMessageReplyMarkup(
-      option: EditMessageReplyMarkupOption = {},
-  ): Promise<Message | ApiResponse<true> | null> {
+  async editMessageReplyMarkup(option: EditMessageReplyMarkupOption = {}): Promise<Message | ApiResponse<true> | null> {
     this.logger.logMethodArgs?.('editMessageReplyMarkup', {option});
 
     const response = await this.callApi('editMessageReplyMarkup', {
@@ -81,9 +80,7 @@ export class AlwatrTelegramApi {
     return responseJson;
   }
 
-  async copyMessage(
-      option: CopyMessageOption,
-  ): Promise<ApiResponse<{message_id: number}>> {
+  async copyMessage(option: CopyMessageOption): Promise<ApiResponse<{message_id: number}>> {
     this.logger.logMethodArgs?.('copyMessage', {option});
     this.sendChatAction({chat_id: option.chat_id, action: 'typing', message_thread_id: option.message_thread_id});
 
@@ -91,7 +88,7 @@ export class AlwatrTelegramApi {
       ...option,
     } as unknown as StringifyableRecord);
 
-    const responseJson = await response.json() as ApiResponse<{message_id: number}>;
+    const responseJson = (await response.json()) as ApiResponse<{message_id: number}>;
     if (response.status != 200) {
       this.logger.error('copyMessage', 'copy_message_failed', responseJson);
       return responseJson;
@@ -99,9 +96,7 @@ export class AlwatrTelegramApi {
     return responseJson;
   }
 
-  async sendChatAction(
-      option: SendChatActionOption,
-  ): Promise<{ok: boolean, result: {message_id: number}} | null> {
+  async sendChatAction(option: SendChatActionOption): Promise<{ok: boolean; result: {message_id: number}} | null> {
     this.logger.logMethodArgs?.('sendChatAction', {option});
 
     const response = await this.callApi('sendChatAction', {
@@ -115,7 +110,6 @@ export class AlwatrTelegramApi {
     }
     return responseJson;
   }
-
 
   async getMe(): Promise<User | null> {
     this.logger.logMethod?.('getMe');
