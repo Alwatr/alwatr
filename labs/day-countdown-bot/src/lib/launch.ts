@@ -13,9 +13,9 @@ export async function launchBot(): Promise<void> {
     logger.logProperty?.('botInfo', botInfo);
 
     if (process.env.NODE_ENV === 'production') {
-      adminInfoList.forEach(async (info) => {
-        await bot.api.sendMessage(info.chatId, message('startup_message'));
-      });
+      for (let i = adminInfoList.length - 1; 0 <= i; i--) {
+        await bot.api.sendMessage(adminInfoList[i].chatId, message('startup_message'));
+      }
     }
   }
   catch (err) {

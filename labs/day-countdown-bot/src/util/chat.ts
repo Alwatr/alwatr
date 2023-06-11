@@ -61,6 +61,7 @@ export async function addChat(chat: Chat, messageThreadId?: number): Promise<Cha
 }
 
 export async function actionAllChat(action: (chat: DayCountdownChat) => MaybePromise<void>): Promise<void> {
+  logger.logMethod?.('actionAllChat');
   const chatList = (await chatStorageClient.getStorage()).data;
   for (const chat in chatList) {
     if (!Object.prototype.hasOwnProperty.call(chatList, chat)) continue;

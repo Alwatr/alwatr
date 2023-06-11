@@ -33,7 +33,7 @@ export class AlwatrTelegramApi {
       option: SendMessageOption = {},
   ): Promise<Message.TextMessage | null> {
     this.logger.logMethodArgs?.('sendMessage', {text, option});
-    this.sendChatAction({chat_id: chatId, action: 'typing', message_thread_id: option.message_thread_id});
+    await this.sendChatAction({chat_id: chatId, action: 'typing', message_thread_id: option.message_thread_id});
 
     text = this.escapeText(text);
     const response = await this.callApi('sendMessage', {

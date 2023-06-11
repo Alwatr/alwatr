@@ -15,15 +15,18 @@ async function sendDayCountdownContent(day: number): Promise<void> {
   const content = await contentStorageClient.get(day + '', 'mobaheleh');
   if (content == null) {
     logger.accident('dayCountdown', 'content_is_null', 'Content is Null', day);
-    adminInfoList.forEach(async (info) => {
-      await bot.api.sendMessage(info.chatId, message('send_get_content_null_message').replace('${day}', day + ''), {
-        message_thread_id: info.messageThreadId,
-      });
-    });
+    for (let i = adminInfoList.length - 1; 0 <= i; i--) {
+      await bot.api.sendMessage(adminInfoList[i].chatId,
+          message('send_get_content_null_message').replace('${day}', day + '',
+          ), {
+            message_thread_id: adminInfoList[i].messageThreadId,
+          });
+    }
 
     return;
   }
 
+  let userCount = 0;
   await actionAllChat(async (chat) => {
     try {
       if (!(chat?.isSubscribed === true)) return;
@@ -34,11 +37,19 @@ async function sendDayCountdownContent(day: number): Promise<void> {
         message_id: content.messageId,
         message_thread_id: chat.chatDetail!.messageThreadId as number | undefined,
       });
+      userCount++;
     }
     catch {
       logger.accident('dayCountdown', 'copy_message_error', 'Copy Message Error', day, chat.id);
     }
   });
+
+  for (let i = adminInfoList.length - 1; 0 <= i; i--) {
+    await bot.api.sendMessage(adminInfoList[i].chatId,
+        message('send_day_count_down_success').replace('${count}', userCount + ''), {
+          message_thread_id: adminInfoList[i].messageThreadId,
+        });
+  }
 }
 
 function scheduleDailyTask(targetTime: Date, callback: () => MaybePromise<void>): void {
@@ -61,15 +72,15 @@ function scheduleDailyTask(targetTime: Date, callback: () => MaybePromise<void>)
 
 export async function dayCountdown(): Promise<void> {
   const targetTime = new Date();
-  targetTime.setHours(config.bot.notifyTimestamp, 0, 0, 0);
+  targetTime.setHours(config.bot.notifyTimestamp - 4, 30, 0, 0);
   scheduleDailyTask(targetTime, async () => {
     let day = dateDistance(mobaheleh.valueOf());
     if (day < 0) return; // TODO: notify to admin for remove it.
 
     await sendDayCountdownContent(day);
-    adminInfoList.forEach(async (info) => {
-      await sendContent(--day, info.chatId, info.messageThreadId);
-    });
+    for (let i = adminInfoList.length - 1; 0 <= i; i--) {
+      await sendContent(--day, adminInfoList[i].chatId, adminInfoList[i].messageThreadId);
+    }
   });
 }
 
@@ -78,7 +89,7 @@ bot.defineCommandHandler('dayCountdown', async () => {
   if (day < 0) return; // TODO: notify to admin for remove it.
 
   await sendDayCountdownContent(day);
-  adminInfoList.forEach(async (info) => {
-    await sendContent(--day, info.chatId, info.messageThreadId);
-  });
+  for (let i = adminInfoList.length - 1; 0 <= i; i--) {
+    await sendContent(--day, adminInfoList[i].chatId, adminInfoList[i].messageThreadId);
+  }
 });

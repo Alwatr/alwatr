@@ -1,6 +1,7 @@
 import './bot/callback-query/toggleSubscribe.js';
 import './bot/command/getContent.js';
 import './bot/command/help.js';
+import './bot/command/invitation.js';
 import './bot/command/notify.js';
 import './bot/command/requestAdmin.js';
 import './bot/command/setContent.js';
