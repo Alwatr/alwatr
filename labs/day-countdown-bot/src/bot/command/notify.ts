@@ -5,7 +5,7 @@ import {message} from '../../director/l18e-loader.js';
 import {bot} from '../../lib/bot.js';
 import {conversationStorageClient} from '../../lib/storage.js';
 import {isAdmin} from '../../util/admin.js';
-import {actionAllChat} from '../../util/chat.js';
+import {actionAllChat, deleteChat} from '../../util/chat.js';
 
 import type {Conversation} from '../../type.js';
 
@@ -61,13 +61,17 @@ async function notifyConversationHandler(update: UpdateType<'message'>): Promise
           messageThreadId = chat.chatDetail?.messageThreadId;
         }
 
-        await bot.api.copyMessage({
+        const response = await bot.api.copyMessage({
           chat_id: chat.id,
           from_chat_id: chatId,
           message_id: notifyMessageId,
           message_thread_id: messageThreadId,
         });
-        i++;
+
+        if (response?.ok === true) i++;
+        else if (response?.error_code === 403) {
+          await deleteChat(chat.id);
+        }
       });
 
       await bot.api.sendMessage(chatId, message('notified_successfully_message').replace('${userCount}', i + ''), {

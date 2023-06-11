@@ -6,7 +6,7 @@ import {bot} from './lib/bot.js';
 import {contentStorageClient} from './lib/storage.js';
 import {adminInfoList} from './util/admin.js';
 import {dateDistance, mobaheleh} from './util/calender.js';
-import {actionAllChat} from './util/chat.js';
+import {actionAllChat, deleteChat} from './util/chat.js';
 
 import type {MaybePromise} from '@alwatr/type';
 
@@ -31,13 +31,17 @@ async function sendDayCountdownContent(day: number): Promise<void> {
     try {
       if (!(chat?.isSubscribed === true)) return;
 
-      await bot.api.copyMessage({
+      const response = await bot.api.copyMessage({
         chat_id: chat.id,
         from_chat_id: content.chatId,
         message_id: content.messageId,
         message_thread_id: chat.chatDetail!.messageThreadId as number | undefined,
       });
-      userCount++;
+
+      if (response?.ok === true) userCount++;
+      else if (response?.error_code === 403) {
+        await deleteChat(chat.id);
+      }
     }
     catch {
       logger.accident('dayCountdown', 'copy_message_error', 'Copy Message Error', day, chat.id);

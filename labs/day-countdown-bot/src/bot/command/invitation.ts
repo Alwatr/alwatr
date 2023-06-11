@@ -3,7 +3,7 @@ import {NotStartInlineKeyboard, subscribedStartInlineKeyboard} from '../../conte
 import {message} from '../../director/l18e-loader.js';
 import {bot} from '../../lib/bot.js';
 import {isAdmin} from '../../util/admin.js';
-import {actionAllChat, isSubscribed} from '../../util/chat.js';
+import {actionAllChat, deleteChat, isSubscribed} from '../../util/chat.js';
 
 bot.defineCommandHandler('invitation', async (context) => {
   logger.logMethod?.('command-invitation');
@@ -11,13 +11,17 @@ bot.defineCommandHandler('invitation', async (context) => {
 
   let i = 0;
   await actionAllChat(async (chat) => {
-    await bot.api.sendMessage(chat.id, message('invitation_message'), {
+    const response = await bot.api.sendMessage(chat.id, message('invitation_message'), {
       reply_markup: {
-        inline_keyboard: await isSubscribed(context.chatId) ? subscribedStartInlineKeyboard : NotStartInlineKeyboard,
+        inline_keyboard: await isSubscribed(chat.id) ? subscribedStartInlineKeyboard : NotStartInlineKeyboard,
       },
       message_thread_id: chat.chatDetail?.messageThreadId as number | undefined,
     });
-    i++;
+
+    if (response?.ok === true) i++;
+    else if (response?.error_code === 403) {
+      await deleteChat(chat.id);
+    }
   });
 
   await context.reply(message('invitation_message_sent').replace('${count}', i + ''));

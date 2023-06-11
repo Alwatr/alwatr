@@ -60,6 +60,11 @@ export async function addChat(chat: Chat, messageThreadId?: number): Promise<Cha
   return chatDetail;
 }
 
+export async function deleteChat(chatId: string | number): Promise<void> {
+  logger.logMethodArgs?.('deleteChat', {chatId});
+  await chatStorageClient.delete(chatId + '');
+}
+
 export async function actionAllChat(action: (chat: DayCountdownChat) => MaybePromise<void>): Promise<void> {
   logger.logMethod?.('actionAllChat');
   const chatList = (await chatStorageClient.getStorage()).data;

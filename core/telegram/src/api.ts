@@ -31,7 +31,7 @@ export class AlwatrTelegramApi {
       chatId: number | string,
       text: string,
       option: SendMessageOption = {},
-  ): Promise<Message.TextMessage | null> {
+  ): Promise<ApiResponse<Message.TextMessage>> {
     this.logger.logMethodArgs?.('sendMessage', {text, option});
     await this.sendChatAction({chat_id: chatId, action: 'typing', message_thread_id: option.message_thread_id});
 
@@ -45,7 +45,7 @@ export class AlwatrTelegramApi {
     const responseJson = await response.json();
     if (response.status != 200) {
       this.logger.error('sendMessage', 'send_message_failed', responseJson);
-      return null;
+      return responseJson;
     }
     return responseJson;
   }
@@ -83,7 +83,7 @@ export class AlwatrTelegramApi {
 
   async copyMessage(
       option: CopyMessageOption,
-  ): Promise<ApiResponse<{message_id: number}> | null> {
+  ): Promise<ApiResponse<{message_id: number}>> {
     this.logger.logMethodArgs?.('copyMessage', {option});
     this.sendChatAction({chat_id: option.chat_id, action: 'typing', message_thread_id: option.message_thread_id});
 
@@ -98,6 +98,7 @@ export class AlwatrTelegramApi {
     }
     return responseJson;
   }
+
   async sendChatAction(
       option: SendChatActionOption,
   ): Promise<{ok: boolean, result: {message_id: number}} | null> {

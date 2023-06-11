@@ -51,14 +51,18 @@ export class AlwatrTelegramContext<U extends Omit<Update, 'update_id'>> {
     this.logger.logMethod?.('constructor');
   }
 
-  async sendMessage(text: string, option?: SendMessageOption): Promise<Message.TextMessage | null> {
+  async sendMessage(text: string, option?: SendMessageOption): Promise<ApiResponse<Message.TextMessage>> {
     return this.api.sendMessage(this.chatId, text, option);
   }
 
-  async reply(text: string, option: SendMessageOption = {}): Promise<Message.TextMessage | null> {
+  async reply(text: string, option: SendMessageOption = {}): Promise<ApiResponse<Message.TextMessage>> {
     if (this.messageId == null) {
       this.logger.error('reply', 'null_message_id');
-      return null;
+      return {
+        ok: false,
+        error_code: 400,
+        description: 'null_message_id',
+      };
     }
     option.reply_to_message_id = this.messageId;
     option.message_thread_id = this.messageThreadId;
