@@ -17,6 +17,7 @@
     {"path": "./core/context"},
     {"path": "./core/server-context"},
     {"path": "./core/router"},
+    {"path": "./core/router2"},
     {"path": "./core/i18n"},
     {"path": "./core/i18n2"},
     {"path": "./core/math"},
