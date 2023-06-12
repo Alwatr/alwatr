@@ -202,26 +202,40 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
    * setLocale();
    * ```
    */
-  setLocale(locale?: Locale | keyof typeof localeList): void {
+  setLocale(locale: Locale | keyof typeof localeList | 'auto'): void {
     this._logger.logMethodArgs?.('setLocale', locale);
+
+    if (locale === 'auto') {
+      this.setLocale(this._findBestLocale());
+      return;
+    }
+    // else
+
     if (typeof locale === 'string') {
       locale = localeList[locale];
     }
 
-    if (locale == null) {
-      const lang = globalThis.document?.documentElement.lang;
-      locale = Object.values(localeList).find((l) => l.code === lang);
-
-      if (locale == null) {
-        this._logger.error('setLocale', 'document_lang_not_supported', {lang});
-        locale = localeList.fa;
-      }
+    if (locale?.code === undefined) {
+      this._logger.error('setLocale', 'locale_not_supported', {locale});
+      this.setLocale(localeList.en);
+      return;
     }
 
     if (this._locale?.code !== locale.code) {
       this._locale = locale;
       this._localeChanged();
     }
+  }
+
+  protected _findBestLocale(): Locale {
+    const lang = globalThis.document?.documentElement.lang;
+    const locale = Object.values(localeList).find((l) => l.code === lang);
+
+    if (locale == null) {
+      this._logger.error('_findBestLocale', 'document_lang_not_supported', {lang});
+    }
+
+    return locale ?? localeList.en;
   }
 
   setResourceLoader(resourceLoader: L10nResourceLoader): void {
