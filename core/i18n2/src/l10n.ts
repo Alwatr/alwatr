@@ -112,7 +112,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
    *
    * return "{key}" if the key not defined in the l18e.
    *
-   * return null if the key is null or undefined (for optional input).
+   * return '' if the key is null or undefined (for optional input).
    *
    * Example:
    *
@@ -120,13 +120,9 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
    * message('hello_world'); // Hello world!
    * ```
    */
-  message(key: string): string;
-  message(key?: null): undefined;
-  message(key?: string | null): string | undefined;
-  message(key?: string | null): string | undefined {
+  message(key?: string | null): string {
     this._logger.logMethodArgs?.('message', key);
-    if (key == null) return;
-    if (key === '') return '';
+    if (!key) return '';
     if (this._resource === undefined) return this._loadingStr;
 
     const msg = this._resource.data[key];
@@ -145,7 +141,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
    * Format number to active locale string unicode and digital group.
    */
   number(number?: number | null, decimal = 2): string {
-    if (number == null) return this._loadingStr;
+    if (number == null) return '';
     if (this._numberFormatter === undefined) return number + '';
     decimal = Math.pow(10, decimal);
     number = Math.round(number * decimal) / decimal;
