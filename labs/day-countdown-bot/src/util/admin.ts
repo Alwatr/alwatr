@@ -15,11 +15,11 @@ export async function addAdmin(chatId: number | string, messageThreadId?: number
   logger.logMethodArgs?.('addAdmin', {chatId});
   if (isAdmin(chatId)) return;
 
+  adminInfoList.push({chatId: +chatId, messageThreadId});
   await configStorageClient.set({
     id: 'admin_list',
     adminInfoList: adminInfoList,
   });
-  adminInfoList.push({chatId: +chatId, messageThreadId});
 }
 
 // TODO: use storage client

@@ -4,7 +4,7 @@ import {config, logger} from './config.js';
 import {message} from './director/l18e-loader.js';
 import {bot} from './lib/bot.js';
 import {contentStorageClient} from './lib/storage.js';
-import {adminInfoList} from './util/admin.js';
+import {adminInfoList, isAdmin} from './util/admin.js';
 import {dateDistance, mobaheleh} from './util/calender.js';
 import {actionAllChat, deleteChat} from './util/chat.js';
 
@@ -88,7 +88,11 @@ export async function dayCountdown(): Promise<void> {
   });
 }
 
-bot.defineCommandHandler('dayCountdown', async () => {
+bot.defineCommandHandler('dayCountdown', async (context) => {
+  if (!isAdmin(context.chatId)) return;
+  const param = context.commandParams ? context.commandParams[0] : 'no';
+  if (param !== 'yes') return;
+
   let day = dateDistance(mobaheleh.valueOf());
   if (day < 0) return; // TODO: notify to admin for remove it.
 
@@ -96,4 +100,13 @@ bot.defineCommandHandler('dayCountdown', async () => {
   for (let i = adminInfoList.length - 1; 0 <= i; i--) {
     await sendContent(--day, adminInfoList[i].chatId, adminInfoList[i].messageThreadId);
   }
+});
+
+bot.defineCommandHandler('nextRozshmar', async (context) => {
+  if (!isAdmin(context.chatId)) return;
+
+  let day = dateDistance(mobaheleh.valueOf());
+  if (day < 0) return; // TODO: notify to admin for remove it.
+
+  await sendContent(--day, context.chatId, context.messageThreadId);
 });
