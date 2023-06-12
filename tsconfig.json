@@ -18,6 +18,7 @@
     {"path": "./core/server-context"},
     {"path": "./core/router"},
     {"path": "./core/i18n"},
+    {"path": "./core/i18n2"},
     {"path": "./core/math"},
     {"path": "./core/nano-server"},
     {"path": "./core/storage-engine"},
