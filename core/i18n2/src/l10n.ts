@@ -18,10 +18,11 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
   protected _resource?: L10nResource;
   protected _numberFormatter?: Intl.NumberFormat;
   protected _unicodeDigits?: UnicodeDigits;
-  protected _loadingStr = '…' as const;
   protected _resourceLoader?: L10nResourceLoader;
+
+  static _loadingStr = '…' as const;
   // Define time units and their corresponding seconds
-  protected _timeUnits = [
+  static _timeUnits = [
     {label: 'year', seconds: 31536000},
     {label: 'month', seconds: 2592000},
     {label: 'week', seconds: 604800},
@@ -121,7 +122,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
   message(key?: string | null): string {
     this._logger.logMethodArgs?.('message', key);
     if (!key) return '';
-    if (this._resource === undefined) return this._loadingStr;
+    if (this._resource === undefined) return (this.constructor as typeof AlwatrL10n)._loadingStr;
 
     const msg = this._resource.data[key];
     if (msg === undefined) {
@@ -140,7 +141,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
    */
   number(number?: number | null, decimal = 2): string {
     if (number == null) return '';
-    if (this._numberFormatter === undefined) return this._loadingStr;
+    if (this._numberFormatter === undefined) return (this.constructor as typeof AlwatrL10n)._loadingStr;
     decimal = Math.pow(10, decimal);
     number = Math.round(number * decimal) / decimal;
     return this._numberFormatter.format(number);
@@ -151,7 +152,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
    */
   replaceNumber(str: string): string {
     this._logger.logMethodArgs?.('replaceNumber', str);
-    if (this._unicodeDigits === undefined) return this._loadingStr;
+    if (this._unicodeDigits === undefined) return (this.constructor as typeof AlwatrL10n)._loadingStr;
     return this._unicodeDigits.translate(str);
   }
 
@@ -160,7 +161,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
    */
   time(date: number | Date, options?: Intl.DateTimeFormatOptions): string {
     this._logger.logMethodArgs?.('time', {date, options});
-    if (this._locale === undefined) return this._loadingStr;
+    if (this._locale === undefined) return (this.constructor as typeof AlwatrL10n)._loadingStr;
     if (typeof date === 'number') date = new Date(date);
     return date.toLocaleDateString(this._locale.code, options);
   }
@@ -172,7 +173,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
   ): string {
     this._logger.logMethodArgs?.('relativeTime', {date, from, options});
 
-    if (this._locale === undefined) return this._loadingStr;
+    if (this._locale === undefined) return (this.constructor as typeof AlwatrL10n)._loadingStr;
 
     const rtf = new Intl.RelativeTimeFormat(this._locale.code, options);
 
@@ -181,7 +182,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
     const diffSec = (from - date) / 1000;
 
     // Find the appropriate unit for the time difference
-    for (const unit of this._timeUnits) {
+    for (const unit of (this.constructor as typeof AlwatrL10n)._timeUnits) {
       const interval = Math.floor(Math.abs(diffSec / unit.seconds));
       if (interval >= 1) {
         return rtf.format(diffSec > 0 ? interval : -interval, unit.label);
