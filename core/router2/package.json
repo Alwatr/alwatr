@@ -1,0 +1,43 @@
+{
+  "name": "@alwatr/router2",
+  "version": "0.32.0",
+  "description": "Elegant powerful router (fundamental advance browser page routing) based on the simplicity of the signals written in tiny TypeScript module.",
+  "keywords": [
+    "router",
+    "route",
+    "routing",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "main": "index.js",
+  "type": "module",
+  "types": "index.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "license": "MIT",
+  "private": "true",
+  "files": [
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "core/router2"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/core/router2#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "dependencies": {
+    "@alwatr/logger": "^0.32.0",
+    "@alwatr/math": "^0.32.0",
+    "@alwatr/signal2": "^0.32.0",
+    "tslib": "^2.5.3"
+  },
+  "devDependencies": {
+    "@alwatr/type": "^0.32.0"
+  }
+}
