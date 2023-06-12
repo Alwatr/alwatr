@@ -12,12 +12,13 @@ if (telegramBotWebhookDomain == null) {
   throw new Error('telegram bot webhook url required, TELEGRAM_BOT_WEBHOOK_DOMAIN="YOUR_WEBHOOK_DOMAIN" yarn start');
 }
 
+process.env.TZ = 'Asia/Tehran';
+
 export const config = {
   telegram: {
     token: telegramBotToken,
     username: process.env.TELEGRAM_BOT_USERNAME,
     webhookDomain: telegramBotWebhookDomain,
-    debugMode: process.env.TELEGRAM_BOT_DEBUG_MODE === '1' ? true : false,
     host: process.env.HOST ?? '0.0.0.0',
     port: process.env.PORT ? +process.env.PORT : 8080,
   },

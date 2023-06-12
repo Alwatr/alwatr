@@ -13,8 +13,6 @@ export function isAdmin(chatId: number | string): boolean {
 
 export async function addAdmin(chatId: number | string, messageThreadId?: number): Promise<void> {
   logger.logMethodArgs?.('addAdmin', {chatId});
-  if (isAdmin(chatId)) return;
-
   adminInfoList.push({chatId: +chatId, messageThreadId});
   await configStorageClient.set({
     id: 'admin_list',

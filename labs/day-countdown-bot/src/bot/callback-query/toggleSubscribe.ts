@@ -2,21 +2,21 @@ import {logger} from '../../config.js';
 import {NotStartInlineKeyboard, subscribedStartInlineKeyboard} from '../../content/buttons.js';
 import {message} from '../../director/l18e-loader.js';
 import {bot} from '../../lib/bot.js';
-import {toggleSubscribe} from '../../util/chat.js';
+import {addChat, toggleSubscribe} from '../../util/chat.js';
 
 bot.defineCallbackQueryHandler('toggleSubscribe', async (context) => {
   logger.logMethodArgs?.('command-toggleSubscribe', {chatId: context.chatId});
-  const chatId = context.update.callback_query!.message!.chat.id;
-  const messageThreadId = context.update.callback_query!.message!.message_thread_id;
-  const messageId = context.update.callback_query!.message!.message_id;
 
-  const isSubscribed = await toggleSubscribe(chatId, messageThreadId);
+  // TODO: check permission for user
+  let isSubscribed = await toggleSubscribe(context.chatId, context.messageThreadId);
 
   if (isSubscribed == null) {
     logger.error('command-toggleSubscribe', 'chat_not_found');
-    return;
+    await addChat(context.update.callback_query!.message!.chat);
+    isSubscribed = await toggleSubscribe(context.chatId, context.messageThreadId);
   }
-  else if (isSubscribed === true) {
+
+  if (isSubscribed === true) {
     context.answerCallbackQuery({text: message('subscribed_successfully_message')});
   }
   else {
@@ -24,10 +24,12 @@ bot.defineCallbackQueryHandler('toggleSubscribe', async (context) => {
   }
 
   await bot.api.editMessageReplyMarkup({
-    chat_id: chatId,
-    message_id: messageId,
+    chat_id: context.chatId,
+    message_id: context.messageId,
     reply_markup: {
       inline_keyboard: isSubscribed ? subscribedStartInlineKeyboard : NotStartInlineKeyboard,
     },
   });
+
+  // TODO: remove reply markup when subscribed
 });

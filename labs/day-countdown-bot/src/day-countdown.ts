@@ -4,13 +4,13 @@ import {config, logger} from './config.js';
 import {message} from './director/l18e-loader.js';
 import {bot} from './lib/bot.js';
 import {contentStorageClient} from './lib/storage.js';
-import {adminInfoList, isAdmin} from './util/admin.js';
+import {adminInfoList} from './util/admin.js';
 import {dateDistance, mobaheleh} from './util/calender.js';
 import {actionAllChat, deleteChat} from './util/chat.js';
 
 import type {MaybePromise} from '@alwatr/type';
 
-async function sendDayCountdownContent(day: number): Promise<void> {
+export async function sendDayCountdownContent(day: number): Promise<void> {
   logger.logMethodArgs?.('sendDayCountdownContent', {day});
   const content = await contentStorageClient.get(day + '', 'mobaheleh');
   if (content == null) {
@@ -29,7 +29,7 @@ async function sendDayCountdownContent(day: number): Promise<void> {
   let userCount = 0;
   await actionAllChat(async (chat) => {
     try {
-      if (!(chat?.isSubscribed === true)) return;
+      if (chat?.isSubscribed !== true) return;
 
       const response = await bot.api.copyMessage({
         chat_id: chat.id,
@@ -58,7 +58,6 @@ async function sendDayCountdownContent(day: number): Promise<void> {
 
 function scheduleDailyTask(targetTime: Date, callback: () => MaybePromise<void>): void {
   const now = new Date();
-
   let timeToWait = targetTime.getTime() - now.getTime();
 
   if (timeToWait <= 0) {
@@ -67,7 +66,7 @@ function scheduleDailyTask(targetTime: Date, callback: () => MaybePromise<void>)
     timeToWait = targetTime.getTime() - now.getTime();
   }
 
-  logger.logProperty?.('scheduleDailyTask', {targetTime, timeToWait: (timeToWait / 60 / 1000) + 'm'});
+  logger.logProperty?.('scheduleDailyTask', {targetTime, timeToWait: Math.ceil(timeToWait / 60 / 1000) + 'm'});
   setTimeout(async () => {
     scheduleDailyTask(targetTime, callback);
     await callback();
@@ -76,7 +75,7 @@ function scheduleDailyTask(targetTime: Date, callback: () => MaybePromise<void>)
 
 export async function dayCountdown(): Promise<void> {
   const targetTime = new Date();
-  targetTime.setHours(config.bot.notifyTimestamp - 4, 30, 0, 0);
+  targetTime.setHours(config.bot.notifyTimestamp, 0, 0, 0);
   scheduleDailyTask(targetTime, async () => {
     let day = dateDistance(mobaheleh.valueOf());
     if (day < 0) return; // TODO: notify to admin for remove it.
@@ -87,26 +86,3 @@ export async function dayCountdown(): Promise<void> {
     }
   });
 }
-
-bot.defineCommandHandler('dayCountdown', async (context) => {
-  if (!isAdmin(context.chatId)) return;
-  const param = context.commandParams ? context.commandParams[0] : 'no';
-  if (param !== 'yes') return;
-
-  let day = dateDistance(mobaheleh.valueOf());
-  if (day < 0) return; // TODO: notify to admin for remove it.
-
-  await sendDayCountdownContent(day);
-  for (let i = adminInfoList.length - 1; 0 <= i; i--) {
-    await sendContent(--day, adminInfoList[i].chatId, adminInfoList[i].messageThreadId);
-  }
-});
-
-bot.defineCommandHandler('nextRozshmar', async (context) => {
-  if (!isAdmin(context.chatId)) return;
-
-  let day = dateDistance(mobaheleh.valueOf());
-  if (day < 0) return; // TODO: notify to admin for remove it.
-
-  await sendContent(--day, context.chatId, context.messageThreadId);
-});

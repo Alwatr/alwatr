@@ -18,19 +18,19 @@ type NotifyConversationContext = Conversation & {
 };
 
 async function notifyConversationHandler(update: UpdateType<'message'>): Promise<boolean> {
-  const chatId = update.message!.chat.id.toString();
-  const text = update.message!.text;
-  const messageId = update.message!.message_id;
-  const messageThreadId = update.message!.message_thread_id ? +update.message!.message_thread_id! : undefined;
+  const chatId = update.message?.chat.id ? update.message?.chat.id + '' : null;
+  const text = update.message?.text;
+  const messageId = update.message?.message_id;
+  const messageThreadId = update.message?.message_thread_id ? +update.message.message_thread_id : undefined;
 
-  if (!isAdmin(chatId)) return false;
+  if (chatId == null || !isAdmin(chatId)) return false;
 
   const conversation = await conversationStorageClient.get<NotifyConversationContext>(chatId);
   if (conversation == null || conversation.name !== 'notify') return false;
 
   if (text === '/cancel') {
     await conversationStorageClient.delete(chatId);
-    await bot.api.sendMessage(chatId, message('cancel_notify_message'), {
+    await bot.api.sendMessage(chatId, message('cancel_message'), {
       message_thread_id: messageThreadId,
       reply_to_message_id: messageId,
     });
@@ -56,16 +56,11 @@ async function notifyConversationHandler(update: UpdateType<'message'>): Promise
       let i = 0;
 
       await actionAllChat(async (chat) => {
-        let messageThreadId;
-        if (chat.chatDetail?.type === 'supergroup') {
-          messageThreadId = chat.chatDetail?.messageThreadId;
-        }
-
         const response = await bot.api.copyMessage({
           chat_id: chat.id,
           from_chat_id: chatId,
           message_id: notifyMessageId,
-          message_thread_id: messageThreadId,
+          message_thread_id: chat.chatDetail?.messageThreadId as number | undefined,
         });
 
         if (response?.ok === true) i++;
@@ -79,17 +74,6 @@ async function notifyConversationHandler(update: UpdateType<'message'>): Promise
         message_thread_id: messageThreadId,
       });
     }
-    else {
-      await bot.api.sendMessage(chatId, message('cancel_notify_message'), {
-        message_thread_id: messageThreadId,
-        reply_to_message_id: messageId,
-      });
-    }
-  }
-  else {
-    // error
-    logger.error('notifyConversationHandler', 'unhandled_state', chatId, conversation);
-    await conversationStorageClient.delete(chatId);
   }
 
   return true;
@@ -99,12 +83,9 @@ bot.defineCommandHandler('notify', async (context) => {
   logger.logMethodArgs?.('notify', context);
   if (!isAdmin(context.chatId)) return;
 
-  const messageId = context.messageId;
-  const messageThreadId = context.messageThreadId;
-
   await bot.api.sendMessage(context.chatId, message('send_notify_message'), {
-    message_thread_id: messageThreadId,
-    reply_to_message_id: messageId,
+    message_thread_id: context.messageThreadId,
+    reply_to_message_id: context.messageId,
   });
 
   await conversationStorageClient.set<NotifyConversationContext>({

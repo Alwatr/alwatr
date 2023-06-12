@@ -9,7 +9,7 @@ import type {MaybePromise} from '@alwatr/type';
 export async function isSubscribed(chatId: string | number): Promise<boolean> {
   const chat = await chatStorageClient.get<DayCountdownChat>(chatId + '');
 
-  const subscribed = chat != null && chat.isSubscribed === true;
+  const subscribed = chat != null && chat.isSubscribed === true && chat.isDeleted !== true;
   logger.logMethodArgs?.('isSubscribed', {chatId, subscribed});
   return subscribed;
 }
@@ -18,7 +18,7 @@ export async function toggleSubscribe(chatId: number, messageThreadId?: number):
   logger.logMethodArgs?.('toggleSubscribe', {chatId});
   const chat = await chatStorageClient.get<DayCountdownChat>(chatId + '');
   logger.logMethodArgs?.('toggleSubscribe', {chat});
-  if (chat == null) return null;
+  if (chat == null || chat.chatDetail == null) return null;
 
   chat.isSubscribed = !chat.isSubscribed;
   chat.chatDetail!.messageThreadId = messageThreadId;
@@ -68,14 +68,18 @@ export async function addChat(chat: Chat, messageThreadId?: number): Promise<Cha
 
 export async function deleteChat(chatId: string | number): Promise<void> {
   logger.logMethodArgs?.('deleteChat', {chatId});
-  await chatStorageClient.delete(chatId + '');
+  const chat = await chatStorageClient.get(chatId + '');
+  if (chat == null) return;
+
+  chat.isDeleted = true;
+  await chatStorageClient.set(chat);
 }
 
 export async function actionAllChat(action: (chat: DayCountdownChat) => MaybePromise<void>): Promise<void> {
   logger.logMethod?.('actionAllChat');
   const chatList = (await chatStorageClient.getStorage()).data;
-  for (const chat in chatList) {
-    if (!Object.prototype.hasOwnProperty.call(chatList, chat)) continue;
-    await action(chatList[chat]);
+  for (const chatIndex in chatList) {
+    if (!Object.prototype.hasOwnProperty.call(chatList, chatIndex) || chatList[chatIndex].isDeleted === true) continue;
+    await action(chatList[chatIndex]);
   }
 }

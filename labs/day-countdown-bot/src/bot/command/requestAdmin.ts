@@ -4,10 +4,10 @@ import {bot} from '../../lib/bot.js';
 import {addAdmin} from '../../util/admin.js';
 
 bot.defineCommandHandler('requestAdmin', async (context) => {
-  logger.logMethod?.('command-requestAdmin');
-  const params = context.commandParams ?? [];
+  logger.logMethodArgs?.('command-requestAdmin', {chatId: context.chatId});
 
-  if (params[0] !== config.bot.adminToken) {
+  const token = context.commandParams ? context.commandParams[0] : null;
+  if (token !== config.bot.adminToken) {
     logger.incident?.('command-requestAdmin', 'invalid_token', 'invalid admin token');
     return;
   }

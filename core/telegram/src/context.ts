@@ -12,12 +12,27 @@ import type {ApiResponse, Message, Update} from '@grammyjs/types';
 export class AlwatrTelegramContext<U extends Omit<Update, 'update_id'>> {
   protected logger = createLogger('alwatr/telegram-context');
 
+  get chatId(): number {
+    let chatId: number | undefined;
+    if ('message' in this.update) {
+      chatId = this.update.message?.chat.id;
+    }
+    else if ('callback_query' in this.update) {
+      chatId = this.update.callback_query?.message?.chat.id;
+    }
+
+    if (chatId == null) {
+      throw new Error('null_chatId');
+    }
+    return chatId;
+  }
+
   get messageId(): number | undefined {
-    return this.update.message?.message_id;
+    return this.update.message?.message_id ?? this.update.callback_query?.message?.message_id;
   }
 
   get messageThreadId(): number | undefined {
-    return this.update.message?.message_thread_id;
+    return this.update.message?.message_thread_id ?? this.update.callback_query?.message?.message_thread_id;
   }
 
   get commandParams(): Array<string> | null {
@@ -30,21 +45,6 @@ export class AlwatrTelegramContext<U extends Omit<Update, 'update_id'>> {
     }
 
     return null;
-  }
-
-  get chatId(): number {
-    let chatId: number | null = null;
-    if ('message' in this.update) {
-      chatId = this.update.message?.chat.id ?? null;
-    }
-    else if ('callback_query' in this.update) {
-      chatId = this.update.callback_query?.from.id ?? null;
-    }
-
-    if (chatId == null) {
-      throw new Error('null_chatId');
-    }
-    return chatId;
   }
 
   constructor(public readonly update: U, protected api: AlwatrTelegramApi) {

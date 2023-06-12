@@ -6,8 +6,11 @@ import {isAdmin} from '../../util/admin.js';
 import {actionAllChat, deleteChat, isSubscribed} from '../../util/chat.js';
 
 bot.defineCommandHandler('invitation', async (context) => {
-  logger.logMethod?.('command-invitation');
+  logger.logMethodArgs?.('command-invitation', {chatId: context.chatId});
   if (!isAdmin(context.chatId)) return;
+
+  const param = context.commandParams ? context.commandParams[0] : null;
+  if (param !== 'yes') return;
 
   let i = 0;
   await actionAllChat(async (chat) => {

@@ -1,3 +1,4 @@
+import {isNumber} from '@alwatr/math';
 import {UpdateType} from '@alwatr/telegram';
 
 import {logger} from '../../config.js';
@@ -17,20 +18,19 @@ type SetContentConversationContext = Conversation & {
 };
 
 async function setContentConversationHandler(update: UpdateType<'message'>): Promise<boolean> {
-  const chatId = update.message!.chat.id.toString();
+  const chatId = update.message?.chat.id ? update.message?.chat.id + '' : null;
+  const text = update.message?.text;
+  const messageId = update.message?.message_id;
+  const messageThreadId = update.message?.message_thread_id;
 
-  const text = update.message!.text;
-  const messageId = update.message!.message_id;
-  const messageThreadId = update.message!.message_thread_id;
-
-  if (!isAdmin(chatId)) return false;
+  if (chatId == null || !isAdmin(chatId)) return false;
 
   const conversation = await conversationStorageClient.get<SetContentConversationContext>(chatId);
   if (conversation == null || conversation.name !== 'set-content') return false;
 
   if (text === '/cancel') {
     await conversationStorageClient.delete(chatId);
-    await bot.api.sendMessage(chatId, message('reset_message'), {
+    await bot.api.sendMessage(chatId, message('cancel_message'), {
       message_thread_id: messageThreadId,
       reply_to_message_id: messageId,
     });
@@ -50,7 +50,7 @@ async function setContentConversationHandler(update: UpdateType<'message'>): Pro
   }
   else if (conversation.state === 'getDay') {
     const day = text?.match(/\d+/)?.[0];
-    if (day == null) {
+    if (day == null || !isNumber(day)) {
       await bot.api.sendMessage(chatId, message('invalid_day_set_content_message'), {
         reply_to_message_id: messageId,
         message_thread_id: messageThreadId,
@@ -68,11 +68,6 @@ async function setContentConversationHandler(update: UpdateType<'message'>): Pro
       messageId: +conversation.context!.contentMessageId!,
     }, 'mobaheleh');
   }
-  else {
-    // error
-    logger.error('notifyConversationHandler', chatId, conversation);
-    await conversationStorageClient.delete(chatId);
-  }
 
   return true;
 }
@@ -80,6 +75,7 @@ async function setContentConversationHandler(update: UpdateType<'message'>): Pro
 bot.defineCommandHandler('setContent', async (context) => {
   logger.logMethodArgs?.('setContent', context.chatId);
   if (!isAdmin(context.chatId)) return;
+
   await bot.api.sendMessage(context.chatId, message('send_set_content_message'), {
     reply_to_message_id: context.messageId,
   });
