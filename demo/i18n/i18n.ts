@@ -25,6 +25,19 @@ l10n.setResourceLoader((locale) => {
 
 l10n.setLocale('fa');
 
+const now = Date.now();
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+for (const unit of l10n.constructor._timeUnits) {
+  const sec = unit.seconds * 1000;
+  logger.logProperty?.('time ' + unit.label, l10n.relativeTime(now, now - sec));
+  logger.logProperty?.('time ' + unit.label, l10n.relativeTime(now, now - 2 * sec));
+  logger.logProperty?.('time ' + unit.label, l10n.relativeTime(now, now - 3 * sec));
+  logger.logProperty?.('time ' + unit.label, l10n.relativeTime(now, now + sec));
+  logger.logProperty?.('time ' + unit.label, l10n.relativeTime(now, now + 2 * sec));
+  logger.logProperty?.('time ' + unit.label, l10n.relativeTime(now, now + 3 * sec));
+}
+
 await delay(500);
 
 l10n.setLocale('en');
