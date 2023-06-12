@@ -32,9 +32,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
   ] as const;
 
   constructor() {
-    super({
-      name: 'alwatr_localization',
-    });
+    super({name: 'alwatr_localization'});
   }
 
   get locale(): Locale | undefined {
@@ -142,7 +140,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
    */
   number(number?: number | null, decimal = 2): string {
     if (number == null) return '';
-    if (this._numberFormatter === undefined) return number + '';
+    if (this._numberFormatter === undefined) return this._loadingStr;
     decimal = Math.pow(10, decimal);
     number = Math.round(number * decimal) / decimal;
     return this._numberFormatter.format(number);
@@ -153,7 +151,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
    */
   replaceNumber(str: string): string {
     this._logger.logMethodArgs?.('replaceNumber', str);
-    if (this._unicodeDigits === undefined) return str;
+    if (this._unicodeDigits === undefined) return this._loadingStr;
     return this._unicodeDigits.translate(str);
   }
 
