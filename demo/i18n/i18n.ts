@@ -8,6 +8,8 @@ l10n.subscribe(() => {
   logger.logProperty?.('hi', l10n.message('hi'));
 });
 
+logger.logProperty?.('hi', l10n.message('hi'));
+
 l10n.setResourceLoader((locale) => {
   return {
     ok: true,
