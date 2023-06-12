@@ -43,7 +43,7 @@
     "@alwatr/type": "^0.32.0",
     "@alwatr/ui-kit": "^0.32.0",
     "@alwatr/util": "^0.32.0",
-    "@web/dev-server": "^0.2.1",
+    "@web/dev-server": "^0.2.2",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "esbuild": "^0.17.19",
     "lit-analyzer": "^1.2.1",
