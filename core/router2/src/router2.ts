@@ -1,17 +1,14 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
-import {isNumber, random} from '@alwatr/math';
 import {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
 import {AlwatrBaseSignal} from '@alwatr/signal2/base.js';
 
-import type {PushState, RouteContext, RouteContextBase, RoutesConfig} from './type.js';
-import type {ParamValueType, QueryParameters} from '@alwatr/type';
+import type {PushState, RouteContext, RouteContextBase} from './type.js';
+import type {QueryParameters} from '@alwatr/type';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/router2',
   version: _ALWATR_VERSION_,
 });
-
-export const logger = createLogger('alwatr/router2/initializer');
 
 const documentBaseUrl = document.querySelector('base')?.href || '/';
 
@@ -22,86 +19,18 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
     return this._$detail ?? this._makeRouteContext();
   }
 
-  constructor(config: {popstateTrigger?: boolean}) {
+  constructor(config: {popstateTrigger?: boolean; clickTrigger?: boolean}) {
     super({name: 'alwatr_router'});
 
     this._dispatch(this._makeRouteContext());
     this._popstateHandler = this._popstateHandler.bind(this);
+    this._clickHandler = this._clickHandler.bind(this);
 
     config.popstateTrigger ??= true;
     this.popstateTrigger = config.popstateTrigger;
-  }
 
-  /**
-   * The result of calling the current route's render() callback base on routesConfig.
-   *
-   * alias for `routesConfig.templates[routesConfig.routeId(currentRoute)](currentRoute)`
-   *
-   * if the location is app root and `routeId()` return noting then redirect to `home` automatically
-   * if `routeId()` return noting or render function not defined in the `templates` redirected to `_404` routeId.
-   *
-   * Example:
-   *
-   * ```ts
-   * const routeConfig = {
-   *   routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
-   *   templates: {
-   *     'about': () => html`<page-about></page-about>`,
-   *     'product-list': () => {
-   *       import('./page-product-list.js'); // lazy import
-   *       return html`<page-product-list></page-product-list>`,
-   *     },
-   *     'contact': () => html`<page-contact></page-contact>`,
-   *     'home': () => html`<page-home></page-home>`,
-   *     '_404': () => html`<page-404></page-404>`,
-   *   },
-   * };
-   *
-   * routerOutlet(routeConfig);
-   * ```
-   */
-  routerOutlet(routesConfig: RoutesConfig, thisArg: unknown = null): unknown {
-    this._logger.logMethodArgs?.('routerOutlet', {routesConfig});
-
-    const routeContext = this._getDetail();
-
-    if (routeContext == null) {
-      this._logger.accident('routerOutlet', 'route_context_undefined', 'Route context not provided yet.');
-      return;
-    }
-
-    const routeId = routesConfig.routeId(routeContext) ?? '';
-    let render = routesConfig.templates[routeId];
-
-    while (typeof render === 'string') {
-      render = routesConfig.templates[render];
-    }
-
-    try {
-      if (typeof render === 'function') {
-        return render.call(thisArg, routeContext);
-      }
-      // else
-      if (routeId === '') {
-        return routesConfig.templates.home(routeContext);
-      }
-      // else
-      this._logger.incident?.(
-          'routerOutlet',
-          'page_not_found',
-          'Requested page not defined in routesConfig.templates',
-          {
-            routeId,
-            routeContext,
-            routesConfig,
-          },
-      );
-      return routesConfig.templates._404(routeContext);
-    }
-    catch (err) {
-      this._logger.error('routerOutlet', 'render_failed', err);
-      return routesConfig.templates.home(routeContext);
-    }
+    config.clickTrigger ??= true;
+    this.clickTrigger = config.clickTrigger;
   }
 
   /**
@@ -267,7 +196,7 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
    */
   protected _popstateHandler(event: PopStateEvent): void {
     const href = globalThis.location?.href;
-    logger.logMethodArgs?.('_popstateHandler', href);
+    this._logger.logMethodArgs?.('_popstateHandler', href);
     if (event.state === 'router-ignore') return;
     this.redirect(href, false);
   }
@@ -287,5 +216,92 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
 
   get popstateTrigger(): boolean {
     return this._$popstateTrigger;
+  }
+
+  protected _$clickTrigger = false;
+
+  /**
+   * Alwatr router global click handler.
+   */
+  protected _clickHandler(event: MouseEvent): void {
+    this._logger.logMethod?.('_clickHandler');
+
+    if (
+      // ignore if the default action is prevented.
+      event.defaultPrevented ||
+      // ignore if the left mouse button is not pressed.
+      event.button !== 0 ||
+      // ignore if the meta key is pressed.
+      event.metaKey ||
+      // ignore if the ctrl key is pressed.
+      event.ctrlKey ||
+      // ignore if the shift key is pressed.
+      event.shiftKey ||
+      // ignore if the alt key is pressed.
+      event.altKey
+    ) {
+      return;
+    }
+
+    // prettier-ignore
+    // find the <a> element that the click is at (or within)
+    const anchor = event
+        .composedPath()
+        .find(
+            (target) => (target as HTMLElement)?.tagName?.toLowerCase() === 'a',
+        ) as HTMLAnchorElement | undefined;
+
+    if (
+      // ignore if the anchor is not found.
+      anchor == null ||
+      // ignore if the anchor is not an <a> element.
+      anchor.tagName?.toLowerCase() !== 'a' ||
+      // ignore if the <a> element has a non-default target.
+      (typeof anchor.target === 'string' && anchor.target !== '' && anchor.target.toLowerCase() !== '_self') ||
+      // ignore if the <a> element has a download attribute.
+      anchor.hasAttribute('download') ||
+      // ignore if the <a> element has a rel attribute.
+      anchor.getAttribute('rel') === 'external' ||
+      // ignore if the <a> element has a `router-ignore` attribute.
+      anchor.hasAttribute('router-ignore') ||
+      // ignore the anchor protocols other than HTTP and HTTPS (mailto, ftp, ...).
+      (anchor.protocol !== 'http:' && anchor.protocol !== 'https:') ||
+      // ignore if the anchor points to another origin (include the port number).
+      anchor.href.indexOf(window.location.origin) !== 0
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+
+    // ignore if the target URL is the current page(after prevent default).
+    if (anchor.href === window.location.href) {
+      return;
+    }
+
+    // if none of the above, convert the click into a navigation signal.
+    this.redirect(anchor.href, true);
+
+    // for a click event, the scroll is reset to the top position.
+    if (event.type === 'click') {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  set clickTrigger(enable: boolean) {
+    this._logger.logProperty?.('clickTrigger.enable', enable);
+    if (this._$clickTrigger === enable) return;
+
+    if (enable) {
+      window.document.addEventListener('click', this._clickHandler);
+    }
+    if (!enable) {
+      window.document.removeEventListener('click', this._clickHandler);
+    }
+    this._$clickTrigger = enable;
+  }
+
+  get clickTrigger(): boolean {
+    return this._$clickTrigger;
   }
 }

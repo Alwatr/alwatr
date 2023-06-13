@@ -156,3 +156,5 @@ export interface RoutesConfig {
    */
   templates: RouterTemplates;
 }
+
+export type TemplateList<PageName extends string> = Record<PageName, PageName | (() => unknown)>;
