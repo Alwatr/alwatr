@@ -126,6 +126,13 @@ jobs:
               short: 6
               full: 6.2-php8.2-fpm
 
+          - image: polyfill
+            path: cloud/container/polyfill
+            description: Self hosted polyfill.io
+            version:
+              short: 4
+              full: 4.50.1
+
           # - image: tdlib
           #   path: cloud/container/tdlib
           #   description: Cross-platform library for building Telegram clients.
