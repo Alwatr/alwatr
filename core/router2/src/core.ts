@@ -1,5 +1,5 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
-import {isNumber} from '@alwatr/math';
+import {isNumber, random} from '@alwatr/math';
 import {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
 import {AlwatrBaseSignal} from '@alwatr/signal2/base.js';
 
@@ -18,16 +18,18 @@ const documentBaseUrl = document.querySelector('base')?.href || '/';
 export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
   protected override _logger = createLogger('alwatr/router2');
 
-  constructor(name: string) {
-    super({name});
-  }
-
   get route(): RouteContext {
-    return this._$detail ?? this.makeRouteContext();
+    return this._$detail ?? this._makeRouteContext();
   }
 
-  set route(newRoute: RouteContext) {
-    this._dispatch(newRoute);
+  constructor(config: {popstateTrigger?: boolean}) {
+    super({name: 'alwatr_router'});
+
+    this._dispatch(this._makeRouteContext());
+    this._popstateHandler = this._popstateHandler.bind(this);
+
+    config.popstateTrigger ??= true;
+    this.popstateTrigger = config.popstateTrigger;
   }
 
   /**
@@ -112,15 +114,13 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
    * ```
    */
   url(route: Partial<RouteContextBase>): string {
-    this._logger.logMethodArgs?.('url', {route});
-
     let href = '';
 
     if (Array.isArray(route.sectionList)) {
       href += documentBaseUrl + route.sectionList.join('/');
     }
 
-    href += this.toQueryParamString(route.queryParamList);
+    href += this._toQueryParamString(route.queryParamList);
 
     if (route.hash != null && route.hash !== '') {
       if (route.hash.indexOf('#') !== 0) {
@@ -159,14 +159,14 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
       }
     }
     const href = typeof route === 'string' ? route : this.url(route);
-    this.updateBrowserHistory(href, pushState);
-    this._dispatch(this.makeRouteContext());
+    this._updateBrowserHistory(href, pushState);
+    this._dispatch(this._makeRouteContext());
   }
 
   /**
    * Update browser history state (history.pushState or history.replaceState).
    */
-  updateBrowserHistory(url: string, pushState: PushState): void {
+  protected _updateBrowserHistory(url: string, pushState: PushState): void {
     if (pushState === false || globalThis.history == null) return;
 
     this._logger.logMethodArgs?.('updateBrowserHistory', url);
@@ -183,16 +183,15 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
   /**
    * Make route context from url.
    */
-  makeRouteContext(): RouteContext {
+  protected _makeRouteContext(): RouteContext {
     this._logger.logMethod?.('makeRouteContext');
 
     const sectionList = location.pathname
         .split('/')
         .map(this._decodeURIComponent) // decode must be after split because encoded '/' maybe include in values.
-        .filter((section) => section.trim() !== '')
-        .map(this._sanitizeValue);
+        .filter((section) => section.trim() !== '');
 
-    const queryParamList = this.parseQueryParamString(location.search);
+    const queryParamList = this._parseQueryParamString(location.search);
 
     const protocol = location.protocol === 'https:' ? 'HTTPS' : 'HTTP';
 
@@ -212,7 +211,7 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
   /**
    * Convert `QueryParameters` object to `queryParameter` string.
    */
-  toQueryParamString(queryParameterList?: QueryParameters): string {
+  protected _toQueryParamString(queryParameterList?: QueryParameters): string {
     if (queryParameterList == null) return '';
     const list: Array<string> = [];
     for (const key of Object.keys(queryParameterList)) {
@@ -224,7 +223,7 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
   /**
    * Convert `queryParameter` string to `QueryParameters` object.
    */
-  parseQueryParamString(queryParameter?: string): QueryParameters {
+  protected _parseQueryParamString(queryParameter?: string): QueryParameters {
     this._logger.logMethodArgs?.('parseQueryParamString', {queryParamString: queryParameter});
 
     const queryParamList: QueryParameters = {};
@@ -235,35 +234,10 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
 
     for (const parameter of queryParameter.split('&')) {
       const parameterArray = parameter.split('=');
-      queryParamList[parameterArray[0]] = this._sanitizeValue(parameterArray[1]);
+      queryParamList[parameterArray[0]] = parameterArray[1] ?? '';
     }
 
     return queryParamList;
-  }
-
-  /**
-   * Sanitize string value to valid parameters types.
-   */
-  protected _sanitizeValue(value?: string | null): ParamValueType {
-    if (value == null) {
-      return '';
-    }
-    // else
-    value = value.trim();
-    if (value === '') {
-      return value;
-    }
-    // else
-    const lowerValue = value.toLocaleLowerCase();
-    if (lowerValue === 'true' || lowerValue === 'false') {
-      return lowerValue === 'true';
-    }
-    // else
-    if (isNumber(value)) {
-      return +value;
-    }
-    // else
-    return value;
   }
 
   /**
@@ -284,5 +258,34 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
 
   unsubscribe(listenerCallback: ListenerCallback<this, RouteContext>): void {
     return this._unsubscribe(listenerCallback);
+  }
+
+  protected _$popstateTrigger = false;
+
+  /**
+   * Alwatr router global popstate handler.
+   */
+  protected _popstateHandler(event: PopStateEvent): void {
+    const href = globalThis.location?.href;
+    logger.logMethodArgs?.('_popstateHandler', href);
+    if (event.state === 'router-ignore') return;
+    this.redirect(href, false);
+  }
+
+  set popstateTrigger(enable: boolean) {
+    this._logger.logProperty?.('popstateTrigger', enable);
+    if (this._$popstateTrigger === enable) return;
+
+    if (enable) {
+      globalThis.addEventListener('popstate', this._popstateHandler);
+    }
+    else {
+      globalThis.removeEventListener('popstate', this._popstateHandler);
+    }
+    this._$popstateTrigger = enable;
+  }
+
+  get popstateTrigger(): boolean {
+    return this._$popstateTrigger;
   }
 }

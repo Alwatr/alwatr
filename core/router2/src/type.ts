@@ -15,7 +15,7 @@ import type {QueryParameters} from '@alwatr/type';
  * ```
  */
 export type RouteContextBase = {
-  sectionList: Array<string | number | boolean>;
+  sectionList: Array<string>;
   queryParamList: QueryParameters;
   hash: string;
 }
