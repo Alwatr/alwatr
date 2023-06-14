@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/fsm2",
-  "version": "0.31.0",
+  "version": "0.32.0",
   "description": "Managing invocations finite-state machines for lit-element written in tiny TypeScript module.",
   "keywords": [
     "state",
