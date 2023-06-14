@@ -15,6 +15,7 @@
     {"path": "../core/signal"},
     {"path": "../core/signal2"},
     {"path": "../core/router"},
+    {"path": "../core/router2"},
     {"path": "../core/type"},
     {"path": "../core/storage-client"},
     {"path": "../core/crypto"},

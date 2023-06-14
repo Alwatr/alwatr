@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@alwatr/router</title>
+    <script type="module" src="./index.js"></script>
+    <style>
+      html {
+        color-scheme: light dark;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h3>Check the console</h3>
+    <ol>
+      <ul>
+        <a href="/">Root</a>
+      </ul>
+      <ul>
+        <a href="/home">Home</a>
+      </ul>
+      <ul>
+        <a href="/about">About</a>
+      </ul>
+      <ul>
+        <a href="/products">Products</a>
+      </ul>
+      <ul>
+        <a href="/product/1">Product 1</a>
+      </ul>
+      <ul>
+        <a href="/product/2?color=red&size=big">Product 2 red big</a>
+      </ul>
+      <ul>
+        <a href="/contact">Contact</a>
+      </ul>
+      <ul>
+        <a href="/junk">Junk (404)</a>
+      </ul>
+    </ol>
+
+    <div class="render"></div>
+
+    <textarea cols="70" rows="20"></textarea>
+  </body>
+</html>
