@@ -2195,10 +2195,10 @@
     picomatch "^2.2.2"
     ws "^7.4.2"
 
-"@web/dev-server-rollup@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.5.0.tgz#dfe35808bd0aa258971fb193bf6793652581d21b"
-  integrity sha512-5bdMynXaNqY2+zDLk0FNQSqGpAazewTVZV8zUBnz790RxayYeITIWQLpBA6pnKZWEBQsh9ITbXoK2a4AVm9xSQ==
+"@web/dev-server-rollup@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.5.1.tgz#ef7bdcea60c0f5cbd7dd0a2cc2bbfc5fb17e89fe"
+  integrity sha512-Gkqb6SlLW/xJey+FtDHIV1nAC/mUiivivG05HlOMnK7Md5pV2t2viJ3hdkpWFkbgmWNYKLSb3ZqbAFJ4EBR/Uw==
   dependencies:
     "@rollup/plugin-node-resolve" "^15.0.1"
     "@web/dev-server-core" "^0.5.0"
@@ -2207,16 +2207,16 @@
     rollup "^3.15.0"
     whatwg-url "^11.0.0"
 
-"@web/dev-server@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.2.1.tgz#b0d56c6cc2a3a13ab99edac8e4672d485c760b36"
-  integrity sha512-gIiED5tzMv+0fHFMfxzNTPGyrkYQbSpOlM7mfOUh7b1Qftw4rj8l/vfAIUHUNlqLUh4MqFhwcvtzj7dg05h9qA==
+"@web/dev-server@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.2.3.tgz#36e27d2a15d7b4942a16a9dce3b9703fe9094f05"
+  integrity sha512-cp3LvgPWUtgTxVdD84elqbjprSUMbzY0gTjvY4JIyJ+/y02SgkeAmDY/OItOyjLq3fj49zMQpDj/RcXg+Wy3KA==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@types/command-line-args" "^5.0.0"
     "@web/config-loader" "^0.2.1"
     "@web/dev-server-core" "^0.5.1"
-    "@web/dev-server-rollup" "^0.5.0"
+    "@web/dev-server-rollup" "^0.5.1"
     camelcase "^6.2.0"
     command-line-args "^5.1.1"
     command-line-usage "^7.0.1"
