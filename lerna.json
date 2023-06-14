@@ -6,21 +6,20 @@
     "core/*",
     "services/*",
     "ui/*",
-    "demo"
+    "uniquely/*",
+    "labs/*"
   ],
   "command": {
     "version": {
       "conventionalCommits": true,
       "changelogPreset": "angular",
-      "message": "release: %s"
+      "message": "release: %s",
+      "forcePublish": true,
+      "push": true
     },
     "publish": {
       "conventionalCommits": true,
       "ignoreChanges": ["*.md"]
-    },
-    "bootstrap": {
-      "hoist": true,
-      "npmClientArgs": ["--no-package-lock"]
     },
     "run": {
       "stream": true
