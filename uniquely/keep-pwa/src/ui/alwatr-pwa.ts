@@ -3,7 +3,7 @@ import '@alwatr/font/vazirmatn.css';
 import {AlwatrPwaElement} from '@alwatr/pwa-helper/pwa-element.js';
 import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/color.css';
-import '@alwatr/ui-kit/style/theme/palette-20.css';
+import '@alwatr/ui-kit/style/theme/palette-40.css';
 
 import './page/home.js'; // for perf
 import './stuff/app-footer.js';
