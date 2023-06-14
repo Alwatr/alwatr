@@ -7,24 +7,22 @@ import {
   AlwatrBaseElement,
   UnresolvedMixin,
 } from '@alwatr/element';
-import {message} from '@alwatr/i18n';
-import '@alwatr/ui-kit/card/icon-box.js';
 
 import {languageButtonClickEventListener, topAppBarContextProvider} from '../../manager/context.js';
+import '../stuff/select-product.js';
 
-import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-page-404': AlwatrPage404;
+    'alwatr-page-product': AlwatrPageProduct;
   }
 }
 
 /**
- * Alwatr 404 Page
+ * Alwatr Select Product Page
  */
-@customElement('alwatr-page-404')
-export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
+@customElement('alwatr-page-product')
+export class AlwatrPageProduct extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
   static override styles = css`
     :host {
       display: block;
@@ -38,7 +36,7 @@ export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(Alw
     super.connectedCallback();
     topAppBarContextProvider.setValue({
       type: 'small',
-      headlineKey: 'page_404_not_found',
+      headlineKey: 'page_product_headline',
       startIcon: {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back_to_home_click_event'},
       endIconList: [{icon: 'globe-outline', clickSignalId: languageButtonClickEventListener.id}],
       tinted: 2,
@@ -48,16 +46,6 @@ export class AlwatrPage404 extends UnresolvedMixin(LocalizeMixin(SignalMixin(Alw
   override render(): unknown {
     this._logger.logMethod?.('render');
 
-    const box: IconBoxContent = {
-      stated: true,
-      elevated: 1,
-      icon: 'construct-outline',
-      flipRtl: true,
-      headline: message('page_404_not_found'),
-      description: message('page_404_not_found_description'),
-      preLine: true,
-    };
-
-    return html`<alwatr-icon-box .content=${box}></alwatr-icon-box>`;
+    return html`<alwatr-select-product></alwatr-select-product>`;
   }
 }

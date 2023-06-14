@@ -11,5 +11,5 @@ export type Photo = AlwatrDocumentObject & {
   /**
    * Photo extra meta information for future maintenances
    */
-  meta: Record<string, string | number>; // meta: {order: 1233, customer: 1334}
+  meta?: Record<string, string | number>; // meta: {order: 1233, customer: 1334}
 };
