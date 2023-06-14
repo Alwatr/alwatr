@@ -1,8 +1,13 @@
 {
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
   "version": "0.32.0",
   "npmClient": "yarn",
-  "useWorkspaces": true,
-  "package": ["core/*", "services/*", "ui/*", "demo"],
+  "packages": [
+    "core/*",
+    "services/*",
+    "ui/*",
+    "demo"
+  ],
   "command": {
     "version": {
       "conventionalCommits": true,
