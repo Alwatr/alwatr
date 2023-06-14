@@ -71,6 +71,11 @@ jobs:
             dockerfile: cloud/container/alwatr-pwa.dockerfile
             description: Customer Order Management PWA.
 
+          - image: keep-pwa
+            source: uniquely/keep-pwa
+            dockerfile: cloud/container/alwatr-pwa.dockerfile
+            description: Keep PWA.
+
           - image: com-api
             source: uniquely/com-api
             dockerfile: cloud/container/alwatr-services.dockerfile

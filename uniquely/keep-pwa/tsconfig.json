@@ -1,0 +1,34 @@
+{
+  "extends": "../../tsconfig.base",
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    // "moduleResolution": "bundler",
+    "rootDir": "src",
+    "outDir": "build",
+    "noEmit": true,
+    "plugins": [
+      {
+        "name": "ts-lit-plugin",
+        "strict": true
+      }
+    ],
+  },
+
+  "include": ["src/**/*.ts", "src/**/*.json"],
+  "exclude": [],
+  "references": [
+    {"path": "../../core/router"},
+    {"path": "../../core/fetch"},
+    {"path": "../../core/i18n"},
+    {"path": "../../core/type"},
+    {"path": "../../core/validator"},
+    {"path": "../../core/signal"},
+    {"path": "../../core/util"},
+    {"path": "../../core/fsm"},
+    {"path": "../../core/context"},
+    {"path": "../../ui/element"},
+    {"path": "../../ui/ui-kit"},
+    {"path": "../../ui/pwa-helper"},
+  ]
+}

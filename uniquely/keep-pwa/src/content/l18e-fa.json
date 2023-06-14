@@ -1,0 +1,31 @@
+{
+  "ok": true,
+  "meta": {
+    "code": "fa-IR",
+    "rev": 0
+  },
+  "data": {
+    "loading": "در حال بارگذاری ...",
+
+    "app_footer_description": "بزرگترین تولید کننده اسکوپ سنگ در شرق کشور",
+
+    "page_404_not_found": "یافت نشد!",
+    "page_404_not_found_description": "متاسفانه صفحه مورد نظر یافت نشد!",
+
+    "full_name": "نام و نام‌خانوادگی",
+    "phone_number": "شماره تلفن",
+    "city": "شهر",
+    "activity_field": "حوزه فعالیت",
+    "tool_distribution": "توزیع‌کننده ابزار",
+    "sales_tools": "فروشنده ابزار",
+    "stonemason": "سنگ‌کار",
+    "contractor": "پیمانکار",
+    "submit_form": "ارسال فرم",
+    "cancel": "لغو",
+    "collaboration_form_title": "درخواست همکاری",
+    "form_submitted": "درخواست شما ثبت شد.",
+    "collaboration_form_description": "فرم درخواست همکاری با کیپ",
+    "invalid_form_data": "اطلاعات فرم صحیح نمی‌باشد.",
+    "check_network_connection": "لطفا از اتصال خود به اینترنت اطمینان حاصل فرمایید و دوباره ارسال کنید."
+  }
+}
