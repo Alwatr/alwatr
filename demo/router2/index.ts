@@ -1,6 +1,5 @@
 import {router} from '@alwatr/router2';
-import {renderState} from '@alwatr/router2/utility.js';
-
+import {renderState} from '@alwatr/util';
 
 // const routes: RoutesConfig = {
 //   routeId: (routeContext: RouteContext): string | undefined => routeContext.sectionList[0]?.toString(),
@@ -8,11 +7,13 @@ import {renderState} from '@alwatr/router2/utility.js';
 //     'home': () => '<h1>Home Page</h1>',
 //     '_404': () => '<h1>404 Not Found!</h1>',
 //     'about': () => '<h1>About Page</h1>',
-//     'product-list': () => '<h1>Product List</h1>',
+//     'products': () => '<h1>Product List</h1>',
 //     'product': (routeContext) => `<h1>Product ${routeContext.sectionList[1]}</h1>`,
 //     'contact': () => '<h1>Product Page</h1>',
 //   },
 // };
+
+type PageName = 'home' | 'about' | 'products' | 'product' | 'contact';
 
 /**
  * Your render process, can be lit-element requestUpdate or any other framework request render method.
@@ -20,7 +21,17 @@ import {renderState} from '@alwatr/router2/utility.js';
 function render(): void {
   console.info('render');
   document.querySelector('textarea')!.value = JSON.stringify(router.route, null, 2);
-  document.querySelector('.render')!.innerHTML = renderState();
+  document.querySelector('.render')!.innerHTML = renderState(
+    <PageName>router.route.sectionList[0] ?? 'home',
+    {
+      home: 'about',
+      about: () => '<h1>About Page</h1>',
+      products: () => '<h1>Product List</h1>',
+      product: () => `<h1>Product ${router.route.sectionList[1]}</h1>`,
+      contact: () => '<h1>Product Page</h1>',
+      _default: () => '<h1>404 Not Found!</h1>',
+    },
+  ) ?? 'error!';
 }
 
 /**

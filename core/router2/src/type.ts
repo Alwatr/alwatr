@@ -14,7 +14,7 @@ import type {QueryParameters} from '@alwatr/type';
  * }
  * ```
  */
-export type RouteContextBase = {
+export interface RouteContextBase {
   sectionList: Array<string>;
   queryParamList: QueryParameters;
   hash: string;
@@ -39,7 +39,7 @@ export type RouteContextBase = {
  * }
  * ```
  */
-export type RouteContext = RouteContextBase & {
+export interface RouteContext extends RouteContextBase {
   href: string;
   pathname: string;
   hostname: string;
@@ -53,7 +53,7 @@ export type PushState = boolean | 'replace';
 /**
  * Initial router options.
  */
-export interface InitOptions {
+export interface RouterConfig {
   /**
    * A navigation trigger for Alwatr Router that translated clicks on `<a>` links into navigation signal.
    *
@@ -71,90 +71,3 @@ export interface InitOptions {
    */
   popstateTrigger?: boolean;
 }
-
-/**
- * Type of `routeConfig.templates` items.
- */
-export type TemplateCallback = (routeContext: RouteContext) => unknown;
-
-/**
- * Type of `routeConfig.templates`.
- */
-export type RouterTemplates = {
-  [x: string]: TemplateCallback | string | undefined;
-  home: TemplateCallback;
-  _404: TemplateCallback;
-}
-
-/**
- * Routes config for routerOutlet.
- *
- * The `routerOutlet` return `list[map(currentRoute)].render(currentRoute)`.
- *
- * Example:
- *
- * ```ts
- * const routeConfig = {
- *   routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
- *   templates: {
- *     'about': () => html`<page-about></page-about>`,
- *     'product-list': () => {
- *       import('./page-product-list.js'); // lazy import
- *       return html`<page-product-list></page-product-list>`,
- *     },
- *     'contact': () => html`<page-contact></page-contact>`,
- *     'home': () => html`<page-home></page-home>`,
- *     '_404': () => html`<page-404></page-404>`,
- *   },
- * };
- *
- * routerOutlet(routeConfig);
- * ```
- */
-export interface RoutesConfig {
-  /**
-   * Define function to generate routeId (same as pageName) from current routeContext.
-   *
-   * if the location is app root and `routeId()` return noting then redirect to `home` automatically
-   * if `routeId()` return noting or render function not defined in the `templates` redirected to `_404` routeId.
-   *
-   * Example:
-   *
-   * ```ts
-   * router.outlet({
-   *   routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
-   *   templates: {
-   *     // ...
-   *   },
-   * })
-   * ```
-   */
-  routeId: (routeContext: RouteContext) => string | undefined;
-
-  /**
-   * Define templates of the routes (pages).
-   *
-   * Example:
-   *
-   * ```ts
-   * const routeConfig = {
-   *   routeId: (routeContext) => routeContext.sectionList[0]?.toString(),
-   *   templates: {
-   *     'about': () => html`<page-about></page-about>`,
-   *     'product-list': () => {
-   *       import('./page-product-list.js'); // lazy import
-   *       return html`<page-product-list></page-product-list>`,
-   *     },
-   *     'contact': () => html`<page-contact></page-contact>`,
-   *     'home': () => html`<page-home></page-home>`,
-   *     '_404': () => html`<page-404></page-404>`,
-   *   },
-   * };
-   *
-   * routerOutlet(routeConfig);
-   * ```
-   */
-  templates: RouterTemplates;
-}
-
-export type TemplateList<PageName extends string> = Record<PageName, PageName | (() => unknown)>;

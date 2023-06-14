@@ -2,7 +2,7 @@ import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
 import {AlwatrBaseSignal} from '@alwatr/signal2/base.js';
 
-import type {PushState, RouteContext, RouteContextBase} from './type.js';
+import type {RouterConfig, PushState, RouteContext, RouteContextBase} from './type.js';
 import type {QueryParameters} from '@alwatr/type';
 
 globalAlwatr.registeredList.push({
@@ -19,18 +19,15 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
     return this._$detail ?? this._makeRouteContext();
   }
 
-  constructor(config: {popstateTrigger?: boolean; clickTrigger?: boolean}) {
+  constructor(config: RouterConfig) {
     super({name: 'alwatr_router'});
 
     this._dispatch(this._makeRouteContext());
     this._popstateHandler = this._popstateHandler.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
 
-    config.popstateTrigger ??= true;
-    this.popstateTrigger = config.popstateTrigger;
-
-    config.clickTrigger ??= true;
-    this.clickTrigger = config.clickTrigger;
+    this.popstateTrigger = config.popstateTrigger === true;
+    this.clickTrigger = config.clickTrigger === true;
   }
 
   /**
