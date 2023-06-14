@@ -13,9 +13,12 @@
     {"path": "./core/logger"},
     {"path": "./core/fetch"},
     {"path": "./core/signal"},
+    {"path": "./core/signal2"},
     {"path": "./core/context"},
+    {"path": "./core/server-context"},
     {"path": "./core/router"},
     {"path": "./core/i18n"},
+    {"path": "./core/i18n2"},
     {"path": "./core/math"},
     {"path": "./core/nano-server"},
     {"path": "./core/storage-engine"},
@@ -24,6 +27,7 @@
     {"path": "./core/validator"},
     {"path": "./core/util"},
     {"path": "./core/fsm"},
+    {"path": "./core/fsm2"},
     {"path": "./core/type"},
 
     // ui

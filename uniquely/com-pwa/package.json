@@ -23,8 +23,8 @@
     "w": "yarn watch",
     "start": "NODE_OPTIONS=--enable-source-maps run-s clean build serve",
     "clean": "rm -rf dist build .tsbuildinfo",
-    "build": "yarn build:es",
-    "build-dev": "run-s build:root build:tsc \"build:es --debug\"",
+    "build": "yarn build:es --clean",
+    "build-dev": "run-s build:root build:tsc \"build:es --clean --debug\"",
     "build:es": "./esbuild.mjs",
     "build:tsc": "tsc --build",
     "build:root": "cd ../../ && yarn build:ts",
@@ -53,7 +53,7 @@
     "lit-analyzer": "^1.2.1",
     "npm-run-all": "^4.1.5",
     "ts-lit-plugin": "^1.2.1",
-    "tslib": "^2.5.2",
-    "typescript": "^5.0.4"
+    "tslib": "^2.5.3",
+    "typescript": "^5.1.3"
   }
 }

@@ -17,7 +17,7 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
-    "**/**/*.{d.ts.map,d.ts,js.map,js,md}"
+    "**/**/*.{d.ts.map,d.ts,js.map,js,md,css}"
   ],
   "publishConfig": {
     "access": "public"
@@ -38,7 +38,7 @@
     "@alwatr/icon": "^0.32.0",
     "@alwatr/signal": "^0.32.0",
     "@alwatr/util": "^0.32.0",
-    "tslib": "^2.5.2"
+    "tslib": "^2.5.3"
   },
   "devDependencies": {
     "@alwatr/type": "^0.32.0"

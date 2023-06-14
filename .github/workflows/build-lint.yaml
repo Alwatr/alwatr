@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: Build
+name: Build & Lint
 
 on:
   workflow_dispatch:
@@ -9,21 +9,19 @@ on:
 
   push:
     branches:
-      - next*
+      - next
       - main
-      - release/*
 
 env:
-  NODE_VERSION: latest
+  NODE_VERSION: lts/*
 
 jobs:
-  build-ts:
-    name: Build Typescript
+  build-lint-ts:
+    name: Build & Lint Typescript
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
-      security-events: write
 
     steps:
       - name: ⤵️ Checkout repository
@@ -43,3 +41,6 @@ jobs:
 
       - name: 🚀 Extra Packages Build
         run: yarn lerna run build
+
+      - name: 🚀 Run ESLint
+        run: yarn lint:ts
