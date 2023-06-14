@@ -1,18 +1,6 @@
 import {router} from '@alwatr/router2';
 import {renderState} from '@alwatr/util';
 
-// const routes: RoutesConfig = {
-//   routeId: (routeContext: RouteContext): string | undefined => routeContext.sectionList[0]?.toString(),
-//   templates: {
-//     'home': () => '<h1>Home Page</h1>',
-//     '_404': () => '<h1>404 Not Found!</h1>',
-//     'about': () => '<h1>About Page</h1>',
-//     'products': () => '<h1>Product List</h1>',
-//     'product': (routeContext) => `<h1>Product ${routeContext.sectionList[1]}</h1>`,
-//     'contact': () => '<h1>Product Page</h1>',
-//   },
-// };
-
 type PageName = 'home' | 'about' | 'products' | 'product' | 'contact';
 
 /**
