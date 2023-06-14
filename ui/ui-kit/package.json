@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/ui-kit",
-  "version": "0.32.0",
+  "version": "1.0.0",
   "description": "Alwatr UI Elements Kit",
   "keywords": [
     "element",
@@ -17,7 +17,7 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
-    "**/**/*.{d.ts.map,d.ts,js.map,js,md}"
+    "**/**/*.{d.ts.map,d.ts,js.map,js,md,css}"
   ],
   "publishConfig": {
     "access": "public"
@@ -32,15 +32,15 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/element": "^0.32.0",
-    "@alwatr/fetch": "^0.32.0",
-    "@alwatr/i18n": "^0.32.0",
-    "@alwatr/icon": "^0.32.0",
-    "@alwatr/signal": "^0.32.0",
-    "@alwatr/util": "^0.32.0",
-    "tslib": "^2.5.0"
+    "@alwatr/element": "^1.0.0",
+    "@alwatr/fetch": "^1.0.0",
+    "@alwatr/i18n": "^1.0.0",
+    "@alwatr/icon": "^1.0.0",
+    "@alwatr/signal": "^1.0.0",
+    "@alwatr/util": "^1.0.0",
+    "tslib": "^2.5.3"
   },
   "devDependencies": {
-    "@alwatr/type": "^0.32.0"
+    "@alwatr/type": "^1.0.0"
   }
 }

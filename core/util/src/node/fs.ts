@@ -1,5 +1,5 @@
-import {existsSync, readFileSync, writeFileSync, renameSync, mkdirSync} from 'node:fs';
-import {rename, mkdir, writeFile, readFile, rm, symlink} from 'node:fs/promises';
+import {existsSync, readFileSync, writeFileSync, mkdirSync, copyFileSync, renameSync} from 'node:fs';
+import {mkdir, writeFile, readFile, rm, symlink, copyFile, rename} from 'node:fs/promises';
 import {dirname} from 'node:path';
 
 import {createLogger} from '@alwatr/logger';
@@ -99,6 +99,7 @@ export const readJsonFile = async <T extends StringifyableRecord = Stringifyable
 export const writeJsonFileSync = <T extends StringifyableRecord = StringifyableRecord>(
   path: string,
   data: T,
+  existFile: 'replace' | 'copy' | 'rename' = 'replace',
   space?: string | number,
 ): void => {
   logger.logMethodArgs?.('writeJsonFileSync', path);
@@ -118,10 +119,15 @@ export const writeJsonFileSync = <T extends StringifyableRecord = StringifyableR
 
   if (existsSync(path)) {
     try {
-      renameSync(path, path + '.bk');
+      if (existFile === 'copy') {
+        copyFileSync(path, path + '.bk');
+      }
+      else if (existFile === 'rename') {
+        renameSync(path, path + '.bk');
+      }
     }
     catch (err) {
-      logger.error('writeJsonFileSync', 'rename_failed', err);
+      logger.error('writeJsonFileSync', 'rename_copy_failed', err);
     }
   }
   else {
@@ -153,6 +159,7 @@ export const writeJsonFileSync = <T extends StringifyableRecord = StringifyableR
 export const writeJsonFile = async <T extends StringifyableRecord = StringifyableRecord>(
   path: string,
   data: T,
+  existFile: 'replace' | 'copy' | 'rename' = 'replace',
   space?: string | number,
 ): Promise<void> => {
   logger.logMethodArgs?.('writeJsonFile', path);
@@ -173,10 +180,15 @@ export const writeJsonFile = async <T extends StringifyableRecord = Stringifyabl
 
   if (existsSync(path)) {
     try {
-      await rename(path, path + '.bk');
+      if (existFile === 'copy') {
+        await copyFile(path, path + '.bk');
+      }
+      else if (existFile === 'rename') {
+        await rename(path, path + '.bk');
+      }
     }
     catch (err) {
-      logger.error('writeJsonFile', 'rename_failed', err);
+      logger.error('writeJsonFile', 'rename_copy_failed', err);
     }
   }
   else {
@@ -223,5 +235,6 @@ export const makeLinkForce = async (src: string, dest: string): Promise<void> =>
   }
   catch (error) {
     logger.error('makeLink', 'symlink_failed', error);
+    throw error;
   }
 };

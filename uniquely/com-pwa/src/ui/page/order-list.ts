@@ -74,11 +74,9 @@ export class AlwatrPageOrderList extends ScheduleUpdateToFrameMixin(
       this.gotState = orderStorageContextConsumer.getState().target;
     }, {receivePrevious: 'NextCycle'}));
 
-    this._addSignalListeners(
-        eventListener.subscribe(buttons.retry.clickSignalId, () => {
-          orderStorageContextConsumer.request();
-        }),
-    );
+    this._addSignalListeners(eventListener.subscribe(buttons.retry.clickSignalId, () => {
+      orderStorageContextConsumer.request();
+    }, {receivePrevious: 'No'}));
   }
 
   protected override update(changedProperties: PropertyValues<this>): void {

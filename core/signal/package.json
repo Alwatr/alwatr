@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/signal",
-  "version": "0.32.0",
+  "version": "1.0.0",
   "description": "Elegant powerful event system for handle global signals and states written in tiny TypeScript module.",
   "keywords": [
     "signal",
@@ -29,9 +29,9 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/logger": "^0.32.0",
-    "@alwatr/type": "^0.32.0",
-    "@alwatr/util": "^0.32.0",
-    "tslib": "^2.5.0"
+    "@alwatr/logger": "^1.0.0",
+    "@alwatr/type": "^1.0.0",
+    "@alwatr/util": "^1.0.0",
+    "tslib": "^2.5.3"
   }
 }

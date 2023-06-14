@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/pwa-helper",
-  "version": "0.32.0",
+  "version": "1.0.0",
   "description": "Alwatr PWA Helper",
   "keywords": [
     "element",
@@ -31,13 +31,13 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/element": "^0.32.0",
-    "@alwatr/i18n": "^0.32.0",
-    "@alwatr/logger": "^0.32.0",
-    "@alwatr/ui-kit": "^0.32.0",
-    "tslib": "^2.5.0"
+    "@alwatr/element": "^1.0.0",
+    "@alwatr/i18n": "^1.0.0",
+    "@alwatr/logger": "^1.0.0",
+    "@alwatr/ui-kit": "^1.0.0",
+    "tslib": "^2.5.3"
   },
   "devDependencies": {
-    "@alwatr/type": "^0.32.0"
+    "@alwatr/type": "^1.0.0"
   }
 }

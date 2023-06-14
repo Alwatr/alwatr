@@ -19,13 +19,6 @@ import '@alwatr/icon';
 import {calcDiscount} from '@alwatr/math';
 import {redirect} from '@alwatr/router';
 import {AlwatrDocumentStorage} from '@alwatr/type';
-import {
-  Order,
-  OrderDraft,
-  OrderItem,
-  OrderShippingInfo,
-  Product,
-} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
 
@@ -37,13 +30,14 @@ import '../stuff/order-shipping-form.js';
 import '../stuff/order-status-box.js';
 import '../stuff/select-product.js';
 
+import type {Order, OrderDraft, OrderItem, OrderShippingInfo, Product} from '@alwatr/type/customer-order-management.js';
 import type {IconButtonContent} from '@alwatr/ui-kit/button/icon-button.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 import type {AlwatrTextField} from '@alwatr/ui-kit/text-field/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'alwatr-page-order': AlwatrPageNewOrder;
+    'alwatr-page-order': AlwatrPageOrder;
   }
 }
 
@@ -51,7 +45,7 @@ declare global {
  * Alwatr Customer Order Management Order Form Page
  */
 @customElement('alwatr-page-order')
-export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
+export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(AlwatrBaseElement))) {
   static override styles: CSSResultGroup = css`
     :host {
       display: flex;
@@ -535,7 +529,7 @@ export class AlwatrPageNewOrder extends UnresolvedMixin(LocalizeMixin(SignalMixi
           <div>
             <span>${message('order_item_qty_box')}:</span>
             <span>
-              <span>${number(item.qty)}</span>
+              <span class="bold-text">${number(item.qty)}</span>
               <alwatr-icon .name=${'cube-outline'}></alwatr-icon>
             </span>
           </div>

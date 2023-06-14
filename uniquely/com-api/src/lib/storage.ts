@@ -8,5 +8,5 @@ export const storageClient = new AlwatrStorageClient(config.storageClient);
 
 export const userStorage = new AlwatrStorageClient<ComUser>({
   ...config.storageClient,
-  name: config.privateStorage.userList,
+  name: config.secureStorage.userList,
 });

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/com-api",
-  "version": "0.32.0",
+  "version": "1.0.0",
   "description": "Alwatr Customer Order Management API",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -35,16 +35,16 @@
     "watch:es": "yarn build:es --watch"
   },
   "devDependencies": {
-    "@alwatr/crypto": "^0.32.0",
-    "@alwatr/logger": "^0.32.0",
-    "@alwatr/math": "^0.32.0",
-    "@alwatr/nano-server": "^0.32.0",
-    "@alwatr/storage-client": "^0.32.0",
-    "@alwatr/type": "^0.32.0",
-    "@types/node": "^20.1.0",
-    "esbuild": "^0.17.19",
+    "@alwatr/crypto": "^1.0.0",
+    "@alwatr/logger": "^1.0.0",
+    "@alwatr/math": "^1.0.0",
+    "@alwatr/nano-server": "^1.0.0",
+    "@alwatr/storage-client": "^1.0.0",
+    "@alwatr/type": "^1.0.0",
+    "@types/node": "^20.3.1",
+    "esbuild": "^0.18.2",
     "nodemon": "^2.0.22",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.3"
   }
 }

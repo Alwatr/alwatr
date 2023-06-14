@@ -18,6 +18,6 @@
     "@alwatr/type": "^0.32.0",
     "@alwatr/util": "^0.32.0",
     "@alwatr/validator": "^0.32.0",
-    "tslib": "^2.5.0"
+    "tslib": "^2.5.3"
   }
 }

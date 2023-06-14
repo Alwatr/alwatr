@@ -11,9 +11,9 @@
     "cancel": "لغو",
     "invalid_phone_number": "شماره تلفن صحیح نمی‌باشد.",
 
-    "page_404_not_found": "پیدا نشد!",
-    "page_404_under_develope": "دردست ساخت",
-    "page_404_under_develope_description": "برنامه نویسان سخت مشغول کارند...\nاندکی صبر سحر نزدیک است...\nدرضمن اگر رو من بزنی یک سفارش الکی ثبت می‌شود\nپس لطفا نزن!",
+    "page_404_not_found_headline": "یافت نشد",
+    "page_404_not_found": "صفحه مورد نظر یافت نشد!",
+    "page_404_not_found_description": "می‌توانید از منوی صفحه اصلی مجدداً برای پیدا کردن صفحه مورد نظر اقدام کنید.",
 
     "fetch_failed_headline": "خطا!",
     "fetch_failed_description": "خطا در اتصال به اینترنت! لطفا مجدد تلاش کنید.",
@@ -44,7 +44,17 @@
     "page_order_order_not_valid_message": "لطفا مقادیر سفارش رو بازبینی و اصلاح کنید.",
     "order_summary_palette_price": "هزینه پالت (${paletteCount} عدد)",
 
-    "page_order_tracking_headline": "پیگیری سفارش",
+    "page_admin_order_list_headline": "لیست سفارشات کاربران",
+    "page_admin_order_list_phone_number": "شماره تلفن",
+    "page_admin_order_list_province": "استان",
+    "page_admin_order_list_city": "شهر",
+    "page_admin_order_list_order_id": "کد سفارش",
+    "page_admin_order_list_order_list": "لیست سفارشات",
+    "page_admin_order_list_order_status": "وضعیت سفارش",
+    "page_admin_order_list_order_date": "تاریخ ثبت سفارش",
+    "page_admin_order_list_empty_order_list": "سفارشی ثبت نشده است.",
+
+    "page_admin_order_list_reloading_failed": "بارگذاری با خطا روبرو شد، لطفا مجدد تلاش کنید.",
 
     "page_sign_in_headline": "مدیریت سفارشات سافیت",
     "page_sign_sign_in_failed": "ورود با خطا روبرو شد! لطفا دوباره امتحان کنید.",

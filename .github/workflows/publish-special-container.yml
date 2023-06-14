@@ -14,7 +14,6 @@ on:
     branches:
       - next
       - main
-      - v2
 
   pull_request:
     paths:
@@ -36,6 +35,13 @@ jobs:
       max-parallel: 1
       matrix:
         include:
+          - image: traefik
+            path: cloud/container/traefik
+            description: Clone of Traefik.
+            version:
+              short: 1
+              full: 1.7-alpine
+
           - image: alpine
             path: cloud/container/alpine
             description: A minimal Docker image based on Alpine Linux with a complete package index and only 5 MB in size!
@@ -48,21 +54,35 @@ jobs:
             description: High performance Accelerated NGINX optimized for serve static content like CDN.
             version:
               short: 1
-              full: 1.6.1-1.24-alpine
+              full: 1.7.0-1.24-alpine
 
           - image: nginx-pwa
             path: cloud/container/nginx-pwa
             description: High performance Accelerated NGINX optimized for serve progressive web applications.
             version:
               short: 1
-              full: 1.6.1-1.24-alpine
+              full: 1.7.0-1.24-alpine
 
           - image: nginx-storage
             path: cloud/container/nginx-storage
             description: High performance Accelerated NGINX optimized for serve alwatr storage server json.
             version:
               short: 1
-              full: 1.6.1-1.24-alpine
+              full: 1.7.0-1.24-alpine
+
+          - image: adminer
+            path: cloud/container/adminer
+            description: Clone of Adminer.
+            version:
+              short: 4
+              full: 4
+
+          - image: mariadb
+            path: cloud/container/mariadb
+            description: Clone of Mariadb.
+            version:
+              short: 10
+              full: 10.9
 
           # - image: tdlib
           #   path: cloud/container/tdlib
@@ -80,11 +100,11 @@ jobs:
 
     steps:
       - name: ⤵️ Checkout repository
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
 
       - name: 🏗 Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v4.4.0
+        uses: docker/metadata-action@v4.6.0
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           images: |
@@ -106,14 +126,14 @@ jobs:
 
       - name: 🏗 Install cosign
         if: ${{ github.event_name != 'pull_request' }}
-        uses: sigstore/cosign-installer@v3.0.3
+        uses: sigstore/cosign-installer@v3.0.5
 
       - name: 🏗 Setup Docker Buildx
-        uses: docker/setup-buildx-action@v2.5.0
+        uses: docker/setup-buildx-action@v2.7.0
 
       - name: 🏗 Log into registry ${{env.REGISTRY}}
         if: ${{ github.event_name != 'pull_request' }}
-        uses: docker/login-action@v2.1.0
+        uses: docker/login-action@v2.2.0
         with:
           registry: ${{env.REGISTRY}}
           username: ${{github.repository_owner}}
@@ -121,7 +141,7 @@ jobs:
 
       - name: 🚀 Build and push container image
         id: build-and-push
-        uses: docker/build-push-action@v4.0.0
+        uses: docker/build-push-action@v4.1.1
         with:
           context: ${{matrix.path}}
           push: ${{github.event_name != 'pull_request'}}

@@ -1,0 +1,19 @@
+{
+  "short_name": "Keep",
+  "name": "Keep Collection",
+  "description": "Keep Collection Official PWA",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#c24000",
+  "background_color": "#fffcfa",
+  "orientation": "portrait",
+  "default_locale": "fa",
+  "icons": [
+    {"src": "/image/icon-192-maskable.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable"},
+    {"src": "/image/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable"},
+    {"src": "/image/favicon.ico", "type": "image/x-icon", "sizes": "32x32"},
+    {"src": "/image/icon-192.png", "type": "image/png", "sizes": "192x192"},
+    {"src": "/image/icon-512.png", "type": "image/png", "sizes": "512x512"}
+  ],
+  "screenshots": []
+}
