@@ -12,7 +12,7 @@ services:
 
     restart: unless-stopped
 
-    cpu_shares: 4096
+    cpu_shares: 2048
     mem_limit: ${MEMORY_LIMIT:-256m}
 
     logging:
