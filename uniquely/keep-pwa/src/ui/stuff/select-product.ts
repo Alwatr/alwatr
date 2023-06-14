@@ -61,19 +61,19 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
         '1': {
           id: '1',
           title: {fa: 'اسکوپ دوشیار زاویه', en: 'Double-Angle Scoop'},
-          image: {id: 'keep-scope-1-0.jpg'},
+          image: {id: 'keep-scope-3-0.jpg'},
           price: 1590,
         },
         '2': {
           id: '2',
           title: {fa: 'اسکوپ پروانه', en: 'Helical Scoop'},
-          image: {id: 'keep-scope-2-0.jpg'},
+          image: {id: 'keep-scope-1-0.jpg'},
           price: 1400,
         },
         '3': {
           id: '3',
           title: {fa: 'اسکوپ دوشیار صاف', en: 'Double-Sided Flat Scoop'},
-          image: {id: 'keep-scope-3-0.jpg'},
+          image: {id: 'keep-scope-2-0.jpg'},
           price: 1590,
         },
       },
