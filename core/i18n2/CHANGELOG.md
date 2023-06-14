@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
+
+### Bug Fixes
+
+- **i18n2:** return '' if key not exists ([2e68d1a](https://github.com/AliMD/alwatr/commit/2e68d1a082fb837b04fc8fe450626b507b0f2463))
+- **i18n2:** return loadingStr if resource not eixsts ([aff42e1](https://github.com/AliMD/alwatr/commit/aff42e18ddc61949f20cf13475520658ac1a5eb1))
+- **i18n2:** some issues & export an instacne ([b5874f3](https://github.com/AliMD/alwatr/commit/b5874f35051927815070a00e86c585f0e3dd291e))
+
+### Features
+
+- **i18n2:** add `i18n2` class base ([4783d6b](https://github.com/AliMD/alwatr/commit/4783d6b7410e452a3458d72dc5ebaead62d08b2f))
+
 # [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
 
 **Note:** Version bump only for package @alwatr/i18n

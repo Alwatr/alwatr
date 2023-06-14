@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
+
+### Bug Fixes
+
+- **fsm2:** add `name` to `config` & remove `context` ([593fde4](https://github.com/AliMD/alwatr/commit/593fde418de223a2b942d7a63a665b9074939b24))
+- **fsm2:** convert `config` to an object ([42a34cb](https://github.com/AliMD/alwatr/commit/42a34cb3c26db823e1e6b51ae497a43ed24ab8c2))
+- **fsm2:** types ([8543edf](https://github.com/AliMD/alwatr/commit/8543edfe3688b2ccf207de136d29f272d7e1ab44))
+- **fsm:** make it private ([70b9644](https://github.com/AliMD/alwatr/commit/70b96441f205a3e287928997ca427e1851dfebf8))
+
+### Features
+
+- **fsm2:** base class ([db13f5c](https://github.com/AliMD/alwatr/commit/db13f5c95524b16dc0dc003096f555988d5ef379))
+- **fsm2:** review and cleanup ([6349f33](https://github.com/AliMD/alwatr/commit/6349f3338beccdca4b2a29adc3dc3feef8888492))
+- **fsm2:** rewrite from scratch. ([5b7a6cf](https://github.com/AliMD/alwatr/commit/5b7a6cfd41eae2b73f1469a80ecc24d7063e58c3))
+- **fsm2:** simple FiniteStateMachine and base ([30c7ba0](https://github.com/AliMD/alwatr/commit/30c7ba0f78f1df97de0d411c4707c1f1ed8b4d16))
+- **fsm2:** StateRecord conf ([e193097](https://github.com/AliMD/alwatr/commit/e193097cd98cb636c4379c8e07ce4e4cd4cfc75c))
+- **fsm2:** use abstract for base class ([8bdd9a3](https://github.com/AliMD/alwatr/commit/8bdd9a3f9067f4583674498a26fa5572879541d7))
+
 # [0.31.0](https://github.com/AliMD/alwatr/compare/v0.30.0...v0.31.0) (2023-05-08)
 
 ### Bug Fixes

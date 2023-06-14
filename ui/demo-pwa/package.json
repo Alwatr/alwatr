@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/ui-demo-pwa",
-  "version": "0.32.0",
+  "version": "1.0.0",
   "description": "Alwatr Progressive Web Application Demo.",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -30,9 +30,9 @@
     "watch:es": "yarn build --clean --watch --debug"
   },
   "devDependencies": {
-    "@alwatr/element": "^0.32.0",
-    "@alwatr/pwa-helper": "^0.32.0",
-    "@alwatr/ui-kit": "^0.32.0",
+    "@alwatr/element": "^1.0.0",
+    "@alwatr/pwa-helper": "^1.0.0",
+    "@alwatr/ui-kit": "^1.0.0",
     "@material/web": "^1.0.0-pre.10",
     "@web/dev-server": "^0.2.3",
     "@webcomponents/webcomponentsjs": "^2.8.0",

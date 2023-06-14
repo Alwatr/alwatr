@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
+
+### Bug Fixes
+
+- **util/fs:** makeLinkForce throw error ([8bfcc80](https://github.com/AliMD/alwatr/commit/8bfcc80b11ad59538478440fe6e88cc9ee12df77))
+
+### Features
+
+- **util/fs:** existFile option option ([c8c2020](https://github.com/AliMD/alwatr/commit/c8c202097f6a1fb568993f7987977a140dde5273))
+- **util:** add string capitalize ([c499456](https://github.com/AliMD/alwatr/commit/c4994562f75471184d49f46ba3c6d7acdb4ab796))
+
 # [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
 
 ### Features
