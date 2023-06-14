@@ -3656,17 +3656,10 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-<<<<<<< HEAD
 esbuild@^0.18.2:
   version "0.18.2"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.18.2.tgz#e17305c67b79a7f80d8fda15f73f3b94339339b4"
   integrity sha512-1P4sK9gXVcjvrrUjE94Hbo9goU+T6U1sdzLf+JJ+3uI6GEb4e4n3Wrqto9hZHUWabblpT2ifmC61LhZnLyTNFw==
-=======
-esbuild@^0.17.18, esbuild@^0.17.19:
-  version "0.17.19"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.17.19.tgz#087a727e98299f0462a3d0bcdd9cd7ff100bd955"
-  integrity sha512-XQ0jAPFkK/u3LcVRcvVHQcTIqD6E2H1fvZMA5dQPSOWb3suUbWbfbRf94pjc0bNzRYLfIrDRQXr7X+LHIm5oHw==
->>>>>>> 25705ec9 (deps(keep-pwa): update alwatr package)
   optionalDependencies:
     "@esbuild/android-arm" "0.18.2"
     "@esbuild/android-arm64" "0.18.2"
