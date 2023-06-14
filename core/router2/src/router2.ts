@@ -292,7 +292,7 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
     if (enable) {
       window.document.addEventListener('click', this._clickHandler);
     }
-    if (!enable) {
+    else {
       window.document.removeEventListener('click', this._clickHandler);
     }
     this._$clickTrigger = enable;
