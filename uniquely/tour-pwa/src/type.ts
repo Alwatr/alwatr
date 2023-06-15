@@ -20,4 +20,4 @@ export interface PageHomeContent extends StringifyableRecord {
   socialList: Array<BoxType>;
 }
 
-export type PageName = 'home' | '404';
+export type PageName = 'home' | '404' | 'favorites' | 'tours' | 'call' | 'unknown';
