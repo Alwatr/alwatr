@@ -1,7 +1,6 @@
 import {html, customElement, PropertyValues, AlwatrBaseElement, cache} from '@alwatr/element';
 import '@alwatr/font/vazirmatn.css';
 import {l10n} from '@alwatr/i18n2';
-import {scrollToTopEvent} from '@alwatr/pwa-helper/context.js';
 import {router} from '@alwatr/router2';
 import {AlwatrSimpleSignal} from '@alwatr/signal2';
 import '@alwatr/ui-kit/style/mobile-only.css';
@@ -11,6 +10,7 @@ import '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 import {renderState, untilNextFrame} from '@alwatr/util';
 
 import './page/home.js'; // for perf
+import {scrollToTopEvent} from './pwa-helper/context.js';
 import './stuff/app-footer.js';
 
 import type {PageName} from '../type.js';
