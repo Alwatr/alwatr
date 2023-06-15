@@ -56,6 +56,7 @@
     {"path": "./uniquely/com-api"},
     {"path": "./uniquely/com-pwa"},
     {"path": "./uniquely/keep-pwa"},
+    {"path": "./uniquely/tour-pwa"},
 
     // labs
     {"path": "./labs/zx-example"}
