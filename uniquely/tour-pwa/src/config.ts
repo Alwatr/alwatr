@@ -1,7 +1,7 @@
 import {FetchOptions} from '@alwatr/fetch';
 import callIcon from '@alwatr/icon/svg/call-outline.svg';
 import {getConfKey} from '@alwatr/pwa-helper/config.js';
-import {NavigationBarContent} from '@alwatr/ui-kit/src/navigation-bar/navigation-bar.js';
+import {NavigationBarContent} from '@alwatr/ui-kit/navigation-bar/navigation-bar.js';
 import {getLocalStorageItem} from '@alwatr/util';
 
 const defaultExport = <K extends string, T extends {default: K}>(m: Promise<T>): Promise<K> =>

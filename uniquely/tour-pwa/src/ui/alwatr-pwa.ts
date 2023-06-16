@@ -3,8 +3,8 @@ import '@alwatr/font/vazirmatn.css';
 import {l10n} from '@alwatr/i18n2';
 import {router} from '@alwatr/router2';
 import {AlwatrSimpleSignal} from '@alwatr/signal2';
+import {navigationBarEvent} from '@alwatr/ui-kit/navigation-bar/context.js';
 import '@alwatr/ui-kit/navigation-bar/navigation-bar.js';
-import {navigationBarContext, navigationBarEvent} from '@alwatr/ui-kit/src/navigation-bar/context.js';
 import '@alwatr/ui-kit/style/mobile-only.css';
 import '@alwatr/ui-kit/style/theme/color.css';
 import '@alwatr/ui-kit/style/theme/palette-40.css';
@@ -79,8 +79,6 @@ class AlwatrPwa extends AlwatrBaseElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-
-    navigationBarContext.setValue(navigationBarData);
 
     router.redirect('home');
     router.subscribe(() => this._routeContextUpdated());
