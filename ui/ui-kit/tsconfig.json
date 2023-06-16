@@ -18,6 +18,7 @@
   "references": [
     {"path": "../element"},
     {"path": "../icon"},
+    {"path": "../icon2"},
     {"path": "../../core/type"},
     {"path": "../../core/i18n"},
     {"path": "../../core/signal"},

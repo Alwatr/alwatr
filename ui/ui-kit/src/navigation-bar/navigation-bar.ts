@@ -7,24 +7,24 @@ import {
   type PropertyValueMap,
 } from '@alwatr/element';
 import {l10n} from '@alwatr/i18n2';
-import '@alwatr/icon';
+import {alwatrIconDirective, alwatrIconStyle} from '@alwatr/icon/icon2.js';
 import {router} from '@alwatr/router2';
+import {MaybePromise} from '@alwatr/type';
 
 import {navigationBarContext, navigationBarEvent} from './context.js';
 import {AlwatrSurface} from '../card/surface.js';
 
 import type {RouteContextBase} from '@alwatr/router2/type.js';
-import type {StringifyableRecord} from '@alwatr/type';
 
-export interface NavigationBarItemContent extends StringifyableRecord {
+export interface NavigationBarItemContent {
   id: string;
-  icon: string;
+  icon: MaybePromise<string>;
   iconFlipRtl?: boolean;
   link: RouteContextBase['sectionList'];
   label?: string;
   // badgeValue: string,
 }
-export interface NavigationBarContent extends StringifyableRecord {
+export interface NavigationBarContent {
   itemList: Array<NavigationBarItemContent>;
 }
 
@@ -44,6 +44,7 @@ declare global {
 export class AlwatrNavigationBar extends AlwatrSurface {
   static override styles = [
     AlwatrSurface.styles,
+    alwatrIconStyle,
     css`
       :host {
         display: flex;
@@ -75,12 +76,12 @@ export class AlwatrNavigationBar extends AlwatrSurface {
         border-radius: var(--sys-radius-large);
       }
 
-      alwatr-icon {
+      .alwatr-icon {
         padding: calc(var(--sys-spacing-track) / 2) calc(2.5 * var(--sys-spacing-track));
         color: var(--sys-color-on-surface-variant);
         font-size: calc(3 * var(--sys-spacing-track));
       }
-      .item[data-active] alwatr-icon {
+      .item[data-active] .alwatr-icon {
         color: var(--sys-color-on-secondary-container);
       }
 
@@ -125,7 +126,6 @@ export class AlwatrNavigationBar extends AlwatrSurface {
   }
 
   protected navigationItem(content: NavigationBarItemContent): unknown {
-    const iconName = content.icon + (content.id === this.activeItemId ? '-sharp' : '-outline');
     return html`
       <a
         class="item"
@@ -135,7 +135,7 @@ export class AlwatrNavigationBar extends AlwatrSurface {
         @click=${this.itemClickHandler}
       >
         <div class="indicator">
-          <alwatr-icon .name=${iconName} ?flip-rtl=${content.iconFlipRtl}></alwatr-icon>
+          ${alwatrIconDirective(content.icon)}
         </div>
         <div class="label">${l10n.message(content.label)}</div>
       </a>
