@@ -68,6 +68,7 @@ function scheduleDailyTask(targetTime: Date, callback: () => MaybePromise<void>)
 
   logger.logProperty?.('scheduleDailyTask', {targetTime, timeToWait: Math.ceil(timeToWait / 60 / 1000) + 'm'});
   setTimeout(async () => {
+    targetTime.setDate(targetTime.getDate() + 1);
     scheduleDailyTask(targetTime, callback);
     await callback();
   }, timeToWait);
