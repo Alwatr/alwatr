@@ -15,7 +15,7 @@
     ],
   },
 
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.json", "../../custom.d.ts"],
   "exclude": [],
   "references": [
     {"path": "../../core/router2"},
