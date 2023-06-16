@@ -7,7 +7,7 @@ import {
   type PropertyValueMap,
 } from '@alwatr/element';
 import {l10n} from '@alwatr/i18n2';
-import {alwatrIconDirective, alwatrIconStyle} from '@alwatr/icon/icon2.js';
+import {alwatrIconDirective, alwatrIconStyle} from '@alwatr/icon2';
 import {router} from '@alwatr/router2';
 import {MaybePromise} from '@alwatr/type';
 
