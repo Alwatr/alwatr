@@ -36,7 +36,7 @@
     "@material/web": "^1.0.0-pre.10",
     "@web/dev-server": "^0.2.3",
     "@webcomponents/webcomponentsjs": "^2.8.0",
-    "esbuild": "^0.18.2",
+    "esbuild": "^0.18.3",
     "lit-analyzer": "^1.2.1",
     "npm-run-all": "^4.1.5",
     "ts-lit-plugin": "^1.2.1",
