@@ -1,5 +1,5 @@
 import {AlwatrContextSignal, AlwatrEventSignal} from '@alwatr/signal2';
-import {TopAppBarContent} from '@alwatr/ui-kit/src/top-app-bar/top-app-bar.js';
+import {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
 
 export const scrollToTopEvent = new AlwatrEventSignal<{smooth?: boolean}>({
   name: 'command_scroll_to_top',
