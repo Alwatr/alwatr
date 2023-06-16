@@ -49,6 +49,7 @@
     "@alwatr/ui-kit": "^1.0.0",
     "@alwatr/util": "^1.0.0",
     "@alwatr/validator": "^1.0.0",
+    "@alwatr/icon": "^1.0.0",
     "@web/dev-server": "^0.2.3",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "esbuild": "^0.17.0",
