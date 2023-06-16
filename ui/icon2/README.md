@@ -1,5 +1,3 @@
-# Alwatr Icon2 - `@alwatr/icon2`
+# Alwatr Icon v2 - `@alwatr/icon2` - `<alwatr-icon>`
 
-It's a directive to display an icon
-
-## How to use
+Best practices (The Right Way) of using premium designed icons in the website and webapp.
