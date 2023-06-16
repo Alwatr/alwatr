@@ -1,0 +1,42 @@
+{
+  "name": "@alwatr/icon2",
+  "version": "0.1.0",
+  "description": "Best practices (The Right Way) of using premium designed icons in the website and webapp.",
+  "keywords": [
+    "icon",
+    "icons",
+    "lit",
+    "element",
+    "component",
+    "typescript",
+    "pwa",
+    "alwatr"
+  ],
+  "main": "icon2.js",
+  "type": "module",
+  "types": "icon2.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "license": "MIT",
+  "private": "true",
+  "files": [
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md,svg}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "ui/icon"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui/icon#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "dependencies": {
+    "@alwatr/element": "^1.0.0",
+    "@alwatr/fetch": "^1.0.0",
+    "@alwatr/logger": "^1.0.0",
+    "tslib": "^2.5.3"
+  }
+}
