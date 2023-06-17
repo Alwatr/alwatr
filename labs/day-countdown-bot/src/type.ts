@@ -4,8 +4,8 @@ export interface DayCountdownChat extends AlwatrDocumentObject {
   chatDetail?: ChatDetail;
   isSubscribed?: boolean;
   lastBotMessageId?: number;
-  lastDayCountdownSent?: number;
-  lastNotifyMessageId?: number;
+  lastDayCountdownSent?: Array<number>;
+  lastNotifyMessageId?: Array<number>;
   isDeleted?: boolean,
 }
 

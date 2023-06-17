@@ -1,4 +1,5 @@
 import './bot/callback-query/toggleSubscribe.js';
+import './bot/command/dayCountdown.js';
 import './bot/command/getContent.js';
 import './bot/command/help.js';
 import './bot/command/invitation.js';

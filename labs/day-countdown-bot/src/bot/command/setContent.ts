@@ -23,6 +23,8 @@ async function setContentConversationHandler(update: UpdateType<'message'>): Pro
   const messageId = update.message?.message_id;
   const messageThreadId = update.message?.message_thread_id;
 
+  logger.logMethodArgs?.('setContentConversationHandler', {chatId, messageId, messageThreadId});
+
   if (chatId == null || !isAdmin(chatId)) return false;
 
   const conversation = await conversationStorageClient.get<SetContentConversationContext>(chatId);

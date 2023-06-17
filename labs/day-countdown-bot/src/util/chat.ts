@@ -14,19 +14,19 @@ export async function isSubscribed(chatId: string | number): Promise<boolean> {
   return subscribed;
 }
 
-export async function toggleSubscribe(chatId: number, messageThreadId?: number): Promise<boolean | null> {
+export async function toggleSubscribe(chatId: number): Promise<boolean | null> {
   logger.logMethodArgs?.('toggleSubscribe', {chatId});
   const chat = await chatStorageClient.get<DayCountdownChat>(chatId + '');
   logger.logMethodArgs?.('toggleSubscribe', {chat});
   if (chat == null || chat.chatDetail == null) return null;
 
   chat.isSubscribed = !chat.isSubscribed;
-  chat.chatDetail!.messageThreadId = messageThreadId;
   chatStorageClient.set<DayCountdownChat>(chat);
   return chat.isSubscribed;
 }
 
 export async function addChat(chat: Chat, messageThreadId?: number): Promise<ChatDetail | null> {
+  logger.logMethodArgs?.('addChat', {chat, messageThreadId});
   let chatDetail: ChatDetail | null = null;
 
   if (chat.type === 'group') {
@@ -41,7 +41,7 @@ export async function addChat(chat: Chat, messageThreadId?: number): Promise<Cha
       type: chat.type,
       chatId: chat.id,
       title: chat.title,
-      messageThreadId,
+      messageThreadId: chat.is_forum ? messageThreadId : undefined,
     };
   }
   else if (chat.type === 'private') {
@@ -82,4 +82,17 @@ export async function actionAllChat(action: (chat: DayCountdownChat) => MaybePro
     if (!Object.prototype.hasOwnProperty.call(chatList, chatIndex) || chatList[chatIndex].isDeleted === true) continue;
     await action(chatList[chatIndex]);
   }
+}
+
+export async function checkDayCountdownSent(day: number, chatId: string | number): Promise<boolean> {
+  const chat = await chatStorageClient.get(chatId + '');
+  return chat?.lastDayCountdownSent?.includes(day) ?? false;
+}
+
+export async function setDayCountdownSent(day: number, chatId: string | number): Promise<void> {
+  const chat = await chatStorageClient.get(chatId + '');
+  if (chat == null) return;
+  chat.lastDayCountdownSent ??= [];
+  chat.lastDayCountdownSent.push(day);
+  await chatStorageClient.set(chat);
 }

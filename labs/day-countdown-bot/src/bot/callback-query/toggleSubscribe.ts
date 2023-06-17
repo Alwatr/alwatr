@@ -8,12 +8,15 @@ bot.defineCallbackQueryHandler('toggleSubscribe', async (context) => {
   logger.logMethodArgs?.('command-toggleSubscribe', {chatId: context.chatId});
 
   // TODO: check permission for user
-  let isSubscribed = await toggleSubscribe(context.chatId, context.messageThreadId);
+  let isSubscribed = await toggleSubscribe(context.chatId);
 
   if (isSubscribed == null) {
     logger.error('command-toggleSubscribe', 'chat_not_found');
-    await addChat(context.update.callback_query!.message!.chat);
-    isSubscribed = await toggleSubscribe(context.chatId, context.messageThreadId);
+    await addChat(
+      context.update.callback_query!.message!.chat,
+      context.update.callback_query!.message!.message_thread_id,
+    );
+    isSubscribed = await toggleSubscribe(context.chatId);
   }
 
   if (isSubscribed === true) {
