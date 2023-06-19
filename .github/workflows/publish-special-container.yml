@@ -102,7 +102,7 @@ jobs:
             path: cloud/container/wordpress/php7.4
             description: Clone of Wordpress.
             version:
-              short: 6-7
+              short: 6-php7
               full: 6.2-php7.4-fpm
 
           - image: wordpress
