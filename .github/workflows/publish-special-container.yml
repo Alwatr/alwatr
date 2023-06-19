@@ -99,7 +99,14 @@ jobs:
               full: 8.1-apache
 
           - image: wordpress
-            path: cloud/container/wordpress
+            path: cloud/container/wordpress/php7.4
+            description: Clone of Wordpress.
+            version:
+              short: 6-7
+              full: 6-php7.4-fpm
+
+          - image: wordpress
+            path: cloud/container/wordpress/php8.1
             description: Clone of Wordpress.
             version:
               short: 6
