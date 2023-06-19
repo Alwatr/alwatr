@@ -1,0 +1,2 @@
+ARG NOCODB_VERSION=0.109.1
+FROM docker.io/nocodb/nocodb:${NOCODB_VERSION}

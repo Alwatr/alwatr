@@ -84,6 +84,13 @@ jobs:
               short: 10
               full: 10.9
 
+          - image: nocodb
+            path: cloud/container/nocodb
+            description: Clone of Nocodb.
+            version:
+              short: 0.109
+              full: 0.109.1
+
           # - image: tdlib
           #   path: cloud/container/tdlib
           #   description: Cross-platform library for building Telegram clients.

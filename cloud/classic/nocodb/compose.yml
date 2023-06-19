@@ -8,7 +8,7 @@ networks:
 
 services:
   nocodb:
-    image: nocodb/nocodb:latest
+    image: ghcr.io/alimd/nocodb:${IMAGE_VERSION:-0.109.1}
 
     cpu_shares: 256
     mem_limit: 256m
