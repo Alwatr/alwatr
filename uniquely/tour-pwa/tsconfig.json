@@ -26,7 +26,7 @@
     {"path": "../../core/signal2"},
     {"path": "../../core/util"},
     {"path": "../../core/fsm2"},
-    {"path": "../../core/context"},
+    {"path": "../../core/server-context"},
     {"path": "../../ui/element"},
     {"path": "../../ui/ui-kit"},
     {"path": "../../ui/pwa-helper"},
