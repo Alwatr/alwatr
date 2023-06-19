@@ -98,6 +98,13 @@ jobs:
               short: 8
               full: 8.1-apache
 
+          - image: wordpress
+            path: cloud/container/wordpress
+            description: Clone of Wordpress.
+            version:
+              short: 6
+              full: 6-php8.1-fpm
+
           # - image: tdlib
           #   path: cloud/container/tdlib
           #   description: Cross-platform library for building Telegram clients.
