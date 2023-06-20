@@ -1,17 +1,28 @@
-import {AlwatrServerRequest} from '@alwatr/server-context';
+import {AlwatrApiRequest} from '@alwatr/server-context';
 import {AlwatrDocumentStorage, StringifyableRecord} from '@alwatr/type';
 
-export interface PriceDetail extends StringifyableRecord {
-  id: string;
-  price: number;
-  date: number
+export interface PriceDetailItem extends StringifyableRecord {
+  amount: number;
+  date: number;
 }
-export type TourRecord = AlwatrDocumentStorage<PriceDetail>
 
-export const tourServerContext = new AlwatrServerRequest({
-  name: 'price-storage.server-request',
+export interface Price extends StringifyableRecord {
+  /**
+   * Tour id
+   */
+  id: string;
+
+  /**
+   * @description A record of categories with their prices
+   * @example { 'economy': [{ amount: 18_000_000, date: 1687284459767 }, ... ]
+   */
+  priceRecord: Record<string, Array<PriceDetailItem>>;
+}
+
+export const priceStorageRequest = new AlwatrApiRequest<AlwatrDocumentStorage<Price>>({
+  name: 'price_storage.server_request',
 });
 
-tourServerContext.request({
+priceStorageRequest.request({
   url: '...',
 });
