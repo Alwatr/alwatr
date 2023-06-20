@@ -1,7 +1,7 @@
 import {customElement, css, html, state, AlwatrBaseElement, PropertyValues} from '@alwatr/element';
 import '@alwatr/ui-kit/card/icon-box.js';
 
-import {tourServerContext} from '../../manager/tour-storage.js';
+import {tourStorageRequest} from '../../manager/tour-storage.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -26,13 +26,13 @@ export class AlwatrPageHome extends AlwatrBaseElement {
   `;
 
   @state()
-    gotState = tourServerContext.state;
+    gotState = tourStorageRequest.state;
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    tourServerContext.subscribe(() => {
-      this.gotState = tourServerContext.state;
+    tourStorageRequest.subscribe(() => {
+      this.gotState = tourStorageRequest.state;
     });
   }
 
@@ -64,9 +64,9 @@ export class AlwatrPageHome extends AlwatrBaseElement {
     return html`Getting the list of tours is failed`;
   }
 
-  protected async _render_complete(): Promise<unknown> {
-    const tourStorage = await tourServerContext.response?.json();
-    this._logger.logMethodArgs?.('_render_complete', {tourStorage});
+  protected _render_complete(): unknown {
+    const tourList = tourStorageRequest.response?.data;
+    this._logger.logMethodArgs?.('_render_complete', {tourList});
     return html`The list of tours is ready`;
   }
 }

@@ -1,7 +1,10 @@
 import {customElement, AlwatrBaseElement, property, css, html, PropertyValues} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n2';
 import {alwatrIconDirective} from '@alwatr/icon2';
-import {MaybePromise} from '@alwatr/type';
+
+import type{Image} from '../../manager/tour-storage.js';
+import type{MaybePromise} from '@alwatr/type';
+
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -18,7 +21,7 @@ export interface PriceDetailItem {
 export interface TourCardContent {
   id: string;
   title: string;
-  imageUrl: string;
+  image: Image;
   priceDetailList: Array<PriceDetailItem>;
 }
 
@@ -46,7 +49,7 @@ export class AlwatrTourCard extends AlwatrBaseElement {
 
   protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
     super.firstUpdated(_changedProperties);
-    this.style.backgroundImage = `url(${this.content!.imageUrl})`;
+    this.style.backgroundImage = `url(${this.content!.image.url})`;
   }
 
   protected _getPriceDetailTemplate(priceDetail: PriceDetailItem): unknown {
