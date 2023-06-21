@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/context",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Elegant powerful context manager base on alwatr signal, written in tiny TypeScript, ES module.",
   "keywords": [
     "context",
@@ -30,14 +30,14 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/fetch": "^1.0.0",
-    "@alwatr/fsm": "^1.0.0",
-    "@alwatr/logger": "^1.0.0",
-    "@alwatr/signal": "^1.0.0",
-    "@alwatr/util": "^1.0.0",
+    "@alwatr/fetch": "^1.0.1",
+    "@alwatr/fsm": "^1.0.1",
+    "@alwatr/logger": "^1.0.1",
+    "@alwatr/signal": "^1.0.1",
+    "@alwatr/util": "^1.0.1",
     "tslib": "^2.5.3"
   },
   "devDependencies": {
-    "@alwatr/type": "^1.0.0"
+    "@alwatr/type": "^1.0.1"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/zx-example",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Test google zx with typescript in action.",
   "keywords": [
     "zx-example",
@@ -33,7 +33,7 @@
     "build": "chmod -v +x *.js"
   },
   "dependencies": {
-    "@alwatr/logger": "^1.0.0",
+    "@alwatr/logger": "^1.0.1",
     "tslib": "^2.5.3",
     "zx": "^7.2.2"
   }
