@@ -1,6 +1,6 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 
-import {Directive, PartType, type PartInfo} from './lit.js';
+import {Directive, PartType, type PartInfo, type Part} from './lit.js';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/fract',
@@ -18,5 +18,9 @@ export class AlwatrDirective extends Directive {
   override update(_part: Part, props: Array<unknown>): unknown {
     this._logger.logMethodArgs?.('update', props);
     return this.render(...props);
+  }
+
+  render(...props: unknown[]): unknown {
+    return this._logger.logMethodArgs?.('render', props);
   }
 }
