@@ -1,5 +1,5 @@
 {
-  "name": "@alwatr/directive",
+  "name": "@alwatr/fract",
   "version": "1.0.0",
   "description": "Elegant simple render strategy powered by lit written in tiny TypeScript module for who hate react!",
   "keywords": [
@@ -25,9 +25,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "core/math"
+    "directory": "core/fract"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/core/math#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/core/fract#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
