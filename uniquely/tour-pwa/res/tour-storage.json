@@ -1,0 +1,37 @@
+{
+  "ok": true,
+  "statusCode": 200,
+  "meta": {
+    "formatVersion": 0,
+    "id": "1",
+    "lastAutoId": 0,
+    "lastUpdated": 0,
+    "reversion": 0
+  },
+  "data": {
+    "1": {
+      "id": "1",
+      "title": "تور استانبول",
+      "indexImage": {
+        "url": "image/istanbul.jpg"
+      },
+      "categories": ["economy"]
+    },
+    "2": {
+      "id": "2",
+      "title": "تور دبی",
+      "indexImage": {
+        "url": "image/dubai.jpeg"
+      },
+      "categories": ["appropriate"]
+    },
+    "3": {
+      "id": "3",
+      "title": "تور کیش",
+      "indexImage": {
+        "url": "image/kish.jpeg"
+      },
+      "categories": ["luxury"]
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "statusCode": 200,
+  "meta": {
+    "formatVersion": 0,
+    "id": "1",
+    "lastAutoId": 0,
+    "lastUpdated": 0,
+    "reversion": 0
+  },
+  "data": {
+    "price1": {
+      "id": "1",
+      "priceRecord": {
+        "economy": [
+          {
+            "amount": 18000000,
+            "date": 1687284458767
+          },
+          {
+            "amount": 21000000,
+            "date": 1687284459767
+          },
+          {
+            "amount": 19000000,
+            "date": 1687284457767
+          }
+        ]
+      }
+    },
+    "price2": {
+      "id": "2",
+      "priceRecord": {
+        "appropriate": [
+          {
+            "amount": 22000000,
+            "date": 1687284456767
+          },
+          {
+            "amount": 20000000,
+            "date": 1687284455767
+          }
+        ]
+      }
+    },
+    "price3": {
+      "id": "3",
+      "priceRecord": {
+        "luxury": [
+          {
+            "amount": 11000000,
+            "date": 1687284454767
+          }
+        ]
+      }
+    }
+  }
+}

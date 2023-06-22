@@ -23,7 +23,7 @@ export const tourStorageRequest = new AlwatrApiRequest<AlwatrDocumentStorage<Tou
 });
 
 tourStorageRequest.request({
-  url: '...',
+  url: 'tour-storage.json',
 });
 
 export const tourDetailContext = new AlwatrContextSignal<Tour & {priceRecord: Record<string, Array<PriceDetailItem>>}>({
@@ -39,27 +39,27 @@ router.subscribe(async () => {
     return;
   }
 
-  const tourStorage = tourStorageRequest.response?.data;
-  const priceStorage = priceStorageRequest.response?.data;
+  const tourList = tourStorageRequest.response?.data;
+  const priceList = priceStorageRequest.response?.data;
 
-  if (tourStorage == null || priceStorage == null) {
+  if (tourList == null || priceList == null) {
     // FIXME:
     return;
   }
 
-  if (!Object.prototype.hasOwnProperty.call(tourStorage.data, tourId)) {
+  if (!Object.prototype.hasOwnProperty.call(tourList, tourId)) {
     // FIXME:
     return;
   }
 
-  if (!Object.prototype.hasOwnProperty.call(priceStorage.data, tourId)) {
+  if (!Object.prototype.hasOwnProperty.call(priceList, tourId)) {
     // FIXME:
     return;
   }
 
-  const tour = tourStorage.data[tourId];
+  const tour = tourList[tourId];
   tourDetailContext.setValue({
     ...tour,
-    priceRecord: priceStorage.data[tourId].priceRecord,
+    priceRecord: priceList[tourId].priceRecord,
   });
 });
