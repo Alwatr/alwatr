@@ -30,6 +30,7 @@
     {"path": "./core/fsm"},
     {"path": "./core/fsm2"},
     {"path": "./core/type"},
+    {"path": "./core/fract"},
 
     // ui
     {"path": "./ui/element"},
