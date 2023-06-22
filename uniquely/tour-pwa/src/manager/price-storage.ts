@@ -24,5 +24,5 @@ export const priceStorageRequest = new AlwatrApiRequest<AlwatrDocumentStorage<Pr
 });
 
 priceStorageRequest.request({
-  url: '...',
+  url: 'price-storage.json',
 });
