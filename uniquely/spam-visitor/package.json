@@ -1,0 +1,60 @@
+{
+  "name": "@alwatr/spam-visitor",
+  "version": "0.31.0",
+  "description": "Spam website visitor for increase visit rate",
+  "type": "module",
+  "keywords": [
+    "puppeteer",
+    "alwatr"
+  ],
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "contributors": [
+    "S. Amir Mohammad Najafi <njfamirm@gmail.com> (https://njfamirm.ir)"
+  ],
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=18.13.0",
+    "npm": ">=8.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "labs/spam-visitor"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/uniquely/spam-visitor#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "scripts": {
+    "b": "yarn build",
+    "c": "yarn clean",
+    "cb": "run-s clean build",
+    "s": "yarn start",
+    "w": "yarn watch",
+    "start": "NODE_OPTIONS=--enable-source-maps run-s clean build serve",
+    "build": "yarn build:es --analyze=verbose",
+    "build:ts": "tsc --build",
+    "build:es": "esbuild src/index.ts --platform=node --target=node19 --bundle --format=esm --minify --sourcemap --outdir=dist --out-extension:.js=.mjs",
+    "clean": "rm -rf dist build .tsbuildinfo",
+    "serve": "node --enable-source-maps dist/index.mjs",
+    "serve:debug": "node --inspect --enable-source-maps dist/index.mjs",
+    "watch": "run-s clean build && run-p watch:es watch:node",
+    "watch:node": "nodemon -w dist/ --enable-source-maps dist/index.mjs",
+    "watch:debug-node": "nodemon -w dist/ --inspect --enable-source-maps dist/index.mjs",
+    "watch:ts": "yarn build:ts --watch --preserveWatchOutput",
+    "watch:es": "yarn build:es --watch"
+  },
+  "devDependencies": {
+    "@alwatr/logger": "^0.31.0",
+    "@alwatr/type": "^0.31.0",
+    "@alwatr/util": "^0.31.0",
+    "puppeteer": "^18.0.4",
+    "@types/node": "^20.1.0",
+    "esbuild": "^0.18.6",
+    "nodemon": "^2.0.22",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.0.4"
+  }
+}

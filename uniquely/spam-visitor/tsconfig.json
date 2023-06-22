@@ -4,21 +4,14 @@
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "rootDir": "src",
-    "outDir": ".",
-    "plugins": [
-      {
-        "name": "ts-lit-plugin",
-        "strict": true
-      }
-    ],
+    "outDir": "."
   },
 
   "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
-    {"path": "../element"},
-    {"path": "../../core/fetch"},
     {"path": "../../core/logger"},
-    {"path": "../../core/fract"}
+    {"path": "../../core/util"},
+    {"path": "../../core/type"}
   ]
 }

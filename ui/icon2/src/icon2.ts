@@ -1,5 +1,7 @@
-import {AsyncDirective, css, directive, html, unsafeSVG} from '@alwatr/element';
+import {css, directive, html, unsafeSVG} from '@alwatr/element';
+import {AlwatrDynamicDirective} from '@alwatr/fract';
 
+import type {PartInfo} from '@alwatr/fract/src/lit.js';
 import type {MaybePromise} from '@alwatr/type';
 
 export const alwatrIconStyle = css`
@@ -25,8 +27,12 @@ export const alwatrIconStyle = css`
   }
 `;
 
-class AlwatrIcon extends AsyncDirective {
-  render(svg: MaybePromise<string>): unknown {
+class AlwatrIcon extends AlwatrDynamicDirective {
+  constructor(partInfo: PartInfo) {
+    super(partInfo, '<alwatr-icon>');
+  }
+
+  override render(svg: MaybePromise<string>): unknown {
     if (svg instanceof Promise) {
       svg.then((_svg) => {
         this.setValue(this._render_icon(_svg));

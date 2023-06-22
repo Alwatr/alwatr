@@ -30,6 +30,7 @@
     {"path": "./core/fsm"},
     {"path": "./core/fsm2"},
     {"path": "./core/type"},
+    {"path": "./core/fract"},
 
     // ui
     {"path": "./ui/element"},
@@ -54,7 +55,11 @@
     {"path": "./uniquely/soffit-pwa"},
     {"path": "./uniquely/com-api"},
     {"path": "./uniquely/com-pwa"},
+<<<<<<< HEAD
     {"path": "./uniquely/keep-pwa"},
+=======
+    {"path": "./uniquely/spam-visitor"},
+>>>>>>> 9dc8ca43 (feat(spam-visitor): base package)
 
     // labs
     {"path": "./labs/zx-example"}
