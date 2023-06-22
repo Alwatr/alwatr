@@ -2,17 +2,18 @@ import {createLogger} from '@alwatr/logger';
 
 import {PartType, type PartInfo, AsyncDirective, Part} from './lit.js';
 
-export class AlwatrDynamicDirective extends AsyncDirective {
-  protected _logger = createLogger(this.constructor.name);
+export abstract class AlwatrDynamicDirective extends AsyncDirective {
+  protected _logger;
 
-  constructor(_partInfo: PartInfo) {
-    super(_partInfo);
-    this._logger.logMethodArgs?.('constructor', Object.keys(PartType)[_partInfo.type - 1]);
+  constructor(partInfo: PartInfo, debugName: string) {
+    super(partInfo);
+    this._logger = createLogger(debugName);
+    this._logger.logMethodArgs?.('constructor', Object.keys(PartType)[partInfo.type - 1]);
   }
 
   override setValue(value: unknown): void {
-    super.setValue(value);
     this._logger.logMethodArgs?.('setValue', value);
+    super.setValue(value);
   }
 
   override update(_part: Part, props: Array<unknown>): unknown {
@@ -20,17 +21,13 @@ export class AlwatrDynamicDirective extends AsyncDirective {
     return this.render(...props);
   }
 
-  render(...props: unknown[]): unknown {
-    return this._logger.logMethodArgs?.('render', props);
-  }
-
   protected override reconnected(): void {
-    super.reconnected();
     this._logger.logMethod?.('reconnected');
+    super.reconnected();
   }
 
   protected override disconnected(): void {
-    super.disconnected();
     this._logger.logMethod?.('disconnected');
+    super.disconnected();
   }
 }
