@@ -12,7 +12,7 @@ import {MaybePromise} from '@alwatr/type';
 
 import {navigationBarContext, navigationBarEvent} from './context.js';
 import {AlwatrSurface} from '../card/surface.js';
-import {alwatrIconDirective} from '../icon/icon.js';
+import {alwatrIcon} from '../icon/icon.js';
 
 import type {RouteContextBase} from '@alwatr/router2/type.js';
 
@@ -134,7 +134,7 @@ export class AlwatrNavigationBar extends AlwatrSurface {
         @click=${this.itemClickHandler}
       >
         <div class="indicator">
-          ${alwatrIconDirective(content.icon)}
+          ${alwatrIcon(content.icon)}
         </div>
         <div class="label">${l10n.message(content.label)}</div>
       </a>
