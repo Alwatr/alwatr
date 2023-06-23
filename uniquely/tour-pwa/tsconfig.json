@@ -27,6 +27,7 @@
     {"path": "../../core/util"},
     {"path": "../../core/fsm2"},
     {"path": "../../core/server-context"},
+    {"path": "../../core/fract"},
     {"path": "../../ui/element"},
     {"path": "../../ui/ui-kit"},
     {"path": "../../ui/pwa-helper"},
