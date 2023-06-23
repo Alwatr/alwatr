@@ -15,6 +15,7 @@
   }
 }
 
-[dir='rtl'] .alwatr-icon svg {
+[dir='rtl'] .alwatr-icon.flip-icon-in-rtl svg,
+[dir='rtl'] .flip-icon-in-rtl .alwatr-icon svg {
   transform: scaleX(-1);
 }
