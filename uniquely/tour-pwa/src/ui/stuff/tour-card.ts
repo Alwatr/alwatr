@@ -1,6 +1,6 @@
 import {customElement, AlwatrBaseElement, property, css, html, PropertyValues} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n2';
-import {alwatrIconDirective} from '@alwatr/ui-kit/icon/icon.js';
+import {alwatrIcon} from '@alwatr/ui-kit/icon/icon.js';
 
 import type{Image} from '../../manager/tour-storage.js';
 import type{MaybePromise} from '@alwatr/type';
@@ -55,7 +55,7 @@ export class AlwatrTourCard extends AlwatrBaseElement {
   protected _getPriceDetailTemplate(priceDetail: PriceDetailItem): unknown {
     return html`
       <div>
-        <span>${alwatrIconDirective(priceDetail.icon!)}</span>
+        <span>${alwatrIcon(priceDetail.icon!)}</span>
         ${l10n.message('from')}
         ${priceDetail.price}
         ${l10n.message('in')}
