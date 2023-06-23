@@ -12,6 +12,7 @@ logger.logOther?.('..:: Alwatr Fake Visit Service ::..');
     const searchUrlList = config.crawl.searchUrlList;
     const productLinkSelectorList = config.crawl.productLinkSelectorList;
     for (let i = 0; i < searchUrlList.length; i++) {
+      logger.logProperty?.('visit_index', i);
       try {
         await cleanup(config.crawl.home);
         await visit(searchUrlList[i], productLinkSelectorList[i]);
