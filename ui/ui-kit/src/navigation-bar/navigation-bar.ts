@@ -7,12 +7,12 @@ import {
   type PropertyValueMap,
 } from '@alwatr/element';
 import {l10n} from '@alwatr/i18n2';
-import {alwatrIconDirective, alwatrIconStyle} from '@alwatr/icon2';
 import {router} from '@alwatr/router2';
 import {MaybePromise} from '@alwatr/type';
 
 import {navigationBarContext, navigationBarEvent} from './context.js';
 import {AlwatrSurface} from '../card/surface.js';
+import {alwatrIconDirective} from '../icon/icon.js';
 
 import type {RouteContextBase} from '@alwatr/router2/type.js';
 
@@ -44,7 +44,6 @@ declare global {
 export class AlwatrNavigationBar extends AlwatrSurface {
   static override styles = [
     AlwatrSurface.styles,
-    alwatrIconStyle,
     css`
       :host {
         display: flex;

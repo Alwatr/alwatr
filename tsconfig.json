@@ -35,7 +35,6 @@
     // ui
     {"path": "./ui/element"},
     {"path": "./ui/icon"},
-    {"path": "./ui/icon2"},
     {"path": "./ui/ui-kit"},
     {"path": "./ui/pwa-helper"},
 

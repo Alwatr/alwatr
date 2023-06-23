@@ -1,0 +1,20 @@
+.alwatr-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  contain: size layout paint style;
+  box-sizing: content-box;
+  vertical-align: middle;
+
+  svg {
+    display: block;
+    height: 100%;
+    width: 100%;
+    stroke: currentcolor;
+    fill: currentcolor;
+  }
+}
+
+[dir='rtl'] .alwatr-icon svg {
+  transform: scaleX(-1);
+}
