@@ -1,5 +1,5 @@
 import {directive, html, nothing} from '@alwatr/element';
-import {AlwatrDynamicDirective} from '@alwatr/fract';
+import {AlwatrDynamicDirective, type PartInfo} from '@alwatr/fract';
 import {router} from '@alwatr/router2';
 import '@alwatr/ui-kit/navigation-bar/navigation-bar.js';
 import {renderState} from '@alwatr/util';
@@ -8,7 +8,6 @@ import './page/home.js'; // for perf
 import {navigationBarData} from '../config.js';
 
 import type {PageName} from '../type.js';
-import type {PartInfo} from '@alwatr/fract/lit.js';
 
 const renderRecord: Record<PageName | '_default', undefined | PageName | (() => unknown)> = {
   _default: 'home',
