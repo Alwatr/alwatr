@@ -69,6 +69,7 @@ const esbuildContext = await esbuild.context({
     '.woff': 'copy',
     '.woff2': 'copy',
     '.svg': 'text',
+    '.scss': 'css',
   },
 
   banner: {
