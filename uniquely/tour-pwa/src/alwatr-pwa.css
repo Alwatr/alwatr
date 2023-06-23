@@ -1,0 +1,11 @@
+#root {
+  contain: size layout paint style;
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  overflow: clip;
+  background-color: red;
+}
