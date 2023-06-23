@@ -1,6 +1,6 @@
 import {customElement, AlwatrBaseElement, property, css, html, PropertyValues} from '@alwatr/element';
 import {l10n} from '@alwatr/i18n2';
-import {alwatrIconDirective} from '@alwatr/icon2';
+import {alwatrIconDirective} from '@alwatr/ui-kit/icon/icon.js';
 
 import type{Image} from '../../manager/tour-storage.js';
 import type{MaybePromise} from '@alwatr/type';

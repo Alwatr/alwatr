@@ -4,9 +4,6 @@
   "description": "Alwatr Keep PWA.",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "contributors": [
-    "MHF <honarvar.info@gmail.com>"
-  ],
   "private": true,
   "engines": {
     "node": ">=18.13.0",
