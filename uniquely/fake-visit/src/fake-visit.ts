@@ -4,16 +4,16 @@ import {config, logger} from './config.js';
 import {getCurrentPage, openUrl} from './lib/puppeteer.js';
 
 
-export async function visit(): Promise<void> {
+export async function visit(searchUrl: string, productLinkSelector: string): Promise<void> {
   logger.logMethod?.('visit');
 
   const page = await getCurrentPage();
   await page.setUserAgent(generateRandomUserAgent());
   await openUrl(page, config.crawl.home);
-  await openUrl(page, config.crawl.searchUrl);
+  await openUrl(page, searchUrl);
 
-  await page.waitForSelector(config.crawl.productLinkSelector);
-  const productLink = await page.$(config.crawl.productLinkSelector);
+  await page.waitForSelector(productLinkSelector);
+  const productLink = await page.$(productLinkSelector);
   if (productLink == null) {
     throw new Error('product_link_not_found');
   }
