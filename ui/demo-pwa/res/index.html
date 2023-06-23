@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa-IR" dir="rtl">
 <head>
   <base href="/" />
 
@@ -13,8 +13,14 @@
   <meta charset="utf-8" />
   <title>Alwatr UI Demo</title>
 
-  <link rel="stylesheet" href="alwatr-pwa.css" />
-  <script type="module" src="alwatr-pwa.js"></script>
+  <link rel="preload" as="style" href="alwatr-pwa.css" fetchpriority="high" />
+  <link rel="preload" as="script" href="alwatr-pwa.js" fetchpriority="high" crossorigin />
+  <link
+    media="print"
+    rel="stylesheet"
+    href="alwatr-pwa.css"
+    onload="this.media='all';this.onload=null;"
+  />
 
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
@@ -25,7 +31,7 @@
   />
 
   <link rel="shortcut icon" href="image/favicon.ico" />
-  <link rel="manifest" href="manifest.json" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <!-- Add to home screen for Chrome on Android. Fallback for manifest.json -->
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="application-name" content="Alwatr PWA Starter" />
@@ -61,11 +67,34 @@
   <meta name="og:description" content="Alwatr Progressive Web Application Demo." />
 
   <link rel="canonical" href="https://demo.alwatr.ir" />
+
+  <style>
+    html,
+    body {
+      margin: 0 auto;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    [unresolved] {
+      text-align: center;
+      font-size: 24px;
+      padding:
+        calc(8 * var(--sys-spacing-track, 8px))
+        calc(2 * var(--sys-spacing-track, 8px))
+        calc(2 * var(--sys-spacing-track, 8px))
+      ;
+    }
+  </style>
 </head>
 <body>
-  <alwatr-pwa unresolved>
-    Loading...
-  </alwatr-pwa>
+  <div id="alwatr_pwa_root" unresolved>
+    درحال بارگذاری...
+  </div>
+
+  <script type="module" src="alwatr-pwa.js"></script>
+
   <noscript>
     <div class="noscript">
       <p dir="ltr">Please enable JavaScript to view this website.</p>
