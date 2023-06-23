@@ -1,2 +1,3 @@
-export {AlwatrDirective} from './directive.js';
-export {AlwatrDynamicDirective} from './dynamic-directive.js';
+export * from './directive.js';
+export * from './dynamic-directive.js';
+export * from './lit-html.js';

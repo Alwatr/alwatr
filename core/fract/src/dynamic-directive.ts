@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-import {PartType, type PartInfo, AsyncDirective, Part} from './lit.js';
+import {PartType, type PartInfo, AsyncDirective, Part} from './lit-html.js';
 
 export abstract class AlwatrDynamicDirective extends AsyncDirective {
   protected _logger;
