@@ -77,24 +77,24 @@
       height: 100%;
     }
 
-    [unresolved] {
+    .app-loader {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
       text-align: center;
       font-size: 24px;
-      padding:
-        calc(8 * var(--sys-spacing-track, 8px))
-        calc(2 * var(--sys-spacing-track, 8px))
-        calc(2 * var(--sys-spacing-track, 8px))
-      ;
+      padding-top: 64px;
+    }
+
+    .loading .app-loader {
+      display: block;
     }
   </style>
 </head>
-<body>
-  <div id="alwatr_pwa_root" unresolved>
-    درحال بارگذاری...
-  </div>
-
+<body class="loading">
+  <div class="app-loader">درحال بارگذاری...</div>
   <script type="module" src="alwatr-pwa.js"></script>
-
   <noscript>
     <div class="noscript">
       <p dir="ltr">Please enable JavaScript to view this website.</p>
