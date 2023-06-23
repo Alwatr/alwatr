@@ -1,4 +1,4 @@
-import callIcon from '@alwatr/icon/svg/add.svg';
+import callIcon from '@alwatr/icon/svg/call-outline.svg';
 import {defaultExport} from '@alwatr/util';
 
 /**
