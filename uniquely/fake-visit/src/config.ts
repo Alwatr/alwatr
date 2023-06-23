@@ -4,6 +4,22 @@ import type {PuppeteerLaunchOptions} from 'puppeteer-core';
 
 export const logger = createLogger('fake-visit');
 
+const crawlerHome = process.env.FAKE_VISIT_HOME;
+if (!crawlerHome) {
+  throw new Error('Home url required, FAKE_VISIT_HOME="YOUR_URL"');
+}
+
+const crawlSearchUrlList = process.env.FAKE_VISIT_SEARCH_URL?.split(',').map((url) => url.trim());
+if (!crawlSearchUrlList?.length || !crawlSearchUrlList.every((url) => url.startsWith('http'))) {
+  throw new Error('Search URL required, FAKE_VISIT_SEARCH_URL="YOUR_SEARCH_URL1, YOUR_SEARCH_URL2"');
+}
+
+const crawlProductLinkSelectorList = process.env.FAKE_VISIT_PRODUCT_LINK_SELECTOR?.split(',').map((url) => url.trim());
+if (crawlProductLinkSelectorList?.length !== crawlSearchUrlList.length) {
+  // eslint-disable-next-line max-len
+  throw new Error('Product selector required, FAKE_VISIT_PRODUCT_LINK_SELECTOR="YOUR_PRODUCT_LINK_SELECTOR1, YOUR_PRODUCT_LINK_SELECTOR2"');
+}
+
 export const config = {
   launchOption: <PuppeteerLaunchOptions>{
     product: 'chrome',
@@ -24,9 +40,9 @@ export const config = {
     ],
   },
   crawl: {
-    home: process.env.FAKE_VISIT_HOME as string,
-    searchUrl: process.env.FAKE_VISIT_SEARCH_URL as string,
-    productLinkSelector: process.env.FAKE_VISIT_PRODUCT_LINK_SELECTOR as string,
+    home: crawlerHome as string,
+    searchUrlList: crawlSearchUrlList,
+    productLinkSelectorList: crawlProductLinkSelectorList,
     timeout: Number(process.env.FAKE_VISIT_TYPE_DELAY) || 60_000,
     typeDelay: Number(process.env.FAKE_VISIT_TYPE_DELAY) || 15,
     navigationDelay: Number(process.env.FAKE_VISIT_NAVIGATION_DELAY) || 10_000,
@@ -46,13 +62,3 @@ export const config = {
     token: process.env.NOTIFIER_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
 } as const;
-
-if (!config.crawl.home) {
-  throw new Error('Home url required, FAKE_VISIT_HOME="YOUR_URL"');
-}
-if (!config.crawl.searchUrl) {
-  throw new Error('Search URL required, FAKE_VISIT_SEARCH_URL="YOUR_SEARCH_URL"');
-}
-if (!config.crawl.productLinkSelector) {
-  throw new Error('Product selector required, FAKE_VISIT_PRODUCT_LINK_SELECTOR="YOUR_PRODUCT_LINK_SELECTOR"');
-}

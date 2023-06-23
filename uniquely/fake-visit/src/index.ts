@@ -10,12 +10,14 @@ logger.logOther?.('..:: Alwatr Fake Visit Service ::..');
   // eslint-disable-next-line no-constant-condition
   while (true) {
     try {
-      const searchUrl = config.crawl.searchUrl;
-      const productLinkSelector = config.crawl.productLinkSelector;
-      await cleanup(config.crawl.home);
-      await visit(searchUrl, productLinkSelector);
-      const count = await incrementCount();
-      await notify(count);
+      const searchUrlList = config.crawl.searchUrlList;
+      const productLinkSelectorList = config.crawl.productLinkSelectorList;
+      for (let i = 0; i < searchUrlList.length; i++) {
+        await cleanup(config.crawl.home);
+        await visit(searchUrlList[i], productLinkSelectorList[i]);
+        const count = await incrementCount();
+        await notify(count);
+      }
     }
     catch (error) {
       logger.error?.('init', 'init_failed', error);
