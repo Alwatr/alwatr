@@ -20,6 +20,15 @@
   "files": [
     "**/*.{d.ts.map,d.ts,js.map,js,html,md,svg}"
   ],
+  "exports": {
+    ".": {
+      "default": "./icon.js",
+      "types": "./icon.d.ts"
+    },
+    "./svg/*.svg": {
+      "types": "./svg.d.ts"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
