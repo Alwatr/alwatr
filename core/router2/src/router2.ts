@@ -1,5 +1,4 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
-import {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
 import {AlwatrObservable} from '@alwatr/signal2/observable.js';
 
 import type {RouterConfig, PushState, RouteContext, RouteContextBase} from './type.js';
