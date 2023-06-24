@@ -29,7 +29,7 @@ export class AlwatrMultithreadContextSignal<TValue> extends AlwatrContextSignal<
     if (context === undefined) {
       throw new Error('context_not_define', {cause: 'context not define in this thread yet!'});
     }
-    context._dispatch(message.payload);
+    context._notify(message.payload);
   }
 
   static _postMessage(name: string, payload: unknown): void {

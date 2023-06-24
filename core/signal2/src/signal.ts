@@ -1,9 +1,9 @@
 import {AlwatrObservable} from './observable.js';
 
 /**
- * Alwatr event signal without any data.
+ * Alwatr event signal.
  */
-export class AlwatrSimpleSignal extends AlwatrObservable<undefined> {
+export class AlwatrSignal<T> extends AlwatrObservable<T> {
   constructor(config: {name: string, loggerPrefix?: string}) {
     config.loggerPrefix ??= 'signal';
     super(config);
@@ -12,14 +12,14 @@ export class AlwatrSimpleSignal extends AlwatrObservable<undefined> {
   /**
    * Dispatch an event to all listeners.
    */
-  notify(): void {
-    this._notify(undefined);
+  notify(detail: T): void {
+    this._notify(detail);
   }
 
   /**
-   * Wait until next event signal.
+   * Wait until next event.
    */
-  untilNewNotify(): Promise<void> {
+  untilNewNotify(): Promise<T> {
     return super._untilNewNotify();
   }
 }

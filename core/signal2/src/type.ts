@@ -35,7 +35,7 @@ export interface ListenerCallback<T, D> {
   (this: T, detail: D): MaybePromise<void>;
 }
 
-export interface ListenerObject<T, D> {
+export interface Observer<T, D> {
   callback: ListenerCallback<T, D>;
   options: SubscribeOptions;
 }
