@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {AlwatrBaseSignal} from '@alwatr/signal2/base.js';
+import {AlwatrObservable} from '@alwatr/signal2/observable.js';
 
 import type {ActionName, ActionRecord, StateEventDetail, StateRecord} from './type.js';
 import type {MaybePromise} from '@alwatr/type';
@@ -7,12 +7,12 @@ import type {MaybePromise} from '@alwatr/type';
 /**
  * Finite State Machine Base Class
  */
-export abstract class FiniteStateMachineBase<S extends string, E extends string> extends AlwatrBaseSignal<S> {
+export abstract class FiniteStateMachineBase<S extends string, E extends string> extends AlwatrObservable<S> {
   /**
    * Current state
    */
   protected get _state(): S {
-    return this._getDetail()!;
+    return this._getData()!;
   }
 
   /**
@@ -68,7 +68,7 @@ export abstract class FiniteStateMachineBase<S extends string, E extends string>
 
     if (await this._shouldTransition(eventDetail) !== true) return;
 
-    this._dispatch(toState);
+    this._notify(toState);
 
     this._transitioned(eventDetail);
   }
@@ -111,6 +111,6 @@ export abstract class FiniteStateMachineBase<S extends string, E extends string>
    * Reset machine to initial state.
    */
   protected _reset(): void {
-    this._$detail = this._initialState;
+    this._$data = this._initialState;
   }
 }

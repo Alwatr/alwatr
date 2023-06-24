@@ -1,7 +1,5 @@
 import {FiniteStateMachineBase} from './base.js';
 
-import type {ListenerCallback, SubscribeResult, SubscribeOptions} from '@alwatr/signal2';
-
 /**
  * Finite State Machine Base Class
  */
@@ -18,19 +16,5 @@ export abstract class FiniteStateMachine<S extends string, E extends string> ext
    */
   transition(event: E): void {
     super._transition(event);
-  }
-
-  /**
-   * Subscribe to state changes.
-   */
-  subscribe(listenerCallback: ListenerCallback<this, S>, options?: SubscribeOptions): SubscribeResult {
-    return super._subscribe(listenerCallback, options);
-  }
-
-  /**
-   * Unsubscribe from changes.
-   */
-  unsubscribe(listenerCallback: ListenerCallback<this, S>): void {
-    return super._unsubscribe(listenerCallback);
   }
 }
