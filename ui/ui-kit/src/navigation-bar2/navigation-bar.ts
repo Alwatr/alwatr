@@ -1,4 +1,4 @@
-import {AlwatrDirective, directive, html, noChange, map, type PartInfo, nothing} from '@alwatr/fract';
+import {AlwatrDirective, directive, html, noChange, map, ifDefined, type PartInfo, nothing} from '@alwatr/fract';
 import {l10n} from '@alwatr/i18n2';
 
 import './navigation-bar.scss';
@@ -23,7 +23,7 @@ export class AlwatrNavigationBarDirective extends AlwatrDirective {
   }
 
   protected _render_nav_item(item: NavigationBarItem): unknown {
-    return html`<a href="/">
+    return html`<a href=${ifDefined(item.href)}>
       ${alwatrIcon(item.icon, item.flipIconInRtl)}
       ${this._render_label(item)}
     </a>`;

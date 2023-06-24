@@ -11,6 +11,8 @@ export interface NavigationBarItem {
   label?: string;
 
   labelKey?: string;
+
+  href?: string;
 }
 
 export interface NavigationBarContent {
