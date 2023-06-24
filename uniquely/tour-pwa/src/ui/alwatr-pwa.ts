@@ -104,7 +104,7 @@ class AlwatrPwa extends AlwatrBaseElement {
 
   protected _routeContextUpdated(): void {
     this.requestUpdate();
-    scrollToTopEvent.dispatch({smooth: true});
+    scrollToTopEvent.notify({smooth: true});
   }
 
   override render(): unknown {
@@ -114,7 +114,7 @@ class AlwatrPwa extends AlwatrBaseElement {
 
   protected override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
-    this._registerServiceWorkerSignal.dispatch();
+    this._registerServiceWorkerSignal.notify();
   }
 
   protected _topAppBarTemplate(): unknown {
