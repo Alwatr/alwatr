@@ -2,7 +2,6 @@ import {AlwatrApiRequestBase} from './api-request.js';
 
 import type {ServerRequestState, ServerRequestEvent, ServerRequestConfig} from './server-request.js';
 import type {FetchOptions} from '@alwatr/fetch/type.js';
-import type {ListenerCallback, SubscribeResult, SubscribeOptions} from '@alwatr/signal2';
 import type {AlwatrServiceResponse} from '@alwatr/type';
 
 type ExtraState = 'offlineCheck' | 'reloading' | 'reloadingFailed';
@@ -142,19 +141,5 @@ export class AlwatrServerContext<
 
   request(options?: Partial<FetchOptions>): void {
     return this._request(options);
-  }
-
-  /**
-   * Subscribe to state changes.
-   */
-  subscribe(listenerCallback: ListenerCallback<this, ServerContextState>, options?: SubscribeOptions): SubscribeResult {
-    return this._subscribe(listenerCallback, options);
-  }
-
-  /**
-   * Unsubscribe from changes.
-   */
-  unsubscribe(listenerCallback: ListenerCallback<this, ServerContextState>): void {
-    return this._unsubscribe(listenerCallback);
   }
 }
