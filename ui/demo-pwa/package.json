@@ -34,7 +34,11 @@
     "watch:root": "cd ../../ && yarn watch:ts"
   },
   "devDependencies": {
+    "@alwatr/type": "^1.0.0",
     "@alwatr/util": "^1.0.0",
+    "@alwatr/fract": "^1.0.0",
+    "@alwatr/signal2": "^1.0.0",
+    "@alwatr/i18n2": "^1.0.0",
     "@alwatr/ui-kit": "^1.0.0",
     "@web/dev-server": "^0.2.3",
     "esbuild": "^0.18.6",

@@ -18,9 +18,10 @@
   "exclude": [],
   "references": [
     {"path": "../../core/type"},
-    {"path": "../../core/router"},
     {"path": "../../core/util"},
-    {"path": "../../ui/ui-kit"},
-    {"path": "../../ui/pwa-helper"},
+    {"path": "../../core/fract"},
+    {"path": "../../core/router2"},
+    {"path": "../../core/i18n2"},
+    {"path": "../../ui/ui-kit"}
   ]
 }
