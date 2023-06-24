@@ -77,23 +77,20 @@
       height: 100%;
     }
 
-    .app-loader {
-      display: none;
-      position: absolute;
-      left: 0;
-      right: 0;
+    #alwatr_pwa[unresolved] {
       text-align: center;
       font-size: 24px;
       padding-top: 64px;
     }
 
-    .loading .app-loader {
-      display: block;
+    #alwatr_pwa:not([unresolved]) {
+      /* Wait until css load */
+      display: none;
     }
   </style>
 </head>
-<body class="loading">
-  <div class="app-loader">درحال بارگذاری...</div>
+<body>
+  <div id="alwatr_pwa" unresolved>درحال بارگذاری...</div>
   <script type="module" src="alwatr-pwa.js"></script>
   <noscript>
     <div class="noscript">
