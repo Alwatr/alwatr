@@ -19,7 +19,7 @@ export class AlwatrNavigationBarDirective extends AlwatrDirective {
       return noChange;
     }
 
-    return html`<div class="navigation-bar">${map(content.itemList, this._render_nav_item), this}</div>`;
+    return html`<div class="navigation-bar">${map(content.itemList, this._render_nav_item, this)}</div>`;
   }
 
   protected _render_nav_item(item: NavigationBarItem): unknown {

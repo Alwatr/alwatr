@@ -18,7 +18,7 @@ export class AlwatrTopAppBarDirective extends AlwatrDirective {
       this._logger.incident?.('render', 'invalid_content', 'content not defined');
       return noChange;
     }
-
+    content.type ??= 'small';
     const headline = content.headline || l10n.message(content.headlineKey);
     const headlineTemplate = content.type === 'medium' || content.type === 'large' ? headline : nothing;
     const titleTemplate = content.type === 'center' || content.type === 'small' ? headline : nothing;
