@@ -10,6 +10,7 @@
   "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
-    {"path": "../logger"}
+    {"path": "../logger"},
+    {"path": "../signal2"}
   ]
 }

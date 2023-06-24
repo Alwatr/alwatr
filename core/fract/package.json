@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@alwatr/logger": "^1.0.0",
+    "@alwatr/signal2": "^1.0.0",
     "lit-html": "^2.7.4",
     "tslib": "^2.5.3"
   }
