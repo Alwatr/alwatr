@@ -1,6 +1,6 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 import {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
-import {AlwatrBaseSignal} from '@alwatr/signal2/base.js';
+import {AlwatrObservable} from '@alwatr/signal2/observable.js';
 
 import type {RouterConfig, PushState, RouteContext, RouteContextBase} from './type.js';
 import type {QueryParameters} from '@alwatr/type';
@@ -12,17 +12,17 @@ globalAlwatr.registeredList.push({
 
 const documentBaseUrl = document.querySelector('base')?.href || '/';
 
-export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
+export class AlwatrRouter extends AlwatrObservable<RouteContext> {
   protected override _logger = createLogger('alwatr/router2');
 
   get route(): RouteContext {
-    return this._$detail ?? this._makeRouteContext();
+    return this._$data ?? this._makeRouteContext();
   }
 
   constructor(config: RouterConfig) {
     super({name: 'alwatr_router'});
 
-    this._dispatch(this._makeRouteContext());
+    this._notify(this._makeRouteContext());
     this._popstateHandler = this._popstateHandler.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
 
@@ -79,14 +79,14 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
     if (route == null) return;
     this._logger.logMethodArgs?.('redirect', route);
     if (keepSectionSlice > 0 && typeof route === 'object' && Array.isArray(route.sectionList)) {
-      const routeContext = this._getDetail();
+      const routeContext = this._getData();
       if (routeContext != null) {
         route.sectionList = [...routeContext.sectionList.slice(0, keepSectionSlice), ...route.sectionList];
       }
     }
     const href = typeof route === 'string' ? route : this.url(route);
     this._updateBrowserHistory(href, pushState);
-    this._dispatch(this._makeRouteContext());
+    this._notify(this._makeRouteContext());
   }
 
   /**
@@ -176,14 +176,6 @@ export class AlwatrRouter extends AlwatrBaseSignal<RouteContext> {
     catch (err) {
       return val;
     }
-  }
-
-  subscribe(listenerCallback: ListenerCallback<this, RouteContext>, options?: SubscribeOptions): SubscribeResult {
-    return this._subscribe(listenerCallback, options);
-  }
-
-  unsubscribe(listenerCallback: ListenerCallback<this, RouteContext>): void {
-    return this._unsubscribe(listenerCallback);
   }
 
   protected _$popstateTrigger = false;
