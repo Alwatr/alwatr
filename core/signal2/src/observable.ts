@@ -1,11 +1,17 @@
 import {createLogger} from '@alwatr/logger';
 
-import type {SubscribeOptions, ListenerCallback, Observer, SubscribeResult as SubscribeResult} from './type.js';
+import type {
+  SubscribeOptions,
+  ListenerCallback,
+  Observer,
+  SubscribeResult,
+  AlwatrObservableInterface,
+} from './type.js';
 
 /**
  * Alwatr base signal.
  */
-export abstract class AlwatrObservable<T> {
+export abstract class AlwatrObservable<T> implements AlwatrObservableInterface<T> {
   protected _name;
   protected _logger;
   protected _$data?: T;
@@ -66,10 +72,7 @@ export abstract class AlwatrObservable<T> {
   /**
    * Subscribe to context changes.
    */
-  subscribe(
-      listenerCallback: ListenerCallback<this, T>,
-      options: SubscribeOptions = {},
-  ): SubscribeResult {
+  subscribe(listenerCallback: ListenerCallback<this, T>, options: SubscribeOptions = {}): SubscribeResult {
     this._logger.logMethodArgs?.('subscribe', {options});
 
     const _listenerObject: Observer<this, T> = {

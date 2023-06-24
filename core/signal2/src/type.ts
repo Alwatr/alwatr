@@ -43,3 +43,8 @@ export interface Observer<T, D> {
 export interface SubscribeResult {
   unsubscribe: () => void;
 }
+
+export interface AlwatrObservableInterface<T> {
+  subscribe(listenerCallback: ListenerCallback<this, T>, options?: SubscribeOptions): SubscribeResult;
+  unsubscribe(listenerCallback: ListenerCallback<this, T>): void;
+}
