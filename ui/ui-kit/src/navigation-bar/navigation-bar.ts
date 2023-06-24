@@ -148,6 +148,6 @@ export class AlwatrNavigationBar extends AlwatrSurface {
     if (id == null) return;
 
     this.activeItemId = id;
-    navigationBarEvent.dispatch(this.content!.itemList.find((item) => item.id === id)!);
+    navigationBarEvent.notify(this.content!.itemList.find((item) => item.id === id)!);
   }
 }
