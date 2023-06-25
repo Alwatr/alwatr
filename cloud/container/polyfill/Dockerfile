@@ -1,13 +1,13 @@
-ARG RUST_VERSION=1
+# ARG RUST_VERSION=1
 ARG NODE_VERSION=20
-FROM docker.io/library/rust:${RUST_VERSION}-alpine as rust-builder
+# FROM docker.io/library/rust:${RUST_VERSION}-alpine as rust-builder
 
-RUN apk update
-RUN apk add --no-cache build-base llvm lld
+# RUN apk update
+# RUN apk add --no-cache build-base llvm lld
 
-RUN cargo install viceroy
+# RUN cargo install viceroy
 
-FROM docker.io/library/node:${NODE_VERSION}-alpine as node-builder
+FROM docker.io/library/node:${NODE_VERSION}-alpine as es-builder
 
 WORKDIR /app
 
@@ -18,5 +18,14 @@ ENV POLYFILL_VERSION heads/main
 RUN curl -L -o polyfill-service.tar.gz https://codeload.github.com/Financial-Times/polyfill-service/tar.gz/refs/${POLYFILL_VERSION}
 RUN tar -xzf polyfill-service.tar.gz --strip-components=1
 
-RUN npm install
-RUN npm build
+RUN npm ci
+RUN npm run build:app
+
+FROM docker.io/library/node:${NODE_VERSION}-alpine as app
+
+WORKDIR /app
+
+# COPY --from=rust-builder /usr/local/cargo/bin/viceroy /usr/local/bin/viceroy
+COPY --from=es-builder /app/ /app/
+
+CMD ["yarn", "start"]
