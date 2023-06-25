@@ -56,19 +56,21 @@
       height: 100%;
     }
 
-    [unresolved] {
-      display: block;
+    #alwatr_pwa[unresolved] {
       text-align: center;
+      font-size: 24px;
       padding-top: 64px;
-      font-size: 22px;
+    }
+
+    #alwatr_pwa:not([unresolved]) {
+      /* Wait until css load */
+      display: none;
     }
   </style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="config.js"></script>
+  <div id="alwatr_pwa" unresolved>درحال بارگذاری...</div>
   <script type="module" src="alwatr-pwa.js"></script>
-
   <noscript>
     <div class="noscript">
       <p dir="ltr">Please enable JavaScript to view this website.</p>
