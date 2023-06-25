@@ -103,7 +103,7 @@ jobs:
             description: Clone of Wordpress.
             version:
               short: 6-php7
-              full: 6.2-php7.4-fpm
+              full: 6.1-php7.4-fpm # latest version support php 7.4 is 6.1
 
           - image: wordpress
             path: cloud/container/wordpress/php8.1
