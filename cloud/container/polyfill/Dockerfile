@@ -1,5 +1,13 @@
-ARG NODE_VERSION=12
-FROM docker.io/library/node:${NODE_VERSION}-alpine as builder
+ARG RUST_VERSION=1
+ARG NODE_VERSION=20
+FROM docker.io/library/rust:${RUST_VERSION}-alpine as rust-builder
+
+RUN apk update
+RUN apk add --no-cache build-base llvm lld
+
+RUN cargo install viceroy
+
+FROM docker.io/library/node:${NODE_VERSION}-alpine as node-builder
 
 WORKDIR /app
 
