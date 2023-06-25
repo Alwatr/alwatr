@@ -1,10 +1,15 @@
-import {AlwatrContextSignal, AlwatrSignal} from '@alwatr/signal2';
-import {TopAppBarContent} from '@alwatr/ui-kit/top-app-bar/top-app-bar.js';
+import {AlwatrSignal} from '@alwatr/signal2';
+import {untilNextFrame} from '@alwatr/util';
 
 export const scrollToTopEvent = new AlwatrSignal<{smooth?: boolean}>({
   name: 'command_scroll_to_top',
 });
 
-export const topAppBarContext = new AlwatrContextSignal<TopAppBarContent>({
-  name: 'top_app_bar_context',
+scrollToTopEvent.subscribe(async (option): Promise<undefined> => {
+  await untilNextFrame();
+  document.documentElement.querySelector('.scroll-area')?.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: option.smooth ? 'smooth' : 'auto',
+  });
 });
