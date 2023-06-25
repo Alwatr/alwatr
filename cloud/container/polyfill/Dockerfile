@@ -1,5 +1,5 @@
 # ARG RUST_VERSION=1
-ARG NODE_VERSION=20
+ARG NODE_VERSION=18
 # FROM docker.io/library/rust:${RUST_VERSION}-alpine as rust-builder
 
 # RUN apk update
@@ -18,7 +18,7 @@ ENV POLYFILL_VERSION heads/main
 RUN curl -L -o polyfill-service.tar.gz https://codeload.github.com/Financial-Times/polyfill-service/tar.gz/refs/${POLYFILL_VERSION}
 RUN tar -xzf polyfill-service.tar.gz --strip-components=1
 
-RUN npm ci
+RUN npm install --no-audit
 RUN npm run build:app
 
 FROM docker.io/library/node:${NODE_VERSION}-alpine as app
