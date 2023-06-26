@@ -2,7 +2,6 @@ import {fetch} from '@alwatr/fetch';
 import {ActionRecord, FiniteStateMachineBase, StateRecord} from '@alwatr/fsm2';
 
 import type {FetchOptions} from '@alwatr/fetch/type.js';
-import type {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
 
 export interface ServerRequestConfig extends Partial<FetchOptions> {
   name: string;
@@ -114,20 +113,6 @@ export class AlwatrServerRequest extends AlwatrServerRequestBase {
 
   request(options?: Partial<FetchOptions>): void {
     return this._request(options);
-  }
-
-  /**
-   * Subscribe to state changes.
-   */
-  subscribe(listenerCallback: ListenerCallback<this, ServerRequestState>, options?: SubscribeOptions): SubscribeResult {
-    return this._subscribe(listenerCallback, options);
-  }
-
-  /**
-   * Unsubscribe from changes.
-   */
-  unsubscribe(listenerCallback: ListenerCallback<this, ServerRequestState>): void {
-    return this._unsubscribe(listenerCallback);
   }
 
   cleanup(): void {

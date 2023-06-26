@@ -5,7 +5,6 @@ import {AlwatrServerRequestBase} from './server-request.js';
 
 import type {ServerRequestState} from './server-request.js';
 import type {FetchOptions} from '@alwatr/fetch/type.js';
-import type {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
 import type {AlwatrServiceResponse} from '@alwatr/type';
 
 export abstract class AlwatrApiRequestBase<
@@ -79,20 +78,6 @@ export class AlwatrApiRequest<T extends AlwatrServiceResponse = AlwatrServiceRes
 
   request(options?: Partial<FetchOptions>): void {
     return this._request(options);
-  }
-
-  /**
-   * Subscribe to state changes.
-   */
-  subscribe(listenerCallback: ListenerCallback<this, ServerRequestState>, options?: SubscribeOptions): SubscribeResult {
-    return this._subscribe(listenerCallback, options);
-  }
-
-  /**
-   * Unsubscribe from changes.
-   */
-  unsubscribe(listenerCallback: ListenerCallback<this, ServerRequestState>): void {
-    return this._unsubscribe(listenerCallback);
   }
 
   cleanup(): void {
