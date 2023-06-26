@@ -1,4 +1,4 @@
-import {nothing} from './lit-html.js';
+import {nothing} from '../lit-html.js';
 
 /**
  * Returns an iterable containing the result of calling `f(value)` on each value in `items`.
