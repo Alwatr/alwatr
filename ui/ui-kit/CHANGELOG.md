@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
+
+### Bug Fixes
+
+- **keep:** color palette ([3cc5566](https://github.com/AliMD/alwatr/commit/3cc5566ffdd849fe930eb85b5be05bf0e75771af))
+
+### Features
+
+- **ui/theme:** 20 palette ([41a86a2](https://github.com/AliMD/alwatr/commit/41a86a24a77aa92799b88b3fec19e28b02b3d917))
+
 # [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
 
 **Note:** Version bump only for package @alwatr/ui-kit

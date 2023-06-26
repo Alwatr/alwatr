@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
+
+### Bug Fixes
+
+- **pwa:** build clean flag ([ca324ef](https://github.com/AliMD/alwatr/commit/ca324ef4270e43b2dc4e51574e01aad77ae4abf8))
+
 # [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
 
 **Note:** Version bump only for package @alwatr/soffit-pwa

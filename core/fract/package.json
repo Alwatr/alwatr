@@ -1,0 +1,40 @@
+{
+  "name": "@alwatr/fract",
+  "version": "1.0.0",
+  "description": "Elegant simple render strategy powered by lit written in tiny TypeScript module for who hate react!",
+  "keywords": [
+    "render",
+    "fuck-react",
+    "react",
+    "render",
+    "lit-html",
+    "lit",
+    "alwatr"
+  ],
+  "main": "index.js",
+  "type": "module",
+  "types": "index.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "core/fract"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/core/fract#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "dependencies": {
+    "@alwatr/logger": "^1.0.0",
+    "@alwatr/signal2": "^1.0.0",
+    "lit-html": "^2.7.4",
+    "tslib": "^2.5.3"
+  }
+}

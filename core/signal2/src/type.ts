@@ -30,13 +30,21 @@ export interface SubscribeOptions {
   // debounce?: 'AnimationFrame' | number;
 }
 
-export type ListenerCallback<TValue> = (value: TValue) => MaybePromise<void>;
+export interface ListenerCallback<T, D> {
+  // (this: T): MaybePromise<void>;
+  (this: T, detail: D): MaybePromise<void>;
+}
 
-export interface ListenerObject<TValue> {
-  callback: ListenerCallback<TValue>;
+export interface Observer<T, D> {
+  callback: ListenerCallback<T, D>;
   options: SubscribeOptions;
 }
 
 export interface SubscribeResult {
   unsubscribe: () => void;
+}
+
+export interface AlwatrObservableInterface<T> {
+  subscribe(listenerCallback: ListenerCallback<this, T>, options?: SubscribeOptions): SubscribeResult;
+  unsubscribe(listenerCallback: ListenerCallback<this, T>): void;
 }

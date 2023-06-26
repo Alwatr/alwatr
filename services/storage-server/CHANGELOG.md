@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
+
+### Bug Fixes
+
+- **storage-server/link:** make dest folder if not exist ([b71acb4](https://github.com/AliMD/alwatr/commit/b71acb40e1ac07668a825703253b5c205f106bb4))
+- **storage-server:** remove json extension ([8d70704](https://github.com/AliMD/alwatr/commit/8d707046aeb35e4ebcfc0ea0e257ea29653fad34))
+- **storage-server:** rollback json extension as correct way ([47e6bc2](https://github.com/AliMD/alwatr/commit/47e6bc22076fd4835a1604370318792985472233))
+
 # [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
 
 ### Bug Fixes

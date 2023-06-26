@@ -53,7 +53,7 @@ CMD ["yarn", "serve"]
 
 ENV NODE_ENV production
 ENV NODE_OPTIONS --enable-source-maps
-ENV ALWATR_DEBUG *
+# ENV ALWATR_DEBUG 1
 ENV HOST 0.0.0.0
 ENV PORT 80
 EXPOSE 80

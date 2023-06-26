@@ -5,14 +5,14 @@ networks:
 
 services:
   service-proxy:
-    image: ${TRAEFIK_IMAGE:-docker.io/library/traefik:v1.7-alpine}
+    image: ${TRAEFIK_IMAGE:-ghcr.io/alimd/traefik:v1.7-alpine}
 
     networks:
       - alwatr-public-network
 
     restart: unless-stopped
 
-    cpu_shares: 4096
+    cpu_shares: 2048
     mem_limit: ${MEMORY_LIMIT:-256m}
 
     logging:

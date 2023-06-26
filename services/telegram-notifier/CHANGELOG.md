@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/AliMD/flight-finder/compare/v0.32.0...v1.0.0) (2023-06-14)
+
+### Features
+
+- review and cleanup all workflows ([fff7e92](https://github.com/AliMD/flight-finder/commit/fff7e92c5d85a79adcc975802b949a9dc61d2ba3))
+
 # [0.32.0](https://github.com/AliMD/flight-finder/compare/v0.31.0...v0.32.0) (2023-05-27)
 
 **Note:** Version bump only for package @alwatr/telegram-notify

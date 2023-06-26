@@ -15,8 +15,11 @@
     {"path": "./core/signal"},
     {"path": "./core/signal2"},
     {"path": "./core/context"},
+    {"path": "./core/server-context"},
     {"path": "./core/router"},
+    {"path": "./core/router2"},
     {"path": "./core/i18n"},
+    {"path": "./core/i18n2"},
     {"path": "./core/math"},
     {"path": "./core/nano-server"},
     {"path": "./core/storage-engine"},
@@ -27,6 +30,7 @@
     {"path": "./core/fsm"},
     {"path": "./core/fsm2"},
     {"path": "./core/type"},
+    {"path": "./core/fract"},
 
     // ui
     {"path": "./ui/element"},
@@ -50,6 +54,7 @@
     {"path": "./uniquely/soffit-pwa"},
     {"path": "./uniquely/com-api"},
     {"path": "./uniquely/com-pwa"},
+    {"path": "./uniquely/keep-pwa"},
 
     // labs
     {"path": "./labs/zx-example"}

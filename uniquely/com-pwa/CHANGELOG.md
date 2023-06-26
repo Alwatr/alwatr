@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
+
+### Bug Fixes
+
+- **com-pwa/admin-order-list:** show admin in user list ([343b7e8](https://github.com/AliMD/alwatr/commit/343b7e8c7aa4fa363537df34bb72ee69a5eca739))
+- **com-pwa/admin-order:** load userListIncOrderStorageContextConsumer ([002e6b5](https://github.com/AliMD/alwatr/commit/002e6b58f08f9aa69eece179499994a9c60c6569))
+- **com-pwa/admin-order:** use backToAdminOrderList page ([82e4c78](https://github.com/AliMD/alwatr/commit/82e4c787dd36913671f5e3cab578d3be3f2e6169))
+- **com-pwa:** 404 page text ([9bc2f23](https://github.com/AliMD/alwatr/commit/9bc2f23f40c0bd88a9d20e26a345df401c987f17))
+- **com-pwa:** add `a` link ([bd431bf](https://github.com/AliMD/alwatr/commit/bd431bff66ce51081bbbb41ac52e7f3948ea9a41))
+- **com-pwa:** admin sort ([f4050a3](https://github.com/AliMD/alwatr/commit/f4050a3c37480a9e78f3e332bc7f4d27956b653e))
+- **com-pwa:** back to `admin-order-list` & add the missing `this` param ([23bb08f](https://github.com/AliMD/alwatr/commit/23bb08f70c34657acd64b62a448bd9144ffe0606))
+- **com-pwa:** remove extra import ([c562cda](https://github.com/AliMD/alwatr/commit/c562cda67e664ffca1fb180ec69c68eff50198c3))
+- **com-pwa:** rename the page ([0b454fe](https://github.com/AliMD/alwatr/commit/0b454fe781f78d352b0e3aac4083634f8036cbd8))
+- **com-pwa:** set receivePrevious to no for button ([b046740](https://github.com/AliMD/alwatr/commit/b046740bd86ddba9a4d8fa3a9c7f3d67c885d6ca))
+- **com-pwa:** set receivePrevious: 'No' for button ([3398aae](https://github.com/AliMD/alwatr/commit/3398aaefcf7200deb46b0b7cb282998dd3fe1c44))
+- **com-pwa:** user-inc-order-box tag name ([0bbb9ba](https://github.com/AliMD/alwatr/commit/0bbb9ba7123bafb5f71f0fe45e6e91c51dbdd69b))
+- **pwa:** build clean flag ([ca324ef](https://github.com/AliMD/alwatr/commit/ca324ef4270e43b2dc4e51574e01aad77ae4abf8))
+
+### Features
+
+- **com-pwa/admin-order-list:** reload button ([b967be3](https://github.com/AliMD/alwatr/commit/b967be3cd66b2cadad12307d574441d2a90f1072))
+- **com-pwa/admin-order:** retry button ([b4c06d7](https://github.com/AliMD/alwatr/commit/b4c06d7b880c57fb2fe2ffe9cbe76ab57fc6ac80))
+- **com-pwa/user-info-box:** improve style ([268803e](https://github.com/AliMD/alwatr/commit/268803ebaf36041c4d4dae1b5fac0ae03a0f8858))
+- **com-pwa:** add `admin-order` page ([ccd340f](https://github.com/AliMD/alwatr/commit/ccd340fdffc8675ed9995ba9391abf14ccbd84ea))
+- **com-pwa:** add `admin-order` route ([7bb5ade](https://github.com/AliMD/alwatr/commit/7bb5adea863fec4170877f096a1da4519b853c36))
+- **com-pwa:** admin sort ([9c5d8cd](https://github.com/AliMD/alwatr/commit/9c5d8cd67e9b0f79509a24e3339004d019f3d57d))
+- **com-pwa:** admin-order-list page ([f8d7249](https://github.com/AliMD/alwatr/commit/f8d72494e11276ed74296313c391bf925ab4c55b))
+- **com-pwa:** bold text for count ([3da1259](https://github.com/AliMD/alwatr/commit/3da12595307a1cad8d58e43fb3af3adf1602a9de))
+- **com-pwa:** improve admin-order-list page ([6633d36](https://github.com/AliMD/alwatr/commit/6633d36197d1d796a633860fc7a2d9f5fd8d1139))
+- **com-pwa:** set redirect on profile icon for admin ([6c668cc](https://github.com/AliMD/alwatr/commit/6c668cc5abd832cc9cdf91b5e5e3209986fd07ae))
+- **com-pwa:** user-info-box ([2805908](https://github.com/AliMD/alwatr/commit/28059087a5aa58699e9ac227f2db0b1f03c2077a))
+
 # [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
 
 ### Bug Fixes

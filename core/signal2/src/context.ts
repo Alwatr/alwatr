@@ -1,11 +1,12 @@
-import {AlwatrBaseSignal} from './base.js';
+import {AlwatrObservable} from './observable.js';
 
 /**
  * Alwatr context signal.
  */
-export class AlwatrContextSignal<TValue> extends AlwatrBaseSignal<TValue> {
-  constructor(public override name: string) {
-    super(name, 'context-signal');
+export class AlwatrContextSignal<T> extends AlwatrObservable<T> {
+  constructor(config: {name: string, loggerPrefix?: string}) {
+    config.loggerPrefix ??= 'context-signal';
+    super(config);
   }
 
   /**
@@ -13,16 +14,16 @@ export class AlwatrContextSignal<TValue> extends AlwatrBaseSignal<TValue> {
    *
    * Return undefined if context not set before or expired.
    */
-  getValue(): TValue | undefined {
-    return this._getDetail();
+  getValue(): T | undefined {
+    return super._getData();
   }
 
   /**
    * Set context value and notify all subscribers.
    */
-  setValue(value: TValue): void {
+  setValue(value: T): void {
     this._logger.logMethodArgs?.('setValue', {value});
-    this._dispatch(value);
+    super._notify(value);
   }
 
   /**
@@ -31,13 +32,13 @@ export class AlwatrContextSignal<TValue> extends AlwatrBaseSignal<TValue> {
    * `receivePrevious` in new subscribers not work until new context changes.
    */
   expire(): void {
-    this._expire();
+    super._clear();
   }
 
   /**
    * Get the value of the next context changes.
    */
-  untilChange(): Promise<TValue> {
-    return this._untilChange();
+  untilChange(): Promise<T> {
+    return super._untilNewNotify();
   }
 }

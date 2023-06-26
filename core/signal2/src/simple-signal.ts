@@ -1,17 +1,25 @@
-import {AlwatrBaseSignal} from './base.js';
+import {AlwatrObservable} from './observable.js';
 
 /**
- * Alwatr event signal without any detail.
+ * Alwatr event signal without any data.
  */
-export class AlwatrSimpleSignal extends AlwatrBaseSignal<undefined> {
-  constructor(public override name: string) {
-    super(name, 'event-signal');
+export class AlwatrSimpleSignal extends AlwatrObservable<undefined> {
+  constructor(config: {name: string, loggerPrefix?: string}) {
+    config.loggerPrefix ??= 'signal';
+    super(config);
   }
 
   /**
    * Dispatch an event to all listeners.
    */
-  dispatch(): void {
-    this._dispatch(undefined);
+  notify(): void {
+    this._notify(undefined);
+  }
+
+  /**
+   * Wait until next event signal.
+   */
+  untilNewNotify(): Promise<void> {
+    return super._untilNewNotify();
   }
 }

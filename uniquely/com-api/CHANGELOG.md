@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
+
+### Bug Fixes
+
+- **com-api:** default storage token in config ([67259e4](https://github.com/AliMD/alwatr/commit/67259e40d42a504bb72a0396dbf674ef2bafafdf))
+- **com-api:** user-list-inc-order permission ([91beb27](https://github.com/AliMD/alwatr/commit/91beb27cbe372e6b66c99928e26fa4679b751c23))
+- **storage-server:** rollback json extension as correct way ([47e6bc2](https://github.com/AliMD/alwatr/commit/47e6bc22076fd4835a1604370318792985472233))
+
+### Features
+
+- **com-api:** admin user-list-inc-order route ([852d7cc](https://github.com/AliMD/alwatr/commit/852d7ccf4278adda574db211ed5ae0baa632e28a))
+
 # [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
 
 ### Bug Fixes

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {AlwatrBaseSignal} from '@alwatr/signal2/base.js';
+import {AlwatrObservable} from '@alwatr/signal2/observable.js';
 
 import type {ActionName, ActionRecord, StateEventDetail, StateRecord} from './type.js';
 import type {MaybePromise} from '@alwatr/type';
@@ -7,12 +7,12 @@ import type {MaybePromise} from '@alwatr/type';
 /**
  * Finite State Machine Base Class
  */
-export abstract class FiniteStateMachineBase<S extends string, E extends string> extends AlwatrBaseSignal<S> {
+export abstract class FiniteStateMachineBase<S extends string, E extends string> extends AlwatrObservable<S> {
   /**
    * Current state
    */
   protected get _state(): S {
-    return this._getDetail()!;
+    return this._getData()!;
   }
 
   /**
@@ -25,9 +25,13 @@ export abstract class FiniteStateMachineBase<S extends string, E extends string>
    */
   protected _actionRecord: ActionRecord<S, E> = {};
 
-  constructor(name: string, protected _initial: S) {
-    super(name, 'fsm');
-    this._$detail = _initial;
+  protected _initialState: S;
+
+  constructor(config: {name: string, loggerPrefix?: string, initialState: S}) {
+    config.loggerPrefix ??= 'fsm';
+    super(config);
+    this._initialState = config.initialState;
+    this._reset();
   }
 
   /**
@@ -64,7 +68,7 @@ export abstract class FiniteStateMachineBase<S extends string, E extends string>
 
     if (await this._shouldTransition(eventDetail) !== true) return;
 
-    this._dispatch(toState);
+    this._notify(toState);
 
     this._transitioned(eventDetail);
   }
@@ -101,5 +105,12 @@ export abstract class FiniteStateMachineBase<S extends string, E extends string>
       this._logger.logMethodArgs?.('_$execAction', name);
       return this._actionRecord[name]?.call(this, eventDetail);
     }
+  }
+
+  /**
+   * Reset machine to initial state.
+   */
+  protected _reset(): void {
+    this._$data = this._initialState;
   }
 }

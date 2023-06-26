@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
+
+### Bug Fixes
+
+- **com-api:** user-list-inc-order permission ([91beb27](https://github.com/AliMD/alwatr/commit/91beb27cbe372e6b66c99928e26fa4679b751c23))
+- **type/photo:** make meta optional ([5cea716](https://github.com/AliMD/alwatr/commit/5cea716d77bfe4db57c8f25307c4ee18862bb716))
+
+### Features
+
+- **type/com:** ComUserIncOrder ([8ddf5bf](https://github.com/AliMD/alwatr/commit/8ddf5bf0b75b601582751f017f293a26c74b1815))
+
 # [0.32.0](https://github.com/AliMD/alwatr/compare/v0.31.0...v0.32.0) (2023-05-27)
 
 ### Bug Fixes
