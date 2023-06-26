@@ -31,6 +31,9 @@
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
+  "scripts": {
+    "b": "esbuild"
+  },
   "dependencies": {
     "@alwatr/element": "^1.0.0",
     "@alwatr/fetch": "^1.0.0",
