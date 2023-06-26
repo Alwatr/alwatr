@@ -154,7 +154,7 @@ jobs:
 
       - name: 🏗 Install cosign
         if: ${{ github.event_name != 'pull_request' }}
-        uses: sigstore/cosign-installer@v3.0.5
+        uses: sigstore/cosign-installer@v3.1.0
 
       - name: 🏗 Setup Docker Buildx
         uses: docker/setup-buildx-action@v2.7.0
