@@ -41,7 +41,7 @@
     "@alwatr/i18n2": "^1.0.0",
     "@alwatr/ui-kit": "^1.0.0",
     "@web/dev-server": "^0.2.3",
-    "esbuild": "^0.18.6",
+    "esbuild": "^0.18.9",
     "lit-analyzer": "^1.2.1",
     "npm-run-all": "^4.1.5",
     "ts-lit-plugin": "^1.2.1",
