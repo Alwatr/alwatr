@@ -6,3 +6,4 @@ export * from './polyfill.js';
 export * from './flat-str.js';
 export * from './string.js';
 export * from './render-state.js';
+export * from './default-export.js';
