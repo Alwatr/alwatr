@@ -26,6 +26,7 @@
       "types": "./icon.d.ts"
     },
     "./svg/*.svg": {
+      "default": "./svg/*.svg",
       "types": "./svg.d.ts"
     }
   },

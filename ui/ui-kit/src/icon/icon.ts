@@ -4,12 +4,12 @@ import './icon.scss';
 
 import type {MaybePromise} from '@alwatr/type';
 
-class AlwatrIcon extends AlwatrDynamicDirective {
+export class AlwatrIconDirective extends AlwatrDynamicDirective {
   constructor(partInfo: PartInfo) {
     super(partInfo, '<alwatr-icon>');
   }
 
-  override render(svg: MaybePromise<string>): unknown {
+  render(svg: MaybePromise<string>, flipIconInRtl = false): unknown {
     if (svg instanceof Promise) {
       svg.then((_svg) => {
         this.setValue(this._render_icon(_svg));
@@ -17,13 +17,13 @@ class AlwatrIcon extends AlwatrDynamicDirective {
       return this._render_icon();
     }
     else {
-      return this._render_icon(svg);
+      return this._render_icon(svg, flipIconInRtl ? 'flip-icon-in-rtl' : '');
     }
   }
 
-  _render_icon(svg?: string): unknown {
-    return html`<div class="alwatr-icon">${svg ? unsafeSVG(svg) : ''}</div>`;
+  _render_icon(svg?: string, customClass = ''): unknown {
+    return html`<div class="alwatr-icon ${customClass}">${svg ? unsafeSVG(svg) : ''}</div>`;
   }
 }
 
-export const alwatrIconDirective = directive(AlwatrIcon);
+export const alwatrIcon = directive(AlwatrIconDirective);
