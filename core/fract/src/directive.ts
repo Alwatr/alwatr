@@ -1,6 +1,6 @@
 import {createLogger, globalAlwatr} from '@alwatr/logger';
 
-import {Directive, PartType, type PartInfo, type Part} from './lit.js';
+import {Directive, PartType, type PartInfo, type Part} from './lit-html.js';
 
 globalAlwatr.registeredList.push({
   name: '@alwatr/fract',
