@@ -87,7 +87,10 @@ export abstract class AlwatrObservable<T> implements AlwatrObservableInterface<T
       callbackExecuted = true;
       setTimeout(() => {
         try {
-          listenerCallback.call(this, data);
+          const ret = listenerCallback.call(this, data);
+          if (ret instanceof Promise) {
+            ret.catch((err) => this._logger.error('subscribe.receivePrevious', 'call_signal_callback_failed', err));
+          }
         }
         catch (err) {
           this._logger.error('subscribe.receivePrevious', 'call_signal_callback_failed', err);
