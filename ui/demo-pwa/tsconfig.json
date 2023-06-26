@@ -17,9 +17,11 @@
   "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
-    {"path": "../../core/router"},
-    {"path": "../../ui/element"},
-    {"path": "../../ui/ui-kit"},
-    {"path": "../../ui/pwa-helper"},
+    {"path": "../../core/type"},
+    {"path": "../../core/util"},
+    {"path": "../../core/fract"},
+    {"path": "../../core/router2"},
+    {"path": "../../core/i18n2"},
+    {"path": "../../ui/ui-kit"}
   ]
 }
