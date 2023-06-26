@@ -25,6 +25,6 @@ FROM docker.io/library/node:${NODE_VERSION}-alpine as app
 WORKDIR /app
 
 COPY --from=rust-builder /usr/local/cargo/bin/viceroy /usr/local/bin/viceroy
-COPY --from=es-builder /app/ /app/
+COPY --from=es-builder /app/bin/main.wasm ./bin/main.wasm
 
 CMD ["yarn", "start"]
