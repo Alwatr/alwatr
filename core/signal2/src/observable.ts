@@ -56,11 +56,11 @@ export abstract class AlwatrObservable<T> implements AlwatrObservableInterface<T
       try {
         const ret = listener.callback.call(this, data);
         if (ret instanceof Promise) {
-          ret.catch((err) => this._logger.error('_executeObservers', 'call_listener_failed', err));
+          ret.catch((err) => this._logger.error('_$dispatch', 'call_listener_failed', err));
         }
       }
       catch (err) {
-        this._logger.error('_executeObservers', 'call_listener_failed', err);
+        this._logger.error('_$dispatch', 'call_listener_failed', err);
       }
     }
 
@@ -95,7 +95,7 @@ export abstract class AlwatrObservable<T> implements AlwatrObservableInterface<T
       }, 0);
     }
 
-    // if once then must remove listener after fist callback called! then why push it to listenerList?!
+    // If once then must remove listener after first callback called! then why push it to listenerList?!
     if (options.once !== true || callbackExecuted === true) {
       if (options.priority === true) {
         this._$observers.unshift(_listenerObject);
