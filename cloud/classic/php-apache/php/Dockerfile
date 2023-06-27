@@ -1,5 +1,5 @@
 ARG PHP_IMAGE=ghcr.io/alimd/php:8.1-apache
-FROM $PHP_IMAGE
+FROM ${PHP_IMAGE}
 
 WORKDIR /var/www/html
 EXPOSE 80

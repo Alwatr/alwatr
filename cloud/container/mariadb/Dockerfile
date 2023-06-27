@@ -1,2 +1,2 @@
-ARG MARIADB_VERSION=10.9
-FROM docker.io/wodby/mariadb:${MARIADB_VERSION}
+ARG MARIADB_IMAGE=docker.io/wodby/mariadb:10.9
+FROM ${MARIADB_IMAGE}

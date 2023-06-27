@@ -1,5 +1,5 @@
-ARG NGINX_IMAGE=ghcr.io/alimd/nginx:1.7.0-1.24-alpine
-FROM $NGINX_IMAGE
+ARG NGINX_IMAGE=docker.io/library/nginx:1.24-alpine
+FROM ${NGINX_IMAGE}
 
 # Default environment for nginx template
 # ENV NGINX_ACCESS_LOG="/var/log/nginx/access.log json"
