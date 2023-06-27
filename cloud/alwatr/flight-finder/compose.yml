@@ -6,7 +6,7 @@ networks:
 
 services:
   storage-server:
-    image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION}
+    image: ${STORAGE_SERVER_IMAGE}
 
     cpu_shares: 512
     mem_limit: 256m
@@ -39,7 +39,7 @@ services:
         max-file: '2'
 
   telegram-notifier:
-    image: ghcr.io/alimd/telegram-notifier:${TELEGRAM_NOTIFIER_VERSION}
+    image: ${TELEGRAM_NOTIFIER_IMAGE}
 
     cpu_shares: 512
     mem_limit: 256m
@@ -72,7 +72,7 @@ services:
         max-file: '2'
 
   flight-crawler:
-    image: ghcr.io/alimd/flight-crawler:${FLIGHT_CRAWLER_VERSION}
+    image: ${FLIGHT_CRAWLER_IMAGE}
 
     cpu_shares: 256
     mem_limit: 256m
@@ -103,7 +103,7 @@ services:
         max-file: '2'
 
   api:
-    image: ghcr.io/alimd/flight-finder-api:${API_VERSION}
+    image: ${API_IMAGE}
 
     cpu_shares: 512
     mem_limit: 256m
@@ -139,7 +139,7 @@ services:
       traefik.frontend.redirect.entryPoint: https
 
   pwa:
-    image: ghcr.io/alimd/flight-finder-pwa:${PWA_VERSION}
+    image: ${PWA_IMAGE}
 
     cpu_shares: 512
     mem_limit: 256m

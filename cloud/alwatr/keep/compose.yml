@@ -6,7 +6,7 @@ networks:
 
 services:
   pwa:
-    image: ghcr.io/alimd/keep-pwa:${PWA_VERSION}
+    image: ${PWA_IMAGE}
 
     cpu_count: 1
     cpu_shares: 1024
@@ -35,7 +35,7 @@ services:
       traefik.frontend.redirect.entryPoint: https
 
   storage-server:
-    image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION}
+    image: ${STORAGE_SERVER_IMAGE}
 
     cpu_count: 1
     cpu_shares: 1024
@@ -69,7 +69,7 @@ services:
         max-file: '2'
 
   form-registration:
-    image: ghcr.io/alimd/form-registration:${FORM_REGISTRATION_VERSION}
+    image: ${FORM_REGISTRATION_IMAGE}
 
     cpu_count: 1
     cpu_shares: 1024
@@ -106,7 +106,7 @@ services:
       traefik.frontend.redirect.entryPoint: https
 
   cdn:
-    image: ghcr.io/alimd/nginx:${CDN_VERSION}
+    image: ${CDN_IMAGE}
 
     cpu_count: 1
     cpu_shares: 1024
