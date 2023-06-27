@@ -1,4 +1,5 @@
-import {AlwatrDynamicDirective, directive, html, type PartInfo} from '@alwatr/fract';
+import {AlwatrDynamicDirective, directive, html, mapObject, type PartInfo} from '@alwatr/fract';
+import {router} from '@alwatr/router2';
 import {renderState} from '@alwatr/util';
 
 import {tourStorageRequest} from '../../manager/tour-storage.js';
@@ -10,13 +11,19 @@ class AlwatrHome extends AlwatrDynamicDirective {
     super(partInfo, '<alwatr-home>');
 
     tourStorageRequest.subscribe(() => {
-      this.setValue(renderState(<PageName>tourStorageRequest.state, {
-        _default: 'initial',
-        initial: 'loading',
-        failed: () => this._render_failed(),
-        loading: () => this._render_loading(),
-        complete: () => this._render_complete(),
-      }));
+      this.setValue(
+          renderState(
+          <PageName>tourStorageRequest.state,
+          {
+            _default: 'initial',
+            initial: 'loading',
+            failed: this._render_failed,
+            loading: this._render_loading,
+            complete: this._render_complete,
+          },
+          this,
+          ),
+      );
     });
   }
 
@@ -37,7 +44,11 @@ class AlwatrHome extends AlwatrDynamicDirective {
   protected _render_complete(): unknown {
     const tourList = tourStorageRequest.response?.data;
     this._logger.logMethodArgs?.('_render_complete', {tourList});
-    return html`The list of tours is ready`;
+    return mapObject(
+        tourList,
+        (tour) => html`<a href=${router.url({sectionList: ['tour', tour.id]})}>${tour.title}</a><br>`,
+        this,
+    );
   }
 }
 

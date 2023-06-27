@@ -10,7 +10,8 @@
   },
   "data": {
     "price1": {
-      "id": "1",
+      "id": "price1",
+      "tourId": "1",
       "priceRecord": {
         "economy": [
           {
@@ -29,7 +30,8 @@
       }
     },
     "price2": {
-      "id": "2",
+      "id": "price2",
+      "tourId": "2",
       "priceRecord": {
         "appropriate": [
           {
@@ -44,7 +46,8 @@
       }
     },
     "price3": {
-      "id": "3",
+      "id": "price3",
+      "tourId": "3",
       "priceRecord": {
         "luxury": [
           {

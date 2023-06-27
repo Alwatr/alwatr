@@ -10,6 +10,7 @@ import './app.scss';
 import './page/404.js';
 import './page/home.js';
 import {alwatrHome} from './page/home2.js';
+import {alwatrTourDetail} from './page/tour-detail2.js';
 import {scrollToTopEvent} from './pwa-helper/context.js';
 import {rootElement} from './root-element.js';
 import {icons} from '../icons.js';
@@ -19,7 +20,7 @@ import type {RouteContext} from '@alwatr/router2';
 
 appLogger.logModule?.('app');
 
-export type PageName = 'home' | 'favorites' | 'tours' | 'call' | 'unknown' | '_404';
+export type PageName = 'home' | 'favorites' | 'tours' | 'tour' | 'call' | 'unknown' | '_404';
 
 function* alwatrPwa(): unknown {
   yield alwatrTopAppBar({
@@ -37,6 +38,7 @@ function* alwatrPwa(): unknown {
           favorites: () => html`favorites...`,
           home: () => alwatrHome(),
           tours: () => html`tours...`,
+          tour: () => alwatrTourDetail(),
           call: () => html`call...`,
           _404: () => html`<alwatr-page-404></alwatr-page-404>`,
         }),

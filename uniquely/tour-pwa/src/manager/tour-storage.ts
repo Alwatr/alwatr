@@ -52,7 +52,8 @@ router.subscribe(async () => {
     return;
   }
 
-  if (!Object.prototype.hasOwnProperty.call(priceList, tourId)) {
+  const targetPrice = Object.values(priceList).find((item) => item.tourId === tourId);
+  if (targetPrice == null) {
     // FIXME:
     return;
   }
@@ -60,6 +61,6 @@ router.subscribe(async () => {
   const tour = tourList[tourId];
   tourDetailContext.setValue({
     ...tour,
-    priceRecord: priceList[tourId].priceRecord,
+    priceRecord: targetPrice.priceRecord,
   });
 });
