@@ -1,7 +1,5 @@
-ARG PHP_VERSION=8.1
-ARG IMAGE_NAME=ghcr.io/alimd/php:${PHP_VERSION}-apache
-
-FROM $IMAGE_NAME
+ARG PHP_IMAGE=ghcr.io/alimd/php:8.1-apache
+FROM $PHP_IMAGE
 
 WORKDIR /var/www/html
 EXPOSE 80
