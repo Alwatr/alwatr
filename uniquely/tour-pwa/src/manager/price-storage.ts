@@ -8,9 +8,14 @@ export interface PriceDetailItem extends StringifyableRecord {
 
 export interface Price extends StringifyableRecord {
   /**
-   * Tour id
+   * Price id
    */
   id: string;
+
+  /**
+   * Tour id
+   */
+  tourId: string;
 
   /**
    * @description A record of categories with their prices
