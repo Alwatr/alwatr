@@ -9,7 +9,7 @@ services:
     build:
       context: ./nginx/
       args:
-        - NGINX_VERSION=${NGINX_VERSION:-1.24}
+        - NGINX_IMAGE=${NGINX_IMAGE}
 
     networks:
       - alwatr-public-network

@@ -1,6 +1,5 @@
-ARG NGINX_VERSION=1.7.0-1.24
-
-FROM ghcr.io/alimd/nginx:${NGINX_VERSION}-alpine
+ARG NGINX_IMAGE=ghcr.io/alimd/nginx:1.7.0-1.24-alpine
+FROM $NGINX_IMAGE
 
 RUN rm -rfv /etc/nginx/templates
 

@@ -1,5 +1,5 @@
-ARG ALPINE_VERSION=3.17
-FROM docker.io/library/alpine:${ALPINE_VERSION}
+ARG ALPINE_IMAGE=docker.io/library/alpine:3.17
+FROM $ALPINE_IMAGE
 
 ARG APK_TESTING
 RUN set -ex; \

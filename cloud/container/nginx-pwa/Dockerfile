@@ -1,6 +1,5 @@
-ARG ALWATR_NGINX_VERSION=1.7.0-1.24-alpine
-
-FROM ghcr.io/alimd/nginx:$ALWATR_NGINX_VERSION
+ARG NGINX_IMAGE=ghcr.io/alimd/nginx:1.7.0-1.24-alpine
+FROM $NGINX_IMAGE
 
 # Default environment for nginx template
 ENV NGINX_OPEN_FILE_CACHE="max=1000 inactive=1h" \

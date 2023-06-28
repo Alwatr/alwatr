@@ -1,6 +1,4 @@
-ARG NGINX_VERSION=1.7.0-1.24
-ARG NGINX_IMAGE=ghcr.io/alimd/nginx:${NGINX_VERSION}-alpine
-
+ARG NGINX_IMAGE=docker.io/library/nginx:1.24-alpine
 FROM $NGINX_IMAGE
 
 # Default environment for nginx template
