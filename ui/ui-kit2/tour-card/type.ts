@@ -1,4 +1,4 @@
-import {MaybePromise, Photo} from '@alwatr/type';
+import type {MaybePromise, Photo} from '@alwatr/type';
 
 export interface TourCardContent {
   title: string;
