@@ -1,0 +1,9 @@
+.alwatr-tab-bar {
+  flex-grow: 0;
+  flex-shrink: 0;
+  border-radius: 0;
+  user-select: pointer;
+
+  & .tab {
+  }
+}
