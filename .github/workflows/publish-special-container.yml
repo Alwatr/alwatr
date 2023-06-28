@@ -89,14 +89,28 @@ jobs:
             description: Clone of Nocodb.
             version:
               short: 0.109
-              full: 0.109.1
+              full: 0.109.2
 
           - image: php
-            path: cloud/container/php
-            description: Clone of PHP.
+            path: cloud/container/php/7.4-apache
+            description: Clone of PHP Apache.
+            version:
+              short: 7
+              full: 7.4-apache
+
+          - image: php
+            path: cloud/container/php/7.4-fpm
+            description: Clone of PHP FPM.
+            version:
+              short: 7
+              full: 7.4-fpm
+
+          - image: php
+            path: cloud/container/php/8.2-fpm
+            description: Clone of PHP FPM.
             version:
               short: 8
-              full: 8.1-apache
+              full: 8.2-fpm
 
           - image: wordpress
             path: cloud/container/wordpress/php7.4
@@ -106,11 +120,11 @@ jobs:
               full: 6.1-php7.4-fpm # latest version support php 7.4 is 6.1
 
           - image: wordpress
-            path: cloud/container/wordpress/php8.1
+            path: cloud/container/wordpress/php8.2
             description: Clone of Wordpress.
             version:
               short: 6
-              full: 6.2-php8.1-fpm
+              full: 6.2-php8.2-fpm
 
           # - image: tdlib
           #   path: cloud/container/tdlib

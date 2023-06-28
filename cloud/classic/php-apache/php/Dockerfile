@@ -1,4 +1,4 @@
-ARG PHP_IMAGE=ghcr.io/alimd/php:8.1-apache
+ARG PHP_IMAGE=ghcr.io/alimd/php:8.2-apache
 FROM ${PHP_IMAGE}
 
 WORKDIR /var/www/html
