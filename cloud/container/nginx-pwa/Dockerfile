@@ -1,5 +1,5 @@
 ARG ALWATR_NGINX_IMAGE=ghcr.io/alimd/nginx:1.7.0-1.24-alpine
-FROM ${ALWATR_NGINX_IMAGE}
+FROM $ALWATR_NGINX_IMAGE
 
 # Default environment for nginx template
 ENV NGINX_OPEN_FILE_CACHE="max=1000 inactive=1h" \

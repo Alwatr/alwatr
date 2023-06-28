@@ -1,5 +1,5 @@
 ARG ALPINE_IMAGE=ghcr.io/alimd/alpine:3.17
-FROM ${ALPINE_IMAGE}
+FROM $ALPINE_IMAGE
 
 ARG TDLIB_VERSION=1.8.0
 RUN set -ex; \

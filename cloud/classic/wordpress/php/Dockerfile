@@ -1,5 +1,5 @@
 ARG WORDPRESS_IMAGE=ghcr.io/alimd/wordpress:6.2-php8.2-fpm
-FROM ${WORDPRESS_IMAGE}
+FROM $WORDPRESS_IMAGE
 
 WORKDIR /var/www/html
 EXPOSE 80
