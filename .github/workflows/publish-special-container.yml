@@ -95,21 +95,21 @@ jobs:
             path: cloud/container/php/7.4-apache
             description: Clone of PHP Apache.
             version:
-              short: 7
+              short: 7-apache
               full: 7.4-apache
 
           - image: php
             path: cloud/container/php/7.4-fpm
             description: Clone of PHP FPM.
             version:
-              short: 7
+              short: 7-fpm
               full: 7.4-fpm
 
           - image: php
             path: cloud/container/php/8.2-fpm
             description: Clone of PHP FPM.
             version:
-              short: 8
+              short: 8-fpm
               full: 8.2-fpm
 
           - image: wordpress
