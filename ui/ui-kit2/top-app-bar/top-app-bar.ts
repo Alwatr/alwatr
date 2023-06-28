@@ -2,7 +2,7 @@ import {AlwatrDirective, directive, html, noChange, nothing, map, type PartInfo}
 import {l10n} from '@alwatr/i18n2';
 
 import './top-app-bar.scss';
-import '../button/icon-button.js';
+import '../old/button/icon-button.js';
 
 import type {TopAppBarContent} from './type.js';
 

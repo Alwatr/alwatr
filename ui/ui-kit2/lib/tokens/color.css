@@ -1,0 +1,124 @@
+:root {
+  /* theme light */
+  --sys-color-primary-hsl: var(--ref-palette-primary40);
+  --sys-color-on-primary-hsl: var(--ref-palette-primary100);
+  --sys-color-primary-container-hsl: var(--ref-palette-primary90);
+  --sys-color-on-primary-container-hsl: var(--ref-palette-primary10);
+
+  --sys-color-secondary-hsl: var(--ref-palette-secondary40);
+  --sys-color-on-secondary-hsl: var(--ref-palette-secondary100);
+  --sys-color-secondary-container-hsl: var(--ref-palette-secondary90);
+  --sys-color-on-secondary-container-hsl: var(--ref-palette-secondary10);
+
+  --sys-color-tertiary-hsl: var(--ref-palette-tertiary40);
+  --sys-color-on-tertiary-hsl: var(--ref-palette-tertiary100);
+  --sys-color-tertiary-container-hsl: var(--ref-palette-tertiary90);
+  --sys-color-on-tertiary-container-hsl: var(--ref-palette-tertiary10);
+
+  --sys-color-background-hsl: var(--ref-palette-neutral99);
+  --sys-color-on-background-hsl: var(--ref-palette-neutral10);
+
+  --sys-color-surface-hsl: var(--ref-palette-neutral99);
+  --sys-color-on-surface-hsl: var(--ref-palette-neutral10);
+
+  --sys-color-surface-variant-hsl: var(--ref-palette-neutral-variant90);
+  --sys-color-on-surface-variant-hsl: var(--ref-palette-neutral-variant30);
+
+  --sys-color-outline-hsl: var(--ref-palette-neutral-variant50);
+  --sys-color-outline-variant-hsl: var(--ref-palette-neutral-variant80);
+
+  --sys-color-error-hsl: var(--ref-palette-error40);
+  --sys-color-error-container-hsl: var(--ref-palette-error90);
+  --sys-color-on-error-hsl: var(--ref-palette-error100);
+  --sys-color-on-error-container-hsl: var(--ref-palette-error10);
+
+  --sys-color-inverse-primary-hsl: var(--ref-palette-primary80);
+  --sys-color-inverse-surface-hsl: var(--ref-palette-neutral20);
+  --sys-color-inverse-on-surface-hsl: var(--ref-palette-neutral95);
+
+  --sys-color-surface-tint-hsl: var(--sys-color-primary-hsl);
+  --sys-color-shadow-hsl: var(--ref-palette-neutral0);
+  --sys-color-scrim-hsl: var(--ref-palette-neutral0);
+
+  /* make colors from hsl vars */
+  --sys-color-primary: hsl(var(--sys-color-primary-hsl));
+  --sys-color-on-primary: hsl(var(--sys-color-on-primary-hsl));
+  --sys-color-primary-container: hsl(var(--sys-color-primary-container-hsl));
+  --sys-color-on-primary-container: hsl(var(--sys-color-on-primary-container-hsl));
+
+  --sys-color-secondary: hsl(var(--sys-color-secondary-hsl));
+  --sys-color-on-secondary: hsl(var(--sys-color-on-secondary-hsl));
+  --sys-color-secondary-container: hsl(var(--sys-color-secondary-container-hsl));
+  --sys-color-on-secondary-container: hsl(var(--sys-color-on-secondary-container-hsl));
+
+  --sys-color-tertiary: hsl(var(--sys-color-tertiary-hsl));
+  --sys-color-on-tertiary: hsl(var(--sys-color-on-tertiary-hsl));
+  --sys-color-tertiary-container: hsl(var(--sys-color-tertiary-container-hsl));
+  --sys-color-on-tertiary-container: hsl(var(--sys-color-on-tertiary-container-hsl));
+
+  --sys-color-background: hsl(var(--sys-color-background-hsl));
+  --sys-color-on-background: hsl(var(--sys-color-on-background-hsl));
+
+  --sys-color-surface: hsl(var(--sys-color-surface-hsl));
+  --sys-color-on-surface: hsl(var(--sys-color-on-surface-hsl));
+
+  --sys-color-surface-variant: hsl(var(--sys-color-surface-variant-hsl));
+  --sys-color-on-surface-variant: hsl(var(--sys-color-on-surface-variant-hsl));
+
+  --sys-color-outline: hsl(var(--sys-color-outline-hsl));
+  --sys-color-outline-variant: hsl(var(--sys-color-outline-variant-hsl));
+
+  --sys-color-error: hsl(var(--sys-color-error-hsl));
+  --sys-color-error-container: hsl(var(--sys-color-error-container-hsl));
+  --sys-color-on-error: hsl(var(--sys-color-on-error-hsl));
+  --sys-color-on-error-container: hsl(var(--sys-color-on-error-container-hsl));
+
+  --sys-color-inverse-primary: hsl(var(--sys-color-inverse-primary-hsl));
+  --sys-color-inverse-surface: hsl(var(--sys-color-inverse-surface-hsl));
+  --sys-color-inverse-on-surface: hsl(var(--sys-color-inverse-on-surface-hsl));
+
+  --sys-color-surface-tint: hsl(var(--sys-color-surface-tint-hsl));
+  --sys-color-shadow: hsl(var(--sys-color-shadow-hsl));
+  --sys-color-scrim: hsl(var(--sys-color-scrim-hsl));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* theme dark */
+    --sys-color-primary-hsl: var(--ref-palette-primary80);
+    --sys-color-on-primary-hsl: var(--ref-palette-primary20);
+    --sys-color-primary-container-hsl: var(--ref-palette-primary30);
+    --sys-color-on-primary-container-hsl: var(--ref-palette-primary90);
+
+    --sys-color-secondary-hsl: var(--ref-palette-secondary80);
+    --sys-color-on-secondary-hsl: var(--ref-palette-secondary20);
+    --sys-color-secondary-container-hsl: var(--ref-palette-secondary30);
+    --sys-color-on-secondary-container-hsl: var(--ref-palette-secondary90);
+
+    --sys-color-tertiary-hsl: var(--ref-palette-tertiary80);
+    --sys-color-on-tertiary-hsl: var(--ref-palette-tertiary20);
+    --sys-color-tertiary-container-hsl: var(--ref-palette-tertiary30);
+    --sys-color-on-tertiary-container-hsl: var(--ref-palette-tertiary90);
+
+    --sys-color-background-hsl: var(--ref-palette-neutral10);
+    --sys-color-on-background-hsl: var(--ref-palette-neutral90);
+
+    --sys-color-surface-hsl: var(--ref-palette-neutral10);
+    --sys-color-on-surface-hsl: var(--ref-palette-neutral90);
+
+    --sys-color-surface-variant-hsl: var(--ref-palette-neutral-variant30);
+    --sys-color-on-surface-variant-hsl: var(--ref-palette-neutral-variant80);
+
+    --sys-color-outline-hsl: var(--ref-palette-neutral-variant60);
+    --sys-color-outline-variant-hsl: var(--ref-palette-neutral-variant30);
+
+    --sys-color-error-hsl: var(--ref-palette-error80);
+    --sys-color-error-container-hsl: var(--ref-palette-error30);
+    --sys-color-on-error-hsl: var(--ref-palette-error20);
+    --sys-color-on-error-container-hsl: var(--ref-palette-error90);
+
+    --sys-color-inverse-primary-hsl: var(--ref-palette-primary40);
+    --sys-color-inverse-surface-hsl: var(--ref-palette-neutral90);
+    --sys-color-inverse-on-surface-hsl: var(--ref-palette-neutral20);
+  }
+}

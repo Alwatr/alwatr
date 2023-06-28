@@ -1,4 +1,4 @@
-import type {IconButtonContent} from '../button/icon-button.js';
+import type {IconButtonContent} from '../old/button/icon-button.js';
 
 export interface TopAppBarContent {
   /**
