@@ -6,3 +6,4 @@ export {ifDefined} from 'lit-html/directives/if-defined.js';
 export {cache} from 'lit-html/directives/cache.js';
 
 export type {Part, PartInfo} from 'lit-html/directive.js';
+export type {LitUnstable} from 'lit-html';
