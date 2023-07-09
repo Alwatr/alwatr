@@ -15,7 +15,6 @@ import {generateSW} from 'workbox-build';
 
 import packageJson from './package.json' assert {type: 'json'};
 
-
 const logger = createLogger('alwatr-pwa-build');
 const banner = '/* ..:: Alwatr PWA ::.. */\n';
 
@@ -47,6 +46,7 @@ const copyPromise = fs.cp(resDir, outDir, {recursive: true, force: true, derefer
 
 const esbuildContext = await esbuild.context({
   entryPoints: [`${srcDir}/${srcFilename}.ts`],
+
   logLevel: 'info',
   platform: 'browser',
   target: 'es2018',
@@ -185,5 +185,3 @@ else {
 //     https://github.com/zandaqo/esbuild-plugin-lit/blob/master/css-loader.ts
 //     https://github.com/chialab/rna/tree/main/packages/esbuild-plugin-html
 // */
-
-

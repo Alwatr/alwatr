@@ -9,8 +9,8 @@ import './app.css';
 // import './lit-debug.js';
 import {alwatrPageTest} from './page-test.js';
 import {rootElement} from './root-element.js';
-import '../../../ui-kit/style/theme/color.css';
-import '../../../ui-kit/style/theme/palette-300.css';
+// import '../../../ui-kit/style/theme/color.css';
+// import '../../../ui-kit/style/theme/palette-300.css';
 import {icons} from '../icons.js';
 import {appLogger} from '../share/logger.js';
 
