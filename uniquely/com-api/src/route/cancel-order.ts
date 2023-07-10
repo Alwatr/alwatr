@@ -21,7 +21,7 @@ nanoServer.route('PUT', '/cancel-order', async (connection) => {
     };
   }
 
-  order.canceled = true;
+  order.status = 'canceled';
   await patchUserOrder(userAuth.id, order);
 
   return {

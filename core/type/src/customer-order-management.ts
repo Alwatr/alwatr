@@ -135,11 +135,6 @@ export interface Order extends AlwatrDocumentObject {
    * Customer device ip address.
    */
   remoteAddress: string;
-
-  /**
-   * Order cancel status
-   */
-  canceled?: boolean;
 }
 
 export interface OrderDraft extends Partial<Order> {
