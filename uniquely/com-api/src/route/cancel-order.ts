@@ -6,7 +6,7 @@ import {validateUserAuth} from '../lib/validate-user-auth.js';
 import type {Order} from '@alwatr/type/customer-order-management.js';
 
 // Cancel order
-nanoServer.route('PUT', '/cancel-order', async (connection) => {
+nanoServer.route('PATCH', '/cancel-order', async (connection) => {
   logger.logMethod?.('cancel-order');
 
   const userAuth = await validateUserAuth(connection.getUserAuth());

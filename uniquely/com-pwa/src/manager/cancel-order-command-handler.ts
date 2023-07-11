@@ -15,7 +15,7 @@ commandHandler.define<{orderId: string}, string | null>(cancelOrderCommandTrigge
   try {
     const response = await serviceRequest<AlwatrServiceResponseSuccessWithMeta<never>>({
       ...config.fetchContextOptions,
-      method: 'PUT',
+      method: 'PATCH',
       url: config.serverContext.cancelOrder,
       userAuth: {
         id: userContext.id,
