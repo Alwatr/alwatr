@@ -108,6 +108,11 @@ export const buttons = {
     icon: 'checkmark-outline',
     clickSignalId: 'sign_in_submit_click_event',
   },
+  cancelOrder: {
+    labelKey: 'page_order_detail_cancel',
+    icon: 'close-outline',
+    clickSignalId: 'cancel_order_click_event',
+  },
 } as const;
 
 eventListener.subscribe(buttons.newOrder.clickSignalId, () => {

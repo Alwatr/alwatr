@@ -19,6 +19,11 @@
     "fetch_failed_description": "خطا در اتصال به اینترنت! لطفا مجدد تلاش کنید.",
 
     "page_order_detail_not_found": "سفارش پیدا نشد!",
+    "page_order_detail_cancel": "لغو سفارش",
+    "page_order_detail_two_step_verify_cancel_message": "آیا از لغو سفارش خود مطمئن هستید؟",
+    "page_order_detail_two_step_verify_cancel_action_label": "بله، لغو سفارش!",
+    "page_order_detail_two_cancel_order_success_message": "سفارش شما با موفقیت لغو شد.",
+    "page_order_detail_two_cancel_order_failed_message": "لغو سفارش با خطا مواجه شد!",
 
     "page_order_tracking_not_found": "سفارش پیدا نشد!",
 

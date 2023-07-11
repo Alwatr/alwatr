@@ -301,6 +301,7 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
       this._render_itemList(order.itemList, this.fsm.getContext().productStorage),
       this._render_shippingInfo(order.shippingInfo),
       this._render_summary(order),
+      this._render_cancel_button(order),
     ];
   }
 
@@ -481,6 +482,14 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
   protected _render_status(order: Order | OrderDraft): unknown {
     this._logger.logMethod?.('_render_status');
     return html`<alwatr-order-status-box .content=${order}></alwatr-order-status-box>`;
+  }
+
+  protected _render_cancel_button(order: Order | OrderDraft): unknown {
+    this._logger.logMethod?.('_render_cancel_button');
+    if (['shipping', 'canceled'].includes(order.status)) return nothing;
+    return html`<div class="btn-container">
+      <alwatr-button .content=${buttons.cancelOrder}></alwatr-button>
+    </div>`;
   }
 
   protected _render_itemList(

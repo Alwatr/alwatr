@@ -16,3 +16,4 @@ export const homePageContentContextConsumer =
   contextConsumer.bind<PageHomeContent>(homePageContentContextProvider.id);
 
 export const submitOrderCommandTrigger = commandTrigger.bind<Partial<Order>, Order | null>('submit-order-command');
+export const cancelOrderCommandTrigger = commandTrigger.bind<{orderId: string}, string | null>('cancel-order-command');

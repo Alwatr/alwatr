@@ -6,13 +6,14 @@ import {getLocalStorageItem, setLocalStorageItem} from '@alwatr/util';
 import {validator} from '@alwatr/validator';
 
 import {config} from '../../config.js';
+import {buttons} from '../buttons.js';
 import {orderStorageContextConsumer} from '../context-provider/order-storage.js';
 import {
   productPriceStorageContextConsumer,
   productFinalPriceStorageContextConsumer,
 } from '../context-provider/price-storage.js';
 import {productStorageContextConsumer} from '../context-provider/product-storage.js';
-import {submitOrderCommandTrigger} from '../context.js';
+import {cancelOrderCommandTrigger, submitOrderCommandTrigger} from '../context.js';
 import {logger} from '../logger.js';
 
 import type {ClickSignalType} from '@alwatr/type';
@@ -96,7 +97,11 @@ export const orderFsmConstructor = finiteStateMachineProvider.defineConstructor(
       },
     },
     orderDetail: {
-      on: {},
+      on: {
+        cancel_order: {
+          actions: 'cancel_order',
+        },
+      },
     },
     notFound: {
       on: {},
@@ -238,6 +243,30 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
       fsmInstance.transition('retry');
     }
   },
+
+  cancel_order: async (fsmInstance) => {
+    const response = await snackbarSignalTrigger.requestWithResponse({
+      messageKey: 'page_order_detail_two_step_verify_cancel_message',
+      actionLabelKey: 'page_order_detail_two_step_verify_cancel_action_label',
+      duration: 3_000,
+    });
+    if (response.actionButton) {
+      const orderId = fsmInstance.getContext().orderId;
+      const response = await cancelOrderCommandTrigger.requestWithResponse({orderId});
+      if (response) {
+        snackbarSignalTrigger.requestWithResponse({
+          messageKey: 'page_order_detail_two_cancel_order_success_message',
+          duration: 10_000,
+        });
+      }
+      else {
+        snackbarSignalTrigger.requestWithResponse({
+          messageKey: 'page_order_detail_two_cancel_order_failed_message',
+          duration: 5_000,
+        });
+      }
+    }
+  },
 });
 
 // condition
@@ -317,6 +346,10 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
       }
       fsmInstance.transition('request_update');
     },
+  },
+  {
+    signalId: buttons.cancelOrder.clickSignalId,
+    transition: 'cancel_order',
   },
   {
     signalId: 'order_item_qty_remove',
