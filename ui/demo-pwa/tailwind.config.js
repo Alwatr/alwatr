@@ -1,12 +1,12 @@
-import {generateColors, palettes} from './colors.js'
+import {generateColors, palettes} from './colors.ts'
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./res/*.html', './src/**/*.ts'],
   theme: {
     colors: {
-      ...palettes.h300,
-      ...generateColors(palettes.h300)
+      ...palettes.h270,
+      ...generateColors(palettes.h270)
     },
     extend: {},
   },
