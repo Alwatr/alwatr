@@ -17,3 +17,7 @@ export const homePageContentContextConsumer =
 
 export const submitOrderCommandTrigger = commandTrigger.bind<Partial<Order>, Order | null>('submit-order-command');
 export const cancelOrderCommandTrigger = commandTrigger.bind<{orderId: string}, string | null>('cancel-order-command');
+export const changeOrderStatusTrigger = commandTrigger.bind<
+  {userId: string; orderId: string; status: string},
+  {userId: string; order: Order} | null
+>('change-order-status-command');

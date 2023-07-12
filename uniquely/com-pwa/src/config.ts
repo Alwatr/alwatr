@@ -29,6 +29,7 @@ export const config = {
     userOrderList: apiBaseUrl + 'publistore/auth/order-list',
     newOrder: apiBaseUrl + 'order',
     cancelOrder: apiBaseUrl + 'cancel-order',
+    orderStatus: apiBaseUrl + 'order-status',
 
     // admin access
     adminUserListIncOrder: apiBaseUrl + 'admin/user-list-inc-order',
