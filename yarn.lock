@@ -2027,10 +2027,10 @@
     rollup "^3.15.0"
     whatwg-url "^11.0.0"
 
-"@web/dev-server@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.2.5.tgz#7f690db24b7966edd9530cf278bbf5053e6a1882"
-  integrity sha512-IQWzjnK9H861X5BN+R9uQk2L7knogegHQcKyGsSfjyFC3fDdLit5WG2vUVpxFAYfhS4zjJWGajXGbTMhF8clkQ==
+"@web/dev-server@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.3.0.tgz#9818bc2c8b88b61761b70081a8ac2afedfb4d308"
+  integrity sha512-QlKiWrf8MAUIXAhMSGuBepXyZFNOi3GDPQGsnf5ZAnFXUAOT3LCXiKSBMSKfXIrPpFQ7AzyJwT+KIZ7LvnMJcg==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@types/command-line-args" "^5.0.0"
