@@ -1,4 +1,4 @@
-import type {IconButtonContent} from '../old/button/icon-button.js';
+// import type {IconButtonContent} from '../../old/button/icon-button.js';
 
 export interface TopAppBarContent {
   /**
@@ -19,12 +19,12 @@ export interface TopAppBarContent {
   /**
    * @default ```{icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'}```
    */
-  startIcon?: IconButtonContent;
+  startIcon?: unknown;
 
   /**
    * @default ```[]```
    */
-  endIconList?: Array<IconButtonContent>;
+  endIconList?: Array<unknown>;
 
   /**
    * @default ```2```
