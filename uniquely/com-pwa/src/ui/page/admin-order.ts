@@ -30,6 +30,7 @@ import {
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
+import {snackbarSignalTrigger} from '@alwatr/ui-kit/src/snackbar/show-snackbar.js';
 
 import {config} from '../../config.js';
 import {buttons} from '../../manager/buttons.js';
@@ -161,6 +162,21 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
     [hidden] {
       display: none;
     }
+
+    /* .order-status-select {
+      appearance: none;
+      border: 2px solid var(--sys-color-primary);
+      border-radius: var(--sys-radius-xsmall);
+      font-family: var(--sys-typescale-body-medium-font-family-name);
+      font-size: var(--sys-typescale-body-medium-font-size);
+      padding: var(--sys-spacing-track);
+    } */
+
+    .order-status-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   `;
 
   @state()
@@ -206,18 +222,33 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
       productStorageContextConsumer.request();
     }, {receivePrevious: 'No'}));
 
-    this._addSignalListeners(eventListener.subscribe(buttons.changeOrderStatus.clickSignalId, () => {
+    this._addSignalListeners(eventListener.subscribe(buttons.changeOrderStatus.clickSignalId, async () => {
       const select = this.shadowRoot?.querySelector<HTMLSelectElement>('.order-status-select');
       const status = select?.value as Order['status'] | null;
       if (select == null || status == null) return;
       const order = userListIncOrderStorageContextConsumer.getResponse()?.data[this.userId!]?.orderList[this.orderId!];
       if (order == null) return;
       order.status = status;
-      changeOrderStatusTrigger.request({
+      const response = await changeOrderStatusTrigger.requestWithResponse({
         orderId: this.orderId!,
         userId: this.userId!,
         status,
       });
+
+      if (response != null) {
+        snackbarSignalTrigger.request({
+          messageKey: 'page_admin_order_change_order_status_success_message',
+          duration: 5_000,
+        });
+
+        this.requestUpdate();
+      }
+      else {
+        snackbarSignalTrigger.request({
+          messageKey: 'page_admin_order_change_order_status_failed_message',
+          duration: 5_000,
+        });
+      }
     }, {receivePrevious: 'No'}));
   }
 
@@ -337,13 +368,15 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
   protected _render_change_status(order: Order | OrderDraft): unknown {
     this._logger.logMethod?.('_render_change_status');
     return html`
-      <alwatr-surface tinted>
-        ${message('page_admin_order_list_order_status')}:
-        <select class="order-status-select">
-          ${orderStatusCS.map((option) => html`<option value="${option}">
-            ${message('order_status_' + option)}
-          </option>`)}
-        </select>
+      <alwatr-surface tinted class="order-status-container">
+        <span>
+          ${message('page_admin_order_list_order_status')}:
+          <select class="order-status-select">
+            ${orderStatusCS.map((option) => html`<option value="${option}">
+              ${message('order_status_' + option)}
+            </option>`)}
+          </select>
+        </span>
         <span>
           <alwatr-button
             .content=${buttons.changeOrderStatus}

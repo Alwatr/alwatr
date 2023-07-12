@@ -59,6 +59,8 @@
     "page_admin_order_list_order_date": "تاریخ ثبت سفارش",
     "page_admin_order_list_empty_order_list": "سفارشی ثبت نشده است.",
     "page_admin_order_list_order_change_status": "تغییر وضعیت سفارش",
+    "page_admin_order_change_order_status_success_message": "وضعیت سفارش با موفقیت تغییر کرد.",
+    "page_admin_order_change_order_status_failed_message": "تغییر وضعیت سفارش با خطا روبرو شد، لطفا مجدد تلاش کنید!",
 
 
     "page_admin_order_list_reloading_failed": "بارگذاری با خطا روبرو شد، لطفا مجدد تلاش کنید.",
