@@ -12,12 +12,21 @@ import {
   state,
   UnresolvedMixin,
   type PropertyValues,
+  query,
 } from '@alwatr/element';
 import {message, number, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/icon';
 import {calcDiscount} from '@alwatr/math';
 import {redirect} from '@alwatr/router';
 import {eventListener} from '@alwatr/signal';
+import {
+  orderStatusCS,
+  type Order,
+  type OrderDraft,
+  type OrderItem,
+  type OrderShippingInfo,
+  type Product,
+} from '@alwatr/type/customer-order-management.js';
 import '@alwatr/ui-kit/button/button.js';
 import '@alwatr/ui-kit/card/icon-box.js';
 import '@alwatr/ui-kit/card/surface.js';
@@ -26,11 +35,10 @@ import {config} from '../../config.js';
 import {buttons} from '../../manager/buttons.js';
 import {productStorageContextConsumer} from '../../manager/context-provider/product-storage.js';
 import {userListIncOrderStorageContextConsumer} from '../../manager/context-provider/user-list-storage.js';
-import {scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
+import {changeOrderStatusTrigger, scrollToTopCommand, topAppBarContextProvider} from '../../manager/context.js';
 import '../stuff/order-status-box.js';
 
 import type {AlwatrDocumentStorage} from '@alwatr/type';
-import type {Order, OrderDraft, OrderItem, OrderShippingInfo, Product} from '@alwatr/type/customer-order-management.js';
 import type {IconBoxContent} from '@alwatr/ui-kit/card/icon-box.js';
 
 declare global {
@@ -164,6 +172,9 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
   @property({type: String})
     userId?: string;
 
+  @query('.order-status-select')
+  protected _orderStatusSelect?: HTMLSelectElement;
+
   override connectedCallback(): void {
     super.connectedCallback();
 
@@ -193,6 +204,20 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
     this._addSignalListeners(eventListener.subscribe(buttons.reloadAdminOrderListStorage.clickSignalId, () => {
       userListIncOrderStorageContextConsumer.request();
       productStorageContextConsumer.request();
+    }, {receivePrevious: 'No'}));
+
+    this._addSignalListeners(eventListener.subscribe(buttons.changeOrderStatus.clickSignalId, () => {
+      const select = this.shadowRoot?.querySelector<HTMLSelectElement>('.order-status-select');
+      const status = select?.value as Order['status'] | null;
+      if (select == null || status == null) return;
+      const order = userListIncOrderStorageContextConsumer.getResponse()?.data[this.userId!]?.orderList[this.orderId!];
+      if (order == null) return;
+      order.status = status;
+      changeOrderStatusTrigger.request({
+        orderId: this.orderId!,
+        userId: this.userId!,
+        status,
+      });
     }, {receivePrevious: 'No'}));
   }
 
@@ -301,11 +326,32 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
     const productStorage = productStorageContextConsumer.getResponse();
 
     return [
+      this._render_change_status(order),
       this._render_status(order),
       this._render_itemList(order.itemList, productStorage),
       this._render_shippingInfo(order.shippingInfo),
       this._render_summary(order),
     ];
+  }
+
+  protected _render_change_status(order: Order | OrderDraft): unknown {
+    this._logger.logMethod?.('_render_change_status');
+    return html`
+      <alwatr-surface tinted>
+        ${message('page_admin_order_list_order_status')}:
+        <select class="order-status-select">
+          ${orderStatusCS.map((option) => html`<option value="${option}">
+            ${message('order_status_' + option)}
+          </option>`)}
+        </select>
+        <span>
+          <alwatr-button
+            .content=${buttons.changeOrderStatus}
+            ?disabled=${this._orderStatusSelect?.value != null && order.status === this._orderStatusSelect.value}
+          ></alwatr-button>
+        </span>
+      </alwatr-surface>
+    `;
   }
 
   protected _render_status(order: Order | OrderDraft): unknown {

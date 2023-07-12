@@ -113,6 +113,11 @@ export const buttons = {
     icon: 'close-outline',
     clickSignalId: 'cancel_order_click_event',
   },
+  changeOrderStatus: {
+    labelKey: 'page_admin_order_list_order_change_status',
+    icon: 'checkmark-done-outline',
+    clickSignalId: 'change_order_status_click_event',
+  },
 } as const;
 
 eventListener.subscribe(buttons.newOrder.clickSignalId, () => {
