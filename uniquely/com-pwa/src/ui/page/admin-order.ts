@@ -369,7 +369,7 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
         <span>
           ${message('page_admin_order_list_order_status')}:
           <select @change=${this._selectChange} class="order-status-select">
-            ${orderStatusCS.map((option) => html`<option value="${option}">
+            ${orderStatusCS.map((option) => html`<option value=${option} ?selected=${order.status === option}>
               ${message('order_status_' + option)}
             </option>`)}
           </select>
