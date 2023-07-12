@@ -1,12 +1,12 @@
 import {AlwatrDirective, directive, html, map, noChange, type PartInfo} from '@alwatr/fract';
 
-import './tour-card.scss';
+import './category-tab-bar.scss';
 
 import type {TabBarContent} from './type.js';
 
-export class AlwatrTabBarDirective extends AlwatrDirective {
+export class AlwatrCategoryTabBarDirective extends AlwatrDirective {
   constructor(partInfo: PartInfo) {
-    super(partInfo, '<alwatr-tour-card>');
+    super(partInfo, '<alwatr-category-tab-bar>');
   }
 
   render(content?: TabBarContent | null): unknown {
@@ -25,4 +25,4 @@ export class AlwatrTabBarDirective extends AlwatrDirective {
   }
 }
 
-export const alwatrTabBar = directive(AlwatrTabBarDirective);
+export const alwatrCategoryTabBar = directive(AlwatrCategoryTabBarDirective);
