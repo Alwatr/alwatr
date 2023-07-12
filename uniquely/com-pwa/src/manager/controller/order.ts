@@ -252,21 +252,21 @@ finiteStateMachineProvider.defineActions<OrderFsm>('order_fsm', {
       duration: 3_000,
     });
     if (response.actionButton) {
-      const orderStorage = fsmInstance.getContext().orderStorage;
+      const orderStorage = fsmInstance.getContext().orderStorage!;
       const orderId = fsmInstance.getContext().orderId;
       const response = await cancelOrderCommandTrigger.requestWithResponse({orderId});
       if (response) {
         snackbarSignalTrigger.request({
-          messageKey: 'page_order_detail_two_cancel_order_success_message',
+          messageKey: 'page_order_cancel_order_success_message',
           duration: 10_000,
         });
 
-        orderStorage!.data[orderId].status = 'canceled';
+        orderStorage.data[orderId].status = 'canceled';
         fsmInstance.transition('request_update', {orderStorage});
       }
       else {
         snackbarSignalTrigger.request({
-          messageKey: 'page_order_detail_two_cancel_order_failed_message',
+          messageKey: 'page_order_cancel_order_failed_message',
           duration: 5_000,
         });
       }
