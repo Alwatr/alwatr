@@ -368,7 +368,7 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
       <alwatr-surface tinted class="order-status-container">
         <span>
           ${message('page_admin_order_list_order_status')}:
-          <select @change=${() => {this.requestUpdate();}} class="order-status-select">
+          <select @change=${this._selectChange} class="order-status-select">
             ${orderStatusCS.map((option) => html`<option value="${option}">
               ${message('order_status_' + option)}
             </option>`)}
@@ -382,6 +382,10 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
         </span>
       </alwatr-surface>
     `;
+  }
+
+  protected _selectChange(): void {
+    this.requestUpdate();
   }
 
   protected _render_status(order: Order | OrderDraft): unknown {
