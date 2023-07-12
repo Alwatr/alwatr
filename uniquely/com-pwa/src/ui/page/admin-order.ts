@@ -12,7 +12,6 @@ import {
   state,
   UnresolvedMixin,
   type PropertyValues,
-  query,
 } from '@alwatr/element';
 import {message, number, replaceNumber} from '@alwatr/i18n';
 import '@alwatr/icon';
@@ -187,9 +186,6 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
 
   @property({type: String})
     userId?: string;
-
-  @query('.order-status-select')
-  protected _orderStatusSelect?: HTMLSelectElement;
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -367,11 +363,12 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
 
   protected _render_change_status(order: Order | OrderDraft): unknown {
     this._logger.logMethod?.('_render_change_status');
+    const selectElement = this.shadowRoot?.querySelector<HTMLSelectElement>('.order-status-select');
     return html`
       <alwatr-surface tinted class="order-status-container">
         <span>
           ${message('page_admin_order_list_order_status')}:
-          <select class="order-status-select">
+          <select @change=${() => {this.requestUpdate();}} class="order-status-select">
             ${orderStatusCS.map((option) => html`<option value="${option}">
               ${message('order_status_' + option)}
             </option>`)}
@@ -380,7 +377,7 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
         <span>
           <alwatr-button
             .content=${buttons.changeOrderStatus}
-            ?disabled=${this._orderStatusSelect?.value != null && order.status === this._orderStatusSelect.value}
+            ?disabled=${selectElement?.value != null && order.status === selectElement.value}
           ></alwatr-button>
         </span>
       </alwatr-surface>
