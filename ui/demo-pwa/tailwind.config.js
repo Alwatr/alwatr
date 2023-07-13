@@ -1,14 +1,16 @@
-import {generateColors, palettes} from './colors.ts'
+import {generateColors, palettes} from './theme-colors.ts';
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./res/*.html', './src/**/*.ts'],
+  darkMode: 'media',
   theme: {
-    colors: {
-      ...palettes.h270,
-      ...generateColors(palettes.h270)
+    extend: {
+      colors: {
+        ...palettes.h270,
+        ...generateColors(palettes.h270),
+      },
     },
-    extend: {},
   },
   plugins: [],
 };

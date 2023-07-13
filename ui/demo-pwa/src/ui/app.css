@@ -2,6 +2,8 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@import '../../theme-colors-auto.css';
+
 #alwatr_pwa {
   contain: size layout paint style;
   box-sizing: border-box;

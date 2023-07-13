@@ -1,6 +1,6 @@
 export const palettes = {
   h300: {
-    primary: {
+    refPrimary: {
       0: '#000000',
       10: '#23005c',
       20: '#381e72',
@@ -115,7 +115,7 @@ export const palettes = {
     },
   },
   h270: {
-    primary: {
+    refPrimary: {
       0: '#000000',
       10: '#001847',
       20: '#002b73',
@@ -232,14 +232,16 @@ export const palettes = {
 } as const;
 
 export const generateColors = (palette: typeof palettes.h300) => ({
-  primaryLight: palette.primary[40],
-  primaryDark: palette.primary[80],
-  onPrimaryLight: palette.primary[100],
-  onPrimaryDark: palette.primary[20],
-  primaryContainerLight: palette.primary[90],
-  primaryContainerDark: palette.primary[30],
-  onPrimaryContainerLight: palette.primary[10],
-  onPrimaryContainerDark: palette.primary[90],
+  primaryLight: palette.refPrimary[40],
+  primaryDark: palette.refPrimary[80],
+  primaryAuto: 'rgb(var(--sys-color-primary) / <alpha-value>)',
+  onPrimaryLight: palette.refPrimary[100],
+  onPrimaryDark: palette.refPrimary[20],
+  onPrimaryAuto: 'rgb(var(--sys-color-on-primary) / <alpha-value>)',
+  primaryContainerLight: palette.refPrimary[90],
+  primaryContainerDark: palette.refPrimary[30],
+  onPrimaryContainerLight: palette.refPrimary[10],
+  onPrimaryContainerDark: palette.refPrimary[90],
 
   secondaryLight: palette.secondary[40],
   secondaryDark: palette.secondary[80],
@@ -288,14 +290,14 @@ export const generateColors = (palette: typeof palettes.h300) => ({
   onErrorContainerLight: palette.error[10],
   onErrorContainerDark: palette.error[90],
 
-  inversePrimaryLight: palette.primary[80],
+  inversePrimaryLight: palette.refPrimary[80],
   inverseSurfaceLight: palette.neutral[20],
   inverseOnSurfaceLight: palette.neutral[95],
-  inversePrimaryDark: palette.primary[40],
+  inversePrimaryDark: palette.refPrimary[40],
   inverseSurfaceDark: palette.neutral[90],
   inverseOnSurfaceDark: palette.neutral[25],
 
-  surfaceTint: palette.primary[40],
+  surfaceTint: palette.refPrimary[40],
   shadow: palette.neutral[0],
   scrim: palette.neutral[0],
 } as const);
