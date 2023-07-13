@@ -5,10 +5,12 @@ import {alwatrNavigationBar} from '@alwatr/ui-kit/navigation-bar2/navigation-bar
 import {alwatrTopAppBar} from '@alwatr/ui-kit/top-app-bar2/top-app-bar.js';
 import {renderState} from '@alwatr/util';
 
-import './app.scss';
+import './app.css';
 // import './lit-debug.js';
 import {alwatrPageTest} from './page-test.js';
 import {rootElement} from './root-element.js';
+// import '../../../ui-kit/style/theme/color.css';
+// import '../../../ui-kit/style/theme/palette-300.css';
 import {icons} from '../icons.js';
 import {appLogger} from '../share/logger.js';
 

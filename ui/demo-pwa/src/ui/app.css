@@ -1,0 +1,8 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import './css/base.css';
+@import './css/palettes/h300.css';
+@import './css/theme-colors-auto.css';
+@import './css/pwa.css';
