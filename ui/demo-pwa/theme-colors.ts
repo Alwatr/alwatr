@@ -19,7 +19,7 @@ export const palettes = {
       100: '#ffffff',
     },
 
-    secondary: {
+    refSecondary: {
       0: '#000000',
       10: '#1e192b',
       20: '#332d41',
@@ -38,7 +38,7 @@ export const palettes = {
       100: '#ffffff',
     },
 
-    tertiary: {
+    refTertiary: {
       0: '#000000',
       10: '#31101d',
       20: '#4a2532',
@@ -57,7 +57,7 @@ export const palettes = {
       100: '#ffffff',
     },
 
-    neutral: {
+    refNeutral: {
       0: '#000000',
       10: '#1c1b1e',
       20: '#323033',
@@ -76,7 +76,7 @@ export const palettes = {
       100: '#ffffff',
     },
 
-    neutralVariant: {
+    refNeutralVariant: {
       0: '#000000',
       10: '#1d1a22',
       20: '#322f37',
@@ -95,7 +95,7 @@ export const palettes = {
       100: '#ffffff',
     },
 
-    error: {
+    refError: {
       0: '#000000',
       10: '#410002',
       20: '#690005',
@@ -134,7 +134,7 @@ export const palettes = {
       100: '#ffffff',
     },
 
-    secondary: {
+    refSecondary: {
       0: '#000000',
       10: '#151b2c',
       20: '#2a3042',
@@ -153,7 +153,7 @@ export const palettes = {
       100: '#ffffff',
     },
 
-    tertiary: {
+    refTertiary: {
       0: '#000000',
       10: '#2b122b',
       20: '#412741',
@@ -172,7 +172,7 @@ export const palettes = {
       100: '#ffffff',
     },
 
-    neutral: {
+    refNeutral: {
       0: '#000000',
       10: '#1b1b1f',
       20: '#303034',
@@ -191,7 +191,7 @@ export const palettes = {
       100: '#ffffff',
     },
 
-    neutralVariant: {
+    refNeutralVariant: {
       0: '#000000',
       10: '#191b23',
       20: '#2e3038',
@@ -210,7 +210,7 @@ export const palettes = {
       100: '#ffffff',
     },
 
-    error: {
+    refError: {
       0: '#000000',
       10: '#410002',
       20: '#690005',
@@ -240,64 +240,89 @@ export const generateColors = (palette: typeof palettes.h300) => ({
   onPrimaryAuto: 'rgb(var(--sys-color-on-primary) / <alpha-value>)',
   primaryContainerLight: palette.refPrimary[90],
   primaryContainerDark: palette.refPrimary[30],
+  primaryContainerAuto: 'rgb(var(--sys-color-primary-container) / <alpha-value>)',
   onPrimaryContainerLight: palette.refPrimary[10],
   onPrimaryContainerDark: palette.refPrimary[90],
+  onPrimaryContainerAuto: 'rgb(var(--sys-color-on-primary-container) / <alpha-value>)',
 
-  secondaryLight: palette.secondary[40],
-  secondaryDark: palette.secondary[80],
-  onSecondaryLight: palette.secondary[100],
-  onSecondaryDark: palette.secondary[20],
-  secondaryContainerLight: palette.secondary[90],
-  secondaryContainerDark: palette.secondary[30],
-  onSecondaryContainerLight: palette.secondary[10],
-  onSecondaryContainerDark: palette.secondary[90],
+  secondaryLight: palette.refSecondary[40],
+  secondaryDark: palette.refSecondary[80],
+  secondaryAuto: 'rgb(var(--sys-color-secondary) / <alpha-value>)',
+  onSecondaryLight: palette.refSecondary[100],
+  onSecondaryDark: palette.refSecondary[20],
+  onSecondaryAuto: 'rgb(var(--sys-color-on-secondary) / <alpha-value>)',
+  secondaryContainerLight: palette.refSecondary[90],
+  secondaryContainerDark: palette.refSecondary[30],
+  secondaryContainerAuto: 'rgb(var(--sys-color-secondary-container) / <alpha-value>)',
+  onSecondaryContainerLight: palette.refSecondary[10],
+  onSecondaryContainerDark: palette.refSecondary[90],
+  onSecondaryContainerAuto: 'rgb(var(--sys-color-on-secondary-container) / <alpha-value>)',
 
-  tertiaryLight: palette.tertiary[40],
-  tertiaryDark: palette.tertiary[80],
-  onTertiaryLight: palette.tertiary[100],
-  onTertiaryDark: palette.tertiary[20],
-  tertiaryContainerLight: palette.tertiary[90],
-  tertiaryContainerDark: palette.tertiary[30],
-  onTertiaryContainerLight: palette.tertiary[10],
-  onTertiaryContainerDark: palette.tertiary[90],
+  tertiaryLight: palette.refTertiary[40],
+  tertiaryDark: palette.refTertiary[80],
+  tertiaryAuto: 'rgb(var(--sys-color-tertiary) / <alpha-value>)',
+  onTertiaryLight: palette.refTertiary[100],
+  onTertiaryDark: palette.refTertiary[20],
+  onTertiaryAuto: 'rgb(var(--sys-color-on-tertiary) / <alpha-value>)',
+  tertiaryContainerLight: palette.refTertiary[90],
+  tertiaryContainerDark: palette.refTertiary[30],
+  tertiaryContainerAuto: 'rgb(var(--sys-color-tertiary-container) / <alpha-value>)',
+  onTertiaryContainerLight: palette.refTertiary[10],
+  onTertiaryContainerDark: palette.refTertiary[90],
+  onTertiaryContainerAuto: 'rgb(var(--sys-color-on-tertiary-container) / <alpha-value>)',
 
-  backgroundLight: palette.neutral[99],
-  backgroundDark: palette.neutral[10],
-  onBackgroundLight: palette.neutral[10],
-  onBackgroundDark: palette.neutral[90],
+  backgroundLight: palette.refNeutral[99],
+  backgroundDark: palette.refNeutral[10],
+  backgroundAuto: 'rgb(var(--sys-color-background) / <alpha-value>)',
+  onBackgroundLight: palette.refNeutral[10],
+  onBackgroundDark: palette.refNeutral[90],
+  onBackgroundAuto: 'rgb(var(--sys-color-on-background) / <alpha-value>)',
 
-  surfaceLight: palette.neutral[99],
-  surfaceDark: palette.neutral[10],
-  onSurfaceLight: palette.neutral[10],
-  onSurfaceDark: palette.neutral[90],
+  surfaceLight: palette.refNeutral[99],
+  surfaceDark: palette.refNeutral[10],
+  surfaceAuto: 'rgb(var(--sys-color-surface) / <alpha-value>)',
+  onSurfaceLight: palette.refNeutral[10],
+  onSurfaceDark: palette.refNeutral[90],
+  onSurfaceAuto: 'rgb(var(--sys-color-on-surface) / <alpha-value>)',
 
-  surfaceVariantLight: palette.neutral[90],
-  surfaceVariantDark: palette.neutral[30],
-  onSurfaceVariantLight: palette.neutral[30],
-  onSurfaceVariantDark: palette.neutral[80],
+  surfaceVariantLight: palette.refNeutral[90],
+  surfaceVariantDark: palette.refNeutral[30],
+  surfaceVariantAuto: 'rgb(var(--sys-color-surface-variant) / <alpha-value>)',
+  onSurfaceVariantLight: palette.refNeutral[30],
+  onSurfaceVariantDark: palette.refNeutral[80],
+  onSurfaceVariantAuto: 'rgb(var(--sys-color-on-surface-variant) / <alpha-value>)',
 
-  outlineLight: palette.neutral[50],
-  outlineDark: palette.neutral[60],
-  outlineVariantLight: palette.neutral[80],
-  outlineVariantDark: palette.neutral[30],
+  outlineLight: palette.refNeutral[50],
+  outlineDark: palette.refNeutral[60],
+  outlineVariantAuto: 'rgb(var(--sys-color-outline-variant) / <alpha-value>)',
+  outlineVariantLight: palette.refNeutral[80],
+  outlineVariantDark: palette.refNeutral[30],
+  onOutlineVariantAuto: 'rgb(var(--sys-color-on-outline-variant) / <alpha-value>)',
 
-  errorLight: palette.error[40],
-  errorDark: palette.error[80],
-  onErrorLight: palette.error[100],
-  onErrorDark: palette.error[20],
-  errorContainerLight: palette.error[90],
-  errorContainerDark: palette.error[30],
-  onErrorContainerLight: palette.error[10],
-  onErrorContainerDark: palette.error[90],
+  errorLight: palette.refError[40],
+  errorDark: palette.refError[80],
+  errorAuto: 'rgb(var(--sys-color-error) / <alpha-value>)',
+  onErrorLight: palette.refError[100],
+  onErrorDark: palette.refError[20],
+  onErrorAuto: 'rgb(var(--sys-color-on-error) / <alpha-value>)',
+  errorContainerLight: palette.refError[90],
+  errorContainerDark: palette.refError[30],
+  errorContainerAuto: 'rgb(var(--sys-color-error-container) / <alpha-value>)',
+  onErrorContainerLight: palette.refError[10],
+  onErrorContainerDark: palette.refError[90],
+  onErrorContainerAuto: 'rgb(var(--sys-color-on-error-container) / <alpha-value>)',
 
   inversePrimaryLight: palette.refPrimary[80],
-  inverseSurfaceLight: palette.neutral[20],
-  inverseOnSurfaceLight: palette.neutral[95],
   inversePrimaryDark: palette.refPrimary[40],
-  inverseSurfaceDark: palette.neutral[90],
-  inverseOnSurfaceDark: palette.neutral[25],
+  inversePrimaryAuto: 'rgb(var(--sys-color-inverse-primary) / <alpha-value>)',
+  inverseSurfaceLight: palette.refNeutral[20],
+  inverseSurfaceDark: palette.refNeutral[90],
+  inverseSurfaceAuto: 'rgb(var(--sys-color-inverse-surface) / <alpha-value>)',
+  inverseOnSurfaceLight: palette.refNeutral[95],
+  inverseOnSurfaceDark: palette.refNeutral[25],
+  inverseOnSurfaceAuto: 'rgb(var(--sys-color-inverse-on-surface) / <alpha-value>)',
 
   surfaceTint: palette.refPrimary[40],
-  shadow: palette.neutral[0],
-  scrim: palette.neutral[0],
+  shadow: palette.refNeutral[0],
+  scrim: palette.refNeutral[0],
 } as const);
