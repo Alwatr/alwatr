@@ -1,8 +1,3 @@
-import type {MaybePromise} from '@alwatr/type';
-
 export interface TabBarContent {
-  itemList: Array<{
-    title: string;
-    icon?: MaybePromise<string>;
-  }>;
+  itemList: Array<Record<string, unknown>>; // FIXME: Use `tour-storage` when defined
 }

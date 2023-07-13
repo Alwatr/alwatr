@@ -1,12 +1,15 @@
-import {AlwatrDirective, directive, html, map, noChange, type PartInfo} from '@alwatr/fract';
+import {AlwatrDirective, directive, html, map, classMap, noChange, type PartInfo} from '@alwatr/fract';
 
 import './category-tab-bar.scss';
 
 import type {TabBarContent} from './type.js';
 
 export class AlwatrCategoryTabBarDirective extends AlwatrDirective {
+  activeTabIndex: number;
+
   constructor(partInfo: PartInfo) {
     super(partInfo, '<alwatr-category-tab-bar>');
+    this.activeTabIndex = 0;
   }
 
   render(content?: TabBarContent | null): unknown {
@@ -19,7 +22,9 @@ export class AlwatrCategoryTabBarDirective extends AlwatrDirective {
 
     return html`
       <div class="alwatr-tab-bar">
-        ${map(content.itemList, (item) => html`<div class="tab">${item.title}</div>`)}
+        ${map(content.itemList, (item, index) => html`
+        <div class=${classMap({tab: true, active: this.activeTabIndex === index})}>...</div>`,
+  )}
       </div>
     `;
   }
