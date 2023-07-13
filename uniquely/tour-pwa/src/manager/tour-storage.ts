@@ -1,9 +1,12 @@
-import {router} from '@alwatr/router2';
-import {AlwatrApiRequest} from '@alwatr/server-context';
-import {AlwatrContextSignal} from '@alwatr/signal2';
-import {AlwatrDocumentStorage, StringifyableRecord} from '@alwatr/type';
+import {AlwatrServerContext} from '@alwatr/server-context';
+import {AlwatrServiceResponse, StringifyableRecord} from '@alwatr/type';
 
-import {type PriceDetailItem, priceStorageRequest} from './price-storage.js';
+import {appLogger} from '../share/logger.js';
+
+export interface PriceDetailItem extends StringifyableRecord {
+  amount: number;
+  date: number;
+}
 
 export interface Image extends StringifyableRecord {
   url: string;
@@ -16,51 +19,19 @@ export interface Tour extends StringifyableRecord {
   title: string;
   indexImage: Image;
   imageList?: Array<Image>;
+  /**
+   * @description A record of categories with their prices
+   * @example { 'economy': [{ amount: 18_000_000, date: 1687284459767 }, ... ]
+   */
+  priceList: Record<string, Array<PriceDetailItem>>;
 }
 
-export const tourStorageRequest = new AlwatrApiRequest<AlwatrDocumentStorage<Tour>>({
-  name: 'tour_storage.server_request',
-});
-
-tourStorageRequest.request({
+const tourContext = new AlwatrServerContext<AlwatrServiceResponse<Tour>>({
+  name: 'tour.server_context',
   url: 'tour-storage.json',
 });
 
-export const tourDetailContext = new AlwatrContextSignal<Tour & {priceRecord: Record<string, Array<PriceDetailItem>>}>({
-  name: 'tour_detail_context',
+tourContext.subscribe(() => {
+  appLogger.logProperty?.('tourContext', tourContext.context);
 });
 
-router.subscribe(async () => {
-  if (router.route.sectionList[0] !== 'tour') return;
-
-  const tourId = router.route.sectionList[1];
-  if (!tourId) {
-    // FIXME:
-    return;
-  }
-
-  const tourList = tourStorageRequest.response?.data;
-  const priceList = priceStorageRequest.response?.data;
-
-  if (tourList == null || priceList == null) {
-    // FIXME:
-    return;
-  }
-
-  if (!Object.prototype.hasOwnProperty.call(tourList, tourId)) {
-    // FIXME:
-    return;
-  }
-
-  const targetPrice = Object.values(priceList).find((item) => item.tourId === tourId);
-  if (targetPrice == null) {
-    // FIXME:
-    return;
-  }
-
-  const tour = tourList[tourId];
-  tourDetailContext.setValue({
-    ...tour,
-    priceRecord: targetPrice.priceRecord,
-  });
-});
