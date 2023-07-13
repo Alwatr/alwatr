@@ -7,6 +7,14 @@
     max-height: 100%;
   }
 
+  body {
+    contain: size layout paint style;
+    transform: translateZ(0);
+    overflow: hidden;
+    overflow: clip;
+    overscroll-behavior: contain;
+  }
+
   .noscript {
     text-align: center;
     font-size: 2rem;

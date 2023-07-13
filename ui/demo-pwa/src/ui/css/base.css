@@ -11,12 +11,12 @@
     box-sizing: border-box;
   }
 
-  html {
-    font-size: 62.5%; /* 10px */
-  }
+  /* html {
+    font-size: 62.5%;
+  } */
 
   body {
-    contain: size layout paint style;
+
     text-rendering: optimizeLegibility;
     font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -29,10 +29,6 @@
     -ms-content-zooming: none;
     -ms-touch-action: pan-x pan-y pinch-zoom;
     touch-action: pan-x pan-y pinch-zoom;
-    transform: translateZ(0);
-    overflow: hidden;
-    overflow: clip;
-    overscroll-behavior: contain;
 
     /* Theme */
     color: var(--sys-color-on-background);
