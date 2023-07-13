@@ -1,0 +1,47 @@
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 62.5%; /* 10px */
+  }
+
+  body {
+    contain: size layout paint style;
+    text-rendering: optimizeLegibility;
+    font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    tab-size: 4;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    word-wrap: break-word;
+    text-size-adjust: none;
+    -webkit-user-drag: none;
+    -ms-content-zooming: none;
+    -ms-touch-action: pan-x pan-y pinch-zoom;
+    touch-action: pan-x pan-y pinch-zoom;
+    transform: translateZ(0);
+    overflow: hidden;
+    overflow: clip;
+    overscroll-behavior: contain;
+
+    /* Theme */
+    color: var(--sys-color-on-background);
+    background-color: var(--sys-color-background);
+    font-family: var(--sys-typescale-body-medium-font-family-name);
+    font-weight: var(--sys-typescale-body-medium-font-weight);
+    font-size: var(--sys-typescale-body-medium-font-size);
+    letter-spacing: var(--sys-typescale-body-medium-letter-spacing);
+    line-height: var(--sys-typescale-body-medium-line-height);
+  }
+
+}

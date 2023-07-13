@@ -2,30 +2,6 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import '../../theme-colors-auto.css';
-
-#alwatr_pwa {
-  contain: size layout paint style;
-  box-sizing: border-box;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  overflow: hidden;
-  overflow: clip;
-}
-
-#alwatr_pwa:not([unresolved]) {
-  display: flex !important;
-}
-
-#alwatr_pwa main {
-  contain: size layout paint style;
-  flex-grow: 1;
-  flex-shrink: 0;
-}
-
-#alwatr_pwa .scroll-area {
-  overflow-y: auto;
-}
+@import './css/base.css';
+@import './css/theme-colors-auto.css';
+@import './css/pwa.css';
