@@ -1,4 +1,14 @@
-import {AlwatrDirective, directive, html, noChange, map, ifDefined, type PartInfo, nothing} from '@alwatr/fract';
+import {
+  AlwatrDirective,
+  directive,
+  html,
+  noChange,
+  map,
+  ifDefined,
+  classMap,
+  nothing,
+  type PartInfo,
+} from '@alwatr/fract';
 import {l10n} from '@alwatr/i18n2';
 
 import './navigation-bar.scss';
@@ -7,11 +17,14 @@ import {alwatrIcon} from '../icon/icon.js';
 import type {NavigationBarContent, NavigationBarItem} from './type.js';
 
 export class AlwatrNavigationBarDirective extends AlwatrDirective {
+  activeItemIndex: number;
+
   constructor(partInfo: PartInfo) {
     super(partInfo, '<alwatr-navigation-bar>');
+    this.activeItemIndex = 0;
   }
 
-  render(content?: NavigationBarContent | null): unknown {
+  render(content?: NavigationBarContent | null, activeItemIndex = 0): unknown {
     this._logger.logMethodArgs?.('render', content);
 
     if (content == null) {
@@ -19,11 +32,17 @@ export class AlwatrNavigationBarDirective extends AlwatrDirective {
       return noChange;
     }
 
-    return html`<div class="navigation-bar">${map(content.itemList, this._render_nav_item, this)}</div>`;
+    this.activeItemIndex = activeItemIndex;
+    return html`<div class="navigation-bar">
+    ${map(content.itemList, (item, index) => this._render_nav_item(item, index), this)}</div>`;
   }
 
-  protected _render_nav_item(item: NavigationBarItem): unknown {
-    return html`<a href=${ifDefined(item.href)}>
+  protected _render_nav_item(item: NavigationBarItem, index: number): unknown {
+    return html`<a
+      class=${classMap({'nav-item': true, 'active': this.activeItemIndex === index})}
+      href=${ifDefined(item.href)}
+      @click=${(): void => {this.activeItemIndex = index;}}
+    >
       ${alwatrIcon(item.icon, item.flipIconInRtl)}
       ${this._render_label(item)}
     </a>`;
