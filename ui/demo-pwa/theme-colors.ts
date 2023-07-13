@@ -112,7 +112,7 @@ const refColors = {
     99: 'rgba(var(--ref-palette-error99), <alpha-value>)',
     100: 'rgba(var(--ref-palette-error100), <alpha-value>)',
   },
-};
+} as const;
 
 export const colors = {
   ...refColors,

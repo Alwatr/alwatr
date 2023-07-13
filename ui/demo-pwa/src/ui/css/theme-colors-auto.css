@@ -1,5 +1,3 @@
-@import('./palette.css')
-
 @layer base {
   :root {
     --sys-color-primary: var(--ref-palette-primary40);
@@ -46,40 +44,40 @@
   @media (prefers-color-scheme: dark) {
     :root {
       --sys-color-primary: var(--ref-palette-primary80);
-    --sys-color-on-primary: var(--ref-palette-primary20);
-    --sys-color-primary-container: var(--ref-palette-primary30);
-    --sys-color-on-primary-container: var(--ref-palette-primary90);
+      --sys-color-on-primary: var(--ref-palette-primary20);
+      --sys-color-primary-container: var(--ref-palette-primary30);
+      --sys-color-on-primary-container: var(--ref-palette-primary90);
 
-    --sys-color-secondary: var(--ref-palette-secondary80);
-    --sys-color-on-secondary: var(--ref-palette-secondary20);
-    --sys-color-secondary-container: var(--ref-palette-secondary30);
-    --sys-color-on-secondary-container: var(--ref-palette-secondary90);
+      --sys-color-secondary: var(--ref-palette-secondary80);
+      --sys-color-on-secondary: var(--ref-palette-secondary20);
+      --sys-color-secondary-container: var(--ref-palette-secondary30);
+      --sys-color-on-secondary-container: var(--ref-palette-secondary90);
 
-    --sys-color-tertiary: var(--ref-palette-tertiary80);
-    --sys-color-on-tertiary: var(--ref-palette-tertiary20);
-    --sys-color-tertiary-container: var(--ref-palette-tertiary30);
-    --sys-color-on-tertiary-container: var(--ref-palette-tertiary90);
+      --sys-color-tertiary: var(--ref-palette-tertiary80);
+      --sys-color-on-tertiary: var(--ref-palette-tertiary20);
+      --sys-color-tertiary-container: var(--ref-palette-tertiary30);
+      --sys-color-on-tertiary-container: var(--ref-palette-tertiary90);
 
-    --sys-color-background: var(--ref-palette-neutral10);
-    --sys-color-on-background: var(--ref-palette-neutral90);
+      --sys-color-background: var(--ref-palette-neutral10);
+      --sys-color-on-background: var(--ref-palette-neutral90);
 
-    --sys-color-surface: var(--ref-palette-neutral10);
-    --sys-color-on-surface: var(--ref-palette-neutral90);
+      --sys-color-surface: var(--ref-palette-neutral10);
+      --sys-color-on-surface: var(--ref-palette-neutral90);
 
-    --sys-color-surface-variant: var(--ref-palette-neutral-variant30);
-    --sys-color-on-surface-variant: var(--ref-palette-neutral-variant80);
+      --sys-color-surface-variant: var(--ref-palette-neutral-variant30);
+      --sys-color-on-surface-variant: var(--ref-palette-neutral-variant80);
 
-    --sys-color-outline: var(--ref-palette-neutral-variant60);
-    --sys-color-outline-variant: var(--ref-palette-neutral-variant30);
+      --sys-color-outline: var(--ref-palette-neutral-variant60);
+      --sys-color-outline-variant: var(--ref-palette-neutral-variant30);
 
-    --sys-color-error: var(--ref-palette-error80);
-    --sys-color-error-container: var(--ref-palette-error30);
-    --sys-color-on-error: var(--ref-palette-error20);
-    --sys-color-on-error-container: var(--ref-palette-error90);
+      --sys-color-error: var(--ref-palette-error80);
+      --sys-color-error-container: var(--ref-palette-error30);
+      --sys-color-on-error: var(--ref-palette-error20);
+      --sys-color-on-error-container: var(--ref-palette-error90);
 
-    --sys-color-inverse-primary: var(--ref-palette-primary40);
-    --sys-color-inverse-surface: var(--ref-palette-neutral90);
-    --sys-color-inverse-on-surface: var(--ref-palette-neutral20);
+      --sys-color-inverse-primary: var(--ref-palette-primary40);
+      --sys-color-inverse-surface: var(--ref-palette-neutral90);
+      --sys-color-inverse-on-surface: var(--ref-palette-neutral20);
     }
   }
 }
