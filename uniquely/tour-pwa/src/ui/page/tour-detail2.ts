@@ -41,8 +41,8 @@ class AlwatrTourDetail extends AlwatrDynamicDirective {
         ${this._content?.title}
         <img src=${this._content?.indexImage.url} alt=${this._content?.indexImage.alt ?? ''} />
         <div>
-          ${this._content?.priceRecord[this._selectedCategory!][0].amount}
-          ${this._content?.priceRecord[this._selectedCategory!][0].date}
+          ${this._content?.priceList[this._selectedCategory!][0].amount}
+          ${this._content?.priceList[this._selectedCategory!][0].date}
         </div>
       </div>
     `;
