@@ -15,7 +15,23 @@
       "indexImage": {
         "url": "image/istanbul.jpg"
       },
-      "categories": ["economy"]
+      "categories": ["economy"],
+      "priceList": {
+        "economy": [
+          {
+            "amount": 18000000,
+            "date": 1687284458767
+          },
+          {
+            "amount": 21000000,
+            "date": 1687284459767
+          },
+          {
+            "amount": 19000000,
+            "date": 1687284457767
+          }
+        ]
+      }
     },
     "2": {
       "id": "2",
@@ -23,7 +39,19 @@
       "indexImage": {
         "url": "image/dubai.jpeg"
       },
-      "categories": ["appropriate"]
+      "categories": ["appropriate"],
+      "priceList": {
+        "appropriate": [
+          {
+            "amount": 22000000,
+            "date": 1687284456767
+          },
+          {
+            "amount": 20000000,
+            "date": 1687284455767
+          }
+        ]
+      }
     },
     "3": {
       "id": "3",
@@ -31,7 +59,15 @@
       "indexImage": {
         "url": "image/kish.jpeg"
       },
-      "categories": ["luxury"]
+      "categories": ["luxury"],
+      "priceList": {
+        "luxury": [
+          {
+            "amount": 11000000,
+            "date": 1687284454767
+          }
+        ]
+      }
     }
   }
 }
