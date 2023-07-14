@@ -26,7 +26,7 @@ export interface Tour extends StringifyableRecord {
   priceList: Record<string, Array<PriceDetailItem>>;
 }
 
-const tourContext = new AlwatrServerContext<AlwatrServiceResponse<Tour>>({
+export const tourContext = new AlwatrServerContext<AlwatrServiceResponse<Record<string, Tour>>>({
   name: 'tour.server_context',
   url: 'tour-storage.json',
 });
