@@ -37,8 +37,5 @@
     "@alwatr/signal": "^1.0.0",
     "@alwatr/util": "^1.0.0",
     "tslib": "^2.6.0"
-  },
-  "devDependencies": {
-    "@alwatr/type": "^1.0.0"
   }
 }

@@ -29,22 +29,5 @@
     "serve": "wds",
     "watch": "run-s clean build:ts && run-p watch:ts serve",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
-  },
-  "devDependencies": {
-    "@alwatr/element": "^1.0.0",
-    "@alwatr/fetch": "^1.0.0",
-    "@alwatr/i18n": "^1.0.0",
-    "@alwatr/icon": "^1.0.0",
-    "@alwatr/logger": "^1.0.0",
-    "@alwatr/router": "^1.0.0",
-    "@alwatr/signal": "^1.0.0",
-    "@alwatr/type": "^1.0.0",
-    "@web/dev-server": "^0.3.0",
-    "@webcomponents/webcomponentsjs": "^2.8.0",
-    "lit-analyzer": "^1.2.1",
-    "npm-run-all": "^4.1.5",
-    "ts-lit-plugin": "^1.2.1",
-    "tslib": "^2.6.0",
-    "typescript": "^5.1.6"
   }
 }
