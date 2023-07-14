@@ -17,5 +17,5 @@ export interface PageHomeContent extends StringifyableRecord {
   about: BoxType;
   catalogue: BoxType;
   product: BoxType;
-  socialList: Array<BoxType>;
+  socialList: BoxType[];
 }

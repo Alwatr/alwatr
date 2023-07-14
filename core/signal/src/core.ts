@@ -66,7 +66,7 @@ export const getSignalObject = <T extends Stringifyable>(id: string): SignalObje
 export const _callListeners = <T extends Stringifyable>(signal: SignalObject<T>, detail: T): void => {
   logger.logMethodArgs?.('_callListeners', {signalId: signal.id, signalDetail: detail});
 
-  const removeList: Array<ListenerObject<T>> = [];
+  const removeList: ListenerObject<T>[] = [];
 
   for (const listener of signal.listenerList) {
     if (listener.disabled) continue;

@@ -1,6 +1,6 @@
 import {type CacheStrategy, type CacheDuplicate, fetch} from '@alwatr/fetch';
 
-const buttons = document.querySelectorAll('button') as NodeListOf<HTMLButtonElement>;
+const buttons = document.querySelectorAll('button');
 
 for (const button of buttons) {
   const url = button.dataset.url;

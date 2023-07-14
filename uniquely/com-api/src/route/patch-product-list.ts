@@ -11,7 +11,7 @@ nanoServer.route<Record<string, never>>('PATCH', '/product-list', async (connect
   await validateUserAuth(connection.getUserAuth(), 'product/patch');
 
   const params = connection.requireQueryParams<{storage: string}>({storage: 'string'});
-  const bodyJson = await connection.requireJsonBody<{data: Array<Product>}>();
+  const bodyJson = await connection.requireJsonBody<{data: Product[]}>();
 
   const storage = config.publicStorage.productList.replace('${name}', params.storage);
   for (const price of bodyJson.data) {

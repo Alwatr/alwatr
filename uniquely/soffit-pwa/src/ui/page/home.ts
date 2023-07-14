@@ -88,7 +88,7 @@ export class AlwatrPageHome extends SignalMixin(AlwatrBaseElement) {
     yield mapIterable(this, this.content.socialList, this._boxTemplate, message('loading'));
     yield html`<alwatr-supply-chain-box></alwatr-supply-chain-box>`;
     if (localeContextConsumer.getValue()?.language === 'fa') {
-      yield this._boxTemplate(this.content.agency as BoxType);
+      yield this._boxTemplate(this.content.agency!);
     }
   }
 

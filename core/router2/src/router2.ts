@@ -138,7 +138,7 @@ export class AlwatrRouter extends AlwatrObservable<RouteContext> {
    */
   protected _toQueryParamString(queryParameterList?: QueryParameters): string {
     if (queryParameterList == null) return '';
-    const list: Array<string> = [];
+    const list: string[] = [];
     for (const key of Object.keys(queryParameterList)) {
       list.push(`${key}=${String(queryParameterList[key])}`);
     }

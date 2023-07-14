@@ -24,9 +24,9 @@ export const orderFsmConstructor = finiteStateMachineProvider.defineConstructor(
   initial: 'pending',
   context: {
     orderId: '',
-    newOrder: <OrderDraft>(
+    newOrder: (
       getLocalStorageItem(newOrderLocalStorageKey, {id: 'new', status: 'draft', shippingInfo: {}, itemList: []})
-    ),
+    ) as OrderDraft,
     orderStorage: orderStorageContextConsumer.getResponse(),
     productStorage: productStorageContextConsumer.getResponse(),
     priceStorage: productPriceStorageContextConsumer.getResponse(),

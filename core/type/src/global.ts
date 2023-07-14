@@ -1,13 +1,13 @@
 /* eslint-disable no-var */
 
-export type AlwatrPackageInfo = {
+export interface AlwatrPackageInfo {
   name: string;
   version: string;
-};
+}
 
-export type GlobalAlwatr = {
-  registeredList: Array<AlwatrPackageInfo>;
-};
+export interface GlobalAlwatr {
+  registeredList: AlwatrPackageInfo[];
+}
 
 declare global {
   var _ALWATR_VERSION_: string;

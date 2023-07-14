@@ -24,7 +24,7 @@ export interface TopAppBarContent {
   /**
    * @default ```[]```
    */
-  endIconList?: Array<IconButtonContent>;
+  endIconList?: IconButtonContent[];
 
   /**
    * @default ```2```

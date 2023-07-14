@@ -10,7 +10,7 @@ function render(): void {
   console.info('render');
   document.querySelector('textarea')!.value = JSON.stringify(router.route, null, 2);
   document.querySelector('.render')!.innerHTML = renderState(
-    <PageName>router.route.sectionList[0] ?? 'home',
+    router.route.sectionList[0] as PageName ?? 'home',
     {
       home: 'about',
       about: () => '<h1>About Page</h1>',

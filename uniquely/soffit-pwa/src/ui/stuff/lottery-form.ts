@@ -101,7 +101,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     for (const inputElement of this.renderRoot.querySelectorAll<AlwatrTextField>(
         'alwatr-text-field,alwatr-radio-group',
     )) {
-      data[inputElement.name] = inputElement.value as string;
+      data[inputElement.name] = inputElement.value;
     }
     return data;
   }

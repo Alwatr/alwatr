@@ -14,8 +14,8 @@ import type {QueryParameters} from '@alwatr/type';
  * }
  * ```
  */
-export type RouteContextBase = {
-  sectionList: Array<string | number | boolean>;
+export interface RouteContextBase {
+  sectionList: (string | number | boolean)[];
   queryParamList: QueryParameters;
   hash: string;
 }
@@ -80,7 +80,7 @@ export type TemplateCallback = (routeContext: RouteContext) => unknown;
 /**
  * Type of `routeConfig.templates`.
  */
-export type RouterTemplates = {
+export interface RouterTemplates {
   [x: string]: TemplateCallback | string | undefined;
   home: TemplateCallback;
   _404: TemplateCallback;

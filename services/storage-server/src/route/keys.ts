@@ -2,7 +2,7 @@ import {config, logger} from '../config.js';
 import {nanoServer} from '../lib/nano-server.js';
 import {storageProvider} from '../lib/storage-provider.js';
 
-nanoServer.route<Array<string>>('GET', '/keys', (connection) => {
+nanoServer.route<string[]>('GET', '/keys', (connection) => {
   logger.logMethod?.('getStorageKeys');
 
   connection.requireToken(config.nanoServer.accessToken);

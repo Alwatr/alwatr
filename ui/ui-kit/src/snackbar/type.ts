@@ -1,4 +1,4 @@
-export type SnackbarOptions = {
+export interface SnackbarOptions {
   /**
    * Snackbar message.
    */
@@ -29,6 +29,6 @@ export type SnackbarOptions = {
   duration?: number;
 }
 
-export type SnackbarResponse = {
+export interface SnackbarResponse {
   actionButton?: true;
 }

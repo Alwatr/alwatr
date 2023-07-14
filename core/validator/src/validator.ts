@@ -41,7 +41,7 @@ export function validator<T extends StringifyableRecord>(
 
     const itemPath = `${path}/${itemName}`;
     const itemSchema = validSchema[itemName];
-    const itemValue = targetObject[itemName] as Stringifyable;
+    const itemValue = targetObject[itemName];
 
     if (Array.isArray(itemSchema)) {
       // array
@@ -97,7 +97,7 @@ export function validator<T extends StringifyableRecord>(
     }
     else if (itemSchema === Number) {
       if (isNumber(itemValue)) {
-        targetObject[itemName] = +(<string>itemValue);
+        targetObject[itemName] = +(itemValue as string);
       }
       else {
         throw new Error('invalid_type', {

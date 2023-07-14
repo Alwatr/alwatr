@@ -1,10 +1,10 @@
 import type {MaybePromise} from '@alwatr/type';
 
-export type StateEventDetail<S, E> = {
+export interface StateEventDetail<S, E> {
   from: S;
   event: E;
   to: S;
-};
+}
 
 export type StateRecord<S extends string, E extends string> = Partial<Record<S | '_all', Partial<Record<E, S>>>>;
 

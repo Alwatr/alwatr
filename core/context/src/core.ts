@@ -15,9 +15,9 @@ export const serverContextFsmConstructorId = 'server_context_fsm';
 
 export const serverContextFsmConstructor = finiteStateMachineProvider.defineConstructor(serverContextFsmConstructorId, {
   initial: 'initial',
-  context: <ServerContextFsmContext>{
+  context: {
     options: {},
-  },
+  } as ServerContextFsmContext,
   stateRecord: {
     $all: {
       on: {},
@@ -130,7 +130,7 @@ finiteStateMachineProvider.defineActions<ServerContextFsm>(serverContextFsmConst
 
     try {
       const {response, options} = fsm.getContext();
-      if (options == null || options.url == null) {
+      if (options?.url == null) {
         logger.error('action_request', 'invalid_fetch_options', {id: fsm.id, options});
         return;
       }

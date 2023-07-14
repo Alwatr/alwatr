@@ -1,7 +1,4 @@
-interface IndexableWindow {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
-}
+type IndexableWindow = Record<string, any>;
 
 export const win = globalThis as IndexableWindow;
 

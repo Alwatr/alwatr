@@ -7,7 +7,7 @@ export type L18eContext = AlwatrServiceResponseSuccessWithMeta<Record<string, st
   rev: number;
 }>;
 
-export type LocaleContext = {
+export interface LocaleContext {
   /**
    * fa-IR, en-US, ...
    */
@@ -22,7 +22,7 @@ export type LocaleContext = {
    * ltr, rtl
    */
   direction: 'rtl' | 'ltr';
-};
+}
 
 /**
  * Multi language string
