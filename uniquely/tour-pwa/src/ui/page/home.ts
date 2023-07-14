@@ -1,62 +1,20 @@
-import {customElement, css, html, state, AlwatrBaseElement, PropertyValues} from '@alwatr/element';
-import '@alwatr/ui-kit/card/icon-box.js';
+import {AlwatrDynamicDirective, directive, html, mapObject, type PartInfo} from '@alwatr/fract';
+import {router} from '@alwatr/router2';
 
-import {tourStorageRequest} from '../../manager/tour-storage.js';
+import {tourContext} from '../../manager/tour-storage.js';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'alwatr-page-home': AlwatrPageHome;
-  }
-}
-
-/**
- * Alwatr home page
- */
-@customElement('alwatr-page-home')
-export class AlwatrPageHome extends AlwatrBaseElement {
-  static override styles = css`
-    :host {
-      display: flex;
-      flex-wrap: wrap;
-      padding: calc(2 * var(--sys-spacing-track));
-      justify-content: center;
-      gap: var(--sys-spacing-track);
-      overflow-y: auto;
-    }
-  `;
-
-  @state()
-    gotState = tourStorageRequest.state;
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    tourStorageRequest.subscribe(() => {
-      this.gotState = tourStorageRequest.state;
-    });
-  }
-
-  protected override update(changedProperties: PropertyValues<this>): void {
-    super.update(changedProperties);
-    if (changedProperties.has('gotState')) {
-      this.setAttribute('state', this.gotState);
-    }
+class AlwatrHome extends AlwatrDynamicDirective {
+  constructor(partInfo: PartInfo) {
+    super(partInfo, '<alwatr-home>');
   }
 
   override render(): unknown {
-    this._logger.logMethod?.('render');
-
-    const methodName = `_render_${this.gotState}`;
-    if (typeof this[methodName as keyof this] !== 'function') {
-      return this._render_loading(); // FIXME:
-    }
-
-    return (this[methodName as keyof this] as () => unknown)();
+    return this._render_loading();
   }
 
   protected _render_loading(): unknown {
     this._logger.logMethod?.('_render_loading');
-    return html`Loading tour list...`;
+    return html`<p>Loading tour list...</p>`;
   }
 
   protected _render_failed(): unknown {
@@ -65,8 +23,14 @@ export class AlwatrPageHome extends AlwatrBaseElement {
   }
 
   protected _render_complete(): unknown {
-    const tourList = tourStorageRequest.response?.data;
+    const tourList = tourContext.context?.data;
     this._logger.logMethodArgs?.('_render_complete', {tourList});
-    return html`The list of tours is ready`;
+    return mapObject(
+        tourList,
+        (tour) => html`<a href=${router.url({sectionList: ['tour', tour.id]})}>${tour.title}</a><br>`,
+        this,
+    );
   }
 }
+
+export const alwatrHome = directive(AlwatrHome);

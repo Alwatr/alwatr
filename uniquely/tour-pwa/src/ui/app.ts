@@ -8,9 +8,8 @@ import {renderState} from '@alwatr/util';
 
 import './app.scss';
 import './page/404.js';
-import './page/home.js';
-import {alwatrHome} from './page/home2.js';
-import {alwatrTourDetail} from './page/tour-detail2.js';
+import {alwatrHome} from './page/home.js';
+import {alwatrTourDetail} from './page/tour-detail.js';
 import {scrollToTopEvent} from './pwa-helper/context.js';
 import {rootElement} from './root-element.js';
 import {icons} from '../icons.js';
