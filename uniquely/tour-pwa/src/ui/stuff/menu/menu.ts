@@ -9,7 +9,7 @@ export class AlwatrMenuDirective extends AlwatrDirective {
     super(partInfo, '<alwatr-menu>');
   }
 
-  render(content?: Array<MenuItem> | null): unknown {
+  render(content?: MenuItem[] | null): unknown {
     this._logger.logMethodArgs?.('render', content);
 
     if (content == null) {
@@ -25,7 +25,7 @@ export class AlwatrMenuDirective extends AlwatrDirective {
     </div>`;
   }
 
-  renderSingleMenuItem(item: Record<string, unknown>): unknown {
+  renderSingleMenuItem(item: MenuItem): unknown {
     this._logger.logMethodArgs?.('renderMenuItem', item);
     return html`<li>
       <a
@@ -35,7 +35,7 @@ export class AlwatrMenuDirective extends AlwatrDirective {
     </li>`;
   }
 
-  renderMenuItemWithChildren(item: Record<string, unknown>): unknown {
+  renderMenuItemWithChildren(item: MenuItem): unknown {
     this._logger.logMethodArgs?.('renderMenuItem', item);
     return html`<li>
       <button
