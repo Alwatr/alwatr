@@ -1,4 +1,4 @@
-import {AlwatrDirective, directive, html, map, classMap, noChange, type PartInfo} from '@alwatr/fract';
+import {AlwatrDirective, directive, html, map, noChange, type PartInfo} from '@alwatr/fract';
 
 import './category-tab-bar.scss';
 
@@ -20,13 +20,11 @@ export class AlwatrCategoryTabBarDirective extends AlwatrDirective {
       return noChange;
     }
 
-    return html`
-      <div class="alwatr-tab-bar">
-        ${map(content.itemList, (item, index) => html`
-        <div class=${classMap({tab: true, active: this.activeTabIndex === index})}>...</div>`,
-  )}
-      </div>
-    `;
+    return html` <div class="alwatr-tab-bar">${map(content.itemList, this._renderItem)}</div> `;
+  }
+
+  protected _renderItem(_item: Record<string, unknown>): unknown {
+    return html` <div>...</div>`;
   }
 }
 
