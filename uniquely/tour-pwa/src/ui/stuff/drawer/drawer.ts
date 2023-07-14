@@ -1,19 +1,20 @@
-import {AlwatrDirective, directive, html, Part, type PartInfo} from '@alwatr/fract';
+import {AlwatrDirective, directive, html, type PartInfo} from '@alwatr/fract';
 
-import './menu.scss';
+import './drawer.scss';
 
 export class AlwatrDrawerDirective extends AlwatrDirective {
   constructor(partInfo: PartInfo) {
     super(partInfo, '<alwatr-drawer>');
   }
 
-  render(slot: Part): unknown {
+  render(renderContent: () => unknown): unknown {
     this._logger.logMethod?.('render');
 
     return html`
-      <div class="alwatr-drawer">
-        ${slot}
-      </div>
+      <aside
+        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        aria-label="Sidenav"
+      >${renderContent()}</aside>
     `;
   }
 }
