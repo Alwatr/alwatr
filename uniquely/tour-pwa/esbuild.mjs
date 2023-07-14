@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-import '@alwatr/pwa-helper/esbuild.mjs';
+import '../../ui/demo-pwa/esbuild.mjs';
