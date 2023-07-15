@@ -1,4 +1,5 @@
 import type {AlwatrDocumentObject} from './storage.js';
+import type {StringifyableRecord} from './type-helper.js';
 
 export const genderCS = ['male', 'female'] as const;
 export type Gender = typeof genderCS[number];
@@ -61,7 +62,7 @@ export interface User extends AlwatrDocumentObject {
   postalCode?: string;
 }
 
-export interface UserAuth {
+export interface UserAuth extends StringifyableRecord {
   id: string;
   token: string;
 }
