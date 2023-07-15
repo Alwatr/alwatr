@@ -14,7 +14,7 @@ export abstract class FiniteStateMachine<S extends string, E extends string> ext
   /**
    * Transition finite state machine instance to new state.
    */
-  transition(event: E): void {
-    super._transition(event);
+  async transition(event: E): Promise<void> {
+    await super._transition(event);
   }
 }

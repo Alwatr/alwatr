@@ -27,7 +27,7 @@ class LightMachine extends FiniteStateMachine<State, Event> {
     };
 
     this._actionRecord = {
-      _on_powerLost: this._onPowerLost,
+      _on_powerLost: this._onPowerLost.bind(this),
     };
   }
 
@@ -47,14 +47,14 @@ lightMachine.subscribe(function StateChanged() {
 console.log('start', lightMachine.state);
 
 await delay(1000);
-lightMachine.transition('timer');
+await lightMachine.transition('timer');
 await delay(1000);
-lightMachine.transition('timer');
+await lightMachine.transition('timer');
 await delay(1000);
-lightMachine.transition('timer');
+await lightMachine.transition('timer');
 await delay(1000);
-lightMachine.transition('powerLost');
+await lightMachine.transition('powerLost');
 await delay(1000);
-lightMachine.transition('timer');
+await lightMachine.transition('timer');
 await delay(1000);
-lightMachine.transition('powerBack');
+await lightMachine.transition('powerBack');

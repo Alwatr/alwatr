@@ -130,14 +130,14 @@ lightMachineConsumer.defineSignals([
 console.log('start', lightMachineConsumer.getState());
 
 await delay(1000);
-lightMachineConsumer.transition('TIMER', {a: 1});
+await lightMachineConsumer.transition('TIMER', {a: 1});
 await delay(1000);
-lightMachineConsumer.transition('TIMER', {b: 2});
+await lightMachineConsumer.transition('TIMER', {b: 2});
 await delay(1000);
-lightMachineConsumer.transition('TIMER');
+await lightMachineConsumer.transition('TIMER');
 await delay(1000);
-lightMachineConsumer.transition('POWER_LOST', {a: 4});
+await lightMachineConsumer.transition('POWER_LOST', {a: 4});
 await delay(1000);
-lightMachineConsumer.transition('TIMER', {a: 5, b: 5});
+await lightMachineConsumer.transition('TIMER', {a: 5, b: 5});
 await delay(1000);
-lightMachineConsumer.transition('POWER_BACK', {a: 6});
+await lightMachineConsumer.transition('POWER_BACK', {a: 6});

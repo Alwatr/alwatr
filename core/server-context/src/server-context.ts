@@ -68,13 +68,13 @@ export abstract class AlwatrServerContextBase<
   protected _$offlineRequestAction(): void {
     this._logger.logMethod?.('_$offlineRequestAction');
     this._setOptions({cacheStrategy: 'cache_only'});
-    this._$requestAction();
+    void this._$requestAction();
   }
 
   protected _$onlineRequestAction(): void {
     this._logger.logMethod?.('_$onlineRequestAction');
     this._setOptions({cacheStrategy: 'update_cache'});
-    this._$requestAction();
+    void this._$requestAction();
   }
 
   protected _$updateContextAction(): void {
@@ -106,15 +106,15 @@ export abstract class AlwatrServerContextBase<
 
       await this._$fetch(this._$fetchOptions);
 
-      this._transition('requestSuccess');
+      void this._transition('requestSuccess');
     }
     catch (err) {
       if ((err as Error).message === 'fetch_cache_not_found') {
-        this._transition('cacheNotFound');
+        await this._transition('cacheNotFound');
       }
       else {
         this._logger.error('_$requestAction', 'fetch_failed', err);
-        this._transition('requestFailed');
+        await this._transition('requestFailed');
       }
     }
   }

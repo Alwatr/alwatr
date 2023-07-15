@@ -116,7 +116,7 @@ export const setContext = <TContext extends StringifyableRecord = StringifyableR
 /**
  * Transition finite state machine instance to new state.
  */
-export const transition = <
+export const transition = async <
   TEventId extends string = string,
   TContext extends StringifyableRecord = StringifyableRecord
 >(
@@ -170,7 +170,7 @@ export const transition = <
 
   contextProvider.setValue(instanceId, fsmInstance, {debounce: 'Timeout'});
 
-  _execAllActions(fsmConstructor, fsmInstance.state, consumerInterface);
+  await _execAllActions(fsmConstructor, fsmInstance.state, consumerInterface);
 };
 
 /**
@@ -188,30 +188,30 @@ export const defineActions = <T extends FsmTypeHelper>(constructorId: string, ac
 /**
  * Execute all actions for current state.
  */
-export const _execAllActions = (
+export const _execAllActions = async (
     constructor: FsmConstructor,
     state: FsmState,
     consumerInterface: FsmConsumerInterface,
-): void => {
+): Promise<void> => {
   logger.logMethodArgs?.('_execAllActions', consumerInterface.id);
 
   const stateRecord = constructor.config.stateRecord;
 
   if (state.by === 'INIT') {
-    _execAction(constructor, stateRecord.$all.entry, consumerInterface);
-    _execAction(constructor, stateRecord[state.target]?.entry, consumerInterface);
+    await _execAction(constructor, stateRecord.$all.entry, consumerInterface);
+    await _execAction(constructor, stateRecord[state.target]?.entry, consumerInterface);
     return;
   }
 
   // else
   if (state.from !== state.target) {
-    _execAction(constructor, stateRecord.$all.exit, consumerInterface);
-    _execAction(constructor, stateRecord[state.from]?.exit, consumerInterface);
-    _execAction(constructor, stateRecord.$all.entry, consumerInterface);
-    _execAction(constructor, stateRecord[state.target]?.entry, consumerInterface);
+    await _execAction(constructor, stateRecord.$all.exit, consumerInterface);
+    await _execAction(constructor, stateRecord[state.from]?.exit, consumerInterface);
+    await _execAction(constructor, stateRecord.$all.entry, consumerInterface);
+    await _execAction(constructor, stateRecord[state.target]?.entry, consumerInterface);
   }
 
-  _execAction(
+  await _execAction(
       constructor,
     stateRecord[state.from]?.on[state.by] != null
       ? stateRecord[state.from].on[state.by]?.actions
@@ -260,7 +260,7 @@ export const _execAction = (
 /**
  * Initialize new finite state machine instance.
  */
-export const initFsmInstance = (instanceId: string, constructorId: string): void => {
+export const initFsmInstance = async (instanceId: string, constructorId: string): Promise<void> => {
   logger.logMethodArgs?.('initializeMachine', {constructorId, instanceId});
   const constructor = getFsmConstructor(constructorId);
   const {initial, context} = constructor.config;
@@ -275,7 +275,7 @@ export const initFsmInstance = (instanceId: string, constructorId: string): void
   };
   contextProvider.setValue<FsmInstance>(instanceId, newInstance, {debounce: 'NextCycle'});
 
-  _execAllActions(constructor, newInstance.state, finiteStateMachineConsumer(instanceId));
+  await _execAllActions(constructor, newInstance.state, finiteStateMachineConsumer(instanceId));
 };
 
 /**
@@ -305,7 +305,7 @@ export const subscribeSignals = (
               }
               else {
                 // prettier-ignore
-                transition(
+                void transition(
                     instanceId,
                     signalConfig.transition,
                     signalConfig.contextName == null ? undefined : {
@@ -402,11 +402,11 @@ export const destroy = (instanceId: string): void => {
 /**
  * Reset finite state machine instance to initial state and context.
  */
-export const reset = (instanceId: string): void => {
+export const reset = async (instanceId: string): Promise<void> => {
   logger.logMethodArgs?.('reset', instanceId);
   const constructorId = getFsmInstance(instanceId).constructorId;
   // contextProvider.expire(instanceId);
-  initFsmInstance(instanceId, constructorId);
+  await initFsmInstance(instanceId, constructorId);
 };
 
 /**
@@ -414,80 +414,81 @@ export const reset = (instanceId: string): void => {
  * Lookup current finite state machine instance or initialize new one and return consumer object .
  */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext extends T['TContext'] = T['TContext']>(
-  instanceId: string,
-  makeFromConstructor?: string,
-) => {
-  logger.logMethodArgs?.('stateMachineLookup', instanceId);
+export const finiteStateMachineConsumer =
+  async <T extends FsmTypeHelper, TContext extends T['TContext'] = T['TContext']>(
+    instanceId: string,
+    makeFromConstructor?: string,
+  ) => {
+    logger.logMethodArgs?.('stateMachineLookup', instanceId);
 
-  const machineInstance = contextConsumer.getValue<FsmInstance>(instanceId);
-  if (machineInstance == null) {
+    const machineInstance = contextConsumer.getValue<FsmInstance>(instanceId);
+    if (machineInstance == null) {
     // instance not initialized.
-    if (makeFromConstructor == null) {
-      throw new Error('fsm_undefined', {cause: {instanceId}});
+      if (makeFromConstructor == null) {
+        throw new Error('fsm_undefined', {cause: {instanceId}});
+      }
+      await initFsmInstance(instanceId, makeFromConstructor);
     }
-    initFsmInstance(instanceId, makeFromConstructor);
-  }
 
-  return {
+    return {
     /**
      * Finite state machine instance id.
      */
-    id: instanceId,
+      id: instanceId,
 
-    /**
+      /**
      * Finite state machine constructor id.
      */
-    constructorId: machineInstance?.constructorId! ?? makeFromConstructor,
+      constructorId: machineInstance?.constructorId ?? makeFromConstructor,
 
-    /**
+      /**
      * Render helper for use finite state machine instance in UI.
      */
-    render: render.bind(null, instanceId) as OmitFirstParam<typeof render<T['TState']>>,
+      render: render.bind(null, instanceId) as OmitFirstParam<typeof render<T['TState']>>,
 
-    /**
+      /**
      * Subscribe to finite state machine instance state changes.
      */
-    subscribe: subscribe.bind(null, instanceId) as OmitFirstParam<typeof subscribe>,
+      subscribe: subscribe.bind(null, instanceId) as OmitFirstParam<typeof subscribe>,
 
-    /**
+      /**
      * Unsubscribe from finite state machine instance state changes.
      */
-    unsubscribe: unsubscribe,
+      unsubscribe: unsubscribe,
 
-    /**
+      /**
      * Get current state of finite state machine instance.
      */
-    getState: getState.bind(null, instanceId) as OmitFirstParam<typeof getState<T['TState'], T['TEventId']>>,
+      getState: getState.bind(null, instanceId) as OmitFirstParam<typeof getState<T['TState'], T['TEventId']>>,
 
-    /**
+      /**
      * Get current context of finite state machine instance.
      */
-    getContext: getContext.bind(null, instanceId) as OmitFirstParam<typeof getContext<TContext>>,
+      getContext: getContext.bind(null, instanceId) as OmitFirstParam<typeof getContext<TContext>>,
 
-    /**
+      /**
      * Set context of finite state machine instance.
      */
-    setContext: setContext.bind(null, instanceId) as OmitFirstParam<typeof setContext<TContext>>,
+      setContext: setContext.bind(null, instanceId) as OmitFirstParam<typeof setContext<TContext>>,
 
-    /**
+      /**
      * Transition finite state machine instance to new state.
      */
-    transition: transition.bind(null, instanceId) as OmitFirstParam<typeof transition<T['TEventId'], TContext>>,
+      transition: transition.bind(null, instanceId) as OmitFirstParam<typeof transition<T['TEventId'], TContext>>,
 
-    /**
+      /**
      * Define signals for finite state machine instance.
      */
-    defineSignals: defineInstanceSignals.bind(null, instanceId) as OmitFirstParam<typeof defineInstanceSignals<T>>,
+      defineSignals: defineInstanceSignals.bind(null, instanceId) as OmitFirstParam<typeof defineInstanceSignals<T>>,
 
-    /**
+      /**
      * Reset finite state machine instance to initial state and context.
      */
-    reset: reset.bind(null, instanceId) as OmitFirstParam<typeof reset>,
+      reset: reset.bind(null, instanceId) as OmitFirstParam<typeof reset>,
 
-    /**
+      /**
      * Destroy finite state machine instance object to clear memory.
      */
-    destroy: destroy.bind(null, instanceId) as OmitFirstParam<typeof destroy>,
-  } as const;
-};
+      destroy: destroy.bind(null, instanceId) as OmitFirstParam<typeof destroy>,
+    } as const;
+  };

@@ -247,7 +247,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
       return documentObject;
     }
     else {
-      return JSON.parse(JSON.stringify(documentObject));
+      return JSON.parse(JSON.stringify(documentObject)) as DocumentType;
     }
   }
 
@@ -272,7 +272,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     this._logger.logMethodArgs?.('set', documentObject.id);
 
     if (fastInstance !== true) {
-      documentObject = JSON.parse(JSON.stringify(documentObject));
+      documentObject = JSON.parse(JSON.stringify(documentObject)) as DocumentType;
     }
 
     if (documentObject.id === 'auto_increment') {
@@ -396,7 +396,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
    */
   unload(): void {
     this._logger.logMethod?.('unload');
-    this._$save();
+    void this._$save();
     this._keys = null;
     this._storage = this._newStorage;
   }

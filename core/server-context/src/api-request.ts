@@ -34,14 +34,14 @@ export abstract class AlwatrApiRequestBase<
     }
 
     try {
-      this._responseJson = JSON.parse(responseText);
+      this._responseJson = JSON.parse(responseText) as T;
     }
     catch (err) {
       this._logger.error('_$fetch', 'invalid_response_json', err, {responseText});
       throw err;
     }
 
-    const responseJson = this._responseJson!;
+    const responseJson = this._responseJson;
     if (responseJson.ok !== true) {
       if (typeof responseJson.errorCode === 'string') {
         this._logger.accident('_$fetch', responseJson.errorCode, 'fetch response not ok', {responseJson});

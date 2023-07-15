@@ -223,7 +223,7 @@ export class AlwatrL10n extends AlwatrObservable<LocaleCode> {
 
     if (this._locale?.code !== locale.code) {
       this._locale = locale;
-      this._localeChanged();
+      void this._localeChanged();
     }
   }
 

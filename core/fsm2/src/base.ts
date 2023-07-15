@@ -70,7 +70,7 @@ export abstract class FiniteStateMachineBase<S extends string, E extends string>
 
     this._notify(toState);
 
-    this._transitioned(eventDetail);
+    await this._transitioned(eventDetail);
   }
 
   /**
@@ -89,21 +89,26 @@ export abstract class FiniteStateMachineBase<S extends string, E extends string>
     }
 
     if (`_on_${eventDetail.from}_${eventDetail.event}` in this) {
-      this._$execAction(`_on_${eventDetail.from}_${eventDetail.event}`, eventDetail);
+      await this._$execAction(`_on_${eventDetail.from}_${eventDetail.event}`, eventDetail);
     }
     else {
-      this._$execAction(`_on_all_${eventDetail.event}`, eventDetail);
+      await this._$execAction(`_on_all_${eventDetail.event}`, eventDetail);
     }
   }
 
   /**
    * Execute action name if defined in _actionRecord.
    */
-  protected _$execAction(name: ActionName<S, E>, eventDetail: StateEventDetail<S, E>): MaybePromise<void> {
+  protected async _$execAction(name: ActionName<S, E>, eventDetail: StateEventDetail<S, E>): Promise<void> {
     const actionFn = this._actionRecord[name];
     if (typeof actionFn === 'function') {
       this._logger.logMethodArgs?.('_$execAction', name);
-      return this._actionRecord[name]?.call(this, eventDetail);
+      try {
+        return await this._actionRecord[name]?.call(this, eventDetail);
+      }
+      catch (err) {
+        this._logger.error?.('_$execAction', 'action_failed', err);
+      }
     }
   }
 

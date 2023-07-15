@@ -247,8 +247,8 @@ export const clamp = (val: number, min: number, max: number): number => (val > m
 
 export const hex = (bytes: Uint8Array): string => {
   let str = '';
-  for (let i = 0; i < bytes.length; i++) {
-    str += bytes[i].toString(16).padStart(2, '0');
+  for (const byte of bytes) {
+    str += byte.toString(16).padStart(2, '0');
   }
   return str;
 };

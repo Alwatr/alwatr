@@ -104,7 +104,7 @@ export async function serviceRequest<
 
   let responseJson: T;
   try {
-    responseJson = JSON.parse(responseText);
+    responseJson = JSON.parse(responseText) as T;
   }
   catch (err) {
     logger.error('serviceRequest', 'invalid_json', err, {responseText});
@@ -231,7 +231,7 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
       // else
       const response = await _handleRemoveDuplicate(options);
       if (response.ok) {
-        cacheStorage.put(request, response.clone());
+        await cacheStorage.put(request, response.clone());
       }
       return response;
     }
@@ -255,7 +255,7 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
       try {
         const networkResponse = await _handleRemoveDuplicate(options);
         if (networkResponse.ok) {
-          cacheStorage.put(request, networkResponse.clone());
+          await cacheStorage.put(request, networkResponse.clone());
         }
         return networkResponse;
       }
@@ -272,16 +272,16 @@ async function _handleCacheStrategy(options: Required<FetchOptions>): Promise<Re
     case 'update_cache': {
       const networkResponse = await _handleRemoveDuplicate(options);
       if (networkResponse.ok) {
-        cacheStorage.put(request, networkResponse.clone());
+        await cacheStorage.put(request, networkResponse.clone());
       }
       return networkResponse;
     }
 
     case 'stale_while_revalidate': {
       const cachedResponse = await cacheStorage.match(request);
-      const fetchedResponsePromise = _handleRemoveDuplicate(options).then((networkResponse) => {
+      const fetchedResponsePromise = _handleRemoveDuplicate(options).then(async (networkResponse) => {
         if (networkResponse.ok) {
-          cacheStorage.put(request, networkResponse.clone());
+          await cacheStorage.put(request, networkResponse.clone());
           if (typeof options.revalidateCallback === 'function') {
             setTimeout(options.revalidateCallback, 0, networkResponse.clone());
           }

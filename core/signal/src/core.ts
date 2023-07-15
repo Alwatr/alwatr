@@ -128,9 +128,9 @@ export const subscribe = <T extends Stringifyable>(
   if (execCallback) {
     // Run callback for old dispatch signal
 
-    const callback = (): void => {
+    const callback = async (): Promise<void> => {
       try {
-        if (signal.detail !== undefined) listenerCallback(signal.detail);
+        if (signal.detail !== undefined) await listenerCallback(signal.detail);
       }
       catch (err) {
         logger.error('subscribe', 'call_signal_callback_failed', err, {
@@ -355,7 +355,7 @@ export const defineCommand = <TArgument extends StringifyableRecord, TReturn ext
       async (argumentObject) => {
         clearDetail(requestSignalId); // clean argumentObject from memory
         if (argumentObject._callbackSignalId == null) {
-          signalProvider(argumentObject);
+          await signalProvider(argumentObject);
         }
         else {
           // prettier-ignore

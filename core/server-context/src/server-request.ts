@@ -44,7 +44,7 @@ export abstract class AlwatrServerRequestBase<
   protected _request(options?: Partial<FetchOptions>): void {
     this._logger.logMethodArgs?.('_request', options);
     this._setOptions(options);
-    this._transition('request');
+    void this._transition('request');
   }
 
   protected async _$fetch(options: FetchOptions): Promise<void> {
@@ -66,11 +66,11 @@ export abstract class AlwatrServerRequestBase<
 
       await this._$fetch(this._$fetchOptions);
 
-      this._transition('requestSuccess');
+      void this._transition('requestSuccess');
     }
     catch (err) {
       this._logger.error('_$requestAction', 'fetch_failed', err);
-      this._transition('requestFailed');
+      void this._transition('requestFailed');
     }
   }
 
