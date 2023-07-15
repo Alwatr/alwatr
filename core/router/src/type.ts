@@ -1,4 +1,4 @@
-import type {QueryParameters} from '@alwatr/type';
+import type {QueryParameters, StringifyableRecord} from '@alwatr/type';
 
 /**
  * Route context base type.
@@ -14,7 +14,7 @@ import type {QueryParameters} from '@alwatr/type';
  * }
  * ```
  */
-export interface RouteContextBase {
+export interface RouteContextBase extends StringifyableRecord {
   sectionList: (string | number | boolean)[];
   queryParamList: QueryParameters;
   hash: string;

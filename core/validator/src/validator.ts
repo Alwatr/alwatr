@@ -1,7 +1,7 @@
 import {UnicodeDigits, isNumber} from '@alwatr/math';
 
 import type {JsonSchema} from './type.js';
-import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
+import type {StringifyableRecord} from '@alwatr/type';
 
 export type {JsonSchema};
 

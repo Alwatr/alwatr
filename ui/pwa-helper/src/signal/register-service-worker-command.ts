@@ -1,8 +1,9 @@
 import {commandHandler, eventTrigger} from '@alwatr/signal';
 
 import {logger} from '../logger.js';
+import type {StringifyableRecord} from '@alwatr/type';
 
-export interface Options {
+export interface Options extends StringifyableRecord {
   /**
    * Service worker path
    *
