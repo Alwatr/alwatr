@@ -140,7 +140,7 @@ export const colorTheme: Config['theme'] = {
     onPrimaryContainerDark: refColors.refPrimary[90],
 
     /**
-     * secondary colors
+     * Secondary colors
      */
     secondary: 'rgba(var(--sys-color-secondary), <alpha-value>)',
     secondaryLight: refColors.refSecondary[40],
@@ -201,7 +201,6 @@ export const colorTheme: Config['theme'] = {
 
     /**
      * Surface variant colors
-     * FIXME: !
      */
     surfaceVariant: 'rgba(var(--sys-color-surface-variant), <alpha-value>)',
     surfaceVariantLight: refColors.refNeutral[90],
@@ -212,13 +211,16 @@ export const colorTheme: Config['theme'] = {
     onSurfaceVariantDark: refColors.refNeutral[80],
 
     /**
-     * Outline variant colors
+     * Outline colors
      */
-    outlineVariant: 'rgba(var(--sys-color-outline-variant), <alpha-value>)',
+    outline: 'rgba(var(--sys-color-outline), <alpha-value>)',
     outlineLight: refColors.refNeutral[50],
     outlineDark: refColors.refNeutral[60],
 
-    onOutlineVariant: 'rgba(var(--sys-color-on-outline-variant), <alpha-value>)',
+    /**
+     * Outline variant colors
+     */
+    outlineVariant: 'rgba(var(--sys-color-outline-variant), <alpha-value>)',
     outlineVariantLight: refColors.refNeutral[80],
     outlineVariantDark: refColors.refNeutral[30],
 
