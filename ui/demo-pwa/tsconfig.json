@@ -22,6 +22,7 @@
     {"path": "../../core/fract"},
     {"path": "../../core/router2"},
     {"path": "../../core/i18n2"},
-    {"path": "../../ui/ui-kit"}
+    {"path": "../../ui/ui-kit"},
+    {"path": "../../ui/style"}
   ]
 }

@@ -1,0 +1,32 @@
+{
+  "name": "@alwatr/style",
+  "version": "1.0.0",
+  "description": "Alwatr shared styles (lib, utils, theme, ...).",
+  "keywords": [
+    "style",
+    "alwatr"
+  ],
+  "main": "main.js",
+  "type": "module",
+  "types": "main.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "license": "MIT",
+  "files": [
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md,svg,css}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "ui/style"
+  },
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui/style#readme",
+  "bugs": {
+    "url": "https://github.com/AliMD/alwatr/issues"
+  },
+  "dependencies": {
+    "tslib": "^2.6.0"
+  }
+}
