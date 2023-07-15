@@ -69,7 +69,7 @@ export class AlwatrIcon extends DirectionMixin(SignalMixin(AlwatrBaseElement)) {
   private _name = '';
   set name(val: string) {
     this._name = val;
-    if (val) this._fetchIcon(val);
+    if (val) void this._fetchIcon(val);
   }
 
   @property()

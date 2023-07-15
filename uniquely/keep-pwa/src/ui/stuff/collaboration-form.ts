@@ -89,7 +89,7 @@ export class AlwatrCollaborationForm extends LocalizeMixin(SignalMixin(AlwatrBas
     }
   }
 
-  protected async cancel(): Promise<void> {
+  protected cancel(): void {
     this.dispatchEvent(new CustomEvent('form-canceled'));
   }
 
@@ -133,7 +133,7 @@ export class AlwatrCollaborationForm extends LocalizeMixin(SignalMixin(AlwatrBas
       ></alwatr-text-field>
       <alwatr-text-field
         .name=${'city'}
-        .type=${'string'}
+        .type=${'text'}
         .placeholder=${message('city')}
         outlined
         active-outline

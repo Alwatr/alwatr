@@ -11,7 +11,7 @@ export class AlwatrIconDirective extends AlwatrDynamicDirective {
 
   render(svg: MaybePromise<string>, flipIconInRtl = false): unknown {
     if (svg instanceof Promise) {
-      svg.then((_svg) => {
+      void svg.then((_svg) => {
         this.setValue(this._render_icon(_svg));
       });
       return this._render_icon();

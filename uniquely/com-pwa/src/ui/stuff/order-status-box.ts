@@ -33,6 +33,11 @@ export class AlwatrOrderStatusBox extends LocalizeMixin(SignalMixin(AlwatrBaseEl
     }
   `;
 
+  constructor() {
+    super();
+    this._onClickEvent = this._onClickEvent.bind(this);
+  }
+
   @property({attribute: false})
     content?: Order | OrderDraft | null;
 

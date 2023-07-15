@@ -25,6 +25,7 @@ export function LoggerMixin<T extends Constructor<LitElement>>(superClass: T): C
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(...args: any[]) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       super(...args);
       this._logger.logMethod?.('constructor');
     }

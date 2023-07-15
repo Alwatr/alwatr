@@ -6,9 +6,9 @@ for (const button of buttons) {
   const url = button.dataset.url;
 
   if (button && url) {
-    button.addEventListener('click', async () => {
+    button.addEventListener('click', () => {
       try {
-        const response = await fetch({
+        void fetch({
           url,
           mode: 'cors',
           timeout: +document.querySelector<HTMLSelectElement>('#timeout')!.value,
@@ -17,8 +17,9 @@ for (const button of buttons) {
           async revalidateCallback(response) {
             console.log('Demo revalidateCallback: %o', {url, response, text: await response.text()});
           },
+        }).then((response) => {
+          console.log('Demo fetch: %o', {url, response, text: response.text()});
         });
-        console.log('Demo response: %o', {url, response, text: await response.text()});
       }
       catch (error) {
         console.warn('Demo catch error: %o', {url, error});

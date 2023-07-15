@@ -13,9 +13,9 @@ export async function crawlAllJobs(): Promise<void> {
   const jobKeyList = Object.keys(jobList);
   let updated = false;
 
-  for (let i = 0; i < jobKeyList.length; i++) {
+  for (const jobKey of jobKeyList) {
     try {
-      const job = jobList[jobKeyList[i]];
+      const job = jobList[jobKey];
       const oldResultList = job.resultList;
       const resultList = await crawl(job.detail);
       job.resultList = resultList;

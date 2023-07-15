@@ -6,4 +6,4 @@ import './route/notify.js';
 
 logger.logOther?.('..:: Alwatr Telegram Notify Nanoservice ::..');
 
-launchBot();
+void launchBot();

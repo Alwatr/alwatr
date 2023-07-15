@@ -27,7 +27,8 @@ document.getElementById('myButton5')?.addEventListener('click', () => {
   console.log('value:', context.getValue());
 });
 
-document.getElementById('myButton6')?.addEventListener('click', async () => {
-  await context.untilChange();
-  console.log('until change reolved');
+document.getElementById('myButton6')?.addEventListener('click', () => {
+  void context.untilChange().then(() => {
+    console.log('until change reolved');
+  });
 });

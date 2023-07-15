@@ -4,7 +4,7 @@ import {homePageContent} from '../../content/home-page-fa.js'; // for perf
 import {homePageContentContextProvider} from '../context.js';
 import {logger} from '../logger.js';
 
-localeContextConsumer.subscribe(async () => {
+localeContextConsumer.subscribe(() => {
   const language = localeContextConsumer.getValue()?.language;
   logger.logMethodArgs?.('contentProvider', {language});
   if (language == null) return;

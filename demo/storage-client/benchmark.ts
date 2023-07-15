@@ -85,4 +85,4 @@ async function getBench(): Promise<void> {
 
 await getBench();
 
-request();
+void request();

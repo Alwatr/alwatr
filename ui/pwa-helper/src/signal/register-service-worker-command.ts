@@ -1,6 +1,7 @@
 import {commandHandler, eventTrigger} from '@alwatr/signal';
 
 import {logger} from '../logger.js';
+
 import type {StringifyableRecord} from '@alwatr/type';
 
 export interface Options extends StringifyableRecord {

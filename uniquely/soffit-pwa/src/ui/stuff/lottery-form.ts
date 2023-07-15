@@ -91,7 +91,7 @@ export class AlwatrLotteryForm extends LocalizeMixin(SignalMixin(AlwatrBaseEleme
     }
   }
 
-  protected async cancel(): Promise<void> {
+  protected cancel(): void {
     this.dispatchEvent(new CustomEvent('form-canceled'));
   }
 

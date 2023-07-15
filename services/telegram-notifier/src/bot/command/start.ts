@@ -9,7 +9,7 @@ bot.command('start', async (ctx): Promise<void> => {
   logger.logMethodArgs?.('command/start', {chatId, token});
 
   if (token == null) {
-    ctx.reply('این یک بات خصوصی هستش! لطفا مزاحم نشوید.');
+    await ctx.reply('این یک بات خصوصی هستش! لطفا مزاحم نشوید.');
     return;
   }
 
@@ -19,7 +19,7 @@ bot.command('start', async (ctx): Promise<void> => {
   };
 
   if (target.memberList.indexOf(chatId) !== -1) {
-    ctx.reply('شما درحال حاضر عضو این لیست هستید!');
+    await ctx.reply('شما درحال حاضر عضو این لیست هستید!');
     return;
   }
 

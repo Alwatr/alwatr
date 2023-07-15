@@ -135,7 +135,7 @@ export class AlwatrLotteryBox extends LocalizeMixin(SignalMixin(AlwatrBaseElemen
       this.style.height = 'auto';
       return;
     }
-    form.animateExpand();
+    void form.animateExpand();
 
     await untilEvent(box, 'transitionend');
     box.style.height = 'auto';
@@ -153,7 +153,7 @@ export class AlwatrLotteryBox extends LocalizeMixin(SignalMixin(AlwatrBaseElemen
 
     const form = this.renderRoot.querySelector<AlwatrLotteryForm>('#form');
     if (form != null) {
-      form.animateCollapse();
+      void form.animateCollapse();
       await delay(250);
     }
 

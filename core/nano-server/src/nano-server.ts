@@ -101,15 +101,15 @@ export class AlwatrNanoServer {
     this.httpServer.keepAliveTimeout = this._config.keepAliveTimeout;
     this.httpServer.headersTimeout = this._config.headersTimeout;
 
-    this.httpServer.on('error', this._errorListener);
-    this.httpServer.on('clientError', this._clientErrorListener);
+    this.httpServer.on('error', this._errorListener.bind(this));
+    this.httpServer.on('clientError', this._clientErrorListener.bind(this));
 
     if (this._config.healthRoute === true) {
-      this.route('GET', '/health', this._onHealthCheckRequest);
+      this.route('GET', '/health', this._onHealthCheckRequest.bind(this));
     }
 
     if (this._config.allowAllOrigin === true) {
-      this.route('OPTIONS', 'all', this._onHOptionRequest);
+      this.route('OPTIONS', 'all', this._onHOptionRequest.bind(this));
     }
 
     this.httpServer.listen(this._config.port, this._config.host, () => {
@@ -320,10 +320,10 @@ export class AlwatrNanoServer {
     // TODO: handled open remained connections.
 
     const middleware =
-      this.middlewareList[connection.method]?.[route] ||
-      this.middlewareList.ALL[route] ||
-      this.middlewareList[connection.method]?.all ||
-      this.middlewareList.ALL.all ||
+      this.middlewareList[connection.method]?.[route] ??
+      this.middlewareList.ALL[route] ??
+      this.middlewareList[connection.method]?.all ??
+      this.middlewareList.ALL.all ??
       this._notFoundListener;
 
     try {
@@ -434,6 +434,7 @@ export class AlwatrConnection {
     let body = '';
 
     this.incomingMessage.on('data', (chunk: unknown) => {
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       body += chunk;
     });
 

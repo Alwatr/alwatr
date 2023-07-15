@@ -382,7 +382,7 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
     const order = this.fsm.getContext().newOrder;
     return html`
       <alwatr-surface tinted>
-        <alwatr-order-shipping-form .formData=${order.shippingInfo}></alwatr-order-shipping-form>
+        <alwatr-order-shipping-form .formData=${order.shippingInfo ?? {}}></alwatr-order-shipping-form>
       </alwatr-surface>
       <div class="btn-container">
         <alwatr-button .content=${buttons.submitShippingForm}></alwatr-button>

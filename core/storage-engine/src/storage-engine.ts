@@ -151,7 +151,7 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
     this.saveDebounce = config.saveDebounce ?? 1000;
     this.saveBeautiful = config.saveBeautiful || false;
 
-    exitHook(() => this._$save(true));
+    exitHook(() => void this._$save(true));
     this._storage = this.load();
 
     if (this._storage.meta?.formatVersion !== AlwatrStorageEngine.formatVersion) {

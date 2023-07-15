@@ -135,7 +135,7 @@ export class AlwatrCollaborationBox extends LocalizeMixin(SignalMixin(AlwatrBase
       this.style.height = 'auto';
       return;
     }
-    form.animateExpand();
+    void form.animateExpand();
 
     await untilEvent(box, 'transitionend');
     box.style.height = 'auto';
@@ -153,7 +153,7 @@ export class AlwatrCollaborationBox extends LocalizeMixin(SignalMixin(AlwatrBase
 
     const form = this.renderRoot.querySelector<AlwatrCollaborationForm>('#form');
     if (form != null) {
-      form.animateCollapse();
+      void form.animateCollapse();
       await delay(250);
     }
 

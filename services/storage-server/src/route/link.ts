@@ -40,7 +40,7 @@ nanoServer.route('GET', '/link', async (connection) => {
 
   const destDir = dirname(dest);
   if (!existsSync(destDir)) {
-    mkdir(destDir, {recursive: true});
+    await mkdir(destDir, {recursive: true});
   }
 
   if (!existsSync(src)) {

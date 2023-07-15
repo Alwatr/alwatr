@@ -6,6 +6,6 @@ const serverContext = new AlwatrServerContext({
 });
 
 serverContext.request();
-serverContext.subscribe(async function StateChaned() {
+serverContext.subscribe(function StateChaned() {
   console.log('serverContext => result', {state: this.state, context: this.context});
 });

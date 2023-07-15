@@ -70,7 +70,7 @@ export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseE
     }
   `;
 
-  @property()
+  @property({type: Object})
     userIncOrder?: ComUserIncOrder;
 
   override render(): unknown {
@@ -109,11 +109,11 @@ export class alwatrUserIncOrderBox extends LocalizeMixin(SignalMixin(AlwatrBaseE
       orderListTemplate = html`
       <span class="empty-order">
         ${message('page_admin_order_list_empty_order_list')}
-      <span>`;
+      </span>`;
     }
     else {
       const orderList = orderListValues.sort((o1, o2) => {
-        return (o2.meta?.updated || 0) - (o1.meta?.updated || 0);
+        return (o2.meta?.updated ?? 0) - (o1.meta?.updated ?? 0);
       });
 
       orderListTemplate = mapIterable(this, orderList, (order) => this._renderOrderInfo(order));

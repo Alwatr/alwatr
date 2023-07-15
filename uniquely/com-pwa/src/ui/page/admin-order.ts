@@ -404,15 +404,15 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
       <div class="detail-container">
         <div>
           <span>${message('order_shipping_recipient_name_title')}:</span>
-          <span>${shippingInfo?.recipientName || nullStr}</span>
+          <span>${shippingInfo?.recipientName ?? nullStr}</span>
         </div>
         <div>
           <span>${message('order_shipping_recipient_national_code_title')}:</span>
-          <span>${replaceNumber(shippingInfo?.recipientNationalCode || nullStr)}</span>
+          <span>${replaceNumber(shippingInfo?.recipientNationalCode ?? nullStr)}</span>
         </div>
         <div>
           <span>${message('order_shipping_address_title')}:</span>
-          <span>${replaceNumber(shippingInfo?.address || nullStr)}</span>
+          <span>${replaceNumber(shippingInfo?.address ?? nullStr)}</span>
         </div>
         <div>
           <span>${message('order_shipping_car_type_title')}:</span>

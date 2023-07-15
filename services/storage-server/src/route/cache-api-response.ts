@@ -26,7 +26,7 @@ nanoServer.route<Record<string, never>>('PUT', '/cache-api-response', async (con
     };
   }
 
-  writeJsonFile<AlwatrServiceResponseSuccess>(path, {
+  await writeJsonFile<AlwatrServiceResponseSuccess>(path, {
     ok: true,
     data: bodyJson.data,
   });

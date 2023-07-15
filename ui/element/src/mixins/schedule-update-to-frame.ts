@@ -11,7 +11,7 @@ export function ScheduleUpdateToFrameMixin<T extends Constructor<SignalMixinInte
   class ScheduleUpdateToFrameMixinClass extends superClass {
     protected override async scheduleUpdate(): Promise<void> {
       await untilNextFrame();
-      super.scheduleUpdate();
+      await super.scheduleUpdate();
     }
   }
   return ScheduleUpdateToFrameMixinClass as unknown as Constructor<ScheduleUpdateToFrameMixinInterface> & T;

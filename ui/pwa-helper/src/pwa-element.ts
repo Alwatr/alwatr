@@ -100,7 +100,7 @@ export class AlwatrPwaElement extends RouterMixin(SignalMixin(UnresolvedMixin(Al
 
   protected override async scheduleUpdate(): Promise<void> {
     await untilNextFrame();
-    super.scheduleUpdate();
+    await super.scheduleUpdate();
   }
 
   override render(): unknown {

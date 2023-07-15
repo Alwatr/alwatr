@@ -72,8 +72,8 @@ class AlwatrPwa extends AlwatrPwaElement {
     import('./page/admin-order.js');
     topAppBarContextProvider.setValue({headlineKey: 'loading'});
     return html`<alwatr-page-admin-order
-      .userId=${routeContext.sectionList[1]}
-      .orderId=${routeContext.sectionList[2]}
+      .userId=${routeContext.sectionList[1].toString() ?? ''}
+      .orderId=${routeContext.sectionList[2].toString() ?? ''}
       unresolved
       >...</alwatr-page-admin-order
     >`;
@@ -82,7 +82,7 @@ class AlwatrPwa extends AlwatrPwaElement {
   protected _renderPageOrder(routeContext: RouteContext): unknown {
     import('./page/order.js');
     topAppBarContextProvider.setValue({headlineKey: 'loading'});
-    const orderId = routeContext.sectionList[1] ?? 'new';
+    const orderId = routeContext.sectionList[1].toString() ?? 'new';
     return html`<alwatr-page-order .orderId=${orderId} unresolved>...</alwatr-page-order>`;
   }
 

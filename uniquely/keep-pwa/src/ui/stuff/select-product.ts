@@ -47,7 +47,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
     }
   `;
 
-  @property()
+  @property({type: Object})
   protected productStorage?: AlwatrDocumentStorage<Product & {price: number}> = {
       ok: true,
       meta: {

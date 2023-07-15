@@ -92,7 +92,7 @@ export class AlwatrSnackbar extends AlwatrSurface {
     this._logger.logProperty?.('open', open);
     if (this._opened === open) return;
     this._opened = open;
-    this.updateComplete.then(async () => {
+    void this.updateComplete.then(async () => {
       if (this._opened !== open) return;
       this.toggleAttribute('opened', open);
       this.toggleAttribute('closing', !open);

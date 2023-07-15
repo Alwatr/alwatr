@@ -37,7 +37,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
     }
   `;
 
-  @property()
+  @property({type: Object})
     formData: Partial<OrderShippingInfo> = {};
 
   override connectedCallback(): void {
@@ -98,7 +98,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         .name=${'recipientName'}
         .type=${'text'}
         .placeholder=${message('order_shipping_recipient_name_title')}
-        .value=${this.formData.recipientName}
+        .value=${this.formData.recipientName ?? ''}
         @input-change=${this._inputChanged}
         outlined
         active-outline
@@ -108,7 +108,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         .name=${'recipientNationalCode'}
         .type=${'number'}
         .placeholder=${message('order_shipping_recipient_national_code_title')}
-        .value=${this.formData.recipientNationalCode}
+        .value=${this.formData.recipientNationalCode ?? ''}
         @input-change=${this._inputChanged}
         outlined
         active-outline
@@ -118,7 +118,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         .name=${'address'}
         .type=${'textarea'}
         .placeholder=${message('order_shipping_address_title')}
-        .value=${this.formData.address}
+        .value=${this.formData.address ?? ''}
         @input-change=${this._inputChanged}
         outlined
         active-outline
@@ -148,7 +148,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
         .name=${'description'}
         .type=${'textarea'}
         .placeholder=${message('order_shipping_description_title')}
-        .value=${this.formData.description}
+        .value=${this.formData.description ?? ''}
         @input-change=${this._inputChanged}
         outlined
         active-outline

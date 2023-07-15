@@ -1,4 +1,4 @@
-import type {StringifyableRecord} from "@alwatr/type";
+import type {StringifyableRecord} from '@alwatr/type';
 
 export interface SnackbarOptions extends StringifyableRecord {
   /**

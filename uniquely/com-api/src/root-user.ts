@@ -23,4 +23,4 @@ const initRootUser = async (): Promise<void> => {
   }
 };
 
-initRootUser();
+void initRootUser();
