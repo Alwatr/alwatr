@@ -23,18 +23,15 @@ export class AlwatrTourCardDirective extends AlwatrDirective {
         <img src=${content.image.id} />
         <div class="description">
           <h3>${content.title}</h3>
-          ${}
+          ${map(
+      content.descriptionList,
+      (description) => html`<div class="description__item">${
+        alwatrIcon({svg: description.icon})
+      }${description.text}</div>`,
+  )}
         </div>
       </div>
     `;
-  }
-
-  protected _render_() {
-    return map(
-      descriptionList,
-      (description) => html`<div class="description__item">${
-        alwatrIcon({svg: description.icon})
-      }${description.text}</div>`)
   }
 }
 

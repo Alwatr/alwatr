@@ -1,7 +1,7 @@
 import {AlwatrDynamicDirective, directive, html, type PartInfo} from '@alwatr/fract';
+import {alwatrNavigationBar} from '@alwatr/ui-kit2/navigation-bar/navigation-bar.js';
 import {alwatrTopAppBar} from '@alwatr/ui-kit2/top-app-bar/top-app-bar.js';
 
-import {alwatrNavigationBar} from '../stuff/navigation-bar/navigation-bar.js';
 import {alwatrTourCard} from '../stuff/tour-card/tour-card.js';
 
 class AlwatrDestCardList extends AlwatrDynamicDirective {
