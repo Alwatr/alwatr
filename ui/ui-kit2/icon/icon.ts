@@ -6,7 +6,7 @@ import type {MaybePromise} from '@alwatr/type';
 
 export interface AlwatrIconOptions {
   svg: MaybePromise<string>;
-  flipIconInRtl: boolean;
+  flipIconInRtl?: boolean;
 }
 
 export class AlwatrIconDirective extends AlwatrDynamicDirective {
