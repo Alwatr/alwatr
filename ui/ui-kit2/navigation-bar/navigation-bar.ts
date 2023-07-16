@@ -29,9 +29,13 @@ export class AlwatrNavigationBarDirective extends AlwatrDirective {
     return html`<div class="sticky bottom-0 left-0 z-50 w-full h-16 bg-white
           border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
       <div class="grid h-full max-w-lg grid-cols-3 mx-auto">
-        ${map(options.itemList, (item) => this._render_navigation_item(item), this)}
+        ${this._render_navigation_item_list(options.itemList)}
       </div>
     </div>`;
+  }
+
+  protected _render_navigation_item_list(itemList: Array<AlwatrNavigationBarItem>): unknown {
+    return map(itemList, (item) => this._render_navigation_item(item), this);
   }
 
   protected _render_navigation_item(item: AlwatrNavigationBarItem): unknown {
@@ -44,8 +48,8 @@ export class AlwatrNavigationBarDirective extends AlwatrDirective {
   protected _render_label(item: AlwatrNavigationBarItem): unknown {
     if (item.label == null && item.labelKey == null) return nothing;
     const label = item.label || l10n.message(item.labelKey);
-    return html`<span class="text-sm text-gray-500 dark:text-gray-400
-    group-hover:text-blue-600 dark:group-hover:text-blue-500">
+    return html`<span
+      class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
       ${label}
     </span>`;
   }

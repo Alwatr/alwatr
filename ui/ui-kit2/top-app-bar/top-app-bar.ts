@@ -1,7 +1,8 @@
 import {AlwatrDirective, directive, html, noChange, nothing, map, type PartInfo} from '@alwatr/fract';
 import {l10n} from '@alwatr/i18n2';
 
-import type {AlwatrIconButtonContent} from '../icon-button/icon-button.js';
+import {alwatrIconButton, type AlwatrIconButtonContent} from '../icon-button/icon-button.js';
+
 import type {StringifyableRecord} from '@alwatr/type';
 
 
@@ -62,16 +63,19 @@ export class AlwatrTopAppBarDirective extends AlwatrDirective {
     return html`
       <div class="alwatr-top-app-bar" type=${options.type}>
         <div class="row">
-          <alwatr-icon-button class="leading-icon" .content=${options.startIcon}></alwatr-icon-button>
+          ${alwatrIconButton({icon: options.startIcon.icon, flipRtl: options.startIcon.flipRtl})}
           <div class="title">${titleTemplate}</div>
-          ${map(options.endIconList, (iconContent) => html`<alwatr-icon-button
-            class="trailing-icons"
-            .content=${iconContent}
-          ></alwatr-icon-button>`)}
+          ${this._render_end_icon_list(options.endIconList)}
         </div>
         <div class="headline">${headlineTemplate}</div>
       </div>
     `;
+  }
+
+  protected _render_end_icon_list(endIconList: Array<AlwatrIconButtonContent>): unknown {
+    return map(endIconList, (iconOptions) => {
+      return alwatrIconButton({icon: iconOptions.icon, flipRtl: iconOptions.flipRtl});
+    });
   }
 }
 
