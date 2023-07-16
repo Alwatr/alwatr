@@ -21,7 +21,7 @@ const banner = '/* ..:: Alwatr PWA ::.. */\n';
 const srcDir = 'src';
 const resDir = 'res';
 const outDir = 'dist';
-const srcFilename = 'alwatr-pwa';
+const srcFilename = 'main';
 
 const cleanMode = process.argv.includes('--clean');
 const watchMode = process.argv.includes('--watch');
@@ -132,8 +132,8 @@ async function makeHtml() {
   }
 
   htmlContent = htmlContent
-      .replaceAll('alwatr-pwa.css', cssFilename)
-      .replaceAll('alwatr-pwa.js', jsFilename);
+      .replaceAll(`${srcFilename}.css`, cssFilename)
+      .replaceAll(`${srcFilename}.js`, jsFilename);
 
   await copyPromise; // wait to cp done
   await fs.writeFile(`${outDir}/index.html`, htmlContent, {encoding: 'utf-8', flag: 'w'});
