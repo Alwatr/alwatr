@@ -3,25 +3,18 @@ import {l10n} from '@alwatr/i18n2';
 
 import {alwatrIcon} from '../icon/icon.js';
 
-import type {MaybePromise} from '@alwatr/type';
+import type {StringifyableRecord} from '@alwatr/type';
 
-export interface AlwatrNavigationBarItem {
-  icon: MaybePromise<string>;
-
+export interface AlwatrNavigationBarItem extends StringifyableRecord {
+  icon: string;
   label?: string;
-
   labelKey?: string;
-
   href?: string;
-
-  /**
-   * @default false
-   */
   flipIconInRtl?: boolean;
 }
 
-export interface AlwatrNavigationBarOptions {
-  itemList: Array<AlwatrNavigationBarItem>;
+export interface AlwatrNavigationBarOptions extends StringifyableRecord {
+itemList: Array<AlwatrNavigationBarItem>;
 }
 
 export class AlwatrNavigationBarDirective extends AlwatrDirective {
@@ -36,12 +29,12 @@ export class AlwatrNavigationBarDirective extends AlwatrDirective {
     return html`<div class="sticky bottom-0 left-0 z-50 w-full h-16 bg-white
           border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
       <div class="grid h-full max-w-lg grid-cols-3 mx-auto">
-        ${map(options.itemList, (item) => this._render_nav_item(item), this)}
+        ${map(options.itemList, (item) => this._render_navigation_item(item), this)}
       </div>
     </div>`;
   }
 
-  protected _render_nav_item(item: AlwatrNavigationBarItem): unknown {
+  protected _render_navigation_item(item: AlwatrNavigationBarItem): unknown {
     return html`<button type="button" class="inline-flex flex-col items-center justify-center font-medium px-54
     hover:bg-gray-50 dark:hover:bg-gray-800 group">
       ${alwatrIcon({svg: item.icon, flipIconInRtl: item.flipIconInRtl})}${this._render_label(item)}

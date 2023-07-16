@@ -1,28 +1,14 @@
 import {AlwatrDirective, directive, html, noChange, type PartInfo} from '@alwatr/fract';
 
+import {alwatrIcon} from '../icon/icon.js';
+
 import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
 
 export interface AlwatrIconButtonContent extends StringifyableRecord {
-  /**
-   * Icon name.
-   */
   icon: string;
-
-  /**
-   * Flip icon on rtl
-   */
   flipRtl?: true;
-
-  /**
-   * Unique name for identify click event over signal.
-   */
   clickSignalId?: string;
-
-  /**
-   * Dispatched signal with ClickSignalType and this detail.
-   */
   clickDetail?: Stringifyable;
-
   disabled?: boolean;
 }
 

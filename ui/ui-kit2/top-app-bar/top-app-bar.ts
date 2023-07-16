@@ -7,14 +7,14 @@ import type {StringifyableRecord} from '@alwatr/type';
 
 export interface AlwatrTopAppBarOptions extends StringifyableRecord {
   /**
-   * @default 'small'
+   * @default small
    */
   type?: 'center' | 'small' | 'medium' | 'large';
 
   headline?: string;
 
   /**
-   * @default 'loading'
+   * @default loading
    */
   headlineKey?: string;
 
