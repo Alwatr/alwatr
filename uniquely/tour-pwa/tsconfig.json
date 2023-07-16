@@ -30,6 +30,7 @@
     {"path": "../../core/fract"},
     {"path": "../../ui/element"},
     {"path": "../../ui/ui-kit"},
+    {"path": "../../ui/ui-kit2"},
     {"path": "../../ui/pwa-helper"},
   ]
 }
