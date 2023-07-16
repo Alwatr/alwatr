@@ -1,31 +1,9 @@
 import {AlwatrDirective, directive, html, noChange, nothing, map, type PartInfo} from '@alwatr/fract';
 import {l10n} from '@alwatr/i18n2';
 
-import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
+import type {AlwatrIconButtonContent} from '../icon-button/icon-button.js';
+import type {StringifyableRecord} from '@alwatr/type';
 
-export interface IconButtonContent extends StringifyableRecord {
-  /**
-   * Icon name.
-   */
-  icon: string;
-
-  /**
-   * Flip icon on rtl
-   */
-  flipRtl?: true;
-
-  /**
-   * Unique name for identify click event over signal.
-   */
-  clickSignalId?: string;
-
-  /**
-   * Dispatched signal with ClickSignalType and this detail.
-   */
-  clickDetail?: Stringifyable;
-
-  disabled?: boolean;
-}
 
 export interface AlwatrTopAppBarOptions extends StringifyableRecord {
   /**
@@ -43,12 +21,12 @@ export interface AlwatrTopAppBarOptions extends StringifyableRecord {
   /**
    * @default {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'}
    */
-  startIcon?: IconButtonContent;
+  startIcon?: AlwatrIconButtonContent;
 
   /**
    * @default []
    */
-  endIconList?: Array<IconButtonContent>;
+  endIconList?: Array<AlwatrIconButtonContent>;
 
   /**
    * @default 2
