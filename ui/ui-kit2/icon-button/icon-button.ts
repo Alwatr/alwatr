@@ -1,4 +1,5 @@
-import {AlwatrDirective, directive, html, noChange, type PartInfo} from '@alwatr/fract';
+import {AlwatrDirective, directive, html, noChange, nothing, type PartInfo} from '@alwatr/fract';
+import {AlwatrSignal} from '@alwatr/signal2';
 
 import {alwatrIcon} from '../icon/icon.js';
 
@@ -17,12 +18,20 @@ export class AlwatrIconButtonDirective extends AlwatrDirective {
     super(partInfo, '<alwatr-icon-button>');
   }
 
+  protected _dispatchSignal(signalName: string, signalDetail?: unknown): void {
+    const signal = new AlwatrSignal({name: signalName});
+    signal.notify(signalDetail);
+  }
+
   render(options?: AlwatrIconButtonContent): unknown {
     if (options == null) return noChange;
-    return html`<button ?disabled=${options.disabled}>
+    return html`<button
+      ?disabled=${options.disabled}
+      @click=${options.clickSignalId
+        ? this._dispatchSignal.bind(this, options.clickSignalId, options.clickDetail)
+        : nothing}>
       ${alwatrIcon({svg: options.icon, flipIconInRtl: options.flipRtl})}
-    </button>
-    `;
+    </button>`;
   }
 }
 
