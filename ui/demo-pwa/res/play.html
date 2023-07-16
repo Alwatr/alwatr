@@ -3,24 +3,10 @@
 <head>
   <base href="/" />
 
-  <!-- TODO: use {{TEMPLATE_KEY}} and replace in esbuild -->
-  <!-- TODO: preconnect -->
-  <!-- TODO: preload config.js or better solution -->
-  <!-- TODO: preload fonts -->
-  <!-- FIXME: cdn connecting issues -->
-  <!-- FIXME: fetchpriority="high" -->
-
   <meta charset="utf-8" />
-  <title>Alwatr UI Demo</title>
+  <title>Alwatr UI Playground</title>
 
-  <link rel="preload" as="style" href="main.css" fetchpriority="high" />
-  <link rel="preload" as="script" href="main.js" fetchpriority="high" crossorigin />
-  <link
-    media="print"
-    rel="stylesheet"
-    href="main.css"
-    onload="this.media='all';this.onload=null;"
-  />
+  <link rel="stylesheet" href="main.css" />
 
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
@@ -67,43 +53,15 @@
   <meta name="og:description" content="Alwatr Progressive Web Application Demo." />
 
   <link rel="canonical" href="https://demo.alwatr.ir" />
-
-  <style>
-    body {
-      padding: 0;
-      margin: 0;
-    }
-
-    #alwatr_pwa[unresolved] {
-      text-align: center;
-      padding-top: 32px;
-      font-size: 24px;
-      line-height: 32px;
-      font-weight: 400px;
-    }
-
-    #alwatr_pwa:not([unresolved]) {
-      /* Wait until css load */
-      display: none;
-    }
-  </style>
 </head>
 <body
   class="h-full w-full max-w-full max-h-full m-0 p-0 overflow-clip transform-gpu break-words touch-pan-x touch-pan-y touch-pinch-zoom bg-background font-vazirmatn text-onBackground text-bodyMedium [contain:size_layout_paint_style] [overscroll-behavior:none]"
 >
   <div
     id="alwatr_pwa"
-    unresolved
     class="!flex h-full w-full max-w-full max-h-full flex-col flex-nowrap items-stretch overflow-clip [contain:size_layout_paint_style]"
   >
     درحال بارگذاری...
   </div>
-  <script type="module" src="main.js"></script>
-  <noscript>
-    <div class="text-titleLarge text-center px-8 py-20">
-      <p dir="ltr" class="mb-4">Please enable JavaScript to view this website.</p>
-      <p dir="rtl">لطفا JavaScript را برای مشاهده این وب سایت فعال کنید.</p>
-    </div>
-  </noscript>
 </body>
 </html>
