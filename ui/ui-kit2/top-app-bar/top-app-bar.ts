@@ -5,7 +5,6 @@ import {alwatrIconButton, type AlwatrIconButtonContent} from '../icon-button/ico
 
 import type {StringifyableRecord} from '@alwatr/type';
 
-
 export interface AlwatrTopAppBarOptions extends StringifyableRecord {
   /**
    * @default small

@@ -1,20 +1,20 @@
-import {AlwatrDirective, directive, html, noChange, map, nothing, type PartInfo} from '@alwatr/fract';
+import {AlwatrDirective, html, noChange, map, nothing, type PartInfo, directive} from '@alwatr/fract';
 import {l10n} from '@alwatr/i18n2';
 
 import {alwatrIcon} from '../icon/icon.js';
 
-import type {StringifyableRecord} from '@alwatr/type';
+import type {MaybePromise} from '@alwatr/type';
 
-export interface AlwatrNavigationBarItem extends StringifyableRecord {
-  icon: string;
+export interface AlwatrNavigationBarItem {
+  icon: MaybePromise<string>;
   label?: string;
   labelKey?: string;
   href?: string;
   flipIconInRtl?: boolean;
 }
 
-export interface AlwatrNavigationBarOptions extends StringifyableRecord {
-itemList: Array<AlwatrNavigationBarItem>;
+export interface AlwatrNavigationBarOptions {
+  itemList: Array<AlwatrNavigationBarItem>;
 }
 
 export class AlwatrNavigationBarDirective extends AlwatrDirective {
