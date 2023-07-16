@@ -47,7 +47,6 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
     return html`
       <div class="p-10">
         <h1 class="text-titleMedium text-center">سلام ...</h1>
-        <h1 class="text-titleMedium text-center">سلام ...</h1>
         ${alwatrButton({label: 'کلید ۱', extendClass: 'text-red-50'})}
         ${alwatrButton({label: 'پریز ۲', disabled: true})}
       </div>
@@ -58,3 +57,9 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
 // TODO: send app rendered signal
 
 export const alwatrPwa = directive(AlwatrPwaDirective);
+
+export const alwatrPwaContainer = document.getElementById('alwatr_pwa')!;
+
+if (alwatrPwaContainer === null) {
+  throw new Error('Cannot find `<div id="alwatr_pwa">` element!');
+}

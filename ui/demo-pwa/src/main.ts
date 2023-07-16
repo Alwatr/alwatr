@@ -2,11 +2,10 @@ import {render} from '@alwatr/fract';
 
 import './main.css';
 import {appLogger} from './share/logger.js';
-import {alwatrPwa} from './ui/alwatr-pwa.js';
-import {rootElement} from './ui/root-element.js';
+import {alwatrPwa, alwatrPwaContainer} from './ui/alwatr-pwa.js';
 
 appLogger.logModule?.('main');
 
-rootElement.replaceChildren(); // clean content
-render(alwatrPwa(), rootElement);
-rootElement.removeAttribute('unresolved');
+alwatrPwaContainer.replaceChildren(); // clean content
+render(alwatrPwa(), alwatrPwaContainer);
+alwatrPwaContainer.removeAttribute('unresolved');
