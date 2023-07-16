@@ -1,8 +1,6 @@
 import {AlwatrDirective, directive, html, noChange, nothing, map, type PartInfo} from '@alwatr/fract';
 import {l10n} from '@alwatr/i18n2';
 
-import './top-app-bar.css';
-
 import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
 
 export interface IconButtonContent extends StringifyableRecord {
