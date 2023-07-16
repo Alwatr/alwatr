@@ -1,0 +1,113 @@
+@layer base {
+  :root {
+    /* HCT 260/48 */
+
+    /* primary */
+    --ref-palette-primary0: 0, 0, 0;
+    --ref-palette-primary10: 0, 28, 59;
+    --ref-palette-primary20: 0, 48, 96;
+    --ref-palette-primary25: 0, 59, 115;
+    --ref-palette-primary30: 0, 71, 135;
+    --ref-palette-primary35: 11, 83, 153;
+    --ref-palette-primary40: 34, 95, 166;
+    --ref-palette-primary50: 65, 120, 193;
+    --ref-palette-primary60: 93, 146, 221;
+    --ref-palette-primary70: 121, 173, 250;
+    --ref-palette-primary80: 167, 200, 255;
+    --ref-palette-primary90: 213, 227, 255;
+    --ref-palette-primary95: 235, 241, 255;
+    --ref-palette-primary98: 249, 249, 255;
+    --ref-palette-primary99: 253, 251, 255;
+    --ref-palette-primary100: 255, 255, 255;
+
+    /* secondary */
+    --ref-palette-secondary0: 0, 0, 0;
+    --ref-palette-secondary10: 18, 28, 43;
+    --ref-palette-secondary20: 39, 49, 65;
+    --ref-palette-secondary25: 50, 60, 77;
+    --ref-palette-secondary30: 61, 71, 88;
+    --ref-palette-secondary35: 73, 83, 100;
+    --ref-palette-secondary40: 85, 95, 113;
+    --ref-palette-secondary50: 109, 119, 138;
+    --ref-palette-secondary60: 135, 145, 165;
+    --ref-palette-secondary70: 161, 172, 192;
+    --ref-palette-secondary80: 189, 199, 220;
+    --ref-palette-secondary90: 217, 227, 248;
+    --ref-palette-secondary95: 235, 241, 255;
+    --ref-palette-secondary98: 249, 249, 255;
+    --ref-palette-secondary99: 253, 251, 255;
+    --ref-palette-secondary100: 255, 255, 255;
+
+    /* tertiary */
+    --ref-palette-tertiary0: 0, 0, 0;
+    --ref-palette-tertiary10: 39, 19, 47;
+    --ref-palette-tertiary20: 62, 40, 69;
+    --ref-palette-tertiary25: 73, 51, 81;
+    --ref-palette-tertiary30: 85, 63, 93;
+    --ref-palette-tertiary35: 98, 74, 105;
+    --ref-palette-tertiary40: 110, 86, 118;
+    --ref-palette-tertiary50: 136, 110, 144;
+    --ref-palette-tertiary60: 163, 135, 170;
+    --ref-palette-tertiary70: 190, 162, 198;
+    --ref-palette-tertiary80: 219, 189, 226;
+    --ref-palette-tertiary90: 248, 216, 254;
+    --ref-palette-tertiary95: 254, 235, 255;
+    --ref-palette-tertiary98: 255, 247, 251;
+    --ref-palette-tertiary99: 255, 251, 255;
+    --ref-palette-tertiary100: 255, 255, 255;
+
+    /* neutral */
+    --ref-palette-neutral0: 0, 0, 0;
+    --ref-palette-neutral10: 26, 28, 30;
+    --ref-palette-neutral20: 47, 48, 51;
+    --ref-palette-neutral25: 58, 59, 62;
+    --ref-palette-neutral30: 70, 71, 74;
+    --ref-palette-neutral35: 81, 82, 86;
+    --ref-palette-neutral40: 94, 94, 98;
+    --ref-palette-neutral50: 118, 119, 122;
+    --ref-palette-neutral60: 144, 144, 148;
+    --ref-palette-neutral70: 171, 171, 174;
+    --ref-palette-neutral80: 199, 198, 202;
+    --ref-palette-neutral90: 227, 226, 230;
+    --ref-palette-neutral95: 241, 240, 244;
+    --ref-palette-neutral98: 250, 249, 253;
+    --ref-palette-neutral99: 253, 251, 255;
+    --ref-palette-neutral100: 255, 255, 255;
+
+    /* neutral-variant */
+    --ref-palette-neutral-variant0: 0, 0, 0;
+    --ref-palette-neutral-variant10: 24, 28, 34;
+    --ref-palette-neutral-variant20: 45, 48, 56;
+    --ref-palette-neutral-variant25: 56, 59, 67;
+    --ref-palette-neutral-variant30: 67, 71, 78;
+    --ref-palette-neutral-variant35: 79, 82, 90;
+    --ref-palette-neutral-variant40: 91, 94, 102;
+    --ref-palette-neutral-variant50: 116, 119, 127;
+    --ref-palette-neutral-variant60: 141, 145, 153;
+    --ref-palette-neutral-variant70: 168, 171, 180;
+    --ref-palette-neutral-variant80: 196, 198, 207;
+    --ref-palette-neutral-variant90: 224, 226, 236;
+    --ref-palette-neutral-variant95: 238, 240, 250;
+    --ref-palette-neutral-variant98: 249, 249, 255;
+    --ref-palette-neutral-variant99: 253, 251, 255;
+    --ref-palette-neutral-variant100: 255, 255, 255;
+
+    /* error */
+    --ref-palette-error0: 0, 0, 0;
+    --ref-palette-error10: 65, 0, 2;
+    --ref-palette-error20: 105, 0, 5;
+    --ref-palette-error25: 126, 0, 7;
+    --ref-palette-error30: 147, 0, 10;
+    --ref-palette-error35: 168, 7, 16;
+    --ref-palette-error40: 186, 26, 26;
+    --ref-palette-error50: 222, 55, 48;
+    --ref-palette-error60: 255, 84, 73;
+    --ref-palette-error70: 255, 137, 125;
+    --ref-palette-error80: 255, 180, 171;
+    --ref-palette-error90: 255, 218, 214;
+    --ref-palette-error95: 255, 237, 234;
+    --ref-palette-error98: 255, 248, 247;
+    --ref-palette-error99: 255, 251, 255;
+    --ref-palette-error100: 255, 255, 255;
+  }
+}
