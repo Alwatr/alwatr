@@ -33,7 +33,10 @@ export class AlwatrIconButtonDirective extends AlwatrDirective {
 
   render(options?: AlwatrIconButtonContent): unknown {
     if (options == null) return noChange;
-    return html``;
+    return html`<button ?disabled=${options.disabled}>
+      ${alwatrIcon({svg: options.icon, flipIconInRtl: options.flipRtl})}
+    </button>
+    `;
   }
 }
 
