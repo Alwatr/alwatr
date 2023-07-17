@@ -32,7 +32,7 @@ setInterval(() => {
 console.time('set all items');
 
 async function request(): Promise<void> {
-  const parallelRequest: Array<Promise<User>> = [];
+  const parallelRequest: Promise<User>[] = [];
 
   for (let j = 0; j < 100; j++) {
     i++;

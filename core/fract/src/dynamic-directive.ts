@@ -16,7 +16,7 @@ export abstract class AlwatrDynamicDirective extends AsyncDirective {
     super.setValue(value);
   }
 
-  override update(_part: Part, props: Array<unknown>): unknown {
+  override update(_part: Part, props: unknown[]): unknown {
     this._logger.logMethodArgs?.('update', props);
     return this.render(...props);
   }

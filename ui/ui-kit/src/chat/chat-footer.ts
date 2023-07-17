@@ -33,7 +33,7 @@ export class AlwatrChatFooter extends AlwatrBaseElement {
     this._logger.logMethod?.('render');
     return html`
       <alwatr-icon-button
-        .content=${<IconButtonContent>{icon: 'happy-outline'}}
+        .content=${{icon: 'happy-outline'} as IconButtonContent}
         @click=${this._sendMessage}
       ></alwatr-icon-button>
       <alwatr-chat-text-input></alwatr-chat-text-input>

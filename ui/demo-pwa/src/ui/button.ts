@@ -1,6 +1,6 @@
 import {AlwatrDynamicDirective, classMap, directive, html, type PartInfo} from '@alwatr/fract';
 
-export type ButtonOptions = {
+export interface ButtonOptions {
    /**
    * Label.
    */

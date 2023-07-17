@@ -16,6 +16,6 @@ interface SepehrFlightInformation extends StringifyableRecord {
 }
 
 export interface SepehrResponse extends StringifyableRecord {
-  flightHeaderList: Array<SepehrFlightInformation>;
+  flightHeaderList: SepehrFlightInformation[];
 }
 

@@ -58,7 +58,7 @@ export class AlwatrUserFactory {
    * const userToken = userFactory.generateToken([user.id, user.lpe]);
    * ```
    */
-  generateToken(uniquelyList: Array<string | number | boolean>): string {
+  generateToken(uniquelyList: (string | number | boolean)[]): string {
     return this._tokenGenerator.generate(uniquelyList.join());
   }
 
@@ -73,7 +73,7 @@ export class AlwatrUserFactory {
    * }
    * ```
    */
-  verifyToken(uniquelyList: Array<string | number | boolean>, token: string): TokenStatus {
+  verifyToken(uniquelyList: (string | number | boolean)[], token: string): TokenStatus {
     return this._tokenGenerator.verify(uniquelyList.join(), token);
   }
 }

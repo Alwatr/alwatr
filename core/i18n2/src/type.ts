@@ -7,7 +7,7 @@ export type L10nResource = AlwatrServiceResponseSuccessWithMeta<Record<string, s
   rev: number;
 }>;
 
-export type Locale = {
+export interface Locale {
   /**
    * fa-IR, en-US, ...
    */
@@ -22,6 +22,6 @@ export type Locale = {
    * ltr, rtl
    */
   direction: 'rtl' | 'ltr';
-};
+}
 
 export type L10nResourceLoader = (locale: Locale) => MaybePromise<L10nResource>

@@ -9,7 +9,7 @@ export interface FsmConstructor {
   readonly id: string;
   readonly config: FsmConstructorConfig;
   actionRecord: ActionRecord;
-  signalList: Array<SignalConfig>;
+  signalList: SignalConfig[];
 }
 
 export interface FsmConstructorConfig<

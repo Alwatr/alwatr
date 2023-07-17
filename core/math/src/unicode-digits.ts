@@ -63,7 +63,7 @@ const supportedLanguageList = {
 
 export type UnicodeLangKeys = keyof typeof supportedLanguageList;
 
-const commonLangList: Array<UnicodeLangKeys> = ['en', 'fa', 'ar'];
+const commonLangList: UnicodeLangKeys[] = ['en', 'fa', 'ar'];
 
 export class UnicodeDigits {
   protected _toLangZeroCode;
@@ -96,9 +96,9 @@ export class UnicodeDigits {
    * console.log(unicodeDigits.translate(list));
    * ```
    */
-  constructor(toLanguage: UnicodeLangKeys, fromLanguages: Array<UnicodeLangKeys> | 'all' = [...commonLangList]) {
+  constructor(toLanguage: UnicodeLangKeys, fromLanguages: UnicodeLangKeys[] | 'all' = [...commonLangList]) {
     if (fromLanguages === 'all') {
-      fromLanguages = Object.keys(supportedLanguageList) as Array<UnicodeLangKeys>;
+      fromLanguages = Object.keys(supportedLanguageList) as UnicodeLangKeys[];
     }
 
     const removeSelf = fromLanguages.indexOf(toLanguage);
@@ -106,7 +106,7 @@ export class UnicodeDigits {
 
     this._toLangZeroCode = supportedLanguageList[toLanguage];
 
-    const regParts: Array<string> = [];
+    const regParts: string[] = [];
     for (let n = 0; n < 10; n++) {
       regParts.push(
           '(' + fromLanguages.map((langKey) => String.fromCharCode(supportedLanguageList[langKey] + n)).join('|') + ')',

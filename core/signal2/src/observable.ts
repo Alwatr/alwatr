@@ -15,7 +15,7 @@ export abstract class AlwatrObservable<T> implements AlwatrObservableInterface<T
   protected _name;
   protected _logger;
   protected _$data?: T;
-  protected _$observers: Array<Observer<this, T>> = [];
+  protected _$observers: Observer<this, T>[] = [];
 
   constructor(config: {name: string; loggerPrefix?: string}) {
     config.loggerPrefix ??= 'signal';
@@ -47,7 +47,7 @@ export abstract class AlwatrObservable<T> implements AlwatrObservableInterface<T
    * Execute all observers callback.
    */
   protected _$dispatch(data: T): void {
-    const removeList: Array<Observer<this, T>> = [];
+    const removeList: Observer<this, T>[] = [];
 
     for (const listener of this._$observers) {
       if (listener.options.disabled) continue;
