@@ -44,7 +44,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '64px',
         letterSpacing: '-0.25px',
-        fontWeight: '400px',
+        fontWeight: '400',
       },
     ],
     displayMedium: [
@@ -52,7 +52,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '52px',
         letterSpacing: '0px',
-        fontWeight: '400px',
+        fontWeight: '400',
       },
     ],
     displaySmall: [
@@ -60,7 +60,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '44px',
         letterSpacing: '0px',
-        fontWeight: '400px',
+        fontWeight: '400',
       },
     ],
     headlineLarge: [
@@ -68,7 +68,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '40px',
         letterSpacing: '0px',
-        fontWeight: '400px',
+        fontWeight: '400',
       },
     ],
     headlineMedium: [
@@ -76,7 +76,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '36px',
         letterSpacing: '0px',
-        fontWeight: '400px',
+        fontWeight: '400',
       },
     ],
     headlineSmall: [
@@ -84,7 +84,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '32px',
         letterSpacing: '0px',
-        fontWeight: '400px',
+        fontWeight: '400',
       },
     ],
     bodyLarge: [
@@ -92,7 +92,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '24px',
         letterSpacing: '0.5px',
-        fontWeight: '400px',
+        fontWeight: '400',
       },
     ],
     bodyMedium: [
@@ -100,7 +100,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '20px',
         letterSpacing: '0.25px',
-        fontWeight: '400px',
+        fontWeight: '400',
       },
     ],
     bodySmall: [
@@ -108,7 +108,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '15px',
         letterSpacing: '0.4px',
-        fontWeight: '400px',
+        fontWeight: '400',
       },
     ],
     labelLarge: [
@@ -116,7 +116,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '20px',
         letterSpacing: '0.1px',
-        fontWeight: '500px',
+        fontWeight: '500',
       },
     ],
     labelMedium: [
@@ -124,7 +124,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '16px',
         letterSpacing: '0.5px',
-        fontWeight: '500px',
+        fontWeight: '500',
       },
     ],
     labelSmall: [
@@ -132,7 +132,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '16px',
         letterSpacing: '0.5px',
-        fontWeight: '500px',
+        fontWeight: '500',
       },
     ],
     titleLarge: [
@@ -140,7 +140,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '28px',
         letterSpacing: '0px',
-        fontWeight: '400px',
+        fontWeight: '400',
       },
     ],
     titleMedium: [
@@ -148,7 +148,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '24px',
         letterSpacing: '0.15px',
-        fontWeight: '500px',
+        fontWeight: '500',
       },
     ],
     titleSmall: [
@@ -156,7 +156,7 @@ export const typographyTheme: Config['theme'] = {
       {
         lineHeight: '20px',
         letterSpacing: '0.1px',
-        fontWeight: '500px',
+        fontWeight: '500',
       },
     ],
   },
