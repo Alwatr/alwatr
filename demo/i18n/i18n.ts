@@ -28,8 +28,7 @@ l10n.setResourceLoader((locale) => {
 l10n.setLocale('fa');
 
 const now = Date.now();
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+// @ts-expect-error constructor type
 for (const unit of l10n.constructor._timeUnits) {
   const sec = unit.seconds * 1000;
   logger.logProperty?.('time ' + unit.label, l10n.relativeTime(now, now - sec));

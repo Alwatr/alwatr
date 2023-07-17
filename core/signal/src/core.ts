@@ -303,6 +303,7 @@ export const untilNext = <T extends Stringifyable>(signalId: string): Promise<T>
  */
 export const setContextProvider = <TContext extends Stringifyable, TRquest extends Stringifyable = null>(
   signalId: string,
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   signalProvider: ProviderFunction<TRquest, TContext | void>,
   options: Partial<ProviderOptions> = {},
 ): void => {

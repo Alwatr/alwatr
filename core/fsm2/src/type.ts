@@ -9,8 +9,7 @@ export type StateEventDetail<S, E> = {
 export type StateRecord<S extends string, E extends string> = Partial<Record<S | '_all', Partial<Record<E, S>>>>;
 
 export interface Action<S extends string, E extends string> {
-  (): MaybePromise<void>;
-  (eventDetail: StateEventDetail<S, E>): MaybePromise<void>;
+  (eventDetail?: StateEventDetail<S, E>): MaybePromise<void>;
 }
 
 export type ActionName<S extends string, E extends string> =
