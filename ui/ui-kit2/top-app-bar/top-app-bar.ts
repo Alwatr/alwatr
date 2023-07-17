@@ -1,11 +1,12 @@
 import {AlwatrDirective, directive, html, noChange, nothing, map, type PartInfo} from '@alwatr/fract';
 import {l10n} from '@alwatr/i18n2';
+import {defaultExport} from '@alwatr/util';
 
 import {alwatrIconButton, type AlwatrIconButtonContent} from '../icon-button/icon-button.js';
 
-import type {StringifyableRecord} from '@alwatr/type';
+const arrowBackOutlineIcon = defaultExport(import('@alwatr/icon/svg/arrow-back-outline.svg'));
 
-export interface AlwatrTopAppBarOptions extends StringifyableRecord {
+export interface AlwatrTopAppBarOptions {
   /**
    * @default small
    */
@@ -50,7 +51,7 @@ export class AlwatrTopAppBarDirective extends AlwatrDirective {
     if (options == null) return noChange;
     options.type ??= 'small';
     options.headlineKey ??= 'loading';
-    options.startIcon ??= {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'};
+    options.startIcon ??= {icon: arrowBackOutlineIcon, flipRtl: true, clickSignalId: 'back-click-event'};
     options.endIconList ??= [];
     options.tinted ??= 2;
     options.elevated ??= 0;

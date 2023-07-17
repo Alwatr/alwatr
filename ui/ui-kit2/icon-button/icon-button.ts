@@ -3,10 +3,10 @@ import {AlwatrSignal} from '@alwatr/signal2';
 
 import {alwatrIcon} from '../icon/icon.js';
 
-import type {Stringifyable, StringifyableRecord} from '@alwatr/type';
+import type {MaybePromise, Stringifyable} from '@alwatr/type';
 
-export interface AlwatrIconButtonContent extends StringifyableRecord {
-  icon: string;
+export interface AlwatrIconButtonContent {
+  icon: MaybePromise<string>;
   flipRtl?: true;
   clickSignalId?: string;
   clickDetail?: Stringifyable;

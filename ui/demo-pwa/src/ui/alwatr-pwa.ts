@@ -13,7 +13,7 @@ export type PageName = 'home' | 'favorites' | 'contact' | 'other' | '_404';
 appLogger.logModule?.('alwatr-pwa');
 
 const menuContext = {
-  navigationBar: {
+  pageAction: {
     itemList: [
       {icon: icons.home, href: '/home'},
       {icon: icons.star, href: '/favorites'},
@@ -37,7 +37,7 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
 
     yield html`<main class="scroll-area">${this._renderContent()}</main>`;
 
-    yield html`${alwatrNavigationBar(menuContext.navigationBar)}`;
+    yield html`${alwatrNavigationBar(menuContext.pageAction)}`;
   }
 
   protected _renderContent(): unknown {
