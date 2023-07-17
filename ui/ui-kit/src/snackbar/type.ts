@@ -1,4 +1,6 @@
-export interface SnackbarOptions {
+import {StringifyableRecord} from '@alwatr/type';
+
+export interface SnackbarOptions extends StringifyableRecord {
   /**
    * Snackbar message.
    */
@@ -29,6 +31,6 @@ export interface SnackbarOptions {
   duration?: number;
 }
 
-export interface SnackbarResponse {
+export interface SnackbarResponse extends StringifyableRecord {
   actionButton?: true;
 }

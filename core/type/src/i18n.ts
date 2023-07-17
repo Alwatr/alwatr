@@ -1,4 +1,5 @@
 import {AlwatrServiceResponseSuccessWithMeta} from './service-response.js';
+import {StringifyableRecord} from './type-helper.js';
 
 export type LocaleCode = `${Lowercase<string>}-${Uppercase<string>}`;
 
@@ -7,7 +8,7 @@ export type L18eContext = AlwatrServiceResponseSuccessWithMeta<Record<string, st
   rev: number;
 }>;
 
-export interface LocaleContext {
+export interface LocaleContext extends StringifyableRecord {
   /**
    * fa-IR, en-US, ...
    */
