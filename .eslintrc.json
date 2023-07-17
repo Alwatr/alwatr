@@ -57,6 +57,7 @@
     "@typescript-eslint/prefer-string-starts-ends-with": "off",
     "@typescript-eslint/unbound-method": "warn",
     "@typescript-eslint/prefer-nullish-coalescing": "warn",
+    "@typescript-eslint/no-misused-promises": "warn",
     "import/no-unresolved": "off",
     "import/no-duplicates": ["error", {"prefer-inline": true}],
     "wc/guard-super-call": "off",
