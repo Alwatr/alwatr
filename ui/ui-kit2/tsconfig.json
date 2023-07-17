@@ -16,15 +16,10 @@
   "include": ["*/*.ts"],
   "exclude": [],
   "references": [
-    {"path": "../element"},
-    {"path": "../icon"},
     {"path": "../../core/fract"},
     {"path": "../../core/type"},
-    {"path": "../../core/i18n"},
     {"path": "../../core/i18n2"},
-    {"path": "../../core/signal"},
     {"path": "../../core/signal2"},
-    {"path": "../../core/math"},
     {"path": "../../core/util"},
   ]
 }

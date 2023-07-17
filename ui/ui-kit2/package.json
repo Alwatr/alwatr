@@ -37,15 +37,9 @@
     "b": "esbuild"
   },
   "dependencies": {
-    "@alwatr/element": "^1.0.0",
-    "@alwatr/fetch": "^1.0.0",
-    "@alwatr/i18n": "^1.0.0",
     "@alwatr/i18n2": "^1.0.0",
-    "@alwatr/icon": "^1.0.0",
-    "@alwatr/signal": "^1.0.0",
     "@alwatr/signal2": "^1.0.0",
     "@alwatr/util": "^1.0.0",
-    "@alwatr/router2": "^1.0.0",
     "tslib": "^2.6.0"
   }
 }
