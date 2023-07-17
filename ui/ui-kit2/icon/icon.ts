@@ -28,7 +28,7 @@ export class AlwatrIconDirective extends AlwatrDynamicDirective {
 
   _render_icon(svg?: string, customClass = ''): unknown {
     return html`<div
-      class="alwatr-icon w-1 h-1 box-content align-middle [contain:size_layout_paint_style] ${customClass}">
+      class="alwatr-icon w-[1em] h-[1em] box-content align-middle [contain:size_layout_paint_style] ${customClass}">
       ${svg ? unsafeSVG(svg) : nothing}
     </div>`;
   }
