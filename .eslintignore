@@ -1,5 +1,6 @@
 *.js
 *.d.ts
 /demo/es-bench/
-/node_modules
 /uniquely/flight-finder-pwa
+node_modules
+_data
