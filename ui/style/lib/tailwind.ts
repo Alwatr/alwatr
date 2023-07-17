@@ -1,3 +1,5 @@
+import {join, dirname} from 'node:path';
+
 import {colorTheme} from './colors.js';
 import {typographyTheme} from './typography.js';
 import {zIndex} from './z-index.js';
@@ -5,7 +7,11 @@ import {zIndex} from './z-index.js';
 import type {Config} from 'tailwindcss';
 
 export const tailwindConfig: Config = {
-  content: ['./res/*.html', './src/**/*.ts'],
+  content: [
+    './res/*.html',
+    './src/**/*.ts',
+    join(dirname(require.resolve('@alwatr/ui-kit2')), '**/*.ts'),
+  ],
   darkMode: 'media',
   theme: {
     extend: {
