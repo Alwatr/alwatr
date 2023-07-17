@@ -1,6 +1,6 @@
 import {Config} from 'tailwindcss';
 
-export const zIndex: Config['theme'] = {
+export const zIndexTheme: Config['theme'] = {
   zIndex: {
     'bottomness': '-900',
     'below': '-1',
