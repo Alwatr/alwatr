@@ -3,7 +3,8 @@
   "extends": [
     "eslint:recommended",
     "google",
-    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/strict",
+    "plugin:@typescript-eslint/stylistic",
     // "plugin:@typescript-eslint/recommended-type-checked",
     // "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:import/recommended",
@@ -56,6 +57,7 @@
       }
     ],
     "@typescript-eslint/prefer-string-starts-ends-with": "off",
+    "@typescript-eslint/no-dynamic-delete": "off",
     "import/no-unresolved": "off",
     "import/no-duplicates": ["error", {"prefer-inline": true}],
     "wc/guard-super-call": "off",
