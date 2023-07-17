@@ -53,15 +53,31 @@
   <meta name="og:description" content="Alwatr Progressive Web Application Demo." />
 
   <link rel="canonical" href="https://demo.alwatr.ir" />
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@alwatr/icon/+esm"></script>
 </head>
-<body
-  class="h-full w-full max-w-full max-h-full m-0 p-0 overflow-clip transform-gpu break-words touch-pan-x touch-pan-y touch-pinch-zoom bg-background font-vazirmatn text-onBackground text-bodyMedium [contain:size_layout_paint_style] [overscroll-behavior:none]"
->
+<body class="h-full w-full max-w-full max-h-full m-0 p-0 overflow-clip transform-gpu break-words touch-pan-x touch-pan-y touch-pinch-zoom bg-background font-vazirmatn text-onBackground text-bodyMedium [contain:size_layout_paint_style] [overscroll-behavior:none]">
   <div
     id="alwatr_pwa"
     class="!flex h-full w-full max-w-full max-h-full flex-col flex-nowrap items-stretch overflow-clip [contain:size_layout_paint_style]"
   >
-    درحال بارگذاری...
+    <!-- Alwatr top navigation bar -->
+    <header
+      class="flex grow-0 shrink-0 select-none px-1 z-sticky h-16 items-center bg-surface scroll [&.scroll]:bg-surfaceContainer">
+      <button class="inline-block p-3 rounded-full cursor-pointer text-onSurface">
+        <alwatr-icon name="menu-outline" class="w-6 h-6"></alwatr-icon>
+      </button>
+      <div class="grow px-1 text-titleLarge lead whitespace-nowrap overflow-clip text-center text-onSurface">عنوان صفحه</div>
+      <button class="inline-block p-3 rounded-full cursor-pointer text-onSurfaceVariant">
+        <alwatr-icon name="refresh-outline" class="w-6 h-6"></alwatr-icon>
+      </button>
+      <button class="inline-block p-3 rounded-full cursor-pointer text-onSurfaceVariant">
+        <alwatr-icon name="calendar-number-outline" class="w-6 h-6"></alwatr-icon>
+      </button>
+    </header>
+    <main class="grow">main</main>
+    <footer>
+      <nav>nav</nav>
+    </footer>
   </div>
 </body>
 </html>

@@ -156,7 +156,7 @@ async function buildServiceWorker() {
 }
 
 if (watchMode) {
-  esbuildContext.watch({});
+  esbuildContext.watch();
 }
 else {
   await makeHtml();
