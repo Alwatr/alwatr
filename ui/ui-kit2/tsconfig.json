@@ -3,7 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": ".",
     "plugins": [
       {
@@ -13,7 +13,7 @@
     ],
   },
   // files, include and exclude from the inheriting config are always overwritten.
-  "include": ["src/**/*.ts"],
+  "include": ["**/*.ts", "**/*.css"],
   "exclude": [],
   "references": [
     {"path": "../element"},
