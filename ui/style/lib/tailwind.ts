@@ -11,7 +11,8 @@ export const tailwindConfig: Config = {
   content: [
     './res/*.html',
     './src/**/*.ts',
-    join(dirname(require.resolve('@alwatr/ui-kit2')), '**/*.ts')],
+    join(dirname(require.resolve('@alwatr/ui-kit2')), '**/*.ts'),
+  ],
   darkMode: 'media',
   theme: {
     extend: {

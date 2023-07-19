@@ -6,7 +6,7 @@ import {promises as fs, existsSync} from 'node:fs';
 
 import {createLogger} from '@alwatr/logger';
 import postCssPlugin from '@deanc/esbuild-plugin-postcss';
-import postcssAutoprefixer from 'autoprefixer';
+import postcssPresetEnv from 'postcss-preset-env';
 import * as esbuild from 'esbuild';
 import postcssImport from 'postcss-import';
 import postcssTailwind from 'tailwindcss';
@@ -88,7 +88,7 @@ const esbuildContext = await esbuild.context({
         postcssImport,
         postcssNesting,
         postcssTailwind,
-        postcssAutoprefixer,
+        postcssPresetEnv,
       ],
     }),
   ],
