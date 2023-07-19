@@ -1,5 +1,5 @@
 {
-  "name": "@alwatr/ui-kit",
+  "name": "@alwatr/ui-kit2",
   "version": "1.0.0",
   "description": "Alwatr UI Elements Kit",
   "keywords": [
@@ -13,7 +13,9 @@
     "esm",
     "alwatr"
   ],
+  "main": "index.js",
   "type": "module",
+  "types": "index.d.ts",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "license": "MIT",
   "files": [
@@ -25,22 +27,16 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
-    "directory": "ui/ui-kit"
+    "directory": "ui/ui-kit2"
   },
-  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui/ui-kit#readme",
+  "homepage": "https://github.com/AliMD/alwatr/tree/main/ui/ui-kit2#readme",
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/element": "^1.0.0",
-    "@alwatr/fetch": "^1.0.0",
-    "@alwatr/i18n": "^1.0.0",
     "@alwatr/i18n2": "^1.0.0",
-    "@alwatr/icon": "^1.0.0",
-    "@alwatr/signal": "^1.0.0",
     "@alwatr/signal2": "^1.0.0",
     "@alwatr/util": "^1.0.0",
-    "@alwatr/router2": "^1.0.0",
     "tslib": "^2.6.0"
   }
 }

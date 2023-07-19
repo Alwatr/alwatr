@@ -60,13 +60,15 @@
     id="alwatr_pwa"
     class="!flex h-full w-full max-w-full max-h-full flex-col flex-nowrap items-stretch overflow-clip [contain:size_layout_paint_style]"
   >
-    <!-- Alwatr top navigation bar -->
+    <!-- Alwatr top navigation bar (Center) -->
     <header
-      class="flex grow-0 shrink-0 select-none px-1 z-sticky h-16 items-center bg-surface scroll [&.scroll]:bg-surfaceContainer">
-      <button class="inline-block p-3 rounded-full cursor-pointer text-onSurface">
+      class="flex grow-0 shrink-0 select-none px-1 z-sticky h-16 items-center bg-surface scroll [&.scroll]:bg-surfaceContainer [&.scroll]:elevation-2">
+      <button class="inline-block p-3 rounded-full cursor-pointer text-primary">
         <alwatr-icon name="menu-outline" class="w-6 h-6"></alwatr-icon>
       </button>
-      <div class="grow px-1 text-titleLarge lead whitespace-nowrap overflow-clip text-center text-onSurface">عنوان صفحه</div>
+      <div
+        class="grow px-1 text-titleLarge lead whitespace-nowrap overflow-clip text-ellipsis text-start text-onSurface [&.title-center]:text-center [&.title-center]:px-3"
+      >عنوان صفحه</div>
       <button class="inline-block p-3 rounded-full cursor-pointer text-onSurfaceVariant">
         <alwatr-icon name="refresh-outline" class="w-6 h-6"></alwatr-icon>
       </button>
@@ -74,7 +76,33 @@
         <alwatr-icon name="calendar-number-outline" class="w-6 h-6"></alwatr-icon>
       </button>
     </header>
-    <main class="grow">main</main>
+    <main class="grow flex gap-8 flex-wrap p-8">
+      <div class="w-20 h-20 elevation-0 hover:elevation-2 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-1 hover:elevation-3 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-2 hover:elevation-4 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-3 hover:elevation-5 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-4 hover:elevation-6 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-5 hover:elevation-7 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-6 hover:elevation-8 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-7 hover:elevation-9 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-8 hover:elevation-10 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-9 hover:elevation-11 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-10 hover:elevation-12 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-11 hover:elevation-13 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-12 hover:elevation-14 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-13 hover:elevation-15 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-14 hover:elevation-16 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-15 hover:elevation-17 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-16 hover:elevation-18 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-17 hover:elevation-19 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-18 hover:elevation-20 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-19 hover:elevation-21 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-20 hover:elevation-22 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-21 hover:elevation-23 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-22 hover:elevation-24 transition-shadow"></div>
+      <div class="w-20 h-20 elevation-23"></div>
+      <div class="w-20 h-20 elevation-24"></div>
+    </main>
     <footer>
       <nav>nav</nav>
     </footer>
