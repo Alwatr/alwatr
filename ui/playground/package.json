@@ -24,10 +24,10 @@
     "start": "run-s clean build serve",
     "clean": "rm -rf dist build .tsbuildinfo",
     "build": "run-s build:*",
-    "build:css": "postcss res/*.css -o res/out.css",
+    "build:css": "postcss res/*.css -o res/dist.css",
     "serve": "wds",
     "watch": "run-p watch:css serve",
-    "watch:css": "postcss res/*.css -o res/out.css --watch"
+    "watch:css": "yarn build:css --watch"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
