@@ -6,8 +6,8 @@ const config = {
   port: 8080,
   open: true,
   watch: true,
-  debug: true,
-  rootDir: 'dist',
+  // debug: true,
+  rootDir: 'res',
   appIndex: 'index.html',
   plugins: [],
   middleware: [(context, next) => {

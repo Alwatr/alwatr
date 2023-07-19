@@ -3,7 +3,6 @@ import postcssImport from 'postcss-import';
 import postcssTailwind from 'tailwindcss';
 import postcssNesting from 'tailwindcss/nesting/index.js';
 
-
 const config = {
   plugins: [
     postcssImport,
