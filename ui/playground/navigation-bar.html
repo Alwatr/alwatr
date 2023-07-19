@@ -24,55 +24,46 @@
            text-bodyMedium [contain:size_layout_paint_style] [overscroll-behavior:none]"
     >
 
-    <div id="alwatr_pwa">
+    <div id="alwatr_pwa" class="flex h-full w-full max-w-full max-h-full flex-col flex-nowrap items-stretch overflow-clip">
+      <div class="grow"></div>
+      <footer class="grow-0 shrink-0 bg-surfaceContainer elevation-2">
+        <nav class= "flex max-w-screen-medium mx-auto select-none bg-surfaceContainer h-20 items-stretch [&>*]:grow">
+          <button class= "group flex flex-col pt-3 items-center justify-start">
+            <div class="px-5 py-1 rounded-2xl text-onSurfaceVariant group-hover:bg-onSurface [[aria-selected=true]_&]:bg-primary">
+              <alwatr-icon name="menu-outline" class="block w-6 h-6"></alwatr-icon>
+            </div>
+            <div class= "py-1 text-labelMedium">منو</div>
+          </button>
 
-      <footer
-        class= "flex grow-0 shrink-0 select-none z-sticky items-center bg-surfaceContainer
-                h-20 elevation-2 gap-0.5 "
-      >
+          <button aria-selected="true" class= "group flex flex-col pt-3 items-center justify-start">
+            <div class="px-5 py-1 rounded-2xl text-onSurfaceVariant group-hover:bg-onSurface [[aria-selected=true]_&]:bg-primary">
+              <alwatr-icon name="menu-outline" class="block w-6 h-6"></alwatr-icon>
+            </div>
+            <div class= "py-1 text-labelMedium">منو</div>
+          </button>
 
-        <button
-          class= "text-onSurfaceVariant hover:text-onSurface active:text-onSurface
-                  focus:text-onSurface"
-        >
-          <div class="w-16 h-8 hover:bg-onSurface hover:opacity-25">
-            <alwatr-icon name="menu-outline" class="w-6 h-6 hover:!opacity-100"></alwatr-icon>
-          </div>
-          <div class= "text-labelMedium">منو</div>
-        </button>
+          <button class= "group flex flex-col pt-3 items-center justify-start">
+            <div class="px-5 py-1 rounded-2xl text-onSurfaceVariant group-hover:bg-onSurface [[aria-selected=true]_&]:bg-primary">
+              <alwatr-icon name="menu-outline" class="block w-6 h-6"></alwatr-icon>
+            </div>
+            <div class= "py-1 text-labelMedium">منو</div>
+          </button>
 
-        <button
-          class= "text-onSurfaceVariant hover:text-onSurface active:text-onSurface
-                  focus:text-onSurface"
-        >
-          <div class="w-16 h-8 hover:bg-onSurface hover:opacity-25">
-            <alwatr-icon name="refresh-outline" class="w-6 h-6 hover:!opacity-100 "></alwatr-icon>
-          </div>
-          <div class="text-labelMedium">رفرش</div>
-        </button>
+          <button class= "group flex flex-col pt-3 items-center justify-start">
+            <div class="px-5 py-1 rounded-2xl text-onSurfaceVariant group-hover:bg-onSurface [[aria-selected=true]_&]:bg-primary">
+              <alwatr-icon name="menu-outline" class="block w-6 h-6"></alwatr-icon>
+            </div>
+            <div class= "py-1 text-labelMedium">منو</div>
+          </button>
 
-        <button
-          class= "text-onSurfaceVariant hover:text-onSurface active:text-onSurface
-                  focus:text-onSurface"
-        >
-          <div class="w-16 h-8 hover:bg-onSurface hover:opacity-25">
-            <alwatr-icon name="calendar-number-outline" class="w-6 h-6 hover:!opacity-100"></alwatr-icon>
-          </div>
-          <div class="text-labelMedium">تقویم</div>
-        </button>
-
-        <button
-          class= "text-onSurfaceVariant hover:text-onSurface active:text-onSurface
-                  focus:text-onSurface"
-        >
-          <div class="w-16 h-8 hover:bg-onSurface hover:opacity-25">
-            <alwatr-icon name="calendar-number-outline" class="w-6 h-6 hover:!opacity-100"></alwatr-icon>
-          </div>
-          <div class="text-labelMedium">تقویم</div>
-        </button>
-
+          <button class= "group flex flex-col pt-3 items-center justify-start">
+            <div class="px-5 py-1 rounded-2xl text-onSurfaceVariant group-hover:bg-onSurface [[aria-selected=true]_&]:bg-primary">
+              <alwatr-icon name="menu-outline" class="block w-6 h-6"></alwatr-icon>
+            </div>
+            <div class= "py-1 text-labelMedium">منو</div>
+          </button>
+        </nav>
       </footer>
-
     </div>
   </body>
 </html>
