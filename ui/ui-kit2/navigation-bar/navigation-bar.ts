@@ -14,7 +14,7 @@ export interface AlwatrNavigationBarItem {
 }
 
 export interface AlwatrNavigationBarOptions {
-  itemList: Array<AlwatrNavigationBarItem>;
+  itemList: AlwatrNavigationBarItem[];
 }
 
 export class AlwatrNavigationBarDirective extends AlwatrDirective {
@@ -34,7 +34,7 @@ export class AlwatrNavigationBarDirective extends AlwatrDirective {
     </div>`;
   }
 
-  protected _render_navigation_item_list(itemList: Array<AlwatrNavigationBarItem>): unknown {
+  protected _render_navigation_item_list(itemList: AlwatrNavigationBarItem[]): unknown {
     return map(itemList, (item) => this._render_navigation_item(item), this);
   }
 

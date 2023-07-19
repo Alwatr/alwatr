@@ -27,7 +27,7 @@ export interface AlwatrTopAppBarOptions {
   /**
    * @default []
    */
-  endIconList?: Array<AlwatrIconButtonContent>;
+  endIconList?: AlwatrIconButtonContent[];
 
   /**
    * @default 2
@@ -72,7 +72,7 @@ export class AlwatrTopAppBarDirective extends AlwatrDirective {
     `;
   }
 
-  protected _render_end_icon_list(endIconList: Array<AlwatrIconButtonContent>): unknown {
+  protected _render_end_icon_list(endIconList: AlwatrIconButtonContent[]): unknown {
     return map(endIconList, (iconOptions) => {
       return alwatrIconButton({icon: iconOptions.icon, flipRtl: iconOptions.flipRtl});
     });

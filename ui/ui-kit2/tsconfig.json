@@ -13,7 +13,7 @@
     ],
   },
   // files, include and exclude from the inheriting config are always overwritten.
-  "include": ["*/*.ts"],
+  "include": ["**/*.ts"],
   "exclude": [],
   "references": [
     {"path": "../../core/fract"},

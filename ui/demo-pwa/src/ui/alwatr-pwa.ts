@@ -42,7 +42,7 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
 
   protected _renderContent(): unknown {
     return alwatrObserve(router, (route: RouteContext) => {
-      const page = <PageName>route.sectionList[0] ?? 'home';
+      const page = route.sectionList[0] as PageName ?? 'home';
       return cache(renderState(page, {
         home: () => html`<h1>home2...</h1>`,
         favorites: () => html`${alwatrPageTest(page)}`,
