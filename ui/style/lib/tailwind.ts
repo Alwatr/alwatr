@@ -2,6 +2,7 @@ import {join, dirname} from 'node:path';
 
 import {colorTheme} from './colors.js';
 import {elevationPlugin} from './elevation.js';
+import {screenTheme} from './screen.js';
 import {typographyTheme} from './typography.js';
 import {zIndexTheme} from './z-index.js';
 
@@ -19,6 +20,7 @@ export const tailwindConfig: Config = {
       ...colorTheme,
       ...typographyTheme,
       ...zIndexTheme,
+      ...screenTheme,
     },
   },
   plugins: [
