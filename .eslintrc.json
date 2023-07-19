@@ -3,8 +3,10 @@
   "extends": [
     "eslint:recommended",
     "google",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/strict",
+    "plugin:@typescript-eslint/stylistic",
+    // "plugin:@typescript-eslint/strict-type-checked",
+    // "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:wc/best-practice",
@@ -16,6 +18,7 @@
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
+    "project": true,
     "ecmaVersion": 2021,
     "sourceType": "module"
   },
@@ -41,7 +44,6 @@
     "new-cap": ["error", {"capIsNewExceptionPattern": "Mixin$"}],
     "brace-style": ["error", "stroustrup", {"allowSingleLine": true}],
     "operator-linebreak": ["error", "after", {"overrides": {"?": "before", ":": "before"}}],
-    "@typescript-eslint/explicit-function-return-type": "error",
     "import/order": [
       "error",
       {
@@ -54,6 +56,8 @@
         }
       }
     ],
+    "@typescript-eslint/prefer-string-starts-ends-with": "off",
+    "@typescript-eslint/no-dynamic-delete": "off",
     "import/no-unresolved": "off",
     "import/no-duplicates": ["error", {"prefer-inline": true}],
     "wc/guard-super-call": "off",

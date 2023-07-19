@@ -66,7 +66,7 @@ export const getSignalObject = <T extends Stringifyable>(id: string): SignalObje
 export const _callListeners = <T extends Stringifyable>(signal: SignalObject<T>, detail: T): void => {
   logger.logMethodArgs?.('_callListeners', {signalId: signal.id, signalDetail: detail});
 
-  const removeList: Array<ListenerObject<T>> = [];
+  const removeList: ListenerObject<T>[] = [];
 
   for (const listener of signal.listenerList) {
     if (listener.disabled) continue;
@@ -303,6 +303,7 @@ export const untilNext = <T extends Stringifyable>(signalId: string): Promise<T>
  */
 export const setContextProvider = <TContext extends Stringifyable, TRquest extends Stringifyable = null>(
   signalId: string,
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   signalProvider: ProviderFunction<TRquest, TContext | void>,
   options: Partial<ProviderOptions> = {},
 ): void => {

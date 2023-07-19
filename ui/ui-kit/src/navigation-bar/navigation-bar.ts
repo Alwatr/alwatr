@@ -25,7 +25,7 @@ export interface NavigationBarItemContent {
   // badgeValue: string,
 }
 export interface NavigationBarContent {
-  itemList: Array<NavigationBarItemContent>;
+  itemList: NavigationBarItemContent[];
 }
 
 declare global {

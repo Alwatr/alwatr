@@ -109,7 +109,7 @@ export class AlwatrSelectProduct extends LocalizeMixin(SignalMixin(UnresolvedMix
 
   private _selectedChanged(event: CustomEvent): void {
     if (this.order == null || this.priceStorage == null || this.finalPriceStorage == null) return;
-    const target = <AlwatrProductCard | null>event.target;
+    const target = event.target as AlwatrProductCard | null;
     const productId = target?.content?.id;
 
     this._logger.logMethodArgs?.('_selectedChanged', {productId});

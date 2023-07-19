@@ -16,5 +16,5 @@ export interface NavigationBarItem {
 }
 
 export interface NavigationBarContent {
-  itemList: Array<NavigationBarItem>;
+  itemList: NavigationBarItem[];
 }

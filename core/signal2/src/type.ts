@@ -30,10 +30,7 @@ export interface SubscribeOptions {
   // debounce?: 'AnimationFrame' | number;
 }
 
-export interface ListenerCallback<T, D> {
-  // (this: T): MaybePromise<void>;
-  (this: T, detail: D): MaybePromise<void>;
-}
+export type ListenerCallback<T, D> = (this: T, detail: D) => MaybePromise<void>;
 
 export interface Observer<T, D> {
   callback: ListenerCallback<T, D>;

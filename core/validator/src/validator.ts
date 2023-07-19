@@ -97,7 +97,7 @@ export function validator<T extends StringifyableRecord>(
     }
     else if (itemSchema === Number) {
       if (isNumber(itemValue)) {
-        targetObject[itemName] = +(<string>itemValue);
+        targetObject[itemName] = +(itemValue as string);
       }
       else {
         throw new Error('invalid_type', {

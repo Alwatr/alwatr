@@ -4,7 +4,7 @@ export const renderState = <R, T extends string>(
   state: T,
   renderRecord: Record<T | '_default', undefined | T | (() => R)>,
   thisArg: unknown = null,
-): R | void => {
+): R | undefined => {
   logger.logMethodArgs?.('renderState', {state, renderRecord});
 
   let render = renderRecord[state];
