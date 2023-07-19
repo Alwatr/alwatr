@@ -33,9 +33,6 @@
   "bugs": {
     "url": "https://github.com/AliMD/alwatr/issues"
   },
-  "scripts": {
-    "b": "esbuild"
-  },
   "dependencies": {
     "@alwatr/i18n2": "^1.0.0",
     "@alwatr/signal2": "^1.0.0",
