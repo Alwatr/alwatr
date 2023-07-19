@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="ltr" class="h-full w-full [overscroll-behavior:none]">
+<head>
+  <base href="/" />
+
+  <meta charset="utf-8" />
+  <title>Alwatr UI Playground</title>
+
+  <link rel="stylesheet" href="dist.css" />
+
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#673ab7" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
+  />
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@alwatr/icon/+esm"></script>
+</head>
+<body class="h-full w-full max-w-full max-h-full m-0 p-0 overflow-clip transform-gpu break-words touch-pan-x touch-pan-y touch-pinch-zoom bg-background font-vazirmatn text-onBackground text-bodyMedium [contain:size_layout_paint_style] [overscroll-behavior:none]">
+  <div
+    id="alwatr_pwa"
+    class="!flex h-full w-full max-w-full max-h-full flex-col flex-nowrap items-stretch overflow-clip [contain:size_layout_paint_style] bg-scrim">
+
+    <nav class="w-[360px] h-full flex flex-col bg-surfaceContainerLow gap-3 elevation-1 rounded-e-3xl box-border px-7">
+        <h2 class="text-onSurfaceVariant text-titleSmall">headline</h2>
+        <ul>
+          <li class="rounded-full bg-secondaryContainer w-84 h-[56px] flex flex-nowrap ps-4 pe-6 items-center gap-3 cursor-pointer select-none">
+            <alwatr-icon name="chatbubbles" class="w-6 h-6 text-onSecondaryContainer"></alwatr-icon>
+            <span class="grow text-labelLarge text-onSecondaryContainer">Inbox</span>
+            <span>26</span>
+          </li>
+          <li class="rounded-full w-84 h-[56px] flex flex-nowrap ps-4 pe-6 items-center gap-3 cursor-pointer select-none">
+            <alwatr-icon name="send-outline" class="w-6 h-6 text-onSurfaceVariant"></alwatr-icon>
+            <span class="grow text-labelLarge text-onSurfaceVariant">Outbox</span>
+            <span>100+</span>
+          </li>
+          <li class="rounded-full w-84 h-[56px] flex flex-nowrap ps-4 pe-6 items-center gap-3 cursor-pointer select-none">
+            <alwatr-icon name="heart-outline" class="w-6 h-6 text-onSurfaceVariant"></alwatr-icon>
+            <span class="grow text-labelLarge text-onSurfaceVariant">Favorite</span>
+            <span></span>
+          </li>
+          <li class="rounded-full w-84 h-[56px] flex flex-nowrap ps-4 pe-6 items-center gap-3 cursor-pointer select-none">
+            <alwatr-icon name="trash-outline" class="w-6 h-6 text-onSurfaceVariant"></alwatr-icon>
+            <span class="grow text-labelLarge text-onSurfaceVariant">Trash</span>
+            <span></span>
+          </li>
+        </ul>
+    </nav>
+
+  </div>
+</body>
+</html>
