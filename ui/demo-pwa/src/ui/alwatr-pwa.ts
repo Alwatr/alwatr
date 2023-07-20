@@ -5,23 +5,12 @@ import {alwatrTopAppBar} from '@alwatr/ui-kit2/top-app-bar/top-app-bar.js';
 import {renderState} from '@alwatr/util';
 
 import {alwatrPageTest} from './page-test.js';
-import {icons} from '../icons.js';
 import {appLogger} from '../share/logger.js';
 
 export type PageName = 'home' | 'favorites' | 'contact' | 'other' | '_404';
 
 appLogger.logModule?.('alwatr-pwa');
 
-const menuContext = {
-  pageAction: {
-    itemList: [
-      {icon: icons.home, href: '/home'},
-      {icon: icons.star, href: '/favorites'},
-      {icon: icons.triangle, href: '/other'},
-      {icon: icons.call, href: '/contact'},
-    ],
-  },
-};
 
 export class AlwatrPwaDirective extends AlwatrDynamicDirective {
   constructor(partInfo: PartInfo) {
@@ -35,9 +24,9 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
       headline: 'Alwatr PWA Demo',
     })}`;
 
-    yield html`<main class="scroll-area">${this._renderContent()}</main>`;
+    yield html`<main class="scroll-area grow">${this._renderContent()}</main>`;
 
-    yield html`${alwatrNavigationBar(menuContext.pageAction)}`;
+    yield html`${alwatrNavigationBar()}`;
   }
 
   protected _renderContent(): unknown {

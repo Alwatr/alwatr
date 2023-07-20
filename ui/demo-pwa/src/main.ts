@@ -1,6 +1,7 @@
 import {render} from '@alwatr/fract';
 
 import './main.css';
+import './share/context.js';
 import {appLogger} from './share/logger.js';
 import {alwatrPwa, alwatrPwaContainer} from './ui/alwatr-pwa.js';
 
