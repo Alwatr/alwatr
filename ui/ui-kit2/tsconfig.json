@@ -18,6 +18,7 @@
   "references": [
     {"path": "../../core/fract"},
     {"path": "../../core/type"},
+    {"path": "../../core/context"},
     {"path": "../../core/i18n2"},
     {"path": "../../core/signal2"},
     {"path": "../../core/util"},
