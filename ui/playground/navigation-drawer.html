@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa-IR" dir="ltr" class="h-full w-full [overscroll-behavior:none]">
+<html lang="fa-IR" dir="rtl" class="h-full w-full [overscroll-behavior:none]">
 <head>
   <base href="/" />
 
@@ -18,37 +18,73 @@
 
   <script type="module" src="https://cdn.jsdelivr.net/npm/@alwatr/icon/+esm"></script>
 </head>
-<body class="h-full w-full max-w-full max-h-full m-0 p-0 overflow-clip transform-gpu break-words touch-pan-x touch-pan-y touch-pinch-zoom bg-background font-vazirmatn text-onBackground text-bodyMedium [contain:size_layout_paint_style] [overscroll-behavior:none]">
+
+<body class= "h-full w-full max-w-full max-h-full m-0 p-0 overflow-clip transform-gpu break-words touch-pan-x touch-pan-y
+              touch-pinch-zoom font-vazirmatn text-onBackground text-bodyMedium [contain:size_layout_paint_style]
+              [overscroll-behavior:none]"
+>
   <div
     id="alwatr_pwa"
-    class="!flex h-full w-full max-w-full max-h-full flex-col flex-nowrap items-stretch overflow-clip [contain:size_layout_paint_style] bg-scrim">
+    class= "!flex h-full w-full max-w-full max-h-full flex-col flex-nowrap items-stretch overflow-clip
+            [contain:size_layout_paint_style]"
+  >
 
-    <nav class="w-[360px] h-full flex flex-col bg-surfaceContainerLow gap-3 elevation-1 rounded-e-3xl box-border px-7">
-        <h2 class="text-onSurfaceVariant text-titleSmall">headline</h2>
-        <ul>
-          <li class="rounded-full bg-secondaryContainer w-84 h-[56px] flex flex-nowrap ps-4 pe-6 items-center gap-3 cursor-pointer select-none">
-            <alwatr-icon name="chatbubbles" class="w-6 h-6 text-onSecondaryContainer"></alwatr-icon>
-            <span class="grow text-labelLarge text-onSecondaryContainer">Inbox</span>
-            <span>26</span>
-          </li>
-          <li class="rounded-full w-84 h-[56px] flex flex-nowrap ps-4 pe-6 items-center gap-3 cursor-pointer select-none">
-            <alwatr-icon name="send-outline" class="w-6 h-6 text-onSurfaceVariant"></alwatr-icon>
-            <span class="grow text-labelLarge text-onSurfaceVariant">Outbox</span>
-            <span>100+</span>
-          </li>
-          <li class="rounded-full w-84 h-[56px] flex flex-nowrap ps-4 pe-6 items-center gap-3 cursor-pointer select-none">
-            <alwatr-icon name="heart-outline" class="w-6 h-6 text-onSurfaceVariant"></alwatr-icon>
-            <span class="grow text-labelLarge text-onSurfaceVariant">Favorite</span>
-            <span></span>
-          </li>
-          <li class="rounded-full w-84 h-[56px] flex flex-nowrap ps-4 pe-6 items-center gap-3 cursor-pointer select-none">
-            <alwatr-icon name="trash-outline" class="w-6 h-6 text-onSurfaceVariant"></alwatr-icon>
-            <span class="grow text-labelLarge text-onSurfaceVariant">Trash</span>
-            <span></span>
-          </li>
-        </ul>
+    <nav class="w-[360px] h-full flex flex-col bg-surface elevation-1 rounded-e-2xl box-border px-3">
+
+      <h2 class="mx-6 pt-7 pb-5 text-onSurfaceVariant text-titleSmall">سربرگ</h2>
+
+      <ul class="text-onSurfaceVariant">
+
+        <li
+          class= "flex w-84 h-14 rounded-full flex-nowrap px-3 items-center bg-secondaryContainer text-secondaryContainer
+                  cursor-pointer select-none"
+          >
+          <alwatr-icon name="menu-outline" class="w-6 h-6 text-onSecondaryContainer mx-1"></alwatr-icon>
+
+          <div class="mx-2 grow text-labelLarge text-onSecondaryContainer">دریافتی</div>
+          <div class="mx-3 text-labelLarge text-onSecondaryContainer">۲۶</div>
+        </li>
+
+        <li
+          class= "group flex w-84 h-14 rounded-full flex-nowrap px-3 items-center hover:bg-secondaryContainer hover:bg-opacity-40 hover:text-secondaryContainer
+                  cursor-pointer select-none"
+          >
+          <alwatr-icon name="menu-outline" class="w-6 h-6 group-hover:text-onSecondaryContainer mx-1"></alwatr-icon>
+
+          <div class="mx-2 grow text-labelLarge group-hover:text-onSecondaryContainer">دریافتی</div>
+        </li>
+
+
+        <li
+          class= "group flex w-84 h-14 rounded-full flex-nowrap px-3 items-center hover:bg-secondaryContainer hover:bg-opacity-40 hover:text-secondaryContainer
+                  cursor-pointer select-none"
+          >
+          <alwatr-icon name="menu-outline" class="w-6 h-6 group-hover:text-onSecondaryContainer mx-1"></alwatr-icon>
+
+          <div class="mx-2 grow text-labelLarge group-hover:text-onSecondaryContainer">دریافتی</div>
+        </li>
+
+        <li
+          class= "group flex w-84 h-14 rounded-full flex-nowrap px-3 items-center hover:bg-secondaryContainer hover:bg-opacity-40 hover:text-secondaryContainer
+                  cursor-pointer select-none"
+          >
+          <alwatr-icon name="menu-outline" class="w-6 h-6 group-hover:text-onSecondaryContainer mx-1"></alwatr-icon>
+
+          <div class="mx-2 grow text-labelLarge group-hover:text-onSecondaryContainer">دریافتی</div>
+        </li>
+
+        <li
+          class= "group flex w-84 h-14 rounded-full flex-nowrap px-3 items-center hover:bg-secondaryContainer hover:bg-opacity-40 hover:text-secondaryContainer
+                  cursor-pointer select-none"
+          >
+          <alwatr-icon name="menu-outline" class="w-6 h-6 group-hover:text-onSecondaryContainer mx-1"></alwatr-icon>
+
+          <div class="mx-2 grow text-labelLarge group-hover:text-onSecondaryContainer">دریافتی</div>
+        </li>
+        
+      </ul>
+
     </nav>
-
   </div>
 </body>
 </html>
