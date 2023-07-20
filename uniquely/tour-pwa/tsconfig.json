@@ -3,7 +3,6 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": ".tsbuildinfo",
-    // "moduleResolution": "bundler",
     "rootDir": "src",
     "outDir": "build",
     "noEmit": true,
@@ -15,21 +14,16 @@
     ],
   },
 
-  "include": ["src/**/*.ts", "src/**/*.json"],
+  "include": ["src/**/*.ts"],
   "exclude": [],
   "references": [
-    {"path": "../../core/router2"},
-    {"path": "../../core/fetch"},
-    {"path": "../../core/i18n2"},
     {"path": "../../core/type"},
-    {"path": "../../core/validator"},
-    {"path": "../../core/signal2"},
     {"path": "../../core/util"},
-    {"path": "../../core/fsm2"},
-    {"path": "../../core/server-context"},
     {"path": "../../core/fract"},
-    {"path": "../../ui/element"},
+    {"path": "../../core/router2"},
+    {"path": "../../core/i18n2"},
     {"path": "../../ui/ui-kit"},
-    {"path": "../../ui/pwa-helper"},
+    {"path": "../../ui/ui-kit2"},
+    {"path": "../../ui/style"}
   ]
 }

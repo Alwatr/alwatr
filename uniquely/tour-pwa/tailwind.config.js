@@ -1,2 +1,3 @@
-import tailwindConfig from '../../ui/demo-pwa/tailwind.config';
+import {tailwindConfig} from '@alwatr/style'
+
 export default tailwindConfig;

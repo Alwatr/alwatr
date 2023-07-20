@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/tour-pwa",
   "version": "1.0.0",
-  "description": "Alwatr Keep PWA.",
+  "description": "Alwatr Tour PWA.",
   "type": "module",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "private": true,
@@ -10,7 +10,7 @@
     "npm": ">=8.0.0",
     "yarn": ">=1.22.0"
   },
-  "browserslist": "> 0.1%, not dead",
+  "browserslist": "> 1.5%, not dead",
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
