@@ -1,35 +1,41 @@
 import {contextProvider} from '@alwatr/context';
+import {StringifyableRecord} from '@alwatr/type';
 
 import {icons} from '../icons.js';
 
-import type {NavigationContext} from '@alwatr/ui-kit2/navigation-bar/navigation-bar.js';
-
-
-// import type {NavigationContext} from '@alwatr/ui-kit2/navigation-bar/navigation-bar.js';
-
 export const navigationContextSignalName = 'navigation-context';
-contextProvider.setValue<NavigationContext>(navigationContextSignalName, {
+contextProvider.setValue(navigationContextSignalName, {
   currentActive: 'home',
-  navigationBar: {
-    home: {
-      icon: icons.home,
-      label: 'Home',
+  navigationBar: [
+    {
+      id: 'home',
+      icon: icons.homeOutline,
+      selectedIcon: icons.home,
+      label: 'خانه',
     },
-    call: {
-      icon: icons.call,
-      label: 'Call',
+    {
+      id: 'call',
+      icon: icons.callOutline,
+      selectedIcon: icons.call,
+      label: 'تماس',
     },
-    favorite: {
-      icon: icons.star,
-      label: 'Favorite',
+    {
+      id: 'favorite',
+      icon: icons.starOutline,
+      selectedIcon: icons.star,
+      label: 'علاقه‌مندی‌ها',
     },
-    triangle: {
-      icon: icons.triangle,
-      label: 'Menu',
+    {
+      id: 'triangle',
+      icon: icons.triangleOutline,
+      selectedIcon: icons.triangle,
+      label: 'منو',
     },
-    triangl: {
-      icon: icons.triangle,
-      label: 'Other',
+    {
+      id: 'other',
+      icon: icons.triangleOutline,
+      selectedIcon: icons.triangle,
+      label: 'بقیه‌ش',
     },
-  },
+  ] as unknown as StringifyableRecord,
 });
