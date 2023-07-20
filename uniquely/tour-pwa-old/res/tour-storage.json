@@ -1,0 +1,73 @@
+{
+  "ok": true,
+  "statusCode": 200,
+  "meta": {
+    "formatVersion": 0,
+    "id": "1",
+    "lastAutoId": 0,
+    "lastUpdated": 0,
+    "reversion": 0
+  },
+  "data": {
+    "1": {
+      "id": "1",
+      "title": "تور استانبول",
+      "indexImage": {
+        "url": "image/istanbul.jpg"
+      },
+      "categories": ["economy"],
+      "priceList": {
+        "economy": [
+          {
+            "amount": 18000000,
+            "date": 1687284458767
+          },
+          {
+            "amount": 21000000,
+            "date": 1687284459767
+          },
+          {
+            "amount": 19000000,
+            "date": 1687284457767
+          }
+        ]
+      }
+    },
+    "2": {
+      "id": "2",
+      "title": "تور دبی",
+      "indexImage": {
+        "url": "image/dubai.jpeg"
+      },
+      "categories": ["appropriate"],
+      "priceList": {
+        "appropriate": [
+          {
+            "amount": 22000000,
+            "date": 1687284456767
+          },
+          {
+            "amount": 20000000,
+            "date": 1687284455767
+          }
+        ]
+      }
+    },
+    "3": {
+      "id": "3",
+      "title": "تور کیش",
+      "indexImage": {
+        "url": "image/kish.jpeg"
+      },
+      "categories": ["luxury"],
+      "priceList": {
+        "luxury": [
+          {
+            "amount": 11000000,
+            "date": 1687284454767
+          }
+        ]
+      }
+    }
+  }
+}
