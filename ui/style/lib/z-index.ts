@@ -9,7 +9,7 @@ export const zIndexTheme: Config['theme'] = {
     'dropdown': '100',
     'sticky': '200',
     'fixed': '300',
-    'backdrop': '400',
+    'scrim': '400',
     'modal': '500',
     'popover': '600',
     'snackbar': '700',
