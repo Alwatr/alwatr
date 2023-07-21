@@ -34,6 +34,22 @@ export const stateLayerPlugin = plugin(({matchUtilities, theme}) => {
             },
           };
         },
+        stateHover: (value) => {
+          if (typeof value !== 'function') return null;
+          const makeColor = value as unknown as (options: {opacityValue: number}) => string;
+          const color = makeColor({opacityValue: stateOpacity.hover});
+          return {
+            backgroundImage: `linear-gradient(${color}, ${color})`,
+          };
+        },
+        stateActive: (value) => {
+          if (typeof value !== 'function') return null;
+          const makeColor = value as unknown as (options: {opacityValue: number}) => string;
+          const color = makeColor({opacityValue: stateOpacity.pressed});
+          return {
+            backgroundImage: `linear-gradient(${color}, ${color})`,
+          };
+        },
       },
       {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
