@@ -28,95 +28,68 @@
       <div class="grow"></div>
 
       <footer class="shrink-0 grow-0 bg-surfaceContainer elevation-2">
-        <nav class="mx-auto flex h-20 max-w-screen-medium select-none items-stretch bg-surfaceContainer">
-          <button aria-selected="false" class="group flex grow flex-col items-center justify-start pt-3">
+        <nav
+          class="mx-auto flex h-20 max-w-screen-medium cursor-pointer select-none items-stretch text-labelMedium text-onSurfaceVariant"
+        >
+          <a
+            aria-selected="false"
+            class="group flex grow flex-col items-center justify-start pt-3 aria-selected:pointer-events-none"
+          >
             <div
-              class="rounded-2xl px-5 py-1 text-onSurfaceVariant group-hover:bg-onSurface group-hover:bg-opacity-30 group-focus:bg-onSurface group-focus:bg-opacity-20 [[aria-selected=true]_&]:bg-onSurface"
+              class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer group-aria-selected:text-onSecondaryContainer"
             >
-              <alwatr-icon
-                name="menu-outline"
-                class="block h-6 w-6 text-onSurfaceVariant group-hover:text-onSecondaryContainer group-focus:text-onSecondaryContainer"
-              >
-              </alwatr-icon>
+              <alwatr-icon name="menu-outline" class="block h-6 w-6"> </alwatr-icon>
             </div>
-            <div
-              class="py-1 text-labelMedium text-onSurfaceVariant group-hover:text-onSurface group-focus:text-onSurface"
-            >
-              منو
-            </div>
-          </button>
+            <div class="py-1 group-aria-selected:text-onSurface">منو</div>
+          </a>
 
-          <button class="group flex flex-col items-center justify-start pt-3">
+          <a
+            aria-selected="false"
+            class="group flex grow flex-col items-center justify-start pt-3 aria-selected:pointer-events-none"
+          >
             <div
-              class="rounded-2xl px-5 py-1 text-onSurfaceVariant group-hover:bg-onSurface group-hover:bg-opacity-30 group-focus:bg-onSurface group-focus:bg-opacity-20 [[aria-selected=true]_&]:bg-primary"
+              class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer group-aria-selected:text-onSecondaryContainer"
             >
-              <alwatr-icon
-                name="call-outline"
-                class="block h-6 w-6 text-onSurfaceVariant group-hover:text-onSecondaryContainer group-focus:text-onSecondaryContainer"
-              >
-              </alwatr-icon>
+              <alwatr-icon name="call-outline" class="block h-6 w-6"> </alwatr-icon>
             </div>
+            <div class="py-1 group-aria-selected:text-onSurface">تماس</div>
+          </a>
 
+          <a
+            aria-selected="true"
+            class="group flex grow flex-col items-center justify-start pt-3 aria-selected:pointer-events-none"
+          >
             <div
-              class="py-1 text-labelMedium text-onSurfaceVariant group-hover:text-onSurface group-focus:text-onSurface"
+              class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer group-aria-selected:text-onSecondaryContainer"
             >
-              تماس
+              <alwatr-icon name="create-outline" class="block h-6 w-6"> </alwatr-icon>
             </div>
-          </button>
+            <div class="py-1 group-aria-selected:text-onSurface">یادداشت</div>
+          </a>
 
-          <button class="group flex flex-col items-center justify-start pt-3">
+          <a
+            aria-selected="false"
+            class="group flex grow flex-col items-center justify-start pt-3 aria-selected:pointer-events-none"
+          >
             <div
-              class="rounded-2xl px-5 py-1 text-onSurfaceVariant group-hover:bg-onSurface group-hover:bg-opacity-30 group-focus:bg-onSurface group-focus:bg-opacity-20 [[aria-selected=true]_&]:bg-primary"
+              class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer group-aria-selected:text-onSecondaryContainer"
             >
-              <alwatr-icon
-                name="create-outline"
-                class="block h-6 w-6 text-onSurfaceVariant group-hover:text-onSecondaryContainer group-focus:text-onSecondaryContainer"
-              >
-              </alwatr-icon>
+              <alwatr-icon name="mic-outline" class="block h-6 w-6"> </alwatr-icon>
             </div>
+            <div class="py-1 group-aria-selected:text-onSurface">ضبط</div>
+          </a>
 
+          <a
+            aria-selected="false"
+            class="group flex grow flex-col items-center justify-start pt-3 aria-selected:pointer-events-none"
+          >
             <div
-              class="py-1 text-labelMedium text-onSurfaceVariant group-hover:text-onSurface group-focus:text-onSurface"
+              class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer group-aria-selected:text-onSecondaryContainer"
             >
-              یادداشت
+              <alwatr-icon name="person-outline" class="block h-6 w-6"> </alwatr-icon>
             </div>
-          </button>
-
-          <button class="group flex flex-col items-center justify-start pt-3">
-            <div
-              class="rounded-2xl px-5 py-1 text-onSurfaceVariant group-hover:bg-onSurface group-hover:bg-opacity-30 group-focus:bg-onSurface group-focus:bg-opacity-20 [[aria-selected=true]_&]:bg-primary"
-            >
-              <alwatr-icon
-                name="mic-outline"
-                class="block h-6 w-6 text-onSurfaceVariant group-hover:text-onSecondaryContainer group-focus:text-onSecondaryContainer"
-              >
-              </alwatr-icon>
-            </div>
-
-            <div
-              class="py-1 text-labelMedium text-onSurfaceVariant group-hover:text-onSurface group-focus:text-onSurface"
-            >
-              ضبط
-            </div>
-          </button>
-
-          <button class="group flex flex-col items-center justify-start pt-3">
-            <div
-              class="rounded-2xl px-5 py-1 text-onSurfaceVariant group-hover:bg-onSurface group-hover:bg-opacity-30 group-focus:bg-onSurface group-focus:bg-opacity-20 [[aria-selected=true]_&]:bg-primary"
-            >
-              <alwatr-icon
-                name="person-outline"
-                class="block h-6 w-6 text-onSurfaceVariant group-hover:text-onSecondaryContainer group-focus:text-onSecondaryContainer"
-              >
-              </alwatr-icon>
-            </div>
-
-            <div
-              class="py-1 text-labelMedium text-onSurfaceVariant group-hover:text-onSurface group-focus:text-onSurface"
-            >
-              مخاطبین
-            </div>
-          </button>
+            <div class="py-1 group-aria-selected:text-onSurface">person</div>
+          </a>
         </nav>
       </footer>
     </div>
