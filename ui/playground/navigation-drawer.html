@@ -1,90 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa-IR" dir="rtl" class="h-full w-full [overscroll-behavior:none]">
-<head>
-  <base href="/" />
+  <head>
+    <base href="/" />
 
-  <meta charset="utf-8" />
-  <title>Alwatr UI Playground</title>
+    <meta charset="utf-8" />
+    <title>Alwatr UI Playground</title>
 
-  <link rel="stylesheet" href="dist.css" />
+    <link rel="stylesheet" href="dist.css" />
 
-  <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#673ab7" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
-  />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#673ab7" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
+    />
 
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@alwatr/icon/+esm"></script>
-</head>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@alwatr/icon/+esm"></script>
+  </head>
 
-<body class= "h-full w-full max-w-full max-h-full m-0 p-0 overflow-clip transform-gpu break-words touch-pan-x touch-pan-y
-              touch-pinch-zoom font-vazirmatn text-onBackground text-bodyMedium [contain:size_layout_paint_style]
-              [overscroll-behavior:none]"
->
-  <div
-    id="alwatr_pwa"
-    class= "!flex h-full w-full max-w-full max-h-full flex-col flex-nowrap items-stretch overflow-clip
-            [contain:size_layout_paint_style]"
+  <body
+    class="m-0 h-full max-h-full w-full max-w-full transform-gpu touch-pan-x touch-pan-y touch-pinch-zoom overflow-clip break-words p-0 font-vazirmatn text-bodyMedium text-onBackground [overscroll-behavior:none] [contain:size_layout_paint_style]"
   >
+    <div
+      id="alwatr_pwa"
+      class="!flex h-full max-h-full w-full max-w-full flex-col flex-nowrap items-stretch overflow-clip [contain:size_layout_paint_style]"
+    >
+      <nav class="box-border flex h-full w-[360px] flex-col rounded-e-2xl bg-surface px-3 elevation-1">
+        <h2 class="mx-6 pb-5 pt-7 text-titleSmall text-onSurfaceVariant">سربرگ</h2>
 
-    <nav class="w-[360px] h-full flex flex-col bg-surface elevation-1 rounded-e-2xl box-border px-3">
-
-      <h2 class="mx-6 pt-7 pb-5 text-onSurfaceVariant text-titleSmall">سربرگ</h2>
-
-      <ul class="text-onSurfaceVariant">
-
-        <li
-          class= "flex w-84 h-14 rounded-full flex-nowrap px-3 items-center bg-secondaryContainer text-secondaryContainer
-                  cursor-pointer select-none"
+        <ul class="text-onSurfaceVariant">
+          <li
+            class="w-84 flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full bg-secondaryContainer px-3 text-secondaryContainer"
           >
-          <alwatr-icon name="menu-outline" class="w-6 h-6 text-onSecondaryContainer mx-1"></alwatr-icon>
+            <alwatr-icon name="menu-outline" class="mx-1 h-6 w-6 text-onSecondaryContainer"></alwatr-icon>
 
-          <div class="mx-2 grow text-labelLarge text-onSecondaryContainer">دریافتی</div>
-          <div class="mx-3 text-labelLarge text-onSecondaryContainer">۲۶</div>
-        </li>
+            <div class="mx-2 grow text-labelLarge text-onSecondaryContainer">دریافتی</div>
+            <div class="mx-3 text-labelLarge text-onSecondaryContainer">۲۶</div>
+          </li>
 
-        <li
-          class= "group flex w-84 h-14 rounded-full flex-nowrap px-3 items-center hover:bg-secondaryContainer hover:bg-opacity-40 hover:text-secondaryContainer
-                  cursor-pointer select-none"
+          <li
+            class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3 hover:bg-secondaryContainer hover:bg-opacity-40 hover:text-secondaryContainer"
           >
-          <alwatr-icon name="menu-outline" class="w-6 h-6 group-hover:text-onSecondaryContainer mx-1"></alwatr-icon>
+            <alwatr-icon name="menu-outline" class="mx-1 h-6 w-6 group-hover:text-onSecondaryContainer"></alwatr-icon>
 
-          <div class="mx-2 grow text-labelLarge group-hover:text-onSecondaryContainer">دریافتی</div>
-        </li>
+            <div class="mx-2 grow text-labelLarge group-hover:text-onSecondaryContainer">دریافتی</div>
+          </li>
 
-
-        <li
-          class= "group flex w-84 h-14 rounded-full flex-nowrap px-3 items-center hover:bg-secondaryContainer hover:bg-opacity-40 hover:text-secondaryContainer
-                  cursor-pointer select-none"
+          <li
+            class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3 hover:bg-secondaryContainer hover:bg-opacity-40 hover:text-secondaryContainer"
           >
-          <alwatr-icon name="menu-outline" class="w-6 h-6 group-hover:text-onSecondaryContainer mx-1"></alwatr-icon>
+            <alwatr-icon name="menu-outline" class="mx-1 h-6 w-6 group-hover:text-onSecondaryContainer"></alwatr-icon>
 
-          <div class="mx-2 grow text-labelLarge group-hover:text-onSecondaryContainer">دریافتی</div>
-        </li>
+            <div class="mx-2 grow text-labelLarge group-hover:text-onSecondaryContainer">دریافتی</div>
+          </li>
 
-        <li
-          class= "group flex w-84 h-14 rounded-full flex-nowrap px-3 items-center hover:bg-secondaryContainer hover:bg-opacity-40 hover:text-secondaryContainer
-                  cursor-pointer select-none"
+          <li
+            class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3 hover:bg-secondaryContainer hover:bg-opacity-40 hover:text-secondaryContainer"
           >
-          <alwatr-icon name="menu-outline" class="w-6 h-6 group-hover:text-onSecondaryContainer mx-1"></alwatr-icon>
+            <alwatr-icon name="menu-outline" class="mx-1 h-6 w-6 group-hover:text-onSecondaryContainer"></alwatr-icon>
 
-          <div class="mx-2 grow text-labelLarge group-hover:text-onSecondaryContainer">دریافتی</div>
-        </li>
+            <div class="mx-2 grow text-labelLarge group-hover:text-onSecondaryContainer">دریافتی</div>
+          </li>
 
-        <li
-          class= "group flex w-84 h-14 rounded-full flex-nowrap px-3 items-center hover:bg-secondaryContainer hover:bg-opacity-40 hover:text-secondaryContainer
-                  cursor-pointer select-none"
+          <li
+            class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3 hover:bg-secondaryContainer hover:bg-opacity-40 hover:text-secondaryContainer"
           >
-          <alwatr-icon name="menu-outline" class="w-6 h-6 group-hover:text-onSecondaryContainer mx-1"></alwatr-icon>
+            <alwatr-icon name="menu-outline" class="mx-1 h-6 w-6 group-hover:text-onSecondaryContainer"></alwatr-icon>
 
-          <div class="mx-2 grow text-labelLarge group-hover:text-onSecondaryContainer">دریافتی</div>
-        </li>
-        
-      </ul>
-
-    </nav>
-  </div>
-</body>
+            <div class="mx-2 grow text-labelLarge group-hover:text-onSecondaryContainer">دریافتی</div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </body>
 </html>

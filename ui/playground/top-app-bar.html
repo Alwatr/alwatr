@@ -1,132 +1,105 @@
-<!DOCTYPE html>
+<!doctype html>
 <html dir="rtl" class="h-full w-full [overscroll-behavior:none]">
-<head>
-  <base href="/" />
+  <head>
+    <base href="/" />
 
-  <meta charset="utf-8" />
-  <title>Alwatr UI Playground</title>
+    <meta charset="utf-8" />
+    <title>Alwatr UI Playground</title>
 
-  <link rel="stylesheet" href="dist.css" />
+    <link rel="stylesheet" href="dist.css" />
 
-  <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#673ab7" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
-  />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#673ab7" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
+    />
 
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@alwatr/icon/+esm"></script>
-</head>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@alwatr/icon/+esm"></script>
+  </head>
   <body
-    class="h-full w-full max-w-full max-h-full m-0 p-0 overflow-clip transform-gpu break-words
-           touch-pan-x touch-pan-y touch-pinch-zoom bg-background font-vazirmatn text-onBackground
-           text-bodyMedium [contain:size_layout_paint_style] [overscroll-behavior:none]"
-    >
-
+    class="m-0 h-full max-h-full w-full max-w-full transform-gpu touch-pan-x touch-pan-y touch-pinch-zoom overflow-clip break-words bg-background p-0 font-vazirmatn text-bodyMedium text-onBackground [overscroll-behavior:none] [contain:size_layout_paint_style]"
+  >
     <div id="alwatr_pwa">
-
       <!-- Alwatr top navigation bar Center-->
       <header
-        class="flex grow-0 shrink-0 select-none px-1 z-sticky h-16
-              items-center bg-surface scroll [&.scroll]:bg-surfaceContainer">
-
-        <button class="inline-block p-3 rounded-full cursor-pointer text-onSurface">
-          <alwatr-icon name="menu-outline" class="w-6 h-6"></alwatr-icon>
+        class="scroll z-sticky flex h-16 shrink-0 grow-0 select-none items-center bg-surface px-1 [&.scroll]:bg-surfaceContainer"
+      >
+        <button class="inline-block cursor-pointer rounded-full p-3 text-onSurface">
+          <alwatr-icon name="menu-outline" class="h-6 w-6"></alwatr-icon>
         </button>
 
-        <div class="grow px-1 text-titleLarge lead whitespace-nowrap overflow-clip
-                    text-center text-onSurface">
+        <div class="lead grow overflow-clip whitespace-nowrap px-1 text-center text-titleLarge text-onSurface">
           عنوان صفحه
         </div>
 
-        <button class="inline-block p-3 rounded-full cursor-pointer text-onSurfaceVariant">
-          <alwatr-icon name="refresh-outline" class="w-6 h-6"></alwatr-icon>
+        <button class="inline-block cursor-pointer rounded-full p-3 text-onSurfaceVariant">
+          <alwatr-icon name="refresh-outline" class="h-6 w-6"></alwatr-icon>
         </button>
 
-        <button class="inline-block p-3 rounded-full cursor-pointer text-onSurfaceVariant">
-          <alwatr-icon name="calendar-number-outline" class="w-6 h-6"></alwatr-icon>
+        <button class="inline-block cursor-pointer rounded-full p-3 text-onSurfaceVariant">
+          <alwatr-icon name="calendar-number-outline" class="h-6 w-6"></alwatr-icon>
         </button>
-
       </header>
 
-      <div class="w-full h-16"></div>
+      <div class="h-16 w-full"></div>
 
       <!-- Alwatr top navigation bar medium -->
       <header>
-
         <div
-          class= "flex grow-0 shrink-0 select-none px-1 z-sticky h-16 items-center bg-surface
-                  text-surface scroll [&.scroll]:bg-surfaceContainer"
+          class="scroll z-sticky flex h-16 shrink-0 grow-0 select-none items-center bg-surface px-1 text-surface [&.scroll]:bg-surfaceContainer"
         >
-
-          <button class="inline-block p-3 rounded-full cursor-pointer text-onSurface">
-            <alwatr-icon name="menu-outline" class="w-6 h-6 text-onSurface"></alwatr-icon>
+          <button class="inline-block cursor-pointer rounded-full p-3 text-onSurface">
+            <alwatr-icon name="menu-outline" class="h-6 w-6 text-onSurface"></alwatr-icon>
           </button>
 
-          <div
-            class= "grow px-1 text-titleLarge whitespace-nowrap overflow-clip text-center
-                    text-onSurface"
-          >
-          </div>
+          <div class="grow overflow-clip whitespace-nowrap px-1 text-center text-titleLarge text-onSurface"></div>
 
-          <button class="inline-block p-3 rounded-full cursor-pointer text-onSurfaceVariant">
-            <alwatr-icon name="refresh-outline" class="w-6 h-6"></alwatr-icon>
+          <button class="inline-block cursor-pointer rounded-full p-3 text-onSurfaceVariant">
+            <alwatr-icon name="refresh-outline" class="h-6 w-6"></alwatr-icon>
           </button>
 
-          <button class="inline-block p-3 rounded-full cursor-pointer text-onSurfaceVariant">
-            <alwatr-icon name="calendar-number-outline" class="w-6 h-6"></alwatr-icon>
+          <button class="inline-block cursor-pointer rounded-full p-3 text-onSurfaceVariant">
+            <alwatr-icon name="calendar-number-outline" class="h-6 w-6"></alwatr-icon>
           </button>
-
         </div>
 
         <div
-          class= "flex h-12 px-4 pb-5 items-end text-headlineSmall whitespace-nowrap overflow-clip
-                  text-right text-onSurface bg-surface scroll [&.scroll]:bg-surfaceContainer"
+          class="scroll flex h-12 items-end overflow-clip whitespace-nowrap bg-surface px-4 pb-5 text-right text-headlineSmall text-onSurface [&.scroll]:bg-surfaceContainer"
         >
           <div>عنوان صفحه</div>
         </div>
-
       </header>
 
-      <div class="w-full h-16"></div>
+      <div class="h-16 w-full"></div>
 
       <!-- Alwatr top navigation bar large-->
       <header>
-
         <div
-          class= "flex grow-0 shrink-0 select-none px-1 z-sticky h-16 items-center bg-surface
-                  text-surface scroll [&.scroll]:bg-surfaceContainer"
+          class="scroll z-sticky flex h-16 shrink-0 grow-0 select-none items-center bg-surface px-1 text-surface [&.scroll]:bg-surfaceContainer"
         >
-
-          <button class="inline-block p-3 rounded-full cursor-pointer text-onSurface">
-            <alwatr-icon name="menu-outline" class="w-6 h-6 text-onSurface"></alwatr-icon>
+          <button class="inline-block cursor-pointer rounded-full p-3 text-onSurface">
+            <alwatr-icon name="menu-outline" class="h-6 w-6 text-onSurface"></alwatr-icon>
           </button>
 
-          <div
-            class= "grow px-1 text-titleLarge lead whitespace-nowrap overflow-clip text-center
-                    text-onSurface"
-          >
-          </div>
+          <div class="lead grow overflow-clip whitespace-nowrap px-1 text-center text-titleLarge text-onSurface"></div>
 
-          <button class="inline-block p-3 rounded-full cursor-pointer text-onSurfaceVariant">
-            <alwatr-icon name="refresh-outline" class="w-6 h-6"></alwatr-icon>
+          <button class="inline-block cursor-pointer rounded-full p-3 text-onSurfaceVariant">
+            <alwatr-icon name="refresh-outline" class="h-6 w-6"></alwatr-icon>
           </button>
 
-          <button class="inline-block p-3 rounded-full cursor-pointer text-onSurfaceVariant">
-            <alwatr-icon name="calendar-number-outline" class="w-6 h-6"></alwatr-icon>
+          <button class="inline-block cursor-pointer rounded-full p-3 text-onSurfaceVariant">
+            <alwatr-icon name="calendar-number-outline" class="h-6 w-6"></alwatr-icon>
           </button>
-
         </div>
 
         <div
-          class= "flex h-24 px-4 pb-7 text-headlineMedium whitespace-nowrap overflow-clip items-end
-                  text-right text-onSurface bg-surface scroll [&.scroll]:bg-surfaceContainer">
+          class="scroll flex h-24 items-end overflow-clip whitespace-nowrap bg-surface px-4 pb-7 text-right text-headlineMedium text-onSurface [&.scroll]:bg-surfaceContainer"
+        >
           <div>عنوان صفحه</div>
         </div>
-
       </header>
-
     </div>
   </body>
 </html>
