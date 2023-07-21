@@ -1,32 +1,62 @@
-<!DOCTYPE html>
-<html class="h-full w-full [overscroll-behavior:none]">
-<head>
-  <base href="/" />
+<!doctype html>
+<html dir="rtl" class="h-full w-full [overscroll-behavior:none]">
+  <head>
+    <base href="/" />
 
-  <meta charset="utf-8" />
-  <title>Alwatr UI Playground</title>
+    <meta charset="utf-8" />
+    <title>Alwatr UI Playground</title>
 
-  <link rel="stylesheet" href="dist.css" />
+    <link rel="stylesheet" href="dist.css" />
 
-  <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#673ab7" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
-  />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#673ab7" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
+    />
 
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@alwatr/icon/+esm"></script>
-</head>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@alwatr/icon/+esm"></script>
+  </head>
   <body
-    class="h-full w-full max-w-full max-h-full m-0 p-0 overflow-clip transform-gpu break-words
-           touch-pan-x touch-pan-y touch-pinch-zoom bg-background font-vazirmatn text-onBackground
-           text-bodyMedium [contain:size_layout_paint_style] [overscroll-behavior:none]"
-    >
-
+    class="m-0 h-full max-h-full w-full max-w-full transform-gpu touch-pan-x touch-pan-y touch-pinch-zoom overflow-clip break-words bg-background p-0 font-vazirmatn text-bodyMedium text-onBackground [overscroll-behavior:none] [contain:size_layout_paint_style]"
+  >
     <div id="alwatr_pwa">
+      <div class="flex flex-col gap-4 p-4">
+        <button
+          class="flex h-10 w-10 cursor-pointer items-center justify-center bg-primaryContainer rounded-xl elevation-3 state-onPrimaryContainer hover:elevation-4 active:elevation-3 focus:elevation-3"
+        >
+          <alwatr-icon name="add-outline" class="h-6 w-6"></alwatr-icon>
+        </button>
+
+        <button
+          class="flex h-14 w-14 cursor-pointer items-center justify-center bg-primaryContainer rounded-2xl elevation-3 state-onPrimaryContainer hover:elevation-4 active:elevation-3 focus:elevation-3"
+        >
+          <alwatr-icon name="add-outline" class="h-6 w-6"></alwatr-icon>
+        </button>
+
+        <button
+          class="flex h-24 w-24 cursor-pointer items-center justify-center bg-primaryContainer rounded-[1.75rem] elevation-3 state-onPrimaryContainer hover:elevation-4 active:elevation-3 focus:elevation-3"
+        >
+          <alwatr-icon name="add-outline" class="h-9 w-9"></alwatr-icon>
+        </button>
+      </div>
 
 
+      <div class="fixed left-4 bottom-4 flex flex-col items-end gap-6">
+        <button
+            class="flex h-10 w-10 cursor-pointer items-center justify-center bg-primaryContainer rounded-xl elevation-3 state-onPrimaryContainer hover:elevation-4 active:elevation-3 focus:elevation-3"
+          >
+            <alwatr-icon name="add-outline" class="h-6 w-6"></alwatr-icon>
+          </button>
+
+        <button
+          class="flex h-14 px-4 gap-2 min-w-[5rem] cursor-pointer items-center justify-center bg-primaryContainer rounded-2xl elevation-3 state-onPrimaryContainer hover:elevation-4 active:elevation-3 focus:elevation-3 text-labelLarge"
+        >
+          <alwatr-icon name="cart-outline" class="h-6 w-6" flip-rtl dir="rtl"></alwatr-icon>
+          سفارش جدید
+        </button>
+      </div>
     </div>
   </body>
 </html>
