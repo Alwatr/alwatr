@@ -20,18 +20,18 @@
   </head>
 
   <body
-    class="m-0 h-full max-h-full w-full max-w-full transform-gpu touch-pan-x touch-pan-y touch-pinch-zoom overflow-clip break-words p-0 font-vazirmatn text-bodyMedium text-onBackground [overscroll-behavior:none] [contain:size_layout_paint_style]"
+    class="m-0 h-full max-h-full w-full max-w-full transform-gpu touch-pan-x touch-pan-y touch-pinch-zoom overflow-clip break-words p-0 font-vazirmatn text-bodyMedium text-onBackground [overscroll-behavior:none]"
   >
-    <div
-      id="alwatr_pwa"
-      class="!flex h-full max-h-full w-full max-w-full flex-col flex-nowrap items-stretch overflow-clip [contain:size_layout_paint_style]"
+    <aside
+      id="navigationDrawer"
+      class="fixed bottom-0 left-0 top-0 z-modal w-[22.5rem] translate-x-full transform-gpu overflow-clip rounded-e-2xl bg-surfaceContainerLow px-3 transition-transform duration-300 ease-in will-change-transform elevation-1 rtl:left-auto rtl:right-0 extended:translate-x-0 extended:rounded-none extended:bg-surface extended:transition-none extended:will-change-auto extended:elevation-0 [&.opened]:translate-x-0 [&.opened]:ease-out"
     >
-      <nav class="box-border flex h-full w-[360px] flex-col rounded-e-2xl bg-surface px-3 elevation-1">
+      <nav class="flex h-full flex-col px-3 elevation-1">
         <h2 class="mx-6 pb-5 pt-7 text-titleSmall text-onSurfaceVariant">سربرگ</h2>
 
-        <ul class="text-onSurfaceVariant">
+        <ul class="text-labelLarge text-onSurfaceVariant">
           <li
-            class="w-84 flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full bg-secondaryContainer px-3 text-secondaryContainer"
+            class="flex h-14 w-[21rem] cursor-pointer select-none flex-nowrap items-center rounded-full hover:text-secondaryContainer hover:stateActive-secondaryContainer"
           >
             <alwatr-icon name="menu-outline" class="mx-1 h-6 w-6 text-onSecondaryContainer"></alwatr-icon>
 
@@ -72,6 +72,6 @@
           </li>
         </ul>
       </nav>
-    </div>
+    </aside>
   </body>
 </html>
