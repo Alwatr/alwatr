@@ -13,9 +13,10 @@ services:
 
     command:
       - run
-      - -format=jsonv5
       - -c
       - /etc/config/${CONFIG}.json
+      - -format
+      - jsonv5
 
     env_file: .env
 
