@@ -15,11 +15,13 @@ import {l10n} from '@alwatr/i18n2';
 
 import {alwatrIcon} from '../icon/icon.js';
 
+import type {AlwatrNavigationDrawerContext} from '../navigation-drawer/navigation-drawer.js';
 import type {MaybePromise} from '@alwatr/type';
 
 export interface NavigationContext {
   currentActive: string;
-  navigationBar: AlwatrNavigationBarItem[]
+  navigationBar: AlwatrNavigationBarItem[];
+  navigationDrawer: AlwatrNavigationDrawerContext;
 }
 
 export interface AlwatrNavigationBarItem {
@@ -51,6 +53,11 @@ export class AlwatrNavigationBarDirective extends AlwatrDynamicDirective {
       this.setValue(this.render(this.navigationContext.navigationBar));
     });
   }
+
+  // override disconnected() {
+  //   super.disconnected();
+  //   contextConsumer(this.contextSignalName).unsubscribe();
+  // }
 
   render(options?: AlwatrNavigationBarItem[]): unknown {
     this._logger.logMethodArgs?.('render', options);
