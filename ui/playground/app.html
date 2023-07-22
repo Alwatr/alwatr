@@ -27,8 +27,46 @@
         id="navigationDrawer"
         class="fixed bottom-0 left-0 top-0 z-modal w-[22.5rem] translate-x-full transform-gpu overflow-clip rounded-e-2xl bg-surfaceContainerLow px-3 transition-transform duration-300 ease-in will-change-transform elevation-1 rtl:left-auto rtl:right-0 [&.opened]:translate-x-0 extended:translate-x-0 [&.opened]:ease-out extended:transition-none extended:will-change-auto extended:rounded-none extended:elevation-0"
       >
-        <nav>...</nav>
+        <nav>
+          <h2 class="2 mx-6 py-7 text-titleSmall text-onSurfaceVariant">سربرگ</h2>
+
+        <ul class="text-labelLarge text-onSurfaceVariant">
+          <li
+            class="5 flex h-14 px-3 cursor-pointer select-none stateActive-secondaryContainer bg-secondaryContainer flex-nowrap items-center rounded-full hover:text-secondaryContainer hover:stateActive-secondaryContainer"
+          >
+            <alwatr-icon name="menu-outline" class="4 mx-1 h-6 w-6 text-onSecondaryContainer"></alwatr-icon>
+
+            <div class="3 mx-2 grow text-labelLarge text-onSecondaryContainer">دریافتی</div>
+            <div class="6 ml-3 text-labelLarge text-onSecondaryContainer">۲۶</div>
+          </li>
+
+          <li
+            class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3 hover:bg-secondaryContainer hover:stateHover-onSecondaryContainer hover:text-secondaryContainer active:text-onSecondaryContainer active:stateActive-onSecondaryContainer"
+          >
+            <alwatr-icon name="send-outline" class="mx-1 h-6 w-6 text-onSurfaceVariant group-hover:text-onSecondaryContainer"></alwatr-icon>
+
+            <div class="mx-2 grow text-labelLarge text-onSurfaceVariant group-hover:text-onSecondaryContainer">ارسال</div>
+          </li>
+
+          <li
+            class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3 hover:bg-secondaryContainer hover:stateHover-onSecondaryContainer hover:text-secondaryContainer active:text-onSecondaryContainer active:stateActive-onSecondaryContainer"
+          >
+            <alwatr-icon name="archive-outline" class="mx-1 h-6 w-6 text-onSurfaceVariant group-hover:text-onSecondaryContainer"></alwatr-icon>
+
+            <div class="mx-2 grow text-labelLarge text-onSurfaceVariant group-hover:text-onSecondaryContainer">آرشیو</div>
+          </li>
+
+          <li
+            class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3 hover:bg-secondaryContainer hover:stateHover-onSecondaryContainer hover:text-secondaryContainer active:text-onSecondaryContainer active:stateActive-onSecondaryContainer"
+          >
+            <alwatr-icon name="trash-outline" class="mx-1 h-6 w-6 text-onSurfaceVariant group-hover:text-onSecondaryContainer"></alwatr-icon>
+
+            <div class="mx-2 grow text-labelLarge text-onSurfaceVariant group-hover:text-onSecondaryContainer">دریافتی</div>
+          </li>
+
+        </nav>
       </aside>
+
       <div
         id="scrim"
         class="z-scrim pointer-events-none fixed bottom-0 left-0 right-0 top-0 bg-scrim opacity-0 transition-opacity will-change-[opacity] extended:hidden [&.opened]:pointer-events-auto [&.opened]:opacity-25"
