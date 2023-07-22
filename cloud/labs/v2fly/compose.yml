@@ -22,6 +22,6 @@ services:
 
     volumes:
       - type: bind
-        source: ./config
+        source: ./secret
         target: /etc/config
         read_only: true
