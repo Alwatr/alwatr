@@ -65,12 +65,12 @@ export class AlwatrNavigationDrawerDirective extends AlwatrDynamicDirective {
     if (options == null) return noChange;
 
     return html`
-      <nav
-      class="w-[360px] h-full flex flex-col bg-surfaceContainerLow gap-3 elevation-1 rounded-e-3xl box-border px-7 z-fixed absolute">
-      <h2 class="text-onSurfaceVariant text-titleSmall">${options.headline ?? nothing}</h2>
+      <div class="fixed inset-0 bg-scrim opacity-50"></div>
+      <nav class="w-[360px] h-full flex flex-col bg-surfaceContainerLow gap-3
+      elevation-1 rounded-e-3xl box-border px-7 z-fixed absolute">
+      <h2 class="text-onSurfaceVariant text-titleSmall mt-5">${options.headline}</h2>
       ${this._render_primary_item_list(options.mainItems)}
     </nav>
-    <div class="fixed inset-0 bg-scrim opacity-50"></div>
     `;
   }
 
@@ -83,17 +83,20 @@ export class AlwatrNavigationDrawerDirective extends AlwatrDynamicDirective {
 
   protected _render_primary_item(options: AlwatrNavigationDrawerItem, selected?: boolean): unknown {
     return html`
-      <li
-        class="rounded-full w-84 h-[56px] flex flex-nowrap ps-4 pe-6
+      <button
+        class="group rounded-full w-84 h-[56px] flex flex-nowrap ps-4 pe-6
           items-center gap-3 cursor-pointer select-none
+          hover:bg-onSecondaryContainer hover:bg-opacity-10
+          [&>.alwatr-icon]:group-hover:text-onSecondaryContainer
           [&>.alwatr-icon]:w-6 [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:text-onSurfaceVariant
           ${classMap({'bg-secondaryContainer [&>.alwatr-icon]:text-onSecondaryContainer': selected === true})}">
         ${alwatrIcon({svg: selected ? options.selectedIcon : options.icon, flipIconInRtl: options.flipIconInRtl})}
-        <span class="grow text-labelLarge ${classMap({'text-onSecondaryContainer': selected === true})}">
+        <span class="grow text-labelLarge group-hover:text-onSecondaryContainer
+          ${classMap({'text-onSecondaryContainer': selected === true})}">
           ${this._render_label(options)}
         </span>
         <span>${options.badge}</span>
-      </li>
+      </button>
     `;
   }
 
