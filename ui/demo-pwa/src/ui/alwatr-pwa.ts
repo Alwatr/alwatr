@@ -1,6 +1,7 @@
 import {AlwatrDynamicDirective, alwatrObserve, cache, directive, html, type PartInfo} from '@alwatr/fract';
 import {router, type RouteContext} from '@alwatr/router2';
 import {alwatrNavigationBar} from '@alwatr/ui-kit2/navigation-bar/navigation-bar.js';
+import {alwatrNavigationDrawer} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
 import {alwatrTopAppBar} from '@alwatr/ui-kit2/top-app-bar/top-app-bar.js';
 import {renderState} from '@alwatr/util';
 
@@ -26,6 +27,7 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
 
     yield html`<main class="scroll-area grow">${this._renderContent()}</main>`;
 
+    yield html`${alwatrNavigationDrawer()}`;
     yield html`${alwatrNavigationBar()}`;
   }
 

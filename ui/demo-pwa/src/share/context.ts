@@ -38,4 +38,39 @@ contextProvider.setValue(navigationContextSignalName, {
       label: 'بقیه‌ش',
     },
   ] as unknown as StringifyableRecord,
+  navigationDrawer: {
+    mainItems: [
+      {
+        id: 'home',
+        icon: icons.homeOutline,
+        selectedIcon: icons.home,
+        label: 'خانه',
+      },
+      {
+        id: 'call',
+        icon: icons.callOutline,
+        selectedIcon: icons.call,
+        label: 'تماس',
+        badge: '+۹۹',
+      },
+      {
+        id: 'favorite',
+        icon: icons.starOutline,
+        selectedIcon: icons.star,
+        label: 'علاقه‌مندی‌ها',
+      },
+      {
+        id: 'triangle',
+        icon: icons.triangleOutline,
+        selectedIcon: icons.triangle,
+        label: 'منو',
+      },
+      {
+        id: 'other',
+        icon: icons.triangleOutline,
+        selectedIcon: icons.triangle,
+        label: 'بقیه‌ش',
+      },
+    ],
+  } as unknown as StringifyableRecord,
 });
