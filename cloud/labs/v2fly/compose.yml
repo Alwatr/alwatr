@@ -13,14 +13,15 @@ services:
 
     command:
       - run
-      - -format=jsonv5
       - -c
       - /etc/config/${CONFIG}.json
+      - -format
+      - jsonv5
 
     env_file: .env
 
     volumes:
       - type: bind
-        source: ./config
+        source: ./secret
         target: /etc/config
         read_only: true
