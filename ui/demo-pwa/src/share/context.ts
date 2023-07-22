@@ -39,6 +39,7 @@ contextProvider.setValue(navigationContextSignalName, {
     },
   ] as unknown as StringifyableRecord,
   navigationDrawer: {
+    headline: 'عناوین مهم',
     mainItems: [
       {
         id: 'home',
