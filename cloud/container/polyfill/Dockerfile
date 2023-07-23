@@ -37,6 +37,6 @@ FROM docker.io/library/node:${NODE_VERSION}-alpine as app
 WORKDIR /app
 
 COPY --from=rust-builder /usr/local/cargo/bin/viceroy /usr/local/bin/viceroy
-COPY --from=es-builder /app/bin/main.wasm ./bin/main.wasm
+COPY --from=es-builder /app/bin/main.wasm /app/fastly.toml ./
 
-CMD ["yarn", "start"]
+CMD ["viceroy", "main.wasm",  "-C", "fastly.toml"]
