@@ -109,8 +109,6 @@
     "order_shipping_time_period_key_3_4w": "سه تا چهار هفته",
 
     "order_item_not_exist": "محصولی پیدا نشد!",
-    "order_item_qty_m2": "متراژ (m²)",
-    "order_item_qty_tile": "تعداد (تایل)",
     "order_item_qty_box": "تعداد (بسته)",
     "order_item_price": "قیمت فروش (m²)",
     "order_item_final_price": "قیمت نمایندگی (m²)",

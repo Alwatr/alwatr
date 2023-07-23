@@ -516,17 +516,6 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
             </span>
           </div>
           <div>
-            <span>${message('order_item_qty_m2')}:</span>
-            <span><span>${number(item.qty * config.order.factor.box2m2)}</span> m²</span>
-          </div>
-          <div>
-            <span>${message('order_item_qty_tile')}:</span>
-            <span>
-              <span>${number(item.qty * config.order.factor.box2tile)}</span>
-              <alwatr-icon .name=${'stop-outline'}></alwatr-icon>
-            </span>
-          </div>
-          <div>
             <span>${message('order_item_qty_box')}:</span>
             <span>
               <span class="bold-text">${number(item.qty)}</span>
