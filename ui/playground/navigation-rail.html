@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="h-full w-full [overscroll-behavior:none]">
+<html lang="fa-IR" dir="rtl" class="h-full w-full [overscroll-behavior:none]">
   <head>
     <base href="/" />
 
@@ -18,9 +18,77 @@
 
     <script type="module" src="https://cdn.jsdelivr.net/npm/@alwatr/icon/+esm"></script>
   </head>
+
   <body
-    class="m-0 h-full max-h-full w-full max-w-full transform-gpu touch-pan-x touch-pan-y touch-pinch-zoom overflow-clip break-words bg-background p-0 font-vazirmatn text-bodyMedium text-onBackground [overscroll-behavior:none] [contain:size_layout_paint_style]"
+    class="m-0 h-full max-h-full w-full max-w-full transform-gpu touch-pan-x touch-pan-y touch-pinch-zoom overflow-clip break-words font-vazirmatn text-bodyMedium text-onBackground [overscroll-behavior:none]"
   >
-    <div id="alwatr_pwa"></div>
+    <aside
+      id="navigationDrawer"
+      class="fixed bottom-0 left-0 top-0 z-modal w-20 translate-x-full transform-gpu overflow-clip rounded-e-2xl bg-surfaceContainerLow transition-transform duration-300 ease-in will-change-transform elevation-1 rtl:left-auto rtl:right-0 extended:translate-x-0 extended:rounded-none extended:transition-none extended:will-change-auto extended:elevation-0 [&.opened]:translate-x-0 [&.opened]:ease-out"
+    >
+      <nav class="flex h-full flex-col justify-around bg-surfaceContainerLow elevation-1">
+        <ul class="flex flex-col gap-3 text-labelLarge text-onSurfaceVariant">
+          <li class="w-84 group group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
+            <div
+              class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl group-hover:bg-secondaryContainer group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer"
+            >
+              <alwatr-icon
+                name="person-outline"
+                class="mx-1 h-6 w-6 group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer"
+              ></alwatr-icon>
+            </div>
+
+            <div class="mx-2 grow group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer">
+              مخاطبین
+            </div>
+          </li>
+
+          <li class="w-84 group group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
+            <div
+              class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl group-hover:bg-secondaryContainer group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer"
+            >
+              <alwatr-icon
+                name="send-outline"
+                class="mx-1 h-6 w-6 group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer"
+              ></alwatr-icon>
+            </div>
+
+            <div class="mx-2 grow group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer">
+              ارسال
+            </div>
+          </li>
+
+          <li class="w-84 group group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
+            <div
+              class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl group-hover:bg-secondaryContainer group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer"
+            >
+              <alwatr-icon
+                name="archive-outline"
+                class="mx-1 h-6 w-6 group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer"
+              ></alwatr-icon>
+            </div>
+
+            <div class="mx-2 grow group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer">
+              آرشیو
+            </div>
+          </li>
+
+          <li class="w-84 group group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
+            <div
+              class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl group-hover:bg-secondaryContainer group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer"
+            >
+              <alwatr-icon
+                name="trash-outline"
+                class="mx-1 h-6 w-6 group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer"
+              ></alwatr-icon>
+            </div>
+
+            <div class="mx-2 grow group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer">
+              زباله
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </aside>
   </body>
 </html>
