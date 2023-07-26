@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="h-full w-full [overscroll-behavior:none]">
+<html dir="rtl" class="h-full w-full [overscroll-behavior:none]">
   <head>
     <base href="/" />
 
@@ -21,6 +21,13 @@
   <body
     class="m-0 h-full max-h-full w-full max-w-full transform-gpu touch-pan-x touch-pan-y touch-pinch-zoom overflow-clip break-words bg-background p-0 font-vazirmatn text-bodyMedium text-onBackground [overscroll-behavior:none] [contain:size_layout_paint_style]"
   >
-    <div id="alwatr_pwa"></div>
+    <div
+      id="alwatr_pwa"
+      class="flex h-full max-h-full w-full max-w-full flex-col flex-nowrap items-stretch overflow-clip"
+    >
+      <div class="flex w-10 h-10 rounded-full bg-surfaceContainerHighest text-Primary items-center justify-center hover:stateHover-onSurface m-1 active:stateActive-onSurface">
+        <alwatr-icon name="menu-outline" class="w-6 h-6"></alwatr-icon>
+      </div>
+    </div>
   </body>
 </html>
