@@ -2,8 +2,7 @@ import {customElement, AlwatrBaseElement, property, css, html, PropertyValues} f
 import {l10n} from '@alwatr/i18n2';
 import {alwatrIcon} from '@alwatr/ui-kit/icon/icon.js';
 
-import type{Image} from '../../manager/tour-storage.js';
-import type{MaybePromise} from '@alwatr/type';
+import type {MaybePromise, Photo} from '@alwatr/type';
 
 
 declare global {
@@ -21,8 +20,8 @@ export interface PriceDetailItem {
 export interface TourCardContent {
   id: string;
   title: string;
-  image: Image;
-  priceDetailList: Array<PriceDetailItem>;
+  image: Photo;
+  priceDetailList: PriceDetailItem[];
 }
 
 /**
