@@ -38,6 +38,6 @@
     "@alwatr/logger": "^1.0.0",
     "@alwatr/router": "^1.0.0",
     "lit": "^2.7.6",
-    "tslib": "^2.6.0"
+    "tslib": "^2.6.1"
   }
 }
