@@ -1,7 +1,5 @@
 import {AlwatrDirective, directive, html, map, noChange, type PartInfo} from '@alwatr/fract';
-
-import './tour-card.scss';
-import {alwatrIcon} from '../icon/icon.js';
+import {alwatrIcon} from '@alwatr/ui-kit2/icon/icon.js';
 
 import type {TourCardContent} from './type.js';
 
