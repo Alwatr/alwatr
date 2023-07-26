@@ -62,8 +62,5 @@
   "githubPullRequests.ignoredPullRequestBranches": [
     "main",
     "next"
-  ],
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  ]
 }
