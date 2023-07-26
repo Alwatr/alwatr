@@ -1,0 +1,71 @@
+baseURL: 'http://localhost:1313'
+title: پروژه الوتر
+copyright: ''
+
+# https://gohugo.io/content-management/multilingual/
+languageCode: fa-IR
+defaultContentLanguage: fa
+timeZone: Asia/Tehran
+# Render the default content language in subdir, e.g. content/en/. The site root / will then redirect to /en/.
+defaultContentLanguageInSubdir: false
+languages:
+  fa:
+    contentDir: content/fa
+    disabled: false
+    languageCode: fa-IR
+    languageDirection: rtl
+    languageName: Persian
+    title: پروژه الوتر
+    weight: 1
+  en:
+    contentDir: content/en
+    disabled: true
+    languageCode: en-US
+    languageDirection: ltr
+    languageName: English
+    title: Alwatr Project
+    weight: 2
+
+archetypeDir: archetypes
+assetDir: assets
+contentDir: content
+dataDir: data
+themesDir: themes
+publishDir: public
+
+# build:
+buildDrafts: false
+buildExpired: false
+buildFuture: false
+cleanDestinationDir: true
+# Timeout for generating page contents,
+timeout: 60s
+
+# caches:
+
+disableAliases: false
+disableHugoGeneratorInject: true
+disableKinds: []
+disableLiveReload: false
+disablePathToLower: true
+enableEmoji: false
+enableGitInfo: true
+enableInlineShortcodes: false
+enableMissingTranslationPlaceholders: false
+enableRobotsTXT: true
+# Enable to turn relative URLs into absolute.
+canonifyURLs: false
+# Enable this to make all relative URLs relative to content root. Note that this does not affect absolute URLs.
+relativeURLs: false
+# Don’t sync modification time of files.
+noTimes: false
+paginate: 10
+paginatePath: page
+# Pluralize titles in lists.
+pluralizeListTitles: true
+# Maximum number of items in the RSS feed. -1=unlimited
+rssLimit: -1
+summaryLength: 70
+titleCaseStyle: AP
+# When enabled, creates URL of the form /filename.html instead of /filename/.
+uglyURLs: false
