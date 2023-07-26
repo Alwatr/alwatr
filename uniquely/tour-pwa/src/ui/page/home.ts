@@ -1,7 +1,7 @@
 import {AlwatrDynamicDirective, directive, html, mapObject, type PartInfo} from '@alwatr/fract';
 import {router} from '@alwatr/router2';
 
-import {tourContext} from '../../../../tour-pwa-old/src/manager/tour-storage.js';
+import {tourContext} from '../../manager/tour-storage.js';
 
 class AlwatrHome extends AlwatrDynamicDirective {
   constructor(partInfo: PartInfo) {

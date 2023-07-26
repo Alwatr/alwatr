@@ -1,6 +1,6 @@
 import {AlwatrDynamicDirective, directive, html, type PartInfo} from '@alwatr/fract';
 
-import type {Tour} from '../../../../tour-pwa-old/src/manager/tour-storage.js';
+import type {Tour} from '../../manager/tour-storage.js';
 
 class AlwatrTourDetail extends AlwatrDynamicDirective {
   protected _content?: Tour;
