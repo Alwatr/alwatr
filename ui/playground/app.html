@@ -1,74 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa-IR" dir="rtl" class="h-full w-full [overscroll-behavior:none]">
-<head>
-  <base href="/" />
+  <head>
+    <base href="/" />
 
-  <meta charset="utf-8" />
-  <title>Alwatr UI Playground</title>
+    <meta charset="utf-8" />
+    <title>Alwatr UI Playground</title>
 
-  <link rel="stylesheet" href="dist.css" />
+    <link rel="stylesheet" href="dist.css" />
 
-  <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#673ab7" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
-  />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#673ab7" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
+    />
 
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@alwatr/icon/+esm"></script>
-</head>
-<body class="h-full w-full max-w-full max-h-full m-0 p-0 overflow-clip transform-gpu break-words touch-pan-x touch-pan-y touch-pinch-zoom bg-background font-vazirmatn text-onBackground text-bodyMedium [contain:size_layout_paint_style] [overscroll-behavior:none]">
-  <div
-    id="alwatr_pwa"
-    class="!flex h-full w-full max-w-full max-h-full flex-col flex-nowrap items-stretch overflow-clip [contain:size_layout_paint_style]"
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@alwatr/icon/+esm"></script>
+  </head>
+  <body
+    class="m-0 h-full max-h-full w-full max-w-full transform-gpu touch-pan-x touch-pan-y touch-pinch-zoom overflow-clip break-words bg-background p-0 font-vazirmatn text-bodyMedium text-onBackground [overscroll-behavior:none]"
   >
-    <!-- Alwatr top navigation bar (Center) -->
-    <header
-      class="flex grow-0 shrink-0 select-none px-1 z-sticky h-16 items-center bg-surface scroll [&.scroll]:bg-surfaceContainer [&.scroll]:elevation-2">
-      <button class="inline-block p-3 rounded-full cursor-pointer text-primary">
-        <alwatr-icon name="menu-outline" class="w-6 h-6"></alwatr-icon>
-      </button>
+    <div id="alwatr_pwa" class="h-full max-h-full w-full max-w-full">
+      <!-- Navigation drawer -->
+      <aside
+        id="navigationDrawer"
+        class="fixed bottom-0 left-0 top-0 z-modal w-[22.5rem] translate-x-full transform-gpu overflow-clip rounded-e-2xl bg-surfaceContainerLow transition-transform duration-300 ease-in will-change-transform elevation-1 rtl:left-auto rtl:right-0 extended:translate-x-0 extended:rounded-none extended:transition-none extended:will-change-auto extended:elevation-0 [&.opened]:translate-x-0 [&.opened]:ease-out"
+      >
+        <nav class="flex h-full flex-col bg-surfaceContainerLow px-3 py-3 elevation-1">
+          <h2 class="mx-6 py-7 text-titleSmall text-onSurfaceVariant">سربرگ</h2>
+
+          <ul class="text-labelLarge text-onSurfaceVariant">
+            <li
+              class="flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full bg-secondaryContainer px-3 text-onSecondaryContainer stateActive-secondaryContainer"
+            >
+              <alwatr-icon name="menu-outline" class="mx-1 h-6 w-6"></alwatr-icon>
+
+              <div class="mx-2 grow">دریافتی</div>
+              <div class="ml-3">۲۶</div>
+            </li>
+
+            <li
+              class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3 hover:bg-secondaryContainer hover:text-onSecondaryContainer hover:stateHover-onSecondaryContainer active:text-onSecondaryContainer active:stateActive-onSecondaryContainer"
+            >
+              <alwatr-icon name="person-outline" class="mx-1 h-6 w-6"></alwatr-icon>
+
+              <div class="mx-2 grow">مخاطبین</div>
+            </li>
+
+            <li
+              class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3 hover:bg-secondaryContainer hover:text-onSecondaryContainer hover:stateHover-onSecondaryContainer active:text-onSecondaryContainer active:stateActive-onSecondaryContainer"
+            >
+              <alwatr-icon name="create-outline" class="mx-1 h-6 w-6"></alwatr-icon>
+
+              <div class="mx-2 grow">ارسال</div>
+            </li>
+
+            <li
+              class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3 hover:bg-secondaryContainer hover:text-onSecondaryContainer hover:stateHover-onSecondaryContainer active:text-onSecondaryContainer active:stateActive-onSecondaryContainer"
+            >
+              <alwatr-icon name="archive-outline" class="mx-1 h-6 w-6"></alwatr-icon>
+
+              <div class="mx-2 grow">آرشیو</div>
+            </li>
+
+            <li
+              class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3 hover:bg-secondaryContainer hover:text-onSecondaryContainer hover:stateHover-onSecondaryContainer active:text-onSecondaryContainer active:stateActive-onSecondaryContainer"
+            >
+              <alwatr-icon name="trash-outline" class="mx-1 h-6 w-6"></alwatr-icon>
+
+              <div class="mx-2 grow">سطل زباله</div>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
       <div
-        class="grow px-1 text-titleLarge lead whitespace-nowrap overflow-clip text-ellipsis text-start text-onSurface [&.title-center]:text-center [&.title-center]:px-3"
-      >عنوان صفحه</div>
-      <button class="inline-block p-3 rounded-full cursor-pointer text-onSurfaceVariant">
-        <alwatr-icon name="refresh-outline" class="w-6 h-6"></alwatr-icon>
-      </button>
-      <button class="inline-block p-3 rounded-full cursor-pointer text-onSurfaceVariant">
-        <alwatr-icon name="calendar-number-outline" class="w-6 h-6"></alwatr-icon>
-      </button>
-    </header>
-    <main class="grow flex gap-8 flex-wrap p-8">
-      <div class="w-20 h-20 elevation-0 hover:elevation-2 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-1 hover:elevation-3 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-2 hover:elevation-4 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-3 hover:elevation-5 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-4 hover:elevation-6 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-5 hover:elevation-7 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-6 hover:elevation-8 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-7 hover:elevation-9 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-8 hover:elevation-10 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-9 hover:elevation-11 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-10 hover:elevation-12 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-11 hover:elevation-13 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-12 hover:elevation-14 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-13 hover:elevation-15 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-14 hover:elevation-16 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-15 hover:elevation-17 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-16 hover:elevation-18 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-17 hover:elevation-19 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-18 hover:elevation-20 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-19 hover:elevation-21 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-20 hover:elevation-22 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-21 hover:elevation-23 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-22 hover:elevation-24 transition-shadow"></div>
-      <div class="w-20 h-20 elevation-23"></div>
-      <div class="w-20 h-20 elevation-24"></div>
-    </main>
-    <footer>
-      <nav>nav</nav>
-    </footer>
-  </div>
-</body>
+        id="scrim"
+        class="pointer-events-none fixed bottom-0 left-0 right-0 top-0 z-scrim bg-scrim opacity-0 transition-opacity will-change-[opacity] extended:hidden [&.opened]:pointer-events-auto [&.opened]:opacity-25"
+        onclick="navigationDrawer.classList.remove('opened');scrim.classList.remove('opened');"
+      ></div>
+
+      <!-- App container -->
+      <div
+        class="flex h-full max-h-full w-full max-w-full flex-col flex-nowrap items-stretch overflow-clip extended:ps-[22.5rem]"
+      >
+        <!-- Top app bar -->
+        <header
+          class="scroll flex h-16 shrink-0 grow-0 select-none items-center bg-surface px-1 [&.scroll]:bg-surfaceContainer"
+        >
+          <button
+            class="inline-block cursor-pointer rounded-full p-3 text-onSurface"
+            onclick="navigationDrawer.classList.add('opened');scrim.classList.add('opened');"
+          >
+            <alwatr-icon name="menu-outline" class="h-6 w-6"></alwatr-icon>
+          </button>
+
+          <div class="lead grow overflow-clip whitespace-nowrap px-1 text-start text-titleLarge text-onSurface">
+            عنوان صفحه
+          </div>
+
+          <button class="inline-block cursor-pointer rounded-full p-3 text-onSurfaceVariant">
+            <alwatr-icon name="refresh-outline" class="h-6 w-6"></alwatr-icon>
+          </button>
+
+          <button class="inline-block cursor-pointer rounded-full p-3 text-onSurfaceVariant">
+            <alwatr-icon name="calendar-number-outline" class="h-6 w-6"></alwatr-icon>
+          </button>
+        </header>
+
+        <!-- Pages container -->
+        <main class="flex grow flex-wrap gap-8 p-8">...</main>
+
+        <!-- Navigation bar -->
+        <footer class="shrink-0 grow-0 bg-surfaceContainer elevation-2">
+          <nav
+            class="mx-auto flex h-20 max-w-screen-medium cursor-pointer select-none items-stretch text-labelMedium text-onSurfaceVariant"
+          >
+            <a
+              aria-selected="false"
+              class="group flex grow flex-col items-center justify-start pt-3 hover:text-onSurface aria-selected:pointer-events-none"
+            >
+              <div
+                class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer group-aria-selected:text-onSecondaryContainer"
+              >
+                <alwatr-icon name="menu-outline" class="block h-6 w-6"> </alwatr-icon>
+              </div>
+              <div class="py-1 group-aria-selected:text-onSurface">منو</div>
+            </a>
+
+            <a
+              aria-selected="false"
+              class="group flex grow flex-col items-center justify-start pt-3 hover:text-onSurface aria-selected:pointer-events-none"
+            >
+              <div
+                class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer group-aria-selected:text-onSecondaryContainer"
+              >
+                <alwatr-icon name="call-outline" class="block h-6 w-6"> </alwatr-icon>
+              </div>
+              <div class="py-1 group-aria-selected:text-onSurface">تماس</div>
+            </a>
+
+            <a
+              aria-selected="true"
+              class="group flex grow flex-col items-center justify-start pt-3 aria-selected:pointer-events-none"
+            >
+              <div
+                class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer group-aria-selected:text-onSecondaryContainer"
+              >
+                <alwatr-icon name="create-outline" class="block h-6 w-6"> </alwatr-icon>
+              </div>
+              <div class="py-1 group-aria-selected:text-onSurface">یادداشت</div>
+            </a>
+
+            <a
+              aria-selected="false"
+              class="group flex grow flex-col items-center justify-start pt-3 hover:text-onSurface aria-selected:pointer-events-none"
+            >
+              <div
+                class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer group-aria-selected:text-onSecondaryContainer"
+              >
+                <alwatr-icon name="mic-outline" class="block h-6 w-6"> </alwatr-icon>
+              </div>
+              <div class="py-1 group-aria-selected:text-onSurface">ضبط</div>
+            </a>
+
+            <a
+              aria-selected="false"
+              class="group flex grow flex-col items-center justify-start pt-3 hover:text-onSurface aria-selected:pointer-events-none"
+            >
+              <div
+                class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer group-aria-selected:text-onSecondaryContainer"
+              >
+                <alwatr-icon name="person-outline" class="block h-6 w-6"> </alwatr-icon>
+              </div>
+              <div class="py-1 group-aria-selected:text-onSurface">دوستان</div>
+            </a>
+          </nav>
+        </footer>
+      </div>
+    </div>
+  </body>
 </html>
