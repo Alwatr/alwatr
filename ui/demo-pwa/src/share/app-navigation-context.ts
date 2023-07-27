@@ -4,7 +4,17 @@ import type {AlwatrIconOptions} from '@alwatr/ui-kit2/icon/icon.js';
 import type {NavigationBarContent} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
 
 export interface AppNavigationContext {
-  navigationBar: NavigationBarContent;
+  navigationBar: {
+    selected: string;
+    itemList: Record<
+      string,
+      {
+        label: string;
+        icon: AlwatrIconOptions;
+        badge?: string;
+      }
+    >;
+  };
   navigationRail: {
     selected: string;
     itemList: Record<
@@ -16,17 +26,7 @@ export interface AppNavigationContext {
       }
     >;
   };
-  navigationDrawer: {
-    selected: string;
-    itemList: Record<
-      string,
-      {
-        label: string;
-        icon: AlwatrIconOptions;
-        badge?: string;
-      }
-    >;
-  };
+  navigationDrawer: NavigationBarContent;
 }
 
 export const appNavigationContext = new AlwatrContextSignal<AppNavigationContext>({name: 'app-navigation-context'});
