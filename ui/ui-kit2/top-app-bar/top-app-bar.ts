@@ -1,8 +1,9 @@
-import {AlwatrDirective, directive, html, noChange, nothing, map, type PartInfo} from '@alwatr/fract';
+import {AlwatrDirective, directive, html, noChange, map, type PartInfo} from '@alwatr/fract';
 import {l10n} from '@alwatr/i18n2';
 import {defaultExport} from '@alwatr/util';
 
-import {alwatrIconButton, type AlwatrIconButtonContent} from '../icon-button/icon-button.js';
+import {alwatrIcon} from '../icon/icon.js';
+import {type AlwatrIconButtonContent} from '../icon-button/icon-button.js';
 
 const arrowBackOutlineIcon = defaultExport(import('@alwatr/icon/svg/arrow-back-outline.svg'));
 
@@ -15,27 +16,29 @@ export interface AlwatrTopAppBarOptions {
   headline?: string;
 
   /**
-   * @default loading
+   * @defaultValue loading
    */
   headlineKey?: string;
 
   /**
-   * @default {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'}
+   * @defaultValue {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'}
    */
   startIcon?: AlwatrIconButtonContent;
 
+  flipIconInRtl?: AlwatrIconButtonContent;
+
   /**
-   * @default []
+   * @defaultValue []
    */
   endIconList?: AlwatrIconButtonContent[];
 
   /**
-   * @default 2
+   * @defaultValue 2
    */
   tinted?: number;
 
   /**
-   * @default 0
+   * @defaultValue 0
    */
   elevated?: number;
 }
@@ -48,33 +51,60 @@ export class AlwatrTopAppBarDirective extends AlwatrDirective {
   render(options?: AlwatrTopAppBarOptions): unknown {
     this._logger.logMethodArgs?.('render', options);
 
-    if (options == null) return noChange;
+    if (options === undefined) return noChange;
     options.type ??= 'small';
     options.headlineKey ??= 'loading';
-    options.startIcon ??= {icon: arrowBackOutlineIcon, flipRtl: true, clickSignalId: 'back-click-event'};
+    options.startIcon ??= {svg: arrowBackOutlineIcon, flipIconInRtl: true, clickSignalId: 'back-click-event'};
     options.endIconList ??= [];
     options.tinted ??= 2;
     options.elevated ??= 0;
 
-    const headline = options.headline || l10n.message(options.headlineKey);
-    const headlineTemplate = options.type === 'medium' || options.type === 'large' ? headline : nothing;
-    const titleTemplate = options.type === 'center' || options.type === 'small' ? headline : nothing;
-
-    return html`
-      <div class="alwatr-top-app-bar" type=${options.type}>
-        <div class="row">
-          ${alwatrIconButton({icon: options.startIcon.icon, flipRtl: options.startIcon.flipRtl})}
-          <div class="title">${titleTemplate}</div>
-          ${this._render_end_icon_list(options.endIconList)}
-        </div>
-        <div class="headline">${headlineTemplate}</div>
+    return html`<header>
+      <div
+        class="scroll z-sticky flex h-16 shrink-0 grow-0 select-none items-center
+          bg-surface px-1 text-surface [&.scroll]:bg-surfaceContainer"
+      >
+        <button class="inline-block cursor-pointer rounded-full p-3 text-onSurface
+          [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6">
+          ${alwatrIcon(options.startIcon)}
+        </button>
+        ${this._renderTitle(options)}
+        ${this._renderEndIconList(options.endIconList)}
+        ${this._renderHeadline(options)}
       </div>
-    `;
+    </header> `;
   }
 
-  protected _render_end_icon_list(endIconList: AlwatrIconButtonContent[]): unknown {
-    return map(endIconList, (iconOptions) => {
-      return alwatrIconButton({icon: iconOptions.icon, flipRtl: iconOptions.flipRtl});
+  protected _renderTitle(options: AlwatrTopAppBarOptions): unknown {
+    if (options.type === 'center' || options.type === 'small') {
+      const headline = options.headline || l10n.message(options.headlineKey);
+      return html` <div class="grow overflow-clip whitespace-nowrap px-1 text-center text-titleLarge text-onSurface">
+          ${headline}
+        </div>`;
+    }
+    return;
+  }
+
+  protected _renderHeadline(options: AlwatrTopAppBarOptions): unknown {
+    if (options.type === 'medium' || options.type === 'large') {
+      const headline = options.headline || l10n.message(options.headlineKey);
+      return html`<div class="scroll flex h-24 items-end overflow-clip whitespace-nowrap bg-surface px-4 pb-7
+        text-right text-headlineMedium text-onSurface [&.scroll]:bg-surfaceContainer"
+      >
+        <div>${headline}</div>
+      </div>`;
+    }
+    return;
+  }
+
+  protected _renderEndIconList(iconList: AlwatrIconButtonContent[]): unknown {
+    return map(iconList, (iconOptions) => {
+      return html`<button
+        class="inline-block cursor-pointer rounded-full p-3 text-onSurfaceVariant
+          [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
+      >
+        ${alwatrIcon({svg: iconOptions.svg})}
+      </button> `;
     });
   }
 }

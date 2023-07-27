@@ -6,8 +6,8 @@ import {alwatrIcon} from '../icon/icon.js';
 import type {MaybePromise, Stringifyable} from '@alwatr/type';
 
 export interface AlwatrIconButtonContent {
-  icon: MaybePromise<string>;
-  flipRtl?: true;
+  svg: MaybePromise<string>;
+  flipIconInRtl?: true;
   clickSignalId?: string;
   clickDetail?: Stringifyable;
   disabled?: boolean;
@@ -30,7 +30,7 @@ export class AlwatrIconButtonDirective extends AlwatrDirective {
       @click=${options.clickSignalId
         ? this._dispatchSignal.bind(this, options.clickSignalId, options.clickDetail)
         : nothing}>
-      ${alwatrIcon({svg: options.icon, flipIconInRtl: options.flipRtl})}
+      ${alwatrIcon({svg: options.svg, flipIconInRtl: options.flipIconInRtl})}
     </button>`;
   }
 }
