@@ -1,4 +1,3 @@
-/* eslint-disable lit/attribute-value-entities */
 import {AlwatrDirective, directive, html, mapObject, when, type PartInfo, classMap} from '@alwatr/fract';
 
 import {alwatrIcon, AlwatrIconOptions} from '../icon/icon.js';
@@ -48,9 +47,10 @@ export class AlwatrNavigationDrawerDirective extends AlwatrDirective {
   protected _renderNavItem(content: NavigationDrawerContent): unknown {
     return mapObject(content.itemList, (item, key) => html`<li
       class="flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full
-      bg-secondaryContainer px-3 text-onSecondaryContainer
+      hover:bg-secondaryContainer hover:text-onSecondaryContainer px-3 hover:stateHover-onSecondaryContainer
       [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6
-      ${classMap({'stateActive-secondaryContainer': content.selected === key})}"
+      ${classMap({'stateActive-onSecondaryContainer text-onSecondaryContainer': content.selected === key})}
+      "
       >${alwatrIcon(item.icon)}<div class="mx-2 grow">${item.label}</div>
       ${when(item.badge != null, () => html`<div class="ml-3">${item.badge}</div>`)}</li>`);
   }
