@@ -3,7 +3,7 @@ import {AlwatrDirective, directive, html, mapObject, when, type PartInfo, classM
 
 import {alwatrIcon, AlwatrIconOptions} from '../icon/icon.js';
 
-export interface NavigationBarContent {
+export interface NavigationDrawerContent {
   selected: string;
   title: string;
   itemList: Record<
@@ -21,7 +21,7 @@ export class AlwatrNavigationDrawerDirective extends AlwatrDirective {
     super(partInfo, '<alwatr-navigation-drawer>');
   }
 
-  render(content: NavigationBarContent): unknown {
+  render(content: NavigationDrawerContent): unknown {
     this._logger.logMethod?.('render');
 
     return html`
@@ -40,12 +40,12 @@ export class AlwatrNavigationDrawerDirective extends AlwatrDirective {
     `;
   }
 
-  protected _renderNavItems(content: NavigationBarContent): unknown {
+  protected _renderNavItems(content: NavigationDrawerContent): unknown {
     return html`<ul class="text-labelLarge text-onSurfaceVariant">${this._renderNavItem(content)}</ul>
     `;
   }
 
-  protected _renderNavItem(content: NavigationBarContent): unknown {
+  protected _renderNavItem(content: NavigationDrawerContent): unknown {
     return mapObject(content.itemList, (item, key) => html`<li
       class="flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full
       bg-secondaryContainer px-3 text-onSecondaryContainer
