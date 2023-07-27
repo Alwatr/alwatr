@@ -1,7 +1,7 @@
 import {AlwatrContextSignal} from '@alwatr/signal2';
 
 import type {AlwatrIconOptions} from '@alwatr/ui-kit2/icon/icon.js';
-import type {NavigationBarContent} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
+import type {NavigationDrawerContent} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
 
 export interface AppNavigationContext {
   navigationBar: {
@@ -26,7 +26,7 @@ export interface AppNavigationContext {
       }
     >;
   };
-  navigationDrawer: NavigationBarContent;
+  navigationDrawer: NavigationDrawerContent;
 }
 
 export const appNavigationContext = new AlwatrContextSignal<AppNavigationContext>({name: 'app-navigation-context'});
