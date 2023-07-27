@@ -2,7 +2,7 @@ import {AlwatrContextSignal} from '@alwatr/signal2';
 
 import type {AlwatrIconOptions} from '@alwatr/ui-kit2/icon/icon.js';
 
-export interface AppNavigation {
+export interface AppNavigationContext {
   navigationBar: {
     selected: string;
     itemList: Record<
@@ -38,6 +38,4 @@ export interface AppNavigation {
   };
 }
 
-class AppNavigationContext extends AlwatrContextSignal<AppNavigation> {}
-
-export const appNavigationContext = new AppNavigationContext({name: 'app-navigation-context'});
+export const appNavigationContext = new AlwatrContextSignal<AppNavigationContext>({name: 'app-navigation-context'});
