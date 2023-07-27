@@ -1,3 +1,4 @@
+/* eslint-disable lit/attribute-value-entities */
 import {AlwatrDynamicDirective, alwatrObserve, cache, directive, html, type PartInfo} from '@alwatr/fract';
 import {router, type RouteContext} from '@alwatr/router2';
 import {alwatrIcon} from '@alwatr/ui-kit2/icon/icon.js';
@@ -67,9 +68,10 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
             <div
               class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant
               group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer
-              group-aria-selected:text-onSecondaryContainer"
+              group-aria-selected:text-onSecondaryContainer
+              [&>.alwatr-icon]:block [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
             >
-              <alwatr-icon name="menu-outline" class="block h-6 w-6"> </alwatr-icon>
+            ${alwatrIcon({svg: icons.menu})}
             </div>
             <div class="py-1 group-aria-selected:text-onSurface">منو</div>
           </a>
@@ -82,9 +84,10 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
             <div
               class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant
               group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer
-              group-aria-selected:text-onSecondaryContainer"
+              group-aria-selected:text-onSecondaryContainer
+              [&>.alwatr-icon]:block [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
             >
-              <alwatr-icon name="call-outline" class="block h-6 w-6"> </alwatr-icon>
+              ${alwatrIcon({svg: icons.call})}
             </div>
             <div class="py-1 group-aria-selected:text-onSurface">تماس</div>
           </a>
@@ -96,9 +99,10 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
             <div
               class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant
               group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer
-              group-aria-selected:text-onSecondaryContainer"
+              group-aria-selected:text-onSecondaryContainer
+              [&>.alwatr-icon]:block [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
             >
-              <alwatr-icon name="create-outline" class="block h-6 w-6"> </alwatr-icon>
+              ${alwatrIcon({svg: icons.create})}
             </div>
             <div class="py-1 group-aria-selected:text-onSurface">یادداشت</div>
           </a>
@@ -111,9 +115,10 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
             <div
               class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant
               group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer
-              group-aria-selected:text-onSecondaryContainer"
+              group-aria-selected:text-onSecondaryContainer
+              [&>.alwatr-icon]:block [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
             >
-              <alwatr-icon name="mic-outline" class="block h-6 w-6"> </alwatr-icon>
+              ${alwatrIcon({svg: icons.mic})}
             </div>
             <div class="py-1 group-aria-selected:text-onSurface">ضبط</div>
           </a>
@@ -126,9 +131,10 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
             <div
               class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant
               group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer
-              group-aria-selected:text-onSecondaryContainer"
+              group-aria-selected:text-onSecondaryContainer
+              [&>.alwatr-icon]:block [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
             >
-              <alwatr-icon name="person-outline" class="block h-6 w-6"> </alwatr-icon>
+              ${alwatrIcon({svg: icons.person})}
             </div>
             <div class="py-1 group-aria-selected:text-onSurface">دوستان</div>
           </a>
@@ -153,10 +159,10 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
           <ul class="text-labelLarge text-onSurfaceVariant">
             <li
               class="flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full
-              bg-secondaryContainer px-3 text-onSecondaryContainer stateActive-secondaryContainer"
+              bg-secondaryContainer px-3 text-onSecondaryContainer stateActive-secondaryContainer
+              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
             >
-              <alwatr-icon name="menu-outline" class="mx-1 h-6 w-6"></alwatr-icon>
-
+            ${alwatrIcon({svg: icons.menu})}
               <div class="mx-2 grow">دریافتی</div>
               <div class="ml-3">۲۶</div>
             </li>
@@ -164,39 +170,40 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
             <li
               class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full
               px-3 hover:bg-secondaryContainer hover:text-onSecondaryContainer hover:stateHover-onSecondaryContainer
-              active:text-onSecondaryContainer active:stateActive-onSecondaryContainer"
+              active:text-onSecondaryContainer active:stateActive-onSecondaryContainer
+              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6"
             >
-              <alwatr-icon name="person-outline" class="mx-1 h-6 w-6"></alwatr-icon>
-
+              ${alwatrIcon({svg: icons.person})}
               <div class="mx-2 grow">مخاطبین</div>
             </li>
 
             <li
               class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3
               hover:bg-secondaryContainer hover:text-onSecondaryContainer hover:stateHover-onSecondaryContainer
-              active:text-onSecondaryContainer active:stateActive-onSecondaryContainer"
+              active:text-onSecondaryContainer active:stateActive-onSecondaryContainer
+              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
             >
-              <alwatr-icon name="create-outline" class="mx-1 h-6 w-6"></alwatr-icon>
-
+            ${alwatrIcon({svg: icons.create})}
               <div class="mx-2 grow">ارسال</div>
             </li>
 
             <li
               class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3
               hover:bg-secondaryContainer hover:text-onSecondaryContainer hover:stateHover-onSecondaryContainer
-              active:text-onSecondaryContainer active:stateActive-onSecondaryContainer"
+              active:text-onSecondaryContainer active:stateActive-onSecondaryContainer
+              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6"
             >
-              <alwatr-icon name="archive-outline" class="mx-1 h-6 w-6"></alwatr-icon>
-
+              ${alwatrIcon({svg: icons.archive})}
               <div class="mx-2 grow">آرشیو</div>
             </li>
 
             <li
               class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full
               px-3 hover:bg-secondaryContainer hover:text-onSecondaryContainer hover:stateHover-onSecondaryContainer
-              active:text-onSecondaryContainer active:stateActive-onSecondaryContainer"
+              active:text-onSecondaryContainer active:stateActive-onSecondaryContainer
+              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6"
             >
-              <alwatr-icon name="trash-outline" class="mx-1 h-6 w-6"></alwatr-icon>
+              ${alwatrIcon({svg: icons.trash})}
 
               <div class="mx-2 grow">سطل زباله</div>
             </li>
@@ -225,12 +232,11 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
           <li class="w-84 group group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
             <div
               class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl group-hover:bg-secondaryContainer
-              group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer"
+              group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer
+              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:group-hover:text-onSecondaryContainer
+              [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6 [&>.alwatr-icon]:group-active:text-onSecondaryContainer"
             >
-              <alwatr-icon
-                name="person-outline"
-                class="mx-1 h-6 w-6 group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer"
-              ></alwatr-icon>
+              ${alwatrIcon({svg: icons.person})}
             </div>
 
             <div class="mx-2 grow group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer">
@@ -241,12 +247,11 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
           <li class="w-84 group group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
             <div
               class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl group-hover:bg-secondaryContainer
-              group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer"
+              group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer
+              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:group-hover:text-onSecondaryContainer
+              [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6 [&>.alwatr-icon]:group-active:text-onSecondaryContainer"
             >
-              <alwatr-icon
-                name="send-outline"
-                class="mx-1 h-6 w-6 group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer"
-              ></alwatr-icon>
+              ${alwatrIcon({svg: icons.send})}
             </div>
 
             <div class="mx-2 grow group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer">
@@ -257,14 +262,12 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
           <li class="w-84 group group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
             <div
               class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl group-hover:bg-secondaryContainer
-              group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer"
+              group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer
+              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:group-hover:text-onSecondaryContainer
+              [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6 [&>.alwatr-icon]:group-active:text-onSecondaryContainer"
             >
-              <alwatr-icon
-                name="archive-outline"
-                class="mx-1 h-6 w-6 group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer"
-              ></alwatr-icon>
+              ${alwatrIcon({svg: icons.archive})}
             </div>
-
             <div class="mx-2 grow group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer">
               آرشیو
             </div>
@@ -273,14 +276,12 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
           <li class="w-84 group group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
             <div
               class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl group-hover:bg-secondaryContainer
-              group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer"
+              group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer
+              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:group-hover:text-onSecondaryContainer
+              [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6 [&>.alwatr-icon]:group-active:text-onSecondaryContainer"
             >
-              <alwatr-icon
-                name="trash-outline"
-                class="mx-1 h-6 w-6 group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer"
-              ></alwatr-icon>
+              ${alwatrIcon({svg: icons.trash})}
             </div>
-
             <div class="mx-2 grow group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer">
               زباله
             </div>
