@@ -1,11 +1,13 @@
-/* eslint-disable lit/attribute-value-entities */
 import {AlwatrDynamicDirective, alwatrObserve, cache, directive, html, type PartInfo} from '@alwatr/fract';
 import {router, type RouteContext} from '@alwatr/router2';
 import {alwatrIcon} from '@alwatr/ui-kit2/icon/icon.js';
+import {alwatrNavigationDrawer} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
+import {alwatrNavigationRail} from '@alwatr/ui-kit2/navigation-rail/navigation-rail.js';
 import {renderState} from '@alwatr/util';
 
 import {alwatrPageTest} from './page-test.js';
 import {icons} from '../icons.js';
+import {appNavigationContext, type AppNavigationContext} from '../share/app-navigation-context.js';
 import {appLogger} from '../share/logger.js';
 
 export type PageName = 'home' | 'favorites' | 'contact' | 'other' | '_404';
@@ -31,7 +33,8 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
   * render(): unknown {
     this._logger.logMethod?.('render');
 
-    yield html` <!-- Navigation drawer -->
+    yield html`
+      <!-- Navigation drawer -->
       ${this._renderNavigationDrawer()}
 
       <!--  Navigation rail  -->
@@ -144,151 +147,15 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
   }
 
   protected _renderNavigationDrawer(): unknown {
-    return html`
-      <aside
-        id="navigationDrawer"
-        class="fixed bottom-0 left-0 top-0 z-modal w-[22.5rem] translate-x-full
-        transform-gpu overflow-clip rounded-e-2xl bg-surfaceContainerLow transition-transform
-        duration-300 ease-in will-change-transform elevation-1 rtl:left-auto rtl:right-0
-        extended:translate-x-0 extended:rounded-none extended:transition-none extended:will-change-auto
-        extended:elevation-0 [&.opened]:translate-x-0 [&.opened]:ease-out"
-      >
-        <nav class="flex h-full flex-col bg-surfaceContainerLow px-3 py-3 elevation-1">
-          <h2 class="mx-6 py-7 text-titleSmall text-onSurfaceVariant">سربرگ</h2>
-
-          <ul class="text-labelLarge text-onSurfaceVariant">
-            <li
-              class="flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full
-              bg-secondaryContainer px-3 text-onSecondaryContainer stateActive-secondaryContainer
-              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
-            >
-            ${alwatrIcon({svg: icons.menu})}
-              <div class="mx-2 grow">دریافتی</div>
-              <div class="ml-3">۲۶</div>
-            </li>
-
-            <li
-              class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full
-              px-3 hover:bg-secondaryContainer hover:text-onSecondaryContainer hover:stateHover-onSecondaryContainer
-              active:text-onSecondaryContainer active:stateActive-onSecondaryContainer
-              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6"
-            >
-              ${alwatrIcon({svg: icons.person})}
-              <div class="mx-2 grow">مخاطبین</div>
-            </li>
-
-            <li
-              class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3
-              hover:bg-secondaryContainer hover:text-onSecondaryContainer hover:stateHover-onSecondaryContainer
-              active:text-onSecondaryContainer active:stateActive-onSecondaryContainer
-              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
-            >
-            ${alwatrIcon({svg: icons.create})}
-              <div class="mx-2 grow">ارسال</div>
-            </li>
-
-            <li
-              class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full px-3
-              hover:bg-secondaryContainer hover:text-onSecondaryContainer hover:stateHover-onSecondaryContainer
-              active:text-onSecondaryContainer active:stateActive-onSecondaryContainer
-              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6"
-            >
-              ${alwatrIcon({svg: icons.archive})}
-              <div class="mx-2 grow">آرشیو</div>
-            </li>
-
-            <li
-              class="w-84 group flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full
-              px-3 hover:bg-secondaryContainer hover:text-onSecondaryContainer hover:stateHover-onSecondaryContainer
-              active:text-onSecondaryContainer active:stateActive-onSecondaryContainer
-              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6"
-            >
-              ${alwatrIcon({svg: icons.trash})}
-
-              <div class="mx-2 grow">سطل زباله</div>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-      <div
-        id="scrim"
-        class="pointer-events-none fixed bottom-0 left-0 right-0 top-0 z-scrim bg-scrim opacity-0
-        transition-opacity will-change-[opacity] extended:hidden [&.opened]:pointer-events-auto [&.opened]:opacity-25"
-        onclick="navigationDrawer.classList.remove('opened');scrim.classList.remove('opened');"
-      ></div>
-    `;
+    return alwatrObserve(appNavigationContext, (content: AppNavigationContext) => {
+      return cache(alwatrNavigationDrawer(content.navigationDrawer));
+    });
   }
 
   protected _renderNavigationRail(): unknown {
-    return html` <aside
-      id="navigationRail"
-      class="fixed bottom-0 left-0 top-0 z-modal w-20 translate-x-full transform-gpu overflow-clip
-      rounded-e-2xl bg-surfaceContainerLow transition-transform duration-300 ease-in will-change-transform
-      elevation-1 rtl:left-auto rtl:right-0 medium:translate-x-0 medium:rounded-none medium:transition-none
-      medium:will-change-auto medium:elevation-0 extended:hidden [&.opened]:translate-x-0 [&.opened]:ease-out"
-    >
-      <nav class="flex h-full flex-col justify-around bg-surfaceContainerLow elevation-1">
-        <ul class="flex flex-col gap-3 text-labelLarge text-onSurfaceVariant">
-          <li class="w-84 group group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
-            <div
-              class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl group-hover:bg-secondaryContainer
-              group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer
-              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:group-hover:text-onSecondaryContainer
-              [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6 [&>.alwatr-icon]:group-active:text-onSecondaryContainer"
-            >
-              ${alwatrIcon({svg: icons.person})}
-            </div>
-
-            <div class="mx-2 grow group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer">
-              مخاطبین
-            </div>
-          </li>
-
-          <li class="w-84 group group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
-            <div
-              class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl group-hover:bg-secondaryContainer
-              group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer
-              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:group-hover:text-onSecondaryContainer
-              [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6 [&>.alwatr-icon]:group-active:text-onSecondaryContainer"
-            >
-              ${alwatrIcon({svg: icons.send})}
-            </div>
-
-            <div class="mx-2 grow group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer">
-              ارسال
-            </div>
-          </li>
-
-          <li class="w-84 group group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
-            <div
-              class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl group-hover:bg-secondaryContainer
-              group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer
-              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:group-hover:text-onSecondaryContainer
-              [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6 [&>.alwatr-icon]:group-active:text-onSecondaryContainer"
-            >
-              ${alwatrIcon({svg: icons.archive})}
-            </div>
-            <div class="mx-2 grow group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer">
-              آرشیو
-            </div>
-          </li>
-
-          <li class="w-84 group group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
-            <div
-              class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl group-hover:bg-secondaryContainer
-              group-hover:stateHover-onSecondaryContainer group-active:stateActive-onSecondaryContainer
-              [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:group-hover:text-onSecondaryContainer
-              [&>.alwatr-icon]:h-6  [&>.alwatr-icon]:w-6 [&>.alwatr-icon]:group-active:text-onSecondaryContainer"
-            >
-              ${alwatrIcon({svg: icons.trash})}
-            </div>
-            <div class="mx-2 grow group-hover:text-onSecondaryContainer group-active:text-onSecondaryContainer">
-              زباله
-            </div>
-          </li>
-        </ul>
-      </nav>
-    </aside>`;
+    return alwatrObserve(appNavigationContext, (context: AppNavigationContext) => {
+      return alwatrNavigationRail(context.navigationRail);
+    });
   }
 
   protected _renderTopAppBar(): unknown {
