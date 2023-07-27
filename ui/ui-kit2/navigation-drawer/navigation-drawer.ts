@@ -1,14 +1,14 @@
 import {AlwatrDirective, directive, html, mapObject, when, type PartInfo, classMap, noChange} from '@alwatr/fract';
+import {l10n} from '@alwatr/i18n2';
 
 import {alwatrIcon, AlwatrIconOptions} from '../icon/icon.js';
 
-export interface NavigationDrawerContent {
+export interface AlwatrNavigationDrawerContent {
   selected: string;
   title: string;
-  itemList: Record<
-    string,
-    {
-      label: string;
+  itemList: Record<string, {
+      label?: string;
+      labelKey?: string;
       icon: AlwatrIconOptions;
       badge?: string;
     }
@@ -20,7 +20,7 @@ export class AlwatrNavigationDrawerDirective extends AlwatrDirective {
     super(partInfo, '<alwatr-navigation-drawer>');
   }
 
-  render(content?: NavigationDrawerContent): unknown {
+  render(content?: AlwatrNavigationDrawerContent): unknown {
     this._logger.logMethod?.('render');
 
     if (content === undefined) return noChange;
@@ -41,15 +41,18 @@ export class AlwatrNavigationDrawerDirective extends AlwatrDirective {
     `;
   }
 
-  protected _renderNavItems(content: NavigationDrawerContent): unknown {
-    const navItemList = mapObject(content.itemList, (item, key) => html`<li
-      class="flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full
-      hover:bg-secondaryContainer hover:text-onSecondaryContainer px-3 hover:stateHover-onSecondaryContainer
-      [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6
-      ${classMap({'stateActive-onSecondaryContainer text-onSecondaryContainer': content.selected === key})}
-      "
-      >${alwatrIcon(item.icon)}<div class="mx-2 grow">${item.label}</div>
-      ${when(item.badge != null, () => html`<div class="ml-3">${item.badge}</div>`)}</li>`);
+  protected _renderNavItems(content: AlwatrNavigationDrawerContent): unknown {
+    const navItemList = mapObject(content.itemList, (item, key) => {
+      const _label = item.label ?? l10n.message(item.labelKey);
+      return html`<li
+        class="flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full
+        hover:bg-secondaryContainer hover:text-onSecondaryContainer px-3 hover:stateHover-onSecondaryContainer
+        [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6
+        ${classMap({'stateActive-onSecondaryContainer text-onSecondaryContainer': content.selected === key})}
+        "
+        >${alwatrIcon(item.icon)}${when(_label, () => html`<div class="mx-2 grow">${_label}</div>`)}
+        ${when(item.badge != null, () => html`<div class="ml-3">${item.badge}</div>`)}</li>`;
+    });
 
     return html`<ul class="text-labelLarge text-onSurfaceVariant">${navItemList}</ul>`;
   }

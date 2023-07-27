@@ -1,13 +1,13 @@
-import {AlwatrDirective, classMap, directive, html, mapObject, noChange, type PartInfo} from '@alwatr/fract';
+import {AlwatrDirective, classMap, directive, html, mapObject, noChange, when, type PartInfo} from '@alwatr/fract';
+import {l10n} from '@alwatr/i18n2';
 
 import {alwatrIcon, type AlwatrIconOptions} from '../icon/icon.js';
 
-export interface NavigationRailContent {
+export interface AlwatrNavigationRailContent {
   selected: string;
-  itemList: Record<
-    string,
-    {
-      label: string;
+  itemList: Record<string, {
+      label?: string;
+      labelKey?: string;
       icon: AlwatrIconOptions;
       badge?: string;
     }
@@ -19,27 +19,24 @@ export class AlwatrNavigationRailDirective extends AlwatrDirective {
     super(partInfo, '<alwatr-navigation-rail>');
   }
 
-  render(content?: NavigationRailContent): unknown {
-    this._logger.logMethod?.('render');
+  render(content?: AlwatrNavigationRailContent): unknown {
+    this._logger.logMethodArgs?.('render', content);
     if (content === undefined) return noChange;
 
-    return html` <aside
+    return html`<aside
       id="navigationRail"
       class="fixed bottom-0 left-0 top-0 z-modal w-20 translate-x-full transform-gpu overflow-clip
-    rounded-e-2xl bg-surfaceContainerLow transition-transform duration-300 ease-in will-change-transform
-    elevation-1 rtl:left-auto rtl:right-0 medium:translate-x-0 medium:rounded-none medium:transition-none
-    medium:will-change-auto medium:elevation-0 extended:hidden [&.opened]:translate-x-0 [&.opened]:ease-out"
-    >
-      <nav class="flex h-full flex-col justify-around bg-surfaceContainerLow elevation-1">
-        ${this._renderNavItemList(content)}
-      </nav>
-    </aside>`;
+      rounded-e-2xl bg-surfaceContainerLow transition-transform duration-300 ease-in will-change-transform
+      elevation-1 rtl:left-auto rtl:right-0 medium:translate-x-0 medium:rounded-none medium:transition-none
+      medium:will-change-auto medium:elevation-0 extended:hidden [&.opened]:translate-x-0 [&.opened]:ease-out"
+      ><nav class="flex h-full flex-col justify-around bg-surfaceContainerLow elevation-1">
+        ${this._renderNavItemList(content)}</nav></aside>`;
   }
 
-  protected _renderNavItemList(content: NavigationRailContent): unknown {
+  protected _renderNavItemList(content: AlwatrNavigationRailContent): unknown {
     const itemList = mapObject(content.itemList, (item, key) => {
-      return html`
-        <li class="w-84 group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
+      const _label = item.label ?? l10n.message(item.labelKey);
+      return html`<li class="w-84 group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
           <div
             class="flex h-8 w-14 flex-col items-center justify-around rounded-2xl
             group-hover:bg-secondaryContainer group-hover:stateHover-onSecondaryContainer
@@ -47,16 +44,10 @@ export class AlwatrNavigationRailDirective extends AlwatrDirective {
             [&>.alwatr-icon]:group-hover:text-onSecondaryContainer
             ${classMap({'[&>.alwatr-icon]:text-onSecondaryContainer': key === content.selected,
     'stateActive-onSecondaryContainer': key === content.selected})}"
-            >
-            ${alwatrIcon(item.icon)}
-          </div>
-          <div class="mx-2 grow group-hover:text-onSecondaryContainer
+            >${alwatrIcon(item.icon)}</div>
+          ${when(_label, () => html`<div class="mx-2 grow group-hover:text-onSecondaryContainer
             ${classMap({'text-onSecondaryContainer': key === content.selected})}"
-          >
-            ${item.label}
-          </div>
-        </li>
-      `;
+          >${_label}</div>`)}</li>`;
     });
 
     return html`
