@@ -43,93 +43,9 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
   }
 
   protected _renderNavigationBar(): unknown {
-    return html`
-      <footer class="shrink-0 grow-0 bg-surfaceContainer elevation-2">
-        <nav
-          class="mx-auto flex h-20 max-w-screen-medium cursor-pointer select-none
-          items-stretch text-labelMedium text-onSurfaceVariant"
-        >
-          <a
-            aria-selected="false"
-            class="group flex grow flex-col items-center justify-start pt-3
-            hover:text-onSurface aria-selected:pointer-events-none"
-          >
-            <div
-              class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant
-              group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer
-              group-aria-selected:text-onSecondaryContainer
-              [&>.alwatr-icon]:block [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
-            >
-            ${alwatrIcon({svg: icons.menu})}
-            </div>
-            <div class="py-1 group-aria-selected:text-onSurface">منو</div>
-          </a>
-
-          <a
-            aria-selected="false"
-            class="group flex grow flex-col items-center justify-start pt-3
-            hover:text-onSurface aria-selected:pointer-events-none"
-          >
-            <div
-              class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant
-              group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer
-              group-aria-selected:text-onSecondaryContainer
-              [&>.alwatr-icon]:block [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
-            >
-              ${alwatrIcon({svg: icons.call})}
-            </div>
-            <div class="py-1 group-aria-selected:text-onSurface">تماس</div>
-          </a>
-
-          <a
-            aria-selected="true"
-            class="group flex grow flex-col items-center justify-start pt-3 aria-selected:pointer-events-none"
-          >
-            <div
-              class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant
-              group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer
-              group-aria-selected:text-onSecondaryContainer
-              [&>.alwatr-icon]:block [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
-            >
-              ${alwatrIcon({svg: icons.create})}
-            </div>
-            <div class="py-1 group-aria-selected:text-onSurface">یادداشت</div>
-          </a>
-
-          <a
-            aria-selected="false"
-            class="group flex grow flex-col items-center justify-start pt-3
-            hover:text-onSurface aria-selected:pointer-events-none"
-          >
-            <div
-              class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant
-              group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer
-              group-aria-selected:text-onSecondaryContainer
-              [&>.alwatr-icon]:block [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
-            >
-              ${alwatrIcon({svg: icons.mic})}
-            </div>
-            <div class="py-1 group-aria-selected:text-onSurface">ضبط</div>
-          </a>
-
-          <a
-            aria-selected="false"
-            class="group flex grow flex-col items-center justify-start pt-3
-            hover:text-onSurface aria-selected:pointer-events-none"
-          >
-            <div
-              class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant
-              group-active:stateActive-onSurfaceVariant group-aria-selected:bg-secondaryContainer
-              group-aria-selected:text-onSecondaryContainer
-              [&>.alwatr-icon]:block [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
-            >
-              ${alwatrIcon({svg: icons.person})}
-            </div>
-            <div class="py-1 group-aria-selected:text-onSurface">دوستان</div>
-          </a>
-        </nav>
-      </footer>
-    `;
+    return alwatrObserve(appNavigationContext, (content: AppNavigationContext) => {
+      return cache(alwatrNavigationBar(content.navigationBar));
+    });
   }
 
   protected _renderNavigationDrawer(): unknown {
