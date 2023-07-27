@@ -1,4 +1,4 @@
-import {AlwatrDirective, directive, html, mapObject, when, type PartInfo, classMap} from '@alwatr/fract';
+import {AlwatrDirective, directive, html, mapObject, when, type PartInfo, classMap, noChange} from '@alwatr/fract';
 
 import {alwatrIcon, AlwatrIconOptions} from '../icon/icon.js';
 
@@ -20,8 +20,10 @@ export class AlwatrNavigationDrawerDirective extends AlwatrDirective {
     super(partInfo, '<alwatr-navigation-drawer>');
   }
 
-  render(content: NavigationDrawerContent): unknown {
+  render(content?: NavigationDrawerContent): unknown {
     this._logger.logMethod?.('render');
+
+    if (content === undefined) return noChange;
 
     return html`
       <aside
