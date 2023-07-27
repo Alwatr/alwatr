@@ -1,5 +1,7 @@
 import {AlwatrContextSignal} from '@alwatr/signal2';
 
+import type {AlwatrIconOptions} from '@alwatr/ui-kit2/icon/icon.js';
+
 export interface AppNavigation {
   navigationBar: {
     selected: string;
@@ -7,8 +9,7 @@ export interface AppNavigation {
       string,
       {
         label: string;
-        icon: string;
-        iconFlipRtl?: boolean;
+        icon: AlwatrIconOptions;
         badge?: string;
       }
     >;
@@ -19,8 +20,7 @@ export interface AppNavigation {
       string,
       {
         label: string;
-        icon: string;
-        iconFlipRtl?: boolean;
+        icon: AlwatrIconOptions;
         badge?: string;
       }
     >;
@@ -31,8 +31,7 @@ export interface AppNavigation {
       string,
       {
         label: string;
-        icon: string;
-        iconFlipRtl?: boolean;
+        icon: AlwatrIconOptions;
         badge?: string;
       }
     >;
