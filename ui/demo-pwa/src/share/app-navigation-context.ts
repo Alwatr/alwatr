@@ -1,34 +1,15 @@
 import {AlwatrContextSignal} from '@alwatr/signal2';
+import {AlwatrNavigationRailContent} from '@alwatr/ui-kit2/navigation-rail/navigation-rail.js';
 
 import {icons} from '../icons.js';
 
-import type {AlwatrIconOptions} from '@alwatr/ui-kit2/icon/icon.js';
-import type {NavigationDrawerContent} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
+import type {AlwatrNavigationBarContent} from '@alwatr/ui-kit2/navigation-bar/navigation-bar.js';
+import type {AlwatrNavigationDrawerContent} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
 
 export interface AppNavigationContext {
-  navigationBar: {
-    selected: string;
-    itemList: Record<
-      string,
-      {
-        label: string;
-        icon: AlwatrIconOptions;
-        badge?: string;
-      }
-    >;
-  };
-  navigationRail: {
-    selected: string;
-    itemList: Record<
-      string,
-      {
-        label: string;
-        icon: AlwatrIconOptions;
-        badge?: string;
-      }
-    >;
-  };
-  navigationDrawer: NavigationDrawerContent;
+  navigationBar: AlwatrNavigationBarContent;
+  navigationRail: AlwatrNavigationRailContent;
+  navigationDrawer: AlwatrNavigationDrawerContent;
 }
 
 export const appNavigationContext = new AlwatrContextSignal<AppNavigationContext>({name: 'app-navigation-context'});
@@ -45,7 +26,7 @@ appNavigationContext.setValue({
     },
   },
   navigationBar: {
-    selected: 'given',
+    selected: 'send',
     itemList: {
       given: {label: 'دریافتی', icon: {svg: icons.menu}},
       contact: {label: 'مخاطبین', icon: {svg: icons.person}},
