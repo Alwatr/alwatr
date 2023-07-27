@@ -57,6 +57,7 @@
       }
     ],
     "@typescript-eslint/prefer-string-starts-ends-with": "off",
+    "lit/attribute-value-entities": "off",
     "@typescript-eslint/no-dynamic-delete": "off",
     "import/no-unresolved": "off",
     "import/no-duplicates": ["error", {"prefer-inline": true}],
