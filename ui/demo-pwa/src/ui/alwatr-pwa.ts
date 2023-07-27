@@ -1,9 +1,9 @@
 import {AlwatrDynamicDirective, alwatrObserve, cache, directive, html, type PartInfo} from '@alwatr/fract';
 import {router, type RouteContext} from '@alwatr/router2';
-import {alwatrIcon} from '@alwatr/ui-kit2/icon/icon.js';
 import {alwatrNavigationBar} from '@alwatr/ui-kit2/navigation-bar/navigation-bar.js';
 import {alwatrNavigationDrawer} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
 import {alwatrNavigationRail} from '@alwatr/ui-kit2/navigation-rail/navigation-rail.js';
+import {alwatrTopAppBar} from '@alwatr/ui-kit2/top-app-bar/top-app-bar.js';
 import {renderState} from '@alwatr/util';
 
 import {alwatrPageTest} from './page-test.js';
@@ -15,16 +15,6 @@ export type PageName = 'home' | 'favorites' | 'contact' | 'other' | '_404';
 
 appLogger.logModule?.('alwatr-pwa');
 
-// const menuContext = {
-//   pageAction: {
-//     itemList: [
-//       {icon: icons.home, href: '/home'},
-//       {icon: icons.star, href: '/favorites'},
-//       {icon: icons.triangle, href: '/other'},
-//       {icon: icons.call, href: '/contact'},
-//     ],
-//   },
-// };
 
 export class AlwatrPwaDirective extends AlwatrDynamicDirective {
   constructor(partInfo: PartInfo) {
@@ -57,41 +47,17 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
 
   protected _renderNavigationRail(): unknown {
     return alwatrObserve(appNavigationContext, (context: AppNavigationContext) => {
-      return alwatrNavigationRail(context.navigationRail);
+      return cache(alwatrNavigationRail(context.navigationRail));
     });
   }
 
   protected _renderTopAppBar(): unknown {
-    return html`
-      <header
-        class="scroll flex h-16 shrink-0 grow-0 select-none items-center bg-surface px-1 [&.scroll]:bg-surfaceContainer"
-      >
-        <button
-          class="inline-block cursor-pointer rounded-full p-3 text-onSurface [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
-          onclick="navigationDrawer.classList.add('opened');scrim.classList.add('opened');"
-        >
-          ${alwatrIcon({svg: icons.menu})}
-        </button>
-
-        <div class="lead grow overflow-clip whitespace-nowrap px-1 text-start text-titleLarge text-onSurface">
-          عنوان صفحه
-        </div>
-
-        <button
-          class="inline-block cursor-pointer rounded-full p-3
-          text-onSurfaceVariant [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
-        >
-          ${alwatrIcon({svg: icons.refresh})}
-        </button>
-
-        <button
-          class="inline-block cursor-pointer rounded-full p-3
-          text-onSurfaceVariant [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
-        >
-          ${alwatrIcon({svg: icons.calendarNumber})}
-        </button>
-      </header>
-    `;
+    return alwatrTopAppBar({
+      type: 'large',
+      headline: 'app_name',
+      startIcon: {svg: icons.person},
+      endIconList: [{svg: icons.refresh}, {svg: icons.home}],
+    });
   }
 
   protected _renderContent(): unknown {
