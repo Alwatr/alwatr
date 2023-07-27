@@ -1,17 +1,24 @@
 import {AlwatrDirective, directive, html, map, noChange, type PartInfo} from '@alwatr/fract';
 
-import type {MenuItem} from './type.js';
+import type {MaybePromise} from '@alwatr/type';
+
+export interface MenuItem {
+  id: string;
+  label: string;
+  icon?: MaybePromise<string>;
+  children: MenuItem[];
+}
 
 export class AlwatrMenuDirective extends AlwatrDirective {
   constructor(partInfo: PartInfo) {
     super(partInfo, '<alwatr-menu>');
   }
 
-  render(content?: MenuItem[] | null): unknown {
+  render(content?: MenuItem[]): unknown {
     this._logger.logMethodArgs?.('render', content);
 
-    if (content == null) {
-      this._logger.incident?.('render', 'invalid_content', 'content not defined');
+    if (content === undefined) {
+      this._logger.incident?.('render', 'null_content', 'content not defined');
       return noChange;
     }
 

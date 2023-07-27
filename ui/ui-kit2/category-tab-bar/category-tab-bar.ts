@@ -1,6 +1,8 @@
 import {AlwatrDirective, directive, html, map, noChange, type PartInfo} from '@alwatr/fract';
 
-import type {TabBarContent} from './type.js';
+export interface TabBarContent {
+  itemList: Record<string, unknown>[]; // FIXME: Use `tour-storage` when defined
+}
 
 export class AlwatrCategoryTabBarDirective extends AlwatrDirective {
   activeTabIndex: number;
@@ -10,11 +12,11 @@ export class AlwatrCategoryTabBarDirective extends AlwatrDirective {
     this.activeTabIndex = 0;
   }
 
-  render(content?: TabBarContent | null): unknown {
+  render(content?: TabBarContent): unknown {
     this._logger.logMethodArgs?.('render', content);
 
-    if (content == null) {
-      this._logger.incident?.('render', 'invalid_content', 'content not defined');
+    if (content === undefined) {
+      this._logger.incident?.('render', 'null_content', 'content not defined');
       return noChange;
     }
 
