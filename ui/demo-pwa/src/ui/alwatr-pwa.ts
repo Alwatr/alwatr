@@ -33,27 +33,13 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
   * render(): unknown {
     this._logger.logMethod?.('render');
 
-    yield html`
-      <!-- Navigation drawer -->
-      ${this._renderNavigationDrawer()}
+    yield this._renderTopAppBar();
+    yield this._renderNavigationRail();
+    yield this._renderNavigationDrawer();
 
-      <!--  Navigation rail  -->
-      ${this._renderNavigationRail()}
+    yield html`<main class="flex grow flex-wrap gap-8 p-8">${this._renderContent()}</main>`;
 
-      <!-- App container -->
-      <div
-        class="flex h-full max-h-full w-full max-w-full flex-col flex-nowrap
-        items-stretch overflow-clip medium:ps-20 extended:ps-[22.5rem]"
-      >
-        <!-- Top app bar -->
-        ${this._renderTopAppBar()}
-
-        <!-- Pages container -->
-        <main class="flex grow flex-wrap gap-8 p-8">${this._renderContent()}</main>
-
-        <!-- Navigation bar -->
-        ${this._renderNavigationBar()}
-      </div>`;
+    yield this._renderNavigationBar();
   }
 
   protected _renderNavigationBar(): unknown {
