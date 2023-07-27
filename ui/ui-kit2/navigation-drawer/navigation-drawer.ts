@@ -40,12 +40,7 @@ export class AlwatrNavigationDrawerDirective extends AlwatrDirective {
   }
 
   protected _renderNavItems(content: NavigationDrawerContent): unknown {
-    return html`<ul class="text-labelLarge text-onSurfaceVariant">${this._renderNavItem(content)}</ul>
-    `;
-  }
-
-  protected _renderNavItem(content: NavigationDrawerContent): unknown {
-    return mapObject(content.itemList, (item, key) => html`<li
+    const navItemList = mapObject(content.itemList, (item, key) => html`<li
       class="flex h-14 cursor-pointer select-none flex-nowrap items-center rounded-full
       hover:bg-secondaryContainer hover:text-onSecondaryContainer px-3 hover:stateHover-onSecondaryContainer
       [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6
@@ -53,6 +48,8 @@ export class AlwatrNavigationDrawerDirective extends AlwatrDirective {
       "
       >${alwatrIcon(item.icon)}<div class="mx-2 grow">${item.label}</div>
       ${when(item.badge != null, () => html`<div class="ml-3">${item.badge}</div>`)}</li>`);
+
+    return html`<ul class="text-labelLarge text-onSurfaceVariant">${navItemList}</ul>`;
   }
 }
 
