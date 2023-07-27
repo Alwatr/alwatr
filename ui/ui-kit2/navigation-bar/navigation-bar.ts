@@ -1,4 +1,4 @@
-import {AlwatrDirective, html, noChange, directive, mapObject, when, type PartInfo, classMap} from '@alwatr/fract';
+import {AlwatrDirective, html, noChange, directive, mapObject, when, type PartInfo} from '@alwatr/fract';
 import {l10n} from '@alwatr/i18n2';
 
 import {alwatrIcon, type AlwatrIconOptions} from '../icon/icon.js';
@@ -39,8 +39,7 @@ export class AlwatrNavigationBarDirective extends AlwatrDirective {
         class="rounded-2xl px-5 py-1 group-hover:stateHover-onSurfaceVariant
         [&>.alwatr-icon]:block [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6
         group-hover:stateHover-onSurfaceVariant group-aria-selected:bg-secondaryContainer
-        group-aria-selected:text-onSecondaryContainer 
-        ${classMap({'group-active:stateActive-onSurfaceVariant': content.selected === key})}"
+        group-active:stateActive-onSurfaceVariant group-aria-selected:text-onSecondaryContainer"
         >${alwatrIcon(item.icon)}</div>${when(_label, () => html`<div class="py-1 group-aria-selected:text-onSurface">
           ${_label}</div>`)}</a>`;
     });
