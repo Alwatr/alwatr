@@ -2819,9 +2819,9 @@
 	rs-progress {
 		display: none;
 	}
-	#Top_bar #logo img {
+	/* #Top_bar #logo img {
 		max-height: initial;
-	}
+	} */
 	a.action_button {
 		border-radius: 0;
 	}
