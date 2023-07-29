@@ -32,6 +32,7 @@ contentDir: content
 dataDir: data
 themesDir: themes
 publishDir: public
+staticDir: static
 
 # build:
 buildDrafts: false
