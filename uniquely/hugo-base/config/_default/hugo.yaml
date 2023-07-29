@@ -8,23 +8,23 @@ defaultContentLanguage: fa
 timeZone: Asia/Tehran
 # Render the default content language in subdir, e.g. content/en/. The site root / will then redirect to /en/.
 defaultContentLanguageInSubdir: false
-languages:
-  fa:
-    contentDir: content/fa
-    disabled: false
-    languageCode: fa-IR
-    languageDirection: rtl
-    languageName: Persian
-    title: پروژه الوتر
-    weight: 1
-  en:
-    contentDir: content/en
-    disabled: true
-    languageCode: en-US
-    languageDirection: ltr
-    languageName: English
-    title: Alwatr Project
-    weight: 2
+# languages:
+#   fa:
+#     contentDir: content/fa
+#     disabled: false
+#     languageCode: fa-IR
+#     languageDirection: rtl
+#     languageName: Persian
+#     title: پروژه الوتر
+#     weight: 1
+#   en:
+#     contentDir: content/en
+#     disabled: true
+#     languageCode: en-US
+#     languageDirection: ltr
+#     languageName: English
+#     title: Alwatr Project
+#     weight: 2
 
 archetypeDir: archetypes
 assetDir: assets
