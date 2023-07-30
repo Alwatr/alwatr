@@ -5,6 +5,7 @@ import {icons} from '../icons.js';
 
 import type {AlwatrNavigationBarContent} from '@alwatr/ui-kit2/navigation-bar/navigation-bar.js';
 import type {AlwatrNavigationDrawerContent} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
+import type {AlwatrTopAppBarContent} from '@alwatr/ui-kit2/top-app-bar/top-app-bar.js';
 
 export interface AppNavigationContext {
   navigationBar: AlwatrNavigationBarContent;
@@ -13,6 +14,7 @@ export interface AppNavigationContext {
 }
 
 export const appNavigationContext = new AlwatrContextSignal<AppNavigationContext>({name: 'app-navigation-context'});
+export const topAppBarContext = new AlwatrContextSignal<AlwatrTopAppBarContent>({name: 'top-app-bar-context'});
 
 appNavigationContext.setValue({
   navigationRail: {
@@ -46,4 +48,11 @@ appNavigationContext.setValue({
       trash: {label: 'زباله', icon: {svg: icons.trash}},
     },
   },
+});
+
+topAppBarContext.setValue({
+  type: 'large',
+  headline: 'الوتر دمو',
+  startIcon: {svg: icons.person},
+  endIconList: [{svg: icons.refresh}, {svg: icons.home}],
 });

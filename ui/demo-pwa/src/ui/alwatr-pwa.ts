@@ -3,12 +3,11 @@ import {router, type RouteContext} from '@alwatr/router2';
 import {alwatrNavigationBar} from '@alwatr/ui-kit2/navigation-bar/navigation-bar.js';
 import {alwatrNavigationDrawer} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
 import {alwatrNavigationRail} from '@alwatr/ui-kit2/navigation-rail/navigation-rail.js';
-import {alwatrTopAppBar} from '@alwatr/ui-kit2/top-app-bar/top-app-bar.js';
+import {alwatrTopAppBar, AlwatrTopAppBarContent} from '@alwatr/ui-kit2/top-app-bar/top-app-bar.js';
 import {renderState} from '@alwatr/util';
 
 import {alwatrPageTest} from './page-test.js';
-import {icons} from '../icons.js';
-import {appNavigationContext, type AppNavigationContext} from '../share/app-navigation-context.js';
+import {appNavigationContext, topAppBarContext, type AppNavigationContext} from '../share/app-navigation-context.js';
 import {appLogger} from '../share/logger.js';
 
 export type PageName = 'home' | 'favorites' | 'contact' | 'other' | '_404';
@@ -52,11 +51,8 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
   }
 
   protected _renderTopAppBar(): unknown {
-    return alwatrTopAppBar({
-      type: 'large',
-      headline: 'app_name',
-      startIcon: {svg: icons.person},
-      endIconList: [{svg: icons.refresh}, {svg: icons.home}],
+    return alwatrObserve(topAppBarContext, (context: AlwatrTopAppBarContent) => {
+      return cache(alwatrTopAppBar(context));
     });
   }
 
