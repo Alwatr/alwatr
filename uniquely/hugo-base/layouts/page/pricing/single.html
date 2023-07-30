@@ -1,9 +1,4 @@
-{{ define "main" }}
-
-<body
-  class="page style-simple button-custom layout-full-width if-zoom if-border-hide no-content-padding header-transparent header-fw sticky-header sticky-tb-color ab-hide subheader-both-center menuo-right menuo-no-borders mobile-tb-center mobile-side-slide mobile-mini-mr-ll tablet-sticky mobile-header-mini mobile-sticky">
-  <div id="Wrapper">
-    {{ partial "header" }}
+{{ define "content" }}
     <div id="Content">
       <div class="content_wrapper clearfix">
         <div class="sections_group">
@@ -1169,10 +1164,4 @@
         </div>
       </div>
     </div>
-    {{ partial "footer" }}
-  </div>
-  {{ partial "side-slide" }}
-  <div id="body_overlay"></div>
-  ${{ partial "base-script" }}
-</body>
 {{ end }}

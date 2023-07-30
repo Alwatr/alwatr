@@ -14,7 +14,7 @@
   <meta charset="utf-8" />
   <title>
     {{ block "title" . }}
-      {{ .Site.Title }}
+    {{ .Site.Title }}
     {{ end }}
   </title>
 
@@ -38,7 +38,30 @@
   <link rel="stylesheet" href="plugins/rs-plugin-6.custom/css/rs6.css" />
 </head>
 
-  {{ block "main" . }}
+<body class="home page template-slider style-simple button-custom layout-full-width if-zoom if-border-hide no-content-padding header-transparent header-fw sticky-header sticky-tb-color ab-hide subheader-both-center menuo-right menuo-no-borders mobile-tb-center mobile-side-slide mobile-mini-mr-ll tablet-sticky mobile-header-mini mobile-sticky">
+
+  <div id="Wrapper">
+    {{ block "header" . }}
+    {{ partial "header" . }}
+    {{ end }}
+
+    {{ block "content" . }}
+    {{ end }}
+
+    {{ block "footer" . }}
+    {{ partial "footer" . }}
+    {{ end }}
+  </div>
+
+  {{ block "side-slide" . }}
+  {{ partial "side-slide" . }}
   {{ end }}
+  <div id="body_overlay"></div>
+
+  {{ block "script" . }}
+  {{ partial "base-script" . }}
+  {{ end }}
+
+</body>
 
 </html>

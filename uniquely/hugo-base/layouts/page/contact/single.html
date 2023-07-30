@@ -1,196 +1,185 @@
-{{ define "main" }}
-
-<body
-  class="page style-simple button-custom layout-full-width if-zoom if-border-hide no-content-padding header-transparent header-fw sticky-header sticky-tb-color ab-hide subheader-both-center menuo-right menuo-no-borders mobile-tb-center mobile-side-slide mobile-mini-mr-ll tablet-sticky mobile-header-mini mobile-sticky">
-  <div id="Wrapper">
-    {{ partial "header" }}
-    <div id="Content">
-      <div class="section" style="padding-top: 160px; padding-bottom: 40px">
-        <div class="container">
+{{ define "content" }}
+<div id="Content">
+  <div class="section" style="padding-top: 160px; padding-bottom: 40px">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6" style="padding: 0px 3% 30px">
           <div class="row">
-            <div class="col-md-6" style="padding: 0px 3% 30px">
-              <div class="row">
-                <div class="col-12">
-                  <div class="column_attr clearfix mobile_align_center">
-                    <h1>
-                      Call us
-                      <br />
-                      anytime
-                      <br />
-                    </h1>
-                    <p>
-                      <strong>
-                        <br />
-                        Lorem ipsum dolor</strong>
-                      sit amet, consectetur adipiscing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua mavel
-                      facilisis.
-                    </p>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <hr class="no_line" style="margin: 0 auto 30px auto" />
-                </div>
-                <div class="col-md-2">
-                  <div class="column_attr clearfix align_center mobile_align_center">
-                    <h2>
-                      <i class="icon-paper-plane-line" style="color: #626262"></i>
-                    </h2>
-                  </div>
-                </div>
-                <div class="col-md-5">
-                  <div class="column_attr clearfix mobile_align_center" style="padding: 3px 2%">
-                    <h4 style="margin: 0">
-                      <a href="#">noreply@envato.com</a>
-                    </h4>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <hr class="no_line" style="margin: 0 auto 30px auto" />
-                </div>
-                <div class="col-md-2">
-                  <div class="column_attr clearfix align_center">
-                    <h2><i class="icon-phone" style="color: #626262"></i></h2>
-                  </div>
-                </div>
-                <div class="col-md-5">
-                  <div class="column_attr clearfix mobile_align_center" style="padding: 7px 2% 20px">
-                    <h4 style="margin: 0">+95 454 959</h4>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="image_frame image_item no_link scale-with-grid no_border">
-                <div class="image_wrapper">
-                  <img class="scale-with-grid" src="images/reno4-contact-dude.png" alt="reno4-contact-dude" title=""
-                    width="646" height="753" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="section" style="padding-bottom: 38px">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6" style="
-                  padding: 40px 3% 0px 3%;
-                  background-color: #ffd800;
-                  margin-top: -89px;
-                ">
-              <h2>
-                Feel free to
-                <br />
-                send us a message
-              </h2>
-              <hr class="no_line" style="margin: 0 auto 20px auto" />
-              <div id="contactWrapper">
-                <div id="contactform">
-                  <form method="post" id="reused_form">
-                    <!-- One Second (1/2) Column -->
-                    <div class="column one-second">
-                      <input placeholder="Your name" id="name" type="text" name="Name" required maxlength="50" />
-                    </div>
-                    <!-- One Second (1/2) Column -->
-                    <div class="column one-second">
-                      <input placeholder="Your e-mail" id="email" type="email" name="Email" required maxlength="50" />
-                    </div>
-                    <div class="column one">
-                      <input placeholder="Subject" id="subject" type="text" name="Subject" maxlength="50" />
-                    </div>
-                    <div class="column one">
-                      <textarea placeholder="Message" id="message" name="Message" rows="10" maxlength="6000"
-                        required></textarea>
-                    </div>
-                    <div class="column one">
-                      <button class="button-primary" id="submit" type="submit">
-                        Send A Message
-                      </button>
-                    </div>
-                  </form>
-                  <div id="success_message" style="display: none">
-                    <h3>Submitted the form successfully!</h3>
-                    <p>We will get back to you soon.</p>
-                  </div>
-                  <div id="error_message" style="width: 100%; height: 100%; display: none">
-                    <h3>Error</h3>
-                    Sorry there was an error sending your form.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6" style="padding: 0px 4% 0px">
-              <div class="row">
-                <div class="col-md-3">
-                  <h1><span style="color: #ffd800">#1</span></h1>
-                </div>
-                <div class="col-md-9">
-                  <h3>Quantum perri</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore acilisis.
-                  </p>
-                </div>
-                <div class="col-12">
-                  <hr class="no_line" style="margin: 0 auto 40px auto" />
-                </div>
-                <div class="col-md-3">
-                  <h1><span style="color: #ffd800">#2</span></h1>
-                </div>
-                <div class="col-md-9">
-                  <h3>Postre via</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore acilisis.
-                  </p>
-                </div>
-                <div class="col-12">
-                  <hr class="no_line" style="margin: 0 auto 40px auto" />
-                </div>
-                <div class="col-md-3">
-                  <h1><span style="color: #ffd800">#3</span></h1>
-                </div>
-                <div class="col-md-9">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore acilisis.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="section" style="padding-top: 50px; padding-bottom: 125px">
-        <div class="container">
-          <div class="row justify-content-md-center text-center">
-            <div class="col-md-6">
-              <div class="col-12">
-                <hr style="margin: 0 auto 25px" />
-              </div>
-              <div class="col-12 text-center">
-                <p style="text-align: center">
-                  Find more about us on our funpages quantum more <br />
-                  pertrone vita.
+            <div class="col-12">
+              <div class="column_attr clearfix mobile_align_center">
+                <h1>
+                  Call us
+                  <br />
+                  anytime
+                  <br />
+                </h1>
+                <p>
+                  <strong>
+                    <br />
+                    Lorem ipsum dolor</strong>
+                  sit amet, consectetur adipiscing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua mavel
+                  facilisis.
                 </p>
-                <hr class="no_line" style="margin: 0 auto 30px auto" />
-                <a href="#" class="icon_bar icon_bar_pinterest icon_bar_large"><span class="t"><i
-                      class="icon-pinterest"></i></span><span class="b"><i class="icon-pinterest"></i></span></a>
-                <a href="#" class="icon_bar icon_bar_facebook icon_bar_large"><span class="t"><i
-                      class="icon-facebook"></i></span><span class="b"><i class="icon-facebook"></i></span></a>
-                <a href="#" class="icon_bar icon_bar_instagram icon_bar_large"><span class="t"><i
-                      class="icon-instagram"></i></span><span class="b"><i class="icon-instagram"></i></span></a>
               </div>
+            </div>
+            <div class="col-12">
+              <hr class="no_line" style="margin: 0 auto 30px auto" />
+            </div>
+            <div class="col-md-2">
+              <div class="column_attr clearfix align_center mobile_align_center">
+                <h2>
+                  <i class="icon-paper-plane-line" style="color: #626262"></i>
+                </h2>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="column_attr clearfix mobile_align_center" style="padding: 3px 2%">
+                <h4 style="margin: 0">
+                  <a href="#">noreply@envato.com</a>
+                </h4>
+              </div>
+            </div>
+            <div class="col-12">
+              <hr class="no_line" style="margin: 0 auto 30px auto" />
+            </div>
+            <div class="col-md-2">
+              <div class="column_attr clearfix align_center">
+                <h2><i class="icon-phone" style="color: #626262"></i></h2>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="column_attr clearfix mobile_align_center" style="padding: 7px 2% 20px">
+                <h4 style="margin: 0">+95 454 959</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="image_frame image_item no_link scale-with-grid no_border">
+            <div class="image_wrapper">
+              <img class="scale-with-grid" src="images/reno4-contact-dude.png" alt="reno4-contact-dude" title=""
+                width="646" height="753" />
             </div>
           </div>
         </div>
       </div>
     </div>
-    {{ partial "footer" }}
   </div>
-  {{ partial "side-slide" }}
-  <div id="body_overlay"></div>
-  ${{ partial "base-script" }}
-</body>
+  <div class="section" style="padding-bottom: 38px">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6" style="
+                  padding: 40px 3% 0px 3%;
+                  background-color: #ffd800;
+                  margin-top: -89px;
+                ">
+          <h2>
+            Feel free to
+            <br />
+            send us a message
+          </h2>
+          <hr class="no_line" style="margin: 0 auto 20px auto" />
+          <div id="contactWrapper">
+            <div id="contactform">
+              <form method="post" id="reused_form">
+                <!-- One Second (1/2) Column -->
+                <div class="column one-second">
+                  <input placeholder="Your name" id="name" type="text" name="Name" required maxlength="50" />
+                </div>
+                <!-- One Second (1/2) Column -->
+                <div class="column one-second">
+                  <input placeholder="Your e-mail" id="email" type="email" name="Email" required maxlength="50" />
+                </div>
+                <div class="column one">
+                  <input placeholder="Subject" id="subject" type="text" name="Subject" maxlength="50" />
+                </div>
+                <div class="column one">
+                  <textarea placeholder="Message" id="message" name="Message" rows="10" maxlength="6000"
+                    required></textarea>
+                </div>
+                <div class="column one">
+                  <button class="button-primary" id="submit" type="submit">
+                    Send A Message
+                  </button>
+                </div>
+              </form>
+              <div id="success_message" style="display: none">
+                <h3>Submitted the form successfully!</h3>
+                <p>We will get back to you soon.</p>
+              </div>
+              <div id="error_message" style="width: 100%; height: 100%; display: none">
+                <h3>Error</h3>
+                Sorry there was an error sending your form.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" style="padding: 0px 4% 0px">
+          <div class="row">
+            <div class="col-md-3">
+              <h1><span style="color: #ffd800">#1</span></h1>
+            </div>
+            <div class="col-md-9">
+              <h3>Quantum perri</h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore acilisis.
+              </p>
+            </div>
+            <div class="col-12">
+              <hr class="no_line" style="margin: 0 auto 40px auto" />
+            </div>
+            <div class="col-md-3">
+              <h1><span style="color: #ffd800">#2</span></h1>
+            </div>
+            <div class="col-md-9">
+              <h3>Postre via</h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore acilisis.
+              </p>
+            </div>
+            <div class="col-12">
+              <hr class="no_line" style="margin: 0 auto 40px auto" />
+            </div>
+            <div class="col-md-3">
+              <h1><span style="color: #ffd800">#3</span></h1>
+            </div>
+            <div class="col-md-9">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore acilisis.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section" style="padding-top: 50px; padding-bottom: 125px">
+    <div class="container">
+      <div class="row justify-content-md-center text-center">
+        <div class="col-md-6">
+          <div class="col-12">
+            <hr style="margin: 0 auto 25px" />
+          </div>
+          <div class="col-12 text-center">
+            <p style="text-align: center">
+              Find more about us on our funpages quantum more <br />
+              pertrone vita.
+            </p>
+            <hr class="no_line" style="margin: 0 auto 30px auto" />
+            <a href="#" class="icon_bar icon_bar_pinterest icon_bar_large"><span class="t"><i
+                  class="icon-pinterest"></i></span><span class="b"><i class="icon-pinterest"></i></span></a>
+            <a href="#" class="icon_bar icon_bar_facebook icon_bar_large"><span class="t"><i
+                  class="icon-facebook"></i></span><span class="b"><i class="icon-facebook"></i></span></a>
+            <a href="#" class="icon_bar icon_bar_instagram icon_bar_large"><span class="t"><i
+                  class="icon-instagram"></i></span><span class="b"><i class="icon-instagram"></i></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {{ end }}

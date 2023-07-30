@@ -1,249 +1,238 @@
-{{ define "main" }}
-  <body
-    class="page style-simple button-custom layout-full-width if-zoom if-border-hide no-content-padding header-transparent header-fw sticky-header sticky-tb-color ab-hide subheader-both-center menuo-right menuo-no-borders mobile-tb-center mobile-side-slide mobile-mini-mr-ll tablet-sticky mobile-header-mini mobile-sticky">
-    <div id="Wrapper">
-      {{ partial "header" . }}
-      <div id="Content">
-        <div class="section" style="
+{{ define "content" }}
+<div id="Content">
+  <div class="section" style="
               padding-top: 200px;
               padding-bottom: 40px;
               background-image: url(images/reno4-about-workers.png);
               background-repeat: no-repeat;
               background-position: center top;
             ">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-5">
-                <h1>
-                  A few words
-                  <br />
-                  about us
-                </h1>
-                <hr class="no_line" style="margin: 0 auto 30px auto" />
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua
-                  maecenas accumsan lacus vel facilisis.
-                </p>
-              </div>
-              <div class="col-12">
-                <hr class="no_line" style="margin: 0 auto 175px auto" />
-              </div>
-              <div class="col-md-6">
-                <div class="column_attr clearfix" style="padding: 40px 0% 0px">
-                  <h3>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
-                    do eiusmod
-                    <span style="background: #ffd800">tempor incididunt ut</span>
-                    labore et dolore magna aliqua.
-                  </h3>
-                  <h3>
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                  </h3>
-                </div>
-              </div>
-            </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5">
+          <h1>
+            A few words
+            <br />
+            about us
+          </h1>
+          <hr class="no_line" style="margin: 0 auto 30px auto" />
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+            do eiusmod tempor incididunt ut labore et dolore magna aliqua
+            maecenas accumsan lacus vel facilisis.
+          </p>
+        </div>
+        <div class="col-12">
+          <hr class="no_line" style="margin: 0 auto 175px auto" />
+        </div>
+        <div class="col-md-6">
+          <div class="column_attr clearfix" style="padding: 40px 0% 0px">
+            <h3>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
+              do eiusmod
+              <span style="background: #ffd800">tempor incididunt ut</span>
+              labore et dolore magna aliqua.
+            </h3>
+            <h3>
+              Duis aute irure dolor in reprehenderit in voluptate velit
+              esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+              occaecat cupidatat non proident, sunt in culpa qui officia
+              deserunt mollit anim id est laborum.
+            </h3>
           </div>
         </div>
-        <div class="section full-width-ex-mobile" style="padding-top: 50px; padding-bottom: 35px">
-          <div class="">
-            <div class="row">
-              <div class="col-md-6 text-right" style="padding: 0px 2%">
-                <img src="images/reno4-home-team.png" alt="reno4-home-team" title="" width="640" height="780" />
-              </div>
-              <div class="col-md-6" style="padding: 10% 30px">
-                <div class="row">
-                  <div class="col-md-10">
-                    <div class="column_attr clearfix" style="padding: 30px 2%">
-                      <h3>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua.
-                        <span style="background: #ffd800">Ut enim ad minim veniam, quis nostrud</span>
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo coneu fugiat nulla pariatur.
-                      </h3>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="image_frame image_item no_link scale-with-grid no_border">
-                      <div class="image_wrapper">
-                        <img class="scale-with-grid" src="images/reno4-about-singnature.png" alt="reno4-about-singnature"
-                          title="" width="200" height="117" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+      </div>
+    </div>
+  </div>
+  <div class="section full-width-ex-mobile" style="padding-top: 50px; padding-bottom: 35px">
+    <div class="">
+      <div class="row">
+        <div class="col-md-6 text-right" style="padding: 0px 2%">
+          <img src="images/reno4-home-team.png" alt="reno4-home-team" title="" width="640" height="780" />
+        </div>
+        <div class="col-md-6" style="padding: 10% 30px">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="column_attr clearfix" style="padding: 30px 2%">
+                <h3>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing
+                  elit, sed do eiusmod tempor incididunt ut labore et
+                  dolore magna aliqua.
+                  <span style="background: #ffd800">Ut enim ad minim veniam, quis nostrud</span>
+                  exercitation ullamco laboris nisi ut aliquip ex ea
+                  commodo coneu fugiat nulla pariatur.
+                </h3>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="section" style="padding-top: 50px; padding-bottom: 35px">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-9">
-                <div class="column_attr clearfix" style="padding: 0px 5% 0px 0%">
-                  <h3>
-                    Fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum.
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="section" style="padding-top: 35px; padding-bottom: 30px">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-3" style="padding: 0 0 20px 0">
-                <div class="image_frame image_item no_link scale-with-grid no_border">
-                  <div class="image_wrapper">
-                    <img class="scale-with-grid" src="images/reno4-about-icon1.png" alt="reno4-about-icon1" title=""
-                      width="125" height="300" />
-                  </div>
-                </div>
-                <div class="column_attr clearfix" style="padding: 55px 0% 0px">
-                  <div class="google_font" style="
-                        font-family: 'Comfortaa', Arial, Tahoma, sans-serif;
-                        font-size: 53px;
-                        line-height: 53px;
-                        font-weight: 700;
-                        letter-spacing: 0px;
-                        color: #222222;
-                      ">
-                    <span class="counter-inline animate-math"><span class="number" data-to="234">234</span></span>k
-                  </div>
-                  <p>Lorem ipsum dolor</p>
-                </div>
-              </div>
-              <div class="col-md-3" style="padding: 0 0 20px 0">
-                <div class="image_frame image_item no_link scale-with-grid no_border">
-                  <div class="image_wrapper">
-                    <img class="scale-with-grid" src="images/reno4-about-icon2.png" alt="reno4-about-icon2" title=""
-                      width="125" height="300" />
-                  </div>
-                </div>
-                <div class="column_attr clearfix" style="padding: 55px 0% 0px">
-                  <div class="google_font" style="
-                        font-family: 'Comfortaa', Arial, Tahoma, sans-serif;
-                        font-size: 53px;
-                        line-height: 53px;
-                        font-weight: 700;
-                        letter-spacing: 0px;
-                        color: #222222;
-                      ">
-                    <span class="counter-inline animate-math"><span class="number" data-to="150">150</span></span>k
-                  </div>
-                  <p>Lorem ipsum dolor</p>
-                </div>
-              </div>
-              <div class="col-md-3" style="padding: 0 0 20px 0">
-                <div class="image_frame image_item no_link scale-with-grid no_border">
-                  <div class="image_wrapper">
-                    <img class="scale-with-grid" src="images/reno4-about-icon3.png" alt="reno4-about-icon3" title=""
-                      width="125" height="300" />
-                  </div>
-                </div>
-                <div class="column_attr clearfix" style="padding: 55px 0% 0px">
-                  <div class="google_font" style="
-                        font-family: 'Comfortaa', Arial, Tahoma, sans-serif;
-                        font-size: 53px;
-                        line-height: 53px;
-                        font-weight: 700;
-                        letter-spacing: 0px;
-                        color: #222222;
-                      ">
-                    <span class="counter-inline animate-math"><span class="number" data-to="920">920</span></span>km
-                  </div>
-                  <p>Lorem ipsum dolor</p>
-                </div>
-              </div>
-              <div class="col-md-3" style="padding: 0 0 20px 0">
-                <div class="image_frame image_item no_link scale-with-grid no_border">
-                  <div class="image_wrapper">
-                    <img class="scale-with-grid" src="images/reno4-about-icon4.png" alt="reno4-about-icon4" title=""
-                      width="125" height="300" />
-                  </div>
-                </div>
-                <div class="column_attr clearfix" style="padding: 55px 0% 0px">
-                  <div class="google_font" style="
-                        font-family: 'Comfortaa', Arial, Tahoma, sans-serif;
-                        font-size: 53px;
-                        line-height: 53px;
-                        font-weight: 700;
-                        letter-spacing: 0px;
-                        color: #222222;
-                      ">
-                    <span class="counter-inline animate-math"><span class="number" data-to="750">750</span></span>m
-                  </div>
-                  <p>Lorem ipsum dolor</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="section" style="padding-top: 50px; padding-bottom: 90px">
-          <div class="container">
-            <div class="row">
-              <div class="col-12">
-                <div class="row">
-                  <div class="col-md-8">
-                    <h1>
-                      Call us if you have
-                      <br />
-                      a question
-                    </h1>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12">
-                <hr class="no_line" style="margin: 0 auto 30px" />
-              </div>
-              <div class="col-md-4">
-                <div class="row">
-                  <div class="col-md-2">
-                    <div class="column_attr clearfix align_center mobile_align_center">
-                      <h2><i class="icon-phone" style="color: #626262"></i></h2>
-                    </div>
-                  </div>
-                  <div class="col-md-10">
-                    <div class="column_attr clearfix mobile_align_center" style="padding: 7px 2% 20px">
-                      <h4 style="margin: 0">+95 454 959</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="row">
-                  <div class="col-md-2">
-                    <div class="column_attr clearfix align_center mobile_align_center">
-                      <h2>
-                        <i class="icon-paper-plane-line" style="color: #626262"></i>
-                      </h2>
-                    </div>
-                  </div>
-                  <div class="col-md-10">
-                    <div class="column_attr clearfix mobile_align_center" style="padding: 3px 2%">
-                      <h4 style="margin: 0">
-                        <a href="#">noreply@envato.com</a>
-                      </h4>
-                    </div>
-                  </div>
+            <div class="col-12">
+              <div class="image_frame image_item no_link scale-with-grid no_border">
+                <div class="image_wrapper">
+                  <img class="scale-with-grid" src="images/reno4-about-singnature.png" alt="reno4-about-singnature"
+                    title="" width="200" height="117" />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {{ partial "footer" . }}
     </div>
-    {{ partial "side-slide" . }}
-    <div id="body_overlay"></div>
-    <!-- JS -->
-    {{ partial "base-script" }}
-  </body>
+  </div>
+  <div class="section" style="padding-top: 50px; padding-bottom: 35px">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+          <div class="column_attr clearfix" style="padding: 0px 5% 0px 0%">
+            <h3>
+              Fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+              proident, sunt in culpa qui officia deserunt mollit anim id
+              est laborum.
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section" style="padding-top: 35px; padding-bottom: 30px">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3" style="padding: 0 0 20px 0">
+          <div class="image_frame image_item no_link scale-with-grid no_border">
+            <div class="image_wrapper">
+              <img class="scale-with-grid" src="images/reno4-about-icon1.png" alt="reno4-about-icon1" title=""
+                width="125" height="300" />
+            </div>
+          </div>
+          <div class="column_attr clearfix" style="padding: 55px 0% 0px">
+            <div class="google_font" style="
+                        font-family: 'Comfortaa', Arial, Tahoma, sans-serif;
+                        font-size: 53px;
+                        line-height: 53px;
+                        font-weight: 700;
+                        letter-spacing: 0px;
+                        color: #222222;
+                      ">
+              <span class="counter-inline animate-math"><span class="number" data-to="234">234</span></span>k
+            </div>
+            <p>Lorem ipsum dolor</p>
+          </div>
+        </div>
+        <div class="col-md-3" style="padding: 0 0 20px 0">
+          <div class="image_frame image_item no_link scale-with-grid no_border">
+            <div class="image_wrapper">
+              <img class="scale-with-grid" src="images/reno4-about-icon2.png" alt="reno4-about-icon2" title=""
+                width="125" height="300" />
+            </div>
+          </div>
+          <div class="column_attr clearfix" style="padding: 55px 0% 0px">
+            <div class="google_font" style="
+                        font-family: 'Comfortaa', Arial, Tahoma, sans-serif;
+                        font-size: 53px;
+                        line-height: 53px;
+                        font-weight: 700;
+                        letter-spacing: 0px;
+                        color: #222222;
+                      ">
+              <span class="counter-inline animate-math"><span class="number" data-to="150">150</span></span>k
+            </div>
+            <p>Lorem ipsum dolor</p>
+          </div>
+        </div>
+        <div class="col-md-3" style="padding: 0 0 20px 0">
+          <div class="image_frame image_item no_link scale-with-grid no_border">
+            <div class="image_wrapper">
+              <img class="scale-with-grid" src="images/reno4-about-icon3.png" alt="reno4-about-icon3" title=""
+                width="125" height="300" />
+            </div>
+          </div>
+          <div class="column_attr clearfix" style="padding: 55px 0% 0px">
+            <div class="google_font" style="
+                        font-family: 'Comfortaa', Arial, Tahoma, sans-serif;
+                        font-size: 53px;
+                        line-height: 53px;
+                        font-weight: 700;
+                        letter-spacing: 0px;
+                        color: #222222;
+                      ">
+              <span class="counter-inline animate-math"><span class="number" data-to="920">920</span></span>km
+            </div>
+            <p>Lorem ipsum dolor</p>
+          </div>
+        </div>
+        <div class="col-md-3" style="padding: 0 0 20px 0">
+          <div class="image_frame image_item no_link scale-with-grid no_border">
+            <div class="image_wrapper">
+              <img class="scale-with-grid" src="images/reno4-about-icon4.png" alt="reno4-about-icon4" title=""
+                width="125" height="300" />
+            </div>
+          </div>
+          <div class="column_attr clearfix" style="padding: 55px 0% 0px">
+            <div class="google_font" style="
+                        font-family: 'Comfortaa', Arial, Tahoma, sans-serif;
+                        font-size: 53px;
+                        line-height: 53px;
+                        font-weight: 700;
+                        letter-spacing: 0px;
+                        color: #222222;
+                      ">
+              <span class="counter-inline animate-math"><span class="number" data-to="750">750</span></span>m
+            </div>
+            <p>Lorem ipsum dolor</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section" style="padding-top: 50px; padding-bottom: 90px">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-md-8">
+              <h1>
+                Call us if you have
+                <br />
+                a question
+              </h1>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <hr class="no_line" style="margin: 0 auto 30px" />
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="column_attr clearfix align_center mobile_align_center">
+                <h2><i class="icon-phone" style="color: #626262"></i></h2>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="column_attr clearfix mobile_align_center" style="padding: 7px 2% 20px">
+                <h4 style="margin: 0">+95 454 959</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="column_attr clearfix align_center mobile_align_center">
+                <h2>
+                  <i class="icon-paper-plane-line" style="color: #626262"></i>
+                </h2>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="column_attr clearfix mobile_align_center" style="padding: 3px 2%">
+                <h4 style="margin: 0">
+                  <a href="#">noreply@envato.com</a>
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {{ end }}
