@@ -1,5 +1,12 @@
 <!DOCTYPE html>
-<html class="h-full w-full [overscroll-behavior:none]">
+
+<!--[if lt IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie10 lt-ie9"> <![endif]-->
+<!--[if IE 9]><html class="no-js lt-ie10"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html>
+<!--<![endif]-->
 
 <head>
   <base href="/" />
@@ -14,17 +21,24 @@
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="{{ .Site.Params.LightThemeColorSchema }}" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ .Site.Params.DarkThemeColorSchema }}" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover" />
 
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link rel="shortcut icon" href="images/favicon.ico" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Open+Sans:100,200,300,400,400italic,500,600,700,700italic,900" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,400italic,500,600,700,700italic,900" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Comfortaa:100,200,300,400,400italic,500,600,700,700italic,900" />
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/structure.css" />
+  <link rel="stylesheet" href="css/renovate4.css" />
+  <link rel="stylesheet" href="plugins/rs-plugin-6.custom/css/rs6.css" />
 </head>
 
-<body
-  class="h-full w-full max-w-full max-h-full m-0 p-0 overflow-clip transform-gpu break-words touch-pan-x touch-pan-y touch-pinch-zoom bg-background font-vazirmatn text-onBackground text-bodyMedium [contain:size_layout_paint_style] [overscroll-behavior:none]">
-  <main class="p-10">
-    {{ block "main" . }}
-
-    {{ end }}
-  </main>
-</body>
+  {{ block "main" . }}
+  {{ end }}
 
 </html>

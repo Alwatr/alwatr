@@ -1,0 +1,147 @@
+{{ define "main" }}
+
+<body
+  class="page style-simple button-custom layout-full-width if-zoom if-border-hide no-content-padding header-transparent header-fw sticky-header sticky-tb-color ab-hide subheader-both-center menuo-right menuo-no-borders mobile-tb-center mobile-side-slide mobile-mini-mr-ll tablet-sticky mobile-header-mini mobile-sticky">
+  <div id="Wrapper">
+    {{ partial "header" . }}
+    <div id="Content">
+      <div class="section mcb-section bg-cover" style="
+            padding-top: 200px;
+            padding-bottom: 50px;
+            background-image: url(images/reno4-offer-top-bg.png);
+            background-repeat: no-repeat;
+            background-position: center bottom;
+          ">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="column_attr clearfix">
+                <h1>
+                  See our
+                  <br />
+                  realizations
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section mcb-section full-width" style="
+            padding-top: 60px;
+            padding-bottom: 30px;
+            padding-left: 1%;
+            padding-right: 1%;
+          ">
+        <div class="row">
+          <div class="col-12 column_image_gallery">
+            <div id="sc_gallery-4030" class="gallery galleryid-10 gallery-columns-2 gallery-size-full file">
+              <dl class="gallery-item">
+                <dt class="gallery-icon landscape">
+                  <a href="images/reno4-gallery-image-1.jpg"><img width="1024" height="700"
+                      src="images/reno4-gallery-image-1.jpg" class="attachment-full size-full" alt=""
+                      loading="lazy" /></a>
+                </dt>
+              </dl>
+              <dl class="gallery-item">
+                <dt class="gallery-icon landscape">
+                  <a href="images/reno4-gallery-image-2.jpg"><img width="1024" height="700"
+                      src="images/reno4-gallery-image-2.jpg" class="attachment-full size-full" alt=""
+                      loading="lazy" /></a>
+                </dt>
+              </dl>
+              <br style="clear: both" />
+              <dl class="gallery-item">
+                <dt class="gallery-icon landscape">
+                  <a href="images/reno4-gallery-image-3.jpg"><img width="1024" height="700"
+                      src="images/reno4-gallery-image-3.jpg" class="attachment-full size-full" alt=""
+                      loading="lazy" /></a>
+                </dt>
+              </dl>
+              <dl class="gallery-item">
+                <dt class="gallery-icon landscape">
+                  <a href="images/reno4-gallery-image-4.jpg"><img width="1024" height="700"
+                      src="images/reno4-gallery-image-4.jpg" class="attachment-full size-full" alt=""
+                      loading="lazy" /></a>
+                </dt>
+              </dl>
+              <br style="clear: both" />
+              <dl class="gallery-item">
+                <dt class="gallery-icon landscape">
+                  <a href="images/reno4-gallery-image-5.jpg"><img width="1024" height="700"
+                      src="images/reno4-gallery-image-5.jpg" class="attachment-full size-full" alt=""
+                      loading="lazy" /></a>
+                </dt>
+              </dl>
+              <dl class="gallery-item">
+                <dt class="gallery-icon landscape">
+                  <a href="images/reno4-gallery-image-6.jpg"><img width="1024" height="700"
+                      src="images/reno4-gallery-image-6.jpg" class="attachment-full size-full" alt=""
+                      loading="lazy" /></a>
+                </dt>
+              </dl>
+              <br style="clear: both" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section" style="padding-top: 50px; padding-bottom: 90px">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-md-8">
+                  <h1>
+                    Call us if you have
+                    <br />
+                    a question
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <hr class="no_line" style="margin: 0 auto 30px" />
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="column_attr clearfix align_center mobile_align_center">
+                    <h2><i class="icon-phone" style="color: #626262"></i></h2>
+                  </div>
+                </div>
+                <div class="col-md-10">
+                  <div class="column_attr clearfix mobile_align_center" style="padding: 7px 2% 20px">
+                    <h4 style="margin: 0">+95 454 959</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="column_attr clearfix align_center mobile_align_center">
+                    <h2>
+                      <i class="icon-paper-plane-line" style="color: #626262"></i>
+                    </h2>
+                  </div>
+                </div>
+                <div class="col-md-10">
+                  <div class="column_attr clearfix mobile_align_center" style="padding: 3px 2%">
+                    <h4 style="margin: 0">
+                      <a href="#">noreply@envato.com</a>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ partial "footer" . }}
+  </div>
+  {{ partial "side-slide" . }}
+  <div id="body_overlay"></div>
+  <!-- JS -->
+  {{ partial "base-script" }}
+</body>
+{{ end }}
