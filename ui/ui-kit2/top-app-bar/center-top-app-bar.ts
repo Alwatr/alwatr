@@ -28,8 +28,6 @@ export const centerTopAppBar = (content: CenterTopAppBarContent) => html`<header
 `;
 
 export const endIconListTemplate = (iconList?: IconButtonContent[]) => {
-  return iconList?.map((icon) => {
-    return iconButton(icon);
-  });
+  return iconList?.map((icon) => iconButton(icon));
 };
 
