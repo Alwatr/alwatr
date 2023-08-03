@@ -53,6 +53,6 @@ appNavigationContext.setValue({
 topAppBarContext.setValue({
   type: 'large',
   headline: 'الوتر دمو',
-  startIcon: {svg: icons.person},
-  endIconList: [{svg: icons.refresh}, {svg: icons.home}],
+  startIcon: {svg: icons.person, onClick: () => {console.log('`startIcon` clicked');}},
+  endIconList: [{svg: icons.refresh, onClick: () => {console.log('`refreshIcon` clicked');}}, {svg: icons.home, onClick: () => {console.log('`homeIcon` clicked');}}],
 });
