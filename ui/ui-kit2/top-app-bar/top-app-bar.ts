@@ -2,8 +2,8 @@ import {AlwatrDirective, directive, html, noChange, map, type PartInfo} from '@a
 import {l10n} from '@alwatr/i18n2';
 import {defaultExport} from '@alwatr/util';
 
-import {alwatrIcon} from '../icon/icon.js';
-import {type AlwatrIconButtonContent} from '../icon-button/icon-button.js';
+import {icon} from '../icon/icon.js';
+import {type IconButtonContent} from '../icon-button/icon-button.js';
 
 const arrowBackOutlineIcon = defaultExport(import('@alwatr/icon/svg/arrow-back-outline.svg'));
 
@@ -23,10 +23,10 @@ export interface AlwatrTopAppBarContent {
   /**
    * @defaultValue {icon: 'arrow-back-outline', flipRtl: true, clickSignalId: 'back-click-event'}
    */
-  startIcon?: AlwatrIconButtonContent;
+  startIcon?: IconButtonContent;
 
-  flipIconInRtl?: AlwatrIconButtonContent;
-  endIconList?: AlwatrIconButtonContent[];
+  flipIconInRtl?: IconButtonContent;
+  endIconList?: IconButtonContent[];
 
   /**
    * @defaultValue 2
@@ -62,7 +62,7 @@ export class AlwatrTopAppBarDirective extends AlwatrDirective {
       >
         <button class="inline-block cursor-pointer rounded-full p-3 text-onSurface
           [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6">
-          ${alwatrIcon(content.startIcon)}
+          ${icon(content.startIcon)}
         </button>
         ${this._renderTitle(content)}
         ${this._renderEndIconList(content.endIconList)}
@@ -93,13 +93,13 @@ export class AlwatrTopAppBarDirective extends AlwatrDirective {
     return;
   }
 
-  protected _renderEndIconList(iconList: AlwatrIconButtonContent[]): unknown {
+  protected _renderEndIconList(iconList: IconButtonContent[]): unknown {
     return map(iconList, (iconOptions) => {
       return html`<button
         class="inline-block cursor-pointer rounded-full p-3 text-onSurfaceVariant
           [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
       >
-        ${alwatrIcon({svg: iconOptions.svg})}
+        ${icon({svg: iconOptions.svg})}
       </button> `;
     });
   }
