@@ -23,12 +23,12 @@ ENV POLYFILL_VERSION heads/main
 RUN curl -L -o polyfill-service.tar.gz https://codeload.github.com/Financial-Times/polyfill-service/tar.gz/refs/${POLYFILL_VERSION}
 RUN tar -xzf polyfill-service.tar.gz --strip-components=1
 
-RUN yarn global add pnpm
+RUN npm install -g pnpm
 
 # just pnpm-lock file exists!
 RUN pnpm install
 
-RUN yarn build:app
+RUN pnpm build:app
 
 # ---
 
