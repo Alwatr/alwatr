@@ -12,11 +12,7 @@ export interface CenterTopAppBarContent {
   elevated?: number;
 }
 
-export const centerTopAppBar = (content: CenterTopAppBarContent) => html`
-  <header
-    class="scroll z-sticky flex h-16 shrink-0 grow-0 select-none items-center bg-surface px-1 [&.scroll]:bg-surfaceContainer"
-  >
-
+export const centerTopAppBar = (content: CenterTopAppBarContent) => html`<header class="scroll z-sticky flex h-16 shrink-0 grow-0 select-none items-center bg-surface px-1 [&.scroll]:bg-surfaceContainer">
     <!-- <button class="inline-block cursor-pointer rounded-full p-3 text-onSurface">
       <alwatr-icon name="menu-outline" class="h-6 w-6"></alwatr-icon>
     </button> -->
@@ -31,7 +27,7 @@ export const centerTopAppBar = (content: CenterTopAppBarContent) => html`
   </header>
 `;
 
-const endIconListTemplate = (iconList?: IconButtonContent[]) => {
+export const endIconListTemplate = (iconList?: IconButtonContent[]) => {
   return iconList?.map((icon) => {
     return iconButton(icon);
   });
