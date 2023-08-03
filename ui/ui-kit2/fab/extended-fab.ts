@@ -1,10 +1,10 @@
 import {AlwatrDirective, directive, html, nothing, type PartInfo} from '@alwatr/fract';
 
-import {alwatrIcon, AlwatrIconOptions} from '../icon/icon.js';
+import {icon, IconContent} from '../icon/icon.js';
 
 export interface AlwatrExtendedFabContent {
   label: string;
-  icon?: AlwatrIconOptions;
+  icon?: IconContent;
 }
 
 export class AlwatrFabExtendedDirective extends AlwatrDirective {
@@ -22,7 +22,7 @@ export class AlwatrFabExtendedDirective extends AlwatrDirective {
       [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
     >
     ${content.label}
-    ${content.icon ? alwatrIcon(content.icon) : nothing}
+    ${content.icon ? icon(content.icon) : nothing}
     </button> `;
   }
 }

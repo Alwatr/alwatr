@@ -1,9 +1,9 @@
 import {AlwatrDirective, classMap, directive, html, type PartInfo} from '@alwatr/fract';
 
-import {alwatrIcon, AlwatrIconOptions} from '../icon/icon.js';
+import {icon, IconContent} from '../icon/icon.js';
 
 export interface AlwatrFabContent {
-  icon: AlwatrIconOptions
+  icon: IconContent
 
   /**
    * @defaultValue 'medium'
@@ -29,7 +29,7 @@ export class AlwatrFabDirective extends AlwatrDirective {
     'h-14 w-14 rounded-2xl': content.type === 'medium',
     'h-24 w-24 rounded-[1.75rem] [&>.alwatr-icon]:w-9 [&>.alwatr-icon]:h-9': content.type === 'large'})}"
     >
-      ${alwatrIcon(content.icon)}
+      ${icon(content.icon)}
     </button> `;
   }
 }

@@ -1,14 +1,14 @@
 import {AlwatrDirective, classMap, directive, html, mapObject, noChange, when, type PartInfo} from '@alwatr/fract';
 import {l10n} from '@alwatr/i18n2';
 
-import {alwatrIcon, type AlwatrIconOptions} from '../icon/icon.js';
+import {icon, type IconContent} from '../icon/icon.js';
 
 export interface AlwatrNavigationRailContent {
   selected: string;
   itemList: Record<string, {
       label?: string;
       labelKey?: string;
-      icon: AlwatrIconOptions;
+      icon: IconContent;
       badge?: string;
     }
   >;
@@ -44,7 +44,7 @@ export class AlwatrNavigationRailDirective extends AlwatrDirective {
             [&>.alwatr-icon]:group-hover:text-onSecondaryContainer
             ${classMap({'[&>.alwatr-icon]:text-onSecondaryContainer': key === content.selected,
     'stateActive-onSecondaryContainer': key === content.selected})}"
-            >${alwatrIcon(item.icon)}</div>
+            >${icon(item.icon)}</div>
           ${when(_label, () => html`<div class="mx-2 grow group-hover:text-onSecondaryContainer
             ${classMap({'text-onSecondaryContainer': key === content.selected})}"
           >${_label}</div>`)}</li>`;
