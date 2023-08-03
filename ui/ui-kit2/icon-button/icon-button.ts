@@ -1,38 +1,10 @@
-import {AlwatrDirective, directive, html, noChange, nothing, type PartInfo} from '@alwatr/fract';
-import {AlwatrSignal} from '@alwatr/signal2';
+import {html} from '@alwatr/fract';
 
-import {alwatrIcon} from '../icon/icon.js';
+import {icon, type IconContent} from '../icon/icon.js';
 
-import type {MaybePromise, Stringifyable} from '@alwatr/type';
-
-export interface AlwatrIconButtonContent {
-  svg: MaybePromise<string>;
-  flipIconInRtl?: true;
-  clickSignalId?: string;
-  clickDetail?: Stringifyable;
+export interface IconButtonContent extends IconContent {
+  onClick(event: MouseEvent): void;
   disabled?: boolean;
 }
 
-export class AlwatrIconButtonDirective extends AlwatrDirective {
-  constructor(partInfo: PartInfo) {
-    super(partInfo, '<alwatr-icon-button>');
-  }
-
-  protected _dispatchSignal(signalName: string, signalDetail?: unknown): void {
-    const signal = new AlwatrSignal({name: signalName});
-    signal.notify(signalDetail);
-  }
-
-  render(options?: AlwatrIconButtonContent): unknown {
-    if (options == null) return noChange;
-    return html`<button
-      ?disabled=${options.disabled}
-      @click=${options.clickSignalId
-        ? this._dispatchSignal.bind(this, options.clickSignalId, options.clickDetail)
-        : nothing}>
-      ${alwatrIcon({svg: options.svg, flipIconInRtl: options.flipIconInRtl})}
-    </button>`;
-  }
-}
-
-export const alwatrIconButton = directive(AlwatrIconButtonDirective);
+export const iconButton = (content: IconButtonContent) => html`<button ?disabled=${content.disabled} @click=${content.onClick}>${icon(content)}</button>`;
