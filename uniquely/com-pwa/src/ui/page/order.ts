@@ -706,7 +706,7 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
   protected _onQtyInputChange(event: CustomEvent, orderItem: OrderItem): void {
     const target = event.target as AlwatrTextField;
     this._logger.logMethodArgs?.('_onQtyInputChange', target.value);
-    const qty = +target.value || 80;
+    const qty = +target.value || 1;
     orderItem.qty = qty;
     this.requestUpdate();
   }

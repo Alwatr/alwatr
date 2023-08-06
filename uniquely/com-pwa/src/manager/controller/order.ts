@@ -309,12 +309,13 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     signalId: 'order_item_qty_add',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
       const orderItem = event.detail;
-      if (orderItem.qty === 1) {
-        orderItem.qty = config.order.pallet.boxSize;
-      }
-      else {
-        orderItem.qty += config.order.pallet.boxSize;
-      }
+      orderItem.qty += 1;
+      // if (orderItem.qty === 1) {
+      //   orderItem.qty = config.order.pallet.boxSize;
+      // }
+      // else {
+      //   orderItem.qty += config.order.pallet.boxSize;
+      // }
       fsmInstance.transition('request_update');
     },
   },
@@ -322,7 +323,8 @@ finiteStateMachineProvider.defineSignals<OrderFsm>('order_fsm', [
     signalId: 'order_item_qty_remove',
     callback: (event: ClickSignalType<OrderItem>, fsmInstance): void => {
       const orderItem = event.detail;
-      orderItem.qty -= config.order.pallet.boxSize;
+      orderItem.qty -= 1;
+      // orderItem.qty -= config.order.pallet.boxSize;
       if (orderItem.qty < 1) orderItem.qty = 1;
       fsmInstance.transition('request_update');
     },
@@ -384,7 +386,8 @@ export function updateOrderCalculate(order: OrderDraft): void {
 
   let itemListCount = 0;
   for (const item of order.itemList) {
-    if (!item.qty) item.qty = config.order.pallet.boxSize;
+    if (!item.qty) item.qty = 1;
+    // if (!item.qty) item.qty = config.order.pallet.boxSize;
     order.subTotalMarket += item.marketPrice * item.qty;
     order.subTotalAgency += item.agencyPrice * item.qty;
     itemListCount += item.qty;
