@@ -668,15 +668,6 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
             <alwatr-icon .name=${'toman'}></alwatr-icon>
           </span>
         </div>
-        <div ?hidden=${order.ladingFee === 0}>
-          <span>${message('order_summary_lading_price').replace('${carCount}',
-      number(order.ladingFee / (config.order.lading[order.shippingInfo.carType!]?.fee ?? order.ladingFee)))}:
-          </span>
-          <span>
-            <span>${number(order.ladingFee)}</span>
-            <alwatr-icon .name=${'toman'}></alwatr-icon>
-          </span>
-        </div>
         <div ?hidden=${order.palletCost === 0}>
           <span>
             ${message('order_summary_palette_price')
