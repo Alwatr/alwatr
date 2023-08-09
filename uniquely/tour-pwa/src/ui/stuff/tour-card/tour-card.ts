@@ -1,5 +1,5 @@
 import {AlwatrDirective, directive, html, map, noChange, type PartInfo} from '@alwatr/fract';
-import {alwatrIcon} from '@alwatr/ui-kit2/icon/icon.js';
+import {icon} from '@alwatr/ui-kit2/icon/icon.js';
 
 import type {TourCardContent} from './type.js';
 
@@ -23,7 +23,7 @@ export class AlwatrTourCardDirective extends AlwatrDirective {
           <h3>${content.title}</h3>
           ${map(
       content.descriptionList,
-      (description) => html`<div class="description__item">${alwatrIcon(description.icon)}${description.text}</div>`,
+      (description) => html`<div class="description__item">${icon(description.icon)}${description.text}</div>`,
   )}
         </div>
       </div>

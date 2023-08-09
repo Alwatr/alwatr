@@ -1,47 +1,18 @@
 import {AlwatrDynamicDirective, alwatrObserve, cache, directive, html, type PartInfo} from '@alwatr/fract';
 import {router, type RouteContext} from '@alwatr/router2';
 import {alwatrNavigationBar} from '@alwatr/ui-kit2/navigation-bar/navigation-bar.js';
-import {alwatrTopAppBar} from '@alwatr/ui-kit2/top-app-bar/top-app-bar.js';
+import {alwatrNavigationDrawer} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
+import {alwatrNavigationRail} from '@alwatr/ui-kit2/navigation-rail/navigation-rail.js';
+import {centerTopAppBar, type CenterTopAppBarContent} from '@alwatr/ui-kit2/top-app-bar/center-top-app-bar.js';
 import {renderState} from '@alwatr/util';
 
-import {icons} from '../icons.js';
+import {appNavigationContext, topAppBarContext, type AppNavigationContext} from '../share/app-navigation-context.js';
 import {appLogger} from '../share/logger.js';
 
 export type PageName = 'home' | 'favorites' | 'tours' | 'call' | '_404';
 
 appLogger.logModule?.('alwatr-pwa');
 
-const menuContext = {
-  pageAction: {
-    itemList: [
-      {
-        icon: '',
-        link: '',
-        label: '',
-      },
-      {
-        icon: icons.star,
-        link: '/favorites',
-        label: 'علاقه مندی ها',
-      },
-      {
-        icon: icons.home,
-        link: '/home',
-        label: 'خانه',
-      },
-      {
-        icon: icons.triangle,
-        link: 'tours',
-        label: 'تورها',
-      },
-      {
-        icon: icons.call,
-        link: '/call',
-        label: 'تماس',
-      },
-    ],
-  },
-};
 
 export class AlwatrPwaDirective extends AlwatrDynamicDirective {
   constructor(partInfo: PartInfo) {
@@ -51,13 +22,29 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
   * render(): unknown {
     this._logger.logMethod?.('render');
 
-    yield html`${alwatrTopAppBar({
-      headline: 'Alwatr Tour PWA',
-    })}`;
+    yield this._renderTopAppBar();
+    yield this._renderNavigationRail();
+    yield this._renderNavigationDrawer();
 
-    yield html`<main class="scroll-area">${this._renderContent()}</main>`;
+    yield html`<main class="flex grow flex-wrap gap-8 p-8">${this._renderContent()}</main>`;
 
-    yield html`${alwatrNavigationBar(menuContext.pageAction)}`;
+    yield this._renderNavigationBar();
+  }
+
+  protected _renderNavigationBar(): unknown {
+    return alwatrObserve(appNavigationContext, (content: AppNavigationContext) => alwatrNavigationBar(content.navigationBar));
+  }
+
+  protected _renderNavigationDrawer(): unknown {
+    return alwatrObserve(appNavigationContext, (content: AppNavigationContext) => alwatrNavigationDrawer(content.navigationDrawer));
+  }
+
+  protected _renderNavigationRail(): unknown {
+    return alwatrObserve(appNavigationContext, (context: AppNavigationContext) => alwatrNavigationRail(context.navigationRail));
+  }
+
+  protected _renderTopAppBar(): unknown {
+    return alwatrObserve(topAppBarContext, (context: CenterTopAppBarContent) => centerTopAppBar(context));
   }
 
   protected _renderContent(): unknown {
@@ -65,13 +52,10 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
       const page = route.sectionList[0] as PageName ?? 'home';
       return cache(renderState(page, {
         favorites: () => html`favorites...`,
-        home: () => html`<alwatr-page-home></alwatr-page-home>`,
+        home: () => html`home...`,
         tours: () => html`tours...`,
         call: () => html`call...`,
-        _404: () => {
-          import('../../../tour-pwa/src/ui/page/404.js');
-          return html`<alwatr-page-404></alwatr-page-404>`;
-        },
+        _404: () => html`404...`,
         _default: '_404',
       }));
     });
