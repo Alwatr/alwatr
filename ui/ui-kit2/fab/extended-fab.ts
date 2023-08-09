@@ -2,7 +2,7 @@ import {AlwatrDirective, directive, html, nothing, type PartInfo} from '@alwatr/
 
 import {icon, IconContent} from '../icon/icon.js';
 
-export interface AlwatrExtendedFabContent {
+export interface ExtendedFabContent {
   label: string;
   icon?: IconContent;
 }
@@ -12,7 +12,7 @@ export class AlwatrFabExtendedDirective extends AlwatrDirective {
     super(partInfo, '<alwatr-extended-fab>');
   }
 
-  override render(content: AlwatrExtendedFabContent): unknown {
+  override render(content: ExtendedFabContent): unknown {
     this._logger.logMethod?.('render');
 
     return html`<button
@@ -20,10 +20,7 @@ export class AlwatrFabExtendedDirective extends AlwatrDirective {
       gap-2 rounded-2xl bg-primaryContainer px-4 text-labelLarge elevation-3
       state-onPrimaryContainer hover:elevation-4 focus:elevation-3 active:elevation-3
       [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6"
-    >
-    ${content.label}
-    ${content.icon ? icon(content.icon) : nothing}
-    </button> `;
+    >${content.label}${content.icon ? icon(content.icon) : nothing}</button> `;
   }
 }
 
