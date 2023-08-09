@@ -1,7 +1,7 @@
 import {AlwatrDirective, directive, html, mapObject, when, type PartInfo, classMap, noChange} from '@alwatr/fract';
 import {l10n} from '@alwatr/i18n2';
 
-import {alwatrIcon, AlwatrIconOptions} from '../icon/icon.js';
+import {icon, IconContent} from '../icon/icon.js';
 
 export interface AlwatrNavigationDrawerContent {
   selected: string;
@@ -9,7 +9,7 @@ export interface AlwatrNavigationDrawerContent {
   itemList: Record<string, {
       label?: string;
       labelKey?: string;
-      icon: AlwatrIconOptions;
+      icon: IconContent;
       badge?: string;
     }
   >;
@@ -50,7 +50,7 @@ export class AlwatrNavigationDrawerDirective extends AlwatrDirective {
         [&>.alwatr-icon]:mx-1 [&>.alwatr-icon]:h-6 [&>.alwatr-icon]:w-6
         ${classMap({'stateActive-onSecondaryContainer text-onSecondaryContainer': content.selected === key})}
         "
-        >${alwatrIcon(item.icon)}${when(_label, () => html`<div class="mx-2 grow">${_label}</div>`)}
+        >${icon(item.icon)}${when(_label, () => html`<div class="mx-2 grow">${_label}</div>`)}
         ${when(item.badge != null, () => html`<div class="ml-3">${item.badge}</div>`)}</li>`;
     });
 

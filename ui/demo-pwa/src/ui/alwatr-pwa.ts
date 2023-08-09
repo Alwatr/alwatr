@@ -33,27 +33,19 @@ export class AlwatrPwaDirective extends AlwatrDynamicDirective {
   }
 
   protected _renderNavigationBar(): unknown {
-    return alwatrObserve(appNavigationContext, (content: AppNavigationContext) => {
-      return cache(alwatrNavigationBar(content.navigationBar));
-    });
+    return alwatrObserve(appNavigationContext, (content: AppNavigationContext) => cache(alwatrNavigationBar(content.navigationBar)));
   }
 
   protected _renderNavigationDrawer(): unknown {
-    return alwatrObserve(appNavigationContext, (content: AppNavigationContext) => {
-      return cache(alwatrNavigationDrawer(content.navigationDrawer));
-    });
+    return alwatrObserve(appNavigationContext, (content: AppNavigationContext) => cache(alwatrNavigationDrawer(content.navigationDrawer)));
   }
 
   protected _renderNavigationRail(): unknown {
-    return alwatrObserve(appNavigationContext, (context: AppNavigationContext) => {
-      return cache(alwatrNavigationRail(context.navigationRail));
-    });
+    return alwatrObserve(appNavigationContext, (context: AppNavigationContext) => cache(alwatrNavigationRail(context.navigationRail)));
   }
 
   protected _renderTopAppBar(): unknown {
-    return alwatrObserve(topAppBarContext, (context: AlwatrTopAppBarContent) => {
-      return cache(alwatrTopAppBar(context));
-    });
+    return alwatrObserve(topAppBarContext, (context: AlwatrTopAppBarContent) => cache(alwatrTopAppBar(context)));
   }
 
   protected _renderContent(): unknown {
