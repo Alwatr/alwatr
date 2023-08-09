@@ -2,7 +2,7 @@ import {AlwatrDirective, classMap, directive, html, type PartInfo} from '@alwatr
 
 import {icon, IconContent} from '../icon/icon.js';
 
-export interface AlwatrFabContent {
+export interface FabContent {
   icon: IconContent
 
   /**
@@ -16,7 +16,7 @@ export class AlwatrFabDirective extends AlwatrDirective {
     super(partInfo, '<alwatr-fab>');
   }
 
-  override render(content: AlwatrFabContent): unknown {
+  override render(content: FabContent): unknown {
     this._logger.logMethod?.('render');
     content.type ??= 'medium';
 

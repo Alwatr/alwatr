@@ -3,7 +3,7 @@ import {l10n} from '@alwatr/i18n2';
 
 import {icon, type IconContent} from '../icon/icon.js';
 
-export interface AlwatrNavigationRailContent {
+export interface NavigationRailContent {
   selected: string;
   itemList: Record<string, {
       label?: string;
@@ -19,7 +19,7 @@ export class AlwatrNavigationRailDirective extends AlwatrDirective {
     super(partInfo, '<alwatr-navigation-rail>');
   }
 
-  render(content?: AlwatrNavigationRailContent): unknown {
+  render(content?: NavigationRailContent): unknown {
     this._logger.logMethodArgs?.('render', content);
     if (content === undefined) return noChange;
 
@@ -33,7 +33,7 @@ export class AlwatrNavigationRailDirective extends AlwatrDirective {
         ${this._renderNavItemList(content)}</nav></aside>`;
   }
 
-  protected _renderNavItemList(content: AlwatrNavigationRailContent): unknown {
+  protected _renderNavItemList(content: NavigationRailContent): unknown {
     const itemList = mapObject(content.itemList, (item, key) => {
       const _label = item.label ?? l10n.message(item.labelKey);
       return html`<li class="w-84 group mx-3 flex h-14 cursor-pointer select-none flex-col flex-nowrap items-center">
@@ -50,11 +50,7 @@ export class AlwatrNavigationRailDirective extends AlwatrDirective {
           >${_label}</div>`)}</li>`;
     });
 
-    return html`
-      <ul class="flex flex-col gap-3 text-labelLarge text-onSurfaceVariant">
-        ${itemList}
-      </ul>
-    `;
+    return html`<ul class="flex flex-col gap-3 text-labelLarge text-onSurfaceVariant">${itemList}</ul>`;
   }
 }
 
