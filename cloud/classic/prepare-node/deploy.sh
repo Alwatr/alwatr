@@ -52,17 +52,17 @@ function command_ssh() {
   command_keyscan
 
   echoStep "Setup ssh: add ssh auth keys"
-  scp ./config/ssh-auth "$remoteHost:~/.ssh/authorized_keys"
-  scp ./config/ssh-auth "$remoteHost:~/.sak"
+  $scp ./config/ssh-auth "$remoteHost:~/.ssh/authorized_keys"
+  $scp ./config/ssh-auth "$remoteHost:~/.sak"
   echoGap
 
   echoStep "Setup ssh: reconfigure openssh-server"
-  remoteShell 'rm -v /etc/ssh/ssh_host_*; dpkg-reconfigure openssh-server --default-priority'
+  remoteShell 'rm -v /etc/ssh/ssh_host_*; dpkg-reconfigure openssh-server --default-priority; systemctl restart ssh'
   command_keyscan
 
   echoStep "Setup ssh: add sshd_config"
-  scp ./config/ssh-banner $remoteHost:/etc/ssh/banner
-  scp ./config/ssh-config $remoteHost:/etc/ssh/sshd_config
+  $scp ./config/ssh-banner $remoteHost:/etc/ssh/banner
+  $scp ./config/ssh-config $remoteHost:/etc/ssh/sshd_config
 
   echoStep "Setup ssh: restart ssh and test"
 
@@ -75,7 +75,7 @@ function command_apt() {
   echoStep "Prepare debian"
 
   echoStep "Prepare debian: add apt sources.list"
-  scp ./config/apt-source-list "$remoteHost:/etc/apt/sources.list"
+  $scp ./config/apt-source-list "$remoteHost:/etc/apt/sources.list"
 
   echoStep "Prepare debian: upgrade"
 
@@ -113,7 +113,7 @@ function command_dns() {
     localPath=./config/$envName/resolv.conf
   fi
 
-  scp $localPath "$remoteHost:$remotePath"
+  $scp $localPath "$remoteHost:$remotePath"
 
   remoteShell "cat $remotePath"
 }
