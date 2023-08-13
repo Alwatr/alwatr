@@ -171,6 +171,7 @@ function command_docker() {
 
 function command_dtest() {
   echoStep "Test docker"
+
   remoteShell '
     docker --version
     docker compose version
@@ -185,13 +186,39 @@ function command_dtest() {
   '
 }
 
+function command_sysctl() {
+  echoStep "Config sysctl"
+
+  remoteShell '
+    sysctl --all
+    echo ''
+
+    if [ ! -d /etc/sysctl.d.bk ]
+    then
+      mkdir -p /etc/sysctl.d.bk
+      mv -v /etc/sysctl.d/* /etc/sysctl.d.bk/ || true
+      mv -v /etc/sysctl.conf /etc/sysctl.d.bk/ || true
+    fi
+
+    if [ -f /etc/sysctl.conf ]
+    then
+      rm -fv /etc/sysctl.conf
+    fi
+  '
+
+  $rsyncAll ./config/sysctl/ $remoteHost:/etc/sysctl.d/
+
+  remoteShell 'sysctl --system'
+}
+
 function command_full() {
   echoStep "Full setup..."
   command_ping
   command_ssh
   command_time
-  command_apt
   command_dns
+  command_sysctl
+  command_apt
   command_docker
   command_dtest
 }
@@ -213,6 +240,7 @@ function command_help() {
     time     Config time and timezone.
     docker   Install and setup docker & docker compose.
     dtest    Test docekr.
+    sysctl   Config sysctl.
     exec     Execute custome command
   "
 }
