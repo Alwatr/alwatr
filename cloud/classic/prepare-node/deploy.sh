@@ -111,6 +111,7 @@ function command_dns() {
 
   remoteShell "cat $file"
 }
+
 function command_idocker() {
   echoStep "Install Docker"
 
@@ -129,6 +130,16 @@ function command_idocker() {
   '
 }
 
+command_full() {
+  echoStep "Full setup..."
+  command_hi
+  command_info || true
+  command_keyscan
+  command_sshs
+  command_apt
+  command_dns
+  command_idocker
+}
 
 function command_help() {
   echo "
@@ -137,7 +148,7 @@ function command_help() {
   Alwatr prepare node script.
 
   Command:
-    full     Sync, Build, Create/Recreate containers.
+    full     Full setup docker.
     hi       Check server is up with ping.
     info     Get server info.
     keyscan  add server to known_hosts.
