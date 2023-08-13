@@ -64,9 +64,10 @@ function command_ssh() {
   scp ./config/ssh-banner $remoteHost:/etc/ssh/banner
   scp ./config/ssh-config $remoteHost:/etc/ssh/sshd_config
 
+  echoStep "Setup ssh: restart ssh and test"
+
   remoteShell 'systemctl restart ssh'
   sleep 1
-
   remoteShell 'cat /etc/os-release; echo ''; cat ~/.ssh/authorized_keys'
 }
 
@@ -115,11 +116,6 @@ function command_dns() {
   scp $localPath "$remoteHost:$remotePath"
 
   remoteShell "cat $remotePath"
-}
-
-function command_exec() {
-  echoStep "Exec $@"
-  remoteShell $@
 }
 
 function command_time() {
@@ -176,7 +172,7 @@ function command_dtest() {
     docker --version
     docker compose version
     echo ''
-    docker image rm hello-world
+    docker image rm hello-world || true
     echo ''
     docker pull hello-world
     echo ''
@@ -220,7 +216,11 @@ function command_full() {
   command_sysctl
   command_apt
   command_docker
-  command_dtest
+}
+
+function command_exec() {
+  echoStep "Exec $@"
+  remoteShell $@
 }
 
 function command_help() {
