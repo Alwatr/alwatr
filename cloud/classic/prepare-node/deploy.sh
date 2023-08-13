@@ -42,7 +42,7 @@ function command_info() {
 function command_keyscan() {
   echoStep "Setup ssh: update local known_hosts"
   ssh-keygen -R $deployHost &>/dev/null || true
-  ssh-keyscan -t rsa $deployHost >> ~/.ssh/known_hosts || echoError "Cannot scan $deployHost public key."
+  ssh-keyscan -t rsa $deployHost >>~/.ssh/known_hosts || echoError "Cannot scan $deployHost public key."
   echoGap
 }
 
@@ -120,6 +120,13 @@ function command_help() {
 
   Command:
     full     Sync, Build, Create/Recreate containers.
+    hi       Check server is up with ping.
+    info     Get server info.
+    keyscan  add server to known_hosts.
+    sshs     Setup ssh.
+    apt      Update source list, Upgrade, Dist update.
+    dns      Setup dns.
+    idocker  Install and setup docker & docker compose.
   "
 }
 
