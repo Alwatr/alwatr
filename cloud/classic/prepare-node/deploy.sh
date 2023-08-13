@@ -97,22 +97,19 @@ function command_apt() {
 function command_dns() {
   echoStep "Update DNS"
 
-  file=/etc/resolv.conf
-  remoteShell "if [ ! -f $file.bak ]; then cat $file; cp -av $file $file.bak; fi"
+  remotePath=/etc/resolv.conf
+  remoteShell "if [ ! -f $remotePath.bak ]; then cat $remotePath; cp -av $remotePath $remotePath.bak; fi"
+
+  localPath=/etc/resolv.conf
 
   if [ -f ./config/$envName/resolv.conf ]
   then
-    scp ./config/$envName/resolv.conf  "$remoteHost:$file"
-  else
-    scp ./config/resolv.conf  "$remoteHost:$file"
+    localPath=./config/$envName/resolv.conf
   fi
 
-  remoteShell "cat $file"
-}
+  scp $localPath "$remoteHost:$serverFile"
 
-function command_sync() {
-  echoStep "Sync..."
-  $rsync ./ "$remotePath/"
+  remoteShell "cat $file"
 }
 
 function command_help() {
@@ -123,7 +120,6 @@ function command_help() {
 
   Command:
     full     Sync, Build, Create/Recreate containers.
-    sync   Upload all files with remote host (exclude \"_data\").
   "
 }
 
@@ -134,5 +130,4 @@ remotePath="${remoteHost}:${deployPath:-/lib/setup}"
 envName=$(basename $envPath .env)
 
 sshAgent
-sync
 command_${command} $@
