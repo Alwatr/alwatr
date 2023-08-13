@@ -111,6 +111,24 @@ function command_dns() {
 
   remoteShell "cat $file"
 }
+function command_idocker() {
+  echoStep "Install Docker"
+
+  if [ ! -f /etc/apt/keyrings/docker.gpg ]; then
+    remoteShell "mkdir -p /etc/apt/keyrings"
+    remoteShell "curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg"
+  fi
+
+  scp ./config/docker-source-list "$remoteHost:/etc/apt/sources.list.d/docker.list"
+  remoteShell '
+    cat /etc/apt/sources.list.d/docker.list
+    apt update
+    apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    docker --version
+    docker compose --version
+  '
+}
+
 
 function command_help() {
   echo "
