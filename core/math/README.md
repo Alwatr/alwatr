@@ -33,15 +33,15 @@ console.log(unicodeDigits.translate(list));
 
 ### `unicodeDigits.translate(str: string): string`
 
-Convert the String of number of the source language to the destination language.
+Convert the String of a number of the source language to the destination language.
 
-- **str** is String of number of the source language.
+- **str** is a String of numbers of the source language.
 
 @TODO: update from ts files docs
 
 ### `isNumber(value: unknown): boolean`
 
-Check the value is number or can convert to a number, for example string ' 123 ' can be converted to 123.
+Check the value is a number or can convert to a number, for example, the string ' 123 ' can be converted to 123.
 
 #### Why is this needed?
 
@@ -132,7 +132,7 @@ Options:
 transformToRange(5, {in: [0, 10], out: [0, 100]}); // => 50
 ```
 
-Make percentage of any value
+Make a percentage of any value
 
 ```ts
 transformToRange(2000, {in: [0, 5000], out: [0, 100]}); // => 40
@@ -182,7 +182,7 @@ console.log(random.float(1, 10)); // somewhere between 1 and 10
 
 ### `string: (min: number, max?: number): string`
 
-Generate a random string with random length.
+Generate a random string with a random length.
 The string will contain only characters from the characters list.
 The length of the string will be between min and max (max included).
 If max not specified, the length will be set to min.
