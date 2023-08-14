@@ -17,18 +17,6 @@ command="${1:-help}"
 
 sshPort=404
 
-function command_ping() {
-  echoStep "ping $remoteHost"
-
-  if ping -c 1 '8.8.8.8' &>/dev/null; then
-    ping='ping -c'
-  else
-    ping='ping -n'
-  fi
-
-  $ping 1 $deployHost || echoError "Cannot access to $deployHost"
-}
-
 function command_info() {
   echoStep "Node info"
 
@@ -97,12 +85,12 @@ function command_apt() {
     uname -a
     apt clean
     apt update
-    apt autoremove -y
+    apt autoremove -y --purge
     apt list --upgradable
     apt upgrade -y
-    apt autoremove -y
+    apt autoremove -y --purge
     apt dist-upgrade -y
-    apt autoremove -y
+    apt autoremove -y --purge
     uname -a
   '
 
@@ -145,8 +133,8 @@ function command_docker() {
 
   echoStep "Install docker: cleanup old versions"
   remoteShell '
-    for pkg in docker.io docker-doc docker-compose podman-docker containerd runc
-      do apt remove -y $pkg
+    for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do
+      apt remove -y --purge $pkg
     done
   '
   echoStep "Install docker: sources.list"
@@ -168,7 +156,7 @@ function command_docker() {
     cat /etc/apt/sources.list.d/docker.list
     apt update
     apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-    apt autoremove -y
+    apt autoremove -y --purge
   '
 
   command_dtest
@@ -217,15 +205,35 @@ function command_sysctl() {
   sleep 1
 }
 
+function command_disk() {
+  echoStep "Configure disk"
+  remoteShell '
+    cat /sys/block/sda/queue/scheduler || true
+    echo scheduler="noop" > /etc/default/scheduler
+  '
+  command_reboot
+  command_ping
+  remoteShell 'cat /sys/block/sda/queue/scheduler' || true
+}
+
+function command_reboot() {
+  echoStep "Reboot"
+  remoteShell 'reboot' || true
+  sleep 2
+}
+
 function command_full() {
   echoStep "Full setup..."
-  command_ping
+  command_ping 1
   command_ssh
   command_time
   command_dns
   command_sysctl
+  command_disk
   command_apt
   command_docker
+  command_reboot
+  command_ping
   echoLogo
 }
 
