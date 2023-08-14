@@ -4,7 +4,7 @@
 # https://linux.die.net/man/5/sshd_config
 
 # Specifies the port number on which the SSH server listens for incoming connections. (default is `22`)
-Port 22
+Port 404
 
 # Specifies whether remote hosts are allowed to bind to ports on the SSH client machine. (default is `no`)
 GatewayPorts no
