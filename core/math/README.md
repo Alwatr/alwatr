@@ -1,6 +1,6 @@
 # Alwatr Math - `@alwatr/math`
 
-Simple useful Math library written in tiny TypeScript module.
+A straightforward and valuable mathematical library developed as a small TypeScript module.
 
 ## API
 
