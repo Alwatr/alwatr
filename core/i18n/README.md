@@ -1,3 +1,3 @@
 # Alwatr Internationalization - `@alwatr/i18n`
 
-Elegant powerful translation module (i18n/l10n) with dynamic json storage written in tiny TypeScript, ES module.
+An elegant and robust translation module (i18n/l10n) with dynamic JSON storage, developed using compact TypeScript as an ES module.
