@@ -59,7 +59,7 @@
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "autoprefixer": "^10.4.14",
     "esbuild": "^0.18.20",
-    "eslint": "^8.45.0",
+    "eslint": "^8.47.0",
     "eslint-config-google": "^0.14.0",
     "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.27.5",
