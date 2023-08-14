@@ -1,12 +1,12 @@
 # Alwatr Fetch - `@alwatr/fetch`
 
-Enhanced fetch API with cache strategy, retry pattern, timeout, helper methods and enhanced types written in tiny TypeScript, ES module.
+An enhanced fetch API with cache strategy, retry pattern, timeout, helper methods, and improved types, implemented in a compact TypeScript module, utilizing ES module system.
 
 ## Example usage
 
 ### `fetch(options: FetchOptions): Promise<Response>`
 
-It's a wrapper around the browser's `fetch` function that adds retry pattern with timeout and cacheStrategy.
+It's a wrapper around the browser's `fetch` function that adds a retry pattern with timeout and cacheStrategy.
 
 ```ts
 import {fetch} from 'https://esm.run/@alwatr/fetch';
@@ -34,19 +34,19 @@ console.log(productList);
 - `bodyJson`: Body as JS Object.
 - `queryParameters`: URL Query Parameters as JS Object.
 - `timeout`: A timeout in ms for the fetch request (default `10_000`ms).
-- `retry`: If fetch response not acceptable or timed out, it will retry the request (default `3`).
-- `retryDelay`: Delay before each retries (default `1_000`).
-- `removeDuplicate`: Simple memory caching for remove duplicate/parallel requests (default `never`).
+- `retry`: If fetch response is not acceptable or timed out, it will retry the request (default `3`).
+- `retryDelay`: Delay before each retry (default `1_000`).
+- `removeDuplicate`: Simple memory caching for removing duplicate/parallel requests (default `never`).
   - `never`: Never use memory caching.
   - `always`: Always use memory caching and remove all duplicate requests (just by method+url).
-  - `until_load`: Cache parallel requests until request completed (it will be removed after the promise resolved).
+  - `until_load`: Cache parallel requests until the request is completed (it will be removed after the promise is resolved).
   - `auto`: If CacheStorage was supported use `until_load` strategy else use `always`.
 - `cacheStrategy`: Strategies for caching (default `network_only`).
-  - `network_only`: Only network request without any cache.
-  - `network_first`: Network first, falling back to cache.
+  - `network_only`: Only network requests without any cache.
+  - `network_first`: Network first, falling back to the cache.
   - `cache_only`: Cache only without any network request.
-  - `cache_first`: Cache first, falling back to network.
-  - `stale_while_revalidate`: Fastest strategy, Use cached first but always request network to update the cache.
+  - `cache_first`: Cache first, falling back to the network.
+  - `stale_while_revalidate`: Fastest strategy, Use cached first but always request the network to update the cache.
 - `revalidateCallback`: Revalidate callback for `stale_while_revalidate` cache strategy.
 - `cacheStorageName`: Cache storage custom name (default `alwatr_fetch_cache`).
 
