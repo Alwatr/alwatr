@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-source ../lib/deploy.sh
+ALWATR_LIB=../lib
+source $ALWATR_LIB/deploy.sh

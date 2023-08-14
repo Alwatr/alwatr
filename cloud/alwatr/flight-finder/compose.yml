@@ -18,7 +18,7 @@ services:
     networks:
       internal:
         aliases:
-          - '${APP_ID}-storage-server'
+          - '${appId}-storage-server'
 
     environment:
       - STORAGE_PATH=/storage
@@ -49,7 +49,7 @@ services:
     networks:
       internal:
         aliases:
-          - '${APP_ID}-telegram-notifier'
+          - '${appId}-telegram-notifier'
 
     environment:
       - STORAGE_PATH=/storage
@@ -87,11 +87,11 @@ services:
       - telegram-notifier
 
     environment:
-      - STORAGE_HOST=${APP_ID}-storage-server
+      - STORAGE_HOST=${appId}-storage-server
       - STORAGE_PORT=80
       - STORAGE_NAME=${STORAGE_NAME}
       - STORAGE_TOKEN=${STORAGE_TOKEN}
-      - NOTIFIER_HOST=http://${APP_ID}-telegram-notifier
+      - NOTIFIER_HOST=http://${appId}-telegram-notifier
       - NOTIFIER_TOKEN=${TELEGRAM_NOTIFIER_TOKEN}
       - NOTIFIER_TO=${TELEGRAM_NOTIFIER_TO}
       - ALWATR_DEBUG=${FLIGHT_CRAWLER_DEBUG:-}
@@ -118,7 +118,7 @@ services:
       - storage-server
 
     environment:
-      - STORAGE_HOST=${APP_ID}-storage-server
+      - STORAGE_HOST=${appId}-storage-server
       - STORAGE_PORT=80
       - STORAGE_NAME=${STORAGE_NAME}
       - STORAGE_TOKEN=${STORAGE_TOKEN}

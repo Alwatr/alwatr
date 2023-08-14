@@ -47,7 +47,7 @@ services:
     networks:
       internal:
         aliases:
-          - '${APP_ID}-storage-server'
+          - '${appId}-storage-server'
 
     environment:
       - STORAGE_PATH=/storage
@@ -84,7 +84,7 @@ services:
       - storage-server
 
     environment:
-      - STORAGE_HOST=${APP_ID}-storage-server
+      - STORAGE_HOST=${appId}-storage-server
       - STORAGE_PORT=80
       - STORAGE_TOKEN=${STORAGE_TOKEN}
       - ACCESS_TOKEN=${FORM_REGISTRATION_TOKEN}

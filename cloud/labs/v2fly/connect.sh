@@ -6,4 +6,4 @@ trap "echo '❌ Error'" ERR
 thisPath="$(pwd)"
 cd $thisPath
 
-v2ray run -format=jsonv5 -c ${1:-./secret/vmess-ws-client.json}
+v2ray run -format=jsonv5 -c ${1:-./secret/pazh/c.json}

@@ -1,0 +1,115 @@
+# SSH configuration file
+# For more information, refer to the man page documentation:
+# https://man.openbsd.org/ssh_config
+# https://linux.die.net/man/5/sshd_config
+
+# Specifies the port number on which the SSH server listens for incoming connections. (default is `22`)
+Port 404
+
+# Specifies whether remote hosts are allowed to bind to ports on the SSH client machine. (default is `no`)
+GatewayPorts no
+
+# Specifies whether X11 forwarding is permitted. (default is `no`)
+X11Forwarding no
+
+# Specifies the time allowed for the user to authenticate successfully before the SSH server disconnects. (default is `120s`)
+LoginGraceTime 30s
+
+# Specifies the maximum number of authentication attempts allowed before the SSH server disconnects. (default is `6`)
+MaxAuthTries 2
+
+# Specifies the encryption ciphers in order of preference for SSH connections.
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+# Specifies the Message Authentication Codes (MACs) in order of preference for SSH connections.
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+
+# Specifies the key exchange algorithms in order of preference for SSH connections.
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+
+# Configures the SFTP (Secure File Transfer Protocol) subsystem.
+Subsystem sftp internal-sftp
+
+# Specifies whether root login via SSH is allowed. Disabling root login enhances security by forcing users to log in with non-root accounts. (default is `prohibit-password`)
+PermitRootLogin without-password
+
+# Specifies whether TCP forwarding is permitted. (default is `yes`)
+AllowTcpForwarding yes
+
+# Specifies the SSH protocol version to use. Version 2 is more secure than version 1 and is the recommended choice. (default is `2`)
+Protocol 2
+
+# Specifies whether host-based authentication is permitted. (default is `no`)
+HostbasedAuthentication no
+
+# Specifies whether data compression is enabled for SSH connections. (default is `no`)
+Compression delayed
+
+# Specifies whether rhosts files are ignored for authentication. (default is `yes`)
+IgnoreRhosts yes
+
+# Specifies whether empty passwords are allowed for authentication. (default is `no`)
+PermitEmptyPasswords no
+
+# Specifies whether password authentication is allowed. Disabling password authentication improves security by relying on more secure authentication methods such as public key authentication. (default is `yes`)
+PasswordAuthentication no
+
+# Specifies whether DNS resolution is used for SSH connections. (default is `yes`)
+UseDNS no
+
+# Specifies whether public key authentication is allowed. Public key authentication is a more secure method of authentication compared to passwords. (default is `yes`)
+PubkeyAuthentication yes
+
+TCPKeepAlive yes
+
+# Specifies the time interval in seconds after which the SSH server will send a null packet to the client to keep the connection alive. (in seconds) (default is `0`)
+ClientAliveInterval 600
+
+# Specifies the maximum number of client alive messages that can be sent without any response before the SSH server disconnects the client. (default is `3`)
+ClientAliveCountMax 0
+
+# Specifies the path to the SSH banner file, which is displayed before the SSH login prompt. (default is `none`)
+Banner /etc/ssh/banner
+
+# Specifies the file(s) containing public keys for authentication. (default is `.ssh/authorized_keys .ssh/authorized_keys2`)
+AuthorizedKeysFile .sak
+
+# Specifies a list of users who are allowed to log in via SSH. Uncomment and replace "some_user" with the desired usernames.
+# AllowUsers
+
+# Specifies a list of users who are denied access via SSH. Uncomment and replace "some_user" with the desired usernames. (default is `none`)
+# DenyUsers
+
+# Specifies the facility to be used for logging SSH events. (default is `AUTH`)
+# Available facilities: AUTH, AUTHPRIV, DAEMON, USER, LOCAL0, LOCAL1, LOCAL2, LOCAL3, LOCAL4, LOCAL5, LOCAL6, LOCAL7
+SyslogFacility AUTH
+
+# Specifies the verbosity level for logging SSH events. (default is `INFO`)
+# Available levels: QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3
+LogLevel INFO
+
+# Specifies the key types accepted for public key authentication.
+# PubkeyAcceptedKeyTypes ssh-ed25519,ecdsa-sha2-nistp256,ssh-rsa
+
+# # Specifies a conditional block for matching specific criteria related to the SSH key.
+# Match Key key-01@openssh.com KeyBits >=2048
+#     # Specifies the key types accepted for public key authentication within the Match block.
+#     PubkeyAcceptedKeyTypes ssh-rsa
+
+# Set this to 'yes' to enable PAM authentication, account processing,
+# and session processing. If this is enabled, PAM authentication will
+# be allowed through the KbdInteractiveAuthentication and
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication via KbdInteractiveAuthentication may bypass
+# the setting of "PermitRootLogin without-password".
+# If you just want the PAM account and session checks to run without
+# PAM authentication, then enable this but set PasswordAuthentication
+# and KbdInteractiveAuthentication to 'no'.
+UsePAM yes
+
+AllowAgentForwarding yes
+
+PrintMotd no
+
+PidFile /var/run/sshd.pid
+
