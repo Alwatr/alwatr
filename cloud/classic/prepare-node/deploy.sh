@@ -15,6 +15,8 @@ envPath="${1:-}"
 command="${1:-help}"
 [ ! -z "${1:-}" ] && shift
 
+sshPort=404
+
 function command_ping() {
   echoStep "ping $remoteHost"
 
@@ -41,19 +43,26 @@ function command_info() {
 
 function command_keyscan() {
   echoStep "Setup ssh: update local known_hosts"
-  ssh-keygen -R $deployHost &>/dev/null || true
-  ssh-keyscan -t rsa $deployHost >>~/.ssh/known_hosts || echoError "Cannot scan $deployHost public key."
+  sshKeyCleanup $deployHost
   echoGap
 }
 
 function command_ssh() {
   echoStep "Setup openssh"
 
-  command_keyscan
+  echoStep "Setup ssh: change port"
+  local oldSshPort=$sshPort
+  sshPort=22
+  sshKeyCleanup $deployHost
+  remoteShell 'echo "Port 404" >> /etc/ssh/sshd_config; systemctl restart ssh' || true
+  echoGap
+
+  sshPort=$oldSshPort
+  sshKeyCleanup $deployHost
 
   echoStep "Setup ssh: add ssh auth keys"
-  $scp ./config/ssh-auth "$remoteHost:~/.ssh/authorized_keys"
-  $scp ./config/ssh-auth "$remoteHost:~/.sak"
+  scopy ./config/ssh-auth "$remoteHost:~/.ssh/authorized_keys"
+  scopy ./config/ssh-auth "$remoteHost:~/.sak"
   echoGap
 
   echoStep "Setup ssh: reconfigure openssh-server"
@@ -61,8 +70,8 @@ function command_ssh() {
   command_keyscan
 
   echoStep "Setup ssh: add sshd_config"
-  $scp ./config/ssh-banner $remoteHost:/etc/ssh/banner
-  $scp ./config/ssh-config $remoteHost:/etc/ssh/sshd_config
+  scopy ./config/ssh-banner $remoteHost:/etc/ssh/banner
+  scopy ./config/ssh-config $remoteHost:/etc/ssh/sshd_config
 
   echoStep "Setup ssh: restart ssh and test"
 
@@ -75,7 +84,7 @@ function command_apt() {
   echoStep "Prepare debian"
 
   echoStep "Prepare debian: add apt sources.list"
-  $scp ./config/apt-source-list "$remoteHost:/etc/apt/sources.list"
+  scopy ./config/apt-source-list "$remoteHost:/etc/apt/sources.list"
 
   echoStep "Prepare debian: upgrade"
 
@@ -113,7 +122,7 @@ function command_dns() {
     localPath=./config/$envName/resolv.conf
   fi
 
-  $scp $localPath "$remoteHost:$remotePath"
+  scopy $localPath "$remoteHost:$remotePath"
 
   remoteShell "cat $remotePath"
 }
@@ -202,9 +211,10 @@ function command_sysctl() {
     fi
   '
 
-  $rsyncAll ./config/sysctl/ $remoteHost:/etc/sysctl.d/
+  rcopy ./config/sysctl/ $remoteHost:/etc/sysctl.d/
 
-  remoteShell 'sysctl --system'
+  remoteShell 'sysctl --system' || true
+  sleep 1
 }
 
 function command_full() {
@@ -216,11 +226,17 @@ function command_full() {
   command_sysctl
   command_apt
   command_docker
+  echoLogo
 }
 
 function command_exec() {
   echoStep "Exec $@"
   remoteShell $@
+}
+
+function command_sh() {
+  echoStep "Remote shell"
+  ssh -o ConnectTimeout=2 -o ConnectionAttempts=1  -p ${sshPort:-22} -t $remoteHost
 }
 
 function command_help() {
@@ -241,9 +257,12 @@ function command_help() {
     docker   Install and setup docker & docker compose.
     dtest    Test docekr.
     sysctl   Config sysctl.
-    exec     Execute custome command
+    exec     Execute custome command.
+    sh       Access remote shell.
   "
 }
+
+echoLogo
 
 loadEnv
 
