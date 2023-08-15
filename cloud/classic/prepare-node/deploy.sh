@@ -49,8 +49,9 @@ function command_ssh() {
   sshKeyCleanup $deployHost
 
   echoStep "Setup ssh: add ssh auth keys"
-  scopy ./config/ssh-auth "$remoteHost:~/.ssh/authorized_keys"
-  scopy ./config/ssh-auth "$remoteHost:~/.sak"
+  copyConfigFile ssh-auth ~/.sak
+  copyConfigFile ssh-auth ~/.ssh/authorized_keys
+
   echoGap
 
   echoStep "Setup ssh: reconfigure openssh-server"
@@ -58,21 +59,21 @@ function command_ssh() {
   command_keyscan
 
   echoStep "Setup ssh: add sshd_config"
-  scopy ./config/ssh-banner $remoteHost:/etc/ssh/banner
-  scopy ./config/ssh-config $remoteHost:/etc/ssh/sshd_config
+  copyConfigFile ssh-banner /etc/ssh/banner
+  copyConfigFile ssh-config /etc/ssh/sshd_config
 
   echoStep "Setup ssh: restart ssh and test"
 
   remoteShell 'systemctl restart ssh'
   sleep 1
-  remoteShell 'cat /etc/os-release; echo ''; cat ~/.ssh/authorized_keys'
+  remoteShell "echo 'SSH OK ;)'"
 }
 
 function command_apt() {
   echoStep "Prepare debian"
 
   echoStep "Prepare debian: add apt sources.list"
-  scopy ./config/apt-source-list "$remoteHost:/etc/apt/sources.list"
+  copyConfigFile apt-source-list /etc/apt/sources.list
 
   echoStep "Prepare debian: upgrade"
 
@@ -100,19 +101,7 @@ function command_apt() {
 function command_dns() {
   echoStep "Update DNS"
 
-  remotePath=/etc/resolv.conf
-  remoteShell "if [ ! -f $remotePath.bak ]; then cat $remotePath; cp -av $remotePath $remotePath.bak; fi"
-
-  localPath=./config/resolv.conf
-
-  if [ -f ./config/$envName/resolv.conf ]
-  then
-    localPath=./config/$envName/resolv.conf
-  fi
-
-  scopy $localPath "$remoteHost:$remotePath"
-
-  remoteShell "cat $remotePath"
+  copyConfigFile resolv.conf /etc/resolv.conf
 }
 
 function command_time() {
@@ -200,8 +189,11 @@ function command_sysctl() {
   '
 
   rcopy ./config/sysctl/ $remoteHost:/etc/sysctl.d/
+  # if [ -d "./config/$envName/sysctl" ]; then
+  #   rcopy "./config/$envName/sysctl/" $remoteHost:/etc/sysctl.d/
+  # fi
 
-  remoteShell 'sysctl --system' || true
+  remoteShell 'sysctl --system' || remoteShell 'sysctl --system'
   sleep 1
 }
 
