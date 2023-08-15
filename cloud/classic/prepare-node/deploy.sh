@@ -42,7 +42,7 @@ function command_ssh() {
   local oldSshPort=$sshPort
   sshPort=22
   sshKeyCleanup $deployHost
-  remoteShell 'echo "Port 404" >> /etc/ssh/sshd_config; systemctl restart ssh' || true
+  remoteShell 'echo "Port 404" >> /etc/ssh/sshd_config; systemctl restart ssh && echo "ssh restarted"' || true
   echoGap
 
   sshPort=$oldSshPort
@@ -56,7 +56,7 @@ function command_ssh() {
 
   echoStep "Setup ssh: reconfigure openssh-server"
   remoteShell 'rm -v /etc/ssh/ssh_host_*; dpkg-reconfigure openssh-server --default-priority; systemctl restart ssh'
-  command_keyscan
+  sshKeyCleanup $deployHost
 
   echoStep "Setup ssh: add sshd_config"
   copyConfigFile ssh-banner /etc/ssh/banner
