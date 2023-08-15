@@ -1,6 +1,6 @@
 # Alwatr Router - `@alwatr/router`
 
-Elegant powerful router (fundamental advance browser page routing) based on the simplicity of the signals written in tiny TypeScript module.
+An elegant and powerful router (fundamentally advancing browser page routing) based on the simplicity of signals, crafted within a small TypeScript module.
 
 ## Example usage
 
@@ -76,11 +76,11 @@ render() {
 router.signal.addListener(() => this.requestUpdate());
 ```
 
-### Make link from semantic route
+### Make a link from the semantic route
 
 `router.makeUrl(route)`
 
-Make anchor valid href from route.
+Make anchor valid href from the route.
 
 ```html
 <a href=${ router.makeUrl({sectionList: ['product', 100]}) }>
