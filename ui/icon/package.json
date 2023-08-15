@@ -20,6 +20,16 @@
   "files": [
     "**/*.{d.ts.map,d.ts,js.map,js,html,md,svg}"
   ],
+  "exports": {
+    ".": {
+      "default": "./icon.js",
+      "types": "./icon.d.ts"
+    },
+    "./svg/*.svg": {
+      "default": "./svg/*.svg",
+      "types": "./svg.d.ts"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -36,6 +46,6 @@
     "@alwatr/element": "^1.0.0",
     "@alwatr/fetch": "^1.0.0",
     "@alwatr/logger": "^1.0.0",
-    "tslib": "^2.5.3"
+    "tslib": "^2.6.1"
   }
 }

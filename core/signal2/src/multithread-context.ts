@@ -2,11 +2,11 @@ import {createLogger} from '@alwatr/logger';
 
 import {AlwatrContextSignal} from './context.js';
 
-type AlwatrContextChangedMessage = {
+interface AlwatrContextChangedMessage {
   type: 'alwatr_context_changed';
   name: string;
   payload: unknown;
-};
+}
 
 /**
  * Alwatr multithread context signal.
@@ -29,7 +29,7 @@ export class AlwatrMultithreadContextSignal<TValue> extends AlwatrContextSignal<
     if (context === undefined) {
       throw new Error('context_not_define', {cause: 'context not define in this thread yet!'});
     }
-    context._dispatch(message.payload);
+    context._notify(message.payload);
   }
 
   static _postMessage(name: string, payload: unknown): void {
@@ -37,11 +37,11 @@ export class AlwatrMultithreadContextSignal<TValue> extends AlwatrContextSignal<
     if (AlwatrMultithreadContextSignal._worker === undefined) {
       throw new Error('worker_not_defined', {cause: 'setupChannel must be called before any setValue.'});
     }
-    AlwatrMultithreadContextSignal._worker.postMessage(<AlwatrContextChangedMessage>{
+    AlwatrMultithreadContextSignal._worker.postMessage({
       type: 'alwatr_context_changed',
       name,
       payload,
-    });
+    } as AlwatrContextChangedMessage);
   }
 
   constructor(config: {name: string, loggerPrefix?: string}) {

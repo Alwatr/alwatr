@@ -19,6 +19,7 @@
   "cSpell.words": [
     "alimd",
     "alwatr",
+    "bottomness",
     "calt",
     "chatbox",
     "checkmark",
@@ -46,7 +47,9 @@
     "securage",
     "Stringifyable",
     "Superfast",
+    "tailwindcss",
     "tnum",
+    "topness",
     "tsbuildinfo",
     "typescale",
     "vazirmatn",
@@ -55,5 +58,9 @@
     "xsmall",
     "zindex"
   ],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "main",
+    "next"
+  ]
 }

@@ -4,7 +4,13 @@
   "extends": "./tsconfig.base",
   "compilerOptions": {
     "composite": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "plugins": [
+      {
+        "name": "ts-lit-plugin",
+        "strict": true
+      }
+    ],
   },
   "files": [],
   "exclude": [],
@@ -35,9 +41,10 @@
     // ui
     {"path": "./ui/element"},
     {"path": "./ui/icon"},
-    {"path": "./ui/icon2"},
     {"path": "./ui/ui-kit"},
+    {"path": "./ui/ui-kit2"},
     {"path": "./ui/pwa-helper"},
+    {"path": "./ui/style"},
 
     // demo
     {"path": "./demo"},

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa-IR" dir="rtl" class="h-full w-full [overscroll-behavior:none]">
 <head>
   <base href="/" />
 
@@ -13,8 +13,14 @@
   <meta charset="utf-8" />
   <title>Alwatr UI Demo</title>
 
-  <link rel="stylesheet" href="alwatr-pwa.css" />
-  <script type="module" src="alwatr-pwa.js"></script>
+  <link rel="preload" as="style" href="main.css" fetchpriority="high" />
+  <link rel="preload" as="script" href="main.js" fetchpriority="high" crossorigin />
+  <link
+    media="print"
+    rel="stylesheet"
+    href="main.css"
+    onload="this.media='all';this.onload=null;"
+  />
 
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#673ab7" />
@@ -25,7 +31,7 @@
   />
 
   <link rel="shortcut icon" href="image/favicon.ico" />
-  <link rel="manifest" href="manifest.json" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <!-- Add to home screen for Chrome on Android. Fallback for manifest.json -->
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="application-name" content="Alwatr PWA Starter" />
@@ -61,14 +67,41 @@
   <meta name="og:description" content="Alwatr Progressive Web Application Demo." />
 
   <link rel="canonical" href="https://demo.alwatr.ir" />
+
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    #alwatr_pwa[unresolved] {
+      text-align: center;
+      padding-top: 32px;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 400px;
+    }
+
+    #alwatr_pwa:not([unresolved]) {
+      /* Wait until css load */
+      display: none;
+    }
+  </style>
 </head>
-<body>
-  <alwatr-pwa unresolved>
-    Loading...
-  </alwatr-pwa>
+<body
+  class="h-full w-full max-w-full max-h-full m-0 p-0 overflow-clip transform-gpu break-words touch-pan-x touch-pan-y touch-pinch-zoom bg-background font-vazirmatn text-onBackground text-bodyMedium [contain:size_layout_paint_style] [overscroll-behavior:none]"
+>
+  <div
+    id="alwatr_pwa"
+    unresolved
+    class="!flex h-full w-full max-w-full max-h-full flex-col flex-nowrap items-stretch overflow-clip [contain:size_layout_paint_style] medium:ps-20 extended:ps-[22.5rem]"
+  >
+    درحال بارگذاری...
+  </div>
+  <script type="module" src="main.js"></script>
   <noscript>
-    <div class="noscript">
-      <p dir="ltr">Please enable JavaScript to view this website.</p>
+    <div class="text-titleLarge text-center px-8 py-20">
+      <p dir="ltr" class="mb-4">Please enable JavaScript to view this website.</p>
       <p dir="rtl">لطفا JavaScript را برای مشاهده این وب سایت فعال کنید.</p>
     </div>
   </noscript>

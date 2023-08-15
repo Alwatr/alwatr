@@ -1,2 +1,2 @@
-ARG NOCODB_VERSION=0.109.1
-FROM docker.io/nocodb/nocodb:${NOCODB_VERSION}
+ARG NOCODB_IMAGE=docker.io/nocodb/nocodb:0.109.2
+FROM $NOCODB_IMAGE

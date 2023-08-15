@@ -1,3 +1,3 @@
-ARG PHP_VERSION=7.4
-ARG WORDPRESS_VERSION=6.2
-FROM docker.io/wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}-fpm
+# latest version support php 7 is 6.1
+ARG WORDPRESS_IMAGE=docker.io/wordpress:6.1-php7.4-fpm
+FROM $WORDPRESS_IMAGE

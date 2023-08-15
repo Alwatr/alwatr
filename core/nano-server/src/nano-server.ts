@@ -168,7 +168,7 @@ export class AlwatrNanoServer {
       throw new Error('route_already_exists');
     }
 
-    this.middlewareList[method][route] = <RouteMiddleware>middleware;
+    this.middlewareList[method][route] = middleware as RouteMiddleware;
   }
 
   /**
@@ -334,7 +334,7 @@ export class AlwatrNanoServer {
     }
     catch (errorObject) {
       if (typeof errorObject === 'object' && errorObject != null && 'ok' in errorObject) {
-        this.reply(serverResponse, <AlwatrServiceResponse<StringifyableRecord, StringifyableRecord>>errorObject);
+        this.reply(serverResponse, errorObject as AlwatrServiceResponse<StringifyableRecord, StringifyableRecord>);
       }
       else {
         const err = errorObject as Error;
@@ -350,7 +350,7 @@ export class AlwatrNanoServer {
           meta: {
             name: err?.name,
             message: err?.message,
-            cause: <StringifyableRecord>err?.cause,
+            cause: err?.cause as StringifyableRecord,
           },
         });
       }
@@ -498,7 +498,7 @@ export class AlwatrConnection {
    * if (token == null) return;
    * ```
    */
-  requireToken(validator?: ((token: string) => boolean) | Array<string> | string): string {
+  requireToken(validator?: ((token: string) => boolean) | string[] | string): string {
     const token = this.getAuthBearer();
 
     if (token == null) {

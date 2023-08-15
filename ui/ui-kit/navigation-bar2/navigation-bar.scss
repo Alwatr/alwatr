@@ -1,0 +1,23 @@
+.navigation-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: calc(var(--sys-spacing-track) / 2);
+  padding: calc(1.5 * var(--sys-spacing-track)) 0 calc(2 * var(--sys-spacing-track)) 0;
+  color: var(--sys-color-on-surface-variant);
+  user-select: none;
+
+  & a {
+    display: block;
+    height: 100%;
+    flex-grow: 1;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .alwatr-icon {
+    padding: calc(var(--sys-spacing-track) / 2) calc(2.5 * var(--sys-spacing-track));
+    font-size: calc(3 * var(--sys-spacing-track));
+  }
+}

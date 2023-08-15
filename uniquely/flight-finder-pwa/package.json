@@ -10,7 +10,7 @@
     "npm": ">=8.0.0",
     "yarn": ">=1.22.0"
   },
-  "browserslist": "> 0.1%, not dead",
+  "browserslist": "> 1.5%, not dead",
   "repository": {
     "type": "git",
     "url": "https://github.com/AliMD/alwatr",
@@ -29,22 +29,5 @@
     "serve": "wds",
     "watch": "run-s clean build:ts && run-p watch:ts serve",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput"
-  },
-  "devDependencies": {
-    "@alwatr/element": "^1.0.0",
-    "@alwatr/fetch": "^1.0.0",
-    "@alwatr/i18n": "^1.0.0",
-    "@alwatr/icon": "^1.0.0",
-    "@alwatr/logger": "^1.0.0",
-    "@alwatr/router": "^1.0.0",
-    "@alwatr/signal": "^1.0.0",
-    "@alwatr/type": "^1.0.0",
-    "@web/dev-server": "^0.2.3",
-    "@webcomponents/webcomponentsjs": "^2.8.0",
-    "lit-analyzer": "^1.2.1",
-    "npm-run-all": "^4.1.5",
-    "ts-lit-plugin": "^1.2.1",
-    "tslib": "^2.5.3",
-    "typescript": "^5.1.3"
   }
 }

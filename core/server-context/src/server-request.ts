@@ -2,7 +2,6 @@ import {fetch} from '@alwatr/fetch';
 import {ActionRecord, FiniteStateMachineBase, StateRecord} from '@alwatr/fsm2';
 
 import type {FetchOptions} from '@alwatr/fetch/type.js';
-import type {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
 
 export interface ServerRequestConfig extends Partial<FetchOptions> {
   name: string;
@@ -18,7 +17,7 @@ export abstract class AlwatrServerRequestBase<
   protected _$fetchOptions?: FetchOptions;
   protected _response?: Response;
 
-  protected override _stateRecord = <StateRecord<ServerRequestState | ExtraState, ServerRequestEvent | ExtraEvent>>{
+  protected override _stateRecord = {
     initial: {
       request: 'loading',
     },
@@ -32,11 +31,11 @@ export abstract class AlwatrServerRequestBase<
     complete: {
       request: 'loading',
     },
-  };
+  } as StateRecord<ServerRequestState | ExtraState, ServerRequestEvent | ExtraEvent>;
 
-  protected override _actionRecord = <ActionRecord<ServerRequestState | ExtraState, ServerRequestEvent | ExtraEvent>>{
+  protected override _actionRecord = {
     _on_loading_enter: this._$requestAction,
-  };
+  } as ActionRecord<ServerRequestState | ExtraState, ServerRequestEvent | ExtraEvent>;
 
   constructor(protected _config: ServerRequestConfig) {
     super({name: _config.name, initialState: 'initial'});
@@ -114,20 +113,6 @@ export class AlwatrServerRequest extends AlwatrServerRequestBase {
 
   request(options?: Partial<FetchOptions>): void {
     return this._request(options);
-  }
-
-  /**
-   * Subscribe to state changes.
-   */
-  subscribe(listenerCallback: ListenerCallback<this, ServerRequestState>, options?: SubscribeOptions): SubscribeResult {
-    return this._subscribe(listenerCallback, options);
-  }
-
-  /**
-   * Unsubscribe from changes.
-   */
-  unsubscribe(listenerCallback: ListenerCallback<this, ServerRequestState>): void {
-    return this._unsubscribe(listenerCallback);
   }
 
   cleanup(): void {

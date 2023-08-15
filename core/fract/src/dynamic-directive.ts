@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-import {PartType, type PartInfo, AsyncDirective, Part} from './lit.js';
+import {PartType, type PartInfo, AsyncDirective, Part} from './lit-html.js';
 
 export abstract class AlwatrDynamicDirective extends AsyncDirective {
   protected _logger;
@@ -16,7 +16,7 @@ export abstract class AlwatrDynamicDirective extends AsyncDirective {
     super.setValue(value);
   }
 
-  override update(_part: Part, props: Array<unknown>): unknown {
+  override update(_part: Part, props: unknown[]): unknown {
     this._logger.logMethodArgs?.('update', props);
     return this.render(...props);
   }

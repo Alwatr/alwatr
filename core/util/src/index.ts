@@ -7,3 +7,5 @@ export * from './flat-str.js';
 export * from './string.js';
 export * from './render-state.js';
 export * from './userAgent.js';
+export * from './default-export.js';
+

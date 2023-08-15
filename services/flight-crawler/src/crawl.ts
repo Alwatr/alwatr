@@ -13,9 +13,9 @@ export async function crawlAllJobs(): Promise<void> {
   const jobKeyList = Object.keys(jobList);
   let updated = false;
 
-  for (let i = 0; i < jobKeyList.length; i++) {
+  for (const jobKey of jobKeyList) {
     try {
-      const job = jobList[jobKeyList[i]];
+      const job = jobList[jobKey];
       const oldResultList = job.resultList;
       const resultList = await crawl(job.detail);
       job.resultList = resultList;
@@ -38,7 +38,7 @@ export async function crawlAllJobs(): Promise<void> {
   if (updated === false) await storageClient.set(jobList[jobKeyList[jobKeyList.length - 1]]);
 }
 
-async function crawl(detail: JobDetail): Promise<Array<JobResult>> {
+async function crawl(detail: JobDetail): Promise<JobResult[]> {
   logger.logMethodArgs?.('crawl', detail);
   const fetchOption = makeRequestOption(detail);
   const response = await makeRequest(fetchOption);
@@ -86,11 +86,11 @@ async function makeRequest(option: Partial<FetchOptions> & {url: string}): Promi
   return response;
 }
 
-async function translateResponse(response: Response): Promise<Array<JobResult>> {
+async function translateResponse(response: Response): Promise<JobResult[]> {
   logger.logMethod?.('translateResponse');
   const responseJson = (await response.json()) as SepehrResponse;
 
-  const jobResult: Array<JobResult> = [];
+  const jobResult: JobResult[] = [];
   for (const flightInformation of responseJson.flightHeaderList) {
     jobResult.push({
       price: +(flightInformation.formattedPrice as string).replaceAll(',', ''),
@@ -122,9 +122,9 @@ async function translateResponse(response: Response): Promise<Array<JobResult>> 
   return jobResult;
 }
 
-function extraFilterResult(jobResultList: Array<JobResult>, detail: JobDetail): Array<JobResult> {
+function extraFilterResult(jobResultList: JobResult[], detail: JobDetail): JobResult[] {
   logger.logMethod?.('extraFilterResult');
-  let filteredJobResultList: Array<JobResult> = jobResultList;
+  let filteredJobResultList: JobResult[] = jobResultList;
 
   if (detail.maxPrice != null) {
     const maxPrice = detail.maxPrice;

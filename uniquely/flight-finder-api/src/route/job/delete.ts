@@ -41,7 +41,7 @@ async function deleteJob(
         meta: {
           name: err.name,
           message: err.message,
-          cause: <StringifyableRecord>err.cause,
+          cause: err.cause as StringifyableRecord,
         },
       };
     }

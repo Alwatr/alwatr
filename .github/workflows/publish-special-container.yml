@@ -89,28 +89,42 @@ jobs:
             description: Clone of Nocodb.
             version:
               short: 0.109
-              full: 0.109.1
+              full: 0.109.2
 
           - image: php
-            path: cloud/container/php
-            description: Clone of PHP.
+            path: cloud/container/php/7.4-apache
+            description: Clone of PHP Apache.
             version:
-              short: 8
-              full: 8.1-apache
+              short: 7-apache
+              full: 7.4-apache
+
+          - image: php
+            path: cloud/container/php/7.4-fpm
+            description: Clone of PHP FPM.
+            version:
+              short: 7-fpm
+              full: 7.4-fpm
+
+          - image: php
+            path: cloud/container/php/8.2-fpm
+            description: Clone of PHP FPM.
+            version:
+              short: 8-fpm
+              full: 8.2-fpm
 
           - image: wordpress
             path: cloud/container/wordpress/php7.4
             description: Clone of Wordpress.
             version:
               short: 6-php7
-              full: 6.2-php7.4-fpm
+              full: 6.1-php7.4-fpm # latest version support php 7.4 is 6.1
 
           - image: wordpress
-            path: cloud/container/wordpress/php8.1
+            path: cloud/container/wordpress/php8.2
             description: Clone of Wordpress.
             version:
               short: 6
-              full: 6.2-php8.1-fpm
+              full: 6.2-php8.2-fpm
 
           # - image: tdlib
           #   path: cloud/container/tdlib
@@ -154,10 +168,10 @@ jobs:
 
       - name: 🏗 Install cosign
         if: ${{ github.event_name != 'pull_request' }}
-        uses: sigstore/cosign-installer@v3.0.5
+        uses: sigstore/cosign-installer@v3.1.1
 
       - name: 🏗 Setup Docker Buildx
-        uses: docker/setup-buildx-action@v2.7.0
+        uses: docker/setup-buildx-action@v2.9.1
 
       - name: 🏗 Log into registry ${{env.REGISTRY}}
         if: ${{ github.event_name != 'pull_request' }}

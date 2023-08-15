@@ -484,7 +484,7 @@ export class AlwatrPageOrder extends UnresolvedMixin(LocalizeMixin(SignalMixin(A
   }
 
   protected _render_itemList(
-      itemList: Array<OrderItem>,
+      itemList: OrderItem[],
       productStorage: AlwatrDocumentStorage<Product> | null | undefined,
       editable = false,
   ): unknown {
