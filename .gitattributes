@@ -1,5 +1,5 @@
 cloud/classic/lib/* filter=crypt diff=crypt merge=crypt
-alwatr_rsa filter=crypt diff=crypt merge=crypt
+ssh-* filter=crypt diff=crypt merge=crypt
 **/secret/** filter=crypt diff=crypt merge=crypt
 *.env filter=crypt diff=crypt merge=crypt
 *.http filter=crypt diff=crypt merge=crypt
