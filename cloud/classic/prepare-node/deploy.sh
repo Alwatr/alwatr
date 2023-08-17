@@ -61,6 +61,8 @@ function command_ssh() {
   echoStep "Setup ssh: add sshd_config"
   copyConfigFile ssh-banner /etc/ssh/banner
   copyConfigFile ssh-config /etc/ssh/sshd_config
+  copyConfigFile ssh-rsa "~/.ssh/id_rsa"
+  copyConfigFile ssh-rsa.pub "~/.ssh/id_rsa.pub"
 
   echoStep "Setup ssh: restart ssh and test"
 
