@@ -58,6 +58,7 @@ RUN set -ex; \
     cd /tmp/ioncube; \
     curl -sSLO http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz; \
     tar xzf ioncube_loaders_lin_x86-64.tar.gz; \
+    ls -lah ioncube/; \
     mv ioncube/ioncube_loader_lin_${PHP_VERSION}.so "$PHP_EXT_DIR/ioncube.so"; \
     echo "zend_extension=ioncube.so" > $PHP_INI_DIR/conf.d/16-ioncube.ini; \
     rm -rf /tmp/ioncube; \
