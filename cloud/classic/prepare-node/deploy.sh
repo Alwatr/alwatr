@@ -49,8 +49,8 @@ function command_ssh() {
   sshKeyCleanup $deployHost
 
   echoStep "Setup ssh: add ssh auth keys"
+  copyConfigFile ssh-auth '~/.ssh/authorized_keys' silent
   copyConfigFile ssh-auth '~/.sak'
-  copyConfigFile ssh-auth '~/.ssh/authorized_keys'
 
   echoGap
 
