@@ -49,8 +49,8 @@ function command_ssh() {
   sshKeyCleanup $deployHost
 
   echoStep "Setup ssh: add ssh auth keys"
+  scopy ./config/ssh-auth "$remoteHost:~/.ssh/authorized_keys"
   copyConfigFile ssh-auth '~/.sak'
-  copyConfigFile ssh-auth '~/.ssh/authorized_keys'
 
   echoGap
 
@@ -61,6 +61,8 @@ function command_ssh() {
   echoStep "Setup ssh: add sshd_config"
   copyConfigFile ssh-banner /etc/ssh/banner
   copyConfigFile ssh-config /etc/ssh/sshd_config
+  copyConfigFile ssh-rsa "~/.ssh/id_rsa"
+  copyConfigFile ssh-rsa.pub "~/.ssh/id_rsa.pub"
 
   echoStep "Setup ssh: restart ssh and test"
 

@@ -6,11 +6,6 @@ on:
   workflow_dispatch:
 
   push:
-    paths:
-      - 'cloud/container/**'
-      - '.github/workflows/publish-special-container.yml'
-    tags:
-      - 'v*.*.*'
     branches:
       - next
       - main
