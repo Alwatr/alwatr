@@ -29,7 +29,7 @@ export async function incrementCount(): Promise<number> {
   let count;
   count = await storageClient.get('count');
   if (count == null) {
-    count = <Count>{id: 'count', value: 0};
+    count = {id: 'count', value: 0} as Count;
   }
   count.value++;
   await storageClient.set(count);

@@ -21,7 +21,7 @@ if (crawlProductLinkSelectorList?.length !== crawlSearchUrlList.length) {
 }
 
 export const config = {
-  launchOption: <PuppeteerLaunchOptions>{
+  launchOption: {
     product: 'chrome',
     channel: 'chrome',
     userDataDir: './chrome-profile/',
@@ -38,7 +38,7 @@ export const config = {
       '--ignore-certifcate-errors-spki-list',
       '--disable-gpu',
     ],
-  },
+  } as PuppeteerLaunchOptions,
   crawl: {
     home: crawlerHome as string,
     searchUrlList: crawlSearchUrlList,
