@@ -5,7 +5,7 @@ services:
   storage-server:
     image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION}
 
-    cpu_shares: 512
+    cpuset: $CPUSET
     mem_limit: 256m
 
     stop_grace_period: 30s
@@ -38,7 +38,7 @@ services:
   fake-visit:
     image: ghcr.io/alimd/fake-visit:${FAKE_VISIT_VERSION}
 
-    cpu_shares: 256
+    cpuset: $CPUSET
     mem_limit: 2048m
 
     restart: unless-stopped
