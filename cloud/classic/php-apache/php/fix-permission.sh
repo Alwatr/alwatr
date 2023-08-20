@@ -3,7 +3,7 @@ set -ex
 
 if [ "${SKIP_FIX_PERMISSIONS:-0}" = "1" ]
 then
-  echo "Skip fix permitions"
+  echo "Skip fix permissions"
   exit 0
 fi
 

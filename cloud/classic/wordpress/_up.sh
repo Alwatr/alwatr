@@ -5,4 +5,4 @@ set -ex
 
 docker compose up --detach --remove-orphans --force-recreate
 
-time docker compose exec php "fix-permition.sh" || true
+time docker compose exec php bash -c 'if [ "$SKIP_FIX_PERMISSIONS" != "1" ]; then fix-permission.sh; fi'

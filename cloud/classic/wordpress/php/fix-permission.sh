@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 set -ex
 
-if [ "${SKIP_FIX_PERMISSIONS:-0}" = "1" ]
-then
-  echo "Skip fix permitions"
-  exit 0
-fi
-
 data=/var/www/html/
 ls -lahF $data
 chown www-data:www-data -R $data
