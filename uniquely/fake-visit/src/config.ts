@@ -20,6 +20,8 @@ if (crawlProductLinkSelectorList?.length !== crawlSearchUrlList.length) {
   throw new Error('Product selector required, FAKE_VISIT_PRODUCT_LINK_SELECTOR="YOUR_PRODUCT_LINK_SELECTOR1, YOUR_PRODUCT_LINK_SELECTOR2"');
 }
 
+const args = process.env.chromeArgs?.split(',').map((arg) => arg.trim()) ?? [];
+
 export const config = {
   launchOption: {
     product: 'chrome',
@@ -37,6 +39,7 @@ export const config = {
       '--ignore-certifcate-errors',
       '--ignore-certifcate-errors-spki-list',
       '--disable-gpu',
+      ...args,
     ],
   } as PuppeteerLaunchOptions,
   crawl: {
