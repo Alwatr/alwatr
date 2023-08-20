@@ -1,4 +1,4 @@
-ARG NGINX_IMAGE=docker.io/library/nginx:1.24-alpine
+ARG NGINX_IMAGE=docker.io/library/nginx:1.25-alpine
 FROM $NGINX_IMAGE
 
 # Default environment for nginx template

@@ -1,4 +1,4 @@
-ARG NGINX_IMAGE=ghcr.io/alimd/nginx:1.7.0-1.24-alpine
+ARG NGINX_IMAGE=ghcr.io/alimd/nginx:1.8.0-1.25-alpine
 FROM $NGINX_IMAGE
 
 # Default environment for nginx template
