@@ -5,8 +5,8 @@ WORKDIR /var/www/html
 EXPOSE 80
 
 COPY php.conf.ini $PHP_INI_DIR/conf.d/
-COPY fix-permition.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/fix-permition.sh
+COPY fix-permission.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/fix-permission.sh
 
 ARG APT_INSTALL
 RUN set -ex; \
