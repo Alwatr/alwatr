@@ -5,8 +5,8 @@ networks:
     external: true
 
 services:
-  cdn:
-    image: $CDN_IMAGE
+  ssc:
+    image: $sscImage
 
     cpu_count: 1
     cpu_shares: 1024
@@ -18,7 +18,7 @@ services:
       alwatr-public-network:
 
     environment:
-      - NGINX_ACCESS_LOG=${CDN_ACCESS_LOG:-off}
+      - NGINX_ACCESS_LOG=${accessLog:-off}
 
     volumes:
       - type: bind
@@ -36,6 +36,6 @@ services:
     labels:
       traefik.enable: true
       traefik.port: 80
-      traefik.frontend.rule: Host:${DOMAIN}; PathPrefix:/
+      traefik.frontend.rule: Host:$domain
       traefik.frontend.entryPoints: http, https
       traefik.frontend.redirect.entryPoint: https
