@@ -65,3 +65,5 @@ export const config = {
     token: process.env.NOTIFIER_TOKEN ?? 'YOUR_SECRET_TOKEN',
   },
 } as const;
+
+logger.logProperty?.('config', config);
