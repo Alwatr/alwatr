@@ -49,12 +49,9 @@ services:
     depends_on:
       - storage-server
 
+    env_file: .env
+
     environment:
-      - FAKE_VISIT_HOME=${FAKE_VISIT_HOME}
-      - FAKE_VISIT_SEARCH_URL=${FAKE_VISIT_SEARCH_URL}
-      - FAKE_VISIT_PRODUCT_LINK_SELECTOR=${FAKE_VISIT_PRODUCT_LINK_SELECTOR}
-      - FAKE_VISIT_NOTIFY_COUNT=${FAKE_VISIT_NOTIFY_COUNT}
-      - FAKE_VISIT_HEADLESS=1
       - STORAGE_HOST=${APP_ID}-storage-server
       - STORAGE_PORT=80
       - STORAGE_NAME=${STORAGE_NAME}
