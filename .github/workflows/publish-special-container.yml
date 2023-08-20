@@ -58,6 +58,13 @@ jobs:
               short: 1
               full: 1.8.0-1.25-alpine
 
+          - image: nginx-ws
+            path: cloud/container/nginx-ws
+            description: High performance Accelerated NGINX optimized for serve static website.
+            version:
+              short: 1
+              full: 1.8.0-1.25-alpine
+
           - image: nginx-storage
             path: cloud/container/nginx-storage
             description: High performance Accelerated NGINX optimized for serve alwatr storage server json.
