@@ -1,0 +1,8 @@
+set $NGINX_FORCE_DOMAIN;
+set $NGINX_FORCE_DOMAIN_STATUS 302;
+
+location = / {
+  if ($host != $NGINX_FORCE_DOMAIN) {
+    return $NGINX_FORCE_DOMAIN_STATUS $scheme://$NGINX_FORCE_DOMAIN;
+  }
+}
