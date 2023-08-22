@@ -35,6 +35,6 @@
     "@alwatr/i18n": "^1.0.0",
     "@alwatr/logger": "^1.0.0",
     "@alwatr/ui-kit": "^1.0.0",
-    "tslib": "^2.6.1"
+    "tslib": "^2.6.2"
   }
 }
