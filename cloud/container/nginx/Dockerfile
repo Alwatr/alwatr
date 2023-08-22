@@ -25,7 +25,10 @@ ENV NGINX_ACCESS_LOG=off \
     NGINX_AUTOINDEX=off \
     NGINX_DOCUMENT_ROOT=/var/www/html \
     NGINX_DISABLE_SYMLINKS=if_not_owner \
-    NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE=1
+    NGINX_FORCE_DOMAIN="" \
+    NGINX_FORCE_DOMAIN_STATUS=302 \
+    NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE=1 \
+    NGINX_ENTRYPOINT_QUIET_LOGS=""
 
 RUN apk add --no-cache curl
 HEALTHCHECK --interval=30s --timeout=3s --start-period=1s --retries=3 CMD curl -fso /dev/null http://localhost/server-info || exit 1
