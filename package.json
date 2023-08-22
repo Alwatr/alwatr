@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@deanc/esbuild-plugin-postcss": "^1.0.2",
-    "@types/node": "^20.5.1",
+    "@types/node": "^20.5.2",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.0",
     "@web/dev-server": "^0.3.0",
