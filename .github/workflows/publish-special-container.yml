@@ -49,28 +49,28 @@ jobs:
             description: High performance Accelerated NGINX optimized for serve static content like CDN.
             version:
               short: 1
-              full: 1.9.0-1.25-alpine
+              full: 1.9.1-1.25-alpine
 
           - image: nginx-pwa
             path: cloud/container/nginx-pwa
             description: High performance Accelerated NGINX optimized for serve progressive web applications.
             version:
               short: 1
-              full: 1.9.0-1.25-alpine
+              full: 1.9.1-1.25-alpine
 
           - image: nginx-ws
             path: cloud/container/nginx-ws
             description: High performance Accelerated NGINX optimized for serve static website.
             version:
               short: 1
-              full: 1.9.0-1.25-alpine
+              full: 1.9.1-1.25-alpine
 
           - image: nginx-storage
             path: cloud/container/nginx-storage
             description: High performance Accelerated NGINX optimized for serve alwatr storage server json.
             version:
               short: 1
-              full: 1.9.0-1.25-alpine
+              full: 1.9.1-1.25-alpine
 
           - image: adminer
             path: cloud/container/adminer
