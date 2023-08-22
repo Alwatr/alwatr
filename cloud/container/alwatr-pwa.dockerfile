@@ -1,5 +1,5 @@
 ARG NODE_VERSION=20
-ARG ALWATR_NGINX_VERSION=1.8.0-1.25-alpine
+ARG ALWATR_NGINX_VERSION=1.9.0-1.25-alpine
 
 FROM docker.io/library/node:${NODE_VERSION}-alpine as builder
 
