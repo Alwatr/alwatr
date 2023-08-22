@@ -90,9 +90,9 @@ function command_apt() {
     apt update
     apt autoremove -y --purge
     apt list --upgradable
-    apt upgrade -y
-    apt autoremove -y --purge
     apt dist-upgrade -y
+    apt autoremove -y --purge
+    apt upgrade -y
     apt autoremove -y --purge
     uname -a
   '
@@ -216,16 +216,43 @@ function command_reboot() {
   sleep 2
 }
 
+function command_net() {
+  echoStep "Config network interfaces"
+  local remotePath=/etc/network/interfaces
+
+  copyConfigFile net.conf $remotePath || return 0
+
+  remoteShell "
+    if ! systemctl restart networking; then
+      echo 'Failed to restart network service. Rolling back...'
+      cp -v $remotePath.bak $remotePath
+      systemctl restart networking
+    else
+      echo 'Network service restarted.'
+      if ! ping -c 1 -W 1 1.1.1.1; then
+        echo 'Failed to ping, rolling back...'
+        cp -v $remotePath.bak $remotePath
+        systemctl restart networking
+      fi
+    fi
+  "
+}
+
 function command_full() {
   echoStep "Full setup..."
   command_ping 1
   command_ssh
+
   command_time
+  command_net
   command_dns
+
+  command_apt
+
   command_sysctl
   command_disk
-  command_apt
   command_docker
+
   command_reboot
   command_ping
   echoLogo
