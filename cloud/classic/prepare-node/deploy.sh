@@ -61,8 +61,11 @@ function command_ssh() {
   echoStep "Setup ssh: add sshd_config"
   copyConfigFile ssh-banner /etc/ssh/banner
   copyConfigFile ssh-config /etc/ssh/sshd_config
+
+  echoStep "Setup ssh: add ssh key"
   copyConfigFile ssh-rsa "~/.ssh/id_rsa"
   copyConfigFile ssh-rsa.pub "~/.ssh/id_rsa.pub"
+  remoteShell 'chmod 600 ~/.ssh/id_rsa'
 
   echoStep "Setup ssh: restart ssh and test"
 
@@ -237,6 +240,8 @@ function command_net() {
     fi
   "
 }
+
+# TODO: function command_hostname() {}
 
 function command_full() {
   echoStep "Full setup..."
