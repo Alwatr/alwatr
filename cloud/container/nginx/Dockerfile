@@ -36,6 +36,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=1s --retries=3 CMD curl -
 RUN rm -rfv /etc/nginx/conf.d/*
 COPY conf/ /etc/nginx/
 COPY www/  /var/www/
+RUN chmod a+rx /etc/nginx/entrypoint.sh /etc/nginx/entrypoint.d/*.sh
 
 EXPOSE 80
 WORKDIR /var/www/html/
