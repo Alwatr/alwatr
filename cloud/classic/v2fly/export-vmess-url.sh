@@ -41,14 +41,15 @@ EOF
 
 function exportConfig() {
   local index=0
-  serverPort=$(jq -r '.inbounds[0].settings.port' ${configPath})
+  serverPort=$(jq -r '.inbounds[0].port' ${configPath})
   local output=""
-  for user in $(jq -r '.inbounds[0].settings.users[]' ${configPath}); do
+  for userId in $(jq -r '.inbounds[0].settings.users[]' ${configPath}); do
     oldOutput=$output
-    userName="${configName}-u${index}"
-    config=$(makeConfig $serverUrl $serverPort $1 $user $userName)
+    local userName="⚡️${configName}, user${index}, $1"
+    config=$(makeConfig $serverUrl $serverPort $1 $userId "$userName")
     url=$(echo $config | base64)
-    output="${oldOutput}\n${userName}\t${url}"
+    # output="${oldOutput}\n${userName}\tvmess://${url}"
+    output="${oldOutput}\nvmess://${url}"
     ((index++))
   done
 
