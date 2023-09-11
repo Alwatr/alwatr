@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2023-09-11)
+
+### Bug Fixes
+
+- **ui-kit2/icon-button:** the render structure ([ff3039f](https://github.com/AliMD/alwatr/commit/ff3039fa8c59d8a8262594fd550f55246dbd11a1))
+- **ui-kit2/icon-button:** use `button` tag ([006fe03](https://github.com/AliMD/alwatr/commit/006fe034fb3887f88c9f071516772420f009a681))
+- **ui-kit2:** a style issue ([42ce3a3](https://github.com/AliMD/alwatr/commit/42ce3a384d21ede1ee6190c167be25618c07a731))
+- **ui-kit2:** add the classes of `icon-buton` ([e11aaf6](https://github.com/AliMD/alwatr/commit/e11aaf6ef2bc59f0868c9f2b9e87e88297a7a680))
+- **ui-kit2:** complete the structure ([a562b74](https://github.com/AliMD/alwatr/commit/a562b74a56b99086de335aea3c70633fa7966438))
+- **ui-kit2:** focus style ([dbe081e](https://github.com/AliMD/alwatr/commit/dbe081ee5c0eb11622a093d500a0438b6ae58767))
+- **ui-kit2:** remove an extra method ([51740e7](https://github.com/AliMD/alwatr/commit/51740e790d43437f6866bd15a26f42d0b43ccde5))
+- **ui-kit2:** rename some interfaces ([a05df33](https://github.com/AliMD/alwatr/commit/a05df33941c6db908fafcd90d57158812bb7406d))
+- **ui-kit2:** return `noChange` ([5db4407](https://github.com/AliMD/alwatr/commit/5db44075ecc66b07f36abcd476343fc540c2e835))
+- **ui-kit2:** some issues of `review` ([5c3860b](https://github.com/AliMD/alwatr/commit/5c3860b615d1e49a94fceede28b91f6b46634ba1))
+- **ui-kit2:** type name ([62c598f](https://github.com/AliMD/alwatr/commit/62c598ffa409dce322611c83690b84fc8356d58d))
+- **ui-kit2:** types & `label`s ([c0c4c77](https://github.com/AliMD/alwatr/commit/c0c4c77d596c3dd5ef5e27faebf4cdcb1297eefa))
+
+### Features
+
+- **ui-kit2:** add drawer ([0659445](https://github.com/AliMD/alwatr/commit/0659445ccac9309c5754966da46f7782774aa2cf))
+- **ui-kit2:** add icon ([7fd446a](https://github.com/AliMD/alwatr/commit/7fd446a0e74b0130648a6ddf35d0b4231e675fe7))
+- **ui-kit2:** add icon button ([19a7e7d](https://github.com/AliMD/alwatr/commit/19a7e7d23f4f0ce5ae576269cfca5bb1148abb64))
+- **ui-kit2:** add navigation rail ([48b44df](https://github.com/AliMD/alwatr/commit/48b44df1055a61c11fe1c696ab0dec479332e2d4))
+- **ui-kit2:** add navigation-bar ([e729caa](https://github.com/AliMD/alwatr/commit/e729caa92113c7511a3e06cd2a8ad2c624bb4494))
+- **ui-kit2:** add the all sizes ([2a64a13](https://github.com/AliMD/alwatr/commit/2a64a13b0fadfb3f9bbfc135eea2537b7e65353d))
+- **ui-kit2:** add top-app-bar ([f8f095f](https://github.com/AliMD/alwatr/commit/f8f095f5c26f73eb4065573bf539c55138175c8f))
+- **ui-kit2:** alwatr extended fab ([f9a246c](https://github.com/AliMD/alwatr/commit/f9a246c48daf8e554b0155cbfb4a1835f4707f64))
+- **ui-kit2:** alwatr fab ([6b26bec](https://github.com/AliMD/alwatr/commit/6b26bec3990ebf55b75409a4341b60176f8af22e))
+- **ui-kit2:** base multi top-app-bar ([985caca](https://github.com/AliMD/alwatr/commit/985caca66a331421398ad9946d8a4434d941320c))
+- **ui-kit2:** base package ([b451054](https://github.com/AliMD/alwatr/commit/b451054e2c20c7d4f830b62fc4c0d15b55412dfd))
+- **ui-kit2:** convert to a `directive` ([d248b78](https://github.com/AliMD/alwatr/commit/d248b7844fa0c48ec206cbd72b1a229ed65fe595))
+- **ui-kit2:** icon type ([272c0e4](https://github.com/AliMD/alwatr/commit/272c0e45cf49f3c3f4e99eb7fda218b4152b4c34))
+- **ui-kit2:** improve top-app-bar from playground ([c208003](https://github.com/AliMD/alwatr/commit/c20800378bdc8397b7295de2d4ec7f0d7028495b))
+- **ui-kit2:** rename options to content ([c810b1a](https://github.com/AliMD/alwatr/commit/c810b1a82393759ab0a4698f23ac96552bb5f120))
+
 # [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
 
 ### Bug Fixes

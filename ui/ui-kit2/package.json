@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/ui-kit2",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Alwatr UI Elements Kit",
   "keywords": [
     "element",
@@ -35,9 +35,9 @@
     "url": "https://github.com/AliMD/alwatr/issues"
   },
   "dependencies": {
-    "@alwatr/i18n2": "^1.0.0",
-    "@alwatr/signal2": "^1.0.0",
-    "@alwatr/util": "^1.0.0",
+    "@alwatr/i18n2": "^1.1.0",
+    "@alwatr/signal2": "^1.1.0",
+    "@alwatr/util": "^1.1.0",
     "tslib": "^2.6.2"
   }
 }

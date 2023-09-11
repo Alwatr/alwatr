@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/form-registration",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Alwatr Form Registration API Nanoservice, Distributed simple and fast nanoservice for registering form information.",
   "type": "module",
   "keywords": [

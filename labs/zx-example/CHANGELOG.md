@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2023-09-11)
+
+# 1.0.0 (2023-06-14)
+
+# 0.32.0 (2023-05-27)
+
+# 0.31.0 (2023-05-08)
+
+# 0.30.0 (2023-03-06)
+
+# 0.29.0 (2023-02-10)
+
+# 0.28.0 (2023-01-20)
+
+### Bug Fixes
+
+- version in package.json ([403baa5](https://github.com/AliMD/alwatr/commit/403baa53159db2a0fff5b3651769b85e66b13191))
+
+# 0.27.0 (2022-12-29)
+
+### Bug Fixes
+
+- **labs/zx:** readme ([51164ae](https://github.com/AliMD/alwatr/commit/51164ae94eb4d06076981b3844377d2088f24bdb))
+
+### Features
+
+- labs ([c672f3c](https://github.com/AliMD/alwatr/commit/c672f3cd7e2a336c0fed2bcba5f09d85da62728e))
+- labs refrences and workspace ([9676e29](https://github.com/AliMD/alwatr/commit/9676e290a84e4da07dc38d4c66c29b9a6a6cc179))
+
 # [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
 
 **Note:** Version bump only for package @alwatr/zx-example
