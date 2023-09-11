@@ -11,7 +11,7 @@ on:
 
 jobs:
   publish-npm:
-    if: github.repository_owner == 'njfamirm'
+    if: github.repository_owner == 'AliMd'
 
     name: Publish NPM
     runs-on: ubuntu-latest
