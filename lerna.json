@@ -8,8 +8,10 @@
       "conventionalCommits": true,
       "changelogPreset": "angular",
       "message": "release",
-      "noPrivate": true,
       "forcePublish": true,
+      "signGitTag": true,
+      "progress": true,
+      "createRelease": "github",
       "push": true
     },
     "publish": {

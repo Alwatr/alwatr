@@ -30,7 +30,7 @@
     "f": "yarn format",
     "fl": "yarn format:eslint",
     "fp": "yarn format:prettier",
-    "p": "run-s pull clean build:ts build:r ver",
+    "v": "run-s pull clean build:ts build:r ver",
     "lint": "run-s lint:*",
     "lint:ts": "eslint . --config .eslintrc.json --ext .ts",
     "build": "yarn build:ts",
@@ -43,7 +43,7 @@
     "serve": "wds",
     "watch": "run-p watch:* serve",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput",
-    "ver": "lerna version",
+    "ver": "lerna version --no-private",
     "pull": "git pull",
     "push": "git push && git push --tags",
     "publish": "lerna publish from-package"
