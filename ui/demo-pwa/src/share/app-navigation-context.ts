@@ -1,20 +1,20 @@
 import {AlwatrContextSignal} from '@alwatr/signal2';
-import {AlwatrNavigationRailContent} from '@alwatr/ui-kit2/navigation-rail/navigation-rail.js';
 
 import {icons} from '../icons.js';
 
-import type {AlwatrNavigationBarContent} from '@alwatr/ui-kit2/navigation-bar/navigation-bar.js';
-import type {AlwatrNavigationDrawerContent} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
-import type {AlwatrTopAppBarContent} from '@alwatr/ui-kit2/top-app-bar/top-app-bar.js';
+import type {NavigationBarContent} from '@alwatr/ui-kit2/navigation-bar/navigation-bar.js';
+import type {NavigationDrawerContent} from '@alwatr/ui-kit2/navigation-drawer/navigation-drawer.js';
+import type {NavigationRailContent} from '@alwatr/ui-kit2/navigation-rail/navigation-rail.js';
+import type {CenterTopAppBarContent} from '@alwatr/ui-kit2/top-app-bar/center-top-app-bar.js';
 
 export interface AppNavigationContext {
-  navigationBar: AlwatrNavigationBarContent;
-  navigationRail: AlwatrNavigationRailContent;
-  navigationDrawer: AlwatrNavigationDrawerContent;
+  navigationBar: NavigationBarContent;
+  navigationRail: NavigationRailContent;
+  navigationDrawer: NavigationDrawerContent;
 }
 
 export const appNavigationContext = new AlwatrContextSignal<AppNavigationContext>({name: 'app-navigation-context'});
-export const topAppBarContext = new AlwatrContextSignal<AlwatrTopAppBarContent>({name: 'top-app-bar-context'});
+export const topAppBarContext = new AlwatrContextSignal<CenterTopAppBarContent>({name: 'top-app-bar-context'});
 
 appNavigationContext.setValue({
   navigationRail: {
@@ -51,8 +51,7 @@ appNavigationContext.setValue({
 });
 
 topAppBarContext.setValue({
-  type: 'large',
-  headline: 'الوتر دمو',
-  startIcon: {svg: icons.person},
-  endIconList: [{svg: icons.refresh}, {svg: icons.home}],
+  title: 'الوتر دمو',
+  startIcon: {svg: icons.person, onClick: () => {console.log('`startIcon` clicked');}},
+  endIconList: [{svg: icons.refresh, onClick: () => {console.log('`refreshIcon` clicked');}}, {svg: icons.home, onClick: () => {console.log('`homeIcon` clicked');}}],
 });

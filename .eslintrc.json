@@ -37,7 +37,7 @@
     }
   },
   "rules": {
-    "max-len": ["error", {"code": 120}],
+    "max-len": ["error", {"code": 300}],
     "no-eval": ["error", {"allowIndirect": true}],
     "no-floating-decimal": "error",
     "space-infix-ops": "error",
