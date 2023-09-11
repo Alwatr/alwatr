@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: Release on Github
+
+on:
+  workflow_dispatch:
+
+  push:
+    tags:
+      - '**'
+
+jobs:
+  publish-npm:
+    if: github.repository_owner == 'njfamirm'
+
+    name: Publish NPM
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      discussions: write
+
+    steps:
+      - name: ⤵️ Checkout repository
+        uses: actions/checkout@v4.0.0
+
+      - name: 🚀 Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          discussion_category_name: Announcements
