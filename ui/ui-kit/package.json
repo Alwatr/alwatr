@@ -19,6 +19,7 @@
   "files": [
     "**/**/*.{d.ts.map,d.ts,js.map,js,md,css}"
   ],
+  "private": true,
   "publishConfig": {
     "access": "public"
   },
