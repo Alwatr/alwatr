@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/style",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Alwatr shared styles (lib, utils, theme, ...).",
   "keywords": [
     "style",
