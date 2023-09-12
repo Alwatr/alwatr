@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2023-09-12)
+
+# 1.0.0 (2023-06-14)
+
+# 0.32.0 (2023-05-27)
+
+# 0.31.0 (2023-05-08)
+
+### Bug Fixes
+
+* new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+* **i18n:** date method for convert date to active locale ([8b51a97](https://github.com/AliMD/alwatr/commit/8b51a97c780ffd3ed653124f64c0752af779f41c))
+
+### Performance Improvements
+
+* **i18n:** use toLocaleDateString for convert date ([f1efcec](https://github.com/AliMD/alwatr/commit/f1efcecb2480e310d289333d840a0dd27fa3881d))
+
+# 0.30.0 (2023-03-06)
+
+### Features
+
+* **i18n:** l18eReadyPromise ([85c7570](https://github.com/AliMD/alwatr/commit/85c7570d71c3d5b9ec87b0e357ecf41f47f96227))
+* **i18n:** make number with fixed decimal ([86e60ec](https://github.com/AliMD/alwatr/commit/86e60ec4c89b8bd485bd32674df286885366ee1b))
+* **i18n:** optional number args ([b571385](https://github.com/AliMD/alwatr/commit/b5713853a035e78b06bd4b97cb703e74de0e86ce))
+* **i18n:** work background without delay ([2876d00](https://github.com/AliMD/alwatr/commit/2876d009a96e586544fa00798ec35574209ae2a9))
+
+# 0.29.0 (2023-02-10)
+
+### Bug Fixes
+
+* **i18n:** prevent duplicate loader ([711cb56](https://github.com/AliMD/alwatr/commit/711cb5698a4b8887b684be79808b30a40f8e9e8a))
+* **i18n:** review and docs ([8574523](https://github.com/AliMD/alwatr/commit/85745235085e6957ab87a9c4e7fb836e73d649f6))
+
+### Features
+
+* **i18n:** add replaceNumber and auto detect setLocale from html ([3413471](https://github.com/AliMD/alwatr/commit/341347149f8685bc259034f5593048aa7db0b927))
+
+# 0.28.0 (2023-01-20)
+
+# 0.27.0 (2022-12-29)
+
+# 0.26.0 (2022-12-22)
+
+### Bug Fixes
+
+* set correct path ([d01ce6f](https://github.com/AliMD/alwatr/commit/d01ce6ffa749a5e3e0e11e35b4ed61d75d61fec9))
+* tsconfig ([e96dcd3](https://github.com/AliMD/alwatr/commit/e96dcd30774a9f06f7d051e0504192cbbe019e35))
+
+### Features
+
+* improve accident debugging ([d697e6c](https://github.com/AliMD/alwatr/commit/d697e6c4c7d0a4172f4dba9caf6fbd478f79de9c))
+* improve error debugging ([1fba504](https://github.com/AliMD/alwatr/commit/1fba50400a1e8ececc10bbe8ea11cc8dcea2289c))
+
 # [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
 
 **Note:** Version bump only for package @alwatr/i18n

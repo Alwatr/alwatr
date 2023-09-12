@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2023-09-12)
+
+# 1.0.0 (2023-06-14)
+
+# 0.32.0 (2023-05-27)
+
+# 0.31.0 (2023-05-08)
+
+### Features
+
+* **math:** simpleHashNumber ([dffb285](https://github.com/AliMD/alwatr/commit/dffb285e11cd9652d54d2d22956fc22177d16699))
+
+# 0.30.0 (2023-03-06)
+
+### Bug Fixes
+
+* **math:** remove getClientId ([b5894d6](https://github.com/AliMD/alwatr/commit/b5894d6cf75798d35773dcc048e9dd21fa44199d))
+
+### Features
+
+* **math:** calcDiscount ([ac7c18b](https://github.com/AliMD/alwatr/commit/ac7c18bc0f0e008b8db9fd4b69451a89e7fb069b))
+
+# 0.29.0 (2023-02-10)
+
+### Bug Fixes
+
+* **typescript:** rollback to 4.9.5 ([cc30f85](https://github.com/AliMD/alwatr/commit/cc30f8502bf95868ff41ba986120b2842acba36b))
+
+### Features
+
+* **i18n:** add replaceNumber and auto detect setLocale from html ([3413471](https://github.com/AliMD/alwatr/commit/341347149f8685bc259034f5593048aa7db0b927))
+* **math:** clamp function ([6fe4423](https://github.com/AliMD/alwatr/commit/6fe44236fc123a32837cfb4ea278b783f2bc2e7a))
+* **math:** getDeviceUuid ([946dad3](https://github.com/AliMD/alwatr/commit/946dad3544f2741462ff239edab8b4a9ea323bd6))
+* **math:** random uuid ([738f51e](https://github.com/AliMD/alwatr/commit/738f51eb323100fafca0a5f515b48d215dae5b3c))
+* **math:** rename deviceId to clientId ([b211fd4](https://github.com/AliMD/alwatr/commit/b211fd42245d51d7109186ddb2f41574d0f0b786))
+
+### Performance Improvements
+
+* **math:** enhance getClientId ([3187039](https://github.com/AliMD/alwatr/commit/3187039a9b87472bda16af6d4b0b71e31c17f272))
+* **math:** enhance getClientId ([af42959](https://github.com/AliMD/alwatr/commit/af429594950c7ded35af53414494dd2f6f4fe208))
+* **unicode-digits:** enhance translate ([104bdba](https://github.com/AliMD/alwatr/commit/104bdba948df11e62577f084b1e51fc4c78e0d9c))
+
+# 0.28.0 (2023-01-20)
+
+### Bug Fixes
+
+* **type:** revert paramkey ([f1ad066](https://github.com/AliMD/alwatr/commit/f1ad06621f7fe80018573e50804e9f3c1b2edde1))
+
+### Features
+
+* **type:** add optional text on ChatPhotoMessage ([af83f5b](https://github.com/AliMD/alwatr/commit/af83f5b8604cecd3c9b0cb2375267458fd02431d))
+
+# 0.27.0 (2022-12-29)
+
+### Features
+
+* **type:** define math types ([8c19f40](https://github.com/AliMD/alwatr/commit/8c19f4058d4361b7d3f4f714595e34cb6fa21109))
+
+# 0.26.0 (2022-12-22)
+
+### Bug Fixes
+
+* set correct path ([d01ce6f](https://github.com/AliMD/alwatr/commit/d01ce6ffa749a5e3e0e11e35b4ed61d75d61fec9))
+* tsconfig ([e96dcd3](https://github.com/AliMD/alwatr/commit/e96dcd30774a9f06f7d051e0504192cbbe019e35))
+
 # [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
 
 **Note:** Version bump only for package @alwatr/math

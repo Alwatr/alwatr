@@ -3,6 +3,67 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2023-09-12)
+
+### Features
+
+* **logger:** add logModule ([2e37bef](https://github.com/AliMD/alwatr/commit/2e37befd5f66094c5a521424e2a9d60796384f88))
+
+# 1.0.0 (2023-06-14)
+
+# 0.32.0 (2023-05-27)
+
+# 0.31.0 (2023-05-08)
+
+### Bug Fixes
+
+* **logger:** logMethod args type ([66338b7](https://github.com/AliMD/alwatr/commit/66338b7ba1d4b15af78f9f604f7be0a7e483413d))
+* **logger:** logMethod args type ([1983b3d](https://github.com/AliMD/alwatr/commit/1983b3d2fe260226ca2660e33b9bd924facdf776))
+* new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+* **logger:** add `duration time` to logger time label ([ef188c4](https://github.com/AliMD/alwatr/commit/ef188c41a02789e1b35ab424bab24a393a03a3b0))
+* **logger:** add `time` & `timeEnd` ([0bd4ec5](https://github.com/AliMD/alwatr/commit/0bd4ec5dbd185b17cfb8656a84a782e848ade138))
+* **logger:** optional devMode per package ([cc1eb87](https://github.com/AliMD/alwatr/commit/cc1eb879832807d55ad4cf268a54b2d5e4346fff))
+
+# 0.30.0 (2023-03-06)
+
+### Features
+
+* **logger:** export isBrowser ([5b5be8b](https://github.com/AliMD/alwatr/commit/5b5be8b2312ca67f186d1614506423f1fdb90877))
+
+# 0.29.0 (2023-02-10)
+
+# 0.28.0 (2023-01-20)
+
+### Bug Fixes
+
+* **logger:** _ALWATR_VERSION_ ([9cf8f20](https://github.com/AliMD/alwatr/commit/9cf8f208e8adbfa2e2c622a8465453d5554cbd37))
+
+# 0.27.0 (2022-12-29)
+
+### Bug Fixes
+
+* **logger:** version ([2295fee](https://github.com/AliMD/alwatr/commit/2295fee74e8eebd9db399129de31f2b0d6d6b168))
+
+### Features
+
+* **type:** define alwatrRegistredList ([25406c2](https://github.com/AliMD/alwatr/commit/25406c268f39cf3e055ea05c9fc7b50bd3dd0a17))
+
+# 0.26.0 (2022-12-22)
+
+### Bug Fixes
+
+* set correct path ([d01ce6f](https://github.com/AliMD/alwatr/commit/d01ce6ffa749a5e3e0e11e35b4ed61d75d61fec9))
+* tsconfig ([e96dcd3](https://github.com/AliMD/alwatr/commit/e96dcd30774a9f06f7d051e0504192cbbe019e35))
+
+### Features
+
+* improve error debugging ([1fba504](https://github.com/AliMD/alwatr/commit/1fba50400a1e8ececc10bbe8ea11cc8dcea2289c))
+* **logger:** add root version ([2ac01c1](https://github.com/AliMD/alwatr/commit/2ac01c1d12323a6c8591b3dd4826d08a55647dc1))
+* **logger:** move incident to deployment mode ([4ee8dac](https://github.com/AliMD/alwatr/commit/4ee8dac5c54ce8a897382d3d4fb5bb852d24cf24))
+
 # [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
 
 **Note:** Version bump only for package @alwatr/logger

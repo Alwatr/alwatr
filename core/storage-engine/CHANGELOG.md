@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2023-09-12)
+
+# 1.0.0 (2023-06-14)
+
+# 0.32.0 (2023-05-27)
+
+### Bug Fixes
+
+* import util/node ([ca9e995](https://github.com/AliMD/alwatr/commit/ca9e995567ad267c1730e1c98f9dbbd03ab90331))
+
+# 0.31.0 (2023-05-08)
+
+### Bug Fixes
+
+* logger new api ([fd86f32](https://github.com/AliMD/alwatr/commit/fd86f324b98dc1d22654f4597a033e8ff10c4dad))
+* new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+* **storage-engine:** dev mode ([65491ce](https://github.com/AliMD/alwatr/commit/65491ce7b7ff0756d8e475442d175b880b9894db))
+* **storage-engine:** new _$save method ([21cdf51](https://github.com/AliMD/alwatr/commit/21cdf5138bfced0177af4538d80f88fe2d415f67))
+
+### Features
+
+* **storage-engine:** none blocking save storage ([f668ba0](https://github.com/AliMD/alwatr/commit/f668ba0232c0b3372ee14c40d35b1f7e577b15c7))
+* **storage-engine:** save new empty storage after open ([85bb855](https://github.com/AliMD/alwatr/commit/85bb8551e2dfe976d191d7c7243c29fe71433e54))
+
+# 0.30.0 (2023-03-06)
+
+# 0.29.0 (2023-02-10)
+
+# 0.28.0 (2023-01-20)
+
+### Bug Fixes
+
+* version in package.json ([403baa5](https://github.com/AliMD/alwatr/commit/403baa53159db2a0fff5b3651769b85e66b13191))
+
+### Features
+
+* **storage-engine:** migrate old storages ([10fc378](https://github.com/AliMD/alwatr/commit/10fc3785ee22bf397dd1448cf0c1568be65fb8cb))
+* **type:** id in storage meta type ([146b9eb](https://github.com/AliMD/alwatr/commit/146b9eb4ebc748eda852988328b88abb75651945))
+
+# 0.27.0 (2022-12-29)
+
+### Bug Fixes
+
+* review issue ([e5d192c](https://github.com/AliMD/alwatr/commit/e5d192cbee6917c2de01146cf8bd026895724ab8))
+
+# 0.26.0 (2022-12-22)
+
+### Bug Fixes
+
+* set correct path ([d01ce6f](https://github.com/AliMD/alwatr/commit/d01ce6ffa749a5e3e0e11e35b4ed61d75d61fec9))
+* **storage-engine:** AlwatrDocumentStorage ([ca9a7bf](https://github.com/AliMD/alwatr/commit/ca9a7bf5e17b333538e749ada5d481a06c847101))
+* **storage-engine:** export type ([4dbd79f](https://github.com/AliMD/alwatr/commit/4dbd79f746484c870f877b98d556930e9c35b3f9))
+* **storage-engine:** work with new types ([e86c9cd](https://github.com/AliMD/alwatr/commit/e86c9cd8de6fb6b73f3b5e185b4cc7a7afe81a83))
+* tsconfig ([e96dcd3](https://github.com/AliMD/alwatr/commit/e96dcd30774a9f06f7d051e0504192cbbe019e35))
+
 # [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
 
 **Note:** Version bump only for package @alwatr/storage-engine

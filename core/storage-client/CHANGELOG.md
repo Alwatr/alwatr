@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2023-09-12)
+
+# 1.0.0 (2023-06-14)
+
+# 0.32.0 (2023-05-27)
+
+### Bug Fixes
+
+* **storage-client:** `get` return type ([dfe9728](https://github.com/AliMD/alwatr/commit/dfe9728b033d74f25891cab02fc19a153f760896))
+* **storage-client:** remove some extra types ([017b8ed](https://github.com/AliMD/alwatr/commit/017b8ed262cf009a7ce3eeb9c141761d3d32ba81))
+
+### Features
+
+* **storage-client:** compatibel with new storage server response types ([9b88472](https://github.com/AliMD/alwatr/commit/9b88472ce4f037010c291f5e15b2a480a8439fdf))
+
+# 0.31.0 (2023-05-08)
+
+### Bug Fixes
+
+* logger new api ([fd86f32](https://github.com/AliMD/alwatr/commit/fd86f324b98dc1d22654f4597a033e8ff10c4dad))
+* new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+* **storage-client:** serviceRequest type ([66758e1](https://github.com/AliMD/alwatr/commit/66758e12a6da369f9d2ff90b57a470ff08413f7b))
+
+### Features
+
+* **storage-client:** `cacheApiResponse` method ([4d6ca79](https://github.com/AliMD/alwatr/commit/4d6ca793ef46f1eabed7ed5e07a2fa3234811a1b))
+* **storage-client:** `link` method ([25e2250](https://github.com/AliMD/alwatr/commit/25e22507004d230f809884bbb88d02410571db53))
+* **storage-client:** add touch method ([5a347b3](https://github.com/AliMD/alwatr/commit/5a347b316408c53ed3f5947fed9c1fff41c0c13c))
+
+# 0.30.0 (2023-03-06)
+
+# 0.29.0 (2023-02-10)
+
+# 0.28.0 (2023-01-20)
+
+### Bug Fixes
+
+* **storage-client:** export AlwatrStorageClientConfig ([9d626c2](https://github.com/AliMD/alwatr/commit/9d626c28898c7d97776896317d246b8483ecbe5e))
+
+# 0.27.0 (2022-12-29)
+
+### Bug Fixes
+
+* review issue ([e5d192c](https://github.com/AliMD/alwatr/commit/e5d192cbee6917c2de01146cf8bd026895724ab8))
+
+### Features
+
+* **type:** define alwatrRegistredList ([25406c2](https://github.com/AliMD/alwatr/commit/25406c268f39cf3e055ea05c9fc7b50bd3dd0a17))
+
+# 0.26.0 (2022-12-22)
+
+### Bug Fixes
+
+* set correct path ([d01ce6f](https://github.com/AliMD/alwatr/commit/d01ce6ffa749a5e3e0e11e35b4ed61d75d61fec9))
+* **storage-client:** build issue ([20df110](https://github.com/AliMD/alwatr/commit/20df1106f8fad4dc916d44467584000cace07541))
+* **storage-client:** getStorage queryParameters ([441c2f8](https://github.com/AliMD/alwatr/commit/441c2f88719d0fd98eb70d26aa4ea79a47acd6b9))
+* **storage-client:** import type ([c1ef85d](https://github.com/AliMD/alwatr/commit/c1ef85d74be28998f5b5ce6b55bb92a6c40fcd89))
+* tsconfig ([e96dcd3](https://github.com/AliMD/alwatr/commit/e96dcd30774a9f06f7d051e0504192cbbe019e35))
+
+### Features
+
+* improve error debugging ([1fba504](https://github.com/AliMD/alwatr/commit/1fba50400a1e8ececc10bbe8ea11cc8dcea2289c))
+* **storage-client:** error codes ([fc5fe8a](https://github.com/AliMD/alwatr/commit/fc5fe8a650d881b224c9421da3bb34565e1e3fee))
+* **storage-client:** more data validate on get ([4a8200c](https://github.com/AliMD/alwatr/commit/4a8200c42da20fe21dbdf198ef1c3708186e23cc))
+
 # [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
 
 **Note:** Version bump only for package @alwatr/storage-client

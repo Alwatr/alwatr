@@ -3,6 +3,83 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2023-09-12)
+
+### Bug Fixes
+
+* **icon:** scg export ([c50e413](https://github.com/AliMD/alwatr/commit/c50e4139f566afa9ec791eea81f2d3403561d481))
+
+### Features
+
+* **icon:** import svg type ([ca659e4](https://github.com/AliMD/alwatr/commit/ca659e43a485488e5e8ea177f7d955054e69682e))
+
+# 1.0.0 (2023-06-14)
+
+# 0.32.0 (2023-05-27)
+
+# 0.31.0 (2023-05-08)
+
+### Bug Fixes
+
+* **icon:** 404 cache issue ([5fbc7d8](https://github.com/AliMD/alwatr/commit/5fbc7d87dcb6a82e8cb72e689730db1660c7aa58))
+* **icon:** build issue ([42d3914](https://github.com/AliMD/alwatr/commit/42d39140ca43602c8e30d676bcd9af4b4f62998e))
+* **icon:** render delay on icon change ([9b4bafb](https://github.com/AliMD/alwatr/commit/9b4bafbb23c613c32c35ae3a0c83c1fdd38b8ac4))
+* new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+* **ui/icon:** svg property ([7815917](https://github.com/AliMD/alwatr/commit/7815917546be016387d9c0a30a60821d541a0bce))
+
+# 0.30.0 (2023-03-06)
+
+### Bug Fixes
+
+* **icon:** fill color ([fa1c280](https://github.com/AliMD/alwatr/commit/fa1c280e0385f3acbf456204f47d6e627371e130))
+* **icon:** fix all svg currentcolor ([f06c795](https://github.com/AliMD/alwatr/commit/f06c795f36c5b05c8c2e17e8b80e1e5dd72613c6))
+* **icon:** vertical-align style ([d449498](https://github.com/AliMD/alwatr/commit/d4494981d00a46aa512b6d892286f9f24aeaa0ff))
+
+### Features
+
+* **icon:** add toman icon ;) ([fbebf5b](https://github.com/AliMD/alwatr/commit/fbebf5b5051fc92c634455bb1ba6e5447720bbe1))
+* **icon:** update and compress all icons ([8ded731](https://github.com/AliMD/alwatr/commit/8ded731ef6da34a1f66d1fce80a92c77929b8144))
+
+# 0.29.0 (2023-02-10)
+
+### Bug Fixes
+
+* compatible with new element mixins ([d26e827](https://github.com/AliMD/alwatr/commit/d26e82731b2ae9c2483ba931c450c5a604633122))
+
+### Features
+
+* debug all renders ([73a0d34](https://github.com/AliMD/alwatr/commit/73a0d3483b7c42ab0a6247721073b81a01f7b258))
+* **icon:** enhance preload, support `icon-url-prefix` context signal ([b5a277c](https://github.com/AliMD/alwatr/commit/b5a277c1403177ba14de9434d908df0f4000a5a6))
+
+# 0.28.0 (2023-01-20)
+
+### Bug Fixes
+
+* **icon:** attr name ([92492bd](https://github.com/AliMD/alwatr/commit/92492bde7595a272ce38476732ee32ddc758d9d2))
+* **icon:** fetch timeout ([46ee93e](https://github.com/AliMD/alwatr/commit/46ee93e2a3b50ec5b087dd86a84ebee37a9695c5))
+
+# 0.27.0 (2022-12-29)
+
+### Bug Fixes
+
+* **icon:** DirectionMixin! ([61b369e](https://github.com/AliMD/alwatr/commit/61b369e4a058d38df79f281dc84193129a12b4a5))
+* **icon:** PropertyValues ([ccba95a](https://github.com/AliMD/alwatr/commit/ccba95a7a716773c57474d8002320304e772e3cc))
+* **icon:** reflect flip-rtl errro ([b2359e6](https://github.com/AliMD/alwatr/commit/b2359e64c2ef9c381274fe91cc038593c0603ee9))
+
+### Features
+
+* **element:** export from lit ([21f15d8](https://github.com/AliMD/alwatr/commit/21f15d86319a40fab02d86f24a1451c056f36a7c))
+* **ui/icon:** localize mixin ([d91fe98](https://github.com/AliMD/alwatr/commit/d91fe98c3d9df8e30e5159ab93bb8018ef6d4c90))
+
+# 0.26.0 (2022-12-22)
+
+### Bug Fixes
+
+* **ui/*:** package path ([21dc99f](https://github.com/AliMD/alwatr/commit/21dc99fddb55b085a3d79b8595ae4630520bc43e))
+
 # [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
 
 **Note:** Version bump only for package @alwatr/icon

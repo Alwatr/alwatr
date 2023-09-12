@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2023-09-12)
+
+# 1.0.0 (2023-06-14)
+
+# 0.32.0 (2023-05-27)
+
+### Bug Fixes
+
+* **nano-server:** `data` type ([f629f3b](https://github.com/AliMD/alwatr/commit/f629f3b7952b775ead78119c699ce93c119b8164))
+
+# 0.31.0 (2023-05-08)
+
+### Bug Fixes
+
+* **nano-server:** path prefix ([83995f7](https://github.com/AliMD/alwatr/commit/83995f7bc9748ecb632d6f8dbea5e2f96fa59c41))
+* **nano-server:** prefixPattern, logger ([f9d203e](https://github.com/AliMD/alwatr/commit/f9d203e65955629f6dd5c468867f20ce578337eb))
+* new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+* **nano-server:** add getUserAuth ([615266f](https://github.com/AliMD/alwatr/commit/615266f06ef47a7a5b36fe3d6abee1653703bf6f))
+* **nano-server:** prefix pattern ([ad5e1b5](https://github.com/AliMD/alwatr/commit/ad5e1b56651c96cb825187604f877fee396b3ec4))
+
+# 0.30.0 (2023-03-06)
+
+### Features
+
+* **nano-server:** getRemoteAddress ([eff82cb](https://github.com/AliMD/alwatr/commit/eff82cbdba5a35a88d95f6997365210683163d62))
+* **nano-server:** requireClientId ([fccd734](https://github.com/AliMD/alwatr/commit/fccd734f0c08cc624492b30e14c451143706cc00))
+
+# 0.29.0 (2023-02-10)
+
+### Bug Fixes
+
+* **nano-server:** compatible with ParamValueType ([325d896](https://github.com/AliMD/alwatr/commit/325d89651aeba38079d6fb9184adb894df94f083))
+* **nano-server:** null parsedParams ([bb969b2](https://github.com/AliMD/alwatr/commit/bb969b23495f791003225b5c557e40e10e7f8124))
+* **nano-server:** type ([2586061](https://github.com/AliMD/alwatr/commit/25860611f765e67ecddd586d80169ebe7f75701b))
+
+### Features
+
+* **nano-server:** add client-id to IncomingHttpHeaders type ([a4a86c7](https://github.com/AliMD/alwatr/commit/a4a86c7e410edfe69e66cdab6b8ffdc0d9b95eb8))
+* **nano-service:** api prefix support ([21960dc](https://github.com/AliMD/alwatr/commit/21960dce5f25a587b19886e487f7d46af5ca087b))
+
+# 0.28.0 (2023-01-20)
+
+### Bug Fixes
+
+* **nano-server:** math references ([e46071a](https://github.com/AliMD/alwatr/commit/e46071a49bb61cb6f36d2e79e14c32712f3746fa))
+* **type:** revert paramkey ([f1ad066](https://github.com/AliMD/alwatr/commit/f1ad06621f7fe80018573e50804e9f3c1b2edde1))
+
+# 0.27.0 (2022-12-29)
+
+### Bug Fixes
+
+* review issue ([e5d192c](https://github.com/AliMD/alwatr/commit/e5d192cbee6917c2de01146cf8bd026895724ab8))
+
+# 0.26.0 (2022-12-22)
+
+### Bug Fixes
+
+* inline home route ([ce978f6](https://github.com/AliMD/alwatr/commit/ce978f6e1e2890e853d0db351c08efca665e5fad))
+* **nano-server:** check method on getBody ([9aa9857](https://github.com/AliMD/alwatr/commit/9aa9857fb6ad96f861f31c651bf131813e46b343))
+* **nano-server:** handle utf8 reply issue ([33aa238](https://github.com/AliMD/alwatr/commit/33aa238d99f92c03a5b39e829cb39172dc45d5c6))
+* **nano-server:** remove return null on requireToken ([3c6779f](https://github.com/AliMD/alwatr/commit/3c6779f6b114aa1afe71e9b2054fb6dbe273c26a))
+* **nano-server:** route generic ([94e181b](https://github.com/AliMD/alwatr/commit/94e181ba1172399ac992af6dc969c56e4edffbf0))
+* **nano-server:** update docs and return type ([df949c1](https://github.com/AliMD/alwatr/commit/df949c19ea75921ab9c3e7323dc33ef340bd3ee7))
+* set correct path ([d01ce6f](https://github.com/AliMD/alwatr/commit/d01ce6ffa749a5e3e0e11e35b4ed61d75d61fec9))
+* tsconfig ([e96dcd3](https://github.com/AliMD/alwatr/commit/e96dcd30774a9f06f7d051e0504192cbbe019e35))
+
+### Features
+
+* improve accident debugging ([d697e6c](https://github.com/AliMD/alwatr/commit/d697e6c4c7d0a4172f4dba9caf6fbd478f79de9c))
+* improve error debugging ([1fba504](https://github.com/AliMD/alwatr/commit/1fba50400a1e8ececc10bbe8ea11cc8dcea2289c))
+* **nano-server:** clear debug info from client for security reasons. ([5814af2](https://github.com/AliMD/alwatr/commit/5814af2ceeac6e2175c4ab924e4b40cef765072c))
+* **nano-server:** maybe promise type ([d782761](https://github.com/AliMD/alwatr/commit/d7827616ea71b7e6328c6a85b80c2daec0b6f512))
+* **nano-server:** reply throw on route ([083dfa5](https://github.com/AliMD/alwatr/commit/083dfa51b391dc689d1d4fed9f1f17d768e7384c))
+* **nano-server:** routeMiddleware type ([a05b1a2](https://github.com/AliMD/alwatr/commit/a05b1a2bc79aeca67a81f4758f5d2b0f6c890028))
+
 # [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
 
 **Note:** Version bump only for package @alwatr/nano-server

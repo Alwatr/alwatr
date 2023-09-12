@@ -3,6 +3,97 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2023-09-12)
+
+# 1.0.0 (2023-06-14)
+
+# 0.32.0 (2023-05-27)
+
+### Bug Fixes
+
+* **fetch:** serviceRequest type ([44c1086](https://github.com/AliMD/alwatr/commit/44c10866e1c630bc3cf85b3e9be38b268b5b0c31))
+* **fetch:** userAuth in StringifyableFetchOptions ([f554b57](https://github.com/AliMD/alwatr/commit/f554b575584cb1464d48fbe8a8c4006125365853))
+
+# 0.31.0 (2023-05-08)
+
+### Bug Fixes
+
+* **fetch.ts:** compatible with node ([c3acb53](https://github.com/AliMD/alwatr/commit/c3acb53effd4a79e389bc4de1567b0285c03d71d))
+* **fetch:** bodyJson type ([5740467](https://github.com/AliMD/alwatr/commit/57404673e7f031a73d1cf23501e6fa8d89759769))
+* **fetch:** check node_mode before use navigator.online ([a688f48](https://github.com/AliMD/alwatr/commit/a688f48e9ce4b103c25ffd50f1b8c96e89c205d1))
+* **fetch:** serviceRequest generic type ([074ef38](https://github.com/AliMD/alwatr/commit/074ef3876086f93486753559d8e3db0b60c52a0e))
+* **fetch:** suppress fetch_cache_not_found extra error ([c04f609](https://github.com/AliMD/alwatr/commit/c04f60944106dbd8d1bf2fb5ce0e7be644c3abc6))
+* new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+* **fetch:** add user auth ([811fbc0](https://github.com/AliMD/alwatr/commit/811fbc018c2b4e3b808704e8623bd5dff2b2f3f7))
+* **fetch:** StringifyableFetchOptions type ([e13fdb2](https://github.com/AliMD/alwatr/commit/e13fdb2550cf3a2102c331aa7980234ca6f86e08))
+
+# 0.30.0 (2023-03-06)
+
+### Bug Fixes
+
+* **fetch:** fetchContext duplicate setSignalValue ([8aa9b00](https://github.com/AliMD/alwatr/commit/8aa9b003a2d7b7ffc8243ff7092d9560763d7273))
+* **fetch:** getClientId in nodejs ([c99e41c](https://github.com/AliMD/alwatr/commit/c99e41c9e9a979ca50cc01aeb5371a3487d9da2e))
+
+### Features
+
+* **fetch:** enhance fetchContext with dispatchOptions and only cache_only request in first time ([1f6b575](https://github.com/AliMD/alwatr/commit/1f6b575437104d64ede8a2c23d141160360d2cd5))
+* **fetch:** fetchContext ([d63d17e](https://github.com/AliMD/alwatr/commit/d63d17ecb58221159dc45a473fdd1c992d306d2b))
+* **fetch:** fetchContext skip online request when offline ([7c2b649](https://github.com/AliMD/alwatr/commit/7c2b6491f78acb961cdc0583112e3c709a177b79))
+* **fetch:** fetchContext work on background ([2e12bfd](https://github.com/AliMD/alwatr/commit/2e12bfde0a0636c30e60906c4812ec66b2d36742))
+* **fetch:** handle offline for all requests ([6a8d7b7](https://github.com/AliMD/alwatr/commit/6a8d7b7159732d834be052191935580331e36962))
+
+# 0.29.0 (2023-02-10)
+
+### Bug Fixes
+
+* **fetch:** device id to client id ([077e467](https://github.com/AliMD/alwatr/commit/077e4671d804d43c8f61a9d163d8d51d7a69134e))
+* **fetch:** headers type ([cd4b14e](https://github.com/AliMD/alwatr/commit/cd4b14e46b5090b6df8cb4f89d22b53966b9151e))
+
+### Features
+
+* **fetch:** add update_cache to CacheStrategy ([e1406b1](https://github.com/AliMD/alwatr/commit/e1406b12e1276de3295c47506c8102ab3f8bfa79))
+* **fetch:** clientId on service request ([9575a1d](https://github.com/AliMD/alwatr/commit/9575a1d595a0a4757581a29a66837cbe4be46ed3))
+
+# 0.28.0 (2023-01-20)
+
+# 0.27.0 (2022-12-29)
+
+### Bug Fixes
+
+* review issue ([e5d192c](https://github.com/AliMD/alwatr/commit/e5d192cbee6917c2de01146cf8bd026895724ab8))
+
+### Features
+
+* **type:** add types ([2de3842](https://github.com/AliMD/alwatr/commit/2de384297b70b9818ec8d62ce8d31be4822d95a4))
+
+# 0.26.0 (2022-12-22)
+
+### Bug Fixes
+
+* all import without .js ([fa739ab](https://github.com/AliMD/alwatr/commit/fa739ab23f67bae1d10bfcc146920b71377a26fc))
+* **core/fetch:** tsconfig refrences ([e6b9542](https://github.com/AliMD/alwatr/commit/e6b9542284e67b67600da4dcebd19daedb031c9c))
+* **fetch:** always call revalidateCallback ([444edc5](https://github.com/AliMD/alwatr/commit/444edc52b6dd5de5418ae8630e1f2270f0114372))
+* **fetch:** enhance handle and report errors in serviceRequest ([dbfc7ff](https://github.com/AliMD/alwatr/commit/dbfc7ff2a036216498dc8e2ff58b74b7eb8d9bc0))
+* **fetch:** fetch_cache_not_found is not error ([3d1aa4e](https://github.com/AliMD/alwatr/commit/3d1aa4e572fbf4bc7b0a527a3fdcf4c521af18dd))
+* **fetch:** fetch_failed error message ([3e98bd9](https://github.com/AliMD/alwatr/commit/3e98bd926a495c13d476f2f1cfb9e546a059d4d8))
+* **fetch:** remove extra _options ([ad24c81](https://github.com/AliMD/alwatr/commit/ad24c8104b944ebda52308e60d41976ac1eeee81))
+* **fetch:** revalidateCallback issue ([7207909](https://github.com/AliMD/alwatr/commit/72079098edb438c28256dad03d7802bc2fab0858))
+* set correct path ([d01ce6f](https://github.com/AliMD/alwatr/commit/d01ce6ffa749a5e3e0e11e35b4ed61d75d61fec9))
+* **storage-engine:** AlwatrDocumentStorage ([ca9a7bf](https://github.com/AliMD/alwatr/commit/ca9a7bf5e17b333538e749ada5d481a06c847101))
+* tsconfig ([e96dcd3](https://github.com/AliMD/alwatr/commit/e96dcd30774a9f06f7d051e0504192cbbe019e35))
+* tsconfig refrences ([cea0562](https://github.com/AliMD/alwatr/commit/cea05621ecfa499476c5b10a412e60f27ba6a06d))
+
+### Features
+
+* **fetch:** add AlwatrDocumentStorage type ([44b84f0](https://github.com/AliMD/alwatr/commit/44b84f0754169a707472655811020f6e542a6e5d))
+* **fetch:** serviceRequest ([b0b5478](https://github.com/AliMD/alwatr/commit/b0b5478d16b2cb590cfc29d644006e4a459dd6d6))
+* **fetch:** serviceRequest ([#513](https://github.com/AliMD/alwatr/issues/513)) ([113ee49](https://github.com/AliMD/alwatr/commit/113ee498c778d9efc00cc4807bfef09e52336a31))
+* improve accident debugging ([d697e6c](https://github.com/AliMD/alwatr/commit/d697e6c4c7d0a4172f4dba9caf6fbd478f79de9c))
+* improve error debugging ([1fba504](https://github.com/AliMD/alwatr/commit/1fba50400a1e8ececc10bbe8ea11cc8dcea2289c))
+
 # [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
 
 **Note:** Version bump only for package @alwatr/fetch

@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2023-09-12)
+
+# 1.0.0 (2023-06-14)
+
+# 0.32.0 (2023-05-27)
+
+# 0.31.0 (2023-05-08)
+
+### Bug Fixes
+
+* new logger api ([9d83a7d](https://github.com/AliMD/alwatr/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+* **router:** add thisArg for routerOutlet ([2bfd1f5](https://github.com/AliMD/alwatr/commit/2bfd1f5b8593f7107b4e84b35600cc07ca3d6c6c))
+
+# 0.30.0 (2023-03-06)
+
+### Bug Fixes
+
+* **router:** home page for sub page routes ([af737f3](https://github.com/AliMD/alwatr/commit/af737f3451fd057f0a2a574be05c34bd06c0f7c0))
+* **router:** make url from router respect empty sectionList ([1fb62f7](https://github.com/AliMD/alwatr/commit/1fb62f774bf5e9e6b68c04d756b32177697e55e8))
+
+### Features
+
+* **router:** internal redirect render template to another route ([de92671](https://github.com/AliMD/alwatr/commit/de9267126935b73dd561d8817346410f00960234))
+* **router:** keepSectionSlice for redirect ([1c3b370](https://github.com/AliMD/alwatr/commit/1c3b370c41f96a8ad612ea9fd5ab9963f6a3b27b))
+
+# 0.29.0 (2023-02-10)
+
+### Bug Fixes
+
+* **route:** cleanup old api ([cf42205](https://github.com/AliMD/alwatr/commit/cf422055b96dbfd33a23732fe3e1def8b86e73c5))
+* **route:** export types ([551f4e3](https://github.com/AliMD/alwatr/commit/551f4e3509cd7b50477c3eefc72a34145e710aa0))
+* **router:** makeRouteContext as soon as posible ([f092b45](https://github.com/AliMD/alwatr/commit/f092b4584cc5fc424ac63cdf40b7c635053b9720))
+* **route:** RouteContextBase type ([9e9ee78](https://github.com/AliMD/alwatr/commit/9e9ee7861bebfe68990171799537d3664ac1a66e))
+* **router:** protocol type ([01fa523](https://github.com/AliMD/alwatr/commit/01fa52381d5ac9760c9af0d595826565548c6841))
+
+### Features
+
+* **route:** makeRouteContext ([16be581](https://github.com/AliMD/alwatr/commit/16be5815a4a44f22bd17c4a87f1b7ef30f9aec6c))
+* **route:** new url method ([580f2b3](https://github.com/AliMD/alwatr/commit/580f2b34396461389da0126d64c3c6ffde99e87b))
+* **route:** redirect with update browser history ([d6d64a0](https://github.com/AliMD/alwatr/commit/d6d64a0fc80284e279db4515d95ff99f530b447f))
+* **router:** enhance logging ([d5930ea](https://github.com/AliMD/alwatr/commit/d5930ea6117b4794c3771a8331c0d6ae063dd52e))
+* **router:** export main api in index and auto init ([58718eb](https://github.com/AliMD/alwatr/commit/58718ebaa10c784255b4a0faa467d35659a1b1df))
+* **router:** initialize process on DOMContentLoaded ([6b114e2](https://github.com/AliMD/alwatr/commit/6b114e2f64a50a40467bff20ecf562d1b7827632))
+* **router:** new api from scratch! ([2b26a8d](https://github.com/AliMD/alwatr/commit/2b26a8d9f95b5968dbda003edc9d540ea95fadd1))
+
+# 0.28.0 (2023-01-20)
+
+# 0.27.0 (2022-12-29)
+
+### Bug Fixes
+
+* **core/router:** preventDefault on svg link click ([e35e935](https://github.com/AliMD/alwatr/commit/e35e9351857d5bcb5128afbc87eb62dd11da865e))
+
+# 0.26.0 (2022-12-22)
+
+### Bug Fixes
+
+* set correct path ([d01ce6f](https://github.com/AliMD/alwatr/commit/d01ce6ffa749a5e3e0e11e35b4ed61d75d61fec9))
+* tsconfig ([e96dcd3](https://github.com/AliMD/alwatr/commit/e96dcd30774a9f06f7d051e0504192cbbe019e35))
+
 # [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
 
 **Note:** Version bump only for package @alwatr/router

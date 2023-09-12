@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2023-09-12)
+
+# 1.0.0 (2023-06-14)
+
+# 0.32.0 (2023-05-27)
+
+# 0.31.0 (2023-05-08)
+
+### Performance Improvements
+
+* **pwa:** optimize first load and rendering ([343d757](https://github.com/AliMD/alwatr/commit/343d757eefab6572df54fb4f7624698e9a9f9e11))
+
+# 0.30.0 (2023-03-06)
+
+# 0.29.0 (2023-02-10)
+
+# 0.28.0 (2023-01-20)
+
+# 0.27.0 (2022-12-29)
+
+### Features
+
+* new ui design system ([8c9c8ba](https://github.com/AliMD/alwatr/commit/8c9c8ba29c477838f3e7034b902f4e0dafabd17c))
+
+# 0.26.0 (2022-12-22)
+
+### Bug Fixes
+
+* **ui/*:** package path in refrences ([841d86d](https://github.com/AliMD/alwatr/commit/841d86dc2555fdc86a950b490ea2eb9fffe4df2d))
+
 # [1.0.0](https://github.com/AliMD/alwatr/compare/v0.32.0...v1.0.0) (2023-06-14)
 
 **Note:** Version bump only for package @alwatr/font
