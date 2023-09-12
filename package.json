@@ -30,7 +30,7 @@
     "f": "yarn format",
     "fl": "yarn format:eslint",
     "fp": "yarn format:prettier",
-    "p": "run-s pull clean build:ts build:r ver",
+    "rl": "run-s pull ver",
     "lint": "run-s lint:*",
     "lint:ts": "eslint . --config .eslintrc.json --ext .ts",
     "build": "yarn build:ts",
