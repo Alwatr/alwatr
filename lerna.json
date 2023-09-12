@@ -8,9 +8,8 @@
       "conventionalCommits": true,
       "changelogPreset": "angular",
       "ignoreChanges": ["*.md"],
+      "message": "release: new independent version",
       "private": false,
-      "signGitCommit": true,
-      "signGitTag": true,
       "forcePublish": true,
       "push": true,
       "createRelease": "github"
