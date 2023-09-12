@@ -6,7 +6,10 @@
   "command": {
     "version": {
       "conventionalCommits": true,
+      "changelog": true,
       "changelogPreset": "angular",
+      "changelogIncludeCommitsClientLogin": " by @%l",
+      "createReleaseDiscussion": "announcements",
       "ignoreChanges": ["*.md"],
       "message": "release: new independent version",
       "private": false,
