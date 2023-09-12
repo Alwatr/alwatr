@@ -9,10 +9,6 @@ on:
     types:
       - created
 
-  push:
-    tags:
-      - 'v*.*.*'
-
 env:
   NODE_VERSION: lts/*
 
