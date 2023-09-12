@@ -40,7 +40,7 @@ jobs:
         run: yarn build
 
       - name: 🚀 Extra Packages Build
-        run: yarn lerna run build
+        run: yarn build:r
 
       - name: 🚀 Run ESLint
         run: yarn lint:ts

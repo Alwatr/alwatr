@@ -38,10 +38,10 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: 🏗 Build Typescript
-        run: yarn build:ts
+        run: yarn build
 
-      - name: 🏗 Run ESLint
-        run: yarn lint:ts
+      # - name: 🚀 Extra Packages Build
+      #   run: yarn build:r
 
       - name: 🚀 Publish
         run: yarn run publish --yes
