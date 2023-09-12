@@ -3,6 +3,7 @@
   "version": "independent",
   "npmClient": "yarn",
   "packages": ["core/*", "services/*", "ui/*", "uniquely/*", "labs/*"],
+  "loglevel": "verbose",
   "command": {
     "version": {
       "conventionalCommits": true,
