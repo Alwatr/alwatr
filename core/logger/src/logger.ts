@@ -12,7 +12,7 @@ globalAlwatr.registeredList.push({
 export const NODE_MODE = typeof process !== 'undefined';
 export const DEV_MODE = NODE_MODE
   ? process.env.ALWATR_DEBUG === '1'
-  : globalThis.localStorage?.getItem('ALWATR_DEBUG') === '1';
+  : globalThis.localStorage?.getItem('alwatrDebug') === '1';
 
 /**
  * Color list storage for logger.
