@@ -13,7 +13,6 @@
       "ignoreChanges": ["*.md"],
       "message": "release: new independent version",
       "private": false,
-      "forcePublish": true,
       "forceGitTag": true,
       "push": true,
       "createRelease": "github"
