@@ -1,5 +1,5 @@
 {
-  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "$schema": "node_modules/@lerna-lite/cli/schemas/lerna-schema.json",
   "version": "independent",
   "npmClient": "yarn",
   "packages": ["core/*", "services/*", "ui/*", "uniquely/*", "labs/*"],
@@ -14,10 +14,6 @@
       "forceGitTag": true,
       "push": true,
       "createRelease": "github"
-    },
-    "publish": {
-      "conventionalCommits": true,
-      "ignoreChanges": ["*.md"]
     },
     "run": {
       "stream": true
