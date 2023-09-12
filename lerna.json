@@ -9,6 +9,7 @@
       "changelog": true,
       "changelogPreset": "angular",
       "createReleaseDiscussion": "announcements",
+      "changelogIncludeCommitsClientLogin": " by @%l",
       "ignoreChanges": ["*.md"],
       "message": "release: new independent version",
       "private": false,
