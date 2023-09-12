@@ -43,7 +43,7 @@
     "serve": "wds",
     "watch": "run-p watch:* serve",
     "watch:ts": "yarn build:ts --watch --preserveWatchOutput",
-    "ver": "lerna version",
+    "ver": "lerna version --no-private",
     "pull": "git pull",
     "push": "git push && git push --tags",
     "publish": "lerna publish from-package"

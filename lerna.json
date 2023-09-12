@@ -7,10 +7,13 @@
     "version": {
       "conventionalCommits": true,
       "changelogPreset": "angular",
-      "message": "release",
-      "noPrivate": true,
+      "ignoreChanges": ["*.md"],
+      "private": false,
+      "signGitCommit": true,
+      "signGitTag": true,
       "forcePublish": true,
-      "push": true
+      "push": true,
+      "createRelease": "github"
     },
     "publish": {
       "conventionalCommits": true,
