@@ -8,13 +8,11 @@
       "conventionalCommits": true,
       "changelog": true,
       "changelogPreset": "angular",
-      "createReleaseDiscussion": "announcements",
       "ignoreChanges": ["*.md"],
       "message": "release: new independent version",
       "private": false,
       "forceGitTag": true,
-      "push": true,
-      "createRelease": "github"
+      "push": true
     },
     "run": {
       "stream": true
