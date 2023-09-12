@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/AliMD/alwatr/compare/@alwatr/logger@1.1.1...@alwatr/logger@1.1.2) (2023-09-12)
+
+### Bug Fixes
+
+* **logger:** change localStorage debug key to `alwatrDebug` ([66542ea](https://github.com/AliMD/alwatr/commit/66542ea22a9a515db4a15dc966624b3029f517ed)) by @AliMD
+
 ## [1.1.1](https://github.com/AliMD/alwatr/compare/@alwatr/logger@1.1.0...@alwatr/logger@1.1.1) (2023-09-12)
 
 **Note:** Version bump only for package @alwatr/logger
