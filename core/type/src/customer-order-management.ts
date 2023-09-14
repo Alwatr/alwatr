@@ -89,7 +89,7 @@ export interface Order extends AlwatrDocumentObject {
   /**
    * Order cart list.
    */
-  itemList: Array<OrderItem>;
+  itemList: OrderItem[];
 
   /**
    * Delivery info
@@ -174,7 +174,7 @@ export interface OrderShippingInfo extends StringifyableRecord {
 }
 
 export interface ComUser extends User {
-  permissions?: Array<UserPermission> | 'root';
+  permissions?: UserPermission[] | 'root';
   shopName?: string;
   priceListName?: string;
 }

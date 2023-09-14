@@ -87,7 +87,7 @@ export type ProviderFunction<TArgument, TReturn> = (argumentObject: TArgument) =
 /**
  * Listener spec.
  */
-export type ListenerSpec = {
+export interface ListenerSpec {
   /**
    * Unique listener id
    */
@@ -97,7 +97,7 @@ export type ListenerSpec = {
    * Signal id
    */
   signalId: string;
-};
+}
 
 /**
  * Signal listeners object in storage.
@@ -119,7 +119,7 @@ export type ListenerObject<T extends Stringifyable> = ListenerSpec & {
 /**
  * Signal object in storage.
  */
-export type SignalObject<T extends Stringifyable> = {
+export interface SignalObject<T extends Stringifyable> {
   /**
    * Signal id for direct access.
    */
@@ -144,8 +144,8 @@ export type SignalObject<T extends Stringifyable> = {
   /**
    * Signal listeners list.
    */
-  listenerList: Array<ListenerObject<T>>;
-};
+  listenerList: ListenerObject<T>[];
+}
 
 /**
  * Signal stack storage.

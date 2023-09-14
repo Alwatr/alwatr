@@ -1,4 +1,4 @@
-export type AlwatrStorageClientConfig = {
+export interface AlwatrStorageClientConfig {
   /**
    * Storage name (like database name).
    */
@@ -34,4 +34,4 @@ export type AlwatrStorageClientConfig = {
    * @default undefined Auto detect base on `NODE_ENV`
    */
   devMode?: boolean;
-};
+}

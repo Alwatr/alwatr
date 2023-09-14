@@ -1,4 +1,4 @@
-export type AlwatrStorageEngineConfig = {
+export interface AlwatrStorageEngineConfig {
   /**
    * Storage name.
    */
@@ -31,9 +31,9 @@ export type AlwatrStorageEngineConfig = {
    * @default undefined Auto detect base on `NODE_ENV`
    */
   devMode?: boolean;
-};
+}
 
-export type AlwatrStorageEngineProviderConfig = {
+export interface AlwatrStorageEngineProviderConfig {
   /**
    * Default storage path. you can override it in get config params.
    *
@@ -61,4 +61,4 @@ export type AlwatrStorageEngineProviderConfig = {
    * @default undefined Auto detect base in NODE_ENV
    */
   devMode?: boolean;
-};
+}

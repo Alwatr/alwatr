@@ -20,6 +20,8 @@ After accepted issue, if you would like to _implement_ the feature, you can _sub
 
 ## Commit Message Format
 
+[Follow The Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/)
+
 ```txt
 <type>(<scope>): <short summary>
   │      │         │
@@ -29,8 +31,6 @@ After accepted issue, if you would like to _implement_ the feature, you can _sub
   │
   └─⫸ Commit Type: fix|feat|refactor|perf|docs|lint|chore|merge|release
 ```
-
-Example: `feat(signal): support signal providers`
 
 ## Type
 
@@ -45,3 +45,23 @@ Must be one of the following:
 - **chore**: Other changes that don't modify `src`
 - **merge**: Merge branches, solve conflict, etc
 - **release**: Release new version
+
+## Example
+
+```
+feat(signal): support signal providers
+```
+
+### Commit message with description and breaking change footer
+
+```
+feat(api): allow provided config object to extend other configs
+
+BREAKING CHANGE: `extends` key in config file is now used for extending other config files
+```
+
+### Commit message with ! to draw attention to breaking change
+
+```
+feat(api)!: send an email to the customer when a product is shipped
+```

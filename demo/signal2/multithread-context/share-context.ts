@@ -2,7 +2,7 @@ import {AlwatrMultithreadContextSignal} from '@alwatr/signal2';
 
 import type {Stringifyable} from '@alwatr/type';
 
-type Message = {
+interface Message {
   type: string;
   payload: Stringifyable
 }

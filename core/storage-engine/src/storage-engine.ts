@@ -97,12 +97,12 @@ export class AlwatrStorageEngine<DocumentType extends AlwatrDocumentObject = Alw
   _storage: AlwatrDocumentStorage<DocumentType>;
 
   protected _logger: AlwatrLogger;
-  protected _keys: Array<string> | null = null;
+  protected _keys: string[] | null = null;
 
   /**
    * All document ids in array.
    */
-  get keys(): Array<string> {
+  get keys(): string[] {
     if (this._keys === null) {
       this._keys = Object.keys(this._storage.data);
     }

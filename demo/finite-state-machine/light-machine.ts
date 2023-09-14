@@ -5,8 +5,8 @@ import {delay} from '@alwatr/util';
 const lightMachineConstructor = finiteStateMachineProvider.defineConstructor('light_machine', {
   initial: 'green',
   context: {
-    a: <number> 0,
-    b: <number> 0,
+    a: 0 as number,
+    b: 0 as number,
   },
   stateRecord: {
     $all: {

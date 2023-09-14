@@ -12,7 +12,7 @@ services:
     build:
       context: ./nginx
       args:
-        - NGINX_VERSION=${NGINX_VERSION:-1.24}
+        - NGINX_IMAGE=${NGINX_IMAGE}
 
     networks:
       - internal
@@ -54,8 +54,7 @@ services:
     build:
       context: ./php
       args:
-        - PHP_VERSION=${PHP_VERSION:-8.1}
-        - WORDPRESS_VERSION=${WORDPRESS_VERSION:-6}
+        - WORDPRESS_IMAGE=${WORDPRESS_IMAGE}
         - APT_INSTALL=${APT_INSTALL:-}
         - PHP_EXT_INSTALL=${PHP_EXT_INSTALL:-}
         - SOURCEGUARDIAN_LOADER=${SOURCEGUARDIAN_LOADER:-0}

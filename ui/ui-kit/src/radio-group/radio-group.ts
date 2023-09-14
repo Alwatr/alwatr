@@ -6,12 +6,12 @@ declare global {
   }
 }
 
-export type RadioOption = {label: string; value: string};
+export interface RadioOption {label: string; value: string}
 
-export type RadioGroupOptions = {
+export interface RadioGroupOptions {
   title: string;
-  radioGroup: Array<RadioOption>;
-};
+  radioGroup: RadioOption[];
+}
 
 /**
  * Alwatr fieldset element

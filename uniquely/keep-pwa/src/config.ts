@@ -21,9 +21,9 @@ export const config = {
     token: getConfKey<string>('token'),
   },
 
-  fetchContextOptions: <Partial<FetchOptions>>{
+  fetchContextOptions: {
     removeDuplicate: 'auto',
     retry: 2,
     retryDelay: 2_000,
-  },
+  } as Partial<FetchOptions>,
 } as const;

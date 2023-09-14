@@ -18,19 +18,19 @@ export interface PageHomeContent extends StringifyableRecord {
   topAppBar: TopAppBarContent;
   about: BoxType;
   catalogue: BoxType;
-  productList: Array<BoxType>;
-  socialList: Array<BoxType>;
+  productList: BoxType[];
+  socialList: BoxType[];
   agency?: BoxType; // just available in fa.
 }
 
 export interface PageAgencyContent extends StringifyableRecord {
   topAppBar: TopAppBarContent;
-  agencyList: Array<BoxType>;
+  agencyList: BoxType[];
 }
 
 export interface ProductPageContent extends StringifyableRecord {
   topAppBar: TopAppBarContent;
-  product: Array<ProductType>;
+  product: ProductType[];
 }
 
 export interface FormData extends StringifyableRecord {

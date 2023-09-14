@@ -4,7 +4,13 @@
   "extends": "./tsconfig.base",
   "compilerOptions": {
     "composite": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "plugins": [
+      {
+        "name": "ts-lit-plugin",
+        "strict": true
+      }
+    ],
   },
   "files": [],
   "exclude": [],
@@ -17,6 +23,7 @@
     {"path": "./core/context"},
     {"path": "./core/server-context"},
     {"path": "./core/router"},
+    {"path": "./core/router2"},
     {"path": "./core/i18n"},
     {"path": "./core/i18n2"},
     {"path": "./core/math"},
@@ -29,12 +36,15 @@
     {"path": "./core/fsm"},
     {"path": "./core/fsm2"},
     {"path": "./core/type"},
+    {"path": "./core/fract"},
 
     // ui
     {"path": "./ui/element"},
     {"path": "./ui/icon"},
     {"path": "./ui/ui-kit"},
+    {"path": "./ui/ui-kit2"},
     {"path": "./ui/pwa-helper"},
+    {"path": "./ui/style"},
 
     // demo
     {"path": "./demo"},

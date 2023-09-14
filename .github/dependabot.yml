@@ -2,7 +2,8 @@
 
 version: 2
 updates:
-  - package-ecosystem: github-actions
+  -
+    package-ecosystem: github-actions
     directory: /
     open-pull-requests-limit: 20
     reviewers:
@@ -13,8 +14,13 @@ updates:
       - ci
       - priority-low
       - maintenance
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
-  - package-ecosystem: npm
+  -
+    package-ecosystem: npm
     directory: /
     versioning-strategy: increase
     open-pull-requests-limit: 20
@@ -27,3 +33,13 @@ updates:
       - ci
       - priority-low
       - maintenance
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
+        exclude-patterns:
+          - "*lint*"
+      lint-dependencies:
+        patterns:
+          - "*lint*"

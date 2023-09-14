@@ -20,7 +20,7 @@ Many of the methods in the logger are no-ops when the debug mode is off in the b
 Please remember to **reload** the window after changing the debug mode.
 
 ```ts
-window.localStorage?.setItem('ALWATR_DEBUG', '1');
+window.localStorage?.setItem('alwatrDebug', '1');
 ```
 
 > Make sure the [log level](https://developer.chrome.com/docs/devtools/console/log/#browser) in set correctly.

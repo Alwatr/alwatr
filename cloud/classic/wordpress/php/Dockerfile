@@ -1,15 +1,12 @@
-ARG PHP_VERSION=8.1
-ARG WORDPRESS_VERSION=6
-ARG IMAGE_NAME=docker.io/wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}-fpm
-
-FROM $IMAGE_NAME
+ARG WORDPRESS_IMAGE=ghcr.io/alimd/wordpress:6.2-php8.2-fpm
+FROM $WORDPRESS_IMAGE
 
 WORKDIR /var/www/html
 EXPOSE 80
 
 COPY php.conf.ini $PHP_INI_DIR/conf.d/
-COPY fix-permition.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/fix-permition.sh
+COPY fix-permission.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/fix-permission.sh
 
 ARG APT_INSTALL
 RUN set -ex; \
@@ -61,6 +58,7 @@ RUN set -ex; \
     cd /tmp/ioncube; \
     curl -sSLO http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz; \
     tar xzf ioncube_loaders_lin_x86-64.tar.gz; \
+    ls -lah ioncube/; \
     mv ioncube/ioncube_loader_lin_${PHP_VERSION}.so "$PHP_EXT_DIR/ioncube.so"; \
     echo "zend_extension=ioncube.so" > $PHP_INI_DIR/conf.d/16-ioncube.ini; \
     rm -rf /tmp/ioncube; \

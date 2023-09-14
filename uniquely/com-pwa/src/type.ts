@@ -9,5 +9,5 @@ export interface BoxType extends IconBoxContent {
 
 export interface PageHomeContent extends StringifyableRecord {
   topAppBar: TopAppBarContent;
-  boxList: Array<BoxType>;
+  boxList: BoxType[];
 }

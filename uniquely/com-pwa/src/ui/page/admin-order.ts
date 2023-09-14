@@ -314,7 +314,7 @@ export class AlwatrPageAdminOrder extends UnresolvedMixin(LocalizeMixin(SignalMi
   }
 
   protected _render_itemList(
-      itemList: Array<OrderItem>,
+      itemList: OrderItem[],
       productStorage: AlwatrDocumentStorage<Product> | null | undefined,
   ): unknown {
     this._logger.logMethod?.('_render_itemList');

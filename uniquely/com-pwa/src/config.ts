@@ -33,11 +33,11 @@ export const config = {
     adminUserListIncOrder: apiBaseUrl + 'admin/user-list-inc-order',
   },
 
-  fetchContextOptions: <Partial<FetchOptions>>{
+  fetchContextOptions: {
     removeDuplicate: 'auto',
     retry: 2,
     retryDelay: 2_000,
-  },
+  } as Partial<FetchOptions>,
 
   order: {
     factor: {
@@ -48,7 +48,7 @@ export const config = {
       boxSize: 80,
       price: 190_000,
     },
-    lading: <Record<CarType, {fee: number; capacity: number}>> {
+    lading: {
       'nissan': {
         capacity: 90,
         fee: 96_000,
@@ -81,6 +81,6 @@ export const config = {
         capacity: 113,
         fee: 100_000,
       },
-    },
+    } as Record<CarType, {fee: number; capacity: number}>,
   },
 } as const;

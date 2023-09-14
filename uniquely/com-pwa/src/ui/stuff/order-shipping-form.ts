@@ -64,7 +64,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
     this._logger.logMethod?.('render');
 
     const radioGroupOptions = {
-      carType: <RadioGroupOptions>{
+      carType: {
         title: message('order_shipping_car_type_title'),
         radioGroup: carTypeCS.map((value) => {
           return {
@@ -72,8 +72,8 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
             label: `${message('order_shipping_car_type_key_' + value)} (${number(config.order.lading[value].fee)}+)`,
           };
         }),
-      },
-      ladingType: <RadioGroupOptions>{
+      } as RadioGroupOptions,
+      ladingType: {
         title: message('order_shipping_lading_type_title'),
         radioGroup: ladingTypeCS.map((value) => {
           return {
@@ -81,8 +81,8 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
             label: `${message('order_shipping_lading_type_key_' + value)}`,
           };
         }),
-      },
-      timePeriod: <RadioGroupOptions>{
+      } as RadioGroupOptions,
+      timePeriod: {
         title: message('order_shipping_time_period_title'),
         radioGroup: timePeriodCS.map((value) => {
           return {
@@ -90,7 +90,7 @@ export class AlwatrOrderShoppingForm extends LocalizeMixin(SignalMixin(Unresolve
             label: message('order_shipping_time_period_key_' + value),
           };
         }),
-      },
+      } as RadioGroupOptions,
     };
 
     return html`

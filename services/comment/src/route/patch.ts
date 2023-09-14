@@ -41,7 +41,7 @@ async function setComment(
       meta: {
         name: err.name,
         message: err.message,
-        cause: <StringifyableRecord>err.cause,
+        cause: err.cause as StringifyableRecord,
       },
     };
   }

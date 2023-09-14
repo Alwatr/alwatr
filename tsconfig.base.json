@@ -4,11 +4,11 @@
   "compilerOptions": {
     /* Basic Options */
     "incremental": true,
-    "target": "ES2019",
+    "target": "ES2020",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "resolveJsonModule": true, // temporary for fix import json issue
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
     // "allowJs": true,
     // "checkJs": true,
     // "jsx": "preserve",

@@ -8,10 +8,10 @@ networks:
 
 services:
   nocodb:
-    image: nocodb/nocodb:latest
+    image: ${NOCODB_IMAGE}
 
-    cpu_shares: 256
-    mem_limit: 256m
+    cpu_shares: 1024
+    mem_limit: 300m
 
     stop_grace_period: 5s
 

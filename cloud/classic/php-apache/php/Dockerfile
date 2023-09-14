@@ -1,14 +1,12 @@
-ARG PHP_VERSION=8.1
-ARG IMAGE_NAME=docker.io/library/php:${PHP_VERSION}-apache
-
-FROM $IMAGE_NAME
+ARG PHP_IMAGE=ghcr.io/alimd/php:8.2-apache
+FROM $PHP_IMAGE
 
 WORKDIR /var/www/html
 EXPOSE 80
 
 COPY php.conf.ini $PHP_INI_DIR/conf.d/
-COPY fix-permition.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/fix-permition.sh
+COPY fix-permission.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/fix-permission.sh
 
 ARG APT_INSTALL
 RUN set -ex; \

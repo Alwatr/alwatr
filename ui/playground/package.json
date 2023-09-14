@@ -1,0 +1,38 @@
+{
+  "name": "@alwatr/playground",
+  "version": "1.0.0",
+  "description": "Alwatr Ui Playground",
+  "type": "module",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "private": true,
+  "engines": {
+    "node": ">=18.13.0",
+    "npm": ">=8.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliMD/alwatr",
+    "directory": "ui/playground"
+  },
+  "browserslist": "> 1.5%, not dead",
+  "postcss": {
+    "plugins": {
+      "postcss-import": {},
+      "tailwindcss/nesting": {},
+      "tailwindcss": {},
+      "postcss-preset-env": {}
+    }
+  },
+  "scripts": {
+    "b": "yarn build",
+    "s": "yarn start",
+    "w": "yarn watch",
+    "start": "run-s clean build serve",
+    "build": "run-s build:*",
+    "build:css": "postcss index.css --map --output dist.css",
+    "serve": "wds",
+    "watch": "run-p watch:css serve",
+    "watch:css": "yarn build:css --watch"
+  }
+}

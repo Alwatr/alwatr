@@ -283,11 +283,11 @@ export const initFsmInstance = (instanceId: string, constructorId: string): void
  */
 export const subscribeSignals = (
     instanceId: string,
-    signalList: Array<SignalConfig>,
+    signalList: SignalConfig[],
     subscribeConstructorSignals = true,
-): Array<ListenerSpec> => {
+): ListenerSpec[] => {
   logger.logMethodArgs?.('subscribeSignals', {instanceId, signalList});
-  const listenerList: Array<ListenerSpec> = [];
+  const listenerList: ListenerSpec[] = [];
 
   if (subscribeConstructorSignals) {
     signalList = signalList.concat(getFsmConstructor(getFsmInstance(instanceId).constructorId).signalList);
@@ -327,11 +327,11 @@ export const subscribeSignals = (
  */
 export const defineConstructorSignals = <T extends FsmTypeHelper>(
   constructorId: string,
-  signalList: Array<SignalConfig<T>>,
+  signalList: SignalConfig<T>[],
 ): void => {
   logger.logMethodArgs?.('defineSignals', {constructorId, signalList: signalList});
   const fsmConstructor = getFsmConstructor(constructorId);
-  fsmConstructor.signalList = fsmConstructor.signalList.concat(signalList as Array<SignalConfig>);
+  fsmConstructor.signalList = fsmConstructor.signalList.concat(signalList as SignalConfig[]);
 };
 
 /**
@@ -339,11 +339,11 @@ export const defineConstructorSignals = <T extends FsmTypeHelper>(
  */
 export const defineInstanceSignals = <T extends FsmTypeHelper>(
   instanceId: string,
-  signalList: Array<SignalConfig<T>>,
+  signalList: SignalConfig<T>[],
   subscribeConstructorSignals = true,
-): Array<ListenerSpec> => {
+): ListenerSpec[] => {
   logger.logMethodArgs?.('defineSignals', {instanceId, signals: signalList});
-  return subscribeSignals(instanceId, signalList as Array<SignalConfig>, subscribeConstructorSignals);
+  return subscribeSignals(instanceId, signalList as SignalConfig[], subscribeConstructorSignals);
 };
 
 /**
@@ -438,7 +438,7 @@ export const finiteStateMachineConsumer = <T extends FsmTypeHelper, TContext ext
     /**
      * Finite state machine constructor id.
      */
-    constructorId: <string>machineInstance?.constructorId ?? makeFromConstructor,
+    constructorId: machineInstance?.constructorId as string ?? makeFromConstructor,
 
     /**
      * Render helper for use finite state machine instance in UI.

@@ -15,9 +15,9 @@ export const serverContextFsmConstructorId = 'server_context_fsm';
 
 export const serverContextFsmConstructor = finiteStateMachineProvider.defineConstructor(serverContextFsmConstructorId, {
   initial: 'initial',
-  context: <ServerContextFsmContext>{
+  context: {
     options: {},
-  },
+  } as ServerContextFsmContext,
   stateRecord: {
     $all: {
       on: {},

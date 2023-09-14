@@ -1,6 +1,6 @@
-export type JsonSchema = {
+export interface JsonSchema {
   [key: string]:
-    | Array<JsonSchema>
+    | JsonSchema[]
     | JsonSchema
     | StringConstructor
     | NumberConstructor
@@ -9,4 +9,4 @@ export type JsonSchema = {
     | number
     | boolean
     | null;
-};
+}

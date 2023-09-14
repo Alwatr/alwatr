@@ -1,11 +1,9 @@
-import {AlwatrBaseSignal} from './base.js';
-
-import type {ListenerCallback, SubscribeOptions, SubscribeResult} from './type.js';
+import {AlwatrObservable} from './observable.js';
 
 /**
- * Alwatr event signal without any detail.
+ * Alwatr event signal without any data.
  */
-export class AlwatrSimpleSignal extends AlwatrBaseSignal<undefined> {
+export class AlwatrSimpleSignal extends AlwatrObservable<undefined> {
   constructor(config: {name: string, loggerPrefix?: string}) {
     config.loggerPrefix ??= 'signal';
     super(config);
@@ -14,28 +12,14 @@ export class AlwatrSimpleSignal extends AlwatrBaseSignal<undefined> {
   /**
    * Dispatch an event to all listeners.
    */
-  dispatch(): void {
-    this._dispatch(undefined);
+  notify(): void {
+    this._notify(undefined);
   }
 
   /**
-   * Subscribe to context changes.
+   * Wait until next event signal.
    */
-  subscribe(listenerCallback: ListenerCallback<this, never>, options?: SubscribeOptions): SubscribeResult {
-    return super._subscribe(listenerCallback as ListenerCallback<this, undefined>, options);
-  }
-
-  /**
-   * Unsubscribe from context.
-   */
-  unsubscribe(listenerCallback: ListenerCallback<this, never>): void {
-    return super._unsubscribe(listenerCallback as ListenerCallback<this, undefined>);
-  }
-
-  /**
-   * Wait until next event.
-   */
-  untilNext(): Promise<void> {
-    return super._untilChange();
+  untilNewNotify(): Promise<void> {
+    return super._untilNewNotify();
   }
 }

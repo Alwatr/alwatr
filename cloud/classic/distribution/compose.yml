@@ -6,7 +6,7 @@ networks:
 
 services:
   distribution:
-    image: ${DISTRIBUTION_IMAGE:-registry:2}
+    image: ${DISTRIBUTION_IMAGE}
 
     networks:
       - alwatr-public-network

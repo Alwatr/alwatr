@@ -5,14 +5,14 @@ import {AlwatrServerRequestBase} from './server-request.js';
 
 import type {ServerRequestState} from './server-request.js';
 import type {FetchOptions} from '@alwatr/fetch/type.js';
-import type {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
-import type {AlwatrServiceResponse, Stringifyable, StringifyableRecord} from '@alwatr/type';
+import type {AlwatrServiceResponse} from '@alwatr/type';
 
 export abstract class AlwatrApiRequestBase<
-  TData extends Stringifyable = Stringifyable,
-  TMeta extends StringifyableRecord = StringifyableRecord
-> extends AlwatrServerRequestBase {
-  protected _responseJson?: AlwatrServiceResponse<TData, TMeta>;
+  T extends AlwatrServiceResponse = AlwatrServiceResponse,
+  ExtraState extends string = never,
+  ExtraEvent extends string = never
+> extends AlwatrServerRequestBase<ExtraState, ExtraEvent> {
+  protected _responseJson?: T;
 
   protected override async _$fetch(options: FetchOptions): Promise<void> {
     if (!NODE_MODE) {
@@ -60,10 +60,7 @@ export abstract class AlwatrApiRequestBase<
   }
 }
 
-export class AlwatrApiRequest<
-  TData extends Stringifyable = Stringifyable,
-  TMeta extends StringifyableRecord = StringifyableRecord
-> extends AlwatrApiRequestBase<TData, TMeta> {
+export class AlwatrApiRequest<T extends AlwatrServiceResponse = AlwatrServiceResponse> extends AlwatrApiRequestBase<T> {
   /**
    * Current state.
    */
@@ -71,7 +68,7 @@ export class AlwatrApiRequest<
     return this._state;
   }
 
-  get response(): AlwatrServiceResponse<TData, TMeta> | undefined {
+  get response(): T | undefined {
     return this._responseJson;
   }
 
@@ -81,20 +78,6 @@ export class AlwatrApiRequest<
 
   request(options?: Partial<FetchOptions>): void {
     return this._request(options);
-  }
-
-  /**
-   * Subscribe to state changes.
-   */
-  subscribe(listenerCallback: ListenerCallback<this, ServerRequestState>, options?: SubscribeOptions): SubscribeResult {
-    return this._subscribe(listenerCallback, options);
-  }
-
-  /**
-   * Unsubscribe from changes.
-   */
-  unsubscribe(listenerCallback: ListenerCallback<this, ServerRequestState>): void {
-    return super._unsubscribe(listenerCallback);
   }
 
   cleanup(): void {

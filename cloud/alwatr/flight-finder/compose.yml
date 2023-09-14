@@ -6,7 +6,7 @@ networks:
 
 services:
   storage-server:
-    image: ghcr.io/alimd/storage-server:${STORAGE_SERVER_VERSION}
+    image: ${STORAGE_SERVER_IMAGE}
 
     cpu_shares: 512
     mem_limit: 256m
@@ -18,7 +18,7 @@ services:
     networks:
       internal:
         aliases:
-          - '${APP_ID}-storage-server'
+          - '${appId}-storage-server'
 
     environment:
       - STORAGE_PATH=/storage
@@ -39,7 +39,7 @@ services:
         max-file: '2'
 
   telegram-notifier:
-    image: ghcr.io/alimd/telegram-notifier:${TELEGRAM_NOTIFIER_VERSION}
+    image: ${TELEGRAM_NOTIFIER_IMAGE}
 
     cpu_shares: 512
     mem_limit: 256m
@@ -49,7 +49,7 @@ services:
     networks:
       internal:
         aliases:
-          - '${APP_ID}-telegram-notifier'
+          - '${appId}-telegram-notifier'
 
     environment:
       - STORAGE_PATH=/storage
@@ -72,7 +72,7 @@ services:
         max-file: '2'
 
   flight-crawler:
-    image: ghcr.io/alimd/flight-crawler:${FLIGHT_CRAWLER_VERSION}
+    image: ${FLIGHT_CRAWLER_IMAGE}
 
     cpu_shares: 256
     mem_limit: 256m
@@ -87,11 +87,11 @@ services:
       - telegram-notifier
 
     environment:
-      - STORAGE_HOST=${APP_ID}-storage-server
+      - STORAGE_HOST=${appId}-storage-server
       - STORAGE_PORT=80
       - STORAGE_NAME=${STORAGE_NAME}
       - STORAGE_TOKEN=${STORAGE_TOKEN}
-      - NOTIFIER_HOST=http://${APP_ID}-telegram-notifier
+      - NOTIFIER_HOST=http://${appId}-telegram-notifier
       - NOTIFIER_TOKEN=${TELEGRAM_NOTIFIER_TOKEN}
       - NOTIFIER_TO=${TELEGRAM_NOTIFIER_TO}
       - ALWATR_DEBUG=${FLIGHT_CRAWLER_DEBUG:-}
@@ -103,7 +103,7 @@ services:
         max-file: '2'
 
   api:
-    image: ghcr.io/alimd/flight-finder-api:${API_VERSION}
+    image: ${API_IMAGE}
 
     cpu_shares: 512
     mem_limit: 256m
@@ -118,7 +118,7 @@ services:
       - storage-server
 
     environment:
-      - STORAGE_HOST=${APP_ID}-storage-server
+      - STORAGE_HOST=${appId}-storage-server
       - STORAGE_PORT=80
       - STORAGE_NAME=${STORAGE_NAME}
       - STORAGE_TOKEN=${STORAGE_TOKEN}
@@ -139,7 +139,7 @@ services:
       traefik.frontend.redirect.entryPoint: https
 
   pwa:
-    image: ghcr.io/alimd/flight-finder-pwa:${PWA_VERSION}
+    image: ${PWA_IMAGE}
 
     cpu_shares: 512
     mem_limit: 256m

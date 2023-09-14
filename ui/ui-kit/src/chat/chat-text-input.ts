@@ -67,7 +67,7 @@ export class AlwatrChatTextInput extends LocalizeMixin(SignalMixin(AlwatrBaseEle
     return html`
       <textarea rows="1" placeholder=${message('chat_text_input_placeholder')} @input=${this.__inputChange}></textarea>
       <alwatr-icon-button
-        .content=${<IconButtonContent>{icon: 'send-outline', flipRtl: true, clickSignalId: 'send-message'}}
+        .content=${{icon: 'send-outline', flipRtl: true, clickSignalId: 'send-message'} as IconButtonContent}
         disabled
       ></alwatr-icon-button>
     `;

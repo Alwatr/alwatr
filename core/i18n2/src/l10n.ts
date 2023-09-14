@@ -1,7 +1,6 @@
 import {globalAlwatr} from '@alwatr/logger';
 import {UnicodeDigits, UnicodeLangKeys} from '@alwatr/math';
-import {ListenerCallback, SubscribeOptions, SubscribeResult} from '@alwatr/signal2';
-import {AlwatrBaseSignal} from '@alwatr/signal2/base.js';
+import {AlwatrObservable} from '@alwatr/signal2/observable.js';
 
 import {localeList} from './locale-list.js';
 
@@ -13,7 +12,7 @@ globalAlwatr.registeredList.push({
   version: _ALWATR_VERSION_,
 });
 
-export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
+export class AlwatrL10n extends AlwatrObservable<LocaleCode> {
   protected _locale?: Locale;
   protected _resource?: L10nResource;
   protected _numberFormatter?: Intl.NumberFormat;
@@ -53,7 +52,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
 
     await this._loadResource();
 
-    this._dispatch(locale.code);
+    this._notify(locale.code);
 
     // Update root meta in browser
     globalThis.document?.documentElement.setAttribute('lang', locale.code);
@@ -253,15 +252,7 @@ export class AlwatrL10n extends AlwatrBaseSignal<LocaleCode> {
     this._resourceLoader = resourceLoader;
   }
 
-  subscribe(listenerCallback: ListenerCallback<this, LocaleCode>, options?: SubscribeOptions): SubscribeResult {
-    return this._subscribe(listenerCallback, options);
-  }
-
-  unsubscribe(listenerCallback: ListenerCallback<this, LocaleCode>): void {
-    this._unsubscribe(listenerCallback);
-  }
-
   untilChange(): Promise<LocaleCode> {
-    return this._untilChange();
+    return this._untilNewNotify();
   }
 }

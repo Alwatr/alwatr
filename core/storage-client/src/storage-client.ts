@@ -358,14 +358,14 @@ export class AlwatrStorageClient<DocumentType extends AlwatrDocumentObject = Alw
    * const userIdArray = await userStorage.keys();
    * ```
    */
-  async keys(storage = this.config.name): Promise<Array<string>> {
+  async keys(storage = this.config.name): Promise<string[]> {
     this._logger.logMethodArgs?.('keys', {storage});
 
     if (storage == null) {
       throw new Error('storage_not_defined');
     }
 
-    const responseJson = await serviceRequest<AlwatrServiceResponseSuccess<Array<string>>>({
+    const responseJson = await serviceRequest<AlwatrServiceResponseSuccess<string[]>>({
       ...this.fetchOption,
       url: this.fetchOption.url + 'keys',
       queryParameters: {

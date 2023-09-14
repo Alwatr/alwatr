@@ -10,12 +10,12 @@ const tokenGenerator = new AlwatrTokenGenerator({
   encoding: 'base64url',
 });
 
-type User = {
+interface User {
   id: string;
   name: string;
   role: 'admin' | 'user';
   auth: string;
-};
+}
 
 const user: User = {
   id: 'alimd',

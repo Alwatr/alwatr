@@ -3,7 +3,7 @@ import type {StringifyableRecord} from './type-helper.js';
 
 export interface Job extends AlwatrDocumentObject {
   detail: JobDetail;
-  resultList: Array<JobResult>;
+  resultList: JobResult[];
 }
 
 export interface JobDetail extends StringifyableRecord {

@@ -1,6 +1,7 @@
-ARG NGINX_VERSION=1.24
+ARG NGINX_IMAGE=ghcr.io/alimd/nginx:1.9.2-1.25-alpine
+FROM $NGINX_IMAGE
 
-FROM docker.io/library/nginx:${NGINX_VERSION}-alpine
+RUN rm -rfv /etc/nginx/templates /etc/nginx/conf.d/* /etc/nginx/nginx.conf
 
 COPY toggle-cache.html /var/www/
 COPY conf.d/ /etc/nginx/conf.d/

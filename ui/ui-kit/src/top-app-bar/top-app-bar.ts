@@ -45,7 +45,7 @@ export interface TopAppBarContent extends StringifyableRecord {
   /**
    * @default ```[]```
    */
-  endIconList?: Array<IconButtonContent>;
+  endIconList?: IconButtonContent[];
   /**
    * @default ```2```
    */
