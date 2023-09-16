@@ -9,10 +9,6 @@ on:
     types:
       - created
 
-  push:
-    tags:
-      - 'v*.*.*'
-
 env:
   NODE_VERSION: lts/*
 
@@ -29,10 +25,10 @@ jobs:
 
     steps:
       - name: ⤵️ Checkout repository
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v4.0.0
 
       - name: 🏗 Setup nodejs
-        uses: actions/setup-node@v3.8.0
+        uses: actions/setup-node@v3.8.1
         with:
           node-version: ${{env.NODE_VERSION}}
           registry-url: https://registry.npmjs.org/
@@ -42,10 +38,10 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: 🏗 Build Typescript
-        run: yarn build:ts
+        run: yarn build
 
-      - name: 🏗 Run ESLint
-        run: yarn lint:ts
+      # - name: 🚀 Extra Packages Build
+      #   run: yarn build:r
 
       - name: 🚀 Publish
         run: yarn run publish --yes

@@ -49,21 +49,28 @@ jobs:
             description: High performance Accelerated NGINX optimized for serve static content like CDN.
             version:
               short: 1
-              full: 1.7.0-1.24-alpine
+              full: 1.9.2-1.25-alpine
 
           - image: nginx-pwa
             path: cloud/container/nginx-pwa
             description: High performance Accelerated NGINX optimized for serve progressive web applications.
             version:
               short: 1
-              full: 1.7.0-1.24-alpine
+              full: 1.9.2-1.25-alpine
+
+          - image: nginx-ws
+            path: cloud/container/nginx-ws
+            description: High performance Accelerated NGINX optimized for serve static website.
+            version:
+              short: 1
+              full: 1.9.2-1.25-alpine
 
           - image: nginx-storage
             path: cloud/container/nginx-storage
             description: High performance Accelerated NGINX optimized for serve alwatr storage server json.
             version:
               short: 1
-              full: 1.7.0-1.24-alpine
+              full: 1.9.2-1.25-alpine
 
           - image: adminer
             path: cloud/container/adminer
@@ -137,11 +144,11 @@ jobs:
 
     steps:
       - name: ⤵️ Checkout repository
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v4.0.0
 
       - name: 🏗 Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v4.6.0
+        uses: docker/metadata-action@v5.0.0
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           images: |
@@ -163,14 +170,14 @@ jobs:
 
       - name: 🏗 Install cosign
         if: ${{ github.event_name != 'pull_request' }}
-        uses: sigstore/cosign-installer@v3.1.1
+        uses: sigstore/cosign-installer@v3.1.2
 
       - name: 🏗 Setup Docker Buildx
-        uses: docker/setup-buildx-action@v2.9.1
+        uses: docker/setup-buildx-action@v3.0.0
 
       - name: 🏗 Log into registry ${{env.REGISTRY}}
         if: ${{ github.event_name != 'pull_request' }}
-        uses: docker/login-action@v2.2.0
+        uses: docker/login-action@v3.0.0
         with:
           registry: ${{env.REGISTRY}}
           username: ${{github.repository_owner}}
@@ -178,7 +185,7 @@ jobs:
 
       - name: 🚀 Build and push container image
         id: build-and-push
-        uses: docker/build-push-action@v4.1.1
+        uses: docker/build-push-action@v5.0.0
         with:
           context: ${{matrix.path}}
           push: ${{github.event_name != 'pull_request'}}

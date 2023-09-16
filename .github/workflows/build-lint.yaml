@@ -25,10 +25,10 @@ jobs:
 
     steps:
       - name: ⤵️ Checkout repository
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v4.0.0
 
       - name: 🏗 Setup nodejs
-        uses: actions/setup-node@v3.8.0
+        uses: actions/setup-node@v3.8.1
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: yarn
@@ -40,7 +40,7 @@ jobs:
         run: yarn build
 
       - name: 🚀 Extra Packages Build
-        run: yarn lerna run build
+        run: yarn build:r
 
       - name: 🚀 Run ESLint
         run: yarn lint:ts

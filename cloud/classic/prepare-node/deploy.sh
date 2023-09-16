@@ -61,8 +61,11 @@ function command_ssh() {
   echoStep "Setup ssh: add sshd_config"
   copyConfigFile ssh-banner /etc/ssh/banner
   copyConfigFile ssh-config /etc/ssh/sshd_config
+
+  echoStep "Setup ssh: add ssh key"
   copyConfigFile ssh-rsa "~/.ssh/id_rsa"
   copyConfigFile ssh-rsa.pub "~/.ssh/id_rsa.pub"
+  remoteShell 'chmod 600 ~/.ssh/id_rsa'
 
   echoStep "Setup ssh: restart ssh and test"
 
@@ -90,9 +93,9 @@ function command_apt() {
     apt update
     apt autoremove -y --purge
     apt list --upgradable
-    apt upgrade -y
-    apt autoremove -y --purge
     apt dist-upgrade -y
+    apt autoremove -y --purge
+    apt upgrade -y
     apt autoremove -y --purge
     uname -a
   '
@@ -216,16 +219,45 @@ function command_reboot() {
   sleep 2
 }
 
+function command_net() {
+  echoStep "Config network interfaces"
+  local remotePath=/etc/network/interfaces
+
+  copyConfigFile net.conf $remotePath || return 0
+
+  remoteShell "
+    if ! systemctl restart networking; then
+      echo 'Failed to restart network service. Rolling back...'
+      cp -v $remotePath.bak $remotePath
+      systemctl restart networking
+    else
+      echo 'Network service restarted.'
+      if ! ping -c 1 -W 1 1.1.1.1; then
+        echo 'Failed to ping, rolling back...'
+        cp -v $remotePath.bak $remotePath
+        systemctl restart networking
+      fi
+    fi
+  "
+}
+
+# TODO: function command_hostname() {}
+
 function command_full() {
   echoStep "Full setup..."
   command_ping 1
   command_ssh
+
   command_time
+  command_net
   command_dns
+
+  command_apt
+
   command_sysctl
   command_disk
-  command_apt
   command_docker
+
   command_reboot
   command_ping
   echoLogo

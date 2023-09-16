@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/util",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Util library written in tiny TypeScript module.",
   "keywords": [
     "util",
@@ -40,9 +40,9 @@
     }
   },
   "dependencies": {
-    "@alwatr/math": "^1.0.0",
-    "@alwatr/type": "^1.0.0",
-    "tslib": "^2.6.1"
+    "@alwatr/math": "^1.1.2",
+    "@alwatr/type": "^1.1.1",
+    "tslib": "^2.6.2"
   },
   "devDependencies": {
     "flatstr": "^1.0.12"
