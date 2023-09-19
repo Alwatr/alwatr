@@ -1,3 +1,10 @@
+- name: 'bug-report'
+  color: ee0811
+  description: 'Inconsistencies or issues which will cause a problem for users or implementors.'
+- name: 'feature-request'
+  color: 0e9a26
+  description: 'Request new features or options.'
+
 - name: 'breaking-change'
   color: ee0701
   description: 'A change that changes the API or breaks backward compatibility for users.'
