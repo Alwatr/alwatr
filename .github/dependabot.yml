@@ -36,10 +36,19 @@ updates:
     groups:
       production-dependencies:
         dependency-type: "production"
+        exclude-patterns:
+          - "@alwatr/*"
+          - "fract"
       development-dependencies:
         dependency-type: "development"
         exclude-patterns:
           - "*lint*"
+          - "@alwatr/*"
+          - "fract"
       lint-dependencies:
         patterns:
           - "*lint*"
+      alwatr-dependencies:
+        patterns:
+          - "@alwatr/*"
+          - "fract"
