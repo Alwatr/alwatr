@@ -1,0 +1,5 @@
+location / {
+  if ($redirect_uri) {
+    return 302 $redirect_uri;
+  }
+}

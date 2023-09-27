@@ -1,0 +1,3 @@
+map $request_uri $redirect_uri {
+  include /etc/nginx/redirects.map;
+}
