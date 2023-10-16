@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@deanc/esbuild-plugin-postcss": "^1.0.2",
-    "@lerna-lite/changed": "^2.5.1",
+    "@lerna-lite/changed": "^2.6.0",
     "@lerna-lite/cli": "^2.5.1",
     "@lerna-lite/diff": "^2.5.1",
     "@lerna-lite/exec": "^2.5.1",
