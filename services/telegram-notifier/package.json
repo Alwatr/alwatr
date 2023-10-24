@@ -34,6 +34,6 @@
     "watch:es": "yarn build:es --watch"
   },
   "dependencies": {
-    "telegraf": "^4.13.1"
+    "telegraf": "^4.15.0"
   }
 }
