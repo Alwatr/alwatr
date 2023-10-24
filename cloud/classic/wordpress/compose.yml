@@ -99,3 +99,4 @@ services:
         define('WP_MEMORY_LIMIT', '${WP_MEMORY_LIMIT:-256M}');
         define('WP_MAX_MEMORY_LIMIT', '${WP_MAX_MEMORY_LIMIT:-768M}');
         define('DISABLE_WP_CRON', true);
+        define('WP_AUTO_UPDATE_CORE', false);
