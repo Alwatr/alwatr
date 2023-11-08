@@ -150,7 +150,7 @@ jobs:
 
       - name: 🏗 Install cosign
         if: ${{ github.event_name != 'pull_request' }}
-        uses: sigstore/cosign-installer@v3.1.2
+        uses: sigstore/cosign-installer@v3.2.0
 
       - name: 🏗 Sign the published container image
         if: ${{github.event_name != 'pull_request'}}
