@@ -62,10 +62,15 @@ function command_ssh() {
   copyConfigFile ssh-banner /etc/ssh/banner
   copyConfigFile ssh-config /etc/ssh/sshd_config
 
-  echoStep "Setup ssh: add ssh key"
-  copyConfigFile ssh-rsa "~/.ssh/id_rsa"
-  copyConfigFile ssh-rsa.pub "~/.ssh/id_rsa.pub"
-  remoteShell 'chmod 600 ~/.ssh/id_rsa'
+  if [ ! "$addSshKey" == false ]; then
+    echoStep "Setup ssh: add ssh key"
+    copyConfigFile ssh-rsa "~/.ssh/id_rsa"
+    copyConfigFile ssh-rsa.pub "~/.ssh/id_rsa.pub"
+    remoteShell 'chmod 600 ~/.ssh/id_rsa'
+  else
+    echoStep "Setup ssh: skip add ssh key"
+  fi
+
 
   echoStep "Setup ssh: restart ssh and test"
 
