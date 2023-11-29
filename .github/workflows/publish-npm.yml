@@ -5,9 +5,9 @@ name: Publish NPM
 on:
   workflow_dispatch:
 
-  release:
-    types:
-      - created
+  # release:
+  #   types:
+  #     - created
 
 env:
   NODE_VERSION: lts/*

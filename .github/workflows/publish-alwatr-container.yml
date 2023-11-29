@@ -5,17 +5,17 @@ name: Publish Alwatr Containers
 on:
   workflow_dispatch:
 
-  push:
-    tags:
-      - 'v*.*.*'
-    branches:
-      - next
-      - main
+  # push:
+  #   tags:
+  #     - 'v*.*.*'
+  #   branches:
+  #     - next
+  #     - main
 
-  pull_request:
-    paths:
-      - 'cloud/container/alwatr-*.dockerfile'
-      - '.github/workflows/publish-alwatr-container.yml'
+  # pull_request:
+  #   paths:
+  #     - 'cloud/container/alwatr-*.dockerfile'
+  #     - '.github/workflows/publish-alwatr-container.yml'
 
 env:
   REGISTRY: ghcr.io

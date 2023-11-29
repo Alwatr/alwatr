@@ -3,8 +3,9 @@
 name: PR Labels
 
 on:
-  pull_request:
-    types: [opened, labeled, unlabeled, synchronize]
+  workflow_dispatch:
+    # pull_request:
+  #   types: [opened, labeled, unlabeled, synchronize]
 
 jobs:
   pr_labels:

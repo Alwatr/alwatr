@@ -5,8 +5,8 @@ name: Lock closed
 on:
   workflow_dispatch:
 
-  schedule:
-    - cron: '5 8 * * *'
+  # schedule:
+  #   - cron: '5 8 * * *'
     #        * * * * *
     #        │ │ │ │ │
     #        │ │ │ │ └───── day of the week (0 - 6 or SUN-SAT)

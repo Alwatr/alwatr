@@ -5,15 +5,15 @@ name: Publish Special Containers
 on:
   workflow_dispatch:
 
-  push:
-    branches:
-      - next
-      - main
+  # push:
+  #   branches:
+  #     - next
+  #     - main
 
-  pull_request:
-    paths:
-      - 'cloud/container/**'
-      - '.github/workflows/publish-special-container.yml'
+  # pull_request:
+  #   paths:
+  #     - 'cloud/container/**'
+  #     - '.github/workflows/publish-special-container.yml'
 
 env:
   REGISTRY: ghcr.io

@@ -5,12 +5,12 @@ name: Build & Lint
 on:
   workflow_dispatch:
 
-  pull_request:
+  # pull_request:
 
-  push:
-    branches:
-      - next
-      - main
+  # push:
+  #   branches:
+  #     - next
+  #     - main
 
 env:
   NODE_VERSION: lts/*
