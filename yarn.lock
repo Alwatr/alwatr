@@ -1711,6 +1711,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"alwatr-monorepo@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "alwatr-monorepo@workspace:."
+  dependencies:
+    "@alwatr/eslint-config": "npm:^1.2.11"
+    "@alwatr/prettier-config": "npm:^1.0.6"
+    "@alwatr/tsconfig-base": "npm:^1.3.2"
+    "@lerna-lite/changed": "npm:^3.9.3"
+    "@lerna-lite/cli": "npm:^3.9.3"
+    "@lerna-lite/diff": "npm:^3.9.3"
+    "@lerna-lite/exec": "npm:^3.9.3"
+    "@lerna-lite/publish": "npm:^3.9.3"
+    "@lerna-lite/run": "npm:^3.9.3"
+    "@lerna-lite/version": "npm:^3.9.3"
+    "@typescript-eslint/eslint-plugin": "npm:^7.17.0"
+    "@typescript-eslint/parser": "npm:^7.17.0"
+    conventional-changelog-conventionalcommits: "npm:^7.0.2"
+    eslint: "npm:^8.57.0"
+    eslint-import-resolver-typescript: "npm:^3.6.3"
+    eslint-plugin-import: "npm:^2.31.0"
+    eslint-plugin-require-extensions: "npm:^0.1.3"
+    prettier: "npm:^3.3.3"
+    typescript: "npm:^5.6.3"
+  languageName: unknown
+  linkType: soft
+
 "alwatr@workspace:packages/alwatr":
   version: 0.0.0-use.local
   resolution: "alwatr@workspace:packages/alwatr"
@@ -6069,32 +6095,6 @@ __metadata:
   checksum: 10c0/5b61ca583a95e2dd85d7078400190efd452e05751a64accb8c06ce4db65d7e0b0cde9917d705e826a2e05cc2548f61efde115ffa374c3e436d04be45c889e5b4
   languageName: node
   linkType: hard
-
-"weaver-kit-monorepo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "weaver-kit-monorepo@workspace:."
-  dependencies:
-    "@alwatr/eslint-config": "npm:^1.2.11"
-    "@alwatr/prettier-config": "npm:^1.0.6"
-    "@alwatr/tsconfig-base": "npm:^1.3.2"
-    "@lerna-lite/changed": "npm:^3.9.3"
-    "@lerna-lite/cli": "npm:^3.9.3"
-    "@lerna-lite/diff": "npm:^3.9.3"
-    "@lerna-lite/exec": "npm:^3.9.3"
-    "@lerna-lite/publish": "npm:^3.9.3"
-    "@lerna-lite/run": "npm:^3.9.3"
-    "@lerna-lite/version": "npm:^3.9.3"
-    "@typescript-eslint/eslint-plugin": "npm:^7.17.0"
-    "@typescript-eslint/parser": "npm:^7.17.0"
-    conventional-changelog-conventionalcommits: "npm:^7.0.2"
-    eslint: "npm:^8.57.0"
-    eslint-import-resolver-typescript: "npm:^3.6.3"
-    eslint-plugin-import: "npm:^2.31.0"
-    eslint-plugin-require-extensions: "npm:^0.1.3"
-    prettier: "npm:^3.3.3"
-    typescript: "npm:^5.6.3"
-  languageName: unknown
-  linkType: soft
 
 "web-streams-polyfill@npm:^3.0.3":
   version: 3.3.3
