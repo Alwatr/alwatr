@@ -1,3 +1,0 @@
-location ~ /(service-worker\.js|manifest\.webmanifest)$ {
-  expires epoch;
-}

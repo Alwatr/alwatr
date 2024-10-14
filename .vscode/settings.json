@@ -1,66 +1,82 @@
 {
-  "eslint.packageManager": "yarn",
-  "npm.packageManager": "yarn",
-  "lit-plugin.strict": true,
-  "editor.wordWrapColumn": 120,
+  "cSpell.language": "en,fa,fa-IR",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "js/ts.implicitProjectConfig.checkJs": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": false,
   "editor.formatOnSave": false,
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true
+  "editor.wordWrapColumn": 120,
+  "eslint.nodePath": ".yarn/sdks",
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts, ${capture}.d.ts.map, ${capture}.js.LEGAL.txt",
+    "*.mjs": "${capture}.mjs.map, ${capture}.min.mjs, ${capture}.d.ts, ${capture}.d.ts.map, ${capture}.mjs.LEGAL.txt, ${capture}.cjs",
+    "*.cjs": "${capture}.cjs.map, ${capture}.min.cjs, ${capture}.d.ts, ${capture}.d.ts.map, ${capture}.cjs.LEGAL.txt",
+    "*.ts": "${capture}.js, ${capture}.js.map, ${capture}.d.ts, ${capture}.d.ts.map",
+    "tsconfig.json": "tsconfig.*.json, *.tsbuildinfo"
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.useEditorConfig": true,
+  "files.associations": {
+    "*.ajs": "json",
+    "*.ajs.bk": "json",
+    "*.conf.template": "nginx",
+    "*.njk": "html"
+  },
   "files.exclude": {
-    "**/*.map": true,
-    "**/*.d.ts": true,
-    "**/*.tsbuildinfo": true
+    // "**/*.map": true,
+    // "**/*.d.ts": true,
+    // "**/*.tsbuildinfo": true
   },
-  "cSpell.language": "en,fa,fa-IR",
-  "cSpell.words": [
-    "alimd",
-    "alwatr",
-    "bottomness",
-    "calt",
-    "chatbox",
-    "checkmark",
-    "cssprop",
-    "currentcolor",
-    "datetime",
-    "Disconnectable",
-    "esbuild",
-    "Fatemeh",
-    "Fract",
-    "kubernetes",
-    "mastmalize",
-    "metafile",
-    "mihandoost",
-    "nanoserver",
-    "nanoservice",
-    "noncallable",
-    "outbase",
-    "outdir",
-    "preconnect",
-    "preload",
-    "publistore",
-    "requestable",
-    "roundot",
-    "securage",
-    "Stringifyable",
-    "Superfast",
-    "tailwindcss",
-    "tnum",
-    "topness",
-    "tsbuildinfo",
-    "typescale",
-    "vazirmatn",
-    "videocam",
-    "xlarge",
-    "xsmall",
-    "zindex"
+  "git.autoStash": true,
+  "git.branchProtection": [
+    "main",
+    "next"
   ],
-  "typescript.tsdk": "node_modules/typescript/lib",
   "githubPullRequests.ignoredPullRequestBranches": [
     "main",
     "next"
+  ],
+  "markdownlint.ignore": [
+    "**/CHANGELOG.md"
+  ],
+  "npm.packageManager": "yarn",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
+  "prettier.useEditorConfig": true,
+  "search.exclude": {
+    "**/.pnp.*": true,
+    "**/.yarn": true,
+    "**/*.lock": true
+  },
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "cSpell.words": [
+    "alpinejs",
+    "alwatr",
+    "colspan",
+    "cssnano",
+    "fract",
+    "Mihandoost",
+    "nanolib",
+    "nanotron",
+    "nitrobase",
+    "nowrap",
+    "shortcode",
+    "stringifyable",
+    "tailwindcss",
+    "tbody",
+    "thead",
+    "tsbuildinfo",
+    "vazirmatn",
+    "windstyle"
+  ],
+  "css.customData": [
+    ".vscode/tailwind.json"
+  ],
+  "github.copilot.chat.experimental.codeGeneration.instructions": [
+    {
+      "file": ".github/copilot-instruction.md"
+    }
   ]
 }

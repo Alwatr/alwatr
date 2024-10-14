@@ -13,32 +13,29 @@ Desktop.ini
 # Logs
 *.log*
 
-# Build
-.tsbuildinfo
-*.map
-*.d.ts
-*.js
-!*.config.js
-!**/res/*.js
-dist
-build
-
-# Dependencies
+# package managers
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+#!.yarn/cache
+.pnp.*
 node_modules
 package-lock.json
+
+# Build
+dist
+*.tsbuildinfo
+*.map
+*.d.ts
 
 # Output of 'npm pack'
 *.tgz
 
-# Yarn Integrity file
-.yarn-integrity
-
 # dotenv environment variables file
 .env
-# *.env
-# !example.env
 
-temp
-_data
-db
-chrome-profile
+# deploy data backup
+deploy/_data

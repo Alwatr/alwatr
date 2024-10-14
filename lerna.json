@@ -1,19 +1,88 @@
 {
-  "$schema": "node_modules/@lerna-lite/cli/schemas/lerna-schema.json",
-  "version": "independent",
+  "$schema": "https://raw.githubusercontent.com/lerna-lite/lerna-lite/main/packages/cli/schemas/lerna-schema.json",
+  "version": "1.0.0-0",
   "npmClient": "yarn",
-  "packages": ["core/*", "services/*", "ui/*", "uniquely/*", "labs/*"],
+  "packages": [
+    "packages/*"
+  ],
   "loglevel": "verbose",
   "command": {
     "version": {
       "conventionalCommits": true,
       "changelog": true,
-      "changelogPreset": "angular",
+      "changelogPreset": {
+        "name": "conventionalcommits",
+        "types": [
+          {
+            "type": "feat",
+            "section": "Features"
+          },
+          {
+            "type": "feature",
+            "section": "Features"
+          },
+          {
+            "type": "fix",
+            "section": "Bug Fixes"
+          },
+          {
+            "type": "perf",
+            "section": "Performance Improvements"
+          },
+          {
+            "type": "revert",
+            "section": "Reverts"
+          },
+          {
+            "type": "refactor",
+            "section": "Code Refactoring"
+          },
+          {
+            "type": "chore",
+            "section": "Miscellaneous Chores"
+          },
+          {
+            "type": "docs",
+            "section": "Documentation",
+            "hidden": true
+          },
+          {
+            "type": "doc",
+            "section": "Documentation",
+            "hidden": true
+          },
+          {
+            "type": "deps",
+            "section": "Dependencies update",
+            "hidden": true
+          },
+          {
+            "type": "style",
+            "section": "Styles",
+            "hidden": true
+          },
+          {
+            "type": "test",
+            "section": "Tests",
+            "hidden": true
+          },
+          {
+            "type": "build",
+            "section": "Build System",
+            "hidden": true
+          },
+          {
+            "type": "ci",
+            "section": "Continuous Integration",
+            "hidden": true
+          }
+        ]
+      },
       "changelogIncludeCommitsClientLogin": " by @%l",
-      "ignoreChanges": ["*.md"],
-      "message": "release: new independent version",
-      "private": false,
+      "message": "release:",
       "forceGitTag": true,
+      "signGitTag": true,
+      "signGitCommit": true,
       "push": true,
       "createRelease": "github"
     },

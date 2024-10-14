@@ -1,1 +1,0 @@
-# Adminer Container Mirror

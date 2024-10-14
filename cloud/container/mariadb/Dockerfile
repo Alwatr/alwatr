@@ -1,2 +1,0 @@
-ARG MARIADB_IMAGE=docker.io/wodby/mariadb:10.9
-FROM $MARIADB_IMAGE

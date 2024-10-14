@@ -1,0 +1,107 @@
+{
+  "name": "alwatr",
+  "displayName": "Alwatr",
+  "version": "1.0.0-0",
+  "description": "Alwatr Ecosystem",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "keywords": [
+    "alwatr"
+  ],
+  "type": "module",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.mjs",
+      "require": "./dist/main.cjs"
+    },
+    "./nanolib": {
+      "types": "./dist/nanolib/nanolib.d.ts",
+      "import": "./dist/nanolib/nanolib.mjs",
+      "require": "./dist/nanolib/nanolib.cjs"
+    },
+    "./nanolib/dedupe": {
+      "types": "./dist/nanolib/dedupe.d.ts",
+      "import": "./dist/nanolib/dedupe.mjs",
+      "require": "./dist/nanolib/dedupe.cjs"
+    },
+    "./nanolib/exit-hook": {
+      "types": "./dist/nanolib/exit-hook.d.ts",
+      "import": "./dist/nanolib/exit-hook.mjs",
+      "require": "./dist/nanolib/exit-hook.cjs"
+    },
+    "./nanolib/node-fs": {
+      "types": "./dist/nanolib/node-fs.d.ts",
+      "import": "./dist/nanolib/node-fs.mjs",
+      "require": "./dist/nanolib/node-fs.cjs"
+    },
+    "./nitrobase": {
+      "types": "./dist/nitrobase.d.ts",
+      "import": "./dist/nitrobase.mjs",
+      "require": "./dist/flux.cjs"
+    },
+    "./flux": {
+      "types": "./dist/flux.d.ts",
+      "import": "./dist/flux.mjs",
+      "require": "./dist/flux.cjs"
+    },
+    "./nanotron": {
+      "types": "./dist/nanotron.d.ts",
+      "import": "./dist/nanotron.mjs",
+      "require": "./dist/nanotron.cjs"
+    }
+  },
+  "license": "AGPL-3.0-only",
+  "files": [
+    "**/*.{js,mjs,cjs,map,d.ts,html,md}",
+    "!demo/**/*"
+  ],
+  "engines": {
+    "node": ">=18.16.0",
+    "yarn": ">=4.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "packages/alwatr"
+  },
+  "homepage": "https://github.com/Alwatr/alwatr#readme",
+  "bugs": {
+    "url": "https://github.com/Alwatr/alwatr/issues"
+  },
+  "prettier": "@alwatr/prettier-config",
+  "scripts": {
+    "b": "yarn run build",
+    "t": "yarn run test",
+    "w": "yarn run watch",
+    "c": "yarn run clean",
+    "cb": "yarn run clean && yarn run build",
+    "d": "yarn run build:es && yarn node --enable-source-maps --trace-warnings",
+    "build": "yarn run build:ts && yarn run build:es",
+    "build:es": "nano-build --preset=module3",
+    "build:ts": "tsc --build",
+    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest",
+    "watch": "yarn run watch:ts & yarn run watch:es",
+    "watch:es": "yarn run build:es --watch",
+    "watch:ts": "yarn run build:ts --watch --preserveWatchOutput",
+    "clean": "rm -rfv dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@alwatr/flux": "^3.2.0",
+    "@alwatr/nanolib": "^1.2.1",
+    "@alwatr/nanotron": "^4.3.0",
+    "@alwatr/nitrobase": "^7.3.0"
+  },
+  "devDependencies": {
+    "@alwatr/nano-build": "^2.0.2",
+    "@alwatr/prettier-config": "^1.0.6",
+    "@alwatr/tsconfig-base": "^1.3.2",
+    "@alwatr/type-helper": "^2.0.2",
+    "typescript": "^5.6.3"
+  }
+}
