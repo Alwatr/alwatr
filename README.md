@@ -1,4 +1,27 @@
-# Alwatr Ecosystem
+# Alwatr
+
+Alwatr Ecosystem
+
+## Introduction
+
+Alwatr is a comprehensive ecosystem designed to streamline your development process. It includes a variety of tools and libraries to help you build robust applications efficiently.
+
+## Installation
+
+To install the Alwatr package, use the following command:
+
+```sh
+yarn add alwatr
+```
+
+## Usage
+
+To use Alwatr in your project, import the necessary modules as shown below:
+
+```typescript
+import { someFunction } from 'alwatr/nanolib';
+import { anotherFunction } from 'alwatr/flux';
+```
 
 ## Sponsors
 
