@@ -1,1 +1,0 @@
-# Alwatr CloudNative Kubernetes Deployments

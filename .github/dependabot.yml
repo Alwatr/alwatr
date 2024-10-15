@@ -1,0 +1,71 @@
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    open-pull-requests-limit: 20
+    commit-message:
+      prefix: deps
+      include: scope
+    reviewers:
+      - AliMD
+    schedule:
+      interval: weekly
+      time: '10:30'
+      day: thursday
+    labels:
+      - ci
+      - priority-low
+      - maintenance
+    groups:
+      github-actions:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /
+    versioning-strategy: increase
+    open-pull-requests-limit: 20
+    commit-message:
+      prefix: deps
+      include: scope
+    reviewers:
+      - AliMD
+    schedule:
+      interval: weekly
+      time: '10:30'
+      day: thursday
+    labels:
+      - dependencies
+      - ci
+      - priority-low
+      - maintenance
+    groups:
+      production-dependencies:
+        dependency-type: 'production'
+        exclude-patterns:
+          - '@alwatr/*'
+          - 'fract'
+      development-dependencies:
+        dependency-type: 'development'
+        exclude-patterns:
+          - '@alwatr/*'
+          - 'fract'
+      alwatr-dependencies:
+        patterns:
+          - '@alwatr/*'
+          - 'fract'
+
+  - package-ecosystem: docker
+    directory: /packages/alwatr
+    reviewers:
+      - AliMD
+    schedule:
+      interval: weekly
+      time: '10:30'
+      day: thursday
+    labels:
+      - ci
+      - priority-low
+      - maintenance

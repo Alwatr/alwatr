@@ -1,6 +1,0 @@
-mv Sahel-Black-WOL.woff           sahel-900.woff
-mv Sahel-Bold-WOL.woff            sahel-700.woff
-mv Sahel-Semi-bold-WOL.woff       sahel-600.woff
-mv Sahel-WOL.woff                 sahel-400.woff
-mv Sahel-Light-WOL.woff           sahel-300.woff
-
