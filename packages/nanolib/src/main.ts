@@ -19,3 +19,4 @@ export * from '@alwatr/global-this';
 export * from '@alwatr/http-primer';
 export * from '@alwatr/hash-string';
 export * from '@alwatr/synapse';
+export * from '@alwatr/validate-national-code';
