@@ -5,14 +5,14 @@ name: CodeQL
 on:
   workflow_dispatch:
 
-  # schedule:
-  #   - cron: '0 7 * */2 *'
-  #            │ │ │  │  │
-  #            │ │ │  │  └─── day of the week (0 - 6 or SUN-SAT)
-  #            │ │ │  └────── month (1 - 12 or JAN-DEC)
-  #            │ │ └───────── day of the month (1 - 31)
-  #            │ └─────────── hour (0 - 23)
-  #            └───────────── minute (0 - 59)
+  schedule:
+    - cron: '0 7 * */2 *'
+    #        │ │ │  │  │
+    #        │ │ │  │  └─── day of the week (0 - 6 or SUN-SAT)
+    #        │ │ │  └────── month (1 - 12 or JAN-DEC)
+    #        │ │ └───────── day of the month (1 - 31)
+    #        │ └─────────── hour (0 - 23)
+    #        └───────────── minute (0 - 59)
 
 jobs:
   analyze-code-ql:
@@ -35,14 +35,14 @@ jobs:
         uses: actions/checkout@v4.2.1
 
       - name: 🏗 Initialize CodeQL
-        uses: github/codeql-action/init@v3.26.13
+        uses: github/codeql-action/init@v3.26.12
         with:
           languages: ${{ matrix.language }}
           # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
           # queries: security-extended,security-and-quality
 
       - name: 🏗 Auto build
-        uses: github/codeql-action/autobuild@v3.26.13
+        uses: github/codeql-action/autobuild@v3.26.12
 
       - name: 🚀 Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3.26.13
+        uses: github/codeql-action/analyze@v3.26.12

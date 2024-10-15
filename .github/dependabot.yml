@@ -6,14 +6,13 @@ updates:
     directory: /
     open-pull-requests-limit: 20
     commit-message:
-      prefix: deps
-      include: scope
+      prefix: 'deps'
     reviewers:
       - AliMD
     schedule:
       interval: weekly
-      time: '10:30'
-      day: thursday
+      time: '00:30'
+      day: 'thursday'
     labels:
       - ci
       - priority-low
@@ -28,14 +27,13 @@ updates:
     versioning-strategy: increase
     open-pull-requests-limit: 20
     commit-message:
-      prefix: deps
-      include: scope
+      prefix: 'deps'
     reviewers:
       - AliMD
     schedule:
       interval: weekly
-      time: '10:30'
-      day: thursday
+      time: '00:30'
+      day: 'thursday'
     labels:
       - dependencies
       - ci
@@ -56,16 +54,3 @@ updates:
         patterns:
           - '@alwatr/*'
           - 'fract'
-
-  - package-ecosystem: docker
-    directory: /packages/alwatr
-    reviewers:
-      - AliMD
-    schedule:
-      interval: weekly
-      time: '10:30'
-      day: thursday
-    labels:
-      - ci
-      - priority-low
-      - maintenance
