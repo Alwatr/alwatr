@@ -1,0 +1,77 @@
+{
+  "name": "@alwatr/validate-national-code",
+  "version": "1.0.0-0",
+  "description": "A tiny TypeScript library to validate an Iranian national code.",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "keywords": [
+    "validate-national-code",
+    "cross-platform",
+    "ECMAScript",
+    "typescript",
+    "javascript",
+    "browser",
+    "esm",
+    "module",
+    "utility",
+    "util",
+    "utils",
+    "nanolib",
+    "alwatr"
+  ],
+  "type": "module",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.mjs",
+      "require": "./dist/main.cjs"
+    }
+  },
+  "license": "AGPL-3.0-only",
+  "files": [
+    "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
+    "LICENSE",
+    "!demo/**/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib",
+    "directory": "packages/validate-national-code"
+  },
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/validate-national-code#readme",
+  "bugs": {
+    "url": "https://github.com/Alwatr/nanolib/issues"
+  },
+  "prettier": "@alwatr/prettier-config",
+  "scripts": {
+    "b": "yarn run build",
+    "t": "yarn run test",
+    "w": "yarn run watch",
+    "c": "yarn run clean",
+    "cb": "yarn run clean && yarn run build",
+    "d": "yarn run build:es && yarn node --enable-source-maps --trace-warnings",
+    "build": "yarn run build:ts && yarn run build:es",
+    "build:es": "nano-build --preset=module",
+    "build:ts": "tsc --build",
+    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest",
+    "watch": "yarn run watch:ts & yarn run watch:es",
+    "watch:es": "yarn run build:es --watch",
+    "watch:ts": "yarn run build:ts --watch --preserveWatchOutput",
+    "clean": "rm -rfv dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@alwatr/package-tracer": "workspace:^"
+  },
+  "devDependencies": {
+    "@alwatr/nano-build": "workspace:^",
+    "@alwatr/prettier-config": "workspace:^",
+    "@alwatr/tsconfig-base": "workspace:^",
+    "@alwatr/type-helper": "workspace:^",
+    "typescript": "^5.6.3"
+  }
+}
