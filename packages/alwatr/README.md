@@ -48,7 +48,6 @@ This change simplifies dependency management and reduces bundle size for project
 3. **Update imports:** Change your import statements to use the new format, e.g., `import { resolveUrl } from 'alwatr/nanolib';`
 
 This major release streamlines the alwatr ecosystem and improves the developer experience. Be sure to update your projects accordingly!
-```
 
 ## Sponsors
 
