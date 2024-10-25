@@ -1,4 +1,4 @@
-# validate-national-code
+# iranian-national-code-validator
 
 A tiny TypeScript library to validate an Iranian national code.
 
@@ -11,15 +11,15 @@ A tiny TypeScript library to validate an Iranian national code.
 ## Installation
 
 ```bash
-npm install @alwatr/validate-national-code
+npm install @alwatr/iranian-national-code-validator
 ```
 
 ## Usage
 
 ```ts
-import { resolveUrl } from '@alwatr/validate-national-code';
+import { resolveUrl } from '@alwatr/iranian-national-code-validator';
 
-console.log(validateNationalCode('5222222222')); // false
+console.log(isValidIranianNationalCode('5222222222')); // false
 ```
 
 ## Sponsors

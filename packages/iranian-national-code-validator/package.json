@@ -1,10 +1,12 @@
 {
-  "name": "@alwatr/validate-national-code",
+  "name": "@alwatr/iranian-national-code-validator",
   "version": "1.0.0-0",
   "description": "A tiny TypeScript library to validate an Iranian national code.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [
-    "validate-national-code",
+    "national-code",
+    "validator",
+    "iranian-national-code",
     "cross-platform",
     "ECMAScript",
     "typescript",
@@ -41,9 +43,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/validate-national-code"
+    "directory": "packages/iranian-national-code-validator"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/validate-national-code#readme",
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/iranian-national-code-validator#readme",
   "bugs": {
     "url": "https://github.com/Alwatr/nanolib/issues"
   },

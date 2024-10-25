@@ -29,7 +29,7 @@
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/synapse": "workspace:*",
     "@alwatr/unicode-digits": "workspace:*",
-    "@alwatr/validate-national-code": "workspace:^"
+    "@alwatr/iranian-national-code-validator": "workspace:^"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
