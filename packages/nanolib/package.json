@@ -17,6 +17,7 @@
     "@alwatr/global-this": "workspace:*",
     "@alwatr/hash-string": "workspace:*",
     "@alwatr/http-primer": "workspace:*",
+    "@alwatr/iranian-national-code-validator": "workspace:^",
     "@alwatr/is-number": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/logger": "workspace:*",
@@ -28,8 +29,7 @@
     "@alwatr/render-state": "workspace:*",
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/synapse": "workspace:*",
-    "@alwatr/unicode-digits": "workspace:*",
-    "@alwatr/iranian-national-code-validator": "workspace:^"
+    "@alwatr/unicode-digits": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
