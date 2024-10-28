@@ -4,7 +4,7 @@ import type {TokenGeneratorConfig} from './token.js';
 /**
  * Alwatr hash generator recommended configuration for making random self-validate **user-id**.
  */
-export const userIdGeneratorRecommendedConfig: HashGeneratorConfig = {
+export const userIdGeneratorRecommendedConfig: HashGeneratorConfig = /* #__PURE__ */ {
   prefix: 'u',
   algorithm: 'sha1',
   encoding: 'base64url',
@@ -14,7 +14,7 @@ export const userIdGeneratorRecommendedConfig: HashGeneratorConfig = {
 /**
  * Hash generator recommended configuration for making random self-validate **device-id**.
  */
-export const deviceIdGeneratorRecommendedConfig: HashGeneratorConfig = {
+export const deviceIdGeneratorRecommendedConfig: HashGeneratorConfig = /* #__PURE__ */ {
   ...userIdGeneratorRecommendedConfig,
   prefix: 'd',
 };
@@ -22,7 +22,7 @@ export const deviceIdGeneratorRecommendedConfig: HashGeneratorConfig = {
 /**
  * Hash generator pre configuration for making random self-validate **secrets**.
  */
-export const secretGeneratorRecommendedConfig: HashGeneratorConfig = {
+export const secretGeneratorRecommendedConfig: HashGeneratorConfig = /* #__PURE__ */ {
   prefix: 's',
   algorithm: 'sha384',
   encoding: 'base64url',
@@ -32,7 +32,7 @@ export const secretGeneratorRecommendedConfig: HashGeneratorConfig = {
 /**
  * Token generator recommended configuration for making secure self-validate **user-token**.
  */
-export const userTokenGeneratorRecommendedConfig: Omit<TokenGeneratorConfig, 'secret' | 'duration'> = {
+export const userTokenGeneratorRecommendedConfig: Omit<TokenGeneratorConfig, 'secret' | 'duration'> = /* #__PURE__ */ {
   prefix: 't',
   algorithm: 'sha224',
   encoding: 'base64url',
