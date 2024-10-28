@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.5.0](https://github.com/Alwatr/nanotron/compare/v4.4.1...v4.5.0) (2024-10-28)
+
+### Bug Fixes
+
+* **crypto:** remove side effects ([852e035](https://github.com/Alwatr/nanotron/commit/852e035d6ffceec32f7b4d2197140a27b4afb330)) by @AliMD
+
+### Dependencies update
+
+* bump the development-dependencies group across 1 directory with 2 updates ([8b3e101](https://github.com/Alwatr/nanotron/commit/8b3e10128af769ef95a2e7b2ed788e843eb47414)) by @dependabot[bot]
+* update nanolib v1.4.0 and other deps ([b8e7be7](https://github.com/Alwatr/nanotron/commit/b8e7be7b6c58d4f1cbc12593b2d6124f3d19b377)) by @
+
 ## [4.4.1](https://github.com/Alwatr/nanotron/compare/v4.4.0...v4.4.1) (2024-10-16)
 
 ### Dependencies update
