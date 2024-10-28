@@ -4,8 +4,26 @@ import {logger} from './logger.js';
 
 import type {NanotronClientRequest} from '@alwatr/nanotron-api-server';
 
+/**
+ * Parses the request body as JSON and assigns it to `this.sharedMeta.body`.
+ * If the body is empty or invalid, it sends an error response,
+ * which triggers `terminatedHandlers` and prevents further handlers from executing.
+ *
+ * @this {NanotronClientRequest<{body: DictionaryOpt}>}
+ * @returns {Promise<void>} A promise that resolves when the body is successfully parsed or an error response is sent.
+ *
+ * @example
+ * ```ts
+ * nanotronApiServer.defineRoute<{body: DictionaryOpt}>({
+ *   preHandlers: [parseBodyAsJson],
+ *   async handler() {
+ *     const body = this.sharedMeta.body; // json object
+ *   },
+ * });
+ * ```
+ */
 export async function parseBodyAsJson(
-  this: NanotronClientRequest<{body: DictionaryOpt}>,
+  this: NanotronClientRequest<{body?: DictionaryOpt}>,
 ): Promise<void> {
   const bodyBuffer = await this.getBodyRaw();
   logger.logProperty?.('bodyBuffer', bodyBuffer);
