@@ -1,11 +1,9 @@
 import {HttpStatusCodes} from '@alwatr/nanotron-api-server';
 
-import {logger} from './logger.js';
-
 import type {NanotronClientRequest} from '@alwatr/nanotron-api-server';
 
 /**
- * Parses the request body as JSON and assigns it to `this.sharedMeta.body`.
+ * Middleware to parses the request body as JSON and assigns it to `this.sharedMeta.body`.
  * If the body is empty or invalid, it sends an error response,
  * which triggers `terminatedHandlers` and prevents further handlers from executing.
  *
@@ -25,11 +23,11 @@ import type {NanotronClientRequest} from '@alwatr/nanotron-api-server';
 export async function parseBodyAsJson(
   this: NanotronClientRequest<{body?: DictionaryOpt}>,
 ): Promise<void> {
+  this.logger_.logMethod?.('parseBodyAsJson');
   const bodyBuffer = await this.getBodyRaw();
-  logger.logProperty?.('bodyBuffer', bodyBuffer);
 
   if (bodyBuffer.length === 0) {
-    logger.error('parseBodyAsJson', 'body_required');
+    this.logger_.error('parseBodyAsJson', 'body_required');
     this.serverResponse.statusCode = HttpStatusCodes.Error_Client_422_Unprocessable_Entity;
     this.serverResponse.replyErrorResponse({
       ok: false,
@@ -43,7 +41,7 @@ export async function parseBodyAsJson(
     this.sharedMeta.body = JSON.parse(bodyBuffer.toString()) as DictionaryOpt;
   }
   catch (error) {
-    logger.error('parseBodyAsJson', 'invalid_body_json', error);
+    this.logger_.error('parseBodyAsJson', 'invalid_body_json', error);
     this.serverResponse.statusCode = HttpStatusCodes.Error_Client_422_Unprocessable_Entity;
     this.serverResponse.replyErrorResponse({
       ok: false,
@@ -52,5 +50,5 @@ export async function parseBodyAsJson(
     });
   }
 
-  logger.logProperty?.('body', this.sharedMeta.body);
+  this.logger_.logProperty?.('body', this.sharedMeta.body);
 }
