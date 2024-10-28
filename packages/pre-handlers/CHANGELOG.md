@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.5.1](https://github.com/Alwatr/pre-handlers/compare/v4.5.0...v4.5.1) (2024-10-28)
+
+### Bug Fixes
+
+* deps ([fc6724b](https://github.com/Alwatr/pre-handlers/commit/fc6724b3b42fac816982c94128157bb188318243)) by @
+
 ## [4.5.0](https://github.com/Alwatr/pre-handlers/compare/v4.4.1...v4.5.0) (2024-10-28)
 
 ### Features
