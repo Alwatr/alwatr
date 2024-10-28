@@ -8,6 +8,8 @@ export async function parseBodyAsJson(
   this: NanotronClientRequest<{body: DictionaryOpt}>,
 ): Promise<void> {
   const bodyBuffer = await this.getBodyRaw();
+  logger.logProperty?.('bodyBuffer', bodyBuffer);
+
   if (bodyBuffer.length === 0) {
     logger.error('parseBodyAsJson', 'body_required');
     this.serverResponse.statusCode = HttpStatusCodes.Error_Client_422_Unprocessable_Entity;
@@ -32,5 +34,5 @@ export async function parseBodyAsJson(
     });
   }
 
-  logger.logMethodArgs?.('parseBodyAsJson', {body: this.sharedMeta.body});
+  logger.logProperty?.('body', this.sharedMeta.body);
 }
