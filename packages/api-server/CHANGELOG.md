@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.5.2](https://github.com/Alwatr/nanotron/compare/v4.5.1...v4.5.2) (2024-11-02)
+
+### Dependencies update
+
+* **deps:** bump the alwatr group with 6 updates ([6636bb3](https://github.com/Alwatr/nanotron/commit/6636bb307401e28863eb27288d5abbaab2d67e18)) by @dependabot[bot]
+* update ([86fbeb6](https://github.com/Alwatr/nanotron/commit/86fbeb663d94452f3596d0894ec19d4c6bed3099)) by @
+
 ## [4.5.0](https://github.com/Alwatr/nanotron/compare/v4.4.1...v4.5.0) (2024-10-28)
 
 ### Dependencies update

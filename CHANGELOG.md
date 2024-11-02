@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.5.2](https://github.com/Alwatr/nanotron/compare/v4.5.1...v4.5.2) (2024-11-02)
+
+### Miscellaneous Chores
+
+* add Copilot instructions and update VSCode settings and extensions ([aa26bab](https://github.com/Alwatr/nanotron/commit/aa26bab56bffa097d74397424aad5f84f213bdc5)) by @AliMD
+* update dependabot configuration for improved dependency management ([7e6e8de](https://github.com/Alwatr/nanotron/commit/7e6e8decf15b6f853effb61d0e8066513941e317)) by @AliMD
+
+### Dependencies update
+
+* bump the github-actions group with 2 updates ([49ce364](https://github.com/Alwatr/nanotron/commit/49ce3640e6cd49d97f52cb6f43610489cdaf1f6e)) by @dependabot[bot]
+* **deps:** bump the alwatr group with 6 updates ([6636bb3](https://github.com/Alwatr/nanotron/commit/6636bb307401e28863eb27288d5abbaab2d67e18)) by @dependabot[bot]
+* update ([86fbeb6](https://github.com/Alwatr/nanotron/commit/86fbeb663d94452f3596d0894ec19d4c6bed3099)) by @
+
 ## [4.5.1](https://github.com/Alwatr/nanotron/compare/v4.5.0...v4.5.1) (2024-10-28)
 
 ### Bug Fixes

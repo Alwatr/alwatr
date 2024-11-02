@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/crypto",
-  "version": "4.5.0",
+  "version": "4.5.2",
   "description": "A robust generator of secure authentication HOTP tokens, employing the HMAC-based One-Time Password algorithm, accompanied by a suite of cryptographic utilities, all encapsulated within a compact TypeScript module.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [
