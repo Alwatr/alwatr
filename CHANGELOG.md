@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.0](https://github.com/Alwatr/nanotron/compare/v4.5.2...v4.6.0) (2024-11-07)
+
+### Features
+
+* **api-server:** allow `CORS` requests to do ([27d8166](https://github.com/Alwatr/nanotron/commit/27d816677930213d455a998bf9ceb44571ddd4ac)) by @mohammadhonarvar
+
+### Bug Fixes
+
+* **api-server:** debug issue ([a3ef40f](https://github.com/Alwatr/nanotron/commit/a3ef40fc0b2845bff5d2d5fc7c6eb5ccad4f0d85)) by @mohammadhonarvar
+
+### Dependencies update
+
+* **deps-dev:** bump @types/node in the dependencies group ([9901819](https://github.com/Alwatr/nanotron/commit/9901819d0a7fef85736951f354bc1846294bb7fe)) by @dependabot[bot]
+* **deps:** bump @alwatr/nanolib from 5.0.0 to 5.2.1 in the alwatr group ([f06afb7](https://github.com/Alwatr/nanotron/commit/f06afb74f363c478ffc5967bafadfa2bc9009129)) by @dependabot[bot]
+* update ([78b89b2](https://github.com/Alwatr/nanotron/commit/78b89b2648010cf394a4211e47abfe4fecf49d5f)) by @AliMD
+
 ## [4.5.2](https://github.com/Alwatr/nanotron/compare/v4.5.1...v4.5.2) (2024-11-02)
 
 ### Miscellaneous Chores

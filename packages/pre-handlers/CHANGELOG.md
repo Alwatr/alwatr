@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.0](https://github.com/Alwatr/pre-handlers/compare/v4.5.2...v4.6.0) (2024-11-07)
+
+### Dependencies update
+
+* **deps-dev:** bump @types/node in the dependencies group ([9901819](https://github.com/Alwatr/pre-handlers/commit/9901819d0a7fef85736951f354bc1846294bb7fe)) by @dependabot[bot]
+* **deps:** bump @alwatr/nanolib from 5.0.0 to 5.2.1 in the alwatr group ([f06afb7](https://github.com/Alwatr/pre-handlers/commit/f06afb74f363c478ffc5967bafadfa2bc9009129)) by @dependabot[bot]
+
 ## [4.5.2](https://github.com/Alwatr/pre-handlers/compare/v4.5.1...v4.5.2) (2024-11-02)
 
 ### Dependencies update
