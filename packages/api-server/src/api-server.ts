@@ -148,7 +148,11 @@ export class NanotronApiServer {
     this.httpServer.on('clientError', this.handleClientError_);
 
     if (this.config_.healthRoute) {
-      this._defineHealthRoute();
+      this.defineHealthRoute_();
+    }
+
+    if (this.config_.allowAllOrigin === true) {
+      this.defineCorsRoute_();
     }
   }
 
@@ -253,6 +257,10 @@ export class NanotronApiServer {
 
     const connection = new NanotronClientRequest(url, nativeClientRequest, nativeServerResponse, routeOption);
 
+    if (this.config_.allowAllOrigin === true) {
+      connection.serverResponse.headers['access-control-allow-origin'] = '*';
+    }
+
     if (routeOption === null) {
       connection.serverResponse.statusCode = HttpStatusCodes.Error_Client_404_Not_Found;
       connection.serverResponse.replyError();
@@ -284,7 +292,9 @@ export class NanotronApiServer {
     // TODO: handled open remained connections.
   }
 
-  protected _defineHealthRoute(): void {
+  protected defineHealthRoute_(): void {
+    this.logger_.logMethod?.('defineHealthRoute_');
+
     this.defineRoute({
       method: 'GET',
       url: '/health',
@@ -294,6 +304,24 @@ export class NanotronApiServer {
         res.setHeader('server', 'Alwatr Nanotron');
         res.setHeader('content-type', 'application/json');
         res.end('{"ok":true}');
+      },
+    });
+  }
+
+  protected defineCorsRoute_(): void {
+    this.logger_.logMethod?.('defineCorsRoute_');
+
+    this.defineRoute({
+      method: 'OPTIONS',
+      matchType: 'startsWith',
+      url: '/',
+      handler: function () {
+        const res = this.serverResponse.raw_;
+        res.statusCode = HttpStatusCodes.Success_204_No_Content;
+        res.setHeader('access-control-allow-origin', '*');
+        res.setHeader('access-control-allow-methods', '*');
+        res.setHeader('access-control-allow-headers', '*');
+        res.end();
       },
     });
   }
