@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.0](https://github.com/Alwatr/nanotron/compare/v4.6.0...v4.7.0) (2024-11-07)
+
+### Features
+
+* **api-server:** set `allowOrigin` from configs ([8add97c](https://github.com/Alwatr/nanotron/commit/8add97cac9d29e4a7ce26ee487896183dabea135)) by @mohammadhonarvar
+
 ## [4.6.0](https://github.com/Alwatr/nanotron/compare/v4.5.2...v4.6.0) (2024-11-07)
 
 ### Features

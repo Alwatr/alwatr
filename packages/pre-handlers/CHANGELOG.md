@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.0](https://github.com/Alwatr/pre-handlers/compare/v4.6.0...v4.7.0) (2024-11-07)
+
+**Note:** Version bump only for package @alwatr/pre-handlers
+
 ## [4.6.0](https://github.com/Alwatr/pre-handlers/compare/v4.5.2...v4.6.0) (2024-11-07)
 
 ### Dependencies update
