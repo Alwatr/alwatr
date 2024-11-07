@@ -293,11 +293,12 @@ export class NanotronApiServer {
   }
 
   protected defineHealthRoute_(): void {
+    this.logger_.logMethod?.('defineHealthRoute_');
+
     this.defineRoute({
       method: 'GET',
       url: '/health',
       handler: function () {
-        this.logger_.logMethod?.('defineHealthRoute_');
         const res = this.serverResponse.raw_;
         res.statusCode = HttpStatusCodes.Success_200_OK;
         res.setHeader('server', 'Alwatr Nanotron');
@@ -308,12 +309,13 @@ export class NanotronApiServer {
   }
 
   protected defineCorsRoute_(): void {
+    this.logger_.logMethod?.('defineCorsRoute_');
+
     this.defineRoute({
       method: 'OPTIONS',
       matchType: 'startsWith',
       url: '/',
       handler: function () {
-        this.logger_.logMethod?.('defineCorsRoute_');
         const res = this.serverResponse.raw_;
         res.statusCode = HttpStatusCodes.Success_204_No_Content;
         res.setHeader('access-control-allow-origin', '*');
