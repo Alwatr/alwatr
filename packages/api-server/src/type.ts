@@ -71,6 +71,18 @@ export interface DefineRouteOption<TSharedMeta extends DictionaryOpt = Dictionar
    * @default `1_048_576` (1MiB) or the value set in the server configuration.
    */
   bodyLimit?: number;
+
+  /**
+   * Add CORS headers
+   *
+   * @default Api Server Config
+   */
+  allowOrigin?: {
+    origin: string;
+    methods: string;
+    headers: string;
+    maxAge: string | number;
+  };
 }
 
 /**

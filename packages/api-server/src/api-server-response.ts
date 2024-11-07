@@ -38,8 +38,16 @@ export class NanotronServerResponse {
     // Set default reply headers.
     this.headers = {
       server: 'Alwatr Nanotron',
-      'content-type': 'text/plain',
+      'content-type': 'text/plain charset=UTF-8',
     };
+
+    const allowOrigin = this.clientRequest.routeOption?.allowOrigin;
+    if (allowOrigin) {
+      this.headers['access-control-allow-origin'] = allowOrigin.origin;
+      this.headers['access-control-allow-methods'] = allowOrigin.methods;
+      this.headers['access-control-allow-headers'] = allowOrigin.headers;
+      this.headers['access-control-max-age'] = allowOrigin.maxAge;
+    }
   }
 
   get statusCode(): HttpStatusCode {
