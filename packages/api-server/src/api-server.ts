@@ -60,11 +60,16 @@ export interface NanotronApiServerConfig {
   healthRoute?: boolean;
 
   /**
-   * Add OPTIONS route for preflight requests to allow access all origins.
+   * Add OPTIONS route for preflight requests to allow access origins.
    *
-   * @default false
+   * @default {origin: '*', methods: '*', headers: '*', maxAge: 86_400}
    */
-  allowAllOrigin?: boolean;
+  allowOrigin: {
+    origin: string;
+    methods: string;
+    headers: string;
+    maxAge: string | number;
+  },
 
   /**
    * A prefix to be added to the beginning of the `url` of all defined routes.
@@ -89,7 +94,12 @@ export class NanotronApiServer {
     headersTimeout: 130_000,
     keepAliveTimeout: 120_000,
     healthRoute: true,
-    allowAllOrigin: false,
+    allowOrigin: {
+      origin: '*',
+      methods: '*',
+      headers: '*',
+      maxAge: 86_400, // 24h
+    },
     prefix: '/api/',
     bodyLimit: 1_048_576, // 1MiB
   };
@@ -147,12 +157,10 @@ export class NanotronApiServer {
     this.httpServer.on('error', this.handleServerError_);
     this.httpServer.on('clientError', this.handleClientError_);
 
+    this.defineCorsRoute_();
+
     if (this.config_.healthRoute) {
       this.defineHealthRoute_();
-    }
-
-    if (this.config_.allowAllOrigin === true) {
-      this.defineCorsRoute_();
     }
   }
 
@@ -205,6 +213,7 @@ export class NanotronApiServer {
       preHandlers: [],
       postHandlers: [],
       bodyLimit: this.config_.bodyLimit,
+      allowOrigin: this.config_.allowOrigin,
       ...option,
     };
     this.logger_.logMethodArgs?.('defineRoute', option_);
@@ -256,10 +265,6 @@ export class NanotronApiServer {
     const routeOption = this.getRouteOption_(url);
 
     const connection = new NanotronClientRequest(url, nativeClientRequest, nativeServerResponse, routeOption);
-
-    if (this.config_.allowAllOrigin === true) {
-      connection.serverResponse.headers['access-control-allow-origin'] = '*';
-    }
 
     if (routeOption === null) {
       connection.serverResponse.statusCode = HttpStatusCodes.Error_Client_404_Not_Found;
@@ -316,11 +321,19 @@ export class NanotronApiServer {
       matchType: 'startsWith',
       url: '/',
       handler: function () {
+        const allowOrigin = this.routeOption?.allowOrigin;
+        if (allowOrigin === undefined) return;
+
         const res = this.serverResponse.raw_;
-        res.statusCode = HttpStatusCodes.Success_204_No_Content;
-        res.setHeader('access-control-allow-origin', '*');
-        res.setHeader('access-control-allow-methods', '*');
-        res.setHeader('access-control-allow-headers', '*');
+
+        res.writeHead(HttpStatusCodes.Success_204_No_Content, {
+          'access-control-allow-origin': allowOrigin.origin,
+          'access-control-allow-methods': allowOrigin.methods,
+          'access-control-allow-headers': allowOrigin.headers,
+          'access-control-max-age': allowOrigin.maxAge + '',
+          'content-length': 0,
+        });
+
         res.end();
       },
     });
