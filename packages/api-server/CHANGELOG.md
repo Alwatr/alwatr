@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.8.0](https://github.com/Alwatr/nanotron/compare/v4.7.0...v4.8.0) (2024-11-08)
+
+### Features
+
+* **api-server:** refactor CORS handling to use new crossOrigin configuration ([52a40d7](https://github.com/Alwatr/nanotron/commit/52a40d741124b78e7fdfc4207e591a4e620b2446)) by @
+
 ## [4.7.0](https://github.com/Alwatr/nanotron/compare/v4.6.0...v4.7.0) (2024-11-07)
 
 ### Features
