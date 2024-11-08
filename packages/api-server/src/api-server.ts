@@ -62,9 +62,10 @@ export interface NanotronApiServerConfig {
   /**
    * Add OPTIONS route for preflight requests to allow access origins.
    *
-   * @default {origin: '*', methods: '*', headers: '*', maxAge: 86_400}
+   * @default {enable: false, origin: '*', methods: '*', headers: '*', maxAge: 86_400}
    */
-  allowOrigin: {
+  crossOrigin?: {
+    enable: boolean;
     origin: string;
     methods: string;
     headers: string;
@@ -94,7 +95,8 @@ export class NanotronApiServer {
     headersTimeout: 130_000,
     keepAliveTimeout: 120_000,
     healthRoute: true,
-    allowOrigin: {
+    crossOrigin: {
+      enable: false,
       origin: '*',
       methods: '*',
       headers: '*',
@@ -104,7 +106,7 @@ export class NanotronApiServer {
     bodyLimit: 1_048_576, // 1MiB
   };
 
-  readonly config_;
+  readonly config_: Required<NanotronApiServerConfig>;
   protected readonly logger_;
 
   readonly httpServer;
@@ -213,7 +215,7 @@ export class NanotronApiServer {
       preHandlers: [],
       postHandlers: [],
       bodyLimit: this.config_.bodyLimit,
-      allowOrigin: this.config_.allowOrigin,
+      crossOrigin: this.config_.crossOrigin,
       ...option,
     };
     this.logger_.logMethodArgs?.('defineRoute', option_);
@@ -315,25 +317,21 @@ export class NanotronApiServer {
 
   protected defineCorsRoute_(): void {
     this.logger_.logMethod?.('defineCorsRoute_');
-
+    const crossOrigin = this.config_.crossOrigin;
+    if (crossOrigin?.enable !== true) return;
     this.defineRoute({
       method: 'OPTIONS',
       matchType: 'startsWith',
       url: '/',
       handler: function () {
-        const allowOrigin = this.routeOption?.allowOrigin;
-        if (allowOrigin === undefined) return;
-
         const res = this.serverResponse.raw_;
-
         res.writeHead(HttpStatusCodes.Success_204_No_Content, {
-          'access-control-allow-origin': allowOrigin.origin,
-          'access-control-allow-methods': allowOrigin.methods,
-          'access-control-allow-headers': allowOrigin.headers,
-          'access-control-max-age': allowOrigin.maxAge + '',
+          'access-control-allow-origin': crossOrigin.origin,
+          'access-control-allow-methods': crossOrigin.methods,
+          'access-control-allow-headers': crossOrigin.headers,
+          'access-control-max-age': crossOrigin.maxAge + '',
           'content-length': 0,
         });
-
         res.end();
       },
     });

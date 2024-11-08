@@ -77,7 +77,8 @@ export interface DefineRouteOption<TSharedMeta extends DictionaryOpt = Dictionar
    *
    * @default Api Server Config
    */
-  allowOrigin?: {
+  crossOrigin?: {
+    enable: boolean;
     origin: string;
     methods: string;
     headers: string;

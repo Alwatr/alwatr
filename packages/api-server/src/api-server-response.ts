@@ -41,12 +41,12 @@ export class NanotronServerResponse {
       'content-type': 'text/plain charset=UTF-8',
     };
 
-    const allowOrigin = this.clientRequest.routeOption?.allowOrigin;
-    if (allowOrigin) {
-      this.headers['access-control-allow-origin'] = allowOrigin.origin;
-      this.headers['access-control-allow-methods'] = allowOrigin.methods;
-      this.headers['access-control-allow-headers'] = allowOrigin.headers;
-      this.headers['access-control-max-age'] = allowOrigin.maxAge;
+    const crossOrigin = this.clientRequest.routeOption?.crossOrigin;
+    if (crossOrigin?.enable === true) {
+      this.headers['access-control-allow-origin'] = crossOrigin.origin;
+      this.headers['access-control-allow-methods'] = crossOrigin.methods;
+      this.headers['access-control-allow-headers'] = crossOrigin.headers;
+      this.headers['access-control-max-age'] = crossOrigin.maxAge;
     }
   }
 
