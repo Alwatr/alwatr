@@ -171,6 +171,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@alwatr/hash-string@workspace:packages/hash-string":
+  version: 0.0.0-use.local
+  resolution: "@alwatr/hash-string@workspace:packages/hash-string"
+  dependencies:
+    "@alwatr/nano-build": "workspace:^"
+    "@alwatr/package-tracer": "workspace:^"
+    "@alwatr/prettier-config": "workspace:^"
+    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/type-helper": "workspace:^"
+    typescript: "npm:^5.6.3"
+  languageName: unknown
+  linkType: soft
+
 "@alwatr/http-primer@workspace:^, @alwatr/http-primer@workspace:packages/http-primer":
   version: 0.0.0-use.local
   resolution: "@alwatr/http-primer@workspace:packages/http-primer"
