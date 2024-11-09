@@ -171,7 +171,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/hash-string@workspace:packages/hash-string":
+"@alwatr/hash-string@workspace:^, @alwatr/hash-string@workspace:packages/hash-string":
   version: 0.0.0-use.local
   resolution: "@alwatr/hash-string@workspace:packages/hash-string"
   dependencies:
@@ -266,6 +266,7 @@ __metadata:
     "@alwatr/flat-string": "workspace:^"
     "@alwatr/flatomise": "workspace:^"
     "@alwatr/global-this": "workspace:^"
+    "@alwatr/hash-string": "workspace:^"
     "@alwatr/http-primer": "workspace:^"
     "@alwatr/is-number": "workspace:^"
     "@alwatr/local-storage": "workspace:^"
