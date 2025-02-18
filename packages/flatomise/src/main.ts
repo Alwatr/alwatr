@@ -10,22 +10,22 @@ export interface Flatomise<T> {
   /**
    * The promise.
    */
-  promise: Promise<T>;
+  readonly promise: Promise<T>;
 
   /**
    * Resolve the promise.
    */
-  resolve: (value: T | PromiseLike<T>) => void;
+  readonly resolve: (value: T | PromiseLike<T>) => void;
 
   /**
    * Reject the promise.
    */
-  reject: (reason?: any) => void;
+  readonly reject: (reason?: any) => void;
 
   /**
    * Whether the promise is settled (resolved or rejected).
    */
-  settled: boolean;
+  readonly settled: boolean;
 }
 
 /**
@@ -43,7 +43,7 @@ export interface Flatomise<T> {
  * ```
  */
 export function newFlatomise<T>(): Flatomise<T> {
-  const flatomise: Partial<Flatomise<T>> = {settled: false};
+  const flatomise: Partial<Mutable<Flatomise<T>>> = {settled: false};
   flatomise.promise = new Promise<T>((resolve, reject) => {
     flatomise.resolve = resolve;
     flatomise.reject = reject;
