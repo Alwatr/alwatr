@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.3](https://github.com/Alwatr/flux/compare/v4.0.2...v4.0.3) (2025-02-18)
+
+### Bug Fixes
+
+* **observable:** improve subscription logic for 'once' option and streamline unsubscribe handling ([d8516a0](https://github.com/Alwatr/flux/commit/d8516a098a9033bfb0780afdf84f4a0667660047)) by @alimd
+
+### Dependencies update
+
+* **deps-dev:** bump the dependencies group across 1 directory with 11 updates ([18e3479](https://github.com/Alwatr/flux/commit/18e34795f826270a407d77440b946f8101513ba9)) by @dependabot[bot]
+* **deps-dev:** bump the dependencies group with 10 updates ([b70907b](https://github.com/Alwatr/flux/commit/b70907bcb78b664c80e7d7acec9acf04c805cb2f)) by @dependabot[bot]
+* **deps:** bump @alwatr/nanolib in the alwatr group across 1 directory ([2f52985](https://github.com/Alwatr/flux/commit/2f52985a74d4c5719dcb5d8d0440e3c2fac9be72)) by @dependabot[bot]
+* **deps:** bump @octokit/endpoint from 10.1.1 to 10.1.3 ([5c4a949](https://github.com/Alwatr/flux/commit/5c4a949920ebefce64ace26b8bdbde40e2fc5271)) by @dependabot[bot]
+* **deps:** bump @octokit/plugin-paginate-rest from 11.3.3 to 11.4.2 ([e185af9](https://github.com/Alwatr/flux/commit/e185af957d3aa4fdcb17bb9f8cfa93e9429cd4ef)) by @dependabot[bot]
+* **deps:** bump @octokit/request from 9.1.1 to 9.2.2 ([7d9b6ce](https://github.com/Alwatr/flux/commit/7d9b6ce22da7949829bd84f82548be34c1ea813a)) by @dependabot[bot]
+* **deps:** bump @octokit/request-error from 6.1.1 to 6.1.7 ([e702fa7](https://github.com/Alwatr/flux/commit/e702fa7b8b27d1a59ccaa696430a3a2dec6b7f0a)) by @dependabot[bot]
+* **deps:** bump cross-spawn from 7.0.3 to 7.0.6 ([9659263](https://github.com/Alwatr/flux/commit/9659263e16fd58194f2ba6fb85258f8fd160c460)) by @dependabot[bot]
+* **deps:** bump the alwatr group with 4 updates ([7e1b5fd](https://github.com/Alwatr/flux/commit/7e1b5fdde606bd76a443356c74f332015beed275)) by @dependabot[bot]
+* **deps:** bump the github-actions group across 1 directory with 4 updates ([e9c2451](https://github.com/Alwatr/flux/commit/e9c2451a8c8babdc486bbe9bfc00ccbf84607d99)) by @dependabot[bot]
+* update TypeScript to 5.7.3-sdk and Prettier to 3.5.1-sdk; bump [@lerna-lite](https://github.com/lerna-lite) packages to 3.12.1; upgrade Yarn to 4.6.0 ([2bb77b6](https://github.com/Alwatr/flux/commit/2bb77b609bf7cab5e29014528d36055308a7757a)) by @alimd
+
 ## [4.0.2](https://github.com/Alwatr/flux/compare/v4.0.1...v4.0.2) (2024-11-06)
 
 ### Bug Fixes

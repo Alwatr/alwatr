@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/context",
-  "version": "4.0.0",
+  "version": "4.0.3",
   "description": "A simple yet powerful TypeScript library for managing application context and facilitating efficient communication between components.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [
