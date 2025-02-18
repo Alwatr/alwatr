@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/package-tracer",
-  "version": "5.3.0",
+  "version": "5.4.0",
   "description": "Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/nano-build",
-  "version": "5.3.0",
+  "version": "5.4.0",
   "description": "Build/bundle tools for ECMAScript, TypeScript, and JavaScript libraries. It's easy to use, doesn't require any setup, and adheres to best practices. It has no dependencies and uses esbuild for enhanced performance.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [

@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.0](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@1.2.11...@alwatr/eslint-config@5.4.0) (2025-02-18)
+
+### Dependencies update
+
+* bump @types/node from ^22.13.0 to ^22.13.4 and prettier from 3.4.2 to 3.5.1; update eslint-import-resolver-typescript to 3.8.2 ([b9a8399](https://github.com/Alwatr/nanolib/commit/b9a8399add39509e90bfdc589fb5e2321718029d)) by @
+* bump esbuild from 0.24.2 to 0.25.0 ([b9cdc08](https://github.com/Alwatr/nanolib/commit/b9cdc08ee0ce431090583694e4b97250b1296947)) by @dependabot[bot]
+
+## 5.3.0 (2025-02-03)
+
+### Miscellaneous Chores
+
+* edit README ([3860b3d](https://github.com/Alwatr/nanolib/commit/3860b3df48ab82dc479d5236c2e8579df614aabf)) by @
+
+### Dependencies update
+
+* bump esbuild in the production-dependencies group ([97b1ced](https://github.com/Alwatr/nanolib/commit/97b1ced6218d154e53a7b8d238f5a8681ef4efd8)) by @
+* bump the development-dependencies group across 1 directory with 11 updates ([cb79d07](https://github.com/Alwatr/nanolib/commit/cb79d072a57c79e1c01abff1a293d6757bb65350)) by @
+* update typescript and @types/node to version 5.7.3 and 22.13.0 respectively across multiple packages ([ddab05b](https://github.com/Alwatr/nanolib/commit/ddab05b5d767c30191f36a065e4bc88744e8e3fe)) by @
+
+## 5.0.0 (2024-11-02)
+
+### ⚠ BREAKING CHANGES
+
+* To simplify version management and ensure consistency, all nanolib packages now use the same version as @alwatr/nanolib. This may require updates to your project's dependencies.
+
+### Code Refactoring
+
+* use the same version as @alwatr/nanolib ([60eb860](https://github.com/Alwatr/nanolib/commit/60eb860a0e33dfffe2d1d95e63ce54c60876be06)) by @
+
 ## [5.3.0](https://github.com/Alwatr/nanolib/compare/v5.2.1...v5.3.0) (2025-02-03)
 
 ### Miscellaneous Chores

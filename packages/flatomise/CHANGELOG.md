@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.0](https://github.com/Alwatr/nanolib/compare/@alwatr/flatomise@1.2.8...@alwatr/flatomise@5.4.0) (2025-02-18)
+
+### Features
+
+* enhance Flatomise interface with promise settlement tracking ([692e7ff](https://github.com/Alwatr/nanolib/commit/692e7ff5ddbc2efef16aaa2ecbeff90e55d63e2a)) by @
+
+### Code Refactoring
+
+* make Flatomise properties readonly for immutability ([14dd30f](https://github.com/Alwatr/nanolib/commit/14dd30f6615d6e4cddf125803267fc9a817f59ac)) by @
+
+### Dependencies update
+
+* **flatomise:** add @alwatr/type-helper to dependencies and TypeScript types ([7a489ab](https://github.com/Alwatr/nanolib/commit/7a489abd39aac2c1189e6697025f82af196e2fe9)) by @
+
+## 5.3.0 (2025-02-03)
+
+### Miscellaneous Chores
+
+* edit README ([3860b3d](https://github.com/Alwatr/nanolib/commit/3860b3df48ab82dc479d5236c2e8579df614aabf)) by @
+
+### Dependencies update
+
+* bump the development-dependencies group across 1 directory with 11 updates ([cb79d07](https://github.com/Alwatr/nanolib/commit/cb79d072a57c79e1c01abff1a293d6757bb65350)) by @
+* update typescript and @types/node to version 5.7.3 and 22.13.0 respectively across multiple packages ([ddab05b](https://github.com/Alwatr/nanolib/commit/ddab05b5d767c30191f36a065e4bc88744e8e3fe)) by @
+
+## 5.0.0 (2024-11-02)
+
+### ⚠ BREAKING CHANGES
+
+* To simplify version management and ensure consistency, all nanolib packages now use the same version as @alwatr/nanolib. This may require updates to your project's dependencies.
+
+### Code Refactoring
+
+* use the same version as @alwatr/nanolib ([60eb860](https://github.com/Alwatr/nanolib/commit/60eb860a0e33dfffe2d1d95e63ce54c60876be06)) by @
+
 ## [5.3.0](https://github.com/Alwatr/nanolib/compare/v5.2.1...v5.3.0) (2025-02-03)
 
 ### Miscellaneous Chores

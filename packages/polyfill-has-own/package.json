@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/polyfill-has-own",
-  "version": "5.3.1",
+  "version": "5.4.0",
   "description": "A polyfill for `Object.hasOwn`.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [
