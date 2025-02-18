@@ -57,14 +57,14 @@
     "clean": "rm -rfv dist *.tsbuildinfo"
   },
   "dependencies": {
-    "@alwatr/nanolib": "^5.2.1"
+    "@alwatr/nanolib": "^5.4.0"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^5.0.0",
+    "@alwatr/nano-build": "^5.4.0",
     "@alwatr/prettier-config": "^5.0.0",
     "@alwatr/tsconfig-base": "^5.0.0",
-    "@alwatr/type-helper": "^5.0.0",
-    "@types/node": "^22.13.1",
+    "@alwatr/type-helper": "^5.3.0",
+    "@types/node": "^22.13.4",
     "jest": "^29.7.0",
     "typescript": "^5.7.3"
   }
