@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.8.1](https://github.com/Alwatr/nanotron/compare/v4.8.0...v4.8.1) (2025-02-18)
+
+### Dependencies update
+
+* **deps-dev:** bump the dependencies group across 1 directory with 11 updates ([9257e08](https://github.com/Alwatr/nanotron/commit/9257e08b96f5661a7e13e153b9c71d9dbc08fd18)) by @dependabot[bot]
+* update TypeScript, Prettier, and various dependencies to latest versions ([5c0f752](https://github.com/Alwatr/nanotron/commit/5c0f7521851acaabb2466e459754c130d7ebf31b)) by @
+
 ## [4.8.0](https://github.com/Alwatr/nanotron/compare/v4.7.0...v4.8.0) (2024-11-08)
 
 ### Features
