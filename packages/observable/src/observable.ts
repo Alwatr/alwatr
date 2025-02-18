@@ -87,19 +87,24 @@ export abstract class AlwatrObservable<T extends DictionaryOpt = DictionaryOpt> 
       }, 0);
     }
 
-    // If once then must remove listener after first callback called! then why push it to listenerList?!
-    if (options.once !== true || callbackExecuted === true) {
-      if (options.priority === true) {
-        this.observers__.unshift(listenerObject_);
-      }
-      else {
-        this.observers__.push(listenerObject_);
-      }
-    }
-
-    return {
+    const subscribeResult: SubscribeResult = {
       unsubscribe: this.unsubscribe.bind(this, listenerCallback),
     };
+
+    // If once then must remove listener after first callback called! then why push it to listenerList?!
+    if (options.once === true && callbackExecuted === true) {
+      return subscribeResult;
+    }
+    // else
+
+    if (options.priority === true) {
+      this.observers__.unshift(listenerObject_);
+    }
+    else {
+      this.observers__.push(listenerObject_);
+    }
+
+    return subscribeResult;
   }
 
   /**
