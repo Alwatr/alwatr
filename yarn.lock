@@ -153,6 +153,7 @@ __metadata:
     "@alwatr/package-tracer": "workspace:^"
     "@alwatr/prettier-config": "workspace:^"
     "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/type-helper": "workspace:^"
     typescript: "npm:^5.7.3"
   languageName: unknown
   linkType: soft
