@@ -1,6 +1,6 @@
-import {createHash, randomBytes, type BinaryLike} from 'node:crypto';
+import {createHash, randomBytes, type BinaryLike, type BinaryToTextEncoding} from 'node:crypto';
 
-import type {CryptoAlgorithm, CryptoEncoding} from './type.js';
+import type {CryptoAlgorithm} from './type.js';
 
 /**
  * Represents the configuration for a hash generator.
@@ -19,7 +19,7 @@ export interface HashGeneratorConfig {
   /**
    * The encoding used for the generated hash.
    */
-  encoding: CryptoEncoding;
+  encoding: BinaryToTextEncoding;
 
   /**
    * The length of the CRC (Cyclic Redundancy Check) value.

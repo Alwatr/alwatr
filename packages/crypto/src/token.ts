@@ -1,8 +1,8 @@
-import {createHmac} from 'node:crypto';
+import {createHmac, type BinaryToTextEncoding} from 'node:crypto';
 
 import {parseDuration, type Duration} from '@alwatr/nanolib';
 
-import type {CryptoAlgorithm, CryptoEncoding} from './type.js';
+import type {CryptoAlgorithm} from './type.js';
 
 export type TokenValidity = 'valid' | 'invalid' | 'expired';
 
@@ -23,7 +23,7 @@ export interface TokenGeneratorConfig {
   /**
    * The encoding used for the generated hash.
    */
-  encoding: CryptoEncoding;
+  encoding: BinaryToTextEncoding;
 
   /**
    * The secret used for encryption and decryption tokens.
