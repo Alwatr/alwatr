@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.9.0](https://github.com/Alwatr/pre-handlers/compare/v4.8.1...v4.9.0) (2025-02-26)
+
+### Dependencies update
+
+* bump @types/node from 22.13.4 to 22.13.5 and prettier from 3.5.1 to 3.5.2 across multiple packages ([3d55c9a](https://github.com/Alwatr/pre-handlers/commit/3d55c9a4044773fdc8d7c8b635311f2043f48569)) by @alimd
+
 ## [4.8.1](https://github.com/Alwatr/pre-handlers/compare/v4.8.0...v4.8.1) (2025-02-18)
 
 ### Dependencies update

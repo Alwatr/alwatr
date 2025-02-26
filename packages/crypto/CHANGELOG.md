@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.9.0](https://github.com/Alwatr/nanotron/compare/v4.8.1...v4.9.0) (2025-02-26)
+
+### Features
+
+* **crypto:** add 'ascii' and 'utf8' to CryptoEncoding type ([aa2720f](https://github.com/Alwatr/nanotron/commit/aa2720f6f7b128a572d8591dc7a75ac15ed6d2d6)) by @alimd
+
+### Code Refactoring
+
+* **crypto:** replace CryptoEncoding with BinaryToTextEncoding in hash and token configurations ([8e356cd](https://github.com/Alwatr/nanotron/commit/8e356cd60ee438d1f2d2ab688468944d8b6bd99e)) by @alimd
+
+### Dependencies update
+
+* bump @types/node from 22.13.4 to 22.13.5 and prettier from 3.5.1 to 3.5.2 across multiple packages ([3d55c9a](https://github.com/Alwatr/nanotron/commit/3d55c9a4044773fdc8d7c8b635311f2043f48569)) by @alimd
+
 ## [4.8.1](https://github.com/Alwatr/nanotron/compare/v4.8.0...v4.8.1) (2025-02-18)
 
 ### Dependencies update
