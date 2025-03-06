@@ -57,11 +57,11 @@ jobs:
 
       - name: 🏗 Setup Docker Buildx
         if: ${{ steps.file_change.outputs.container_folder != 'false' }}
-        uses: docker/setup-buildx-action@v3.9.0
+        uses: docker/setup-buildx-action@v3.10.0
 
       - name: 🏗 Cache Docker Layers
         if: ${{ steps.file_change.outputs.container_folder != 'false' }}
-        uses: actions/cache@v4.2.1
+        uses: actions/cache@v4.2.2
         with:
           path: /tmp/.buildx-cache
           key: container/${{ matrix.name }}
@@ -84,7 +84,7 @@ jobs:
       - name: 🏗 Extract metadata
         if: ${{ steps.file_change.outputs.container_folder != 'false' }}
         id: meta
-        uses: docker/metadata-action@v5.6.1
+        uses: docker/metadata-action@v5.7.0
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           images: |
@@ -98,7 +98,7 @@ jobs:
 
       - name: 🚀 Build and export to docekr
         if: ${{ steps.file_change.outputs.container_folder != 'false' }}
-        uses: docker/build-push-action@v6.14.0
+        uses: docker/build-push-action@v6.15.0
         with:
           context: ./${{matrix.context}}
           file: ${{matrix.path}}/Dockerfile
@@ -118,7 +118,7 @@ jobs:
 
       - name: 🚀 Build and publish container image
         if: ${{ steps.file_change.outputs.container_folder != 'false' }}
-        uses: docker/build-push-action@v6.14.0
+        uses: docker/build-push-action@v6.15.0
         with:
           context: ./${{matrix.context}}
           file: ${{matrix.path}}/Dockerfile
