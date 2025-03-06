@@ -462,9 +462,9 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * collectionRef.save();
    * ```
    */
-  save(): void {
+  save(itemId: string | number | null): void {
     this.logger__.logMethod?.('save');
-    this.updated__(null, false);
+    this.updated__(itemId, false);
   }
 
   /**
@@ -475,9 +475,9 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * collectionRef.saveImmediate();
    * ```
    */
-  saveImmediate(): void {
+  saveImmediate(itemId: string | number | null): void {
     this.logger__.logMethod?.('saveImmediate');
-    this.updated__(null, true);
+    this.updated__(itemId, true);
   }
 
   /**
