@@ -379,7 +379,6 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
     this.context__.meta.rev++;
   }
 
-
   /**
    * Retrieves the document's extra metadata.
    *
