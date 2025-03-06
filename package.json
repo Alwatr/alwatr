@@ -39,7 +39,7 @@
     "publish": "lerna publish from-package"
   },
   "devDependencies": {
-    "@alwatr/eslint-config": "^5.4.0",
+    "@alwatr/eslint-config": "^5.5.0",
     "@alwatr/prettier-config": "^5.0.0",
     "@lerna-lite/changed": "^3.12.1",
     "@lerna-lite/cli": "^3.12.1",
@@ -60,5 +60,5 @@
     "prettier": "^3.5.3",
     "typescript": "^5.8.2"
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.7.0"
 }
