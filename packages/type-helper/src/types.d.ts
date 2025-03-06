@@ -216,7 +216,7 @@ export type JsonPrimitive = string | number | boolean | null;
  * Strigifyable JSON value that can be of type `string`, `number`, `boolean`, `null`, `undefined`,
  * `JSONArray`, or `JSONObject`.
  */
-export type JsonValue = JsonPrimitive | JsonArray | JsonObject | JsonifiableObject;
+export type JsonValue = JsonPrimitive | JsonArray | JsonObject | JsonifiableObject | undefined;
 
 /**
  * Represents `Array<JSONValues>`.
