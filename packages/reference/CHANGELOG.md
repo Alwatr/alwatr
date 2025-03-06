@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.8.0](https://github.com/Alwatr/nitrobase/compare/v7.7.0...v7.8.0) (2025-03-06)
+
+### Features
+
+* **reference:** update save and saveImmediate methods to accept itemId parameter ([8fe304e](https://github.com/Alwatr/nitrobase/commit/8fe304ec47a2d86a6ca78e8cbea3efe7d231bc88)) by @
+
+### Miscellaneous Chores
+
+* **reference:** remove unnecessary blank line in DocumentReference class ([eeb63b9](https://github.com/Alwatr/nitrobase/commit/eeb63b96e07e6638b1fcc4976de65571ed4267eb)) by @
+
+### Dependencies update
+
+* **deps-dev:** bump the dependencies group across 1 directory with 5 updates ([fe6ab37](https://github.com/Alwatr/nitrobase/commit/fe6ab37263f609f8bce8398462b7105b8e5a55fe)) by @dependabot[bot]
+* update @alwatr/nanolib, @alwatr/nano-build, and @alwatr/type-helper to latest versions ([5f3f89b](https://github.com/Alwatr/nitrobase/commit/5f3f89b1236f66e9167957d60d43c8d0abff108d)) by @
+
 ## [7.7.0](https://github.com/Alwatr/nitrobase/compare/v7.6.1...v7.7.0) (2025-02-26)
 
 **Note:** Version bump only for package @alwatr/nitrobase-reference
