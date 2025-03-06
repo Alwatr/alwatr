@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.0](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@5.4.0...@alwatr/logger@5.5.0) (2025-03-06)
+
+### Miscellaneous Chores
+
+* update username casing in changelog entries ([9722ac9](https://github.com/Alwatr/nanolib/commit/9722ac9a078438a4e8ebfa5826ea70e0e3a52ca6)) by @
+
+### Dependencies update
+
+* bump the development-dependencies group across 1 directory with 11 updates ([720c395](https://github.com/Alwatr/nanolib/commit/720c3954da55c929fe8fb16957121f4c51fb7f0c)) by @dependabot[bot]
+
 ## [5.4.0](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@4.0.8...@alwatr/logger@5.4.0) (2025-02-18)
 
 ### Dependencies update

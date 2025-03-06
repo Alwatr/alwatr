@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.0](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@2.0.3...@alwatr/type-helper@5.4.0) (2025-03-06)
+
+### Features
+
+* **types:** allow undefined in JsonValue type definition ([7f25f3f](https://github.com/Alwatr/nanolib/commit/7f25f3f022c198bf67822ea6071a475deb4bb89c)) by @
+* **types:** simplify JsonObject type definition ([a119d66](https://github.com/Alwatr/nanolib/commit/a119d66a3fc7eebcf38084d9cdd216f6a09ba1ae)) by @
+
+### Miscellaneous Chores
+
+* update username casing in changelog entries ([9722ac9](https://github.com/Alwatr/nanolib/commit/9722ac9a078438a4e8ebfa5826ea70e0e3a52ca6)) by @
+
+### Dependencies update
+
+* bump the development-dependencies group across 1 directory with 11 updates ([720c395](https://github.com/Alwatr/nanolib/commit/720c3954da55c929fe8fb16957121f4c51fb7f0c)) by @dependabot[bot]
+
+## 5.3.0 (2025-02-03)
+
+### Miscellaneous Chores
+
+* edit README ([3860b3d](https://github.com/Alwatr/nanolib/commit/3860b3df48ab82dc479d5236c2e8579df614aabf)) by @
+
+### Dependencies update
+
+* bump the development-dependencies group across 1 directory with 11 updates ([cb79d07](https://github.com/Alwatr/nanolib/commit/cb79d072a57c79e1c01abff1a293d6757bb65350)) by @
+* update typescript and @types/node to version 5.7.3 and 22.13.0 respectively across multiple packages ([ddab05b](https://github.com/Alwatr/nanolib/commit/ddab05b5d767c30191f36a065e4bc88744e8e3fe)) by @
+
+## 5.0.0 (2024-11-02)
+
+### ⚠ BREAKING CHANGES
+
+* To simplify version management and ensure consistency, all nanolib packages now use the same version as @alwatr/nanolib. This may require updates to your project's dependencies.
+
+### Code Refactoring
+
+* use the same version as @alwatr/nanolib ([60eb860](https://github.com/Alwatr/nanolib/commit/60eb860a0e33dfffe2d1d95e63ce54c60876be06)) by @
+
 ## [5.3.0](https://github.com/Alwatr/nanolib/compare/v5.2.1...v5.3.0) (2025-02-03)
 
 ### Miscellaneous Chores

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/flat-string",
-  "version": "5.4.0",
+  "version": "5.5.0",
   "description": "The `flat-string` function flattens the underlying C structures of a concatenated JavaScript string.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [
