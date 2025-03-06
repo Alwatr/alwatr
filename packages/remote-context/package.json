@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/remote-context",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "A powerful TypeScript library for managing remote context data with offline-first support and automatic revalidation.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "keywords": [

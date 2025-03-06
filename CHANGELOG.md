@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.4](https://github.com/Alwatr/flux/compare/v4.0.3...v4.0.4) (2025-03-06)
+
+### Dependencies update
+
+* bump @alwatr/nanolib, @alwatr/nano-build, and @alwatr/type-helper to version 5.5.0 across multiple packages ([db73076](https://github.com/Alwatr/flux/commit/db7307671b0f14cb19072656bd6021144b27dadb)) by @
+* **deps-dev:** bump the dependencies group across 1 directory with 6 updates ([5978202](https://github.com/Alwatr/flux/commit/5978202acbdc6b2e3db6d315dc3c114daa4f0289)) by @dependabot[bot]
+* **deps:** bump the github-actions group across 1 directory with 2 updates ([99c7131](https://github.com/Alwatr/flux/commit/99c71315a6d0068d54f083bd37320a44da1cdcf5)) by @dependabot[bot]
+* update package manager to yarn@4.7.0 ([9bd8beb](https://github.com/Alwatr/flux/commit/9bd8beb89f09cde347f842d82b5c222ee1758481)) by @
+* update prettier to version 3.5.3-sdk and typescript to version 5.8.2-sdk ([a506c40](https://github.com/Alwatr/flux/commit/a506c401c2b9f456dec09261878663950e3620f9)) by @
+
 ## [4.0.3](https://github.com/Alwatr/flux/compare/v4.0.2...v4.0.3) (2025-02-18)
 
 ### Bug Fixes
