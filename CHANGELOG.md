@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.0](https://github.com/Alwatr/alwatr/compare/v3.10.0...v3.11.0) (2025-03-06)
+
+### Features
+
+* **deps-dev:** bump the dependencies group with 4 updates ([69ce95c](https://github.com/Alwatr/alwatr/commit/69ce95c2dc44f92909e7665391a01db63af47d07)) by @dependabot[bot]
+* update @alwatr/flux to version 4.0.4 ([c7aa71c](https://github.com/Alwatr/alwatr/commit/c7aa71c9d7b82f88c9a35359e0de887108bec75c)) by @
+* update @alwatr/nanolib to version 5.5.0 ([0c43df3](https://github.com/Alwatr/alwatr/commit/0c43df32907252726894a797c35f5cf7a6ab7a32)) by @
+* update @alwatr/nanotron to version 4.9.1 ([774818d](https://github.com/Alwatr/alwatr/commit/774818dd409618801cb51afc4c6de6486a10be7e)) by @
+* update @alwatr/nitrobase to version 7.8.0 ([61c0604](https://github.com/Alwatr/alwatr/commit/61c0604b8900655dbe84d31e7469e56103ffc8a3)) by @
+
 ## [3.10.0](https://github.com/Alwatr/alwatr/compare/v3.9.0...v3.10.0) (2025-02-26)
 
 ### Features
