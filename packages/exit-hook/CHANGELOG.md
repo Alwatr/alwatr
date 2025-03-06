@@ -103,7 +103,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-* update ([4434ba6](https://github.com/Alwatr/nanolib/commit/4434ba67c3f576bb1a0c307fbdb263c43cd9733a)) by @AliMD
+* update ([4434ba6](https://github.com/Alwatr/nanolib/commit/4434ba67c3f576bb1a0c307fbdb263c43cd9733a)) by @alimd
 
 ## [1.1.7](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@1.1.6...@alwatr/exit-hook@1.1.7) (2024-10-25)
 
@@ -127,13 +127,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [1.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@1.1.2...@alwatr/exit-hook@1.1.3) (2024-10-11)
 
 ### Bug Fixes
 
-- **exit-hook:** Refactor exitHook function to prevent automatically register process exit events ([32d7e29](https://github.com/Alwatr/nanolib/commit/32d7e29dcd89dd4b7dc1a57da391ba8e70f5021d)) by @AliMD
+- **exit-hook:** Refactor exitHook function to prevent automatically register process exit events ([32d7e29](https://github.com/Alwatr/nanolib/commit/32d7e29dcd89dd4b7dc1a57da391ba8e70f5021d)) by @alimd
 
 ## [1.1.2](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@1.1.1...@alwatr/exit-hook@1.1.2) (2024-10-10)
 
@@ -157,12 +157,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Code Refactoring
 
-- **exit-hook:** use new dedupe api ([185aced](https://github.com/Alwatr/nanolib/commit/185aced6566ba986062fbc0d936fb8090430f681)) by @AliMD
+- **exit-hook:** use new dedupe api ([185aced](https://github.com/Alwatr/nanolib/commit/185aced6566ba986062fbc0d936fb8090430f681)) by @alimd
 
 ### Miscellaneous Chores
 
 - **exit-hook:** change the license to AGPL-3.0 ([74e89a1](https://github.com/Alwatr/nanolib/commit/74e89a18044831c225649494734d284bb95d4629)) by @ArmanAsadian
-- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @AliMD
+- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @alimd
 
 ### Dependencies update
 
@@ -177,7 +177,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Dependencies update
 
 - bump the development-dependencies group across 1 directory with 10 updates ([9ed98ff](https://github.com/Alwatr/nanolib/commit/9ed98ffd0668d5a36e255c82edab3af53bffda8f)) by @dependabot[bot]
-- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @AliMD
+- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @alimd
 
 ## [1.0.14](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@1.0.13...@alwatr/exit-hook@1.0.14) (2024-08-31)
 
@@ -189,13 +189,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **exit-hook:** define package using @alwatr/dedupe to prevent duplicates ([e16638c](https://github.com/Alwatr/nanolib/commit/e16638cb69639f1c7c1316d72db8032fef617d00)) by @AliMD
+- **exit-hook:** define package using @alwatr/dedupe to prevent duplicates ([e16638c](https://github.com/Alwatr/nanolib/commit/e16638cb69639f1c7c1316d72db8032fef617d00)) by @alimd
 
 ## [1.0.12](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@1.0.11...@alwatr/exit-hook@1.0.12) (2024-08-31)
 
 ### Dependencies update
 
-- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @AliMD
+- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @alimd
 
 ## [1.0.11](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@1.0.10...@alwatr/exit-hook@1.0.11) (2024-07-04)
 
@@ -207,11 +207,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **exit-hook:** show error properly and safe exit on SIGTERM ([b0a27b8](https://github.com/Alwatr/nanolib/commit/b0a27b8c89945069c98637269f976b5e9f3618c0)) by @AliMD
+- **exit-hook:** show error properly and safe exit on SIGTERM ([b0a27b8](https://github.com/Alwatr/nanolib/commit/b0a27b8c89945069c98637269f976b5e9f3618c0)) by @alimd
 
 ### Dependencies update
 
-- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @AliMD
+- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @alimd
 
 ## [1.0.9](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@1.0.8...@alwatr/exit-hook@1.0.9) (2024-04-25)
 
@@ -228,7 +228,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @AliMD
+- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @alimd
 
 ## [1.0.6](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@1.0.5...@alwatr/exit-hook@1.0.6) (2024-01-24)
 

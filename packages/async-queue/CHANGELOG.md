@@ -113,7 +113,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [1.3.3](https://github.com/Alwatr/nanolib/compare/@alwatr/async-queue@1.3.2...@alwatr/async-queue@1.3.3) (2024-10-11)
 
@@ -137,14 +137,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Code Refactoring
 
-- update Dictionary type definitions ([c94cbc4](https://github.com/Alwatr/nanolib/commit/c94cbc4523864e2cc47828ccf5508b68945ac2b8)) by @AliMD
-- use new type-helper global types and remove all import types ([08b5d08](https://github.com/Alwatr/nanolib/commit/08b5d08c03c7c315382337239de0426462f384b8)) by @AliMD
-- **wait:** rename package to delay ([cf8c45c](https://github.com/Alwatr/nanolib/commit/cf8c45cf3f5b61fdd4b1b1c7f744c4eb3e230016)) by @AliMD
+- update Dictionary type definitions ([c94cbc4](https://github.com/Alwatr/nanolib/commit/c94cbc4523864e2cc47828ccf5508b68945ac2b8)) by @alimd
+- use new type-helper global types and remove all import types ([08b5d08](https://github.com/Alwatr/nanolib/commit/08b5d08c03c7c315382337239de0426462f384b8)) by @alimd
+- **wait:** rename package to delay ([cf8c45c](https://github.com/Alwatr/nanolib/commit/cf8c45cf3f5b61fdd4b1b1c7f744c4eb3e230016)) by @alimd
 
 ### Miscellaneous Chores
 
 - **async-queue:** change the license to AGPL-3.0 ([e253149](https://github.com/Alwatr/nanolib/commit/e253149c3d1d51522406aa44db02a038aaf0d920)) by @ArmanAsadian
-- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @AliMD
+- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @alimd
 
 ### Dependencies update
 
@@ -159,7 +159,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Dependencies update
 
 - bump the development-dependencies group across 1 directory with 10 updates ([9ed98ff](https://github.com/Alwatr/nanolib/commit/9ed98ffd0668d5a36e255c82edab3af53bffda8f)) by @dependabot[bot]
-- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @AliMD
+- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @alimd
 
 ## [1.2.9](https://github.com/Alwatr/nanolib/compare/@alwatr/async-queue@1.2.8...@alwatr/async-queue@1.2.9) (2024-08-31)
 
@@ -171,7 +171,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @AliMD
+- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @alimd
 
 ## [1.2.7](https://github.com/Alwatr/nanolib/compare/@alwatr/async-queue@1.2.6...@alwatr/async-queue@1.2.7) (2024-07-04)
 
@@ -183,7 +183,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @AliMD
+- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @alimd
 
 ## [1.2.5](https://github.com/Alwatr/nanolib/compare/@alwatr/async-queue@1.2.4...@alwatr/async-queue@1.2.5) (2024-04-25)
 
@@ -197,7 +197,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @AliMD
+- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @alimd
 
 ## [1.2.2](https://github.com/Alwatr/nanolib/compare/@alwatr/async-queue@1.2.1...@alwatr/async-queue@1.2.2) (2024-01-24)
 
@@ -211,7 +211,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **async-queue:** Add waitForAllFinish method to AsyncQueue class ([3fdef04](https://github.com/Alwatr/nanolib/commit/3fdef04244c515b727c9ccabfd21d7667b561a83)) by @AliMD
+- **async-queue:** Add waitForAllFinish method to AsyncQueue class ([3fdef04](https://github.com/Alwatr/nanolib/commit/3fdef04244c515b727c9ccabfd21d7667b561a83)) by @alimd
 
 ## [1.1.1](https://github.com/Alwatr/nanolib/compare/@alwatr/async-queue@1.1.0...@alwatr/async-queue@1.1.1) (2024-01-16)
 
@@ -221,8 +221,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **AsyncQueue:** generic type for push method ([aec6710](https://github.com/Alwatr/nanolib/commit/aec6710041347452fa52bb2556e59d24bb0932a3)) by @AliMD
-- **AsyncQueue:** waitForFinish ([47decb4](https://github.com/Alwatr/nanolib/commit/47decb44a21338393d0820e9a965bf27f22dfbcd)) by @AliMD
+- **AsyncQueue:** generic type for push method ([aec6710](https://github.com/Alwatr/nanolib/commit/aec6710041347452fa52bb2556e59d24bb0932a3)) by @alimd
+- **AsyncQueue:** waitForFinish ([47decb4](https://github.com/Alwatr/nanolib/commit/47decb44a21338393d0820e9a965bf27f22dfbcd)) by @alimd
 
 ## [1.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/async-queue@1.0.1...@alwatr/async-queue@1.0.2) (2024-01-08)
 
@@ -240,5 +240,5 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **async-queue:** A simple async queue like mutex and semaphore methodology for javascript and typescript. ([e753ff2](https://github.com/Alwatr/nanolib/commit/e753ff29cf53e0e6bcdd9661666ee60300960db3)) by @AliMD
+- **async-queue:** A simple async queue like mutex and semaphore methodology for javascript and typescript. ([e753ff2](https://github.com/Alwatr/nanolib/commit/e753ff29cf53e0e6bcdd9661666ee60300960db3)) by @alimd
 - **async-queue:** add isRunning ([2e54a0a](https://github.com/Alwatr/nanolib/commit/2e54a0a5200ccbfcc64e443728eb6d16513b4296)) by @njfamirm

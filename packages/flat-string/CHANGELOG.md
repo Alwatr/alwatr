@@ -112,7 +112,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [1.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/flat-string@1.1.2...@alwatr/flat-string@1.1.3) (2024-10-11)
 
@@ -141,7 +141,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Miscellaneous Chores
 
 - **flat-string:** change the license to AGPL-3.0 ([1f06ca4](https://github.com/Alwatr/nanolib/commit/1f06ca4edc93381ccbe4c8e04ef2f23a4218a2b6)) by @ArmanAsadian
-- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @AliMD
+- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @alimd
 
 ## [1.0.23](https://github.com/Alwatr/nanolib/compare/@alwatr/flat-string@1.0.22...@alwatr/flat-string@1.0.23) (2024-09-21)
 
@@ -163,7 +163,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @AliMD
+- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @alimd
 
 ## [1.0.19](https://github.com/Alwatr/nanolib/compare/@alwatr/flat-string@1.0.18...@alwatr/flat-string@1.0.19) (2024-07-04)
 
@@ -245,20 +245,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- package.json include files ([053fc10](https://github.com/Alwatr/nanolib/commit/053fc10b518038647136db9ada2433e27ecb2e63)) by @AliMD
+- package.json include files ([053fc10](https://github.com/Alwatr/nanolib/commit/053fc10b518038647136db9ada2433e27ecb2e63)) by @alimd
 
 ## [1.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/flat-string@1.0.0...@alwatr/flat-string@1.0.1) (2023-12-21)
 
 ### Features
 
-- **prettier-config:** new package for prettier share configs ([a6fdee3](https://github.com/Alwatr/nanolib/commit/a6fdee34591abb1d19e7ea7e431bd6624e2ea6d4)) by @AliMD
+- **prettier-config:** new package for prettier share configs ([a6fdee3](https://github.com/Alwatr/nanolib/commit/a6fdee34591abb1d19e7ea7e431bd6624e2ea6d4)) by @alimd
 
 # 1.0.0 (2023-12-20)
 
 ### Bug Fixes
 
-- build process ([83fc4e6](https://github.com/Alwatr/nanolib/commit/83fc4e609f86c25291e5f89016d6777bf197ffcb)) by @AliMD
+- build process ([83fc4e6](https://github.com/Alwatr/nanolib/commit/83fc4e609f86c25291e5f89016d6777bf197ffcb)) by @alimd
 
 ### Features
 
-- **flat-string:** add new package for simplifies the complex C structures that are part of a combined JavaScript string ([ebfdcb3](https://github.com/Alwatr/nanolib/commit/ebfdcb368bc111e59d6b920f572d6365eef62144)) by @AliMD
+- **flat-string:** add new package for simplifies the complex C structures that are part of a combined JavaScript string ([ebfdcb3](https://github.com/Alwatr/nanolib/commit/ebfdcb368bc111e59d6b920f572d6365eef62144)) by @alimd

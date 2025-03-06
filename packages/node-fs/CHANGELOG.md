@@ -51,7 +51,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* **node-fs:** enhance makeEmptyFile to create directories recursively if they don't exist ([723a770](https://github.com/Alwatr/nanolib/commit/723a7701c60c3872fc41cb041c1044793145280f)) by @AliMD
+* **node-fs:** enhance makeEmptyFile to create directories recursively if they don't exist ([723a770](https://github.com/Alwatr/nanolib/commit/723a7701c60c3872fc41cb041c1044793145280f)) by @alimd
 
 ## 5.0.0 (2024-11-02)
 
@@ -129,7 +129,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-* update ([4434ba6](https://github.com/Alwatr/nanolib/commit/4434ba67c3f576bb1a0c307fbdb263c43cd9733a)) by @AliMD
+* update ([4434ba6](https://github.com/Alwatr/nanolib/commit/4434ba67c3f576bb1a0c307fbdb263c43cd9733a)) by @alimd
 
 ## [1.1.7](https://github.com/Alwatr/nanolib/compare/@alwatr/node-fs@1.1.6...@alwatr/node-fs@1.1.7) (2024-10-25)
 
@@ -152,7 +152,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [1.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/node-fs@1.1.2...@alwatr/node-fs@1.1.3) (2024-10-11)
 
@@ -181,14 +181,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Code Refactoring
 
-- **node-fs:** remove unused import from common module ([496a338](https://github.com/Alwatr/nanolib/commit/496a338a6366aa12dc32bbed07a3e14bd5315bd2)) by @AliMD
-- **node-fs:** Update logger import and initialization ([0f89c0f](https://github.com/Alwatr/nanolib/commit/0f89c0f7bc24e79c20d3d5d3fc3f906f12cf7161)) by @AliMD
-- use new type-helper global types and remove all import types ([08b5d08](https://github.com/Alwatr/nanolib/commit/08b5d08c03c7c315382337239de0426462f384b8)) by @AliMD
+- **node-fs:** remove unused import from common module ([496a338](https://github.com/Alwatr/nanolib/commit/496a338a6366aa12dc32bbed07a3e14bd5315bd2)) by @alimd
+- **node-fs:** Update logger import and initialization ([0f89c0f](https://github.com/Alwatr/nanolib/commit/0f89c0f7bc24e79c20d3d5d3fc3f906f12cf7161)) by @alimd
+- use new type-helper global types and remove all import types ([08b5d08](https://github.com/Alwatr/nanolib/commit/08b5d08c03c7c315382337239de0426462f384b8)) by @alimd
 
 ### Miscellaneous Chores
 
 - **node-fs:** change the license to AGPL-3.0 ([9728276](https://github.com/Alwatr/nanolib/commit/97282764bfdb15ef1de25704012f1628a5d0c112)) by @ArmanAsadian
-- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @AliMD
+- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @alimd
 
 ### Dependencies update
 
@@ -203,7 +203,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Dependencies update
 
 - bump the development-dependencies group across 1 directory with 10 updates ([9ed98ff](https://github.com/Alwatr/nanolib/commit/9ed98ffd0668d5a36e255c82edab3af53bffda8f)) by @dependabot[bot]
-- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @AliMD
+- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @alimd
 
 ## [1.0.11](https://github.com/Alwatr/nanolib/compare/@alwatr/node-fs@1.0.10...@alwatr/node-fs@1.0.11) (2024-08-31)
 
@@ -219,7 +219,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @AliMD
+- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @alimd
 
 ## [1.0.8](https://github.com/Alwatr/nanolib/compare/@alwatr/node-fs@1.0.7...@alwatr/node-fs@1.0.8) (2024-07-04)
 
@@ -231,7 +231,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @AliMD
+- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @alimd
 
 ## [1.0.6](https://github.com/Alwatr/nanolib/compare/@alwatr/node-fs@1.0.5...@alwatr/node-fs@1.0.6) (2024-04-25)
 
@@ -245,11 +245,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- exported types by add .js extensions to all imports ([fc3d83e](https://github.com/Alwatr/nanolib/commit/fc3d83e8f375da97ba276314b2e6966aa82c9b3f)) by @AliMD
+- exported types by add .js extensions to all imports ([fc3d83e](https://github.com/Alwatr/nanolib/commit/fc3d83e8f375da97ba276314b2e6966aa82c9b3f)) by @alimd
 
 ### Miscellaneous Chores
 
-- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @AliMD
+- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @alimd
 
 ## [1.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/node-fs@1.0.2...@alwatr/node-fs@1.0.3) (2024-01-24)
 
@@ -267,25 +267,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **node-fs:** enhance type of JSON-related functions ([69751ed](https://github.com/Alwatr/nanolib/commit/69751ed658f76eb439a9834f861c01c06542352b)) by @AliMD
+- **node-fs:** enhance type of JSON-related functions ([69751ed](https://github.com/Alwatr/nanolib/commit/69751ed658f76eb439a9834f861c01c06542352b)) by @alimd
 
 # 1.0.0-beta.0 (2024-01-08)
 
 ### Bug Fixes
 
-- **node-fs:** Update import statement for make-file module ([7bddaa0](https://github.com/Alwatr/nanolib/commit/7bddaa0d629c304fedd07c4022d7503aa9b974b6)) by @AliMD
+- **node-fs:** Update import statement for make-file module ([7bddaa0](https://github.com/Alwatr/nanolib/commit/7bddaa0d629c304fedd07c4022d7503aa9b974b6)) by @alimd
 
 ### Features
 
-- **node-fs:** Add make-file-bench demo script ([ca3a57a](https://github.com/Alwatr/nanolib/commit/ca3a57a31de5a8b9c76c9d33cb9755809f09a335)) by @AliMD
+- **node-fs:** Add make-file-bench demo script ([ca3a57a](https://github.com/Alwatr/nanolib/commit/ca3a57a31de5a8b9c76c9d33cb9755809f09a335)) by @alimd
 - **node-fs:** base package ([74cbe48](https://github.com/Alwatr/nanolib/commit/74cbe4821c991d1f6c3d5805b29602b922c3f505)) by @njfamirm
 - **node-fs:** copy from store ([5c23e01](https://github.com/Alwatr/nanolib/commit/5c23e01e42d438c15dcd272d2cc351527865c86c)) by @njfamirm
 - **node-fs:** definePackage and logger ([3880703](https://github.com/Alwatr/nanolib/commit/38807039895c784be6168111506b0721980cbb29)) by @njfamirm
 - **node-fs:** demo ([31f3740](https://github.com/Alwatr/nanolib/commit/31f37405a7bb2b4b02440de7f96f5cc8a474aba9)) by @njfamirm
-- **node-fs:** enhance json types ([e85d927](https://github.com/Alwatr/nanolib/commit/e85d9276374a8c5171901791a3a43acad64843a6)) by @AliMD
-- **node-fs:** enhance writeJson type ([9010c72](https://github.com/Alwatr/nanolib/commit/9010c723b1f34cd647f157466554b312fc84a1d3)) by @AliMD
+- **node-fs:** enhance json types ([e85d927](https://github.com/Alwatr/nanolib/commit/e85d9276374a8c5171901791a3a43acad64843a6)) by @alimd
+- **node-fs:** enhance writeJson type ([9010c72](https://github.com/Alwatr/nanolib/commit/9010c723b1f34cd647f157466554b312fc84a1d3)) by @alimd
 - **node-fs:** makeFile ([186ba09](https://github.com/Alwatr/nanolib/commit/186ba09822bddfe200a0ac4725063785cadd0999)) by @njfamirm
-- **node-fs:** readFile under asyncQueue ([ab12153](https://github.com/Alwatr/nanolib/commit/ab12153281600a4ac90ef627811b430a95140ddd)) by @AliMD
-- **node-fs:** rewrite new writeFile method ([7534ed1](https://github.com/Alwatr/nanolib/commit/7534ed158cdfe1ee593050255c17449960b13001)) by @AliMD
-- **node-fs:** writeFile under asyncQueue ([6d8b3d7](https://github.com/Alwatr/nanolib/commit/6d8b3d7953938fc954e8ce350206555030560978)) by @AliMD
-- **node-fs:** writeJson method ([581d4f9](https://github.com/Alwatr/nanolib/commit/581d4f958ccb262c13f23881151616b7ec5e93ee)) by @AliMD
+- **node-fs:** readFile under asyncQueue ([ab12153](https://github.com/Alwatr/nanolib/commit/ab12153281600a4ac90ef627811b430a95140ddd)) by @alimd
+- **node-fs:** rewrite new writeFile method ([7534ed1](https://github.com/Alwatr/nanolib/commit/7534ed158cdfe1ee593050255c17449960b13001)) by @alimd
+- **node-fs:** writeFile under asyncQueue ([6d8b3d7](https://github.com/Alwatr/nanolib/commit/6d8b3d7953938fc954e8ce350206555030560978)) by @alimd
+- **node-fs:** writeJson method ([581d4f9](https://github.com/Alwatr/nanolib/commit/581d4f958ccb262c13f23881151616b7ec5e93ee)) by @alimd

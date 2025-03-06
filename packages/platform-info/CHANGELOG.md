@@ -103,7 +103,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-* update ([4434ba6](https://github.com/Alwatr/nanolib/commit/4434ba67c3f576bb1a0c307fbdb263c43cd9733a)) by @AliMD
+* update ([4434ba6](https://github.com/Alwatr/nanolib/commit/4434ba67c3f576bb1a0c307fbdb263c43cd9733a)) by @alimd
 
 ## [1.2.7](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@1.2.6...@alwatr/platform-info@1.2.7) (2024-10-25)
 
@@ -120,7 +120,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **platform-info:** Update platformInfo logic and remove redundant code for prevent side-effects ([db46c48](https://github.com/Alwatr/nanolib/commit/db46c4844db360735271f0d4c0d6417207589aaf)) by @AliMD
+- **platform-info:** Update platformInfo logic and remove redundant code for prevent side-effects ([db46c48](https://github.com/Alwatr/nanolib/commit/db46c4844db360735271f0d4c0d6417207589aaf)) by @alimd
 
 ### Code Refactoring
 
@@ -130,7 +130,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [1.2.3](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@1.2.2...@alwatr/platform-info@1.2.3) (2024-10-11)
 
@@ -158,13 +158,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Code Refactoring
 
-- **platform-info:** enhance type to prevent modification ([e62c0eb](https://github.com/Alwatr/nanolib/commit/e62c0eb14f6102efde4206f7ba72ecc5dc146ce2)) by @AliMD
-- use new type-helper global types and remove all import types ([08b5d08](https://github.com/Alwatr/nanolib/commit/08b5d08c03c7c315382337239de0426462f384b8)) by @AliMD
+- **platform-info:** enhance type to prevent modification ([e62c0eb](https://github.com/Alwatr/nanolib/commit/e62c0eb14f6102efde4206f7ba72ecc5dc146ce2)) by @alimd
+- use new type-helper global types and remove all import types ([08b5d08](https://github.com/Alwatr/nanolib/commit/08b5d08c03c7c315382337239de0426462f384b8)) by @alimd
 
 ### Miscellaneous Chores
 
 - **platform-info:** change the license to AGPL-3.0 ([0ca6ad1](https://github.com/Alwatr/nanolib/commit/0ca6ad19a486e9bcfd3ddcaa5741fd5b2e0e4005)) by @ArmanAsadian
-- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @AliMD
+- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @alimd
 
 ### Dependencies update
 
@@ -179,7 +179,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Dependencies update
 
 - bump the development-dependencies group across 1 directory with 10 updates ([9ed98ff](https://github.com/Alwatr/nanolib/commit/9ed98ffd0668d5a36e255c82edab3af53bffda8f)) by @dependabot[bot]
-- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @AliMD
+- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @alimd
 
 ## [1.1.11](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@1.1.10...@alwatr/platform-info@1.1.11) (2024-08-31)
 
@@ -191,7 +191,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @AliMD
+- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @alimd
 
 ## [1.1.9](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@1.1.8...@alwatr/platform-info@1.1.9) (2024-07-04)
 
@@ -203,7 +203,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @AliMD
+- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @alimd
 
 ## [1.1.7](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@1.1.6...@alwatr/platform-info@1.1.7) (2024-04-25)
 
@@ -217,7 +217,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @AliMD
+- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @alimd
 
 ## [1.1.4](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@1.1.3...@alwatr/platform-info@1.1.4) (2024-01-24)
 
@@ -278,4 +278,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - **platform-info:** Add isWebWorker property to platformInfo constant object ([ae3ca10](https://github.com/Alwatr/nanolib/commit/ae3ca1097eb9075eb4d730891e8d92768948f43d)) by @
-- **platform-info:** new package for detect the current platform ([83f9534](https://github.com/Alwatr/nanolib/commit/83f95346bf0cf00402c6121bcbe4d231ff1739f1)) by @AliMD
+- **platform-info:** new package for detect the current platform ([83f9534](https://github.com/Alwatr/nanolib/commit/83f95346bf0cf00402c6121bcbe4d231ff1739f1)) by @alimd

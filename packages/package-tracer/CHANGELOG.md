@@ -86,7 +86,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [1.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/package-tracer@1.0.2...@alwatr/package-tracer@1.0.3) (2024-10-11)
 
@@ -115,15 +115,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Code Refactoring
 
 - **package-tracer:** add some new `function`s & improve the code style ([207af08](https://github.com/Alwatr/nanolib/commit/207af08d5632ed5b435428904cd5cafcf8b12cb2)) by @mohammadhonarvar
-- **package-tracer:** Improve package tracking functionality ([5be7132](https://github.com/Alwatr/nanolib/commit/5be7132d2275e028cc88155d32960e05da22726f)) by @AliMD
-- update Dictionary type definitions ([c94cbc4](https://github.com/Alwatr/nanolib/commit/c94cbc4523864e2cc47828ccf5508b68945ac2b8)) by @AliMD
-- use new type-helper global types and remove all import types ([08b5d08](https://github.com/Alwatr/nanolib/commit/08b5d08c03c7c315382337239de0426462f384b8)) by @AliMD
+- **package-tracer:** Improve package tracking functionality ([5be7132](https://github.com/Alwatr/nanolib/commit/5be7132d2275e028cc88155d32960e05da22726f)) by @alimd
+- update Dictionary type definitions ([c94cbc4](https://github.com/Alwatr/nanolib/commit/c94cbc4523864e2cc47828ccf5508b68945ac2b8)) by @alimd
+- use new type-helper global types and remove all import types ([08b5d08](https://github.com/Alwatr/nanolib/commit/08b5d08c03c7c315382337239de0426462f384b8)) by @alimd
 
 ### Miscellaneous Chores
 
-- fix versions ([497a6d8](https://github.com/Alwatr/nanolib/commit/497a6d81ae5989e566e96d498fc5f1b6c80193ae)) by @AliMD
-- **package-tracer:** change the license to AGPL-3.0 ([ff6e45e](https://github.com/Alwatr/nanolib/commit/ff6e45e2fcbfb69446ce002642f4819ff42fa6b9)) by @AliMD
-- Remove old CHANGELOG.md file ([bdca0ca](https://github.com/Alwatr/nanolib/commit/bdca0ca847005a9af5668e23dac1937b2bab4a7b)) by @AliMD
+- fix versions ([497a6d8](https://github.com/Alwatr/nanolib/commit/497a6d81ae5989e566e96d498fc5f1b6c80193ae)) by @alimd
+- **package-tracer:** change the license to AGPL-3.0 ([ff6e45e](https://github.com/Alwatr/nanolib/commit/ff6e45e2fcbfb69446ce002642f4819ff42fa6b9)) by @alimd
+- Remove old CHANGELOG.md file ([bdca0ca](https://github.com/Alwatr/nanolib/commit/bdca0ca847005a9af5668e23dac1937b2bab4a7b)) by @alimd
 
 ### Dependencies update
 

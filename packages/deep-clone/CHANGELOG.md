@@ -104,7 +104,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [1.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/deep-clone@1.1.2...@alwatr/deep-clone@1.1.3) (2024-10-11)
 
@@ -133,7 +133,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Miscellaneous Chores
 
 - **deep-clone:** change the license to AGPL-3.0 ([062b9c5](https://github.com/Alwatr/nanolib/commit/062b9c5f0e6fc78fa39101d538f3ba8720ab073a)) by @ArmanAsadian
-- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @AliMD
+- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @alimd
 
 ## [1.0.24](https://github.com/Alwatr/nanolib/compare/@alwatr/deep-clone@1.0.23...@alwatr/deep-clone@1.0.24) (2024-09-21)
 
@@ -155,7 +155,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @AliMD
+- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @alimd
 
 ## [1.0.20](https://github.com/Alwatr/nanolib/compare/@alwatr/deep-clone@1.0.19...@alwatr/deep-clone@1.0.20) (2024-07-04)
 
@@ -247,11 +247,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **deep-clone:** deps ([2bce58c](https://github.com/Alwatr/nanolib/commit/2bce58c0742e3547a4bbc6c9efb792d5dca9375b)) by @AliMD
-- package.json include files ([053fc10](https://github.com/Alwatr/nanolib/commit/053fc10b518038647136db9ada2433e27ecb2e63)) by @AliMD
+- **deep-clone:** deps ([2bce58c](https://github.com/Alwatr/nanolib/commit/2bce58c0742e3547a4bbc6c9efb792d5dca9375b)) by @alimd
+- package.json include files ([053fc10](https://github.com/Alwatr/nanolib/commit/053fc10b518038647136db9ada2433e27ecb2e63)) by @alimd
 
 # 1.0.0 (2023-12-22)
 
 ### Features
 
-- **deep-clone:** new package for deep clone obj/array ([9ac5379](https://github.com/Alwatr/nanolib/commit/9ac5379bd579b85d165a79b75bb782654167430d)) by @AliMD
+- **deep-clone:** new package for deep clone obj/array ([9ac5379](https://github.com/Alwatr/nanolib/commit/9ac5379bd579b85d165a79b75bb782654167430d)) by @alimd

@@ -84,7 +84,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [1.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/render-state@1.0.2...@alwatr/render-state@1.0.3) (2024-10-11)
 
@@ -108,5 +108,5 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- fix versions ([497a6d8](https://github.com/Alwatr/nanolib/commit/497a6d81ae5989e566e96d498fc5f1b6c80193ae)) by @AliMD
-- Remove change log file ([1955c9c](https://github.com/Alwatr/nanolib/commit/1955c9c20fc72df6c07e8e37a4bad48f1bd9125f)) by @AliMD
+- fix versions ([497a6d8](https://github.com/Alwatr/nanolib/commit/497a6d81ae5989e566e96d498fc5f1b6c80193ae)) by @alimd
+- Remove change log file ([1955c9c](https://github.com/Alwatr/nanolib/commit/1955c9c20fc72df6c07e8e37a4bad48f1bd9125f)) by @alimd

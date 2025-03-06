@@ -116,7 +116,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Code Refactoring
 
-* **http-utils:** rename package to http-primer and update description ([3c30e17](https://github.com/Alwatr/nanolib/commit/3c30e1768e506dcbb2c83693c7f9dd3dd157d8af)) by @AliMD
+* **http-utils:** rename package to http-primer and update description ([3c30e17](https://github.com/Alwatr/nanolib/commit/3c30e1768e506dcbb2c83693c7f9dd3dd157d8af)) by @alimd
 
 ## [1.4.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@1.3.0...@alwatr/nanolib@1.4.0) (2024-10-25)
 
@@ -127,21 +127,21 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* **nanolib:** Update package.json to use "@alwatr/env" instead of "@alwatr/get-env" ([fd03dc0](https://github.com/Alwatr/nanolib/commit/fd03dc0d168a97758ddede62e7eb5c41c7cc2567)) by @AliMD
+* **nanolib:** Update package.json to use "@alwatr/env" instead of "@alwatr/get-env" ([fd03dc0](https://github.com/Alwatr/nanolib/commit/fd03dc0d168a97758ddede62e7eb5c41c7cc2567)) by @alimd
 
 ### Code Refactoring
 
-* **env:** rename package and function ([6d72576](https://github.com/Alwatr/nanolib/commit/6d72576576964ba4bf3bdc5767e14d9293f941c9)) by @AliMD
+* **env:** rename package and function ([6d72576](https://github.com/Alwatr/nanolib/commit/6d72576576964ba4bf3bdc5767e14d9293f941c9)) by @alimd
 * **nanolib:** export `global-this` & update `exports` key in `package.json` ([42c8081](https://github.com/Alwatr/nanolib/commit/42c8081784cc41b28a151de7ae2e0a65b9391498)) by @mohammadhonarvar
 
 ### Miscellaneous Chores
 
-* update devDependencies in package.json ([4d366af](https://github.com/Alwatr/nanolib/commit/4d366af59509004786ba5787c7bc322afb353e02)) by @AliMD
+* update devDependencies in package.json ([4d366af](https://github.com/Alwatr/nanolib/commit/4d366af59509004786ba5787c7bc322afb353e02)) by @alimd
 
 ### Dependencies update
 
 * update ([43ccc7c](https://github.com/Alwatr/nanolib/commit/43ccc7cd4e50e87fbb333b5a836bb8f4bedd462d)) by @mohammadhonarvar
-* update ([c958a81](https://github.com/Alwatr/nanolib/commit/c958a818ad10ba590f141f05aea1ac135d3e0fd5)) by @AliMD
+* update ([c958a81](https://github.com/Alwatr/nanolib/commit/c958a818ad10ba590f141f05aea1ac135d3e0fd5)) by @alimd
 
 ## [1.3.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@1.2.1...@alwatr/nanolib@1.3.0) (2024-10-15)
 
@@ -176,7 +176,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ### Dependencies update
 
@@ -203,7 +203,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - **nanolib:** add `nanolib` package to export the common packages ([1610b1e](https://github.com/Alwatr/nanolib/commit/1610b1eb5dd7e7f10505b35ae016889c7f4b6b24)) by @mohammadhonarvar
-- **nanolib:** add demo test file ([0e98a3e](https://github.com/Alwatr/nanolib/commit/0e98a3e899fb7ce172bdf879ca6c0e6a46068612)) by @AliMD
+- **nanolib:** add demo test file ([0e98a3e](https://github.com/Alwatr/nanolib/commit/0e98a3e899fb7ce172bdf879ca6c0e6a46068612)) by @alimd
 
 ### Miscellaneous Chores
 

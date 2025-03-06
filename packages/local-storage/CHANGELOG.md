@@ -93,7 +93,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Code Refactoring
 
-* **local-storage:** update removeItem method to use localStorage instead of window.localStorage ([9680a14](https://github.com/Alwatr/nanolib/commit/9680a141a4366d4bb146a73ffcd1bb63dd14f27c)) by @AliMD
+* **local-storage:** update removeItem method to use localStorage instead of window.localStorage ([9680a14](https://github.com/Alwatr/nanolib/commit/9680a141a4366d4bb146a73ffcd1bb63dd14f27c)) by @alimd
 
 ## [1.1.6](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@1.1.5...@alwatr/local-storage@1.1.6) (2024-10-12)
 
@@ -109,7 +109,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [1.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@1.1.2...@alwatr/local-storage@1.1.3) (2024-10-11)
 
@@ -129,7 +129,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **local-storage:** If the version is greater than 1, remove the previous version. ([1fdff96](https://github.com/Alwatr/nanolib/commit/1fdff9696a9cf7f1ced0a4c905ea62eb4c422f7a)) by @AliMD
+- **local-storage:** If the version is greater than 1, remove the previous version. ([1fdff96](https://github.com/Alwatr/nanolib/commit/1fdff9696a9cf7f1ced0a4c905ea62eb4c422f7a)) by @alimd
 - use `package-tracer` ([cc3c5f9](https://github.com/Alwatr/nanolib/commit/cc3c5f9c1a3d03f0d81b46835665f16a0426fd0d)) by @mohammadhonarvar
 
 ### Bug Fixes
@@ -138,12 +138,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Code Refactoring
 
-- use new type-helper global types and remove all import types ([08b5d08](https://github.com/Alwatr/nanolib/commit/08b5d08c03c7c315382337239de0426462f384b8)) by @AliMD
+- use new type-helper global types and remove all import types ([08b5d08](https://github.com/Alwatr/nanolib/commit/08b5d08c03c7c315382337239de0426462f384b8)) by @alimd
 
 ### Miscellaneous Chores
 
 - **local-storage:** change the license to AGPL-3.0 ([ef7ea07](https://github.com/Alwatr/nanolib/commit/ef7ea075094c88d90d2ddc6fb9612ae18d792225)) by @ArmanAsadian
-- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @AliMD
+- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @alimd
 
 ## [1.0.10](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@1.0.9...@alwatr/local-storage@1.0.10) (2024-09-21)
 
@@ -165,7 +165,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @AliMD
+- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @alimd
 
 ## [1.0.6](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@1.0.5...@alwatr/local-storage@1.0.6) (2024-07-04)
 
@@ -197,9 +197,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **local-storage:** Rewrite local storage module ([5ed0f39](https://github.com/Alwatr/nanolib/commit/5ed0f39d090c027bb600a5d061ede887b4669198)) by @AliMD
+- **local-storage:** Rewrite local storage module ([5ed0f39](https://github.com/Alwatr/nanolib/commit/5ed0f39d090c027bb600a5d061ede887b4669198)) by @alimd
 - **local-storage:** separate package from `@alwatr/util` ([4cc22ed](https://github.com/Alwatr/nanolib/commit/4cc22eda8d89f291783eef3b8917434489b628e1)) by @njfamirm
 
 ### Bug Fixes
 
-- **local-storage:** Remove unused dependency and update tsconfig references ([b1caaea](https://github.com/Alwatr/nanolib/commit/b1caaea8565cd497d31d91e4e2ea1becd84a82a4)) by @AliMD
+- **local-storage:** Remove unused dependency and update tsconfig references ([b1caaea](https://github.com/Alwatr/nanolib/commit/b1caaea8565cd497d31d91e4e2ea1becd84a82a4)) by @alimd

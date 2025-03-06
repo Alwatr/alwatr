@@ -59,7 +59,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* **fetch:** improve error handling for fetch responses and JSON parsing ([8692bb1](https://github.com/Alwatr/nanolib/commit/8692bb1123e8b3a6d6f8aea20464c55b344da9d2)) by @AliMD
+* **fetch:** improve error handling for fetch responses and JSON parsing ([8692bb1](https://github.com/Alwatr/nanolib/commit/8692bb1123e8b3a6d6f8aea20464c55b344da9d2)) by @alimd
 
 ## 5.0.0 (2024-11-02)
 
@@ -133,11 +133,11 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 
 ### Features
 
-* **fetch:** use @alwatr/http-primer for types and http codes ([6fe993a](https://github.com/Alwatr/nanolib/commit/6fe993ac0f395a4c0c6ad3b2caa48a2986cc850f)) by @AliMD
+* **fetch:** use @alwatr/http-primer for types and http codes ([6fe993a](https://github.com/Alwatr/nanolib/commit/6fe993ac0f395a4c0c6ad3b2caa48a2986cc850f)) by @alimd
 
 ### Code Refactoring
 
-* **fetch:** update HTTP headers content-type to use MimeTypes constant ([c3862fc](https://github.com/Alwatr/nanolib/commit/c3862fc6a643da97dacbd15bcf5d3351caaaf269)) by @AliMD
+* **fetch:** update HTTP headers content-type to use MimeTypes constant ([c3862fc](https://github.com/Alwatr/nanolib/commit/c3862fc6a643da97dacbd15bcf5d3351caaaf269)) by @alimd
 
 ## [4.1.7](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@4.1.6...@alwatr/fetch@4.1.7) (2024-10-25)
 
@@ -158,7 +158,7 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [4.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@4.1.2...@alwatr/fetch@4.1.3) (2024-10-11)
 
@@ -183,21 +183,21 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 ### Bug Fixes
 
 - all dependeny topology ([1c17f34](https://github.com/Alwatr/nanolib/commit/1c17f349adf3e98e2a80ab2da4f0f81028dc9c5f)) by @mohammadhonarvar
-- **fetch:** remove unused import from fetch core module ([28ec726](https://github.com/Alwatr/nanolib/commit/28ec7269322f90dba02fbb33e4e622db42169368)) by @AliMD
+- **fetch:** remove unused import from fetch core module ([28ec726](https://github.com/Alwatr/nanolib/commit/28ec7269322f90dba02fbb33e4e622db42169368)) by @alimd
 
 ### Code Refactoring
 
-- **fetch:** update fetch package to use @alwatr/parse-duration for timeout and retryDelay durations ([1108c54](https://github.com/Alwatr/nanolib/commit/1108c547e43f2c65f46d65b58dd19cee9abd2fd7)) by @AliMD
-- **fetch:** Update logger import and initialization ([1f0451c](https://github.com/Alwatr/nanolib/commit/1f0451c9fec81b875736135778cdd4150556ba97)) by @AliMD
-- **fetch:** use new DictionaryReq type ([a8149cf](https://github.com/Alwatr/nanolib/commit/a8149cff114da7c7ce9a335c837ae794904fa3ca)) by @AliMD
-- update Dictionary type definitions ([c94cbc4](https://github.com/Alwatr/nanolib/commit/c94cbc4523864e2cc47828ccf5508b68945ac2b8)) by @AliMD
-- use new type-helper global types and remove all import types ([08b5d08](https://github.com/Alwatr/nanolib/commit/08b5d08c03c7c315382337239de0426462f384b8)) by @AliMD
-- **wait:** rename package to delay ([cf8c45c](https://github.com/Alwatr/nanolib/commit/cf8c45cf3f5b61fdd4b1b1c7f744c4eb3e230016)) by @AliMD
+- **fetch:** update fetch package to use @alwatr/parse-duration for timeout and retryDelay durations ([1108c54](https://github.com/Alwatr/nanolib/commit/1108c547e43f2c65f46d65b58dd19cee9abd2fd7)) by @alimd
+- **fetch:** Update logger import and initialization ([1f0451c](https://github.com/Alwatr/nanolib/commit/1f0451c9fec81b875736135778cdd4150556ba97)) by @alimd
+- **fetch:** use new DictionaryReq type ([a8149cf](https://github.com/Alwatr/nanolib/commit/a8149cff114da7c7ce9a335c837ae794904fa3ca)) by @alimd
+- update Dictionary type definitions ([c94cbc4](https://github.com/Alwatr/nanolib/commit/c94cbc4523864e2cc47828ccf5508b68945ac2b8)) by @alimd
+- use new type-helper global types and remove all import types ([08b5d08](https://github.com/Alwatr/nanolib/commit/08b5d08c03c7c315382337239de0426462f384b8)) by @alimd
+- **wait:** rename package to delay ([cf8c45c](https://github.com/Alwatr/nanolib/commit/cf8c45cf3f5b61fdd4b1b1c7f744c4eb3e230016)) by @alimd
 
 ### Miscellaneous Chores
 
 - **fetch:** change the license to AGPL-3.0 ([edf9069](https://github.com/Alwatr/nanolib/commit/edf9069608bd276b85c9ac937e33ad225c5921a9)) by @ArmanAsadian
-- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @AliMD
+- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @alimd
 
 ### Dependencies update
 
@@ -215,13 +215,13 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 
 ### Code Refactoring
 
-- **fetch:** handle fetchJson error responses properly ([ae8fe24](https://github.com/Alwatr/nanolib/commit/ae8fe244aca17f235c4347ff1fd10070a410340c)) by @AliMD
-- **fetch:** update query parameters handling ([939b3d5](https://github.com/Alwatr/nanolib/commit/939b3d52998ec7b3f5c32ff5438b649148109ede)) by @AliMD
+- **fetch:** handle fetchJson error responses properly ([ae8fe24](https://github.com/Alwatr/nanolib/commit/ae8fe244aca17f235c4347ff1fd10070a410340c)) by @alimd
+- **fetch:** update query parameters handling ([939b3d5](https://github.com/Alwatr/nanolib/commit/939b3d52998ec7b3f5c32ff5438b649148109ede)) by @alimd
 
 ### Dependencies update
 
 - bump the development-dependencies group across 1 directory with 10 updates ([9ed98ff](https://github.com/Alwatr/nanolib/commit/9ed98ffd0668d5a36e255c82edab3af53bffda8f)) by @dependabot[bot]
-- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @AliMD
+- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @alimd
 
 ## [3.1.8](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@3.1.7...@alwatr/fetch@3.1.8) (2024-08-31)
 
@@ -237,7 +237,7 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 
 ### Dependencies update
 
-- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @AliMD
+- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @alimd
 
 ## [3.1.5](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@3.1.4...@alwatr/fetch@3.1.5) (2024-07-04)
 
@@ -249,7 +249,7 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 
 ### Dependencies update
 
-- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @AliMD
+- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @alimd
 
 ## [3.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@3.1.2...@alwatr/fetch@3.1.3) (2024-04-25)
 
@@ -263,11 +263,11 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 
 ### Bug Fixes
 
-- exported types by add .js extensions to all imports ([fc3d83e](https://github.com/Alwatr/nanolib/commit/fc3d83e8f375da97ba276314b2e6966aa82c9b3f)) by @AliMD
+- exported types by add .js extensions to all imports ([fc3d83e](https://github.com/Alwatr/nanolib/commit/fc3d83e8f375da97ba276314b2e6966aa82c9b3f)) by @alimd
 
 ### Miscellaneous Chores
 
-- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @AliMD
+- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @alimd
 
 ## [3.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@3.0.0...@alwatr/fetch@3.1.0) (2024-01-24)
 
@@ -277,7 +277,7 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 
 ### Bug Fixes
 
-- **fetch:** better error handling on handleRetryPattern\_ when user is offline ([b867f30](https://github.com/Alwatr/nanolib/commit/b867f30b3eba529ec1aae0026f0ded252ce54332)) by @AliMD
+- **fetch:** better error handling on handleRetryPattern\_ when user is offline ([b867f30](https://github.com/Alwatr/nanolib/commit/b867f30b3eba529ec1aae0026f0ded252ce54332)) by @alimd
 
 ### Code Refactoring
 
@@ -293,10 +293,10 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 
 ### Features
 
-- **fetch:** alwatrAuth ([28e365c](https://github.com/Alwatr/nanolib/commit/28e365c839b0ea80060c0f44ed4dc4473468d5c4)) by @AliMD
+- **fetch:** alwatrAuth ([28e365c](https://github.com/Alwatr/nanolib/commit/28e365c839b0ea80060c0f44ed4dc4473468d5c4)) by @alimd
 - **fetch:** move from last repo ([4b86bb5](https://github.com/Alwatr/nanolib/commit/4b86bb542af296c91bc1db36b4e08fdbad501db2)) by @njfamirm
-- **fetch:** Update fetch type definitions with document ([38398cc](https://github.com/Alwatr/nanolib/commit/38398cc33f311a569a53cc3e06c3191e17dbd45b)) by @AliMD
+- **fetch:** Update fetch type definitions with document ([38398cc](https://github.com/Alwatr/nanolib/commit/38398cc33f311a569a53cc3e06c3191e17dbd45b)) by @alimd
 
 ### Code Refactoring
 
-- **fetch:** review and update everything ([61ec38b](https://github.com/Alwatr/nanolib/commit/61ec38b2fde28ba26a7973fcd60a30c861faf4dd)) by @AliMD
+- **fetch:** review and update everything ([61ec38b](https://github.com/Alwatr/nanolib/commit/61ec38b2fde28ba26a7973fcd60a30c861faf4dd)) by @alimd

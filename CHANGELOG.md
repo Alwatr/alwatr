@@ -31,13 +31,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* **fetch:** improve error handling for fetch responses and JSON parsing ([8692bb1](https://github.com/Alwatr/nanolib/commit/8692bb1123e8b3a6d6f8aea20464c55b344da9d2)) by @AliMD
+* **fetch:** improve error handling for fetch responses and JSON parsing ([8692bb1](https://github.com/Alwatr/nanolib/commit/8692bb1123e8b3a6d6f8aea20464c55b344da9d2)) by @alimd
 
 ## [5.1.0](https://github.com/Alwatr/nanolib/compare/v5.0.0...v5.1.0) (2024-11-04)
 
 ### Features
 
-* **node-fs:** enhance makeEmptyFile to create directories recursively if they don't exist ([723a770](https://github.com/Alwatr/nanolib/commit/723a7701c60c3872fc41cb041c1044793145280f)) by @AliMD
+* **node-fs:** enhance makeEmptyFile to create directories recursively if they don't exist ([723a770](https://github.com/Alwatr/nanolib/commit/723a7701c60c3872fc41cb041c1044793145280f)) by @alimd
 
 ## 5.0.0 (2024-11-02)
 

@@ -117,7 +117,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-* update ([4434ba6](https://github.com/Alwatr/nanolib/commit/4434ba67c3f576bb1a0c307fbdb263c43cd9733a)) by @AliMD
+* update ([4434ba6](https://github.com/Alwatr/nanolib/commit/4434ba67c3f576bb1a0c307fbdb263c43cd9733a)) by @alimd
 
 ## [4.0.7](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@4.0.6...@alwatr/logger@4.0.7) (2024-10-25)
 
@@ -134,7 +134,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **logger:** Update default debug mode logic for prevent side-effects ([42101d6](https://github.com/Alwatr/nanolib/commit/42101d6471bd0d4e88e47dc8321dddc1cd63cec8)) by @AliMD
+- **logger:** Update default debug mode logic for prevent side-effects ([42101d6](https://github.com/Alwatr/nanolib/commit/42101d6471bd0d4e88e47dc8321dddc1cd63cec8)) by @alimd
 
 ### Code Refactoring
 
@@ -145,7 +145,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [4.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@4.0.2...@alwatr/logger@4.0.3) (2024-10-11)
 
@@ -170,7 +170,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **logger:** add logStep method to logger ([860aeed](https://github.com/Alwatr/nanolib/commit/860aeedb2da390ee3d47c037b22a37f73e6dbbbc)) by @AliMD
+- **logger:** add logStep method to logger ([860aeed](https://github.com/Alwatr/nanolib/commit/860aeedb2da390ee3d47c037b22a37f73e6dbbbc)) by @alimd
 - use `package-tracer` ([cc3c5f9](https://github.com/Alwatr/nanolib/commit/cc3c5f9c1a3d03f0d81b46835665f16a0426fd0d)) by @mohammadhonarvar
 
 ### Bug Fixes
@@ -180,12 +180,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Code Refactoring
 
 - **logger:** remove definePackage from logger ([c8a9d0c](https://github.com/Alwatr/nanolib/commit/c8a9d0cdcc3e45e7a33731ec6ee6a496451e9eb1)) by @mohammadhonarvar
-- **logger:** rename logModule to logFileModule ([1f6bd71](https://github.com/Alwatr/nanolib/commit/1f6bd71272007f5bbc90258ffa13b7d851e0918c)) by @AliMD
+- **logger:** rename logModule to logFileModule ([1f6bd71](https://github.com/Alwatr/nanolib/commit/1f6bd71272007f5bbc90258ffa13b7d851e0918c)) by @alimd
 
 ### Miscellaneous Chores
 
-- **logger:** change the license to AGPL-3.0 ([4bb4673](https://github.com/Alwatr/nanolib/commit/4bb4673972069a307e799cad9a5078b0288a9340)) by @AliMD
-- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @AliMD
+- **logger:** change the license to AGPL-3.0 ([4bb4673](https://github.com/Alwatr/nanolib/commit/4bb4673972069a307e799cad9a5078b0288a9340)) by @alimd
+- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @alimd
 
 ### Dependencies update
 
@@ -200,7 +200,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Dependencies update
 
 - bump the development-dependencies group across 1 directory with 10 updates ([9ed98ff](https://github.com/Alwatr/nanolib/commit/9ed98ffd0668d5a36e255c82edab3af53bffda8f)) by @dependabot[bot]
-- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @AliMD
+- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @alimd
 
 ## [3.2.12](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@3.2.11...@alwatr/logger@3.2.12) (2024-08-31)
 
@@ -216,7 +216,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @AliMD
+- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @alimd
 
 ## [3.2.9](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@3.2.8...@alwatr/logger@3.2.9) (2024-07-04)
 
@@ -228,7 +228,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @AliMD
+- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @alimd
 
 ## [3.2.7](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@3.2.6...@alwatr/logger@3.2.7) (2024-04-25)
 
@@ -242,11 +242,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- exported types by add .js extensions to all imports ([fc3d83e](https://github.com/Alwatr/nanolib/commit/fc3d83e8f375da97ba276314b2e6966aa82c9b3f)) by @AliMD
+- exported types by add .js extensions to all imports ([fc3d83e](https://github.com/Alwatr/nanolib/commit/fc3d83e8f375da97ba276314b2e6966aa82c9b3f)) by @alimd
 
 ### Miscellaneous Chores
 
-- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @AliMD
+- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @alimd
 
 ## [3.2.4](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@3.2.3...@alwatr/logger@3.2.4) (2024-01-24)
 
@@ -268,7 +268,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **logger:** defaultDebugMode ([bab9f7c](https://github.com/Alwatr/nanolib/commit/bab9f7c7b26fc2f50476ebc74d484a4b39c9dbda)) by @AliMD
+- **logger:** defaultDebugMode ([bab9f7c](https://github.com/Alwatr/nanolib/commit/bab9f7c7b26fc2f50476ebc74d484a4b39c9dbda)) by @alimd
 
 ### Features
 
@@ -278,7 +278,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **logger:** definePackage ([dfd090e](https://github.com/Alwatr/nanolib/commit/dfd090ebd691c9a589370094d49f950524f71369)) by @AliMD
+- **logger:** definePackage ([dfd090e](https://github.com/Alwatr/nanolib/commit/dfd090ebd691c9a589370094d49f950524f71369)) by @alimd
 
 ## [3.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@3.0.0...@alwatr/logger@3.0.1) (2024-01-03)
 
@@ -288,13 +288,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- `__package_version__` global type ([de8a3f9](https://github.com/Alwatr/nanolib/commit/de8a3f93bdb5a786c42f56324072b4b9520ce3a1)) by @AliMD
-- **logger:** definePackage ([e2e5c6c](https://github.com/Alwatr/nanolib/commit/e2e5c6c8175d6f7bfba1d103c1cac2f647aa6116)) by @AliMD
+- `__package_version__` global type ([de8a3f9](https://github.com/Alwatr/nanolib/commit/de8a3f93bdb5a786c42f56324072b4b9520ce3a1)) by @alimd
+- **logger:** definePackage ([e2e5c6c](https://github.com/Alwatr/nanolib/commit/e2e5c6c8175d6f7bfba1d103c1cac2f647aa6116)) by @alimd
 
 ### Features
 
 - **logger:** change devMode env name ([ad549dc](https://github.com/Alwatr/nanolib/commit/ad549dc39e52242261c78939bd62ca10f69cea60)) by @njfamirm
-- **logger:** Update debugMode to enabled by default in development mode ([bc7c7ee](https://github.com/Alwatr/nanolib/commit/bc7c7ee1118a259ceaa1be1dade90f2f9ccf9e1d)) by @AliMD
+- **logger:** Update debugMode to enabled by default in development mode ([bc7c7ee](https://github.com/Alwatr/nanolib/commit/bc7c7ee1118a259ceaa1be1dade90f2f9ccf9e1d)) by @alimd
 - **logger:** use alwatr dedupe ([d89d076](https://github.com/Alwatr/nanolib/commit/d89d076c9fd0dd311804831b1ac0ea955efd4b6d)) by @njfamirm
 
 ### BREAKING CHANGES

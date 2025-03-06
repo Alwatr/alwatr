@@ -119,7 +119,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-* update ([4434ba6](https://github.com/Alwatr/nanolib/commit/4434ba67c3f576bb1a0c307fbdb263c43cd9733a)) by @AliMD
+* update ([4434ba6](https://github.com/Alwatr/nanolib/commit/4434ba67c3f576bb1a0c307fbdb263c43cd9733a)) by @alimd
 
 ## [2.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@2.0.2...@alwatr/nano-build@2.0.3) (2024-10-25)
 
@@ -138,7 +138,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [2.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@1.6.0...@alwatr/nano-build@2.0.0) (2024-10-11)
 
@@ -148,26 +148,26 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **nano-build:** Add presets for module bundling ([158dfec](https://github.com/Alwatr/nanolib/commit/158dfecc4afdac18bcfa5a9288f04ebb1feed6d1)) by @AliMD
+- **nano-build:** Add presets for module bundling ([158dfec](https://github.com/Alwatr/nanolib/commit/158dfecc4afdac18bcfa5a9288f04ebb1feed6d1)) by @alimd
 
 ### Code Refactoring
 
-- **nano-build:** Update all presets options ([91bdf90](https://github.com/Alwatr/nanolib/commit/91bdf9033aad8e0c71a5aab882e8b6c2af0a99ac)) by @AliMD
+- **nano-build:** Update all presets options ([91bdf90](https://github.com/Alwatr/nanolib/commit/91bdf9033aad8e0c71a5aab882e8b6c2af0a99ac)) by @alimd
 
 ## [1.6.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@1.5.0...@alwatr/nano-build@1.6.0) (2024-10-10)
 
 ### Features
 
-- **nano-build:** Add **dev_mode** global variable ([a8f7e63](https://github.com/Alwatr/nanolib/commit/a8f7e63c66c8166145e9e81994263d36ea6751ae)) by @AliMD
-- Update nano-build options and presets ([293598e](https://github.com/Alwatr/nanolib/commit/293598ed7ef85763f2ab72128cdad85a4d0310ae)) by @AliMD
+- **nano-build:** Add **dev_mode** global variable ([a8f7e63](https://github.com/Alwatr/nanolib/commit/a8f7e63c66c8166145e9e81994263d36ea6751ae)) by @alimd
+- Update nano-build options and presets ([293598e](https://github.com/Alwatr/nanolib/commit/293598ed7ef85763f2ab72128cdad85a4d0310ae)) by @alimd
 
 ### Miscellaneous Chores
 
-- Add tsconfig.json for nano-build package ([8b47c2d](https://github.com/Alwatr/nanolib/commit/8b47c2d940a55ac0e13e54209f18d5274877bcfe)) by @AliMD
-- Update devDependencies in nano-build package.json ([c900c09](https://github.com/Alwatr/nanolib/commit/c900c0942c10a663c8bffdc2f9f6583c9a69dece)) by @AliMD
-- Update nano-build options and presets ([8b2bc3a](https://github.com/Alwatr/nanolib/commit/8b2bc3af60e136c952951d468b0c184e4e14a46b)) by @AliMD
-- Update nano-build README.md ([f641961](https://github.com/Alwatr/nanolib/commit/f6419615da9b8e7755f231b37a10341531efa99c)) by @AliMD
-- Update nano-build script to display mode information ([7a76f2a](https://github.com/Alwatr/nanolib/commit/7a76f2a9d88854ddcc79fb8c7f865555d2cbd5da)) by @AliMD
+- Add tsconfig.json for nano-build package ([8b47c2d](https://github.com/Alwatr/nanolib/commit/8b47c2d940a55ac0e13e54209f18d5274877bcfe)) by @alimd
+- Update devDependencies in nano-build package.json ([c900c09](https://github.com/Alwatr/nanolib/commit/c900c0942c10a663c8bffdc2f9f6583c9a69dece)) by @alimd
+- Update nano-build options and presets ([8b2bc3a](https://github.com/Alwatr/nanolib/commit/8b2bc3af60e136c952951d468b0c184e4e14a46b)) by @alimd
+- Update nano-build README.md ([f641961](https://github.com/Alwatr/nanolib/commit/f6419615da9b8e7755f231b37a10341531efa99c)) by @alimd
+- Update nano-build script to display mode information ([7a76f2a](https://github.com/Alwatr/nanolib/commit/7a76f2a9d88854ddcc79fb8c7f865555d2cbd5da)) by @alimd
 
 ### Dependencies update
 
@@ -209,7 +209,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @AliMD
+- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @alimd
 
 ## [1.3.7](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@1.3.6...@alwatr/nano-build@1.3.7) (2024-07-04)
 
@@ -236,7 +236,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @AliMD
+- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @alimd
 
 ## [1.3.2](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@1.3.1...@alwatr/nano-build@1.3.2) (2024-01-24)
 
@@ -270,7 +270,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- refactor nano-build.cjs to include microservice preset and update all presets configs ([3f662b8](https://github.com/Alwatr/nanolib/commit/3f662b83be33d7b75469734be4490bc00f935112)) by @AliMD
+- refactor nano-build.cjs to include microservice preset and update all presets configs ([3f662b8](https://github.com/Alwatr/nanolib/commit/3f662b83be33d7b75469734be4490bc00f935112)) by @alimd
 
 ### Features
 
@@ -286,14 +286,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **nano-build:** Add check for package.json existence ([2a95315](https://github.com/Alwatr/nanolib/commit/2a95315b069644737d170195d8dc6f415407fa15)) by @AliMD
-- **nano-build:** error messages ([e95b497](https://github.com/Alwatr/nanolib/commit/e95b4970e6faeb3f600cefb7246233d45b102c37)) by @AliMD
-- **nano-build:** root fn name ([adf7b8f](https://github.com/Alwatr/nanolib/commit/adf7b8f4c2b71b528279d26fe5609cfde7095197)) by @AliMD
+- **nano-build:** Add check for package.json existence ([2a95315](https://github.com/Alwatr/nanolib/commit/2a95315b069644737d170195d8dc6f415407fa15)) by @alimd
+- **nano-build:** error messages ([e95b497](https://github.com/Alwatr/nanolib/commit/e95b4970e6faeb3f600cefb7246233d45b102c37)) by @alimd
+- **nano-build:** root fn name ([adf7b8f](https://github.com/Alwatr/nanolib/commit/adf7b8f4c2b71b528279d26fe5609cfde7095197)) by @alimd
 
 ### Features
 
-- **nano-build:** Refactor build options and add presets ([c24f0b7](https://github.com/Alwatr/nanolib/commit/c24f0b79f34167cfbb5f769dbb2de981ca377a9f)) by @AliMD
-- **nano-lib:** enhance console.log statements ([92f9b2a](https://github.com/Alwatr/nanolib/commit/92f9b2a84035e4d1d92480d692e06426f9e2d371)) by @AliMD
+- **nano-build:** Refactor build options and add presets ([c24f0b7](https://github.com/Alwatr/nanolib/commit/c24f0b79f34167cfbb5f769dbb2de981ca377a9f)) by @alimd
+- **nano-lib:** enhance console.log statements ([92f9b2a](https://github.com/Alwatr/nanolib/commit/92f9b2a84035e4d1d92480d692e06426f9e2d371)) by @alimd
 
 ## [1.0.4](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@1.0.3...@alwatr/nano-build@1.0.4) (2023-12-22)
 
@@ -309,16 +309,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- package.json include files ([053fc10](https://github.com/Alwatr/nanolib/commit/053fc10b518038647136db9ada2433e27ecb2e63)) by @AliMD
+- package.json include files ([053fc10](https://github.com/Alwatr/nanolib/commit/053fc10b518038647136db9ada2433e27ecb2e63)) by @alimd
 
 ## [1.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@1.0.0...@alwatr/nano-build@1.0.1) (2023-12-21)
 
 ### Features
 
-- **prettier-config:** new package for prettier share configs ([a6fdee3](https://github.com/Alwatr/nanolib/commit/a6fdee34591abb1d19e7ea7e431bd6624e2ea6d4)) by @AliMD
+- **prettier-config:** new package for prettier share configs ([a6fdee3](https://github.com/Alwatr/nanolib/commit/a6fdee34591abb1d19e7ea7e431bd6624e2ea6d4)) by @alimd
 
 # 1.0.0 (2023-12-20)
 
 ### Features
 
-- **nano-build:** new package for esbuild ([224a09e](https://github.com/Alwatr/nanolib/commit/224a09e9e20c0b8b1ff1de3c224ef84ee2be1f5b)) by @AliMD
+- **nano-build:** new package for esbuild ([224a09e](https://github.com/Alwatr/nanolib/commit/224a09e9e20c0b8b1ff1de3c224ef84ee2be1f5b)) by @alimd

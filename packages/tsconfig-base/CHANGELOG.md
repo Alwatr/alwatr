@@ -49,19 +49,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [1.3.1](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@1.3.0...@alwatr/tsconfig-base@1.3.1) (2024-10-10)
 
 ### Code Refactoring
 
-- enable allowUnusedLabels in tsconfig.json ([a25e708](https://github.com/Alwatr/nanolib/commit/a25e70892f7499a5f008b92fd8fd1abcadbdeb56)) by @AliMD
+- enable allowUnusedLabels in tsconfig.json ([a25e708](https://github.com/Alwatr/nanolib/commit/a25e70892f7499a5f008b92fd8fd1abcadbdeb56)) by @alimd
 
 ## [1.3.0](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@1.2.0...@alwatr/tsconfig-base@1.3.0) (2024-09-29)
 
 ### Features
 
-- **tsconfig-base:** use ESNext instead of ES2023 for the "lib" option ([47673e4](https://github.com/Alwatr/nanolib/commit/47673e481a1fc4dfd4ba2576d5dd5590da93adac)) by @AliMD
+- **tsconfig-base:** use ESNext instead of ES2023 for the "lib" option ([47673e4](https://github.com/Alwatr/nanolib/commit/47673e481a1fc4dfd4ba2576d5dd5590da93adac)) by @alimd
 
 ### Bug Fixes
 
@@ -89,7 +89,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **tsconfig:** change verbatimModuleSyntax=true and moduleDetection=force ([75e40f9](https://github.com/Alwatr/nanolib/commit/75e40f97273e7cb474506a906fa8f8e164f5661c)) by @AliMD
+- **tsconfig:** change verbatimModuleSyntax=true and moduleDetection=force ([75e40f9](https://github.com/Alwatr/nanolib/commit/75e40f97273e7cb474506a906fa8f8e164f5661c)) by @alimd
 
 ## [1.0.5](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@1.0.4...@alwatr/tsconfig-base@1.0.5) (2023-12-23)
 
@@ -111,21 +111,21 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- package.json include files ([053fc10](https://github.com/Alwatr/nanolib/commit/053fc10b518038647136db9ada2433e27ecb2e63)) by @AliMD
+- package.json include files ([053fc10](https://github.com/Alwatr/nanolib/commit/053fc10b518038647136db9ada2433e27ecb2e63)) by @alimd
 
 ## [1.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@1.0.0...@alwatr/tsconfig-base@1.0.1) (2023-12-21)
 
 ### Features
 
-- **prettier-config:** new package for prettier share configs ([a6fdee3](https://github.com/Alwatr/nanolib/commit/a6fdee34591abb1d19e7ea7e431bd6624e2ea6d4)) by @AliMD
-- **tsconfig-base:** Add pretty and newLine options to tsconfig.json ([be2f48e](https://github.com/Alwatr/nanolib/commit/be2f48efde7e669eb858d0011ef4771b46f1d768)) by @AliMD
+- **prettier-config:** new package for prettier share configs ([a6fdee3](https://github.com/Alwatr/nanolib/commit/a6fdee34591abb1d19e7ea7e431bd6624e2ea6d4)) by @alimd
+- **tsconfig-base:** Add pretty and newLine options to tsconfig.json ([be2f48e](https://github.com/Alwatr/nanolib/commit/be2f48efde7e669eb858d0011ef4771b46f1d768)) by @alimd
 
 # 1.0.0 (2023-12-20)
 
 ### Bug Fixes
 
-- build process ([83fc4e6](https://github.com/Alwatr/nanolib/commit/83fc4e609f86c25291e5f89016d6777bf197ffcb)) by @AliMD
+- build process ([83fc4e6](https://github.com/Alwatr/nanolib/commit/83fc4e609f86c25291e5f89016d6777bf197ffcb)) by @alimd
 
 ### Features
 
-- **tsconfig-base:** new package for TypeScript base config ([33bb94e](https://github.com/Alwatr/nanolib/commit/33bb94e38ab34634a26d51643f308cc651da695a)) by @AliMD
+- **tsconfig-base:** new package for TypeScript base config ([33bb94e](https://github.com/Alwatr/nanolib/commit/33bb94e38ab34634a26d51643f308cc651da695a)) by @alimd

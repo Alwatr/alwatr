@@ -64,7 +64,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-* update ([4434ba6](https://github.com/Alwatr/nanolib/commit/4434ba67c3f576bb1a0c307fbdb263c43cd9733a)) by @AliMD
+* update ([4434ba6](https://github.com/Alwatr/nanolib/commit/4434ba67c3f576bb1a0c307fbdb263c43cd9733a)) by @alimd
 
 ## [1.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@1.0.1...@alwatr/global-this@1.0.2) (2024-10-25)
 
@@ -85,18 +85,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Code Refactoring
 
-- **global-scope:** Remove global-scope module and replace with global-this ([b194b27](https://github.com/Alwatr/nanolib/commit/b194b2772628fec30cd41d677232e7393fcded61)) by @AliMD
+- **global-scope:** Remove global-scope module and replace with global-this ([b194b27](https://github.com/Alwatr/nanolib/commit/b194b2772628fec30cd41d677232e7393fcded61)) by @alimd
 - use new `global-this` package ([42510b9](https://github.com/Alwatr/nanolib/commit/42510b9ae0e385206a902db093d188949f1cb84e)) by @mohammadhonarvar
 
 ## [1.1.26](https://github.com/Alwatr/nanolib/compare/@alwatr/global-scope@1.1.25...@alwatr/global-scope@1.1.26) (2024-10-11)
 
 ### Bug Fixes
 
-- **global-scope:** prevent duplicate global scope module throw, just log error ([e67ffec](https://github.com/Alwatr/nanolib/commit/e67ffec77cbf5ae9de75d532be0062444486790b)) by @AliMD
+- **global-scope:** prevent duplicate global scope module throw, just log error ([e67ffec](https://github.com/Alwatr/nanolib/commit/e67ffec77cbf5ae9de75d532be0062444486790b)) by @alimd
 
 ### Miscellaneous Chores
 
-- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @AliMD
+- include LICENSE and LEGAL files to publish ([09f366f](https://github.com/Alwatr/nanolib/commit/09f366f680bfa9fb26acb2cd1ccbc68c5a9e9ad8)) by @alimd
 
 ## [1.1.25](https://github.com/Alwatr/nanolib/compare/@alwatr/global-scope@1.1.24...@alwatr/global-scope@1.1.25) (2024-10-11)
 
@@ -120,12 +120,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Code Refactoring
 
-- **global-scope:** Improve shared scope definition ([4704a02](https://github.com/Alwatr/nanolib/commit/4704a02497848a18ace8ae27830834d6322d6624)), closes [#123](https://github.com/Alwatr/nanolib/issues/123) by @AliMD
+- **global-scope:** Improve shared scope definition ([4704a02](https://github.com/Alwatr/nanolib/commit/4704a02497848a18ace8ae27830834d6322d6624)), closes [#123](https://github.com/Alwatr/nanolib/issues/123) by @alimd
 
 ### Miscellaneous Chores
 
 - **global-scop:** change the license to AGPL-3.0 ([ad7c262](https://github.com/Alwatr/nanolib/commit/ad7c2629743115af18b9298c6a9ccb5172c27333)) by @ArmanAsadian
-- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @AliMD
+- Update build and lint scripts ([392d0b7](https://github.com/Alwatr/nanolib/commit/392d0b71f446bce336b0256119a80f07aff794ba)) by @alimd
 
 ### Dependencies update
 
@@ -140,7 +140,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Dependencies update
 
 - bump the development-dependencies group across 1 directory with 10 updates ([9ed98ff](https://github.com/Alwatr/nanolib/commit/9ed98ffd0668d5a36e255c82edab3af53bffda8f)) by @dependabot[bot]
-- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @AliMD
+- update ([c36ed50](https://github.com/Alwatr/nanolib/commit/c36ed50f68da2f5608ccd96119963a16cfacb4ce)) by @alimd
 
 ## [1.1.19](https://github.com/Alwatr/nanolib/compare/@alwatr/global-scope@1.1.18...@alwatr/global-scope@1.1.19) (2024-08-31)
 
@@ -152,7 +152,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @AliMD
+- update all dependencies ([1e0c30e](https://github.com/Alwatr/nanolib/commit/1e0c30e6a3a8e19deb5185814e24ab6c08dca573)) by @alimd
 
 ## [1.1.17](https://github.com/Alwatr/nanolib/compare/@alwatr/global-scope@1.1.16...@alwatr/global-scope@1.1.17) (2024-07-04)
 
@@ -164,7 +164,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies update
 
-- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @AliMD
+- upgrade ([6dbd300](https://github.com/Alwatr/nanolib/commit/6dbd300642c9bcc9e7d0b281e244bf1b06eb1c38)) by @alimd
 
 ## [1.1.15](https://github.com/Alwatr/nanolib/compare/@alwatr/global-scope@1.1.14...@alwatr/global-scope@1.1.15) (2024-04-25)
 
@@ -178,7 +178,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Miscellaneous Chores
 
-- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @AliMD
+- **deps:** update ([1a45030](https://github.com/Alwatr/nanolib/commit/1a450305440b710a300787d4ca24b1ed8c6a39d7)) by @alimd
 
 ## [1.1.12](https://github.com/Alwatr/nanolib/compare/@alwatr/global-scope@1.1.11...@alwatr/global-scope@1.1.12) (2024-01-24)
 
@@ -236,7 +236,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **global-scope:** polyfill for globalThis ([17ac530](https://github.com/Alwatr/nanolib/commit/17ac530922c4b4300f370ece38b155d2b3d6713a)) by @AliMD
+- **global-scope:** polyfill for globalThis ([17ac530](https://github.com/Alwatr/nanolib/commit/17ac530922c4b4300f370ece38b155d2b3d6713a)) by @alimd
 
 ## [1.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/global-scope@1.0.0...@alwatr/global-scope@1.0.1) (2023-12-22)
 
@@ -246,5 +246,5 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **global-scope:** Add globalScope and sharedScope\_ variables ([9e9f2ee](https://github.com/Alwatr/nanolib/commit/9e9f2ee77a48cd1451a80be72d33f40cbef33a52)) by @AliMD
-- **global-scope:** new package ([b3cd89e](https://github.com/Alwatr/nanolib/commit/b3cd89ef0172d65a50772c5137a8f9bef440b306)) by @AliMD
+- **global-scope:** Add globalScope and sharedScope\_ variables ([9e9f2ee](https://github.com/Alwatr/nanolib/commit/9e9f2ee77a48cd1451a80be72d33f40cbef33a52)) by @alimd
+- **global-scope:** new package ([b3cd89e](https://github.com/Alwatr/nanolib/commit/b3cd89ef0172d65a50772c5137a8f9bef440b306)) by @alimd
