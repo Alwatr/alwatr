@@ -8,7 +8,7 @@ updates:
     commit-message:
       prefix: 'deps'
     reviewers:
-      - AliMD
+      - alimd
     schedule:
       interval: weekly
       time: '00:30'
@@ -29,7 +29,7 @@ updates:
     commit-message:
       prefix: 'deps'
     reviewers:
-      - AliMD
+      - alimd
     schedule:
       interval: weekly
       time: '00:30'
