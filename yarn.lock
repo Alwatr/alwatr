@@ -5,60 +5,60 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@alwatr/async-queue@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/async-queue@npm:5.4.0"
+"@alwatr/async-queue@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/async-queue@npm:5.5.0"
   dependencies:
-    "@alwatr/flatomise": "npm:^5.4.0"
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/586b46039d0ee84fd899195979c95d8d8f3058b7e4344682b4d4832bc24c26c9aaacd902ec87ea3d2838a9eef48209705a9bcd527b91eac68911c6ce5e868f63
+    "@alwatr/flatomise": "npm:^5.5.0"
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/10dee620847f160056993baefa9f7892eb9098e9e47b72b421a38d3e3504122a784288399c23cf6915867a570a5f5dec64c844de8ef37c5a0a0b0a5799976128
   languageName: node
   linkType: hard
 
-"@alwatr/dedupe@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/dedupe@npm:5.4.0"
+"@alwatr/dedupe@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/dedupe@npm:5.5.0"
   dependencies:
-    "@alwatr/global-this": "npm:^5.4.0"
-    "@alwatr/package-tracer": "npm:^5.4.0"
-    "@alwatr/polyfill-has-own": "npm:^5.4.0"
-  checksum: 10c0/a774aabfa2e55149bbb7c5d0015048403fc5b72b9c18506cc1c0bef1033fe6c23a551c5bf9dbadb34a0d876df62bbc3e932735f49c0b3c60cfb0f6adf6570201
+    "@alwatr/global-this": "npm:^5.5.0"
+    "@alwatr/package-tracer": "npm:^5.5.0"
+    "@alwatr/polyfill-has-own": "npm:^5.5.0"
+  checksum: 10c0/fb86ac9e8fc1fcc6e74a27dea27072b4cba06518935dccd42f4c586f0d8ee0e28a1c116d6d14948f505d40cc17a40cdd8655bd5010fefc75717ee7ffa2ade9b1
   languageName: node
   linkType: hard
 
-"@alwatr/deep-clone@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/deep-clone@npm:5.4.0"
+"@alwatr/deep-clone@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/deep-clone@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/b704b70aa90e9a78181572fcac7484e93ced5963a6ddf141fff22dc139f3e9e01ee398133253b24261b19948ffaaffe57a6b71dba3c9daebcb75dc0ccc037183
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/cf81ff90c95c5cb0cca68d0c41b51135c45507ddf36b14adb88bfea89630cb2bf0451908de9a1cea98f4d5e2e55d9a4547b980bfa69df04596c337bbb9e40bbf
   languageName: node
   linkType: hard
 
-"@alwatr/delay@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/delay@npm:5.4.0"
+"@alwatr/delay@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/delay@npm:5.5.0"
   dependencies:
-    "@alwatr/global-this": "npm:^5.4.0"
-    "@alwatr/package-tracer": "npm:^5.4.0"
-    "@alwatr/parse-duration": "npm:^5.4.0"
-  checksum: 10c0/41b43d8c9e0d4281df2c4972bb7831cb49606d73616da1d4ab164f231a1951424b9d753a67ac7fc60b4ffb7620c7834942bac698fcc6733af32fc561721f2033
+    "@alwatr/global-this": "npm:^5.5.0"
+    "@alwatr/package-tracer": "npm:^5.5.0"
+    "@alwatr/parse-duration": "npm:^5.5.0"
+  checksum: 10c0/5c65fc1d9d235f4b21d753fb6e372d49d93ac6e457e6e642dc652de67437bcfb5466b0f0d990705b9a0ec80f335abf1157cbf3807fe2e0254d009d4d9dd65e10
   languageName: node
   linkType: hard
 
-"@alwatr/env@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/env@npm:5.4.0"
+"@alwatr/env@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/env@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-    "@alwatr/platform-info": "npm:^5.4.0"
-  checksum: 10c0/ee5020738dac43b6d5a120d328a865e00e9accbd7dad5794f01f6dfb7e63d2a80d23a23e0169ecca9ce8955f43fc0ddabf02aa76904b9a75d6502f995c9906ca
+    "@alwatr/package-tracer": "npm:^5.5.0"
+    "@alwatr/platform-info": "npm:^5.5.0"
+  checksum: 10c0/09c4fc06a72efa1de20b1c8bd2d5548fb8e3b5a97b9b222842706f4cd282df5bce89c8cd164ca0fafd962fc116e83b69ca81cfd078417cc15e1acb313f4cc2c9
   languageName: node
   linkType: hard
 
-"@alwatr/eslint-config@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/eslint-config@npm:5.4.0"
+"@alwatr/eslint-config@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/eslint-config@npm:5.5.0"
   dependencies:
     esbuild: "npm:^0.25.0"
   peerDependencies:
@@ -68,134 +68,134 @@ __metadata:
     eslint-import-resolver-typescript: ">3.0.0"
     eslint-plugin-import: ">2.0.0"
     eslint-plugin-require-extensions: ">0.1.0"
-  checksum: 10c0/d62d46bfce807c8ef3637e94c5da2a958258384d92211cae13135983d466e9e3c71528a7e2338962e3bb12fa40ec30fafe674dc8b42c72097a36f12c65534e49
+  checksum: 10c0/523111df433e5669726d189372340de212f61c5c02e7257c6ca6d5220302d9032c6d435ca184bae9d03f4130f82f25832913cd59d3de963e43faeb2950d33071
   languageName: node
   linkType: hard
 
-"@alwatr/exit-hook@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/exit-hook@npm:5.4.0"
+"@alwatr/exit-hook@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/exit-hook@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/f83edb6c1be74bac6c4dca15d33378cb811c8a1c8484503ba192efb20de5632263cdab864b13c5f1af440c9f8811b2659ddd4fbaed4345b835ca3ed810bc4e7f
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/1a0cfa216148957286f85c10c96f795b9bcb383aa7ed8cfa19ca2696d6ee2e08dfbbe1e4d40043a2dd6de81322e164798873ee0471c49d2844389ddd0c1d5392
   languageName: node
   linkType: hard
 
-"@alwatr/fetch@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/fetch@npm:5.4.0"
+"@alwatr/fetch@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/fetch@npm:5.5.0"
   dependencies:
-    "@alwatr/delay": "npm:^5.4.0"
-    "@alwatr/global-this": "npm:^5.4.0"
-    "@alwatr/http-primer": "npm:^5.4.0"
-    "@alwatr/logger": "npm:^5.4.0"
-    "@alwatr/package-tracer": "npm:^5.4.0"
-    "@alwatr/parse-duration": "npm:^5.4.0"
-  checksum: 10c0/d0492ae4b925ea890a087c0492ee2cda82f647e4bc2312bb935ded4faa603d358cd3b43f20aa3c661ce93e848c52e9da736af07013dd87100d3d881274f58f2e
+    "@alwatr/delay": "npm:^5.5.0"
+    "@alwatr/global-this": "npm:^5.5.0"
+    "@alwatr/http-primer": "npm:^5.5.0"
+    "@alwatr/logger": "npm:^5.5.0"
+    "@alwatr/package-tracer": "npm:^5.5.0"
+    "@alwatr/parse-duration": "npm:^5.5.0"
+  checksum: 10c0/40d3dfd30ea767474f86fa4d3e68c9be85437f1ecc156eb3d3c0897a72daebbf2e1e67803ef09b62a3a7644a29206dc74ddae98141bd1eace8e9b4ac55deac7f
   languageName: node
   linkType: hard
 
-"@alwatr/flat-string@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/flat-string@npm:5.4.0"
+"@alwatr/flat-string@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/flat-string@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/978ad4adea3b99487d55aa088b2d37fc4d236e596a55a3c32cd763b0219a2abf5c1a32721a26764cd518f3b66a4939f4c359ff7cecad797ee4a0cf60b7f8e594
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/002267d1aa6ca56fbec0f8f78e75b8d7756509eecbefb29a762b6312598a36b434937f984f51da91039e32b906619f14a4c70cde89785635cdc4178c0bcb35f1
   languageName: node
   linkType: hard
 
-"@alwatr/flatomise@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/flatomise@npm:5.4.0"
+"@alwatr/flatomise@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/flatomise@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/67fb969923e8a994875a8d16cfa1269329ca1c39cf5fc769ddac9c4e90c63480ae6bdca1cc4f6f65280d099122e0c4d80f098b8b611679bfa8fbaa3257a90d2e
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/849c8367a577142645891904c33bd05677a788ba6269bfbc41578945238db3330b5e0dfef938a7c738eda2e1a10485ca757328abc8e4e3903fcbc943111a2076
   languageName: node
   linkType: hard
 
-"@alwatr/global-this@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/global-this@npm:5.4.0"
+"@alwatr/global-this@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/global-this@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/051e4495ab6caec2ade46db35318bb711d313762dbf7e40274195e88e5ce8f1e6d703e4c4ba3b47bec4696fd37764880674a7d6b806d918898842812ad526b20
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/a6e27eb126ccc7c4279fe13b6cb7fb801a1dee18f352d8eebea7ecf90fa4317f14e6aa94e77fa235364ce8d19c6176557d3e6039345902fb58202e8c30e22c5d
   languageName: node
   linkType: hard
 
-"@alwatr/http-primer@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/http-primer@npm:5.4.0"
+"@alwatr/http-primer@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/http-primer@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/fed8ee7ebe23be536fe20e5eca962b2b550617cc2eb018dc0e68463dbea9ea1d0d5ccb034b6fbf648c4dfa0ea9f084808be75a87312c44f5d25ee644ddf45613
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/ba62f14ed59fff857d34a6c6d2ad156c65bf0f1ea3b02b6f39634d17621fa8c1f933c4192bec9c17ae474bcad5e640b0009fc09e88292837433661cf0d557c69
   languageName: node
   linkType: hard
 
-"@alwatr/is-number@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/is-number@npm:5.4.0"
+"@alwatr/is-number@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/is-number@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/40d262b582617b8f7244fafcf3b5eb41cc5ad1023f1497f09c543a44878d1f3fdfe3ce25c8deb8b02e407aaccfb9f59e1a8836890246e6544929fedee9f5faf0
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/b2edaad334ddda469e1d382534677591e548051b7069eee8ff54e8056f434747a987c82ed466f07c505f33fba990223a31db7bbaff41a5ac1f03860c3cece85f
   languageName: node
   linkType: hard
 
-"@alwatr/local-storage@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/local-storage@npm:5.4.0"
+"@alwatr/local-storage@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/local-storage@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/83dd6fa44f464f2c7eb83ddb5a937934eb56eeb997617eb9969b283185ff01f621fb8b70b5a102a8ee55ec854ec68b5f2b10b10a1ddc241cee90fecdd9bbd245
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/d0eff70a110935325ab02bf45f95fde5b257ac678fca9771be3b17f5234944f9d704f934fee82cbc25d6e53d9675444aab611ba5f330bec454211c995cb0bad7
   languageName: node
   linkType: hard
 
-"@alwatr/logger@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/logger@npm:5.4.0"
+"@alwatr/logger@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/logger@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-    "@alwatr/platform-info": "npm:^5.4.0"
-  checksum: 10c0/2c6da6854f755a59f21b8ee4e93647a2bd2bb7fd7011f5e9c0d3aa61fd1358c7aecafea130aab1b9cd1fc7365e34f8c98aaf36788750d0771c2e544fff914e70
+    "@alwatr/package-tracer": "npm:^5.5.0"
+    "@alwatr/platform-info": "npm:^5.5.0"
+  checksum: 10c0/e7d17105e0d30ec64d4975d1e865615b5609e13bda4a95ed70fb1de06cf3c1df2875ed4f51f537078a7b750fb770ee9a900cff7e982657923d8c347691e99f5a
   languageName: node
   linkType: hard
 
-"@alwatr/nano-build@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/nano-build@npm:5.4.0"
+"@alwatr/nano-build@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/nano-build@npm:5.5.0"
   dependencies:
     esbuild: "npm:^0.25.0"
   bin:
     nano-build: ./nano-build.cjs
-  checksum: 10c0/d13854dc232dc6a70e62f0f2f3cb7e4c3083ef9dd22b7312f748b8b6921467fc2629d261d9d8a7402d8d6a8c8cf8b64ef709f16f0b8b68c42ed26c159512e656
+  checksum: 10c0/130aa1059b45e32244b14fb5d444c764c821060910266d3fff558e854e1198f59cd589ceba0f28afcee7fd487867815bc090931e8c1e080a94863168519e01b5
   languageName: node
   linkType: hard
 
-"@alwatr/nanolib@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/nanolib@npm:5.4.0"
+"@alwatr/nanolib@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/nanolib@npm:5.5.0"
   dependencies:
-    "@alwatr/async-queue": "npm:^5.4.0"
-    "@alwatr/dedupe": "npm:^5.4.0"
-    "@alwatr/deep-clone": "npm:^5.4.0"
-    "@alwatr/delay": "npm:^5.4.0"
-    "@alwatr/env": "npm:^5.4.0"
-    "@alwatr/exit-hook": "npm:^5.4.0"
-    "@alwatr/fetch": "npm:^5.4.0"
-    "@alwatr/flat-string": "npm:^5.4.0"
-    "@alwatr/flatomise": "npm:^5.4.0"
-    "@alwatr/global-this": "npm:^5.4.0"
-    "@alwatr/http-primer": "npm:^5.4.0"
-    "@alwatr/is-number": "npm:^5.4.0"
-    "@alwatr/local-storage": "npm:^5.4.0"
-    "@alwatr/logger": "npm:^5.4.0"
-    "@alwatr/node-fs": "npm:^5.4.0"
-    "@alwatr/package-tracer": "npm:^5.4.0"
-    "@alwatr/parse-duration": "npm:^5.4.0"
-    "@alwatr/platform-info": "npm:^5.4.0"
-    "@alwatr/render-state": "npm:^5.4.0"
-    "@alwatr/resolve-url": "npm:^5.4.0"
-    "@alwatr/unicode-digits": "npm:^5.4.0"
-  checksum: 10c0/ce38eb9a65292b38df5d20b6895151fb1662864d42086b58b291c10b29661fdfc18c5e8cf0bc6f37a5a1bcd60adafb765891cca642601d450ecbb0b945f1893b
+    "@alwatr/async-queue": "npm:^5.5.0"
+    "@alwatr/dedupe": "npm:^5.5.0"
+    "@alwatr/deep-clone": "npm:^5.5.0"
+    "@alwatr/delay": "npm:^5.5.0"
+    "@alwatr/env": "npm:^5.5.0"
+    "@alwatr/exit-hook": "npm:^5.5.0"
+    "@alwatr/fetch": "npm:^5.5.0"
+    "@alwatr/flat-string": "npm:^5.5.0"
+    "@alwatr/flatomise": "npm:^5.5.0"
+    "@alwatr/global-this": "npm:^5.5.0"
+    "@alwatr/http-primer": "npm:^5.5.0"
+    "@alwatr/is-number": "npm:^5.5.0"
+    "@alwatr/local-storage": "npm:^5.5.0"
+    "@alwatr/logger": "npm:^5.5.0"
+    "@alwatr/node-fs": "npm:^5.5.0"
+    "@alwatr/package-tracer": "npm:^5.5.0"
+    "@alwatr/parse-duration": "npm:^5.5.0"
+    "@alwatr/platform-info": "npm:^5.5.0"
+    "@alwatr/render-state": "npm:^5.5.0"
+    "@alwatr/resolve-url": "npm:^5.5.0"
+    "@alwatr/unicode-digits": "npm:^5.5.0"
+  checksum: 10c0/c6a45750db9e1334b36a506a3ed073a0a8333fadff5ea5acc24376100338bba9b22a03cac54b5fcf6eea09406cd989ff54ae1d8562b6c2f8c0b244d06ae2f522
   languageName: node
   linkType: hard
 
@@ -203,14 +203,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/nitrobase-engine@workspace:packages/engine"
   dependencies:
-    "@alwatr/nano-build": "npm:^5.4.0"
-    "@alwatr/nanolib": "npm:^5.4.0"
+    "@alwatr/nano-build": "npm:^5.5.0"
+    "@alwatr/nanolib": "npm:^5.5.0"
     "@alwatr/nitrobase-helper": "workspace:^"
     "@alwatr/nitrobase-reference": "workspace:^"
     "@alwatr/nitrobase-types": "workspace:^"
     "@alwatr/prettier-config": "npm:^5.0.0"
     "@alwatr/tsconfig-base": "npm:^5.0.0"
-    "@alwatr/type-helper": "npm:^5.3.0"
+    "@alwatr/type-helper": "npm:^5.4.0"
     "@types/node": "npm:^22.13.9"
     typescript: "npm:^5.8.2"
   languageName: unknown
@@ -220,12 +220,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/nitrobase-helper@workspace:packages/helper"
   dependencies:
-    "@alwatr/nano-build": "npm:^5.4.0"
-    "@alwatr/nanolib": "npm:^5.4.0"
+    "@alwatr/nano-build": "npm:^5.5.0"
+    "@alwatr/nanolib": "npm:^5.5.0"
     "@alwatr/nitrobase-types": "workspace:^"
     "@alwatr/prettier-config": "npm:^5.0.0"
     "@alwatr/tsconfig-base": "npm:^5.0.0"
-    "@alwatr/type-helper": "npm:^5.3.0"
+    "@alwatr/type-helper": "npm:^5.4.0"
     "@types/node": "npm:^22.13.9"
     typescript: "npm:^5.8.2"
   languageName: unknown
@@ -241,13 +241,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/nitrobase-reference@workspace:packages/reference"
   dependencies:
-    "@alwatr/nano-build": "npm:^5.4.0"
-    "@alwatr/nanolib": "npm:^5.4.0"
+    "@alwatr/nano-build": "npm:^5.5.0"
+    "@alwatr/nanolib": "npm:^5.5.0"
     "@alwatr/nitrobase-helper": "workspace:^"
     "@alwatr/nitrobase-types": "workspace:^"
     "@alwatr/prettier-config": "npm:^5.0.0"
     "@alwatr/tsconfig-base": "npm:^5.0.0"
-    "@alwatr/type-helper": "npm:^5.3.0"
+    "@alwatr/type-helper": "npm:^5.4.0"
     "@types/node": "npm:^22.13.9"
     typescript: "npm:^5.8.2"
   languageName: unknown
@@ -257,11 +257,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/nitrobase-types@workspace:packages/types"
   dependencies:
-    "@alwatr/nano-build": "npm:^5.4.0"
-    "@alwatr/nanolib": "npm:^5.4.0"
+    "@alwatr/nano-build": "npm:^5.5.0"
+    "@alwatr/nanolib": "npm:^5.5.0"
     "@alwatr/prettier-config": "npm:^5.0.0"
     "@alwatr/tsconfig-base": "npm:^5.0.0"
-    "@alwatr/type-helper": "npm:^5.3.0"
+    "@alwatr/type-helper": "npm:^5.4.0"
     "@types/node": "npm:^22.13.9"
     typescript: "npm:^5.8.2"
   languageName: unknown
@@ -271,14 +271,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/nitrobase-user-management@workspace:packages/user-management"
   dependencies:
-    "@alwatr/nano-build": "npm:^5.4.0"
-    "@alwatr/nanolib": "npm:^5.4.0"
+    "@alwatr/nano-build": "npm:^5.5.0"
+    "@alwatr/nanolib": "npm:^5.5.0"
     "@alwatr/nitrobase-engine": "workspace:^"
     "@alwatr/nitrobase-reference": "workspace:^"
     "@alwatr/nitrobase-types": "workspace:^"
     "@alwatr/prettier-config": "npm:^5.0.0"
     "@alwatr/tsconfig-base": "npm:^5.0.0"
-    "@alwatr/type-helper": "npm:^5.3.0"
+    "@alwatr/type-helper": "npm:^5.4.0"
     "@types/node": "npm:^22.13.9"
     typescript: "npm:^5.8.2"
   languageName: unknown
@@ -288,8 +288,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/nitrobase@workspace:packages/nitrobase"
   dependencies:
-    "@alwatr/nano-build": "npm:^5.4.0"
-    "@alwatr/nanolib": "npm:^5.4.0"
+    "@alwatr/nano-build": "npm:^5.5.0"
+    "@alwatr/nanolib": "npm:^5.5.0"
     "@alwatr/nitrobase-engine": "workspace:^"
     "@alwatr/nitrobase-helper": "workspace:^"
     "@alwatr/nitrobase-reference": "workspace:^"
@@ -297,56 +297,56 @@ __metadata:
     "@alwatr/nitrobase-user-management": "workspace:^"
     "@alwatr/prettier-config": "npm:^5.0.0"
     "@alwatr/tsconfig-base": "npm:^5.0.0"
-    "@alwatr/type-helper": "npm:^5.3.0"
+    "@alwatr/type-helper": "npm:^5.4.0"
     "@types/node": "npm:^22.13.9"
     typescript: "npm:^5.8.2"
   languageName: unknown
   linkType: soft
 
-"@alwatr/node-fs@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/node-fs@npm:5.4.0"
+"@alwatr/node-fs@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/node-fs@npm:5.5.0"
   dependencies:
-    "@alwatr/async-queue": "npm:^5.4.0"
-    "@alwatr/flat-string": "npm:^5.4.0"
-    "@alwatr/logger": "npm:^5.4.0"
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/bece069d83321d88900206db98dfc4a651295624d6d26630ffc577ede06cd3a22d179bc1858a5fc282d2b662ac733c3da19269c12c14b3fd2d4a1cfa7450c14c
+    "@alwatr/async-queue": "npm:^5.5.0"
+    "@alwatr/flat-string": "npm:^5.5.0"
+    "@alwatr/logger": "npm:^5.5.0"
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/06f68b62d34cd7654e149e7888068c7a9ba3242c6f56a108b4d4ff362e1498933afe9ccbc4dfe806caebc6794f41be6feccff8a6d3c5d105a753527fda0e7ad5
   languageName: node
   linkType: hard
 
-"@alwatr/package-tracer@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/package-tracer@npm:5.4.0"
-  checksum: 10c0/0aae4e5a41cf570e1eb7f64b9b3c9dd72d686e5abb1c93be557b259f6c8b6318e886e13f01be678a2cdd89cff1996b0a7894bbebc7b6492581308673fe02d111
+"@alwatr/package-tracer@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/package-tracer@npm:5.5.0"
+  checksum: 10c0/97f07614077baf6ce8cd095aaa1a061871ba0d27f39136bfc981795b95e1d9ae5914c738d1b0315801a71f108943cd012b5730fe1ea417ec587e3f81ef36dc24
   languageName: node
   linkType: hard
 
-"@alwatr/parse-duration@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/parse-duration@npm:5.4.0"
+"@alwatr/parse-duration@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/parse-duration@npm:5.5.0"
   dependencies:
-    "@alwatr/is-number": "npm:^5.4.0"
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/041c0103cda0ea3a4a1ce8800324180fecbb9682de768aa7f2311754e528502761c915154d286e0e2cb21122fc7b919b7dca3bb41e5584ad4874c55d3aa2168b
+    "@alwatr/is-number": "npm:^5.5.0"
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/83d132c9e1ccceefd06f9ac26a99040f4fcae11e22c95ff00fb4b9cd1cd05c0d7b1ceffb0bc0b23f56045337c7113c8fa4fc34f93484c2e46ef73f6f63f12487
   languageName: node
   linkType: hard
 
-"@alwatr/platform-info@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/platform-info@npm:5.4.0"
+"@alwatr/platform-info@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/platform-info@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/be640325ccb2dd153cd896addbbaaa2bb3cd0a5279083949f0da2976257b5f0821b411ae76a4d1c4218d5a5a72cbe89fe4546166cc4745b1b9937c3968aae314
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/faebf2e0730e40aa808b2f8b06fd3bf3cdecc9ed4938a957cb98730cddeda999e5687115c87cadd5cb770c90a9510c16d11ae9b7957ab447b7b1347f392d354e
   languageName: node
   linkType: hard
 
-"@alwatr/polyfill-has-own@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/polyfill-has-own@npm:5.4.0"
+"@alwatr/polyfill-has-own@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/polyfill-has-own@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/fd9940ecf7ce9b21e68bb69fd311a96f78e03d39327ab6a15484266acde12faf8edcb3c44d34a8cf3424aa802ea16df8d2c1925b50815057039cd00d065537b4
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/b1a72f878f1030b09a8da1bad5f9aaa9ffd5291af933e84be40c46a6376b2d88e68a8b093260d532010ee87dbe508e9819506e3c70c1f141f608e04473e3e804
   languageName: node
   linkType: hard
 
@@ -357,22 +357,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/render-state@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/render-state@npm:5.4.0"
+"@alwatr/render-state@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/render-state@npm:5.5.0"
   dependencies:
-    "@alwatr/logger": "npm:^5.4.0"
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/8e491cf6b240193d006ee8ac91e76766d74841c42ebf06d8b00334c0ff25702c069e73cbb83b46e8518d34df0bdc84b243e29ea317c602e8a0e75fb7f7116dae
+    "@alwatr/logger": "npm:^5.5.0"
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/713ed097b78de65d56e4511b96a1f67ab7bcef5e20dfe6a7f5f9904e0c81f47df8b5d30c81175e11a4260f609b779305d34801125ca903526f4bf887ad6e1748
   languageName: node
   linkType: hard
 
-"@alwatr/resolve-url@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/resolve-url@npm:5.4.0"
+"@alwatr/resolve-url@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/resolve-url@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/91698323b3f90afa6d9208aa386ee40e5744c9b2535ed11d1ba38a0ef36622669affafeffc5ccf1a9f285a461c11395e65559af516403ab383f6733c2af6902f
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/5d2d53f189d10ab564831908bb6f21df78cbdae44afdb311b151c3647a7fdbab68c7d0ea0552d028f32f3eceffb409fa454ee826f455b4efeaf9597d22faa03e
   languageName: node
   linkType: hard
 
@@ -383,19 +383,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/type-helper@npm:^5.3.0":
-  version: 5.3.0
-  resolution: "@alwatr/type-helper@npm:5.3.0"
-  checksum: 10c0/fbd2ccb24ac30f7c21c4049129cb464293ccbfa27ad0d75b6e1f225fbb1f0db9b512b6f8a2492b623430262c3789f5cf5582eb6a5385b94a5e74076aa92e6382
+"@alwatr/type-helper@npm:^5.4.0":
+  version: 5.4.0
+  resolution: "@alwatr/type-helper@npm:5.4.0"
+  checksum: 10c0/a8fd820f9b9484941e301caf858bbacc536a3af4884ff016fce90535842654a9d503e73ecc8c80e4938d7229f1678fd7048b6d4ed959267f6ecddced6e1e57cd
   languageName: node
   linkType: hard
 
-"@alwatr/unicode-digits@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@alwatr/unicode-digits@npm:5.4.0"
+"@alwatr/unicode-digits@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@alwatr/unicode-digits@npm:5.5.0"
   dependencies:
-    "@alwatr/package-tracer": "npm:^5.4.0"
-  checksum: 10c0/c3f58bae61ab80280fb31a86ec534057070a3978859e2f07631008c60fa1514ccab190d81047ef5399c8fb89cf424e382ca75ec71f39e73fc5ec959565a7b789
+    "@alwatr/package-tracer": "npm:^5.5.0"
+  checksum: 10c0/c770a54cfb72c7f0e923df2b67dc72a8b3b96266fd0306943ddfd66a957c36ab3227856a04b92696229e5db67b6d79b5edee28634c34dcead0ef6f81c9e54058
   languageName: node
   linkType: hard
 
@@ -1725,7 +1725,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "alwatr-nitrobase@workspace:."
   dependencies:
-    "@alwatr/eslint-config": "npm:^5.4.0"
+    "@alwatr/eslint-config": "npm:^5.5.0"
     "@alwatr/prettier-config": "npm:^5.0.0"
     "@lerna-lite/changed": "npm:^3.12.1"
     "@lerna-lite/cli": "npm:^3.12.1"
