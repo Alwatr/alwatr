@@ -226,7 +226,7 @@ export type JsonArray = JsonValue[] | readonly JsonValue[];
 /**
  * Represents an `Dictionary` of `JSONValue` (Record<string, JSONValues>)
  */
-export type JsonObject = {[Key in string]: JsonValue} & {[Key in string]?: JsonValue | undefined};
+export type JsonObject = {[Key in string]?: JsonValue};
 
 /**
  * Represents an object that can be converted to JSON value (JsonObject or an object with toJSON method).
