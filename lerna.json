@@ -43,18 +43,15 @@
           },
           {
             "type": "docs",
-            "section": "Documentation",
-            "hidden": true
+            "section": "Documentation"
           },
           {
             "type": "doc",
-            "section": "Documentation",
-            "hidden": true
+            "section": "Documentation"
           },
           {
             "type": "deps",
-            "section": "Dependencies update",
-            "hidden": false
+            "section": "Dependencies update"
           },
           {
             "type": "style",
@@ -79,9 +76,6 @@
         ]
       },
       "changelogIncludeCommitsClientLogin": " by @%l",
-      "ignoreChanges": [
-        "*.md"
-      ],
       "message": "release:",
       "private": true,
       "forceGitTag": true,
