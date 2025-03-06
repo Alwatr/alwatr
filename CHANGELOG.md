@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.9.1](https://github.com/Alwatr/nanotron/compare/v4.9.0...v4.9.1) (2025-03-06)
+
+### Dependencies update
+
+* **deps-dev:** bump the dependencies group with 5 updates ([e6a00eb](https://github.com/Alwatr/nanotron/commit/e6a00eb139f70f2396ecf12b68103b40aa785521)) by @dependabot[bot]
+* **deps:** bump the github-actions group across 1 directory with 2 updates ([49c6f51](https://github.com/Alwatr/nanotron/commit/49c6f51beb9d1db1f91248189cd583d33e1a3a67)) by @dependabot[bot]
+* **dev:** update @alwatr/eslint-config to version 5.5.0 and bump packageManager to yarn@4.7.0 ([4b7d8a2](https://github.com/Alwatr/nanotron/commit/4b7d8a2e54251294a5cf9e430c9dafd36dd297fd)) by @
+* update @alwatr/nanolib and @alwatr/nano-build to version 5.5.0; bump @alwatr/type-helper to version 5.4.0 ([1e8b122](https://github.com/Alwatr/nanotron/commit/1e8b1228034af44e0d4914f5100d9e564c05a5a6)) by @
+* update prettier to version 3.5.3-sdk and typescript to version 5.8.2-sdk ([7fdd0c8](https://github.com/Alwatr/nanotron/commit/7fdd0c8b52f23afcd843feb4cc6fdcdb1abbb8b7)) by @
+
 ## [4.9.0](https://github.com/Alwatr/nanotron/compare/v4.8.1...v4.9.0) (2025-02-26)
 
 ### Features
