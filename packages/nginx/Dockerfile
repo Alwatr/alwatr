@@ -33,7 +33,8 @@ ENV nitrobaseApiPrefix="/api/s7" \
     nitrobaseRegionAuthenticated="a" \
     nitrobaseRegionManagers="m" \
     nitrobaseRegionPerUser="u" \
-    nitrobaseRegionPerOwner="o"
+    nitrobaseRegionPerOwner="o" \
+    nitrobaseRegionValidateAuth="auth"
 
 LABEL org.opencontainers.image.title="alwatr/nitrobase-nginx" \
     org.opencontainers.image.description="Extremely fast and compact JSON-based database that operates in memory, includes a JSON file backup, and serves over the highly accelerated Nginx." \
