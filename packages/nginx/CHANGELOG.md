@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.9.0](https://github.com/Alwatr/nitrobase/compare/v7.8.0...v7.9.0) (2025-03-09)
+
+### Features
+
+* **nginx:** add user authentication validation endpoint ([da84d93](https://github.com/Alwatr/nitrobase/commit/da84d9381dc35714fa89dff6e3820cde966b8764)) by @
+
 ## [7.8.0](https://github.com/Alwatr/nitrobase/compare/v7.7.0...v7.8.0) (2025-03-06)
 
 **Note:** Version bump only for package @alwatr/nitrobase-nginx
