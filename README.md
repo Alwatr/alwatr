@@ -1,6 +1,7 @@
-# Alwatr
+## Alwatr Developer Kit
 
-Alwatr Ecosystem
+The Alwatr Developer Kit is a comprehensive ecosystem designed to facilitate your development process. It comprises a diverse range of tools and libraries, empowering you to construct robust applications with enhanced efficiency.
+
 
 ## Introduction
 
