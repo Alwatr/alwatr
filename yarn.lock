@@ -369,6 +369,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:^"
     "@alwatr/tsconfig-base": "workspace:^"
     "@alwatr/type-helper": "workspace:^"
+    jest: "npm:^29.7.0"
     typescript: "npm:^5.8.2"
   languageName: unknown
   linkType: soft
