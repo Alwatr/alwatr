@@ -52,7 +52,7 @@
     "@alwatr/prettier-config": "workspace:^",
     "@alwatr/tsconfig-base": "workspace:^",
     "@alwatr/type-helper": "workspace:^",
-    "@types/node": "^22.13.9",
+    "@types/node": "^22.13.10",
     "typescript": "^5.8.2"
   }
 }
