@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.1](https://github.com/Alwatr/alwatr/compare/v3.11.0...v3.11.1) (2025-03-13)
+
+### Bug Fixes
+
+* update @alwatr/flux to version 4.0.5 and @alwatr/nanolib to version 5.5.1 ([5bf5cac](https://github.com/Alwatr/alwatr/commit/5bf5cac37a708977406a452879159524e0a5b618)) by @alimd
+
 ## [3.11.0](https://github.com/Alwatr/alwatr/compare/v3.10.0...v3.11.0) (2025-03-06)
 
 ### Features
