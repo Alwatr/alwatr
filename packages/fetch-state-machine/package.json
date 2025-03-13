@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@alwatr/fsm": "workspace:^",
-    "@alwatr/nanolib": "^5.5.0"
+    "@alwatr/nanolib": "^5.5.1"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^5.5.0",
