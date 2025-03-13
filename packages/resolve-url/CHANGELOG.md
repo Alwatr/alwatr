@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.1](https://github.com/Alwatr/nanolib/compare/@alwatr/resolve-url@5.5.0...@alwatr/resolve-url@5.5.1) (2025-03-13)
+
+### Bug Fixes
+
+* **resolve-url:** Remove lookbehind regex for Safari/iOS compatibility ([42c4df7](https://github.com/Alwatr/nanolib/commit/42c4df7144f299e6e764e57c442903ca8ba2667b)) by @alimd
+
+### Dependencies update
+
+* add jest version 29.7.0 to resolve-url package ([1f988a2](https://github.com/Alwatr/nanolib/commit/1f988a2382d978ca8f21c68548bb51d7a74d4a73)) by @alimd
+
 ## [5.5.0](https://github.com/Alwatr/nanolib/compare/@alwatr/resolve-url@5.4.0...@alwatr/resolve-url@5.5.0) (2025-03-06)
 
 ### Dependencies update
