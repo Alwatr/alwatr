@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.5](https://github.com/Alwatr/flux/compare/v4.0.4...v4.0.5) (2025-03-13)
+
+### Bug Fixes
+
+* bump @alwatr/nanolib to version 5.5.1 across multiple packages for iOS issues ([70d879e](https://github.com/Alwatr/flux/commit/70d879e379a560fbcbe41f7176a638942ee22152)) by @
+
+### Dependencies update
+
+* update @types/node to version 22.13.10 and bump [@lerna-lite](https://github.com/lerna-lite) packages to version 3.12.3 ([e918359](https://github.com/Alwatr/flux/commit/e918359ec013c32b3224aebf04f92553be31b395)) by @
+
 ## [4.0.4](https://github.com/Alwatr/flux/compare/v4.0.3...v4.0.4) (2025-03-06)
 
 ### Dependencies update

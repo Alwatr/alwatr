@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/observable",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "A lightweight and flexible TypeScript library for implementing the observer pattern (similar to signals) with events, subscriptions, and convenient features.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [

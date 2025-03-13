@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/signal",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "A simple and efficient TypeScript library for event-driven communication using signals.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [
