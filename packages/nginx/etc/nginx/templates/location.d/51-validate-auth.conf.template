@@ -4,7 +4,7 @@ location = /$nitrobaseRegionValidateAuth/ {
   if ($authUserToken = "") {
     # User not defined
     set $debugInfo 511;
-    return 403;
+    return 401;
     break;
   }
 
