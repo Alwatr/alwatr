@@ -5,7 +5,7 @@ location /$nitrobaseRegionManagers/ {
   if ($authUserToken = "") {
     # User not defined
     set $debugInfo 571;
-    return 403;
+    return 401;
     break;
   }
 
