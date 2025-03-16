@@ -5,7 +5,7 @@ location ~ ^/(?<requestLocation>$nitrobaseRegionPerUser/[A-z0-9_=-]+/[A-z0-9_=-]
   if ($authUserToken = "") {
     # User not defined
     set $debugInfo 581;
-    return 403;
+    return 401;
     break;
   }
 
