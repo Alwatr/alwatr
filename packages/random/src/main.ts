@@ -179,3 +179,17 @@ export function randUuid(): UUID {
   )}` as UUID;
 }
 
+/**
+ * Generate a random boolean with specified probability of being true.
+ *
+ * Example:
+ *
+ * ```js
+ * console.log(randBoolean()); // 50% chance of true
+ * console.log(randBoolean(0.8)); // 80% chance of true
+ * ```
+ */
+export function randBoolean(probability = 0.5): boolean {
+  return randNumber() < probability;
+}
+
