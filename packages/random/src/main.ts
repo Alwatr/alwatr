@@ -42,3 +42,36 @@ export function randInteger(min: number, max: number): number {
   return Math.floor(randFloat(min, max + 1));
 }
 
+/**
+ * Generate a random string with specified length.
+ * The string will contain only characters from the characters list.
+ * The length of the string will be between min and max (max included).
+ * If max not specified, the length will be set to min.
+ *
+ * Example:
+ *
+ *```js
+ * console.log(randString(6)); // something like 'Aab1V2'
+ * console.log(randString(3, 6)); // random length between 3 and 6
+ * ```
+ */
+export function randString(min: number, max?: number): string {
+  const length = max != null ? randInteger(min, max) : min;
+  let result = '';
+
+  // Small optimization for short strings
+  if (length <= 10) {
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(randNumber() * charactersLength));
+    }
+    return result;
+  }
+
+  // For longer strings, use array join for better performance
+  const resultArray = new Array(length);
+  for (let i = 0; i < length; i++) {
+    resultArray[i] = characters.charAt(Math.floor(randNumber() * charactersLength));
+  }
+  return resultArray.join('');
+}
+
