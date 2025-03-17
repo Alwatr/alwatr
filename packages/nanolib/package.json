@@ -106,6 +106,7 @@
     "@alwatr/package-tracer": "workspace:^",
     "@alwatr/parse-duration": "workspace:^",
     "@alwatr/platform-info": "workspace:^",
+    "@alwatr/random": "workspace:^",
     "@alwatr/render-state": "workspace:^",
     "@alwatr/resolve-url": "workspace:^",
     "@alwatr/unicode-digits": "workspace:^"

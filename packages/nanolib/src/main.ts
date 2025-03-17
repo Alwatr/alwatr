@@ -10,6 +10,7 @@ export * from '@alwatr/logger';
 export * from '@alwatr/package-tracer';
 export * from '@alwatr/parse-duration';
 export * from '@alwatr/platform-info';
+export * from '@alwatr/random';
 export * from '@alwatr/render-state';
 export * from '@alwatr/unicode-digits';
 export * from '@alwatr/resolve-url';
