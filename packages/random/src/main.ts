@@ -150,3 +150,8 @@ export function randValues<T extends ArrayBufferView | null>(array: T): T {
   return array;
 }
 
+/**
+ * Type alias for a UUID string.
+ */
+export type UUID = `${string}-${string}-${string}-${string}-${string}`;
+
