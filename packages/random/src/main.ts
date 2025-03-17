@@ -155,3 +155,27 @@ export function randValues<T extends ArrayBufferView | null>(array: T): T {
  */
 export type UUID = `${string}-${string}-${string}-${string}-${string}`;
 
+/**
+ * Generate a random UUID (v4).
+ *
+ * Example:
+ *
+ * ```js
+ * console.log(randUuid()); // "a1b2c3d4-e5f6-47a8-b9c0-d1e2f3a4b5c6"
+ * ```
+ */
+export function randUuid(): UUID {
+  if (hasCrypto && globalThis.crypto?.randomUUID) {
+    return globalThis.crypto.randomUUID() as UUID;
+  }
+
+  // Fallback implementation
+  const bytes = randValues(new Uint8Array(16));
+  bytes[6] = (bytes[6] & 0x0f) | 0x40; // version 4
+  bytes[8] = (bytes[8] & 0xbf) | 0x80; // variant RFC4122
+
+  return `${hex(bytes.subarray(0, 4))}-${hex(bytes.subarray(4, 6))}-${hex(bytes.subarray(6, 8))}-${hex(bytes.subarray(8, 10))}-${hex(
+    bytes.subarray(10, 16),
+  )}` as UUID;
+}
+
