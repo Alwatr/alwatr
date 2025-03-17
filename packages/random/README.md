@@ -51,6 +51,9 @@ console.log(randString(6)); // "A1b2C3"
 // Get random string with variable length
 console.log(randString(3, 6)); // "X2fg"
 
+// Get random string with custom character set
+console.log(randString(5, undefined, '01')); // "10101"
+
 // Get random value with step
 console.log(randStep(0, 10, 2)); // 0, 2, 4, 6, 8, or 10
 
@@ -98,16 +101,19 @@ Returns a random float between `min` and `max` (max not included).
 const value = randFloat(1, 10); // Between 1 and 10 (float)
 ```
 
-### `randString(min, max?)`
+### `randString(min, max?, chars?)`
 
-Generates a random string with characters from alphanumeric set (`A-Z`, `a-z`, `0-9`).
+Generates a random string with characters from the specified character set (defaults to alphanumeric set: `A-Z`, `a-z`, `0-9`).
 
 - With one argument: Returns a string of exactly that length
 - With two arguments: Returns a string with random length between min and max (inclusive)
+- With three arguments: Uses the provided character set instead of the default alphanumeric set
 
 ```ts
 const fixedLength = randString(6); // "A1b2C3"
 const variableLength = randString(3, 6); // Random length between 3 and 6
+const binaryString = randString(8, undefined, '01'); // "10110010"
+const hexString = randString(6, 6, '0123456789abcdef'); // "a3f28c"
 ```
 
 ### `randStep(min, max, step)`

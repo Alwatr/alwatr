@@ -2,7 +2,7 @@ import {
   randNumber,
   randInteger,
   randFloat,
-  randString,
+  maxLength,
   randStep,
   randShuffle,
   randPick,
@@ -83,7 +83,7 @@ describe('@alwatr/random', () => {
   describe('string generation', () => {
     test('randString() with fixed length', () => {
       const length = 8;
-      const str = randString(length);
+      const str = maxLength(length);
       expect(str.length).toBe(length);
       expect(typeof str).toBe('string');
     });
@@ -91,20 +91,42 @@ describe('@alwatr/random', () => {
     test('randString() with variable length', () => {
       const min = 5;
       const max = 10;
-      const str = randString(min, max);
+      const str = maxLength(min, max);
       expect(str.length).toBeGreaterThanOrEqual(min);
       expect(str.length).toBeLessThanOrEqual(max);
     });
 
     test('randString() with min equal to max', () => {
       const length = 5;
-      const str = randString(length, length);
+      const str = maxLength(length, length);
       expect(str.length).toBe(length);
     });
 
     test('randString() returns empty string when min is 0', () => {
-      const str = randString(0);
+      const str = maxLength(0);
       expect(str.length).toBe(0);
+    });
+
+    test('randString() with custom character set', () => {
+      const length = 10;
+      const chars = '01';  // Binary characters
+      const str = maxLength(length, undefined, chars);
+
+      expect(str.length).toBe(length);
+      // Verify that only characters from the custom set are used
+      expect(str.split('').every(char => chars.includes(char))).toBe(true);
+    });
+
+    test('randString() with custom character set and variable length', () => {
+      const min = 5;
+      const max = 10;
+      const chars = 'ABC123';
+      const str = maxLength(min, max, chars);
+
+      expect(str.length).toBeGreaterThanOrEqual(min);
+      expect(str.length).toBeLessThanOrEqual(max);
+      // Verify that only characters from the custom set are used
+      expect(str.split('').every(char => chars.includes(char))).toBe(true);
     });
   });
 

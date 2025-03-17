@@ -2,10 +2,6 @@ import {packageTracer} from '@alwatr/package-tracer';
 
 __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
-// Character set for random string generation
-const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-const charactersLength = characters.length;
-
 // Use the native crypto module when available for better randomness
 const hasCrypto = typeof globalThis.crypto !== 'undefined';
 
@@ -69,24 +65,33 @@ export function randInteger(min: number, max: number): number {
  *```js
  * console.log(randString(6)); // something like 'Aab1V2'
  * console.log(randString(3, 6)); // random length between 3 and 6
+ * console.log(randString(5, undefined, '01')); // binary string like '10101'
  * ```
  */
-export function randString(min: number, max?: number): string {
-  const length = max != null ? randInteger(min, max) : min;
+export function randString(
+  minLength: number,
+  maxLength: number = minLength,
+  chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+): string {
+  const length = maxLength === minLength ? minLength : randInteger(minLength, maxLength);
+  if (length <= 0) return '';
+
+  const charsLength = chars.length;
+
   let result = '';
 
   // Small optimization for short strings
   if (length <= 10) {
     for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(randNumber() * charactersLength));
+      result += chars.charAt(Math.floor(randNumber() * charsLength));
     }
     return result;
   }
-
+  // else
   // For longer strings, use array join for better performance
   const resultArray = new Array(length);
   for (let i = 0; i < length; i++) {
-    resultArray[i] = characters.charAt(Math.floor(randNumber() * charactersLength));
+    resultArray[i] = chars.charAt(Math.floor(randNumber() * charsLength));
   }
   return resultArray.join('');
 }
