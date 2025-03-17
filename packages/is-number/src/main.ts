@@ -3,7 +3,20 @@ import {packageTracer} from '@alwatr/package-tracer';
 __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 /**
- * Check the value is number or can convert to a number, for example string ' 123 ' can be converted to 123
+ * Polyfill for Number.isFinite - properly checks if a value is a finite number
+ * without type coercion.
+ *
+ * @param value - The value to check
+ * @returns true if the value is a finite number, false otherwise
+ */
+export function isFiniteNumber(value: unknown): boolean {
+  // Use native implementation if available
+  if (typeof Number.isFinite === 'function') {
+    return Number.isFinite(value);
+  }
+  // Fallback implementation
+  return typeof value === 'number' && isFinite(value);
+}
  *
  * @param value - the value must check numeric.
  *
