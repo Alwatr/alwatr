@@ -17,28 +17,46 @@ export function isFiniteNumber(value: unknown): boolean {
   // Fallback implementation
   return typeof value === 'number' && isFinite(value);
 }
+
+/**
+ * Check if the value is a number or can be converted to a number.
  *
- * @param value - the value must check numeric.
- *
- * @return true if the value is number or can convert to a number, otherwise false.
+ * @param value - The value to check.
+ * @returns `true` if the value is a number or can be converted to a number, otherwise `false`.
  *
  * @example
  * ```ts
- * isNumber(123); // true
- * isNumber('123'); // true
- * isNumber(' 123 '); // true
- * isNumber(''); // false
- * isNumber('  '); // false
- * isNumber(' 123a '); // false
- * isNumber(' 123 a '); // false
+ * isNumber(123);        // true
+ * isNumber('123');      // true
+ * isNumber(' 123 ');    // true
+ * isNumber('0xff');     // true
+ * isNumber('-1.1');     // true
+ * isNumber('');         // false
+ * isNumber('  ');       // false
+ * isNumber(' 123a ');   // false
+ * isNumber(NaN);        // false
+ * isNumber(Infinity);   // false
+ * isNumber({});         // false
+ * isNumber([]);         // false
+ * isNumber(null);       // false
+ * isNumber(undefined);  // false
  * ```
  */
 export function isNumber(value: unknown): boolean {
+  // Handle number type
   if (typeof value === 'number') {
     return value - value === 0;
   }
-  if (typeof value === 'string' && value.trim() !== '') {
-    return Number.isFinite ? Number.isFinite(+value) : isFinite(+value);
+
+  // Handle string type
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    if (trimmed === '') return false;
+
+    // Use unary plus for fastest string-to-number conversion
+    const num = +trimmed;
+    return isFiniteNumber(num);
   }
+
   return false;
 }
