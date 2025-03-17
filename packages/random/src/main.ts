@@ -109,3 +109,19 @@ export function randShuffle<T>(array: T[]): T[] {
   return array.sort(() => randNumber() - 0.5);
 }
 
+/**
+ * Choose a random item from an array.
+ * Throws an error if the array is empty.
+ *
+ * Example:
+ *
+ * ```js
+ * const array = [1, 2, 3, 4, 5];
+ * console.log(randPick(array)); // one random element
+ * ```
+ */
+export function randPick<T>(array: T[]): T {
+  if (array.length === 0) throw new Error('Cannot pick from empty array');
+  return array[randInteger(0, array.length - 1)];
+}
+
