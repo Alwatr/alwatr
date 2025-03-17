@@ -27,3 +27,18 @@ export function randNumber(): number {
 export function randFloat(min: number, max: number): number {
   return randNumber() * (max - min) + min;
 }
+
+/**
+ * Generate a random integer number between min and max (max included).
+ *
+ * Example:
+ *
+ * ```js
+ * console.log(randInteger(1, 10)); // somewhere between 1 and 10
+ * ```
+ */
+export function randInteger(min: number, max: number): number {
+  // Use Math.floor and add 1 to max for better distribution
+  return Math.floor(randFloat(min, max + 1));
+}
+
