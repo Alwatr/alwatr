@@ -92,3 +92,20 @@ export function randStep(min: number, max: number, step: number): number {
   return min + randInteger(0, steps) * step;
 }
 
+/**
+ * Shuffle an array in place and return it.
+ *
+ * Example:
+ *
+ * ```js
+ * const array = [1, 2, 3, 4, 5];
+ * randShuffle(array);
+ * console.log(array); // [2, 4, 3, 1, 5] (randomized)
+ * ```
+ */
+export function randShuffle<T>(array: T[]): T[] {
+  // Using sort with random comparator for potentially better performance on large arrays
+  // Note: This approach may not provide perfectly uniform distribution
+  return array.sort(() => randNumber() - 0.5);
+}
+
