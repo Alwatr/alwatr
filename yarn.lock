@@ -263,6 +263,7 @@ __metadata:
     "@alwatr/parse-duration": "workspace:^"
     "@alwatr/platform-info": "workspace:^"
     "@alwatr/prettier-config": "workspace:^"
+    "@alwatr/random": "workspace:^"
     "@alwatr/render-state": "workspace:^"
     "@alwatr/resolve-url": "workspace:^"
     "@alwatr/tsconfig-base": "workspace:^"
@@ -343,6 +344,19 @@ __metadata:
 "@alwatr/prettier-config@workspace:^, @alwatr/prettier-config@workspace:packages/prettier-config":
   version: 0.0.0-use.local
   resolution: "@alwatr/prettier-config@workspace:packages/prettier-config"
+  languageName: unknown
+  linkType: soft
+
+"@alwatr/random@workspace:^, @alwatr/random@workspace:packages/random":
+  version: 0.0.0-use.local
+  resolution: "@alwatr/random@workspace:packages/random"
+  dependencies:
+    "@alwatr/nano-build": "workspace:^"
+    "@alwatr/package-tracer": "workspace:^"
+    "@alwatr/prettier-config": "workspace:^"
+    "@alwatr/tsconfig-base": "workspace:^"
+    jest: "npm:^29.7.0"
+    typescript: "npm:^5.8.2"
   languageName: unknown
   linkType: soft
 
