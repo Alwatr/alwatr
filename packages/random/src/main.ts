@@ -193,3 +193,16 @@ export function randBoolean(probability = 0.5): boolean {
   return randNumber() < probability;
 }
 
+/**
+ * Generate a random hex color string.
+ *
+ * Example:
+ *
+ * ```js
+ * console.log(randColor()); // "#a1b2c3"
+ * ```
+ */
+export function randColor(): string {
+  const bytes = randValues(new Uint8Array(3));
+  return `#${hex(bytes)}`;
+}
