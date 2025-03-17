@@ -14,3 +14,16 @@ __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 export function randNumber(): number {
   return Math.random();
 }
+
+/**
+ * Generate a random float number between min and max (max not included).
+ *
+ * Example:
+ *
+ * ```js
+ * console.log(randFloat(1, 10)); // somewhere between 1 and 10 (as float)
+ * ```
+ */
+export function randFloat(min: number, max: number): number {
+  return randNumber() * (max - min) + min;
+}
