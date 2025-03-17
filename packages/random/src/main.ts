@@ -125,3 +125,28 @@ export function randPick<T>(array: T[]): T {
   return array[randInteger(0, array.length - 1)];
 }
 
+/**
+ * Fills a typed array with cryptographically strong random values.
+ * Falls back to Math.random if crypto is not available.
+ *
+ * Example:
+ *
+ * ```js
+ * const array = new Uint8Array(10);
+ * randValues(array);
+ * ```
+ */
+export function randValues<T extends ArrayBufferView | null>(array: T): T {
+  if (hasCrypto && globalThis.crypto?.getRandomValues) {
+    return globalThis.crypto.getRandomValues(array);
+  }
+
+  // Fallback for environments without crypto
+  if (array instanceof Uint8Array) {
+    for (let i = 0; i < array.length; i++) {
+      array[i] = Math.floor(randNumber() * 256);
+    }
+  }
+  return array;
+}
+
