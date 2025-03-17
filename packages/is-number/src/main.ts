@@ -60,3 +60,45 @@ export function isNumber(value: unknown): boolean {
 
   return false;
 }
+
+/**
+ * Convert a value to a number if possible.
+ *
+ * @param value - The value to convert.
+ * @returns The converted number if valid, otherwise `null`.
+ *
+ * @example
+ * ```ts
+ * toNumber(123);        // 123
+ * toNumber('123');      // 123
+ * toNumber(' 123 ');    // 123
+ * toNumber('0xff');     // 255
+ * toNumber('-1.1');     // -1.1
+ * toNumber('');         // null
+ * toNumber('  ');       // null
+ * toNumber('123a');     // null
+ * toNumber(NaN);        // null
+ * toNumber(Infinity);   // null
+ * toNumber({});         // null
+ * toNumber([]);         // null
+ * toNumber(null);       // null
+ * toNumber(undefined);  // null
+ * ```
+ */
+export function toNumber(value: unknown): number | null {
+  // Handle number type
+  if (typeof value === 'number') {
+    return value - value === 0 ? value : null;
+  }
+
+  // Handle string type
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    if (trimmed === '') return null;
+
+    const num = +trimmed;
+    return isFiniteNumber(num) ? num : null;
+  }
+
+  return null;
+}
