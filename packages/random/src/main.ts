@@ -2,6 +2,22 @@ import {packageTracer} from '@alwatr/package-tracer';
 
 __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
+// Character set for random string generation
+const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+const charactersLength = characters.length;
+
+// Use the native crypto module when available for better randomness
+const hasCrypto = typeof globalThis.crypto !== 'undefined';
+
+/**
+ * Convert a Uint8Array to a hexadecimal string.
+ */
+function hex(bytes: Uint8Array): string {
+  return Array.from(bytes)
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+}
+
 /**
  * Returns a float random number between 0 and 1 (1 not included).
  *
