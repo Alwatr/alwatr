@@ -75,3 +75,20 @@ export function randString(min: number, max?: number): string {
   return resultArray.join('');
 }
 
+/**
+ * Generate a random integer between min and max with a step.
+ *
+ * Example:
+ *
+ * ```js
+ * console.log(randStep(6, 10, 2)); // 6 or 8 or 10
+ * ```
+ */
+export function randStep(min: number, max: number, step: number): number {
+  if (step === 0) {
+    return min; // Return min when step is 0 to avoid division by zero
+  }
+  const steps = Math.floor((max - min) / step);
+  return min + randInteger(0, steps) * step;
+}
+
