@@ -1,4 +1,6 @@
+import {getGlobalThis} from '@alwatr/global-this';
 import {packageTracer} from '@alwatr/package-tracer';
+
 const globalThis = getGlobalThis();
 
 __dev_mode__: packageTracer.add(__package_name__, __package_version__);
@@ -57,7 +59,7 @@ export function randNumber(): number {
  * ```
  */
 export function randFloat(min: number, max: number): number {
-  return randNumber() * (max - min) + min;
+  return Math.random() * (max - min) + min;
 }
 
 /**
@@ -103,7 +105,7 @@ export function randString(
   // Small optimization for short strings
   if (length <= 10) {
     for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(randNumber() * charsLength));
+      result += chars.charAt(Math.floor(Math.random() * charsLength));
     }
     return result;
   }
@@ -111,7 +113,7 @@ export function randString(
   // For longer strings, use array join for better performance
   const resultArray = new Array(length);
   for (let i = 0; i < length; i++) {
-    resultArray[i] = chars.charAt(Math.floor(randNumber() * charsLength));
+    resultArray[i] = chars.charAt(Math.floor(Math.random() * charsLength));
   }
   return resultArray.join('');
 }
@@ -245,7 +247,7 @@ export function randUuid(): UUID {
  * ```
  */
 export function randBoolean(probability = 0.5): boolean {
-  return randNumber() < probability;
+  return Math.random() < probability;
 }
 
 /**
@@ -258,6 +260,6 @@ export function randBoolean(probability = 0.5): boolean {
  * ```
  */
 export function randColor(): string {
-  const bytes = randValues(new Uint8Array(3));
+  const bytes = randArray(new Array<number>(3));
   return `#${bytesToHex(bytes)}`;
 }
