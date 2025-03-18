@@ -129,6 +129,18 @@ describe('@alwatr/random', () => {
       // Verify that only characters from the custom set are used
       expect(str.split('').every(char => chars.includes(char))).toBe(true);
     });
+
+    test('randString() optimizes for short strings', () => {
+      // This test just ensures the code path for short strings works
+      const str = randString(10);
+      expect(str.length).toBe(10);
+    });
+
+    test('randString() handles longer strings with array join', () => {
+      // This test ensures the code path for longer strings works
+      const str = randString(20);
+      expect(str.length).toBe(20);
+    });
   });
 
   describe('step generation', () => {
@@ -195,6 +207,12 @@ describe('@alwatr/random', () => {
       expect(shuffled).toEqual(original);
     });
 
+    test('randShuffle() returns the same array reference for chaining', () => {
+      const array = [1, 2, 3, 4, 5];
+      const result = randShuffle(array);
+      expect(result).toBe(array); // Same reference
+    });
+
     test('randPick() selects a valid array element', () => {
       const array = [1, 2, 3, 4, 5];
       for (let i = 0; i < 100; i++) {
@@ -212,6 +230,25 @@ describe('@alwatr/random', () => {
       const uuid = randUuid();
       const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
       expect(uuidRegex.test(uuid)).toBe(true);
+    });
+
+    test('randUuid() creates properly formatted UUID v4', () => {
+      const uuid = randUuid();
+      const parts = uuid.split('-');
+
+      expect(parts.length).toBe(5);
+      expect(parts[0].length).toBe(8);
+      expect(parts[1].length).toBe(4);
+      expect(parts[2].length).toBe(4);
+      expect(parts[3].length).toBe(4);
+      expect(parts[4].length).toBe(12);
+
+      // Version 4 UUID has the 13th character as '4'
+      expect(uuid.charAt(14)).toBe('4');
+
+      // Variant should be binary 10xx (8, 9, a, or b)
+      const variantChar = uuid.charAt(19);
+      expect(['8', '9', 'a', 'b', 'A', 'B']).toContain(variantChar);
     });
   });
 
@@ -240,6 +277,13 @@ describe('@alwatr/random', () => {
       }
 
       expect(trueCount).toBe(samples);
+    });
+
+    test('randBoolean() with default probability', () => {
+      // This just checks that the function runs with default parameters
+      // Statistical testing would be unreliable in unit tests
+      const result = randBoolean();
+      expect(typeof result).toBe('boolean');
     });
   });
 
@@ -287,6 +331,24 @@ describe('@alwatr/random', () => {
       for (const value of array) {
         expect(value).toBeGreaterThanOrEqual(min);
         expect(value).toBeLessThanOrEqual(max);
+      }
+    });
+
+    test('randArray() returns the same array for chaining', () => {
+      const array = new Uint8Array(10);
+      const result = randArray(array);
+      expect(result).toBe(array); // Same reference
+    });
+
+    test('randArray() works with regular number arrays', () => {
+      const array = new Array(5);
+      randArray(array, -10, 10);
+
+      expect(array.length).toBe(5);
+      for (const value of array) {
+        expect(typeof value).toBe('number');
+        expect(value).toBeGreaterThanOrEqual(-10);
+        expect(value).toBeLessThanOrEqual(10);
       }
     });
   });
