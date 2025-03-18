@@ -5,8 +5,8 @@
     "outDir": "dist",
     "emitDeclarationOnly": true,
     "composite": true,
-    "types": ["@alwatr/nano-build", "@alwatr/type-helper"]
+    "types": ["@alwatr/nano-build"]
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [{"path": "../package-tracer"}]
 }
