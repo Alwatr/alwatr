@@ -134,7 +134,7 @@ export function randStep(min: number, max: number, step: number): number {
 }
 
 /**
- * Shuffle an array in place and return it.
+ * Shuffle an array in place using Fisher-Yates shuffle algorithm and return it.
  *
  * Example:
  *
@@ -145,9 +145,11 @@ export function randStep(min: number, max: number, step: number): number {
  * ```
  */
 export function randShuffle<T>(array: T[]): T[] {
-  // Using sort with random comparator for potentially better performance on large arrays
-  // Note: This approach may not provide perfectly uniform distribution
-  return array.sort(() => randNumber() - 0.5);
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = randInteger(0, i);
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
 /**
