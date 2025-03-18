@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.1](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.5.0...@alwatr/eslint-config@5.5.1) (2025-03-18)
+
+### Bug Fixes
+
+* **eslint-config:** remove esbuild dependency from package.json ([4071c87](https://github.com/Alwatr/nanolib/commit/4071c8720f86fc974fdce1247f1a32aec6852764)) by @alimd
+
+### Dependencies update
+
+* bump eslint-import-resolver-typescript ([7b84aa0](https://github.com/Alwatr/nanolib/commit/7b84aa086acce4aff1a8b3839f32f8a9b57bce8c)) by @dependabot[bot]
+* bump the development-dependencies group with 9 updates ([7290aa3](https://github.com/Alwatr/nanolib/commit/7290aa3b52ce66ca237d2a12d28a7687b113f83d)) by @dependabot[bot]
+
 ## [5.5.0](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.4.0...@alwatr/eslint-config@5.5.0) (2025-03-06)
 
 ### Miscellaneous Chores

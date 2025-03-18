@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.1](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.5.0...@alwatr/global-this@5.5.1) (2025-03-18)
+
+### Bug Fixes
+
+* **global-this:** update generic type in getGlobalThis function for improved type inference ([e3c449e](https://github.com/Alwatr/nanolib/commit/e3c449e8720080ccb4718e5097a8f3a845daaae8)) by @alimd
+
+### Dependencies update
+
+* bump the development-dependencies group with 9 updates ([7290aa3](https://github.com/Alwatr/nanolib/commit/7290aa3b52ce66ca237d2a12d28a7687b113f83d)) by @dependabot[bot]
+
 ## [5.5.0](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.4.0...@alwatr/global-this@5.5.0) (2025-03-06)
 
 ### Miscellaneous Chores

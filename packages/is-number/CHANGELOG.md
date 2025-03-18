@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.0](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.5.0...@alwatr/is-number@5.6.0) (2025-03-18)
+
+### Features
+
+* **is-number:** add polyfill for Number.isFinite to check finite numbers ([27c60b1](https://github.com/Alwatr/nanolib/commit/27c60b16e69e87fd62dee25ee21012651b9ba7ca)) by @alimd
+* **is-number:** add toNumber function to convert various values to numbers ([3f4a9d1](https://github.com/Alwatr/nanolib/commit/3f4a9d1d316ba685c47cafdee031e231ef0d40c5)) by @alimd
+
+### Code Refactoring
+
+* **is-number:** enhance isNumber function to handle additional cases and improve documentation ([16f16b4](https://github.com/Alwatr/nanolib/commit/16f16b41c487f874f94dd64aaa778c618879db82)) by @alimd
+
 ## [5.5.0](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.4.0...@alwatr/is-number@5.5.0) (2025-03-06)
 
 ### Miscellaneous Chores

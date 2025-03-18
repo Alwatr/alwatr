@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.1](https://github.com/Alwatr/nanolib/compare/@alwatr/parse-duration@5.5.0...@alwatr/parse-duration@5.5.1) (2025-03-18)
+
+### Code Refactoring
+
+* **parse-duration:** replace isNumber with toNumber for improved number conversion and enhance error handling ([4d63892](https://github.com/Alwatr/nanolib/commit/4d63892f914cebe73bd1dc1e688c2f4ea5b53de1)) by @alimd
+
 ## [5.5.0](https://github.com/Alwatr/nanolib/compare/@alwatr/parse-duration@5.4.0...@alwatr/parse-duration@5.5.0) (2025-03-06)
 
 ### Miscellaneous Chores

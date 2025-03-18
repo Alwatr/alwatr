@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@5.5.0...@alwatr/nano-build@5.5.1) (2025-03-18)
+
+### Dependencies update
+
+* bump esbuild in the production-dependencies group ([73b8002](https://github.com/Alwatr/nanolib/commit/73b8002fc46f0de2b1ae588411fc2ca20af7fc89)) by @dependabot[bot]
+* bump the development-dependencies group with 9 updates ([7290aa3](https://github.com/Alwatr/nanolib/commit/7290aa3b52ce66ca237d2a12d28a7687b113f83d)) by @dependabot[bot]
+
 ## [5.5.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@5.4.0...@alwatr/nano-build@5.5.0) (2025-03-06)
 
 ### Miscellaneous Chores

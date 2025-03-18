@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@5.5.1...@alwatr/nanolib@5.6.0) (2025-03-18)
+
+### Features
+
+* **nanolib:** add @alwatr/random as a dependency and export in main module ([7c5a8e3](https://github.com/Alwatr/nanolib/commit/7c5a8e325a68a0702b39e515ed6db03ed036ec38)) by @alimd
+* **nanolib:** export `hash-string` ([b235158](https://github.com/Alwatr/nanolib/commit/b235158c14a9f0223c9af51c90ba9a1dfc3b4169)) by @mohammadhonarvar
+
 ## [5.5.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@5.5.0...@alwatr/nanolib@5.5.1) (2025-03-13)
 
 **Note:** Version bump only for package @alwatr/nanolib

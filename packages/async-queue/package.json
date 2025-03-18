@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/async-queue",
-  "version": "5.5.0",
+  "version": "5.5.1",
   "description": "A queue that executes async tasks in order like mutex and semaphore methodology for javascript and typescript.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [
