@@ -1,15 +1,20 @@
 {
   "name": "@alwatr/hash-string",
-  "version": "5.0.0",
-  "description": "A tiny TypeScript library to hash a string or number.",
+  "version": "5.5.0",
+  "description": "A simple utility to generate a hash string.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [
-    "hash-string",
     "hash",
-    "cross-platform",
-    "ECMAScript",
+    "string",
+    "hash-string",
+    "md5",
+    "utility",
+    "alwatr",
+    "nanolib",
     "typescript",
     "javascript",
+    "node",
+    "nodejs",
     "browser",
     "esm",
     "module",
@@ -72,7 +77,7 @@
     "@alwatr/nano-build": "workspace:^",
     "@alwatr/prettier-config": "workspace:^",
     "@alwatr/tsconfig-base": "workspace:^",
-    "@alwatr/type-helper": "workspace:^",
-    "typescript": "^5.6.3"
+    "jest": "^29.7.0",
+    "typescript": "^5.8.2"
   }
 }
