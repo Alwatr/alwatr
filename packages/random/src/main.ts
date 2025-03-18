@@ -169,26 +169,29 @@ export function randPick<T>(array: T[]): T {
 }
 
 /**
- * Fills a typed array with cryptographically strong random values.
- * Falls back to Math.random if crypto is not available.
+ * Fills a typed array with random integer values within the specified range.
+ * The array is modified in place and also returned for chaining.
  *
- * Example:
+ * @param array - The array to fill with random values (modified in place)
+ * @param min - Minimum value (inclusive), defaults to 0
+ * @param max - Maximum value (inclusive), defaults to 255
+ * @returns The same array that was passed in (for chaining)
  *
- * ```js
- * const array = new Uint8Array(10);
- * randValues(array);
+ * @example
+ * ```ts
+ * // Fill a Uint8Array with random values (0-255)
+ * randArray(new Uint8Array(10));
+ *
+ * // Fill with custom range
+ * randArray(new Uint16Array(5), 1000, 2000); // Values between 1000-2000
+ *
+ * // Also works with number arrays
+ * randArray(new Array<number>(8), -100, 100); // Values between -100 and 100
  * ```
  */
-export function randValues<T extends ArrayBufferView | null>(array: T): T {
-  if (hasCrypto && globalThis.crypto?.getRandomValues) {
-    return globalThis.crypto.getRandomValues(array);
-  }
-
-  // Fallback for environments without crypto
-  if (array instanceof Uint8Array) {
-    for (let i = 0; i < array.length; i++) {
-      array[i] = Math.floor(randNumber() * 256);
-    }
+export function randArray<T extends number[] | Uint8Array | Uint16Array | Uint32Array>(array: T, min = 0, max = 255): T {
+  for (let i = array.length - 1; i >= 0; i--) {
+    array[i] = randInteger(min, max);
   }
   return array;
 }
