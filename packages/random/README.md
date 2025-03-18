@@ -166,7 +166,7 @@ const mostlyTrue = randBoolean(0.8); // true or false (80% chance of true)
 
 ### `randColor()`
 
-Generates a random hex color string.
+Generates a random hex color string with 6 hexadecimal digits (representing RGB values).
 
 ```ts
 const color = randColor(); // "#a1b2c3"
@@ -174,17 +174,22 @@ const color = randColor(); // "#a1b2c3"
 
 ### `randArray(array, min?, max?)`
 
-Fills a typed array with random values. Works with various typed arrays like Uint8Array, Uint16Array, etc.
+Fills a typed array with random integer values within the specified range. The array is modified in place and also returned for chaining.
 
 ```ts
-const array = new Uint8Array(10);
-randArray(array); // Fills with random values between 0-255
-randArray(array, 10, 20); // Fills with random values between 10-20
+// Fill a Uint8Array with random values (0-255)
+randArray(new Uint8Array(10));
+
+// Fill with custom range
+randArray(new Uint16Array(5), 1000, 2000); // Values between 1000-2000
+
+// Also works with number arrays
+randArray(new Array<number>(8), -100, 100); // Values between -100 and 100
 ```
 
 ### `bytesToHex(bytes)`
 
-Converts a Uint8Array or number array into a hexadecimal string representation.
+Converts a Uint8Array or number array into a hexadecimal string representation. Each byte is converted to a two-character hex string (padded with a leading zero if necessary) and concatenated together.
 
 ```ts
 const bytes = new Uint8Array([10, 255, 0, 16]);
