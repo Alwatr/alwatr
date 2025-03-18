@@ -5,7 +5,12 @@ __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 /**
  * Simple hash string for fast hashing (like md5).
  * This function is not very secure and should not be used for security purposes.
- * But it cannot ve reversed easily and brute force can take up to years for very fast computers.
+ * But it cannot be reversed easily and brute force can take up to years for very fast computers.
+ *
+ * @param str - The string or number to hash
+ * @param prefix - A prefix to add to the beginning of the hash result
+ * @param repeat - Number of times to repeat the hashing process for increased complexity (default: 3)
+ * @returns A hashed string with the specified prefix
  */
 export function hashString(str: string | number, prefix: string, repeat = 3): string {
   let hash1 = 0xdeadbeef;
@@ -32,4 +37,3 @@ export function hashString(str: string | number, prefix: string, repeat = 3): st
     return hashString(result, prefix, repeat - 1);
   }
 }
-
