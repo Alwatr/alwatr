@@ -216,13 +216,22 @@ export function randUuid(): UUID {
   }
 
   // Fallback implementation
-  const bytes = randValues(new Uint8Array(16));
+  const bytes = randArray(new Uint8Array(16));
   bytes[6] = (bytes[6] & 0x0f) | 0x40; // version 4
   bytes[8] = (bytes[8] & 0xbf) | 0x80; // variant RFC4122
 
-  return `${bytesToHex(bytes.subarray(0, 4))}-${bytesToHex(bytes.subarray(4, 6))}-${bytesToHex(bytes.subarray(6, 8))}-${bytesToHex(bytes.subarray(8, 10))}-${bytesToHex(
-    bytes.subarray(10, 16),
-  )}` as UUID;
+  // prettier-ignore
+  return `${
+    bytesToHex(bytes.subarray(0, 4))
+  }-${
+    bytesToHex(bytes.subarray(4, 6))
+  }-${
+    bytesToHex(bytes.subarray(6, 8))
+  }-${
+    bytesToHex(bytes.subarray(8, 10))
+  }-${
+    bytesToHex(bytes.subarray(10, 16))
+  }` as UUID;
 }
 
 /**
