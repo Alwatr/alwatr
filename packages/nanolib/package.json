@@ -98,6 +98,7 @@
     "@alwatr/flat-string": "workspace:^",
     "@alwatr/flatomise": "workspace:^",
     "@alwatr/global-this": "workspace:^",
+    "@alwatr/hash-string": "workspace:^",
     "@alwatr/http-primer": "workspace:^",
     "@alwatr/is-number": "workspace:^",
     "@alwatr/local-storage": "workspace:^",
