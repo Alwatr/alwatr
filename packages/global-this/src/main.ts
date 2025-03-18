@@ -16,6 +16,6 @@ const globalThis__: GlobalThis =
  * }
  * ```
  */
-export function getGlobalThis<T extends DictionaryOpt = DictionaryOpt<unknown>>(): GlobalThis & T {
+export function getGlobalThis<T extends DictionaryOpt = GlobalThis>(): GlobalThis & T {
   return globalThis__ as GlobalThis & T;
 }

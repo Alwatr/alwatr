@@ -1,6 +1,6 @@
 import {getGlobalThis, type GlobalThis} from '@alwatr/global-this';
 
-export const win = /* #__PURE__ */ getGlobalThis();
+export const win = /* #__PURE__ */ getGlobalThis<DictionaryOpt<unknown>>();
 
 // prettier-ignore
 const requestAnimationFrameFallback =
