@@ -9,7 +9,8 @@ import {
   randBoolean,
   randColor,
   randUuid,
-  randValues,
+  randArray,
+  bytesToHex,
 } from '@alwatr/random';
 
 describe('@alwatr/random', () => {
@@ -250,29 +251,65 @@ describe('@alwatr/random', () => {
     });
   });
 
-  describe('random values', () => {
-    test('randValues() fills typed array with random values', () => {
+  describe('random array filling', () => {
+    test('randArray() fills typed array with random values', () => {
       const array = new Uint8Array(10);
       const emptyArray = new Uint8Array(10);
 
-      randValues(array);
+      randArray(array);
 
       // Extremely unlikely that a randomly filled array would equal an empty one
       expect(array).not.toEqual(emptyArray);
     });
 
-    test('randValues() fills different typed arrays', () => {
+    test('randArray() fills different typed arrays', () => {
       const array8 = new Uint8Array(10);
       const array16 = new Uint16Array(5);
       const array32 = new Uint32Array(2);
 
-      randValues(array8);
-      randValues(array16);
-      randValues(array32);
+      randArray(array8);
+      randArray(array16);
+      randArray(array32);
 
       expect(array8.every(Number.isInteger)).toBe(true);
       expect(array16.every(Number.isInteger)).toBe(true);
       expect(array32.every(Number.isInteger)).toBe(true);
+    });
+
+    test('randArray() respects min and max parameters', () => {
+      const array = new Uint8Array(100);
+      const min = 10;
+      const max = 20;
+
+      randArray(array, min, max);
+
+      // Check that all values are in range
+      for (const value of array) {
+        expect(value).toBeGreaterThanOrEqual(min);
+        expect(value).toBeLessThanOrEqual(max);
+      }
+    });
+  });
+
+  describe('bytesToHex', () => {
+    test('converts Uint8Array to hex string', () => {
+      const bytes = new Uint8Array([10, 255, 0, 16]);
+      expect(bytesToHex(bytes)).toBe('0aff0010');
+    });
+
+    test('converts number array to hex string', () => {
+      const array = [171, 205, 3];
+      expect(bytesToHex(array)).toBe('abcd03');
+    });
+
+    test('handles empty array', () => {
+      expect(bytesToHex([])).toBe('');
+      expect(bytesToHex(new Uint8Array(0))).toBe('');
+    });
+
+    test('pads single-digit hex values with leading zero', () => {
+      const bytes = new Uint8Array([0, 1, 2, 3, 10, 15]);
+      expect(bytesToHex(bytes)).toBe('000102030a0f');
     });
   });
 });
