@@ -80,6 +80,7 @@
     "clean": "rm -rfv dist *.tsbuildinfo"
   },
   "dependencies": {
+    "@alwatr/global-this": "workspace:^",
     "@alwatr/package-tracer": "workspace:^"
   },
   "devDependencies": {
