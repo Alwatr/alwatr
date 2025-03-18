@@ -7,23 +7,31 @@ __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 const hasCrypto = typeof globalThis.crypto !== 'undefined';
 
 /**
- * Converts a Uint8Array of bytes into a hexadecimal string representation.
- * Each byte is converted to a two-character hex string (padded with a leading zero if necessary) and joined together.
+ * Converts a Uint8Array or number array into a hexadecimal string representation.
+ * Each byte is converted to a two-character hex string (padded with a leading zero if necessary)
+ * and concatenated together to form a single string.
  *
  * @param bytes - The array of bytes to convert to hexadecimal
  * @returns A hexadecimal string representation of the input bytes
  *
  * @example
  * ```ts
+ * // Using with Uint8Array
  * const bytes = new Uint8Array([10, 255, 0, 16]);
- * hex(bytes); // Returns "0aff0010"
+ * bytesToHex(bytes); // Returns "0aff0010"
+ *
+ * // Using with number array
+ * const array = [171, 205, 3];
+ * bytesToHex(array); // Returns "abcd03"
  * ```
  */
-export function bytesToHex(bytes: Uint8Array): string {
-  // TODO separate package for this function
-  return Array.from(bytes)
-    .map((byte) => byte.toString(16).padStart(2, '0'))
-    .join('');
+export function bytesToHex(bytes: number[] | Uint8Array): string {
+  let result = '';
+  for (const byte of bytes) {
+    const hex = byte.toString(16);
+    result += hex.length === 1 ? '0' + hex : hex;
+  }
+  return result;
 }
 
 /**
