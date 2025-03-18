@@ -33,7 +33,8 @@ import {
   randUuid,
   randBoolean,
   randColor,
-  randValues
+  randArray,
+  bytesToHex
 } from '@alwatr/random';
 
 // Get random number between 0 and 1
@@ -73,6 +74,10 @@ console.log(randBoolean(0.8)); // true or false (80% chance of true)
 
 // Generate random color
 console.log(randColor()); // "#a1b2c3"
+
+// Convert bytes to hexadecimal string
+const bytes = new Uint8Array([10, 255, 0, 16]);
+console.log(bytesToHex(bytes)); // "0aff0010"
 ```
 
 ## API
@@ -167,13 +172,26 @@ Generates a random hex color string.
 const color = randColor(); // "#a1b2c3"
 ```
 
-### `randValues(array)`
+### `randArray(array, min?, max?)`
 
-Fills a typed array with cryptographically secure random values if available. Falls back to Math.random if not.
+Fills a typed array with random values. Works with various typed arrays like Uint8Array, Uint16Array, etc.
 
 ```ts
 const array = new Uint8Array(10);
-randValues(array);
+randArray(array); // Fills with random values between 0-255
+randArray(array, 10, 20); // Fills with random values between 10-20
+```
+
+### `bytesToHex(bytes)`
+
+Converts a Uint8Array or number array into a hexadecimal string representation.
+
+```ts
+const bytes = new Uint8Array([10, 255, 0, 16]);
+const hex = bytesToHex(bytes); // "0aff0010"
+
+const array = [171, 205, 3];
+const hex2 = bytesToHex(array); // "abcd03"
 ```
 
 ## Sponsors
