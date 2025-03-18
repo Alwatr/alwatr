@@ -13,6 +13,10 @@ __dev_mode__: packageTracer.add(__package_name__, __package_version__);
  * @returns A hashed string with the specified prefix
  */
 export function hashString(str: string | number, prefix: string, repeat = 3): string {
+  if (repeat < 1) {
+    throw new Error('The repeat parameter must be greater than or equal to 1');
+  }
+
   let hash1 = 0xdeadbeef;
   let hash2 = 0x41c6ce57;
 
