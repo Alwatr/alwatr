@@ -45,9 +45,6 @@
     "url": "https://github.com/Alwatr/nanolib/issues"
   },
   "prettier": "@alwatr/prettier-config",
-  "dependencies": {
-    "esbuild": "^0.25.0"
-  },
   "devDependencies": {
     "@alwatr/prettier-config": "workspace:^",
     "@typescript-eslint/eslint-plugin": "^7.15.0",
