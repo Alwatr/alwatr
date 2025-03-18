@@ -6,9 +6,20 @@ __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 const hasCrypto = typeof globalThis.crypto !== 'undefined';
 
 /**
- * Convert a Uint8Array to a hexadecimal string.
+ * Converts a Uint8Array of bytes into a hexadecimal string representation.
+ * Each byte is converted to a two-character hex string (padded with a leading zero if necessary) and joined together.
+ *
+ * @param bytes - The array of bytes to convert to hexadecimal
+ * @returns A hexadecimal string representation of the input bytes
+ *
+ * @example
+ * ```ts
+ * const bytes = new Uint8Array([10, 255, 0, 16]);
+ * hex(bytes); // Returns "0aff0010"
+ * ```
  */
-function hex(bytes: Uint8Array): string {
+export function bytesToHex(bytes: Uint8Array): string {
+  // TODO separate package for this function
   return Array.from(bytes)
     .map((byte) => byte.toString(16).padStart(2, '0'))
     .join('');
@@ -195,7 +206,7 @@ export function randUuid(): UUID {
   bytes[6] = (bytes[6] & 0x0f) | 0x40; // version 4
   bytes[8] = (bytes[8] & 0xbf) | 0x80; // variant RFC4122
 
-  return `${hex(bytes.subarray(0, 4))}-${hex(bytes.subarray(4, 6))}-${hex(bytes.subarray(6, 8))}-${hex(bytes.subarray(8, 10))}-${hex(
+  return `${bytesToHex(bytes.subarray(0, 4))}-${bytesToHex(bytes.subarray(4, 6))}-${bytesToHex(bytes.subarray(6, 8))}-${bytesToHex(bytes.subarray(8, 10))}-${bytesToHex(
     bytes.subarray(10, 16),
   )}` as UUID;
 }
@@ -225,5 +236,5 @@ export function randBoolean(probability = 0.5): boolean {
  */
 export function randColor(): string {
   const bytes = randValues(new Uint8Array(3));
-  return `#${hex(bytes)}`;
+  return `#${bytesToHex(bytes)}`;
 }
