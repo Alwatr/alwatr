@@ -1,22 +1,22 @@
-import {hashString} from '@alwatr/hash-string';
+import {nanoHash} from '@alwatr/hash-string';
 
 describe('hashString', () => {
   it('should generate hash for string inputs', () => {
-    const result = hashString('test', 'prefix-');
+    const result = nanoHash('test', 'prefix-');
     expect(typeof result).toBe('string');
     expect(result.startsWith('prefix-')).toBe(true);
     expect(result).not.toBe('prefix-test');
   });
 
   it('should generate hash for numeric inputs', () => {
-    const result = hashString(12345, 'num-');
+    const result = nanoHash(12345, 'num-');
     expect(typeof result).toBe('string');
     expect(result.startsWith('num-')).toBe(true);
   });
 
   it('should return different hashes for different inputs', () => {
-    const hash1 = hashString('test1', 'p-');
-    const hash2 = hashString('test2', 'p-');
+    const hash1 = nanoHash('test1', 'p-');
+    const hash2 = nanoHash('test2', 'p-');
     expect(hash1).not.toBe(hash2);
   });
 
@@ -24,7 +24,7 @@ describe('hashString', () => {
     const prefixes = ['a-', 'test-', 'hash_', '123-'];
 
     prefixes.forEach((prefix) => {
-      const result = hashString('sameInput', prefix);
+      const result = nanoHash('sameInput', prefix);
       expect(result.startsWith(prefix)).toBe(true);
     });
   });
@@ -33,9 +33,9 @@ describe('hashString', () => {
     const input = 'repeatTest';
     const prefix = 'r-';
 
-    const hash1 = hashString(input, prefix, 1);
-    const hash2 = hashString(input, prefix, 2);
-    const hash3 = hashString(input, prefix, 3);
+    const hash1 = nanoHash(input, prefix, 1);
+    const hash2 = nanoHash(input, prefix, 2);
+    const hash3 = nanoHash(input, prefix, 3);
 
     expect(hash1).not.toBe(hash2);
     expect(hash2).not.toBe(hash3);
@@ -43,14 +43,14 @@ describe('hashString', () => {
   });
 
   it('should handle empty strings', () => {
-    const result = hashString('', 'empty-');
+    const result = nanoHash('', 'empty-');
     expect(typeof result).toBe('string');
     expect(result.startsWith('empty-')).toBe(true);
     expect(result.length).toBeGreaterThan('empty-'.length);
   });
 
   it('should handle special characters', () => {
-    const result = hashString('!@#$%^&*()', 'special-');
+    const result = nanoHash('!@#$%^&*()', 'special-');
     expect(typeof result).toBe('string');
     expect(result.startsWith('special-')).toBe(true);
   });
@@ -59,15 +59,15 @@ describe('hashString', () => {
     const input = 'consistencyTest';
     const prefix = 'c-';
 
-    const hash1 = hashString(input, prefix);
-    const hash2 = hashString(input, prefix);
+    const hash1 = nanoHash(input, prefix);
+    const hash2 = nanoHash(input, prefix);
 
     expect(hash1).toBe(hash2);
   });
 
   it('should handle long strings', () => {
     const longString = 'a'.repeat(1000);
-    const result = hashString(longString, 'long-');
+    const result = nanoHash(longString, 'long-');
 
     expect(typeof result).toBe('string');
     expect(result.startsWith('long-')).toBe(true);
@@ -75,18 +75,18 @@ describe('hashString', () => {
 
   it('should handle Unicode characters', () => {
     const unicodeString = '😀🌍🚀';
-    const result = hashString(unicodeString, 'unicode-');
+    const result = nanoHash(unicodeString, 'unicode-');
 
     expect(typeof result).toBe('string');
     expect(result.startsWith('unicode-')).toBe(true);
   });
 
-  it('should default to repeat value of 3 when not specified', () => {
+  it('should default to repeat value of 1 when not specified', () => {
     const input = 'defaultRepeat';
     const prefix = 'd-';
 
-    const defaultResult = hashString(input, prefix);
-    const explicitResult = hashString(input, prefix, 3);
+    const defaultResult = nanoHash(input, prefix);
+    const explicitResult = nanoHash(input, prefix, 1);
 
     expect(defaultResult).toBe(explicitResult);
   });
@@ -95,7 +95,7 @@ describe('hashString', () => {
     const input = 'Ali@MD_65';
     const prefix = 'p-';
     const expectedHash = 'p-dm3wzfp6jiud';
-    const hash = hashString(input, prefix, 3);
+    const hash = nanoHash(input, prefix, 3);
     expect(hash).toBe(expectedHash);
   });
 });
