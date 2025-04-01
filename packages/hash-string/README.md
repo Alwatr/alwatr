@@ -39,6 +39,14 @@ Generates a simple hash from the input string or number.
 
 Returns a hashed string with the specified prefix.
 
+### djb2Hash(str: string): number
+
+Implements the DJB2 hash algorithm, a fast and efficient string hashing function created by Daniel J. Bernstein.
+
+- **str**: The string to hash
+
+Returns a 32-bit unsigned integer hash value.
+
 ## Features
 
 - Fast and lightweight hashing algorithm
