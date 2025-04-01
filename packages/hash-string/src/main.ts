@@ -12,7 +12,7 @@ __dev_mode__: packageTracer.add(__package_name__, __package_version__);
  * @param repeat - Number of times to repeat the hashing process for increased complexity (default: 3)
  * @returns A hashed string with the specified prefix
  */
-export function hashString(str: string | number, prefix: string, repeat = 3): string {
+export function hashString(str: string | number, prefix: string, repeat = 1): string {
   if (repeat < 1) {
     throw new Error('The repeat parameter must be greater than or equal to 1');
   }
