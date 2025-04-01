@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.2](https://github.com/Alwatr/nanolib/compare/@alwatr/env@5.5.1...@alwatr/env@5.5.2) (2025-04-01)
+
+### Dependencies update
+
+* bump the development-dependencies group across 1 directory with 2 updates ([c1320b4](https://github.com/Alwatr/nanolib/commit/c1320b447a492c5e720e25ad71e9df81eeea3670)) by @dependabot[bot]
+
 ## [5.5.1](https://github.com/Alwatr/nanolib/compare/@alwatr/env@5.5.0...@alwatr/env@5.5.1) (2025-03-18)
 
 ### Dependencies update

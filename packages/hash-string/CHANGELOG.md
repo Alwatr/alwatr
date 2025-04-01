@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/Alwatr/nanolib/compare/@alwatr/hash-string@5.1.0...@alwatr/hash-string@5.2.0) (2025-04-01)
+
+### Features
+
+* implement DJB2 hash algorithm for efficient string hashing ([d505181](https://github.com/Alwatr/nanolib/commit/d505181fed1f85cf067ea5499b3de692b84385b0)) by @alimd
+
+### Bug Fixes
+
+* change default repeat value in hashString function from 3 to 1 ([e5c373f](https://github.com/Alwatr/nanolib/commit/e5c373f2a18ce1933f234a6f8dafeda181df1f14)) by @alimd
+
+### Code Refactoring
+
+* replace hashString function with nanoHash and export new hashing methods ([3651b0c](https://github.com/Alwatr/nanolib/commit/3651b0cf254a044f7eb4cfc0a52a9b645e1c26d3)) by @alimd
+
 ## 5.1.0 (2025-03-18)
 
 ### Features

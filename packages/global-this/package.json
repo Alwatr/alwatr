@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/global-this",
-  "version": "5.5.1",
+  "version": "5.5.2",
   "description": "Provides access to `globalThis`, ensuring cross-platform compatibility, including browsers (`window`), Node.js (`global`), and Web Workers (`self`).",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [
