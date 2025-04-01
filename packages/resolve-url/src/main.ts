@@ -7,7 +7,8 @@ export function resolveUrl(...parts: string[]): string {
     return ''; // or throw an error, depending on your needs
   }
 
-  const trimSlashes = /^\/+|\/+$/g;
+  const leadingSlashes = /^\/+/;
+  const trailingSlashes = /\/+$/;
   const multipleSlashes = /\/{2,}/g;
 
   const prefix = parts[0].indexOf('/') === 0 ? '/' : ''; // Add leading slash if the first part has it
@@ -15,7 +16,7 @@ export function resolveUrl(...parts: string[]): string {
   return (
     prefix +
     parts
-      .map((part) => part.replace(trimSlashes, '')) // Remove leading and trailing slashes
+      .map((part) => part.replace(leadingSlashes, '').replace(trailingSlashes, '')) // Remove leading and trailing slashes
       .filter((part) => part) // Remove empty parts
       .join('/')
       // Replace multiple slashes with a single slash, except for protocol
