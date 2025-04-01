@@ -90,4 +90,12 @@ describe('hashString', () => {
 
     expect(defaultResult).toBe(explicitResult);
   });
+
+  it('should algorithm be deterministic', () => {
+    const input = 'Ali@MD_65';
+    const prefix = 'p-';
+    const expectedHash = 'p-dm3wzfp6jiud';
+    const hash = hashString(input, prefix, 3);
+    expect(hash).toBe(expectedHash);
+  });
 });
