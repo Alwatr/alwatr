@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.12.1](https://github.com/Alwatr/alwatr/compare/v3.12.0...v3.12.1) (2025-04-15)
+
+### Bug Fixes
+
+* update @alwatr/nanolib to 5.6.2 ([3810153](https://github.com/Alwatr/alwatr/commit/381015347f2ee4dc3376263cafbd72ba0b3d9f66)) by @
+
 ## [3.12.0](https://github.com/Alwatr/alwatr/compare/v3.11.1...v3.12.0) (2025-04-01)
 
 ### Features
