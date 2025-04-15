@@ -56,7 +56,7 @@ export async function fetchJson<T extends JsonObject>(options: FetchOptions): Pr
       // responseText,
     };
 
-    logger_.accident('fetchJson', 'fetch_json_failed', {responseError, error});
+    logger_.accident('fetchJson', 'fetch_json_failed', {responseError, error, responseText});
     return responseError;
   }
 }
