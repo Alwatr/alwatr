@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.0](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@5.5.2...@alwatr/fetch@5.6.0) (2025-04-15)
+
+### Features
+
+* **fetchJson:** include responseText in error logging for better debugging ([168aa1c](https://github.com/Alwatr/nanolib/commit/168aa1cf72fa7668a92be87711656bbd5f1b784c)) by @alimd
+
+### Bug Fixes
+
+* **fetchJson:** update return type of fetchJson to be more generic ([9db5234](https://github.com/Alwatr/nanolib/commit/9db5234c16fc4574386c555bd068b4ab0382a364)) by @alimd
+
 ## [5.5.2](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@5.5.1...@alwatr/fetch@5.5.2) (2025-04-01)
 
 **Note:** Version bump only for package @alwatr/fetch

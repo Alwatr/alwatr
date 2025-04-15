@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/fetch",
-  "version": "5.5.2",
+  "version": "5.6.0",
   "description": "Enhanced fetch API with cache strategy, retry pattern, timeout, helper methods and enhanced types.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [
