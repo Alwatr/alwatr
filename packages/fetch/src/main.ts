@@ -31,7 +31,7 @@ export type * from './type.js';
  * });
  * ```
  */
-export async function fetchJson<T extends JsonObject>(options: FetchOptions): Promise<ResponseSuccess<T> | ResponseError> {
+export async function fetchJson<T extends JsonObject>(options: FetchOptions): Promise<T | ResponseError> {
   let response;
   let responseText;
   let responseJson;
