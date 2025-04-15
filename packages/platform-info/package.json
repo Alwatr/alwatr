@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/platform-info",
-  "version": "5.5.2",
+  "version": "5.5.3",
   "description": "This module provides a way to detect the current platform where the script is running. It defines a constant `platformInfo` which holds the information about the current platform.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [

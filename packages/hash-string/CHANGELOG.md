@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.2.1 (2025-04-15)</small>
+
+**Note:** Version bump only for package @alwatr/hash-string
+
 ## [5.2.0](https://github.com/Alwatr/nanolib/compare/@alwatr/hash-string@5.1.0...@alwatr/hash-string@5.2.0) (2025-04-01)
 
 ### Features
