@@ -3,8 +3,10 @@ import {packageTracer} from '@alwatr/package-tracer';
 __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 export function resolveUrl(...parts: string[]): string {
+  parts = parts.filter((part: string): part is string => typeof part === 'string' && part.length > 0);
+
   if (parts.length === 0) {
-    return ''; // or throw an error, depending on your needs
+    return '';
   }
 
   const leadingSlashes = /^\/+/;
@@ -25,3 +27,4 @@ export function resolveUrl(...parts: string[]): string {
       .replace('{{PROTOCOL_SLASH}}', '://')
   );
 }
+
