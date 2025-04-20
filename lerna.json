@@ -90,7 +90,6 @@
       "signGitCommit": true,
       "push": true,
       "createRelease": "github",
-      "generateReleaseNotes": true,
       "conventionalGraduate": true
     },
     "run": {
