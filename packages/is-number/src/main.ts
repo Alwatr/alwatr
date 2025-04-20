@@ -42,7 +42,7 @@ export function isFiniteNumber(value: unknown): boolean {
  * isNumber(undefined);  // false
  * ```
  */
-export function isNumber(value: unknown): boolean {
+export function isNumber(value: unknown): value is number {
   // Handle number type
   if (typeof value === 'number') {
     return value - value === 0;
