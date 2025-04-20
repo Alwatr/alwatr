@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.12.2](https://github.com/Alwatr/alwatr/compare/v3.12.1...v3.12.2) (2025-04-20)
+
+### Bug Fixes
+
+* update @alwatr/eslint-config to 5.5.4, @alwatr/nanolib to 5.6.5, @alwatr/nano-build to 5.5.3, and @alwatr/type-helper to 5.4.1 ([e3b939b](https://github.com/Alwatr/alwatr/commit/e3b939b91386b39face86917c7edf7a33376666b)) by @
+
 ## [3.12.1](https://github.com/Alwatr/alwatr/compare/v3.12.0...v3.12.1) (2025-04-15)
 
 ### Bug Fixes
