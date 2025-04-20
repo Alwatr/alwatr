@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.4](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.5.3...@alwatr/eslint-config@5.5.4) (2025-04-20)
+
+### Dependencies update
+
+* update conventional-changelog-conventionalcommits to version 8.0.0 and eslint-import-resolver-typescript to version 4.3.3 ([bdcb425](https://github.com/Alwatr/nanolib/commit/bdcb425cb5f40cbd9b9fae485e974d9e5e529a73)) by @alimd
+
 ## <small>5.5.3 (2025-04-15)</small>
 
 **Note:** Version bump only for package @alwatr/eslint-config

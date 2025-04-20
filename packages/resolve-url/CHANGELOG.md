@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.5](https://github.com/Alwatr/nanolib/compare/@alwatr/resolve-url@5.5.4...@alwatr/resolve-url@5.5.5) (2025-04-20)
+
+### Bug Fixes
+
+* **resolve-url:** ensure only non-empty string parts are processed in resolveUrl function ([dcd4009](https://github.com/Alwatr/nanolib/commit/dcd400973ec42cbb81b20e8f3d37dbbee57ea498)) by @alimd
+
 ## <small>5.5.4 (2025-04-15)</small>
 
 **Note:** Version bump only for package @alwatr/resolve-url

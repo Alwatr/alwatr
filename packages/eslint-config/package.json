@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/eslint-config",
-  "version": "5.5.3",
+  "version": "5.5.4",
   "description": "Alwatr ECMAScript Style Guide as a ESLint shareable configurations.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [
