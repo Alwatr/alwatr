@@ -92,10 +92,53 @@ describe('@alwatr/resolve-url - resolveUrl', () => {
     expect(resolveUrl('http://example.com/path/to/resource')).toBe('http://example.com/path/to/resource');
   });
 
-  //  it('should handle complex url 1', () => {
-  //     expect(resolveUrl('http:////ali/', '///md////', '/65/////')).toBe('http://ali/md/65');
-  // });
   it('should handle complex url 2', () => {
     expect(resolveUrl('//no-protocol/', '/path////test/')).toBe('/no-protocol/path/test');
+  });
+
+  // Tests moved from main.test.ts
+  it('should resolve parts correctly', () => {
+    expect(resolveUrl('a', 'b', 'c')).toBe('a/b/c');
+    expect(resolveUrl('/a/', '/b/', '/c/')).toBe('/a/b/c');
+    expect(resolveUrl('a//b', '//c')).toBe('a/b/c');
+    expect(resolveUrl('http://example.com', 'a')).toBe('http://example.com/a');
+    expect(resolveUrl('http://example.com/', '/a/')).toBe('http://example.com/a');
+  });
+
+  it('should handle empty parts', () => {
+    expect(resolveUrl('a', '', 'c')).toBe('a/c');
+    expect(resolveUrl('', 'b', 'c')).toBe('b/c');
+    expect(resolveUrl('a', 'b', '')).toBe('a/b');
+    expect(resolveUrl('', '', '')).toBe('');
+  });
+
+  it('should handle single part', () => {
+    expect(resolveUrl('a')).toBe('a');
+    expect(resolveUrl('/a/')).toBe('/a');
+    expect(resolveUrl('')).toBe('');
+  });
+
+  it('should handle no parts', () => {
+    expect(resolveUrl()).toBe('');
+  });
+
+  it('should handle leading/trailing slashes correctly', () => {
+    expect(resolveUrl('/a', 'b')).toBe('/a/b');
+    expect(resolveUrl('a', '/b')).toBe('a/b');
+    expect(resolveUrl('//a', 'b//')).toBe('/a/b');
+  });
+
+  it('should handle protocol correctly', () => {
+    expect(resolveUrl('https://example.com//', '//api/', '/v1')).toBe('https://example.com/api/v1');
+    expect(resolveUrl('ftp://test.com', 'path')).toBe('ftp://test.com/path');
+  });
+
+  // Test case for the original error
+  it('should handle null or undefined parts', () => {
+    expect(resolveUrl('a', undefined, 'c')).toBe('a/c');
+    expect(resolveUrl(null, 'b', 'c')).toBe('b/c');
+    expect(resolveUrl('a', 'b', null)).toBe('a/b');
+    expect(resolveUrl(undefined, undefined, undefined)).toBe('');
+    expect(resolveUrl('/a', null, 'b', undefined, '/c/')).toBe('/a/b/c');
   });
 });
