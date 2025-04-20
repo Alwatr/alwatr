@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.0](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.6.2...@alwatr/is-number@5.7.0) (2025-04-20)
+
+### Features
+
+* **is-number:** update isNumber function return type to use type predicate ([f489dec](https://github.com/Alwatr/nanolib/commit/f489decf9cce1473a3d87a4aeb65ff07965832e8)) by @alimd
+
 ## <small>5.6.2 (2025-04-15)</small>
 
 **Note:** Version bump only for package @alwatr/is-number
