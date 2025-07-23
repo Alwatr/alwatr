@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.9.2](https://github.com/Alwatr/nanotron/compare/v4.9.1...v4.9.2) (2025-07-23)
+
+### Bug Fixes
+
+* correct route matching logic in NanotronApiServer ([509b46f](https://github.com/Alwatr/nanotron/commit/509b46fd478b55cce6aa2f564c051d4b36044649)) by @alimd
+
+### Dependencies update
+
+* add conventional-commits-filter dependency ([ed73b3c](https://github.com/Alwatr/nanotron/commit/ed73b3cdd4cbce1ab3ad6cdb51dd542e78b48384)) by @
+* update conventional-changelog-conventionalcommits to version 8.0.0 ([ce3a1ba](https://github.com/Alwatr/nanotron/commit/ce3a1ba0a5fbf6501aa6e10bcc3e9223ba9b6db2)) by @
+* update dependencies to latest versions ([353d048](https://github.com/Alwatr/nanotron/commit/353d0485a5c21ab219d84cd0a6c35f62b46c2da9)) by @alimd
+
 ## [4.9.1](https://github.com/Alwatr/nanotron/compare/v4.9.0...v4.9.1) (2025-03-06)
 
 ### Dependencies update

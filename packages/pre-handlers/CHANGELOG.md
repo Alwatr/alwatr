@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.9.2](https://github.com/Alwatr/pre-handlers/compare/v4.9.1...v4.9.2) (2025-07-23)
+
+### Dependencies update
+
+* update dependencies to latest versions ([353d048](https://github.com/Alwatr/pre-handlers/commit/353d0485a5c21ab219d84cd0a6c35f62b46c2da9)) by @alimd
+
 ## [4.9.1](https://github.com/Alwatr/pre-handlers/compare/v4.9.0...v4.9.1) (2025-03-06)
 
 ### Dependencies update
