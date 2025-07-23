@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.9.3](https://github.com/Alwatr/nanotron/compare/v4.9.2...v4.9.3) (2025-07-23)
+
+### Bug Fixes
+
+* update checksum for @alwatr/unicode-digits dependency in yarn.lock ([c339238](https://github.com/Alwatr/nanotron/commit/c3392386074ef8cc0676384eaa5aeef65d84c0f4)) by @
+
 ## [4.9.2](https://github.com/Alwatr/nanotron/compare/v4.9.1...v4.9.2) (2025-07-23)
 
 ### Bug Fixes
