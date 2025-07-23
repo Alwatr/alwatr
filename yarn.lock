@@ -374,7 +374,7 @@ __metadata:
   resolution: "@alwatr/unicode-digits@npm:5.5.3"
   dependencies:
     "@alwatr/package-tracer": "npm:^5.5.3"
-  checksum: 10c0/8d2c13f260ae6b03f45064edecd5e8d64c23add8183ea34a98cc4ed77274953fdde8b13b3e2520a357b125abde1fe97ca875ae9aa99aa61cf6ca71fcab1d1d13
+  checksum: 10c0/e4680c7af190a4a0057a2eea82d7c362a7c23a9dc57e509fdd931c12ac444015ae93b12c39f3b603e95864461e36a8b0eee56e66de11191e225126f3f666c35e
   languageName: node
   linkType: hard
 
