@@ -184,7 +184,7 @@ export class NanotronApiServer {
     if (Object.hasOwn(this.routeHandlerList__.startsWith, url.method)) {
       const routeList = this.routeHandlerList__.startsWith[url.method];
       for (const pathname in routeList) {
-        if (pathname.indexOf(url.pathname) === 0) {
+        if (url.pathname.indexOf(pathname) === 0) {
           return routeList[pathname]!;
         }
       }
