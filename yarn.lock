@@ -25,12 +25,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/crypto@npm:^4.9.1":
-  version: 4.9.1
-  resolution: "@alwatr/crypto@npm:4.9.1"
+"@alwatr/crypto@npm:^4.9.3":
+  version: 4.9.3
+  resolution: "@alwatr/crypto@npm:4.9.3"
   dependencies:
-    "@alwatr/nanolib": "npm:^5.5.0"
-  checksum: 10c0/bc42e0beca09c2d4bf73758d80a30b069efcd36ccbb8fe3e707283c2934f4e9b35a05326361ef5ed95d1cff0745edbcaf8c0be5d7aaf3c5eb3bf2513a9adbff4
+    "@alwatr/nanolib": "npm:^5.6.5"
+  checksum: 10c0/06f5f476057ce033d04bba6f8cdb28d13b9b2e827a005b9a4999eb183c4489e37c6da7a4a8ffcc79327dab847434c661e2f82e61b6b56b1018fc4caa2bc6e887
   languageName: node
   linkType: hard
 
@@ -261,24 +261,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/nanotron-api-server@npm:^4.9.1":
-  version: 4.9.1
-  resolution: "@alwatr/nanotron-api-server@npm:4.9.1"
+"@alwatr/nanotron-api-server@npm:^4.9.3":
+  version: 4.9.3
+  resolution: "@alwatr/nanotron-api-server@npm:4.9.3"
   dependencies:
-    "@alwatr/nanolib": "npm:^5.5.0"
-  checksum: 10c0/af970e6100cdafcabdd317cc968089088fd542d64c9c8d6eacabed2fdc42159fdadb7243c649152a36f9ce7e9c92968e8e89e9a3d242a5565dc08c1cc5b601f3
+    "@alwatr/nanolib": "npm:^5.6.5"
+  checksum: 10c0/c94a7e1043c942b32c6c14776246a7282624da04299fb81e34f595938a69cb4d4169c42d8f200927b6cf3b160a1fcc2886344e98afc97e10601c27db87ad3b05
   languageName: node
   linkType: hard
 
-"@alwatr/nanotron@npm:^4.9.1":
-  version: 4.9.1
-  resolution: "@alwatr/nanotron@npm:4.9.1"
+"@alwatr/nanotron@npm:^4.9.3":
+  version: 4.9.3
+  resolution: "@alwatr/nanotron@npm:4.9.3"
   dependencies:
-    "@alwatr/crypto": "npm:^4.9.1"
-    "@alwatr/nanolib": "npm:^5.5.0"
-    "@alwatr/nanotron-api-server": "npm:^4.9.1"
-    "@alwatr/pre-handlers": "npm:^4.9.1"
-  checksum: 10c0/ddfb7b1e487e20a813533106b22182b5eaf3bf4c3951c32fdb1b59663351316967e65bb8a7304c3434bbc2514e3ba97c0d6e66bf959a061ba552c707a2c57364
+    "@alwatr/crypto": "npm:^4.9.3"
+    "@alwatr/nanolib": "npm:^5.6.5"
+    "@alwatr/nanotron-api-server": "npm:^4.9.3"
+    "@alwatr/pre-handlers": "npm:^4.9.3"
+  checksum: 10c0/2cf8a421bab9b15bcf2a833e0a879f6ffd18be6294152777ef1818c4dac7c7b9fa5db9925773847d8966038bee42f4c81fdf58bc647d232fb04e9343ba42e0ee
   languageName: node
   linkType: hard
 
@@ -406,13 +406,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/pre-handlers@npm:^4.9.1":
-  version: 4.9.1
-  resolution: "@alwatr/pre-handlers@npm:4.9.1"
+"@alwatr/pre-handlers@npm:^4.9.3":
+  version: 4.9.3
+  resolution: "@alwatr/pre-handlers@npm:4.9.3"
   dependencies:
-    "@alwatr/nanolib": "npm:^5.5.0"
-    "@alwatr/nanotron-api-server": "npm:^4.9.1"
-  checksum: 10c0/bcb5abaab17e87cd1276cd9ded140e88866af652614c853930dde3dbf5dda0ce1871f2812734534da4c3abb431d610f0857474ba64ac5ce9f00237cf3232d185
+    "@alwatr/nanolib": "npm:^5.6.5"
+    "@alwatr/nanotron-api-server": "npm:^4.9.3"
+  checksum: 10c0/f6ffeac4af1700f666f5cd202b709e09b2f01e55a622a73201493c9023ae25703ead30086e30f07afc0f72d1c0bd192168fc54a83ad96302ea81089a7c5d74a4
   languageName: node
   linkType: hard
 
@@ -2012,7 +2012,7 @@ __metadata:
     "@alwatr/flux": "npm:^4.0.5"
     "@alwatr/nano-build": "npm:^5.5.3"
     "@alwatr/nanolib": "npm:^5.6.5"
-    "@alwatr/nanotron": "npm:^4.9.1"
+    "@alwatr/nanotron": "npm:^4.9.3"
     "@alwatr/nitrobase": "npm:^7.8.0"
     "@alwatr/prettier-config": "npm:^5.0.0"
     "@alwatr/tsconfig-base": "npm:^5.0.0"
