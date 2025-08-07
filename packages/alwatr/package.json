@@ -107,6 +107,6 @@
     "@alwatr/prettier-config": "^5.0.0",
     "@alwatr/tsconfig-base": "^5.0.0",
     "@alwatr/type-helper": "^5.4.1",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   }
 }
