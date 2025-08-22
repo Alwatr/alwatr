@@ -3,10 +3,10 @@
   "description": "A zero-dependency CLI tool to automate common Yarn maintenance tasks. This utility streamlines the process of upgrading dependencies, fixing version inconsistencies, and ensuring your project is up-to-date with a single command.",
   "version": "5.0.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
   "bin": {
     "upd": "./dist/main.mjs"
   },
+  "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/prettier-config": "workspace:*",
@@ -22,16 +22,16 @@
   ],
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/yarn-upgrade#readme",
   "keywords": [
-    "yarn",
-    "upgrade",
-    "update",
+    "alwatr",
     "maintenance",
     "module",
     "monorepo",
-    "alwatr",
+    "update",
+    "upgrade",
     "util",
     "utility",
-    "utils"
+    "utils",
+    "yarn"
   ],
   "license": "MPL-2.0",
   "main": "./dist/main.cjs",
