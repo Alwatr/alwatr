@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const {context, build} = require('esbuild');
 const {resolve} = require('path');
 const {existsSync} = require('fs');
