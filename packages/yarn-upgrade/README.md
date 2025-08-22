@@ -46,12 +46,12 @@ The script will execute the following sequence of commands on your project:
 
 - `yarn set version latest`
 - `yarn upgrade-interactive`
-- `yarn dlx syncpack lint`
-- `yarn dlx syncpack fix`
-- `yarn dlx syncpack format`
 - `yarn up "@*/*" "*" --recursive`
-- `yarn dedupe`
 - `yarn dlx @yarnpkg/sdks vscode`
+- `yarn dedupe`
+- `yarn syncpack format`
+- `yarn syncpack fix`
+- `yarn syncpack lint --sort count`
 
 ## Contributing
 
