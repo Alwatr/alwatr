@@ -2,9 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/lerna-lite/lerna-lite/main/packages/cli/schemas/lerna-schema.json",
   "version": "independent",
   "npmClient": "yarn",
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "loglevel": "verbose",
   "command": {
     "version": {
@@ -53,8 +51,7 @@
           },
           {
             "type": "deps",
-            "section": "Dependencies update",
-            "hidden": false
+            "section": "Dependencies update"
           },
           {
             "type": "style",
@@ -79,11 +76,9 @@
         ]
       },
       "changelogIncludeCommitsClientLogin": " by @%l",
-      "ignoreChanges": [
-        "*.md"
-      ],
+      "ignoreChanges": ["*.md"],
       "skipBumpOnlyReleases": true,
-      "message": "release:",
+      "message": "release: %s",
       "private": false,
       "forceGitTag": true,
       "signGitTag": true,
