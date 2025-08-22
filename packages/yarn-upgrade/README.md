@@ -16,8 +16,6 @@ It is designed to be run in any Yarn project without requiring any pre-installed
 
 ## Usage
 
-The recommended way to use this tool is with a package runner like `yarn dlx` or `npx`. This ensures you are always using the latest version without having to install it globally or per-project.
-
 Navigate to the root directory of your Yarn project and run the following command:
 
 ```bash
@@ -29,6 +27,20 @@ Alternatively, you can use `npx`:
 ```bash
 npx @alwatr/yarn-upgrade
 ```
+
+### Local Installation
+
+```bash
+yarn add @alwatr/yarn-upgrade
+```
+
+Now you can run the tool using:
+
+```bash
+yarn upd
+```
+
+## Execution Steps
 
 The script will execute the following sequence of commands on your project:
 
