@@ -29,7 +29,7 @@
     "LICENSE",
     "!demo/**/*"
   ],
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/wait#readme",
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/delay#readme",
   "keywords": [
     "alwatr",
     "browser",
