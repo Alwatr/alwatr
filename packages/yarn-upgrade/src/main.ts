@@ -7,7 +7,7 @@ const commands: string[] = [
   'pwd',
   'yarn set version latest',
   'yarn upgrade-interactive',
-  'yarn up "@*/*" "*" --recursive',
+  'yarn up @*/* * --recursive',
   'yarn dlx @yarnpkg/sdks vscode',
   'yarn dedupe',
   'yarn dlx syncpack@alpha format',
