@@ -5,7 +5,7 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "bin": {
-    "project-upd": "./dist/main.mjs"
+    "upd": "./dist/main.mjs"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
