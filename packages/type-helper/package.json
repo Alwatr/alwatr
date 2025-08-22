@@ -3,20 +3,12 @@
   "version": "5.4.2",
   "description": "Collection of useful typescript type helpers.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "keywords": [
-    "type",
-    "type-helper",
-    "types",
-    "typescript",
-    "utility",
-    "util",
-    "utils",
-    "nanolib",
-    "alwatr"
-  ],
-  "license": "AGPL-3.0-only",
-  "main": "",
-  "types": "./src/main.d.ts",
+  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "devDependencies": {
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "typescript": "^5.9.2"
+  },
   "exports": {
     ".": {
       "types": "./src/main.d.ts",
@@ -33,6 +25,21 @@
     "LICENSE",
     "!demo/**/*"
   ],
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/type-helper#readme",
+  "keywords": [
+    "alwatr",
+    "nanolib",
+    "type",
+    "type-helper",
+    "types",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
+  "license": "AGPL-3.0-only",
+  "main": "",
+  "prettier": "@alwatr/prettier-config",
   "publishConfig": {
     "access": "public"
   },
@@ -41,28 +48,19 @@
     "url": "https://github.com/Alwatr/nanolib",
     "directory": "packages/type-helper"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/type-helper#readme",
-  "bugs": {
-    "url": "https://github.com/Alwatr/nanolib/issues"
-  },
-  "prettier": "@alwatr/prettier-config",
   "scripts": {
     "b": "yarn run build",
-    "w": "yarn run watch",
-    "c": "yarn run clean",
-    "cb": "yarn run clean && yarn run build",
-    "d": "yarn run build:es && yarn node --enable-source-maps --trace-warnings",
     "build": "yarn run build:ts && yarn run build:es",
     "build:es": "echo skip build:es",
     "build:ts": "echo skip build:ts",
+    "c": "yarn run clean",
+    "cb": "yarn run clean && yarn run build",
+    "clean": "rm -rfv dist *.tsbuildinfo",
+    "d": "yarn run build:es && yarn node --enable-source-maps --trace-warnings",
+    "w": "yarn run watch",
     "watch": "yarn run watch:ts & yarn run watch:es",
     "watch:es": "yarn run build:es --watch",
-    "watch:ts": "yarn run build:ts --watch --preserveWatchOutput",
-    "clean": "rm -rfv dist *.tsbuildinfo"
+    "watch:ts": "yarn run build:ts --watch --preserveWatchOutput"
   },
-  "devDependencies": {
-    "@alwatr/prettier-config": "workspace:*",
-    "@alwatr/tsconfig-base": "workspace:*",
-    "typescript": "^5.9.2"
-  }
+  "types": "./src/main.d.ts"
 }

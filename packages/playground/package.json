@@ -1,13 +1,18 @@
 {
   "name": "playground",
-  "version": "5.0.0-0",
   "description": "Necessary library for all ECMAScript (JavaScript/TypeScript) projects.",
+  "version": "5.0.0-0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "private": true,
-  "type": "module",
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
-  "types": "./dist/main.d.ts",
+  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "dependencies": {
+    "@alwatr/nanolib": "workspace:*"
+  },
+  "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "typescript": "^5.9.2"
+  },
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -15,25 +20,15 @@
       "require": "./dist/main.cjs"
     }
   },
-  "license": "AGPL-3.0-only",
   "files": [
     "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
     "LICENSE",
     "!demo/**/*"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/nanolib"
-  },
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/nanolib#readme",
-  "bugs": {
-    "url": "https://github.com/Alwatr/nanolib/issues"
-  },
-  "prettier": "@alwatr/prettier-config",
+  "license": "AGPL-3.0-only",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
   "nano-build": {
     "entryPoints": [
       "src/main.ts"
@@ -47,27 +42,30 @@
       "__dev_mode__"
     ]
   },
+  "prettier": "@alwatr/prettier-config",
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib",
+    "directory": "packages/nanolib"
+  },
   "scripts": {
     "b": "yarn run build",
-    "w": "yarn run watch",
-    "c": "yarn run clean",
-    "cb": "yarn run clean && yarn run build",
-    "d": "yarn run build:es && yarn node --enable-source-maps --trace-warnings",
     "build": "yarn run build:ts && yarn run build:es",
     "build:es": "nano-build ",
     "build:ts": "tsc --build",
+    "c": "yarn run clean",
+    "cb": "yarn run clean && yarn run build",
+    "clean": "rm -rfv dist *.tsbuildinfo",
+    "d": "yarn run build:es && yarn node --enable-source-maps --trace-warnings",
+    "w": "yarn run watch",
     "watch": "yarn run watch:ts & yarn run watch:es",
     "watch:es": "yarn run build:es --watch",
-    "watch:ts": "yarn run build:ts --watch --preserveWatchOutput",
-    "clean": "rm -rfv dist *.tsbuildinfo"
+    "watch:ts": "yarn run build:ts --watch --preserveWatchOutput"
   },
-  "dependencies": {
-    "@alwatr/nanolib": "workspace:*"
-  },
-  "devDependencies": {
-    "@alwatr/nano-build": "workspace:*",
-    "@alwatr/prettier-config": "workspace:*",
-    "@alwatr/tsconfig-base": "workspace:*",
-    "typescript": "^5.9.2"
-  }
+  "type": "module",
+  "types": "./dist/main.d.ts"
 }

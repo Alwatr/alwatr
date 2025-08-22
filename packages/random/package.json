@@ -3,82 +3,7 @@
   "version": "5.1.3",
   "description": "A lightweight utility library for generating random numbers, strings, UUIDs and more",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "keywords": [
-    "random",
-    "random-number",
-    "random-string",
-    "random-uuid",
-    "random-boolean",
-    "shuffle",
-    "uuid",
-    "uuid-v4",
-    "math",
-    "crypto",
-    "cryptographically-secure",
-    "utility",
-    "array-shuffle",
-    "random-color",
-    "cross-platform",
-    "ECMAScript",
-    "typescript",
-    "javascript",
-    "node",
-    "nodejs",
-    "browser",
-    "esm",
-    "module",
-    "utility",
-    "util",
-    "utils",
-    "nanolib",
-    "alwatr"
-  ],
-  "type": "module",
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
-  "types": "./dist/main.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/main.d.ts",
-      "import": "./dist/main.mjs",
-      "require": "./dist/main.cjs"
-    }
-  },
-  "license": "AGPL-3.0-only",
-  "files": [
-    "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
-    "LICENSE",
-    "!demo/**/*"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/random"
-  },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/random#readme",
-  "bugs": {
-    "url": "https://github.com/Alwatr/nanolib/issues"
-  },
-  "prettier": "@alwatr/prettier-config",
-  "scripts": {
-    "b": "yarn run build",
-    "t": "yarn run test",
-    "w": "yarn run watch",
-    "c": "yarn run clean",
-    "cb": "yarn run clean && yarn run build",
-    "d": "yarn run build:es && yarn node --enable-source-maps --trace-warnings",
-    "build": "yarn run build:ts && yarn run build:es",
-    "build:es": "nano-build --preset=module",
-    "build:ts": "tsc --build",
-    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest",
-    "watch": "yarn run watch:ts & yarn run watch:es",
-    "watch:es": "yarn run build:es --watch",
-    "watch:ts": "yarn run build:ts --watch --preserveWatchOutput",
-    "clean": "rm -rfv dist *.tsbuildinfo"
-  },
+  "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
     "@alwatr/global-this": "workspace:*",
     "@alwatr/package-tracer": "workspace:*"
@@ -89,5 +14,78 @@
     "@alwatr/tsconfig-base": "workspace:*",
     "jest": "^30.0.5",
     "typescript": "^5.9.2"
-  }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.mjs",
+      "require": "./dist/main.cjs"
+    }
+  },
+  "files": [
+    "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
+    "LICENSE",
+    "!demo/**/*"
+  ],
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/random#readme",
+  "keywords": [
+    "alwatr",
+    "array-shuffle",
+    "browser",
+    "cross-platform",
+    "crypto",
+    "cryptographically-secure",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "math",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "random",
+    "random-boolean",
+    "random-color",
+    "random-number",
+    "random-string",
+    "random-uuid",
+    "shuffle",
+    "typescript",
+    "util",
+    "utility",
+    "utility",
+    "utils",
+    "uuid",
+    "uuid-v4"
+  ],
+  "license": "AGPL-3.0-only",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "prettier": "@alwatr/prettier-config",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib",
+    "directory": "packages/random"
+  },
+  "scripts": {
+    "b": "yarn run build",
+    "build": "yarn run build:ts && yarn run build:es",
+    "build:es": "nano-build --preset=module",
+    "build:ts": "tsc --build",
+    "c": "yarn run clean",
+    "cb": "yarn run clean && yarn run build",
+    "clean": "rm -rfv dist *.tsbuildinfo",
+    "d": "yarn run build:es && yarn node --enable-source-maps --trace-warnings",
+    "t": "yarn run test",
+    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest",
+    "w": "yarn run watch",
+    "watch": "yarn run watch:ts & yarn run watch:es",
+    "watch:es": "yarn run build:es --watch",
+    "watch:ts": "yarn run build:ts --watch --preserveWatchOutput"
+  },
+  "type": "module",
+  "types": "./dist/main.d.ts"
 }

@@ -3,48 +3,8 @@
   "version": "5.5.4",
   "description": "Build/bundle tools for ECMAScript, TypeScript, and JavaScript libraries. It's easy to use, doesn't require any setup, and adheres to best practices. It has no dependencies and uses esbuild for enhanced performance.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "keywords": [
-    "build",
-    "bundle",
-    "esbuild",
-    "cross-platform",
-    "ECMAScript",
-    "typescript",
-    "javascript",
-    "node",
-    "nodejs",
-    "browser",
-    "esm",
-    "module",
-    "utility",
-    "util",
-    "utils",
-    "nanolib",
-    "alwatr"
-  ],
-  "type": "commonjs",
   "bin": "./nano-build.cjs",
-  "main": "",
-  "types": "./global.d.ts",
-  "license": "AGPL-3.0-only",
-  "files": [
-    "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
-    "LICENSE",
-    "!demo/**/*"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/nano-build"
-  },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/nano-build#readme",
-  "bugs": {
-    "url": "https://github.com/Alwatr/nanolib/issues"
-  },
-  "prettier": "@alwatr/prettier-config",
+  "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
     "esbuild": "^0.25.9"
   },
@@ -54,5 +14,43 @@
     "@alwatr/type-helper": "workspace:*",
     "@types/node": "^24.3.0",
     "typescript": "^5.9.2"
-  }
+  },
+  "files": [
+    "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
+    "LICENSE",
+    "!demo/**/*"
+  ],
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/nano-build#readme",
+  "keywords": [
+    "alwatr",
+    "browser",
+    "build",
+    "bundle",
+    "cross-platform",
+    "ECMAScript",
+    "esbuild",
+    "esm",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
+  "license": "AGPL-3.0-only",
+  "main": "",
+  "prettier": "@alwatr/prettier-config",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib",
+    "directory": "packages/nano-build"
+  },
+  "type": "commonjs",
+  "types": "./global.d.ts"
 }

@@ -1,36 +1,37 @@
 {
   "name": "@alwatr/prettier-config",
-  "version": "5.0.0",
   "description": "Alwatr's shareable configurations for Prettier.",
+  "version": "5.0.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "keywords": [
-    "prettier",
-    "config",
-    "pretty",
-    "beautify",
-    "cross-platform",
-    "ECMAScript",
-    "typescript",
-    "javascript",
-    "node",
-    "nodejs",
-    "browser",
-    "esm",
-    "module",
-    "utility",
-    "util",
-    "utils",
-    "nanolib",
-    "alwatr"
-  ],
-  "type": "commonjs",
-  "main": "./prettier.config.cjs",
-  "license": "AGPL-3.0-only",
+  "bugs": "https://github.com/Alwatr/nanolib/issues",
   "files": [
     "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
     "LICENSE",
     "!demo/**/*"
   ],
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/prettier-config#readme",
+  "keywords": [
+    "alwatr",
+    "beautify",
+    "browser",
+    "config",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "prettier",
+    "pretty",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
+  "license": "AGPL-3.0-only",
+  "main": "./prettier.config.cjs",
   "publishConfig": {
     "access": "public"
   },
@@ -39,8 +40,5 @@
     "url": "https://github.com/Alwatr/nanolib",
     "directory": "packages/prettier-config"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/prettier-config#readme",
-  "bugs": {
-    "url": "https://github.com/Alwatr/nanolib/issues"
-  }
+  "type": "commonjs"
 }
