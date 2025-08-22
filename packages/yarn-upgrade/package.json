@@ -20,7 +20,7 @@
     "LICENSE",
     "!demo/**/*"
   ],
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/delay#readme",
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/yarn-upgrade#readme",
   "keywords": [
     "yarn",
     "upgrade",
