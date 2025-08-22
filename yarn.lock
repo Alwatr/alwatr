@@ -431,7 +431,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/yarn-upgrade@workspace:packages/yarn-upgrade":
+"@alwatr/yarn-upgrade@workspace:^, @alwatr/yarn-upgrade@workspace:packages/yarn-upgrade":
   version: 0.0.0-use.local
   resolution: "@alwatr/yarn-upgrade@workspace:packages/yarn-upgrade"
   dependencies:
@@ -442,7 +442,7 @@ __metadata:
     "@types/node": "npm:^24.3.0"
     typescript: "npm:^5.9.2"
   bin:
-    project-upd: ./dist/main.js
+    upd: ./dist/main.mjs
   languageName: unknown
   linkType: soft
 
@@ -2801,6 +2801,7 @@ __metadata:
   dependencies:
     "@alwatr/eslint-config": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/yarn-upgrade": "workspace:^"
     "@lerna-lite/changed": "npm:^4.7.2"
     "@lerna-lite/cli": "npm:^4.7.2"
     "@lerna-lite/diff": "npm:^4.7.2"

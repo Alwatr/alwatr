@@ -5,6 +5,7 @@
   "devDependencies": {
     "@alwatr/eslint-config": "workspace:*",
     "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/yarn-upgrade": "workspace:^",
     "@lerna-lite/changed": "^4.7.2",
     "@lerna-lite/cli": "^4.7.2",
     "@lerna-lite/diff": "^4.7.2",
@@ -54,7 +55,6 @@
     "rl": "yarn run pull && yarn run clean && yarn run build && yarn run lint && yarn run release",
     "t": "yarn run test",
     "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest --verbose --passWithNoTests",
-    "upd": "yarn set version latest; yarn upgrade-interactive; yarn up '@*/*' '*' --recursive; yarn syncpack lint; yarn syncpack fix; yarn dedupe; yarn dlx @yarnpkg/sdks vscode;",
     "w": "yarn run watch",
     "watch": "lerna run --parallel watch"
   },
