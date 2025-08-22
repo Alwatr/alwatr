@@ -29,11 +29,9 @@
     "module",
     "monorepo",
     "alwatr",
-    "until",
     "util",
     "utility",
-    "utils",
-    "wait"
+    "utils"
   ],
   "license": "MPL-2.0",
   "main": "./dist/main.cjs",
@@ -51,7 +49,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/delay"
+    "directory": "packages/yarn-upgrade"
   },
   "scripts": {
     "b": "yarn run build",
