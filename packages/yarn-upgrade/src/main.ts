@@ -4,7 +4,6 @@ import {spawn} from 'child_process';
 
 // List of commands to be executed sequentially
 const commands: string[] = [
-  'pwd',
   'yarn set version latest',
   'yarn upgrade-interactive',
   'yarn up @*/* * --recursive',
