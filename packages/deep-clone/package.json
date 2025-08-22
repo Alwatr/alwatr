@@ -46,7 +46,7 @@
     "utility",
     "utils"
   ],
-  "license": "AGPL-3.0-only",
+  "license": "MPL-2.0",
   "main": "./dist/main.cjs",
   "module": "./dist/main.mjs",
   "prettier": "@alwatr/prettier-config",

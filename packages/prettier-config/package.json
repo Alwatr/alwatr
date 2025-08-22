@@ -30,7 +30,7 @@
     "utility",
     "utils"
   ],
-  "license": "AGPL-3.0-only",
+  "license": "MPL-2.0",
   "main": "./prettier.config.cjs",
   "publishConfig": {
     "access": "public"

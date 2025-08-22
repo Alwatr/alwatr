@@ -41,7 +41,7 @@
     "utility",
     "utils"
   ],
-  "license": "AGPL-3.0-only",
+  "license": "MPL-2.0",
   "main": "./eslint-config.cjs",
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.18.0",

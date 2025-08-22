@@ -19,7 +19,7 @@
     "typescript",
     "typescript"
   ],
-  "license": "AGPL-3.0-only",
+  "license": "MPL-2.0",
   "main": "tsconfig.json",
   "publishConfig": {
     "access": "public"
