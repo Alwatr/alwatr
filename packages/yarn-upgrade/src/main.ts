@@ -1,50 +1,60 @@
 #!/usr/bin/env node
 
-import {exec} from 'child_process';
-import {promisify} from 'util';
-
-// Promisify exec for async/await usage
-const execPromise = promisify(exec);
+import {spawn} from 'child_process';
 
 // List of commands to be executed sequentially
 const commands: string[] = [
+  'pwd',
   'yarn set version latest',
   'yarn upgrade-interactive',
-  'yarn dlx syncpack lint',
-  'yarn dlx syncpack fix',
-  'yarn dlx syncpack format',
   'yarn up "@*/*" "*" --recursive',
-  'yarn dedupe',
   'yarn dlx @yarnpkg/sdks vscode',
+  'yarn dedupe',
+  'yarn dlx syncpack@alpha format',
+  'yarn dlx syncpack@alpha fix',
+  'yarn dlx syncpack@alpha lint --sort count'
 ];
 
 // A helper function to execute a command and log its output
-async function runCommand(command: string): Promise<void> {
+function runCommand(command: string): Promise<void> {
   console.log(`\n\x1b[36m$ ${command}\x1b[0m`); // Log command in cyan
-  try {
-    const {stdout, stderr} = await execPromise(command);
-    if (stdout) {
-      console.log(stdout);
-    }
-    if (stderr) {
-      console.error(`\x1b[33m${stderr}\x1b[0m`); // Log warnings in yellow
-    }
-  }
-  catch (error) {
-    console.error(`\x1b[31mError executing command: ${command}\x1b[0m`);
-    if (error instanceof Error) {
-      console.error(error.message);
-    }
-    // Stop the script if a command fails
-    process.exit(1);
-  }
+  return new Promise((resolve, reject) => {
+    const [cmd, ...args] = command.split(' ');
+    const child = spawn(cmd, args, {
+      // This is the magic part:
+      // It connects the child process's stdio to the parent process (your terminal)
+      stdio: 'inherit',
+
+      // Run in the directory where the user executed the command
+      cwd: process.cwd(), 
+    });
+
+    child.on('close', (code) => {
+      if (code === 0) {
+        resolve();
+      }
+      else {
+        reject();
+      }
+    });
+
+    child.on('error', (err) => {
+      reject(err);
+    });
+  });
 }
 
 // Main function to run all commands in sequence
 async function main() {
   console.log('🚀 Starting project maintenance script...');
   for (const command of commands) {
-    await runCommand(command);
+    try {
+      await runCommand(command);
+    }
+    catch (error) {
+      console.error(`\x1b[31mFailed to execute command: ${command}\x1b[0m`);
+      process.exit(1);
+    }
   }
   console.log('\n✅ All tasks completed successfully!');
 }
