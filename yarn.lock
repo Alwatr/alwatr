@@ -431,6 +431,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@alwatr/yarn-upgrade@workspace:packages/yarn-upgrade":
+  version: 0.0.0-use.local
+  resolution: "@alwatr/yarn-upgrade@workspace:packages/yarn-upgrade"
+  dependencies:
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
+    "@types/node": "npm:^24.3.0"
+    typescript: "npm:^5.9.2"
+  bin:
+    project-upd: ./dist/main.js
+  languageName: unknown
+  linkType: soft
+
 "@ampproject/remapping@npm:^2.2.0":
   version: 2.3.0
   resolution: "@ampproject/remapping@npm:2.3.0"
