@@ -102,16 +102,6 @@ Each function within `@alwatr/delay` returns a Promise that resolves when the sp
 
 We welcome contributions to improve this package! Feel free to open bug reports, suggest new features, or submit pull requests following our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md).
 
-**License:**
-
-This package is distributed under the [MIT License](https://alimd.mit-license.org/).
-
 ## Sponsors
 
 The following companies, organizations, and individuals support Nanolib ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.
-
-### Contributing
-
-Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
-
-
