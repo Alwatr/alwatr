@@ -72,7 +72,7 @@
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/prettier-config": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
-    "@types/node": "^22.14.1",
-    "typescript": "^5.8.3"
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
   }
 }
