@@ -29,7 +29,6 @@
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/hash-string#readme",
   "keywords": [
     "alwatr",
-    "alwatr",
     "browser",
     "esm",
     "hash",
@@ -38,13 +37,11 @@
     "md5",
     "module",
     "nanolib",
-    "nanolib",
     "node",
     "nodejs",
     "string",
     "typescript",
     "util",
-    "utility",
     "utility",
     "utils"
   ],
