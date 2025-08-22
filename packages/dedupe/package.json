@@ -68,15 +68,15 @@
     "clean": "rm -rfv dist *.tsbuildinfo"
   },
   "dependencies": {
-    "@alwatr/global-this": "workspace:^",
-    "@alwatr/package-tracer": "workspace:^",
-    "@alwatr/polyfill-has-own": "workspace:^"
+    "@alwatr/global-this": "workspace:*",
+    "@alwatr/package-tracer": "workspace:*",
+    "@alwatr/polyfill-has-own": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "workspace:^",
-    "@alwatr/prettier-config": "workspace:^",
-    "@alwatr/tsconfig-base": "workspace:^",
-    "@alwatr/type-helper": "workspace:^",
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
     "typescript": "^5.8.3"
   }
 }

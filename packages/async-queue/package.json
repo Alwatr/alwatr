@@ -75,14 +75,14 @@
     "clean": "rm -rfv dist *.tsbuildinfo"
   },
   "dependencies": {
-    "@alwatr/flatomise": "workspace:^",
-    "@alwatr/package-tracer": "workspace:^"
+    "@alwatr/flatomise": "workspace:*",
+    "@alwatr/package-tracer": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "workspace:^",
-    "@alwatr/prettier-config": "workspace:^",
-    "@alwatr/tsconfig-base": "workspace:^",
-    "@alwatr/type-helper": "workspace:^",
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
     "jest": "^29.7.0",
     "typescript": "^5.8.3"
   }

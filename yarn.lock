@@ -5,84 +5,84 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@alwatr/async-queue@workspace:^, @alwatr/async-queue@workspace:packages/async-queue":
+"@alwatr/async-queue@workspace:*, @alwatr/async-queue@workspace:packages/async-queue":
   version: 0.0.0-use.local
   resolution: "@alwatr/async-queue@workspace:packages/async-queue"
   dependencies:
-    "@alwatr/flatomise": "workspace:^"
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/flatomise": "workspace:*"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     jest: "npm:^29.7.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/dedupe@workspace:^, @alwatr/dedupe@workspace:packages/dedupe":
+"@alwatr/dedupe@workspace:*, @alwatr/dedupe@workspace:packages/dedupe":
   version: 0.0.0-use.local
   resolution: "@alwatr/dedupe@workspace:packages/dedupe"
   dependencies:
-    "@alwatr/global-this": "workspace:^"
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/polyfill-has-own": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/global-this": "workspace:*"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/polyfill-has-own": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/deep-clone@workspace:^, @alwatr/deep-clone@workspace:packages/deep-clone":
+"@alwatr/deep-clone@workspace:*, @alwatr/deep-clone@workspace:packages/deep-clone":
   version: 0.0.0-use.local
   resolution: "@alwatr/deep-clone@workspace:packages/deep-clone"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/delay@workspace:^, @alwatr/delay@workspace:packages/delay":
+"@alwatr/delay@workspace:*, @alwatr/delay@workspace:packages/delay":
   version: 0.0.0-use.local
   resolution: "@alwatr/delay@workspace:packages/delay"
   dependencies:
-    "@alwatr/global-this": "workspace:^"
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/parse-duration": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/global-this": "workspace:*"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/parse-duration": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     "@types/node": "npm:^22.14.1"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/env@workspace:^, @alwatr/env@workspace:packages/env":
+"@alwatr/env@workspace:*, @alwatr/env@workspace:packages/env":
   version: 0.0.0-use.local
   resolution: "@alwatr/env@workspace:packages/env"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/platform-info": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/platform-info": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     "@types/node": "npm:^22.14.1"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/eslint-config@workspace:^, @alwatr/eslint-config@workspace:packages/eslint-config":
+"@alwatr/eslint-config@workspace:*, @alwatr/eslint-config@workspace:packages/eslint-config":
   version: 0.0.0-use.local
   resolution: "@alwatr/eslint-config@workspace:packages/eslint-config"
   dependencies:
-    "@alwatr/prettier-config": "workspace:^"
+    "@alwatr/prettier-config": "workspace:*"
     "@typescript-eslint/eslint-plugin": "npm:^7.15.0"
     "@typescript-eslint/parser": "npm:^7.15.0"
     eslint: "npm:^8.57.1"
@@ -100,150 +100,150 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/exit-hook@workspace:^, @alwatr/exit-hook@workspace:packages/exit-hook":
+"@alwatr/exit-hook@workspace:*, @alwatr/exit-hook@workspace:packages/exit-hook":
   version: 0.0.0-use.local
   resolution: "@alwatr/exit-hook@workspace:packages/exit-hook"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     "@types/node": "npm:^22.14.1"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/fetch@workspace:^, @alwatr/fetch@workspace:packages/fetch":
+"@alwatr/fetch@workspace:*, @alwatr/fetch@workspace:packages/fetch":
   version: 0.0.0-use.local
   resolution: "@alwatr/fetch@workspace:packages/fetch"
   dependencies:
-    "@alwatr/delay": "workspace:^"
-    "@alwatr/global-this": "workspace:^"
-    "@alwatr/http-primer": "workspace:^"
-    "@alwatr/logger": "workspace:^"
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/parse-duration": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/delay": "workspace:*"
+    "@alwatr/global-this": "workspace:*"
+    "@alwatr/http-primer": "workspace:*"
+    "@alwatr/logger": "workspace:*"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/parse-duration": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     jest: "npm:^29.7.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/flat-string@workspace:^, @alwatr/flat-string@workspace:packages/flat-string":
+"@alwatr/flat-string@workspace:*, @alwatr/flat-string@workspace:packages/flat-string":
   version: 0.0.0-use.local
   resolution: "@alwatr/flat-string@workspace:packages/flat-string"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/flatomise@workspace:^, @alwatr/flatomise@workspace:packages/flatomise":
+"@alwatr/flatomise@workspace:*, @alwatr/flatomise@workspace:packages/flatomise":
   version: 0.0.0-use.local
   resolution: "@alwatr/flatomise@workspace:packages/flatomise"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/global-this@workspace:^, @alwatr/global-this@workspace:packages/global-this":
+"@alwatr/global-this@workspace:*, @alwatr/global-this@workspace:packages/global-this":
   version: 0.0.0-use.local
   resolution: "@alwatr/global-this@workspace:packages/global-this"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     "@types/node": "npm:^22.14.1"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/hash-string@workspace:^, @alwatr/hash-string@workspace:packages/hash-string":
+"@alwatr/hash-string@workspace:*, @alwatr/hash-string@workspace:packages/hash-string":
   version: 0.0.0-use.local
   resolution: "@alwatr/hash-string@workspace:packages/hash-string"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     jest: "npm:^29.7.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/http-primer@workspace:^, @alwatr/http-primer@workspace:packages/http-primer":
+"@alwatr/http-primer@workspace:*, @alwatr/http-primer@workspace:packages/http-primer":
   version: 0.0.0-use.local
   resolution: "@alwatr/http-primer@workspace:packages/http-primer"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/is-number@workspace:^, @alwatr/is-number@workspace:packages/is-number":
+"@alwatr/is-number@workspace:*, @alwatr/is-number@workspace:packages/is-number":
   version: 0.0.0-use.local
   resolution: "@alwatr/is-number@workspace:packages/is-number"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     jest: "npm:^29.7.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/local-storage@workspace:^, @alwatr/local-storage@workspace:packages/local-storage":
+"@alwatr/local-storage@workspace:*, @alwatr/local-storage@workspace:packages/local-storage":
   version: 0.0.0-use.local
   resolution: "@alwatr/local-storage@workspace:packages/local-storage"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/logger@workspace:^, @alwatr/logger@workspace:packages/logger":
+"@alwatr/logger@workspace:*, @alwatr/logger@workspace:packages/logger":
   version: 0.0.0-use.local
   resolution: "@alwatr/logger@workspace:packages/logger"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/platform-info": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/platform-info": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     "@types/node": "npm:^22.14.1"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/nano-build@workspace:^, @alwatr/nano-build@workspace:packages/nano-build":
+"@alwatr/nano-build@workspace:*, @alwatr/nano-build@workspace:packages/nano-build":
   version: 0.0.0-use.local
   resolution: "@alwatr/nano-build@workspace:packages/nano-build"
   dependencies:
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     "@types/node": "npm:^22.14.1"
     esbuild: "npm:^0.25.2"
     typescript: "npm:^5.8.3"
@@ -252,181 +252,181 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/nanolib@workspace:^, @alwatr/nanolib@workspace:packages/nanolib":
+"@alwatr/nanolib@workspace:*, @alwatr/nanolib@workspace:packages/nanolib":
   version: 0.0.0-use.local
   resolution: "@alwatr/nanolib@workspace:packages/nanolib"
   dependencies:
-    "@alwatr/async-queue": "workspace:^"
-    "@alwatr/dedupe": "workspace:^"
-    "@alwatr/deep-clone": "workspace:^"
-    "@alwatr/delay": "workspace:^"
-    "@alwatr/env": "workspace:^"
-    "@alwatr/exit-hook": "workspace:^"
-    "@alwatr/fetch": "workspace:^"
-    "@alwatr/flat-string": "workspace:^"
-    "@alwatr/flatomise": "workspace:^"
-    "@alwatr/global-this": "workspace:^"
-    "@alwatr/hash-string": "workspace:^"
-    "@alwatr/http-primer": "workspace:^"
-    "@alwatr/is-number": "workspace:^"
-    "@alwatr/local-storage": "workspace:^"
-    "@alwatr/logger": "workspace:^"
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/node-fs": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/parse-duration": "workspace:^"
-    "@alwatr/platform-info": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/random": "workspace:^"
-    "@alwatr/render-state": "workspace:^"
-    "@alwatr/resolve-url": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/unicode-digits": "workspace:^"
+    "@alwatr/async-queue": "workspace:*"
+    "@alwatr/dedupe": "workspace:*"
+    "@alwatr/deep-clone": "workspace:*"
+    "@alwatr/delay": "workspace:*"
+    "@alwatr/env": "workspace:*"
+    "@alwatr/exit-hook": "workspace:*"
+    "@alwatr/fetch": "workspace:*"
+    "@alwatr/flat-string": "workspace:*"
+    "@alwatr/flatomise": "workspace:*"
+    "@alwatr/global-this": "workspace:*"
+    "@alwatr/hash-string": "workspace:*"
+    "@alwatr/http-primer": "workspace:*"
+    "@alwatr/is-number": "workspace:*"
+    "@alwatr/local-storage": "workspace:*"
+    "@alwatr/logger": "workspace:*"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/node-fs": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/parse-duration": "workspace:*"
+    "@alwatr/platform-info": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/random": "workspace:*"
+    "@alwatr/render-state": "workspace:*"
+    "@alwatr/resolve-url": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/unicode-digits": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/node-fs@workspace:^, @alwatr/node-fs@workspace:packages/node-fs":
+"@alwatr/node-fs@workspace:*, @alwatr/node-fs@workspace:packages/node-fs":
   version: 0.0.0-use.local
   resolution: "@alwatr/node-fs@workspace:packages/node-fs"
   dependencies:
-    "@alwatr/async-queue": "workspace:^"
-    "@alwatr/flat-string": "workspace:^"
-    "@alwatr/logger": "workspace:^"
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/async-queue": "workspace:*"
+    "@alwatr/flat-string": "workspace:*"
+    "@alwatr/logger": "workspace:*"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     "@types/node": "npm:^22.14.1"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/package-tracer@workspace:^, @alwatr/package-tracer@workspace:packages/package-tracer":
+"@alwatr/package-tracer@workspace:*, @alwatr/package-tracer@workspace:packages/package-tracer":
   version: 0.0.0-use.local
   resolution: "@alwatr/package-tracer@workspace:packages/package-tracer"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/parse-duration@workspace:^, @alwatr/parse-duration@workspace:packages/parse-duration":
+"@alwatr/parse-duration@workspace:*, @alwatr/parse-duration@workspace:packages/parse-duration":
   version: 0.0.0-use.local
   resolution: "@alwatr/parse-duration@workspace:packages/parse-duration"
   dependencies:
-    "@alwatr/is-number": "workspace:^"
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/is-number": "workspace:*"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     jest: "npm:^29.7.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/platform-info@workspace:^, @alwatr/platform-info@workspace:packages/platform-info":
+"@alwatr/platform-info@workspace:*, @alwatr/platform-info@workspace:packages/platform-info":
   version: 0.0.0-use.local
   resolution: "@alwatr/platform-info@workspace:packages/platform-info"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     "@types/node": "npm:^22.14.1"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/polyfill-has-own@workspace:^, @alwatr/polyfill-has-own@workspace:packages/polyfill-has-own":
+"@alwatr/polyfill-has-own@workspace:*, @alwatr/polyfill-has-own@workspace:packages/polyfill-has-own":
   version: 0.0.0-use.local
   resolution: "@alwatr/polyfill-has-own@workspace:packages/polyfill-has-own"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/prettier-config@workspace:^, @alwatr/prettier-config@workspace:packages/prettier-config":
+"@alwatr/prettier-config@workspace:*, @alwatr/prettier-config@workspace:packages/prettier-config":
   version: 0.0.0-use.local
   resolution: "@alwatr/prettier-config@workspace:packages/prettier-config"
   languageName: unknown
   linkType: soft
 
-"@alwatr/random@workspace:^, @alwatr/random@workspace:packages/random":
+"@alwatr/random@workspace:*, @alwatr/random@workspace:packages/random":
   version: 0.0.0-use.local
   resolution: "@alwatr/random@workspace:packages/random"
   dependencies:
-    "@alwatr/global-this": "workspace:^"
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/global-this": "workspace:*"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     jest: "npm:^29.7.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/render-state@workspace:^, @alwatr/render-state@workspace:packages/redner-state":
+"@alwatr/render-state@workspace:*, @alwatr/render-state@workspace:packages/redner-state":
   version: 0.0.0-use.local
   resolution: "@alwatr/render-state@workspace:packages/redner-state"
   dependencies:
-    "@alwatr/logger": "workspace:^"
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/logger": "workspace:*"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/resolve-url@workspace:^, @alwatr/resolve-url@workspace:packages/resolve-url":
+"@alwatr/resolve-url@workspace:*, @alwatr/resolve-url@workspace:packages/resolve-url":
   version: 0.0.0-use.local
   resolution: "@alwatr/resolve-url@workspace:packages/resolve-url"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     jest: "npm:^29.7.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/tsconfig-base@workspace:^, @alwatr/tsconfig-base@workspace:packages/tsconfig-base":
+"@alwatr/tsconfig-base@workspace:*, @alwatr/tsconfig-base@workspace:packages/tsconfig-base":
   version: 0.0.0-use.local
   resolution: "@alwatr/tsconfig-base@workspace:packages/tsconfig-base"
   languageName: unknown
   linkType: soft
 
-"@alwatr/type-helper@workspace:^, @alwatr/type-helper@workspace:packages/type-helper":
+"@alwatr/type-helper@workspace:*, @alwatr/type-helper@workspace:packages/type-helper":
   version: 0.0.0-use.local
   resolution: "@alwatr/type-helper@workspace:packages/type-helper"
   dependencies:
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/unicode-digits@workspace:^, @alwatr/unicode-digits@workspace:packages/unicode-digits":
+"@alwatr/unicode-digits@workspace:*, @alwatr/unicode-digits@workspace:packages/unicode-digits":
   version: 0.0.0-use.local
   resolution: "@alwatr/unicode-digits@workspace:packages/unicode-digits"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
@@ -2725,8 +2725,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "alwatr-nanolib@workspace:."
   dependencies:
-    "@alwatr/eslint-config": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
+    "@alwatr/eslint-config": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
     "@lerna-lite/changed": "npm:^4.0.0"
     "@lerna-lite/cli": "npm:^4.0.0"
     "@lerna-lite/diff": "npm:^4.0.0"
@@ -7131,10 +7131,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "playground@workspace:packages/playground"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/nanolib": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/nanolib": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft

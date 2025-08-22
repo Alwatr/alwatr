@@ -63,13 +63,13 @@
     "clean": "rm -rfv dist *.tsbuildinfo"
   },
   "dependencies": {
-    "@alwatr/logger": "workspace:^",
-    "@alwatr/package-tracer": "workspace:^"
+    "@alwatr/logger": "workspace:*",
+    "@alwatr/package-tracer": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "workspace:^",
-    "@alwatr/prettier-config": "workspace:^",
-    "@alwatr/tsconfig-base": "workspace:^",
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
     "typescript": "^5.8.3"
   }
 }

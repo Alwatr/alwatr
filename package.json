@@ -39,8 +39,8 @@
     "publish": "lerna publish from-package"
   },
   "devDependencies": {
-    "@alwatr/eslint-config": "workspace:^",
-    "@alwatr/prettier-config": "workspace:^",
+    "@alwatr/eslint-config": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
     "@lerna-lite/changed": "^4.0.0",
     "@lerna-lite/cli": "^4.0.0",
     "@lerna-lite/diff": "^4.0.0",

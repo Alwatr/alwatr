@@ -61,8 +61,8 @@
     "clean": "rm -rfv dist *.tsbuildinfo"
   },
   "devDependencies": {
-    "@alwatr/prettier-config": "workspace:^",
-    "@alwatr/tsconfig-base": "workspace:^",
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
     "typescript": "^5.8.3"
   }
 }

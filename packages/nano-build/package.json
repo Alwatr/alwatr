@@ -49,9 +49,9 @@
     "esbuild": "^0.25.2"
   },
   "devDependencies": {
-    "@alwatr/prettier-config": "workspace:^",
-    "@alwatr/tsconfig-base": "workspace:^",
-    "@alwatr/type-helper": "workspace:^",
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
     "@types/node": "^22.14.1",
     "typescript": "^5.8.3"
   }
