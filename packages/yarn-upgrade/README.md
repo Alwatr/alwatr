@@ -31,7 +31,7 @@ npx @alwatr/yarn-upgrade
 ### Local Installation
 
 ```bash
-yarn add @alwatr/yarn-upgrade
+yarn add -D @alwatr/yarn-upgrade
 ```
 
 Now you can run the tool using:
