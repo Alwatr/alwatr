@@ -1,0 +1,72 @@
+{
+  "name": "@alwatr/yarn-upgrade",
+  "description": "A zero-dependency CLI tool to automate common Yarn maintenance tasks. This utility streamlines the process of upgrading dependencies, fixing version inconsistencies, and ensuring your project is up-to-date with a single command.",
+  "version": "5.0.0",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "bin": {
+    "project-upd": "./dist/main.mjs"
+  },
+  "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  },
+  "files": [
+    "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
+    "LICENSE",
+    "!demo/**/*"
+  ],
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/delay#readme",
+  "keywords": [
+    "yarn",
+    "upgrade",
+    "update",
+    "maintenance",
+    "module",
+    "monorepo",
+    "alwatr",
+    "until",
+    "util",
+    "utility",
+    "utils",
+    "wait"
+  ],
+  "license": "MPL-2.0",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "nano-build": {
+    "platform": "node",
+    "format": "esm",
+    "target": "node22",
+    "minify": false
+  },
+  "prettier": "@alwatr/prettier-config",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib",
+    "directory": "packages/delay"
+  },
+  "scripts": {
+    "b": "yarn run build",
+    "build": "yarn run build:ts && yarn run build:es",
+    "build:es": "nano-build",
+    "build:ts": "tsc --build",
+    "c": "yarn run clean",
+    "cb": "yarn run clean && yarn run build",
+    "clean": "rm -rfv dist *.tsbuildinfo",
+    "d": "yarn run build:es && yarn node --enable-source-maps --trace-warnings",
+    "w": "yarn run watch",
+    "watch": "yarn run watch:ts & yarn run watch:es",
+    "watch:es": "yarn run build:es --watch",
+    "watch:ts": "yarn run build:ts --watch --preserveWatchOutput"
+  },
+  "type": "module",
+  "types": "./dist/main.d.ts"
+}
