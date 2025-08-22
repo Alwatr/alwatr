@@ -44,6 +44,9 @@ describe('fetch json', () => {
   });
 
   it('should make a GET request to the specified URL and parse json and handle 404 status code', async () => {
+    /**
+     * @type {import('@alwatr/fetch').FetchOptions}}
+     */
     const options = {
       url: 'https://httpbin.org/status/404',
       cacheStrategy: 'network_only',
