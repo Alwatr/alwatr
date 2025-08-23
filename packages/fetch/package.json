@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/fetch",
-  "version": "5.6.3",
   "description": "Enhanced fetch API with cache strategy, retry pattern, timeout, helper methods and enhanced types.",
+  "version": "5.6.3",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
