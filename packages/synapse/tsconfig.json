@@ -1,0 +1,15 @@
+{
+  "extends": "@alwatr/tsconfig-base/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "emitDeclarationOnly": true,
+    "composite": true,
+    "types": ["node", "@alwatr/nano-build", "@alwatr/type-helper"],
+    "lib": ["es2022", "dom"]
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    {"path": "../logger"}
+  ]
+}

@@ -402,6 +402,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@alwatr/synapse@workspace:packages/synapse":
+  version: 0.0.0-use.local
+  resolution: "@alwatr/synapse@workspace:packages/synapse"
+  dependencies:
+    "@alwatr/logger": "workspace:*"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
+    "@types/node": "npm:^22.17.2"
+    typescript: "npm:^5.9.2"
+  languageName: unknown
+  linkType: soft
+
 "@alwatr/tsconfig-base@workspace:*, @alwatr/tsconfig-base@workspace:packages/tsconfig-base":
   version: 0.0.0-use.local
   resolution: "@alwatr/tsconfig-base@workspace:packages/tsconfig-base"
