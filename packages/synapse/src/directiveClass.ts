@@ -21,8 +21,14 @@ export abstract class DirectiveBase {
   protected readonly element_: HTMLElement;
 
   /**
+   * Whether the element is connected to the DOM.
+   */
+  protected isConnected_ = false;
+
+  /**
    * Constructor to initialize the directive with the target element.
    * @param element - The DOM element this directive is attached to.
+   * @param selector - The CSS selector for the directive.
    */
   constructor(element: HTMLElement, selector: string) {
     this.selector_ = selector;
@@ -32,20 +38,24 @@ export abstract class DirectiveBase {
   }
 
   /**
-   * Called when the element connects to the DOM.
-   * Override this method to define custom behavior on connection.
+   * Called when the element is connected to the DOM tree.
+   * You can override this method to perform setup tasks, such as adding event listeners.
    */
   protected connected_(): void {
     this.logger.logMethod?.('connected_');
+    this.isConnected_ = true;
     this.update_();
   }
 
   /**
    * Called when the element disconnects from the DOM.
-   * Override this method to define custom behavior on disconnection.
+   *
+   * You can override this method to perform cleanup tasks, such as removing event listeners
+   * that were added in {@link connected_}.
    */
   protected disconnected_(): void {
     this.logger.logMethod?.('disconnected_');
+    this.isConnected_ = false;
   }
 
   /**
