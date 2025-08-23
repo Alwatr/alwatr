@@ -1,2 +1,2 @@
 export * from './bootstrap.js';
-export * from './directive.js';
+export * from './directiveDecorator.js';

@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-import type { DirectiveConstructor } from './directive.js';
+import type {DirectiveConstructor} from './directiveDecorator.js';
 
 /**
  * Alwatr Synapse Logger.
