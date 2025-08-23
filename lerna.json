@@ -22,7 +22,6 @@
       "signGitCommit": true,
       "push": true,
       "createRelease": "github",
-      "conventionalGraduate": true,
       "allowBranch": "next",
       "exact": true,
       "syncWorkspaceLock": true,
