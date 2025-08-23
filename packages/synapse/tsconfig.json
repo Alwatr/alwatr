@@ -5,8 +5,7 @@
     "outDir": "dist",
     "emitDeclarationOnly": true,
     "composite": true,
-    "types": ["node", "@alwatr/nano-build", "@alwatr/type-helper"],
-    "lib": ["es2022", "dom"]
+    "types": ["@alwatr/nano-build", "@alwatr/type-helper"],
   },
   "include": ["src/**/*.ts"],
   "references": [
