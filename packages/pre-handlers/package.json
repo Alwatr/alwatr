@@ -68,7 +68,7 @@
     "@alwatr/prettier-config": "^5.0.0",
     "@alwatr/tsconfig-base": "^5.0.0",
     "@alwatr/type-helper": "^5.4.2",
-    "@types/node": "^24.1.0",
+    "@types/node": "^22.17.2",
     "jest": "^30.0.5",
     "typescript": "^5.9.2"
   }
