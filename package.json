@@ -52,6 +52,7 @@
     "pull": "git pull",
     "release": "lerna version",
     "rl": "yarn run pull && yarn run clean && yarn run build && yarn run lint && yarn run release",
+    "rlt": "lerna version --dry-run",
     "t": "yarn run test",
     "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest --verbose --passWithNoTests",
     "upd": "yarn set version latest; yarn up '*'; yarn up '*' -R; yarn dlx @yarnpkg/sdks vscode; yarn dedupe",
