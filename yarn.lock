@@ -280,6 +280,7 @@ __metadata:
     "@alwatr/random": "workspace:*"
     "@alwatr/render-state": "workspace:*"
     "@alwatr/resolve-url": "workspace:*"
+    "@alwatr/synapse": "workspace:^"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/unicode-digits": "workspace:*"
     typescript: "npm:^5.9.2"
@@ -402,7 +403,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/synapse@workspace:packages/synapse":
+"@alwatr/synapse@workspace:^, @alwatr/synapse@workspace:packages/synapse":
   version: 0.0.0-use.local
   resolution: "@alwatr/synapse@workspace:packages/synapse"
   dependencies:
@@ -411,7 +412,6 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^22.17.2"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft

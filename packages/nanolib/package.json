@@ -27,6 +27,7 @@
     "@alwatr/random": "workspace:*",
     "@alwatr/render-state": "workspace:*",
     "@alwatr/resolve-url": "workspace:*",
+    "@alwatr/synapse": "workspace:*",
     "@alwatr/unicode-digits": "workspace:*"
   },
   "devDependencies": {
