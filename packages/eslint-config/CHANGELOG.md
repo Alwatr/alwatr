@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.5](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.5.4...@alwatr/eslint-config@5.5.5) (2025-08-23)
+
+### Code Refactoring
+
+* Updated all package.json files in the project to change dependency version specifiers from "workspace:^" to "workspace:*" for consistency and to allow for more flexible version resolution. ([db6a4f7](https://github.com/Alwatr/nanolib/commit/db6a4f76deec2d1d8039978144e4bc51b6f1a0e3)) by @alimd
+
 ## [5.5.4](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.5.3...@alwatr/eslint-config@5.5.4) (2025-04-20)
 
 ### Dependencies update

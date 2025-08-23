@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.1](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.7.0...@alwatr/is-number@5.7.1) (2025-08-23)
+
+### Code Refactoring
+
+* Updated all package.json files in the project to change dependency version specifiers from "workspace:^" to "workspace:*" for consistency and to allow for more flexible version resolution. ([db6a4f7](https://github.com/Alwatr/nanolib/commit/db6a4f76deec2d1d8039978144e4bc51b6f1a0e3)) by @alimd
+
 ## [5.7.0](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.6.2...@alwatr/is-number@5.7.0) (2025-04-20)
 
 ### Features

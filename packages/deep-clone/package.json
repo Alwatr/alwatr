@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/deep-clone",
-  "version": "5.5.3",
+  "version": "5.5.4",
   "description": "Clone deeply nested objects and arrays in JavaScript.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [

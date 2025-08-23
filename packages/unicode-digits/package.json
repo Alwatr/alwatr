@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/unicode-digits",
-  "version": "5.5.3",
+  "version": "5.5.4",
   "description": "Convert the String of number of the source language to the destination language.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/random",
-  "version": "5.1.2",
+  "version": "5.1.3",
   "description": "A lightweight utility library for generating random numbers, strings, UUIDs and more",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "keywords": [

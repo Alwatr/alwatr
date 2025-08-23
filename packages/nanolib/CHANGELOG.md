@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.6](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@5.6.5...@alwatr/nanolib@5.6.6) (2025-08-23)
+
+### Code Refactoring
+
+* Updated all package.json files in the project to change dependency version specifiers from "workspace:^" to "workspace:*" for consistency and to allow for more flexible version resolution. ([db6a4f7](https://github.com/Alwatr/nanolib/commit/db6a4f76deec2d1d8039978144e4bc51b6f1a0e3)) by @alimd
+
 ## [5.6.5](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@5.6.4...@alwatr/nanolib@5.6.5) (2025-04-20)
 
 **Note:** Version bump only for package @alwatr/nanolib
