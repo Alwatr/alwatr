@@ -1,0 +1,36 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 1.0.0 (2025-08-23)
+
+### ✨ Features
+
+* add project maintenance script using yarn commands ([03c411c](https://github.com/Alwatr/nanolib/commit/03c411c8294bc66dc800fff1337b16fd46b6a792))
+* add README.md for @alwatr/yarn-upgrade CLI tool ([0bb801e](https://github.com/Alwatr/nanolib/commit/0bb801ea0adfe9acd98e79a3435943a1f78917de))
+* add TypeScript configuration file for yarn-upgrade package ([cf212ce](https://github.com/Alwatr/nanolib/commit/cf212ce6819f8e76325754ab65d8f6f38df579ed))
+* new @alwatr/yarn-upgrade CLI tool ([fe26687](https://github.com/Alwatr/nanolib/commit/fe26687a0ecedd1f9023b6ec20523b63409b96b0))
+
+### 🐛 Bug Fixes
+
+* remove quotes from yarn upgrade command for correct execution ([b2b1aed](https://github.com/Alwatr/nanolib/commit/b2b1aed0b66134e233d38455ded4e71f6408f044))
+* remove redundant syncpack commands from maintenance script ([8cad19a](https://github.com/Alwatr/nanolib/commit/8cad19a2b7d66de0a66d7abc51208523a4c73347))
+* remove unnecessary 'pwd' command from maintenance script ([8f1fdc2](https://github.com/Alwatr/nanolib/commit/8f1fdc2ea95ce4f027b2f2f1cee5f7e112e90b98))
+* rename bin command from 'project-upd' to 'upd' in package.json ([d20789e](https://github.com/Alwatr/nanolib/commit/d20789e95e888690ec37794612ea4b5c841fead8))
+* revert version to 1.0.0-rc in package.json ([b218f7a](https://github.com/Alwatr/nanolib/commit/b218f7afc40e55c886fa9ecb401b85fd7235f695))
+
+### 🔨 Code Refactoring
+
+* replace exec with spawn for command execution in maintenance script ([fc7217a](https://github.com/Alwatr/nanolib/commit/fc7217aace946dbe739e3f6bb8808a76a80c79f6))
+
+### 🧹 Miscellaneous Chores
+
+* add LICENSE file with Mozilla Public License Version 2.0 ([f03c3b6](https://github.com/Alwatr/nanolib/commit/f03c3b64e79dcb9e05707bfb2535013472f5cc2c))
+* reorder keywords and add bugs field in package.json ([7b37671](https://github.com/Alwatr/nanolib/commit/7b37671ef9173649fe0b6ae465c8d9916f20758c))
+* update homepage and repository directory in package.json for yarn-upgrade ([b0bb702](https://github.com/Alwatr/nanolib/commit/b0bb702519d392d754a1343329a107f829582e08))
+* update packages/yarn-upgrade/package.json ([e0b4871](https://github.com/Alwatr/nanolib/commit/e0b4871230bef11052dec8ea8e0c7cbb86c731ff))
+
+### 🔗 Dependencies update
+
+* revert @types/node version to ^22.17.2 (LTS) ([49f8101](https://github.com/Alwatr/nanolib/commit/49f8101eac5c41aa7684112f4308254dbfab9787))

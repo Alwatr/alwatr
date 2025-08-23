@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@5.0.0...@alwatr/tsconfig-base@5.0.1) (2025-08-23)
+
+### 🐛 Bug Fixes
+
+* update license from AGPL-3.0-only to MPL-2.0 ([d20968e](https://github.com/Alwatr/nanolib/commit/d20968e60cc89b1dcdf9b96507178da6ed562f55))
+
+### 🧹 Miscellaneous Chores
+
+* edit README ([3860b3d](https://github.com/Alwatr/nanolib/commit/3860b3df48ab82dc479d5236c2e8579df614aabf))
+* reformat all package.json files ([ceda45d](https://github.com/Alwatr/nanolib/commit/ceda45de186667790474f729cb4b161a5148ce19))
+* update username casing in changelog entries ([9722ac9](https://github.com/Alwatr/nanolib/commit/9722ac9a078438a4e8ebfa5826ea70e0e3a52ca6))
+
 ## 5.0.0 (2024-11-02)
 
 ### ⚠ BREAKING CHANGES

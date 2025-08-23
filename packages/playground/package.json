@@ -1,7 +1,7 @@
 {
   "name": "playground",
   "description": "Necessary library for all ECMAScript (JavaScript/TypeScript) projects.",
-  "version": "5.0.0-0",
+  "version": "5.0.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {

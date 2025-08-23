@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@5.5.3...@alwatr/nano-build@6.0.0) (2025-08-23)
+
+### ⚠ BREAKING CHANGES
+
+* drop old browser supports in default configurations
+
+### ✨ Features
+
+* update esbuild to v0.25.9 ([3dccddd](https://github.com/Alwatr/nanolib/commit/3dccddd42e626803e5058333926ab9266d302cc2))
+* update target versions for default configurations ([2d6463c](https://github.com/Alwatr/nanolib/commit/2d6463c65ae444e50dc298e9dbddfd8f7106c8c2))
+
+### 🐛 Bug Fixes
+
+* update bin field in package.json and add shebang to nano-build.cjs ([02dfbe7](https://github.com/Alwatr/nanolib/commit/02dfbe773028a4dfd6f18f1195391dfa9025f4f0))
+* update bin field in package.json to a simpler format ([6243f49](https://github.com/Alwatr/nanolib/commit/6243f49c7d63721f5b634adb4957de375226f4af))
+* update license from AGPL-3.0-only to MPL-2.0 ([d20968e](https://github.com/Alwatr/nanolib/commit/d20968e60cc89b1dcdf9b96507178da6ed562f55))
+* update package versions in multiple package.json files ([7638b1c](https://github.com/Alwatr/nanolib/commit/7638b1cafee2b4e0f97db7a89ac9fba6384b9b10))
+
+### 🔨 Code Refactoring
+
+* Updated all package.json files in the project to change dependency version specifiers from "workspace:^" to "workspace:*" for consistency and to allow for more flexible version resolution. ([db6a4f7](https://github.com/Alwatr/nanolib/commit/db6a4f76deec2d1d8039978144e4bc51b6f1a0e3))
+
+### 🧹 Miscellaneous Chores
+
+* reformat all package.json files ([ceda45d](https://github.com/Alwatr/nanolib/commit/ceda45de186667790474f729cb4b161a5148ce19))
+
+### 🔗 Dependencies update
+
+* revert @types/node version to ^22.17.2 (LTS) ([49f8101](https://github.com/Alwatr/nanolib/commit/49f8101eac5c41aa7684112f4308254dbfab9787))
+
 ## [5.5.4](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@5.5.3...@alwatr/nano-build@5.5.4) (2025-08-23)
 
 ### Code Refactoring

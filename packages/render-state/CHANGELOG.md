@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.5](https://github.com/Alwatr/nanolib/compare/@alwatr/render-state@5.5.3...@alwatr/render-state@5.5.5) (2025-08-23)
+
+### 🐛 Bug Fixes
+
+* render-state folder name ([405d456](https://github.com/Alwatr/nanolib/commit/405d456ac6f29d3b86a4f54424bc1cf3cdd338c1))
+
 ## [5.5.4](https://github.com/Alwatr/nanolib/compare/@alwatr/render-state@5.5.3...@alwatr/render-state@5.5.4) (2025-08-23)
 
 ### Code Refactoring

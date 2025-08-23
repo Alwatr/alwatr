@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.5](https://github.com/Alwatr/nanolib/compare/@alwatr/deep-clone@5.5.3...@alwatr/deep-clone@5.5.5) (2025-08-23)
+
+### 🐛 Bug Fixes
+
+* update license from AGPL-3.0-only to MPL-2.0 ([d20968e](https://github.com/Alwatr/nanolib/commit/d20968e60cc89b1dcdf9b96507178da6ed562f55))
+* update package versions in multiple package.json files ([7638b1c](https://github.com/Alwatr/nanolib/commit/7638b1cafee2b4e0f97db7a89ac9fba6384b9b10))
+
+### 🔨 Code Refactoring
+
+* Updated all package.json files in the project to change dependency version specifiers from "workspace:^" to "workspace:*" for consistency and to allow for more flexible version resolution. ([db6a4f7](https://github.com/Alwatr/nanolib/commit/db6a4f76deec2d1d8039978144e4bc51b6f1a0e3))
+
+### 🧹 Miscellaneous Chores
+
+* reformat all package.json files ([ceda45d](https://github.com/Alwatr/nanolib/commit/ceda45de186667790474f729cb4b161a5148ce19))
+
+### 🔗 Dependencies update
+
+* update TypeScript and Jest versions across all packages to improve compatibility and performance ([31baf36](https://github.com/Alwatr/nanolib/commit/31baf366101e92e27db66a21c849fb101f19be47))
+
 ## [5.5.4](https://github.com/Alwatr/nanolib/compare/@alwatr/deep-clone@5.5.3...@alwatr/deep-clone@5.5.4) (2025-08-23)
 
 ### Code Refactoring
