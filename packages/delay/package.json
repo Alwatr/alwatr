@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/delay",
   "description": "Comprehensive toolkit for managing asynchronous operations.",
-  "version": "5.5.5",
+  "version": "5.5.6",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
@@ -14,7 +14,7 @@
     "@alwatr/prettier-config": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
-    "@types/node": "^24.3.0",
+    "@types/node": "^22.17.2",
     "typescript": "^5.9.2"
   },
   "exports": {

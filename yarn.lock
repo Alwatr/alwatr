@@ -58,7 +58,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.3.0"
+    "@types/node": "npm:^22.17.2"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -73,7 +73,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.3.0"
+    "@types/node": "npm:^22.17.2"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -108,7 +108,7 @@ __metadata:
     "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
-    "@types/node": "npm:^24.3.0"
+    "@types/node": "npm:^22.17.2"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -166,7 +166,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.3.0"
+    "@types/node": "npm:^22.17.2"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -232,7 +232,7 @@ __metadata:
     "@alwatr/platform-info": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
-    "@types/node": "npm:^24.3.0"
+    "@types/node": "npm:^22.17.2"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -244,7 +244,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.3.0"
+    "@types/node": "npm:^22.17.2"
     esbuild: "npm:^0.25.9"
     typescript: "npm:^5.9.2"
   bin:
@@ -298,7 +298,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.3.0"
+    "@types/node": "npm:^22.17.2"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -338,7 +338,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.3.0"
+    "@types/node": "npm:^22.17.2"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -375,9 +375,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/render-state@workspace:*, @alwatr/render-state@workspace:packages/redner-state":
+"@alwatr/render-state@workspace:*, @alwatr/render-state@workspace:packages/render-state":
   version: 0.0.0-use.local
-  resolution: "@alwatr/render-state@workspace:packages/redner-state"
+  resolution: "@alwatr/render-state@workspace:packages/render-state"
   dependencies:
     "@alwatr/logger": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
@@ -439,7 +439,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.3.0"
+    "@types/node": "npm:^22.17.2"
     typescript: "npm:^5.9.2"
   bin:
     upd: ./dist/main.mjs
@@ -2436,7 +2436,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^24.3.0":
+"@types/node@npm:*":
   version: 24.3.0
   resolution: "@types/node@npm:24.3.0"
   dependencies:
@@ -2445,7 +2445,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.0.0":
+"@types/node@npm:^22.0.0, @types/node@npm:^22.17.2":
   version: 22.17.2
   resolution: "@types/node@npm:22.17.2"
   dependencies:
