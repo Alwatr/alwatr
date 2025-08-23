@@ -2,6 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/lerna-lite/lerna-lite/main/packages/cli/schemas/lerna-schema.json",
   "version": "4.9.3",
   "npmClient": "yarn",
+  "useWorkspaces": true,
   "packages": ["packages/*"],
   "loglevel": "verbose",
   "command": {
@@ -11,84 +12,45 @@
       "changelogPreset": {
         "name": "conventionalcommits",
         "types": [
-          {
-            "type": "feat",
-            "section": "Features"
-          },
-          {
-            "type": "feature",
-            "section": "Features"
-          },
-          {
-            "type": "fix",
-            "section": "Bug Fixes"
-          },
-          {
-            "type": "perf",
-            "section": "Performance Improvements"
-          },
-          {
-            "type": "revert",
-            "section": "Reverts"
-          },
-          {
-            "type": "refactor",
-            "section": "Code Refactoring"
-          },
-          {
-            "type": "chore",
-            "section": "Miscellaneous Chores"
-          },
-          {
-            "type": "docs",
-            "section": "Documentation",
-            "hidden": true
-          },
-          {
-            "type": "doc",
-            "section": "Documentation",
-            "hidden": true
-          },
-          {
-            "type": "deps",
-            "section": "Dependencies update"
-          },
-          {
-            "type": "style",
-            "section": "Styles",
-            "hidden": true
-          },
-          {
-            "type": "test",
-            "section": "Tests",
-            "hidden": true
-          },
-          {
-            "type": "build",
-            "section": "Build System",
-            "hidden": true
-          },
-          {
-            "type": "ci",
-            "section": "Continuous Integration",
-            "hidden": true
-          }
+          { "type": "feat", "section": "Features" },
+          { "type": "feature", "section": "Features" },
+          { "type": "fix", "section": "Bug Fixes" },
+          { "type": "perf", "section": "Performance Improvements" },
+          { "type": "revert", "section": "Reverts" },
+          { "type": "refactor", "section": "Code Refactoring" },
+          { "type": "chore", "section": "Miscellaneous Chores" },
+          { "type": "deps", "section": "Dependencies update" },
+          { "type": "docs", "section": "Documentation", "hidden": true },
+          { "type": "doc", "section": "Documentation", "hidden": true },
+          { "type": "style", "section": "Styles", "hidden": true },
+          { "type": "test", "section": "Tests", "hidden": true },
+          { "type": "build", "section": "Build System", "hidden": true },
+          { "type": "ci", "section": "Continuous Integration", "hidden": true }
         ]
       },
       "changelogIncludeCommitsClientLogin": " by @%l",
-      "ignoreChanges": ["*.md"],
+      "ignoreChanges": [
+        "**/*.md",
+        "**/docs/**",
+        "**/*.test.js"
+      ],
       "skipBumpOnlyReleases": true,
       "message": "release: %s",
-      "private": false,
       "forceGitTag": true,
       "signGitTag": true,
       "signGitCommit": true,
       "push": true,
       "createRelease": "github",
-      "conventionalGraduate": true
+      "conventionalGraduate": true,
+      "allowBranch": "next",
+      "exact": true
     },
     "run": {
       "stream": true
+    },
+    "publish": {
+      "verifyAccess": true,
+      "registry": "https://registry.npmjs.org/"
     }
   }
 }
