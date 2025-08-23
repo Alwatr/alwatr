@@ -9,7 +9,7 @@ updates:
       prefix: deps
     schedule:
       interval: weekly
-      time: 00:30
+      time: '00:30'
       day: thursday
     labels:
       - ci
@@ -28,7 +28,7 @@ updates:
       prefix: deps
     schedule:
       interval: weekly
-      time: 00:30
+      time: '00:30'
       day: thursday
     labels:
       - dependencies
