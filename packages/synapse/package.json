@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/synapse",
-  "description": "A lightweight directive-based library for vanilla TypeScript.",
+  "description": "Connect your TypeScript classes to the DOM, declaratively.",
   "version": "0.1.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
@@ -30,20 +30,17 @@
   "keywords": [
     "alwatr",
     "browser",
-    "cross-platform",
+    "declarative",
+    "decorator",
     "directive",
+    "DOM",
     "ECMAScript",
     "esm",
     "javascript",
     "module",
     "nanolib",
-    "node",
-    "nodejs",
     "typescript",
-    "util",
-    "utility",
-    "utils",
-    "web-component"
+    "UI"
   ],
   "license": "MPL-2.0",
   "main": "./dist/main.cjs",
