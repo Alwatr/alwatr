@@ -8,32 +8,7 @@
   "command": {
     "version": {
       "conventionalCommits": true,
-      "changelog": true,
-      "changelogPreset": {
-        "name": "conventionalcommits",
-        "types": [
-          { "type": "feat", "section": "Features" },
-          { "type": "feature", "section": "Features" },
-          { "type": "fix", "section": "Bug Fixes" },
-          { "type": "perf", "section": "Performance Improvements" },
-          { "type": "revert", "section": "Reverts" },
-          { "type": "refactor", "section": "Code Refactoring" },
-          { "type": "chore", "section": "Miscellaneous Chores" },
-          { "type": "deps", "section": "Dependencies update" },
-          { "type": "docs", "section": "Documentation", "hidden": true },
-          { "type": "doc", "section": "Documentation", "hidden": true },
-          { "type": "style", "section": "Styles", "hidden": true },
-          { "type": "test", "section": "Tests", "hidden": true },
-          { "type": "build", "section": "Build System", "hidden": true },
-          { "type": "ci", "section": "Continuous Integration", "hidden": true }
-        ]
-      },
-      "changelogIncludeCommitsClientLogin": " by @%l",
-      "ignoreChanges": [
-        "**/*.md",
-        "**/docs/**",
-        "**/*.test.js"
-      ],
+      "ignoreChanges": ["**/*.md", "**/docs/**", "**/*.test.js"],
       "skipBumpOnlyReleases": true,
       "message": "release: %s",
       "forceGitTag": true,
@@ -43,7 +18,35 @@
       "createRelease": "github",
       "conventionalGraduate": true,
       "allowBranch": "next",
-      "exact": true
+      "exact": true,
+      "syncWorkspaceLock": true,
+      "changelog": true,
+      "changelogIncludeCommitsClientLogin": " by @%l",
+      "changelogHeaderMessage": "# Changelog\n\nAll notable changes to this project will be documented in this file.",
+      "changelogPreset": {
+        "name": "conventionalcommits",
+        "issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issues/{{id}}",
+        "issuePrefixes": ["#"],
+        "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
+        "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
+        "userUrlFormat": "{{host}}/{{user}}",
+        "types": [
+          {"type": "feat", "section": "✨ Features"},
+          {"type": "feature", "section": "✨ Features"},
+          {"type": "fix", "section": "🐛 Bug Fixes"},
+          {"type": "perf", "section": "⚡ Performance Improvements"},
+          {"type": "revert", "section": "⏪ Reverts"},
+          {"type": "refactor", "section": "🔨 Code Refactoring"},
+          {"type": "chore", "section": "🧹 Miscellaneous Chores"},
+          {"type": "deps", "section": "🔗 Dependencies update"},
+          {"type": "doc", "hidden": true},
+          {"type": "docs", "hidden": true},
+          {"type": "style", "hidden": true},
+          {"type": "test", "hidden": true},
+          {"type": "build", "hidden": true},
+          {"type": "ci", "hidden": true}
+        ]
+      }
     },
     "run": {
       "stream": true
