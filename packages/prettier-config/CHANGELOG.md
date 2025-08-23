@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/prettier-config@5.0.1...@alwatr/prettier-config@5.0.2) (2025-08-23)
+
+**Note:** Version bump only for package @alwatr/prettier-config
+
 ## [5.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/prettier-config@5.0.0...@alwatr/prettier-config@5.0.1) (2025-08-23)
 
 ### 🐛 Bug Fixes

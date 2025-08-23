@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/yarn-upgrade",
   "description": "A zero-dependency CLI tool to automate common Yarn maintenance tasks. This utility streamlines the process of upgrading dependencies, fixing version inconsistencies, and ensuring your project is up-to-date with a single command.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bin": {
     "upd": "./dist/main.mjs"

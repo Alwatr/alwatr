@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.5](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@5.6.4...@alwatr/fetch@5.6.5) (2025-08-23)
+
+**Note:** Version bump only for package @alwatr/fetch
+
 ## [5.6.4](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@5.6.2...@alwatr/fetch@5.6.4) (2025-08-23)
 
 ### 🐛 Bug Fixes
