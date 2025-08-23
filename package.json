@@ -1,43 +1,7 @@
 {
   "name": "alwatr-nanotron",
   "description": "Nanotron: Your Lightweight, High-Performance Micro/Nano Service Framework. Nanotron is designed for building blazingly fast and efficient microservices and APIs. Its minimalist approach and focus on performance make it ideal for resource-constrained environments and scenarios where every millisecond counts.",
-  "repository": "https://github.com/Alwatr/nanotron",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "license": "AGPL-3.0-only",
-  "type": "module",
-  "private": true,
-  "engines": {
-    "node": ">=18.16.0",
-    "yarn": ">=4.0.0"
-  },
-  "workspaces": [
-    "packages/*"
-  ],
-  "prettier": "@alwatr/prettier-config",
-  "scripts": {
-    "b": "yarn run build",
-    "t": "yarn run test",
-    "w": "yarn run watch",
-    "c": "yarn run clean",
-    "cb": "yarn run clean && yarn run build",
-    "l": "yarn run lint",
-    "f": "yarn run format",
-    "rl": "yarn run pull && yarn run clean && yarn run build && yarn run lint && yarn run release",
-    "upd": "yarn set version latest; yarn up '*'; yarn up '*' -R; yarn dlx @yarnpkg/sdks vscode; yarn dedupe",
-    "lint": "yarn run lint:ts && yarn run lint:es",
-    "lint:es": "eslint . --config .eslintrc.json --ext .ts",
-    "lint:ts": "lerna run build:ts",
-    "build": "lerna run build",
-    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest --verbose --passWithNoTests",
-    "watch": "lerna run --parallel watch",
-    "format": "yarn run format:prettier && yarn run format:eslint",
-    "format:eslint": "yarn run lint --fix",
-    "format:prettier": "prettier . --ignore-path .gitignore --write",
-    "clean": "git add -v . && git clean -d -x -f --exclude=node_modules --exclude='*.env' --exclude=_data --exclude='.pnp*' --exclude=.yarn",
-    "pull": "git pull",
-    "release": "lerna version",
-    "publish": "lerna publish from-package"
-  },
   "devDependencies": {
     "@alwatr/eslint-config": "^5.5.5",
     "@alwatr/prettier-config": "^5.0.0",
@@ -61,5 +25,41 @@
     "prettier": "^3.6.2",
     "typescript": "^5.9.2"
   },
-  "packageManager": "yarn@4.9.3"
+  "engines": {
+    "node": ">=18.16.0",
+    "yarn": ">=4.0.0"
+  },
+  "license": "AGPL-3.0-only",
+  "packageManager": "yarn@4.9.3",
+  "prettier": "@alwatr/prettier-config",
+  "private": true,
+  "repository": "https://github.com/Alwatr/nanotron",
+  "scripts": {
+    "b": "yarn run build",
+    "build": "lerna run build",
+    "c": "yarn run clean",
+    "cb": "yarn run clean && yarn run build",
+    "clean": "git add -v . && git clean -d -x -f --exclude=node_modules --exclude='*.env' --exclude=_data --exclude='.pnp*' --exclude=.yarn",
+    "f": "yarn run format",
+    "format": "yarn run format:prettier && yarn run format:eslint",
+    "format:eslint": "yarn run lint --fix",
+    "format:prettier": "prettier . --ignore-path .gitignore --write",
+    "l": "yarn run lint",
+    "lint": "yarn run lint:ts && yarn run lint:es",
+    "lint:es": "eslint . --config .eslintrc.json --ext .ts",
+    "lint:ts": "lerna run build:ts",
+    "publish": "lerna publish from-package",
+    "pull": "git pull",
+    "release": "lerna version",
+    "rl": "yarn run pull && yarn run clean && yarn run build && yarn run lint && yarn run release",
+    "t": "yarn run test",
+    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest --verbose --passWithNoTests",
+    "upd": "yarn set version latest; yarn up '*'; yarn up '*' -R; yarn dlx @yarnpkg/sdks vscode; yarn dedupe",
+    "w": "yarn run watch",
+    "watch": "lerna run --parallel watch"
+  },
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ]
 }
