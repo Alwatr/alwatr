@@ -1,0 +1,72 @@
+import {createLogger} from '@alwatr/logger';
+
+/**
+ * Base class for creating directives that attach behavior to DOM elements.
+ * Extend this class to define custom directives.
+ */
+export abstract class DirectiveBase {
+  /**
+   * The CSS selector for the directive.
+   */
+  protected readonly selector_;
+
+  /**
+   * Logger instance for the directive.
+   */
+  protected readonly logger;
+
+  /**
+   * The target DOM element this directive is attached to.
+   */
+  protected readonly element_: HTMLElement;
+
+  /**
+   * Constructor to initialize the directive with the target element.
+   * @param element - The DOM element this directive is attached to.
+   */
+  constructor(element: HTMLElement, selector: string) {
+    this.selector_ = selector;
+    this.logger = createLogger(`directive:${this.selector_}`);
+    this.logger.logMethodArgs?.('new', {selector, element});
+    this.element_ = element;
+  }
+
+  /**
+   * Called when the element connects to the DOM.
+   * Override this method to define custom behavior on connection.
+   */
+  protected connected_(): void {
+    if (this.logger.logMethod) {
+      this.logger.logMethod('connected_');
+    }
+    this.update_();
+  }
+
+  /**
+   * Called when the element disconnects from the DOM.
+   * Override this method to define custom behavior on disconnection.
+   */
+  protected disconnected_(): void {
+    if (this.logger.logMethod) {
+      this.logger.logMethod('disconnected_');
+    }
+  }
+
+  /**
+   * Called to update the directive's state or behavior.
+   * Must be implemented by subclasses.
+   */
+  protected abstract update_(): void;
+
+  /**
+   * Dispatches a custom event from the target element.
+   * @param eventName - The name of the event.
+   * @param detail - Optional data to include in the event.
+   */
+  protected dispatch_(eventName: string, detail?: unknown): void {
+    this.logger.logMethodArgs?.('dispatch_', {eventName, detail});
+    this.element_.dispatchEvent(
+      new CustomEvent(eventName, { detail, bubbles: true })
+    );
+  }
+}
