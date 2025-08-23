@@ -6,13 +6,11 @@ updates:
     directory: /
     open-pull-requests-limit: 20
     commit-message:
-      prefix: 'deps'
-    reviewers:
-      - alimd
+      prefix: deps
     schedule:
       interval: weekly
-      time: '00:30'
-      day: 'thursday'
+      time: 00:30
+      day: thursday
     labels:
       - ci
       - priority-low
@@ -27,30 +25,33 @@ updates:
     versioning-strategy: increase
     open-pull-requests-limit: 20
     commit-message:
-      prefix: 'deps'
-    reviewers:
-      - alimd
+      prefix: deps
     schedule:
       interval: weekly
-      time: '00:30'
-      day: 'thursday'
+      time: 00:30
+      day: thursday
     labels:
       - dependencies
       - ci
       - priority-low
       - maintenance
     groups:
-      production-dependencies:
-        dependency-type: 'production'
-        exclude-patterns:
-          - '@alwatr/*'
-          - 'fract'
-      development-dependencies:
-        dependency-type: 'development'
-        exclude-patterns:
-          - '@alwatr/*'
-          - 'fract'
-      alwatr-dependencies:
+      npm-dependencies:
         patterns:
-          - '@alwatr/*'
-          - 'fract'
+          - '*'
+    ignore:
+      - dependency-name: "@types/node"
+        update-types:
+          - version-update:semver-major
+      - dependency-name: "eslint"
+        update-types:
+          - version-update:semver-major
+      - dependency-name: "@typescript-eslint/eslint-plugin"
+        update-types:
+          - version-update:semver-major
+      - dependency-name: "@typescript-eslint/parser"
+        update-types:
+          - version-update:semver-major
+      - dependency-name: "conventional-changelog-conventionalcommits"
+        update-types:
+          - version-update:semver-major
