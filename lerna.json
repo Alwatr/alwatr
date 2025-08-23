@@ -27,7 +27,7 @@
       "exact": true,
       "syncWorkspaceLock": true,
       "changelog": true,
-      "changelogIncludeCommitsClientLogin": " by @%l",
+      "private": false,
       "changelogPreset": {
         "name": "conventionalcommits",
         "issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issues/{{id}}",
@@ -99,10 +99,6 @@
     },
     "run": {
       "stream": true
-    },
-    "publish": {
-      "verifyAccess": true,
-      "registry": "https://registry.npmjs.org/"
     }
   }
 }
