@@ -28,7 +28,6 @@
       "syncWorkspaceLock": true,
       "changelog": true,
       "changelogIncludeCommitsClientLogin": " by @%l",
-      "changelogHeaderMessage": "# Changelog\n\nAll notable changes to this project will be documented in this file.",
       "changelogPreset": {
         "name": "conventionalcommits",
         "issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issues/{{id}}",
