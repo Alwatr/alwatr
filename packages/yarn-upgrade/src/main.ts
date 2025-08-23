@@ -9,9 +9,7 @@ const commands: string[] = [
   'yarn up @*/* * --recursive',
   'yarn dlx @yarnpkg/sdks vscode',
   'yarn dedupe',
-  'yarn dlx syncpack@alpha format',
-  'yarn dlx syncpack@alpha fix',
-  'yarn dlx syncpack@alpha lint --sort count'
+  'yarn dlx syncpack@alpha lint --sort count',
 ];
 
 // A helper function to execute a command and log its output
