@@ -1,7 +1,40 @@
 # Change Log
+# Changelog
+
+All notable changes to this project will be documented in this file.
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [4.9.4](https://github.com/Alwatr/nanotron/compare/v4.9.3...v4.9.4) (2025-08-23)
+
+### ✨ Features
+
+* add dry-run script for lerna version ([5dc1e9a](https://github.com/Alwatr/nanotron/commit/5dc1e9ae2755a0a121fee741c555c5df9aa179c2)) by @alimd
+
+### 🐛 Bug Fixes
+
+* clean up lerna.json formatting and update dependencies section ([6e0b519](https://github.com/Alwatr/nanotron/commit/6e0b5193cde9f8122ede6dc9e1cdfcf3a719a62e)) by @alimd
+
+### 🔨 Code Refactoring
+
+* reorganize package.json files for consistency and clarity ([bde116e](https://github.com/Alwatr/nanotron/commit/bde116e21f9d9bd6084940e257438916d2c3d312)) by @alimd
+* update lerna.json for improved configuration and consistency ([45f3341](https://github.com/Alwatr/nanotron/commit/45f33410c2023a0336bf458a46f99f503453c906)) by @alimd
+
+### 🧹 Miscellaneous Chores
+
+* enhance changelog configuration and structure in lerna.json ([f5fdc1f](https://github.com/Alwatr/nanotron/commit/f5fdc1fb822f0dc991787564c65e480f08d6133c)) by @alimd
+* rebuild yarn.lock ([ba5b34f](https://github.com/Alwatr/nanotron/commit/ba5b34fea2937585fac23865242620b5c7924103)) by @alimd
+* rebuild yarn.lock ([370dbd2](https://github.com/Alwatr/nanotron/commit/370dbd2538fb08de14e08c0d7c996f94f17edf18)) by @alimd
+* remove unused dependencies from package.json ([0085f04](https://github.com/Alwatr/nanotron/commit/0085f04727129264f6e13197ac3a4a47eb0a66fa)) by @alimd
+* reorder resolutions section in package.json ([985d5f7](https://github.com/Alwatr/nanotron/commit/985d5f7b6ebc450c93f961f199163a2388b37eea)) by @
+* update dependencies and improve release script in package.json ([0abdc5e](https://github.com/Alwatr/nanotron/commit/0abdc5e00f8099e2bda035e8f82ca3237c3a8ec7)) by @
+
+### 🔗 Dependencies update
+
+* downgrade @types/node version to 22.17.2 in all package.json files ([4f01e14](https://github.com/Alwatr/nanotron/commit/4f01e1408d8d0954865eb9d20f90178f13e98719)) by @alimd
+* update dependencies for eslint-config, lerna-lite, typescript, and nanolib ([de16a71](https://github.com/Alwatr/nanotron/commit/de16a718bb1c0fa569d39c824ec39a1e67ef8dfe)) by @alimd
+* update typescript version to 5.9.2-sdk in package.json ([0bc9387](https://github.com/Alwatr/nanotron/commit/0bc9387febb6f03e6809d4f8108f86fa831f4ed1)) by @alimd
 
 ## [4.9.3](https://github.com/Alwatr/nanotron/compare/v4.9.2...v4.9.3) (2025-07-23)
 

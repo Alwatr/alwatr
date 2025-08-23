@@ -1,14 +1,20 @@
 {
   "$schema": "https://raw.githubusercontent.com/lerna-lite/lerna-lite/main/packages/cli/schemas/lerna-schema.json",
-  "version": "4.9.3",
+  "version": "4.9.4",
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "loglevel": "verbose",
   "command": {
     "version": {
       "conventionalCommits": true,
-      "ignoreChanges": ["**/*.md", "**/docs/**", "**/*.test.js"],
+      "ignoreChanges": [
+        "**/*.md",
+        "**/docs/**",
+        "**/*.test.js"
+      ],
       "skipBumpOnlyReleases": true,
       "message": "release: %s",
       "forceGitTag": true,
@@ -26,25 +32,69 @@
       "changelogPreset": {
         "name": "conventionalcommits",
         "issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issues/{{id}}",
-        "issuePrefixes": ["#"],
+        "issuePrefixes": [
+          "#"
+        ],
         "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
         "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
         "userUrlFormat": "{{host}}/{{user}}",
         "types": [
-          {"type": "feat", "section": "✨ Features"},
-          {"type": "feature", "section": "✨ Features"},
-          {"type": "fix", "section": "🐛 Bug Fixes"},
-          {"type": "perf", "section": "⚡ Performance Improvements"},
-          {"type": "revert", "section": "⏪ Reverts"},
-          {"type": "refactor", "section": "🔨 Code Refactoring"},
-          {"type": "chore", "section": "🧹 Miscellaneous Chores"},
-          {"type": "deps", "section": "🔗 Dependencies update"},
-          {"type": "doc", "hidden": true},
-          {"type": "docs", "hidden": true},
-          {"type": "style", "hidden": true},
-          {"type": "test", "hidden": true},
-          {"type": "build", "hidden": true},
-          {"type": "ci", "hidden": true}
+          {
+            "type": "feat",
+            "section": "✨ Features"
+          },
+          {
+            "type": "feature",
+            "section": "✨ Features"
+          },
+          {
+            "type": "fix",
+            "section": "🐛 Bug Fixes"
+          },
+          {
+            "type": "perf",
+            "section": "⚡ Performance Improvements"
+          },
+          {
+            "type": "revert",
+            "section": "⏪ Reverts"
+          },
+          {
+            "type": "refactor",
+            "section": "🔨 Code Refactoring"
+          },
+          {
+            "type": "chore",
+            "section": "🧹 Miscellaneous Chores"
+          },
+          {
+            "type": "deps",
+            "section": "🔗 Dependencies update"
+          },
+          {
+            "type": "doc",
+            "hidden": true
+          },
+          {
+            "type": "docs",
+            "hidden": true
+          },
+          {
+            "type": "style",
+            "hidden": true
+          },
+          {
+            "type": "test",
+            "hidden": true
+          },
+          {
+            "type": "build",
+            "hidden": true
+          },
+          {
+            "type": "ci",
+            "hidden": true
+          }
         ]
       }
     },

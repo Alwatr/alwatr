@@ -1,7 +1,21 @@
 # Change Log
+# Changelog
+
+All notable changes to this project will be documented in this file.
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [4.9.4](https://github.com/Alwatr/pre-handlers/compare/v4.9.3...v4.9.4) (2025-08-23)
+
+### 🔨 Code Refactoring
+
+* reorganize package.json files for consistency and clarity ([bde116e](https://github.com/Alwatr/pre-handlers/commit/bde116e21f9d9bd6084940e257438916d2c3d312)) by @alimd
+
+### 🔗 Dependencies update
+
+* downgrade @types/node version to 22.17.2 in all package.json files ([4f01e14](https://github.com/Alwatr/pre-handlers/commit/4f01e1408d8d0954865eb9d20f90178f13e98719)) by @alimd
+* update dependencies for eslint-config, lerna-lite, typescript, and nanolib ([de16a71](https://github.com/Alwatr/pre-handlers/commit/de16a718bb1c0fa569d39c824ec39a1e67ef8dfe)) by @alimd
 
 ## [4.9.3](https://github.com/Alwatr/pre-handlers/compare/v4.9.2...v4.9.3) (2025-07-23)
 
