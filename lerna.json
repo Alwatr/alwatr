@@ -99,10 +99,6 @@
     },
     "run": {
       "stream": true
-    },
-    "publish": {
-      "verifyAccess": true,
-      "registry": "https://registry.npmjs.org/"
     }
   }
 }
