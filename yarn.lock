@@ -2813,6 +2813,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.18.0"
     "@typescript-eslint/parser": "npm:^7.18.0"
     conventional-changelog-conventionalcommits: "npm:^9.1.0"
+    conventional-commits-filter: "npm:^5.0.0"
     eslint: "npm:^8.57.1"
     eslint-import-resolver-typescript: "npm:^4.4.4"
     eslint-plugin-import: "npm:^2.32.0"
