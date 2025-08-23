@@ -36,9 +36,7 @@ export abstract class DirectiveBase {
    * Override this method to define custom behavior on connection.
    */
   protected connected_(): void {
-    if (this.logger.logMethod) {
-      this.logger.logMethod('connected_');
-    }
+    this.logger.logMethod?.('connected_');
     this.update_();
   }
 
@@ -47,9 +45,7 @@ export abstract class DirectiveBase {
    * Override this method to define custom behavior on disconnection.
    */
   protected disconnected_(): void {
-    if (this.logger.logMethod) {
-      this.logger.logMethod('disconnected_');
-    }
+    this.logger.logMethod?.('disconnected_');
   }
 
   /**
@@ -65,8 +61,6 @@ export abstract class DirectiveBase {
    */
   protected dispatch_(eventName: string, detail?: unknown): void {
     this.logger.logMethodArgs?.('dispatch_', {eventName, detail});
-    this.element_.dispatchEvent(
-      new CustomEvent(eventName, { detail, bubbles: true })
-    );
+    this.element_.dispatchEvent(new CustomEvent(eventName, {detail, bubbles: true}));
   }
 }
