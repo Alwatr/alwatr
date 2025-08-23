@@ -27,6 +27,7 @@
       "exact": true,
       "syncWorkspaceLock": true,
       "changelog": true,
+      "private": false,
       "changelogPreset": {
         "name": "conventionalcommits",
         "issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issues/{{id}}",
