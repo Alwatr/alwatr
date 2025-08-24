@@ -37,10 +37,11 @@ pnpm i @alwatr/synapse
 
 ## How It Works
 
-Synapse is built around two core concepts:
+Synapse is built around three core concepts:
 
-1. **`@directive(selector)`**: A class decorator that registers a class. You tell Synapse, "any element matching this `selector` should be managed by this class."
-2. **`bootstrapDirectives(root?)`**: A function that scans the DOM for elements matching registered selectors and creates an instance of the corresponding class for each one.
+1. **`@directive(selector)`**: A class decorator that registers your class. You tell Synapse, "any element matching this `selector` should be managed by this class."
+2. **`DirectiveBase`**: An abstract class that your directives should extend. It provides the connected `element`, a dedicated `logger`, and an `update_` method to encapsulate your logic.
+3. **`bootstrapDirectives(root?)`**: A function that scans the DOM for elements matching registered selectors and creates an instance of the corresponding class for each one.
 
 ## Usage
 
@@ -48,36 +49,35 @@ Let's create a simple "click-to-copy" directive.
 
 ### 1. Create a Directive
 
-A directive is a class that receives the target `HTMLElement` in its constructor.
+A directive is a class that extends `DirectiveBase` to encapsulate its logic. All initialization logic should be placed in the `update_` method.
 
 ```typescript
 // src/copy-button.ts
-import {directive} from '@alwatr/synapse';
+import {directive, DirectiveBase} from '@alwatr/synapse';
 
 @directive('[data-copy-button]')
-export class CopyButtonDirective {
-  private readonly originalText: string;
+export class CopyButtonDirective extends DirectiveBase {
+  private originalText!: string;
 
-  constructor(element: HTMLElement) {
-    this.originalText = element.textContent ?? 'Copy';
-
-    element.addEventListener('click', this.handleClick.bind(this));
+  protected update_(): void {
+    this.originalText = this.element_.textContent ?? 'Copy';
+    this.element_.addEventListener('click', () => this.handleClick());
   }
 
-  async handleClick(event: MouseEvent): Promise<void> {
-    const element = event.currentTarget as HTMLElement;
-    const textToCopy = element.dataset.copyText ?? 'No text to copy!';
+  private async handleClick(): Promise<void> {
+    const textToCopy = this.element_.dataset.copyText ?? 'No text to copy!';
 
     try {
       await navigator.clipboard.writeText(textToCopy);
-      element.textContent = 'Copied!';
+      this.element_.textContent = 'Copied!';
+      this.logger_.logMethod?.('handleClick', 'copied');
     } catch (err) {
-      console.error('Failed to copy:', err);
-      element.textContent = 'Failed!';
+      this.logger_.error('handleClick', 'Failed to copy', err);
+      this.element_.textContent = 'Failed!';
     }
 
     setTimeout(() => {
-      element.textContent = this.originalText;
+      this.element_.textContent = this.originalText;
     }, 2000);
   }
 }
@@ -123,7 +123,18 @@ A class decorator that registers your class as a directive for elements matching
 
 - **`selector`**: A valid CSS selector string.
 
-The decorated class **must** have a constructor that accepts a single `HTMLElement` argument.
+The decorated class **must** extend `DirectiveBase`. Synapse will instantiate it for each matching element.
+
+### `DirectiveBase`
+
+An abstract class that your directive classes must extend. It provides the following protected properties and methods:
+
+- **`constructor(element: HTMLElement, selector: string)`**: The base constructor automatically called by Synapse. It initializes the `element_`, `selector_`, and `logger_` properties and then calls `update_()`. You should not need to override it.
+- **`element_: HTMLElement`** (readonly): The DOM element the directive is attached to.
+- **`selector_: string`** (readonly): The CSS selector that matched the element.
+- **`logger_`** (readonly): A dedicated logger instance pre-configured for the directive (`directive:selector`).
+- **`update_(): void`**: An abstract method that you **must** implement. This is where you should put your directive's initialization logic (e.g., adding event listeners). It's called automatically by the constructor.
+- **`dispatch_(eventName: string, detail?: unknown): void`**: A helper method to dispatch a `CustomEvent` from the `element_`.
 
 ### `bootstrapDirectives(rootElement: Element | Document = document.body)`
 

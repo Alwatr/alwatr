@@ -16,9 +16,9 @@ export type DirectiveConstructor<T extends DirectiveBase = DirectiveBase> = new 
  * @example
  * ```ts
  * @directive('.my-button')
- * class MyButtonDirective {
- *   constructor(element: HTMLElement) {
- *     element.addEventListener('click', () => console.log('Button clicked!'));
+ * class MyButtonDirective extends DirectiveBase {
+ *   protected update_(): void {
+ *     this.element_.addEventListener('click', () => console.log('Button clicked!'));
  *   }
  * }
  * ```
