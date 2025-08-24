@@ -38,7 +38,7 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
         // Mark the element as processed before creating an instance
         element.setAttribute(initializedAttribute, 'true');
         // Instantiate the directive with the element.
-        new constructor(element);
+        new constructor(element, selector);
       });
     }
     catch (err) {
