@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@5.6.8...@alwatr/nanolib@5.7.0) (2025-08-24)
+
+### ✨ Features
+
+* **nanolib:** add @alwatr/synapse as a dependency and export in main module ([6bef692](https://github.com/Alwatr/nanolib/commit/6bef692b4fe9a3728277889912bc9196bf579a3f))
+
+### 🔨 Code Refactoring
+
+* remove unnecessary blank lines from README.md ([27a53e1](https://github.com/Alwatr/nanolib/commit/27a53e15fe5a29bfb3c487e875f1ced3cd311615))
+
 ## [5.6.8](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@5.6.7...@alwatr/nanolib@5.6.8) (2025-08-23)
 
 **Note:** Version bump only for package @alwatr/nanolib
