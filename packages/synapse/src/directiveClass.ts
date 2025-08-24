@@ -13,7 +13,7 @@ export abstract class DirectiveBase {
   /**
    * Logger instance for the directive.
    */
-  protected readonly logger;
+  protected readonly logger_;
 
   /**
    * The target DOM element this directive is attached to.
@@ -26,8 +26,8 @@ export abstract class DirectiveBase {
    * @param selector - The CSS selector for the directive.
    */
   constructor(element: HTMLElement, selector: string) {
-    this.logger = createLogger(`directive:${selector}`);
-    this.logger.logMethodArgs?.('new', {selector, element});
+    this.logger_ = createLogger(`directive:${selector}`);
+    this.logger_.logMethodArgs?.('new', {selector, element});
 
     this.selector_ = selector;
     this.element_ = element;
@@ -47,7 +47,7 @@ export abstract class DirectiveBase {
    * @param detail - Optional data to include in the event.
    */
   protected dispatch_(eventName: string, detail?: unknown): void {
-    this.logger.logMethodArgs?.('dispatch_', {eventName, detail});
+    this.logger_.logMethodArgs?.('dispatch_', {eventName, detail});
     this.element_.dispatchEvent(new CustomEvent(eventName, {detail, bubbles: true}));
   }
 }
