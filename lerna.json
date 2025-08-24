@@ -16,7 +16,7 @@
         "**/*.test.js"
       ],
       "skipBumpOnlyReleases": true,
-      "message": "release: %s",
+      "message": "release:",
       "forceGitTag": true,
       "signGitTag": true,
       "signGitCommit": true,
