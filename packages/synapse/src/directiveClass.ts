@@ -1,3 +1,4 @@
+import {delay} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
 
 /**
@@ -32,7 +33,7 @@ export abstract class DirectiveBase {
     this.selector_ = selector;
     this.element_ = element;
 
-    this.update_();
+    delay.immediate().then(() => this.update_());
   }
 
   /**
