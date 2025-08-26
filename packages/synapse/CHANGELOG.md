@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.0.0...@alwatr/synapse@1.0.1) (2025-08-26)
+
+### 🐛 Bug Fixes
+
+* add missing dependency for @alwatr/delay in package.json ([616025e](https://github.com/Alwatr/nanolib/commit/616025e6d345f16ecedf62761ec96d2ad29c5856))
+* ensure directive update is delayed for proper initialization ([5bc0024](https://github.com/Alwatr/nanolib/commit/5bc0024c52c3813f463141d6508c39090638c4c8))
+
 ## 1.0.0 (2025-08-24)
 
 ### ✨ Features
