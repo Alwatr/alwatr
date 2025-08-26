@@ -407,6 +407,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/synapse@workspace:packages/synapse"
   dependencies:
+    "@alwatr/delay": "workspace:*"
     "@alwatr/logger": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
