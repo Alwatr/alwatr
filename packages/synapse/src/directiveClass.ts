@@ -44,6 +44,7 @@ export abstract class DirectiveBase {
    * Called to update the directive's state or behavior.
    * Must be implemented by subclasses.
    */
+  protected abstract update_(): MaybePromise<void>;
 
   protected init_(): MaybePromise<void> {
     this.logger_.logMethod?.('init');
