@@ -50,6 +50,13 @@ export abstract class DirectiveBase {
     this.logger_.logMethod?.('init');
   }
 
+  protected destroy_(): MaybePromise<void> {
+    this.logger_.logMethod?.('destroy');
+    this.element_.remove();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (this as any).element_ = null;
+  }
+
   /**
    * Dispatches a custom event from the target element.
    * @param eventName - The name of the event.
