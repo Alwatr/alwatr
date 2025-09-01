@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.7](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@5.5.6...@alwatr/logger@5.5.7) (2025-09-01)
+
+### 🔗 Dependencies update
+
+* update lerna-lite dependencies to version 4.7.3 and jest to 30.1.2 ([95d7870](https://github.com/Alwatr/nanolib/commit/95d7870ec7ad1e6ed2688bafddcabf46857f6981))
+
 ## [5.5.6](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@5.5.5...@alwatr/logger@5.5.6) (2025-08-23)
 
 **Note:** Version bump only for package @alwatr/logger

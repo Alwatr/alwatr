@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/yarn-upgrade@1.0.1...@alwatr/yarn-upgrade@1.0.2) (2025-09-01)
+
+### 🔗 Dependencies update
+
+* update lerna-lite dependencies to version 4.7.3 and jest to 30.1.2 ([95d7870](https://github.com/Alwatr/nanolib/commit/95d7870ec7ad1e6ed2688bafddcabf46857f6981))
+
 ## [1.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/yarn-upgrade@1.0.0...@alwatr/yarn-upgrade@1.0.1) (2025-08-23)
 
 **Note:** Version bump only for package @alwatr/yarn-upgrade

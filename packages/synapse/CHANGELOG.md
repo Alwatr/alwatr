@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.0.1...@alwatr/synapse@1.1.0) (2025-09-01)
+
+### ✨ Features
+
+* add destroy_ method to clean up directive resources ([5b3878c](https://github.com/Alwatr/nanolib/commit/5b3878cd709dfda1cb224b296e8e36f900e1dfa3))
+* add init_ method for directive initialization ([30178d4](https://github.com/Alwatr/nanolib/commit/30178d40dcd59052068a334b0e811473fa184dd5))
+* add query and queryAll decorators for element selection ([7eac8d2](https://github.com/Alwatr/nanolib/commit/7eac8d241b9ad714145c42f20a7a8bf58dd4b1e1))
+* update main.ts to export queryDecorators ([66631e5](https://github.com/Alwatr/nanolib/commit/66631e5ddb5e1d0ed6b3883ff2008595a13c3a62))
+
+### 🐛 Bug Fixes
+
+* ensure proper initialization sequence by awaiting init_ before update_ ([f251964](https://github.com/Alwatr/nanolib/commit/f2519648c89a0347978366749b681f8e4e3578a9))
+* ensure update_ method is abstract in DirectiveBase class ([beae25e](https://github.com/Alwatr/nanolib/commit/beae25e45a9cad40501b60efeb4fa6b1e566a16d))
+
 ## [1.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.0.0...@alwatr/synapse@1.0.1) (2025-08-26)
 
 ### 🐛 Bug Fixes
