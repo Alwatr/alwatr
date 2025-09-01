@@ -33,7 +33,11 @@ export abstract class DirectiveBase {
     this.selector_ = selector;
     this.element_ = element;
 
-    delay.immediate().then(() => this.update_());
+    (async () => {
+      await delay.immediate();
+      await this.init_();
+      await this.update_();
+    })();
   }
 
   /**
