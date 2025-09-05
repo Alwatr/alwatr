@@ -15,7 +15,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    jest: "npm:^30.1.2"
+    jest: "npm:^30.1.3"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -58,7 +58,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^22.18.0"
+    "@types/node": "npm:^22.18.1"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -73,7 +73,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^22.18.0"
+    "@types/node": "npm:^22.18.1"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -108,7 +108,7 @@ __metadata:
     "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
-    "@types/node": "npm:^22.18.0"
+    "@types/node": "npm:^22.18.1"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -127,7 +127,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    jest: "npm:^30.1.2"
+    jest: "npm:^30.1.3"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -166,7 +166,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^22.18.0"
+    "@types/node": "npm:^22.18.1"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -179,7 +179,7 @@ __metadata:
     "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
-    jest: "npm:^30.1.2"
+    jest: "npm:^30.1.3"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -205,7 +205,7 @@ __metadata:
     "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
-    jest: "npm:^30.1.2"
+    jest: "npm:^30.1.3"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -232,7 +232,7 @@ __metadata:
     "@alwatr/platform-info": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
-    "@types/node": "npm:^22.18.0"
+    "@types/node": "npm:^22.18.1"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -244,7 +244,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^22.18.0"
+    "@types/node": "npm:^22.18.1"
     esbuild: "npm:^0.25.9"
     typescript: "npm:^5.9.2"
   bin:
@@ -299,7 +299,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^22.18.0"
+    "@types/node": "npm:^22.18.1"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -325,7 +325,7 @@ __metadata:
     "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
-    jest: "npm:^30.1.2"
+    jest: "npm:^30.1.3"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -339,7 +339,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^22.18.0"
+    "@types/node": "npm:^22.18.1"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -371,7 +371,7 @@ __metadata:
     "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
-    jest: "npm:^30.1.2"
+    jest: "npm:^30.1.3"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -398,7 +398,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    jest: "npm:^30.1.2"
+    jest: "npm:^30.1.3"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -454,7 +454,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^22.18.0"
+    "@types/node": "npm:^22.18.1"
     typescript: "npm:^5.9.2"
   bin:
     upd: ./dist/main.mjs
@@ -2557,7 +2557,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.0.0, @types/node@npm:^22.18.0":
+"@types/node@npm:^22.0.0, @types/node@npm:^22.18.1":
   version: 22.18.1
   resolution: "@types/node@npm:22.18.1"
   dependencies:
@@ -2930,7 +2930,7 @@ __metadata:
     eslint-import-resolver-typescript: "npm:^4.4.4"
     eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-require-extensions: "npm:^0.1.3"
-    jest: "npm:^30.1.2"
+    jest: "npm:^30.1.3"
     prettier: "npm:^3.6.2"
     typescript: "npm:^5.9.2"
   languageName: unknown
@@ -6049,7 +6049,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^30.1.2":
+"jest@npm:^30.1.3":
   version: 30.1.3
   resolution: "jest@npm:30.1.3"
   dependencies:

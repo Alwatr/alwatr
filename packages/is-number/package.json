@@ -11,7 +11,7 @@
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/prettier-config": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
-    "jest": "^30.1.2",
+    "jest": "^30.1.3",
     "typescript": "^5.9.2"
   },
   "exports": {
