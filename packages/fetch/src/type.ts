@@ -31,18 +31,18 @@ export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
 /**
  * Options for the fetch request.
  */
-export interface FetchOptions extends RequestInit {
+export interface FetchOptions_ {
   /**
    * A string to set the request's method.
    *
    * @default 'GET'
    */
-  method?: HttpMethod;
+  method: HttpMethod;
 
   /**
    * A Headers object to set the request's headers.
    */
-  headers?: Record<string, string> & HttpRequestHeaders;
+  headers: HttpRequestHeaders & DictionaryReq<string>;
 
   /**
    * A timeout for the fetch request.
@@ -52,21 +52,21 @@ export interface FetchOptions extends RequestInit {
    *
    * @default '8s'
    */
-  timeout?: Duration;
+  timeout: Duration;
 
   /**
    * If the fetch response is not acceptable or timed out, it will retry the request.
    *
    * @default 3
    */
-  retry?: number;
+  retry: number;
 
   /**
    * Delay before each retry.
    *
    * @default '1s'
    */
-  retryDelay?: Duration;
+  retryDelay: Duration;
 
   /**
    * Simple memory caching to remove duplicate/parallel requests.
@@ -78,7 +78,7 @@ export interface FetchOptions extends RequestInit {
    *
    * @default 'never'
    */
-  removeDuplicate?: CacheDuplicate;
+  removeDuplicate: CacheDuplicate;
 
   /**
    * Strategies for caching.
@@ -92,7 +92,7 @@ export interface FetchOptions extends RequestInit {
    *
    * @default 'network_only'
    */
-  cacheStrategy?: CacheStrategy;
+  cacheStrategy: CacheStrategy;
 
   /**
    * Revalidate callback for `stale_while_revalidate` cache strategy.
@@ -101,8 +101,10 @@ export interface FetchOptions extends RequestInit {
 
   /**
    * Custom name for the cache storage.
+   * 
+   * @default 'fetch_cache'
    */
-  cacheStorageName?: string;
+  cacheStorageName: string;
 
   /**
    * Body as a JavaScript object.
@@ -127,3 +129,5 @@ export interface FetchOptions extends RequestInit {
     userToken: string;
   };
 }
+
+export type FetchOptions = Partial<FetchOptions_> & Omit<RequestInit, 'headers'>;
