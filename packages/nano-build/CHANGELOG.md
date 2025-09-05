@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.0.2...@alwatr/nano-build@6.0.3) (2025-09-05)
+
+### 🐛 Bug Fixes
+
+* update target browsers in presetRecord to include Safari 15.6 ([a448366](https://github.com/Alwatr/nanolib/commit/a4483669e530fa597c40c70612979726170d277f))
+
+### 🔗 Dependencies update
+
+* update jest to version 30.1.3 and @types/node to version 22.18.1 ([754212b](https://github.com/Alwatr/nanolib/commit/754212b1523cfc4cfe26c9e9f6d634aa8311e0b7))
+
 ## [6.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.0.1...@alwatr/nano-build@6.0.2) (2025-09-01)
 
 ### 🔗 Dependencies update

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/yarn-upgrade@1.0.2...@alwatr/yarn-upgrade@1.0.3) (2025-09-05)
+
+### 🔗 Dependencies update
+
+* update jest to version 30.1.3 and @types/node to version 22.18.1 ([754212b](https://github.com/Alwatr/nanolib/commit/754212b1523cfc4cfe26c9e9f6d634aa8311e0b7))
+
 ## [1.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/yarn-upgrade@1.0.1...@alwatr/yarn-upgrade@1.0.2) (2025-09-01)
 
 ### 🔗 Dependencies update

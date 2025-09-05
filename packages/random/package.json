@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/random",
   "description": "A lightweight utility library for generating random numbers, strings, UUIDs and more",
-  "version": "5.1.6",
+  "version": "5.1.7",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.10](https://github.com/Alwatr/nanolib/compare/@alwatr/resolve-url@5.5.9...@alwatr/resolve-url@5.5.10) (2025-09-05)
+
+### 🔗 Dependencies update
+
+* update jest to version 30.1.3 and @types/node to version 22.18.1 ([754212b](https://github.com/Alwatr/nanolib/commit/754212b1523cfc4cfe26c9e9f6d634aa8311e0b7))
+
 ## [5.5.9](https://github.com/Alwatr/nanolib/compare/@alwatr/resolve-url@5.5.8...@alwatr/resolve-url@5.5.9) (2025-09-01)
 
 ### 🔗 Dependencies update
