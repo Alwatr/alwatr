@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@5.7.3...@alwatr/nanolib@5.8.0) (2025-09-05)
+
+### ✨ Features
+
+* **nanolib:** add `validate-national-code` package ([f1e1ba8](https://github.com/Alwatr/nanolib/commit/f1e1ba8fc9b060c26e9482a5fab874cf9119ab8f))
+
+### 🔨 Code Refactoring
+
+* rename package & update its usages ([1c3064a](https://github.com/Alwatr/nanolib/commit/1c3064a8d5d7a408f697f200439a4c979dd0e6df))
+
+### 🔗 Dependencies update
+
+* update ([c5326f4](https://github.com/Alwatr/nanolib/commit/c5326f495e0823ea18fc69f21ccb568ffdeb0e60))
+* update workspace dependency versions to use wildcard ([c7c06e5](https://github.com/Alwatr/nanolib/commit/c7c06e54c240317f13f35bb0c2bed92058ec8dbe))
+
 ## [5.7.3](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@5.7.2...@alwatr/nanolib@5.7.3) (2025-09-05)
 
 **Note:** Version bump only for package @alwatr/nanolib
