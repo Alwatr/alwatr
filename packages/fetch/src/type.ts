@@ -1,4 +1,4 @@
-import type {HttpMethod, HttpRequestHeaders, HttpStatusCode} from '@alwatr/http-primer';
+import type {HttpMethod, HttpRequestHeaders} from '@alwatr/http-primer';
 import type {Duration} from '@alwatr/parse-duration';
 
 /**
@@ -32,11 +32,6 @@ export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
  * Options for the fetch request.
  */
 export interface FetchOptions extends RequestInit {
-  /**
-   * Request URL.
-   */
-  url: string;
-
   /**
    * A string to set the request's method.
    *
@@ -132,17 +127,3 @@ export interface FetchOptions extends RequestInit {
     userToken: string;
   };
 }
-
-export type ResponseSuccess<T extends JsonObject> = T & {
-  ok: true;
-  statusCode: HttpStatusCode;
-};
-
-export type ResponseError = {
-  ok: false;
-  statusCode: HttpStatusCode;
-  errorCode: string;
-  errorMessage: string;
-  // responseText?: string;
-  meta?: Json;
-};
