@@ -5,7 +5,7 @@ import {createLogger} from '@alwatr/logger';
 import {packageTracer} from '@alwatr/package-tracer';
 import {parseDuration} from '@alwatr/parse-duration';
 
-import type {FetchOptions} from './type.js';
+import type {FetchOptions_, FetchOptions} from './type.js';
 
 export {cacheSupported};
 export type * from './type.js';
@@ -16,20 +16,22 @@ const logger_ = /* #__PURE__ */ createLogger('@alwatr/fetch');
 
 const globalThis_ = /* #__PURE__ */ getGlobalThis();
 
-let cacheStorage_: Cache;
 const cacheSupported = /* #__PURE__ */ Object.hasOwn(globalThis_, 'caches');
 
 const duplicateRequestStorage_: Record<string, Promise<Response>> = {};
 
-const defaultFetchOptions: FetchOptions = {
+const defaultFetchOptions: FetchOptions_ = {
   method: 'GET',
+  headers: {},
   timeout: 8_000,
   retry: 3,
   retryDelay: 1_000,
-  cacheStrategy: 'network_only',
   removeDuplicate: 'never',
-  window: null,
+  cacheStrategy: 'network_only',
+  cacheStorageName: 'fetch_cache',
 };
+
+type FetchOptions__ = FetchOptions_ & Omit<RequestInit, 'headers'> & {url: string};
 
 /**
  * It's a wrapper around the browser's `fetch` function that adds retry pattern, timeout, cacheStrategy,
@@ -37,7 +39,7 @@ const defaultFetchOptions: FetchOptions = {
  *
  * @see {@link FetchOptions}
  *
- * @param options Fetch options.
+ * @param options_ Fetch options.
  *
  * @returns A promise that resolves to the Response to that request, whether it is successful or not.
  *
@@ -56,21 +58,19 @@ const defaultFetchOptions: FetchOptions = {
 export function fetch(url: string, options: FetchOptions): Promise<Response> {
   logger_.logMethodArgs?.('fetch', {url, options});
 
-  options = {...defaultFetchOptions, ...options};
+  const options_: FetchOptions_ & Omit<RequestInit, 'headers'> = {
+    ...defaultFetchOptions,
+    ...options,
+  };
 
-  if (options.cacheStrategy !== 'network_only' && cacheSupported !== true) {
-    logger_.incident?.('fetch', 'fetch_cache_strategy_unsupported', {
-      cacheSupported,
-    });
-    options.cacheStrategy = 'network_only';
+  options_.window ??= null;
+
+  if (options_.removeDuplicate === 'auto') {
+    options_.removeDuplicate = cacheSupported ? 'until_load' : 'always';
   }
 
-  if (options.removeDuplicate === 'auto') {
-    options.removeDuplicate = cacheSupported ? 'until_load' : 'always';
-  }
-
-  if (url.lastIndexOf('?') === -1 && options.queryParams != null) {
-    const queryParams = options.queryParams;
+  if (url.lastIndexOf('?') === -1 && options_.queryParams != null) {
+    const queryParams = options_.queryParams;
     // prettier-ignore
     const queryArray = Object
       .keys(queryParams)
@@ -81,38 +81,41 @@ export function fetch(url: string, options: FetchOptions): Promise<Response> {
     }
   }
 
-  options.headers ??= {};
-
-  if (options.bodyJson !== undefined) {
-    options.body = JSON.stringify(options.bodyJson);
-    options.headers['content-type'] = MimeTypes.JSON;
+  if (options_.bodyJson !== undefined) {
+    options_.body = JSON.stringify(options_.bodyJson);
+    options_.headers['content-type'] = MimeTypes.JSON;
   }
 
-  if (options.bearerToken !== undefined) {
-    options.headers.authorization = `Bearer ${options.bearerToken}`;
+  if (options_.bearerToken !== undefined) {
+    options_.headers.authorization = `Bearer ${options_.bearerToken}`;
   }
-  else if (options.alwatrAuth !== undefined) {
-    options.headers.authorization = `Alwatr ${options.alwatrAuth.userId}:${options.alwatrAuth.userToken}`;
+  else if (options_.alwatrAuth !== undefined) {
+    options_.headers.authorization = `Alwatr ${options_.alwatrAuth.userId}:${options_.alwatrAuth.userToken}`;
   }
 
-  return handleCacheStrategy_(options as Required<FetchOptions>);
+  return handleCacheStrategy_(options_ as FetchOptions__);
 }
 
 /**
  * Handle Cache Strategy over `handleRemoveDuplicate_`.
  */
-async function handleCacheStrategy_(options: Required<FetchOptions>): Promise<Response> {
+async function handleCacheStrategy_(options: FetchOptions__): Promise<Response> {
   if (options.cacheStrategy === 'network_only') {
     return handleRemoveDuplicate_(options);
   }
   // else handle cache strategies!
   logger_.logMethod?.('_handleCacheStrategy');
 
-  if (cacheStorage_ == null && options.cacheStorageName == null) {
-    cacheStorage_ = await caches.open('fetch_cache');
+  if (!cacheSupported) {
+    logger_.incident?.('fetch', 'fetch_cache_strategy_unsupported', {
+      cacheSupported,
+    });
+    options.cacheStrategy = 'network_only';
+    return handleRemoveDuplicate_(options);
   }
+  // else
 
-  const cacheStorage = options.cacheStorageName != null ? await caches.open(options.cacheStorageName) : cacheStorage_;
+  const cacheStorage = await caches.open(options.cacheStorageName);
 
   const request = new Request(options.url, options);
 
@@ -190,7 +193,7 @@ async function handleCacheStrategy_(options: Required<FetchOptions>): Promise<Re
 /**
  * Handle Remove Duplicates over `_handleRetryPattern`.
  */
-async function handleRemoveDuplicate_(options: Required<FetchOptions>): Promise<Response> {
+async function handleRemoveDuplicate_(options: FetchOptions__): Promise<Response> {
   if (options.removeDuplicate === 'never') return handleRetryPattern_(options);
 
   logger_.logMethod?.('handleRemoveDuplicate_');
@@ -222,7 +225,7 @@ async function handleRemoveDuplicate_(options: Required<FetchOptions>): Promise<
 /**
  * Handle retry pattern over `handleTimeout_`.
  */
-async function handleRetryPattern_(options: Required<FetchOptions>): Promise<Response> {
+async function handleRetryPattern_(options: FetchOptions__): Promise<Response> {
   if (!(options.retry > 1)) return handleTimeout_(options);
 
   logger_.logMethod?.('_handleRetryPattern');
@@ -257,7 +260,7 @@ async function handleRetryPattern_(options: Required<FetchOptions>): Promise<Res
 /**
  * It's a wrapper around the browser's `fetch` with timeout.
  */
-function handleTimeout_(options: FetchOptions): Promise<Response> {
+function handleTimeout_(options: FetchOptions__): Promise<Response> {
   if (options.timeout === 0) {
     return globalThis_.fetch(options.url, options);
   }
