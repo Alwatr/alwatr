@@ -102,7 +102,7 @@ const presetRecord = {
     platform: 'browser',
     format: 'iife',
     mangleProps: '_$',
-    target: ['chrome85', 'firefox115', 'ios15.8'],
+    target: ['chrome85', 'firefox115', 'safari15.6'],
     ...(devMode ? developmentOptions : productionOptions),
   },
   pmpa: {
@@ -111,7 +111,7 @@ const presetRecord = {
     platform: 'browser',
     format: 'iife',
     mangleProps: '_$',
-    target: ['chrome85', 'firefox115', 'ios15.8'],
+    target: ['chrome85', 'firefox115', 'safari15.6'],
     ...(devMode ? developmentOptions : productionOptions),
   },
   weaver: {
@@ -120,7 +120,7 @@ const presetRecord = {
     platform: 'browser',
     format: 'iife',
     mangleProps: '_$',
-    target: ['chrome85', 'firefox115', 'ios15.8'],
+    target: ['chrome85', 'firefox115', 'safari15.6'],
     ...(devMode ? developmentOptions : productionOptions),
   },
   microservice: {
