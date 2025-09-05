@@ -5,7 +5,7 @@
   "devDependencies": {
     "@alwatr/eslint-config": "workspace:*",
     "@alwatr/prettier-config": "workspace:*",
-    "@alwatr/yarn-upgrade": "workspace:^",
+    "@alwatr/yarn-upgrade": "workspace:*",
     "@lerna-lite/changed": "^4.7.3",
     "@lerna-lite/cli": "^4.7.3",
     "@lerna-lite/diff": "^4.7.3",

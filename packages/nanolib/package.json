@@ -17,7 +17,7 @@
     "@alwatr/global-this": "workspace:*",
     "@alwatr/hash-string": "workspace:*",
     "@alwatr/http-primer": "workspace:*",
-    "@alwatr/iranian-national-code-validator": "workspace:^",
+    "@alwatr/iranian-national-code-validator": "workspace:*",
     "@alwatr/is-number": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/logger": "workspace:*",
