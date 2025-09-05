@@ -11,10 +11,9 @@ yarn add @alwatr/fetch
 ## Usage
 
 ```ts
-import {fetch} from 'https://esm.run/@alwatr/fetch';
+import {fetch} from '@alwatr/fetch';
 
-const response = await fetch({
-  url: '/api/products',
+const response = await fetch('/api/products', {
   queryParameters: {limit: 10},
   timeout: 5_000,
   retry: 3,
@@ -35,7 +34,7 @@ console.log(productList);
 - `url`: Request URL.
 - `bodyJson`: Body as JS Object.
 - `queryParameters`: URL Query Parameters as JS Object.
-- `timeout`: A timeout in ms for the fetch request (default `10_000`ms).
+- `timeout`: A timeout in ms for the fetch request (default `8_000`ms).
 - `retry`: If fetch response not acceptable or timed out, it will retry the request (default `3`).
 - `retryDelay`: Delay before each retries (default `1_000`).
 - `removeDuplicate`: Simple memory caching for remove duplicate/parallel requests (default `never`).
@@ -61,5 +60,3 @@ The following companies, organizations, and individuals support Nanolib ongoing 
 ### Contributing
 
 Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
-
-
