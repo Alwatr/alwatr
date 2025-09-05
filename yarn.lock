@@ -197,15 +197,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/iranian-national-code-validator@workspace:^, @alwatr/iranian-national-code-validator@workspace:packages/iranian-national-code-validator":
+"@alwatr/iranian-national-code-validator@workspace:*, @alwatr/iranian-national-code-validator@workspace:packages/iranian-national-code-validator":
   version: 0.0.0-use.local
   resolution: "@alwatr/iranian-national-code-validator@workspace:packages/iranian-national-code-validator"
   dependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/package-tracer": "workspace:^"
-    "@alwatr/prettier-config": "workspace:^"
-    "@alwatr/tsconfig-base": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/package-tracer": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -250,7 +250,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/nano-build@workspace:*, @alwatr/nano-build@workspace:^, @alwatr/nano-build@workspace:packages/nano-build":
+"@alwatr/nano-build@workspace:*, @alwatr/nano-build@workspace:packages/nano-build":
   version: 0.0.0-use.local
   resolution: "@alwatr/nano-build@workspace:packages/nano-build"
   dependencies:
@@ -281,7 +281,7 @@ __metadata:
     "@alwatr/global-this": "workspace:*"
     "@alwatr/hash-string": "workspace:*"
     "@alwatr/http-primer": "workspace:*"
-    "@alwatr/iranian-national-code-validator": "workspace:^"
+    "@alwatr/iranian-national-code-validator": "workspace:*"
     "@alwatr/is-number": "workspace:*"
     "@alwatr/local-storage": "workspace:*"
     "@alwatr/logger": "workspace:*"
@@ -318,7 +318,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/package-tracer@workspace:*, @alwatr/package-tracer@workspace:^, @alwatr/package-tracer@workspace:packages/package-tracer":
+"@alwatr/package-tracer@workspace:*, @alwatr/package-tracer@workspace:packages/package-tracer":
   version: 0.0.0-use.local
   resolution: "@alwatr/package-tracer@workspace:packages/package-tracer"
   dependencies:
@@ -370,7 +370,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/prettier-config@workspace:*, @alwatr/prettier-config@workspace:^, @alwatr/prettier-config@workspace:packages/prettier-config":
+"@alwatr/prettier-config@workspace:*, @alwatr/prettier-config@workspace:packages/prettier-config":
   version: 0.0.0-use.local
   resolution: "@alwatr/prettier-config@workspace:packages/prettier-config"
   languageName: unknown
@@ -431,13 +431,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/tsconfig-base@workspace:*, @alwatr/tsconfig-base@workspace:^, @alwatr/tsconfig-base@workspace:packages/tsconfig-base":
+"@alwatr/tsconfig-base@workspace:*, @alwatr/tsconfig-base@workspace:packages/tsconfig-base":
   version: 0.0.0-use.local
   resolution: "@alwatr/tsconfig-base@workspace:packages/tsconfig-base"
   languageName: unknown
   linkType: soft
 
-"@alwatr/type-helper@workspace:*, @alwatr/type-helper@workspace:^, @alwatr/type-helper@workspace:packages/type-helper":
+"@alwatr/type-helper@workspace:*, @alwatr/type-helper@workspace:packages/type-helper":
   version: 0.0.0-use.local
   resolution: "@alwatr/type-helper@workspace:packages/type-helper"
   dependencies:
@@ -460,7 +460,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/yarn-upgrade@workspace:^, @alwatr/yarn-upgrade@workspace:packages/yarn-upgrade":
+"@alwatr/yarn-upgrade@workspace:*, @alwatr/yarn-upgrade@workspace:packages/yarn-upgrade":
   version: 0.0.0-use.local
   resolution: "@alwatr/yarn-upgrade@workspace:packages/yarn-upgrade"
   dependencies:
@@ -2927,7 +2927,7 @@ __metadata:
   dependencies:
     "@alwatr/eslint-config": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
-    "@alwatr/yarn-upgrade": "workspace:^"
+    "@alwatr/yarn-upgrade": "workspace:*"
     "@lerna-lite/changed": "npm:^4.7.3"
     "@lerna-lite/cli": "npm:^4.7.3"
     "@lerna-lite/diff": "npm:^4.7.3"
