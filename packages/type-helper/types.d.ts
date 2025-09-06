@@ -209,57 +209,52 @@ declare global {
 }
 
 /**
+ * A collection of built-in types that should not be made deeply readonly.
+ */
+type KeepMutable = Date | RegExp | Map<any, any> | Set<any> | WeakMap<any, any> | WeakSet<any>;
+
+/**
  * Global Deep Recursive Types
  */
 declare global {
   /**
-   * Represents a type that makes all properties of an object and its nested objects readonly.
-   * @template T - The type to make readonly.
-   * @returns The readonly version of the input type.
+   * Recursively makes all properties of an object or array `readonly`.
+   * @template T The type to make deeply readonly.
    */
-  type DeepReadonly<T> = T extends ((...args: any[]) => any) | Primitive
+  type DeepReadonly<T> = T extends Primitive | ((...args: any[]) => any)
     ? T
-    : T extends DeepReadonlyArray_<infer U>
-      ? DeepReadonlyArray_<U>
-      : T extends DeepReadonlyObject_<infer V>
-        ? DeepReadonlyObject_<V>
-        : T;
-  type DeepReadonlyArray_<T> = readonly DeepReadonly<T>[];
-  type DeepReadonlyObject_<T> = {
-    readonly [P in keyof T]: DeepReadonly<T[P]>;
-  };
+    : T extends KeepMutable
+      ? T
+      : T extends (infer U)[]
+        ? readonly DeepReadonly<U>[]
+        : T extends readonly (infer U)[]
+          ? readonly DeepReadonly<U>[]
+          : {readonly [P in keyof T]: DeepReadonly<T[P]>};
 
   /**
-   * Recursively makes all properties of an object and its nested objects/array required.
-   * @template T - The type to make deep required.
-   * @param {T} value - The value to make deep required.
-   * @returns {DeepRequired<T>} - The deep required type.
+   * Recursively makes all properties of an object or array required.
+   * It also removes `null` and `undefined` from property types.
+   * @template T The type to make deeply required.
    */
-  type DeepRequired<T> = T extends (...args: any[]) => any
-    ? T
-    : T extends any[]
-      ? DeepRequiredArray_<T[number]>
-      : T extends object
-        ? DeepRequiredObject_<T>
-        : T;
-  type DeepRequiredArray_<T> = DeepRequired<NonUndefined<T>>[];
-  type DeepRequiredObject_<T> = {
-    [P in keyof T]-?: DeepRequired<NonUndefined<T[P]>>;
-  };
-
-  /**
-   * Represents a type that makes all properties of the given type optional recursively.
-   * @template T - The type to make partial.
-   */
-  type DeepPartial<T> = {[P in keyof T]?: DeepPartial_<T[P]>};
-  type DeepPartial_<T> = T extends ((...args: any[]) => any) | Primitive
+  type DeepRequired<T> = T extends Primitive | ((...args: any[]) => any) | KeepMutable
     ? T
     : T extends (infer U)[]
-      ? DeepPartialArray_<U>
-      : T extends object
-        ? DeepPartial<T>
-        : T | undefined;
-  type DeepPartialArray_<T> = DeepPartial_<T>[];
+      ? DeepRequired<NonNullable<U>>[]
+      : T extends readonly (infer U)[]
+        ? DeepRequired<NonNullable<U>>[]
+        : {[P in keyof T]-?: DeepRequired<NonNullable<T[P]>>};
+
+  /**
+   * Recursively makes all properties of an object or array optional.
+   * @template T The type to make deeply partial.
+   */
+  type DeepPartial<T> = T extends Primitive | ((...args: any[]) => any) | KeepMutable
+    ? T
+    : T extends (infer U)[]
+      ? DeepPartial<U>[]
+      : T extends readonly (infer U)[]
+        ? DeepPartial<U>[]
+        : {[P in keyof T]?: DeepPartial<T[P]>};
 }
 
 /**
