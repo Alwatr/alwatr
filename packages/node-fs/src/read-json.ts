@@ -36,7 +36,7 @@ export function readJson<T extends JsonValue>(path: string, sync: true): T;
  * const fileContent = await readJson('./file.json', sync);
  * ```
  */
-export function readJson<T extends JsonValue>(path: string, sync: boolean): MaybePromise<T>;
+export function readJson<T extends JsonValue>(path: string, sync: boolean): Awaitable<T>;
 /**
  * Enhanced read json file.
  *
@@ -48,7 +48,7 @@ export function readJson<T extends JsonValue>(path: string, sync: boolean): Mayb
  * const fileContent = await readJson('./file.json');
  * ```
  */
-export function readJson<T extends JsonValue>(path: string, sync = false): MaybePromise<T> {
+export function readJson<T extends JsonValue>(path: string, sync = false): Awaitable<T> {
   logger.logMethodArgs?.('readJson', {path: path.slice(-32), sync});
   if (sync === true) {
     return parseJson<T>(readFileSync(path));
