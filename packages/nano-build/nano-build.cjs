@@ -1,5 +1,10 @@
 #!/usr/bin/env node
 
+/**
+ * @typedef {import('@alwatr/type-helper')}
+ * @typedef {Omit<import('esbuild').BuildOptions, "mangleProps"> & {cjs?: boolean, mangleProps?: string | RegExp}} BuildOptions
+ */
+
 const {context, build} = require('esbuild');
 const {resolve} = require('path');
 const {existsSync} = require('fs');
@@ -20,7 +25,7 @@ console.log(`🔧 ${devMode ? 'Development' : 'Production'} mode`);
 const watchMode = process.argv.includes('--watch');
 
 /**
- * @type {import('esbuild').BuildOptions}
+ * @type {BuildOptions}
  */
 const defaultOptions = {
   entryPoints: ['src/*.ts'],
@@ -45,7 +50,7 @@ const defaultOptions = {
 };
 
 /**
- * @type {import('esbuild').BuildOptions}
+ * @type {BuildOptions}
  */
 const developmentOptions = {
   sourcemap: true,
@@ -53,14 +58,14 @@ const developmentOptions = {
 };
 
 /**
- * @type {import('esbuild').BuildOptions}
+ * @type {BuildOptions}
  */
 const productionOptions = {
   dropLabels: ['__dev_mode__'],
 };
 
 /**
- * @type {DictionaryOpt<import('esbuild').BuildOptions & {cjs?: boolean}>}
+ * @type {DictionaryOpt<BuildOptions>}
  */
 const presetRecord = {
   default: {},
@@ -171,7 +176,9 @@ function getOptions() {
  * @param {import('esbuild').BuildOptions} options
  */
 async function nanoBuild(options) {
+  // @ts-ignore
   const alsoCjs = options.format === 'esm' && options.cjs;
+  // @ts-ignore
   delete options.cjs;
 
   if (options.format === 'esm' || options.format === 'cjs') {
