@@ -45,13 +45,13 @@ declare global {
   type Maybe<T> = T | undefined;
 
   /**
-   * Represents a value that can be of type `T` or a Promise that resolves to `T`.
+   * Represents a value that can be of type `T` or a Promise that resolves to `T`.  
    * A more idiomatic name for `MaybePromise`.
    * @template T The type of the value.
    * @example
    * async function process(data: Awaitable<string>) {
-   * const resolvedData = await data;
-   * console.log(resolvedData);
+   *   const resolvedData = await data;
+   *   console.log(resolvedData);
    * }
    */
   type Awaitable<T> = T | Promise<T>;
@@ -61,8 +61,8 @@ declare global {
    * @template T The type of the item(s).
    * @example
    * function logItems(items: SingleOrArray<string>) {
-   * const allItems = Array.isArray(items) ? items : [items];
-   * allItems.forEach(item => console.log(item));
+   *   const allItems = Array.isArray(items) ? items : [items];
+   *   allItems.forEach(item => console.log(item));
    * }
    */
   type SingleOrArray<T> = T | T[];
@@ -77,7 +77,6 @@ declare global {
 
   /**
    * Returns the keys of an object type `T` that are required (not optional).
-   *
    * @template T - The object type.
    * @returns The keys of `T` that are required.
    */
@@ -87,7 +86,6 @@ declare global {
 
   /**
    * Returns the keys of an object type `T` that are optional.
-   *
    * @template T - The object type.
    * @returns The keys of `T` that are optional.
    */
@@ -121,7 +119,6 @@ declare global {
 
   /**
    * Recursively makes all properties of an object and its nested objects/array required.
-   *
    * @template T - The type to make deep required.
    * @param {T} value - The value to make deep required.
    * @returns {DeepRequired<T>} - The deep required type.
@@ -184,7 +181,7 @@ declare global {
   type ObjectValues<T> = T[keyof T];
 
   /**
-   * Extracts the item type from an array (including readonly arrays).
+   * Extracts the item type from an array (including readonly arrays).  
    * Returns `never` if `T` is not an array.
    * @template T The array type.
    * @example
@@ -203,6 +200,14 @@ declare global {
    * type C = Overwrite<A, B>; // { a: string; b: string; c: boolean; }
    */
   type Overwrite<M, N> = Omit<M, keyof N> & N;
+
+  /**
+   * Flattens a complex type into a simple object representation (بکش از ما بیرون).  
+   * Useful for improving editor tooltips for complex intersection and mapped types.  
+   * And also to transform an interface into a type to aide with assignability.
+   * @template T The type to simplify.
+   */
+  type Simplify<T> = { [K in keyof T]: T[K] } & {};
 
   /**
    * Make all properties in T required and exclude undefined and null from the property type.
@@ -287,13 +292,5 @@ declare global {
     [Key in keyof Pick<T, FilterJsonifiableKeys<T>>]: T[Key];
   };
 
-  /**
-   * Convert simple type (بکش از ما بیرون).
-   * Useful to flatten the type output to improve type hints shown in editors.
-   * And also to transform an interface into a type to aide with assignability.
-   *
-   * @template T - The type to be simplified.
-   * @returns The simplified type.
-   */
-  type Simplify<T> = {[KeyType in keyof T]: T[KeyType]} & {};
+
 }
