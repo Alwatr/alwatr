@@ -136,29 +136,34 @@ declare global {
  */
 declare global {
   /**
-   * Returns the keys of an object type `T` that are required (not optional).
-   * @template T - The object type.
-   * @returns The keys of `T` that are required.
+   * Extracts the keys of `T` that are required.
+   * @template T The object type.
+   * @example
+   * type Props = { a: number; b?: string };
+   * type RKeys = RequiredKeys<Props>; // "a"
    */
   type RequiredKeys<T> = {
     [K in keyof T]-?: {} extends Pick<T, K> ? never : K;
   }[keyof T];
 
   /**
-   * Returns the keys of an object type `T` that are optional.
-   * @template T - The object type.
-   * @returns The keys of `T` that are optional.
+   * Extracts the keys of `T` that are optional.
+   * @template T The object type.
+   * @example
+   * type Props = { a: number; b?: string };
+   * type OKeys = OptionalKeys<Props>; // "b"
    */
   type OptionalKeys<T> = {
     [K in keyof T]-?: {} extends Pick<T, K> ? K : never;
   }[keyof T];
 
   /**
-   * Retrieves the type of a property from an object type.
-   *
-   * @template T - The object type.
-   * @template K - The property key.
-   * @returns {Prop<T, K>} - The type of the property.
+   * Gets the type of a property from an object type.
+   * @template T The object type.
+   * @template K The property key.
+   * @example
+   * type User = { id: number, name: string };
+   * type NameType = Prop<User, 'name'>; // string
    */
   type Prop<T, K> = K extends keyof T ? T[K] : never;
 
@@ -194,7 +199,9 @@ declare global {
 
   /**
    * Flattens a complex type into a simple object representation (بکش از ما بیرون).
+   *
    * Useful for improving editor tooltips for complex intersection and mapped types.
+   *
    * And also to transform an interface into a type to aide with assignability.
    * @template T The type to simplify.
    */
