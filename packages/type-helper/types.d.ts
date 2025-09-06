@@ -3,11 +3,9 @@
 export {}; // Make this a module
 
 /**
- * Global type declarations for convenient access throughout the project.
+ * Global Basic Types.
  */
 declare global {
-  // --- Basic Primitive and Falsy Types ---
-
   /**
    * Represents a primitive type in TypeScript.
    * @example
@@ -29,9 +27,12 @@ declare global {
    * Represents a type that can be `null` or `undefined`.
    */
   type Nullish = null | undefined;
+}
 
-  // --- Utility Wrapper Types ---
-
+/**
+ * Global Utility Wrapper & Types Modifiers.
+ */
+declare global {
   /**
    * Represents a type `T` that can also be `null`.
    * @template T The base type.
@@ -67,8 +68,6 @@ declare global {
    */
   type SingleOrArray<T> = T | T[];
 
-  // --- Type Modifiers ---
-
   /**
    * Excludes `undefined` from a type `T`.
    * @template T The type to modify.
@@ -97,8 +96,6 @@ declare global {
   type StrictlyRequired<T> = {
     [P in keyof T]-?: NonNullable<T[P]>;
   };
-
-  // --- Dictionary Types ---
 
   /**
    * Represents a dictionary object with string keys and values of a specific type.
@@ -132,9 +129,12 @@ declare global {
    * }
    */
   type DictionaryReq<T = any> = {[key in string]: T};
+}
 
-  // --- Deep Recursive Types ---
-
+/**
+ * Global Object and Key Manipulation
+ */
+declare global {
   /**
    * Returns the keys of an object type `T` that are required (not optional).
    * @template T - The object type.
@@ -152,73 +152,6 @@ declare global {
   type OptionalKeys<T> = {
     [K in keyof T]-?: {} extends Pick<T, K> ? K : never;
   }[keyof T];
-
-  /**
-   * Represents a type that makes all properties of an object and its nested objects readonly.
-   * @template T - The type to make readonly.
-   * @returns The readonly version of the input type.
-   */
-  type DeepReadonly<T> = T extends ((...args: any[]) => any) | Primitive
-    ? T
-    : T extends DeepReadonlyArray_<infer U>
-      ? DeepReadonlyArray_<U>
-      : T extends DeepReadonlyObject_<infer V>
-        ? DeepReadonlyObject_<V>
-        : T;
-  type DeepReadonlyArray_<T> = readonly DeepReadonly<T>[];
-  type DeepReadonlyObject_<T> = {
-    readonly [P in keyof T]: DeepReadonly<T[P]>;
-  };
-
-  /**
-   * Recursively makes all properties of an object and its nested objects/array required.
-   * @template T - The type to make deep required.
-   * @param {T} value - The value to make deep required.
-   * @returns {DeepRequired<T>} - The deep required type.
-   */
-  type DeepRequired<T> = T extends (...args: any[]) => any
-    ? T
-    : T extends any[]
-      ? DeepRequiredArray_<T[number]>
-      : T extends object
-        ? DeepRequiredObject_<T>
-        : T;
-  type DeepRequiredArray_<T> = DeepRequired<NonUndefined<T>>[];
-  type DeepRequiredObject_<T> = {
-    [P in keyof T]-?: DeepRequired<NonUndefined<T[P]>>;
-  };
-
-  /**
-   * Represents a type that makes all properties of the given type optional recursively.
-   * @template T - The type to make partial.
-   */
-  type DeepPartial<T> = {[P in keyof T]?: DeepPartial_<T[P]>};
-  type DeepPartial_<T> = T extends ((...args: any[]) => any) | Primitive
-    ? T
-    : T extends (infer U)[]
-      ? DeepPartialArray_<U>
-      : T extends object
-        ? DeepPartial<T>
-        : T | undefined;
-  type DeepPartialArray_<T> = DeepPartial_<T>[];
-
-  // --- Function and Class Types ---
-
-  /**
-   * Represents a class constructor.
-   * @template T The instance type of the class.
-   * @template TArgs The type of the constructor arguments.
-   */
-  type Class<T, TArgs extends any[] = any[]> = new (...args: TArgs) => T;
-
-  /**
-   * Removes the first parameter from a function type.
-   * @template F The function type.
-   * @example
-   * type MyFunc = (id: string, value: number) => void;
-   * type CurriedFunc = OmitFirstParam<MyFunc>; // (value: number) => void
-   */
-  type OmitFirstParam<F> = F extends (x: any, ...args: infer A) => infer R ? (...args: A) => R : never;
 
   /**
    * Retrieves the type of a property from an object type.
@@ -268,12 +201,71 @@ declare global {
   type Simplify<T> = {[K in keyof T]: T[K]} & {};
 
   /**
-   * Represents an object that has the ability to add event listeners.
+   * Represents a class constructor.
+   * @template T The instance type of the class.
+   * @template TArgs The type of the constructor arguments.
    */
-  export interface HasAddEventListener {
-    addEventListener: (type: string, listener: EventListenerOrEventListenerObject, options?: AddEventListenerOptions) => void;
-  }
+  type Class<T, TArgs extends any[] = any[]> = new (...args: TArgs) => T;
+}
 
+/**
+ * Global Deep Recursive Types
+ */
+declare global {
+  /**
+   * Represents a type that makes all properties of an object and its nested objects readonly.
+   * @template T - The type to make readonly.
+   * @returns The readonly version of the input type.
+   */
+  type DeepReadonly<T> = T extends ((...args: any[]) => any) | Primitive
+    ? T
+    : T extends DeepReadonlyArray_<infer U>
+      ? DeepReadonlyArray_<U>
+      : T extends DeepReadonlyObject_<infer V>
+        ? DeepReadonlyObject_<V>
+        : T;
+  type DeepReadonlyArray_<T> = readonly DeepReadonly<T>[];
+  type DeepReadonlyObject_<T> = {
+    readonly [P in keyof T]: DeepReadonly<T[P]>;
+  };
+
+  /**
+   * Recursively makes all properties of an object and its nested objects/array required.
+   * @template T - The type to make deep required.
+   * @param {T} value - The value to make deep required.
+   * @returns {DeepRequired<T>} - The deep required type.
+   */
+  type DeepRequired<T> = T extends (...args: any[]) => any
+    ? T
+    : T extends any[]
+      ? DeepRequiredArray_<T[number]>
+      : T extends object
+        ? DeepRequiredObject_<T>
+        : T;
+  type DeepRequiredArray_<T> = DeepRequired<NonUndefined<T>>[];
+  type DeepRequiredObject_<T> = {
+    [P in keyof T]-?: DeepRequired<NonUndefined<T[P]>>;
+  };
+
+  /**
+   * Represents a type that makes all properties of the given type optional recursively.
+   * @template T - The type to make partial.
+   */
+  type DeepPartial<T> = {[P in keyof T]?: DeepPartial_<T[P]>};
+  type DeepPartial_<T> = T extends ((...args: any[]) => any) | Primitive
+    ? T
+    : T extends (infer U)[]
+      ? DeepPartialArray_<U>
+      : T extends object
+        ? DeepPartial<T>
+        : T | undefined;
+  type DeepPartialArray_<T> = DeepPartial_<T>[];
+}
+
+/**
+ * Global JSON Types
+ */
+declare global {
   /**
    * Matches any valid JSON primitive value.
    */
@@ -328,4 +320,25 @@ declare global {
   type JsonifyObject<T extends object> = {
     [Key in keyof Pick<T, FilterJsonifiableKeys<T>>]: T[Key];
   };
+}
+
+/**
+ * Other Global Utility Types
+ */
+declare global {
+  /**
+   * Removes the first parameter from a function type.
+   * @template F The function type.
+   * @example
+   * type MyFunc = (id: string, value: number) => void;
+   * type CurriedFunc = OmitFirstParam<MyFunc>; // (value: number) => void
+   */
+  type OmitFirstParam<F> = F extends (x: any, ...args: infer A) => infer R ? (...args: A) => R : never;
+
+  /**
+   * Represents an object that has the ability to add event listeners.
+   */
+  export interface HasAddEventListener {
+    addEventListener: (type: string, listener: EventListenerOrEventListenerObject, options?: AddEventListenerOptions) => void;
+  }
 }
