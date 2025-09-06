@@ -268,60 +268,46 @@ declare global {
  * Global JSON Types
  */
 declare global {
-  /**
-   * Matches any valid JSON primitive value.
-   */
+  /** A JSON-compatible primitive value. */
   type JsonPrimitive = string | number | boolean | null;
 
   /**
-   * Strigifyable JSON value that can be of type `string`, `number`, `boolean`, `null`, `undefined`,
-   * `JSONArray`, or `JSONObject`.
+   * Any JSON-compatible value.
+   * This is a recursive type that defines the structure of a JSON object.
    */
-  type JsonValue = JsonPrimitive | JsonArray | JsonObject | JsonifiableObject | undefined;
+  type JsonValue = JsonPrimitive | JsonObject | JsonArray;
 
   /**
-   * Represents `Array<JSONValues>`.
+   * A JSON-compatible array.
    */
-  type JsonArray = JsonValue[] | readonly JsonValue[];
+  interface JsonArray extends Array<JsonValue> {}
 
   /**
-   * Represents an `Dictionary` of `JSONValue` (Record<string, JSONValues>)
+   * A JSON-compatible object.
    */
-  type JsonObject = {[Key in string]?: JsonValue};
+  interface JsonObject extends DictionaryOpt<JsonValue> {}
 
   /**
-   * Represents an object that can be converted to JSON value (JsonObject or an object with toJSON method).
+   * Converts a TypeScript type into its JSON-compatible representation.
+   * - Removes functions, `undefined`, and symbols.
+   * - Converts `Date` objects to strings (`toISOString`).
+   * - Recursively processes objects and arrays.
+   * - Handles objects with a `toJSON` method.
+   * @template T The type to convert to a JSON-compatible type.
    */
-  type JsonifiableObject = JsonObject | {toJSON: () => JsonValue};
-
-  /**
-   * Represents a Json response content that can be of type `JSONArray` or `JSONObject`.
-   */
-  type Json = JsonArray | JsonObject | JsonifiableObject;
-
-  /**
-   * Represents a type that cannot be converted to JSON.
-   * This includes functions, undefined, and symbols.
-   */
-  type NotJsonifiable = ((...arguments_: any[]) => any) | undefined | symbol;
-
-  /**
-   * Filters out the keys from an object type that have values that are not JSONifiable.
-   * @template T - The object type to filter.
-   * @returns The keys from the object type that have values that are JSONifiable.
-   */
-  type FilterJsonifiableKeys<T extends object> = {
-    [Key in keyof T]: T[Key] extends NotJsonifiable ? never : Key;
-  }[keyof T];
-
-  /**
-   * Converts an object type to a JSONifiable object type.
-   * @template T - The object type to be converted.
-   * @returns The JSONifiable object.
-   */
-  type JsonifyObject<T extends object> = {
-    [Key in keyof Pick<T, FilterJsonifiableKeys<T>>]: T[Key];
-  };
+  type Jsonify<T> = T extends {toJSON(): infer J}
+    ? J
+    : T extends JsonPrimitive
+      ? T
+      : T extends Date
+        ? string
+        : T extends (infer U)[]
+          ? Jsonify<U>[]
+          : T extends readonly (infer U)[]
+            ? readonly Jsonify<U>[]
+            : T extends object
+              ? {[K in keyof T as T[K] extends ((...args: any[]) => any) | undefined | symbol ? never : K]: Jsonify<T[K]>}
+              : never;
 }
 
 /**
