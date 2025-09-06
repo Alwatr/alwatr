@@ -76,6 +76,31 @@ declare global {
   type NonUndefined<T> = T extends undefined ? never : T;
 
   /**
+   * Makes all properties of an object mutable (removes `readonly`).
+   * @template T The type to make mutable.
+   * @example
+   * type Config = { readonly port: number; };
+   * type MutableConfig = Mutable<Config>; // { port: number; }
+   */
+  type Mutable<T> = {
+    -readonly [P in keyof T]: T[P];
+  };
+
+  /**
+   * Makes properties of `T` required and removes `null` and `undefined` from their types.
+   * Stricter than the built-in `Required<T>`.
+   * @template T The type to make strictly required.
+   * @example
+   * type User = { name?: string | null; age?: number; };
+   * type StrictUser = StrictlyRequired<User>; // { name: string; age: number; }
+   */
+  type StrictlyRequired<T> = {
+    [P in keyof T]-?: NonNullable<T[P]>;
+  };
+
+  // --- Deep Recursive Types ---
+
+  /**
    * Returns the keys of an object type `T` that are required (not optional).
    * @template T - The object type.
    * @returns The keys of `T` that are required.
@@ -92,13 +117,6 @@ declare global {
   type OptionalKeys<T> = {
     [K in keyof T]-?: {} extends Pick<T, K> ? K : never;
   }[keyof T];
-
-  /**
-   * Represents a type that makes all properties of an object mutable (remove readonly).
-   */
-  type Mutable<T> = {
-    -readonly [P in keyof T]: T[P];
-  };
 
   /**
    * Represents a type that makes all properties of an object and its nested objects readonly.
@@ -213,13 +231,6 @@ declare global {
    * @template T The type to simplify.
    */
   type Simplify<T> = {[K in keyof T]: T[K]} & {};
-
-  /**
-   * Make all properties in T required and exclude undefined and null from the property type.
-   */
-  type StrictlyRequired<T> = {
-    [P in keyof T]-?: NonNullable<T[P]>;
-  };
 
   /**
    * Represents an object that has the ability to add event listeners.
