@@ -92,7 +92,7 @@ export interface AlwatrFetchOptions_ {
    * A JavaScript object to be sent as the request's JSON body.
    * Automatically sets the 'Content-Type' header to 'application/json'.
    */
-  bodyJson?: Json;
+  bodyJson?: JsonValue;
 
   /**
    * A JavaScript object of query parameters to be appended to the request URL.
