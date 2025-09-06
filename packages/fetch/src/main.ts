@@ -75,7 +75,7 @@ export function fetch(url: string, options: FetchOptions): Promise<Response> {
     // prettier-ignore
     const queryArray = Object
       .keys(queryParams)
-      .map(key => `${key}=${String(queryParams[key])}`);
+      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(String(queryParams[key]))}`);
 
     if (queryArray.length > 0) {
       options_.url += '?' + queryArray.join('&');
