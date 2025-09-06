@@ -2,8 +2,10 @@ export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS'
 
 /**
  * Represents the collection of HTTP response headers.
+ *
+ * For supporting custom headers, you can use intersection with a dictionary type, e.g., `HttpResponseHeaders & DictionaryReq<string>`.
  */
-export interface HttpResponseHeaders {
+export type HttpResponseHeaders = {
   /**
    * Indicates if the server supports range requests for the target resource.
    */
@@ -154,15 +156,14 @@ export interface HttpResponseHeaders {
    * Indicates the authentication scheme that should be used to access the requested entity.
    */
   'www-authenticate'?: string;
-
-  // Additional headers can be added here as needed
-  [headerName: Lowercase<string>]: string | string[] | number | undefined;
 }
 
 /**
  * Represents the collection of all HTTP Request headers.
+ * 
+ * For supporting custom headers, you can use intersection with a dictionary type, e.g., `HttpResponseHeaders & DictionaryReq<string>`.
  */
-export interface HttpRequestHeaders {
+export type HttpRequestHeaders = {
   /**
    * Content-Types that are acceptable for the response.
    *
@@ -873,7 +874,4 @@ export interface HttpRequestHeaders {
    * Example: `x-xss-protection: '1; mode=block'`
    */
   'x-xss-protection'?: string;
-
-  // Additional headers can be added here as needed
-  [headerName: Lowercase<string>]: string | string[] | number | undefined;
 }

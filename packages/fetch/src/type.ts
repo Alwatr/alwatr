@@ -1,131 +1,111 @@
-import type {HttpMethod, HttpRequestHeaders, HttpStatusCode} from '@alwatr/http-primer';
+import type {HttpMethod, HttpRequestHeaders} from '@alwatr/http-primer';
 import type {Duration} from '@alwatr/parse-duration';
 
 /**
- * Represents a dictionary of query parameters.
- * The keys are strings and the values can be strings, numbers, or booleans.
+ * A dictionary of query parameters.
+ * Keys are strings, and values can be strings, numbers, or booleans.
  */
 export type QueryParams = DictionaryOpt<string | number | boolean>;
 
 /**
- * Represents the cache strategy for fetching data.
+ * Defines the caching strategy for a fetch request.
  *
- * - 'network_only': Fetches data from the network only.
- * - 'network_first': Tries to fetch data from the network first, and falls back to the cache if the network request fails.
- * - 'cache_only': Fetches data from the cache only.
- * - 'cache_first': Tries to fetch data from the cache first, and falls back to the network if the cache request fails.
- * - 'update_cache': Fetches data from the network and updates the cache with the new data.
- * - 'stale_while_revalidate': Returns the stale data from the cache while fetching updated data from the network.
+ * - `network_only`: Always fetches from the network.
+ * - `network_first`: Tries the network first, then falls back to the cache.
+ * - `cache_only`: Only fetches from the cache; fails if not found.
+ * - `cache_first`: Tries the cache first, then falls back to the network.
+ * - `update_cache`: Fetches from the network and updates the cache.
+ * - `stale_while_revalidate`: Serves from cache while revalidating in the background.
  */
 export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'update_cache' | 'stale_while_revalidate';
 
 /**
- * Represents the caching behavior for duplicate requests.
- * - 'never': The response will not be cached.
- * - 'always': The response will always be cached.
- * - 'until_load': The response will be cached until the page is reloaded.
- * - 'auto': The caching behavior will be determined automatically.
+ * Defines the caching behavior for identical, parallel requests.
+ * - `never`: No deduplication is performed.
+ * - `always`: The response is cached for the lifetime of the application.
+ * - `until_load`: The response is cached until the initial request is complete.
+ * - `auto`: Automatically selects the best strategy (`until_load` in browsers, `always` otherwise).
  */
 export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
 
 /**
- * Options for the fetch request.
+ * Defines the options for an Alwatr fetch request.
  */
-export interface FetchOptions extends RequestInit {
+export interface AlwatrFetchOptions_ {
   /**
-   * Request URL.
-   */
-  url: string;
-
-  /**
-   * A string to set the request's method.
-   *
+   * The HTTP request method.
    * @default 'GET'
    */
-  method?: HttpMethod;
+  method: HttpMethod;
 
   /**
-   * A Headers object to set the request's headers.
+   * An object of request headers.
    */
-  headers?: Record<string, string> & HttpRequestHeaders;
+  headers: HttpRequestHeaders & DictionaryReq<string>;
 
   /**
-   * A timeout for the fetch request.
-   * Set `0` to disable it.
-   *
-   * Use with caution, as it may cause memory leaks in Node.js.
-   *
+   * Request timeout duration. Can be a number (milliseconds) or a string (e.g., '5s').
+   * Set to `0` to disable.
    * @default '8s'
    */
-  timeout?: Duration;
+  timeout: Duration;
 
   /**
-   * If the fetch response is not acceptable or timed out, it will retry the request.
-   *
+   * Number of times to retry a failed request.
+   * Retries occur on network errors, timeouts, or 5xx server responses.
    * @default 3
    */
-  retry?: number;
+  retry: number;
 
   /**
-   * Delay before each retry.
-   *
+   * Delay before each retry attempt. Can be a number (milliseconds) or a string (e.g., '2s').
    * @default '1s'
    */
-  retryDelay?: Duration;
+  retryDelay: Duration;
 
   /**
-   * Simple memory caching to remove duplicate/parallel requests.
-   *
-   * - `never`: Never use memory caching.
-   * - `always`: Always use memory caching and remove all duplicate requests.
-   * - `until_load`: Cache parallel requests until the request is completed (it will be removed after the promise is resolved).
-   * - `auto`: If CacheStorage is supported, use `until_load` strategy; otherwise, use `always`.
-   *
+   * Strategy for handling duplicate parallel requests.
+   * Uniqueness is determined by method, URL, and request body.
    * @default 'never'
    */
-  removeDuplicate?: CacheDuplicate;
+  removeDuplicate: CacheDuplicate;
 
   /**
-   * Strategies for caching.
-   *
-   * - `network_only`: Only network request without any cache.
-   * - `network_first`: Network first, falling back to cache.
-   * - `cache_only`: Cache only without any network request.
-   * - `cache_first`: Cache first, falling back to network.
-   * - `update_cache`: Like `network_only` but with update cache.
-   * - `stale_while_revalidate`: Fastest strategy, use cached first but always request network to update the cache.
-   *
+   * The caching strategy to use for the request.
+   * Requires a browser environment with Cache API support.
    * @default 'network_only'
    */
-  cacheStrategy?: CacheStrategy;
+  cacheStrategy: CacheStrategy;
 
   /**
-   * Revalidate callback for `stale_while_revalidate` cache strategy.
+   * A callback function that is executed with the fresh response when using the 'stale_while_revalidate' cache strategy.
    */
   revalidateCallback?: (response: Response) => void | Promise<void>;
 
   /**
-   * Custom name for the cache storage.
+   * Custom name for the CacheStorage instance.
+   * @default 'fetch_cache'
    */
-  cacheStorageName?: string;
+  cacheStorageName: string;
 
   /**
-   * Body as a JavaScript object.
+   * A JavaScript object to be sent as the request's JSON body.
+   * Automatically sets the 'Content-Type' header to 'application/json'.
    */
   bodyJson?: Json;
 
   /**
-   * URL query parameters as a JavaScript object.
+   * A JavaScript object of query parameters to be appended to the request URL.
    */
   queryParams?: QueryParams;
 
   /**
-   * Add token to the Authentication bearer header.
+   * A bearer token to be added to the 'Authorization' header.
    */
   bearerToken?: string;
 
   /**
-   * Alwatr token scheme
+   * Alwatr-specific authentication credentials.
    */
   alwatrAuth?: {
     userId: string;
@@ -133,16 +113,7 @@ export interface FetchOptions extends RequestInit {
   };
 }
 
-export type ResponseSuccess<T extends JsonObject> = T & {
-  ok: true;
-  statusCode: HttpStatusCode;
-};
-
-export type ResponseError = {
-  ok: false;
-  statusCode: HttpStatusCode;
-  errorCode: string;
-  errorMessage: string;
-  // responseText?: string;
-  meta?: Json;
-};
+/**
+ * Combined type for fetch options, including standard RequestInit properties.
+ */
+export type FetchOptions = Partial<AlwatrFetchOptions_> & Omit<RequestInit, 'headers'>;
