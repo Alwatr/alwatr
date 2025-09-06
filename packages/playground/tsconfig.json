@@ -2,10 +2,7 @@
   "extends": "@alwatr/tsconfig-base/tsconfig.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "dist",
-    "emitDeclarationOnly": true,
-    "composite": true,
-    "types": ["@alwatr/nano-build"]
+    "noEmit": true,
   },
   "include": ["src/**/*.ts"],
   "references": [{"path": "../nanolib"}]
