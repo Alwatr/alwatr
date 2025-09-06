@@ -20,3 +20,5 @@ export * from '@alwatr/http-primer';
 export * from '@alwatr/hash-string';
 export * from '@alwatr/synapse';
 export * from '@alwatr/iranian-national-code-validator';
+export type {} from '@alwatr/type-helper';
+export type {} from '@alwatr/nano-build';
