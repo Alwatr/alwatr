@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.1...@alwatr/synapse@1.1.2) (2025-09-06)
+
+### 🔨 Code Refactoring
+
+* update method return types to Awaitable for consistency ([623a8f7](https://github.com/Alwatr/nanolib/commit/623a8f74e9f4ce8142363874ade116a87448df3a))
+
 ## [1.1.1](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.0...@alwatr/synapse@1.1.1) (2025-09-05)
 
 **Note:** Version bump only for package @alwatr/synapse

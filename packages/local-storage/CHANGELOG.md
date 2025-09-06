@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.9](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@5.5.8...@alwatr/local-storage@5.5.9) (2025-09-06)
+
+### 🐛 Bug Fixes
+
+* support json primitive values ([0af6a75](https://github.com/Alwatr/nanolib/commit/0af6a75881073a586d89666679b1c2e351f48224))
+
+### 🔨 Code Refactoring
+
+* update type definitions for getItem and setItem to use JsonValue for consistency ([140cd09](https://github.com/Alwatr/nanolib/commit/140cd09c4c4cdab480fd2263f387bf9385b497ef))
+
 ## [5.5.8](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@5.5.7...@alwatr/local-storage@5.5.8) (2025-09-05)
 
 **Note:** Version bump only for package @alwatr/local-storage

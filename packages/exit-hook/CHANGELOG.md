@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.9](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@5.5.8...@alwatr/exit-hook@5.5.9) (2025-09-06)
+
+**Note:** Version bump only for package @alwatr/exit-hook
+
 ## [5.5.8](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@5.5.7...@alwatr/exit-hook@5.5.8) (2025-09-05)
 
 ### 🔗 Dependencies update

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@6.0.0...@alwatr/nanolib@6.0.1) (2025-09-06)
+
+### 🔨 Code Refactoring
+
+* add type exports from type-helper and nano-build for consistency ([ee33b8c](https://github.com/Alwatr/nanolib/commit/ee33b8cfb88b5681c24f2b10dcd72b798eccd962))
+* move dependencies to 'dependencies' section and remove from 'devDependencies' for consistency ([87fb706](https://github.com/Alwatr/nanolib/commit/87fb706a22ea493d1e93b6e0f321cc999d11eefd))
+
 ## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@5.8.0...@alwatr/nanolib@6.0.0) (2025-09-06)
 
 **Note:** Version bump only for package @alwatr/nanolib

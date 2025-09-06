@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.9](https://github.com/Alwatr/nanolib/compare/@alwatr/node-fs@5.5.8...@alwatr/node-fs@5.5.9) (2025-09-06)
+
+### 🔨 Code Refactoring
+
+* update return types for readJson and writeJson functions to use Awaitable for consistency ([3215d65](https://github.com/Alwatr/nanolib/commit/3215d6509f4b4d1985726f1a2ca67997a0cbee8b))
+
 ## [5.5.8](https://github.com/Alwatr/nanolib/compare/@alwatr/node-fs@5.5.7...@alwatr/node-fs@5.5.8) (2025-09-05)
 
 ### 🔗 Dependencies update

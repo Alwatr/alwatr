@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/unicode-digits",
   "description": "Convert the String of number of the source language to the destination language.",
-  "version": "5.5.8",
+  "version": "5.5.9",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {

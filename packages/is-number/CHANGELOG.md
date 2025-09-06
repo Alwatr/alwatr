@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.6](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.7.5...@alwatr/is-number@5.7.6) (2025-09-06)
+
+**Note:** Version bump only for package @alwatr/is-number
+
 ## [5.7.5](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.7.4...@alwatr/is-number@5.7.5) (2025-09-05)
 
 ### 🔗 Dependencies update

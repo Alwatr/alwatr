@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@5.0.2...@alwatr/tsconfig-base@6.0.0) (2025-09-06)
+
+### ⚠ BREAKING CHANGES
+
+* **tsconfig:** Updated TypeScript target to ESNext for modern JavaScript features. Enabled `noEmitHelpers`, which may affect build outputs.
+
+### ✨ Features
+
+* **tsconfig:** update target to ESNext and refine compiler options ([e6bfca0](https://github.com/Alwatr/nanolib/commit/e6bfca04369d13da36af7a31f4fc6b082e52b271))
+
+### 🐛 Bug Fixes
+
+* add 'json' to files pattern in package.json for consistency ([a2ccac5](https://github.com/Alwatr/nanolib/commit/a2ccac595c53970616272bba5a7a59c2c164cad8))
+* **tsconfig:** enable composite option for improved project structure ([4ce1181](https://github.com/Alwatr/nanolib/commit/4ce1181d7fc3adf431b39103e51ac656339e7190))
+
 ## [5.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@5.0.1...@alwatr/tsconfig-base@5.0.2) (2025-08-23)
 
 **Note:** Version bump only for package @alwatr/tsconfig-base

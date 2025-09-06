@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@5.4.4...@alwatr/type-helper@6.0.0) (2025-09-06)
+
+### ⚠ BREAKING CHANGES
+
+* The JSON types completely refactored for better consistency and clarity. Use new `JsonPrimitive`, `JsonValue`, `JsonArray`, `JsonObject` and powerful `Jsonify` util.
+* The type alias `Merge` has been renamed to `Overwrite` to avoid confusion with deep merging. The new name better describes its functionality: properties of `N` overwrite properties of `M`.
+* The type `ArrayItems` has been renamed to `ArrayItem` for better consistency and clarity.
+The logic has been updated to return `never` if the input is not an array. Additionally, it now supports readonly arrays using `readonly (infer U)[]
+* The type alias `Values` has been renamed to `ObjectValues` for better alignment with the TypeScript ecosystem. Update all references
+* The type alias `Immutable<T>` has been removed. Use internal `Readonly<T>` for better alignment with the TypeScript ecosystem. Update all references
+* The type alias `MaybePromise` has been renamed to `Awaitable` for better alignment with the TypeScript ecosystem. Update all references
+* Import separate types not supported anymore, please just use global usage.
+
+### 🔨 Code Refactoring
+
+* enhance Class type definition to include constructor argument types ([698b3d0](https://github.com/Alwatr/nanolib/commit/698b3d03e9fc7ce1650d8c2bfeb8efdf0225a3c5))
+* enhance DeepReadonly, DeepRequired, and DeepPartial types for improved type safety ([76c905f](https://github.com/Alwatr/nanolib/commit/76c905f85bd50f502675b0d351031f7e8c830515))
+* enhance documentation for RequiredKeys, OptionalKeys, and Prop types ([1bb1ec4](https://github.com/Alwatr/nanolib/commit/1bb1ec4f5fe11a75ea56b7e9ca968b3b7f8bbfae))
+* improve JSON type definitions and enhance documentation ([0928233](https://github.com/Alwatr/nanolib/commit/0928233618eb4f0386066f1a09e7eee43f768d61))
+* improve type documentation ([f16d032](https://github.com/Alwatr/nanolib/commit/f16d032caafc36cc6b3ac2995b1bead3bd55dc96))
+* improve type documentation and add Simplify type definition ([33ffdcf](https://github.com/Alwatr/nanolib/commit/33ffdcf0fedf0cd1e05997fc7487dd6cd995327f))
+* improve type documentation and formatting in type definitions ([e856018](https://github.com/Alwatr/nanolib/commit/e85601807abc9af62232d3079c4aaf7263d76311))
+* improve type documentation and organization in type declarations ([695979b](https://github.com/Alwatr/nanolib/commit/695979bbbf2ac73344cf859dca966da6552a1df3))
+* redefine all types as just global and remove exported each types ([c4ac67a](https://github.com/Alwatr/nanolib/commit/c4ac67a102c15a982c4b32822bd606239c32f05c))
+* remove export from HasAddEventListener interface for consistency ([8aaaba2](https://github.com/Alwatr/nanolib/commit/8aaaba26e5ce12433521c95abacb116677c10174))
+* remove Immutable type definition from global types ([a154220](https://github.com/Alwatr/nanolib/commit/a154220c24fa98f20820121566b82621cdd29958))
+* rename ArrayItems to ArrayItem and fix its logic ([9a63a3f](https://github.com/Alwatr/nanolib/commit/9a63a3fbe2eb7a14b687e90cf045993a5f912990))
+* rename MaybePromise to Awaitable and update documentation ([35bf339](https://github.com/Alwatr/nanolib/commit/35bf3397283f70a8d145b88c06c42fc7ab5a76d3))
+* rename Merge to Overwrite for clarity ([25e4f02](https://github.com/Alwatr/nanolib/commit/25e4f02f3ad6ae6419171f1c208fbd668aa34508))
+* rename Values type to ObjectValues and update documentation ([368de42](https://github.com/Alwatr/nanolib/commit/368de42027738a8ca4fa12b80433d218326b8cbd))
+* reorganize global type declarations and improve documentation ([e91a459](https://github.com/Alwatr/nanolib/commit/e91a4597bacf3381ba124f1b22b1dcbdeb24877a))
+* update DictionaryOpt and DictionaryReq documents ([8be1955](https://github.com/Alwatr/nanolib/commit/8be1955205ea8b4d711f5e5dca9d66609086a04f))
+
 ## [5.4.4](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@5.4.3...@alwatr/type-helper@5.4.4) (2025-08-23)
 
 **Note:** Version bump only for package @alwatr/type-helper

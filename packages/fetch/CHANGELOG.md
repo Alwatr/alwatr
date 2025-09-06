@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@6.0.0...@alwatr/fetch@6.0.1) (2025-09-06)
+
+### 🔨 Code Refactoring
+
+* update bodyJson type definition to use JsonValue for consistency ([ca18953](https://github.com/Alwatr/nanolib/commit/ca1895314e918a157610a554fefcabcb71de97b6))
+
 ## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@5.6.7...@alwatr/fetch@6.0.0) (2025-09-06)
 
 ### ⚠ BREAKING CHANGES

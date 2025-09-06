@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/tsconfig-base",
   "description": "This is a base TypeScript configuration for Alwatr projects.",
-  "version": "5.0.2",
+  "version": "6.0.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "files": [

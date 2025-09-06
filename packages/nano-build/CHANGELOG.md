@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.0.3...@alwatr/nano-build@6.1.0) (2025-09-06)
+
+### ✨ Features
+
+* **nano-build:** enhance logging with picocolors for better visibility ([b7186ea](https://github.com/Alwatr/nanolib/commit/b7186ea124615f0e065bf21d8eb2a248150d3e2a))
+
+### 🔨 Code Refactoring
+
+* remove types configuration for consistency with project standards ([3028601](https://github.com/Alwatr/nanolib/commit/3028601ba30ef3dc91d079e8da1e208d6b911b7d))
+* update type definitions for BuildOptions for consistency and clarity ([a8678b2](https://github.com/Alwatr/nanolib/commit/a8678b2d2e71217d7c110341be5912bf4de55df3))
+
 ## [6.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.0.2...@alwatr/nano-build@6.0.3) (2025-09-05)
 
 ### 🐛 Bug Fixes
