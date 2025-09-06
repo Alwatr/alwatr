@@ -296,6 +296,7 @@ __metadata:
     "@alwatr/resolve-url": "workspace:*"
     "@alwatr/synapse": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     "@alwatr/unicode-digits": "workspace:*"
     typescript: "npm:^5.9.2"
   languageName: unknown
@@ -442,7 +443,6 @@ __metadata:
   resolution: "@alwatr/type-helper@workspace:packages/type-helper"
   dependencies:
     "@alwatr/prettier-config": "workspace:*"
-    "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -7219,6 +7219,7 @@ __metadata:
     "@alwatr/nanolib": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
