@@ -151,9 +151,10 @@ declare global {
 
   /**
    * Represents a class constructor.
-   * @template T - The type of the class.
+   * @template T The instance type of the class.
+   * @template TArgs The type of the constructor arguments.
    */
-  type Class<T> = new (...args: any[]) => T;
+  type Class<T, TArgs extends any[] = any[]> = new (...args: TArgs) => T;
 
   /**
    * Removes the first parameter from a function type.
