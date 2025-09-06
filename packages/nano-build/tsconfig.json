@@ -6,7 +6,6 @@
     "noEmit": true,
     "moduleResolution": "Node",
     "module": "commonjs",
-    "types": ["node", "@alwatr/type-helper"]
   },
   "include": ["*.cjs"]
 }
