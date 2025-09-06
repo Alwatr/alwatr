@@ -45,7 +45,7 @@ declare global {
   type Maybe<T> = T | undefined;
 
   /**
-   * Represents a value that can be of type `T` or a Promise that resolves to `T`.  
+   * Represents a value that can be of type `T` or a Promise that resolves to `T`.
    * A more idiomatic name for `MaybePromise`.
    * @template T The type of the value.
    * @example
@@ -149,6 +149,8 @@ declare global {
         : T | undefined;
   type DeepPartialArray_<T> = DeepPartial_<T>[];
 
+  // --- Function and Class Types ---
+
   /**
    * Represents a class constructor.
    * @template T The instance type of the class.
@@ -159,7 +161,9 @@ declare global {
   /**
    * Removes the first parameter from a function type.
    * @template F The function type.
-   * @returns A new function type without the first parameter.
+   * @example
+   * type MyFunc = (id: string, value: number) => void;
+   * type CurriedFunc = OmitFirstParam<MyFunc>; // (value: number) => void
    */
   type OmitFirstParam<F> = F extends (x: any, ...args: infer A) => infer R ? (...args: A) => R : never;
 
@@ -182,7 +186,7 @@ declare global {
   type ObjectValues<T> = T[keyof T];
 
   /**
-   * Extracts the item type from an array (including readonly arrays).  
+   * Extracts the item type from an array (including readonly arrays).
    * Returns `never` if `T` is not an array.
    * @template T The array type.
    * @example
@@ -203,12 +207,12 @@ declare global {
   type Overwrite<M, N> = Omit<M, keyof N> & N;
 
   /**
-   * Flattens a complex type into a simple object representation (بکش از ما بیرون).  
-   * Useful for improving editor tooltips for complex intersection and mapped types.  
+   * Flattens a complex type into a simple object representation (بکش از ما بیرون).
+   * Useful for improving editor tooltips for complex intersection and mapped types.
    * And also to transform an interface into a type to aide with assignability.
    * @template T The type to simplify.
    */
-  type Simplify<T> = { [K in keyof T]: T[K] } & {};
+  type Simplify<T> = {[K in keyof T]: T[K]} & {};
 
   /**
    * Make all properties in T required and exclude undefined and null from the property type.
@@ -292,6 +296,4 @@ declare global {
   type JsonifyObject<T extends object> = {
     [Key in keyof Pick<T, FilterJsonifiableKeys<T>>]: T[Key];
   };
-
-
 }
