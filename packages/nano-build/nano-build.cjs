@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const pc = require('picocolors');
+
 /**
  * @typedef {import('@alwatr/type-helper')}
  * @typedef {Omit<import('esbuild').BuildOptions, "mangleProps"> & {cjs?: boolean, mangleProps?: string | RegExp}} BuildOptions
@@ -9,20 +11,33 @@ const {context, build} = require('esbuild');
 const {resolve} = require('path');
 const {existsSync} = require('fs');
 
+const logger = {
+  banner: (/** @type {string} */ message, /** @type {unknown[]} */ ...args) => console.log(pc.cyan(pc.bold(`${message}`)), ...args),
+  info: (/** @type {string} */ message, /** @type {unknown[]} */ ...args) => console.log(pc.bgCyan(`[i] ${message} `), ...args),
+  success: (/** @type {string} */ message, /** @type {unknown[]} */ ...args) => console.log(pc.bgGreen(`[✓] ${message} `), ...args),
+  error: (/** @type {string} */ message, /** @type {unknown[]} */ ...args) => console.error(pc.bgRed(`[x] ${message} `), ...args),
+  warn: (/** @type {string} */ message, /** @type {unknown[]} */ ...args) => console.warn(pc.bgYellow(`[!] ${message} `), ...args),
+  log: console.log,
+};
+
 const packageJsonPath = resolve(process.cwd(), 'package.json');
 if (existsSync(packageJsonPath) === false) {
-  console.error('❌ package.json not found', {path: packageJsonPath});
+  logger.error('`package.json` not found in `%s`', packageJsonPath);
   process.exit(1);
 }
 const packageJson = require(packageJsonPath);
 
-console.log('\n🚀 nano-build 📦 %s\n', packageJson.name);
+logger.banner('\n🚀 Alwatr NanoBuild\n');
+logger.banner('📦 %s v%s\n', packageJson.name, packageJson.version);
 
 const devMode = process.env.NODE_ENV !== 'production';
 
-console.log(`🔧 ${devMode ? 'Development' : 'Production'} mode`);
+logger.info(`${devMode ? 'Development' : 'Production'} mode`);
 
 const watchMode = process.argv.includes('--watch');
+if (watchMode) {
+  logger.info('Watch mode enabled');
+}
 
 /**
  * @type {BuildOptions}
@@ -139,16 +154,16 @@ const presetRecord = {
 };
 
 function getOptions() {
-  let presetName = process.argv.find((arg) => arg.startsWith('--preset='))?.split('=')[1] ?? 'default';
-  console.log('🔧 preset: %s', presetName);
+  const presetName = process.argv.find((arg) => arg.startsWith('--preset='))?.split('=')[1] ?? 'default';
+  logger.info('Preset: `%s`', presetName);
   if (!Object.hasOwn(presetRecord, presetName)) {
-    console.error('❌ preset not found', {preset: presetName});
+    logger.error('Preset `%s` not found', presetName);
     process.exit(1);
   }
 
   const presetOptions = presetRecord[presetName];
 
-  let options = {
+  const options = {
     ...defaultOptions,
     ...presetOptions,
     ...packageJson['nano-build'],
@@ -162,7 +177,7 @@ function getOptions() {
     }
   });
 
-  console.log('🛠️  options: %o\n', options);
+  logger.info('Options:', options);
 
   if (typeof options.mangleProps === 'string') {
     options.mangleProps = new RegExp(options.mangleProps);
@@ -189,16 +204,18 @@ async function nanoBuild(options) {
   }
 
   if (watchMode) {
-    console.log('👀 Watching...');
+    logger.info('Watching for changes...');
     const esbuildContext = await context(options);
-    esbuildContext.watch();
+    await esbuildContext.watch();
+    logger.success('Watching for file changes.');
     return;
   }
 
   // else
-  console.log('🛠️  Building...');
+  logger.info('Building...');
   await build(options);
   if (alsoCjs) {
+    logger.info('Building CJS bundle...');
     await build({
       ...options,
       format: 'cjs',
@@ -208,6 +225,7 @@ async function nanoBuild(options) {
       },
     });
   }
+  logger.success('Build complete.');
 }
 
 nanoBuild(getOptions());

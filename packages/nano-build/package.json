@@ -6,7 +6,8 @@
   "bin": "./nano-build.cjs",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
-    "esbuild": "^0.25.9"
+    "esbuild": "^0.25.9",
+    "picocolors": "^1.1.1"
   },
   "devDependencies": {
     "@alwatr/prettier-config": "workspace:*",
