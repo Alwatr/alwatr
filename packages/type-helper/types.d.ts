@@ -34,10 +34,16 @@ declare global {
   type Maybe<T> = T | undefined;
 
   /**
-   * Represents a type that can either be a value of type T or a promise that resolves to a value of type T.
-   * @template T - The type of the value or the resolved value.
+   * Represents a value that can be of type `T` or a Promise that resolves to `T`.
+   * A more idiomatic name for `MaybePromise`.
+   * @template T The type of the value.
+   * @example
+   * async function process(data: Awaitable<string>) {
+   * const resolvedData = await data;
+   * console.log(resolvedData);
+   * }
    */
-  type MaybePromise<T> = T | Promise<T>;
+  type Awaitable<T> = T | Promise<T>;
 
   /**
    * Represents a type that can be either a single value or an array of values.
