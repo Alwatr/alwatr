@@ -44,13 +44,13 @@ export abstract class DirectiveBase {
    * Called to update the directive's state or behavior.
    * Must be implemented by subclasses.
    */
-  protected abstract update_(): MaybePromise<void>;
+  protected abstract update_(): Awaitable<void>;
 
-  protected init_(): MaybePromise<void> {
+  protected init_(): Awaitable<void> {
     this.logger_.logMethod?.('init');
   }
 
-  protected destroy_(): MaybePromise<void> {
+  protected destroy_(): Awaitable<void> {
     this.logger_.logMethod?.('destroy');
     this.element_.remove();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -59,7 +59,7 @@ export const localJsonStorage = {
    * const value = localJsonStorage.getItem('myItem', {a: 1, b: 2});
    * ```
    */
-  getItem<T extends Json>(name: string, defaultValue: T, version = 1): T {
+  getItem<T extends JsonValue>(name: string, defaultValue: T, version = 1): T {
     if (version > 1) {
       this.removeItem(name, version - 1);
     }
@@ -73,7 +73,7 @@ export const localJsonStorage = {
       return defaultValue;
     }
     const json = parseJson<T>(value);
-    if (json === null || typeof json !== 'object') return defaultValue;
+    if (json === null) return defaultValue;
     return json;
   },
 
@@ -104,7 +104,7 @@ export const localJsonStorage = {
    * localJsonStorage.setItem('myItem', {a: 1, b: 2});
    * ```
    */
-  setItem<T extends Json>(name: string, value: T, version = 1): void {
+  setItem<T extends JsonValue>(name: string, value: T, version = 1): void {
     const key = this.key_(name, version);
     localStorage.setItem(key, JSON.stringify(value));
   },

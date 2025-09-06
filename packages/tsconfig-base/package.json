@@ -5,7 +5,7 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "files": [
-    "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
+    "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt,json}",
     "LICENSE",
     "!demo/**/*"
   ],

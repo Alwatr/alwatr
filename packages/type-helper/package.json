@@ -6,19 +6,7 @@
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {
     "@alwatr/prettier-config": "workspace:*",
-    "@alwatr/tsconfig-base": "workspace:*",
     "typescript": "^5.9.2"
-  },
-  "exports": {
-    ".": {
-      "types": "./src/main.d.ts",
-      "default": "./src/main.d.ts"
-    },
-    "./types": {
-      "types": "./src/types.d.ts",
-      "import": "./src/types.mjs",
-      "require": "./src/types.cjs"
-    }
   },
   "files": [
     "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
@@ -62,5 +50,6 @@
     "watch:es": "yarn run build:es --watch",
     "watch:ts": "yarn run build:ts --watch --preserveWatchOutput"
   },
-  "types": "./src/main.d.ts"
+  "type": "module",
+  "types": "types.d.ts"
 }

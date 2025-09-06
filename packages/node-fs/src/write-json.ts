@@ -38,7 +38,7 @@ export function writeJson<T extends JsonValue>(path: string, data: T, sync: true
  * await writeJsonFile('./file.json', { a:1, b:2, c:3 }, sync);
  * ```
  */
-export function writeJson<T extends JsonValue>(path: string, data: T, sync: boolean): MaybePromise<void>;
+export function writeJson<T extends JsonValue>(path: string, data: T, sync: boolean): Awaitable<void>;
 /**
  * Enhanced write json file.
  *
@@ -50,7 +50,7 @@ export function writeJson<T extends JsonValue>(path: string, data: T, sync: bool
  * await writeJsonFile('./file.json', { a:1, b:2, c:3 });
  * ```
  */
-export function writeJson<T extends JsonValue>(path: string, data: T, sync = false): MaybePromise<void> {
+export function writeJson<T extends JsonValue>(path: string, data: T, sync = false): Awaitable<void> {
   logger.logMethodArgs?.('writeJson', '...' + path.slice(-32));
   const content = flatString(jsonStringify(data));
   return sync === true ? writeFileSync(path, content) : writeFile(path, content);
