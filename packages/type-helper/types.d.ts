@@ -175,11 +175,13 @@ declare global {
   type Prop<T, K> = K extends keyof T ? T[K] : never;
 
   /**
-   * Retrieves the union of all values in the given object type.
-   * @typeparam T - The object type.
-   * @returns The union of all values in the object type.
+   * Gets a union of all value types in an object.
+   * @template T The object type.
+   * @example
+   * type Config = { host: string; port: number; };
+   * type ConfigValues = ObjectValues<Config>; // string | number
    */
-  type Values<T> = T[keyof T];
+  type ObjectValues<T> = T[keyof T];
 
   /**
    * Extracts the type of individual items in an array.
