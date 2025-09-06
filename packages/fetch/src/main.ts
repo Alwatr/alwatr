@@ -94,6 +94,8 @@ export function fetch(url: string, options: FetchOptions): Promise<Response> {
     options_.headers.authorization = `Alwatr ${options_.alwatrAuth.userId}:${options_.alwatrAuth.userToken}`;
   }
 
+  logger_.logProperty?.('fetch.options', options_);
+
   return handleCacheStrategy_(options_ as FetchOptions__);
 }
 
@@ -105,7 +107,7 @@ async function handleCacheStrategy_(options: FetchOptions__): Promise<Response> 
     return handleRemoveDuplicate_(options);
   }
   // else handle cache strategies!
-  logger_.logMethod?.('_handleCacheStrategy');
+  logger_.logMethod?.('handleCacheStrategy_');
 
   if (!cacheSupported) {
     logger_.incident?.('fetch', 'fetch_cache_strategy_unsupported', {
@@ -229,7 +231,7 @@ async function handleRemoveDuplicate_(options: FetchOptions__): Promise<Response
 async function handleRetryPattern_(options: FetchOptions__): Promise<Response> {
   if (!(options.retry > 1)) return handleTimeout_(options);
 
-  logger_.logMethod?.('_handleRetryPattern');
+  logger_.logMethod?.('handleRetryPattern_');
   options.retry--;
 
   const externalAbortSignal = options.signal;
