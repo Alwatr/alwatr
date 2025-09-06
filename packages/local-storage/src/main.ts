@@ -73,7 +73,7 @@ export const localJsonStorage = {
       return defaultValue;
     }
     const json = parseJson<T>(value);
-    if (json === null || typeof json !== 'object') return defaultValue;
+    if (json === null) return defaultValue;
     return json;
   },
 
