@@ -183,15 +183,15 @@ declare global {
    */
   type ObjectValues<T> = T[keyof T];
 
-  /**
-   * Extracts the type of individual items in an array.
-   * If the input type is an array, it returns the type of the array items.
-   * If the input type is not an array, it returns the input type itself.
-   *
-   * @typeParam T - The input type.
-   * @returns The type of individual items in the array, or the input type itself.
+ /**
+   * Extracts the item type from an array (including readonly arrays).
+   * Returns `never` if `T` is not an array.
+   * @template T The array type.
+   * @example
+   * type Users = { name: string }[];
+   * type User = ArrayItem<Users>; // { name: string }
    */
-  type ArrayItems<T> = T extends (infer K)[] ? K : T;
+  type ArrayItem<T> = T extends readonly (infer U)[] ? U : never;
 
   /**
    * Merges two types together by omitting keys from the first type that exist in the second type,
