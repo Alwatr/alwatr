@@ -1,35 +1,46 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-indexed-object-style, @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types */
 
 export {}; // Make this a module
 
 /**
- * Declare global types for convenient access throughout the project
+ * Global type declarations for convenient access throughout the project.
  */
 declare global {
+  // --- Basic Primitive and Falsy Types ---
+
   /**
    * Represents a primitive type in TypeScript.
+   * @example
+   * let myVar: Primitive = "hello";
+   * myVar = 123;
+   * myVar = null;
    */
   type Primitive = string | number | bigint | boolean | symbol | null | undefined;
 
   /**
-   * Represents a type that includes all falsy values: false, '', 0, null, and undefined.
+   * Represents a type that includes all falsy values in JavaScript.
+   * @example
+   * const a: Falsy = 0;
+   * const b: Falsy = "";
    */
-  type Falsy = false | '' | 0 | null | undefined;
+  type Falsy = false | '' | 0 | 0n | null | undefined;
 
   /**
-   * Represents a type that can be null or undefined.
+   * Represents a type that can be `null` or `undefined`.
    */
   type Nullish = null | undefined;
 
+  // --- Utility Wrapper Types ---
+
   /**
-   * Represents a type that can be either a value of type T or null.
-   * @template T - The type of the value.
+   * Represents a type `T` that can also be `null`.
+   * @template T The base type.
    */
   type Nullable<T> = T | null;
 
   /**
-   * Represents a type that can either be of type T or undefined.
-   * @template T - The type parameter.
+   * Represents a type `T` that can also be `undefined`. Often used for optional properties.
+   * @template T The base type.
    */
   type Maybe<T> = T | undefined;
 
@@ -46,15 +57,21 @@ declare global {
   type Awaitable<T> = T | Promise<T>;
 
   /**
-   * Represents a type that can be either a single value or an array of values.
-   * @template T - The type of the value(s).
+   * Represents a value that can be either a single item of type `T` or an array of `T`.
+   * @template T The type of the item(s).
+   * @example
+   * function logItems(items: SingleOrArray<string>) {
+   * const allItems = Array.isArray(items) ? items : [items];
+   * allItems.forEach(item => console.log(item));
+   * }
    */
   type SingleOrArray<T> = T | T[];
 
+  // --- Type Modifiers ---
+
   /**
-   * Type helper that removes the undefined type from a given type.
-   * @template T The type to remove undefined from.
-   * @returns The type without undefined.
+   * Excludes `undefined` from a type `T`.
+   * @template T The type to modify.
    */
   type NonUndefined<T> = T extends undefined ? never : T;
 
