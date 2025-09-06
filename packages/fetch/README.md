@@ -1,8 +1,6 @@
 # @alwatr/fetch
 
-[](https://www.npmjs.com/package/@alwatr/fetch)
-[](https://www.npmjs.com/package/@alwatr/fetch)
-[](https://github.com/Alwatr/nanolib/blob/next/packages/fetch/LICENSE)
+![@alwatr/fetch](./demo/alwatr-fetch.webp)
 
 `@alwatr/fetch` is an enhanced, lightweight, and dependency-free wrapper for the native `fetch` API. It provides modern features like caching strategies, request retries, timeouts, and intelligent duplicate request handling, all in a compact package.
 
