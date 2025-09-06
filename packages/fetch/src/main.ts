@@ -5,7 +5,7 @@ import {createLogger} from '@alwatr/logger';
 import {packageTracer} from '@alwatr/package-tracer';
 import {parseDuration} from '@alwatr/parse-duration';
 
-import type {FetchOptions_, FetchOptions} from './type.js';
+import type {AlwatrFetchOptions_, FetchOptions} from './type.js';
 
 export {cacheSupported};
 export type * from './type.js';
@@ -20,7 +20,7 @@ const cacheSupported = /* #__PURE__ */ Object.hasOwn(globalThis_, 'caches');
 
 const duplicateRequestStorage_: Record<string, Promise<Response>> = {};
 
-const defaultFetchOptions: FetchOptions_ = {
+const defaultFetchOptions: AlwatrFetchOptions_ = {
   method: 'GET',
   headers: {},
   timeout: 8_000,
@@ -31,7 +31,7 @@ const defaultFetchOptions: FetchOptions_ = {
   cacheStorageName: 'fetch_cache',
 };
 
-type FetchOptions__ = FetchOptions_ & Omit<RequestInit, 'headers'> & {url: string};
+type FetchOptions__ = AlwatrFetchOptions_ & Omit<RequestInit, 'headers'> & {url: string};
 
 /**
  * It's a wrapper around the browser's `fetch` function that adds retry pattern, timeout, cacheStrategy,
@@ -58,9 +58,10 @@ type FetchOptions__ = FetchOptions_ & Omit<RequestInit, 'headers'> & {url: strin
 export function fetch(url: string, options: FetchOptions): Promise<Response> {
   logger_.logMethodArgs?.('fetch', {url, options});
 
-  const options_: FetchOptions_ & Omit<RequestInit, 'headers'> = {
+  const options_: FetchOptions__ = {
     ...defaultFetchOptions,
     ...options,
+    url,
   };
 
   options_.window ??= null;
@@ -69,7 +70,7 @@ export function fetch(url: string, options: FetchOptions): Promise<Response> {
     options_.removeDuplicate = cacheSupported ? 'until_load' : 'always';
   }
 
-  if (url.lastIndexOf('?') === -1 && options_.queryParams != null) {
+  if (options_.url.lastIndexOf('?') === -1 && options_.queryParams != null) {
     const queryParams = options_.queryParams;
     // prettier-ignore
     const queryArray = Object
@@ -77,7 +78,7 @@ export function fetch(url: string, options: FetchOptions): Promise<Response> {
       .map(key => `${key}=${String(queryParams[key])}`);
 
     if (queryArray.length > 0) {
-      url += '?' + queryArray.join('&');
+      options_.url += '?' + queryArray.join('&');
     }
   }
 
