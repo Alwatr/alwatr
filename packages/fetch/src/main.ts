@@ -200,7 +200,7 @@ async function handleRemoveDuplicate_(options: FetchOptions__): Promise<Response
 
   logger_.logMethod?.('handleRemoveDuplicate_');
 
-  const cacheKey = options.method + ' ' + options.url;
+  const cacheKey = `${options.method} ${options.url} ${typeof options.body === 'string' ? options.body : ''}`;
 
   // We must cache fetch promise without await for handle other parallel requests.
   duplicateRequestStorage_[cacheKey] ??= handleRetryPattern_(options);
