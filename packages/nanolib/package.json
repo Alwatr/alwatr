@@ -21,20 +21,21 @@
     "@alwatr/is-number": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/logger": "workspace:*",
+    "@alwatr/nano-build": "workspace:*",
     "@alwatr/node-fs": "workspace:*",
     "@alwatr/package-tracer": "workspace:*",
     "@alwatr/parse-duration": "workspace:*",
     "@alwatr/platform-info": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
     "@alwatr/random": "workspace:*",
     "@alwatr/render-state": "workspace:*",
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/synapse": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
     "@alwatr/unicode-digits": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "workspace:*",
-    "@alwatr/prettier-config": "workspace:*",
-    "@alwatr/tsconfig-base": "workspace:*",
     "typescript": "^5.9.2"
   },
   "exports": {
