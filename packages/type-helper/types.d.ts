@@ -326,7 +326,7 @@ declare global {
   /**
    * Represents an object that has the ability to add event listeners.
    */
-  export interface HasAddEventListener {
+  interface HasAddEventListener {
     addEventListener: (type: string, listener: EventListenerOrEventListenerObject, options?: AddEventListenerOptions) => void;
   }
 }
