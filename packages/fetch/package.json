@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/fetch",
-  "description": "Enhanced fetch API with cache strategy, retry pattern, timeout, helper methods and enhanced types.",
+  "description": "`@alwatr/fetch` is an enhanced, lightweight, and dependency-free wrapper for the native `fetch` API. It provides modern features like caching strategies, request retries, timeouts, and duplicate request handling, all in a compact package.",
   "version": "5.6.7",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
