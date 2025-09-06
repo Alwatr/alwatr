@@ -45,8 +45,7 @@ type FetchOptions__ = AlwatrFetchOptions_ & Omit<RequestInit, 'headers'> & {url:
  *
  * @example
  * ```typescript
- * const response = await fetch({
- *   url: '/api/products',
+ * const response = await fetch('/api/products', {
  *   queryParameters: {limit: 10},
  *   timeout: 8_000,
  *   retry: 3,
