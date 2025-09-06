@@ -31,7 +31,7 @@ export type CacheDuplicate = 'never' | 'always' | 'until_load' | 'auto';
 /**
  * Options for the fetch request.
  */
-export interface FetchOptions_ {
+export interface AlwatrFetchOptions_ {
   /**
    * A string to set the request's method.
    *
@@ -130,4 +130,4 @@ export interface FetchOptions_ {
   };
 }
 
-export type FetchOptions = Partial<FetchOptions_> & Omit<RequestInit, 'headers'>;
+export type FetchOptions = Partial<AlwatrFetchOptions_> & Omit<RequestInit, 'headers'>;
