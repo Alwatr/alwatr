@@ -13,7 +13,6 @@
     "LICENSE",
     "!demo/**/*"
   ],
-  "type": "module",
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/type-helper#readme",
   "keywords": [
     "alwatr",
@@ -51,5 +50,6 @@
     "watch:es": "yarn run build:es --watch",
     "watch:ts": "yarn run build:ts --watch --preserveWatchOutput"
   },
+  "type": "module",
   "types": "types.d.ts"
 }
