@@ -183,7 +183,7 @@ declare global {
    */
   type ObjectValues<T> = T[keyof T];
 
- /**
+  /**
    * Extracts the item type from an array (including readonly arrays).
    * Returns `never` if `T` is not an array.
    * @template T The array type.
@@ -194,13 +194,15 @@ declare global {
   type ArrayItem<T> = T extends readonly (infer U)[] ? U : never;
 
   /**
-   * Merges two types together by omitting keys from the first type that exist in the second type,
-   * and then combining the remaining keys with the keys from the second type.
-   * @template M - The first type to merge.
-   * @template N - The second type to merge.
-   * @returns A new type that is the result of merging the two input types.
+   * Overwrites properties of `M` with properties of `N`.
+   * @template M The base type.
+   * @template N The overriding type.
+   * @example
+   * type A = { a: string; b: number; };
+   * type B = { b: string; c: boolean; };
+   * type C = Overwrite<A, B>; // { a: string; b: string; c: boolean; }
    */
-  type Merge<M, N> = Omit<M, keyof N> & N;
+  type Overwrite<M, N> = Omit<M, keyof N> & N;
 
   /**
    * Make all properties in T required and exclude undefined and null from the property type.
