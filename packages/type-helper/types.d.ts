@@ -98,6 +98,41 @@ declare global {
     [P in keyof T]-?: NonNullable<T[P]>;
   };
 
+  // --- Dictionary Types ---
+
+  /**
+   * Represents a dictionary object with string keys and values of a specific type.
+   * Any key might be absent, making this suitable for sparse objects or dynamic maps.
+   *
+   * @template T The type of values in the dictionary. Defaults to `any`.
+   * @example
+   * const userRoles: DictionaryOpt<number> = {
+   * 'admin': 1,
+   * 'editor': 2,
+   * };
+   *
+   * const guestRole = userRoles['guest']; // number | undefined
+   */
+  type DictionaryOpt<T = any> = {[key in string]?: T};
+
+  /**
+   * Represents a dictionary object where any string key is expected to have a value of a specific type.
+   * Unlike `DictionaryOpt`, values are not optional. This is useful for type constraints.
+   *
+   * @template T The type of values in the dictionary. Defaults to `any`.
+   * @example
+   * const statusColors: DictionaryReq<string> = {
+   * 'success': '#4CAF50',
+   * 'error': '#F44336',
+   * 'warning': '#FFC107'
+   * };
+   *
+   * function getColor(status: string): string {
+   * return statusColors[status] || '#FFFFFF'; // Accessing any key returns a string
+   * }
+   */
+  type DictionaryReq<T = any> = {[key in string]: T};
+
   // --- Deep Recursive Types ---
 
   /**
@@ -238,20 +273,6 @@ declare global {
   export interface HasAddEventListener {
     addEventListener: (type: string, listener: EventListenerOrEventListenerObject, options?: AddEventListenerOptions) => void;
   }
-
-  /**
-   * Represents a dictionary where values can be optional (undefined).
-   *
-   * @template T The type of values stored in the dictionary. Defaults to `any`.
-   */
-  type DictionaryOpt<T = any> = {[key in string]?: T};
-
-  /**
-   * Represents a dictionary where all values are required (non-optional).
-   *
-   * @template T The type of values stored in the dictionary. Defaults to `any`.
-   */
-  type DictionaryReq<T = any> = {[key in string]: T};
 
   /**
    * Matches any valid JSON primitive value.
