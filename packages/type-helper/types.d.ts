@@ -103,13 +103,6 @@ declare global {
   };
 
   /**
-   * Represents a type that makes all properties of an object immutable (readonly).
-   */
-  type Immutable<T> = {
-    readonly [P in keyof T]: T[P];
-  };
-
-  /**
    * Represents a type that makes all properties of an object and its nested objects readonly.
    * @template T - The type to make readonly.
    * @returns The readonly version of the input type.
