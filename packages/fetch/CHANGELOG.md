@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@5.6.7...@alwatr/fetch@6.0.0) (2025-09-06)
+
+### ⚠ BREAKING CHANGES
+
+* Removed fetchJson; refactored fetch to accept url as a separate parameter, matching the web standard API.
+
+### 🐛 Bug Fixes
+
+* include request body in cache key for duplicate request handling ([a891ceb](https://github.com/Alwatr/nanolib/commit/a891ceb7300b26101f5cd982409477815dad500e))
+* update query parameter encoding in fetch function for proper URL formatting ([ae30c1e](https://github.com/Alwatr/nanolib/commit/ae30c1ef13eae5070c0c2865180dfa7b89aa1eba))
+
+### 🔨 Code Refactoring
+
+* enhance FetchOptions type and improve fetch function handling ([a35e8e4](https://github.com/Alwatr/nanolib/commit/a35e8e495336448531b9b4ca755520517b3e3e2c))
+* enhance logging in fetch and cache strategy functions for better traceability ([db0c51b](https://github.com/Alwatr/nanolib/commit/db0c51b4e5bafbba64c511dda4686226a3fcb842))
+* improve documentation for fetch options and caching strategies ([d114290](https://github.com/Alwatr/nanolib/commit/d114290755d13ac5ca06a19ffe827e39b70ff92a))
+* rename FetchOptions_ to AlwatrFetchOptions_ for consistency ([978947a](https://github.com/Alwatr/nanolib/commit/978947a52196f711ffc452a84edd9f34c95341b3))
+* rewrite fetch module ([d245cce](https://github.com/Alwatr/nanolib/commit/d245cce8c99b345989dd18c373f682dd89ef3319))
+* update fetch calls to use consistent parameters and improve response handling ([49436e6](https://github.com/Alwatr/nanolib/commit/49436e685fe8c81c78649918f3455282106bd754))
+* update FetchOptions interface to enforce required properties ([4423740](https://github.com/Alwatr/nanolib/commit/4423740b3424c3d819e6c59ade183fcd303116c8))
+* update FetchOptions type to AlwatrFetchOptions_ for consistency ([6c1ff26](https://github.com/Alwatr/nanolib/commit/6c1ff264a0a3937bcd6abd58010b92d53f3d76ea))
+
 ## [5.6.7](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@5.6.6...@alwatr/fetch@5.6.7) (2025-09-05)
 
 ### 🔗 Dependencies update

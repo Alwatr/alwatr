@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/http-primer@5.5.8...@alwatr/http-primer@6.0.0) (2025-09-06)
+
+### ⚠ BREAKING CHANGES
+
+* For supporting custom headers, you can use intersection with a dictionary type, e.g., `HttpResponseHeaders & DictionaryReq<string>`.
+
+### 🔨 Code Refactoring
+
+* update HttpResponseHeaders and HttpRequestHeaders types for restricted custom header support ([08a691e](https://github.com/Alwatr/nanolib/commit/08a691edb611478b2b9e3c06a9190faf9d3c572e))
+
 ## [5.5.8](https://github.com/Alwatr/nanolib/compare/@alwatr/http-primer@5.5.7...@alwatr/http-primer@5.5.8) (2025-09-05)
 
 **Note:** Version bump only for package @alwatr/http-primer
