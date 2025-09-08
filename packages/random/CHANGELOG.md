@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.9](https://github.com/Alwatr/nanolib/compare/@alwatr/random@5.1.8...@alwatr/random@5.1.9) (2025-09-08)
+
+### 🔨 Code Refactoring
+
+* **main:** mark getGlobalThis and hasCrypto as pure for optimization ([8474cc2](https://github.com/Alwatr/nanolib/commit/8474cc247ef0a7df0975c72a5c1ab8240844b810))
+
 ## [5.1.8](https://github.com/Alwatr/nanolib/compare/@alwatr/random@5.1.7...@alwatr/random@5.1.8) (2025-09-06)
 
 **Note:** Version bump only for package @alwatr/random

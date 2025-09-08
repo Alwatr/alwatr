@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/delay@5.5.11...@alwatr/delay@6.0.0) (2025-09-08)
+
+### ⚠ BREAKING CHANGES
+
+* **delay:** The API has been completely redesigned. All previous standalone functions are removed and replaced by methods on the `delay` object.
+
+- **REMOVED:**
+  - `untilNextAnimationFrame`
+  - `untilIdle`
+  - `untilDomEvent`
+  - `untilEvent`
+  - `immediate`
+  - `nextMicrotask`
+
+- **ADDED:**
+  - `delay.animationFrame` (replaces `waitForAnimationFrame`)
+  - `delay.idleCallback` (replaces `waitForIdle`)
+  - `delay.domEvent` (replaces `waitForDomEvent`)
+  - `delay.event` (replaces `waitForEvent`)
+  - `delay.nextMacrotask` (replaces `waitForImmediate`)
+  - `delay.nextMicrotask` (replaces `waitForMicrotask`)
+
+Users must update their code to import the `delay` object and use the new method names. For example, `delay.immediate()` should be changed to `delay.nextMacrotask()`.
+
+### ✨ Features
+
+* **delay:** Overhaul delay module with improved API and corrected implementations ([7c12483](https://github.com/Alwatr/nanolib/commit/7c1248354f2535a65cb7981c42ad4e319badb4aa))
+
+### 🔨 Code Refactoring
+
+* **polyfill:** rename global_ to globalThis for clarity and consistency ([7d1484f](https://github.com/Alwatr/nanolib/commit/7d1484fb91a66d46b62011d0fb7825f3089183f8))
+* **polyfill:** streamline requestAnimationFrame and requestIdleCallback implementations ([d18443d](https://github.com/Alwatr/nanolib/commit/d18443d4dedddff8f54227aa7aff2bca5aaacdfa))
+
+### 🧹 Miscellaneous Chores
+
+* **main:** export requestAnimationFrame and requestIdleCallback from main module ([ef80797](https://github.com/Alwatr/nanolib/commit/ef80797319e3bded5c36e98352b6317427d08a59))
+
 ## [5.5.11](https://github.com/Alwatr/nanolib/compare/@alwatr/delay@5.5.10...@alwatr/delay@5.5.11) (2025-09-06)
 
 **Note:** Version bump only for package @alwatr/delay

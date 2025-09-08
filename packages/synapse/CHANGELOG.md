@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.2...@alwatr/synapse@1.1.3) (2025-09-08)
+
+### 🐛 Bug Fixes
+
+* **directive:** change delay from immediate to nextMicrotask ([218d134](https://github.com/Alwatr/nanolib/commit/218d1344a4b377382e7d2294864adb388caf9d1a))
+* **lib:** mark logger creation as pure for optimization ([d902bf8](https://github.com/Alwatr/nanolib/commit/d902bf872454fe5868c7b6bdbb4ddb340337f443))
+
 ## [1.1.2](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.1...@alwatr/synapse@1.1.2) (2025-09-06)
 
 ### 🔨 Code Refactoring
