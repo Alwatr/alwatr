@@ -5,7 +5,7 @@
  * @template T The type of the value that the signal holds or dispatches.
  * @template C The type of the `this` context within the callback.
  */
-export type ListenerCallback<T, C> = (this: C, value: T) => void | Promise<void>;
+export type ListenerCallback<T> = (value: T) => Awaitable<void>;
 
 /**
  * Options for subscribing to a signal.
@@ -50,8 +50,8 @@ export interface SubscribeResult {
  * Internal representation of an observer, containing the callback and its options.
  * @internal
  */
-export interface Observer_<T, C> {
-  callback: ListenerCallback<T, C>;
+export interface Observer_<T> {
+  callback: ListenerCallback<T>;
   options?: SubscribeOptions;
 }
 
