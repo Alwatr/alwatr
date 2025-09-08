@@ -7,7 +7,7 @@
   "dependencies": {
     "@alwatr/fetch": "^5.6.7",
     "@alwatr/fsm": "workspace:^",
-    "@alwatr/nanolib": "^6.0.1"
+    "@alwatr/nanolib": "^6.0.2"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^6.1.0",
