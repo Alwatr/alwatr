@@ -23,6 +23,7 @@
     "l": "yarn run lint",
     "f": "yarn run format",
     "rl": "yarn run pull && yarn run clean && yarn run build && yarn run lint && yarn run release",
+    "rlt": "yarn run release --dry-run",
     "upd": "corepack up && yarn set version latest; yarn up '*'; yarn up '*' -R; yarn dlx @yarnpkg/sdks vscode; yarn dedupe",
     "lint": "yarn run lint:ts && yarn run lint:es",
     "lint:es": "eslint . --config .eslintrc.json --ext .ts",
