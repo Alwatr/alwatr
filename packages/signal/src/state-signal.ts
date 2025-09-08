@@ -39,19 +39,28 @@ export class StateSignal<T> extends SignalBase<T> {
 
   /**
    * Sets a new value for the signal.
-   * If the new value is the same as the current value, listeners will not be notified.
-   *
    * @param newValue The new value to set.
+   *
+   * @example
+   * // For primitives
+   * mySignal.set(42);
+   *
+   * // For objects (best practice is immutability)
+   * mySignal.set({ ...mySignal.value, prop: 'new' });
    */
   set(newValue: T): void {
-    if (this._value === newValue) {
-      return; // Optimization: Do not dispatch if the value hasn't changed.
-    }
     this._value = newValue;
-    // Dispatch as a microtask for consistent, non-blocking behavior.
+    this._dispatch(this._value);
+  }
+
+  /**
+   * Private method to handle the asynchronous dispatching logic.
+   * @param value The value to dispatch.
+   */
+  private _dispatch(value: T): void {
     Promise.resolve()
       .then(() => {
-        this._notify(newValue);
+        this._notify(value);
       })
       .catch((err) => {
         console.error(`{signal: ${this.signalId}} dispatch failed`, err);
