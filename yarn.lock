@@ -410,6 +410,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@alwatr/yarn-upgrade@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "@alwatr/yarn-upgrade@npm:1.0.4"
+  bin:
+    upd: dist/main.mjs
+  checksum: 10c0/b16d03a3001a4a2ac6eb9c0de8b48b2e25d38d29f8812f515709fde49c22e61149ec0749cae7e389741901da974f86ab98598b4e440ec2e6be8d15240d6f648d
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:^2.2.0":
   version: 2.2.1
   resolution: "@ampproject/remapping@npm:2.2.1"
@@ -2609,6 +2618,7 @@ __metadata:
   dependencies:
     "@alwatr/eslint-config": "npm:^5.5.0"
     "@alwatr/prettier-config": "npm:^5.0.0"
+    "@alwatr/yarn-upgrade": "npm:^1.0.4"
     "@lerna-lite/changed": "npm:^3.12.3"
     "@lerna-lite/cli": "npm:^3.12.3"
     "@lerna-lite/diff": "npm:^3.12.3"

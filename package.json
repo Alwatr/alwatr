@@ -24,7 +24,6 @@
     "f": "yarn run format",
     "rl": "yarn run pull && yarn run clean && yarn run build && yarn run lint && yarn run release",
     "rlt": "yarn run release --dry-run",
-    "upd": "corepack up && yarn set version latest; yarn up '*'; yarn up '*' -R; yarn dlx @yarnpkg/sdks vscode; yarn dedupe",
     "lint": "yarn run lint:ts && yarn run lint:es",
     "lint:es": "eslint . --config .eslintrc.json --ext .ts",
     "lint:ts": "lerna run build:ts",
@@ -42,6 +41,7 @@
   "devDependencies": {
     "@alwatr/eslint-config": "^5.5.0",
     "@alwatr/prettier-config": "^5.0.0",
+    "@alwatr/yarn-upgrade": "^1.0.4",
     "@lerna-lite/changed": "^3.12.3",
     "@lerna-lite/cli": "^3.12.3",
     "@lerna-lite/diff": "^3.12.3",
