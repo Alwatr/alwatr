@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/Alwatr/flux/compare/v4.1.0...v4.1.1) (2025-09-08)
+
+### 🔗 Dependencies update
+
+* update @alwatr/nanolib to version 6.0.2 across multiple packages ([2d18fb0](https://github.com/Alwatr/flux/commit/2d18fb0e7311321200b1ed37381308b1dacae4b2))
+
 ## [4.1.0](https://github.com/Alwatr/flux/compare/v4.0.5...v4.1.0) (2025-09-08)
 
 ### 🧹 Miscellaneous Chores

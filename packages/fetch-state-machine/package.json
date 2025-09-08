@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/fetch-state-machine",
   "description": "A powerful TypeScript library for managing asynchronous fetch requests with a built-in state machine.",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
