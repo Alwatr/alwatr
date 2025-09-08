@@ -31,7 +31,7 @@ export interface SubscribeOptions {
 
   /**
    * (For StateSignal only) If true, the listener will be called immediately with the signal's current value upon subscription.
-   * @default false // Note: For StateSignal, the effective default is often `true`.
+   * @default true
    */
   receivePrevious?: boolean;
 }
@@ -50,9 +50,9 @@ export interface SubscribeResult {
  * Internal representation of an observer, containing the callback and its options.
  * @internal
  */
-export interface Observer<T, C> {
+export interface Observer_<T, C> {
   callback: ListenerCallback<T, C>;
-  options: SubscribeOptions;
+  options?: SubscribeOptions;
 }
 
 /**
