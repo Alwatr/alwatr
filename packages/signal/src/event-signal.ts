@@ -64,8 +64,7 @@ export class EventSignal<T = void> extends SignalBase<T> {
     // Unsubscribe 'once' listeners after the loop.
     if (observersToRemove.length > 0) {
       for (const observer of observersToRemove) {
-        const index = this.observers.indexOf(observer);
-        if (index !== -1) this.observers.splice(index, 1);
+        this._removeObserver(observer);
       }
     }
   }

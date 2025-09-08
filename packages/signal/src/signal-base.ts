@@ -15,6 +15,18 @@ export abstract class SignalBase<T> {
   }
 
   /**
+   * Removes a specific observer from the observers list.
+   * @param observer The observer instance to remove.
+   * @protected
+   */
+  protected _removeObserver(observer: Observer<T, this>): void {
+    const index = this.observers.indexOf(observer);
+    if (index !== -1) {
+      this.observers.splice(index, 1);
+    }
+  }
+
+  /**
    * Subscribes a listener to this signal.
    *
    * @param callback The function to be called when the signal is dispatched.
@@ -31,12 +43,8 @@ export abstract class SignalBase<T> {
       this.observers.push(observer);
     }
 
-    const unsubscribe = (): void => {
-      const index = this.observers.indexOf(observer);
-      if (index !== -1) {
-        this.observers.splice(index, 1);
-      }
-    };
+    // The returned unsubscribe function now calls the centralized removal method.
+    const unsubscribe = (): void => this._removeObserver(observer);
 
     return {unsubscribe};
   }
