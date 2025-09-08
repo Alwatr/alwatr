@@ -1,3 +1,5 @@
+import { createLogger, delay } from '@alwatr/nanolib';
+
 import {SignalBase} from './signal-base.js';
 
 import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult} from './type.js';
@@ -23,18 +25,20 @@ import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeRes
  * theme.set('dark'); // Notifies listener, document body class changes.
  */
 export class StateSignal<T> extends SignalBase<T> {
-  private _value: T;
+  private value__: T;
+  protected logger_ = createLogger(`state-signal: ${this.signalId}`);
 
   constructor(config: StateSignalConfig<T>) {
     super(config.signalId);
-    this._value = config.initialValue;
+    this.value__ = config.initialValue;
+    this.logger_.logMethodArgs?.('new', {initialValue: this.value__});
   }
 
   /**
    * Gets the current value of the signal.
    */
   get value(): T {
-    return this._value;
+    return this.value__;
   }
 
   /**
@@ -49,22 +53,23 @@ export class StateSignal<T> extends SignalBase<T> {
    * mySignal.set({ ...mySignal.value, prop: 'new' });
    */
   set(newValue: T): void {
-    this._value = newValue;
-    this._dispatch(this._value);
+    this.logger_.logMethodArgs?.('set', {newValue});
+    this.value__ = newValue;
+    this.dispatch__(this.value__);
   }
 
   /**
    * Private method to handle the asynchronous dispatching logic.
    * @param value The value to dispatch.
    */
-  private _dispatch(value: T): void {
-    Promise.resolve()
-      .then(() => {
-        this._notify(value);
-      })
-      .catch((err) => {
-        console.error(`{signal: ${this.signalId}} dispatch failed`, err);
-      });
+  private async dispatch__(value: T): Promise<void> {
+    try {
+      await delay.nextMicrotask()
+      this.notify_(value);
+    }
+    catch (err) {
+      console.error(`{signal: ${this.signalId}} dispatch failed`, err);
+    }
   }
 
   /**
@@ -83,7 +88,7 @@ export class StateSignal<T> extends SignalBase<T> {
       Promise.resolve()
         .then(() => {
           try {
-            const ret = callback.call(this, this._value);
+            const ret = callback.call(this, this.value__);
             if (ret instanceof Promise) {
               ret.catch((err) => console.error(`{signal: ${this.signalId}} async listener failed on receivePrevious`, err));
             }
@@ -104,9 +109,9 @@ export class StateSignal<T> extends SignalBase<T> {
   }
 
   // The _notify method can be shared or duplicated. For simplicity, we'll include it here.
-  private _notify(value: T): void {
+  private notify_(value: T): void {
     const observersToRemove: Observer<T, this>[] = [];
-    const currentObservers = [...this.observers];
+    const currentObservers = [...this.observers_];
 
     for (const observer of currentObservers) {
       if (observer.options.disabled) continue;
@@ -127,7 +132,7 @@ export class StateSignal<T> extends SignalBase<T> {
 
     if (observersToRemove.length > 0) {
       for (const observer of observersToRemove) {
-        this._removeObserver(observer);
+        this.removeObserver_(observer);
       }
     }
   }
