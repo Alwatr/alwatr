@@ -1,12 +1,12 @@
 import {getGlobalThis} from '@alwatr/global-this';
 import {packageTracer} from '@alwatr/package-tracer';
 
-const globalThis = getGlobalThis();
+const globalThis = /* #__PURE__ */ getGlobalThis();
 
 __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 // Use the native crypto module when available for better randomness
-const hasCrypto = typeof globalThis.crypto !== 'undefined';
+const hasCrypto = /* #__PURE__ */ (() => typeof globalThis.crypto !== 'undefined')();
 
 /**
  * Converts a Uint8Array or number array into a hexadecimal string representation.
