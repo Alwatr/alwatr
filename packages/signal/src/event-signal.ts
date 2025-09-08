@@ -1,3 +1,5 @@
+import {createLogger, delay} from '@alwatr/nanolib';
+
 import {SignalBase} from './signal-base.js';
 
 import type {SignalConfig} from './type.js';
@@ -18,8 +20,11 @@ import type {SignalConfig} from './type.js';
  * onUserClick.dispatch({ x: 10, y: 20 });
  */
 export class EventSignal<T = void> extends SignalBase<T> {
+  protected logger_ = createLogger(`event-signal: ${this.signalId}`);
+
   constructor(config: SignalConfig) {
     super(config.signalId);
+    this.logger_.logMethod?.('new');
   }
 
   /**
@@ -29,42 +34,38 @@ export class EventSignal<T = void> extends SignalBase<T> {
    * @param payload The data to send with the event.
    */
   dispatch(payload: T): void {
+    this.logger_.logMethodArgs?.('dispatch', payload);
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    Promise.resolve()
+    delay
+      .nextMicrotask()
       .then(() => {
-        this._notify(payload);
+        this.notify_(payload);
       })
       .catch((err) => {
-        console.error(`{signal: ${this.signalId}} dispatch failed`, err);
+        this.logger_.error('dispatch', 'dispatch_failed', err);
       });
   }
 
-  private _notify(payload: T): void {
-    const observersToRemove: Observer<T, this>[] = [];
+  private notify_(payload: T): void {
+    this.logger_.logMethodArgs?.('dispatch', payload);
     // Iterate over a copy of the array to prevent issues with modification during iteration.
     const currentObservers = [...this.observers_];
 
     for (const observer of currentObservers) {
-      if (observer.options.disabled) continue;
-      if (observer.options.once) {
-        observersToRemove.push(observer);
+      if (observer.options?.disabled) continue;
+
+      if (observer.options?.once) {
+        this.removeObserver_(observer);
       }
 
       try {
-        const ret = observer.callback.call(this, payload);
+        const ret = observer.callback(payload);
         if (ret instanceof Promise) {
-          ret.catch((err) => console.error(`{signal: ${this.signalId}} async listener failed`, err));
+          ret.catch((err) => this.logger_.error('notify_', 'async_listener_failed', err));
         }
       }
       catch (err) {
-        console.error(`{signal: ${this.signalId}} sync listener failed`, err);
-      }
-    }
-
-    // Unsubscribe 'once' listeners after the loop.
-    if (observersToRemove.length > 0) {
-      for (const observer of observersToRemove) {
-        this.removeObserver_(observer);
+        this.logger_.error('notify_', 'sync_listener_failed', err);
       }
     }
   }
