@@ -57,6 +57,8 @@
     "flatomise",
     "Jsonifiable",
     "Jsonify",
+    "Macrotask",
+    "Microtask",
     "Mihandoost",
     "nanolib",
     "outdir",
