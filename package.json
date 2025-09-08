@@ -3,7 +3,7 @@
   "description": "Alwatr Flux empowers your applications with elegant and powerful state management and event handling capabilities. Built on the observable design pattern, Flux provides a lightweight yet robust foundation for managing global signals and states.",
   "repository": "https://github.com/Alwatr/flux",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "license": "AGPL-3.0-only",
+  "license": "MPL-2.0",
   "type": "module",
   "private": true,
   "engines": {
