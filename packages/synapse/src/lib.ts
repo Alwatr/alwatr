@@ -5,7 +5,7 @@ import type {DirectiveConstructor} from './directiveDecorator.js';
 /**
  * Alwatr Synapse Logger.
  */
-export const logger = createLogger('alwatr/synapse');
+export const logger = /* #__PURE__ */ createLogger('alwatr/synapse');
 
 /**
  * The registry for all directives.
