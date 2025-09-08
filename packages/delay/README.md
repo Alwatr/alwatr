@@ -70,7 +70,7 @@ async function main() {
   }
   ```
 
-- **`delay.event(target: EventTarget, eventName: string, ...): Promise<Event>`**
+- **`delay.event(target: EventTarget, eventName: string, options?: AddEventListenerOptions): Promise<Event>`**
 
   A more generic version of `domEvent`. Waits for any event on any `EventTarget` (e.g., `window`, `document`, or custom event emitters).
 
