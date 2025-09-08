@@ -3,6 +3,8 @@ import {parseDuration, type Duration} from '@alwatr/parse-duration';
 
 import {requestAnimationFrame, requestIdleCallback} from './polyfill.js';
 
+export {requestAnimationFrame, requestIdleCallback};
+
 __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 /**
