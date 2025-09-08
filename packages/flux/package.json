@@ -5,12 +5,10 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/context": "workspace:^",
-    "@alwatr/fetch-state-machine": "workspace:^",
-    "@alwatr/fsm": "workspace:^",
-    "@alwatr/observable": "workspace:^",
-    "@alwatr/remote-context": "workspace:^",
-    "@alwatr/signal": "workspace:^"
+    "@alwatr/context": "workspace:*",
+    "@alwatr/fsm": "workspace:*",
+    "@alwatr/observable": "workspace:*",
+    "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^6.1.0",
