@@ -2,7 +2,7 @@ import {AlwatrRemoteContextStateMachineBase, type ServerContextState} from './ba
 
 import type {FetchOptions} from '@alwatr/nanolib';
 
-export class AlwatrRemoteContextStateMachine<T extends Json = Json> extends AlwatrRemoteContextStateMachineBase<T> {
+export class AlwatrRemoteContextStateMachine<T extends JsonValue = JsonObject> extends AlwatrRemoteContextStateMachineBase<T> {
   /**
    * Current state.
    */

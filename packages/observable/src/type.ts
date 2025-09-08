@@ -28,7 +28,7 @@ export interface SubscribeOptions {
   // debounce?: 'AnimationFrame' | number;
 }
 
-export type ListenerCallback<T, M extends DictionaryOpt = DictionaryOpt> = (this: T, message: M) => MaybePromise<void>;
+export type ListenerCallback<T, M extends DictionaryOpt = DictionaryOpt> = (this: T, message: M) => Awaitable<void>;
 
 export interface Observer<T, M extends DictionaryOpt = DictionaryOpt> {
   callback: ListenerCallback<T, M>;

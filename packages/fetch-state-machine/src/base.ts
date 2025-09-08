@@ -1,5 +1,6 @@
+import {fetch, type FetchOptions} from '@alwatr/fetch';
 import {AlwatrFluxStateMachineBase, type StateRecord, type ActionRecord, type AlwatrFluxStateMachineConfig} from '@alwatr/fsm';
-import {packageTracer, fetch, type FetchOptions} from '@alwatr/nanolib';
+import {packageTracer} from '@alwatr/nanolib';
 
 __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 

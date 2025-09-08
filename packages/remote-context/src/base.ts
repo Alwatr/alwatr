@@ -16,7 +16,7 @@ export type ServerContextEvent = ServerRequestEvent | ExtraEvent;
 
 export type AlwatrRemoteContextStateMachineConfig = AlwatrFetchStateMachineConfig<ServerContextState>;
 
-export abstract class AlwatrRemoteContextStateMachineBase<T extends Json = Json> extends AlwatrJsonFetchStateMachineBase<
+export abstract class AlwatrRemoteContextStateMachineBase<T extends JsonValue = JsonObject> extends AlwatrJsonFetchStateMachineBase<
   T,
   ExtraState,
   ExtraEvent
