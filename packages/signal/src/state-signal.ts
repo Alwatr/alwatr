@@ -2,7 +2,7 @@ import {createLogger, delay} from '@alwatr/nanolib';
 
 import {SignalBase} from './signal-base.js';
 
-import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, Observer_} from './type.js';
+import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult} from './type.js';
 
 /**
  * A stateful signal that holds a value and notifies listeners when the value changes.
