@@ -6,7 +6,7 @@ export interface StateEventDetail<S extends string, E extends string> {
 
 export type StateRecord<S extends string, E extends string> = Partial<Record<S, Partial<Record<E | 'reset', S>>>>;
 
-export type Action<S extends string, E extends string> = (eventDetail?: StateEventDetail<S, E | 'reset'>) => MaybePromise<void>;
+export type Action<S extends string, E extends string> = (eventDetail?: StateEventDetail<S, E | 'reset'>) => Awaitable<void>;
 
 export type ActionName<S extends string, E extends string> =
   | `on_event_${E}`

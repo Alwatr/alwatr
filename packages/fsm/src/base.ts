@@ -58,7 +58,7 @@ export abstract class AlwatrFluxStateMachineBase<S extends string, E extends str
   /**
    * Transition condition.
    */
-  protected shouldTransition_(_eventDetail: StateEventDetail<S, E>): MaybePromise<boolean> {
+  protected shouldTransition_(_eventDetail: StateEventDetail<S, E>): Awaitable<boolean> {
     this.logger_.logMethodFull?.('shouldTransition_', _eventDetail, true);
     return true;
   }
@@ -110,7 +110,7 @@ export abstract class AlwatrFluxStateMachineBase<S extends string, E extends str
   /**
    * Execute action name if defined in _actionRecord.
    */
-  private execAction__(name: ActionName<S, E | 'reset'>, eventDetail: StateEventDetail<S, E>): MaybePromise<void> {
+  private execAction__(name: ActionName<S, E | 'reset'>, eventDetail: StateEventDetail<S, E>): Awaitable<void> {
     const actionFn = this.actionRecord_[name];
     if (typeof actionFn === 'function') {
       this.logger_.logMethodArgs?.('execAction__', name);
