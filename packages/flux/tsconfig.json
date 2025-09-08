@@ -9,10 +9,8 @@
   "include": ["src/**/*.ts"],
   "references": [
     { "path": "../context" },
-    { "path": "../fetch-state-machine" },
     { "path": "../fsm" },
     { "path": "../observable" },
-    { "path": "../remote-context" },
     { "path": "../signal" },
   ],
 }
