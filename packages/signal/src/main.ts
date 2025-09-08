@@ -15,8 +15,8 @@
  * const userClickSignal = new EventSignal({ signalId: 'user-click' });
  */
 
-export {StateSignal} from './state-signal.js';
-export {EventSignal} from './event-signal.js';
+export * from './state-signal.js';
+export * from './event-signal.js';
 
 // Exporting core types for consumers of the library.
-export type {ListenerCallback, SubscribeOptions, SubscribeResult, SignalConfig, StateSignalConfig} from './type.js';
+export type * from './type.js';
