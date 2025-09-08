@@ -7,12 +7,9 @@ updates:
     open-pull-requests-limit: 20
     commit-message:
       prefix: deps
-      include: scope
-    reviewers:
-      - AliMD
     schedule:
       interval: weekly
-      time: '10:30'
+      time: '00:30'
       day: thursday
     labels:
       - ci
@@ -29,9 +26,6 @@ updates:
     open-pull-requests-limit: 20
     commit-message:
       prefix: deps
-      include: scope
-    reviewers:
-      - AliMD
     schedule:
       interval: weekly
       time: '00:30'
@@ -42,15 +36,13 @@ updates:
       - priority-low
       - maintenance
     groups:
-      dependencies:
-        exclude-patterns:
-          - '@alwatr/*'
-          - 'alwatr'
-      alwatr:
+      npm-dependencies:
         patterns:
-          - '@alwatr/*'
-          - 'alwatr'
+          - '*'
     ignore:
+      - dependency-name: "@types/node"
+        update-types:
+          - version-update:semver-major
       - dependency-name: "eslint"
         update-types:
           - version-update:semver-major
