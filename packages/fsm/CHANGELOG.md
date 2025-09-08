@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/Alwatr/flux/compare/v4.0.5...v4.1.0) (2025-09-08)
+
+### 🔨 Code Refactoring
+
+* replace MaybePromise with Awaitable in action and listener callback types ([57d16b4](https://github.com/Alwatr/flux/commit/57d16b447fcbfdce46f9343395f6aa8b897af146))
+
+### 🧹 Miscellaneous Chores
+
+* remove Exir Studio sponsorship logo from README files ([df5d19c](https://github.com/Alwatr/flux/commit/df5d19cf9ff3ea723905b3f3bd4f874c42fdcdfc))
+* remove unused types from tsconfig.json files across multiple packages ([eecabea](https://github.com/Alwatr/flux/commit/eecabea18710ff476011f7b439e9f838198e2fdf))
+* update @alwatr/nanolib and devDependencies to latest versions ([50730ae](https://github.com/Alwatr/flux/commit/50730ae8ea26954e2fbed51feb1a7fa7e8d8e74d))
+* update license to MPL-2.0 ([82d20c8](https://github.com/Alwatr/flux/commit/82d20c88ad1b4ff5909ef0ca6b36b2db8f378279))
+* update package.json files across multiple packages to enhance structure and dependencies ([9df0690](https://github.com/Alwatr/flux/commit/9df0690b0b1ae036293be75da429842f67f8685f))
+
 ## [4.0.5](https://github.com/Alwatr/flux/compare/v4.0.4...v4.0.5) (2025-03-13)
 
 ### Bug Fixes

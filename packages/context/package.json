@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/context",
   "description": "A simple yet powerful TypeScript library for managing application context and facilitating efficient communication between components.",
-  "version": "4.0.5",
+  "version": "4.1.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {

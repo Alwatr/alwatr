@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/lerna-lite/lerna-lite/main/packages/cli/schemas/lerna-schema.json",
-  "version": "4.0.5",
+  "version": "4.1.0",
   "npmClient": "yarn",
   "useWorkspaces": true,
   "packages": [

@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/Alwatr/flux/compare/v4.0.5...v4.1.0) (2025-09-08)
+
+### 🐛 Bug Fixes
+
+* update generic type constraints in state machine classes ([eddca0d](https://github.com/Alwatr/flux/commit/eddca0dbad519f0504429e207800d2fc8031691b))
+* update type definitions Json in state machine classes, and use old fetch package ([ee9a4a4](https://github.com/Alwatr/flux/commit/ee9a4a4c7bed0a1aad8a742ee3f764d08d8f3e81))
+
+### 🔨 Code Refactoring
+
+* replace MaybePromise with Awaitable in action and listener callback types ([57d16b4](https://github.com/Alwatr/flux/commit/57d16b447fcbfdce46f9343395f6aa8b897af146))
+
+### 🧹 Miscellaneous Chores
+
+* add @alwatr/yarn-upgrade dependency and remove outdated update script ([908f1f6](https://github.com/Alwatr/flux/commit/908f1f6690180ece64574a4e7ec371286d854a3c))
+* add dry-run option for release script in package.json ([5a1973e](https://github.com/Alwatr/flux/commit/5a1973ea1c2341a4fd4b3ad295b386019d45d5cb))
+* add missing newline in .yarnrc.yml for better readability ([a49fd76](https://github.com/Alwatr/flux/commit/a49fd76595d8c6db1c87c96a62eefc0e78c69ce7))
+* clean up .eslintignore by removing demo and uniquely directories ([78e5292](https://github.com/Alwatr/flux/commit/78e5292b1fbed388c224d37e4d5a0486e68df15c))
+* correct username casing in CODEOWNERS ([c3b54bf](https://github.com/Alwatr/flux/commit/c3b54bf4bb4c8d28f1f6b75477eb92bc3613172f))
+* remove Exir Studio sponsorship logo from README files ([df5d19c](https://github.com/Alwatr/flux/commit/df5d19cf9ff3ea723905b3f3bd4f874c42fdcdfc))
+* remove unused types from tsconfig.json files across multiple packages ([eecabea](https://github.com/Alwatr/flux/commit/eecabea18710ff476011f7b439e9f838198e2fdf))
+* update @alwatr/nanolib and devDependencies to latest versions ([9c28454](https://github.com/Alwatr/flux/commit/9c28454e2eeb5a3c96784a8ca8ab5f591b606468))
+* update @alwatr/nanolib and devDependencies to latest versions ([fc1092a](https://github.com/Alwatr/flux/commit/fc1092aa35e34075374ea13e7ee2693b6c218830))
+* update @alwatr/nanolib and devDependencies to latest versions ([aedf844](https://github.com/Alwatr/flux/commit/aedf844719889bd8a3f8de92c3a7ca2811a12872))
+* update @alwatr/nanolib and devDependencies to latest versions ([50730ae](https://github.com/Alwatr/flux/commit/50730ae8ea26954e2fbed51feb1a7fa7e8d8e74d))
+* update @alwatr/nanolib and devDependencies to latest versions ([09fc363](https://github.com/Alwatr/flux/commit/09fc36357f34bc7143bc9b1cf5ee9fc456ab3e93))
+* update dependencies to latest versions in package.json ([b928153](https://github.com/Alwatr/flux/commit/b928153398d10376d065b8384378764a5d94c4ea))
+* update devDependencies to latest versions ([2994833](https://github.com/Alwatr/flux/commit/2994833a349f92511deae5d9619e0e272f7ea8a4))
+* update devDependencies to latest versions in package.json ([a4e2d7b](https://github.com/Alwatr/flux/commit/a4e2d7bbfdcc393bbc96ce5fc6f54b015d5ee33a))
+* update lerna.json to enhance changelog formatting and section icons ([8027180](https://github.com/Alwatr/flux/commit/80271806290856ca434d533619f832a26534e86d))
+* update license to MPL-2.0 ([80810ec](https://github.com/Alwatr/flux/commit/80810ec991f0c9e945231f1041c30ff70ff9ea37))
+* update license to MPL-2.0 ([82d20c8](https://github.com/Alwatr/flux/commit/82d20c88ad1b4ff5909ef0ca6b36b2db8f378279))
+* update package.json files across multiple packages to enhance structure and dependencies ([9df0690](https://github.com/Alwatr/flux/commit/9df0690b0b1ae036293be75da429842f67f8685f))
+* update prettier and typescript SDK versions to latest ([6625698](https://github.com/Alwatr/flux/commit/6625698e12e2cf9575691a6b0651d57988d21157))
+
+### 🔗 Dependencies update
+
+* add conventional-commits-filter dependency to enhance commit message management ([d6278a2](https://github.com/Alwatr/flux/commit/d6278a296bb4a6e20894d8e8aefa5507ac266a92))
+* adjust schedule time and remove unnecessary fields in dependabot configuration ([d21cabe](https://github.com/Alwatr/flux/commit/d21cabe2855e81bab1174f67d2b7cd6271460456))
+* **deps:** bump the github-actions group across 1 directory with 5 updates ([31dee50](https://github.com/Alwatr/flux/commit/31dee50b7bfd61f0bbc183105b344cf09938b20c))
+* update CodeQL action versions to v3.30.0 ([aaa569c](https://github.com/Alwatr/flux/commit/aaa569c99096ad283391ae91d91e48ea4047a1fd))
+* update dependency-review-action to v4.7.3 ([838c410](https://github.com/Alwatr/flux/commit/838c410e3a17569dd5167e1a331d1821e8a46024))
+
 ## [4.0.5](https://github.com/Alwatr/flux/compare/v4.0.4...v4.0.5) (2025-03-13)
 
 ### Bug Fixes

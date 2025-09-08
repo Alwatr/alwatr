@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/fsm",
   "description": "A robust TypeScript library for implementing Flux (Finite) State Machines, enabling clear and organized management of application state and transitions.",
-  "version": "4.0.5",
+  "version": "4.1.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {

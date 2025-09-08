@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/Alwatr/flux/compare/v4.0.5...v4.1.0) (2025-09-08)
+
+### 🐛 Bug Fixes
+
+* update type definitions Json in state machine classes, and use old fetch package ([ee9a4a4](https://github.com/Alwatr/flux/commit/ee9a4a4c7bed0a1aad8a742ee3f764d08d8f3e81))
+
+### 🧹 Miscellaneous Chores
+
+* remove Exir Studio sponsorship logo from README files ([df5d19c](https://github.com/Alwatr/flux/commit/df5d19cf9ff3ea723905b3f3bd4f874c42fdcdfc))
+* update dependencies to latest versions in package.json ([b928153](https://github.com/Alwatr/flux/commit/b928153398d10376d065b8384378764a5d94c4ea))
+* update license to MPL-2.0 ([82d20c8](https://github.com/Alwatr/flux/commit/82d20c88ad1b4ff5909ef0ca6b36b2db8f378279))
+* update package.json files across multiple packages to enhance structure and dependencies ([9df0690](https://github.com/Alwatr/flux/commit/9df0690b0b1ae036293be75da429842f67f8685f))
+
 ## [4.0.5](https://github.com/Alwatr/flux/compare/v4.0.4...v4.0.5) (2025-03-13)
 
 ### Bug Fixes
