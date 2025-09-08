@@ -1,106 +1,109 @@
 # @alwatr/delay
 
-`@alwatr/delay` offers a collection of utility functions to handle asynchronous execution flow effectively. It allows you to pause your code until specific conditions are met or certain events occur. This functionality aids in managing complex asynchronous scenarios and crafting intricate flows with ease. The functions can be used independently or combined for robust control over asynchronous operations.
+A robust and lightweight utility library for managing asynchronous operations in JavaScript and TypeScript. `@alwatr/delay` provides a collection of promise-based functions to pause execution until specific conditions are met, such as timeouts, animation frames, idle callbacks, or DOM events. This helps create clean, readable, and predictable asynchronous code.
 
 ## Installation
 
 ```bash
+# Using npm
 npm install @alwatr/delay
-```
 
-```bash
+# Using yarn
 yarn add @alwatr/delay
 ```
 
 ## Usage
 
-Each function within `@alwatr/delay` returns a Promise that resolves when the specified waiting condition is met. Here's a breakdown of the available functions:
+All functions are available under the `delay` object and return a `Promise`. You can use them with `async/await` for clean and linear code flow.
 
-- **waitForTimeout(duration: number): Promise<void>**
+```typescript
+import {delay} from '@alwatr/delay';
 
-  - Waits for a specified duration (in milliseconds) before resolving.
-  - Example:
+async function main() {
+  console.log('Waiting for 1 second...');
+  await delay.by('1s');
+  console.log('Done.');
+}
+```
 
-    ```typescript
-    import {waitForTimeout} from '@alwatr/delay';
+### API Reference
 
-    await waitForTimeout(1000); // Waits for 1 second
-    ```
+- **`delay.by(duration: Duration): Promise<void>`**
 
-- **waitForAnimationFrame(): Promise<DOMHighResTimeStamp>**
+  Pauses execution for a specified duration. The duration can be a number (in milliseconds) or a string (e.g., `'2s'`, `'500ms'`).
 
-  - Pauses execution until the next animation frame is scheduled, resolving with the current timestamp.
-  - Useful for synchronizing UI updates with browser rendering.
-  - Example:
+  ```typescript
+  await delay.by(2000); // Waits for 2 seconds
+  await delay.by('5m'); // Waits for 5 minutes
+  ```
 
-    ```typescript
-    import {waitForAnimationFrame} from '@alwatr/delay';
+- **`delay.animationFrame(): Promise<DOMHighResTimeStamp>`**
 
-    await waitForAnimationFrame(); // Waits for next animation frame
-    ```
+  Resolves at the beginning of the next browser animation frame. Useful for synchronizing animations and DOM updates with the browser's rendering cycle to avoid layout thrashing.
 
-- **waitForIdle(timeout?: number): Promise<IdleDeadline>**
+  ```typescript
+  const timestamp = await delay.animationFrame();
+  console.log(`Rendering next frame at ${timestamp}`);
+  // Perform DOM updates here
+  ```
 
-  - Waits for the next idle period (when the browser is not busy), resolving with an `IdleDeadline` object.
-  - Optionally accepts a timeout value (in milliseconds) for maximum waiting time.
-  - Ideal for executing tasks that don't impact user experience.
-  - Example:
+- **`delay.idleCallback(options?: IdleRequestOptions): Promise<IdleDeadline>`**
 
-    ```typescript
-    import {waitForIdle} from '@alwatr/delay';
+  Resolves when the browser's event loop is idle. Ideal for deferring non-critical background tasks to avoid impacting user experience.
 
-    await waitForIdle(); // Waits for next idle period
-    ```
+  ```typescript
+  const deadline = await delay.idleCallback({timeout: 1000});
+  if (!deadline.didTimeout) {
+    console.log('Running background task during idle time.');
+  }
+  ```
 
-- **waitForDomEvent<T extends keyof HTMLElementEventMap>(element: HTMLElement, eventName: T): Promise<HTMLElementEventMap[T]>**
+- **`delay.domEvent<T extends keyof HTMLElementEventMap>(...): Promise<HTMLElementEventMap[T]>`**
 
-  - Pauses execution until a specific DOM event is triggered on a provided element, resolving with the event object.
-  - Example:
+  Waits for a specific DOM event to be dispatched on an `HTMLElement`.
 
-    ```typescript
-    import {waitForDomEvent} from '@alwatr/delay';
+  ```typescript
+  const button = document.getElementById('my-button');
+  if (button) {
+    const event = await delay.domEvent(button, 'click');
+    console.log('Button was clicked!', event);
+  }
+  ```
 
-    const button = document.getElementById('myButton');
-    await waitForDomEvent(button, 'click'); // Waits for click event on button
-    ```
+- **`delay.event(target: EventTarget, eventName: string, ...): Promise<Event>`**
 
-- **waitForEvent(target: HasAddEventListener, eventName: string): Promise<Event>**
+  A more generic version of `domEvent`. Waits for any event on any `EventTarget` (e.g., `window`, `document`, or custom event emitters).
 
-  - More generic version of `waitForDomEvent`, allowing waiting for any event on any object with an `addEventListener` method.
-  - Example:
+  ```typescript
+  console.log('Waiting for window resize...');
+  await delay.event(window, 'resize');
+  console.log('Window was resized!');
+  ```
 
-    ```typescript
-    import {waitForEvent} from '@alwatr/delay';
+- **`delay.nextMacrotask(): Promise<void>`**
 
-    const server = http.createServer();
-    await waitForEvent(server, 'request'); // Waits for request event on server
-    ```
+  Schedules a macrotask to run in the next cycle of the event loop. This is useful for yielding control back to the browser, allowing it to handle rendering and other user-facing tasks. Implemented with `setTimeout(..., 0)`.
 
-- **waitForImmediate(): Promise<void>**
+  ```typescript
+  console.log('A');
+  await delay.nextMacrotask();
+  console.log('B'); // This will log after 'A' and after the browser has had a chance to breathe.
+  ```
 
-  - Executes the next task in the microtask queue immediately after the current task finishes.
-  - Example:
+- **`delay.nextMicrotask(): Promise<void>`**
 
-    ```typescript
-    import {waitForImmediate} from '@alwatr/delay';
+  Queues a microtask to be executed immediately after the current task completes, before the event loop proceeds to the next macrotask. Useful for scheduling work that needs to happen synchronously after an operation but without blocking the main thread.
 
-    await waitForImmediate(); // Executes next microtask
-    ```
-
-- **waitForMicrotask(): Promise<void>**
-
-  - Similar to `waitForImmediate`, but waits specifically for the next microtask queue.
-  - Example:
-
-    ```typescript
-    import {waitForMicrotask} from '@alwatr/delay';
-
-    await waitForMicrotask(); // Waits for next microtask queue
-    ```
+  ```typescript
+  console.log('A');
+  Promise.resolve().then(() => console.log('C'));
+  await delay.nextMicrotask();
+  console.log('B'); // Logs A, C, B
+  ```
 
 ## Contributing
 
-We welcome contributions to improve this package! Feel free to open bug reports, suggest new features, or submit pull requests following our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md).
+Contributions are welcome\! Please feel free to open an issue or submit a pull request. Read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) to get started.
 
 ## Sponsors
 
