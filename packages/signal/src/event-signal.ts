@@ -42,7 +42,7 @@ export class EventSignal<T = void> extends SignalBase<T> {
   private _notify(payload: T): void {
     const observersToRemove: Observer<T, this>[] = [];
     // Iterate over a copy of the array to prevent issues with modification during iteration.
-    const currentObservers = [...this.observers];
+    const currentObservers = [...this.observers_];
 
     for (const observer of currentObservers) {
       if (observer.options.disabled) continue;
@@ -64,7 +64,7 @@ export class EventSignal<T = void> extends SignalBase<T> {
     // Unsubscribe 'once' listeners after the loop.
     if (observersToRemove.length > 0) {
       for (const observer of observersToRemove) {
-        this._removeObserver(observer);
+        this.removeObserver_(observer);
       }
     }
   }
