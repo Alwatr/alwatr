@@ -1,4 +1,4 @@
-import {createLogger, type AlwatrLogger} from '@alwatr/nanolib';
+import {type AlwatrLogger} from '@alwatr/nanolib';
 
 import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback} from './type.js';
 
@@ -11,7 +11,7 @@ import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback} fro
 export abstract class SignalBase<T> {
   readonly signalId: string;
   protected abstract logger_: AlwatrLogger;
-  protected readonly observers_: Observer_<T, this>[] = [];
+  protected readonly observers_: Observer_<T>[] = [];
 
   constructor(signalId: string) {
     this.signalId = signalId;
@@ -22,7 +22,7 @@ export abstract class SignalBase<T> {
    * @param observer The observer instance to remove.
    * @protected
    */
-  protected removeObserver_(observer: Observer_<T, this>): void {
+  protected removeObserver_(observer: Observer_<T>): void {
     this.logger_.logMethod?.('removeObserver_');
     const index = this.observers_.indexOf(observer);
     if (index !== -1) {
@@ -37,10 +37,10 @@ export abstract class SignalBase<T> {
    * @param options Subscription options to customize the behavior.
    * @returns An object with an `unsubscribe` method to remove the listener.
    */
-  subscribe(callback: ListenerCallback<T, this>, options?: SubscribeOptions): SubscribeResult {
+  subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult {
     this.logger_.logMethodArgs?.('subscribe', {options});
 
-    const observer: Observer_<T, this> = {callback, options};
+    const observer: Observer_<T> = {callback, options};
 
     if (options?.priority) {
       this.observers_.unshift(observer);
