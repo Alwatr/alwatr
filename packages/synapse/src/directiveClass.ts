@@ -34,7 +34,7 @@ export abstract class DirectiveBase {
     this.element_ = element;
 
     (async () => {
-      await delay.immediate();
+      await delay.nextMicrotask();
       await this.init_();
       await this.update_();
     })();
