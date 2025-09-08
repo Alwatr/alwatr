@@ -1,4 +1,6 @@
-import type {Observer, SubscribeOptions, SubscribeResult, ListenerCallback} from './type.js';
+import {createLogger, type AlwatrLogger} from '@alwatr/nanolib';
+
+import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback} from './type.js';
 
 /**
  * An abstract base class for signal implementations.
@@ -7,8 +9,9 @@ import type {Observer, SubscribeOptions, SubscribeResult, ListenerCallback} from
  * @template T The type of data the signal will handle.
  */
 export abstract class SignalBase<T> {
-  protected readonly observers: Observer<T, this>[] = [];
-  public readonly signalId: string;
+  readonly signalId: string;
+  protected abstract logger_: AlwatrLogger;
+  protected readonly observers_: Observer_<T, this>[] = [];
 
   constructor(signalId: string) {
     this.signalId = signalId;
@@ -19,10 +22,11 @@ export abstract class SignalBase<T> {
    * @param observer The observer instance to remove.
    * @protected
    */
-  protected _removeObserver(observer: Observer<T, this>): void {
-    const index = this.observers.indexOf(observer);
+  protected removeObserver_(observer: Observer_<T, this>): void {
+    this.logger_.logMethod?.('removeObserver_');
+    const index = this.observers_.indexOf(observer);
     if (index !== -1) {
-      this.observers.splice(index, 1);
+      this.observers_.splice(index, 1);
     }
   }
 
@@ -33,18 +37,20 @@ export abstract class SignalBase<T> {
    * @param options Subscription options to customize the behavior.
    * @returns An object with an `unsubscribe` method to remove the listener.
    */
-  subscribe(callback: ListenerCallback<T, this>, options: SubscribeOptions = {}): SubscribeResult {
-    const observer: Observer<T, this> = {callback, options};
+  subscribe(callback: ListenerCallback<T, this>, options?: SubscribeOptions): SubscribeResult {
+    this.logger_.logMethodArgs?.('subscribe', {options});
 
-    if (options.priority) {
-      this.observers.unshift(observer);
+    const observer: Observer_<T, this> = {callback, options};
+
+    if (options?.priority) {
+      this.observers_.unshift(observer);
     }
     else {
-      this.observers.push(observer);
+      this.observers_.push(observer);
     }
 
     // The returned unsubscribe function now calls the centralized removal method.
-    const unsubscribe = (): void => this._removeObserver(observer);
+    const unsubscribe = (): void => this.removeObserver_(observer);
 
     return {unsubscribe};
   }
