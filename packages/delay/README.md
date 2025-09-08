@@ -58,7 +58,7 @@ async function main() {
   }
   ```
 
-- **`delay.domEvent<T extends keyof HTMLElementEventMap>(...): Promise<HTMLElementEventMap[T]>`**
+- **`delay.domEvent<T extends keyof HTMLElementEventMap>(element: HTMLElement, eventName: T, options?: AddEventListenerOptions): Promise<HTMLElementEventMap[T]>`**
 
   Waits for a specific DOM event to be dispatched on an `HTMLElement`.
 
