@@ -1,8 +1,8 @@
-import { createLogger, delay } from '@alwatr/nanolib';
+import {createLogger, delay} from '@alwatr/nanolib';
 
 import {SignalBase} from './signal-base.js';
 
-import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult} from './type.js';
+import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, Observer_} from './type.js';
 
 /**
  * A stateful signal that holds a value and notifies listeners when the value changes.
@@ -55,21 +55,16 @@ export class StateSignal<T> extends SignalBase<T> {
   set(newValue: T): void {
     this.logger_.logMethodArgs?.('set', {newValue});
     this.value__ = newValue;
-    this.dispatch__(this.value__);
-  }
 
-  /**
-   * Private method to handle the asynchronous dispatching logic.
-   * @param value The value to dispatch.
-   */
-  private async dispatch__(value: T): Promise<void> {
-    try {
-      await delay.nextMicrotask()
-      this.notify_(value);
-    }
-    catch (err) {
-      console.error(`{signal: ${this.signalId}} dispatch failed`, err);
-    }
+    // Dispatch as a microtask to ensure consistent, non-blocking behavior.
+    delay
+      .nextMicrotask()
+      .then(() => {
+        this.notify_(newValue);
+      })
+      .catch((err) => {
+        this.logger_.error('set', 'dispatch_failed', err);
+      });
   }
 
   /**
@@ -79,16 +74,19 @@ export class StateSignal<T> extends SignalBase<T> {
    * @param options Subscription options, including `receivePrevious`.
    * @returns An object with an `unsubscribe` method.
    */
-  override subscribe(callback: ListenerCallback<T, this>, options: SubscribeOptions = {}): SubscribeResult {
+  override subscribe(callback: ListenerCallback<T>, options: SubscribeOptions = {}): SubscribeResult {
+    this.logger_.logMethodArgs?.('subscribe', {options});
+
     // For StateSignal, `receivePrevious` is the default, most common behavior.
     const receivePrevious = options.receivePrevious !== false;
 
     if (receivePrevious && !options.disabled) {
       // Immediately (but asynchronously) call the listener with the current value.
-      Promise.resolve()
+      delay
+        .nextMicrotask()
         .then(() => {
           try {
-            const ret = callback.call(this, this.value__);
+            const ret = callback(this.value__);
             if (ret instanceof Promise) {
               ret.catch((err) => console.error(`{signal: ${this.signalId}} async listener failed on receivePrevious`, err));
             }
@@ -101,6 +99,7 @@ export class StateSignal<T> extends SignalBase<T> {
 
       // If it's a 'once' subscription, it's now fulfilled, so we don't need to add it to the list.
       if (options.once) {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         return {unsubscribe: () => {}};
       }
     }
@@ -110,29 +109,25 @@ export class StateSignal<T> extends SignalBase<T> {
 
   // The _notify method can be shared or duplicated. For simplicity, we'll include it here.
   private notify_(value: T): void {
-    const observersToRemove: Observer<T, this>[] = [];
+    this.logger_.logMethodArgs?.('notify_', {value});
+
     const currentObservers = [...this.observers_];
 
     for (const observer of currentObservers) {
-      if (observer.options.disabled) continue;
-      if (observer.options.once) {
-        observersToRemove.push(observer);
+      if (observer.options?.disabled) continue;
+
+      if (observer.options?.once) {
+        this.removeObserver_(observer);
       }
 
       try {
-        const ret = observer.callback.call(this, value);
+        const ret = observer.callback(value);
         if (ret instanceof Promise) {
-          ret.catch((err) => console.error(`{signal: ${this.signalId}} async listener failed`, err));
+          ret.catch((err) => this.logger_.error('notify_', 'async_listener_failed', err));
         }
       }
       catch (err) {
-        console.error(`{signal: ${this.signalId}} sync listener failed`, err);
-      }
-    }
-
-    if (observersToRemove.length > 0) {
-      for (const observer of observersToRemove) {
-        this.removeObserver_(observer);
+        this.logger_.error('notify_', 'sync_listener_failed', err);
       }
     }
   }
