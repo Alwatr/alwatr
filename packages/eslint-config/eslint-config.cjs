@@ -81,6 +81,7 @@ module.exports = {
         },
       },
     ],
+    '@typescript-eslint/explicit-member-accessibility': 'error',
     '@typescript-eslint/prefer-string-starts-ends-with': 'off',
     '@typescript-eslint/no-dynamic-delete': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
