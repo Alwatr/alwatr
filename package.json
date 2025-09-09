@@ -43,7 +43,7 @@
     "clean": "git add -v . && git clean -d -x -f --exclude=node_modules --exclude='*.env' --exclude=_data --exclude='.pnp*' --exclude=.yarn",
     "f": "yarn run format",
     "format": "yarn run format:prettier && yarn run format:eslint",
-    "format:eslint": "yarn run lint --fix",
+    "format:eslint": "yarn run lint:es --fix",
     "format:prettier": "prettier . --ignore-path .gitignore --write",
     "l": "yarn run lint",
     "lint": "yarn run lint:ts && yarn run lint:es",
