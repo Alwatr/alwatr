@@ -111,14 +111,14 @@ export type DependencyList = readonly IReadonlySignal<unknown>[];
 export interface ComputedSignalConfig<T> extends SignalConfig {
   /**
    * List of signals that the computed signal depends on.
-   * 
+   *
    * Changes to these dependencies will trigger recalculation.
    */
   deps: DependencyList;
 
   /**
    * Function that computes the value of the signal.
-   * 
+   *
    * This function is called whenever the dependencies change.
    */
   get: () => T;
@@ -138,31 +138,34 @@ export interface IComputedSignal<T> extends IReadonlySignal<T> {
 }
 
 /**
- * Options for creating an effect with explicit dependencies.
+ * Configuration for creating an EffectSignal.
  */
-export interface EffectOptions {
+export interface EffectSignalConfig {
   /**
-   * The list of dependencies that determine when the effect should run.
+   * An array of signals that this effect depends on. The effect will run
+   * whenever any of these signals change.
    */
-  deps: DependencyList;
+  readonly deps: DependencyList;
 
   /**
-   * The asynchronous function to execute when the effect is triggered.
+   * The function to execute as the side-effect. It can be synchronous or asynchronous.
    */
   run: () => Awaitable<void>;
 
   /**
-   * If true, the effect will run once immediately upon creation.
+   * If `true`, the effect function will be run once immediately
+   * upon initialization.
    */
   runImmediately: boolean;
 }
 
 /**
- * The result of creating an effect, containing a `destroy` method for cleanup.
+ * The interface for an EffectSignal, which provides a destroy method for cleanup.
  */
-export interface EffectResult {
+export interface IEffectSignal {
   /**
-   * Stops the effect from running in the future and cleans up its dependencies.
+   * Permanently disposes of the effect, unsubscribing from all dependencies
+   * and stopping any future executions.
    */
   destroy: () => void;
 }
