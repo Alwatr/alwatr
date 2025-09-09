@@ -146,7 +146,7 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
       this.internalSignal_.set(this.config_.get());
     }
     catch (err) {
-      this.logger_.error('_recalculate', 'recalculation_failed', err);
+      this.logger_.error('recalculate_', 'recalculation_failed', err);
     }
 
     this.isRecalculating__ = false;
