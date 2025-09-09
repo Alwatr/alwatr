@@ -60,14 +60,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     this.value__ = newValue;
 
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    delay
-      .nextMicrotask()
-      .then(() => {
-        this.notify_(newValue);
-      })
-      .catch((err) => {
-        this.logger_.error('set', 'dispatch_failed', err);
-      });
+    delay.nextMicrotask().then(() => this.notify_(newValue));
   }
 
   /**
@@ -86,20 +79,14 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
 
     if (receivePrevious && !options.disabled) {
       // Immediately (but asynchronously) call the listener with the current value.
-      delay
-        .nextMicrotask()
-        .then(() => {
-          try {
-            const ret = callback(this.value__);
-            if (ret instanceof Promise) {
-              ret.catch((err) => console.error(`{signal: ${this.signalId}} async listener failed on receivePrevious`, err));
-            }
-          }
-          catch (err) {
-            console.error(`{signal: ${this.signalId}} sync listener failed on receivePrevious`, err);
-          }
-        })
-        .catch((err) => console.error(`{signal: ${this.signalId}} subscribe dispatch failed`, err));
+      delay.nextMicrotask().then(async () => {
+        try {
+          await callback(this.value__);
+        }
+        catch (err) {
+          this.logger_.error('subscribe', 'run_callback_immediate_failed', err);
+        }
+      });
 
       // If it's a 'once' subscription, it's now fulfilled, so we don't need to add it to the list.
       if (options.once) {
