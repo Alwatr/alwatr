@@ -99,7 +99,7 @@ export class UnicodeDigits {
    * console.log(unicodeDigits.translate(list));
    * ```
    */
-  constructor(toLanguage: UnicodeLangKeys, fromLanguages: UnicodeLangKeys[] | 'all' = [...commonLangList]) {
+  public constructor(toLanguage: UnicodeLangKeys, fromLanguages: UnicodeLangKeys[] | 'all' = [...commonLangList]) {
     if (fromLanguages === 'all') {
       fromLanguages = Object.keys(supportedLanguageList) as UnicodeLangKeys[];
     }
@@ -141,7 +141,7 @@ export class UnicodeDigits {
    * console.log(unicodeDigits.translate(list));
    * ```
    */
-  translate(str: string): string {
+  public translate(str: string): string {
     return str.trim() === '' ? str : str.replace(this._searchRegExt, this._replacer);
   }
 }

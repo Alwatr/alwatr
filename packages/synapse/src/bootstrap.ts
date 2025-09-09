@@ -34,7 +34,7 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
       if (elements.length === 0) continue;
 
       logger.logOther?.(`Found ${elements.length} new element(s) for directive "${selector}"`);
-      elements.forEach(element => {
+      elements.forEach((element) => {
         // Mark the element as processed before creating an instance
         element.setAttribute(initializedAttribute, 'true');
         // Instantiate the directive with the element.

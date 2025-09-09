@@ -156,11 +156,11 @@ export type HttpResponseHeaders = {
    * Indicates the authentication scheme that should be used to access the requested entity.
    */
   'www-authenticate'?: string;
-}
+};
 
 /**
  * Represents the collection of all HTTP Request headers.
- * 
+ *
  * For supporting custom headers, you can use intersection with a dictionary type, e.g., `HttpResponseHeaders & DictionaryReq<string>`.
  */
 export type HttpRequestHeaders = {
@@ -874,4 +874,4 @@ export type HttpRequestHeaders = {
    * Example: `x-xss-protection: '1; mode=block'`
    */
   'x-xss-protection'?: string;
-}
+};

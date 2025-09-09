@@ -9,7 +9,7 @@ __dev_mode__: packageTracer.add(__package_name__, __package_version__);
  * @param value - The value to check
  * @returns true if the value is a finite number, false otherwise
  */
-export function isFiniteNumber(value: unknown): boolean {
+export function isFiniteNumber(value: unknown): value is number {
   // Use native implementation if available
   if (typeof Number.isFinite === 'function') {
     return Number.isFinite(value);

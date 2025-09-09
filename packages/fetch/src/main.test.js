@@ -28,7 +28,6 @@ describe('fetch with bodyJson', () => {
   });
 });
 
-
 describe('fetch with timeout', () => {
   it('should throw on timeout', async () => {
     await expect(fetch('http://httpbin.org/delay/1', {timeout: 500, retry: 0})).rejects.toThrow('fetch_timeout');
@@ -41,11 +40,11 @@ describe('fetch with removeDuplicate', () => {
     const [res1, res2] = await Promise.all([
       fetch(url, {
         removeDuplicate: 'always',
-        headers: {'Req': '1'},
+        headers: {Req: '1'},
       }),
       fetch(url, {
         removeDuplicate: 'always',
-        headers: {'Req': '2'},
+        headers: {Req: '2'},
       }),
     ]);
     expect(res1.status).toBe(200);

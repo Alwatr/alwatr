@@ -29,17 +29,9 @@
     // "**/*.tsbuildinfo": true
   },
   "git.autoStash": true,
-  "git.branchProtection": [
-    "main",
-    "next"
-  ],
-  "githubPullRequests.ignoredPullRequestBranches": [
-    "main",
-    "next"
-  ],
-  "markdownlint.ignore": [
-    "**/CHANGELOG.md"
-  ],
+  "git.branchProtection": ["main", "next"],
+  "githubPullRequests.ignoredPullRequestBranches": ["main", "next"],
+  "markdownlint.ignore": ["**/CHANGELOG.md"],
   "npm.packageManager": "yarn",
   "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
   "prettier.useEditorConfig": true,

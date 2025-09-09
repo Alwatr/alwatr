@@ -1,6 +1,6 @@
-import { existsSync } from 'node:fs';
+import {existsSync} from 'node:fs';
 import {mkdir, open} from 'node:fs/promises';
-import { dirname } from 'node:path';
+import {dirname} from 'node:path';
 
 import {logger} from './common.js';
 

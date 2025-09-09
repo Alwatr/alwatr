@@ -17,14 +17,14 @@ npm install @alwatr/hash-string
 import {nanoHash} from '@alwatr/hash-string';
 
 // Hash a string with a prefix
-nanoHash('test', 'prefix-');  // => 'prefix-j26j3d4'
+nanoHash('test', 'prefix-'); // => 'prefix-j26j3d4'
 
 // Hash a number
-nanoHash(12345, 'num-');      // => 'num-8hu3f2l'
+nanoHash(12345, 'num-'); // => 'num-8hu3f2l'
 
 // Adjust complexity with repeat parameter
-nanoHash('test', 'p-', 1);    // => 'p-7ba2n3y' (faster, less complex)
-nanoHash('test', 'p-', 5);    // => 'p-3f72h9b' (slower, more complex)
+nanoHash('test', 'p-', 1); // => 'p-7ba2n3y' (faster, less complex)
+nanoHash('test', 'p-', 5); // => 'p-3f72h9b' (slower, more complex)
 ```
 
 ## API
@@ -68,16 +68,16 @@ For security-critical applications, use established cryptographic hash functions
 
 ```typescript
 // Generate a hash for a string
-nanoHash('hello world', 'msg-');  // => 'msg-k7f2h9d'
+nanoHash('hello world', 'msg-'); // => 'msg-k7f2h9d'
 
 // Generate a hash for a number
-nanoHash(42, 'id-');  // => 'id-p83b2e4'
+nanoHash(42, 'id-'); // => 'id-p83b2e4'
 
 // Same input produces the same output
-nanoHash('test', 'x-') === nanoHash('test', 'x-');  // => true
+nanoHash('test', 'x-') === nanoHash('test', 'x-'); // => true
 
 // Different inputs produce different outputs
-nanoHash('test1', 'x-') !== nanoHash('test2', 'x-');  // => true
+nanoHash('test1', 'x-') !== nanoHash('test2', 'x-'); // => true
 ```
 
 ### Controlling Complexity
@@ -117,7 +117,7 @@ The package includes the DJB2 hash algorithm, a fast and efficient string hashin
 // Generate a numeric hash value
 import {djb2Hash} from '@alwatr/hash-string';
 
-const hashValue = djb2Hash("hello world"); // Returns a 32-bit unsigned integer
+const hashValue = djb2Hash('hello world'); // Returns a 32-bit unsigned integer
 ```
 
 Key features of djb2Hash:

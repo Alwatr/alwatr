@@ -110,12 +110,12 @@ describe('@alwatr/random', () => {
 
     test('randString() with custom character set', () => {
       const length = 10;
-      const chars = '01';  // Binary characters
+      const chars = '01'; // Binary characters
       const str = randString(length, undefined, chars);
 
       expect(str.length).toBe(length);
       // Verify that only characters from the custom set are used
-      expect(str.split('').every(char => chars.includes(char))).toBe(true);
+      expect(str.split('').every((char) => chars.includes(char))).toBe(true);
     });
 
     test('randString() with custom character set and variable length', () => {
@@ -127,7 +127,7 @@ describe('@alwatr/random', () => {
       expect(str.length).toBeGreaterThanOrEqual(min);
       expect(str.length).toBeLessThanOrEqual(max);
       // Verify that only characters from the custom set are used
-      expect(str.split('').every(char => chars.includes(char))).toBe(true);
+      expect(str.split('').every((char) => chars.includes(char))).toBe(true);
     });
 
     test('randString() optimizes for short strings', () => {

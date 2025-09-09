@@ -23,7 +23,7 @@ function runCommand(command: string): Promise<void> {
       stdio: 'inherit',
 
       // Run in the directory where the user executed the command
-      cwd: process.cwd(), 
+      cwd: process.cwd(),
     });
 
     child.on('close', (code) => {

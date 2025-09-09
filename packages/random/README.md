@@ -34,7 +34,7 @@ import {
   randBoolean,
   randColor,
   randArray,
-  bytesToHex
+  bytesToHex,
 } from '@alwatr/random';
 
 // Get random number between 0 and 1

@@ -52,7 +52,7 @@ describe('djb2Hash', () => {
 
     for (const input of inputs) {
       const result = djb2Hash(input);
-      expect(result).toBeLessThanOrEqual(0xFFFFFFFF); // Max 32-bit unsigned int
+      expect(result).toBeLessThanOrEqual(0xffffffff); // Max 32-bit unsigned int
       expect(result).toBeGreaterThanOrEqual(0);
     }
   });

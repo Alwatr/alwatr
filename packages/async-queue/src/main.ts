@@ -40,7 +40,7 @@ export class AsyncQueue {
    * });
    * ```
    */
-  async push<T>(taskId: string, task: () => Promise<T>): Promise<T> {
+  public async push<T>(taskId: string, task: () => Promise<T>): Promise<T> {
     const flatomise = newFlatomise<T>();
 
     const previousTaskPromise = this.queue__[taskId];
@@ -78,7 +78,7 @@ export class AsyncQueue {
    * }
    * ```
    */
-  isRunning(taskId: string): boolean {
+  public isRunning(taskId: string): boolean {
     return this.queue__[taskId] !== undefined;
   }
 
@@ -92,7 +92,7 @@ export class AsyncQueue {
    * await queue.waitForFinish('longTaskId');
    * ```
    */
-  waitForFinish(taskId: string): Promise<unknown> {
+  public waitForFinish(taskId: string): Promise<unknown> {
     return this.queue__[taskId] ?? Promise.resolve();
   }
 
@@ -104,7 +104,7 @@ export class AsyncQueue {
    * await queue.waitForAllFinish();
    * ```
    */
-  waitForAllFinish(): Promise<unknown[]> {
+  public waitForAllFinish(): Promise<unknown[]> {
     return Promise.all(Object.values(this.queue__));
   }
 }
