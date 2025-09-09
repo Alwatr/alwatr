@@ -5,8 +5,7 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/nanolib": "^6.0.2",
-    "@alwatr/observable": "workspace:*"
+    "@alwatr/nanolib": "^6.0.2"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^6.1.0",
