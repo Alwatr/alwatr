@@ -123,16 +123,4 @@ export class EffectSignal implements IEffectSignal {
     this.subscriptionList__.length = 0; // Clear the array of subscriptions.
     this.config_ = {} as EffectSignalConfig;
   }
-
-  /**
-   * Checks if the signal has been destroyed.
-   * @throws {Error} If the signal has been destroyed.
-   * @protected
-   */
-  protected checkDestroyed_(): void {
-    if (this.isDestroyed__) {
-      this.logger_.accident('checkDestroyed_', 'attempt_to_use_destroyed_effect_signal');
-      throw new Error('Cannot interact with a destroyed EffectSignal.');
-    }
-  }
 }
