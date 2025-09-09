@@ -56,6 +56,45 @@ export abstract class SignalBase<T> {
   }
 
   /**
+   * Notifies all registered observers about a value change.
+   *
+   * This method iterates through a snapshot of the current observers to avoid issues with concurrent modifications.
+   * It skips disabled observers, removes observers marked as 'once' after notification, and handles both synchronous
+   * and asynchronous callback errors by logging them.
+   *
+   * @param value - The new value to notify observers about.
+   * @private
+   */
+  protected notify_(value: T): void {
+    if (this.isDestroyed_) {
+      this.logger_.incident?.('notify_', 'attempt_to_dispatch_on_destroyed_signal');
+      return;
+    }
+
+    this.logger_.logMethodArgs?.('notify_', value);
+
+    const currentObservers = [...this.observers_];
+
+    for (const observer of currentObservers) {
+      if (observer.options?.disabled) continue;
+
+      if (observer.options?.once) {
+        this.removeObserver_(observer);
+      }
+
+      try {
+        const ret = observer.callback(value);
+        if (ret instanceof Promise) {
+          ret.catch((err) => this.logger_.error('notify_', 'async_listener_failed', err));
+        }
+      }
+      catch (err) {
+        this.logger_.error('notify_', 'sync_listener_failed', err);
+      }
+    }
+  }
+
+  /**
    * Returns a Promise that resolves with the next value dispatched by the signal.
    * This provides an elegant way to wait for a single, future event using async/await.
    *
