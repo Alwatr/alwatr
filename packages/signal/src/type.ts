@@ -138,16 +138,6 @@ export interface IComputedSignal<T> extends IReadonlySignal<T> {
 }
 
 /**
- * The result of creating an effect, containing a `destroy` method for cleanup.
- */
-export interface EffectResult {
-  /**
-   * Stops the effect from running in the future and cleans up its dependencies.
-   */
-  destroy: () => void;
-}
-
-/**
  * Options for creating an effect with explicit dependencies.
  */
 export interface EffectOptions {
@@ -160,4 +150,19 @@ export interface EffectOptions {
    * The asynchronous function to execute when the effect is triggered.
    */
   run: () => Awaitable<void>;
+
+  /**
+   * If true, the effect will run once immediately upon creation.
+   */
+  runImmediately: boolean;
+}
+
+/**
+ * The result of creating an effect, containing a `destroy` method for cleanup.
+ */
+export interface EffectResult {
+  /**
+   * Stops the effect from running in the future and cleans up its dependencies.
+   */
+  destroy: () => void;
 }
