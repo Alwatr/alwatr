@@ -124,3 +124,15 @@ export interface ComputedOptions<T> {
    */
   get: () => T;
 }
+/**
+ * The interface for a computed signal, which is a read-only signal
+ * with an added `destroy` method for cleanup.
+ * @template T
+ */
+export interface ComputedSignal<T> extends ReadonlySignal<T> {
+  /**
+   * Unsubscribes from all dependencies, stopping future recalculations
+   * and allowing for garbage collection.
+   */
+  destroy: () => void;
+}
