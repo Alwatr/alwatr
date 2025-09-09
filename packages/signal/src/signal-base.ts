@@ -77,4 +77,13 @@ export abstract class SignalBase<T> {
       });
     });
   }
+
+  /**
+   * Clears all listeners from this signal and makes it inactive.
+   * This is useful for lifecycle management and preventing memory leaks.
+   */
+  destroy(): void {
+    // Clear all observers.
+    this.observers_.length = 0;
+  }
 }
