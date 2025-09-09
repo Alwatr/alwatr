@@ -1,4 +1,4 @@
-# Flux - Elegant State Management and Event System
+# Alwatr Flux - Elegant State Management and Event System
 
 ## Introduction
 
@@ -30,8 +30,6 @@ Flux empowers your applications with elegant and powerful state management and e
 
 The following companies, organizations, and individuals support flux ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.
 
-
-### Contributing
+## Contributing
 
 Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
-
