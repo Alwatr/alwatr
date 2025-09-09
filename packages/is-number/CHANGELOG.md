@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.7](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.7.6...@alwatr/is-number@5.7.7) (2025-09-09)
+
+### 🐛 Bug Fixes
+
+* update isFiniteNumber return type to indicate it checks for finite numbers ([2ed06c4](https://github.com/Alwatr/nanolib/commit/2ed06c43ce97a1c04cdc5779e1866fc6445b1ca2))
+
+### 🧹 Miscellaneous Chores
+
+* remove trailing newlines from contributing sections in README files ([e8ab1bc](https://github.com/Alwatr/nanolib/commit/e8ab1bc43e0addea5ccd4c897c2cec597cb9e15f))
+
 ## [5.7.6](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.7.5...@alwatr/is-number@5.7.6) (2025-09-06)
 
 **Note:** Version bump only for package @alwatr/is-number

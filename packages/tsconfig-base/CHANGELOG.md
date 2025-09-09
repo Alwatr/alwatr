@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@6.0.0...@alwatr/tsconfig-base@6.0.1) (2025-09-09)
+
+### 🧹 Miscellaneous Chores
+
+* remove trailing newlines from contributing sections in README files ([e8ab1bc](https://github.com/Alwatr/nanolib/commit/e8ab1bc43e0addea5ccd4c897c2cec597cb9e15f))
+
 ## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@5.0.2...@alwatr/tsconfig-base@6.0.0) (2025-09-06)
 
 ### ⚠ BREAKING CHANGES

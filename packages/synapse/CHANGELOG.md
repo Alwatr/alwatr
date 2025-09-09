@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.3...@alwatr/synapse@1.1.4) (2025-09-09)
+
+### 🧹 Miscellaneous Chores
+
+* remove trailing newlines from contributing sections in README files ([e8ab1bc](https://github.com/Alwatr/nanolib/commit/e8ab1bc43e0addea5ccd4c897c2cec597cb9e15f))
+
 ## [1.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.2...@alwatr/synapse@1.1.3) (2025-09-08)
 
 ### 🐛 Bug Fixes

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.0](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.5.7...@alwatr/eslint-config@5.6.0) (2025-09-09)
+
+### ✨ Features
+
+* **eslint:** add rule for explicit member accessibility ([5714ee3](https://github.com/Alwatr/nanolib/commit/5714ee343326c0e59cd51c536aa0130010dee76b))
+
+### 🧹 Miscellaneous Chores
+
+* remove trailing newlines from contributing sections in README files ([e8ab1bc](https://github.com/Alwatr/nanolib/commit/e8ab1bc43e0addea5ccd4c897c2cec597cb9e15f))
+
 ## [5.5.7](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.5.6...@alwatr/eslint-config@5.5.7) (2025-08-23)
 
 **Note:** Version bump only for package @alwatr/eslint-config

@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/local-storage",
   "description": "`localJsonStorage` is a utility object in our TypeScript package that provides methods for interacting with the local storage in a structured and versioned manner.",
-  "version": "5.5.9",
+  "version": "5.5.10",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
