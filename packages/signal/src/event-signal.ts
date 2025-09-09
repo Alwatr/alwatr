@@ -24,7 +24,7 @@ export class EventSignal<T = void> extends SignalBase<T> {
 
   constructor(config: SignalConfig) {
     super(config.signalId);
-    this.logger_.logMethod?.('new');
+    this.logger_.logMethod?.('initialize');
   }
 
   /**
