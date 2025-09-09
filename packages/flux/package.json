@@ -5,9 +5,7 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/context": "workspace:*",
     "@alwatr/fsm": "workspace:*",
-    "@alwatr/observable": "workspace:*",
     "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {
