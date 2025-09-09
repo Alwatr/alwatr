@@ -76,8 +76,11 @@ export interface StateSignalConfig<T> extends SignalConfig {
 }
 
 /**
- * A read-only interface for a signal, representing any reactive value container.
+ * A read-only signal interface.
+ *
  * Both StateSignal and ComputedSignal implement this.
+ *
+ * @template T The type of the signal's value.
  */
 export interface ReadonlySignal<T> {
   /**
@@ -88,9 +91,10 @@ export interface ReadonlySignal<T> {
   /**
    * Subscribes a listener to this signal.
    * @param callback The function to be called when the signal's value changes.
+   * @param options Optional settings for the subscription.
    * @returns An object with an `unsubscribe` method.
    */
-  subscribe(callback: ListenerCallback<T>): SubscribeResult;
+  subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult;
 }
 
 /**
@@ -99,24 +103,24 @@ export interface ReadonlySignal<T> {
 export type DependencyList = readonly ReadonlySignal<unknown>[];
 
 /**
- * Options for configuring a computed signal.
+ * Options for creating a computed signal with explicit dependencies.
  * @template T - The type of the value computed by the signal.
  */
-export type ComputedOptions<T> = {
+export interface ComputedOptions<T> {
   /**
    * Unique identifier for the signal.
    */
   signalId: string;
 
   /**
-   * Function that computes the value of the signal.
-   * This function is called whenever the dependencies change.
-   */
-  get: () => T;
-
-  /**
    * List of signals that the computed signal depends on.
    * Changes to these dependencies will trigger recalculation.
    */
   deps: DependencyList;
-};
+
+  /**
+   * Function that computes the value of the signal.
+   * This function is called whenever the dependencies change.
+   */
+  get: () => T;
+}
