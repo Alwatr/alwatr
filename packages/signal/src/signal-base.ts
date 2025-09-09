@@ -61,7 +61,7 @@ export abstract class SignalBase<T> {
    * @returns An object with an `unsubscribe` method to remove the listener.
    */
   public subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult {
-    this.logger_.logMethodArgs?.('subscribe', {options});
+    this.logger_.logMethodArgs?.('subscribe.base', {options});
     this.checkDestroyed_();
 
     const observer: Observer_<T> = {callback, options};
@@ -99,23 +99,18 @@ export abstract class SignalBase<T> {
 
     const currentObservers = [...this.observers_];
 
-    for (const observer of currentObservers) {
-      if (observer.options?.disabled) continue;
-
-      if (observer.options?.once) {
-        this.removeObserver_(observer);
-      }
-
+    currentObservers.forEach(async (observer) => {
+      if (observer.options?.disabled) return;
       try {
-        const ret = observer.callback(value);
-        if (ret instanceof Promise) {
-          ret.catch((err) => this.logger_.error('notify_', 'async_listener_failed', err));
+        if (observer.options?.once) {
+          this.removeObserver_(observer);
         }
+        await observer.callback(value);
       }
       catch (err) {
-        this.logger_.error('notify_', 'sync_listener_failed', err);
+        this.logger_.error('notify_', 'run_callback_failed', err);
       }
-    }
+    });
   }
 
   /**
