@@ -66,7 +66,7 @@ Parse a duration string or millisecond number into the specified unit (or millis
 ### Supported Units
 
 | Unit | Description | Milliseconds Equivalent |
-|------|-------------|-------------------------|
+| ---- | ----------- | ----------------------- |
 | `s`  | Second      | 1,000                   |
 | `m`  | Minute      | 60,000                  |
 | `h`  | Hour        | 3,600,000               |
@@ -83,7 +83,7 @@ import {parseDuration, DurationUnit, Duration} from '@alwatr/parse-duration';
 // Type-safe unit parameter
 function waitFor(time: Duration): Promise<void> {
   const ms = parseDuration(time);
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 // Usage

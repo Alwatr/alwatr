@@ -104,14 +104,14 @@ Now, you can use the directive declaratively in your HTML.
 ```html
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Synapse Demo</title>
-  <script type="module" src="dist/main.js"></script>
-</head>
-<body>
-  <!-- This button will now have the copy-on-click behavior -->
-  <button data-copy-button data-copy-text="Hello, Synapse!">Copy Text</button>
-</body>
+  <head>
+    <title>Synapse Demo</title>
+    <script type="module" src="dist/main.js"></script>
+  </head>
+  <body>
+    <!-- This button will now have the copy-on-click behavior -->
+    <button data-copy-button data-copy-text="Hello, Synapse!">Copy Text</button>
+  </body>
 </html>
 ```
 
