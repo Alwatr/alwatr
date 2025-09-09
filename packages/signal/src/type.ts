@@ -1,3 +1,5 @@
+import type {} from '@alwatr/type-helper';
+
 /**
  * @package @alwatr/signal
  *
@@ -82,7 +84,7 @@ export interface StateSignalConfig<T> extends SignalConfig {
  *
  * @template T The type of the signal's value.
  */
-export interface ReadonlySignal<T> {
+export interface IReadonlySignal<T> {
   /**
    * The current value of the signal.
    */
@@ -100,26 +102,23 @@ export interface ReadonlySignal<T> {
 /**
  * A list of signals that a computed or effect depends on.
  */
-export type DependencyList = readonly ReadonlySignal<unknown>[];
+export type DependencyList = readonly IReadonlySignal<unknown>[];
 
 /**
  * Options for creating a computed signal with explicit dependencies.
  * @template T - The type of the value computed by the signal.
  */
-export interface ComputedOptions<T> {
-  /**
-   * Unique identifier for the signal.
-   */
-  signalId: string;
-
+export interface ComputedSignalConfig<T> extends SignalConfig {
   /**
    * List of signals that the computed signal depends on.
+   * 
    * Changes to these dependencies will trigger recalculation.
    */
   deps: DependencyList;
 
   /**
    * Function that computes the value of the signal.
+   * 
    * This function is called whenever the dependencies change.
    */
   get: () => T;
@@ -130,7 +129,7 @@ export interface ComputedOptions<T> {
  * with an added `destroy` method for cleanup.
  * @template T
  */
-export interface ComputedSignal<T> extends ReadonlySignal<T> {
+export interface IComputedSignal<T> extends IReadonlySignal<T> {
   /**
    * Unsubscribes from all dependencies, stopping future recalculations
    * and allowing for garbage collection.
