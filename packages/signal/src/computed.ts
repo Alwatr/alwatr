@@ -1,121 +1,114 @@
-import {createLogger, delay} from '@alwatr/nanolib';
+import {delay} from '@alwatr/delay';
+import {createLogger} from '@alwatr/logger';
 
 import {StateSignal} from './state-signal.js';
 
-import type {ComputedOptions, ComputedSignal, SubscribeResult} from './type.js';
+import type {ComputedSignalConfig, IComputedSignal, SubscribeResult} from './type.js';
 
 /**
- * Creates a read-only computed signal that derives its value from other signals.
- * Its value is recalculated whenever any of the specified dependencies change.
+ * A read-only signal that derives its value from other signals.
  *
- * @template T The type of the computed value.
- * @param options The options object containing the computation details.
- * @param options.signalId Optional unique identifier for the signal.
- * @param options.deps An array of signals that this computation depends on.
- * @param options.get The function to run to compute the value.
- * @returns A `ReadonlySignal` containing the computed value.
+ * Its value is recalculated automatically when any of its dependencies change.
  *
- * @example
- * const firstName = new StateSignal({ initialValue: 'John' });
- * const lastName = new StateSignal({ initialValue: 'Doe' });
- *
- * const fullName = computed({
- *   signalId: 'fullName', // Optional
- *   deps: [firstName, lastName],
- *   get: () => `${firstName.value} ${lastName.value}`,
- * });
- *
- * console.log(fullName.value); // "John Doe"
- * firstName.set('Jane');
- * console.log(fullName.value); // "Jane Doe"
+ * This class is memory-efficient as methods are shared across all instances via prototype.
  */
-export function computed<T>(options: ComputedOptions<T>): ComputedSignal<T> {
-  const logger_ = createLogger(`computed-signal: ${options.signalId}`);
+export class ComputedSignal<T> implements IComputedSignal<T> {
+  public readonly signalId = this.config_.signalId;
 
-  logger_.logMethod?.('initialize');
-
-  // Use a StateSignal internally to hold the computed value and manage subscribers.
-  const internalSignal = new StateSignal<T>({
-    signalId: options.signalId + '-internal',
-    initialValue: options.get(), // Calculate the initial value
+  protected readonly logger_ = createLogger(`computed-signal: ${this.signalId}`);
+  protected readonly computeFn_ = this.config_.get;
+  protected readonly internalSignal_ = new StateSignal<T>({
+    signalId: this.signalId + '-internal',
+    initialValue: this.computeFn_(),
   });
 
-  let isRecalculating = false;
+  private readonly subscriptionList__: SubscribeResult[] = [];
+  private isRecalculating__ = false;
 
-  const recalculate = (): void => {
-    if (internalSignal.isDestroyed) {
-      // If the signal is destroyed, do not perform any more recalculations.
-      logger_.incident?.('recalculate', 'attempt_to_recalculate_destroyed_signal');
-      return;
+  public constructor(protected config_: ComputedSignalConfig<T>) {
+    this.logger_.logMethod?.('constructor');
+    this.recalculate_ = this.recalculate_.bind(this);
+
+    // Subscribe to all dependencies.
+    for (const signal of config_.deps) {
+      this.subscriptionList__.push(signal.subscribe(this.recalculate_));
     }
-
-    if (isRecalculating) {
-      // If a recalculation is already in progress, skip this one.
-      logger_.logMethodArgs?.('recalculate', 'skipped');
-      return;
-    }
-
-    logger_.logMethodArgs?.('recalculate', 'delayed');
-
-    isRecalculating = true;
-
-    delay
-      .nextMacrotask()
-      .then(() => {
-        if (internalSignal.isDestroyed) {
-          // Double-check in case destroy was called during the microtask
-          logger_.incident?.('recalculate', 'attempt_to_recalculate_destroyed_signal');
-          return;
-        }
-        logger_.logMethodArgs?.('recalculate', 'executing');
-        internalSignal.set(options.get());
-      })
-      .catch((err) => {
-        logger_.error('recalculate', 'recalculation_failed', err);
-      })
-      .finally(() => {
-        isRecalculating = false;
-      });
-  };
-
-  const subscriptionList: SubscribeResult[] = [];
-  for (const signal of options.deps) {
-    subscriptionList.push(signal.subscribe(recalculate));
   }
 
-  const destroy = (): void => {
-    logger_.logMethod?.('destroy');
+  /**
+   * The current value of the computed signal.
+   * Throws an error if accessed after the signal has been destroyed.
+   */
+  public get value(): T {
+    return this.internalSignal_.value;
+  }
 
-    if (internalSignal.isDestroyed) {
-      // Prevent multiple calls to destroy
-      logger_.incident?.('destroy', 'attempt_to_destroy_already_destroyed_signal');
-      return; 
+  /**
+   * Subscribes a listener to this computed signal.
+   *
+   * The listener will be called whenever the computed value changes.
+   */
+  public readonly subscribe = this.internalSignal_.subscribe.bind(this.internalSignal_);
+
+  /**
+   * Unsubscribes from all dependencies, stopping future recalculations
+   * and allowing for garbage collection.
+   */
+  public destroy(): void {
+    this.logger_.logMethod?.('destroy');
+
+    if (this.internalSignal_.isDestroyed) {
+      this.logger_.incident?.('destroy', 'already_destroyed');
+      return;
     }
 
-    internalSignal.destroy();
+    this.internalSignal_.destroy();
 
-    // 1. Unsubscribe from all upstream dependencies.
-    for (const subscription of subscriptionList) {
+    // Unsubscribe from all upstream dependencies.
+    for (const subscription of this.subscriptionList__) {
       subscription.unsubscribe();
     }
-    subscriptionList.length = 0; // Clear the array
-  };
+    this.subscriptionList__.length = 0; // Clear the array of subscriptions.
+    // @ts-expect-error deps is readonly
+    this.config_.deps.length = 0;
+  }
 
-  const checkDestroyed = (): void => {
-    if (internalSignal.isDestroyed) {
-      throw new Error(`Cannot interact with a destroyed computed signal (id: ${options.signalId})`);
+  /**
+   * Private method to recalculate the signal's value.
+   * It batches updates using a microtask to prevent multiple recalculations in a single event loop tick.
+   */
+  protected async recalculate_(): Promise<void> {
+    if (this.internalSignal_.isDestroyed) {
+      // This check is important in case a dependency fires after this signal is destroyed.
+      this.logger_.incident?.('recalculate', 'attempt_to_recalculate_destroyed_signal');
+      return;
     }
-  };
 
-  return {
-    get value(): T {
-      checkDestroyed();
-      return internalSignal.value;
-    },
-    subscribe: (callback, options) => {
-      checkDestroyed();
-      return internalSignal.subscribe(callback, options);
-    },
-    destroy,
-  };
+    if (this.isRecalculating__) {
+      // If a recalculation is already scheduled, skip this one.
+      this.logger_.logMethod?.('recalculate//skipped');
+      return;
+    }
+
+    this.logger_.logMethod?.('recalculate//delayed');
+    this.isRecalculating__ = true;
+
+    try {
+      await delay.nextMacrotask();
+
+      if (this.internalSignal_.isDestroyed) {
+        // Double-check in case destroy was called during the microtask
+        this.logger_.incident?.('recalculate', 'attempt_to_recalculate_destroyed_signal');
+        return;
+      }
+
+      this.logger_.logMethod?.('recalculate//executing');
+      this.internalSignal_.set(this.computeFn_());
+    }
+    catch (err) {
+      this.logger_.error('_recalculate', 'recalculation_failed', err);
+    }
+
+    this.isRecalculating__ = false;
+  }
 }
