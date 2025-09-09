@@ -26,7 +26,7 @@ export abstract class DirectiveBase {
    * @param element - The DOM element this directive is attached to.
    * @param selector - The CSS selector for the directive.
    */
-  constructor(element: HTMLElement, selector: string) {
+  public constructor(element: HTMLElement, selector: string) {
     this.logger_ = createLogger(`directive:${selector}`);
     this.logger_.logMethodArgs?.('new', {selector, element});
 
