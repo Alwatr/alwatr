@@ -14,6 +14,6 @@
     {"path": "../global-this"},
     {"path": "../delay"},
     {"path": "../parse-duration"},
-    {"path": "../http-primer"},
+    {"path": "../http-primer"}
   ]
 }

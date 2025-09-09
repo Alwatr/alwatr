@@ -52,8 +52,7 @@ async function fetchProducts() {
 
     const data = await response.json();
     console.log('Products:', data);
-  }
-  catch (error) {
+  } catch (error) {
     console.error('Failed to fetch products:', error);
   }
 }
@@ -65,25 +64,25 @@ fetchProducts();
 
 The `fetch` function takes a `url` string and an `options` object. The options object extends the standard `RequestInit` and adds several custom options for enhanced control.
 
-| Option | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `method` | `HttpMethod` | `'GET'` | The HTTP request method. |
-| `headers` | `HttpRequestHeaders` | `{}` | An object representing the request's headers. |
-| `timeout` | `Duration` | `8_000` (8s) | Request timeout in milliseconds or as a duration string (e.g., `'5s'`). Set to `0` to disable. |
-| `retry` | `number` | `3` | Number of retries if the request fails with a server error (5xx) or times out. |
-| `retryDelay` | `Duration` | `1_000` (1s) | Delay between retry attempts in milliseconds or as a duration string. |
-| `removeDuplicate` | `'never' \| 'always' \| 'until_load' \| 'auto'` | `'never'` | Strategy for handling identical parallel requests. `body` is included for uniqueness. |
-| `cacheStrategy` | `'network_only' \| 'network_first' \| ...` | `'network_only'` | Caching strategy using the browser's Cache API. |
-| `cacheStorageName`| `string` | `'fetch_cache'` | Custom name for the `CacheStorage` instance. |
-| `revalidateCallback`| `(response: Response) => void`| `undefined` | Callback executed with the new response when using `stale_while_revalidate` strategy. |
-| `bodyJson` | `Json` | `undefined` | A JavaScript object sent as the request body. Sets `Content-Type` to `application/json`. |
-| `queryParams` | `Dictionary` | `undefined` | An object of query parameters appended to the URL. |
-| `bearerToken` | `string` | `undefined` | A bearer token added to the `Authorization` header. |
-| `alwatrAuth` | `{userId: string; userToken: string}` | `undefined` | Alwatr-specific authentication credentials. |
+| Option               | Type                                            | Default          | Description                                                                                    |
+| :------------------- | :---------------------------------------------- | :--------------- | :--------------------------------------------------------------------------------------------- |
+| `method`             | `HttpMethod`                                    | `'GET'`          | The HTTP request method.                                                                       |
+| `headers`            | `HttpRequestHeaders`                            | `{}`             | An object representing the request's headers.                                                  |
+| `timeout`            | `Duration`                                      | `8_000` (8s)     | Request timeout in milliseconds or as a duration string (e.g., `'5s'`). Set to `0` to disable. |
+| `retry`              | `number`                                        | `3`              | Number of retries if the request fails with a server error (5xx) or times out.                 |
+| `retryDelay`         | `Duration`                                      | `1_000` (1s)     | Delay between retry attempts in milliseconds or as a duration string.                          |
+| `removeDuplicate`    | `'never' \| 'always' \| 'until_load' \| 'auto'` | `'never'`        | Strategy for handling identical parallel requests. `body` is included for uniqueness.          |
+| `cacheStrategy`      | `'network_only' \| 'network_first' \| ...`      | `'network_only'` | Caching strategy using the browser's Cache API.                                                |
+| `cacheStorageName`   | `string`                                        | `'fetch_cache'`  | Custom name for the `CacheStorage` instance.                                                   |
+| `revalidateCallback` | `(response: Response) => void`                  | `undefined`      | Callback executed with the new response when using `stale_while_revalidate` strategy.          |
+| `bodyJson`           | `Json`                                          | `undefined`      | A JavaScript object sent as the request body. Sets `Content-Type` to `application/json`.       |
+| `queryParams`        | `Dictionary`                                    | `undefined`      | An object of query parameters appended to the URL.                                             |
+| `bearerToken`        | `string`                                        | `undefined`      | A bearer token added to the `Authorization` header.                                            |
+| `alwatrAuth`         | `{userId: string; userToken: string}`           | `undefined`      | Alwatr-specific authentication credentials.                                                    |
 
 ... and all other standard `RequestInit` properties like `signal`, `credentials`, etc.
 
------
+---
 
 ## Features in Detail
 

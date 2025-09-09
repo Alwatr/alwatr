@@ -9,7 +9,7 @@ try {
     timeout: 3_000,
     removeDuplicate: 'until_load',
   });
-  
+
   console.log('ok: %s', response2.ok);
   console.log('text1: %s', await (await response1).text());
   console.log('text2: %s', await response2.text());

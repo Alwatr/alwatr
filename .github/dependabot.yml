@@ -40,18 +40,18 @@ updates:
         patterns:
           - '*'
     ignore:
-      - dependency-name: "@types/node"
+      - dependency-name: '@types/node'
         update-types:
           - version-update:semver-major
-      - dependency-name: "eslint"
+      - dependency-name: 'eslint'
         update-types:
           - version-update:semver-major
-      - dependency-name: "@typescript-eslint/eslint-plugin"
+      - dependency-name: '@typescript-eslint/eslint-plugin'
         update-types:
           - version-update:semver-major
-      - dependency-name: "@typescript-eslint/parser"
+      - dependency-name: '@typescript-eslint/parser'
         update-types:
           - version-update:semver-major
-      - dependency-name: "conventional-changelog-conventionalcommits"
+      - dependency-name: 'conventional-changelog-conventionalcommits'
         update-types:
           - version-update:semver-major

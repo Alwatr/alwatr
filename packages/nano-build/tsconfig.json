@@ -5,7 +5,7 @@
     "checkJs": true,
     "noEmit": true,
     "moduleResolution": "Node",
-    "module": "commonjs",
+    "module": "commonjs"
   },
   "include": ["*.cjs"]
 }
