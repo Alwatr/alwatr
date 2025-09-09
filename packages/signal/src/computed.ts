@@ -6,11 +6,43 @@ import {StateSignal} from './state-signal.js';
 import type {ComputedSignalConfig, IComputedSignal, SubscribeResult} from './type.js';
 
 /**
- * A read-only signal that derives its value from other signals.
+ * A read-only signal that derives its value from a set of dependency signals.
  *
- * Its value is recalculated automatically when any of its dependencies change.
+ * The `ComputedSignal` is a powerful tool for creating values that reactively update
+ * when their underlying data sources change. It is both memory-efficient and performant,
+ * as its methods are shared via prototype and recalculations are batched into microtasks.
  *
- * This class is memory-efficient as methods are shared across all instances via prototype.
+ * A key feature is its lifecycle management: a `ComputedSignal` must be destroyed when no longer
+ * needed to prevent memory leaks from its subscriptions to dependency signals.
+ *
+ * @template T The type of the computed value.
+ * @implements {IComputedSignal<T>}
+ *
+ * @example
+ * // --- Basic Usage ---
+ * const counter = new StateSignal({ initialValue: 0, signalId: 'counter' });
+ * const isEven = new ComputedSignal({
+ *   signalId: 'isEven',
+ *   deps: [counter],
+ *   get: () => counter.value % 2 === 0,
+ * });
+ *
+ * console.log(isEven.value); // true
+ *
+ * isEven.subscribe(newValue => {
+ *   console.log(`Is the counter even? ${newValue}`);
+ * });
+ *
+ * counter.set(1); // Logs: "Is the counter even? false"
+ * console.log(isEven.value); // false
+ *
+ * // --- Lifecycle Management ---
+ * // When the component/logic using 'isEven' is about to be removed:
+ * isEven.destroy();
+ *
+ * // Any further interaction will throw an error.
+ * // counter.set(2); // isEven no longer recalculates.
+ * // console.log(isEven.value); // Throws an Error.
  */
 export class ComputedSignal<T> implements IComputedSignal<T> {
   public readonly signalId = this.config_.signalId;
@@ -37,22 +69,30 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
 
   /**
    * The current value of the computed signal.
-   * Throws an error if accessed after the signal has been destroyed.
+   * Accessing this property will return the cached value without re-running the calculation
+   * unless one of its dependencies has changed since the last access.
+   *
+   * @returns {T} The current computed value.
+   * @throws {Error} If accessed after the signal has been destroyed.
    */
   public get value(): T {
     return this.internalSignal_.value;
   }
 
   /**
-   * Subscribes a listener to this computed signal.
+   * Subscribes a callback function to be executed whenever the computed value changes.
    *
    * The listener will be called whenever the computed value changes.
    */
   public readonly subscribe = this.internalSignal_.subscribe.bind(this.internalSignal_);
 
   /**
-   * Unsubscribes from all dependencies, stopping future recalculations
-   * and allowing for garbage collection.
+   * Permanently disposes of the computed signal.
+   * This method unsubscribes from all dependency signals, effectively stopping any
+   * future recalculations and cleaning up internal resources to prevent memory leaks.
+   *
+   * After `destroy()` is called, any attempt to access `.value` or `.subscribe()`
+   * will result in an error.
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
@@ -74,8 +114,10 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
   }
 
   /**
-   * Private method to recalculate the signal's value.
-   * It batches updates using a microtask to prevent multiple recalculations in a single event loop tick.
+   * Schedules a recalculation of the signal's value.
+   * This method batches updates using a macrotask to ensure the
+   * calculation function runs only once per event loop tick, even if multiple
+   * dependencies change simultaneously.
    */
   protected async recalculate_(): Promise<void> {
     if (this.internalSignal_.isDestroyed) {
