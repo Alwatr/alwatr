@@ -1,6 +1,8 @@
+import {createLogger, delay} from '@alwatr/nanolib';
+
 import {StateSignal} from './state-signal.js';
 
-import type {ComputedOptions, ReadonlySignal} from './type.js';
+import type {ComputedOptions, ComputedSignal, SubscribeResult} from './type.js';
 
 /**
  * Creates a read-only computed signal that derives its value from other signals.
@@ -27,29 +29,81 @@ import type {ComputedOptions, ReadonlySignal} from './type.js';
  * firstName.set('Jane');
  * console.log(fullName.value); // "Jane Doe"
  */
-export function computed<T>(options: ComputedOptions<T>): ReadonlySignal<T> {
+export function computed<T>(options: ComputedOptions<T>): ComputedSignal<T> {
+  const logger_ = createLogger(`computed-signal: ${options.signalId}`);
+
+  logger_.logMethod?.('initialize');
+
   // Use a StateSignal internally to hold the computed value and manage subscribers.
   const internalSignal = new StateSignal<T>({
-    signalId: options.signalId, // Use provided signalId or default
+    signalId: options.signalId + '-internal',
     initialValue: options.get(), // Calculate the initial value
   });
 
+  let isDestroyed = false;
+  let isRecalculating = false;
+
   const recalculate = (): void => {
-    internalSignal.set(options.get());
+    // If the signal is destroyed, do not perform any more recalculations.
+    if (isDestroyed || isRecalculating) {
+      logger_.logMethodArgs?.('recalculate', {isRecalculating, skipped: true});
+      return;
+    }
+
+    isRecalculating = true;
+
+    logger_.logMethod?.('recalculate');
+
+    delay
+      .nextMacrotask()
+      .then(() => {
+        if (!isDestroyed) {
+          // Double-check in case destroy was called during the microtask
+          internalSignal.set(options.get());
+        }
+      })
+      .catch((err) => {
+        logger_.error('recalculate', 'recalculation_failed', err);
+      })
+      .finally(() => {
+        isRecalculating = false;
+      });
   };
 
-  // Subscribe to every dependency. When any of them change, recalculate.
+  const subscriptionList: SubscribeResult[] = [];
   for (const signal of options.deps) {
-    // TODO: destroying a computed?!
-    signal.subscribe(recalculate);
+    subscriptionList.push(signal.subscribe(recalculate));
   }
 
-  // Return a read-only version of the internal signal.
-  // This prevents consumers from calling .set() on a computed signal.
+  const destroy = (): void => {
+    if (isDestroyed) return; // Prevent multiple calls to destroy
+    isDestroyed = true;
+
+    // 1. Unsubscribe from all upstream dependencies.
+    for (const subscription of subscriptionList) {
+      subscription.unsubscribe();
+    }
+    subscriptionList.length = 0; // Clear the array
+
+    // 2. Destroy the internal signal, clearing all its own (downstream) listeners.
+    internalSignal.destroy();
+  };
+
+  const checkDestroyed = (): void => {
+    if (isDestroyed) {
+      throw new Error(`Cannot interact with a destroyed computed signal (id: ${options.signalId})`);
+    }
+  };
+
   return {
     get value(): T {
+      checkDestroyed();
       return internalSignal.value;
     },
-    subscribe: internalSignal.subscribe.bind(internalSignal),
+    subscribe: (callback, options) => {
+      checkDestroyed();
+      return internalSignal.subscribe(callback, options);
+    },
+    destroy,
   };
 }
