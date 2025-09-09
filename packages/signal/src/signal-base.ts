@@ -1,6 +1,10 @@
-import {type AlwatrLogger} from '@alwatr/nanolib';
+import {packageTracer} from '@alwatr/package-tracer';
 
-import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback} from './type.js';
+import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback, SignalConfig} from './type.js';
+import type {AlwatrLogger} from '@alwatr/logger';
+import type {} from '@alwatr/nano-build';
+
+__dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 /**
  * An abstract base class for signal implementations.
@@ -9,7 +13,8 @@ import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback} fro
  * @template T The type of data the signal will handle.
  */
 export abstract class SignalBase<T> {
-  readonly signalId: string;
+  public readonly signalId: string;
+
   protected abstract logger_: AlwatrLogger;
 
   /**
@@ -23,12 +28,12 @@ export abstract class SignalBase<T> {
   /**
    * Indicates whether the signal has been destroyed.
    */
-  get isDestroyed(): boolean {
+  public get isDestroyed(): boolean {
     return this.isDestroyed_;
   }
 
-  constructor(signalId: string) {
-    this.signalId = signalId;
+  public constructor(config: SignalConfig) {
+    this.signalId = config.signalId;
   }
 
   /**
@@ -55,7 +60,7 @@ export abstract class SignalBase<T> {
    * @param options Subscription options to customize the behavior.
    * @returns An object with an `unsubscribe` method to remove the listener.
    */
-  subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult {
+  public subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult {
     this.logger_.logMethodArgs?.('subscribe', {options});
     this.checkDestroyed_();
 
@@ -126,7 +131,7 @@ export abstract class SignalBase<T> {
    *   console.log('Signal received:', nextValue);
    * }
    */
-  untilNext(): Promise<T> {
+  public untilNext(): Promise<T> {
     this.logger_.logMethod?.('untilNext');
     this.checkDestroyed_();
     return new Promise((resolve) => {
@@ -142,10 +147,10 @@ export abstract class SignalBase<T> {
    * Clears all listeners from this signal and makes it inactive.
    * This is useful for lifecycle management and preventing memory leaks.
    */
-  destroy(): void {
+  public destroy(): void {
     this.logger_.logMethod?.('destroy');
-    this.observers_.length = 0; // Clear all observers.
     this.isDestroyed_ = true;
+    this.observers_.length = 0; // Clear all observers.
   }
 
   protected checkDestroyed_ = (): void => {
