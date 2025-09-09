@@ -109,4 +109,9 @@ export class StateSignal<T> extends SignalBase<T> implements ReadonlySignal<T> {
 
     return super.subscribe(callback, options);
   }
+
+  public override destroy(): void {
+    super.destroy();
+    this.value__ = null as T; // Clear the value.
+  }
 }
