@@ -1,8 +1,9 @@
-import {createLogger, delay} from '@alwatr/nanolib';
+import {delay} from '@alwatr/delay';
+import {createLogger} from '@alwatr/logger';
 
 import {SignalBase} from './signal-base.js';
 
-import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, ReadonlySignal} from './type.js';
+import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, IReadonlySignal} from './type.js';
 
 /**
  * A stateful signal that holds a value and notifies listeners when the value changes.
@@ -24,20 +25,20 @@ import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeRes
  *
  * theme.set('dark'); // Notifies listener, document body class changes.
  */
-export class StateSignal<T> extends SignalBase<T> implements ReadonlySignal<T> {
+export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> {
   private value__: T;
   protected logger_ = createLogger(`state-signal: ${this.signalId}`);
 
-  constructor(config: StateSignalConfig<T>) {
-    super(config.signalId);
+  public constructor(config: StateSignalConfig<T>) {
+    super(config);
     this.value__ = config.initialValue;
-    this.logger_.logMethodArgs?.('initialize', {initialValue: this.value__});
+    this.logger_.logMethodArgs?.('constructor', {initialValue: this.value__});
   }
 
   /**
    * Gets the current value of the signal.
    */
-  get value(): T {
+  public get value(): T {
     this.checkDestroyed_();
     return this.value__;
   }
@@ -53,7 +54,7 @@ export class StateSignal<T> extends SignalBase<T> implements ReadonlySignal<T> {
    * // For objects (best practice is immutability)
    * mySignal.set({ ...mySignal.value, prop: 'new' });
    */
-  set(newValue: T): void {
+  public set(newValue: T): void {
     this.logger_.logMethodArgs?.('set', {newValue});
     this.checkDestroyed_();
     this.value__ = newValue;
@@ -70,13 +71,13 @@ export class StateSignal<T> extends SignalBase<T> implements ReadonlySignal<T> {
   }
 
   /**
-   * Overrides the base subscribe method to handle the `receivePrevious` option.
+   * Subscribes a listener to this signal.
    *
    * @param callback The function to be called when the signal's value changes.
    * @param options Subscription options, including `receivePrevious`.
    * @returns An object with an `unsubscribe` method.
    */
-  override subscribe(callback: ListenerCallback<T>, options: SubscribeOptions = {}): SubscribeResult {
+  public override subscribe(callback: ListenerCallback<T>, options: SubscribeOptions = {}): SubscribeResult {
     this.logger_.logMethodArgs?.('subscribe', {options});
     this.checkDestroyed_();
 
