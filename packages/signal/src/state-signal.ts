@@ -2,7 +2,7 @@ import {createLogger, delay} from '@alwatr/nanolib';
 
 import {SignalBase} from './signal-base.js';
 
-import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult} from './type.js';
+import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, ReadonlySignal} from './type.js';
 
 /**
  * A stateful signal that holds a value and notifies listeners when the value changes.
@@ -24,7 +24,7 @@ import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeRes
  *
  * theme.set('dark'); // Notifies listener, document body class changes.
  */
-export class StateSignal<T> extends SignalBase<T> {
+export class StateSignal<T> extends SignalBase<T> implements ReadonlySignal<T> {
   private value__: T;
   protected logger_ = createLogger(`state-signal: ${this.signalId}`);
 
