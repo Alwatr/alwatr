@@ -148,3 +148,17 @@ export interface EffectResult {
   destroy: () => void;
 }
 
+/**
+ * Options for creating an effect with explicit dependencies.
+ */
+export interface EffectOptions {
+  /**
+   * The list of dependencies that determine when the effect should run.
+   */
+  deps: DependencyList;
+
+  /**
+   * The asynchronous function to execute when the effect is triggered.
+   */
+  run: () => Awaitable<void>;
+}
