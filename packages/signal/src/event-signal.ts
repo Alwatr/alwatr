@@ -1,4 +1,5 @@
-import {createLogger, delay} from '@alwatr/nanolib';
+import {delay} from '@alwatr/delay';
+import {createLogger} from '@alwatr/logger';
 
 import {SignalBase} from './signal-base.js';
 
@@ -22,9 +23,9 @@ import type {SignalConfig} from './type.js';
 export class EventSignal<T = void> extends SignalBase<T> {
   protected logger_ = createLogger(`event-signal: ${this.signalId}`);
 
-  constructor(config: SignalConfig) {
-    super(config.signalId);
-    this.logger_.logMethod?.('initialize');
+  public constructor(config: SignalConfig) {
+    super(config);
+    this.logger_.logMethod?.('constructor');
   }
 
   /**
@@ -33,7 +34,7 @@ export class EventSignal<T = void> extends SignalBase<T> {
    *
    * @param payload The data to send with the event.
    */
-  dispatch(payload: T): void {
+  public dispatch(payload: T): void {
     this.logger_.logMethodArgs?.('dispatch', payload);
     this.checkDestroyed_();
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
