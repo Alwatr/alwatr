@@ -38,13 +38,6 @@ export class EventSignal<T = void> extends SignalBase<T> {
     this.logger_.logMethodArgs?.('dispatch', payload);
     this.checkDestroyed_();
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    delay
-      .nextMicrotask()
-      .then(() => {
-        this.notify_(payload);
-      })
-      .catch((err) => {
-        this.logger_.error('dispatch', 'dispatch_failed', err);
-      });
+    delay.nextMicrotask().then(() => this.notify_(payload));
   }
 }
