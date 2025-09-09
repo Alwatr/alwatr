@@ -40,27 +40,35 @@ export function computed<T>(options: ComputedOptions<T>): ComputedSignal<T> {
     initialValue: options.get(), // Calculate the initial value
   });
 
-  let isDestroyed = false;
   let isRecalculating = false;
 
   const recalculate = (): void => {
-    // If the signal is destroyed, do not perform any more recalculations.
-    if (isDestroyed || isRecalculating) {
-      logger_.logMethodArgs?.('recalculate', {isRecalculating, skipped: true});
+    if (internalSignal.isDestroyed) {
+      // If the signal is destroyed, do not perform any more recalculations.
+      logger_.incident?.('recalculate', 'attempt_to_recalculate_destroyed_signal');
       return;
     }
 
-    isRecalculating = true;
+    if (isRecalculating) {
+      // If a recalculation is already in progress, skip this one.
+      logger_.logMethodArgs?.('recalculate', 'skipped');
+      return;
+    }
 
-    logger_.logMethod?.('recalculate');
+    logger_.logMethodArgs?.('recalculate', 'delayed');
+
+    isRecalculating = true;
 
     delay
       .nextMacrotask()
       .then(() => {
-        if (!isDestroyed) {
+        if (internalSignal.isDestroyed) {
           // Double-check in case destroy was called during the microtask
-          internalSignal.set(options.get());
+          logger_.incident?.('recalculate', 'attempt_to_recalculate_destroyed_signal');
+          return;
         }
+        logger_.logMethodArgs?.('recalculate', 'executing');
+        internalSignal.set(options.get());
       })
       .catch((err) => {
         logger_.error('recalculate', 'recalculation_failed', err);
@@ -76,21 +84,25 @@ export function computed<T>(options: ComputedOptions<T>): ComputedSignal<T> {
   }
 
   const destroy = (): void => {
-    if (isDestroyed) return; // Prevent multiple calls to destroy
-    isDestroyed = true;
+    logger_.logMethod?.('destroy');
+
+    if (internalSignal.isDestroyed) {
+      // Prevent multiple calls to destroy
+      logger_.incident?.('destroy', 'attempt_to_destroy_already_destroyed_signal');
+      return; 
+    }
+
+    internalSignal.destroy();
 
     // 1. Unsubscribe from all upstream dependencies.
     for (const subscription of subscriptionList) {
       subscription.unsubscribe();
     }
     subscriptionList.length = 0; // Clear the array
-
-    // 2. Destroy the internal signal, clearing all its own (downstream) listeners.
-    internalSignal.destroy();
   };
 
   const checkDestroyed = (): void => {
-    if (isDestroyed) {
+    if (internalSignal.isDestroyed) {
       throw new Error(`Cannot interact with a destroyed computed signal (id: ${options.signalId})`);
     }
   };
