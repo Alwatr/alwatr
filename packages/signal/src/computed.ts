@@ -10,7 +10,7 @@ import type {ComputedSignalConfig, IComputedSignal, SubscribeResult} from './typ
  *
  * The `ComputedSignal` is a powerful tool for creating values that reactively update
  * when their underlying data sources change. It is both memory-efficient and performant,
- * as its methods are shared via prototype and recalculations are batched into microtasks.
+ * as its methods are shared via prototype and recalculations are batched into macrotasks.
  *
  * A key feature is its lifecycle management: a `ComputedSignal` must be destroyed when no longer
  * needed to prevent memory leaks from its subscriptions to dependency signals.
@@ -48,10 +48,9 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
   public readonly signalId = this.config_.signalId;
 
   protected readonly logger_ = createLogger(`computed-signal: ${this.signalId}`);
-  protected readonly computeFn_ = this.config_.get;
   protected readonly internalSignal_ = new StateSignal<T>({
     signalId: this.signalId + '-internal',
-    initialValue: this.computeFn_(),
+    initialValue: this.config_.get(),
   });
 
   private readonly subscriptionList__: SubscribeResult[] = [];
@@ -109,8 +108,7 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
       subscription.unsubscribe();
     }
     this.subscriptionList__.length = 0; // Clear the array of subscriptions.
-    // @ts-expect-error deps is readonly
-    this.config_.deps.length = 0;
+    this.config_ = {} as ComputedSignalConfig<T>;
   }
 
   /**
@@ -145,7 +143,7 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
       }
 
       this.logger_.logMethod?.('recalculate//executing');
-      this.internalSignal_.set(this.computeFn_());
+      this.internalSignal_.set(this.config_.get());
     }
     catch (err) {
       this.logger_.error('_recalculate', 'recalculation_failed', err);
