@@ -41,7 +41,6 @@ import type {EffectSignalConfig, IEffectSignal, SubscribeResult} from './type.js
  */
 export class EffectSignal implements IEffectSignal {
   protected readonly logger_ = createLogger(`effect-signal`);
-  protected readonly effectFn_ = this.config_.run;
 
   private readonly subscriptionList__: SubscribeResult[] = [];
   private isRunning__ = false;
@@ -90,7 +89,7 @@ export class EffectSignal implements IEffectSignal {
       }
 
       this.logger_.logMethod?.('run_//executing');
-      await this.effectFn_();
+      await this.config_.run();
     }
     catch (err) {
       this.logger_.error('run_', 'effect_failed', err);
@@ -122,8 +121,7 @@ export class EffectSignal implements IEffectSignal {
       subscription.unsubscribe();
     }
     this.subscriptionList__.length = 0; // Clear the array of subscriptions.
-    // @ts-expect-error deps is readonly
-    this.config_.deps.length = 0; // Clear the dependencies array.
+    this.config_ = {} as EffectSignalConfig;
   }
 
   /**
