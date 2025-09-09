@@ -27,4 +27,3 @@ export function resolveUrl(...parts: string[]): string {
       .replace('{{PROTOCOL_SLASH}}', '://')
   );
 }
-
