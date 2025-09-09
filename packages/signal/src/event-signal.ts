@@ -35,6 +35,7 @@ export class EventSignal<T = void> extends SignalBase<T> {
    */
   dispatch(payload: T): void {
     this.logger_.logMethodArgs?.('dispatch', payload);
+    this.checkDestroyed_();
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
     delay
       .nextMicrotask()
@@ -44,29 +45,5 @@ export class EventSignal<T = void> extends SignalBase<T> {
       .catch((err) => {
         this.logger_.error('dispatch', 'dispatch_failed', err);
       });
-  }
-
-  private notify_(payload: T): void {
-    this.logger_.logMethodArgs?.('dispatch', payload);
-    // Iterate over a copy of the array to prevent issues with modification during iteration.
-    const currentObservers = [...this.observers_];
-
-    for (const observer of currentObservers) {
-      if (observer.options?.disabled) continue;
-
-      if (observer.options?.once) {
-        this.removeObserver_(observer);
-      }
-
-      try {
-        const ret = observer.callback(payload);
-        if (ret instanceof Promise) {
-          ret.catch((err) => this.logger_.error('notify_', 'async_listener_failed', err));
-        }
-      }
-      catch (err) {
-        this.logger_.error('notify_', 'sync_listener_failed', err);
-      }
-    }
   }
 }
