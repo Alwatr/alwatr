@@ -124,6 +124,7 @@ export interface ComputedOptions<T> {
    */
   get: () => T;
 }
+
 /**
  * The interface for a computed signal, which is a read-only signal
  * with an added `destroy` method for cleanup.
@@ -136,3 +137,14 @@ export interface ComputedSignal<T> extends ReadonlySignal<T> {
    */
   destroy: () => void;
 }
+
+/**
+ * The result of creating an effect, containing a `destroy` method for cleanup.
+ */
+export interface EffectResult {
+  /**
+   * Stops the effect from running in the future and cleans up its dependencies.
+   */
+  destroy: () => void;
+}
+
