@@ -54,4 +54,27 @@ export abstract class SignalBase<T> {
 
     return {unsubscribe};
   }
+
+  /**
+   * Returns a Promise that resolves with the next value dispatched by the signal.
+   * This provides an elegant way to wait for a single, future event using async/await.
+   *
+   * @returns A Promise that resolves with the next dispatched value.
+   *
+   * @example
+   * async function onButtonClick() {
+   *   console.log('Waiting for the next signal...');
+   *   const nextValue = await mySignal.untilNext();
+   *   console.log('Signal received:', nextValue);
+   * }
+   */
+  untilNext(): Promise<T> {
+    return new Promise((resolve) => {
+      this.subscribe(resolve, {
+        once: true,
+        priority: true, // Resolve the promise before other listeners are called.
+        receivePrevious: false, // We only want the *next* value.
+      });
+    });
+  }
 }
