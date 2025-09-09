@@ -38,6 +38,7 @@ export class StateSignal<T> extends SignalBase<T> implements ReadonlySignal<T> {
    * Gets the current value of the signal.
    */
   get value(): T {
+    this.checkDestroyed_();
     return this.value__;
   }
 
@@ -54,6 +55,7 @@ export class StateSignal<T> extends SignalBase<T> implements ReadonlySignal<T> {
    */
   set(newValue: T): void {
     this.logger_.logMethodArgs?.('set', {newValue});
+    this.checkDestroyed_();
     this.value__ = newValue;
 
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
@@ -76,6 +78,7 @@ export class StateSignal<T> extends SignalBase<T> implements ReadonlySignal<T> {
    */
   override subscribe(callback: ListenerCallback<T>, options: SubscribeOptions = {}): SubscribeResult {
     this.logger_.logMethodArgs?.('subscribe', {options});
+    this.checkDestroyed_();
 
     // For StateSignal, `receivePrevious` is the default, most common behavior.
     const receivePrevious = options.receivePrevious !== false;
@@ -105,39 +108,5 @@ export class StateSignal<T> extends SignalBase<T> implements ReadonlySignal<T> {
     }
 
     return super.subscribe(callback, options);
-  }
-
-  /**
-   * Notifies all registered observers about a value change.
-   * 
-   * This method iterates through a snapshot of the current observers to avoid issues with concurrent modifications.
-   * It skips disabled observers, removes observers marked as 'once' after notification, and handles both synchronous
-   * and asynchronous callback errors by logging them.
-   * 
-   * @param value - The new value to notify observers about.
-   * @private
-   */
-  private notify_(value: T): void {
-    this.logger_.logMethodArgs?.('notify_', {value});
-
-    const currentObservers = [...this.observers_];
-
-    for (const observer of currentObservers) {
-      if (observer.options?.disabled) continue;
-
-      if (observer.options?.once) {
-        this.removeObserver_(observer);
-      }
-
-      try {
-        const ret = observer.callback(value);
-        if (ret instanceof Promise) {
-          ret.catch((err) => this.logger_.error('notify_', 'async_listener_failed', err));
-        }
-      }
-      catch (err) {
-        this.logger_.error('notify_', 'sync_listener_failed', err);
-      }
-    }
   }
 }
