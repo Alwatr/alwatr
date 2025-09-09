@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/flux",
   "description": "Flux empowers your applications with elegant and powerful state management and event handling capabilities. Built on the observable design pattern, Flux provides a lightweight yet robust foundation for managing global signals and states.",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
