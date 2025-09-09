@@ -31,7 +31,7 @@ export class StateSignal<T> extends SignalBase<T> implements ReadonlySignal<T> {
   constructor(config: StateSignalConfig<T>) {
     super(config.signalId);
     this.value__ = config.initialValue;
-    this.logger_.logMethodArgs?.('new', {initialValue: this.value__});
+    this.logger_.logMethodArgs?.('initialize', {initialValue: this.value__});
   }
 
   /**
@@ -107,7 +107,16 @@ export class StateSignal<T> extends SignalBase<T> implements ReadonlySignal<T> {
     return super.subscribe(callback, options);
   }
 
-  // The _notify method can be shared or duplicated. For simplicity, we'll include it here.
+  /**
+   * Notifies all registered observers about a value change.
+   * 
+   * This method iterates through a snapshot of the current observers to avoid issues with concurrent modifications.
+   * It skips disabled observers, removes observers marked as 'once' after notification, and handles both synchronous
+   * and asynchronous callback errors by logging them.
+   * 
+   * @param value - The new value to notify observers about.
+   * @private
+   */
   private notify_(value: T): void {
     this.logger_.logMethodArgs?.('notify_', {value});
 
