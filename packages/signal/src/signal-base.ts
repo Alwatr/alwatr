@@ -11,7 +11,21 @@ import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback} fro
 export abstract class SignalBase<T> {
   readonly signalId: string;
   protected abstract logger_: AlwatrLogger;
+
+  /**
+   * An array of observers that are notified when the signal changes.
+   * This is a protected property to allow subclasses to manage observers internally.
+   * @protected
+   */
   protected readonly observers_: Observer_<T>[] = [];
+
+  protected isDestroyed_ = false;
+  /**
+   * Indicates whether the signal has been destroyed.
+   */
+  get isDestroyed(): boolean {
+    return this.isDestroyed_;
+  }
 
   constructor(signalId: string) {
     this.signalId = signalId;
@@ -23,6 +37,10 @@ export abstract class SignalBase<T> {
    * @protected
    */
   protected removeObserver_(observer: Observer_<T>): void {
+    if (this.isDestroyed_) {
+      this.logger_.incident?.('removeObserver_', 'attempt_to_dispatch_on_destroyed_signal');
+      return;
+    }
     this.logger_.logMethod?.('removeObserver_');
     const index = this.observers_.indexOf(observer);
     if (index !== -1) {
@@ -39,6 +57,7 @@ export abstract class SignalBase<T> {
    */
   subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult {
     this.logger_.logMethodArgs?.('subscribe', {options});
+    this.checkDestroyed_();
 
     const observer: Observer_<T> = {callback, options};
 
@@ -108,6 +127,8 @@ export abstract class SignalBase<T> {
    * }
    */
   untilNext(): Promise<T> {
+    this.logger_.logMethod?.('untilNext');
+    this.checkDestroyed_();
     return new Promise((resolve) => {
       this.subscribe(resolve, {
         once: true,
@@ -122,7 +143,15 @@ export abstract class SignalBase<T> {
    * This is useful for lifecycle management and preventing memory leaks.
    */
   destroy(): void {
-    // Clear all observers.
-    this.observers_.length = 0;
+    this.logger_.logMethod?.('destroy');
+    this.observers_.length = 0; // Clear all observers.
+    this.isDestroyed_ = true;
   }
+
+  protected checkDestroyed_ = (): void => {
+    if (this.isDestroyed_) {
+      this.logger_.accident('checkDestroyed_', 'attempt_to_use_destroyed_signal');
+      throw new Error(`Cannot interact with a destroyed signal (id: ${this.signalId})`);
+    }
+  };
 }
