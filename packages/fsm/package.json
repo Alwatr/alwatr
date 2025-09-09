@@ -6,7 +6,7 @@
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
     "@alwatr/nanolib": "^6.0.3",
-    "@alwatr/observable": "workspace:*"
+    "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^6.1.1",
