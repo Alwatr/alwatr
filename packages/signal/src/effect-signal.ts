@@ -26,6 +26,7 @@ import type {EffectSignalConfig, IEffectSignal, SubscribeResult} from './type.js
  *   run: () => {
  *     console.log(`Counter is ${counter.value} and title is "${documentTitle.value}"`);
  *   },
+ *   runImmediately: true,
  * });
  * // Immediately logs: "Counter is 0 and title is "Home""
  *
