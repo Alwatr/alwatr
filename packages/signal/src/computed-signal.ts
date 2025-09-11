@@ -3,7 +3,7 @@ import {createLogger} from '@alwatr/logger';
 
 import {StateSignal} from './state-signal.js';
 
-import type {ComputedSignalConfig, IComputedSignal, ListenerCallback, SubscribeOptions, SubscribeResult} from './type.js';
+import type {ComputedSignalConfig, IComputedSignal, SubscribeResult} from './type.js';
 
 /**
  * A read-only signal that derives its value from a set of dependency signals.
