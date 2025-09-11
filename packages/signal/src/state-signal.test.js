@@ -187,10 +187,10 @@ describe('StateSignal', () => {
     });
 
     signal.subscribe(callback);
-    const setPromise = signal.set(1);
+    signal.set(1);
 
-    // Set should wait for the async callback
-    await setPromise;
+    // Set should not be awaited, but we need to wait for the microtask queue to be processed.
+    await delay.nextMicrotask();
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
