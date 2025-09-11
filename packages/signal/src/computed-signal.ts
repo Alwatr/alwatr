@@ -3,7 +3,7 @@ import {createLogger} from '@alwatr/logger';
 
 import {StateSignal} from './state-signal.js';
 
-import type {ComputedSignalConfig, IComputedSignal, SubscribeResult} from './type.js';
+import type {ComputedSignalConfig, IComputedSignal, ListenerCallback, SubscribeOptions, SubscribeResult} from './type.js';
 
 /**
  * A read-only signal that derives its value from a set of dependency signals.
@@ -54,7 +54,10 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
    * This is how the computed signal provides `.value` and `.subscribe()` methods.
    * @protected
    */
-  protected readonly internalSignal_: StateSignal<T>;
+  protected readonly internalSignal_ = new StateSignal<T>({
+    signalId: this.signalId + '-internal',
+    initialValue: this.config_.get(),
+  });
 
   private readonly subscriptionList__: SubscribeResult[] = [];
   private isRecalculating__ = false;
@@ -66,12 +69,6 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
   public constructor(protected config_: ComputedSignalConfig<T>) {
     this.logger_.logMethod?.('constructor');
     this.recalculate_ = this.recalculate_.bind(this);
-
-    // Initialize the internal state with the first computed value.
-    this.internalSignal_ = new StateSignal<T>({
-      signalId: this.signalId + '-internal',
-      initialValue: this.config_.get(),
-    });
 
     // Subscribe to all dependencies to trigger recalculation on change.
     for (const signal of config_.deps) {
