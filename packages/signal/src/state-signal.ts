@@ -110,15 +110,12 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     if (receivePrevious && !options.disabled) {
       // Immediately (but asynchronously) call the listener with the current value.
       // This is done in a microtask to ensure it happens after the subscription is fully registered.
-      delay.nextMicrotask().then(() => {
-        try {
-          // No need to await, let it run in the background.
-          const _ = callback(this.value__);
-        }
-        catch (err) {
+      delay
+        .nextMicrotask()
+        .then(() => callback(this.value__))
+        .catch((err) => {
           this.logger_.error('subscribe', 'run_callback_immediate_failed', err);
-        }
-      });
+        });
 
       // If it's a 'once' subscription that receives the previous value, it's now fulfilled.
       // We don't need to add it to the observers list for future updates.
