@@ -81,6 +81,14 @@ module.exports = {
         },
       },
     ],
+    '@typescript-eslint/no-unused-vars': [
+      'error', // یا "error" بسته به سطح سخت‌گیری شما
+      {
+        varsIgnorePattern: '_',
+        argsIgnorePattern: '_',
+        caughtErrorsIgnorePattern: '_',
+      },
+    ],
     '@typescript-eslint/explicit-member-accessibility': 'error',
     '@typescript-eslint/prefer-string-starts-ends-with': 'off',
     '@typescript-eslint/no-dynamic-delete': 'off',
