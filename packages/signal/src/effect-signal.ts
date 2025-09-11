@@ -65,7 +65,7 @@ export class EffectSignal implements IEffectSignal {
     // Run the effect immediately if requested.
     if (config_.runImmediately === true) {
       // We don't need to await this, let it run in the background.
-      const _ = this.run_();
+      void this.run_();
     }
   }
 
