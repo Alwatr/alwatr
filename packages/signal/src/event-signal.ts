@@ -51,11 +51,12 @@ export class EventSignal<T = void> extends SignalBase<T> {
    *
    * @param payload The data to send with the event.
    */
-  public async dispatch(payload: T): Promise<void> {
+  public dispatch(payload: T): void {
     this.logger_.logMethodArgs?.('dispatch', payload);
     this.checkDestroyed_();
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    await delay.nextMicrotask();
-    await this.notify_(payload);
+    delay.nextMicrotask().then(() => {
+      this.notify_(payload);
+    });
   }
 }
