@@ -193,6 +193,14 @@ The `subscribe` method accepts an optional second argument to customize its beha
 - **`.untilNext()`**: Returns a `Promise` that resolves with the next value/payload.
 - **`.destroy()`**: (On all but `StateSignal`) Cleans up the signal.
 
+## Sponsors
+
+The following companies, organizations, and individuals support flux ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.
+
+## Contributing
+
+Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
+
 ---
 <br>
 <br>
@@ -392,3 +400,11 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 - **`.subscribe(callback, options?)`**: یک شنونده را مشترک می‌کند. `{ unsubscribe: () => void }` را برمی‌گرداند.
 - **`.untilNext()`**: یک `Promise` برمی‌گرداند که با مقدار/پیام بعدی resolve می‌شود.
 - **`.destroy()`**: (روی همه سیگنال‌ها به جز `StateSignal`) سیگنال را پاک‌سازی می‌کند.
+
+## حامیان (Sponsors)
+
+شرکت‌ها، سازمان‌ها و افراد زیر از نگهداری و توسعه مداوم flux حمایت می‌کنند. با تبدیل شدن به یک حامی، لوگوی خود را در README و وب‌سایت ما قرار دهید.
+
+## مشارکت (Contributing)
+
+از مشارکت‌ها استقبال می‌شود! لطفاً قبل از ارسال pull request، [راهنمای مشارکت ما](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) را مطالعه کنید.
