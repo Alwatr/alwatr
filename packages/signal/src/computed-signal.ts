@@ -87,10 +87,9 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
     return this.internalSignal_.value;
   }
 
-  /**
-   * Subscribes a callback function to be executed whenever the computed value changes.
-   */
   public readonly subscribe = this.internalSignal_.subscribe.bind(this.internalSignal_);
+
+  public readonly untilNext = this.internalSignal_.untilNext.bind(this.internalSignal_);
 
   /**
    * Permanently disposes of the computed signal.
