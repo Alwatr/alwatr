@@ -140,10 +140,10 @@ describe('EventSignal', () => {
     });
 
     signal.subscribe(callback);
-    const dispatchPromise = signal.dispatch('test');
+    signal.dispatch('test');
 
-    // Dispatch should wait for the async callback
-    await dispatchPromise;
+    // Dispatch should not be awaited, but we need to wait for the microtask queue to be processed.
+    await delay.nextMicrotask();
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
