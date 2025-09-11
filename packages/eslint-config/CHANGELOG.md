@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.1](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.6.0...@alwatr/eslint-config@5.6.1) (2025-09-11)
+
+### 🐛 Bug Fixes
+
+* add rule to enforce no unused variables in TypeScript files ([843d35a](https://github.com/Alwatr/nanolib/commit/843d35a41ea410cfb6ad3e10044f62a50d1e4858))
+
 ## [5.6.0](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.5.7...@alwatr/eslint-config@5.6.0) (2025-09-09)
 
 ### ✨ Features
