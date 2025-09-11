@@ -260,4 +260,11 @@ export interface IEffectSignal {
    * and unwanted side effects from running.
    */
   destroy: () => void;
+
+  /**
+   * Indicates whether the signal has been destroyed.
+   * A destroyed signal cannot be used and will throw an error if interacted with.
+   * @returns `true` if the signal is destroyed, `false` otherwise.
+   */
+  readonly isDestroyed: boolean;
 }
