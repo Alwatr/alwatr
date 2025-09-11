@@ -77,7 +77,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * // For object types, it's best practice to set an immutable new object.
    * mySignal.set({ ...mySignal.value, property: 'new-value' });
    */
-  public set(newValue: T): Promise<void> {
+  public set(newValue: T): void {
     this.logger_.logMethodArgs?.('set', {newValue});
     this.checkDestroyed_();
 
