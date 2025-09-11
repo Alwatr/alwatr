@@ -104,7 +104,7 @@ export abstract class SignalBase<T> {
    * @param value The new value to notify observers about.
    * @protected
    */
-  protected notify_(value: T): void {
+  protected async notify_(value: T): Promise<void> {
     if (this.isDestroyed_) {
       this.logger_.incident?.('notify_', 'notify_on_destroyed_signal');
       return;
@@ -124,9 +124,7 @@ export abstract class SignalBase<T> {
       }
 
       try {
-        // We don't await the callback here to allow all synchronous listeners to fire immediately.
-        // Asynchronous listeners will continue in the background.
-        const _ = observer.callback(value);
+        await observer.callback(value);
       }
       catch (err) {
         this.logger_.error('notify_', 'run_callback_failed', err);
