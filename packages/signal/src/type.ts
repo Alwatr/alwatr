@@ -137,6 +137,21 @@ export interface IReadonlySignal<T> {
    * @returns An object with an `unsubscribe` method for cleanup.
    */
   subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult;
+
+  /**
+   * Returns a Promise that resolves with the next value dispatched by the signal.
+   * This provides an elegant way to wait for a single, future event using `async/await`.
+   *
+   * @returns A Promise that resolves with the next dispatched value.
+   *
+   * @example
+   * async function onButtonClick() {
+   *   console.log('Waiting for the next signal...');
+   *   const nextValue = await mySignal.untilNext();
+   *   console.log('Signal received:', nextValue);
+   * }
+   */
+  untilNext(): Promise<T>;
 }
 
 /**
