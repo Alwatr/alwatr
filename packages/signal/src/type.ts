@@ -130,6 +130,13 @@ export interface IReadonlySignal<T> {
   readonly value: T;
 
   /**
+   * Indicates whether the signal has been destroyed.
+   * A destroyed signal cannot be used and will throw an error if interacted with.
+   * @returns `true` if the signal is destroyed, `false` otherwise.
+   */
+  readonly isDestroyed: boolean;
+
+  /**
    * Subscribes a listener to this signal.
    *
    * @param callback The function to be called when the signal's value changes.
@@ -152,6 +159,15 @@ export interface IReadonlySignal<T> {
    * }
    */
   untilNext(): Promise<T>;
+
+  /**
+   * Destroys the signal, clearing all its listeners and making it inactive.
+   *
+   * After destruction, any interaction with the signal (like `subscribe` or `untilNext`)
+   * will throw an error. This is crucial for preventing memory leaks by allowing
+   * garbage collection of the signal and its observers.
+   */
+  destroy(): void;
 }
 
 /**
