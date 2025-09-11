@@ -49,6 +49,15 @@ export class EffectSignal implements IEffectSignal {
   private isDestroyed__ = false;
 
   /**
+   * Indicates whether the effect signal has been destroyed.
+   * A destroyed signal cannot be used and will throw an error if interacted with.
+   * @returns `true` if the signal is destroyed, `false` otherwise.
+   */
+  public get isDestroyed(): boolean {
+    return this.isDestroyed__;
+  }
+
+  /**
    * Initializes a new `EffectSignal`.
    * @param config The configuration, including dependencies (`deps`) and the `run` function.
    */
