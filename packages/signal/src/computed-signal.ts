@@ -87,6 +87,15 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
     return this.internalSignal_.value;
   }
 
+  /**
+   * Indicates whether the computed signal has been destroyed.
+   * A destroyed signal cannot be used and will throw an error if interacted with.
+   * @returns `true` if the signal is destroyed, `false` otherwise.
+   */
+  public get isDestroyed(): boolean {
+    return this.internalSignal_.isDestroyed;
+  }
+
   public readonly subscribe = this.internalSignal_.subscribe.bind(this.internalSignal_);
 
   public readonly untilNext = this.internalSignal_.untilNext.bind(this.internalSignal_);
