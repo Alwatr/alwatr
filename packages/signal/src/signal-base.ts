@@ -8,30 +8,42 @@ __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 /**
  * An abstract base class for signal implementations.
- * Its sole responsibility is to manage a list of observers (listeners).
- * It provides the core `subscribe` method, leaving dispatch logic to subclasses.
+ *
+ * `SignalBase` provides the core functionality for managing subscriptions (observers).
+ * It handles adding, removing, and notifying listeners. The responsibility of *when* to notify
+ * is left to the concrete subclasses (`StateSignal`, `EventSignal`, etc.).
+ *
  * @template T The type of data the signal will handle.
  */
 export abstract class SignalBase<T> {
+  /**
+   * The unique identifier for this signal instance. Useful for debugging.
+   */
   public readonly signalId: string;
 
   protected abstract logger_: AlwatrLogger;
 
   /**
-   * An array of observers that are notified when the signal changes.
-   * This is a protected property to allow subclasses to manage observers internally.
+   * The list of observers (listeners) subscribed to this signal.
    * @protected
    */
   protected readonly observers_: Observer_<T>[] = [];
 
   protected isDestroyed_ = false;
+
   /**
    * Indicates whether the signal has been destroyed.
+   * A destroyed signal cannot be used and will throw an error if interacted with.
+   * @returns `true` if the signal is destroyed, `false` otherwise.
    */
   public get isDestroyed(): boolean {
     return this.isDestroyed_;
   }
 
+  /**
+   * Initializes a new `SignalBase`.
+   * @param config The configuration for the signal, containing its `signalId`.
+   */
   public constructor(config: SignalConfig) {
     this.signalId = config.signalId;
   }
@@ -43,7 +55,7 @@ export abstract class SignalBase<T> {
    */
   protected removeObserver_(observer: Observer_<T>): void {
     if (this.isDestroyed_) {
-      this.logger_.incident?.('removeObserver_', 'attempt_to_dispatch_on_destroyed_signal');
+      this.logger_.incident?.('removeObserver_', 'remove_observer_on_destroyed_signal');
       return;
     }
     this.logger_.logMethod?.('removeObserver_');
@@ -54,11 +66,13 @@ export abstract class SignalBase<T> {
   }
 
   /**
-   * Subscribes a listener to this signal.
+   * Subscribes a listener function to this signal.
+   *
+   * The listener will be called whenever the signal is notified (e.g., when `dispatch` or `set` is called).
    *
    * @param callback The function to be called when the signal is dispatched.
-   * @param options Subscription options to customize the behavior.
-   * @returns An object with an `unsubscribe` method to remove the listener.
+   * @param options Subscription options to customize the behavior (e.g., `once`, `priority`).
+   * @returns A `SubscribeResult` object with an `unsubscribe` method to remove the listener.
    */
   public subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult {
     this.logger_.logMethodArgs?.('subscribe.base', {options});
@@ -67,55 +81,62 @@ export abstract class SignalBase<T> {
     const observer: Observer_<T> = {callback, options};
 
     if (options?.priority) {
+      // High-priority observers are added to the front of the queue.
       this.observers_.unshift(observer);
     }
     else {
       this.observers_.push(observer);
     }
 
-    // The returned unsubscribe function now calls the centralized removal method.
+    // The returned unsubscribe function is a closure that calls the internal removal method.
     const unsubscribe = (): void => this.removeObserver_(observer);
 
     return {unsubscribe};
   }
 
   /**
-   * Notifies all registered observers about a value change.
+   * Notifies all registered observers about a new value.
    *
-   * This method iterates through a snapshot of the current observers to avoid issues with concurrent modifications.
-   * It skips disabled observers, removes observers marked as 'once' after notification, and handles both synchronous
-   * and asynchronous callback errors by logging them.
+   * This method iterates through a snapshot of the current observers to prevent issues
+   * with subscriptions changing during notification (e.g., an observer unsubscribing itself).
+   * It handles `once`, `disabled`, and asynchronous callbacks gracefully.
    *
-   * @param value - The new value to notify observers about.
-   * @private
+   * @param value The new value to notify observers about.
+   * @protected
    */
   protected notify_(value: T): void {
     if (this.isDestroyed_) {
-      this.logger_.incident?.('notify_', 'attempt_to_dispatch_on_destroyed_signal');
+      this.logger_.incident?.('notify_', 'notify_on_destroyed_signal');
       return;
     }
 
     this.logger_.logMethodArgs?.('notify_', value);
 
+    // Create a snapshot of the observers array to iterate over.
+    // This prevents issues if the observers_ array is modified during the loop.
     const currentObservers = [...this.observers_];
 
-    currentObservers.forEach(async (observer) => {
-      if (observer.options?.disabled) return;
+    for (const observer of currentObservers) {
+      if (observer.options?.disabled) continue;
+
+      if (observer.options?.once) {
+        this.removeObserver_(observer);
+      }
+
       try {
-        if (observer.options?.once) {
-          this.removeObserver_(observer);
-        }
-        await observer.callback(value);
+        // We don't await the callback here to allow all synchronous listeners to fire immediately.
+        // Asynchronous listeners will continue in the background.
+        const _ = observer.callback(value);
       }
       catch (err) {
         this.logger_.error('notify_', 'run_callback_failed', err);
       }
-    });
+    }
   }
 
   /**
    * Returns a Promise that resolves with the next value dispatched by the signal.
-   * This provides an elegant way to wait for a single, future event using async/await.
+   * This provides an elegant way to wait for a single, future event using `async/await`.
    *
    * @returns A Promise that resolves with the next dispatched value.
    *
@@ -133,14 +154,17 @@ export abstract class SignalBase<T> {
       this.subscribe(resolve, {
         once: true,
         priority: true, // Resolve the promise before other listeners are called.
-        receivePrevious: false, // We only want the *next* value.
+        receivePrevious: false, // We only want the *next* value, not the current one.
       });
     });
   }
 
   /**
-   * Clears all listeners from this signal and makes it inactive.
-   * This is useful for lifecycle management and preventing memory leaks.
+   * Destroys the signal, clearing all its listeners and making it inactive.
+   *
+   * After destruction, any interaction with the signal (like `subscribe` or `untilNext`)
+   * will throw an error. This is crucial for preventing memory leaks by allowing
+   * garbage collection of the signal and its observers.
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
@@ -148,6 +172,11 @@ export abstract class SignalBase<T> {
     this.observers_.length = 0; // Clear all observers.
   }
 
+  /**
+   * Throws an error if the signal has been destroyed.
+   * This is a safeguard to prevent interaction with a defunct signal.
+   * @protected
+   */
   protected checkDestroyed_ = (): void => {
     if (this.isDestroyed_) {
       this.logger_.accident('checkDestroyed_', 'attempt_to_use_destroyed_signal');
