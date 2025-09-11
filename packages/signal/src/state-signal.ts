@@ -77,16 +77,17 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * // For object types, it's best practice to set an immutable new object.
    * mySignal.set({ ...mySignal.value, property: 'new-value' });
    */
-  public set(newValue: T): void {
+  public async set(newValue: T): Promise<void> {
     this.logger_.logMethodArgs?.('set', {newValue});
     this.checkDestroyed_();
 
-    if (this.value__ === newValue) return; // Do not notify if the value is the same.
+    if (typeof newValue !== 'object' && Object.is(this.value__, newValue)) return; // Do not notify if the value is the same for primitives.
 
     this.value__ = newValue;
 
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    delay.nextMicrotask().then(() => this.notify_(newValue));
+    await delay.nextMicrotask();
+    await this.notify_(newValue);
   }
 
   /**
