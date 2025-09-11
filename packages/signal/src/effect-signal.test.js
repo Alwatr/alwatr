@@ -1,0 +1,162 @@
+import {EffectSignal, StateSignal} from '@alwatr/signal';
+import {delay} from '@alwatr/delay';
+
+describe('EffectSignal', () => {
+  /** @type {StateSignal<number>} */
+  let depSignal;
+  /** @type {EffectSignal} */
+  let effectSignal;
+
+  beforeEach(() => {
+    depSignal = new StateSignal({signalId: 'dep', initialValue: 0});
+  });
+
+  afterEach(() => {
+    if (effectSignal && !effectSignal.isDestroyed) {
+      effectSignal.destroy();
+    }
+    depSignal.destroy();
+  });
+
+  it('should be defined', () => {
+    const runFn = jest.fn();
+    effectSignal = new EffectSignal({
+      deps: [depSignal],
+      run: runFn,
+    });
+    expect(EffectSignal).toBeDefined();
+    expect(effectSignal).toBeInstanceOf(EffectSignal);
+  });
+
+  it('should run the effect immediately if runImmediately is true', () => {
+    const runFn = jest.fn();
+    effectSignal = new EffectSignal({
+      deps: [depSignal],
+      run: runFn,
+      runImmediately: true,
+    });
+    expect(runFn).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not run the effect immediately if runImmediately is false or undefined', () => {
+    const runFn = jest.fn();
+    effectSignal = new EffectSignal({
+      deps: [depSignal],
+      run: runFn,
+      runImmediately: false,
+    });
+    expect(runFn).not.toHaveBeenCalled();
+  });
+
+  it('should run the effect when a dependency changes', async () => {
+    const runFn = jest.fn();
+    effectSignal = new EffectSignal({
+      deps: [depSignal],
+      run: runFn,
+    });
+    expect(runFn).not.toHaveBeenCalled();
+    depSignal.set(1);
+    await delay.nextMicrotask();
+    expect(runFn).toHaveBeenCalledTimes(1);
+  });
+
+  it('should run the effect for each dependency change', async () => {
+    const runFn = jest.fn();
+    effectSignal = new EffectSignal({
+      deps: [depSignal],
+      run: runFn,
+    });
+    depSignal.set(1);
+    await delay.nextMicrotask();
+    depSignal.set(2);
+    await delay.nextMicrotask();
+    expect(runFn).toHaveBeenCalledTimes(2);
+  });
+
+  it('should handle multiple dependencies', async () => {
+    const depSignal2 = new StateSignal({signalId: 'dep2', initialValue: 'a'});
+    const runFn = jest.fn();
+    effectSignal = new EffectSignal({
+      deps: [depSignal, depSignal2],
+      run: runFn,
+    });
+    depSignal.set(1);
+    await delay.nextMicrotask();
+    expect(runFn).toHaveBeenCalledTimes(1);
+    depSignal2.set('b');
+    await delay.nextMicrotask();
+    expect(runFn).toHaveBeenCalledTimes(2);
+    depSignal2.destroy();
+  });
+
+  it('should not run the effect after destroy', async () => {
+    const runFn = jest.fn();
+    effectSignal = new EffectSignal({
+      deps: [depSignal],
+      run: runFn,
+    });
+    effectSignal.destroy();
+    depSignal.set(1);
+    await delay.nextMicrotask();
+    expect(runFn).not.toHaveBeenCalled();
+  });
+
+  it('should handle async run functions', async () => {
+    const runFn = jest.fn().mockResolvedValue(undefined);
+    effectSignal = new EffectSignal({
+      deps: [depSignal],
+      run: runFn,
+    });
+    depSignal.set(1);
+    await delay.nextMicrotask();
+    expect(runFn).toHaveBeenCalledTimes(1);
+  });
+
+  it('should continue running other effects if one throws an error', async () => {
+    const runFn1 = jest.fn().mockImplementation(() => {
+      throw new Error('Test error');
+    });
+    const runFn2 = jest.fn();
+    const depSignal2 = new StateSignal({signalId: 'dep2', initialValue: 0});
+    const effectSignal1 = new EffectSignal({
+      deps: [depSignal],
+      run: runFn1,
+    });
+    const effectSignal2 = new EffectSignal({
+      deps: [depSignal],
+      run: runFn2,
+    });
+    depSignal.set(1);
+    await delay.nextMicrotask();
+    expect(runFn1).toHaveBeenCalledTimes(1);
+    expect(runFn2).toHaveBeenCalledTimes(1);
+    effectSignal1.destroy();
+    effectSignal2.destroy();
+    depSignal2.destroy();
+  });
+
+  it('should not run if dependencies do not change', async () => {
+    const runFn = jest.fn();
+    effectSignal = new EffectSignal({
+      deps: [depSignal],
+      run: runFn,
+    });
+    depSignal.set(0); // Same value
+    await delay.nextMicrotask();
+    expect(runFn).not.toHaveBeenCalled();
+  });
+
+  describe('destroyed signal', () => {
+    it('should not run effect after destroy', async () => {
+      const runFn = jest.fn();
+      effectSignal = new EffectSignal({
+        deps: [depSignal],
+        run: runFn,
+      });
+      effectSignal.destroy();
+      depSignal.set(1);
+      await delay.nextMicrotask();
+      expect(runFn).not.toHaveBeenCalled();
+    });
+  });
+});
