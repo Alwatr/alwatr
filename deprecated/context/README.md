@@ -69,7 +69,6 @@ userContext.expire();
     * `once`: If `true`, the listener will be automatically unsubscribed after the first change.
     * `priority`: If `true`, the listener will be executed before other listeners.
     * `receivePrevious`: If `true`, the listener will be immediately called with the current context value (if available).
-    * `disabled`: If `true`, the listener will not be executed.
 
 * **`unsubscribe(listenerCallback: ListenerCallback<this, T>)`:** (Inherited from `AlwatrObservable`) Unsubscribes a listener from context changes.
 
@@ -81,8 +80,6 @@ userContext.expire();
 
 The following companies, organizations, and individuals support flux ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.
 
-
 ### Contributing
 
 Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
-

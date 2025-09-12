@@ -29,7 +29,7 @@ describe('EventSignal', () => {
     signal.dispatch(payload);
 
     expect(callback).not.toHaveBeenCalled(); // Should be async
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(payload);
   });
@@ -43,7 +43,7 @@ describe('EventSignal', () => {
     signal.subscribe(callback2);
     signal.dispatch(payload);
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback1).toHaveBeenCalledTimes(1);
     expect(callback1).toHaveBeenCalledWith(payload);
     expect(callback2).toHaveBeenCalledTimes(1);
@@ -57,7 +57,7 @@ describe('EventSignal', () => {
     subscription.unsubscribe();
     signal.dispatch('some-data');
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).not.toHaveBeenCalled();
   });
 
@@ -66,12 +66,12 @@ describe('EventSignal', () => {
     signal.subscribe(callback, {once: true});
 
     signal.dispatch('first-dispatch');
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith('first-dispatch');
 
     signal.dispatch('second-dispatch');
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(1); // Should not be called again
   });
 
@@ -91,7 +91,7 @@ describe('EventSignal', () => {
 
     voidSignal.dispatch();
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(undefined);
     voidSignal.destroy();
@@ -103,7 +103,7 @@ describe('EventSignal', () => {
 
     signal.dispatch(undefined);
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(undefined);
   });
@@ -117,26 +117,13 @@ describe('EventSignal', () => {
     signal.subscribe(callback2, {priority: true}); // High priority
     signal.dispatch('test');
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callOrder).toEqual(['priority', 'normal']);
-  });
-
-  it('should not notify disabled subscribers', async () => {
-    const callback1 = jest.fn();
-    const callback2 = jest.fn();
-
-    signal.subscribe(callback1);
-    signal.subscribe(callback2, {disabled: true});
-    signal.dispatch('test');
-
-    await delay.nextMicrotask();
-    expect(callback1).toHaveBeenCalledTimes(1);
-    expect(callback2).not.toHaveBeenCalled();
   });
 
   it('should handle async callbacks correctly', async () => {
     const callback = jest.fn(async () => {
-      await delay.nextMicrotask();
+      await delay.nextMacrotask();
       return 'done';
     });
 
@@ -144,7 +131,7 @@ describe('EventSignal', () => {
     signal.dispatch('test');
 
     // Dispatch should not be awaited, but we need to wait for the microtask queue to be processed.
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
@@ -158,7 +145,7 @@ describe('EventSignal', () => {
     signal.subscribe(normalCallback);
     signal.dispatch('test');
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(errorCallback).toHaveBeenCalledTimes(1);
     expect(normalCallback).toHaveBeenCalledTimes(1);
   });
@@ -200,7 +187,7 @@ describe('EventSignal', () => {
       localSignal.destroy();
       expect(() => localSignal.dispatch()).toThrow();
 
-      await delay.nextMicrotask();
+      await delay.nextMacrotask();
       expect(callback).not.toHaveBeenCalled();
     });
   });

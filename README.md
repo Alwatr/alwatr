@@ -158,7 +158,6 @@ The `subscribe` method accepts an optional second argument to customize its beha
 
 - `once: true`: The listener is called only once and then automatically removed.
 - `priority: true`: The listener is moved to the front of the queue and is executed before other listeners.
-- `disabled: true`: Temporarily disables the listener without removing it.
 - `receivePrevious: false` (For `StateSignal` only): Prevents the listener from being called immediately with the current value upon subscription.
 
 ## API Overview
@@ -374,7 +373,6 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 
 - `once: true`: شنونده فقط یک بار فراخوانی شده و سپس به طور خودکار حذف می‌شود.
 - `priority: true`: شنونده به ابتدای صف منتقل شده و قبل از سایر شنوندگان اجرا می‌شود.
-- `disabled: true`: به طور موقت شنونده را بدون حذف کردن غیرفعال می‌کند.
 - `receivePrevious: false` (فقط برای `StateSignal`): از فراخوانی فوری شنونده با مقدار فعلی در هنگام اشتراک جلوگیری می‌کند.
 
 ## مرور کلی API

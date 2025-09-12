@@ -30,7 +30,7 @@ describe('StateSignal', () => {
     signal.set(newValue);
 
     expect(callback).not.toHaveBeenCalled(); // Should be async
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(newValue);
   });
@@ -41,7 +41,7 @@ describe('StateSignal', () => {
     signal.subscribe(callback, {receivePrevious: false});
     signal.set(0); // Same as initial
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).not.toHaveBeenCalled();
   });
 
@@ -54,7 +54,7 @@ describe('StateSignal', () => {
     signal.subscribe(callback2, {receivePrevious: false});
     signal.set(newValue);
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback1).toHaveBeenCalledTimes(1);
     expect(callback1).toHaveBeenCalledWith(newValue);
     expect(callback2).toHaveBeenCalledTimes(1);
@@ -68,7 +68,7 @@ describe('StateSignal', () => {
     subscription.unsubscribe();
     signal.set(50);
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).not.toHaveBeenCalled();
   });
 
@@ -77,12 +77,12 @@ describe('StateSignal', () => {
     signal.subscribe(callback, {once: true});
 
     signal.set(10);
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(10);
 
     signal.set(20);
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(1); // Should not be called again
   });
 
@@ -90,11 +90,11 @@ describe('StateSignal', () => {
     const callback = jest.fn();
 
     signal.set(5);
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
 
     signal.subscribe(callback);
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(5);
   });
@@ -103,15 +103,15 @@ describe('StateSignal', () => {
     const callback = jest.fn();
 
     signal.set(5);
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
 
     signal.subscribe(callback, {receivePrevious: false});
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).not.toHaveBeenCalled();
 
     signal.set(10);
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(10);
   });
@@ -133,7 +133,7 @@ describe('StateSignal', () => {
     signal.set(0);
     signal.set(0);
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).not.toHaveBeenCalled();
   });
 
@@ -147,12 +147,12 @@ describe('StateSignal', () => {
     value.a++;
     signal.set(value);
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(value);
 
     signal.set(value);
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(2);
     expect(callback).toHaveBeenCalledWith(value);
   });
@@ -167,26 +167,13 @@ describe('StateSignal', () => {
     signal.subscribe(callback2, {priority: true, receivePrevious: false}); // High priority
     signal.set(1);
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callOrder).toEqual(['priority', 'normal']);
-  });
-
-  it('should not notify disabled subscribers', async () => {
-    const callback1 = jest.fn();
-    const callback2 = jest.fn();
-
-    signal.subscribe(callback1);
-    signal.subscribe(callback2, {disabled: true});
-    signal.set(1);
-
-    await delay.nextMicrotask();
-    expect(callback1).toHaveBeenCalledTimes(2);
-    expect(callback2).not.toHaveBeenCalled();
   });
 
   it('should handle async callbacks correctly', async () => {
     const callback = jest.fn(async () => {
-      await delay.nextMicrotask();
+      await delay.nextMacrotask();
       return 'done';
     });
 
@@ -194,7 +181,7 @@ describe('StateSignal', () => {
     signal.set(1);
 
     // Set should not be awaited, but we need to wait for the microtask queue to be processed.
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledTimes(2);
   });
 
@@ -208,7 +195,7 @@ describe('StateSignal', () => {
     signal.subscribe(normalCallback, {receivePrevious: false});
     signal.set(1);
 
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     expect(errorCallback).toHaveBeenCalledTimes(1);
     expect(normalCallback).toHaveBeenCalledTimes(1);
   });
@@ -242,7 +229,7 @@ describe('StateSignal', () => {
       localSignal.destroy();
       expect(() => localSignal.set(1)).toThrow();
 
-      await delay.nextMicrotask();
+      await delay.nextMacrotask();
       expect(callback).not.toHaveBeenCalled();
     });
   });
