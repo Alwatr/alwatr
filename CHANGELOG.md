@@ -3,6 +3,164 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/Alwatr/flux/compare/v4.1.1...v5.0.0) (2025-09-12)
+
+### ⚠ BREAKING CHANGES
+
+* Rewrite @alwatr/signal from ground-up — complete API overhaul
+
+Summary:
+A full rewrite of the @alwatr/signal package was released. The internal implementation, public exports and types have changed in an incompatible way. Consumers must update imports and call-sites to use the new API.
+
+Affected:
+- packages/signal (public package @alwatr/signal)
+- Any repos importing old signal types/exports or relying on previous runtime semantics
+
+What changed (high-level):
+- New core primitives and public API (StateSignal, ComputedSignal, EffectSignal, EventSignal) with new constructors and config objects.
+- signalId is now required for identity/logging.
+- Lifecycle semantics: ComputedSignal and EffectSignal must call .destroy() to avoid leaks.
+- Async model explicit: State/Event notify on microtask; Computed/Effect batch on macrotask.
+- subscribe() options changed (once, priority, receivePrevious).
+- Types and exported symbols renamed/reshaped; package.json exports/types updated.
+
+Migration notes:
+- Replace old imports with new named exports from '@alwatr/signal'.
+- Instantiate signals with the new config object shape (e.g. new StateSignal({ signalId, initialValue })).
+- Ensure ComputedSignal/EffectSignal .destroy() is called in teardown paths.
+- Update code that relied on previous sync/async timing — recompute batching behavior may differ.
+- Update TypeScript types/usages according to new exports; run yarn build & yarn test after changes.
+
+Quick example (new usage):
+const firstName = new StateSignal<string>({ signalId: 'user-firstName', initialValue: 'John' });
+const fullName = new ComputedSignal<string>({ signalId: 'user-fullName', deps: [firstName], get: () => `User: ${firstName.value}` });
+const logger = new EffectSignal({ deps: [fullName], run: () => console.log(fullName.value) });
+// remember to call fullName.destroy()/logger.destroy() when no longer needed
+
+Action items for maintainers/releasers:
+- Bump major version.
+- Add migration notes to CHANGELOG and README.
+- Run CI: yarn build && yarn test (Node >=18.16.0).
+- Notify downstream consumers about required code changes.
+* Deprecate `@alwatr/observable`
+* Deprecate `@alwatr/context`
+* Deprecate `@alwatr/remote-context`
+* Deprecate `@alwatr/fetch-state-machine`
+
+* update package description to accurately reflect the library's capabilities ([785b30b](https://github.com/Alwatr/flux/commit/785b30b5ab694b1165c541a7dbbf6959221f8f46))
+
+### ✨ Features
+
+* add abstract SignalBase class for managing observers and subscriptions ([913aee8](https://github.com/Alwatr/flux/commit/913aee840e8f3f82ba865d4db0492a70a8ef8d99))
+* add computed function for creating read-only computed signals ([137bf73](https://github.com/Alwatr/flux/commit/137bf7391b71ce11e77773cc45e030341c2b5408))
+* add destroy method to ComputedSignal interface for cleanup and garbage collection ([67dcc46](https://github.com/Alwatr/flux/commit/67dcc46a4f1330e60a161da4213b58f938534757))
+* add destroy method to EffectResult interface for cleanup ([fe5638a](https://github.com/Alwatr/flux/commit/fe5638ada3f7ebdda67ae3d6538518310684d10c))
+* add destruction check in dispatch method and remove unused notify_ method ([f37086d](https://github.com/Alwatr/flux/commit/f37086d439fbf74e2486586e9e80cc6509e9fc42))
+* add destruction checks and logging in computed function to prevent operations on destroyed signals ([7233967](https://github.com/Alwatr/flux/commit/723396732a9decda613529446e4d095cdecbd57a))
+* add destruction checks in value getter, setter, and subscribe method; remove unused notify_ method ([3e22e63](https://github.com/Alwatr/flux/commit/3e22e633bccf2f04fb989250a623df5d35401042))
+* add effect function to manage side effects with dependency tracking ([6890953](https://github.com/Alwatr/flux/commit/68909538d19df0724e592b77cccd24db645ae9a7))
+* add isDestroyed getter to ComputedSignal for lifecycle management ([b26d9fe](https://github.com/Alwatr/flux/commit/b26d9fe088324ea1246ab5b2164dffae6734b1e5))
+* add isDestroyed getter to EffectSignal for lifecycle management ([c918007](https://github.com/Alwatr/flux/commit/c918007925eb54b73bb54aa06bca16bc65cf6ce6))
+* add isDestroyed property and destroy method to IReadonlySignal for lifecycle management ([a5abfb8](https://github.com/Alwatr/flux/commit/a5abfb8f26c281cfa8e65fa56dcf0dd35f18945c))
+* add isDestroyed property to IEffectSignal for lifecycle management ([45b5b67](https://github.com/Alwatr/flux/commit/45b5b679149098e5498cf37c49e00957efef8305))
+* add ReadonlySignal interface and ComputedOptions type for signal management ([9d475dd](https://github.com/Alwatr/flux/commit/9d475ddcb36ed44509257df18ecb82ddb6fa284d))
+* add StateSignal class for managing stateful signals and notifications ([409f2b9](https://github.com/Alwatr/flux/commit/409f2b9f8abaa74a1b0d761d4513a64a6604b320))
+* add types for signal listener, subscription options, and configuration ([3bebee5](https://github.com/Alwatr/flux/commit/3bebee5ab733d344ea6c1e6f1e7b7f3310cf4a87))
+* add untilNext method to ComputedSignal for improved subscription handling ([c8d333f](https://github.com/Alwatr/flux/commit/c8d333fe860de3714a5946f000a1f83c7ec7144a))
+* add untilNext method to IReadonlySignal for awaiting next dispatched value ([004b228](https://github.com/Alwatr/flux/commit/004b22870d17c86bfa2f2e3b0d68a82376d2a5a1))
+* add untilNext method to SignalBase for awaiting next dispatched value ([5771e72](https://github.com/Alwatr/flux/commit/5771e72bf8876a8feaaebc263394e05003e9d44e))
+* enhance computed function to include logging, improve destruction handling, and return ComputedSignal type ([2446570](https://github.com/Alwatr/flux/commit/24465704b8d7b2ca38c59073b189c2e4410240b3))
+* enhance ReadonlySignal interface with options parameter and improve documentation ([9abed87](https://github.com/Alwatr/flux/commit/9abed875db6cabc709aa63ec4893158db30e0372))
+* enhance SignalBase with destruction checks and logging ([10acb3d](https://github.com/Alwatr/flux/commit/10acb3dedf682f19f94670cd79c8fe5e403e0fc1))
+* implement destroy method to clear observers and manage lifecycle ([50ae3e3](https://github.com/Alwatr/flux/commit/50ae3e30d0aa3fa8137b6ab8e8198c2a931d43bb))
+* implement EventSignal class for dispatching transient events ([4f55a49](https://github.com/Alwatr/flux/commit/4f55a49e2896f52e8b730edf55f9dc431d86d165))
+* implement ReadonlySignal interface in StateSignal class ([748226c](https://github.com/Alwatr/flux/commit/748226c5958ed7985b2fedd93a6d4a1bbde3839e))
+* move notify_ mothod to the base ([4d81348](https://github.com/Alwatr/flux/commit/4d81348cf869187eca7777f7182d19e2256046e6))
+* new EffectSignal class with immediate execution option and improved lifecycle management ([4552fde](https://github.com/Alwatr/flux/commit/4552fde94ac8262e7c8933b53d26bd5ed9b7839e))
+* remove logger and signal classes for cleaner architecture ([0beef9c](https://github.com/Alwatr/flux/commit/0beef9c1fc2e9aff6f9d1028a4bc30b44c10037b))
+* update main entry point documentation and export necessary types ([7c3f12a](https://github.com/Alwatr/flux/commit/7c3f12a67f24f13bd0c9a9ff3ca9e3a14d7afb1c))
+
+### 🐛 Bug Fixes
+
+* change notify_ method to fire callbacks synchronously and handle unhandled promise rejections ([2b54d69](https://github.com/Alwatr/flux/commit/2b54d69a45fca9500097f17e99c9572955617e55))
+* change set method to be synchronous ([a0cdaf4](https://github.com/Alwatr/flux/commit/a0cdaf441f888caacc98f8f3017b066ccf6186df))
+* clear value on destroy method in StateSignal class ([0088c03](https://github.com/Alwatr/flux/commit/0088c03ac976b473d0ce7d659cf7cbd0254bfdde))
+* correct logger method call from 'new' to 'initialize' in EventSignal constructor ([f9f7177](https://github.com/Alwatr/flux/commit/f9f7177bf3025b3e1484bab612b35af1c7fd0455))
+* correct logger method call from 'new' to 'initialize' in StateSignal constructor and improve notify_ method documentation ([b0d6981](https://github.com/Alwatr/flux/commit/b0d6981088144f74a78bb412babe077f4fe7d2f9))
+* correct observer array reference and method call in EventSignal ([83a3ddf](https://github.com/Alwatr/flux/commit/83a3ddf7151ef866b1f392fdd56aa0105e742718))
+* correct primitive value comparison logic in StateSignal set method ([93c5319](https://github.com/Alwatr/flux/commit/93c5319d0c1318a2c053373c3e7d8fa839544386))
+* ensure effect runs immediately on initialization ([a7d34d6](https://github.com/Alwatr/flux/commit/a7d34d6203a283faeac821ab0909f5d91802006d))
+* error log in computed-signal.ts ([7c2ab54](https://github.com/Alwatr/flux/commit/7c2ab54de6410ed4287286713fc3a34a9e02ef24))
+* export everything in main ([dc6779e](https://github.com/Alwatr/flux/commit/dc6779eeb0fbce67a3b665e46fc0e0df8583c88e))
+* make dispatch sync ([678ef01](https://github.com/Alwatr/flux/commit/678ef01fdc19b04167f60579e606cbf1fe1fa774))
+* make set method synchronously ([d36cda2](https://github.com/Alwatr/flux/commit/d36cda241c4e0c2bf952590a989c7de40f94bf41))
+* update default value for receivePrevious in SubscribeOptions and make options optional in Observer interface ([a27aa1f](https://github.com/Alwatr/flux/commit/a27aa1fdd106748deab8899d3df9d9a98e29c8eb))
+* update interface names and import type from @alwatr/type-helper ([a855b39](https://github.com/Alwatr/flux/commit/a855b39336f5bd99c822a9f061a84171bce274c9))
+
+### 🔨 Code Refactoring
+
+* centralize observer removal logic in SignalBase class ([61c13e9](https://github.com/Alwatr/flux/commit/61c13e96ff1d16651b884822a4b5b808d6c474b2))
+* change dispatch method to async for improved non-blocking behavior ([696d942](https://github.com/Alwatr/flux/commit/696d9423b147743634cd4a87c42e04f8d1f3b5cb))
+* change notify_ method to async for improved observer handling ([dbaec6e](https://github.com/Alwatr/flux/commit/dbaec6e35b4894cc404d3dcbbbdfc4c671fa70ef))
+* change set method to async for improved notification handling ([a42cb1b](https://github.com/Alwatr/flux/commit/a42cb1b438e4652ae9a470d11949895be09782af))
+* enhance documentation for ComputedSignal class and its methods ([e7deac5](https://github.com/Alwatr/flux/commit/e7deac5e4a118faa3ad32746ca6bbff1750d4902))
+* enhance logging and improve dispatch method in EventSignal ([23d717a](https://github.com/Alwatr/flux/commit/23d717ae67bcc437499902822cc50c1a4c291e9d))
+* enhance SignalBase class with improved type imports and access modifiers ([d26efbe](https://github.com/Alwatr/flux/commit/d26efbe09973b65f9720bee7104490b3e080be7b))
+* improve immediate callback execution in subscribe method ([3518aa3](https://github.com/Alwatr/flux/commit/3518aa3355731158f8f4032899a77867f4af16ff))
+* improve logging and error handling in subscribe and notify methods ([fbcc7fa](https://github.com/Alwatr/flux/commit/fbcc7fa4dea17d99600672b4c566f87b5747e651))
+* improve StateSignal implementation by renaming variables and enhancing dispatch logic ([68e7e73](https://github.com/Alwatr/flux/commit/68e7e73eeb5814c95affd2e698131bd8353b4d99))
+* improve value change notification logic in StateSignal ([24ffa82](https://github.com/Alwatr/flux/commit/24ffa82b7b69483095ff80b88d87dfe9ea90fc09))
+* optimize value setting in StateSignal to prevent unnecessary dispatches ([cb00df1](https://github.com/Alwatr/flux/commit/cb00df13b6ea38e23ecb70b1ae73487a18ca85fd))
+* prevent unnecessary promise handling in EffectSignal constructor ([93940b0](https://github.com/Alwatr/flux/commit/93940b0d05345a238111b2443f247859bb08f680))
+* remove 'disabled' option from subscribe options in README and tests ([73ee9db](https://github.com/Alwatr/flux/commit/73ee9db4fbb01cc87d0e1c38f2c27398c53a6157))
+* remove 'disabled' option from SubscribeOptions and clean up related logic in SignalBase and StateSignal ([381356a](https://github.com/Alwatr/flux/commit/381356a02f4972a8ab2eff5653be867f4b57010c))
+* remove checkDestroyed_ method from EffectSignal class ([9e42492](https://github.com/Alwatr/flux/commit/9e42492ce9ba84794ef0a57527b8275bfe78a3e8))
+* remove unused imports in ComputedSignal ([d797820](https://github.com/Alwatr/flux/commit/d7978208e34f46e98f0fbaf15fd4a4703dce7d16))
+* remove unused Observer_ type import in StateSignal ([29d95a4](https://github.com/Alwatr/flux/commit/29d95a47305d474ad2d9c3634ebf91b598fb2bc2))
+* reorganize EffectResult interface and add runImmediately option to EffectOptions ([e4825a1](https://github.com/Alwatr/flux/commit/e4825a19464d52bcdcb47f8e6a027fbc2a5ceee6))
+* reorganize imports and enhance EventSignal constructor and dispatch method visibility ([1d25544](https://github.com/Alwatr/flux/commit/1d2554471dbc430bb12edc4a94ea33d4a1922814))
+* reset config_ in ComputedSignal's destroy method to improve memory management ([b5bcb20](https://github.com/Alwatr/flux/commit/b5bcb204addc639e611ca0ba47640eaf31372ff6))
+* reset config_ in EffectSignal's destroy method to improve memory management ([81a9748](https://github.com/Alwatr/flux/commit/81a9748cdaf121d3a0ae872c23fe691c1f51acf9))
+* simplify dispatch method in EventSignal by removing error handling ([7777299](https://github.com/Alwatr/flux/commit/7777299b31a38fdd31ae6a96bc6a34bd270dc831))
+* simplify exports in main entry point of Signal package ([3039eca](https://github.com/Alwatr/flux/commit/3039eca5eebd43937937b2eac6aa65e649cc5da8))
+* simplify ListenerCallback and Observer_ type definitions ([dc95f09](https://github.com/Alwatr/flux/commit/dc95f098c57277a1f4af05d21e2017c1e8bfc2d5))
+* simplify observer type definitions in SignalBase class ([a579ec4](https://github.com/Alwatr/flux/commit/a579ec43040da719d43a08544448340c17243c54))
+* streamline dispatch logic and enhance error handling in StateSignal ([eec0a43](https://github.com/Alwatr/flux/commit/eec0a430c9dc18c082b00765781a3333c48b51d8))
+* streamline internal signal initialization in ComputedSignal ([3791208](https://github.com/Alwatr/flux/commit/3791208298b884183e202694f451185b3ae9b524))
+* streamline microtask dispatch in set and subscribe methods ([598eef3](https://github.com/Alwatr/flux/commit/598eef334cfb3c34ee1dd38178fd94fc4a2fae56))
+* update ComputedSignal class structure and improve dependency management ([7947b61](https://github.com/Alwatr/flux/commit/7947b61fd77fc46f69ad95016dac0f890f2c30c9))
+* update EffectOptions to EffectSignalConfig with improved dependency handling and runImmediately option ([7d162fc](https://github.com/Alwatr/flux/commit/7d162fc77d0aca04744369306b6b13d506cbdc04))
+* update import statements and enhance access modifiers in StateSignal class ([fe12bf2](https://github.com/Alwatr/flux/commit/fe12bf2d4e47ac88f0e1b74e3f506046c136c1b1))
+* update observer handling in SignalBase for consistency and clarity ([f97c51d](https://github.com/Alwatr/flux/commit/f97c51d404616e90931db3547171b4e0cf0a60f0))
+
+### 🧹 Miscellaneous Chores
+
+* add @jest/globals dependency to package.json and update yarn.lock ([2105405](https://github.com/Alwatr/flux/commit/2105405afe5e747b92ab59fc7de4b4bbdcc0bdb6))
+* clean up yarn.lock by removing unused package entries ([6a23277](https://github.com/Alwatr/flux/commit/6a232775a9261a48bc32096908753f88924d6d06))
+* deprecate context abd observable ([0a90540](https://github.com/Alwatr/flux/commit/0a90540c70ebfa9bb25726ed22b10143bd900a4c))
+* deprecate fetch based packages ([2a4c19f](https://github.com/Alwatr/flux/commit/2a4c19f139e2ea730a81bd5e4156d7cdd5348c16))
+* remove @alwatr/context ([b733fba](https://github.com/Alwatr/flux/commit/b733fbae3a62879bd5bbbc6571743a308ea013b4))
+* remove @alwatr/observable ([dce1904](https://github.com/Alwatr/flux/commit/dce19042f7042f43330643c15348b77bf940688c))
+* remove copilot instruction file to streamline project documentation ([6551786](https://github.com/Alwatr/flux/commit/655178673066ac41c116dd09683131edceb628ce))
+* remove export of '@alwatr/remote-context' from main.ts ([35aac32](https://github.com/Alwatr/flux/commit/35aac32e06a1fc8c7f65f8ce0cc59e010480bb76))
+* remove fetch-state-machine export from main.ts ([33de03e](https://github.com/Alwatr/flux/commit/33de03e3434c2974756db673d7689ecb342086a9))
+* remove reference to @alwatr/observable from package.json and tsconfig.json ([30ead90](https://github.com/Alwatr/flux/commit/30ead9083f19cda76873ed227c76476926175eca))
+* replace @alwatr/observable with @alwatr/signal in package.json and tsconfig.json ([784468e](https://github.com/Alwatr/flux/commit/784468ee819cbb2e21168cd01e47943fb15eaf0f))
+* streamline settings.json by consolidating array formatting and removing unnecessary comments ([9fdf0d0](https://github.com/Alwatr/flux/commit/9fdf0d05f6a784236b774427aff8e7b25fd7ec58))
+* temporary deprecate fsm ([e18fa8e](https://github.com/Alwatr/flux/commit/e18fa8ee3f5afb7b67ddf5837f1f4613f64bb355))
+* update @alwatr/eslint-config to version 5.6.1 ([de337eb](https://github.com/Alwatr/flux/commit/de337eb20f3acf9b4a8cc33116b48c7d3ea0aa5b))
+* update @alwatr/nanolib dependency to version 6.0.2 ([134d3e7](https://github.com/Alwatr/flux/commit/134d3e7878c7a22d5f7994c671b5dceabfd29b57))
+* update eslintignore and remove deprecated references from tsconfig files ([806aad5](https://github.com/Alwatr/flux/commit/806aad55ca212dedae5057b3a06bc6293347afb4))
+
+### 🔗 Dependencies update
+
+* update ([8c3b09a](https://github.com/Alwatr/flux/commit/8c3b09ab34e9646376f1ffaaada9e6efd23d950c))
+* update @alwatr/eslint-config, @alwatr/prettier-config, @alwatr/tsconfig-base, and @alwatr/yarn-upgrade to latest versions ([ecfdff0](https://github.com/Alwatr/flux/commit/ecfdff055864ed717632a9c6be053ec25d460b8d))
+* update @alwatr/nanolib to ^6.0.3 and devDependencies to latest versions ([78576fe](https://github.com/Alwatr/flux/commit/78576fe849359bd0a7fec724290312c749019386))
+* update dependencies and devDependencies in package.json ([d2cf47c](https://github.com/Alwatr/flux/commit/d2cf47c26b65f41eb8de0873fe7065d0a42aaecf))
+* update devDependencies to latest versions ([750acf8](https://github.com/Alwatr/flux/commit/750acf860d34cbe78be3ad6a81560cb817c33d94))
+* update workspace dependency versions for consistency ([b004468](https://github.com/Alwatr/flux/commit/b0044682805a6f5842214755de109034ec4d0405))
+
 ## [4.1.1](https://github.com/Alwatr/flux/compare/v4.1.0...v4.1.1) (2025-09-08)
 
 ### 🔗 Dependencies update
