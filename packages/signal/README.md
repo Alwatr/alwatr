@@ -17,13 +17,13 @@ It's designed to be simple to learn, yet capable of handling complex state manag
 
 Signals are the fundamental building blocks in Alwatr Signal. They are special objects that hold a value and can notify interested consumers when that value changes. There are three main types of signals:
 
-1.  **`StateSignal`**: The foundation of reactivity. It holds a mutable value. When you `set()` a new value, it notifies all its dependents.
-2.  **`ComputedSignal`**: A read-only signal that derives its value from other signals. It automatically updates when its dependencies change. The result is memoized, so the calculation only runs when needed.
-3.  **`EffectSignal`**: The bridge to the "outside world." It executes a side effect (like logging or rendering) in response to changes in the signals it depends on.
+1. **`StateSignal`**: The foundation of reactivity. It holds a mutable value. When you `set()` a new value, it notifies all its dependents.
+2. **`ComputedSignal`**: A read-only signal that derives its value from other signals. It automatically updates when its dependencies change. The result is memoized, so the calculation only runs when needed.
+3. **`EffectSignal`**: The bridge to the "outside world." It executes a side effect (like logging or rendering) in response to changes in the signals it depends on.
 
 There is also a fourth type for stateless events:
 
-4.  **`EventSignal`**: A stateless signal for dispatching one-off events that don't have a persistent value.
+4. **`EventSignal`**: A stateless signal for dispatching one-off events that don't have a persistent value.
 
 ---
 
@@ -44,7 +44,7 @@ npm i @alwatr/signal
 `StateSignal` is where your application's state lives. Let's create signals for a user's name and a counter.
 
 ```typescript
-import { StateSignal } from '@alwatr/signal';
+import {StateSignal} from '@alwatr/signal';
 
 // A signal to hold the user's first name.
 const firstName = new StateSignal<string>({
@@ -64,7 +64,7 @@ const counter = new StateSignal<number>({
 A `ComputedSignal` combines other signals into a new, read-only value. Let's create a `fullName` signal that automatically updates when `firstName` changes.
 
 ```typescript
-import { ComputedSignal } from '@alwatr/signal';
+import {ComputedSignal} from '@alwatr/signal';
 
 const fullName = new ComputedSignal<string>({
   signalId: 'user-fullName',
@@ -80,7 +80,7 @@ console.log(fullName.value); // Outputs: "User: John"
 An `EffectSignal` runs a side effect whenever one of its dependencies changes. This is perfect for logging, updating the DOM, or making network requests.
 
 ```typescript
-import { EffectSignal } from '@alwatr/signal';
+import {EffectSignal} from '@alwatr/signal';
 
 const loggerEffect = new EffectSignal({
   deps: [fullName, counter], // This effect depends on fullName and counter.
@@ -96,7 +96,7 @@ Now, let's see the magic happen. When we update a `StateSignal`, the changes aut
 
 ```typescript
 // Subscribe to changes for demonstration
-fullName.subscribe(newFullName => {
+fullName.subscribe((newFullName) => {
   console.log(`Full name signal updated to: ${newFullName}`);
 });
 
@@ -114,6 +114,7 @@ counter.set(1);
 ```
 
 The output would be:
+
 ```
 User: John
 Full name signal updated to: User: Jane
@@ -141,6 +142,7 @@ const isEven = new ComputedSignal({
 // When the component/logic using it is about to be removed:
 isEven.destroy();
 ```
+
 Calling `destroy()` unsubscribes the signal from all its dependencies, allowing it to be safely garbage collected.
 
 ### Asynchronous Notifications
@@ -148,7 +150,7 @@ Calling `destroy()` unsubscribes the signal from all its dependencies, allowing 
 Alwatr Signal uses a predictable asynchronous model for notifications:
 
 - **`StateSignal` and `EventSignal`** schedule notifications on the **microtask** queue (`Promise.resolve().then(...)`). This ensures that multiple synchronous `set()` calls within the same event loop tick are batched, and listeners are notified shortly after, but not immediately.
-- **`ComputedSignal` and `EffectSignal`** schedule their recalculations/runs on the **macrotask** queue (e.g., `setTimeout(..., 0)`). This is a crucial optimization. If multiple dependencies change in the same event loop, the computed signal will only recalculate *once* per tick, avoiding redundant work.
+- **`ComputedSignal` and `EffectSignal`** schedule their recalculations/runs on the **macrotask** queue (e.g., `setTimeout(..., 0)`). This is a crucial optimization. If multiple dependencies change in the same event loop, the computed signal will only recalculate _once_ per tick, avoiding redundant work.
 
 ### Subscription Options
 
@@ -162,6 +164,7 @@ The `subscribe` method accepts an optional second argument to customize its beha
 ## API Overview
 
 ### `StateSignal<T>`
+
 - **`constructor(config)`**: Creates a new state signal.
   - `config.signalId`: `string`
   - `config.initialValue`: `T`
@@ -169,6 +172,7 @@ The `subscribe` method accepts an optional second argument to customize its beha
 - **`.set(newValue: T)`**: Sets a new value and notifies listeners.
 
 ### `ComputedSignal<T>`
+
 - **`constructor(config)`**: Creates a new computed signal.
   - `config.signalId`: `string`
   - `config.deps`: `IReadonlySignal<unknown>[]` - Array of dependency signals.
@@ -177,6 +181,7 @@ The `subscribe` method accepts an optional second argument to customize its beha
 - **`.destroy()`**: Cleans up the signal's subscriptions. **(Important!)**
 
 ### `EffectSignal`
+
 - **`constructor(config)`**: Creates a new effect signal.
   - `config.deps`: `IReadonlySignal<unknown>[]` - Array of dependency signals.
   - `config.run`: `() => void | Promise<void>` - The side effect function.
@@ -184,11 +189,13 @@ The `subscribe` method accepts an optional second argument to customize its beha
 - **`.destroy()`**: Cleans up the signal's subscriptions. **(Important!)**
 
 ### `EventSignal<T>`
+
 - **`constructor(config)`**: Creates a new event signal.
   - `config.signalId`: `string`
 - **`.dispatch(payload: T)`**: Dispatches an event to all listeners.
 
 ### Common Methods
+
 - **`.subscribe(callback, options?)`**: Subscribes a listener. Returns `{ unsubscribe: () => void }`.
 - **`.untilNext()`**: Returns a `Promise` that resolves with the next value/payload.
 - **`.destroy()`**: (On all but `StateSignal`) Cleans up the signal.
@@ -202,6 +209,7 @@ The following companies, organizations, and individuals support flux ongoing mai
 Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
 
 ---
+
 <br>
 <br>
 <br>
@@ -225,13 +233,13 @@ Contributions are welcome! Please read our [contribution guidelines](https://git
 
 سیگنال‌ها بلوک‌های سازنده اصلی در Alwatr Signal هستند. آن‌ها اشیاء خاصی هستند که یک مقدار را نگه می‌دارند و می‌توانند مصرف‌کنندگان علاقه‌مند را هنگام تغییر آن مقدار مطلع کنند. سه نوع اصلی سیگنال وجود دارد:
 
-1.  **`StateSignal`**: پایه و اساس واکنش‌پذیری. این سیگنال یک مقدار قابل تغییر را نگه می‌دارد. وقتی شما مقدار جدیدی را `set()` می‌کنید، تمام وابستگان خود را مطلع می‌سازد.
-2.  **`ComputedSignal`**: یک سیگنال فقط-خواندنی (read-only) که مقدار خود را از سیگنال‌های دیگر استخراج می‌کند. این سیگنال به طور خودکار با تغییر وابستگی‌هایش به‌روز می‌شود. نتیجه کش (memoized) می‌شود، بنابراین محاسبات فقط در صورت نیاز انجام می‌شود.
-3.  **`EffectSignal`**: پلی به "دنیای بیرون". این سیگنال یک اثر جانبی (side effect) مانند لاگ‌گیری یا رندر کردن را در پاسخ به تغییرات سیگنال‌هایی که به آن‌ها وابسته است، اجرا می‌کند.
+1. **`StateSignal`**: پایه و اساس واکنش‌پذیری. این سیگنال یک مقدار قابل تغییر را نگه می‌دارد. وقتی شما مقدار جدیدی را `set()` می‌کنید، تمام وابستگان خود را مطلع می‌سازد.
+2. **`ComputedSignal`**: یک سیگنال فقط-خواندنی (read-only) که مقدار خود را از سیگنال‌های دیگر استخراج می‌کند. این سیگنال به طور خودکار با تغییر وابستگی‌هایش به‌روز می‌شود. نتیجه کش (memoized) می‌شود، بنابراین محاسبات فقط در صورت نیاز انجام می‌شود.
+3. **`EffectSignal`**: پلی به "دنیای بیرون". این سیگنال یک اثر جانبی (side effect) مانند لاگ‌گیری یا رندر کردن را در پاسخ به تغییرات سیگنال‌هایی که به آن‌ها وابسته است، اجرا می‌کند.
 
 یک نوع چهارم نیز برای رویدادهای بدون حالت وجود دارد:
 
-4.  **`EventSignal`**: یک سیگنال بدون حالت برای ارسال رویدادهای یک‌باره که مقدار پایداری ندارند.
+4. **`EventSignal`**: یک سیگنال بدون حالت برای ارسال رویدادهای یک‌باره که مقدار پایداری ندارند.
 
 ---
 
@@ -252,7 +260,7 @@ npm i @alwatr/signal
 `StateSignal` جایی است که وضعیت برنامه شما زندگی می‌کند. بیایید سیگنال‌هایی برای نام یک کاربر و یک شمارنده ایجاد کنیم.
 
 ```typescript
-import { StateSignal } from '@alwatr/signal';
+import {StateSignal} from '@alwatr/signal';
 
 // سیگنالی برای نگهداری نام کوچک کاربر
 const firstName = new StateSignal<string>({
@@ -272,7 +280,7 @@ const counter = new StateSignal<number>({
 یک `ComputedSignal` سیگنال‌های دیگر را ترکیب کرده و یک مقدار جدید و فقط-خواندنی ایجاد می‌کند. بیایید یک سیگنال `fullName` بسازیم که با تغییر `firstName` به طور خودکار به‌روز شود.
 
 ```typescript
-import { ComputedSignal } from '@alwatr/signal';
+import {ComputedSignal} from '@alwatr/signal';
 
 const fullName = new ComputedSignal<string>({
   signalId: 'user-fullName',
@@ -288,7 +296,7 @@ console.log(fullName.value); // خروجی: "User: John"
 یک `EffectSignal` هر زمان که یکی از وابستگی‌هایش تغییر کند، یک اثر جانبی اجرا می‌کند. این برای لاگ‌گیری، به‌روزرسانی DOM یا ارسال درخواست‌های شبکه عالی است.
 
 ```typescript
-import { EffectSignal } from '@alwatr/signal';
+import {EffectSignal} from '@alwatr/signal';
 
 const loggerEffect = new EffectSignal({
   deps: [fullName, counter], // این افکت به fullName و counter وابسته است
@@ -304,7 +312,7 @@ const loggerEffect = new EffectSignal({
 
 ```typescript
 // برای نمایش، در تغییرات مشترک می‌شویم
-fullName.subscribe(newFullName => {
+fullName.subscribe((newFullName) => {
   console.log(`Full name signal updated to: ${newFullName}`);
 });
 
@@ -322,6 +330,7 @@ counter.set(1);
 ```
 
 خروجی به این صورت خواهد بود:
+
 ```
 User: John
 Full name signal updated to: User: Jane
@@ -349,6 +358,7 @@ const isEven = new ComputedSignal({
 // زمانی که کامپوننت/منطقی که از آن استفاده می‌کند در شرف حذف شدن است:
 isEven.destroy();
 ```
+
 فراخوانی `destroy()` اشتراک سیگنال را از تمام وابستگی‌هایش لغو می‌کند و به сборщик زباله (garbage collector) اجازه می‌دهد آن را با خیال راحت پاک کند.
 
 ### نوتیفیکیشن‌های ناهمزمان (Asynchronous)
@@ -356,7 +366,7 @@ isEven.destroy();
 Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی برای نوتیفیکیشن‌ها استفاده می‌کند:
 
 - **`StateSignal` و `EventSignal`** نوتیفیکیشن‌ها را در صف **microtask** (`Promise.resolve().then(...)`) زمان‌بندی می‌کنند. این تضمین می‌کند که چندین فراخوانی `set()` همزمان در یک تیک حلقه رویداد (event loop) دسته‌بندی شده و شنوندگان کمی بعد، اما نه بلافاصله، مطلع می‌شوند.
-- **`ComputedSignal` و `EffectSignal`** محاسبات/اجراهای خود را در صف **macrotask** (مانند `setTimeout(..., 0)`) زمان‌بندی می‌کنند. این یک بهینه‌سازی حیاتی است. اگر چندین وابستگی در یک حلقه رویداد تغییر کنند، سیگنال محاسباتی فقط *یک بار* در هر تیک دوباره محاسبه می‌شود و از کار اضافی جلوگیری می‌کند.
+- **`ComputedSignal` و `EffectSignal`** محاسبات/اجراهای خود را در صف **macrotask** (مانند `setTimeout(..., 0)`) زمان‌بندی می‌کنند. این یک بهینه‌سازی حیاتی است. اگر چندین وابستگی در یک حلقه رویداد تغییر کنند، سیگنال محاسباتی فقط _یک بار_ در هر تیک دوباره محاسبه می‌شود و از کار اضافی جلوگیری می‌کند.
 
 ### گزینه‌های اشتراک (`subscribe`)
 
@@ -370,6 +380,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 ## مرور کلی API
 
 ### `StateSignal<T>`
+
 - **`constructor(config)`**: یک سیگنال وضعیت جدید ایجاد می‌کند.
   - `config.signalId`: `string`
   - `config.initialValue`: `T`
@@ -377,6 +388,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 - **`.set(newValue: T)`**: مقدار جدیدی را تنظیم کرده و شنوندگان را مطلع می‌کند.
 
 ### `ComputedSignal<T>`
+
 - **`constructor(config)`**: یک سیگنال محاسباتی جدید ایجاد می‌کند.
   - `config.signalId`: `string`
   - `config.deps`: `IReadonlySignal<unknown>[]` - آرایه‌ای از سیگنال‌های وابسته.
@@ -385,6 +397,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 - **`.destroy()`**: اشتراک‌های سیگنال را پاک‌سازی می‌کند. **(مهم!)**
 
 ### `EffectSignal`
+
 - **`constructor(config)`**: یک سیگنال افکت جدید ایجاد می‌کند.
   - `config.deps`: `IReadonlySignal<unknown>[]` - آرایه‌ای از سیگنال‌های وابسته.
   - `config.run`: `() => void | Promise<void>` - تابع اثر جانبی.
@@ -392,11 +405,13 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 - **`.destroy()`**: اشتراک‌های سیگنال را پاک‌سازی می‌کند. **(مهم!)**
 
 ### `EventSignal<T>`
+
 - **`constructor(config)`**: یک سیگنال رویداد جدید ایجاد می‌کند.
   - `config.signalId`: `string`
 - **`.dispatch(payload: T)`**: یک رویداد را به تمام شنوندگان ارسال می‌کند.
 
 ### متدهای مشترک
+
 - **`.subscribe(callback, options?)`**: یک شنونده را مشترک می‌کند. `{ unsubscribe: () => void }` را برمی‌گرداند.
 - **`.untilNext()`**: یک `Promise` برمی‌گرداند که با مقدار/پیام بعدی resolve می‌شود.
 - **`.destroy()`**: (روی همه سیگنال‌ها به جز `StateSignal`) سیگنال را پاک‌سازی می‌کند.
