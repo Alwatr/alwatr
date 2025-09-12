@@ -1,79 +1,44 @@
-# Alwatr Signal Codebase Guide for AI Agents
+## Alwatr Signal — Copilot instructions (short)
 
-This document provides essential guidance for working within the Alwatr Signal codebase. Adhering to these patterns is crucial for maintaining the project's quality and consistency.
+This repo is a TypeScript monorepo (Yarn v4 workspaces + lerna-lite). The active, modern implementation lives in `packages/signal`. Avoid touching `deprecated/` — it contains historical experiments and incompatible patterns.
 
-## 1. High-Level Architecture
+Key points an AI coding agent must know (actionable):
 
-This is a TypeScript monorepo for **Alwatr Signal**, a powerful, lightweight, and modern reactive programming library.
+- Architecture: `packages/signal` implements a small reactive system built from four signal primitives: `StateSignal`, `ComputedSignal`, `EffectSignal`, `EventSignal`. See `packages/signal/src/*.ts` (e.g. `state-signal.ts`, `computed-signal.ts`, `effect-signal.ts`, `event-signal.ts`).
+- Conventions: every signal must include a `signalId` (format: `domain-concept`). Computed/Effect signals must call `.destroy()` when disposed to avoid leaks. Strong TypeScript types are required.
+- Async model: `StateSignal`/`EventSignal` use microtasks (batched via Promise microtask). `ComputedSignal`/`EffectSignal` schedule work on macrotasks (setTimeout) to dedupe recomputations — rely on this behavior when changing scheduling logic.
 
-- **The Core:** The primary and active development is in the `packages/signal` directory. This is the modern implementation of the reactive programming model.
-- **Deprecated Code:** The `deprecated` directory contains older, related concepts like `fsm`, `observable`, and `context`. **Do not use or reference code from the `deprecated` directory.** All new development should use the patterns from `packages/signal`.
-- **Zero Dependencies:** The core signal library (`packages/signal`) is designed to have zero third-party dependencies. Do not add any unless absolutely necessary and approved.
+- Build & test (repo-level):
+  - Install: use Yarn v4 (repo `packageManager: yarn@4.9.4`).
+  - Build all packages: `yarn build` (runs `lerna run build`).
+  - Build single package: `cd packages/signal && yarn build` (or run package scripts `yarn build:ts` / `yarn build:es`).
+  - Watch all: `yarn watch` (lerna parallel watch).
+  - Tests: `yarn test` (Jest). Tests set NODE_OPTIONS with `--enable-source-maps --experimental-vm-modules` — preserve that when invoking Jest in CI.
 
-## 2. Core Concept: The Signal System
+- Lint/format: root provides `yarn lint` and `yarn format` (Prettier + ESLint). Use `yarn run lint` before commits.
 
-The entire architecture is built around "Signals," which are special objects that hold a value or state and notify consumers when they change. Understanding the four types of signals is essential.
+- Packaging & release: lerna-lite is configured (see `lerna.json`) and uses conventional commits for changelogs. Releases are gated to branch `next` and use signed tags.
 
-### a. `StateSignal`
-The foundation of reactivity. It holds a mutable value. Use it to store the application's state.
+- Dependencies: core signal code prefers zero external third-party deps; it uses internal `@alwatr/*` helpers. When adding deps, prefer internal packages and keep the core small.
 
-- **Source:** `packages/signal/src/state-signal.ts`
-- **Example:**
-  ```typescript
-  import {StateSignal} from '@alwatr/signal';
+- Important files to reference in PRs or when editing behaviour:
+  - `packages/signal/src/*` — implementation and tests (e.g. `state-signal.ts`, `computed-signal.ts`, `effect-signal.ts`).
+  - `packages/signal/package.json` — package build/test scripts and exports.
+  - `package.json` (root) & `lerna.json` — workspace scripts, Node/Yarn engines, release config.
 
-  // A signal to hold a simple counter.
-  const counter = new StateSignal<number>({
-    signalId: 'app-counter', // Convention: MUST have a unique signalId.
-    initialValue: 0,
-  });
+- Release / CI expectations for contributors: keep TypeScript builds green (`tsc --build`), run `yarn build` and `yarn test`, follow conventional commit types (`feat`, `fix`, `perf`, `chore`, `deps`, etc.).
 
-  // To update the state and notify dependents:
-  counter.setValue(1);
-  ```
+Examples you can use in edits or tests:
 
-### b. `ComputedSignal`
-A read-only signal that derives its value from other signals. It automatically updates when its dependencies change and memoizes the result.
+- Creating a StateSignal (use `signalId`):
+  - See `packages/signal/README.md` for API examples and the repo README for end-to-end samples.
 
-- **Source:** `packages/signal/src/computed-signal.ts`
-- **Example:**
-  ```typescript
-  import {ComputedSignal} from '@alwatr/signal';
+Agent-specific rules (do not infer — follow these):
 
-  const doubleCounter = new ComputedSignal<string>({
-    signalId: 'app-double-counter',
-    deps: [counter], // Depends on the `counter` signal.
-    get: () => counter.value * 2,
-  });
+- Never introduce references to `deprecated/` code in new features. Use `packages/signal` patterns instead.
+- Preserve TypeScript types and exports in `packages/signal/package.json` (`exports` -> `dist/*`). If you change public API, update `exports` and `types` and add tests.
+- Small edits only: Prefer modifying `packages/signal/src/*` and tests under the same package. For cross-package changes, run full `yarn build` and `yarn test` before requesting a PR.
 
-  console.log(doubleCounter.value); // Access the computed value.
-  ```
+If anything above is unclear or you want more detail (examples of signal lifecycles, typical unit-test structure, or release steps), tell me which section to expand and I will iterate.
 
-### c. `EffectSignal`
-Executes a side effect (like logging, DOM updates, or API calls) in response to changes in its dependent signals.
-
-- **Source:** `packages/signal/src/effect-signal.ts`
-- **Example:**
-  ```typescript
-  import {EffectSignal} from '@alwatr/signal';
-
-  const loggerEffect = new EffectSignal({
-    signalId: 'app-logger', // Effects should also have a signalId.
-    deps: [counter],
-    run: () => {
-      console.log(`Counter changed to: ${counter.value}`);
-    },
-  });
-  ```
-
-### d. `EventSignal`
-A stateless signal for dispatching one-off events that don't have a persistent value.
-
-- **Source:** `packages/signal/src/event-signal.ts`
-
-## 3. Critical Conventions
-
-- **`signalId` is Mandatory:** Every signal of any type **must** be created with a unique, descriptive `signalId`. This is crucial for debugging and tracing data flow. The format is typically `domain-concept`, e.g., `user-firstName`.
-- **Type Safety:** The project is 100% TypeScript. All new code must be strongly typed. Use generics where appropriate, as seen in the signal classes.
-- **Lifecycle Management:** Signals have a `destroy()` method. When a signal is no longer needed, its `destroy()` method should be called to prevent memory leaks by cleaning up subscriptions.
-- **Asynchronous Flow:** Signal notifications are asynchronous and non-blocking. Do not write code that assumes synchronous state updates.
+Happy to expand any section or add short examples/tests on demand.
