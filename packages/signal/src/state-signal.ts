@@ -81,7 +81,8 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     this.logger_.logMethodArgs?.('set', {newValue});
     this.checkDestroyed_();
 
-    if (Object.is(this.value__, newValue) && typeof newValue !== 'object') return; // Do not notify if the value is the same for primitives.
+    // For primitives (including null), do not notify if the value is the same.
+    if (Object.is(this.value__, newValue) && (typeof newValue !== 'object' || newValue === null)) return;
 
     this.value__ = newValue;
 
