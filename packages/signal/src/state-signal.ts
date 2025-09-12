@@ -108,7 +108,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     // By default, new subscribers to a StateSignal should receive the current value.
     const receivePrevious = options.receivePrevious !== false;
 
-    if (receivePrevious && !options.disabled) {
+    if (receivePrevious) {
       // Immediately (but asynchronously) call the listener with the current value.
       // This is done in a microtask to ensure it happens after the subscription is fully registered.
       delay

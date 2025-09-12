@@ -39,14 +39,6 @@ export interface SubscribeOptions {
   priority?: boolean;
 
   /**
-   * If `true`, the listener will be temporarily disabled and will not be called during notifications.
-   * This can be useful for temporarily pausing a subscription without completely unsubscribing.
-   *
-   * @default false
-   */
-  disabled?: boolean;
-
-  /**
    * **For `StateSignal` only.** If `true` (the default), the listener will be called immediately with the
    * signal's current value upon subscription. Set to `false` if you only want to be notified of *future* changes.
    *

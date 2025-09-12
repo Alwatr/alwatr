@@ -99,7 +99,6 @@ export abstract class SignalBase<T> {
    *
    * This method iterates through a snapshot of the current observers to prevent issues
    * with subscriptions changing during notification (e.g., an observer unsubscribing itself).
-   * It handles `once`, `disabled`, and asynchronous callbacks gracefully.
    *
    * @param value The new value to notify observers about.
    * @protected
@@ -117,8 +116,6 @@ export abstract class SignalBase<T> {
     const currentObservers = [...this.observers_];
 
     for (const observer of currentObservers) {
-      if (observer.options?.disabled) continue;
-
       if (observer.options?.once) {
         this.removeObserver_(observer);
       }
