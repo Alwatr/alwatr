@@ -1,3 +1,4 @@
+import {describe, beforeEach, afterEach, it, expect, jest} from '@jest/globals';
 import {EventSignal} from '@alwatr/signal';
 import {delay} from '@alwatr/delay';
 
@@ -197,7 +198,7 @@ describe('EventSignal', () => {
       localSignal.subscribe(callback);
 
       localSignal.destroy();
-      localSignal.dispatch();
+      expect(() => localSignal.dispatch()).toThrow();
 
       await delay.nextMicrotask();
       expect(callback).not.toHaveBeenCalled();

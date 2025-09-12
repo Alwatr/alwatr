@@ -1,3 +1,4 @@
+import {describe, beforeEach, afterEach, it, expect, jest} from '@jest/globals';
 import {StateSignal} from '@alwatr/signal';
 import {delay} from '@alwatr/delay';
 
@@ -25,7 +26,7 @@ describe('StateSignal', () => {
     const callback = jest.fn();
     const newValue = 42;
 
-    signal.subscribe(callback);
+    signal.subscribe(callback, {receivePrevious: false});
     signal.set(newValue);
 
     expect(callback).not.toHaveBeenCalled(); // Should be async
@@ -37,7 +38,7 @@ describe('StateSignal', () => {
   it('should not notify subscribers if value does not change', async () => {
     const callback = jest.fn();
 
-    signal.subscribe(callback);
+    signal.subscribe(callback, {receivePrevious: false});
     signal.set(0); // Same as initial
 
     await delay.nextMicrotask();
@@ -49,8 +50,8 @@ describe('StateSignal', () => {
     const callback2 = jest.fn();
     const newValue = 100;
 
-    signal.subscribe(callback1);
-    signal.subscribe(callback2);
+    signal.subscribe(callback1, {receivePrevious: false});
+    signal.subscribe(callback2, {receivePrevious: false});
     signal.set(newValue);
 
     await delay.nextMicrotask();
@@ -62,7 +63,7 @@ describe('StateSignal', () => {
 
   it('should not notify unsubscribed listeners', async () => {
     const callback = jest.fn();
-    const subscription = signal.subscribe(callback);
+    const subscription = signal.subscribe(callback, {receivePrevious: false});
 
     subscription.unsubscribe();
     signal.set(50);
@@ -127,7 +128,7 @@ describe('StateSignal', () => {
   it('should handle setting the same value multiple times without notifying', async () => {
     const callback = jest.fn();
 
-    signal.subscribe(callback);
+    signal.subscribe(callback, {receivePrevious: false});
     signal.set(0);
     signal.set(0);
     signal.set(0);
@@ -140,7 +141,9 @@ describe('StateSignal', () => {
     const callback = jest.fn();
     const value = {a: 1};
     const signal = new StateSignal({signalId: 'object-signal', initialValue: value});
-    signal.subscribe(callback);
+    
+    signal.subscribe(callback, {receivePrevious: false});
+
     value.a++;
     signal.set(value);
 
@@ -155,12 +158,13 @@ describe('StateSignal', () => {
   });
 
   it('should notify high-priority subscribers first', async () => {
+    /** @type {Array<string>} */
     const callOrder = [];
     const callback1 = jest.fn(() => callOrder.push('normal'));
     const callback2 = jest.fn(() => callOrder.push('priority'));
 
-    signal.subscribe(callback1); // Normal priority
-    signal.subscribe(callback2, {priority: true}); // High priority
+    signal.subscribe(callback1, {receivePrevious: false}); // Normal priority
+    signal.subscribe(callback2, {priority: true, receivePrevious: false}); // High priority
     signal.set(1);
 
     await delay.nextMicrotask();
@@ -176,7 +180,7 @@ describe('StateSignal', () => {
     signal.set(1);
 
     await delay.nextMicrotask();
-    expect(callback1).toHaveBeenCalledTimes(1);
+    expect(callback1).toHaveBeenCalledTimes(2);
     expect(callback2).not.toHaveBeenCalled();
   });
 
@@ -191,7 +195,7 @@ describe('StateSignal', () => {
 
     // Set should not be awaited, but we need to wait for the microtask queue to be processed.
     await delay.nextMicrotask();
-    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(2);
   });
 
   it('should continue notifying other subscribers if one callback throws an error', async () => {
@@ -200,8 +204,8 @@ describe('StateSignal', () => {
     });
     const normalCallback = jest.fn();
 
-    signal.subscribe(errorCallback);
-    signal.subscribe(normalCallback);
+    signal.subscribe(errorCallback, {receivePrevious: false});
+    signal.subscribe(normalCallback, {receivePrevious: false});
     signal.set(1);
 
     await delay.nextMicrotask();
@@ -233,10 +237,10 @@ describe('StateSignal', () => {
     it('should not notify any listeners after being destroyed', async () => {
       const localSignal = new StateSignal({signalId: 'local', initialValue: 0});
       const callback = jest.fn();
-      localSignal.subscribe(callback);
+      localSignal.subscribe(callback, {receivePrevious: false});
 
       localSignal.destroy();
-      localSignal.set(1);
+      expect(() => localSignal.set(1)).toThrow();
 
       await delay.nextMicrotask();
       expect(callback).not.toHaveBeenCalled();

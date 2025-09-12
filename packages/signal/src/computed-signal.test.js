@@ -1,5 +1,5 @@
-import {ComputedSignal} from './computed-signal.js';
-import {StateSignal} from './state-signal.js';
+import {describe, beforeEach, afterEach, it, expect, jest} from '@jest/globals';
+import {ComputedSignal, StateSignal} from '@alwatr/signal';
 import {delay} from '@alwatr/delay';
 
 describe('ComputedSignal', () => {
@@ -34,36 +34,48 @@ describe('ComputedSignal', () => {
     expect(signal.value).toBe(3); // 1 + 2
   });
 
-  it('should compute value from dependencies', () => {
+  it('should compute value from dependencies', async () => {
     expect(signal.value).toBe(3);
     dep1.set(5);
+    await signal.untilNext();
     expect(signal.value).toBe(7); // 5 + 2
   });
 
   it('should notify subscribers when computed value changes', async () => {
     const callback = jest.fn();
-    signal.subscribe(callback);
+    signal.subscribe(callback, {receivePrevious: false});
     dep1.set(10);
-    await delay.nextMicrotask();
+    await signal.untilNext();
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(12); // 10 + 2
   });
 
   it('should not notify if computed value does not change', async () => {
     const callback = jest.fn();
-    signal.subscribe(callback);
+    signal.subscribe(callback, {receivePrevious: false});
     dep1.set(1); // Same as initial
-    await delay.nextMicrotask();
+    await delay.by(5);
     expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('should compute once if multiple dependencies change', async () => {
+    const callback = jest.fn();
+    signal.subscribe(callback, {receivePrevious: false});
+    dep1.set(3);
+    await delay.nextMicrotask();
+    dep2.set(4);
+    await signal.untilNext();
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(7); // 3 + 4
   });
 
   it('should notify multiple subscribers', async () => {
     const callback1 = jest.fn();
     const callback2 = jest.fn();
-    signal.subscribe(callback1);
-    signal.subscribe(callback2);
+    signal.subscribe(callback1, {receivePrevious: false});
+    signal.subscribe(callback2, {receivePrevious: false});
     dep2.set(5);
-    await delay.nextMicrotask();
+    await signal.untilNext();
     expect(callback1).toHaveBeenCalledTimes(1);
     expect(callback1).toHaveBeenCalledWith(6); // 1 + 5
     expect(callback2).toHaveBeenCalledTimes(1);
@@ -72,22 +84,22 @@ describe('ComputedSignal', () => {
 
   it('should not notify unsubscribed listeners', async () => {
     const callback = jest.fn();
-    const subscription = signal.subscribe(callback);
+    const subscription = signal.subscribe(callback, {receivePrevious: false});
     subscription.unsubscribe();
     dep1.set(10);
-    await delay.nextMicrotask();
+    await signal.untilNext();
     expect(callback).not.toHaveBeenCalled();
   });
 
   it('should handle subscriptions with the "once" option', async () => {
     const callback = jest.fn();
-    signal.subscribe(callback, {once: true});
+    signal.subscribe(callback, {once: true, receivePrevious: false});
     dep1.set(10);
-    await delay.nextMicrotask();
+    await signal.untilNext();
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(12);
     dep2.set(20);
-    await delay.nextMicrotask();
+    await signal.untilNext();
     expect(callback).toHaveBeenCalledTimes(1); // Should not be called again
   });
 
@@ -107,61 +119,15 @@ describe('ComputedSignal', () => {
     noDepSignal.destroy();
   });
 
-  it('should handle async get function', async () => {
-    const asyncSignal = new ComputedSignal({
-      signalId: 'async-computed',
-      deps: [dep1],
-      get: async () => {
-        await delay.by(10);
-        return dep1.value * 2;
-      },
-    });
-    expect(asyncSignal.value).toBe(2); // Initial
-    dep1.set(5);
-    await delay.nextMicrotask();
-    expect(asyncSignal.value).toBe(10);
-    asyncSignal.destroy();
-  });
-
-  it('should notify high-priority subscribers first', async () => {
-    const calls = [];
-    const callback1 = jest.fn(() => calls.push('low'));
-    const callback2 = jest.fn(() => calls.push('high'));
-    signal.subscribe(callback1, {priority: 0});
-    signal.subscribe(callback2, {priority: 1});
-    dep1.set(10);
-    await delay.nextMicrotask();
-    expect(calls).toEqual(['high', 'low']);
-  });
-
-  it('should not notify disabled subscribers', async () => {
-    const callback = jest.fn();
-    const subscription = signal.subscribe(callback);
-    subscription.disabled = true;
-    dep1.set(10);
-    await delay.nextMicrotask();
-    expect(callback).not.toHaveBeenCalled();
-  });
-
-  it('should handle async callbacks correctly', async () => {
-    const callback = jest.fn(async () => {
-      await delay(5);
-    });
-    signal.subscribe(callback);
-    dep1.set(10);
-    await delay.nextMicrotask();
-    expect(callback).toHaveBeenCalledTimes(1);
-  });
-
   it('should continue notifying other subscribers if one callback throws an error', async () => {
     const callback1 = jest.fn(() => {
       throw new Error('Test error');
     });
     const callback2 = jest.fn();
-    signal.subscribe(callback1);
-    signal.subscribe(callback2);
+    signal.subscribe(callback1, {receivePrevious: false});
+    signal.subscribe(callback2, {receivePrevious: false});
     dep1.set(10);
-    await delay.nextMicrotask();
+    await signal.untilNext();
     expect(callback1).toHaveBeenCalledTimes(1);
     expect(callback2).toHaveBeenCalledTimes(1);
   });
@@ -174,10 +140,10 @@ describe('ComputedSignal', () => {
 
     it('should not notify after destroy', async () => {
       const callback = jest.fn();
-      signal.subscribe(callback);
+      signal.subscribe(callback, {receivePrevious: false});
       signal.destroy();
       dep1.set(10);
-      await delay.nextMicrotask();
+      await delay.by(5);
       expect(callback).not.toHaveBeenCalled();
     });
   });

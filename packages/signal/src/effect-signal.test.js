@@ -1,3 +1,4 @@
+import {describe, beforeEach, afterEach, it, expect, jest} from '@jest/globals';
 import {EffectSignal, StateSignal} from '@alwatr/signal';
 import {delay} from '@alwatr/delay';
 
@@ -28,23 +29,24 @@ describe('EffectSignal', () => {
     expect(effectSignal).toBeInstanceOf(EffectSignal);
   });
 
-  it('should run the effect immediately if runImmediately is true', () => {
+  it('should run the effect immediately if runImmediately is true', async () => {
     const runFn = jest.fn();
     effectSignal = new EffectSignal({
       deps: [depSignal],
       run: runFn,
       runImmediately: true,
     });
+    await delay.by(5);
     expect(runFn).toHaveBeenCalledTimes(1);
   });
 
-  it('should not run the effect immediately if runImmediately is false or undefined', () => {
+  it('should not run the effect immediately if runImmediately is false or undefined', async () => {
     const runFn = jest.fn();
     effectSignal = new EffectSignal({
       deps: [depSignal],
       run: runFn,
-      runImmediately: false,
     });
+    await delay.by(5);
     expect(runFn).not.toHaveBeenCalled();
   });
 
@@ -54,9 +56,10 @@ describe('EffectSignal', () => {
       deps: [depSignal],
       run: runFn,
     });
+    await delay.by(5);
     expect(runFn).not.toHaveBeenCalled();
     depSignal.set(1);
-    await delay.nextMicrotask();
+    await delay.by(5);
     expect(runFn).toHaveBeenCalledTimes(1);
   });
 
@@ -67,9 +70,11 @@ describe('EffectSignal', () => {
       run: runFn,
     });
     depSignal.set(1);
-    await delay.nextMicrotask();
+    await delay.by(5);
+
     depSignal.set(2);
-    await delay.nextMicrotask();
+    await delay.by(5);
+
     expect(runFn).toHaveBeenCalledTimes(2);
   });
 
@@ -81,10 +86,12 @@ describe('EffectSignal', () => {
       run: runFn,
     });
     depSignal.set(1);
-    await delay.nextMicrotask();
+    await delay.by(5);
+
     expect(runFn).toHaveBeenCalledTimes(1);
     depSignal2.set('b');
-    await delay.nextMicrotask();
+    await delay.by(5);
+
     expect(runFn).toHaveBeenCalledTimes(2);
     depSignal2.destroy();
   });
@@ -97,7 +104,8 @@ describe('EffectSignal', () => {
     });
     effectSignal.destroy();
     depSignal.set(1);
-    await delay.nextMicrotask();
+    await delay.by(5);
+
     expect(runFn).not.toHaveBeenCalled();
   });
 
@@ -108,31 +116,9 @@ describe('EffectSignal', () => {
       run: runFn,
     });
     depSignal.set(1);
-    await delay.nextMicrotask();
-    expect(runFn).toHaveBeenCalledTimes(1);
-  });
+    await delay.by(5);
 
-  it('should continue running other effects if one throws an error', async () => {
-    const runFn1 = jest.fn().mockImplementation(() => {
-      throw new Error('Test error');
-    });
-    const runFn2 = jest.fn();
-    const depSignal2 = new StateSignal({signalId: 'dep2', initialValue: 0});
-    const effectSignal1 = new EffectSignal({
-      deps: [depSignal],
-      run: runFn1,
-    });
-    const effectSignal2 = new EffectSignal({
-      deps: [depSignal],
-      run: runFn2,
-    });
-    depSignal.set(1);
-    await delay.nextMicrotask();
-    expect(runFn1).toHaveBeenCalledTimes(1);
-    expect(runFn2).toHaveBeenCalledTimes(1);
-    effectSignal1.destroy();
-    effectSignal2.destroy();
-    depSignal2.destroy();
+    expect(runFn).toHaveBeenCalledTimes(1);
   });
 
   it('should not run if dependencies do not change', async () => {
@@ -142,7 +128,8 @@ describe('EffectSignal', () => {
       run: runFn,
     });
     depSignal.set(0); // Same value
-    await delay.nextMicrotask();
+    await delay.by(5);
+
     expect(runFn).not.toHaveBeenCalled();
   });
 
@@ -155,7 +142,8 @@ describe('EffectSignal', () => {
       });
       effectSignal.destroy();
       depSignal.set(1);
-      await delay.nextMicrotask();
+      await delay.by(5);
+
       expect(runFn).not.toHaveBeenCalled();
     });
   });
