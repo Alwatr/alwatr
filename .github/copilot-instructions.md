@@ -1,44 +1,44 @@
 ## Alwatr Signal — Copilot instructions (short)
 
-This repo is a TypeScript monorepo (Yarn v4 workspaces + lerna-lite). The active, modern implementation lives in `packages/signal`. Avoid touching `deprecated/` — it contains historical experiments and incompatible patterns.
+This is a TypeScript monorepo (Yarn v4 workspaces + lerna-lite). The active implementation lives in `packages/signal`. `deprecated/` contains historical experiments — do not reuse or reference it in new code.
 
-Key points an AI coding agent must know (actionable):
+What you need to know to be productive
+- Core primitives: `StateSignal`, `ComputedSignal`, `EffectSignal`, `EventSignal` (see `packages/signal/src/*`).
+- signal identity: every signal requires a `signalId` (convention: `domain-concept`, e.g. `user-firstName`).
+- Lifecycle: `ComputedSignal` and `EffectSignal` must call `.destroy()` when no longer needed — otherwise subscriptions leak. `StateSignal` holds an internal value and also exposes `.destroy()`.
+- Async model (important):
+  - `StateSignal` / `EventSignal` notify on the microtask queue (Promise -> next microtask).
+  - `ComputedSignal` / `EffectSignal` batch and run on the macrotask queue (next macrotask via setTimeout/delay). Rely on this when changing scheduling logic.
 
-- Architecture: `packages/signal` implements a small reactive system built from four signal primitives: `StateSignal`, `ComputedSignal`, `EffectSignal`, `EventSignal`. See `packages/signal/src/*.ts` (e.g. `state-signal.ts`, `computed-signal.ts`, `effect-signal.ts`, `event-signal.ts`).
-- Conventions: every signal must include a `signalId` (format: `domain-concept`). Computed/Effect signals must call `.destroy()` when disposed to avoid leaks. Strong TypeScript types are required.
-- Async model: `StateSignal`/`EventSignal` use microtasks (batched via Promise microtask). `ComputedSignal`/`EffectSignal` schedule work on macrotasks (setTimeout) to dedupe recomputations — rely on this behavior when changing scheduling logic.
+Build, test, lint workflows (exact commands)
+- Install: use Yarn v4 (project `packageManager: yarn@4.9.4`).
+- Full build: `yarn build` (runs `lerna run build`).
+- Build single package: `cd packages/signal && yarn build` or `yarn workspace @alwatr/signal run build`.
+- Watch: `yarn watch` (parallel watch across packages) or `yarn workspace @alwatr/signal run watch` for local edits.
+- Tests: `yarn test` — note tests set NODE_OPTIONS to include `--enable-source-maps --experimental-vm-modules`. Preserve that in CI or when running Jest manually.
+- Lint/format: `yarn lint` / `yarn format` (`eslint` + `prettier`). Root scripts run `lerna` and package-level scripts.
 
-- Build & test (repo-level):
-  - Install: use Yarn v4 (repo `packageManager: yarn@4.9.4`).
-  - Build all packages: `yarn build` (runs `lerna run build`).
-  - Build single package: `cd packages/signal && yarn build` (or run package scripts `yarn build:ts` / `yarn build:es`).
-  - Watch all: `yarn watch` (lerna parallel watch).
-  - Tests: `yarn test` (Jest). Tests set NODE_OPTIONS with `--enable-source-maps --experimental-vm-modules` — preserve that when invoking Jest in CI.
+Project conventions and gotchas
+- Minimal external deps in core: prefer internal `@alwatr/*` helpers. Avoid adding heavy third-party libs to `packages/signal`.
+- Public API changes: if you change exports or types in `packages/signal`, update `packages/signal/package.json` (`exports` and `types`) and add unit tests.
+- Tests & Node: project's engines require Node >=18.16.0. Jest runs with experimental vm modules — don't remove NODE_OPTIONS.
+- Logging/tracing: signals use `signalId` in logs (see `createLogger` usage in `state-signal.ts`, `computed-signal.ts`) — keep ids stable and descriptive.
 
-- Lint/format: root provides `yarn lint` and `yarn format` (Prettier + ESLint). Use `yarn run lint` before commits.
+Common reference files
+- Implementation: `packages/signal/src/{state-signal.ts,computed-signal.ts,effect-signal.ts,event-signal.ts,signal-base.ts}`
+- Types: `packages/signal/src/type.ts`
+- Package config & build scripts: `packages/signal/package.json`
+- Repo build & release: `package.json` (root), `lerna.json` (lerna-lite config)
 
-- Packaging & release: lerna-lite is configured (see `lerna.json`) and uses conventional commits for changelogs. Releases are gated to branch `next` and use signed tags.
+Rules for automated agents (concrete)
+- Never edit or reference code in `deprecated/` — it's intentionally incompatible.
+- Preserve TypeScript types and public exports. If you rename or remove exports, update `exports` in `packages/signal/package.json` and add tests.
+- When adding or editing Computed/Effect signals, ensure `.destroy()` is called in teardown paths (tests, demos, or components).
+- Keep changes small and focused to `packages/signal/src/*` unless a cross-package change is required — run `yarn build` & `yarn test` before opening a PR.
 
-- Dependencies: core signal code prefers zero external third-party deps; it uses internal `@alwatr/*` helpers. When adding deps, prefer internal packages and keep the core small.
+Quick examples (from repo)
+- Create a StateSignal: see `packages/signal/src/state-signal.ts` and README examples — use `signalId` and `initialValue`.
+- ComputedSignal must subscribe to deps and be destroyed: see `packages/signal/src/computed-signal.ts` for the pattern using an internal `StateSignal` and macrotask batching.
 
-- Important files to reference in PRs or when editing behaviour:
-  - `packages/signal/src/*` — implementation and tests (e.g. `state-signal.ts`, `computed-signal.ts`, `effect-signal.ts`).
-  - `packages/signal/package.json` — package build/test scripts and exports.
-  - `package.json` (root) & `lerna.json` — workspace scripts, Node/Yarn engines, release config.
-
-- Release / CI expectations for contributors: keep TypeScript builds green (`tsc --build`), run `yarn build` and `yarn test`, follow conventional commit types (`feat`, `fix`, `perf`, `chore`, `deps`, etc.).
-
-Examples you can use in edits or tests:
-
-- Creating a StateSignal (use `signalId`):
-  - See `packages/signal/README.md` for API examples and the repo README for end-to-end samples.
-
-Agent-specific rules (do not infer — follow these):
-
-- Never introduce references to `deprecated/` code in new features. Use `packages/signal` patterns instead.
-- Preserve TypeScript types and exports in `packages/signal/package.json` (`exports` -> `dist/*`). If you change public API, update `exports` and `types` and add tests.
-- Small edits only: Prefer modifying `packages/signal/src/*` and tests under the same package. For cross-package changes, run full `yarn build` and `yarn test` before requesting a PR.
-
-If anything above is unclear or you want more detail (examples of signal lifecycles, typical unit-test structure, or release steps), tell me which section to expand and I will iterate.
-
+If anything in these instructions is unclear or you want the agent to expand automated test examples / lifecycle patterns, tell me which part to expand and I will iterate.
 Happy to expand any section or add short examples/tests on demand.
