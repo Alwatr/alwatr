@@ -56,13 +56,10 @@
     "conventionalcommits",
     "Exir",
     "jfsm",
+    "Macrotask",
     "Mihandoost",
     "nanolib",
     "tsbuildinfo"
   ],
-  "github.copilot.chat.codeGeneration.instructions": [
-    {
-      "file": ".vscode/copilot-instruction.md"
-    }
-  ]
+  "jest.jestCommandLine": "yarn run test"
 }

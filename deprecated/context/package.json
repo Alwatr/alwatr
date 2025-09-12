@@ -1,16 +1,12 @@
 {
-  "name": "@alwatr/flux",
-  "description": "Flux empowers your applications with elegant and powerful state management and event handling capabilities. Built on the observable design pattern, Flux provides a lightweight yet robust foundation for managing global signals and states.",
+  "name": "@alwatr/context",
+  "description": "A simple yet powerful TypeScript library for managing application context and facilitating efficient communication between components.",
   "version": "4.1.1",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/context": "workspace:^",
-    "@alwatr/fetch-state-machine": "workspace:^",
-    "@alwatr/fsm": "workspace:^",
-    "@alwatr/observable": "workspace:^",
-    "@alwatr/remote-context": "workspace:^",
-    "@alwatr/signal": "workspace:^"
+    "@alwatr/nanolib": "^6.0.2",
+    "@alwatr/observable": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^6.1.0",
@@ -32,7 +28,7 @@
     "**/*.{js,mjs,cjs,map,d.ts,html,md}",
     "!demo/**/*"
   ],
-  "homepage": "https://github.com/Alwatr/flux/tree/next/packages/signal#readme",
+  "homepage": "https://github.com/Alwatr/flux/tree/next/packages/context#readme",
   "keywords": [
     "alwatr",
     "esm",
@@ -50,7 +46,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/flux",
-    "directory": "packages/signal"
+    "directory": "packages/context"
   },
   "scripts": {
     "b": "yarn run build",

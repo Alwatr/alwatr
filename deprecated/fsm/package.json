@@ -1,18 +1,18 @@
 {
-  "name": "@alwatr/context",
-  "description": "A simple yet powerful TypeScript library for managing application context and facilitating efficient communication between components.",
+  "name": "@alwatr/fsm",
+  "description": "A robust TypeScript library for implementing Flux (Finite) State Machines, enabling clear and organized management of application state and transitions.",
   "version": "4.1.1",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/nanolib": "^6.0.2",
-    "@alwatr/observable": "workspace:^"
+    "@alwatr/nanolib": "^6.0.3",
+    "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^6.1.0",
-    "@alwatr/prettier-config": "^5.0.2",
-    "@alwatr/tsconfig-base": "^6.0.0",
-    "@alwatr/type-helper": "^6.0.0",
+    "@alwatr/nano-build": "^6.1.1",
+    "@alwatr/prettier-config": "^5.0.3",
+    "@alwatr/tsconfig-base": "^6.0.1",
+    "@alwatr/type-helper": "^6.0.1",
     "@types/node": "^22.18.1",
     "jest": "^30.1.3",
     "typescript": "^5.9.2"
@@ -28,12 +28,14 @@
     "**/*.{js,mjs,cjs,map,d.ts,html,md}",
     "!demo/**/*"
   ],
-  "homepage": "https://github.com/Alwatr/flux/tree/next/packages/context#readme",
+  "homepage": "https://github.com/Alwatr/flux/tree/next/packages/fsm#readme",
   "keywords": [
     "alwatr",
     "esm",
-    "observable",
-    "signal",
+    "finite",
+    "flux",
+    "machine",
+    "state",
     "typescript"
   ],
   "license": "MPL-2.0",
@@ -46,7 +48,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/flux",
-    "directory": "packages/context"
+    "directory": "packages/fsm"
   },
   "scripts": {
     "b": "yarn run build",

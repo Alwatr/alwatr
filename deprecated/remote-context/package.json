@@ -1,13 +1,12 @@
 {
-  "name": "@alwatr/fetch-state-machine",
-  "description": "A powerful TypeScript library for managing asynchronous fetch requests with a built-in state machine.",
+  "name": "@alwatr/remote-context",
+  "description": "A powerful TypeScript library for managing remote context data with offline-first support and automatic revalidation.",
   "version": "4.1.1",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/fetch": "^5.6.7",
-    "@alwatr/fsm": "workspace:^",
-    "@alwatr/nanolib": "^6.0.2"
+    "@alwatr/fetch-state-machine": "workspace:*",
+    "@alwatr/nanolib": "^6.0.1"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^6.1.0",
@@ -29,12 +28,14 @@
     "**/*.{js,mjs,cjs,map,d.ts,html,md}",
     "!demo/**/*"
   ],
-  "homepage": "https://github.com/Alwatr/flux/tree/next/packages/fetch-state-machine#readme",
+  "homepage": "https://github.com/Alwatr/flux/tree/next/packages/remote-context#readme",
   "keywords": [
     "alwatr",
     "context",
     "esm",
-    "fetch-state-machine",
+    "flux",
+    "remote-context",
+    "server-context",
     "signal",
     "typescript"
   ],
@@ -48,7 +49,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/flux",
-    "directory": "packages/fetch-state-machine"
+    "directory": "packages/remote-context"
   },
   "scripts": {
     "b": "yarn run build",
