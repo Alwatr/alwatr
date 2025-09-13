@@ -8,5 +8,5 @@
     "types": ["@alwatr/nano-build"]
   },
   "include": ["src/**/*.ts"],
-  "references": [{"path": "../package-tracer"}, {"path": "../logger"}]
+  "references": [{"path": "../logger"}]
 }

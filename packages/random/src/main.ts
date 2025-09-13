@@ -1,9 +1,6 @@
 import {getGlobalThis} from '@alwatr/global-this';
-import {packageTracer} from '@alwatr/package-tracer';
 
 const globalThis = /* #__PURE__ */ getGlobalThis();
-
-__dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 // Use the native crypto module when available for better randomness
 const hasCrypto = /* #__PURE__ */ (() => typeof globalThis.crypto !== 'undefined')();

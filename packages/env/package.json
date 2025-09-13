@@ -5,7 +5,6 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
-    "@alwatr/package-tracer": "workspace:*",
     "@alwatr/platform-info": "workspace:*"
   },
   "devDependencies": {

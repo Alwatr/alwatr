@@ -10,15 +10,12 @@ import {delay} from '@alwatr/delay';
 import {getGlobalThis} from '@alwatr/global-this';
 import {HttpStatusCodes, MimeTypes} from '@alwatr/http-primer';
 import {createLogger} from '@alwatr/logger';
-import {packageTracer} from '@alwatr/package-tracer';
 import {parseDuration} from '@alwatr/parse-duration';
 
 import type {AlwatrFetchOptions_, FetchOptions} from './type.js';
 
 export {cacheSupported};
 export type * from './type.js';
-
-__dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 const logger_ = /* #__PURE__ */ createLogger('@alwatr/fetch');
 const globalThis_ = /* #__PURE__ */ getGlobalThis();

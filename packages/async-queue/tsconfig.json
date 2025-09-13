@@ -8,5 +8,5 @@
     "types": ["@alwatr/nano-build", "@alwatr/type-helper"]
   },
   "include": ["src/**/*.ts"],
-  "references": [{"path": "../flatomise"}, {"path": "../package-tracer"}]
+  "references": [{"path": "../flatomise"}]
 }

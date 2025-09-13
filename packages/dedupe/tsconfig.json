@@ -8,5 +8,5 @@
     "types": ["@alwatr/nano-build", "@alwatr/type-helper"]
   },
   "include": ["src/**/*.ts"],
-  "references": [{"path": "../global-this"}, {"path": "../polyfill-has-own"}, {"path": "../package-tracer"}]
+  "references": [{"path": "../global-this"}, {"path": "../polyfill-has-own"}]
 }

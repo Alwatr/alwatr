@@ -1,7 +1,3 @@
-import {packageTracer} from '@alwatr/package-tracer';
-
-__dev_mode__: packageTracer.add(__package_name__, __package_version__);
-
 export function resolveUrl(...parts: string[]): string {
   parts = parts.filter((part: string): part is string => typeof part === 'string' && part.length > 0);
 

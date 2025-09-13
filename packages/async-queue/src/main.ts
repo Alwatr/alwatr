@@ -1,7 +1,4 @@
 import {newFlatomise} from '@alwatr/flatomise';
-import {packageTracer} from '@alwatr/package-tracer';
-
-__dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 /**
  * A queue that executes async tasks in order like mutex and semaphore methodology

@@ -8,5 +8,5 @@
     "types": ["node", "@alwatr/nano-build", "@alwatr/type-helper"]
   },
   "include": ["src/**/*.ts"],
-  "references": [{"path": "../global-this"}, {"path": "../package-tracer"}, {"path": "../parse-duration"}]
+  "references": [{"path": "../global-this"}, {"path": "../parse-duration"}]
 }

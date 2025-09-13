@@ -1,8 +1,5 @@
 import {getGlobalThis} from '@alwatr/global-this';
-import {packageTracer} from '@alwatr/package-tracer';
 import '@alwatr/polyfill-has-own';
-
-__dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 const globalThis_ = getGlobalThis<{__alwatr_dedupe__: string | true}>();
 

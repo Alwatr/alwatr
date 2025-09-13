@@ -9,7 +9,6 @@
     "@alwatr/global-this": "workspace:*",
     "@alwatr/http-primer": "workspace:*",
     "@alwatr/logger": "workspace:*",
-    "@alwatr/package-tracer": "workspace:*",
     "@alwatr/parse-duration": "workspace:*"
   },
   "devDependencies": {

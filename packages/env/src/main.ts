@@ -1,7 +1,4 @@
-import {packageTracer} from '@alwatr/package-tracer';
 import {platformInfo} from '@alwatr/platform-info';
-
-__dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 /**
  * Parameters for retrieving an environment variable value.

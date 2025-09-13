@@ -6,7 +6,6 @@
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
     "@alwatr/global-this": "workspace:*",
-    "@alwatr/package-tracer": "workspace:*",
     "@alwatr/polyfill-has-own": "workspace:*"
   },
   "devDependencies": {

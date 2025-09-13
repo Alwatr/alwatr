@@ -8,5 +8,5 @@
     "types": ["node", "@alwatr/nano-build", "@alwatr/type-helper"]
   },
   "include": ["src/**/*.ts"],
-  "references": [{"path": "../async-queue"}, {"path": "../flat-string"}, {"path": "../logger"}, {"path": "../package-tracer"}]
+  "references": [{"path": "../async-queue"}, {"path": "../flat-string"}, {"path": "../logger"}]
 }
