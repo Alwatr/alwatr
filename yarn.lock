@@ -19,6 +19,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@alwatr/debounce@workspace:packages/debounce":
+  version: 0.0.0-use.local
+  resolution: "@alwatr/debounce@workspace:packages/debounce"
+  dependencies:
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
+    "@types/node": "npm:^22.18.1"
+    typescript: "npm:^5.9.2"
+  languageName: unknown
+  linkType: soft
+
 "@alwatr/dedupe@workspace:*, @alwatr/dedupe@workspace:packages/dedupe":
   version: 0.0.0-use.local
   resolution: "@alwatr/dedupe@workspace:packages/dedupe"
