@@ -4,6 +4,8 @@ import type {DebouncerConfig} from './type.ts';
  * A powerful and type-safe Debouncer class.
  * 
  * It encapsulates the debouncing logic, state, and provides a rich control API.
+ * Debouncing delays function execution until after a specified delay has passed since the last invocation.
+ * Useful for optimizing performance in scenarios like search inputs, resize events, or API calls.
  * 
  * @example
  * ```typescript
@@ -17,6 +19,15 @@ import type {DebouncerConfig} from './type.ts';
  * // Debounce search input
  * debouncer.trigger('hello');
  * debouncer.trigger('hello world'); // Only 'hello world' will log after 300ms
+ * 
+ * // Advanced: With leading edge
+ * const leadingDebouncer = new Debouncer({
+ *   callback: () => console.log('Immediate and delayed'),
+ *   delay: 500,
+ *   leading: true,
+ *   trailing: true,
+ * });
+ * leadingDebouncer.trigger(); // Logs immediately, then again after 500ms if not cancelled
  * ```
  */
 export class Debouncer<F extends AnyFunction> {
@@ -29,6 +40,7 @@ export class Debouncer<F extends AnyFunction> {
 
   /**
    * Checks if there is a pending execution scheduled.
+   * Returns true if a timer is active, indicating a debounced call is waiting.
    */
   public get isPending(): boolean {
     return this.timerId__ !== undefined;
@@ -45,6 +57,10 @@ export class Debouncer<F extends AnyFunction> {
    *   delay: 500,
    * });
    * debouncer.trigger(42); // Logs after 500ms if not triggered again
+   * 
+   * // Edge case: Rapid triggers only execute the last one
+   * debouncer.trigger(1);
+   * debouncer.trigger(2); // Only 2 will execute after delay
    * ```
    */
   public trigger(...args: Parameters<F>): void {
@@ -69,6 +85,7 @@ export class Debouncer<F extends AnyFunction> {
 
   /**
    * Cancels any pending debounced execution and cleans up internal state.
+   * Useful for stopping execution when the operation is no longer needed (e.g., component unmount).
    * 
    * @example
    * ```typescript
@@ -78,6 +95,8 @@ export class Debouncer<F extends AnyFunction> {
    * });
    * debouncer.trigger();
    * debouncer.cancel(); // Prevents execution
+   * 
+   * // Note: After cancel, isPending becomes false
    * ```
    */
   public cancel(): void {
@@ -97,6 +116,7 @@ export class Debouncer<F extends AnyFunction> {
 
   /**
    * Immediately executes the pending function if one exists.
+   * Bypasses the delay and cleans up state. If no pending call, does nothing.
    * 
    * @example
    * ```typescript
@@ -106,6 +126,10 @@ export class Debouncer<F extends AnyFunction> {
    * });
    * debouncer.trigger();
    * setTimeout(() => debouncer.flush(), 500); // Executes immediately
+   * 
+   * // Edge case: Flush after cancel does nothing
+   * debouncer.cancel();
+   * debouncer.flush(); // No execution
    * ```
    */
   public flush(): void {
@@ -142,6 +166,15 @@ export class Debouncer<F extends AnyFunction> {
  * // Debounce search input
  * debouncer.trigger('hello');
  * debouncer.trigger('hello world'); // Only 'hello world' will log after 300ms
+ * 
+ * // With custom thisContext
+ * const obj = { log: (msg: string) => console.log('Obj:', msg) };
+ * const debouncerWithContext = createDebouncer({
+ *   callback: obj.log,
+ *   thisContext: obj,
+ *   delay: 200,
+ * });
+ * debouncerWithContext.trigger('test'); // Logs 'Obj: test'
  * ```
  */
 export function createDebouncer<F extends AnyFunction>(config: DebouncerConfig<F>): Debouncer<F> {
