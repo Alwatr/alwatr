@@ -81,17 +81,20 @@ export class LocalStorageProvider<T extends JsonValue> {
    * it writes and returns the default value.
    */
   public read(): T {
-    this.logger_.logMethod?.('read');
-    const value = localStorage.getItem(this.key_);
-    if (value === null) {
-      return this.writeDefault__();
-    }
-
     try {
-      return JSON.parse(value) as T;
+      const value = localStorage.getItem(this.key_);
+
+      if (value === null) {
+        this.logger_.logMethod?.('read//no_value');
+        return this.writeDefault__();
+      }
+
+      const parsedValue = JSON.parse(value) as T;
+      this.logger_.logMethodFull?.('read//value', undefined, {parsedValue});
+      return parsedValue;
     }
     catch (err) {
-      this.logger_.error('read', 'json_parse_error', {err});
+      this.logger_.error('read', 'read_parse_error', {err});
       return this.writeDefault__();
     }
   }
@@ -100,11 +103,12 @@ export class LocalStorageProvider<T extends JsonValue> {
    * Serializes and writes a value to localStorage.
    */
   public write(value: T): void {
+    this.logger_.logMethodArgs?.('write', {value});
     try {
       localStorage.setItem(this.key_, JSON.stringify(value));
     }
     catch (err) {
-      console.error('LocalStorageProvider.write: Failed to write to localStorage.', {key: this.key_, err});
+      this.logger_.error('write', 'write_stringify_error', {err});
     }
   }
 
