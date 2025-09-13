@@ -11,6 +11,12 @@ export interface DebouncerConfig<F extends AnyFunction> {
   callback: F;
 
   /**
+   * The `this` context to be used when invoking the callback.
+   * If provided, it will be stored and used for all invocations.
+   */
+  thisContext?: ThisParameterType<F>;
+
+  /**
    * The delay in milliseconds before the function is executed.
    */
   delay: number;
