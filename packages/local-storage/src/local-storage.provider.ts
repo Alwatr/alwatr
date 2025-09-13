@@ -88,13 +88,7 @@ export class LocalStorageProvider<T extends JsonValue> {
     }
 
     try {
-      const parsedValue = JSON.parse(value) as T;
-      // A simple runtime check to ensure we have an object if we expect one.
-      if (typeof parsedValue !== typeof this.config_.defaultValue) {
-        this.logger_.accident('read', 'type_mismatch', {expected: typeof this.config_.defaultValue, received: typeof parsedValue});
-        return this.writeDefaultــ();
-      }
-      return parsedValue;
+      return JSON.parse(value) as T;
     }
     catch (err) {
       this.logger_.error('read', 'json_parse_error', {err});
