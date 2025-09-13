@@ -36,10 +36,14 @@ export class LocalStorageProvider<T extends JsonValue> {
   }
 
   /**
-   * Generate the storage key for a given version (defaults to current config version).
+   * Generates the versioned storage key.
+   * @param meta - An object containing the name and version.
+   * @returns The versioned key string.
    */
-  private generateKey_(version?: number): string {
-    return `${this.config_.name}.v${version ?? this.config_.version}`;
+  public static getKey(meta: StorageMeta): string {
+    return `${meta.name}.v${meta.version}`;
+  }
+
   }
 
   /**
