@@ -227,6 +227,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/local-storage@workspace:packages/local-storage"
   dependencies:
+    "@alwatr/logger": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
     "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
