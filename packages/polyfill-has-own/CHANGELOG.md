@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.12](https://github.com/Alwatr/nanolib/compare/@alwatr/polyfill-has-own@5.5.11...@alwatr/polyfill-has-own@5.5.12) (2025-09-13)
+
+**Note:** Version bump only for package @alwatr/polyfill-has-own
+
 ## [5.5.11](https://github.com/Alwatr/nanolib/compare/@alwatr/polyfill-has-own@5.5.10...@alwatr/polyfill-has-own@5.5.11) (2025-09-13)
 
 ### 🧹 Miscellaneous Chores

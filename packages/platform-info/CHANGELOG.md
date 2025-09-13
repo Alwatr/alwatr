@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.12](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@5.5.11...@alwatr/platform-info@5.5.12) (2025-09-13)
+
+### 🔗 Dependencies update
+
+* update @types/node version to ^22.18.3 in multiple package.json files ([13db6fc](https://github.com/Alwatr/nanolib/commit/13db6fc176bc6cdcefedc50d77ac550bd5052c9a))
+
 ## [5.5.11](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@5.5.10...@alwatr/platform-info@5.5.11) (2025-09-13)
 
 ### 🧹 Miscellaneous Chores

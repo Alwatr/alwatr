@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.1](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.1.0...@alwatr/local-storage@6.1.1) (2025-09-13)
+
+### 🐛 Bug Fixes
+
+* remove duplicate "types" entry in package.json ([86dce1a](https://github.com/Alwatr/nanolib/commit/86dce1a88ad3c605fe03f335d4f4813aad573ed8))
+
 ## [6.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.0.0...@alwatr/local-storage@6.1.0) (2025-09-13)
 
 ### ✨ Features

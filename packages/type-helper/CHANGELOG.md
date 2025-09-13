@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.0.1...@alwatr/type-helper@6.0.2) (2025-09-13)
+
+### 🧹 Miscellaneous Chores
+
+* add utility types for function manipulation and event listener interface ([b2ca24d](https://github.com/Alwatr/nanolib/commit/b2ca24d3e4d23236796be1b8fa2e74c9ffc3379f))
+
 ## [6.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.0.0...@alwatr/type-helper@6.0.1) (2025-09-09)
 
 **Note:** Version bump only for package @alwatr/type-helper

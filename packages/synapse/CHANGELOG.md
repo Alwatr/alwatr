@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.7](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.6...@alwatr/synapse@1.1.7) (2025-09-13)
+
+### 🐛 Bug Fixes
+
+* types ([c451e48](https://github.com/Alwatr/nanolib/commit/c451e48869bb4bb9a9ddbf9f272f0a303aae9bda))
+
+### 🧹 Miscellaneous Chores
+
+* add reference to delay package in tsconfig ([6486d02](https://github.com/Alwatr/nanolib/commit/6486d02f0cb10ddf3c43c6d8d6efc7c77666f4c8))
+
 ## [1.1.6](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.5...@alwatr/synapse@1.1.6) (2025-09-13)
 
 **Note:** Version bump only for package @alwatr/synapse

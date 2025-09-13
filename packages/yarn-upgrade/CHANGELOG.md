@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.6](https://github.com/Alwatr/nanolib/compare/@alwatr/yarn-upgrade@1.0.5...@alwatr/yarn-upgrade@1.0.6) (2025-09-13)
+
+### 🔗 Dependencies update
+
+* update @types/node version to ^22.18.3 in multiple package.json files ([13db6fc](https://github.com/Alwatr/nanolib/commit/13db6fc176bc6cdcefedc50d77ac550bd5052c9a))
+
 ## [1.0.5](https://github.com/Alwatr/nanolib/compare/@alwatr/yarn-upgrade@1.0.4...@alwatr/yarn-upgrade@1.0.5) (2025-09-09)
 
 **Note:** Version bump only for package @alwatr/yarn-upgrade
