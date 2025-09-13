@@ -11,7 +11,6 @@ __metadata:
   dependencies:
     "@alwatr/flatomise": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
@@ -26,7 +25,6 @@ __metadata:
   dependencies:
     "@alwatr/global-this": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/polyfill-has-own": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
@@ -40,7 +38,6 @@ __metadata:
   resolution: "@alwatr/deep-clone@workspace:packages/deep-clone"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.9.2"
@@ -53,7 +50,6 @@ __metadata:
   dependencies:
     "@alwatr/global-this": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/parse-duration": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
@@ -68,7 +64,6 @@ __metadata:
   resolution: "@alwatr/env@workspace:packages/env"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/platform-info": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
@@ -105,7 +100,6 @@ __metadata:
   resolution: "@alwatr/exit-hook@workspace:packages/exit-hook"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@types/node": "npm:^22.18.1"
@@ -122,7 +116,6 @@ __metadata:
     "@alwatr/http-primer": "workspace:*"
     "@alwatr/logger": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/parse-duration": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
@@ -137,7 +130,6 @@ __metadata:
   resolution: "@alwatr/flat-string@workspace:packages/flat-string"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.9.2"
@@ -149,7 +141,6 @@ __metadata:
   resolution: "@alwatr/flatomise@workspace:packages/flatomise"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
@@ -162,7 +153,6 @@ __metadata:
   resolution: "@alwatr/global-this@workspace:packages/global-this"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
@@ -176,7 +166,6 @@ __metadata:
   resolution: "@alwatr/hash-string@workspace:packages/hash-string"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     jest: "npm:^30.1.3"
@@ -189,7 +178,6 @@ __metadata:
   resolution: "@alwatr/http-primer@workspace:packages/http-primer"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
@@ -202,7 +190,6 @@ __metadata:
   resolution: "@alwatr/iranian-national-code-validator@workspace:packages/iranian-national-code-validator"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
@@ -215,7 +202,6 @@ __metadata:
   resolution: "@alwatr/is-number@workspace:packages/is-number"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     jest: "npm:^30.1.3"
@@ -229,7 +215,6 @@ __metadata:
   dependencies:
     "@alwatr/logger": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
@@ -243,7 +228,6 @@ __metadata:
   resolution: "@alwatr/logger@workspace:packages/logger"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/platform-info": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
@@ -313,7 +297,6 @@ __metadata:
     "@alwatr/flat-string": "workspace:*"
     "@alwatr/logger": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
@@ -340,7 +323,6 @@ __metadata:
   dependencies:
     "@alwatr/is-number": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     jest: "npm:^30.1.3"
@@ -353,7 +335,6 @@ __metadata:
   resolution: "@alwatr/platform-info@workspace:packages/platform-info"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
@@ -367,7 +348,6 @@ __metadata:
   resolution: "@alwatr/polyfill-has-own@workspace:packages/polyfill-has-own"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.9.2"
@@ -386,7 +366,6 @@ __metadata:
   dependencies:
     "@alwatr/global-this": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     jest: "npm:^30.1.3"
@@ -400,7 +379,6 @@ __metadata:
   dependencies:
     "@alwatr/logger": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.9.2"
@@ -412,7 +390,6 @@ __metadata:
   resolution: "@alwatr/resolve-url@workspace:packages/resolve-url"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
@@ -455,7 +432,6 @@ __metadata:
   resolution: "@alwatr/unicode-digits@workspace:packages/unicode-digits"
   dependencies:
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"

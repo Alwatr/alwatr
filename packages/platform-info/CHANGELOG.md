@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.11](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@5.5.10...@alwatr/platform-info@5.5.11) (2025-09-13)
+
+### 🧹 Miscellaneous Chores
+
+* remove package-tracer dependency and related code from fetch package ([96fe4e9](https://github.com/Alwatr/nanolib/commit/96fe4e9552a205f218ceed187c55e4e904a07089))
+* remove package-tracer dependency and related code from platform-info ([ac93d49](https://github.com/Alwatr/nanolib/commit/ac93d49c53d120d0631dccb6892726e2dc777cc4))
+
 ## [5.5.10](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@5.5.9...@alwatr/platform-info@5.5.10) (2025-09-09)
 
 ### 🧹 Miscellaneous Chores

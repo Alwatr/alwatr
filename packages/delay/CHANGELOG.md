@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/delay@6.0.1...@alwatr/delay@6.0.2) (2025-09-13)
+
+### 🧹 Miscellaneous Chores
+
+* remove package-tracer dependency and related code from fetch package ([96fe4e9](https://github.com/Alwatr/nanolib/commit/96fe4e9552a205f218ceed187c55e4e904a07089))
+
 ## [6.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/delay@6.0.0...@alwatr/delay@6.0.1) (2025-09-09)
 
 **Note:** Version bump only for package @alwatr/delay

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.9](https://github.com/Alwatr/nanolib/compare/@alwatr/hash-string@5.2.8...@alwatr/hash-string@5.2.9) (2025-09-13)
+
+### 🧹 Miscellaneous Chores
+
+* remove package-tracer dependency and related code from fetch package ([96fe4e9](https://github.com/Alwatr/nanolib/commit/96fe4e9552a205f218ceed187c55e4e904a07089))
+
 ## [5.2.8](https://github.com/Alwatr/nanolib/compare/@alwatr/hash-string@5.2.7...@alwatr/hash-string@5.2.8) (2025-09-09)
 
 ### 🧹 Miscellaneous Chores

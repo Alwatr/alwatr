@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/http-primer@6.0.2...@alwatr/http-primer@6.0.3) (2025-09-13)
+
+### 🧹 Miscellaneous Chores
+
+* remove package-tracer dependency and related code from fetch package ([96fe4e9](https://github.com/Alwatr/nanolib/commit/96fe4e9552a205f218ceed187c55e4e904a07089))
+
 ## [6.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/http-primer@6.0.1...@alwatr/http-primer@6.0.2) (2025-09-09)
 
 ### 🧹 Miscellaneous Chores

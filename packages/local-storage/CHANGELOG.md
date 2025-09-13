@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.0.0...@alwatr/local-storage@6.1.0) (2025-09-13)
+
+### ✨ Features
+
+* **local-storage:** add static version property to LocalStorageProvider ([267b4b6](https://github.com/Alwatr/nanolib/commit/267b4b6d5a7d4fb14fbea7fe3b5c11611c838170))
+
+### 🧹 Miscellaneous Chores
+
+* remove package-tracer dependency and related code from fetch package ([96fe4e9](https://github.com/Alwatr/nanolib/commit/96fe4e9552a205f218ceed187c55e4e904a07089))
+* remove package-tracer dependency and related code from LocalStorageProvider ([84e2fc1](https://github.com/Alwatr/nanolib/commit/84e2fc1894a09908119b5456804a6404e5cdcbd3))
+
 ## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@5.5.10...@alwatr/local-storage@6.0.0) (2025-09-13)
 
 ### ⚠ BREAKING CHANGES

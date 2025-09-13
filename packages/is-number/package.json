@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/is-number",
   "description": "A simple utility to Check the value is number or can convert to a number, for example string ' 123 ' can be converted to 123.",
-  "version": "5.7.7",
+  "version": "5.7.8",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {
