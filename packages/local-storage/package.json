@@ -30,23 +30,21 @@
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/local-storage#readme",
   "keywords": [
     "alwatr",
-    "browser",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "json",
-    "json-storage",
-    "JsonStorage",
-    "local-json-storage",
-    "local-storage",
+    "localStorage",
+    "JSON storage",
+    "browser storage",
+    "data persistence",
+    "versioning",
+    "automatic migration",
+    "provider pattern",
+    "facade factory",
+    "TypeScript",
+    "JavaScript",
+    "ESM",
     "module",
     "nanolib",
-    "storage",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
+    "cross-platform",
+    "utility"
   ],
   "license": "MPL-2.0",
   "main": "./dist/main.cjs",
@@ -75,5 +73,7 @@
     "watch:ts": "yarn run build:ts --watch --preserveWatchOutput"
   },
   "type": "module",
+  "types": "./dist/main.d.ts"
+}
   "types": "./dist/main.d.ts"
 }
