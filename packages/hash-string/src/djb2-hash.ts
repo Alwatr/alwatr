@@ -1,11 +1,11 @@
 /**
- * DJB2 Hash Algorithm - A fast string hashing function.
+ * DJB2 hash algorithm but faster!
  *
  * This implementation is based on Daniel J. Bernstein's popular 'times 33' hash algorithm,
  * commonly known as DJB2. It's known for its simplicity, speed, and good distribution properties
  * for short strings, making it suitable for general purpose hashing needs.
  *
- * Performance notes:
+ * Performance improvements in this version:
  * - Uses right-to-left iteration to avoid repeated length lookups
  * - Employs bit shifting operations for faster computation
  * - Final right shift ensures unsigned 32-bit integer output
