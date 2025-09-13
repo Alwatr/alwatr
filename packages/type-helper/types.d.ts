@@ -29,6 +29,46 @@ declare global {
   type Nullish = null | undefined;
 }
 
+
+/**
+ * Global Functions and Class Types.
+ */
+declare global {
+  /**
+   * Generic function type.
+   * @template Args Tuple of argument types (defaults to any[]).
+   * @template R Return type (defaults to any).
+   * @example
+   * type Handler = Func<[string, number], boolean>;
+   */
+  type Func<Args extends any[] = any[], R = any> = (...args: Args) => R;
+
+  /** Alias for any callable. */
+  type AnyFunction = Func;
+
+  /** Alias for function that returns void. */
+  type VoidFunction = Func<any[], void>;
+
+  /** Alias for a no-op function with no arguments. */
+  type Noop = () => void;
+
+  /**
+   * Removes the first parameter from a function type.
+   * @template F The function type.
+   * @example
+   * type MyFunc = (id: string, value: number) => void;
+   * type CurriedFunc = OmitFirstParam<MyFunc>; // (value: number) => void
+   */
+  type OmitFirstParam<F> = F extends (x: any, ...args: infer A) => infer R ? (...args: A) => R : never;
+
+  /**
+   * Represents a class constructor.
+   * @template T The instance type of the class.
+   * @template TArgs The type of the constructor arguments.
+   */
+  type Class<T, TArgs extends any[] = any[]> = new (...args: TArgs) => T;
+}
+
 /**
  * Global Utility Wrapper & Types Modifiers.
  */
@@ -207,12 +247,13 @@ declare global {
    */
   type Simplify<T> = {[K in keyof T]: T[K]} & {};
 
+
   /**
-   * Represents a class constructor.
-   * @template T The instance type of the class.
-   * @template TArgs The type of the constructor arguments.
+   * Represents an object that has the ability to add event listeners.
    */
-  type Class<T, TArgs extends any[] = any[]> = new (...args: TArgs) => T;
+  interface HasAddEventListener {
+    addEventListener: (type: string, listener: EventListenerOrEventListenerObject, options?: AddEventListenerOptions) => void;
+  }
 }
 
 /**
@@ -308,25 +349,4 @@ declare global {
             : T extends object
               ? {[K in keyof T as T[K] extends ((...args: any[]) => any) | undefined | symbol ? never : K]: Jsonify<T[K]>}
               : never;
-}
-
-/**
- * Other Global Utility Types
- */
-declare global {
-  /**
-   * Removes the first parameter from a function type.
-   * @template F The function type.
-   * @example
-   * type MyFunc = (id: string, value: number) => void;
-   * type CurriedFunc = OmitFirstParam<MyFunc>; // (value: number) => void
-   */
-  type OmitFirstParam<F> = F extends (x: any, ...args: infer A) => infer R ? (...args: A) => R : never;
-
-  /**
-   * Represents an object that has the ability to add event listeners.
-   */
-  interface HasAddEventListener {
-    addEventListener: (type: string, listener: EventListenerOrEventListenerObject, options?: AddEventListenerOptions) => void;
-  }
 }

@@ -1,18 +1,15 @@
 {
-  "name": "@alwatr/local-storage",
-  "description": "A modern, simple, and robust solution for managing versioned JSON objects in the browser's `localStorage`. This package provides a clean, class-based API with a factory function to ensure your application's data persistence is safe, maintainable, and future-proof.",
-  "version": "6.1.0",
+  "name": "@alwatr/debounce",
+  "description": "A powerful, modern, and type-safe debouncer utility designed for high-performance applications. It's framework-agnostic, works seamlessly in both Node.js and browsers, and provides a rich API for fine-grained control over function execution.",
+  "version": "1.0.0-rc",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
-  "dependencies": {
-    "@alwatr/logger": "workspace:*"
-  },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/prettier-config": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
-    "@jest/globals": "^30.1.2",
+    "@types/node": "^22.18.1",
     "typescript": "^5.9.2"
   },
   "exports": {
@@ -27,24 +24,30 @@
     "LICENSE",
     "!demo/**/*"
   ],
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/local-storage#readme",
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/debounce#readme",
   "keywords": [
-    "alwatr",
-    "localStorage",
-    "JSON storage",
-    "browser storage",
-    "data persistence",
-    "versioning",
-    "automatic migration",
-    "provider pattern",
-    "facade factory",
-    "TypeScript",
-    "JavaScript",
-    "ESM",
+    "debounce",
+    "debouncing",
+    "typescript",
+    "type-safe",
+    "javascript",
+    "esm",
     "module",
-    "nanolib",
+    "browser",
+    "node",
+    "nodejs",
     "cross-platform",
-    "utility"
+    "universal",
+    "utility",
+    "util",
+    "leading",
+    "trailing",
+    "lifecycle",
+    "memory-leak",
+    "tree-shakable",
+    "framework-agnostic",
+    "alwatr",
+    "nanolib"
   ],
   "license": "MPL-2.0",
   "main": "./dist/main.cjs",
@@ -56,7 +59,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/local-storage"
+    "directory": "packages/debounce"
   },
   "scripts": {
     "b": "yarn run build",
