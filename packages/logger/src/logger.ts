@@ -150,6 +150,8 @@ export const createLogger = (domain: string, debugMode = defaultDebugMode): Alwa
 
     logOther: console_.debug.bind(console_, keySection_, styleScope, sanitizedDomain, style_.reset),
 
+    logTable: console_.table.bind(console_),
+
     incident: platformInfo.isCli
       ? console_.log.bind(console_, `${styleScope}🚸\n%s${style_.reset}.%s() Incident \`%s\`!${style_.reset}`, sanitizedDomain)
       : console_.log.bind(console_, '%c%s%c.%s() Incident `%s`!', styleScope, sanitizedDomain, 'color: orange;'),
