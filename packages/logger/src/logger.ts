@@ -1,9 +1,6 @@
-import {packageTracer} from '@alwatr/package-tracer';
 import {platformInfo} from '@alwatr/platform-info';
 
 import type {AlwatrLogger} from './type.js';
-
-__dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 const defaultDebugMode = /* #__PURE__ */ (() => {
   return (
