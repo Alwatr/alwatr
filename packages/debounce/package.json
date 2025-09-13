@@ -4,8 +4,6 @@
   "version": "1.0.0-rc",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
-  "dependencies": {
-  },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/prettier-config": "workspace:*",

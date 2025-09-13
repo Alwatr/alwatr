@@ -4,6 +4,20 @@ import type {DebouncerConfig} from './type.ts';
  * A powerful and type-safe Debouncer class.
  * 
  * It encapsulates the debouncing logic, state, and provides a rich control API.
+ * 
+ * @example
+ * ```typescript
+ * const debouncer = new Debouncer({
+ *   callback: (text: string) => console.log('Searching:', text),
+ *   delay: 300,
+ *   leading: false,
+ *   trailing: true,
+ * });
+ * 
+ * // Debounce search input
+ * debouncer.trigger('hello');
+ * debouncer.trigger('hello world'); // Only 'hello world' will log after 300ms
+ * ```
  */
 export class Debouncer<F extends AnyFunction> {
   private timerId__?: number | NodeJS.Timeout;
@@ -23,6 +37,15 @@ export class Debouncer<F extends AnyFunction> {
   /**
    * Triggers the debounced function with the stored `thisContext`.
    * @param args The arguments to pass to the callback.
+   * 
+   * @example
+   * ```typescript
+   * const debouncer = new Debouncer({
+   *   callback: (value: number) => console.log('Value:', value),
+   *   delay: 500,
+   * });
+   * debouncer.trigger(42); // Logs after 500ms if not triggered again
+   * ```
    */
   public trigger(...args: Parameters<F>): void {
     this.lastArgs__ = args;
@@ -32,12 +55,12 @@ export class Debouncer<F extends AnyFunction> {
       clearTimeout(this.timerId__!);
     }
 
-    if (this.config__.leading && !wasPending) {
+    if (this.config__.leading === true && !wasPending) {
       this.invoke__();
     }
 
     this.timerId__ = setTimeout(() => {
-      if (this.config__.trailing && wasPending) {
+      if (this.config__.trailing === true && wasPending) {
         this.invoke__();
       }
       this.cleanup__();
@@ -46,6 +69,16 @@ export class Debouncer<F extends AnyFunction> {
 
   /**
    * Cancels any pending debounced execution and cleans up internal state.
+   * 
+   * @example
+   * ```typescript
+   * const debouncer = new Debouncer({
+   *   callback: () => console.log('Executed'),
+   *   delay: 1000,
+   * });
+   * debouncer.trigger();
+   * debouncer.cancel(); // Prevents execution
+   * ```
    */
   public cancel(): void {
     if (this.isPending) {
@@ -64,6 +97,16 @@ export class Debouncer<F extends AnyFunction> {
 
   /**
    * Immediately executes the pending function if one exists.
+   * 
+   * @example
+   * ```typescript
+   * const debouncer = new Debouncer({
+   *   callback: () => console.log('Flushed'),
+   *   delay: 1000,
+   * });
+   * debouncer.trigger();
+   * setTimeout(() => debouncer.flush(), 500); // Executes immediately
+   * ```
    */
   public flush(): void {
     if (this.isPending) {
@@ -86,6 +129,20 @@ export class Debouncer<F extends AnyFunction> {
 /**
  * Factory function for creating a Debouncer instance for better type inference.
  * @param config Configuration for the debouncer.
+ * 
+ * @example
+ * ```typescript
+ * const debouncer = createDebouncer({
+ *   callback: (text: string) => console.log('Searching:', text),
+ *   delay: 300,
+ *   leading: false,
+ *   trailing: true,
+ * });
+ * 
+ * // Debounce search input
+ * debouncer.trigger('hello');
+ * debouncer.trigger('hello world'); // Only 'hello world' will log after 300ms
+ * ```
  */
 export function createDebouncer<F extends AnyFunction>(config: DebouncerConfig<F>): Debouncer<F> {
   return new Debouncer(config);
