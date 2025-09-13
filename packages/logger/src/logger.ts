@@ -57,7 +57,7 @@ const _sanitizeDomain = (domain: string): string => {
   domain = domain.trim();
   const first = domain.charAt(0);
   if (first !== '[' && first !== '{' && first !== '<') {
-    domain = '[' + domain + ']';
+    domain = '{' + domain + '}';
   }
   return domain;
 };
