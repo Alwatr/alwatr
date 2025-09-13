@@ -75,5 +75,3 @@
   "type": "module",
   "types": "./dist/main.d.ts"
 }
-  "types": "./dist/main.d.ts"
-}
