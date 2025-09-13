@@ -1,7 +1,7 @@
 import {createLogger} from '@alwatr/logger';
 import {packageTracer} from '@alwatr/package-tracer';
 
-import type {LocalStorageProviderConfig} from './type.js';
+import type {LocalStorageProviderConfig, StorageMeta} from './type.js';
 
 __dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
@@ -26,12 +26,12 @@ __dev_mode__: packageTracer.add(__package_name__, __package_version__);
  * ```
  */
 export class LocalStorageProvider<T extends JsonValue> {
-  private readonly _key: string;
+  private readonly key_: string;
   protected readonly logger_ = createLogger(`local-storage-provider: ${this.config_.name}, v: ${this.config_.version}`);
 
   public constructor(protected readonly config_: LocalStorageProviderConfig<T>) {
     this.logger_.logMethodArgs?.('constructor', {config: this.config_});
-    this._key = this.generateKey_();
+    this.key_ = LocalStorageProvider.getKey(this.config_);
     this.migrate_();
   }
 
@@ -82,7 +82,7 @@ export class LocalStorageProvider<T extends JsonValue> {
    */
   public read(): T {
     this.logger_.logMethod?.('read');
-    const value = localStorage.getItem(this._key);
+    const value = localStorage.getItem(this.key_);
     if (value === null) {
       return this.writeDefaultــ();
     }
@@ -107,10 +107,10 @@ export class LocalStorageProvider<T extends JsonValue> {
    */
   public write(value: T): void {
     try {
-      localStorage.setItem(this._key, JSON.stringify(value));
+      localStorage.setItem(this.key_, JSON.stringify(value));
     }
     catch (err) {
-      console.error('LocalStorageProvider.write: Failed to write to localStorage.', {key: this._key, err});
+      console.error('LocalStorageProvider.write: Failed to write to localStorage.', {key: this.key_, err});
     }
   }
 
@@ -118,7 +118,7 @@ export class LocalStorageProvider<T extends JsonValue> {
    * Removes the item from localStorage.
    */
   public remove(): void {
-    localStorage.removeItem(this._key);
+    localStorage.removeItem(this.key_);
   }
 
   /**
@@ -129,7 +129,7 @@ export class LocalStorageProvider<T extends JsonValue> {
 
     // Iterate from v1 up to the version just before the current one and remove them.
     for (let i = 1; i < this.config_.version; i++) {
-      const oldKey = this.generateKey_(i);
+      const oldKey = LocalStorageProvider.getKey({name: this.config_.name, version: i});
       localStorage.removeItem(oldKey);
     }
   }
