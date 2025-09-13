@@ -46,7 +46,7 @@ export class LocalStorageProvider<T extends JsonValue> {
 
   /**
    * Statically checks if a versioned item exists in localStorage.
-   * This is the solution to your problem. It can be called without creating an instance.
+   * This method provides a high-performance way to check for data existence without the overhead of creating a full provider instance.
    *
    * @param meta - An object containing the name and version of the item to check.
    * @returns `true` if the item exists, otherwise `false`.
