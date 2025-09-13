@@ -44,6 +44,26 @@ export class LocalStorageProvider<T extends JsonValue> {
     return `${meta.name}.v${meta.version}`;
   }
 
+  /**
+   * Statically checks if a versioned item exists in localStorage.
+   * This is the solution to your problem. It can be called without creating an instance.
+   *
+   * @param meta - An object containing the name and version of the item to check.
+   * @returns `true` if the item exists, otherwise `false`.
+   *
+   * @example
+   * ```typescript
+   * const formExists = LocalStorageProvider.has({ name: 'user-form', version: 1 });
+   * if (formExists) {
+   *   // Show the "Thank you" message
+   * } else {
+   *   // Show the form
+   * }
+   * ```
+   */
+  public static has(meta: StorageMeta): boolean {
+    const key = LocalStorageProvider.getKey(meta);
+    return localStorage.getItem(key) !== null;
   }
 
   /**
