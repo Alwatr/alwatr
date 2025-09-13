@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@5.5.10...@alwatr/local-storage@6.0.0) (2025-09-13)
+
+### ⚠ BREAKING CHANGES
+
+* **local-storage:** The provider's constructor config shape and public methods have changed.
+Existing callers must be updated to the new API:
+- Update imports/instantiation to use the new LocalStorageProvider<T>(config: LocalStorageProviderConfig<T>).
+- Replace any old config fields / method names with the new ones (e.g. versioned key handling, defaultValue handling).
+- Data migration behavior changed: previous-version keys are automatically removed when version > 1.
+- Update call sites that relied on prior serialization, error handling, or return semantics.
+
+Suggested migration steps:
+1. Inspect the new LocalStorageProviderConfig<T> type and adapt object literal passed to the constructor.
+2. Replace old read/write/remove calls with the new method names and signatures.
+3. Ensure stored values match the new serialization expectations (JSON-serializable).
+4. Run tests and rehydrate any persisted data if necessary (previous keys are removed for versions >1).
+
+### ✨ Features
+
+* **local-storage:** add factory function to create LocalStorageProvider with detailed documentation ([eb4a04d](https://github.com/Alwatr/nanolib/commit/eb4a04de84d69497e7489b756c172ed2b0af008d))
+* **local-storage:** add static method to check existence of versioned items in localStorage ([8e05938](https://github.com/Alwatr/nanolib/commit/8e059382d085aa691f296b2267a372925868f974))
+
+### 🐛 Bug Fixes
+
+* **local-storage:** correct typo in writeDefault method name ([c0b05c0](https://github.com/Alwatr/nanolib/commit/c0b05c0417ec75e7d9bc57c224380f34472ec467))
+* **local-storage:** simplify read method by removing type check for parsed value ([23826ef](https://github.com/Alwatr/nanolib/commit/23826ef70eb22e6f092ba2c6ce11c28b3628f2f2))
+* **local-storage:** standardize key naming convention in LocalStorageProvider ([043cf27](https://github.com/Alwatr/nanolib/commit/043cf27881b840d5adeb79ea4a840a15ea23e262))
+
+### 🔨 Code Refactoring
+
+* **local-storage:** complete API rewrite for LocalStorageProvider ([29d01d8](https://github.com/Alwatr/nanolib/commit/29d01d84fbb3ed405ce46d1870d1a929de1c838c))
+* **local-storage:** enhance logging in read and write methods for better error tracking ([2cbf404](https://github.com/Alwatr/nanolib/commit/2cbf4042fcef74de016fd1ae80f8263f9de5c610))
+* **local-storage:** rename private key variable and update its initialization method ([e25a8ea](https://github.com/Alwatr/nanolib/commit/e25a8ea4a4b75aeac0702fc0a9ef39a5f441e54c))
+* **local-storage:** update key generation method to static and enhance documentation ([e36fd53](https://github.com/Alwatr/nanolib/commit/e36fd5355ad4b7fa7b4e629568b9a878ae868c3e))
+* **types:** reorganize StorageMeta and LocalStorageProviderConfig interfaces ([d3d001e](https://github.com/Alwatr/nanolib/commit/d3d001ef041ea59981551204d84bee7635cfc192))
+
+### 🧹 Miscellaneous Chores
+
+* add @jest/globals dependency for testing ([a024449](https://github.com/Alwatr/nanolib/commit/a024449366e6b4aa246603528dde6586dda3379e))
+
 ## [5.5.10](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@5.5.9...@alwatr/local-storage@5.5.10) (2025-09-09)
 
 ### 🧹 Miscellaneous Chores

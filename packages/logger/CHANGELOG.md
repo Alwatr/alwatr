@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.0](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@5.5.10...@alwatr/logger@5.6.0) (2025-09-13)
+
+### ✨ Features
+
+* **logger:** change domain sanitization to use curly braces instead of square brackets ([b1898c5](https://github.com/Alwatr/nanolib/commit/b1898c5f0805901af7a137bb064e3e23e61f0591))
+
 ## [5.5.10](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@5.5.9...@alwatr/logger@5.5.10) (2025-09-09)
 
 ### 🧹 Miscellaneous Chores
