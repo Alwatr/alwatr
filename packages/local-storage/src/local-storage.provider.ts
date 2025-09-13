@@ -26,6 +26,7 @@ __dev_mode__: packageTracer.add(__package_name__, __package_version__);
  * ```
  */
 export class LocalStorageProvider<T extends JsonValue> {
+  public static readonly version = __package_version__;
   private readonly key__: string;
   protected readonly logger_ = createLogger(`local-storage-provider: ${this.config_.name}, v: ${this.config_.version}`);
 
