@@ -26,13 +26,13 @@ __dev_mode__: packageTracer.add(__package_name__, __package_version__);
  * ```
  */
 export class LocalStorageProvider<T extends JsonValue> {
-  private readonly key_: string;
+  private readonly key__: string;
   protected readonly logger_ = createLogger(`local-storage-provider: ${this.config_.name}, v: ${this.config_.version}`);
 
   public constructor(protected readonly config_: LocalStorageProviderConfig<T>) {
     this.logger_.logMethodArgs?.('constructor', {config: this.config_});
-    this.key_ = LocalStorageProvider.getKey(this.config_);
-    this.migrate_();
+    this.key__ = LocalStorageProvider.getKey(this.config_);
+    this.migrate__();
   }
 
   /**
@@ -82,7 +82,7 @@ export class LocalStorageProvider<T extends JsonValue> {
    */
   public read(): T {
     try {
-      const value = localStorage.getItem(this.key_);
+      const value = localStorage.getItem(this.key__);
 
       if (value === null) {
         this.logger_.logMethod?.('read//no_value');
@@ -105,7 +105,7 @@ export class LocalStorageProvider<T extends JsonValue> {
   public write(value: T): void {
     this.logger_.logMethodArgs?.('write', {value});
     try {
-      localStorage.setItem(this.key_, JSON.stringify(value));
+      localStorage.setItem(this.key__, JSON.stringify(value));
     }
     catch (err) {
       this.logger_.error('write', 'write_stringify_error', {err});
@@ -116,13 +116,13 @@ export class LocalStorageProvider<T extends JsonValue> {
    * Removes the item from localStorage.
    */
   public remove(): void {
-    localStorage.removeItem(this.key_);
+    localStorage.removeItem(this.key__);
   }
 
   /**
    * Manages data migration by removing all previous versions of the item.
    */
-  private migrate_(): void {
+  private migrate__(): void {
     if (this.config_.version <= 1) return;
 
     // Iterate from v1 up to the version just before the current one and remove them.
