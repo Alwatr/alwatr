@@ -69,7 +69,7 @@ export class LocalStorageProvider<T extends JsonValue> {
   /**
    * Writes the default value to localStorage and returns it.
    */
-  private writeDefaultــ(): T {
+  private writeDefault__(): T {
     this.logger_.logMethodArgs?.('writeDefaultــ', this.config_.defaultValue);
     this.write(this.config_.defaultValue);
     return this.config_.defaultValue;
@@ -84,7 +84,7 @@ export class LocalStorageProvider<T extends JsonValue> {
     this.logger_.logMethod?.('read');
     const value = localStorage.getItem(this.key_);
     if (value === null) {
-      return this.writeDefaultــ();
+      return this.writeDefault__();
     }
 
     try {
@@ -92,7 +92,7 @@ export class LocalStorageProvider<T extends JsonValue> {
     }
     catch (err) {
       this.logger_.error('read', 'json_parse_error', {err});
-      return this.writeDefaultــ();
+      return this.writeDefault__();
     }
   }
 
