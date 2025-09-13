@@ -1,4 +1,4 @@
-export interface LocalStorageProviderConfig<T> {
+export interface StorageMeta {
   /**
    * The unique name for the storage item.
    */
@@ -9,7 +9,9 @@ export interface LocalStorageProviderConfig<T> {
    * starting from 1 and incrementing by 1 for each new version.
    */
   version: number;
+}
 
+export interface LocalStorageProviderConfig<T> extends StorageMeta {
   /**
    * The default value to use if no value is stored.
    */
