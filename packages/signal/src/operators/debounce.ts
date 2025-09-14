@@ -60,8 +60,10 @@ import type {IReadonlySignal, DebounceSignalConfig} from '../type.js';
  * ```
  */
 export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, config: DebounceSignalConfig): ComputedSignal<T> {
+  const signalId = config.signalId ?? `${sourceSignal.signalId}-debounced`;
+
   const internalSignal = new StateSignal<T>({
-    signalId: `${sourceSignal.signalId}-debounced-internal`,
+    signalId: `${signalId}-internal`,
     initialValue: sourceSignal.value,
   });
 
@@ -75,7 +77,7 @@ export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, confi
   const subscription = sourceSignal.subscribe(debouncer.trigger);
 
   return createComputedSignal({
-    signalId: `${sourceSignal.signalId}-debounced`,
+    signalId,
     deps: [internalSignal],
     get: () => internalSignal.value,
     onDestroy: () => {

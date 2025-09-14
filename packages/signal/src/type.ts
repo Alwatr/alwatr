@@ -95,7 +95,7 @@ export interface SignalConfig {
    * 'user-profile-signal'
    * 'app-theme-signal'
    */
-  readonly signalId: string;
+  signalId: string;
 
   /**
    * An optional callback function that will be executed when the signal's `destroy` method is called.
@@ -267,4 +267,19 @@ export interface IEffectSignal {
 }
 
 // Exclude 'callback' and 'thisContext' as they are managed internally.
-export type DebounceSignalConfig = Omit<DebouncerConfig<never>, 'func' | 'thisContext'>;
+export interface DebounceSignalConfig extends Omit<DebouncerConfig<never>, 'func' | 'thisContext'> {
+  /**
+   * A unique identifier for the signal. This is crucial for debugging, logging, and differentiating signals,
+   * especially in large applications.
+   *
+   * @default `${sourceSignal.signalId}-debounced`
+   */
+  signalId?: string;
+
+  /**
+   * An optional callback function that will be executed when the signal's `destroy` method is called.
+   * This is useful for cleaning up additional resources used by the signal,
+   * such as subscriptions or timers created in operators.
+   */
+  onDestroy?: () => void;
+}
