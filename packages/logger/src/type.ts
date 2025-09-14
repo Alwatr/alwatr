@@ -2,6 +2,17 @@
  * Represents the AlwatrLogger interface for logging various types of information at different levels of detail.
  * This interface allows for structured logging of events, method calls, errors, and more,
  * aiding in debugging and understanding application behavior.
+ * 
+ * @example
+ * import {createLogger} from '@alwatr/logger';
+ * const logger = createLogger('my-module'); // Create a logger with a specific scope
+ * 
+ * function greet(name: string) {
+ *   logger.logMethodArgs?.('greet', {name}); // Log the method call with its arguments
+ *   // ...
+ * }
+ *
+ * greet('Ali');
  */
 export interface AlwatrLogger {
   /**
