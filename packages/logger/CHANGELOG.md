@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@5.6.2...@alwatr/logger@6.0.0) (2025-09-14)
+
+### ⚠ BREAKING CHANGES
+
+* Internal logger config keys renamed and Color API now returns normalized values; callers must update config and run tests.
+
+با توکل بر خدا آپدیت کنید طوری نمیشه ان‌شاالله
+
+### ✨ Features
+
+* add logTable method to AlwatrLogger interface and implement in createLogger ([33682dd](https://github.com/Alwatr/nanolib/commit/33682dde84814b121234e58a97de300d4f8b09ee))
+
+### 🐛 Bug Fixes
+
+* access self in logger ([4898e2a](https://github.com/Alwatr/nanolib/commit/4898e2ab42482662444fede6459284004fe2ec9e))
+* change logTable parameter type from any to unknown for better type safety ([8f7d632](https://github.com/Alwatr/nanolib/commit/8f7d632139d0387af224b7779b3f8e3d7c061791))
+* correct regex in sanitizeDomain function to properly validate domain format ([831c56d](https://github.com/Alwatr/nanolib/commit/831c56d2cb77a6d8b053121cd4a034bb060b82e1))
+* replace globalThis initialization with getGlobalThis for improved consistency ([dff4090](https://github.com/Alwatr/nanolib/commit/dff40901f060815ff0f8800487a7bb091c2367ff))
+* update default debug mode logic to include NODE_ENV check for CLI environments ([c334071](https://github.com/Alwatr/nanolib/commit/c33407167a4be02b450249d985f43daac46b52f0))
+
+### 🔨 Code Refactoring
+
+* enhance logger configuration and improve color handling ([7ab540d](https://github.com/Alwatr/nanolib/commit/7ab540dc5ac81561810ab1e6922b80be617f8dd6))
+
+### 🧹 Miscellaneous Chores
+
+* remove unnecessary types from tsconfig.json for cleaner configuration ([986afde](https://github.com/Alwatr/nanolib/commit/986afde2dc976cf69f550f715d74fc5eb7a96086))
+
 ## [5.6.2](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@5.6.1...@alwatr/logger@5.6.2) (2025-09-13)
 
 ### 🔗 Dependencies update

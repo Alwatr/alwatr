@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.13](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.5.12...@alwatr/global-this@5.5.13) (2025-09-14)
+
+### 🐛 Bug Fixes
+
+* refactor globalThis initialization for improved clarity and error handling ([df79e21](https://github.com/Alwatr/nanolib/commit/df79e217c485adfaf806567893d78c2fada289a6))
+
 ## [5.5.12](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.5.11...@alwatr/global-this@5.5.12) (2025-09-13)
 
 ### 🔗 Dependencies update

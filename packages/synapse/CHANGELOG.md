@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.8](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.7...@alwatr/synapse@1.1.8) (2025-09-14)
+
+### 🔨 Code Refactoring
+
+* **package:** update keywords in package.json for debounce, local-storage, and synapse packages ([09c9cca](https://github.com/Alwatr/nanolib/commit/09c9cca3cd600e9ffaf600fb1926c0ee884a1aa8))
+
 ## [1.1.7](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.6...@alwatr/synapse@1.1.7) (2025-09-13)
 
 ### 🐛 Bug Fixes
