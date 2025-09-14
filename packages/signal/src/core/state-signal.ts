@@ -157,8 +157,8 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * This is crucial for memory management to prevent leaks.
    */
   public override destroy(): void {
-    super.destroy();
     // Clear the value to allow for garbage collection.
     this.value__ = null as T;
+    super.destroy();
   }
 }

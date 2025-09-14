@@ -36,7 +36,7 @@ export abstract class SignalBase<T> {
     return this.isDestroyed_;
   }
 
-  public constructor(protected readonly config_: SignalConfig) {}
+  public constructor(protected config_: SignalConfig) {}
 
   /**
    * Removes a specific observer from the observers list.
@@ -161,10 +161,11 @@ export abstract class SignalBase<T> {
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
+    if (this.isDestroyed_) return;
     this.isDestroyed_ = true;
     this.observers_.length = 0; // Clear all observers.
     this.config_.onDestroy?.(); // Call the optional onDestroy callback.
-    delete this.config_.onDestroy;
+    this.config_ = null as unknown as SignalConfig; // Help GC by breaking references.
   }
 
   /**
