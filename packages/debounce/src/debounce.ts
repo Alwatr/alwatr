@@ -48,7 +48,7 @@ export class Debouncer<F extends AnyFunction> {
 
   /**
    * Triggers the debounced function with the stored `thisContext`.
-   * @param args The arguments to pass to the func.
+   * @param args The arguments to pass to the `func`.
    * 
    * @example
    * ```typescript
