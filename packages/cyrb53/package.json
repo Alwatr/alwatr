@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/cyrb53",
   "description": "A modern, high-quality, and fast 53-bit string hash function.",
-  "version": "1.0.0",
+  "version": "1.0.0-rc",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {
@@ -27,10 +27,10 @@
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/cyrb53#readme",
   "keywords": [
     "alwatr",
-    "hash",
-    "string",
     "cyrb53",
-    "nanolib"
+    "hash",
+    "nanolib",
+    "string"
   ],
   "license": "MPL-2.0",
   "main": "./dist/main.cjs",
