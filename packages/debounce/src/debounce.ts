@@ -2,11 +2,11 @@ import type {DebouncerConfig} from './type.ts';
 
 /**
  * A powerful and type-safe Debouncer class.
- * 
+ *
  * It encapsulates the debouncing logic, state, and provides a rich control API.
  * Debouncing delays function execution until after a specified delay has passed since the last invocation.
  * Useful for optimizing performance in scenarios like search inputs, resize events, or API calls.
- * 
+ *
  * @example
  * ```typescript
  * const debouncer = new Debouncer({
@@ -15,11 +15,11 @@ import type {DebouncerConfig} from './type.ts';
  *   leading: false,
  *   trailing: true,
  * });
- * 
+ *
  * // Debounce search input
  * debouncer.trigger('hello');
  * debouncer.trigger('hello world'); // Only 'hello world' will log after 300ms
- * 
+ *
  * // Advanced: With leading edge
  * const leadingDebouncer = new Debouncer({
  *   func: () => console.log('Immediate and delayed'),
@@ -50,7 +50,7 @@ export class Debouncer<F extends AnyFunction> {
   /**
    * Triggers the debounced function with the stored `thisContext`.
    * @param args The arguments to pass to the `func`.
-   * 
+   *
    * @example
    * ```typescript
    * const debouncer = new Debouncer({
@@ -58,7 +58,7 @@ export class Debouncer<F extends AnyFunction> {
    *   delay: 500,
    * });
    * debouncer.trigger(42); // Logs after 500ms if not triggered again
-   * 
+   *
    * // Edge case: Rapid triggers only execute the last one
    * debouncer.trigger(1);
    * debouncer.trigger(2); // Only 2 will execute after delay
@@ -66,22 +66,25 @@ export class Debouncer<F extends AnyFunction> {
    */
   public trigger(...args: Parameters<F>): void {
     this.lastArgs__ = args; // its an array even if triggered without any args
-    const wasPending = this.isPending;
+    const firstTrigger = !this.isPending;
 
-    if (wasPending) {
-      clearTimeout(this.timerId__!);
-    }
-    else { // First trigger
-      if (this.config__.leading === true) {
-        this.invoke__();
-      }
+    if (firstTrigger) {
       if (this.config__.maxWait) {
         this.maxWaitTimerId__ = setTimeout(() => this.flush(), this.config__.maxWait);
       }
+      if (this.config__.leading === true) {
+        this.invoke__();
+      }
+    }
+    else {
+      clearTimeout(this.timerId__!);
     }
 
     this.timerId__ = setTimeout(() => {
-      if (this.config__.trailing === true && wasPending) {
+      // If trailing is enabled, and either:
+      // 1. It's not the first trigger (so we need a trailing call).
+      // 2. It IS the first trigger, but leading was disabled (so this is the ONLY call).
+      if (this.config__.trailing === true && (!firstTrigger || this.config__.leading !== true)) {
         this.invoke__();
       }
       this.cleanup__();
@@ -91,7 +94,7 @@ export class Debouncer<F extends AnyFunction> {
   /**
    * Cancels any pending debounced execution and cleans up internal state.
    * Useful for stopping execution when the operation is no longer needed (e.g., component unmount).
-   * 
+   *
    * @example
    * ```typescript
    * const debouncer = new Debouncer({
@@ -100,7 +103,7 @@ export class Debouncer<F extends AnyFunction> {
    * });
    * debouncer.trigger();
    * debouncer.cancel(); // Prevents execution
-   * 
+   *
    * // Note: After cancel, isPending becomes false
    * ```
    */
@@ -126,7 +129,7 @@ export class Debouncer<F extends AnyFunction> {
   /**
    * Immediately executes the pending function if one exists.
    * Bypasses the delay and cleans up state. If no pending call, does nothing.
-   * 
+   *
    * @example
    * ```typescript
    * const debouncer = new Debouncer({
@@ -135,7 +138,7 @@ export class Debouncer<F extends AnyFunction> {
    * });
    * debouncer.trigger();
    * setTimeout(() => debouncer.flush(), 500); // Executes immediately
-   * 
+   *
    * // Edge case: Flush after cancel does nothing
    * debouncer.cancel();
    * debouncer.flush(); // No execution
@@ -152,6 +155,8 @@ export class Debouncer<F extends AnyFunction> {
    * The core execution logic.
    */
   private invoke__(): void {
-    this.config__.func.apply(this.config__.thisContext, this.lastArgs__);
+    if (this.lastArgs__) {
+      this.config__.func.apply(this.config__.thisContext, this.lastArgs__);
+    }
   }
 }
