@@ -1,3 +1,4 @@
+import type {DebouncerConfig} from '@alwatr/debounce';
 import type {} from '@alwatr/type-helper';
 
 /**
@@ -116,6 +117,11 @@ export interface StateSignalConfig<T> extends SignalConfig {
  * @template T The type of the signal's value.
  */
 export interface IReadonlySignal<T> {
+  /**
+   * The unique identifier for this signal instance. Useful for debugging.
+   */
+  readonly signalId: string;
+
   /**
    * The current value of the signal.
    */
@@ -260,3 +266,6 @@ export interface IEffectSignal {
    */
   readonly isDestroyed: boolean;
 }
+
+// Exclude 'callback' and 'thisContext' as they are managed internally.
+export type DebounceSignalConfig = Omit<DebouncerConfig<never>, 'func' | 'thisContext'>;
