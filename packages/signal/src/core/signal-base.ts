@@ -15,7 +15,7 @@ export abstract class SignalBase<T> {
   /**
    * The unique identifier for this signal instance. Useful for debugging.
    */
-  public readonly signalId: string;
+  public readonly signalId: string = this.config_.signalId;
 
   protected abstract logger_: AlwatrLogger;
 
@@ -36,9 +36,7 @@ export abstract class SignalBase<T> {
     return this.isDestroyed_;
   }
 
-  public constructor(config: SignalConfig) {
-    this.signalId = config.signalId;
-  }
+  public constructor(protected readonly config_: SignalConfig) {}
 
   /**
    * Removes a specific observer from the observers list.
@@ -165,6 +163,8 @@ export abstract class SignalBase<T> {
     this.logger_.logMethod?.('destroy');
     this.isDestroyed_ = true;
     this.observers_.length = 0; // Clear all observers.
+    this.config_.onDestroy?.(); // Call the optional onDestroy callback.
+    delete this.config_.onDestroy;
   }
 
   /**
