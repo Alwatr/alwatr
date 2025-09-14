@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.0](https://github.com/Alwatr/flux/compare/v5.0.0...v5.1.0) (2025-09-14)
+
+### ✨ Features
+
+* add createComputedSignal function for reactive value management ([da4ad2e](https://github.com/Alwatr/flux/commit/da4ad2ec31e24d0756007b666e6c6c3c3ad75709))
+* add createEventSignal function for dispatching transient events ([0729eca](https://github.com/Alwatr/flux/commit/0729eca8ad7ed9fd4fca02c5f2c5f5d2f1a5acf4))
+* add createFilteredSignal function to emit values from a source signal based on a predicate ([ad4873c](https://github.com/Alwatr/flux/commit/ad4873c2f5ca8d26e44db371c1387f450e12189b))
+* add createMappedSignal function for transforming source signal values ([6fcefed](https://github.com/Alwatr/flux/commit/6fcefed778bd6007c639d218e3736aaf9d071d10))
+* add createStateSignal function for creating stateful signals ([2764b50](https://github.com/Alwatr/flux/commit/2764b501dfc39488f7b5446935e7ebdfe06fcd35))
+* add optional onDestroy callback to SignalConfig and EffectSignalConfig for resource cleanup ([d0ed93a](https://github.com/Alwatr/flux/commit/d0ed93a1f7e9da5c73222fb9a3e7e1b95fa88212))
+* add signalId property to IReadonlySignal for debugging and update DebounceSignalConfig type ([d7a43ba](https://github.com/Alwatr/flux/commit/d7a43bad568d12264482475bddb045467dfe229c))
+* add update method for state transitions based on previous value ([77b3593](https://github.com/Alwatr/flux/commit/77b3593df19e166b0446938104a9795b037b2d3d))
+* call optional onDestroy callback in createDebouncedSignal for improved resource cleanup ([8eef425](https://github.com/Alwatr/flux/commit/8eef4252d193db5809850bd624e739bcc8549077))
+* call optional onDestroy callback in destroy method for resource cleanup ([64a0e3b](https://github.com/Alwatr/flux/commit/64a0e3b6f242e91bccc48fe0cf8d1e214bcc2a5e))
+* enhance createDebouncedSignal with optional signalId and onDestroy callback for improved resource management ([7ce880a](https://github.com/Alwatr/flux/commit/7ce880a40b96a3aaa78297d68cd3e7e9e05b7a20))
+* enhance destroy method in SignalBase and StateSignal for improved memory management ([a81f005](https://github.com/Alwatr/flux/commit/a81f0057803fe1c0c0650d0a2223319064739067))
+* implement createDebouncedSignal function for debouncing updates from a source signal ([42bd6a9](https://github.com/Alwatr/flux/commit/42bd6a915494222171317142bd21e11ff3ef2e25))
+* implement createEffect function for managing reactive side-effects ([730c847](https://github.com/Alwatr/flux/commit/730c847ed6720ca7761dfb5745d957a681352a9c))
+* implement IReadonlySignal interface in ComputedSignal and call optional onDestroy callback in destroy method ([8828230](https://github.com/Alwatr/flux/commit/8828230fa2ea8246d6b08d73dfee863eceea4c82))
+* improve resource cleanup in createDebouncedSignal by checking internalSignal state before destruction ([36b8505](https://github.com/Alwatr/flux/commit/36b850505c0541906038a05f2cf5967baac1b2cb))
+* update createDebouncedSignal to use ComputedSignal type and streamline resource cleanup in onDestroy callback ([bb0908a](https://github.com/Alwatr/flux/commit/bb0908a03ad9a86e432b8bfa17e21ced881c8f41))
+
+### 🐛 Bug Fixes
+
+* debounce destroy ([e14a39a](https://github.com/Alwatr/flux/commit/e14a39a6b4729980d5aa7486873b4aae272bec0b))
+* initialize signalId in constructor and call optional onDestroy callback in destroy method ([198f9b3](https://github.com/Alwatr/flux/commit/198f9b3b08a259d118b8645bb144677ea7f24613))
+* remove unused dependency @alwatr/package-tracer from package.json ([9008a40](https://github.com/Alwatr/flux/commit/9008a40b8eb7e996ee8995956ab14d93bf021407))
+
+### 🔨 Code Refactoring
+
+* move fundamental signals to core ([5fc4cd9](https://github.com/Alwatr/flux/commit/5fc4cd90cb3463a876bc21f4699510aace7db8f4))
+* remove packageTracer import and related dev mode initialization ([d02276e](https://github.com/Alwatr/flux/commit/d02276eed37337b1f68d2c74cc5ee366add55f35))
+* remove unused IComputedSignal and IEffectSignal imports from computed and effect creators ([bf7d3f2](https://github.com/Alwatr/flux/commit/bf7d3f287ee2db101b6ca0ad30eccf5f1af4bdd1))
+* reorganize exports to use core and creators directories ([cdb5225](https://github.com/Alwatr/flux/commit/cdb5225773c5a909f176bb5550ce4f3a0517f09f))
+* simplify parameter and return type annotations in createComputedSignal, createEffect, and createEventSignal ([024025e](https://github.com/Alwatr/flux/commit/024025e68fb4793ab7ecd97e51ccb5f271002a52))
+
+### 🧹 Miscellaneous Chores
+
+* add initial Jest configuration file for testing setup ([071ec20](https://github.com/Alwatr/flux/commit/071ec200be91fa21da83b7c49133e5de99797198))
+* standardize dependency names in dependabot configuration and update VSCode settings ([a1629cb](https://github.com/Alwatr/flux/commit/a1629cb050da77334ee2307ea25d008bbfceacdd))
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 6 updates ([f6ae979](https://github.com/Alwatr/flux/commit/f6ae9795e34ba3913fa208f7f94794b5753b90c9))
+* update @alwatr/debounce dependency to version 1.1.0 ([bce3ffe](https://github.com/Alwatr/flux/commit/bce3ffe6c174c05aef60dc9fdc7e78aa31dcc71b))
+* update @types/node dependency to version 22.18.3 ([6e1a847](https://github.com/Alwatr/flux/commit/6e1a8477095f102d09b020dccfe4e638c1d058ca))
+
 ## [5.0.0](https://github.com/Alwatr/flux/compare/v4.1.1...v5.0.0) (2025-09-12)
 
 ### ⚠ BREAKING CHANGES
