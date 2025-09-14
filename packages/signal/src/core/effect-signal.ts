@@ -138,6 +138,9 @@ export class EffectSignal implements IEffectSignal {
       subscription.unsubscribe();
     }
     this.subscriptionList__.length = 0; // Clear the array of subscriptions.
+
+    this.config_.onDestroy?.(); // Call the optional onDestroy callback.
+
     this.config_ = null as unknown as EffectSignalConfig; // Release config closure.
   }
 }
