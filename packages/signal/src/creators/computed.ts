@@ -1,6 +1,6 @@
 import {ComputedSignal} from '../core/computed-signal.js';
 
-import type {ComputedSignalConfig, IComputedSignal} from '../type.js';
+import type {ComputedSignalConfig} from '../type.js';
 
 /**
  * Creates a  * A read-only signal that derives its value from a set of dependency signals.

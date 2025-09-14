@@ -1,6 +1,6 @@
 import {EffectSignal} from '../core/effect-signal.js';
 
-import type {EffectSignalConfig, IEffectSignal} from '../type.js';
+import type {EffectSignalConfig} from '../type.js';
 
 /**
  * Creates a side-effect that runs in response to changes in dependency signals.
