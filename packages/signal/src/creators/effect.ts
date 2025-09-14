@@ -18,8 +18,8 @@ import type {EffectSignalConfig} from '../type.js';
  *
  * @example
  * // --- Create dependency signals ---
- * const counter = new StateSignal({ initialValue: 0, signalId: 'counter' });
- * const user = new StateSignal({ initialValue: 'guest', signalId: 'user' });
+ * const counter = createStateSignal({ initialValue: 0, signalId: 'counter' });
+ * const user = createStateSignal({ initialValue: 'guest', signalId: 'user' });
  *
  * // --- Create an effect ---
  * const analyticsEffect = createEffect({
