@@ -19,6 +19,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@alwatr/cyrb53@workspace:packages/cyrb53":
+  version: 0.0.0-use.local
+  resolution: "@alwatr/cyrb53@workspace:packages/cyrb53"
+  dependencies:
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
+    "@jest/globals": "npm:^30.1.2"
+    typescript: "npm:^5.9.2"
+  languageName: unknown
+  linkType: soft
+
 "@alwatr/debounce@workspace:packages/debounce":
   version: 0.0.0-use.local
   resolution: "@alwatr/debounce@workspace:packages/debounce"
