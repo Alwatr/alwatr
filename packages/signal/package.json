@@ -5,7 +5,7 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/debounce": "^1.0.1",
+    "@alwatr/debounce": "^1.1.0",
     "@alwatr/delay": "^6.0.4",
     "@alwatr/logger": "^6.0.0"
   },
