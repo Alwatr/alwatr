@@ -3,7 +3,8 @@ import {createDebouncer} from '@alwatr/debounce';
 import {StateSignal} from '../core/state-signal.js';
 import {createComputedSignal} from '../creators/computed.js';
 
-import type {IReadonlySignal, IComputedSignal, DebounceSignalConfig} from '../type.js';
+import type {ComputedSignal} from '../core/computed-signal.js';
+import type {IReadonlySignal, DebounceSignalConfig} from '../type.js';
 
 /**
  * Creates a new computed signal that debounces updates from a source signal.
@@ -58,7 +59,7 @@ import type {IReadonlySignal, IComputedSignal, DebounceSignalConfig} from '../ty
  * // debouncedSearch.destroy();
  * ```
  */
-export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, config: DebounceSignalConfig): IComputedSignal<T> {
+export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, config: DebounceSignalConfig): ComputedSignal<T> {
   const internalSignal = new StateSignal<T>({
     signalId: `${sourceSignal.signalId}-debounced-internal`,
     initialValue: sourceSignal.value,
@@ -73,26 +74,14 @@ export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, confi
 
   const subscription = sourceSignal.subscribe(debouncer.trigger);
 
-  const computedSignal = createComputedSignal({
+  return createComputedSignal({
     signalId: `${sourceSignal.signalId}-debounced`,
     deps: [internalSignal],
     get: () => internalSignal.value,
+    onDestroy: () => {
+      debouncer.cancel();
+      internalSignal.destroy();
+      subscription.unsubscribe();
+    },
   });
-
-  // --- Lifecycle Management ---
-  // Piggyback on the computed signal's destroy method to clean up our resources.
-  const computedSignalDestroy = computedSignal.destroy.bind(computedSignal);
-
-  computedSignal.destroy = (): void => {
-    // 1. Unsubscribe from the source signal to stop receiving updates.
-    subscription.unsubscribe();
-    // 2. Cancel any pending debouncer execution to prevent memory leaks.
-    debouncer.cancel();
-    // 3. Destroy the internal signal.
-    internalSignal.destroy();
-    // 4. Call the original destroy method to clean up the computed signal itself.
-    computedSignalDestroy();
-  };
-
-  return computedSignal;
 }
