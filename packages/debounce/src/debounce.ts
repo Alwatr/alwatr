@@ -32,6 +32,7 @@ import type {DebouncerConfig} from './type.ts';
  */
 export class Debouncer<F extends AnyFunction> {
   private timerId__?: number | NodeJS.Timeout;
+  private maxWaitTimerId__?: number | NodeJS.Timeout;
   private lastArgs__?: Parameters<F>;
 
   public constructor(private readonly config__: DebouncerConfig<F>) {
@@ -64,15 +65,19 @@ export class Debouncer<F extends AnyFunction> {
    * ```
    */
   public trigger(...args: Parameters<F>): void {
-    this.lastArgs__ = args;
+    this.lastArgs__ = args; // its an array even if triggered without any args
     const wasPending = this.isPending;
 
     if (wasPending) {
       clearTimeout(this.timerId__!);
     }
-
-    if (this.config__.leading === true && !wasPending) {
-      this.invoke__();
+    else { // First trigger
+      if (this.config__.leading === true) {
+        this.invoke__();
+      }
+      if (this.config__.maxWait) {
+        this.maxWaitTimerId__ = setTimeout(() => this.flush(), this.config__.maxWait);
+      }
     }
 
     this.timerId__ = setTimeout(() => {
@@ -100,8 +105,11 @@ export class Debouncer<F extends AnyFunction> {
    * ```
    */
   public cancel(): void {
-    if (this.isPending) {
-      clearTimeout(this.timerId__!);
+    if (this.timerId__) {
+      clearTimeout(this.timerId__);
+    }
+    if (this.maxWaitTimerId__) {
+      clearTimeout(this.maxWaitTimerId__);
     }
     this.cleanup__();
   }
@@ -111,6 +119,7 @@ export class Debouncer<F extends AnyFunction> {
    */
   private cleanup__(): void {
     delete this.timerId__;
+    delete this.maxWaitTimerId__;
     delete this.lastArgs__;
   }
 
@@ -134,9 +143,9 @@ export class Debouncer<F extends AnyFunction> {
    */
   public flush(): void {
     if (this.isPending) {
-      this.cancel();
       this.invoke__();
     }
+    this.cancel();
   }
 
   /**
