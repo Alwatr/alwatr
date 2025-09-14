@@ -2,7 +2,13 @@ import {describe, beforeEach, afterEach, it, expect, jest} from '@jest/globals';
 import {createDebouncer} from '@alwatr/debounce';
 
 describe('Debouncer', () => {
+  /**
+   * @type {import("jest-mock").Mock<import("jest-mock").UnknownFunction>}
+   */
   let mockFunc;
+  /**
+   * @type {import("@alwatr/debounce").Debouncer<typeof mockFunc>}
+   */
   let debouncer;
 
   beforeEach(() => {
@@ -189,6 +195,9 @@ describe('Debouncer', () => {
   });
 
   describe('ThisContext Binding', () => {
+    /**
+     * @type {{ value: string; }}
+     */
     let context;
 
     beforeEach(() => {
