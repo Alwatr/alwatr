@@ -152,40 +152,6 @@ export class Debouncer<F extends AnyFunction> {
    * The core execution logic.
    */
   private invoke__(): void {
-    if (this.lastArgs__) {
-      // `thisContext` is now read directly from the stored config.
-      this.config__.func.apply(this.config__.thisContext, this.lastArgs__);
-    }
+    this.config__.func.apply(this.config__.thisContext, this.lastArgs__);
   }
-}
-
-/**
- * Factory function for creating a Debouncer instance for better type inference.
- * @param config Configuration for the debouncer.
- * 
- * @example
- * ```typescript
- * const debouncer = createDebouncer({
- *   func: (text: string) => console.log('Searching:', text),
- *   delay: 300,
- *   leading: false,
- *   trailing: true,
- * });
- * 
- * // Debounce search input
- * debouncer.trigger('hello');
- * debouncer.trigger('hello world'); // Only 'hello world' will log after 300ms
- * 
- * // With custom thisContext
- * const obj = { log: (msg: string) => console.log('Obj:', msg) };
- * const debouncerWithContext = createDebouncer({
- *   func: obj.log,
- *   thisContext: obj,
- *   delay: 200,
- * });
- * debouncerWithContext.trigger('test'); // Logs 'Obj: test'
- * ```
- */
-export function createDebouncer<F extends AnyFunction>(config: DebouncerConfig<F>): Debouncer<F> {
-  return new Debouncer(config);
 }
