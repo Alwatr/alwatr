@@ -240,6 +240,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/logger@workspace:packages/logger"
   dependencies:
+    "@alwatr/global-this": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
     "@alwatr/platform-info": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
