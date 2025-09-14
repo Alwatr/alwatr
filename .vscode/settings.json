@@ -21,8 +21,7 @@
   "files.associations": {
     "*.ajs": "json",
     "*.ajs.bk": "json",
-    "*.conf.template": "nginx",
-    "*.njk": "html"
+    "*.conf.template": "nginx"
   },
   "files.exclude": {
     // "**/*.map": true,
@@ -54,12 +53,22 @@
   "cSpell.words": [
     "Alwatr",
     "conventionalcommits",
-    "Exir",
-    "jfsm",
+    "Debouncer",
+    "Deno",
+    "flatomise",
+    "Jsonifiable",
+    "Jsonify",
     "Macrotask",
+    "Microtask",
     "Mihandoost",
     "nanolib",
-    "tsbuildinfo"
-  ],
-  "jest.jestCommandLine": "yarn run test"
+    "outdir",
+    "outfile",
+    "pmpa",
+    "Strigifyable",
+    "syncpack",
+    "tsbuildinfo",
+    "typeof",
+    "cyrb53"
+  ]
 }
