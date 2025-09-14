@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.0.0...@alwatr/debounce@1.0.1) (2025-09-14)
+
+### 🔨 Code Refactoring
+
+* **debounce:** rename 'callback' to 'func' for consistency in API ([df7ede1](https://github.com/Alwatr/nanolib/commit/df7ede1a78109831cca22389bd2d69df2e0ae366))
+
 ## [1.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.0.0-rc.0...@alwatr/debounce@1.0.0) (2025-09-14)
 
 ### 🔨 Code Refactoring
