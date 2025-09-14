@@ -1,17 +1,9 @@
+import {getGlobalThis} from '@alwatr/global-this';
 import {platformInfo} from '@alwatr/platform-info';
 
 import type {AlwatrLogger} from './type.js';
 
-// --- Constants & Configurations ---
-
-const globalThis_: typeof globalThis = /* #__PURE__ */ (() => {
-  if (typeof globalThis === 'object' && globalThis) return globalThis;
-  if (typeof window === 'object' && window) return window;
-  if (typeof global === 'object' && global) return global;
-  if (typeof self === 'object' && self) return self;
-  throw new Error('alwatr/logger: Could not find global object.');
-})();
-const console_ = globalThis_.console;
+const console_ = getGlobalThis().console;
 
 /**
  * Default debug mode state, determined by environment variables or localStorage.
