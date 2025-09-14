@@ -5,7 +5,6 @@
     "outDir": "dist",
     "emitDeclarationOnly": true,
     "composite": true,
-    "types": ["node", "@alwatr/nano-build"]
   },
   "include": ["src/**/*.ts"],
   "references": [{"path": "../platform-info"}, {"path": "../global-this"}]
