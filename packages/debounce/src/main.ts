@@ -1,5 +1,7 @@
 import {Debouncer} from './debounce.js';
 
+import type {DebouncerConfig} from './type.js';
+
 export * from './debounce.js';
 export type * from './type.js';
 
