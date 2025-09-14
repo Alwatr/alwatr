@@ -195,7 +195,7 @@ function MyComponent() {
 
 ### Using with `thisContext`
 
-When your func is a method on a class, `this` can lose its context. Pass the class instance to `thisContext` to ensure it's bound correctly.
+When your `func` is a method on a class, `this` can lose its context. Pass the class instance to `thisContext` to ensure it's bound correctly.
 
 ```typescript
 class ApiService {
