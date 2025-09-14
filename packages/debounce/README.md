@@ -104,7 +104,7 @@ This is the configuration object passed to `createDebouncer` or the `Debouncer` 
 | :------------ | :---------------------- | :------------------------------------------------------------------- | :---------- |
 | `func`        | `F extends AnyFunction` | **(Required)** The function to be debounced.                         | -           |
 | `delay`       | `number`                | **(Required)** The debounce delay in milliseconds.                   | -           |
-| `thisContext` | `ThisParameterType<F>`  | The `this` context for the func. Essential when using class methods. | `undefined` |
+| `thisContext` | `ThisParameterType<F>`  | The `this` context for the `func`. Essential when using class methods. | `undefined` |
 | `leading`     | `boolean`               | If `true`, executes the function on the leading edge.                | `false`     |
 | `trailing`    | `boolean`               | If `true`, executes the function on the trailing edge.               | `true`      |
 
