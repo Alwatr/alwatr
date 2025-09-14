@@ -14,8 +14,8 @@ import type {ComputedSignalConfig} from '../type.js';
  *
  * @template T The type of the computed value.
  *
- * @param {ComputedSignalConfig<T>} config The configuration for the computed signal.
- * @returns {IComputedSignal<T>} A new, read-only computed signal.
+ * @param config The configuration for the computed signal.
+ * @returns A new, read-only computed signal.
  *
  * @example
  * const firstName = createStateSignal({ signalId: 'firstName', initialValue: 'John' });

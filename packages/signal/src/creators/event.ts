@@ -12,8 +12,8 @@ import type {SignalConfig} from '../type.js';
  *
  * @template T The type of the payload for the events.
  *
- * @param {SignalConfig} config The configuration for the event signal.
- * @returns {EventSignal<T>} A new instance of EventSignal.
+ * @param config The configuration for the event signal.
+ * @returns A new instance of EventSignal.
  *
  * @example
  * const onUserClick = createEventSignal<{ x: number, y: number }>({

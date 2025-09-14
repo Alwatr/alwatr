@@ -13,8 +13,8 @@ import type {EffectSignalConfig} from '../type.js';
  * A key feature is its lifecycle management: an `EffectSignal` **must** be destroyed when no longer
  * needed to prevent memory leaks and stop the effect from running unnecessarily.
  *
- * @param {EffectSignalConfig} config The configuration for the effect.
- * @returns {IEffectSignal} An object with a `destroy` method to stop the effect.
+ * @param config The configuration for the effect.
+ * @returns An object with a `destroy` method to stop the effect.
  *
  * @example
  * // --- Create dependency signals ---
