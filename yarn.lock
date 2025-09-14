@@ -5,10 +5,10 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@alwatr/debounce@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@alwatr/debounce@npm:1.0.1"
-  checksum: 10c0/c53e9ed56c662ff31fa89557fc1288f05a92906f5cee8bd5b54699f8dc32b2718c6cb3ba9942a1b3d4e2b9db5b5eeceda3c65ea5ce95fa43a5ac182a37bbf8da
+"@alwatr/debounce@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@alwatr/debounce@npm:1.1.0"
+  checksum: 10c0/c588ce4c10815cb9642d8a10d6cf5cf0257721f1eddba16eac8c5eb10e15b92c7a50dcfef39b2f1c95e25e626888d5095ddd008e4b301c4b202582fe49b22bae
   languageName: node
   linkType: hard
 
@@ -99,7 +99,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/signal@workspace:packages/signal"
   dependencies:
-    "@alwatr/debounce": "npm:^1.0.1"
+    "@alwatr/debounce": "npm:^1.1.0"
     "@alwatr/delay": "npm:^6.0.4"
     "@alwatr/logger": "npm:^6.0.0"
     "@alwatr/nano-build": "npm:^6.1.2"
