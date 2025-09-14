@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.11](https://github.com/Alwatr/nanolib/compare/@alwatr/hash-string@5.2.10...@alwatr/hash-string@5.2.11) (2025-09-14)
+
+### 🔨 Code Refactoring
+
+* **hash:** remove djb2Hash implementation and tests ([140a1e1](https://github.com/Alwatr/nanolib/commit/140a1e191bbe864379e2621919f7fbc37f403afa))
+
 ## [5.2.10](https://github.com/Alwatr/nanolib/compare/@alwatr/hash-string@5.2.9...@alwatr/hash-string@5.2.10) (2025-09-13)
 
 **Note:** Version bump only for package @alwatr/hash-string
