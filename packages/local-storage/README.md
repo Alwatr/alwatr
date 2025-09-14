@@ -135,7 +135,7 @@ Contributions are welcome! Please read our [contribution guidelines](https://git
 
 <br>
 <br>
-<br>
+<div dir="rtl">
 
 # Alwatr Local Storage Provider (راهنمای فارسی)
 
@@ -266,3 +266,5 @@ userSettingsProvider.remove();
 ## مشارکت (Contributing)
 
 از مشارکت‌ها استقبال می‌شود! لطفاً قبل از ارسال pull request، [راهنمای مشارکت ما](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) را مطالعه کنید.
+
+</div>
