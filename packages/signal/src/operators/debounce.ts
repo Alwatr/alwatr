@@ -31,7 +31,7 @@ import type {IReadonlySignal, IComputedSignal, DebounceSignalConfig} from '../ty
  * @example
  * ```typescript
  * // Create a source signal for user input.
- * const searchInput = new StateSignal({
+ * const searchInput = createStateSignal({
  *   signalId: 'search-input',
  *   initialValue: '',
  * });
@@ -40,7 +40,7 @@ import type {IReadonlySignal, IComputedSignal, DebounceSignalConfig} from '../ty
  * const debouncedSearch = createDebouncedSignal(searchInput, { delay: 300 });
  *
  * // Use an effect to react to the debounced value.
- * new EffectSignal({
+ * createEffect({
  *   deps: [debouncedSearch],
  *   run: () => {
  *     if (debouncedSearch.value) {
