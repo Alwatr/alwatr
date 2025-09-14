@@ -322,8 +322,7 @@ describe('Debouncer', () => {
     jest.advanceTimersByTime(300);
     expect(mockFunc).toHaveBeenCalledTimes(1); // Trailing call
   });
-
-  it('should execute immediately for leading debounce but not for trailing on single trigger', () => {
+  it('should execute leading but skip trailing on single trigger', () => {
     debouncer = createDebouncer({
       func: mockFunc,
       delay: 300,
@@ -336,7 +335,7 @@ describe('Debouncer', () => {
     expect(mockFunc).toHaveBeenCalledTimes(1); // no trailing call on same argument
   });
 
-  it('should execute immediately for leading debounce but not for trailing on single trigger or extra flush', () => {
+  it('should execute leading and skip trailing after flush', () => {
     debouncer = createDebouncer({
       func: mockFunc,
       delay: 300,
@@ -351,7 +350,7 @@ describe('Debouncer', () => {
     expect(mockFunc).toHaveBeenCalledTimes(1); // no trailing call on same argument
   });
 
-  it('should execute immediately for leading debounce but not for trailing on single trigger', () => {
+  it('should execute leading and trailing on multiple triggers', () => {
     debouncer = createDebouncer({
       func: mockFunc,
       delay: 300,
@@ -367,7 +366,7 @@ describe('Debouncer', () => {
     expect(mockFunc).toHaveBeenLastCalledWith('second');
   });
 
-  it('should execute immediately for leading debounce but not for trailing on single trigger', () => {
+  it('should execute leading and flush, skip trailing', () => {
     debouncer = createDebouncer({
       func: mockFunc,
       delay: 300,
