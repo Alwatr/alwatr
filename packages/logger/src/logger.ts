@@ -17,7 +17,9 @@ const console_ = globalThis_.console;
 const defaultDebugMode = /* #__PURE__ */ (() => {
   return (
     platformInfo.development ||
-    (platformInfo.isCli ? Boolean(process.env.DEBUG) : typeof localStorage !== 'undefined' && localStorage.getItem('ALWATR_DEBUG') === '1')
+    (platformInfo.isCli
+      ? process.env.NODE_ENV !== 'production' || Boolean(process.env.DEBUG)
+      : typeof localStorage !== 'undefined' && localStorage.getItem('ALWATR_DEBUG') === '1')
   );
 })();
 
