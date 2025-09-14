@@ -84,6 +84,7 @@ export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, confi
       debouncer.cancel();
       internalSignal.destroy();
       subscription.unsubscribe();
+      config.onDestroy?.();
     },
   });
 }
