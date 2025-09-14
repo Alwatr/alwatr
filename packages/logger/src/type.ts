@@ -175,8 +175,7 @@ export interface AlwatrLogger {
    * @param tabularData Any data that can be represented in tabular form.
    * @param properties Alternate properties for constructing the table.
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  logTable?(tabularData: any, properties?: readonly string[]): void;
+  logTable?(tabularData: unknown, properties?: readonly string[]): void;
 
   /**
    * Starts a timer with a specified label using `console.time`. Useful for measuring performance.
