@@ -31,6 +31,13 @@ export interface DebouncerConfig<F extends AnyFunction> {
   delay: number;
 
   /**
+   * The maximum time the `func` is allowed to be delayed before it's invoked.
+   * This is useful for guaranteeing execution of a function that's continuously triggered.
+   * If set, the function will be called after `maxWait` milliseconds, even if triggers are still occurring.
+   */
+  maxWait?: number;
+
+  /**
    * If `true`, the function is called on the leading edge of the timeout.
    * Useful for immediate feedback (e.g., button press).
    * @default false

@@ -40,6 +40,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
+    "@jest/globals": "npm:^30.1.2"
     "@types/node": "npm:^22.18.3"
     typescript: "npm:^5.9.2"
   languageName: unknown

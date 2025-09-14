@@ -2,11 +2,11 @@ import type {DebouncerConfig} from './type.ts';
 
 /**
  * A powerful and type-safe Debouncer class.
- * 
+ *
  * It encapsulates the debouncing logic, state, and provides a rich control API.
  * Debouncing delays function execution until after a specified delay has passed since the last invocation.
  * Useful for optimizing performance in scenarios like search inputs, resize events, or API calls.
- * 
+ *
  * @example
  * ```typescript
  * const debouncer = new Debouncer({
@@ -15,11 +15,11 @@ import type {DebouncerConfig} from './type.ts';
  *   leading: false,
  *   trailing: true,
  * });
- * 
+ *
  * // Debounce search input
  * debouncer.trigger('hello');
  * debouncer.trigger('hello world'); // Only 'hello world' will log after 300ms
- * 
+ *
  * // Advanced: With leading edge
  * const leadingDebouncer = new Debouncer({
  *   func: () => console.log('Immediate and delayed'),
@@ -32,10 +32,12 @@ import type {DebouncerConfig} from './type.ts';
  */
 export class Debouncer<F extends AnyFunction> {
   private timerId__?: number | NodeJS.Timeout;
+  private maxWaitTimerId__?: number | NodeJS.Timeout;
   private lastArgs__?: Parameters<F>;
 
   public constructor(private readonly config__: DebouncerConfig<F>) {
     this.config__.trailing ??= true;
+    this.flush = this.flush.bind(this);
   }
 
   /**
@@ -49,7 +51,7 @@ export class Debouncer<F extends AnyFunction> {
   /**
    * Triggers the debounced function with the stored `thisContext`.
    * @param args The arguments to pass to the `func`.
-   * 
+   *
    * @example
    * ```typescript
    * const debouncer = new Debouncer({
@@ -57,26 +59,30 @@ export class Debouncer<F extends AnyFunction> {
    *   delay: 500,
    * });
    * debouncer.trigger(42); // Logs after 500ms if not triggered again
-   * 
+   *
    * // Edge case: Rapid triggers only execute the last one
    * debouncer.trigger(1);
    * debouncer.trigger(2); // Only 2 will execute after delay
    * ```
    */
   public trigger(...args: Parameters<F>): void {
-    this.lastArgs__ = args;
-    const wasPending = this.isPending;
+    this.lastArgs__ = args; // its an array even if triggered without any args
+    const firstTrigger = !this.isPending;
 
-    if (wasPending) {
+    if (firstTrigger) {
+      if (this.config__.maxWait) {
+        this.maxWaitTimerId__ = setTimeout(this.flush, this.config__.maxWait);
+      }
+      if (this.config__.leading === true) {
+        this.invoke__();
+      }
+    }
+    else {
       clearTimeout(this.timerId__!);
     }
 
-    if (this.config__.leading === true && !wasPending) {
-      this.invoke__();
-    }
-
     this.timerId__ = setTimeout(() => {
-      if (this.config__.trailing === true && wasPending) {
+      if (this.config__.trailing === true) {
         this.invoke__();
       }
       this.cleanup__();
@@ -86,7 +92,7 @@ export class Debouncer<F extends AnyFunction> {
   /**
    * Cancels any pending debounced execution and cleans up internal state.
    * Useful for stopping execution when the operation is no longer needed (e.g., component unmount).
-   * 
+   *
    * @example
    * ```typescript
    * const debouncer = new Debouncer({
@@ -95,13 +101,16 @@ export class Debouncer<F extends AnyFunction> {
    * });
    * debouncer.trigger();
    * debouncer.cancel(); // Prevents execution
-   * 
+   *
    * // Note: After cancel, isPending becomes false
    * ```
    */
   public cancel(): void {
-    if (this.isPending) {
-      clearTimeout(this.timerId__!);
+    if (this.timerId__) {
+      clearTimeout(this.timerId__);
+    }
+    if (this.maxWaitTimerId__) {
+      clearTimeout(this.maxWaitTimerId__);
     }
     this.cleanup__();
   }
@@ -111,13 +120,14 @@ export class Debouncer<F extends AnyFunction> {
    */
   private cleanup__(): void {
     delete this.timerId__;
+    delete this.maxWaitTimerId__;
     delete this.lastArgs__;
   }
 
   /**
    * Immediately executes the pending function if one exists.
    * Bypasses the delay and cleans up state. If no pending call, does nothing.
-   * 
+   *
    * @example
    * ```typescript
    * const debouncer = new Debouncer({
@@ -126,7 +136,7 @@ export class Debouncer<F extends AnyFunction> {
    * });
    * debouncer.trigger();
    * setTimeout(() => debouncer.flush(), 500); // Executes immediately
-   * 
+   *
    * // Edge case: Flush after cancel does nothing
    * debouncer.cancel();
    * debouncer.flush(); // No execution
@@ -134,49 +144,18 @@ export class Debouncer<F extends AnyFunction> {
    */
   public flush(): void {
     if (this.isPending) {
-      this.cancel();
       this.invoke__();
     }
+    this.cancel();
   }
 
   /**
    * The core execution logic.
    */
   private invoke__(): void {
-    if (this.lastArgs__) {
-      // `thisContext` is now read directly from the stored config.
+    if (this.lastArgs__) { // only call if we have new args (skip trailing call if leading already called)
       this.config__.func.apply(this.config__.thisContext, this.lastArgs__);
+      this.lastArgs__ = undefined;
     }
   }
-}
-
-/**
- * Factory function for creating a Debouncer instance for better type inference.
- * @param config Configuration for the debouncer.
- * 
- * @example
- * ```typescript
- * const debouncer = createDebouncer({
- *   func: (text: string) => console.log('Searching:', text),
- *   delay: 300,
- *   leading: false,
- *   trailing: true,
- * });
- * 
- * // Debounce search input
- * debouncer.trigger('hello');
- * debouncer.trigger('hello world'); // Only 'hello world' will log after 300ms
- * 
- * // With custom thisContext
- * const obj = { log: (msg: string) => console.log('Obj:', msg) };
- * const debouncerWithContext = createDebouncer({
- *   func: obj.log,
- *   thisContext: obj,
- *   delay: 200,
- * });
- * debouncerWithContext.trigger('test'); // Logs 'Obj: test'
- * ```
- */
-export function createDebouncer<F extends AnyFunction>(config: DebouncerConfig<F>): Debouncer<F> {
-  return new Debouncer(config);
 }

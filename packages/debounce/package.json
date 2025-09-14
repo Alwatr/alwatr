@@ -9,6 +9,7 @@
     "@alwatr/prettier-config": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
+    "@jest/globals": "^30.1.2",
     "@types/node": "^22.18.3",
     "typescript": "^5.9.2"
   },
