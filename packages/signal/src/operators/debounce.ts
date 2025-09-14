@@ -82,9 +82,9 @@ export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, confi
     get: () => internalSignal.value,
     onDestroy: () => {
       if (internalSignal.isDestroyed) return;
-      internalSignal.destroy();
-      debouncer.cancel();
       subscription.unsubscribe();
+      debouncer.cancel();
+      internalSignal.destroy();
       config.onDestroy?.();
       config = null as unknown as DebounceSignalConfig;
     },
