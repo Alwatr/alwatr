@@ -277,7 +277,7 @@ describe('Debouncer', () => {
       jest.advanceTimersByTime(200);
       expect(mockFunc).toHaveBeenCalledTimes(1); // Should not call again yet
       jest.advanceTimersByTime(200); // Trigger maxWait, which may call flush
-      expect(mockFunc).toHaveBeenCalledTimes(2); // Should not call again
+      expect(mockFunc).toHaveBeenCalledTimes(2); // Should be called a second time due to maxWait
     });
 
     it('should prevent double-invocation with leading: true, trailing: false, and maxWait on single trigger', () => {
