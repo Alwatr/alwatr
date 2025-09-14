@@ -68,6 +68,7 @@
     "Strigifyable",
     "syncpack",
     "tsbuildinfo",
-    "typeof"
+    "typeof",
+    "cyrb53"
   ]
 }
