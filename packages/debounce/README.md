@@ -73,7 +73,7 @@ import {createDebouncer} from '@alwatr/debounce';
 // 1. Create a debouncer instance
 const debouncer = createDebouncer({
   // The function you want to debounce
-  callback: (query: string) => {
+  func: (query: string) => {
     console.log(`Searching for: ${query}`);
   },
   // The delay in milliseconds
@@ -100,13 +100,13 @@ A factory function that creates a new `Debouncer` instance. It's the recommended
 
 This is the configuration object passed to `createDebouncer` or the `Debouncer` constructor.
 
-| Property      | Type                    | Description                                                              | Default     |
-| :------------ | :---------------------- | :----------------------------------------------------------------------- | :---------- |
-| `callback`    | `F extends AnyFunction` | **(Required)** The function to be debounced.                             | -           |
-| `delay`       | `number`                | **(Required)** The debounce delay in milliseconds.                       | -           |
-| `thisContext` | `ThisParameterType<F>`  | The `this` context for the callback. Essential when using class methods. | `undefined` |
-| `leading`     | `boolean`               | If `true`, executes the function on the leading edge.                    | `false`     |
-| `trailing`    | `boolean`               | If `true`, executes the function on the trailing edge.                   | `true`      |
+| Property      | Type                    | Description                                                          | Default     |
+| :------------ | :---------------------- | :------------------------------------------------------------------- | :---------- |
+| `func`        | `F extends AnyFunction` | **(Required)** The function to be debounced.                         | -           |
+| `delay`       | `number`                | **(Required)** The debounce delay in milliseconds.                   | -           |
+| `thisContext` | `ThisParameterType<F>`  | The `this` context for the `func`. Essential when using class methods. | `undefined` |
+| `leading`     | `boolean`               | If `true`, executes the function on the leading edge.                | `false`     |
+| `trailing`    | `boolean`               | If `true`, executes the function on the trailing edge.               | `true`      |
 
 ### `Debouncer` Instance
 
@@ -120,7 +120,7 @@ An instance of the `Debouncer` class returned by `createDebouncer`.
 #### Methods
 
 - **`trigger(...args: Parameters<F>): void`**
-  Triggers the debounce timer. Each call resets the timer. The arguments passed here will be forwarded to the `callback` function.
+  Triggers the debounce timer. Each call resets the timer. The arguments passed here will be forwarded to the `func` function.
 
 - **`cancel(): void`**
   Cancels any pending execution and clears internal state. This is crucial for preventing memory leaks.
@@ -143,7 +143,7 @@ In modern Single-Page Applications (SPAs) or any component-based architecture, c
 ```typescript
 class MyComponent {
   private debouncer = createDebouncer({
-    callback: this.doSomething,
+    func: this.doSomething,
     thisContext: this, // Bind `this` correctly!
     delay: 500,
   });
@@ -175,7 +175,7 @@ function MyComponent() {
   const debouncedApiCall = useMemo(
     () =>
       createDebouncer({
-        callback: (query) => fetch(`/api/search?q=${query}`),
+        func: (query) => fetch(`/api/search?q=${query}`),
         delay: 300,
       }),
     [],
@@ -195,12 +195,12 @@ function MyComponent() {
 
 ### Using with `thisContext`
 
-When your callback is a method on a class, `this` can lose its context. Pass the class instance to `thisContext` to ensure it's bound correctly.
+When your `func` is a method on a class, `this` can lose its context. Pass the class instance to `thisContext` to ensure it's bound correctly.
 
 ```typescript
 class ApiService {
   private debouncer = createDebouncer({
-    callback: this.sendRequest,
+    func: this.sendRequest,
     thisContext: this, // Ensures `this` inside `sendRequest` is `ApiService`
     delay: 500,
   });
@@ -309,7 +309,7 @@ import {createDebouncer} from '@alwatr/debounce';
 // ۱. یک نمونه دیبانسر بسازید
 const debouncer = createDebouncer({
   // تابعی که می‌خواهید دیبانس کنید
-  callback: (query: string) => {
+  func: (query: string) => {
     console.log(`در حال جستجو برای: ${query}`);
   },
   // تأخیر بر حسب میلی‌ثانیه
@@ -338,9 +338,9 @@ debouncer.trigger('علی');
 
 | ویژگی         | نوع                     | توضیحات                                                               | پیش‌فرض     |
 | :------------ | :---------------------- | :-------------------------------------------------------------------- | :---------- |
-| `callback`    | `F extends AnyFunction` | **(الزامی)** تابعی که باید دیبانس شود.                                | -           |
+| `func`        | `F extends AnyFunction` | **(الزامی)** تابعی که باید دیبانس شود.                                | -           |
 | `delay`       | `number`                | **(الزامی)** تأخیر دیبانس بر حسب میلی‌ثانیه.                          | -           |
-| `thisContext` | `ThisParameterType<F>`  | کانتکست `this` برای callback. هنگام استفاده از متدهای کلاس ضروری است. | `undefined` |
+| `thisContext` | `ThisParameterType<F>`  | کانتکست `this` برای `func`. هنگام استفاده از متدهای کلاس ضروری است.     | `undefined` |
 | `leading`     | `boolean`               | اگر `true` باشد، تابع در لبه بالارونده (leading edge) اجرا می‌شود.    | `false`     |
 | `trailing`    | `boolean`               | اگر `true` باشد، تابع در لبه پایین‌رونده (trailing edge) اجرا می‌شود. | `true`      |
 
@@ -356,7 +356,7 @@ debouncer.trigger('علی');
 #### متدها
 
 - **`trigger(...args: Parameters<F>): void`**
-  تایمر دیبانس را فعال می‌کند. هر فراخوانی، تایمر را ریست می‌کند. آرگومان‌های پاس داده شده به این متد، به تابع `callback` ارسال می‌شوند.
+  تایمر دیبانس را فعال می‌کند. هر فراخوانی، تایمر را ریست می‌کند. آرگومان‌های پاس داده شده به این متد، به تابع `func` ارسال می‌شوند.
 
 - **`cancel(): void`**
   هرگونه اجرای در حال انتظار را لغو کرده و وضعیت داخلی را پاک می‌کند. این متد برای جلوگیری از نشت حافظه بسیار حیاتی است.
@@ -379,7 +379,7 @@ debouncer.trigger('علی');
 ```typescript
 class MyComponent {
   private debouncer = createDebouncer({
-    callback: this.doSomething,
+    func: this.doSomething,
     thisContext: this, // `this` را به درستی متصل کنید!
     delay: 500,
   });
@@ -411,7 +411,7 @@ function MyComponent() {
   const debouncedApiCall = useMemo(
     () =>
       createDebouncer({
-        callback: (query) => fetch(`/api/search?q=${query}`),
+        func: (query) => fetch(`/api/search?q=${query}`),
         delay: 300,
       }),
     [],
@@ -431,12 +431,12 @@ function MyComponent() {
 
 ### استفاده با `thisContext`
 
-زمانی که `callback` شما یک متد از یک کلاس است، `this` ممکن است کانتکست خود را از دست بدهد. برای اطمینان از اتصال صحیح، نمونه کلاس را به `thisContext` پاس دهید.
+زمانی که `func` شما یک متد از یک کلاس است، `this` ممکن است کانتکست خود را از دست بدهد. برای اطمینان از اتصال صحیح، نمونه کلاس را به `thisContext` پاس دهید.
 
 ```typescript
 class ApiService {
   private debouncer = createDebouncer({
-    callback: this.sendRequest,
+    func: this.sendRequest,
     thisContext: this, // تضمین می‌کند که `this` در داخل `sendRequest` همان `ApiService` است
     delay: 500,
   });

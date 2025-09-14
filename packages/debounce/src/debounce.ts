@@ -10,7 +10,7 @@ import type {DebouncerConfig} from './type.ts';
  * @example
  * ```typescript
  * const debouncer = new Debouncer({
- *   callback: (text: string) => console.log('Searching:', text),
+ *   func: (text: string) => console.log('Searching:', text),
  *   delay: 300,
  *   leading: false,
  *   trailing: true,
@@ -22,7 +22,7 @@ import type {DebouncerConfig} from './type.ts';
  * 
  * // Advanced: With leading edge
  * const leadingDebouncer = new Debouncer({
- *   callback: () => console.log('Immediate and delayed'),
+ *   func: () => console.log('Immediate and delayed'),
  *   delay: 500,
  *   leading: true,
  *   trailing: true,
@@ -48,12 +48,12 @@ export class Debouncer<F extends AnyFunction> {
 
   /**
    * Triggers the debounced function with the stored `thisContext`.
-   * @param args The arguments to pass to the callback.
+   * @param args The arguments to pass to the `func`.
    * 
    * @example
    * ```typescript
    * const debouncer = new Debouncer({
-   *   callback: (value: number) => console.log('Value:', value),
+   *   func: (value: number) => console.log('Value:', value),
    *   delay: 500,
    * });
    * debouncer.trigger(42); // Logs after 500ms if not triggered again
@@ -90,7 +90,7 @@ export class Debouncer<F extends AnyFunction> {
    * @example
    * ```typescript
    * const debouncer = new Debouncer({
-   *   callback: () => console.log('Executed'),
+   *   func: () => console.log('Executed'),
    *   delay: 1000,
    * });
    * debouncer.trigger();
@@ -121,7 +121,7 @@ export class Debouncer<F extends AnyFunction> {
    * @example
    * ```typescript
    * const debouncer = new Debouncer({
-   *   callback: () => console.log('Flushed'),
+   *   func: () => console.log('Flushed'),
    *   delay: 1000,
    * });
    * debouncer.trigger();
@@ -145,7 +145,7 @@ export class Debouncer<F extends AnyFunction> {
   private invoke__(): void {
     if (this.lastArgs__) {
       // `thisContext` is now read directly from the stored config.
-      this.config__.callback.apply(this.config__.thisContext, this.lastArgs__);
+      this.config__.func.apply(this.config__.thisContext, this.lastArgs__);
     }
   }
 }
@@ -157,7 +157,7 @@ export class Debouncer<F extends AnyFunction> {
  * @example
  * ```typescript
  * const debouncer = createDebouncer({
- *   callback: (text: string) => console.log('Searching:', text),
+ *   func: (text: string) => console.log('Searching:', text),
  *   delay: 300,
  *   leading: false,
  *   trailing: true,
@@ -170,7 +170,7 @@ export class Debouncer<F extends AnyFunction> {
  * // With custom thisContext
  * const obj = { log: (msg: string) => console.log('Obj:', msg) };
  * const debouncerWithContext = createDebouncer({
- *   callback: obj.log,
+ *   func: obj.log,
  *   thisContext: obj,
  *   delay: 200,
  * });
