@@ -71,7 +71,7 @@ function getNextColor_(): string {
  */
 function sanitizeDomain_(domain: string): string {
   domain = domain.trim();
-  if (!/^[\[{<]/.test(domain)) {
+  if (!/^[[{<]/.test(domain)) {
     domain = `{${domain}}`;
   }
   return domain;
