@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.0.1...@alwatr/debounce@1.1.0) (2025-09-14)
+
+### ✨ Features
+
+* add maxWait option to Debouncer for guaranteed execution ([a305a6e](https://github.com/Alwatr/nanolib/commit/a305a6e82f96feebe2e895cdd35676da0f8b79f6))
+
+### 🐛 Bug Fixes
+
+* bind flush method in constructor for correct context ([671315c](https://github.com/Alwatr/nanolib/commit/671315cdadab448df660ae53c973eb71d4124699))
+
+### 🔨 Code Refactoring
+
+* add missing type import for DebouncerConfig ([d0c5808](https://github.com/Alwatr/nanolib/commit/d0c5808f2b6eb6fe856f8a38f5a79d2c427cf928))
+* improve trigger logic and clean up documentation comments ([cce9162](https://github.com/Alwatr/nanolib/commit/cce9162f2ee1c1fa2978ba04cd1be2eac5302b9e))
+* simplify trailing call logic and ensure lastArgs are cleared after invocation ([e8f74da](https://github.com/Alwatr/nanolib/commit/e8f74da9660c0c44d2704eb863bb082bce9a5978))
+* streamline invoke logic and restore createDebouncer function ([9bdc412](https://github.com/Alwatr/nanolib/commit/9bdc4124cdea3b267c040ec770a002ed64a814ac))
+
 ## [1.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.0.0...@alwatr/debounce@1.0.1) (2025-09-14)
 
 ### 🔨 Code Refactoring
