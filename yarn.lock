@@ -85,6 +85,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@alwatr/djb2-hash@workspace:packages/djb2-hash":
+  version: 0.0.0-use.local
+  resolution: "@alwatr/djb2-hash@workspace:packages/djb2-hash"
+  dependencies:
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    jest: "npm:^30.1.3"
+    typescript: "npm:^5.9.2"
+  languageName: unknown
+  linkType: soft
+
 "@alwatr/env@workspace:*, @alwatr/env@workspace:packages/env":
   version: 0.0.0-use.local
   resolution: "@alwatr/env@workspace:packages/env"
