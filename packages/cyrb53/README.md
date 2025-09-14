@@ -31,7 +31,7 @@ console.log(`The hash of "${myString}" is ${hash}`);
 // Using a seed for varied hashing
 const hashWithSeed = cyrb53(myString, 123);
 console.log(`The hash with seed 123 is ${hashWithSeed}`);
-// Output: The hash with seed 123 is 3485572083421510
+// Output: The hash with seed 123 is 3160286127194783
 ```
 
 ## API
