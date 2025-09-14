@@ -7,7 +7,7 @@ import type {} from '@alwatr/type-helper';
  * Key notes:
  * - `leading` and `trailing` control execution timing: leading executes immediately on first trigger, trailing after delay.
  * - If both are true, execution happens on first trigger and last trigger (after delay).
- * - `thisContext` ensures the func is bound to the correct `this` value, useful in class methods or event handlers.
+ * - `thisContext` ensures the `func` is bound to the correct `this` value, useful in class methods or event handlers.
  * - `delay` must be a positive number.
  */
 export interface DebouncerConfig<F extends AnyFunction> {
