@@ -1,6 +1,6 @@
 import {packageTracer} from '@alwatr/package-tracer';
 
-import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback, SignalConfig} from './type.js';
+import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback, SignalConfig} from '../type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {} from '@alwatr/nano-build';
 
@@ -40,10 +40,6 @@ export abstract class SignalBase<T> {
     return this.isDestroyed_;
   }
 
-  /**
-   * Initializes a new `SignalBase`.
-   * @param config The configuration for the signal, containing its `signalId`.
-   */
   public constructor(config: SignalConfig) {
     this.signalId = config.signalId;
   }

@@ -3,7 +3,7 @@ import {createLogger} from '@alwatr/logger';
 
 import {StateSignal} from './state-signal.js';
 
-import type {ComputedSignalConfig, IComputedSignal, SubscribeResult} from './type.js';
+import type {ComputedSignalConfig, IComputedSignal, SubscribeResult} from '../type.js';
 
 /**
  * A read-only signal that derives its value from a set of dependency signals.
@@ -62,10 +62,6 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
   private readonly subscriptionList__: SubscribeResult[] = [];
   private isRecalculating__ = false;
 
-  /**
-   * Initializes a new `ComputedSignal`.
-   * @param config The configuration, including dependencies (`deps`) and the getter function (`get`).
-   */
   public constructor(protected config_: ComputedSignalConfig<T>) {
     this.logger_.logMethod?.('constructor');
     this.recalculate_ = this.recalculate_.bind(this);
