@@ -5,9 +5,9 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
+    "@alwatr/debounce": "^1.0.1",
     "@alwatr/delay": "^6.0.4",
-    "@alwatr/logger": "^6.0.0",
-    "@alwatr/package-tracer": "^5.5.11"
+    "@alwatr/logger": "^6.0.0"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^6.1.2",
