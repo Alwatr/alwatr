@@ -340,7 +340,7 @@ debouncer.trigger('علی');
 | :------------ | :---------------------- | :-------------------------------------------------------------------- | :---------- |
 | `func`        | `F extends AnyFunction` | **(الزامی)** تابعی که باید دیبانس شود.                                | -           |
 | `delay`       | `number`                | **(الزامی)** تأخیر دیبانس بر حسب میلی‌ثانیه.                          | -           |
-| `thisContext` | `ThisParameterType<F>`  | کانتکست `this` برای func. هنگام استفاده از متدهای کلاس ضروری است.     | `undefined` |
+| `thisContext` | `ThisParameterType<F>`  | کانتکست `this` برای `func`. هنگام استفاده از متدهای کلاس ضروری است.     | `undefined` |
 | `leading`     | `boolean`               | اگر `true` باشد، تابع در لبه بالارونده (leading edge) اجرا می‌شود.    | `false`     |
 | `trailing`    | `boolean`               | اگر `true` باشد، تابع در لبه پایین‌رونده (trailing edge) اجرا می‌شود. | `true`      |
 
