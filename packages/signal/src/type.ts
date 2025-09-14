@@ -96,6 +96,13 @@ export interface SignalConfig {
    * 'app-theme-signal'
    */
   readonly signalId: string;
+
+  /**
+   * An optional callback function that will be executed when the signal's `destroy` method is called.
+   * This is useful for cleaning up additional resources used by the signal,
+   * such as subscriptions or timers created in operators.
+   */
+  onDestroy?: () => void;
 }
 
 /**
@@ -202,21 +209,6 @@ export interface ComputedSignalConfig<T> extends SignalConfig {
 }
 
 /**
- * The public interface for a `ComputedSignal`. It is a read-only signal
- * that also includes a `destroy` method for essential lifecycle management.
- *
- * @template T The type of the computed value.
- */
-export interface IComputedSignal<T> extends IReadonlySignal<T> {
-  /**
-   * Disconnects the `ComputedSignal` from its dependencies.
-   * This must be called to prevent memory leaks when the signal is no longer needed,
-   * as it stops the automatic re-evaluation.
-   */
-  destroy: () => void;
-}
-
-/**
  * Configuration for creating an `EffectSignal`.
  */
 export interface EffectSignalConfig {
@@ -246,6 +238,13 @@ export interface EffectSignalConfig {
    * @default false
    */
   runImmediately?: boolean;
+
+  /**
+   * An optional callback function that will be executed when the signal's `destroy` method is called.
+   * This is useful for cleaning up additional resources used by the signal,
+   * such as subscriptions or timers created in operators.
+   */
+  onDestroy?: () => void;
 }
 
 /**
