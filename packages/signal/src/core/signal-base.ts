@@ -1,10 +1,6 @@
-import {packageTracer} from '@alwatr/package-tracer';
-
 import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback, SignalConfig} from '../type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {} from '@alwatr/nano-build';
-
-__dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 /**
  * An abstract base class for signal implementations.
