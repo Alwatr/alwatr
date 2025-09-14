@@ -1,10 +1,6 @@
-import {packageTracer} from '@alwatr/package-tracer';
-
-import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback, SignalConfig} from './type.js';
+import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback, SignalConfig} from '../type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
 import type {} from '@alwatr/nano-build';
-
-__dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 /**
  * An abstract base class for signal implementations.
@@ -19,7 +15,7 @@ export abstract class SignalBase<T> {
   /**
    * The unique identifier for this signal instance. Useful for debugging.
    */
-  public readonly signalId: string;
+  public readonly signalId: string = this.config_.signalId;
 
   protected abstract logger_: AlwatrLogger;
 
@@ -40,13 +36,7 @@ export abstract class SignalBase<T> {
     return this.isDestroyed_;
   }
 
-  /**
-   * Initializes a new `SignalBase`.
-   * @param config The configuration for the signal, containing its `signalId`.
-   */
-  public constructor(config: SignalConfig) {
-    this.signalId = config.signalId;
-  }
+  public constructor(protected config_: SignalConfig) {}
 
   /**
    * Removes a specific observer from the observers list.
@@ -171,8 +161,11 @@ export abstract class SignalBase<T> {
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
+    if (this.isDestroyed_) return;
     this.isDestroyed_ = true;
     this.observers_.length = 0; // Clear all observers.
+    this.config_.onDestroy?.(); // Call the optional onDestroy callback.
+    this.config_ = null as unknown as SignalConfig; // Help GC by breaking references.
   }
 
   /**

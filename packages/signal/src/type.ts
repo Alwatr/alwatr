@@ -1,3 +1,4 @@
+import type {DebouncerConfig} from '@alwatr/debounce';
 import type {} from '@alwatr/type-helper';
 
 /**
@@ -94,7 +95,14 @@ export interface SignalConfig {
    * 'user-profile-signal'
    * 'app-theme-signal'
    */
-  readonly signalId: string;
+  signalId: string;
+
+  /**
+   * An optional callback function that will be executed when the signal's `destroy` method is called.
+   * This is useful for cleaning up additional resources used by the signal,
+   * such as subscriptions or timers created in operators.
+   */
+  onDestroy?: () => void;
 }
 
 /**
@@ -116,6 +124,11 @@ export interface StateSignalConfig<T> extends SignalConfig {
  * @template T The type of the signal's value.
  */
 export interface IReadonlySignal<T> {
+  /**
+   * The unique identifier for this signal instance. Useful for debugging.
+   */
+  readonly signalId: string;
+
   /**
    * The current value of the signal.
    */
@@ -196,21 +209,6 @@ export interface ComputedSignalConfig<T> extends SignalConfig {
 }
 
 /**
- * The public interface for a `ComputedSignal`. It is a read-only signal
- * that also includes a `destroy` method for essential lifecycle management.
- *
- * @template T The type of the computed value.
- */
-export interface IComputedSignal<T> extends IReadonlySignal<T> {
-  /**
-   * Disconnects the `ComputedSignal` from its dependencies.
-   * This must be called to prevent memory leaks when the signal is no longer needed,
-   * as it stops the automatic re-evaluation.
-   */
-  destroy: () => void;
-}
-
-/**
  * Configuration for creating an `EffectSignal`.
  */
 export interface EffectSignalConfig {
@@ -240,6 +238,13 @@ export interface EffectSignalConfig {
    * @default false
    */
   runImmediately?: boolean;
+
+  /**
+   * An optional callback function that will be executed when the signal's `destroy` method is called.
+   * This is useful for cleaning up additional resources used by the signal,
+   * such as subscriptions or timers created in operators.
+   */
+  onDestroy?: () => void;
 }
 
 /**
@@ -259,4 +264,22 @@ export interface IEffectSignal {
    * @returns `true` if the signal is destroyed, `false` otherwise.
    */
   readonly isDestroyed: boolean;
+}
+
+// Exclude 'callback' and 'thisContext' as they are managed internally.
+export interface DebounceSignalConfig extends Omit<DebouncerConfig<never>, 'func' | 'thisContext'> {
+  /**
+   * A unique identifier for the signal. This is crucial for debugging, logging, and differentiating signals,
+   * especially in large applications.
+   *
+   * @default `${sourceSignal.signalId}-debounced`
+   */
+  signalId?: string;
+
+  /**
+   * An optional callback function that will be executed when the signal's `destroy` method is called.
+   * This is useful for cleaning up additional resources used by the signal,
+   * such as subscriptions or timers created in operators.
+   */
+  onDestroy?: () => void;
 }

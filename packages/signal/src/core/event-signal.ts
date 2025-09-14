@@ -3,7 +3,7 @@ import {createLogger} from '@alwatr/logger';
 
 import {SignalBase} from './signal-base.js';
 
-import type {SignalConfig} from './type.js';
+import type {SignalConfig} from '../type.js';
 
 /**
  * A stateless signal for dispatching transient events.
@@ -35,10 +35,6 @@ import type {SignalConfig} from './type.js';
 export class EventSignal<T = void> extends SignalBase<T> {
   protected logger_ = createLogger(`event-signal: ${this.signalId}`);
 
-  /**
-   * Initializes a new `EventSignal`.
-   * @param config The configuration for the signal, containing its `signalId`.
-   */
   public constructor(config: SignalConfig) {
     super(config);
     this.logger_.logMethod?.('constructor');

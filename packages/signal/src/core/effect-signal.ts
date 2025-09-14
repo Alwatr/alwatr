@@ -1,7 +1,7 @@
 import {delay} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
 
-import type {EffectSignalConfig, IEffectSignal, SubscribeResult} from './type.js';
+import type {EffectSignalConfig, IEffectSignal, SubscribeResult} from '../type.js';
 
 /**
  * Manages a side-effect that runs in response to changes in dependency signals.
@@ -57,10 +57,6 @@ export class EffectSignal implements IEffectSignal {
     return this.isDestroyed__;
   }
 
-  /**
-   * Initializes a new `EffectSignal`.
-   * @param config The configuration, including dependencies (`deps`) and the `run` function.
-   */
   public constructor(protected config_: EffectSignalConfig) {
     this.logger_.logMethod?.('constructor');
     this.run_ = this.run_.bind(this);
@@ -142,6 +138,9 @@ export class EffectSignal implements IEffectSignal {
       subscription.unsubscribe();
     }
     this.subscriptionList__.length = 0; // Clear the array of subscriptions.
+
+    this.config_.onDestroy?.(); // Call the optional onDestroy callback.
+
     this.config_ = null as unknown as EffectSignalConfig; // Release config closure.
   }
 }

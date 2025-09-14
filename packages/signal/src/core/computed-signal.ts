@@ -3,7 +3,7 @@ import {createLogger} from '@alwatr/logger';
 
 import {StateSignal} from './state-signal.js';
 
-import type {ComputedSignalConfig, IComputedSignal, SubscribeResult} from './type.js';
+import type {ComputedSignalConfig, IReadonlySignal, SubscribeResult} from '../type.js';
 
 /**
  * A read-only signal that derives its value from a set of dependency signals.
@@ -44,7 +44,7 @@ import type {ComputedSignalConfig, IComputedSignal, SubscribeResult} from './typ
  * // --- IMPORTANT: Clean up when done ---
  * fullName.destroy();
  */
-export class ComputedSignal<T> implements IComputedSignal<T> {
+export class ComputedSignal<T> implements IReadonlySignal<T> {
   public readonly signalId = this.config_.signalId;
 
   protected readonly logger_ = createLogger(`computed-signal: ${this.signalId}`);
@@ -62,10 +62,6 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
   private readonly subscriptionList__: SubscribeResult[] = [];
   private isRecalculating__ = false;
 
-  /**
-   * Initializes a new `ComputedSignal`.
-   * @param config The configuration, including dependencies (`deps`) and the getter function (`get`).
-   */
   public constructor(protected config_: ComputedSignalConfig<T>) {
     this.logger_.logMethod?.('constructor');
     this.recalculate_ = this.recalculate_.bind(this);
@@ -125,6 +121,9 @@ export class ComputedSignal<T> implements IComputedSignal<T> {
 
     // Destroy the internal signal to clean up its resources and mark it as destroyed.
     this.internalSignal_.destroy();
+
+    this.config_.onDestroy?.(); // Call the optional onDestroy callback.
+
     this.config_ = null as unknown as ComputedSignalConfig<T>; // Release config closure.
   }
 

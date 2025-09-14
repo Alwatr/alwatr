@@ -3,7 +3,7 @@ import {createLogger} from '@alwatr/logger';
 
 import {SignalBase} from './signal-base.js';
 
-import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, IReadonlySignal} from './type.js';
+import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, IReadonlySignal} from '../type.js';
 
 /**
  * A stateful signal that holds a value and notifies listeners when the value changes.
@@ -42,10 +42,6 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
   private value__: T;
   protected logger_ = createLogger(`state-signal: ${this.signalId}`);
 
-  /**
-   * Initializes a new `StateSignal`.
-   * @param config The configuration for the state signal, including `signalId` and `initialValue`.
-   */
   public constructor(config: StateSignalConfig<T>) {
     super(config);
     this.value__ = config.initialValue;
@@ -161,8 +157,8 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * This is crucial for memory management to prevent leaks.
    */
   public override destroy(): void {
-    super.destroy();
     // Clear the value to allow for garbage collection.
     this.value__ = null as T;
+    super.destroy();
   }
 }
