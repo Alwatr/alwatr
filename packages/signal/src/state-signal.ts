@@ -32,6 +32,9 @@ import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeRes
  * // Set a new value, which triggers the notification.
  * counter.set(1); // Outputs: "Counter changed to: 1"
  *
+ * // Update value based on the previous value.
+ * counter.update(current => current + 1); // Outputs: "Counter changed to: 2"
+ *
  * // Unsubscribe when no longer needed.
  * subscription.unsubscribe();
  */
@@ -90,6 +93,29 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     delay.nextMicrotask().then(() => {
       this.notify_(newValue);
     });
+  }
+
+  /**
+   * Updates the signal's value based on its previous value.
+   *
+   * This method is particularly useful for state transitions that depend on the current value,
+   * especially for objects or arrays, as it promotes an immutable update pattern.
+   *
+   * @param updater A function that receives the current value and returns the new value.
+   *
+   * @example
+   * // For a counter
+   * counterSignal.update(current => current + 1);
+   *
+   * // For an object state
+   * userSignal.update(currentUser => ({ ...currentUser, loggedIn: true }));
+   */
+  public update(updater: (previousValue: T) => T): void {
+    this.logger_.logMethod?.('update');
+    this.checkDestroyed_();
+    // The updater function is called with the current value to compute the new value,
+    // which is then passed to the `set` method.
+    this.set(updater(this.value__));
   }
 
   /**
