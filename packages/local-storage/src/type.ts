@@ -1,3 +1,6 @@
+import type {} from '@alwatr/nano-build';
+import type {} from '@alwatr/type-helper';
+
 export interface StorageMeta {
   /**
    * The unique name for the storage item.
