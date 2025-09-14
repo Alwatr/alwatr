@@ -18,8 +18,8 @@ import type {ComputedSignalConfig} from '../type.js';
  * @returns {IComputedSignal<T>} A new, read-only computed signal.
  *
  * @example
- * const firstName = createStateSignal({ initialValue: 'John' });
- * const lastName = createStateSignal({ initialValue: 'Doe' });
+ * const firstName = createStateSignal({ signalId: 'firstName', initialValue: 'John' });
+ * const lastName = createStateSignal({ signalId: 'lastName', initialValue: 'Doe' });
  *
  * const fullName = createComputedSignal({
  *   signalId: 'fullName',
