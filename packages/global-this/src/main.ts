@@ -1,10 +1,12 @@
 export type GlobalThis = typeof globalThis;
 
-const globalThis__: GlobalThis =
-  (typeof globalThis === 'object' && globalThis) ||
-  (typeof window === 'object' && window) ||
-  (typeof global === 'object' && global) ||
-  self;
+const globalThis__: GlobalThis = /* #__PURE__ */ (() => {
+  if (typeof globalThis === 'object' && globalThis) return globalThis;
+  if (typeof window === 'object' && window) return window;
+  if (typeof global === 'object' && global) return global;
+  if (typeof self === 'object' && self) return self;
+  throw new Error('alwatr/logger: Could not find global object.');
+})();
 
 /**
  * Provides access to `globalThis`, ensuring cross-platform compatibility.
