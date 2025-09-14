@@ -82,10 +82,7 @@ export class Debouncer<F extends AnyFunction> {
     }
 
     this.timerId__ = setTimeout(() => {
-      // If trailing is enabled, and either:
-      // 1. It's not the first trigger (so we need a trailing call).
-      // 2. It IS the first trigger, but leading was disabled (so this is the ONLY call).
-      if (this.config__.trailing === true && (!firstTrigger || this.config__.leading !== true)) {
+      if (this.config__.trailing === true) {
         this.invoke__();
       }
       this.cleanup__();
@@ -156,8 +153,9 @@ export class Debouncer<F extends AnyFunction> {
    * The core execution logic.
    */
   private invoke__(): void {
-    if (this.lastArgs__) {
+    if (this.lastArgs__) { // only call if we have new args (skip trailing call if leading already called)
       this.config__.func.apply(this.config__.thisContext, this.lastArgs__);
+      this.lastArgs__ = undefined;
     }
   }
 }
