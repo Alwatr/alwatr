@@ -3,7 +3,7 @@ import {ComputedSignal} from '../core/computed-signal.js';
 import type {ComputedSignalConfig} from '../type.js';
 
 /**
- * Creates a  * A read-only signal that derives its value from a set of dependency signals.
+ * Creates a read-only signal that derives its value from a set of dependency signals.
  *
  * `ComputedSignal` is a powerful tool for creating values that reactively update when their underlying
  * data sources change. Its value is memoized, meaning the `get` function is only re-evaluated when
