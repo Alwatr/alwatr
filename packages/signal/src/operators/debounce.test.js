@@ -64,7 +64,7 @@ describe('createDebouncedSignal', () => {
     sourceSignal.set(1);
     debouncedSignal.destroy();
     jest.advanceTimersByTime(100);
-    expect(debouncedSignal.get()).toBe(0); // Should not update after destroy
+    expect(() => debouncedSignal.get()).toThrow(); // Should throw on access after 
   });
 
   it('should call onDestroy callback if provided', () => {
