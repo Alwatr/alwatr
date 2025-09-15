@@ -2,7 +2,6 @@ import {delay} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
 
 import type {EffectSignalConfig, IEffectSignal, SubscribeResult} from '../type.js';
-import type {AlwatrLogger} from '@alwatr/logger';
 
 /**
  * Manages a side-effect that runs in response to changes in dependency signals.
@@ -47,31 +46,31 @@ export class EffectSignal implements IEffectSignal {
   /**
    * The unique identifier for this signal instance.
    */
-  public readonly signalId: string;
+  public readonly signalId = this.config_.signalId ? this.config_.signalId : `[${this.config_.deps.map((dep) => dep.signalId).join(', ')}]`;
 
   /**
    * The logger instance for this signal.
    * @protected
    */
-  protected readonly logger_: AlwatrLogger;
+  protected readonly logger_ = createLogger(`effect-signal: ${this.signalId}`);
 
   /**
    * A list of subscriptions to dependency signals.
    * @private
    */
-  private readonly dependencySubscriptions_: SubscribeResult[] = [];
+  private readonly dependencySubscriptions__: SubscribeResult[] = [];
 
   /**
    * A flag to prevent concurrent executions of the effect.
    * @private
    */
-  private isRunning_ = false;
+  private isRunning__ = false;
 
   /**
    * A flag indicating whether the effect has been destroyed.
    * @private
    */
-  private isDestroyed_ = false;
+  private isDestroyed__ = false;
 
   /**
    * Indicates whether the effect signal has been destroyed.
@@ -80,28 +79,23 @@ export class EffectSignal implements IEffectSignal {
    * @returns `true` if the signal is destroyed, `false` otherwise.
    */
   public get isDestroyed(): boolean {
-    return this.isDestroyed_;
+    return this.isDestroyed__;
   }
 
-  /**
-   * Constructs a new EffectSignal.
-   * @param config_ The configuration for the effect signal.
-   */
   public constructor(protected config_: EffectSignalConfig) {
-    this.signalId = config_.signalId;
-    this.logger_ = createLogger(`effect-signal:${this.signalId}`);
     this.logger_.logMethod?.('constructor');
-    this.run = this.run.bind(this);
+    this.run_ = this.run_.bind(this);
 
     // Subscribe to all dependencies. We don't need the previous value,
     // as the `runImmediately` option controls the initial execution.
     for (const signal of config_.deps) {
-      this.dependencySubscriptions_.push(signal.subscribe(this.run, {receivePrevious: false}));
+      this.dependencySubscriptions__.push(signal.subscribe(this.run_, {receivePrevious: false}));
     }
 
     // Run the effect immediately if requested.
     if (config_.runImmediately === true) {
-      this.run();
+      // We don't need to await this, let it run in the background.
+      void this.run_();
     }
   }
 
@@ -111,26 +105,40 @@ export class EffectSignal implements IEffectSignal {
    * This method batches updates using a macrotask (`delay.nextMacrotask`) to ensure the
    * `run` function executes only once per event loop tick, even if multiple
    * dependencies change simultaneously.
+   * @protected
    */
-  public async run(): Promise<void> {
-    if (this.isRunning_ || this.isDestroyed_) return;
+  protected async run_(): Promise<void> {
+    this.logger_.logMethod?.('run_');
 
-    this.logger_.logMethod?.('run');
-    this.isRunning_ = true;
+    if (this.isDestroyed__) {
+      this.logger_.incident?.('run_', 'run_on_destroyed_signal');
+      return;
+    }
+    if (this.isRunning__) {
+      // If an execution is already scheduled, do nothing.
+      this.logger_.logStep?.('run_', 'skipped_because_already_running');
+      return;
+    }
+
+    this.isRunning__ = true;
 
     try {
       // Wait for the next macrotask to batch simultaneous updates.
       await delay.nextMacrotask();
-      if (this.isDestroyed_) return;
+      if (this.isDestroyed__) {
+        this.logger_.incident?.('run_', 'destroyed_during_delay');
+        return;
+      }
 
+      this.logger_.logStep?.('run_', 'executing_effect');
       await this.config_.run();
     }
     catch (err) {
-      this.logger_.error('run', 'effect_failed', err);
+      this.logger_.error('run_', 'effect_failed', err);
     }
 
     // Reset the flag after the current execution is complete.
-    this.isRunning_ = false;
+    this.isRunning__ = false;
   }
 
   /**
@@ -142,13 +150,19 @@ export class EffectSignal implements IEffectSignal {
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
-    this.isDestroyed_ = true;
+
+    if (this.isDestroyed__) {
+      this.logger_.incident?.('destroy', 'already_destroyed');
+      return;
+    }
+
+    this.isDestroyed__ = true;
 
     // Unsubscribe from all upstream dependencies.
-    for (const subscription of this.dependencySubscriptions_) {
+    for (const subscription of this.dependencySubscriptions__) {
       subscription.unsubscribe();
     }
-    this.dependencySubscriptions_.length = 0; // Clear the array of subscriptions.
+    this.dependencySubscriptions__.length = 0; // Clear the array of subscriptions.
 
     this.config_.onDestroy?.(); // Call the optional onDestroy callback.
     this.config_ = null as unknown as EffectSignalConfig; // Release config closure.
