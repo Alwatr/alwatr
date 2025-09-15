@@ -127,6 +127,7 @@ export class EffectSignal implements IEffectSignal {
       await delay.nextMacrotask();
       if (this.isDestroyed__) {
         this.logger_.incident?.('run_', 'destroyed_during_delay');
+        this.isRunning__ = false;
         return;
       }
 
