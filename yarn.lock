@@ -5,10 +5,10 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@alwatr/debounce@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@alwatr/debounce@npm:1.1.0"
-  checksum: 10c0/c588ce4c10815cb9642d8a10d6cf5cf0257721f1eddba16eac8c5eb10e15b92c7a50dcfef39b2f1c95e25e626888d5095ddd008e4b301c4b202582fe49b22bae
+"@alwatr/debounce@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@alwatr/debounce@npm:1.1.1"
+  checksum: 10c0/5aebae3d7d98dde21e004526408a994ce5eeadeecca61af03c8a37736e5d742101ea0b9d17892151472b564c83ffc29bf1e9bef9b18ee7416268abb81ff1b951
   languageName: node
   linkType: hard
 
@@ -99,7 +99,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/signal@workspace:packages/signal"
   dependencies:
-    "@alwatr/debounce": "npm:^1.1.0"
+    "@alwatr/debounce": "npm:^1.1.1"
     "@alwatr/delay": "npm:^6.0.4"
     "@alwatr/logger": "npm:^6.0.0"
     "@alwatr/nano-build": "npm:^6.1.2"
@@ -2894,11 +2894,11 @@ __metadata:
   linkType: hard
 
 "baseline-browser-mapping@npm:^2.8.2":
-  version: 2.8.3
-  resolution: "baseline-browser-mapping@npm:2.8.3"
+  version: 2.8.4
+  resolution: "baseline-browser-mapping@npm:2.8.4"
   bin:
     baseline-browser-mapping: dist/cli.js
-  checksum: 10c0/710db4cf8eeb0bb5b7edec686523c2cb0ad193402e5a89d06bbf613048a568c1152797d0e8894bd1b5a089f045e532b5a41257be2a59d4effe81474b085a4f4a
+  checksum: 10c0/d85c8e9b919d4f7d5b46cf3d89e6a8be6e74086934ff6f362b720be8e06656021a0207e2ba1efe8ae2563dec893a76ad15633e06f3e153984fab8118e2dc4ae7
   languageName: node
   linkType: hard
 
@@ -6935,11 +6935,11 @@ __metadata:
   linkType: hard
 
 "pretty-ms@npm:^9.2.0":
-  version: 9.2.0
-  resolution: "pretty-ms@npm:9.2.0"
+  version: 9.3.0
+  resolution: "pretty-ms@npm:9.3.0"
   dependencies:
     parse-ms: "npm:^4.0.0"
-  checksum: 10c0/ab6d066f90e9f77020426986e1b018369f41575674544c539aabec2e63a20fec01166d8cf6571d0e165ad11cfe5a8134a2a48a36d42ab291c59c6deca5264cbb
+  checksum: 10c0/555ea39a1de48a30601938aedb76d682871d33b6dee015281c37108921514b11e1792928b1648c2e5589acc73c8ef0fb5e585fb4c718e340a28b86799e90fb34
   languageName: node
   linkType: hard
 

@@ -46,7 +46,7 @@ export class EffectSignal implements IEffectSignal {
   /**
    * The unique identifier for this signal instance.
    */
-  public readonly signalId = this.config_.signalId ? this.config_.signalId : `[${this.config_.deps.map((dep) => dep.signalId).join(', ')}]`;
+  public readonly signalId = this.config_.signalId ?? `[${this.config_.deps.map((dep) => dep.signalId).join(', ')}]`;
 
   /**
    * The logger instance for this signal.

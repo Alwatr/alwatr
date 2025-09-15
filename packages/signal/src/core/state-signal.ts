@@ -134,7 +134,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * @returns An object with an `unsubscribe` method to remove the listener.
    */
   public override subscribe(callback: ListenerCallback<T>, options: SubscribeOptions = {}): SubscribeResult {
-    this.logger_.logMethodArgs?.('subscribe', {options});
+    this.logger_.logMethodArgs?.('subscribe', options);
     this.checkDestroyed_();
 
     // By default, new subscribers to a StateSignal should receive the current value.
@@ -143,7 +143,10 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
       // This is done in a microtask to ensure it happens after the subscription is fully registered.
       delay
         .nextMicrotask()
-        .then(() => callback(this.value__))
+        .then(() => {
+          this.logger_.logStep?.('subscribe', 'immediate_callback');
+          callback(this.value__);
+        })
         .catch((err) => this.logger_.error('subscribe', 'immediate_callback_failed', err));
 
       // If it's a 'once' subscription that receives the previous value, it's now fulfilled.

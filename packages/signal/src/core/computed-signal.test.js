@@ -41,6 +41,15 @@ describe('ComputedSignal', () => {
     expect(signal.get()).toBe(7); // 5 + 2
   });
 
+  it('should notify subscriber with receivePrevious', async () => {
+    const callback = jest.fn();
+
+    signal.subscribe(callback);
+    await delay.nextMacrotask();
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(3);
+  });
+
   it('should notify subscribers when computed value changes', async () => {
     const callback = jest.fn();
     signal.subscribe(callback, {receivePrevious: false});
@@ -130,6 +139,13 @@ describe('ComputedSignal', () => {
     await signal.untilNext();
     expect(callback1).toHaveBeenCalledTimes(1);
     expect(callback2).toHaveBeenCalledTimes(1);
+  });
+
+  it('should update without any subscribers', async () => {
+    expect(signal.get()).toBe(3);
+    dep1.set(7);
+    await signal.untilNext();
+    expect(signal.get()).toBe(9); // 7 + 2
   });
 
   describe('destroyed signal', () => {
