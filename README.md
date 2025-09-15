@@ -181,9 +181,9 @@ These are available on most signal instances.
 
 - **`.subscribe(callback, options?)`**
   Subscribes a listener function that will be called when the signal's value changes or an event is dispatched.
-  -   `callback`: The function to execute.
-  -   `options` (optional): An object to customize subscription behavior (`once`, `priority`, `receivePrevious`).
-  -   *Returns*: A `SubscribeResult` object with an `unsubscribe()` method.
+  - `callback`: The function to execute.
+  - `options` (optional): An object to customize subscription behavior (`once`, `priority`, `receivePrevious`).
+  - _Returns_: A `SubscribeResult` object with an `unsubscribe()` method.
 
 - **`.untilNext(): Promise<T>`**
   Returns a `Promise` that resolves with the next value or payload from the signal. This is useful for `async/await` patterns.
@@ -199,14 +199,14 @@ A stateless signal for dispatching transient events. It does not hold a value.
 
 #### Constructor
 
--   **`new EventSignal<T>(config)`** or **`createEventSignal<T>(config)`**
-    -   `config.signalId`: `string` - A unique identifier for the signal.
-    -   `config.onDestroy?`: `() => void` - An optional cleanup callback.
+- **`new EventSignal<T>(config)`** or **`createEventSignal<T>(config)`**
+  - `config.signalId`: `string` - A unique identifier for the signal.
+  - `config.onDestroy?`: `() => void` - An optional cleanup callback.
 
 #### Methods
 
--   **`.dispatch(payload: T)`**
-    Dispatches an event to all active listeners. The payload is required, but for events without data, you can use `EventSignal<void>` and call `dispatch()` with no arguments.
+- **`.dispatch(payload: T)`**
+  Dispatches an event to all active listeners. The payload is required, but for events without data, you can use `EventSignal<void>` and call `dispatch()` with no arguments.
 
 ---
 
@@ -216,23 +216,23 @@ A stateful signal that holds a value and notifies listeners when it changes.
 
 #### Constructor
 
--   **`new StateSignal<T>(config)`** or **`createStateSignal<T>(config)`**
-    -   `config.signalId`: `string` - A unique identifier.
-    -   `config.initialValue`: `T` - The starting value for the signal.
-    -   `config.onDestroy?`: `() => void` - An optional cleanup callback.
+- **`new StateSignal<T>(config)`** or **`createStateSignal<T>(config)`**
+  - `config.signalId`: `string` - A unique identifier.
+  - `config.initialValue`: `T` - The starting value for the signal.
+  - `config.onDestroy?`: `() => void` - An optional cleanup callback.
 
 #### Properties
 
--   **`.value: T`**
-    Gets the current value of the signal.
+- **`.value: T`**
+  Gets the current value of the signal.
 
 #### Methods
 
--   **`.set(newValue: T)`**
-    Updates the signal's value and notifies listeners. It does not notify if the new value is the same as the old one (using `Object.is` for comparison).
+- **`.set(newValue: T)`**
+  Updates the signal's value and notifies listeners. It does not notify if the new value is the same as the old one (using `Object.is` for comparison).
 
--   **`.update(updater: (previousValue: T) => T)`**
-    Updates the signal's value based on its previous value. The `updater` function receives the current value and should return the new value.
+- **`.update(updater: (previousValue: T) => T)`**
+  Updates the signal's value based on its previous value. The `updater` function receives the current value and should return the new value.
 
 ---
 
@@ -242,16 +242,16 @@ A read-only signal that derives its value from a set of dependency signals.
 
 #### Constructor
 
--   **`new ComputedSignal<T>(config)`** or **`createComputedSignal<T>(config)`**
-    -   `config.signalId`: `string` - A unique identifier.
-    -   `config.deps`: `DependencyList` - An array of `IReadonlySignal` instances that this signal depends on.
-    -   `config.get`: `() => T` - A pure function that computes the value based on its dependencies.
-    -   `config.onDestroy?`: `() => void` - An optional cleanup callback.
+- **`new ComputedSignal<T>(config)`** or **`createComputedSignal<T>(config)`**
+  - `config.signalId`: `string` - A unique identifier.
+  - `config.deps`: `DependencyList` - An array of `IReadonlySignal` instances that this signal depends on.
+  - `config.get`: `() => T` - A pure function that computes the value based on its dependencies.
+  - `config.onDestroy?`: `() => void` - An optional cleanup callback.
 
 #### Properties
 
--   **`.value: T`**
-    Gets the current memoized value. The `get` function is only re-executed if a dependency has changed.
+- **`.value: T`**
+  Gets the current memoized value. The `get` function is only re-executed if a dependency has changed.
 
 ---
 
@@ -261,30 +261,30 @@ Manages a side-effect that runs in response to changes in dependency signals.
 
 #### Constructor
 
--   **`new EffectSignal(config)`** or **`createEffect(config)`**
-    -   `config.deps`: `DependencyList` - An array of `IReadonlySignal` instances to depend on.
-    -   `config.run`: `() => Awaitable<void>` - The side-effect function to execute.
-    -   `config.runImmediately?`: `boolean` (default: `false`) - If `true`, runs the effect once upon creation.
-    -   `config.onDestroy?`: `() => void` - An optional cleanup callback.
+- **`new EffectSignal(config)`** or **`createEffect(config)`**
+  - `config.deps`: `DependencyList` - An array of `IReadonlySignal` instances to depend on.
+  - `config.run`: `() => Awaitable<void>` - The side-effect function to execute.
+  - `config.runImmediately?`: `boolean` (default: `false`) - If `true`, runs the effect once upon creation.
+  - `config.onDestroy?`: `() => void` - An optional cleanup callback.
 
 ### Operators
 
 Operators are functions that create a new signal from a source signal, applying transformations or behaviors.
 
--   **`createDebouncedSignal(sourceSignal, config)`**
-    Creates a `ComputedSignal` that only updates its value after a specified delay of inactivity from the `sourceSignal`.
-    -   `sourceSignal`: The signal to debounce.
-    -   `config`: Debounce options (`delay`, `leading`, `trailing`).
+- **`createDebouncedSignal(sourceSignal, config)`**
+  Creates a `ComputedSignal` that only updates its value after a specified delay of inactivity from the `sourceSignal`.
+  - `sourceSignal`: The signal to debounce.
+  - `config`: Debounce options (`delay`, `leading`, `trailing`).
 
--   **`createFilteredSignal(sourceSignal, predicate, signalId?)`**
-    Creates a `ComputedSignal` that only emits values from the `sourceSignal` that pass the `predicate` function.
-    -   `sourceSignal`: The signal to filter.
-    -   `predicate`: A function that returns `true` for values to keep.
+- **`createFilteredSignal(sourceSignal, predicate, signalId?)`**
+  Creates a `ComputedSignal` that only emits values from the `sourceSignal` that pass the `predicate` function.
+  - `sourceSignal`: The signal to filter.
+  - `predicate`: A function that returns `true` for values to keep.
 
--   **`createMappedSignal(sourceSignal, projectFunction, signalId?)`**
-    Creates a `ComputedSignal` that transforms each value from the `sourceSignal` using the `projectFunction`.
-    -   `sourceSignal`: The signal to map.
-    -   `projectFunction`: A function that transforms the value.
+- **`createMappedSignal(sourceSignal, projectFunction, signalId?)`**
+  Creates a `ComputedSignal` that transforms each value from the `sourceSignal` using the `projectFunction`.
+  - `sourceSignal`: The signal to map.
+  - `projectFunction`: A function that transforms the value.
 
 ## Sponsors
 
@@ -478,9 +478,9 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 
 - **`.subscribe(callback, options?)`**
   یک تابع شنونده را مشترک می‌کند که با تغییر مقدار سیگنال یا ارسال یک رویداد فراخوانی می‌شود.
-  -   `callback`: تابعی که باید اجرا شود.
-  -   `options` (اختیاری): یک شی برای سفارشی‌سازی رفتار اشتراک (`once`, `priority`, `receivePrevious`).
-  -   *خروجی*: یک شی `SubscribeResult` با متد `unsubscribe()`.
+  - `callback`: تابعی که باید اجرا شود.
+  - `options` (اختیاری): یک شی برای سفارشی‌سازی رفتار اشتراک (`once`, `priority`, `receivePrevious`).
+  - _خروجی_: یک شی `SubscribeResult` با متد `unsubscribe()`.
 
 - **`.untilNext(): Promise<T>`**
   یک `Promise` را برمی‌گرداند که با مقدار یا پی‌لود بعدی از سیگنال، resolve می‌شود. این برای الگوهای `async/await` مفید است.
@@ -496,14 +496,14 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 
 #### سازنده
 
--   **`new EventSignal<T>(config)`** یا **`createEventSignal<T>(config)`**
-    -   `config.signalId`: `string` - یک شناسه منحصر به فرد برای سیگنال.
-    -   `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
+- **`new EventSignal<T>(config)`** یا **`createEventSignal<T>(config)`**
+  - `config.signalId`: `string` - یک شناسه منحصر به فرد برای سیگنال.
+  - `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
 
 #### متدها
 
--   **`.dispatch(payload: T)`**
-    یک رویداد را به تمام شنوندگان فعال ارسال می‌کند. پی‌لود الزامی است، اما برای رویدادهای بدون داده، می‌توانید از `EventSignal<void>` استفاده کرده و `dispatch()` را بدون آرگومان فراخوانی کنید.
+- **`.dispatch(payload: T)`**
+  یک رویداد را به تمام شنوندگان فعال ارسال می‌کند. پی‌لود الزامی است، اما برای رویدادهای بدون داده، می‌توانید از `EventSignal<void>` استفاده کرده و `dispatch()` را بدون آرگومان فراخوانی کنید.
 
 ---
 
@@ -513,23 +513,23 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 
 #### سازنده
 
--   **`new StateSignal<T>(config)`** یا **`createStateSignal<T>(config)`**
-    -   `config.signalId`: `string` - یک شناسه منحصر به فرد.
-    -   `config.initialValue`: `T` - مقدار اولیه برای سیگنال.
-    -   `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
+- **`new StateSignal<T>(config)`** یا **`createStateSignal<T>(config)`**
+  - `config.signalId`: `string` - یک شناسه منحصر به فرد.
+  - `config.initialValue`: `T` - مقدار اولیه برای سیگنال.
+  - `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
 
 #### خصوصیات
 
--   **`.value: T`**
-    مقدار فعلی سیگنال را دریافت می‌کند.
+- **`.value: T`**
+  مقدار فعلی سیگنال را دریافت می‌کند.
 
 #### متدها
 
--   **`.set(newValue: T)`**
-    مقدار سیگنال را به‌روز می‌کند و به شنوندگان اطلاع می‌دهد. اگر مقدار جدید با مقدار قبلی یکسان باشد (با استفاده از `Object.is` برای مقایسه)، اطلاع‌رسانی نمی‌کند.
+- **`.set(newValue: T)`**
+  مقدار سیگنال را به‌روز می‌کند و به شنوندگان اطلاع می‌دهد. اگر مقدار جدید با مقدار قبلی یکسان باشد (با استفاده از `Object.is` برای مقایسه)، اطلاع‌رسانی نمی‌کند.
 
--   **`.update(updater: (previousValue: T) => T)`**
-    مقدار سیگنال را بر اساس مقدار قبلی آن به‌روز می‌کند. تابع `updater` مقدار فعلی را دریافت کرده و باید مقدار جدید را برگرداند.
+- **`.update(updater: (previousValue: T) => T)`**
+  مقدار سیگنال را بر اساس مقدار قبلی آن به‌روز می‌کند. تابع `updater` مقدار فعلی را دریافت کرده و باید مقدار جدید را برگرداند.
 
 ---
 
@@ -539,16 +539,16 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 
 #### سازنده
 
--   **`new ComputedSignal<T>(config)`** یا **`createComputedSignal<T>(config)`**
-    -   `config.signalId`: `string` - یک شناسه منحصر به فرد.
-    -   `config.deps`: `DependencyList` - آرایه‌ای از نمونه‌های `IReadonlySignal` که این سیگنال به آن‌ها وابسته است.
-    -   `config.get`: `() => T` - یک تابع خالص که مقدار را بر اساس وابستگی‌های خود محاسبه می‌کند.
-    -   `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
+- **`new ComputedSignal<T>(config)`** یا **`createComputedSignal<T>(config)`**
+  - `config.signalId`: `string` - یک شناسه منحصر به فرد.
+  - `config.deps`: `DependencyList` - آرایه‌ای از نمونه‌های `IReadonlySignal` که این سیگنال به آن‌ها وابسته است.
+  - `config.get`: `() => T` - یک تابع خالص که مقدار را بر اساس وابستگی‌های خود محاسبه می‌کند.
+  - `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
 
 #### خصوصیات
 
--   **`.value: T`**
-    مقدار memoized شده فعلی را دریافت می‌کند. تابع `get` فقط در صورتی دوباره اجرا می‌شود که یکی از وابستگی‌ها تغییر کرده باشد.
+- **`.value: T`**
+  مقدار memoized شده فعلی را دریافت می‌کند. تابع `get` فقط در صورتی دوباره اجرا می‌شود که یکی از وابستگی‌ها تغییر کرده باشد.
 
 ---
 
@@ -558,30 +558,30 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 
 #### سازنده
 
--   **`new EffectSignal(config)`** یا **`createEffect(config)`**
-    -   `config.deps`: `DependencyList` - آرایه‌ای از نمونه‌های `IReadonlySignal` برای وابستگی.
-    -   `config.run`: `() => Awaitable<void>` - تابع اثر جانبی برای اجرا.
-    -   `config.runImmediately?`: `boolean` (پیش‌فرض: `false`) - اگر `true` باشد، اثر را یک بار در هنگام ایجاد اجرا می‌کند.
-    -   `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
+- **`new EffectSignal(config)`** یا **`createEffect(config)`**
+  - `config.deps`: `DependencyList` - آرایه‌ای از نمونه‌های `IReadonlySignal` برای وابستگی.
+  - `config.run`: `() => Awaitable<void>` - تابع اثر جانبی برای اجرا.
+  - `config.runImmediately?`: `boolean` (پیش‌فرض: `false`) - اگر `true` باشد، اثر را یک بار در هنگام ایجاد اجرا می‌کند.
+  - `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
 
 ### عملگرها
 
 عملگرها توابعی هستند که یک سیگنال جدید را از یک سیگنال منبع ایجاد می‌کنند و تبدیلات یا رفتارهایی را اعمال می‌کنند.
 
--   **`createDebouncedSignal(sourceSignal, config)`**
-    یک `ComputedSignal` ایجاد می‌کند که مقدار خود را فقط پس از یک تأخیر مشخص از عدم فعالیت از `sourceSignal` به‌روز می‌کند.
-    -   `sourceSignal`: سیگنال برای debounce کردن.
-    -   `config`: گزینه‌های Debounce (`delay`, `leading`, `trailing`).
+- **`createDebouncedSignal(sourceSignal, config)`**
+  یک `ComputedSignal` ایجاد می‌کند که مقدار خود را فقط پس از یک تأخیر مشخص از عدم فعالیت از `sourceSignal` به‌روز می‌کند.
+  - `sourceSignal`: سیگنال برای debounce کردن.
+  - `config`: گزینه‌های Debounce (`delay`, `leading`, `trailing`).
 
--   **`createFilteredSignal(sourceSignal, predicate, signalId?)`**
-    یک `ComputedSignal` ایجاد می‌کند که فقط مقادیری از `sourceSignal` را منتشر می‌کند که از تابع `predicate` عبور کنند.
-    -   `sourceSignal`: سیگنال برای فیلتر کردن.
-    -   `predicate`: تابعی که برای مقادیر مورد نظر `true` برمی‌گرداند.
+- **`createFilteredSignal(sourceSignal, predicate, signalId?)`**
+  یک `ComputedSignal` ایجاد می‌کند که فقط مقادیری از `sourceSignal` را منتشر می‌کند که از تابع `predicate` عبور کنند.
+  - `sourceSignal`: سیگنال برای فیلتر کردن.
+  - `predicate`: تابعی که برای مقادیر مورد نظر `true` برمی‌گرداند.
 
--   **`createMappedSignal(sourceSignal, projectFunction, signalId?)`**
-    یک `ComputedSignal` ایجاد می‌کند که هر مقدار از `sourceSignal` را با استفاده از `projectFunction` تبدیل می‌کند.
-    -   `sourceSignal`: سیگنال برای map کردن.
-    -   `projectFunction`: تابعی که مقدار را تبدیل می‌کند.
+- **`createMappedSignal(sourceSignal, projectFunction, signalId?)`**
+  یک `ComputedSignal` ایجاد می‌کند که هر مقدار از `sourceSignal` را با استفاده از `projectFunction` تبدیل می‌کند.
+  - `sourceSignal`: سیگنال برای map کردن.
+  - `projectFunction`: تابعی که مقدار را تبدیل می‌کند.
 
 ## حامیان (Sponsors)
 
