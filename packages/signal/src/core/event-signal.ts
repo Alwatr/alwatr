@@ -42,7 +42,6 @@ export class EventSignal<T = void> extends SignalBase<T> {
   public constructor(config: SignalConfig) {
     super(config);
     this.logger_.logMethod?.('constructor');
-    this.notify_ = this.notify_.bind(this);
   }
 
   /**
