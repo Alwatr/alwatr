@@ -26,7 +26,7 @@ import type {EffectSignalConfig, IEffectSignal, SubscribeResult} from '../type.j
  *   signalId: 'analytics-effect',
  *   deps: [counter, user],
  *   run: () => {
- *     console.log(`Analytics: User '${user.value}' clicked ${counter.value} times.`);
+ *     console.log(`Analytics: User '${user.get()}' clicked ${counter.get()} times.`);
  *   },
  *   runImmediately: true, // Optional: run once on creation
  * });
@@ -84,18 +84,18 @@ export class EffectSignal implements IEffectSignal {
 
   public constructor(protected config_: EffectSignalConfig) {
     this.logger_.logMethod?.('constructor');
-    this.run_ = this.run_.bind(this);
+    this.scheduleExecution_ = this.scheduleExecution_.bind(this);
 
     // Subscribe to all dependencies. We don't need the previous value,
     // as the `runImmediately` option controls the initial execution.
     for (const signal of config_.deps) {
-      this.dependencySubscriptions__.push(signal.subscribe(this.run_, {receivePrevious: false}));
+      this.dependencySubscriptions__.push(signal.subscribe(this.scheduleExecution_, {receivePrevious: false}));
     }
 
     // Run the effect immediately if requested.
     if (config_.runImmediately === true) {
       // We don't need to await this, let it run in the background.
-      void this.run_();
+      void this.scheduleExecution_();
     }
   }
 
@@ -107,16 +107,16 @@ export class EffectSignal implements IEffectSignal {
    * dependencies change simultaneously.
    * @protected
    */
-  protected async run_(): Promise<void> {
-    this.logger_.logMethod?.('run_');
+  protected async scheduleExecution_(): Promise<void> {
+    this.logger_.logMethod?.('scheduleExecution_');
 
     if (this.isDestroyed__) {
-      this.logger_.incident?.('run_', 'run_on_destroyed_signal');
+      this.logger_.incident?.('scheduleExecution_', 'schedule_execution_on_destroyed_signal');
       return;
     }
     if (this.isRunning__) {
       // If an execution is already scheduled, do nothing.
-      this.logger_.logStep?.('run_', 'skipped_because_already_running');
+      this.logger_.logStep?.('scheduleExecution_', 'skipped_because_already_running');
       return;
     }
 
@@ -126,16 +126,16 @@ export class EffectSignal implements IEffectSignal {
       // Wait for the next macrotask to batch simultaneous updates.
       await delay.nextMacrotask();
       if (this.isDestroyed__) {
-        this.logger_.incident?.('run_', 'destroyed_during_delay');
+        this.logger_.incident?.('scheduleExecution_', 'destroyed_during_delay');
         this.isRunning__ = false;
         return;
       }
 
-      this.logger_.logStep?.('run_', 'executing_effect');
+      this.logger_.logStep?.('scheduleExecution_', 'executing_effect');
       await this.config_.run();
     }
     catch (err) {
-      this.logger_.error('run_', 'effect_failed', err);
+      this.logger_.error('scheduleExecution_', 'effect_failed', err);
     }
 
     // Reset the flag after the current execution is complete.

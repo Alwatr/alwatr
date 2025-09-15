@@ -24,10 +24,10 @@ import type {ComputedSignalConfig} from '../type.js';
  * const fullName = createComputedSignal({
  *   signalId: 'fullName',
  *   deps: [firstName, lastName],
- *   get: () => `${firstName.value} ${lastName.value}`,
+ *   get: () => `${firstName.get()} ${lastName.get()}`,
  * });
  *
- * console.log(fullName.value); // "John Doe"
+ * console.log(fullName.get()); // "John Doe"
  *
  * // IMPORTANT: Always destroy a computed signal when no longer needed.
  * // fullName.destroy();

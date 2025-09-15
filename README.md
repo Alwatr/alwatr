@@ -74,10 +74,10 @@ import {ComputedSignal} from '@alwatr/signal';
 const fullName = new ComputedSignal<string>({
   signalId: 'user-fullName',
   deps: [firstName], // This computed signal depends on firstName.
-  get: () => `User: ${firstName.value}`,
+  get: () => `User: ${firstName.get()}`,
 });
 
-console.log(fullName.value); // Outputs: "User: John"
+console.log(fullName.get()); // Outputs: "User: John"
 ```
 
 ### 4. Create an Effect Signal
@@ -90,7 +90,7 @@ import {EffectSignal} from '@alwatr/signal';
 const loggerEffect = new EffectSignal({
   deps: [fullName, counter], // This effect depends on fullName and counter.
   run: () => {
-    console.log(`${fullName.value} has clicked ${counter.value} times.`);
+    console.log(`${fullName.get()} has clicked ${counter.get()} times.`);
   },
 });
 ```
@@ -139,7 +139,7 @@ Signals that depend on other signals (like `ComputedSignal` and `EffectSignal`) 
 // Create a computed signal
 const isEven = new ComputedSignal({
   deps: [counter],
-  get: () => counter.value % 2 === 0,
+  get: () => counter.get() % 2 === 0,
 });
 
 // ... use it for a while ...
@@ -223,7 +223,7 @@ A stateful signal that holds a value and notifies listeners when it changes.
 
 #### Properties
 
-- **`.value: T`**
+- **`.get(): T`**
   Gets the current value of the signal.
 
 #### Methods
@@ -250,7 +250,7 @@ A read-only signal that derives its value from a set of dependency signals.
 
 #### Properties
 
-- **`.value: T`**
+- **`.get(): T`**
   Gets the current memoized value. The `get` function is only re-executed if a dependency has changed.
 
 ---
@@ -371,10 +371,10 @@ import {ComputedSignal} from '@alwatr/signal';
 const fullName = new ComputedSignal<string>({
   signalId: 'user-fullName',
   deps: [firstName], // این سیگنال محاسباتی به firstName وابسته است
-  get: () => `User: ${firstName.value}`,
+  get: () => `User: ${firstName.get()}`,
 });
 
-console.log(fullName.value); // خروجی: "User: John"
+console.log(fullName.get()); // خروجی: "User: John"
 ```
 
 ### ۴. ایجاد `EffectSignal`
@@ -387,7 +387,7 @@ import {EffectSignal} from '@alwatr/signal';
 const loggerEffect = new EffectSignal({
   deps: [fullName, counter], // این افکت به fullName و counter وابسته است
   run: () => {
-    console.log(`${fullName.value} has clicked ${counter.value} times.`);
+    console.log(`${fullName.get()} has clicked ${counter.get()} times.`);
   },
 });
 ```
@@ -436,7 +436,7 @@ User: Jane has clicked 1 times.
 // یک سیگنال محاسباتی ایجاد کنید
 const isEven = new ComputedSignal({
   deps: [counter],
-  get: () => counter.value % 2 === 0,
+  get: () => counter.get() % 2 === 0,
 });
 
 // ... مدتی از آن استفاده کنید ...
@@ -520,7 +520,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 
 #### خصوصیات
 
-- **`.value: T`**
+- **`.get(): T`**
   مقدار فعلی سیگنال را دریافت می‌کند.
 
 #### متدها
@@ -547,7 +547,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 
 #### خصوصیات
 
-- **`.value: T`**
+- **`.get(): T`**
   مقدار memoized شده فعلی را دریافت می‌کند. تابع `get` فقط در صورتی دوباره اجرا می‌شود که یکی از وابستگی‌ها تغییر کرده باشد.
 
 ---

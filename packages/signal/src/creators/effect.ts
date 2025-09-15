@@ -25,7 +25,7 @@ import type {EffectSignalConfig} from '../type.js';
  * const analyticsEffect = createEffect({
  *   deps: [counter, user],
  *   run: () => {
- *     console.log(`Analytics: User '${user.value}' clicked ${counter.value} times.`);
+ *     console.log(`Analytics: User '${user.get()}' clicked ${counter.get()} times.`);
  *   },
  *   runImmediately: true, // Optional: run once on creation
  * });

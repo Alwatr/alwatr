@@ -69,10 +69,10 @@ import {ComputedSignal} from '@alwatr/signal';
 const fullName = new ComputedSignal<string>({
   signalId: 'user-fullName',
   deps: [firstName], // This computed signal depends on firstName.
-  get: () => `User: ${firstName.value}`,
+  get: () => `User: ${firstName.get()}`,
 });
 
-console.log(fullName.value); // Outputs: "User: John"
+console.log(fullName.get()); // Outputs: "User: John"
 ```
 
 ### 4. Create an Effect Signal
@@ -85,7 +85,7 @@ import {EffectSignal} from '@alwatr/signal';
 const loggerEffect = new EffectSignal({
   deps: [fullName, counter], // This effect depends on fullName and counter.
   run: () => {
-    console.log(`${fullName.value} has clicked ${counter.value} times.`);
+    console.log(`${fullName.get()} has clicked ${counter.get()} times.`);
   },
 });
 ```
@@ -134,7 +134,7 @@ Signals that depend on other signals (like `ComputedSignal` and `EffectSignal`) 
 // Create a computed signal
 const isEven = new ComputedSignal({
   deps: [counter],
-  get: () => counter.value % 2 === 0,
+  get: () => counter.get() % 2 === 0,
 });
 
 // ... use it for a while ...
@@ -167,7 +167,7 @@ The `subscribe` method accepts an optional second argument to customize its beha
 - **`constructor(config)`**: Creates a new state signal.
   - `config.signalId`: `string`
   - `config.initialValue`: `T`
-- **`.value`**: `T` - Gets the current value.
+- **`.get()`**: `T` - Gets the current value.
 - **`.set(newValue: T)`**: Sets a new value and notifies listeners.
 
 ### `ComputedSignal<T>`
@@ -176,7 +176,7 @@ The `subscribe` method accepts an optional second argument to customize its beha
   - `config.signalId`: `string`
   - `config.deps`: `IReadonlySignal<unknown>[]` - Array of dependency signals.
   - `config.get`: `() => T` - The function to compute the value.
-- **`.value`**: `T` - Gets the current (memoized) value.
+- **`.get()`**: `T` - Gets the current (memoized) value.
 - **`.destroy()`**: Cleans up the signal's subscriptions. **(Important!)**
 
 ### `EffectSignal`
@@ -284,10 +284,10 @@ import {ComputedSignal} from '@alwatr/signal';
 const fullName = new ComputedSignal<string>({
   signalId: 'user-fullName',
   deps: [firstName], // این سیگنال محاسباتی به firstName وابسته است
-  get: () => `User: ${firstName.value}`,
+  get: () => `User: ${firstName.get()}`,
 });
 
-console.log(fullName.value); // خروجی: "User: John"
+console.log(fullName.get()); // خروجی: "User: John"
 ```
 
 ### ۴. ایجاد `EffectSignal`
@@ -300,7 +300,7 @@ import {EffectSignal} from '@alwatr/signal';
 const loggerEffect = new EffectSignal({
   deps: [fullName, counter], // این افکت به fullName و counter وابسته است
   run: () => {
-    console.log(`${fullName.value} has clicked ${counter.value} times.`);
+    console.log(`${fullName.get()} has clicked ${counter.get()} times.`);
   },
 });
 ```
@@ -349,7 +349,7 @@ User: Jane has clicked 1 times.
 // یک سیگنال محاسباتی ایجاد کنید
 const isEven = new ComputedSignal({
   deps: [counter],
-  get: () => counter.value % 2 === 0,
+  get: () => counter.get() % 2 === 0,
 });
 
 // ... مدتی از آن استفاده کنید ...
@@ -382,7 +382,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 - **`constructor(config)`**: یک سیگنال وضعیت جدید ایجاد می‌کند.
   - `config.signalId`: `string`
   - `config.initialValue`: `T`
-- **`.value`**: `T` - مقدار فعلی را دریافت می‌کند.
+- **`.get()`**: `T` - مقدار فعلی را دریافت می‌کند.
 - **`.set(newValue: T)`**: مقدار جدیدی را تنظیم کرده و شنوندگان را مطلع می‌کند.
 
 ### `ComputedSignal<T>`
@@ -391,7 +391,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
   - `config.signalId`: `string`
   - `config.deps`: `IReadonlySignal<unknown>[]` - آرایه‌ای از سیگنال‌های وابسته.
   - `config.get`: `() => T` - تابعی برای محاسبه مقدار.
-- **`.value`**: `T` - مقدار فعلی (کش شده) را دریافت می‌کند.
+- **`.get()`**: `T` - مقدار فعلی (کش شده) را دریافت می‌کند.
 - **`.destroy()`**: اشتراک‌های سیگنال را پاک‌سازی می‌کند. **(مهم!)**
 
 ### `EffectSignal`

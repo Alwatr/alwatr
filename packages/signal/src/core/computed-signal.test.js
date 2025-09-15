@@ -17,7 +17,7 @@ describe('ComputedSignal', () => {
     signal = new ComputedSignal({
       signalId,
       deps: [dep1, dep2],
-      get: () => dep1.value + dep2.value,
+      get: () => dep1.get() + dep2.get(),
     });
   });
 
@@ -31,14 +31,14 @@ describe('ComputedSignal', () => {
     expect(ComputedSignal).toBeDefined();
     expect(signal).toBeInstanceOf(ComputedSignal);
     expect(signal.signalId).toBe(signalId);
-    expect(signal.value).toBe(3); // 1 + 2
+    expect(signal.get()).toBe(3); // 1 + 2
   });
 
   it('should compute value from dependencies', async () => {
-    expect(signal.value).toBe(3);
+    expect(signal.get()).toBe(3);
     dep1.set(5);
     await signal.untilNext();
-    expect(signal.value).toBe(7); // 5 + 2
+    expect(signal.get()).toBe(7); // 5 + 2
   });
 
   it('should notify subscribers when computed value changes', async () => {
@@ -115,7 +115,7 @@ describe('ComputedSignal', () => {
       deps: [],
       get: () => 42,
     });
-    expect(noDepSignal.value).toBe(42);
+    expect(noDepSignal.get()).toBe(42);
     noDepSignal.destroy();
   });
 
@@ -135,7 +135,7 @@ describe('ComputedSignal', () => {
   describe('destroyed signal', () => {
     it('should throw error when accessing value after destroy', () => {
       signal.destroy();
-      expect(() => signal.value).toThrow();
+      expect(() => signal.get()).toThrow();
     });
 
     it('should not notify after destroy', async () => {

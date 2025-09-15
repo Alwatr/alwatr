@@ -36,8 +36,8 @@ import type {IReadonlySignal} from '../type.js';
  * run: () => {
  * // This effect only runs for even numbers.
  * // The value can be `undefined` on the first run if initialValue is not even.
- * if (evenNumberSignal.value !== undefined) {
- * console.log(`Even number detected: ${evenNumberSignal.value}`);
+ * if (evenNumberSignal.get() !== undefined) {
+ * console.log(`Even number detected: ${evenNumberSignal.get()}`);
  * }
  * },
  * runImmediately: true,
@@ -52,7 +52,8 @@ export function createFilteredSignal<T>(
   predicate: (value: T) => boolean,
   signalId = `${sourceSignal.signalId}-filtered`,
 ): ComputedSignal<T | undefined> {
-  const initialValue = predicate(sourceSignal.value) ? sourceSignal.value : undefined;
+  const sourceValue = sourceSignal.get();
+  const initialValue = predicate(sourceValue) ? sourceValue : undefined;
 
   const internalSignal = createStateSignal({
     signalId: `${signalId}-internal`,
@@ -68,7 +69,7 @@ export function createFilteredSignal<T>(
   return createComputedSignal({
     signalId,
     deps: [internalSignal],
-    get: () => internalSignal.value,
+    get: () => internalSignal.get(),
     onDestroy: () => {
       subscription.unsubscribe();
       internalSignal.destroy();

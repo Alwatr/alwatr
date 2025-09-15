@@ -19,7 +19,7 @@ describe('StateSignal', () => {
     expect(StateSignal).toBeDefined();
     expect(signal).toBeInstanceOf(StateSignal);
     expect(signal.signalId).toBe(signalId);
-    expect(signal.value).toBe(0);
+    expect(signal.get()).toBe(0);
   });
 
   it('should notify subscribers when value changes', async () => {
@@ -218,7 +218,7 @@ describe('StateSignal', () => {
     });
 
     it('should throw an error when accessing value on a destroyed signal', () => {
-      expect(() => signal.value).toThrow(`Cannot interact with a destroyed signal (id: ${signalId})`);
+      expect(() => signal.get()).toThrow(`Cannot interact with a destroyed signal (id: ${signalId})`);
     });
 
     it('should not notify any listeners after being destroyed', async () => {

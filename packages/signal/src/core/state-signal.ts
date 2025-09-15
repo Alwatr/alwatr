@@ -22,7 +22,7 @@ import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeRes
  * });
  *
  * // Get the current value.
- * console.log(counter.value); // Outputs: 0
+ * console.log(counter.get()); // Outputs: 0
  *
  * // Subscribe to changes.
  * const subscription = counter.subscribe(newValue => {
@@ -63,9 +63,9 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * @returns The current value.
    *
    * @example
-   * console.log(mySignal.value);
+   * console.log(mySignal.get());
    */
-  public get value(): T {
+  public get(): T {
     this.checkDestroyed_();
     return this.value__;
   }
@@ -83,7 +83,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * mySignal.set(42);
    *
    * // For object types, it's best practice to set an immutable new object.
-   * mySignal.set({ ...mySignal.value, property: 'new-value' });
+   * mySignal.set({ ...mySignal.get(), property: 'new-value' });
    */
   public set(newValue: T): void {
     this.logger_.logMethodArgs?.('set', {newValue});

@@ -139,7 +139,7 @@ export interface IReadonlySignal<T> {
   /**
    * The current value of the signal.
    */
-  readonly value: T;
+  get: () => T;
 
   /**
    * Indicates whether the signal has been destroyed.
@@ -209,7 +209,7 @@ export interface ComputedSignalConfig<T> extends SignalConfig {
    * const counter = new StateSignal({initialValue: 0});
    * const isEven = new ComputedSignal({
    *   deps: [counter],
-   *   get: () => counter.value % 2 === 0,
+   *   get: () => counter.get() % 2 === 0,
    * });
    */
   get: () => T;
@@ -245,7 +245,7 @@ export interface EffectSignalConfig {
    * const counter = new StateSignal({initialValue: 0});
    * new EffectSignal({
    *   deps: [counter],
-   *   run: () => console.log(`The counter is now: ${counter.value}`),
+   *   run: () => console.log(`The counter is now: ${counter.get()}`),
    * });
    */
   run: () => Awaitable<void>;

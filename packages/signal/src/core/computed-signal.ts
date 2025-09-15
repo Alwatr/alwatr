@@ -26,10 +26,10 @@ import type {ComputedSignalConfig, IReadonlySignal, SubscribeResult, SubscribeOp
  * const fullName = new ComputedSignal({
  *   signalId: 'fullName',
  *   deps: [firstName, lastName],
- *   get: () => `${firstName.value} ${lastName.value}`,
+ *   get: () => `${firstName.get()} ${lastName.get()}`,
  * });
  *
- * console.log(fullName.value); // Outputs: "John Doe"
+ * console.log(fullName.get()); // Outputs: "John Doe"
  *
  * // --- Subscribe to the computed value ---
  * fullName.subscribe(newFullName => {
@@ -38,7 +38,7 @@ import type {ComputedSignalConfig, IReadonlySignal, SubscribeResult, SubscribeOp
  *
  * // --- Update a dependency ---
  * lastName.set('Smith'); // Recalculates and logs: "Name changed to: John Smith"
- * console.log(fullName.value); // Outputs: "John Smith"
+ * console.log(fullName.get()); // Outputs: "John Smith"
  *
  * // --- IMPORTANT: Clean up when done ---
  * fullName.destroy();
@@ -57,7 +57,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
 
   /**
    * The internal `StateSignal` that holds the computed value.
-   * This is how the computed signal provides `.value` and `.subscribe()` methods.
+   * This is how the computed signal provides `.get()` and `.subscribe()` methods.
    * @protected
    */
   protected readonly internalSignal_ = new StateSignal<T>({
@@ -95,8 +95,8 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
    * @returns The current computed value.
    * @throws {Error} If accessed after the signal has been destroyed.
    */
-  public get value(): T {
-    return this.internalSignal_.value;
+  public get(): T {
+    return this.internalSignal_.get();
   }
 
   /**
@@ -136,7 +136,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
    * stopping future recalculations and allowing the signal to be garbage collected.
    * Failure to call `destroy()` will result in memory leaks.
    *
-   * After `destroy()` is called, any attempt to access `.value` or `.subscribe()` will throw an error.
+   * After `destroy()` is called, any attempt to access `.get()` or `.subscribe()` will throw an error.
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
