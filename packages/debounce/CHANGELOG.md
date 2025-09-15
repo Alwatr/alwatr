@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.0...@alwatr/debounce@1.1.1) (2025-09-15)
+
+### 🐛 Bug Fixes
+
+* bind flush method correctly in Debouncer and improve readability of invoke logic ([5ddb12c](https://github.com/Alwatr/nanolib/commit/5ddb12c7d5d6040edad0f37ae79b3f725481d1f7))
+
 ## [1.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.0.1...@alwatr/debounce@1.1.0) (2025-09-14)
 
 ### ✨ Features
