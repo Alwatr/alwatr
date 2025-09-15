@@ -141,6 +141,13 @@ describe('ComputedSignal', () => {
     expect(callback2).toHaveBeenCalledTimes(1);
   });
 
+  it('should update without any subscribers', async () => {
+    expect(signal.get()).toBe(3);
+    dep1.set(7);
+    await signal.untilNext();
+    expect(signal.get()).toBe(9); // 7 + 2
+  });
+
   describe('destroyed signal', () => {
     it('should throw error when accessing value after destroy', () => {
       signal.destroy();
