@@ -5,12 +5,12 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/debounce": "^1.1.1",
-    "@alwatr/delay": "^6.0.4",
-    "@alwatr/logger": "^6.0.0"
+    "@alwatr/debounce": "^1.1.2",
+    "@alwatr/delay": "^6.0.5",
+    "@alwatr/logger": "^6.0.1"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^6.1.2",
+    "@alwatr/nano-build": "^6.2.0",
     "@alwatr/prettier-config": "^5.0.3",
     "@alwatr/tsconfig-base": "^6.0.1",
     "@alwatr/type-helper": "^6.0.2",
