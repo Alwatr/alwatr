@@ -13,7 +13,7 @@ export abstract class SignalBase<T> {
    * The unique identifier for this signal instance.
    * Useful for debugging and logging.
    */
-  public readonly signalId: string;
+  public readonly signalId = this.config_.signalId;
 
   /**
    * The logger instance for this signal.
@@ -29,9 +29,9 @@ export abstract class SignalBase<T> {
 
   /**
    * A flag indicating whether the signal has been destroyed.
-   * @protected
+   * @private
    */
-  protected isDestroyed_ = false;
+  private isDestroyed__ = false;
 
   /**
    * Indicates whether the signal has been destroyed.
@@ -40,16 +40,10 @@ export abstract class SignalBase<T> {
    * @returns `true` if the signal is destroyed, `false` otherwise.
    */
   public get isDestroyed(): boolean {
-    return this.isDestroyed_;
+    return this.isDestroyed__;
   }
 
-  /**
-   * Constructs a new SignalBase.
-   * @param config_ The configuration for the signal.
-   */
-  public constructor(protected config_: SignalConfig) {
-    this.signalId = this.config_.signalId;
-  }
+  public constructor(protected config_: SignalConfig) {}
 
   /**
    * Removes a specific observer from the observers list.
@@ -58,7 +52,13 @@ export abstract class SignalBase<T> {
    * @protected
    */
   protected removeObserver_(observer: Observer_<T>): void {
-    this.logger_.logMethodArgs?.('removeObserver_', {observer});
+    this.logger_.logMethod?.('removeObserver_');
+
+    if (this.isDestroyed__) {
+      this.logger_.incident?.('removeObserver_', 'remove_observer_on_destroyed_signal');
+      return;
+    }
+
     const index = this.observers_.indexOf(observer);
     if (index !== -1) {
       this.observers_.splice(index, 1);
@@ -75,8 +75,8 @@ export abstract class SignalBase<T> {
    * @returns A `SubscribeResult` object with an `unsubscribe` method to remove the listener.
    */
   public subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult {
+    this.logger_.logMethodArgs?.('subscribe.base', {options});
     this.checkDestroyed_();
-    this.logger_.logMethodArgs?.('subscribe', {options});
 
     const observer: Observer_<T> = {callback, options};
 
@@ -105,6 +105,11 @@ export abstract class SignalBase<T> {
    */
   protected notify_(value: T): void {
     this.logger_.logMethodArgs?.('notify_', value);
+
+    if (this.isDestroyed__) {
+      this.logger_.incident?.('notify_', 'notify_on_destroyed_signal');
+      return;
+    }
 
     // Create a snapshot of the observers array to iterate over.
     // This prevents issues if the observers_ array is modified during the loop.
@@ -141,8 +146,8 @@ export abstract class SignalBase<T> {
    * }
    */
   public untilNext(): Promise<T> {
-    this.checkDestroyed_();
     this.logger_.logMethod?.('untilNext');
+    this.checkDestroyed_();
     return new Promise((resolve) => {
       this.subscribe(resolve, {
         once: true,
@@ -161,7 +166,11 @@ export abstract class SignalBase<T> {
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
-    this.isDestroyed_ = true;
+    if (this.isDestroyed__) {
+      this.logger_.incident?.('destroy_', 'double_destroy_attempt');
+      return;
+    }
+    this.isDestroyed__ = true;
     this.observers_.length = 0; // Clear all observers.
     this.config_.onDestroy?.(); // Call the optional onDestroy callback.
     this.config_ = null as unknown as SignalConfig; // Help GC by breaking references.
@@ -173,7 +182,7 @@ export abstract class SignalBase<T> {
    * @protected
    */
   protected checkDestroyed_(): void {
-    if (this.isDestroyed_) {
+    if (this.isDestroyed__) {
       this.logger_.accident('checkDestroyed_', 'attempt_to_use_destroyed_signal');
       throw new Error(`Cannot interact with a destroyed signal (id: ${this.signalId})`);
     }
