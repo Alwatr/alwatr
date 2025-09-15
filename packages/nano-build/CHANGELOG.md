@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.1.2...@alwatr/nano-build@6.2.0) (2025-09-15)
+
+### ✨ Features
+
+* enable minification of whitespace in default build options ([8fc194f](https://github.com/Alwatr/nanolib/commit/8fc194f14d236fbaab6e173319b32c629d0d6e97))
+
 ## [6.1.2](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.1.1...@alwatr/nano-build@6.1.2) (2025-09-13)
 
 ### 🔗 Dependencies update
