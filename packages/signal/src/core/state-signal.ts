@@ -4,7 +4,6 @@ import {createLogger} from '@alwatr/logger';
 import {SignalBase} from './signal-base.js';
 
 import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, IReadonlySignal} from '../type.js';
-import type {AlwatrLogger} from '@alwatr/logger';
 
 /**
  * A stateful signal that holds a value and notifies listeners when the value changes.
@@ -50,15 +49,10 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * The logger instance for this signal.
    * @protected
    */
-  protected logger_: AlwatrLogger;
+  protected logger_ = createLogger(`state-signal: ${this.signalId}`);
 
-  /**
-   * Constructs a new StateSignal.
-   * @param config The configuration for the signal.
-   */
   public constructor(config: StateSignalConfig<T>) {
     super(config);
-    this.logger_ = createLogger(`state-signal:${this.signalId}`);
     this.value__ = config.initialValue;
     this.logger_.logMethodArgs?.('constructor', {initialValue: this.value__});
   }
@@ -92,8 +86,8 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * mySignal.set({ ...mySignal.value, property: 'new-value' });
    */
   public set(newValue: T): void {
-    this.checkDestroyed_();
     this.logger_.logMethodArgs?.('set', {newValue});
+    this.checkDestroyed_();
 
     // For primitives (including null), do not notify if the value is the same.
     if (Object.is(this.value__, newValue) && (typeof newValue !== 'object' || newValue === null)) {
@@ -122,8 +116,8 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * userSignal.update(currentUser => ({ ...currentUser, loggedIn: true }));
    */
   public update(updater: (previousValue: T) => T): void {
-    this.checkDestroyed_();
     this.logger_.logMethod?.('update');
+    this.checkDestroyed_();
     // The updater function is called with the current value to compute the new value,
     // which is then passed to the `set` method.
     this.set(updater(this.value__));
@@ -140,8 +134,8 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * @returns An object with an `unsubscribe` method to remove the listener.
    */
   public override subscribe(callback: ListenerCallback<T>, options: SubscribeOptions = {}): SubscribeResult {
-    this.checkDestroyed_();
     this.logger_.logMethodArgs?.('subscribe', {options});
+    this.checkDestroyed_();
 
     // By default, new subscribers to a StateSignal should receive the current value.
     if (options.receivePrevious !== false) {
