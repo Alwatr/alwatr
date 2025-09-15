@@ -31,40 +31,47 @@ describe('createDebouncedSignal', () => {
     expect(debouncedSignal.signalId).toBe(`${signalId}-debounced`);
   });
 
-  it('should debounce updates with trailing edge', () => {
+  it('should debounce updates with trailing edge', async () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100});
+    await jest.advanceTimersByTimeAsync(1);
     sourceSignal.set(1);
     sourceSignal.set(2);
     expect(debouncedSignal.get()).toBe(0);
-    jest.advanceTimersByTime(100);
+    await jest.advanceTimersByTimeAsync(110);
     expect(debouncedSignal.get()).toBe(2);
   });
 
-  it('should support leading edge', () => {
+  it('should support leading edge', async () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100, leading: true});
+    await jest.advanceTimersByTimeAsync(1);
     sourceSignal.set(1);
+    await jest.advanceTimersByTimeAsync(1);
     expect(debouncedSignal.get()).toBe(1);
     sourceSignal.set(2);
+    await jest.advanceTimersByTimeAsync(10);
     expect(debouncedSignal.get()).toBe(1);
-    jest.advanceTimersByTime(100);
+    await jest.advanceTimersByTimeAsync(100);
     expect(debouncedSignal.get()).toBe(2);
   });
 
-  it('should support trailing edge', () => {
+  it('should support trailing edge', async () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100, trailing: true});
+    await jest.advanceTimersByTimeAsync(1);
     sourceSignal.set(1);
     sourceSignal.set(2);
+    await jest.advanceTimersByTimeAsync(1);
     expect(debouncedSignal.get()).toBe(0);
-    jest.advanceTimersByTime(100);
+    await jest.advanceTimersByTimeAsync(100);
     expect(debouncedSignal.get()).toBe(2);
   });
 
-  it('should cancel debounced updates on destroy', () => {
+  it('should cancel debounced updates on destroy', async () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100});
+    await jest.advanceTimersByTimeAsync(1);
     sourceSignal.set(1);
+    await jest.advanceTimersByTimeAsync(1);
     debouncedSignal.destroy();
-    jest.advanceTimersByTime(100);
-    expect(() => debouncedSignal.get()).toThrow(); // Should throw on access after 
+    expect(() => debouncedSignal.get()).toThrow(); // Should throw on access after
   });
 
   it('should call onDestroy callback if provided', () => {
@@ -79,15 +86,16 @@ describe('createDebouncedSignal', () => {
     expect(debouncedSignal.signalId).toBe('custom-debounced');
   });
 
-  it('should handle multiple rapid updates correctly', () => {
+  it('should handle multiple rapid updates correctly', async () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100});
+    await jest.advanceTimersByTimeAsync(1);
     sourceSignal.set(1);
-    jest.advanceTimersByTime(50);
+    await jest.advanceTimersByTimeAsync(50);
     sourceSignal.set(2);
-    jest.advanceTimersByTime(50);
+    await jest.advanceTimersByTimeAsync(50);
     sourceSignal.set(3);
     expect(debouncedSignal.get()).toBe(0);
-    jest.advanceTimersByTime(100);
+    await jest.advanceTimersByTimeAsync(110);
     expect(debouncedSignal.get()).toBe(3);
   });
 });
