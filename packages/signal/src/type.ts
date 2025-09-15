@@ -222,12 +222,13 @@ export interface EffectSignalConfig {
   /**
    * A unique identifier for the signal. This is crucial for debugging, logging, and differentiating signals,
    * especially in large applications.
+   * @default auto-generated based on dependencies
    *
    * @example
    * 'user-profile-signal'
    * 'app-theme-signal'
    */
-  signalId: string;
+  signalId?: string;
 
   /**
    * An array of dependency signals (`StateSignal` or `ComputedSignal` instances).
@@ -268,6 +269,11 @@ export interface EffectSignalConfig {
  * The public interface for an `EffectSignal`, which provides a `destroy` method for cleanup.
  */
 export interface IEffectSignal {
+  /**
+   * The unique identifier for this signal instance.
+   */
+  signalId: string;
+
   /**
    * Permanently disposes of the effect, unsubscribing from all dependencies
    * and stopping any future executions. This is crucial for preventing memory leaks
