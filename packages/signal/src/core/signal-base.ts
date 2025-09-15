@@ -75,7 +75,7 @@ export abstract class SignalBase<T> {
    * @returns A `SubscribeResult` object with an `unsubscribe` method to remove the listener.
    */
   public subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult {
-    this.logger_.logMethodArgs?.('subscribe.base', {options});
+    this.logger_.logMethodArgs?.('subscribe.base', options);
     this.checkDestroyed_();
 
     const observer: Observer_<T> = {callback, options};
