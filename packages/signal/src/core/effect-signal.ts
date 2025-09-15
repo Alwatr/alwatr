@@ -23,6 +23,7 @@ import type {EffectSignalConfig, IEffectSignal, SubscribeResult} from '../type.j
  *
  * // --- Create an effect ---
  * const analyticsEffect = new EffectSignal({
+ *   signalId: 'analytics-effect',
  *   deps: [counter, user],
  *   run: () => {
  *     console.log(`Analytics: User '${user.value}' clicked ${counter.value} times.`);
@@ -42,15 +43,39 @@ import type {EffectSignalConfig, IEffectSignal, SubscribeResult} from '../type.j
  * counter.set(2); // Nothing is logged.
  */
 export class EffectSignal implements IEffectSignal {
-  protected readonly logger_ = createLogger(`effect-signal`);
+  /**
+   * The unique identifier for this signal instance.
+   */
+  public readonly signalId = this.config_.signalId ? this.config_.signalId : `[${this.config_.deps.map((dep) => dep.signalId).join(', ')}]`;
 
-  private readonly subscriptionList__: SubscribeResult[] = [];
+  /**
+   * The logger instance for this signal.
+   * @protected
+   */
+  protected readonly logger_ = createLogger(`effect-signal: ${this.signalId}`);
+
+  /**
+   * A list of subscriptions to dependency signals.
+   * @private
+   */
+  private readonly dependencySubscriptions__: SubscribeResult[] = [];
+
+  /**
+   * A flag to prevent concurrent executions of the effect.
+   * @private
+   */
   private isRunning__ = false;
+
+  /**
+   * A flag indicating whether the effect has been destroyed.
+   * @private
+   */
   private isDestroyed__ = false;
 
   /**
    * Indicates whether the effect signal has been destroyed.
-   * A destroyed signal cannot be used and will throw an error if interacted with.
+   * A destroyed signal will no longer execute its effect and cannot be reused.
+   *
    * @returns `true` if the signal is destroyed, `false` otherwise.
    */
   public get isDestroyed(): boolean {
@@ -64,7 +89,7 @@ export class EffectSignal implements IEffectSignal {
     // Subscribe to all dependencies. We don't need the previous value,
     // as the `runImmediately` option controls the initial execution.
     for (const signal of config_.deps) {
-      this.subscriptionList__.push(signal.subscribe(this.run_, {receivePrevious: false}));
+      this.dependencySubscriptions__.push(signal.subscribe(this.run_, {receivePrevious: false}));
     }
 
     // Run the effect immediately if requested.
@@ -83,38 +108,38 @@ export class EffectSignal implements IEffectSignal {
    * @protected
    */
   protected async run_(): Promise<void> {
+    this.logger_.logMethod?.('run_');
+
     if (this.isDestroyed__) {
       this.logger_.incident?.('run_', 'run_on_destroyed_signal');
       return;
     }
     if (this.isRunning__) {
       // If an execution is already scheduled, do nothing.
-      this.logger_.logMethod?.('run_//skipped');
+      this.logger_.logStep?.('run_', 'skipped_because_already_running');
       return;
     }
 
-    this.logger_.logMethod?.('run_//scheduled');
     this.isRunning__ = true;
 
     try {
       // Wait for the next macrotask to batch simultaneous updates.
       await delay.nextMacrotask();
-
       if (this.isDestroyed__) {
         this.logger_.incident?.('run_', 'destroyed_during_delay');
+        this.isRunning__ = false;
         return;
       }
 
-      this.logger_.logMethod?.('run_//executing');
+      this.logger_.logStep?.('run_', 'executing_effect');
       await this.config_.run();
     }
     catch (err) {
       this.logger_.error('run_', 'effect_failed', err);
     }
-    finally {
-      // Reset the flag after the current execution is complete.
-      this.isRunning__ = false;
-    }
+
+    // Reset the flag after the current execution is complete.
+    this.isRunning__ = false;
   }
 
   /**
@@ -131,16 +156,16 @@ export class EffectSignal implements IEffectSignal {
       this.logger_.incident?.('destroy', 'already_destroyed');
       return;
     }
+
     this.isDestroyed__ = true;
 
     // Unsubscribe from all upstream dependencies.
-    for (const subscription of this.subscriptionList__) {
+    for (const subscription of this.dependencySubscriptions__) {
       subscription.unsubscribe();
     }
-    this.subscriptionList__.length = 0; // Clear the array of subscriptions.
+    this.dependencySubscriptions__.length = 0; // Clear the array of subscriptions.
 
     this.config_.onDestroy?.(); // Call the optional onDestroy callback.
-
     this.config_ = null as unknown as EffectSignalConfig; // Release config closure.
   }
 }

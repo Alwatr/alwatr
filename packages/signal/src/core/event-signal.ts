@@ -33,6 +33,10 @@ import type {SignalConfig} from '../type.js';
  * onAppReady.dispatch(); // Notifies the listener.
  */
 export class EventSignal<T = void> extends SignalBase<T> {
+  /**
+   * The logger instance for this signal.
+   * @protected
+   */
   protected logger_ = createLogger(`event-signal: ${this.signalId}`);
 
   public constructor(config: SignalConfig) {
@@ -48,11 +52,9 @@ export class EventSignal<T = void> extends SignalBase<T> {
    * @param payload The data to send with the event.
    */
   public dispatch(payload: T): void {
-    this.logger_.logMethodArgs?.('dispatch', payload);
+    this.logger_.logMethodArgs?.('dispatch', {payload});
     this.checkDestroyed_();
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    delay.nextMicrotask().then(() => {
-      this.notify_(payload);
-    });
+    delay.nextMicrotask().then(() => this.notify_(payload));
   }
 }

@@ -4,19 +4,21 @@ import type {} from '@alwatr/nano-build';
 
 /**
  * An abstract base class for signal implementations.
+ * It provides the core functionality for managing subscriptions (observers).
  *
- * `SignalBase` provides the core functionality for managing subscriptions (observers).
- * It handles adding, removing, and notifying listeners. The responsibility of *when* to notify
- * is left to the concrete subclasses (`StateSignal`, `EventSignal`, etc.).
- *
- * @template T The type of data the signal will handle.
+ * @template T The type of data that the signal holds or dispatches.
  */
 export abstract class SignalBase<T> {
   /**
-   * The unique identifier for this signal instance. Useful for debugging.
+   * The unique identifier for this signal instance.
+   * Useful for debugging and logging.
    */
-  public readonly signalId: string = this.config_.signalId;
+  public readonly signalId = this.config_.signalId;
 
+  /**
+   * The logger instance for this signal.
+   * @protected
+   */
   protected abstract logger_: AlwatrLogger;
 
   /**
@@ -25,30 +27,38 @@ export abstract class SignalBase<T> {
    */
   protected readonly observers_: Observer_<T>[] = [];
 
-  protected isDestroyed_ = false;
+  /**
+   * A flag indicating whether the signal has been destroyed.
+   * @private
+   */
+  private isDestroyed__ = false;
 
   /**
    * Indicates whether the signal has been destroyed.
    * A destroyed signal cannot be used and will throw an error if interacted with.
+   *
    * @returns `true` if the signal is destroyed, `false` otherwise.
    */
   public get isDestroyed(): boolean {
-    return this.isDestroyed_;
+    return this.isDestroyed__;
   }
 
   public constructor(protected config_: SignalConfig) {}
 
   /**
    * Removes a specific observer from the observers list.
+   *
    * @param observer The observer instance to remove.
    * @protected
    */
   protected removeObserver_(observer: Observer_<T>): void {
-    if (this.isDestroyed_) {
+    this.logger_.logMethod?.('removeObserver_');
+
+    if (this.isDestroyed__) {
       this.logger_.incident?.('removeObserver_', 'remove_observer_on_destroyed_signal');
       return;
     }
-    this.logger_.logMethod?.('removeObserver_');
+
     const index = this.observers_.indexOf(observer);
     if (index !== -1) {
       this.observers_.splice(index, 1);
@@ -79,9 +89,9 @@ export abstract class SignalBase<T> {
     }
 
     // The returned unsubscribe function is a closure that calls the internal removal method.
-    const unsubscribe = (): void => this.removeObserver_(observer);
-
-    return {unsubscribe};
+    return {
+      unsubscribe: (): void => this.removeObserver_(observer),
+    };
   }
 
   /**
@@ -94,12 +104,12 @@ export abstract class SignalBase<T> {
    * @protected
    */
   protected notify_(value: T): void {
-    if (this.isDestroyed_) {
+    this.logger_.logMethodArgs?.('notify_', value);
+
+    if (this.isDestroyed__) {
       this.logger_.incident?.('notify_', 'notify_on_destroyed_signal');
       return;
     }
-
-    this.logger_.logMethodArgs?.('notify_', value);
 
     // Create a snapshot of the observers array to iterate over.
     // This prevents issues if the observers_ array is modified during the loop.
@@ -111,14 +121,9 @@ export abstract class SignalBase<T> {
       }
 
       try {
-        // Fire the callback, but don't await it.
-        // If the callback returns a promise, it's up to the callback's author to handle it.
         const result = observer.callback(value);
         if (result instanceof Promise) {
-          // Log unhandled promise rejections from listeners.
-          result.catch((err) => {
-            this.logger_.error('notify_', 'async_callback_failed', err, {observer});
-          });
+          result.catch((err) => this.logger_.error('notify_', 'async_callback_failed', err, {observer}));
         }
       }
       catch (err) {
@@ -161,8 +166,11 @@ export abstract class SignalBase<T> {
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
-    if (this.isDestroyed_) return;
-    this.isDestroyed_ = true;
+    if (this.isDestroyed__) {
+      this.logger_.incident?.('destroy_', 'double_destroy_attempt');
+      return;
+    }
+    this.isDestroyed__ = true;
     this.observers_.length = 0; // Clear all observers.
     this.config_.onDestroy?.(); // Call the optional onDestroy callback.
     this.config_ = null as unknown as SignalConfig; // Help GC by breaking references.
@@ -173,10 +181,10 @@ export abstract class SignalBase<T> {
    * This is a safeguard to prevent interaction with a defunct signal.
    * @protected
    */
-  protected checkDestroyed_ = (): void => {
-    if (this.isDestroyed_) {
+  protected checkDestroyed_(): void {
+    if (this.isDestroyed__) {
       this.logger_.accident('checkDestroyed_', 'attempt_to_use_destroyed_signal');
       throw new Error(`Cannot interact with a destroyed signal (id: ${this.signalId})`);
     }
-  };
+  }
 }

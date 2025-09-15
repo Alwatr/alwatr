@@ -39,7 +39,16 @@ import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeRes
  * subscription.unsubscribe();
  */
 export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> {
+  /**
+   * The current value of the signal.
+   * @private
+   */
   private value__: T;
+
+  /**
+   * The logger instance for this signal.
+   * @protected
+   */
   protected logger_ = createLogger(`state-signal: ${this.signalId}`);
 
   public constructor(config: StateSignalConfig<T>) {
@@ -81,14 +90,14 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     this.checkDestroyed_();
 
     // For primitives (including null), do not notify if the value is the same.
-    if (Object.is(this.value__, newValue) && (typeof newValue !== 'object' || newValue === null)) return;
+    if (Object.is(this.value__, newValue) && (typeof newValue !== 'object' || newValue === null)) {
+      return;
+    }
 
     this.value__ = newValue;
 
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    delay.nextMicrotask().then(() => {
-      this.notify_(newValue);
-    });
+    delay.nextMicrotask().then(() => this.notify_(newValue));
   }
 
   /**
@@ -129,17 +138,13 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     this.checkDestroyed_();
 
     // By default, new subscribers to a StateSignal should receive the current value.
-    const receivePrevious = options.receivePrevious !== false;
-
-    if (receivePrevious) {
+    if (options.receivePrevious !== false) {
       // Immediately (but asynchronously) call the listener with the current value.
       // This is done in a microtask to ensure it happens after the subscription is fully registered.
       delay
         .nextMicrotask()
         .then(() => callback(this.value__))
-        .catch((err) => {
-          this.logger_.error('subscribe', 'run_callback_immediate_failed', err);
-        });
+        .catch((err) => this.logger_.error('subscribe', 'immediate_callback_failed', err));
 
       // If it's a 'once' subscription that receives the previous value, it's now fulfilled.
       // We don't need to add it to the observers list for future updates.
@@ -157,8 +162,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * This is crucial for memory management to prevent leaks.
    */
   public override destroy(): void {
-    // Clear the value to allow for garbage collection.
-    this.value__ = null as T;
+    this.value__ = null as T; // Clear the value to allow for garbage collection.
     super.destroy();
   }
 }

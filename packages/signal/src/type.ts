@@ -79,7 +79,14 @@ export interface SubscribeResult {
  * @internal
  */
 export interface Observer_<T> {
+  /**
+   * The listener's callback function.
+   */
   callback: ListenerCallback<T>;
+
+  /**
+   * Subscription options for the observer.
+   */
   options?: SubscribeOptions;
 }
 
@@ -213,6 +220,17 @@ export interface ComputedSignalConfig<T> extends SignalConfig {
  */
 export interface EffectSignalConfig {
   /**
+   * A unique identifier for the signal. This is crucial for debugging, logging, and differentiating signals,
+   * especially in large applications.
+   * @default auto-generated based on dependencies
+   *
+   * @example
+   * 'user-profile-signal'
+   * 'app-theme-signal'
+   */
+  signalId?: string;
+
+  /**
    * An array of dependency signals (`StateSignal` or `ComputedSignal` instances).
    * The effect's `run` function will be executed whenever any of these signals change.
    */
@@ -252,6 +270,11 @@ export interface EffectSignalConfig {
  */
 export interface IEffectSignal {
   /**
+   * The unique identifier for this signal instance.
+   */
+  signalId: string;
+
+  /**
    * Permanently disposes of the effect, unsubscribing from all dependencies
    * and stopping any future executions. This is crucial for preventing memory leaks
    * and unwanted side effects from running.
@@ -266,20 +289,23 @@ export interface IEffectSignal {
   readonly isDestroyed: boolean;
 }
 
-// Exclude 'callback' and 'thisContext' as they are managed internally.
+/**
+ * Configuration for creating a debounced signal using `createDebouncedSignal`.
+ *
+ * @see {@link createDebouncedSignal}
+ * @see {@link DebouncerConfig}
+ */
 export interface DebounceSignalConfig extends Omit<DebouncerConfig<never>, 'func' | 'thisContext'> {
   /**
-   * A unique identifier for the signal. This is crucial for debugging, logging, and differentiating signals,
-   * especially in large applications.
+   * A unique identifier for the signal. This is crucial for debugging and differentiating signals.
    *
    * @default `${sourceSignal.signalId}-debounced`
    */
   signalId?: string;
 
   /**
-   * An optional callback function that will be executed when the signal's `destroy` method is called.
-   * This is useful for cleaning up additional resources used by the signal,
-   * such as subscriptions or timers created in operators.
+   * An optional callback executed when the signal's `destroy` method is called.
+   * Useful for cleaning up resources tied to the debounced signal.
    */
   onDestroy?: () => void;
 }
