@@ -49,6 +49,7 @@ const defaultOptions = {
   target: 'es2022',
   bundle: true,
   minify: true,
+  minifyWhitespace: true,
   treeShaking: true,
   sourcemap: false,
   sourcesContent: false,

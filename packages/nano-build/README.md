@@ -89,6 +89,7 @@ yarn run build --preset=module
   logLevel: 'info',
   target: 'es2020',
   minify: true,
+  minifyWhitespace: true,
   treeShaking: true,
   sourcemap: false,
   sourcesContent: false,
