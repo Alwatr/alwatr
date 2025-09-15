@@ -22,6 +22,20 @@ describe('StateSignal', () => {
     expect(signal.get()).toBe(0);
   });
 
+  it('should notify subscriber with receivePrevious', async () => {
+    const callback = jest.fn();
+    const newValue = 42;
+
+    signal.subscribe(callback);
+    await delay.nextMacrotask();
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(0);
+    signal.set(newValue);
+    await delay.nextMacrotask();
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenCalledWith(newValue);
+  });
+
   it('should notify subscribers when value changes', async () => {
     const callback = jest.fn();
     const newValue = 42;
@@ -193,11 +207,12 @@ describe('StateSignal', () => {
 
     signal.subscribe(errorCallback, {receivePrevious: false});
     signal.subscribe(normalCallback, {receivePrevious: false});
-    signal.set(1);
-
+    signal.set(5);
+    signal.set(10);
     await delay.nextMacrotask();
-    expect(errorCallback).toHaveBeenCalledTimes(1);
-    expect(normalCallback).toHaveBeenCalledTimes(1);
+    expect(errorCallback).toHaveBeenCalledTimes(2);
+    expect(normalCallback).toHaveBeenCalledTimes(2);
+    expect(normalCallback).toHaveBeenCalledWith(10)
   });
 
   describe('destroyed signal', () => {
