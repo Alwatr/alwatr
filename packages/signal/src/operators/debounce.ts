@@ -74,7 +74,7 @@ export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, confi
     },
   });
 
-  const subscription = sourceSignal.subscribe((value) => debouncer.trigger(value));
+  const subscription = sourceSignal.subscribe((value) => debouncer.trigger(value), {receivePrevious: false});
 
   return createComputedSignal({
     signalId,
