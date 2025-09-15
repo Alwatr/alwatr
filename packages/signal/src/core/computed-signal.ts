@@ -178,7 +178,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
 
     if (this.isRecalculating__) {
       // If a recalculation is already scheduled, do nothing.
-      this.logger_.logStep?.('debounced_', 'skipping_recalculation_already_scheduled');
+      this.logger_.logStep?.('recalculate_', 'skipping_recalculation_already_scheduled');
       return;
     }
 
@@ -191,11 +191,11 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
       
       if (this.isDestroyed) {
         this.logger_.incident?.('recalculate_', 'destroyed_during_delay');
+        this.isRecalculating__ = false;
         return;
       }
 
       this.logger_.logStep?.('recalculate_', 'recalculating_value');
-
 
       // Set the new value on the internal signal, which will notify our subscribers.
       this.internalSignal_.set(this.config_.get());
