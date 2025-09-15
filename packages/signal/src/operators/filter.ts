@@ -52,7 +52,8 @@ export function createFilteredSignal<T>(
   predicate: (value: T) => boolean,
   signalId = `${sourceSignal.signalId}-filtered`,
 ): ComputedSignal<T | undefined> {
-  const initialValue = predicate(sourceSignal.get()) ? sourceSignal.get() : undefined;
+  const sourceValue = sourceSignal.get();
+  const initialValue = predicate(sourceValue) ? sourceValue : undefined;
 
   const internalSignal = createStateSignal({
     signalId: `${signalId}-internal`,
