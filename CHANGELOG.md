@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.2](https://github.com/Alwatr/flux/compare/v5.2.1...v5.2.2) (2025-09-15)
+
+### 🐛 Bug Fixes
+
+* update subscription to prevent receiving previous value in debounced signal ([044780d](https://github.com/Alwatr/flux/commit/044780d35427a97711788224e60e209fb53dea53))
+* update subscription to trigger debouncer with value from source signal ([a7e8eff](https://github.com/Alwatr/flux/commit/a7e8effd7e963aaf905afae08a652d7abe222c3a))
+
+### 🔨 Code Refactoring
+
+* improve logging in subscribe method to pass options directly ([e026dbf](https://github.com/Alwatr/flux/commit/e026dbf74ca96ec6d878bd5fb08f4939c46d08f2))
+* simplify signalId assignment using nullish coalescing operator ([0578c85](https://github.com/Alwatr/flux/commit/0578c854677df2fe0a62e5fbbfa017856d82b611))
+* update logging in subscribe method to pass options directly ([a7e32f2](https://github.com/Alwatr/flux/commit/a7e32f20df6b12c1c9dd06feaf01fca8170a5346))
+
+### 🧹 Miscellaneous Chores
+
+* update @alwatr/debounce dependency to version 1.1.1 ([c2e2ae4](https://github.com/Alwatr/flux/commit/c2e2ae4fe54f8fdd482bd53b598f5e88570a26f2))
+* update package dependencies to latest versions ([a517c82](https://github.com/Alwatr/flux/commit/a517c82b99073a65a8470da428dfd288080b7ea5))
+
 ## [5.2.1](https://github.com/Alwatr/flux/compare/v5.2.0...v5.2.1) (2025-09-15)
 
 ### ⚡ Performance Improvements
