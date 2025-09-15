@@ -41,6 +41,15 @@ describe('ComputedSignal', () => {
     expect(signal.get()).toBe(7); // 5 + 2
   });
 
+  it('should notify subscriber with receivePrevious', async () => {
+    const callback = jest.fn();
+
+    signal.subscribe(callback);
+    await delay.nextMacrotask();
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(3);
+  });
+
   it('should notify subscribers when computed value changes', async () => {
     const callback = jest.fn();
     signal.subscribe(callback, {receivePrevious: false});
