@@ -44,8 +44,8 @@ import type {IReadonlySignal, DebounceSignalConfig} from '../type.js';
  * createEffect({
  *   deps: [debouncedSearch],
  *   run: () => {
- *     if (debouncedSearch.value) {
- *       console.log(`🚀 Sending API request for: "${debouncedSearch.value}"`);
+ *     if (debouncedSearch.get()) {
+ *       console.log(`🚀 Sending API request for: "${debouncedSearch.get()}"`);
  *     }
  *   },
  * });
@@ -64,7 +64,7 @@ export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, confi
 
   const internalSignal = new StateSignal<T>({
     signalId: `${signalId}-internal`,
-    initialValue: sourceSignal.value,
+    initialValue: sourceSignal.get(),
   });
 
   const debouncer = createDebouncer({
@@ -79,7 +79,7 @@ export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, confi
   return createComputedSignal({
     signalId,
     deps: [internalSignal],
-    get: () => internalSignal.value,
+    get: () => internalSignal.get(),
     onDestroy: () => {
       if (internalSignal.isDestroyed) return;
       subscription.unsubscribe();

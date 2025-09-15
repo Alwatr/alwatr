@@ -30,10 +30,10 @@ import type {IReadonlySignal} from '../type.js';
  *   (user) => user.name,
  * );
  *
- * console.log(userNameSignal.value); // Outputs: "John"
+ * console.log(userNameSignal.get()); // Outputs: "John"
  * // in next macro-task ...
  * userSignal.set({ name: 'Jane', age: 32 });
- * console.log(userNameSignal.value); // Outputs: "Jane"
+ * console.log(userNameSignal.get()); // Outputs: "Jane"
  */
 export function createMappedSignal<T, R>(
   sourceSignal: IReadonlySignal<T>,
@@ -43,6 +43,6 @@ export function createMappedSignal<T, R>(
   return createComputedSignal({
     signalId,
     deps: [sourceSignal],
-    get: () => projectFunction(sourceSignal.value),
+    get: () => projectFunction(sourceSignal.get()),
   });
 }

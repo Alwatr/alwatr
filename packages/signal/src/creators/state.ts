@@ -19,9 +19,9 @@ import type {StateSignalConfig} from '../type.js';
  *   initialValue: 0,
  * });
  *
- * console.log(counter.value); // Outputs: 0
+ * console.log(counter.get()); // Outputs: 0
  * counter.set(1);
- * console.log(counter.value); // Outputs: 1
+ * console.log(counter.get()); // Outputs: 1
  */
 export function createStateSignal<T>(config: StateSignalConfig<T>): StateSignal<T> {
   return new StateSignal(config);
