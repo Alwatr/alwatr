@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.1](https://github.com/Alwatr/flux/compare/v5.2.0...v5.2.1) (2025-09-15)
+
+### ⚡ Performance Improvements
+
+* To improve readability and avoid calling sourceSignal.get() twice, used temporary variable before using it. ([2aaa3bd](https://github.com/Alwatr/flux/commit/2aaa3bdd06745885495ca64a71c4040b9ec57cea))
+
+### 🔨 Code Refactoring
+
+* change the `signal.value` to `signal.get()` ([fcdcb6c](https://github.com/Alwatr/flux/commit/fcdcb6caf82747b8e6d7ad846d6babead385c603))
+* rename run_ method to scheduleExecution_ for clarity in EffectSignal ([402af2f](https://github.com/Alwatr/flux/commit/402af2f7b84357ade4f79b33611d6968ec6b8efd))
+
 ## [5.2.0](https://github.com/Alwatr/flux/compare/v5.1.0...v5.2.0) (2025-09-15)
 
 ### ✨ Features
