@@ -3,7 +3,13 @@ import {createLogger} from '@alwatr/logger';
 
 import {StateSignal} from './state-signal.js';
 
-import type {ComputedSignalConfig, IReadonlySignal, SubscribeResult} from '../type.js';
+import type {
+  ComputedSignalConfig,
+  IReadonlySignal,
+  SubscribeResult,
+  SubscribeOptions,
+} from '../type.js';
+import type {AlwatrLogger} from '@alwatr/logger';
 
 /**
  * A read-only signal that derives its value from a set of dependency signals.
@@ -16,7 +22,7 @@ import type {ComputedSignalConfig, IReadonlySignal, SubscribeResult} from '../ty
  * needed to prevent memory leaks from its subscriptions to dependency signals.
  *
  * @template T The type of the computed value.
- * @implements {IComputedSignal<T>}
+ * @implements {IReadonlySignal<T>}
  *
  * @example
  * // --- Create dependency signals ---
@@ -45,30 +51,55 @@ import type {ComputedSignalConfig, IReadonlySignal, SubscribeResult} from '../ty
  * fullName.destroy();
  */
 export class ComputedSignal<T> implements IReadonlySignal<T> {
-  public readonly signalId = this.config_.signalId;
+  /**
+   * The unique identifier for this signal instance.
+   */
+  public readonly signalId: string;
 
-  protected readonly logger_ = createLogger(`computed-signal: ${this.signalId}`);
+  /**
+   * The logger instance for this signal.
+   * @protected
+   */
+  protected readonly logger_: AlwatrLogger;
 
   /**
    * The internal `StateSignal` that holds the computed value.
    * This is how the computed signal provides `.value` and `.subscribe()` methods.
    * @protected
    */
-  protected readonly internalSignal_ = new StateSignal<T>({
-    signalId: this.signalId + '-internal',
-    initialValue: this.config_.get(),
-  });
+  protected readonly internalSignal_: StateSignal<T>;
 
-  private readonly subscriptionList__: SubscribeResult[] = [];
-  private isRecalculating__ = false;
+  /**
+   * A list of subscriptions to dependency signals.
+   * @private
+   */
+  private readonly dependencySubscriptions_: SubscribeResult[] = [];
 
+  /**
+   * A flag to prevent concurrent recalculations.
+   * @private
+   */
+  private isRecalculating_ = false;
+
+  /**
+   * Constructs a new ComputedSignal.
+   * @param config_ The configuration for the computed signal.
+   */
   public constructor(protected config_: ComputedSignalConfig<T>) {
+    this.signalId = config_.signalId;
+    this.logger_ = createLogger(`computed-signal:${this.signalId}`);
     this.logger_.logMethod?.('constructor');
-    this.recalculate_ = this.recalculate_.bind(this);
+
+    this.internalSignal_ = new StateSignal<T>({
+      signalId: `${this.signalId}-internal`,
+      initialValue: this.config_.get(),
+    });
+
+    this.recalculate = this.recalculate.bind(this);
 
     // Subscribe to all dependencies to trigger recalculation on change.
     for (const signal of config_.deps) {
-      this.subscriptionList__.push(signal.subscribe(this.recalculate_, {receivePrevious: false}));
+      this.dependencySubscriptions_.push(signal.subscribe(this.recalculate, {receivePrevious: false}));
     }
   }
 
@@ -92,9 +123,26 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
     return this.internalSignal_.isDestroyed;
   }
 
-  public readonly subscribe = this.internalSignal_.subscribe.bind(this.internalSignal_);
+  /**
+   * Subscribes a listener to this signal.
+   * The listener will be called whenever the computed value changes.
+   *
+   * @param callback The function to be called with the new value.
+   * @param options Subscription options.
+   * @returns A `SubscribeResult` object with an `unsubscribe` method.
+   */
+  public subscribe(callback: (value: T) => void, options?: SubscribeOptions): SubscribeResult {
+    return this.internalSignal_.subscribe(callback, options);
+  }
 
-  public readonly untilNext = this.internalSignal_.untilNext.bind(this.internalSignal_);
+  /**
+   * Returns a Promise that resolves with the next computed value.
+   *
+   * @returns A Promise that resolves with the next value.
+   */
+  public untilNext(): Promise<T> {
+    return this.internalSignal_.untilNext();
+  }
 
   /**
    * Permanently disposes of the computed signal.
@@ -108,22 +156,14 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
 
-    if (this.internalSignal_.isDestroyed) {
-      this.logger_.incident?.('destroy', 'already_destroyed');
-      return;
-    }
-
     // Unsubscribe from all upstream dependencies.
-    for (const subscription of this.subscriptionList__) {
+    for (const subscription of this.dependencySubscriptions_) {
       subscription.unsubscribe();
     }
-    this.subscriptionList__.length = 0; // Clear the array of subscriptions.
+    this.dependencySubscriptions_.length = 0; // Clear the array of subscriptions.
 
-    // Destroy the internal signal to clean up its resources and mark it as destroyed.
-    this.internalSignal_.destroy();
-
+    this.internalSignal_.destroy(); // Destroy the internal signal.
     this.config_.onDestroy?.(); // Call the optional onDestroy callback.
-
     this.config_ = null as unknown as ComputedSignalConfig<T>; // Release config closure.
   }
 
@@ -135,41 +175,26 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
    * change in the same synchronous block of code.
    * @protected
    */
-  protected async recalculate_(): Promise<void> {
-    if (this.internalSignal_.isDestroyed) {
-      // This check is important in case a dependency fires after this signal is destroyed.
-      this.logger_.incident?.('recalculate', 'recalculate_on_destroyed_signal');
-      return;
-    }
+  protected async recalculate(): Promise<void> {
+    if (this.isRecalculating_ || this.isDestroyed) return;
 
-    if (this.isRecalculating__) {
-      // If a recalculation is already scheduled, do nothing.
-      this.logger_.logMethod?.('recalculate_//skipped');
-      return;
-    }
-
-    this.logger_.logMethod?.('recalculate_//scheduled');
-    this.isRecalculating__ = true;
+    this.logger_.logMethod?.('recalculate');
+    this.isRecalculating_ = true;
 
     try {
       // Wait for the next macrotask to start the recalculation.
       // This batches all synchronous dependency updates in the current event loop.
       await delay.nextMacrotask();
+      if (this.isDestroyed) return;
 
-      if (this.internalSignal_.isDestroyed) {
-        this.logger_.incident?.('recalculate', 'destroyed_during_delay');
-        return;
-      }
-
-      this.logger_.logMethod?.('recalculate_//executing');
       // Set the new value on the internal signal, which will notify our subscribers.
       this.internalSignal_.set(this.config_.get());
     }
     catch (err) {
-      this.logger_.error('recalculate_', 'recalculation_failed', err);
+      this.logger_.error('recalculate', 'recalculation_failed', err);
     }
 
     // Allow the next recalculation to be scheduled.
-    this.isRecalculating__ = false;
+    this.isRecalculating_ = false;
   }
 }

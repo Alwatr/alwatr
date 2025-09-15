@@ -4,6 +4,7 @@ import {createLogger} from '@alwatr/logger';
 import {SignalBase} from './signal-base.js';
 
 import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, IReadonlySignal} from '../type.js';
+import type {AlwatrLogger} from '@alwatr/logger';
 
 /**
  * A stateful signal that holds a value and notifies listeners when the value changes.
@@ -39,11 +40,25 @@ import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeRes
  * subscription.unsubscribe();
  */
 export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> {
+  /**
+   * The current value of the signal.
+   * @private
+   */
   private value__: T;
-  protected logger_ = createLogger(`state-signal: ${this.signalId}`);
 
+  /**
+   * The logger instance for this signal.
+   * @protected
+   */
+  protected logger_: AlwatrLogger;
+
+  /**
+   * Constructs a new StateSignal.
+   * @param config The configuration for the signal.
+   */
   public constructor(config: StateSignalConfig<T>) {
     super(config);
+    this.logger_ = createLogger(`state-signal:${this.signalId}`);
     this.value__ = config.initialValue;
     this.logger_.logMethodArgs?.('constructor', {initialValue: this.value__});
   }
@@ -77,18 +92,18 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * mySignal.set({ ...mySignal.value, property: 'new-value' });
    */
   public set(newValue: T): void {
-    this.logger_.logMethodArgs?.('set', {newValue});
     this.checkDestroyed_();
+    this.logger_.logMethodArgs?.('set', {newValue});
 
     // For primitives (including null), do not notify if the value is the same.
-    if (Object.is(this.value__, newValue) && (typeof newValue !== 'object' || newValue === null)) return;
+    if (Object.is(this.value__, newValue) && (typeof newValue !== 'object' || newValue === null)) {
+      return;
+    }
 
     this.value__ = newValue;
 
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    delay.nextMicrotask().then(() => {
-      this.notify_(newValue);
-    });
+    delay.nextMicrotask().then(() => this.notify_(newValue));
   }
 
   /**
@@ -107,8 +122,8 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * userSignal.update(currentUser => ({ ...currentUser, loggedIn: true }));
    */
   public update(updater: (previousValue: T) => T): void {
-    this.logger_.logMethod?.('update');
     this.checkDestroyed_();
+    this.logger_.logMethod?.('update');
     // The updater function is called with the current value to compute the new value,
     // which is then passed to the `set` method.
     this.set(updater(this.value__));
@@ -125,21 +140,17 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * @returns An object with an `unsubscribe` method to remove the listener.
    */
   public override subscribe(callback: ListenerCallback<T>, options: SubscribeOptions = {}): SubscribeResult {
-    this.logger_.logMethodArgs?.('subscribe', {options});
     this.checkDestroyed_();
+    this.logger_.logMethodArgs?.('subscribe', {options});
 
     // By default, new subscribers to a StateSignal should receive the current value.
-    const receivePrevious = options.receivePrevious !== false;
-
-    if (receivePrevious) {
+    if (options.receivePrevious !== false) {
       // Immediately (but asynchronously) call the listener with the current value.
       // This is done in a microtask to ensure it happens after the subscription is fully registered.
       delay
         .nextMicrotask()
         .then(() => callback(this.value__))
-        .catch((err) => {
-          this.logger_.error('subscribe', 'run_callback_immediate_failed', err);
-        });
+        .catch((err) => this.logger_.error('subscribe', 'immediate_callback_failed', err));
 
       // If it's a 'once' subscription that receives the previous value, it's now fulfilled.
       // We don't need to add it to the observers list for future updates.
@@ -157,8 +168,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * This is crucial for memory management to prevent leaks.
    */
   public override destroy(): void {
-    // Clear the value to allow for garbage collection.
-    this.value__ = null as T;
+    this.value__ = null as T; // Clear the value to allow for garbage collection.
     super.destroy();
   }
 }
