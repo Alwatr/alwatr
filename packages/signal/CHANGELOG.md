@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/Alwatr/flux/compare/v5.1.0...v5.2.0) (2025-09-15)
+
+### ✨ Features
+
+* Add comprehensive documentation to the repository ([d5569e6](https://github.com/Alwatr/flux/commit/d5569e63acd0aa926c34d9a61b2fff5139b9d3cc))
+* Update EffectSignalConfig to allow optional signalId and add documentation ([6aab97e](https://github.com/Alwatr/flux/commit/6aab97e6e223f822f66cacb78c9d194fa5e2df9d))
+
+### 🐛 Bug Fixes
+
+* Refactor logger initialization and ensure checkDestroyed_ is called in relevant methods ([a17884d](https://github.com/Alwatr/flux/commit/a17884d5df097d62353e5b4110d3a83a5ae093b3))
+
+### 🔨 Code Refactoring
+
+* Ensure isRunning__ is reset when destroyed during delay in EffectSignal ([ff9a590](https://github.com/Alwatr/flux/commit/ff9a5905f7875e7dcb675cbdbb44869b0743e954))
+* Improve signal management by consolidating destruction checks and enhancing logging ([8765ba2](https://github.com/Alwatr/flux/commit/8765ba2f701f10db89ef11a3045065442360d193))
+* Remove unnecessary binding of notify_ in EventSignal constructor ([eb3be32](https://github.com/Alwatr/flux/commit/eb3be3211b13c21aa4f5c16a37f5c9fc59144951))
+* Simplify ComputedSignal implementation and improve logging for lifecycle methods ([bc35e91](https://github.com/Alwatr/flux/commit/bc35e91d5871669cc22c6c92ee2b83c4d940194e))
+* Simplify EffectSignal implementation and improve logging for lifecycle methods ([a5cad04](https://github.com/Alwatr/flux/commit/a5cad04469efd929e2ce7da42b371d4c054e5eaf))
+* Simplify EventSignal logger initialization and constructor ([b515315](https://github.com/Alwatr/flux/commit/b515315428e8ba0c70a7ef5ede49916e899b6fcd))
+* Update logger step identifiers for recalculation in ComputedSignal ([8de799f](https://github.com/Alwatr/flux/commit/8de799f40d90c2cdc3440d90bc1f2b6ce22f7013))
+
 ## [5.1.0](https://github.com/Alwatr/flux/compare/v5.0.0...v5.1.0) (2025-09-14)
 
 ### ✨ Features
