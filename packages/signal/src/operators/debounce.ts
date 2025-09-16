@@ -33,7 +33,7 @@ import type {IReadonlySignal, DebounceSignalConfig} from '../type.js';
  * ```typescript
  * // Create a source signal for user input.
  * const searchInput = createStateSignal({
- *   signalId: 'search-input',
+ *   name: 'search-input',
  *   initialValue: '',
  * });
  *
@@ -60,10 +60,10 @@ import type {IReadonlySignal, DebounceSignalConfig} from '../type.js';
  * ```
  */
 export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, config: DebounceSignalConfig): ComputedSignal<T> {
-  const signalId = config.signalId ?? `${sourceSignal.signalId}-debounced`;
+  const name = config.name ?? `${sourceSignal.name}-debounced`;
 
   const internalSignal = new StateSignal<T>({
-    signalId: `${signalId}-internal`,
+    name: `${name}-internal`,
     initialValue: sourceSignal.get(),
   });
 
@@ -77,7 +77,7 @@ export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, confi
   const subscription = sourceSignal.subscribe((value) => debouncer.trigger(value), {receivePrevious: false});
 
   return createComputedSignal({
-    signalId,
+    name: name,
     deps: [internalSignal],
     get: () => internalSignal.get(),
     onDestroy: () => {

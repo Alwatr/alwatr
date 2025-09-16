@@ -102,7 +102,7 @@ export interface SignalConfig {
    * 'user-profile-signal'
    * 'app-theme-signal'
    */
-  signalId: string;
+  name: string;
 
   /**
    * An optional callback function that will be executed when the signal's `destroy` method is called.
@@ -134,7 +134,7 @@ export interface IReadonlySignal<T> {
   /**
    * The unique identifier for this signal instance. Useful for debugging.
    */
-  readonly signalId: string;
+  readonly name: string;
 
   /**
    * The current value of the signal.
@@ -228,7 +228,7 @@ export interface EffectSignalConfig {
    * 'user-profile-signal'
    * 'app-theme-signal'
    */
-  signalId?: string;
+  name?: string;
 
   /**
    * An array of dependency signals (`StateSignal` or `ComputedSignal` instances).
@@ -272,7 +272,7 @@ export interface IEffectSignal {
   /**
    * The unique identifier for this signal instance.
    */
-  signalId: string;
+  name: string;
 
   /**
    * Permanently disposes of the effect, unsubscribing from all dependencies
@@ -299,9 +299,9 @@ export interface DebounceSignalConfig extends Omit<DebouncerConfig<never>, 'func
   /**
    * A unique identifier for the signal. This is crucial for debugging and differentiating signals.
    *
-   * @default `${sourceSignal.signalId}-debounced`
+   * @default `${sourceSignal.name}-debounced`
    */
-  signalId?: string;
+  name?: string;
 
   /**
    * An optional callback executed when the signal's `destroy` method is called.

@@ -17,7 +17,7 @@ import type {SignalConfig} from '../type.js';
  *
  * @example
  * const onUserClick = createEventSignal<{ x: number, y: number }>({
- *   signalId: 'on-user-click'
+ *   name: 'on-user-click'
  * });
  *
  * onUserClick.subscribe(pos => {

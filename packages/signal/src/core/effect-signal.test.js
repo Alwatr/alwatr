@@ -9,7 +9,7 @@ describe('EffectSignal', () => {
   let effectSignal;
 
   beforeEach(() => {
-    depSignal = new StateSignal({signalId: 'dep', initialValue: 0});
+    depSignal = new StateSignal({name: 'dep', initialValue: 0});
   });
 
   afterEach(() => {
@@ -79,7 +79,7 @@ describe('EffectSignal', () => {
   });
 
   it('should handle multiple dependencies', async () => {
-    const depSignal2 = new StateSignal({signalId: 'dep2', initialValue: 'a'});
+    const depSignal2 = new StateSignal({name: 'dep2', initialValue: 'a'});
     const runFn = jest.fn();
     effectSignal = new EffectSignal({
       deps: [depSignal, depSignal2],

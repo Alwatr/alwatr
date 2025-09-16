@@ -16,7 +16,7 @@ It's designed to be simple to learn, yet capable of handling complex state manag
 - **Performant**: Smart change detection and batched updates prevent unnecessary computations and re-renders.
 - **Predictable**: Asynchronous, non-blocking notifications ensure a consistent and understandable data flow.
 - **Lifecycle Management**: Built-in `destroy()` methods for easy cleanup and memory leak prevention.
-- **Easy to Debug**: Unique `signalId` for each signal makes logging and tracing a breeze.
+- **Easy to Debug**: Unique `name` for each signal makes logging and tracing a breeze.
 
 ## Core Concepts
 
@@ -53,13 +53,13 @@ import {StateSignal} from '@alwatr/signal';
 
 // A signal to hold the user's first name.
 const firstName = new StateSignal<string>({
-  signalId: 'user-firstName',
+  name: 'user-firstName',
   initialValue: 'John',
 });
 
 // A signal to hold a simple counter.
 const counter = new StateSignal<number>({
-  signalId: 'app-counter',
+  name: 'app-counter',
   initialValue: 0,
 });
 ```
@@ -72,7 +72,7 @@ A `ComputedSignal` combines other signals into a new, read-only value. Let's cre
 import {ComputedSignal} from '@alwatr/signal';
 
 const fullName = new ComputedSignal<string>({
-  signalId: 'user-fullName',
+  name: 'user-fullName',
   deps: [firstName], // This computed signal depends on firstName.
   get: () => `User: ${firstName.get()}`,
 });
@@ -173,7 +173,7 @@ This section provides a detailed overview of the core components of Alwatr Signa
 
 These are available on most signal instances.
 
-- **`.signalId: string`**
+- **`.name: string`**
   A unique, read-only identifier for the signal, useful for debugging.
 
 - **`.isDestroyed: boolean`**
@@ -200,7 +200,7 @@ A stateless signal for dispatching transient events. It does not hold a value.
 #### Constructor
 
 - **`new EventSignal<T>(config)`** or **`createEventSignal<T>(config)`**
-  - `config.signalId`: `string` - A unique identifier for the signal.
+  - `config.name`: `string` - A unique identifier for the signal.
   - `config.onDestroy?`: `() => void` - An optional cleanup callback.
 
 #### Methods
@@ -217,7 +217,7 @@ A stateful signal that holds a value and notifies listeners when it changes.
 #### Constructor
 
 - **`new StateSignal<T>(config)`** or **`createStateSignal<T>(config)`**
-  - `config.signalId`: `string` - A unique identifier.
+  - `config.name`: `string` - A unique identifier.
   - `config.initialValue`: `T` - The starting value for the signal.
   - `config.onDestroy?`: `() => void` - An optional cleanup callback.
 
@@ -243,7 +243,7 @@ A read-only signal that derives its value from a set of dependency signals.
 #### Constructor
 
 - **`new ComputedSignal<T>(config)`** or **`createComputedSignal<T>(config)`**
-  - `config.signalId`: `string` - A unique identifier.
+  - `config.name`: `string` - A unique identifier.
   - `config.deps`: `DependencyList` - An array of `IReadonlySignal` instances that this signal depends on.
   - `config.get`: `() => T` - A pure function that computes the value based on its dependencies.
   - `config.onDestroy?`: `() => void` - An optional cleanup callback.
@@ -276,12 +276,12 @@ Operators are functions that create a new signal from a source signal, applying 
   - `sourceSignal`: The signal to debounce.
   - `config`: Debounce options (`delay`, `leading`, `trailing`).
 
-- **`createFilteredSignal(sourceSignal, predicate, signalId?)`**
+- **`createFilteredSignal(sourceSignal, predicate, name?)`**
   Creates a `ComputedSignal` that only emits values from the `sourceSignal` that pass the `predicate` function.
   - `sourceSignal`: The signal to filter.
   - `predicate`: A function that returns `true` for values to keep.
 
-- **`createMappedSignal(sourceSignal, projectFunction, signalId?)`**
+- **`createMappedSignal(sourceSignal, projectFunction, name?)`**
   Creates a `ComputedSignal` that transforms each value from the `sourceSignal` using the `projectFunction`.
   - `sourceSignal`: The signal to map.
   - `projectFunction`: A function that transforms the value.
@@ -313,7 +313,7 @@ Contributions are welcome! Please read our [contribution guidelines](https://git
 - **عملکرد بالا**: تشخیص هوشمند تغییرات و به‌روزرسانی‌های دسته‌ای از محاسبات و رندرهای غیرضروری جلوگیری می‌کند.
 - **پیش‌بینی‌پذیر**: نوتیفیکیشن‌های ناهمزمان (asynchronous) و غیرمسدودکننده (non-blocking) جریان داده‌ای سازگار و قابل فهم را تضمین می‌کنند.
 - **مدیریت چرخه حیات (Lifecycle)**: متدهای داخلی `destroy()` برای پاک‌سازی آسان و جلوگیری از نشت حافظه (memory leak).
-- **اشکال‌زدایی آسان**: شناسه‌های منحصر به فرد (`signalId`) برای هر سیگنال، لاگ‌گیری و ردیابی را بسیار ساده می‌کند.
+- **اشکال‌زدایی آسان**: شناسه‌های منحصر به فرد (`name`) برای هر سیگنال، لاگ‌گیری و ردیابی را بسیار ساده می‌کند.
 
 ## مفاهیم اصلی
 
@@ -350,13 +350,13 @@ import {StateSignal} from '@alwatr/signal';
 
 // سیگنالی برای نگهداری نام کوچک کاربر
 const firstName = new StateSignal<string>({
-  signalId: 'user-firstName',
+  name: 'user-firstName',
   initialValue: 'John',
 });
 
 // سیگنالی برای نگهداری یک شمارنده ساده
 const counter = new StateSignal<number>({
-  signalId: 'app-counter',
+  name: 'app-counter',
   initialValue: 0,
 });
 ```
@@ -369,7 +369,7 @@ const counter = new StateSignal<number>({
 import {ComputedSignal} from '@alwatr/signal';
 
 const fullName = new ComputedSignal<string>({
-  signalId: 'user-fullName',
+  name: 'user-fullName',
   deps: [firstName], // این سیگنال محاسباتی به firstName وابسته است
   get: () => `User: ${firstName.get()}`,
 });
@@ -470,7 +470,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 
 این موارد در اکثر نمونه‌های سیگنال موجود است.
 
-- **`.signalId: string`**
+- **`.name: string`**
   یک شناسه منحصر به فرد و فقط-خواندنی برای سیگنال، که برای اشکال‌زدایی مفید است.
 
 - **`.isDestroyed: boolean`**
@@ -497,7 +497,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 #### سازنده
 
 - **`new EventSignal<T>(config)`** یا **`createEventSignal<T>(config)`**
-  - `config.signalId`: `string` - یک شناسه منحصر به فرد برای سیگنال.
+  - `config.name`: `string` - یک شناسه منحصر به فرد برای سیگنال.
   - `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
 
 #### متدها
@@ -514,7 +514,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 #### سازنده
 
 - **`new StateSignal<T>(config)`** یا **`createStateSignal<T>(config)`**
-  - `config.signalId`: `string` - یک شناسه منحصر به فرد.
+  - `config.name`: `string` - یک شناسه منحصر به فرد.
   - `config.initialValue`: `T` - مقدار اولیه برای سیگنال.
   - `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
 
@@ -540,7 +540,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 #### سازنده
 
 - **`new ComputedSignal<T>(config)`** یا **`createComputedSignal<T>(config)`**
-  - `config.signalId`: `string` - یک شناسه منحصر به فرد.
+  - `config.name`: `string` - یک شناسه منحصر به فرد.
   - `config.deps`: `DependencyList` - آرایه‌ای از نمونه‌های `IReadonlySignal` که این سیگنال به آن‌ها وابسته است.
   - `config.get`: `() => T` - یک تابع خالص که مقدار را بر اساس وابستگی‌های خود محاسبه می‌کند.
   - `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
@@ -573,12 +573,12 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
   - `sourceSignal`: سیگنال برای debounce کردن.
   - `config`: گزینه‌های Debounce (`delay`, `leading`, `trailing`).
 
-- **`createFilteredSignal(sourceSignal, predicate, signalId?)`**
+- **`createFilteredSignal(sourceSignal, predicate, name?)`**
   یک `ComputedSignal` ایجاد می‌کند که فقط مقادیری از `sourceSignal` را منتشر می‌کند که از تابع `predicate` عبور کنند.
   - `sourceSignal`: سیگنال برای فیلتر کردن.
   - `predicate`: تابعی که برای مقادیر مورد نظر `true` برمی‌گرداند.
 
-- **`createMappedSignal(sourceSignal, projectFunction, signalId?)`**
+- **`createMappedSignal(sourceSignal, projectFunction, name?)`**
   یک `ComputedSignal` ایجاد می‌کند که هر مقدار از `sourceSignal` را با استفاده از `projectFunction` تبدیل می‌کند.
   - `sourceSignal`: سیگنال برای map کردن.
   - `projectFunction`: تابعی که مقدار را تبدیل می‌کند.

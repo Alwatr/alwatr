@@ -9,13 +9,13 @@ describe('ComputedSignal', () => {
   let dep2;
   /** @type {ComputedSignal<number>} */
   let signal;
-  const signalId = 'test-computed-signal';
+  const name = 'test-computed-signal';
 
   beforeEach(() => {
-    dep1 = new StateSignal({signalId: 'dep1', initialValue: 1});
-    dep2 = new StateSignal({signalId: 'dep2', initialValue: 2});
+    dep1 = new StateSignal({name: 'dep1', initialValue: 1});
+    dep2 = new StateSignal({name: 'dep2', initialValue: 2});
     signal = new ComputedSignal({
-      signalId,
+      name,
       deps: [dep1, dep2],
       get: () => dep1.get() + dep2.get(),
     });
@@ -27,10 +27,10 @@ describe('ComputedSignal', () => {
     dep2.destroy();
   });
 
-  it('should be defined and have the correct signalId and initial value', () => {
+  it('should be defined and have the correct name and initial value', () => {
     expect(ComputedSignal).toBeDefined();
     expect(signal).toBeInstanceOf(ComputedSignal);
-    expect(signal.signalId).toBe(signalId);
+    expect(signal.name).toBe(name);
     expect(signal.get()).toBe(3); // 1 + 2
   });
 
@@ -120,7 +120,7 @@ describe('ComputedSignal', () => {
 
   it('should handle no dependencies', () => {
     const noDepSignal = new ComputedSignal({
-      signalId: 'no-dep',
+      name: 'no-dep',
       deps: [],
       get: () => 42,
     });

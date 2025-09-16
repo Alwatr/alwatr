@@ -13,7 +13,7 @@ export abstract class SignalBase<T> {
    * The unique identifier for this signal instance.
    * Useful for debugging and logging.
    */
-  public readonly signalId = this.config_.signalId;
+  public readonly name = this.config_.name;
 
   /**
    * The logger instance for this signal.
@@ -184,7 +184,7 @@ export abstract class SignalBase<T> {
   protected checkDestroyed_(): void {
     if (this.isDestroyed__) {
       this.logger_.accident('checkDestroyed_', 'attempt_to_use_destroyed_signal');
-      throw new Error(`Cannot interact with a destroyed signal (id: ${this.signalId})`);
+      throw new Error(`Cannot interact with a destroyed signal (id: ${this.name})`);
     }
   }
 }

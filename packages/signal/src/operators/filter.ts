@@ -19,12 +19,12 @@ import type {IReadonlySignal} from '../type.js';
  *
  * @param sourceSignal The original signal to filter.
  * @param predicate A function that returns `true` if the value should be passed.
- * @param signalId An optional, unique identifier for the new signal for debugging. default: `${sourceSignal.signalId}-filtered`
+ * @param name An optional, unique identifier for the new signal for debugging. default: `${sourceSignal.name}-filtered`
  *
  * @returns A new computed signal that emits filtered values.
  *
  * @example
- * const numberSignal = createStateSignal({ signalId: 'number', initialValue: 0 });
+ * const numberSignal = createStateSignal({ name: 'number', initialValue: 0 });
  *
  * const evenNumberSignal = createFilteredSignal(
  * numberSignal,
@@ -50,13 +50,13 @@ import type {IReadonlySignal} from '../type.js';
 export function createFilteredSignal<T>(
   sourceSignal: IReadonlySignal<T>,
   predicate: (value: T) => boolean,
-  signalId = `${sourceSignal.signalId}-filtered`,
+  name = `${sourceSignal.name}-filtered`,
 ): ComputedSignal<T | undefined> {
   const sourceValue = sourceSignal.get();
   const initialValue = predicate(sourceValue) ? sourceValue : undefined;
 
   const internalSignal = createStateSignal({
-    signalId: `${signalId}-internal`,
+    name: `${name}-internal`,
     initialValue,
   });
 
@@ -67,7 +67,7 @@ export function createFilteredSignal<T>(
   });
 
   return createComputedSignal({
-    signalId,
+    name: name,
     deps: [internalSignal],
     get: () => internalSignal.get(),
     onDestroy: () => {

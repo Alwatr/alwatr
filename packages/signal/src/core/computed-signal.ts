@@ -19,12 +19,12 @@ import type {ComputedSignalConfig, IReadonlySignal, SubscribeResult, SubscribeOp
  *
  * @example
  * // --- Create dependency signals ---
- * const firstName = new StateSignal({ signalId: 'firstName', initialValue: 'John' });
- * const lastName = new StateSignal({ signalId: 'lastName', initialValue: 'Doe' });
+ * const firstName = new StateSignal({ name: 'firstName', initialValue: 'John' });
+ * const lastName = new StateSignal({ name: 'lastName', initialValue: 'Doe' });
  *
  * // --- Create a computed signal ---
  * const fullName = new ComputedSignal({
- *   signalId: 'fullName',
+ *   name: 'fullName',
  *   deps: [firstName, lastName],
  *   get: () => `${firstName.get()} ${lastName.get()}`,
  * });
@@ -47,13 +47,13 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
   /**
    * The unique identifier for this signal instance.
    */
-  public readonly signalId = this.config_.signalId;
+  public readonly name = this.config_.name;
 
   /**
    * The logger instance for this signal.
    * @protected
    */
-  protected readonly logger_ = createLogger(`computed-signal: ${this.signalId}`);
+  protected readonly logger_ = createLogger(`computed-signal: ${this.name}`);
 
   /**
    * The internal `StateSignal` that holds the computed value.
@@ -61,7 +61,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
    * @protected
    */
   protected readonly internalSignal_ = new StateSignal<T>({
-    signalId: `${this.signalId}-internal`,
+    name: `${this.name}-internal`,
     initialValue: this.config_.get(),
   });
 

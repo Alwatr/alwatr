@@ -17,7 +17,7 @@ import type {SignalConfig} from '../type.js';
  *
  * @example
  * // Create a signal for user click events.
- * const onUserClick = new EventSignal<{ x: number, y: number }>({ signalId: 'on-user-click' });
+ * const onUserClick = new EventSignal<{ x: number, y: number }>({ name: 'on-user-click' });
  *
  * // Subscribe to the event.
  * onUserClick.subscribe(clickPosition => {
@@ -28,7 +28,7 @@ import type {SignalConfig} from '../type.js';
  * onUserClick.dispatch({ x: 100, y: 250 }); // Notifies the listener.
  *
  * // --- Example with no payload ---
- * const onAppReady = new EventSignal({ signalId: 'on-app-ready' });
+ * const onAppReady = new EventSignal({ name: 'on-app-ready' });
  * onAppReady.subscribe(() => console.log('Application is ready!'));
  * onAppReady.dispatch(); // Notifies the listener.
  */
@@ -37,7 +37,7 @@ export class EventSignal<T = void> extends SignalBase<T> {
    * The logger instance for this signal.
    * @protected
    */
-  protected logger_ = createLogger(`event-signal: ${this.signalId}`);
+  protected logger_ = createLogger(`event-signal: ${this.name}`);
 
   public constructor(config: SignalConfig) {
     super(config);

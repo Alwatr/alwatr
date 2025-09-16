@@ -11,7 +11,7 @@ It's designed to be simple to learn, yet capable of handling complex state manag
 - **Performant**: Smart change detection and batched updates prevent unnecessary computations and re-renders.
 - **Predictable**: Asynchronous, non-blocking notifications ensure a consistent and understandable data flow.
 - **Lifecycle Management**: Built-in `destroy()` methods for easy cleanup and memory leak prevention.
-- **Easy to Debug**: Unique `signalId` for each signal makes logging and tracing a breeze.
+- **Easy to Debug**: Unique `name` for each signal makes logging and tracing a breeze.
 
 ## Core Concepts
 
@@ -48,13 +48,13 @@ import {StateSignal} from '@alwatr/signal';
 
 // A signal to hold the user's first name.
 const firstName = new StateSignal<string>({
-  signalId: 'user-firstName',
+  name: 'user-firstName',
   initialValue: 'John',
 });
 
 // A signal to hold a simple counter.
 const counter = new StateSignal<number>({
-  signalId: 'app-counter',
+  name: 'app-counter',
   initialValue: 0,
 });
 ```
@@ -67,7 +67,7 @@ A `ComputedSignal` combines other signals into a new, read-only value. Let's cre
 import {ComputedSignal} from '@alwatr/signal';
 
 const fullName = new ComputedSignal<string>({
-  signalId: 'user-fullName',
+  name: 'user-fullName',
   deps: [firstName], // This computed signal depends on firstName.
   get: () => `User: ${firstName.get()}`,
 });
@@ -165,7 +165,7 @@ The `subscribe` method accepts an optional second argument to customize its beha
 ### `StateSignal<T>`
 
 - **`constructor(config)`**: Creates a new state signal.
-  - `config.signalId`: `string`
+  - `config.name`: `string`
   - `config.initialValue`: `T`
 - **`.get()`**: `T` - Gets the current value.
 - **`.set(newValue: T)`**: Sets a new value and notifies listeners.
@@ -173,7 +173,7 @@ The `subscribe` method accepts an optional second argument to customize its beha
 ### `ComputedSignal<T>`
 
 - **`constructor(config)`**: Creates a new computed signal.
-  - `config.signalId`: `string`
+  - `config.name`: `string`
   - `config.deps`: `IReadonlySignal<unknown>[]` - Array of dependency signals.
   - `config.get`: `() => T` - The function to compute the value.
 - **`.get()`**: `T` - Gets the current (memoized) value.
@@ -190,7 +190,7 @@ The `subscribe` method accepts an optional second argument to customize its beha
 ### `EventSignal<T>`
 
 - **`constructor(config)`**: Creates a new event signal.
-  - `config.signalId`: `string`
+  - `config.name`: `string`
 - **`.dispatch(payload: T)`**: Dispatches an event to all listeners.
 
 ### Common Methods
@@ -226,7 +226,7 @@ Contributions are welcome! Please read our [contribution guidelines](https://git
 - **عملکرد بالا**: تشخیص هوشمند تغییرات و به‌روزرسانی‌های دسته‌ای از محاسبات و رندرهای غیرضروری جلوگیری می‌کند.
 - **پیش‌بینی‌پذیر**: نوتیفیکیشن‌های ناهمزمان (asynchronous) و غیرمسدودکننده (non-blocking) جریان داده‌ای سازگار و قابل فهم را تضمین می‌کنند.
 - **مدیریت چرخه حیات (Lifecycle)**: متدهای داخلی `destroy()` برای پاک‌سازی آسان و جلوگیری از نشت حافظه (memory leak).
-- **اشکال‌زدایی آسان**: شناسه‌های منحصر به فرد (`signalId`) برای هر سیگنال، لاگ‌گیری و ردیابی را بسیار ساده می‌کند.
+- **اشکال‌زدایی آسان**: شناسه‌های منحصر به فرد (`name`) برای هر سیگنال، لاگ‌گیری و ردیابی را بسیار ساده می‌کند.
 
 ## مفاهیم اصلی
 
@@ -263,13 +263,13 @@ import {StateSignal} from '@alwatr/signal';
 
 // سیگنالی برای نگهداری نام کوچک کاربر
 const firstName = new StateSignal<string>({
-  signalId: 'user-firstName',
+  name: 'user-firstName',
   initialValue: 'John',
 });
 
 // سیگنالی برای نگهداری یک شمارنده ساده
 const counter = new StateSignal<number>({
-  signalId: 'app-counter',
+  name: 'app-counter',
   initialValue: 0,
 });
 ```
@@ -282,7 +282,7 @@ const counter = new StateSignal<number>({
 import {ComputedSignal} from '@alwatr/signal';
 
 const fullName = new ComputedSignal<string>({
-  signalId: 'user-fullName',
+  name: 'user-fullName',
   deps: [firstName], // این سیگنال محاسباتی به firstName وابسته است
   get: () => `User: ${firstName.get()}`,
 });
@@ -380,7 +380,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 ### `StateSignal<T>`
 
 - **`constructor(config)`**: یک سیگنال وضعیت جدید ایجاد می‌کند.
-  - `config.signalId`: `string`
+  - `config.name`: `string`
   - `config.initialValue`: `T`
 - **`.get()`**: `T` - مقدار فعلی را دریافت می‌کند.
 - **`.set(newValue: T)`**: مقدار جدیدی را تنظیم کرده و شنوندگان را مطلع می‌کند.
@@ -388,7 +388,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 ### `ComputedSignal<T>`
 
 - **`constructor(config)`**: یک سیگنال محاسباتی جدید ایجاد می‌کند.
-  - `config.signalId`: `string`
+  - `config.name`: `string`
   - `config.deps`: `IReadonlySignal<unknown>[]` - آرایه‌ای از سیگنال‌های وابسته.
   - `config.get`: `() => T` - تابعی برای محاسبه مقدار.
 - **`.get()`**: `T` - مقدار فعلی (کش شده) را دریافت می‌کند.
@@ -405,7 +405,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 ### `EventSignal<T>`
 
 - **`constructor(config)`**: یک سیگنال رویداد جدید ایجاد می‌کند.
-  - `config.signalId`: `string`
+  - `config.name`: `string`
 - **`.dispatch(payload: T)`**: یک رویداد را به تمام شنوندگان ارسال می‌کند.
 
 ### متدهای مشترک

@@ -18,11 +18,11 @@ import type {ComputedSignalConfig} from '../type.js';
  * @returns A new, read-only computed signal.
  *
  * @example
- * const firstName = createStateSignal({ signalId: 'firstName', initialValue: 'John' });
- * const lastName = createStateSignal({ signalId: 'lastName', initialValue: 'Doe' });
+ * const firstName = createStateSignal({ name: 'firstName', initialValue: 'John' });
+ * const lastName = createStateSignal({ name: 'lastName', initialValue: 'Doe' });
  *
  * const fullName = createComputedSignal({
- *   signalId: 'fullName',
+ *   name: 'fullName',
  *   deps: [firstName, lastName],
  *   get: () => `${firstName.get()} ${lastName.get()}`,
  * });

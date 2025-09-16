@@ -17,7 +17,7 @@ import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeRes
  * @example
  * // Create a new state signal with an initial value.
  * const counter = new StateSignal<number>({
- *   signalId: 'counter-signal',
+ *   name: 'counter-signal',
  *   initialValue: 0,
  * });
  *
@@ -49,7 +49,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * The logger instance for this signal.
    * @protected
    */
-  protected logger_ = createLogger(`state-signal: ${this.signalId}`);
+  protected logger_ = createLogger(`state-signal: ${this.name}`);
 
   public constructor(config: StateSignalConfig<T>) {
     super(config);

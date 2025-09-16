@@ -5,20 +5,20 @@ import {delay} from '@alwatr/delay';
 describe('EventSignal', () => {
   /** @type {EventSignal<unknown>} */
   let signal;
-  const signalId = 'test-event-signal';
+  const name = 'test-event-signal';
 
   beforeEach(() => {
-    signal = new EventSignal({signalId});
+    signal = new EventSignal({name});
   });
 
   afterEach(() => {
     signal.destroy();
   });
 
-  it('should be defined and have the correct signalId', () => {
+  it('should be defined and have the correct name', () => {
     expect(EventSignal).toBeDefined();
     expect(signal).toBeInstanceOf(EventSignal);
-    expect(signal.signalId).toBe(signalId);
+    expect(signal.name).toBe(name);
   });
 
   it('should dispatch an event and notify a subscriber with the correct payload', async () => {
@@ -85,7 +85,7 @@ describe('EventSignal', () => {
   });
 
   it('should handle dispatching without a payload (void)', async () => {
-    const voidSignal = new EventSignal({signalId: 'void-signal'});
+    const voidSignal = new EventSignal({name: 'void-signal'});
     const callback = jest.fn();
     voidSignal.subscribe(callback);
 
@@ -168,19 +168,19 @@ describe('EventSignal', () => {
     });
 
     it('should throw an error when dispatch is called on a destroyed signal', () => {
-      expect(() => signal.dispatch('test')).toThrow(`Cannot interact with a destroyed signal (id: ${signalId})`);
+      expect(() => signal.dispatch('test')).toThrow(`Cannot interact with a destroyed signal (id: ${name})`);
     });
 
     it('should throw an error when subscribe is called on a destroyed signal', () => {
-      expect(() => signal.subscribe(jest.fn())).toThrow(`Cannot interact with a destroyed signal (id: ${signalId})`);
+      expect(() => signal.subscribe(jest.fn())).toThrow(`Cannot interact with a destroyed signal (id: ${name})`);
     });
 
     it('should throw an error when untilNext is called on a destroyed signal', () => {
-      expect(() => signal.untilNext()).toThrow(`Cannot interact with a destroyed signal (id: ${signalId})`);
+      expect(() => signal.untilNext()).toThrow(`Cannot interact with a destroyed signal (id: ${name})`);
     });
 
     it('should not notify any listeners after being destroyed', async () => {
-      const localSignal = new EventSignal({signalId: 'local'});
+      const localSignal = new EventSignal({name: 'local'});
       const callback = jest.fn();
       localSignal.subscribe(callback);
 
