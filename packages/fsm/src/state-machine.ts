@@ -26,7 +26,7 @@ export class StateMachine<TState extends string, TEvent extends EventObject<stri
     this._logger.logMethodArgs('constructor', {initialState: this._currentState});
 
     this.signal = createStateSignal({
-      signalId: `fsm-signal:${this.name}`,
+      name: `fsm-signal:${this.name}`,
       initialValue: this.getSnapshot(),
     });
 
