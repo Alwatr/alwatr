@@ -8,14 +8,38 @@ export type StateTransitions<TState extends string, TEvent extends string> = {
   };
 };
 
+// A detailed object passed to every action and guard.
+export interface TransitionDetail<TState extends string, TEvent extends string, TContext> {
+  from: TState;
+  to: TState;
+  event: TEvent;
+  context: TContext;
+}
+
+export type Action<TState extends string, TEvent extends string, TContext> = (
+  detail: TransitionDetail<TState, TEvent, TContext>,
+) => Awaitable<void>;
+
+// Guards are conditional functions for transitions.
+export type Guard<TState extends string, TEvent extends string, TContext> = (
+  detail: TransitionDetail<TState, TEvent, TContext>,
+) => Awaitable<boolean>;
+
 /**
  * Defines the structure for actions associated with events or states.
  * Actions can be triggered on entering/exiting a state or on a specific transition.
  */
-export type StateActions<TState extends string, TEvent extends string, TContext> = {
-  [S in TState as `onEnter_${S}`]?: (context: TContext) => void;
+export type ActionRecord<TState extends string, TEvent extends string, TContext> = {
+  onEnter_ANY?: Action<TState, TEvent, TContext>;
+  onExit_ANY?: Action<TState, TEvent, TContext>;
 } & {
-  [E in TEvent as `on_${E}`]?: (context: TContext) => void;
+  [S in TState as `onEnter_${S}`]?: Action<TState, TEvent, TContext>;
+} & {
+  [S in TState as `onExit_${S}`]?: Action<TState, TEvent, TContext>;
+} & {
+  [E in TEvent as `on_${E}`]?: Action<TState, TEvent, TContext>;
+} & {
+  [T in `${TEvent}_in_${TState}` as `on_${T}`]?: Action<TState, TEvent, TContext>;
 };
 
 /**
