@@ -162,6 +162,22 @@ describe('EventSignal', () => {
     await expect(secondPromise).resolves.toBe(payload);
   });
 
+  it('should multiple dispatch calls notify subscribers each time', async () => {
+    const callback = jest.fn();
+    signal.subscribe(callback);
+
+    signal.dispatch(1);
+    signal.dispatch(2);
+    signal.dispatch(3);
+
+    await delay.nextMacrotask();
+
+    expect(callback).toHaveBeenCalledTimes(3);
+    expect(callback).toHaveBeenNthCalledWith(1, 1);
+    expect(callback).toHaveBeenNthCalledWith(2, 2);
+    expect(callback).toHaveBeenNthCalledWith(3, 3);
+  });
+
   describe('destroyed signal', () => {
     beforeEach(() => {
       signal.destroy();
