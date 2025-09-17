@@ -1,5 +1,5 @@
 import {createLogger} from '@alwatr/logger';
-import {createStateSignal, createEventSignal, createComputedSignal, type SubscribeResult} from '@alwatr/signal';
+import {createStateSignal, createEventSignal, createComputedSignal} from '@alwatr/signal';
 
 import type {StateMachineConfig, MachineState, MachineEvent} from './type.js';
 
