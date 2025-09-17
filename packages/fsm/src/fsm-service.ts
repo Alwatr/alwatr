@@ -8,21 +8,21 @@ import type {StateMachineConfig, MachineState, MachineEvent} from './type.js';
  * It handles signal creation, logic connection, and lifecycle management, providing a clean,
  * reactive API for interacting with the FSM.
  *
- * @template TContext The type of the machine's context (extended state).
- * @template TEvent The union type of all possible events.
  * @template TState The union type of all possible state names.
+ * @template TEvent The union type of all possible events.
+ * @template TContext The type of the machine's context (extended state).
  */
-export class FsmService<TContext extends DictionaryOpt<unknown>, TEvent extends MachineEvent, TState extends string> {
+export class FsmService<TState extends string, TEvent extends MachineEvent, TContext extends DictionaryOpt<unknown>> {
   protected readonly logger_ = createLogger(`fsm: ${this.config_.name}`);
 
   public readonly eventSignal = createEventSignal<TEvent>({
     name: `${this.config_.name}-event`,
   });
 
-  private readonly stateSignal__ = createStateSignal<MachineState<TContext, TState>>({
+  private readonly stateSignal__ = createStateSignal<MachineState<TState, TContext>>({
     name: `${this.config_.name}-state__`,
     initialValue: {
-      state: this.config_.initial,
+      name: this.config_.initial,
       context: this.config_.context,
     },
   });
@@ -31,13 +31,13 @@ export class FsmService<TContext extends DictionaryOpt<unknown>, TEvent extends 
    * The public, read-only state signal.
    * Subscribe to this signal in your UI to react to state changes.
    */
-  public readonly stateSignal = createComputedSignal<MachineState<TContext, TState>>({
+  public readonly stateSignal = createComputedSignal<MachineState<TState, TContext>>({
     name: `${this.config_.name}-state`,
     deps: [this.stateSignal__],
     get: () => this.stateSignal__.get(),
   });
 
-  public constructor(protected readonly config_: StateMachineConfig<TContext, TEvent, TState>) {
+  public constructor(protected readonly config_: StateMachineConfig<TState, TEvent, TContext>) {
     this.logger_.logMethodArgs?.('constructor', config_);
     this.eventSignal.subscribe(this.processTransition_.bind(this), {receivePrevious: false});
   }
@@ -49,13 +49,13 @@ export class FsmService<TContext extends DictionaryOpt<unknown>, TEvent extends 
     this.logger_.logMethodArgs?.('processTransition_', event);
 
     const currentState = this.stateSignal__.get();
-    const currentStateDefinition = this.config_.states[currentState.state];
+    const currentStateDefinition = this.config_.states[currentState.name];
     const transition = currentStateDefinition?.on?.[event.type as TEvent['type']];
 
     if (!transition) {
       // Event ignored in the current state
       this.logger_.incident?.('processTransition_', 'transition_not_found', {
-        currentState: currentState.state,
+        currentState: currentState.name,
         requestedEvent: event.type,
       });
       return;
@@ -66,10 +66,10 @@ export class FsmService<TContext extends DictionaryOpt<unknown>, TEvent extends 
     // 1. Execute exit actions of the current state
     if (currentStateDefinition.exit?.length) {
       for (const effect of currentStateDefinition.exit ?? []) {
-        Promise.resolve(effect(newContext, event)).then((result) => {
+        Promise.resolve(effect(event, newContext)).then((result) => {
           if (result && 'type' in result) {
             this.logger_.logStep?.('processTransition_', 'new_event_from_exit_effect', {
-              currentState: currentState.state,
+              currentState: currentState.name,
               requestedEvent: event.type,
               newEvent: result.type,
             });
@@ -82,7 +82,7 @@ export class FsmService<TContext extends DictionaryOpt<unknown>, TEvent extends 
     // 2. Execute transition actions (pure context updates)
     if (transition.actions?.length) {
       for (const assigner of transition.actions) {
-        const update = assigner(newContext, event as Extract<TEvent, {type: TEvent['type']}>);
+        const update = assigner(event as Extract<TEvent, {type: TEvent['type']}>, newContext);
         if (update) {
           this.logger_.logProperty?.(`$${event.type}.updateContext`, update);
           newContext = {
@@ -93,17 +93,17 @@ export class FsmService<TContext extends DictionaryOpt<unknown>, TEvent extends 
       }
     }
 
-    const nextStateValue = transition.target ?? currentState.state;
+    const nextStateValue = transition.target ?? currentState.name;
 
     // 3. Execute entry actions of the next state (if transition occurs)
-    if (nextStateValue !== currentState.state) {
+    if (nextStateValue !== currentState.name) {
       const nextStateDefinition = this.config_.states[nextStateValue];
       if (nextStateDefinition && nextStateDefinition.entry?.length) {
         for (const effect of nextStateDefinition.entry) {
-          Promise.resolve(effect(newContext, event)).then((result) => {
+          Promise.resolve(effect(event, newContext)).then((result) => {
             if (result && 'type' in result) {
               this.logger_.logStep?.('processTransition_', 'new_event_from_exit_effect', {
-                currentState: currentState.state,
+                currentState: currentState.name,
                 requestedEvent: event.type,
                 newEvent: result.type,
               });
@@ -116,7 +116,7 @@ export class FsmService<TContext extends DictionaryOpt<unknown>, TEvent extends 
 
     // 4. Set the final new state
     this.stateSignal__.set({
-      state: nextStateValue,
+      name: nextStateValue,
       context: newContext,
     });
   }

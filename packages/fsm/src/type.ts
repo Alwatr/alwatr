@@ -1,4 +1,5 @@
 import type {SignalConfig} from '@alwatr/signal';
+import type {} from '@alwatr/type-helper';
 
 /**
  * Represents the state of a state machine, including its current finite state value
@@ -7,9 +8,9 @@ import type {SignalConfig} from '@alwatr/signal';
  * @template TContext The type of the context object (extended state).
  * @template TState The union type of the finite state values (e.g., 'idle' | 'loading').
  */
-export interface MachineState<TContext extends DictionaryOpt<unknown>, TState extends string> {
+export interface MachineState<TState extends string, TContext extends DictionaryOpt<unknown>> {
   /** The current finite state value. */
-  readonly state: TState;
+  readonly name: TState;
   /** The context (extended state) of the machine, holding quantitative data. */
   readonly context: TContext;
 }
@@ -35,9 +36,9 @@ export interface MachineEvent<TEventType extends string = string> {
  * @template TEvent The type of the event that triggered this assigner.
  * @returns A partial context object to be merged into the machine's context.
  */
-export type Assigner<TContext extends DictionaryOpt<unknown>, TEvent extends MachineEvent> = (
-  context: Readonly<TContext>,
+export type Assigner<TEvent extends MachineEvent, TContext extends DictionaryOpt<unknown>> = (
   event: Readonly<TEvent>,
+  context: Readonly<TContext>,
 ) => Partial<TContext>;
 
 /**
@@ -48,10 +49,10 @@ export type Assigner<TContext extends DictionaryOpt<unknown>, TEvent extends Mac
  * @template TEvent The type of the event that triggered this effect.
  * @returns void or a Promise<void>.
  */
-export type Effect<TContext extends DictionaryOpt<unknown>, TEvent extends MachineEvent> = (
-  context: Readonly<TContext>,
+export type Effect<TEvent extends MachineEvent, TContext extends DictionaryOpt<unknown>> = (
   event: Readonly<TEvent>,
-// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+  context: Readonly<TContext>,
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 ) => Awaitable<TEvent | void>;
 
 /**
@@ -62,11 +63,11 @@ export type Effect<TContext extends DictionaryOpt<unknown>, TEvent extends Machi
  * @template TEvent The type of the event.
  * @template TState The type of the state.
  */
-export interface Transition<TContext extends DictionaryOpt<unknown>, TEvent extends MachineEvent, TState extends string> {
+export interface Transition<TState extends string, TEvent extends MachineEvent, TContext extends DictionaryOpt<unknown>> {
   /** The target state to transition to. If undefined, it's an internal transition (no state change). */
   readonly target?: TState;
   /** An array of assigners to execute when this transition is taken. These update context synchronously. */
-  readonly actions?: readonly Assigner<TContext, TEvent>[];
+  readonly actions?: readonly Assigner<TEvent, TContext>[];
 }
 
 /**
@@ -77,7 +78,7 @@ export interface Transition<TContext extends DictionaryOpt<unknown>, TEvent exte
  * @template TEvent The union type of all possible events.
  * @template TState The union type of all possible states.
  */
-export interface StateMachineConfig<TContext extends DictionaryOpt<unknown>, TEvent extends MachineEvent, TState extends string>
+export interface StateMachineConfig<TState extends string, TEvent extends MachineEvent, TContext extends DictionaryOpt<unknown>>
   extends Pick<SignalConfig, 'name'> {
   /** The initial finite state value. */
   readonly initial: TState;
@@ -92,12 +93,12 @@ export interface StateMachineConfig<TContext extends DictionaryOpt<unknown>, TEv
     readonly [S in TState]?: {
       /** An object mapping event types to transitions for the current state. */
       readonly on?: {
-        readonly [E in TEvent['type']]?: Transition<TContext, Extract<TEvent, {type: E}>, TState>;
+        readonly [E in TEvent['type']]?: Transition<TState, Extract<TEvent, {type: E}>, TContext>;
       };
       /** An array of side-effect effects to execute upon entering this state. */
-      readonly entry?: readonly Effect<TContext, TEvent>[];
+      readonly entry?: readonly Effect<TEvent, TContext>[];
       /** An array of side-effect effects to execute upon exiting this state. */
-      readonly exit?: readonly Effect<TContext, TEvent>[];
+      readonly exit?: readonly Effect<TEvent, TContext>[];
     };
   };
 }
