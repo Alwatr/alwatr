@@ -1,112 +1,103 @@
+import type {SignalConfig} from '@alwatr/signal';
+
 /**
- * Defines the structure for state transitions.
- * For each state, it maps events to the next state.
+ * Represents the state of a state machine, including its current finite state value
+ * and its extended state (context).
+ *
+ * @template TContext The type of the context object (extended state).
+ * @template TState The union type of the finite state values (e.g., 'idle' | 'loading').
  */
-export type StateTransitions<TState extends string, TEvent extends string> = {
-  [S in TState]?: {
-    [E in TEvent]?: TState;
+export interface MachineState<TContext extends DictionaryOpt<unknown>, TState extends string> {
+  /** The current finite state value. */
+  readonly state: TState;
+  /** The context (extended state) of the machine, holding quantitative data. */
+  readonly context: TContext;
+}
+
+/**
+ * Represents an event that can be sent to the state machine.
+ * It must have a `type` property, which acts as a discriminator.
+ *
+ * @template TEventType The union type of event names.
+ */
+export interface MachineEvent<TEventType extends string = string> {
+  /** The unique type of the event. */
+  readonly type: TEventType;
+  /** An event can carry an optional payload. */
+  [key: string]: unknown;
+}
+
+/**
+ * Defines an assigner (synchronous action) that updates the context during transitions.
+ * It must return a partial context object to merge.
+ *
+ * @template TContext The type of the machine's context.
+ * @template TEvent The type of the event that triggered this assigner.
+ * @returns A partial context object to be merged into the machine's context.
+ */
+export type Assigner<TContext extends DictionaryOpt<unknown>, TEvent extends MachineEvent> = (
+  context: Readonly<TContext>,
+  event: Readonly<TEvent>,
+) => Partial<TContext>;
+
+/**
+ * Defines an effect (asynchronous side-effect action) executed on state entry/exit.
+ * It can interact with the outside world and does not update context.
+ *
+ * @template TContext The type of the machine's context.
+ * @template TEvent The type of the event that triggered this effect.
+ * @returns void or a Promise<void>.
+ */
+export type Effect<TContext extends DictionaryOpt<unknown>, TEvent extends MachineEvent> = (
+  context: Readonly<TContext>,
+  event: Readonly<TEvent>,
+// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+) => Awaitable<TEvent | void>;
+
+/**
+ * Defines a transition for a given state and event. It specifies the target state
+ * and any assigners to be executed.
+ *
+ * @template TContext The type of the machine's context.
+ * @template TEvent The type of the event.
+ * @template TState The type of the state.
+ */
+export interface Transition<TContext extends DictionaryOpt<unknown>, TEvent extends MachineEvent, TState extends string> {
+  /** The target state to transition to. If undefined, it's an internal transition (no state change). */
+  readonly target?: TState;
+  /** An array of assigners to execute when this transition is taken. These update context synchronously. */
+  readonly actions?: readonly Assigner<TContext, TEvent>[];
+}
+
+/**
+ * The declarative configuration object for creating a state machine.
+ * This object defines the entire behavior of the machine.
+ *
+ * @template TContext The type of the context object.
+ * @template TEvent The union type of all possible events.
+ * @template TState The union type of all possible states.
+ */
+export interface StateMachineConfig<TContext extends DictionaryOpt<unknown>, TEvent extends MachineEvent, TState extends string>
+  extends Pick<SignalConfig, 'name'> {
+  /** The initial finite state value. */
+  readonly initial: TState;
+
+  /** The initial context (extended state) of the machine. */
+  readonly context: TContext;
+
+  /**
+   * An object defining all possible states and their transitions.
+   */
+  readonly states: {
+    readonly [S in TState]?: {
+      /** An object mapping event types to transitions for the current state. */
+      readonly on?: {
+        readonly [E in TEvent['type']]?: Transition<TContext, Extract<TEvent, {type: E}>, TState>;
+      };
+      /** An array of side-effect effects to execute upon entering this state. */
+      readonly entry?: readonly Effect<TContext, TEvent>[];
+      /** An array of side-effect effects to execute upon exiting this state. */
+      readonly exit?: readonly Effect<TContext, TEvent>[];
+    };
   };
-};
-
-// A detailed object passed to every action and guard.
-export interface TransitionDetail<TState extends string, TEvent extends string, TContext> {
-  from: TState;
-  to: TState;
-  event: TEvent;
-  context: TContext;
-}
-
-export type Action<TState extends string, TEvent extends string, TContext> = (
-  detail: TransitionDetail<TState, TEvent, TContext>,
-) => Awaitable<void>;
-
-// Guards are conditional functions for transitions.
-export type Guard<TState extends string, TEvent extends string, TContext> = (
-  detail: TransitionDetail<TState, TEvent, TContext>,
-) => Awaitable<boolean>;
-
-/**
- * Defines the structure for actions associated with events or states.
- * Actions can be triggered on entering/exiting a state or on a specific transition.
- */
-export type ActionRecord<TState extends string, TEvent extends string, TContext> = {
-  onEnter_ANY?: Action<TState, TEvent, TContext>;
-  onExit_ANY?: Action<TState, TEvent, TContext>;
-} & {
-  [S in TState as `onEnter_${S}`]?: Action<TState, TEvent, TContext>;
-} & {
-  [S in TState as `onExit_${S}`]?: Action<TState, TEvent, TContext>;
-} & {
-  [E in TEvent as `on_${E}`]?: Action<TState, TEvent, TContext>;
-} & {
-  [T in `${TEvent}_in_${TState}` as `on_${T}`]?: Action<TState, TEvent, TContext>;
-};
-
-/**
- * The configuration object for creating a new state machine.
- */
-export interface StateMachineConfig<TState extends string, TEvent extends string, TContext> {
-  /**
-   * A unique name for the state machine, used for logging and debugging.
-   */
-  name: string;
-
-  /**
-   * The initial state of the machine.
-   */
-  initialState: TState;
-
-  /**
-   * An initial context or payload for the machine.
-   */
-  initialContext: TContext;
-
-  /**
-   * A record defining all possible state transitions.
-   */
-  states: StateTransitions<TState, TEvent>;
-
-  /**
-   * A record of actions to be executed on state entry or event triggers.
-   */
-  actions?: StateActions<TState, TEvent, TContext>;
-}
-
-/**
- * The public interface of a created state machine instance.
- * This is the API that users will interact with.
- */
-export interface StateMachine<TState extends string, TEvent extends string, TContext> {
-  /**
-   * The name of the state machine.
-   */
-  readonly name: string;
-
-  /**
-   * Returns the current state of the machine.
-   */
-  getState: () => TState;
-
-  /**
-   * Returns the current context of the machine.
-   */
-  getContext: () => TContext;
-
-  /**
-   * Triggers a transition to a new state based on an event.
-   * @param event The event to trigger.
-   * @param contextUpdater An optional function to update the context.
-   */
-  transition: (event: TEvent, contextUpdater?: (context: TContext) => TContext) => TState | null;
-
-  /**
-   * The Alwatr Signal instance for this FSM, allowing reactive subscriptions.
-   * You can listen for state changes using `fsm.signal.subscribe()`.
-   */
-  readonly signal: AlwatrSignal<TState>; // Assuming AlwatrSignal is imported
-
-  /**
-   * A method to clean up resources, particularly signal subscriptions.
-   */
-  destroy: () => void;
 }
