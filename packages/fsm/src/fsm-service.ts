@@ -212,10 +212,10 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
   /**
    * Destroys the service, cleaning up all internal signals and subscriptions
-   * to prevent memory leaks. This should be called when the component using
-   * the service is unmounted.
+   * to prevent memory leaks.
    */
   public destroy(): void {
+    this.logger_.logMethod?.('destroy');
     this.eventSignal.destroy();
     this.stateSignal.destroy();
   }
