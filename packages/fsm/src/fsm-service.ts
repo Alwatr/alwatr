@@ -1,5 +1,5 @@
 import {createLogger} from '@alwatr/logger';
-import {createStateSignal, createEventSignal, createComputedSignal} from '@alwatr/signal';
+import {createStateSignal, createEventSignal} from '@alwatr/signal';
 
 import type {StateMachineConfig, MachineState, MachineEvent} from './type.js';
 
@@ -31,11 +31,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    * The public, read-only state signal.
    * Subscribe to this signal in your UI to react to state changes.
    */
-  public readonly stateSignal = createComputedSignal<MachineState<TState, TContext>>({
-    name: `fsm-state-${this.config_.name}`,
-    deps: [this.stateSignal_],
-    get: () => this.stateSignal_.get(),
-  });
+  public readonly stateSignal = this.stateSignal_.asReadonly();
 
   public constructor(protected readonly config_: StateMachineConfig<TState, TEvent, TContext>) {
     this.logger_.logMethodArgs?.('constructor', config_);
@@ -129,8 +125,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    * the service is unmounted.
    */
   public destroy(): void {
-    this.stateSignal.destroy();
     this.eventSignal.destroy();
-    this.stateSignal_.destroy();
+    this.stateSignal.destroy();
   }
 }
