@@ -39,7 +39,8 @@ export interface MachineEvent<TEventType extends string = string> {
 export type Assigner<TEvent extends MachineEvent, TContext extends DictionaryOpt<unknown>> = (
   event: Readonly<TEvent>,
   context: Readonly<TContext>,
-) => Partial<TContext>;
+// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+) => Partial<TContext> | void;
 
 /**
  * Defines an effect (asynchronous side-effect action) executed on state entry/exit.
