@@ -53,6 +53,7 @@ export type Assigner<TEvent extends MachineEvent, TContext extends Record<string
 export type Effect<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
   event: Readonly<TEvent>,
   context: Readonly<TContext>,
+// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 ) => Awaitable<TEvent | void>;
 
 /**
@@ -80,7 +81,7 @@ export interface Transition<TState extends string, TEvent extends MachineEvent, 
   /** The target state to transition to. If undefined, it's an internal transition. */
   readonly target?: TState;
   /** An array of assigners to execute. These update context synchronously. */
-  readonly assigners?: readonly Assigner<TEvent, TContext>[];
+  readonly assigners?: SingleOrArray<Assigner<TEvent, TContext>>;
   /** A condition function that must return true for the transition to occur. */
   readonly condition?: Condition<TEvent, TContext>;
 }
@@ -106,12 +107,12 @@ export interface StateMachineConfig<TState extends string, TEvent extends Machin
     readonly [S in TState]?: {
       /** An object mapping event types to transitions for the current state. */
       readonly on?: {
-        readonly [E in TEvent['type']]?: readonly Transition<TState, Extract<TEvent, {type: E}>, TContext>[];
+        readonly [E in TEvent['type']]?: SingleOrArray<Transition<TState, Extract<TEvent, {type: E}>, TContext>>;
       };
       /** An array of side-effect effects to execute upon entering this state. */
-      readonly entry?: readonly Effect<TEvent, TContext>[];
+      readonly entry?: SingleOrArray<Effect<TEvent, TContext>>;
       /** An array of side-effect effects to execute upon exiting this state. */
-      readonly exit?: readonly Effect<TEvent, TContext>[];
+      readonly exit?: SingleOrArray<Effect<TEvent, TContext>>;
     };
   };
 }
