@@ -128,6 +128,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    */
   public destroy(): void {
     this.stateSignal_.destroy();
+    this.stateSignal.destroy();
     this.eventSignal.destroy();
   }
 }
