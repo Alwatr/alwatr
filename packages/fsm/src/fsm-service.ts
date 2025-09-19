@@ -20,23 +20,20 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     name: `fsm-event-${this.config_.name}`,
   });
 
-  protected readonly stateSignal_ = createStateSignal<MachineState<TState, TContext>>({
-    name: `fsm-state-${this.config_.name}__`,
+  private readonly stateSignal__ = createStateSignal<MachineState<TState, TContext>>({
+    name: `fsm-state-${this.config_.name}`,
     initialValue: {
       name: this.config_.initial,
       context: this.config_.context,
     },
   });
 
-  /**
-   * The public, read-only state signal.
-   * Subscribe to this signal in your UI to react to state changes.
-   */
-  public readonly stateSignal = this.stateSignal_.asReadonly();
+  /** The public, read-only state signal. Subscribe to react to state changes. */
+  public readonly stateSignal = this.stateSignal__.asReadonly();
 
   public constructor(protected readonly config_: StateMachineConfig<TState, TEvent, TContext>) {
     this.logger_.logMethodArgs?.('constructor', config_);
-    this.eventSignal.subscribe(this.processTransition_.bind(this), {receivePrevious: false});
+    this.eventSignal.subscribe(this.processTransition__.bind(this), {receivePrevious: false});
   }
 
   /**
