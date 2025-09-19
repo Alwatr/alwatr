@@ -32,7 +32,7 @@
     "yarn": ">=4.0.0"
   },
   "license": "MPL-2.0",
-  "packageManager": "yarn@4.9.4",
+  "packageManager": "yarn@4.10.2",
   "prettier": "@alwatr/prettier-config",
   "private": true,
   "repository": "https://github.com/Alwatr/flux",
