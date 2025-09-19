@@ -9,12 +9,18 @@ const console_ = getGlobalThis().console;
  * Default debug mode state, determined by environment variables or localStorage.
  */
 const defaultDebugMode = /* #__PURE__ */ (() => {
-  return (
-    platformInfo.development ||
-    (platformInfo.isCli
-      ? process.env.NODE_ENV !== 'production' || Boolean(process.env.DEBUG)
-      : typeof localStorage !== 'undefined' && localStorage.getItem('ALWATR_DEBUG') === '1')
-  );
+  if (platformInfo.development) {
+    if (platformInfo.isCli) {
+      return process.env.ALWATR_DEBUG !== '0';
+    }
+    else {
+      return typeof localStorage !== 'undefined' && localStorage.getItem('ALWATR_DEBUG') !== '0';
+    }
+  }
+  // else
+  return platformInfo.isCli
+    ? Boolean(process.env.DEBUG)
+    : typeof localStorage !== 'undefined' && localStorage.getItem('ALWATR_DEBUG') === '1';
 })();
 
 /**
