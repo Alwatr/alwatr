@@ -102,7 +102,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
         for (const effect of nextStateDefinition.entry) {
           Promise.resolve(effect(event, newContext)).then((result) => {
             if (result && 'type' in result) {
-              this.logger_.logStep?.('processTransition_', 'new_event_from_exit_effect', {
+              this.logger_.logStep?.('processTransition_', 'new_event_from_enter_effect', {
                 currentState: currentState.name,
                 requestedEvent: event.type,
                 newEvent: result.type,
