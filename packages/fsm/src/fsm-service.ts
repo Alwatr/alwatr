@@ -127,8 +127,8 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    * the service is unmounted.
    */
   public destroy(): void {
-    this.stateSignal_.destroy();
     this.stateSignal.destroy();
     this.eventSignal.destroy();
+    this.stateSignal_.destroy();
   }
 }
