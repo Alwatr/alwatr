@@ -64,7 +64,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
     // 2. Execute exit actions of the current state (if transition occurs)
     if (targetState.name !== currentState.name) {
-      void this.executeEffects__(event, targetState.context, this.config_.states[currentState.name]?.exit);
+      void this.executeEffects__(event, currentState.context, this.config_.states[currentState.name]?.exit);
     }
 
     // 3. Execute transition actions (pure context updates)
