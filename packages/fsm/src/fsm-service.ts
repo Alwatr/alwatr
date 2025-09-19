@@ -84,8 +84,8 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     }
 
     // 2. Execute transition actions (pure context updates)
-    if (transition.actions?.length) {
-      for (const assigner of transition.actions) {
+    if (transition.assigners?.length) {
+      for (const assigner of transition.assigners) {
         const update = assigner(event as Extract<TEvent, {type: TEvent['type']}>, newContext);
         this.logger_.logMethodFull?.(`event.${event.type}.action.${assigner.name || 'anonymous'}`, {event, newContext}, update);
         if (update) {
