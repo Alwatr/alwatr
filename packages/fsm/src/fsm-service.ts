@@ -174,38 +174,40 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
   }
 
   /**
-   * Applies all assigner actions for a transition to the context.
+   * Applies all assigner functions to the context to produce a new, updated context.
    * This is a pure function.
+   *
+   * @param event The event that triggered the transition.
+   * @param context The current context.
+   * @param assigners A single assigner or an array of assigners.
+   * @returns The new, updated context.
    */
   private applyAssigners__(event: TEvent, context: Readonly<TContext>, assigners?: SingleOrArray<Assigner<TEvent, TContext>>): TContext {
     if (!assigners) {
-      this.logger_.logMethodArgs?.('applyAssigners__//skipped', {assignersLength: 0});
+      this.logger_.logMethodArgs?.('applyAssigners__//skipped', {count: 0});
       return context;
     }
-    const assignersArray = Array.isArray(assigners) ? assigners : [assigners];
 
-    this.logger_.logMethodArgs?.('applyAssigners__', {assignersLength: assignersArray.length});
-    let newContext = context;
+    const assignersArray: Assigner<TEvent, TContext>[] = Array.isArray(assigners) ? assigners : [assigners];
 
-    for (const assigner of assignersArray) {
+    this.logger_.logMethodArgs?.('applyAssigners__', {count: assignersArray.length});
+
+    return assignersArray.reduce((accContext, assigner) => {
       try {
-        const update = assigner(event, context);
-        this.logger_.logMethodFull?.(`event.${event.type}.action.${assigner.name || 'anonymous'}`, {event, context}, update);
-        if (typeof update === 'object' && update !== null) {
-          newContext = {...newContext, ...update};
+        const partialUpdate = assigner(event, accContext);
+        this.logger_.logMethodFull?.(`event.${event.type}.action.${assigner.name || 'anonymous'}`, {event, context}, partialUpdate);
+        if (typeof partialUpdate === 'object' && partialUpdate !== null) {
+          return {...accContext, ...partialUpdate};
         }
       }
       catch (error) {
         this.logger_.error('applyAssigners__', 'assigner_failed', error, {
-          context: newContext,
           event,
+          context: accContext,
         });
-        // If an assigner fails, revert all changes from this transition by returning the original context.
-        return context;
       }
-    }
-
-    return newContext;
+      return accContext; // Return accumulator context if assigner fails or returns nothing.
+    }, context);
   }
 
   /**
