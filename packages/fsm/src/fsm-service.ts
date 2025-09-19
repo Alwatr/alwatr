@@ -37,43 +37,47 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
   }
 
   /**
-   * The internal method that contains the core FSM logic.
+   * The core FSM logic that processes a single event and transitions the machine to a new state.
+   * This process is atomic and follows the Run-to-Completion (RTC) model.
+   *
+   * @param event The event to process.
    */
-  protected async processTransition_(event: TEvent): Promise<void> {
-    const currentState = this.stateSignal_.get();
+  private async processTransition__(event: TEvent): Promise<void> {
+    const currentState = this.stateSignal__.get();
     this.logger_.logMethodArgs?.('processTransition_', {state: currentState.name, event});
 
-    // 1. find the current state definition
     const transition = this.findTransition__(event, currentState.context);
 
     if (!transition) {
-      // Event ignored in the current state
-      this.logger_.incident?.('processTransition_', 'transition_not_found', {
-        currentState: currentState.name,
-        requestedEvent: event.type,
+      this.logger_.incident?.('processTransition_', 'ignored_event', 'No valid transition found for event', {
+        state: currentState.name,
+        event,
       });
-      return;
+      return; // Event ignored, no transition occurs.
     }
 
-    const targetState: Mutable<MachineState<TState, TContext>> = {
-      name: transition.target ?? currentState.name,
-      context: currentState.context,
-    };
+    const targetStateName = transition.target ?? currentState.name;
 
-    // 2. Execute exit actions of the current state (if transition occurs)
-    if (targetState.name !== currentState.name) {
+    // 1. Execute exit effects of the current state if transitioning to a new state.
+    if (targetStateName !== currentState.name) {
       void this.executeEffects__(event, currentState.context, this.config_.states[currentState.name]?.exit);
     }
 
-    // 3. Execute transition actions (pure context updates)
-    targetState.context = this.applyAssigners__(event, targetState.context, transition.assigners);
+    // 2. Apply assigners to compute the next context. This is a pure function.
+    const nextContext = this.applyAssigners__(event, currentState.context, transition.assigners);
 
-    // 4. Set the final new state
-    this.stateSignal_.set(targetState);
+    // 3. Create the final next state object.
+    const nextState: MachineState<TState, TContext> = {
+      name: targetStateName,
+      context: nextContext,
+    };
 
-    // 5. Execute entry actions of the next state (if transition occurs)
-    if (targetState.name !== currentState.name) {
-      void this.executeEffects__(event, targetState.context, this.config_.states[targetState.name]?.entry);
+    // 4. Set the new state, notifying all subscribers.
+    this.stateSignal__.set(nextState);
+
+    // 5. Execute entry effects of the new state if a transition occurred.
+    if (nextState.name !== currentState.name) {
+      void this.executeEffects__(event, nextState.context, this.config_.states[nextState.name]?.entry);
     }
   }
 
