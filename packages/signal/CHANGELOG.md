@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/Alwatr/flux/compare/v5.2.2...v6.0.0) (2025-09-19)
+
+### ✨ Features
+
+* add asReadonly method to StateSignal for improved interface exposure ([e8be13a](https://github.com/Alwatr/flux/commit/e8be13aa1b49c0e67b8022b0bef02fb80e5499f4))
+
+### 🐛 Bug Fixes
+
+* remove space in logger initialization for signal classes ([6e3b071](https://github.com/Alwatr/flux/commit/6e3b0710b67f67849c4dce390e9bfa7b2f80a9f7))
+
+### 🔨 Code Refactoring
+
+* enhance logging during EffectSignal construction for dependency subscriptions ([062da7e](https://github.com/Alwatr/flux/commit/062da7e5a91070576579731ac21870ffcafa7033))
+* enhance logging in update method to track value changes ([5b0bb00](https://github.com/Alwatr/flux/commit/5b0bb000a7aeb37ab90405f34959b230ca575232))
+* replace signalId with name in signal implementation ([0c2f065](https://github.com/Alwatr/flux/commit/0c2f065bb0afa49980537e42773cbbf21013a2a3))
+* update internal signal name format and enhance logging during dependency subscription ([1670726](https://github.com/Alwatr/flux/commit/1670726059b77b058b9daa3841bb7bb1ded61af3))
+
+### 🔗 Dependencies update
+
+* update @alwatr/logger to version 6.0.2 and @types/node to version 22.18.6; upgrade esbuild and other dependencies ([95dfaba](https://github.com/Alwatr/flux/commit/95dfabab2a4d4ea2b0e42a70bee1f3e68a67bffc))
+* update dependencies for logger, nano-build, type-helper, and node types ([23fe723](https://github.com/Alwatr/flux/commit/23fe7236ffa0bfd2551a6dfc52c23689ce4b036e))
+* update package dependencies for improved compatibility and performance ([1e91063](https://github.com/Alwatr/flux/commit/1e9106343d01330089c33d9591969a66625a1e7b))
+
 ## [5.2.2](https://github.com/Alwatr/flux/compare/v5.2.1...v5.2.2) (2025-09-15)
 
 ### 🐛 Bug Fixes
