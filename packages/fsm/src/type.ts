@@ -80,10 +80,10 @@ export type Condition<TEvent extends MachineEvent, TContext extends Record<strin
 export interface Transition<TState extends string, TEvent extends MachineEvent, TContext extends Record<string, unknown>> {
   /** The target state to transition to. If undefined, it's an internal transition. */
   readonly target?: TState;
-  /** An array of assigners to execute. These update context synchronously. */
-  readonly assigners?: SingleOrArray<Assigner<TEvent, TContext>>;
   /** A condition function that must return true for the transition to occur. */
   readonly condition?: Condition<TEvent, TContext>;
+  /** An array of assigners to execute. These update context synchronously. */
+  readonly assigners?: SingleOrArray<Assigner<TEvent, TContext>>;
 }
 
 /**
