@@ -33,7 +33,7 @@ import type {MachineEvent, StateMachineConfig} from './type.js';
  *       on: {
  *         TOGGLE: {
  *           target: 'on',
- *           assigners: [(_, context) => ({brightness: context.brightness || 100})],
+ *           assigners: [() => ({brightness: 100})],
  *         },
  *       },
  *     },
