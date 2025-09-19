@@ -116,11 +116,10 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * userSignal.update(currentUser => ({ ...currentUser, loggedIn: true }));
    */
   public update(updater: (previousValue: T) => T): void {
-    this.logger_.logMethod?.('update');
     this.checkDestroyed_();
-    // The updater function is called with the current value to compute the new value,
-    // which is then passed to the `set` method.
-    this.set(updater(this.value__));
+    const newValue = updater(this.value__);
+    this.logger_.logMethodFull?.('update', this.value__, newValue);
+    this.set(newValue);
   }
 
   /**
