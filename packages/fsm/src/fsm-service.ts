@@ -175,12 +175,13 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
   /**
    * Applies all assigner functions to the context to produce a new, updated context.
-   * This is a pure function.
+   * This process is atomic (all-or-nothing). If any assigner fails, the original
+   * context is returned, and all updates are discarded.
    *
    * @param event The event that triggered the transition.
    * @param context The current context.
    * @param assigners A single assigner or an array of assigners.
-   * @returns The new, updated context.
+   * @returns The new, updated context, or the original context if any assigner fails.
    */
   private applyAssigners__(event: TEvent, context: Readonly<TContext>, assigners?: SingleOrArray<Assigner<TEvent, TContext>>): TContext {
     if (!assigners) {
@@ -192,22 +193,28 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
     this.logger_.logMethodArgs?.('applyAssigners__', {count: assignersArray.length});
 
-    return assignersArray.reduce((accContext, assigner) => {
-      try {
+    try {
+      // The entire reduce operation is wrapped in a single try/catch block
+      // to ensure atomic updates.
+      return assignersArray.reduce((accContext, assigner) => {
         const partialUpdate = assigner(event, accContext);
         this.logger_.logMethodFull?.(`event.${event.type}.action.${assigner.name || 'anonymous'}`, {event, context}, partialUpdate);
         if (typeof partialUpdate === 'object' && partialUpdate !== null) {
+          // The next assigner receives the updated context from the previous one.
           return {...accContext, ...partialUpdate};
         }
-      }
-      catch (error) {
-        this.logger_.error('applyAssigners__', 'assigner_failed', error, {
-          event,
-          context: accContext,
-        });
-      }
-      return accContext; // Return accumulator context if assigner fails or returns nothing.
-    }, context);
+        // If an assigner returns nothing, pass the accumulated context along.
+        return accContext;
+      }, context);
+    }
+    catch (error) {
+      this.logger_.error('applyAssigners__', 'assigner_failed_atomic', error, {
+        event,
+        context, // Log the original context for debugging.
+      });
+      // On ANY failure, discard all changes and return the original context.
+      return context;
+    }
   }
 
   /**
