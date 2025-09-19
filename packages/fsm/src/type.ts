@@ -5,10 +5,10 @@ import type {} from '@alwatr/type-helper';
  * Represents the state of a state machine, including its current finite state value
  * and its extended state (context).
  *
+ * @template TState The union type of the finite state values.
  * @template TContext The type of the context object (extended state).
- * @template TState The union type of the finite state values (e.g., 'idle' | 'loading').
  */
-export interface MachineState<TState extends string, TContext extends DictionaryOpt<unknown>> {
+export interface MachineState<TState extends string, TContext extends Record<string, unknown>> {
   /** The current finite state value. */
   readonly name: TState;
   /** The context (extended state) of the machine, holding quantitative data. */
@@ -36,7 +36,7 @@ export interface MachineEvent<TEventType extends string = string> {
  * @template TEvent The type of the event that triggered this assigner.
  * @returns A partial context object to be merged into the machine's context.
  */
-export type Assigner<TEvent extends MachineEvent, TContext extends DictionaryOpt<unknown>> = (
+export type Assigner<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
   event: Readonly<TEvent>,
   context: Readonly<TContext>,
 // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
@@ -44,49 +44,61 @@ export type Assigner<TEvent extends MachineEvent, TContext extends DictionaryOpt
 
 /**
  * Defines an effect (asynchronous side-effect action) executed on state entry/exit.
- * It can interact with the outside world and does not update context.
+ * It can interact with the outside world and can dispatch new events.
  *
  * @template TContext The type of the machine's context.
  * @template TEvent The type of the event that triggered this effect.
  * @returns void or a Promise<void>.
  */
-export type Effect<TEvent extends MachineEvent, TContext extends DictionaryOpt<unknown>> = (
+export type Effect<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
   event: Readonly<TEvent>,
   context: Readonly<TContext>,
-  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 ) => Awaitable<TEvent | void>;
 
 /**
- * Defines a transition for a given state and event. It specifies the target state
- * and any assigners to be executed.
+ * Defines a conditional guard function for a transition.
+ * The transition is only taken if this function returns true.
  *
  * @template TContext The type of the machine's context.
  * @template TEvent The type of the event.
- * @template TState The type of the state.
+ * @returns `true` if the transition should be taken, `false` otherwise.
  */
-export interface Transition<TState extends string, TEvent extends MachineEvent, TContext extends DictionaryOpt<unknown>> {
-  /** The target state to transition to. If undefined, it's an internal transition (no state change). */
+export type Condition<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
+  event: Readonly<TEvent>,
+  context: Readonly<TContext>,
+) => boolean;
+
+/**
+ * Defines a transition for a given state and event. It specifies the target state,
+ * actions, and an optional condition.
+ *
+ * @template TState The type of the state.
+ * @template TEvent The type of the event.
+ * @template TContext The type of the machine's context.
+ */
+export interface Transition<TState extends string, TEvent extends MachineEvent, TContext extends Record<string, unknown>> {
+  /** The target state to transition to. If undefined, it's an internal transition. */
   readonly target?: TState;
-  /** An array of assigners to execute when this transition is taken. These update context synchronously. */
+  /** An array of assigners to execute. These update context synchronously. */
   readonly actions?: readonly Assigner<TEvent, TContext>[];
+  /** A condition function that must return true for the transition to occur. */
+  readonly condition?: Condition<TEvent, TContext>;
 }
 
 /**
  * The declarative configuration object for creating a state machine.
  * This object defines the entire behavior of the machine.
  *
- * @template TContext The type of the context object.
- * @template TEvent The union type of all possible events.
  * @template TState The union type of all possible states.
+ * @template TEvent The union type of all possible events.
+ * @template TContext The type of the context object.
  */
-export interface StateMachineConfig<TState extends string, TEvent extends MachineEvent, TContext extends DictionaryOpt<unknown>>
+export interface StateMachineConfig<TState extends string, TEvent extends MachineEvent, TContext extends Record<string, unknown>>
   extends Pick<SignalConfig, 'name'> {
   /** The initial finite state value. */
   readonly initial: TState;
-
   /** The initial context (extended state) of the machine. */
   readonly context: TContext;
-
   /**
    * An object defining all possible states and their transitions.
    */
