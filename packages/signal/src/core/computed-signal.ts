@@ -61,7 +61,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
    * @protected
    */
   protected readonly internalSignal_ = new StateSignal<T>({
-    name: `${this.name}-internal`,
+    name: `compute-${this.name}_`,
     initialValue: this.config_.get(),
   });
 
@@ -84,6 +84,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
 
     // Subscribe to all dependencies to trigger recalculation on change.
     for (const signal of config_.deps) {
+      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', {signal: signal.name});
       this.dependencySubscriptions__.push(signal.subscribe(this.recalculate_, {receivePrevious: false}));
     }
   }
@@ -188,7 +189,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
       // Wait for the next macrotask to start the recalculation.
       // This batches all synchronous dependency updates in the current event loop.
       await delay.nextMacrotask();
-      
+
       if (this.isDestroyed) {
         this.logger_.incident?.('recalculate_', 'destroyed_during_delay');
         this.isRecalculating__ = false;
