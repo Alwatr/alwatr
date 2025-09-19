@@ -16,11 +16,11 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
   protected readonly logger_ = createLogger(`fsm: ${this.config_.name}`);
 
   public readonly eventSignal = createEventSignal<TEvent>({
-    name: `${this.config_.name}-event`,
+    name: `fsm-event-${this.config_.name}`,
   });
 
-  private readonly stateSignal__ = createStateSignal<MachineState<TState, TContext>>({
-    name: `${this.config_.name}-state__`,
+  protected readonly stateSignal_ = createStateSignal<MachineState<TState, TContext>>({
+    name: `fsm-state-${this.config_.name}__`,
     initialValue: {
       name: this.config_.initial,
       context: this.config_.context,
@@ -32,9 +32,9 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    * Subscribe to this signal in your UI to react to state changes.
    */
   public readonly stateSignal = createComputedSignal<MachineState<TState, TContext>>({
-    name: `${this.config_.name}-state`,
-    deps: [this.stateSignal__],
-    get: () => this.stateSignal__.get(),
+    name: `fsm-state-${this.config_.name}`,
+    deps: [this.stateSignal_],
+    get: () => this.stateSignal_.get(),
   });
 
   public constructor(protected readonly config_: StateMachineConfig<TState, TEvent, TContext>) {
@@ -45,10 +45,10 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
   /**
    * The internal method that contains the core FSM logic.
    */
-  private async processTransition_(event: TEvent): Promise<void> {
+  protected async processTransition_(event: TEvent): Promise<void> {
     this.logger_.logMethodArgs?.('processTransition_', event);
 
-    const currentState = this.stateSignal__.get();
+    const currentState = this.stateSignal_.get();
     const currentStateDefinition = this.config_.states[currentState.name];
     const transition = currentStateDefinition?.on?.[event.type as TEvent['type']];
 
@@ -83,8 +83,8 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     if (transition.actions?.length) {
       for (const assigner of transition.actions) {
         const update = assigner(event as Extract<TEvent, {type: TEvent['type']}>, newContext);
+        this.logger_.logMethodFull?.(`event.${event.type}.action.${assigner.name || 'anonymous'}`, {event, newContext}, update);
         if (update) {
-          this.logger_.logProperty?.(`$${event.type}.updateContext`, update);
           newContext = {
             ...newContext,
             ...update,
@@ -115,7 +115,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     }
 
     // 4. Set the final new state
-    this.stateSignal__.set({
+    this.stateSignal_.set({
       name: nextStateValue,
       context: newContext,
     });
@@ -127,7 +127,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    * the service is unmounted.
    */
   public destroy(): void {
-    this.stateSignal__.destroy();
+    this.stateSignal_.destroy();
     this.eventSignal.destroy();
   }
 }
