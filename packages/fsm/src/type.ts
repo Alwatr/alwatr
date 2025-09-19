@@ -39,7 +39,7 @@ export interface MachineEvent<TEventType extends string = string> {
 export type Assigner<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
   event: Readonly<TEvent>,
   context: Readonly<TContext>,
-// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 ) => Partial<TContext> | void;
 
 /**
@@ -106,7 +106,7 @@ export interface StateMachineConfig<TState extends string, TEvent extends Machin
     readonly [S in TState]?: {
       /** An object mapping event types to transitions for the current state. */
       readonly on?: {
-        readonly [E in TEvent['type']]?: Transition<TState, Extract<TEvent, {type: E}>, TContext>;
+        readonly [E in TEvent['type']]?: readonly Transition<TState, Extract<TEvent, {type: E}>, TContext>[];
       };
       /** An array of side-effect effects to execute upon entering this state. */
       readonly entry?: readonly Effect<TEvent, TContext>[];
