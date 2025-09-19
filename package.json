@@ -6,7 +6,7 @@
     "@alwatr/eslint-config": "^5.6.1",
     "@alwatr/prettier-config": "^5.0.3",
     "@alwatr/tsconfig-base": "^6.0.1",
-    "@alwatr/yarn-upgrade": "^1.0.7",
+    "@alwatr/yarn-upgrade": "^1.0.8",
     "@lerna-lite/changed": "^4.7.3",
     "@lerna-lite/cli": "^4.7.3",
     "@lerna-lite/diff": "^4.7.3",
@@ -32,7 +32,7 @@
     "yarn": ">=4.0.0"
   },
   "license": "MPL-2.0",
-  "packageManager": "yarn@4.9.4",
+  "packageManager": "yarn@4.10.2",
   "prettier": "@alwatr/prettier-config",
   "private": true,
   "repository": "https://github.com/Alwatr/flux",
@@ -56,7 +56,7 @@
     "rl": "yarn run pull && yarn run clean && yarn run build && yarn run lint && yarn run release",
     "rlt": "yarn run release --dry-run",
     "t": "yarn run test",
-    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest --verbose --passWithNoTests",
+    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" ALWATR_DEBUG=0 jest --verbose --passWithNoTests",
     "w": "yarn run watch",
     "watch": "lerna run --parallel watch"
   },

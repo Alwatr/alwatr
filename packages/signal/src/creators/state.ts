@@ -15,7 +15,7 @@ import type {StateSignalConfig} from '../type.js';
  *
  * @example
  * const counter = createStateSignal({
- *   signalId: 'counter-signal',
+ *   name: 'counter-signal',
  *   initialValue: 0,
  * });
  *

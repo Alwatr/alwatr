@@ -6,7 +6,7 @@ describe('createDebouncedSignal', () => {
   let debouncedSignal;
   /** @type {StateSignal<number>} */
   let sourceSignal;
-  const signalId = 'test-debounce-signal';
+  const name = 'test-debounce-signal';
   /**
    * @type {import("jest-mock").Mock<import("jest-mock").UnknownFunction>}
    */
@@ -15,7 +15,7 @@ describe('createDebouncedSignal', () => {
   beforeEach(() => {
     mockFunc = jest.fn();
     jest.useFakeTimers();
-    sourceSignal = new StateSignal({signalId, initialValue: 0});
+    sourceSignal = new StateSignal({name, initialValue: 0});
   });
 
   afterEach(() => {
@@ -28,7 +28,7 @@ describe('createDebouncedSignal', () => {
   it('should create a debounced signal with default config', () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100});
     expect(debouncedSignal.get()).toBe(0);
-    expect(debouncedSignal.signalId).toBe(`${signalId}-debounced`);
+    expect(debouncedSignal.name).toBe(`${name}-debounced`);
   });
 
   it('should debounce updates with trailing edge', async () => {
@@ -81,9 +81,9 @@ describe('createDebouncedSignal', () => {
     expect(onDestroyMock).toHaveBeenCalled();
   });
 
-  it('should use custom signalId if provided', () => {
-    debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100, signalId: 'custom-debounced'});
-    expect(debouncedSignal.signalId).toBe('custom-debounced');
+  it('should use custom name if provided', () => {
+    debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100, name: 'custom-debounced'});
+    expect(debouncedSignal.name).toBe('custom-debounced');
   });
 
   it('should handle multiple rapid updates correctly', async () => {

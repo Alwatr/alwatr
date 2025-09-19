@@ -5,20 +5,20 @@ import {delay} from '@alwatr/delay';
 describe('StateSignal', () => {
   /** @type {StateSignal<number>} */
   let signal;
-  const signalId = 'test-state-signal';
+  const name = 'test-state-signal';
 
   beforeEach(() => {
-    signal = new StateSignal({signalId, initialValue: 0});
+    signal = new StateSignal({name, initialValue: 0});
   });
 
   afterEach(() => {
     signal.destroy();
   });
 
-  it('should be defined and have the correct signalId and initial value', () => {
+  it('should be defined and have the correct name and initial value', () => {
     expect(StateSignal).toBeDefined();
     expect(signal).toBeInstanceOf(StateSignal);
-    expect(signal.signalId).toBe(signalId);
+    expect(signal.name).toBe(name);
     expect(signal.get()).toBe(0);
   });
 
@@ -154,7 +154,7 @@ describe('StateSignal', () => {
   it('should notify subscribers multiple times for object values when they change', async () => {
     const callback = jest.fn();
     const value = {a: 1};
-    const signal = new StateSignal({signalId: 'object-signal', initialValue: value});
+    const signal = new StateSignal({name: 'object-signal', initialValue: value});
     
     signal.subscribe(callback, {receivePrevious: false});
 
@@ -221,23 +221,23 @@ describe('StateSignal', () => {
     });
 
     it('should throw an error when set is called on a destroyed signal', () => {
-      expect(() => signal.set(1)).toThrow(`Cannot interact with a destroyed signal (id: ${signalId})`);
+      expect(() => signal.set(1)).toThrow(`Cannot interact with a destroyed signal (id: ${name})`);
     });
 
     it('should throw an error when subscribe is called on a destroyed signal', () => {
-      expect(() => signal.subscribe(jest.fn())).toThrow(`Cannot interact with a destroyed signal (id: ${signalId})`);
+      expect(() => signal.subscribe(jest.fn())).toThrow(`Cannot interact with a destroyed signal (id: ${name})`);
     });
 
     it('should throw an error when untilNext is called on a destroyed signal', () => {
-      expect(() => signal.untilNext()).toThrow(`Cannot interact with a destroyed signal (id: ${signalId})`);
+      expect(() => signal.untilNext()).toThrow(`Cannot interact with a destroyed signal (id: ${name})`);
     });
 
     it('should throw an error when accessing value on a destroyed signal', () => {
-      expect(() => signal.get()).toThrow(`Cannot interact with a destroyed signal (id: ${signalId})`);
+      expect(() => signal.get()).toThrow(`Cannot interact with a destroyed signal (id: ${name})`);
     });
 
     it('should not notify any listeners after being destroyed', async () => {
-      const localSignal = new StateSignal({signalId: 'local', initialValue: 0});
+      const localSignal = new StateSignal({name: 'local', initialValue: 0});
       const callback = jest.fn();
       localSignal.subscribe(callback, {receivePrevious: false});
 

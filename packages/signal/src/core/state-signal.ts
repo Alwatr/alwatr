@@ -17,7 +17,7 @@ import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeRes
  * @example
  * // Create a new state signal with an initial value.
  * const counter = new StateSignal<number>({
- *   signalId: 'counter-signal',
+ *   name: 'counter-signal',
  *   initialValue: 0,
  * });
  *
@@ -49,7 +49,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * The logger instance for this signal.
    * @protected
    */
-  protected logger_ = createLogger(`state-signal: ${this.signalId}`);
+  protected logger_ = createLogger(`state-signal: ${this.name}`);
 
   public constructor(config: StateSignalConfig<T>) {
     super(config);
@@ -116,11 +116,10 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * userSignal.update(currentUser => ({ ...currentUser, loggedIn: true }));
    */
   public update(updater: (previousValue: T) => T): void {
-    this.logger_.logMethod?.('update');
     this.checkDestroyed_();
-    // The updater function is called with the current value to compute the new value,
-    // which is then passed to the `set` method.
-    this.set(updater(this.value__));
+    const newValue = updater(this.value__);
+    this.logger_.logMethodFull?.('update', this.value__, newValue);
+    this.set(newValue);
   }
 
   /**
@@ -167,5 +166,9 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
   public override destroy(): void {
     this.value__ = null as T; // Clear the value to allow for garbage collection.
     super.destroy();
+  }
+
+  public asReadonly(): IReadonlySignal<T> {
+    return this;
   }
 }

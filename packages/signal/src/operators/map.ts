@@ -15,13 +15,13 @@ import type {IReadonlySignal} from '../type.js';
  *
  * @param sourceSignal The original signal to transform.
  * @param projectFunction A function to apply to each value from the source signal.
- * @param [signalId] An optional, unique identifier for the new signal for debugging. default: `${sourceSignal.signalId}-mapped`
+ * @param [name] An optional, unique identifier for the new signal for debugging. default: `${sourceSignal.name}-mapped`
  *
  * @returns A new, read-only computed signal with the transformed values.
  *
  * @example
  * const userSignal = createStateSignal({
- *   signalId: 'user',
+ *   name: 'user',
  *   initialValue: { name: 'John', age: 30 },
  * });
  *
@@ -38,10 +38,10 @@ import type {IReadonlySignal} from '../type.js';
 export function createMappedSignal<T, R>(
   sourceSignal: IReadonlySignal<T>,
   projectFunction: (value: T) => R,
-  signalId = `${sourceSignal.signalId}-mapped`,
+  name = `${sourceSignal.name}-mapped`,
 ): ComputedSignal<R> {
   return createComputedSignal({
-    signalId,
+    name: name,
     deps: [sourceSignal],
     get: () => projectFunction(sourceSignal.get()),
   });

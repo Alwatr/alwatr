@@ -18,12 +18,12 @@ import type {EffectSignalConfig, IEffectSignal, SubscribeResult} from '../type.j
  *
  * @example
  * // --- Create dependency signals ---
- * const counter = new StateSignal({ initialValue: 0, signalId: 'counter' });
- * const user = new StateSignal({ initialValue: 'guest', signalId: 'user' });
+ * const counter = new StateSignal({ initialValue: 0, name: 'counter' });
+ * const user = new StateSignal({ initialValue: 'guest', name: 'user' });
  *
  * // --- Create an effect ---
  * const analyticsEffect = new EffectSignal({
- *   signalId: 'analytics-effect',
+ *   name: 'analytics-effect',
  *   deps: [counter, user],
  *   run: () => {
  *     console.log(`Analytics: User '${user.get()}' clicked ${counter.get()} times.`);
@@ -46,13 +46,13 @@ export class EffectSignal implements IEffectSignal {
   /**
    * The unique identifier for this signal instance.
    */
-  public readonly signalId = this.config_.signalId ?? `[${this.config_.deps.map((dep) => dep.signalId).join(', ')}]`;
+  public readonly name = this.config_.name ?? `[${this.config_.deps.map((dep) => dep.name).join(', ')}]`;
 
   /**
    * The logger instance for this signal.
    * @protected
    */
-  protected readonly logger_ = createLogger(`effect-signal: ${this.signalId}`);
+  protected readonly logger_ = createLogger(`effect-signal: ${this.name}`);
 
   /**
    * A list of subscriptions to dependency signals.
@@ -89,11 +89,13 @@ export class EffectSignal implements IEffectSignal {
     // Subscribe to all dependencies. We don't need the previous value,
     // as the `runImmediately` option controls the initial execution.
     for (const signal of config_.deps) {
+      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', {signal: signal.name});
       this.dependencySubscriptions__.push(signal.subscribe(this.scheduleExecution_, {receivePrevious: false}));
     }
 
     // Run the effect immediately if requested.
     if (config_.runImmediately === true) {
+      this.logger_.logStep?.('constructor', 'scheduling_initial_execution');
       // We don't need to await this, let it run in the background.
       void this.scheduleExecution_();
     }

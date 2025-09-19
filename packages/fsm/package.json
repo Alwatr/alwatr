@@ -1,19 +1,19 @@
 {
   "name": "@alwatr/fsm",
-  "description": "A robust TypeScript library for implementing Flux (Finite) State Machines, enabling clear and organized management of application state and transitions.",
+  "description": "A lightweight, reactive, type-safe state machine library built on top of @alwatr/signal.",
   "version": "4.1.1",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/nanolib": "^6.0.3",
+    "@alwatr/logger": "^6.0.3",
     "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^6.1.1",
+    "@alwatr/nano-build": "^6.2.1",
     "@alwatr/prettier-config": "^5.0.3",
     "@alwatr/tsconfig-base": "^6.0.1",
-    "@alwatr/type-helper": "^6.0.1",
-    "@types/node": "^22.18.1",
+    "@alwatr/type-helper": "^6.1.0",
+    "@types/node": "^22.18.6",
     "jest": "^30.1.3",
     "typescript": "^5.9.2"
   },
