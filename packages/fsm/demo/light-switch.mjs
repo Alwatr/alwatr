@@ -32,7 +32,7 @@ const lightMachineConfig = {
       on: {
         TOGGLE: {
           target: 'on',
-          assigners: [(_, context) => ({brightness: context.brightness || 100})],
+          assigners: [(_, context) => ({brightness: 100})],
         },
       },
     },
@@ -62,32 +62,32 @@ const lightSwitchFsmService = createFsmService(lightMachineConfig);
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 lightSwitchFsmService.stateSignal.subscribe((state) => {
-  console.log(`Light is ${state.name} with brightness ${state.context.brightness}`);
+  console.log(`Light turn ${state.name} with brightness ${state.context.brightness}`);
 });
 
 console.log('start, state: %s', lightSwitchFsmService.stateSignal.get().name); // start, state: off
 
 await delay(10);
 console.log('\n\n');
-lightSwitchFsmService.eventSignal.dispatch({type: 'TOGGLE'}); // Light is on with brightness 100
+lightSwitchFsmService.eventSignal.dispatch({type: 'TOGGLE'}); // Light turn on with brightness 100
 await delay(10);
 console.log('\n\n');
-lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 50}); // Light is on with brightness 50
+lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 50}); // Light turn on with brightness 50
 await delay(10);
 console.log('\n\n');
 lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 200}); // Invalid brightness, no state change
 await delay(10);
 console.log('\n\n');
-lightSwitchFsmService.eventSignal.dispatch({type: 'TOGGLE'}); // Light is off with brightness 0
+lightSwitchFsmService.eventSignal.dispatch({type: 'TOGGLE'}); // Light turn off with brightness 0
 await delay(10);
 console.log('\n\n');
-lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 75}); // Light is off with brightness 0
+lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 75}); // Light turn off with brightness 0
 await delay(10);
 console.log('\n\n');
-lightSwitchFsmService.eventSignal.dispatch({type: 'TOGGLE'}); // Light is on with brightness 100
+lightSwitchFsmService.eventSignal.dispatch({type: 'TOGGLE'}); // Light turn on with brightness 100
 await delay(10);
 console.log('\n\n');
-lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 0}); // Light is off with brightness 0
+lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 0}); // Light turn off with brightness 0
 await delay(10);
 console.log('\n\n');
 
