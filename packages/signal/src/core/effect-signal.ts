@@ -89,11 +89,13 @@ export class EffectSignal implements IEffectSignal {
     // Subscribe to all dependencies. We don't need the previous value,
     // as the `runImmediately` option controls the initial execution.
     for (const signal of config_.deps) {
+      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', {signal: signal.name});
       this.dependencySubscriptions__.push(signal.subscribe(this.scheduleExecution_, {receivePrevious: false}));
     }
 
     // Run the effect immediately if requested.
     if (config_.runImmediately === true) {
+      this.logger_.logStep?.('constructor', 'scheduling_initial_execution');
       // We don't need to await this, let it run in the background.
       void this.scheduleExecution_();
     }
