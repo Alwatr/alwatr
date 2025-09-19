@@ -53,7 +53,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
    * The logger instance for this signal.
    * @protected
    */
-  protected readonly logger_ = createLogger(`computed-signal: ${this.name}`);
+  protected readonly logger_ = createLogger(`computed-signal:${this.name}`);
 
   /**
    * The internal `StateSignal` that holds the computed value.

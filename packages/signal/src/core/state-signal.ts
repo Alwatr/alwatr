@@ -49,7 +49,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * The logger instance for this signal.
    * @protected
    */
-  protected logger_ = createLogger(`state-signal: ${this.name}`);
+  protected logger_ = createLogger(`state-signal:${this.name}`);
 
   public constructor(config: StateSignalConfig<T>) {
     super(config);
