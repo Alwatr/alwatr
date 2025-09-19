@@ -128,6 +128,13 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     });
   }
 
+  /**
+   * Sequentially executes a list of effects (side-effects).
+   * Errors are caught and logged without stopping the FSM.
+   *
+   * @param event The event that triggered these effects.
+   * @param context The context at the time of execution.
+   * @param effects A single effect or an array of effects.
    */
   private async executeEffects__(
     event: TEvent,
@@ -135,31 +142,32 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     effects?: SingleOrArray<Effect<TEvent, TContext>>,
   ): Promise<void> {
     if (!effects) {
-      this.logger_.logMethodArgs?.('executeEffects__//skipped', {effectsLength: 0});
+      this.logger_.logMethodArgs?.('executeEffects__//skipped', {count: 0});
       return;
     }
     const effectsArray: Effect<TEvent, TContext>[] = Array.isArray(effects) ? effects : [effects];
 
-    this.logger_.logMethodArgs?.('executeEffects__', {effectsLength: effectsArray.length});
+    this.logger_.logMethodArgs?.('executeEffects__', {count: effectsArray.length});
 
     for (const effect of effectsArray) {
       try {
         const result = await effect(event, context);
+        // If an effect returns a new event, dispatch it to be processed next.
         if (result && 'type' in result) {
           this.logger_.logStep?.('executeEffects__', 'new_event_from_effect', {
-            effectName: effect.name || 'anonymous',
-            currentState: this.stateSignal_.get().name,
-            event: event.type,
+            effect: effect.name || 'anonymous',
+            state: this.stateSignal__.get().name,
             newEvent: result.type,
           });
           this.eventSignal.dispatch(result);
         }
       }
       catch (error) {
-        this.logger_.error('executeEffects_', 'effect_failed', error, {
-          effectName: effect.name || 'anonymous',
-          currentState: this.stateSignal_.get().name,
-          event: event.type,
+        this.logger_.error('executeEffects__', 'effect_failed', error, {
+          effect: effect.name || 'anonymous',
+          state: this.stateSignal__.get().name,
+          event,
+          context,
         });
       }
     }
