@@ -96,14 +96,26 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
     if (Array.isArray(transitionConfig)) {
       // Find the first transition whose condition is met
-      return transitionConfig.find((transition) => {
+      return transitionConfig.find((transition, index) => {
+        if (!transition.condition) return true; // No condition means always true
+        
         try {
-          return transition.condition?.(event, context) ?? true;
+          const conditionResult = transition.condition?.(event, context);
+          if (!conditionResult) {
+            this.logger_.incident?.('findTransition_', 'condition_not_met', {
+              currentState: currentState.name,
+              requestedEvent: event.type,
+              transitionIndex: index,
+              condition: transition.condition.name || 'anonymous',
+            });
+          }
+          return conditionResult; 
         }
         catch (error) {
           this.logger_.error('findTransition_', 'condition_check_failed', error, {
             currentState: currentState.name,
             requestedEvent: event.type,
+            transitionIndex: index,
             transition,
           });
           return false;
