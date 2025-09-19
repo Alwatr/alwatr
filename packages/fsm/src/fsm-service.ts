@@ -15,6 +15,7 @@ import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect,
 export class FsmService<TState extends string, TEvent extends MachineEvent, TContext extends Record<string, unknown>> {
   protected readonly logger_ = createLogger(`fsm: ${this.config_.name}`);
 
+  /** The event signal for sending events to the FSM. */
   public readonly eventSignal = createEventSignal<TEvent>({
     name: `fsm-event-${this.config_.name}`,
   });
