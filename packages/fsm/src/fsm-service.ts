@@ -44,12 +44,12 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    */
   private async processTransition__(event: TEvent): Promise<void> {
     const currentState = this.stateSignal__.get();
-    this.logger_.logMethodArgs?.('processTransition_', {state: currentState.name, event});
+    this.logger_.logMethodArgs?.('processTransition__', {state: currentState.name, event});
 
     const transition = this.findTransition__(event, currentState.context);
 
     if (!transition) {
-      this.logger_.incident?.('processTransition_', 'ignored_event', 'No valid transition found for event', {
+      this.logger_.incident?.('processTransition__', 'ignored_event', 'No valid transition found for event', {
         state: currentState.name,
         event,
       });
@@ -198,7 +198,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
       // to ensure atomic updates.
       return assignersArray.reduce((accContext, assigner) => {
         const partialUpdate = assigner(event, accContext);
-        this.logger_.logMethodFull?.(`event.${event.type}.action.${assigner.name || 'anonymous'}`, {event, context}, partialUpdate);
+        this.logger_.logMethodFull?.(`event.${event.type}.action.${assigner.name || 'anonymous'}`, {event, accContext}, partialUpdate);
         if (typeof partialUpdate === 'object' && partialUpdate !== null) {
           // The next assigner receives the updated context from the previous one.
           return {...accContext, ...partialUpdate};
