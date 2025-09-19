@@ -29,7 +29,6 @@ declare global {
   type Nullish = null | undefined;
 }
 
-
 /**
  * Global Functions and Class Types.
  */
@@ -107,6 +106,17 @@ declare global {
    * }
    */
   type SingleOrArray<T> = T | T[];
+
+  /**
+   * Represents a value that can be either a single item of type `T` or a readonly array of `T`.
+   * @template T The type of the item(s).
+   * @example
+   * function logItems(items: SingleOrReadonlyArray<string>) {
+   *   const allItems = Array.isArray(items) ? items : [items];
+   *   allItems.forEach(item => console.log(item));
+   * }
+   */
+  type SingleOrReadonlyArray<T> = T | readonly T[];
 
   /**
    * Excludes `undefined` from a type `T`.
@@ -246,7 +256,6 @@ declare global {
    * @template T The type to simplify.
    */
   type Simplify<T> = {[K in keyof T]: T[K]} & {};
-
 
   /**
    * Represents an object that has the ability to add event listeners.
