@@ -90,6 +90,7 @@ await delay(1000); console.log('\n\n');
 lightMachineService.eventSignal.dispatch({type: 'TIMER'});
 await delay(1000); console.log('\n\n');
 lightMachineService.eventSignal.dispatch({type: 'TIMER'});
+await delay(1000); console.log('\n\n');
 
 console.log('end', lightMachineService.stateSignal.get().name);
 
