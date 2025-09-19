@@ -1,7 +1,7 @@
 import {createLogger} from '@alwatr/logger';
 import {createStateSignal, createEventSignal} from '@alwatr/signal';
 
-import type {StateMachineConfig, MachineState, MachineEvent} from './type.js';
+import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect, Assigner} from './type.js';
 
 /**
  * A generic, encapsulated service that creates, runs, and manages a finite state machine.
@@ -42,11 +42,11 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    * The internal method that contains the core FSM logic.
    */
   protected async processTransition_(event: TEvent): Promise<void> {
-    this.logger_.logMethodArgs?.('processTransition_', event);
-
     const currentState = this.stateSignal_.get();
-    const currentStateDefinition = this.config_.states[currentState.name];
-    const transition = currentStateDefinition?.on?.[event.type as TEvent['type']];
+    this.logger_.logMethodArgs?.('processTransition_', {state: currentState.name, event});
+
+    // 1. find the current state definition
+    const transition = this.findTransition__(event, currentState.context);
 
     if (!transition) {
       // Event ignored in the current state
@@ -57,66 +57,148 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
       return;
     }
 
-    const nextStateValue = transition.target ?? currentState.name;
-    let newContext = currentState.context;
+    const targetState: Mutable<MachineState<TState, TContext>> = {
+      name: transition.target ?? currentState.name,
+      context: currentState.context,
+    };
 
-    // Execute exit/entry effects ONLY if the state is changing
-    if (nextStateValue !== currentState.name) {
-      // 1. Execute exit actions of the current state
-      if (currentStateDefinition.exit?.length) {
-        for (const effect of currentStateDefinition.exit ?? []) {
-          Promise.resolve(effect(event, newContext)).then((result) => {
-            if (result && 'type' in result) {
-              this.logger_.logStep?.('processTransition_', 'new_event_from_exit_effect', {
-                currentState: currentState.name,
-                requestedEvent: event.type,
-                newEvent: result.type,
-              });
-              this.eventSignal.dispatch(result);
-            }
-          });
-        }
-      }
+    // 2. Execute exit actions of the current state (if transition occurs)
+    if (targetState.name !== currentState.name) {
+      void this.executeEffects__(event, targetState.context, this.config_.states[currentState.name]?.exit);
     }
 
-    // 2. Execute transition actions (pure context updates)
-    if (transition.assigners?.length) {
-      for (const assigner of transition.assigners) {
-        const update = assigner(event as Extract<TEvent, {type: TEvent['type']}>, newContext);
-        this.logger_.logMethodFull?.(`event.${event.type}.action.${assigner.name || 'anonymous'}`, {event, newContext}, update);
-        if (update) {
-          newContext = {
-            ...newContext,
-            ...update,
-          };
-        }
-      }
-    }
-
-    // 3. Execute entry actions of the next state (if transition occurs)
-    if (nextStateValue !== currentState.name) {
-      const nextStateDefinition = this.config_.states[nextStateValue];
-      if (nextStateDefinition && nextStateDefinition.entry?.length) {
-        for (const effect of nextStateDefinition.entry) {
-          Promise.resolve(effect(event, newContext)).then((result) => {
-            if (result && 'type' in result) {
-              this.logger_.logStep?.('processTransition_', 'new_event_from_enter_effect', {
-                currentState: currentState.name,
-                requestedEvent: event.type,
-                newEvent: result.type,
-              });
-              this.eventSignal.dispatch(result);
-            }
-          });
-        }
-      }
-    }
+    // 3. Execute transition actions (pure context updates)
+    targetState.context = this.applyAssigners__(event, targetState.context, transition.assigners);
 
     // 4. Set the final new state
-    this.stateSignal_.set({
-      name: nextStateValue,
-      context: newContext,
-    });
+    this.stateSignal_.set(targetState);
+
+    // 5. Execute entry actions of the next state (if transition occurs)
+    if (targetState.name !== currentState.name) {
+      void this.executeEffects__(event, targetState.context, this.config_.states[currentState.name]?.entry);
+    }
+  }
+
+  /**
+   * Resolves the appropriate transition based on the current state and event.
+   * It supports conditional transitions (guards).
+   */
+  private findTransition__(event: TEvent, context: Readonly<TContext>): Maybe<Transition<TState, TEvent, TContext>> {
+    const currentState = this.stateSignal_.get();
+    const currentStateConfig = this.config_.states[currentState.name];
+    const transitionConfig = currentStateConfig?.on?.[event.type as TEvent['type']] as
+      | SingleOrArray<Transition<TState, TEvent, TContext>>
+      | undefined;
+
+    if (!transitionConfig) {
+      return undefined;
+    }
+
+    if (Array.isArray(transitionConfig)) {
+      // Find the first transition whose condition is met
+      return transitionConfig.find((transition) => {
+        try {
+          return transition.condition?.(event, context) ?? true;
+        }
+        catch (error) {
+          this.logger_.error('findTransition_', 'condition_check_failed', error, {
+            currentState: currentState.name,
+            requestedEvent: event.type,
+            transition,
+          });
+          return false;
+        }
+      });
+    }
+
+    // else
+    try {
+      if (transitionConfig.condition && !transitionConfig.condition?.(event, context)) {
+        // The single transition has a condition that is not met
+        return undefined;
+      }
+    }
+    catch (error) {
+      this.logger_.error('findTransition_', 'condition_check_failed', error, {
+        currentState: currentState.name,
+        requestedEvent: event.type,
+        transitionConfig,
+      });
+      return undefined;
+    }
+
+    return transitionConfig;
+  }
+
+  /**
+   * Sequentially executes a list of effects, handling errors and dispatching new events.
+   */
+  private async executeEffects__(
+    event: TEvent,
+    context: Readonly<TContext>,
+    effects?: SingleOrArray<Effect<TEvent, TContext>>,
+  ): Promise<void> {
+    if (!effects) {
+      this.logger_.logMethodArgs?.('executeEffects__//skipped', {effectsLength: 0});
+      return;
+    }
+    const effectsArray: Effect<TEvent, TContext>[] = Array.isArray(effects) ? effects : [effects];
+
+    this.logger_.logMethodArgs?.('executeEffects__', {effectsLength: effectsArray.length});
+
+    for (const effect of effectsArray) {
+      try {
+        const result = await effect(event, context);
+        if (result && 'type' in result) {
+          this.logger_.logStep?.('executeEffects__', 'new_event_from_effect', {
+            effectName: effect.name || 'anonymous',
+            currentState: this.stateSignal_.get().name,
+            event: event.type,
+            newEvent: result.type,
+          });
+          this.eventSignal.dispatch(result);
+        }
+      }
+      catch (error) {
+        this.logger_.error('executeEffects_', 'effect_failed', error, {
+          effectName: effect.name || 'anonymous',
+          currentState: this.stateSignal_.get().name,
+          event: event.type,
+        });
+      }
+    }
+  }
+
+  /**
+   * Applies all assigner actions for a transition to the context.
+   * This is a pure function.
+   */
+  private applyAssigners__(event: TEvent, context: Readonly<TContext>, assigners?: SingleOrArray<Assigner<TEvent, TContext>>): TContext {
+    if (!assigners) {
+      this.logger_.logMethodArgs?.('applyAssigners__//skipped', {assignersLength: 0});
+      return context;
+    }
+    const assignersArray = Array.isArray(assigners) ? assigners : [assigners];
+
+    this.logger_.logMethodArgs?.('applyAssigners__', {assignersLength: assignersArray.length});
+
+    for (const assigner of assignersArray) {
+      try {
+        const update = assigner(event, context);
+        this.logger_.logMethodFull?.(`event.${event.type}.action.${assigner.name || 'anonymous'}`, {event, context}, update);
+        if (typeof update === 'object' && update !== null) {
+          context = {...context, ...update};
+        }
+      }
+      catch (error) {
+        this.logger_.error('applyAssigners__', 'assigner_failed', error, {
+          currentContext: context,
+          event,
+        });
+      }
+    }
+
+    return context;
   }
 
   /**
