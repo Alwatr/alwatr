@@ -167,4 +167,8 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     this.value__ = null as T; // Clear the value to allow for garbage collection.
     super.destroy();
   }
+
+  public asReadonly(): IReadonlySignal<T> {
+    return this;
+  }
 }
