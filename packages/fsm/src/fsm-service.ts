@@ -12,7 +12,7 @@ import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect,
  * @template TEvent The union type of all possible events.
  * @template TContext The type of the machine's context (extended state).
  */
-export class FsmService<TState extends string, TEvent extends MachineEvent, TContext extends DictionaryOpt<unknown>> {
+export class FsmService<TState extends string, TEvent extends MachineEvent, TContext extends Record<string, unknown>> {
   protected readonly logger_ = createLogger(`fsm: ${this.config_.name}`);
 
   public readonly eventSignal = createEventSignal<TEvent>({
