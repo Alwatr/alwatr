@@ -193,24 +193,27 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     const assignersArray = Array.isArray(assigners) ? assigners : [assigners];
 
     this.logger_.logMethodArgs?.('applyAssigners__', {assignersLength: assignersArray.length});
+    let newContext = context;
 
     for (const assigner of assignersArray) {
       try {
         const update = assigner(event, context);
         this.logger_.logMethodFull?.(`event.${event.type}.action.${assigner.name || 'anonymous'}`, {event, context}, update);
         if (typeof update === 'object' && update !== null) {
-          context = {...context, ...update};
+          newContext = {...newContext, ...update};
         }
       }
       catch (error) {
         this.logger_.error('applyAssigners__', 'assigner_failed', error, {
-          currentContext: context,
+          context: newContext,
           event,
         });
+        // If an assigner fails, revert all changes from this transition by returning the original context.
+        return context;
       }
     }
 
-    return context;
+    return newContext;
   }
 
   /**
