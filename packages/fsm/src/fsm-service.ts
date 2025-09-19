@@ -100,7 +100,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
         if (!transition.condition) return true; // No condition means always true
         
         try {
-          const conditionResult = transition.condition?.(event, context);
+          const conditionResult = transition.condition(event, context);
           if (!conditionResult) {
             this.logger_.incident?.('findTransition_', 'condition_not_met', {
               currentState: currentState.name,
