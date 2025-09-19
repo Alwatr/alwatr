@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.11](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.10...@alwatr/synapse@1.1.11) (2025-09-19)
+
+**Note:** Version bump only for package @alwatr/synapse
+
 ## [1.1.10](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.9...@alwatr/synapse@1.1.10) (2025-09-19)
 
 **Note:** Version bump only for package @alwatr/synapse

@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/flatomise",
   "description": "A utility for creating promises that can be externally resolved or rejected.",
-  "version": "5.5.13",
+  "version": "5.5.14",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {

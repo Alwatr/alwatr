@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.0.2...@alwatr/type-helper@6.1.0) (2025-09-19)
+
+### ✨ Features
+
+* add SingleOrReadonlyArray type for flexible item handling ([4b65513](https://github.com/Alwatr/nanolib/commit/4b65513a3731389d84637b68cb38c76a4c0db491))
+
 ## [6.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.0.1...@alwatr/type-helper@6.0.2) (2025-09-13)
 
 ### 🧹 Miscellaneous Chores
