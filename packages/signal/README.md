@@ -4,6 +4,12 @@ Alwatr Signal is a powerful, lightweight, and modern reactive programming librar
 
 It's designed to be simple to learn, yet capable of handling complex state management scenarios.
 
+[](https://www.google.com/search?q=https://www.npmjs.com/package/%40alwatr/signal)
+[](https://www.google.com/search?q=https://www.npmjs.com/package/%40alwatr/flux)
+[](https://www.google.com/search?q=alwatr+signal)
+[](https://www.google.com/search?q=alwatr+flux)
+[](https://www.google.com/search?q=alwatr)
+
 ## Features
 
 - **Type-Safe**: Fully implemented in TypeScript for robust, type-safe code.
@@ -218,6 +224,12 @@ Contributions are welcome! Please read our [contribution guidelines](https://git
 کتابخانه Alwatr Signal یک ابزار قدرتمند، سبک و مدرن برای برنامه‌نویسی واکنشی (Reactive Programming) است. این کتابخانه با الگوبرداری از بهترین مفاهیم بزرگترین کتابخانه‌های واکنشی طراحی شده، اما مهندسی آن به گونه‌ای است که از تمام آن‌ها سریع‌تر و کارآمدتر باشد. این کتابخانه روشی استوار و زیبا برای مدیریت وضعیت برنامه از طریق سیگنال‌ها ارائه می‌دهد و واکنش‌پذیری دقیق (fine-grained reactivity)، پیش‌بینی‌پذیری و عملکرد عالی را به ارمغان می‌آورد.
 
 طراحی آن به گونه‌ای است که یادگیری آن ساده باشد، اما در عین حال قادر به مدیریت سناریوهای پیچیده مدیریت وضعیت نیز باشد.
+
+[](https://www.google.com/search?q=https://www.npmjs.com/package/%40alwatr/signal)
+[](https://www.google.com/search?q=https://www.npmjs.com/package/%40alwatr/flux)
+[](https://www.google.com/search?q=alwatr+signal)
+[](https://www.google.com/search?q=alwatr+flux)
+[](https://www.google.com/search?q=alwatr)
 
 ## ویژگی‌ها
 
