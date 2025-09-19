@@ -72,27 +72,29 @@ lightMachineService.stateSignal.subscribe((state) => {
   console.log('state changed: %o', state);
 }, {receivePrevious: false});
 
-console.log('start', lightMachineService.stateSignal.get().name);
+console.log('start, state: %s', lightMachineService.stateSignal.get().name); // start, state: green
 
 await delay(10); console.log('\n\n');
-lightMachineService.eventSignal.dispatch({type: 'TIMER'});
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: yellow
 await delay(10); console.log('\n\n');
-lightMachineService.eventSignal.dispatch({type: 'TIMER'});
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: red
 await delay(10); console.log('\n\n');
-lightMachineService.eventSignal.dispatch({type: 'POWER_LOST'});
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: green
 await delay(10); console.log('\n\n');
-lightMachineService.eventSignal.dispatch({type: 'TIMER'});
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: yellow
 await delay(10); console.log('\n\n');
-lightMachineService.eventSignal.dispatch({type: 'POWER_BACK'});
+lightMachineService.eventSignal.dispatch({type: 'POWER_LOST'}); // state changed: flashingRed, Power lost!
 await delay(10); console.log('\n\n');
-lightMachineService.eventSignal.dispatch({type: 'TIMER'});
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // no state change
 await delay(10); console.log('\n\n');
-lightMachineService.eventSignal.dispatch({type: 'TIMER'});
+lightMachineService.eventSignal.dispatch({type: 'POWER_BACK'}); // state changed: green
 await delay(10); console.log('\n\n');
-lightMachineService.eventSignal.dispatch({type: 'TIMER'});
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: yellow
+await delay(10); console.log('\n\n');
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: red
 await delay(10); console.log('\n\n');
 
-console.log('end', lightMachineService.stateSignal.get().name);
+console.log('end, state: %s', lightMachineService.stateSignal.get().name); // end, state: red
 
 // 5. Cleanup
 lightMachineService.destroy();
