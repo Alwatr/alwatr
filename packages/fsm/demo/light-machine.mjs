@@ -25,7 +25,6 @@ const lightMachineFsm = {
         },
         POWER_LOST: {
           target: 'flashingRed',
-          actions: [powerLostWarning],
         },
       },
     },
@@ -36,7 +35,6 @@ const lightMachineFsm = {
         },
         POWER_LOST: {
           target: 'flashingRed',
-          actions: [powerLostWarning],
         },
       },
     },
@@ -47,11 +45,11 @@ const lightMachineFsm = {
         },
         POWER_LOST: {
           target: 'flashingRed',
-          actions: [powerLostWarning],
         },
       },
     },
     flashingRed: {
+      entry: [powerLostWarning],
       on: {
         POWER_BACK: {
           target: 'green',
