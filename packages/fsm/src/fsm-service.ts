@@ -82,70 +82,52 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
   }
 
   /**
-   * Resolves the appropriate transition based on the current state and event.
-   * It supports conditional transitions (guards).
+   * Finds the first valid transition for the given event and context by evaluating conditions.
+   *
+   * @param event The triggering event.
+   * @param context The current machine context.
+   * @returns The first matching transition or `undefined` if none are found.
    */
-  private findTransition__(event: TEvent, context: Readonly<TContext>): Maybe<Transition<TState, TEvent, TContext>> {
-    const currentState = this.stateSignal_.get();
-    const currentStateConfig = this.config_.states[currentState.name];
-    const transitionConfig = currentStateConfig?.on?.[event.type as TEvent['type']] as
+  private findTransition__(event: TEvent, context: Readonly<TContext>): Transition<TState, TEvent, TContext> | undefined {
+    this.logger_.logMethod?.('findTransition__');
+
+    const currentStateName = this.stateSignal__.get().name;
+    const currentStateConfig = this.config_.states[currentStateName];
+    const transitions = currentStateConfig?.on?.[event.type as TEvent['type']] as
       | SingleOrArray<Transition<TState, TEvent, TContext>>
       | undefined;
 
-    if (!transitionConfig) {
-      return undefined;
-    }
+    if (!transitions) return undefined;
 
-    if (Array.isArray(transitionConfig)) {
-      // Find the first transition whose condition is met
-      return transitionConfig.find((transition, index) => {
-        if (!transition.condition) return true; // No condition means always true
-        
-        try {
-          const conditionResult = transition.condition(event, context);
-          if (!conditionResult) {
-            this.logger_.incident?.('findTransition_', 'condition_not_met', {
-              currentState: currentState.name,
-              requestedEvent: event.type,
-              transitionIndex: index,
-              condition: transition.condition.name || 'anonymous',
-            });
-          }
-          return conditionResult; 
-        }
-        catch (error) {
-          this.logger_.error('findTransition_', 'condition_check_failed', error, {
-            currentState: currentState.name,
-            requestedEvent: event.type,
-            transitionIndex: index,
-            transition,
-          });
-          return false;
-        }
-      });
-    }
+    // Normalize to an array to handle both single and multiple transitions uniformly.
+    const transitionsArray = Array.isArray(transitions) ? transitions : [transitions];
 
-    // else
-    try {
-      if (transitionConfig.condition && !transitionConfig.condition?.(event, context)) {
-        // The single transition has a condition that is not met
-        return undefined;
+    return transitionsArray.find((transition, index) => {
+      if (!transition.condition) return true; // A transition without a condition is always valid.
+
+      try {
+        const conditionMet = transition.condition(event, context);
+        this.logger_.logStep?.('findTransition__', 'check_condition', {
+          state: currentStateName,
+          eventType: event.type,
+          transitionIndex: index,
+          condition: transition.condition.name || 'anonymous',
+          result: conditionMet,
+        });
+        return conditionMet;
       }
-    }
-    catch (error) {
-      this.logger_.error('findTransition_', 'condition_check_failed', error, {
-        currentState: currentState.name,
-        requestedEvent: event.type,
-        transitionConfig,
-      });
-      return undefined;
-    }
-
-    return transitionConfig;
+      catch (error) {
+        this.logger_.error('findTransition__', 'condition_failed', error, {
+          state: currentStateName,
+          eventType: event.type,
+          transitionIndex: index,
+          condition: transition.condition.name || 'anonymous',
+        });
+        return false; // Treat a failing condition as not met.
+      }
+    });
   }
 
-  /**
-   * Sequentially executes a list of effects, handling errors and dispatching new events.
    */
   private async executeEffects__(
     event: TEvent,
