@@ -2,7 +2,6 @@
 
 [](https://www.google.com/search?q=https://www.npmjs.com/package/%40alwatr/fsm)
 [](https://www.google.com/search?q=https://bundlephobia.com/package/%40alwatr/fsm)
-[](https://www.google.com/search?q=https://github.com/Alwatr/alwatr/actions/workflows/build-lint.yaml)
 
 A tiny, type-safe, declarative, and reactive finite state machine (FSM) library for modern TypeScript applications, built on top of [Alwatr Signals](https://www.google.com/search?q=https://github.com/Alwatr/alwatr/tree/main/packages/signal).
 
@@ -40,7 +39,7 @@ This library is designed to be:
 - **اعلانی (Declarative)**: تمام منطق ماشین خود را در یک آبجکت پیکربندی واحد و خوانا تعریف کنید.
 - **تایپ-سیف (Type-Safe)**: با بهره‌گیری از قدرت TypeScript، خطاها را در زمان کامپایل پیدا کنید، نه در زمان اجرا.
 - **واکنش‌گرا (Reactive)**: مبتنی بر سیگنال‌ها برای یکپارچه‌سازی آسان با فریم‌ورک‌های مدرن و کدهای واکنش‌گرا.
-- **انعطاف‌پذیر (Resilient)**: مدل اجرای کامل تا انتها (RTC) را تضمین کرده و خطاهای توابع تعریف‌شده توسط کاربر را بدون متوقف کردن سیستم مدیریت می‌کند.
+- **مستحکم و تاب‌آور (Resilient)**: مدل اجرای کامل تا انتها (RTC) را تضمین کرده و خطاهای توابع تعریف‌شده توسط کاربر را بدون متوقف کردن سیستم مدیریت می‌کند.
 
 ## Installation
 
@@ -119,7 +118,7 @@ const lightMachineConfig: StateMachineConfig<LightState, LightEvent, LightContex
           target: 'off', // ...transition to 'off'.
           assigners: [() => ({brightness: 0})], // ...and reset brightness.
         },
-        // An internal transition that only updates context.
+        // An internal transition that only updates context without changing the state.
         SET_BRIGHTNESS: {
           // No 'target' means it's an internal transition.
           assigners: [(event) => ({brightness: event.level})],
@@ -195,9 +194,10 @@ const fetchMachineConfig: StateMachineConfig<FetchState, FetchEvent, FetchContex
             const response = await fetch(`https://api.example.com/users/${event.id}`);
             if (!response.ok) throw new Error('User not found');
             const user = (await response.json()) as User;
-            // An effect can return a new event to dispatch.
+            // An effect can return a new event to be dispatched back to the machine.
             return {type: 'RESOLVE', user};
           } catch (err) {
+            // If an error occurs, dispatch a 'REJECT' event.
             return {type: 'REJECT', error: (err as Error).message};
           }
         },
@@ -224,7 +224,7 @@ const fetchMachineConfig: StateMachineConfig<FetchState, FetchEvent, FetchContex
           target: 'pending',
           // A condition that must be met for the transition to occur.
           condition: (event, context) => {
-            // This is just an example; you might have retry logic in context.
+            // This is just an example; you might have retry logic in the context.
             console.log('Checking retry condition...');
             return true;
           },
