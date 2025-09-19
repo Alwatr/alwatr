@@ -52,7 +52,7 @@ export class EffectSignal implements IEffectSignal {
    * The logger instance for this signal.
    * @protected
    */
-  protected readonly logger_ = createLogger(`effect-signal: ${this.name}`);
+  protected readonly logger_ = createLogger(`effect-signal:${this.name}`);
 
   /**
    * A list of subscriptions to dependency signals.

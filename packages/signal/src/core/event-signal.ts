@@ -37,7 +37,7 @@ export class EventSignal<T = void> extends SignalBase<T> {
    * The logger instance for this signal.
    * @protected
    */
-  protected logger_ = createLogger(`event-signal: ${this.name}`);
+  protected logger_ = createLogger(`event-signal:${this.name}`);
 
   public constructor(config: SignalConfig) {
     super(config);
