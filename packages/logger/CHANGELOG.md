@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@6.0.1...@alwatr/logger@6.0.2) (2025-09-19)
+
+### 🐛 Bug Fixes
+
+* improve default debug mode logic for CLI and browser environments ([2b339bc](https://github.com/Alwatr/nanolib/commit/2b339bc80dc8ce82e49ec8d83f690230f543c930))
+
 ## [6.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@6.0.0...@alwatr/logger@6.0.1) (2025-09-15)
 
 **Note:** Version bump only for package @alwatr/logger
