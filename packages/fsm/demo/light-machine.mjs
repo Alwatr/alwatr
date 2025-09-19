@@ -63,34 +63,41 @@ const lightMachineFsm = {
 const lightMachineService = createFsmService(lightMachineFsm);
 
 // 5. Use it in your application
+lightMachineService.stateSignal.subscribe(
+  (state) => {
+    console.log('state changed: %o', state);
+  },
+  {receivePrevious: false},
+);
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+// --- test ---
 
-lightMachineService.stateSignal.subscribe((state) => {
-  console.log('state changed: %o', state);
-}, {receivePrevious: false});
+const delay = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 10));
+  console.log('\n\n');
+};
 
 console.log('start, state: %s', lightMachineService.stateSignal.get().name); // start, state: green
 
-await delay(10); console.log('\n\n');
+await delay();
 lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: yellow
-await delay(10); console.log('\n\n');
+await delay();
 lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: red
-await delay(10); console.log('\n\n');
+await delay();
 lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: green
-await delay(10); console.log('\n\n');
+await delay();
 lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: yellow
-await delay(10); console.log('\n\n');
+await delay();
 lightMachineService.eventSignal.dispatch({type: 'POWER_LOST'}); // state changed: flashingRed, Power lost!
-await delay(10); console.log('\n\n');
+await delay();
 lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // no state change
-await delay(10); console.log('\n\n');
+await delay();
 lightMachineService.eventSignal.dispatch({type: 'POWER_BACK'}); // state changed: green
-await delay(10); console.log('\n\n');
+await delay();
 lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: yellow
-await delay(10); console.log('\n\n');
+await delay();
 lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: red
-await delay(10); console.log('\n\n');
+await delay();
 
 console.log('end, state: %s', lightMachineService.stateSignal.get().name); // end, state: red
 

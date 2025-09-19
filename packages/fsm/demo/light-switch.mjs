@@ -59,37 +59,34 @@ const lightMachineConfig = {
 const lightSwitchFsmService = createFsmService(lightMachineConfig);
 
 // 4. Use it in your application
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 lightSwitchFsmService.stateSignal.subscribe((state) => {
   console.log(`Light turn ${state.name} with brightness ${state.context.brightness}`);
 });
 
+// --- test ---
+
+const delay = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 10));
+  console.log('\n\n');
+};
+
 console.log('start, state: %s', lightSwitchFsmService.stateSignal.get().name); // start, state: off
 
-await delay(10);
-console.log('\n\n');
+await delay();
 lightSwitchFsmService.eventSignal.dispatch({type: 'TOGGLE'}); // Light turn on with brightness 100
-await delay(10);
-console.log('\n\n');
+await delay();
 lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 50}); // Light turn on with brightness 50
-await delay(10);
-console.log('\n\n');
+await delay();
 lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 200}); // Invalid brightness, no state change
-await delay(10);
-console.log('\n\n');
+await delay();
 lightSwitchFsmService.eventSignal.dispatch({type: 'TOGGLE'}); // Light turn off with brightness 0
-await delay(10);
-console.log('\n\n');
+await delay();
 lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 75}); // Light turn off with brightness 0
-await delay(10);
-console.log('\n\n');
+await delay();
 lightSwitchFsmService.eventSignal.dispatch({type: 'TOGGLE'}); // Light turn on with brightness 100
-await delay(10);
-console.log('\n\n');
+await delay();
 lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 0}); // Light turn off with brightness 0
-await delay(10);
-console.log('\n\n');
+await delay();
 
 console.log('end, state: %s', lightSwitchFsmService.stateSignal.get().name); // end, state: off
 
