@@ -74,23 +74,23 @@ lightMachineService.stateSignal.subscribe((state) => {
 
 console.log('start', lightMachineService.stateSignal.get().name);
 
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightMachineService.eventSignal.dispatch({type: 'TIMER'});
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightMachineService.eventSignal.dispatch({type: 'TIMER'});
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightMachineService.eventSignal.dispatch({type: 'POWER_LOST'});
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightMachineService.eventSignal.dispatch({type: 'TIMER'});
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightMachineService.eventSignal.dispatch({type: 'POWER_BACK'});
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightMachineService.eventSignal.dispatch({type: 'TIMER'});
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightMachineService.eventSignal.dispatch({type: 'TIMER'});
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightMachineService.eventSignal.dispatch({type: 'TIMER'});
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 
 console.log('end', lightMachineService.stateSignal.get().name);
 

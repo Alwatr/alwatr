@@ -57,17 +57,17 @@ lightSwitchFsmService.stateSignal.subscribe((state) => {
 
 console.log('start, state: %s', lightSwitchFsmService.stateSignal.get().name);
 
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightSwitchFsmService.eventSignal.dispatch({type: 'TOGGLE'}); // Light is on with brightness 100
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 50}); // Light is on with brightness 50
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightSwitchFsmService.eventSignal.dispatch({type: 'TOGGLE'}); // Light is off with brightness 0
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightSwitchFsmService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 75}); // Light is off with brightness 0
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 lightSwitchFsmService.eventSignal.dispatch({type: 'TOGGLE'}); // Light is on with brightness 100
-await delay(1000); console.log('\n\n');
+await delay(10); console.log('\n\n');
 
 console.log('end, state: %s', lightSwitchFsmService.stateSignal.get().name);
 
