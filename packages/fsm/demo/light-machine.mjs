@@ -1,60 +1,97 @@
-import {FiniteStateMachine} from '@alwatr/fsm';
-import {delay} from '@alwatr/util';
+import {createFsmService} from '@alwatr/fsm';
 
-type State = 'green' | 'yellow' | 'red' | 'flashingRed';
-type Event = 'timer' | 'powerBack' | 'powerLost';
+// 1. Define types
+/** @typedef {'green' | 'yellow' | 'red' | 'flashingRed'} State */
+/** @typedef {{type: 'TIMER'} | {type: 'POWER_BACK'} | {type: 'POWER_LOST'}} Event */
 
-class LightMachine extends FiniteStateMachine<State, Event> {
-  constructor(name: string) {
-    super({name, initialState: 'green'});
+// 2. Define some actions
+const powerLostWarning = () => {
+  console.warn('Power lost!');
+};
 
-    this._stateRecord = {
-      _all: {
-        powerLost: 'flashingRed',
+// 3. Config the state machine
+/**
+ * @type {import('@alwatr/fsm').StateMachineConfig<State, Event, Record<string, unknown>>}
+ */
+const lightMachineFsm = {
+  name: 'light-machine',
+  initial: 'green',
+  context: {},
+  states: {
+    green: {
+      on: {
+        TIMER: {
+          target: 'yellow',
+        },
+        POWER_LOST: {
+          target: 'flashingRed',
+          actions: [powerLostWarning],
+        },
       },
-      green: {
-        timer: 'yellow',
+    },
+    yellow: {
+      on: {
+        TIMER: {
+          target: 'red',
+        },
+        POWER_LOST: {
+          target: 'flashingRed',
+          actions: [powerLostWarning],
+        },
       },
-      yellow: {
-        timer: 'red',
+    },
+    red: {
+      on: {
+        TIMER: {
+          target: 'green',
+        },
+        POWER_LOST: {
+          target: 'flashingRed',
+          actions: [powerLostWarning],
+        },
       },
-      red: {
-        timer: 'green',
+    },
+    flashingRed: {
+      on: {
+        POWER_BACK: {
+          target: 'green',
+        },
       },
-      flashingRed: {
-        powerBack: 'green',
-      },
-    };
+    },
+  },
+};
 
-    this._actionRecord = {
-      on_powerLost: this._onPowerLost,
-    };
-  }
+// 4. Create the service
+const lightMachineService = createFsmService(lightMachineFsm);
 
-  protected _onPowerLost(): void {
-    console.warn('_onPowerLost');
-  }
-}
+// 5. Use it in your application
 
-// ----
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const lightMachine = new LightMachine('demo.light-machine.1');
+lightMachineService.stateSignal.subscribe((state) => {
+  console.log('state changed: %o', state);
+}, {receivePrevious: false});
 
-lightMachine.subscribe(function StateChanged() {
-  console.log('state changed: %s', this.state);
-});
+console.log('start', lightMachineService.stateSignal.get().name);
 
-console.log('start', lightMachine.state);
+await delay(1000); console.log('\n\n');
+lightMachineService.eventSignal.dispatch({type: 'TIMER'});
+await delay(1000); console.log('\n\n');
+lightMachineService.eventSignal.dispatch({type: 'TIMER'});
+await delay(1000); console.log('\n\n');
+lightMachineService.eventSignal.dispatch({type: 'POWER_LOST'});
+await delay(1000); console.log('\n\n');
+lightMachineService.eventSignal.dispatch({type: 'TIMER'});
+await delay(1000); console.log('\n\n');
+lightMachineService.eventSignal.dispatch({type: 'POWER_BACK'});
+await delay(1000); console.log('\n\n');
+lightMachineService.eventSignal.dispatch({type: 'TIMER'});
+await delay(1000); console.log('\n\n');
+lightMachineService.eventSignal.dispatch({type: 'TIMER'});
+await delay(1000); console.log('\n\n');
+lightMachineService.eventSignal.dispatch({type: 'TIMER'});
 
-await delay(1000);
-lightMachine.transition('timer');
-await delay(1000);
-lightMachine.transition('timer');
-await delay(1000);
-lightMachine.transition('timer');
-await delay(1000);
-lightMachine.transition('powerLost');
-await delay(1000);
-lightMachine.transition('timer');
-await delay(1000);
-lightMachine.transition('powerBack');
+console.log('end', lightMachineService.stateSignal.get().name);
+
+// 5. Cleanup
+lightMachineService.destroy();
