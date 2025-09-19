@@ -61,21 +61,25 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
       return;
     }
 
+    const nextStateValue = transition.target ?? currentState.name;
     let newContext = currentState.context;
 
-    // 1. Execute exit actions of the current state
-    if (currentStateDefinition.exit?.length) {
-      for (const effect of currentStateDefinition.exit ?? []) {
-        Promise.resolve(effect(event, newContext)).then((result) => {
-          if (result && 'type' in result) {
-            this.logger_.logStep?.('processTransition_', 'new_event_from_exit_effect', {
-              currentState: currentState.name,
-              requestedEvent: event.type,
-              newEvent: result.type,
-            });
-            this.eventSignal.dispatch(result);
-          }
-        });
+    // Execute exit/entry effects ONLY if the state is changing
+    if (nextStateValue !== currentState.name) {
+      // 1. Execute exit actions of the current state
+      if (currentStateDefinition.exit?.length) {
+        for (const effect of currentStateDefinition.exit ?? []) {
+          Promise.resolve(effect(event, newContext)).then((result) => {
+            if (result && 'type' in result) {
+              this.logger_.logStep?.('processTransition_', 'new_event_from_exit_effect', {
+                currentState: currentState.name,
+                requestedEvent: event.type,
+                newEvent: result.type,
+              });
+              this.eventSignal.dispatch(result);
+            }
+          });
+        }
       }
     }
 
@@ -92,8 +96,6 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
         }
       }
     }
-
-    const nextStateValue = transition.target ?? currentState.name;
 
     // 3. Execute entry actions of the next state (if transition occurs)
     if (nextStateValue !== currentState.name) {
