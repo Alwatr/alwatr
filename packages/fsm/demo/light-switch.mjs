@@ -32,7 +32,7 @@ const lightMachineConfig = {
       on: {
         TOGGLE: {
           target: 'on',
-          assigners: [(_, context) => ({brightness: 100})],
+          assigners: [() => ({brightness: 100})],
         },
       },
     },
