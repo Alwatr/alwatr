@@ -100,9 +100,7 @@ export interface StateMachineConfig<TState extends string, TEvent extends Machin
   readonly initial: TState;
   /** The initial context (extended state) of the machine. */
   readonly context: TContext;
-  /**
-   * An object defining all possible states and their transitions.
-   */
+  /** An object defining all possible states and their transitions. */
   readonly states: {
     readonly [S in TState]?: {
       /** An object mapping event types to transitions for the current state. */
