@@ -49,7 +49,7 @@ const lightMachineFsm = {
       },
     },
     flashingRed: {
-      entry: [powerLostWarning],
+      entry: powerLostWarning,
       on: {
         POWER_BACK: {
           target: 'green',
