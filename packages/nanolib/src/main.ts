@@ -4,7 +4,6 @@ import type {} from '@alwatr/type-helper';
 export * from '@alwatr/async-queue'
 export * from '@alwatr/cyrb53'
 export * from '@alwatr/debounce'
-export * from '@alwatr/dedupe'
 export * from '@alwatr/deep-clone'
 export * from '@alwatr/delay'
 export * from '@alwatr/djb2-hash'
