@@ -27,10 +27,10 @@
   "keywords": [
     "alwatr",
     "browser",
-    "esm",
-    "hash",
     "djb2",
     "djb2-hash",
+    "esm",
+    "hash",
     "hash-string",
     "javascript",
     "module",
