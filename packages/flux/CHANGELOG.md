@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.1](https://github.com/Alwatr/flux/compare/v6.0.0...v6.0.1) (2025-09-20)
+
+### ⚠ BREAKING CHANGES
+
+* Complete rewrite of @alwatr/flux core package
+
+### ✨ Features
+
+* add initial implementation of Flux package with README, LICENSE, and configuration files ([778881c](https://github.com/Alwatr/flux/commit/778881c00c8e73bbf7649fcecb641a1689e9eaad))
+
+### 🔗 Dependencies update
+
+* update ([c125252](https://github.com/Alwatr/flux/commit/c1252529be17b6b6d90be85d411837fac35ad5df))
+
 ## [4.1.1](https://github.com/Alwatr/flux/compare/v4.1.0...v4.1.1) (2025-09-08)
 
 **Note:** Version bump only for package @alwatr/flux

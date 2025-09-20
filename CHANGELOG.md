@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.1](https://github.com/Alwatr/flux/compare/v6.0.0...v6.0.1) (2025-09-20)
+
+### ⚠ BREAKING CHANGES
+
+* Complete rewrite of @alwatr/flux core package
+
+### ✨ Features
+
+* add initial implementation of Flux package with README, LICENSE, and configuration files ([778881c](https://github.com/Alwatr/flux/commit/778881c00c8e73bbf7649fcecb641a1689e9eaad))
+
+### 🐛 Bug Fixes
+
+* add sideEffects property to package.json for fsm and signal packages ([37d175c](https://github.com/Alwatr/flux/commit/37d175c2cd16144449dfa72e7504a4d179f1cb01))
+* update release script to include testing step ([7b256f3](https://github.com/Alwatr/flux/commit/7b256f38f3945d5ab8598f95f71b196897902686))
+
+### 🔨 Code Refactoring
+
+* remove public access modifier from constructors in signal classes ([afb42da](https://github.com/Alwatr/flux/commit/afb42da7fd812cd09555c43ac9489ef15efce96a))
+* rename Alwatr Signal to Alwatr FSM and update README to reflect new features and philosophy ([bb09cb7](https://github.com/Alwatr/flux/commit/bb09cb7818589146426eb367435e8ba7e1527955))
+
+### 🔗 Dependencies update
+
+* update ([c125252](https://github.com/Alwatr/flux/commit/c1252529be17b6b6d90be85d411837fac35ad5df))
+* update alwatr dependencies ([19bd8a5](https://github.com/Alwatr/flux/commit/19bd8a597a4e74b620e04a497eff7247a03bf8b8))
+
 ## [6.0.0](https://github.com/Alwatr/flux/compare/v5.2.2...v6.0.0) (2025-09-19)
 
 ### ⚠ BREAKING CHANGES
