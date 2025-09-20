@@ -1,14 +1,14 @@
 # Alwatr Signal
 
+[](https://www.google.com/search?q=alwatr+flux)
+[](https://www.google.com/search?q=alwatr+signal)
+[](https://www.google.com/search?q=alwatr)
+[](https://www.npmjs.com/package/%40alwatr/flux)
+[](https://www.npmjs.com/package/%40alwatr/signal)
+
 Alwatr Signal is a powerful, lightweight, and modern reactive programming library. It is inspired by the best concepts from major reactive libraries but engineered to be faster and more efficient than all of them. It provides a robust and elegant way to manage application state through a system of signals, offering fine-grained reactivity, predictability, and excellent performance.
 
 It's designed to be simple to learn, yet capable of handling complex state management scenarios.
-
-[](https://www.google.com/search?q=https://www.npmjs.com/package/%40alwatr/signal)
-[](https://www.google.com/search?q=https://www.npmjs.com/package/%40alwatr/flux)
-[](https://www.google.com/search?q=alwatr+signal)
-[](https://www.google.com/search?q=alwatr+flux)
-[](https://www.google.com/search?q=alwatr)
 
 ## Features
 
@@ -221,15 +221,15 @@ Contributions are welcome! Please read our [contribution guidelines](https://git
 
 # Alwatr Signal (راهنمای فارسی)
 
+[](https://www.google.com/search?q=alwatr+flux)
+[](https://www.google.com/search?q=alwatr+signal)
+[](https://www.google.com/search?q=alwatr)
+[](https://www.npmjs.com/package/%40alwatr/flux)
+[](https://www.npmjs.com/package/%40alwatr/signal)
+
 کتابخانه Alwatr Signal یک ابزار قدرتمند، سبک و مدرن برای برنامه‌نویسی واکنشی (Reactive Programming) است. این کتابخانه با الگوبرداری از بهترین مفاهیم بزرگترین کتابخانه‌های واکنشی طراحی شده، اما مهندسی آن به گونه‌ای است که از تمام آن‌ها سریع‌تر و کارآمدتر باشد. این کتابخانه روشی استوار و زیبا برای مدیریت وضعیت برنامه از طریق سیگنال‌ها ارائه می‌دهد و واکنش‌پذیری دقیق (fine-grained reactivity)، پیش‌بینی‌پذیری و عملکرد عالی را به ارمغان می‌آورد.
 
 طراحی آن به گونه‌ای است که یادگیری آن ساده باشد، اما در عین حال قادر به مدیریت سناریوهای پیچیده مدیریت وضعیت نیز باشد.
-
-[](https://www.google.com/search?q=https://www.npmjs.com/package/%40alwatr/signal)
-[](https://www.google.com/search?q=https://www.npmjs.com/package/%40alwatr/flux)
-[](https://www.google.com/search?q=alwatr+signal)
-[](https://www.google.com/search?q=alwatr+flux)
-[](https://www.google.com/search?q=alwatr)
 
 ## ویژگی‌ها
 

@@ -1,16 +1,16 @@
 # Alwatr FSM
 
+[](https://www.google.com/search?q=alwatr+flux)
+[](https://www.google.com/search?q=alwatr+fsm)
+[](https://www.google.com/search?q=alwatr+signal)
+[](https://www.google.com/search?q=alwatr)
+[](https://www.npmjs.com/package/%40alwatr/flux)
+[](https://www.npmjs.com/package/%40alwatr/fsm)
+[](https://www.npmjs.com/package/%40alwatr/signal)
+
 A tiny, type-safe, declarative, and reactive finite state machine (FSM) library for modern TypeScript applications, built on top of [Alwatr Signals](https://github.com/Alwatr/flux/tree/next/packages/signal).
 
 یک کتابخانه کوچک، تایپ-سیف، اعلانی و واکنش‌گرا (reactive) برای مدیریت وضعیت به روش ماشین حالت متناهی (FSM) در اپلیکیشن‌های مدرن TypeScript که بر پایه [Alwatr Signals](https://github.com/Alwatr/flux/tree/next/packages/signal) ساخته شده است.
-
-[](https://www.google.com/search?q=https://www.npmjs.com/package/%40alwatr/fsm)
-[](https://www.google.com/search?q=https://www.npmjs.com/package/%40alwatr/flux)
-[](https://www.google.com/search?q=alwatr+fsm)
-[](https://www.google.com/search?q=alwatr+flux)
-[](https://www.google.com/search?q=alwatr)
-[](https://www.google.com/search?q=https://www.npmjs.com/package/%40alwatr/fsm)
-[](https://www.google.com/search?q=https://bundlephobia.com/package/%40alwatr/fsm)
 
 ## Philosophy
 
