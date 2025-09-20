@@ -78,7 +78,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
    */
   private isRecalculating__ = false;
 
-  public constructor(protected config_: ComputedSignalConfig<T>) {
+  constructor(protected config_: ComputedSignalConfig<T>) {
     this.logger_.logMethod?.('constructor');
     this.recalculate_ = this.recalculate_.bind(this);
 

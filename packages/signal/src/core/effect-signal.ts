@@ -82,7 +82,7 @@ export class EffectSignal implements IEffectSignal {
     return this.isDestroyed__;
   }
 
-  public constructor(protected config_: EffectSignalConfig) {
+  constructor(protected config_: EffectSignalConfig) {
     this.logger_.logMethod?.('constructor');
     this.scheduleExecution_ = this.scheduleExecution_.bind(this);
 

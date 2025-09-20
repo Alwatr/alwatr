@@ -43,7 +43,7 @@ export abstract class SignalBase<T> {
     return this.isDestroyed__;
   }
 
-  public constructor(protected config_: SignalConfig) {}
+  constructor(protected config_: SignalConfig) {}
 
   /**
    * Removes a specific observer from the observers list.

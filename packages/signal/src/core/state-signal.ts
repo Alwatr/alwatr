@@ -51,7 +51,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    */
   protected logger_ = createLogger(`state-signal:${this.name}`);
 
-  public constructor(config: StateSignalConfig<T>) {
+  constructor(config: StateSignalConfig<T>) {
     super(config);
     this.value__ = config.initialValue;
     this.logger_.logMethodArgs?.('constructor', {initialValue: this.value__});
