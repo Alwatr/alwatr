@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.4](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@6.0.3...@alwatr/logger@6.0.4) (2025-09-20)
+
+### 🐛 Bug Fixes
+
+* add sideEffects property to package.json files for better tree-shaking ([c7b9e74](https://github.com/Alwatr/nanolib/commit/c7b9e74e1920c8e35b438742de61883ca62da58c))
+* add sideEffects property to package.json files for better tree-shaking ([e8402c4](https://github.com/Alwatr/nanolib/commit/e8402c481a14a1f807a37aaa862a936713d26176))
+* remove unnecessary pure annotations ([adeb916](https://github.com/Alwatr/nanolib/commit/adeb9166f8e911f59269032b76c36cb1888332cf))
+* update console_ declaration and change createLogger to a function declaration ([2252855](https://github.com/Alwatr/nanolib/commit/22528553e1bb4393ad7fc5583ef7391cd8b0f045))
+
+### 🧹 Miscellaneous Chores
+
+* remove duplicate sideEffects property from multiple package.json files ([b123f86](https://github.com/Alwatr/nanolib/commit/b123f86be81481de2314aae9bb2eeb629743d24c))
+
 ## [6.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@6.0.2...@alwatr/logger@6.0.3) (2025-09-19)
 
 **Note:** Version bump only for package @alwatr/logger

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.15](https://github.com/Alwatr/nanolib/compare/@alwatr/deep-clone@5.5.14...@alwatr/deep-clone@5.5.15) (2025-09-20)
+
+### 🐛 Bug Fixes
+
+* add sideEffects property to package.json files for better tree-shaking ([c7b9e74](https://github.com/Alwatr/nanolib/commit/c7b9e74e1920c8e35b438742de61883ca62da58c))
+* add sideEffects property to package.json files for better tree-shaking ([e8402c4](https://github.com/Alwatr/nanolib/commit/e8402c481a14a1f807a37aaa862a936713d26176))
+
+### 🧹 Miscellaneous Chores
+
+* remove duplicate sideEffects property from multiple package.json files ([b123f86](https://github.com/Alwatr/nanolib/commit/b123f86be81481de2314aae9bb2eeb629743d24c))
+
 ## [5.5.14](https://github.com/Alwatr/nanolib/compare/@alwatr/deep-clone@5.5.13...@alwatr/deep-clone@5.5.14) (2025-09-19)
 
 **Note:** Version bump only for package @alwatr/deep-clone

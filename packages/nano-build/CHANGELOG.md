@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.2.1...@alwatr/nano-build@6.3.0) (2025-09-20)
+
+### ✨ Features
+
+* enhance banner message in default options with package info and logging ([7121f21](https://github.com/Alwatr/nanolib/commit/7121f21839c7b6eb94900e69ecb0d208b276cb42))
+
+### 🐛 Bug Fixes
+
+* add sideEffects property to package.json files for better tree-shaking ([c7b9e74](https://github.com/Alwatr/nanolib/commit/c7b9e74e1920c8e35b438742de61883ca62da58c))
+* add sideEffects property to package.json files for better tree-shaking ([e8402c4](https://github.com/Alwatr/nanolib/commit/e8402c481a14a1f807a37aaa862a936713d26176))
+
+### 🧹 Miscellaneous Chores
+
+* remove duplicate sideEffects property from multiple package.json files ([b123f86](https://github.com/Alwatr/nanolib/commit/b123f86be81481de2314aae9bb2eeb629743d24c))
+
 ## [6.2.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.2.0...@alwatr/nano-build@6.2.1) (2025-09-19)
 
 ### 🐛 Bug Fixes

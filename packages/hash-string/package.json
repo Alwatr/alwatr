@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/hash-string",
   "description": "A simple utility to generate a hash string.",
-  "version": "5.2.13",
+  "version": "5.2.14",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {

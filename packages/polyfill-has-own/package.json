@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/polyfill-has-own",
   "description": "A polyfill for `Object.hasOwn`.",
-  "version": "5.5.14",
+  "version": "5.5.15",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {

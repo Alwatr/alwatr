@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.2](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.6.1...@alwatr/eslint-config@5.6.2) (2025-09-20)
+
+### 🐛 Bug Fixes
+
+* add sideEffects property to package.json files for better tree-shaking ([c7b9e74](https://github.com/Alwatr/nanolib/commit/c7b9e74e1920c8e35b438742de61883ca62da58c))
+* add sideEffects property to package.json files for better tree-shaking ([e8402c4](https://github.com/Alwatr/nanolib/commit/e8402c481a14a1f807a37aaa862a936713d26176))
+* enhance TypeScript ESLint rules for member accessibility ([0a89655](https://github.com/Alwatr/nanolib/commit/0a8965503f4791e0ae92c2ef88e7291b8f15af13))
+
+### 🧹 Miscellaneous Chores
+
+* remove duplicate sideEffects property from multiple package.json files ([b123f86](https://github.com/Alwatr/nanolib/commit/b123f86be81481de2314aae9bb2eeb629743d24c))
+
 ## [5.6.1](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.6.0...@alwatr/eslint-config@5.6.1) (2025-09-11)
 
 ### 🐛 Bug Fixes

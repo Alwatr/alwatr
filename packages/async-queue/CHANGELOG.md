@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.15](https://github.com/Alwatr/nanolib/compare/@alwatr/async-queue@5.5.14...@alwatr/async-queue@5.5.15) (2025-09-20)
+
+**Note:** Version bump only for package @alwatr/async-queue
+
 ## [5.5.14](https://github.com/Alwatr/nanolib/compare/@alwatr/async-queue@5.5.13...@alwatr/async-queue@5.5.14) (2025-09-19)
 
 **Note:** Version bump only for package @alwatr/async-queue

@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/djb2-hash",
   "description": "A fast, non-cryptographic hash function based on DJB2.",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {
