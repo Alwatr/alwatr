@@ -4,11 +4,14 @@
   "version": "6.0.11",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "sideEffects": false,
   "dependencies": {
     "@alwatr/async-queue": "workspace:*",
-    "@alwatr/dedupe": "workspace:*",
+    "@alwatr/cyrb53": "workspace:*",
+    "@alwatr/debounce": "workspace:*",
     "@alwatr/deep-clone": "workspace:*",
     "@alwatr/delay": "workspace:*",
+    "@alwatr/djb2-hash": "workspace:*",
     "@alwatr/env": "workspace:*",
     "@alwatr/exit-hook": "workspace:*",
     "@alwatr/fetch": "workspace:*",
@@ -21,21 +24,20 @@
     "@alwatr/is-number": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/logger": "workspace:*",
-    "@alwatr/nano-build": "workspace:*",
     "@alwatr/node-fs": "workspace:*",
-    "@alwatr/package-tracer": "workspace:*",
     "@alwatr/parse-duration": "workspace:*",
     "@alwatr/platform-info": "workspace:*",
-    "@alwatr/prettier-config": "workspace:*",
     "@alwatr/random": "workspace:*",
     "@alwatr/render-state": "workspace:*",
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/synapse": "workspace:*",
-    "@alwatr/tsconfig-base": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
     "@alwatr/unicode-digits": "workspace:*"
   },
   "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
     "typescript": "^5.9.2"
   },
   "exports": {
@@ -44,20 +46,10 @@
       "import": "./dist/main.mjs",
       "require": "./dist/main.cjs"
     },
-    "./exit-hook": {
-      "types": "./dist/exit-hook.d.ts",
-      "import": "./dist/exit-hook.mjs",
-      "require": "./dist/exit-hook.cjs"
-    },
-    "./node-fs": {
-      "types": "./dist/node-fs.d.ts",
-      "import": "./dist/node-fs.mjs",
-      "require": "./dist/node-fs.cjs"
-    },
-    "./dedupe": {
-      "types": "./dist/dedupe.d.ts",
-      "import": "./dist/dedupe.mjs",
-      "require": "./dist/dedupe.cjs"
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.mjs",
+      "require": "./dist/node.cjs"
     }
   },
   "files": [
@@ -94,6 +86,10 @@
   "license": "MPL-2.0",
   "main": "./dist/main.cjs",
   "module": "./dist/main.mjs",
+  "peerDependencies": {
+    "@alwatr/nano-build": "workspace:^",
+    "@alwatr/type-helper": "workspace:^"
+  },
   "prettier": "@alwatr/prettier-config",
   "publishConfig": {
     "access": "public"
