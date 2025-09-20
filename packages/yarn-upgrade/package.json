@@ -65,6 +65,7 @@
     "watch:es": "yarn run build:es --watch",
     "watch:ts": "yarn run build:ts --watch --preserveWatchOutput"
   },
+  "sideEffects": false,
   "type": "module",
   "types": "./dist/main.d.ts"
 }

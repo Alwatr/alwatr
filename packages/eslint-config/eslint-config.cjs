@@ -82,14 +82,21 @@ module.exports = {
       },
     ],
     '@typescript-eslint/no-unused-vars': [
-      'error', // یا "error" بسته به سطح سخت‌گیری شما
+      'error',
       {
         varsIgnorePattern: '_',
         argsIgnorePattern: '_',
         caughtErrorsIgnorePattern: '_',
       },
     ],
-    '@typescript-eslint/explicit-member-accessibility': 'error',
+    '@typescript-eslint/explicit-member-accessibility': [
+      'error',
+      {
+        overrides: {
+          constructors: 'no-public',
+        },
+      },
+    ],
     '@typescript-eslint/prefer-string-starts-ends-with': 'off',
     '@typescript-eslint/no-dynamic-delete': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',

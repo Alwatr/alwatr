@@ -60,5 +60,6 @@
     "url": "https://github.com/Alwatr/nanolib",
     "directory": "packages/eslint-config"
   },
+  "sideEffects": false,
   "type": "commonjs"
 }

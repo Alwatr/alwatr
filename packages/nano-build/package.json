@@ -52,6 +52,7 @@
     "url": "https://github.com/Alwatr/nanolib",
     "directory": "packages/nano-build"
   },
+  "sideEffects": false,
   "type": "commonjs",
   "types": "./global.d.ts"
 }

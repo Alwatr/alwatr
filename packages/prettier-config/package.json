@@ -40,5 +40,6 @@
     "url": "https://github.com/Alwatr/nanolib",
     "directory": "packages/prettier-config"
   },
+  "sideEffects": false,
   "type": "commonjs"
 }

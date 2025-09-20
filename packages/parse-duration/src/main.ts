@@ -3,7 +3,7 @@ import {toNumber} from '@alwatr/is-number';
 /**
  * Unit conversion table (milliseconds)
  */
-const unitConversion = /* #__PURE__ */ Object.freeze({
+const unitConversion = Object.freeze({
   s: 1_000,
   m: 60_000,
   h: 3_600_000,

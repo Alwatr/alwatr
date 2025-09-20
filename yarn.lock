@@ -19,7 +19,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/cyrb53@workspace:packages/cyrb53":
+"@alwatr/cyrb53@workspace:*, @alwatr/cyrb53@workspace:packages/cyrb53":
   version: 0.0.0-use.local
   resolution: "@alwatr/cyrb53@workspace:packages/cyrb53"
   dependencies:
@@ -32,7 +32,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/debounce@workspace:packages/debounce":
+"@alwatr/debounce@workspace:*, @alwatr/debounce@workspace:packages/debounce":
   version: 0.0.0-use.local
   resolution: "@alwatr/debounce@workspace:packages/debounce"
   dependencies:
@@ -46,7 +46,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/dedupe@workspace:*, @alwatr/dedupe@workspace:packages/dedupe":
+"@alwatr/dedupe@workspace:packages/dedupe":
   version: 0.0.0-use.local
   resolution: "@alwatr/dedupe@workspace:packages/dedupe"
   dependencies:
@@ -86,7 +86,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/djb2-hash@workspace:packages/djb2-hash":
+"@alwatr/djb2-hash@workspace:*, @alwatr/djb2-hash@workspace:packages/djb2-hash":
   version: 0.0.0-use.local
   resolution: "@alwatr/djb2-hash@workspace:packages/djb2-hash"
   dependencies:
@@ -276,7 +276,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/nano-build@workspace:*, @alwatr/nano-build@workspace:packages/nano-build":
+"@alwatr/nano-build@workspace:*, @alwatr/nano-build@workspace:^, @alwatr/nano-build@workspace:packages/nano-build":
   version: 0.0.0-use.local
   resolution: "@alwatr/nano-build@workspace:packages/nano-build"
   dependencies:
@@ -297,9 +297,11 @@ __metadata:
   resolution: "@alwatr/nanolib@workspace:packages/nanolib"
   dependencies:
     "@alwatr/async-queue": "workspace:*"
-    "@alwatr/dedupe": "workspace:*"
+    "@alwatr/cyrb53": "workspace:*"
+    "@alwatr/debounce": "workspace:*"
     "@alwatr/deep-clone": "workspace:*"
     "@alwatr/delay": "workspace:*"
+    "@alwatr/djb2-hash": "workspace:*"
     "@alwatr/env": "workspace:*"
     "@alwatr/exit-hook": "workspace:*"
     "@alwatr/fetch": "workspace:*"
@@ -312,9 +314,8 @@ __metadata:
     "@alwatr/is-number": "workspace:*"
     "@alwatr/local-storage": "workspace:*"
     "@alwatr/logger": "workspace:*"
-    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/nano-build": "workspace:^"
     "@alwatr/node-fs": "workspace:*"
-    "@alwatr/package-tracer": "workspace:*"
     "@alwatr/parse-duration": "workspace:*"
     "@alwatr/platform-info": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
@@ -323,7 +324,7 @@ __metadata:
     "@alwatr/resolve-url": "workspace:*"
     "@alwatr/synapse": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
-    "@alwatr/type-helper": "workspace:*"
+    "@alwatr/type-helper": "workspace:^"
     "@alwatr/unicode-digits": "workspace:*"
     typescript: "npm:^5.9.2"
   languageName: unknown
@@ -345,7 +346,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/package-tracer@workspace:*, @alwatr/package-tracer@workspace:packages/package-tracer":
+"@alwatr/package-tracer@workspace:packages/package-tracer":
   version: 0.0.0-use.local
   resolution: "@alwatr/package-tracer@workspace:packages/package-tracer"
   dependencies:
@@ -458,7 +459,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/type-helper@workspace:*, @alwatr/type-helper@workspace:packages/type-helper":
+"@alwatr/type-helper@workspace:*, @alwatr/type-helper@workspace:^, @alwatr/type-helper@workspace:packages/type-helper":
   version: 0.0.0-use.local
   resolution: "@alwatr/type-helper@workspace:packages/type-helper"
   dependencies:

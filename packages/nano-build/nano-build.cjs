@@ -56,7 +56,7 @@ const defaultOptions = {
   charset: 'utf8',
   legalComments: 'linked',
   banner: {
-    js: '/* ' + packageJson.name + ' v' + packageJson.version + ' */',
+    js: `/** 📦 ${packageJson.name} v${packageJson.version} */ __dev_mode__: console.log("📦 ${packageJson.name} v${packageJson.version}");`,
   },
   define: {
     __package_name__: `'${packageJson.name}'`,
