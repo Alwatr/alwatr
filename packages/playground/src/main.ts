@@ -1,5 +1,5 @@
 import {createLogger} from '@alwatr/nanolib';
-// import '@alwatr/nanolib/node';
+import '@alwatr/nanolib/node';
 
 /* #__PURE__ */
 createLogger('playground');
