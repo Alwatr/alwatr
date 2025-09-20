@@ -3,7 +3,7 @@ import {platformInfo} from '@alwatr/platform-info';
 
 import type {AlwatrLogger} from './type.js';
 
-const console_ = getGlobalThis().console;
+const console_ = /* #__PURE__ */ getGlobalThis().console;
 
 /**
  * Default debug mode state, determined by environment variables or localStorage.
@@ -99,7 +99,7 @@ function sanitizeDomain_(domain: string): string {
  * logger.logMethodArgs?.('myMethod', {a: 1}); // This line is ignored if debugMode is false.
  * ```
  */
-export const createLogger = (domain: string, debugMode = defaultDebugMode): AlwatrLogger => {
+export function createLogger(domain: string, debugMode = defaultDebugMode): AlwatrLogger {
   const color = getNextColor_();
   const styleScope = style_.scope.replace('{{color}}', color);
   const sanitizedDomain = sanitizeDomain_(domain);
@@ -161,4 +161,4 @@ export const createLogger = (domain: string, debugMode = defaultDebugMode): Alwa
     time: (label: string) => console_.time(sanitizedDomain + '.' + label),
     timeEnd: (label: string) => console_.timeEnd(sanitizedDomain + '.' + label),
   } as const;
-};
+}
