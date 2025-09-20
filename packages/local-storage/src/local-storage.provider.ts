@@ -28,7 +28,7 @@ export class LocalStorageProvider<T extends JsonValue> {
   private readonly key__: string;
   protected readonly logger_ = createLogger(`local-storage-provider: ${this.config_.name}, v: ${this.config_.version}`);
 
-  public constructor(protected readonly config_: LocalStorageProviderConfig<T>) {
+  constructor(protected readonly config_: LocalStorageProviderConfig<T>) {
     this.logger_.logMethodArgs?.('constructor', {config: this.config_});
     this.key__ = LocalStorageProvider.getKey(this.config_);
     this.migrate__();

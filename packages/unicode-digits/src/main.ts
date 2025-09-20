@@ -95,7 +95,7 @@ export class UnicodeDigits {
    * console.log(unicodeDigits.translate(list));
    * ```
    */
-  public constructor(toLanguage: UnicodeLangKeys, fromLanguages: UnicodeLangKeys[] | 'all' = [...commonLangList]) {
+  constructor(toLanguage: UnicodeLangKeys, fromLanguages: UnicodeLangKeys[] | 'all' = [...commonLangList]) {
     if (fromLanguages === 'all') {
       fromLanguages = Object.keys(supportedLanguageList) as UnicodeLangKeys[];
     }

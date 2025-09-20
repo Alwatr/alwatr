@@ -35,7 +35,7 @@ export class Debouncer<F extends AnyFunction> {
   private maxWaitTimerId__?: number | NodeJS.Timeout;
   private lastArgs__?: Parameters<F>;
 
-  public constructor(private readonly config__: DebouncerConfig<F>) {
+  constructor(private readonly config__: DebouncerConfig<F>) {
     this.config__.trailing ??= true;
     this.flush = this.flush.bind(this);
   }
