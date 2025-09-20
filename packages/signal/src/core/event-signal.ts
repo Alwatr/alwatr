@@ -39,7 +39,7 @@ export class EventSignal<T = void> extends SignalBase<T> {
    */
   protected logger_ = createLogger(`event-signal:${this.name}`);
 
-  public constructor(config: SignalConfig) {
+  constructor(config: SignalConfig) {
     super(config);
     this.logger_.logMethod?.('constructor');
   }
