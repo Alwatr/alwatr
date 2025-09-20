@@ -9,7 +9,6 @@
     "LICENSE",
     "!demo/**/*"
   ],
-  "sideEffects": false,
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/prettier-config#readme",
   "keywords": [
     "alwatr",

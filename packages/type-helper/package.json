@@ -14,7 +14,6 @@
     "!demo/**/*"
   ],
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/type-helper#readme",
-  "sideEffects": false,
   "keywords": [
     "alwatr",
     "nanolib",

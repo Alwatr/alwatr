@@ -15,7 +15,6 @@
     "@alwatr/type-helper": "workspace:*",
     "typescript": "^5.9.2"
   },
-  "sideEffects": true,
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",

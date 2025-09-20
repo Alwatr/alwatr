@@ -10,7 +10,6 @@
     "!demo/**/*"
   ],
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/tsconfig-base#readme",
-  "sideEffects": false,
   "keywords": [
     "alwatr",
     "nanolib",

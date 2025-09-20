@@ -23,7 +23,6 @@
     "LICENSE",
     "!demo/**/*"
   ],
-  "sideEffects": false,
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/unicode-digits#readme",
   "keywords": [
     "alwatr",
