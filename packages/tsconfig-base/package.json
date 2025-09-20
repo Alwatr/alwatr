@@ -29,5 +29,6 @@
     "type": "git",
     "url": "https://github.com/Alwatr/nanolib",
     "directory": "packages/tsconfig-base"
-  }
+  },
+  "sideEffects": false
 }
