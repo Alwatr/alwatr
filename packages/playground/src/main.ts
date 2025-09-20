@@ -1,7 +1,5 @@
 import {createLogger} from '@alwatr/nanolib';
-import '@alwatr/nanolib/exit-hook';
-import '@alwatr/nanolib/node-fs';
-// import '@alwatr/nanolib/dedupe';
+// import '@alwatr/nanolib/node';
 
 /* #__PURE__ */
 createLogger('playground');
