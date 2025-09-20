@@ -4,7 +4,6 @@
   "version": "6.0.11",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
-  "private": true,
   "dependencies": {
     "@alwatr/async-queue": "workspace:*",
     "@alwatr/cyrb53": "workspace:*",
