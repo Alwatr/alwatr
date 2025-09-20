@@ -276,7 +276,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/nano-build@workspace:*, @alwatr/nano-build@workspace:packages/nano-build":
+"@alwatr/nano-build@workspace:*, @alwatr/nano-build@workspace:^, @alwatr/nano-build@workspace:packages/nano-build":
   version: 0.0.0-use.local
   resolution: "@alwatr/nano-build@workspace:packages/nano-build"
   dependencies:
@@ -314,7 +314,7 @@ __metadata:
     "@alwatr/is-number": "workspace:*"
     "@alwatr/local-storage": "workspace:*"
     "@alwatr/logger": "workspace:*"
-    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/nano-build": "workspace:^"
     "@alwatr/node-fs": "workspace:*"
     "@alwatr/parse-duration": "workspace:*"
     "@alwatr/platform-info": "workspace:*"
@@ -324,12 +324,9 @@ __metadata:
     "@alwatr/resolve-url": "workspace:*"
     "@alwatr/synapse": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
-    "@alwatr/type-helper": "workspace:*"
+    "@alwatr/type-helper": "workspace:^"
     "@alwatr/unicode-digits": "workspace:*"
     typescript: "npm:^5.9.2"
-  peerDependencies:
-    "@alwatr/nano-build": "workspace:^"
-    "@alwatr/type-helper": "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -462,7 +459,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/type-helper@workspace:*, @alwatr/type-helper@workspace:packages/type-helper":
+"@alwatr/type-helper@workspace:*, @alwatr/type-helper@workspace:^, @alwatr/type-helper@workspace:packages/type-helper":
   version: 0.0.0-use.local
   resolution: "@alwatr/type-helper@workspace:packages/type-helper"
   dependencies:

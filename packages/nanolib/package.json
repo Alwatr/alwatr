@@ -23,6 +23,7 @@
     "@alwatr/is-number": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/logger": "workspace:*",
+    "@alwatr/nano-build": "workspace:^",
     "@alwatr/node-fs": "workspace:*",
     "@alwatr/parse-duration": "workspace:*",
     "@alwatr/platform-info": "workspace:*",
@@ -30,13 +31,12 @@
     "@alwatr/render-state": "workspace:*",
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/synapse": "workspace:*",
+    "@alwatr/type-helper": "workspace:^",
     "@alwatr/unicode-digits": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "workspace:*",
     "@alwatr/prettier-config": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
     "typescript": "^5.9.2"
   },
   "exports": {
@@ -85,10 +85,6 @@
   "license": "MPL-2.0",
   "main": "./dist/main.cjs",
   "module": "./dist/main.mjs",
-  "peerDependencies": {
-    "@alwatr/nano-build": "workspace:^",
-    "@alwatr/type-helper": "workspace:^"
-  },
   "prettier": "@alwatr/prettier-config",
   "publishConfig": {
     "access": "public"
