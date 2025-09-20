@@ -1,290 +1,301 @@
-# Alwatr Signal
+# Alwatr FSM
 
-Alwatr Signal is a powerful, lightweight, and modern reactive programming library. It is inspired by the best concepts from major reactive libraries but engineered to be faster and more efficient than all of them. It provides a robust and elegant way to manage application state through a system of signals, offering fine-grained reactivity, predictability, and excellent performance.
+[](https://www.google.com/search?q=alwatr+flux)
+[](https://www.google.com/search?q=alwatr+fsm)
+[](https://www.google.com/search?q=alwatr+signal)
+[](https://www.google.com/search?q=alwatr)
+[](https://www.npmjs.com/package/%40alwatr/flux)
+[](https://www.npmjs.com/package/%40alwatr/fsm)
+[](https://www.npmjs.com/package/%40alwatr/signal)
 
-It's designed to be simple to learn, yet capable of handling complex state management scenarios.
+A tiny, type-safe, declarative, and reactive finite state machine (FSM) library for modern TypeScript applications, built on top of [Alwatr Signals](https://github.com/Alwatr/flux/tree/next/packages/signal).
 
-[![npm version](https://img.shields.io/npm/v/@alwatr/signal?logo=npm&logoColor=white)](https://www.npmjs.com/package/@alwatr/signal 'npm version')
-[![npm downloads](https://img.shields.io/npm/dm/@alwatr/signal)](https://www.npmjs.com/package/@alwatr/signal 'npm downloads')
-[![size](https://img.shields.io/bundlephobia/minzip/@alwatr/signal)](https://bundlephobia.com/package/@alwatr/signal 'size')
-[![code coverage](https://img.shields.io/coveralls/github/Alwatr/signal)](https://coveralls.io/github/Alwatr/signal 'code coverage')
+یک کتابخانه کوچک، تایپ-سیف، اعلانی و واکنش‌گرا (reactive) برای مدیریت وضعیت به روش ماشین حالت متناهی (FSM) در اپلیکیشن‌های مدرن TypeScript که بر پایه [Alwatr Signals](https://github.com/Alwatr/flux/tree/next/packages/signal) ساخته شده است.
 
-## Features
+## Philosophy
 
-- **Type-Safe**: Fully implemented in TypeScript for robust, type-safe code.
-- **Lightweight**: A small footprint with zero third-party dependencies.
-- **Performant**: Smart change detection and batched updates prevent unnecessary computations and re-renders.
-- **Predictable**: Asynchronous, non-blocking notifications ensure a consistent and understandable data flow.
-- **Lifecycle Management**: Built-in `destroy()` methods for easy cleanup and memory leak prevention.
-- **Easy to Debug**: Unique `name` for each signal makes logging and tracing a breeze.
+Managing state in complex applications can be challenging. As features grow, state transitions can become unpredictable, leading to bugs and difficult-to-maintain code. Finite State Machines provide a powerful model to solve this problem by formalizing application logic.
 
-## Core Concepts
+An FSM describes a system that can be in **exactly one** of a finite number of **states** at any given time. It transitions from one state to another in response to **events**, following predefined rules. This approach makes state changes predictable, visualizable, and robust.
 
-Signals are the fundamental building blocks in Alwatr Signal. They are special objects that hold a value and can notify interested consumers when that value changes. There are three main types of signals:
+This library is designed to be:
 
-1. **`StateSignal`**: The foundation of reactivity. It holds a mutable value. When you `set()` a new value, it notifies all its dependents.
-2. **`ComputedSignal`**: A read-only signal that derives its value from other signals. It automatically updates when its dependencies change. The result is memoized, so the calculation only runs when needed.
-3. **`EffectSignal`**: The bridge to the "outside world." It executes a side effect (like logging or rendering) in response to changes in the signals it depends on.
-
-There is also a fourth type for stateless events:
-
-4. **`EventSignal`**: A stateless signal for dispatching one-off events that don't have a persistent value.
+- **Declarative**: Define your entire machine logic in a single, easy-to-read configuration object.
+- **Type-Safe**: Leverage TypeScript to catch errors at compile time, not runtime.
+- **Reactive**: Built around signals for seamless integration with modern UI frameworks and reactive codebases.
+- **Resilient**: Guarantees Run-to-Completion (RTC) and handles errors in user-defined functions gracefully without crashing.
 
 ---
 
-## Getting Started: A Practical Example
+## مفاهیم و فلسفه
 
-Let's build a simple reactive system to see how the different signal types work together.
+مدیریت وضعیت در اپلیکیشن‌های پیچیده یک چالش است. با رشد برنامه، جریان تغییر وضعیت‌ها می‌تواند غیرقابل‌پیش‌بینی شده و منجر به باگ‌ها و کدهای غیرقابل نگهداری شود. ماشین‌های حالت متناهی (FSM) یک مدل قدرتمند برای حل این مشکل از طریق ساختارمند کردن منطق برنامه ارائه می‌دهند.
 
-### 1. Install
+یک FSM سیستمی را توصیف می‌کند که در هر لحظه **دقیقا در یکی** از تعداد محدودی **وضعیت (state)** قرار دارد. این سیستم در پاسخ به **رویدادها (events)** و بر اساس قوانین از پیش تعریف‌شده، از یک وضعیت به وضعیت دیگر **گذار (transition)** می‌کند. این رویکرد، تغییرات وضعیت را قابل‌پیش‌بینی، قابل ترسیم و مستحکم می‌سازد.
 
-First, ensure you have the package installed:
+این کتابخانه با اهداف زیر طراحی شده است:
+
+- **اعلانی (Declarative)**: تمام منطق ماشین خود را در یک آبجکت پیکربندی واحد و خوانا تعریف کنید.
+- **تایپ-سیف (Type-Safe)**: با بهره‌گیری از قدرت TypeScript، خطاها را در زمان کامپایل پیدا کنید، نه در زمان اجرا.
+- **واکنش‌گرا (Reactive)**: مبتنی بر سیگنال‌ها برای یکپارچه‌سازی آسان با فریم‌ورک‌های مدرن و کدهای واکنش‌گرا.
+- **مستحکم و تاب‌آور (Resilient)**: مدل اجرای کامل تا انتها (RTC) را تضمین کرده و خطاهای توابع تعریف‌شده توسط کاربر را بدون متوقف کردن سیستم مدیریت می‌کند.
+
+## Installation
 
 ```bash
-npm i @alwatr/signal
+npm i @alwatr/fsm
 ```
 
-### 2. Create State Signals
+## Core Concepts / مفاهیم کلیدی
 
-`StateSignal` is where your application's state lives. Let's create signals for a user's name and a counter.
+| Term           | Description                                                                                                         |
+| :------------- | :------------------------------------------------------------------------------------------------------------------ |
+| **State**      | The current finite state of the machine (e.g., `'idle'`, `'loading'`).                                              |
+| **Context**    | An object holding the "extended state"—any quantitative or non-finite data (e.g., `{retries: 2, data: null}`).      |
+| **Event**      | An object that triggers a potential state transition (e.g., `{type: 'FETCH', id: '123'}`).                          |
+| **Transition** | A rule defining the path from a source state to a target state for a given event. It can be guarded by a condition. |
+| **Assigner**   | A **pure function** that synchronously updates the `context` during a transition.                                   |
+| **Effect**     | A function for **side effects** (e.g., API calls, logging) that runs upon entering or exiting a state.              |
+| **Condition**  | A **predicate function** that must return `true` for its associated transition to be taken.                         |
 
-```typescript
-import {StateSignal} from '@alwatr/signal';
+| اصطلاح                     | توضیحات                                                                                                                        |
+| :------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+| **وضعیت (State)**          | وضعیت متناهی فعلی ماشین (مثلاً `'idle'`, `'loading'`).                                                                         |
+| **زمینه (Context)**        | یک آبجکت برای نگهداری "وضعیت گسترده"—هرگونه داده کمی یا نامتناهی (مثلاً `{retries: 2, data: null}`).                           |
+| **رویداد (Event)**         | آبجکتی که یک گذار وضعیت بالقوه را آغاز می‌کند (مثلاً `{type: 'FETCH', id: '123'}`).                                            |
+| **گذار (Transition)**      | قانونی که مسیر از یک وضعیت مبدأ به یک وضعیت مقصد را برای یک رویداد خاص تعریف می‌کند. این گذار می‌تواند توسط یک شرط محافظت شود. |
+| **تخصیص‌دهنده (Assigner)** | یک **تابع خالص** که به صورت همزمان (synchronously) `context` را در طول یک گذار به‌روزرسانی می‌کند.                             |
+| **اثر جانبی (Effect)**     | تابعی برای **عملیات‌های جانبی** (مانند فراخوانی API یا لاگ کردن) که هنگام ورود یا خروج از یک وضعیت اجرا می‌شود.                |
+| **شرط (Condition)**        | یک **تابع گزاره‌ای** که باید `true` برگرداند تا گذار مرتبط با آن انجام شود.                                                    |
 
-// A signal to hold the user's first name.
-const firstName = new StateSignal<string>({
-  name: 'user-firstName',
-  initialValue: 'John',
-});
+## Example 1: A Simple Light Switch
 
-// A signal to hold a simple counter.
-const counter = new StateSignal<number>({
-  name: 'app-counter',
-  initialValue: 0,
-});
+Let's model a simple light switch that can be turned on and off.
+
+### ۱. تعریف انواع
+
+First, define the types for the states, events, and context.
+ابتدا انواع مربوط به وضعیت‌ها، رویدادها و زمینه را تعریف می‌کنیم.
+
+```ts
+import type {StateMachineConfig} from '@alwatr/fsm';
+
+// The context stores the brightness level.
+type LightContext = {brightness: number};
+
+// The machine can only be in one of these two states.
+type LightState = 'on' | 'off';
+
+// Define the events that can be sent to the machine.
+type LightEvent = {type: 'TOGGLE'} | {type: 'SET_BRIGHTNESS'; level: number};
 ```
 
-### 3. Create a Computed Signal
+### ۲. پیکربندی ماشین
 
-A `ComputedSignal` combines other signals into a new, read-only value. Let's create a `fullName` signal that automatically updates when `firstName` changes.
+Define the entire machine logic in a configuration object.
+کل منطق ماشین را در یک آبجکت پیکربندی تعریف می‌کنیم.
 
-```typescript
-import {ComputedSignal} from '@alwatr/signal';
-
-const fullName = new ComputedSignal<string>({
-  name: 'user-fullName',
-  deps: [firstName], // This computed signal depends on firstName.
-  get: () => `User: ${firstName.get()}`,
-});
-
-console.log(fullName.get()); // Outputs: "User: John"
-```
-
-### 4. Create an Effect Signal
-
-An `EffectSignal` runs a side effect whenever one of its dependencies changes. This is perfect for logging, updating the DOM, or making network requests.
-
-```typescript
-import {EffectSignal} from '@alwatr/signal';
-
-const loggerEffect = new EffectSignal({
-  deps: [fullName, counter], // This effect depends on fullName and counter.
-  run: () => {
-    console.log(`${fullName.get()} has clicked ${counter.get()} times.`);
+```ts
+const lightMachineConfig: StateMachineConfig<LightState, LightEvent, LightContext> = {
+  name: 'light-switch',
+  initial: 'off',
+  context: {brightness: 0},
+  states: {
+    off: {
+      on: {
+        // When in the 'off' state and a 'TOGGLE' event occurs...
+        TOGGLE: {
+          target: 'on', // ...transition to the 'on' state.
+          assigners: [() => ({brightness: 100})], // ...and set brightness to 100.
+        },
+      },
+    },
+    on: {
+      on: {
+        // When in the 'on' state and a 'TOGGLE' event occurs...
+        TOGGLE: {
+          target: 'off', // ...transition to 'off'.
+          assigners: [() => ({brightness: 0})], // ...and reset brightness.
+        },
+        // An internal transition that only updates context without changing the state.
+        SET_BRIGHTNESS: {
+          // No 'target' means it's an internal transition.
+          assigners: [(event) => ({brightness: event.level})],
+        },
+      },
+    },
   },
-});
+};
 ```
 
-### 5. Putting It All Together
+### ۳. ساخت و استفاده از سرویس
 
-Now, let's see the magic happen. When we update a `StateSignal`, the changes automatically propagate through the system.
+Create the service and interact with it using signals.
+سرویس را ایجاد کرده و با استفاده از سیگنال‌ها با آن تعامل می‌کنیم.
 
-```typescript
-// Subscribe to changes for demonstration
-fullName.subscribe((newFullName) => {
-  console.log(`Full name signal updated to: ${newFullName}`);
-});
+```ts
+import {createFsmService} from '@alwatr/fsm';
 
-// Let's change the first name.
-firstName.set('Jane');
-// This will trigger:
-// 1. `fullName` to recalculate its value.
-// 2. The `fullName.subscribe` callback to run.
-// 3. The `loggerEffect` to run.
+// Create the FSM service instance.
+const lightService = createFsmService(lightMachineConfig);
 
-// Let's increment the counter.
-counter.set(1);
-// This will trigger:
-// 1. The `loggerEffect` to run again.
-```
-
-The output would be:
-
-```
-User: John
-Full name signal updated to: User: Jane
-User: Jane has clicked 0 times.
-User: Jane has clicked 1 times.
-```
-
-## Advanced Topics
-
-### Lifecycle Management and Memory Leaks
-
-Signals that depend on other signals (like `ComputedSignal` and `EffectSignal`) create subscriptions internally. If you don't clean these up, they can lead to memory leaks.
-
-**Always call `destroy()` on `ComputedSignal` and `EffectSignal` when they are no longer needed.**
-
-```typescript
-// Create a computed signal
-const isEven = new ComputedSignal({
-  deps: [counter],
-  get: () => counter.get() % 2 === 0,
+// Subscribe to state changes.
+lightService.stateSignal.subscribe((state) => {
+  console.log(`Light is ${state.name} with brightness ${state.context.brightness}`);
 });
 
-// ... use it for a while ...
+// Dispatch events to trigger transitions.
+lightService.eventSignal.dispatch({type: 'TOGGLE'});
+// Logs: Light is on with brightness 100
 
-// When the component/logic using it is about to be removed:
-isEven.destroy();
+lightService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 50});
+// Logs: Light is on with brightness 50
+
+lightService.eventSignal.dispatch({type: 'TOGGLE'});
+// Logs: Light is off with brightness 0
 ```
 
-Calling `destroy()` unsubscribes the signal from all its dependencies, allowing it to be safely garbage collected.
+## Example 2: Async Data Fetching
 
-### Asynchronous Notifications
+A more advanced example showing side effects (`effects`) and conditional transitions (`condition`).
 
-Alwatr Signal uses a predictable asynchronous model for notifications:
+```ts
+import {createFsmService} from '@alwatr/fsm';
+import type {StateMachineConfig} from '@alwatr/fsm';
 
-- **`StateSignal` and `EventSignal`** schedule notifications on the **microtask** queue (`Promise.resolve().then(...)`). This ensures that multiple synchronous `set()` calls within the same event loop tick are batched, and listeners are notified shortly after, but not immediately.
-- **`ComputedSignal` and `EffectSignal`** schedule their recalculations/runs on the **macrotask** queue (e.g., `setTimeout(..., 0)`). This is a crucial optimization. If multiple dependencies change in the same event loop, the computed signal will only recalculate _once_ per tick, avoiding redundant work.
+// Types
+type User = {id: string; name: string};
+type FetchContext = {user: User | null; error: string | null};
+type FetchState = 'idle' | 'pending' | 'success' | 'error';
+type FetchEvent = {type: 'FETCH'; id: string} | {type: 'RESOLVE'; user: User} | {type: 'REJECT'; error: string} | {type: 'RETRY'};
 
-### Subscription Options
+// FSM Configuration
+const fetchMachineConfig: StateMachineConfig<FetchState, FetchEvent, FetchContext> = {
+  name: 'fetch-user',
+  initial: 'idle',
+  context: {
+    user: null,
+    error: null,
+  },
+  states: {
+    idle: {
+      on: {
+        FETCH: {target: 'pending'},
+      },
+    },
+    pending: {
+      // On entering 'pending' state, execute the fetchUser effect.
+      entry: [
+        async (event, context) => {
+          if (event.type !== 'FETCH') return; // Type guard
+          try {
+            console.log(`Fetching user with id: ${event.id}...`);
+            const response = await fetch(`https://api.example.com/users/${event.id}`);
+            if (!response.ok) throw new Error('User not found');
+            const user = (await response.json()) as User;
+            // An effect can return a new event to be dispatched back to the machine.
+            return {type: 'RESOLVE', user};
+          } catch (err) {
+            // If an error occurs, dispatch a 'REJECT' event.
+            return {type: 'REJECT', error: (err as Error).message};
+          }
+        },
+      ],
+      on: {
+        RESOLVE: {
+          target: 'success',
+          assigners: [(event) => ({user: event.user})],
+        },
+        REJECT: {
+          target: 'error',
+          assigners: [(event) => ({error: event.error})],
+        },
+      },
+    },
+    success: {
+      on: {
+        FETCH: {target: 'pending'}, // Allow re-fetching
+      },
+    },
+    error: {
+      on: {
+        RETRY: {
+          target: 'pending',
+          // A condition that must be met for the transition to occur.
+          condition: (event, context) => {
+            // This is just an example; you might have retry logic in the context.
+            console.log('Checking retry condition...');
+            return true;
+          },
+        },
+      },
+    },
+  },
+};
 
-The `subscribe` method accepts an optional second argument to customize its behavior:
+// --- Usage ---
+const fetchService = createFsmService(fetchMachineConfig);
 
-- `once: true`: The listener is called only once and then automatically removed.
-- `priority: true`: The listener is moved to the front of the queue and is executed before other listeners.
-- `receivePrevious: false` (For `StateSignal` only): Prevents the listener from being called immediately with the current value upon subscription.
+fetchService.stateSignal.subscribe((state) => {
+  console.log('Current State:', state.name);
+  if (state.name === 'success') console.log('User:', state.context.user);
+  if (state.name === 'error') console.log('Error:', state.context.error);
+});
 
-## API Reference
+fetchService.eventSignal.dispatch({type: 'FETCH', id: '1'});
+```
 
-This section provides a detailed overview of the core components of Alwatr Signal.
+## Architectural Advantages / مزیت‌های معماری
 
-### Common Methods & Properties
+- **Predictable & Visualizable**: By constraining how and when state can change, your application logic becomes deterministic and easy to reason about. The declarative nature of the config allows for easy visualization of all possible states and transitions.
+  <br>
+  **قابل پیش‌بینی و ترسیم**: با محدود کردن زمان و چگونگی تغییر وضعیت، منطق برنامه شما قطعی و قابل درک می‌شود. ماهیت اعلانی پیکربندی، امکان ترسیم و مشاهده تمام وضعیت‌ها و گذارهای ممکن را فراهم می‌کند.
 
-These are available on most signal instances.
+- **Type-Safe by Design**: The library is built from the ground up with TypeScript. It ensures that event payloads are correctly typed for each transition and that assigners update the context with valid data, preventing a wide class of bugs at compile time.
+  <br>
+  **ذاتاً تایپ-سیف**: این کتابخانه از پایه با TypeScript ساخته شده است. این امر تضمین می‌کند که پارامترهای رویدادها در هر گذار به درستی تایپ‌دهی شده و `assigner`ها زمینه (`context`) را با داده‌های معتبر به‌روزرسانی می‌کنند، که از بروز دسته وسیعی از باگ‌ها در زمان کامپایل جلوگیری می‌کند.
 
-- **`.name: string`**
-  A unique, read-only identifier for the signal, useful for debugging.
+- **Decouples Logic from UI**: The `FsmService` encapsulates your application's logic, keeping it completely independent of your UI framework. Your UI simply subscribes to the `stateSignal` and dispatches events to the `eventSignal`. This improves testability and makes it easy to refactor or even replace the UI layer.
+  <br>
+  **جداسازی منطق از UI**: سرویس FSM منطق برنامه شما را کپسوله کرده و آن را کاملاً مستقل از فریم‌ورک UI نگه می‌دارد. لایه UI شما تنها به `stateSignal` گوش می‌دهد و رویدادها را به `eventSignal` ارسال می‌کند. این رویکرد آزمون‌پذیری را بهبود بخشیده و بازنویسی یا حتی تعویض لایه UI را آسان می‌کند.
 
-- **`.isDestroyed: boolean`**
-  A read-only property that returns `true` if the signal has been destroyed.
+- **Robust & Resilient**: The machine operates on a Run-to-Completion (RTC) model, ensuring that each event is fully processed before the next one begins, preventing race conditions. Furthermore, any errors thrown inside user-defined functions (`condition`, `assigner`, `effect`) are caught and logged, preventing the entire machine from crashing.
+    <br>
+    **مستحکم و انعطاف‌پذیر**: ماشین بر اساس مدل اجرای کامل تا انتها (RTC) عمل می‌کند، که تضمین می‌کند هر رویداد به طور کامل پردازش شده و سپس رویداد بعدی آغاز می‌شود. این از بروز race condition جلوگیری می‌کند. علاوه بر این، هرگونه خطای ایجاد شده در توابع تعریف‌شده توسط کاربر (`condition`, `assigner`, `effect`) مدیریت و لاگ می‌شود و از کرش کردن کل ماشین جلوگیری می‌کند.
 
-- **`.subscribe(callback, options?)`**
-  Subscribes a listener function that will be called when the signal's value changes or an event is dispatched.
-  - `callback`: The function to execute.
-  - `options` (optional): An object to customize subscription behavior (`once`, `priority`, `receivePrevious`).
-  - _Returns_: A `SubscribeResult` object with an `unsubscribe()` method.
+## API Reference / مرجع API
 
-- **`.untilNext(): Promise<T>`**
-  Returns a `Promise` that resolves with the next value or payload from the signal. This is useful for `async/await` patterns.
+### `createFsmService(config)`
 
-- **`.destroy()`**
-  Cleans up the signal, unsubscribing it from all dependencies and removing its own listeners. This is crucial for `ComputedSignal` and `EffectSignal` to prevent memory leaks.
+The main factory function to create a new FSM service.
+تابع اصلی برای ساخت یک سرویس FSM جدید.
 
----
+- **`config`**: `StateMachineConfig<TState, TEvent, TContext>`
+  - The declarative configuration object for the state machine.
+  - آبجکت پیکربندی اعلانی برای ماشین حالت.
+- **Returns**: `FsmService<TState, TEvent, TContext>`
+  - An instance of the FSM service with two main properties:
+    - `stateSignal`: A readable signal that emits the current `MachineState`.
+    - `eventSignal`: A signal to `dispatch` new events to the machine.
+  - یک نمونه از سرویس FSM با دو پراپرتی اصلی:
+    - `stateSignal`: یک سیگنال خواندنی که `MachineState` فعلی را منتشر می‌کند.
+    - `eventSignal`: سیگنالی برای ارسال (`dispatch`) رویدادهای جدید به ماشین.
 
-### `EventSignal<T = void>`
+### Key Types / انواع کلیدی
 
-A stateless signal for dispatching transient events. It does not hold a value.
+| Type                     | Description                                                                   |
+| :----------------------- | :---------------------------------------------------------------------------- |
+| **`MachineState<S, C>`** | Represents the complete state, containing `name: S` and `context: C`.         |
+| **`MachineEvent<T>`**    | The base interface for events. Must have a `type: T` property.                |
+| **`StateMachineConfig`** | The main configuration object defining `initial`, `context`, and `states`.    |
+| **`Transition`**         | Defines a transition with an optional `target`, `condition`, and `assigners`. |
 
-#### Constructor
-
-- **`new EventSignal<T>(config)`** or **`createEventSignal<T>(config)`**
-  - `config.name`: `string` - A unique identifier for the signal.
-  - `config.onDestroy?`: `() => void` - An optional cleanup callback.
-
-#### Methods
-
-- **`.dispatch(payload: T)`**
-  Dispatches an event to all active listeners. The payload is required, but for events without data, you can use `EventSignal<void>` and call `dispatch()` with no arguments.
-
----
-
-### `StateSignal<T>`
-
-A stateful signal that holds a value and notifies listeners when it changes.
-
-#### Constructor
-
-- **`new StateSignal<T>(config)`** or **`createStateSignal<T>(config)`**
-  - `config.name`: `string` - A unique identifier.
-  - `config.initialValue`: `T` - The starting value for the signal.
-  - `config.onDestroy?`: `() => void` - An optional cleanup callback.
-
-#### Properties
-
-- **`.get(): T`**
-  Gets the current value of the signal.
-
-#### Methods
-
-- **`.set(newValue: T)`**
-  Updates the signal's value and notifies listeners. It does not notify if the new value is the same as the old one (using `Object.is` for comparison).
-
-- **`.update(updater: (previousValue: T) => T)`**
-  Updates the signal's value based on its previous value. The `updater` function receives the current value and should return the new value.
-
----
-
-### `ComputedSignal<T>`
-
-A read-only signal that derives its value from a set of dependency signals.
-
-#### Constructor
-
-- **`new ComputedSignal<T>(config)`** or **`createComputedSignal<T>(config)`**
-  - `config.name`: `string` - A unique identifier.
-  - `config.deps`: `DependencyList` - An array of `IReadonlySignal` instances that this signal depends on.
-  - `config.get`: `() => T` - A pure function that computes the value based on its dependencies.
-  - `config.onDestroy?`: `() => void` - An optional cleanup callback.
-
-#### Properties
-
-- **`.get(): T`**
-  Gets the current memoized value. The `get` function is only re-executed if a dependency has changed.
-
----
-
-### `EffectSignal`
-
-Manages a side-effect that runs in response to changes in dependency signals.
-
-#### Constructor
-
-- **`new EffectSignal(config)`** or **`createEffect(config)`**
-  - `config.deps`: `DependencyList` - An array of `IReadonlySignal` instances to depend on.
-  - `config.run`: `() => Awaitable<void>` - The side-effect function to execute.
-  - `config.runImmediately?`: `boolean` (default: `false`) - If `true`, runs the effect once upon creation.
-  - `config.onDestroy?`: `() => void` - An optional cleanup callback.
-
-### Operators
-
-Operators are functions that create a new signal from a source signal, applying transformations or behaviors.
-
-- **`createDebouncedSignal(sourceSignal, config)`**
-  Creates a `ComputedSignal` that only updates its value after a specified delay of inactivity from the `sourceSignal`.
-  - `sourceSignal`: The signal to debounce.
-  - `config`: Debounce options (`delay`, `leading`, `trailing`).
-
-- **`createFilteredSignal(sourceSignal, predicate, name?)`**
-  Creates a `ComputedSignal` that only emits values from the `sourceSignal` that pass the `predicate` function.
-  - `sourceSignal`: The signal to filter.
-  - `predicate`: A function that returns `true` for values to keep.
-
-- **`createMappedSignal(sourceSignal, projectFunction, name?)`**
-  Creates a `ComputedSignal` that transforms each value from the `sourceSignal` using the `projectFunction`.
-  - `sourceSignal`: The signal to map.
-  - `projectFunction`: A function that transforms the value.
+| نوع                      | توضیحات                                                                                                        |
+| :----------------------- | :------------------------------------------------------------------------------------------------------------- |
+| **`MachineState<S, C>`** | وضعیت کامل ماشین را نمایش می‌دهد که شامل `name: S` (نام وضعیت) و `context: C` (زمینه) است.                     |
+| **`MachineEvent<T>`**    | اینترفیس پایه برای رویدادها. باید یک پراپرتی `type: T` داشته باشد.                                             |
+| **`StateMachineConfig`** | آبجکت اصلی پیکربندی که `initial` (وضعیت اولیه)، `context` (زمینه اولیه) و `states` (وضعیت‌ها) را تعریف می‌کند. |
+| **`Transition`**         | یک گذار را با `target` (مقصد)، `condition` (شرط) و `assigners` (تخصیص‌دهنده‌ها)ی اختیاری تعریف می‌کند.         |
 
 ## Sponsors
 
@@ -293,300 +304,3 @@ The following companies, organizations, and individuals support flux ongoing mai
 ## Contributing
 
 Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
-
----
-
-<br>
-<br>
-<br>
-
-# Alwatr Signal (راهنمای فارسی)
-
-کتابخانه Alwatr Signal یک ابزار قدرتمند، سبک و مدرن برای برنامه‌نویسی واکنشی (Reactive Programming) است. این کتابخانه با الگوبرداری از بهترین مفاهیم بزرگترین کتابخانه‌های واکنشی طراحی شده، اما مهندسی آن به گونه‌ای است که از تمام آن‌ها سریع‌تر و کارآمدتر باشد. این کتابخانه روشی استوار و زیبا برای مدیریت وضعیت برنامه از طریق سیگنال‌ها ارائه می‌دهد و واکنش‌پذیری دقیق (fine-grained reactivity)، پیش‌بینی‌پذیری و عملکرد عالی را به ارمغان می‌آورد.
-
-طراحی آن به گونه‌ای است که یادگیری آن ساده باشد، اما در عین حال قادر به مدیریت سناریوهای پیچیده مدیریت وضعیت نیز باشد.
-
-## ویژگی‌ها
-
-- **ایمنی نوع (Type-Safe)**: به طور کامل با TypeScript پیاده‌سازی شده تا کدی قوی و ایمن از نظر نوع داشته باشید.
-- **سبک**: حجم بسیار کم و بدون هیچ وابستگی (dependency) خارجی.
-- **عملکرد بالا**: تشخیص هوشمند تغییرات و به‌روزرسانی‌های دسته‌ای از محاسبات و رندرهای غیرضروری جلوگیری می‌کند.
-- **پیش‌بینی‌پذیر**: نوتیفیکیشن‌های ناهمزمان (asynchronous) و غیرمسدودکننده (non-blocking) جریان داده‌ای سازگار و قابل فهم را تضمین می‌کنند.
-- **مدیریت چرخه حیات (Lifecycle)**: متدهای داخلی `destroy()` برای پاک‌سازی آسان و جلوگیری از نشت حافظه (memory leak).
-- **اشکال‌زدایی آسان**: شناسه‌های منحصر به فرد (`name`) برای هر سیگنال، لاگ‌گیری و ردیابی را بسیار ساده می‌کند.
-
-## مفاهیم اصلی
-
-سیگنال‌ها بلوک‌های سازنده اصلی در Alwatr Signal هستند. آن‌ها اشیاء خاصی هستند که یک مقدار را نگه می‌دارند و می‌توانند مصرف‌کنندگان علاقه‌مند را هنگام تغییر آن مقدار مطلع کنند. سه نوع اصلی سیگنال وجود دارد:
-
-1. **`StateSignal`**: پایه و اساس واکنش‌پذیری. این سیگنال یک مقدار قابل تغییر را نگه می‌دارد. وقتی شما مقدار جدیدی را `set()` می‌کنید، تمام وابستگان خود را مطلع می‌سازد.
-2. **`ComputedSignal`**: یک سیگنال فقط-خواندنی (read-only) که مقدار خود را از سیگنال‌های دیگر استخراج می‌کند. این سیگنال به طور خودکار با تغییر وابستگی‌هایش به‌روز می‌شود. نتیجه کش (memoized) می‌شود، بنابراین محاسبات فقط در صورت نیاز انجام می‌شود.
-3. **`EffectSignal`**: پلی به "دنیای بیرون". این سیگنال یک اثر جانبی (side effect) مانند لاگ‌گیری یا رندر کردن را در پاسخ به تغییرات سیگنال‌هایی که به آن‌ها وابسته است، اجرا می‌کند.
-
-یک نوع چهارم نیز برای رویدادهای بدون حالت وجود دارد:
-
-4. **`EventSignal`**: یک سیگنال بدون حالت برای ارسال رویدادهای یک‌باره که مقدار پایداری ندارند.
-
----
-
-## شروع به کار: یک مثال عملی
-
-بیایید یک سیستم واکنشی ساده بسازیم تا ببینیم انواع مختلف سیگنال‌ها چگونه با هم کار می‌کنند.
-
-### ۱. نصب
-
-ابتدا، اطمینان حاصل کنید که بسته را نصب کرده‌اید:
-
-```bash
-npm i @alwatr/signal
-```
-
-### ۲. ایجاد `StateSignal`
-
-`StateSignal` جایی است که وضعیت برنامه شما زندگی می‌کند. بیایید سیگنال‌هایی برای نام یک کاربر و یک شمارنده ایجاد کنیم.
-
-```typescript
-import {StateSignal} from '@alwatr/signal';
-
-// سیگنالی برای نگهداری نام کوچک کاربر
-const firstName = new StateSignal<string>({
-  name: 'user-firstName',
-  initialValue: 'John',
-});
-
-// سیگنالی برای نگهداری یک شمارنده ساده
-const counter = new StateSignal<number>({
-  name: 'app-counter',
-  initialValue: 0,
-});
-```
-
-### ۳. ایجاد `ComputedSignal`
-
-یک `ComputedSignal` سیگنال‌های دیگر را ترکیب کرده و یک مقدار جدید و فقط-خواندنی ایجاد می‌کند. بیایید یک سیگنال `fullName` بسازیم که با تغییر `firstName` به طور خودکار به‌روز شود.
-
-```typescript
-import {ComputedSignal} from '@alwatr/signal';
-
-const fullName = new ComputedSignal<string>({
-  name: 'user-fullName',
-  deps: [firstName], // این سیگنال محاسباتی به firstName وابسته است
-  get: () => `User: ${firstName.get()}`,
-});
-
-console.log(fullName.get()); // خروجی: "User: John"
-```
-
-### ۴. ایجاد `EffectSignal`
-
-یک `EffectSignal` هر زمان که یکی از وابستگی‌هایش تغییر کند، یک اثر جانبی اجرا می‌کند. این برای لاگ‌گیری، به‌روزرسانی DOM یا ارسال درخواست‌های شبکه عالی است.
-
-```typescript
-import {EffectSignal} from '@alwatr/signal';
-
-const loggerEffect = new EffectSignal({
-  deps: [fullName, counter], // این افکت به fullName و counter وابسته است
-  run: () => {
-    console.log(`${fullName.get()} has clicked ${counter.get()} times.`);
-  },
-});
-```
-
-### ۵. کنار هم قرار دادن همه چیز
-
-حالا، بیایید جادو را ببینیم. وقتی ما یک `StateSignal` را به‌روز می‌کنیم، تغییرات به طور خودکار در سراسر سیستم پخش می‌شوند.
-
-```typescript
-// برای نمایش، در تغییرات مشترک می‌شویم
-fullName.subscribe((newFullName) => {
-  console.log(`Full name signal updated to: ${newFullName}`);
-});
-
-// بیایید نام کوچک را تغییر دهیم
-firstName.set('Jane');
-// این کار باعث می‌شود:
-// ۱. `fullName` مقدار خود را دوباره محاسبه کند.
-// ۲. کال‌بک `fullName.subscribe` اجرا شود.
-// ۳. `loggerEffect` اجرا شود.
-
-// بیایید شمارنده را افزایش دهیم
-counter.set(1);
-// این کار باعث می‌شود:
-// ۱. `loggerEffect` دوباره اجرا شود.
-```
-
-خروجی به این صورت خواهد بود:
-
-```
-User: John
-Full name signal updated to: User: Jane
-User: Jane has clicked 0 times.
-User: Jane has clicked 1 times.
-```
-
-## مباحث پیشرفته
-
-### مدیریت چرخه حیات و نشت حافظه
-
-سیگنال‌هایی که به سیگنال‌های دیگر وابسته‌اند (مانند `ComputedSignal` و `EffectSignal`) به صورت داخلی اشتراک (subscription) ایجاد می‌کنند. اگر این اشتراک‌ها را پاک‌سازی نکنید، می‌توانند منجر به نشت حافظه شوند.
-
-**همیشه متد `destroy()` را روی `ComputedSignal` و `EffectSignal` زمانی که دیگر به آن‌ها نیازی نیست، فراخوانی کنید.**
-
-```typescript
-// یک سیگنال محاسباتی ایجاد کنید
-const isEven = new ComputedSignal({
-  deps: [counter],
-  get: () => counter.get() % 2 === 0,
-});
-
-// ... مدتی از آن استفاده کنید ...
-
-// زمانی که کامپوننت/منطقی که از آن استفاده می‌کند در شرف حذف شدن است:
-isEven.destroy();
-```
-
-فراخوانی `destroy()` اشتراک سیگنال را از تمام وابستگی‌هایش لغو می‌کند و به сборщик زباله (garbage collector) اجازه می‌دهد آن را با خیال راحت پاک کند.
-
-### نوتیفیکیشن‌های ناهمزمان (Asynchronous)
-
-Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی برای نوتیفیکیشن‌ها استفاده می‌کند:
-
-- **`StateSignal` و `EventSignal`** نوتیفیکیشن‌ها را در صف **microtask** (`Promise.resolve().then(...)`) زمان‌بندی می‌کنند. این تضمین می‌کند که چندین فراخوانی `set()` همزمان در یک تیک حلقه رویداد (event loop) دسته‌بندی شده و شنوندگان کمی بعد، اما نه بلافاصله، مطلع می‌شوند.
-- **`ComputedSignal` و `EffectSignal`** محاسبات/اجراهای خود را در صف **macrotask** (مانند `setTimeout(..., 0)`) زمان‌بندی می‌کنند. این یک بهینه‌سازی حیاتی است. اگر چندین وابستگی در یک حلقه رویداد تغییر کنند، سیگنال محاسباتی فقط _یک بار_ در هر تیک دوباره محاسبه می‌شود و از کار اضافی جلوگیری می‌کند.
-
-### گزینه‌های اشتراک (`subscribe`)
-
-متد `subscribe` یک آرگومان دوم اختیاری برای سفارشی‌سازی رفتار خود می‌پذیرد:
-
-- `once: true`: شنونده فقط یک بار فراخوانی شده و سپس به طور خودکار حذف می‌شود.
-- `priority: true`: شنونده به ابتدای صف منتقل شده و قبل از سایر شنوندگان اجرا می‌شود.
-- `receivePrevious: false` (فقط برای `StateSignal`): از فراخوانی فوری شنونده با مقدار فعلی در هنگام اشتراک جلوگیری می‌کند.
-
-## مرجع API
-
-این بخش یک نمای کلی از اجزای اصلی Alwatr Signal ارائه می‌دهد.
-
-### متدها و خصوصیات مشترک
-
-این موارد در اکثر نمونه‌های سیگنال موجود است.
-
-- **`.name: string`**
-  یک شناسه منحصر به فرد و فقط-خواندنی برای سیگنال، که برای اشکال‌زدایی مفید است.
-
-- **`.isDestroyed: boolean`**
-  یک خصوصیت فقط-خواندنی که در صورت از بین رفتن سیگنال، `true` را برمی‌گرداند.
-
-- **`.subscribe(callback, options?)`**
-  یک تابع شنونده را مشترک می‌کند که با تغییر مقدار سیگنال یا ارسال یک رویداد فراخوانی می‌شود.
-  - `callback`: تابعی که باید اجرا شود.
-  - `options` (اختیاری): یک شی برای سفارشی‌سازی رفتار اشتراک (`once`, `priority`, `receivePrevious`).
-  - _خروجی_: یک شی `SubscribeResult` با متد `unsubscribe()`.
-
-- **`.untilNext(): Promise<T>`**
-  یک `Promise` را برمی‌گرداند که با مقدار یا پی‌لود بعدی از سیگنال، resolve می‌شود. این برای الگوهای `async/await` مفید است.
-
-- **`.destroy()`**
-  سیگنال را پاک‌سازی می‌کند، اشتراک آن را از تمام وابستگی‌ها لغو کرده و شنوندگان خود را حذف می‌کند. این برای `ComputedSignal` و `EffectSignal` برای جلوگیری از نشت حافظه بسیار مهم است.
-
----
-
-### `EventSignal<T = void>`
-
-یک سیگنال بدون حالت برای ارسال رویدادهای گذرا. این سیگنال مقداری را نگه نمی‌دارد.
-
-#### سازنده
-
-- **`new EventSignal<T>(config)`** یا **`createEventSignal<T>(config)`**
-  - `config.name`: `string` - یک شناسه منحصر به فرد برای سیگنال.
-  - `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
-
-#### متدها
-
-- **`.dispatch(payload: T)`**
-  یک رویداد را به تمام شنوندگان فعال ارسال می‌کند. پی‌لود الزامی است، اما برای رویدادهای بدون داده، می‌توانید از `EventSignal<void>` استفاده کرده و `dispatch()` را بدون آرگومان فراخوانی کنید.
-
----
-
-### `StateSignal<T>`
-
-یک سیگنال با حالت که یک مقدار را نگه می‌دارد و با تغییر آن به شنوندگان اطلاع می‌دهد.
-
-#### سازنده
-
-- **`new StateSignal<T>(config)`** یا **`createStateSignal<T>(config)`**
-  - `config.name`: `string` - یک شناسه منحصر به فرد.
-  - `config.initialValue`: `T` - مقدار اولیه برای سیگنال.
-  - `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
-
-#### خصوصیات
-
-- **`.get(): T`**
-  مقدار فعلی سیگنال را دریافت می‌کند.
-
-#### متدها
-
-- **`.set(newValue: T)`**
-  مقدار سیگنال را به‌روز می‌کند و به شنوندگان اطلاع می‌دهد. اگر مقدار جدید با مقدار قبلی یکسان باشد (با استفاده از `Object.is` برای مقایسه)، اطلاع‌رسانی نمی‌کند.
-
-- **`.update(updater: (previousValue: T) => T)`**
-  مقدار سیگنال را بر اساس مقدار قبلی آن به‌روز می‌کند. تابع `updater` مقدار فعلی را دریافت کرده و باید مقدار جدید را برگرداند.
-
----
-
-### `ComputedSignal<T>`
-
-یک سیگنال فقط-خواندنی که مقدار خود را از مجموعه‌ای از سیگنال‌های وابسته استخراج می‌کند.
-
-#### سازنده
-
-- **`new ComputedSignal<T>(config)`** یا **`createComputedSignal<T>(config)`**
-  - `config.name`: `string` - یک شناسه منحصر به فرد.
-  - `config.deps`: `DependencyList` - آرایه‌ای از نمونه‌های `IReadonlySignal` که این سیگنال به آن‌ها وابسته است.
-  - `config.get`: `() => T` - یک تابع خالص که مقدار را بر اساس وابستگی‌های خود محاسبه می‌کند.
-  - `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
-
-#### خصوصیات
-
-- **`.get(): T`**
-  مقدار memoized شده فعلی را دریافت می‌کند. تابع `get` فقط در صورتی دوباره اجرا می‌شود که یکی از وابستگی‌ها تغییر کرده باشد.
-
----
-
-### `EffectSignal`
-
-یک اثر جانبی را مدیریت می‌کند که در پاسخ به تغییرات در سیگنال‌های وابسته اجرا می‌شود.
-
-#### سازنده
-
-- **`new EffectSignal(config)`** یا **`createEffect(config)`**
-  - `config.deps`: `DependencyList` - آرایه‌ای از نمونه‌های `IReadonlySignal` برای وابستگی.
-  - `config.run`: `() => Awaitable<void>` - تابع اثر جانبی برای اجرا.
-  - `config.runImmediately?`: `boolean` (پیش‌فرض: `false`) - اگر `true` باشد، اثر را یک بار در هنگام ایجاد اجرا می‌کند.
-  - `config.onDestroy?`: `() => void` - یک کال‌بک پاک‌سازی اختیاری.
-
-### عملگرها
-
-عملگرها توابعی هستند که یک سیگنال جدید را از یک سیگنال منبع ایجاد می‌کنند و تبدیلات یا رفتارهایی را اعمال می‌کنند.
-
-- **`createDebouncedSignal(sourceSignal, config)`**
-  یک `ComputedSignal` ایجاد می‌کند که مقدار خود را فقط پس از یک تأخیر مشخص از عدم فعالیت از `sourceSignal` به‌روز می‌کند.
-  - `sourceSignal`: سیگنال برای debounce کردن.
-  - `config`: گزینه‌های Debounce (`delay`, `leading`, `trailing`).
-
-- **`createFilteredSignal(sourceSignal, predicate, name?)`**
-  یک `ComputedSignal` ایجاد می‌کند که فقط مقادیری از `sourceSignal` را منتشر می‌کند که از تابع `predicate` عبور کنند.
-  - `sourceSignal`: سیگنال برای فیلتر کردن.
-  - `predicate`: تابعی که برای مقادیر مورد نظر `true` برمی‌گرداند.
-
-- **`createMappedSignal(sourceSignal, projectFunction, name?)`**
-  یک `ComputedSignal` ایجاد می‌کند که هر مقدار از `sourceSignal` را با استفاده از `projectFunction` تبدیل می‌کند.
-  - `sourceSignal`: سیگنال برای map کردن.
-  - `projectFunction`: تابعی که مقدار را تبدیل می‌کند.
-
-## حامیان (Sponsors)
-
-شرکت‌ها، سازمان‌ها و افراد زیر از نگهداری و توسعه مداوم flux حمایت می‌کنند. با تبدیل شدن به یک حامی، لوگوی خود را در README و وب‌سایت ما قرار دهید.
-
-## مشارکت (Contributing)
-
-از مشارکت‌ها استقبال می‌شود! لطفاً قبل از ارسال pull request، [راهنمای مشارکت ما](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) را مطالعه کنید.
