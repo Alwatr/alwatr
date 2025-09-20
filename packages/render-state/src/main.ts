@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-const logger = /* #__PURE__ */ createLogger(__package_name__);
+const logger = createLogger(__package_name__);
 
 export const renderState = <R, T extends string>(
   state: T,

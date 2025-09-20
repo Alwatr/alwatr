@@ -17,13 +17,13 @@ import type {AlwatrFetchOptions_, FetchOptions} from './type.js';
 export {cacheSupported};
 export type * from './type.js';
 
-const logger_ = /* #__PURE__ */ createLogger('@alwatr/fetch');
-const globalThis_ = /* #__PURE__ */ getGlobalThis();
+const logger_ = createLogger('@alwatr/fetch');
+const globalThis_ = getGlobalThis();
 
 /**
  * A boolean flag indicating whether the browser's Cache API is supported.
  */
-const cacheSupported = /* #__PURE__ */ Object.hasOwn(globalThis_, 'caches');
+const cacheSupported = Object.hasOwn(globalThis_, 'caches');
 
 /**
  * A simple in-memory storage for tracking and managing duplicate in-flight requests.

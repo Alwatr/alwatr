@@ -3,12 +3,12 @@ import {platformInfo} from '@alwatr/platform-info';
 
 import type {AlwatrLogger} from './type.js';
 
-const console_ = /* #__PURE__ */ getGlobalThis().console;
+const console_ = getGlobalThis().console;
 
 /**
  * Default debug mode state, determined by environment variables or localStorage.
  */
-const defaultDebugMode = /* #__PURE__ */ (() => {
+const defaultDebugMode = (() => {
   if (platformInfo.development) {
     if (platformInfo.isCli) {
       return process.env.ALWATR_DEBUG !== '0';
@@ -26,7 +26,7 @@ const defaultDebugMode = /* #__PURE__ */ (() => {
 /**
  * A list of aesthetically pleasing colors for console logging, adapted for CLI and browser environments.
  */
-const colorList = /* #__PURE__ */ (() =>
+const colorList = (() =>
   platformInfo.isCli
     ? ['0;36', '0;35', '0;34', '0;33', '0;32'] // CLI-safe colors
     : [
@@ -50,7 +50,7 @@ const colorList = /* #__PURE__ */ (() =>
 /**
  * Platform-specific styling templates for logger output.
  */
-const style_ = /* #__PURE__ */ (() => ({
+const style_ = (() => ({
   scope: platformInfo.isCli ? '\x1b[{{color}}m' : 'color: {{color}};',
   reset: platformInfo.isCli ? '\x1b[0m' : 'color: inherit;',
 }))();
@@ -58,7 +58,7 @@ const style_ = /* #__PURE__ */ (() => ({
 /**
  * Platform-specific format for displaying the logger's scope.
  */
-const keySection_ = /* #__PURE__ */ (() => (platformInfo.isCli ? '%s%s%s' : '%c%s%c'))();
+const keySection_ = (() => (platformInfo.isCli ? '%s%s%s' : '%c%s%c'))();
 
 // --- Utility Functions ---
 

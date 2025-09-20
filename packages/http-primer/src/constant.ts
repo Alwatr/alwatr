@@ -1,7 +1,7 @@
 /**
  * Object representing standard HTTP methods.
  */
-export const HttpMethods = /* #__PURE__ */ {
+export const HttpMethods = {
   /**
    * GET: Requests a representation of the specified resource.
    */
@@ -51,7 +51,7 @@ export const HttpMethods = /* #__PURE__ */ {
 /**
  * Object representing standard HTTP status codes.
  */
-export const HttpStatusCodes = /* #__PURE__ */ {
+export const HttpStatusCodes = {
   /**
    * 100 Continue: The server has received the request headers and the client should proceed to send the request body.
    */
@@ -380,7 +380,7 @@ export const HttpStatusCodes = /* #__PURE__ */ {
 /**
  * Object representing standard HTTP status messages.
  */
-export const HttpStatusMessages = /* #__PURE__ */ {
+export const HttpStatusMessages = {
   100: 'Continue',
   101: 'Switching Protocols',
   102: 'Processing',
@@ -454,7 +454,7 @@ export type HttpStatusCode = keyof typeof HttpStatusMessages;
 /**
  * Object representing standard MIME types.
  */
-export const MimeTypes = /* #__PURE__ */ {
+export const MimeTypes = {
   AAC: 'audio/aac',
   ABW: 'application/x-abiword',
   ARC: 'application/x-freearc',

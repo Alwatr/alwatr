@@ -1,9 +1,9 @@
 import {getGlobalThis} from '@alwatr/global-this';
 
-const globalThis = /* #__PURE__ */ getGlobalThis();
+const globalThis = getGlobalThis();
 
 // Use the native crypto module when available for better randomness
-const hasCrypto = /* #__PURE__ */ (() => typeof globalThis.crypto !== 'undefined')();
+const hasCrypto = (() => typeof globalThis.crypto !== 'undefined')();
 
 /**
  * Converts a Uint8Array or number array into a hexadecimal string representation.

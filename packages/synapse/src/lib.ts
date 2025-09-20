@@ -6,7 +6,7 @@ import type {} from '@alwatr/type-helper';
 /**
  * Alwatr Synapse Logger.
  */
-export const logger = /* #__PURE__ */ createLogger('alwatr/synapse');
+export const logger = createLogger('alwatr/synapse');
 
 /**
  * The registry for all directives.

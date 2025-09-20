@@ -1,6 +1,6 @@
 export type GlobalThis = typeof globalThis;
 
-const globalThis__: GlobalThis = /* #__PURE__ */ (() => {
+const globalThis__: GlobalThis = (() => {
   if (typeof globalThis === 'object' && globalThis) return globalThis;
   if (typeof window === 'object' && window) return window;
   if (typeof global === 'object' && global) return global;

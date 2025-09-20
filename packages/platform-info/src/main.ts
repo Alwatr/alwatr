@@ -48,7 +48,7 @@ interface PlatformInfo {
   readonly isElectron: boolean;
 }
 
-export const platformInfo: PlatformInfo = /* #__PURE__ */ (() => {
+export const platformInfo: PlatformInfo = (() => {
   /**
    * Represents information about the current platform.
    */
