@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@6.0.11...@alwatr/nanolib@6.1.0) (2025-09-20)
+
+### ⚠ BREAKING CHANGES
+
+* review your imports path
+
+### ✨ Features
+
+* update package list and export all necessary modules ([91aa255](https://github.com/Alwatr/nanolib/commit/91aa255a937bdd69e20d21ab2b4e2ebff486499b))
+
+### 🐛 Bug Fixes
+
+* add sideEffects property to package.json for better tree-shaking ([d9f319c](https://github.com/Alwatr/nanolib/commit/d9f319cdc2ce3bb8cf0be03d287aa5cb8b94d591))
+* deps of package.json ([71ebcdf](https://github.com/Alwatr/nanolib/commit/71ebcdf2cd114604a2a38073939e07c6253fd887))
+* remove unused export for dedupe from main.ts ([dd59e56](https://github.com/Alwatr/nanolib/commit/dd59e5656d54f23a853dbc5f5bce2bfcb03c93c4))
+
+### 🔨 Code Refactoring
+
+* consolidate node exports into node.ts and remove deprecated files ([ccdf40b](https://github.com/Alwatr/nanolib/commit/ccdf40b61a83adb8c71304d72e8baf4e926dec8d))
+
+### 🧹 Miscellaneous Chores
+
+* make nanolib private to prevent publish ([f80baeb](https://github.com/Alwatr/nanolib/commit/f80baeb75642acc6c3492b04ed465d9ed4e789a5))
+* remove private flag from package.json ([ca80f4b](https://github.com/Alwatr/nanolib/commit/ca80f4b5f61a647d0ac13f1bb84bb2ea9ca5b64b))
+
 ## [6.0.11](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@6.0.10...@alwatr/nanolib@6.0.11) (2025-09-19)
 
 **Note:** Version bump only for package @alwatr/nanolib
