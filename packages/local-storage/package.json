@@ -22,6 +22,7 @@
       "require": "./dist/main.cjs"
     }
   },
+  "sideEffects": false,
   "files": [
     "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
     "LICENSE",
