@@ -26,12 +26,10 @@ Flux is a monorepo containing a suite of powerful, focused packages. The two mai
 فلاکس یک مونوریپو است که مجموعه‌ای از پکیج‌های قدرتمند و متمرکز را در خود جای داده است. دو ستون اصلی آن عبارتند از:
 
 - **[@alwatr/signal](https://github.com/Alwatr/flux/tree/next/packages/signal)**: A revolutionary reactive programming library. It provides the foundational blocks for creating and composing streams of data and events with surgical precision.
-
-- **[@alwatr/signal](https://github.com/Alwatr/flux/tree/next/packages/signal)**: یک کتابخانه برنامه‌نویسی واکنشی انقلابی. این پکیج، بلوک‌های بنیادین برای ایجاد و ترکیب جریان‌های داده و رویدادها را با دقتی بی‌نظیر فراهم می‌کند.
+  <br>یک کتابخانه برنامه‌نویسی واکنشی انقلابی. این پکیج، بلوک‌های بنیادین برای ایجاد و ترکیب جریان‌های داده و رویدادها را با دقتی بی‌نظیر فراهم می‌کند.
 
 - **[@alwatr/fsm](https://github.com/Alwatr/flux/tree/next/packages/fsm)**: A tiny, declarative, and type-safe Finite State Machine (FSM) library built on top of signals. It makes modeling complex, multi-step logic feel effortless and robust.
-
-- **[@alwatr/fsm](https://github.com/Alwatr/flux/tree/next/packages/fsm)**: یک کتابخانه ماشین حالت متناهی (FSM) کوچک، اعلانی و تایپ-سیف که بر پایه سیگنال‌ها ساخته شده است. این ابزار، مدل‌سازی منطق‌های پیچیده و چندمرحله‌ای را به کاری آسان و مستحکم تبدیل می‌کند.
+  <br>یک کتابخانه ماشین حالت متناهی (FSM) کوچک، اعلانی و تایپ-سیف که بر پایه سیگنال‌ها ساخته شده است. این ابزار، مدل‌سازی منطق‌های پیچیده و چندمرحله‌ای را به کاری آسان و مستحکم تبدیل می‌کند.
 
 ---
 
