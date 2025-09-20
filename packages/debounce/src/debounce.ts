@@ -37,6 +37,7 @@ export class Debouncer<F extends AnyFunction> {
 
   public constructor(private readonly config__: DebouncerConfig<F>) {
     this.config__.trailing ??= true;
+    this.flush = this.flush.bind(this);
   }
 
   /**
@@ -70,7 +71,7 @@ export class Debouncer<F extends AnyFunction> {
 
     if (firstTrigger) {
       if (this.config__.maxWait) {
-        this.maxWaitTimerId__ = setTimeout(() => this.flush, this.config__.maxWait);
+        this.maxWaitTimerId__ = setTimeout(this.flush, this.config__.maxWait);
       }
       if (this.config__.leading === true) {
         this.invoke__();
