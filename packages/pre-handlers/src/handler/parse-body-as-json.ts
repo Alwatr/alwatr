@@ -20,9 +20,7 @@ import type {NanotronClientRequest} from '@alwatr/nanotron-api-server';
  * });
  * ```
  */
-export async function parseBodyAsJson(
-  this: NanotronClientRequest<{body?: DictionaryOpt}>,
-): Promise<void> {
+export async function parseBodyAsJson(this: NanotronClientRequest<{body?: DictionaryOpt}>): Promise<void> {
   this.logger_.logMethod?.('parseBodyAsJson');
   const bodyBuffer = await this.getBodyRaw();
 
