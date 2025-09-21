@@ -3,6 +3,6 @@
   "version": "7.9.0",
   "description": "Extremely fast and compact JSON-based database that operates in memory, includes a JSON file backup, and serve over the highly accelerated Nginx.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "license": "AGPL-3.0-only",
+  "license": "MPL-2.0",
   "private": true
 }
