@@ -1,27 +1,17 @@
 {
   "recommendations": [
     "arcanis.vscode-zipfs",
-    "bbugh.change-color-format",
-    "bradlc.vscode-tailwindcss",
     "cardinal90.multi-cursor-case-preserve",
     "christian-kohler.path-intellisense",
-    "csstools.postcss",
     "davidanson.vscode-markdownlint",
     "dbaeumer.vscode-eslint",
     "redhat.vscode-xml",
     "redhat.vscode-yaml",
     "editorconfig.editorconfig",
     "esbenp.prettier-vscode",
-    "foxundermoon.shell-format",
-    "ginfuru.better-nunjucks",
-    "guapibai.nunjucks-prettier",
-    "humao.rest-client",
-    "irongeek.vscode-env",
     "gruntfuggly.todo-tree",
     "streetsidesoftware.code-spell-checker-persian",
     "streetsidesoftware.code-spell-checker",
-    "stylelint.vscode-stylelint",
-    "yzhang.markdown-all-in-one",
-    "runem.lit-plugin"
+    "yzhang.markdown-all-in-one"
   ]
 }
