@@ -10,7 +10,7 @@
       "conventionalCommits": true,
       "ignoreChanges": ["**/docs/**", "**/*.test.js"],
       "skipBumpOnlyReleases": true,
-      "message": "release:",
+      "message": "release: %s",
       "forceGitTag": true,
       "signGitTag": true,
       "signGitCommit": true,
