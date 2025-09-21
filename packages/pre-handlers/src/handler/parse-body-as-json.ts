@@ -1,6 +1,7 @@
 import {HttpStatusCodes} from '@alwatr/nanotron-api-server';
 
 import type {NanotronClientRequest} from '@alwatr/nanotron-api-server';
+import type {} from '@alwatr/type-helper';
 
 /**
  * Middleware to parses the request body as JSON and assigns it to `this.sharedMeta.body`.
@@ -20,7 +21,7 @@ import type {NanotronClientRequest} from '@alwatr/nanotron-api-server';
  * });
  * ```
  */
-export async function parseBodyAsJson(this: NanotronClientRequest<{body?: DictionaryOpt}>): Promise<void> {
+export async function parseBodyAsJson(this: NanotronClientRequest<{body?: JsonObject | JsonArray}>): Promise<void> {
   this.logger_.logMethod?.('parseBodyAsJson');
   const bodyBuffer = await this.getBodyRaw();
 
@@ -36,7 +37,7 @@ export async function parseBodyAsJson(this: NanotronClientRequest<{body?: Dictio
   }
 
   try {
-    this.sharedMeta.body = JSON.parse(bodyBuffer.toString()) as DictionaryOpt;
+    this.sharedMeta.body = JSON.parse(bodyBuffer.toString()) as DictionaryOpt | JsonArray;
   }
   catch (error) {
     this.logger_.error('parseBodyAsJson', 'invalid_body_json', error);
