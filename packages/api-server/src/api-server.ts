@@ -1,6 +1,6 @@
 import {createServer} from 'node:http';
 
-import {createLogger, packageTracer} from '@alwatr/nanolib';
+import {createLogger} from '@alwatr/logger';
 
 import {NanotronClientRequest} from './api-client-request.js';
 import {HttpStatusCodes, HttpStatusMessages} from './const.js';
@@ -8,8 +8,6 @@ import {NanotronUrl} from './url.js';
 
 import type {DefineRouteOption, MatchType, NativeClientRequest, NativeServerResponse} from './type.js';
 import type {Duplex} from 'node:stream';
-
-__dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 /**
  * Configuration options for the NanotronApiServer.
@@ -70,7 +68,7 @@ export interface NanotronApiServerConfig {
     methods: string;
     headers: string;
     maxAge: string | number;
-  },
+  };
 
   /**
    * A prefix to be added to the beginning of the `url` of all defined routes.
@@ -106,10 +104,10 @@ export class NanotronApiServer {
     bodyLimit: 1_048_576, // 1MiB
   };
 
-  readonly config_: Required<NanotronApiServerConfig>;
+  public readonly config_: Required<NanotronApiServerConfig>;
   protected readonly logger_;
 
-  readonly httpServer;
+  public readonly httpServer;
 
   protected readonly routeHandlerList__: Record<MatchType, DictionaryOpt<DictionaryOpt<Required<DefineRouteOption>>>>;
 
@@ -166,7 +164,7 @@ export class NanotronApiServer {
     }
   }
 
-  close(): void {
+  public close(): void {
     this.logger_.logMethod?.('close');
     this.httpServer.close();
   }
@@ -209,7 +207,7 @@ export class NanotronApiServer {
     routeHandlerList[option.method]![option.url] = option;
   }
 
-  defineRoute<TSharedMeta extends DictionaryOpt = DictionaryOpt>(option: DefineRouteOption<TSharedMeta>): void {
+  public defineRoute<TSharedMeta extends DictionaryOpt = DictionaryOpt>(option: DefineRouteOption<TSharedMeta>): void {
     const option_: Required<DefineRouteOption<TSharedMeta>> = {
       matchType: 'exact',
       preHandlers: [],
