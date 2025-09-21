@@ -143,7 +143,7 @@ export class AlwatrNitrobase {
    */
   public newDocument<TDoc extends JsonObject = JsonObject>(stat: Omit<StoreFileStat, 'type'>, data: TDoc): void {
     logger.logMethodArgs?.('newDocument', stat);
-    return this.newStoreFile_(
+    return this.newStoreFile__(
       {
         ...stat,
         type: StoreFileType.Document,
@@ -170,7 +170,7 @@ export class AlwatrNitrobase {
    */
   public newCollection(stat: Omit<StoreFileStat, 'type'>): void {
     logger.logMethodArgs?.('newCollection', stat);
-    return this.newStoreFile_({
+    return this.newStoreFile__({
       ...stat,
       type: StoreFileType.Collection,
     });
@@ -182,15 +182,15 @@ export class AlwatrNitrobase {
    * @param stat nitrobase file stat
    * @param data initial data for the document
    */
-  public newStoreFile_(stat: StoreFileStat, data?: DictionaryOpt): void {
-    logger.logMethodArgs?.('newStoreFile_', stat);
+  private newStoreFile__(stat: StoreFileStat, data?: DictionaryOpt): void {
+    logger.logMethodArgs?.('newStoreFile__', stat);
 
     (stat.changeDebounce as number | undefined) ??= this.config.defaultChangeDebounce;
 
     let fileStoreRef: DocumentReference | CollectionReference;
     if (stat.type === StoreFileType.Document) {
       if (data === undefined) {
-        logger.accident('newStoreFile_', 'document_data_required', stat);
+        logger.accident('newStoreFile__', 'document_data_required', stat);
         throw new Error('document_data_required', {cause: stat});
       }
       fileStoreRef = DocumentReference.newRefFromData(stat, data, this.storeChanged_);
@@ -199,12 +199,12 @@ export class AlwatrNitrobase {
       fileStoreRef = CollectionReference.newRefFromData(stat, this.storeChanged_);
     }
     else {
-      logger.accident('newStoreFile_', 'store_file_type_not_supported', stat);
+      logger.accident('newStoreFile__', 'store_file_type_not_supported', stat);
       throw new Error('store_file_type_not_supported', {cause: stat});
     }
 
     if (this.rootDb__.hasItem(fileStoreRef.id)) {
-      logger.accident('newStoreFile_', 'store_file_already_defined', stat);
+      logger.accident('newStoreFile__', 'store_file_already_defined', stat);
       throw new Error('store_file_already_defined', {cause: stat});
     }
 
