@@ -5,10 +5,10 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanotron/issues",
   "dependencies": {
-    "@alwatr/nanolib": "^6.1.0"
+    "@alwatr/nanolib": "^6.1.1"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^6.3.0",
+    "@alwatr/nano-build": "^6.3.1",
     "@alwatr/prettier-config": "^5.0.4",
     "@alwatr/tsconfig-base": "^6.0.2",
     "@alwatr/type-helper": "^6.1.1",

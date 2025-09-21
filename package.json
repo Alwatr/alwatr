@@ -5,7 +5,7 @@
   "devDependencies": {
     "@alwatr/eslint-config": "^5.6.2",
     "@alwatr/prettier-config": "^5.0.4",
-    "@alwatr/yarn-upgrade": "^1.0.9",
+    "@alwatr/yarn-upgrade": "^1.0.10",
     "@lerna-lite/changed": "^4.8.0",
     "@lerna-lite/cli": "^4.8.0",
     "@lerna-lite/diff": "^4.8.0",

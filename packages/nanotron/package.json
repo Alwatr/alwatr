@@ -6,12 +6,12 @@
   "bugs": "https://github.com/Alwatr/nanotron/issues",
   "dependencies": {
     "@alwatr/crypto": "workspace:^",
-    "@alwatr/nanolib": "^6.1.0",
+    "@alwatr/nanolib": "^6.1.1",
     "@alwatr/nanotron-api-server": "workspace:^",
     "@alwatr/pre-handlers": "workspace:^"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^6.3.0",
+    "@alwatr/nano-build": "^6.3.1",
     "@alwatr/prettier-config": "^5.0.4",
     "@alwatr/tsconfig-base": "^6.0.2",
     "@alwatr/type-helper": "^6.1.1",
