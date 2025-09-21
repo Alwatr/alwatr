@@ -5,16 +5,15 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nitrobase/issues",
   "dependencies": {
-    "@alwatr/nanolib": "^5.5.0",
     "@alwatr/nitrobase-types": "workspace:^"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^5.5.0",
-    "@alwatr/prettier-config": "^5.0.0",
-    "@alwatr/tsconfig-base": "^5.0.0",
-    "@alwatr/type-helper": "^5.4.0",
-    "@types/node": "^22.13.9",
-    "typescript": "^5.8.2"
+    "@alwatr/nano-build": "^6.3.1",
+    "@alwatr/prettier-config": "^5.0.4",
+    "@alwatr/tsconfig-base": "^6.0.2",
+    "@alwatr/type-helper": "^6.1.1",
+    "@types/node": "^22.18.6",
+    "typescript": "^5.9.2"
   },
   "exports": {
     ".": {
