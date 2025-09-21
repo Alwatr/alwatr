@@ -5,11 +5,11 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/logger": "^6.0.4",
+    "@alwatr/logger": "^6.0.5",
     "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^6.3.0",
+    "@alwatr/nano-build": "^6.3.1",
     "@alwatr/prettier-config": "^5.0.4",
     "@alwatr/tsconfig-base": "^6.0.2",
     "@alwatr/type-helper": "^6.1.1",
