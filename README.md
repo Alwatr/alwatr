@@ -21,7 +21,7 @@ npm install @alwatr/nanotron
 ## Getting Started
 
 ```js
-import { NanotronApiServer } from '@alwatr/nanotron';
+import {NanotronApiServer} from '@alwatr/nanotron';
 
 const apiServer = new NanotronApiServer({
   host: '0.0.0.0',
@@ -37,7 +37,7 @@ apiServer.defineRoute({
       ok: true,
       message: 'Hello :)',
     });
-  }
+  },
 });
 
 apiServer.defineRoute({
@@ -49,7 +49,7 @@ apiServer.defineRoute({
       ok: true,
       data: body.toString(),
     });
-  }
+  },
 });
 ```
 
