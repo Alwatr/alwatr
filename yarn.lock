@@ -5,7 +5,7 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@alwatr/crypto@workspace:^, @alwatr/crypto@workspace:packages/crypto":
+"@alwatr/crypto@workspace:*, @alwatr/crypto@workspace:packages/crypto":
   version: 0.0.0-use.local
   resolution: "@alwatr/crypto@workspace:packages/crypto"
   dependencies:
@@ -70,7 +70,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/nanotron-api-server@workspace:^, @alwatr/nanotron-api-server@workspace:packages/api-server":
+"@alwatr/nanotron-api-server@workspace:*, @alwatr/nanotron-api-server@workspace:packages/api-server":
   version: 0.0.0-use.local
   resolution: "@alwatr/nanotron-api-server@workspace:packages/api-server"
   dependencies:
@@ -89,10 +89,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/nanotron@workspace:packages/nanotron"
   dependencies:
-    "@alwatr/crypto": "workspace:^"
+    "@alwatr/crypto": "workspace:*"
     "@alwatr/nano-build": "npm:^6.3.1"
-    "@alwatr/nanotron-api-server": "workspace:^"
-    "@alwatr/pre-handlers": "workspace:^"
+    "@alwatr/nanotron-api-server": "workspace:*"
+    "@alwatr/pre-handlers": "workspace:*"
     "@alwatr/prettier-config": "npm:^5.0.4"
     "@alwatr/tsconfig-base": "npm:^6.0.2"
     "@alwatr/type-helper": "npm:^6.1.1"
@@ -118,12 +118,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/pre-handlers@workspace:^, @alwatr/pre-handlers@workspace:packages/pre-handlers":
+"@alwatr/pre-handlers@workspace:*, @alwatr/pre-handlers@workspace:packages/pre-handlers":
   version: 0.0.0-use.local
   resolution: "@alwatr/pre-handlers@workspace:packages/pre-handlers"
   dependencies:
     "@alwatr/nano-build": "npm:^6.3.1"
-    "@alwatr/nanotron-api-server": "workspace:^"
+    "@alwatr/nanotron-api-server": "workspace:*"
     "@alwatr/prettier-config": "npm:^5.0.4"
     "@alwatr/tsconfig-base": "npm:^6.0.2"
     "@alwatr/type-helper": "npm:^6.1.1"
