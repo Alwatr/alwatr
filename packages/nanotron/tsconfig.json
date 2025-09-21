@@ -5,8 +5,7 @@
     "outDir": "dist",
     "emitDeclarationOnly": true,
     "composite": true,
-    "types": ["node", "@alwatr/nano-build", "@alwatr/type-helper"]
   },
   "include": ["src/**/*.ts"],
-  "references": [{"path": "../api-server"}, {"path": "../pre-handlers"}],
+  "references": [{"path": "../api-server"}, {"path": "../pre-handlers"}, {"path": "../crypto"}]
 }

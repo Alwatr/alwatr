@@ -45,7 +45,7 @@ export class AlwatrHashGenerator {
    * const clientId = hashGenerator.generateRandom();
    * ```
    */
-  generateRandom(): string {
+  public generateRandom(): string {
     return this.generate(randomBytes(16));
   }
 
@@ -57,7 +57,7 @@ export class AlwatrHashGenerator {
    * const userId = hashGenerator.generateRandomSelfValidate();
    * ```
    */
-  generateRandomSelfValidate(): string {
+  public generateRandomSelfValidate(): string {
     return this.generateSelfValidate(randomBytes(16));
   }
 
@@ -70,7 +70,7 @@ export class AlwatrHashGenerator {
    * const crcHash = hashGenerator.generate(data);
    * ```
    */
-  generate(data: BinaryLike): string {
+  public generate(data: BinaryLike): string {
     return this.config.prefix + createHash(this.config.algorithm).update(data).digest(this.config.encoding);
   }
 
@@ -79,7 +79,7 @@ export class AlwatrHashGenerator {
    * @param data - The data to generate the crc hash from.
    * @returns The generated crc hash.
    */
-  generateCrc(data: BinaryLike): string {
+  public generateCrc(data: BinaryLike): string {
     const crc = createHash('sha1').update(data).digest(this.config.encoding);
     return this.config.crcLength == null || this.config.crcLength < 1 ? crc : crc.slice(0, this.config.crcLength);
   }
@@ -93,7 +93,7 @@ export class AlwatrHashGenerator {
    * const userId = hashGenerator.generateSelfValidate(data);
    * ```
    */
-  generateSelfValidate(data: BinaryLike): string {
+  public generateSelfValidate(data: BinaryLike): string {
     const mainHash = this.generate(data);
     const crcHash = this.generateCrc(mainHash);
     return mainHash + crcHash;
@@ -111,7 +111,7 @@ export class AlwatrHashGenerator {
    * }
    * ```
    */
-  verify(data: BinaryLike, hash: string): boolean {
+  public verify(data: BinaryLike, hash: string): boolean {
     return hash === this.generate(data);
   }
 
@@ -126,7 +126,7 @@ export class AlwatrHashGenerator {
    * }
    * ```
    */
-  verifySelfValidate(hash: string): boolean {
+  public verifySelfValidate(hash: string): boolean {
     const gapPos = hash.length - this.config.crcLength;
     const mainHash = hash.slice(0, gapPos);
     const crcHash = hash.slice(gapPos);

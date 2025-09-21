@@ -3,18 +3,12 @@
   "version": "4.9.4",
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "loglevel": "verbose",
   "command": {
     "version": {
       "conventionalCommits": true,
-      "ignoreChanges": [
-        "**/*.md",
-        "**/docs/**",
-        "**/*.test.js"
-      ],
+      "ignoreChanges": ["**/docs/**", "**/*.test.js"],
       "skipBumpOnlyReleases": true,
       "message": "release: %s",
       "forceGitTag": true,
@@ -22,7 +16,6 @@
       "signGitCommit": true,
       "push": true,
       "createRelease": "github",
-      "conventionalGraduate": true,
       "allowBranch": "next",
       "exact": true,
       "syncWorkspaceLock": true,
@@ -31,9 +24,7 @@
       "changelogPreset": {
         "name": "conventionalcommits",
         "issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issues/{{id}}",
-        "issuePrefixes": [
-          "#"
-        ],
+        "issuePrefixes": ["#"],
         "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
         "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
         "userUrlFormat": "{{host}}/{{user}}",

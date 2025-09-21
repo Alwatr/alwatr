@@ -2,7 +2,5 @@
 *.mjs
 *.cjs
 *.d.ts
-/demo/es-bench/
-/uniquely/flight-finder-pwa
 node_modules
 _data
