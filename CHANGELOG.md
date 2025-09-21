@@ -1,10 +1,75 @@
 # Change Log
-# Changelog
-
-All notable changes to this project will be documented in this file.
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [4.10.0](https://github.com/Alwatr/nanotron/compare/v4.9.4...v4.10.0) (2025-09-21)
+
+### 🐛 Bug Fixes
+
+* add import for type helper from '@alwatr/type-helper' ([f774b19](https://github.com/Alwatr/nanotron/commit/f774b191df16c66590da264c7f88b3f700c3f426))
+* add missing commas in HttpMethods and HttpStatusCodes for consistency ([967e397](https://github.com/Alwatr/nanotron/commit/967e397640d641e726fd3562ee4a77e78042ddcd))
+* correct username casing in CODEOWNERS ([845d2fd](https://github.com/Alwatr/nanotron/commit/845d2fd76d89d820d179db3d66db16824741f5a5))
+* make generate and verify methods public in AlwatrTokenGenerator class ([637666f](https://github.com/Alwatr/nanotron/commit/637666f8326e8696c6bdb2400ea207fe05d6cc40))
+* update function signature to allow body as JsonArray in parseBodyAsJson middleware ([11751ec](https://github.com/Alwatr/nanotron/commit/11751ec1bea9126165ca8ee324ae9f2c7c64db08))
+* update import for Duration type from '@alwatr/parse-duration' ([a365b18](https://github.com/Alwatr/nanotron/commit/a365b18577124d7f4f62ed48c8d639554362d530))
+* update import path for parseDuration from nanolib to parse-duration ([5c390a2](https://github.com/Alwatr/nanotron/commit/5c390a2bd3299a82789b125458016c93ff9b47d5))
+* update type definitions and examples in HttpRequestHeaders for clarity ([2545289](https://github.com/Alwatr/nanotron/commit/25452892cec56df6a4c99762b97720e4ee0f2734))
+* update workspace dependency versioning to use wildcard for multiple packages ([c9969ef](https://github.com/Alwatr/nanotron/commit/c9969effaea0e65713d2197dd60c217ee191113a))
+* update workspace dependency versioning to use wildcard for nanotron-api-server ([0f62667](https://github.com/Alwatr/nanotron/commit/0f62667adfb3d35026ebe143b8f682d128ccfdc1))
+
+### 🔨 Code Refactoring
+
+* add public access modifiers to methods in AlwatrHashGenerator ([e54d186](https://github.com/Alwatr/nanotron/commit/e54d1863a05339cf23b75305f809f2b11e0087c2))
+* change access modifiers for method and debugId properties in NanotronUrl ([69dc466](https://github.com/Alwatr/nanotron/commit/69dc466c05dd4f4c302d7a9356129a83b1808beb))
+* remove unused import and development mode tracer from main.ts ([4d316cb](https://github.com/Alwatr/nanotron/commit/4d316cb45d8cb7bec8823acd2426792bfd26824b))
+* remove unused packageTracer import and development mode tracer from main.ts ([411708a](https://github.com/Alwatr/nanotron/commit/411708a37a1202098b747d902cd255c03cfad061))
+* replace @alwatr/nanolib with @alwatr/logger and update access modifiers in NanotronApiServer ([4847597](https://github.com/Alwatr/nanotron/commit/48475970e2f6ba282442d1c23c6bf01bace85c1f))
+* update access modifiers for class properties and methods in NanotronServerResponse ([7c8bc33](https://github.com/Alwatr/nanotron/commit/7c8bc33d298a42e495f66b7ef8799aff87056e00))
+* update access modifiers for class properties in NanotronClientRequest ([2aa5926](https://github.com/Alwatr/nanotron/commit/2aa5926889c6ffa2376e1314bc6bcaae067c8668))
+* update access modifiers to public for methods in AlwatrCryptoFactory ([2dd01fd](https://github.com/Alwatr/nanotron/commit/2dd01fd3465ad1f8c26980a809333c7036abed6b))
+
+### 🧹 Miscellaneous Chores
+
+* add 'jules' label for issues related to the Google Jules AI agent ([9f9d25f](https://github.com/Alwatr/nanotron/commit/9f9d25fecee21d01f34e10a830982f292a7c8115))
+* add ignore rule for @types/node in dependabot configuration ([1f8821c](https://github.com/Alwatr/nanotron/commit/1f8821c21ae976e0a8fd9c4ae9bb2991f764f01f))
+* add initial configuration and style guide for Gemini behavior ([4fda75c](https://github.com/Alwatr/nanotron/commit/4fda75cb36a2bac01ad9d34cc9cffc70a19886e2))
+* add missing newline in .yarnrc.yml for better readability ([0415725](https://github.com/Alwatr/nanotron/commit/0415725485e20f6ce1aac6a11c6011b9f46a2fd0))
+* add missing reference to "../crypto" in tsconfig.json ([363d070](https://github.com/Alwatr/nanotron/commit/363d070282838ccf73a9fa5905868f6494fa572b))
+* clean up VSCode extensions recommendations by removing unused extensions ([131425c](https://github.com/Alwatr/nanotron/commit/131425c354df6c572a40c6aa94571ce6bfc5e149))
+* fix lerna.json release message ([280199f](https://github.com/Alwatr/nanotron/commit/280199f4ba062dbda6551d8504441d4abe5e29ad))
+* remove changelog header message from lerna.json ([88e2bad](https://github.com/Alwatr/nanotron/commit/88e2badcd39e4cd27857503428c350b8fcd3d999))
+* remove Exir Studio sponsorship logo from multiple README files ([af3fd5d](https://github.com/Alwatr/nanotron/commit/af3fd5dda9b57d0948003db1feb0dc2dad4883d7))
+* remove outdated Copilot instruction file ([9363935](https://github.com/Alwatr/nanotron/commit/9363935d6b4452317cf061afa8a6a58527128539))
+* remove resolutions section and update eslint format script ([e8c6d8d](https://github.com/Alwatr/nanotron/commit/e8c6d8d78b4a72b7814911527a1d78d18ff89dc6))
+* remove specific paths from .eslintignore ([9247cda](https://github.com/Alwatr/nanotron/commit/9247cda87b4ea72f020d05bd0ed233fda3868615))
+* remove unnecessary publish configuration and set private to false in lerna.json ([d225632](https://github.com/Alwatr/nanotron/commit/d225632fac937bbf0faeb6db7eb9796e6ff0f00a))
+* remove unused types from compiler options in tsconfig.json ([2d47851](https://github.com/Alwatr/nanotron/commit/2d47851db94f8c9da50d3b0a3570d02052bfe61a))
+* remove unused types from compiler options in tsconfig.json ([a65a484](https://github.com/Alwatr/nanotron/commit/a65a484cbf96ae4e36a395620b2940e3bcc221c0))
+* remove unused types from compiler options in tsconfig.json ([ad8d30f](https://github.com/Alwatr/nanotron/commit/ad8d30f176c082d22720d3fd8ba1b2e39e7e95c4))
+* standardize formatting in tsconfig.json files by removing trailing commas ([fb9c6b9](https://github.com/Alwatr/nanotron/commit/fb9c6b9648b04b038db212727e8d38761d081a65))
+* standardize quotes for dependency names in dependabot configuration ([d5194b3](https://github.com/Alwatr/nanotron/commit/d5194b328c6d544bec2ec61b8061da5186a643f7))
+* standardize time format in dependabot configuration ([7d6a94c](https://github.com/Alwatr/nanotron/commit/7d6a94c30b1180ec7dd2d9daf5deb6585faad2d2))
+* streamline lerna.json formatting and remove unnecessary lines ([bec5b37](https://github.com/Alwatr/nanotron/commit/bec5b3715f61c96c2d925110819a240d5e549318))
+* update @alwatr/nanolib and @alwatr/nano-build to version 6.1.1 and 6.3.1 respectively ([81b3d5e](https://github.com/Alwatr/nanotron/commit/81b3d5ebf5ecc1242ee0a010631e4d920af9f3dd))
+* update @alwatr/nanolib and related dependencies to version 6.x ([d824f0d](https://github.com/Alwatr/nanotron/commit/d824f0d5b8e008ec758842997a6e2ee6f7d078d5))
+* update cSpell.words list to include additional terms ([edff255](https://github.com/Alwatr/nanotron/commit/edff255ae01dede405f3d91056f669a46129ced6))
+* update dependabot configuration to remove scope inclusion and adjust schedule times ([157112d](https://github.com/Alwatr/nanotron/commit/157112d20881f361ed6626040e9b84f24f966ac9))
+* update dependencies in package.json to latest versions ([20b10f3](https://github.com/Alwatr/nanotron/commit/20b10f3d27d3a59a44239cf8fbdf9ab307f994a0))
+* update file associations and add new words to cSpell dictionary ([72ac848](https://github.com/Alwatr/nanotron/commit/72ac848e3af4fbf5d4a30ea8cd367496ffa18328))
+* update licenses from AGPL-3.0 to MPL-2.0 ([a84513e](https://github.com/Alwatr/nanotron/commit/a84513efbe12b9570c7550c887f2cdfbf67fc82b))
+
+### 🔗 Dependencies update
+
+* **deps:** bump the github-actions group across 1 directory with 5 updates ([d4f0af8](https://github.com/Alwatr/nanotron/commit/d4f0af89b3b4bf3ed4ad9de463ae0de693efd3ad))
+* **deps:** bump the github-actions group with 2 updates ([9eeb76f](https://github.com/Alwatr/nanotron/commit/9eeb76fec59838230d039f89642580ac8a50ee6a))
+* **deps:** update CodeQL and dependency review actions to latest versions ([7272c2b](https://github.com/Alwatr/nanotron/commit/7272c2bb8567d5483fc6a82b71c837b95fd115e9))
+* remove @alwatr/nanolib from dependencies in package.json ([62e6b0d](https://github.com/Alwatr/nanotron/commit/62e6b0d858e10bc0c594fd616e584f51c299bd2c))
+* remove @alwatr/nanolib from dependencies in package.json ([5d5f774](https://github.com/Alwatr/nanotron/commit/5d5f774ffb90b226be5cacd36d78b49a853c124c))
+* replace @alwatr/nanolib with @alwatr/parse-duration in package.json ([b7d3841](https://github.com/Alwatr/nanotron/commit/b7d38412d1bc72c682c13c576640161d8a231ebc))
+* update dependencies in package.json to replace @alwatr/nanolib with @alwatr/logger ([457a9fc](https://github.com/Alwatr/nanotron/commit/457a9fc556e5237d2190fb6f2ef928edc1ced82c))
+* update minizlib version to 3.1.0 in yarn.lock ([a9a3b5e](https://github.com/Alwatr/nanotron/commit/a9a3b5efaaed9e48a3bb15e8dc849ced3cefdb0a))
+* upgrade * ([8aa82b7](https://github.com/Alwatr/nanotron/commit/8aa82b78783a733a2a8193717d61848ce9575c0f))
 
 ## [4.9.4](https://github.com/Alwatr/nanotron/compare/v4.9.3...v4.9.4) (2025-08-23)
 

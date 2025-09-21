@@ -1,10 +1,35 @@
 # Change Log
-# Changelog
-
-All notable changes to this project will be documented in this file.
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [4.10.0](https://github.com/Alwatr/nanotron/compare/v4.9.4...v4.10.0) (2025-09-21)
+
+### 🐛 Bug Fixes
+
+* add import for type helper from '@alwatr/type-helper' ([f774b19](https://github.com/Alwatr/nanotron/commit/f774b191df16c66590da264c7f88b3f700c3f426))
+* add missing commas in HttpMethods and HttpStatusCodes for consistency ([967e397](https://github.com/Alwatr/nanotron/commit/967e397640d641e726fd3562ee4a77e78042ddcd))
+* update type definitions and examples in HttpRequestHeaders for clarity ([2545289](https://github.com/Alwatr/nanotron/commit/25452892cec56df6a4c99762b97720e4ee0f2734))
+
+### 🔨 Code Refactoring
+
+* change access modifiers for method and debugId properties in NanotronUrl ([69dc466](https://github.com/Alwatr/nanotron/commit/69dc466c05dd4f4c302d7a9356129a83b1808beb))
+* replace @alwatr/nanolib with @alwatr/logger and update access modifiers in NanotronApiServer ([4847597](https://github.com/Alwatr/nanotron/commit/48475970e2f6ba282442d1c23c6bf01bace85c1f))
+* update access modifiers for class properties and methods in NanotronServerResponse ([7c8bc33](https://github.com/Alwatr/nanotron/commit/7c8bc33d298a42e495f66b7ef8799aff87056e00))
+* update access modifiers for class properties in NanotronClientRequest ([2aa5926](https://github.com/Alwatr/nanotron/commit/2aa5926889c6ffa2376e1314bc6bcaae067c8668))
+
+### 🧹 Miscellaneous Chores
+
+* remove Exir Studio sponsorship logo from multiple README files ([af3fd5d](https://github.com/Alwatr/nanotron/commit/af3fd5dda9b57d0948003db1feb0dc2dad4883d7))
+* remove unused types from compiler options in tsconfig.json ([ad8d30f](https://github.com/Alwatr/nanotron/commit/ad8d30f176c082d22720d3fd8ba1b2e39e7e95c4))
+* standardize formatting in tsconfig.json files by removing trailing commas ([fb9c6b9](https://github.com/Alwatr/nanotron/commit/fb9c6b9648b04b038db212727e8d38761d081a65))
+* update @alwatr/nanolib and @alwatr/nano-build to version 6.1.1 and 6.3.1 respectively ([81b3d5e](https://github.com/Alwatr/nanotron/commit/81b3d5ebf5ecc1242ee0a010631e4d920af9f3dd))
+* update @alwatr/nanolib and related dependencies to version 6.x ([d824f0d](https://github.com/Alwatr/nanotron/commit/d824f0d5b8e008ec758842997a6e2ee6f7d078d5))
+* update licenses from AGPL-3.0 to MPL-2.0 ([a84513e](https://github.com/Alwatr/nanotron/commit/a84513efbe12b9570c7550c887f2cdfbf67fc82b))
+
+### 🔗 Dependencies update
+
+* update dependencies in package.json to replace @alwatr/nanolib with @alwatr/logger ([457a9fc](https://github.com/Alwatr/nanotron/commit/457a9fc556e5237d2190fb6f2ef928edc1ced82c))
 
 ## [4.9.4](https://github.com/Alwatr/nanotron/compare/v4.9.3...v4.9.4) (2025-08-23)
 

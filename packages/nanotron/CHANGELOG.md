@@ -1,10 +1,30 @@
 # Change Log
-# Changelog
-
-All notable changes to this project will be documented in this file.
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [4.10.0](https://github.com/Alwatr/nanotron/compare/v4.9.4...v4.10.0) (2025-09-21)
+
+### 🐛 Bug Fixes
+
+* update workspace dependency versioning to use wildcard for nanotron-api-server ([0f62667](https://github.com/Alwatr/nanotron/commit/0f62667adfb3d35026ebe143b8f682d128ccfdc1))
+
+### 🔨 Code Refactoring
+
+* remove unused import and development mode tracer from main.ts ([4d316cb](https://github.com/Alwatr/nanotron/commit/4d316cb45d8cb7bec8823acd2426792bfd26824b))
+
+### 🧹 Miscellaneous Chores
+
+* add missing reference to "../crypto" in tsconfig.json ([363d070](https://github.com/Alwatr/nanotron/commit/363d070282838ccf73a9fa5905868f6494fa572b))
+* remove Exir Studio sponsorship logo from multiple README files ([af3fd5d](https://github.com/Alwatr/nanotron/commit/af3fd5dda9b57d0948003db1feb0dc2dad4883d7))
+* standardize formatting in tsconfig.json files by removing trailing commas ([fb9c6b9](https://github.com/Alwatr/nanotron/commit/fb9c6b9648b04b038db212727e8d38761d081a65))
+* update @alwatr/nanolib and @alwatr/nano-build to version 6.1.1 and 6.3.1 respectively ([81b3d5e](https://github.com/Alwatr/nanotron/commit/81b3d5ebf5ecc1242ee0a010631e4d920af9f3dd))
+* update @alwatr/nanolib and related dependencies to version 6.x ([d824f0d](https://github.com/Alwatr/nanotron/commit/d824f0d5b8e008ec758842997a6e2ee6f7d078d5))
+* update licenses from AGPL-3.0 to MPL-2.0 ([a84513e](https://github.com/Alwatr/nanotron/commit/a84513efbe12b9570c7550c887f2cdfbf67fc82b))
+
+### 🔗 Dependencies update
+
+* remove @alwatr/nanolib from dependencies in package.json ([5d5f774](https://github.com/Alwatr/nanotron/commit/5d5f774ffb90b226be5cacd36d78b49a853c124c))
 
 ## [4.9.4](https://github.com/Alwatr/nanotron/compare/v4.9.3...v4.9.4) (2025-08-23)
 

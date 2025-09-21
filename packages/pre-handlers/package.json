@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/pre-handlers",
   "description": "Functions that will run before processing every defined route.",
-  "version": "4.9.4",
+  "version": "4.10.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/pre-handlers/issues",
   "dependencies": {
