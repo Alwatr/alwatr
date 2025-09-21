@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.2](https://github.com/Alwatr/flux/compare/v6.0.1...v6.0.2) (2025-09-21)
+
+### 🔗 Dependencies update
+
+* update @alwatr/yarn-upgrade and [@lerna-lite](https://github.com/lerna-lite) packages to latest versions ([482e57e](https://github.com/Alwatr/flux/commit/482e57e33d1eedfb218eebe7c53e67f78f5f3cbf))
+* update dependencies for @alwatr/nano-build, @alwatr/logger, @alwatr/debounce, and @alwatr/delay ([e7cfed5](https://github.com/Alwatr/flux/commit/e7cfed56bd6a7e7cd402e6f38c415de5737f5b24))
+* upgrade * ([ce63c9d](https://github.com/Alwatr/flux/commit/ce63c9d531c5e406a497651aed552af2fb6349ae))
+
 ## [6.0.1](https://github.com/Alwatr/flux/compare/v6.0.0...v6.0.1) (2025-09-20)
 
 ### ⚠ BREAKING CHANGES
