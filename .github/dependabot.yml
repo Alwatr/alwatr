@@ -57,7 +57,7 @@ updates:
           - version-update:semver-major
 
   - package-ecosystem: docker
-    directory: /packages/nginx
+    directory: /packages/nherit
     schedule:
       interval: weekly
       time: '00:30'
