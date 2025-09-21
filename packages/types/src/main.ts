@@ -1,6 +1,5 @@
-import {packageTracer} from '@alwatr/nanolib';
-
-__dev_mode__: packageTracer.add(__package_name__, __package_version__);
+import type {} from '@alwatr/nano-build';
+import type {} from '@alwatr/type-helper';
 
 // *** Nitrobase File ***
 
