@@ -25,12 +25,12 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
   /**
    * Alwatr nitrobase engine version string.
    */
-  static readonly version = __package_version__;
+  public static readonly version = __package_version__;
 
   /**
    * Alwatr nitrobase engine file format version number.
    */
-  static readonly fileFormatVersion = 3;
+  public static readonly fileFormatVersion = 3;
 
   /**
    * Creates new CollectionReference instance from stat.
@@ -41,7 +41,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * @template TItem The collection item data type.
    * @returns A new collection reference class.
    */
-  static newRefFromData<TItem extends JsonObject>(
+  public static newRefFromData<TItem extends JsonObject>(
     stat: StoreFileId,
     updatedCallback: (from: CollectionReference<TItem>) => void,
     debugDomain?: string,
@@ -76,7 +76,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * @template TItem The collection item data type.
    * @returns A new collection reference class.
    */
-  static newRefFromContext<TItem extends JsonObject>(
+  public static newRefFromContext<TItem extends JsonObject>(
     context: CollectionContext<TItem>,
     updatedCallback: (from: CollectionReference<TItem>) => void,
     debugDomain?: string,
@@ -150,17 +150,17 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
   /**
    * The ID of the collection nitrobase file.
    */
-  readonly id: string;
+  public readonly id: string;
 
   /**
    * The location path of the collection nitrobase file.
    */
-  readonly path: string;
+  public readonly path: string;
 
   /**
    * Indicates whether the collection has unsaved changes.
    */
-  hasUnprocessedChanges_ = false;
+  public hasUnprocessedChanges_ = false;
 
   /**
    * Logger instance for this collection.
@@ -201,14 +201,14 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    *
    * @returns nitrobase schema version
    */
-  get schemaVer(): number {
+  public get schemaVer(): number {
     return this.context__.meta.schemaVer ?? 1;
   }
 
   /**
    * Set nitrobase schema version for migrate
    */
-  set schemaVer(ver: number) {
+  public set schemaVer(ver: number) {
     this.logger__.logMethodArgs?.('set schemaVer', {old: this.context__.meta.schemaVer, new: ver});
     this.context__.meta.schemaVer = ver;
     this.updated__();
@@ -230,7 +230,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * console.log(isFrozen); // Output: false
    * ```
    */
-  get freeze(): boolean {
+  public get freeze(): boolean {
     return this._freeze;
   }
 
@@ -245,7 +245,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * console.log(collectionRef.freeze); // Output: true
    * ```
    */
-  set freeze(value: boolean) {
+  public set freeze(value: boolean) {
     this.logger__.logMethodArgs?.('freeze changed', {value});
     this._freeze = value;
   }
@@ -265,7 +265,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * }
    * ```
    */
-  hasItem(itemId: string | number): boolean {
+  public hasItem(itemId: string | number): boolean {
     const exists = Object.hasOwn(this.context__.data, itemId);
     this.logger__.logMethodFull?.('hasItem', itemId, exists);
     return exists;
@@ -281,7 +281,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * const metadata = collectionRef.getStoreMeta();
    * ```
    */
-  getStoreMeta(): Readonly<StoreFileMeta> {
+  public getStoreMeta(): Readonly<StoreFileMeta> {
     this.logger__.logMethod?.('getStoreMeta');
     return this.context__.meta;
   }
@@ -311,7 +311,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * const itemMeta = collectionRef.getItemMeta('item1');
    * ```
    */
-  getItemMeta(itemId: string | number): Readonly<CollectionItemMeta> {
+  public getItemMeta(itemId: string | number): Readonly<CollectionItemMeta> {
     const meta = this.item__(itemId).meta;
     this.logger__.logMethodFull?.('getItemMeta', itemId, meta);
     return meta;
@@ -328,7 +328,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * const itemData = collectionRef.getItemData('item1');
    * ```
    */
-  getItemData(itemId: string | number): TItem {
+  public getItemData(itemId: string | number): TItem {
     this.logger__.logMethodArgs?.('getItemData', itemId);
     return this.item__(itemId).data;
   }
@@ -346,7 +346,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * collectionRef.getItemContext_('item1')?.data.name = 'test2';
    * ```
    */
-  getItemContext_(itemId: string | number): CollectionItem<TItem> | undefined {
+  public getItemContext_(itemId: string | number): CollectionItem<TItem> | undefined {
     this.logger__.logMethodArgs?.('getItemContext_', itemId);
     return this.context__.data[itemId];
   }
@@ -363,7 +363,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * collectionRef.addItem('item1', { key: 'value' });
    * ```
    */
-  addItem(itemId: string | number, data: TItem): void {
+  public addItem(itemId: string | number, data: TItem): void {
     this.logger__.logMethodArgs?.('addItem', {itemId, data});
     if (this.hasItem(itemId)) {
       this.logger__.accident('addItem', 'collection_item_exist', {itemId});
@@ -396,7 +396,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * const newId = collectionRef.appendItem({ key: 'value' });
    * ```
    */
-  appendItem(data: TItem): string | number {
+  public appendItem(data: TItem): string | number {
     this.logger__.logMethodArgs?.('appendItem', data);
     const id = this.nextAutoIncrementId__();
     this.addItem(id, data);
@@ -414,7 +414,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * collectionRef.hasItem('item1'); // Output: false
    * ```
    */
-  removeItem(itemId: string | number): void {
+  public removeItem(itemId: string | number): void {
     this.logger__.logMethodArgs?.('removeItem', itemId);
     delete this.context__.data[itemId];
     this.updated__();
@@ -431,7 +431,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * collectionRef.replaceItemData('item1', { a: 1, b: 2, c: 3 });
    * ```
    */
-  replaceItemData(itemId: string | number, data: TItem): void {
+  public replaceItemData(itemId: string | number, data: TItem): void {
     this.logger__.logMethodArgs?.('replaceItemData', {itemId, data});
     (this.item__(itemId).data as unknown) = data;
     this.updated__(itemId);
@@ -448,7 +448,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * collectionRef.mergeItemData(itemId, partialUpdate);
    * ```
    */
-  mergeItemData(itemId: string | number, data: Partial<TItem>): void {
+  public mergeItemData(itemId: string | number, data: Partial<TItem>): void {
     this.logger__.logMethodArgs?.('mergeItemData', {itemId, data});
     Object.assign(this.item__(itemId).data, data);
     this.updated__(itemId);
@@ -463,7 +463,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * collectionRef.save();
    * ```
    */
-  save(itemId: string | number | null): void {
+  public save(itemId: string | number | null): void {
     this.logger__.logMethod?.('save');
     this.updated__(itemId, false);
   }
@@ -476,7 +476,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * collectionRef.saveImmediate();
    * ```
    */
-  saveImmediate(itemId: string | number | null): void {
+  public saveImmediate(itemId: string | number | null): void {
     this.logger__.logMethod?.('saveImmediate');
     this.updated__(itemId, true);
   }
@@ -491,7 +491,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * const ids = collectionRef.keys();
    * ```
    */
-  keys(): string[] {
+  public keys(): string[] {
     this.logger__.logMethod?.('keys');
     return Object.keys(this.context__.data);
   }
@@ -508,7 +508,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * console.log('data: %o', items[0].data);
    * ```
    */
-  values(): CollectionItem<TItem>[] {
+  public values(): CollectionItem<TItem>[] {
     this.logger__.logMethod?.('values');
     return Object.values(this.context__.data);
   }
@@ -525,7 +525,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * }
    * ```
    */
-  *ids(): Generator<string, void, void> {
+  public *ids(): Generator<string, void, void> {
     this.logger__.logMethod?.('ids');
     for (const id in this.context__.data) {
       yield id;
@@ -543,7 +543,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    *  console.log(item.data);
    * }
    */
-  *items(): Generator<CollectionItem<TItem>, void, void> {
+  public *items(): Generator<CollectionItem<TItem>, void, void> {
     this.logger__.logMethod?.('items');
     for (const id in this.context__.data) {
       yield this.context__.data[id];
@@ -560,12 +560,12 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * const context = collectionRef.getFullContext_();
    * ```
    */
-  getFullContext_(): Readonly<CollectionContext<TItem>> {
+  public getFullContext_(): Readonly<CollectionContext<TItem>> {
     this.logger__.logMethod?.('getFullContext_');
     return this.context__;
   }
 
-  updateDelayed_ = false;
+  public updateDelayed_ = false;
 
   /**
    * Update the document metadata and invoke the updated callback.
@@ -585,7 +585,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
     this.updateDelayed_ = true;
 
     if (immediate === true || this.context__.meta.changeDebounce === undefined) {
-      await delay.immediate();
+      await delay.nextMacrotask();
     }
     else {
       await delay.by(this.context__.meta.changeDebounce);
@@ -645,7 +645,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * const colExtraMeta = collectionRef.getExtraMeta();
    * ```
    */
-  getExtraMeta<T extends JsonObject>(): T {
+  public getExtraMeta<T extends JsonObject>(): T {
     this.logger__.logMethod?.('getExtraMeta');
     return this.context__.meta.extra as T;
   }
@@ -660,7 +660,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * collectionRef.replaceExtraMeta({ a: 1, b: 2, c: 3 });
    * ```
    */
-  replaceExtraMeta<T extends JsonObject>(extraMeta: T): void {
+  public replaceExtraMeta<T extends JsonObject>(extraMeta: T): void {
     this.logger__.logMethodArgs?.('replaceExtraMeta', extraMeta);
     this.context__.meta.extra = extraMeta;
     this.updated__();
@@ -676,7 +676,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
    * collectionRef.mergeExtraMeta({ c: 4 });
    * ```
    */
-  mergeExtraMeta<T extends JsonObject>(extraMeta: Partial<T>): void {
+  public mergeExtraMeta<T extends JsonObject>(extraMeta: Partial<T>): void {
     this.logger__.logMethodArgs?.('mergeExtraMeta', extraMeta);
     Object.assign(this.context__.meta.extra, extraMeta);
     this.updated__();

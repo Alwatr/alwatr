@@ -15,12 +15,12 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
   /**
    * Alwatr nitrobase engine version string.
    */
-  static readonly version = __package_version__;
+  public static readonly version = __package_version__;
 
   /**
    * Alwatr nitrobase engine file format version number.
    */
-  static readonly fileFormatVersion = 3;
+  public static readonly fileFormatVersion = 3;
 
   /**
    * Creates new DocumentReference instance from stat and initial data.
@@ -31,7 +31,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * @template TDoc The document data type.
    * @returns A new document reference class.
    */
-  static newRefFromData<TDoc extends JsonObject>(
+  public static newRefFromData<TDoc extends JsonObject>(
     statId: StoreFileId,
     data: TDoc,
     updatedCallback: (from: DocumentReference<TDoc>) => unknown,
@@ -66,7 +66,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * @template TDoc The document data type.
    * @returns A new document reference class.
    */
-  static newRefFromContext<TDoc extends JsonObject>(
+  public static newRefFromContext<TDoc extends JsonObject>(
     context: DocumentContext<TDoc>,
     updatedCallback: (from: DocumentReference<TDoc>) => unknown,
     debugDomain?: string,
@@ -140,17 +140,17 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
   /**
    * The ID of the document nitrobase file.
    */
-  readonly id: string;
+  public readonly id: string;
 
   /**
    * The location path of the document nitrobase file.
    */
-  readonly path: string;
+  public readonly path: string;
 
   /**
    * Indicates whether the document has unsaved changes.
    */
-  hasUnprocessedChanges_ = false;
+  public hasUnprocessedChanges_ = false;
 
   /**
    * Logger instance for this document.
@@ -186,14 +186,14 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    *
    * @returns nitrobase schema version
    */
-  get schemaVer(): number {
+  public get schemaVer(): number {
     return this.context__.meta.schemaVer ?? 1;
   }
 
   /**
    * Set nitrobase schema version for migrate
    */
-  set schemaVer(ver: number) {
+  public set schemaVer(ver: number) {
     this.logger__.logMethodArgs?.('set schemaVer', {old: this.context__.meta.schemaVer, new: ver});
     this.context__.meta.schemaVer = ver;
     this.updated__();
@@ -215,7 +215,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * console.log(isFrozen); // Output: false
    * ```
    */
-  get freeze(): boolean {
+  public get freeze(): boolean {
     return this._freeze;
   }
 
@@ -230,7 +230,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * console.log(documentRef.freeze); // Output: true
    * ```
    */
-  set freeze(value: boolean) {
+  public set freeze(value: boolean) {
     this.logger__.logMethodArgs?.('freeze changed', {value});
     this._freeze = value;
   }
@@ -245,7 +245,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * const documentData = documentRef.getData();
    * ```
    */
-  getData(): TDoc {
+  public getData(): TDoc {
     this.logger__.logMethod?.('getData');
     return this.context__.data;
   }
@@ -260,7 +260,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * const documentMeta = documentRef.getStoreMeta();
    * ```
    */
-  getStoreMeta(): Readonly<StoreFileMeta> {
+  public getStoreMeta(): Readonly<StoreFileMeta> {
     this.logger__.logMethod?.('getStoreMeta');
     return this.context__.meta;
   }
@@ -275,7 +275,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * documentRef.replaceData({ a: 1, b: 2, c: 3 });
    * ```
    */
-  replaceData(data: TDoc): void {
+  public replaceData(data: TDoc): void {
     this.logger__.logMethodArgs?.('replaceData', data);
     (this.context__.data as unknown) = data;
     this.updated__();
@@ -291,7 +291,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * documentRef.mergeData({ c: 4 });
    * ```
    */
-  mergeData(data: Partial<TDoc>): void {
+  public mergeData(data: Partial<TDoc>): void {
     this.logger__.logMethodArgs?.('mergeData', data);
     Object.assign(this.context__.data, data);
     this.updated__();
@@ -306,7 +306,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * documentRef.save();
    * ```
    */
-  save(): void {
+  public save(): void {
     this.logger__.logMethod?.('save');
     this.updated__();
   }
@@ -319,7 +319,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * documentRef.saveImmediate();
    * ```
    */
-  saveImmediate(): void {
+  public saveImmediate(): void {
     this.logger__.logMethod?.('saveImmediate');
     this.updated__(/* immediate: */ true);
   }
@@ -334,12 +334,12 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * const context = documentRef.getFullContext_();
    * ```
    */
-  getFullContext_(): Readonly<DocumentContext<TDoc>> {
+  public getFullContext_(): Readonly<DocumentContext<TDoc>> {
     this.logger__.logMethod?.('getFullContext_');
     return this.context__;
   }
 
-  updateDelayed_ = false;
+  public updateDelayed_ = false;
 
   /**
    * Update the document metadata and invoke the updated callback.
@@ -356,7 +356,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
     this.updateDelayed_ = true;
 
     if (immediate === true || this.context__.meta.changeDebounce === undefined) {
-      await delay.immediate();
+      await delay.nextMacrotask();
     }
     else {
       await delay.by(this.context__.meta.changeDebounce);
@@ -390,7 +390,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * const colExtraMeta = documentRef.getExtraMeta();
    * ```
    */
-  getExtraMeta<T extends JsonObject>(): T {
+  public getExtraMeta<T extends JsonObject>(): T {
     this.logger__.logMethod?.('getExtraMeta');
     return this.context__.meta.extra as T;
   }
@@ -405,7 +405,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * documentRef.replaceExtraMeta({ a: 1, b: 2, c: 3 });
    * ```
    */
-  replaceExtraMeta<T extends JsonObject>(extraMeta: T): void {
+  public replaceExtraMeta<T extends JsonObject>(extraMeta: T): void {
     this.logger__.logMethodArgs?.('replaceExtraMeta', extraMeta);
     this.context__.meta.extra = extraMeta;
     this.updated__();
@@ -421,7 +421,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
    * documentRef.mergeExtraMeta({ c: 4 });
    * ```
    */
-  mergeExtraMeta<T extends JsonObject>(extraMeta: Partial<T>): void {
+  public mergeExtraMeta<T extends JsonObject>(extraMeta: Partial<T>): void {
     this.logger__.logMethodArgs?.('mergeExtraMeta', extraMeta);
     Object.assign(this.context__.meta.extra, extraMeta);
     this.updated__();
