@@ -30,8 +30,8 @@ jobs:
       matrix:
         include:
           - name: nitrobase-nginx
-            path: ./packages/nginx
-            context: ./packages/nginx
+            path: ./packages/nherit
+            context: ./packages/nherit
 
     permissions:
       contents: read
@@ -108,8 +108,8 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: 🧪 Nginx config test
-        if: ${{ steps.file_change.outputs.container_folder != 'false' && contains(matrix.name, 'nginx') }}
+      - name: 🧪 Nherit config test
+        if: ${{ steps.file_change.outputs.container_folder != 'false' && contains(matrix.name, 'nherit') }}
         run: |
           echo "Running tests for ${{matrix.name}}"
           docker run --rm -e TEST_MODE=1 ${{env.USER}}/${{matrix.name}}:test /etc/nginx/entrypoint.sh nginx -T -c /etc/nginx/nginx.conf
