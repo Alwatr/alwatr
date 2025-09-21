@@ -1,8 +1,8 @@
 import {dirname, resolve} from 'node:path';
 
-import {createLogger} from '@alwatr/nanolib';
-import {existsSync, makeEmptyFile} from '@alwatr/nanolib/node-fs';
+import {createLogger} from '@alwatr/logger';
 import {Region, type AlwatrAuth, type StoreFileId, type StoreFileMeta} from '@alwatr/nitrobase-types';
+import {existsSync, makeEmptyFile} from '@alwatr/node-fs';
 
 import {logger} from './logger.js';
 
@@ -21,7 +21,6 @@ export type NewUser<TUser extends JsonObject> = AlwatrAuth & {
  * Nitrobase User Management Interface.
  */
 interface NitrobaseUserManagementInterface<TUser extends JsonObject> {
-
   /**
    * Create a new user.
    * @param user The new user data.
@@ -57,7 +56,6 @@ interface NitrobaseUserManagementInterface<TUser extends JsonObject> {
    */
   verifyUserToken(userId: string, token: string): Promise<boolean>;
 
-
   /**
    * Save user data to storage.
    * @param userId The user ID.
@@ -89,11 +87,10 @@ interface NitrobaseUserManagementInterface<TUser extends JsonObject> {
  * Manages user data and authentication.
  */
 export class NitrobaseUserManagement<TUser extends JsonObject> implements NitrobaseUserManagementInterface<TUser> {
-
   /**
    * Default Nitrobase store IDs used by this class.
    */
-  static readonly nitrobaseIds = {
+  public static readonly nitrobaseIds = {
     userList: {
       name: 'user-list',
       region: Region.Managers,
@@ -110,7 +107,7 @@ export class NitrobaseUserManagement<TUser extends JsonObject> implements Nitrob
    * Initialize the user management module.
    * @param nitrobase The Nitrobase instance.
    */
-  static async initialize(nitrobase: AlwatrNitrobase): Promise<void> {
+  public static async initialize(nitrobase: AlwatrNitrobase): Promise<void> {
     logger.logMethod?.('NitrobaseUserManagement.initialize');
     nitrobase.newCollection(this.nitrobaseIds.userList);
   }
@@ -123,18 +120,14 @@ export class NitrobaseUserManagement<TUser extends JsonObject> implements Nitrob
    * Create a new instance of NitrobaseUserManagement.
    * @param nitrobase_ The Nitrobase instance.
    */
-  constructor(
-    protected readonly nitrobase_: AlwatrNitrobase,
-  ) {
+  constructor(protected readonly nitrobase_: AlwatrNitrobase) {
     this.logger_.logMethod?.('constructor');
     this.userListCollection_ = this.nitrobase_.openCollection(NitrobaseUserManagement.nitrobaseIds.userList);
   }
 
-
-
   // Implementation of NitrobaseUserManagementInterface methods with JSDoc comments
 
-  async newUser(user: NewUser<TUser>): Promise<void> {
+  public async newUser(user: NewUser<TUser>): Promise<void> {
     this.logger_.logMethodArgs?.('newUser', user);
 
     (await this.userListCollection_).addItem(user.userId, {});
@@ -144,49 +137,49 @@ export class NitrobaseUserManagement<TUser extends JsonObject> implements Nitrob
     await this.makeTokenFile_(user.userId, user.userToken, user.isManager);
   }
 
-  async hasUser(userId: string): Promise<boolean> {
+  public async hasUser(userId: string): Promise<boolean> {
     const userExists = (await this.userListCollection_).hasItem(userId);
     this.logger_.logMethodFull?.('hasUser', {userId}, userExists);
     return userExists;
   }
 
-  async getUserData(userId: string): Promise<TUser> {
+  public async getUserData(userId: string): Promise<TUser> {
     this.logger_.logMethodArgs?.('getUserData', userId);
     const userInfoDocument = await this.openUserInfoDocument_(userId);
     return userInfoDocument.getData();
   }
 
-  async getUserMeta(userId: string): Promise<Readonly<StoreFileMeta>> {
+  public async getUserMeta(userId: string): Promise<Readonly<StoreFileMeta>> {
     this.logger_.logMethodArgs?.('getUserMeta', userId);
     const document = await this.openUserInfoDocument_(userId);
     return document.getStoreMeta();
   }
 
-  save(userId: string): void {
+  public save(userId: string): void {
     this.logger_.logMethodArgs?.('save', userId);
     this.openUserInfoDocument_(userId).then((document) => {
       document.save();
     });
   }
 
-  saveImmediate(userId: string): void {
+  public saveImmediate(userId: string): void {
     this.logger_.logMethodArgs?.('saveImmediate', userId);
     this.openUserInfoDocument_(userId).then((document) => {
       document.saveImmediate();
     });
   }
 
-  async userIds(): Promise<Generator<string, void, void>> {
+  public async userIds(): Promise<Generator<string, void, void>> {
     return (await this.userListCollection_).ids();
   }
 
-  async verifyUserToken(userId: string, token: string): Promise<boolean> {
+  public async verifyUserToken(userId: string, token: string): Promise<boolean> {
     const tokenFileExist = existsSync(await this.getUserTokenFilePath_(userId, token));
     this.logger_.logMethodFull?.('verifyUserToken', {userId, token: token.slice(0, 12) + '...'}, tokenFileExist);
     return tokenFileExist;
   }
 
-  async getUserDirectory(userId: string): Promise<string> {
+  public async getUserDirectory(userId: string): Promise<string> {
     const userInfoDocument = await this.openUserInfoDocument_(userId);
     const userDirectoryPath = dirname(resolve(this.nitrobase_.config.rootPath, userInfoDocument.path));
     this.logger_.logMethodFull?.('getUserDirectory', {userId}, userDirectoryPath);

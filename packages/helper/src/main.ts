@@ -1,7 +1,5 @@
-import {flatString, packageTracer} from '@alwatr/nanolib';
+import {flatString} from '@alwatr/flat-string';
 import {StoreFileExtension, type StoreFileId, type StoreFileStat} from '@alwatr/nitrobase-types';
-
-__dev_mode__: packageTracer.add(__package_name__, __package_version__);
 
 /**
  * Convert StoreFileId to a string ID.

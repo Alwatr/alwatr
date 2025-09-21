@@ -83,7 +83,3 @@ The following companies, organizations, and individuals support Nitrobase ongoin
 ### Contributing
 
 Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
-
-### License
-
-This project is licensed under the [AGPL-3.0 License](LICENSE).

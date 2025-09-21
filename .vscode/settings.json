@@ -21,8 +21,7 @@
   "files.associations": {
     "*.ajs": "json",
     "*.ajs.bk": "json",
-    "*.conf.template": "nginx",
-    "*.njk": "html"
+    "*.conf.template": "nginx"
   },
   "files.exclude": {
     // "**/*.map": true,
@@ -54,25 +53,33 @@
   "cSpell.words": [
     "Alwatr",
     "conventionalcommits",
+    "cyrb53",
+    "Debouncer",
     "Deno",
     "flatomise",
+    "HPKP",
+    "HSTS",
     "Jsonifiable",
+    "Jsonify",
+    "Macrotask",
+    "Microtask",
     "Mihandoost",
     "nanolib",
     "nitrobase",
+    "nanoservice",
     "nosql",
+    "nanotron",
+    "nosniff",
     "outdir",
     "outfile",
+    "permessage",
     "pmpa",
+    "SAMEORIGIN",
+    "serviceworker",
+    "Strigifyable",
+    "superchat",
+    "syncpack",
     "tsbuildinfo",
     "typeof"
-  ],
-  "github.copilot.chat.codeGeneration.instructions": [
-    {
-      "file": ".vscode/copilot-instruction.md"
-    }
-  ],
-  "[nginx]": {
-    "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
-  }
+  ]
 }

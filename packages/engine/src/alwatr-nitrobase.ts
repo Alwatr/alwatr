@@ -1,6 +1,5 @@
-import {delay} from '@alwatr/nanolib';
-import {exitHook} from '@alwatr/nanolib/exit-hook';
-import {existsSync, readJson, resolve, unlink, writeJson} from '@alwatr/nanolib/node-fs';
+import {delay} from '@alwatr/delay';
+import {exitHook} from '@alwatr/exit-hook';
 import {getStoreId, getStorePath} from '@alwatr/nitrobase-helper';
 import {CollectionReference, DocumentReference} from '@alwatr/nitrobase-reference';
 import {
@@ -14,6 +13,7 @@ import {
   type StoreFileId,
   type CollectionItem,
 } from '@alwatr/nitrobase-types';
+import {existsSync, readJson, resolve, unlink, writeJson} from '@alwatr/node-fs';
 
 import {logger} from './logger.js';
 
@@ -55,7 +55,7 @@ export class AlwatrNitrobase {
    *
    * Use for nitrobase file format version for check compatibility.
    */
-  static readonly version = __package_version__;
+  public static readonly version = __package_version__;
 
   /**
    * The root nitrobase file stat.
@@ -91,7 +91,7 @@ export class AlwatrNitrobase {
    * });
    * ```
    */
-  constructor(readonly config: AlwatrNitrobaseConfig) {
+  constructor(public readonly config: AlwatrNitrobaseConfig) {
     this.storeChanged_ = this.storeChanged_.bind(this);
 
     logger.logMethodArgs?.('new', config);
@@ -112,7 +112,7 @@ export class AlwatrNitrobase {
    * }
    * ```
    */
-  hasStore(storeId: StoreFileId): boolean {
+  public hasStore(storeId: StoreFileId): boolean {
     const id_ = getStoreId(storeId);
     const exists = this.rootDb__.hasItem(id_);
     logger.logMethodFull?.('hasStore', id_, exists);
@@ -141,9 +141,9 @@ export class AlwatrNitrobase {
    * );
    * ```
    */
-  newDocument<TDoc extends JsonObject = JsonObject>(stat: Omit<StoreFileStat, 'type'>, data: TDoc): void {
+  public newDocument<TDoc extends JsonObject = JsonObject>(stat: Omit<StoreFileStat, 'type'>, data: TDoc): void {
     logger.logMethodArgs?.('newDocument', stat);
-    return this.newStoreFile_(
+    return this.newStoreFile__(
       {
         ...stat,
         type: StoreFileType.Document,
@@ -168,14 +168,12 @@ export class AlwatrNitrobase {
    * );
    * ```
    */
-  newCollection(stat: Omit<StoreFileStat, 'type'>): void {
+  public newCollection(stat: Omit<StoreFileStat, 'type'>): void {
     logger.logMethodArgs?.('newCollection', stat);
-    return this.newStoreFile_(
-      {
-        ...stat,
-        type: StoreFileType.Collection,
-      }
-    );
+    return this.newStoreFile__({
+      ...stat,
+      type: StoreFileType.Collection,
+    });
   }
 
   /**
@@ -184,18 +182,15 @@ export class AlwatrNitrobase {
    * @param stat nitrobase file stat
    * @param data initial data for the document
    */
-  newStoreFile_(
-    stat: StoreFileStat,
-    data?: DictionaryOpt,
-  ): void {
-    logger.logMethodArgs?.('newStoreFile_', stat);
+  private newStoreFile__(stat: StoreFileStat, data?: DictionaryOpt): void {
+    logger.logMethodArgs?.('newStoreFile__', stat);
 
     (stat.changeDebounce as number | undefined) ??= this.config.defaultChangeDebounce;
 
     let fileStoreRef: DocumentReference | CollectionReference;
     if (stat.type === StoreFileType.Document) {
       if (data === undefined) {
-        logger.accident('newStoreFile_', 'document_data_required', stat);
+        logger.accident('newStoreFile__', 'document_data_required', stat);
         throw new Error('document_data_required', {cause: stat});
       }
       fileStoreRef = DocumentReference.newRefFromData(stat, data, this.storeChanged_);
@@ -204,12 +199,12 @@ export class AlwatrNitrobase {
       fileStoreRef = CollectionReference.newRefFromData(stat, this.storeChanged_);
     }
     else {
-      logger.accident('newStoreFile_', 'store_file_type_not_supported', stat);
+      logger.accident('newStoreFile__', 'store_file_type_not_supported', stat);
       throw new Error('store_file_type_not_supported', {cause: stat});
     }
 
     if (this.rootDb__.hasItem(fileStoreRef.id)) {
-      logger.accident('newStoreFile_', 'store_file_already_defined', stat);
+      logger.accident('newStoreFile__', 'store_file_already_defined', stat);
       throw new Error('store_file_already_defined', {cause: stat});
     }
 
@@ -237,7 +232,7 @@ export class AlwatrNitrobase {
    * userProfile.update({name: 'ali'});
    * ```
    */
-  async openDocument<TDoc extends JsonObject>(documentId: StoreFileId): Promise<DocumentReference<TDoc>> {
+  public async openDocument<TDoc extends JsonObject>(documentId: StoreFileId): Promise<DocumentReference<TDoc>> {
     const id = getStoreId(documentId);
     logger.logMethodArgs?.('openDocument', id);
 
@@ -285,7 +280,7 @@ export class AlwatrNitrobase {
    * orders.append({name: 'order 1'});
    * ```
    */
-  async openCollection<TItem extends JsonObject>(collectionId: StoreFileId): Promise<CollectionReference<TItem>> {
+  public async openCollection<TItem extends JsonObject>(collectionId: StoreFileId): Promise<CollectionReference<TItem>> {
     const id = getStoreId(collectionId);
     logger.logMethodArgs?.('openCollection', id);
 
@@ -328,7 +323,7 @@ export class AlwatrNitrobase {
    * alwatrStore.hasStore({name: 'user-list', region: Region.Secret}); // true
    * ```
    */
-  unloadStore(storeId: StoreFileId): void {
+  public unloadStore(storeId: StoreFileId): void {
     const id_ = getStoreId(storeId);
     logger.logMethodArgs?.('unloadStore', id_);
     const ref = this.cacheReferences__[id_];
@@ -354,7 +349,7 @@ export class AlwatrNitrobase {
    * alwatrStore.hasStore({name: 'user-list', region: Region.Secret}); // false
    * ```
    */
-  async removeStore(storeId: StoreFileId): Promise<void> {
+  public async removeStore(storeId: StoreFileId): Promise<void> {
     const id_ = getStoreId(storeId);
     logger.logMethodArgs?.('removeStore', id_);
     if (!this.rootDb__.hasItem(id_)) {
@@ -389,7 +384,7 @@ export class AlwatrNitrobase {
    * await alwatrStore.saveAll();
    * ```
    */
-  async saveAll(): Promise<void> {
+  public async saveAll(): Promise<void> {
     logger.logMethod?.('saveAll');
     for (const ref of Object.values(this.cacheReferences__)) {
       if (ref.hasUnprocessedChanges_ === true && ref.freeze !== true) {
@@ -495,7 +490,7 @@ export class AlwatrNitrobase {
    *   console.log(nitrobase.meta.id, nitrobase.data);
    * }
    */
-  getStoreList(): CollectionItem<Omit<StoreFileStat, 'schemaVer'>>[] {
+  public getStoreList(): CollectionItem<Omit<StoreFileStat, 'schemaVer'>>[] {
     logger.logMethod?.('getStoreList');
     return this.rootDb__.values();
   }
