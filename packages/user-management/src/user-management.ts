@@ -1,8 +1,8 @@
 import {dirname, resolve} from 'node:path';
 
-import {createLogger} from '@alwatr/nanolib';
-import {existsSync, makeEmptyFile} from '@alwatr/nanolib/node-fs';
+import {createLogger} from '@alwatr/logger';
 import {Region, type AlwatrAuth, type StoreFileId, type StoreFileMeta} from '@alwatr/nitrobase-types';
+import {existsSync, makeEmptyFile} from '@alwatr/node-fs';
 
 import {logger} from './logger.js';
 
@@ -21,7 +21,6 @@ export type NewUser<TUser extends JsonObject> = AlwatrAuth & {
  * Nitrobase User Management Interface.
  */
 interface NitrobaseUserManagementInterface<TUser extends JsonObject> {
-
   /**
    * Create a new user.
    * @param user The new user data.
@@ -57,7 +56,6 @@ interface NitrobaseUserManagementInterface<TUser extends JsonObject> {
    */
   verifyUserToken(userId: string, token: string): Promise<boolean>;
 
-
   /**
    * Save user data to storage.
    * @param userId The user ID.
@@ -89,7 +87,6 @@ interface NitrobaseUserManagementInterface<TUser extends JsonObject> {
  * Manages user data and authentication.
  */
 export class NitrobaseUserManagement<TUser extends JsonObject> implements NitrobaseUserManagementInterface<TUser> {
-
   /**
    * Default Nitrobase store IDs used by this class.
    */
@@ -123,14 +120,10 @@ export class NitrobaseUserManagement<TUser extends JsonObject> implements Nitrob
    * Create a new instance of NitrobaseUserManagement.
    * @param nitrobase_ The Nitrobase instance.
    */
-  constructor(
-    protected readonly nitrobase_: AlwatrNitrobase,
-  ) {
+  constructor(protected readonly nitrobase_: AlwatrNitrobase) {
     this.logger_.logMethod?.('constructor');
     this.userListCollection_ = this.nitrobase_.openCollection(NitrobaseUserManagement.nitrobaseIds.userList);
   }
-
-
 
   // Implementation of NitrobaseUserManagementInterface methods with JSDoc comments
 
