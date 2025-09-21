@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.10.1](https://github.com/Alwatr/nanotron/compare/v4.10.0...v4.10.1) (2025-09-21)
+
+### 🧹 Miscellaneous Chores
+
+* add "sideEffects": false to package.json files for better tree-shaking ([2aae07b](https://github.com/Alwatr/nanotron/commit/2aae07b0e1757b6035ea0ca8c1b0eda64a13dfcc))
+* remove empty line before contributing section in README ([59236cc](https://github.com/Alwatr/nanotron/commit/59236cc1a5445c16f124c49651f8a6f89166a16b))
+
 ## [4.10.0](https://github.com/Alwatr/nanotron/compare/v4.9.4...v4.10.0) (2025-09-21)
 
 ### 🐛 Bug Fixes

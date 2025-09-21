@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/nanotron-api-server",
   "description": "Nanotron: Your Lightweight, High-Performance Micro/Nano Service Framework. Nanotron is designed for building blazingly fast and efficient microservices and APIs. Its minimalist approach and focus on performance make it ideal for resource-constrained environments and scenarios where every millisecond counts.",
-  "version": "4.10.0",
+  "version": "4.10.1",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanotron/issues",
   "dependencies": {
