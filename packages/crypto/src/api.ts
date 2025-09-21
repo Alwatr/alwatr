@@ -1,5 +1,3 @@
-import {packageTracer, type Duration} from '@alwatr/nanolib';
-
 import {AlwatrHashGenerator} from './hash.js';
 import {
   deviceIdGeneratorRecommendedConfig,
@@ -9,7 +7,7 @@ import {
 } from './pre-config.js';
 import {AlwatrTokenGenerator, type TokenValidity} from './token.js';
 
-__dev_mode__:  packageTracer.add(__package_name__, __package_version__);
+import type {Duration} from '@alwatr/nanolib';
 
 /**
  * Configuration options for the CryptoFactory.
@@ -59,7 +57,7 @@ export class AlwatrCryptoFactory {
    * }
    * ```
    */
-  generateUserId(): string {
+  public generateUserId(): string {
     return this._generators.userId.generateRandomSelfValidate();
   }
 
@@ -74,7 +72,7 @@ export class AlwatrCryptoFactory {
    * }
    * ```
    */
-  verifyUserId(userId: string): boolean {
+  public verifyUserId(userId: string): boolean {
     return this._generators.userId.verifySelfValidate(userId);
   }
 
@@ -87,7 +85,7 @@ export class AlwatrCryptoFactory {
    * const userToken = cryptoFactory.generateToken([user.id, user.lpe]);
    * ```
    */
-  generateToken(uniquelyList: (string | number)[]): string {
+  public generateToken(uniquelyList: (string | number)[]): string {
     return this._generators.token.generate(uniquelyList.join());
   }
 
@@ -103,7 +101,7 @@ export class AlwatrCryptoFactory {
    * }
    * ```
    */
-  verifyToken(uniquelyList: (string | number)[], token: string): TokenValidity {
+  public verifyToken(uniquelyList: (string | number)[], token: string): TokenValidity {
     return this._generators.token.verify(uniquelyList.join(), token);
   }
 
@@ -118,7 +116,7 @@ export class AlwatrCryptoFactory {
    * }
    * ```
    */
-  generateSecret(): string {
+  public generateSecret(): string {
     return this._generators.secret.generateRandomSelfValidate();
   }
 
@@ -133,7 +131,7 @@ export class AlwatrCryptoFactory {
    * }
    * ```
    */
-  verifySecret(secret: string): boolean {
+  public verifySecret(secret: string): boolean {
     return this._generators.secret.verifySelfValidate(secret);
   }
 
@@ -145,7 +143,7 @@ export class AlwatrCryptoFactory {
    * const deviceId = deviceFactory.generateDeviceId();
    * ```
    */
-  generateDeviceId(): string {
+  public generateDeviceId(): string {
     return this._generators.deviceId.generateRandomSelfValidate();
   }
 
@@ -164,7 +162,7 @@ export class AlwatrCryptoFactory {
    * }
    * ```
    */
-  verifyDeviceId(deviceId: string): boolean {
+  public verifyDeviceId(deviceId: string): boolean {
     return this._generators.deviceId.verifySelfValidate(deviceId);
   }
 }
