@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.10.0](https://github.com/Alwatr/nitrobase/compare/v7.9.0...v7.10.0) (2025-09-21)
+
+### 🐛 Bug Fixes
+
+* add "sideEffects": false to package.json files for better tree-shaking ([cb6f75b](https://github.com/Alwatr/nitrobase/commit/cb6f75b86eb7dba6812aaad5136fcd867e885562))
+* add missing dependencies for delay and logger modules ([514ccbc](https://github.com/Alwatr/nitrobase/commit/514ccbc64a0d7165080ec4ddc5ea90bc04648425))
+* add type imports for nano-build and type-helper in logger files ([6ca3627](https://github.com/Alwatr/nitrobase/commit/6ca362761c0d30a2813369bda49c927960c787f8))
+* remove unused packageTracer import from logger.ts ([44690db](https://github.com/Alwatr/nitrobase/commit/44690dbc6628f65b0ac91c9d96c09beb1c4f2d34))
+* update imports for delay and logger modules ([892a47d](https://github.com/Alwatr/nitrobase/commit/892a47d66611a44078da7319b52b04385f9d0c1e))
+* update imports for logger and delay modules ([615f596](https://github.com/Alwatr/nitrobase/commit/615f596a883714638c469cc1e783edd5da719a7d))
+
+### 🔨 Code Refactoring
+
+* update access modifiers to public for class properties and methods in nitrobase and user management ([a988d63](https://github.com/Alwatr/nitrobase/commit/a988d63b61828f6ce360e7179cbaccfa19dc1ae2))
+
+### 🧹 Miscellaneous Chores
+
+* remove Exir Studio sponsorship logo from multiple README files ([506459f](https://github.com/Alwatr/nitrobase/commit/506459fea7d29b97e478da562590dd202ce7e833))
+* remove unused types from tsconfig.json files and update references ([b504ced](https://github.com/Alwatr/nitrobase/commit/b504ced4a8f98de4fe79a2c974937278bd4e46cb))
+* Update license from AGPL-3.0 to MPL-2.0 ([af1746e](https://github.com/Alwatr/nitrobase/commit/af1746ee9a3786c1cb2e0014f138e9f3b7086b8d))
+* update package.json files across all packages for consistency and improved metadata ([647900d](https://github.com/Alwatr/nitrobase/commit/647900d9966f8df275c4e2ef0550c501be38ece0))
+
+### 🔗 Dependencies update
+
+* update dependencies in package.json files across all packages to latest versions ([72c20ef](https://github.com/Alwatr/nitrobase/commit/72c20efbc1cac9825fb4880772e3fad797d74a23))
+
 ## [7.8.0](https://github.com/Alwatr/nitrobase/compare/v7.7.0...v7.8.0) (2025-03-06)
 
 ### Features

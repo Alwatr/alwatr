@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.10.0](https://github.com/Alwatr/nitrobase/compare/v7.9.0...v7.10.0) (2025-09-21)
+
+### ✨ Features
+
+* update alwatr/nginx-json to v4.0.0 ([8294c0a](https://github.com/Alwatr/nitrobase/commit/8294c0a1df2de31fb1b45a03aeaaaa0c7438e1aa))
+
+### 🔨 Code Refactoring
+
+* rename nherit package ([6b06623](https://github.com/Alwatr/nitrobase/commit/6b06623f8eeabf731d029f79accfc085405ee269))
+
 ## [7.9.0](https://github.com/Alwatr/nitrobase/compare/v7.8.0...v7.9.0) (2025-03-09)
 
 ### Features

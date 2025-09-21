@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.10.0](https://github.com/Alwatr/nitrobase/compare/v7.9.0...v7.10.0) (2025-09-21)
+
+### ✨ Features
+
+* add configuration and style guide for Gemini behavior ([3467275](https://github.com/Alwatr/nitrobase/commit/3467275e7ce3d96dc23d41d68aedec9b2a496701))
+* update alwatr/nginx-json to v4.0.0 ([8294c0a](https://github.com/Alwatr/nitrobase/commit/8294c0a1df2de31fb1b45a03aeaaaa0c7438e1aa))
+
+### 🐛 Bug Fixes
+
+* add "sideEffects": false to package.json files for better tree-shaking ([cb6f75b](https://github.com/Alwatr/nitrobase/commit/cb6f75b86eb7dba6812aaad5136fcd867e885562))
+* add missing dependencies for delay and logger modules ([514ccbc](https://github.com/Alwatr/nitrobase/commit/514ccbc64a0d7165080ec4ddc5ea90bc04648425))
+* add type imports for nano-build and type-helper in logger files ([6ca3627](https://github.com/Alwatr/nitrobase/commit/6ca362761c0d30a2813369bda49c927960c787f8))
+* correct username casing in CODEOWNERS ([f8bbf53](https://github.com/Alwatr/nitrobase/commit/f8bbf5350ca917102db900ce63e8d2a6999ca843))
+* **nginx:** change unauthorized response from 403 to 401 for region managers ([d075b6c](https://github.com/Alwatr/nitrobase/commit/d075b6cc728b8ceb502205dd41489f2a68274eb4))
+* **nginx:** change unauthorized response from 403 to 401 for region owner access ([0064123](https://github.com/Alwatr/nitrobase/commit/0064123032064256d21ad8c50c27b6c25efdd9f3))
+* **nginx:** change unauthorized response from 403 to 401 for user authentication ([3f7a191](https://github.com/Alwatr/nitrobase/commit/3f7a1914222edd5f6e4181dc61959dc372192e3f))
+* **nginx:** change unauthorized response from 403 to 401 for user authentication ([5afefbb](https://github.com/Alwatr/nitrobase/commit/5afefbb4101a8ff64c157ccc23c3f46c77e9239b))
+* **nginx:** change unauthorized response from 403 to 401 for user authentication ([cafe849](https://github.com/Alwatr/nitrobase/commit/cafe849bd442288abedc6d74e4decbce826de15f))
+* **nginx:** change unauthorized response from 403 to 401 for user token validation ([08d1235](https://github.com/Alwatr/nitrobase/commit/08d1235af71a3205771a6b778a3736a3da04cbb0))
+* remove packageTracer import and add type imports for nano-build and type-helper ([d684cdb](https://github.com/Alwatr/nitrobase/commit/d684cdb0db227f8df18aa1cf76ef7285bb4a6f72))
+* remove packageTracer import and related code from logger.ts ([b288082](https://github.com/Alwatr/nitrobase/commit/b2880826cdf8f88e5ce512d839b66b5a29935b35))
+* remove unused packageTracer import from logger.ts ([44690db](https://github.com/Alwatr/nitrobase/commit/44690dbc6628f65b0ac91c9d96c09beb1c4f2d34))
+* remove unused packageTracer import from main.ts ([6f0fc64](https://github.com/Alwatr/nitrobase/commit/6f0fc64b8c320d500da5af4de2e5435cca5469ff))
+* update dependencies in package.json for user-management ([dd53ff3](https://github.com/Alwatr/nitrobase/commit/dd53ff380a86a0ac80e56af57b20ebff2475148a))
+* update imports for delay and logger modules ([892a47d](https://github.com/Alwatr/nitrobase/commit/892a47d66611a44078da7319b52b04385f9d0c1e))
+* update imports for logger and delay modules ([615f596](https://github.com/Alwatr/nitrobase/commit/615f596a883714638c469cc1e783edd5da719a7d))
+* update logger import and clean up unused lines in user-management.ts ([4fef1b9](https://github.com/Alwatr/nitrobase/commit/4fef1b9192bb5b090c44a610a6d783b77f99097d))
+
+### 🔨 Code Refactoring
+
+* rename newStoreFile_ to newStoreFile__ for consistency in AlwatrNitrobase class ([2010994](https://github.com/Alwatr/nitrobase/commit/201099488a9bd379a67355df0c26fbef205626bd))
+* rename nherit package ([6b06623](https://github.com/Alwatr/nitrobase/commit/6b06623f8eeabf731d029f79accfc085405ee269))
+* update access modifiers to public for class properties and methods in nitrobase and user management ([a988d63](https://github.com/Alwatr/nitrobase/commit/a988d63b61828f6ce360e7179cbaccfa19dc1ae2))
+
+### 🧹 Miscellaneous Chores
+
+* add .tmp to .gitignore to ignore temporary files ([def34c4](https://github.com/Alwatr/nitrobase/commit/def34c45c4f21e7f5506041922c7d87451c5404b))
+* add 'jules' label for issues related to the Google Jules AI agent ([11f782a](https://github.com/Alwatr/nitrobase/commit/11f782a3e18a20cbdf9926f5bd61d9ece5636a98))
+* clean up file associations and update cSpell words in settings ([f5340c0](https://github.com/Alwatr/nitrobase/commit/f5340c0cd1c50ee03818e95b785a9c7c4a6a0aba))
+* clean up VSCode extensions recommendations by removing unused extensions ([f173feb](https://github.com/Alwatr/nitrobase/commit/f173feb3b7d9889bcc18ffe8a46952917365979a))
+* remove deprecated paths from .eslintignore ([0d16f59](https://github.com/Alwatr/nitrobase/commit/0d16f59844605f88d3b8c04b939b0ef974c149f5))
+* remove Exir Studio sponsorship logo from multiple README files ([506459f](https://github.com/Alwatr/nitrobase/commit/506459fea7d29b97e478da562590dd202ce7e833))
+* remove outdated Copilot instruction file ([a6355bd](https://github.com/Alwatr/nitrobase/commit/a6355bdefa8852d542994ce7e9ffbdc7f328d62f))
+* remove unused types from tsconfig.json files and update references ([b504ced](https://github.com/Alwatr/nitrobase/commit/b504ced4a8f98de4fe79a2c974937278bd4e46cb))
+* reorder and add missing words to cSpell dictionary in settings.json ([c93e220](https://github.com/Alwatr/nitrobase/commit/c93e2203fab4d7ceae5f487c264eb5bd2b9c0631))
+* set private flag to true in lerna configuration ([9be9010](https://github.com/Alwatr/nitrobase/commit/9be9010e21f908cb81535b8324d8fb186898f328))
+* simplify dependabot configuration by removing unnecessary fields ([d5a4544](https://github.com/Alwatr/nitrobase/commit/d5a4544dc25803706a74a9873b9b368eadd9c10b))
+* update docker directory path from /packages/nginx to /packages/nherit in dependabot configuration ([d68c3a7](https://github.com/Alwatr/nitrobase/commit/d68c3a71e7b51982a4f939e57bfa1c0bdd19bcdf))
+* update eslint format script and add test command ([afbe3ef](https://github.com/Alwatr/nitrobase/commit/afbe3efe5cbe2a11d53c80c249779f8eae1ed84e))
+* update lerna configuration for improved changelog and versioning ([cdb2fba](https://github.com/Alwatr/nitrobase/commit/cdb2fba0d378300651f39f36159dd9ebf2a3da3d))
+* Update license from AGPL-3.0 to MPL-2.0 ([af1746e](https://github.com/Alwatr/nitrobase/commit/af1746ee9a3786c1cb2e0014f138e9f3b7086b8d))
+* update package.json files across all packages for consistency and improved metadata ([647900d](https://github.com/Alwatr/nitrobase/commit/647900d9966f8df275c4e2ef0550c501be38ece0))
+* update prettier and typescript versions in package.json ([3f791eb](https://github.com/Alwatr/nitrobase/commit/3f791eb1eb6bd7966f60f922d8ccfea83668248a))
+
+### 🔗 Dependencies update
+
+* add conventional-commits-filter package version 5.0.0 ([5915a2c](https://github.com/Alwatr/nitrobase/commit/5915a2c64fcd8d4f96912ce6c8117ac2d39b5154))
+* add missing dependencies for flat-string and logger ([1ee8b82](https://github.com/Alwatr/nitrobase/commit/1ee8b821864115b922a654e23984ff2f537e73d4))
+* add missing dependencies in package.json ([8fe3ae3](https://github.com/Alwatr/nitrobase/commit/8fe3ae36736564a0c56b8915cfcb52b4b00befc2))
+* **deps:** bump github/codeql-action in the github-actions group ([85a80a1](https://github.com/Alwatr/nitrobase/commit/85a80a1fb73e1058d2e9e2cba84927289443f470))
+* remove unused packageTracer import and related code from logger.ts ([46ee9d8](https://github.com/Alwatr/nitrobase/commit/46ee9d80bb65299933c8f41631bad527ff206f38))
+* remove unused packageTracer import from main.ts ([ad4e1de](https://github.com/Alwatr/nitrobase/commit/ad4e1def8502bbafb0d6496edd3c44c414041591))
+* update conventional-changelog-conventionalcommits to version 9.1.0 and fix package path in yarn.lock ([9b7f9d7](https://github.com/Alwatr/nitrobase/commit/9b7f9d718d48fa8867f67726f0acd63d9bd0e877))
+* update dependencies in package.json files across all packages to latest versions ([72c20ef](https://github.com/Alwatr/nitrobase/commit/72c20efbc1cac9825fb4880772e3fad797d74a23))
+* update devDependencies in package.json to latest versions for improved compatibility ([dfb48fb](https://github.com/Alwatr/nitrobase/commit/dfb48fbf881e30821ec39e6ec599f62c63d01e47))
+* update imports to use new package paths for improved modularity ([e59abcc](https://github.com/Alwatr/nitrobase/commit/e59abcce6d32fe3eee1c1f1b578a4b09794e95e6))
+* upgrade * ([85beeb8](https://github.com/Alwatr/nitrobase/commit/85beeb83761e72b668dff3215cc384106306a783))
+
 ## [7.9.0](https://github.com/Alwatr/nitrobase/compare/v7.8.0...v7.9.0) (2025-03-09)
 
 ### Features

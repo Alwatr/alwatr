@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.10.0](https://github.com/Alwatr/nitrobase/compare/v7.9.0...v7.10.0) (2025-09-21)
+
+### 🐛 Bug Fixes
+
+* add "sideEffects": false to package.json files for better tree-shaking ([cb6f75b](https://github.com/Alwatr/nitrobase/commit/cb6f75b86eb7dba6812aaad5136fcd867e885562))
+* remove unused packageTracer import from main.ts ([6f0fc64](https://github.com/Alwatr/nitrobase/commit/6f0fc64b8c320d500da5af4de2e5435cca5469ff))
+
+### 🧹 Miscellaneous Chores
+
+* remove Exir Studio sponsorship logo from multiple README files ([506459f](https://github.com/Alwatr/nitrobase/commit/506459fea7d29b97e478da562590dd202ce7e833))
+* remove unused types from tsconfig.json files and update references ([b504ced](https://github.com/Alwatr/nitrobase/commit/b504ced4a8f98de4fe79a2c974937278bd4e46cb))
+* Update license from AGPL-3.0 to MPL-2.0 ([af1746e](https://github.com/Alwatr/nitrobase/commit/af1746ee9a3786c1cb2e0014f138e9f3b7086b8d))
+* update package.json files across all packages for consistency and improved metadata ([647900d](https://github.com/Alwatr/nitrobase/commit/647900d9966f8df275c4e2ef0550c501be38ece0))
+
+### 🔗 Dependencies update
+
+* update dependencies in package.json files across all packages to latest versions ([72c20ef](https://github.com/Alwatr/nitrobase/commit/72c20efbc1cac9825fb4880772e3fad797d74a23))
+
 ## [7.8.0](https://github.com/Alwatr/nitrobase/compare/v7.7.0...v7.8.0) (2025-03-06)
 
 ### Dependencies update
