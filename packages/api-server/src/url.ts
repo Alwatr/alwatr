@@ -5,8 +5,8 @@ import type {HttpMethod, NativeClientRequest} from './type.js';
 export class NanotronUrl extends URL {
   protected static versionPattern_ = new RegExp('^/v[0-9]+/');
 
-  readonly method: HttpMethod;
-  readonly debugId: string;
+  public readonly method: HttpMethod;
+  public readonly debugId: string;
 
   constructor(clientRequest: NativeClientRequest, prefix: `/${string}/` | '/') {
     let url = clientRequest.url ?? '';
