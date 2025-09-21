@@ -16,7 +16,7 @@ export type ErrorResponse = {
   ok: false;
   errorCode: Lowercase<string>;
   errorMessage: string;
-  meta?: Json;
+  meta?: JsonObject;
 };
 
 export type RouteHandler<TSharedMeta extends DictionaryOpt = DictionaryOpt> = (
@@ -24,7 +24,7 @@ export type RouteHandler<TSharedMeta extends DictionaryOpt = DictionaryOpt> = (
   clientRequest: NanotronClientRequest<TSharedMeta>,
   serverResponse: NanotronServerResponse,
   sharedMeta: TSharedMeta,
-) => MaybePromise<void>;
+) => Awaitable<void>;
 
 export type NativeClientRequest = IncomingMessage;
 export type NativeServerResponse = ServerResponse;
@@ -280,7 +280,7 @@ export interface HttpRequestHeaders {
   /**
    * Authentication credentials for HTTP authentication.
    *
-   * Example: `authorization: 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=='`
+   * Example: `authorization: 'Basic QWxhZGAliMdGVuIHNlc2FtZQ=='`
    */
   authorization?: string;
 
@@ -322,7 +322,7 @@ export interface HttpRequestHeaders {
   /**
    * A Base64-encoded binary MD5 sum of the content of the request body.
    *
-   * Example: `content-md5: 'Q2hlY2sgSW50ZWdyaXR5IQ=='`
+   * Example: `content-md5: 'Q2hlY2sgSW50Z1234XR5IQ=='`
    */
   'content-md5'?: string;
 
@@ -336,7 +336,7 @@ export interface HttpRequestHeaders {
   /**
    * An HTTP cookie previously sent by the server with `Set-Cookie`.
    *
-   * Example: `cookie: 'sessionid=38afes7a8'`
+   * Example: `cookie: 'sessionid=38ali123sc7a8'`
    */
   cookie?: string;
 
@@ -407,7 +407,7 @@ export interface HttpRequestHeaders {
   /**
    * Authorization credentials for connecting to a proxy.
    *
-   * Example: `proxy-authorization: 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=='`
+   * Example: `proxy-authorization: 'Basic QWxhZGRap2bj4pvGVuIHNlc2FtZQ=='`
    */
   'proxy-authorization'?: string;
 
@@ -773,7 +773,7 @@ export interface HttpRequestHeaders {
    * The `Sec-WebSocket-Accept` header field is used in the WebSocket opening handshake.
    * It is sent from the server to the client to confirm that the server is willing to initiate a WebSocket connection.
    *
-   * Example: `sec-websocket-accept: 's3pPLMBiTxaQ9kYGzzhZRbK+xOo='`
+   * Example: `sec-websocket-accept: 's3pPLMBiTxaQ9kYGz1zhZRbK+xOo='`
    */
   'sec-websocket-accept'?: string;
 
