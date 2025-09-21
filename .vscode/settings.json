@@ -21,8 +21,7 @@
   "files.associations": {
     "*.ajs": "json",
     "*.ajs.bk": "json",
-    "*.conf.template": "nginx",
-    "*.njk": "html"
+    "*.conf.template": "nginx"
   },
   "files.exclude": {
     // "**/*.map": true,
@@ -53,21 +52,24 @@
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "cSpell.words": [
     "Alwatr",
+    "conventionalcommits",
+    "Debouncer",
     "Deno",
     "flatomise",
     "Jsonifiable",
     "Jsonify",
+    "Macrotask",
     "nanotron",
+    "Microtask",
+    "Mihandoost",
+    "nanolib",
     "outdir",
     "outfile",
     "pmpa",
     "Strigifyable",
+    "syncpack",
     "tsbuildinfo",
-    "typeof"
-  ],
-  "github.copilot.chat.codeGeneration.instructions": [
-    {
-      "file": ".vscode/copilot-instruction.md"
-    }
+    "typeof",
+    "cyrb53"
   ]
 }
