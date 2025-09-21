@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/Alwatr/nanolib/compare/@alwatr/djb2-hash@1.1.3...@alwatr/djb2-hash@1.1.4) (2025-09-21)
+
+**Note:** Version bump only for package @alwatr/djb2-hash
+
 ## [1.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/djb2-hash@1.1.2...@alwatr/djb2-hash@1.1.3) (2025-09-20)
 
 ### 🐛 Bug Fixes

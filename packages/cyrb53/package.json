@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/cyrb53",
   "description": "A modern, high-quality, and fast 53-bit string hash function.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {

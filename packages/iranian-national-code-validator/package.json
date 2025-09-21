@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/iranian-national-code-validator",
   "description": "A tiny TypeScript library to Validates an Iranian National Code (Code Melli).",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {

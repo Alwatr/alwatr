@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.16](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@5.5.15...@alwatr/platform-info@5.5.16) (2025-09-21)
+
+**Note:** Version bump only for package @alwatr/platform-info
+
 ## [5.5.15](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@5.5.14...@alwatr/platform-info@5.5.15) (2025-09-20)
 
 ### 🐛 Bug Fixes

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.3.0...@alwatr/nano-build@6.3.1) (2025-09-21)
+
+### 🐛 Bug Fixes
+
+* change console.log to console.debug in banner for better logging ([4aea838](https://github.com/Alwatr/nanolib/commit/4aea838b64adc945d22580a018ab6e440185862b))
+* format banner string for better readability ([2356fea](https://github.com/Alwatr/nanolib/commit/2356feaa68451037b4519c74ce3d7f3a621e2d1c))
+
 ## [6.3.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.2.1...@alwatr/nano-build@6.3.0) (2025-09-20)
 
 ### ✨ Features
