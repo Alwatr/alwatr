@@ -5,9 +5,11 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nitrobase/issues",
   "dependencies": {
+    "@alwatr/logger": "^6.0.5",
     "@alwatr/nitrobase-engine": "workspace:^",
     "@alwatr/nitrobase-reference": "workspace:^",
-    "@alwatr/nitrobase-types": "workspace:^"
+    "@alwatr/nitrobase-types": "workspace:^",
+    "@alwatr/node-fs": "^5.5.19"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^6.3.1",
