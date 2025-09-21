@@ -1,6 +1,5 @@
-import {delay} from '@alwatr/nanolib';
-import {exitHook} from '@alwatr/nanolib/exit-hook';
-import {existsSync, readJson, resolve, unlink, writeJson} from '@alwatr/nanolib/node-fs';
+import {delay} from '@alwatr/delay';
+import {exitHook} from '@alwatr/exit-hook';
 import {getStoreId, getStorePath} from '@alwatr/nitrobase-helper';
 import {CollectionReference, DocumentReference} from '@alwatr/nitrobase-reference';
 import {
@@ -14,6 +13,7 @@ import {
   type StoreFileId,
   type CollectionItem,
 } from '@alwatr/nitrobase-types';
+import {existsSync, readJson, resolve, unlink, writeJson} from '@alwatr/node-fs';
 
 import {logger} from './logger.js';
 
@@ -170,12 +170,10 @@ export class AlwatrNitrobase {
    */
   newCollection(stat: Omit<StoreFileStat, 'type'>): void {
     logger.logMethodArgs?.('newCollection', stat);
-    return this.newStoreFile_(
-      {
-        ...stat,
-        type: StoreFileType.Collection,
-      }
-    );
+    return this.newStoreFile_({
+      ...stat,
+      type: StoreFileType.Collection,
+    });
   }
 
   /**
@@ -184,10 +182,7 @@ export class AlwatrNitrobase {
    * @param stat nitrobase file stat
    * @param data initial data for the document
    */
-  newStoreFile_(
-    stat: StoreFileStat,
-    data?: DictionaryOpt,
-  ): void {
+  newStoreFile_(stat: StoreFileStat, data?: DictionaryOpt): void {
     logger.logMethodArgs?.('newStoreFile_', stat);
 
     (stat.changeDebounce as number | undefined) ??= this.config.defaultChangeDebounce;
