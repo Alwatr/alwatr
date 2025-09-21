@@ -1,20 +1,16 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
-enable-beta-ecosystems: true
 updates:
   - package-ecosystem: github-actions
     directory: /
     open-pull-requests-limit: 20
     commit-message:
       prefix: deps
-      include: scope
-    reviewers:
-      - AliMD
     schedule:
       interval: weekly
       time: '00:30'
-      day: 'thursday'
+      day: thursday
     labels:
       - ci
       - priority-low
@@ -30,45 +26,38 @@ updates:
     open-pull-requests-limit: 20
     commit-message:
       prefix: deps
-      include: scope
-    reviewers:
-      - AliMD
     schedule:
       interval: weekly
       time: '00:30'
-      day: 'thursday'
+      day: thursday
     labels:
       - dependencies
       - ci
       - priority-low
       - maintenance
     groups:
-      dependencies:
-        exclude-patterns:
-          - '@alwatr/*'
-          - 'alwatr'
-      alwatr:
+      npm-dependencies:
         patterns:
-          - '@alwatr/*'
-          - 'alwatr'
+          - '*'
     ignore:
-      - dependency-name: "eslint"
+      - dependency-name: '@types/node'
         update-types:
           - version-update:semver-major
-      - dependency-name: "@typescript-eslint/eslint-plugin"
+      - dependency-name: 'eslint'
         update-types:
           - version-update:semver-major
-      - dependency-name: "@typescript-eslint/parser"
+      - dependency-name: '@typescript-eslint/eslint-plugin'
         update-types:
           - version-update:semver-major
-      - dependency-name: "conventional-changelog-conventionalcommits"
+      - dependency-name: '@typescript-eslint/parser'
+        update-types:
+          - version-update:semver-major
+      - dependency-name: 'conventional-changelog-conventionalcommits'
         update-types:
           - version-update:semver-major
 
   - package-ecosystem: docker
     directory: /packages/nginx
-    reviewers:
-      - AliMD
     schedule:
       interval: weekly
       time: '00:30'
