@@ -1,4 +1,4 @@
-import {createLogger} from '@alwatr/nanolib';
+import {createLogger} from '@alwatr/logger';
 
 import {type HttpStatusCode, HttpStatusCodes, HttpStatusMessages} from './const.js';
 
@@ -13,16 +13,16 @@ export interface NanotronServerResponseConfig {
 }
 
 export class NanotronServerResponse {
-  readonly clientRequest: NanotronClientRequest;
+  public readonly clientRequest: NanotronClientRequest;
 
-  readonly raw_: NativeServerResponse;
+  public readonly raw_: NativeServerResponse;
 
-  readonly headers: HttpResponseHeaders;
+  public readonly headers: HttpResponseHeaders;
 
   protected readonly logger_;
 
   protected hasBeenSent_ = false;
-  get hasBeenSent(): boolean {
+  public get hasBeenSent(): boolean {
     return this.hasBeenSent_;
   }
 
@@ -50,11 +50,11 @@ export class NanotronServerResponse {
     }
   }
 
-  get statusCode(): HttpStatusCode {
+  public get statusCode(): HttpStatusCode {
     return this.raw_.statusCode as HttpStatusCode;
   }
 
-  set statusCode(value: HttpStatusCode) {
+  public set statusCode(value: HttpStatusCode) {
     this.raw_.statusCode = value;
   }
 
@@ -65,18 +65,14 @@ export class NanotronServerResponse {
     }
   }
 
-  replyErrorResponse(errorResponse: ErrorResponse): void {
+  public replyErrorResponse(errorResponse: ErrorResponse): void {
     this.logger_.logMethod?.('replyErrorResponse');
     this.clientRequest.terminatedHandlers = true;
     this.headers['content-type'] = 'application/json';
     let meta = '';
     if (errorResponse.meta !== undefined) {
       const metaType = typeof errorResponse.meta;
-      if (
-        metaType === 'string' ||
-        metaType === 'number' ||
-        metaType === 'boolean' ||
-        errorResponse.meta === null) {
+      if (metaType === 'string' || metaType === 'number' || metaType === 'boolean' || errorResponse.meta === null) {
         meta = `,"meta":"${errorResponse.meta}"`;
       }
       else if (metaType === 'object') {
@@ -87,7 +83,7 @@ export class NanotronServerResponse {
     this.reply(responseString);
   }
 
-  replyError(error?: Error | string | Json | unknown): void {
+  public replyError(error?: Error | string | JsonObject | unknown): void {
     this.logger_.logMethodArgs?.('replyError', {error});
 
     this.clientRequest.terminatedHandlers = true;
@@ -112,7 +108,7 @@ export class NanotronServerResponse {
       });
     }
     else if (typeof error === 'object' && error !== null) {
-      this.replyJson(error as Json);
+      this.replyJson(error as JsonObject);
     }
     else {
       this.replyErrorResponse({
@@ -123,7 +119,7 @@ export class NanotronServerResponse {
     }
   }
 
-  replyJson(responseJson: Json): void {
+  public replyJson(responseJson: JsonObject): void {
     this.logger_.logMethodArgs?.('replyJson', {responseJson});
 
     let responseString: string;
@@ -145,7 +141,7 @@ export class NanotronServerResponse {
     this.reply(responseString);
   }
 
-  reply(context: string | Buffer): void {
+  public reply(context: string | Buffer): void {
     this.logger_.logMethodArgs?.('reply', this.clientRequest.url.debugId);
 
     if (this.raw_.writableFinished && this.hasBeenSent_ === false) {
