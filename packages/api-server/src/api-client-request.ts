@@ -1,4 +1,4 @@
-import {createLogger} from '@alwatr/nanolib';
+import {createLogger} from '@alwatr/logger';
 
 import {NanotronServerResponse} from './api-server-response.js';
 import {HttpStatusCodes} from './const.js';
@@ -7,11 +7,11 @@ import type {DefineRouteOption, HttpRequestHeaders, NativeClientRequest, NativeS
 import type {NanotronUrl} from './url.js';
 
 export class NanotronClientRequest<TSharedMeta extends DictionaryOpt = DictionaryOpt> {
-  readonly url: NanotronUrl;
+  public readonly url: NanotronUrl;
 
-  readonly serverResponse: NanotronServerResponse;
+  public readonly serverResponse: NanotronServerResponse;
 
-  readonly routeOption: Required<DefineRouteOption> | null;
+  public readonly routeOption: Required<DefineRouteOption> | null;
 
   /**
    * A flag to indicate if the running handlers queue has been terminated.
@@ -25,22 +25,22 @@ export class NanotronClientRequest<TSharedMeta extends DictionaryOpt = Dictionar
    * - Check this flag to determine if the handlers queue has been interrupted.
    * - Set this flag to `true` to manually stop the execution of subsequent handlers.
    */
-  terminatedHandlers?: true;
+  public terminatedHandlers?: true;
 
-  readonly sharedMeta: TSharedMeta = {} as TSharedMeta;
+  public readonly sharedMeta: TSharedMeta = {} as TSharedMeta;
 
-  readonly raw_: NativeClientRequest;
+  public readonly raw_: NativeClientRequest;
 
   protected readonly logger_;
 
-  readonly remoteAddress: string | null;
+  public readonly remoteAddress: string | null;
 
-  get headers(): HttpRequestHeaders {
+  public get headers(): HttpRequestHeaders {
     return this.raw_.headers;
   }
 
   private queryParams__?: DictionaryOpt<string>;
-  get queryParams(): DictionaryOpt<string> {
+  public get queryParams(): DictionaryOpt<string> {
     if (this.queryParams__ === undefined) {
       this.queryParams__ = {};
       for (const [key, value] of this.url.searchParams.entries()) {
@@ -72,7 +72,7 @@ export class NanotronClientRequest<TSharedMeta extends DictionaryOpt = Dictionar
     this.serverResponse = new NanotronServerResponse(this, nativeServerResponse);
   }
 
-  getBodyRaw(): Promise<Buffer> {
+  public getBodyRaw(): Promise<Buffer> {
     return new Promise((resolve, reject) => {
       // method must be POST or PUT or PATCH
       const method = this.url.method;
