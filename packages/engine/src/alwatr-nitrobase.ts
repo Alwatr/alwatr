@@ -490,7 +490,7 @@ export class AlwatrNitrobase {
    *   console.log(nitrobase.meta.id, nitrobase.data);
    * }
    */
-  getStoreList(): CollectionItem<Omit<StoreFileStat, 'schemaVer'>>[] {
+  public getStoreList(): CollectionItem<Omit<StoreFileStat, 'schemaVer'>>[] {
     logger.logMethod?.('getStoreList');
     return this.rootDb__.values();
   }
