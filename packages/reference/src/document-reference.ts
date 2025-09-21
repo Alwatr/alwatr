@@ -1,4 +1,5 @@
-import {createLogger, delay} from '@alwatr/nanolib';
+import {delay} from '@alwatr/delay';
+import {createLogger} from '@alwatr/logger';
 import {getStoreId, getStorePath} from '@alwatr/nitrobase-helper';
 import {StoreFileType, StoreFileExtension, type StoreFileId, type DocumentContext, type StoreFileMeta} from '@alwatr/nitrobase-types';
 
