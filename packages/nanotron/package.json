@@ -6,7 +6,6 @@
   "bugs": "https://github.com/Alwatr/nanotron/issues",
   "dependencies": {
     "@alwatr/crypto": "workspace:^",
-    "@alwatr/nanolib": "^6.1.1",
     "@alwatr/nanotron-api-server": "workspace:^",
     "@alwatr/pre-handlers": "workspace:^"
   },
