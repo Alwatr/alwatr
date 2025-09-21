@@ -5,6 +5,8 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nitrobase/issues",
   "dependencies": {
+    "@alwatr/delay": "^6.0.8",
+    "@alwatr/logger": "^6.0.5",
     "@alwatr/nitrobase-helper": "workspace:^",
     "@alwatr/nitrobase-types": "workspace:^"
   },
