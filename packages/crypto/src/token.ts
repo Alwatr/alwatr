@@ -1,6 +1,6 @@
 import {createHmac, type BinaryToTextEncoding} from 'node:crypto';
 
-import {parseDuration, type Duration} from '@alwatr/nanolib';
+import {parseDuration, type Duration} from '@alwatr/parse-duration';
 
 import type {CryptoAlgorithm} from './type.js';
 
