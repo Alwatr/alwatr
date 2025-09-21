@@ -5,7 +5,7 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanotron/issues",
   "dependencies": {
-    "@alwatr/nanolib": "^6.1.1"
+    "@alwatr/parse-duration": "^5.5.17"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^6.3.1",
