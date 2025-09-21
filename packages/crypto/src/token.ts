@@ -66,7 +66,7 @@ export class AlwatrTokenGenerator {
    * user.auth = tokenGenerator.generate(`${user.id}-${user.role}`);
    * ```
    */
-  generate(data: string): string {
+  public generate(data: string): string {
     return this._generate(data, this._epoch);
   }
 
@@ -80,7 +80,7 @@ export class AlwatrTokenGenerator {
    * const validateStatus = tokenGenerator.verify([user.id,user.role].join(), user.auth);
    * ```
    */
-  verify(data: string, token: string): TokenValidity {
+  public verify(data: string, token: string): TokenValidity {
     const epoch = this._epoch;
     if (token === this._generate(data, epoch)) return 'valid';
     if (this._duration == 0) return 'invalid';
