@@ -5,9 +5,9 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanotron/issues",
   "dependencies": {
-    "@alwatr/crypto": "workspace:^",
-    "@alwatr/nanotron-api-server": "workspace:^",
-    "@alwatr/pre-handlers": "workspace:^"
+    "@alwatr/crypto": "workspace:*",
+    "@alwatr/nanotron-api-server": "workspace:*",
+    "@alwatr/pre-handlers": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^6.3.1",
