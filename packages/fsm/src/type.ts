@@ -98,7 +98,7 @@ export interface FsmPersistenceConfig {
 
   /**
    * The key under which to store the FSM state in localStorage.
-   * @default ‍`signal-name`
+   * @default `signal-name`
    */
   storageKey?: string;
 }
