@@ -1,16 +1,27 @@
 {
   "name": "alwatr",
-  "displayName": "Alwatr",
-  "version": "3.12.2",
   "description": "Alwatr Ecosystem",
+  "version": "3.12.2",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "keywords": [
-    "alwatr"
-  ],
-  "type": "module",
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
-  "types": "./dist/main.d.ts",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
+  "dependencies": {
+    "@alwatr/flux": "^6.0.2",
+    "@alwatr/nanolib": "^6.1.1",
+    "@alwatr/nanotron": "^4.10.1",
+    "@alwatr/nitrobase": "^7.10.0"
+  },
+  "devDependencies": {
+    "@alwatr/nano-build": "^6.3.1",
+    "@alwatr/prettier-config": "^5.0.4",
+    "@alwatr/tsconfig-base": "^6.0.2",
+    "@alwatr/type-helper": "^6.1.1",
+    "typescript": "^5.9.2"
+  },
+  "displayName": "Alwatr",
+  "engines": {
+    "node": ">=18.16.0",
+    "yarn": ">=4.0.0"
+  },
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -22,20 +33,10 @@
       "import": "./dist/nanolib/nanolib.mjs",
       "require": "./dist/nanolib/nanolib.cjs"
     },
-    "./nanolib/dedupe": {
-      "types": "./dist/nanolib/dedupe.d.ts",
-      "import": "./dist/nanolib/dedupe.mjs",
-      "require": "./dist/nanolib/dedupe.cjs"
-    },
-    "./nanolib/exit-hook": {
-      "types": "./dist/nanolib/exit-hook.d.ts",
-      "import": "./dist/nanolib/exit-hook.mjs",
-      "require": "./dist/nanolib/exit-hook.cjs"
-    },
-    "./nanolib/node-fs": {
-      "types": "./dist/nanolib/node-fs.d.ts",
-      "import": "./dist/nanolib/node-fs.mjs",
-      "require": "./dist/nanolib/node-fs.cjs"
+    "./nanolib/node": {
+      "types": "./dist/nanolib/node.d.ts",
+      "import": "./dist/nanolib/node.mjs",
+      "require": "./dist/nanolib/node.cjs"
     },
     "./nitrobase": {
       "types": "./dist/nitrobase/nitrobase.d.ts",
@@ -58,15 +59,18 @@
       "require": "./dist/nanotron.cjs"
     }
   },
-  "license": "MPL-2.0",
   "files": [
     "**/*.{js,mjs,cjs,map,d.ts,html,md}",
     "!demo/**/*"
   ],
-  "engines": {
-    "node": ">=18.16.0",
-    "yarn": ">=4.0.0"
-  },
+  "homepage": "https://github.com/Alwatr/alwatr#readme",
+  "keywords": [
+    "alwatr"
+  ],
+  "license": "MPL-2.0",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "prettier": "@alwatr/prettier-config",
   "publishConfig": {
     "access": "public"
   },
@@ -75,38 +79,22 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "packages/alwatr"
   },
-  "homepage": "https://github.com/Alwatr/alwatr#readme",
-  "bugs": {
-    "url": "https://github.com/Alwatr/alwatr/issues"
-  },
-  "prettier": "@alwatr/prettier-config",
   "scripts": {
     "b": "yarn run build",
-    "t": "yarn run test",
-    "w": "yarn run watch",
-    "c": "yarn run clean",
-    "cb": "yarn run clean && yarn run build",
-    "d": "yarn run build:es && yarn node --enable-source-maps --trace-warnings",
     "build": "yarn run build:ts && yarn run build:es",
     "build:es": "nano-build --preset=module3",
     "build:ts": "tsc --build",
+    "c": "yarn run clean",
+    "cb": "yarn run clean && yarn run build",
+    "clean": "rm -rfv dist *.tsbuildinfo",
+    "d": "yarn run build:es && yarn node --enable-source-maps --trace-warnings",
+    "t": "yarn run test",
     "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest",
+    "w": "yarn run watch",
     "watch": "yarn run watch:ts & yarn run watch:es",
     "watch:es": "yarn run build:es --watch",
-    "watch:ts": "yarn run build:ts --watch --preserveWatchOutput",
-    "clean": "rm -rfv dist *.tsbuildinfo"
+    "watch:ts": "yarn run build:ts --watch --preserveWatchOutput"
   },
-  "dependencies": {
-    "@alwatr/flux": "^4.0.5",
-    "@alwatr/nanolib": "^5.6.5",
-    "@alwatr/nanotron": "^4.9.1",
-    "@alwatr/nitrobase": "^7.8.0"
-  },
-  "devDependencies": {
-    "@alwatr/nano-build": "^5.5.3",
-    "@alwatr/prettier-config": "^5.0.0",
-    "@alwatr/tsconfig-base": "^5.0.0",
-    "@alwatr/type-helper": "^5.4.1",
-    "typescript": "^5.8.3"
-  }
+  "type": "module",
+  "types": "./dist/main.d.ts"
 }
