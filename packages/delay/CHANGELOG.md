@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.9](https://github.com/Alwatr/nanolib/compare/@alwatr/delay@6.0.8...@alwatr/delay@6.0.9) (2025-09-22)
+
+**Note:** Version bump only for package @alwatr/delay
+
 ## [6.0.8](https://github.com/Alwatr/nanolib/compare/@alwatr/delay@6.0.7...@alwatr/delay@6.0.8) (2025-09-21)
 
 **Note:** Version bump only for package @alwatr/delay

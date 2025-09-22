@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/local-storage",
   "description": "A modern, simple, and robust solution for managing versioned JSON objects in the browser's `localStorage`. This package provides a clean, class-based API with a factory function to ensure your application's data persistence is safe, maintainable, and future-proof.",
-  "version": "6.1.8",
+  "version": "6.2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.2](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.1.1...@alwatr/type-helper@6.1.2) (2025-09-22)
+
+### 🐛 Bug Fixes
+
+* extend JsonValue type to include objects with toJSON method ([13e8315](https://github.com/Alwatr/nanolib/commit/13e8315312229b7dd7238f2fc37c650f7cfd8ccb))
+
 ## [6.1.1](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.1.0...@alwatr/type-helper@6.1.1) (2025-09-20)
 
 ### 🐛 Bug Fixes

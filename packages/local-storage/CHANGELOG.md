@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.1.8...@alwatr/local-storage@6.2.0) (2025-09-22)
+
+### ✨ Features
+
+* move createLocalStorageProvider function to facade.ts and clean up main.ts ([5dd6164](https://github.com/Alwatr/nanolib/commit/5dd6164f908de9a6ceec70dd19cc6f67d8c22ad6))
+
+### 🐛 Bug Fixes
+
+* correct parameter name in createLocalStorageProvider example ([bc894a3](https://github.com/Alwatr/nanolib/commit/bc894a36e3d033244b81063dccb1dfedb86a0082))
+* improve error handling in read and write methods of LocalStorageProvider ([845f37c](https://github.com/Alwatr/nanolib/commit/845f37cddd14f54a5bb50c3d902c7221d8fc9aef))
+* refactor LocalStorageProvider constructor and methods for improved clarity and error handling ([da2c5b4](https://github.com/Alwatr/nanolib/commit/da2c5b476ff0184e476be2e2a8af87ba6364bfbd))
+* update error logging in convertDataType__ method for improved clarity ([3e395e5](https://github.com/Alwatr/nanolib/commit/3e395e529aae1dcac5ad0b431070761b23e2d935))
+* update return types in LocalStorageProvider methods for better type safety ([0abcb41](https://github.com/Alwatr/nanolib/commit/0abcb41b9440324a70e2b782b0643bb8a51e47c6))
+
 ## [6.1.8](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.1.7...@alwatr/local-storage@6.1.8) (2025-09-22)
 
 ### 🐛 Bug Fixes
