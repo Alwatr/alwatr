@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.2](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.3.1...@alwatr/local-storage@6.3.2) (2025-09-22)
+
+### 🐛 Bug Fixes
+
+* remove unnecessary constraint from createLocalStorageProvider generic type ([960467f](https://github.com/Alwatr/nanolib/commit/960467fd161a80bf4e90cb3070054cee58182bfb))
+
 ## [6.3.1](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.3.0...@alwatr/local-storage@6.3.1) (2025-09-22)
 
 ### 🐛 Bug Fixes
