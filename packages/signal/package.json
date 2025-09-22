@@ -5,10 +5,10 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/debounce": "^1.1.7",
-    "@alwatr/delay": "^6.0.9",
-    "@alwatr/local-storage": "^6.3.0",
-    "@alwatr/logger": "^6.0.6"
+    "@alwatr/debounce": "^1.1.8",
+    "@alwatr/delay": "^6.0.10",
+    "@alwatr/local-storage": "^6.3.3",
+    "@alwatr/logger": "^6.0.7"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^6.3.2",

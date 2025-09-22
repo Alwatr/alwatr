@@ -5,7 +5,7 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/logger": "^6.0.6",
+    "@alwatr/logger": "^6.0.7",
     "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {
