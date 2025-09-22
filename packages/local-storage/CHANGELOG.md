@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.0](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.2.0...@alwatr/local-storage@6.3.0) (2025-09-22)
+
+### ✨ Features
+
+* make convertDataType public access ([f8b08e1](https://github.com/Alwatr/nanolib/commit/f8b08e1c81b97176f1dc1777434a17126651fdd3))
+
 ## [6.2.0](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.1.8...@alwatr/local-storage@6.2.0) (2025-09-22)
 
 ### ✨ Features
