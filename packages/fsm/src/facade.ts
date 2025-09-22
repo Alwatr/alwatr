@@ -75,7 +75,7 @@ export function createFsmService<TState extends string, TEvent extends MachineEv
   const stateSignal = config.persistent
     ? createPersistentStateSignal<MachineState<TState, TContext>>({
       name: `fsm-state-${config.name}`,
-      // storageKey: config.persistent.storageKey ?? config.name,
+      storageKey: config.persistent.storageKey ?? config.name,
       defaultValue: initialValue,
       schemaVersion: config.persistent.schemaVersion,
     })
