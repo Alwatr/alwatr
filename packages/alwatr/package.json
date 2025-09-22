@@ -11,11 +11,11 @@
     "@alwatr/nitrobase": "^7.8.0"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^5.5.3",
-    "@alwatr/prettier-config": "^5.0.0",
-    "@alwatr/tsconfig-base": "^5.0.0",
-    "@alwatr/type-helper": "^5.4.1",
-    "typescript": "^5.8.3"
+    "@alwatr/nano-build": "^6.3.1",
+    "@alwatr/prettier-config": "^5.0.4",
+    "@alwatr/tsconfig-base": "^6.0.2",
+    "@alwatr/type-helper": "^6.1.1",
+    "typescript": "^5.9.2"
   },
   "displayName": "Alwatr",
   "engines": {
