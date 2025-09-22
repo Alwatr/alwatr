@@ -13,7 +13,7 @@ import type {LocalStorageProvider} from '@alwatr/local-storage';
  *
  * @template T The type of the state it holds.
  */
-export class PersistentStateSignal<T extends JsonValue> extends StateSignal<T> {
+export class PersistentStateSignal<T extends JsonValue> extends StateSignal<Jsonify<T>> {
   /**
    * The underlying storage provider instance.
    * @private
@@ -28,7 +28,7 @@ export class PersistentStateSignal<T extends JsonValue> extends StateSignal<T> {
    */
   private readonly storageSyncSubscription__ = this.subscribe(
     (newValue) => {
-      this.logger_.logMethodArgs?.('storage_sync', {newValue});
+      this.logger_.logMethodArgs?.('storage_sync', newValue);
       this.storageProvider__.write(newValue);
     },
     {receivePrevious: false}, // Only listen for *new* changes.
@@ -59,6 +59,20 @@ export class PersistentStateSignal<T extends JsonValue> extends StateSignal<T> {
       schemaVersion: config.schemaVersion,
       initialValue,
     });
+  }
+
+  /**
+   * Updates the signal's value.
+   *
+   * This method accepts the rich type `T` for developer convenience,
+   * immediately serializes it to `Jsonify<T>`, and then updates the
+   * signal's internal state.
+   *
+   * @param newValue The new rich value to set.
+   */
+  public override set(newValue: T | Jsonify<T>): void {
+    const serializedValue = this.storageProvider__.convertDataType(newValue);
+    super.set(serializedValue);
   }
 
   /**
