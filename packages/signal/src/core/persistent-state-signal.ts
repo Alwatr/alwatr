@@ -25,7 +25,7 @@ export class PersistentStateSignal<T extends JsonValue> extends StateSignal<Json
    * Debouncer to limit how often we write to localStorage.
    * @private
    */
-  private storageDebouncer__;
+  private readonly storageDebouncer__;
 
   /**
    * The subscription to the signal's own changes to sync with storage.
@@ -77,7 +77,7 @@ export class PersistentStateSignal<T extends JsonValue> extends StateSignal<Json
    * Syncs the new value to storage.
    * @param newValue The new value to sync to storage.
    */
-  private syncStorage__(newValue: Jsonify<T> | T): void {
+  private syncStorage__(newValue: Jsonify<T>): void {
     this.logger_.logMethodArgs?.('syncStorage__', newValue);
     this.storageProvider__.write(newValue);
   }
