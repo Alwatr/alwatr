@@ -318,7 +318,7 @@ export interface DebounceSignalConfig extends Omit<DebouncerConfig<never>, 'func
 export interface PersistentStateSignalConfig<T extends JsonValue> extends SignalConfig, LocalStorageProviderConfig<T> {
   /**
    * The key under which to store the signal's state in localStorage.
-   * @default ‍`signal-name`
+   * @default `signal-name`
    */
   storageKey?: string;
 
