@@ -1,6 +1,8 @@
+import {createPersistentStateSignal, createStateSignal} from '@alwatr/signal';
+
 import {FsmService} from './fsm-service.js';
 
-import type {MachineEvent, StateMachineConfig} from './type.js';
+import type {MachineEvent, MachineState, StateMachineConfig} from './type.js';
 
 /**
  * A simple and clean factory function for creating an `FsmService` instance.
@@ -62,8 +64,25 @@ import type {MachineEvent, StateMachineConfig} from './type.js';
  * // lightService.destroy();
  * ```
  */
-export function createFsmService<TState extends string, TEvent extends MachineEvent, TContext extends Record<string, unknown>>(
+export function createFsmService<TState extends string, TEvent extends MachineEvent, TContext extends JsonObject>(
   config: StateMachineConfig<TState, TEvent, TContext>,
 ): FsmService<TState, TEvent, TContext> {
-  return new FsmService(config);
+  const initialValue: MachineState<TState, TContext> = {
+    name: config.initial,
+    context: config.context,
+  };
+
+  const stateSignal = config.persistent
+    ? createPersistentStateSignal<MachineState<TState, TContext>>({
+      name: `fsm-state-${config.name}`,
+      // storageKey: config.persistent.storageKey ?? config.name,
+      defaultValue: initialValue,
+      schemaVersion: config.persistent.schemaVersion,
+    })
+    : createStateSignal<MachineState<TState, TContext>>({
+      name: `fsm-state-${config.name}`,
+      initialValue: initialValue,
+    });
+
+  return new FsmService(config, stateSignal);
 }
