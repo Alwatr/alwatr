@@ -1,5 +1,5 @@
 import {createLogger} from '@alwatr/logger';
-import {createStateSignal, createEventSignal} from '@alwatr/signal';
+import {createEventSignal, type StateSignal, type PersistentStateSignal} from '@alwatr/signal';
 
 import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect, Assigner} from './type.js';
 
@@ -12,7 +12,7 @@ import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect,
  * @template TEvent The union type of all possible events.
  * @template TContext The type of the machine's context (extended state).
  */
-export class FsmService<TState extends string, TEvent extends MachineEvent, TContext extends Record<string, unknown>> {
+export class FsmService<TState extends string, TEvent extends MachineEvent, TContext extends JsonObject> {
   protected readonly logger_ = createLogger(`fsm:${this.config_.name}`);
 
   /** The event signal for sending events to the FSM. */
@@ -20,18 +20,13 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     name: `fsm-event-${this.config_.name}`,
   });
 
-  private readonly stateSignal__ = createStateSignal<MachineState<TState, TContext>>({
-    name: `fsm-state-${this.config_.name}`,
-    initialValue: {
-      name: this.config_.initial,
-      context: this.config_.context,
-    },
-  });
-
   /** The public, read-only state signal. Subscribe to react to state changes. */
   public readonly stateSignal = this.stateSignal__.asReadonly();
 
-  constructor(protected readonly config_: StateMachineConfig<TState, TEvent, TContext>) {
+  constructor(
+    protected readonly config_: StateMachineConfig<TState, TEvent, TContext>,
+    private readonly stateSignal__: StateSignal<MachineState<TState, TContext>> | PersistentStateSignal<MachineState<TState, TContext>>,
+  ) {
     this.logger_.logMethodArgs?.('constructor', config_);
     this.eventSignal.subscribe(this.processTransition__.bind(this), {receivePrevious: false});
   }

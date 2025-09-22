@@ -1,4 +1,5 @@
 import type {DebouncerConfig} from '@alwatr/debounce';
+import type {LocalStorageProviderConfig} from '@alwatr/local-storage';
 import type {} from '@alwatr/type-helper';
 
 /**
@@ -252,7 +253,6 @@ export interface EffectSignalConfig {
 
   /**
    * If `true`, the effect's `run` function will be executed once immediately upon initialization.
-   *
    * @default false
    */
   runImmediately?: boolean;
@@ -298,7 +298,6 @@ export interface IEffectSignal {
 export interface DebounceSignalConfig extends Omit<DebouncerConfig<never>, 'func' | 'thisContext'> {
   /**
    * A unique identifier for the signal. This is crucial for debugging and differentiating signals.
-   *
    * @default `${sourceSignal.name}-debounced`
    */
   name?: string;
@@ -308,4 +307,25 @@ export interface DebounceSignalConfig extends Omit<DebouncerConfig<never>, 'func
    * Useful for cleaning up resources tied to the debounced signal.
    */
   onDestroy?: () => void;
+}
+
+/**
+ * Configuration for a persistent state signal.
+ * It combines the core signal configuration with the necessary options for local storage persistence.
+ *
+ * @template T The type of the state it holds.
+ */
+export interface PersistentStateSignalConfig<T extends JsonValue> extends SignalConfig, LocalStorageProviderConfig<T> {
+  /**
+   * The key under which to store the signal's state in localStorage.
+   * @default `signal-name`
+   */
+  storageKey?: string;
+
+  /**
+   * The debounce delay (in milliseconds) for saving changes to localStorage.
+   * This helps to reduce the frequency of write operations, which can be costly in terms of performance.
+   * @default 500
+   */
+  saveDebounceDelay?: number;
 }

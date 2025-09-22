@@ -8,12 +8,12 @@ import type {} from '@alwatr/type-helper';
  * @template TState The union type of the finite state values.
  * @template TContext The type of the context object (extended state).
  */
-export interface MachineState<TState extends string, TContext extends Record<string, unknown>> {
+export type MachineState<TState extends string, TContext extends JsonObject> = {
   /** The current finite state value. */
   readonly name: TState;
   /** The context (extended state) of the machine, holding quantitative data. */
   readonly context: TContext;
-}
+};
 
 /**
  * Represents an event that can be sent to the state machine.
@@ -36,7 +36,7 @@ export interface MachineEvent<TEventType extends string = string> {
  * @template TEvent The type of the event that triggered this assigner.
  * @returns A partial context object to be merged into the machine's context.
  */
-export type Assigner<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
+export type Assigner<TEvent extends MachineEvent, TContext extends JsonObject> = (
   event: Readonly<TEvent>,
   context: Readonly<TContext>,
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
@@ -50,10 +50,10 @@ export type Assigner<TEvent extends MachineEvent, TContext extends Record<string
  * @template TEvent The type of the event that triggered this effect.
  * @returns void or a Promise<void>.
  */
-export type Effect<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
+export type Effect<TEvent extends MachineEvent, TContext extends JsonObject> = (
   event: Readonly<TEvent>,
   context: Readonly<TContext>,
-// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 ) => Awaitable<TEvent | void>;
 
 /**
@@ -64,7 +64,7 @@ export type Effect<TEvent extends MachineEvent, TContext extends Record<string, 
  * @template TEvent The type of the event.
  * @returns `true` if the transition should be taken, `false` otherwise.
  */
-export type Condition<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
+export type Condition<TEvent extends MachineEvent, TContext extends JsonObject> = (
   event: Readonly<TEvent>,
   context: Readonly<TContext>,
 ) => boolean;
@@ -77,13 +77,30 @@ export type Condition<TEvent extends MachineEvent, TContext extends Record<strin
  * @template TEvent The type of the event.
  * @template TContext The type of the machine's context.
  */
-export interface Transition<TState extends string, TEvent extends MachineEvent, TContext extends Record<string, unknown>> {
+export interface Transition<TState extends string, TEvent extends MachineEvent, TContext extends JsonObject> {
   /** The target state to transition to. If undefined, it's an internal transition. */
   readonly target?: TState;
   /** A condition function that must return true for the transition to occur. */
   readonly condition?: Condition<TEvent, TContext>;
   /** An array of assigners to execute. These update context synchronously. */
   readonly assigners?: SingleOrArray<Assigner<TEvent, TContext>>;
+}
+
+/**
+ * Configuration options for persisting the FSM state in localStorage.
+ */
+export interface FsmPersistenceConfig {
+  /**
+   * The version of the state's data structure (schema).
+   * Increment this number whenever you make a breaking change to the state's context shape.
+   */
+  schemaVersion: number;
+
+  /**
+   * The key under which to store the FSM state in localStorage.
+   * @default `signal-name`
+   */
+  storageKey?: string;
 }
 
 /**
@@ -94,12 +111,17 @@ export interface Transition<TState extends string, TEvent extends MachineEvent, 
  * @template TEvent The union type of all possible events.
  * @template TContext The type of the context object.
  */
-export interface StateMachineConfig<TState extends string, TEvent extends MachineEvent, TContext extends Record<string, unknown>>
+export interface StateMachineConfig<TState extends string, TEvent extends MachineEvent, TContext extends JsonObject>
   extends Pick<SignalConfig, 'name'> {
   /** The initial finite state value. */
   readonly initial: TState;
+
   /** The initial context (extended state) of the machine. */
   readonly context: TContext;
+
+  /** If provided, the FSM's state will be persisted in localStorage. */
+  persistent?: FsmPersistenceConfig;
+
   /** An object defining all possible states and their transitions. */
   readonly states: {
     readonly [S in TState]?: {
