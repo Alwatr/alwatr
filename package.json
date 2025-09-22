@@ -1,40 +1,7 @@
 {
   "name": "alwatr-monorepo",
   "description": "Alwatr Ecosystem",
-  "repository": "https://github.com/Alwatr/alwatr",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "license": "MPL-2.0",
-  "type": "module",
-  "private": true,
-  "engines": {
-    "node": ">=18.16.0",
-    "yarn": ">=4.0.0"
-  },
-  "workspaces": [
-    "packages/*"
-  ],
-  "prettier": "@alwatr/prettier-config",
-  "scripts": {
-    "b": "yarn run build",
-    "c": "yarn run clean",
-    "cb": "yarn run clean && yarn run build",
-    "l": "yarn run lint",
-    "f": "yarn run format",
-    "rl": "yarn run pull && yarn run clean && yarn run build && yarn run lint && yarn run release",
-    "upd": "yarn set version latest; yarn up '*'; yarn up '*' -R; yarn dlx @yarnpkg/sdks vscode; yarn dedupe",
-    "lint": "yarn run lint:ts && yarn run lint:es",
-    "lint:es": "eslint . --config .eslintrc.json --ext .ts --ignore-path .prettierignore",
-    "lint:ts": "lerna run build:ts",
-    "build": "lerna run build",
-    "watch": "lerna run --parallel watch",
-    "format": "yarn run format:prettier && yarn run format:eslint",
-    "format:eslint": "yarn run lint:es --fix",
-    "format:prettier": "prettier . --ignore-path .prettierignore --write",
-    "clean": "git add -v . && git clean -d -x -f --exclude=node_modules --exclude='*.env' --exclude=_data --exclude='.pnp*' --exclude=.yarn",
-    "pull": "git pull",
-    "release": "lerna version",
-    "publish": "lerna publish from-package"
-  },
   "devDependencies": {
     "@alwatr/eslint-config": "^5.5.4",
     "@alwatr/prettier-config": "^5.0.0",
@@ -56,5 +23,38 @@
     "prettier": "^3.5.3",
     "typescript": "^5.8.3"
   },
-  "packageManager": "yarn@4.9.1"
+  "engines": {
+    "node": ">=18.16.0",
+    "yarn": ">=4.0.0"
+  },
+  "license": "MPL-2.0",
+  "packageManager": "yarn@4.9.1",
+  "prettier": "@alwatr/prettier-config",
+  "private": true,
+  "repository": "https://github.com/Alwatr/alwatr",
+  "scripts": {
+    "b": "yarn run build",
+    "build": "lerna run build",
+    "c": "yarn run clean",
+    "cb": "yarn run clean && yarn run build",
+    "clean": "git add -v . && git clean -d -x -f --exclude=node_modules --exclude='*.env' --exclude=_data --exclude='.pnp*' --exclude=.yarn",
+    "f": "yarn run format",
+    "format": "yarn run format:prettier && yarn run format:eslint",
+    "format:eslint": "yarn run lint:es --fix",
+    "format:prettier": "prettier . --ignore-path .prettierignore --write",
+    "l": "yarn run lint",
+    "lint": "yarn run lint:ts && yarn run lint:es",
+    "lint:es": "eslint . --config .eslintrc.json --ext .ts --ignore-path .prettierignore",
+    "lint:ts": "lerna run build:ts",
+    "publish": "lerna publish from-package",
+    "pull": "git pull",
+    "release": "lerna version",
+    "rl": "yarn run pull && yarn run clean && yarn run build && yarn run lint && yarn run release",
+    "upd": "yarn set version latest; yarn up '*'; yarn up '*' -R; yarn dlx @yarnpkg/sdks vscode; yarn dedupe",
+    "watch": "lerna run --parallel watch"
+  },
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ]
 }
