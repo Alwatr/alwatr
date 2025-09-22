@@ -253,7 +253,6 @@ export interface EffectSignalConfig {
 
   /**
    * If `true`, the effect's `run` function will be executed once immediately upon initialization.
-   *
    * @default false
    */
   runImmediately?: boolean;
@@ -299,7 +298,6 @@ export interface IEffectSignal {
 export interface DebounceSignalConfig extends Omit<DebouncerConfig<never>, 'func' | 'thisContext'> {
   /**
    * A unique identifier for the signal. This is crucial for debugging and differentiating signals.
-   *
    * @default `${sourceSignal.name}-debounced`
    */
   name?: string;
@@ -321,7 +319,6 @@ export interface PersistentStateSignalConfig<T> extends SignalConfig, LocalStora
   /**
    * The debounce delay (in milliseconds) for saving changes to localStorage.
    * This helps to reduce the frequency of write operations, which can be costly in terms of performance.
-   * 
    * @default 500
    */
   saveDebounceDelay?: number;
