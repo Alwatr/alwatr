@@ -40,7 +40,7 @@ export class LocalStorageProvider<T extends JsonValue> {
       schemaVersion: config.schemaVersion,
     };
     this.key__ = LocalStorageProvider.getKey(this.meta__);
-    this.defaultValue__ = this.convertDataType(config.defaultValue);
+    this.defaultValue__ = this.convertDataType__(config.defaultValue);
     this.migrate__();
   }
 
@@ -99,7 +99,7 @@ export class LocalStorageProvider<T extends JsonValue> {
    * @returns The converted data as `T`.
    * @throws {Error} If the serialization/deserialization process fails.
    */
-  public convertDataType(data: T): T {
+  private convertDataType__(data: T): T {
     this.logger_.logMethod?.('convertDataType');
     // Simulate real serialization/deserialization cycle for real types
     try {
