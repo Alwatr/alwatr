@@ -14,9 +14,9 @@ It's designed to handle data structure migrations automatically, preventing issu
 
 This library is built upon a few simple but powerful concepts:
 
-1. **Provider Pattern**: Instead of using static functions, you create an _instance_ of a `LocalStorageProvider` for each unique data item you want to manage. This instance is configured once with a name, version, and default value, and then used to interact with that specific item.
+1. **Provider Pattern**: Instead of using static functions, you create an _instance_ of a `LocalStorageProvider` for each unique data item you want to manage. This instance is configured once with a name, schemaVersion, and default value, and then used to interact with that specific item.
 
-2. **Versioning & Automatic Migration**: When you initialize a provider with a new `version` number, it automatically removes all older versions of that data from `localStorage`. This prevents conflicts and ensures the application is working with the correct data structure.
+2. **Versioning & Automatic Migration**: When you initialize a provider with a new `schemaVersion` number, it automatically removes all older versions of that data from `localStorage`. This prevents conflicts and ensures the application is working with the correct data structure.
 
 3. **Facade Factory Function**: The `createLocalStorageProvider` function acts as a clean entry point (Facade) to the library. This simplifies the API and decouples your code from the internal class implementation, making future library upgrades safer and easier.
 
@@ -51,7 +51,7 @@ interface UserSettings {
 // Create a provider for user settings
 const userSettingsProvider = createLocalStorageProvider<UserSettings>({
   name: 'user-settings',
-  version: 1,
+  schemaVersion: 1,
   defaultValue: {
     theme: 'light',
     notifications: true,
@@ -95,7 +95,7 @@ This method is highly efficient as it **does not** require a `defaultValue` and 
 ```typescript
 import {LocalStorageProvider} from '@alwatr/local-storage';
 
-const formMeta = {name: 'user-survey-form', version: 1};
+const formMeta = {name: 'user-survey-form', schemaVersion: 1};
 
 if (LocalStorageProvider.has(formMeta)) {
   // The user has already filled out the form.
@@ -119,7 +119,7 @@ userSettingsProvider.remove();
 
 - **Always use the `createLocalStorageProvider` factory function.** It provides a stable API that protects your code from internal library changes.
 - **Prefer `LocalStorageProvider.has()` for existence checks.** It's the most performant and cleanest way to check for data without the overhead of creating an instance and providing a `defaultValue`.
-- **Increment the `version` number** whenever you make a breaking change to your data structure. The library will handle the cleanup of old data automatically.
+- **Increment the `schemaVersion` number** whenever you make a breaking change to your data structure. The library will handle the cleanup of old data automatically.
 
 ---
 
@@ -152,9 +152,9 @@ Contributions are welcome! Please read our [contribution guidelines](https://git
 
 این کتابخانه بر پایه چند مفهوم ساده اما قدرتمند بنا شده است:
 
-1. **الگوی Provider (ارائه‌دهنده)**: به جای استفاده از توابع استاتیک، شما برای هر آیتم داده‌ای که می‌خواهید مدیریت کنید، یک _نمونه (instance)_ از `LocalStorageProvider` می‌سازید. این نمونه یک بار با `name`, `version` و `defaultValue` پیکربندی شده و سپس برای تعامل با آن آیتم خاص استفاده می‌شود.
+1. **الگوی Provider (ارائه‌دهنده)**: به جای استفاده از توابع استاتیک، شما برای هر آیتم داده‌ای که می‌خواهید مدیریت کنید، یک _نمونه (instance)_ از `LocalStorageProvider` می‌سازید. این نمونه یک بار با `name`, `schemaVersion` و `defaultValue` پیکربندی شده و سپس برای تعامل با آن آیتم خاص استفاده می‌شود.
 
-2. **نسخه‌بندی و مهاجرت خودکار**: هنگامی که شما یک Provider را با شماره `version` جدیدی مقداردهی اولیه می‌کنید، این کتابخانه به طور خودکار تمام نسخه‌های قدیمی‌تر آن داده را از `localStorage` حذف می‌کند. این کار از تداخل جلوگیری کرده و تضمین می‌کند که اپلیکیشن همیشه با ساختار داده صحیح کار می‌کند.
+2. **نسخه‌بندی و مهاجرت خودکار**: هنگامی که شما یک Provider را با شماره `schemaVersion` جدیدی مقداردهی اولیه می‌کنید، این کتابخانه به طور خودکار تمام نسخه‌های قدیمی‌تر آن داده را از `localStorage` حذف می‌کند. این کار از تداخل جلوگیری کرده و تضمین می‌کند که اپلیکیشن همیشه با ساختار داده صحیح کار می‌کند.
 
 3. **تابع سازنده Facade**: تابع `createLocalStorageProvider` به عنوان یک نقطه ورود تمیز (Facade) به کتابخانه عمل می‌کند. این کار API را ساده کرده و کد شما را از پیاده‌سازی داخلی کلاس‌ها جدا (decouple) می‌سازد، که باعث می‌شود ارتقاء کتابخانه در آینده امن‌تر و آسان‌تر باشد.
 
@@ -189,7 +189,7 @@ interface UserSettings {
 // یک provider برای تنظیمات کاربر بسازید
 const userSettingsProvider = createLocalStorageProvider<UserSettings>({
   name: 'user-settings',
-  version: 1,
+  schemaVersion: 1,
   defaultValue: {
     theme: 'light',
     notifications: true,
@@ -233,7 +233,7 @@ console.log(currentSettings.theme); // "dark"
 ```typescript
 import {LocalStorageProvider} from '@alwatr/local-storage';
 
-const formMeta = {name: 'user-survey-form', version: 1};
+const formMeta = {name: 'user-survey-form', schemaVersion: 1};
 
 if (LocalStorageProvider.has(formMeta)) {
   // داده وجود دارد. کاربر قبلاً فرم را پر کرده است.
@@ -257,7 +257,7 @@ userSettingsProvider.remove();
 
 - **همیشه از تابع سازنده `createLocalStorageProvider` استفاده کنید.** این تابع یک API پایدار فراهم می‌کند که کد شما را در برابر تغییرات داخلی کتابخانه محافظت می‌کند.
 - **برای بررسی وجود داده، `LocalStorageProvider.has()` را ترجیح دهید.** این کارآمدترین و تمیزترین روش برای بررسی وجود داده بدون سربار ساختن یک نمونه و تعریف `defaultValue` است.
-- **هر زمان که یک تغییر ساختاری در داده‌های خود ایجاد کردید که با نسخه‌های قبلی ناسازگار است، شماره `version` را افزایش دهید.** کتابخانه پاک‌سازی داده‌های قدیمی را به صورت خودکار انجام خواهد داد.
+- **هر زمان که یک تغییر ساختاری در داده‌های خود ایجاد کردید که با نسخه‌های قبلی ناسازگار است، شماره `schemaVersion` را افزایش دهید.** کتابخانه پاک‌سازی داده‌های قدیمی را به صورت خودکار انجام خواهد داد.
 
 ## حامیان (Sponsors)
 
