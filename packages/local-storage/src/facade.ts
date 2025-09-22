@@ -24,6 +24,6 @@ import type {LocalStorageProviderConfig} from './type.js';
  * console.log(currentSettings); // { theme: 'dark', notifications: false }
  * ```
  */
-export function createLocalStorageProvider<T>(config: LocalStorageProviderConfig<T>): LocalStorageProvider<T> {
+export function createLocalStorageProvider<T extends JsonValue>(config: LocalStorageProviderConfig<T>): LocalStorageProvider<T> {
   return new LocalStorageProvider<T>(config);
 }
