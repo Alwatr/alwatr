@@ -33,20 +33,10 @@
       "import": "./dist/nanolib/nanolib.mjs",
       "require": "./dist/nanolib/nanolib.cjs"
     },
-    "./nanolib/dedupe": {
-      "types": "./dist/nanolib/dedupe.d.ts",
-      "import": "./dist/nanolib/dedupe.mjs",
-      "require": "./dist/nanolib/dedupe.cjs"
-    },
-    "./nanolib/exit-hook": {
-      "types": "./dist/nanolib/exit-hook.d.ts",
-      "import": "./dist/nanolib/exit-hook.mjs",
-      "require": "./dist/nanolib/exit-hook.cjs"
-    },
-    "./nanolib/node-fs": {
-      "types": "./dist/nanolib/node-fs.d.ts",
-      "import": "./dist/nanolib/node-fs.mjs",
-      "require": "./dist/nanolib/node-fs.cjs"
+    "./nanolib/node": {
+      "types": "./dist/nanolib/node.d.ts",
+      "import": "./dist/nanolib/node.mjs",
+      "require": "./dist/nanolib/node.cjs"
     },
     "./nitrobase": {
       "types": "./dist/nitrobase/nitrobase.d.ts",
