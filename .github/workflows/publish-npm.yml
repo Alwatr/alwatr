@@ -24,10 +24,10 @@ jobs:
 
     steps:
       - name: ⤵️ Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
 
       - name: 🏗 Setup nodejs
-        uses: actions/setup-node@v4.3.0
+        uses: actions/setup-node@v4.4.0
         with:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: 'https://registry.npmjs.org'
@@ -40,7 +40,7 @@ jobs:
         run: echo "cache_folder=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: 🏗 Cache Layer
-        uses: actions/cache@v4.2.3
+        uses: actions/cache@v4.2.4
         # id: yarn_cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn_config.outputs.cache_folder }}
