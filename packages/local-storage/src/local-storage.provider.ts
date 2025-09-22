@@ -106,7 +106,7 @@ export class LocalStorageProvider<T extends JsonValue> {
       return JSON.parse(JSON.stringify(data)) as Jsonify<T>;
     }
     catch (err) {
-      this.logger_.error('write', 'convert_data_type_error', {err});
+      this.logger_.error('convertDataType__', 'convert_data_type_error', {err});
       throw new Error('convert_data_type_error');
     }
   }
