@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/Alwatr/flux/compare/v6.0.2...v6.1.0) (2025-09-22)
+
+### 🔗 Dependencies update
+
+* update dependencies to latest versions across packages ([97bd715](https://github.com/Alwatr/flux/commit/97bd71555912053f8b2ba6ad0578b74bf7f1c1d3))
+
 ## [6.0.2](https://github.com/Alwatr/flux/compare/v6.0.1...v6.0.2) (2025-09-21)
 
 ### 🔗 Dependencies update

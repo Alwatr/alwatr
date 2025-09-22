@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/Alwatr/flux/compare/v6.0.2...v6.1.0) (2025-09-22)
+
+### ✨ Features
+
+* add createPersistentStateSignal function for localStorage state management ([05c99bd](https://github.com/Alwatr/flux/commit/05c99bdef47fd285f0c1dc1017c511f411d0405b))
+* add PersistentStateSignalConfig for local storage integration ([5dc1dfb](https://github.com/Alwatr/flux/commit/5dc1dfbc961d3820c2d765dedcb9d29909bbeab4))
+* add saveDebounceDelay option to PersistentStateSignalConfig for optimized localStorage writes ([ebc542e](https://github.com/Alwatr/flux/commit/ebc542e496cfcdfe06d74abeb08a4e1c4f4ec8b6))
+* enhance createFsmService to support persistent state signals ([9e46b3b](https://github.com/Alwatr/flux/commit/9e46b3b7da52df6b342b92a2468f0198c1d69c1e))
+* implement debouncing for localStorage writes in PersistentStateSignal ([9644b37](https://github.com/Alwatr/flux/commit/9644b37f6d2c8b2b0cd8a27b0b4ce0ad4afa86a3))
+* implement PersistentStateSignal for localStorage persistence ([0303a74](https://github.com/Alwatr/flux/commit/0303a744408d5e7188daf811bc3109c9c22fd156))
+
+### 🐛 Bug Fixes
+
+* enhance set method in PersistentStateSignal to support data type conversion ([3970fc1](https://github.com/Alwatr/flux/commit/3970fc17d90d72f124114b29b879b423934101a9))
+* refine generic type constraint in PersistentStateSignalConfig to extend JsonValue ([d50a1fb](https://github.com/Alwatr/flux/commit/d50a1fb880d0816ccda13eaea1ddfa9b13e89f6d))
+* refine generic type handling in PersistentStateSignal and syncStorage method ([30c50a8](https://github.com/Alwatr/flux/commit/30c50a8d3e24b742529aa3def0bfe0fde6561e4a))
+* remove unnecessary comments from EffectSignalConfig and DebounceSignalConfig interfaces ([397692c](https://github.com/Alwatr/flux/commit/397692c361b8f0faa6443379c1bdefba74fb88a3))
+* remove unnecessary constraint on generic type T in PersistentStateSignal ([83aab63](https://github.com/Alwatr/flux/commit/83aab637f4e7a9c976769b0bf64f89371da0b83a))
+* update exports to include persistent state signal and related creators/operators ([2eb94fa](https://github.com/Alwatr/flux/commit/2eb94fa8683ee0d74b609b36415de3e039b364a5))
+* update FsmService to use JsonObject for context and remove state signal creation ([5fbb6a6](https://github.com/Alwatr/flux/commit/5fbb6a662625bd4da9fa0d1428c5d683631c56f8))
+* update PersistentStateSignal to serialize values correctly and improve logging ([65947d4](https://github.com/Alwatr/flux/commit/65947d4a2b0c28b43fa3b0d15ea63e08d23d91c7))
+* update StateSignal constructor to properly pass config parameters ([f1b4cf0](https://github.com/Alwatr/flux/commit/f1b4cf02103f97295eb7f76155012c27b9773a8a))
+* update storageDebouncer to be readonly and adjust syncStorage method signature ([575b127](https://github.com/Alwatr/flux/commit/575b127e6367461cd3d6928ff73e395ed23bf459))
+* update storageKey handling in PersistentStateSignal and createFsmService for improved state management ([42e764f](https://github.com/Alwatr/flux/commit/42e764f58a2f804c6082a46bfb96eb678a49c22a))
+* update type definitions to use JsonObject for context in MachineState, Assigner, Effect, Condition, Transition, and StateMachineConfig ([e07e991](https://github.com/Alwatr/flux/commit/e07e9914e944b35a08a1c079053675a66183644a))
+
+### 🔗 Dependencies update
+
+* add @alwatr/local-storage as a dependency ([47b60fa](https://github.com/Alwatr/flux/commit/47b60fa3844fc49ccb85bc612e102c801a47ef1b))
+* update @alwatr/local-storage to version 6.3.0 ([1b10f57](https://github.com/Alwatr/flux/commit/1b10f578d8c817da8472f18a8c9d8e7520a0a7f4))
+* update dependencies to latest versions across packages ([97bd715](https://github.com/Alwatr/flux/commit/97bd71555912053f8b2ba6ad0578b74bf7f1c1d3))
+* update package dependencies for @alwatr/yarn-upgrade, @alwatr/logger, and other packages ([96b56e7](https://github.com/Alwatr/flux/commit/96b56e75360411bed73ce84acb870db6153f8917))
+* update package versions for @alwatr/debounce, @alwatr/delay, @alwatr/logger, @alwatr/local-storage, @alwatr/parse-duration, @alwatr/yarn-upgrade, and npm-packlist ([c013151](https://github.com/Alwatr/flux/commit/c013151c5bea3cf2e4c99165964e61b019de8f9b))
+
 ## [6.0.2](https://github.com/Alwatr/flux/compare/v6.0.1...v6.0.2) (2025-09-21)
 
 ### 🔗 Dependencies update

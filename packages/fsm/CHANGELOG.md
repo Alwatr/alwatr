@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/Alwatr/flux/compare/v6.0.2...v6.1.0) (2025-09-22)
+
+### ✨ Features
+
+* enhance createFsmService to support persistent state signals ([9e46b3b](https://github.com/Alwatr/flux/commit/9e46b3b7da52df6b342b92a2468f0198c1d69c1e))
+
+### 🐛 Bug Fixes
+
+* update FsmService to use JsonObject for context and remove state signal creation ([5fbb6a6](https://github.com/Alwatr/flux/commit/5fbb6a662625bd4da9fa0d1428c5d683631c56f8))
+* update storageKey handling in PersistentStateSignal and createFsmService for improved state management ([42e764f](https://github.com/Alwatr/flux/commit/42e764f58a2f804c6082a46bfb96eb678a49c22a))
+* update type definitions to use JsonObject for context in MachineState, Assigner, Effect, Condition, Transition, and StateMachineConfig ([e07e991](https://github.com/Alwatr/flux/commit/e07e9914e944b35a08a1c079053675a66183644a))
+
+### 🔗 Dependencies update
+
+* update dependencies to latest versions across packages ([97bd715](https://github.com/Alwatr/flux/commit/97bd71555912053f8b2ba6ad0578b74bf7f1c1d3))
+* update package dependencies for @alwatr/yarn-upgrade, @alwatr/logger, and other packages ([96b56e7](https://github.com/Alwatr/flux/commit/96b56e75360411bed73ce84acb870db6153f8917))
+
 ## [6.0.2](https://github.com/Alwatr/flux/compare/v6.0.1...v6.0.2) (2025-09-21)
 
 ### 🔗 Dependencies update
