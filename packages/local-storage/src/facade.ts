@@ -12,7 +12,7 @@ import type {LocalStorageProviderConfig} from './type.js';
  * ```typescript
  * const userSettings = createLocalStorageProvider({
  *   name: 'user-settings',
- *   version: 1,
+ *   schemaVersion: 1,
  *   defaultValue: { theme: 'light', notifications: true }
  * });
  *
