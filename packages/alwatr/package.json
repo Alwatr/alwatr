@@ -8,7 +8,7 @@
     "@alwatr/flux": "^6.0.2",
     "@alwatr/nanolib": "^6.1.1",
     "@alwatr/nanotron": "^4.10.1",
-    "@alwatr/nitrobase": "^7.8.0"
+    "@alwatr/nitrobase": "^7.10.0"
   },
   "devDependencies": {
     "@alwatr/nano-build": "^6.3.1",
