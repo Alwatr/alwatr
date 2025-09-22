@@ -14,7 +14,7 @@ export interface StorageMeta {
   schemaVersion: number;
 }
 
-export interface LocalStorageProviderConfig<T> extends StorageMeta {
+export interface LocalStorageProviderConfig<T extends JsonValue> extends StorageMeta {
   /**
    * The default value to use if no value is stored.
    */
