@@ -14,7 +14,7 @@ import type {LocalStorageProvider} from '@alwatr/local-storage';
  *
  * @template T The type of the state it holds.
  */
-export class PersistentStateSignal<T> extends StateSignal<Jsonify<T>> {
+export class PersistentStateSignal<T extends JsonValue> extends StateSignal<T> {
   /**
    * The underlying storage provider instance.
    * @private
@@ -77,43 +77,9 @@ export class PersistentStateSignal<T> extends StateSignal<Jsonify<T>> {
    * Syncs the new value to storage.
    * @param newValue The new value to sync to storage.
    */
-  private syncStorage__(newValue: Jsonify<T>): void {
+  private syncStorage__(newValue: T): void {
     this.logger_.logMethodArgs?.('syncStorage__', newValue);
     this.storageProvider__.write(newValue);
-  }
-
-  /**
-   * Updates the signal's value.
-   *
-   * This method accepts the rich type `T` for developer convenience,
-   * immediately serializes it to `Jsonify<T>`, and then updates the
-   * signal's internal state.
-   *
-   * @param newValue The new rich value to set.
-   * @param convertDataType If true, converts `newValue` from `T` to `Jsonify<T>`.
-   *                        Default is false, meaning `newValue` is already `Jsonify<T>`.
-   */
-  public override set(newValue: Jsonify<T>): void;
-
-  /**
-   * Updates the signal's value.
-   *
-   * This method accepts the rich type `T` for developer convenience,
-   * immediately serializes it to `Jsonify<T>`, and then updates the
-   * signal's internal state.
-   *
-   * @param newValue The new rich value to set.
-   * @param convertDataType If true, converts `newValue` from `T` to `Jsonify<T>`.
-   *                        Default is false, meaning `newValue` is already `Jsonify<T>`.
-   */
-  public override set(newValue: T | Jsonify<T>, convertDataType: true): void;
-  public override set(newValue: T | Jsonify<T>, convertDataType?: true): void {
-    if (convertDataType === true) {
-      super.set(this.storageProvider__.convertDataType(newValue as T));
-    }
-    else {
-      super.set(newValue as Jsonify<T>);
-    }
   }
 
   /**
