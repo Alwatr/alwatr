@@ -26,7 +26,7 @@ export class LocalStorageProvider<T extends JsonValue> {
   public static readonly version = __package_version__;
 
   private readonly key__: string;
-  protected readonly logger_ = createLogger(`local-storage-provider: ${this.config_.name}, v: ${this.config_.version}`);
+  protected readonly logger_ = createLogger(`local-storage-provider: ${this.config_.name}, v: ${this.config_.schemaVersion}`);
 
   constructor(protected readonly config_: LocalStorageProviderConfig<T>) {
     this.logger_.logMethodArgs?.('constructor', {config: this.config_});
@@ -36,11 +36,11 @@ export class LocalStorageProvider<T extends JsonValue> {
 
   /**
    * Generates the versioned storage key.
-   * @param meta - An object containing the name and version.
+   * @param meta - An object containing the name and schemaVersion.
    * @returns The versioned key string.
    */
   public static getKey(meta: StorageMeta): string {
-    return `${meta.name}.v${meta.version}`;
+    return `${meta.name}.v${meta.schemaVersion}`;
   }
 
   /**
@@ -52,7 +52,7 @@ export class LocalStorageProvider<T extends JsonValue> {
    *
    * @example
    * ```typescript
-   * const formExists = LocalStorageProvider.has({ name: 'user-form', version: 1 });
+   * const formExists = LocalStorageProvider.has({ name: 'user-form', schemaVersion: 1 });
    * if (formExists) {
    *   // Show the "Thank you" message
    * } else {
@@ -122,11 +122,11 @@ export class LocalStorageProvider<T extends JsonValue> {
    * Manages data migration by removing all previous versions of the item.
    */
   private migrate__(): void {
-    if (this.config_.version <= 1) return;
+    if (this.config_.schemaVersion <= 1) return;
 
     // Iterate from v1 up to the version just before the current one and remove them.
-    for (let i = 1; i < this.config_.version; i++) {
-      const oldKey = LocalStorageProvider.getKey({name: this.config_.name, version: i});
+    for (let i = 1; i < this.config_.schemaVersion; i++) {
+      const oldKey = LocalStorageProvider.getKey({name: this.config_.name, schemaVersion: i});
       localStorage.removeItem(oldKey);
     }
   }

@@ -11,7 +11,7 @@ export interface StorageMeta {
    * The data structure version.
    * starting from 1 and incrementing by 1 for each new version.
    */
-  version: number;
+  schemaVersion: number;
 }
 
 export interface LocalStorageProviderConfig<T> extends StorageMeta {
