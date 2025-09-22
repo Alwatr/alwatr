@@ -22,7 +22,7 @@ import type {LocalStorageProviderConfig, StorageMeta} from './type.js';
  * console.log(currentSettings); // { theme: 'dark', notifications: false }
  * ```
  */
-export class LocalStorageProvider<T extends JsonValue> {
+export class LocalStorageProvider<T> {
   public static readonly version = __package_version__;
 
   private readonly key__: string;
@@ -99,7 +99,7 @@ export class LocalStorageProvider<T extends JsonValue> {
    * @returns The converted data as `Jsonify<T>`.
    * @throws {Error} If the serialization/deserialization process fails.
    */
-  public convertDataType(data: T): Jsonify<T> {
+  public convertDataType(data: T | Jsonify<T>): Jsonify<T> {
     this.logger_.logMethod?.('convertDataType');
     // Simulate real serialization/deserialization cycle for real types
     try {
