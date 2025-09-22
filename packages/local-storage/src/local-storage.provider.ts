@@ -26,11 +26,21 @@ export class LocalStorageProvider<T extends JsonValue> {
   public static readonly version = __package_version__;
 
   private readonly key__: string;
-  protected readonly logger_ = createLogger(`local-storage-provider: ${this.config_.name}, v: ${this.config_.schemaVersion}`);
+  protected readonly logger_;
 
-  constructor(protected readonly config_: LocalStorageProviderConfig<T>) {
-    this.logger_.logMethodArgs?.('constructor', {config: this.config_});
-    this.key__ = LocalStorageProvider.getKey(this.config_);
+  private meta__: StorageMeta;
+
+  protected readonly defaultValue__: Jsonify<T>;
+
+  constructor(config: LocalStorageProviderConfig<T>) {
+    this.logger_ = createLogger(`local-storage-provider: ${config.name}, v: ${config.schemaVersion}`);
+    this.logger_.logMethodArgs?.('constructor', {config});
+    this.meta__ = {
+      name: config.name,
+      schemaVersion: config.schemaVersion,
+    };
+    this.key__ = LocalStorageProvider.getKey(this.meta__);
+    this.defaultValue__ = this.convertDataType__(config.defaultValue);
     this.migrate__();
   }
 
@@ -68,10 +78,37 @@ export class LocalStorageProvider<T extends JsonValue> {
   /**
    * Writes the default value to localStorage and returns it.
    */
-  private writeDefault__(): T {
-    this.logger_.logMethodArgs?.('writeDefaultــ', this.config_.defaultValue);
-    this.write(this.config_.defaultValue);
-    return this.config_.defaultValue;
+  private handleDefault__(): Jsonify<T> {
+    this.logger_.logMethodArgs?.('handleDefault__', this.defaultValue__);
+    try {
+      this.write(this.defaultValue__);
+    }
+    catch (err) {
+      this.logger_.error('write', 'write_default_error', {err});
+    }
+    return this.defaultValue__;
+  }
+
+  /**
+   * Converts the provided data to a JSON-compatible format by simulating
+   * a serialization/deserialization cycle. This ensures that the data
+   * conforms to the `Jsonify<T>` type.
+   *
+   * @template T - The type of the input data.
+   * @param data - The data to be converted to a JSON-compatible format.
+   * @returns The converted data as `Jsonify<T>`.
+   * @throws {Error} If the serialization/deserialization process fails.
+   */
+  private convertDataType__(data: T): Jsonify<T> {
+    this.logger_.logMethod?.('convertDataType__');
+    // Simulate real serialization/deserialization cycle for real types
+    try {
+      return JSON.parse(JSON.stringify(data)) as Jsonify<T>;
+    }
+    catch (err) {
+      this.logger_.error('convertDataType__', 'convert_data_type_error', {err});
+      throw new Error('convert_data_type_error');
+    }
   }
 
   /**
@@ -79,35 +116,50 @@ export class LocalStorageProvider<T extends JsonValue> {
    * If the item doesn't exist, is invalid JSON, or doesn't match the expected type,
    * it writes and returns the default value.
    */
-  public read(): T {
+  public read(): Jsonify<T> {
+    let value: string | null = null;
     try {
-      const value = localStorage.getItem(this.key__);
+      value = localStorage.getItem(this.key__);
+    }
+    catch (err) {
+      this.logger_.error('read', 'read_local_storage_error', {err});
+    }
 
-      if (value === null) {
-        this.logger_.logMethod?.('read//no_value');
-        return this.writeDefault__();
-      }
+    if (value === null) {
+      this.logger_.logMethod?.('read//no_value');
+      return this.handleDefault__();
+    }
 
-      const parsedValue = JSON.parse(value) as T;
+    try {
+      const parsedValue = JSON.parse(value) as Jsonify<T>;
       this.logger_.logMethodFull?.('read//value', undefined, {parsedValue});
       return parsedValue;
     }
     catch (err) {
       this.logger_.error('read', 'read_parse_error', {err});
-      return this.writeDefault__();
+      return this.handleDefault__();
     }
   }
 
   /**
    * Serializes and writes a value to localStorage.
    */
-  public write(value: T): void {
+  public write(value: T | Jsonify<T>): void {
     this.logger_.logMethodArgs?.('write', {value});
+    let valueStr: string;
     try {
-      localStorage.setItem(this.key__, JSON.stringify(value));
+      valueStr = JSON.stringify(value);
     }
     catch (err) {
       this.logger_.error('write', 'write_stringify_error', {err});
+      throw new Error('write_stringify_error');
+    }
+
+    try {
+      localStorage.setItem(this.key__, valueStr);
+    }
+    catch (err) {
+      this.logger_.error('write', 'write_local_storage_error', {err});
     }
   }
 
@@ -122,11 +174,11 @@ export class LocalStorageProvider<T extends JsonValue> {
    * Manages data migration by removing all previous versions of the item.
    */
   private migrate__(): void {
-    if (this.config_.schemaVersion <= 1) return;
+    if (this.meta__.schemaVersion <= 1) return;
 
     // Iterate from v1 up to the version just before the current one and remove them.
-    for (let i = 1; i < this.config_.schemaVersion; i++) {
-      const oldKey = LocalStorageProvider.getKey({name: this.config_.name, schemaVersion: i});
+    for (let i = 1; i < this.meta__.schemaVersion; i++) {
+      const oldKey = LocalStorageProvider.getKey({name: this.meta__.name, schemaVersion: i});
       localStorage.removeItem(oldKey);
     }
   }
