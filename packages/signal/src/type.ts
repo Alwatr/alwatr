@@ -317,4 +317,12 @@ export interface DebounceSignalConfig extends Omit<DebouncerConfig<never>, 'func
  *
  * @template T The type of the state it holds.
  */
-export interface PersistentStateSignalConfig<T> extends SignalConfig, LocalStorageProviderConfig<T> {}
+export interface PersistentStateSignalConfig<T> extends SignalConfig, LocalStorageProviderConfig<T> {
+  /**
+   * The debounce delay (in milliseconds) for saving changes to localStorage.
+   * This helps to reduce the frequency of write operations, which can be costly in terms of performance.
+   * 
+   * @default 500
+   */
+  saveDebounceDelay?: number;
+}
