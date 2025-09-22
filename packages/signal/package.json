@@ -7,6 +7,7 @@
   "dependencies": {
     "@alwatr/debounce": "^1.1.6",
     "@alwatr/delay": "^6.0.8",
+    "@alwatr/local-storage": "^6.1.8",
     "@alwatr/logger": "^6.0.5"
   },
   "devDependencies": {

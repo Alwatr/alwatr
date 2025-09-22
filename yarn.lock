@@ -82,7 +82,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/logger@npm:^6.0.5":
+"@alwatr/local-storage@npm:^6.1.8":
+  version: 6.1.8
+  resolution: "@alwatr/local-storage@npm:6.1.8"
+  dependencies:
+    "@alwatr/logger": "npm:6.0.5"
+  checksum: 10c0/44963de3ac2e07ec0476e30eb56494c08847c3f60d6a3ef2a0cb43c6e745fcf5e68d5a0406719a338f9d0bcad783928af4ba69b5beb4ae285bb605bc1d793e51
+  languageName: node
+  linkType: hard
+
+"@alwatr/logger@npm:6.0.5, @alwatr/logger@npm:^6.0.5":
   version: 6.0.5
   resolution: "@alwatr/logger@npm:6.0.5"
   dependencies:
@@ -133,6 +142,7 @@ __metadata:
   dependencies:
     "@alwatr/debounce": "npm:^1.1.6"
     "@alwatr/delay": "npm:^6.0.8"
+    "@alwatr/local-storage": "npm:^6.1.8"
     "@alwatr/logger": "npm:^6.0.5"
     "@alwatr/nano-build": "npm:^6.3.1"
     "@alwatr/prettier-config": "npm:^5.0.4"
