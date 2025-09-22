@@ -69,10 +69,30 @@ export class PersistentStateSignal<T extends JsonValue> extends StateSignal<Json
    * signal's internal state.
    *
    * @param newValue The new rich value to set.
+   * @param convertDataType If true, converts `newValue` from `T` to `Jsonify<T>`.
+   *                        Default is false, meaning `newValue` is already `Jsonify<T>`.
    */
-  public override set(newValue: T | Jsonify<T>): void {
-    const serializedValue = this.storageProvider__.convertDataType(newValue);
-    super.set(serializedValue);
+  public override set(newValue: Jsonify<T>): void;
+  
+  /**
+   * Updates the signal's value.
+   *
+   * This method accepts the rich type `T` for developer convenience,
+   * immediately serializes it to `Jsonify<T>`, and then updates the
+   * signal's internal state.
+   *
+   * @param newValue The new rich value to set.
+   * @param convertDataType If true, converts `newValue` from `T` to `Jsonify<T>`.
+   *                        Default is false, meaning `newValue` is already `Jsonify<T>`.
+   */
+  public override set(newValue: T | Jsonify<T>, convertDataType: true): void;
+  public override set(newValue: T | Jsonify<T>, convertDataType?: true): void {
+    if (convertDataType === true) {
+      super.set(this.storageProvider__.convertDataType(newValue as T));
+    }
+    else {
+      super.set(newValue as Jsonify<T>);
+    }
   }
 
   /**
