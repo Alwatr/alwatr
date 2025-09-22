@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.1](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.3.0...@alwatr/local-storage@6.3.1) (2025-09-22)
+
+### 🐛 Bug Fixes
+
+* update convertDataType method to accept both raw and serialized data types ([1ca0256](https://github.com/Alwatr/nanolib/commit/1ca02563d0ce27f0b90572563eb8afb109ae2f07))
+
 ## [6.3.0](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.2.0...@alwatr/local-storage@6.3.0) (2025-09-22)
 
 ### ✨ Features
