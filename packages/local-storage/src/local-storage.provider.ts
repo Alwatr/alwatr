@@ -68,10 +68,11 @@ export class LocalStorageProvider<T extends JsonValue> {
   /**
    * Writes the default value to localStorage and returns it.
    */
-  private writeDefault__(): T {
-    this.logger_.logMethodArgs?.('writeDefaultــ', this.config_.defaultValue);
+  private writeDefault__(): Jsonify<T> {
+    this.logger_.logMethodArgs?.('writeDefault__', this.config_.defaultValue);
     this.write(this.config_.defaultValue);
-    return this.config_.defaultValue;
+    // Simulate real serialization/deserialization cycle for real types
+    return JSON.parse(JSON.stringify(this.config_.defaultValue)) as Jsonify<T>;
   }
 
   /**
@@ -79,16 +80,16 @@ export class LocalStorageProvider<T extends JsonValue> {
    * If the item doesn't exist, is invalid JSON, or doesn't match the expected type,
    * it writes and returns the default value.
    */
-  public read(): T {
+  public read(): Jsonify<T> {
+    const value = localStorage.getItem(this.key__);
+
+    if (value === null) {
+      this.logger_.logMethod?.('read//no_value');
+      return this.writeDefault__();
+    }
+
     try {
-      const value = localStorage.getItem(this.key__);
-
-      if (value === null) {
-        this.logger_.logMethod?.('read//no_value');
-        return this.writeDefault__();
-      }
-
-      const parsedValue = JSON.parse(value) as T;
+      const parsedValue = JSON.parse(value) as Jsonify<T>;
       this.logger_.logMethodFull?.('read//value', undefined, {parsedValue});
       return parsedValue;
     }
@@ -108,6 +109,7 @@ export class LocalStorageProvider<T extends JsonValue> {
     }
     catch (err) {
       this.logger_.error('write', 'write_stringify_error', {err});
+      throw new Error('write_stringify_error');
     }
   }
 
