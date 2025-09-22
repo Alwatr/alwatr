@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.3](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.3.2...@alwatr/local-storage@6.3.3) (2025-09-22)
+
+### 🐛 Bug Fixes
+
+* add constraint to createLocalStorageProvider generic type to extend JsonValue ([198ca49](https://github.com/Alwatr/nanolib/commit/198ca49042780aff15d3979bea3951bf094b3b15))
+* add generic type constraint to LocalStorageProviderConfig to extend JsonValue ([9b97692](https://github.com/Alwatr/nanolib/commit/9b9769254613aac6ad94a0c2dd885c44e63b6ed2))
+* refine generic type constraints in LocalStorageProvider to extend JsonValue ([6a05c12](https://github.com/Alwatr/nanolib/commit/6a05c12583326dbea8784f79f7c559b9a31d3cef))
+* rename convertDataType method to convertDataType__ for consistency ([83ccb56](https://github.com/Alwatr/nanolib/commit/83ccb56a9ff95ba0c4e8e6a77cb67a010d60701a))
+
 ## [6.3.2](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.3.1...@alwatr/local-storage@6.3.2) (2025-09-22)
 
 ### 🐛 Bug Fixes

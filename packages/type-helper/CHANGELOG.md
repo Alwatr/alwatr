@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.1.2...@alwatr/type-helper@6.1.3) (2025-09-22)
+
+### 🐛 Bug Fixes
+
+* remove unnecessary method from JsonValue type definition ([d18847c](https://github.com/Alwatr/nanolib/commit/d18847c8f0bd0f36c91159377786ade8fe346406))
+
 ## [6.1.2](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.1.1...@alwatr/type-helper@6.1.2) (2025-09-22)
 
 ### 🐛 Bug Fixes

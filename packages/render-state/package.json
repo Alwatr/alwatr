@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/render-state",
   "description": "Clone deeply nested objects and arrays in JavaScript.",
-  "version": "5.5.20",
+  "version": "5.5.21",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {

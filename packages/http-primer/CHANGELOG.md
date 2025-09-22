@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.10](https://github.com/Alwatr/nanolib/compare/@alwatr/http-primer@6.0.9...@alwatr/http-primer@6.0.10) (2025-09-22)
+
+**Note:** Version bump only for package @alwatr/http-primer
+
 ## [6.0.9](https://github.com/Alwatr/nanolib/compare/@alwatr/http-primer@6.0.8...@alwatr/http-primer@6.0.9) (2025-09-22)
 
 **Note:** Version bump only for package @alwatr/http-primer
