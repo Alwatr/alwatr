@@ -1,3 +1,4 @@
+import {createDebouncer} from '@alwatr/debounce';
 import {createLocalStorageProvider} from '@alwatr/local-storage';
 
 import {StateSignal} from './state-signal.js';
@@ -21,18 +22,18 @@ export class PersistentStateSignal<T extends JsonValue> extends StateSignal<Json
   private readonly storageProvider__: LocalStorageProvider<T>;
 
   /**
+   * Debouncer to limit how often we write to localStorage.
+   * @private
+   */
+  private storageDebouncer__;
+
+  /**
    * The subscription to the signal's own changes to sync with storage.
    * We subscribe to our own signal. When the value is set from anywhere,
    * this listener will trigger and write it to localStorage.
    * @private
    */
-  private readonly storageSyncSubscription__ = this.subscribe(
-    (newValue) => {
-      this.logger_.logMethodArgs?.('storage_sync', newValue);
-      this.storageProvider__.write(newValue);
-    },
-    {receivePrevious: false}, // Only listen for *new* changes.
-  );
+  private readonly storageSyncSubscription__;
 
   constructor(config: PersistentStateSignalConfig<T>) {
     // 1. Create the LocalStorageProvider instance.
@@ -53,12 +54,32 @@ export class PersistentStateSignal<T extends JsonValue> extends StateSignal<Json
       onDestroy: config.onDestroy,
     });
 
-    this.storageProvider__ = storageProvider;
     this.logger_.logMethodArgs?.('constructor', {
       name: config.name,
       schemaVersion: config.schemaVersion,
       initialValue,
     });
+
+    this.storageProvider__ = storageProvider;
+
+    this.storageDebouncer__ = createDebouncer({
+      delay: config.saveDebounceDelay ?? 500,
+      leading: false,
+      trailing: true,
+      thisContext: this,
+      func: this.syncStorage__,
+    });
+
+    this.storageSyncSubscription__ = this.subscribe(this.storageDebouncer__.trigger, {receivePrevious: false});
+  }
+
+  /**
+   * Syncs the new value to storage.
+   * @param newValue The new value to sync to storage.
+   */
+  private syncStorage__(newValue: Jsonify<T> | T): void {
+    this.logger_.logMethodArgs?.('syncStorage__', newValue);
+    this.storageProvider__.write(newValue);
   }
 
   /**
@@ -73,7 +94,7 @@ export class PersistentStateSignal<T extends JsonValue> extends StateSignal<Json
    *                        Default is false, meaning `newValue` is already `Jsonify<T>`.
    */
   public override set(newValue: Jsonify<T>): void;
-  
+
   /**
    * Updates the signal's value.
    *
@@ -111,6 +132,8 @@ export class PersistentStateSignal<T extends JsonValue> extends StateSignal<Json
    */
   public override destroy(): void {
     this.logger_.logMethod?.('destroy');
+    // Flush any pending storage writes before destroying.
+    this.storageDebouncer__.flush();
     // Unsubscribe from the sync listener to prevent memory leaks.
     this.storageSyncSubscription__.unsubscribe();
     super.destroy();
