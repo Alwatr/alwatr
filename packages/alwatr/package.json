@@ -1,7 +1,7 @@
 {
   "name": "alwatr",
   "description": "Alwatr Ecosystem",
-  "version": "3.12.2",
+  "version": "4.0.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "dependencies": {

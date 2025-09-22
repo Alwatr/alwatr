@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/Alwatr/alwatr/compare/v3.12.2...v4.0.0) (2025-09-22)
+
+### ✨ Features
+
+* update @alwatr/flux version in package.json to 6.0.2 ([8ed1ae0](https://github.com/Alwatr/alwatr/commit/8ed1ae02477700b2f8c83aba016b1624b41ddc59))
+* update @alwatr/nanolib version in package.json to 6.1.1 ([1098a48](https://github.com/Alwatr/alwatr/commit/1098a48f19774b4c076341e76396dea832cc3d9d))
+* update @alwatr/nanotron version in package.json to ^4.10.1 ([05d3fe9](https://github.com/Alwatr/alwatr/commit/05d3fe9387fcf5a936ad794e6151bb4ae12770db))
+* update @alwatr/nitrobase version in package.json to ^7.10.0 ([76fa0b2](https://github.com/Alwatr/alwatr/commit/76fa0b262da54d9826829e33daf537d47dee87dc))
+
+### 🐛 Bug Fixes
+
+* add sideEffects property to package.json ([32eeb88](https://github.com/Alwatr/alwatr/commit/32eeb88fa058ef1bf920a5fe81396eaf0d02e2dc))
+* consolidate nanolib exports and remove deprecated files ([261e6c2](https://github.com/Alwatr/alwatr/commit/261e6c2735fcffdcb694febc39fb8d5fdb02eea6))
+
+### 🧹 Miscellaneous Chores
+
+* reorganize package.json structure and update scripts for consistency ([4249023](https://github.com/Alwatr/alwatr/commit/42490230015d1ad898e50a191bcef3226ab4feb9))
+
+### 🔗 Dependencies update
+
+* update devDependencies in package.json for improved compatibility ([460e50d](https://github.com/Alwatr/alwatr/commit/460e50dcbcf4f5068c95204333e10c5bde210ee7))
+
 ## [3.12.2](https://github.com/Alwatr/alwatr/compare/v3.12.1...v3.12.2) (2025-04-20)
 
 ### Bug Fixes

@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/Alwatr/alwatr/compare/v3.12.2...v4.0.0) (2025-09-22)
+
+### ✨ Features
+
+* update @alwatr/flux version in package.json to 6.0.2 ([8ed1ae0](https://github.com/Alwatr/alwatr/commit/8ed1ae02477700b2f8c83aba016b1624b41ddc59))
+* update @alwatr/nanolib version in package.json to 6.1.1 ([1098a48](https://github.com/Alwatr/alwatr/commit/1098a48f19774b4c076341e76396dea832cc3d9d))
+* update @alwatr/nanotron version in package.json to ^4.10.1 ([05d3fe9](https://github.com/Alwatr/alwatr/commit/05d3fe9387fcf5a936ad794e6151bb4ae12770db))
+* update @alwatr/nitrobase version in package.json to ^7.10.0 ([76fa0b2](https://github.com/Alwatr/alwatr/commit/76fa0b262da54d9826829e33daf537d47dee87dc))
+
+### 🐛 Bug Fixes
+
+* add sideEffects property to package.json ([32eeb88](https://github.com/Alwatr/alwatr/commit/32eeb88fa058ef1bf920a5fe81396eaf0d02e2dc))
+* consolidate nanolib exports and remove deprecated files ([261e6c2](https://github.com/Alwatr/alwatr/commit/261e6c2735fcffdcb694febc39fb8d5fdb02eea6))
+
+### 🧹 Miscellaneous Chores
+
+* add 'jules' label for issues related to the Google Jules AI agent ([023b0e6](https://github.com/Alwatr/alwatr/commit/023b0e6466e25b927286380b3a0b9077de141e79))
+* add configuration and style guide for Gemini code review ([f58425e](https://github.com/Alwatr/alwatr/commit/f58425eed182c613b7cbdede9bb585bf9bfd27a2))
+* clean up file associations and update cSpell words list ([2480cac](https://github.com/Alwatr/alwatr/commit/2480cac459bba1dd4f08acde604468ab386455f9))
+* correct username casing in CODEOWNERS file ([cc68a1f](https://github.com/Alwatr/alwatr/commit/cc68a1fe039b4e42432ac88eb3df6ebd8d76a084))
+* remove copilot instruction markdown file ([6dacfec](https://github.com/Alwatr/alwatr/commit/6dacfec457a29e1a666d1708c041853cb1ab47df))
+* remove deploy data backup from .gitignore ([0d71733](https://github.com/Alwatr/alwatr/commit/0d717334c344b1e9bf084306f2bde02927c4338d))
+* remove unused VSCode extension recommendations ([f933210](https://github.com/Alwatr/alwatr/commit/f933210b6bffaf1617a4e269dee3c6f163824f23))
+* reorganize package.json structure and update scripts for consistency ([4249023](https://github.com/Alwatr/alwatr/commit/42490230015d1ad898e50a191bcef3226ab4feb9))
+* skip tests by default in package.json ([c3c2e0c](https://github.com/Alwatr/alwatr/commit/c3c2e0c60c253c94e556dbd843ea170237001569))
+* update .eslintignore to include .mjs and .cjs file extensions ([ecb3b77](https://github.com/Alwatr/alwatr/commit/ecb3b776089c443f6e3c9dd87f77315ad626fd07))
+* update dependabot configuration for scheduling and commit message prefixes ([006b302](https://github.com/Alwatr/alwatr/commit/006b302f811f46977d8efd94247c9081c549f4be))
+* update lerna configuration for improved changelog and section formatting ([db2dfd7](https://github.com/Alwatr/alwatr/commit/db2dfd7384e266b182c647f6b83897b47fae90ac))
+* update package.json dependencies and scripts for consistency ([12e3316](https://github.com/Alwatr/alwatr/commit/12e331620af128b32d6a65f722faa30dfe3a4c1f))
+
+### 🔗 Dependencies update
+
+* update devDependencies in package.json for improved compatibility ([460e50d](https://github.com/Alwatr/alwatr/commit/460e50dcbcf4f5068c95204333e10c5bde210ee7))
+* update devDependencies in package.json for improved compatibility ([681a38c](https://github.com/Alwatr/alwatr/commit/681a38c234d439f4ecefec25fff3221a8e49d7fb))
+* update prettier and typescript versions in package.json ([dbffee9](https://github.com/Alwatr/alwatr/commit/dbffee901eb70f89b759123d127fa457ff1725e6))
+
 ## [3.12.2](https://github.com/Alwatr/alwatr/compare/v3.12.1...v3.12.2) (2025-04-20)
 
 ### Bug Fixes
