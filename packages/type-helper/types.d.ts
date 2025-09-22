@@ -325,7 +325,7 @@ declare global {
    * Any JSON-compatible value.
    * This is a recursive type that defines the structure of a JSON object.
    */
-  type JsonValue = JsonPrimitive | JsonObject | JsonArray | {toJSON(): JsonValue};
+  type JsonValue = JsonPrimitive | JsonObject | JsonArray;
 
   /**
    * A JSON-compatible array.
