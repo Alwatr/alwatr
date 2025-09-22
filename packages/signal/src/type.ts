@@ -1,4 +1,5 @@
 import type {DebouncerConfig} from '@alwatr/debounce';
+import type {LocalStorageProviderConfig} from '@alwatr/local-storage';
 import type {} from '@alwatr/type-helper';
 
 /**
@@ -309,3 +310,11 @@ export interface DebounceSignalConfig extends Omit<DebouncerConfig<never>, 'func
    */
   onDestroy?: () => void;
 }
+
+/**
+ * Configuration for a persistent state signal.
+ * It combines the core signal configuration with the necessary options for local storage persistence.
+ *
+ * @template T The type of the state it holds.
+ */
+export interface PersistentStateSignalConfig<T> extends SignalConfig, LocalStorageProviderConfig<T> {}
