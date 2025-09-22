@@ -26,13 +26,14 @@ export class LocalStorageProvider<T extends JsonValue> {
   public static readonly version = __package_version__;
 
   private readonly key__: string;
-  protected readonly logger_ = createLogger(`local-storage-provider: ${this.config_.name}, v: ${this.config_.schemaVersion}`);
+  protected readonly logger_;
 
   private meta__: StorageMeta;
 
   protected readonly defaultValue__: Jsonify<T>;
 
   constructor(config: LocalStorageProviderConfig<T>) {
+    this.logger_ = createLogger(`local-storage-provider: ${config.name}, v: ${config.schemaVersion}`);
     this.logger_.logMethodArgs?.('constructor', {config});
     this.meta__ = {
       name: config.name,
@@ -116,7 +117,13 @@ export class LocalStorageProvider<T extends JsonValue> {
    * it writes and returns the default value.
    */
   public read(): Jsonify<T> {
-    const value = localStorage.getItem(this.key__);
+    let value: string | null = null;
+    try {
+      value = localStorage.getItem(this.key__);
+    }
+    catch (err) {
+      this.logger_.error('read', 'read_local_storage_error', {err});
+    }
 
     if (value === null) {
       this.logger_.logMethod?.('read//no_value');
@@ -139,12 +146,20 @@ export class LocalStorageProvider<T extends JsonValue> {
    */
   public write(value: T | Jsonify<T>): void {
     this.logger_.logMethodArgs?.('write', {value});
+    let valueStr: string;
     try {
-      localStorage.setItem(this.key__, JSON.stringify(value));
+      valueStr = JSON.stringify(value);
     }
     catch (err) {
       this.logger_.error('write', 'write_stringify_error', {err});
       throw new Error('write_stringify_error');
+    }
+
+    try {
+      localStorage.setItem(this.key__, valueStr);
+    }
+    catch (err) {
+      this.logger_.error('write', 'write_local_storage_error', {err});
     }
   }
 
