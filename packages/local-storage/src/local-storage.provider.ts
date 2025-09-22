@@ -22,15 +22,15 @@ import type {LocalStorageProviderConfig, StorageMeta} from './type.js';
  * console.log(currentSettings); // { theme: 'dark', notifications: false }
  * ```
  */
-export class LocalStorageProvider<T> {
+export class LocalStorageProvider<T extends JsonValue> {
   public static readonly version = __package_version__;
 
   private readonly key__: string;
   protected readonly logger_;
 
-  private meta__: StorageMeta;
+  private readonly meta__: Readonly<StorageMeta>;
 
-  protected readonly defaultValue__: Jsonify<T>;
+  protected readonly defaultValue__: T;
 
   constructor(config: LocalStorageProviderConfig<T>) {
     this.logger_ = createLogger(`local-storage-provider: ${config.name}, v: ${config.schemaVersion}`);
@@ -78,7 +78,7 @@ export class LocalStorageProvider<T> {
   /**
    * Writes the default value to localStorage and returns it.
    */
-  private handleDefault__(): Jsonify<T> {
+  private handleDefault__(): T {
     this.logger_.logMethodArgs?.('handleDefault__', this.defaultValue__);
     try {
       this.write(this.defaultValue__);
@@ -92,18 +92,18 @@ export class LocalStorageProvider<T> {
   /**
    * Converts the provided data to a JSON-compatible format by simulating
    * a serialization/deserialization cycle. This ensures that the data
-   * conforms to the `Jsonify<T>` type.
+   * conforms to the `T` type.
    *
    * @template T - The type of the input data.
    * @param data - The data to be converted to a JSON-compatible format.
-   * @returns The converted data as `Jsonify<T>`.
+   * @returns The converted data as `T`.
    * @throws {Error} If the serialization/deserialization process fails.
    */
-  public convertDataType(data: T | Jsonify<T>): Jsonify<T> {
+  public convertDataType(data: T): T {
     this.logger_.logMethod?.('convertDataType');
     // Simulate real serialization/deserialization cycle for real types
     try {
-      return JSON.parse(JSON.stringify(data)) as Jsonify<T>;
+      return JSON.parse(JSON.stringify(data)) as T;
     }
     catch (err) {
       this.logger_.error('convertDataType__', 'convert_data_type_error', {err});
@@ -116,7 +116,7 @@ export class LocalStorageProvider<T> {
    * If the item doesn't exist, is invalid JSON, or doesn't match the expected type,
    * it writes and returns the default value.
    */
-  public read(): Jsonify<T> {
+  public read(): T {
     let value: string | null = null;
     try {
       value = localStorage.getItem(this.key__);
@@ -131,7 +131,7 @@ export class LocalStorageProvider<T> {
     }
 
     try {
-      const parsedValue = JSON.parse(value) as Jsonify<T>;
+      const parsedValue = JSON.parse(value) as T;
       this.logger_.logMethodFull?.('read//value', undefined, {parsedValue});
       return parsedValue;
     }
@@ -144,7 +144,7 @@ export class LocalStorageProvider<T> {
   /**
    * Serializes and writes a value to localStorage.
    */
-  public write(value: T | Jsonify<T>): void {
+  public write(value: T): void {
     this.logger_.logMethodArgs?.('write', {value});
     let valueStr: string;
     try {
