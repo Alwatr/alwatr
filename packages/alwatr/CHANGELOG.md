@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/Alwatr/alwatr/compare/v4.0.0...v4.0.1) (2025-09-25)
+
+### 🐛 Bug Fixes
+
+* update alwatr dependencies to latest versions ([d293233](https://github.com/Alwatr/alwatr/commit/d293233c8113983e146222941eeac60a8bd6111f))
+
 ## [4.0.0](https://github.com/Alwatr/alwatr/compare/v3.12.2...v4.0.0) (2025-09-22)
 
 ### ✨ Features
