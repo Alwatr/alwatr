@@ -2,7 +2,6 @@
 
 The Alwatr Developer Kit is a comprehensive ecosystem designed to facilitate your development process. It comprises a diverse range of tools and libraries, empowering you to construct robust applications with enhanced efficiency.
 
-
 ## Introduction
 
 Alwatr is a comprehensive ecosystem designed to streamline your development process. It includes a variety of tools and libraries to help you build robust applications efficiently.
@@ -57,7 +56,3 @@ The following companies, organizations, and individuals support Nitrobase ongoin
 ### Contributing
 
 Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
-
-### License
-
-This project is licensed under the [MPL-2.0 License](LICENSE).
