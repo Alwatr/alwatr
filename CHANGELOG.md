@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.2](https://github.com/Alwatr/alwatr/compare/v4.0.1...v4.0.2) (2025-09-27)
+
+### 🐛 Bug Fixes
+
+* back @alwatr/flux dependency to version 4.1.1 ([089a8dc](https://github.com/Alwatr/alwatr/commit/089a8dcb437279d2fa0c4a111401fea4888eaaea))
+* update @alwatr/nanolib dependency to version 6.1.8 ([48ba301](https://github.com/Alwatr/alwatr/commit/48ba301a77add26991731aa20c637a369b1f8b21))
+
+### 🧹 Miscellaneous Chores
+
+* add publish configuration with latest distTag ([8f02c8a](https://github.com/Alwatr/alwatr/commit/8f02c8ade08c6d0606826646eb92bf7ff9b21033))
+
+### 🔗 Dependencies update
+
+* update devDependencies to latest versions ([6252281](https://github.com/Alwatr/alwatr/commit/625228164c7c029c74e7f5a613a20e0d7f539cee))
+
 ## [4.0.1](https://github.com/Alwatr/alwatr/compare/v4.0.0...v4.0.1) (2025-09-25)
 
 ### 🐛 Bug Fixes
