@@ -21,7 +21,8 @@
   "files": [
     "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
     "LICENSE",
-    "!demo/**/*"
+    "!demo/**/*",
+    "!**/*.test.js"
   ],
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/http-primer#readme",
   "keywords": [

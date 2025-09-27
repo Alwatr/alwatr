@@ -27,7 +27,8 @@
   "files": [
     "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
     "LICENSE",
-    "!demo/**/*"
+    "!demo/**/*",
+    "!**/*.test.js"
   ],
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/node-fs#readme",
   "keywords": [
