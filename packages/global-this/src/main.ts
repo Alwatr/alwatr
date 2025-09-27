@@ -1,11 +1,16 @@
 export type GlobalThis = typeof globalThis;
 
+/**
+ * The global object in various JavaScript environments.
+ * It checks for `globalThis`, `window`, `global`, and `self` in that order.
+ * @private
+ */
 const globalThis__: GlobalThis = (() => {
   if (typeof globalThis === 'object' && globalThis) return globalThis;
   if (typeof window === 'object' && window) return window;
   if (typeof global === 'object' && global) return global;
   if (typeof self === 'object' && self) return self;
-  throw new Error('alwatr/global-this: Could not find global object.');
+  throw new Error(`${__package_name__} v${__package_version__}: Could not find global object.`);
 })();
 
 /**
