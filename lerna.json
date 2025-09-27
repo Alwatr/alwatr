@@ -97,6 +97,9 @@
     },
     "run": {
       "stream": true
+    },
+    "publish": {
+      "distTag": "latest"
     }
   }
 }
