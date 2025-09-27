@@ -1,6 +1,3 @@
-import type {} from '@alwatr/nano-build';
-import type {} from '@alwatr/type-helper';
-
 export * from '@alwatr/async-queue'
 export * from '@alwatr/cyrb53'
 export * from '@alwatr/debounce'
