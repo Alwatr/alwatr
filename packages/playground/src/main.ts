@@ -5,4 +5,6 @@ import '@alwatr/nanolib/node';
 /* #__PURE__ */
 createLogger('playground');
 
-console.log('hi');
+const obj: DictionaryOpt<string> = {name: 'ali'};
+
+console.log(`Hi ${obj.name}`);
