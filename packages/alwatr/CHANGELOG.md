@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/Alwatr/alwatr/compare/v4.0.2...v5.0.0) (2025-09-27)
+
+### ⚠ BREAKING CHANGES
+
+* Upgrade flux (include fms and signal) to v6
+
+### 🔗 Dependencies update
+
+* update @alwatr/flux dependency to version 6.1.0 ([cbe02ac](https://github.com/Alwatr/alwatr/commit/cbe02aca5810abc64c028e81f070c0943e3f6a5e))
+
 ## [4.0.2](https://github.com/Alwatr/alwatr/compare/v4.0.1...v4.0.2) (2025-09-27)
 
 ### 🐛 Bug Fixes
