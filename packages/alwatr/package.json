@@ -6,7 +6,7 @@
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "dependencies": {
     "@alwatr/flux": "^4.1.1",
-    "@alwatr/nanolib": "^6.1.7",
+    "@alwatr/nanolib": "^6.1.8",
     "@alwatr/nanotron": "^4.10.1",
     "@alwatr/nitrobase": "^7.10.0"
   },
