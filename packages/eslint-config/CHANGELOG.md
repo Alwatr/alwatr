@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.3](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.6.2...@alwatr/eslint-config@5.6.3) (2025-09-27)
+
+### 🧹 Miscellaneous Chores
+
+* exclude test files from package distribution ([86f4f2f](https://github.com/Alwatr/nanolib/commit/86f4f2f5985845c5cf3a3a9398de7b2f98ce53e7))
+
 ## [5.6.2](https://github.com/Alwatr/nanolib/compare/@alwatr/eslint-config@5.6.1...@alwatr/eslint-config@5.6.2) (2025-09-20)
 
 ### 🐛 Bug Fixes

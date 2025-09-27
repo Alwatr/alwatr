@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.9](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.8...@alwatr/debounce@1.1.9) (2025-09-27)
+
+### 🧹 Miscellaneous Chores
+
+* exclude test files from package distribution ([86f4f2f](https://github.com/Alwatr/nanolib/commit/86f4f2f5985845c5cf3a3a9398de7b2f98ce53e7))
+
 ## [1.1.8](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.7...@alwatr/debounce@1.1.8) (2025-09-22)
 
 **Note:** Version bump only for package @alwatr/debounce

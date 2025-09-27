@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.0](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.5.19...@alwatr/global-this@5.6.0) (2025-09-27)
+
+### ✨ Features
+
+* add type exports for '@alwatr/type-helper' and '@alwatr/nano-build' ([9646ddd](https://github.com/Alwatr/nanolib/commit/9646ddde384afcf0f578d812b8e3820559d3799b))
+
+### 🧹 Miscellaneous Chores
+
+* exclude test files from package distribution ([86f4f2f](https://github.com/Alwatr/nanolib/commit/86f4f2f5985845c5cf3a3a9398de7b2f98ce53e7))
+* remove unused type references from tsconfig.json ([86fac00](https://github.com/Alwatr/nanolib/commit/86fac003599fe0aa02c3dcca65b47ec9ee643c00))
+
 ## [5.5.19](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.5.18...@alwatr/global-this@5.5.19) (2025-09-22)
 
 **Note:** Version bump only for package @alwatr/global-this
