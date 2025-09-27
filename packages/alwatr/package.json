@@ -5,7 +5,7 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "dependencies": {
-    "@alwatr/flux": "^6.1.0",
+    "@alwatr/flux": "^4.1.1",
     "@alwatr/nanolib": "^6.1.7",
     "@alwatr/nanotron": "^4.10.1",
     "@alwatr/nitrobase": "^7.10.0"
