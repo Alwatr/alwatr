@@ -15,7 +15,7 @@
     "@alwatr/prettier-config": "^5.0.5",
     "@alwatr/tsconfig-base": "^6.0.3",
     "@alwatr/type-helper": "^6.1.4",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "displayName": "Alwatr",
   "engines": {
