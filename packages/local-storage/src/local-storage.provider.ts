@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-import type {LocalStorageProviderConfig, StorageMeta} from './type.js';
+import type {LocalStorageProviderConfig} from './type.js';
 
 /**
  * A provider class for managing a specific, versioned item in localStorage.
@@ -28,20 +28,11 @@ export class LocalStorageProvider<T extends JsonValue> {
   private readonly key__: string;
   protected readonly logger_;
 
-  private readonly meta__: Readonly<StorageMeta>;
-
-  protected readonly defaultValue__: T;
-
-  constructor(config: LocalStorageProviderConfig<T>) {
+  constructor(config: LocalStorageProviderConfig) {
     this.logger_ = createLogger(`local-storage-provider: ${config.name}, v: ${config.schemaVersion}`);
     this.logger_.logMethodArgs?.('constructor', {config});
-    this.meta__ = {
-      name: config.name,
-      schemaVersion: config.schemaVersion,
-    };
-    this.key__ = LocalStorageProvider.getKey(this.meta__);
-    this.defaultValue__ = this.convertDataType__(config.defaultValue);
-    this.migrate__();
+    this.key__ = LocalStorageProvider.getKey(config);
+    LocalStorageProvider.clearPreviousStorageVersions(config);
   }
 
   /**
@@ -49,8 +40,21 @@ export class LocalStorageProvider<T extends JsonValue> {
    * @param meta - An object containing the name and schemaVersion.
    * @returns The versioned key string.
    */
-  public static getKey(meta: StorageMeta): string {
-    return `${meta.name}.v${meta.schemaVersion}`;
+  public static getKey(config: LocalStorageProviderConfig): string {
+    return `${config.name}.v${config.schemaVersion}`;
+  }
+
+  /**
+   * Manages data migration by removing all previous versions of the item.
+   */
+  public static clearPreviousStorageVersions(config: LocalStorageProviderConfig): void {
+    if (config.schemaVersion < 1) return;
+
+    // Iterate from v1 up to the version just before the current one and remove them.
+    for (let i = 0; i < config.schemaVersion; i++) {
+      const oldKey = LocalStorageProvider.getKey({name: config.name, schemaVersion: i});
+      localStorage.removeItem(oldKey);
+    }
   }
 
   /**
@@ -70,45 +74,8 @@ export class LocalStorageProvider<T extends JsonValue> {
    * }
    * ```
    */
-  public static has(meta: StorageMeta): boolean {
-    const key = LocalStorageProvider.getKey(meta);
-    return localStorage.getItem(key) !== null;
-  }
-
-  /**
-   * Writes the default value to localStorage and returns it.
-   */
-  private handleDefault__(): T {
-    this.logger_.logMethodArgs?.('handleDefault__', this.defaultValue__);
-    try {
-      this.write(this.defaultValue__);
-    }
-    catch (err) {
-      this.logger_.error('write', 'write_default_error', {err});
-    }
-    return this.defaultValue__;
-  }
-
-  /**
-   * Converts the provided data to a JSON-compatible format by simulating
-   * a serialization/deserialization cycle. This ensures that the data
-   * conforms to the `T` type.
-   *
-   * @template T - The type of the input data.
-   * @param data - The data to be converted to a JSON-compatible format.
-   * @returns The converted data as `T`.
-   * @throws {Error} If the serialization/deserialization process fails.
-   */
-  private convertDataType__(data: T): T {
-    this.logger_.logMethod?.('convertDataType');
-    // Simulate real serialization/deserialization cycle for real types
-    try {
-      return JSON.parse(JSON.stringify(data)) as T;
-    }
-    catch (err) {
-      this.logger_.error('convertDataType__', 'convert_data_type_error', {err});
-      throw new Error('convert_data_type_error');
-    }
+  public has(): boolean {
+    return localStorage.getItem(this.key__) !== null;
   }
 
   /**
@@ -116,8 +83,9 @@ export class LocalStorageProvider<T extends JsonValue> {
    * If the item doesn't exist, is invalid JSON, or doesn't match the expected type,
    * it writes and returns the default value.
    */
-  public read(): T {
+  public read(): T | null {
     let value: string | null = null;
+
     try {
       value = localStorage.getItem(this.key__);
     }
@@ -125,9 +93,9 @@ export class LocalStorageProvider<T extends JsonValue> {
       this.logger_.error('read', 'read_local_storage_error', {err});
     }
 
-    if (value === null) {
+    if (!value) {
       this.logger_.logMethod?.('read//no_value');
-      return this.handleDefault__();
+      return null;
     }
 
     try {
@@ -137,7 +105,7 @@ export class LocalStorageProvider<T extends JsonValue> {
     }
     catch (err) {
       this.logger_.error('read', 'read_parse_error', {err});
-      return this.handleDefault__();
+      return null;
     }
   }
 
@@ -168,18 +136,5 @@ export class LocalStorageProvider<T extends JsonValue> {
    */
   public remove(): void {
     localStorage.removeItem(this.key__);
-  }
-
-  /**
-   * Manages data migration by removing all previous versions of the item.
-   */
-  private migrate__(): void {
-    if (this.meta__.schemaVersion <= 1) return;
-
-    // Iterate from v1 up to the version just before the current one and remove them.
-    for (let i = 1; i < this.meta__.schemaVersion; i++) {
-      const oldKey = LocalStorageProvider.getKey({name: this.meta__.name, schemaVersion: i});
-      localStorage.removeItem(oldKey);
-    }
   }
 }
