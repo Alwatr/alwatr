@@ -10,8 +10,7 @@ import type {LocalStorageProviderConfig} from './type.js';
  * ```typescript
  * const userSettings = new LocalStorageProvider({
  *   name: 'user-settings',
- *   version: 1,
- *   defaultValue: { theme: 'light', notifications: true }
+ *   version: 1
  * });
  *
  * // Write new settings
@@ -80,8 +79,7 @@ export class LocalStorageProvider<T extends JsonValue> {
 
   /**
    * Reads and parses the value from localStorage.
-   * If the item doesn't exist, is invalid JSON, or doesn't match the expected type,
-   * it writes and returns the default value.
+   * If the item doesn't exist or is invalid JSON, returns null.
    */
   public read(): T | null {
     let value: string | null = null;
