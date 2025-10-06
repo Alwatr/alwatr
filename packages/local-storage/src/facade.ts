@@ -12,8 +12,7 @@ import type {LocalStorageProviderConfig} from './type.js';
  * ```typescript
  * const userSettings = createLocalStorageProvider({
  *   name: 'user-settings',
- *   schemaVersion: 1,
- *   defaultValue: { theme: 'light', notifications: true }
+ *   schemaVersion: 1
  * });
  *
  * // Write new settings
@@ -24,6 +23,6 @@ import type {LocalStorageProviderConfig} from './type.js';
  * console.log(currentSettings); // { theme: 'dark', notifications: false }
  * ```
  */
-export function createLocalStorageProvider<T extends JsonValue>(config: LocalStorageProviderConfig<T>): LocalStorageProvider<T> {
+export function createLocalStorageProvider<T extends JsonValue>(config: LocalStorageProviderConfig): LocalStorageProvider<T> {
   return new LocalStorageProvider<T>(config);
 }

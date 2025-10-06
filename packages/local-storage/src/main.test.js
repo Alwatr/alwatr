@@ -43,20 +43,32 @@ describe('LocalStorageProvider', () => {
   describe('static has', () => {
     it('should return true if item exists', () => {
       mockLocalStorage.getItem.mockReturnValue('{"value": "test"}');
-      const exists = LocalStorageProvider.has({name: 'test', schemaVersion: 1});
+      const provider = createLocalStorageProvider({
+        name: 'test',
+        schemaVersion: 1,
+      });
+      const exists = provider.has();
       expect(exists).toBe(true);
       expect(mockLocalStorage.getItem).toHaveBeenCalledWith('test.v1');
     });
 
     it('should return false if item does not exist', () => {
       mockLocalStorage.getItem.mockReturnValue(null);
-      const exists = LocalStorageProvider.has({name: 'test', schemaVersion: 1});
+      const provider = createLocalStorageProvider({
+        name: 'test',
+        schemaVersion: 1,
+      });
+      const exists = provider.has();
       expect(exists).toBe(false);
     });
 
     it('should return false for null value', () => {
       mockLocalStorage.getItem.mockReturnValue(null);
-      const exists = LocalStorageProvider.has({name: 'test', schemaVersion: 1});
+      const provider = createLocalStorageProvider({
+        name: 'test',
+        schemaVersion: 1,
+      });
+      const exists = provider.has();
       expect(exists).toBe(false);
     });
   });
@@ -66,17 +78,15 @@ describe('LocalStorageProvider', () => {
       const provider = createLocalStorageProvider({
         name: 'test',
         schemaVersion: 3,
-        defaultValue: {key: 'value'},
       });
       expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('test.v1');
       expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('test.v2');
     });
 
-    it('should not migrate if schemaVersion is 1', () => {
+    it('should not migrate if schemaVersion is 0', () => {
       const provider = createLocalStorageProvider({
         name: 'test',
-        schemaVersion: 1,
-        defaultValue: {key: 'value'},
+        schemaVersion: 0,
       });
       expect(mockLocalStorage.removeItem).not.toHaveBeenCalled();
     });
@@ -85,7 +95,6 @@ describe('LocalStorageProvider', () => {
       const provider = createLocalStorageProvider({
         name: 'test',
         schemaVersion: 5,
-        defaultValue: {key: 'value'},
       });
       expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('test.v1');
       expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('test.v2');
@@ -95,16 +104,14 @@ describe('LocalStorageProvider', () => {
   });
 
   describe('read', () => {
-    it('should return default value if no item exists', () => {
+    it('should return null if no item exists', () => {
       mockLocalStorage.getItem.mockReturnValue(null);
       const provider = createLocalStorageProvider({
         name: 'test',
         schemaVersion: 1,
-        defaultValue: {key: 'default'},
       });
       const result = provider.read();
-      expect(result).toEqual({key: 'default'});
-      expect(mockLocalStorage.setItem).toHaveBeenCalledWith('test.v1', '{"key":"default"}');
+      expect(result).toBe(null);
     });
 
     it('should return parsed value if item exists', () => {
@@ -112,33 +119,19 @@ describe('LocalStorageProvider', () => {
       const provider = createLocalStorageProvider({
         name: 'test',
         schemaVersion: 1,
-        defaultValue: {key: 'default'},
       });
       const result = provider.read();
       expect(result).toEqual({key: 'stored'});
     });
 
-    it('should return default value on invalid JSON', () => {
+    it('should return null on invalid JSON', () => {
       mockLocalStorage.getItem.mockReturnValue('invalid json');
       const provider = createLocalStorageProvider({
         name: 'test',
         schemaVersion: 1,
-        defaultValue: {key: 'default'},
       });
       const result = provider.read();
-      expect(result).toEqual({key: 'default'});
-    });
-
-    it('should handle complex default values', () => {
-      mockLocalStorage.getItem.mockReturnValue(null);
-      const provider = createLocalStorageProvider({
-        name: 'test',
-        schemaVersion: 1,
-        defaultValue: {theme: 'dark', lastLogin: Date.now(), settings: [1, 2, 3]},
-      });
-      const result = provider.read();
-      expect(result.theme).toBe('dark');
-      expect(Array.isArray(result.settings)).toBe(true);
+      expect(result).toBe(null);
     });
   });
 
@@ -147,7 +140,6 @@ describe('LocalStorageProvider', () => {
       const provider = createLocalStorageProvider({
         name: 'test',
         schemaVersion: 1,
-        defaultValue: {key: 'default'},
       });
       provider.write({key: 'newValue'});
       expect(mockLocalStorage.setItem).toHaveBeenCalledWith('test.v1', '{"key":"newValue"}');
@@ -160,7 +152,6 @@ describe('LocalStorageProvider', () => {
       const provider = createLocalStorageProvider({
         name: 'test',
         schemaVersion: 1,
-        defaultValue: {key: 'default'},
       });
       expect(() => provider.write({key: 'value'})).not.toThrow();
     });
@@ -169,10 +160,6 @@ describe('LocalStorageProvider', () => {
       const provider = createLocalStorageProvider({
         name: 'test',
         schemaVersion: 1,
-        /**
-         * @type {string|number|Array<number>}
-         */
-        defaultValue: '',
       });
       provider.write('string value');
       expect(mockLocalStorage.setItem).toHaveBeenCalledWith('test.v1', '"string value"');
@@ -188,7 +175,6 @@ describe('LocalStorageProvider', () => {
       const provider = createLocalStorageProvider({
         name: 'test',
         schemaVersion: 1,
-        defaultValue: {key: 'default'},
       });
       provider.remove();
       expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('test.v1');
@@ -198,7 +184,6 @@ describe('LocalStorageProvider', () => {
       const provider = createLocalStorageProvider({
         name: 'test',
         schemaVersion: 1,
-        defaultValue: {key: 'default'},
       });
       expect(() => provider.remove()).not.toThrow();
     });
@@ -209,26 +194,21 @@ describe('LocalStorageProvider', () => {
       const provider = createLocalStorageProvider({
         name: 'factory-test',
         schemaVersion: 1,
-        defaultValue: {created: true},
       });
       expect(provider).toBeInstanceOf(LocalStorageProvider);
-      const result = provider.read();
-      expect(result.created).toBe(true);
     });
 
     it('should handle different configurations', () => {
       const provider1 = createLocalStorageProvider({
         name: 'config1',
         schemaVersion: 2,
-        defaultValue: 'default1',
       });
       const provider2 = createLocalStorageProvider({
         name: 'config2',
         schemaVersion: 1,
-        defaultValue: {key: 'default2'},
       });
-      expect(provider1.read()).toBe('default1');
-      expect(provider2.read().key).toBe('default2');
+      expect(provider1.read()).toBe(null);
+      expect(provider2.read()).toBe(null);
     });
   });
 });
