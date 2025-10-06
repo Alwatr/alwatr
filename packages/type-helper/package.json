@@ -6,7 +6,7 @@
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {
     "@alwatr/prettier-config": "workspace:*",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "files": [
     "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
