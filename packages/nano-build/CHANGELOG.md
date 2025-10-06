@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.5](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.3.4...@alwatr/nano-build@6.3.5) (2025-10-06)
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 4 updates ([9825815](https://github.com/Alwatr/nanolib/commit/982581552bbb4b97dca52af5e93a80937f0c3109))
+
 ## [6.3.4](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.3.3...@alwatr/nano-build@6.3.4) (2025-09-27)
 
 ### 🧹 Miscellaneous Chores

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.10](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.9...@alwatr/debounce@1.1.10) (2025-10-06)
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 4 updates ([9825815](https://github.com/Alwatr/nanolib/commit/982581552bbb4b97dca52af5e93a80937f0c3109))
+
 ## [1.1.9](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.8...@alwatr/debounce@1.1.9) (2025-09-27)
 
 ### 🧹 Miscellaneous Chores

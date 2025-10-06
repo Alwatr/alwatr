@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.3.4...@alwatr/local-storage@7.0.0) (2025-10-06)
+
+### ⚠ BREAKING CHANGES
+
+* api changed and defaultValue removed
+
+### ✨ Features
+
+* implement static method to check existence of versioned item in localStorage ([c622595](https://github.com/Alwatr/nanolib/commit/c622595bcd793746133733b22c7704463d50314d))
+
+### 🔨 Code Refactoring
+
+* enhance documentation for LocalStorageProviderConfig interface ([11407cd](https://github.com/Alwatr/nanolib/commit/11407cd80ee9def06bcb21c6bb426e92caa7d702))
+* improve documentation for LocalStorageProvider's static methods ([145ac5c](https://github.com/Alwatr/nanolib/commit/145ac5c0d947c9d3f1e91a25e5ca749e0e56d85b))
+* simplify LocalStorageProvider configuration and remove unused types ([b839299](https://github.com/Alwatr/nanolib/commit/b839299d3950f1662773fd8f3a0e6b2189c3d140))
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 4 updates ([9825815](https://github.com/Alwatr/nanolib/commit/982581552bbb4b97dca52af5e93a80937f0c3109))
+
 ## [6.3.4](https://github.com/Alwatr/nanolib/compare/@alwatr/local-storage@6.3.3...@alwatr/local-storage@6.3.4) (2025-09-27)
 
 ### 🧹 Miscellaneous Chores

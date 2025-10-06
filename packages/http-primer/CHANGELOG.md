@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.12](https://github.com/Alwatr/nanolib/compare/@alwatr/http-primer@6.0.11...@alwatr/http-primer@6.0.12) (2025-10-06)
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 4 updates ([9825815](https://github.com/Alwatr/nanolib/commit/982581552bbb4b97dca52af5e93a80937f0c3109))
+
 ## [6.0.11](https://github.com/Alwatr/nanolib/compare/@alwatr/http-primer@6.0.10...@alwatr/http-primer@6.0.11) (2025-09-27)
 
 ### 🧹 Miscellaneous Chores

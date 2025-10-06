@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.9](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@6.0.8...@alwatr/logger@6.0.9) (2025-10-06)
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 4 updates ([9825815](https://github.com/Alwatr/nanolib/commit/982581552bbb4b97dca52af5e93a80937f0c3109))
+
 ## [6.0.8](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@6.0.7...@alwatr/logger@6.0.8) (2025-09-27)
 
 ### 🧹 Miscellaneous Chores

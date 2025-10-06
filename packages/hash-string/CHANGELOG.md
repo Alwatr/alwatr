@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.19](https://github.com/Alwatr/nanolib/compare/@alwatr/hash-string@5.2.18...@alwatr/hash-string@5.2.19) (2025-10-06)
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 4 updates ([9825815](https://github.com/Alwatr/nanolib/commit/982581552bbb4b97dca52af5e93a80937f0c3109))
+
 ## [5.2.18](https://github.com/Alwatr/nanolib/compare/@alwatr/hash-string@5.2.17...@alwatr/hash-string@5.2.18) (2025-09-27)
 
 ### 🧹 Miscellaneous Chores
