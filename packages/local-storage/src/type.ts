@@ -1,6 +1,9 @@
 import type {} from '@alwatr/nano-build';
 import type {} from '@alwatr/type-helper';
 
+/**
+ * Configuration options for a local storage provider.
+ */
 export interface LocalStorageProviderConfig {
   /**
    * The unique name for the storage item.
@@ -8,8 +11,8 @@ export interface LocalStorageProviderConfig {
   name: string;
 
   /**
-   * The data structure version.
-   * starting from 1 and incrementing by 1 for each new version.
+   * The version of the data structure.
+   * Start from 1 for production, 0 for development mode, and increment by 1 for each new data schema change.
    */
   schemaVersion: number;
 }
