@@ -69,6 +69,10 @@ export class LocalStorageProvider<T extends JsonValue> {
    * const exists = LocalStorageProvider.has({ name: 'user-form', schemaVersion: 1 });
    * ```
    */
+  public static has(config: LocalStorageProviderConfig): boolean {
+    const key = LocalStorageProvider.getKey(config);
+    return localStorage.getItem(key) !== null;
+  }
 
   /**
    * Checks if the current versioned item exists in localStorage.
