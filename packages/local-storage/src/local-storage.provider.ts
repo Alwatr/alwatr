@@ -57,19 +57,29 @@ export class LocalStorageProvider<T extends JsonValue> {
   }
 
   /**
-   * Statically checks if a versioned item exists in localStorage.
-   * This method provides a high-performance way to check for data existence without the overhead of creating a full provider instance.
+   * Checks if a versioned item exists in localStorage for the given configuration.
+   * This static method allows checking for the existence of a specific versioned item
+   * without instantiating the provider.
    *
-   * @param meta - An object containing the name and version of the item to check.
-   * @returns `true` if the item exists, otherwise `false`.
+   * @param config - The configuration object containing the name and schemaVersion.
+   * @returns `true` if the item exists in localStorage, otherwise `false`.
    *
    * @example
    * ```typescript
-   * const formExists = LocalStorageProvider.has({ name: 'user-form', schemaVersion: 1 });
-   * if (formExists) {
-   *   // Show the "Thank you" message
-   * } else {
-   *   // Show the form
+   * const exists = LocalStorageProvider.has({ name: 'user-form', schemaVersion: 1 });
+   * ```
+   */
+
+  /**
+   * Checks if the current versioned item exists in localStorage.
+   *
+   * @returns `true` if the item exists in localStorage, otherwise `false`.
+   *
+   * @example
+   * ```typescript
+   * const provider = new LocalStorageProvider({ name: 'profile', schemaVersion: 2 });
+   * if (provider.has()) {
+   *   // Item exists
    * }
    * ```
    */
