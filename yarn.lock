@@ -14,6 +14,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@alwatr/async-queue@npm:5.5.20":
+  version: 5.5.20
+  resolution: "@alwatr/async-queue@npm:5.5.20"
+  dependencies:
+    "@alwatr/flatomise": "npm:5.5.20"
+  checksum: 10c0/67912f9ed7ee097d6d89e33aa48585448e66e9f106558bb2fe3fe85793970274ff7ff21ed10cf8e6c3d00a0c9b416154c9cc4ae14641a4a2807b66a84c863ed9
+  languageName: node
+  linkType: hard
+
 "@alwatr/crypto@npm:4.10.1":
   version: 4.10.1
   resolution: "@alwatr/crypto@npm:4.10.1"
@@ -23,28 +32,45 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/cyrb53@npm:1.0.7":
-  version: 1.0.7
-  resolution: "@alwatr/cyrb53@npm:1.0.7"
-  checksum: 10c0/3b3adf0af9ed892372802187b1bd18646e3dc929240338fe651ffce0c2a8cbac736860b1b50f7f8ac532b74aee501d72d4c86d5b5c8c1602402794369e9f5bc2
+"@alwatr/cyrb53@npm:1.0.8":
+  version: 1.0.8
+  resolution: "@alwatr/cyrb53@npm:1.0.8"
+  checksum: 10c0/000833786191c8362e5becdd6f14678e90f489bb1bf8f572963eeb96211553350c42a449d7747c10e1ca807ee1364e44ac7ac1a9ddcd26d0c29f41d07255317c
   languageName: node
   linkType: hard
 
-"@alwatr/debounce@npm:1.1.9, @alwatr/debounce@npm:^1.1.8":
+"@alwatr/debounce@npm:1.1.10":
+  version: 1.1.10
+  resolution: "@alwatr/debounce@npm:1.1.10"
+  checksum: 10c0/2217327c14b8140a87a151dfbaba2b6add0a2940977ba41f919d16a1efb54234e2e058574970db660b6cfb7c3289771836a0c83a2fd5ce47ef2c3696563a52e4
+  languageName: node
+  linkType: hard
+
+"@alwatr/debounce@npm:^1.1.8":
   version: 1.1.9
   resolution: "@alwatr/debounce@npm:1.1.9"
   checksum: 10c0/0522d4b6383e239ede2f606a72be29c5899488fecc009e4ebe8801e7580e8d4e349610b5524458de1730ac733e29f8e5f8d819745f9ccf02c29369488375ef13
   languageName: node
   linkType: hard
 
-"@alwatr/deep-clone@npm:5.5.19":
-  version: 5.5.19
-  resolution: "@alwatr/deep-clone@npm:5.5.19"
-  checksum: 10c0/d75381212e20d2585825388d1e39197e63111fa6b93f17d6f1f877a61775545699bd42916e66be39370866fb5273279e91745e95d36b9f64298cb934e2e563a8
+"@alwatr/deep-clone@npm:5.5.20":
+  version: 5.5.20
+  resolution: "@alwatr/deep-clone@npm:5.5.20"
+  checksum: 10c0/3252016d27395f7a21a23d7dc3ed8228c7361274e18821340fe8fcd6ec86117bf13035ab1ed4e82bfbdbfa1cf7eb010dfdd82d69e6e449af0567ba30c0aec2dd
   languageName: node
   linkType: hard
 
-"@alwatr/delay@npm:6.0.11, @alwatr/delay@npm:^6.0.10, @alwatr/delay@npm:^6.0.8":
+"@alwatr/delay@npm:6.0.12":
+  version: 6.0.12
+  resolution: "@alwatr/delay@npm:6.0.12"
+  dependencies:
+    "@alwatr/global-this": "npm:5.6.1"
+    "@alwatr/parse-duration": "npm:5.5.21"
+  checksum: 10c0/b1fa137bc49a44e80a3136a4abfeebf86567edf8a390a6c908c5f0f3133568c62f6292e3fa420b799d7b9bf679d97274414f878f8e21b1ec0fde370cec433548
+  languageName: node
+  linkType: hard
+
+"@alwatr/delay@npm:^6.0.10, @alwatr/delay@npm:^6.0.8":
   version: 6.0.11
   resolution: "@alwatr/delay@npm:6.0.11"
   dependencies:
@@ -54,25 +80,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/djb2-hash@npm:1.1.7":
-  version: 1.1.7
-  resolution: "@alwatr/djb2-hash@npm:1.1.7"
-  checksum: 10c0/7d479854b856c9902d4352736d33b94f5d16958e81202dbeded98299cc003db6e8b77e3c2e89467d40a4ce70492de79dcb459f052e12d80e69e8fc5f85f031f7
+"@alwatr/djb2-hash@npm:1.1.8":
+  version: 1.1.8
+  resolution: "@alwatr/djb2-hash@npm:1.1.8"
+  checksum: 10c0/711ef92b5dab9b09832d757460bb06a8c7eaab6120328cee5bb124b078b973534f93d255a74f544e6fa00cdde83a6d2d49d1213eea4e93b8cc3cc826dfb2fb46
   languageName: node
   linkType: hard
 
-"@alwatr/env@npm:5.5.19":
-  version: 5.5.19
-  resolution: "@alwatr/env@npm:5.5.19"
+"@alwatr/env@npm:5.5.20":
+  version: 5.5.20
+  resolution: "@alwatr/env@npm:5.5.20"
   dependencies:
-    "@alwatr/platform-info": "npm:5.5.19"
-  checksum: 10c0/7dc4b1e184f0e6377b20b626410b8b686fa14c6fddfc1fd59daefdb88eafffd9a177a96b8fbd4517db23d5e412c54c761a9f1a98f007859cdf05df3b3e164320
+    "@alwatr/platform-info": "npm:5.5.20"
+  checksum: 10c0/e86319023768289727c20d3bb5fb7b08cab8bbbc5e644e63d90b640b4f8f54f132de0a49ca049ab4f89cb70618222f2c6d2731d7ba44a7b2e9a701433db19658
   languageName: node
   linkType: hard
 
-"@alwatr/eslint-config@npm:^5.6.3":
-  version: 5.6.3
-  resolution: "@alwatr/eslint-config@npm:5.6.3"
+"@alwatr/eslint-config@npm:^5.6.4":
+  version: 5.6.4
+  resolution: "@alwatr/eslint-config@npm:5.6.4"
   peerDependencies:
     "@typescript-eslint/eslint-plugin": ^7.18.0
     "@typescript-eslint/parser": ^7.18.0
@@ -80,27 +106,34 @@ __metadata:
     eslint-import-resolver-typescript: ^4.4.4
     eslint-plugin-import: ^2.32.0
     eslint-plugin-require-extensions: ^0.1.3
-  checksum: 10c0/6e50bd2315f668d0db33f2b1e52f0e9e6538bdc01d41a6f95ed2d5e7342d75d4c37622d4bc2b7e6ee9f51dbbce713f55f7c332680f2bfdf2b19d157106d4cd7f
+  checksum: 10c0/6f3d7f1299b87869b3586dd5858e0934a5075dc73ee526c217f4e69510029b90873aab42a8046edbf0bcd4a4151892d431506d765fbf425fc156ab7b48528c05
   languageName: node
   linkType: hard
 
-"@alwatr/exit-hook@npm:5.5.19, @alwatr/exit-hook@npm:^5.5.16":
+"@alwatr/exit-hook@npm:5.5.20":
+  version: 5.5.20
+  resolution: "@alwatr/exit-hook@npm:5.5.20"
+  checksum: 10c0/d30083369e7bb38553b39a4cc0848cb9a604db840798cac8cd0973b740ab3cc25b3b30b6981707eab1547b8b7bca063a6f7b7a8dcbadafbe64d8a604a64946f1
+  languageName: node
+  linkType: hard
+
+"@alwatr/exit-hook@npm:^5.5.16":
   version: 5.5.19
   resolution: "@alwatr/exit-hook@npm:5.5.19"
   checksum: 10c0/f29a8cb13757cfb865f9bab72572d399ec56bb8f04ab33b5d1d5fe7c696eafea56c80843504c1a9cc128ac45c80795a814a3c1ffbacd61563e281f44dea5e254
   languageName: node
   linkType: hard
 
-"@alwatr/fetch@npm:6.0.15":
-  version: 6.0.15
-  resolution: "@alwatr/fetch@npm:6.0.15"
+"@alwatr/fetch@npm:6.0.16":
+  version: 6.0.16
+  resolution: "@alwatr/fetch@npm:6.0.16"
   dependencies:
-    "@alwatr/delay": "npm:6.0.11"
-    "@alwatr/global-this": "npm:5.6.0"
-    "@alwatr/http-primer": "npm:6.0.11"
-    "@alwatr/logger": "npm:6.0.8"
-    "@alwatr/parse-duration": "npm:5.5.20"
-  checksum: 10c0/534818725669484dceeffbef93f130d29e149a3fe4cfb250963351a5c89d5d38ea40ef1f96525026eabd770577bb314ea4fc0b3c845ab9bf114417a8ff0fa2df
+    "@alwatr/delay": "npm:6.0.12"
+    "@alwatr/global-this": "npm:5.6.1"
+    "@alwatr/http-primer": "npm:6.0.12"
+    "@alwatr/logger": "npm:6.0.9"
+    "@alwatr/parse-duration": "npm:5.5.21"
+  checksum: 10c0/d6d6709c5defd07eee9d2962913bb8eac3ef67c720c6bf58c2ea7a9e390c0a6e5462311ef0dd98d80e30c865e2cbd1e82e25c78b0cca946e26199f505b13bff7
   languageName: node
   linkType: hard
 
@@ -111,10 +144,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@alwatr/flat-string@npm:5.5.20":
+  version: 5.5.20
+  resolution: "@alwatr/flat-string@npm:5.5.20"
+  checksum: 10c0/b611354b8c5bb94820ddfa02041670ebadbdf2993603e68947c9c734eccda3e59784f9b249584f679e6209289895d742cf48ecf5c1f025e34bc1c558672e4b94
+  languageName: node
+  linkType: hard
+
 "@alwatr/flatomise@npm:5.5.19":
   version: 5.5.19
   resolution: "@alwatr/flatomise@npm:5.5.19"
   checksum: 10c0/5f6404681ce149427b78876480dc20679c5ad4ab8c28cdb6e72c2dd9aa0defa08b78c0279fa434787f9fe5ffa1e6e9fef352a506cf813b61d86b99acf314f516
+  languageName: node
+  linkType: hard
+
+"@alwatr/flatomise@npm:5.5.20":
+  version: 5.5.20
+  resolution: "@alwatr/flatomise@npm:5.5.20"
+  checksum: 10c0/d05c2c5d4fec1d304511515a40570642c139a042bca26cd18de3fc53dcb91c7d92f3f6327789b4328fa7410f0cb5799e7ddc5100bf7e9fa1aa24960599d37206
   languageName: node
   linkType: hard
 
@@ -145,24 +192,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/hash-string@npm:5.2.18":
-  version: 5.2.18
-  resolution: "@alwatr/hash-string@npm:5.2.18"
-  checksum: 10c0/8221c6c5ab292735a6491fdcf1c1e5049565c95d6899408a6dc23bd41a49c669756f645f39f6ec09af037ec8aca7d0f3ba1987ff88ab66a0d25ffa3871774078
+"@alwatr/global-this@npm:5.6.1":
+  version: 5.6.1
+  resolution: "@alwatr/global-this@npm:5.6.1"
+  checksum: 10c0/1612a0de51772166c13ed60c673a9507be6310f345d56c96b3de871ca1e7c9722669f1f8da74fe2c60a53a663d8fba8db05978af375e69ae0bb17dfedad90732
   languageName: node
   linkType: hard
 
-"@alwatr/http-primer@npm:6.0.11":
-  version: 6.0.11
-  resolution: "@alwatr/http-primer@npm:6.0.11"
-  checksum: 10c0/8d31589a5907ed8ac2b3010cc19645380d0fe8ad0de53da3917011f87a781f1fe4652773b6715ed87cb8b1d8580ab334116cc3b07e10165c5ba4b4a00a207f68
+"@alwatr/hash-string@npm:5.2.19":
+  version: 5.2.19
+  resolution: "@alwatr/hash-string@npm:5.2.19"
+  checksum: 10c0/0cd1e5207f764abae5669ab3b33bc67458baa4a5cf9fcb2fd137f79139e151326642a9f9f29b5cc925e310d2d77d7ce3aecbccb801b67e427de42789812e3140
   languageName: node
   linkType: hard
 
-"@alwatr/iranian-national-code-validator@npm:1.0.11":
-  version: 1.0.11
-  resolution: "@alwatr/iranian-national-code-validator@npm:1.0.11"
-  checksum: 10c0/2fc457d76e7feaa0e209d308ea0bf7584421cd406b6da7a3387bb06332e13c5eccee854ee0b86c3664995a443472ab3123bce03d35b10174c54a362ce71946da
+"@alwatr/http-primer@npm:6.0.12":
+  version: 6.0.12
+  resolution: "@alwatr/http-primer@npm:6.0.12"
+  checksum: 10c0/b17a23861a0248750faa6baa056f6f959e1973be14c2348ddc430bc638bfd0f9c5649864d3d0fdfd5f18889225b5941ef9e3044d8176f868b85e416921092438
+  languageName: node
+  linkType: hard
+
+"@alwatr/iranian-national-code-validator@npm:1.0.12":
+  version: 1.0.12
+  resolution: "@alwatr/iranian-national-code-validator@npm:1.0.12"
+  checksum: 10c0/04ce035013be1e74db33d130f4a66bbd83a27e0b895cb4fa3014141c908c063565bc01baa01604daa216f696e238d7b312f035153d9e9f38e59ed620098eac9f
   languageName: node
   linkType: hard
 
@@ -173,7 +227,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/local-storage@npm:6.3.4, @alwatr/local-storage@npm:^6.3.3":
+"@alwatr/is-number@npm:5.7.17":
+  version: 5.7.17
+  resolution: "@alwatr/is-number@npm:5.7.17"
+  checksum: 10c0/f8113552cadc10b9f99633bb83caaf95f259564e34b072afebf24a6f46c4b76363a6e1ab87a975bb2c5c2d27f930a96e8d8b5eaa9a48d4055b20f597bd9901c2
+  languageName: node
+  linkType: hard
+
+"@alwatr/local-storage@npm:7.0.0":
+  version: 7.0.0
+  resolution: "@alwatr/local-storage@npm:7.0.0"
+  dependencies:
+    "@alwatr/logger": "npm:6.0.9"
+  checksum: 10c0/cd01b176b1ce034652108718fb378c2e620c20200a878ae09b149442319fd4f935f7b80792718d0c6e4c4ae051a3198edd36171d3fd3fec132d8ce0595dd512f
+  languageName: node
+  linkType: hard
+
+"@alwatr/local-storage@npm:^6.3.3":
   version: 6.3.4
   resolution: "@alwatr/local-storage@npm:6.3.4"
   dependencies:
@@ -192,51 +262,61 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/nano-build@npm:^6.3.4":
-  version: 6.3.4
-  resolution: "@alwatr/nano-build@npm:6.3.4"
+"@alwatr/logger@npm:6.0.9":
+  version: 6.0.9
+  resolution: "@alwatr/logger@npm:6.0.9"
+  dependencies:
+    "@alwatr/global-this": "npm:5.6.1"
+    "@alwatr/platform-info": "npm:5.5.20"
+  checksum: 10c0/6c01cfc4ff76c2a85b30a9a54d91cb9a2bd8b85a8f54b1e9d53e3b9250c566f1f7a49c2683855326812c724ba04f3a0286e838c90ed67852067ed5402b1a950b
+  languageName: node
+  linkType: hard
+
+"@alwatr/nano-build@npm:^6.3.5":
+  version: 6.3.5
+  resolution: "@alwatr/nano-build@npm:6.3.5"
   dependencies:
     esbuild: "npm:^0.25.10"
     picocolors: "npm:^1.1.1"
   bin:
     nano-build: nano-build.cjs
-  checksum: 10c0/190b945554eb9e92f662fc8c238c97c636757da02a914ccc4728b5470349626dae137ed1e9210d4a3637da9ac2ab8ba6ecea3b34c0b15b20e1fd87e51ccfb5a8
+  checksum: 10c0/8916aacb84a1b9ea5696f768653fd15bee1731d1767dffb82a1cab780614ecc9ec5811f02e4ee7d26f20d634e1933e721337f2767aedd48c02bd0bb9de7f726b
   languageName: node
   linkType: hard
 
-"@alwatr/nanolib@npm:^6.1.8":
-  version: 6.1.8
-  resolution: "@alwatr/nanolib@npm:6.1.8"
+"@alwatr/nanolib@npm:^6.1.9":
+  version: 6.1.9
+  resolution: "@alwatr/nanolib@npm:6.1.9"
   dependencies:
-    "@alwatr/async-queue": "npm:5.5.19"
-    "@alwatr/cyrb53": "npm:1.0.7"
-    "@alwatr/debounce": "npm:1.1.9"
-    "@alwatr/deep-clone": "npm:5.5.19"
-    "@alwatr/delay": "npm:6.0.11"
-    "@alwatr/djb2-hash": "npm:1.1.7"
-    "@alwatr/env": "npm:5.5.19"
-    "@alwatr/exit-hook": "npm:5.5.19"
-    "@alwatr/fetch": "npm:6.0.15"
-    "@alwatr/flat-string": "npm:5.5.19"
-    "@alwatr/flatomise": "npm:5.5.19"
-    "@alwatr/global-this": "npm:5.6.0"
-    "@alwatr/hash-string": "npm:5.2.18"
-    "@alwatr/http-primer": "npm:6.0.11"
-    "@alwatr/iranian-national-code-validator": "npm:1.0.11"
-    "@alwatr/is-number": "npm:5.7.16"
-    "@alwatr/local-storage": "npm:6.3.4"
-    "@alwatr/logger": "npm:6.0.8"
-    "@alwatr/nano-build": "npm:^6.3.4"
-    "@alwatr/node-fs": "npm:5.5.22"
-    "@alwatr/parse-duration": "npm:5.5.20"
-    "@alwatr/platform-info": "npm:5.5.19"
-    "@alwatr/random": "npm:5.1.20"
-    "@alwatr/render-state": "npm:5.5.22"
-    "@alwatr/resolve-url": "npm:5.5.21"
-    "@alwatr/synapse": "npm:1.1.16"
-    "@alwatr/type-helper": "npm:^6.1.4"
-    "@alwatr/unicode-digits": "npm:5.5.19"
-  checksum: 10c0/8bfb65a92ab3413388f7e24a36fc7ca0e19176843bcba7260a23b6d2eed6759bbbfb01264a9fd1c1a8c5e0aedf4716691dc49ec3fd5e896533c49ec5f2ec5d0e
+    "@alwatr/async-queue": "npm:5.5.20"
+    "@alwatr/cyrb53": "npm:1.0.8"
+    "@alwatr/debounce": "npm:1.1.10"
+    "@alwatr/deep-clone": "npm:5.5.20"
+    "@alwatr/delay": "npm:6.0.12"
+    "@alwatr/djb2-hash": "npm:1.1.8"
+    "@alwatr/env": "npm:5.5.20"
+    "@alwatr/exit-hook": "npm:5.5.20"
+    "@alwatr/fetch": "npm:6.0.16"
+    "@alwatr/flat-string": "npm:5.5.20"
+    "@alwatr/flatomise": "npm:5.5.20"
+    "@alwatr/global-this": "npm:5.6.1"
+    "@alwatr/hash-string": "npm:5.2.19"
+    "@alwatr/http-primer": "npm:6.0.12"
+    "@alwatr/iranian-national-code-validator": "npm:1.0.12"
+    "@alwatr/is-number": "npm:5.7.17"
+    "@alwatr/local-storage": "npm:7.0.0"
+    "@alwatr/logger": "npm:6.0.9"
+    "@alwatr/nano-build": "npm:^6.3.5"
+    "@alwatr/node-fs": "npm:5.5.23"
+    "@alwatr/parse-duration": "npm:5.5.21"
+    "@alwatr/platform-info": "npm:5.5.20"
+    "@alwatr/random": "npm:5.1.21"
+    "@alwatr/render-state": "npm:5.5.23"
+    "@alwatr/resolve-url": "npm:5.5.22"
+    "@alwatr/synapse": "npm:1.1.17"
+    "@alwatr/type-helper": "npm:^6.1.5"
+    "@alwatr/unicode-digits": "npm:5.5.20"
+  checksum: 10c0/c2d9dd2ea91a0b185129e9a14a4f007f1de73d70c4acddb9b7e3ace389c694d8bed9512c85802f7d0fcd445020366e2409bdb21d070346411cf12f3c3ac63a65
   languageName: node
   linkType: hard
 
@@ -331,7 +411,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/node-fs@npm:5.5.22, @alwatr/node-fs@npm:^5.5.19":
+"@alwatr/node-fs@npm:5.5.23":
+  version: 5.5.23
+  resolution: "@alwatr/node-fs@npm:5.5.23"
+  dependencies:
+    "@alwatr/async-queue": "npm:5.5.20"
+    "@alwatr/flat-string": "npm:5.5.20"
+    "@alwatr/logger": "npm:6.0.9"
+  checksum: 10c0/16095a97ad97a8b8c01fd2ad37e2e3330bfd4962c9c249af08a3b8813d3ab738a976b33b2bb5912921609bc46f67c6f06e2a2129b81cb6f6bd90db08c9aee5f7
+  languageName: node
+  linkType: hard
+
+"@alwatr/node-fs@npm:^5.5.19":
   version: 5.5.22
   resolution: "@alwatr/node-fs@npm:5.5.22"
   dependencies:
@@ -351,10 +442,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@alwatr/parse-duration@npm:5.5.21":
+  version: 5.5.21
+  resolution: "@alwatr/parse-duration@npm:5.5.21"
+  dependencies:
+    "@alwatr/is-number": "npm:5.7.17"
+  checksum: 10c0/d2f246488139680e17893ff2bb115510f68decb5c1df969400a5c3bdd84308fd0345086b359da5e815b85f1270ee2ee9441e9641f084524e8cb55488ccf208df
+  languageName: node
+  linkType: hard
+
 "@alwatr/platform-info@npm:5.5.19":
   version: 5.5.19
   resolution: "@alwatr/platform-info@npm:5.5.19"
   checksum: 10c0/74e5badc150d8928abd6ce8e4783fcda04f6e8856877a67d06340fcfecc5f5464af2d5efc9c8837aa6d9fe49aa7ec8f0a1d018d652ad8ae3f76f6f4bbcf5d7f8
+  languageName: node
+  linkType: hard
+
+"@alwatr/platform-info@npm:5.5.20":
+  version: 5.5.20
+  resolution: "@alwatr/platform-info@npm:5.5.20"
+  checksum: 10c0/5f6ed23ec9700ab3b95d82a25da094e2d39374ac5d39200938ecea4e4b43b5b3669f98eeb755d728718a3d6b8531f9b2751ee1889ccbdd827ed43c2fab27eeaa
   languageName: node
   linkType: hard
 
@@ -374,28 +481,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/random@npm:5.1.20":
-  version: 5.1.20
-  resolution: "@alwatr/random@npm:5.1.20"
+"@alwatr/random@npm:5.1.21":
+  version: 5.1.21
+  resolution: "@alwatr/random@npm:5.1.21"
   dependencies:
-    "@alwatr/global-this": "npm:5.6.0"
-  checksum: 10c0/4515ad1a6c170d6a08ca9e45862e46a0c23f1ac2380fa19a04a2eccd3d7a6c609cf7158aeb30dc8f067d291e2fc62a95a3df6fc8ad9f0f4cb65a9bf716bdda7a
+    "@alwatr/global-this": "npm:5.6.1"
+  checksum: 10c0/0ed87d0bb29a804aaa298a107c8d76cc64af36e1293d77d4ba97e05d99e429c9f40ecf8de61ceb8c4b9d34b9ff35eb58631345ae89ab887faddbe548de1c1f93
   languageName: node
   linkType: hard
 
-"@alwatr/render-state@npm:5.5.22":
+"@alwatr/render-state@npm:5.5.23":
+  version: 5.5.23
+  resolution: "@alwatr/render-state@npm:5.5.23"
+  dependencies:
+    "@alwatr/logger": "npm:6.0.9"
+  checksum: 10c0/394215e92881d9f358a2c80c9f9ad53fd6521fa229f6388166ca9db3acc8a843023041c9b10bc127e43ce8532f477c54257534b8d73524f96dc50d82063a2992
+  languageName: node
+  linkType: hard
+
+"@alwatr/resolve-url@npm:5.5.22":
   version: 5.5.22
-  resolution: "@alwatr/render-state@npm:5.5.22"
-  dependencies:
-    "@alwatr/logger": "npm:6.0.8"
-  checksum: 10c0/9cf20ef05dcae22c34231a68a409e827f81cddeedf0b4fe76d4e51c62d225c05b412e9f0f710d857be0aacd5b816d643c16ee7714476047bad9efe51504bccdb
-  languageName: node
-  linkType: hard
-
-"@alwatr/resolve-url@npm:5.5.21":
-  version: 5.5.21
-  resolution: "@alwatr/resolve-url@npm:5.5.21"
-  checksum: 10c0/c7e71c51f117f3e919905608fa4d2a5f7c0dd6205ca78659334ab41d42a05a035f0469eec02d73c36dad95b89f7d2d509091a7ec4e940ee25508d40d866532ec
+  resolution: "@alwatr/resolve-url@npm:5.5.22"
+  checksum: 10c0/04911c701677339b5c2e697cb9dc5ecaf204065cea70b87d64fedd95f7ae2ea77f040d97180e89def2b61ca4ebd65bb2166d8bb9e72b700b2cc4e95e19279645
   languageName: node
   linkType: hard
 
@@ -411,13 +518,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/synapse@npm:1.1.16":
-  version: 1.1.16
-  resolution: "@alwatr/synapse@npm:1.1.16"
+"@alwatr/synapse@npm:1.1.17":
+  version: 1.1.17
+  resolution: "@alwatr/synapse@npm:1.1.17"
   dependencies:
-    "@alwatr/delay": "npm:6.0.11"
-    "@alwatr/logger": "npm:6.0.8"
-  checksum: 10c0/2285c2b74b935e76b7e13e27f59944e1e4209b59cb0e2f2c34eaa5dbe7d9bd7732ec966e30454ace562b7217a7b661e4543b324059bd629a3ebdbe4afb62d250
+    "@alwatr/delay": "npm:6.0.12"
+    "@alwatr/logger": "npm:6.0.9"
+  checksum: 10c0/d9e01c0368a0e9f612fbea2e220d7b19b0473c47acf2baf25471bd7247d99539dc24f83479a8528d0b5eb594edac9d27d06c672a9d9ba8d49809e9eef8d34b59
   languageName: node
   linkType: hard
 
@@ -428,26 +535,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alwatr/type-helper@npm:^6.1.4":
-  version: 6.1.4
-  resolution: "@alwatr/type-helper@npm:6.1.4"
-  checksum: 10c0/c51ff5259fc7aae5cee76b7424264eaa5feb5c09015892c50ceb3ef33bb398c9b9a8cebd5b90e9a2490725c51afc7fafe9053f9385d52625007b48443fa4dbcb
+"@alwatr/type-helper@npm:^6.1.5":
+  version: 6.1.5
+  resolution: "@alwatr/type-helper@npm:6.1.5"
+  checksum: 10c0/f32009f0b7c803f162f1dd8e7aec557a181e8d3a3c0c89021b6cf288a0d2a57a71b23ccdae143336f25edfd39ff2a3984e5ca09e372caeca2a564979e733c111
   languageName: node
   linkType: hard
 
-"@alwatr/unicode-digits@npm:5.5.19":
-  version: 5.5.19
-  resolution: "@alwatr/unicode-digits@npm:5.5.19"
-  checksum: 10c0/8b3181be64bd04614339327c4fb1c1d89b275e6c06f9c19ae7df8db8cd1d1ae952ca2cfc8185482aeb2a4fd9f7aa9988d576bb2daf082c920f495cfd4431786f
+"@alwatr/unicode-digits@npm:5.5.20":
+  version: 5.5.20
+  resolution: "@alwatr/unicode-digits@npm:5.5.20"
+  checksum: 10c0/945578033422df04b2eb5b16162a9b78ddbf10ada0eb4a93151f730e3c225cb1959a8d95871740bfaf70144aa19e92ec0db8765de7b13549e62da48d023b09be
   languageName: node
   linkType: hard
 
-"@alwatr/yarn-upgrade@npm:^1.0.13":
-  version: 1.0.13
-  resolution: "@alwatr/yarn-upgrade@npm:1.0.13"
+"@alwatr/yarn-upgrade@npm:^1.0.14":
+  version: 1.0.14
+  resolution: "@alwatr/yarn-upgrade@npm:1.0.14"
   bin:
     upd: dist/main.mjs
-  checksum: 10c0/5883a9e8c3f8cfe49d82fdb2fca10b5fd09245cb84e21a490fe183e3500a4cd83ae181066c21490d6b2627ddda20f18ec871867577d33a540780e840c5c374e0
+  checksum: 10c0/4e919244875fc0bf312ab42840cc5e7644af1e221e6602c925ecda3b0ae32ef657bbaa3e00716d59becc02e1625278798bc2d50543aa4e8534d5f8c242d150b5
   languageName: node
   linkType: hard
 
@@ -765,20 +872,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@inquirer/ansi@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@inquirer/ansi@npm:1.0.0"
-  checksum: 10c0/bac070de6b03dac71b31623d3e8911162856af18d731f899a71c13ffe371daa9a0cff941fed533b89d7e088e8d08d087bd2f97d1777bc6fe6ff4841518ca5a26
+"@inquirer/ansi@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@inquirer/ansi@npm:1.0.1"
+  checksum: 10c0/b0da2f25bbbe197946e717603f95ad0eacb098fcab1c9296cdf21f7c68fca830f589bf3e1b6803ada8dae8ce5e67fd7bb0e00909185e905333a84daacb81b473
   languageName: node
   linkType: hard
 
-"@inquirer/core@npm:^10.2.2":
-  version: 10.2.2
-  resolution: "@inquirer/core@npm:10.2.2"
+"@inquirer/core@npm:^10.3.0":
+  version: 10.3.0
+  resolution: "@inquirer/core@npm:10.3.0"
   dependencies:
-    "@inquirer/ansi": "npm:^1.0.0"
-    "@inquirer/figures": "npm:^1.0.13"
-    "@inquirer/type": "npm:^3.0.8"
+    "@inquirer/ansi": "npm:^1.0.1"
+    "@inquirer/figures": "npm:^1.0.14"
+    "@inquirer/type": "npm:^3.0.9"
     cli-width: "npm:^4.1.0"
     mute-stream: "npm:^2.0.0"
     signal-exit: "npm:^4.1.0"
@@ -789,75 +896,75 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/5475e343f7e3687cbfe877068a63f672da5414a35c95235bb13cf1a49c1fb3853aeb644cf13df514118ea036c267e3e2082706e52b6e6c1a4fb09e9d1c2d8384
+  checksum: 10c0/174baa46ba9b4239a8e20d01d7ab890fd5d3d535c5473c864b0863d18d56b63a5dd0d657d646c0cb260965f4ed12089484f99d8abeaf0fa0961b619d708d8d7a
   languageName: node
   linkType: hard
 
-"@inquirer/expand@npm:^4.0.20":
-  version: 4.0.20
-  resolution: "@inquirer/expand@npm:4.0.20"
+"@inquirer/expand@npm:^4.0.21":
+  version: 4.0.21
+  resolution: "@inquirer/expand@npm:4.0.21"
   dependencies:
-    "@inquirer/core": "npm:^10.2.2"
-    "@inquirer/type": "npm:^3.0.8"
+    "@inquirer/core": "npm:^10.3.0"
+    "@inquirer/type": "npm:^3.0.9"
     yoctocolors-cjs: "npm:^2.1.2"
   peerDependencies:
     "@types/node": ">=18"
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/82f5334e80c21ad25cd332f3e7de97f0c69f98181cd0bb693aa525030eca0bd9a274a3199453dfb2066f9c90674be822a2ebbbaa7c42b67288035d931d859eda
+  checksum: 10c0/906272572e5ec4accda2eb6ce99265d1507253dae4c0416d45ac5900c012dba642c954fe7bddfd2743a0f921f4232a07a9f9eb291cb4a60a11f0026e07eadffd
   languageName: node
   linkType: hard
 
-"@inquirer/figures@npm:^1.0.13":
-  version: 1.0.13
-  resolution: "@inquirer/figures@npm:1.0.13"
-  checksum: 10c0/23700a4a0627963af5f51ef4108c338ae77bdd90393164b3fdc79a378586e1f5531259882b7084c690167bf5a36e83033e45aca0321570ba810890abe111014f
+"@inquirer/figures@npm:^1.0.14":
+  version: 1.0.14
+  resolution: "@inquirer/figures@npm:1.0.14"
+  checksum: 10c0/e19487d1d54db4ee9de2bd60792fa04c422b81ccfcf8307c8a8d385364c18622373e08a7f124d8c92383ef74edd20c3e3be1d7c2fdf31beccd5819c0d7809532
   languageName: node
   linkType: hard
 
-"@inquirer/input@npm:^4.2.4":
-  version: 4.2.4
-  resolution: "@inquirer/input@npm:4.2.4"
+"@inquirer/input@npm:^4.2.5":
+  version: 4.2.5
+  resolution: "@inquirer/input@npm:4.2.5"
   dependencies:
-    "@inquirer/core": "npm:^10.2.2"
-    "@inquirer/type": "npm:^3.0.8"
+    "@inquirer/core": "npm:^10.3.0"
+    "@inquirer/type": "npm:^3.0.9"
   peerDependencies:
     "@types/node": ">=18"
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/e903086170d94624125916e361c81e89a1f55ef8b91d58fe505fd16d58a9a3d8275c9af93def3a7355301a1f46417a0cbd4c8faace74b1a8679504e6d3a25f0c
+  checksum: 10c0/d12e92fde89c400059e614cb4649b5186bd084571958ac226e70a3337954350a565211bb76783daab20854cd1912c6dea4683038183c5bde0dbf126ff5dbc078
   languageName: node
   linkType: hard
 
-"@inquirer/select@npm:^4.3.4":
-  version: 4.3.4
-  resolution: "@inquirer/select@npm:4.3.4"
+"@inquirer/select@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "@inquirer/select@npm:4.4.0"
   dependencies:
-    "@inquirer/ansi": "npm:^1.0.0"
-    "@inquirer/core": "npm:^10.2.2"
-    "@inquirer/figures": "npm:^1.0.13"
-    "@inquirer/type": "npm:^3.0.8"
+    "@inquirer/ansi": "npm:^1.0.1"
+    "@inquirer/core": "npm:^10.3.0"
+    "@inquirer/figures": "npm:^1.0.14"
+    "@inquirer/type": "npm:^3.0.9"
     yoctocolors-cjs: "npm:^2.1.2"
   peerDependencies:
     "@types/node": ">=18"
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/01547a3a929d67d43f40dbfe6d1d7fdf48a71fc2781c132b25a965de1ee78262251589f9554102d7a6e39aa01c58c2e87cf6c8c62b1cc3f33795f1517f7430c7
+  checksum: 10c0/9ab3811342f293e49eff60c85117612226c54aebda09db7f2354eabb95df55e02a8a4a674cb3514c12cf7c3dc6df4ef1addc4e41e006f52c17d9cee50208643a
   languageName: node
   linkType: hard
 
-"@inquirer/type@npm:^3.0.8":
-  version: 3.0.8
-  resolution: "@inquirer/type@npm:3.0.8"
+"@inquirer/type@npm:^3.0.9":
+  version: 3.0.9
+  resolution: "@inquirer/type@npm:3.0.9"
   peerDependencies:
     "@types/node": ">=18"
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/1171bffb9ea0018b12ec4f46a7b485f7e2a328e620e89f3b03f2be8c25889e5b9e62daca3ea10ed040a71d847066c4d9879dc1fea8aa5690ebbc968d3254a5ac
+  checksum: 10c0/bf036f9fac2519e7f710507ef1fab7c1149242a1e6490600fc18498175c0c0bc4a8f121592ab4eeb6b7b5acbc7cc6aedb0ad461bf4a12bc329e49168bbe7b61f
   languageName: node
   linkType: hard
 
@@ -907,27 +1014,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lerna-lite/changed@npm:^4.9.0":
-  version: 4.9.0
-  resolution: "@lerna-lite/changed@npm:4.9.0"
+"@lerna-lite/changed@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/changed@npm:4.9.1"
   dependencies:
-    "@lerna-lite/cli": "npm:4.9.0"
-    "@lerna-lite/core": "npm:4.9.0"
-    "@lerna-lite/list": "npm:4.9.0"
-    "@lerna-lite/listable": "npm:4.9.0"
-  checksum: 10c0/ba25e5a846ea1ce044aae046afbd85430187485490a2219db951f2824b84dbb449a178b810f071d6c3233f962a4327835ce9c9933c1b4a6a5645403bb6d4be6c
+    "@lerna-lite/cli": "npm:4.9.1"
+    "@lerna-lite/core": "npm:4.9.1"
+    "@lerna-lite/list": "npm:4.9.1"
+    "@lerna-lite/listable": "npm:4.9.1"
+  checksum: 10c0/c3fa76c730c478324cb522d989b789ca5c28138b262454ddea981a75a0b6c297b176322034c3311b3166fae09ec24f49eadc5937c759dcc29b7c664464e9e20b
   languageName: node
   linkType: hard
 
-"@lerna-lite/cli@npm:4.9.0, @lerna-lite/cli@npm:^4.9.0":
-  version: 4.9.0
-  resolution: "@lerna-lite/cli@npm:4.9.0"
+"@lerna-lite/cli@npm:4.9.1, @lerna-lite/cli@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/cli@npm:4.9.1"
   dependencies:
-    "@lerna-lite/core": "npm:4.9.0"
-    "@lerna-lite/init": "npm:4.9.0"
-    "@lerna-lite/npmlog": "npm:4.7.3"
+    "@lerna-lite/core": "npm:4.9.1"
+    "@lerna-lite/init": "npm:4.9.1"
+    "@lerna-lite/npmlog": "npm:4.9.1"
     dedent: "npm:^1.7.0"
-    dotenv: "npm:^17.2.2"
+    dotenv: "npm:^17.2.3"
     import-local: "npm:^3.2.0"
     load-json-file: "npm:^7.0.1"
     yargs: "npm:^18.0.0"
@@ -946,20 +1053,20 @@ __metadata:
       optional: true
   bin:
     lerna: dist/cli.js
-  checksum: 10c0/47acaf7ddcbb92c786d8e6d4d2dfe73108e124ba01310a7aa5b43eb278a9a2d1a84f7475d6a49ebad309144f8b94e1c2d896123c7712853f11ad7ecb22ee3326
+  checksum: 10c0/cb502dfd2145cb838a2c1fca2801a699ed99b6f05f2fa423b4bc99fb4ee0ae3bd36536943e8d965cccc747b24bad370d58b6d13f4187edf9ae94e72a2de5b4a6
   languageName: node
   linkType: hard
 
-"@lerna-lite/core@npm:4.9.0":
-  version: 4.9.0
-  resolution: "@lerna-lite/core@npm:4.9.0"
+"@lerna-lite/core@npm:4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/core@npm:4.9.1"
   dependencies:
-    "@inquirer/expand": "npm:^4.0.20"
-    "@inquirer/input": "npm:^4.2.4"
-    "@inquirer/select": "npm:^4.3.4"
-    "@lerna-lite/npmlog": "npm:4.7.3"
+    "@inquirer/expand": "npm:^4.0.21"
+    "@inquirer/input": "npm:^4.2.5"
+    "@inquirer/select": "npm:^4.4.0"
+    "@lerna-lite/npmlog": "npm:4.9.1"
     "@npmcli/run-script": "npm:^10.0.0"
-    ci-info: "npm:^4.3.0"
+    ci-info: "npm:^4.3.1"
     config-chain: "npm:^1.1.13"
     dedent: "npm:^1.7.0"
     execa: "npm:^9.6.0"
@@ -968,12 +1075,10 @@ __metadata:
     json5: "npm:^2.2.3"
     lilconfig: "npm:^3.1.3"
     load-json-file: "npm:^7.0.1"
-    npm-package-arg: "npm:^13.0.0"
+    npm-package-arg: "npm:^13.0.1"
     p-map: "npm:^7.0.3"
-    p-queue: "npm:^8.1.1"
-    picomatch: "npm:^4.0.3"
-    resolve-from: "npm:^5.0.0"
-    semver: "npm:^7.7.2"
+    p-queue: "npm:^9.0.0"
+    semver: "npm:^7.7.3"
     slash: "npm:^5.1.0"
     tinyglobby: "npm:^0.2.15"
     tinyrainbow: "npm:^3.0.3"
@@ -982,153 +1087,152 @@ __metadata:
     write-package: "npm:^7.2.0"
     yaml: "npm:^2.8.1"
     zeptomatch: "npm:^2.0.2"
-  checksum: 10c0/a5a1a76dbb55c57702a173994a67f09d033f1b55bd30e10e1789cbb72d1d9212d7e59196a0443834e7a68b14b31a9bf9da04983826e6d3449b4ce5bd531ad84f
+  checksum: 10c0/4d4b310cbb35e86f67faec3c42d0a4b04a5918345ad9264587e32ac1fc726d12ce3480e0c4f7db56d5e50d00ea0c6d5731c252d06b9defd50fb374158903f098
   languageName: node
   linkType: hard
 
-"@lerna-lite/diff@npm:^4.9.0":
-  version: 4.9.0
-  resolution: "@lerna-lite/diff@npm:4.9.0"
+"@lerna-lite/diff@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/diff@npm:4.9.1"
   dependencies:
-    "@lerna-lite/cli": "npm:4.9.0"
-    "@lerna-lite/core": "npm:4.9.0"
-    "@lerna-lite/npmlog": "npm:^4.7.3"
-  checksum: 10c0/e56e82e787bfa966c114e1b62c71ae2ffc2abc8a0466a80c40c7cca63a42688f7d781a4800fd2ebc8001a4d81152c626a1883903aee776be8a092a1a51120d71
+    "@lerna-lite/cli": "npm:4.9.1"
+    "@lerna-lite/core": "npm:4.9.1"
+    "@lerna-lite/npmlog": "npm:^4.9.1"
+  checksum: 10c0/26bf1a19cbe04facfb3d9aa09bd3db0380ac9e3cd34730c473d128154c22401e246a2fc9b1e089f7795c7fa5aeaa0d54351f97804d9273b4195b3e63f9658822
   languageName: node
   linkType: hard
 
-"@lerna-lite/exec@npm:^4.9.0":
-  version: 4.9.0
-  resolution: "@lerna-lite/exec@npm:4.9.0"
+"@lerna-lite/exec@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/exec@npm:4.9.1"
   dependencies:
-    "@lerna-lite/cli": "npm:4.9.0"
-    "@lerna-lite/core": "npm:4.9.0"
-    "@lerna-lite/profiler": "npm:4.9.0"
-    dotenv: "npm:^17.2.2"
+    "@lerna-lite/cli": "npm:4.9.1"
+    "@lerna-lite/core": "npm:4.9.1"
+    "@lerna-lite/profiler": "npm:4.9.1"
+    dotenv: "npm:^17.2.3"
     p-map: "npm:^7.0.3"
     tinyrainbow: "npm:^3.0.3"
-  checksum: 10c0/a4b5d6580973f06793d9eab05ef4b8bb0ebbe974de55e1c97478ec898142e2cac1e5c78a7ddff60262aaca013582256b400dd34a9a53d49bc389e9c1dfb24e3a
+  checksum: 10c0/380d680528a81f9e4dac0f9bea9d5e7b62a95ba3f000d9ed4a4b20bc8611ca24571f01b2dffbb009986accd98bdc16dd2354813d408b76d1da4b490a86f1465f
   languageName: node
   linkType: hard
 
-"@lerna-lite/init@npm:4.9.0":
-  version: 4.9.0
-  resolution: "@lerna-lite/init@npm:4.9.0"
+"@lerna-lite/init@npm:4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/init@npm:4.9.1"
   dependencies:
-    "@lerna-lite/core": "npm:4.9.0"
+    "@lerna-lite/core": "npm:4.9.1"
     fs-extra: "npm:^11.3.2"
     p-map: "npm:^7.0.3"
     write-json-file: "npm:^7.0.0"
-  checksum: 10c0/379ef6191b56a1677d83addf3469fd6731040816c7a07b5fd6a059a24affbad28874b0ccd3d20ec75d7abf9e73b95958545b39f97db423da69700718fceb3329
+  checksum: 10c0/9e1c6542313af3f5da5f1801ce7fb5ddbb8759e40c29c009c5c159a24291768eccd5c9e626a0e3f26cb6a1aeb47ce6131d514a8ca9ccb51153b079b2ea8fe4e4
   languageName: node
   linkType: hard
 
-"@lerna-lite/list@npm:4.9.0":
-  version: 4.9.0
-  resolution: "@lerna-lite/list@npm:4.9.0"
+"@lerna-lite/list@npm:4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/list@npm:4.9.1"
   dependencies:
-    "@lerna-lite/cli": "npm:4.9.0"
-    "@lerna-lite/core": "npm:4.9.0"
-    "@lerna-lite/listable": "npm:4.9.0"
-  checksum: 10c0/2658b40612ad45a106b497d5048a66900682c3b6713a25e03a2583c3b2f95d3e0cb53c81d5a1ca3d178eb44e9be4e76f76dfcc814e62ce8fdea6ff8ec05a873e
+    "@lerna-lite/cli": "npm:4.9.1"
+    "@lerna-lite/core": "npm:4.9.1"
+    "@lerna-lite/listable": "npm:4.9.1"
+  checksum: 10c0/0b87d02904385305684420360c28a481863733f02506705f4be26335aa773ccb6d2d3652ee178b0f861cb092e4836b7f3686a2bc43b6631bf9485dc0e95c7734
   languageName: node
   linkType: hard
 
-"@lerna-lite/listable@npm:4.9.0":
-  version: 4.9.0
-  resolution: "@lerna-lite/listable@npm:4.9.0"
+"@lerna-lite/listable@npm:4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/listable@npm:4.9.1"
   dependencies:
-    "@lerna-lite/core": "npm:4.9.0"
+    "@lerna-lite/core": "npm:4.9.1"
     columnify: "npm:^1.6.0"
     tinyrainbow: "npm:^3.0.3"
-  checksum: 10c0/2f732ed74f4e2a43899c2c63fa743f1b4426ece5a95ef7a0f274823dc07661e6e7e12857f44b28f7b23e11bc845c4c48bbd4fdf9a0e1e4d0a1d5d91d2a9467b2
+  checksum: 10c0/fc01c2f7a8c5169151887bee1c07abb525856c42d4db7ae41a648a3ca3674b69f48ecfd4629848f412c4c1614feea8193c92d9e299b4db38682463ba25fd691a
   languageName: node
   linkType: hard
 
-"@lerna-lite/npmlog@npm:4.7.3, @lerna-lite/npmlog@npm:^4.7.3":
-  version: 4.7.3
-  resolution: "@lerna-lite/npmlog@npm:4.7.3"
+"@lerna-lite/npmlog@npm:4.9.1, @lerna-lite/npmlog@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/npmlog@npm:4.9.1"
   dependencies:
     aproba: "npm:^2.1.0"
-    color-support: "npm:^1.1.3"
-    console-control-strings: "npm:^1.1.0"
-    fast-string-width: "npm:^3.0.1"
+    fast-string-width: "npm:^3.0.2"
     has-unicode: "npm:^2.0.1"
     set-blocking: "npm:^2.0.0"
     signal-exit: "npm:^4.1.0"
+    tinyrainbow: "npm:^3.0.3"
     wide-align: "npm:^1.1.5"
-  checksum: 10c0/614b86e324013b90e74b3fd1d4824e46f2d93c7092f57958d06cdb7b224b8f0b387e80c81472b9c777be08fa13c4777865f1eb78ca74e1cdc7fca8f4de9eb017
+  checksum: 10c0/729f2d6a2da16b3e76bd9b918d26045b83c399749dc1a61d7546c5f5103d16d6db7d0bc33964f09ef8583c87d76f76f8a8053c078523096de3dec959d77817c2
   languageName: node
   linkType: hard
 
-"@lerna-lite/profiler@npm:4.9.0":
-  version: 4.9.0
-  resolution: "@lerna-lite/profiler@npm:4.9.0"
+"@lerna-lite/profiler@npm:4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/profiler@npm:4.9.1"
   dependencies:
-    "@lerna-lite/core": "npm:4.9.0"
-    "@lerna-lite/npmlog": "npm:4.7.3"
+    "@lerna-lite/core": "npm:4.9.1"
+    "@lerna-lite/npmlog": "npm:4.9.1"
     fs-extra: "npm:^11.3.2"
     upath: "npm:^2.0.1"
-  checksum: 10c0/98fad151e2f011d42600e1ee5bc517759c86f25b599dbbc81c8f4dd5f0ce7c053edfcca5ae8aeb11fefa801cfd5109b5f2cc167528cb7aa620c8579a9e9ce18d
+  checksum: 10c0/cf3d8022daa236b5a60edac0f0f4671536b42867f1b058d1edd0795bbf3367bc8d35792435a3e5b936a03c808fe2d4beb67b4495be6ad93d03a8e58614ef2fbf
   languageName: node
   linkType: hard
 
-"@lerna-lite/publish@npm:^4.9.0":
-  version: 4.9.0
-  resolution: "@lerna-lite/publish@npm:4.9.0"
+"@lerna-lite/publish@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/publish@npm:4.9.1"
   dependencies:
-    "@lerna-lite/cli": "npm:4.9.0"
-    "@lerna-lite/core": "npm:4.9.0"
-    "@lerna-lite/npmlog": "npm:4.7.3"
-    "@lerna-lite/version": "npm:4.9.0"
-    "@npmcli/arborist": "npm:^9.1.5"
+    "@lerna-lite/cli": "npm:4.9.1"
+    "@lerna-lite/core": "npm:4.9.1"
+    "@lerna-lite/npmlog": "npm:4.9.1"
+    "@lerna-lite/version": "npm:4.9.1"
+    "@npmcli/arborist": "npm:^9.1.6"
     "@npmcli/package-json": "npm:^7.0.1"
     byte-size: "npm:^9.0.1"
-    ci-info: "npm:^4.3.0"
+    ci-info: "npm:^4.3.1"
     columnify: "npm:^1.6.0"
     fs-extra: "npm:^11.3.2"
     has-unicode: "npm:^2.0.1"
-    libnpmaccess: "npm:^10.0.2"
-    libnpmpublish: "npm:^11.1.1"
+    libnpmaccess: "npm:^10.0.3"
+    libnpmpublish: "npm:^11.1.2"
     normalize-path: "npm:^3.0.0"
-    npm-package-arg: "npm:^13.0.0"
+    npm-package-arg: "npm:^13.0.1"
     npm-packlist: "npm:^10.0.2"
     npm-registry-fetch: "npm:^19.0.0"
     p-map: "npm:^7.0.3"
     p-pipe: "npm:^4.0.0"
     pacote: "npm:^21.0.3"
-    semver: "npm:^7.7.2"
+    semver: "npm:^7.7.3"
     ssri: "npm:^12.0.0"
     tar: "npm:^7.5.1"
     tinyglobby: "npm:^0.2.15"
     tinyrainbow: "npm:^3.0.3"
-  checksum: 10c0/503666a4445a880d4a0c810c2f18edae6e7dd6c9f36da9555496b840e0099ce3c00cd526170fdb9b088ceb39d17a41bf5e474966f84b09c3ca69a57f69600801
+  checksum: 10c0/018fc3dba950b341bacb9205cbecb42026e4135b349eb292251bba2889acd26c79e5c559f6f55ad00da06c316e97881d7345e6060f7f118756f3cea0c31daf88
   languageName: node
   linkType: hard
 
-"@lerna-lite/run@npm:^4.9.0":
-  version: 4.9.0
-  resolution: "@lerna-lite/run@npm:4.9.0"
+"@lerna-lite/run@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/run@npm:4.9.1"
   dependencies:
-    "@lerna-lite/cli": "npm:4.9.0"
-    "@lerna-lite/core": "npm:4.9.0"
-    "@lerna-lite/npmlog": "npm:4.7.3"
-    "@lerna-lite/profiler": "npm:4.9.0"
+    "@lerna-lite/cli": "npm:4.9.1"
+    "@lerna-lite/core": "npm:4.9.1"
+    "@lerna-lite/npmlog": "npm:4.9.1"
+    "@lerna-lite/profiler": "npm:4.9.1"
     fs-extra: "npm:^11.3.2"
     p-map: "npm:^7.0.3"
     tinyrainbow: "npm:^3.0.3"
-  checksum: 10c0/dc0e99a6af4cd029e60df8803a1236ff51ca3cc223b8967dd4ee3666e456cf28ccb47e11ddaab49bc548d25bc4e62624927bfdb29405879ba24dce1977b17751
+  checksum: 10c0/53be51107391e57be0a02da63c021ae6a81bf83bd91d8bffefe6f0e4690642eeb727ece1addc13b32179fd65fe52f7e63e7bbdd2c67199feb5dce07cc9c44126
   languageName: node
   linkType: hard
 
-"@lerna-lite/version@npm:4.9.0, @lerna-lite/version@npm:^4.9.0":
-  version: 4.9.0
-  resolution: "@lerna-lite/version@npm:4.9.0"
+"@lerna-lite/version@npm:4.9.1, @lerna-lite/version@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "@lerna-lite/version@npm:4.9.1"
   dependencies:
     "@conventional-changelog/git-client": "npm:^2.5.1"
-    "@lerna-lite/cli": "npm:4.9.0"
-    "@lerna-lite/core": "npm:4.9.0"
-    "@lerna-lite/npmlog": "npm:4.7.3"
+    "@lerna-lite/cli": "npm:4.9.1"
+    "@lerna-lite/core": "npm:4.9.1"
+    "@lerna-lite/npmlog": "npm:4.9.1"
     "@octokit/plugin-enterprise-rest": "npm:^6.0.1"
     "@octokit/rest": "npm:^22.0.0"
     conventional-changelog: "npm:^7.1.1"
@@ -1142,19 +1246,19 @@ __metadata:
     is-stream: "npm:^4.0.1"
     load-json-file: "npm:^7.0.1"
     new-github-release-url: "npm:^2.0.0"
-    npm-package-arg: "npm:^13.0.0"
+    npm-package-arg: "npm:^13.0.1"
     p-limit: "npm:^7.1.1"
     p-map: "npm:^7.0.3"
     p-pipe: "npm:^4.0.0"
     p-reduce: "npm:^3.0.0"
     pify: "npm:^6.1.0"
-    semver: "npm:^7.7.2"
+    semver: "npm:^7.7.3"
     slash: "npm:^5.1.0"
     tinyrainbow: "npm:^3.0.3"
     uuid: "npm:^13.0.0"
     write-json-file: "npm:^7.0.0"
     zeptomatch: "npm:^2.0.2"
-  checksum: 10c0/0587101e547d598af21b4137fcf53bcc395afe4872098c257ee3cdd60e036f20e394ed4fa5a37fd5940e1f3fe573446aa4b435067bd48b24bc9a9493b0877c16
+  checksum: 10c0/cf4745f386b6c06cb7f94ffbab13d41be042063e3dbf1cc8fff3a1723956f5cbbb1c0feb256bea0df6f84bcf94e02b3cc93ca8be95122372e1f8d2060e782819
   languageName: node
   linkType: hard
 
@@ -1222,9 +1326,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@npmcli/arborist@npm:^9.1.5":
-  version: 9.1.5
-  resolution: "@npmcli/arborist@npm:9.1.5"
+"@npmcli/arborist@npm:^9.1.6":
+  version: 9.1.6
+  resolution: "@npmcli/arborist@npm:9.1.6"
   dependencies:
     "@isaacs/string-locale-compare": "npm:^1.1.0"
     "@npmcli/fs": "npm:^4.0.0"
@@ -1261,7 +1365,7 @@ __metadata:
     walk-up-path: "npm:^4.0.0"
   bin:
     arborist: bin/index.js
-  checksum: 10c0/40618f54cfa7de5ee14a25fea09541ac0af4399f19c6ea5e32ddc0bd0d961105c039d3c7b08e99d38e4bba547f19a69957c48ee5ae2909ac67f5e7339a71bc9a
+  checksum: 10c0/359e2a278fda83e60bdfdc410c1d439753d8d390a475e934d31d3fd250a3f2b0693dc7c64f6e9ed9cc5bd0186b21b50c3fc1c5befc0c6ff4996d332477dbe1b1
   languageName: node
   linkType: hard
 
@@ -2011,17 +2115,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "alwatr-monorepo@workspace:."
   dependencies:
-    "@alwatr/eslint-config": "npm:^5.6.3"
+    "@alwatr/eslint-config": "npm:^5.6.4"
     "@alwatr/prettier-config": "npm:^5.0.5"
     "@alwatr/tsconfig-base": "npm:^6.0.3"
-    "@alwatr/yarn-upgrade": "npm:^1.0.13"
-    "@lerna-lite/changed": "npm:^4.9.0"
-    "@lerna-lite/cli": "npm:^4.9.0"
-    "@lerna-lite/diff": "npm:^4.9.0"
-    "@lerna-lite/exec": "npm:^4.9.0"
-    "@lerna-lite/publish": "npm:^4.9.0"
-    "@lerna-lite/run": "npm:^4.9.0"
-    "@lerna-lite/version": "npm:^4.9.0"
+    "@alwatr/yarn-upgrade": "npm:^1.0.14"
+    "@lerna-lite/changed": "npm:^4.9.1"
+    "@lerna-lite/cli": "npm:^4.9.1"
+    "@lerna-lite/diff": "npm:^4.9.1"
+    "@lerna-lite/exec": "npm:^4.9.1"
+    "@lerna-lite/publish": "npm:^4.9.1"
+    "@lerna-lite/run": "npm:^4.9.1"
+    "@lerna-lite/version": "npm:^4.9.1"
     "@typescript-eslint/eslint-plugin": "npm:^7.18.0"
     "@typescript-eslint/parser": "npm:^7.18.0"
     conventional-changelog-conventionalcommits: "npm:^9.1.0"
@@ -2031,7 +2135,7 @@ __metadata:
     eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-require-extensions: "npm:^0.1.3"
     prettier: "npm:^3.6.2"
-    typescript: "npm:^5.9.2"
+    typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
 
@@ -2040,14 +2144,14 @@ __metadata:
   resolution: "alwatr@workspace:packages/alwatr"
   dependencies:
     "@alwatr/flux": "npm:^6.1.0"
-    "@alwatr/nano-build": "npm:^6.3.4"
-    "@alwatr/nanolib": "npm:^6.1.8"
+    "@alwatr/nano-build": "npm:^6.3.5"
+    "@alwatr/nanolib": "npm:^6.1.9"
     "@alwatr/nanotron": "npm:^4.10.1"
     "@alwatr/nitrobase": "npm:^7.10.0"
     "@alwatr/prettier-config": "npm:^5.0.5"
     "@alwatr/tsconfig-base": "npm:^6.0.3"
-    "@alwatr/type-helper": "npm:^6.1.4"
-    typescript: "npm:^5.9.2"
+    "@alwatr/type-helper": "npm:^6.1.5"
+    typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
 
@@ -2367,10 +2471,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ci-info@npm:^4.0.0, ci-info@npm:^4.3.0":
+"ci-info@npm:^4.0.0":
   version: 4.3.0
   resolution: "ci-info@npm:4.3.0"
   checksum: 10c0/60d3dfe95d75c01454ec1cfd5108617dd598a28a2a3e148bd7e1523c1c208b5f5a3007cafcbe293e6fd0a5a310cc32217c5dc54743eeabc0a2bec80072fc055c
+  languageName: node
+  linkType: hard
+
+"ci-info@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "ci-info@npm:4.3.1"
+  checksum: 10c0/7dd82000f514d76ddfe7775e4cb0d66e5c638f5fa0e2a3be29557e898da0d32ac04f231217d414d07fb968b1fbc6d980ee17ddde0d2c516f23da9cfff608f6c1
   languageName: node
   linkType: hard
 
@@ -2422,15 +2533,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-support@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "color-support@npm:1.1.3"
-  bin:
-    color-support: bin.js
-  checksum: 10c0/8ffeaa270a784dc382f62d9be0a98581db43e11eee301af14734a6d089bd456478b1a8b3e7db7ca7dc5b18a75f828f775c44074020b51c05fc00e6d0992b1cc6
-  languageName: node
-  linkType: hard
-
 "columnify@npm:^1.6.0":
   version: 1.6.0
   resolution: "columnify@npm:1.6.0"
@@ -2472,13 +2574,6 @@ __metadata:
     ini: "npm:^1.3.4"
     proto-list: "npm:~1.2.1"
   checksum: 10c0/39d1df18739d7088736cc75695e98d7087aea43646351b028dfabd5508d79cf6ef4c5bcd90471f52cd87ae470d1c5490c0a8c1a292fbe6ee9ff688061ea0963e
-  languageName: node
-  linkType: hard
-
-"console-control-strings@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "console-control-strings@npm:1.1.0"
-  checksum: 10c0/7ab51d30b52d461412cd467721bb82afe695da78fff8f29fe6f6b9cbaac9a2328e27a22a966014df9532100f6dd85370460be8130b9c677891ba36d96a343f50
   languageName: node
   linkType: hard
 
@@ -2746,10 +2841,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^17.2.2":
-  version: 17.2.2
-  resolution: "dotenv@npm:17.2.2"
-  checksum: 10c0/be66513504590aff6eccb14167625aed9bd42ce80547f4fe5d195860211971a7060949b57108dfaeaf90658f79e40edccd3f233f0a978bff507b5b1565ae162b
+"dotenv@npm:^17.2.3":
+  version: 17.2.3
+  resolution: "dotenv@npm:17.2.3"
+  checksum: 10c0/c884403209f713214a1b64d4d1defa4934c2aa5b0002f5a670ae298a51e3c3ad3ba79dfee2f8df49f01ae74290fcd9acdb1ab1d09c7bfb42b539036108bb2ba0
   languageName: node
   linkType: hard
 
@@ -3318,19 +3413,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-string-truncated-width@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "fast-string-truncated-width@npm:3.0.1"
-  checksum: 10c0/c19302137c22dfaa127c8b833c49871543e0e15c5e1bf966df1b81d6401acad1683c927294222290739b4364b6dfce6c1337029db2f7a2f712bce4ef19133db9
+"fast-string-truncated-width@npm:^3.0.2":
+  version: 3.0.3
+  resolution: "fast-string-truncated-width@npm:3.0.3"
+  checksum: 10c0/043b8663397d14a3880ce4f3407bcda60b40db9bbeafe62863a35d1f9c69ea17c8da3fcd72de235553e6c9cd053128cde9e24ca0d4a7463208f48db3cd23d981
   languageName: node
   linkType: hard
 
-"fast-string-width@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "fast-string-width@npm:3.0.1"
+"fast-string-width@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "fast-string-width@npm:3.0.2"
   dependencies:
-    fast-string-truncated-width: "npm:^3.0.1"
-  checksum: 10c0/b311dd8f803afe96f82eb39a2015f00cc3b5a22150d32b80b45a82fa46208f42be05fc88e497134dbced40e0b3ccab23a69095158f943c5b82d6cbef3cf60c48
+    fast-string-truncated-width: "npm:^3.0.2"
+  checksum: 10c0/c8822d175315bb353ebe782b65214ac53b13e3bf704e03b132ea7bdfa8de6a636375b3ab7a4097545393d109381c37c4f387c72a462c90b61412dbc4632f39a7
   languageName: node
   linkType: hard
 
@@ -4433,19 +4528,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"libnpmaccess@npm:^10.0.2":
-  version: 10.0.2
-  resolution: "libnpmaccess@npm:10.0.2"
+"libnpmaccess@npm:^10.0.3":
+  version: 10.0.3
+  resolution: "libnpmaccess@npm:10.0.3"
   dependencies:
     npm-package-arg: "npm:^13.0.0"
     npm-registry-fetch: "npm:^19.0.0"
-  checksum: 10c0/23250148cac23bd22d37c67157349f1edae1630e78d2e8496d63a90da431bc6b3924544dc25a50949c7483b9144a39e387345e709faa0e837dda2a1a169ac4d7
+  checksum: 10c0/4582f7a1b5e5a0103ed4e76776df3b82f5b296fc5d3ab92391d61ef526899783cdfa7983cb4cbc0d354ca4cdfd9e183523f8e45cb8be80a6804af05a7291127d
   languageName: node
   linkType: hard
 
-"libnpmpublish@npm:^11.1.1":
-  version: 11.1.1
-  resolution: "libnpmpublish@npm:11.1.1"
+"libnpmpublish@npm:^11.1.2":
+  version: 11.1.2
+  resolution: "libnpmpublish@npm:11.1.2"
   dependencies:
     "@npmcli/package-json": "npm:^7.0.0"
     ci-info: "npm:^4.0.0"
@@ -4455,7 +4550,7 @@ __metadata:
     semver: "npm:^7.3.7"
     sigstore: "npm:^4.0.0"
     ssri: "npm:^12.0.0"
-  checksum: 10c0/d446b61289eec99fa7f3d9d504e15931930e3c6c12560a4a31b7b5af3184a9b9a91fe10ca741699c2f0aebd6384e840f392ae5c2d86563226607c355d8512d8e
+  checksum: 10c0/213cd2aeb65822892c3723a81d191a385e97f126ec63800f7051609e24c38c3fa36ea529b26739dc56dfba21f7f456347889f3aa1e6024c8c6a40bfa4cd9d184
   languageName: node
   linkType: hard
 
@@ -4841,6 +4936,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"npm-package-arg@npm:^13.0.1":
+  version: 13.0.1
+  resolution: "npm-package-arg@npm:13.0.1"
+  dependencies:
+    hosted-git-info: "npm:^9.0.0"
+    proc-log: "npm:^5.0.0"
+    semver: "npm:^7.3.5"
+    validate-npm-package-name: "npm:^6.0.0"
+  checksum: 10c0/14ff9f491e2a1c68b5a0b0faede011179663e2ae59b96bf9fa3e4ea95ee1927fc3a20c0967e9dc20e0ee0ebddb7ea2172bd83abd4e7a5689ed837d156ad0f79f
+  languageName: node
+  linkType: hard
+
 "npm-packlist@npm:^10.0.1, npm-packlist@npm:^10.0.2":
   version: 10.0.2
   resolution: "npm-packlist@npm:10.0.2"
@@ -5045,13 +5152,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-queue@npm:^8.1.1":
-  version: 8.1.1
-  resolution: "p-queue@npm:8.1.1"
+"p-queue@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "p-queue@npm:9.0.0"
   dependencies:
     eventemitter3: "npm:^5.0.1"
-    p-timeout: "npm:^6.1.2"
-  checksum: 10c0/7732a6a0fbb67b388ae71a3f4a114c79291f2f466fe31929749aaa237c6ca13b7c3075785b4a16812ec3ed65107944421e6dd7c02a8dceefb69f8c5cc3c7652d
+    p-timeout: "npm:^7.0.0"
+  checksum: 10c0/0f27fcbec9e4e02f34cc3660f14b5746798c51a2425dc3d3c5238924c34726b1580606d5d1432fc05304e2350c00b112ded03eb43c1b49de7791a7150fbfcb4e
   languageName: node
   linkType: hard
 
@@ -5062,10 +5169,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-timeout@npm:^6.1.2":
-  version: 6.1.4
-  resolution: "p-timeout@npm:6.1.4"
-  checksum: 10c0/019edad1c649ab07552aa456e40ce7575c4b8ae863191477f02ac8d283ac8c66cedef0ca93422735130477a051dfe952ba717641673fd3599befdd13f63bcc33
+"p-timeout@npm:^7.0.0":
+  version: 7.0.1
+  resolution: "p-timeout@npm:7.0.1"
+  checksum: 10c0/87d96529d1096d506607218dba6f9ec077c6dbedd0c2e2788c748e33bcd05faae8a81009fd9d22ec0b3c95fc83f4717306baba223f6e464737d8b99294c3e863
   languageName: node
   linkType: hard
 
@@ -5564,12 +5671,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.1.1, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.5.2, semver@npm:^7.5.3, semver@npm:^7.6.0, semver@npm:^7.7.1, semver@npm:^7.7.2":
+"semver@npm:^7.1.1, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.5.2, semver@npm:^7.5.3, semver@npm:^7.6.0, semver@npm:^7.7.1":
   version: 7.7.2
   resolution: "semver@npm:7.7.2"
   bin:
     semver: bin/semver.js
   checksum: 10c0/aca305edfbf2383c22571cb7714f48cadc7ac95371b4b52362fb8eeffdfbc0de0669368b82b2b15978f8848f01d7114da65697e56cd8c37b0dab8c58e543f9ea
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.7.3":
+  version: 7.7.3
+  resolution: "semver@npm:7.7.3"
+  bin:
+    semver: bin/semver.js
+  checksum: 10c0/4afe5c986567db82f44c8c6faef8fe9df2a9b1d98098fc1721f57c696c4c21cebd572f297fc21002f81889492345b8470473bc6f4aff5fb032a6ea59ea2bc45e
   languageName: node
   linkType: hard
 
@@ -6130,23 +6246,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.9.2":
-  version: 5.9.2
-  resolution: "typescript@npm:5.9.2"
+"typescript@npm:^5.9.3":
+  version: 5.9.3
+  resolution: "typescript@npm:5.9.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/cd635d50f02d6cf98ed42de2f76289701c1ec587a363369255f01ed15aaf22be0813226bff3c53e99d971f9b540e0b3cc7583dbe05faded49b1b0bed2f638a18
+  checksum: 10c0/6bd7552ce39f97e711db5aa048f6f9995b53f1c52f7d8667c1abdc1700c68a76a308f579cd309ce6b53646deb4e9a1be7c813a93baaf0a28ccd536a30270e1c5
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.9.2#optional!builtin<compat/typescript>":
-  version: 5.9.2
-  resolution: "typescript@patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"
+"typescript@patch:typescript@npm%3A^5.9.3#optional!builtin<compat/typescript>":
+  version: 5.9.3
+  resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/34d2a8e23eb8e0d1875072064d5e1d9c102e0bdce56a10a25c0b917b8aa9001a9cf5c225df12497e99da107dc379360bc138163c66b55b95f5b105b50578067e
+  checksum: 10c0/ad09fdf7a756814dce65bc60c1657b40d44451346858eea230e10f2e95a289d9183b6e32e5c11e95acc0ccc214b4f36289dcad4bf1886b0adb84d711d336a430
   languageName: node
   linkType: hard
 
