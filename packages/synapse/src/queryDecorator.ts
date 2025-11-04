@@ -13,7 +13,7 @@ import type {DirectiveBase} from './directiveClass.js';
  * @directive('[my-directive]')
  * class MyDirective extends DirectiveBase {
  *   @query('.my-element')
- *   protected myElement?: HTMLDivElement;
+ *   protected myElement: HTMLDivElement | null;
  * }
  * ```
  */
@@ -45,7 +45,7 @@ export function query(selector: string, cache = true) {
  * @directive('[my-directive]')
  * class MyDirective extends DirectiveBase {
  *   @queryAll('.my-elements')
- *   protected myElements?: NodeListOf<HTMLDivElement>;
+ *   protected myElements: NodeListOf<HTMLDivElement>;
  * }
  * ```
  */
