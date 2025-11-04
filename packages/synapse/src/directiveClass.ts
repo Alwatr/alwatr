@@ -82,7 +82,7 @@ export abstract class DirectiveBase {
     this.logger_.logMethod?.('init_');
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this as any).update_?.();
+    (this as any).update_?.(); // backward compatibility
   }
 
   /**
