@@ -1,30 +1,61 @@
+/**
+ * @package @alwatr/synapse
+ *
+ * This file defines the `DirectiveBase` class, which is the foundation for creating custom directives
+ * in the Alwatr Synapse library. Directives are used to attach behavior and logic to DOM elements
+ * declaratively.
+ */
+
 import {delay} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
 
 /**
- * Base class for creating directives that attach behavior to DOM elements.
- * Extend this class to define custom directives.
+ * The abstract base class for all directives.
+ *
+ * Extend this class to create a new directive that can be registered with the `@directive` decorator.
+ * It provides the core functionality for linking a TypeScript class to a DOM element and managing its lifecycle.
+ *
+ * @example
+ * ```ts
+ * import {DirectiveBase, directive} from '@alwatr/synapse';
+ *
+ * @directive('[my-directive]')
+ * export class MyDirective extends DirectiveBase {
+ *   protected override update_(): void {
+ *     this.element_.textContent = 'Hello from MyDirective!';
+ *     this.element_.addEventListener('click', () => this.log('Element clicked!'));
+ *   }
+ * }
+ * ```
  */
 export abstract class DirectiveBase {
   /**
-   * The CSS selector for the directive.
+   * The CSS selector that this directive is associated with.
+   * This is the selector string provided to the `@directive` decorator.
    */
   protected readonly selector_;
 
   /**
-   * Logger instance for the directive.
+   * A dedicated logger instance for this directive, pre-configured with a context like `directive:[selector]`.
+   * Use this for logging to provide clear, contextual messages.
    */
   protected readonly logger_;
 
   /**
-   * The target DOM element this directive is attached to.
+   * The DOM element to which this directive instance is attached.
+   * All directive logic operates on this element.
    */
   protected readonly element_: HTMLElement;
 
   /**
-   * Constructor to initialize the directive with the target element.
-   * @param element - The DOM element this directive is attached to.
-   * @param selector - The CSS selector for the directive.
+   * Initializes the directive. This constructor is called by the Synapse bootstrap process and should not be
+   * overridden in subclasses.
+   *
+   * It sets up the logger, element, and selector, and then schedules the `init_` and `update_` lifecycle methods
+   * to run in the next microtask.
+   *
+   * @param element The DOM element to which this directive is attached.
+   * @param selector The CSS selector that matched this directive.
    */
   constructor(element: HTMLElement, selector: string) {
     this.logger_ = createLogger(`directive:${selector}`);
@@ -36,27 +67,50 @@ export abstract class DirectiveBase {
     (async () => {
       await delay.nextMicrotask();
       await this.init_();
-      await this.update_();
     })();
   }
 
+  /**
+   * Called once automatically after the directive is initialized.
+   *
+   * This method serves as the main entry point for your directive's logic,
+   * such as modifying the element or setting up event listeners.
+   *
+   * **Note:** Do not call this method directly. It is designed to be called only once by the framework.
+   */
   protected init_(): Awaitable<void> {
     this.logger_.logMethod?.('init_');
-    this.update_(); // backward compatibility
-  }
 
-  protected update_(): Awaitable<void>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (this as any).update_?.();
+  }
 
   /**
    * Dispatches a custom event from the target element.
-   * @param eventName - The name of the event.
-   * @param detail - Optional data to include in the event.
+   *
+   * This is a convenience method for firing events that can be listened to by other parts of the application.
+   * The event bubbles up through the DOM.
+   *
+   * @param eventName The name of the custom event.
+   * @param detail Optional data to include in the event's `detail` property.
+   *
+   * @example
+   * ```ts
+   * this.dispatch_('user-action', {action: 'save', id: 123});
+   * ```
    */
   protected dispatch_(eventName: string, detail?: unknown): void {
     this.logger_.logMethodArgs?.('dispatch_', {eventName, detail});
     this.element_.dispatchEvent(new CustomEvent(eventName, {detail, bubbles: true}));
   }
 
+  /**
+   * Cleans up the directive's resources.
+   *
+   * This method removes the element from the DOM and nullifies the internal reference to it,
+   * helping with garbage collection. It can be extended by subclasses to perform additional cleanup,
+   * such as removing event listeners.
+   */
   protected destroy_(): Awaitable<void> {
     this.logger_.logMethod?.('destroy_');
     this.element_.remove();
