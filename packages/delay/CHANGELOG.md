@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.13](https://github.com/Alwatr/nanolib/compare/@alwatr/delay@6.0.12...@alwatr/delay@6.0.13) (2025-11-04)
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group across 1 directory with 9 updates ([fdf29d5](https://github.com/Alwatr/nanolib/commit/fdf29d5aa89983cb06f79d42650a364521f5c4b9))
+* update @types/node from ^22.18.12 to ^24.10.0 across multiple packages ([1169a86](https://github.com/Alwatr/nanolib/commit/1169a86001da2abfbe99a7da33c8e92183f553f6))
+
 ## [6.0.12](https://github.com/Alwatr/nanolib/compare/@alwatr/delay@6.0.11...@alwatr/delay@6.0.12) (2025-10-06)
 
 ### 🔗 Dependencies update

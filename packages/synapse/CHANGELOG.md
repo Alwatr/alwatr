@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.18](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.17...@alwatr/synapse@1.1.18) (2025-11-04)
+
+### 🔨 Code Refactoring
+
+* enhance documentation and structure of DirectiveBase class ([b2cf694](https://github.com/Alwatr/nanolib/commit/b2cf6941ffdf56adfc0a357331a1f155f782943e))
+* simplify update and destroy methods in DirectiveBase class ([e8a906d](https://github.com/Alwatr/nanolib/commit/e8a906d5e4346eda808fc3013287e620e31ef4e3))
+* update property types in query decorators to ensure proper null handling ([bc250dd](https://github.com/Alwatr/nanolib/commit/bc250dde37c72f9469d11ec6a49b9567f3d81d38))
+
 ## [1.1.17](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.16...@alwatr/synapse@1.1.17) (2025-10-06)
 
 ### 🔗 Dependencies update

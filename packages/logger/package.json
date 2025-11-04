@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/logger",
   "description": "Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.",
-  "version": "6.0.9",
+  "version": "6.0.10",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
