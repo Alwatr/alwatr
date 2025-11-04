@@ -21,7 +21,8 @@ import {createLogger} from '@alwatr/logger';
  *
  * @directive('[my-directive]')
  * export class MyDirective extends DirectiveBase {
- *   protected override update_(): void {
+ *   protected override init_(): void {
+ *     super.init_(); // فراخوانی متد والد برای حفظ سازگاری با نسخه‌های قبل ضروری است
  *     this.element_.textContent = 'Hello from MyDirective!';
  *     this.element_.addEventListener('click', () => this.log('Element clicked!'));
  *   }
