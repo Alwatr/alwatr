@@ -40,22 +40,12 @@ export abstract class DirectiveBase {
     })();
   }
 
-  /**
-   * Called to update the directive's state or behavior.
-   * Must be implemented by subclasses.
-   */
-  protected abstract update_(): Awaitable<void>;
-
   protected init_(): Awaitable<void> {
-    this.logger_.logMethod?.('init');
+    this.logger_.logMethod?.('init_');
+    this.update_(); // backward compatibility
   }
 
-  protected destroy_(): Awaitable<void> {
-    this.logger_.logMethod?.('destroy');
-    this.element_.remove();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this as any).element_ = null;
-  }
+  protected update_(): Awaitable<void>;
 
   /**
    * Dispatches a custom event from the target element.
@@ -65,5 +55,12 @@ export abstract class DirectiveBase {
   protected dispatch_(eventName: string, detail?: unknown): void {
     this.logger_.logMethodArgs?.('dispatch_', {eventName, detail});
     this.element_.dispatchEvent(new CustomEvent(eventName, {detail, bubbles: true}));
+  }
+
+  protected destroy_(): Awaitable<void> {
+    this.logger_.logMethod?.('destroy_');
+    this.element_.remove();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (this as any).element_ = null;
   }
 }
