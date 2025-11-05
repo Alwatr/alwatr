@@ -29,14 +29,14 @@ export class FetchError extends Error {
    * The parsed body of the error response, typically a JSON object.
    * It will be `undefined` for non-HTTP errors.
    */
-  public data?: unknown;
+  public data?: JsonObject | string;
 
   /**
    * The specific reason for the fetch failure.
    */
   public reason: FetchErrorReason;
 
-  constructor(reason: FetchErrorReason, message: string, response?: Response, data?: unknown) {
+  constructor(reason: FetchErrorReason, message: string, response?: Response, data?: JsonObject | string) {
     super(message);
     this.name = 'FetchError';
     this.reason = reason;
