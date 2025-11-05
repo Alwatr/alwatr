@@ -8,6 +8,7 @@ It's designed to be a drop-in replacement for the standard `fetch` to instantly 
 
 ## Key Features
 
+- **Go-Style Error Handling**: Returns a tuple `[Response, null]` on success or `[null, Error]` on failure—no exceptions thrown.
 - **Retry Pattern**: Automatically retries failed requests on timeouts or server errors (5xx).
 - **Request Timeout**: Aborts requests that take too long to complete.
 - **Duplicate Handling**: Prevents sending identical parallel requests, returning a single response for all callers.
@@ -32,32 +33,103 @@ pnpm add @alwatr/fetch
 
 ## Quick Start
 
-Import the `fetch` function and use it just like you would the native `fetch`. It accepts a URL and an options object with several powerful enhancements.
+Import the `fetch` function and use it with tuple destructuring for elegant error handling. The function returns `[Response, null]` on success or `[null, Error]` on failure—no exceptions are thrown.
 
 ```typescript
-import {fetch} from '@alwatr/fetch';
+import {fetch, FetchError} from '@alwatr/fetch';
 
 async function fetchProducts() {
-  try {
-    console.log('Fetching product list...');
-    const response = await fetch('/api/products', {
-      queryParams: {limit: 10, category: 'electronics'},
-      cacheStrategy: 'stale_while_revalidate',
-      timeout: '5s', // Use string duration
-    });
+  console.log('Fetching product list...');
+  
+  const [response, error] = await fetch('/api/products', {
+    queryParams: {limit: 10, category: 'electronics'},
+    cacheStrategy: 'stale_while_revalidate',
+    timeout: '5s',
+  });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+  if (error) {
+    console.error('Failed to fetch products:', error.message);
+    if (error instanceof FetchError) {
+      console.error('Error reason:', error.reason);
+      console.error('Server response:', error.data);
     }
-
-    const data = await response.json();
-    console.log('Products:', data);
-  } catch (error) {
-    console.error('Failed to fetch products:', error);
+    return;
   }
+
+  // At this point, response is guaranteed to be valid and ok
+  const data = await response.json();
+  console.log('Products:', data);
 }
 
 fetchProducts();
+```
+
+## Error Handling
+
+`@alwatr/fetch` uses a **Go-style tuple return pattern** instead of throwing exceptions. This provides explicit, type-safe error handling.
+
+### Return Type
+
+```typescript
+type FetchResponse = Promise<[Response, null] | [null, Error | FetchError]>;
+```
+
+- **Success**: `[Response, null]` - The response is guaranteed to have `response.ok === true`
+- **Failure**: `[null, Error | FetchError]` - Contains details about what went wrong
+
+### FetchError Class
+
+When a request fails, you may receive a `FetchError` instance which provides additional context:
+
+```typescript
+class FetchError extends Error {
+  reason: FetchErrorReason;  // Specific error reason
+  response?: Response;        // The HTTP response (if available)
+  data?: unknown;             // Parsed response body (if available)
+}
+```
+
+### Error Reasons
+
+The `reason` property indicates why the request failed:
+
+- `'http_error'`: HTTP error status (e.g., 404, 500)
+- `'timeout'`: Request exceeded the timeout duration
+- `'cache_not_found'`: Resource not found in cache (when using `cache_only`)
+- `'network_error'`: Network-level error (e.g., DNS failure, connection refused)
+- `'aborted'`: Request was aborted via AbortSignal
+- `'unknown_error'`: Unspecified error
+
+### Error Handling Example
+
+```typescript
+const [response, error] = await fetch('/api/user/profile', {
+  bearerToken: 'jwt-token',
+});
+
+if (error) {
+  if (error instanceof FetchError) {
+    switch (error.reason) {
+      case 'http_error':
+        console.error(`HTTP ${error.response?.status}: ${error.data}`);
+        break;
+      case 'timeout':
+        console.error('Request timed out. Please try again.');
+        break;
+      case 'network_error':
+        console.error('Network error. Check your connection.');
+        break;
+      default:
+        console.error('Request failed:', error.message);
+    }
+  } else {
+    console.error('Unexpected error:', error);
+  }
+  return;
+}
+
+// Safe to use response here
+const userData = await response.json();
 ```
 
 ## API and Options
@@ -91,14 +163,20 @@ The `fetch` function takes a `url` string and an `options` object. The options o
 The `queryParams` option simplifies adding search parameters to your request URL.
 
 ```typescript
-// This will make a GET request to:
-// /api/users?page=2&sort=asc
-const response = await fetch('/api/users', {
+// This will make a GET request to: /api/users?page=2&sort=asc
+const [response, error] = await fetch('/api/users', {
   queryParams: {
     page: 2,
     sort: 'asc',
   },
 });
+
+if (error) {
+  console.error('Failed to fetch users:', error.message);
+  return;
+}
+
+const users = await response.json();
 ```
 
 ### JSON Body
@@ -107,23 +185,38 @@ Use `bodyJson` to send a JavaScript object as a JSON payload. The `Content-Type`
 
 ```typescript
 // This will make a POST request to /api/orders with a JSON body
-const response = await fetch('/api/orders', {
+const [response, error] = await fetch('/api/orders', {
   method: 'POST',
   bodyJson: {
     productId: 'xyz-123',
     quantity: 2,
   },
 });
+
+if (error) {
+  console.error('Failed to create order:', error.message);
+  return;
+}
+
+const order = await response.json();
+console.log('Order created:', order);
 ```
 
 ### Timeout
 
-Set a timeout for your requests. If the request takes longer than the specified duration, it will be aborted, and the promise will reject with a `fetch_timeout` error.
+Set a timeout for your requests. If the request takes longer than the specified duration, it will be aborted and return an error with `reason: 'timeout'`.
 
 ```typescript
-await fetch('/api/slow-endpoint', {
+const [response, error] = await fetch('/api/slow-endpoint', {
   timeout: '2.5s', // You can use duration strings
 });
+
+if (error) {
+  if (error instanceof FetchError && error.reason === 'timeout') {
+    console.error('Request timed out after 2.5 seconds');
+  }
+  return;
+}
 ```
 
 ### Retry Pattern
@@ -132,10 +225,17 @@ The fetch operation will automatically retry on server errors (5xx status codes)
 
 ```typescript
 // Retry up to 5 times, with a 2-second delay between each attempt
-await fetch('/api/flaky-service', {
+const [response, error] = await fetch('/api/flaky-service', {
   retry: 5,
   retryDelay: '2s',
 });
+
+if (error) {
+  console.error('Request failed after 5 retries:', error.message);
+  return;
+}
+
+const data = await response.json();
 ```
 
 ### Duplicate Request Handling
@@ -150,10 +250,13 @@ The `removeDuplicate` option prevents multiple identical requests from being sen
 ```typescript
 // Both calls will result in only ONE network request.
 // The second call will receive the response from the first.
-const [res1, res2] = await Promise.all([
+const [result1, result2] = await Promise.all([
   fetch('/api/data', {removeDuplicate: 'until_load'}),
   fetch('/api/data', {removeDuplicate: 'until_load'}),
 ]);
+
+const [response1, error1] = result1;
+const [response2, error2] = result2;
 ```
 
 ### Cache Strategies
@@ -163,17 +266,26 @@ Leverage the browser's Cache API with `cacheStrategy`.
 - `'network_only'` (default): Standard fetch behavior; no caching.
 - `'cache_first'`: Serves from cache if available. Otherwise, fetches from the network and caches the result.
 - `'network_first'`: Fetches from the network first. If the network fails, it falls back to the cache.
+- `'cache_only'`: Only serves from cache; returns an error if not found.
+- `'update_cache'`: Fetches from network and updates the cache.
 - `'stale_while_revalidate'`: The fastest strategy. It serves stale content from the cache immediately while sending a network request in the background to update the cache for the next time.
 
 ```typescript
 // Serve news from cache instantly, but update it in the background for the next visit.
-const response = await fetch('/api/news', {
+const [response, error] = await fetch('/api/news', {
   cacheStrategy: 'stale_while_revalidate',
   revalidateCallback: (freshResponse) => {
     console.log('Cache updated with fresh data!');
     // You can use freshResponse to update the UI if needed
   },
 });
+
+if (error) {
+  console.error('Failed to load news:', error.message);
+  return;
+}
+
+const news = await response.json();
 ```
 
 ### Authentication
@@ -182,12 +294,19 @@ Easily add authentication headers with `bearerToken` or the `alwatrAuth` scheme.
 
 ```typescript
 // Using a Bearer Token
-await fetch('/api/secure/data', {
+const [response, error] = await fetch('/api/secure/data', {
   bearerToken: 'your-jwt-token-here',
 });
 
+if (error) {
+  if (error instanceof FetchError && error.response?.status === 401) {
+    console.error('Authentication failed. Please log in again.');
+  }
+  return;
+}
+
 // Using Alwatr's authentication scheme
-await fetch('/api/secure/data', {
+const [response2, error2] = await fetch('/api/secure/data', {
   alwatrAuth: {
     userId: 'user-id',
     userToken: 'user-auth-token',
