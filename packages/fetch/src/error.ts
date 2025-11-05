@@ -2,11 +2,12 @@
  * Defines the specific reason for a fetch failure.
  * - `http_error`: An HTTP error status was received (e.g., 404, 500).
  * - `timeout`: The request was aborted due to a timeout.
+ * - `cache_not_found`: The requested resource was not found in the cache_only strategy.
  * - `network_error`: A generic network-level error occurred.
  * - `aborted`: The request was aborted by a user-provided signal.
  * - `unknown_error`: An unspecified error occurred.
  */
-export type FetchErrorReason = 'http_error' | 'timeout' | 'network_error' | 'aborted' | 'unknown_error';
+export type FetchErrorReason = 'http_error' | 'cache_not_found' | 'timeout' | 'network_error' | 'aborted' | 'unknown_error';
 
 /**
  * Custom error class for fetch-related failures.
