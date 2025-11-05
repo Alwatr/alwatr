@@ -11,7 +11,7 @@ import type { FetchErrorReason } from "./type.js";
  * @example
  * ```typescript
  * const [response, error] = await fetch('/api/endpoint');
- * if (error instanceof FetchError) {
+ * if (error) {
  *   console.error(`Request failed with status ${error.response?.status}`);
  *   console.error('Server response:', error.data);
  * }
