@@ -125,11 +125,16 @@ export async function fetch(url: string, options: FetchOptions): Promise<FetchRe
       error = err;
 
       if (error.response !== undefined && error.data === undefined) {
-        try {
-          error.data = await error.response.json();
-        }
-        catch {
-          error.data = await error.response.text().catch(() => '');
+        const bodyText = await error.response.text().catch(() => '');
+
+        if (bodyText.trim().length > 0) {
+          try {
+          // Try to parse as JSON  
+            error.data = JSON.parse(bodyText);
+          }
+          catch {
+            error.data = bodyText;
+          }
         }
       }
     }
