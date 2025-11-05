@@ -442,8 +442,8 @@ function handleTimeout_(options: FetchOptions__): Promise<Response> {
     }
 
     const timeoutId = setTimeout(() => {
-      abortController?.abort('fetch_timeout');
       reject(new FetchError('timeout', 'fetch_timeout'));
+      abortController?.abort('fetch_timeout');
     }, parseDuration(options.timeout!));
 
     globalThis_
