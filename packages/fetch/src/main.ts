@@ -8,6 +8,7 @@
 
 import {delay} from '@alwatr/delay';
 import {getGlobalThis} from '@alwatr/global-this';
+import {hasOwn} from '@alwatr/has-own';
 import {HttpStatusCodes, MimeTypes} from '@alwatr/http-primer';
 import {createLogger} from '@alwatr/logger';
 import {parseDuration} from '@alwatr/parse-duration';
@@ -25,7 +26,7 @@ const globalThis_ = getGlobalThis();
 /**
  * A boolean flag indicating whether the browser's Cache API is supported.
  */
-const cacheSupported = Object.hasOwn(globalThis_, 'caches');
+const cacheSupported = /* #__PURE__ */ hasOwn(globalThis_, 'caches');
 
 /**
  * A simple in-memory storage for tracking and managing duplicate in-flight requests.
@@ -112,16 +113,7 @@ export async function fetch(url: string, options: FetchOptions): Promise<FetchRe
     const response = await handleCacheStrategy_(options_);
 
     if (!response.ok) {
-      let responseData: unknown;
-
-      try {
-        responseData = await response.json();
-      }
-      catch {
-        responseData = await response.text().catch(() => '');
-      }
-
-      throw new FetchError('http_error', `HTTP error! status: ${response.status} ${response.statusText}`, response, responseData);
+      throw new FetchError('http_error', `HTTP error! status: ${response.status} ${response.statusText}`, response);
     }
 
     return [response, null];
@@ -131,6 +123,15 @@ export async function fetch(url: string, options: FetchOptions): Promise<FetchRe
 
     if (err instanceof FetchError) {
       error = err;
+
+      if (error.response !== undefined && error.data === undefined) {
+        try {
+          error.data = await error.response.json();
+        }
+        catch {
+          error.data = await error.response.text().catch(() => '');
+        }
+      }
     }
     else if (err instanceof Error) {
       if (err.message === 'fetch_timeout') {
@@ -256,8 +257,7 @@ async function handleCacheStrategy_(options: FetchOptions__): Promise<Response> 
     case 'cache_only': {
       const cachedResponse = await cacheStorage.match(request);
       if (cachedResponse == null) {
-        logger_.accident('_handleCacheStrategy', 'fetch_cache_not_found', {url: request.url});
-        throw new Error('fetch_cache_not_found');
+        throw new FetchError('cache_not_found', 'Resource not found in cache');
       }
       // else
 
@@ -384,19 +384,18 @@ async function handleRetryPattern_(options: FetchOptions__): Promise<Response> {
   try {
     const response = await handleTimeout_(options);
 
-    // Only retry on server errors (5xx). Client errors (4xx) are not retried.
-    if (response.status < HttpStatusCodes.Error_Server_500_Internal_Server_Error) {
-      return response;
+    if (!response.ok && response.status >= HttpStatusCodes.Error_Server_500_Internal_Server_Error) {
+      // only retry for server errors (5xx)
+      throw new FetchError('http_error', `HTTP error! status: ${response.status} ${response.statusText}`, response);
     }
-    // else
 
-    throw new Error('fetch_server_error');
+    return response;
   }
   catch (err) {
     logger_.accident('fetch', 'fetch_failed_retry', err);
 
     // Do not retry if the browser is offline.
-    if (globalThis_.navigator?.onLine === false) {
+    if (globalThis_.navigator.onLine === false) {
       logger_.accident('handleRetryPattern_', 'offline', 'Skip retry because offline');
       throw err;
     }
@@ -438,8 +437,8 @@ function handleTimeout_(options: FetchOptions__): Promise<Response> {
     }
 
     const timeoutId = setTimeout(() => {
-      reject(new Error('fetch_timeout'));
       abortController?.abort('fetch_timeout');
+      reject(new FetchError('timeout', 'fetch_timeout'));
     }, parseDuration(options.timeout!));
 
     globalThis_
