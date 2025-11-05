@@ -139,10 +139,7 @@ export async function fetch(url: string, options: FetchOptions): Promise<FetchRe
       }
     }
     else if (err instanceof Error) {
-      if (err.message === 'fetch_timeout') {
-        error = new FetchError('timeout', err.message);
-      }
-      else if (err.name === 'AbortError') {
+      if (err.name === 'AbortError') {
         error = new FetchError('aborted', err.message);
       }
       else {
