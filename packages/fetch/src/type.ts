@@ -121,9 +121,9 @@ export type FetchOptions = Partial<AlwatrFetchOptions_> & Omit<RequestInit, 'hea
 
 /**
  * Represents the tuple returned by the fetch function.
- * On success, it's `[Response, null]`. On failure, it's `[null, Error | FetchError]`.
+ * On success, it's `[Response, null]`. On failure, it's `[null, FetchError]`.
  */
-export type FetchResponse = Promise<[Response, null] | [null, Error | FetchError]>;
+export type FetchResponse = Promise<[Response, null] | [null, FetchError]>;
 
 /**
  * Defines the specific reason for a fetch failure.
