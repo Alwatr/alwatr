@@ -395,7 +395,7 @@ async function handleRetryPattern_(options: FetchOptions__): Promise<Response> {
     logger_.accident('fetch', 'fetch_failed_retry', err);
 
     // Do not retry if the browser is offline.
-    if (globalThis_.navigator.onLine === false) {
+    if (globalThis_.navigator?.onLine === false) {
       logger_.accident('handleRetryPattern_', 'offline', 'Skip retry because offline');
       throw err;
     }
