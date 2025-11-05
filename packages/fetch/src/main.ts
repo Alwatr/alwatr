@@ -67,10 +67,12 @@ type FetchOptions__ = AlwatrFetchOptions_ & Omit<RequestInit, 'headers'> & {url:
  *
  * @param {string} url - The URL to fetch.
  * @param {FetchOptions} options - Optional configuration for the fetch request.
- * @returns {Promise<Response>} A promise that resolves to the `Response` object for the request.
+ * @returns {Promise<[Response, null] | [null, Error]>} A promise that resolves to a tuple.
+ * On success, it returns `[response, null]`. On failure, it returns `[null, error]`.
  *
  * @example
  * ```typescript
+ * import {fetch} from '@alwatr/fetch';
  * async function fetchProducts() {
  *   try {
  *     const response = await fetch("/api/products", {
@@ -94,8 +96,33 @@ type FetchOptions__ = AlwatrFetchOptions_ & Omit<RequestInit, 'headers'> & {url:
  * fetchProducts();
  * ```
  */
-export function fetch(url: string, options: FetchOptions): Promise<Response> {
+export async function fetch(url: string, options: FetchOptions): Promise<[Response, null] | [null, Error]> {
   logger_.logMethodArgs?.('fetch', {url, options});
+
+  const options_ = _processOptions(url, options);
+
+  try {
+    // Start the fetch lifecycle, beginning with the cache strategy.
+    const response = await handleCacheStrategy_(options_);
+    return [response, null];
+  }
+  catch (err) {
+    const error = err instanceof Error ? err : new Error(String(err));
+    logger_.error('fetch', error.message, error);
+    return [null, error];
+  }
+}
+
+/**
+ * Processes and sanitizes the fetch options.
+ *
+ * @param {string} url - The URL to fetch.
+ * @param {FetchOptions} options - The user-provided options.
+ * @returns {FetchOptions__} The processed and complete fetch options.
+ * @private
+ */
+function _processOptions(url: string, options: FetchOptions): FetchOptions__ {
+  logger_.logMethodArgs?.('_processOptions', {url, options});
 
   const options_: FetchOptions__ = {
     ...defaultFetchOptions,
@@ -138,8 +165,7 @@ export function fetch(url: string, options: FetchOptions): Promise<Response> {
 
   logger_.logProperty?.('fetch.options', options_);
 
-  // Start the fetch lifecycle, beginning with the cache strategy.
-  return handleCacheStrategy_(options_);
+  return options_;
 }
 
 /**
