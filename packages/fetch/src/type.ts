@@ -1,3 +1,4 @@
+import type {FetchError} from './error.js';
 import type {HttpMethod, HttpRequestHeaders} from '@alwatr/http-primer';
 import type {Duration} from '@alwatr/parse-duration';
 
@@ -117,3 +118,9 @@ export interface AlwatrFetchOptions_ {
  * Combined type for fetch options, including standard RequestInit properties.
  */
 export type FetchOptions = Partial<AlwatrFetchOptions_> & Omit<RequestInit, 'headers'>;
+
+/**
+ * Represents the tuple returned by the fetch function.
+ * On success, it's `[Response, null]`. On failure, it's `[null, Error | FetchError]`.
+ */
+export type FetchResponse = Promise<[Response, null] | [null, Error | FetchError]>;
