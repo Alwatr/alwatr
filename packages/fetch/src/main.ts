@@ -19,6 +19,7 @@ import type {AlwatrFetchOptions_, FetchOptions, FetchResponse} from './type.js';
 
 export {cacheSupported};
 export type * from './type.js';
+export * from './error.js';
 
 const logger_ = createLogger('@alwatr/fetch');
 const globalThis_ = getGlobalThis();
