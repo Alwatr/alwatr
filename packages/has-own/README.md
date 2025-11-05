@@ -9,7 +9,7 @@ npm install @alwatr/has-own
 ```
 
 ```bash
-yarn add @alwatr/polyfill-has-own
+yarn add @alwatr/has-own
 ```
 
 ## Usage
