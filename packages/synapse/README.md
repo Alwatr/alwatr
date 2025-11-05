@@ -59,7 +59,8 @@ import {directive, DirectiveBase} from '@alwatr/synapse';
 export class CopyButtonDirective extends DirectiveBase {
   private originalText!: string;
 
-  protected update_(): void {
+  protected override init_(): void {
+    super.init_();
     this.originalText = this.element_.textContent ?? 'Copy';
     this.element_.addEventListener('click', () => this.handleClick());
   }
