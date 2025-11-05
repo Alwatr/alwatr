@@ -1,5 +1,5 @@
 import {getGlobalThis} from '@alwatr/global-this';
-import '@alwatr/polyfill-has-own';
+import {hasOwn} from '@alwatr/has-own';
 
 const globalThis_ = getGlobalThis<{__alwatr_dedupe__: string | true}>();
 
@@ -35,7 +35,7 @@ const list: DictionaryOpt<true> = {};
  * ```
  */
 export function deduplicate(args: {name: string; strict?: true}): void {
-  if (Object.hasOwn(list, args.name)) {
+  if (hasOwn(list, args.name)) {
     const error = new Error('duplication_detected', {
       cause: {
         name: args.name,
