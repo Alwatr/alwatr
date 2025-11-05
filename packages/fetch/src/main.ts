@@ -112,22 +112,42 @@ export async function fetch(url: string, options: FetchOptions): Promise<FetchRe
     const response = await handleCacheStrategy_(options_);
 
     if (!response.ok) {
-      let responseData: unknown = null;
+      let responseData: unknown;
+
       try {
         responseData = await response.json();
       }
       catch {
-        responseData = await response.text();
+        responseData = await response.text().catch(() => '');
       }
 
-      throw new FetchError(response, responseData, `HTTP error! status: ${response.status} ${response.statusText}`);
+      throw new FetchError('http_error', `HTTP error! status: ${response.status} ${response.statusText}`, response, responseData);
     }
 
     return [response, null];
   }
   catch (err) {
-    const error = err instanceof Error ? err : new Error(String(err ?? 'unknown_error'));
-    logger_.error('fetch', error.message, {error});
+    let error: FetchError;
+
+    if (err instanceof FetchError) {
+      error = err;
+    }
+    else if (err instanceof Error) {
+      if (err.message === 'fetch_timeout') {
+        error = new FetchError('timeout', err.message);
+      }
+      else if (err.name === 'AbortError') {
+        error = new FetchError('aborted', err.message);
+      }
+      else {
+        error = new FetchError('network_error', err.message);
+      }
+    }
+    else {
+      error = new FetchError('unknown_error', String(err ?? 'unknown_error'));
+    }
+
+    logger_.error('fetch', error.reason, {error});
     return [null, error];
   }
 }
