@@ -1,6 +1,6 @@
 {
-  "name": "@alwatr/polyfill-has-own",
-  "description": "A polyfill for `Object.hasOwn`.",
+  "name": "@alwatr/has-own",
+  "description": "A side-effect-free polyfill/replacement for `Object.hasOwn` that supports all browsers.",
   "version": "5.5.21",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
@@ -23,7 +23,7 @@
     "!demo/**/*",
     "!**/*.test.js"
   ],
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/polyfill-has-own#readme",
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/has-own#readme",
   "keywords": [
     "alwatr",
     "cross-platform",
@@ -38,7 +38,7 @@
     "node",
     "nodejs",
     "polyfill",
-    "polyfill-has-own",
+    "has-own",
     "typescript",
     "util",
     "utility",
@@ -54,7 +54,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/polyfill-has-own"
+    "directory": "packages/has-own"
   },
   "scripts": {
     "b": "yarn run build",
@@ -70,7 +70,7 @@
     "watch:es": "yarn run build:es --watch",
     "watch:ts": "yarn run build:ts --watch --preserveWatchOutput"
   },
-  "sideEffects": true,
+  "sideEffects": false,
   "type": "module",
   "types": "./dist/main.d.ts"
 }

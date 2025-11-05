@@ -1,16 +1,12 @@
 # Object.hasOwn Polyfill
 
-A polyfill for `Object.hasOwn`.
+A side-effect-free polyfill/replacement for `Object.hasOwn` that supports all browsers.
 
 ## Installation
 
-You can install this package using npm or yarn:
-
 ```bash
-npm install @alwatr/polyfill-has-own
+npm install @alwatr/has-own
 ```
-
-If you're using Yarn, you can do this with:
 
 ```bash
 yarn add @alwatr/polyfill-has-own
@@ -19,10 +15,10 @@ yarn add @alwatr/polyfill-has-own
 ## Usage
 
 ```ts
-import '@alwatr/polyfill-has-own';
+import {hasOwn} from '@alwatr/has-own';
 
 const obj = {foo: 'bar'};
-obj.hasOwn('foo'); // true
+hasOwn('foo'); // true
 ```
 
 ## Sponsors
