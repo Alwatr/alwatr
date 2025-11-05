@@ -51,8 +51,8 @@ __metadata:
   resolution: "@alwatr/dedupe@workspace:packages/dedupe"
   dependencies:
     "@alwatr/global-this": "workspace:*"
+    "@alwatr/has-own": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/polyfill-has-own": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
@@ -152,6 +152,7 @@ __metadata:
   dependencies:
     "@alwatr/delay": "workspace:*"
     "@alwatr/global-this": "workspace:*"
+    "@alwatr/has-own": "workspace:*"
     "@alwatr/http-primer": "workspace:*"
     "@alwatr/logger": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
@@ -196,6 +197,17 @@ __metadata:
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
     "@types/node": "npm:^24.10.0"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
+"@alwatr/has-own@workspace:*, @alwatr/has-own@workspace:packages/has-own":
+  version: 0.0.0-use.local
+  resolution: "@alwatr/has-own@workspace:packages/has-own"
+  dependencies:
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -380,17 +392,6 @@ __metadata:
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
     "@types/node": "npm:^24.10.0"
-    typescript: "npm:^5.9.3"
-  languageName: unknown
-  linkType: soft
-
-"@alwatr/polyfill-has-own@workspace:*, @alwatr/polyfill-has-own@workspace:packages/polyfill-has-own":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/polyfill-has-own@workspace:packages/polyfill-has-own"
-  dependencies:
-    "@alwatr/nano-build": "workspace:*"
-    "@alwatr/prettier-config": "workspace:*"
-    "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
