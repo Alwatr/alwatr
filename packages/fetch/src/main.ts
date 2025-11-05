@@ -1,9 +1,9 @@
 /**
  * @module @alwatr/fetch
  *
- * An enhanced, lightweight, and dependency-free wrapper for the native `fetch` API.
- * It provides modern features like caching strategies, request retries, timeouts, and
- * duplicate request handling.
+ * An enhanced, lightweight, and dependency-free wrapper for the native `fetch`
+ * API. It provides modern features like caching strategies, request retries,
+ * timeouts, and duplicate request handling.
  */
 
 import {delay} from '@alwatr/delay';
@@ -12,7 +12,9 @@ import {HttpStatusCodes, MimeTypes} from '@alwatr/http-primer';
 import {createLogger} from '@alwatr/logger';
 import {parseDuration} from '@alwatr/parse-duration';
 
-import type {AlwatrFetchOptions_, FetchOptions} from './type.js';
+import {FetchError} from './error.js';
+
+import type {AlwatrFetchOptions_, FetchOptions, FetchResponse} from './type.js';
 
 export {cacheSupported};
 export type * from './type.js';
@@ -67,36 +69,40 @@ type FetchOptions__ = AlwatrFetchOptions_ & Omit<RequestInit, 'headers'> & {url:
  *
  * @param {string} url - The URL to fetch.
  * @param {FetchOptions} options - Optional configuration for the fetch request.
- * @returns {Promise<[Response, null] | [null, Error]>} A promise that resolves to a tuple.
- * On success, it returns `[response, null]`. On failure, it returns `[null, error]`.
+ * @returns {Promise<FetchResponse>} A promise that resolves to a tuple. On
+ * success, it returns `[response, null]`. On failure, it returns `[null,
+ * error]`. The `error` can be a standard `Error` for network issues or a
+ * `FetchError` for HTTP errors, which includes the response data.
  *
  * @example
  * ```typescript
  * import {fetch} from '@alwatr/fetch';
+ *
  * async function fetchProducts() {
- *   try {
- *     const response = await fetch("/api/products", {
- *       queryParams: { limit: 10, category: "electronics" },
- *       timeout: 5_000, // 5 seconds
- *       retry: 3,
- *       cacheStrategy: "stale_while_revalidate",
- *     });
+ *   const [response, error] = await fetch('/api/products', {
+ *     queryParams: { limit: 10 },
+ *     timeout: 5_000,
+ *   });
  *
- *     if (!response.ok) {
- *       throw new Error(`HTTP error! status: ${response.status}`);
+ *   if (error) {
+ *     console.error('Request failed:', error.message);
+ *     if (error instanceof FetchError) {
+ *       // Access detailed error info
+ *       console.error('Status:', error.response.status);
+ *       console.error('Server response:', error.data);
  *     }
- *
- *     const data = await response.json();
- *     console.log("Products:", data);
- *   } catch (error) {
- *     console.error("Failed to fetch products:", error);
+ *     return;
  *   }
+ *
+ *   // At this point, response is guaranteed to be valid and ok.
+ *   const data = await response.json();
+ *   console.log('Products:', data);
  * }
  *
  * fetchProducts();
  * ```
  */
-export async function fetch(url: string, options: FetchOptions): Promise<[Response, null] | [null, Error]> {
+export async function fetch(url: string, options: FetchOptions): Promise<FetchResponse> {
   logger_.logMethodArgs?.('fetch', {url, options});
 
   const options_ = _processOptions(url, options);
@@ -104,11 +110,24 @@ export async function fetch(url: string, options: FetchOptions): Promise<[Respon
   try {
     // Start the fetch lifecycle, beginning with the cache strategy.
     const response = await handleCacheStrategy_(options_);
+
+    if (!response.ok) {
+      let responseData: unknown = null;
+      try {
+        responseData = await response.json();
+      }
+      catch {
+        responseData = await response.text();
+      }
+
+      throw new FetchError(response, responseData, `HTTP error! status: ${response.status} ${response.statusText}`);
+    }
+
     return [response, null];
   }
   catch (err) {
-    const error = err instanceof Error ? err : new Error(String(err));
-    logger_.error('fetch', error.message, error);
+    const error = err instanceof Error ? err : new Error(String(err ?? 'unknown_error'));
+    logger_.error('fetch', error.message, {error});
     return [null, error];
   }
 }
