@@ -18,7 +18,7 @@ yarn add @alwatr/has-own
 import {hasOwn} from '@alwatr/has-own';
 
 const obj = {foo: 'bar'};
-hasOwn('foo'); // true
+hasOwn(obj, 'foo'); // true
 ```
 
 ## Sponsors
