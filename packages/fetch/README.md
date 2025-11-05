@@ -8,7 +8,7 @@ It's designed to be a drop-in replacement for the standard `fetch` to instantly 
 
 ## Key Features
 
-- **Go-Style Error Handling**: Returns a tuple `[Response, null]` on success or `[null, Error]` on failure—no exceptions thrown.
+- **Go-Style Error Handling**: Returns a tuple `[Response, null]` on success or `[null, FetchError]` on failure—no exceptions thrown.
 - **Retry Pattern**: Automatically retries failed requests on timeouts or server errors (5xx).
 - **Request Timeout**: Aborts requests that take too long to complete.
 - **Duplicate Handling**: Prevents sending identical parallel requests, returning a single response for all callers.
@@ -33,14 +33,14 @@ pnpm add @alwatr/fetch
 
 ## Quick Start
 
-Import the `fetch` function and use it with tuple destructuring for elegant error handling. The function returns `[Response, null]` on success or `[null, Error]` on failure—no exceptions are thrown.
+Import the `fetch` function and use it with tuple destructuring for elegant error handling. The function returns `[Response, null]` on success or `[null, FetchError]` on failure—no exceptions are thrown.
 
 ```typescript
-import {fetch, FetchError} from '@alwatr/fetch';
+import {fetch} from '@alwatr/fetch';
 
 async function fetchProducts() {
   console.log('Fetching product list...');
-  
+
   const [response, error] = await fetch('/api/products', {
     queryParams: {limit: 10, category: 'electronics'},
     cacheStrategy: 'stale_while_revalidate',
@@ -49,10 +49,7 @@ async function fetchProducts() {
 
   if (error) {
     console.error('Failed to fetch products:', error.message);
-    if (error instanceof FetchError) {
-      console.error('Error reason:', error.reason);
-      console.error('Server response:', error.data);
-    }
+    console.error('Error reason:', error.reason);
     return;
   }
 
@@ -71,21 +68,21 @@ fetchProducts();
 ### Return Type
 
 ```typescript
-type FetchResponse = Promise<[Response, null] | [null, Error | FetchError]>;
+type FetchResponse = Promise<[Response, null] | [null, FetchError]>;
 ```
 
 - **Success**: `[Response, null]` - The response is guaranteed to have `response.ok === true`
-- **Failure**: `[null, Error | FetchError]` - Contains details about what went wrong
+- **Failure**: `[null, FetchError]` - Contains detailed information about what went wrong
 
 ### FetchError Class
 
-When a request fails, you may receive a `FetchError` instance which provides additional context:
+All errors are returned as `FetchError` instances, which provide rich context about the failure:
 
 ```typescript
 class FetchError extends Error {
-  reason: FetchErrorReason;  // Specific error reason
-  response?: Response;        // The HTTP response (if available)
-  data?: unknown;             // Parsed response body (if available)
+  reason: FetchErrorReason; // Specific error reason
+  response?: Response; // The HTTP response (if available)
+  data?: unknown; // Parsed response body (if available)
 }
 ```
 
@@ -108,22 +105,21 @@ const [response, error] = await fetch('/api/user/profile', {
 });
 
 if (error) {
-  if (error instanceof FetchError) {
-    switch (error.reason) {
-      case 'http_error':
-        console.error(`HTTP ${error.response?.status}: ${error.data}`);
-        break;
-      case 'timeout':
-        console.error('Request timed out. Please try again.');
-        break;
-      case 'network_error':
-        console.error('Network error. Check your connection.');
-        break;
-      default:
-        console.error('Request failed:', error.message);
-    }
-  } else {
-    console.error('Unexpected error:', error);
+  switch (error.reason) {
+    case 'http_error':
+      console.error(`HTTP ${error.response?.status}: ${error.data}`);
+      break;
+    case 'timeout':
+      console.error('Request timed out. Please try again.');
+      break;
+    case 'network_error':
+      console.error('Network error. Check your connection.');
+      break;
+    case 'cache_not_found':
+      console.error('Data not available offline.');
+      break;
+    default:
+      console.error('Request failed:', error.message);
   }
   return;
 }
@@ -165,10 +161,7 @@ The `queryParams` option simplifies adding search parameters to your request URL
 ```typescript
 // This will make a GET request to: /api/users?page=2&sort=asc
 const [response, error] = await fetch('/api/users', {
-  queryParams: {
-    page: 2,
-    sort: 'asc',
-  },
+  queryParams: {page: 2, sort: 'asc'},
 });
 
 if (error) {
@@ -204,7 +197,7 @@ console.log('Order created:', order);
 
 ### Timeout
 
-Set a timeout for your requests. If the request takes longer than the specified duration, it will be aborted and return an error with `reason: 'timeout'`.
+Set a timeout for your requests. If the request takes longer than the specified duration, it will be aborted and return a `FetchError` with `reason: 'timeout'`.
 
 ```typescript
 const [response, error] = await fetch('/api/slow-endpoint', {
@@ -212,7 +205,7 @@ const [response, error] = await fetch('/api/slow-endpoint', {
 });
 
 if (error) {
-  if (error instanceof FetchError && error.reason === 'timeout') {
+  if (error.reason === 'timeout') {
     console.error('Request timed out after 2.5 seconds');
   }
   return;
@@ -250,13 +243,14 @@ The `removeDuplicate` option prevents multiple identical requests from being sen
 ```typescript
 // Both calls will result in only ONE network request.
 // The second call will receive the response from the first.
-const [result1, result2] = await Promise.all([
+const results = await Promise.all([
   fetch('/api/data', {removeDuplicate: 'until_load'}),
   fetch('/api/data', {removeDuplicate: 'until_load'}),
 ]);
 
-const [response1, error1] = result1;
-const [response2, error2] = result2;
+// Both results will have the same response or error
+const [response1, error1] = results[0];
+const [response2, error2] = results[1];
 ```
 
 ### Cache Strategies
@@ -299,11 +293,13 @@ const [response, error] = await fetch('/api/secure/data', {
 });
 
 if (error) {
-  if (error instanceof FetchError && error.response?.status === 401) {
+  if (error.response?.status === 401) {
     console.error('Authentication failed. Please log in again.');
   }
   return;
 }
+
+const data = await response.json();
 
 // Using Alwatr's authentication scheme
 const [response2, error2] = await fetch('/api/secure/data', {
