@@ -107,7 +107,7 @@ const [response, error] = await fetch('/api/user/profile', {
 if (error) {
   switch (error.reason) {
     case 'http_error':
-      console.error(`HTTP ${error.response?.status}: ${error.data}`);
+      console.error(`HTTP ${error.response?.status}:`, error.data);
       break;
     case 'timeout':
       console.error('Request timed out. Please try again.');
