@@ -187,10 +187,11 @@ describe('@alwatr/fetch', () => {
 
   describe('Timeout handling', () => {
     it('should timeout and return FetchError with reason "timeout"', async () => {
+      let timeoutId;
       mockFetch.mockImplementation(
         () =>
           new Promise((resolve) => {
-            setTimeout(() => resolve(createMockResponse({data: 'too late'})), 2000);
+            timeoutId = setTimeout(() => resolve(createMockResponse({data: 'too late'})), 1000);
           }),
       );
 
@@ -202,6 +203,7 @@ describe('@alwatr/fetch', () => {
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
       expect(error.reason).toBe('timeout');
+      clearTimeout(timeoutId);
     });
 
     it('should not timeout when timeout is 0', async () => {
