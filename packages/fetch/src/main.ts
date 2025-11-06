@@ -104,7 +104,7 @@ type FetchOptions__ = AlwatrFetchOptions_ & Omit<RequestInit, 'headers'> & {url:
  * fetchProducts();
  * ```
  */
-export async function fetch(url: string, options: FetchOptions): Promise<FetchResponse> {
+export async function fetch(url: string, options: FetchOptions = {}): Promise<FetchResponse> {
   logger_.logMethodArgs?.('fetch', {url, options});
 
   const options_ = _processOptions(url, options);
