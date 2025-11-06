@@ -3,6 +3,104 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@6.0.17...@alwatr/fetch@7.0.0) (2025-11-06)
+
+### ⚠ BREAKING CHANGES
+
+* The `fetch` function no longer throws exceptions. Instead, it returns a **tuple** following the Go-style error handling pattern:
+
+```typescript
+// Old behavior (v1.x)
+type FetchResponse = Promise<Response>;
+
+// New behavior (v2.x)
+type FetchResponse = Promise<[Response, null] | [null, Error | FetchError]>;
+```
+
+### Why This Change?
+
+1. **Explicit Error Handling**: Forces developers to handle errors at the call site
+2. **Type Safety**: TypeScript can track whether you've handled errors
+3. **No Try-Catch Boilerplate**: Cleaner, more readable code
+4. **Better Error Context**: `FetchError` provides detailed error reasons and response data
+5. **Consistent Patterns**: Aligns with modern error handling practices (Go, Rust Result types)
+
+### Migration Guide
+
+#### Before (v1.x)
+
+```typescript
+import {fetch} from '@alwatr/fetch';
+
+async function getUser(id: string) {
+  try {
+    const response = await fetch(`/api/users/${id}`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  }
+  catch (error) {
+    console.error('Failed to fetch user:', error);
+    throw error;
+  }
+}
+```
+
+#### After (v2.x)
+
+```typescript
+import {fetch, FetchError} from '@alwatr/fetch';
+
+async function getUser(id: string) {
+  const [response, error] = await fetch(`/api/users/${id}`);
+
+  if (error) {
+    console.error('Failed to fetch user:', error.message, error.response);
+    return null; // or throw, or return a default value
+  }
+
+  // response is guaranteed to be ok here
+  return await response.json();
+}
+```
+
+* enhance error handling in README with Go-style tuple pattern and FetchError examples ([e1091ec](https://github.com/Alwatr/nanolib/commit/e1091eca2c27cf3aa03e046fed3ccfad6ce704ed))
+
+### ✨ Features
+
+* add custom FetchError class for enhanced error handling in fetch requests ([31891de](https://github.com/Alwatr/nanolib/commit/31891de09437ddb86fd2101124120bf78a9552eb))
+* enhance FetchError handling with specific reasons for fetch failures ([cc6569d](https://github.com/Alwatr/nanolib/commit/cc6569de16c27f2adaecefe3bef2c76ead29ffb8))
+* enhance FetchResponse type to include FetchError for improved error handling ([dd6a0ff](https://github.com/Alwatr/nanolib/commit/dd6a0ff31ddbcd6ccdfd6f65eccbbe83b9cce237))
+
+### 🐛 Bug Fixes
+
+* add 'cache_not_found' reason to FetchErrorReason type for improved error categorization ([14dddd5](https://github.com/Alwatr/nanolib/commit/14dddd5750140f60ed4305d21226eb348795c0a3))
+* add @alwatr/has-own dependency and update tsconfig references ([1bb1c71](https://github.com/Alwatr/nanolib/commit/1bb1c71bb8e7f6c2ffb0d6a563893e37183ec54b))
+* add missing type import from @alwatr/type-helper ([2326335](https://github.com/Alwatr/nanolib/commit/23263352c2698738c5a43a5deebdf1744268e8ce))
+* export error handling types from error.js ([bb88521](https://github.com/Alwatr/nanolib/commit/bb8852197cf0878f3ca62b14d3bd046a031e52a1))
+* improve error handling in fetch function to parse response body as JSON or fallback to text ([8e02ba8](https://github.com/Alwatr/nanolib/commit/8e02ba8b4733005e52095dc9833e1e36d1f3e94a))
+* refine error handling for fetch timeout and abort scenarios ([b5ac722](https://github.com/Alwatr/nanolib/commit/b5ac7229d713897f4d39d0c406dd3839792de680))
+* replace Object.hasOwn with hasOwn import and enhance FetchError handling for better error reporting ([c320420](https://github.com/Alwatr/nanolib/commit/c320420689543aab1eebd46fe7dd601bda281002))
+* set default options for fetch function ([7bda786](https://github.com/Alwatr/nanolib/commit/7bda786a8754d876e49d42ea1e5e7379ad70170d))
+* support nodejs ([fb6d993](https://github.com/Alwatr/nanolib/commit/fb6d993fe6af56a468c73fa31a960aa601279b75))
+* timeout abort issue ([bb3845d](https://github.com/Alwatr/nanolib/commit/bb3845d2b4cec705a8021f5c65de658fefc51e21))
+* update error handling in README to reference FetchError consistently ([1f6e240](https://github.com/Alwatr/nanolib/commit/1f6e240c946a07b7ce9c4489a509597fec8705f9))
+* update fetch function to return a tuple and add options processing ([d05bfb5](https://github.com/Alwatr/nanolib/commit/d05bfb59260be5eae5aeab7bd816aa2f613dd643))
+* update fetch function to return FetchResponse and handle FetchError for improved error reporting ([ddf47e0](https://github.com/Alwatr/nanolib/commit/ddf47e07510bb0cd38fa75c8921a3d64ed370afc))
+* update FetchError data type to ensure consistent error handling ([954b79a](https://github.com/Alwatr/nanolib/commit/954b79a7ba3954565c7d09db6b188b79f1fd8fa2))
+* update FetchResponse type to ensure consistent error handling ([8da0b3a](https://github.com/Alwatr/nanolib/commit/8da0b3a8ac2801494ffa214a99792215a403b16e))
+
+### 🧹 Miscellaneous Chores
+
+* reorder jest dependency in package.json ([a098ecf](https://github.com/Alwatr/nanolib/commit/a098ecf0489596104908627c759c8dcb092d2424))
+
+### 🔗 Dependencies update
+
+* add @jest/globals dependency and remove types from tsconfig ([47ee79a](https://github.com/Alwatr/nanolib/commit/47ee79a234a026ce28ab5671f84f72aea61d8508))
+
 ## [6.0.17](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@6.0.16...@alwatr/fetch@6.0.17) (2025-11-04)
 
 **Note:** Version bump only for package @alwatr/fetch

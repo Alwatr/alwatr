@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.23](https://github.com/Alwatr/nanolib/compare/@alwatr/dedupe@5.5.22...@alwatr/dedupe@5.5.23) (2025-11-06)
+
+### 🐛 Bug Fixes
+
+* update package references and imports to use @alwatr/has-own instead of @alwatr/polyfill-has-own ([5441696](https://github.com/Alwatr/nanolib/commit/5441696dc7abbbd9e48c178c60dfde86c76b9517))
+
 ## [5.5.22](https://github.com/Alwatr/nanolib/compare/@alwatr/dedupe@5.5.21...@alwatr/dedupe@5.5.22) (2025-11-04)
 
 **Note:** Version bump only for package @alwatr/dedupe

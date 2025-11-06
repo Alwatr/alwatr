@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.19](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.18...@alwatr/synapse@1.1.19) (2025-11-06)
+
+### 🐛 Bug Fixes
+
+* rename update_ method to init_ and call super.init_ in CopyButtonDirective ([66ec105](https://github.com/Alwatr/nanolib/commit/66ec10508385d3bdc5e7e19d53d48294d48ed865))
+
 ## [1.1.18](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.17...@alwatr/synapse@1.1.18) (2025-11-04)
 
 ### 🔨 Code Refactoring

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.6.0 (2025-11-06)
+
+### ✨ Features
+
+* add Object.hasOwn polyfill with full documentation and license ([4883447](https://github.com/Alwatr/nanolib/commit/488344708fad4eafe90092c10fe3c1fadf08bc11))
+
+### 🐛 Bug Fixes
+
+* remove unnecessary pure annotation from hasOwn export ([f0b50ec](https://github.com/Alwatr/nanolib/commit/f0b50ec21c1eb560b7f954075c7819141b8da978))
+
+### 🧹 Miscellaneous Chores
+
+* remove duplicate 'has-own' keyword from package.json ([6c0fb04](https://github.com/Alwatr/nanolib/commit/6c0fb04746225079b7c585083df4ae1c6b7dd478))
+
 ## [5.5.21](https://github.com/Alwatr/nanolib/compare/@alwatr/polyfill-has-own@5.5.20...@alwatr/polyfill-has-own@5.5.21) (2025-11-04)
 
 **Note:** Version bump only for package @alwatr/polyfill-has-own
