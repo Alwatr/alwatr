@@ -73,8 +73,7 @@ type FetchOptions__ = AlwatrFetchOptions_ & Omit<RequestInit, 'headers'> & {url:
  * @param {FetchOptions} options - Optional configuration for the fetch request.
  * @returns {Promise<FetchResponse>} A promise that resolves to a tuple. On
  * success, it returns `[response, null]`. On failure, it returns `[null,
- * error]`. The `error` can be a standard `Error` for network issues or a
- * `FetchError` for HTTP errors, which includes the response data.
+ * FetchError]`.
  *
  * @example
  * ```typescript
@@ -87,12 +86,7 @@ type FetchOptions__ = AlwatrFetchOptions_ & Omit<RequestInit, 'headers'> & {url:
  *   });
  *
  *   if (error) {
- *     console.error('Request failed:', error.message);
- *     if (error instanceof FetchError) {
- *       // Access detailed error info
- *       console.error('Status:', error.response.status);
- *       console.error('Server response:', error.data);
- *     }
+ *     console.error('Request failed:', error.reason);
  *     return;
  *   }
  *
