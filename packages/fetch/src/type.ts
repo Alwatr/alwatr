@@ -1,5 +1,7 @@
+import type {FetchError} from './error.js';
 import type {HttpMethod, HttpRequestHeaders} from '@alwatr/http-primer';
 import type {Duration} from '@alwatr/parse-duration';
+import type {} from '@alwatr/type-helper';
 
 /**
  * A dictionary of query parameters.
@@ -117,3 +119,20 @@ export interface AlwatrFetchOptions_ {
  * Combined type for fetch options, including standard RequestInit properties.
  */
 export type FetchOptions = Partial<AlwatrFetchOptions_> & Omit<RequestInit, 'headers'>;
+
+/**
+ * Represents the tuple returned by the fetch function.
+ * On success, it's `[Response, null]`. On failure, it's `[null, FetchError]`.
+ */
+export type FetchResponse = Promise<[Response, null] | [null, FetchError]>;
+
+/**
+ * Defines the specific reason for a fetch failure.
+ * - `http_error`: An HTTP error status was received (e.g., 404, 500).
+ * - `timeout`: The request was aborted due to a timeout.
+ * - `cache_not_found`: The requested resource was not found in the cache_only strategy.
+ * - `network_error`: A generic network-level error occurred.
+ * - `aborted`: The request was aborted by a user-provided signal.
+ * - `unknown_error`: An unspecified error occurred.
+ */
+export type FetchErrorReason = 'http_error' | 'cache_not_found' | 'timeout' | 'network_error' | 'aborted' | 'unknown_error';

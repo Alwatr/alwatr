@@ -1,21 +1,25 @@
 /**
  * @module @alwatr/fetch
  *
- * An enhanced, lightweight, and dependency-free wrapper for the native `fetch` API.
- * It provides modern features like caching strategies, request retries, timeouts, and
- * duplicate request handling.
+ * An enhanced, lightweight, and dependency-free wrapper for the native `fetch`
+ * API. It provides modern features like caching strategies, request retries,
+ * timeouts, and duplicate request handling.
  */
 
 import {delay} from '@alwatr/delay';
 import {getGlobalThis} from '@alwatr/global-this';
+import {hasOwn} from '@alwatr/has-own';
 import {HttpStatusCodes, MimeTypes} from '@alwatr/http-primer';
 import {createLogger} from '@alwatr/logger';
 import {parseDuration} from '@alwatr/parse-duration';
 
-import type {AlwatrFetchOptions_, FetchOptions} from './type.js';
+import {FetchError} from './error.js';
+
+import type {AlwatrFetchOptions_, FetchOptions, FetchResponse} from './type.js';
 
 export {cacheSupported};
 export type * from './type.js';
+export * from './error.js';
 
 const logger_ = createLogger('@alwatr/fetch');
 const globalThis_ = getGlobalThis();
@@ -23,7 +27,7 @@ const globalThis_ = getGlobalThis();
 /**
  * A boolean flag indicating whether the browser's Cache API is supported.
  */
-const cacheSupported = Object.hasOwn(globalThis_, 'caches');
+const cacheSupported = /* #__PURE__ */ hasOwn(globalThis_, 'caches');
 
 /**
  * A simple in-memory storage for tracking and managing duplicate in-flight requests.
@@ -67,35 +71,95 @@ type FetchOptions__ = AlwatrFetchOptions_ & Omit<RequestInit, 'headers'> & {url:
  *
  * @param {string} url - The URL to fetch.
  * @param {FetchOptions} options - Optional configuration for the fetch request.
- * @returns {Promise<Response>} A promise that resolves to the `Response` object for the request.
+ * @returns {Promise<FetchResponse>} A promise that resolves to a tuple. On
+ * success, it returns `[response, null]`. On failure, it returns `[null,
+ * FetchError]`.
  *
  * @example
  * ```typescript
+ * import {fetch} from '@alwatr/fetch';
+ *
  * async function fetchProducts() {
- *   try {
- *     const response = await fetch("/api/products", {
- *       queryParams: { limit: 10, category: "electronics" },
- *       timeout: 5_000, // 5 seconds
- *       retry: 3,
- *       cacheStrategy: "stale_while_revalidate",
- *     });
+ *   const [response, error] = await fetch('/api/products', {
+ *     queryParams: { limit: 10 },
+ *     timeout: 5_000,
+ *   });
  *
- *     if (!response.ok) {
- *       throw new Error(`HTTP error! status: ${response.status}`);
- *     }
- *
- *     const data = await response.json();
- *     console.log("Products:", data);
- *   } catch (error) {
- *     console.error("Failed to fetch products:", error);
+ *   if (error) {
+ *     console.error('Request failed:', error.reason);
+ *     return;
  *   }
+ *
+ *   // At this point, response is guaranteed to be valid and ok.
+ *   const data = await response.json();
+ *   console.log('Products:', data);
  * }
  *
  * fetchProducts();
  * ```
  */
-export function fetch(url: string, options: FetchOptions): Promise<Response> {
+export async function fetch(url: string, options: FetchOptions = {}): Promise<FetchResponse> {
   logger_.logMethodArgs?.('fetch', {url, options});
+
+  const options_ = _processOptions(url, options);
+
+  try {
+    // Start the fetch lifecycle, beginning with the cache strategy.
+    const response = await handleCacheStrategy_(options_);
+
+    if (!response.ok) {
+      throw new FetchError('http_error', `HTTP error! status: ${response.status} ${response.statusText}`, response);
+    }
+
+    return [response, null];
+  }
+  catch (err) {
+    let error: FetchError;
+
+    if (err instanceof FetchError) {
+      error = err;
+
+      if (error.response !== undefined && error.data === undefined) {
+        const bodyText = await error.response.text().catch(() => '');
+
+        if (bodyText.trim().length > 0) {
+          try {
+            // Try to parse as JSON
+            error.data = JSON.parse(bodyText);
+          }
+          catch {
+            error.data = bodyText;
+          }
+        }
+      }
+    }
+    else if (err instanceof Error) {
+      if (err.name === 'AbortError') {
+        error = new FetchError('aborted', err.message);
+      }
+      else {
+        error = new FetchError('network_error', err.message);
+      }
+    }
+    else {
+      error = new FetchError('unknown_error', String(err ?? 'unknown_error'));
+    }
+
+    logger_.error('fetch', error.reason, {error});
+    return [null, error];
+  }
+}
+
+/**
+ * Processes and sanitizes the fetch options.
+ *
+ * @param {string} url - The URL to fetch.
+ * @param {FetchOptions} options - The user-provided options.
+ * @returns {FetchOptions__} The processed and complete fetch options.
+ * @private
+ */
+function _processOptions(url: string, options: FetchOptions): FetchOptions__ {
+  logger_.logMethodArgs?.('_processOptions', {url, options});
 
   const options_: FetchOptions__ = {
     ...defaultFetchOptions,
@@ -138,8 +202,7 @@ export function fetch(url: string, options: FetchOptions): Promise<Response> {
 
   logger_.logProperty?.('fetch.options', options_);
 
-  // Start the fetch lifecycle, beginning with the cache strategy.
-  return handleCacheStrategy_(options_);
+  return options_;
 }
 
 /**
@@ -191,8 +254,7 @@ async function handleCacheStrategy_(options: FetchOptions__): Promise<Response> 
     case 'cache_only': {
       const cachedResponse = await cacheStorage.match(request);
       if (cachedResponse == null) {
-        logger_.accident('_handleCacheStrategy', 'fetch_cache_not_found', {url: request.url});
-        throw new Error('fetch_cache_not_found');
+        throw new FetchError('cache_not_found', 'Resource not found in cache');
       }
       // else
 
@@ -319,13 +381,12 @@ async function handleRetryPattern_(options: FetchOptions__): Promise<Response> {
   try {
     const response = await handleTimeout_(options);
 
-    // Only retry on server errors (5xx). Client errors (4xx) are not retried.
-    if (response.status < HttpStatusCodes.Error_Server_500_Internal_Server_Error) {
-      return response;
+    if (!response.ok && response.status >= HttpStatusCodes.Error_Server_500_Internal_Server_Error) {
+      // only retry for server errors (5xx)
+      throw new FetchError('http_error', `HTTP error! status: ${response.status} ${response.statusText}`, response);
     }
-    // else
 
-    throw new Error('fetch_server_error');
+    return response;
   }
   catch (err) {
     logger_.accident('fetch', 'fetch_failed_retry', err);
@@ -373,7 +434,7 @@ function handleTimeout_(options: FetchOptions__): Promise<Response> {
     }
 
     const timeoutId = setTimeout(() => {
-      reject(new Error('fetch_timeout'));
+      reject(new FetchError('timeout', 'fetch_timeout'));
       abortController?.abort('fetch_timeout');
     }, parseDuration(options.timeout!));
 

@@ -17,6 +17,7 @@
     "@alwatr/flat-string": "workspace:*",
     "@alwatr/flatomise": "workspace:*",
     "@alwatr/global-this": "workspace:*",
+    "@alwatr/has-own": "workspace:^",
     "@alwatr/hash-string": "workspace:*",
     "@alwatr/http-primer": "workspace:*",
     "@alwatr/iranian-national-code-validator": "workspace:*",

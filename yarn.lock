@@ -51,8 +51,8 @@ __metadata:
   resolution: "@alwatr/dedupe@workspace:packages/dedupe"
   dependencies:
     "@alwatr/global-this": "workspace:*"
+    "@alwatr/has-own": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
-    "@alwatr/polyfill-has-own": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
@@ -152,6 +152,7 @@ __metadata:
   dependencies:
     "@alwatr/delay": "workspace:*"
     "@alwatr/global-this": "workspace:*"
+    "@alwatr/has-own": "workspace:*"
     "@alwatr/http-primer": "workspace:*"
     "@alwatr/logger": "workspace:*"
     "@alwatr/nano-build": "workspace:*"
@@ -159,6 +160,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
+    "@jest/globals": "npm:^30.2.0"
     jest: "npm:^30.2.0"
     typescript: "npm:^5.9.3"
   languageName: unknown
@@ -196,6 +198,17 @@ __metadata:
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
     "@types/node": "npm:^24.10.0"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
+"@alwatr/has-own@workspace:*, @alwatr/has-own@workspace:^, @alwatr/has-own@workspace:packages/has-own":
+  version: 0.0.0-use.local
+  resolution: "@alwatr/has-own@workspace:packages/has-own"
+  dependencies:
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -308,6 +321,7 @@ __metadata:
     "@alwatr/flat-string": "workspace:*"
     "@alwatr/flatomise": "workspace:*"
     "@alwatr/global-this": "workspace:*"
+    "@alwatr/has-own": "workspace:^"
     "@alwatr/hash-string": "workspace:*"
     "@alwatr/http-primer": "workspace:*"
     "@alwatr/iranian-national-code-validator": "workspace:*"
@@ -380,17 +394,6 @@ __metadata:
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
     "@types/node": "npm:^24.10.0"
-    typescript: "npm:^5.9.3"
-  languageName: unknown
-  linkType: soft
-
-"@alwatr/polyfill-has-own@workspace:*, @alwatr/polyfill-has-own@workspace:packages/polyfill-has-own":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/polyfill-has-own@workspace:packages/polyfill-has-own"
-  dependencies:
-    "@alwatr/nano-build": "workspace:*"
-    "@alwatr/prettier-config": "workspace:*"
-    "@alwatr/tsconfig-base": "workspace:*"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -2085,17 +2088,17 @@ __metadata:
   linkType: hard
 
 "@npmcli/package-json@npm:^7.0.0, @npmcli/package-json@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "@npmcli/package-json@npm:7.0.1"
+  version: 7.0.2
+  resolution: "@npmcli/package-json@npm:7.0.2"
   dependencies:
     "@npmcli/git": "npm:^7.0.0"
     glob: "npm:^11.0.3"
     hosted-git-info: "npm:^9.0.0"
-    json-parse-even-better-errors: "npm:^4.0.0"
-    proc-log: "npm:^5.0.0"
+    json-parse-even-better-errors: "npm:^5.0.0"
+    proc-log: "npm:^6.0.0"
     semver: "npm:^7.5.3"
     validate-npm-package-license: "npm:^3.0.4"
-  checksum: 10c0/9eba28524129084403dad9a7850de61f6e68d23b649126ebf3aafb4f3cec36af7ea916b3c4883672e52a2531d17ea9e0fab601db47fe99e7453451d082032c00
+  checksum: 10c0/2901c648c80b4805c3c17ca30c76217858b348b20aab1ddf83b30240ed1d32257284545a9c78a8eb1c6d1a5dd7d5c61b430bfc5bc9ae409c989abafe54b6d4e3
   languageName: node
   linkType: hard
 
@@ -3192,11 +3195,11 @@ __metadata:
   linkType: hard
 
 "baseline-browser-mapping@npm:^2.8.19":
-  version: 2.8.24
-  resolution: "baseline-browser-mapping@npm:2.8.24"
+  version: 2.8.25
+  resolution: "baseline-browser-mapping@npm:2.8.25"
   bin:
     baseline-browser-mapping: dist/cli.js
-  checksum: 10c0/8add2f6fe6312134032caa1d385d07a939e25594566672a57d2eef2a53592252b8b56348cdd991d73d78741033d16a28d3da96ef3fc9f4d0bb9ea268124a53c3
+  checksum: 10c0/93d5631ef1d1770c6166c760adb75e510a2f9ea9bccc1e2f3ec97c1e946ce71f9480e6314ad37e3ed933f2edc597cc9c7a0ec98d42691028e300bd62efd9cddd
   languageName: node
   linkType: hard
 
@@ -3856,9 +3859,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.238":
-  version: 1.5.244
-  resolution: "electron-to-chromium@npm:1.5.244"
-  checksum: 10c0/a3cbc8c9c9415234f97e92724924f943fcb82494b3a2f9ae998954d22496e86f7eaf5e2fceca8aa8be098b0693f508332ec2d3b4b39a42cd2de1fac4d048a19f
+  version: 1.5.245
+  resolution: "electron-to-chromium@npm:1.5.245"
+  checksum: 10c0/b129116a3a77eba49a5c3f35de16a6b76e39a08f608f8eedbefdd86669f255ead2e9a15f596eecd4521b3a87bcecab86cbd80843cd0a64a5daffde4af338d9c3
   languageName: node
   linkType: hard
 
