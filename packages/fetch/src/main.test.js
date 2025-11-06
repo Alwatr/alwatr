@@ -5,6 +5,9 @@ import {fetch, FetchError} from '@alwatr/fetch';
 const mockFetch = jest.fn();
 global.fetch = mockFetch;
 
+// Mock global navigator for offline tests
+global.navigator = {onLine: true};
+
 // Helper to create mock Response
 function createMockResponse(data, options = {}) {
   const {status = 200, statusText = 'OK', headers = {}} = options;
@@ -13,8 +16,8 @@ function createMockResponse(data, options = {}) {
     status,
     statusText,
     headers: new Headers(headers),
-    json: async () => data,
-    text: async () => JSON.stringify(data),
+    json: jest.fn().mockResolvedValue(data),
+    text: jest.fn().mockResolvedValue(JSON.stringify(data)),
     clone: function () {
       return this;
     },
@@ -24,6 +27,7 @@ function createMockResponse(data, options = {}) {
 describe('@alwatr/fetch', () => {
   beforeEach(() => {
     mockFetch.mockClear();
+    global.navigator.onLine = true;
   });
 
   describe('Successful requests', () => {
@@ -37,7 +41,7 @@ describe('@alwatr/fetch', () => {
       expect(response).toBeDefined();
       expect(response.ok).toBe(true);
       expect(response.status).toBe(200);
-      expect(await response.json()).toEqual(mockData);
+      await expect(response.json()).resolves.toEqual(mockData);
     });
 
     it('should handle query parameters correctly', async () => {
@@ -99,7 +103,9 @@ describe('@alwatr/fetch', () => {
   describe('Error handling - HTTP errors', () => {
     it('should return [null, FetchError] for 404 error', async () => {
       const errorData = {error: 'Not Found'};
-      mockFetch.mockResolvedValueOnce(createMockResponse(errorData, {status: 404, statusText: 'Not Found'}));
+      const mockResponse = createMockResponse(errorData, {status: 404, statusText: 'Not Found'});
+      mockResponse.text = jest.fn().mockResolvedValue(JSON.stringify(errorData));
+      mockFetch.mockResolvedValueOnce(mockResponse);
 
       const [response, error] = await fetch('https://api.example.com/missing');
 
@@ -111,9 +117,10 @@ describe('@alwatr/fetch', () => {
     });
 
     it('should return [null, FetchError] for 500 server error', async () => {
-      mockFetch.mockResolvedValueOnce(
-        createMockResponse({error: 'Internal Server Error'}, {status: 500, statusText: 'Internal Server Error'}),
-      );
+      const errorData = {error: 'Internal Server Error'};
+      const mockResponse = createMockResponse(errorData, {status: 500, statusText: 'Internal Server Error'});
+      mockResponse.text = jest.fn().mockResolvedValue(JSON.stringify(errorData));
+      mockFetch.mockResolvedValueOnce(mockResponse);
 
       const [response, error] = await fetch('https://api.example.com/error');
 
@@ -129,7 +136,7 @@ describe('@alwatr/fetch', () => {
         status: 400,
         statusText: 'Bad Request',
         headers: new Headers(),
-        text: async () => 'Plain text error message',
+        text: jest.fn().mockResolvedValue('Plain text error message'),
         clone: function () {
           return this;
         },
@@ -180,7 +187,7 @@ describe('@alwatr/fetch', () => {
 
   describe('Timeout handling', () => {
     it('should timeout and return FetchError with reason "timeout"', async () => {
-      mockFetch.mockImplementationOnce(
+      mockFetch.mockImplementation(
         () =>
           new Promise((resolve) => {
             setTimeout(() => resolve(createMockResponse({data: 'too late'})), 2000);
@@ -189,7 +196,7 @@ describe('@alwatr/fetch', () => {
 
       const [response, error] = await fetch('https://api.example.com/slow', {
         timeout: 100,
-        retry: 0,
+        retry: 1,
       });
 
       expect(response).toBeNull();
@@ -198,7 +205,7 @@ describe('@alwatr/fetch', () => {
     });
 
     it('should not timeout when timeout is 0', async () => {
-      mockFetch.mockImplementationOnce(
+      mockFetch.mockImplementation(
         () =>
           new Promise((resolve) => {
             setTimeout(() => resolve(createMockResponse({data: 'success'})), 100);
@@ -216,9 +223,14 @@ describe('@alwatr/fetch', () => {
 
   describe('Retry pattern', () => {
     it('should retry on 500 error and eventually succeed', async () => {
+      const errorResponse1 = createMockResponse({}, {status: 500});
+      errorResponse1.text = jest.fn().mockResolvedValue('');
+      const errorResponse2 = createMockResponse({}, {status: 500});
+      errorResponse2.text = jest.fn().mockResolvedValue('');
+
       mockFetch
-        .mockResolvedValueOnce(createMockResponse({}, {status: 500}))
-        .mockResolvedValueOnce(createMockResponse({}, {status: 500}))
+        .mockResolvedValueOnce(errorResponse1)
+        .mockResolvedValueOnce(errorResponse2)
         .mockResolvedValueOnce(createMockResponse({success: true}));
 
       const [response, error] = await fetch('https://api.example.com/flaky', {
@@ -244,7 +256,9 @@ describe('@alwatr/fetch', () => {
     });
 
     it('should not retry 4xx errors', async () => {
-      mockFetch.mockResolvedValueOnce(createMockResponse({error: 'Bad Request'}, {status: 400}));
+      const errorResponse = createMockResponse({error: 'Bad Request'}, {status: 400});
+      errorResponse.text = jest.fn().mockResolvedValue(JSON.stringify({error: 'Bad Request'}));
+      mockFetch.mockResolvedValueOnce(errorResponse);
 
       const [response, error] = await fetch('https://api.example.com/bad', {
         retry: 3,
@@ -257,7 +271,9 @@ describe('@alwatr/fetch', () => {
     });
 
     it('should fail after all retries exhausted', async () => {
-      mockFetch.mockResolvedValue(createMockResponse({}, {status: 500}));
+      const errorResponse = createMockResponse({}, {status: 500});
+      errorResponse.text = jest.fn().mockResolvedValue('');
+      mockFetch.mockResolvedValue(errorResponse);
 
       const [response, error] = await fetch('https://api.example.com/always-fails', {
         retry: 2,
@@ -268,6 +284,21 @@ describe('@alwatr/fetch', () => {
       expect(error).toBeInstanceOf(FetchError);
       expect(error.reason).toBe('http_error');
       expect(mockFetch).toHaveBeenCalledTimes(2);
+    });
+
+    it('should not retry when offline', async () => {
+      global.navigator.onLine = false;
+      const errorResponse = createMockResponse({}, {status: 500});
+      errorResponse.text = jest.fn().mockResolvedValue('');
+      mockFetch.mockResolvedValue(errorResponse);
+
+      const [response, error] = await fetch('https://api.example.com/fails', {
+        retry: 3,
+        retryDelay: 10,
+      });
+
+      expect(error).toBeInstanceOf(FetchError);
+      expect(mockFetch).toHaveBeenCalledTimes(1); // Should not retry
     });
   });
 
@@ -333,7 +364,7 @@ describe('@alwatr/fetch', () => {
         status: 404,
         statusText: 'Not Found',
         headers: new Headers(),
-        text: async () => '',
+        text: jest.fn().mockResolvedValue(''),
         clone: function () {
           return this;
         },
@@ -352,7 +383,7 @@ describe('@alwatr/fetch', () => {
         status: 500,
         statusText: 'Internal Server Error',
         headers: new Headers(),
-        text: async () => '{invalid json',
+        text: jest.fn().mockResolvedValue('{invalid json'),
         clone: function () {
           return this;
         },
