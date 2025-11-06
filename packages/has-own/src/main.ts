@@ -4,4 +4,4 @@
  * @param {PropertyKey} prop A property name.
  * @returns {boolean} True if the property exists, otherwise false.
  */
-export const hasOwn = Object.hasOwn ?? /* @__PURE__ */ Object.call.bind(Object.prototype.hasOwnProperty);
+export const hasOwn = Object.hasOwn ?? Object.call.bind(Object.prototype.hasOwnProperty);
