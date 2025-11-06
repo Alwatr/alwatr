@@ -122,7 +122,7 @@ describe('@alwatr/fetch', () => {
       mockResponse.text = jest.fn().mockResolvedValue(JSON.stringify(errorData));
       mockFetch.mockResolvedValueOnce(mockResponse);
 
-      const [response, error] = await fetch('https://api.example.com/error');
+      const [response, error] = await fetch('https://api.example.com/error', {retry: 0});
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
@@ -154,7 +154,7 @@ describe('@alwatr/fetch', () => {
     it('should return [null, FetchError] for network failure', async () => {
       mockFetch.mockRejectedValueOnce(new Error('Network request failed'));
 
-      const [response, error] = await fetch('https://api.example.com/data');
+      const [response, error] = await fetch('https://api.example.com/data', {retry: 0});
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
@@ -167,7 +167,7 @@ describe('@alwatr/fetch', () => {
       abortError.name = 'AbortError';
       mockFetch.mockRejectedValueOnce(abortError);
 
-      const [response, error] = await fetch('https://api.example.com/data');
+      const [response, error] = await fetch('https://api.example.com/data', {retry: 0});
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
@@ -177,7 +177,7 @@ describe('@alwatr/fetch', () => {
     it('should handle unknown errors', async () => {
       mockFetch.mockRejectedValueOnce('Unknown error type');
 
-      const [response, error] = await fetch('https://api.example.com/data');
+      const [response, error] = await fetch('https://api.example.com/data', {retry: 0});
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
@@ -195,7 +195,7 @@ describe('@alwatr/fetch', () => {
       );
 
       const [response, error] = await fetch('https://api.example.com/slow', {
-        timeout: 100,
+        timeout: 10,
         retry: 1,
       });
 
@@ -371,7 +371,7 @@ describe('@alwatr/fetch', () => {
       };
       mockFetch.mockResolvedValueOnce(mockResponse);
 
-      const [response, error] = await fetch('https://api.example.com/empty');
+      const [response, error] = await fetch('https://api.example.com/empty', {retry: 0});
 
       expect(error).toBeInstanceOf(FetchError);
       expect(error.data).toBeUndefined();
@@ -390,7 +390,7 @@ describe('@alwatr/fetch', () => {
       };
       mockFetch.mockResolvedValueOnce(mockResponse);
 
-      const [response, error] = await fetch('https://api.example.com/malformed');
+      const [response, error] = await fetch('https://api.example.com/malformed', {retry: 0});
 
       expect(error).toBeInstanceOf(FetchError);
       expect(error.data).toBe('{invalid json');
