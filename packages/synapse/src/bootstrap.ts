@@ -27,6 +27,14 @@ const initializedAttribute = '_synapseConnected';
 export function bootstrapDirectives(rootElement: Element | Document = document.body): void {
   logger.logMethod?.('bootstrapDirectives');
 
+  if (document.readyState === 'loading') {
+    logger.incident?.('bootstrapDirectives', 'dom_not_ready', 'Delaying directive initialization until DOM is ready');
+    document.addEventListener('DOMContentLoaded', () => {
+      bootstrapDirectives(rootElement);
+    }, {once: true});
+    return;
+  }
+
   for (const {selector, constructor} of directiveRegistry_) {
     try {
       const uninitializedSelector = `${selector}:not([${initializedAttribute}])`;
