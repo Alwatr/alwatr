@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@6.2.0...@alwatr/nanolib@6.2.1) (2025-11-09)
+
+**Note:** Version bump only for package @alwatr/nanolib
+
 ## [6.2.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@6.1.10...@alwatr/nanolib@6.2.0) (2025-11-06)
 
 ### ✨ Features

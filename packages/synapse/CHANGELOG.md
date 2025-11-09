@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.20](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.19...@alwatr/synapse@1.1.20) (2025-11-09)
+
+### 🐛 Bug Fixes
+
+* delay directive initialization until DOM is ready ([07dd452](https://github.com/Alwatr/nanolib/commit/07dd452732b8d32b822fd99b4eba1617623ced09))
+
 ## [1.1.19](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.18...@alwatr/synapse@1.1.19) (2025-11-06)
 
 ### 🐛 Bug Fixes
