@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.24](https://github.com/Alwatr/nanolib/compare/@alwatr/resolve-url@5.5.23...@alwatr/resolve-url@5.5.24) (2025-11-12)
+
+### 🐛 Bug Fixes
+
+* improve URL resolution by handling leading and trailing slashes correctly ([c7d4274](https://github.com/Alwatr/nanolib/commit/c7d4274d027240387011b21243ca2a832ed13d56))
+
 ## [5.5.23](https://github.com/Alwatr/nanolib/compare/@alwatr/resolve-url@5.5.22...@alwatr/resolve-url@5.5.23) (2025-11-04)
 
 **Note:** Version bump only for package @alwatr/resolve-url
