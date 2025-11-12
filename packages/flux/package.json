@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/flux",
   "description": "Flux is not just another state management library; it's a paradigm shift. It provides a cohesive, type-safe, and incredibly performant ecosystem for orchestrating application state, from simple reactive values to complex, resilient workflows. Built on the principles of predictability and simplicity, Flux empowers you to write clean, decoupled, and highly maintainable code.",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {

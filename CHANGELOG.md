@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.1](https://github.com/Alwatr/flux/compare/v6.1.0...v6.1.1) (2025-11-12)
+
+### 🐛 Bug Fixes
+
+* add sideEffects property to package.json for better tree-shaking ([b62663c](https://github.com/Alwatr/flux/commit/b62663ceedac43e9f642c59130a6be0cd4bdc90d))
+* update defaultValue to initialValue in createFsmService for clarity ([f54c61c](https://github.com/Alwatr/flux/commit/f54c61c4c1a7d2f476f3cedd480a9c31a4eac29f))
+
+### 🔨 Code Refactoring
+
+* simplify storageProvider initialization in PersistentStateSignal constructor ([e3ca306](https://github.com/Alwatr/flux/commit/e3ca3068df1396c7a06396f9b362523d14695c89))
+* streamline PersistentStateSignal constructor and update config properties ([849f945](https://github.com/Alwatr/flux/commit/849f945cbbad6301eedee2806d10f24286494045))
+
+### 🔗 Dependencies update
+
+* bump the github-actions group across 1 directory with 4 updates ([445e90f](https://github.com/Alwatr/flux/commit/445e90fd9db55a9906633173f4181649265b12df))
+* update dependencies and devDependencies versions across packages ([ab923fa](https://github.com/Alwatr/flux/commit/ab923fa8ec7f504a3ce59e0ec944d05d361f60be))
+* update devDependencies and packageManager versions ([2bfe815](https://github.com/Alwatr/flux/commit/2bfe8151e1aaf9e866c0d800c5ccd4b6aba6e41b))
+* update typescript version to 5.9.3-sdk ([39cf467](https://github.com/Alwatr/flux/commit/39cf467c347126f417e7e9eae76d1b6d8b9eff61))
+
 ## [6.1.0](https://github.com/Alwatr/flux/compare/v6.0.2...v6.1.0) (2025-09-22)
 
 ### ✨ Features

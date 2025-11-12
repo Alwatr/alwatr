@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.1](https://github.com/Alwatr/flux/compare/v6.1.0...v6.1.1) (2025-11-12)
+
+### 🐛 Bug Fixes
+
+* update defaultValue to initialValue in createFsmService for clarity ([f54c61c](https://github.com/Alwatr/flux/commit/f54c61c4c1a7d2f476f3cedd480a9c31a4eac29f))
+
+### 🔗 Dependencies update
+
+* update dependencies and devDependencies versions across packages ([ab923fa](https://github.com/Alwatr/flux/commit/ab923fa8ec7f504a3ce59e0ec944d05d361f60be))
+
 ## [6.1.0](https://github.com/Alwatr/flux/compare/v6.0.2...v6.1.0) (2025-09-22)
 
 ### ✨ Features

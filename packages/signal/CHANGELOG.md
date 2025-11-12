@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.1](https://github.com/Alwatr/flux/compare/v6.1.0...v6.1.1) (2025-11-12)
+
+### 🔨 Code Refactoring
+
+* simplify storageProvider initialization in PersistentStateSignal constructor ([e3ca306](https://github.com/Alwatr/flux/commit/e3ca3068df1396c7a06396f9b362523d14695c89))
+* streamline PersistentStateSignal constructor and update config properties ([849f945](https://github.com/Alwatr/flux/commit/849f945cbbad6301eedee2806d10f24286494045))
+
+### 🔗 Dependencies update
+
+* update dependencies and devDependencies versions across packages ([ab923fa](https://github.com/Alwatr/flux/commit/ab923fa8ec7f504a3ce59e0ec944d05d361f60be))
+
 ## [6.1.0](https://github.com/Alwatr/flux/compare/v6.0.2...v6.1.0) (2025-09-22)
 
 ### ✨ Features
