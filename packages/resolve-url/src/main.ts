@@ -9,17 +9,22 @@ export function resolveUrl(...parts: string[]): string {
   const trailingSlashes = /\/+$/;
   const multipleSlashes = /\/{2,}/g;
 
-  const prefix = parts[0].indexOf('/') === 0 ? '/' : ''; // Add leading slash if the first part has it
+  const prefix = parts[0].charAt(0) === '/' ? '/' : ''; // Add leading slash if the first part has it
+  const lastPart = parts[parts.length - 1];
+  const suffix = lastPart.charAt(lastPart.length - 1) === '/' ? '/' : ''; // Add trailing slash if the last part has it
 
-  return (
+  const url = (
     prefix +
     parts
       .map((part) => part.replace(leadingSlashes, '').replace(trailingSlashes, '')) // Remove leading and trailing slashes
       .filter((part) => part) // Remove empty parts
       .join('/')
       // Replace multiple slashes with a single slash, except for protocol
-      .replace('://', '{{PROTOCOL_SLASH}}')
-      .replace(multipleSlashes, '/')
-      .replace('{{PROTOCOL_SLASH}}', '://')
-  );
+      .replace('://', '{{PROTOCOL_SLASH}}') +
+    suffix
+  )
+    .replace(multipleSlashes, '/')
+    .replace('{{PROTOCOL_SLASH}}', '://');
+
+  return url;
 }

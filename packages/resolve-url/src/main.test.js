@@ -1,3 +1,4 @@
+import {describe, it, expect} from '@jest/globals';
 import {resolveUrl} from '@alwatr/resolve-url';
 
 describe('@alwatr/resolve-url - resolveUrl', () => {
@@ -9,12 +10,16 @@ describe('@alwatr/resolve-url - resolveUrl', () => {
     expect(resolveUrl('http://example.com', 'path//to///resource')).toBe('http://example.com/path/to/resource');
   });
 
-  it('should handle leading and trailing slashes in URL parts', () => {
-    expect(resolveUrl('http://example.com/', '/path/', '/to/', '/resource/')).toBe('http://example.com/path/to/resource');
+  it('should handle leading slashes in URL parts', () => {
+    expect(resolveUrl('/path/', '/to/', '/resource')).toBe('/path/to/resource');
+  });
+
+  it('should handle trailing slashes in URL parts', () => {
+    expect(resolveUrl('path/', '/to/', '/resource/')).toBe('path/to/resource/');
   });
 
   it('should handle multiple slashes at the beginning and end of URL parts', () => {
-    expect(resolveUrl('http://example.com', '///path', 'to', 'resource///')).toBe('http://example.com/path/to/resource');
+    expect(resolveUrl('http://example.com', '///path', 'to', 'resource///')).toBe('http://example.com/path/to/resource/');
   });
 
   it('should preserve the protocol (http)', () => {
@@ -47,7 +52,7 @@ describe('@alwatr/resolve-url - resolveUrl', () => {
     expect(resolveUrl('http://example.com')).toBe('http://example.com');
   });
   it('should handle a single part URL with trailing slash', () => {
-    expect(resolveUrl('http://example.com/')).toBe('http://example.com');
+    expect(resolveUrl('http://example.com/')).toBe('http://example.com/');
   });
 
   it('should handle a single part without protocol', () => {
@@ -55,7 +60,7 @@ describe('@alwatr/resolve-url - resolveUrl', () => {
   });
 
   it('should handle only slashes as input', () => {
-    expect(resolveUrl('///')).toBe('/');
+    expect(resolveUrl('/', null, '/')).toBe('/');
   });
 
   it('should handle empty input', () => {
@@ -93,16 +98,16 @@ describe('@alwatr/resolve-url - resolveUrl', () => {
   });
 
   it('should handle complex url 2', () => {
-    expect(resolveUrl('//no-protocol/', '/path////test/')).toBe('/no-protocol/path/test');
+    expect(resolveUrl('//no-protocol/', '/path////test/')).toBe('/no-protocol/path/test/');
   });
 
   // Tests moved from main.test.ts
   it('should resolve parts correctly', () => {
     expect(resolveUrl('a', 'b', 'c')).toBe('a/b/c');
-    expect(resolveUrl('/a/', '/b/', '/c/')).toBe('/a/b/c');
+    expect(resolveUrl('/a/', '/b/', '/c/')).toBe('/a/b/c/');
     expect(resolveUrl('a//b', '//c')).toBe('a/b/c');
     expect(resolveUrl('http://example.com', 'a')).toBe('http://example.com/a');
-    expect(resolveUrl('http://example.com/', '/a/')).toBe('http://example.com/a');
+    expect(resolveUrl('http://example.com/', '/a/')).toBe('http://example.com/a/');
   });
 
   it('should handle empty parts', () => {
@@ -114,7 +119,7 @@ describe('@alwatr/resolve-url - resolveUrl', () => {
 
   it('should handle single part', () => {
     expect(resolveUrl('a')).toBe('a');
-    expect(resolveUrl('/a/')).toBe('/a');
+    expect(resolveUrl('/a/')).toBe('/a/');
     expect(resolveUrl('')).toBe('');
   });
 
@@ -125,7 +130,7 @@ describe('@alwatr/resolve-url - resolveUrl', () => {
   it('should handle leading/trailing slashes correctly', () => {
     expect(resolveUrl('/a', 'b')).toBe('/a/b');
     expect(resolveUrl('a', '/b')).toBe('a/b');
-    expect(resolveUrl('//a', 'b//')).toBe('/a/b');
+    expect(resolveUrl('//a', 'b//')).toBe('/a/b/');
   });
 
   it('should handle protocol correctly', () => {
@@ -139,6 +144,6 @@ describe('@alwatr/resolve-url - resolveUrl', () => {
     expect(resolveUrl(null, 'b', 'c')).toBe('b/c');
     expect(resolveUrl('a', 'b', null)).toBe('a/b');
     expect(resolveUrl(undefined, undefined, undefined)).toBe('');
-    expect(resolveUrl('/a', null, 'b', undefined, '/c/')).toBe('/a/b/c');
+    expect(resolveUrl('/a', null, 'b', undefined, '/c/')).toBe('/a/b/c/');
   });
 });
