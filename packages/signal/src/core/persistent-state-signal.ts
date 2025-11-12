@@ -51,10 +51,7 @@ export class PersistentStateSignal<T extends JsonValue> extends StateSignal<T> {
 
     this.logger_.logMethodArgs?.('constructor', config);
 
-    this.storageProvider__ = createLocalStorageProvider<T>({
-      name: storageKey,
-      schemaVersion,
-    });
+    this.storageProvider__ = storageProvider;
 
     this.storageDebouncer__ = createDebouncer({
       delay: saveDebounceDelay,
