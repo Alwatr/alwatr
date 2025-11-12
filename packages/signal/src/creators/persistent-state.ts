@@ -19,7 +19,7 @@ import type {PersistentStateSignalConfig} from '../type.js';
  * const userThemeSignal = createPersistentStateSignal<string>({
  *   name: 'user-theme',
  *   schemaVersion: 1,
- *   defaultValue: 'light',
+ *   initialValue: 'light',
  * });
  *
  * // The initial value is read from localStorage, or 'light' if not present.

@@ -36,37 +36,28 @@ export class PersistentStateSignal<T extends JsonValue> extends StateSignal<T> {
   private readonly storageSyncSubscription__;
 
   constructor(config: PersistentStateSignalConfig<T>) {
-    config.storageKey ??= config.name;
-    config.saveDebounceDelay ??= 500;
+    const {name, storageKey = name, saveDebounceDelay = 500, initialValue, onDestroy, schemaVersion} = config;
 
-    // 1. Create the LocalStorageProvider instance.
     const storageProvider = createLocalStorageProvider<T>({
-      name: config.storageKey,
-      schemaVersion: config.schemaVersion,
-      defaultValue: config.defaultValue,
+      name: storageKey,
+      schemaVersion,
     });
 
-    // 2. Read the initial value from storage.
-    // The .read() method guarantees a valid value is returned (either from storage or the default).
-    const initialValue = storageProvider.read();
-
-    // 3. Call the parent constructor with the correct initial value.
     super({
-      name: config.name,
-      initialValue,
-      onDestroy: config.onDestroy,
+      name,
+      initialValue: storageProvider.read() ?? initialValue,
+      onDestroy,
     });
 
-    this.logger_.logMethodArgs?.('constructor', {
-      name: config.name,
-      schemaVersion: config.schemaVersion,
-      initialValue,
-    });
+    this.logger_.logMethodArgs?.('constructor', config);
 
-    this.storageProvider__ = storageProvider;
+    this.storageProvider__ = createLocalStorageProvider<T>({
+      name: storageKey,
+      schemaVersion,
+    });
 
     this.storageDebouncer__ = createDebouncer({
-      delay: config.saveDebounceDelay,
+      delay: saveDebounceDelay,
       leading: false,
       trailing: true,
       thisContext: this,
