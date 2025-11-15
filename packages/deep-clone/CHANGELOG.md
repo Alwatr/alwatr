@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.23](https://github.com/Alwatr/nanolib/compare/@alwatr/deep-clone@5.5.22...@alwatr/deep-clone@5.5.23) (2025-11-15)
+
+**Note:** Version bump only for package @alwatr/deep-clone
+
 ## [5.5.22](https://github.com/Alwatr/nanolib/compare/@alwatr/deep-clone@5.5.21...@alwatr/deep-clone@5.5.22) (2025-11-15)
 
 **Note:** Version bump only for package @alwatr/deep-clone

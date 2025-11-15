@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.26](https://github.com/Alwatr/nanolib/compare/@alwatr/node-fs@5.5.25...@alwatr/node-fs@5.5.26) (2025-11-15)
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 2 updates ([a80b84d](https://github.com/Alwatr/nanolib/commit/a80b84dada6c09b5e5621e7487c8ec13fff3c23a))
+
 ## [5.5.25](https://github.com/Alwatr/nanolib/compare/@alwatr/node-fs@5.5.24...@alwatr/node-fs@5.5.25) (2025-11-15)
 
 **Note:** Version bump only for package @alwatr/node-fs

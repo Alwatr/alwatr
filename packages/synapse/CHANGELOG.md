@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.2.0...@alwatr/synapse@1.2.1) (2025-11-15)
+
+### 🐛 Bug Fixes
+
+* ensure cleanup tasks are called with the correct context in DirectiveBase ([06ab04e](https://github.com/Alwatr/nanolib/commit/06ab04e0eaa3837c2bc55089723051364bc6e56b))
+* rename cleanupTaskList variable for consistency ([d51eee9](https://github.com/Alwatr/nanolib/commit/d51eee92883b851fb3fc5307d7eefd5dc536be8e))
+
 ## [1.2.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.20...@alwatr/synapse@1.2.0) (2025-11-15)
 
 ### ✨ Features

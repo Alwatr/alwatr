@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.23](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@5.5.22...@alwatr/platform-info@5.5.23) (2025-11-15)
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 2 updates ([a80b84d](https://github.com/Alwatr/nanolib/commit/a80b84dada6c09b5e5621e7487c8ec13fff3c23a))
+
 ## [5.5.22](https://github.com/Alwatr/nanolib/compare/@alwatr/platform-info@5.5.21...@alwatr/platform-info@5.5.22) (2025-11-15)
 
 **Note:** Version bump only for package @alwatr/platform-info

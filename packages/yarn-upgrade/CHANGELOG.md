@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.17](https://github.com/Alwatr/nanolib/compare/@alwatr/yarn-upgrade@1.0.16...@alwatr/yarn-upgrade@1.0.17) (2025-11-15)
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 2 updates ([a80b84d](https://github.com/Alwatr/nanolib/commit/a80b84dada6c09b5e5621e7487c8ec13fff3c23a))
+
 ## [1.0.16](https://github.com/Alwatr/nanolib/compare/@alwatr/yarn-upgrade@1.0.15...@alwatr/yarn-upgrade@1.0.16) (2025-11-15)
 
 **Note:** Version bump only for package @alwatr/yarn-upgrade

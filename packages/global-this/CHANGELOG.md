@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.4](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.6.3...@alwatr/global-this@5.6.4) (2025-11-15)
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 2 updates ([a80b84d](https://github.com/Alwatr/nanolib/commit/a80b84dada6c09b5e5621e7487c8ec13fff3c23a))
+
 ## [5.6.3](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.6.2...@alwatr/global-this@5.6.3) (2025-11-15)
 
 **Note:** Version bump only for package @alwatr/global-this

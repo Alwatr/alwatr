@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/deep-clone",
   "description": "Clone deeply nested objects and arrays in JavaScript.",
-  "version": "5.5.22",
+  "version": "5.5.23",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {
