@@ -51,7 +51,7 @@ export abstract class DirectiveBase {
   /**
    * A list of callback functions to be executed when the directive is destroyed.
    */
-  private readonly cleanupTaskList_: NoopFunction[] = [];
+  private readonly cleanupTaskList__: NoopFunction[] = [];
 
   /**
    * Initializes the directive. This constructor is called by the Synapse bootstrap process and should not be
@@ -124,9 +124,9 @@ export abstract class DirectiveBase {
    * );
    * ```
    */
-  protected onDestroy(task: NoopFunction): void {
-    this.logger_.logMethod?.('onDestroy');
-    this.cleanupTaskList_.push(task);
+  protected onDestroy_(task: NoopFunction): void {
+    this.logger_.logMethod?.('onDestroy_');
+    this.cleanupTaskList__.push(task);
   }
 
   /**
@@ -140,8 +140,8 @@ export abstract class DirectiveBase {
     this.logger_.logMethod?.('destroy_');
 
     // Execute all registered cleanup tasks
-    if (this.cleanupTaskList_.length > 0) {
-      for (const task of this.cleanupTaskList_) {
+    if (this.cleanupTaskList__.length > 0) {
+      for (const task of this.cleanupTaskList__) {
         try {
           task();
         }
@@ -150,7 +150,7 @@ export abstract class DirectiveBase {
         }
       }
 
-      this.cleanupTaskList_.length = 0; // clear the list after executing all tasks
+      this.cleanupTaskList__.length = 0; // clear the list after executing all tasks
     }
 
     this.element_.remove();
