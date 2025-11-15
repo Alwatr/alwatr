@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.3](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.6.2...@alwatr/global-this@5.6.3) (2025-11-15)
+
+**Note:** Version bump only for package @alwatr/global-this
+
 ## [5.6.2](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.6.1...@alwatr/global-this@5.6.2) (2025-11-04)
 
 ### 🔗 Dependencies update

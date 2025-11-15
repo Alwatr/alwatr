@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.25](https://github.com/Alwatr/nanolib/compare/@alwatr/render-state@5.5.24...@alwatr/render-state@5.5.25) (2025-11-15)
+
+**Note:** Version bump only for package @alwatr/render-state
+
 ## [5.5.24](https://github.com/Alwatr/nanolib/compare/@alwatr/render-state@5.5.23...@alwatr/render-state@5.5.24) (2025-11-04)
 
 **Note:** Version bump only for package @alwatr/render-state

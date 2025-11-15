@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.6](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.1.5...@alwatr/type-helper@6.1.6) (2025-11-15)
+
+### 🐛 Bug Fixes
+
+* rename Noop type to NoopFunction for clarity ([068ff72](https://github.com/Alwatr/nanolib/commit/068ff726dd0cbfc87de1c71782e5f8a35d2eeb83))
+
 ## [6.1.5](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.1.4...@alwatr/type-helper@6.1.5) (2025-10-06)
 
 ### 🔗 Dependencies update

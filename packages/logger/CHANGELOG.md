@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.11](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@6.0.10...@alwatr/logger@6.0.11) (2025-11-15)
+
+**Note:** Version bump only for package @alwatr/logger
+
 ## [6.0.10](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@6.0.9...@alwatr/logger@6.0.10) (2025-11-04)
 
 ### 🔗 Dependencies update
