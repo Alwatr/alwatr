@@ -143,7 +143,7 @@ export abstract class DirectiveBase {
     if (this.cleanupTaskList__.length > 0) {
       for (const task of this.cleanupTaskList__) {
         try {
-          task();
+          task.call(this);
         }
         catch (err) {
           this.logger_.error('destroy_', 'error_in_destroy_callback', err);
