@@ -49,7 +49,7 @@ declare global {
   type VoidFunction = Func<any[], void>;
 
   /** Alias for a no-op function with no arguments. */
-  type Noop = () => void;
+  type NoopFunction = () => void;
 
   /**
    * Removes the first parameter from a function type.

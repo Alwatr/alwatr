@@ -70,5 +70,8 @@
     "tsbuildinfo",
     "typeof",
     "cyrb53"
+  ],
+  "github-actions.workflows.pinned.workflows": [
+    ".github/workflows/publish-npm.yml"
   ]
 }

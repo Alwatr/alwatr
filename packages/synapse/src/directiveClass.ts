@@ -49,6 +49,11 @@ export abstract class DirectiveBase {
   protected readonly element_: HTMLElement;
 
   /**
+   * A list of callback functions to be executed when the directive is destroyed.
+   */
+  private readonly cleanupTaskList_: NoopFunction[] = [];
+
+  /**
    * Initializes the directive. This constructor is called by the Synapse bootstrap process and should not be
    * overridden in subclasses.
    *
@@ -106,6 +111,25 @@ export abstract class DirectiveBase {
   }
 
   /**
+   * Registers a task to be executed when the directive is destroyed.
+   * Follows the `on[Event]` pattern, similar to `onClick`.
+   * Useful for cleaning up resources, such as unsubscribing from signals or removing global event listeners.
+   *
+   * @param task The cleanup task to register.
+   *
+   * @example
+   * ```ts
+   * this.onDestroy(
+   *   signal.subscribe(() => this.log('signal changed')).unsubscribe
+   * );
+   * ```
+   */
+  protected onDestroy(task: NoopFunction): void {
+    this.logger_.logMethod?.('onDestroy');
+    this.cleanupTaskList_.push(task);
+  }
+
+  /**
    * Cleans up the directive's resources.
    *
    * This method removes the element from the DOM and nullifies the internal reference to it,
@@ -114,6 +138,21 @@ export abstract class DirectiveBase {
    */
   protected destroy_(): Awaitable<void> {
     this.logger_.logMethod?.('destroy_');
+
+    // Execute all registered cleanup tasks
+    if (this.cleanupTaskList_.length > 0) {
+      for (const task of this.cleanupTaskList_) {
+        try {
+          task();
+        }
+        catch (err) {
+          this.logger_.error('destroy_', 'error_in_destroy_callback', err);
+        }
+      }
+
+      this.cleanupTaskList_.length = 0; // clear the list after executing all tasks
+    }
+
     this.element_.remove();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this as any).element_ = null;
