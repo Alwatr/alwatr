@@ -7,6 +7,7 @@ import type {DirectiveBase} from './directiveClass.js';
  *
  * @param selector The CSS selector to query for.
  * @param cache Whether to cache the result on first access. Defaults is true.
+ * @param root Optional root element to perform the query on. Defaults to the directive's element.
  *
  * @example
  * ```ts
@@ -17,14 +18,15 @@ import type {DirectiveBase} from './directiveClass.js';
  * }
  * ```
  */
-export function query(selector: string, cache = true) {
+export function query(selector: string, cache = true, root?: ParentNode) {
   return function (target: DirectiveBase, propertyKey: string): void {
     const privateKey = Symbol(`${String(propertyKey)}__`);
 
     Object.defineProperty(target, propertyKey, {
       get(this: DirectiveBase) {
         if (cache === false || (this as any)[privateKey] === undefined) {
-          (this as any)[privateKey] = this.element_.querySelector(selector);
+          root ??= this.element_;
+          (this as any)[privateKey] = root.querySelector(selector);
         }
         return (this as any)[privateKey];
       },
@@ -40,6 +42,7 @@ export function query(selector: string, cache = true) {
  *
  * @param selector The CSS selector to query for.
  * @param cache Whether to cache the result on first access. Defaults is true.
+ * @param root Optional root element to perform the query on. Defaults to the directive's element.
  *
  * @example
  * ```ts
@@ -50,14 +53,15 @@ export function query(selector: string, cache = true) {
  * }
  * ```
  */
-export function queryAll(selector: string, cache = true) {
+export function queryAll(selector: string, cache = true, root?: ParentNode) {
   return function (target: DirectiveBase, propertyKey: string): void {
     const privateKey = Symbol(`${String(propertyKey)}__`);
 
     Object.defineProperty(target, propertyKey, {
       get(this: DirectiveBase) {
         if (cache === false || (this as any)[privateKey] === undefined) {
-          (this as any)[privateKey] = this.element_.querySelectorAll(selector);
+          root ??= this.element_;
+          (this as any)[privateKey] = root.querySelectorAll(selector);
         }
         return (this as any)[privateKey];
       },
