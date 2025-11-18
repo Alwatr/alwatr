@@ -107,3 +107,95 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Fe
     return [null, error];
   }
 }
+
+/**
+ * An enhanced wrapper for the native `fetch` function that automatically parses JSON responses.
+ *
+ * This function extends the standard `fetch` with the same features (timeout, retry, caching, etc.)
+ * and automatically parses the response body as JSON. It returns a tuple with the parsed data or an error.
+ *
+ * @template T - The expected type of the JSON response data.
+ *
+ * @param {string} url - The URL to fetch.
+ * @param {FetchOptions} options - Optional configuration for the fetch request.
+ * @returns {Promise<[T, null] | [null, FetchError]>} A promise that resolves to a tuple.
+ * On success, it returns `[data, null]` where data is the parsed JSON.
+ * On failure, it returns `[null, FetchError]`.
+ *
+ * @example
+ * ```typescript
+ * import {fetchJson} from '@alwatr/fetch';
+ *
+ * interface Product {
+ *   ok: true;
+ *   id: number;
+ *   name: string;
+ *   price: number;
+ * }
+ *
+ * async function getProduct(id: number) {
+ *   const [data, error] = await fetchJson<Product>(`/api/products/${id}`, {
+ *     timeout: 5_000,
+ *     cacheStrategy: 'cache_first',
+ *     requireResponseJsonWithOkTrue: true,
+ *   });
+ *
+ *   if (error) {
+ *     console.error('Failed to fetch product:', error.reason);
+ *     return;
+ *   }
+ *
+ *   // data is now typed as Product and guaranteed to be valid
+ *   console.log('Product name:', data.name);
+ * }
+ * ```
+ */
+export async function fetchJson<T extends JsonObject = JsonObject>(
+  url: string,
+  options: FetchJsonOptions = {},
+): Promise<[T, null] | [null, FetchError]> {
+  logger_.logMethodArgs?.('fetchJson', {url, options});
+
+  const [response, error] = await fetch(url, options);
+
+  if (error) {
+    return [null, error];
+  }
+
+  const bodyText = await response.text().catch(() => '');
+  if (bodyText.trim().length === 0) {
+    const parseError = new FetchError(
+      'json_parse_error',
+      'Response body is empty, cannot parse JSON',
+      response,
+      bodyText,
+    );
+    logger_.error('fetchJson', parseError.reason, {error: parseError});
+    return [null, parseError];
+  }
+
+  try {
+    const data = JSON.parse(bodyText) as T;
+    if (options.requireJsonResponseWithOkTrue && data.ok !== true) {
+      const parseError = new FetchError(
+        'json_response_error',
+        'Response JSON "ok" property is not true',
+        response,
+        data,
+      );
+      logger_.error('fetchJson', parseError.reason, {error: parseError});
+      return [null, parseError];
+    }
+    return [data, null];
+  }
+  catch (err) {
+    const parseError = new FetchError(
+      'json_parse_error',
+      err instanceof Error ? err.message : 'Failed to parse JSON response',
+      response,
+      bodyText,
+    );
+    logger_.error('fetchJson', parseError.reason, {error: parseError});
+    return [null, parseError];
+  }
+}
