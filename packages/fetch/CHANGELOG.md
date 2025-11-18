@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@7.0.3...@alwatr/fetch@7.1.0) (2025-11-18)
+
+### ✨ Features
+
+* add fetchJson function for automatic JSON parsing with error handling ([6cc3e4b](https://github.com/Alwatr/nanolib/commit/6cc3e4b6d854caddb187150126548d9081c91e3c))
+
+### 🔨 Code Refactoring
+
+* improve type definitions for cache strategy and error reasons ([c599f72](https://github.com/Alwatr/nanolib/commit/c599f7254f05dd964ca0378f2017f9e98de2018c))
+* separate core funcs ([110db1f](https://github.com/Alwatr/nanolib/commit/110db1f171c5f18eb9a9ab5d62df33447e1c55d6))
+
 ## [7.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@7.0.2...@alwatr/fetch@7.0.3) (2025-11-18)
 
 **Note:** Version bump only for package @alwatr/fetch
