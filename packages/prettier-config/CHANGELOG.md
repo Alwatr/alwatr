@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/prettier-config@5.0.5...@alwatr/prettier-config@6.0.0) (2025-11-18)
+
+### ⚠ BREAKING CHANGES
+
+* The default configuration changed
+
+### ✨ Features
+
+* enhance prettier configuration with ES module support and additional options ([11666fd](https://github.com/Alwatr/nanolib/commit/11666fdaacee8e68f54e9db61d5ff53cdea9009c))
+
 ## [5.0.5](https://github.com/Alwatr/nanolib/compare/@alwatr/prettier-config@5.0.4...@alwatr/prettier-config@5.0.5) (2025-09-27)
 
 ### 🧹 Miscellaneous Chores

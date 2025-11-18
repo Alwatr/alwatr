@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.5](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.6.4...@alwatr/global-this@5.6.5) (2025-11-18)
+
+### 🐛 Bug Fixes
+
+* add type imports from @alwatr/nano-build and @alwatr/type-helper across multiple packages ([5ab7f15](https://github.com/Alwatr/nanolib/commit/5ab7f159ba57788bf8df40fa96a3027f589d5a77))
+
 ## [5.6.4](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.6.3...@alwatr/global-this@5.6.4) (2025-11-15)
 
 ### 🔗 Dependencies update

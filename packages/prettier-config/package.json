@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/prettier-config",
   "description": "Alwatr's shareable configurations for Prettier.",
-  "version": "5.0.5",
+  "version": "6.0.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "files": [

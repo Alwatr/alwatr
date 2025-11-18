@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.16](https://github.com/Alwatr/nanolib/compare/@alwatr/iranian-national-code-validator@1.0.15...@alwatr/iranian-national-code-validator@1.0.16) (2025-11-18)
+
+### 🔨 Code Refactoring
+
+* remove unnecessary type declarations from tsconfig.json files ([89bcc7d](https://github.com/Alwatr/nanolib/commit/89bcc7db839807110b80f8ba34414ea9734d9c75))
+
 ## [1.0.15](https://github.com/Alwatr/nanolib/compare/@alwatr/iranian-national-code-validator@1.0.14...@alwatr/iranian-national-code-validator@1.0.15) (2025-11-15)
 
 **Note:** Version bump only for package @alwatr/iranian-national-code-validator

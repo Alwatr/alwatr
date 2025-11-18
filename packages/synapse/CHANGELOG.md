@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.2.1...@alwatr/synapse@1.3.0) (2025-11-18)
+
+### ✨ Features
+
+* add optional root parameter to query and queryAll decorators ([95f33b6](https://github.com/Alwatr/nanolib/commit/95f33b60b937a572734b47dbb6887a0a84801beb))
+
+### 🐛 Bug Fixes
+
+* update documentation for queryAll to clarify cache parameter ([0693612](https://github.com/Alwatr/nanolib/commit/06936122ee9aecfc11cdcf68278eac09fc08e8ff))
+
 ## [1.2.1](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.2.0...@alwatr/synapse@1.2.1) (2025-11-15)
 
 ### 🐛 Bug Fixes

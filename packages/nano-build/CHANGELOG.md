@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.9](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.3.8...@alwatr/nano-build@6.3.9) (2025-11-18)
+
+### 🔨 Code Refactoring
+
+* remove unnecessary type declarations from tsconfig.json files ([89bcc7d](https://github.com/Alwatr/nanolib/commit/89bcc7db839807110b80f8ba34414ea9734d9c75))
+* rename main file to cli and enhance export cli command ([857dc53](https://github.com/Alwatr/nanolib/commit/857dc53d19c18a3207da75d3de34541982b03742))
+* update bin field in package.json to use a string instead of an object ([088063c](https://github.com/Alwatr/nanolib/commit/088063cce2f8eba161da3c17fe4021df06a514a5))
+
 ## [6.3.8](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.3.7...@alwatr/nano-build@6.3.8) (2025-11-15)
 
 ### 🔗 Dependencies update

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.24](https://github.com/Alwatr/nanolib/compare/@alwatr/hash-string@5.2.23...@alwatr/hash-string@5.2.24) (2025-11-18)
+
+### 🔨 Code Refactoring
+
+* remove unnecessary type declarations from tsconfig.json files ([89bcc7d](https://github.com/Alwatr/nanolib/commit/89bcc7db839807110b80f8ba34414ea9734d9c75))
+
 ## [5.2.23](https://github.com/Alwatr/nanolib/compare/@alwatr/hash-string@5.2.22...@alwatr/hash-string@5.2.23) (2025-11-15)
 
 **Note:** Version bump only for package @alwatr/hash-string

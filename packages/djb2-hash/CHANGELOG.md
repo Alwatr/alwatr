@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.12](https://github.com/Alwatr/nanolib/compare/@alwatr/djb2-hash@1.1.11...@alwatr/djb2-hash@1.1.12) (2025-11-18)
+
+### 🔨 Code Refactoring
+
+* remove unnecessary type declarations from tsconfig.json files ([89bcc7d](https://github.com/Alwatr/nanolib/commit/89bcc7db839807110b80f8ba34414ea9734d9c75))
+
 ## [1.1.11](https://github.com/Alwatr/nanolib/compare/@alwatr/djb2-hash@1.1.10...@alwatr/djb2-hash@1.1.11) (2025-11-15)
 
 **Note:** Version bump only for package @alwatr/djb2-hash

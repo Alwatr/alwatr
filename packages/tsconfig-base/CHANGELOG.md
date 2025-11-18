@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.4](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@6.0.3...@alwatr/tsconfig-base@6.0.4) (2025-11-18)
+
+### 🐛 Bug Fixes
+
+* update files field in package.json to include json files and ensure tsconfig.json is listed ([49a5866](https://github.com/Alwatr/nanolib/commit/49a5866c8063334b242f7a3c01e19401251658be))
+
+### 🔨 Code Refactoring
+
+* remove unnecessary type declarations from tsconfig.json files ([89bcc7d](https://github.com/Alwatr/nanolib/commit/89bcc7db839807110b80f8ba34414ea9734d9c75))
+
 ## [6.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@6.0.2...@alwatr/tsconfig-base@6.0.3) (2025-09-27)
 
 ### 🧹 Miscellaneous Chores

@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@6.2.4...@alwatr/nanolib@7.0.0) (2025-11-18)
+
+### ⚠ BREAKING CHANGES
+
+* don't need to install `@alwatr/prettier-config` anymore! just use `@alwatr/nanolib/prettier` in your `package.json`
+
+Example:
+```
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "prettier": "@alwatr/nanolib/prettier"
+}
+```
+* don't need to install `@alwatr/tsconfig-base` anymore! Just use `@alwatr/nanolib/tsconfig-base` in your `tsconfig.json`
+
+Example:
+```json
+{
+  "extends": "@alwatr/nanolib/tsconfig-base",
+  "compilerOptions": {
+    "rootDir": "src"
+  },
+  "include": ["src/**/*.ts"]
+}
+```
+* don't need to install `@alwatr/nano-build` anymore!
+
+### ✨ Features
+
+* add @alwatr/tsconfig-base to dependencies and update exports in package.json ([4e487c6](https://github.com/Alwatr/nanolib/commit/4e487c6985d1950a9f07e4b2bb9d6d0f1cde2f07))
+* add nano-build entry point and update package.json ([fdc1f12](https://github.com/Alwatr/nanolib/commit/fdc1f12f15c23738595ebc151d0d6753eb23c942))
+* add prettier configuration files and update package.json dependencies ([5664377](https://github.com/Alwatr/nanolib/commit/5664377ef740338f74a81df0da48758204babc1e))
+
+### 🐛 Bug Fixes
+
+* add type imports from @alwatr/nano-build and @alwatr/type-helper across multiple packages ([5ab7f15](https://github.com/Alwatr/nanolib/commit/5ab7f159ba57788bf8df40fa96a3027f589d5a77))
+
 ## [6.2.4](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@6.2.3...@alwatr/nanolib@6.2.4) (2025-11-15)
 
 **Note:** Version bump only for package @alwatr/nanolib
