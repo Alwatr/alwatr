@@ -31,7 +31,7 @@
     "yarn": ">=4.0.0"
   },
   "license": "MPL-2.0",
-  "packageManager": "yarn@4.10.3",
+  "packageManager": "yarn@4.11.0",
   "prettier": "@alwatr/prettier-config",
   "private": true,
   "repository": "https://github.com/Alwatr/nanolib",
