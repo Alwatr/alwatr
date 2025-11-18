@@ -3,7 +3,9 @@
   "description": "Build/bundle tools for ECMAScript, TypeScript, and JavaScript libraries. It's easy to use, doesn't require any setup, and adheres to best practices. It has no dependencies and uses esbuild for enhanced performance.",
   "version": "6.3.8",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "bin": "./nano-build.cjs",
+  "bin": {
+    "nano-build": "./cli.cjs"
+  },
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
     "esbuild": "^0.27.0",
