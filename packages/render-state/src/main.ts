@@ -1,5 +1,7 @@
 import {createLogger} from '@alwatr/logger';
 
+import type {} from '@alwatr/nano-build';
+
 const logger = createLogger(__package_name__);
 
 export const renderState = <R, T extends string>(

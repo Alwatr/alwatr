@@ -1,6 +1,5 @@
-/* eslint-disable import/export */
-export type * from '@alwatr/type-helper';
-export type * from '@alwatr/nano-build';
+import type {} from '@alwatr/nano-build';
+import type {} from '@alwatr/type-helper';
 
 export type GlobalThis = typeof globalThis;
 

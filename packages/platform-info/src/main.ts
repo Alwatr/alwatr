@@ -1,3 +1,5 @@
+import type {} from '@alwatr/type-helper';
+
 /**
  * Represents information about the current platform.
  */

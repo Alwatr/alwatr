@@ -1,3 +1,6 @@
+import type {} from '@alwatr/nano-build';
+import type {} from '@alwatr/type-helper';
+
 /**
  * A module for tracking package information.
  * This module is useful for keeping track of loaded packages and their versions.
