@@ -1,5 +1,5 @@
 {
-  "extends": "@alwatr/tsconfig-base/tsconfig.json",
+  "extends": "./tsconfig-base.json",
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",

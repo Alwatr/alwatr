@@ -35,12 +35,12 @@
     "@alwatr/render-state": "workspace:*",
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/synapse": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:^",
     "@alwatr/unicode-digits": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/prettier-config": "workspace:*",
-    "@alwatr/tsconfig-base": "workspace:*",
     "typescript": "^5.9.3"
   },
   "exports": {
@@ -53,11 +53,13 @@
       "types": "./dist/node.d.ts",
       "import": "./dist/node.mjs",
       "require": "./dist/node.cjs"
-    }
+    },
+    "./tsconfig-base": "./tsconfig-base.json"
   },
   "files": [
     "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
     "LICENSE",
+    "tsconfig-base.json",
     "!demo/**/*",
     "!**/*.test.js"
   ],
