@@ -19,7 +19,13 @@ export type QueryParams = DictionaryOpt<string | number | boolean>;
  * - `update_cache`: Fetches from the network and updates the cache.
  * - `stale_while_revalidate`: Serves from cache while revalidating in the background.
  */
-export type CacheStrategy = 'network_only' | 'network_first' | 'cache_only' | 'cache_first' | 'update_cache' | 'stale_while_revalidate';
+export type CacheStrategy =
+  | 'network_only'
+  | 'network_first'
+  | 'cache_only'
+  | 'cache_first'
+  | 'update_cache'
+  | 'stale_while_revalidate';
 
 /**
  * Defines the caching behavior for identical, parallel requests.
@@ -120,6 +126,8 @@ export interface AlwatrFetchOptions_ {
  */
 export type FetchOptions = Partial<AlwatrFetchOptions_> & Omit<RequestInit, 'headers'>;
 
+export type FetchJsonOptions = FetchOptions & {requireJsonResponseWithOkTrue?: true};
+
 /**
  * Represents the tuple returned by the fetch function.
  * On success, it's `[Response, null]`. On failure, it's `[null, FetchError]`.
@@ -133,6 +141,16 @@ export type FetchResponse = Promise<[Response, null] | [null, FetchError]>;
  * - `cache_not_found`: The requested resource was not found in the cache_only strategy.
  * - `network_error`: A generic network-level error occurred.
  * - `aborted`: The request was aborted by a user-provided signal.
+ * - `json_parse_error`: The response body could not be parsed as JSON.
+ * - `json_response_error`: The response JSON "ok" property is not true.
  * - `unknown_error`: An unspecified error occurred.
  */
-export type FetchErrorReason = 'http_error' | 'cache_not_found' | 'timeout' | 'network_error' | 'aborted' | 'unknown_error';
+export type FetchErrorReason =
+  | 'http_error'
+  | 'cache_not_found'
+  | 'timeout'
+  | 'network_error'
+  | 'aborted'
+  | 'json_parse_error'
+  | 'json_response_error'
+  | 'unknown_error';
