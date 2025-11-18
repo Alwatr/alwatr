@@ -31,26 +31,11 @@ yarn run build
 
 ## Configuration
 
-### TypeScript
+### TypeScript types
 
-To use `@alwatr/nano-build` in your TypeScript project, you need to configure your `tsconfig.json` file.
-Below is an example configuration:
-
-```jsonc
-{
-  "extends": "@alwatr/tsconfig-base/tsconfig.json",
-  "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
-    "emitDeclarationOnly": true,
-    "composite": true,
-    "types": ["@alwatr/nano-build"],
-  },
-  "include": ["src/**/*.ts"],
-}
+```ts
+import type {} from '@alwatr/nano-build';
 ```
-
-This configuration ensures that your TypeScript project is set up to use `@alwatr/nano-build` effectively, providing a streamlined build process with best practices.
 
 ### Overwriting configuration
 
