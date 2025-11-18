@@ -7174,8 +7174,6 @@ __metadata:
   dependencies:
     "@alwatr/nanolib": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
-    "@alwatr/tsconfig-base": "workspace:*"
-    "@alwatr/type-helper": "workspace:*"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
