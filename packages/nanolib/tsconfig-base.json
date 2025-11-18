@@ -1,0 +1,3 @@
+{
+  "extends": "@alwatr/tsconfig-base/tsconfig.json"
+}

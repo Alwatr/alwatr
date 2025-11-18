@@ -2,8 +2,11 @@
 import {createLogger} from '@alwatr/nanolib';
 import '@alwatr/nanolib/node';
 
+// import type {} from '@alwatr/nano-build';
+// import type {} from '@alwatr/type-helper';
+
 /* #__PURE__ */
-createLogger('playground');
+createLogger(__package_name__);
 
 const obj: DictionaryOpt<string> = {name: 'ali'};
 

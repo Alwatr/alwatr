@@ -1,7 +1,7 @@
 /**
  * @type {import('prettier').Config}
  */
-module.exports = {
+const config = {
   // plugins: ['@prettier/plugin-xml', 'prettier-plugin-nginx', 'prettier-plugin-css-order', 'prettier-plugin-jsdoc'],
   arrowParens: 'always',
   bracketSameLine: false,
@@ -36,3 +36,5 @@ module.exports = {
     },
   ],
 };
+
+export default config;

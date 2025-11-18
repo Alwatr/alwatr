@@ -32,7 +32,12 @@
     "utils"
   ],
   "license": "MPL-2.0",
-  "main": "./prettier.config.cjs",
+  "exports": {
+    ".": {
+      "import": "./prettier.config.mjs",
+      "require": "./prettier.config.cjs"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -42,5 +47,11 @@
     "directory": "packages/prettier-config"
   },
   "sideEffects": false,
-  "type": "commonjs"
+  "type": "module",
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  },
+  "peerDependencies": {
+    "prettier": ">=3.0.0"
+  }
 }
