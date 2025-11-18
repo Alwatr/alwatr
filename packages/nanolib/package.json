@@ -31,6 +31,7 @@
     "@alwatr/node-fs": "workspace:*",
     "@alwatr/parse-duration": "workspace:*",
     "@alwatr/platform-info": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
     "@alwatr/random": "workspace:*",
     "@alwatr/render-state": "workspace:*",
     "@alwatr/resolve-url": "workspace:*",
@@ -40,7 +41,6 @@
     "@alwatr/unicode-digits": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/prettier-config": "workspace:*",
     "typescript": "^5.9.3"
   },
   "exports": {
@@ -53,6 +53,10 @@
       "types": "./dist/node.d.ts",
       "import": "./dist/node.mjs",
       "require": "./dist/node.cjs"
+    },
+    "./prettier": {
+      "import": "./prettier.config.mjs",
+      "require": "./prettier.config.cjs"
     },
     "./tsconfig-base": "./tsconfig-base.json"
   },
