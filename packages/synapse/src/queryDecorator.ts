@@ -39,6 +39,7 @@ export function query(selector: string, cache = true) {
  * The queries are performed once and the result is cached.
  *
  * @param selector The CSS selector to query for.
+ * @param cache Whether to cache the result on first access. Defaults is true.
  *
  * @example
  * ```ts
