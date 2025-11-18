@@ -8,7 +8,6 @@
     "@alwatr/nanolib": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/prettier-config": "workspace:*",
     "typescript": "^5.9.3"
   },
   "exports": {
@@ -42,7 +41,7 @@
       "__dev_mode__"
     ]
   },
-  "prettier": "@alwatr/prettier-config",
+  "prettier": "@alwatr/nanolib/prettier",
   "private": true,
   "publishConfig": {
     "access": "public"

@@ -403,6 +403,10 @@ __metadata:
 "@alwatr/prettier-config@workspace:*, @alwatr/prettier-config@workspace:packages/prettier-config":
   version: 0.0.0-use.local
   resolution: "@alwatr/prettier-config@workspace:packages/prettier-config"
+  dependencies:
+    prettier: "npm:^3.6.2"
+  peerDependencies:
+    prettier: ">=3.0.0"
   languageName: unknown
   linkType: soft
 
@@ -7173,7 +7177,6 @@ __metadata:
   resolution: "playground@workspace:packages/playground"
   dependencies:
     "@alwatr/nanolib": "workspace:*"
-    "@alwatr/prettier-config": "workspace:*"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
