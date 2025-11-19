@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.3.0...@alwatr/synapse@1.3.1) (2025-11-19)
+
+### 🐛 Bug Fixes
+
+* refactor query and queryAll to use a parent variable for improved clarity ([57b175b](https://github.com/Alwatr/nanolib/commit/57b175bddd5617b9a05aba3f3eb81ec0c34527f7))
+
 ## [1.3.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.2.1...@alwatr/synapse@1.3.0) (2025-11-18)
 
 ### ✨ Features
