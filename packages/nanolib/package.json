@@ -37,7 +37,6 @@
     "@alwatr/render-state": "workspace:*",
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/synapse": "workspace:*",
-    "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:^",
     "@alwatr/unicode-digits": "workspace:*",
     "@alwatr/yarn-upgrade": "workspace:*"
