@@ -4,7 +4,7 @@
   "version": "1.0.18",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bin": {
-    "upd": "./dist/main.mjs"
+    "upd": "./dist/main.cjs"
   },
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {
@@ -36,10 +36,9 @@
   ],
   "license": "MPL-2.0",
   "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
   "nano-build": {
     "platform": "node",
-    "format": "esm",
+    "format": "cjs",
     "target": "node22",
     "minify": false
   },
