@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.2](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.1.1...@alwatr/nanolib@7.1.2) (2025-11-19)
+
+### 🐛 Bug Fixes
+
+* remove tsconfig-base dependency and add custom tsconfig settings ([1d5a955](https://github.com/Alwatr/nanolib/commit/1d5a955daec0ba7c76698d6cd6efec6e58c26b91))
+
 ## [7.1.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.1.0...@alwatr/nanolib@7.1.1) (2025-11-19)
 
 **Note:** Version bump only for package @alwatr/nanolib
