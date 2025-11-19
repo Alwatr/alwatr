@@ -5,7 +5,8 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "bin": {
-    "nano-build": "./nano-build.cjs"
+    "nano-build": "./nano-build.cjs",
+    "upd": "./yarn-upgrade.cjs"
   },
   "dependencies": {
     "@alwatr/async-queue": "workspace:*",
@@ -38,7 +39,8 @@
     "@alwatr/synapse": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:^",
-    "@alwatr/unicode-digits": "workspace:*"
+    "@alwatr/unicode-digits": "workspace:*",
+    "@alwatr/yarn-upgrade": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
