@@ -340,6 +340,7 @@ __metadata:
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:^"
     "@alwatr/unicode-digits": "workspace:*"
+    "@alwatr/yarn-upgrade": "workspace:*"
     typescript: "npm:^5.9.3"
   bin:
     nano-build: ./nano-build.cjs
