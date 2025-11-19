@@ -344,6 +344,7 @@ __metadata:
     typescript: "npm:^5.9.3"
   bin:
     nano-build: ./nano-build.cjs
+    upd: ./yarn-upgrade.cjs
   languageName: unknown
   linkType: soft
 
@@ -502,7 +503,7 @@ __metadata:
     "@types/node": "npm:^24.10.1"
     typescript: "npm:^5.9.3"
   bin:
-    upd: ./dist/main.mjs
+    upd: ./dist/main.cjs
   languageName: unknown
   linkType: soft
 

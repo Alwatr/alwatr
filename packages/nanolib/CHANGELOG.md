@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.0.1...@alwatr/nanolib@7.1.0) (2025-11-19)
+
+### ✨ Features
+
+* add yarn-upgrade command to package.json ([43e3174](https://github.com/Alwatr/nanolib/commit/43e3174033e41c2c4aa05db05315f2946b06661e))
+* add yarn-upgrade script for automatic dependency upgrades ([0961da3](https://github.com/Alwatr/nanolib/commit/0961da3ee2852767d3b20fe6fe47f5de9c649b2e))
+
 ## [7.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.0.0...@alwatr/nanolib@7.0.1) (2025-11-18)
 
 **Note:** Version bump only for package @alwatr/nanolib

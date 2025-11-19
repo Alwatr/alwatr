@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.19](https://github.com/Alwatr/nanolib/compare/@alwatr/yarn-upgrade@1.0.18...@alwatr/yarn-upgrade@1.0.19) (2025-11-19)
+
+### 🐛 Bug Fixes
+
+* update binary and build format to use CommonJS ([97767d5](https://github.com/Alwatr/nanolib/commit/97767d5f562a88026e043489b71e9e7ee1eadbf6))
+
 ## [1.0.18](https://github.com/Alwatr/nanolib/compare/@alwatr/yarn-upgrade@1.0.17...@alwatr/yarn-upgrade@1.0.18) (2025-11-18)
 
 ### 🔨 Code Refactoring
