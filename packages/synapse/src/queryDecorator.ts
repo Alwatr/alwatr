@@ -25,8 +25,8 @@ export function query(selector: string, cache = true, root?: ParentNode) {
     Object.defineProperty(target, propertyKey, {
       get(this: DirectiveBase) {
         if (cache === false || (this as any)[privateKey] === undefined) {
-          root ??= this.element_;
-          (this as any)[privateKey] = root.querySelector(selector);
+          const parent = root ?? this.element_;
+          (this as any)[privateKey] = parent.querySelector(selector);
         }
         return (this as any)[privateKey];
       },
@@ -60,8 +60,8 @@ export function queryAll(selector: string, cache = true, root?: ParentNode) {
     Object.defineProperty(target, propertyKey, {
       get(this: DirectiveBase) {
         if (cache === false || (this as any)[privateKey] === undefined) {
-          root ??= this.element_;
-          (this as any)[privateKey] = root.querySelectorAll(selector);
+          const parent = root ?? this.element_;
+          (this as any)[privateKey] = parent.querySelectorAll(selector);
         }
         return (this as any)[privateKey];
       },
