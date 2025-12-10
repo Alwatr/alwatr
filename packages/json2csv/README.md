@@ -41,11 +41,9 @@ You can customize the output using optional parameters:
 
 ```typescript
 const csv = jsonToCsv(
-const csv = jsonToCsv(
   data,       // Data array
   ';',        // Custom delimiter (default: ',')
   false       // Include headers (default: true)
-);
 );
 ```
 
