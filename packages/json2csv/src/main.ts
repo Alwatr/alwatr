@@ -1,3 +1,21 @@
+import type {} from '@alwatr/type-helper';
+
+/**
+ * Converts a JSON array of objects to a CSV string.
+ *
+ * @param jsonData - The Array of JSON objects to convert.
+ * @param delimiter - The delimiter character to use (default: ',').
+ * @param includeHeaders - Whether to include the header row (default: true).
+ * @param replacer - A function that handles value replacement, similar to `JSON.stringify`.
+ * @returns The CSV string.
+ *
+ * @example
+ * ```ts
+ * const data = [{name: 'Ali', age: 30}, {name: 'John', age: 25}];
+ * const csv = jsonToCsv(data);
+ * // "name,age\nAli,30\nJohn,25"
+ * ```
+ */
 export function jsonToCsv(
   jsonData?: DictionaryOpt<unknown>[],
   delimiter = ',',
@@ -31,7 +49,11 @@ export function jsonToCsv(
 
     const rowValues: string[] = [];
     for (const header of headers) {
-      const cellValue = (row as DictionaryOpt<JsonObject>)[header];
+      let cellValue = (row as DictionaryOpt<JsonValue>)[header];
+
+      if (replacer && cellValue !== undefined) {
+        cellValue = replacer(header, cellValue);
+      }
 
       if (cellValue === null || cellValue === undefined) {
         rowValues.push(escapeCsvValue('', delimiterRegex, doubleQuoteRegex));

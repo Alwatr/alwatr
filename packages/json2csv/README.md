@@ -1,12 +1,16 @@
-# JSON to CSV
+# @alwatr/json2csv
 
-...
+A tiny, efficient, and cross-platform JSON to CSV converter.
+
+## Features
+
+- **Lightweight**: Minimal footprint, zero dependencies (except type helpers).
+- **Fast**: Optimized for performance using array mapping and joining.
+- **Flexible**: Custom delimiters, optional headers, and value replacement support.
+- **Robust**: Handles escaped characters, nested objects, and arrays correctly.
+- **Type-Safe**: Written in TypeScript with full type definitions.
 
 ## Installation
-
-```bash
-npm install @alwatr/json2csv
-```
 
 ```bash
 yarn add @alwatr/json2csv
@@ -14,26 +18,49 @@ yarn add @alwatr/json2csv
 
 ## Usage
 
-```ts
-import {jsonToCsv} from '@alwatr/json2csv';
+```typescript
+import { jsonToCsv } from '@alwatr/json2csv';
 
-const csv = jsonToCsv([
-  {name: 'Ali', age: 30},
-  {name: 'Mahdi', age: 25},
-]);
+const data = [
+  { name: 'Ali', age: 30, city: 'Tehran' },
+  { name: 'John', age: 25, city: 'New York' }
+];
 
+const csv = jsonToCsv(data);
 console.log(csv);
-
-// Output:
-// name,age
-// Ali,30
-// Mahdi,25
+/*
+name,age,city
+Ali,30,Tehran
+John,25,New York
+*/
 ```
 
-## Sponsors
+### options
 
-The following companies, organizations, and individuals support Nanolib ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.
+You can customize the output using optional parameters:
 
-### Contributing
+```typescript
+const csv = jsonToCsv(
+  data,       // Data array
+  ';',        // Custom delimiter (default: ',')
+  false,      // Include headers (default: true)
+  undefined   // Replacer function (optional)
+);
+```
 
-Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
+## API
+
+### `jsonToCsv(jsonData, delimiter?, includeHeaders?, replacer?)`
+
+Converts a JSON array of objects to a CSV string.
+
+- **`jsonData`**: `Array<object>` - The array of objects to convert.
+- **`delimiter`**: `string` - The character to separate fields (default: `,`).
+- **`includeHeaders`**: `boolean` - Whether to include the header row (default: `true`).
+- **`replacer`**: `(key: string, value: any) => any` - A function that transforms the result, similar to `JSON.stringify`.
+
+**Returns**: `string` - The generated CSV string.
+
+## License
+
+MPL-2.0

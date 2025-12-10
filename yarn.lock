@@ -261,6 +261,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@alwatr/json2csv@workspace:packages/json2csv":
+  version: 0.0.0-use.local
+  resolution: "@alwatr/json2csv@workspace:packages/json2csv"
+  dependencies:
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
 "@alwatr/local-storage@workspace:*, @alwatr/local-storage@workspace:packages/local-storage":
   version: 0.0.0-use.local
   resolution: "@alwatr/local-storage@workspace:packages/local-storage"
