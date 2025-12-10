@@ -26,6 +26,7 @@
     "@alwatr/http-primer": "workspace:*",
     "@alwatr/iranian-national-code-validator": "workspace:*",
     "@alwatr/is-number": "workspace:*",
+    "@alwatr/json2csv": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/logger": "workspace:*",
     "@alwatr/nano-build": "workspace:^",
