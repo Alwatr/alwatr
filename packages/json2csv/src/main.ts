@@ -48,32 +48,28 @@ export function jsonToCsv(
   // 3. Iterate through Data and Create CSV Rows
   for (const row of jsonData) {
     if (typeof row !== 'object' || row === null || Array.isArray(row)) {
-      // Handle non-object rows
-      const cellValue = Array.isArray(row) ? JSON.stringify(row, replacer) : row === null ? '' : String(row);
-      csvRows.push(escapeCsvValue(cellValue, delimiterRegex, doubleQuoteRegex));
+      // Skip non-object rows
       continue;
     }
 
     let rowStr = '';
     for (let i = 0; i < headersLen; i++) {
-        if (i > 0) rowStr += delimiter;
+      if (i > 0) rowStr += delimiter;
 
-        const header = headers[i];
-        let cellValue = (row as DictionaryOpt<JsonValue>)[header];
+      const header = headers[i];
+      let cellValue = (row as DictionaryOpt<JsonValue>)[header];
 
-        if (replacer && cellValue !== undefined) {
-          cellValue = replacer(header, cellValue);
-        }
+      if (replacer && cellValue !== undefined) {
+        cellValue = replacer(header, cellValue);
+      }
 
-        if (cellValue === null || cellValue === undefined) {
-          // skip empty value
-        }
-        else if (typeof cellValue === 'object') {
-          rowStr += escapeCsvValue(JSON.stringify(cellValue, replacer), delimiterRegex, doubleQuoteRegex);
-        }
-        else {
-          rowStr += escapeCsvValue(String(cellValue), delimiterRegex, doubleQuoteRegex);
-        }
+      if (cellValue === null || cellValue === undefined) {
+        // skip empty value
+      } else if (typeof cellValue === 'object') {
+        rowStr += escapeCsvValue(JSON.stringify(cellValue, replacer), delimiterRegex, doubleQuoteRegex);
+      } else {
+        rowStr += escapeCsvValue(String(cellValue), delimiterRegex, doubleQuoteRegex);
+      }
     }
     csvRows.push(rowStr);
   }
