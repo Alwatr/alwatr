@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/has-own",
   "description": "A side-effect-free polyfill/replacement for `Object.hasOwn` that supports all browsers.",
-  "version": "5.6.3",
+  "version": "5.6.4",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {

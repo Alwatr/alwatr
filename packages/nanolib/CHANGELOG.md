@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.1.2...@alwatr/nanolib@7.2.0) (2025-12-10)
+
+### ✨ Features
+
+* add and re-export `@alwatr/json2csv` package ([319b539](https://github.com/Alwatr/nanolib/commit/319b539c3707dbab8e728b128174ed0f67e62cd4))
+
 ## [7.1.2](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.1.1...@alwatr/nanolib@7.1.2) (2025-11-19)
 
 ### 🐛 Bug Fixes

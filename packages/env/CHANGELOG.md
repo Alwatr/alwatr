@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.25](https://github.com/Alwatr/nanolib/compare/@alwatr/env@5.5.24...@alwatr/env@5.5.25) (2025-12-10)
+
+### 🔗 Dependencies update
+
+* Upgrade lerna-lite, prettier, types/node, and yarn dependencies. ([42a7fca](https://github.com/Alwatr/nanolib/commit/42a7fca15430aca2ac1eaa19496c2a2ebfc8c470))
+
 ## [5.5.24](https://github.com/Alwatr/nanolib/compare/@alwatr/env@5.5.23...@alwatr/env@5.5.24) (2025-11-18)
 
 ### 🔨 Code Refactoring

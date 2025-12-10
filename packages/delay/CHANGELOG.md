@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.17](https://github.com/Alwatr/nanolib/compare/@alwatr/delay@6.0.16...@alwatr/delay@6.0.17) (2025-12-10)
+
+### 🔗 Dependencies update
+
+* Upgrade lerna-lite, prettier, types/node, and yarn dependencies. ([42a7fca](https://github.com/Alwatr/nanolib/commit/42a7fca15430aca2ac1eaa19496c2a2ebfc8c470))
+
 ## [6.0.16](https://github.com/Alwatr/nanolib/compare/@alwatr/delay@6.0.15...@alwatr/delay@6.0.16) (2025-11-18)
 
 ### 🐛 Bug Fixes

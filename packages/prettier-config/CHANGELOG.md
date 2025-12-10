@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/prettier-config@6.0.0...@alwatr/prettier-config@6.0.1) (2025-12-10)
+
+### 🔗 Dependencies update
+
+* Upgrade lerna-lite, prettier, types/node, and yarn dependencies. ([42a7fca](https://github.com/Alwatr/nanolib/commit/42a7fca15430aca2ac1eaa19496c2a2ebfc8c470))
+
 ## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/prettier-config@5.0.5...@alwatr/prettier-config@6.0.0) (2025-11-18)
 
 ### ⚠ BREAKING CHANGES

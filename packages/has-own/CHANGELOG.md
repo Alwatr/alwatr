@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.4](https://github.com/Alwatr/nanolib/compare/@alwatr/has-own@5.6.3...@alwatr/has-own@5.6.4) (2025-12-10)
+
+**Note:** Version bump only for package @alwatr/has-own
+
 ## [5.6.3](https://github.com/Alwatr/nanolib/compare/@alwatr/has-own@5.6.2...@alwatr/has-own@5.6.3) (2025-11-18)
 
 **Note:** Version bump only for package @alwatr/has-own

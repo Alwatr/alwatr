@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.25](https://github.com/Alwatr/nanolib/compare/@alwatr/flatomise@5.5.24...@alwatr/flatomise@5.5.25) (2025-12-10)
+
+**Note:** Version bump only for package @alwatr/flatomise
+
 ## [5.5.24](https://github.com/Alwatr/nanolib/compare/@alwatr/flatomise@5.5.23...@alwatr/flatomise@5.5.24) (2025-11-18)
 
 ### 🐛 Bug Fixes
