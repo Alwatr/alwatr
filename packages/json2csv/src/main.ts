@@ -65,9 +65,11 @@ export function jsonToCsv(
 
       if (cellValue === null || cellValue === undefined) {
         // skip empty value
-      } else if (typeof cellValue === 'object') {
+      }
+      else if (typeof cellValue === 'object') {
         rowStr += escapeCsvValue(JSON.stringify(cellValue, replacer), delimiterRegex, doubleQuoteRegex);
-      } else {
+      }
+      else {
         rowStr += escapeCsvValue(String(cellValue), delimiterRegex, doubleQuoteRegex);
       }
     }
