@@ -74,4 +74,13 @@ describe('jsonToCsv', () => {
     expect(jsonToCsv(null)).toBe('');
     expect(jsonToCsv(undefined)).toBe('');
   });
+
+  it('should handle array with primitive first element safely', () => {
+    // This used to crash before the fix
+    const mixedData = [1, {a: 1}];
+    const csv = jsonToCsv(mixedData);
+    // Since the first element is not an object, headers cannot be extracted safely.
+    // It should return empty string (or valid error handling if designed so, but currently returns '' based on logic).
+    expect(csv).toBe('');
+  });
 });
