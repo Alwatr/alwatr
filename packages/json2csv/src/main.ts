@@ -22,7 +22,7 @@ export function jsonToCsv(
   includeHeaders = true,
   replacer?: (key: string, value: unknown) => JsonValue,
 ): string {
-  if (!Array.isArray(jsonData) || jsonData.length === 0 || !jsonData[0]) {
+  if (!Array.isArray(jsonData) || jsonData.length === 0 || typeof jsonData[0] !== 'object' || jsonData[0] === null) {
     return '';
   }
 
