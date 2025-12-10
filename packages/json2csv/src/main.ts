@@ -20,22 +20,29 @@ export function jsonToCsv(
   jsonData?: DictionaryOpt<unknown>[],
   delimiter = ',',
   includeHeaders = true,
-  replacer?: (key: string, value: JsonValue) => JsonValue,
+  replacer?: (key: string, value: unknown) => JsonValue,
 ): string {
   if (!Array.isArray(jsonData) || jsonData.length === 0 || !jsonData[0]) {
     return '';
   }
 
-  const delimiterRegex = new RegExp(`[${delimiter}\\n"]`, 'g'); // Pre-compile regex
+  const delimiterRegex = new RegExp(`[${delimiter}\\n"]`);
   const doubleQuoteRegex = /"/g;
 
   // 1. Extract Headers (Keys)
   const headers = Object.keys(jsonData[0]);
+  const headersLen = headers.length;
 
-  // 2. Create CSV (using Array for better performance)
+  // 2. Create CSV
   const csvRows: string[] = [];
+
   if (includeHeaders) {
-    csvRows.push(headers.map((header) => escapeCsvValue(header, delimiterRegex, doubleQuoteRegex)).join(delimiter));
+    let headerRow = '';
+    for (let i = 0; i < headersLen; i++) {
+      if (i > 0) headerRow += delimiter;
+      headerRow += escapeCsvValue(headers[i], delimiterRegex, doubleQuoteRegex);
+    }
+    csvRows.push(headerRow);
   }
 
   // 3. Iterate through Data and Create CSV Rows
@@ -47,35 +54,41 @@ export function jsonToCsv(
       continue;
     }
 
-    const rowValues: string[] = [];
-    for (const header of headers) {
-      let cellValue = (row as DictionaryOpt<JsonValue>)[header];
+    let rowStr = '';
+    for (let i = 0; i < headersLen; i++) {
+        if (i > 0) rowStr += delimiter;
 
-      if (replacer && cellValue !== undefined) {
-        cellValue = replacer(header, cellValue);
-      }
+        const header = headers[i];
+        let cellValue = (row as DictionaryOpt<JsonValue>)[header];
 
-      if (cellValue === null || cellValue === undefined) {
-        rowValues.push(escapeCsvValue('', delimiterRegex, doubleQuoteRegex));
-      }
-      else if (typeof cellValue === 'object') {
-        rowValues.push(escapeCsvValue(JSON.stringify(cellValue, replacer), delimiterRegex, doubleQuoteRegex));
-      }
-      else {
-        rowValues.push(escapeCsvValue(String(cellValue), delimiterRegex, doubleQuoteRegex));
-      }
+        if (replacer && cellValue !== undefined) {
+          cellValue = replacer(header, cellValue);
+        }
+
+        if (cellValue === null || cellValue === undefined) {
+          // skip empty value
+        }
+        else if (typeof cellValue === 'object') {
+          rowStr += escapeCsvValue(JSON.stringify(cellValue, replacer), delimiterRegex, doubleQuoteRegex);
+        }
+        else {
+          rowStr += escapeCsvValue(String(cellValue), delimiterRegex, doubleQuoteRegex);
+        }
     }
-    csvRows.push(rowValues.join(delimiter));
+    csvRows.push(rowStr);
   }
 
-  return csvRows.join('\n'); // Join at the very end (more efficient)
+  return csvRows.join('\n');
 }
 
-// Helper function to escape CSV values (extracted for performance)
+// Optimized helper function
 function escapeCsvValue(value: string, delimiterRegex: RegExp, doubleQuoteRegex: RegExp): string {
-  if (typeof value !== 'string' || value === '') {
-    return value; // No escaping needed
+  if (value === '') return value;
+
+  // Only replace if necessary
+  if (delimiterRegex.test(value)) {
+    return `"${value.replace(doubleQuoteRegex, '""')}"`;
   }
-  const escapedValue = value.replace(doubleQuoteRegex, '""');
-  return delimiterRegex.test(escapedValue) ? `"${escapedValue}"` : escapedValue;
+
+  return value;
 }
