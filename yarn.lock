@@ -41,7 +41,7 @@ __metadata:
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
     "@jest/globals": "npm:^30.2.0"
-    "@types/node": "npm:^24.10.2"
+    "@types/node": "npm:^24.10.3"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -81,7 +81,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.10.2"
+    "@types/node": "npm:^24.10.3"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -107,7 +107,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.10.2"
+    "@types/node": "npm:^24.10.3"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -141,7 +141,7 @@ __metadata:
     "@alwatr/nano-build": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
-    "@types/node": "npm:^24.10.2"
+    "@types/node": "npm:^24.10.3"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -197,7 +197,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.10.2"
+    "@types/node": "npm:^24.10.3"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -296,7 +296,7 @@ __metadata:
     "@alwatr/platform-info": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
-    "@types/node": "npm:^24.10.2"
+    "@types/node": "npm:^24.10.3"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -308,8 +308,8 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.10.2"
-    esbuild: "npm:^0.27.0"
+    "@types/node": "npm:^24.10.3"
+    esbuild: "npm:^0.27.1"
     picocolors: "npm:^1.1.1"
     typescript: "npm:^5.9.3"
   bin:
@@ -371,7 +371,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.10.2"
+    "@types/node": "npm:^24.10.3"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -409,7 +409,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.10.2"
+    "@types/node": "npm:^24.10.3"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -512,7 +512,7 @@ __metadata:
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/tsconfig-base": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
-    "@types/node": "npm:^24.10.2"
+    "@types/node": "npm:^24.10.3"
     typescript: "npm:^5.9.3"
   bin:
     upd: ./dist/main.cjs
@@ -1663,25 +1663,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lerna-lite/changed@npm:^4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/changed@npm:4.9.4"
+"@lerna-lite/changed@npm:^4.10.2":
+  version: 4.10.2
+  resolution: "@lerna-lite/changed@npm:4.10.2"
   dependencies:
-    "@lerna-lite/cli": "npm:4.9.4"
-    "@lerna-lite/core": "npm:4.9.4"
-    "@lerna-lite/list": "npm:4.9.4"
-    "@lerna-lite/listable": "npm:4.9.4"
-  checksum: 10c0/4f612efec952761a3efe47efea957e72175236179ca85ff403d5c86fa44b75b9788e871ca0f49e39d4135cb25cb8fb8b35ba91bbde676030f6a2dd6a31efd4e6
+    "@lerna-lite/cli": "npm:4.10.2"
+    "@lerna-lite/core": "npm:4.10.2"
+    "@lerna-lite/list": "npm:4.10.2"
+    "@lerna-lite/listable": "npm:4.10.2"
+  checksum: 10c0/9ea7887d87d6d5a5954ced170bc1a8aacf4bbdbca342cab8e88f4e6d8f24ea5f9889c8cc38f079dfcdae83829decf670424b2c8b30651cfcae92ae56b10f1eaa
   languageName: node
   linkType: hard
 
-"@lerna-lite/cli@npm:4.9.4, @lerna-lite/cli@npm:^4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/cli@npm:4.9.4"
+"@lerna-lite/cli@npm:4.10.2, @lerna-lite/cli@npm:^4.10.2":
+  version: 4.10.2
+  resolution: "@lerna-lite/cli@npm:4.10.2"
   dependencies:
-    "@lerna-lite/core": "npm:4.9.4"
-    "@lerna-lite/init": "npm:4.9.4"
-    "@lerna-lite/npmlog": "npm:4.9.4"
+    "@lerna-lite/core": "npm:4.10.2"
+    "@lerna-lite/init": "npm:4.10.2"
+    "@lerna-lite/npmlog": "npm:4.10.0"
     dedent: "npm:^1.7.0"
     dotenv: "npm:^17.2.3"
     import-local: "npm:^3.2.0"
@@ -1702,23 +1702,23 @@ __metadata:
       optional: true
   bin:
     lerna: dist/cli.js
-  checksum: 10c0/6be3466ed7e9e6d79a8b06c0e2b5020209768cc216751958049859dc29b46668622746b58b3cb16b0a5a4d72cbc8bbe70915dad54de7d39efebe346372319de0
+  checksum: 10c0/eab0c64ddeef55779cccbac49f2569a1a5a93a40bc8360f6cab25de6c7b0e11883c8cc551821d5deb0a09332100722748d84c90821640f264b2befc3eecff84d
   languageName: node
   linkType: hard
 
-"@lerna-lite/core@npm:4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/core@npm:4.9.4"
+"@lerna-lite/core@npm:4.10.2":
+  version: 4.10.2
+  resolution: "@lerna-lite/core@npm:4.10.2"
   dependencies:
     "@inquirer/expand": "npm:^4.0.23"
     "@inquirer/input": "npm:^4.3.1"
     "@inquirer/select": "npm:^4.4.2"
-    "@lerna-lite/npmlog": "npm:4.9.4"
+    "@lerna-lite/npmlog": "npm:4.10.0"
     "@npmcli/run-script": "npm:^10.0.3"
     ci-info: "npm:^4.3.1"
     config-chain: "npm:^1.1.13"
     dedent: "npm:^1.7.0"
-    execa: "npm:^9.6.0"
+    execa: "npm:^9.6.1"
     fs-extra: "npm:^11.3.2"
     glob-parent: "npm:^6.0.2"
     json5: "npm:^2.2.3"
@@ -1734,74 +1734,74 @@ __metadata:
     write-file-atomic: "npm:^7.0.0"
     write-json-file: "npm:^7.0.0"
     write-package: "npm:^7.2.0"
-    yaml: "npm:^2.8.1"
+    yaml: "npm:^2.8.2"
     zeptomatch: "npm:^2.1.0"
-  checksum: 10c0/1088cc3a835ce598020501d5c87c39159999049fc02f46a063b047d375f1faefd59a1e2a903389ae54871b107dfc5a1c4084da173373fea2698a3c44bce0b0f7
+  checksum: 10c0/0d8e5895cfb3d53491e0f218cf8f814e5b3759284a75837c02721f8486269e3717ca06d64ce92ea120655f64bef73b8e6e41b5893134af390c3b569d9dc2fb92
   languageName: node
   linkType: hard
 
-"@lerna-lite/diff@npm:^4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/diff@npm:4.9.4"
+"@lerna-lite/diff@npm:^4.10.2":
+  version: 4.10.2
+  resolution: "@lerna-lite/diff@npm:4.10.2"
   dependencies:
-    "@lerna-lite/cli": "npm:4.9.4"
-    "@lerna-lite/core": "npm:4.9.4"
-    "@lerna-lite/npmlog": "npm:^4.9.4"
-  checksum: 10c0/8f8ad30b1bd96484a98b492f01937d4c64a3703e173d1c999c10c0d343460b0fccff11c829a65621ff65a23630d0aee38c72a4c77222d12b3223e85f7b9549d3
+    "@lerna-lite/cli": "npm:4.10.2"
+    "@lerna-lite/core": "npm:4.10.2"
+    "@lerna-lite/npmlog": "npm:^4.10.0"
+  checksum: 10c0/e776e95f10b268ec3ba178bb061c3a23f593cda0023943bc6d26f7342761db06d210ef0840e375cc929fb9338de7395e18c2ce1c89d2e68fc76b0b41d77d38c2
   languageName: node
   linkType: hard
 
-"@lerna-lite/exec@npm:^4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/exec@npm:4.9.4"
+"@lerna-lite/exec@npm:^4.10.2":
+  version: 4.10.2
+  resolution: "@lerna-lite/exec@npm:4.10.2"
   dependencies:
-    "@lerna-lite/cli": "npm:4.9.4"
-    "@lerna-lite/core": "npm:4.9.4"
-    "@lerna-lite/profiler": "npm:4.9.4"
+    "@lerna-lite/cli": "npm:4.10.2"
+    "@lerna-lite/core": "npm:4.10.2"
+    "@lerna-lite/profiler": "npm:4.10.2"
     dotenv: "npm:^17.2.3"
     p-map: "npm:^7.0.4"
     tinyrainbow: "npm:^3.0.3"
-  checksum: 10c0/d42827fdc8dc7ff8a2a3b8a530aa09158ebdc881cc94accc82236997aa3ad3c7a35a92fb880ba6666b5120f06fd166307fcc9da632f3d1516e4d119942e9654d
+  checksum: 10c0/1ce6bdf059bda17600c7e2ebcabf2f795d10f0006b62801108f59be6b767739c10745a56b01e2a7d9d04ea08a471706b79f23196669ccf217def69381f24a6fb
   languageName: node
   linkType: hard
 
-"@lerna-lite/init@npm:4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/init@npm:4.9.4"
+"@lerna-lite/init@npm:4.10.2":
+  version: 4.10.2
+  resolution: "@lerna-lite/init@npm:4.10.2"
   dependencies:
-    "@lerna-lite/core": "npm:4.9.4"
+    "@lerna-lite/core": "npm:4.10.2"
     fs-extra: "npm:^11.3.2"
     p-map: "npm:^7.0.4"
     write-json-file: "npm:^7.0.0"
-  checksum: 10c0/26f3f4003ed69bf290f3fa0c07994593fceaa5dabca9341b935010b8c83274463584ed1a1940db513a129cea73cdd7ea580fa4fd006fa9fa5163b750b48223d6
+  checksum: 10c0/f796158e2d29b263c6bc2cc38102d6c32a8250675c20c3327a951eb77feda8fadc97d55155080aa0276a311c732ac6398685943fa9d2f4a1b08458d181302c52
   languageName: node
   linkType: hard
 
-"@lerna-lite/list@npm:4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/list@npm:4.9.4"
+"@lerna-lite/list@npm:4.10.2":
+  version: 4.10.2
+  resolution: "@lerna-lite/list@npm:4.10.2"
   dependencies:
-    "@lerna-lite/cli": "npm:4.9.4"
-    "@lerna-lite/core": "npm:4.9.4"
-    "@lerna-lite/listable": "npm:4.9.4"
-  checksum: 10c0/af694783eb4475f3abc6c88aacb93df86b6bed194a170d01bea0a7bde974e8e6b00ed69a4ff07d4bcc308ec71307be0397b54aa9cc195fcc27ae6c0ad13ae0cd
+    "@lerna-lite/cli": "npm:4.10.2"
+    "@lerna-lite/core": "npm:4.10.2"
+    "@lerna-lite/listable": "npm:4.10.2"
+  checksum: 10c0/36f3e2c0f95d38e9fd620cbe70f1dd753b5de0fb31d73cd8a1264ff2be6dfb9c5e527dfdac28d0450ac6b196ae3f99a57d87995963c9496a6f375ad8d2b6d070
   languageName: node
   linkType: hard
 
-"@lerna-lite/listable@npm:4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/listable@npm:4.9.4"
+"@lerna-lite/listable@npm:4.10.2":
+  version: 4.10.2
+  resolution: "@lerna-lite/listable@npm:4.10.2"
   dependencies:
-    "@lerna-lite/core": "npm:4.9.4"
+    "@lerna-lite/core": "npm:4.10.2"
     columnify: "npm:^1.6.0"
     tinyrainbow: "npm:^3.0.3"
-  checksum: 10c0/871bd6334d16b8b37c031fae2dcbde6373b5647cc97cd71a5153c2df68a2eb8bc95c47a6d9637d68c11a016e866e50a8157f487eebd5e3c433524aa12a450e85
+  checksum: 10c0/d692c107253f9685a33fef86f845ee584d9a8cd1496bb16dcd3e447d21623d170cf457a03fd2f01b7bfc30ddbd7b983f8a5c07dac25993a158ad81ee16b83ff6
   languageName: node
   linkType: hard
 
-"@lerna-lite/npmlog@npm:4.9.4, @lerna-lite/npmlog@npm:^4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/npmlog@npm:4.9.4"
+"@lerna-lite/npmlog@npm:4.10.0, @lerna-lite/npmlog@npm:^4.10.0":
+  version: 4.10.0
+  resolution: "@lerna-lite/npmlog@npm:4.10.0"
   dependencies:
     aproba: "npm:^2.1.0"
     fast-string-width: "npm:^3.0.2"
@@ -1810,31 +1810,31 @@ __metadata:
     signal-exit: "npm:^4.1.0"
     tinyrainbow: "npm:^3.0.3"
     wide-align: "npm:^1.1.5"
-  checksum: 10c0/e455a4f658eeccd328d91ac2ce799bd0c2c314271caabf2de79347408d7b98e8e3c63cef8e5380e1661c7087fd6d60a116bfc15c6fa762f340a1456e942dd342
+  checksum: 10c0/8a55071ad2a2f588d887029a77688b7b7fdaab40666063e44b09f2b8946e9a8279f384d62b67691825689ac48639f0b1009fabbc9207980d38f54e76d4d434bc
   languageName: node
   linkType: hard
 
-"@lerna-lite/profiler@npm:4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/profiler@npm:4.9.4"
+"@lerna-lite/profiler@npm:4.10.2":
+  version: 4.10.2
+  resolution: "@lerna-lite/profiler@npm:4.10.2"
   dependencies:
-    "@lerna-lite/core": "npm:4.9.4"
-    "@lerna-lite/npmlog": "npm:4.9.4"
+    "@lerna-lite/core": "npm:4.10.2"
+    "@lerna-lite/npmlog": "npm:4.10.0"
     fs-extra: "npm:^11.3.2"
     upath: "npm:^2.0.1"
-  checksum: 10c0/8201e589d2f8b0c660d0e82440b8e464cdd09eae282db414e951da11c9d8e858f4171e9cba76ed7c6238045e095600bd293da3a7f91305035c8d08684e83d551
+  checksum: 10c0/18d89534376c512e7310c0aa4968a4c9b368174f5ba47a1f5803c2e304311bf55922d4a5b15bebda4437bbcf7498acf9550dbd6feadf4610fc20256c6b301716
   languageName: node
   linkType: hard
 
-"@lerna-lite/publish@npm:^4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/publish@npm:4.9.4"
+"@lerna-lite/publish@npm:^4.10.2":
+  version: 4.10.2
+  resolution: "@lerna-lite/publish@npm:4.10.2"
   dependencies:
-    "@lerna-lite/cli": "npm:4.9.4"
-    "@lerna-lite/core": "npm:4.9.4"
-    "@lerna-lite/npmlog": "npm:4.9.4"
-    "@lerna-lite/version": "npm:4.9.4"
-    "@npmcli/arborist": "npm:^9.1.8"
+    "@lerna-lite/cli": "npm:4.10.2"
+    "@lerna-lite/core": "npm:4.10.2"
+    "@lerna-lite/npmlog": "npm:4.10.0"
+    "@lerna-lite/version": "npm:4.10.2"
+    "@npmcli/arborist": "npm:^9.1.9"
     "@npmcli/package-json": "npm:^7.0.4"
     byte-size: "npm:^9.0.1"
     ci-info: "npm:^4.3.1"
@@ -1855,33 +1855,33 @@ __metadata:
     tar: "npm:^7.5.2"
     tinyglobby: "npm:^0.2.15"
     tinyrainbow: "npm:^3.0.3"
-  checksum: 10c0/18ca86284138292caf8318c73faf97fbe5ec7c40c9921dca3d4346cc606f6ce166b1d4942146de815d08dbbc74a759f7ba6dd8d050cab2423c3342f7db9efea6
+  checksum: 10c0/86617329b792b10fe738f4f99a9852e6b6bd389326c05b1e922623cfd66b8fd3ce668b9a02b96e2d45da44525fc778c325f56b82e4fa7505394055eea8b41c2f
   languageName: node
   linkType: hard
 
-"@lerna-lite/run@npm:^4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/run@npm:4.9.4"
+"@lerna-lite/run@npm:^4.10.2":
+  version: 4.10.2
+  resolution: "@lerna-lite/run@npm:4.10.2"
   dependencies:
-    "@lerna-lite/cli": "npm:4.9.4"
-    "@lerna-lite/core": "npm:4.9.4"
-    "@lerna-lite/npmlog": "npm:4.9.4"
-    "@lerna-lite/profiler": "npm:4.9.4"
+    "@lerna-lite/cli": "npm:4.10.2"
+    "@lerna-lite/core": "npm:4.10.2"
+    "@lerna-lite/npmlog": "npm:4.10.0"
+    "@lerna-lite/profiler": "npm:4.10.2"
     fs-extra: "npm:^11.3.2"
     p-map: "npm:^7.0.4"
     tinyrainbow: "npm:^3.0.3"
-  checksum: 10c0/bbb6153e01394a659202f8b962d7a878c0b0a2a395db1d2a9710f4f7bab6acb274cbdee553112b10879423e4f7b9b3f06e77e1ab0b6f9d06451d37d174450850
+  checksum: 10c0/b648a8d8b36c92539e344d92abb5851e18d715339fe5f99d5ac97eb4db0b907d117c1c0b4e8bd0f3c9cbc7e686514cd3be5b9ec23d05130c82f963861a61dde5
   languageName: node
   linkType: hard
 
-"@lerna-lite/version@npm:4.9.4, @lerna-lite/version@npm:^4.9.4":
-  version: 4.9.4
-  resolution: "@lerna-lite/version@npm:4.9.4"
+"@lerna-lite/version@npm:4.10.2, @lerna-lite/version@npm:^4.10.2":
+  version: 4.10.2
+  resolution: "@lerna-lite/version@npm:4.10.2"
   dependencies:
     "@conventional-changelog/git-client": "npm:^2.5.1"
-    "@lerna-lite/cli": "npm:4.9.4"
-    "@lerna-lite/core": "npm:4.9.4"
-    "@lerna-lite/npmlog": "npm:4.9.4"
+    "@lerna-lite/cli": "npm:4.10.2"
+    "@lerna-lite/core": "npm:4.10.2"
+    "@lerna-lite/npmlog": "npm:4.10.0"
     "@octokit/plugin-enterprise-rest": "npm:^6.0.1"
     "@octokit/rest": "npm:^22.0.1"
     conventional-changelog: "npm:^7.1.1"
@@ -1907,7 +1907,7 @@ __metadata:
     uuid: "npm:^13.0.0"
     write-json-file: "npm:^7.0.0"
     zeptomatch: "npm:^2.1.0"
-  checksum: 10c0/f2444f8007f15d0a2d141f56cf86d58d48d4600a912d469eb7acc0a7ebd04cb5288a2b332161aa83c0a4e78b2a426c5ba17e22dc212d71b11505b8540c9d6216
+  checksum: 10c0/446064c09bf3dcb76dea746fdacde587f1ce72c91c5302d5da3bad98abc4f19160c0c0f4636afd9faec9e2115c54062d9cc8b68f2b4cac28a6026a4ef6faf76e
   languageName: node
   linkType: hard
 
@@ -1962,7 +1962,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@npmcli/arborist@npm:^9.1.8":
+"@npmcli/arborist@npm:^9.1.9":
   version: 9.1.9
   resolution: "@npmcli/arborist@npm:9.1.9"
   dependencies:
@@ -2512,12 +2512,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^24.10.2":
-  version: 24.10.2
-  resolution: "@types/node@npm:24.10.2"
+"@types/node@npm:*":
+  version: 25.0.1
+  resolution: "@types/node@npm:25.0.1"
   dependencies:
     undici-types: "npm:~7.16.0"
-  checksum: 10c0/560c894e1a9bf7468718ceca8cd520361fd0d3fcc0b020c2f028fc722b28b5b56aecd16736a9b753d52a14837c066cf23480a8582ead59adc63a7e4333bc976c
+  checksum: 10c0/1d5ca9f240d0cf8e43d5281c0e6ee96fb22d37dc2e5ef52c6ca71de47957a6128e124990cedf5b14c03d0250737bd78ad370d93bcf1729a75ca4e54384fdd51a
   languageName: node
   linkType: hard
 
@@ -2527,6 +2527,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~6.21.0"
   checksum: 10c0/fd56fc727bdc2cd9582e05db5daab6c8eb7bc5e5640a54cbc64ccc160a61cf50940742be5536f83796bffc83ce7709d5580a9ca85806f57501958821d230ab78
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^24.10.3":
+  version: 24.10.3
+  resolution: "@types/node@npm:24.10.3"
+  dependencies:
+    undici-types: "npm:~7.16.0"
+  checksum: 10c0/58ddaf9ce3dd9d3aa55f7dfacb7b8f16481ad64a47b99f1890fa3d4498d1958def78699838f422c0a81851d6be8b9de7ffc344435a60abcf02c0e2c085008b20
   languageName: node
   linkType: hard
 
@@ -2878,13 +2887,13 @@ __metadata:
     "@alwatr/eslint-config": "workspace:*"
     "@alwatr/prettier-config": "workspace:*"
     "@alwatr/yarn-upgrade": "workspace:*"
-    "@lerna-lite/changed": "npm:^4.9.4"
-    "@lerna-lite/cli": "npm:^4.9.4"
-    "@lerna-lite/diff": "npm:^4.9.4"
-    "@lerna-lite/exec": "npm:^4.9.4"
-    "@lerna-lite/publish": "npm:^4.9.4"
-    "@lerna-lite/run": "npm:^4.9.4"
-    "@lerna-lite/version": "npm:^4.9.4"
+    "@lerna-lite/changed": "npm:^4.10.2"
+    "@lerna-lite/cli": "npm:^4.10.2"
+    "@lerna-lite/diff": "npm:^4.10.2"
+    "@lerna-lite/exec": "npm:^4.10.2"
+    "@lerna-lite/publish": "npm:^4.10.2"
+    "@lerna-lite/run": "npm:^4.10.2"
+    "@lerna-lite/version": "npm:^4.10.2"
     "@types/jest": "npm:^30.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^7.18.0"
     "@typescript-eslint/parser": "npm:^7.18.0"
@@ -3180,11 +3189,11 @@ __metadata:
   linkType: hard
 
 "baseline-browser-mapping@npm:^2.9.0":
-  version: 2.9.5
-  resolution: "baseline-browser-mapping@npm:2.9.5"
+  version: 2.9.7
+  resolution: "baseline-browser-mapping@npm:2.9.7"
   bin:
     baseline-browser-mapping: dist/cli.js
-  checksum: 10c0/581bd4f578a1b5ccd48ad0155f760c412803f02e97259deec99150b87c95766266b607b09aefa65da96dc5b925165706d675f10413630e767391e26a4f7afcdf
+  checksum: 10c0/500af82926d71d23fab20bcf821eb27deeaad45d1a01bd33d2dea7aab6114149068fa0d42bb9c5c18657e996b6e8063b84612c8fb8ac8ba6c6c6028fa4930ed1
   languageName: node
   linkType: hard
 
@@ -3891,8 +3900,8 @@ __metadata:
   linkType: hard
 
 "es-abstract@npm:^1.23.2, es-abstract@npm:^1.23.5, es-abstract@npm:^1.23.9, es-abstract@npm:^1.24.0":
-  version: 1.24.0
-  resolution: "es-abstract@npm:1.24.0"
+  version: 1.24.1
+  resolution: "es-abstract@npm:1.24.1"
   dependencies:
     array-buffer-byte-length: "npm:^1.0.2"
     arraybuffer.prototype.slice: "npm:^1.0.4"
@@ -3948,7 +3957,7 @@ __metadata:
     typed-array-length: "npm:^1.0.7"
     unbox-primitive: "npm:^1.1.0"
     which-typed-array: "npm:^1.1.19"
-  checksum: 10c0/b256e897be32df5d382786ce8cce29a1dd8c97efbab77a26609bd70f2ed29fbcfc7a31758cb07488d532e7ccccdfca76c1118f2afe5a424cdc05ca007867c318
+  checksum: 10c0/fca062ef8b5daacf743732167d319a212d45cb655b0bb540821d38d715416ae15b04b84fc86da9e2c89135aa7b337337b6c867f84dcde698d75d55688d5d765c
   languageName: node
   linkType: hard
 
@@ -4007,7 +4016,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.27.0":
+"esbuild@npm:^0.27.1":
   version: 0.27.1
   resolution: "esbuild@npm:0.27.1"
   dependencies:
@@ -4359,7 +4368,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:^9.6.0":
+"execa@npm:^9.6.1":
   version: 9.6.1
   resolution: "execa@npm:9.6.1"
   dependencies:
@@ -8627,7 +8636,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml@npm:^2.8.1":
+"yaml@npm:^2.8.2":
   version: 2.8.2
   resolution: "yaml@npm:2.8.2"
   bin:
