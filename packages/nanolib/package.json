@@ -16,6 +16,7 @@
     "@alwatr/delay": "workspace:*",
     "@alwatr/djb2-hash": "workspace:*",
     "@alwatr/env": "workspace:*",
+    "@alwatr/eslint-config": "workspace:*",
     "@alwatr/exit-hook": "workspace:*",
     "@alwatr/fetch": "workspace:*",
     "@alwatr/flat-string": "workspace:*",
