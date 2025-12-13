@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.2](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.3.1...@alwatr/nanolib@7.3.2) (2025-12-13)
+
+### 🔨 Code Refactoring
+
+* simplify eslint-config package export definition by removing explicit import entry. ([c106500](https://github.com/Alwatr/nanolib/commit/c10650070a47f04bd6b2ee75050a204dfd0795ee))
+
+### 🔗 Dependencies update
+
+* add `@alwatr/eslint-config` dependency ([23b56f0](https://github.com/Alwatr/nanolib/commit/23b56f0aed4220714580f8609542e6f2079e44de))
+
 ## [7.3.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.3.0...@alwatr/nanolib@7.3.1) (2025-12-13)
 
 ### 🐛 Bug Fixes
