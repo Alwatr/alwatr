@@ -30,7 +30,7 @@ import type {DebouncerConfig} from './type.ts';
  * leadingDebouncer.trigger(); // Logs immediately, then again after 500ms if not cancelled
  * ```
  */
-export class Debouncer<F extends AnyFunction> {
+export class Debouncer<F extends AnyFunc> {
   private timerId__?: number | NodeJS.Timeout;
   private maxWaitTimerId__?: number | NodeJS.Timeout;
   private lastArgs__?: Parameters<F>;

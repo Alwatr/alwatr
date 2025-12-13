@@ -32,6 +32,6 @@ export type * from './type.js';
  * debouncerWithContext.trigger('test'); // Logs 'Obj: test'
  * ```
  */
-export function createDebouncer<F extends AnyFunction>(config: DebouncerConfig<F>): Debouncer<F> {
+export function createDebouncer<F extends AnyFunc>(config: DebouncerConfig<F>): Debouncer<F> {
   return new Debouncer(config);
 }
