@@ -51,7 +51,7 @@ export abstract class DirectiveBase {
   /**
    * A list of callback functions to be executed when the directive is destroyed.
    */
-  private readonly cleanupTaskList__: NoopFunction[] = [];
+  private readonly cleanupTaskList__: NoopFunc[] = [];
 
   /**
    * Initializes the directive. This constructor is called by the Synapse bootstrap process and should not be
@@ -124,7 +124,7 @@ export abstract class DirectiveBase {
    * );
    * ```
    */
-  protected onDestroy_(task: NoopFunction): void {
+  protected onDestroy_(task: NoopFunc): void {
     this.logger_.logMethod?.('onDestroy_');
     this.cleanupTaskList__.push(task);
   }
