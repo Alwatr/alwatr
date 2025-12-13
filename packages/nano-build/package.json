@@ -6,7 +6,7 @@
   "bin": "./cli.cjs",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
-    "esbuild": "^0.27.0",
+    "esbuild": "^0.27.1",
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
