@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.2.2...@alwatr/nanolib@7.3.0) (2025-12-13)
+
+### ✨ Features
+
+* add ESLint configuration files for improved linting support ([e4b54f9](https://github.com/Alwatr/nanolib/commit/e4b54f9dd1c385574c4cd3cc64abb7bfe88e2817))
+
 ## [7.2.2](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.2.1...@alwatr/nanolib@7.2.2) (2025-12-13)
 
 **Note:** Version bump only for package @alwatr/nanolib
