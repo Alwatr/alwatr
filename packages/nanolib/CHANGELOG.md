@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.3.0...@alwatr/nanolib@7.3.1) (2025-12-13)
+
+### 🐛 Bug Fixes
+
+* Correct ESLint config export paths in package.json. ([a094a6b](https://github.com/Alwatr/nanolib/commit/a094a6b3f3fe582bbe42ace7b8ba03ca252bfc8e))
+
 ## [7.3.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.2.2...@alwatr/nanolib@7.3.0) (2025-12-13)
 
 ### ✨ Features
