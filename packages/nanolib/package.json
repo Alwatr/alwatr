@@ -60,6 +60,10 @@
       "import": "./prettier.config.mjs",
       "require": "./prettier.config.cjs"
     },
+    "./eslint-config": {
+      "import": "./eslint.config.mjs",
+      "require": "./eslint.config.cjs"
+    },
     "./tsconfig-base": "./tsconfig-base.json"
   },
   "files": [
