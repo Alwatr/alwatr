@@ -39,17 +39,18 @@ declare global {
    * @template R Return type (defaults to any).
    * @example
    * type Handler = Func<[string, number], boolean>;
+   * type AnyFunction = Func;
    */
   type Func<Args extends any[] = any[], R = any> = (...args: Args) => R;
 
   /** Alias for any callable. */
-  type AnyFunction = Func;
+  type AnyFunc = Func;
 
   /** Alias for function that returns void. */
-  type VoidFunction = Func<any[], void>;
+  type VoidFunc = Func<any[], void>;
 
   /** Alias for a no-op function with no arguments. */
-  type NoopFunction = () => void;
+  type NoopFunc = () => void;
 
   /**
    * Removes the first parameter from a function type.
