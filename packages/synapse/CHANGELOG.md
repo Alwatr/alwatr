@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.4](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.3.3...@alwatr/synapse@1.3.4) (2025-12-13)
+
+### 🐛 Bug Fixes
+
+* update NoopFunction type alias to NoopFunc ([553e586](https://github.com/Alwatr/nanolib/commit/553e586060aa78e1db7806aea207443db8e789ab))
+
 ## [1.3.3](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.3.2...@alwatr/synapse@1.3.3) (2025-12-13)
 
 **Note:** Version bump only for package @alwatr/synapse

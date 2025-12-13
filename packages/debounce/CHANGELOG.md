@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.17](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.16...@alwatr/debounce@1.1.17) (2025-12-13)
+
+### 🐛 Bug Fixes
+
+* rename `AnyFunction` type alias to `AnyFunc` ([9865edc](https://github.com/Alwatr/nanolib/commit/9865edced9d377390454a8cbe7b6c5a6551195cb))
+
 ## [1.1.16](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.15...@alwatr/debounce@1.1.16) (2025-12-13)
 
 ### 🔗 Dependencies update
