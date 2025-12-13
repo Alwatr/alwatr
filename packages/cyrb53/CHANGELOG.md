@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.14](https://github.com/Alwatr/nanolib/compare/@alwatr/cyrb53@1.0.13...@alwatr/cyrb53@1.0.14) (2025-12-13)
+
+**Note:** Version bump only for package @alwatr/cyrb53
+
 ## [1.0.13](https://github.com/Alwatr/nanolib/compare/@alwatr/cyrb53@1.0.12...@alwatr/cyrb53@1.0.13) (2025-12-10)
 
 **Note:** Version bump only for package @alwatr/cyrb53

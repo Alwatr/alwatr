@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/delay",
   "description": "Comprehensive toolkit for managing asynchronous operations.",
-  "version": "6.0.17",
+  "version": "6.0.18",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {

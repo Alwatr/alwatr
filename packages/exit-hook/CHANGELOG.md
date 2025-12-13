@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.26](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@5.5.25...@alwatr/exit-hook@5.5.26) (2025-12-13)
+
+### 🔗 Dependencies update
+
+* update `@types/node` and `[@lerna-lite](https://github.com/lerna-lite)` dependencies. ([8daa8fd](https://github.com/Alwatr/nanolib/commit/8daa8fd023d5414c9f95feb4319353c6ea34be31))
+
 ## [5.5.25](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@5.5.24...@alwatr/exit-hook@5.5.25) (2025-12-10)
 
 ### 🔗 Dependencies update

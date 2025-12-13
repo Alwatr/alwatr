@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.7](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.6.6...@alwatr/global-this@5.6.7) (2025-12-13)
+
+### 🔗 Dependencies update
+
+* update `@types/node` and `[@lerna-lite](https://github.com/lerna-lite)` dependencies. ([8daa8fd](https://github.com/Alwatr/nanolib/commit/8daa8fd023d5414c9f95feb4319353c6ea34be31))
+
 ## [5.6.6](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.6.5...@alwatr/global-this@5.6.6) (2025-12-10)
 
 ### 🔗 Dependencies update

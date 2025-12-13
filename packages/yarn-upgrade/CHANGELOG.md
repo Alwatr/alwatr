@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.21](https://github.com/Alwatr/nanolib/compare/@alwatr/yarn-upgrade@1.0.20...@alwatr/yarn-upgrade@1.0.21) (2025-12-13)
+
+### 🔗 Dependencies update
+
+* update `@types/node` and `[@lerna-lite](https://github.com/lerna-lite)` dependencies. ([8daa8fd](https://github.com/Alwatr/nanolib/commit/8daa8fd023d5414c9f95feb4319353c6ea34be31))
+
 ## [1.0.20](https://github.com/Alwatr/nanolib/compare/@alwatr/yarn-upgrade@1.0.19...@alwatr/yarn-upgrade@1.0.20) (2025-12-10)
 
 ### 🔗 Dependencies update

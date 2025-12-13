@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.1.8...@alwatr/type-helper@7.0.0) (2025-12-13)
+
+### ⚠ BREAKING CHANGES
+
+* All `*Function` types renamed to `*Func`
+
+### 🐛 Bug Fixes
+
+* rename `*Function` types to `*Func` for duplicate issue with new typescript types ([44dbb11](https://github.com/Alwatr/nanolib/commit/44dbb1195bacc37aa4b4e2be1e53d7bc657ef418))
+
 ## [6.1.8](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.1.7...@alwatr/type-helper@6.1.8) (2025-12-10)
 
 **Note:** Version bump only for package @alwatr/type-helper

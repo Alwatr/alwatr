@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.16](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.15...@alwatr/debounce@1.1.16) (2025-12-13)
+
+### 🔗 Dependencies update
+
+* update `@types/node` and `[@lerna-lite](https://github.com/lerna-lite)` dependencies. ([8daa8fd](https://github.com/Alwatr/nanolib/commit/8daa8fd023d5414c9f95feb4319353c6ea34be31))
+
 ## [1.1.15](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.14...@alwatr/debounce@1.1.15) (2025-12-10)
 
 ### 🔗 Dependencies update

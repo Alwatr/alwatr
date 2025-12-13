@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.18](https://github.com/Alwatr/nanolib/compare/@alwatr/delay@6.0.17...@alwatr/delay@6.0.18) (2025-12-13)
+
+### 🔗 Dependencies update
+
+* update `@types/node` and `[@lerna-lite](https://github.com/lerna-lite)` dependencies. ([8daa8fd](https://github.com/Alwatr/nanolib/commit/8daa8fd023d5414c9f95feb4319353c6ea34be31))
+
 ## [6.0.17](https://github.com/Alwatr/nanolib/compare/@alwatr/delay@6.0.16...@alwatr/delay@6.0.17) (2025-12-10)
 
 ### 🔗 Dependencies update
