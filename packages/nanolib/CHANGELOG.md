@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.4](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.3.3...@alwatr/nanolib@7.3.4) (2025-12-14)
+
+### 🐛 Bug Fixes
+
+* correct tsconfig base filename from `tsconfig-base.json` to `tsconfig.base.json` in package files. ([56688c5](https://github.com/Alwatr/nanolib/commit/56688c55d92f0941b9a870e6af1d743d6bd3a536))
+
 ## [7.3.3](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.3.2...@alwatr/nanolib@7.3.3) (2025-12-14)
 
 ### 🔨 Code Refactoring
