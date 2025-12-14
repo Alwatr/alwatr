@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.10.1](https://github.com/Alwatr/nitrobase/compare/v7.10.0...v7.10.1) (2025-12-14)
+
+### 🧹 Miscellaneous Chores
+
+* migrate ESLint configuration from .eslintrc.json to .eslintrc.cjs ([b6821f8](https://github.com/Alwatr/nitrobase/commit/b6821f87ae190b6b68802255f04f0e46a3cd3d89))
+* update dependencies and add ESLint runtime setting to VS Code configuration. ([dd353be](https://github.com/Alwatr/nitrobase/commit/dd353beb129cf15d4f68f983cfe36caac7af9c79))
+* update tsconfig extends to use @alwatr/nanolib ([ffbc8ce](https://github.com/Alwatr/nitrobase/commit/ffbc8ce74d47d7f4e1ff0061722df10f68af11cc))
+
+### 🔗 Dependencies update
+
+* replace '@alwatr/nano-build' with '@alwatr/nanolib' in logger imports ([9a355b9](https://github.com/Alwatr/nitrobase/commit/9a355b92b27434a3cd132e7e52df5c2e112ca97e))
+* update @alwatr/logger and @alwatr/node-fs versions; switch prettier config to @alwatr/nanolib ([a46a819](https://github.com/Alwatr/nitrobase/commit/a46a81911b320e18c627c0be8fb4d103268c6662))
+* update `@alwatr/nanolib` and `@types/node` dependencies across all packages. ([bc6d96f](https://github.com/Alwatr/nitrobase/commit/bc6d96f4fd423bcfb817d74b526596669d8a8aed))
+* update dependencies and switch prettier config to @alwatr/nanolib ([b9d4abb](https://github.com/Alwatr/nitrobase/commit/b9d4abbba9d56b0210cf838aa4e002145d11a205))
+* update dependencies and switch prettier config to @alwatr/nanolib ([adf97f3](https://github.com/Alwatr/nitrobase/commit/adf97f3b4e26088f8e054a349c7f77e07755e7f9))
+* update dependencies and switch prettier config to @alwatr/nanolib ([e2c9ffb](https://github.com/Alwatr/nitrobase/commit/e2c9ffb5f62d88a1ddaef77886d41c0cb7df604d))
+* update dependencies and switch prettier config to @alwatr/nanolib ([e826de4](https://github.com/Alwatr/nitrobase/commit/e826de494a2fb03125edad10930fac819e23c801))
+* update devDependencies and improve eslint configuration ([de73cf4](https://github.com/Alwatr/nitrobase/commit/de73cf406efc0a75ce7645a86e065d196a64fd6b))
+* update devDependencies and switch prettier config to @alwatr/nanolib ([bb4f564](https://github.com/Alwatr/nitrobase/commit/bb4f564a76b4a123c13bb6deb24aa7b1faccff68))
+* update prettier to version 3.7.4-sdk and typescript to version 5.9.3-sdk ([dfd8ec7](https://github.com/Alwatr/nitrobase/commit/dfd8ec7c6c18538314f5463f875c4211223c79e5))
+
 ## [7.10.0](https://github.com/Alwatr/nitrobase/compare/v7.9.0...v7.10.0) (2025-09-21)
 
 ### ✨ Features

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.10.1](https://github.com/Alwatr/nitrobase/compare/v7.10.0...v7.10.1) (2025-12-14)
+
+### 🧹 Miscellaneous Chores
+
+* update tsconfig extends to use @alwatr/nanolib ([ffbc8ce](https://github.com/Alwatr/nitrobase/commit/ffbc8ce74d47d7f4e1ff0061722df10f68af11cc))
+
+### 🔗 Dependencies update
+
+* update `@alwatr/nanolib` and `@types/node` dependencies across all packages. ([bc6d96f](https://github.com/Alwatr/nitrobase/commit/bc6d96f4fd423bcfb817d74b526596669d8a8aed))
+* update devDependencies and switch prettier config to @alwatr/nanolib ([bb4f564](https://github.com/Alwatr/nitrobase/commit/bb4f564a76b4a123c13bb6deb24aa7b1faccff68))
+
 ## [7.10.0](https://github.com/Alwatr/nitrobase/compare/v7.9.0...v7.10.0) (2025-09-21)
 
 ### 🐛 Bug Fixes

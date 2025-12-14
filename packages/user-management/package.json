@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/nitrobase-user-management",
   "description": "",
-  "version": "7.10.0",
+  "version": "7.10.1",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nitrobase/issues",
   "dependencies": {
