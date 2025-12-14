@@ -70,7 +70,7 @@
   "files": [
     "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
     "LICENSE",
-    "tsconfig-base.json",
+    "tsconfig.base.json",
     "!demo/**/*",
     "!**/*.test.js"
   ],
