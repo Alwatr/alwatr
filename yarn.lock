@@ -202,7 +202,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/has-own@workspace:*, @alwatr/has-own@workspace:^, @alwatr/has-own@workspace:packages/has-own":
+"@alwatr/has-own@workspace:*, @alwatr/has-own@workspace:packages/has-own":
   version: 0.0.0-use.local
   resolution: "@alwatr/has-own@workspace:packages/has-own"
   dependencies:
@@ -301,7 +301,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/nano-build@workspace:*, @alwatr/nano-build@workspace:^, @alwatr/nano-build@workspace:packages/nano-build":
+"@alwatr/nano-build@workspace:*, @alwatr/nano-build@workspace:packages/nano-build":
   version: 0.0.0-use.local
   resolution: "@alwatr/nano-build@workspace:packages/nano-build"
   dependencies:
@@ -334,7 +334,7 @@ __metadata:
     "@alwatr/flat-string": "workspace:*"
     "@alwatr/flatomise": "workspace:*"
     "@alwatr/global-this": "workspace:*"
-    "@alwatr/has-own": "workspace:^"
+    "@alwatr/has-own": "workspace:*"
     "@alwatr/hash-string": "workspace:*"
     "@alwatr/http-primer": "workspace:*"
     "@alwatr/iranian-national-code-validator": "workspace:*"
@@ -342,7 +342,7 @@ __metadata:
     "@alwatr/json2csv": "workspace:*"
     "@alwatr/local-storage": "workspace:*"
     "@alwatr/logger": "workspace:*"
-    "@alwatr/nano-build": "workspace:^"
+    "@alwatr/nano-build": "workspace:*"
     "@alwatr/node-fs": "workspace:*"
     "@alwatr/parse-duration": "workspace:*"
     "@alwatr/platform-info": "workspace:*"
@@ -351,7 +351,7 @@ __metadata:
     "@alwatr/render-state": "workspace:*"
     "@alwatr/resolve-url": "workspace:*"
     "@alwatr/synapse": "workspace:*"
-    "@alwatr/type-helper": "workspace:^"
+    "@alwatr/type-helper": "workspace:*"
     "@alwatr/unicode-digits": "workspace:*"
     "@alwatr/yarn-upgrade": "workspace:*"
     typescript: "npm:^5.9.3"
@@ -484,7 +484,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/type-helper@workspace:*, @alwatr/type-helper@workspace:^, @alwatr/type-helper@workspace:packages/type-helper":
+"@alwatr/type-helper@workspace:*, @alwatr/type-helper@workspace:packages/type-helper":
   version: 0.0.0-use.local
   resolution: "@alwatr/type-helper@workspace:packages/type-helper"
   dependencies:

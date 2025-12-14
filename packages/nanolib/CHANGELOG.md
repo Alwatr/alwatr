@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.3](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.3.2...@alwatr/nanolib@7.3.3) (2025-12-14)
+
+### 🔨 Code Refactoring
+
+* rename base TypeScript configuration and update tsconfig extension reference ([6f94719](https://github.com/Alwatr/nanolib/commit/6f94719b2ef12e3f431151b4c78995ff1b3b2469))
+* rename ESLint configuration files for CommonJS and ES modules ([632fdd8](https://github.com/Alwatr/nanolib/commit/632fdd83158e4ec20cfc7e23832c5bc9acb6e038))
+* update workspace dependency versioning and improve exports structure ([12cf4c8](https://github.com/Alwatr/nanolib/commit/12cf4c81a927af3780fe0a0d909363d2b605e359))
+
 ## [7.3.2](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.3.1...@alwatr/nanolib@7.3.2) (2025-12-13)
 
 ### 🔨 Code Refactoring
