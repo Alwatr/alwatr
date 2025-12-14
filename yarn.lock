@@ -5,58 +5,65 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@alwatr/async-queue@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/async-queue::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/async-queue@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/async-queue::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/async-queue@npm:5.5.26":
+  version: 5.5.26
+  resolution: "@alwatr/async-queue@npm:5.5.26"
   dependencies:
-    "@alwatr/flatomise": "workspace:*"
+    "@alwatr/flatomise": "npm:5.5.26"
+  checksum: 10c0/a4a2e8817bf045b79d8e0b2f3bd296e88b1671f693859608aa33e4d8977b55b588da0752daf23561e6326cdcdf1a050b446e2922c4a84aee80620362823bff54
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/cyrb53@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/cyrb53::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/cyrb53@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/cyrb53::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/cyrb53@npm:1.0.14":
+  version: 1.0.14
+  resolution: "@alwatr/cyrb53@npm:1.0.14"
+  checksum: 10c0/04a81806a5e92db688d7cd08445c5111b252a86deb7a97c4efe132b45ddb112ff69c697ee25c17ae5600e1605723e838aeff6dedcb414d5630c8c0bccb7231bd
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/debounce@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/debounce::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/debounce@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/debounce::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/debounce@npm:1.1.17":
+  version: 1.1.17
+  resolution: "@alwatr/debounce@npm:1.1.17"
+  checksum: 10c0/9b8ac86efde78fb75c638a1d80f10d492c97d3b1fb796d472cbc3d2bc590d7c37130d17ac1f47b99fa1fa0b70295d43ad701e5116757da657eb40a51ba441bd9
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/deep-clone@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/deep-clone::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/deep-clone@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/deep-clone::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/deep-clone@npm:5.5.26":
+  version: 5.5.26
+  resolution: "@alwatr/deep-clone@npm:5.5.26"
+  checksum: 10c0/9a956b70411f732b8a6bef9bd6102b6b387f2a0b40d5eaac6944ffbaf2b46c02325c7e392f7cbc045da42955d1bf8d4ac8b81fce327f71be1630c58dd38e5cd8
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/delay@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/delay::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/delay@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/delay::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/delay@npm:6.0.18, @alwatr/delay@npm:^6.0.18":
+  version: 6.0.18
+  resolution: "@alwatr/delay@npm:6.0.18"
   dependencies:
-    "@alwatr/global-this": "workspace:*"
-    "@alwatr/parse-duration": "workspace:*"
+    "@alwatr/global-this": "npm:5.6.7"
+    "@alwatr/parse-duration": "npm:5.5.27"
+  checksum: 10c0/c14ab1bb3d74e688c01060e3746920cf26a3be7537309f093fd806c74695296d93b4056202f8f3fddfd3c27c3c8a63ff3bc54f369e6ce4712f84f3163e973193
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/djb2-hash@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/djb2-hash::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/djb2-hash@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/djb2-hash::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/djb2-hash@npm:1.1.14":
+  version: 1.1.14
+  resolution: "@alwatr/djb2-hash@npm:1.1.14"
+  checksum: 10c0/237d551cdee86da0b813bb901b93416abd6da320426e5896dd603eb957ba1bbc2e123452a69770bd5474501f4a238290affafd5deb712bf31500060a34c64a20
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/env@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/env::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/env@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/env::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/env@npm:5.5.26":
+  version: 5.5.26
+  resolution: "@alwatr/env@npm:5.5.26"
   dependencies:
-    "@alwatr/platform-info": "workspace:*"
+    "@alwatr/platform-info": "npm:5.5.26"
+  checksum: 10c0/59cc961a976f99ba1fb692517f73e7223ee9cc22ef5d8504316d1483fe7d90ec13533a04df117ae5920be5bcaa9470b0db476b63664ba954f73fb492479dda7c
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/eslint-config@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/eslint-config::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/eslint-config@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/eslint-config::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/eslint-config@npm:5.6.6":
+  version: 5.6.6
+  resolution: "@alwatr/eslint-config@npm:5.6.6"
   peerDependencies:
     "@typescript-eslint/eslint-plugin": ^7.18.0
     "@typescript-eslint/parser": ^7.18.0
@@ -64,152 +71,168 @@ __metadata:
     eslint-import-resolver-typescript: ^4.4.4
     eslint-plugin-import: ^2.32.0
     eslint-plugin-require-extensions: ^0.1.3
+  checksum: 10c0/6cd1340df67d624ce73e42ce1ea46f2fbbe2c4380c50a490422ac9da005822c4e475de7078390c8af98f67df2140134e2533c7b9a100160baff8e01835f8c4c0
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/exit-hook@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/exit-hook::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/exit-hook@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/exit-hook::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/exit-hook@npm:5.5.26, @alwatr/exit-hook@npm:^5.5.26":
+  version: 5.5.26
+  resolution: "@alwatr/exit-hook@npm:5.5.26"
+  checksum: 10c0/dbac7115217be02b83bcdb52c7600f464f7d94f656307db1fc0cc346001760ef1e9d4bafc7f64f4993886cade2eff842dfde6e3f7e33ae51e1712432b90a2688
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/fetch@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/fetch::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/fetch@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/fetch::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/fetch@npm:7.1.2":
+  version: 7.1.2
+  resolution: "@alwatr/fetch@npm:7.1.2"
   dependencies:
-    "@alwatr/delay": "workspace:*"
-    "@alwatr/global-this": "workspace:*"
-    "@alwatr/has-own": "workspace:*"
-    "@alwatr/http-primer": "workspace:*"
-    "@alwatr/logger": "workspace:*"
-    "@alwatr/parse-duration": "workspace:*"
+    "@alwatr/delay": "npm:6.0.18"
+    "@alwatr/global-this": "npm:5.6.7"
+    "@alwatr/has-own": "npm:5.6.5"
+    "@alwatr/http-primer": "npm:6.0.18"
+    "@alwatr/logger": "npm:6.0.15"
+    "@alwatr/parse-duration": "npm:5.5.27"
+  checksum: 10c0/c391ee3b9f38f4e627f97b8121c5c7da0156eabd31a61bdf553f56e967f161a75c3d1b3193986c3fbecc0e928db899da0c249469f40c404abc6ce8311d0007b0
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/flat-string@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/flat-string::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/flat-string@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/flat-string::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/flat-string@npm:5.5.26, @alwatr/flat-string@npm:^5.5.26":
+  version: 5.5.26
+  resolution: "@alwatr/flat-string@npm:5.5.26"
+  checksum: 10c0/dc6b947f97fe1e4ccc825e932d750e4dbb2c8045821a5a2f18f9c10adc5d6661ef1dc7640d80678f623ac66bcd86e3ac8bad6678503dae97f2a7517c6bdc82c3
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/flatomise@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/flatomise::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/flatomise@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/flatomise::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/flatomise@npm:5.5.26":
+  version: 5.5.26
+  resolution: "@alwatr/flatomise@npm:5.5.26"
+  checksum: 10c0/431d3c90c79cefdedb018f7c20410fb02b7b3de3f63ff9d9a8723a86ed78eb9f11366b98ef7cf92501bfa5c8be0fe5698feeadb5e728d71a102a796afba679fc
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/global-this@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/global-this::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/global-this@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/global-this::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/global-this@npm:5.6.7":
+  version: 5.6.7
+  resolution: "@alwatr/global-this@npm:5.6.7"
+  checksum: 10c0/0508b07d9656024b9320183e92dea14026545c1d2163c26f439ed47d8422d5cb77e2f98296a266a6eefe9d4ec91b0414c989967dfbf1d4134e51f8bfc5fd5698
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/has-own@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/has-own::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/has-own@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/has-own::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/has-own@npm:5.6.5":
+  version: 5.6.5
+  resolution: "@alwatr/has-own@npm:5.6.5"
+  checksum: 10c0/876bad5cbbb72577843acc71606a8ffbfd8680cf1c556fb97e848844941c8744199b212ced230ea70d4274f5d7ac53f8194cb7724a7bd270d4cb0ff3cf78502d
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/hash-string@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/hash-string::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/hash-string@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/hash-string::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/hash-string@npm:5.2.26":
+  version: 5.2.26
+  resolution: "@alwatr/hash-string@npm:5.2.26"
+  checksum: 10c0/81a976cb8c5407f14e120119c4d0e05582e71b87bfe49d20c9305e40c4198e7f0572d619743e60ee05f7d8e7adea914a5d88519b44c93a01947149ff469ec91e
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/http-primer@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/http-primer::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/http-primer@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/http-primer::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/http-primer@npm:6.0.18":
+  version: 6.0.18
+  resolution: "@alwatr/http-primer@npm:6.0.18"
+  checksum: 10c0/9d546e8401c6855410f006e27569ca2cd5059f7d6dbccfe1654aaa34be9fbbc0b29f8f54beeb00f2f068eabfc3c85cc0bfb5d40c544e1febacefa3052290ca74
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/iranian-national-code-validator@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/iranian-national-code-validator::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/iranian-national-code-validator@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/iranian-national-code-validator::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/iranian-national-code-validator@npm:1.0.18":
+  version: 1.0.18
+  resolution: "@alwatr/iranian-national-code-validator@npm:1.0.18"
+  checksum: 10c0/91975bbee0937e21b9b533bafb5f0e2b256b360325bbb5dbb8612b5f805973f7695b0a55da6d86ff35c7eb999f87118b4861c40d01041184971afdb59c29bf5f
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/is-number@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/is-number::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/is-number@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/is-number::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/is-number@npm:5.7.23":
+  version: 5.7.23
+  resolution: "@alwatr/is-number@npm:5.7.23"
+  checksum: 10c0/e98a4b376250dde7be02ec1668e11514954e6cfc11b087a2ffe9dd3cf8ec75c19b59b73c1ca55a0d677d7be018f4d22f9af6ea0e34094a894aafd49ce38885f9
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/json2csv@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/json2csv::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/json2csv@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/json2csv::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/json2csv@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@alwatr/json2csv@npm:1.0.2"
+  checksum: 10c0/14975814f45ea4ad9128cc362fedaa5d63897802da8a8f97db6ea0a42593198637e3561c80a22f3447aabf7c2710e7e964e6dacb70b30f756b4975a6062c2afb
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/local-storage@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/local-storage::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/local-storage@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/local-storage::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/local-storage@npm:7.0.6":
+  version: 7.0.6
+  resolution: "@alwatr/local-storage@npm:7.0.6"
   dependencies:
-    "@alwatr/logger": "workspace:*"
+    "@alwatr/logger": "npm:6.0.15"
+  checksum: 10c0/68198d6dd5c4ade48a5a9533e634ef30e6911a983a41646d5bfb4adb0c1a22f53b1d5547df57494f5c543d03942da4b0ae1978ad4786c9de2bf1d5b4caefa659
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/logger@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/logger::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/logger@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/logger::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/logger@npm:6.0.15, @alwatr/logger@npm:^6.0.15":
+  version: 6.0.15
+  resolution: "@alwatr/logger@npm:6.0.15"
   dependencies:
-    "@alwatr/global-this": "workspace:*"
-    "@alwatr/platform-info": "workspace:*"
+    "@alwatr/global-this": "npm:5.6.7"
+    "@alwatr/platform-info": "npm:5.5.26"
+  checksum: 10c0/5beba03687eff6b869cf13a0bafe19dcbbe71f849c3072cb0ebd7ae4464824168a1af688ea7f2c2f1b188e07ed8f3faea7dfcbd5bd6ef879a29e9c5b4a9dbd02
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/nano-build@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/nano-build::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/nano-build@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/nano-build::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/nano-build@npm:6.3.11":
+  version: 6.3.11
+  resolution: "@alwatr/nano-build@npm:6.3.11"
   dependencies:
     esbuild: "npm:^0.27.1"
     picocolors: "npm:^1.1.1"
   bin:
-    nano-build: ./cli.cjs
+    nano-build: cli.cjs
+  checksum: 10c0/fc717750f6e3fa02de6eef133ee8b89acba779ae27988e9e8a9dc068422d67568fb57fc6c76ec92410cd26f6366840ad1ecb96c8519b9ea79dbb3b29150ef7a6
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/nanolib@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/nanolib::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/nanolib@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/nanolib::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/nanolib@npm:^7.3.4":
+  version: 7.3.4
+  resolution: "@alwatr/nanolib@npm:7.3.4"
   dependencies:
-    "@alwatr/async-queue": "workspace:*"
-    "@alwatr/cyrb53": "workspace:*"
-    "@alwatr/debounce": "workspace:*"
-    "@alwatr/deep-clone": "workspace:*"
-    "@alwatr/delay": "workspace:*"
-    "@alwatr/djb2-hash": "workspace:*"
-    "@alwatr/env": "workspace:*"
-    "@alwatr/eslint-config": "workspace:*"
-    "@alwatr/exit-hook": "workspace:*"
-    "@alwatr/fetch": "workspace:*"
-    "@alwatr/flat-string": "workspace:*"
-    "@alwatr/flatomise": "workspace:*"
-    "@alwatr/global-this": "workspace:*"
-    "@alwatr/has-own": "workspace:*"
-    "@alwatr/hash-string": "workspace:*"
-    "@alwatr/http-primer": "workspace:*"
-    "@alwatr/iranian-national-code-validator": "workspace:*"
-    "@alwatr/is-number": "workspace:*"
-    "@alwatr/json2csv": "workspace:*"
-    "@alwatr/local-storage": "workspace:*"
-    "@alwatr/logger": "workspace:*"
-    "@alwatr/nano-build": "workspace:*"
-    "@alwatr/node-fs": "workspace:*"
-    "@alwatr/parse-duration": "workspace:*"
-    "@alwatr/platform-info": "workspace:*"
-    "@alwatr/prettier-config": "workspace:*"
-    "@alwatr/random": "workspace:*"
-    "@alwatr/render-state": "workspace:*"
-    "@alwatr/resolve-url": "workspace:*"
-    "@alwatr/synapse": "workspace:*"
-    "@alwatr/type-helper": "workspace:*"
-    "@alwatr/unicode-digits": "workspace:*"
-    "@alwatr/yarn-upgrade": "workspace:*"
+    "@alwatr/async-queue": "npm:5.5.26"
+    "@alwatr/cyrb53": "npm:1.0.14"
+    "@alwatr/debounce": "npm:1.1.17"
+    "@alwatr/deep-clone": "npm:5.5.26"
+    "@alwatr/delay": "npm:6.0.18"
+    "@alwatr/djb2-hash": "npm:1.1.14"
+    "@alwatr/env": "npm:5.5.26"
+    "@alwatr/eslint-config": "npm:5.6.6"
+    "@alwatr/exit-hook": "npm:5.5.26"
+    "@alwatr/fetch": "npm:7.1.2"
+    "@alwatr/flat-string": "npm:5.5.26"
+    "@alwatr/flatomise": "npm:5.5.26"
+    "@alwatr/global-this": "npm:5.6.7"
+    "@alwatr/has-own": "npm:5.6.5"
+    "@alwatr/hash-string": "npm:5.2.26"
+    "@alwatr/http-primer": "npm:6.0.18"
+    "@alwatr/iranian-national-code-validator": "npm:1.0.18"
+    "@alwatr/is-number": "npm:5.7.23"
+    "@alwatr/json2csv": "npm:1.0.2"
+    "@alwatr/local-storage": "npm:7.0.6"
+    "@alwatr/logger": "npm:6.0.15"
+    "@alwatr/nano-build": "npm:6.3.11"
+    "@alwatr/node-fs": "npm:5.5.29"
+    "@alwatr/parse-duration": "npm:5.5.27"
+    "@alwatr/platform-info": "npm:5.5.26"
+    "@alwatr/prettier-config": "npm:6.0.1"
+    "@alwatr/random": "npm:5.1.27"
+    "@alwatr/render-state": "npm:5.5.29"
+    "@alwatr/resolve-url": "npm:5.5.29"
+    "@alwatr/synapse": "npm:1.3.4"
+    "@alwatr/type-helper": "npm:7.0.0"
+    "@alwatr/unicode-digits": "npm:5.5.26"
+    "@alwatr/yarn-upgrade": "npm:1.0.21"
   bin:
-    nano-build: ./nano-build.cjs
-    upd: ./yarn-upgrade.cjs
+    nano-build: nano-build.cjs
+    upd: yarn-upgrade.cjs
+  checksum: 10c0/ace3460686b4290c36f973841a968e84fa87ed272763f5f8a51d76d19edd8a197dc196cc42234a4b1ed69e84cc91929dd4c4037a4cdcb6f43711b8e36d04cf18
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "@alwatr/nitrobase-engine@workspace:^, @alwatr/nitrobase-engine@workspace:packages/engine":
   version: 0.0.0-use.local
@@ -218,13 +241,13 @@ __metadata:
     "@alwatr/delay": "npm:^6.0.18"
     "@alwatr/exit-hook": "npm:^5.5.26"
     "@alwatr/logger": "npm:^6.0.15"
-    "@alwatr/nanolib": "npm:^7.3.2"
+    "@alwatr/nanolib": "npm:^7.3.4"
     "@alwatr/nitrobase-helper": "workspace:^"
     "@alwatr/nitrobase-reference": "workspace:^"
     "@alwatr/nitrobase-types": "workspace:^"
     "@alwatr/node-fs": "npm:^5.5.29"
     "@alwatr/type-helper": "npm:^7.0.0"
-    "@types/node": "npm:^24.10.3"
+    "@types/node": "npm:^24.10.4"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -235,9 +258,9 @@ __metadata:
   dependencies:
     "@alwatr/flat-string": "npm:^5.5.26"
     "@alwatr/logger": "npm:^6.0.15"
-    "@alwatr/nanolib": "npm:^7.3.2"
+    "@alwatr/nanolib": "npm:^7.3.4"
     "@alwatr/nitrobase-types": "workspace:^"
-    "@types/node": "npm:^24.10.3"
+    "@types/node": "npm:^24.10.4"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -254,11 +277,11 @@ __metadata:
   dependencies:
     "@alwatr/delay": "npm:^6.0.18"
     "@alwatr/logger": "npm:^6.0.15"
-    "@alwatr/nanolib": "npm:^7.3.2"
+    "@alwatr/nanolib": "npm:^7.3.4"
     "@alwatr/nitrobase-helper": "workspace:^"
     "@alwatr/nitrobase-types": "workspace:^"
     "@alwatr/type-helper": "npm:^7.0.0"
-    "@types/node": "npm:^24.10.3"
+    "@types/node": "npm:^24.10.4"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -267,9 +290,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/nitrobase-types@workspace:packages/types"
   dependencies:
-    "@alwatr/nanolib": "npm:^7.3.2"
+    "@alwatr/nanolib": "npm:^7.3.4"
     "@alwatr/type-helper": "npm:^7.0.0"
-    "@types/node": "npm:^24.10.3"
+    "@types/node": "npm:^24.10.4"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -279,13 +302,13 @@ __metadata:
   resolution: "@alwatr/nitrobase-user-management@workspace:packages/user-management"
   dependencies:
     "@alwatr/logger": "npm:^6.0.15"
-    "@alwatr/nanolib": "npm:^7.3.2"
+    "@alwatr/nanolib": "npm:^7.3.4"
     "@alwatr/nitrobase-engine": "workspace:^"
     "@alwatr/nitrobase-reference": "workspace:^"
     "@alwatr/nitrobase-types": "workspace:^"
     "@alwatr/node-fs": "npm:^5.5.29"
     "@alwatr/type-helper": "npm:^7.0.0"
-    "@types/node": "npm:^24.10.3"
+    "@types/node": "npm:^24.10.4"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -294,99 +317,110 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@alwatr/nitrobase@workspace:packages/nitrobase"
   dependencies:
-    "@alwatr/nanolib": "npm:^7.3.2"
+    "@alwatr/nanolib": "npm:^7.3.4"
     "@alwatr/nitrobase-engine": "workspace:^"
     "@alwatr/nitrobase-helper": "workspace:^"
     "@alwatr/nitrobase-reference": "workspace:^"
     "@alwatr/nitrobase-types": "workspace:^"
     "@alwatr/nitrobase-user-management": "workspace:^"
-    "@types/node": "npm:^24.10.3"
+    "@types/node": "npm:^24.10.4"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
 
-"@alwatr/node-fs@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/node-fs::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/node-fs@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/node-fs::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/node-fs@npm:5.5.29, @alwatr/node-fs@npm:^5.5.29":
+  version: 5.5.29
+  resolution: "@alwatr/node-fs@npm:5.5.29"
   dependencies:
-    "@alwatr/async-queue": "workspace:*"
-    "@alwatr/flat-string": "workspace:*"
-    "@alwatr/logger": "workspace:*"
+    "@alwatr/async-queue": "npm:5.5.26"
+    "@alwatr/flat-string": "npm:5.5.26"
+    "@alwatr/logger": "npm:6.0.15"
+  checksum: 10c0/62ff25f770f8671deaea07f4b49575940fdd794176d55aa0efc3448b86aa8ae541589c5f135dd55bb0547c51bd6c803b4dfeef0483d4a1c155924f144506427f
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/parse-duration@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/parse-duration::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/parse-duration@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/parse-duration::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/parse-duration@npm:5.5.27":
+  version: 5.5.27
+  resolution: "@alwatr/parse-duration@npm:5.5.27"
   dependencies:
-    "@alwatr/is-number": "workspace:*"
+    "@alwatr/is-number": "npm:5.7.23"
+  checksum: 10c0/aac54175c0b1a1ea6b5ffdf99f883856814380a0e05d44bf096fe03380b903190f783565f6361bc05ac304235918147a5971159845462355e25ffa3c2bdbd0e6
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/platform-info@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/platform-info::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/platform-info@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/platform-info::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/platform-info@npm:5.5.26":
+  version: 5.5.26
+  resolution: "@alwatr/platform-info@npm:5.5.26"
+  checksum: 10c0/4e80ff10b51f0265fbef520766b5fa69c8b01e92f35147d55958d3e2b0bbcff8c7bdfffdefac2e3f324ed2a8eed67ee30ec24a713efbf63ffaa40ea0c3c9d99d
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/prettier-config@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/prettier-config::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/prettier-config@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/prettier-config::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/prettier-config@npm:6.0.1":
+  version: 6.0.1
+  resolution: "@alwatr/prettier-config@npm:6.0.1"
   peerDependencies:
     prettier: ">=3.0.0"
+  checksum: 10c0/7e7b97553027e29b3dc6b85c15c5060902f651fa727e52cef376f3b875a6979cd21737dcd55e5233c2f73f377715000944a17604b1a17e1b40ed2f2a3eece624
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/random@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/random::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/random@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/random::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/random@npm:5.1.27":
+  version: 5.1.27
+  resolution: "@alwatr/random@npm:5.1.27"
   dependencies:
-    "@alwatr/global-this": "workspace:*"
+    "@alwatr/global-this": "npm:5.6.7"
+  checksum: 10c0/5890784fe66ab35dab1ee628c0588fcd88a618ca53f7716d843fbd424fa752ed18413e5ff141502e402c81383802805de9409b2c4ad538179791e1168fad6fe5
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/render-state@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/render-state::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/render-state@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/render-state::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/render-state@npm:5.5.29":
+  version: 5.5.29
+  resolution: "@alwatr/render-state@npm:5.5.29"
   dependencies:
-    "@alwatr/logger": "workspace:*"
+    "@alwatr/logger": "npm:6.0.15"
+  checksum: 10c0/d1a9567dee6904cd8bc520cef439000f24cf56c069b2a57d040e2e034dfc37c16a68f5795420ae07beaba8b10aff195429f809a8ff06382f2e0bd85928e78449
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/resolve-url@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/resolve-url::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/resolve-url@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/resolve-url::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/resolve-url@npm:5.5.29":
+  version: 5.5.29
+  resolution: "@alwatr/resolve-url@npm:5.5.29"
+  checksum: 10c0/6ab1506dcf36c420d28299c00780af81bf32fa4a97a50a3d78c18ed22e1b1169e8519dfd00cc179b117aa75159e8e677a4ad5a6944a3791e3861b2f5b61d040a
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/synapse@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/synapse::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/synapse@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/synapse::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/synapse@npm:1.3.4":
+  version: 1.3.4
+  resolution: "@alwatr/synapse@npm:1.3.4"
   dependencies:
-    "@alwatr/delay": "workspace:*"
-    "@alwatr/logger": "workspace:*"
+    "@alwatr/delay": "npm:6.0.18"
+    "@alwatr/logger": "npm:6.0.15"
+  checksum: 10c0/58973076e457433ef1fa1787fbebfa6aab06afa1c0e4e074d4c5381167e361b6032ff7cd7db2e61912bbedb2ed7d266d9f89463fbd141feca8fc79bebeed54a2
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/type-helper@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/type-helper::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/type-helper@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/type-helper::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/type-helper@npm:7.0.0, @alwatr/type-helper@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@alwatr/type-helper@npm:7.0.0"
+  checksum: 10c0/69b92d4d238d6c3e8b764ae220c75c77839a4e480cc3a2f4848d4d8acb85e6b73f8bb3c9fffc6e7e756e0f3263e1cd96dc0914a647184e58a1453b165679bd75
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/unicode-digits@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/unicode-digits::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/unicode-digits@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/unicode-digits::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/unicode-digits@npm:5.5.26":
+  version: 5.5.26
+  resolution: "@alwatr/unicode-digits@npm:5.5.26"
+  checksum: 10c0/a94940fd50fa2cad2a99f183b8f386ce57bc45bcfbd3777721ef409d7c5ddc4d133f9e0d1f049f14dacd243182a030c50c46a58e91871a1fdb3c5cc46ae9f9ba
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@alwatr/yarn-upgrade@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/yarn-upgrade::locator=alwatr-nitrobase%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@alwatr/yarn-upgrade@portal:/Volumes/Alwatr/Projects/alwatr-io/nanolib/packages/yarn-upgrade::locator=alwatr-nitrobase%40workspace%3A."
+"@alwatr/yarn-upgrade@npm:1.0.21":
+  version: 1.0.21
+  resolution: "@alwatr/yarn-upgrade@npm:1.0.21"
   bin:
-    upd: ./dist/main.cjs
+    upd: dist/main.cjs
+  checksum: 10c0/56342233909d9568f2a9d470e6ca32e46d11ebb7cbff1b61558a100875022ed19d2e012781b7ca9915fd70f5882aea4e66fb3f4500e4d99559367a28ad256927
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.26.2, @babel/code-frame@npm:^7.27.1":
   version: 7.27.1
@@ -2372,29 +2406,29 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 25.0.1
-  resolution: "@types/node@npm:25.0.1"
+  version: 25.0.2
+  resolution: "@types/node@npm:25.0.2"
   dependencies:
     undici-types: "npm:~7.16.0"
-  checksum: 10c0/1d5ca9f240d0cf8e43d5281c0e6ee96fb22d37dc2e5ef52c6ca71de47957a6128e124990cedf5b14c03d0250737bd78ad370d93bcf1729a75ca4e54384fdd51a
+  checksum: 10c0/12c4044bf2e46ba3d313ddf6256ee3c88e336a62d129fe788eeab8ff2631b3df51eb31ade4cdc04552fbe51e285f0663c49b60c78acd31da2b9f2c86a84347e3
   languageName: node
   linkType: hard
 
 "@types/node@npm:^22.0.0":
-  version: 22.19.2
-  resolution: "@types/node@npm:22.19.2"
+  version: 22.19.3
+  resolution: "@types/node@npm:22.19.3"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/fd56fc727bdc2cd9582e05db5daab6c8eb7bc5e5640a54cbc64ccc160a61cf50940742be5536f83796bffc83ce7709d5580a9ca85806f57501958821d230ab78
+  checksum: 10c0/a30a75d503da795ddbd5f8851014f3e91925c2a63fa3f14128d54c998f25d682dfba96dc9589c73cf478b87a16d88beb790b11697bb8cd5bee913079237a58f2
   languageName: node
   linkType: hard
 
-"@types/node@npm:^24.10.3":
-  version: 24.10.3
-  resolution: "@types/node@npm:24.10.3"
+"@types/node@npm:^24.10.4":
+  version: 24.10.4
+  resolution: "@types/node@npm:24.10.4"
   dependencies:
     undici-types: "npm:~7.16.0"
-  checksum: 10c0/58ddaf9ce3dd9d3aa55f7dfacb7b8f16481ad64a47b99f1890fa3d4498d1958def78699838f422c0a81851d6be8b9de7ffc344435a60abcf02c0e2c085008b20
+  checksum: 10c0/069639cb7233ee747df1897b5e784f6b6c5da765c96c94773c580aac888fa1a585048d2a6e95eb8302d89c7a9df75801c8b5a0b7d0221d4249059cf09a5f4228
   languageName: node
   linkType: hard
 
@@ -2743,7 +2777,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "alwatr-nitrobase@workspace:."
   dependencies:
-    "@alwatr/nanolib": "npm:^7.3.2"
+    "@alwatr/nanolib": "npm:^7.3.4"
     "@lerna-lite/changed": "npm:^4.10.2"
     "@lerna-lite/cli": "npm:^4.10.2"
     "@lerna-lite/diff": "npm:^4.10.2"
@@ -2751,7 +2785,7 @@ __metadata:
     "@lerna-lite/publish": "npm:^4.10.2"
     "@lerna-lite/run": "npm:^4.10.2"
     "@lerna-lite/version": "npm:^4.10.2"
-    "@types/node": "npm:^24.10.3"
+    "@types/node": "npm:^24.10.4"
     "@typescript-eslint/eslint-plugin": "npm:^7.18.0"
     "@typescript-eslint/parser": "npm:^7.18.0"
     conventional-changelog-conventionalcommits: "npm:^9.1.0"

@@ -10,8 +10,8 @@
     "@alwatr/nitrobase-types": "workspace:^"
   },
   "devDependencies": {
-    "@alwatr/nanolib": "^7.3.2",
-    "@types/node": "^24.10.3",
+    "@alwatr/nanolib": "^7.3.4",
+    "@types/node": "^24.10.4",
     "typescript": "^5.9.3"
   },
   "exports": {
