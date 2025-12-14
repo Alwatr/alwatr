@@ -9,6 +9,7 @@
   "editor.formatOnSave": false,
   "editor.wordWrapColumn": 120,
   "eslint.nodePath": ".yarn/sdks",
+  "eslint.runtime": "node",
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
