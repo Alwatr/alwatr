@@ -22,7 +22,7 @@
     "@alwatr/flat-string": "workspace:*",
     "@alwatr/flatomise": "workspace:*",
     "@alwatr/global-this": "workspace:*",
-    "@alwatr/has-own": "workspace:^",
+    "@alwatr/has-own": "workspace:*",
     "@alwatr/hash-string": "workspace:*",
     "@alwatr/http-primer": "workspace:*",
     "@alwatr/iranian-national-code-validator": "workspace:*",
@@ -30,7 +30,7 @@
     "@alwatr/json2csv": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/logger": "workspace:*",
-    "@alwatr/nano-build": "workspace:^",
+    "@alwatr/nano-build": "workspace:*",
     "@alwatr/node-fs": "workspace:*",
     "@alwatr/parse-duration": "workspace:*",
     "@alwatr/platform-info": "workspace:*",
@@ -39,7 +39,7 @@
     "@alwatr/render-state": "workspace:*",
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/synapse": "workspace:*",
-    "@alwatr/type-helper": "workspace:^",
+    "@alwatr/type-helper": "workspace:*",
     "@alwatr/unicode-digits": "workspace:*",
     "@alwatr/yarn-upgrade": "workspace:*"
   },
@@ -57,12 +57,15 @@
       "import": "./dist/node.mjs",
       "require": "./dist/node.cjs"
     },
-    "./prettier": {
+    "./prettier-config": {
       "import": "./prettier.config.mjs",
       "require": "./prettier.config.cjs"
     },
-    "./eslint-config": "./eslint-config.cjs",
-    "./tsconfig-base": "./tsconfig-base.json"
+    "./eslint-config": {
+      "import": "./eslint.config.mjs",
+      "require": "./eslint.config.cjs"
+    },
+    "./tsconfig": "./tsconfig.base.json"
   },
   "files": [
     "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
