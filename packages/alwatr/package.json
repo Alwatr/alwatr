@@ -5,17 +5,17 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "dependencies": {
-    "@alwatr/flux": "^6.1.0",
-    "@alwatr/nanolib": "^6.1.8",
+    "@alwatr/flux": "^6.1.1",
+    "@alwatr/nanolib": "^7.3.4",
     "@alwatr/nanotron": "^4.10.1",
-    "@alwatr/nitrobase": "^7.10.0"
+    "@alwatr/nitrobase": "^7.10.1"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^6.3.4",
-    "@alwatr/prettier-config": "^5.0.5",
-    "@alwatr/tsconfig-base": "^6.0.3",
-    "@alwatr/type-helper": "^6.1.4",
-    "typescript": "^5.9.2"
+    "@alwatr/nano-build": "^6.3.11",
+    "@alwatr/prettier-config": "^6.0.1",
+    "@alwatr/tsconfig-base": "^6.0.4",
+    "@alwatr/type-helper": "^7.0.0",
+    "typescript": "^5.9.3"
   },
   "displayName": "Alwatr",
   "engines": {
