@@ -9,7 +9,7 @@
     "@alwatr/prettier-config": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
-    "@types/node": "^24.10.3",
+    "@types/node": "^24.10.4",
     "typescript": "^5.9.3"
   },
   "exports": {
