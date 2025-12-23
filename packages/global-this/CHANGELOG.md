@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.8](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.6.7...@alwatr/global-this@5.6.8) (2025-12-23)
+
+### 🔗 Dependencies update
+
+* upgrade @types/node to version 24.10.4 and update related dependencies ([acf04df](https://github.com/Alwatr/nanolib/commit/acf04df71647f5a401ef5e6bbfffcc478e4326d2))
+
 ## [5.6.7](https://github.com/Alwatr/nanolib/compare/@alwatr/global-this@5.6.6...@alwatr/global-this@5.6.7) (2025-12-13)
 
 ### 🔗 Dependencies update

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.3.11...@alwatr/nano-build@6.4.0) (2025-12-23)
+
+### ✨ Features
+
+* update browser target versions in presetRecord for better compatibility ([f985c88](https://github.com/Alwatr/nanolib/commit/f985c885329b309b39ebbb41e409553bc5bdbdfa))
+* update esbuild dependency version to ^0.27.2 for improved stability ([649f7e5](https://github.com/Alwatr/nanolib/commit/649f7e58097ddcb86199970157ffb0341dcb367a))
+
+### 🔗 Dependencies update
+
+* upgrade @types/node to version 24.10.4 and update related dependencies ([acf04df](https://github.com/Alwatr/nanolib/commit/acf04df71647f5a401ef5e6bbfffcc478e4326d2))
+
 ## [6.3.11](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.3.10...@alwatr/nano-build@6.3.11) (2025-12-13)
 
 ### 🐛 Bug Fixes

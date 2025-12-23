@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.27](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@5.5.26...@alwatr/exit-hook@5.5.27) (2025-12-23)
+
+### 🔗 Dependencies update
+
+* upgrade @types/node to version 24.10.4 and update related dependencies ([acf04df](https://github.com/Alwatr/nanolib/commit/acf04df71647f5a401ef5e6bbfffcc478e4326d2))
+
 ## [5.5.26](https://github.com/Alwatr/nanolib/compare/@alwatr/exit-hook@5.5.25...@alwatr/exit-hook@5.5.26) (2025-12-13)
 
 ### 🔗 Dependencies update

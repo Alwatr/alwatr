@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/node-fs",
   "description": "Enhanced file system operations in Node.js with asynchronous queue to prevent parallel writes.",
-  "version": "5.5.29",
+  "version": "5.5.30",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.16](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@6.0.15...@alwatr/logger@6.0.16) (2025-12-23)
+
+### 🔗 Dependencies update
+
+* upgrade @types/node to version 24.10.4 and update related dependencies ([acf04df](https://github.com/Alwatr/nanolib/commit/acf04df71647f5a401ef5e6bbfffcc478e4326d2))
+
 ## [6.0.15](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@6.0.14...@alwatr/logger@6.0.15) (2025-12-13)
 
 ### 🔗 Dependencies update

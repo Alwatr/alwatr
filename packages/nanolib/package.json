@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/nanolib",
   "description": "Necessary library for all ECMAScript (JavaScript/TypeScript) projects.",
-  "version": "7.3.4",
+  "version": "7.3.5",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "bin": {

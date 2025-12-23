@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.28](https://github.com/Alwatr/nanolib/compare/@alwatr/parse-duration@5.5.27...@alwatr/parse-duration@5.5.28) (2025-12-23)
+
+**Note:** Version bump only for package @alwatr/parse-duration
+
 ## [5.5.27](https://github.com/Alwatr/nanolib/compare/@alwatr/parse-duration@5.5.26...@alwatr/parse-duration@5.5.27) (2025-12-13)
 
 **Note:** Version bump only for package @alwatr/parse-duration
