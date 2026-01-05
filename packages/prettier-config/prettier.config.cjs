@@ -16,7 +16,7 @@ module.exports = {
   objectWrap: 'preserve',
   printWidth: 120,
   proseWrap: 'preserve',
-  quoteProps: 'as-needed',
+  quoteProps: 'consistent',
   semi: true,
   singleAttributePerLine: true,
   singleQuote: true,

@@ -1,7 +1,7 @@
 /**
  * @type {import('prettier').Config}
  */
-const config = {
+export default {
   // plugins: ['@prettier/plugin-xml', 'prettier-plugin-nginx', 'prettier-plugin-css-order', 'prettier-plugin-jsdoc'],
   arrowParens: 'always',
   bracketSameLine: false,
@@ -16,7 +16,7 @@ const config = {
   objectWrap: 'preserve',
   printWidth: 120,
   proseWrap: 'preserve',
-  quoteProps: 'as-needed',
+  quoteProps: 'consistent',
   semi: true,
   singleAttributePerLine: true,
   singleQuote: true,
@@ -36,5 +36,3 @@ const config = {
     },
   ],
 };
-
-export default config;
