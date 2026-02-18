@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/Alwatr/flux/compare/v6.1.1...v6.2.0) (2026-02-18)
+
+### 🔨 Code Refactoring
+
+* migrate to bun package manager ([545c1ae](https://github.com/Alwatr/flux/commit/545c1ae31f04ece1ef1abd4db7237b47b65b0473))
+
+### 🔗 Dependencies update
+
+* update dependencies across packages to latest versions ([6ac0147](https://github.com/Alwatr/flux/commit/6ac01476b0803d662035d4c291bb5c77ae4207f6))
+
 ## [6.1.1](https://github.com/Alwatr/flux/compare/v6.1.0...v6.1.1) (2025-11-12)
 
 ### 🐛 Bug Fixes

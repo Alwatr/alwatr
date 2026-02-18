@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/Alwatr/flux/compare/v6.1.1...v6.2.0) (2026-02-18)
+
+### ✨ Features
+
+* add session-state exports to main module for sessionStorage management ([99bc3fd](https://github.com/Alwatr/flux/commit/99bc3fd9b559b6c359a4533eb4af0ec61e5deee0))
+* add SessionStateSignal for sessionStorage management ([f62cb97](https://github.com/Alwatr/flux/commit/f62cb976bc5e5cfc8a0a48579c6dbebcacce10f4))
+* add SessionStateSignalConfig interface for sessionStorage management ([ee59398](https://github.com/Alwatr/flux/commit/ee593981fe6e6d20499f7e1992aed3ea42ffa64d))
+* implement createSessionStateSignal for sessionStorage management ([05d70f5](https://github.com/Alwatr/flux/commit/05d70f5f0e79f410a1b8439566cd6588807cc462))
+
+### 🐛 Bug Fixes
+
+* update default saveDebounceDelay to 500ms in SessionStateSignalConfig ([a19f9db](https://github.com/Alwatr/flux/commit/a19f9db003033448683d44a1678d6a6272fe5696))
+
+### 🔨 Code Refactoring
+
+* migrate to bun package manager ([545c1ae](https://github.com/Alwatr/flux/commit/545c1ae31f04ece1ef1abd4db7237b47b65b0473))
+
+### 🧹 Miscellaneous Chores
+
+* update VSCode settings to remove yarn-specific configurations ([180ff27](https://github.com/Alwatr/flux/commit/180ff27cab9d4835b0f4ebb71d8eddb37d0f1722))
+* update workflows to use bun and latest action versions ([3261f20](https://github.com/Alwatr/flux/commit/3261f200ea0ff3634fc2112bcbaf9f1c279c5a4f))
+
+### 🔗 Dependencies update
+
+* add @alwatr/session-storage dependency and update all deps ([4e8a3f6](https://github.com/Alwatr/flux/commit/4e8a3f60af461a02197945149728c2dcf845df7d))
+* update dependencies across packages to latest versions ([6ac0147](https://github.com/Alwatr/flux/commit/6ac01476b0803d662035d4c291bb5c77ae4207f6))
+
 ## [6.1.1](https://github.com/Alwatr/flux/compare/v6.1.0...v6.1.1) (2025-11-12)
 
 ### 🐛 Bug Fixes

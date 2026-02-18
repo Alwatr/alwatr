@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/fsm",
   "description": "A tiny, type-safe, declarative, and reactive finite state machine (FSM) library for modern TypeScript applications, built on top of Alwatr Signals.",
-  "version": "6.1.1",
+  "version": "6.2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
