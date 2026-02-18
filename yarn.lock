@@ -350,6 +350,7 @@ __metadata:
     "@alwatr/random": "workspace:*"
     "@alwatr/render-state": "workspace:*"
     "@alwatr/resolve-url": "workspace:*"
+    "@alwatr/session-storage": "workspace:*"
     "@alwatr/synapse": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
     "@alwatr/unicode-digits": "workspace:*"
@@ -464,7 +465,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@alwatr/session-storage@workspace:packages/session-storage":
+"@alwatr/session-storage@workspace:*, @alwatr/session-storage@workspace:packages/session-storage":
   version: 0.0.0-use.local
   resolution: "@alwatr/session-storage@workspace:packages/session-storage"
   dependencies:
