@@ -58,7 +58,7 @@ export class SessionStorageProvider<T extends JsonValue> {
    *
    * @example
    * ```typescript
-   * const provider = new SessionStorageProvider('profile');
+   * const provider = new SessionStorageProvider({name: 'profile'});
    * if (provider.has()) {
    *   // Item exists
    * }
