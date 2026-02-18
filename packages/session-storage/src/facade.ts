@@ -4,7 +4,7 @@ import type { SessionStorageProviderConfig } from './type.js';
 /**
  * Factory function to create a new SessionStorageProvider.
  *
- * @param name - The unique name for the storage item.
+ * @param config - The provider configuration.
  * @returns An instance of SessionStorageProvider.
  *
  * @example
