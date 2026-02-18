@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.4.0...@alwatr/nano-build@6.4.1) (2026-02-18)
+
+### 🐛 Bug Fixes
+
+* update esbuild to version 0.27.3 ([447c68c](https://github.com/Alwatr/nanolib/commit/447c68c56c598c1cc1e3e4a864f1bfe27d42b7d8))
+
+### 🔗 Dependencies update
+
+* update @types/node to version 24.10.13 across multiple packages ([4c6d2a3](https://github.com/Alwatr/nanolib/commit/4c6d2a37ab26b1c86812b2aa38b2eca4ee097cb6))
+
 ## [6.4.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.3.11...@alwatr/nano-build@6.4.0) (2025-12-23)
 
 ### ✨ Features

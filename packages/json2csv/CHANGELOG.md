@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/Alwatr/nanolib/compare/@alwatr/json2csv@1.0.3...@alwatr/json2csv@1.0.4) (2026-02-18)
+
+### 🧹 Miscellaneous Chores
+
+* update keywords in package.json files for better categorization ([cf0ddb6](https://github.com/Alwatr/nanolib/commit/cf0ddb66eab7e2a87158279e455d71c495b30834))
+
 ## [1.0.3](https://github.com/Alwatr/nanolib/compare/@alwatr/json2csv@1.0.2...@alwatr/json2csv@1.0.3) (2025-12-23)
 
 **Note:** Version bump only for package @alwatr/json2csv

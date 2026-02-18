@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/async-queue",
   "description": "A queue that executes async tasks in order like mutex and semaphore methodology for javascript and typescript.",
-  "version": "5.5.27",
+  "version": "5.5.28",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {

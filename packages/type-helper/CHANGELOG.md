@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@7.0.0...@alwatr/type-helper@7.0.1) (2026-02-18)
+
+**Note:** Version bump only for package @alwatr/type-helper
+
 ## [7.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@6.1.8...@alwatr/type-helper@7.0.0) (2025-12-13)
 
 ### ⚠ BREAKING CHANGES

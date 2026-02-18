@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.19](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.18...@alwatr/debounce@1.1.19) (2026-02-18)
+
+### 🔗 Dependencies update
+
+* update @types/node to version 24.10.13 across multiple packages ([4c6d2a3](https://github.com/Alwatr/nanolib/commit/4c6d2a37ab26b1c86812b2aa38b2eca4ee097cb6))
+
 ## [1.1.18](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.17...@alwatr/debounce@1.1.18) (2025-12-23)
 
 ### 🔗 Dependencies update

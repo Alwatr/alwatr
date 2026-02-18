@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.28](https://github.com/Alwatr/nanolib/compare/@alwatr/flat-string@5.5.27...@alwatr/flat-string@5.5.28) (2026-02-18)
+
+**Note:** Version bump only for package @alwatr/flat-string
+
 ## [5.5.27](https://github.com/Alwatr/nanolib/compare/@alwatr/flat-string@5.5.26...@alwatr/flat-string@5.5.27) (2025-12-23)
 
 **Note:** Version bump only for package @alwatr/flat-string

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/prettier-config@6.0.1...@alwatr/prettier-config@6.0.2) (2026-02-18)
+
+### 🐛 Bug Fixes
+
+* update quoteProps setting to 'consistent' in Prettier configuration ([85f8fe0](https://github.com/Alwatr/nanolib/commit/85f8fe08227dda092e0e926783e58024ee9f81fb))
+
+### 🧹 Miscellaneous Chores
+
+* **prettier-config:** remove peerDependencies for prettier ([92c7417](https://github.com/Alwatr/nanolib/commit/92c7417d3f3c3f9935960d8371529d7f1cc8ad4e))
+* update keywords in package.json files for better categorization ([cf0ddb6](https://github.com/Alwatr/nanolib/commit/cf0ddb66eab7e2a87158279e455d71c495b30834))
+
+### 🔗 Dependencies update
+
+* update @types/node to version 24.10.13 across multiple packages ([4c6d2a3](https://github.com/Alwatr/nanolib/commit/4c6d2a37ab26b1c86812b2aa38b2eca4ee097cb6))
+
 ## [6.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/prettier-config@6.0.0...@alwatr/prettier-config@6.0.1) (2025-12-10)
 
 ### 🔗 Dependencies update

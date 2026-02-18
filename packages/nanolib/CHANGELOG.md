@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.6](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.3.5...@alwatr/nanolib@7.3.6) (2026-02-18)
+
+### 🧹 Miscellaneous Chores
+
+* remove eslint configuration files and dependencies ([cb34eab](https://github.com/Alwatr/nanolib/commit/cb34eab2b622301a5f1e19ba4ccf2946cefac02a))
+* **session-storage:** add session-storage dependency and export in main.ts ([6682ba7](https://github.com/Alwatr/nanolib/commit/6682ba7902a8fb393790bed2364baa50d87f0fe2))
+* update keywords in package.json files for better categorization ([cf0ddb6](https://github.com/Alwatr/nanolib/commit/cf0ddb66eab7e2a87158279e455d71c495b30834))
+
 ## [7.3.5](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.3.4...@alwatr/nanolib@7.3.5) (2025-12-23)
 
 **Note:** Version bump only for package @alwatr/nanolib

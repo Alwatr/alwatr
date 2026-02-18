@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.29](https://github.com/Alwatr/nanolib/compare/@alwatr/random@5.1.28...@alwatr/random@5.1.29) (2026-02-18)
+
+**Note:** Version bump only for package @alwatr/random
+
 ## [5.1.28](https://github.com/Alwatr/nanolib/compare/@alwatr/random@5.1.27...@alwatr/random@5.1.28) (2025-12-23)
 
 **Note:** Version bump only for package @alwatr/random
