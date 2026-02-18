@@ -4,6 +4,15 @@
   "version": "6.0.1",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "devDependencies": {
+    "prettier": "^3.8.1"
+  },
+  "exports": {
+    ".": {
+      "import": "./prettier.config.mjs",
+      "require": "./prettier.config.cjs"
+    }
+  },
   "files": [
     "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
     "LICENSE",
@@ -32,12 +41,6 @@
     "utils"
   ],
   "license": "MPL-2.0",
-  "exports": {
-    ".": {
-      "import": "./prettier.config.mjs",
-      "require": "./prettier.config.cjs"
-    }
-  },
   "publishConfig": {
     "access": "public"
   },
@@ -47,8 +50,5 @@
     "directory": "packages/prettier-config"
   },
   "sideEffects": false,
-  "type": "module",
-  "devDependencies": {
-    "prettier": "^3.8.1"
-  }
+  "type": "module"
 }
