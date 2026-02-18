@@ -329,3 +329,30 @@ export interface PersistentStateSignalConfig<T extends JsonValue> extends StateS
    */
   saveDebounceDelay?: number;
 }
+
+/**
+ * Configuration for a session state signal.
+ * The state is persisted in `sessionStorage` and cleared when the tab closes.
+ *
+ * @template T The type of the state it holds.
+ */
+export interface SessionStateSignalConfig<T extends JsonValue> extends StateSignalConfig<T> {
+  /**
+   * The key used to store data in `sessionStorage`.
+   * Defaults to the signal's `name` if not provided.
+   *
+   * @default `name`
+   *
+   * @example
+   * 'checkout-wizard-state'
+   */
+  storageKey?: string;
+
+  /**
+   * The debounce delay in milliseconds for writing changes to `sessionStorage`.
+   * A lower value than `PersistentStateSignal` is used because session writes are less costly.
+   *
+   * @default 300
+   */
+  saveDebounceDelay?: number;
+}
