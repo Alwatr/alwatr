@@ -1,1 +1,0 @@
-module.exports = require('@alwatr/eslint-config');
