@@ -1,4 +1,5 @@
 import { SessionStorageProvider } from './session-storage.provider.js';
+import type { SessionStorageProviderConfig } from './type.js';
 
 /**
  * Factory function to create a new SessionStorageProvider.
@@ -8,7 +9,7 @@ import { SessionStorageProvider } from './session-storage.provider.js';
  *
  * @example
  * ```typescript
- * const formData = createSessionStorageProvider('multi-step-form');
+ * const formData = createSessionStorageProvider({ name: 'multi-step-form' });
  *
  * // Write new data
  * formData.write({ step: 2, answers: { q1: 'yes' } });
@@ -18,6 +19,6 @@ import { SessionStorageProvider } from './session-storage.provider.js';
  * console.log(current); // { step: 2, answers: { q1: 'yes' } }
  * ```
  */
-export function createSessionStorageProvider<T extends JsonValue>(name: string): SessionStorageProvider<T> {
-  return new SessionStorageProvider<T>(name);
+export function createSessionStorageProvider<T extends JsonValue>(config: SessionStorageProviderConfig): SessionStorageProvider<T> {
+  return new SessionStorageProvider<T>(config);
 }
