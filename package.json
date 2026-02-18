@@ -3,8 +3,8 @@
   "description": "Alwatr Flux empowers your applications with elegant and powerful state management and event handling capabilities. Built on the observable design pattern, Flux provides a lightweight yet robust foundation for managing global signals and states.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "devDependencies": {
-    "@alwatr/eslint-config": "^5.6.4",
-    "@alwatr/prettier-config": "^5.0.5",
+    "@alwatr/eslint-config": "^5.6.7",
+    "@alwatr/prettier-config": "^6.0.2",
     "@alwatr/tsconfig-base": "^6.0.3",
     "@lerna-lite/changed": "^4.9.2",
     "@lerna-lite/cli": "^4.9.2",
