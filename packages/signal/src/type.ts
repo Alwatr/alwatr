@@ -352,7 +352,7 @@ export interface SessionStateSignalConfig<T extends JsonValue> extends StateSign
    * The debounce delay in milliseconds for writing changes to `sessionStorage`.
    * A lower value than `PersistentStateSignal` is used because session writes are less costly.
    *
-   * @default 300
+   * @default 500
    */
   saveDebounceDelay?: number;
 }
