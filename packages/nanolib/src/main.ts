@@ -13,6 +13,7 @@ export * from '@alwatr/http-primer';
 export * from '@alwatr/iranian-national-code-validator';
 export * from '@alwatr/is-number';
 export * from '@alwatr/local-storage';
+export * from '@alwatr/session-storage';
 export * from '@alwatr/logger';
 export * from '@alwatr/parse-duration';
 export * from '@alwatr/platform-info';

@@ -350,6 +350,7 @@ __metadata:
     "@alwatr/random": "workspace:*"
     "@alwatr/render-state": "workspace:*"
     "@alwatr/resolve-url": "workspace:*"
+    "@alwatr/session-storage": "workspace:*"
     "@alwatr/synapse": "workspace:*"
     "@alwatr/type-helper": "workspace:*"
     "@alwatr/unicode-digits": "workspace:*"
@@ -460,6 +461,20 @@ __metadata:
     "@alwatr/type-helper": "workspace:*"
     "@jest/globals": "npm:^30.2.0"
     jest: "npm:^30.2.0"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
+"@alwatr/session-storage@workspace:*, @alwatr/session-storage@workspace:packages/session-storage":
+  version: 0.0.0-use.local
+  resolution: "@alwatr/session-storage@workspace:packages/session-storage"
+  dependencies:
+    "@alwatr/logger": "workspace:*"
+    "@alwatr/nano-build": "workspace:*"
+    "@alwatr/prettier-config": "workspace:*"
+    "@alwatr/tsconfig-base": "workspace:*"
+    "@alwatr/type-helper": "workspace:*"
+    "@jest/globals": "npm:^30.2.0"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
