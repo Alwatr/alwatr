@@ -14,7 +14,7 @@
     "@alwatr/prettier-config": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
-    "@types/node": "^24.10.4",
+    "@types/node": "^24.10.13",
     "typescript": "^5.9.3"
   },
   "exports": {
