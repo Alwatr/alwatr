@@ -1,6 +1,6 @@
-import {createLogger} from '@alwatr/logger';
+import { createLogger } from '@alwatr/logger';
 
-import type {SessionStorageProviderConfig} from './type.js';
+import type { SessionStorageProviderConfig } from './type.js';
 
 /**
  * A provider class for managing a specific item in sessionStorage.
@@ -8,25 +8,33 @@ import type {SessionStorageProviderConfig} from './type.js';
  *
  * @example
  * ```typescript
- * const userSession = new SessionStorageProvider('user-session');
+ * const formDraft = new SessionStorageProvider<{title: string; body: string}>({
+ *   name: 'post-form-draft',
+ * });
  *
- * // Write new session data
- * userSession.write({ theme: 'dark', notifications: false });
+ * // Write a draft
+ * formDraft.write({ title: 'Hello', body: 'World' });
  *
- * // Read the current session data
- * const currentSession = userSession.read();
- * console.log(currentSession); // { theme: 'dark', notifications: false }
+ * // Read the draft
+ * const draft = formDraft.read();
+ * console.log(draft); // { title: 'Hello', body: 'World' }
+ *
+ * // Remove the draft
+ * formDraft.remove();
  * ```
  */
 export class SessionStorageProvider<T extends JsonValue> {
+  public static readonly version = __package_version__;
+
   private readonly key_: string;
   protected readonly logger_;
 
-  constructor(name: string) {
-    this.logger_ = createLogger(`session-storage-provider: ${name}`);
-    this.logger_.logMethodArgs?.('constructor', { name });
-    this.key_ = name; // simple key without version
+  constructor(config: SessionStorageProviderConfig) {
+    this.logger_ = createLogger(`session-storage-provider: ${config.name}`);
+    this.logger_.logMethodArgs?.('constructor', { config });
+    this.key_ = config.name;
   }
+
 
   /**
    * Checks if an item exists in sessionStorage for the given key.
@@ -58,7 +66,7 @@ export class SessionStorageProvider<T extends JsonValue> {
    * ```
    */
   public has(): boolean {
-    return sessionStorage.getItem(this.key) !== null;
+    return sessionStorage.getItem(this.key_) !== null;
   }
 
   /**
@@ -82,7 +90,7 @@ export class SessionStorageProvider<T extends JsonValue> {
       raw = sessionStorage.getItem(this.key_);
     }
     catch (err) {
-      this.logger_.error('read', 'read_session_storage_error', {err});
+      this.logger_.error('read', 'read_session_storage_error', { err });
     }
 
     if (!raw) {
@@ -92,11 +100,11 @@ export class SessionStorageProvider<T extends JsonValue> {
 
     try {
       const parsed = JSON.parse(raw) as T;
-      this.logger_.logMethodFull?.('read//value', undefined, {parsed});
+      this.logger_.logMethodFull?.('read//value', undefined, { parsed });
       return parsed;
     }
     catch (err) {
-      this.logger_.error('read', 'read_parse_error', {err});
+      this.logger_.error('read', 'read_parse_error', { err });
       return null;
     }
   }
@@ -113,14 +121,14 @@ export class SessionStorageProvider<T extends JsonValue> {
    * ```
    */
   public write(value: T): void {
-    this.logger_.logMethodArgs?.('write', {value});
+    this.logger_.logMethodArgs?.('write', { value });
 
     let valueStr: string;
     try {
       valueStr = JSON.stringify(value);
     }
     catch (err) {
-      this.logger_.error('write', 'write_stringify_error', {err});
+      this.logger_.error('write', 'write_stringify_error', { err });
       throw new Error('write_stringify_error');
     }
 
@@ -128,7 +136,7 @@ export class SessionStorageProvider<T extends JsonValue> {
       sessionStorage.setItem(this.key_, valueStr);
     }
     catch (err) {
-      this.logger_.error('write', 'write_session_storage_error', {err});
+      this.logger_.error('write', 'write_session_storage_error', { err });
     }
   }
 
