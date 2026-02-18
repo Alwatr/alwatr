@@ -26,15 +26,14 @@ import type { SessionStorageProviderConfig } from './type.js';
 export class SessionStorageProvider<T extends JsonValue> {
   public static readonly version = __package_version__;
 
-  private readonly key_: string;
+  private readonly key__: string;
   protected readonly logger_;
 
   constructor(config: SessionStorageProviderConfig) {
-    this.logger_ = createLogger(`session-storage-provider: ${config.name}`);
-    this.logger_.logMethodArgs?.('constructor', { config });
-    this.key_ = config.name;
+    this.key__ = config.name;
+    this.logger_ = createLogger(`session-storage-provider: ${this.key__}`);
+    this.logger_.logMethodArgs?.('constructor', config);
   }
-
 
   /**
    * Checks if an item exists in sessionStorage for the given key.
@@ -66,7 +65,7 @@ export class SessionStorageProvider<T extends JsonValue> {
    * ```
    */
   public has(): boolean {
-    return sessionStorage.getItem(this.key_) !== null;
+    return sessionStorage.getItem(this.key__) !== null;
   }
 
   /**
@@ -87,7 +86,7 @@ export class SessionStorageProvider<T extends JsonValue> {
     let raw: string | null = null;
 
     try {
-      raw = sessionStorage.getItem(this.key_);
+      raw = sessionStorage.getItem(this.key__);
     }
     catch (err) {
       this.logger_.error('read', 'read_session_storage_error', { err });
@@ -133,7 +132,7 @@ export class SessionStorageProvider<T extends JsonValue> {
     }
 
     try {
-      sessionStorage.setItem(this.key_, valueStr);
+      sessionStorage.setItem(this.key__, valueStr);
     }
     catch (err) {
       this.logger_.error('write', 'write_session_storage_error', { err });
@@ -150,6 +149,6 @@ export class SessionStorageProvider<T extends JsonValue> {
    */
   public remove(): void {
     this.logger_.logMethod?.('remove');
-    sessionStorage.removeItem(this.key_);
+    sessionStorage.removeItem(this.key__);
   }
 }
