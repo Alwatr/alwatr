@@ -1,6 +1,6 @@
 import {directiveRegistry_, logger} from './lib.js';
 
-const initializedAttribute = '_synapseConnected';
+const initializedAttribute = 'synapse';
 
 /**
  * Initializes all registered directives within a given root element.
@@ -44,7 +44,7 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
       logger.logOther?.(`Found ${elements.length} new element(s) for directive "${selector}"`);
       elements.forEach((element) => {
         // Mark the element as processed before creating an instance
-        element.setAttribute(initializedAttribute, 'true');
+        element.setAttribute(initializedAttribute, '');
         // Instantiate the directive with the element.
         new constructor(element, selector);
       });
