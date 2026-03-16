@@ -43,15 +43,3 @@ updates:
       - dependency-name: '@types/node'
         update-types:
           - version-update:semver-major
-      - dependency-name: 'eslint'
-        update-types:
-          - version-update:semver-major
-      - dependency-name: '@typescript-eslint/eslint-plugin'
-        update-types:
-          - version-update:semver-major
-      - dependency-name: '@typescript-eslint/parser'
-        update-types:
-          - version-update:semver-major
-      - dependency-name: 'conventional-changelog-conventionalcommits'
-        update-types:
-          - version-update:semver-major
