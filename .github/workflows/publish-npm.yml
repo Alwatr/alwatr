@@ -30,7 +30,8 @@ jobs:
           bun-version: ${{ env.BUN_VERSION }}
     
       - name: 🔐 Verify NPM access
-        run: bun pm whoami
+        run: cat .npmrc && bun pm whoami
+
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -43,4 +44,4 @@ jobs:
       - name: 🚀 Publish
         run: bun run publish --yes
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
