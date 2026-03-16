@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.18](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@6.0.17...@alwatr/logger@6.0.18) (2026-03-16)
+
+### 🔨 Code Refactoring
+
+* migrate build scripts from yarn to bun across multiple packages ([d90e962](https://github.com/Alwatr/nanolib/commit/d90e962f15e5c951e191d5f02341279b6472abc3))
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 10 updates ([c48d9ba](https://github.com/Alwatr/nanolib/commit/c48d9baa1cd7c2dc144b3e01e0fda60bf87c074c))
+
 ## [6.0.17](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@6.0.16...@alwatr/logger@6.0.17) (2026-02-18)
 
 ### 🔗 Dependencies update

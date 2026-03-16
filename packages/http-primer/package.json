@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/http-primer",
   "description": "Essential HTTP utilities for TypeScript, including types for HTTP methods, status codes, and headers.",
-  "version": "6.0.20",
+  "version": "6.0.21",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {

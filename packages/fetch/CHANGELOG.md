@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.5](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@7.1.4...@alwatr/fetch@7.1.5) (2026-03-16)
+
+### 🔨 Code Refactoring
+
+* migrate build scripts from yarn to bun across multiple packages ([d90e962](https://github.com/Alwatr/nanolib/commit/d90e962f15e5c951e191d5f02341279b6472abc3))
+
 ## [7.1.4](https://github.com/Alwatr/nanolib/compare/@alwatr/fetch@7.1.3...@alwatr/fetch@7.1.4) (2026-02-18)
 
 **Note:** Version bump only for package @alwatr/fetch

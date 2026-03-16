@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.21](https://github.com/Alwatr/nanolib/compare/@alwatr/iranian-national-code-validator@1.0.20...@alwatr/iranian-national-code-validator@1.0.21) (2026-03-16)
+
+### 🔨 Code Refactoring
+
+* migrate build scripts from yarn to bun across multiple packages ([d90e962](https://github.com/Alwatr/nanolib/commit/d90e962f15e5c951e191d5f02341279b6472abc3))
+
 ## [1.0.20](https://github.com/Alwatr/nanolib/compare/@alwatr/iranian-national-code-validator@1.0.19...@alwatr/iranian-national-code-validator@1.0.20) (2026-02-18)
 
 **Note:** Version bump only for package @alwatr/iranian-national-code-validator

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.3.6...@alwatr/synapse@1.4.0) (2026-03-16)
+
+### ✨ Features
+
+* Utilize 'synapse' attribute for directive association ([f86ca7e](https://github.com/Alwatr/nanolib/commit/f86ca7eb2819425d6c44dd28c424321b7f66d227))
+
+### 🔨 Code Refactoring
+
+* migrate build scripts from yarn to bun across multiple packages ([d90e962](https://github.com/Alwatr/nanolib/commit/d90e962f15e5c951e191d5f02341279b6472abc3))
+
 ## [1.3.6](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.3.5...@alwatr/synapse@1.3.6) (2026-02-18)
 
 **Note:** Version bump only for package @alwatr/synapse

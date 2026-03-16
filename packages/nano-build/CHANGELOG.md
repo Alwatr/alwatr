@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.2](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.4.1...@alwatr/nano-build@6.4.2) (2026-03-16)
+
+### 🐛 Bug Fixes
+
+* remove debug statement from banner in default build options ([058c09e](https://github.com/Alwatr/nanolib/commit/058c09ee0cdcf8455df70a96dd6e84e7cee369e4))
+
+### 🔗 Dependencies update
+
+* bump the npm-dependencies group with 10 updates ([c48d9ba](https://github.com/Alwatr/nanolib/commit/c48d9baa1cd7c2dc144b3e01e0fda60bf87c074c))
+
 ## [6.4.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.4.0...@alwatr/nano-build@6.4.1) (2026-02-18)
 
 ### 🐛 Bug Fixes

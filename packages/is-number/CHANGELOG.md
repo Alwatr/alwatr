@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.26](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.7.25...@alwatr/is-number@5.7.26) (2026-03-16)
+
+### 🔨 Code Refactoring
+
+* migrate build scripts from yarn to bun across multiple packages ([d90e962](https://github.com/Alwatr/nanolib/commit/d90e962f15e5c951e191d5f02341279b6472abc3))
+
 ## [5.7.25](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.7.24...@alwatr/is-number@5.7.25) (2026-02-18)
 
 **Note:** Version bump only for package @alwatr/is-number

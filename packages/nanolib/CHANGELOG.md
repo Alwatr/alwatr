@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.7](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.3.6...@alwatr/nanolib@7.3.7) (2026-03-16)
+
+### 🔨 Code Refactoring
+
+* migrate build scripts from yarn to bun across multiple packages ([d90e962](https://github.com/Alwatr/nanolib/commit/d90e962f15e5c951e191d5f02341279b6472abc3))
+
+### 🧹 Miscellaneous Chores
+
+* remove yarn-upgrade script in preparation for bun migration ([d231ab7](https://github.com/Alwatr/nanolib/commit/d231ab770a91f0a2c5086a33855ece60b4b635b5))
+
 ## [7.3.6](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.3.5...@alwatr/nanolib@7.3.6) (2026-02-18)
 
 ### 🧹 Miscellaneous Chores

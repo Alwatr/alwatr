@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/nanolib",
   "description": "Necessary library for all ECMAScript (JavaScript/TypeScript) projects.",
-  "version": "7.3.6",
+  "version": "7.3.7",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bin": {
     "nano-build": "./nano-build.cjs"
