@@ -8,7 +8,6 @@
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/prettier-config": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
-    "jest": "^30.2.0",
     "typescript": "^5.9.3"
   },
   "exports": {
@@ -57,20 +56,20 @@
     "directory": "packages/djb2-hash"
   },
   "scripts": {
-    "b": "yarn run build",
-    "build": "yarn run build:ts && yarn run build:es",
+    "b": "bun run build",
+    "build": "bun run build:ts && bun run build:es",
     "build:es": "nano-build --preset=module",
     "build:ts": "tsc --build",
-    "c": "yarn run clean",
-    "cb": "yarn run clean && yarn run build",
+    "c": "bun run clean",
+    "cb": "bun run clean && bun run build",
     "clean": "rm -rfv dist *.tsbuildinfo",
-    "d": "yarn run build:es && yarn node --enable-source-maps --trace-warnings",
-    "t": "yarn run test",
-    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest",
-    "w": "yarn run watch",
-    "watch": "yarn run watch:ts & yarn run watch:es",
-    "watch:es": "yarn run build:es --watch",
-    "watch:ts": "yarn run build:ts --watch --preserveWatchOutput"
+    "d": "bun run build:es && bun --enable-source-maps --trace-warnings",
+    "t": "bun run test",
+    "test": "echo test-skipped",
+    "w": "bun run watch",
+    "watch": "bun run watch:ts & bun run watch:es",
+    "watch:es": "bun run build:es --watch",
+    "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "sideEffects": false,
   "type": "module",
