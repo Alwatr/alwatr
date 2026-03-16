@@ -6,14 +6,14 @@
   "bin": "./cli.cjs",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
-    "esbuild": "^0.27.3",
+    "esbuild": "^0.27.4",
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
     "@alwatr/prettier-config": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
-    "@types/node": "^24.10.13",
+    "@types/node": "^24.12.0",
     "typescript": "^5.9.3"
   },
   "files": [
