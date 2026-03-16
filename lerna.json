@@ -1,14 +1,19 @@
 {
   "$schema": "https://raw.githubusercontent.com/lerna-lite/lerna-lite/main/packages/cli/schemas/lerna-schema.json",
   "version": "independent",
-  "npmClient": "yarn",
+  "npmClient": "bun",
   "useWorkspaces": true,
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "loglevel": "verbose",
   "command": {
     "version": {
       "conventionalCommits": true,
-      "ignoreChanges": ["**/docs/**", "**/*.test.js"],
+      "ignoreChanges": [
+        "**/docs/**",
+        "**/*.test.js"
+      ],
       "skipBumpOnlyReleases": true,
       "message": "release:",
       "forceGitTag": true,
@@ -24,7 +29,9 @@
       "changelogPreset": {
         "name": "conventionalcommits",
         "issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issues/{{id}}",
-        "issuePrefixes": ["#"],
+        "issuePrefixes": [
+          "#"
+        ],
         "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
         "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
         "userUrlFormat": "{{host}}/{{user}}",
