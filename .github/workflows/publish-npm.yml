@@ -4,7 +4,6 @@ name: Publish NPM
 
 on:
   workflow_dispatch:
-
   release:
     types:
       - created
@@ -28,12 +27,10 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ env.BUN_VERSION }}
-    
-      - name: 🔐 Verify NPM access
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
-          cat ~/.npmrc && bun pm whoami
+          registry-url: 'https://registry.npmjs.org' # This auto-configures .npmrc
 
+      - name: 🔐 Verify NPM access
+        run: bun pm whoami
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
