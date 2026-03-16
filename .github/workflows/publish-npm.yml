@@ -30,7 +30,9 @@ jobs:
           bun-version: ${{ env.BUN_VERSION }}
     
       - name: 🔐 Verify NPM access
-        run: cat ~/.npmrc && bun pm whoami
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
+          cat ~/.npmrc && bun pm whoami
 
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
