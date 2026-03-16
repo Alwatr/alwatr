@@ -18,7 +18,7 @@ Add the following scripts to your `package.json` to use `@alwatr/nano-build`:
 {
   "scripts": {
     "build": "nano-build --preset=module",
-    "watch": "yarn run build --watch"
+    "watch": "bun run build --watch"
   }
 }
 ```
@@ -26,7 +26,7 @@ Add the following scripts to your `package.json` to use `@alwatr/nano-build`:
 Then run the following command to build your project:
 
 ```bash
-yarn run build
+bun run build
 ```
 
 ## Configuration
@@ -62,7 +62,7 @@ Add 'nano-build' field to your `package.json` for overwriting configuration:
 Presets are predefined configurations that can be used to build your project. You can use the `--preset` flag to specify a preset.
 
 ```bash
-yarn run build --preset=module
+bun run build --preset=module
 ```
 
 ### default
