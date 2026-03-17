@@ -5,20 +5,17 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
-    "@alwatr/debounce": "^1.1.19",
-    "@alwatr/delay": "^6.0.20",
-    "@alwatr/local-storage": "^7.0.8",
-    "@alwatr/logger": "^6.0.17",
-    "@alwatr/session-storage": "^1.0.0"
+    "@alwatr/debounce": "^1.1.20",
+    "@alwatr/delay": "^6.0.21",
+    "@alwatr/local-storage": "^7.0.9",
+    "@alwatr/logger": "^6.0.18",
+    "@alwatr/session-storage": "^1.0.1"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^6.4.1",
+    "@alwatr/nano-build": "^6.4.2",
     "@alwatr/prettier-config": "^6.0.2",
     "@alwatr/tsconfig-base": "^6.0.4",
-    "@alwatr/type-helper": "^7.0.1",
-    "@jest/globals": "^30.2.0",
-    "@types/node": "^22.19.11",
-    "jest": "^30.2.0",
+    "@alwatr/type-helper": "^7.0.2",
     "typescript": "^5.9.3"
   },
   "exports": {
@@ -62,7 +59,7 @@
     "clean": "rm -rfv dist *.tsbuildinfo",
     "d": "bun run build:es && bun run --enable-source-maps --trace-warnings",
     "t": "bun run test",
-    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest",
+    "test": "bun test",
     "w": "bun run watch",
     "watch": "bun run watch:ts & bun run watch:es",
     "watch:es": "bun run build:es --watch",
