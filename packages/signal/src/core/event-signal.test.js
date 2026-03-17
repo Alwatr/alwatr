@@ -109,6 +109,9 @@ describe('EventSignal', () => {
   });
 
   it('should notify high-priority subscribers first', async () => {
+    /**
+     * @type {string[]}
+     */
     const callOrder = [];
     const callback1 = jest.fn(() => callOrder.push('normal'));
     const callback2 = jest.fn(() => callOrder.push('priority'));
