@@ -1,10 +1,8 @@
-import {describe, beforeEach, afterEach, it, expect, jest} from '@jest/globals';
-import {createDebouncer} from '@alwatr/debounce';
+import { describe, beforeEach, afterEach, it, expect, jest } from 'bun:test';
+import { createDebouncer } from '@alwatr/debounce';
 
 describe('Debouncer', () => {
-  /**
-   * @type {import("jest-mock").Mock<import("jest-mock").UnknownFunction>}
-   */
+  /** @type {import('bun:test').Mock<(...args: unknown[]) => void>} */
   let mockFunc;
   /**
    * @type {import("@alwatr/debounce").Debouncer<typeof mockFunc>}
@@ -201,7 +199,7 @@ describe('Debouncer', () => {
     let context;
 
     beforeEach(() => {
-      context = {value: 'test'};
+      context = { value: 'test' };
       mockFunc = jest.fn(function () {
         this.value = 'changed';
       });
@@ -309,7 +307,7 @@ describe('Debouncer', () => {
       expect(mockFunc).toHaveBeenCalledTimes(1); // Should not call again
     });
   });
-  
+
   it('should execute after delay for trailing debounce', () => {
     debouncer = createDebouncer({
       func: mockFunc,
