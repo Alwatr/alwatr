@@ -69,12 +69,11 @@ export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, confi
 
   const debouncer = createDebouncer({
     ...config,
-    func: (value: T): void => {
-      internalSignal.set(value);
-    },
+    thisContext: internalSignal,
+    func: internalSignal.set,
   });
 
-  const subscription = sourceSignal.subscribe((value) => debouncer.trigger(value), {receivePrevious: false});
+  const subscription = sourceSignal.subscribe(debouncer.trigger, {receivePrevious: false});
 
   return createComputedSignal({
     name: name,
