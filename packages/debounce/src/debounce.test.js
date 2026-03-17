@@ -62,6 +62,13 @@ describe('Debouncer', () => {
       expect(mockFunc).toHaveBeenCalled();
       expect(mockFunc).toHaveBeenCalledWith('test');
     })
+
+    it('should keep the this context for cancel', async () => {
+      debouncer.trigger('test');
+      setTimeout(debouncer.cancel, 10);
+      await fakeTimePassage(310);
+      expect(mockFunc).not.toHaveBeenCalled();
+    });
   });
 
   describe('Leading Debounce', () => {
