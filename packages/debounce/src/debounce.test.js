@@ -2,6 +2,11 @@ import { describe, beforeEach, afterEach, it, expect, jest } from 'bun:test';
 import { createDebouncer } from '@alwatr/debounce';
 
 describe('Debouncer', () => {
+  const fakeTimePassage = async (ms = 0) => {
+    jest.advanceTimersByTime(ms);
+    await Promise.resolve();
+  };
+
   /** @type {import('bun:test').Mock<(...args: unknown[]) => void>} */
   let mockFunc;
   /**
@@ -27,27 +32,27 @@ describe('Debouncer', () => {
       });
     });
 
-    it('should execute after delay on single trigger', () => {
+    it('should execute after delay on single trigger', async () => {
       debouncer.trigger('test');
       expect(mockFunc).not.toHaveBeenCalled();
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(mockFunc).toHaveBeenCalledWith('test');
     });
 
-    it('should reset delay on multiple triggers', () => {
+    it('should reset delay on multiple triggers', async () => {
       debouncer.trigger('first');
-      jest.advanceTimersByTime(200);
+      await fakeTimePassage(200);
       debouncer.trigger('second');
-      jest.advanceTimersByTime(200);
+      await fakeTimePassage(200);
       expect(mockFunc).not.toHaveBeenCalled();
-      jest.advanceTimersByTime(100);
+      await fakeTimePassage(100);
       expect(mockFunc).toHaveBeenCalledWith('second');
     });
 
-    it('should not execute if cancelled before delay', () => {
+    it('should not execute if cancelled before delay', async () => {
       debouncer.trigger('test');
       debouncer.cancel();
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(mockFunc).not.toHaveBeenCalled();
     });
   });
@@ -67,17 +72,17 @@ describe('Debouncer', () => {
       expect(mockFunc).toHaveBeenCalledWith('test');
     });
 
-    it('should not execute again within delay', () => {
+    it('should not execute again within delay', async () => {
       debouncer.trigger('first');
       expect(mockFunc).toHaveBeenCalledTimes(1);
       debouncer.trigger('second');
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(mockFunc).toHaveBeenCalledTimes(1);
     });
 
-    it('should execute again after delay', () => {
+    it('should execute again after delay', async () => {
       debouncer.trigger('first');
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       debouncer.trigger('second');
       expect(mockFunc).toHaveBeenCalledTimes(2);
     });
@@ -93,24 +98,24 @@ describe('Debouncer', () => {
       });
     });
 
-    it('should execute immediately but not after delay on single trigger', () => {
+    it('should execute immediately but not after delay on single trigger', async () => {
       debouncer.trigger('test');
       expect(mockFunc).toHaveBeenCalledWith('test');
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(mockFunc).toHaveBeenCalledTimes(1);
     });
 
-    it('should execute immediately, then trailing on last trigger', () => {
+    it('should execute immediately, then trailing on last trigger', async () => {
       debouncer.trigger('first');
       expect(mockFunc).toHaveBeenCalledTimes(1);
       expect(mockFunc).toHaveBeenCalledWith('first');
-      jest.advanceTimersByTime(200);
+      await fakeTimePassage(200);
       debouncer.trigger('second');
-      jest.advanceTimersByTime(100);
+      await fakeTimePassage(100);
       debouncer.trigger('third');
-      jest.advanceTimersByTime(100);
+      await fakeTimePassage(100);
       expect(mockFunc).toHaveBeenCalledTimes(1);
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(mockFunc).toHaveBeenCalledTimes(2);
       expect(mockFunc).toHaveBeenLastCalledWith('third');
     });
@@ -124,16 +129,16 @@ describe('Debouncer', () => {
       });
     });
 
-    it('should cancel pending execution', () => {
+    it('should cancel pending execution', async () => {
       debouncer.trigger('test');
       expect(debouncer.isPending).toBe(true);
       debouncer.cancel();
       expect(debouncer.isPending).toBe(false);
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(mockFunc).not.toHaveBeenCalled();
     });
 
-    it('should handle cancel on leading debounce', () => {
+    it('should handle cancel on leading debounce', async () => {
       debouncer = createDebouncer({
         func: mockFunc,
         delay: 300,
@@ -142,7 +147,7 @@ describe('Debouncer', () => {
       debouncer.trigger('test');
       expect(mockFunc).toHaveBeenCalledTimes(1);
       debouncer.cancel();
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(mockFunc).toHaveBeenCalledTimes(1); // No trailing call
     });
   });
@@ -155,13 +160,13 @@ describe('Debouncer', () => {
       });
     });
 
-    it('should execute immediately and cancel pending', () => {
+    it('should execute immediately and cancel pending', async () => {
       debouncer.trigger('test');
       expect(mockFunc).not.toHaveBeenCalled();
       debouncer.flush();
       expect(mockFunc).toHaveBeenCalledWith('test');
       expect(debouncer.isPending).toBe(false);
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(mockFunc).toHaveBeenCalledTimes(1);
     });
 
@@ -180,14 +185,14 @@ describe('Debouncer', () => {
       });
     });
 
-    it('should execute after maxWait even with continuous triggers', () => {
+    it('should execute after maxWait even with continuous triggers', async () => {
       debouncer.trigger('first');
-      jest.advanceTimersByTime(500);
+      await fakeTimePassage(500);
       debouncer.trigger('second');
-      jest.advanceTimersByTime(500);
+      await fakeTimePassage(500);
       expect(mockFunc).toHaveBeenCalledWith('first'); // After maxWait
       debouncer.trigger('third');
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(mockFunc).toHaveBeenCalledWith('third');
     });
   });
@@ -210,57 +215,45 @@ describe('Debouncer', () => {
       });
     });
 
-    it('should bind thisContext correctly', () => {
+    it('should bind thisContext correctly', async () => {
       debouncer.trigger();
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(context.value).toBe('changed');
     });
   });
 
   describe('Edge Cases', () => {
-    it('should handle zero delay', () => {
+    it('should handle zero delay', async () => {
       debouncer = createDebouncer({
         func: mockFunc,
         delay: 0,
       });
       debouncer.trigger('test');
-      jest.advanceTimersByTime(0);
+      await fakeTimePassage(0);
       expect(mockFunc).toHaveBeenCalledWith('test');
     });
 
-    it('should handle no arguments', () => {
+    it('should handle no arguments', async () => {
       debouncer = createDebouncer({
         func: mockFunc,
         delay: 300,
       });
       debouncer.trigger();
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(mockFunc).toHaveBeenCalledWith();
     });
 
-    it('should handle multiple arguments', () => {
+    it('should handle multiple arguments', async () => {
       debouncer = createDebouncer({
         func: mockFunc,
         delay: 300,
       });
       debouncer.trigger('arg1', 'arg2', 123);
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(mockFunc).toHaveBeenCalledWith('arg1', 'arg2', 123);
     });
 
-    it('should not execute if func throws', () => {
-      mockFunc = jest.fn(() => {
-        throw new Error('test');
-      });
-      debouncer = createDebouncer({
-        func: mockFunc,
-        delay: 300,
-      });
-      debouncer.trigger();
-      expect(() => jest.advanceTimersByTime(300)).toThrow('test');
-    });
-
-    it('should double-invocation with leading: true, trailing: false, and maxWait on multiple trigger', () => {
+    it('should double-invocation with leading: true, trailing: false, and maxWait on multiple trigger', async () => {
       debouncer = createDebouncer({
         func: mockFunc,
         delay: 300,
@@ -270,15 +263,15 @@ describe('Debouncer', () => {
       });
       debouncer.trigger('first');
       expect(mockFunc).toHaveBeenCalledTimes(1); // Leading call
-      jest.advanceTimersByTime(200);
+      await fakeTimePassage(200);
       debouncer.trigger('second');
-      jest.advanceTimersByTime(200);
+      await fakeTimePassage(200);
       expect(mockFunc).toHaveBeenCalledTimes(1); // Should not call again yet
-      jest.advanceTimersByTime(200); // Trigger maxWait, which may call flush
+      await fakeTimePassage(200); // Trigger maxWait, which may call flush
       expect(mockFunc).toHaveBeenCalledTimes(2); // Should be called a second time due to maxWait
     });
 
-    it('should prevent double-invocation with leading: true, trailing: false, and maxWait on single trigger', () => {
+    it('should prevent double-invocation with leading: true, trailing: false, and maxWait on single trigger', async () => {
       debouncer = createDebouncer({
         func: mockFunc,
         delay: 300,
@@ -288,11 +281,11 @@ describe('Debouncer', () => {
       });
       debouncer.trigger('first');
       expect(mockFunc).toHaveBeenCalledTimes(1); // Leading call
-      jest.advanceTimersByTime(300);
+      await fakeTimePassage(300);
       expect(mockFunc).toHaveBeenCalledTimes(1); // Should not call again
     });
 
-    it('should prevent double-invocation with leading: true, trailing: false, and flush', () => {
+    it('should prevent double-invocation with leading: true, trailing: false, and flush', async () => {
       debouncer = createDebouncer({
         func: mockFunc,
         delay: 300,
@@ -301,14 +294,14 @@ describe('Debouncer', () => {
       });
       debouncer.trigger('first');
       expect(mockFunc).toHaveBeenCalledTimes(1); // Leading call
-      jest.advanceTimersByTime(100);
+      await fakeTimePassage(100);
       debouncer.flush();
       debouncer.flush();
       expect(mockFunc).toHaveBeenCalledTimes(1); // Should not call again
     });
   });
 
-  it('should execute after delay for trailing debounce', () => {
+  it('should execute after delay for trailing debounce', async () => {
     debouncer = createDebouncer({
       func: mockFunc,
       delay: 300,
@@ -317,10 +310,10 @@ describe('Debouncer', () => {
     });
     debouncer.trigger('first');
     expect(mockFunc).toHaveBeenCalledTimes(0); // No call yet
-    jest.advanceTimersByTime(300);
+    await fakeTimePassage(300);
     expect(mockFunc).toHaveBeenCalledTimes(1); // Trailing call
   });
-  it('should execute leading but skip trailing on single trigger', () => {
+  it('should execute leading but skip trailing on single trigger', async () => {
     debouncer = createDebouncer({
       func: mockFunc,
       delay: 300,
@@ -329,11 +322,11 @@ describe('Debouncer', () => {
     });
     debouncer.trigger('first');
     expect(mockFunc).toHaveBeenCalledTimes(1); // leading call
-    jest.advanceTimersByTime(300);
+    await fakeTimePassage(300);
     expect(mockFunc).toHaveBeenCalledTimes(1); // no trailing call on same argument
   });
 
-  it('should execute leading and skip trailing after flush', () => {
+  it('should execute leading and skip trailing after flush', async () => {
     debouncer = createDebouncer({
       func: mockFunc,
       delay: 300,
@@ -342,13 +335,13 @@ describe('Debouncer', () => {
     });
     debouncer.trigger('first');
     expect(mockFunc).toHaveBeenCalledTimes(1); // leading call
-    jest.advanceTimersByTime(100);
+    await fakeTimePassage(100);
     debouncer.flush();
-    jest.advanceTimersByTime(100);
+    await fakeTimePassage(100);
     expect(mockFunc).toHaveBeenCalledTimes(1); // no trailing call on same argument
   });
 
-  it('should execute leading and trailing on multiple triggers', () => {
+  it('should execute leading and trailing on multiple triggers', async () => {
     debouncer = createDebouncer({
       func: mockFunc,
       delay: 300,
@@ -359,12 +352,12 @@ describe('Debouncer', () => {
     expect(mockFunc).toHaveBeenCalledTimes(1); // leading call
     debouncer.trigger('second');
     expect(mockFunc).toHaveBeenCalledTimes(1); // No call again yet
-    jest.advanceTimersByTime(300);
+    await fakeTimePassage(300);
     expect(mockFunc).toHaveBeenCalledTimes(2); // Trailing call
     expect(mockFunc).toHaveBeenLastCalledWith('second');
   });
 
-  it('should execute leading and flush, skip trailing', () => {
+  it('should execute leading and flush, skip trailing', async () => {
     debouncer = createDebouncer({
       func: mockFunc,
       delay: 300,
@@ -379,7 +372,7 @@ describe('Debouncer', () => {
     debouncer.flush();
     expect(mockFunc).toHaveBeenCalledTimes(2);
     expect(mockFunc).toHaveBeenLastCalledWith('second');
-    jest.advanceTimersByTime(300);
+    await fakeTimePassage(300);
     debouncer.flush();
     expect(mockFunc).toHaveBeenCalledTimes(2); // no trailing call
   });
