@@ -1,24 +1,42 @@
-import {describe, beforeEach, afterEach, it, expect, jest} from '@jest/globals';
-import {createLocalStorageProvider, LocalStorageProvider} from '@alwatr/local-storage';
+import { describe, beforeEach, afterEach, it, expect, jest } from 'bun:test';
+import { createLocalStorageProvider, LocalStorageProvider } from '@alwatr/local-storage';
+
+/**
+ * @typedef {object} MockLocalStorage
+ * @property {import('bun:test').Mock<(key: string) => string | null>} getItem
+ * @property {import('bun:test').Mock<(key: string, value: string) => void>} setItem
+ * @property {import('bun:test').Mock<(key: string) => void>} removeItem
+ */
+
+/**
+ * @returns {MockLocalStorage}
+ */
+function createMockLocalStorage() {
+  return {
+    getItem: jest.fn(),
+    setItem: jest.fn(),
+    removeItem: jest.fn(),
+  };
+}
 
 /**
  * @jest-environment jsdom
  */
 describe('LocalStorageProvider', () => {
-  /**
-   * @type {jest.Mocked<Pick<Storage, "getItem" | "setItem" | "removeItem">>}
-   */
+  /** @type {MockLocalStorage} */
   let mockLocalStorage;
 
+  /** @type {Storage | undefined} */
+  let originalLocalStorage;
+
   beforeEach(() => {
-    mockLocalStorage = {
-      getItem: jest.fn(),
-      setItem: jest.fn(),
-      removeItem: jest.fn(),
-    };
+    originalLocalStorage = globalThis.localStorage;
+    mockLocalStorage = createMockLocalStorage();
+
     Object.defineProperty(globalThis, 'localStorage', {
       value: mockLocalStorage,
       writable: true,
+      configurable: true,
     });
   });
 
@@ -28,14 +46,14 @@ describe('LocalStorageProvider', () => {
 
   describe('static getKey', () => {
     it('should generate the correct versioned key', () => {
-      const key = LocalStorageProvider.getKey({name: 'test', schemaVersion: 1});
+      const key = LocalStorageProvider.getKey({ name: 'test', schemaVersion: 1 });
       expect(key).toBe('test.v1');
     });
 
     it('should handle different names and versions', () => {
-      const key1 = LocalStorageProvider.getKey({name: 'user-settings', schemaVersion: 2});
+      const key1 = LocalStorageProvider.getKey({ name: 'user-settings', schemaVersion: 2 });
       expect(key1).toBe('user-settings.v2');
-      const key2 = LocalStorageProvider.getKey({name: 'form-data', schemaVersion: 5});
+      const key2 = LocalStorageProvider.getKey({ name: 'form-data', schemaVersion: 5 });
       expect(key2).toBe('form-data.v5');
     });
   });
@@ -121,7 +139,7 @@ describe('LocalStorageProvider', () => {
         schemaVersion: 1,
       });
       const result = provider.read();
-      expect(result).toEqual({key: 'stored'});
+      expect(result).toEqual({ key: 'stored' });
     });
 
     it('should return null on invalid JSON', () => {
@@ -141,7 +159,7 @@ describe('LocalStorageProvider', () => {
         name: 'test',
         schemaVersion: 1,
       });
-      provider.write({key: 'newValue'});
+      provider.write({ key: 'newValue' });
       expect(mockLocalStorage.setItem).toHaveBeenCalledWith('test.v1', '{"key":"newValue"}');
     });
 
@@ -153,7 +171,7 @@ describe('LocalStorageProvider', () => {
         name: 'test',
         schemaVersion: 1,
       });
-      expect(() => provider.write({key: 'value'})).not.toThrow();
+      expect(() => provider.write({ key: 'value' })).not.toThrow();
     });
 
     it('should write different data types', () => {

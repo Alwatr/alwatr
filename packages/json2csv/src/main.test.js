@@ -1,5 +1,5 @@
 import {jsonToCsv} from '@alwatr/json2csv';
-import {describe, it, expect} from '@jest/globals';
+import {describe, it, expect} from 'bun:test';
 
 describe('jsonToCsv', () => {
   const testData = [
