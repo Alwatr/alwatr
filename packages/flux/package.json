@@ -9,12 +9,10 @@
     "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^6.4.1",
+    "@alwatr/nano-build": "^6.4.2",
     "@alwatr/prettier-config": "^6.0.2",
     "@alwatr/tsconfig-base": "^6.0.3",
-    "@alwatr/type-helper": "^7.0.1",
-    "@types/node": "^22.19.1",
-    "jest": "^30.2.0",
+    "@alwatr/type-helper": "^7.0.2",
     "typescript": "^5.9.3"
   },
   "exports": {
@@ -58,7 +56,7 @@
     "clean": "rm -rfv dist *.tsbuildinfo",
     "d": "bun run build:es && bun run --enable-source-maps --trace-warnings",
     "t": "bun run test",
-    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest",
+    "test": "bun test",
     "w": "bun run watch",
     "watch": "bun run watch:ts & bun run watch:es",
     "watch:es": "bun run build:es --watch",
