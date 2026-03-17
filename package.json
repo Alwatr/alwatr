@@ -10,6 +10,7 @@
     "@lerna-lite/publish": "^4.11.5",
     "@lerna-lite/run": "^4.11.5",
     "@lerna-lite/version": "^4.11.5",
+    "bun-types": "^1.3.10",
     "conventional-changelog-conventionalcommits": "^9.3.0",
     "conventional-commits-filter": "^5.0.0",
     "typescript": "^5.9.3"
@@ -39,7 +40,7 @@
     "rl": "bun run pull && bun run clean && bun run build && bun run lint && bun run test && bun run release",
     "rlt": "bun run release --dry-run",
     "t": "bun run test",
-    "test": "echo test-skipped",
+    "test": "bun test",
     "w": "bun run watch",
     "watch": "lerna run --parallel watch"
   },
