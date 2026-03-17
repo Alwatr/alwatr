@@ -1,15 +1,21 @@
-import {describe, beforeEach, it, expect, jest} from '@jest/globals';
+import {describe, beforeEach, it, expect, jest} from 'bun:test';
 import {fetch, FetchError} from '@alwatr/fetch';
 
 // Mock global fetch
 const mockFetch = jest.fn();
+// @ts-expect-error type mismatch for global fetch
 global.fetch = mockFetch;
 
 // Mock global navigator for offline tests
+// @ts-expect-error type mismatch for global navigator
 global.navigator = {onLine: true};
 
 // Helper to create mock Response
+/**
+ * @param {unknown} data
+ */
 function createMockResponse(data, options = {}) {
+// @ts-expect-error type mismatch for data
   const {status = 200, statusText = 'OK', headers = {}} = options;
   return {
     ok: status >= 200 && status < 300,
@@ -27,6 +33,7 @@ function createMockResponse(data, options = {}) {
 describe('@alwatr/fetch', () => {
   beforeEach(() => {
     mockFetch.mockClear();
+    // @ts-expect-error 'onLine' is a read-only property
     global.navigator.onLine = true;
   });
 
@@ -39,9 +46,9 @@ describe('@alwatr/fetch', () => {
 
       expect(error).toBeNull();
       expect(response).toBeDefined();
-      expect(response.ok).toBe(true);
-      expect(response.status).toBe(200);
-      await expect(response.json()).resolves.toEqual(mockData);
+      expect(response?.ok).toBe(true);
+      expect(response?.status).toBe(200);
+      expect(response?.json()).resolves.toEqual(mockData);
     });
 
     it('should handle query parameters correctly', async () => {
@@ -111,9 +118,9 @@ describe('@alwatr/fetch', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error.reason).toBe('http_error');
-      expect(error.response.status).toBe(404);
-      expect(error.data).toEqual(errorData);
+      expect(error?.reason).toBe('http_error');
+      expect(error?.response?.status).toBe(404);
+      expect(error?.data).toEqual(errorData);
     });
 
     it('should return [null, FetchError] for 500 server error', async () => {
@@ -126,8 +133,8 @@ describe('@alwatr/fetch', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error.reason).toBe('http_error');
-      expect(error.response.status).toBe(500);
+      expect(error?.reason).toBe('http_error');
+      expect(error?.response?.status).toBe(500);
     });
 
     it('should parse non-JSON error response as text', async () => {
@@ -146,7 +153,7 @@ describe('@alwatr/fetch', () => {
       const [response, error] = await fetch('https://api.example.com/bad');
 
       expect(error).toBeInstanceOf(FetchError);
-      expect(error.data).toBe('Plain text error message');
+      expect(error?.data).toBe('Plain text error message');
     });
   });
 
@@ -158,8 +165,8 @@ describe('@alwatr/fetch', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error.reason).toBe('network_error');
-      expect(error.message).toBe('Network request failed');
+      expect(error?.reason).toBe('network_error');
+      expect(error?.message).toBe('Network request failed');
     });
 
     it('should return [null, FetchError] for aborted request', async () => {
@@ -171,7 +178,7 @@ describe('@alwatr/fetch', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error.reason).toBe('aborted');
+      expect(error?.reason).toBe('aborted');
     });
 
     it('should handle unknown errors', async () => {
@@ -181,7 +188,7 @@ describe('@alwatr/fetch', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error.reason).toBe('unknown_error');
+      expect(error?.reason).toBe('unknown_error');
     });
   });
 
@@ -202,7 +209,7 @@ describe('@alwatr/fetch', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error.reason).toBe('timeout');
+      expect(error?.reason).toBe('timeout');
       clearTimeout(timeoutId);
     });
 
@@ -241,7 +248,7 @@ describe('@alwatr/fetch', () => {
       });
 
       expect(error).toBeNull();
-      expect(response.ok).toBe(true);
+      expect(response?.ok).toBe(true);
       expect(mockFetch).toHaveBeenCalledTimes(3);
     });
 
@@ -268,7 +275,7 @@ describe('@alwatr/fetch', () => {
       });
 
       expect(error).toBeInstanceOf(FetchError);
-      expect(error.reason).toBe('http_error');
+      expect(error?.reason).toBe('http_error');
       expect(mockFetch).toHaveBeenCalledTimes(1);
     });
 
@@ -284,11 +291,12 @@ describe('@alwatr/fetch', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error.reason).toBe('http_error');
+      expect(error?.reason).toBe('http_error');
       expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
     it('should not retry when offline', async () => {
+      // @ts-expect-error 'onLine' is a read-only property
       global.navigator.onLine = false;
       const errorResponse = createMockResponse({}, {status: 500});
       errorResponse.text = jest.fn().mockResolvedValue('');
@@ -318,7 +326,7 @@ describe('@alwatr/fetch', () => {
       expect(results).toHaveLength(3);
       results.forEach(([response, error]) => {
         expect(error).toBeNull();
-        expect(response.ok).toBe(true);
+        expect(response?.ok).toBe(true);
       });
     });
 
@@ -376,7 +384,7 @@ describe('@alwatr/fetch', () => {
       const [response, error] = await fetch('https://api.example.com/empty', {retry: 0});
 
       expect(error).toBeInstanceOf(FetchError);
-      expect(error.data).toBeUndefined();
+      expect(error?.data).toBeUndefined();
     });
 
     it('should handle malformed JSON in error response', async () => {
@@ -395,7 +403,7 @@ describe('@alwatr/fetch', () => {
       const [response, error] = await fetch('https://api.example.com/malformed', {retry: 0});
 
       expect(error).toBeInstanceOf(FetchError);
-      expect(error.data).toBe('{invalid json');
+      expect(error?.data).toBe('{invalid json');
     });
 
     it('should respect custom method', async () => {
