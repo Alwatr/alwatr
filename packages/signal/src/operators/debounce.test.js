@@ -7,10 +7,7 @@ describe('createDebouncedSignal', () => {
   /** @type {StateSignal<number>} */
   let sourceSignal;
   const name = 'test-debounce-signal';
-  /**
-   * @type {import("jest-mock").Mock<import("jest-mock").UnknownFunction>}
-   */
-  let mockFunc;
+  let mockFunc = jest.fn();
 
   beforeEach(() => {
     mockFunc = jest.fn();
