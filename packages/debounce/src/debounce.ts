@@ -38,6 +38,8 @@ export class Debouncer<F extends AnyFunc> {
   constructor(private readonly config__: DebouncerConfig<F>) {
     this.config__.trailing ??= true;
     this.flush = this.flush.bind(this);
+    this.trigger = this.trigger.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
 
   /**

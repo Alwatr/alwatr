@@ -55,6 +55,20 @@ describe('Debouncer', () => {
       await fakeTimePassage(300);
       expect(mockFunc).not.toHaveBeenCalled();
     });
+
+    it('should keep the this context for trigger', async () => {
+      setTimeout(debouncer.trigger, 10, 'test');
+      await fakeTimePassage(310);
+      expect(mockFunc).toHaveBeenCalled();
+      expect(mockFunc).toHaveBeenCalledWith('test');
+    })
+
+    it('should keep the this context for cancel', async () => {
+      debouncer.trigger('test');
+      setTimeout(debouncer.cancel, 10);
+      await fakeTimePassage(310);
+      expect(mockFunc).not.toHaveBeenCalled();
+    });
   });
 
   describe('Leading Debounce', () => {
