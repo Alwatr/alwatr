@@ -1,5 +1,5 @@
 import {cyrb53} from '@alwatr/cyrb53';
-import {describe, it, expect} from '@jest/globals';
+import {describe, it, expect} from 'bun:test';
 
 describe('cyrb53', () => {
   it('should generate a numeric hash for a string input', () => {
