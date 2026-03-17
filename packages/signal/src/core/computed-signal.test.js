@@ -1,4 +1,4 @@
-import {describe, beforeEach, afterEach, it, expect, jest} from '@jest/globals';
+import {describe, beforeEach, afterEach, it, expect, jest} from 'bun:test';
 import {ComputedSignal, StateSignal} from '@alwatr/signal';
 import {delay} from '@alwatr/delay';
 
