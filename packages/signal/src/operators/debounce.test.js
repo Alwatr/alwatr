@@ -33,7 +33,7 @@ describe('createDebouncedSignal', () => {
     expect(debouncedSignal.name).toBe(`${name}-debounced`);
   });
 
-  it.only('should debounce updates with trailing edge', async () => {
+  it('should debounce updates with trailing edge', async () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100});
 
     await fakeTimePassage(1);
