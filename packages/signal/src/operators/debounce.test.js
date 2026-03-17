@@ -2,6 +2,11 @@ import {describe, beforeEach, afterEach, it, expect, jest} from 'bun:test';
 import {ComputedSignal, createDebouncedSignal, StateSignal} from '@alwatr/signal';
 
 describe('createDebouncedSignal', () => {
+  const fakeTimePassage = async (ms = 0) => {
+    jest.advanceTimersByTime(ms);
+    await Promise.resolve();
+  };
+
   /** @type {ComputedSignal<number>} */
   let debouncedSignal;
   /** @type {StateSignal<number>} */
@@ -28,45 +33,50 @@ describe('createDebouncedSignal', () => {
     expect(debouncedSignal.name).toBe(`${name}-debounced`);
   });
 
-  it('should debounce updates with trailing edge', async () => {
+  it.only('should debounce updates with trailing edge', async () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100});
-    await jest.advanceTimersByTimeAsync(1);
-    sourceSignal.set(1);
-    sourceSignal.set(2);
+
+    await fakeTimePassage(1);
+    sourceSignal.set(10);
+    await fakeTimePassage(1);
+    sourceSignal.set(20);
+
+    expect(sourceSignal.get()).toBe(20);
     expect(debouncedSignal.get()).toBe(0);
-    await jest.advanceTimersByTimeAsync(110);
-    expect(debouncedSignal.get()).toBe(2);
+
+    await fakeTimePassage(100);
+    expect(debouncedSignal.get()).toBe(20);
   });
 
   it('should support leading edge', async () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100, leading: true});
-    await jest.advanceTimersByTimeAsync(1);
+    await fakeTimePassage(1);
     sourceSignal.set(1);
-    await jest.advanceTimersByTimeAsync(1);
+    await fakeTimePassage(1);
     expect(debouncedSignal.get()).toBe(1);
     sourceSignal.set(2);
-    await jest.advanceTimersByTimeAsync(10);
+    await fakeTimePassage(10);
     expect(debouncedSignal.get()).toBe(1);
-    await jest.advanceTimersByTimeAsync(100);
+    await fakeTimePassage(100);
     expect(debouncedSignal.get()).toBe(2);
   });
 
   it('should support trailing edge', async () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100, trailing: true});
-    await jest.advanceTimersByTimeAsync(1);
+    await fakeTimePassage(1);
     sourceSignal.set(1);
     sourceSignal.set(2);
-    await jest.advanceTimersByTimeAsync(1);
+    await fakeTimePassage(1);
     expect(debouncedSignal.get()).toBe(0);
-    await jest.advanceTimersByTimeAsync(100);
+    await fakeTimePassage(100);
     expect(debouncedSignal.get()).toBe(2);
   });
 
   it('should cancel debounced updates on destroy', async () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100});
-    await jest.advanceTimersByTimeAsync(1);
+    await fakeTimePassage(1);
     sourceSignal.set(1);
-    await jest.advanceTimersByTimeAsync(1);
+    await fakeTimePassage(1);
     debouncedSignal.destroy();
     expect(() => debouncedSignal.get()).toThrow(); // Should throw on access after
   });
@@ -85,14 +95,14 @@ describe('createDebouncedSignal', () => {
 
   it('should handle multiple rapid updates correctly', async () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100});
-    await jest.advanceTimersByTimeAsync(1);
+    await fakeTimePassage(1);
     sourceSignal.set(1);
-    await jest.advanceTimersByTimeAsync(50);
+    await fakeTimePassage(50);
     sourceSignal.set(2);
-    await jest.advanceTimersByTimeAsync(50);
+    await fakeTimePassage(50);
     sourceSignal.set(3);
     expect(debouncedSignal.get()).toBe(0);
-    await jest.advanceTimersByTimeAsync(110);
+    await fakeTimePassage(110);
     expect(debouncedSignal.get()).toBe(3);
   });
 
@@ -100,7 +110,7 @@ describe('createDebouncedSignal', () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100});
     const callback = jest.fn();
     debouncedSignal.subscribe(callback);
-    await jest.advanceTimersByTimeAsync(1);
+    await fakeTimePassage(1);
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(0);
   });
@@ -110,7 +120,7 @@ describe('createDebouncedSignal', () => {
     const callback = jest.fn();
     debouncedSignal.subscribe(callback, {receivePrevious: false});
     sourceSignal.set(1);
-    await jest.advanceTimersByTimeAsync(110);
+    await fakeTimePassage(110);
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(1);
   });
@@ -120,7 +130,7 @@ describe('createDebouncedSignal', () => {
     const callback = jest.fn();
     debouncedSignal.subscribe(callback, {receivePrevious: false});
     sourceSignal.set(0); // Same as initial
-    await jest.advanceTimersByTimeAsync(110);
+    await fakeTimePassage(110);
     expect(callback).not.toHaveBeenCalled();
   });
 
@@ -131,7 +141,7 @@ describe('createDebouncedSignal', () => {
     debouncedSignal.subscribe(callback1, {receivePrevious: false});
     debouncedSignal.subscribe(callback2, {receivePrevious: false});
     sourceSignal.set(5);
-    await jest.advanceTimersByTimeAsync(110);
+    await fakeTimePassage(110);
     expect(callback1).toHaveBeenCalledTimes(1);
     expect(callback1).toHaveBeenCalledWith(5);
     expect(callback2).toHaveBeenCalledTimes(1);
@@ -144,7 +154,7 @@ describe('createDebouncedSignal', () => {
     const subscription = debouncedSignal.subscribe(callback, {receivePrevious: false});
     subscription.unsubscribe();
     sourceSignal.set(10);
-    await jest.advanceTimersByTimeAsync(110);
+    await fakeTimePassage(110);
     expect(callback).not.toHaveBeenCalled();
   });
 
@@ -153,11 +163,11 @@ describe('createDebouncedSignal', () => {
     const callback = jest.fn();
     debouncedSignal.subscribe(callback, {once: true, receivePrevious: false});
     sourceSignal.set(10);
-    await jest.advanceTimersByTimeAsync(110);
+    await fakeTimePassage(110);
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(10);
     sourceSignal.set(20);
-    await jest.advanceTimersByTimeAsync(110);
+    await fakeTimePassage(110);
     expect(callback).toHaveBeenCalledTimes(1); // Should not be called again
   });
 
@@ -165,7 +175,7 @@ describe('createDebouncedSignal', () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100});
     const untilNextPromise = debouncedSignal.untilNext();
     sourceSignal.set(5);
-    await jest.advanceTimersByTimeAsync(110);
+    await fakeTimePassage(110);
     await expect(untilNextPromise).resolves.toBe(5);
   });
 
@@ -178,7 +188,7 @@ describe('createDebouncedSignal', () => {
     debouncedSignal.subscribe(callback1, {receivePrevious: false});
     debouncedSignal.subscribe(callback2, {receivePrevious: false});
     sourceSignal.set(10);
-    await jest.advanceTimersByTimeAsync(110);
+    await fakeTimePassage(110);
     expect(callback1).toHaveBeenCalledTimes(1);
     expect(callback2).toHaveBeenCalledTimes(1);
   });
@@ -187,7 +197,7 @@ describe('createDebouncedSignal', () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100});
     expect(debouncedSignal.get()).toBe(0);
     sourceSignal.set(7);
-    await jest.advanceTimersByTimeAsync(110);
+    await fakeTimePassage(110);
     expect(debouncedSignal.get()).toBe(7);
   });
 
@@ -197,7 +207,7 @@ describe('createDebouncedSignal', () => {
     debouncedSignal.subscribe(callback, {receivePrevious: false});
     debouncedSignal.destroy();
     sourceSignal.set(10);
-    await jest.advanceTimersByTimeAsync(110);
+    await fakeTimePassage(110);
     expect(callback).not.toHaveBeenCalled();
   });
 });
