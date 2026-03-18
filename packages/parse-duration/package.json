@@ -67,7 +67,7 @@
     "c": "bun run clean",
     "cb": "bun run clean && bun run build",
     "clean": "rm -rfv dist *.tsbuildinfo",
-    "d": "bun run build:es && bun --enable-source-maps --trace-warnings",
+    "d": "bun run build:es && bun",
     "t": "bun run test",
     "test": "bun test",
     "w": "bun run watch",
