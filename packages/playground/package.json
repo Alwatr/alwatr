@@ -13,20 +13,21 @@
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
-      "import": "./dist/main.mjs",
-      "require": "./dist/main.cjs"
+      "default": "./dist/main.js"
+      
     }
   },
   "files": [
-    "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
     "LICENSE",
     "!demo/**/*",
     "!**/*.test.js"
   ],
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/nanolib#readme",
   "license": "MPL-2.0",
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
+  
+  
   "nano-build": {
     "entryPoints": [
       "src/main.ts"
