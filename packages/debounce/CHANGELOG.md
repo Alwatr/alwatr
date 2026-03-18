@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.21](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.20...@alwatr/debounce@1.1.21) (2026-03-18)
+
+### 🐛 Bug Fixes
+
+* bind trigger and cancel methods in Debouncer constructor ([1ba2b3f](https://github.com/Alwatr/nanolib/commit/1ba2b3fd946b240252d8f5431a97117eb5826873))
+
 ## [1.1.20](https://github.com/Alwatr/nanolib/compare/@alwatr/debounce@1.1.19...@alwatr/debounce@1.1.20) (2026-03-16)
 
 ### 🔨 Code Refactoring

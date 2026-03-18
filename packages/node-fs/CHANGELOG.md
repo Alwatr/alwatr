@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.33](https://github.com/Alwatr/nanolib/compare/@alwatr/node-fs@5.5.32...@alwatr/node-fs@5.5.33) (2026-03-18)
+
+**Note:** Version bump only for package @alwatr/node-fs
+
 ## [5.5.32](https://github.com/Alwatr/nanolib/compare/@alwatr/node-fs@5.5.31...@alwatr/node-fs@5.5.32) (2026-03-16)
 
 ### 🔨 Code Refactoring
