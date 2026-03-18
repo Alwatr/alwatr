@@ -1,23 +1,19 @@
 {
   "name": "@alwatr/nano-build",
-  "description": "Build/bundle tools for ECMAScript, TypeScript, and JavaScript libraries. It's easy to use, doesn't require any setup, and adheres to best practices. It has no dependencies and uses esbuild for enhanced performance.",
-  "version": "6.4.2",
+  "description": "Lightweight, zero-config Bun-based build CLI for JavaScript, TypeScript, and ECMAScript libraries. Minimal dependencies, fast builds, and sensible presets for multiple project types.",
+  "version": "7.0.0-rc",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "bin": "./cli.cjs",
+  "bin": "./cli.sh",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
-    "esbuild": "^0.27.4",
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
-    "@alwatr/prettier-config": "workspace:*",
-    "@alwatr/tsconfig-base": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
-    "@types/node": "^24.12.0",
-    "typescript": "^5.9.3"
+    "@alwatr/prettier-config": "workspace:*"
   },
   "files": [
-    "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
+    "**/*.{sh,js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
     "LICENSE",
     "!demo/**/*",
     "!**/*.test.js"
@@ -30,6 +26,7 @@
     "bundle",
     "cross-platform",
     "ECMAScript",
+    "bun",
     "esbuild",
     "esm",
     "javascript",
@@ -43,7 +40,6 @@
     "utils"
   ],
   "license": "MPL-2.0",
-  "main": "",
   "prettier": "@alwatr/prettier-config",
   "publishConfig": {
     "access": "public"
