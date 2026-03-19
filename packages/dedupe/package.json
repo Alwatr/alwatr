@@ -74,6 +74,5 @@
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "sideEffects": true,
-  "type": "module",
-  "types": "./dist/main.d.ts"
+  "type": "module"
 }
