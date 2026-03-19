@@ -4,18 +4,15 @@ name: Publish NPM
 
 on:
   workflow_dispatch:
-
   release:
     types:
       - created
 
 env:
-  NODE_VERSION: lts/*
+  BUN_VERSION: latest
 
 jobs:
   publish-npm:
-    if: github.repository_owner == 'Alwatr'
-
     name: Publish NPM
     runs-on: ubuntu-latest
 
@@ -24,40 +21,27 @@ jobs:
 
     steps:
       - name: ⤵️ Checkout repository
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6
 
-      - name: 🏗 Setup nodejs
-        uses: actions/setup-node@v4.4.0
+      - name: 🏗 Setup bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          registry-url: 'https://registry.npmjs.org'
+          bun-version: ${{ env.BUN_VERSION }}
 
-      - name: 🏗 Setup nodejs corepack
-        run: corepack enable
-
-      - name: 🏗 Get yarn config
-        id: yarn_config
-        run: echo "cache_folder=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-
-      - name: 🏗 Cache Layer
-        uses: actions/cache@v4.2.4
-        # id: yarn_cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn_config.outputs.cache_folder }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      - name: 🔐 Configure NPM authentication and verify
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
+          bun pm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: 🏗 Install dependencies
-        run: yarn install --immutable
+        run: bun ci
 
-      - name: 🏗 Build Typescript
-        run: yarn build
-
-      # - name: 🚀 Extra Packages Build
-      #   run: yarn build:r
+      - name: 🚀 Build Typescript
+        run: bun run build
 
       - name: 🚀 Publish
-        run: yarn run publish --yes
+        run: bun run publish --yes
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
