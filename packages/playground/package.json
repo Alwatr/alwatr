@@ -8,6 +8,7 @@
     "@alwatr/nanolib": "workspace:*"
   },
   "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
     "typescript": "^5.9.3"
   },
   "exports": {
@@ -28,20 +29,6 @@
   "license": "MPL-2.0",
   
   
-  "nano-build": {
-    "entryPoints": [
-      "src/main.ts"
-    ],
-    "minify": false,
-    "minifyWhitespace": false,
-    "treeShaking": true,
-    "bundle": true,
-    "platform": "node",
-    "format": "iife",
-    "dropLabels": [
-      "__dev_mode__"
-    ]
-  },
   "prettier": "@alwatr/nanolib/prettier",
   "private": true,
   "publishConfig": {
@@ -55,7 +42,7 @@
   "scripts": {
     "b": "bun run build",
     "build": "bun run build:ts && bun run build:es",
-    "build:es": "nano-build",
+    "build:es": "nano-build --target=bun src/main.ts",
     "build:ts": "tsc --build",
     "c": "bun run clean",
     "cb": "bun run clean && bun run build",
