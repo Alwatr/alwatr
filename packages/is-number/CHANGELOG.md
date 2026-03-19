@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.7.27...@alwatr/is-number@6.0.0) (2026-03-19)
+
+### ⚠ BREAKING CHANGES
+
+* This package is now ESM-only and no longer provides CommonJS (CJS) distribution.
+- Minimum Node.js version is now 14.13.0 (or 12.22.0 for older versions with --experimental-modules flag)
+- All require() statements must be replaced with import statements
+- CommonJS require() is no longer supported
+
+### 🔨 Code Refactoring
+
+* convert to ESM-only module ([493d7d9](https://github.com/Alwatr/nanolib/commit/493d7d9d76d03c43902eb04f0a9ecebac8f6fbba))
+
+### 🧹 Miscellaneous Chores
+
+* remove unnecessary whitespace in package.json files across multiple packages ([d0cc5c8](https://github.com/Alwatr/nanolib/commit/d0cc5c8eb7b958498d82ad4a009dffb95db572bd))
+* update build command in package.json files to remove source map flags ([6b504fc](https://github.com/Alwatr/nanolib/commit/6b504fc4f813146064a21638014a62b0b5b95ca0))
+* update build:es script to include src/main.ts for all packages ([bc5454d](https://github.com/Alwatr/nanolib/commit/bc5454dc3536e5d2a6ac53be602e93ba7133fb32))
+
 ## [5.7.27](https://github.com/Alwatr/nanolib/compare/@alwatr/is-number@5.7.26...@alwatr/is-number@5.7.27) (2026-03-18)
 
 **Note:** Version bump only for package @alwatr/is-number

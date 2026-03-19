@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@6.0.4...@alwatr/tsconfig-base@7.0.0) (2026-03-19)
+
+### ⚠ BREAKING CHANGES
+
+* This package is now ESM-only and no longer provides CommonJS (CJS) distribution.
+- Minimum Node.js version is now 14.13.0 (or 12.22.0 for older versions with --experimental-modules flag)
+- All require() statements must be replaced with import statements
+- CommonJS require() is no longer supported
+
+### 🔨 Code Refactoring
+
+* convert to ESM-only module ([493d7d9](https://github.com/Alwatr/nanolib/commit/493d7d9d76d03c43902eb04f0a9ecebac8f6fbba))
+
 ## [6.0.4](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@6.0.3...@alwatr/tsconfig-base@6.0.4) (2025-11-18)
 
 ### 🐛 Bug Fixes

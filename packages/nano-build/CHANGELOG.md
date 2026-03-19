@@ -3,6 +3,148 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.4.2...@alwatr/nano-build@7.0.0) (2026-03-19)
+
+### ⚠ BREAKING CHANGES
+
+* Complete rewrite from Node.js to Bun with shell script wrapper
+
+This is a major rewrite introducing fundamental changes to how nano-build works:
+
+## 🔄 Implementation Changes
+
+- **Removed**: Node.js CommonJS CLI (`cli.cjs`) - No longer provides Node.js executable
+- **Added**: Bash shell script CLI (`cli.sh`) - Pure shell wrapper around `bun build`
+- **Removed dependency**: esbuild - Now uses Bun's built-in bundler instead
+- **Removed dependencies**: typescript, @types/node, @alwatr/tsconfig-base, @alwatr/type-helper
+- **Removed**: TypeScript type definitions (global.d.ts no longer exported)
+
+## 🚀 Runtime Requirements
+
+**Before (v6):**
+
+- Required: Node.js
+- Optional: Bun
+
+**After (v7):**
+
+- Required: Bun
+- Not compatible: Node.js-only environments
+
+## 📦 Dependencies Changed
+
+**Removed:**
+
+- `esbuild` (core dependency)
+- `@alwatr/type-helper` (dev)
+- `@alwatr/tsconfig-base` (dev)
+- `@types/node` (dev)
+- `typescript` (dev)
+
+## 🎯 Preset Changes
+
+**Removed presets:**
+
+- `default`
+- `module2`, `module3` (multi-entry variants removed)
+- `pwa` (use `web` preset instead)
+- `pmpa` (use `web` preset instead)
+- `weaver` (use `web` preset instead)
+- `microservice` (use `node-service` or `bun-service` instead)
+
+**New presets:**
+
+- `module` - Single ESM module for Node.js (replaces old `module` with simplified options)
+- `web` - Browser bundles (replaces `pwa`, `pmpa`, `weaver`)
+- `node-service` - Bundled Node.js backend services
+- `bun-service` - Bundled Bun backend services
+
+## ⚙️ CLI Changes
+
+**Before:**
+
+```bash
+bun run build              # Uses Node.js runtime
+nano-build --preset=module src/main.ts # Direct Node.js CLI execution
+```
+
+**After:**
+
+```bash
+nano-build --preset=module src/main.ts # Uses bash script wrapper
+nano-build --preset=module src/*.ts    # Multi-entry build
+```
+
+**New requirements:**
+
+- `bun` must be installed and in PATH
+- Shell environment required (bash)
+
+## 🔍 Migration Guide
+
+### For library modules (v6 → v7)
+
+```bash
+# Before
+npm run build  # via node cli.cjs with preset=module + explicit entrypoint
+
+# After
+npm run build  # via bash cli.sh with preset=module + explicit entrypoint
+```
+
+### For web projects (v6 → v7)
+
+```bash
+# Before
+nano-build --preset=pwa src/main.ts
+
+# After
+nano-build --preset=web src/main.ts
+```
+
+### For services (v6 → v7)
+
+```bash
+# Before
+nano-build --preset=microservice src/main.ts
+
+# After
+nano-build --preset=node-service src/main.ts    # For Node.js
+# or
+nano-build --preset=bun-service src/main.ts     # For Bun
+```
+
+## ✅ Upgrade Checklist
+
+- [ ] Ensure Bun is installed: `curl -fsSL https://bun.sh/install | bash`
+- [ ] Update npm/yarn scripts to use new presets
+- [ ] Test builds with `bun run build`
+- [ ] Test production builds with `NODE_ENV=production bun run build`
+- [ ] Update CI/CD pipelines to use Bun instead of Node.js
+
+## Version
+
+Updates: v6.4.2 → v7.0.0-rc
+
+For Node.js/esbuild compatibility, users should remain on v6.x.
+
+### ✨ Features
+
+* rewrite nano-build as bun-based shell CLI ([a66712c](https://github.com/Alwatr/nanolib/commit/a66712c40ed365172b87bac11dd7ac07742c3dc1))
+
+### 🐛 Bug Fixes
+
+* update package name and version extraction in cli.sh for consistency ([fc24985](https://github.com/Alwatr/nanolib/commit/fc249851d0eb209a2dc3e7077e728648cb3e1dc1))
+
+### 🧹 Miscellaneous Chores
+
+* remove unnecessary whitespace in package.json files across multiple packages ([d0cc5c8](https://github.com/Alwatr/nanolib/commit/d0cc5c8eb7b958498d82ad4a009dffb95db572bd))
+* revert version to 6.4.2 in package.json ([3d483c6](https://github.com/Alwatr/nanolib/commit/3d483c667f0595eb09ecefce936da6075f96dddb))
+
+### 🔗 Dependencies update
+
+* remove unnecessary dependencies and prettier configuration from package.json ([22798ad](https://github.com/Alwatr/nanolib/commit/22798ad9ebffc1352693e526661c06b94d9dcc2a))
+
 ## [6.4.2](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@6.4.1...@alwatr/nano-build@6.4.2) (2026-03-16)
 
 ### 🐛 Bug Fixes

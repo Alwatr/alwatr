@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/dedupe@5.5.31...@alwatr/dedupe@6.0.0) (2026-03-19)
+
+### ⚠ BREAKING CHANGES
+
+* This package is now ESM-only and no longer provides CommonJS (CJS) distribution.
+- Minimum Node.js version is now 14.13.0 (or 12.22.0 for older versions with --experimental-modules flag)
+- All require() statements must be replaced with import statements
+- CommonJS require() is no longer supported
+
+### 🔨 Code Refactoring
+
+* convert to ESM-only module ([493d7d9](https://github.com/Alwatr/nanolib/commit/493d7d9d76d03c43902eb04f0a9ecebac8f6fbba))
+
+### 🧹 Miscellaneous Chores
+
+* remove unnecessary whitespace in package.json files across multiple packages ([d0cc5c8](https://github.com/Alwatr/nanolib/commit/d0cc5c8eb7b958498d82ad4a009dffb95db572bd))
+* update build:es script to include src/main.ts for all packages ([bc5454d](https://github.com/Alwatr/nanolib/commit/bc5454dc3536e5d2a6ac53be602e93ba7133fb32))
+
 ## [5.5.31](https://github.com/Alwatr/nanolib/compare/@alwatr/dedupe@5.5.30...@alwatr/dedupe@5.5.31) (2026-03-16)
 
 ### 🔨 Code Refactoring

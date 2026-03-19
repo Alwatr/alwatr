@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/exit-hook",
   "description": "A utility for registering exit handlers in Node.js.",
-  "version": "5.5.29",
+  "version": "6.0.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "devDependencies": {
