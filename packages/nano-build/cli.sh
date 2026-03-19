@@ -17,8 +17,8 @@ devMode="true"
 if [[ "${NODE_ENV:-}" == "production" ]]; then
   devMode="false"
 fi
-packageName="$(awk -F'"' '/"name"/ {print $4; exit}' package.json)"
-packageVersion="$(awk -F'"' '/"version"/ {print $4; exit}' package.json)"
+packageName="$(grep -o '"name": *"[^"]*"' package.json | cut -d'"' -f4)"
+packageVersion="$(grep -o '"version": *"[^"]*"' package.json | cut -d'"' -f4)"
 banner="📦 ${packageName} v${packageVersion}"
 
 echoColor 2 '\n🚀 Alwatr Nano Build\n'
