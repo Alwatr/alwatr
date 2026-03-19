@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/nano-build",
   "description": "Lightweight, zero-config Bun-based build CLI for JavaScript, TypeScript, and ECMAScript libraries. Minimal dependencies, fast builds, and sensible presets for multiple project types.",
-  "version": "7.0.0-rc",
+  "version": "6.4.2",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bin": "./cli.sh",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
