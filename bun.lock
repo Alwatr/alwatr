@@ -7,6 +7,7 @@
       "devDependencies": {
         "@lerna-lite/cli": "^4.11.5",
         "@lerna-lite/publish": "^4.11.5",
+        "@lerna-lite/run": "^4.11.5",
         "@lerna-lite/version": "^4.11.5",
         "bun-types": "^1.3.11",
         "conventional-changelog-conventionalcommits": "^9.3.0",
@@ -16,7 +17,7 @@
     },
     "packages/async-queue": {
       "name": "@alwatr/async-queue",
-      "version": "5.5.30",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/flatomise": "workspace:*",
       },
@@ -30,7 +31,7 @@
     },
     "packages/cyrb53": {
       "name": "@alwatr/cyrb53",
-      "version": "1.0.17",
+      "version": "2.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -41,7 +42,7 @@
     },
     "packages/debounce": {
       "name": "@alwatr/debounce",
-      "version": "1.1.21",
+      "version": "2.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -53,7 +54,7 @@
     },
     "packages/dedupe": {
       "name": "@alwatr/dedupe",
-      "version": "5.5.31",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/has-own": "workspace:*",
@@ -68,7 +69,7 @@
     },
     "packages/deep-clone": {
       "name": "@alwatr/deep-clone",
-      "version": "5.5.29",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -78,7 +79,7 @@
     },
     "packages/delay": {
       "name": "@alwatr/delay",
-      "version": "6.0.22",
+      "version": "7.0.0",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/parse-duration": "workspace:*",
@@ -94,7 +95,7 @@
     },
     "packages/djb2-hash": {
       "name": "@alwatr/djb2-hash",
-      "version": "1.1.18",
+      "version": "2.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -104,7 +105,7 @@
     },
     "packages/env": {
       "name": "@alwatr/env",
-      "version": "5.5.30",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/platform-info": "workspace:*",
       },
@@ -119,7 +120,7 @@
     },
     "packages/exit-hook": {
       "name": "@alwatr/exit-hook",
-      "version": "5.5.29",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -130,7 +131,7 @@
     },
     "packages/fetch": {
       "name": "@alwatr/fetch",
-      "version": "7.1.6",
+      "version": "8.0.0",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/global-this": "workspace:*",
@@ -149,7 +150,7 @@
     },
     "packages/flat-string": {
       "name": "@alwatr/flat-string",
-      "version": "5.5.29",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -159,7 +160,7 @@
     },
     "packages/flatomise": {
       "name": "@alwatr/flatomise",
-      "version": "5.5.29",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -170,7 +171,7 @@
     },
     "packages/global-this": {
       "name": "@alwatr/global-this",
-      "version": "5.6.10",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -182,7 +183,7 @@
     },
     "packages/has-own": {
       "name": "@alwatr/has-own",
-      "version": "5.6.8",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -192,7 +193,7 @@
     },
     "packages/hash-string": {
       "name": "@alwatr/hash-string",
-      "version": "5.2.30",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -202,7 +203,7 @@
     },
     "packages/http-primer": {
       "name": "@alwatr/http-primer",
-      "version": "6.0.21",
+      "version": "7.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -213,7 +214,7 @@
     },
     "packages/iranian-national-code-validator": {
       "name": "@alwatr/iranian-national-code-validator",
-      "version": "1.0.22",
+      "version": "2.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -224,7 +225,7 @@
     },
     "packages/is-number": {
       "name": "@alwatr/is-number",
-      "version": "5.7.27",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -234,7 +235,7 @@
     },
     "packages/json2csv": {
       "name": "@alwatr/json2csv",
-      "version": "1.0.5",
+      "version": "2.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -245,7 +246,7 @@
     },
     "packages/local-storage": {
       "name": "@alwatr/local-storage",
-      "version": "7.0.9",
+      "version": "8.0.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -259,7 +260,7 @@
     },
     "packages/logger": {
       "name": "@alwatr/logger",
-      "version": "6.0.18",
+      "version": "7.0.0",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/platform-info": "workspace:*",
@@ -274,12 +275,12 @@
     },
     "packages/nano-build": {
       "name": "@alwatr/nano-build",
-      "version": "6.4.2",
+      "version": "7.0.0",
       "bin": "./cli.sh",
     },
     "packages/nanolib": {
       "name": "@alwatr/nanolib",
-      "version": "7.3.8",
+      "version": "8.0.0",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/cyrb53": "workspace:*",
@@ -301,6 +302,7 @@
         "@alwatr/json2csv": "workspace:*",
         "@alwatr/local-storage": "workspace:*",
         "@alwatr/logger": "workspace:*",
+        "@alwatr/nano-build": "workspace:*",
         "@alwatr/node-fs": "workspace:*",
         "@alwatr/parse-duration": "workspace:*",
         "@alwatr/platform-info": "workspace:*",
@@ -314,13 +316,12 @@
         "@alwatr/unicode-digits": "workspace:*",
       },
       "devDependencies": {
-        "@alwatr/nano-build": "workspace:*",
         "typescript": "^5.9.3",
       },
     },
     "packages/node-fs": {
       "name": "@alwatr/node-fs",
-      "version": "5.5.33",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/flat-string": "workspace:*",
@@ -337,7 +338,7 @@
     },
     "packages/package-tracer": {
       "name": "@alwatr/package-tracer",
-      "version": "5.5.28",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -348,7 +349,7 @@
     },
     "packages/parse-duration": {
       "name": "@alwatr/parse-duration",
-      "version": "5.5.31",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/is-number": "workspace:*",
       },
@@ -361,7 +362,7 @@
     },
     "packages/platform-info": {
       "name": "@alwatr/platform-info",
-      "version": "5.5.29",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -384,14 +385,14 @@
     },
     "packages/prettier-config": {
       "name": "@alwatr/prettier-config",
-      "version": "6.0.2",
+      "version": "7.0.0",
       "devDependencies": {
         "prettier": "^3.8.1",
       },
     },
     "packages/random": {
       "name": "@alwatr/random",
-      "version": "5.1.31",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
       },
@@ -404,7 +405,7 @@
     },
     "packages/render-state": {
       "name": "@alwatr/render-state",
-      "version": "5.5.32",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -417,7 +418,7 @@
     },
     "packages/resolve-url": {
       "name": "@alwatr/resolve-url",
-      "version": "5.5.33",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -428,7 +429,7 @@
     },
     "packages/session-storage": {
       "name": "@alwatr/session-storage",
-      "version": "1.0.1",
+      "version": "2.0.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -442,7 +443,7 @@
     },
     "packages/synapse": {
       "name": "@alwatr/synapse",
-      "version": "1.4.1",
+      "version": "2.0.0",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/logger": "workspace:*",
@@ -457,11 +458,11 @@
     },
     "packages/tsconfig-base": {
       "name": "@alwatr/tsconfig-base",
-      "version": "6.0.4",
+      "version": "7.0.0",
     },
     "packages/type-helper": {
       "name": "@alwatr/type-helper",
-      "version": "7.0.2",
+      "version": "8.0.0",
       "devDependencies": {
         "@alwatr/prettier-config": "workspace:*",
         "typescript": "^5.9.3",
@@ -469,7 +470,7 @@
     },
     "packages/unicode-digits": {
       "name": "@alwatr/unicode-digits",
-      "version": "5.5.30",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -582,7 +583,11 @@
 
     "@lerna-lite/npmlog": ["@lerna-lite/npmlog@4.11.5", "", { "dependencies": { "aproba": "^2.1.0", "fast-string-width": "^3.0.2", "has-unicode": "^2.0.1", "signal-exit": "^4.1.0", "tinyrainbow": "^3.0.3", "wide-align": "^1.1.5" } }, "sha512-f03zVtCx3JWD2uEh8hMERa5SaaFSFwzez0GhoYzq84FGB0OkZom776rcP9qAqziCaZm4v7BrUKsphiwQL0q2CA=="],
 
+    "@lerna-lite/profiler": ["@lerna-lite/profiler@4.11.5", "", { "dependencies": { "@lerna-lite/core": "4.11.5", "@lerna-lite/npmlog": "4.11.5", "fs-extra": "^11.3.4" } }, "sha512-/0y5mdhTqJYkhsiLC0WNvLzIqf+DpxWpOd9deSCOheXLGImE+4Ne9zjY89xtno3zlOZ4tt7uXVJuoHKGTENJRg=="],
+
     "@lerna-lite/publish": ["@lerna-lite/publish@4.11.5", "", { "dependencies": { "@lerna-lite/cli": "4.11.5", "@lerna-lite/core": "4.11.5", "@lerna-lite/npmlog": "4.11.5", "@lerna-lite/version": "4.11.5", "@npmcli/arborist": "^9.4.1", "@npmcli/package-json": "^7.0.5", "byte-size": "^9.0.1", "ci-info": "^4.4.0", "columnify": "^1.6.0", "fs-extra": "^11.3.4", "has-unicode": "^2.0.1", "libnpmaccess": "^10.0.3", "libnpmpublish": "^11.1.3", "normalize-path": "^3.0.0", "npm-package-arg": "^13.0.2", "npm-packlist": "^10.0.4", "npm-registry-fetch": "^19.1.1", "p-map": "^7.0.4", "pacote": "^21.5.0", "semver": "^7.7.4", "ssri": "^13.0.1", "tar": "^7.5.11", "tinyglobby": "^0.2.15", "tinyrainbow": "^3.0.3" } }, "sha512-vEJoz0YnB3pQyUOU7d5yxoRhqwH0aFLlLZ1yIC2/G0nJ9ufYENU/0O4m7wQb1CRANSe46f51VBRu04ERI9CD2g=="],
+
+    "@lerna-lite/run": ["@lerna-lite/run@4.11.5", "", { "dependencies": { "@lerna-lite/cli": "4.11.5", "@lerna-lite/core": "4.11.5", "@lerna-lite/npmlog": "4.11.5", "@lerna-lite/profiler": "4.11.5", "fs-extra": "^11.3.4", "p-map": "^7.0.4", "tinyrainbow": "^3.0.3" } }, "sha512-oWH8GcpDvfzkN9UcHvJY8zHNpHrKCoaA+1kY/XslbN1gr07mzJtno3maxvrI3Dv3TJxZG8aufTVbRtXzlNNh8Q=="],
 
     "@lerna-lite/version": ["@lerna-lite/version@4.11.5", "", { "dependencies": { "@conventional-changelog/git-client": "^2.6.0", "@lerna-lite/cli": "4.11.5", "@lerna-lite/core": "4.11.5", "@lerna-lite/npmlog": "4.11.5", "@octokit/plugin-enterprise-rest": "^6.0.1", "@octokit/rest": "^22.0.1", "conventional-changelog": "^7.2.0", "conventional-changelog-angular": "^8.3.0", "conventional-changelog-writer": "^8.4.0", "conventional-commits-parser": "^6.3.0", "conventional-recommended-bump": "^11.2.0", "dedent": "^1.7.2", "fs-extra": "^11.3.4", "git-url-parse": "^16.1.0", "load-json-file": "^7.0.1", "new-github-release-url": "^2.0.0", "npm-package-arg": "^13.0.2", "p-limit": "^7.3.0", "p-map": "^7.0.4", "semver": "^7.7.4", "tinyrainbow": "^3.0.3", "write-json-file": "^7.0.0", "zeptomatch": "^2.1.0" } }, "sha512-HlPDQ2cluAKYbIzJGIPaFmQKEEdARr+sW64lShVgJqBUQgVegEiRtrNsR8dql4LBj0l78fKi4cFFknNHcyXMPQ=="],
 
