@@ -25,6 +25,7 @@
     "@alwatr/json2csv": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/logger": "workspace:*",
+    "@alwatr/nano-build": "workspace:*",
     "@alwatr/node-fs": "workspace:*",
     "@alwatr/parse-duration": "workspace:*",
     "@alwatr/platform-info": "workspace:*",
@@ -38,7 +39,6 @@
     "@alwatr/unicode-digits": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "workspace:*",
     "typescript": "^5.9.3"
   },
   "exports": {
