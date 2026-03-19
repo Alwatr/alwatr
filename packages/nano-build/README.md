@@ -249,7 +249,6 @@ Version 7 is a major rewrite with breaking changes:
 - **Changed requirement**: Requires Bun runtime (not Node.js)
 - **Simplified presets**: Removed `module2`, `module3`, `pwa`, `pmpa`, `weaver`, `microservice`
 - **New presets**: `module`, `web`, `node-service`, `bun-service`
-- **Removed**: TypeScript types and type definitions
 
 If you need Node.js compatibility, please use v6.x.
 
