@@ -1,6 +1,6 @@
 # Nano Build
 
-Lightweight, zero-config Bun-based build CLI for JavaScript, TypeScript, and ECMAScript libraries. Provides sensible defaults and preset configurations for different project types without complex setup.
+Lightweight, zero-config Bun-based build CLI powered by `bun build` for modern app and library bundling. Supports JavaScript/TypeScript plus Bun's built-in content loaders for CSS, JSON, TOML, YAML, HTML, text, and asset files.
 
 ## Features
 
@@ -9,8 +9,36 @@ Lightweight, zero-config Bun-based build CLI for JavaScript, TypeScript, and ECM
 - **Preset configurations**: Optimized setups for common project types
 - **Development & production modes**: Automatic configuration switching based on `NODE_ENV`
 - **Watch mode support**: Real-time rebuilding during development
+- **Broad content-type support**: Uses Bun's built-in loaders and asset handling
 - **Shell-based**: Pure bash implementation, no Node.js runtime required
 - **Zero dependencies**: No external libraries, just Bun
+
+## Benchmark
+
+`nano-build` uses Bun's native bundler, so performance characteristics follow `bun build`.
+
+### Performance Results
+
+Measured on a 16-inch M1 MacBook Pro using the three.js bundle benchmark:
+
+| Bundler | Time | Relative | Visualization |
+| --- | ---: | ---: | --- |
+| 🚀 **nano-build** | **170ms** | **baseline** | \| |
+| esbuild | 300ms | 1.76x | \|\| |
+| rspack | 4.45s | 26x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
+| Parcel 2 | 26.32s | 155x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
+| Rollup + Terser | 32.00s | 188x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
+| Webpack 5 | 38.02s | 224x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
+
+**Key Takeaways:**
+
+- **170ms** for the complete three.js bundle on modern hardware
+- **1.76x faster** than esbuild
+- **26x to 224x faster** than other popular bundlers
+- Powered by Bun's Zig-based architecture and parallel processing
+
+📊 Benchmark source:
+<https://github.com/oven-sh/bun/tree/main/bench/bundle>
 
 ## Requirements
 
@@ -44,6 +72,29 @@ Run the build:
 ```bash
 bun run build
 ```
+
+## Supported Content Types
+
+Like the Bun runtime, the bundler supports an array of file types out of the box. The following table breaks down the bundler's set of standard loaders.
+
+| Extensions | Details |
+| --- | --- |
+| `.js` `.jsx` `.cjs` `.mjs` `.mts` `.cts` `.ts` `.tsx` | Uses Bun's built-in transpiler to parse the file and transpile TypeScript/JSX syntax to vanilla JavaScript. The bundler applies default transforms, including dead code elimination and tree shaking. Bun does not down-convert newer ECMAScript syntax, so recent syntax is preserved in output. |
+| `.json` | JSON files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import pkg from "./package.json";<br/>pkg.name; // => "my-package"<br/> |
+| `.jsonc` | JSON with comments. Files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import config from "./config.jsonc";<br/>config.name; // => "my-config"<br/> |
+| `.toml` | TOML files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import config from "./bunfig.toml";<br/>config.logLevel; // => "debug"<br/> |
+| `.yaml` `.yml` | YAML files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import config from "./config.yaml";<br/>config.name; // => "my-app"<br/> |
+| `.txt` | The contents of the text file are read and inlined into the bundle as a string.<br/><br/>js<br/>import contents from "./file.txt";<br/>console.log(contents); // => "Hello, world!"<br/> |
+| `.html` | HTML files are processed and any referenced assets (scripts, stylesheets, images) are bundled. |
+| `.css` | CSS files are bundled together into a single `.css` file in the output directory. |
+| `.node` `.wasm` | These files are supported by the Bun runtime, but during bundling they are treated as assets. |
+
+If the bundler encounters an import with an unrecognized extension, the file is treated as an asset, copied to `outdir`, and the import is resolved to the emitted file path.
+
+Refer to Bun docs for full loader and file-type details:
+
+- <https://bun.com/docs/bundler#content-types>
+- <https://bun.com/docs/bundler/loaders>
 
 ## CLI Usage
 
