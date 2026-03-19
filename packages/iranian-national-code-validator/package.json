@@ -15,7 +15,6 @@
     ".": {
       "types": "./dist/main.d.ts",
       "default": "./dist/main.js"
-      
     }
   },
   "files": [
@@ -44,8 +43,6 @@
     "validator"
   ],
   "license": "MPL-2.0",
-  
-  
   "prettier": "@alwatr/prettier-config",
   "publishConfig": {
     "access": "public"

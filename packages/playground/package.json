@@ -15,7 +15,6 @@
     ".": {
       "types": "./dist/main.d.ts",
       "default": "./dist/main.js"
-      
     }
   },
   "files": [
@@ -27,8 +26,6 @@
   ],
   "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/nanolib#readme",
   "license": "MPL-2.0",
-  
-  
   "prettier": "@alwatr/nanolib/prettier",
   "private": true,
   "publishConfig": {
