@@ -14,7 +14,8 @@
     }
   },
   "files": [
-    "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
     "LICENSE",
     "!demo/**/*",
     "!**/*.test.js"

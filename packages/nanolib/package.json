@@ -3,9 +3,6 @@
   "description": "Necessary library for all ECMAScript (JavaScript/TypeScript) projects.",
   "version": "7.3.8",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "bin": {
-    "nano-build": "./nano-build.cjs"
-  },
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "dependencies": {
     "@alwatr/async-queue": "workspace:*",
@@ -28,7 +25,6 @@
     "@alwatr/json2csv": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/logger": "workspace:*",
-    "@alwatr/nano-build": "workspace:*",
     "@alwatr/node-fs": "workspace:*",
     "@alwatr/parse-duration": "workspace:*",
     "@alwatr/platform-info": "workspace:*",
@@ -42,27 +38,24 @@
     "@alwatr/unicode-digits": "workspace:*"
   },
   "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
     "typescript": "^5.9.3"
   },
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
-      "import": "./dist/main.mjs",
-      "require": "./dist/main.cjs"
+      "default": "./dist/main.js"
     },
     "./node": {
       "types": "./dist/node.d.ts",
-      "import": "./dist/node.mjs",
-      "require": "./dist/node.cjs"
+      "default": "./dist/node.js"
     },
-    "./prettier-config": {
-      "import": "./prettier.config.mjs",
-      "require": "./prettier.config.cjs"
-    },
+    "./prettier-config": "./prettier.config.js",
     "./tsconfig": "./tsconfig.base.json"
   },
   "files": [
-    "**/*.{js,mjs,cjs,map,d.ts,html,md,LEGAL.txt}",
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
     "LICENSE",
     "tsconfig.base.json",
     "!demo/**/*",
@@ -95,8 +88,6 @@
     "writeJson"
   ],
   "license": "MPL-2.0",
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
   "prettier": "@alwatr/prettier-config",
   "publishConfig": {
     "access": "public"
@@ -109,7 +100,7 @@
   "scripts": {
     "b": "bun run build",
     "build": "bun run build:ts && bun run build:es",
-    "build:es": "nano-build --preset=module3",
+    "build:es": "nano-build --preset=module src/*.ts",
     "build:ts": "tsc --build",
     "c": "bun run clean",
     "cb": "bun run clean && bun run build",

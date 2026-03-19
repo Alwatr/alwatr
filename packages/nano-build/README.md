@@ -1,53 +1,247 @@
-# Nano build
+# Nano Build
 
-Build/bundle tools for ECMAScript, TypeScript, and JavaScript libraries. It's easy to use, doesn't require any setup, and adheres to best practices. It has no dependencies and uses esbuild for enhanced performance.
+Lightweight, zero-config Bun-based build CLI powered by `bun build` for modern app and library bundling. Supports JavaScript/TypeScript plus Bun's built-in content loaders for CSS, JSON, TOML, YAML, HTML, text, and asset files.
+
+## Features
+
+- **Bun-powered**: Leverages Bun's fast JavaScript runtime and bundler
+- **Zero config**: Works out of the box with sensible defaults
+- **Preset configurations**: Optimized setups for common project types
+- **Development & production modes**: Automatic configuration switching based on `NODE_ENV`
+- **Watch mode support**: Real-time rebuilding during development
+- **Broad content-type support**: Uses Bun's built-in loaders and asset handling
+- **Shell-based**: Pure bash implementation, no Node.js runtime required
+- **Zero dependencies**: No external libraries, just Bun
+
+## Benchmark
+
+`nano-build` uses Bun's native bundler, so performance characteristics follow `bun build`.
+
+### Performance Results
+
+Measured on a 16-inch M1 MacBook Pro using the three.js bundle benchmark:
+
+| Bundler | Time | Relative | Visualization |
+| --- | ---: | ---: | --- |
+| 🚀 **nano-build** | **170ms** | **baseline** | \| |
+| esbuild | 300ms | 1.76x | \|\| |
+| rspack | 4.45s | 26x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
+| Parcel 2 | 26.32s | 155x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
+| Rollup + Terser | 32.00s | 188x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
+| Webpack 5 | 38.02s | 224x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
+
+**Key Takeaways:**
+
+- **170ms** for the complete three.js bundle on modern hardware
+- **1.76x faster** than esbuild
+- **26x to 224x faster** than other popular bundlers
+- Powered by Bun's Zig-based architecture and parallel processing
+
+📊 Benchmark source:
+<https://github.com/oven-sh/bun/tree/main/bench/bundle>
+
+## Requirements
+
+- [Bun](https://bun.sh) (required)
+- Linux, macOS, or compatible shell environment
 
 ## Installation
 
-First, install `@alwatr/nano-build` as a development dependency:
+Install `@alwatr/nano-build` as a development dependency:
 
 ```bash
 yarn add -D @alwatr/nano-build
 ```
 
-## Usage
+## Quick Start
 
-Add the following scripts to your `package.json` to use `@alwatr/nano-build`:
+Add build scripts to your `package.json`:
 
 ```json
 {
   "scripts": {
-    "build": "nano-build --preset=module",
-    "watch": "bun run build --watch"
+    "build": "nano-build --preset=module src/main.ts",
+    "watch": "nano-build --preset=module src/main.ts --watch",
+    "build:web": "nano-build --preset=web src/main.ts"
   }
 }
 ```
 
-Then run the following command to build your project:
+Run the build:
 
 ```bash
 bun run build
 ```
 
-## Configuration
+## Supported Content Types
 
-### TypeScript types
+Like the Bun runtime, the bundler supports an array of file types out of the box. The following table breaks down the bundler's set of standard loaders.
 
-```ts
-import type {} from '@alwatr/nano-build';
+| Extensions | Details |
+| --- | --- |
+| `.js` `.jsx` `.cjs` `.mjs` `.mts` `.cts` `.ts` `.tsx` | Uses Bun's built-in transpiler to parse the file and transpile TypeScript/JSX syntax to vanilla JavaScript. The bundler applies default transforms, including dead code elimination and tree shaking. Bun does not down-convert newer ECMAScript syntax, so recent syntax is preserved in output. |
+| `.json` | JSON files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import pkg from "./package.json";<br/>pkg.name; // => "my-package"<br/> |
+| `.jsonc` | JSON with comments. Files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import config from "./config.jsonc";<br/>config.name; // => "my-config"<br/> |
+| `.toml` | TOML files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import config from "./bunfig.toml";<br/>config.logLevel; // => "debug"<br/> |
+| `.yaml` `.yml` | YAML files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import config from "./config.yaml";<br/>config.name; // => "my-app"<br/> |
+| `.txt` | The contents of the text file are read and inlined into the bundle as a string.<br/><br/>js<br/>import contents from "./file.txt";<br/>console.log(contents); // => "Hello, world!"<br/> |
+| `.html` | HTML files are processed and any referenced assets (scripts, stylesheets, images) are bundled. |
+| `.css` | CSS files are bundled together into a single `.css` file in the output directory. |
+| `.node` `.wasm` | These files are supported by the Bun runtime, but during bundling they are treated as assets. |
+
+If the bundler encounters an import with an unrecognized extension, the file is treated as an asset, copied to `outdir`, and the import is resolved to the emitted file path.
+
+Refer to Bun docs for full loader and file-type details:
+
+- <https://bun.com/docs/bundler#content-types>
+- <https://bun.com/docs/bundler/loaders>
+
+## CLI Usage
+
+### Basic Syntax
+
+```bash
+nano-build [flags] <entry-points>
 ```
 
-### Overwriting configuration
+### Flags
 
-Add 'nano-build' field to your `package.json` for overwriting configuration:
+- `--preset=<name>` — Select a build preset (default: none)
+- `--outdir=<path>` — Output directory (default: `dist`)
+- `--watch` — Enable watch mode for development
+- `--help, -h` — Show help message
+
+All other flags are forwarded to `bun build`.
+
+### Help
+
+```bash
+nano-build --help
+```
+
+## Presets
+
+Presets are predefined configurations optimized for specific use cases. Use the `--preset` flag to select one.
+
+### `module`
+
+For building library modules targeting Node.js with ESM format.
+
+**Configuration:**
+
+- Entry points: `src/main.ts`
+- Platform: `node`
+- Format: `esm`
+- Bundled: Yes
+- External packages: Yes
+- Minified: Yes
+- Sourcemap: Linked (dev mode)
+
+**Example:**
+
+```bash
+nano-build --preset=module src/main.ts
+nano-build --preset=module src/*.ts
+```
+
+### `web`
+
+For building browser-ready bundles and web applications.
+
+**Configuration:**
+
+- Platform: `browser`
+- Bundled: Yes (all dependencies included)
+- Minified: Yes
+- Sourcemap: Linked (only in dev mode)
+
+**Example:**
+
+```bash
+nano-build --preset=web src/main.ts
+nano-build --preset=web --watch src/*.ts  # Watch mode
+```
+
+### `node-service`
+
+For building bundled Node.js services and backend applications.
+
+**Configuration:**
+
+- Platform: `node`
+- Format: `esm`
+- Bundled: Yes (all dependencies included)
+- Minified: Yes
+- Sourcemap: Linked (only in dev mode)
+
+**Example:**
+
+```bash
+nano-build --preset=node-service src/main.ts
+NODE_ENV=production nano-build --preset=node-service src/main.ts
+```
+
+### `bun-service`
+
+For building optimized Bun services and backend applications.
+
+**Configuration:**
+
+- Platform: `bun`
+- Format: `esm`
+- Bundled: Yes (all dependencies included)
+- Minified: Yes
+- Sourcemap: Linked (only in dev mode)
+
+**Example:**
+
+```bash
+nano-build --preset=bun-service src/main.ts
+NODE_ENV=production nano-build --preset=bun-service src/main.ts
+```
+
+## Build Modes
+
+### Development Mode
+
+Automatic when `NODE_ENV` is not set to `production`:
+
+- Inline sourcemaps for easier debugging
+- Preserves variable and function names
+- Disables minification
+
+**Enable explicitly:**
+
+```bash
+NODE_ENV=development nano-build --preset=module src/main.ts
+```
+
+### Production Mode
+
+Automatic when `NODE_ENV=production`:
+
+- Optimized bundle size
+- Full minification
+- Removes debug labels and devOnly code
+
+**Enable explicitly:**
+
+```bash
+NODE_ENV=production nano-build --preset=module src/main.ts
+```
+
+## Configuration
+
+### Package.json Overrides
+
+Override build configuration via `package.json`:
 
 ```json
 {
   "nano-build": {
-    "bundle": true
+    "minify": false
   },
   "nano-build-development": {
-    "minify": false,
     "sourcemap": true
   },
   "nano-build-production": {
@@ -57,210 +251,62 @@ Add 'nano-build' field to your `package.json` for overwriting configuration:
 }
 ```
 
-## Presets
+## Examples
 
-Presets are predefined configurations that can be used to build your project. You can use the `--preset` flag to specify a preset.
+### Build a library module
 
 ```bash
-bun run build --preset=module
+nano-build --preset=module src/main.ts
+nano-build --preset=module src/*.ts
 ```
 
-### default
+### Build a web application with watch mode
 
-```js
-{
-  entryPoints: ['src/*.ts'],
-  outdir: 'dist',
-  logLevel: 'info',
-  target: 'es2020',
-  minify: true,
-  minifyWhitespace: true,
-  treeShaking: true,
-  sourcemap: false,
-  sourcesContent: false,
-  bundle: true,
-  charset: 'utf8',
-  legalComments: 'linked',
-  define: {
-    __package_name__: packageJson.name,
-    __package_version__: packageJson.version,
-    __dev_mode__: process.env.NODE_ENV !== 'production',
-  },
-  banner: {
-    js: "/* __package_name__ v__package_version__ */"
-  },
-}
+```bash
+nano-build --preset=web src/*.ts --watch
 ```
 
-### `--preset=module`
+### Build a Node.js service for production
 
-Builds and bundle for single export module.
-
-```js
-{
-  ...defaultPreset,
-  entryPoints: ['src/main.ts'],
-  bundle: true,
-  platform: 'node',
-  format: 'esm',
-  minify: false,
-  cjs: true,
-  packages: 'external',
-  sourcemap: true,
-  sourcesContent: true
-}
+```bash
+NODE_ENV=production nano-build --preset=node-service src/main.ts
 ```
 
-Note: default production overwrite options not applied.
+### Build a Bun service
 
-### `--preset=module2`
-
-Builds and bundles multiple entry points in root of `src` directory for multiple exports module.
-
-```js
-{
-  ...defaultPreset,
-  entryPoints: ['src/*.ts'],
-  bundle: true,
-  platform: 'node',
-  format: 'esm',
-  minify: false,
-  cjs: true,
-  packages: 'external',
-  sourcemap: true,
-  sourcesContent: true
-}
+```bash
+nano-build --preset=bun-service src/main.ts
 ```
 
-Note: default production overwrite options not applied.
+### Custom output directory
 
-### `--preset=module3`
-
-Builds multiple entry points in `src` directory for multiple exports module without bundling.
-
-```js
-{
-  ...defaultPreset,
-  entryPoints: ['src/**/*.ts'],
-  bundle: false,
-  platform: 'node',
-  format: 'esm',
-  minify: false,
-  cjs: true,
-  packages: 'external',
-  sourcemap: true,
-  sourcesContent: true
-}
+```bash
+nano-build --preset=module src/main.ts --outdir=build
 ```
 
-Note: default production overwrite options not applied.
+### Passing additional flags to bun build
 
-### `--preset=pwa`
-
-```js
-{
-  ...defaultPreset,
-  entryPoints: ['site/_ts/*.ts'],
-  outdir: 'dist/es',
-  platform: 'browser',
-  format: 'iife',
-  mangleProps: '_$',
-  target: [
-    'es2018',
-    'chrome62',
-    'edge79',
-    'firefox78',
-    'safari11',
-  ],
-  ...(devMode ? developmentOverwriteOptions : productionOverwriteOptions),
-}
+```bash
+nano-build --preset=module src/main.ts --define:DEBUG=false
 ```
 
-### `--preset=weaver`
+## Migration from v6
 
-```js
-{
-  ...defaultPreset,
-  entryPoints: ['src/ts/*.ts'],
-  outdir: 'dist/es',
-  platform: 'browser',
-  format: 'iife',
-  mangleProps: '_$',
-  target: [
-    'es2018',
-    'chrome62',
-    'edge79',
-    'firefox78',
-    'safari11',
-  ],
-  ...(devMode ? developmentOverwriteOptions : productionOverwriteOptions),
-}
-```
+Version 7 is a major rewrite with breaking changes:
 
-### `--preset=microservice`
+- **Removed**: Node.js CommonJS CLI (`cli.cjs`)
+- **Changed**: Now uses Bash shell script (`cli.sh`) wrapped around `bun build`
+- **Removed dependency**: esbuild (now uses Bun's bundler)
+- **Changed requirement**: Requires Bun runtime (not Node.js)
+- **Simplified presets**: Removed `module2`, `module3`, `pwa`, `pmpa`, `weaver`, `microservice`
+- **New presets**: `module`, `web`, `node-service`, `bun-service`
 
-```js
-{
-  ...defaultPreset,
-  entryPoints: ['src/ts/main.ts'],
-  platform: 'node',
-  format: 'esm',
-  mangleProps: '_$',
-  target: 'node20',
-  ...(devMode ? developmentOverwriteOptions : productionOverwriteOptions),
-}
-```
+If you need Node.js compatibility, please use v6.x.
 
-### `--preset=pmpa`
-
-```js
-{
-  ...defaultPreset,
-  entryPoints: ['site/_ts/*.ts'],
-  outdir: 'dist/es',
-  platform: 'browser',
-  format: 'iife',
-  mangleProps: '_$',
-  target: [
-    'es2018',
-    'chrome62',
-    'edge79',
-    'firefox78',
-    'safari11',
-  ],
-  ...(devMode ? developmentOverwriteOptions : productionOverwriteOptions),
-}
-```
-
-### Development overwrite
-
-This preset is used when `NODE_ENV` is not set to `production`. It overwrites all other presets.
-
-```js
-{
-  sourcemap: true,
-  sourcesContent: true,
-}
-```
-
-you can also add `nano-build-development` field to your `package.json` for overwriting configuration.
-
-### Production overwrite
-
-This preset is used when `NODE_ENV` is set to `production`. It overwrites all other presets.
-
-```js
-{
-  dropLabels: ['__dev_mode__'];
-}
-```
-
-you can also add `nano-build-production` field to your `package.json` for overwriting configuration.
-
-## Sponsors
-
-The following companies, organizations, and individuals support Nanolib ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.
-
-### Contributing
+## Contributing
 
 Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
+
+## License
+
+Licensed under MPL-2.0. See [LICENSE](LICENSE) for details.

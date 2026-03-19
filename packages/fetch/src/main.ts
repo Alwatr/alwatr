@@ -6,12 +6,12 @@
  * timeouts, and duplicate request handling.
  */
 
-import {_processOptions, handleCacheStrategy_, logger_, cacheSupported} from './core.js';
-import {FetchError} from './error.js';
+import { _processOptions, handleCacheStrategy_, logger_, cacheSupported } from './core.js';
+import { FetchError } from './error.js';
 
-import type {FetchJsonOptions, FetchOptions, FetchResponse} from './type.js';
+import type { FetchJsonOptions, FetchOptions, FetchResponse } from './type.js';
 
-export {cacheSupported};
+export { cacheSupported };
 export * from './error.js';
 export type * from './type.js';
 
@@ -57,7 +57,7 @@ export type * from './type.js';
  * ```
  */
 export async function fetch(url: string, options: FetchOptions = {}): Promise<FetchResponse> {
-  logger_.logMethodArgs?.('fetch', {url, options});
+  logger_.logMethodArgs?.('fetch', { url, options });
 
   const options_ = _processOptions(url, options);
 
@@ -103,10 +103,12 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Fe
       error = new FetchError('unknown_error', String(err ?? 'unknown_error'));
     }
 
-    logger_.error('fetch', error.reason, {error});
+    logger_.error('fetch', error.reason, { error });
     return [null, error];
   }
 }
+
+fetch.version = __package_version__;
 
 /**
  * An enhanced wrapper for the native `fetch` function that automatically parses JSON responses.
@@ -154,7 +156,7 @@ export async function fetchJson<T extends JsonObject = JsonObject>(
   url: string,
   options: FetchJsonOptions = {},
 ): Promise<[T, null] | [null, FetchError]> {
-  logger_.logMethodArgs?.('fetchJson', {url, options});
+  logger_.logMethodArgs?.('fetchJson', { url, options });
 
   const [response, error] = await fetch(url, options);
 
@@ -170,7 +172,7 @@ export async function fetchJson<T extends JsonObject = JsonObject>(
       response,
       bodyText,
     );
-    logger_.error('fetchJson', parseError.reason, {error: parseError});
+    logger_.error('fetchJson', parseError.reason, { error: parseError });
     return [null, parseError];
   }
 
@@ -183,7 +185,7 @@ export async function fetchJson<T extends JsonObject = JsonObject>(
         response,
         data,
       );
-      logger_.error('fetchJson', parseError.reason, {error: parseError});
+      logger_.error('fetchJson', parseError.reason, { error: parseError });
       return [null, parseError];
     }
     return [data, null];
@@ -195,7 +197,7 @@ export async function fetchJson<T extends JsonObject = JsonObject>(
       response,
       bodyText,
     );
-    logger_.error('fetchJson', parseError.reason, {error: parseError});
+    logger_.error('fetchJson', parseError.reason, { error: parseError });
     return [null, parseError];
   }
 }

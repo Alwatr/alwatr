@@ -2,6 +2,7 @@ import type {FetchError} from './error.js';
 import type {HttpMethod, HttpRequestHeaders} from '@alwatr/http-primer';
 import type {Duration} from '@alwatr/parse-duration';
 import type {} from '@alwatr/type-helper';
+import type {} from '@alwatr/nano-build';
 
 /**
  * A dictionary of query parameters.
