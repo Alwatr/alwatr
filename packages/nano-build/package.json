@@ -5,12 +5,6 @@
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "bin": "./cli.sh",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
-  "dependencies": {
-    "picocolors": "^1.1.1"
-  },
-  "devDependencies": {
-    "@alwatr/prettier-config": "workspace:*"
-  },
   "files": [
     "**/*.{sh,js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
     "README.md",
@@ -40,7 +34,6 @@
     "utils"
   ],
   "license": "MPL-2.0",
-  "prettier": "@alwatr/prettier-config",
   "publishConfig": {
     "access": "public"
   },
@@ -50,6 +43,5 @@
     "directory": "packages/nano-build"
   },
   "sideEffects": false,
-  "type": "commonjs",
   "types": "./global.d.ts"
 }
