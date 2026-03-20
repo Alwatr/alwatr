@@ -1,56 +1,30 @@
 {
   "name": "@alwatr/unicode-digits",
-  "description": "Convert the String of number of the source language to the destination language.",
   "version": "6.0.0",
+  "description": "Convert the String of number of the source language to the destination language.",
+  "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
-  "devDependencies": {
-    "@alwatr/nano-build": "workspace:*",
-    "@alwatr/prettier-config": "workspace:*",
-    "@alwatr/tsconfig-base": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
-    "typescript": "^5.9.3"
+  "type": "module",
+  "repository": {
+    "directory": "packages/unicode-digits",
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib"
   },
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/unicode-digits#readme",
+  "bugs": "https://github.com/Alwatr/nanolib/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
       "default": "./dist/main.js"
     }
   },
-  "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
-    "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
-  ],
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/unicode-digits#readme",
-  "keywords": [
-    "alwatr",
-    "browser",
-    "cross-platform",
-    "digits",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "module",
-    "nanolib",
-    "typescript",
-    "unicode",
-    "unicode-digits",
-    "util",
-    "utility",
-    "utils"
-  ],
-  "license": "MPL-2.0",
-  "prettier": "@alwatr/prettier-config",
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/unicode-digits"
+  "sideEffects": false,
+  "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
+    "typescript": "^5.9.3"
   },
   "scripts": {
     "b": "bun run build",
@@ -68,6 +42,32 @@
     "watch:es": "bun run build:es --watch",
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
-  "sideEffects": false,
-  "type": "module"
+  "files": [
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr",
+    "browser",
+    "cross-platform",
+    "digits",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "module",
+    "nanolib",
+    "typescript",
+    "unicode",
+    "unicode-digits",
+    "util",
+    "utility",
+    "utils"
+  ],
+  "prettier": "@alwatr/prettier-config"
 }

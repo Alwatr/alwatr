@@ -1,9 +1,24 @@
 {
   "name": "@alwatr/debounce",
-  "description": "A powerful, modern, and type-safe debouncer utility designed for high-performance applications. It's framework-agnostic, works seamlessly in both Node.js and browsers, and provides a rich API for fine-grained control over function execution.",
   "version": "2.0.0",
+  "description": "A powerful, modern, and type-safe debouncer utility designed for high-performance applications. It's framework-agnostic, works seamlessly in both Node.js and browsers, and provides a rich API for fine-grained control over function execution.",
+  "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "type": "module",
+  "repository": {
+    "directory": "packages/debounce",
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib"
+  },
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/debounce#readme",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "default": "./dist/main.js"
+    }
+  },
+  "sideEffects": false,
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/prettier-config": "workspace:*",
@@ -12,11 +27,19 @@
     "@types/node": "^24.12.0",
     "typescript": "^5.9.3"
   },
-  "exports": {
-    ".": {
-      "types": "./dist/main.d.ts",
-      "default": "./dist/main.js"
-    }
+  "scripts": {
+    "b": "bun run build",
+    "build": "bun run build:ts && bun run build:es",
+    "build:es": "nano-build --preset=module src/main.ts",
+    "build:ts": "tsc --build",
+    "c": "bun run clean",
+    "cb": "bun run clean && bun run build",
+    "clean": "rm -rfv dist *.tsbuildinfo",
+    "d": "bun run build:es && bun",
+    "w": "bun run watch",
+    "watch": "bun run watch:ts & bun run watch:es",
+    "watch:es": "bun run build:es --watch",
+    "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "files": [
     "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
@@ -25,7 +48,9 @@
     "!demo/**/*",
     "!**/*.test.js"
   ],
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/debounce#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "alwatr",
     "browser",
@@ -50,30 +75,5 @@
     "util",
     "utility"
   ],
-  "license": "MPL-2.0",
-  "prettier": "@alwatr/prettier-config",
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/debounce"
-  },
-  "scripts": {
-    "b": "bun run build",
-    "build": "bun run build:ts && bun run build:es",
-    "build:es": "nano-build --preset=module src/main.ts",
-    "build:ts": "tsc --build",
-    "c": "bun run clean",
-    "cb": "bun run clean && bun run build",
-    "clean": "rm -rfv dist *.tsbuildinfo",
-    "d": "bun run build:es && bun",
-    "w": "bun run watch",
-    "watch": "bun run watch:ts & bun run watch:es",
-    "watch:es": "bun run build:es --watch",
-    "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
-  },
-  "sideEffects": false,
-  "type": "module"
+  "prettier": "@alwatr/prettier-config"
 }

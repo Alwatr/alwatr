@@ -1,40 +1,30 @@
 {
   "name": "playground",
-  "description": "Necessary library for all ECMAScript (JavaScript/TypeScript) projects.",
   "version": "1.0.0",
+  "description": "Necessary library for all ECMAScript (JavaScript/TypeScript) projects.",
+  "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "type": "module",
+  "repository": {
+    "directory": "packages/nanolib",
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib"
+  },
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/nanolib#readme",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
-  "dependencies": {
-    "@alwatr/nanolib": "workspace:*"
-  },
-  "devDependencies": {
-    "@alwatr/nano-build": "workspace:*",
-    "typescript": "^5.9.3"
-  },
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
       "default": "./dist/main.js"
     }
   },
-  "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
-    "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
-  ],
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/nanolib#readme",
-  "license": "MPL-2.0",
-  "prettier": "@alwatr/nanolib/prettier",
-  "private": true,
-  "publishConfig": {
-    "access": "public"
+  "sideEffects": false,
+  "dependencies": {
+    "@alwatr/nanolib": "workspace:*"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/nanolib"
+  "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "typescript": "^5.9.3"
   },
   "scripts": {
     "b": "bun run build",
@@ -50,6 +40,16 @@
     "watch:es": "bun run build:es --watch",
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
-  "sideEffects": false,
-  "type": "module"
+  "files": [
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "prettier": "@alwatr/nanolib/prettier",
+  "private": true
 }

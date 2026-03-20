@@ -1,9 +1,24 @@
 {
   "name": "@alwatr/env",
-  "description": "A tiny and tree-shakable TypeScript library to get environment variables with type-safe and fallback value for development and production.",
   "version": "6.0.0",
+  "description": "A tiny and tree-shakable TypeScript library to get environment variables with type-safe and fallback value for development and production.",
+  "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "type": "module",
+  "repository": {
+    "directory": "packages/env",
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib"
+  },
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/env#readme",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "default": "./dist/main.js"
+    }
+  },
+  "sideEffects": false,
   "dependencies": {
     "@alwatr/platform-info": "workspace:*"
   },
@@ -14,47 +29,6 @@
     "@alwatr/type-helper": "workspace:*",
     "@types/node": "^24.12.0",
     "typescript": "^5.9.3"
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/main.d.ts",
-      "default": "./dist/main.js"
-    }
-  },
-  "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
-    "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
-  ],
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/env#readme",
-  "keywords": [
-    "alwatr",
-    "browser",
-    "ECMAScript",
-    "env",
-    "esm",
-    "get-env",
-    "get-env-value",
-    "getEnv",
-    "javascript",
-    "module",
-    "nanolib",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ],
-  "license": "MPL-2.0",
-  "prettier": "@alwatr/prettier-config",
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/env"
   },
   "scripts": {
     "b": "bun run build",
@@ -72,6 +46,32 @@
     "watch:es": "bun run build:es --watch",
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
-  "sideEffects": false,
-  "type": "module"
+  "files": [
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr",
+    "browser",
+    "ECMAScript",
+    "env",
+    "esm",
+    "get-env",
+    "get-env-value",
+    "getEnv",
+    "javascript",
+    "module",
+    "nanolib",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
+  "prettier": "@alwatr/prettier-config"
 }

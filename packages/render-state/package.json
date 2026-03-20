@@ -1,9 +1,24 @@
 {
   "name": "@alwatr/render-state",
-  "description": "Clone deeply nested objects and arrays in JavaScript.",
   "version": "6.0.0",
+  "description": "Clone deeply nested objects and arrays in JavaScript.",
+  "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "type": "module",
+  "repository": {
+    "directory": "packages/render-state",
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib"
+  },
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/render-state#readme",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "default": "./dist/main.js"
+    }
+  },
+  "sideEffects": false,
   "dependencies": {
     "@alwatr/logger": "workspace:*"
   },
@@ -12,45 +27,6 @@
     "@alwatr/prettier-config": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
     "typescript": "^5.9.3"
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/main.d.ts",
-      "default": "./dist/main.js"
-    }
-  },
-  "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
-    "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
-  ],
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/render-state#readme",
-  "keywords": [
-    "alwatr",
-    "browser",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "module",
-    "nanolib",
-    "object",
-    "render-state",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ],
-  "license": "MPL-2.0",
-  "prettier": "@alwatr/prettier-config",
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/render-state"
   },
   "scripts": {
     "b": "bun run build",
@@ -66,6 +42,30 @@
     "watch:es": "bun run build:es --watch",
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
-  "sideEffects": false,
-  "type": "module"
+  "files": [
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr",
+    "browser",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "module",
+    "nanolib",
+    "object",
+    "render-state",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
+  "prettier": "@alwatr/prettier-config"
 }

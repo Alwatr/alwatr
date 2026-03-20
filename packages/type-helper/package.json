@@ -1,41 +1,21 @@
 {
   "name": "@alwatr/type-helper",
-  "description": "Collection of useful typescript type helpers.",
   "version": "8.0.0",
+  "description": "Collection of useful typescript type helpers.",
+  "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "type": "module",
+  "repository": {
+    "directory": "packages/type-helper",
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib"
+  },
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/type-helper#readme",
   "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "sideEffects": false,
   "devDependencies": {
     "@alwatr/prettier-config": "workspace:*",
     "typescript": "^5.9.3"
-  },
-  "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
-    "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
-  ],
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/type-helper#readme",
-  "keywords": [
-    "alwatr",
-    "nanolib",
-    "type",
-    "type-helper",
-    "types",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ],
-  "license": "MPL-2.0",
-  "prettier": "@alwatr/prettier-config",
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/type-helper"
   },
   "scripts": {
     "b": "bun run build",
@@ -51,7 +31,27 @@
     "watch:es": "bun run build:es --watch",
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
-  "sideEffects": false,
-  "type": "module",
+  "files": [
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr",
+    "nanolib",
+    "type",
+    "type-helper",
+    "types",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
+  "prettier": "@alwatr/prettier-config",
   "types": "types.d.ts"
 }

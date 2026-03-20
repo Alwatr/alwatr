@@ -1,56 +1,30 @@
 {
   "name": "@alwatr/iranian-national-code-validator",
-  "description": "A tiny TypeScript library to Validates an Iranian National Code (Code Melli).",
   "version": "2.0.0",
+  "description": "A tiny TypeScript library to Validates an Iranian National Code (Code Melli).",
+  "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
-  "devDependencies": {
-    "@alwatr/nano-build": "workspace:*",
-    "@alwatr/prettier-config": "workspace:*",
-    "@alwatr/tsconfig-base": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
-    "typescript": "^5.9.3"
+  "type": "module",
+  "repository": {
+    "directory": "packages/iranian-national-code-validator",
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib"
   },
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/iranian-national-code-validator#readme",
+  "bugs": "https://github.com/Alwatr/nanolib/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
       "default": "./dist/main.js"
     }
   },
-  "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
-    "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
-  ],
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/iranian-national-code-validator#readme",
-  "keywords": [
-    "alwatr",
-    "browser",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "iranian-national-code",
-    "javascript",
-    "module",
-    "nanolib",
-    "national-code",
-    "typescript",
-    "util",
-    "utility",
-    "utils",
-    "validator"
-  ],
-  "license": "MPL-2.0",
-  "prettier": "@alwatr/prettier-config",
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/nanolib",
-    "directory": "packages/iranian-national-code-validator"
+  "sideEffects": false,
+  "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
+    "typescript": "^5.9.3"
   },
   "scripts": {
     "b": "bun run build",
@@ -68,6 +42,32 @@
     "watch:es": "bun run build:es --watch",
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
-  "sideEffects": false,
-  "type": "module"
+  "files": [
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr",
+    "browser",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "iranian-national-code",
+    "javascript",
+    "module",
+    "nanolib",
+    "national-code",
+    "typescript",
+    "util",
+    "utility",
+    "utils",
+    "validator"
+  ],
+  "prettier": "@alwatr/prettier-config"
 }
