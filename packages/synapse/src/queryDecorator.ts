@@ -14,7 +14,7 @@ import type { DirectiveBase } from './directiveClass.js';
  * @directive('[my-directive]')
  * class MyDirective extends DirectiveBase {
  *   @query('.my-element')
- *   protected myElement: HTMLDivElement | null;
+ *   protected myElement!: HTMLDivElement | null;
  * }
  * ```
  */
@@ -38,9 +38,9 @@ export function query<T extends Element>(selector: string, cache = true, root?: 
     return {
       get() {
         let value = (this as any)[privateKey] as T | null | undefined;
-        if (cache === false || value === undefined) {
+        if (value === undefined || cache === false) {
           const parent = root ?? this.element_;
-          (this as any)[privateKey] = value = parent.querySelector<T>(selector);
+          value = (this as any)[privateKey] = parent.querySelector<T>(selector);
         }
         return value;
       }
@@ -73,9 +73,9 @@ export function queryAll<T extends Element>(selector: string, cache = true, root
    * @return A property descriptor with a getter that performs the query and caches the result.
    */
   return function (
-    _target: ClassAccessorDecoratorTarget<DirectiveBase, NodeListOf<T> | null>,
-    context: ClassAccessorDecoratorContext<DirectiveBase, NodeListOf<T> | null>
-  ): ClassAccessorDecoratorResult<DirectiveBase, NodeListOf<T> | null> {
+    _target: ClassAccessorDecoratorTarget<DirectiveBase, NodeListOf<T>>,
+    context: ClassAccessorDecoratorContext<DirectiveBase, NodeListOf<T>>
+  ): ClassAccessorDecoratorResult<DirectiveBase, NodeListOf<T>> {
     if (context.kind !== 'accessor') {
       throw new Error('@queryAll can only be used with the "accessor" keyword');
     }
@@ -84,10 +84,10 @@ export function queryAll<T extends Element>(selector: string, cache = true, root
 
     return {
       get() {
-        let value = (this as any)[privateKey] as NodeListOf<T> | null | undefined;
-        if (cache === false || value === undefined) {
+        let value = (this as any)[privateKey] as NodeListOf<T> | undefined;
+        if (value === undefined || cache === false) {
           const parent = root ?? this.element_;
-          (this as any)[privateKey] = value = parent.querySelectorAll<T>(selector);
+          value = (this as any)[privateKey] = parent.querySelectorAll<T>(selector);
         }
         return value;
       }
