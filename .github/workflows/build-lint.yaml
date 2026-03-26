@@ -43,7 +43,9 @@ jobs:
       #       ${{ runner.os }}-bun-
 
       - name: 🏗 Install dependencies
-        run: bun ci
+        run: |
+          bun --version
+          bun ci
 
       - name: 🚀 Build Typescript
         run: bun run build
