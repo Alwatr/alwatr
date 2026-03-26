@@ -68,8 +68,8 @@
     // "mapRoot": "",
 
     /* Experimental Options */
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    // "experimentalDecorators": true,
+    // "emitDecoratorMetadata": true,
 
     /* Advanced Options */
     "skipLibCheck": true,

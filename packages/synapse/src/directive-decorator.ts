@@ -1,6 +1,6 @@
-import {directiveRegistry_, logger} from './lib.js';
+import { directiveRegistry_, logger } from './lib.js';
 
-import type {DirectiveBase} from './directiveClass.js';
+import type { DirectiveBase } from './directive-class.js';
 
 /**
  * Type definition for a directive constructor.
@@ -29,8 +29,16 @@ export function directive(selector: string) {
   /**
    * The decorator function that receives the class constructor.
    * @param constructor The class to be registered as a directive.
+   * @param context The decorator context.
    */
-  return function (constructor: DirectiveConstructor): void {
-    directiveRegistry_.push({selector, constructor});
+  return function (constructor: DirectiveConstructor, context: ClassDecoratorContext): void {
+    if (context.kind !== 'class') {
+      throw new Error('@directive can only be used on classes');
+    }
+
+    directiveRegistry_.push({
+      selector,
+      constructor
+    });
   };
 }

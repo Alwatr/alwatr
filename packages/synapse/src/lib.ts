@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-import type {DirectiveConstructor} from './directiveDecorator.js';
+import type {DirectiveConstructor} from './directive-decorator.js';
 import type {} from '@alwatr/type-helper';
 
 /**
