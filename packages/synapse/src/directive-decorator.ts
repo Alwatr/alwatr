@@ -1,6 +1,6 @@
 import { directiveRegistry_, logger } from './lib.js';
 
-import type { DirectiveBase } from './directiveClass.js';
+import type { DirectiveBase } from './directive-class.js';
 
 /**
  * Type definition for a directive constructor.

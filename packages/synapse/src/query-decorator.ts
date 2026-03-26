@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { DirectiveBase } from './directiveClass.js';
+import type { DirectiveBase } from './directive-class.js';
 
 /**
  * A property decorator that queries the directive's element for a selector.

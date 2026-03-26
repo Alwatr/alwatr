@@ -1,4 +1,4 @@
 export * from './bootstrap.js';
-export * from './directiveDecorator.js';
-export * from './directiveClass.js';
-export * from './queryDecorator.js';
+export * from './directive-decorator.js';
+export * from './directive-class.js';
+export * from './query-decorator.js';
