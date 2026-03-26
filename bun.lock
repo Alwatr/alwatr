@@ -17,7 +17,7 @@
     },
     "packages/async-queue": {
       "name": "@alwatr/async-queue",
-      "version": "5.5.30",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/flatomise": "workspace:*",
       },
@@ -31,7 +31,7 @@
     },
     "packages/cyrb53": {
       "name": "@alwatr/cyrb53",
-      "version": "1.0.17",
+      "version": "2.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -42,7 +42,7 @@
     },
     "packages/debounce": {
       "name": "@alwatr/debounce",
-      "version": "1.1.21",
+      "version": "2.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -54,7 +54,7 @@
     },
     "packages/dedupe": {
       "name": "@alwatr/dedupe",
-      "version": "5.5.31",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/has-own": "workspace:*",
@@ -69,7 +69,7 @@
     },
     "packages/deep-clone": {
       "name": "@alwatr/deep-clone",
-      "version": "5.5.29",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -79,7 +79,7 @@
     },
     "packages/delay": {
       "name": "@alwatr/delay",
-      "version": "6.0.22",
+      "version": "7.0.0",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/parse-duration": "workspace:*",
@@ -95,7 +95,7 @@
     },
     "packages/djb2-hash": {
       "name": "@alwatr/djb2-hash",
-      "version": "1.1.18",
+      "version": "2.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -105,7 +105,7 @@
     },
     "packages/env": {
       "name": "@alwatr/env",
-      "version": "5.5.30",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/platform-info": "workspace:*",
       },
@@ -120,7 +120,7 @@
     },
     "packages/exit-hook": {
       "name": "@alwatr/exit-hook",
-      "version": "5.5.29",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -131,7 +131,7 @@
     },
     "packages/fetch": {
       "name": "@alwatr/fetch",
-      "version": "7.1.6",
+      "version": "8.0.0",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/global-this": "workspace:*",
@@ -150,7 +150,7 @@
     },
     "packages/flat-string": {
       "name": "@alwatr/flat-string",
-      "version": "5.5.29",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -160,7 +160,7 @@
     },
     "packages/flatomise": {
       "name": "@alwatr/flatomise",
-      "version": "5.5.29",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -171,7 +171,7 @@
     },
     "packages/global-this": {
       "name": "@alwatr/global-this",
-      "version": "5.6.10",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -183,7 +183,7 @@
     },
     "packages/has-own": {
       "name": "@alwatr/has-own",
-      "version": "5.6.8",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -193,7 +193,7 @@
     },
     "packages/hash-string": {
       "name": "@alwatr/hash-string",
-      "version": "5.2.30",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -203,7 +203,7 @@
     },
     "packages/http-primer": {
       "name": "@alwatr/http-primer",
-      "version": "6.0.21",
+      "version": "7.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -214,7 +214,7 @@
     },
     "packages/iranian-national-code-validator": {
       "name": "@alwatr/iranian-national-code-validator",
-      "version": "1.0.22",
+      "version": "2.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -225,7 +225,7 @@
     },
     "packages/is-number": {
       "name": "@alwatr/is-number",
-      "version": "5.7.27",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -235,7 +235,7 @@
     },
     "packages/json2csv": {
       "name": "@alwatr/json2csv",
-      "version": "1.0.5",
+      "version": "2.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -246,7 +246,7 @@
     },
     "packages/local-storage": {
       "name": "@alwatr/local-storage",
-      "version": "7.0.9",
+      "version": "8.0.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -260,7 +260,7 @@
     },
     "packages/logger": {
       "name": "@alwatr/logger",
-      "version": "6.0.18",
+      "version": "7.0.0",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/platform-info": "workspace:*",
@@ -275,12 +275,12 @@
     },
     "packages/nano-build": {
       "name": "@alwatr/nano-build",
-      "version": "6.4.2",
+      "version": "7.0.0",
       "bin": "./cli.sh",
     },
     "packages/nanolib": {
       "name": "@alwatr/nanolib",
-      "version": "7.3.8",
+      "version": "8.0.0",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/cyrb53": "workspace:*",
@@ -321,7 +321,7 @@
     },
     "packages/node-fs": {
       "name": "@alwatr/node-fs",
-      "version": "5.5.33",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/flat-string": "workspace:*",
@@ -338,7 +338,7 @@
     },
     "packages/package-tracer": {
       "name": "@alwatr/package-tracer",
-      "version": "5.5.28",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -349,7 +349,7 @@
     },
     "packages/parse-duration": {
       "name": "@alwatr/parse-duration",
-      "version": "5.5.31",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/is-number": "workspace:*",
       },
@@ -362,7 +362,7 @@
     },
     "packages/platform-info": {
       "name": "@alwatr/platform-info",
-      "version": "5.5.29",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -385,14 +385,14 @@
     },
     "packages/prettier-config": {
       "name": "@alwatr/prettier-config",
-      "version": "6.0.2",
+      "version": "7.0.0",
       "devDependencies": {
         "prettier": "^3.8.1",
       },
     },
     "packages/random": {
       "name": "@alwatr/random",
-      "version": "5.1.31",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
       },
@@ -405,7 +405,7 @@
     },
     "packages/render-state": {
       "name": "@alwatr/render-state",
-      "version": "5.5.32",
+      "version": "6.0.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -418,7 +418,7 @@
     },
     "packages/resolve-url": {
       "name": "@alwatr/resolve-url",
-      "version": "5.5.33",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -429,7 +429,7 @@
     },
     "packages/session-storage": {
       "name": "@alwatr/session-storage",
-      "version": "1.0.1",
+      "version": "2.0.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -443,7 +443,7 @@
     },
     "packages/synapse": {
       "name": "@alwatr/synapse",
-      "version": "1.4.1",
+      "version": "2.0.0",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/logger": "workspace:*",
@@ -453,16 +453,17 @@
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
+        "@happy-dom/global-registrator": "^20.8.8",
         "typescript": "^5.9.3",
       },
     },
     "packages/tsconfig-base": {
       "name": "@alwatr/tsconfig-base",
-      "version": "6.0.4",
+      "version": "7.0.0",
     },
     "packages/type-helper": {
       "name": "@alwatr/type-helper",
-      "version": "7.0.2",
+      "version": "8.0.0",
       "devDependencies": {
         "@alwatr/prettier-config": "workspace:*",
         "typescript": "^5.9.3",
@@ -470,7 +471,7 @@
     },
     "packages/unicode-digits": {
       "name": "@alwatr/unicode-digits",
-      "version": "5.5.30",
+      "version": "6.0.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
@@ -556,6 +557,8 @@
     "@conventional-changelog/git-client": ["@conventional-changelog/git-client@2.6.0", "", { "dependencies": { "@simple-libs/child-process-utils": "^1.0.0", "@simple-libs/stream-utils": "^1.2.0", "semver": "^7.5.2" }, "peerDependencies": { "conventional-commits-filter": "^5.0.0", "conventional-commits-parser": "^6.3.0" }, "optionalPeers": ["conventional-commits-filter", "conventional-commits-parser"] }, "sha512-T+uPDciKf0/ioNNDpMGc8FDsehJClZP0yR3Q5MN6wE/Y/1QZ7F+80OgznnTCOlMEG4AV0LvH2UJi3C/nBnaBUg=="],
 
     "@gar/promise-retry": ["@gar/promise-retry@1.0.3", "", {}, "sha512-GmzA9ckNokPypTg10pgpeHNQe7ph+iIKKmhKu3Ob9ANkswreCx7R3cKmY781K8QK3AqVL3xVh9A42JvIAbkkSA=="],
+
+    "@happy-dom/global-registrator": ["@happy-dom/global-registrator@20.8.8", "", { "dependencies": { "@types/node": ">=20.0.0", "happy-dom": "^20.8.8" } }, "sha512-2NE+gfUX092su6oZYw6yOfgPYAfx9NBLFdMLNdZZtkupCP9oZfz6qFRYf1o8la2Le7Tyb94O5TONzcozENx2xg=="],
 
     "@inquirer/ansi": ["@inquirer/ansi@1.0.2", "", {}, "sha512-S8qNSZiYzFd0wAcyG5AXCvUHC5Sr7xpZ9wZ2py9XR88jUz8wooStVx5M6dRzczbBWjic9NP7+rY0Xi7qqK/aMQ=="],
 
@@ -677,6 +680,10 @@
 
     "@types/parse-path": ["@types/parse-path@7.1.0", "", { "dependencies": { "parse-path": "*" } }, "sha512-EULJ8LApcVEPbrfND0cRQqutIOdiIgJ1Mgrhpy755r14xMohPTEpkV/k28SJvuOs9bHRFW8x+KeDAEPiGQPB9Q=="],
 
+    "@types/whatwg-mimetype": ["@types/whatwg-mimetype@3.0.2", "", {}, "sha512-c2AKvDT8ToxLIOUlN51gTiHXflsfIFisS4pO7pDPoKouJCESkhZnEy623gwP9laCy5lnLDAw1vAzu2vM2YLOrA=="],
+
+    "@types/ws": ["@types/ws@8.18.1", "", { "dependencies": { "@types/node": "*" } }, "sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg=="],
+
     "abbrev": ["abbrev@4.0.0", "", {}, "sha512-a1wflyaL0tHtJSmLSOVybYhy22vRih4eduhhrkcjgrWGnRfrZtovJ2FRjxuTtkkj47O/baf0R86QU5OuYpz8fA=="],
 
     "agent-base": ["agent-base@7.1.4", "", {}, "sha512-MnA+YT8fwfJPgBx3m60MNqakm30XOkyIoH1y6huTQvC0PwZG7ki8NacLBcrPbNoo8vEZy7Jpuk7+jMO+CUovTQ=="],
@@ -695,7 +702,7 @@
 
     "bin-links": ["bin-links@6.0.0", "", { "dependencies": { "cmd-shim": "^8.0.0", "npm-normalize-package-bin": "^5.0.0", "proc-log": "^6.0.0", "read-cmd-shim": "^6.0.0", "write-file-atomic": "^7.0.0" } }, "sha512-X4CiKlcV2GjnCMwnKAfbVWpHa++65th9TuzAEYtZoATiOE2DQKhSp4CJlyLoTqdhBKlXjpXjCTYPNNFS33Fi6w=="],
 
-    "brace-expansion": ["brace-expansion@5.0.4", "", { "dependencies": { "balanced-match": "^4.0.2" } }, "sha512-h+DEnpVvxmfVefa4jFbCf5HdH5YMDXRsmKflpf1pILZWRFlTbJpxeU55nJl4Smt5HQaGzg1o6RHFPJaOqnmBDg=="],
+    "brace-expansion": ["brace-expansion@5.0.5", "", { "dependencies": { "balanced-match": "^4.0.2" } }, "sha512-VZznLgtwhn+Mact9tfiwx64fA9erHH/MCXEUfB/0bX/6Fz6ny5EGTXYltMocqg4xFAQZtnO3DHWWXi8RiuN7cQ=="],
 
     "bun-types": ["bun-types@1.3.11", "", { "dependencies": { "@types/node": "*" } }, "sha512-1KGPpoxQWl9f6wcZh57LvrPIInQMn2TQ7jsgxqpRzg+l0QPOFvJVH7HmvHo/AiPgwXy+/Thf6Ov3EdVn1vOabg=="],
 
@@ -759,6 +766,8 @@
 
     "emoji-regex": ["emoji-regex@10.6.0", "", {}, "sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A=="],
 
+    "entities": ["entities@7.0.1", "", {}, "sha512-TWrgLOFUQTH994YUyl1yT4uyavY5nNB5muff+RtWaqNVCAK408b5ZnnbNAUEWLTCpum9w6arT70i1XdQ4UeOPA=="],
+
     "env-paths": ["env-paths@2.2.1", "", {}, "sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A=="],
 
     "escalade": ["escalade@3.2.0", "", {}, "sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA=="],
@@ -809,6 +818,8 @@
 
     "handlebars": ["handlebars@4.7.8", "", { "dependencies": { "minimist": "^1.2.5", "neo-async": "^2.6.2", "source-map": "^0.6.1", "wordwrap": "^1.0.0" }, "optionalDependencies": { "uglify-js": "^3.1.4" }, "bin": { "handlebars": "bin/handlebars" } }, "sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ=="],
 
+    "happy-dom": ["happy-dom@20.8.8", "", { "dependencies": { "@types/node": ">=20.0.0", "@types/whatwg-mimetype": "^3.0.2", "@types/ws": "^8.18.1", "entities": "^7.0.1", "whatwg-mimetype": "^3.0.0", "ws": "^8.18.3" } }, "sha512-5/F8wxkNxYtsN0bXfMwIyNLZ9WYsoOYPbmoluqVJqv8KBUbcyKZawJ7uYK4WTX8IHBLYv+VXIwfeNDPy1oKMwQ=="],
+
     "has-unicode": ["has-unicode@2.0.1", "", {}, "sha512-8Rf9Y83NBReMnx0gFzA8JImQACstCYWUplepDa9xprwwtmgEZUF0h/i5xSA625zB/I37EtrswSST6OXxwaaIJQ=="],
 
     "hosted-git-info": ["hosted-git-info@9.0.2", "", { "dependencies": { "lru-cache": "^11.1.0" } }, "sha512-M422h7o/BR3rmCQ8UHi7cyyMqKltdP9Uo+J2fXK+RSAY+wTcKOIRyhTuKv4qn+DJf3g+PL890AzId5KZpX+CBg=="],
@@ -855,7 +866,7 @@
 
     "json-stringify-nice": ["json-stringify-nice@1.1.4", "", {}, "sha512-5Z5RFW63yxReJ7vANgW6eZFGWaQvnPE3WNmZoOJrSkGju2etKA2L5rrOa1sm877TVTFt57A80BH1bArcmlLfPw=="],
 
-    "json-with-bigint": ["json-with-bigint@3.5.7", "", {}, "sha512-7ei3MdAI5+fJPVnKlW77TKNKwQ5ppSzWvhPuSuINT/GYW9ZOC1eRKOuhV9yHG5aEsUPj9BBx5JIekkmoLHxZOw=="],
+    "json-with-bigint": ["json-with-bigint@3.5.8", "", {}, "sha512-eq/4KP6K34kwa7TcFdtvnftvHCD9KvHOGGICWwMFc4dOOKF5t4iYqnfLK8otCRCRv06FXOzGGyqE8h8ElMvvdw=="],
 
     "json5": ["json5@2.2.3", "", { "bin": { "json5": "lib/cli.js" } }, "sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg=="],
 
@@ -893,7 +904,7 @@
 
     "minipass-fetch": ["minipass-fetch@5.0.2", "", { "dependencies": { "minipass": "^7.0.3", "minipass-sized": "^2.0.0", "minizlib": "^3.0.1" }, "optionalDependencies": { "iconv-lite": "^0.7.2" } }, "sha512-2d0q2a8eCi2IRg/IGubCNRJoYbA1+YPXAzQVRFmB45gdGZafyivnZ5YSEfo3JikbjGxOdntGFvBQGqaSMXlAFQ=="],
 
-    "minipass-flush": ["minipass-flush@1.0.5", "", { "dependencies": { "minipass": "^3.0.0" } }, "sha512-JmQSYYpPUqX5Jyn1mXaRwOda1uQ8HP5KAT/oDSLCzt1BYRhQU0/hDtsB1ufZfEEzMZ9aAVmsBw8+FWsIXlClWw=="],
+    "minipass-flush": ["minipass-flush@1.0.6", "", { "dependencies": { "minipass": "^7.1.3" } }, "sha512-7Uf5gMJZ2kTkFisE3toGxT991s+cg+vMh42nbZGM2bNxfYVpkpqRudf1QrcOy72a3PwcL4JYqL+4NY7t0Hdd0A=="],
 
     "minipass-pipeline": ["minipass-pipeline@1.2.4", "", { "dependencies": { "minipass": "^3.0.0" } }, "sha512-xuIq7cIOt09RPRJ19gdi4b+RiNvDFYe5JH+ggNvBqGqpQXcru3PcRmOZuHBKWK1Txf9+cQ+HMVN4d6z46LZP7A=="],
 
@@ -963,7 +974,7 @@
 
     "path-scurry": ["path-scurry@2.0.2", "", { "dependencies": { "lru-cache": "^11.0.0", "minipass": "^7.1.2" } }, "sha512-3O/iVVsJAPsOnpwWIeD+d6z/7PmqApyQePUtCndjatj/9I5LylHvt5qluFaBT3I5h3r1ejfR056c+FCv+NnNXg=="],
 
-    "picomatch": ["picomatch@4.0.3", "", {}, "sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q=="],
+    "picomatch": ["picomatch@4.0.4", "", {}, "sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A=="],
 
     "pkg-dir": ["pkg-dir@4.2.0", "", { "dependencies": { "find-up": "^4.0.0" } }, "sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ=="],
 
@@ -1029,7 +1040,7 @@
 
     "strip-final-newline": ["strip-final-newline@4.0.0", "", {}, "sha512-aulFJcD6YK8V1G7iRB5tigAP4TsHBZZrOV8pjV++zdUwmeV8uzbY7yn6h9MswN62adStNZFuCIx4haBnRuMDaw=="],
 
-    "tar": ["tar@7.5.11", "", { "dependencies": { "@isaacs/fs-minipass": "^4.0.0", "chownr": "^3.0.0", "minipass": "^7.1.2", "minizlib": "^3.1.0", "yallist": "^5.0.0" } }, "sha512-ChjMH33/KetonMTAtpYdgUFr0tbz69Fp2v7zWxQfYZX4g5ZN2nOBXm1R2xyA+lMIKrLKIoKAwFj93jE/avX9cQ=="],
+    "tar": ["tar@7.5.13", "", { "dependencies": { "@isaacs/fs-minipass": "^4.0.0", "chownr": "^3.0.0", "minipass": "^7.1.2", "minizlib": "^3.1.0", "yallist": "^5.0.0" } }, "sha512-tOG/7GyXpFevhXVh8jOPJrmtRpOTsYqUIkVdVooZYJS/z8WhfQUX8RJILmeuJNinGAMSu1veBr4asSHFt5/hng=="],
 
     "tinyglobby": ["tinyglobby@0.2.15", "", { "dependencies": { "fdir": "^6.5.0", "picomatch": "^4.0.3" } }, "sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ=="],
 
@@ -1063,6 +1074,8 @@
 
     "wcwidth": ["wcwidth@1.0.1", "", { "dependencies": { "defaults": "^1.0.3" } }, "sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg=="],
 
+    "whatwg-mimetype": ["whatwg-mimetype@3.0.0", "", {}, "sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q=="],
+
     "which": ["which@6.0.1", "", { "dependencies": { "isexe": "^4.0.0" }, "bin": { "node-which": "bin/which.js" } }, "sha512-oGLe46MIrCRqX7ytPUf66EAYvdeMIZYn3WaocqqKZAxrBpkqHfL/qvTyJ/bTk5+AqHCjXmrv3CEWgy368zhRUg=="],
 
     "wide-align": ["wide-align@1.1.5", "", { "dependencies": { "string-width": "^1.0.2 || 2 || 3 || 4" } }, "sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg=="],
@@ -1075,11 +1088,13 @@
 
     "write-json-file": ["write-json-file@7.0.0", "", { "dependencies": { "detect-indent": "^7.0.1", "is-plain-obj": "^4.1.0", "sort-keys": "^6.0.0", "write-file-atomic": "^6.0.0" } }, "sha512-rj8As6LkachKauGxvZkFzCEd6hIRTi9FKtCNKOa4SaH5vPOiACbGcmPUEJXgkhTHwzNsYmcSbD3C9a6whBfyOg=="],
 
+    "ws": ["ws@8.20.0", "", { "peerDependencies": { "bufferutil": "^4.0.1", "utf-8-validate": ">=5.0.2" }, "optionalPeers": ["bufferutil", "utf-8-validate"] }, "sha512-sAt8BhgNbzCtgGbt2OxmpuryO63ZoDk/sqaB/znQm94T4fCEsy/yV+7CdC1kJhOU9lboAEU7R3kquuycDoibVA=="],
+
     "y18n": ["y18n@5.0.8", "", {}, "sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA=="],
 
     "yallist": ["yallist@5.0.0", "", {}, "sha512-YgvUTfwqyc7UXVMrB+SImsVYSmTS8X/tSrtdNZMImM+n7+QTriRXyXim0mBrTXNeqzVF0KWGgHPeiyViFFrNDw=="],
 
-    "yaml": ["yaml@2.8.2", "", { "bin": { "yaml": "bin.mjs" } }, "sha512-mplynKqc1C2hTVYxd0PU2xQAc22TI1vShAYGksCCfxbn/dFwnHTNi1bvYsBTkhdUNtGIf5xNOg938rrSSYvS9A=="],
+    "yaml": ["yaml@2.8.3", "", { "bin": { "yaml": "bin.mjs" } }, "sha512-AvbaCLOO2Otw/lW5bmh9d/WEdcDFdQp2Z2ZUH3pX9U2ihyUY0nvLv7J6TrWowklRGPYbB/IuIMfYgxaCPg5Bpg=="],
 
     "yargs": ["yargs@18.0.0", "", { "dependencies": { "cliui": "^9.0.1", "escalade": "^3.1.1", "get-caller-file": "^2.0.5", "string-width": "^7.2.0", "y18n": "^5.0.5", "yargs-parser": "^22.0.0" } }, "sha512-4UEqdc2RYGHZc7Doyqkrqiln3p9X2DZVxaGbwhn2pi7MrRagKaOcIKe8L3OxYcbhXLgLFUS3zAYuQjKBQgmuNg=="],
 
@@ -1098,8 +1113,6 @@
     "cliui/strip-ansi": ["strip-ansi@7.2.0", "", { "dependencies": { "ansi-regex": "^6.2.2" } }, "sha512-yDPMNjp4WyfYBkHnjIRLfca1i6KMyGCtsVgoKe/z1+6vukgaENdgGBZt+ZmKPc4gavvEZ5OgHfHdrazhgNyG7w=="],
 
     "cross-spawn/which": ["which@2.0.2", "", { "dependencies": { "isexe": "^2.0.0" }, "bin": { "node-which": "./bin/node-which" } }, "sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA=="],
-
-    "minipass-flush/minipass": ["minipass@3.3.6", "", { "dependencies": { "yallist": "^4.0.0" } }, "sha512-DxiNidxSEK+tHG6zOIklvNOwm3hvCrbUrdtzY74U6HKTJxvIDfOUL5W5P2Ghd3DTkhhKPYGqeNUIh5qcM4YBfw=="],
 
     "minipass-pipeline/minipass": ["minipass@3.3.6", "", { "dependencies": { "yallist": "^4.0.0" } }, "sha512-DxiNidxSEK+tHG6zOIklvNOwm3hvCrbUrdtzY74U6HKTJxvIDfOUL5W5P2Ghd3DTkhhKPYGqeNUIh5qcM4YBfw=="],
 
@@ -1128,8 +1141,6 @@
     "cliui/strip-ansi/ansi-regex": ["ansi-regex@6.2.2", "", {}, "sha512-Bq3SmSpyFHaWjPk8If9yc6svM8c56dB5BAtW4Qbw5jHTwwXXcTLoRMkpDJp6VL0XzlWaCHTXrkFURMYmD0sLqg=="],
 
     "cross-spawn/which/isexe": ["isexe@2.0.0", "", {}, "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw=="],
-
-    "minipass-flush/minipass/yallist": ["yallist@4.0.0", "", {}, "sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A=="],
 
     "minipass-pipeline/minipass/yallist": ["yallist@4.0.0", "", {}, "sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A=="],
 
