@@ -7,8 +7,11 @@ const mockFetch = jest.fn();
 global.fetch = mockFetch;
 
 // Mock global navigator for offline tests
-// @ts-expect-error type mismatch for global navigator
-global.navigator = {onLine: true};
+Object.defineProperty(globalThis, 'navigator', {
+  configurable: true,
+  writable: true,
+  value: {onLine: true},
+});
 
 // Helper to create mock Response
 /**
