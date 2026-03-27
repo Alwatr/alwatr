@@ -12,12 +12,12 @@
         "bun-types": "^1.3.11",
         "conventional-changelog-conventionalcommits": "^9.3.0",
         "conventional-commits-filter": "^5.0.0",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/async-queue": {
       "name": "@alwatr/async-queue",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "dependencies": {
         "@alwatr/flatomise": "workspace:*",
       },
@@ -26,35 +26,35 @@
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/cyrb53": {
       "name": "@alwatr/cyrb53",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/debounce": {
       "name": "@alwatr/debounce",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.0",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/dedupe": {
       "name": "@alwatr/dedupe",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/has-own": "workspace:*",
@@ -64,22 +64,22 @@
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/deep-clone": {
       "name": "@alwatr/deep-clone",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/delay": {
       "name": "@alwatr/delay",
-      "version": "7.0.0",
+      "version": "7.0.1",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/parse-duration": "workspace:*",
@@ -90,22 +90,22 @@
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.0",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/djb2-hash": {
       "name": "@alwatr/djb2-hash",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/env": {
       "name": "@alwatr/env",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "dependencies": {
         "@alwatr/platform-info": "workspace:*",
       },
@@ -115,23 +115,23 @@
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.0",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/exit-hook": {
       "name": "@alwatr/exit-hook",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@types/node": "^24.12.0",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/fetch": {
       "name": "@alwatr/fetch",
-      "version": "8.0.0",
+      "version": "8.0.1",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/global-this": "workspace:*",
@@ -145,108 +145,108 @@
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/flat-string": {
       "name": "@alwatr/flat-string",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/flatomise": {
       "name": "@alwatr/flatomise",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/global-this": {
       "name": "@alwatr/global-this",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.0",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/has-own": {
       "name": "@alwatr/has-own",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/hash-string": {
       "name": "@alwatr/hash-string",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/http-primer": {
       "name": "@alwatr/http-primer",
-      "version": "7.0.0",
+      "version": "7.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/iranian-national-code-validator": {
       "name": "@alwatr/iranian-national-code-validator",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/is-number": {
       "name": "@alwatr/is-number",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/json2csv": {
       "name": "@alwatr/json2csv",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/local-storage": {
       "name": "@alwatr/local-storage",
-      "version": "8.0.0",
+      "version": "8.0.1",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -255,12 +255,12 @@
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/logger": {
       "name": "@alwatr/logger",
-      "version": "7.0.0",
+      "version": "7.0.1",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/platform-info": "workspace:*",
@@ -270,17 +270,17 @@
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@types/node": "^24.12.0",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/nano-build": {
       "name": "@alwatr/nano-build",
-      "version": "7.0.0",
+      "version": "7.0.1",
       "bin": "./cli.sh",
     },
     "packages/nanolib": {
       "name": "@alwatr/nanolib",
-      "version": "8.0.0",
+      "version": "9.0.0",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/cyrb53": "workspace:*",
@@ -316,12 +316,12 @@
         "@alwatr/unicode-digits": "workspace:*",
       },
       "devDependencies": {
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/node-fs": {
       "name": "@alwatr/node-fs",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/flat-string": "workspace:*",
@@ -333,23 +333,23 @@
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.0",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/package-tracer": {
       "name": "@alwatr/package-tracer",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/parse-duration": {
       "name": "@alwatr/parse-duration",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "dependencies": {
         "@alwatr/is-number": "workspace:*",
       },
@@ -357,19 +357,19 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/platform-info": {
       "name": "@alwatr/platform-info",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.0",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/playground": {
@@ -380,19 +380,19 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/prettier-config": {
       "name": "@alwatr/prettier-config",
-      "version": "7.0.0",
+      "version": "7.0.1",
       "devDependencies": {
         "prettier": "^3.8.1",
       },
     },
     "packages/random": {
       "name": "@alwatr/random",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
       },
@@ -400,12 +400,12 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/render-state": {
       "name": "@alwatr/render-state",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -413,23 +413,23 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/resolve-url": {
       "name": "@alwatr/resolve-url",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/session-storage": {
       "name": "@alwatr/session-storage",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -438,12 +438,12 @@
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/synapse": {
       "name": "@alwatr/synapse",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/logger": "workspace:*",
@@ -453,31 +453,31 @@
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@happy-dom/global-registrator": "^20.8.8",
-        "typescript": "^5.9.3",
+        "@happy-dom/global-registrator": "^20.8.9",
+        "typescript": "^6.0.2",
       },
     },
     "packages/tsconfig-base": {
       "name": "@alwatr/tsconfig-base",
-      "version": "7.0.0",
+      "version": "8.0.0",
     },
     "packages/type-helper": {
       "name": "@alwatr/type-helper",
-      "version": "8.0.0",
+      "version": "8.0.1",
       "devDependencies": {
         "@alwatr/prettier-config": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/unicode-digits": {
       "name": "@alwatr/unicode-digits",
-      "version": "6.0.0",
+      "version": "6.0.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/prettier-config": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
   },
@@ -558,7 +558,7 @@
 
     "@gar/promise-retry": ["@gar/promise-retry@1.0.3", "", {}, "sha512-GmzA9ckNokPypTg10pgpeHNQe7ph+iIKKmhKu3Ob9ANkswreCx7R3cKmY781K8QK3AqVL3xVh9A42JvIAbkkSA=="],
 
-    "@happy-dom/global-registrator": ["@happy-dom/global-registrator@20.8.8", "", { "dependencies": { "@types/node": ">=20.0.0", "happy-dom": "^20.8.8" } }, "sha512-2NE+gfUX092su6oZYw6yOfgPYAfx9NBLFdMLNdZZtkupCP9oZfz6qFRYf1o8la2Le7Tyb94O5TONzcozENx2xg=="],
+    "@happy-dom/global-registrator": ["@happy-dom/global-registrator@20.8.9", "", { "dependencies": { "@types/node": ">=20.0.0", "happy-dom": "^20.8.9" } }, "sha512-DtZeRRHY9A/bisTJziUBBPrdnPui7+R185G/hzi6/Boymhqh7/wi53AY+IvQHS1+7OPaqfO/1XNpngNwthLz+A=="],
 
     "@inquirer/ansi": ["@inquirer/ansi@1.0.2", "", {}, "sha512-S8qNSZiYzFd0wAcyG5AXCvUHC5Sr7xpZ9wZ2py9XR88jUz8wooStVx5M6dRzczbBWjic9NP7+rY0Xi7qqK/aMQ=="],
 
@@ -818,7 +818,7 @@
 
     "handlebars": ["handlebars@4.7.8", "", { "dependencies": { "minimist": "^1.2.5", "neo-async": "^2.6.2", "source-map": "^0.6.1", "wordwrap": "^1.0.0" }, "optionalDependencies": { "uglify-js": "^3.1.4" }, "bin": { "handlebars": "bin/handlebars" } }, "sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ=="],
 
-    "happy-dom": ["happy-dom@20.8.8", "", { "dependencies": { "@types/node": ">=20.0.0", "@types/whatwg-mimetype": "^3.0.2", "@types/ws": "^8.18.1", "entities": "^7.0.1", "whatwg-mimetype": "^3.0.0", "ws": "^8.18.3" } }, "sha512-5/F8wxkNxYtsN0bXfMwIyNLZ9WYsoOYPbmoluqVJqv8KBUbcyKZawJ7uYK4WTX8IHBLYv+VXIwfeNDPy1oKMwQ=="],
+    "happy-dom": ["happy-dom@20.8.9", "", { "dependencies": { "@types/node": ">=20.0.0", "@types/whatwg-mimetype": "^3.0.2", "@types/ws": "^8.18.1", "entities": "^7.0.1", "whatwg-mimetype": "^3.0.0", "ws": "^8.18.3" } }, "sha512-Tz23LR9T9jOGVZm2x1EPdXqwA37G/owYMxRwU0E4miurAtFsPMQ1d2Jc2okUaSjZqAFz2oEn3FLXC5a0a+siyA=="],
 
     "has-unicode": ["has-unicode@2.0.1", "", {}, "sha512-8Rf9Y83NBReMnx0gFzA8JImQACstCYWUplepDa9xprwwtmgEZUF0h/i5xSA625zB/I37EtrswSST6OXxwaaIJQ=="],
 
@@ -1052,7 +1052,7 @@
 
     "type-fest": ["type-fest@2.19.0", "", {}, "sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA=="],
 
-    "typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
+    "typescript": ["typescript@6.0.2", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ=="],
 
     "uglify-js": ["uglify-js@3.19.3", "", { "bin": { "uglifyjs": "bin/uglifyjs" } }, "sha512-v3Xu+yuwBXisp6QYTcH4UbH+xYJXqnq2m/LtQVWKWzYc1iehYnLixoQDN9FH6/j9/oybfd6W9Ghwkl8+UMKTKQ=="],
 
