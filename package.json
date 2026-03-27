@@ -3,7 +3,7 @@
   "description": "Alwatr Flux empowers your applications with elegant and powerful state management and event handling capabilities. Built on the observable design pattern, Flux provides a lightweight yet robust foundation for managing global signals and states.",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "devDependencies": {
-    "@alwatr/tsconfig-base": "^7.0.0",
+    "@alwatr/tsconfig-base": "^8.0.0",
     "@lerna-lite/changed": "^4.11.5",
     "@lerna-lite/cli": "^4.11.5",
     "@lerna-lite/diff": "^4.11.5",
@@ -11,7 +11,7 @@
     "@lerna-lite/publish": "^4.11.5",
     "@lerna-lite/run": "^4.11.5",
     "@lerna-lite/version": "^4.11.5",
-    "bun-types": "^1.3.10",
+    "bun-types": "^1.3.11",
     "conventional-changelog-conventionalcommits": "^9.3.0",
     "conventional-commits-filter": "^5.0.0",
     "typescript": "^5.9.3"
