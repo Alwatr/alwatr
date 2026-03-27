@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@9.0.0...@alwatr/nanolib@9.0.1) (2026-03-27)
+
+### 🧹 Miscellaneous Chores
+
+* update TypeScript version to ^6.0.2 across all packages ([d6b2bf3](https://github.com/Alwatr/nanolib/commit/d6b2bf3ce064eb927c56d9f8c7a5d3138adde998))
+
 ## [9.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@8.0.0...@alwatr/nanolib@9.0.0) (2026-03-27)
 
 ### ⚠ BREAKING CHANGES

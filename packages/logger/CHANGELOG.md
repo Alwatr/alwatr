@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.2](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@7.0.1...@alwatr/logger@7.0.2) (2026-03-27)
+
+### 🧹 Miscellaneous Chores
+
+* add "types" option to compilerOptions in tsconfig.json files ([bcb6204](https://github.com/Alwatr/nanolib/commit/bcb620419cec2bba4e11a68d27b25cee37a439eb))
+* update TypeScript version to ^6.0.2 across all packages ([d6b2bf3](https://github.com/Alwatr/nanolib/commit/d6b2bf3ce064eb927c56d9f8c7a5d3138adde998))
+
 ## [7.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/logger@7.0.0...@alwatr/logger@7.0.1) (2026-03-27)
 
 ### 🧹 Miscellaneous Chores
