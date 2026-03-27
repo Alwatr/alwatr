@@ -9,10 +9,10 @@
     "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^7.0.0",
-    "@alwatr/prettier-config": "^7.0.0",
-    "@alwatr/tsconfig-base": "^7.0.0",
-    "@alwatr/type-helper": "^8.0.0",
+    "@alwatr/nano-build": "^7.0.1",
+    "@alwatr/prettier-config": "^7.0.1",
+    "@alwatr/tsconfig-base": "^8.0.0",
+    "@alwatr/type-helper": "^8.0.1",
     "typescript": "^5.9.3"
   },
   "exports": {
