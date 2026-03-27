@@ -16,7 +16,7 @@
         "bun-types": "^1.3.11",
         "conventional-changelog-conventionalcommits": "^9.3.0",
         "conventional-commits-filter": "^5.0.0",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
       },
     },
     "packages/flux": {
@@ -30,76 +30,76 @@
         "@alwatr/nano-build": "^7.0.1",
         "@alwatr/prettier-config": "^7.0.1",
         "@alwatr/tsconfig-base": "^8.0.0",
-        "@alwatr/type-helper": "^8.0.1",
-        "typescript": "^5.9.3",
+        "@alwatr/type-helper": "^8.0.2",
+        "typescript": "^6.0.2",
       },
     },
     "packages/fsm": {
       "name": "@alwatr/fsm",
       "version": "6.2.0",
       "dependencies": {
-        "@alwatr/logger": "^7.0.1",
+        "@alwatr/logger": "^7.0.2",
         "@alwatr/signal": "workspace:*",
       },
       "devDependencies": {
         "@alwatr/nano-build": "^7.0.1",
         "@alwatr/prettier-config": "^7.0.1",
         "@alwatr/tsconfig-base": "^8.0.0",
-        "@alwatr/type-helper": "^8.0.1",
-        "typescript": "^5.9.3",
+        "@alwatr/type-helper": "^8.0.2",
+        "typescript": "^6.0.2",
       },
     },
     "packages/signal": {
       "name": "@alwatr/signal",
       "version": "6.2.0",
       "dependencies": {
-        "@alwatr/debounce": "^2.0.1",
-        "@alwatr/delay": "^7.0.1",
-        "@alwatr/local-storage": "^8.0.1",
-        "@alwatr/logger": "^7.0.1",
-        "@alwatr/session-storage": "^2.0.1",
+        "@alwatr/debounce": "^2.0.2",
+        "@alwatr/delay": "^7.0.2",
+        "@alwatr/local-storage": "^8.0.2",
+        "@alwatr/logger": "^7.0.2",
+        "@alwatr/session-storage": "^2.0.2",
       },
       "devDependencies": {
         "@alwatr/nano-build": "^7.0.1",
         "@alwatr/prettier-config": "^7.0.1",
         "@alwatr/tsconfig-base": "^8.0.0",
-        "@alwatr/type-helper": "^8.0.1",
-        "typescript": "^5.9.3",
+        "@alwatr/type-helper": "^8.0.2",
+        "typescript": "^6.0.2",
       },
     },
   },
   "packages": {
-    "@alwatr/debounce": ["@alwatr/debounce@2.0.1", "", {}, "sha512-ht/Gd1QdLBoYrg/vwKLAFZgWunkWQp6e/DVgUmlvmjUdUFP4ijqd2g1koVnnS/G/8egdLVT/Z2wOtsA8BC2jEg=="],
+    "@alwatr/debounce": ["@alwatr/debounce@2.0.2", "", {}, "sha512-ZCgtUXlsp0umqlMkHleSQdQ8mna9IsS1rrY41VlMdJ1VIzBphoyd/20JU285q5fXGOYxsqJ5FzfoJ/gFwEshng=="],
 
-    "@alwatr/delay": ["@alwatr/delay@7.0.1", "", { "dependencies": { "@alwatr/global-this": "6.0.1", "@alwatr/parse-duration": "6.0.1" } }, "sha512-rny2NCoSKP+bj7lSE7FnVT3TDCH4g6xrr2ugCrzGiloTlB4epCqnu0ZaLxPpP7a5fQCmPyTWdDG7DrerDIjbag=="],
+    "@alwatr/delay": ["@alwatr/delay@7.0.2", "", { "dependencies": { "@alwatr/global-this": "6.0.2", "@alwatr/parse-duration": "6.0.2" } }, "sha512-zLUliVh5rFKxKNK9pt1qse4uR8E5EfndtE+E8+w9pW/dJWvnZ1Q7Eugfke3N5e+Wg0OdlY0Gyxwtc/zaBVjEAQ=="],
 
     "@alwatr/flux": ["@alwatr/flux@workspace:packages/flux"],
 
     "@alwatr/fsm": ["@alwatr/fsm@workspace:packages/fsm"],
 
-    "@alwatr/global-this": ["@alwatr/global-this@6.0.1", "", {}, "sha512-bbDouKunkgY6NFxBlC+Ed1GlPL8pjCnkG1I9bdrtV9+3BkJYXNzoMUOUNWIr3ajNGiSWucVMuSxL2iNuiuRWEQ=="],
+    "@alwatr/global-this": ["@alwatr/global-this@6.0.2", "", {}, "sha512-lSc0ZS03ViYFL2TemQkkL2UpnyEXOvx4u8R+l58sgMVlv4Volx9UIBrq/dsyRDYuoZ7g7CVb3BfjreGH1LNNfA=="],
 
-    "@alwatr/is-number": ["@alwatr/is-number@6.0.1", "", {}, "sha512-7GBCIQUStVt8vT8KehAbyhvd7N1vUjDHIPqq170j51dsgCdMENbZBQaazLqAHo43f/3M7G/oBAGtahx9SSjI/g=="],
+    "@alwatr/is-number": ["@alwatr/is-number@6.0.2", "", {}, "sha512-HqQSzhlVNVn5D7VbSiSEloImeKjGTto2jk/F+xDMPBVb8GHDcBy68U0a/UbSi0N8xg3uX2dOsF9UhuYbV/QdPA=="],
 
-    "@alwatr/local-storage": ["@alwatr/local-storage@8.0.1", "", { "dependencies": { "@alwatr/logger": "7.0.1" } }, "sha512-tz9xO7sII3obXdIpIlKGupeDm6LuwH/VpTkYtbfvh2wZwx8HTNwxysjnEenb+6MbrDVSYuTWsDtDT5ow5l0Qjg=="],
+    "@alwatr/local-storage": ["@alwatr/local-storage@8.0.2", "", { "dependencies": { "@alwatr/logger": "7.0.2" } }, "sha512-NUAZq519t8n9Z5OxDL7LFg/WSLnZcAW7iFjOtUf/8BewZjyqsU2KwJWl5QcpyxOXbN93ykjl6m6YFEYfufByHQ=="],
 
-    "@alwatr/logger": ["@alwatr/logger@7.0.1", "", { "dependencies": { "@alwatr/global-this": "6.0.1", "@alwatr/platform-info": "6.0.1" } }, "sha512-Y/mVIDppYAJn9C7DU5lXqqJOeuwLbA9sHeboAEhprXOV+IZoIc4s6GADckGj1tj6agbcrLNJCeByin1avmRt6A=="],
+    "@alwatr/logger": ["@alwatr/logger@7.0.2", "", { "dependencies": { "@alwatr/global-this": "6.0.2", "@alwatr/platform-info": "6.0.2" } }, "sha512-C026Oofx7yYkrqyrW3Mec+9UTzQX5lch1lEirzNXhanaWxs4qeJ/KagOai3pbMrgj0pBsNMnBCxDzAJPeb5qCg=="],
 
     "@alwatr/nano-build": ["@alwatr/nano-build@7.0.1", "", { "bin": { "nano-build": "cli.sh" } }, "sha512-+cXsJrgx4ieKfRxBA0/znmp1CGIjk3374QoxWa549h+h+FMk5AVls9G58SOSvPVJW2rJv2iuTI2JJmppS6xGBA=="],
 
-    "@alwatr/parse-duration": ["@alwatr/parse-duration@6.0.1", "", { "dependencies": { "@alwatr/is-number": "6.0.1" } }, "sha512-0KOYIgZYP5/tTna7l5EjN8AgEJHVnn7Lq8bhBPbus5YKEmIDChdkv3iLETtaJgboqGVjnaqo5l6YCQ2C7Be1mg=="],
+    "@alwatr/parse-duration": ["@alwatr/parse-duration@6.0.2", "", { "dependencies": { "@alwatr/is-number": "6.0.2" } }, "sha512-qmSZ81KCs6Nfq8rrp8JCEn3Oh3qKPgoJR2L2CWnERry3Yk1ym8BSXpeCVNiDiEHGuNBLKxVCUjMRQUdbd4h4AA=="],
 
-    "@alwatr/platform-info": ["@alwatr/platform-info@6.0.1", "", {}, "sha512-7u30GR10lCLQc4+WJTDYZgkZCQRYjhcq2tRby2NqKD7olYWaEZMLoGrddGREb3cBnf+HGSrT4EtfaRa06JL1Dg=="],
+    "@alwatr/platform-info": ["@alwatr/platform-info@6.0.2", "", {}, "sha512-yyLp0SRvwmOOGPCYJseIFrkti1/ccwN/vXuEf5nvUxY0pJ400d51RLRb/Vyntx/q4UP/JbiJWEKwGT0nyL/d+A=="],
 
     "@alwatr/prettier-config": ["@alwatr/prettier-config@7.0.1", "", {}, "sha512-fv7ZTxC/687VU8Z6qXGtag210rA9dRQ5IK+/60KKpN6B1e/v3bq3bl8GI7W1sbblZa0+74+Srau6s+f9AOmTZw=="],
 
-    "@alwatr/session-storage": ["@alwatr/session-storage@2.0.1", "", { "dependencies": { "@alwatr/logger": "7.0.1" } }, "sha512-3fFyveF1U1F1hci2Q0aJAEljaxszhDx1u+9SuJNMAYbdaFKhNyAuzXODcRyWUkiqmiGzL23VF5IGdVgqFUs+Vw=="],
+    "@alwatr/session-storage": ["@alwatr/session-storage@2.0.2", "", { "dependencies": { "@alwatr/logger": "7.0.2" } }, "sha512-pfnXhNj50AxpI2NY710pc3poIH+X8I3oQCnRvCqNtnqOV3TpWF60LdQAsAijz47w4WcqfKRNQzPP9kchfSrCJQ=="],
 
     "@alwatr/signal": ["@alwatr/signal@workspace:packages/signal"],
 
     "@alwatr/tsconfig-base": ["@alwatr/tsconfig-base@8.0.0", "", {}, "sha512-heWguyznZpue9Wg99CktWQeJ90ZG7J7fdD5Y33j46M+HS1rgfMntgIqjhYeSwgXqgX0+uTM4jHNSmHRiYi4wEg=="],
 
-    "@alwatr/type-helper": ["@alwatr/type-helper@8.0.1", "", {}, "sha512-/JDVFDBK33cS3tjR+Z6MHKNRcH9Nnn87iVMQBnNVtak7Wj/jD5pKOJNsHgRqa84X5Rav4fUlT6Tg9fB/uanIqg=="],
+    "@alwatr/type-helper": ["@alwatr/type-helper@8.0.2", "", {}, "sha512-yEm1Iu4dYSzTlZHjNsGkceXYX0TygOheT4gWD7vS4VRrWdZk5lGCOGYQzyB5B8nlScssHamf8JwmQMyBau5CtQ=="],
 
     "@conventional-changelog/git-client": ["@conventional-changelog/git-client@2.6.0", "", { "dependencies": { "@simple-libs/child-process-utils": "^1.0.0", "@simple-libs/stream-utils": "^1.2.0", "semver": "^7.5.2" }, "peerDependencies": { "conventional-commits-filter": "^5.0.0", "conventional-commits-parser": "^6.3.0" }, "optionalPeers": ["conventional-commits-filter", "conventional-commits-parser"] }, "sha512-T+uPDciKf0/ioNNDpMGc8FDsehJClZP0yR3Q5MN6wE/Y/1QZ7F+80OgznnTCOlMEG4AV0LvH2UJi3C/nBnaBUg=="],
 
@@ -595,7 +595,7 @@
 
     "type-fest": ["type-fest@2.19.0", "", {}, "sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA=="],
 
-    "typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
+    "typescript": ["typescript@6.0.2", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ=="],
 
     "uglify-js": ["uglify-js@3.19.3", "", { "bin": { "uglifyjs": "bin/uglifyjs" } }, "sha512-v3Xu+yuwBXisp6QYTcH4UbH+xYJXqnq2m/LtQVWKWzYc1iehYnLixoQDN9FH6/j9/oybfd6W9Ghwkl8+UMKTKQ=="],
 
