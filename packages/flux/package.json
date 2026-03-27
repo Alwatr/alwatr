@@ -12,8 +12,8 @@
     "@alwatr/nano-build": "^7.0.1",
     "@alwatr/prettier-config": "^7.0.1",
     "@alwatr/tsconfig-base": "^8.0.0",
-    "@alwatr/type-helper": "^8.0.1",
-    "typescript": "^5.9.3"
+    "@alwatr/type-helper": "^8.0.2",
+    "typescript": "^6.0.2"
   },
   "exports": {
     ".": {
