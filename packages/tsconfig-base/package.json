@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/tsconfig-base",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "description": "This is a base TypeScript configuration for Alwatr projects.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",

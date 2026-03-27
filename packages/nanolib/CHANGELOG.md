@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@8.0.0...@alwatr/nanolib@9.0.0) (2026-03-27)
+
+### ⚠ BREAKING CHANGES
+
+* experimental decorators and metadata disabled in tsconfig by default.
+
+### 🔨 Code Refactoring
+
+* disable experimental decorators and metadata in tsconfig ([64ff254](https://github.com/Alwatr/nanolib/commit/64ff254af3c601d95b06ccb6146bc5116228ea59))
+
+### 🧹 Miscellaneous Chores
+
+* add .syncpackrc configuration file and reorganize all package.json fields ([5ac13b6](https://github.com/Alwatr/nanolib/commit/5ac13b6c74710279f64d99ace5fb781b0862389e))
+* remove "types" field from package.json in multiple packages ([b2a458d](https://github.com/Alwatr/nanolib/commit/b2a458d3b1028175e6bc8d0485d223e7d22a1773))
+
 ## [8.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/nanolib@7.3.8...@alwatr/nanolib@8.0.0) (2026-03-19)
 
 ### ⚠ BREAKING CHANGES

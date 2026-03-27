@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/resolve-url",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "A tiny TypeScript library to resolve URLs.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",

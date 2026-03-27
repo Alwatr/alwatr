@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/flatomise",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "A utility for creating promises that can be externally resolved or rejected.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",

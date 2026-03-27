@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@8.0.0...@alwatr/type-helper@8.0.1) (2026-03-27)
+
+### 🧹 Miscellaneous Chores
+
+* add .syncpackrc configuration file and reorganize all package.json fields ([5ac13b6](https://github.com/Alwatr/nanolib/commit/5ac13b6c74710279f64d99ace5fb781b0862389e))
+
 ## [8.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/type-helper@7.0.2...@alwatr/type-helper@8.0.0) (2026-03-19)
 
 ### ⚠ BREAKING CHANGES

@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@2.0.0...@alwatr/synapse@3.0.0) (2026-03-27)
+
+### ⚠ BREAKING CHANGES
+
+* **core:** Property decorators (@query, @queryAll) now require the 'accessor' keyword.
+Legacy experimental decorators are no longer supported.
+
+### 🐛 Bug Fixes
+
+* **queryDecorator:** improve type safety and caching logic in query decorators ([37dfc92](https://github.com/Alwatr/nanolib/commit/37dfc9283e8d4f042ec0bbe5c3191d35dd703c2f))
+* **tsconfig:** ensure test files are excluded from compilation ([61b27d1](https://github.com/Alwatr/nanolib/commit/61b27d1c9096d09bfd2a3b15b6796b573a37dd9c))
+* update paths for directive and query decorators to use kebab-case ([539ec65](https://github.com/Alwatr/nanolib/commit/539ec65f335ec4dab844614989a9b3aefd0737b9))
+
+### 🔨 Code Refactoring
+
+* **core:** upgrade decorators to TC39 Stage 3 standard ([b9b8489](https://github.com/Alwatr/nanolib/commit/b9b8489b19611173cbc89506d5f4500b82e8fc46))
+
+### 🧹 Miscellaneous Chores
+
+* add .syncpackrc configuration file and reorganize all package.json fields ([5ac13b6](https://github.com/Alwatr/nanolib/commit/5ac13b6c74710279f64d99ace5fb781b0862389e))
+* add @happy-dom/global-registrator dependency ([7d9a7b3](https://github.com/Alwatr/nanolib/commit/7d9a7b3472b202dec88ee9aa6668c45f03972c0c))
+* remove "types" field from package.json in multiple packages ([b2a458d](https://github.com/Alwatr/nanolib/commit/b2a458d3b1028175e6bc8d0485d223e7d22a1773))
+
 ## [2.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.4.1...@alwatr/synapse@2.0.0) (2026-03-19)
 
 ### ⚠ BREAKING CHANGES

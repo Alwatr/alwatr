@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/unicode-digits",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "Convert the String of number of the source language to the destination language.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",

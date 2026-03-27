@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@7.0.0...@alwatr/tsconfig-base@8.0.0) (2026-03-27)
+
+### ⚠ BREAKING CHANGES
+
+* experimental decorators and metadata disabled in tsconfig by default.
+
+### 🔨 Code Refactoring
+
+* disable experimental decorators and metadata in tsconfig ([64ff254](https://github.com/Alwatr/nanolib/commit/64ff254af3c601d95b06ccb6146bc5116228ea59))
+
+### 🧹 Miscellaneous Chores
+
+* add .syncpackrc configuration file and reorganize all package.json fields ([5ac13b6](https://github.com/Alwatr/nanolib/commit/5ac13b6c74710279f64d99ace5fb781b0862389e))
+
 ## [7.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@6.0.4...@alwatr/tsconfig-base@7.0.0) (2026-03-19)
 
 ### ⚠ BREAKING CHANGES
