@@ -14,7 +14,6 @@
   "bugs": "https://github.com/Alwatr/nanolib/issues",
   "sideEffects": false,
   "devDependencies": {
-    "@alwatr/prettier-config": "workspace:*",
     "typescript": "^6.0.2"
   },
   "scripts": {
@@ -52,6 +51,5 @@
     "utility",
     "utils"
   ],
-  "prettier": "@alwatr/prettier-config",
   "types": "types.d.ts"
 }

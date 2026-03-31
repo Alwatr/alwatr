@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
-    "@alwatr/prettier-config": "^7.0.1",
+    
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
     "typescript": "^6.0.2"
@@ -37,7 +37,7 @@
   "license": "MPL-2.0",
   "main": "./dist/main.cjs",
   "module": "./dist/main.mjs",
-  "prettier": "@alwatr/prettier-config",
+  
   "publishConfig": {
     "access": "public"
   },

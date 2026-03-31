@@ -24,7 +24,6 @@
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
-    "@alwatr/prettier-config": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
     "typescript": "^6.0.2"
   },
@@ -66,6 +65,5 @@
     "util",
     "utility",
     "utils"
-  ],
-  "prettier": "@alwatr/prettier-config"
+  ]
 }

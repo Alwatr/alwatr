@@ -7,12 +7,12 @@
   "dependencies": {
     "@alwatr/flux": "^6.1.0",
     "@alwatr/nanolib": "workspace:*",
-    "@alwatr/nanotron": "^4.10.1",
-    "@alwatr/nitrobase": "^7.10.0"
+    "@alwatr/nanotron": "workspace:*",
+    "@alwatr/nitrobase": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
-    "@alwatr/prettier-config": "^7.0.1",
+    
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
     "typescript": "^6.0.2"
@@ -59,7 +59,7 @@
     "alwatr"
   ],
   "license": "MPL-2.0",
-  "prettier": "@alwatr/prettier-config",
+  
   "publishConfig": {
     "access": "public"
   },
