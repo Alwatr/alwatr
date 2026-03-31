@@ -1,0 +1,10 @@
+{
+  "extends": "@alwatr/nanolib/tsconfig",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "emitDeclarationOnly": true,
+    "composite": true,
+  },
+  "include": ["src/**/*.ts"]
+}

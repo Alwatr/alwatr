@@ -1,0 +1,105 @@
+import {createFsmService} from '@alwatr/fsm';
+
+// 1. Define types
+/** @typedef {'green' | 'yellow' | 'red' | 'flashingRed'} State */
+/** @typedef {{type: 'TIMER'} | {type: 'POWER_BACK'} | {type: 'POWER_LOST'}} Event */
+
+// 2. Define some actions
+const powerLostWarning = () => {
+  console.warn('Power lost!');
+};
+
+// 3. Config the state machine
+/**
+ * @type {import('@alwatr/fsm').StateMachineConfig<State, Event, Record<string, unknown>>}
+ */
+const lightMachineFsm = {
+  name: 'light-machine',
+  initial: 'green',
+  context: {},
+  states: {
+    green: {
+      on: {
+        TIMER: {
+          target: 'yellow',
+        },
+        POWER_LOST: {
+          target: 'flashingRed',
+        },
+      },
+    },
+    yellow: {
+      on: {
+        TIMER: {
+          target: 'red',
+        },
+        POWER_LOST: {
+          target: 'flashingRed',
+        },
+      },
+    },
+    red: {
+      on: {
+        TIMER: {
+          target: 'green',
+        },
+        POWER_LOST: {
+          target: 'flashingRed',
+        },
+      },
+    },
+    flashingRed: {
+      entry: powerLostWarning,
+      on: {
+        POWER_BACK: {
+          target: 'green',
+        },
+      },
+    },
+  },
+};
+
+// 4. Create the service
+const lightMachineService = createFsmService(lightMachineFsm);
+
+// 5. Use it in your application
+lightMachineService.stateSignal.subscribe(
+  (state) => {
+    console.log('state changed: %o', state);
+  },
+  {receivePrevious: false},
+);
+
+// --- test ---
+
+const delay = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 10));
+  console.log('\n\n');
+};
+
+console.log('start, state: %s', lightMachineService.stateSignal.get().name); // start, state: green
+
+await delay();
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: yellow
+await delay();
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: red
+await delay();
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: green
+await delay();
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: yellow
+await delay();
+lightMachineService.eventSignal.dispatch({type: 'POWER_LOST'}); // state changed: flashingRed, Power lost!
+await delay();
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // no state change
+await delay();
+lightMachineService.eventSignal.dispatch({type: 'POWER_BACK'}); // state changed: green
+await delay();
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: yellow
+await delay();
+lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: red
+await delay();
+
+console.log('end, state: %s', lightMachineService.stateSignal.get().name); // end, state: red
+
+// 5. Cleanup
+lightMachineService.destroy();

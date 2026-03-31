@@ -1,0 +1,8 @@
+{
+  "name": "@alwatr/nitrobase-nginx",
+  "description": "Extremely fast and compact JSON-based database that operates in memory, includes a JSON file backup, and serve over the highly accelerated Nginx.",
+  "version": "7.10.0",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "license": "MPL-2.0",
+  "private": true
+}

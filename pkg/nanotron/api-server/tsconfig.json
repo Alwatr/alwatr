@@ -1,0 +1,10 @@
+{
+  "extends": "@alwatr/tsconfig-base/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "emitDeclarationOnly": true,
+    "composite": true,
+  },
+  "include": ["src/**/*.ts"]
+}

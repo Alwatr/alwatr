@@ -1,0 +1,45 @@
+@layer base {
+  :root {
+    --sys-scrollbar-background: transparent;
+    --sys-scrollbar-color: rgba(0, 0, 0, 0.079);
+    --sys-scrollbar-color-hover: rgba(0, 0, 0, 0.119);
+    --sys-scrollbar-size: 0.5rem;
+    --sys-scrollbar-radius: 0.25rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --sys-scrollbar-color: rgba(255, 255, 255, 0.079);
+      --sys-scrollbar-color-hover: rgba(255, 255, 255, 0.119);
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: var(--sys-scrollbar-size);
+    height: var(--sys-scrollbar-size);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: var(--sys-scrollbar-background);
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: var(--sys-scrollbar-background);
+    margin: var(--sys-spacing-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--sys-scrollbar-color);
+    border-radius: var(--sys-scrollbar-radius);
+  }
+
+  :hover::-webkit-scrollbar-thumb {
+    background-color: var(--sys-scrollbar-color-hover);
+  }
+
+  @media (max-width: 600px) {
+    .hide-scrollbar-in-mobile {
+      --sys-scrollbar-size: 0;
+    }
+  }
+}

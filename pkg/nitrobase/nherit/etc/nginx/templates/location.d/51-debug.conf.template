@@ -1,0 +1,5 @@
+location = $nitrobaseDebugPath {
+  default_type application/json;
+
+  return 200 '{"nitrobaseApiPrefix": "$nitrobaseApiPrefix", "nitrobaseRegionPublic": "$nitrobaseRegionPublic", "nitrobaseRegionSecret": "$nitrobaseRegionSecret", "nitrobaseRegionAuthenticated": "$nitrobaseRegionAuthenticated", "nitrobaseRegionManagers": "$nitrobaseRegionManagers", "nitrobaseRegionPerUser": "$nitrobaseRegionPerUser", "nitrobaseRegionPerOwner": "$nitrobaseRegionPerOwner", "authUserId": "$authUserId", "authUserToken": "$authUserToken", "userIdPrefix": "$userIdPrefix", "userLocation": "$userLocation", "document_root": "$document_root", "uri": "$uri", "request_uri": "$request_uri", "remote_addr": "$remote_addr", "http_referer": "$http_referer"}';
+}

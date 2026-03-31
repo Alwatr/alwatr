@@ -1,0 +1,10 @@
+@layer utilities {
+  .text-ellipsis {
+    @apply overflow-hidden overflow-ellipsis whitespace-nowrap;
+  }
+
+  .overflow-clip {
+    overflow: hidden;
+    overflow: clip;
+  }
+}

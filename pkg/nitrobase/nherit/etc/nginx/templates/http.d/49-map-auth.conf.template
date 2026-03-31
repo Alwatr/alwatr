@@ -1,0 +1,30 @@
+# Extract $authUserId from `$http_authorization`
+map $http_authorization $authUserId {
+  default "";
+  # if `$authUserId` is zero, don't bother with regex.
+  "" "";
+  "~^Alwatr\\s+([^/:]+):([^/]+)$" $1;
+}
+
+# Extract $authUserToken from `$http_authorization`
+map $http_authorization $authUserToken {
+  default "";
+  # if `$authUserToken` is zero, don't bother with regex.
+  "" "";
+  "~^Alwatr\\s+([^/:]+):([^/]+)$" $2;
+}
+
+# Extract $userIdPrefix from first 3 characters of `$authUserId`
+map $authUserId $userIdPrefix {
+  default "";
+  # if `$authUserId` is zero, don't bother with regex.
+  "" "";
+  "~^(.{3})" $1;
+}
+
+map $authUserId $userLocation {
+  default "";
+  # if `$authUserId` is zero, don't bother with regex.
+  "" "";
+  "~([A-z0-9_=-]+)" "$nitrobaseRegionPerUser/$userIdPrefix/$authUserId";
+}

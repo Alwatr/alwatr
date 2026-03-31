@@ -1,0 +1,70 @@
+{
+  "name": "@alwatr/fsm",
+  "description": "A tiny, type-safe, declarative, and reactive finite state machine (FSM) library for modern TypeScript applications, built on top of Alwatr Signals.",
+  "version": "6.2.0",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "bugs": "https://github.com/Alwatr/flux/issues",
+  "dependencies": {
+    "@alwatr/logger": "^7.0.2",
+    "@alwatr/signal": "workspace:*"
+  },
+  "devDependencies": {
+    "@alwatr/nano-build": "^7.0.1",
+    "@alwatr/prettier-config": "^7.0.1",
+    "@alwatr/tsconfig-base": "^8.0.0",
+    "@alwatr/type-helper": "^8.0.2",
+    "typescript": "^6.0.2"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.mjs",
+      "require": "./dist/main.cjs"
+    }
+  },
+  "files": [
+    "**/*.{js,mjs,cjs,map,d.ts,html,md}",
+    "!demo/**/*"
+  ],
+  "homepage": "https://github.com/Alwatr/flux/tree/next/packages/fsm#readme",
+  "keywords": [
+    "alwatr",
+    "esm",
+    "finite",
+    "flux",
+    "machine",
+    "state",
+    "typescript"
+  ],
+  "license": "MPL-2.0",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "prettier": "@alwatr/prettier-config",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/flux",
+    "directory": "packages/fsm"
+  },
+  "scripts": {
+    "b": "bun run build",
+    "build": "bun run build:ts && bun run build:es",
+    "build:es": "nano-build --preset=module src/main.ts",
+    "build:ts": "tsc --build",
+    "c": "bun run clean",
+    "cb": "bun run clean && bun run build",
+    "clean": "rm -rfv dist *.tsbuildinfo",
+    "d": "bun run build:es && bun run --enable-source-maps --trace-warnings",
+    "t": "bun run test",
+    "test": "ALWATR_DEBUG=0 bun test",
+    "w": "bun run watch",
+    "watch": "bun run watch:ts & bun run watch:es",
+    "watch:es": "bun run build:es --watch",
+    "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "types": "./dist/main.d.ts"
+}

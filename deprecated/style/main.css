@@ -1,0 +1,10 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import './lib/base.css';
+@import './lib/alpine.css';
+@import './lib/safe-area.css';
+@import './lib/form.css';
+@import './lib/scrollbar.css';
+@import './lib/utilities.css';

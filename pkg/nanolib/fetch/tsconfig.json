@@ -1,0 +1,18 @@
+{
+  "extends": "@alwatr/tsconfig-base/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "emitDeclarationOnly": true,
+    "composite": true
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    {"path": "../logger"},
+    {"path": "../global-this"},
+    {"path": "../delay"},
+    {"path": "../parse-duration"},
+    {"path": "../has-own"},
+    {"path": "../http-primer"}
+  ]
+}

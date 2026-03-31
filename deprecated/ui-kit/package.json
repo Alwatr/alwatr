@@ -1,0 +1,47 @@
+{
+  "name": "@alwatr/ui-kit",
+  "version": "0.0.0",
+  "description": "Alwatr UI Elements Kit",
+  "keywords": [
+    "element",
+    "ui-kit",
+    "ui",
+    "lit",
+    "lit-element",
+    "web-component",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "main": "index.js",
+  "type": "module",
+  "types": "index.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "license": "MIT",
+  "private": true,
+  "files": [
+    "**/**/*.{d.ts.map,d.ts,js.map,js,md,css}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/fract",
+    "directory": "packages/ui-kit"
+  },
+  "homepage": "https://github.com/Alwatr/fract/tree/next/packages/ui-kit#readme",
+  "bugs": {
+    "url": "https://github.com/Alwatr/fract/issues"
+  },
+  "dependencies": {
+    "@alwatr/fract": "workspace:^",
+    "@alwatr/i18n": "workspace:^",
+    "@alwatr/signal": "^2.0.5",
+    "@alwatr/util": "^1.4.1",
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@alwatr/type": "^1.2.4"
+  }
+}

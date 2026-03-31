@@ -1,0 +1,9 @@
+{
+  "ok": false,
+  "statusCode": <!--# echo var="status" default="500" -->,
+  "errorCode": "nitrobase_server_error",
+  "meta": {
+    "server": "AlwatrNitrobase",
+    "debugInfo": "<!--# echo var="debugInfo" default="0" -->"
+  }
+}

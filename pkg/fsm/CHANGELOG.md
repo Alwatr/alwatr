@@ -1,0 +1,521 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [6.2.0](https://github.com/Alwatr/flux/compare/v6.1.1...v6.2.0) (2026-02-18)
+
+### 🔨 Code Refactoring
+
+* migrate to bun package manager ([545c1ae](https://github.com/Alwatr/flux/commit/545c1ae31f04ece1ef1abd4db7237b47b65b0473))
+
+### 🔗 Dependencies update
+
+* update dependencies across packages to latest versions ([6ac0147](https://github.com/Alwatr/flux/commit/6ac01476b0803d662035d4c291bb5c77ae4207f6))
+
+## [6.1.1](https://github.com/Alwatr/flux/compare/v6.1.0...v6.1.1) (2025-11-12)
+
+### 🐛 Bug Fixes
+
+* update defaultValue to initialValue in createFsmService for clarity ([f54c61c](https://github.com/Alwatr/flux/commit/f54c61c4c1a7d2f476f3cedd480a9c31a4eac29f))
+
+### 🔗 Dependencies update
+
+* update dependencies and devDependencies versions across packages ([ab923fa](https://github.com/Alwatr/flux/commit/ab923fa8ec7f504a3ce59e0ec944d05d361f60be))
+
+## [6.1.0](https://github.com/Alwatr/flux/compare/v6.0.2...v6.1.0) (2025-09-22)
+
+### ✨ Features
+
+* enhance createFsmService to support persistent state signals ([9e46b3b](https://github.com/Alwatr/flux/commit/9e46b3b7da52df6b342b92a2468f0198c1d69c1e))
+
+### 🐛 Bug Fixes
+
+* update FsmService to use JsonObject for context and remove state signal creation ([5fbb6a6](https://github.com/Alwatr/flux/commit/5fbb6a662625bd4da9fa0d1428c5d683631c56f8))
+* update storageKey handling in PersistentStateSignal and createFsmService for improved state management ([42e764f](https://github.com/Alwatr/flux/commit/42e764f58a2f804c6082a46bfb96eb678a49c22a))
+* update type definitions to use JsonObject for context in MachineState, Assigner, Effect, Condition, Transition, and StateMachineConfig ([e07e991](https://github.com/Alwatr/flux/commit/e07e9914e944b35a08a1c079053675a66183644a))
+
+### 🔗 Dependencies update
+
+* update dependencies to latest versions across packages ([97bd715](https://github.com/Alwatr/flux/commit/97bd71555912053f8b2ba6ad0578b74bf7f1c1d3))
+* update package dependencies for @alwatr/yarn-upgrade, @alwatr/logger, and other packages ([96b56e7](https://github.com/Alwatr/flux/commit/96b56e75360411bed73ce84acb870db6153f8917))
+
+## [6.0.2](https://github.com/Alwatr/flux/compare/v6.0.1...v6.0.2) (2025-09-21)
+
+### 🔗 Dependencies update
+
+* update dependencies for @alwatr/nano-build, @alwatr/logger, @alwatr/debounce, and @alwatr/delay ([e7cfed5](https://github.com/Alwatr/flux/commit/e7cfed56bd6a7e7cd402e6f38c415de5737f5b24))
+
+## [6.0.1](https://github.com/Alwatr/flux/compare/v6.0.0...v6.0.1) (2025-09-20)
+
+### 🐛 Bug Fixes
+
+* add sideEffects property to package.json for fsm and signal packages ([37d175c](https://github.com/Alwatr/flux/commit/37d175c2cd16144449dfa72e7504a4d179f1cb01))
+
+### 🔨 Code Refactoring
+
+* remove public access modifier from constructors in signal classes ([afb42da](https://github.com/Alwatr/flux/commit/afb42da7fd812cd09555c43ac9489ef15efce96a))
+
+### 🔗 Dependencies update
+
+* update alwatr dependencies ([19bd8a5](https://github.com/Alwatr/flux/commit/19bd8a597a4e74b620e04a497eff7247a03bf8b8))
+
+## [6.0.0](https://github.com/Alwatr/flux/compare/v5.2.2...v6.0.0) (2025-09-19)
+
+### ⚠ BREAKING CHANGES
+
+* Complete rewrite of @alwatr/fsm package
+
+Summary:
+- The package has been fully rewritten: public API, types, internal behavior and lifecycle semantics have changed.
+- Consumers must update imports and usage. Existing code written for the old API will not work without changes.
+
+Example:
+```ts
+import {createFsmService} from '@alwatr/fsm';
+const service = createFsmService({
+  name: 'light-switch',
+  initial: 'off',
+  context: {brightness: 0},
+  states: {
+    off: {
+      on: { TOGGLE: { target: 'on', actions: [() => ({brightness: 100})] } },
+    },
+    on: {
+      on: {
+        TOGGLE: { target: 'off', actions: [() => ({brightness: 0})] },
+        SET_BRIGHTNESS: { actions: [(e) => ({brightness: e.level})] },
+      },
+    },
+  },
+});
+
+const sub = service.stateSignal.subscribe((state) => {
+  console.log(\`Light is \${state.name} brightness=\${state.context.brightness}\`);
+});
+
+service.eventSignal.dispatch({type: 'TOGGLE'});
+// When done:
+sub.unsubscribe?.();
+service.destroy();
+```
+
+### ✨ Features
+
+* add factory function for creating StateMachine instances ([d5afa79](https://github.com/Alwatr/flux/commit/d5afa79f323f4a20b9d9917861774dba3c18ba91))
+* add type definitions for state machine events, states, and transitions ([cd5d770](https://github.com/Alwatr/flux/commit/cd5d770d2c5ca0ab462e27d2ac6a119e6816d82e))
+* implement FsmService for managing finite state machines with event and state signals ([4fbc72a](https://github.com/Alwatr/flux/commit/4fbc72addbc4dc29b3deb1bb5c07e3fa5ad6e2e1))
+* implement StateMachine class with state management and transition logic ([eca4208](https://github.com/Alwatr/flux/commit/eca4208c82932b736f284c7f28df79820c24986a))
+* rewrite new state machine interfaces and types ([31885e5](https://github.com/Alwatr/flux/commit/31885e59dd5542ecffad971704cc20ae26ccca90))
+
+### 🐛 Bug Fixes
+
+* add documentation for eventSignal in FsmService class ([a11cb4a](https://github.com/Alwatr/flux/commit/a11cb4a8c005356832fab3a9924d4f75cc9cc8af))
+* add logging to destroy method for better tracking of service cleanup ([6187d17](https://github.com/Alwatr/flux/commit/6187d17bb4765bae89b271f3dc6920cb69818fa6))
+* allow void return type for Assigner function ([5e1ae6b](https://github.com/Alwatr/flux/commit/5e1ae6b4cd7e472f2928a7ad25c81d2b9d40e8b7))
+* correct entry action execution to use target state context for improved accuracy ([cf16271](https://github.com/Alwatr/flux/commit/cf16271969f020fa502f1178459d44a9c8e74677))
+* correct logger method names in processTransition and applyAssigners for consistency ([f33d553](https://github.com/Alwatr/flux/commit/f33d5533f9b296483f807779e3cb522d4313a876))
+* correct stateSignal naming and improve documentation in FsmService class ([7d5b7fe](https://github.com/Alwatr/flux/commit/7d5b7feef54fbbd76fead7a2fa1a964d77ec0401))
+* enhance applyAssigners logic for atomic updates and improved error handling ([988e00c](https://github.com/Alwatr/flux/commit/988e00cfe4be5974966d52235d2bf3a8f08e1d59))
+* enhance applyAssigners logic to improve context updates and error handling ([73384c0](https://github.com/Alwatr/flux/commit/73384c04479c7398cea0504c0ea8a14b57b7a366))
+* enhance executeEffects logic to improve error handling and logging ([8fe6bed](https://github.com/Alwatr/flux/commit/8fe6beda209ee75ab81bf2249fe1d0b25185a1cd))
+* enhance FSM transition handling and logging for improved clarity and performance ([8695d99](https://github.com/Alwatr/flux/commit/8695d99910b5a1e0abc8603a5ea947d6f77d463b))
+* enhance transition condition logging for better debugging and clarity ([e7cd799](https://github.com/Alwatr/flux/commit/e7cd79964ecfab3c8e9a9ff1d0b74eb4d2f09cbf))
+* ensure proper cleanup of stateSignal in destroy method ([d90a0cf](https://github.com/Alwatr/flux/commit/d90a0cf3ae871f0db1832bdc92a61cb7b0567a65))
+* ensure proper destruction of state signals in destroy method ([512221b](https://github.com/Alwatr/flux/commit/512221bc7a62b77392eb368b97e323bfd95a02fb))
+* execute exit/entry effects only when state changes in FSM ([99a1d66](https://github.com/Alwatr/flux/commit/99a1d6653be5350867d7050cf59d18dd43966cb0))
+* executeEffects__ context ([f1fde9b](https://github.com/Alwatr/flux/commit/f1fde9baccebd27ca76ae785643d60cd463aff97))
+* fsm-service.ts run cond ([5c91967](https://github.com/Alwatr/flux/commit/5c91967b605e5529a8d3e9deb630808966d4f3aa))
+* fsm-service.ts type ([239ea9b](https://github.com/Alwatr/flux/commit/239ea9b77b2cc3c41d14df426315381ce65f156d))
+* improve context handling in applyAssigners__ method ([d3ac560](https://github.com/Alwatr/flux/commit/d3ac56007e18d744fea289d21f5f3518d8726794))
+* improve processTransition logic and enhance logging in FsmService class ([434e6e1](https://github.com/Alwatr/flux/commit/434e6e10b9ee764830898d9c762afba2c893b9d9))
+* move powerLostWarning action to flashingRed state entry ([441223d](https://github.com/Alwatr/flux/commit/441223d30d571b5fd244d7f50a1428c74fef39f0))
+* refactor findTransition logic to improve condition evaluation and logging ([0a32c8d](https://github.com/Alwatr/flux/commit/0a32c8de6974f587404de6d39b8dd10ca20f0d0f))
+* remove space in logger initialization for FsmService class ([d91065a](https://github.com/Alwatr/flux/commit/d91065aa08339f9a3075304e9b061672118f9525))
+* rename transition.actions to transition.assigners for clarity ([1198b59](https://github.com/Alwatr/flux/commit/1198b597c5b326a4a8deb84c1503648a62d28a1c))
+* reorder assigners property documentation for improved clarity ([019a9f0](https://github.com/Alwatr/flux/commit/019a9f0c56876f82e2dcb9c02aaa01ab8a6b2234))
+* replace computed state signal with read-only state signal for improved performance ([76fac47](https://github.com/Alwatr/flux/commit/76fac47612a1e5566dcfd246b16823f93078c908))
+* simplify assigner function in light machine config ([a479b5d](https://github.com/Alwatr/flux/commit/a479b5d6fb511409a1b66734b262fc5371d83d79))
+* standardize light state logging messages for clarity ([a1a464a](https://github.com/Alwatr/flux/commit/a1a464a1588459de1a4e26c6bd933a00fb031b75))
+* update Assigner and Effect types to support SingleOrArray for improved flexibility ([8e6e7ad](https://github.com/Alwatr/flux/commit/8e6e7ad10bfde1170904f3b2820810230af80241))
+* update Assigner type definition to allow void return and change Transition type to array ([f43c993](https://github.com/Alwatr/flux/commit/f43c99369c993c5e252bdb6e47b177d46e86e18f))
+* update entry actions to assigners for consistency in light machine configuration ([66f76c7](https://github.com/Alwatr/flux/commit/66f76c7627af9b096db4a2c4ab16fcbb79b81321))
+* update package description for clarity and accuracy ([86c29fb](https://github.com/Alwatr/flux/commit/86c29fb38eeed2fe71f9b04f28a00231a1074d1f))
+* update type definitions for MachineState, Assigner, Effect, and Transition interfaces ([79760f4](https://github.com/Alwatr/flux/commit/79760f4bf4df48685cb60af5fd20c9496130161c))
+
+### 🔨 Code Refactoring
+
+* enhance action and guard types for state transitions ([1fdfa1b](https://github.com/Alwatr/flux/commit/1fdfa1bb3e847b9e4d1051320a23701d29d243ca))
+* migrate light switch implementation to JavaScript and enhance logging ([2f81bc0](https://github.com/Alwatr/flux/commit/2f81bc03b7ceda739e2204021ce40e0389f52e2a))
+* migrate to createFsmService and enhance state management logging ([5209c4b](https://github.com/Alwatr/flux/commit/5209c4b0dfb6e5737c386a344f7bdbbca3c4c2dd))
+* remove obsolete files and clean up state machine implementation ([921cb24](https://github.com/Alwatr/flux/commit/921cb24f363a635ad8e91523e49500780ffcbb9a))
+* remove unused import and clean up exports in fsm module ([a6c6374](https://github.com/Alwatr/flux/commit/a6c63742ee5d3f7fc8042b51f0889978e0e709e6))
+* replace signalId with name in StateMachine signal creation ([0ce2654](https://github.com/Alwatr/flux/commit/0ce2654b10b7c6dd6f519a62428cdfcac8fa3189))
+* restructure state machine types for improved clarity and functionality ([7b21778](https://github.com/Alwatr/flux/commit/7b21778db22a3fcf5a855790708ee7576d257682))
+* standardize signal naming and visibility in FsmService ([ddfae0f](https://github.com/Alwatr/flux/commit/ddfae0f62fa5355054cf43ca88a0e00f65dc0bb4))
+* update createStateMachine to createFsmService with improved documentation and example ([cc73194](https://github.com/Alwatr/flux/commit/cc73194ec01ab570054e2dba877d8b6c2cd336c2))
+* update exports in main.ts to include facade, state-machine, and types ([0796b4f](https://github.com/Alwatr/flux/commit/0796b4fd3281e42614eec8a79389e242592df5a4))
+* update exports in main.ts to include fsm-service and type-old ([ddcf0be](https://github.com/Alwatr/flux/commit/ddcf0bef31958a93f0433f587184b88e75f2819f))
+* update log message for new event from enter effect in processTransition method ([314e516](https://github.com/Alwatr/flux/commit/314e516745ffaaae0495fe96aea6bcd06d7e49d9))
+* update type definitions and improve state machine configuration ([5d749ca](https://github.com/Alwatr/flux/commit/5d749ca5a4cec6065e91e87f203e0ea05392f6fb))
+
+### 🧹 Miscellaneous Chores
+
+* rollback old fsm ([b2e7f32](https://github.com/Alwatr/flux/commit/b2e7f323841443e30772874eeab52481025a4b1e))
+
+### 🔗 Dependencies update
+
+* update @alwatr/logger to version 6.0.2 and @types/node to version 22.18.6; upgrade esbuild and other dependencies ([95dfaba](https://github.com/Alwatr/flux/commit/95dfabab2a4d4ea2b0e42a70bee1f3e68a67bffc))
+* update dependencies for logger, nano-build, type-helper, and node types ([23fe723](https://github.com/Alwatr/flux/commit/23fe7236ffa0bfd2551a6dfc52c23689ce4b036e))
+* update package dependencies for improved compatibility and performance ([1e91063](https://github.com/Alwatr/flux/commit/1e9106343d01330089c33d9591969a66625a1e7b))
+
+## [4.1.1](https://github.com/Alwatr/flux/compare/v4.1.0...v4.1.1) (2025-09-08)
+
+### 🔗 Dependencies update
+
+* update @alwatr/nanolib to version 6.0.2 across multiple packages ([2d18fb0](https://github.com/Alwatr/flux/commit/2d18fb0e7311321200b1ed37381308b1dacae4b2))
+
+## [4.1.0](https://github.com/Alwatr/flux/compare/v4.0.5...v4.1.0) (2025-09-08)
+
+### 🔨 Code Refactoring
+
+* replace MaybePromise with Awaitable in action and listener callback types ([57d16b4](https://github.com/Alwatr/flux/commit/57d16b447fcbfdce46f9343395f6aa8b897af146))
+
+### 🧹 Miscellaneous Chores
+
+* remove Exir Studio sponsorship logo from README files ([df5d19c](https://github.com/Alwatr/flux/commit/df5d19cf9ff3ea723905b3f3bd4f874c42fdcdfc))
+* remove unused types from tsconfig.json files across multiple packages ([eecabea](https://github.com/Alwatr/flux/commit/eecabea18710ff476011f7b439e9f838198e2fdf))
+* update @alwatr/nanolib and devDependencies to latest versions ([50730ae](https://github.com/Alwatr/flux/commit/50730ae8ea26954e2fbed51feb1a7fa7e8d8e74d))
+* update license to MPL-2.0 ([82d20c8](https://github.com/Alwatr/flux/commit/82d20c88ad1b4ff5909ef0ca6b36b2db8f378279))
+* update package.json files across multiple packages to enhance structure and dependencies ([9df0690](https://github.com/Alwatr/flux/commit/9df0690b0b1ae036293be75da429842f67f8685f))
+
+## [4.0.5](https://github.com/Alwatr/flux/compare/v4.0.4...v4.0.5) (2025-03-13)
+
+### Bug Fixes
+
+* bump @alwatr/nanolib to version 5.5.1 across multiple packages for iOS issues ([70d879e](https://github.com/Alwatr/flux/commit/70d879e379a560fbcbe41f7176a638942ee22152)) by @
+
+### Dependencies update
+
+* update @types/node to version 22.13.10 and bump [@lerna-lite](https://github.com/lerna-lite) packages to version 3.12.3 ([e918359](https://github.com/Alwatr/flux/commit/e918359ec013c32b3224aebf04f92553be31b395)) by @
+
+## [4.0.4](https://github.com/Alwatr/flux/compare/v4.0.3...v4.0.4) (2025-03-06)
+
+### Dependencies update
+
+* bump @alwatr/nanolib, @alwatr/nano-build, and @alwatr/type-helper to version 5.5.0 across multiple packages ([db73076](https://github.com/Alwatr/flux/commit/db7307671b0f14cb19072656bd6021144b27dadb)) by @
+* **deps-dev:** bump the dependencies group across 1 directory with 6 updates ([5978202](https://github.com/Alwatr/flux/commit/5978202acbdc6b2e3db6d315dc3c114daa4f0289)) by @dependabot[bot]
+
+## [4.0.3](https://github.com/Alwatr/flux/compare/v4.0.2...v4.0.3) (2025-02-18)
+
+### Dependencies update
+
+* **deps-dev:** bump the dependencies group across 1 directory with 11 updates ([18e3479](https://github.com/Alwatr/flux/commit/18e34795f826270a407d77440b946f8101513ba9)) by @dependabot[bot]
+* **deps-dev:** bump the dependencies group with 10 updates ([b70907b](https://github.com/Alwatr/flux/commit/b70907bcb78b664c80e7d7acec9acf04c805cb2f)) by @dependabot[bot]
+* **deps:** bump @alwatr/nanolib in the alwatr group across 1 directory ([2f52985](https://github.com/Alwatr/flux/commit/2f52985a74d4c5719dcb5d8d0440e3c2fac9be72)) by @dependabot[bot]
+* **deps:** bump the alwatr group with 4 updates ([7e1b5fd](https://github.com/Alwatr/flux/commit/7e1b5fdde606bd76a443356c74f332015beed275)) by @dependabot[bot]
+
+## [4.0.2](https://github.com/Alwatr/flux/compare/v4.0.1...v4.0.2) (2024-11-06)
+
+### Bug Fixes
+
+* honarvar bugs ([196b77b](https://github.com/Alwatr/flux/commit/196b77bcbb8e2a0b2eb03e50fa908561cada4fe7)) by @
+
+## [4.0.1](https://github.com/Alwatr/flux/compare/v4.0.0...v4.0.1) (2024-11-06)
+
+### Bug Fixes
+
+* **fsm:** resetToInitialState logic and enhance logging in state transitions ([1e81527](https://github.com/Alwatr/flux/commit/1e81527501fe68e5194f9df059ebf41d1623558e)) by @
+
+## [4.0.0](https://github.com/Alwatr/flux/compare/v3.2.2...v4.0.0) (2024-11-06)
+
+### ⚠ BREAKING CHANGES
+
+* **fsm:** all name of type ActionName in class `actionRecord_` changed
+* **fsm:** event 'reset' fired on calling resetToInitialState and the first time in class constructor
+
+### Bug Fixes
+
+* **fsm:** run postTransition__ in resetToInitialState_ and constructor ([00ca9c1](https://github.com/Alwatr/flux/commit/00ca9c156b4a75883bad3e7d1c8907d370fd2b71)) by @AliMD
+
+### Code Refactoring
+
+* **fsm:** update action naming conventions and enhance event handling in state transitions ([c3a4094](https://github.com/Alwatr/flux/commit/c3a40940c0a5dee11dbb0fbaaa45d811603e5ff7)) by @AliMD
+
+### Dependencies update
+
+* update ([a0c4014](https://github.com/Alwatr/flux/commit/a0c40144c50ba69083864bd4403b7c0dab388a2f)) by @AliMD
+
+## [3.2.2](https://github.com/Alwatr/flux/compare/v3.2.1...v3.2.2) (2024-11-02)
+
+### Dependencies update
+
+* **deps-dev:** bump @types/node from 22.8.1 to 22.8.6 in the dependencies group ([#224](https://github.com/Alwatr/flux/issues/224)) ([2ffa758](https://github.com/Alwatr/flux/commit/2ffa7587f46b55bddc98be25c60940c3eb61f815)) by @dependabot[bot]
+* **deps:** bump the alwatr group with 6 updates ([#225](https://github.com/Alwatr/flux/issues/225)) ([6f22eda](https://github.com/Alwatr/flux/commit/6f22eda4e9ee6c31e4c32b23b870a5c148a818da)) by @dependabot[bot]
+
+## [3.2.1](https://github.com/Alwatr/flux/compare/v3.2.0...v3.2.1) (2024-10-28)
+
+### Dependencies update
+
+* bump the alwatr-dependencies group with 2 updates ([#217](https://github.com/Alwatr/flux/issues/217)) ([a5fd542](https://github.com/Alwatr/flux/commit/a5fd542e8866589a4edcaaf4312bdc4f322dc59f)) by @dependabot[bot]
+* bump the development-dependencies group across 1 directory with 9 updates ([9d1d05d](https://github.com/Alwatr/flux/commit/9d1d05d33e259fd810138a37b36adc910b71c4bb)) by @dependabot[bot]
+* update nanolib v1.4.0 with other deps ([8c0fdcd](https://github.com/Alwatr/flux/commit/8c0fdcd4a827790f7c97bfbf7119ba315450f822)) by @AliMD
+
+## [3.2.0](https://github.com/Alwatr/flux/compare/v3.1.1...v3.2.0) (2024-10-11)
+
+### Bug Fixes
+
+* prevent `sideeffects` from `build` result ([fbc7a9f](https://github.com/Alwatr/flux/commit/fbc7a9f21898e3a96f28ce4a105460af0cf513eb)) by @mohammadhonarvar
+
+### Code Refactoring
+
+* update `import`s & packages based on the latest changes of `nanolib` ([b905288](https://github.com/Alwatr/flux/commit/b9052881b7549207c01b0eef92dc459d44b56ac0)) by @mohammadhonarvar
+
+### Dependencies update
+
+* bump the alwatr-dependencies group across 1 directory with 7 updates ([daf1c3f](https://github.com/Alwatr/flux/commit/daf1c3f7ef8d17cf7388df2676b5fe808616ba57)) by @dependabot[bot]
+* bump the alwatr-dependencies group with 4 updates ([7ce1b54](https://github.com/Alwatr/flux/commit/7ce1b54235cc2fd4f386052e7a4c4d324cc74888)) by @dependabot[bot]
+* bump the alwatr-dependencies group with 8 updates ([bc520ba](https://github.com/Alwatr/flux/commit/bc520ba6ac7ed6bcff2c4a3eea81d1a2e502b0cf)) by @dependabot[bot]
+* bump the development-dependencies group with 10 updates ([01de77c](https://github.com/Alwatr/flux/commit/01de77cd1d9fdfb6db06ebd5035c43e46cc8aa17)) by @dependabot[bot]
+* update ([4dc21b2](https://github.com/Alwatr/flux/commit/4dc21b2bf01d7176aea6e0d81cdc3e1f77b97e0f)) by @mohammadhonarvar
+
+## [3.1.1](https://github.com/Alwatr/flux/compare/v3.1.0...v3.1.1) (2024-09-29)
+
+### Miscellaneous Chores
+
+* edited README ([fff9b3f](https://github.com/Alwatr/flux/commit/fff9b3f6ccc52e2257bdfe306e032ded07497b4a)) by @ArmanAsadian
+* **fsm:** change the license to AGPL-3.0 ([babc4a8](https://github.com/Alwatr/flux/commit/babc4a82bd0421981ec40c150f0de262f0f81f42)) by @ArmanAsadian
+
+### Dependencies update
+
+* update ([fb148fd](https://github.com/Alwatr/flux/commit/fb148fdbe7f84acc3eda625e5e8c5773747d32e9)) by @
+
+## [3.1.0](https://github.com/Alwatr/flux/compare/v3.0.3...v3.1.0) (2024-09-26)
+
+### Features
+
+* **fsm:** Add resetToInitialState() method ([86b2479](https://github.com/Alwatr/flux/commit/86b2479c0319b33c8108dfd0319b2c444dc5f6de)) by @AliMD
+
+### Code Refactoring
+
+* update action names in fetch-state-machine and fsm packages and remove `_` prefix ([a90d959](https://github.com/Alwatr/flux/commit/a90d95921b322a288c4a60671ce90ff9fe709c00)) by @AliMD
+
+### Dependencies update
+
+* bump @types/node in the development-dependencies group ([979223c](https://github.com/Alwatr/flux/commit/979223c3cdbb002a926e72e1a7f79c82ff7395d4)) by @dependabot[bot]
+
+## [3.0.3](https://github.com/Alwatr/flux/compare/v3.0.2...v3.0.3) (2024-09-24)
+
+**Note:** Version bump only for package @alwatr/fsm
+
+## [3.0.2](https://github.com/Alwatr/flux/compare/v3.0.1...v3.0.2) (2024-09-21)
+
+### Dependencies update
+
+* update ([1048410](https://github.com/Alwatr/flux/commit/1048410efb300bb0a0ab7eae9734ca8f7f9d83a8)) by @
+
+## [3.0.1](https://github.com/Alwatr/flux/compare/v3.0.0...v3.0.1) (2024-09-17)
+
+**Note:** Version bump only for package @alwatr/fsm
+
+## 3.0.0 (2024-09-17)
+
+### ⚠ BREAKING CHANGES
+
+* **fsm:** FiniteStateMachineBase state property renamed to message data structure
+
+### Features
+
+* update all repo files from alwatr ([b85a3a6](https://github.com/Alwatr/flux/commit/b85a3a62a8c19f395cf33d72329b9c0f301cddfc)) by @AliMD
+
+### Bug Fixes
+
+* all new repo path and packages dependencies ([21a6afa](https://github.com/Alwatr/flux/commit/21a6afa0badafe4051617d9a9e3bbfbaabd0c4ad)) by @
+* cleanup old signal and fsm v1 ([bde0bea](https://github.com/Alwatr/flux/commit/bde0bea06a6750bebad49a127b75b57fd5e55ddd)) by @
+* **fsm:** compatible with new logger api ([77db656](https://github.com/Alwatr/flux/commit/77db656d8b261da29376cf6dba7b9d4c35deeae8)) by @
+* **fsm:** import issue ([9674f34](https://github.com/Alwatr/flux/commit/9674f34a7c63137fb9597d2b465b4fb123c963c1)) by @
+* ts refrence path ([c2baa44](https://github.com/Alwatr/flux/commit/c2baa44999c72a0015481fc8fea25439329c3f37)) by @
+
+### Code Refactoring
+
+* **fsm:** rename main ([60a52bd](https://github.com/Alwatr/flux/commit/60a52bdc1e5ae3126226a9518d81f3c8dbf238dc)) by @AliMD
+* **fsm:** Update FiniteStateMachineBase class ([27a29ca](https://github.com/Alwatr/flux/commit/27a29ca45fb2c7998760ce2177a386c7085011f9)) by @AliMD
+* **fsm:** Update FiniteStateMachineBase class to use class property for state and transition methods ([647a921](https://github.com/Alwatr/flux/commit/647a921dab405b5545aecdb66f5d1d44490795d4)) by @AliMD
+* **fsm:** Update FiniteStateMachineBase state property to message ([be1ca78](https://github.com/Alwatr/flux/commit/be1ca7897b8ada4b44576c2eaf9f38f3c2903668)) by @AliMD
+* **fsm:** Update import statement for type.ts ([6091385](https://github.com/Alwatr/flux/commit/6091385ae7a4c4d92aa74effe6446c8e3a7606e9)) by @AliMD
+* Remove unused dependencies from @alwatr/fsm package ([da58900](https://github.com/Alwatr/flux/commit/da5890009c9ddea4f45949eef5a372dd3784ea7a)) by @AliMD
+* Rename fetch-state-machine.ts base class name ([ab88730](https://github.com/Alwatr/flux/commit/ab88730b46b2db0baeaca09e3de8e51c55b1e361)) by @AliMD
+* Update @alwatr/fsm package and add @alwatr/observable package ([d78b177](https://github.com/Alwatr/flux/commit/d78b1774978632d66c6831c8a46626f524746e81)) by @AliMD
+* Update @alwatr/polyfill-has-own dependency to version ^1.0.9 in fsm package.json ([f1c82a6](https://github.com/Alwatr/flux/commit/f1c82a6d330c3f1bfbf435a00a52e92f0541b024)) by @AliMD
+* Update all package URLs to point to the flux repository ([e7e56d2](https://github.com/Alwatr/flux/commit/e7e56d252d4a0e1b4b1fa20c06e8b61b1b7242ae)) by @AliMD
+* Update AlwatrContext constructor to use AlwatrObservableConfig ([a8c75c6](https://github.com/Alwatr/flux/commit/a8c75c6f937419e628a0b11b053e0028c731bcaf)) by @AliMD
+* Update package dependencies and references ([888f698](https://github.com/Alwatr/flux/commit/888f6987553a410e561da9fe21c0655f8f935db0)) by @AliMD
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump the development-dependencies group with 11 updates ([60f3075](https://github.com/Alwatr/flux/commit/60f3075872d3a4a9da979c589b5aa6b84065d48b)) by @
+* **deps-dev:** bump the development-dependencies group with 14 updates ([c6ae70e](https://github.com/Alwatr/flux/commit/c6ae70e1534469fd36386f0828a52985001e2ef6)) by @
+* **deps-dev:** bump the development-dependencies group with 8 updates ([c853aa2](https://github.com/Alwatr/flux/commit/c853aa2730b5c256049414e302a3d2d0c58ef61e)) by @
+* **deps:** bump the alwatr-dependencies group with 3 updates ([f2a109d](https://github.com/Alwatr/flux/commit/f2a109d9b1775b67303d9407e20a5591cc69e4a7)) by @
+* **deps:** bump the alwatr-dependencies group with 3 updates ([e5105eb](https://github.com/Alwatr/flux/commit/e5105eb0bbc450566b1ae6aee9241d541377bf94)) by @
+* **deps:** bump the alwatr-dependencies group with 4 updates ([0019b83](https://github.com/Alwatr/flux/commit/0019b83ed56643b634972d8a15651ef2eaa2d735)) by @
+* **deps:** bump the alwatr-dependencies group with 4 updates ([eb7fdfa](https://github.com/Alwatr/flux/commit/eb7fdfa545b5c1e040839a427326937acdcd8cb3)) by @
+* **deps:** bump the alwatr-dependencies group with 4 updates ([4069863](https://github.com/Alwatr/flux/commit/40698638f3825b118d8c24fa115403f3f3b564a7)) by @
+* **deps:** fix and update ([ab83ec7](https://github.com/Alwatr/flux/commit/ab83ec789d43245a8ff109e151b054a1fecb8e2a)) by @
+* **deps:** update ([d7e2ef1](https://github.com/Alwatr/flux/commit/d7e2ef1a9de62fff6bfb2fd32af7dcfb4fcb048d)) by @njfamirm
+* **deps:** upgrade ([7e60a62](https://github.com/Alwatr/flux/commit/7e60a6237f8b07b72dd9afd6bbaa140b187fe882)) by @
+* **deps:** workspace dependencies ([627938e](https://github.com/Alwatr/flux/commit/627938e38e75a5e425388c3d56837feffd6716a2)) by @
+* **fsm:** rename fsm2 ([f10fea0](https://github.com/Alwatr/flux/commit/f10fea017f75c3a26a26319b14284e8ee4bc605d)) by @
+* rename core to packages ([9158c8e](https://github.com/Alwatr/flux/commit/9158c8e4c679d96c9b54e91ea6faa49364d47494)) by @
+* update changelogs ([a965ecd](https://github.com/Alwatr/flux/commit/a965ecd095cb621b4a7748d2e048f4a82b0aa872)) by @
+* **yarn:** pnp mode ([02bd406](https://github.com/Alwatr/flux/commit/02bd4064e381c483e31a8acbe7c72e7aed3e62b3)) by @
+
+### Dependencies update
+
+* bump the alwatr-dependencies group with 6 updates ([4470fd8](https://github.com/Alwatr/flux/commit/4470fd8be49e1a73c17bdd5a09127b9f3a67b3bb)) by @dependabot[bot]
+* up ([c1d2c22](https://github.com/Alwatr/flux/commit/c1d2c229984dc71136498dab4682da5da233fe28)) by @
+* update ([0128365](https://github.com/Alwatr/flux/commit/01283652b0798243aaac9643c5024e7856af169c)) by @AliMD
+* update ([e8f8281](https://github.com/Alwatr/flux/commit/e8f8281beb24988466c6e29f724a963118870933)) by @AliMD
+
+## [2.0.5](https://github.com/Alwatr/flux/compare/@alwatr/fsm@2.0.4...@alwatr/fsm@2.0.5) (2023-12-19)
+
+**Note:** Version bump only for package @alwatr/fsm
+
+## [2.0.4](https://github.com/Alwatr/flux/compare/@alwatr/fsm@2.0.2...@alwatr/fsm@2.0.4) (2023-12-19)
+
+**Note:** Version bump only for package @alwatr/fsm
+
+## [2.0.3](https://github.com/Alwatr/flux/compare/@alwatr/fsm@2.0.2...@alwatr/fsm@2.0.3) (2023-11-09)
+
+**Note:** Version bump only for package @alwatr/fsm
+
+## [2.0.2](https://github.com/Alwatr/flux/compare/@alwatr/fsm@2.0.1...@alwatr/fsm@2.0.2) (2023-11-01)
+
+**Note:** Version bump only for package @alwatr/fsm
+
+## [2.0.1](https://github.com/Alwatr/flux/compare/@alwatr/fsm@2.0.0...@alwatr/fsm@2.0.1) (2023-10-23)
+
+### Bug Fixes
+
+- **fsm:** compatible with new logger api ([77db656](https://github.com/Alwatr/flux/commit/77db656d8b261da29376cf6dba7b9d4c35deeae8)) by @
+
+# 2.0.0 (2023-09-19)
+
+### Bug Fixes
+
+- all new repo path and packages dependencies ([21a6afa](https://github.com/Alwatr/flux/commit/21a6afa0badafe4051617d9a9e3bbfbaabd0c4ad)) by @AliMD
+- cleanup old signal and fsm v1 ([bde0bea](https://github.com/Alwatr/flux/commit/bde0bea06a6750bebad49a127b75b57fd5e55ddd)) by @AliMD
+- **fsm:** import issue ([9674f34](https://github.com/Alwatr/flux/commit/9674f34a7c63137fb9597d2b465b4fb123c963c1)) by @AliMD
+- ts refrence path ([c2baa44](https://github.com/Alwatr/flux/commit/c2baa44999c72a0015481fc8fea25439329c3f37)) by @AliMD
+
+## [1.1.2](https://github.com/Alwatr/flux/compare/@alwatr/fsm@1.1.1...@alwatr/fsm@1.1.2) (2023-09-12)
+
+**Note:** Version bump only for package @alwatr/fsm
+
+## [1.1.1](https://github.com/Alwatr/flux/compare/@alwatr/fsm@1.1.0...@alwatr/fsm@1.1.1) (2023-09-12)
+
+**Note:** Version bump only for package @alwatr/fsm
+
+# 1.1.0 (2023-09-12)
+
+# 1.0.0 (2023-06-14)
+
+# 0.32.0 (2023-05-27)
+
+# 0.31.0 (2023-05-08)
+
+### Bug Fixes
+
+- **fms:** import path ([f6770a0](https://github.com/Alwatr/flux/commit/f6770a07fdf6855ccd63a85822d44d5ef9c72dee))
+- **fsm:** action maybe async ([50efffa](https://github.com/Alwatr/flux/commit/50efffa34a2ea5a3515561d7425da0c109631f36))
+- **fsm:** autoSignalUnsubscribe type ([f7db30b](https://github.com/Alwatr/flux/commit/f7db30bf5a90ff3d163f036b313a412a5149ff2b))
+- **fsm:** call render states function in there own this ([a950478](https://github.com/Alwatr/flux/commit/a95047811366e375785b2cd8fb176b1176638cab))
+- **fsm:** fix order of `initFsmInstance` args ([3b60138](https://github.com/Alwatr/flux/commit/3b60138ecebcbcb4d732e4d1a3e79f5b8661ae47))
+- **fsm:** initial exec actions ([e7dd5c8](https://github.com/Alwatr/flux/commit/e7dd5c8aaf9760c9856e4392cc899020f7e796d9))
+- **fsm:** last reported bugs in set state ([e7435c8](https://github.com/Alwatr/flux/commit/e7435c870a054b0ec3e4004f13c6db7610610be0))
+- **fsm:** review reset process ([af6e81c](https://github.com/Alwatr/flux/commit/af6e81c068b467d8b3aa96f2431e13ac479f018c))
+- **fsm:** run init entry actions ([777ae45](https://github.com/Alwatr/flux/commit/777ae459f2b77f79696daf3a0ca355d6d78e57d3))
+- new logger api ([9d83a7d](https://github.com/Alwatr/flux/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+- **fsm:** add `signalRecord` to config ([1a35291](https://github.com/Alwatr/flux/commit/1a352915fba978da141513517655d1e07350c3ec))
+- **fsm:** add unsubscribe ([85ed3c3](https://github.com/Alwatr/flux/commit/85ed3c3439e1f40c2760f6011df112242f10be06))
+- **fsm:** callback in provider signals ([772818b](https://github.com/Alwatr/flux/commit/772818baa7953b6fbb4d4128fcee76733f42cc2d))
+- **fsm:** custom signal callback ([47c22e9](https://github.com/Alwatr/flux/commit/47c22e92a8a8085148b44b316d649b695ff8071a))
+- **fsm:** destroy and expire api ([e1a1c15](https://github.com/Alwatr/flux/commit/e1a1c150d81f4428718bd18f039235c7fce9caf2))
+- **fsm:** new types ([2866e3b](https://github.com/Alwatr/flux/commit/2866e3bd5ff56fd2b5bddcaed3673a5868bae4bb))
+- **fsm:** rewrite state machine ([7f24695](https://github.com/Alwatr/flux/commit/7f246959e5a80b21c1c4b21e895e75f8fbe56798))
+- **fsm:** subscribe ([2af4f44](https://github.com/Alwatr/flux/commit/2af4f44f0e8a2dee39cde10dcaa3281075632e6a))
+
+# 0.30.0 (2023-03-06)
+
+### Bug Fixes
+
+- **fsm:** every signal mather ([0dc504d](https://github.com/Alwatr/flux/commit/0dc504dacbb1ec68f154244619d644ff8e43cc04))
+- **fsm:** remove additional import ([231337b](https://github.com/Alwatr/flux/commit/231337b95ee7b046fe35429f50931ddf85be291f))
+- **fsm:** update context in transition bug ([28a21d0](https://github.com/Alwatr/flux/commit/28a21d00d903b6189d814303c72ba6e784852f33))
+
+### Features
+
+- Alwatr Finite State Machines ([d5900b4](https://github.com/Alwatr/flux/commit/d5900b4ee8685b120188888871405853f5a69417))
+- **fsm:** $all and $self state ([69adf41](https://github.com/Alwatr/flux/commit/69adf41064ca0f55497484c50e298ebc26c42dcc))
+- **fsm:** enhance types ([3b13046](https://github.com/Alwatr/flux/commit/3b130463a102f59c38603b0de470be5c87ee88c9))
+- **fsm:** make simple state machine ([ff9ae1c](https://github.com/Alwatr/flux/commit/ff9ae1ca04156e8b811899ff0f62480e1c37af72))
+- **fsm:** new state context type with {to, from, by} ([11423e6](https://github.com/Alwatr/flux/commit/11423e6a89159b92e82cfd1e774ad37983581090))
+- **fsm:** rewrite with signal power ([01a1651](https://github.com/Alwatr/flux/commit/01a1651e231a817d5eebb54cf84d51d620bfd6e8))
+- **fsm:** share state events ([de42522](https://github.com/Alwatr/flux/commit/de42522a97fdf6be8bee73d91a35820e2a5e6efb))
+- **fsm:** transition with partial context set ([823377e](https://github.com/Alwatr/flux/commit/823377e65028ea3e713f060ae678776c609c1661))
+
+# [1.0.0](https://github.com/Alwatr/flux/compare/v0.32.0...v1.0.0) (2023-06-14)
+
+**Note:** Version bump only for package @alwatr/fsm
+
+# [0.32.0](https://github.com/Alwatr/flux/compare/v0.31.0...v0.32.0) (2023-05-27)
+
+**Note:** Version bump only for package @alwatr/fsm
+
+# [0.31.0](https://github.com/Alwatr/flux/compare/v0.30.0...v0.31.0) (2023-05-08)
+
+### Bug Fixes
+
+- **fms:** import path ([f6770a0](https://github.com/Alwatr/flux/commit/f6770a07fdf6855ccd63a85822d44d5ef9c72dee))
+- **fsm:** action maybe async ([50efffa](https://github.com/Alwatr/flux/commit/50efffa34a2ea5a3515561d7425da0c109631f36))
+- **fsm:** autoSignalUnsubscribe type ([f7db30b](https://github.com/Alwatr/flux/commit/f7db30bf5a90ff3d163f036b313a412a5149ff2b))
+- **fsm:** call render states function in there own this ([a950478](https://github.com/Alwatr/flux/commit/a95047811366e375785b2cd8fb176b1176638cab))
+- **fsm:** fix order of `initFsmInstance` args ([3b60138](https://github.com/Alwatr/flux/commit/3b60138ecebcbcb4d732e4d1a3e79f5b8661ae47))
+- **fsm:** initial exec actions ([e7dd5c8](https://github.com/Alwatr/flux/commit/e7dd5c8aaf9760c9856e4392cc899020f7e796d9))
+- **fsm:** last reported bugs in set state ([e7435c8](https://github.com/Alwatr/flux/commit/e7435c870a054b0ec3e4004f13c6db7610610be0))
+- **fsm:** review reset process ([af6e81c](https://github.com/Alwatr/flux/commit/af6e81c068b467d8b3aa96f2431e13ac479f018c))
+- **fsm:** run init entry actions ([777ae45](https://github.com/Alwatr/flux/commit/777ae459f2b77f79696daf3a0ca355d6d78e57d3))
+- new logger api ([9d83a7d](https://github.com/Alwatr/flux/commit/9d83a7dc5c103bc3bb4282dacfd85fa998915300))
+
+### Features
+
+- **fsm:** add `signalRecord` to config ([1a35291](https://github.com/Alwatr/flux/commit/1a352915fba978da141513517655d1e07350c3ec))
+- **fsm:** add unsubscribe ([85ed3c3](https://github.com/Alwatr/flux/commit/85ed3c3439e1f40c2760f6011df112242f10be06))
+- **fsm:** callback in provider signals ([772818b](https://github.com/Alwatr/flux/commit/772818baa7953b6fbb4d4128fcee76733f42cc2d))
+- **fsm:** custom signal callback ([47c22e9](https://github.com/Alwatr/flux/commit/47c22e92a8a8085148b44b316d649b695ff8071a))
+- **fsm:** destroy and expire api ([e1a1c15](https://github.com/Alwatr/flux/commit/e1a1c150d81f4428718bd18f039235c7fce9caf2))
+- **fsm:** new types ([2866e3b](https://github.com/Alwatr/flux/commit/2866e3bd5ff56fd2b5bddcaed3673a5868bae4bb))
+- **fsm:** rewrite state machine ([7f24695](https://github.com/Alwatr/flux/commit/7f246959e5a80b21c1c4b21e895e75f8fbe56798))
+- **fsm:** subscribe ([2af4f44](https://github.com/Alwatr/flux/commit/2af4f44f0e8a2dee39cde10dcaa3281075632e6a))
+
+# [0.30.0](https://github.com/Alwatr/flux/compare/v0.29.0...v0.30.0) (2023-03-06)
+
+### Bug Fixes
+
+- **fsm:** every signal mather ([0dc504d](https://github.com/Alwatr/flux/commit/0dc504dacbb1ec68f154244619d644ff8e43cc04))
+- **fsm:** remove additional import ([231337b](https://github.com/Alwatr/flux/commit/231337b95ee7b046fe35429f50931ddf85be291f))
+- **fsm:** update context in transition bug ([28a21d0](https://github.com/Alwatr/flux/commit/28a21d00d903b6189d814303c72ba6e784852f33))
+
+### Features
+
+- Alwatr Finite State Machines ([d5900b4](https://github.com/Alwatr/flux/commit/d5900b4ee8685b120188888871405853f5a69417))
+- **fsm:** $all and $self state ([69adf41](https://github.com/Alwatr/flux/commit/69adf41064ca0f55497484c50e298ebc26c42dcc))
+- **fsm:** enhance types ([3b13046](https://github.com/Alwatr/flux/commit/3b130463a102f59c38603b0de470be5c87ee88c9))
+- **fsm:** make simple state machine ([ff9ae1c](https://github.com/Alwatr/flux/commit/ff9ae1ca04156e8b811899ff0f62480e1c37af72))
+- **fsm:** new state context type with {to, from, by} ([11423e6](https://github.com/Alwatr/flux/commit/11423e6a89159b92e82cfd1e774ad37983581090))
+- **fsm:** rewrite with signal power ([01a1651](https://github.com/Alwatr/flux/commit/01a1651e231a817d5eebb54cf84d51d620bfd6e8))
+- **fsm:** share state events ([de42522](https://github.com/Alwatr/flux/commit/de42522a97fdf6be8bee73d91a35820e2a5e6efb))
+- **fsm:** transition with partial context set ([823377e](https://github.com/Alwatr/flux/commit/823377e65028ea3e713f060ae678776c609c1661))

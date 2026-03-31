@@ -1,0 +1,73 @@
+{
+  "name": "@alwatr/pre-handlers",
+  "description": "Functions that will run before processing every defined route.",
+  "version": "4.10.1",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "bugs": "https://github.com/Alwatr/pre-handlers/issues",
+  "dependencies": {
+    "@alwatr/nanotron-api-server": "workspace:*"
+  },
+  "devDependencies": {
+    "@alwatr/nano-build": "^6.3.1",
+    "@alwatr/prettier-config": "^5.0.4",
+    "@alwatr/tsconfig-base": "^6.0.2",
+    "@alwatr/type-helper": "^6.1.1",
+    "@types/node": "^22.18.6",
+    "jest": "^30.1.3",
+    "typescript": "^5.9.2"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.mjs",
+      "require": "./dist/main.cjs"
+    }
+  },
+  "files": [
+    "**/*.{js,mjs,cjs,map,d.ts,html,md}",
+    "!demo/**/*"
+  ],
+  "homepage": "https://github.com/Alwatr/pre-handlers#readme",
+  "keywords": [
+    "alwatr",
+    "api",
+    "esm",
+    "handlers",
+    "middleware",
+    "nanoservice",
+    "route-pre-handlers",
+    "server",
+    "typescript"
+  ],
+  "license": "MPL-2.0",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "prettier": "@alwatr/prettier-config",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/pre-handlers",
+    "directory": "packages/pre-handlers"
+  },
+  "scripts": {
+    "b": "bun run build",
+    "build": "bun run build:ts && bun run build:es",
+    "build:es": "nano-build --preset=module",
+    "build:ts": "tsc --build",
+    "c": "bun run clean",
+    "cb": "bun run clean && bun run build",
+    "clean": "rm -rfv dist *.tsbuildinfo",
+    "d": "bun run build:es && bun",
+    "t": "bun run test",
+    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest",
+    "w": "bun run watch",
+    "watch": "bun run watch:ts & bun run watch:es",
+    "watch:es": "bun run build:es --watch",
+    "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "types": "./dist/main.d.ts"
+}

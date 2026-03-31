@@ -1,0 +1,9 @@
+@layer utilities {
+  input.hide-spin::-webkit-outer-spin-button,
+  input.hide-spin::-webkit-inner-spin-button,
+  input.hide-spin {
+    margin: 0;
+    -webkit-appearance: none;
+    -moz-appearance: textfield !important;
+  }
+}

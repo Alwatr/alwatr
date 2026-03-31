@@ -1,0 +1,14 @@
+# Public region
+# Nitrobase file location that can be accessed by anyone.
+
+location /$nitrobaseRegionPublic/ {
+  if ($authUserToken = "") {
+    set $debugInfo 551;
+    # User not defined
+    return 401;
+    break;
+  }
+
+  set $debugInfo 552;
+  try_files $uri =404;
+}

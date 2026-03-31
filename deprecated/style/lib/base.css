@@ -1,0 +1,28 @@
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  html,
+  :host {
+    tab-size: 4;
+    text-size-adjust: none;
+  }
+
+  body {
+    text-rendering: optimizeLegibility;
+    font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-drag: none;
+    -ms-content-zooming: none;
+  }
+
+  a:focus {
+    outline-width: 0;
+  }
+
+  img {
+    @apply text-center text-labelLarge text-primary;
+  }
+}
