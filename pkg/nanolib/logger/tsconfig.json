@@ -3,10 +3,13 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "emitDeclarationOnly": true,
     "composite": true
   },
-  "include": ["src/**/*.ts"],
-  "references": [{"path": "../platform-info"}, {"path": "../global-this"}]
+  "include": [
+    "src/**/*.ts"
+  ],
 }

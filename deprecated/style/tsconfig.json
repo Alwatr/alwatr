@@ -6,8 +6,8 @@
     "rootDir": ".",
     "outDir": "."
   },
-
-  "include": ["**/*.ts"],
+  "include": [
+    "**/*.ts"
+  ],
   "exclude": [],
-  "references": []
 }

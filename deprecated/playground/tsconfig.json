@@ -8,8 +8,8 @@
     "noEmit": true,
     "plugins": []
   },
-
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts"
+  ],
   "exclude": [],
-  "references": []
 }

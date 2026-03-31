@@ -12,15 +12,4 @@
   "include": [
     "src/**/*.ts"
   ],
-  "references": [
-    {
-      "path": "../types"
-    },
-    {
-      "path": "../engine"
-    },
-    {
-      "path": "../reference"
-    }
-  ]
 }

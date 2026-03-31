@@ -6,8 +6,8 @@
     "rootDir": "src",
     "outDir": "."
   },
-
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts"
+  ],
   "exclude": [],
-  "references": []
 }

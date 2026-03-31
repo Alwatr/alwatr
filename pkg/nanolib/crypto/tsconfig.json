@@ -5,8 +5,11 @@
     "outDir": "dist",
     "emitDeclarationOnly": true,
     "composite": true,
-    "types": ["node"]
+    "types": [
+      "node"
+    ]
   },
-  "include": ["src/**/*.ts"],
-  "references": []
+  "include": [
+    "src/**/*.ts"
+  ],
 }

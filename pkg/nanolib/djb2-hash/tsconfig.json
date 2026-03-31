@@ -7,6 +7,5 @@
     "composite": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.test.ts"],
-  "references": []
+  "exclude": ["src/**/*.test.ts"]
 }

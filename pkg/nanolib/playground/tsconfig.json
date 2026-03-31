@@ -4,6 +4,7 @@
     "rootDir": "src",
     "noEmit": true
   },
-  "include": ["src/**/*.ts"],
-  "references": [{"path": "../nanolib"}]
+  "include": [
+    "src/**/*.ts"
+  ],
 }

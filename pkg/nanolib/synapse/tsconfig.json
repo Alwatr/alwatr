@@ -6,7 +6,10 @@
     "emitDeclarationOnly": true,
     "composite": true,
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["**/*.test.ts"],
-  "references": [{"path": "../logger"}, {"path": "../delay"}]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "**/*.test.ts"
+  ],
 }

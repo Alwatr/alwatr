@@ -13,15 +13,8 @@
       }
     ]
   },
-
-  "include": ["src/**/*.ts"],
-  "exclude": [],
-  "references": [
-    {"path": "../icon"},
-    {"path": "../fract"},
-    {"path": "../router"},
-    {"path": "../i18n"},
-    {"path": "../style"},
-    {"path": "../ui-kit"}
-  ]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": []
 }

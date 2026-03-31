@@ -6,6 +6,7 @@
     "emitDeclarationOnly": true,
     "composite": true,
   },
-  "include": ["src/**/*.ts"],
-  "references": [{"path": "../types"}, {"path": "../reference"}, {"path": "../helper"}]
+  "include": [
+    "src/**/*.ts"
+  ],
 }

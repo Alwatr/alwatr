@@ -7,6 +7,5 @@
     "emitDeclarationOnly": true,
     "composite": true
   },
-  "include": ["src/**/*.ts"],
-  "references": []
+  "include": ["src/**/*.ts"]
 }
