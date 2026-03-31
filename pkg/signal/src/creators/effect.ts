@@ -1,0 +1,46 @@
+import {EffectSignal} from '../core/effect-signal.js';
+
+import type {EffectSignalConfig} from '../type.js';
+
+/**
+ * Creates a side-effect that runs in response to changes in dependency signals.
+ *
+ * `EffectSignal` is designed for running logic that interacts with the "outside world"—such as
+ * logging, network requests, or DOM manipulation—whenever its dependencies are updated.
+ * It encapsulates the subscription and cleanup logic, providing a robust and memory-safe
+ * way to handle reactive side-effects.
+ *
+ * A key feature is its lifecycle management: an `EffectSignal` **must** be destroyed when no longer
+ * needed to prevent memory leaks and stop the effect from running unnecessarily.
+ *
+ * @param config The configuration for the effect.
+ * @returns An object with a `destroy` method to stop the effect.
+ *
+ * @example
+ * // --- Create dependency signals ---
+ * const counter = createStateSignal({ initialValue: 0, name: 'counter' });
+ * const user = createStateSignal({ initialValue: 'guest', name: 'user' });
+ *
+ * // --- Create an effect ---
+ * const analyticsEffect = createEffect({
+ *   deps: [counter, user],
+ *   run: () => {
+ *     console.log(`Analytics: User '${user.get()}' clicked ${counter.get()} times.`);
+ *   },
+ *   runImmediately: true, // Optional: run once on creation
+ * });
+ * // Immediately logs: "Analytics: User 'guest' clicked 0 times."
+ *
+ * // --- Trigger the effect by updating a dependency ---
+ * counter.set(1);
+ * // After a macrotask, logs: "Analytics: User 'guest' clicked 1 times."
+ *
+ * // --- IMPORTANT: Clean up when the effect is no longer needed ---
+ * analyticsEffect.destroy();
+ *
+ * // Further updates will not trigger the effect.
+ * counter.set(2); // Nothing is logged.
+ */
+export function createEffect(config: EffectSignalConfig): EffectSignal {
+  return new EffectSignal(config);
+}
