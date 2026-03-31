@@ -19,10 +19,11 @@
       "name": "alwatr",
       "version": "5.0.0",
       "dependencies": {
-        "@alwatr/flux": "^6.1.0",
+        "@alwatr/fsm": "workspace:*",
         "@alwatr/nanolib": "workspace:*",
         "@alwatr/nanotron": "workspace:*",
         "@alwatr/nitrobase": "workspace:*",
+        "@alwatr/signal": "workspace:*",
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
@@ -655,11 +656,11 @@
       "name": "@alwatr/signal",
       "version": "6.2.0",
       "dependencies": {
-        "@alwatr/debounce": "^2.0.2",
+        "@alwatr/debounce": "workspace:*",
         "@alwatr/delay": "workspace:*",
-        "@alwatr/local-storage": "^8.0.2",
+        "@alwatr/local-storage": "workspace:*",
         "@alwatr/logger": "workspace:*",
-        "@alwatr/session-storage": "^2.0.2",
+        "@alwatr/session-storage": "workspace:*",
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
@@ -695,8 +696,6 @@
     "@alwatr/flat-string": ["@alwatr/flat-string@workspace:pkg/nanolib/flat-string"],
 
     "@alwatr/flatomise": ["@alwatr/flatomise@workspace:pkg/nanolib/flatomise"],
-
-    "@alwatr/flux": ["@alwatr/flux@6.2.0", "", { "dependencies": { "@alwatr/fsm": "6.2.0", "@alwatr/signal": "6.2.0" } }, "sha512-IJv3saMNkhsezYdJEAtZBw4wzpGY7n4OvZXCSoUJjDk/bZibIN1DQ0rrvGX6tpVc1JXcODnJHt7LqjVZUQVXaA=="],
 
     "@alwatr/fsm": ["@alwatr/fsm@workspace:pkg/fsm"],
 

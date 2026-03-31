@@ -44,7 +44,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@alwatr/flux": "^6.1.0",
+    "@alwatr/signal": "workspace:*",
+    "@alwatr/fsm": "workspace:*",
     "@alwatr/nanolib": "workspace:*",
     "@alwatr/nanotron": "workspace:*",
     "@alwatr/nitrobase": "workspace:*"
