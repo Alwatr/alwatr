@@ -15,8 +15,7 @@
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
-      "import": "./dist/main.mjs",
-      "require": "./dist/main.cjs"
+      "default": "./dist/main.js"
     }
   },
   "sideEffects": false,
