@@ -6,7 +6,9 @@
     "emitDeclarationOnly": true,
     "composite": true,
     "types": [
-      "node"
+      "@alwatr/type-helper",
+      "@alwatr/nano-build",
+      "node",
     ],
   },
   "include": [

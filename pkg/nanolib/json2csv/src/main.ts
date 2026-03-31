@@ -1,4 +1,3 @@
-import type {} from '@alwatr/type-helper';
 
 /**
  * Converts a JSON array of objects to a CSV string.

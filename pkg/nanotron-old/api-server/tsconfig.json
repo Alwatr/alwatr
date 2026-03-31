@@ -5,7 +5,11 @@
     "outDir": "dist",
     "emitDeclarationOnly": true,
     "composite": true,
-    "types": ["node"],
+    "types": [
+      "@alwatr/type-helper",
+      "@alwatr/nano-build",
+      "node",
+    ],
   },
   "include": ["src/**/*.ts"]
 }

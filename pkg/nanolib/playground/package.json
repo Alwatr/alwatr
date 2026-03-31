@@ -24,6 +24,8 @@
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
     "typescript": "^6.0.2"
   },
   "scripts": {

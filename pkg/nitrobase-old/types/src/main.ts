@@ -1,4 +1,3 @@
-import type {} from '@alwatr/type-helper';
 
 // *** Nitrobase File ***
 

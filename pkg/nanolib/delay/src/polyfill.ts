@@ -1,6 +1,5 @@
 import {getGlobalThis} from '@alwatr/global-this';
 
-import type {} from '@alwatr/type-helper';
 
 const globalThis = getGlobalThis<DictionaryOpt<unknown>>();
 

@@ -1,7 +1,6 @@
 import {HttpStatusCodes} from '@alwatr/nanotron-api-server';
 
 import type {NanotronClientRequest} from '@alwatr/nanotron-api-server';
-import type {} from '@alwatr/type-helper';
 
 /**
  * Middleware to parses the request body as JSON and assigns it to `this.sharedMeta.body`.

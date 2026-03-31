@@ -19,6 +19,9 @@
     }
   },
   "sideEffects": false,
+  "dependencies": {
+    "@alwatr/type-helper": "workspace:*"
+  },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",

@@ -1,6 +1,5 @@
 import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback, SignalConfig} from '../type.js';
 import type {AlwatrLogger} from '@alwatr/logger';
-import type {} from '@alwatr/nano-build';
 
 /**
  * An abstract base class for signal implementations.

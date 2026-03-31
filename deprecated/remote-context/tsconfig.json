@@ -5,6 +5,7 @@
     "outDir": "dist",
     "emitDeclarationOnly": true,
     "composite": true,
+    "types": ["@alwatr/type-helper"]
   },
   "include": ["src/**/*.ts"],
 }

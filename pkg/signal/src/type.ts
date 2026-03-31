@@ -1,6 +1,5 @@
 import type {DebouncerConfig} from '@alwatr/debounce';
 import type {LocalStorageProviderConfig} from '@alwatr/local-storage';
-import type {} from '@alwatr/type-helper';
 
 /**
  * @package @alwatr/signal

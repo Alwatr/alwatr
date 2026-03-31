@@ -4,7 +4,11 @@
     "rootDir": "src",
     "outDir": "dist",
     "emitDeclarationOnly": true,
-    "composite": true
+    "composite": true,
+    "types": [
+      "@alwatr/type-helper",
+      "@alwatr/nano-build",
+    ]
   },
   "include": ["src/**/*.ts"]
 }

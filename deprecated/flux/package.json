@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
     
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
@@ -48,7 +49,7 @@
   },
   "scripts": {
     "b": "bun run build",
-    "build": "bun run build:ts & bun run build:es",
+    "build": "bun run build:ts && bun run build:es",
     "build:es": "nano-build --preset=module src/main.ts",
     "build:ts": "tsc --build",
     "c": "bun run clean",

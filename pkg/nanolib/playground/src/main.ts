@@ -2,9 +2,7 @@
 import {createLogger} from '@alwatr/nanolib';
 import '@alwatr/nanolib/node';
 
-// import type {} from '@alwatr/nano-build';
-// import type {} from '@alwatr/type-helper';
-
+// // 
 /* #__PURE__ */
 createLogger(__package_name__);
 

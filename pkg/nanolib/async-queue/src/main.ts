@@ -1,6 +1,5 @@
 import {newFlatomise} from '@alwatr/flatomise';
 
-import type {} from '@alwatr/type-helper';
 
 /**
  * A queue that executes async tasks in order like mutex and semaphore methodology

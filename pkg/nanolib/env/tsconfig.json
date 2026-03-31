@@ -3,9 +3,13 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",
-    "types": ["node"],
     "emitDeclarationOnly": true,
-    "composite": true
+    "composite": true,
+    "types": [
+      "@alwatr/type-helper",
+      "@alwatr/nano-build",
+      "node"
+    ]
   },
   "include": ["src/**/*.ts"]
 }

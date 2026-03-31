@@ -2,14 +2,16 @@
   "extends": "../../tsconfig.base",
   "compilerOptions": {
     "composite": true,
+    "types": ["@alwatr/type-helper"],
     "tsBuildInfoFile": ".tsbuildinfo",
     "rootDir": "src",
     "outDir": "build",
     "noEmit": true,
-    "plugins": []
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "src/**/*.ts"
-  ],
-  "exclude": [],
+  ]
 }

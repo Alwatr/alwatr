@@ -1,23 +1,17 @@
 {
   "name": "@alwatr/signal",
-  "description": "Alwatr Signal is a powerful, lightweight, and modern reactive programming library. It is inspired by the best concepts from major reactive libraries but engineered to be faster and more efficient than all of them. It provides a robust and elegant way to manage application state through a system of signals, offering fine-grained reactivity, predictability, and excellent performance.",
   "version": "6.2.0",
+  "description": "Alwatr Signal is a powerful, lightweight, and modern reactive programming library. It is inspired by the best concepts from major reactive libraries but engineered to be faster and more efficient than all of them. It provides a robust and elegant way to manage application state through a system of signals, offering fine-grained reactivity, predictability, and excellent performance.",
+  "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/flux",
+    "directory": "packages/signal"
+  },
+  "homepage": "https://github.com/Alwatr/flux/tree/next/packages/signal#readme",
   "bugs": "https://github.com/Alwatr/flux/issues",
-  "dependencies": {
-    "@alwatr/debounce": "^2.0.2",
-    "@alwatr/delay": "workspace:*",
-    "@alwatr/local-storage": "^8.0.2",
-    "@alwatr/logger": "workspace:*",
-    "@alwatr/session-storage": "^2.0.2"
-  },
-  "devDependencies": {
-    "@alwatr/nano-build": "workspace:*",
-    
-    "@alwatr/tsconfig-base": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
-    "typescript": "^6.0.2"
-  },
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -25,29 +19,19 @@
       "require": "./dist/main.cjs"
     }
   },
-  "files": [
-    "**/*.{js,mjs,cjs,map,d.ts,html,md}",
-    "!demo/**/*"
-  ],
-  "homepage": "https://github.com/Alwatr/flux/tree/next/packages/signal#readme",
-  "keywords": [
-    "alwatr",
-    "esm",
-    "observable",
-    "signal",
-    "typescript"
-  ],
-  "license": "MPL-2.0",
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
-  
-  "publishConfig": {
-    "access": "public"
+  "sideEffects": false,
+  "dependencies": {
+    "@alwatr/debounce": "workspace:*",
+    "@alwatr/delay": "workspace:*",
+    "@alwatr/local-storage": "workspace:*",
+    "@alwatr/logger": "workspace:*",
+    "@alwatr/session-storage": "workspace:*"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/flux",
-    "directory": "packages/signal"
+  "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
+    "typescript": "^6.0.2"
   },
   "scripts": {
     "b": "bun run build",
@@ -65,7 +49,21 @@
     "watch:es": "bun run build:es --watch",
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
-  "sideEffects": false,
-  "type": "module",
+  "files": [
+    "**/*.{js,mjs,cjs,map,d.ts,html,md}",
+    "!demo/**/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr",
+    "esm",
+    "observable",
+    "signal",
+    "typescript"
+  ],
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
   "types": "./dist/main.d.ts"
 }

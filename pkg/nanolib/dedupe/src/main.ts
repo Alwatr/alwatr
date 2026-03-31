@@ -1,8 +1,6 @@
 import {getGlobalThis} from '@alwatr/global-this';
 import {hasOwn} from '@alwatr/has-own';
 
-import type {} from '@alwatr/nano-build';
-import type {} from '@alwatr/type-helper';
 
 const globalThis_ = getGlobalThis<{__alwatr_dedupe__: string | true}>();
 

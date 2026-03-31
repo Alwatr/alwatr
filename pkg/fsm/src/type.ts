@@ -1,5 +1,4 @@
 import type {SignalConfig} from '@alwatr/signal';
-import type {} from '@alwatr/type-helper';
 
 /**
  * Represents the state of a state machine, including its current finite state value

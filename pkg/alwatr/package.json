@@ -1,22 +1,17 @@
 {
   "name": "alwatr",
-  "description": "Alwatr Ecosystem",
   "version": "5.0.0",
+  "description": "Alwatr Ecosystem",
+  "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "packages/alwatr"
+  },
+  "homepage": "https://github.com/Alwatr/alwatr#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
-  "dependencies": {
-    "@alwatr/flux": "^6.1.0",
-    "@alwatr/nanolib": "workspace:*",
-    "@alwatr/nanotron": "workspace:*",
-    "@alwatr/nitrobase": "workspace:*"
-  },
-  "devDependencies": {
-    "@alwatr/nano-build": "workspace:*",
-    
-    "@alwatr/tsconfig-base": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
-    "typescript": "^6.0.2"
-  },
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -47,26 +42,18 @@
       "default": "./dist/nanotron.mjs"
     }
   },
-  "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
-    "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
-  ],
-  "homepage": "https://github.com/Alwatr/alwatr#readme",
-  "keywords": [
-    "alwatr"
-  ],
-  "license": "MPL-2.0",
-  
-  "publishConfig": {
-    "access": "public"
+  "sideEffects": false,
+  "dependencies": {
+    "@alwatr/flux": "^6.1.0",
+    "@alwatr/nanolib": "workspace:*",
+    "@alwatr/nanotron": "workspace:*",
+    "@alwatr/nitrobase": "workspace:*"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/alwatr",
-    "directory": "packages/alwatr"
+  "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
+    "typescript": "^6.0.2"
   },
   "scripts": {
     "b": "bun run build",
@@ -84,6 +71,17 @@
     "watch:es": "bun run build:es --watch",
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
-  "sideEffects": false,
-  "type": "module"
+  "files": [
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr"
+  ]
 }

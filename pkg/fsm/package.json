@@ -1,9 +1,25 @@
 {
   "name": "@alwatr/fsm",
-  "description": "A tiny, type-safe, declarative, and reactive finite state machine (FSM) library for modern TypeScript applications, built on top of Alwatr Signals.",
   "version": "6.2.0",
+  "description": "A tiny, type-safe, declarative, and reactive finite state machine (FSM) library for modern TypeScript applications, built on top of Alwatr Signals.",
+  "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/flux",
+    "directory": "packages/fsm"
+  },
+  "homepage": "https://github.com/Alwatr/flux/tree/next/packages/fsm#readme",
   "bugs": "https://github.com/Alwatr/flux/issues",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.mjs",
+      "require": "./dist/main.cjs"
+    }
+  },
+  "sideEffects": false,
   "dependencies": {
     "@alwatr/logger": "workspace:*",
     "@alwatr/signal": "workspace:*"
@@ -13,39 +29,6 @@
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
     "typescript": "^6.0.2"
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/main.d.ts",
-      "import": "./dist/main.mjs",
-      "require": "./dist/main.cjs"
-    }
-  },
-  "files": [
-    "**/*.{js,mjs,cjs,map,d.ts,html,md}",
-    "!demo/**/*"
-  ],
-  "homepage": "https://github.com/Alwatr/flux/tree/next/packages/fsm#readme",
-  "keywords": [
-    "alwatr",
-    "esm",
-    "finite",
-    "flux",
-    "machine",
-    "state",
-    "typescript"
-  ],
-  "license": "MPL-2.0",
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
-  
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/flux",
-    "directory": "packages/fsm"
   },
   "scripts": {
     "b": "bun run build",
@@ -63,7 +46,23 @@
     "watch:es": "bun run build:es --watch",
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
-  "sideEffects": false,
-  "type": "module",
+  "files": [
+    "**/*.{js,mjs,cjs,map,d.ts,html,md}",
+    "!demo/**/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr",
+    "esm",
+    "finite",
+    "flux",
+    "machine",
+    "state",
+    "typescript"
+  ],
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
   "types": "./dist/main.d.ts"
 }

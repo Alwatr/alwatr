@@ -11,7 +11,6 @@ yarn add -D @alwatr/type-helper
 ### Then import the type helpers to one of your file
 
 ```typescript
-import type {} from '@alwatr/type-helper';
 ```
 
 ## Usage Example

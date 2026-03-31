@@ -1,6 +1,5 @@
 import {createLogger} from '@alwatr/logger';
 
-import type {} from '@alwatr/nano-build';
 
 const logger = createLogger(__package_name__);
 

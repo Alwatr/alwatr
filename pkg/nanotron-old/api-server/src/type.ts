@@ -1,6 +1,5 @@
 import type {NanotronClientRequest} from './api-client-request.js';
 import type {NanotronServerResponse} from './api-server-response.js';
-import type {} from '@alwatr/type-helper';
 import type {IncomingMessage, ServerResponse} from 'node:http';
 
 declare module 'http' {

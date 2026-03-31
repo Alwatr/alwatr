@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.base",
   "compilerOptions": {
     "composite": true,
+    "types": ["@alwatr/type-helper"],
     "tsBuildInfoFile": ".tsbuildinfo",
     "rootDir": "src",
     "outDir": ".",

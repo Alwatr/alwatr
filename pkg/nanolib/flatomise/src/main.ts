@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type {} from '@alwatr/type-helper';
-
 /**
  * Flat promise that can be resolved or rejected from outside.
  */

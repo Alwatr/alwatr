@@ -1,5 +1,4 @@
-import type {} from '@alwatr/nano-build';
-import type {} from '@alwatr/type-helper';
+/// <reference types="@alwatr/nano-build" />
 
 export type GlobalThis = typeof globalThis;
 
