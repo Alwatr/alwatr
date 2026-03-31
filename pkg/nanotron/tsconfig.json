@@ -5,8 +5,22 @@
     "outDir": "dist",
     "emitDeclarationOnly": true,
     "composite": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
   },
-  "include": ["src/**/*.ts"],
-  "references": [{"path": "../api-server"}, {"path": "../pre-handlers"}, {"path": "../crypto"}]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../nanotron-old/api-server"
+    },
+    {
+      "path": "../nanotron-old/pre-handlers"
+    },
+    {
+      "path": "../nanolib/crypto"
+    }
+  ]
 }

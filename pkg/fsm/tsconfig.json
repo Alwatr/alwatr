@@ -5,7 +5,19 @@
     "outDir": "dist",
     "emitDeclarationOnly": true,
     "composite": true,
+    "types": [
+      "@alwatr/type-helper"
+    ]
   },
-  "include": ["src/**/*.ts"],
-  "references": [{"path": "../signal"}],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../signal"
+    },
+    {
+      "path": "../nanolib/logger"
+    }
+  ],
 }

@@ -53,7 +53,7 @@
   "scripts": {
     "b": "yarn run build",
     "build": "yarn run build:ts & yarn run build:es",
-    "build:es": "nano-build --preset=module",
+    "build:es": "nano-build --preset=module src/main.ts",
     "build:ts": "tsc --build",
     "c": "yarn run clean",
     "cb": "yarn run clean && yarn run build",

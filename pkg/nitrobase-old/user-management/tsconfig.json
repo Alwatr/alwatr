@@ -5,7 +5,22 @@
     "outDir": "dist",
     "emitDeclarationOnly": true,
     "composite": true,
+    "types": [
+      "node"
+    ]
   },
-  "include": ["src/**/*.ts"],
-  "references": [{"path": "../types"}, {"path": "../engine"}, {"path": "../reference"}]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../types"
+    },
+    {
+      "path": "../engine"
+    },
+    {
+      "path": "../reference"
+    }
+  ]
 }
