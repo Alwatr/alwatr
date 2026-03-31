@@ -6,14 +6,10 @@
   "type": "module",
   "repository": "https://github.com/Alwatr/alwatr",
   "workspaces": [
-    "pkg/alwatr/",
-    "pkg/fsm/",
+    "pkg/*",
     "pkg/nanolib/*",
-    "pkg/nanotron",
     "pkg/nanotron-old/*",
-    "pkg/nitrobase",
-    "pkg/nitrobase-old/*",
-    "pkg/signal/"
+    "pkg/nitrobase-old/*"
   ],
   "devDependencies": {
     "@lerna-lite/cli": "^4.11.5",
