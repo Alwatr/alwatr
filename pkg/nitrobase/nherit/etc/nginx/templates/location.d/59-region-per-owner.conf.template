@@ -1,0 +1,14 @@
+# PerOwner region
+# Nitrobase file location specific to each owner id.
+
+location ~ ^/$nitrobaseRegionPerOwner/[A-z0-9_=-]+/[A-z0-9_=-]+/ {
+  if ($authUserToken = "") {
+    # User not defined
+    set $debugInfo 591;
+    return 401;
+    break;
+  }
+
+  set $debugInfo 592;
+  try_files $uri =404;
+}

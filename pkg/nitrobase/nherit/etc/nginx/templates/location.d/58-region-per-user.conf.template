@@ -1,0 +1,36 @@
+# PerUser region
+# Nitrobase file location specific to each user id. Can be accessed using the user token.
+
+location ~ ^/(?<requestLocation>$nitrobaseRegionPerUser/[A-z0-9_=-]+/[A-z0-9_=-]+)/ {
+  if ($authUserToken = "") {
+    # User not defined
+    set $debugInfo 581;
+    return 401;
+    break;
+  }
+
+  if (!-f $document_root/$userLocation/.token/$authUserToken.asn) {
+    # Token file not found then user not authenticated
+    set $debugInfo 582;
+    return 403;
+    break;
+  }
+
+  try_files $uri =404;
+
+  if (-f $document_root/$userLocation/.auth/manager.asn) {
+    # Manager authentication file found then user is a manager and can access other user's files
+    set $debugInfo 583;
+    break;
+  }
+
+  if ($userLocation = $requestLocation) {
+    # User requested his own files
+    set $debugInfo 584;
+    break;
+  }
+
+  # User requested other user's files and is not a manager
+  set $debugInfo 584;
+  return 403;
+}

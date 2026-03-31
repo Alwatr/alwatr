@@ -1,0 +1,19 @@
+# Check user authentication by validate user token
+
+location = /$nitrobaseRegionValidateAuth/ {
+  if ($authUserToken = "") {
+    # User not defined
+    set $debugInfo 511;
+    return 401;
+    break;
+  }
+
+   if (!-f $document_root/$userLocation/.token/$authUserToken.asn) {
+    # Token file not found then user not authenticated
+    set $debugInfo 512;
+    return 403;
+    break;
+  }
+
+  return 200 '{"ok": true, "data": {}}';
+}

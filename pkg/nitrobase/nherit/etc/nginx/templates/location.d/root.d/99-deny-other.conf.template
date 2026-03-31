@@ -1,0 +1,5 @@
+# Deny all unknown location
+# this file must be last in the include list
+
+set $debugInfo 99;
+return 403;
