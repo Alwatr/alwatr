@@ -17,59 +17,48 @@
     "@alwatr/type-helper": "^6.1.4",
     "typescript": "^5.9.2"
   },
-  "displayName": "Alwatr",
-  "engines": {
-    "node": ">=18.16.0",
-    "yarn": ">=4.0.0"
-  },
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
-      "import": "./dist/main.mjs",
-      "require": "./dist/main.cjs"
+      "default": "./dist/main.mjs"
     },
     "./nanolib": {
       "types": "./dist/nanolib/nanolib.d.ts",
-      "import": "./dist/nanolib/nanolib.mjs",
-      "require": "./dist/nanolib/nanolib.cjs"
+      "default": "./dist/nanolib/nanolib.mjs"
     },
     "./nanolib/node": {
       "types": "./dist/nanolib/node.d.ts",
-      "import": "./dist/nanolib/node.mjs",
-      "require": "./dist/nanolib/node.cjs"
+      "default": "./dist/nanolib/node.mjs"
     },
     "./nitrobase": {
       "types": "./dist/nitrobase/nitrobase.d.ts",
-      "import": "./dist/nitrobase/nitrobase.mjs",
-      "require": "./dist/nitrobase/nitrobase.cjs"
+      "default": "./dist/nitrobase/nitrobase.mjs"
     },
     "./nitrobase/client": {
       "types": "./dist/nitrobase/client.d.ts",
-      "import": "./dist/nitrobase/client.mjs",
-      "require": "./dist/nitrobase/client.cjs"
+      "default": "./dist/nitrobase/client.mjs"
     },
     "./flux": {
       "types": "./dist/flux.d.ts",
-      "import": "./dist/flux.mjs",
-      "require": "./dist/flux.cjs"
+      "default": "./dist/flux.mjs"
     },
     "./nanotron": {
       "types": "./dist/nanotron.d.ts",
-      "import": "./dist/nanotron.mjs",
-      "require": "./dist/nanotron.cjs"
+      "default": "./dist/nanotron.mjs"
     }
   },
   "files": [
-    "**/*.{js,mjs,cjs,map,d.ts,html,md}",
-    "!demo/**/*"
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
   ],
   "homepage": "https://github.com/Alwatr/alwatr#readme",
   "keywords": [
     "alwatr"
   ],
   "license": "MPL-2.0",
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
   "prettier": "@alwatr/prettier-config",
   "publishConfig": {
     "access": "public"
@@ -96,6 +85,5 @@
     "watch:ts": "yarn run build:ts --watch --preserveWatchOutput"
   },
   "sideEffects": false,
-  "type": "module",
-  "types": "./dist/main.d.ts"
+  "type": "module"
 }
