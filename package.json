@@ -41,6 +41,11 @@
   },
   "type": "module",
   "workspaces": [
-    "packages/*"
+    "pkg/nanolib/*",
+    "pkg/signal/",
+    "pkg/fsm/",
+    "pkg/alwatr/",
+    "pkg/nanotron/*",
+    "pkg/nitrobase/*"
   ]
 }
