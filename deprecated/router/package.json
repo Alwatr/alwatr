@@ -1,0 +1,42 @@
+{
+  "name": "@alwatr/router",
+  "version": "2.0.4",
+  "description": "Elegant powerful router (fundamental advance browser page routing) based on the simplicity of the signals written in tiny TypeScript module.",
+  "keywords": [
+    "router",
+    "route",
+    "routing",
+    "typescript",
+    "esm",
+    "alwatr"
+  ],
+  "main": "index.js",
+  "type": "module",
+  "types": "index.d.ts",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "**/*.{d.ts.map,d.ts,js.map,js,html,md}"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/fract",
+    "directory": "packages/router"
+  },
+  "homepage": "https://github.com/Alwatr/fract/tree/next/packages/router#readme",
+  "bugs": {
+    "url": "https://github.com/Alwatr/fract/issues"
+  },
+  "dependencies": {
+    "@alwatr/logger": "^3.2.5",
+    "@alwatr/math": "^1.3.1",
+    "@alwatr/signal": "^2.0.5",
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@alwatr/type": "^1.2.4"
+  }
+}
