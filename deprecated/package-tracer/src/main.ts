@@ -1,5 +1,3 @@
-import type {} from '@alwatr/nano-build';
-import type {} from '@alwatr/type-helper';
 
 /**
  * A module for tracking package information.
