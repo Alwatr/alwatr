@@ -1,0 +1,23 @@
+### Root
+GET http://localhost
+
+### Root with prefix
+GET http://localhost/api/
+
+### Root with prefix and version
+GET http://localhost/api/v1/
+
+### error 404
+GET http://localhost/api/v1/bla-bla
+
+### Hello
+GET http://localhost/api/v1/hello
+
+### Hello2
+GET http://localhost/api/v1/hello2
+
+### post body test
+POST http://localhost/api/v1/echo-body
+Content-Type: text/plain
+
+bla bla bla ...
