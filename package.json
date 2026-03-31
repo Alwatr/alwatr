@@ -42,7 +42,9 @@
     "rl": "bun run pull && bun run clean && bun run build && bun run lint && bun run test && bun run release",
     "rlt": "bun run release --dry-run",
     "t": "bun run test",
-    "test": "bun test"
+    "test": "ALWATR_DEBUG=0 bun test",
+    "w": "bun run watch",
+    "watch": "lerna run --parallel watch"
   },
   "private": true
 }
