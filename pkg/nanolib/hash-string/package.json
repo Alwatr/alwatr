@@ -1,0 +1,73 @@
+{
+  "name": "@alwatr/hash-string",
+  "version": "6.0.2",
+  "description": "A simple utility to generate a hash string.",
+  "license": "MPL-2.0",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "type": "module",
+  "repository": {
+    "directory": "packages/hash-string",
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib"
+  },
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/hash-string#readme",
+  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "default": "./dist/main.js"
+    }
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "typescript": "^6.0.2"
+  },
+  "scripts": {
+    "b": "bun run build",
+    "build": "bun run build:ts && bun run build:es",
+    "build:es": "nano-build --preset=module src/main.ts",
+    "build:ts": "tsc --build",
+    "c": "bun run clean",
+    "cb": "bun run clean && bun run build",
+    "clean": "rm -rfv dist *.tsbuildinfo",
+    "d": "bun run build:es && bun",
+    "t": "bun run test",
+    "test": "bun test",
+    "w": "bun run watch",
+    "watch": "bun run watch:ts & bun run watch:es",
+    "watch:es": "bun run build:es --watch",
+    "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
+  },
+  "files": [
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr",
+    "browser",
+    "esm",
+    "hash",
+    "hash-string",
+    "javascript",
+    "md5",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "string",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
+  "prettier": "@alwatr/prettier-config"
+}

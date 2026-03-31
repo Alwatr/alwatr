@@ -1,0 +1,36 @@
+{
+  "name": "@alwatr/tsconfig-base",
+  "version": "8.0.0",
+  "description": "This is a base TypeScript configuration for Alwatr projects.",
+  "license": "MPL-2.0",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "repository": {
+    "directory": "packages/tsconfig-base",
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib"
+  },
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/tsconfig-base#readme",
+  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "sideEffects": false,
+  "files": [
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "tsconfig.json",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr",
+    "nanolib",
+    "tsconfig",
+    "tsconfig-base",
+    "tsconfig.json",
+    "typescript",
+    "typescript"
+  ],
+  "main": "tsconfig.json"
+}

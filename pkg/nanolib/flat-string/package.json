@@ -1,0 +1,74 @@
+{
+  "name": "@alwatr/flat-string",
+  "version": "6.0.2",
+  "description": "The `flat-string` function flattens the underlying C structures of a concatenated JavaScript string.",
+  "license": "MPL-2.0",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "type": "module",
+  "repository": {
+    "directory": "packages/flat-string",
+    "type": "git",
+    "url": "https://github.com/Alwatr/nanolib"
+  },
+  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/flat-string#readme",
+  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "default": "./dist/main.js"
+    }
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/prettier-config": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "typescript": "^6.0.2"
+  },
+  "scripts": {
+    "b": "bun run build",
+    "build": "bun run build:ts && bun run build:es",
+    "build:es": "nano-build --preset=module src/main.ts",
+    "build:ts": "tsc --build",
+    "c": "bun run clean",
+    "cb": "bun run clean && bun run build",
+    "clean": "rm -rfv dist *.tsbuildinfo",
+    "d": "bun run build:es && bun",
+    "w": "bun run watch",
+    "watch": "bun run watch:ts & bun run watch:es",
+    "watch:es": "bun run build:es --watch",
+    "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
+  },
+  "files": [
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr",
+    "browser",
+    "concat",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "flat",
+    "flatten",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "optimize",
+    "string",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
+  "prettier": "@alwatr/prettier-config"
+}

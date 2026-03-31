@@ -1,0 +1,12 @@
+{
+  "extends": "@alwatr/tsconfig-base/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "types": ["node"],
+    "emitDeclarationOnly": true,
+    "composite": true
+  },
+  "include": ["src/**/*.ts"],
+  "references": [{"path": "../async-queue"}, {"path": "../flat-string"}, {"path": "../logger"}]
+}
