@@ -4,11 +4,9 @@
     "source.fixAll": "explicit"
   },
   "js/ts.implicitProjectConfig.checkJs": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": false,
   "editor.formatOnSave": false,
   "editor.wordWrapColumn": 120,
-  "eslint.nodePath": ".yarn/sdks",
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
@@ -29,56 +27,40 @@
     // "**/*.tsbuildinfo": true
   },
   "git.autoStash": true,
-  "git.branchProtection": [
-    "main",
-    "next"
-  ],
-  "githubPullRequests.ignoredPullRequestBranches": [
-    "main",
-    "next"
-  ],
-  "markdownlint.ignore": [
-    "**/CHANGELOG.md"
-  ],
-  "npm.packageManager": "yarn",
-  "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
+  "git.branchProtection": ["main", "next"],
+  "githubPullRequests.ignoredPullRequestBranches": ["main", "next"],
+  "markdownlint.ignore": ["**/CHANGELOG.md"],
   "prettier.useEditorConfig": true,
-  "search.exclude": {
-    "**/.pnp.*": true,
-    "**/.yarn": true,
-    "**/*.lock": true
-  },
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
   "cSpell.words": [
     "Alwatr",
     "conventionalcommits",
-    "cyrb53",
     "Debouncer",
     "Deno",
     "flatomise",
-    "HPKP",
-    "HSTS",
     "Jsonifiable",
     "Jsonify",
     "Macrotask",
     "Microtask",
     "Mihandoost",
     "nanolib",
-    "nanoservice",
-    "nanotron",
-    "nitrobase",
-    "nosniff",
     "outdir",
     "outfile",
-    "permessage",
     "pmpa",
-    "SAMEORIGIN",
-    "serviceworker",
     "Strigifyable",
-    "superchat",
     "syncpack",
     "tsbuildinfo",
-    "typeof"
-  ]
+    "typeof",
+    "cyrb53"
+  ],
+  "github-actions.workflows.pinned.workflows": [
+    ".github/workflows/publish-npm.yml"
+  ],
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "js/ts.tsdk.path": "node_modules/typescript/lib"
 }
