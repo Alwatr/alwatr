@@ -61,7 +61,7 @@
     "c": "bun run clean",
     "cb": "bun run clean && bun run build",
     "clean": "rm -rfv dist *.tsbuildinfo",
-    "d": "bun run build:es && bun node",
+    "d": "bun run build:es && bun",
     "w": "bun run watch",
     "watch": "bun run watch:ts & bun run watch:es",
     "watch:es": "bun run build:es --watch",

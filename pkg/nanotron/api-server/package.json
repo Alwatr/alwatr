@@ -56,7 +56,7 @@
     "c": "bun run clean",
     "cb": "bun run clean && bun run build",
     "clean": "rm -rfv dist *.tsbuildinfo",
-    "d": "bun run build:es && bun node --enable-source-maps --trace-warnings",
+    "d": "bun run build:es && bun",
     "t": "bun run test",
     "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest",
     "w": "bun run watch",
