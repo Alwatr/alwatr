@@ -1,7 +1,20 @@
 {
   "name": "alwatr-devkit-monorepo",
   "description": "The Alwatr Developer Kit is a comprehensive ecosystem designed to facilitate your development process. It comprises a diverse range of tools and libraries, empowering you to construct robust applications with enhanced efficiency.",
+  "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "type": "module",
+  "repository": "https://github.com/Alwatr/alwatr",
+  "workspaces": [
+    "pkg/alwatr/",
+    "pkg/fsm/",
+    "pkg/nanolib/*",
+    "pkg/nanotron",
+    "pkg/nanotron-old/*",
+    "pkg/nitrobase",
+    "pkg/nitrobase-old/*",
+    "pkg/signal/"
+  ],
   "devDependencies": {
     "@lerna-lite/cli": "^4.11.5",
     "@lerna-lite/publish": "^4.11.5",
@@ -10,12 +23,8 @@
     "bun-types": "^1.3.11",
     "conventional-changelog-conventionalcommits": "^9.3.0",
     "conventional-commits-filter": "^5.0.0",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   },
-  "license": "MPL-2.0",
-  "prettier": "@alwatr/prettier-config",
-  "private": true,
-  "repository": "https://github.com/Alwatr/alwatr",
   "scripts": {
     "b": "bun run build",
     "build": "lerna run build",
@@ -39,13 +48,6 @@
     "t": "bun run test",
     "test": "bun test"
   },
-  "type": "module",
-  "workspaces": [
-    "pkg/nanolib/*",
-    "pkg/signal/",
-    "pkg/fsm/",
-    "pkg/alwatr/",
-    "pkg/nanotron/*",
-    "pkg/nitrobase/*"
-  ]
+  "prettier": "@alwatr/prettier-config",
+  "private": true
 }

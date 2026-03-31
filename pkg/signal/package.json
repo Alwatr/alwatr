@@ -6,16 +6,16 @@
   "bugs": "https://github.com/Alwatr/flux/issues",
   "dependencies": {
     "@alwatr/debounce": "^2.0.2",
-    "@alwatr/delay": "^7.0.2",
+    "@alwatr/delay": "workspace:*",
     "@alwatr/local-storage": "^8.0.2",
-    "@alwatr/logger": "^7.0.2",
+    "@alwatr/logger": "workspace:*",
     "@alwatr/session-storage": "^2.0.2"
   },
   "devDependencies": {
-    "@alwatr/nano-build": "^7.0.1",
+    "@alwatr/nano-build": "workspace:*",
     "@alwatr/prettier-config": "^7.0.1",
-    "@alwatr/tsconfig-base": "^8.0.0",
-    "@alwatr/type-helper": "^8.0.2",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
     "typescript": "^6.0.2"
   },
   "exports": {

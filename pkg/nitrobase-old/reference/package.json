@@ -1,21 +1,17 @@
 {
   "name": "@alwatr/nitrobase-reference",
-  "description": "Nitrobase is a blazingly fast, lightweight database built on JSON. It stores data entirely in memory for lightning-quick access, while also providing a JSON file backup for persistence. You can easily serve your data over the web using our high-performance accelerated Nginx server.",
   "version": "7.10.1",
+  "description": "Nitrobase is a blazingly fast, lightweight database built on JSON. It stores data entirely in memory for lightning-quick access, while also providing a JSON file backup for persistence. You can easily serve your data over the web using our high-performance accelerated Nginx server.",
+  "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/nitrobase",
+    "directory": "packages/reference"
+  },
+  "homepage": "https://github.com/Alwatr/nitrobase#readme",
   "bugs": "https://github.com/Alwatr/nitrobase/issues",
-  "dependencies": {
-    "@alwatr/delay": "^6.0.18",
-    "@alwatr/logger": "^6.0.15",
-    "@alwatr/nitrobase-helper": "workspace:^",
-    "@alwatr/nitrobase-types": "workspace:^",
-    "@alwatr/type-helper": "^7.0.0"
-  },
-  "devDependencies": {
-    "@alwatr/nanolib": "^7.3.4",
-    "@types/node": "^24.10.4",
-    "typescript": "^5.9.3"
-  },
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -23,35 +19,18 @@
       "require": "./dist/main.cjs"
     }
   },
-  "files": [
-    "**/*.{js,mjs,cjs,map,d.ts,html,md}",
-    "!demo/**/*"
-  ],
-  "homepage": "https://github.com/Alwatr/nitrobase#readme",
-  "keywords": [
-    "alwatr",
-    "data",
-    "data-storage",
-    "database",
-    "esm",
-    "file",
-    "json",
-    "no-sql",
-    "nosql",
-    "storage",
-    "typescript"
-  ],
-  "license": "MPL-2.0",
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
-  "prettier": "@alwatr/nanolib/prettier-config",
-  "publishConfig": {
-    "access": "public"
+  "sideEffects": false,
+  "dependencies": {
+    "@alwatr/delay": "workspace:*",
+    "@alwatr/logger": "workspace:*",
+    "@alwatr/nitrobase-helper": "workspace:^",
+    "@alwatr/nitrobase-types": "workspace:^",
+    "@alwatr/type-helper": "workspace:*"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/nitrobase",
-    "directory": "packages/reference"
+  "devDependencies": {
+    "@alwatr/nanolib": "workspace:*",
+    "@types/node": "^25.5.0",
+    "typescript": "^6.0.2"
   },
   "scripts": {
     "b": "bun run build",
@@ -67,7 +46,28 @@
     "watch:es": "bun run build:es --watch",
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
-  "sideEffects": false,
-  "type": "module",
+  "files": [
+    "**/*.{js,mjs,cjs,map,d.ts,html,md}",
+    "!demo/**/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr",
+    "data",
+    "data-storage",
+    "database",
+    "esm",
+    "file",
+    "json",
+    "no-sql",
+    "nosql",
+    "storage",
+    "typescript"
+  ],
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "prettier": "@alwatr/nanolib/prettier-config",
   "types": "./dist/main.d.ts"
 }
