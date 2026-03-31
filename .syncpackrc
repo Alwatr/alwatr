@@ -1,0 +1,27 @@
+{
+  "sortPackages": true,
+  "sortFirst": [
+    "name",
+    "version",
+    "description",
+    "license",
+    "author",
+    "contributors",
+    "type",
+    "repository",
+    "homepage",
+    "bugs",
+    "workspaces",
+    "bin",
+    "exports",
+    "sideEffects",
+    "dependencies",
+    "peerDependencies",
+    "devDependencies",
+    "resolutions",
+    "scripts",
+    "files",
+    "publishConfig",
+    "keywords"
+  ]
+}
