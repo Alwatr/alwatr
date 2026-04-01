@@ -21,7 +21,7 @@
     // "tsBuildInfoFile": ".tsbuildinfo",
     // "removeComments": true,
     // "noEmit": true,
-    // "emitDeclarationOnly": true,
+    "emitDeclarationOnly": true,
     // "importHelpers": true,
     "noEmitHelpers": true,
     // "downlevelIteration": true,
