@@ -14,7 +14,8 @@
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
-      "default": "./prettier.config.mjs"
+      "default": "./prettier.config.mjs",
+      "import": "./prettier.config.mjs"
     }
   },
   "sideEffects": false,
@@ -22,7 +23,7 @@
     "prettier": "^3.8.1"
   },
   "files": [
-    "prettier.config.*",
+    "prettier.config.js",
     "README.md",
     "LICENSE"
   ],
