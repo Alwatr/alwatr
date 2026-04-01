@@ -49,6 +49,7 @@ for arg in "$@"; do
       echoColor 7 "Flags:\n"
       echoColor 6 "  --preset=module|web|node-service|bun-service  Select a build preset\n"
       echoColor 6 "  --outdir=DIR                                  Specify output directory (default: dist)\n"
+      echoColor 6 "  --debug                                       Enable debug mode (no minification, always sourcemaps)\n"
       echoColor 6 "  --help, -h                                    Show this help message\n"
       echoColor 7 "\nPreset values:\n"
       echoColor 6 "  module       Library/module output (esm, external packages)\n"
