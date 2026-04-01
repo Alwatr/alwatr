@@ -2,56 +2,6 @@
   "name": "@alwatr/is-number",
   "version": "6.0.2",
   "description": "A simple utility to Check the value is number or can convert to a number, for example string ' 123 ' can be converted to 123.",
-  "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
-  "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alwatr/alwatr",
-    "directory": "pkg/nanolib/is-number"
-  },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/is-number#readme",
-  "bugs": "https://github.com/Alwatr/alwatr/issues",
-  "exports": {
-    ".": {
-      "types": "./dist/main.d.ts",
-      "import": "./dist/main.js",
-      "default": "./dist/main.js"
-    }
-  },
-  "sideEffects": false,
-  "devDependencies": {
-    "@alwatr/nano-build": "workspace:*",
-    "@alwatr/tsconfig-base": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
-    "typescript": "^6.0.2"
-  },
-  "scripts": {
-    "b": "bun run build",
-    "build": "bun run build:ts && bun run build:es",
-    "build:es": "nano-build --preset=module src/main.ts",
-    "build:ts": "tsc --build",
-    "c": "bun run clean",
-    "cb": "bun run clean && bun run build",
-    "clean": "rm -rfv dist *.tsbuildinfo",
-    "d": "bun run build:es && bun",
-    "t": "bun run test",
-    "test": "bun test",
-    "w": "bun run watch",
-    "watch": "bun run watch:ts & bun run watch:es",
-    "watch:es": "bun run build:es --watch",
-    "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
-  },
-  "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
-    "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
   "keywords": [
     "alwatr",
     "browser",
@@ -87,5 +37,55 @@
     "util",
     "utility",
     "utils"
-  ]
+  ],
+  "license": "MPL-2.0",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/is-number"
+  },
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/is-number#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
+      "default": "./dist/main.js"
+    }
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
+    "typescript": "^6.0.2"
+  },
+  "scripts": {
+    "b": "bun run build",
+    "build": "bun run build:ts && bun run build:es",
+    "build:es": "nano-build --preset=module src/main.ts",
+    "build:ts": "tsc --build",
+    "c": "bun run clean",
+    "clean": "rm -rfv dist *.tsbuildinfo",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint src/ --ext .ts",
+    "t": "bun run test",
+    "test": "ALWATR_DEBUG=0 bun test",
+    "w": "bun run watch",
+    "watch": "bun run watch:ts & bun run watch:es",
+    "watch:es": "bun run build:es --watch",
+    "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
+  },
+  "files": [
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -2,6 +2,17 @@
   "name": "@alwatr/pre-handlers",
   "version": "4.10.1",
   "description": "Functions that will run before processing every defined route.",
+  "keywords": [
+    "alwatr",
+    "api",
+    "esm",
+    "handlers",
+    "middleware",
+    "nanoservice",
+    "route-pre-handlers",
+    "server",
+    "typescript"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -36,11 +47,11 @@
     "build:es": "nano-build --preset=module src/main.ts",
     "build:ts": "tsc --build",
     "c": "bun run clean",
-    "cb": "bun run clean && bun run build",
     "clean": "rm -rfv dist *.tsbuildinfo",
-    "d": "bun run build:es && bun",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint src/ --ext .ts",
     "t": "bun run test",
-    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --enable-source-maps --experimental-vm-modules\" jest",
+    "test": "ALWATR_DEBUG=0 bun test",
     "w": "bun run watch",
     "watch": "bun run watch:ts & bun run watch:es",
     "watch:es": "bun run build:es --watch",
@@ -52,16 +63,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "api",
-    "esm",
-    "handlers",
-    "middleware",
-    "nanoservice",
-    "route-pre-handlers",
-    "server",
-    "typescript"
-  ]
+  }
 }

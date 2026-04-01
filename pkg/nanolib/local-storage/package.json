@@ -2,6 +2,24 @@
   "name": "@alwatr/local-storage",
   "version": "8.0.2",
   "description": "A modern, simple, and robust solution for managing versioned JSON objects in the browser's `localStorage`. This package provides a clean, class-based API with a factory function to ensure your application's data persistence is safe, maintainable, and future-proof.",
+  "keywords": [
+    "alwatr",
+    "automatic migration",
+    "browser storage",
+    "cross-platform",
+    "data persistence",
+    "ESM",
+    "facade factory",
+    "JavaScript",
+    "JSON storage",
+    "localStorage",
+    "module",
+    "nanolib",
+    "provider pattern",
+    "TypeScript",
+    "utility",
+    "versioning"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -35,9 +53,11 @@
     "build:es": "nano-build --preset=module src/main.ts",
     "build:ts": "tsc --build",
     "c": "bun run clean",
-    "cb": "bun run clean && bun run build",
     "clean": "rm -rfv dist *.tsbuildinfo",
-    "d": "bun run build:es && bun",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint src/ --ext .ts",
+    "t": "bun run test",
+    "test": "ALWATR_DEBUG=0 bun test",
     "w": "bun run watch",
     "watch": "bun run watch:ts & bun run watch:es",
     "watch:es": "bun run build:es --watch",
@@ -52,23 +72,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "automatic migration",
-    "browser storage",
-    "cross-platform",
-    "data persistence",
-    "ESM",
-    "facade factory",
-    "JavaScript",
-    "JSON storage",
-    "localStorage",
-    "module",
-    "nanolib",
-    "provider pattern",
-    "TypeScript",
-    "utility",
-    "versioning"
-  ]
+  }
 }

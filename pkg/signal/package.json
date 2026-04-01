@@ -2,6 +2,13 @@
   "name": "@alwatr/signal",
   "version": "6.2.0",
   "description": "Alwatr Signal is a powerful, lightweight, and modern reactive programming library. It is inspired by the best concepts from major reactive libraries but engineered to be faster and more efficient than all of them. It provides a robust and elegant way to manage application state through a system of signals, offering fine-grained reactivity, predictability, and excellent performance.",
+  "keywords": [
+    "alwatr",
+    "esm",
+    "observable",
+    "signal",
+    "typescript"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -39,9 +46,9 @@
     "build:es": "nano-build --preset=module src/main.ts",
     "build:ts": "tsc --build",
     "c": "bun run clean",
-    "cb": "bun run clean && bun run build",
     "clean": "rm -rfv dist *.tsbuildinfo",
-    "d": "bun run build:es && bun run --enable-source-maps --trace-warnings",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint src/ --ext .ts",
     "t": "bun run test",
     "test": "ALWATR_DEBUG=0 bun test",
     "w": "bun run watch",
@@ -55,12 +62,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "esm",
-    "observable",
-    "signal",
-    "typescript"
-  ]
+  }
 }
