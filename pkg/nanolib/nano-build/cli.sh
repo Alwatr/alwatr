@@ -66,20 +66,19 @@ for arg in "$@"; do
   esac
 done
 
-
 # default args for all presets
 args+=(
-  "--banner='/* ${banner} */'" \
-  "--outdir='${outdir}'" \
-  "--define __dev_mode__=${devMode}" \
-  "--define __package_name__='${packageName}'" \
-  "--define __package_version__='${packageVersion}'" \
+  "--banner=/* ${banner} */" \
+  "--outdir=${outdir}" \
+  --define __dev_mode__="${devMode}" \
+  --define __package_name__="'${packageName}'" \
+  --define __package_version__="'${packageVersion}'" \
 )
 
-if ! $debug; then
-  args+=('--minify')
-else
+if $debug; then
   echoColor 3 "Debug mode enabled: skipping minification and enabling linked sourcemaps.\n"
+else
+  args+=('--minify')
 fi
 
 case "$preset" in
