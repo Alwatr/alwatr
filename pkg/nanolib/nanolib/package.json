@@ -81,7 +81,6 @@
     "dist",
     "src/**/*.ts",
     "!src/**/*.test.ts",
-    "tsconfig.base.json",
     "README.md",
     "LICENSE"
   ],
