@@ -4,7 +4,7 @@ Under construction. Please check back later.
 
 ## Sponsors
 
-The following companies, organizations, and individuals support Nanolib ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.
+The following companies, organizations, and individuals support Alwatr Standard ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.
 
 ### Contributing
 
