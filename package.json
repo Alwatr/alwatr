@@ -24,7 +24,7 @@
   "scripts": {
     "b": "bun run build",
     "build": "lerna run build",
-    "c": "bun run clean",
+    "cl": "bun run clean",
     "cb": "bun run clean && bun run build",
     "clean": "git add -v . && git clean -d -x -f --exclude=node_modules --exclude='*.env' --exclude=_data",
     "f": "bun run format",
