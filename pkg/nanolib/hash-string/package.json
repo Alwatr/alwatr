@@ -2,16 +2,34 @@
   "name": "@alwatr/hash-string",
   "version": "6.0.2",
   "description": "A simple utility to generate a hash string.",
+  "keywords": [
+    "alwatr",
+    "browser",
+    "esm",
+    "hash",
+    "hash-string",
+    "javascript",
+    "md5",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "string",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/hash-string",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/hash-string"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/hash-string#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/hash-string#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -50,23 +68,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "browser",
-    "esm",
-    "hash",
-    "hash-string",
-    "javascript",
-    "md5",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "string",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }

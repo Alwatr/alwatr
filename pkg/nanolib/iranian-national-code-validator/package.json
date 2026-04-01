@@ -2,16 +2,33 @@
   "name": "@alwatr/iranian-national-code-validator",
   "version": "2.0.2",
   "description": "A tiny TypeScript library to Validates an Iranian National Code (Code Melli).",
+  "keywords": [
+    "alwatr",
+    "browser",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "iranian-national-code",
+    "javascript",
+    "module",
+    "nanolib",
+    "national-code",
+    "typescript",
+    "util",
+    "utility",
+    "utils",
+    "validator"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/iranian-national-code-validator",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/iranian-national-code-validator"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/iranian-national-code-validator#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/iranian-national-code-validator#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -50,22 +67,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "browser",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "iranian-national-code",
-    "javascript",
-    "module",
-    "nanolib",
-    "national-code",
-    "typescript",
-    "util",
-    "utility",
-    "utils",
-    "validator"
-  ]
+  }
 }

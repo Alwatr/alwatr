@@ -2,16 +2,34 @@
   "name": "@alwatr/json2csv",
   "version": "2.0.2",
   "description": "A tiny, efficient, and cross-platform JSON to CSV converter.",
+  "keywords": [
+    "alwatr",
+    "cjs",
+    "converter",
+    "cross-platform",
+    "csv",
+    "esm",
+    "export",
+    "json",
+    "json-to-csv",
+    "json2csv",
+    "nanolib",
+    "transformer",
+    "typescript",
+    "ultra-lightweight",
+    "utility",
+    "zero-dependency"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/json2csv",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/json2csv"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/json2csv#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/json2csv#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -48,23 +66,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "cjs",
-    "converter",
-    "cross-platform",
-    "csv",
-    "esm",
-    "export",
-    "json",
-    "json-to-csv",
-    "json2csv",
-    "nanolib",
-    "transformer",
-    "typescript",
-    "ultra-lightweight",
-    "utility",
-    "zero-dependency"
-  ]
+  }
 }

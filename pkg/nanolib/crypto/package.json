@@ -2,16 +2,35 @@
   "name": "@alwatr/crypto",
   "version": "4.10.1",
   "description": "A robust generator of secure authentication HOTP tokens, employing the HMAC-based One-Time Password algorithm, accompanied by a suite of cryptographic utilities, all encapsulated within a compact TypeScript module.",
+  "keywords": [
+    "access",
+    "alwatr",
+    "auth",
+    "authentication",
+    "crypto",
+    "esm",
+    "hash",
+    "hmac",
+    "hotp",
+    "otp",
+    "otp-token",
+    "time",
+    "token",
+    "typescript"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Alwatr/nanotron",
-    "directory": "packages/crypto"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/crypto"
   },
-  "homepage": "https://github.com/Alwatr/nanotron/tree/next/packages/crypto#readme",
-  "bugs": "https://github.com/Alwatr/nanotron/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/crypto#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -51,25 +70,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "access",
-    "alwatr",
-    "auth",
-    "authentication",
-    "crypto",
-    "esm",
-    "hash",
-    "hmac",
-    "hotp",
-    "otp",
-    "otp-token",
-    "time",
-    "token",
-    "token",
-    "typescript"
-  ],
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
-  "types": "./dist/main.d.ts"
+  }
 }

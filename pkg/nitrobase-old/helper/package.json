@@ -2,16 +2,32 @@
   "name": "@alwatr/nitrobase-helper",
   "version": "7.10.1",
   "description": "Extremely fast and compact JSON-based database that operates in memory, includes a JSON file backup, and serve over the highly accelerated Nginx.",
+  "keywords": [
+    "alwatr",
+    "data",
+    "data-storage",
+    "database",
+    "esm",
+    "file",
+    "json",
+    "no-sql",
+    "nosql",
+    "storage",
+    "typescript"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Alwatr/nitrobase",
-    "directory": "packages/helper"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nitrobase-old/helper"
   },
-  "homepage": "https://github.com/Alwatr/nitrobase#readme",
-  "bugs": "https://github.com/Alwatr/nitrobase/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nitrobase-old/helper#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -52,21 +68,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": [
-    "alwatr",
-    "data",
-    "data-storage",
-    "database",
-    "esm",
-    "file",
-    "json",
-    "no-sql",
-    "nosql",
-    "storage",
-    "typescript"
-  ],
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
-  "prettier": "@alwatr/nanolib/prettier-config",
-  "types": "./dist/main.d.ts"
+  "prettier": "@alwatr/nanolib/prettier-config"
 }

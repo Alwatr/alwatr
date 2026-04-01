@@ -2,16 +2,34 @@
   "name": "@alwatr/exit-hook",
   "version": "6.0.2",
   "description": "A utility for registering exit handlers in Node.js.",
+  "keywords": [
+    "alwatr",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "exit",
+    "exit-hook",
+    "hook",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/exit-hook",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/exit-hook"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/exit-hook#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/exit-hook#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -49,23 +67,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "exit",
-    "exit-hook",
-    "hook",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }

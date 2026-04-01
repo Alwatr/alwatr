@@ -2,16 +2,34 @@
   "name": "@alwatr/nitrobase-user-management",
   "version": "7.10.1",
   "description": "",
+  "keywords": [
+    "alwatr",
+    "data",
+    "data-storage",
+    "database",
+    "esm",
+    "file",
+    "json",
+    "no-sql",
+    "nosql",
+    "storage",
+    "typescript",
+    "user",
+    "user-management"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Alwatr/nitrobase",
-    "directory": "packages/user-management"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nitrobase-old/user-management"
   },
-  "homepage": "https://github.com/Alwatr/nitrobase/tree/next/packages/user-management#readme",
-  "bugs": "https://github.com/Alwatr/nitrobase/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nitrobase-old/user-management#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -55,23 +73,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": [
-    "alwatr",
-    "data",
-    "data-storage",
-    "database",
-    "esm",
-    "file",
-    "json",
-    "no-sql",
-    "nosql",
-    "storage",
-    "typescript",
-    "user",
-    "user-management"
-  ],
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
-  "prettier": "@alwatr/nanolib/prettier-config",
-  "types": "./dist/main.d.ts"
+  "prettier": "@alwatr/nanolib/prettier-config"
 }

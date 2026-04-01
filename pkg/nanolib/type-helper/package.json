@@ -2,16 +2,28 @@
   "name": "@alwatr/type-helper",
   "version": "8.0.2",
   "description": "Collection of useful typescript type helpers.",
+  "keywords": [
+    "alwatr",
+    "nanolib",
+    "type",
+    "type-helper",
+    "types",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/type-helper",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/type-helper"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/type-helper#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/type-helper#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
+  "types": "types.d.ts",
   "sideEffects": false,
   "devDependencies": {
     "typescript": "^6.0.2"
@@ -39,17 +51,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "nanolib",
-    "type",
-    "type-helper",
-    "types",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ],
-  "types": "types.d.ts"
+  }
 }

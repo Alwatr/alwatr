@@ -2,36 +2,6 @@
   "name": "@alwatr/prettier-config",
   "version": "7.0.1",
   "description": "Alwatr's shareable configurations for Prettier.",
-  "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "type": "module",
-  "repository": {
-    "directory": "packages/prettier-config",
-    "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
-  },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/prettier-config#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
-  "exports": {
-    ".": {
-      "import": "./prettier.config.mjs",
-      "require": "./prettier.config.cjs"
-    }
-  },
-  "sideEffects": false,
-  "devDependencies": {
-    "prettier": "^3.8.1"
-  },
-  "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
-    "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
   "keywords": [
     "alwatr",
     "beautify",
@@ -51,5 +21,35 @@
     "util",
     "utility",
     "utils"
-  ]
+  ],
+  "license": "MPL-2.0",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/prettier-config"
+  },
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/prettier-config#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
+  "exports": {
+    ".": {
+      "import": "./prettier.config.mjs",
+      "require": "./prettier.config.cjs"
+    }
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "prettier": "^3.8.1"
+  },
+  "files": [
+    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

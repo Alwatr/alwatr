@@ -2,16 +2,28 @@
   "name": "@alwatr/fsm",
   "version": "6.2.0",
   "description": "A tiny, type-safe, declarative, and reactive finite state machine (FSM) library for modern TypeScript applications, built on top of Alwatr Signals.",
+  "keywords": [
+    "alwatr",
+    "esm",
+    "finite",
+    "flux",
+    "machine",
+    "state",
+    "typescript"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Alwatr/flux",
-    "directory": "packages/fsm"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/fsm"
   },
-  "homepage": "https://github.com/Alwatr/flux/tree/next/packages/fsm#readme",
-  "bugs": "https://github.com/Alwatr/flux/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/fsm#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -51,17 +63,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "esm",
-    "finite",
-    "flux",
-    "machine",
-    "state",
-    "typescript"
-  ],
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
-  "types": "./dist/main.d.ts"
+  }
 }

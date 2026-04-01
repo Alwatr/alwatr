@@ -2,16 +2,35 @@
   "name": "@alwatr/djb2-hash",
   "version": "2.0.2",
   "description": "A fast, non-cryptographic hash function based on DJB2.",
+  "keywords": [
+    "alwatr",
+    "browser",
+    "djb2",
+    "djb2-hash",
+    "esm",
+    "hash",
+    "hash-string",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "string",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/djb2-hash",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/djb2-hash"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/djb2-hash#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/djb2-hash#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -50,24 +69,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "browser",
-    "djb2",
-    "djb2-hash",
-    "esm",
-    "hash",
-    "hash-string",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "string",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }
