@@ -2,22 +2,6 @@
   "name": "@alwatr/crypto",
   "version": "4.10.1",
   "description": "A robust generator of secure authentication HOTP tokens, employing the HMAC-based One-Time Password algorithm, accompanied by a suite of cryptographic utilities, all encapsulated within a compact TypeScript module.",
-  "keywords": [
-    "access",
-    "alwatr",
-    "auth",
-    "authentication",
-    "crypto",
-    "esm",
-    "hash",
-    "hmac",
-    "hotp",
-    "otp",
-    "otp-token",
-    "time",
-    "token",
-    "typescript"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -68,5 +52,21 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "access",
+    "alwatr",
+    "auth",
+    "authentication",
+    "crypto",
+    "esm",
+    "hash",
+    "hmac",
+    "hotp",
+    "otp",
+    "otp-token",
+    "time",
+    "token",
+    "typescript"
+  ]
 }

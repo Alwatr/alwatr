@@ -2,25 +2,6 @@
   "name": "@alwatr/has-own",
   "version": "6.0.2",
   "description": "A side-effect-free polyfill/replacement for `Object.hasOwn` that supports all browsers.",
-  "keywords": [
-    "alwatr",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "has-own",
-    "has-own-property",
-    "has-own-property-polyfill",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "polyfill",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -70,5 +51,24 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "has-own",
+    "has-own-property",
+    "has-own-property-polyfill",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "polyfill",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ]
 }

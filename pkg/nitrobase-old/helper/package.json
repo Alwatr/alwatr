@@ -2,19 +2,6 @@
   "name": "@alwatr/nitrobase-helper",
   "version": "7.10.1",
   "description": "Extremely fast and compact JSON-based database that operates in memory, includes a JSON file backup, and serve over the highly accelerated Nginx.",
-  "keywords": [
-    "alwatr",
-    "data",
-    "data-storage",
-    "database",
-    "esm",
-    "file",
-    "json",
-    "no-sql",
-    "nosql",
-    "storage",
-    "typescript"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -68,5 +55,18 @@
   "publishConfig": {
     "access": "public"
   },
+  "keywords": [
+    "alwatr",
+    "data",
+    "data-storage",
+    "database",
+    "esm",
+    "file",
+    "json",
+    "no-sql",
+    "nosql",
+    "storage",
+    "typescript"
+  ],
   "prettier": "@alwatr/nanolib/prettier-config"
 }

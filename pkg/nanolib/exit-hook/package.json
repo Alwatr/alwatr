@@ -2,24 +2,6 @@
   "name": "@alwatr/exit-hook",
   "version": "6.0.2",
   "description": "A utility for registering exit handlers in Node.js.",
-  "keywords": [
-    "alwatr",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "exit",
-    "exit-hook",
-    "hook",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -70,5 +52,23 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "exit",
+    "exit-hook",
+    "hook",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ]
 }
