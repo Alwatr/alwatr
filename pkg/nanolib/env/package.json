@@ -2,23 +2,6 @@
   "name": "@alwatr/env",
   "version": "6.0.2",
   "description": "A tiny and tree-shakable TypeScript library to get environment variables with type-safe and fallback value for development and production.",
-  "keywords": [
-    "alwatr",
-    "browser",
-    "ECMAScript",
-    "env",
-    "esm",
-    "get-env",
-    "get-env-value",
-    "getEnv",
-    "javascript",
-    "module",
-    "nanolib",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -71,5 +54,22 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr",
+    "browser",
+    "ECMAScript",
+    "env",
+    "esm",
+    "get-env",
+    "get-env-value",
+    "getEnv",
+    "javascript",
+    "module",
+    "nanolib",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ]
 }

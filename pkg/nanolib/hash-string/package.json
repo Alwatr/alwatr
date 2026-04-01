@@ -2,24 +2,6 @@
   "name": "@alwatr/hash-string",
   "version": "6.0.2",
   "description": "A simple utility to generate a hash string.",
-  "keywords": [
-    "alwatr",
-    "browser",
-    "esm",
-    "hash",
-    "hash-string",
-    "javascript",
-    "md5",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "string",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -68,5 +50,23 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr",
+    "browser",
+    "esm",
+    "hash",
+    "hash-string",
+    "javascript",
+    "md5",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "string",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ]
 }

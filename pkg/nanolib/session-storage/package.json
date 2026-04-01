@@ -2,24 +2,6 @@
   "name": "@alwatr/session-storage",
   "version": "2.0.2",
   "description": "A modern, simple, and robust solution for managing versioned JSON objects in the browser's `sessionStorage`. This package provides a clean, class-based API with a factory function to ensure your application's data persistence is safe, maintainable, and future-proof within a single tab.",
-  "keywords": [
-    "alwatr",
-    "automatic migration",
-    "browser storage",
-    "cross-platform",
-    "data persistence",
-    "ESM",
-    "facade factory",
-    "JavaScript",
-    "JSON storage",
-    "module",
-    "nanolib",
-    "provider pattern",
-    "sessionStorage",
-    "TypeScript",
-    "utility",
-    "versioning"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -69,5 +51,23 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr",
+    "automatic migration",
+    "browser storage",
+    "cross-platform",
+    "data persistence",
+    "ESM",
+    "facade factory",
+    "JavaScript",
+    "JSON storage",
+    "module",
+    "nanolib",
+    "provider pattern",
+    "sessionStorage",
+    "TypeScript",
+    "utility",
+    "versioning"
+  ]
 }

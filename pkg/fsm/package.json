@@ -2,15 +2,6 @@
   "name": "@alwatr/fsm",
   "version": "6.2.0",
   "description": "A tiny, type-safe, declarative, and reactive finite state machine (FSM) library for modern TypeScript applications, built on top of Alwatr Signals.",
-  "keywords": [
-    "alwatr",
-    "esm",
-    "finite",
-    "flux",
-    "machine",
-    "state",
-    "typescript"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -60,5 +51,14 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr",
+    "esm",
+    "finite",
+    "flux",
+    "machine",
+    "state",
+    "typescript"
+  ]
 }

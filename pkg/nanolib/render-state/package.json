@@ -2,21 +2,6 @@
   "name": "@alwatr/render-state",
   "version": "6.0.2",
   "description": "Clone deeply nested objects and arrays in JavaScript.",
-  "keywords": [
-    "alwatr",
-    "browser",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "module",
-    "nanolib",
-    "object",
-    "render-state",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -66,5 +51,20 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr",
+    "browser",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "module",
+    "nanolib",
+    "object",
+    "render-state",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ]
 }

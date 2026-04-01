@@ -2,28 +2,6 @@
   "name": "@alwatr/http-primer",
   "version": "7.0.2",
   "description": "Essential HTTP utilities for TypeScript, including types for HTTP methods, status codes, and headers.",
-  "keywords": [
-    "alwatr",
-    "browser",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "headers-types",
-    "http",
-    "http-headers",
-    "http-primer",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "status",
-    "status-codes",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -70,5 +48,27 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr",
+    "browser",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "headers-types",
+    "http",
+    "http-headers",
+    "http-primer",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "status",
+    "status-codes",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ]
 }
