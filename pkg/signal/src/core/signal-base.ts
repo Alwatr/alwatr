@@ -12,7 +12,7 @@ export abstract class SignalBase<T> {
    * The unique identifier for this signal instance.
    * Useful for debugging and logging.
    */
-  public readonly name = this.config_.name;
+  public readonly name: string;
 
   /**
    * The logger instance for this signal.
@@ -42,7 +42,9 @@ export abstract class SignalBase<T> {
     return this.isDestroyed__;
   }
 
-  constructor(protected config_: SignalConfig) {}
+  constructor(protected config_: SignalConfig) {
+    this.name = config_.name;
+  }
 
   /**
    * Removes a specific observer from the observers list.
