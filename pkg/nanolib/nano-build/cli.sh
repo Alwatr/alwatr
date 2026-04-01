@@ -13,10 +13,6 @@ if ! command -v bun >/dev/null 2>&1; then
   exit 1
 fi
 
-devMode="true"
-if [[ "${NODE_ENV:-}" == "production" ]]; then
-  devMode="false"
-fi
 packageName="$(grep -o '"name": *"[^"]*"' package.json | cut -d'"' -f4)"
 packageVersion="$(grep -o '"version": *"[^"]*"' package.json | cut -d'"' -f4)"
 banner="📦 ${packageName} v${packageVersion}"
@@ -26,7 +22,12 @@ echoColor 6 "${banner}\n\n"
 
 preset=""
 outdir="dist"
+debug=false
 args=()
+devMode=true
+if [[ "${NODE_ENV:-}" == "production" ]]; then
+  devMode=false
+fi
 
 for arg in "$@"; do
   case "$arg" in
@@ -36,6 +37,11 @@ for arg in "$@"; do
 
     --outdir=*)
       outdir="${arg#--outdir=}"
+    ;;
+
+    --debug)
+      debug=true
+      devMode=true
     ;;
 
     --help|-h)
@@ -60,10 +66,25 @@ for arg in "$@"; do
   esac
 done
 
+
+# default args for all presets
+args+=(
+  "--banner='/* ${banner} */'" \
+  "--outdir='${outdir}'" \
+  "--define __dev_mode__=${devMode}" \
+  "--define __package_name__='${packageName}'" \
+  "--define __package_version__='${packageVersion}'" \
+)
+
+if ! $debug; then
+  args+=('--minify')
+else
+  echoColor 3 "Debug mode enabled: skipping minification and enabling linked sourcemaps.\n"
+fi
+
 case "$preset" in
   module)
     args+=(
-      '--minify'
       '--target=node'
       '--packages=external'
       '--sourcemap=linked'
@@ -73,33 +94,30 @@ case "$preset" in
 
   web)
     args+=(
-      '--minify'
       '--target=browser'
       '--packages=bundle'
     )
-    if [[ "$devMode" == "true" ]]; then
+    if $devMode; then
       args+=('--sourcemap=linked')
     fi
   ;;
 
   node-service)
     args+=(
-      '--minify'
       '--target=node'
       '--packages=bundle'
     )
-    if [[ "$devMode" == "true" ]]; then
+    if $devMode; then
       args+=('--sourcemap=linked')
     fi
   ;;
 
   bun-service)
     args+=(
-      '--minify'
       '--target=bun'
       '--packages=bundle'
     )
-    if [[ "$devMode" == "true" ]]; then
+    if $devMode; then
       args+=('--sourcemap=linked')
     fi
   ;;
@@ -108,12 +126,8 @@ esac
 # FIXME: what about down-leveling?
 # esbuild target: ['chrome109', 'firefox115', 'safari15.6', 'ios15.8'],
 
-bun \
-  --prefer-offline \
-  build \
-    --banner="/* ${banner} */" \
-    --outdir="${outdir}" \
-    --define __dev_mode__="${devMode}" \
-    --define __package_name__="'${packageName}'" \
-    --define __package_version__="'${packageVersion}'" \
-    "${args[@]}"
+printf "\033[1;30mBuilding with the following arguments:\n"
+printf "  %s\n" "${args[@]}" | sed 's/^/  /'
+printf "\033[0m\n"
+
+bun --prefer-offline build "${args[@]}"
