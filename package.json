@@ -1,6 +1,7 @@
 {
   "name": "alwatr-devkit-monorepo",
   "description": "The Alwatr Developer Kit is a comprehensive ecosystem designed to facilitate your development process. It comprises a diverse range of tools and libraries, empowering you to construct robust applications with enhanced efficiency.",
+  "private": true,
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -24,8 +25,8 @@
   "scripts": {
     "b": "bun run build",
     "build": "lerna run build",
-    "cl": "bun run clean",
     "cb": "bun run clean && bun run build",
+    "cl": "bun run clean",
     "clean": "git add -v . && git clean -d -x -f --exclude=node_modules --exclude='*.env' --exclude=_data",
     "f": "bun run format",
     "format": "bun run format:prettier && bun run format:eslint",
@@ -45,6 +46,5 @@
     "test": "ALWATR_DEBUG=0 bun test",
     "w": "bun run watch",
     "watch": "lerna run --parallel watch"
-  },
-  "private": true
+  }
 }

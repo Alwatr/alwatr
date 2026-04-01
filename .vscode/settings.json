@@ -27,9 +27,17 @@
     // "**/*.tsbuildinfo": true
   },
   "git.autoStash": true,
-  "git.branchProtection": ["main", "next"],
-  "githubPullRequests.ignoredPullRequestBranches": ["main", "next"],
-  "markdownlint.ignore": ["**/CHANGELOG.md"],
+  "git.branchProtection": [
+    "main",
+    "next"
+  ],
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "main",
+    "next"
+  ],
+  "markdownlint.ignore": [
+    "**/CHANGELOG.md"
+  ],
   "prettier.useEditorConfig": true,
   "js/ts.tsdk.promptToUseWorkspaceVersion": true,
   "cSpell.words": [
@@ -62,5 +70,11 @@
   "[javascript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
-  "js/ts.tsdk.path": "node_modules/typescript/lib"
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "material-icon-theme.folders.associations": {
+    "signal": "connection",
+    "nitrobase": "aws",
+    "nanotron": "server",
+    "fsm": "ngrx-state"
+  }
 }

@@ -1,4 +1,4 @@
-# ECMAScript Nano Libs
+# Alwatr Core
 
 This repository contains numerous small utility packages. These packages serve various useful purposes and are written in nano ESModule without any dependencies.
 
