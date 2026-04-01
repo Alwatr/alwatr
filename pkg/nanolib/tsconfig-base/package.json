@@ -19,12 +19,9 @@
   },
   "sideEffects": false,
   "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "tsconfig.base.json",
     "README.md",
-    "LICENSE",
-    "tsconfig.json",
-    "!demo/**/*",
-    "!**/*.test.js"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"

@@ -20,11 +20,10 @@
   },
   "sideEffects": false,
   "files": [
-    "**/*.{sh,js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "cli.sh",
+    "global.d.ts",
     "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
