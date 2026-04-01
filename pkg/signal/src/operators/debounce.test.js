@@ -185,7 +185,7 @@ describe('createDebouncedSignal', () => {
   it('should continue notifying other subscribers if one callback throws an error', async () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, { delay: 100 });
     const callback1 = jest.fn(() => {
-      throw new Error('Test error');
+      throw new Error('simulate unhandled error for testing');
     });
     const callback2 = jest.fn();
     debouncedSignal.subscribe(callback1, { receivePrevious: false });
