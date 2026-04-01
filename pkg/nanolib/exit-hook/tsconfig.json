@@ -8,7 +8,6 @@
       "@alwatr/nano-build",
       "node"
     ],
-    "emitDeclarationOnly": true,
     "composite": true
   },
   "include": [

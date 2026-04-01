@@ -7,7 +7,6 @@
       "node",
       "@alwatr/type-helper"
     ],
-    "emitDeclarationOnly": true,
     "composite": true
   },
   "include": [
