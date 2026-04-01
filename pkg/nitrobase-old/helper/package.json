@@ -37,7 +37,7 @@
     "build": "bun run build:ts && bun run build:es",
     "build:es": "nano-build --preset=module src/main.ts",
     "build:ts": "tsc --build",
-    "c": "bun run clean",
+    "cl": "bun run clean",
     "clean": "rm -rfv dist *.tsbuildinfo",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/ --ext .ts",
