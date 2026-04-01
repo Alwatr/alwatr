@@ -24,6 +24,7 @@
   ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/alwatr",
@@ -31,7 +32,12 @@
   },
   "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/nano-build#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
-  "types": "./global.d.ts",
+  "exports": {
+    ".": {
+      "types": "./global.d.ts"
+    },
+    "./global.d.ts": "./global.d.ts"
+  },
   "sideEffects": false,
   "files": [
     "**/*.{sh,js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",

@@ -23,7 +23,12 @@
   },
   "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/type-helper#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
-  "types": "types.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types.d.ts"
+    },
+    "./types.d.ts": "./types.d.ts"
+  },
   "sideEffects": false,
   "devDependencies": {
     "typescript": "^6.0.2"
