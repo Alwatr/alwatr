@@ -24,4 +24,4 @@ export * from '@alwatr/resolve-url';
 export * from '@alwatr/session-storage';
 export * from '@alwatr/synapse';
 export * from '@alwatr/unicode-digits';
-export * from '@alwatr/type-helper';
+export type * from '@alwatr/type-helper';
