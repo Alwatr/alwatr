@@ -2,16 +2,35 @@
   "name": "@alwatr/delay",
   "version": "7.0.2",
   "description": "Comprehensive toolkit for managing asynchronous operations.",
+  "keywords": [
+    "alwatr",
+    "browser",
+    "cross-platform",
+    "delay",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "typescript",
+    "until",
+    "util",
+    "utility",
+    "utils",
+    "wait"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/delay",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/delay"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/delay#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/delay#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -53,24 +72,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "browser",
-    "cross-platform",
-    "delay",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "typescript",
-    "until",
-    "util",
-    "utility",
-    "utils",
-    "wait"
-  ]
+  }
 }

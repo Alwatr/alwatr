@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "description": "Necessary library for all ECMAScript (JavaScript/TypeScript) projects.",
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/nanolib",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/playground"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/nanolib#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/playground#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",

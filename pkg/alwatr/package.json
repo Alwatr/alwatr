@@ -2,15 +2,18 @@
   "name": "alwatr",
   "version": "5.0.0",
   "description": "Alwatr Ecosystem",
+  "keywords": [
+    "alwatr"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/alwatr",
-    "directory": "packages/alwatr"
+    "directory": "pkg/alwatr"
   },
-  "homepage": "https://github.com/Alwatr/alwatr#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/alwatr#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
@@ -81,8 +84,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr"
-  ]
+  }
 }

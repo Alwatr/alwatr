@@ -2,16 +2,36 @@
   "name": "@alwatr/parse-duration",
   "version": "6.0.2",
   "description": "A simple utility to parse a duration string into milliseconds number.",
+  "keywords": [
+    "alwatr",
+    "browser",
+    "cross-platform",
+    "duration",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "parse",
+    "parse-duration",
+    "time",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/parse-duration",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/parse-duration"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/parse-duration#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/parse-duration#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -53,25 +73,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "browser",
-    "cross-platform",
-    "duration",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "parse",
-    "parse-duration",
-    "time",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }

@@ -2,27 +2,6 @@
   "name": "@alwatr/nano-build",
   "version": "7.0.1",
   "description": "Lightweight, zero-config Bun-based build CLI for JavaScript, TypeScript, and ECMAScript libraries. Minimal dependencies, fast builds, and sensible presets for multiple project types.",
-  "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
-  "repository": {
-    "directory": "packages/nano-build",
-    "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
-  },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/nano-build#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
-  "bin": "./cli.sh",
-  "sideEffects": false,
-  "files": [
-    "**/*.{sh,js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
-    "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
   "keywords": [
     "alwatr",
     "browser",
@@ -43,5 +22,26 @@
     "utility",
     "utils"
   ],
-  "types": "./global.d.ts"
+  "license": "MPL-2.0",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/nano-build"
+  },
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/nano-build#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
+  "types": "./global.d.ts",
+  "sideEffects": false,
+  "files": [
+    "**/*.{sh,js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "README.md",
+    "LICENSE",
+    "!demo/**/*",
+    "!**/*.test.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": "./cli.sh"
 }

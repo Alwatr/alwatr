@@ -2,16 +2,34 @@
   "name": "@alwatr/local-storage",
   "version": "8.0.2",
   "description": "A modern, simple, and robust solution for managing versioned JSON objects in the browser's `localStorage`. This package provides a clean, class-based API with a factory function to ensure your application's data persistence is safe, maintainable, and future-proof.",
+  "keywords": [
+    "alwatr",
+    "automatic migration",
+    "browser storage",
+    "cross-platform",
+    "data persistence",
+    "ESM",
+    "facade factory",
+    "JavaScript",
+    "JSON storage",
+    "localStorage",
+    "module",
+    "nanolib",
+    "provider pattern",
+    "TypeScript",
+    "utility",
+    "versioning"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/local-storage",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/local-storage"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/local-storage#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/local-storage#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -51,23 +69,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "automatic migration",
-    "browser storage",
-    "cross-platform",
-    "data persistence",
-    "ESM",
-    "facade factory",
-    "JavaScript",
-    "JSON storage",
-    "localStorage",
-    "module",
-    "nanolib",
-    "provider pattern",
-    "TypeScript",
-    "utility",
-    "versioning"
-  ]
+  }
 }

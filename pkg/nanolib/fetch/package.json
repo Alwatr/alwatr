@@ -2,16 +2,38 @@
   "name": "@alwatr/fetch",
   "version": "8.0.2",
   "description": "`@alwatr/fetch` is an enhanced, lightweight, and dependency-free wrapper for the native `fetch` API. It provides modern features like caching strategies, request retries, timeouts, and intelligent duplicate request handling, all in a compact package.",
+  "keywords": [
+    "alwatr",
+    "api",
+    "browser",
+    "cache",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "fetch",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "request",
+    "retry",
+    "timeout",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/fetch",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/fetch"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/fetch#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/fetch#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -58,27 +80,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "api",
-    "browser",
-    "cache",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "fetch",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "request",
-    "retry",
-    "timeout",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }

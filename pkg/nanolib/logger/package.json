@@ -2,16 +2,35 @@
   "name": "@alwatr/logger",
   "version": "7.0.2",
   "description": "Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.",
+  "keywords": [
+    "alwatr",
+    "console",
+    "cross-platform",
+    "debug",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "log",
+    "logger",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/logger",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/logger"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/logger#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/logger#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -53,24 +72,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "console",
-    "cross-platform",
-    "debug",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "log",
-    "logger",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }

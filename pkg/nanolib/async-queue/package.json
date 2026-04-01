@@ -2,16 +2,41 @@
   "name": "@alwatr/async-queue",
   "version": "6.0.2",
   "description": "A queue that executes async tasks in order like mutex and semaphore methodology for javascript and typescript.",
+  "keywords": [
+    "alwatr",
+    "async",
+    "async-queue",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "lock",
+    "module",
+    "mutex",
+    "nanolib",
+    "node",
+    "nodejs",
+    "queue",
+    "semaphore",
+    "semaphore-slim",
+    "SemaphoreSlim",
+    "spin-lock",
+    "SpinLock",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/async-queue",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/async-queue"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/async-queue#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/async-queue#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -52,30 +77,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "async",
-    "async-queue",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "lock",
-    "module",
-    "mutex",
-    "nanolib",
-    "node",
-    "nodejs",
-    "queue",
-    "semaphore",
-    "semaphore-slim",
-    "SemaphoreSlim",
-    "spin-lock",
-    "SpinLock",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }

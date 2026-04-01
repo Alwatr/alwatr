@@ -2,16 +2,30 @@
   "name": "@alwatr/pre-handlers",
   "version": "4.10.1",
   "description": "Functions that will run before processing every defined route.",
+  "keywords": [
+    "alwatr",
+    "api",
+    "esm",
+    "handlers",
+    "middleware",
+    "nanoservice",
+    "route-pre-handlers",
+    "server",
+    "typescript"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Alwatr/pre-handlers",
-    "directory": "packages/pre-handlers"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanotron-old/pre-handlers"
   },
-  "homepage": "https://github.com/Alwatr/pre-handlers#readme",
-  "bugs": "https://github.com/Alwatr/pre-handlers/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanotron-old/pre-handlers#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.mjs",
+  "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -51,19 +65,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "api",
-    "esm",
-    "handlers",
-    "middleware",
-    "nanoservice",
-    "route-pre-handlers",
-    "server",
-    "typescript"
-  ],
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
-  "types": "./dist/main.d.ts"
+  }
 }

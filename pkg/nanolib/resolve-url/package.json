@@ -2,16 +2,33 @@
   "name": "@alwatr/resolve-url",
   "version": "6.0.2",
   "description": "A tiny TypeScript library to resolve URLs.",
+  "keywords": [
+    "alwatr",
+    "browser",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "module",
+    "nanolib",
+    "resolve",
+    "resolve-url",
+    "typescript",
+    "url",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
-    "directory": "packages/resolve-url",
     "type": "git",
-    "url": "https://github.com/Alwatr/nanolib"
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/resolve-url"
   },
-  "homepage": "https://github.com/Alwatr/nanolib/tree/next/packages/resolve-url#readme",
-  "bugs": "https://github.com/Alwatr/nanolib/issues",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/resolve-url#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
@@ -50,22 +67,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "browser",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "module",
-    "nanolib",
-    "resolve",
-    "resolve-url",
-    "typescript",
-    "url",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }
