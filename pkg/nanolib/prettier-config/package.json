@@ -34,8 +34,7 @@
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
-      "import": "./prettier.config.mjs",
-      "require": "./prettier.config.cjs"
+      "default": "./prettier.config.mjs"
     }
   },
   "sideEffects": false,

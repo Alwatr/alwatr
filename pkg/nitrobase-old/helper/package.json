@@ -25,9 +25,6 @@
   },
   "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nitrobase-old/helper#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
-  "main": "./dist/main.cjs",
-  "module": "./dist/main.mjs",
-  "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
