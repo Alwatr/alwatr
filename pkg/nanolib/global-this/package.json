@@ -2,6 +2,28 @@
   "name": "@alwatr/global-this",
   "version": "6.0.2",
   "description": "Provides access to `globalThis`, ensuring cross-platform compatibility, including browsers (`window`), Node.js (`global`), and Web Workers (`self`).",
+  "keywords": [
+    "alwatr",
+    "browser",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "global",
+    "global-polyfill",
+    "global-shim",
+    "globalThis",
+    "globalThis-polyfill",
+    "globalThis-shim",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -47,35 +69,13 @@
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "dist",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
     "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "browser",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "global",
-    "global-polyfill",
-    "global-shim",
-    "globalThis",
-    "globalThis-polyfill",
-    "globalThis-shim",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }

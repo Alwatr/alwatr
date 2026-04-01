@@ -2,6 +2,28 @@
   "name": "@alwatr/synapse",
   "version": "3.0.1",
   "description": "Connect your TypeScript classes to the DOM, declaratively.",
+  "keywords": [
+    "alwatr",
+    "browser-api",
+    "declarative-ui",
+    "decorator",
+    "directive",
+    "dom",
+    "esm",
+    "frontend",
+    "idempotent",
+    "javascript",
+    "lightweight",
+    "module",
+    "nanolib",
+    "spa",
+    "synapse",
+    "typescript",
+    "ui-library",
+    "vanilla-js",
+    "web-components",
+    "web-development"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -48,35 +70,13 @@
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "dist",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
     "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "browser-api",
-    "declarative-ui",
-    "decorator",
-    "directive",
-    "dom",
-    "esm",
-    "frontend",
-    "idempotent",
-    "javascript",
-    "lightweight",
-    "module",
-    "nanolib",
-    "spa",
-    "synapse",
-    "typescript",
-    "ui-library",
-    "vanilla-js",
-    "web-components",
-    "web-development"
-  ]
+  }
 }

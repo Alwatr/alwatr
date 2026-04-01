@@ -2,6 +2,26 @@
   "name": "@alwatr/prettier-config",
   "version": "7.0.1",
   "description": "Alwatr's shareable configurations for Prettier.",
+  "keywords": [
+    "alwatr",
+    "beautify",
+    "browser",
+    "config",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "prettier",
+    "pretty",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -22,33 +42,11 @@
     "prettier": "^3.8.1"
   },
   "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "prettier.config.*",
     "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "beautify",
-    "browser",
-    "config",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "prettier",
-    "pretty",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }

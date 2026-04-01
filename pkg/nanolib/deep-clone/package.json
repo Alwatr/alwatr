@@ -2,6 +2,26 @@
   "name": "@alwatr/deep-clone",
   "version": "6.0.2",
   "description": "Clone deeply nested objects and arrays in JavaScript.",
+  "keywords": [
+    "alwatr",
+    "browser",
+    "clone",
+    "copy",
+    "cross-platform",
+    "deep-clone",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "object",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -43,33 +63,13 @@
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "dist",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
     "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "browser",
-    "clone",
-    "copy",
-    "cross-platform",
-    "deep-clone",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "object",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }

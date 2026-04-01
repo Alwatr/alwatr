@@ -2,6 +2,26 @@
   "name": "@alwatr/parse-duration",
   "version": "6.0.2",
   "description": "A simple utility to parse a duration string into milliseconds number.",
+  "keywords": [
+    "alwatr",
+    "browser",
+    "cross-platform",
+    "duration",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "parse",
+    "parse-duration",
+    "time",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -46,33 +66,13 @@
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "dist",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
     "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "browser",
-    "cross-platform",
-    "duration",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "parse",
-    "parse-duration",
-    "time",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }

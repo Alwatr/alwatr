@@ -2,6 +2,24 @@
   "name": "@alwatr/flatomise",
   "version": "6.0.2",
   "description": "A utility for creating promises that can be externally resolved or rejected.",
+  "keywords": [
+    "alwatr",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "flat-promise",
+    "flatomise",
+    "javascript",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "promise",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -43,31 +61,13 @@
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "dist",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
     "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "flat-promise",
-    "flatomise",
-    "javascript",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "promise",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }

@@ -2,6 +2,13 @@
   "name": "@alwatr/cyrb53",
   "version": "2.0.2",
   "description": "A modern, high-quality, and fast 53-bit string hash function.",
+  "keywords": [
+    "alwatr",
+    "cyrb53",
+    "hash",
+    "nanolib",
+    "string"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -43,20 +50,13 @@
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "dist",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
     "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "cyrb53",
-    "hash",
-    "nanolib",
-    "string"
-  ]
+  }
 }

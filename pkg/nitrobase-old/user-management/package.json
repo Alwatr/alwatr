@@ -2,6 +2,21 @@
   "name": "@alwatr/nitrobase-user-management",
   "version": "7.10.1",
   "description": "",
+  "keywords": [
+    "alwatr",
+    "data",
+    "data-storage",
+    "database",
+    "esm",
+    "file",
+    "json",
+    "no-sql",
+    "nosql",
+    "storage",
+    "typescript",
+    "user",
+    "user-management"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -52,26 +67,14 @@
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "files": [
-    "**/*.{js,mjs,cjs,map,d.ts,html,md}",
-    "!demo/**/*"
+    "dist",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
+    "README.md",
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
   },
-  "keywords": [
-    "alwatr",
-    "data",
-    "data-storage",
-    "database",
-    "esm",
-    "file",
-    "json",
-    "no-sql",
-    "nosql",
-    "storage",
-    "typescript",
-    "user",
-    "user-management"
-  ],
   "prettier": "@alwatr/nanolib/prettier-config"
 }

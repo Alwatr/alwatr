@@ -2,6 +2,24 @@
   "name": "@alwatr/json2csv",
   "version": "2.0.2",
   "description": "A tiny, efficient, and cross-platform JSON to CSV converter.",
+  "keywords": [
+    "alwatr",
+    "cjs",
+    "converter",
+    "cross-platform",
+    "csv",
+    "esm",
+    "export",
+    "json",
+    "json-to-csv",
+    "json2csv",
+    "nanolib",
+    "transformer",
+    "typescript",
+    "ultra-lightweight",
+    "utility",
+    "zero-dependency"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -43,31 +61,13 @@
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "dist",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
     "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "cjs",
-    "converter",
-    "cross-platform",
-    "csv",
-    "esm",
-    "export",
-    "json",
-    "json-to-csv",
-    "json2csv",
-    "nanolib",
-    "transformer",
-    "typescript",
-    "ultra-lightweight",
-    "utility",
-    "zero-dependency"
-  ]
+  }
 }

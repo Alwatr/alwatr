@@ -2,6 +2,31 @@
   "name": "@alwatr/async-queue",
   "version": "6.0.2",
   "description": "A queue that executes async tasks in order like mutex and semaphore methodology for javascript and typescript.",
+  "keywords": [
+    "alwatr",
+    "async",
+    "async-queue",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "lock",
+    "module",
+    "mutex",
+    "nanolib",
+    "node",
+    "nodejs",
+    "queue",
+    "semaphore",
+    "semaphore-slim",
+    "SemaphoreSlim",
+    "spin-lock",
+    "SpinLock",
+    "typescript",
+    "util",
+    "utility",
+    "utils"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -45,38 +70,13 @@
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "dist",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
     "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "async",
-    "async-queue",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "lock",
-    "module",
-    "mutex",
-    "nanolib",
-    "node",
-    "nodejs",
-    "queue",
-    "semaphore",
-    "semaphore-slim",
-    "SemaphoreSlim",
-    "spin-lock",
-    "SpinLock",
-    "typescript",
-    "util",
-    "utility",
-    "utils"
-  ]
+  }
 }

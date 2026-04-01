@@ -2,6 +2,23 @@
   "name": "@alwatr/iranian-national-code-validator",
   "version": "2.0.2",
   "description": "A tiny TypeScript library to Validates an Iranian National Code (Code Melli).",
+  "keywords": [
+    "alwatr",
+    "browser",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "iranian-national-code",
+    "javascript",
+    "module",
+    "nanolib",
+    "national-code",
+    "typescript",
+    "util",
+    "utility",
+    "utils",
+    "validator"
+  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -43,30 +60,13 @@
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "files": [
-    "**/*.{js,mjs,cjs,ts,map,d.ts,html,LEGAL.txt}",
+    "dist",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
     "README.md",
-    "LICENSE",
-    "!demo/**/*",
-    "!**/*.test.js"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "keywords": [
-    "alwatr",
-    "browser",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "iranian-national-code",
-    "javascript",
-    "module",
-    "nanolib",
-    "national-code",
-    "typescript",
-    "util",
-    "utility",
-    "utils",
-    "validator"
-  ]
+  }
 }
