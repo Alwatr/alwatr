@@ -15,30 +15,37 @@
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
       "default": "./dist/main.js"
     },
     "./nanolib": {
       "types": "./dist/nanolib/nanolib.d.ts",
+      "import": "./dist/nanolib/nanolib.mjs",
       "default": "./dist/nanolib/nanolib.mjs"
     },
     "./nanolib/node": {
       "types": "./dist/nanolib/node.d.ts",
+      "import": "./dist/nanolib/node.mjs",
       "default": "./dist/nanolib/node.mjs"
     },
     "./nitrobase": {
       "types": "./dist/nitrobase/nitrobase.d.ts",
+      "import": "./dist/nitrobase/nitrobase.mjs",
       "default": "./dist/nitrobase/nitrobase.mjs"
     },
     "./nitrobase/client": {
       "types": "./dist/nitrobase/client.d.ts",
+      "import": "./dist/nitrobase/client.mjs",
       "default": "./dist/nitrobase/client.mjs"
     },
     "./flux": {
       "types": "./dist/flux.d.ts",
+      "import": "./dist/flux.mjs",
       "default": "./dist/flux.mjs"
     },
     "./nanotron": {
       "types": "./dist/nanotron.d.ts",
+      "import": "./dist/nanotron.mjs",
       "default": "./dist/nanotron.mjs"
     }
   },
