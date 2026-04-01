@@ -35,8 +35,7 @@
   "exports": {
     ".": {
       "types": "./global.d.ts"
-    },
-    "./global.d.ts": "./global.d.ts"
+    }
   },
   "sideEffects": false,
   "files": [
