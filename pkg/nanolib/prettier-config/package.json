@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/prettier-config",
-  "version": "9.1.0",
+  "version": "9.1.1",
   "description": "Alwatr's shareable configurations for Prettier.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
