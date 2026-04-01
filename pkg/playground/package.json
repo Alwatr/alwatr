@@ -56,6 +56,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "prettier": "@alwatr/nanolib/prettier"
+  }
 }
