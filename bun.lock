@@ -15,20 +15,50 @@
         "typescript": "^6.0.2",
       },
     },
-    "pkg/alwatr": {
-      "name": "alwatr",
+    "pkg/core": {
+      "name": "@alwatr/core",
       "version": "9.1.1",
       "dependencies": {
-        "@alwatr/fsm": "workspace:*",
-        "@alwatr/nanolib": "workspace:*",
-        "@alwatr/nanotron": "workspace:*",
-        "@alwatr/nitrobase": "workspace:*",
-        "@alwatr/signal": "workspace:*",
+        "@alwatr/async-queue": "workspace:*",
+        "@alwatr/cyrb53": "workspace:*",
+        "@alwatr/debounce": "workspace:*",
+        "@alwatr/deep-clone": "workspace:*",
+        "@alwatr/delay": "workspace:*",
+        "@alwatr/djb2-hash": "workspace:*",
+        "@alwatr/fetch": "workspace:*",
+        "@alwatr/flat-string": "workspace:*",
+        "@alwatr/flatomise": "workspace:*",
+        "@alwatr/global-this": "workspace:*",
+        "@alwatr/has-own": "workspace:*",
+        "@alwatr/hash-string": "workspace:*",
+        "@alwatr/http-primer": "workspace:*",
+        "@alwatr/iranian-national-code-validator": "workspace:*",
+        "@alwatr/is-number": "workspace:*",
+        "@alwatr/json2csv": "workspace:*",
+        "@alwatr/local-storage": "workspace:*",
+        "@alwatr/logger": "workspace:*",
+        "@alwatr/parse-duration": "workspace:*",
+        "@alwatr/platform-info": "workspace:*",
+        "@alwatr/random": "workspace:*",
+        "@alwatr/render-state": "workspace:*",
+        "@alwatr/resolve-url": "workspace:*",
+        "@alwatr/session-storage": "workspace:*",
+        "@alwatr/synapse": "workspace:*",
+        "@alwatr/type-helper": "workspace:*",
+        "@alwatr/unicode-digits": "workspace:*",
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
-        "@alwatr/type-helper": "workspace:*",
+        "typescript": "^6.0.2",
+      },
+    },
+    "pkg/devtools": {
+      "name": "@alwatr/devtools",
+      "version": "9.1.1",
+      "devDependencies": {
+        "@alwatr/nano-build": "workspace:*",
+        "@alwatr/tsconfig-base": "workspace:*",
         "typescript": "^6.0.2",
       },
     },
@@ -313,47 +343,6 @@
       "version": "9.1.1",
       "bin": "./cli.sh",
     },
-    "pkg/nanolib/nanolib": {
-      "name": "@alwatr/nanolib",
-      "version": "9.1.1",
-      "dependencies": {
-        "@alwatr/async-queue": "workspace:*",
-        "@alwatr/cyrb53": "workspace:*",
-        "@alwatr/debounce": "workspace:*",
-        "@alwatr/deep-clone": "workspace:*",
-        "@alwatr/delay": "workspace:*",
-        "@alwatr/djb2-hash": "workspace:*",
-        "@alwatr/env": "workspace:*",
-        "@alwatr/exit-hook": "workspace:*",
-        "@alwatr/fetch": "workspace:*",
-        "@alwatr/flat-string": "workspace:*",
-        "@alwatr/flatomise": "workspace:*",
-        "@alwatr/global-this": "workspace:*",
-        "@alwatr/has-own": "workspace:*",
-        "@alwatr/hash-string": "workspace:*",
-        "@alwatr/http-primer": "workspace:*",
-        "@alwatr/iranian-national-code-validator": "workspace:*",
-        "@alwatr/is-number": "workspace:*",
-        "@alwatr/json2csv": "workspace:*",
-        "@alwatr/local-storage": "workspace:*",
-        "@alwatr/logger": "workspace:*",
-        "@alwatr/nano-build": "workspace:*",
-        "@alwatr/node-fs": "workspace:*",
-        "@alwatr/parse-duration": "workspace:*",
-        "@alwatr/platform-info": "workspace:*",
-        "@alwatr/random": "workspace:*",
-        "@alwatr/render-state": "workspace:*",
-        "@alwatr/resolve-url": "workspace:*",
-        "@alwatr/session-storage": "workspace:*",
-        "@alwatr/synapse": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
-        "@alwatr/type-helper": "workspace:*",
-        "@alwatr/unicode-digits": "workspace:*",
-      },
-      "devDependencies": {
-        "typescript": "^6.0.2",
-      },
-    },
     "pkg/nanolib/node-fs": {
       "name": "@alwatr/node-fs",
       "version": "9.1.1",
@@ -391,19 +380,6 @@
         "@alwatr/tsconfig-base": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^25.5.0",
-        "typescript": "^6.0.2",
-      },
-    },
-    "pkg/nanolib/playground": {
-      "name": "playground",
-      "version": "1.0.0",
-      "dependencies": {
-        "@alwatr/nanolib": "workspace:*",
-      },
-      "devDependencies": {
-        "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
-        "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
     },
@@ -653,6 +629,35 @@
         "typescript": "^6.0.2",
       },
     },
+    "pkg/node": {
+      "name": "@alwatr/node",
+      "version": "9.1.1",
+      "dependencies": {
+        "@alwatr/crypto": "workspace:*",
+        "@alwatr/env": "workspace:*",
+        "@alwatr/exit-hook": "workspace:*",
+        "@alwatr/node-fs": "workspace:*",
+      },
+      "devDependencies": {
+        "@alwatr/nano-build": "workspace:*",
+        "@alwatr/tsconfig-base": "workspace:*",
+        "typescript": "^6.0.2",
+      },
+    },
+    "pkg/playground": {
+      "name": "playground",
+      "version": "1.0.0",
+      "dependencies": {
+        "@alwatr/core": "workspace:*",
+        "@alwatr/node": "workspace:*",
+      },
+      "devDependencies": {
+        "@alwatr/nano-build": "workspace:*",
+        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/type-helper": "workspace:*",
+        "typescript": "^6.0.2",
+      },
+    },
     "pkg/signal": {
       "name": "@alwatr/signal",
       "version": "9.1.1",
@@ -670,9 +675,20 @@
         "typescript": "^6.0.2",
       },
     },
+    "pkg/standard": {
+      "name": "@alwatr/standard",
+      "version": "9.1.1",
+      "devDependencies": {
+        "@alwatr/nano-build": "workspace:*",
+        "@alwatr/tsconfig-base": "workspace:*",
+        "typescript": "^6.0.2",
+      },
+    },
   },
   "packages": {
     "@alwatr/async-queue": ["@alwatr/async-queue@workspace:pkg/nanolib/async-queue"],
+
+    "@alwatr/core": ["@alwatr/core@workspace:pkg/core"],
 
     "@alwatr/crypto": ["@alwatr/crypto@workspace:pkg/nanolib/crypto"],
 
@@ -685,6 +701,8 @@
     "@alwatr/deep-clone": ["@alwatr/deep-clone@workspace:pkg/nanolib/deep-clone"],
 
     "@alwatr/delay": ["@alwatr/delay@workspace:pkg/nanolib/delay"],
+
+    "@alwatr/devtools": ["@alwatr/devtools@workspace:pkg/devtools"],
 
     "@alwatr/djb2-hash": ["@alwatr/djb2-hash@workspace:pkg/nanolib/djb2-hash"],
 
@@ -720,8 +738,6 @@
 
     "@alwatr/nano-build": ["@alwatr/nano-build@workspace:pkg/nanolib/nano-build"],
 
-    "@alwatr/nanolib": ["@alwatr/nanolib@workspace:pkg/nanolib/nanolib"],
-
     "@alwatr/nanotron": ["@alwatr/nanotron@workspace:pkg/nanotron"],
 
     "@alwatr/nanotron-api-server": ["@alwatr/nanotron-api-server@workspace:pkg/nanotron-old/api-server"],
@@ -739,6 +755,8 @@
     "@alwatr/nitrobase-types": ["@alwatr/nitrobase-types@workspace:pkg/nitrobase-old/types"],
 
     "@alwatr/nitrobase-user-management": ["@alwatr/nitrobase-user-management@workspace:pkg/nitrobase-old/user-management"],
+
+    "@alwatr/node": ["@alwatr/node@workspace:pkg/node"],
 
     "@alwatr/node-fs": ["@alwatr/node-fs@workspace:pkg/nanolib/node-fs"],
 
@@ -759,6 +777,8 @@
     "@alwatr/session-storage": ["@alwatr/session-storage@workspace:pkg/nanolib/session-storage"],
 
     "@alwatr/signal": ["@alwatr/signal@workspace:pkg/signal"],
+
+    "@alwatr/standard": ["@alwatr/standard@workspace:pkg/standard"],
 
     "@alwatr/synapse": ["@alwatr/synapse@workspace:pkg/nanolib/synapse"],
 
@@ -901,8 +921,6 @@
     "abbrev": ["abbrev@4.0.0", "", {}, "sha512-a1wflyaL0tHtJSmLSOVybYhy22vRih4eduhhrkcjgrWGnRfrZtovJ2FRjxuTtkkj47O/baf0R86QU5OuYpz8fA=="],
 
     "agent-base": ["agent-base@7.1.4", "", {}, "sha512-MnA+YT8fwfJPgBx3m60MNqakm30XOkyIoH1y6huTQvC0PwZG7ki8NacLBcrPbNoo8vEZy7Jpuk7+jMO+CUovTQ=="],
-
-    "alwatr": ["alwatr@workspace:pkg/alwatr"],
 
     "ansi-regex": ["ansi-regex@5.0.1", "", {}, "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ=="],
 
@@ -1194,7 +1212,7 @@
 
     "pkg-dir": ["pkg-dir@4.2.0", "", { "dependencies": { "find-up": "^4.0.0" } }, "sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ=="],
 
-    "playground": ["playground@workspace:pkg/nanolib/playground"],
+    "playground": ["playground@workspace:pkg/playground"],
 
     "postcss-selector-parser": ["postcss-selector-parser@7.1.1", "", { "dependencies": { "cssesc": "^3.0.0", "util-deprecate": "^1.0.2" } }, "sha512-orRsuYpJVw8LdAwqqLykBj9ecS5/cRHlI5+nvTo8LcCKmzDmqVORXtOIYEEQuL9D4BxtA1lm5isAqzQZCoQ6Eg=="],
 
