@@ -1,9 +1,9 @@
-import {delay} from '@alwatr/delay';
-import {createLogger} from '@alwatr/logger';
+import { delay } from '@alwatr/delay';
+import { createLogger, type AlwatrLogger } from '@alwatr/logger';
 
-import {StateSignal} from './state-signal.js';
+import { StateSignal } from './state-signal.js';
 
-import type {ComputedSignalConfig, IReadonlySignal, SubscribeResult, SubscribeOptions} from '../type.js';
+import type { ComputedSignalConfig, IReadonlySignal, SubscribeResult, SubscribeOptions } from '../type.js';
 
 /**
  * A read-only signal that derives its value from a set of dependency signals.
@@ -47,23 +47,20 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
   /**
    * The unique identifier for this signal instance.
    */
-  public readonly name = this.config_.name;
+  public readonly name: string;
 
   /**
    * The logger instance for this signal.
    * @protected
    */
-  protected readonly logger_ = createLogger(`computed-signal:${this.name}`);
+  protected readonly logger_: AlwatrLogger;
 
   /**
    * The internal `StateSignal` that holds the computed value.
    * This is how the computed signal provides `.get()` and `.subscribe()` methods.
    * @protected
    */
-  protected readonly internalSignal_ = new StateSignal<T>({
-    name: `compute-${this.name}_`,
-    initialValue: this.config_.get(),
-  });
+  protected readonly internalSignal_: StateSignal<T>;
 
   /**
    * A list of subscriptions to dependency signals.
@@ -79,13 +76,21 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
   private isRecalculating__ = false;
 
   constructor(protected config_: ComputedSignalConfig<T>) {
-    this.logger_.logMethod?.('constructor');
+    this.name = config_.name;
+    this.logger_ = createLogger(`computed-signal:${this.name}`);
     this.recalculate_ = this.recalculate_.bind(this);
+
+    this.logger_.logMethod?.('constructor');
+
+    this.internalSignal_ = new StateSignal<T>({
+      name: `compute-${this.name}_`,
+      initialValue: this.config_.get(),
+    });
 
     // Subscribe to all dependencies to trigger recalculation on change.
     for (const signal of config_.deps) {
-      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', {signal: signal.name});
-      this.dependencySubscriptions__.push(signal.subscribe(this.recalculate_, {receivePrevious: false}));
+      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', { signal: signal.name });
+      this.dependencySubscriptions__.push(signal.subscribe(this.recalculate_, { receivePrevious: false }));
     }
   }
 

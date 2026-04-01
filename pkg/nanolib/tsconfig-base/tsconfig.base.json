@@ -4,12 +4,13 @@
     /* Basic Options */
     "incremental": true,
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "Preserve",
     "moduleResolution": "Bundler",
     "lib": ["ESNext", "DOM"],
+    "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
-    // "allowJs": true,
+    "allowJs": true,
     "checkJs": true,
     // "jsx": "preserve",
     "declaration": true,
@@ -74,7 +75,7 @@
     /* Advanced Options */
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": false,
+    "useDefineForClassFields": true,
     // "resolveJsonModule": true, // temporary for fix import json issue
 
     "listEmittedFiles": true

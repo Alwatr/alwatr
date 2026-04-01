@@ -1,7 +1,7 @@
-import {delay} from '@alwatr/delay';
-import {createLogger} from '@alwatr/logger';
+import { delay } from '@alwatr/delay';
+import { createLogger, type AlwatrLogger } from '@alwatr/logger';
 
-import type {EffectSignalConfig, IEffectSignal, SubscribeResult} from '../type.js';
+import type { EffectSignalConfig, IEffectSignal, SubscribeResult } from '../type.js';
 
 /**
  * Manages a side-effect that runs in response to changes in dependency signals.
@@ -46,13 +46,13 @@ export class EffectSignal implements IEffectSignal {
   /**
    * The unique identifier for this signal instance.
    */
-  public readonly name = this.config_.name ?? `[${this.config_.deps.map((dep) => dep.name).join(', ')}]`;
+  public readonly name: string;
 
   /**
    * The logger instance for this signal.
    * @protected
    */
-  protected readonly logger_ = createLogger(`effect-signal:${this.name}`);
+  protected readonly logger_: AlwatrLogger;
 
   /**
    * A list of subscriptions to dependency signals.
@@ -83,14 +83,17 @@ export class EffectSignal implements IEffectSignal {
   }
 
   constructor(protected config_: EffectSignalConfig) {
-    this.logger_.logMethod?.('constructor');
+    this.name = config_.name ?? `[${config_.deps.map((dep) => dep.name).join(', ')}]`;
+    this.logger_ = createLogger(`effect-signal:${this.name}`);
     this.scheduleExecution_ = this.scheduleExecution_.bind(this);
+
+    this.logger_.logMethod?.('constructor');
 
     // Subscribe to all dependencies. We don't need the previous value,
     // as the `runImmediately` option controls the initial execution.
     for (const signal of config_.deps) {
-      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', {signal: signal.name});
-      this.dependencySubscriptions__.push(signal.subscribe(this.scheduleExecution_, {receivePrevious: false}));
+      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', { signal: signal.name });
+      this.dependencySubscriptions__.push(signal.subscribe(this.scheduleExecution_, { receivePrevious: false }));
     }
 
     // Run the effect immediately if requested.

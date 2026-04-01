@@ -1,9 +1,9 @@
-import {delay} from '@alwatr/delay';
-import {createLogger} from '@alwatr/logger';
+import { delay } from '@alwatr/delay';
+import { createLogger, type AlwatrLogger } from '@alwatr/logger';
 
-import {SignalBase} from './signal-base.js';
+import { SignalBase } from './signal-base.js';
 
-import type {SignalConfig} from '../type.js';
+import type { SignalConfig } from '../type.js';
 
 /**
  * A stateless signal for dispatching transient events.
@@ -37,10 +37,11 @@ export class EventSignal<T = void> extends SignalBase<T> {
    * The logger instance for this signal.
    * @protected
    */
-  protected logger_ = createLogger(`event-signal:${this.name}`);
+  protected logger_: AlwatrLogger;
 
   constructor(config: SignalConfig) {
     super(config);
+    this.logger_ = createLogger(`event-signal:${this.name}`);
     this.logger_.logMethod?.('constructor');
   }
 
@@ -52,7 +53,7 @@ export class EventSignal<T = void> extends SignalBase<T> {
    * @param payload The data to send with the event.
    */
   public dispatch(payload: T): void {
-    this.logger_.logMethodArgs?.('dispatch', {payload});
+    this.logger_.logMethodArgs?.('dispatch', { payload });
     this.checkDestroyed_();
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
     delay.nextMicrotask().then(() => this.notify_(payload));
