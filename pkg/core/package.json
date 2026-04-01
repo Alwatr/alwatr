@@ -1,5 +1,5 @@
 {
-  "name": "@alwatr/nanolib",
+  "name": "@alwatr/core",
   "version": "9.1.1",
   "description": "Necessary library for all ECMAScript (JavaScript/TypeScript) projects.",
   "license": "MPL-2.0",
@@ -8,9 +8,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/alwatr",
-    "directory": "pkg/nanolib/nanolib"
+    "directory": "pkg/core"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/nanolib#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/core#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
@@ -31,8 +31,6 @@
     "@alwatr/deep-clone": "workspace:*",
     "@alwatr/delay": "workspace:*",
     "@alwatr/djb2-hash": "workspace:*",
-    "@alwatr/env": "workspace:*",
-    "@alwatr/exit-hook": "workspace:*",
     "@alwatr/fetch": "workspace:*",
     "@alwatr/flat-string": "workspace:*",
     "@alwatr/flatomise": "workspace:*",
@@ -45,8 +43,6 @@
     "@alwatr/json2csv": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/logger": "workspace:*",
-    "@alwatr/nano-build": "workspace:*",
-    "@alwatr/node-fs": "workspace:*",
     "@alwatr/parse-duration": "workspace:*",
     "@alwatr/platform-info": "workspace:*",
     "@alwatr/random": "workspace:*",
@@ -54,11 +50,12 @@
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/session-storage": "workspace:*",
     "@alwatr/synapse": "workspace:*",
-    "@alwatr/tsconfig-base": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
-    "@alwatr/unicode-digits": "workspace:*"
+    "@alwatr/unicode-digits": "workspace:*",
+    "@alwatr/type-helper": "workspace:*"
   },
   "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
     "typescript": "^6.0.2"
   },
   "scripts": {
