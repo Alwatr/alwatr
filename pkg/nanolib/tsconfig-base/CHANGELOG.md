@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.1.0](https://github.com/Alwatr/alwatr/compare/v5.0.0...v9.1.0) (2026-04-01)
+
+### ⚠ BREAKING CHANGES
+
+* Enabling `useDefineForClassFields` switches class field definitions to the ES2022 standard. Since we're now building with Bun, all projects must adopt this standard for class fields. Code using the legacy class field behavior (e.g., assigning in constructor) will break and needs to be updated to use ES2022 syntax (e.g., direct field initialization).
+* The export of @alwatr/tsconfig-base has been completely changed. Previously, it exported a JSON file path, but now it directly provides the base configuration. Update your tsconfig.json files as follows:
+
+Before:
+{
+  "extends": "@alwatr/tsconfig-base/tsconfig.json"
+}
+
+After:
+{
+  "extends": "@alwatr/tsconfig-base"
+}
+
+This simplifies usage and aligns with standard TypeScript config extension practices.
+
+### ✨ Features
+
+* change module setting to Preserve and enable allowJs in tsconfig.base.json ([1666f8f](https://github.com/Alwatr/alwatr/commit/1666f8ff67b911b8f675c8454807f86b75baac87))
+* enable useDefineForClassFields in tsconfig.base.json ([ad585f0](https://github.com/Alwatr/alwatr/commit/ad585f0bb72f2eae271298edc7a7f760dd00fb06))
+* update module export to direct extends ([d6a23d6](https://github.com/Alwatr/alwatr/commit/d6a23d64cf6140053c6b4dd57f5b4256693ca893))
+
+### 🐛 Bug Fixes
+
+* enable emitDeclarationOnly in TypeScript configuration ([df11615](https://github.com/Alwatr/alwatr/commit/df116155af979791dc8fe850328672c05bbc961b))
+* update 'files' field in package.json to reference tsconfig.base.json ([c62a3c7](https://github.com/Alwatr/alwatr/commit/c62a3c7073da6018d05adad2cb8c259523079f1f))
+
+### 🔨 Code Refactoring
+
+* reorganize fields in package.json files across multiple packages ([6a0e28f](https://github.com/Alwatr/alwatr/commit/6a0e28f6f43dc816232d6c4f7f4fe2d68993dd29))
+* update tsconfig.json to extend from @alwatr/tsconfig-base directly ([1fb76b0](https://github.com/Alwatr/alwatr/commit/1fb76b0e8a56ec5582b43aee4b6cd1850c5f936d))
+
+### 🧹 Miscellaneous Chores
+
+* rename all pageckage inside pkg/nanolib ([8584300](https://github.com/Alwatr/alwatr/commit/85843005c3c34bdf391a718cacaf5d6eb9786fe7))
+* reorder fields in all package.json ([8c7c2e7](https://github.com/Alwatr/alwatr/commit/8c7c2e7585ff0b62b2d11b5056ba08bca305b3e2))
+* standardize 'files' field in all package.json files ([348d925](https://github.com/Alwatr/alwatr/commit/348d925d29febe3834e0037e014b0a2eea3b15b7))
+* standardize all package.json files ([5a331ff](https://github.com/Alwatr/alwatr/commit/5a331ffe1751ed0cab66ccfd2f49af4bfe0fa2ba))
+* standardize package.json exports to ESM-only ([2deab42](https://github.com/Alwatr/alwatr/commit/2deab422f3285146a1111e97462487e1cc10b214))
+
 ## [8.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/tsconfig-base@7.0.0...@alwatr/tsconfig-base@8.0.0) (2026-03-27)
 
 ### ⚠ BREAKING CHANGES

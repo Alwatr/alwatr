@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.1.0](https://github.com/Alwatr/alwatr/compare/v5.0.0...v9.1.0) (2026-04-01)
+
+### 🐛 Bug Fixes
+
+* update Prettier configuration and standardize file exports ([823f038](https://github.com/Alwatr/alwatr/commit/823f038b7867d575d7d4c0f95d6e995ea5fdbdeb))
+
+### 🔨 Code Refactoring
+
+* reorganize fields in package.json files across multiple packages ([6a0e28f](https://github.com/Alwatr/alwatr/commit/6a0e28f6f43dc816232d6c4f7f4fe2d68993dd29))
+
+### 🧹 Miscellaneous Chores
+
+* rename all pageckage inside pkg/nanolib ([8584300](https://github.com/Alwatr/alwatr/commit/85843005c3c34bdf391a718cacaf5d6eb9786fe7))
+* reorder fields in all package.json ([8c7c2e7](https://github.com/Alwatr/alwatr/commit/8c7c2e7585ff0b62b2d11b5056ba08bca305b3e2))
+* standardize 'files' field in all package.json files ([348d925](https://github.com/Alwatr/alwatr/commit/348d925d29febe3834e0037e014b0a2eea3b15b7))
+* standardize all package.json files ([5a331ff](https://github.com/Alwatr/alwatr/commit/5a331ffe1751ed0cab66ccfd2f49af4bfe0fa2ba))
+* standardize package.json exports to ESM-only ([2deab42](https://github.com/Alwatr/alwatr/commit/2deab422f3285146a1111e97462487e1cc10b214))
+
 ## [7.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/prettier-config@7.0.0...@alwatr/prettier-config@7.0.1) (2026-03-27)
 
 ### 🧹 Miscellaneous Chores

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.1.0](https://github.com/Alwatr/alwatr/compare/v5.0.0...v9.1.0) (2026-04-01)
+
+### 🐛 Bug Fixes
+
+* correct argument formatting for build presets in cli.sh ([c604455](https://github.com/Alwatr/alwatr/commit/c60445546e96801c7acc714c4bb8c7fd27cacd19))
+* remove redundant export for global.d.ts in package.json ([125f0da](https://github.com/Alwatr/alwatr/commit/125f0da3c0099684df18fb5687285dc1eca1d2e7))
+* remove unnecessary sed formatting from build arguments output ([1cde8fb](https://github.com/Alwatr/alwatr/commit/1cde8fb12fa56ed3d8c30396f9267bc72e0f80a1))
+
+### 🔨 Code Refactoring
+
+* add `--debug` option for streamline development mode handling and enhance debugging ([0e7d40d](https://github.com/Alwatr/alwatr/commit/0e7d40d8b6d6fc1eca8148af851b110a022bbf83))
+* reorganize fields in package.json files across multiple packages ([6a0e28f](https://github.com/Alwatr/alwatr/commit/6a0e28f6f43dc816232d6c4f7f4fe2d68993dd29))
+
+### 🧹 Miscellaneous Chores
+
+* rename all pageckage inside pkg/nanolib ([8584300](https://github.com/Alwatr/alwatr/commit/85843005c3c34bdf391a718cacaf5d6eb9786fe7))
+* reorder fields in all package.json ([8c7c2e7](https://github.com/Alwatr/alwatr/commit/8c7c2e7585ff0b62b2d11b5056ba08bca305b3e2))
+* standardize 'files' field in all package.json files ([348d925](https://github.com/Alwatr/alwatr/commit/348d925d29febe3834e0037e014b0a2eea3b15b7))
+* standardize all package.json files ([5a331ff](https://github.com/Alwatr/alwatr/commit/5a331ffe1751ed0cab66ccfd2f49af4bfe0fa2ba))
+* standardize package.json exports to ESM-only ([2deab42](https://github.com/Alwatr/alwatr/commit/2deab422f3285146a1111e97462487e1cc10b214))
+
 ## [7.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/nano-build@7.0.0...@alwatr/nano-build@7.0.1) (2026-03-27)
 
 ### 🧹 Miscellaneous Chores
