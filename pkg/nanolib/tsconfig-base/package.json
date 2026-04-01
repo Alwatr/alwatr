@@ -19,7 +19,7 @@
   },
   "sideEffects": false,
   "files": [
-    "tsconfig.json",
+    "tsconfig.base.json",
     "README.md",
     "LICENSE"
   ],
