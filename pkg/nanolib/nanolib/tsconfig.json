@@ -1,5 +1,5 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "@alwatr/tsconfig-base/tsconfig.json",
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",
@@ -8,7 +8,7 @@
     "types": [
       "@alwatr/type-helper",
       "@alwatr/nano-build",
-    ],
+  ],
   },
   "include": [
     "src/**/*.ts"

@@ -21,9 +21,7 @@
     "./node": {
       "types": "./dist/node.d.ts",
       "default": "./dist/node.js"
-    },
-    "./prettier-config": "./prettier.config.js",
-    "./tsconfig": "./tsconfig.base.json"
+    }
   },
   "sideEffects": false,
   "dependencies": {
@@ -56,6 +54,7 @@
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/session-storage": "workspace:*",
     "@alwatr/synapse": "workspace:*",
+    "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
     "@alwatr/unicode-digits": "workspace:*"
   },
