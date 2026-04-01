@@ -14,9 +14,8 @@
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
-      "default": "./tsconfig.json"
-    },
-    "./tsconfig.json": "./tsconfig.json"
+      "default": "./tsconfig.base.json"
+    }
   },
   "sideEffects": false,
   "files": [
