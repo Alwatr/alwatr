@@ -1,8 +1,8 @@
 // Remember to remove sideEffect from nanolib package.json before test
-import {createLogger} from '@alwatr/nanolib';
-import '@alwatr/nanolib/node';
+import {createLogger} from '@alwatr/core';
+import '@alwatr/node';
 
-// // 
+// //
 /* #__PURE__ */
 createLogger(__package_name__);
 

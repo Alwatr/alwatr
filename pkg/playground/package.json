@@ -21,7 +21,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@alwatr/nanolib": "workspace:*"
+    "@alwatr/core": "workspace:*",
+    "@alwatr/node": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
