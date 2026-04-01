@@ -109,6 +109,7 @@ nano-build [flags] <entry-points>
 - `--preset=<name>` — Select a build preset (default: none)
 - `--outdir=<path>` — Output directory (default: `dist`)
 - `--watch` — Enable watch mode for development
+- `--debug` — Force development-style build (disable minify, enable sourcemaps regardless of `NODE_ENV`)
 - `--help, -h` — Show help message
 
 All other flags are forwarded to `bun build`.
@@ -204,17 +205,7 @@ NODE_ENV=production nano-build --preset=bun-service src/main.ts
 
 ### Development Mode
 
-Automatic when `NODE_ENV` is not set to `production`:
-
-- Inline sourcemaps for easier debugging
-- Preserves variable and function names
-- Disables minification
-
-**Enable explicitly:**
-
-```bash
-NODE_ENV=development nano-build --preset=module src/main.ts
-```
+Inline sourcemaps for easier debugging when `NODE_ENV` is not set to `production`.
 
 ### Production Mode
 
