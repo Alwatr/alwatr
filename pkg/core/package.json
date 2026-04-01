@@ -50,8 +50,8 @@
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/session-storage": "workspace:*",
     "@alwatr/synapse": "workspace:*",
-    "@alwatr/unicode-digits": "workspace:*",
-    "@alwatr/type-helper": "workspace:*"
+    "@alwatr/type-helper": "workspace:*",
+    "@alwatr/unicode-digits": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",

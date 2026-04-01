@@ -2,10 +2,10 @@
   "name": "@alwatr/devtools",
   "version": "9.1.1",
   "description": "Alwatr Developer Tools",
+  "private": true,
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/alwatr",
