@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.0](https://github.com/Alwatr/alwatr/compare/v9.1.1...v9.2.0) (2026-04-01)
+
+### 🧹 Miscellaneous Chores
+
+* add "private" field to package.json files for various packages ([0ae2948](https://github.com/Alwatr/alwatr/commit/0ae29486c511da8cfc6d4af9e743201297b0c4c2))
+
 ## [9.1.1](https://github.com/Alwatr/alwatr/compare/v9.1.0...v9.1.1) (2026-04-01)
 
 ### 🧹 Miscellaneous Chores

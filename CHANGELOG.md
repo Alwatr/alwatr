@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.0](https://github.com/Alwatr/alwatr/compare/v9.1.1...v9.2.0) (2026-04-01)
+
+### ✨ Features
+
+* add initial package structure with LICENSE, README, package.json, tsconfig, and main entry file ([1bada1e](https://github.com/Alwatr/alwatr/commit/1bada1ec79a9e01cf7158f20cc3c030ae81259cc))
+* **core:** initialize `@alwatr/core` package with essential utilities instead of old `@alwatr/nanolib` ([14f6d2f](https://github.com/Alwatr/alwatr/commit/14f6d2f0bed9f203c5546afb2f8484da82d1ff86))
+* **devtools:** add initial devtools package with LICENSE, README, and configuration files ([fe5add2](https://github.com/Alwatr/alwatr/commit/fe5add2c51d027686ea8bf2281db1ae1c36b658e))
+* **node:** new package for export node/bun alwatr packages. ([674d65a](https://github.com/Alwatr/alwatr/commit/674d65ab784d8d3d7040f903560fa694959d9238))
+
+### 🐛 Bug Fixes
+
+* change export of '@alwatr/type-helper' to type export ([1a60ceb](https://github.com/Alwatr/alwatr/commit/1a60cebc3e33031662eccb516d43aafc35d21f7f))
+
+### 🧹 Miscellaneous Chores
+
+* add "private" field to package.json files for various packages ([0ae2948](https://github.com/Alwatr/alwatr/commit/0ae29486c511da8cfc6d4af9e743201297b0c4c2))
+* apply suggestions from code review ([d6c23d9](https://github.com/Alwatr/alwatr/commit/d6c23d924f72c8fec0ee26612efa1db080438b2a))
+* deprecate the alwatr package ([d5d6f5a](https://github.com/Alwatr/alwatr/commit/d5d6f5a0ac887c033e1baf74a26569f54235bde5))
+* format settings.json for better readability and add material icon theme folder associations ([9fd67dd](https://github.com/Alwatr/alwatr/commit/9fd67dd4c60e31c3dcf72d3b1710ec869f5fe31f))
+* **playground:** refactor with new packages structure ([5a6fb53](https://github.com/Alwatr/alwatr/commit/5a6fb53bff391af23eecdfa1638bb012e34d0ee2))
+* remove '@alwatr/type-helper' from types in tsconfig files ([92b650d](https://github.com/Alwatr/alwatr/commit/92b650d3d3f0b2c1c59e91314bcbd7ee7d58e4fa))
+* remove prettier configuration from package.json ([3a4cb9e](https://github.com/Alwatr/alwatr/commit/3a4cb9ea28584928b99bbccdb55704e7343c7c89))
+* **syncpack:** add "private" to sortFirst in .syncpackrc configuration ([9f5b556](https://github.com/Alwatr/alwatr/commit/9f5b556679798f8795b6aef28528aab314ecfd8f))
+
+### 🔗 Dependencies update
+
+* update package dependencies and restructure bun.lock for core and devtools packages ([8ded121](https://github.com/Alwatr/alwatr/commit/8ded121e5bfcf9a079a49640444f395f76e24311))
+
 ## [9.1.1](https://github.com/Alwatr/alwatr/compare/v9.1.0...v9.1.1) (2026-04-01)
 
 ### 🐛 Bug Fixes

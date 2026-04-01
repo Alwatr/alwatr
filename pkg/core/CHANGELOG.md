@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.0](https://github.com/Alwatr/alwatr/compare/v9.1.1...v9.2.0) (2026-04-01)
+
+### ✨ Features
+
+* **core:** initialize `@alwatr/core` package with essential utilities instead of old `@alwatr/nanolib` ([14f6d2f](https://github.com/Alwatr/alwatr/commit/14f6d2f0bed9f203c5546afb2f8484da82d1ff86))
+
+### 🐛 Bug Fixes
+
+* change export of '@alwatr/type-helper' to type export ([1a60ceb](https://github.com/Alwatr/alwatr/commit/1a60cebc3e33031662eccb516d43aafc35d21f7f))
+
+### 🧹 Miscellaneous Chores
+
+* add "private" field to package.json files for various packages ([0ae2948](https://github.com/Alwatr/alwatr/commit/0ae29486c511da8cfc6d4af9e743201297b0c4c2))
+
 ## [9.1.1](https://github.com/Alwatr/alwatr/compare/v9.1.0...v9.1.1) (2026-04-01)
 
 ### 🧹 Miscellaneous Chores
