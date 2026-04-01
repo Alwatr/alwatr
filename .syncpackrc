@@ -12,6 +12,7 @@
     "repository",
     "homepage",
     "bugs",
+    "engines",
     "bin",
     "exports",
     "sideEffects",
