@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nitrobase-old/nherit"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nitrobase-old/nherit#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nitrobase-old/nherit#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "publishConfig": {
     "access": "public"

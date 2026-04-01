@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/json2csv"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/json2csv#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/json2csv#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

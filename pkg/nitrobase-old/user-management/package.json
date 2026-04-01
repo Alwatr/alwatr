@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nitrobase-old/user-management"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nitrobase-old/user-management#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nitrobase-old/user-management#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/session-storage"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/session-storage#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/session-storage#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

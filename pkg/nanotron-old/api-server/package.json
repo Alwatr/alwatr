@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanotron-old/api-server"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanotron-old/api-server#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanotron-old/api-server#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

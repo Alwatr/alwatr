@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/async-queue"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/async-queue#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/async-queue#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

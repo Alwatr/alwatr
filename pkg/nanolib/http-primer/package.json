@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/http-primer"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/http-primer#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/http-primer#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

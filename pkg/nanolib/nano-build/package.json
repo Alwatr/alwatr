@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/nano-build"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/nano-build#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/nano-build#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "bin": "./cli.sh",
   "exports": {

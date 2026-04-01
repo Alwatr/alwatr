@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/prettier-config"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/prettier-config#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/prettier-config#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

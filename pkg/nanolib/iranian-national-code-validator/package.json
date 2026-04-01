@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/iranian-national-code-validator"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/iranian-national-code-validator#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/iranian-national-code-validator#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

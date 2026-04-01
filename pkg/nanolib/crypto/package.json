@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/crypto"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/crypto#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/crypto#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

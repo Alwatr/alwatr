@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/has-own"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/has-own#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/has-own#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

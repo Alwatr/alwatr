@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/tsconfig-base"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/tsconfig-base#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/tsconfig-base#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

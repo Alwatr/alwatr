@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nitrobase-old/reference"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nitrobase-old/reference#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nitrobase-old/reference#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

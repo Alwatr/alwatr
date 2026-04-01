@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanotron"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanotron#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanotron#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

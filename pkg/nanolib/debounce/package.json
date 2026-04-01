@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/debounce"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/debounce#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/debounce#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

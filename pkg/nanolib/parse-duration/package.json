@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/parse-duration"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/parse-duration#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/parse-duration#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

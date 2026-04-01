@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/synapse"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/synapse#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/synapse#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

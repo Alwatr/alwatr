@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/local-storage"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/local-storage#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/local-storage#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {

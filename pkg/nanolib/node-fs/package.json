@@ -10,7 +10,7 @@
     "url": "https://github.com/Alwatr/alwatr",
     "directory": "pkg/nanolib/node-fs"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/main/pkg/nanolib/node-fs#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/node-fs#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
