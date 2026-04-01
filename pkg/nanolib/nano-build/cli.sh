@@ -127,7 +127,7 @@ esac
 # esbuild target: ['chrome109', 'firefox115', 'safari15.6', 'ios15.8'],
 
 printf "\033[1;30mBuilding with the following arguments:\n"
-printf "  %s\n" "${args[@]}" | sed 's/^/  /'
+printf "  %s\n" "${args[@]}"
 printf "\033[0m\n"
 
 bun --prefer-offline build "${args[@]}"
