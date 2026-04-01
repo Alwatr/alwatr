@@ -2,35 +2,6 @@
   "name": "@alwatr/random",
   "version": "6.0.2",
   "description": "A lightweight utility library for generating random numbers, strings, UUIDs and more",
-  "keywords": [
-    "alwatr",
-    "array-shuffle",
-    "browser",
-    "cross-platform",
-    "crypto",
-    "cryptographically-secure",
-    "ECMAScript",
-    "esm",
-    "javascript",
-    "math",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "random",
-    "random-boolean",
-    "random-color",
-    "random-number",
-    "random-string",
-    "random-uuid",
-    "shuffle",
-    "typescript",
-    "util",
-    "utility",
-    "utils",
-    "uuid",
-    "uuid-v4"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -44,6 +15,7 @@
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
       "default": "./dist/main.js"
     }
   },
@@ -82,5 +54,34 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr",
+    "array-shuffle",
+    "browser",
+    "cross-platform",
+    "crypto",
+    "cryptographically-secure",
+    "ECMAScript",
+    "esm",
+    "javascript",
+    "math",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "random",
+    "random-boolean",
+    "random-color",
+    "random-number",
+    "random-string",
+    "random-uuid",
+    "shuffle",
+    "typescript",
+    "util",
+    "utility",
+    "utils",
+    "uuid",
+    "uuid-v4"
+  ]
 }

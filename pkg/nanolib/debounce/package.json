@@ -2,30 +2,6 @@
   "name": "@alwatr/debounce",
   "version": "2.0.2",
   "description": "A powerful, modern, and type-safe debouncer utility designed for high-performance applications. It's framework-agnostic, works seamlessly in both Node.js and browsers, and provides a rich API for fine-grained control over function execution.",
-  "keywords": [
-    "alwatr",
-    "browser",
-    "cross-platform",
-    "debounce",
-    "debouncing",
-    "esm",
-    "framework-agnostic",
-    "javascript",
-    "leading",
-    "lifecycle",
-    "memory-leak",
-    "module",
-    "nanolib",
-    "node",
-    "nodejs",
-    "trailing",
-    "tree-shakable",
-    "type-safe",
-    "typescript",
-    "universal",
-    "util",
-    "utility"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -39,6 +15,7 @@
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
       "default": "./dist/main.js"
     }
   },
@@ -73,5 +50,29 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr",
+    "browser",
+    "cross-platform",
+    "debounce",
+    "debouncing",
+    "esm",
+    "framework-agnostic",
+    "javascript",
+    "leading",
+    "lifecycle",
+    "memory-leak",
+    "module",
+    "nanolib",
+    "node",
+    "nodejs",
+    "trailing",
+    "tree-shakable",
+    "type-safe",
+    "typescript",
+    "universal",
+    "util",
+    "utility"
+  ]
 }

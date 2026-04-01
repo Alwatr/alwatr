@@ -2,9 +2,6 @@
   "name": "alwatr",
   "version": "5.0.0",
   "description": "Alwatr Ecosystem",
-  "keywords": [
-    "alwatr"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -18,40 +15,47 @@
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
       "default": "./dist/main.js"
     },
     "./nanolib": {
       "types": "./dist/nanolib/nanolib.d.ts",
+      "import": "./dist/nanolib/nanolib.mjs",
       "default": "./dist/nanolib/nanolib.mjs"
     },
     "./nanolib/node": {
       "types": "./dist/nanolib/node.d.ts",
+      "import": "./dist/nanolib/node.mjs",
       "default": "./dist/nanolib/node.mjs"
     },
     "./nitrobase": {
       "types": "./dist/nitrobase/nitrobase.d.ts",
+      "import": "./dist/nitrobase/nitrobase.mjs",
       "default": "./dist/nitrobase/nitrobase.mjs"
     },
     "./nitrobase/client": {
       "types": "./dist/nitrobase/client.d.ts",
+      "import": "./dist/nitrobase/client.mjs",
       "default": "./dist/nitrobase/client.mjs"
     },
     "./flux": {
       "types": "./dist/flux.d.ts",
+      "import": "./dist/flux.mjs",
       "default": "./dist/flux.mjs"
     },
     "./nanotron": {
       "types": "./dist/nanotron.d.ts",
+      "import": "./dist/nanotron.mjs",
       "default": "./dist/nanotron.mjs"
     }
   },
   "sideEffects": false,
   "dependencies": {
-    "@alwatr/signal": "workspace:*",
     "@alwatr/fsm": "workspace:*",
     "@alwatr/nanolib": "workspace:*",
     "@alwatr/nanotron": "workspace:*",
-    "@alwatr/nitrobase": "workspace:*"
+    "@alwatr/nitrobase": "workspace:*",
+    "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
@@ -84,5 +88,8 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr"
+  ]
 }

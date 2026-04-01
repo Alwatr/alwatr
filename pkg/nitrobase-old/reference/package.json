@@ -2,19 +2,6 @@
   "name": "@alwatr/nitrobase-reference",
   "version": "7.10.1",
   "description": "Nitrobase is a blazingly fast, lightweight database built on JSON. It stores data entirely in memory for lightning-quick access, while also providing a JSON file backup for persistence. You can easily serve your data over the web using our high-performance accelerated Nginx server.",
-  "keywords": [
-    "alwatr",
-    "data",
-    "data-storage",
-    "database",
-    "esm",
-    "file",
-    "json",
-    "no-sql",
-    "nosql",
-    "storage",
-    "typescript"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -28,6 +15,7 @@
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
       "default": "./dist/main.js"
     }
   },
@@ -67,5 +55,18 @@
   "publishConfig": {
     "access": "public"
   },
+  "keywords": [
+    "alwatr",
+    "data",
+    "data-storage",
+    "database",
+    "esm",
+    "file",
+    "json",
+    "no-sql",
+    "nosql",
+    "storage",
+    "typescript"
+  ],
   "prettier": "@alwatr/nanolib/prettier-config"
 }

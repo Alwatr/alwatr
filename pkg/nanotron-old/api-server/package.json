@@ -2,14 +2,6 @@
   "name": "@alwatr/nanotron-api-server",
   "version": "4.10.1",
   "description": "Nanotron: Your Lightweight, High-Performance Micro/Nano Service Framework. Nanotron is designed for building blazingly fast and efficient microservices and APIs. Its minimalist approach and focus on performance make it ideal for resource-constrained environments and scenarios where every millisecond counts.",
-  "keywords": [
-    "alwatr",
-    "api",
-    "esm",
-    "nanoservice",
-    "server",
-    "typescript"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -23,6 +15,7 @@
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
       "default": "./dist/main.js"
     }
   },
@@ -59,5 +52,13 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr",
+    "api",
+    "esm",
+    "nanoservice",
+    "server",
+    "typescript"
+  ]
 }

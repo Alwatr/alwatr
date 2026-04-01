@@ -2,32 +2,6 @@
   "name": "@alwatr/node-fs",
   "version": "6.0.2",
   "description": "Enhanced file system operations in Node.js with asynchronous queue to prevent parallel writes.",
-  "keywords": [
-    "alwatr",
-    "async",
-    "cross-platform",
-    "ECMAScript",
-    "esm",
-    "file",
-    "filesystem",
-    "fs",
-    "javascript",
-    "JSON",
-    "module",
-    "nanolib",
-    "node",
-    "node-fs",
-    "nodejs",
-    "queue",
-    "readFile",
-    "readJson",
-    "typescript",
-    "util",
-    "utility",
-    "utils",
-    "writeFile",
-    "writeJson"
-  ],
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -41,6 +15,7 @@
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
       "default": "./dist/main.js"
     }
   },
@@ -80,5 +55,31 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "alwatr",
+    "async",
+    "cross-platform",
+    "ECMAScript",
+    "esm",
+    "file",
+    "filesystem",
+    "fs",
+    "javascript",
+    "JSON",
+    "module",
+    "nanolib",
+    "node",
+    "node-fs",
+    "nodejs",
+    "queue",
+    "readFile",
+    "readJson",
+    "typescript",
+    "util",
+    "utility",
+    "utils",
+    "writeFile",
+    "writeJson"
+  ]
 }
