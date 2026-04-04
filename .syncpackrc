@@ -24,6 +24,7 @@
     "scripts",
     "files",
     "publishConfig",
+    "prettier",
     "keywords"
   ]
 }
