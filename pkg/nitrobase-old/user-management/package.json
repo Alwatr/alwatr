@@ -61,6 +61,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "prettier": "@alwatr/nanolib/prettier-config",
   "keywords": [
     "alwatr",
     "data",
@@ -75,6 +76,5 @@
     "typescript",
     "user",
     "user-management"
-  ],
-  "prettier": "@alwatr/nanolib/prettier-config"
+  ]
 }

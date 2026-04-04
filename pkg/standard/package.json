@@ -39,9 +39,9 @@
     "config",
     "prettier",
     "prettier-config",
+    "standards",
     "tsconfig",
     "tsconfig-base",
-    "typescript",
-    "standards"
+    "typescript"
   ]
 }

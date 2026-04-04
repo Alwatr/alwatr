@@ -60,6 +60,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "prettier": "@alwatr/nanolib/prettier-config",
   "keywords": [
     "alwatr",
     "data",
@@ -72,6 +73,5 @@
     "nosql",
     "storage",
     "typescript"
-  ],
-  "prettier": "@alwatr/nanolib/prettier-config"
+  ]
 }
