@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.1](https://github.com/Alwatr/alwatr/compare/v9.2.0...v9.2.1) (2026-04-04)
+
+### 🐛 Bug Fixes
+
+* safely remove element in DirectiveBase class ([ab8adf1](https://github.com/Alwatr/alwatr/commit/ab8adf19f75e2e817e205ca159e5de1dabf2c15a))
+
 ## [9.1.1](https://github.com/Alwatr/alwatr/compare/v9.1.0...v9.1.1) (2026-04-01)
 
 ### 🧹 Miscellaneous Chores

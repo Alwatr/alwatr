@@ -17,7 +17,7 @@
     },
     "pkg/core": {
       "name": "@alwatr/core",
-      "version": "9.2.0",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/cyrb53": "workspace:*",
@@ -64,7 +64,7 @@
     },
     "pkg/fsm": {
       "name": "@alwatr/fsm",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
         "@alwatr/signal": "workspace:*",
@@ -91,7 +91,7 @@
     },
     "pkg/nanolib/crypto": {
       "name": "@alwatr/crypto",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/parse-duration": "workspace:*",
       },
@@ -115,7 +115,7 @@
     },
     "pkg/nanolib/debounce": {
       "name": "@alwatr/debounce",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
@@ -126,7 +126,7 @@
     },
     "pkg/nanolib/dedupe": {
       "name": "@alwatr/dedupe",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/has-own": "workspace:*",
@@ -150,7 +150,7 @@
     },
     "pkg/nanolib/delay": {
       "name": "@alwatr/delay",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/parse-duration": "workspace:*",
@@ -175,7 +175,7 @@
     },
     "pkg/nanolib/env": {
       "name": "@alwatr/env",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/platform-info": "workspace:*",
       },
@@ -189,7 +189,7 @@
     },
     "pkg/nanolib/exit-hook": {
       "name": "@alwatr/exit-hook",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
@@ -200,7 +200,7 @@
     },
     "pkg/nanolib/fetch": {
       "name": "@alwatr/fetch",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/global-this": "workspace:*",
@@ -238,7 +238,7 @@
     },
     "pkg/nanolib/global-this": {
       "name": "@alwatr/global-this",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/type-helper": "workspace:*",
       },
@@ -312,7 +312,7 @@
     },
     "pkg/nanolib/local-storage": {
       "name": "@alwatr/local-storage",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -325,7 +325,7 @@
     },
     "pkg/nanolib/logger": {
       "name": "@alwatr/logger",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/platform-info": "workspace:*",
@@ -345,7 +345,7 @@
     },
     "pkg/nanolib/node-fs": {
       "name": "@alwatr/node-fs",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/flat-string": "workspace:*",
@@ -374,7 +374,7 @@
     },
     "pkg/nanolib/platform-info": {
       "name": "@alwatr/platform-info",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/tsconfig-base": "workspace:*",
@@ -392,7 +392,7 @@
     },
     "pkg/nanolib/random": {
       "name": "@alwatr/random",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
       },
@@ -405,7 +405,7 @@
     },
     "pkg/nanolib/render-state": {
       "name": "@alwatr/render-state",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -428,7 +428,7 @@
     },
     "pkg/nanolib/session-storage": {
       "name": "@alwatr/session-storage",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -441,7 +441,7 @@
     },
     "pkg/nanolib/synapse": {
       "name": "@alwatr/synapse",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/logger": "workspace:*",
@@ -477,7 +477,7 @@
     },
     "pkg/nanotron": {
       "name": "@alwatr/nanotron",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/crypto": "workspace:*",
         "@alwatr/nanotron-api-server": "workspace:*",
@@ -493,7 +493,7 @@
     },
     "pkg/nanotron-old/api-server": {
       "name": "@alwatr/nanotron-api-server",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },
@@ -507,7 +507,7 @@
     },
     "pkg/nanotron-old/pre-handlers": {
       "name": "@alwatr/pre-handlers",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/nanotron-api-server": "workspace:*",
       },
@@ -521,7 +521,7 @@
     },
     "pkg/nitrobase": {
       "name": "@alwatr/nitrobase",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/nitrobase-engine": "workspace:^",
         "@alwatr/nitrobase-helper": "workspace:^",
@@ -539,7 +539,7 @@
     },
     "pkg/nitrobase-old/engine": {
       "name": "@alwatr/nitrobase-engine",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/exit-hook": "workspace:*",
@@ -560,7 +560,7 @@
     },
     "pkg/nitrobase-old/helper": {
       "name": "@alwatr/nitrobase-helper",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/flat-string": "workspace:*",
         "@alwatr/logger": "workspace:*",
@@ -580,7 +580,7 @@
     },
     "pkg/nitrobase-old/reference": {
       "name": "@alwatr/nitrobase-reference",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/logger": "workspace:*",
@@ -598,7 +598,7 @@
     },
     "pkg/nitrobase-old/types": {
       "name": "@alwatr/nitrobase-types",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/type-helper": "workspace:*",
       },
@@ -612,7 +612,7 @@
     },
     "pkg/nitrobase-old/user-management": {
       "name": "@alwatr/nitrobase-user-management",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
         "@alwatr/nitrobase-engine": "workspace:^",
@@ -631,7 +631,7 @@
     },
     "pkg/node": {
       "name": "@alwatr/node",
-      "version": "9.2.0",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/crypto": "workspace:*",
         "@alwatr/env": "workspace:*",
@@ -660,7 +660,7 @@
     },
     "pkg/signal": {
       "name": "@alwatr/signal",
-      "version": "9.1.1",
+      "version": "9.2.1",
       "dependencies": {
         "@alwatr/debounce": "workspace:*",
         "@alwatr/delay": "workspace:*",
