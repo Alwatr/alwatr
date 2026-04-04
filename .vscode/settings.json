@@ -21,11 +21,6 @@
     "*.ajs.bk": "json",
     "*.conf.template": "nginx"
   },
-  "files.exclude": {
-    // "**/*.map": true,
-    // "**/*.d.ts": true,
-    // "**/*.tsbuildinfo": true
-  },
   "git.autoStash": true,
   "git.branchProtection": ["main", "next"],
   "githubPullRequests.ignoredPullRequestBranches": ["main", "next"],
