@@ -1,11 +1,15 @@
 # Alwatr TypeScript Config
 
-This is a base TypeScript configuration for Alwatr projects.
+This package is deprecated.
 
-## installation
+Please migrate to [@alwatr/standard](https://www.npmjs.com/package/@alwatr/standard), which is the new unified package for Alwatr tooling standards.
+
+TypeScript base config is now provided from `@alwatr/standard`.
+
+## Installation
 
 ```bash
-yarn add -D @alwatr/tsconfig-base
+yarn add -D @alwatr/standard
 ```
 
 ## Usage
@@ -14,7 +18,7 @@ Create a `tsconfig.json` file in the root of your project:
 
 ```json
 {
-  "extends": "@alwatr/tsconfig-base",
+  "extends": "@alwatr/standard",
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist"
@@ -22,6 +26,18 @@ Create a `tsconfig.json` file in the root of your project:
   "include": ["src/**/*.ts"]
 }
 ```
+
+You can also use the explicit subpath:
+
+```json
+{
+  "extends": "@alwatr/standard/tsconfig"
+}
+```
+
+## Migration
+
+- `@alwatr/tsconfig-base` -> `@alwatr/standard`
 
 ## Sponsors
 
