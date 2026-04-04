@@ -27,17 +27,9 @@
     // "**/*.tsbuildinfo": true
   },
   "git.autoStash": true,
-  "git.branchProtection": [
-    "main",
-    "next"
-  ],
-  "githubPullRequests.ignoredPullRequestBranches": [
-    "main",
-    "next"
-  ],
-  "markdownlint.ignore": [
-    "**/CHANGELOG.md"
-  ],
+  "git.branchProtection": ["main", "next"],
+  "githubPullRequests.ignoredPullRequestBranches": ["main", "next"],
+  "markdownlint.ignore": ["**/CHANGELOG.md"],
   "prettier.useEditorConfig": true,
   "js/ts.tsdk.promptToUseWorkspaceVersion": true,
   "cSpell.words": [
@@ -61,14 +53,10 @@
     "typeof",
     "cyrb53"
   ],
-  "github-actions.workflows.pinned.workflows": [
-    ".github/workflows/publish-npm.yml"
-  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "github-actions.workflows.pinned.workflows": [".github/workflows/publish-npm.yml"],
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "material-icon-theme.folders.associations": {
