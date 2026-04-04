@@ -31,7 +31,7 @@
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
-    "@types/node": "^24.1.0",
+    "@types/node": "^24.12.2",
     "typescript": "^6.0.2"
   },
   "scripts": {
