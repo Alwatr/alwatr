@@ -5,6 +5,7 @@
     "": {
       "name": "alwatr-devkit-monorepo",
       "devDependencies": {
+        "@alwatr/standard": "workspace:*",
         "@lerna-lite/cli": "^5.0.0",
         "@lerna-lite/publish": "^5.0.0",
         "@lerna-lite/run": "^5.0.0",
@@ -49,7 +50,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "typescript": "^6.0.2",
       },
     },
@@ -58,7 +59,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "typescript": "^6.0.2",
       },
     },
@@ -71,7 +72,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -84,7 +85,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -97,7 +98,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -108,7 +109,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -118,7 +119,7 @@
       "version": "9.2.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -133,7 +134,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -143,7 +144,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -157,7 +158,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -168,7 +169,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -181,7 +182,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -192,7 +193,7 @@
       "version": "9.2.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -211,7 +212,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -221,7 +222,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -231,7 +232,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -244,7 +245,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -255,7 +256,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -265,7 +266,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -275,7 +276,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -285,7 +286,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -295,7 +296,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -305,7 +306,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -318,7 +319,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -332,7 +333,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -353,7 +354,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -367,7 +368,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -377,17 +378,10 @@
       "version": "9.2.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
-      },
-    },
-    "pkg/nanolib/prettier-config": {
-      "name": "@alwatr/prettier-config",
-      "version": "9.2.0",
-      "devDependencies": {
-        "prettier": "^3.8.1",
       },
     },
     "pkg/nanolib/random": {
@@ -398,7 +392,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -411,7 +405,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -421,7 +415,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -434,7 +428,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -448,15 +442,11 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@happy-dom/global-registrator": "^20.8.9",
         "typescript": "^6.0.2",
       },
-    },
-    "pkg/nanolib/tsconfig-base": {
-      "name": "@alwatr/tsconfig-base",
-      "version": "9.1.1",
     },
     "pkg/nanolib/type-helper": {
       "name": "@alwatr/type-helper",
@@ -470,7 +460,7 @@
       "version": "9.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -485,7 +475,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -499,7 +489,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -513,7 +503,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -531,7 +521,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -552,7 +542,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -568,7 +558,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -590,7 +580,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -604,7 +594,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -623,7 +613,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
         "typescript": "^6.0.2",
@@ -640,7 +630,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "typescript": "^6.0.2",
       },
     },
@@ -653,7 +643,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -670,7 +660,7 @@
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
-        "@alwatr/tsconfig-base": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.2",
       },
@@ -764,8 +754,6 @@
 
     "@alwatr/pre-handlers": ["@alwatr/pre-handlers@workspace:pkg/nanotron-old/pre-handlers"],
 
-    "@alwatr/prettier-config": ["@alwatr/prettier-config@workspace:pkg/nanolib/prettier-config"],
-
     "@alwatr/random": ["@alwatr/random@workspace:pkg/nanolib/random"],
 
     "@alwatr/render-state": ["@alwatr/render-state@workspace:pkg/nanolib/render-state"],
@@ -779,8 +767,6 @@
     "@alwatr/standard": ["@alwatr/standard@workspace:pkg/standard"],
 
     "@alwatr/synapse": ["@alwatr/synapse@workspace:pkg/nanolib/synapse"],
-
-    "@alwatr/tsconfig-base": ["@alwatr/tsconfig-base@workspace:pkg/nanolib/tsconfig-base"],
 
     "@alwatr/type-helper": ["@alwatr/type-helper@workspace:pkg/nanolib/type-helper"],
 

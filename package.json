@@ -22,6 +22,7 @@
     "conventional-commits-filter": "^5.0.0",
     "typescript": "^6.0.2"
   },
+  "prettier": "./pkg/standard/prettier.config.js",
   "scripts": {
     "b": "bun run build",
     "build": "lerna run build",
