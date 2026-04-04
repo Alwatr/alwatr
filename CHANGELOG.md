@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.3.0](https://github.com/Alwatr/alwatr/compare/v9.2.1...v9.3.0) (2026-04-04)
+
+### ✨ Features
+
+* **nano-build:** auto-configure --packages with preset defaults ([955f9f2](https://github.com/Alwatr/alwatr/commit/955f9f25578d76da32b4c62075bd8af19a7f2380))
+* **prettier-config:** update README to reflect deprecation and migration to @alwatr/standard ([c42db19](https://github.com/Alwatr/alwatr/commit/c42db1986b7dc38eff4593a8302f2a820a6dd4b8))
+* **standard:** New package for shareable tooling configurations ([75d68c7](https://github.com/Alwatr/alwatr/commit/75d68c76ac36e7a8890df089f56978ba9c707016))
+* **standard:** simplify exports by removing redundant entries ([078b286](https://github.com/Alwatr/alwatr/commit/078b28698c3e1c45dda310908cb25cc56b79d4fe))
+* **tsconfig-base:** update README to reflect deprecation and migration to @alwatr/standard ([60784fe](https://github.com/Alwatr/alwatr/commit/60784fe75a4699b6e884963e30c8d454fadebf42))
+
+### 🔨 Code Refactoring
+
+* update TypeScript configuration to extend from @alwatr/standard/tsconfig ([3e52ee2](https://github.com/Alwatr/alwatr/commit/3e52ee2152b4264ed994ec72610be5828fbdc6d2))
+
+### 🧹 Miscellaneous Chores
+
+* add "prettier" to sortFirst in .syncpackrc ([85da9af](https://github.com/Alwatr/alwatr/commit/85da9af65643457ba504026d8ea483feee3d96b8))
+* add prettier configuration path to package.json ([65053ba](https://github.com/Alwatr/alwatr/commit/65053ba3a7a9a5e95b8bc962fa400e8ed6932b35))
+* clean up settings.json by removing unnecessary comments and reformatting ([8c20465](https://github.com/Alwatr/alwatr/commit/8c20465fd4e778f5c93cf2e59bfe491a493f6489))
+* deprecate @alwatr/prettier-config and @alwatr/tsconfig-base ([01028d9](https://github.com/Alwatr/alwatr/commit/01028d95b0e423bdc1562ae60dd076941c7ebbb6))
+
+### 🔗 Dependencies update
+
+* replace @alwatr/tsconfig-base with @alwatr/standard ([ea38e8f](https://github.com/Alwatr/alwatr/commit/ea38e8f6a1255492992347bb44c963b027d00281))
+* **standard:** update devDependencies to include prettier and remove unused entries ([50ff97d](https://github.com/Alwatr/alwatr/commit/50ff97d3cbba6cd08ff49f71ee7d4cf5c1894070))
+* upgrade ([82462be](https://github.com/Alwatr/alwatr/commit/82462be381987ac4101dcf396facd3ede3f2a533))
+
 ## [9.2.1](https://github.com/Alwatr/alwatr/compare/v9.2.0...v9.2.1) (2026-04-04)
 
 ### 🐛 Bug Fixes

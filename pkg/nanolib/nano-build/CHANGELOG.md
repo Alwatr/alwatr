@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.3.0](https://github.com/Alwatr/alwatr/compare/v9.2.1...v9.3.0) (2026-04-04)
+
+### ✨ Features
+
+* **nano-build:** auto-configure --packages with preset defaults ([955f9f2](https://github.com/Alwatr/alwatr/commit/955f9f25578d76da32b4c62075bd8af19a7f2380))
+
 ## [9.1.1](https://github.com/Alwatr/alwatr/compare/v9.1.0...v9.1.1) (2026-04-01)
 
 ### 🧹 Miscellaneous Chores
