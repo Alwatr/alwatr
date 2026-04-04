@@ -82,20 +82,31 @@ else
   args+=('--minify')
 fi
 
+hasPackages=false
+for arg in "${args[@]}"; do
+  if [[ "$arg" == --packages=* ]]; then
+    hasPackages=true
+    break
+  fi
+done
+
 case "$preset" in
   module)
     args+=(
       '--target=node'
-      '--packages=external'
       '--sourcemap=linked'
       '--format=esm'
     )
+
+    if ! $hasPackages; then
+      hasPackages=true
+      args+=('--packages=external')
+    fi
   ;;
 
   web)
     args+=(
       '--target=browser'
-      '--packages=bundle'
     )
     if $devMode; then
       args+=('--sourcemap=linked')
@@ -105,7 +116,6 @@ case "$preset" in
   node-service)
     args+=(
       '--target=node'
-      '--packages=bundle'
     )
     if $devMode; then
       args+=('--sourcemap=linked')
@@ -115,13 +125,16 @@ case "$preset" in
   bun-service)
     args+=(
       '--target=bun'
-      '--packages=bundle'
     )
     if $devMode; then
       args+=('--sourcemap=linked')
     fi
   ;;
 esac
+
+if ! $hasPackages; then
+  args+=('--packages=bundle')
+fi
 
 # FIXME: what about down-leveling?
 # esbuild target: ['chrome109', 'firefox115', 'safari15.6', 'ios15.8'],
