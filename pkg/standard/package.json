@@ -13,20 +13,10 @@
   "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/standard#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
-    ".": {
-      "default": "./tsconfig.base.json"
-    },
     "./tsconfig": {
       "default": "./tsconfig.base.json"
     },
-    "./tsconfig.base.json": {
-      "default": "./tsconfig.base.json"
-    },
     "./prettier": {
-      "import": "./prettier.config.js",
-      "default": "./prettier.config.js"
-    },
-    "./prettier.config.js": {
       "import": "./prettier.config.js",
       "default": "./prettier.config.js"
     }
