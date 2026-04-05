@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.0](https://github.com/Alwatr/alwatr/compare/v9.3.0...v9.4.0) (2026-04-05)
+
+### ✨ Features
+
+* **synapse:** add autoDestroy method to clean up directives when elements are disconnected from the DOM ([f85745e](https://github.com/Alwatr/alwatr/commit/f85745e0c53431ff88671735b06b3c26474ef676))
+* **synapse:** implement autoDestructDirectives and update directiveInstanceRegistry management ([8e003d9](https://github.com/Alwatr/alwatr/commit/8e003d936a1181812941f3371ced20ee72e77834))
+* **synapse:** implement unique index generation for directive instances ([f380943](https://github.com/Alwatr/alwatr/commit/f380943d039e7bed9b110ecc03102d8f94fcb1ce))
+* **synapse:** integrate FinalizationRegistry for directive garbage collection logging ([1e3f1f8](https://github.com/Alwatr/alwatr/commit/1e3f1f816bc82f740ca91df9d72ef99059ef0baa))
+* **synapse:** update autoDestroy method to return a boolean indicating element disconnection ([521307e](https://github.com/Alwatr/alwatr/commit/521307e2cd82014ad8e4cb3d6aa9fda9948ce5f2))
+
+### 🔨 Code Refactoring
+
+* **signal:** replace arrays with Sets for observer management in SignalBase class ([185133c](https://github.com/Alwatr/alwatr/commit/185133c54c5a71fdfd0b5b43bf4edc37df289311))
+* **synapse:** change protected methods to public in DirectiveBase class ([7ed56a5](https://github.com/Alwatr/alwatr/commit/7ed56a5d13f3625976f1f14e09344d007c86a891))
+* **synapse:** enhance directive initialization logic and improve error handling ([8692c4e](https://github.com/Alwatr/alwatr/commit/8692c4e4fa60bafdc319bb8964390ec6e16d870a))
+* **synapse:** improve formatting and update directive registry to use set for unique selector registration ([b2c9a58](https://github.com/Alwatr/alwatr/commit/b2c9a5861d88a09f991cfdbd590a42dda5f3edcf))
+* **synapse:** update directive registry to use Map and add initialized directives tracking ([2558b40](https://github.com/Alwatr/alwatr/commit/2558b40e691ada0d543e9283ca799e6ba3002983))
+* **synapse:** update onDestroy method signature to accept a context-aware task ([de68470](https://github.com/Alwatr/alwatr/commit/de6847033cbbab0d0ef8c81a864625ccea786e1d))
+
+### 🧹 Miscellaneous Chores
+
+* apply feedbacks from code review ([51f629b](https://github.com/Alwatr/alwatr/commit/51f629b0a3dd989113684091de5b1a3736dc0f28))
+* remove commented-out file exclusion settings from VSCode configuration ([a131c2e](https://github.com/Alwatr/alwatr/commit/a131c2e8b682bdec34f16fd439d59901cc61f621))
+* reorder all package.json ([57d5681](https://github.com/Alwatr/alwatr/commit/57d56816c5676030a11f02d4f0bd675508b970de))
+* **synapse:** change logging for missing elements in bootstrapDirectives ([82f5763](https://github.com/Alwatr/alwatr/commit/82f5763cce4545022644b1a36dc025bb3681fdec))
+
 ## [9.3.0](https://github.com/Alwatr/alwatr/compare/v9.2.1...v9.3.0) (2026-04-04)
 
 ### ✨ Features

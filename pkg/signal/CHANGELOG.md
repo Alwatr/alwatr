@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.0](https://github.com/Alwatr/alwatr/compare/v9.3.0...v9.4.0) (2026-04-05)
+
+### 🔨 Code Refactoring
+
+* **signal:** replace arrays with Sets for observer management in SignalBase class ([185133c](https://github.com/Alwatr/alwatr/commit/185133c54c5a71fdfd0b5b43bf4edc37df289311))
+
 ## [9.3.0](https://github.com/Alwatr/alwatr/compare/v9.2.1...v9.3.0) (2026-04-04)
 
 ### 🔨 Code Refactoring

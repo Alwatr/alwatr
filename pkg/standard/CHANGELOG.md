@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.0](https://github.com/Alwatr/alwatr/compare/v9.3.0...v9.4.0) (2026-04-05)
+
+### 🧹 Miscellaneous Chores
+
+* reorder all package.json ([57d5681](https://github.com/Alwatr/alwatr/commit/57d56816c5676030a11f02d4f0bd675508b970de))
+
 ## [9.3.0](https://github.com/Alwatr/alwatr/compare/v9.2.1...v9.3.0) (2026-04-04)
 
 ### ✨ Features
