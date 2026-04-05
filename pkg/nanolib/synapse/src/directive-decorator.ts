@@ -1,12 +1,15 @@
-import { directiveRegistry_, logger } from './lib.js';
+import {directiveRegistry_, logger} from './lib.js';
 
-import type { DirectiveBase } from './directive-class.js';
+import type {DirectiveBase} from './directive-class.js';
 
 /**
  * Type definition for a directive constructor.
  * A directive class must have a constructor that accepts an HTMLElement.
  */
-export type DirectiveConstructor<T extends DirectiveBase = DirectiveBase> = new (element: HTMLElement, selector: string) => T;
+export type DirectiveConstructor<T extends DirectiveBase = DirectiveBase> = new (
+  element: HTMLElement,
+  selector: string,
+) => T;
 
 /**
  * A class decorator that registers a class as a directive.
@@ -36,9 +39,11 @@ export function directive(selector: string) {
       throw new Error('@directive can only be used on classes');
     }
 
-    directiveRegistry_.push({
-      selector,
-      constructor
-    });
+    if (directiveRegistry_.has(selector)) {
+      logger.accident('@directive', 'duplicate_selector_registration', {selector});
+      return;
+    }
+
+    directiveRegistry_.set(selector, constructor);
   };
 }
