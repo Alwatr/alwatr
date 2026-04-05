@@ -24,8 +24,14 @@ export const directiveRegistry_ = new Map<string, DirectiveConstructor>();
  */
 export const initializedDirectives_ = new WeakMap<Element, Set<string>>();
 
+/**
+ * A Set to keep track of all directive instances that have been created.
+ */
 export const directiveInstanceRegistry_ = new Set<DirectiveBase>();
 
+/**
+ * A FinalizationRegistry to monitor when directive instances are garbage collected.
+ */
 export const finalizationRegistry =
   typeof FinalizationRegistry !== 'undefined' ?
     new FinalizationRegistry((heldValue) => {
