@@ -102,11 +102,11 @@ export abstract class DirectiveBase {
    *
    * @example
    * ```ts
-   * this.dispatch_('user-action', {action: 'save', id: 123});
+   * this.dispatch('user-action', {action: 'save', id: 123});
    * ```
    */
-  protected dispatch_(eventName: string, detail?: unknown): void {
-    this.logger_.logMethodArgs?.('dispatch_', {eventName, detail});
+  public dispatch(eventName: string, detail?: unknown): void {
+    this.logger_.logMethodArgs?.('dispatch', {eventName, detail});
     this.element_.dispatchEvent(new CustomEvent(eventName, {detail, bubbles: true}));
   }
 
@@ -124,8 +124,8 @@ export abstract class DirectiveBase {
    * );
    * ```
    */
-  protected onDestroy_(task: NoopFunc): void {
-    this.logger_.logMethod?.('onDestroy_');
+  public onDestroy(task: NoopFunc): void {
+    this.logger_.logMethod?.('onDestroy');
     this.cleanupTaskList__.push(task);
   }
 
@@ -136,7 +136,7 @@ export abstract class DirectiveBase {
    * helping with garbage collection. It can be extended by subclasses to perform additional cleanup,
    * such as removing event listeners.
    */
-  protected destroy_(): Awaitable<void> {
+  public destroy(): Awaitable<void> {
     this.logger_.logMethod?.('destroy_');
 
     // Execute all registered cleanup tasks
@@ -144,8 +144,7 @@ export abstract class DirectiveBase {
       for (const task of this.cleanupTaskList__) {
         try {
           task.call(this);
-        }
-        catch (err) {
+        } catch (err) {
           this.logger_.error('destroy_', 'error_in_destroy_callback', err);
         }
       }
