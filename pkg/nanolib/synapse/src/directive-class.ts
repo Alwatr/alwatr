@@ -124,7 +124,7 @@ export abstract class DirectiveBase {
    * );
    * ```
    */
-  public onDestroy(task: NoopFunc): void {
+  public onDestroy(task: (this: this) => Awaitable<void>): void {
     this.logger_.logMethod?.('onDestroy');
     this.cleanupTaskList__.push(task);
   }
