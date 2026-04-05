@@ -24,7 +24,8 @@ export abstract class SignalBase<T> {
    * The list of observers (listeners) subscribed to this signal.
    * @protected
    */
-  protected readonly observers_: Observer_<T>[] = [];
+  protected readonly priorityObservers_ = new Set<Observer_<T>>();
+  protected readonly observers_ = new Set<Observer_<T>>();
 
   /**
    * A flag indicating whether the signal has been destroyed.
@@ -60,10 +61,8 @@ export abstract class SignalBase<T> {
       return;
     }
 
-    const index = this.observers_.indexOf(observer);
-    if (index !== -1) {
-      this.observers_.splice(index, 1);
-    }
+    this.priorityObservers_.delete(observer);
+    this.observers_.delete(observer);
   }
 
   /**
@@ -82,11 +81,9 @@ export abstract class SignalBase<T> {
     const observer: Observer_<T> = {callback, options};
 
     if (options?.priority) {
-      // High-priority observers are added to the front of the queue.
-      this.observers_.unshift(observer);
-    }
-    else {
-      this.observers_.push(observer);
+      this.priorityObservers_.add(observer);
+    } else {
+      this.observers_.add(observer);
     }
 
     // The returned unsubscribe function is a closure that calls the internal removal method.
@@ -112,24 +109,29 @@ export abstract class SignalBase<T> {
       return;
     }
 
-    // Create a snapshot of the observers array to iterate over.
-    // This prevents issues if the observers_ array is modified during the loop.
-    const currentObservers = [...this.observers_];
+    for (const observer of this.priorityObservers_) {
+      this.executeObserver__(observer, value);
+    }
 
-    for (const observer of currentObservers) {
-      if (observer.options?.once) {
-        this.removeObserver_(observer);
-      }
+    for (const observer of this.observers_) {
+      this.executeObserver__(observer, value);
+    }
+  }
 
-      try {
-        const result = observer.callback(value);
-        if (result instanceof Promise) {
-          result.catch((err) => this.logger_.error('notify_', 'async_callback_failed', err, {observer}));
-        }
+  /**
+   * Executes a given observer's callback with the provided value, handling both synchronous and asynchronous callbacks.
+   */
+  private executeObserver__(observer: Observer_<T>, value: T): void {
+    if (observer.options?.once) {
+      this.removeObserver_(observer);
+    }
+    try {
+      const result = observer.callback(value);
+      if (result instanceof Promise) {
+        result.catch((err) => this.logger_.error('notify_', 'async_callback_failed', err, {observer}));
       }
-      catch (err) {
-        this.logger_.error('notify_', 'sync_callback_failed', err);
-      }
+    } catch (err) {
+      this.logger_.error('notify_', 'sync_callback_failed', err);
     }
   }
 
@@ -172,7 +174,8 @@ export abstract class SignalBase<T> {
       return;
     }
     this.isDestroyed__ = true;
-    this.observers_.length = 0; // Clear all observers.
+    this.priorityObservers_.clear(); // Clear all priority observers.
+    this.observers_.clear(); // Clear all normal observers.
     this.config_.onDestroy?.(); // Call the optional onDestroy callback.
     this.config_ = null as unknown as SignalConfig; // Help GC by breaking references.
   }

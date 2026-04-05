@@ -8,6 +8,20 @@
 
 import {delay} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
+import {finalizationRegistry} from './lib';
+
+/**
+ * A Map to keep track of how many instances of each directive selector have been created. This is used to generate unique indices for directives that share the same selector.
+ */
+const selectorCount = new Map<string, number>();
+/**
+ * Generates a unique index for a given directive selector. This is used to differentiate multiple instances of the same directive on the page.
+ */
+function generateIndexForSelector(selector: string): number {
+  const currentIndex = selectorCount.get(selector) ?? 0;
+  selectorCount.set(selector, currentIndex + 1);
+  return currentIndex;
+}
 
 /**
  * The abstract base class for all directives.
@@ -53,6 +67,8 @@ export abstract class DirectiveBase {
    */
   private readonly cleanupTaskList__: NoopFunc[] = [];
 
+  public readonly index: number;
+
   /**
    * Initializes the directive. This constructor is called by the Synapse bootstrap process and should not be
    * overridden in subclasses.
@@ -64,11 +80,15 @@ export abstract class DirectiveBase {
    * @param selector The CSS selector that matched this directive.
    */
   constructor(element: HTMLElement, selector: string) {
-    this.logger_ = createLogger(`directive:${selector}`);
+    this.index = generateIndexForSelector(selector);
+
+    const identifier = `directive:${selector}/${this.index}`;
+    this.logger_ = createLogger(identifier);
     this.logger_.logMethodArgs?.('new', {selector, element});
 
     this.selector_ = selector;
     this.element_ = element;
+    finalizationRegistry?.register(this, identifier);
 
     (async () => {
       await delay.nextMicrotask();
@@ -102,11 +122,11 @@ export abstract class DirectiveBase {
    *
    * @example
    * ```ts
-   * this.dispatch_('user-action', {action: 'save', id: 123});
+   * this.dispatch('user-action', {action: 'save', id: 123});
    * ```
    */
-  protected dispatch_(eventName: string, detail?: unknown): void {
-    this.logger_.logMethodArgs?.('dispatch_', {eventName, detail});
+  public dispatch(eventName: string, detail?: unknown): void {
+    this.logger_.logMethodArgs?.('dispatch', {eventName, detail});
     this.element_.dispatchEvent(new CustomEvent(eventName, {detail, bubbles: true}));
   }
 
@@ -124,8 +144,8 @@ export abstract class DirectiveBase {
    * );
    * ```
    */
-  protected onDestroy_(task: NoopFunc): void {
-    this.logger_.logMethod?.('onDestroy_');
+  public onDestroy(task: (this: this) => Awaitable<void>): void {
+    this.logger_.logMethod?.('onDestroy');
     this.cleanupTaskList__.push(task);
   }
 
@@ -136,17 +156,16 @@ export abstract class DirectiveBase {
    * helping with garbage collection. It can be extended by subclasses to perform additional cleanup,
    * such as removing event listeners.
    */
-  protected destroy_(): Awaitable<void> {
-    this.logger_.logMethod?.('destroy_');
+  public destroy(): Awaitable<void> {
+    this.logger_.logMethod?.('destroy');
 
     // Execute all registered cleanup tasks
     if (this.cleanupTaskList__.length > 0) {
       for (const task of this.cleanupTaskList__) {
         try {
           task.call(this);
-        }
-        catch (err) {
-          this.logger_.error('destroy_', 'error_in_destroy_callback', err);
+        } catch (err) {
+          this.logger_.error('destroy', 'error_in_destroy_callback', err);
         }
       }
 
@@ -156,5 +175,22 @@ export abstract class DirectiveBase {
     this.element_?.remove();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this as any).element_ = null;
+  }
+
+  /**
+   * Automatically destroys the directive if its associated element is no longer connected to the DOM.
+   *
+   * This method can be called periodically (e.g., in a `MutationObserver` or a cleanup loop) to ensure that
+   * directives are properly cleaned up when their elements are removed from the DOM.
+   *
+   * **Note:** This method does not automatically run; you must call it as needed to check for disconnected elements.
+   */
+  public autoDestroy(): boolean {
+    this.logger_.logMethod?.('autoDestroy');
+    if (this.element_?.isConnected === false) {
+      void this.destroy();
+      return true;
+    }
+    return false;
   }
 }
