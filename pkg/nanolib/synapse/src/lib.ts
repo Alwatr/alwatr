@@ -22,3 +22,10 @@ export const directiveRegistry_ = new Map<string, DirectiveConstructor>();
  * The `bootstrapDirectives` function updates this WeakMap as it initializes directives, and checks it to avoid re-initialization.
  */
 export const initializedDirectives_ = new WeakMap<Element, Set<string>>();
+
+export const finalizationRegistry =
+  typeof FinalizationRegistry !== 'undefined' ?
+    new FinalizationRegistry((heldValue) => {
+      logger.logOther?.(`Directive ${heldValue} has been garbage collected successfully.`);
+    })
+  : null;

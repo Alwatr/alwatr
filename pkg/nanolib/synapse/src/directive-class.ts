@@ -8,6 +8,7 @@
 
 import {delay} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
+import {finalizationRegistry} from './lib';
 
 /**
  * The abstract base class for all directives.
@@ -69,6 +70,7 @@ export abstract class DirectiveBase {
 
     this.selector_ = selector;
     this.element_ = element;
+    finalizationRegistry?.register(this, selector);
 
     (async () => {
       await delay.nextMicrotask();
