@@ -157,7 +157,7 @@ export abstract class DirectiveBase {
    * such as removing event listeners.
    */
   public destroy(): Awaitable<void> {
-    this.logger_.logMethod?.('destroy_');
+    this.logger_.logMethod?.('destroy');
 
     // Execute all registered cleanup tasks
     if (this.cleanupTaskList__.length > 0) {
@@ -165,7 +165,7 @@ export abstract class DirectiveBase {
         try {
           task.call(this);
         } catch (err) {
-          this.logger_.error('destroy_', 'error_in_destroy_callback', err);
+          this.logger_.error('destroy', 'error_in_destroy_callback', err);
         }
       }
 
