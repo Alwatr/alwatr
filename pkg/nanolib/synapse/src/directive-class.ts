@@ -158,4 +158,19 @@ export abstract class DirectiveBase {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this as any).element_ = null;
   }
+
+  /**
+   * Automatically destroys the directive if its associated element is no longer connected to the DOM.
+   *
+   * This method can be called periodically (e.g., in a `MutationObserver` or a cleanup loop) to ensure that
+   * directives are properly cleaned up when their elements are removed from the DOM.
+   *
+   * **Note:** This method does not automatically run; you must call it as needed to check for disconnected elements.
+   */
+  public autoDestroy(): void {
+    this.logger_.logMethod?.('autoDestroy');
+    if (this.element_?.isConnected === false) {
+      void this.destroy();
+    }
+  }
 }
