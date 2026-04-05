@@ -185,10 +185,12 @@ export abstract class DirectiveBase {
    *
    * **Note:** This method does not automatically run; you must call it as needed to check for disconnected elements.
    */
-  public autoDestroy(): void {
+  public autoDestroy(): boolean {
     this.logger_.logMethod?.('autoDestroy');
     if (this.element_?.isConnected === false) {
       void this.destroy();
+      return true;
     }
+    return false;
   }
 }
