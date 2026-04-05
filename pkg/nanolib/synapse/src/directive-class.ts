@@ -11,6 +11,19 @@ import {createLogger} from '@alwatr/logger';
 import {finalizationRegistry} from './lib';
 
 /**
+ * A Map to keep track of how many instances of each directive selector have been created. This is used to generate unique indices for directives that share the same selector.
+ */
+const selectorCount = new Map<string, number>();
+/**
+ * Generates a unique index for a given directive selector. This is used to differentiate multiple instances of the same directive on the page.
+ */
+function generateIndexForSelector(selector: string): number {
+  const currentIndex = selectorCount.get(selector) ?? 0;
+  selectorCount.set(selector, currentIndex + 1);
+  return currentIndex;
+}
+
+/**
  * The abstract base class for all directives.
  *
  * Extend this class to create a new directive that can be registered with the `@directive` decorator.
@@ -54,6 +67,8 @@ export abstract class DirectiveBase {
    */
   private readonly cleanupTaskList__: NoopFunc[] = [];
 
+  public readonly index: number;
+
   /**
    * Initializes the directive. This constructor is called by the Synapse bootstrap process and should not be
    * overridden in subclasses.
@@ -65,12 +80,15 @@ export abstract class DirectiveBase {
    * @param selector The CSS selector that matched this directive.
    */
   constructor(element: HTMLElement, selector: string) {
-    this.logger_ = createLogger(`directive:${selector}`);
+    this.index = generateIndexForSelector(selector);
+
+    const identifier = `directive:${selector}/${this.index}`;
+    this.logger_ = createLogger(identifier);
     this.logger_.logMethodArgs?.('new', {selector, element});
 
     this.selector_ = selector;
     this.element_ = element;
-    finalizationRegistry?.register(this, selector);
+    finalizationRegistry?.register(this, identifier);
 
     (async () => {
       await delay.nextMicrotask();
