@@ -1,6 +1,7 @@
 import {createLogger} from '@alwatr/logger';
 
 import type {DirectiveConstructor} from './directive-decorator.js';
+import type {DirectiveBase} from './directive-class.js';
 
 /**
  * Alwatr Synapse Logger.
@@ -22,6 +23,8 @@ export const directiveRegistry_ = new Map<string, DirectiveConstructor>();
  * The `bootstrapDirectives` function updates this WeakMap as it initializes directives, and checks it to avoid re-initialization.
  */
 export const initializedDirectives_ = new WeakMap<Element, Set<string>>();
+
+export const directiveInstanceRegistry_ = new Set<DirectiveBase>();
 
 export const finalizationRegistry =
   typeof FinalizationRegistry !== 'undefined' ?

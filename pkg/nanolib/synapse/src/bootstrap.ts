@@ -1,4 +1,4 @@
-import {directiveRegistry_, initializedDirectives_, logger} from './lib.js';
+import {directiveInstanceRegistry_, directiveRegistry_, initializedDirectives_, logger} from './lib.js';
 import type {DirectiveBase} from './directive-class.js';
 
 /**
@@ -63,6 +63,7 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
           const directiveInstance = new constructor(element, selector);
           alreadyInitializedSelector.add(selector);
           directiveInstance.onDestroy(cleanOnDestroy);
+          directiveInstanceRegistry_.add(directiveInstance);
         } catch (err) {
           logger.error('bootstrapDirectives', 'directive_instantiation_error', {selector, element}, err);
         }
