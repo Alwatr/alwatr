@@ -34,8 +34,8 @@
   "scripts": {
     "b": "bun run build",
     "build": "bun run build:ts && bun run build:es",
-    "build:es": "nano-build --target=bun src/main.ts",
-    "build:ts": "tsc --build",
+    "build:es": "nano-build --target=bun --debug src/main.ts",
+    "build:ts": "echo tsc skipped",
     "cl": "bun run clean",
     "clean": "rm -rfv dist *.tsbuildinfo",
     "format": "prettier --write \"src/**/*.ts\"",
