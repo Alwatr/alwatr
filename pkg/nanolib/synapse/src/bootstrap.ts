@@ -42,7 +42,7 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
     try {
       const elementList = rootElement.querySelectorAll<HTMLElement>(selector);
       if (elementList.length === 0) {
-        logger.incident?.('bootstrapDirectives', 'no_elements_found', {selector});
+        logger.logOther?.('no_elements_found', {selector});
         continue;
       }
 
