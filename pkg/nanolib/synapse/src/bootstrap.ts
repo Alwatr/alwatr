@@ -62,7 +62,7 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
         try {
           const directiveInstance = new constructor(element, selector);
           alreadyInitializedSelector.add(selector);
-          directiveInstance.onDestroy(cleanOnDestroy);
+          directiveInstance.addDestroyHook(cleanOnDestroy);
           directiveInstanceRegistry_.add(directiveInstance);
         } catch (err) {
           logger.error('bootstrapDirectives', 'directive_instantiation_error', {selector, element}, err);

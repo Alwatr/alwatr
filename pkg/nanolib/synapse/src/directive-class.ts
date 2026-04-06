@@ -65,8 +65,11 @@ export abstract class DirectiveBase {
   /**
    * A list of callback functions to be executed when the directive is destroyed.
    */
-  private readonly cleanupTaskList__: NoopFunc[] = [];
+  private readonly destroyHookList__: NoopFunc[] = [];
 
+  /**
+   * A unique index for this directive instance, generated based on the selector and the number of existing instances of that selector. This helps differentiate multiple instances of the same directive on the page.
+   */
   public readonly index: number;
 
   /**
@@ -145,9 +148,9 @@ export abstract class DirectiveBase {
    * );
    * ```
    */
-  public onDestroy(task: (this: this) => Awaitable<void>): void {
+  public addDestroyHook(task: (this: this) => Awaitable<void>): void {
     this.logger_.logMethod?.('onDestroy');
-    this.cleanupTaskList__.push(task);
+    this.destroyHookList__.push(task);
   }
 
   /**
@@ -161,8 +164,8 @@ export abstract class DirectiveBase {
     this.logger_.logMethod?.('destroy');
 
     // Execute all registered cleanup tasks
-    if (this.cleanupTaskList__.length > 0) {
-      for (const task of this.cleanupTaskList__) {
+    if (this.destroyHookList__.length > 0) {
+      for (const task of this.destroyHookList__) {
         try {
           task.call(this);
         } catch (err) {
@@ -170,7 +173,7 @@ export abstract class DirectiveBase {
         }
       }
 
-      this.cleanupTaskList__.length = 0; // clear the list after executing all tasks
+      this.destroyHookList__.length = 0; // clear the list after executing all tasks
     }
 
     this.element_?.remove();
