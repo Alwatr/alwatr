@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.2](https://github.com/Alwatr/alwatr/compare/v9.4.1...v9.4.2) (2026-04-06)
+
+### 🐛 Bug Fixes
+
+* **synapse:** remove unnecessary reference to initialized directives in cleanOnDestroy to prevent memory leak ([79f849b](https://github.com/Alwatr/alwatr/commit/79f849b151220c8c8e38bee406bafa96c789461b))
+* **synapse:** rename initializedDirectives_ to initializedDirectiveElements_ for clarity and consistency ([2fdff87](https://github.com/Alwatr/alwatr/commit/2fdff87969316111474e61d599a1f0e6fd0cfa47))
+
 ## [9.4.1](https://github.com/Alwatr/alwatr/compare/v9.4.0...v9.4.1) (2026-04-06)
 
 ### 🐛 Bug Fixes
