@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.1](https://github.com/Alwatr/alwatr/compare/v9.4.0...v9.4.1) (2026-04-06)
+
+### 🐛 Bug Fixes
+
+* **directive:** change delay from nextMicrotask to nextMacrotask for initialization ([e02c6b4](https://github.com/Alwatr/alwatr/commit/e02c6b400bb82971f9bd207916e16811947c524d))
+* **synapse:** add logging to cleanOnDestroy for better debugging ([8a54e65](https://github.com/Alwatr/alwatr/commit/8a54e65f58cdd50f747ea7d3c168f6e4d91e2e2d))
+* **synapse:** update finalization registry to differentiate between instance and element ([93ed64f](https://github.com/Alwatr/alwatr/commit/93ed64f62c5e83b5105315fba71342a564c3eaf6))
+
+### 🧹 Miscellaneous Chores
+
+* **synapse:** add documentation for directive instance tracking and garbage collection ([2059f50](https://github.com/Alwatr/alwatr/commit/2059f502214d5f04f4baa91dca2873b163986b0c))
+
 ## [9.4.0](https://github.com/Alwatr/alwatr/compare/v9.3.0...v9.4.0) (2026-04-05)
 
 ### ✨ Features
