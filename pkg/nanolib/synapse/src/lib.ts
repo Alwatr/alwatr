@@ -22,7 +22,7 @@ export const directiveRegistry_ = new Map<string, DirectiveConstructor>();
  * This allows us to prevent multiple initializations of the same directive on the same element, and also to clean up the tracking when elements are destroyed.
  * The `bootstrapDirectives` function updates this WeakMap as it initializes directives, and checks it to avoid re-initialization.
  */
-export const initializedDirectives_ = new WeakMap<Element, Set<string>>();
+export const initializedDirectiveElements_ = new WeakMap<Element, Set<string>>();
 
 /**
  * A Set to keep track of all directive instances that have been created.

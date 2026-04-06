@@ -1,4 +1,4 @@
-import {directiveInstanceRegistry_, directiveRegistry_, initializedDirectives_, logger} from './lib.js';
+import {directiveInstanceRegistry_, directiveRegistry_, initializedDirectiveElements_, logger} from './lib.js';
 import type {DirectiveBase} from './directive-class.js';
 
 /**
@@ -47,7 +47,7 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
       }
 
       for (const element of elementList) {
-        let alreadyInitializedSelector = initializedDirectives_.get(element);
+        let alreadyInitializedSelector = initializedDirectiveElements_.get(element);
 
         if (alreadyInitializedSelector?.has(selector)) {
           logger.incident?.('bootstrapDirectives', 'directive_already_initialized', {selector, element});
@@ -56,7 +56,7 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
 
         if (!alreadyInitializedSelector) {
           alreadyInitializedSelector = new Set([selector]);
-          initializedDirectives_.set(element, alreadyInitializedSelector);
+          initializedDirectiveElements_.set(element, alreadyInitializedSelector);
         }
 
         try {
@@ -81,10 +81,11 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
 function cleanOnDestroy(this: DirectiveBase) {
   this.logger_.logMethod?.('cleanOnDestroy');
   directiveInstanceRegistry_.delete(this);
+  const alreadyInitializedSelector = initializedDirectiveElements_.get(this.element_);
   if (alreadyInitializedSelector) {
     alreadyInitializedSelector.delete(this.selector_);
     if (alreadyInitializedSelector.size === 0) {
-      initializedDirectives_.delete(this.element_);
+      initializedDirectiveElements_.delete(this.element_);
     }
   }
 }
