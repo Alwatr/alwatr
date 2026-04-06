@@ -50,7 +50,7 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
         let alreadyInitializedSelector = initializedDirectiveElements_.get(element);
 
         if (alreadyInitializedSelector?.has(selector)) {
-          logger.incident?.('bootstrapDirectives', 'directive_already_initialized', {selector, element});
+          logger.logOther?.('bootstrapDirectives', 'directive_already_initialized', {selector, element});
           continue;
         }
 
