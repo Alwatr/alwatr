@@ -17,7 +17,7 @@
     },
     "pkg/core": {
       "name": "@alwatr/core",
-      "version": "9.4.2",
+      "version": "9.4.3",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/cyrb53": "workspace:*",
@@ -434,7 +434,7 @@
     },
     "pkg/nanolib/synapse": {
       "name": "@alwatr/synapse",
-      "version": "9.4.2",
+      "version": "9.4.3",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/logger": "workspace:*",

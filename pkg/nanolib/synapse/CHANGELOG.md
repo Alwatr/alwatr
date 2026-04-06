@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.3](https://github.com/Alwatr/alwatr/compare/v9.4.2...v9.4.3) (2026-04-06)
+
+### 🔨 Code Refactoring
+
+* **synapse:** rename onDestroy to addDestroyHook for clarity and update internal references ([f1c9900](https://github.com/Alwatr/alwatr/commit/f1c9900d22e74dc594c9b6f0a2d940ef94a362cb))
+
+### 🧹 Miscellaneous Chores
+
+* **synapse:** change logging method for already initialized directives to logOther for consistency ([904ed45](https://github.com/Alwatr/alwatr/commit/904ed4568f07c5a76f52aa5db31c3cf487ca17d1))
+
 ## [9.4.2](https://github.com/Alwatr/alwatr/compare/v9.4.1...v9.4.2) (2026-04-06)
 
 ### 🐛 Bug Fixes
