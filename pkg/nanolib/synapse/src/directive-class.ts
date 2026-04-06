@@ -88,7 +88,8 @@ export abstract class DirectiveBase {
 
     this.selector_ = selector;
     this.element_ = element;
-    finalizationRegistry?.register(this, identifier);
+    finalizationRegistry?.register(this, `${identifier}/instance`);
+    finalizationRegistry?.register(this.element_, `${identifier}/element`);
 
     (async () => {
       await delay.nextMacrotask();
