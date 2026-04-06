@@ -91,7 +91,7 @@ export abstract class DirectiveBase {
     finalizationRegistry?.register(this, identifier);
 
     (async () => {
-      await delay.nextMicrotask();
+      await delay.nextMacrotask();
       await this.init_();
     })();
   }
