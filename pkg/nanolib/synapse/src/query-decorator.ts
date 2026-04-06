@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { DirectiveBase } from './directive-class.js';
+import type {DirectiveBase} from './directive-class.js';
 
 /**
  * A property decorator that queries the directive's element for a selector.
@@ -27,7 +27,7 @@ export function query<T extends Element>(selector: string, cache = true, root?: 
    */
   return function (
     _target: ClassAccessorDecoratorTarget<DirectiveBase, T | null>,
-    context: ClassAccessorDecoratorContext<DirectiveBase, T | null>
+    context: ClassAccessorDecoratorContext<DirectiveBase, T | null>,
   ): ClassAccessorDecoratorResult<DirectiveBase, T | null> {
     if (context.kind !== 'accessor') {
       throw new Error('@query can only be used with the "accessor" keyword');
@@ -43,7 +43,7 @@ export function query<T extends Element>(selector: string, cache = true, root?: 
           value = (this as any)[privateKey] = parent.querySelector<T>(selector);
         }
         return value;
-      }
+      },
     };
   };
 }
@@ -74,7 +74,7 @@ export function queryAll<T extends Element>(selector: string, cache = true, root
    */
   return function (
     _target: ClassAccessorDecoratorTarget<DirectiveBase, NodeListOf<T>>,
-    context: ClassAccessorDecoratorContext<DirectiveBase, NodeListOf<T>>
+    context: ClassAccessorDecoratorContext<DirectiveBase, NodeListOf<T>>,
   ): ClassAccessorDecoratorResult<DirectiveBase, NodeListOf<T>> {
     if (context.kind !== 'accessor') {
       throw new Error('@queryAll can only be used with the "accessor" keyword');
@@ -90,7 +90,7 @@ export function queryAll<T extends Element>(selector: string, cache = true, root
           value = (this as any)[privateKey] = parent.querySelectorAll<T>(selector);
         }
         return value;
-      }
+      },
     };
   };
 }

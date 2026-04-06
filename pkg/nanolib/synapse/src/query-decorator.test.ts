@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'bun:test';
-import { GlobalRegistrator } from '@happy-dom/global-registrator';
-import { DirectiveBase } from './directive-class.js';
-import { query, queryAll } from './query-decorator.js';
+import {describe, expect, it} from 'bun:test';
+import {GlobalRegistrator} from '@happy-dom/global-registrator';
+import {DirectiveBase} from './directive-class.js';
+import {query, queryAll} from './query-decorator.js';
 
 GlobalRegistrator.register();
 
