@@ -80,7 +80,7 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
  */
 function cleanOnDestroy(this: DirectiveBase) {
   this.logger_.logMethod?.('cleanOnDestroy');
-  const alreadyInitializedSelector = initializedDirectives_.get(this.element_);
+  directiveInstanceRegistry_.delete(this);
   if (alreadyInitializedSelector) {
     alreadyInitializedSelector.delete(this.selector_);
     if (alreadyInitializedSelector.size === 0) {
