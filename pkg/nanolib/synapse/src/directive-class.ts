@@ -176,7 +176,6 @@ export abstract class DirectiveBase {
       this.destroyHookList__.length = 0; // clear the list after executing all tasks
     }
 
-    this.element_?.remove();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this as any).element_ = null;
   }
