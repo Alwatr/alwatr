@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.4](https://github.com/Alwatr/alwatr/compare/v9.4.3...v9.4.4) (2026-04-08)
+
+**Note:** Version bump only for package @alwatr/core
+
 ## [9.4.3](https://github.com/Alwatr/alwatr/compare/v9.4.2...v9.4.3) (2026-04-06)
 
 **Note:** Version bump only for package @alwatr/core

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.4](https://github.com/Alwatr/alwatr/compare/v9.4.3...v9.4.4) (2026-04-08)
+
+### 🐛 Bug Fixes
+
+* **directive:** prevent remove element in destroy method ([a2e7ce7](https://github.com/Alwatr/alwatr/commit/a2e7ce72e559b72226c1d7711487bb9b13ee932f))
+
 ## [9.4.3](https://github.com/Alwatr/alwatr/compare/v9.4.2...v9.4.3) (2026-04-06)
 
 ### 🔨 Code Refactoring
