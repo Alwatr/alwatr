@@ -1,9 +1,7 @@
 {
   "recommendations": [
-    "arcanis.vscode-zipfs",
     "cardinal90.multi-cursor-case-preserve",
     "christian-kohler.path-intellisense",
-    "davidanson.vscode-markdownlint",
     "dbaeumer.vscode-eslint",
     "redhat.vscode-xml",
     "redhat.vscode-yaml",
@@ -11,7 +9,6 @@
     "esbenp.prettier-vscode",
     "gruntfuggly.todo-tree",
     "streetsidesoftware.code-spell-checker-persian",
-    "streetsidesoftware.code-spell-checker",
-    "yzhang.markdown-all-in-one"
+    "streetsidesoftware.code-spell-checker"
   ]
 }
