@@ -64,7 +64,7 @@
     },
     "pkg/fsm": {
       "name": "@alwatr/fsm",
-      "version": "9.4.5",
+      "version": "9.5.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
         "@alwatr/signal": "workspace:*",
@@ -649,7 +649,7 @@
     },
     "pkg/signal": {
       "name": "@alwatr/signal",
-      "version": "9.4.5",
+      "version": "9.5.0",
       "dependencies": {
         "@alwatr/debounce": "workspace:*",
         "@alwatr/delay": "workspace:*",

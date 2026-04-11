@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.5.0](https://github.com/Alwatr/alwatr/compare/v9.4.5...v9.5.0) (2026-04-11)
+
+### ✨ Features
+
+* add notifyChange method to notify listeners of current value ([08a5e61](https://github.com/Alwatr/alwatr/commit/08a5e6146a7f599acb219c6fbb8a8fdef1c0f6e4))
+
+### 🔨 Code Refactoring
+
+* format code for consistency and improve logging in StateSignal class ([166e8a6](https://github.com/Alwatr/alwatr/commit/166e8a64f763dac00bf8c7a74f1b1a8b73e05232))
+
 ## [9.4.5](https://github.com/Alwatr/alwatr/compare/v9.4.4...v9.4.5) (2026-04-11)
 
 ### 🔨 Code Refactoring
