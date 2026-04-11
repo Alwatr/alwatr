@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.5](https://github.com/Alwatr/alwatr/compare/v9.4.4...v9.4.5) (2026-04-11)
+
+### 🔨 Code Refactoring
+
+* remove generic constraint from createLocalStorageProvider function ([7ff3461](https://github.com/Alwatr/alwatr/commit/7ff34614d59709e24358e500d4c5a3a9320f1698))
+* simplify generic constraints and remove extend jsonValue from types ([f02aeb3](https://github.com/Alwatr/alwatr/commit/f02aeb364abdede199c4eb5e7e73eb51945b8f22))
+
+### 🔗 Dependencies update
+
+* update @conventional-changelog/git-client, [@inquirer](https://github.com/inquirer) packages, dotenv, lru-cache, and tinyglobby to latest versions ([a7fe440](https://github.com/Alwatr/alwatr/commit/a7fe440f69bc05720830d812380a223789a44664))
+* update bun-types and prettier to latest versions ([33a2861](https://github.com/Alwatr/alwatr/commit/33a2861685b28c3c82017b79b086158815657390))
+
 ## [9.4.4](https://github.com/Alwatr/alwatr/compare/v9.4.3...v9.4.4) (2026-04-08)
 
 ### 🐛 Bug Fixes

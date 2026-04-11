@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.5](https://github.com/Alwatr/alwatr/compare/v9.4.4...v9.4.5) (2026-04-11)
+
+### 🔨 Code Refactoring
+
+* remove generic constraint from createLocalStorageProvider function ([7ff3461](https://github.com/Alwatr/alwatr/commit/7ff34614d59709e24358e500d4c5a3a9320f1698))
+* simplify generic constraints and remove extend jsonValue from types ([f02aeb3](https://github.com/Alwatr/alwatr/commit/f02aeb364abdede199c4eb5e7e73eb51945b8f22))
+
 ## [9.4.0](https://github.com/Alwatr/alwatr/compare/v9.3.0...v9.4.0) (2026-04-05)
 
 **Note:** Version bump only for package @alwatr/local-storage

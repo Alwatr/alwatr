@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.5](https://github.com/Alwatr/alwatr/compare/v9.4.4...v9.4.5) (2026-04-11)
+
+### 🔗 Dependencies update
+
+* update bun-types and prettier to latest versions ([33a2861](https://github.com/Alwatr/alwatr/commit/33a2861685b28c3c82017b79b086158815657390))
+
 ## [9.4.0](https://github.com/Alwatr/alwatr/compare/v9.3.0...v9.4.0) (2026-04-05)
 
 ### 🧹 Miscellaneous Chores
