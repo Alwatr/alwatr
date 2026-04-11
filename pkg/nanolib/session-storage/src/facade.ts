@@ -1,6 +1,6 @@
-import { SessionStorageProvider } from './session-storage.provider.js';
+import {SessionStorageProvider} from './session-storage.provider.js';
 
-import type { SessionStorageProviderConfig } from './type.js';
+import type {SessionStorageProviderConfig} from './type.js';
 
 /**
  * Factory function to create a new SessionStorageProvider.
@@ -20,6 +20,6 @@ import type { SessionStorageProviderConfig } from './type.js';
  * console.log(current); // { step: 2, answers: { q1: 'yes' } }
  * ```
  */
-export function createSessionStorageProvider<T extends JsonValue>(config: SessionStorageProviderConfig): SessionStorageProvider<T> {
+export function createSessionStorageProvider<T>(config: SessionStorageProviderConfig): SessionStorageProvider<T> {
   return new SessionStorageProvider<T>(config);
 }

@@ -1,10 +1,10 @@
-import { createDebouncer } from '@alwatr/debounce';
-import { createSessionStorageProvider } from '@alwatr/session-storage';
+import {createDebouncer} from '@alwatr/debounce';
+import {createSessionStorageProvider} from '@alwatr/session-storage';
 
-import { StateSignal } from './state-signal.js';
+import {StateSignal} from './state-signal.js';
 
-import type { SessionStateSignalConfig } from '../type.js';
-import type { SessionStorageProvider } from '@alwatr/session-storage';
+import type {SessionStateSignalConfig} from '../type.js';
+import type {SessionStorageProvider} from '@alwatr/session-storage';
 
 /**
  * A stateful signal that persists its value in the browser's `sessionStorage`.
@@ -48,7 +48,7 @@ import type { SessionStorageProvider } from '@alwatr/session-storage';
  * wizardSignal.destroy();
  * ```
  */
-export class SessionStateSignal<T extends JsonValue> extends StateSignal<T> {
+export class SessionStateSignal<T> extends StateSignal<T> {
   /**
    * The underlying session storage provider instance.
    * @private
@@ -68,9 +68,9 @@ export class SessionStateSignal<T extends JsonValue> extends StateSignal<T> {
   private readonly storageSyncSubscription__;
 
   constructor(config: SessionStateSignalConfig<T>) {
-    const { name, storageKey = name, saveDebounceDelay = 500, initialValue, onDestroy } = config;
+    const {name, storageKey = name, saveDebounceDelay = 500, initialValue, onDestroy} = config;
 
-    const storageProvider = createSessionStorageProvider<T>({ name: storageKey });
+    const storageProvider = createSessionStorageProvider<T>({name: storageKey});
 
     super({
       name,
@@ -90,7 +90,7 @@ export class SessionStateSignal<T extends JsonValue> extends StateSignal<T> {
       func: this.syncStorage__,
     });
 
-    this.storageSyncSubscription__ = this.subscribe(this.storageDebouncer__.trigger, { receivePrevious: false });
+    this.storageSyncSubscription__ = this.subscribe(this.storageDebouncer__.trigger, {receivePrevious: false});
   }
 
   /**

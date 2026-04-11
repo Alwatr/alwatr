@@ -21,7 +21,7 @@ import type {LocalStorageProviderConfig} from './type.js';
  * console.log(currentSettings); // { theme: 'dark', notifications: false }
  * ```
  */
-export class LocalStorageProvider<T extends JsonValue> {
+export class LocalStorageProvider<T> {
   public static readonly version = __package_version__;
 
   private readonly key__: string;
@@ -100,8 +100,7 @@ export class LocalStorageProvider<T extends JsonValue> {
 
     try {
       value = localStorage.getItem(this.key__);
-    }
-    catch (err) {
+    } catch (err) {
       this.logger_.error('read', 'read_local_storage_error', {err});
     }
 
@@ -114,8 +113,7 @@ export class LocalStorageProvider<T extends JsonValue> {
       const parsedValue = JSON.parse(value) as T;
       this.logger_.logMethodFull?.('read//value', undefined, {parsedValue});
       return parsedValue;
-    }
-    catch (err) {
+    } catch (err) {
       this.logger_.error('read', 'read_parse_error', {err});
       return null;
     }
@@ -129,16 +127,14 @@ export class LocalStorageProvider<T extends JsonValue> {
     let valueStr: string;
     try {
       valueStr = JSON.stringify(value);
-    }
-    catch (err) {
+    } catch (err) {
       this.logger_.error('write', 'write_stringify_error', {err});
       throw new Error('write_stringify_error');
     }
 
     try {
       localStorage.setItem(this.key__, valueStr);
-    }
-    catch (err) {
+    } catch (err) {
       this.logger_.error('write', 'write_local_storage_error', {err});
     }
   }

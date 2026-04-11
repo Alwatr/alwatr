@@ -28,6 +28,6 @@ import type {PersistentStateSignalConfig} from '../type.js';
  * // Setting a new value updates the in-memory state and writes to localStorage.
  * userThemeSignal.set('dark');
  */
-export function createPersistentStateSignal<T extends JsonValue>(config: PersistentStateSignalConfig<T>): PersistentStateSignal<T> {
+export function createPersistentStateSignal<T>(config: PersistentStateSignalConfig<T>): PersistentStateSignal<T> {
   return new PersistentStateSignal(config);
 }

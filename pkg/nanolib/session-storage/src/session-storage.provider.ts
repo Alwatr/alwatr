@@ -1,6 +1,6 @@
-import { createLogger } from '@alwatr/logger';
+import {createLogger} from '@alwatr/logger';
 
-import type { SessionStorageProviderConfig } from './type.js';
+import type {SessionStorageProviderConfig} from './type.js';
 
 /**
  * A provider class for managing a specific item in sessionStorage.
@@ -23,7 +23,7 @@ import type { SessionStorageProviderConfig } from './type.js';
  * formDraft.remove();
  * ```
  */
-export class SessionStorageProvider<T extends JsonValue> {
+export class SessionStorageProvider<T> {
   public static readonly version = __package_version__;
 
   private readonly key__: string;
@@ -46,7 +46,7 @@ export class SessionStorageProvider<T extends JsonValue> {
    * ```typescript
    * const exists = SessionStorageProvider.has('user-form');
    * ```
-  */
+   */
   public static has(key: string): boolean {
     return sessionStorage.getItem(key) !== null;
   }
@@ -87,9 +87,8 @@ export class SessionStorageProvider<T extends JsonValue> {
 
     try {
       raw = sessionStorage.getItem(this.key__);
-    }
-    catch (err) {
-      this.logger_.error('read', 'read_session_storage_error', { err });
+    } catch (err) {
+      this.logger_.error('read', 'read_session_storage_error', {err});
     }
 
     if (!raw) {
@@ -99,11 +98,10 @@ export class SessionStorageProvider<T extends JsonValue> {
 
     try {
       const parsed = JSON.parse(raw) as T;
-      this.logger_.logMethodFull?.('read//value', undefined, { parsed });
+      this.logger_.logMethodFull?.('read//value', undefined, {parsed});
       return parsed;
-    }
-    catch (err) {
-      this.logger_.error('read', 'read_parse_error', { err });
+    } catch (err) {
+      this.logger_.error('read', 'read_parse_error', {err});
       return null;
     }
   }
@@ -120,22 +118,20 @@ export class SessionStorageProvider<T extends JsonValue> {
    * ```
    */
   public write(value: T): void {
-    this.logger_.logMethodArgs?.('write', { value });
+    this.logger_.logMethodArgs?.('write', {value});
 
     let valueStr: string;
     try {
       valueStr = JSON.stringify(value);
-    }
-    catch (err) {
-      this.logger_.error('write', 'write_stringify_error', { err });
+    } catch (err) {
+      this.logger_.error('write', 'write_stringify_error', {err});
       throw new Error('write_stringify_error');
     }
 
     try {
       sessionStorage.setItem(this.key__, valueStr);
-    }
-    catch (err) {
-      this.logger_.error('write', 'write_session_storage_error', { err });
+    } catch (err) {
+      this.logger_.error('write', 'write_session_storage_error', {err});
     }
   }
 

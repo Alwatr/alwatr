@@ -1,6 +1,6 @@
-import { SessionStateSignal } from '../core/session-state-signal.js';
+import {SessionStateSignal} from '../core/session-state-signal.js';
 
-import type { SessionStateSignalConfig } from '../type.js';
+import type {SessionStateSignalConfig} from '../type.js';
 
 /**
  * Creates a stateful signal that persists its value in `sessionStorage`.
@@ -37,6 +37,6 @@ import type { SessionStateSignalConfig } from '../type.js';
  * checkoutWizard.destroy();
  * ```
  */
-export function createSessionStateSignal<T extends JsonValue>(config: SessionStateSignalConfig<T>): SessionStateSignal<T> {
+export function createSessionStateSignal<T>(config: SessionStateSignalConfig<T>): SessionStateSignal<T> {
   return new SessionStateSignal(config);
 }

@@ -14,7 +14,7 @@ import type {LocalStorageProvider} from '@alwatr/local-storage';
  *
  * @template T The type of the state it holds.
  */
-export class PersistentStateSignal<T extends JsonValue> extends StateSignal<T> {
+export class PersistentStateSignal<T> extends StateSignal<T> {
   /**
    * The underlying storage provider instance.
    * @private
