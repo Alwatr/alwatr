@@ -1,9 +1,9 @@
-import { delay } from '@alwatr/delay';
-import { createLogger, type AlwatrLogger } from '@alwatr/logger';
+import {delay} from '@alwatr/delay';
+import {createLogger, type AlwatrLogger} from '@alwatr/logger';
 
-import { SignalBase } from './signal-base.js';
+import {SignalBase} from './signal-base.js';
 
-import type { StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, IReadonlySignal } from '../type.js';
+import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, IReadonlySignal} from '../type.js';
 
 /**
  * A stateful signal that holds a value and notifies listeners when the value changes.
@@ -58,7 +58,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     });
     this.logger_ = createLogger(`state-signal:${this.name}`);
     this.value__ = config.initialValue;
-    this.logger_.logMethodArgs?.('constructor', { initialValue: this.value__ });
+    this.logger_.logMethodArgs?.('constructor', {initialValue: this.value__});
   }
 
   /**
@@ -90,8 +90,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * mySignal.set({ ...mySignal.get(), property: 'new-value' });
    */
   public set(newValue: T): void {
-    this.logger_.logMethodArgs?.('set', { newValue });
-    this.checkDestroyed_();
+    this.logger_.logMethodArgs?.('set', {newValue});
 
     // For primitives (including null), do not notify if the value is the same.
     if (Object.is(this.value__, newValue) && (typeof newValue !== 'object' || newValue === null)) {
@@ -100,6 +99,8 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
 
     this.value__ = newValue;
 
+    this.notifyChange();
+  }
 
   /**
    * Notifies all listeners about the current value, even if it hasn't changed.
@@ -165,7 +166,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
       // We don't need to add it to the observers list for future updates.
       if (options.once) {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        return { unsubscribe: () => { } };
+        return {unsubscribe: () => {}};
       }
     }
 
