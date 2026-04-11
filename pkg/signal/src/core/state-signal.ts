@@ -100,8 +100,17 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
 
     this.value__ = newValue;
 
+
+  /**
+   * Notifies all listeners about the current value, even if it hasn't changed.
+   *
+   * This method is useful when you change the value instance directly (e.g., mutating an object) and want to inform listeners about the change.
+   */
+  public notifyChange(): void {
+    this.logger_.logMethod?.('notifyChange');
+    this.checkDestroyed_();
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    delay.nextMicrotask().then(() => this.notify_(newValue));
+    delay.nextMicrotask().then(() => this.notify_(this.value__));
   }
 
   /**
