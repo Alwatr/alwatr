@@ -6,6 +6,8 @@ import {attribute, query, queryAll} from './util-decorators.js';
 GlobalRegistrator.register();
 
 class TestDirective extends DirectiveBase {
+  protected init_(): void {}
+
   @query('.title')
   accessor title!: HTMLHeadingElement | null;
 
