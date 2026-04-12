@@ -94,3 +94,44 @@ export function queryAll<T extends Element>(selector: string, cache = true, root
     };
   };
 }
+
+/**
+ * A property decorator that reads an attribute value from the directive's element.
+ * The read is performed once and the result is cached.
+ *
+ * @param name The attribute name to read.
+ * @param cache Whether to cache the result on first access. Defaults to true.
+ * @param root Optional root element to read the attribute from. Defaults to the directive's element.
+ *
+ * @example
+ * ```ts
+ * @directive('[my-directive]')
+ * class MyDirective extends DirectiveBase {
+ *   @attribute('data-id')
+ *   accessor dataId!: string | null;
+ * }
+ * ```
+ */
+export function attribute(name: string, cache = true, root?: Element) {
+  return function (
+    _target: ClassAccessorDecoratorTarget<DirectiveBase, string | null>,
+    context: ClassAccessorDecoratorContext<DirectiveBase, string | null>,
+  ): ClassAccessorDecoratorResult<DirectiveBase, string | null> {
+    if (context.kind !== 'accessor') {
+      throw new Error('@attribute can only be used with the "accessor" keyword');
+    }
+
+    const privateKey = Symbol(`${String(context.name)}__`);
+
+    return {
+      get() {
+        let value = (this as any)[privateKey] as string | null | undefined;
+        if (value === undefined || cache === false) {
+          const element = root ?? this.element_;
+          value = (this as any)[privateKey] = element.getAttribute(name);
+        }
+        return value;
+      },
+    };
+  };
+}

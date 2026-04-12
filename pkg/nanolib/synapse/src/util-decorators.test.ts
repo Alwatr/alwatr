@@ -1,11 +1,13 @@
 import {describe, expect, it} from 'bun:test';
 import {GlobalRegistrator} from '@happy-dom/global-registrator';
 import {DirectiveBase} from './directive-class.js';
-import {query, queryAll} from './query-decorator.js';
+import {attribute, query, queryAll} from './util-decorators.js';
 
 GlobalRegistrator.register();
 
 class TestDirective extends DirectiveBase {
+  protected init_(): void {}
+
   @query('.title')
   accessor title!: HTMLHeadingElement | null;
 
@@ -14,6 +16,12 @@ class TestDirective extends DirectiveBase {
 
   @queryAll('.item')
   accessor items!: NodeListOf<Element>;
+
+  @attribute('data-id')
+  accessor dataId!: string | null;
+
+  @attribute('data-missing')
+  accessor missingData!: string | null;
 }
 
 describe('@query', () => {
@@ -67,5 +75,35 @@ describe('@queryAll', () => {
 
     const directive = new TestDirective(root, '[test]');
     expect(directive.items.length).toBe(0);
+  });
+});
+
+describe('@attribute', () => {
+  it('returns attribute value', () => {
+    const root = document.createElement('div');
+    root.setAttribute('data-id', '123');
+
+    const directive = new TestDirective(root, 'test');
+    expect(directive.dataId).toBe('123');
+  });
+
+  it('returns null when attribute is not found', () => {
+    const root = document.createElement('div');
+
+    const directive = new TestDirective(root, '[test]');
+    expect(directive.missingData).toBeNull();
+  });
+
+  it('caches result by default', () => {
+    const root = document.createElement('div');
+    root.setAttribute('data-id', '123');
+
+    const directive = new TestDirective(root, '[test]');
+    const first = directive.dataId;
+    root.setAttribute('data-id', '456');
+    const second = directive.dataId;
+
+    expect(first).toBe('123');
+    expect(second).toBe('123');
   });
 });

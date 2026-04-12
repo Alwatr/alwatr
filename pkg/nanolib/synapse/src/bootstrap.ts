@@ -28,48 +28,43 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
 
   if (document.readyState === 'loading') {
     logger.incident?.('bootstrapDirectives', 'dom_not_ready', 'Delaying directive initialization until DOM is ready');
-    document.addEventListener(
-      'DOMContentLoaded',
-      () => {
-        bootstrapDirectives(rootElement);
-      },
-      {once: true},
-    );
+    document.addEventListener('DOMContentLoaded', () => bootstrapDirectives(rootElement), {once: true});
     return;
   }
 
-  for (const [selector, constructor] of directiveRegistry_) {
+  for (const [attributeName, constructor] of directiveRegistry_) {
     try {
-      const elementList = rootElement.querySelectorAll<HTMLElement>(selector);
+      const elementList = rootElement.querySelectorAll<HTMLElement>(`[${attributeName}]`);
+
       if (elementList.length === 0) {
-        logger.logOther?.('no_elements_found', {selector});
+        logger.logOther?.('no_elements_found', {attributeName});
         continue;
       }
 
       for (const element of elementList) {
-        let alreadyInitializedSelector = initializedDirectiveElements_.get(element);
+        let initializedDirectives = initializedDirectiveElements_.get(element);
 
-        if (alreadyInitializedSelector?.has(selector)) {
-          logger.logOther?.('bootstrapDirectives', 'directive_already_initialized', {selector, element});
+        if (initializedDirectives?.has(attributeName)) {
+          logger.logOther?.('bootstrapDirectives', 'directive_already_initialized', {attributeName, element});
           continue;
         }
 
-        if (!alreadyInitializedSelector) {
-          alreadyInitializedSelector = new Set([selector]);
-          initializedDirectiveElements_.set(element, alreadyInitializedSelector);
+        if (!initializedDirectives) {
+          initializedDirectives = new Set([attributeName]);
+          initializedDirectiveElements_.set(element, initializedDirectives);
         }
 
         try {
-          const directiveInstance = new constructor(element, selector);
-          alreadyInitializedSelector.add(selector);
+          const directiveInstance = new constructor(element, attributeName);
+          initializedDirectives.add(attributeName);
           directiveInstance.addDestroyHook(cleanOnDestroy);
           directiveInstanceRegistry_.add(directiveInstance);
         } catch (err) {
-          logger.error('bootstrapDirectives', 'directive_instantiation_error', {selector, element}, err);
+          logger.error('bootstrapDirectives', 'directive_instantiation_error', {attributeName, element}, err);
         }
       }
     } catch (err) {
-      logger.error('bootstrapDirectives', 'directive_instantiation_error', err, {selector});
+      logger.error('bootstrapDirectives', 'bootstrap_error', err, {attributeName});
     }
   }
 }
@@ -81,10 +76,11 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
 function cleanOnDestroy(this: DirectiveBase) {
   this.logger_.logMethod?.('cleanOnDestroy');
   directiveInstanceRegistry_.delete(this);
-  const alreadyInitializedSelector = initializedDirectiveElements_.get(this.element_);
-  if (alreadyInitializedSelector) {
-    alreadyInitializedSelector.delete(this.selector_);
-    if (alreadyInitializedSelector.size === 0) {
+
+  const initializedDirectives = initializedDirectiveElements_.get(this.element_);
+  if (initializedDirectives) {
+    initializedDirectives.delete(this.attributeName);
+    if (initializedDirectives.size === 0) {
       initializedDirectiveElements_.delete(this.element_);
     }
   }
