@@ -83,7 +83,7 @@ describe('@attribute', () => {
     const root = document.createElement('div');
     root.setAttribute('data-id', '123');
 
-    const directive = new TestDirective(root, '[test]');
+    const directive = new TestDirective(root, 'test');
     expect(directive.dataId).toBe('123');
   });
 
