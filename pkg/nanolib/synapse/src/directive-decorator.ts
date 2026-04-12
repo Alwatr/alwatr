@@ -12,16 +12,16 @@ export type DirectiveConstructor<T extends DirectiveBase = DirectiveBase> = new 
 
 /**
  * A class decorator that registers a class as an attribute-based directive.
- * * @param name The unique attribute name for this directive (e.g., 'alwatr-tooltip').
+ * @param name The unique attribute name for this directive (e.g., 'alwatr-tooltip').
  *
  * @example
  * ```ts
  * @directive('alwatr-copy')
  * class CopyDirective extends DirectiveBase {
- * protected update_(): void {
- * // this.value contains the value of the 'alwatr-copy' attribute
- * console.log('Directive configured with:', this.value);
- * }
+ *   protected init_(): void {
+ *     // this.attributeValue contains the value of the 'alwatr-copy' attribute
+ *     console.log('Directive configured with:', this.attributeValue);
+ *   }
  * }
  * ```
  */

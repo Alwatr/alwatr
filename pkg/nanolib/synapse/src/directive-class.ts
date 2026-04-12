@@ -34,7 +34,7 @@ function generateIndexForDirective(name: string): number {
  * ```ts
  * import {DirectiveBase, directive} from '@alwatr/synapse';
  *
- * @directive('[my-directive]')
+ * @directive('my-directive')
  * export class MyDirective extends DirectiveBase {
  *   protected init_(): void {
  *     this.element_.textContent = 'Hello from MyDirective!';
@@ -52,10 +52,10 @@ export abstract class DirectiveBase {
   /**
    * The value of the attribute.
    */
-  public attributeValue: string;
+  public readonly attributeValue: string;
 
   /**
-   * A dedicated logger instance for this directive, pre-configured with a context like `directive:[selector]`.
+   * A dedicated logger instance for this directive, pre-configured with a context like `directive:[attributeName]`.
    * Use this for logging to provide clear, contextual messages.
    */
   protected readonly logger_;
@@ -72,7 +72,7 @@ export abstract class DirectiveBase {
   private readonly destroyHookList__: (() => Awaitable<void>)[] = [];
 
   /**
-   * A unique index for this directive instance, generated based on the selector and the number of existing instances of that selector. This helps differentiate multiple instances of the same directive on the page.
+   * A unique index for this directive instance, generated based on the attribute name and the number of existing instances of that name. This helps differentiate multiple instances of the same directive on the page.
    */
   public readonly index: number;
 
