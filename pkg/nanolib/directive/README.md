@@ -1,14 +1,14 @@
-# @alwatr/synapse
+# @alwatr/directive
 
 **Connect your TypeScript classes to the DOM, declaratively.**
 
-@alwatr/synapse is a lightweight, zero-dependency library that brings the power of directives to vanilla TypeScript. It provides a clean, organized way to attach custom behaviors to DOM elements using CSS selectors, bridging the gap between your logic and your UI without the need for a heavy framework.
+@alwatr/directive is a lightweight, zero-dependency library that brings the power of directives to vanilla TypeScript. It provides a clean, organized way to attach custom behaviors to DOM elements using CSS selectors, bridging the gap between your logic and your UI without the need for a heavy framework.
 
-## Why Synapse?
+## Why Directive?
 
 In modern web development, we often need to add dynamic behavior to elements: a custom tooltip, a special click handler, an element that loads data, etc. While frameworks handle this, vanilla projects can quickly become cluttered with `document.querySelector` calls and manual event listener management.
 
-Synapse solves this by letting you encapsulate behavior in dedicated classes and declaratively link them to your HTML.
+Directive solves this by letting you encapsulate behavior in dedicated classes and declaratively link them to your HTML.
 
 - **Clean & Organized:** Keep your UI logic in self-contained, reusable classes.
 - **Declarative:** Simply add a class or attribute to your HTML to activate a behavior.
@@ -26,20 +26,20 @@ Synapse solves this by letting you encapsulate behavior in dedicated classes and
 
 ```bash
 # npm
-npm i @alwatr/synapse
+npm i @alwatr/directive
 
 # yarn
-yarn add @alwatr/synapse
+yarn add @alwatr/directive
 
 # pnpm
-pnpm i @alwatr/synapse
+pnpm i @alwatr/directive
 ```
 
 ## How It Works
 
-Synapse is built around three core concepts:
+Directive is built around three core concepts:
 
-1. **`@directive(selector)`**: A class decorator that registers your class. You tell Synapse, "any element matching this `selector` should be managed by this class."
+1. **`@directive(selector)`**: A class decorator that registers your class. You tell Directive, "any element matching this `selector` should be managed by this class."
 2. **`DirectiveBase`**: An abstract class that your directives should extend. It provides the connected `element`, a dedicated `logger`, and an `update_` method to encapsulate your logic.
 3. **`bootstrapDirectives(root?)`**: A function that scans the DOM for elements matching registered selectors and creates an instance of the corresponding class for each one.
 
@@ -53,7 +53,7 @@ A directive is a class that extends `DirectiveBase` to encapsulate its logic. Al
 
 ```typescript
 // src/copy-button.ts
-import {directive, DirectiveBase} from '@alwatr/synapse';
+import {directive, DirectiveBase} from '@alwatr/directive';
 
 @directive('[data-copy-button]')
 export class CopyButtonDirective extends DirectiveBase {
@@ -90,7 +90,7 @@ In your main entry point, import your directives and call `bootstrapDirectives` 
 
 ```typescript
 // src/main.ts
-import {bootstrapDirectives} from '@alwatr/synapse';
+import {bootstrapDirectives} from '@alwatr/directive';
 import './copy-button.js'; // Import the directive to register it
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -106,12 +106,12 @@ Now, you can use the directive declaratively in your HTML.
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Synapse Demo</title>
+    <title>Directive Demo</title>
     <script type="module" src="dist/main.js"></script>
   </head>
   <body>
     <!-- This button will now have the copy-on-click behavior -->
-    <button data-copy-button data-copy-text="Hello, Synapse!">Copy Text</button>
+    <button data-copy-button data-copy-text="Hello, Directive!">Copy Text</button>
   </body>
 </html>
 ```
@@ -124,13 +124,13 @@ A class decorator that registers your class as a directive for elements matching
 
 - **`selector`**: A valid CSS selector string.
 
-The decorated class **must** extend `DirectiveBase`. Synapse will instantiate it for each matching element.
+The decorated class **must** extend `DirectiveBase`. Directive will instantiate it for each matching element.
 
 ### `DirectiveBase`
 
 An abstract class that your directive classes must extend. It provides the following protected properties and methods:
 
-- **`constructor(element: HTMLElement, selector: string)`**: The base constructor automatically called by Synapse. It initializes the `element_`, `selector_`, and `logger_` properties and then calls `update_()`. You should not need to override it.
+- **`constructor(element: HTMLElement, selector: string)`**: The base constructor automatically called by Directive. It initializes the `element_`, `selector_`, and `logger_` properties and then calls `update_()`. You should not need to override it.
 - **`element_: HTMLElement`** (readonly): The DOM element the directive is attached to.
 - **`selector_: string`** (readonly): The CSS selector that matched the element.
 - **`logger_`** (readonly): A dedicated logger instance pre-configured for the directive (`directive:selector`).
@@ -143,7 +143,7 @@ Scans a DOM tree for elements that match registered directive selectors and inst
 
 - **`rootElement`** (optional): The root element to scan. Defaults to `document.body`.
 
-This function is idempotent. It marks processed elements with a `_synapseConnected` attribute to ensure that it never initializes a directive on the same element twice. This is particularly useful for SPAs.
+This function is idempotent. It uses `initializedDirectiveElements_` WeakMap to ensure that it never initializes a directive on the same element twice. This is particularly useful for SPAs.
 
 #### Example: Dynamic Content
 

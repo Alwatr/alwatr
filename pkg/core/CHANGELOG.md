@@ -437,7 +437,7 @@ Example:
 
 ### ✨ Features
 
-* **nanolib:** add @alwatr/synapse as a dependency and export in main module ([6bef692](https://github.com/Alwatr/nanolib/commit/6bef692b4fe9a3728277889912bc9196bf579a3f))
+* **nanolib:** add @alwatr/directive as a dependency and export in main module ([6bef692](https://github.com/Alwatr/nanolib/commit/6bef692b4fe9a3728277889912bc9196bf579a3f))
 
 ### 🔨 Code Refactoring
 

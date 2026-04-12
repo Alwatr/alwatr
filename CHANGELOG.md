@@ -39,57 +39,57 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### 🔨 Code Refactoring
 
-* **synapse:** rename onDestroy to addDestroyHook for clarity and update internal references ([f1c9900](https://github.com/Alwatr/alwatr/commit/f1c9900d22e74dc594c9b6f0a2d940ef94a362cb))
+* **directive:** rename onDestroy to addDestroyHook for clarity and update internal references ([f1c9900](https://github.com/Alwatr/alwatr/commit/f1c9900d22e74dc594c9b6f0a2d940ef94a362cb))
 
 ### 🧹 Miscellaneous Chores
 
-* **synapse:** change logging method for already initialized directives to logOther for consistency ([904ed45](https://github.com/Alwatr/alwatr/commit/904ed4568f07c5a76f52aa5db31c3cf487ca17d1))
+* **directive:** change logging method for already initialized directives to logOther for consistency ([904ed45](https://github.com/Alwatr/alwatr/commit/904ed4568f07c5a76f52aa5db31c3cf487ca17d1))
 
 ## [9.4.2](https://github.com/Alwatr/alwatr/compare/v9.4.1...v9.4.2) (2026-04-06)
 
 ### 🐛 Bug Fixes
 
-* **synapse:** remove unnecessary reference to initialized directives in cleanOnDestroy to prevent memory leak ([79f849b](https://github.com/Alwatr/alwatr/commit/79f849b151220c8c8e38bee406bafa96c789461b))
-* **synapse:** rename initializedDirectives_ to initializedDirectiveElements_ for clarity and consistency ([2fdff87](https://github.com/Alwatr/alwatr/commit/2fdff87969316111474e61d599a1f0e6fd0cfa47))
+* **directive:** remove unnecessary reference to initialized directives in cleanOnDestroy to prevent memory leak ([79f849b](https://github.com/Alwatr/alwatr/commit/79f849b151220c8c8e38bee406bafa96c789461b))
+* **directive:** rename initializedDirectives_ to initializedDirectiveElements_ for clarity and consistency ([2fdff87](https://github.com/Alwatr/alwatr/commit/2fdff87969316111474e61d599a1f0e6fd0cfa47))
 
 ## [9.4.1](https://github.com/Alwatr/alwatr/compare/v9.4.0...v9.4.1) (2026-04-06)
 
 ### 🐛 Bug Fixes
 
 * **directive:** change delay from nextMicrotask to nextMacrotask for initialization ([e02c6b4](https://github.com/Alwatr/alwatr/commit/e02c6b400bb82971f9bd207916e16811947c524d))
-* **synapse:** add logging to cleanOnDestroy for better debugging ([8a54e65](https://github.com/Alwatr/alwatr/commit/8a54e65f58cdd50f747ea7d3c168f6e4d91e2e2d))
-* **synapse:** update finalization registry to differentiate between instance and element ([93ed64f](https://github.com/Alwatr/alwatr/commit/93ed64f62c5e83b5105315fba71342a564c3eaf6))
+* **directive:** add logging to cleanOnDestroy for better debugging ([8a54e65](https://github.com/Alwatr/alwatr/commit/8a54e65f58cdd50f747ea7d3c168f6e4d91e2e2d))
+* **directive:** update finalization registry to differentiate between instance and element ([93ed64f](https://github.com/Alwatr/alwatr/commit/93ed64f62c5e83b5105315fba71342a564c3eaf6))
 
 ### 🧹 Miscellaneous Chores
 
 * **playground:** add debug flag to build:es script ([50dee7a](https://github.com/Alwatr/alwatr/commit/50dee7ac350b9bbdb49f2aea3d78a8d0c0704a20))
-* **synapse:** add documentation for directive instance tracking and garbage collection ([2059f50](https://github.com/Alwatr/alwatr/commit/2059f502214d5f04f4baa91dca2873b163986b0c))
+* **directive:** add documentation for directive instance tracking and garbage collection ([2059f50](https://github.com/Alwatr/alwatr/commit/2059f502214d5f04f4baa91dca2873b163986b0c))
 
 ## [9.4.0](https://github.com/Alwatr/alwatr/compare/v9.3.0...v9.4.0) (2026-04-05)
 
 ### ✨ Features
 
-* **synapse:** add autoDestroy method to clean up directives when elements are disconnected from the DOM ([f85745e](https://github.com/Alwatr/alwatr/commit/f85745e0c53431ff88671735b06b3c26474ef676))
-* **synapse:** implement autoDestructDirectives and update directiveInstanceRegistry management ([8e003d9](https://github.com/Alwatr/alwatr/commit/8e003d936a1181812941f3371ced20ee72e77834))
-* **synapse:** implement unique index generation for directive instances ([f380943](https://github.com/Alwatr/alwatr/commit/f380943d039e7bed9b110ecc03102d8f94fcb1ce))
-* **synapse:** integrate FinalizationRegistry for directive garbage collection logging ([1e3f1f8](https://github.com/Alwatr/alwatr/commit/1e3f1f816bc82f740ca91df9d72ef99059ef0baa))
-* **synapse:** update autoDestroy method to return a boolean indicating element disconnection ([521307e](https://github.com/Alwatr/alwatr/commit/521307e2cd82014ad8e4cb3d6aa9fda9948ce5f2))
+* **directive:** add autoDestroy method to clean up directives when elements are disconnected from the DOM ([f85745e](https://github.com/Alwatr/alwatr/commit/f85745e0c53431ff88671735b06b3c26474ef676))
+* **directive:** implement autoDestructDirectives and update directiveInstanceRegistry management ([8e003d9](https://github.com/Alwatr/alwatr/commit/8e003d936a1181812941f3371ced20ee72e77834))
+* **directive:** implement unique index generation for directive instances ([f380943](https://github.com/Alwatr/alwatr/commit/f380943d039e7bed9b110ecc03102d8f94fcb1ce))
+* **directive:** integrate FinalizationRegistry for directive garbage collection logging ([1e3f1f8](https://github.com/Alwatr/alwatr/commit/1e3f1f816bc82f740ca91df9d72ef99059ef0baa))
+* **directive:** update autoDestroy method to return a boolean indicating element disconnection ([521307e](https://github.com/Alwatr/alwatr/commit/521307e2cd82014ad8e4cb3d6aa9fda9948ce5f2))
 
 ### 🔨 Code Refactoring
 
 * **signal:** replace arrays with Sets for observer management in SignalBase class ([185133c](https://github.com/Alwatr/alwatr/commit/185133c54c5a71fdfd0b5b43bf4edc37df289311))
-* **synapse:** change protected methods to public in DirectiveBase class ([7ed56a5](https://github.com/Alwatr/alwatr/commit/7ed56a5d13f3625976f1f14e09344d007c86a891))
-* **synapse:** enhance directive initialization logic and improve error handling ([8692c4e](https://github.com/Alwatr/alwatr/commit/8692c4e4fa60bafdc319bb8964390ec6e16d870a))
-* **synapse:** improve formatting and update directive registry to use set for unique selector registration ([b2c9a58](https://github.com/Alwatr/alwatr/commit/b2c9a5861d88a09f991cfdbd590a42dda5f3edcf))
-* **synapse:** update directive registry to use Map and add initialized directives tracking ([2558b40](https://github.com/Alwatr/alwatr/commit/2558b40e691ada0d543e9283ca799e6ba3002983))
-* **synapse:** update onDestroy method signature to accept a context-aware task ([de68470](https://github.com/Alwatr/alwatr/commit/de6847033cbbab0d0ef8c81a864625ccea786e1d))
+* **directive:** change protected methods to public in DirectiveBase class ([7ed56a5](https://github.com/Alwatr/alwatr/commit/7ed56a5d13f3625976f1f14e09344d007c86a891))
+* **directive:** enhance directive initialization logic and improve error handling ([8692c4e](https://github.com/Alwatr/alwatr/commit/8692c4e4fa60bafdc319bb8964390ec6e16d870a))
+* **directive:** improve formatting and update directive registry to use set for unique selector registration ([b2c9a58](https://github.com/Alwatr/alwatr/commit/b2c9a5861d88a09f991cfdbd590a42dda5f3edcf))
+* **directive:** update directive registry to use Map and add initialized directives tracking ([2558b40](https://github.com/Alwatr/alwatr/commit/2558b40e691ada0d543e9283ca799e6ba3002983))
+* **directive:** update onDestroy method signature to accept a context-aware task ([de68470](https://github.com/Alwatr/alwatr/commit/de6847033cbbab0d0ef8c81a864625ccea786e1d))
 
 ### 🧹 Miscellaneous Chores
 
 * apply feedbacks from code review ([51f629b](https://github.com/Alwatr/alwatr/commit/51f629b0a3dd989113684091de5b1a3736dc0f28))
 * remove commented-out file exclusion settings from VSCode configuration ([a131c2e](https://github.com/Alwatr/alwatr/commit/a131c2e8b682bdec34f16fd439d59901cc61f621))
 * reorder all package.json ([57d5681](https://github.com/Alwatr/alwatr/commit/57d56816c5676030a11f02d4f0bd675508b970de))
-* **synapse:** change logging for missing elements in bootstrapDirectives ([82f5763](https://github.com/Alwatr/alwatr/commit/82f5763cce4545022644b1a36dc025bb3681fdec))
+* **directive:** change logging for missing elements in bootstrapDirectives ([82f5763](https://github.com/Alwatr/alwatr/commit/82f5763cce4545022644b1a36dc025bb3681fdec))
 
 ## [9.3.0](https://github.com/Alwatr/alwatr/compare/v9.2.1...v9.3.0) (2026-04-04)
 
@@ -693,7 +693,7 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 * Add @alwatr/fetch-state-machine package ([03e3a62](https://github.com/Alwatr/alwatr/commit/03e3a62a1f60a4e6fdc9e4979f015d3cc3f474ea))
 * add @alwatr/has-own dependency and include in exports ([2c93361](https://github.com/Alwatr/alwatr/commit/2c933610b4bffe829546ffd98c5deaeee5fafd29))
 * Add @alwatr/observable package ([e554c91](https://github.com/Alwatr/alwatr/commit/e554c91e8d3bf59a853e1a08692f3fa730194616))
-* add @alwatr/synapse package ([212ce48](https://github.com/Alwatr/alwatr/commit/212ce485cca32369e4185d5230bc328d1f3a5517))
+* add @alwatr/directive package ([212ce48](https://github.com/Alwatr/alwatr/commit/212ce485cca32369e4185d5230bc328d1f3a5517))
 * add @alwatr/tsconfig-base to dependencies and update exports in package.json ([4e487c6](https://github.com/Alwatr/alwatr/commit/4e487c6985d1950a9f07e4b2bb9d6d0f1cde2f07))
 * Add `extra` meta for `collection-reference.ts` and `document-reference.ts` with migrate old versions ([8182369](https://github.com/Alwatr/alwatr/commit/81823692edacacb95a53d55218c2c818c9fa13cb))
 * add `extra` property to StoreFileMeta ([5cdb573](https://github.com/Alwatr/alwatr/commit/5cdb5735c2faf888a3fcea466ec3fd848e60148e))
@@ -1475,7 +1475,7 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 * improve error debugging ([62485ea](https://github.com/Alwatr/alwatr/commit/62485ea53b6f9a415cac91f10a060345dbfd84cd))
 * improve error debugging ([a28caf1](https://github.com/Alwatr/alwatr/commit/a28caf1e3b9f0ce83219b6bf04938e06de2b1f1d))
 * improve resource cleanup in createDebouncedSignal by checking internalSignal state before destruction ([36b8505](https://github.com/Alwatr/alwatr/commit/36b850505c0541906038a05f2cf5967baac1b2cb))
-* initialize logger and directive registry in synapse ([08f961c](https://github.com/Alwatr/alwatr/commit/08f961c81ca1b303bcad9f227f379b70dfd92090))
+* initialize logger and directive registry in directive ([08f961c](https://github.com/Alwatr/alwatr/commit/08f961c81ca1b303bcad9f227f379b70dfd92090))
 * **is-number:** add polyfill for Number.isFinite to check finite numbers ([27c60b1](https://github.com/Alwatr/alwatr/commit/27c60b16e69e87fd62dee25ee21012651b9ba7ca))
 * **is-number:** add toNumber function to convert various values to numbers ([3f4a9d1](https://github.com/Alwatr/alwatr/commit/3f4a9d1d316ba685c47cafdee031e231ef0d40c5))
 * **is-number:** extract from @alwatr/util ([1c8a676](https://github.com/Alwatr/alwatr/commit/1c8a676ccefcad12436f41b96eeb39c60cc09040))
@@ -1566,7 +1566,7 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 * **nano-server:** routeMiddleware type ([748086d](https://github.com/Alwatr/alwatr/commit/748086d84bd27583ee6fef34d3b45900096b26de))
 * **nano-service:** api prefix support ([ecb4a1f](https://github.com/Alwatr/alwatr/commit/ecb4a1f76097834a1e4e17ee73fa05e225d897ed))
 * **nanolib:** add @alwatr/random as a dependency and export in main module ([7c5a8e3](https://github.com/Alwatr/alwatr/commit/7c5a8e325a68a0702b39e515ed6db03ed036ec38))
-* **nanolib:** add @alwatr/synapse as a dependency and export in main module ([6bef692](https://github.com/Alwatr/alwatr/commit/6bef692b4fe9a3728277889912bc9196bf579a3f))
+* **nanolib:** add @alwatr/directive as a dependency and export in main module ([6bef692](https://github.com/Alwatr/alwatr/commit/6bef692b4fe9a3728277889912bc9196bf579a3f))
 * **nanolib:** add `global-this` ([97aa2d0](https://github.com/Alwatr/alwatr/commit/97aa2d043d7e81dddc4fb37628a9ac94b78110aa))
 * **nanolib:** add `nanolib` package to export the common packages ([1610b1e](https://github.com/Alwatr/alwatr/commit/1610b1eb5dd7e7f10505b35ae016889c7f4b6b24))
 * **nanolib:** add `validate-national-code` package ([f1e1ba8](https://github.com/Alwatr/alwatr/commit/f1e1ba8fc9b060c26e9482a5fab874cf9119ab8f))
@@ -2001,8 +2001,8 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 * switch to lerna-lite ([a8d4685](https://github.com/Alwatr/alwatr/commit/a8d46853beeac79c0ffc92ea2b6126627b426b76))
 * switch to lerna-lite ([0a996f3](https://github.com/Alwatr/alwatr/commit/0a996f3974f75799485e8becfb8b157102234d7d))
 * switch to lerna-lite ([95a4b2c](https://github.com/Alwatr/alwatr/commit/95a4b2c38b3fc428b17c3c05f88937d648caffdd))
-* **synapse:** add DirectiveBase class for creating custom directives ([275e71f](https://github.com/Alwatr/alwatr/commit/275e71f87d2aeeccb906194109053306aa1011d1))
-* **synapse:** implement directive decorator for class registration ([eca8781](https://github.com/Alwatr/alwatr/commit/eca8781550432a486446b1f7557bfdcc1a8fc178))
+* **directive:** add DirectiveBase class for creating custom directives ([275e71f](https://github.com/Alwatr/alwatr/commit/275e71f87d2aeeccb906194109053306aa1011d1))
+* **directive:** implement directive decorator for class registration ([eca8781](https://github.com/Alwatr/alwatr/commit/eca8781550432a486446b1f7557bfdcc1a8fc178))
 * **text-field:** refactor with value prop and input-change event ([3f06ca5](https://github.com/Alwatr/alwatr/commit/3f06ca561c089eaef23a19858b8d4c37d1f412db))
 * **text-field:** sanitize number in values ([970b775](https://github.com/Alwatr/alwatr/commit/970b7750fecbbe6da1a41b5b1771ae45b4c5e5cc))
 * **toast:** action button ([d9bcc00](https://github.com/Alwatr/alwatr/commit/d9bcc003d2afd582f60a694cd41a4460562fac27))
@@ -2295,7 +2295,7 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 * **util:** flatStr ([c405f6f](https://github.com/Alwatr/alwatr/commit/c405f6fc5326d2a868c679a0fcc6d28ccfc796f6))
 * **util:** generic types ([94e9f03](https://github.com/Alwatr/alwatr/commit/94e9f0386720f803592047a43ccde7b6a75418ba))
 * **util:** generic types ([4736d72](https://github.com/Alwatr/alwatr/commit/4736d725b4f16c4f91ae29152834997c374900aa))
-* Utilize 'synapse' attribute for directive association ([f86ca7e](https://github.com/Alwatr/alwatr/commit/f86ca7eb2819425d6c44dd28c424321b7f66d227))
+* Utilize 'directive' attribute for directive association ([f86ca7e](https://github.com/Alwatr/alwatr/commit/f86ca7eb2819425d6c44dd28c424321b7f66d227))
 * **util:** new package ([0288a68](https://github.com/Alwatr/alwatr/commit/0288a689e92341fbd5480a18f447527ef3807051))
 * **util:** new package ([bf3fe09](https://github.com/Alwatr/alwatr/commit/bf3fe09021098f7608952bdecef6c27dee2824eb))
 * **util:** new package ([6011d40](https://github.com/Alwatr/alwatr/commit/6011d40ed64fde0c43ff8fd653b75e4fbe9fbcec))
@@ -4189,7 +4189,7 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 * **package-tracer:** add some new `function`s & improve the code style ([207af08](https://github.com/Alwatr/alwatr/commit/207af08d5632ed5b435428904cd5cafcf8b12cb2))
 * **package-tracer:** Improve package tracking functionality ([5be7132](https://github.com/Alwatr/alwatr/commit/5be7132d2275e028cc88155d32960e05da22726f))
 * **package.json:** npm-run-all ([bda0d3e](https://github.com/Alwatr/alwatr/commit/bda0d3e785d4b301510a0aee2cb6428fa291fc5b))
-* **package:** update keywords in package.json for debounce, local-storage, and synapse packages ([09c9cca](https://github.com/Alwatr/alwatr/commit/09c9cca3cd600e9ffaf600fb1926c0ee884a1aa8))
+* **package:** update keywords in package.json for debounce, local-storage, and directive packages ([09c9cca](https://github.com/Alwatr/alwatr/commit/09c9cca3cd600e9ffaf600fb1926c0ee884a1aa8))
 * **parse-duration:** replace isNumber with toNumber for improved number conversion and enhance error handling ([4d63892](https://github.com/Alwatr/alwatr/commit/4d63892f914cebe73bd1dc1e688c2f4ea5b53de1))
 * **platform-info:** enhance type to prevent modification ([e62c0eb](https://github.com/Alwatr/alwatr/commit/e62c0eb14f6102efde4206f7ba72ecc5dc146ce2))
 * **polyfill:** rename global_ to globalThis for clarity and consistency ([7d1484f](https://github.com/Alwatr/alwatr/commit/7d1484fb91a66d46b62011d0fb7825f3089183f8))
@@ -7227,7 +7227,7 @@ Co-authored-by: Ali Mihandoost <ali@mihandoost.com>
 * update @alwatr/nanolib and devDependencies to latest versions ([09fc363](https://github.com/Alwatr/alwatr/commit/09fc36357f34bc7143bc9b1cf5ee9fc456ab3e93))
 * update @alwatr/nanolib and related dependencies to version 6.x ([d824f0d](https://github.com/Alwatr/alwatr/commit/d824f0d5b8e008ec758842997a6e2ee6f7d078d5))
 * update @alwatr/nanolib dependency to version 6.0.2 ([134d3e7](https://github.com/Alwatr/alwatr/commit/134d3e7878c7a22d5f7994c671b5dceabfd29b57))
-* update @alwatr/synapse version to use wildcard for compatibility ([490c31f](https://github.com/Alwatr/alwatr/commit/490c31fbe709b3a444922e8c0eb4f89b8745f25c))
+* update @alwatr/directive version to use wildcard for compatibility ([490c31f](https://github.com/Alwatr/alwatr/commit/490c31fbe709b3a444922e8c0eb4f89b8745f25c))
 * update `import`s & test the result of `build` ([7ba474f](https://github.com/Alwatr/alwatr/commit/7ba474fec6d02d61a784eec3a106024f021d4753))
 * update all scripts ([208ff38](https://github.com/Alwatr/alwatr/commit/208ff3878387b5d09628cf79d95c61974434b105))
 * Update alwatr-store demo ([a5dff48](https://github.com/Alwatr/alwatr/commit/a5dff48cdcc8af7ba13722d43f5c3c14ddcfe01c))

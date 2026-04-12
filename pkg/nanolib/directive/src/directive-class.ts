@@ -1,8 +1,8 @@
 /**
- * @package @alwatr/synapse
+ * @package @alwatr/directive
  *
  * This file defines the `DirectiveBase` class, which is the foundation for creating custom directives
- * in the Alwatr Synapse library. Directives are used to attach behavior and logic to DOM elements
+ * in the Alwatr Directive library. Directives are used to attach behavior and logic to DOM elements
  * declaratively.
  */
 
@@ -31,7 +31,7 @@ function generateIndexForSelector(selector: string): number {
  *
  * @example
  * ```ts
- * import {DirectiveBase, directive} from '@alwatr/synapse';
+ * import {DirectiveBase, directive} from '@alwatr/directive';
  *
  * @directive('[my-directive]')
  * export class MyDirective extends DirectiveBase {
@@ -73,7 +73,7 @@ export abstract class DirectiveBase {
   public readonly index: number;
 
   /**
-   * Initializes the directive. This constructor is called by the Synapse bootstrap process and should not be
+   * Initializes the directive. This constructor is called by the Directive bootstrap process and should not be
    * overridden in subclasses.
    *
    * It sets up the logger, element, and selector, and then schedules the `init_` and `update_` lifecycle methods

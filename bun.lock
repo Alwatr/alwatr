@@ -1,6 +1,5 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 1,
   "workspaces": {
     "": {
       "name": "alwatr-devkit-monorepo",
@@ -24,6 +23,7 @@
         "@alwatr/debounce": "workspace:*",
         "@alwatr/deep-clone": "workspace:*",
         "@alwatr/delay": "workspace:*",
+        "@alwatr/directive": "workspace:*",
         "@alwatr/djb2-hash": "workspace:*",
         "@alwatr/fetch": "workspace:*",
         "@alwatr/flat-string": "workspace:*",
@@ -43,7 +43,6 @@
         "@alwatr/render-state": "workspace:*",
         "@alwatr/resolve-url": "workspace:*",
         "@alwatr/session-storage": "workspace:*",
-        "@alwatr/synapse": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@alwatr/unicode-digits": "workspace:*",
       },
@@ -160,6 +159,21 @@
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
+        "typescript": "^6.0.2",
+      },
+    },
+    "pkg/nanolib/directive": {
+      "name": "@alwatr/directive",
+      "version": "9.4.5",
+      "dependencies": {
+        "@alwatr/delay": "workspace:*",
+        "@alwatr/logger": "workspace:*",
+      },
+      "devDependencies": {
+        "@alwatr/nano-build": "workspace:*",
+        "@alwatr/standard": "workspace:*",
+        "@alwatr/type-helper": "workspace:*",
+        "@happy-dom/global-registrator": "^20.8.9",
         "typescript": "^6.0.2",
       },
     },
@@ -432,21 +446,6 @@
         "typescript": "^6.0.2",
       },
     },
-    "pkg/nanolib/synapse": {
-      "name": "@alwatr/synapse",
-      "version": "9.4.5",
-      "dependencies": {
-        "@alwatr/delay": "workspace:*",
-        "@alwatr/logger": "workspace:*",
-      },
-      "devDependencies": {
-        "@alwatr/nano-build": "workspace:*",
-        "@alwatr/standard": "workspace:*",
-        "@alwatr/type-helper": "workspace:*",
-        "@happy-dom/global-registrator": "^20.8.9",
-        "typescript": "^6.0.2",
-      },
-    },
     "pkg/nanolib/type-helper": {
       "name": "@alwatr/type-helper",
       "version": "9.1.1",
@@ -691,6 +690,8 @@
 
     "@alwatr/devtools": ["@alwatr/devtools@workspace:pkg/devtools"],
 
+    "@alwatr/directive": ["@alwatr/directive@workspace:pkg/nanolib/directive"],
+
     "@alwatr/djb2-hash": ["@alwatr/djb2-hash@workspace:pkg/nanolib/djb2-hash"],
 
     "@alwatr/env": ["@alwatr/env@workspace:pkg/nanolib/env"],
@@ -764,8 +765,6 @@
     "@alwatr/signal": ["@alwatr/signal@workspace:pkg/signal"],
 
     "@alwatr/standard": ["@alwatr/standard@workspace:pkg/standard"],
-
-    "@alwatr/synapse": ["@alwatr/synapse@workspace:pkg/nanolib/synapse"],
 
     "@alwatr/type-helper": ["@alwatr/type-helper@workspace:pkg/nanolib/type-helper"],
 

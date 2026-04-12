@@ -49,7 +49,7 @@
     "@alwatr/render-state": "workspace:*",
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/session-storage": "workspace:*",
-    "@alwatr/synapse": "workspace:*",
+    "@alwatr/directive": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
     "@alwatr/unicode-digits": "workspace:*"
   },

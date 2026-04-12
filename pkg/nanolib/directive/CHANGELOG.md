@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [9.4.5](https://github.com/Alwatr/alwatr/compare/v9.4.4...v9.4.5) (2026-04-11)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
 ## [9.4.4](https://github.com/Alwatr/alwatr/compare/v9.4.3...v9.4.4) (2026-04-08)
 
@@ -17,53 +17,53 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### 🔨 Code Refactoring
 
-* **synapse:** rename onDestroy to addDestroyHook for clarity and update internal references ([f1c9900](https://github.com/Alwatr/alwatr/commit/f1c9900d22e74dc594c9b6f0a2d940ef94a362cb))
+* **directive:** rename onDestroy to addDestroyHook for clarity and update internal references ([f1c9900](https://github.com/Alwatr/alwatr/commit/f1c9900d22e74dc594c9b6f0a2d940ef94a362cb))
 
 ### 🧹 Miscellaneous Chores
 
-* **synapse:** change logging method for already initialized directives to logOther for consistency ([904ed45](https://github.com/Alwatr/alwatr/commit/904ed4568f07c5a76f52aa5db31c3cf487ca17d1))
+* **directive:** change logging method for already initialized directives to logOther for consistency ([904ed45](https://github.com/Alwatr/alwatr/commit/904ed4568f07c5a76f52aa5db31c3cf487ca17d1))
 
 ## [9.4.2](https://github.com/Alwatr/alwatr/compare/v9.4.1...v9.4.2) (2026-04-06)
 
 ### 🐛 Bug Fixes
 
-* **synapse:** remove unnecessary reference to initialized directives in cleanOnDestroy to prevent memory leak ([79f849b](https://github.com/Alwatr/alwatr/commit/79f849b151220c8c8e38bee406bafa96c789461b))
-* **synapse:** rename initializedDirectives_ to initializedDirectiveElements_ for clarity and consistency ([2fdff87](https://github.com/Alwatr/alwatr/commit/2fdff87969316111474e61d599a1f0e6fd0cfa47))
+* **directive:** remove unnecessary reference to initialized directives in cleanOnDestroy to prevent memory leak ([79f849b](https://github.com/Alwatr/alwatr/commit/79f849b151220c8c8e38bee406bafa96c789461b))
+* **directive:** rename initializedDirectives_ to initializedDirectiveElements_ for clarity and consistency ([2fdff87](https://github.com/Alwatr/alwatr/commit/2fdff87969316111474e61d599a1f0e6fd0cfa47))
 
 ## [9.4.1](https://github.com/Alwatr/alwatr/compare/v9.4.0...v9.4.1) (2026-04-06)
 
 ### 🐛 Bug Fixes
 
 * **directive:** change delay from nextMicrotask to nextMacrotask for initialization ([e02c6b4](https://github.com/Alwatr/alwatr/commit/e02c6b400bb82971f9bd207916e16811947c524d))
-* **synapse:** add logging to cleanOnDestroy for better debugging ([8a54e65](https://github.com/Alwatr/alwatr/commit/8a54e65f58cdd50f747ea7d3c168f6e4d91e2e2d))
-* **synapse:** update finalization registry to differentiate between instance and element ([93ed64f](https://github.com/Alwatr/alwatr/commit/93ed64f62c5e83b5105315fba71342a564c3eaf6))
+* **directive:** add logging to cleanOnDestroy for better debugging ([8a54e65](https://github.com/Alwatr/alwatr/commit/8a54e65f58cdd50f747ea7d3c168f6e4d91e2e2d))
+* **directive:** update finalization registry to differentiate between instance and element ([93ed64f](https://github.com/Alwatr/alwatr/commit/93ed64f62c5e83b5105315fba71342a564c3eaf6))
 
 ### 🧹 Miscellaneous Chores
 
-* **synapse:** add documentation for directive instance tracking and garbage collection ([2059f50](https://github.com/Alwatr/alwatr/commit/2059f502214d5f04f4baa91dca2873b163986b0c))
+* **directive:** add documentation for directive instance tracking and garbage collection ([2059f50](https://github.com/Alwatr/alwatr/commit/2059f502214d5f04f4baa91dca2873b163986b0c))
 
 ## [9.4.0](https://github.com/Alwatr/alwatr/compare/v9.3.0...v9.4.0) (2026-04-05)
 
 ### ✨ Features
 
-* **synapse:** add autoDestroy method to clean up directives when elements are disconnected from the DOM ([f85745e](https://github.com/Alwatr/alwatr/commit/f85745e0c53431ff88671735b06b3c26474ef676))
-* **synapse:** implement autoDestructDirectives and update directiveInstanceRegistry management ([8e003d9](https://github.com/Alwatr/alwatr/commit/8e003d936a1181812941f3371ced20ee72e77834))
-* **synapse:** implement unique index generation for directive instances ([f380943](https://github.com/Alwatr/alwatr/commit/f380943d039e7bed9b110ecc03102d8f94fcb1ce))
-* **synapse:** integrate FinalizationRegistry for directive garbage collection logging ([1e3f1f8](https://github.com/Alwatr/alwatr/commit/1e3f1f816bc82f740ca91df9d72ef99059ef0baa))
-* **synapse:** update autoDestroy method to return a boolean indicating element disconnection ([521307e](https://github.com/Alwatr/alwatr/commit/521307e2cd82014ad8e4cb3d6aa9fda9948ce5f2))
+* **directive:** add autoDestroy method to clean up directives when elements are disconnected from the DOM ([f85745e](https://github.com/Alwatr/alwatr/commit/f85745e0c53431ff88671735b06b3c26474ef676))
+* **directive:** implement autoDestructDirectives and update directiveInstanceRegistry management ([8e003d9](https://github.com/Alwatr/alwatr/commit/8e003d936a1181812941f3371ced20ee72e77834))
+* **directive:** implement unique index generation for directive instances ([f380943](https://github.com/Alwatr/alwatr/commit/f380943d039e7bed9b110ecc03102d8f94fcb1ce))
+* **directive:** integrate FinalizationRegistry for directive garbage collection logging ([1e3f1f8](https://github.com/Alwatr/alwatr/commit/1e3f1f816bc82f740ca91df9d72ef99059ef0baa))
+* **directive:** update autoDestroy method to return a boolean indicating element disconnection ([521307e](https://github.com/Alwatr/alwatr/commit/521307e2cd82014ad8e4cb3d6aa9fda9948ce5f2))
 
 ### 🔨 Code Refactoring
 
-* **synapse:** change protected methods to public in DirectiveBase class ([7ed56a5](https://github.com/Alwatr/alwatr/commit/7ed56a5d13f3625976f1f14e09344d007c86a891))
-* **synapse:** enhance directive initialization logic and improve error handling ([8692c4e](https://github.com/Alwatr/alwatr/commit/8692c4e4fa60bafdc319bb8964390ec6e16d870a))
-* **synapse:** improve formatting and update directive registry to use set for unique selector registration ([b2c9a58](https://github.com/Alwatr/alwatr/commit/b2c9a5861d88a09f991cfdbd590a42dda5f3edcf))
-* **synapse:** update directive registry to use Map and add initialized directives tracking ([2558b40](https://github.com/Alwatr/alwatr/commit/2558b40e691ada0d543e9283ca799e6ba3002983))
-* **synapse:** update onDestroy method signature to accept a context-aware task ([de68470](https://github.com/Alwatr/alwatr/commit/de6847033cbbab0d0ef8c81a864625ccea786e1d))
+* **directive:** change protected methods to public in DirectiveBase class ([7ed56a5](https://github.com/Alwatr/alwatr/commit/7ed56a5d13f3625976f1f14e09344d007c86a891))
+* **directive:** enhance directive initialization logic and improve error handling ([8692c4e](https://github.com/Alwatr/alwatr/commit/8692c4e4fa60bafdc319bb8964390ec6e16d870a))
+* **directive:** improve formatting and update directive registry to use set for unique selector registration ([b2c9a58](https://github.com/Alwatr/alwatr/commit/b2c9a5861d88a09f991cfdbd590a42dda5f3edcf))
+* **directive:** update directive registry to use Map and add initialized directives tracking ([2558b40](https://github.com/Alwatr/alwatr/commit/2558b40e691ada0d543e9283ca799e6ba3002983))
+* **directive:** update onDestroy method signature to accept a context-aware task ([de68470](https://github.com/Alwatr/alwatr/commit/de6847033cbbab0d0ef8c81a864625ccea786e1d))
 
 ### 🧹 Miscellaneous Chores
 
 * apply feedbacks from code review ([51f629b](https://github.com/Alwatr/alwatr/commit/51f629b0a3dd989113684091de5b1a3736dc0f28))
-* **synapse:** change logging for missing elements in bootstrapDirectives ([82f5763](https://github.com/Alwatr/alwatr/commit/82f5763cce4545022644b1a36dc025bb3681fdec))
+* **directive:** change logging for missing elements in bootstrapDirectives ([82f5763](https://github.com/Alwatr/alwatr/commit/82f5763cce4545022644b1a36dc025bb3681fdec))
 
 ## [9.3.0](https://github.com/Alwatr/alwatr/compare/v9.2.1...v9.3.0) (2026-04-04)
 
@@ -105,13 +105,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * update logger imports to replace nanolib with nano-build across multiple files ([26a07af](https://github.com/Alwatr/alwatr/commit/26a07afe5fc8761a15ff12538f485a6757d75c74))
 * update package.json and tsconfig.json across multiple packages to include @alwatr/type-helper and adjust types ([5635b9e](https://github.com/Alwatr/alwatr/commit/5635b9efeeb7fbb06f405e3ecdfa6ce4c431a1a2))
 
-## [3.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@3.0.0...@alwatr/synapse@3.0.1) (2026-03-27)
+## [3.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@3.0.0...@alwatr/directive@3.0.1) (2026-03-27)
 
 ### 🧹 Miscellaneous Chores
 
 * update TypeScript version to ^6.0.2 across all packages ([d6b2bf3](https://github.com/Alwatr/nanolib/commit/d6b2bf3ce064eb927c56d9f8c7a5d3138adde998))
 
-## [3.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@2.0.0...@alwatr/synapse@3.0.0) (2026-03-27)
+## [3.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@2.0.0...@alwatr/directive@3.0.0) (2026-03-27)
 
 ### ⚠ BREAKING CHANGES
 
@@ -134,7 +134,7 @@ Legacy experimental decorators are no longer supported.
 * add @happy-dom/global-registrator dependency ([7d9a7b3](https://github.com/Alwatr/nanolib/commit/7d9a7b3472b202dec88ee9aa6668c45f03972c0c))
 * remove "types" field from package.json in multiple packages ([b2a458d](https://github.com/Alwatr/nanolib/commit/b2a458d3b1028175e6bc8d0485d223e7d22a1773))
 
-## [2.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.4.1...@alwatr/synapse@2.0.0) (2026-03-19)
+## [2.0.0](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.4.1...@alwatr/directive@2.0.0) (2026-03-19)
 
 ### ⚠ BREAKING CHANGES
 
@@ -153,49 +153,49 @@ Legacy experimental decorators are no longer supported.
 * update build command in package.json files to remove source map flags ([6b504fc](https://github.com/Alwatr/nanolib/commit/6b504fc4f813146064a21638014a62b0b5b95ca0))
 * update build:es script to include src/main.ts for all packages ([bc5454d](https://github.com/Alwatr/nanolib/commit/bc5454dc3536e5d2a6ac53be602e93ba7133fb32))
 
-## [1.4.1](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.4.0...@alwatr/synapse@1.4.1) (2026-03-18)
+## [1.4.1](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.4.0...@alwatr/directive@1.4.1) (2026-03-18)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.4.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.3.6...@alwatr/synapse@1.4.0) (2026-03-16)
+## [1.4.0](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.3.6...@alwatr/directive@1.4.0) (2026-03-16)
 
 ### ✨ Features
 
-* Utilize 'synapse' attribute for directive association ([f86ca7e](https://github.com/Alwatr/nanolib/commit/f86ca7eb2819425d6c44dd28c424321b7f66d227))
+* Utilize 'directive' attribute for directive association ([f86ca7e](https://github.com/Alwatr/nanolib/commit/f86ca7eb2819425d6c44dd28c424321b7f66d227))
 
 ### 🔨 Code Refactoring
 
 * migrate build scripts from yarn to bun across multiple packages ([d90e962](https://github.com/Alwatr/nanolib/commit/d90e962f15e5c951e191d5f02341279b6472abc3))
 
-## [1.3.6](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.3.5...@alwatr/synapse@1.3.6) (2026-02-18)
+## [1.3.6](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.3.5...@alwatr/directive@1.3.6) (2026-02-18)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.3.5](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.3.4...@alwatr/synapse@1.3.5) (2025-12-23)
+## [1.3.5](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.3.4...@alwatr/directive@1.3.5) (2025-12-23)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.3.4](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.3.3...@alwatr/synapse@1.3.4) (2025-12-13)
+## [1.3.4](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.3.3...@alwatr/directive@1.3.4) (2025-12-13)
 
 ### 🐛 Bug Fixes
 
 * update NoopFunction type alias to NoopFunc ([553e586](https://github.com/Alwatr/nanolib/commit/553e586060aa78e1db7806aea207443db8e789ab))
 
-## [1.3.3](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.3.2...@alwatr/synapse@1.3.3) (2025-12-13)
+## [1.3.3](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.3.2...@alwatr/directive@1.3.3) (2025-12-13)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.3.2](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.3.1...@alwatr/synapse@1.3.2) (2025-12-10)
+## [1.3.2](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.3.1...@alwatr/directive@1.3.2) (2025-12-10)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.3.1](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.3.0...@alwatr/synapse@1.3.1) (2025-11-19)
+## [1.3.1](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.3.0...@alwatr/directive@1.3.1) (2025-11-19)
 
 ### 🐛 Bug Fixes
 
 * refactor query and queryAll to use a parent variable for improved clarity ([57b175b](https://github.com/Alwatr/nanolib/commit/57b175bddd5617b9a05aba3f3eb81ec0c34527f7))
 
-## [1.3.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.2.1...@alwatr/synapse@1.3.0) (2025-11-18)
+## [1.3.0](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.2.1...@alwatr/directive@1.3.0) (2025-11-18)
 
 ### ✨ Features
 
@@ -205,14 +205,14 @@ Legacy experimental decorators are no longer supported.
 
 * update documentation for queryAll to clarify cache parameter ([0693612](https://github.com/Alwatr/nanolib/commit/06936122ee9aecfc11cdcf68278eac09fc08e8ff))
 
-## [1.2.1](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.2.0...@alwatr/synapse@1.2.1) (2025-11-15)
+## [1.2.1](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.2.0...@alwatr/directive@1.2.1) (2025-11-15)
 
 ### 🐛 Bug Fixes
 
 * ensure cleanup tasks are called with the correct context in DirectiveBase ([06ab04e](https://github.com/Alwatr/nanolib/commit/06ab04e0eaa3837c2bc55089723051364bc6e56b))
 * rename cleanupTaskList variable for consistency ([d51eee9](https://github.com/Alwatr/nanolib/commit/d51eee92883b851fb3fc5307d7eefd5dc536be8e))
 
-## [1.2.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.20...@alwatr/synapse@1.2.0) (2025-11-15)
+## [1.2.0](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.20...@alwatr/directive@1.2.0) (2025-11-15)
 
 ### ✨ Features
 
@@ -223,19 +223,19 @@ Legacy experimental decorators are no longer supported.
 * rename variable in cleanup task loop for improved clarity ([463ecf0](https://github.com/Alwatr/nanolib/commit/463ecf0ea741c51b61523105f7f10b4cef371002))
 * update onDestroy method to use NoopFunction type for better clarity ([1023aad](https://github.com/Alwatr/nanolib/commit/1023aadeaa5a608176d57773c8ae956a169789c6))
 
-## [1.1.20](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.19...@alwatr/synapse@1.1.20) (2025-11-09)
+## [1.1.20](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.19...@alwatr/directive@1.1.20) (2025-11-09)
 
 ### 🐛 Bug Fixes
 
 * delay directive initialization until DOM is ready ([07dd452](https://github.com/Alwatr/nanolib/commit/07dd452732b8d32b822fd99b4eba1617623ced09))
 
-## [1.1.19](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.18...@alwatr/synapse@1.1.19) (2025-11-06)
+## [1.1.19](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.18...@alwatr/directive@1.1.19) (2025-11-06)
 
 ### 🐛 Bug Fixes
 
 * rename update_ method to init_ and call super.init_ in CopyButtonDirective ([66ec105](https://github.com/Alwatr/nanolib/commit/66ec10508385d3bdc5e7e19d53d48294d48ed865))
 
-## [1.1.18](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.17...@alwatr/synapse@1.1.18) (2025-11-04)
+## [1.1.18](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.17...@alwatr/directive@1.1.18) (2025-11-04)
 
 ### 🔨 Code Refactoring
 
@@ -243,31 +243,31 @@ Legacy experimental decorators are no longer supported.
 * simplify update and destroy methods in DirectiveBase class ([e8a906d](https://github.com/Alwatr/nanolib/commit/e8a906d5e4346eda808fc3013287e620e31ef4e3))
 * update property types in query decorators to ensure proper null handling ([bc250dd](https://github.com/Alwatr/nanolib/commit/bc250dde37c72f9469d11ec6a49b9567f3d81d38))
 
-## [1.1.17](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.16...@alwatr/synapse@1.1.17) (2025-10-06)
+## [1.1.17](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.16...@alwatr/directive@1.1.17) (2025-10-06)
 
 ### 🔗 Dependencies update
 
 * bump the npm-dependencies group with 4 updates ([9825815](https://github.com/Alwatr/nanolib/commit/982581552bbb4b97dca52af5e93a80937f0c3109))
 
-## [1.1.16](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.15...@alwatr/synapse@1.1.16) (2025-09-27)
+## [1.1.16](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.15...@alwatr/directive@1.1.16) (2025-09-27)
 
 ### 🧹 Miscellaneous Chores
 
 * exclude test files from package distribution ([86f4f2f](https://github.com/Alwatr/nanolib/commit/86f4f2f5985845c5cf3a3a9398de7b2f98ce53e7))
 
-## [1.1.15](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.14...@alwatr/synapse@1.1.15) (2025-09-22)
+## [1.1.15](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.14...@alwatr/directive@1.1.15) (2025-09-22)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.1.14](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.13...@alwatr/synapse@1.1.14) (2025-09-22)
+## [1.1.14](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.13...@alwatr/directive@1.1.14) (2025-09-22)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.1.13](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.12...@alwatr/synapse@1.1.13) (2025-09-21)
+## [1.1.13](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.12...@alwatr/directive@1.1.13) (2025-09-21)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.1.12](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.11...@alwatr/synapse@1.1.12) (2025-09-20)
+## [1.1.12](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.11...@alwatr/directive@1.1.12) (2025-09-20)
 
 ### 🐛 Bug Fixes
 
@@ -279,25 +279,25 @@ Legacy experimental decorators are no longer supported.
 
 * remove duplicate sideEffects property from multiple package.json files ([b123f86](https://github.com/Alwatr/nanolib/commit/b123f86be81481de2314aae9bb2eeb629743d24c))
 
-## [1.1.11](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.10...@alwatr/synapse@1.1.11) (2025-09-19)
+## [1.1.11](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.10...@alwatr/directive@1.1.11) (2025-09-19)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.1.10](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.9...@alwatr/synapse@1.1.10) (2025-09-19)
+## [1.1.10](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.9...@alwatr/directive@1.1.10) (2025-09-19)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.1.9](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.8...@alwatr/synapse@1.1.9) (2025-09-15)
+## [1.1.9](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.8...@alwatr/directive@1.1.9) (2025-09-15)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.1.8](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.7...@alwatr/synapse@1.1.8) (2025-09-14)
+## [1.1.8](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.7...@alwatr/directive@1.1.8) (2025-09-14)
 
 ### 🔨 Code Refactoring
 
-* **package:** update keywords in package.json for debounce, local-storage, and synapse packages ([09c9cca](https://github.com/Alwatr/nanolib/commit/09c9cca3cd600e9ffaf600fb1926c0ee884a1aa8))
+* **package:** update keywords in package.json for debounce, local-storage, and directive packages ([09c9cca](https://github.com/Alwatr/nanolib/commit/09c9cca3cd600e9ffaf600fb1926c0ee884a1aa8))
 
-## [1.1.7](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.6...@alwatr/synapse@1.1.7) (2025-09-13)
+## [1.1.7](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.6...@alwatr/directive@1.1.7) (2025-09-13)
 
 ### 🐛 Bug Fixes
 
@@ -307,38 +307,38 @@ Legacy experimental decorators are no longer supported.
 
 * add reference to delay package in tsconfig ([6486d02](https://github.com/Alwatr/nanolib/commit/6486d02f0cb10ddf3c43c6d8d6efc7c77666f4c8))
 
-## [1.1.6](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.5...@alwatr/synapse@1.1.6) (2025-09-13)
+## [1.1.6](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.5...@alwatr/directive@1.1.6) (2025-09-13)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.1.5](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.4...@alwatr/synapse@1.1.5) (2025-09-13)
+## [1.1.5](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.4...@alwatr/directive@1.1.5) (2025-09-13)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.1.4](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.3...@alwatr/synapse@1.1.4) (2025-09-09)
+## [1.1.4](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.3...@alwatr/directive@1.1.4) (2025-09-09)
 
 ### 🧹 Miscellaneous Chores
 
 * remove trailing newlines from contributing sections in README files ([e8ab1bc](https://github.com/Alwatr/nanolib/commit/e8ab1bc43e0addea5ccd4c897c2cec597cb9e15f))
 
-## [1.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.2...@alwatr/synapse@1.1.3) (2025-09-08)
+## [1.1.3](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.2...@alwatr/directive@1.1.3) (2025-09-08)
 
 ### 🐛 Bug Fixes
 
 * **directive:** change delay from immediate to nextMicrotask ([218d134](https://github.com/Alwatr/nanolib/commit/218d1344a4b377382e7d2294864adb388caf9d1a))
 * **lib:** mark logger creation as pure for optimization ([d902bf8](https://github.com/Alwatr/nanolib/commit/d902bf872454fe5868c7b6bdbb4ddb340337f443))
 
-## [1.1.2](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.1...@alwatr/synapse@1.1.2) (2025-09-06)
+## [1.1.2](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.1...@alwatr/directive@1.1.2) (2025-09-06)
 
 ### 🔨 Code Refactoring
 
 * update method return types to Awaitable for consistency ([623a8f7](https://github.com/Alwatr/nanolib/commit/623a8f74e9f4ce8142363874ade116a87448df3a))
 
-## [1.1.1](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.1.0...@alwatr/synapse@1.1.1) (2025-09-05)
+## [1.1.1](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.1.0...@alwatr/directive@1.1.1) (2025-09-05)
 
-**Note:** Version bump only for package @alwatr/synapse
+**Note:** Version bump only for package @alwatr/directive
 
-## [1.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.0.1...@alwatr/synapse@1.1.0) (2025-09-01)
+## [1.1.0](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.0.1...@alwatr/directive@1.1.0) (2025-09-01)
 
 ### ✨ Features
 
@@ -352,7 +352,7 @@ Legacy experimental decorators are no longer supported.
 * ensure proper initialization sequence by awaiting init_ before update_ ([f251964](https://github.com/Alwatr/nanolib/commit/f2519648c89a0347978366749b681f8e4e3578a9))
 * ensure update_ method is abstract in DirectiveBase class ([beae25e](https://github.com/Alwatr/nanolib/commit/beae25e45a9cad40501b60efeb4fa6b1e566a16d))
 
-## [1.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/synapse@1.0.0...@alwatr/synapse@1.0.1) (2025-08-26)
+## [1.0.1](https://github.com/Alwatr/nanolib/compare/@alwatr/directive@1.0.0...@alwatr/directive@1.0.1) (2025-08-26)
 
 ### 🐛 Bug Fixes
 
@@ -363,13 +363,13 @@ Legacy experimental decorators are no longer supported.
 
 ### ✨ Features
 
-* add @alwatr/synapse package ([212ce48](https://github.com/Alwatr/nanolib/commit/212ce485cca32369e4185d5230bc328d1f3a5517))
+* add @alwatr/directive package ([212ce48](https://github.com/Alwatr/nanolib/commit/212ce485cca32369e4185d5230bc328d1f3a5517))
 * add directive decorator for registering class directives ([19c840e](https://github.com/Alwatr/nanolib/commit/19c840e2aa4677d09c615efc7496bab4c0855f39))
 * export directiveClass from main.ts for improved module accessibility ([4c59be0](https://github.com/Alwatr/nanolib/commit/4c59be096ac106137d12f6bc69f82d95ddfe02fa))
 * implement bootstrapDirectives function to initialize registered directives ([edd5bef](https://github.com/Alwatr/nanolib/commit/edd5bef039a9a85baa7e9b116e7268ee6748eeb4))
-* initialize logger and directive registry in synapse ([08f961c](https://github.com/Alwatr/nanolib/commit/08f961c81ca1b303bcad9f227f379b70dfd92090))
-* **synapse:** add DirectiveBase class for creating custom directives ([275e71f](https://github.com/Alwatr/nanolib/commit/275e71f87d2aeeccb906194109053306aa1011d1))
-* **synapse:** implement directive decorator for class registration ([eca8781](https://github.com/Alwatr/nanolib/commit/eca8781550432a486446b1f7557bfdcc1a8fc178))
+* initialize logger and directive registry in directive ([08f961c](https://github.com/Alwatr/nanolib/commit/08f961c81ca1b303bcad9f227f379b70dfd92090))
+* **directive:** add DirectiveBase class for creating custom directives ([275e71f](https://github.com/Alwatr/nanolib/commit/275e71f87d2aeeccb906194109053306aa1011d1))
+* **directive:** implement directive decorator for class registration ([eca8781](https://github.com/Alwatr/nanolib/commit/eca8781550432a486446b1f7557bfdcc1a8fc178))
 
 ### 🐛 Bug Fixes
 

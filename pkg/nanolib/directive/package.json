@@ -1,5 +1,5 @@
 {
-  "name": "@alwatr/synapse",
+  "name": "@alwatr/directive",
   "version": "9.4.5",
   "description": "Connect your TypeScript classes to the DOM, declaratively.",
   "license": "MPL-2.0",
@@ -8,9 +8,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/alwatr",
-    "directory": "pkg/nanolib/synapse"
+    "directory": "pkg/nanolib/directive"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/synapse#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/directive#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
@@ -72,7 +72,7 @@
     "module",
     "nanolib",
     "spa",
-    "synapse",
+    "directive",
     "typescript",
     "ui-library",
     "vanilla-js",
