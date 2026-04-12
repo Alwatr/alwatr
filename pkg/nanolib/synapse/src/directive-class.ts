@@ -8,18 +8,19 @@
 
 import {delay} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
-import {finalizationRegistry} from './lib';
+import {finalizationRegistry} from './lib.js';
 
 /**
- * A Map to keep track of how many instances of each directive selector have been created. This is used to generate unique indices for directives that share the same selector.
+ * A map to keep track of the number of instances for each directive name. This helps in generating unique indices for directives when multiple instances are present on the same page.
  */
-const selectorCount = new Map<string, number>();
+const directiveCount = new Map<string, number>();
+
 /**
- * Generates a unique index for a given directive selector. This is used to differentiate multiple instances of the same directive on the page.
+ * Generates a unique index for each directive instance based on the directive name. This is useful for logging and debugging purposes, especially when multiple instances of the same directive are used.
  */
-function generateIndexForSelector(selector: string): number {
-  const currentIndex = selectorCount.get(selector) ?? 0;
-  selectorCount.set(selector, currentIndex + 1);
+function generateIndexForDirective(name: string): number {
+  const currentIndex = directiveCount.get(name) ?? 0;
+  directiveCount.set(name, currentIndex + 1);
   return currentIndex;
 }
 
@@ -35,8 +36,7 @@ function generateIndexForSelector(selector: string): number {
  *
  * @directive('[my-directive]')
  * export class MyDirective extends DirectiveBase {
- *   protected override init_(): void {
- *     super.init_(); // فراخوانی متد والد برای حفظ سازگاری با نسخه‌های قبل ضروری است
+ *   protected init_(): void {
  *     this.element_.textContent = 'Hello from MyDirective!';
  *     this.element_.addEventListener('click', () => this.log('Element clicked!'));
  *   }
@@ -45,10 +45,14 @@ function generateIndexForSelector(selector: string): number {
  */
 export abstract class DirectiveBase {
   /**
-   * The CSS selector that this directive is associated with.
-   * This is the selector string provided to the `@directive` decorator.
+   * The attribute name that this directive is bound to.
    */
-  protected readonly selector_;
+  public readonly attributeName: string;
+
+  /**
+   * The value of the attribute.
+   */
+  public attributeValue: string;
 
   /**
    * A dedicated logger instance for this directive, pre-configured with a context like `directive:[selector]`.
@@ -65,32 +69,26 @@ export abstract class DirectiveBase {
   /**
    * A list of callback functions to be executed when the directive is destroyed.
    */
-  private readonly destroyHookList__: NoopFunc[] = [];
+  private readonly destroyHookList__: (() => Awaitable<void>)[] = [];
 
   /**
    * A unique index for this directive instance, generated based on the selector and the number of existing instances of that selector. This helps differentiate multiple instances of the same directive on the page.
    */
   public readonly index: number;
 
-  /**
-   * Initializes the directive. This constructor is called by the Synapse bootstrap process and should not be
-   * overridden in subclasses.
-   *
-   * It sets up the logger, element, and selector, and then schedules the `init_` and `update_` lifecycle methods
-   * to run in the next microtask.
-   *
-   * @param element The DOM element to which this directive is attached.
-   * @param selector The CSS selector that matched this directive.
-   */
-  constructor(element: HTMLElement, selector: string) {
-    this.index = generateIndexForSelector(selector);
+  constructor(element: HTMLElement, attributeName: string) {
+    this.index = generateIndexForDirective(attributeName);
 
-    const identifier = `directive:${selector}/${this.index}`;
+    const identifier = `directive:${attributeName}/${this.index}`;
     this.logger_ = createLogger(identifier);
-    this.logger_.logMethodArgs?.('new', {selector, element});
+    this.logger_.logMethodArgs?.('new', {attributeName, element});
 
-    this.selector_ = selector;
+    this.attributeName = attributeName;
     this.element_ = element;
+
+    // Parse the initial value from the attribute
+    this.attributeValue = this.element_.getAttribute(this.attributeName) ?? '';
+
     finalizationRegistry?.register(this, `${identifier}/instance`);
     finalizationRegistry?.register(this.element_, `${identifier}/element`);
 
@@ -101,20 +99,10 @@ export abstract class DirectiveBase {
   }
 
   /**
-   * Called once automatically after the directive is initialized.
-   *
-   * This method serves as the main entry point for your directive's logic,
-   * such as modifying the element or setting up event listeners.
-   *
-   * **Note:** Do not call this method directly. It is designed to be called only once by the framework.
+   * The initialization method that must be implemented by subclasses. This is where you should put the logic to set up the directive, such as adding event listeners or manipulating the DOM element. It is called after the directive instance is created and the initial attribute value is parsed.
+   * This method can be asynchronous if needed, allowing for any setup that requires waiting (e.g., fetching data).
    */
-  protected init_(): Awaitable<void> {
-    this.logger_.logMethod?.('init_');
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this as any).update_?.(); // backward compatibility
-  }
-
+  protected abstract init_(): Awaitable<void>;
   /**
    * Dispatches a custom event from the target element.
    *
