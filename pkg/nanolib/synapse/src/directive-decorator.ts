@@ -1,5 +1,4 @@
 import {directiveRegistry_, logger} from './lib.js';
-
 import type {DirectiveBase} from './directive-class.js';
 
 /**
@@ -8,26 +7,26 @@ import type {DirectiveBase} from './directive-class.js';
  */
 export type DirectiveConstructor<T extends DirectiveBase = DirectiveBase> = new (
   element: HTMLElement,
-  selector: string,
+  attributeName: string,
 ) => T;
 
 /**
- * A class decorator that registers a class as a directive.
- *
- * @param selector The CSS selector to which this directive will be attached.
+ * A class decorator that registers a class as an attribute-based directive.
+ * * @param name The unique attribute name for this directive (e.g., 'alwatr-tooltip').
  *
  * @example
  * ```ts
- * @directive('.my-button')
- * class MyButtonDirective extends DirectiveBase {
- *   protected update_(): void {
- *     this.element_.addEventListener('click', () => console.log('Button clicked!'));
- *   }
+ * @directive('alwatr-copy')
+ * class CopyDirective extends DirectiveBase {
+ * protected update_(): void {
+ * // this.value contains the value of the 'alwatr-copy' attribute
+ * console.log('Directive configured with:', this.value);
+ * }
  * }
  * ```
  */
-export function directive(selector: string) {
-  logger.logMethodArgs?.('@directive', selector);
+export function directive(name: string) {
+  logger.logMethodArgs?.('@directive', name);
 
   /**
    * The decorator function that receives the class constructor.
@@ -39,11 +38,11 @@ export function directive(selector: string) {
       throw new Error('@directive can only be used on classes');
     }
 
-    if (directiveRegistry_.has(selector)) {
-      logger.accident('@directive', 'duplicate_selector_registration', {selector});
+    if (directiveRegistry_.has(name)) {
+      logger.accident('@directive', 'duplicate_directive_registration', {name});
       return;
     }
 
-    directiveRegistry_.set(selector, constructor);
+    directiveRegistry_.set(name, constructor);
   };
 }
