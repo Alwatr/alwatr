@@ -148,14 +148,14 @@ export abstract class DirectiveBase {
    * helping with garbage collection. It can be extended by subclasses to perform additional cleanup,
    * such as removing event listeners.
    */
-  public destroy(): Awaitable<void> {
+  public async destroy(): Promise<void> {
     this.logger_.logMethod?.('destroy');
 
     // Execute all registered cleanup tasks
     if (this.destroyHookList__.length > 0) {
       for (const task of this.destroyHookList__) {
         try {
-          task.call(this);
+          await task.call(this);
         } catch (err) {
           this.logger_.error('destroy', 'error_in_destroy_callback', err);
         }
