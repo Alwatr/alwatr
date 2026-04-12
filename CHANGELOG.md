@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.6.0](https://github.com/Alwatr/alwatr/compare/v9.5.0...v9.6.0) (2026-04-12)
+
+### ✨ Features
+
+* **directive:** add attribute decorator to read attribute values from directive elements ([63a1d98](https://github.com/Alwatr/alwatr/commit/63a1d980353bfd62a8380c244ba221fd3d01e617))
+
+### 🐛 Bug Fixes
+
+* **directive:** add missing init_ method to TestDirective class ([3baedee](https://github.com/Alwatr/alwatr/commit/3baedee188d8803c3e28f3637e4b6b396c2ab7df))
+* **directive:** update destroy method to be async for proper cleanup handling ([cfac5b8](https://github.com/Alwatr/alwatr/commit/cfac5b84a8cff1a88df6c3b73d83c621ad21c77b))
+
+### 🔨 Code Refactoring
+
+* **directive:** rename query-decorator to util-decorators ([9c8d687](https://github.com/Alwatr/alwatr/commit/9c8d6873ce69abc4722bdbab405ea4b560d7c0f9))
+* **directive:** rename query-decorator to util-decorators ([1f74c80](https://github.com/Alwatr/alwatr/commit/1f74c8012a6c8a49d0a409f68733ac7886d65806))
+* **directive:** rename selector references to attribute name for clarity and consistency ([266e730](https://github.com/Alwatr/alwatr/commit/266e730aa0442f131dbcbc3ef500f4a7788dbcfa))
+* **directive:** replace selector references with attribute names for consistency ([018e85b](https://github.com/Alwatr/alwatr/commit/018e85bd7fc8dfd7b335fa5e44465881bbcf1f42))
+* **directive:** update comments to clarify directive key terminology ([7d76c3d](https://github.com/Alwatr/alwatr/commit/7d76c3df457b3b6ad7913a2caa9334e5eea84e27))
+* **directive:** update directive decorator to use attribute name instead of selector ([ba21730](https://github.com/Alwatr/alwatr/commit/ba217307fa50d196fd0afa4136e2176ce9b9177d))
+
+### 🧹 Miscellaneous Chores
+
+* **directive:** Apply suggestions from code review ([65c1c36](https://github.com/Alwatr/alwatr/commit/65c1c362b3d2902e8cf8006525c62bc005d2385a))
+
 ## [9.5.0](https://github.com/Alwatr/alwatr/compare/v9.4.5...v9.5.0) (2026-04-11)
 
 ### ✨ Features
