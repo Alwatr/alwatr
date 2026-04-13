@@ -3,9 +3,9 @@
   "compilerOptions": {
     /* Basic Options */
     "incremental": true,
-    "target": "ESNext",
-    "module": "Preserve",
-    "moduleResolution": "Bundler",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "lib": ["ESNext", "DOM"],
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
