@@ -22,6 +22,6 @@ export * from '@alwatr/random';
 export * from '@alwatr/render-state';
 export * from '@alwatr/resolve-url';
 export * from '@alwatr/session-storage';
-export * from '@alwatr/synapse';
+export * from '@alwatr/directive';
 export * from '@alwatr/unicode-digits';
 export type * from '@alwatr/type-helper';
