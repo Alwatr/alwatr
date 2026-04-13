@@ -59,5 +59,6 @@
     "nitrobase": "aws",
     "nanotron": "server",
     "fsm": "ngrx-state"
-  }
+  },
+  "kiroAgent.configureMCP": "Disabled"
 }
