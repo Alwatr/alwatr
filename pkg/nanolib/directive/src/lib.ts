@@ -4,9 +4,9 @@ import type {DirectiveConstructor} from './directive-decorator.js';
 import type {DirectiveBase} from './directive-class.js';
 
 /**
- * Alwatr Synapse Logger.
+ * Alwatr Directive System Logger
  */
-export const logger = createLogger('alwatr/synapse');
+export const logger = createLogger('alwatr/directive');
 
 /**
  * A Map to store registered directives.
