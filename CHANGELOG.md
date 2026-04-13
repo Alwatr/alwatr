@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.6.1](https://github.com/Alwatr/alwatr/compare/v9.6.0...v9.6.1) (2026-04-13)
+
+### 🧹 Miscellaneous Chores
+
+* **core:** replace synapse with directive package ([dfe47d5](https://github.com/Alwatr/alwatr/commit/dfe47d51302f9f8146b562e37e30d642fe28d4a6))
+* **directive:** rename synapse package to directive ([22fd700](https://github.com/Alwatr/alwatr/commit/22fd70024306bd7715cbfa7026cc8b70dca1fff6))
+* **directive:** revert keyword from directive to synapse ([9cca31a](https://github.com/Alwatr/alwatr/commit/9cca31a3fedcca5ee5a9cbfb5465d6ef6fa15298))
+* **workspace:** update package references from synapse to directive ([25e6ff6](https://github.com/Alwatr/alwatr/commit/25e6ff624843b7267c6d9090aa7699d02a32d2a1))
+
 ## [9.6.0](https://github.com/Alwatr/alwatr/compare/v9.5.0...v9.6.0) (2026-04-12)
 
 ### ✨ Features
