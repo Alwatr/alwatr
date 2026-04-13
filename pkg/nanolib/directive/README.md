@@ -1,174 +1,403 @@
 # @alwatr/directive
 
-**Connect your TypeScript classes to the DOM, declaratively.**
+**Declarative DOM behavior — without a framework.**
 
-@alwatr/directive is a lightweight, zero-dependency library that brings the power of directives to vanilla TypeScript. It provides a clean, organized way to attach custom behaviors to DOM elements using CSS selectors, bridging the gap between your logic and your UI without the need for a heavy framework.
+`@alwatr/directive` is a tiny, zero-dependency TypeScript library that lets you attach rich, reusable behaviors to DOM elements using plain HTML attributes. No virtual DOM. No build-time magic. No framework lock-in.
 
-## Why Directive?
+---
 
-In modern web development, we often need to add dynamic behavior to elements: a custom tooltip, a special click handler, an element that loads data, etc. While frameworks handle this, vanilla projects can quickly become cluttered with `document.querySelector` calls and manual event listener management.
+## Why Directives?
 
-Directive solves this by letting you encapsulate behavior in dedicated classes and declaratively link them to your HTML.
+Modern web apps constantly need to enrich DOM elements: tooltips, lazy loaders, copy buttons, form validators, infinite scrollers, and more. The typical approaches all have trade-offs:
 
-- **Clean & Organized:** Keep your UI logic in self-contained, reusable classes.
-- **Declarative:** Simply add a class or attribute to your HTML to activate a behavior.
-- **Lightweight:** Adds minimal overhead to your project. No virtual DOM, no complex lifecycle.
-- **Idempotent:** Perfect for single-page applications (SPAs) where content is loaded dynamically. You can re-run the bootstrap process on new content without affecting existing elements.
+| Approach                                 | Problem                                                                 |
+| ---------------------------------------- | ----------------------------------------------------------------------- |
+| Inline `querySelector` + event listeners | Scattered, hard to reuse, breaks on dynamic content                     |
+| Full framework (React, Vue, Angular)     | Heavy, opinionated, requires full buy-in                                |
+| Web Components                           | Verbose, requires custom element registration, no plain-HTML activation |
+| **`@alwatr/directive`**                  | ✅ Lightweight, declarative, reusable, SPA-friendly                     |
 
-## Features
+The **Directive Pattern** solves this by letting you encapsulate any DOM behavior in a self-contained class, then activate it declaratively from HTML — just by adding an attribute.
 
-- **Declarative:** Use CSS selectors to bind behavior to DOM elements.
-- **Lightweight:** Tiny footprint with zero dependencies.
-- **Idempotent:** Safely re-bootstrap on new content without affecting existing elements.
-- **Vanilla TypeScript:** No framework required.
+### Key advantages
+
+- **Declarative activation** — behavior is triggered by HTML attributes, not imperative JS calls
+- **Zero coupling** — directives don't know about each other; HTML is the only contract
+- **Idempotent bootstrap** — safely re-run on dynamic content; already-initialized elements are skipped
+- **Async-safe initialization** — `init_()` runs after a macrotask, so the DOM is always settled
+- **Automatic cleanup** — destroy hooks and `autoDestroy()` prevent memory leaks
+- **Progressive enhancement** — works on any existing HTML without restructuring your markup
+- **Tiny footprint** — no runtime overhead beyond what your directive actually does
+
+---
 
 ## Installation
 
 ```bash
-# npm
+bun add @alwatr/directive
+# or
 npm i @alwatr/directive
-
-# yarn
+# or
 yarn add @alwatr/directive
-
-# pnpm
+# or
 pnpm i @alwatr/directive
 ```
 
-## How It Works
+---
 
-Directive is built around three core concepts:
+## Core Concepts
 
-1. **`@directive(selector)`**: A class decorator that registers your class. You tell Directive, "any element matching this `selector` should be managed by this class."
-2. **`DirectiveBase`**: An abstract class that your directives should extend. It provides the connected `element`, a dedicated `logger`, and an `update_` method to encapsulate your logic.
-3. **`bootstrapDirectives(root?)`**: A function that scans the DOM for elements matching registered selectors and creates an instance of the corresponding class for each one.
+The library is built around three primitives:
 
-## Usage
+### 1. `@directive(attributeName)`
 
-Let's create a simple "click-to-copy" directive.
+A class decorator that **registers** your class against an HTML attribute name. When `bootstrapDirectives()` runs, any element with that attribute gets an instance of your class.
 
-### 1. Create a Directive
+### 2. `DirectiveBase`
 
-A directive is a class that extends `DirectiveBase` to encapsulate its logic. All initialization logic should be placed in the `update_` method.
+The abstract base class your directives extend. It wires up the element, a scoped logger, the attribute value, and the lifecycle hooks — so you only write the logic that matters.
+
+### 3. `bootstrapDirectives(root?)`
+
+Scans a DOM subtree, finds all elements matching registered attribute names, and instantiates the corresponding directive class for each one. Idempotent — safe to call multiple times or on overlapping subtrees.
+
+---
+
+## Quick Start
+
+### 1. Create a directive
 
 ```typescript
-// src/copy-button.ts
+// src/directives/copy-button.ts
 import {directive, DirectiveBase} from '@alwatr/directive';
 
-@directive('[data-copy-button]')
+@directive('copy-button')
 export class CopyButtonDirective extends DirectiveBase {
-  private originalText!: string;
+  private originalText_!: string;
 
-  protected override init_(): void {
-    super.init_();
-    this.originalText = this.element_.textContent ?? 'Copy';
-    this.element_.addEventListener('click', () => this.handleClick());
+  protected override async init_(): Promise<void> {
+    // this.attributeValue  → value of the 'copy-button' attribute
+    // this.element_        → the bound HTMLElement
+    // this.logger_         → scoped logger: "directive:copy-button/0"
+
+    this.originalText_ = this.element_.textContent ?? 'Copy';
+    this.element_.addEventListener('click', () => this.handleClick_());
   }
 
-  private async handleClick(): Promise<void> {
-    const textToCopy = this.element_.dataset.copyText ?? 'No text to copy!';
+  private async handleClick_(): Promise<void> {
+    const text = this.attributeValue || this.element_.dataset.copyText || '';
 
     try {
-      await navigator.clipboard.writeText(textToCopy);
+      await navigator.clipboard.writeText(text);
       this.element_.textContent = 'Copied!';
-      this.logger_.logMethod?.('handleClick', 'copied');
-    } catch (err) {
-      this.logger_.error('handleClick', 'Failed to copy', err);
+    } catch {
       this.element_.textContent = 'Failed!';
     }
 
     setTimeout(() => {
-      this.element_.textContent = this.originalText;
+      this.element_.textContent = this.originalText_;
     }, 2000);
   }
 }
 ```
 
-### 2. Bootstrap Your Application
-
-In your main entry point, import your directives and call `bootstrapDirectives` once the DOM is ready.
+### 2. Bootstrap on page load
 
 ```typescript
 // src/main.ts
 import {bootstrapDirectives} from '@alwatr/directive';
-import './copy-button.js'; // Import the directive to register it
+import './directives/copy-button.js'; // importing registers the directive
 
-document.addEventListener('DOMContentLoaded', () => {
-  bootstrapDirectives();
+// Safe to call at any point — if the DOM isn't ready yet,
+// bootstrapDirectives() will automatically defer until DOMContentLoaded.
+bootstrapDirectives();
+```
+
+### 3. Activate from HTML
+
+```html
+<button copy-button="Hello, world!">Copy</button>
+```
+
+That's it. No `getElementById`. No manual wiring. The attribute is the contract.
+
+---
+
+## Reading the Attribute Value
+
+Every directive automatically receives the attribute's value via `this.attributeValue`:
+
+```html
+<div show-tooltip="This is a helpful hint">Hover me</div>
+```
+
+```typescript
+@directive('show-tooltip')
+class TooltipDirective extends DirectiveBase {
+  protected init_(): void {
+    // this.attributeValue === 'This is a helpful hint'
+    this.element_.title = this.attributeValue;
+  }
+}
+```
+
+---
+
+## Dynamic Content (SPA-friendly)
+
+`bootstrapDirectives` is **idempotent**. You can call it as many times as you want — already-initialized elements are tracked internally via a `WeakMap` and are never touched again.
+
+```typescript
+// After fetching and injecting new HTML into the page:
+const container = document.querySelector('#dynamic-region')!;
+container.innerHTML = await fetchSomeHtml();
+
+// Only the new elements will be initialized
+bootstrapDirectives(container);
+```
+
+This makes `@alwatr/directive` a natural fit for SPAs, server-side rendered pages with client-side hydration, and any app that loads content dynamically.
+
+---
+
+## Lifecycle
+
+```
+new DirectiveBase(element, attributeName)
+  │
+  ├─ constructor runs synchronously
+  │    sets: attributeName, attributeValue, element_, logger_, index
+  │
+  └─ after one macrotask (delay.nextMacrotask)
+       └─ init_() called  ← your logic goes here
+```
+
+The macrotask delay ensures the full DOM subtree is painted and settled before your directive runs — no race conditions with sibling elements or CSS.
+
+---
+
+## Cleanup & Memory Management
+
+### `addDestroyHook(task)`
+
+Register cleanup callbacks that run when `destroy()` is called. Use this to remove global event listeners, cancel timers, or unsubscribe from signals.
+
+```typescript
+@directive('live-clock')
+class LiveClockDirective extends DirectiveBase {
+  protected init_(): void {
+    const intervalId = setInterval(() => {
+      this.element_.textContent = new Date().toLocaleTimeString();
+    }, 1000);
+
+    // Registered cleanup — runs automatically on destroy()
+    this.addDestroyHook(() => clearInterval(intervalId));
+  }
+}
+```
+
+### `destroy()`
+
+Runs all registered destroy hooks in order, then nullifies the internal element reference to aid garbage collection.
+
+### `autoDestroy()`
+
+Checks whether `this.element_` is still connected to the DOM. If not, calls `destroy()` and returns `true`. Use this with `autoDestructDirectives()` for periodic cleanup.
+
+### `autoDestructDirectives()`
+
+Iterates over all live directive instances and calls `autoDestroy()` on each. Pair with a `MutationObserver` or a periodic interval for automatic memory management in long-running SPAs.
+
+```typescript
+import {autoDestructDirectives} from '@alwatr/directive';
+
+// Clean up disconnected directives every 30 seconds
+setInterval(autoDestructDirectives, 30_000);
+```
+
+---
+
+## Dispatching Events
+
+Use `dispatch()` to fire a bubbling `CustomEvent` from the directive's element — a clean way to communicate upward without tight coupling.
+
+```typescript
+@directive('submit-form')
+class SubmitFormDirective extends DirectiveBase {
+  protected init_(): void {
+    this.element_.addEventListener('click', () => {
+      this.dispatch('form-submitted', {formId: this.attributeValue});
+    });
+  }
+}
+
+// Anywhere in the app:
+document.addEventListener('form-submitted', (e: CustomEvent) => {
+  console.log('Form submitted:', e.detail.formId);
 });
 ```
 
-### 3. Use it in HTML
+---
 
-Now, you can use the directive declaratively in your HTML.
+## Utility Decorators
 
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Directive Demo</title>
-    <script
-      type="module"
-      src="dist/main.js"
-    ></script>
-  </head>
-  <body>
-    <!-- This button will now have the copy-on-click behavior -->
-    <button
-      data-copy-button
-      data-copy-text="Hello, Directive!"
-    >
-      Copy Text
-    </button>
-  </body>
-</html>
-```
+These TC39 Stage 3 accessor decorators reduce boilerplate for common patterns inside directives. They require the `accessor` keyword.
 
-## API Reference
+### `@query(selector, cache?, root?)`
 
-### `@directive(selector: string)`
-
-A class decorator that registers your class as a directive for elements matching the given CSS `selector`.
-
-- **`selector`**: A valid CSS selector string.
-
-The decorated class **must** extend `DirectiveBase`. Directive will instantiate it for each matching element.
-
-### `DirectiveBase`
-
-An abstract class that your directive classes must extend. It provides the following protected properties and methods:
-
-- **`constructor(element: HTMLElement, selector: string)`**: The base constructor automatically called by Directive. It initializes the `element_`, `selector_`, and `logger_` properties and then calls `update_()`. You should not need to override it.
-- **`element_: HTMLElement`** (readonly): The DOM element the directive is attached to.
-- **`selector_: string`** (readonly): The CSS selector that matched the element.
-- **`logger_`** (readonly): A dedicated logger instance pre-configured for the directive (`directive:selector`).
-- **`update_(): void`**: An abstract method that you **must** implement. This is where you should put your directive's initialization logic (e.g., adding event listeners). It's called automatically by the constructor.
-- **`dispatch_(eventName: string, detail?: unknown): void`**: A helper method to dispatch a `CustomEvent` from the `element_`.
-
-### `bootstrapDirectives(rootElement: Element | Document = document.body)`
-
-Scans a DOM tree for elements that match registered directive selectors and instantiates their corresponding directive classes.
-
-- **`rootElement`** (optional): The root element to scan. Defaults to `document.body`.
-
-This function is idempotent. It marks processed elements with a `_directiveConnected` attribute to ensure that it never initializes a directive on the same element twice. This is particularly useful for SPAs.
-
-#### Example: Dynamic Content
+Lazily queries a single child element. Cached by default.
 
 ```typescript
-// Imagine new content is added to the page
-const newContent = document.createElement('div');
-newContent.innerHTML = '<button data-copy-button data-copy-text="New Content">Copy New</button>';
-document.body.appendChild(newContent);
+@directive('my-card')
+class CardDirective extends DirectiveBase {
+  @query('.card-title')
+  accessor titleEl!: HTMLElement | null;
 
-// You can safely bootstrap again, and it will only process the new button
-bootstrapDirectives(newContent);
+  @query('.card-body', false) // cache=false → re-queries on every access
+  accessor bodyEl!: HTMLElement | null;
+
+  protected init_(): void {
+    if (this.titleEl) {
+      this.titleEl.textContent = 'Hello!';
+    }
+  }
+}
 ```
 
-## Sponsors
+### `@queryAll(selector, cache?, root?)`
 
-The following companies, organizations, and individuals support `nanolib` ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.
+Lazily queries all matching child elements. Cached by default.
 
-### Contributing
+```typescript
+@directive('my-tabs')
+class TabsDirective extends DirectiveBase {
+  @queryAll('.tab-item')
+  accessor tabItems!: NodeListOf<HTMLElement>;
+
+  protected init_(): void {
+    this.tabItems.forEach((tab, i) => {
+      tab.addEventListener('click', () => this.activateTab_(i));
+    });
+  }
+
+  private activateTab_(index: number): void {
+    /* ... */
+  }
+}
+```
+
+### `@attribute(name, cache?, root?)`
+
+Lazily reads an attribute value from the element. Cached by default.
+
+```typescript
+@directive('user-card')
+class UserCardDirective extends DirectiveBase {
+  @attribute('user-id')
+  accessor userId!: string | null;
+
+  @attribute('user-role')
+  accessor userRole!: string | null;
+
+  protected async init_(): Promise<void> {
+    if (!this.userId) return;
+    const user = await fetchUser(this.userId);
+    this.element_.querySelector('.name')!.textContent = user.name;
+  }
+}
+```
+
+---
+
+## Full API Reference
+
+### `directive(attributeName: string)`
+
+Class decorator. Registers the decorated class in the global directive registry.
+
+- `attributeName` — the HTML attribute that activates this directive (e.g. `'show-tooltip'`)
+- Throws if used on a non-class target
+- Logs a warning and skips silently if the same attribute name is registered twice
+
+---
+
+### `DirectiveBase` (abstract class)
+
+| Member                     | Type                             | Description                                                      |
+| -------------------------- | -------------------------------- | ---------------------------------------------------------------- |
+| `attributeName`            | `readonly string`                | The attribute name this directive is bound to                    |
+| `attributeValue`           | `readonly string`                | The value of the attribute at construction time                  |
+| `index`                    | `readonly number`                | Per-attribute instance counter (0, 1, 2, …)                      |
+| `element_`                 | `protected readonly HTMLElement` | The bound DOM element                                            |
+| `logger_`                  | `protected readonly`             | Scoped logger: `directive:{attributeName}/{index}`               |
+| `init_()`                  | `protected abstract`             | Your initialization logic — implement this                       |
+| `dispatch(event, detail?)` | `public`                         | Fires a bubbling `CustomEvent` from `element_`                   |
+| `addDestroyHook(task)`     | `public`                         | Registers an async cleanup callback                              |
+| `destroy()`                | `public async`                   | Runs all destroy hooks, then nullifies `element_`                |
+| `autoDestroy()`            | `public`                         | Destroys if element is disconnected; returns `true` if destroyed |
+
+---
+
+### `bootstrapDirectives(root?: Element | Document)`
+
+Scans `root` (default: `document.body`) for elements matching registered attribute names and instantiates their directive classes.
+
+- Safe to call before DOM is ready — defers automatically via `DOMContentLoaded`
+- Idempotent — uses a `WeakMap` to skip already-initialized elements
+- Scoped — pass any element to limit the scan to a subtree
+
+---
+
+### `autoDestructDirectives()`
+
+Iterates all live directive instances and calls `autoDestroy()` on each. Removes destroyed instances from the internal registry.
+
+---
+
+### `query<T>(selector, cache?, root?)`
+
+Accessor decorator. Lazily queries `element_.querySelector<T>(selector)`.
+
+- `cache` (default `true`) — caches result after first access
+- `root` — override the query root (defaults to `element_`)
+- **Requires `accessor` keyword**
+
+---
+
+### `queryAll<T>(selector, cache?, root?)`
+
+Accessor decorator. Lazily queries `element_.querySelectorAll<T>(selector)`.
+
+- Same options as `@query`
+- **Requires `accessor` keyword**
+
+---
+
+### `attribute(name, cache?, root?)`
+
+Accessor decorator. Lazily reads `element_.getAttribute(name)`.
+
+- `cache` (default `true`) — caches result after first access
+- `root` — override the element to read from (defaults to `element_`)
+- **Requires `accessor` keyword**
+
+---
+
+## TypeScript Configuration
+
+Directives use TC39 Stage 3 decorators. Make sure your `tsconfig.json` does **not** use `experimentalDecorators`:
+
+```jsonc
+{
+  "compilerOptions": {
+    // Do NOT set "experimentalDecorators": true
+    // Stage 3 decorators are enabled by default in TypeScript 5+
+  },
+}
+```
+
+---
+
+## Contributing
 
 Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
