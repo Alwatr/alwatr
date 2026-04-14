@@ -89,13 +89,26 @@ export abstract class DirectiveBase {
     // Parse the initial value from the attribute
     this.attributeValue = this.element_.getAttribute(this.attributeName) ?? '';
 
+    // Register this instance with the FinalizationRegistry for cleanup when garbage collected
     finalizationRegistry?.register(this, `${identifier}/instance`);
     finalizationRegistry?.register(this.element_, `${identifier}/element`);
 
-    (async () => {
-      await delay.nextMacrotask();
+    // Defer the initialization to the next macrotask to ensure that the directive is fully set up and the initial attribute value is parsed before running any logic.
+    delay.nextMacrotask().then(() => this.initializeLifecycle_());
+  }
+
+  private async initializeLifecycle_(): Promise<void> {
+    try {
       await this.init_();
-    })();
+    } catch (err) {
+      this.logger_.error('init_', 'error_in_init', err);
+    }
+    if (this.lazyInit_) {
+      this.triggerLazyInit_();
+    }
+    if (this.onVisible_) {
+      this.triggerOnVisible_();
+    }
   }
 
   /**
@@ -103,6 +116,80 @@ export abstract class DirectiveBase {
    * This method can be asynchronous if needed, allowing for any setup that requires waiting (e.g., fetching data).
    */
   protected abstract init_(): Awaitable<void>;
+
+  /**
+   * Optional lifecycle hook — runs **exactly once** the first time the element enters the viewport.
+   * Falls back to `requestIdleCallback` or `setTimeout(100ms)` if `IntersectionObserver` is unavailable.
+   *
+   * Use for: lazy loading images, fetching data, heavy DOM setup.
+   */
+  protected lazyInit_?(): Awaitable<void>;
+
+  /**
+   * Optional lifecycle hook — runs **every time** the element enters the viewport.
+   * Falls back to a single immediate execution if `IntersectionObserver` is unavailable.
+   *
+   * Use for: impression tracking, restarting animations, refreshing dynamic data.
+   */
+  protected onVisible_?(): Awaitable<void>;
+
+  /**
+   * Handles one-shot lazy execution with environment-aware fallbacks.
+   * Uses IntersectionObserver when available, falls back to requestIdleCallback or setTimeout(100ms).
+   */
+  private triggerLazyInit_(): void {
+    const execute = async () => {
+      try {
+        if (this.isDestroyed()) return;
+        await this.lazyInit_!();
+      } catch (err) {
+        this.logger_.error('triggerLazyInit_', 'error_in_lazy_init', err);
+      }
+    };
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          observer.disconnect();
+          void execute();
+        }
+      });
+      observer.observe(this.element_);
+      this.addDestroyHook(() => observer.disconnect());
+    } else if (typeof requestIdleCallback !== 'undefined') {
+      requestIdleCallback(() => void execute());
+    } else {
+      setTimeout(() => void execute(), 100);
+    }
+  }
+
+  /**
+   * Handles persistent visibility tracking with destroy-safe cleanup.
+   * Uses IntersectionObserver when available, falls back to a single immediate execution.
+   */
+  private triggerOnVisible_(): void {
+    const execute = async () => {
+      try {
+        if (this.isDestroyed()) return;
+        await this.onVisible_!();
+      } catch (err) {
+        this.logger_.error('triggerOnVisible_', 'error_in_on_visible', err);
+      }
+    };
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          void execute();
+        }
+      });
+      observer.observe(this.element_);
+      this.addDestroyHook(() => observer.disconnect());
+    } else {
+      setTimeout(() => void execute(), 100);
+    }
+  }
+
   /**
    * Dispatches a custom event from the target element.
    *
@@ -166,6 +253,13 @@ export abstract class DirectiveBase {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this as any).element_ = null;
+  }
+
+  /**
+   * Checks if the directive has been destroyed.
+   */
+  public isDestroyed(): boolean {
+    return this.element_ === null;
   }
 
   /**
