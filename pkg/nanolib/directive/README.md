@@ -75,7 +75,7 @@ import {directive, DirectiveBase} from '@alwatr/directive';
 export class CopyButtonDirective extends DirectiveBase {
   private originalText_!: string;
 
-  protected async init_(): Promise<void> {
+  protected override async init_(): Promise<void> {
     // this.attributeValue  → value of the 'copy-button' attribute
     // this.element_        → the bound HTMLElement
     // this.logger_         → scoped logger: "directive:copy-button/0"
@@ -134,7 +134,7 @@ Every directive automatically receives the attribute's value via `this.attribute
 ```typescript
 @directive('show-tooltip')
 class TooltipDirective extends DirectiveBase {
-  protected init_(): void {
+  protected override init_(): void {
     // this.attributeValue === 'This is a helpful hint'
     this.element_.title = this.attributeValue;
   }
@@ -199,11 +199,11 @@ Runs **exactly once** — the first time the element enters the viewport. Ideal 
 ```typescript
 @directive('product-image')
 class ProductImageDirective extends DirectiveBase {
-  protected init_(): void {
+  protected override init_(): void {
     this.element_.classList.add('loading-skeleton');
   }
 
-  protected async lazyInit_(): Promise<void> {
+  protected override async lazyInit_(): Promise<void> {
     // Only runs once, when the image scrolls into view
     const img = this.element_.querySelector('img')!;
     img.src = img.dataset['src']!;
@@ -228,7 +228,7 @@ Runs **every time** the element enters the viewport. Ideal for impression tracki
 ```typescript
 @directive('track-impression')
 class ImpressionTrackerDirective extends DirectiveBase {
-  protected onVisible_(): void {
+  protected override onVisible_(): void {
     // Fires each time this element scrolls into view
     analytics.trackImpression(this.attributeValue);
   }
@@ -245,18 +245,18 @@ class ImpressionTrackerDirective extends DirectiveBase {
 @directive('product-card')
 class ProductCardDirective extends DirectiveBase {
   // Runs once at setup — attach event listeners
-  protected init_(): void {
+  protected override init_(): void {
     this.element_.addEventListener('click', () => this.handleClick_());
   }
 
   // Runs once when card first scrolls into view — fetch data
-  protected async lazyInit_(): Promise<void> {
+  protected override async lazyInit_(): Promise<void> {
     const data = await fetchProductData(this.attributeValue);
     this.element_.querySelector('.price')!.textContent = data.price;
   }
 
   // Runs every time card scrolls into view — track impressions
-  protected onVisible_(): void {
+  protected override onVisible_(): void {
     analytics.trackImpression(this.attributeValue);
   }
 
@@ -296,7 +296,7 @@ Register cleanup callbacks that run when `destroy()` is called. Use this to remo
 ```typescript
 @directive('live-clock')
 class LiveClockDirective extends DirectiveBase {
-  protected init_(): void {
+  protected override init_(): void {
     const intervalId = setInterval(() => {
       this.element_.textContent = new Date().toLocaleTimeString();
     }, 1000);
@@ -335,7 +335,7 @@ Use `dispatch()` to fire a bubbling `CustomEvent` from the directive's element �
 ```typescript
 @directive('submit-form')
 class SubmitFormDirective extends DirectiveBase {
-  protected init_(): void {
+  protected override init_(): void {
     this.element_.addEventListener('click', () => {
       this.dispatch('form-submitted', {formId: this.attributeValue});
     });
@@ -367,7 +367,7 @@ class CardDirective extends DirectiveBase {
   @query('.card-body', false) // cache=false → re-queries on every access
   accessor bodyEl!: HTMLElement | null;
 
-  protected init_(): void {
+  protected override init_(): void {
     if (this.titleEl) {
       this.titleEl.textContent = 'Hello!';
     }
@@ -385,7 +385,7 @@ class TabsDirective extends DirectiveBase {
   @queryAll('.tab-item')
   accessor tabItems!: NodeListOf<HTMLElement>;
 
-  protected init_(): void {
+  protected override init_(): void {
     this.tabItems.forEach((tab, i) => {
       tab.addEventListener('click', () => this.activateTab_(i));
     });
@@ -410,7 +410,7 @@ class UserCardDirective extends DirectiveBase {
   @attribute('user-role')
   accessor userRole!: string | null;
 
-  protected async init_(): Promise<void> {
+  protected override async init_(): Promise<void> {
     if (!this.userId) return;
     const user = await fetchUser(this.userId);
     this.element_.querySelector('.name')!.textContent = user.name;
