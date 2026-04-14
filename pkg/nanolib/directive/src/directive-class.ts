@@ -95,6 +95,12 @@ export abstract class DirectiveBase {
     (async () => {
       await delay.nextMacrotask();
       await this.init_();
+      if (typeof this.lazyInit_ === 'function') {
+        this.triggerLazyInit_();
+      }
+      if (typeof this.onVisible_ === 'function') {
+        this.triggerOnVisible_();
+      }
     })();
   }
 
@@ -103,6 +109,78 @@ export abstract class DirectiveBase {
    * This method can be asynchronous if needed, allowing for any setup that requires waiting (e.g., fetching data).
    */
   protected abstract init_(): Awaitable<void>;
+
+  /**
+   * Optional lifecycle hook — runs **exactly once** the first time the element enters the viewport.
+   * Falls back to `requestIdleCallback` or `setTimeout(100ms)` if `IntersectionObserver` is unavailable.
+   *
+   * Use for: lazy loading images, fetching data, heavy DOM setup.
+   */
+  protected lazyInit_?(): Awaitable<void>;
+
+  /**
+   * Optional lifecycle hook — runs **every time** the element enters the viewport.
+   * Falls back to a single immediate execution if `IntersectionObserver` is unavailable.
+   *
+   * Use for: impression tracking, restarting animations, refreshing dynamic data.
+   */
+  protected onVisible_?(): Awaitable<void>;
+
+  /**
+   * Handles one-shot lazy execution with environment-aware fallbacks.
+   * Uses IntersectionObserver when available, falls back to requestIdleCallback or setTimeout(100ms).
+   */
+  private triggerLazyInit_(): void {
+    const execute = async () => {
+      try {
+        await this.lazyInit_!();
+      } catch (err) {
+        this.logger_.error('triggerLazyInit_', 'error_in_lazy_init', err);
+      }
+    };
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          observer.disconnect();
+          void execute();
+        }
+      });
+      observer.observe(this.element_);
+      this.addDestroyHook(() => observer.disconnect());
+    } else if (typeof requestIdleCallback !== 'undefined') {
+      requestIdleCallback(() => void execute());
+    } else {
+      setTimeout(() => void execute(), 100);
+    }
+  }
+
+  /**
+   * Handles persistent visibility tracking with destroy-safe cleanup.
+   * Uses IntersectionObserver when available, falls back to a single immediate execution.
+   */
+  private triggerOnVisible_(): void {
+    const execute = async () => {
+      try {
+        await this.onVisible_!();
+      } catch (err) {
+        this.logger_.error('triggerOnVisible_', 'error_in_on_visible', err);
+      }
+    };
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          void execute();
+        }
+      });
+      observer.observe(this.element_);
+      this.addDestroyHook(() => observer.disconnect());
+    } else {
+      void execute();
+    }
+  }
+
   /**
    * Dispatches a custom event from the target element.
    *
