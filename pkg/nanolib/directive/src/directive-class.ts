@@ -99,7 +99,7 @@ export abstract class DirectiveBase {
 
   private async initializeLifecycle_(): Promise<void> {
     try {
-      await this.init_();
+      await this.init_?.();
     } catch (err) {
       this.logger_.error('init_', 'error_in_init', err);
     }
@@ -115,7 +115,7 @@ export abstract class DirectiveBase {
    * The initialization method that must be implemented by subclasses. This is where you should put the logic to set up the directive, such as adding event listeners or manipulating the DOM element. It is called after the directive instance is created and the initial attribute value is parsed.
    * This method can be asynchronous if needed, allowing for any setup that requires waiting (e.g., fetching data).
    */
-  protected abstract init_(): Awaitable<void>;
+  protected init_?(): Awaitable<void>;
 
   /**
    * Optional lifecycle hook — runs **exactly once** the first time the element enters the viewport.
