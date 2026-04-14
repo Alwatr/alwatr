@@ -1,13 +1,19 @@
 /**
  * Unit tests for DirectiveBase lifecycle hooks: lazyInit_ and onVisible_
  *
- * NOTE: GlobalRegistrator.register() is called in util-decorators.test.ts.
- * Since bun runs test files sequentially in the same process, DOM globals are
- * already available here — do NOT call GlobalRegistrator.register() again.
+ * NOTE: bun runs test files alphabetically. This file (directive-class.test.ts)
+ * runs BEFORE util-decorators.test.ts, so we must register happy-dom here.
+ * GlobalRegistrator.register() throws if called twice, so we guard with a check.
  */
 
 import {describe, it, expect, mock, beforeEach, afterEach} from 'bun:test';
+import {GlobalRegistrator} from '@happy-dom/global-registrator';
 import {DirectiveBase} from './directive-class.js';
+
+// Register DOM globals if not already done (guard against double-registration)
+if (typeof document === 'undefined') {
+  GlobalRegistrator.register();
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -43,6 +49,7 @@ function installMockIntersectionObserver(): void {
   (globalThis as unknown as Record<string, unknown>).IntersectionObserver = class MockIO {
     private cb: IOCallback;
     private instance: MockObserverInstance;
+    private disconnected = false;
 
     constructor(cb: IOCallback) {
       this.cb = cb;
@@ -50,12 +57,18 @@ function installMockIntersectionObserver(): void {
       const inst: MockObserverInstance = {
         callback: cb,
         observe: mock(() => {}),
-        disconnect: mock(() => {}),
+        disconnect: mock(() => {
+          self.disconnected = true;
+        }),
         triggerIntersect() {
-          self.cb([{isIntersecting: true} as IntersectionObserverEntry]);
+          if (!self.disconnected) {
+            self.cb([{isIntersecting: true} as IntersectionObserverEntry]);
+          }
         },
         triggerLeave() {
-          self.cb([{isIntersecting: false} as IntersectionObserverEntry]);
+          if (!self.disconnected) {
+            self.cb([{isIntersecting: false} as IntersectionObserverEntry]);
+          }
         },
       };
       this.instance = inst;
@@ -319,6 +332,130 @@ describe('onVisible_', () => {
     await waitForAsync();
 
     // Still only 1 call (the one before destroy)
+    expect(onVisibleMock).toHaveBeenCalledTimes(1);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// describe: lazyInit_ fallback chain (Task 6.1)
+// ---------------------------------------------------------------------------
+
+describe('lazyInit_ fallback chain', () => {
+  let originalIntersectionObserver: typeof IntersectionObserver | undefined;
+  let originalRequestIdleCallback: typeof requestIdleCallback | undefined;
+
+  beforeEach(() => {
+    originalIntersectionObserver = (globalThis as any).IntersectionObserver;
+    originalRequestIdleCallback = (globalThis as any).requestIdleCallback;
+  });
+
+  afterEach(() => {
+    if (originalIntersectionObserver !== undefined) {
+      (globalThis as any).IntersectionObserver = originalIntersectionObserver;
+    } else {
+      delete (globalThis as any).IntersectionObserver;
+    }
+    if (originalRequestIdleCallback !== undefined) {
+      (globalThis as any).requestIdleCallback = originalRequestIdleCallback;
+    } else {
+      delete (globalThis as any).requestIdleCallback;
+    }
+  });
+
+  // 6.1 test 1 — Requirements 5.1
+  it('schedules lazyInit_() via requestIdleCallback when IntersectionObserver is unavailable', async () => {
+    delete (globalThis as any).IntersectionObserver;
+
+    const lazyInitMock = mock(() => {});
+    const idleCallbackMock = mock((cb: IdleRequestCallback) => {
+      cb({didTimeout: false, timeRemaining: () => 50} as IdleDeadline);
+      return 0;
+    });
+    (globalThis as any).requestIdleCallback = idleCallbackMock;
+
+    class RicFallbackDirective extends DirectiveBase {
+      protected init_(): void {}
+      protected lazyInit_(): void {
+        lazyInitMock();
+      }
+    }
+
+    const root = document.createElement('div');
+    new RicFallbackDirective(root, 'test');
+
+    await waitForInit();
+
+    expect(idleCallbackMock).toHaveBeenCalledTimes(1);
+    expect(lazyInitMock).toHaveBeenCalledTimes(1);
+  });
+
+  // 6.1 test 2 — Requirements 5.2
+  it('schedules lazyInit_() via setTimeout ~100ms when both IntersectionObserver and requestIdleCallback are unavailable', async () => {
+    delete (globalThis as any).IntersectionObserver;
+    delete (globalThis as any).requestIdleCallback;
+
+    const lazyInitMock = mock(() => {});
+
+    class SetTimeoutFallbackDirective extends DirectiveBase {
+      protected init_(): void {}
+      protected lazyInit_(): void {
+        lazyInitMock();
+      }
+    }
+
+    const root = document.createElement('div');
+    new SetTimeoutFallbackDirective(root, 'test');
+
+    await waitForInit();
+
+    // Not yet called — setTimeout(100ms) hasn't fired
+    expect(lazyInitMock).toHaveBeenCalledTimes(0);
+
+    // Wait 150ms for the 100ms setTimeout to fire
+    await new Promise<void>((resolve) => setTimeout(resolve, 150));
+
+    expect(lazyInitMock).toHaveBeenCalledTimes(1);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// describe: onVisible_ fallback (Task 6.2)
+// ---------------------------------------------------------------------------
+
+describe('onVisible_ fallback', () => {
+  let originalIntersectionObserver: typeof IntersectionObserver | undefined;
+
+  beforeEach(() => {
+    originalIntersectionObserver = (globalThis as any).IntersectionObserver;
+  });
+
+  afterEach(() => {
+    if (originalIntersectionObserver !== undefined) {
+      (globalThis as any).IntersectionObserver = originalIntersectionObserver;
+    } else {
+      delete (globalThis as any).IntersectionObserver;
+    }
+  });
+
+  // 6.2 test 1 — Requirements 6.1, 6.2
+  it('calls onVisible_() exactly once immediately when IntersectionObserver is unavailable', async () => {
+    delete (globalThis as any).IntersectionObserver;
+
+    const onVisibleMock = mock(() => {});
+
+    class ImmediateFallbackDirective extends DirectiveBase {
+      protected init_(): void {}
+      protected onVisible_(): void {
+        onVisibleMock();
+      }
+    }
+
+    const root = document.createElement('div');
+    new ImmediateFallbackDirective(root, 'test');
+
+    await waitForInit();
+    await waitForAsync();
+
     expect(onVisibleMock).toHaveBeenCalledTimes(1);
   });
 });
