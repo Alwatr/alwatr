@@ -90,6 +90,24 @@ function restoreIntersectionObserver(): void {
   delete (globalThis as unknown as Record<string, unknown>).IntersectionObserver;
 }
 
+describe('init_', () => {
+  it('does NOT crash when init_() throws an error', async () => {
+    class ThrowingInitDirective extends DirectiveBase {
+      protected init_(): void {
+        throw new Error('init_ error');
+      }
+    }
+
+    const root = document.createElement('div');
+    new ThrowingInitDirective(root, 'test');
+
+    // Wait for the constructor's IIFE to complete
+    await waitForInit();
+
+    // If we reach this point without an unhandled exception, the test passes
+  });
+});
+
 // ---------------------------------------------------------------------------
 // describe: lazyInit_ (Task 5.1)
 // ---------------------------------------------------------------------------
