@@ -135,3 +135,65 @@ export function attribute(name: string, cache = true, root?: Element) {
     };
   };
 }
+
+/**
+ * A method decorator that registers a DOM event listener on the directive's element (or a matching
+ * child element when a CSS selector is provided). The listener is automatically removed when the
+ * directive is destroyed, preventing memory leaks.
+ *
+ * @param eventType The DOM event type to listen for (e.g. `'click'`, `'input'`).
+ * @param selector Optional CSS selector to target a child element via `this.element_.querySelector(selector)`.
+ *   When omitted, the listener is registered directly on `this.element_`.
+ * @param options Optional `AddEventListenerOptions` or capture boolean passed to `addEventListener`.
+ *
+ * @example
+ * ```ts
+ * @directive('[my-directive]')
+ * class MyDirective extends DirectiveBase {
+ *   protected init_(): void {}
+ *
+ *   // Listen on this.element_
+ *   @on('click')
+ *   protected onClick_(event: Event): void {
+ *     console.log('clicked', event);
+ *   }
+ *
+ *   // Listen on a child element
+ *   @on('input', '.search-input')
+ *   protected onInput_(event: Event): void {
+ *     console.log('input', (event.target as HTMLInputElement).value);
+ *   }
+ *
+ *   // With options
+ *   @on('scroll', undefined, {passive: true})
+ *   protected onScroll_(event: Event): void { }
+ * }
+ * ```
+ */
+export function on(
+  eventType: keyof HTMLElementEventMap | string,
+  selector?: string,
+  options?: AddEventListenerOptions | boolean,
+) {
+  return function (
+    target: (this: DirectiveBase, event: Event) => void,
+    context: ClassMethodDecoratorContext<DirectiveBase, (event: Event) => void>,
+  ): void {
+    if (context.kind !== 'method') {
+      throw new Error('@on can only be used on class methods');
+    }
+
+    context.addInitializer(function (this: DirectiveBase) {
+      const targetElement = selector ? this.element_.querySelector(selector) : this.element_;
+
+      if (selector && targetElement === null) {
+        this.logger_.accident('on', 'selector_not_found', {selector});
+        return;
+      }
+
+      const boundMethod = target.bind(this);
+      (targetElement as HTMLElement).addEventListener(eventType, boundMethod, options);
+      this.addDestroyHook(() => (targetElement as HTMLElement).removeEventListener(eventType, boundMethod, options));
+    });
+  };
+}
