@@ -38,12 +38,14 @@
         "@alwatr/json2csv": "workspace:*",
         "@alwatr/local-storage": "workspace:*",
         "@alwatr/logger": "workspace:*",
+        "@alwatr/on": "workspace:*",
         "@alwatr/parse-duration": "workspace:*",
         "@alwatr/platform-info": "workspace:*",
         "@alwatr/random": "workspace:*",
         "@alwatr/render-state": "workspace:*",
         "@alwatr/resolve-url": "workspace:*",
         "@alwatr/session-storage": "workspace:*",
+        "@alwatr/signal": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@alwatr/unicode-digits": "workspace:*",
       },
@@ -462,6 +464,23 @@
         "typescript": "^6.0.2",
       },
     },
+    "pkg/nanolib/signal": {
+      "name": "@alwatr/signal",
+      "version": "9.7.0",
+      "dependencies": {
+        "@alwatr/debounce": "workspace:*",
+        "@alwatr/delay": "workspace:*",
+        "@alwatr/local-storage": "workspace:*",
+        "@alwatr/logger": "workspace:*",
+        "@alwatr/session-storage": "workspace:*",
+      },
+      "devDependencies": {
+        "@alwatr/nano-build": "workspace:*",
+        "@alwatr/standard": "workspace:*",
+        "@alwatr/type-helper": "workspace:*",
+        "typescript": "^6.0.2",
+      },
+    },
     "pkg/nanolib/type-helper": {
       "name": "@alwatr/type-helper",
       "version": "9.1.1",
@@ -662,23 +681,6 @@
         "typescript": "^6.0.2",
       },
     },
-    "pkg/signal": {
-      "name": "@alwatr/signal",
-      "version": "9.7.0",
-      "dependencies": {
-        "@alwatr/debounce": "workspace:*",
-        "@alwatr/delay": "workspace:*",
-        "@alwatr/local-storage": "workspace:*",
-        "@alwatr/logger": "workspace:*",
-        "@alwatr/session-storage": "workspace:*",
-      },
-      "devDependencies": {
-        "@alwatr/nano-build": "workspace:*",
-        "@alwatr/standard": "workspace:*",
-        "@alwatr/type-helper": "workspace:*",
-        "typescript": "^6.0.2",
-      },
-    },
     "pkg/standard": {
       "name": "@alwatr/standard",
       "version": "9.7.0",
@@ -780,7 +782,7 @@
 
     "@alwatr/session-storage": ["@alwatr/session-storage@workspace:pkg/nanolib/session-storage"],
 
-    "@alwatr/signal": ["@alwatr/signal@workspace:pkg/signal"],
+    "@alwatr/signal": ["@alwatr/signal@workspace:pkg/nanolib/signal"],
 
     "@alwatr/standard": ["@alwatr/standard@workspace:pkg/standard"],
 
