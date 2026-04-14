@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.0](https://github.com/Alwatr/alwatr/compare/v9.7.0...v9.8.0) (2026-04-14)
+
+### ✨ Features
+
+* **directive:** add lazy-init and on-visible lifecycle hooks ([d9bb26e](https://github.com/Alwatr/alwatr/commit/d9bb26ed7a1e8b43bd3926f2832423c54d743392))
+* **directive:** defer initialization and enhance error handling in lifecycle methods ([fb15371](https://github.com/Alwatr/alwatr/commit/fb15371bf177167d3a447c8ce10cfa50911b0625))
+* **tests:** guard against double-registration in GlobalRegistrator ([524b467](https://github.com/Alwatr/alwatr/commit/524b4672afb36f85c982ef4b880e95d99d4ad4d6))
+
+### 🐛 Bug Fixes
+
+* **directive:** add isDestroyed() method and guard lazyInit_ and onVisible_ calls ([91611cd](https://github.com/Alwatr/alwatr/commit/91611cdcea9f340fbe95755f8b985120b99cc25a))
+
+### 🔗 Dependencies update
+
+* update @happy-dom/global-registrator to version 20.9.0 ([80c5951](https://github.com/Alwatr/alwatr/commit/80c59515097556653aece082cfacaedca8800e8b))
+
 ## [9.7.0](https://github.com/Alwatr/alwatr/compare/v9.6.1...v9.7.0) (2026-04-14)
 
 ### ✨ Features
