@@ -49,7 +49,7 @@ export class AlwatrActionDirective extends DirectiveBase {
    */
   protected match = this.attributeValue.trim().match(syntaxRegex);
 
-  protected init_(): void {
+  protected override init_(): void {
     if (!this.match) {
       this.logger_.accident('init_', 'invalid_syntax', {attributeValue: this.attributeValue});
       return;
