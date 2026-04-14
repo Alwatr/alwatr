@@ -471,8 +471,8 @@ describe('onVisible_ fallback', () => {
     const root = document.createElement('div');
     new ImmediateFallbackDirective(root, 'test');
 
-    await waitForInit();
-    await waitForAsync();
+    // Wait 150ms for the 100ms setTimeout to fire
+    await new Promise<void>((resolve) => setTimeout(resolve, 150));
 
     expect(onVisibleMock).toHaveBeenCalledTimes(1);
   });
