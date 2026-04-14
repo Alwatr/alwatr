@@ -140,6 +140,7 @@ export abstract class DirectiveBase {
   private triggerLazyInit_(): void {
     const execute = async () => {
       try {
+        if (this.isDestroyed()) return;
         await this.lazyInit_!();
       } catch (err) {
         this.logger_.error('triggerLazyInit_', 'error_in_lazy_init', err);
@@ -169,6 +170,7 @@ export abstract class DirectiveBase {
   private triggerOnVisible_(): void {
     const execute = async () => {
       try {
+        if (this.isDestroyed()) return;
         await this.onVisible_!();
       } catch (err) {
         this.logger_.error('triggerOnVisible_', 'error_in_on_visible', err);
@@ -251,6 +253,13 @@ export abstract class DirectiveBase {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this as any).element_ = null;
+  }
+
+  /**
+   * Checks if the directive has been destroyed.
+   */
+  public isDestroyed(): boolean {
+    return this.element_ === null;
   }
 
   /**
