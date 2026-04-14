@@ -24,7 +24,7 @@ The **Directive Pattern** solves this by letting you encapsulate any DOM behavio
 - **Declarative activation** — behavior is triggered by HTML attributes, not imperative JS calls
 - **Zero coupling** — directives don't know about each other; HTML is the only contract
 - **Idempotent bootstrap** — safely re-run on dynamic content; already-initialized elements are skipped
-- **Async-safe initialization** — if defined, `init_()` runs after a macrotask, so the DOM is always settled
+- **Async-safe initialization** — all lifecycle hooks (`init_()`, `lazyInit_()`, `onVisible_()`) run after a macrotask so the DOM is always settled; visibility hooks fire only when the element is actually visible
 - **Automatic cleanup** — destroy hooks and `autoDestroy()` prevent memory leaks
 - **Progressive enhancement** — works on any existing HTML without restructuring your markup
 - **Tiny footprint** — no runtime overhead beyond what your directive actually does
@@ -75,7 +75,7 @@ import {directive, DirectiveBase} from '@alwatr/directive';
 export class CopyButtonDirective extends DirectiveBase {
   private originalText_!: string;
 
-  protected override async init_(): Promise<void> {
+  protected async init_(): Promise<void> {
     // this.attributeValue  → value of the 'copy-button' attribute
     // this.element_        → the bound HTMLElement
     // this.logger_         → scoped logger: "directive:copy-button/0"
@@ -141,6 +141,8 @@ class TooltipDirective extends DirectiveBase {
 }
 ```
 
+> **Tip:** `init_()` is optional. If you only need `@on` decorators or visibility hooks, you don't have to define it at all.
+
 ---
 
 ## Dynamic Content (SPA-friendly)
@@ -169,12 +171,119 @@ new DirectiveBase(element, attributeName)
   │    sets: attributeName, attributeValue, element_, logger_, index
   │
   └─ after one macrotask (delay.nextMacrotask)
-  ├─ init_()? called  ← your logic goes here if you define it
-  ├─ lazyInit_()? called
-  └─ onVisible_()? called
+       ├─ init_()?       ← optional — runs once (setup, event listeners)
+       ├─ lazyInit_()?   ← optional — runs once, when element first enters viewport
+       └─ onVisible_()?  ← optional — runs every time element enters viewport
 ```
 
 The macrotask delay ensures the full DOM subtree is painted and settled before your directive runs — no race conditions with sibling elements or CSS.
+
+All three hooks are **optional**. You only define the ones you need — a directive that only uses `@on` decorators doesn't need any hook at all.
+
+---
+
+## Visibility Hooks
+
+`DirectiveBase` provides two optional lifecycle hooks for viewport-aware behavior. Both are powered by `IntersectionObserver` and include automatic cleanup on `destroy()`.
+
+### `lazyInit_()`
+
+Runs **exactly once** — the first time the element enters the viewport. Ideal for expensive one-time operations you want to defer until the element is actually visible.
+
+**Fallback chain** (when `IntersectionObserver` is unavailable):
+
+1. `IntersectionObserver` — fires on first intersection, then disconnects
+2. `requestIdleCallback` — schedules execution during browser idle time
+3. `setTimeout(100ms)` — last resort for environments with neither API
+
+```typescript
+@directive('product-image')
+class ProductImageDirective extends DirectiveBase {
+  protected init_(): void {
+    this.element_.classList.add('loading-skeleton');
+  }
+
+  protected async lazyInit_(): Promise<void> {
+    // Only runs once, when the image scrolls into view
+    const img = this.element_.querySelector('img')!;
+    img.src = img.dataset['src']!;
+    await img.decode();
+    this.element_.classList.remove('loading-skeleton');
+  }
+}
+```
+
+```html
+<div product-image="product-123">
+  <img data-src="https://cdn.example.com/product-123.jpg" />
+</div>
+```
+
+### `onVisible_()`
+
+Runs **every time** the element enters the viewport. Ideal for impression tracking, restarting animations, or refreshing dynamic data on each appearance.
+
+**Fallback** (when `IntersectionObserver` is unavailable): `onVisible_()` is called once immediately at setup time, so critical visibility logic is never silently skipped.
+
+```typescript
+@directive('track-impression')
+class ImpressionTrackerDirective extends DirectiveBase {
+  protected onVisible_(): void {
+    // Fires each time this element scrolls into view
+    analytics.trackImpression(this.attributeValue);
+  }
+}
+```
+
+```html
+<div track-impression="banner-hero">...</div>
+```
+
+### Using both hooks together
+
+```typescript
+@directive('product-card')
+class ProductCardDirective extends DirectiveBase {
+  // Runs once at setup — attach event listeners
+  protected init_(): void {
+    this.element_.addEventListener('click', () => this.handleClick_());
+  }
+
+  // Runs once when card first scrolls into view — fetch data
+  protected async lazyInit_(): Promise<void> {
+    const data = await fetchProductData(this.attributeValue);
+    this.element_.querySelector('.price')!.textContent = data.price;
+  }
+
+  // Runs every time card scrolls into view — track impressions
+  protected onVisible_(): void {
+    analytics.trackImpression(this.attributeValue);
+  }
+
+  private handleClick_() {
+    /* ... */
+  }
+}
+```
+
+### Cleanup & `destroy()`
+
+Both hooks register their `IntersectionObserver` in `destroyHookList__` automatically. When `destroy()` is called:
+
+- The `lazyInit_` observer is disconnected — if the element hasn't entered the viewport yet, `lazyInit_()` will **not** run.
+- The `onVisible_` observer is disconnected — `onVisible_()` will **not** fire after destruction.
+
+No manual cleanup is needed. No memory leaks.
+
+### Hook comparison
+
+|                    | `init_()?`             | `lazyInit_()?`                      | `onVisible_()?`                        |
+| ------------------ | ---------------------- | ----------------------------------- | -------------------------------------- |
+| **When**           | After next macrotask   | First viewport entry                | Every viewport entry                   |
+| **Times**          | Once                   | Once                                | Unlimited                              |
+| **Good for**       | Event listeners, setup | Lazy loading, data fetch            | Impression tracking, animation restart |
+| **Auto cleanup**   | —                      | ✅ observer disconnected on destroy | ✅ observer disconnected on destroy    |
+| **Error handling** | —                      | ✅ logged, never re-thrown          | ✅ logged, never re-thrown             |
 
 ---
 
@@ -309,6 +418,49 @@ class UserCardDirective extends DirectiveBase {
 }
 ```
 
+### `@on(eventType, selector?, options?)`
+
+Registers a DOM event listener on `this.element_` (or a matching child element) and automatically removes it when the directive is destroyed — no manual `addEventListener` / `removeEventListener` needed.
+
+```typescript
+@directive('my-form')
+class MyFormDirective extends DirectiveBase {
+  // Basic: listen on this.element_
+  @on('click')
+  protected onClick_(event: Event): void {
+    console.log('clicked', event);
+  }
+
+  // Selector-based: listen on a child element
+  @on('input', '.search-input')
+  protected onInput_(event: Event): void {
+    console.log('input', (event.target as HTMLInputElement).value);
+  }
+
+  // With options (e.g. passive scroll listener)
+  @on('scroll', undefined, {passive: true})
+  protected onScroll_(event: Event): void {
+    /* ... */
+  }
+}
+```
+
+The listener is bound to the directive instance, so `this` inside the method always refers to the directive. Cleanup is registered automatically via `addDestroyHook` — when `destroy()` is called, all `@on` listeners are removed.
+
+Since `init_()` is optional, a directive that only uses `@on` decorators doesn't need to define any lifecycle hook:
+
+```typescript
+@directive('close-dialog')
+class CloseDialogDirective extends DirectiveBase {
+  @on('click')
+  protected onClick_(): void {
+    this.element_.closest('dialog')?.close();
+  }
+}
+```
+
+> **Warning:** If `selector` is provided but `this.element_.querySelector(selector)` returns `null`, a warning is logged and the listener is silently skipped — no error is thrown.
+
 ---
 
 ## Full API Reference
@@ -325,18 +477,20 @@ Class decorator. Registers the decorated class in the global directive registry.
 
 ### `DirectiveBase` (abstract class)
 
-| Member                     | Type                             | Description                                                      |
-| -------------------------- | -------------------------------- | ---------------------------------------------------------------- |
-| `attributeName`            | `readonly string`                | The attribute name this directive is bound to                    |
-| `attributeValue`           | `readonly string`                | The value of the attribute at construction time                  |
-| `index`                    | `readonly number`                | Per-attribute instance counter (0, 1, 2, …)                      |
-| `element_`                 | `protected readonly HTMLElement` | The bound DOM element                                            |
-| `logger_`                  | `protected readonly`             | Scoped logger: `directive:{attributeName}/{index}`               |
-| `init_()`                  | `protected`                      | Optional initialization logic                                    |
-| `dispatch(event, detail?)` | `public`                         | Fires a bubbling `CustomEvent` from `element_`                   |
-| `addDestroyHook(task)`     | `public`                         | Registers an async cleanup callback                              |
-| `destroy()`                | `public async`                   | Runs all destroy hooks, then nullifies `element_`                |
-| `autoDestroy()`            | `public`                         | Destroys if element is disconnected; returns `true` if destroyed |
+| Member                     | Type                             | Description                                                        |
+| -------------------------- | -------------------------------- | ------------------------------------------------------------------ |
+| `attributeName`            | `readonly string`                | The attribute name this directive is bound to                      |
+| `attributeValue`           | `readonly string`                | The value of the attribute at construction time                    |
+| `index`                    | `readonly number`                | Per-attribute instance counter (0, 1, 2, …)                        |
+| `element_`                 | `protected readonly HTMLElement` | The bound DOM element                                              |
+| `logger_`                  | `protected readonly`             | Scoped logger: `directive:{attributeName}/{index}`                 |
+| `init_()?`                 | `protected`                      | Optional — runs once after next macrotask (setup, event listeners) |
+| `lazyInit_()?`             | `protected`                      | Optional — runs once when element first enters the viewport        |
+| `onVisible_()?`            | `protected`                      | Optional — runs every time element enters the viewport             |
+| `dispatch(event, detail?)` | `public`                         | Fires a bubbling `CustomEvent` from `element_`                     |
+| `addDestroyHook(task)`     | `public`                         | Registers an async cleanup callback                                |
+| `destroy()`                | `public async`                   | Runs all destroy hooks, then nullifies `element_`                  |
+| `autoDestroy()`            | `public`                         | Destroys if element is disconnected; returns `true` if destroyed   |
 
 ---
 
@@ -382,6 +536,19 @@ Accessor decorator. Lazily reads `element_.getAttribute(name)`.
 - `cache` (default `true`) — caches result after first access
 - `root` — override the element to read from (defaults to `element_`)
 - **Requires `accessor` keyword**
+
+---
+
+### `on(eventType, selector?, options?)`
+
+Method decorator. Registers a DOM event listener and removes it automatically on `destroy()`.
+
+- `eventType` — `keyof HTMLElementEventMap | string` — the event to listen for (e.g. `'click'`, `'input'`)
+- `selector` — optional CSS selector; when provided, the listener is registered on `this.element_.querySelector(selector)` instead of `this.element_`
+- `options` — optional `AddEventListenerOptions | boolean` passed directly to `addEventListener`
+- The decorated method is bound to the directive instance (`this` is always the directive)
+- When `selector` is provided but matches no element, a warning is logged and registration is skipped silently
+- Throws if applied to a non-method class member
 
 ---
 

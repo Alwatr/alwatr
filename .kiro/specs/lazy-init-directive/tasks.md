@@ -92,3 +92,12 @@
 - هر task به requirements مشخص ارجاع دارد
 - `IntersectionObserver` در `@happy-dom` پشتیبانی می‌شود — می‌توان آن را در تست‌ها mock کرد
 - تمام تغییرات فقط در `directive-class.ts` و فایل تست جدید انجام می‌شوند
+
+- [x] 8. به‌روزرسانی README
+  - فایل `pkg/nanolib/directive/README.md` را به‌روز کن
+  - مستندسازی دو hook جدید `lazyInit_` و `onVisible_` با توضیح کارکرد هر کدام
+  - مثال کد برای هر hook نشان بده
+  - fallback chain برای `lazyInit_` را توضیح بده (`IntersectionObserver` → `requestIdleCallback` → `setTimeout`)
+  - رفتار `onVisible_` در محیط بدون `IntersectionObserver` را توضیح بده
+  - نحوه تعامل با `destroy()` و cleanup را مستند کن
+  - _Requirements: 1.1, 1.2, 1.3, 1.4, 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 5.1, 5.2, 5.3, 6.1, 6.2_

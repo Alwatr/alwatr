@@ -57,3 +57,9 @@ Implement the `@on(eventType, selector?, options?)` method decorator in `pkg/nan
 
 - [x] 3. Checkpoint — Ensure all tests pass
   - Run `bun test` in `pkg/nanolib/directive` and confirm all tests pass. Ask the user if any questions arise.
+
+- [x] 4. Update README with `@on` decorator documentation
+  - Add a section describing the `@on(eventType, selector?, options?)` decorator
+  - Document the signature, parameters, and behavior
+  - Include usage examples for basic event binding, selector-based binding, and cleanup on destroy
+  - Note the warning behavior when a selector matches no element
