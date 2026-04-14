@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.9.0](https://github.com/Alwatr/alwatr/compare/v9.8.0...v9.9.0) (2026-04-14)
+
+### ✨ Features
+
+* **core:** add signal and on package to `@alwatr/core` ([0dfb995](https://github.com/Alwatr/alwatr/commit/0dfb9951c30d012de1862d897eda7c3b4e10a630))
+
 ## [9.8.0](https://github.com/Alwatr/alwatr/compare/v9.7.0...v9.8.0) (2026-04-14)
 
 **Note:** Version bump only for package @alwatr/core

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.9.0](https://github.com/Alwatr/alwatr/compare/v9.8.0...v9.9.0) (2026-04-14)
+
+### ✨ Features
+
+* **directive:** use 'override' keyword for lifecycle methods in directives ([ef130ce](https://github.com/Alwatr/alwatr/commit/ef130cea32d80327fb418f97278f2abaac3f14d4))
+
+### 🐛 Bug Fixes
+
+* **directive:** make init_() method optional in DirectiveBase class ([1abbd67](https://github.com/Alwatr/alwatr/commit/1abbd67497564f924edc338addb922af2b7e45b6))
+
 ## [9.8.0](https://github.com/Alwatr/alwatr/compare/v9.7.0...v9.8.0) (2026-04-14)
 
 ### ✨ Features
