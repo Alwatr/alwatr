@@ -51,6 +51,8 @@
     "@alwatr/resolve-url": "workspace:*",
     "@alwatr/session-storage": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
+    "@alwatr/signal": "workspace:*",
+    "@alwatr/on": "workspace:*",
     "@alwatr/unicode-digits": "workspace:*"
   },
   "devDependencies": {
