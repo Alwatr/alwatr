@@ -24,7 +24,7 @@ The **Directive Pattern** solves this by letting you encapsulate any DOM behavio
 - **Declarative activation** — behavior is triggered by HTML attributes, not imperative JS calls
 - **Zero coupling** — directives don't know about each other; HTML is the only contract
 - **Idempotent bootstrap** — safely re-run on dynamic content; already-initialized elements are skipped
-- **Async-safe initialization** — all lifecycle hooks (`init_()`, `lazyInit_()`, `onVisible_()`) run after a macrotask so the DOM is always settled; visibility hooks fire only when the element is actually visible
+- **Async-safe initialization** — `init_()` runs after a macrotask so the DOM is always settled; visibility hooks (`lazyInit_()`, `onVisible_()`) are initialized after a macrotask and fire when the element becomes visible
 - **Automatic cleanup** — destroy hooks and `autoDestroy()` prevent memory leaks
 - **Progressive enhancement** — works on any existing HTML without restructuring your markup
 - **Tiny footprint** — no runtime overhead beyond what your directive actually does
