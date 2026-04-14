@@ -1,5 +1,10 @@
 import {createEventSignal} from '@alwatr/signal';
 
+export interface EventSignalPayload {
+  actionId: string;
+  actionPayload: string;
+}
+
 /**
  * The shared module-level event signal that carries all dispatched actions.
  * All `AlwatrActionDirective` instances dispatch to this signal, and all
@@ -7,4 +12,4 @@ import {createEventSignal} from '@alwatr/signal';
  *
  * @internal
  */
-export const eventSignal_ = createEventSignal<{actionId: string; actionPayload: string}>({name: 'alwatr-on'});
+export const eventSignal_ = createEventSignal<EventSignalPayload>({name: 'alwatr-on'});
