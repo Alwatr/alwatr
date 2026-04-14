@@ -44,8 +44,8 @@
   - تست‌های موجود را اجرا کن: `bun test` در `pkg/nanolib/directive`
   - _Requirements: 9.1, 9.2, 9.3_
 
-- [-] 5. نوشتن تست‌های unit و property برای hookها
-  - [-] 5.1 نوشتن تست‌های unit برای `lazyInit_`
+- [x] 5. نوشتن تست‌های unit و property برای hookها
+  - [x] 5.1 نوشتن تست‌های unit برای `lazyInit_`
     - یک فایل تست جدید `directive-class.test.ts` در `pkg/nanolib/directive/src/` بساز
     - از `@happy-dom/global-registrator` برای mock کردن DOM استفاده کن
     - تست کن: وقتی `lazyInit_` تعریف نشده، `triggerLazyInit_` فراخوانی نشود
@@ -56,7 +56,7 @@
   - [ ]\* 5.2 نوشتن property test برای اجرای یک‌باره `lazyInit_`
     - **Property: lazyInit single execution** — برای هر instance با `lazyInit_`، تعداد اجرا دقیقاً ۱ است
     - **Validates: Requirements 3.1, 3.2**
-  - [~] 5.3 نوشتن تست‌های unit برای `onVisible_`
+  - [x] 5.3 نوشتن تست‌های unit برای `onVisible_`
     - تست کن: وقتی `onVisible_` تعریف نشده، `triggerOnVisible_` فراخوانی نشود
     - تست کن: وقتی `onVisible_` تعریف شده، هر بار intersection اجرا شود
     - تست کن: وقتی `onVisible_()` خطا پرتاب کند، directive crash نکند
@@ -72,16 +72,16 @@
     - **Property: Backward compatibility** — directive هایی که هیچ hook ندارند رفتار قبلی را حفظ می‌کنند
     - **Validates: Requirements 9.1, 9.2, 9.3**
 
-- [~] 6. تست fallback chain
-  - [~] 6.1 نوشتن تست برای fallback های `lazyInit_`
+- [x] 6. تست fallback chain
+  - [x] 6.1 نوشتن تست برای fallback های `lazyInit_`
     - با mock کردن `IntersectionObserver` به `undefined`، تست کن که `requestIdleCallback` استفاده می‌شود
     - با mock کردن هر دو به `undefined`، تست کن که `setTimeout(100ms)` استفاده می‌شود
     - _Requirements: 5.1, 5.2, 5.3_
-  - [~] 6.2 نوشتن تست برای fallback `onVisible_`
+  - [x] 6.2 نوشتن تست برای fallback `onVisible_`
     - با mock کردن `IntersectionObserver` به `undefined`، تست کن که `onVisible_()` دقیقاً یک بار فوری اجرا می‌شود
     - _Requirements: 6.1, 6.2_
 
-- [~] 7. Final checkpoint — اطمینان از پاس شدن همه تست‌ها
+- [x] 7. Final checkpoint — اطمینان از پاس شدن همه تست‌ها
   - همه تست‌ها را اجرا کن: `bun test` در `pkg/nanolib/directive`
   - اطمینان حاصل کن که هیچ regression در تست‌های موجود (`util-decorators.test.ts`) وجود ندارد
   - در صورت وجود سوال یا ابهام، با کاربر مطرح کن.
