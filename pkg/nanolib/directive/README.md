@@ -24,7 +24,7 @@ The **Directive Pattern** solves this by letting you encapsulate any DOM behavio
 - **Declarative activation** — behavior is triggered by HTML attributes, not imperative JS calls
 - **Zero coupling** — directives don't know about each other; HTML is the only contract
 - **Idempotent bootstrap** — safely re-run on dynamic content; already-initialized elements are skipped
-- **Async-safe initialization** — `init_()` runs after a macrotask, so the DOM is always settled
+- **Async-safe initialization** — if defined, `init_()` runs after a macrotask, so the DOM is always settled
 - **Automatic cleanup** — destroy hooks and `autoDestroy()` prevent memory leaks
 - **Progressive enhancement** — works on any existing HTML without restructuring your markup
 - **Tiny footprint** — no runtime overhead beyond what your directive actually does
@@ -169,7 +169,9 @@ new DirectiveBase(element, attributeName)
   │    sets: attributeName, attributeValue, element_, logger_, index
   │
   └─ after one macrotask (delay.nextMacrotask)
-       └─ init_() called  ← your logic goes here
+  ├─ init_()? called  ← your logic goes here if you define it
+  ├─ lazyInit_()? called
+  └─ onVisible_()? called
 ```
 
 The macrotask delay ensures the full DOM subtree is painted and settled before your directive runs — no race conditions with sibling elements or CSS.
@@ -330,7 +332,7 @@ Class decorator. Registers the decorated class in the global directive registry.
 | `index`                    | `readonly number`                | Per-attribute instance counter (0, 1, 2, …)                      |
 | `element_`                 | `protected readonly HTMLElement` | The bound DOM element                                            |
 | `logger_`                  | `protected readonly`             | Scoped logger: `directive:{attributeName}/{index}`               |
-| `init_()`                  | `protected abstract`             | Your initialization logic — implement this                       |
+| `init_()`                  | `protected`                      | Optional initialization logic                                    |
 | `dispatch(event, detail?)` | `public`                         | Fires a bubbling `CustomEvent` from `element_`                   |
 | `addDestroyHook(task)`     | `public`                         | Registers an async cleanup callback                              |
 | `destroy()`                | `public async`                   | Runs all destroy hooks, then nullifies `element_`                |
