@@ -15,7 +15,7 @@ import {eventSignal_} from './signal';
  * 'input->search-query:$value' → ['input', 'search-query', '$value']
  * 'init->page-loaded'          → ['init', 'page-loaded', undefined]
  */
-const syntaxRegex = /^([a-z]+)->([a-z0-9-]+)(?::(.+))?$/;
+const syntaxRegex = /^([a-z0-9-]+)->([a-z0-9-]+)(?::(.+))?$/;
 
 /**
  * A directive that listens to a DOM event and dispatches a typed action signal.
@@ -84,7 +84,7 @@ export class AlwatrActionDirective extends DirectiveBase {
 
     let actionPayload = actionPayloadRaw ?? '';
     if (actionPayload === '$value' && 'value' in this.element_) {
-      actionPayload = (this.element_ as HTMLInputElement).value;
+      actionPayload = (this.element_ as {value: string}).value;
     }
 
     eventSignal_.dispatch({actionId, actionPayload});
