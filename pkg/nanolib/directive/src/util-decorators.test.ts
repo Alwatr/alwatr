@@ -3,7 +3,10 @@ import {GlobalRegistrator} from '@happy-dom/global-registrator';
 import {DirectiveBase} from './directive-class.js';
 import {attribute, on, query, queryAll} from './util-decorators.js';
 
-GlobalRegistrator.register();
+// Guard against double-registration (directive-class.test.ts may have already registered)
+if (typeof document === 'undefined') {
+  GlobalRegistrator.register();
+}
 
 class TestDirective extends DirectiveBase {
   protected init_(): void {}
