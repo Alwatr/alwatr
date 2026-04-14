@@ -1,5 +1,5 @@
 import {directive, DirectiveBase} from '@alwatr/directive';
-import {eventSignal_} from './signal';
+import {eventSignal_} from './signal.js';
 
 /**
  * Regex for parsing the `alwatr-on` attribute value.
