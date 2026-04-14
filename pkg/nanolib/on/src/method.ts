@@ -1,4 +1,5 @@
 import {eventSignal_} from './signal.js';
+import type {SubscribeResult} from '@alwatr/signal';
 
 /**
  * Subscribes to actions dispatched by any `alwatr-on` directive on the page.
