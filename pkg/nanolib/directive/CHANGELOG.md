@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.7.0](https://github.com/Alwatr/alwatr/compare/v9.6.1...v9.7.0) (2026-04-14)
+
+### ✨ Features
+
+* **directive:** add [@on](https://github.com/on) event decorator for DOM event handling ([2dc63e9](https://github.com/Alwatr/alwatr/commit/2dc63e9ecba16a5c65374a8f3ac6b9d2be2e406d))
+
 ## [9.6.1](https://github.com/Alwatr/alwatr/compare/v9.6.0...v9.6.1) (2026-04-13)
 
 ### 🧹 Miscellaneous Chores

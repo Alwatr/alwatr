@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.7.0](https://github.com/Alwatr/alwatr/compare/v9.6.1...v9.7.0) (2026-04-14)
+
+### 🔨 Code Refactoring
+
+* **tsconfig.base:** change module to esnext ([3ff7332](https://github.com/Alwatr/alwatr/commit/3ff73329a0584799f8092cb94948698db2d23e3f))
+
 ## [9.4.5](https://github.com/Alwatr/alwatr/compare/v9.4.4...v9.4.5) (2026-04-11)
 
 ### 🔗 Dependencies update
