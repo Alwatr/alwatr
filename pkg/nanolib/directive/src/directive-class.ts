@@ -89,19 +89,26 @@ export abstract class DirectiveBase {
     // Parse the initial value from the attribute
     this.attributeValue = this.element_.getAttribute(this.attributeName) ?? '';
 
+    // Register this instance with the FinalizationRegistry for cleanup when garbage collected
     finalizationRegistry?.register(this, `${identifier}/instance`);
     finalizationRegistry?.register(this.element_, `${identifier}/element`);
 
-    (async () => {
-      await delay.nextMacrotask();
+    // Defer the initialization to the next macrotask to ensure that the directive is fully set up and the initial attribute value is parsed before running any logic.
+    delay.nextMacrotask().then(() => this.initializeLifecycle_());
+  }
+
+  private async initializeLifecycle_(): Promise<void> {
+    try {
       await this.init_();
-      if (typeof this.lazyInit_ === 'function') {
-        this.triggerLazyInit_();
-      }
-      if (typeof this.onVisible_ === 'function') {
-        this.triggerOnVisible_();
-      }
-    })();
+    } catch (err) {
+      this.logger_.error('init_', 'error_in_init', err);
+    }
+    if (this.lazyInit_) {
+      this.triggerLazyInit_();
+    }
+    if (this.onVisible_) {
+      this.triggerOnVisible_();
+    }
   }
 
   /**
@@ -177,7 +184,7 @@ export abstract class DirectiveBase {
       observer.observe(this.element_);
       this.addDestroyHook(() => observer.disconnect());
     } else {
-      void execute();
+      setTimeout(() => void execute(), 100);
     }
   }
 
