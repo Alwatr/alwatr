@@ -1,7 +1,7 @@
 import {describe, expect, it} from 'bun:test';
 import {GlobalRegistrator} from '@happy-dom/global-registrator';
 import {DirectiveBase} from './directive-class.js';
-import {attribute, query, queryAll} from './util-decorators.js';
+import {attribute, on, query, queryAll} from './util-decorators.js';
 
 GlobalRegistrator.register();
 
@@ -29,7 +29,7 @@ describe('@query', () => {
     const root = document.createElement('div');
     root.innerHTML = '<h1 class="title">Hello</h1>';
 
-    const directive = new TestDirective(root, '[test]');
+    const directive = new TestDirective(root, 'test');
     expect(directive.title?.textContent).toBe('Hello');
   });
 
@@ -37,7 +37,7 @@ describe('@query', () => {
     const root = document.createElement('div');
     root.innerHTML = '<p>no target here</p>';
 
-    const directive = new TestDirective(root, '[test]');
+    const directive = new TestDirective(root, 'test');
     expect(directive.missing).toBeNull();
   });
 
@@ -45,7 +45,7 @@ describe('@query', () => {
     const root = document.createElement('div');
     root.innerHTML = '<h1 class="title">Hello</h1>';
 
-    const directive = new TestDirective(root, '[test]');
+    const directive = new TestDirective(root, 'test');
     const first = directive.title;
     const second = directive.title;
 
@@ -64,7 +64,7 @@ describe('@queryAll', () => {
       </ul>
     `;
 
-    const directive = new TestDirective(root, '[test]');
+    const directive = new TestDirective(root, 'test');
     expect(directive.items.length).toBe(3);
     expect(directive.items[0]?.textContent).toBe('A');
   });
@@ -73,7 +73,7 @@ describe('@queryAll', () => {
     const root = document.createElement('div');
     root.innerHTML = '<div>empty</div>';
 
-    const directive = new TestDirective(root, '[test]');
+    const directive = new TestDirective(root, 'test');
     expect(directive.items.length).toBe(0);
   });
 });
@@ -90,7 +90,7 @@ describe('@attribute', () => {
   it('returns null when attribute is not found', () => {
     const root = document.createElement('div');
 
-    const directive = new TestDirective(root, '[test]');
+    const directive = new TestDirective(root, 'test');
     expect(directive.missingData).toBeNull();
   });
 
@@ -98,12 +98,170 @@ describe('@attribute', () => {
     const root = document.createElement('div');
     root.setAttribute('data-id', '123');
 
-    const directive = new TestDirective(root, '[test]');
+    const directive = new TestDirective(root, 'test');
     const first = directive.dataId;
     root.setAttribute('data-id', '456');
     const second = directive.dataId;
 
     expect(first).toBe('123');
     expect(second).toBe('123');
+  });
+});
+
+describe('@on', () => {
+  it('is exported from util-decorators', () => {
+    expect(typeof on).toBe('function');
+  });
+
+  it('throws at decoration time when applied to a non-method', () => {
+    expect(() => {
+      // Simulate applying @on to an accessor context
+      const decorator = on('click');
+      decorator(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (() => {}) as any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {kind: 'accessor', name: 'foo', addInitializer: () => {}} as any,
+      );
+    }).toThrow('@on can only be used on class methods');
+  });
+
+  it('calls the decorated method when the event fires on element_', () => {
+    let callCount = 0;
+
+    class ClickDirective extends DirectiveBase {
+      protected init_(): void {}
+
+      @on('click')
+      onClick(_e: Event): void {
+        callCount++;
+      }
+    }
+
+    const root = document.createElement('div');
+    new ClickDirective(root, 'test');
+
+    root.dispatchEvent(new Event('click'));
+    expect(callCount).toBe(1);
+  });
+
+  it('calls both methods when two @on("click") decorators are applied', () => {
+    let count1 = 0;
+    let count2 = 0;
+
+    class TwoClickDirective extends DirectiveBase {
+      protected init_(): void {}
+
+      @on('click')
+      onClickA(_e: Event): void {
+        count1++;
+      }
+
+      @on('click')
+      onClickB(_e: Event): void {
+        count2++;
+      }
+    }
+
+    const root = document.createElement('div');
+    new TwoClickDirective(root, 'test');
+
+    root.dispatchEvent(new Event('click'));
+    expect(count1).toBe(1);
+    expect(count2).toBe(1);
+  });
+
+  it('binds `this` to the directive instance inside the decorated method', () => {
+    let capturedThis: unknown;
+
+    class ThisDirective extends DirectiveBase {
+      protected init_(): void {}
+
+      @on('click')
+      onClick(_e: Event): void {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        capturedThis = this;
+      }
+    }
+
+    const root = document.createElement('div');
+    const instance = new ThisDirective(root, 'test');
+
+    root.dispatchEvent(new Event('click'));
+    expect(capturedThis).toBe(instance);
+  });
+
+  it('removes the listener after destroy() is called', async () => {
+    let callCount = 0;
+
+    class DestroyDirective extends DirectiveBase {
+      protected init_(): void {}
+
+      @on('click')
+      onClick(_e: Event): void {
+        callCount++;
+      }
+    }
+
+    const root = document.createElement('div');
+    const instance = new DestroyDirective(root, 'test');
+
+    root.dispatchEvent(new Event('click'));
+    expect(callCount).toBe(1);
+
+    await instance.destroy();
+
+    root.dispatchEvent(new Event('click'));
+    expect(callCount).toBe(1); // no additional calls after destroy
+  });
+
+  it('registers listener on a matching child element when selector is provided', () => {
+    let callCount = 0;
+
+    class ChildDirective extends DirectiveBase {
+      protected init_(): void {}
+
+      @on('click', '.btn')
+      onBtnClick(_e: Event): void {
+        callCount++;
+      }
+    }
+
+    const root = document.createElement('div');
+    root.innerHTML = '<button class="btn">Click me</button>';
+    new ChildDirective(root, 'test');
+
+    const btn = root.querySelector('.btn') as HTMLElement;
+    btn.dispatchEvent(new Event('click'));
+    expect(callCount).toBe(1);
+
+    // Clicking the root itself should NOT trigger the handler
+    root.dispatchEvent(new Event('click'));
+    expect(callCount).toBe(1);
+  });
+
+  it('logs a warning and does not throw when selector matches nothing', () => {
+    let callCount = 0;
+
+    // Should not throw during class definition or instantiation
+    expect(() => {
+      class MissingChildDirective extends DirectiveBase {
+        protected init_(): void {}
+
+        @on('click', '.nonexistent')
+        onMissing(_e: Event): void {
+          callCount++;
+        }
+      }
+
+      const root = document.createElement('div'); // no .nonexistent child
+      new MissingChildDirective(root, 'test');
+
+      // Dispatching the event should not call the handler (listener was never registered)
+      root.dispatchEvent(new Event('click'));
+    }).not.toThrow();
+
+    // Handler was never registered, so it should not have been called
+    expect(callCount).toBe(0);
   });
 });
