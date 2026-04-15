@@ -267,4 +267,64 @@ describe('@on', () => {
     // Handler was never registered, so it should not have been called
     expect(callCount).toBe(0);
   });
+
+  it('works correctly when addInitializer fires AFTER constructor (Bun bundler bug simulation)', () => {
+    // Bun bundler emits __runInitializers inside the constructor body *before*
+    // __decorateElement has registered the initializers. This means context.addInitializer
+    // callbacks are silently skipped in browser builds.
+    //
+    // This test simulates that broken ordering by manually applying the decorator
+    // *after* the instance is already constructed — if the implementation relied solely
+    // on context.addInitializer, the listener would never be registered.
+    let callCount = 0;
+
+    // Step 1: define a plain class WITHOUT @on (no decorator at class-definition time)
+    class LateDecoratedDirective extends DirectiveBase {
+      protected init_(): void {}
+
+      // This method will have @on applied manually AFTER instantiation (simulating the bug)
+      onLateClick(_e: Event): void {
+        callCount++;
+      }
+    }
+
+    // Step 2: apply the @on decorator manually to the method function, populating onEntriesWeakMap
+    const decorator = on('click');
+    const addInitializerCalls: Array<(this: DirectiveBase) => void> = [];
+    decorator(LateDecoratedDirective.prototype.onLateClick, {
+      kind: 'method',
+      name: 'onLateClick',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      metadata: {} as any,
+      access: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        has: () => false,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        get: () => undefined as any,
+      },
+      addInitializer(fn) {
+        // Collect but do NOT call — simulates Bun bundler running __runInitializers
+        // before __decorateElement has had a chance to register anything.
+        addInitializerCalls.push(fn);
+      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as any);
+
+    // Step 3: construct the instance — at this point addInitializer callbacks have NOT run
+    // (simulating the Bun bundler bug where __runInitializers fires before __decorateElement)
+    const root = document.createElement('div');
+    const instance = new LateDecoratedDirective(root, 'test');
+
+    // Step 4: dispatch the event — the listener should be registered via the WeakMap path
+    // in DirectiveBase.runOnEntries_(), NOT via addInitializer
+    root.dispatchEvent(new Event('click'));
+    expect(callCount).toBe(1);
+
+    // Verify that addInitializer was indeed never called (confirming we tested the right path)
+    expect(addInitializerCalls.length).toBe(1); // registered but not called
+    // If we now call them (simulating correct runtime), it would double-register — but we don't
+
+    // Cleanup
+    void instance.destroy();
+  });
 });
