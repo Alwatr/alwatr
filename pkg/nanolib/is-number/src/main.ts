@@ -38,7 +38,7 @@ export function isFiniteNumber(value: unknown): value is number {
  * isNumber(undefined);  // false
  * ```
  */
-export function isNumber(value: unknown): value is number {
+export function isNumber(value: unknown): boolean {
   // Handle number type
   if (typeof value === 'number') {
     return value - value === 0;

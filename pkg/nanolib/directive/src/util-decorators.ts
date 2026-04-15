@@ -184,6 +184,7 @@ export function on(
     }
 
     context.addInitializer(function (this: DirectiveBase) {
+      this.logger_.logMethodArgs?.('@on-init', {eventType, selector, options});
       const targetElement = selector ? this.element_.querySelector(selector) : this.element_;
 
       if (selector && targetElement === null) {

@@ -104,6 +104,19 @@ case "$preset" in
     fi
   ;;
 
+  module-web)
+    args+=(
+      '--target=browser'
+      '--sourcemap=linked'
+      '--format=esm'
+    )
+
+    if ! $hasPackages; then
+      hasPackages=true
+      args+=('--packages=external')
+    fi
+  ;;
+
   web)
     args+=(
       '--target=browser'

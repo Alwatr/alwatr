@@ -173,12 +173,13 @@ new DirectiveBase(element, attributeName)
   └─ after one macrotask (delay.nextMacrotask)
        ├─ init_()?       ← optional — runs once (setup, event listeners)
        ├─ lazyInit_()?   ← optional — runs once, when element first enters viewport
-       └─ onVisible_()?  ← optional — runs every time element enters viewport
+       ├─ onVisible_()?  ← optional — runs every time element enters viewport
+       └─ onHidden_()?   ← optional — runs every time element leaves viewport
 ```
 
 The macrotask delay ensures the full DOM subtree is painted and settled before your directive runs — no race conditions with sibling elements or CSS.
 
-All three hooks are **optional**. You only define the ones you need — a directive that only uses `@on` decorators doesn't need any hook at all.
+All four hooks are **optional**. You only define the ones you need — a directive that only uses `@on` decorators doesn't need any hook at all.
 
 ---
 
@@ -223,7 +224,7 @@ class ProductImageDirective extends DirectiveBase {
 
 Runs **every time** the element enters the viewport. Ideal for impression tracking, restarting animations, or refreshing dynamic data on each appearance.
 
-**Fallback** (when `IntersectionObserver` is unavailable): `onVisible_()` is called once immediately at setup time, so critical visibility logic is never silently skipped.
+**Fallback** (when `IntersectionObserver` is unavailable): `onVisible_()` is scheduled once via `setTimeout(100ms)` at setup time, so critical visibility logic is never silently skipped while avoiding a performance hit at startup.
 
 ```typescript
 @directive('track-impression')
@@ -238,6 +239,39 @@ class ImpressionTrackerDirective extends DirectiveBase {
 ```html
 <div track-impression="banner-hero">...</div>
 ```
+
+### `onHidden_()`
+
+Runs **every time** the element leaves the viewport. The counterpart to `onVisible_()`.
+
+**Fallback**: no fallback — if `IntersectionObserver` is unavailable, this hook is never called. Design your directive to work correctly without it.
+
+```typescript
+@directive('auto-pause-video')
+class AutoPauseVideoDirective extends DirectiveBase {
+  private video_!: HTMLVideoElement;
+
+  protected override init_(): void {
+    this.video_ = this.element_.querySelector('video')!;
+  }
+
+  protected override onVisible_(): void {
+    void this.video_.play();
+  }
+
+  protected override onHidden_(): void {
+    this.video_.pause();
+  }
+}
+```
+
+```html
+<div auto-pause-video>
+  <video src="clip.mp4"></video>
+</div>
+```
+
+> **Note:** `onVisible_` and `onHidden_` share a single `IntersectionObserver` instance — no duplicate observers are created when both are defined.
 
 ### Using both hooks together
 
@@ -268,22 +302,23 @@ class ProductCardDirective extends DirectiveBase {
 
 ### Cleanup & `destroy()`
 
-Both hooks register their `IntersectionObserver` in `destroyHookList__` automatically. When `destroy()` is called:
+All visibility hooks register their `IntersectionObserver` in `destroyHookList__` automatically. `onVisible_` and `onHidden_` share a single observer, so only one entry is added. When `destroy()` is called:
 
 - The `lazyInit_` observer is disconnected — if the element hasn't entered the viewport yet, `lazyInit_()` will **not** run.
-- The `onVisible_` observer is disconnected — `onVisible_()` will **not** fire after destruction.
+- The shared `onVisible_`/`onHidden_` observer is disconnected — neither hook will fire after destruction.
 
 No manual cleanup is needed. No memory leaks.
 
 ### Hook comparison
 
-|                    | `init_()?`             | `lazyInit_()?`                      | `onVisible_()?`                        |
-| ------------------ | ---------------------- | ----------------------------------- | -------------------------------------- |
-| **When**           | After next macrotask   | First viewport entry                | Every viewport entry                   |
-| **Times**          | Once                   | Once                                | Unlimited                              |
-| **Good for**       | Event listeners, setup | Lazy loading, data fetch            | Impression tracking, animation restart |
-| **Auto cleanup**   | —                      | ✅ observer disconnected on destroy | ✅ observer disconnected on destroy    |
-| **Error handling** | —                      | ✅ logged, never re-thrown          | ✅ logged, never re-thrown             |
+|                    | `init_()?`             | `lazyInit_()?`                       | `onVisible_()?`                        | `onHidden_()?`                    |
+| ------------------ | ---------------------- | ------------------------------------ | -------------------------------------- | --------------------------------- |
+| **When**           | After next macrotask   | First viewport entry                 | Every viewport entry                   | Every viewport exit               |
+| **Times**          | Once                   | Once                                 | Unlimited                              | Unlimited                         |
+| **Good for**       | Event listeners, setup | Lazy loading, data fetch             | Impression tracking, animation restart | Pause video, cancel work, hide UI |
+| **Auto cleanup**   | —                      | ✅ observer disconnected on destroy  | ✅ shared observer, disconnected       | ✅ shared observer, disconnected  |
+| **Error handling** | —                      | ✅ logged, never re-thrown           | ✅ logged, never re-thrown             | ✅ logged, never re-thrown        |
+| **Fallback**       | —                      | `requestIdleCallback` → `setTimeout` | Called once via `setTimeout(100ms)`    | None — silently skipped           |
 
 ---
 
@@ -487,6 +522,7 @@ Class decorator. Registers the decorated class in the global directive registry.
 | `init_()?`                 | `protected`                      | Optional — runs once after next macrotask (setup, event listeners) |
 | `lazyInit_()?`             | `protected`                      | Optional — runs once when element first enters the viewport        |
 | `onVisible_()?`            | `protected`                      | Optional — runs every time element enters the viewport             |
+| `onHidden_()?`             | `protected`                      | Optional — runs every time element leaves the viewport             |
 | `dispatch(event, detail?)` | `public`                         | Fires a bubbling `CustomEvent` from `element_`                     |
 | `addDestroyHook(task)`     | `public`                         | Registers an async cleanup callback                                |
 | `destroy()`                | `public async`                   | Runs all destroy hooks, then nullifies `element_`                  |

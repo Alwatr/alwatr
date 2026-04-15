@@ -106,8 +106,8 @@ export abstract class DirectiveBase {
     if (this.lazyInit_) {
       this.triggerLazyInit_();
     }
-    if (this.onVisible_) {
-      this.triggerOnVisible_();
+    if (this.onVisible_ || this.onHidden_) {
+      this.triggerVisibilityObserver_();
     }
   }
 
@@ -132,6 +132,14 @@ export abstract class DirectiveBase {
    * Use for: impression tracking, restarting animations, refreshing dynamic data.
    */
   protected onVisible_?(): Awaitable<void>;
+
+  /**
+   * Optional lifecycle hook — runs **every time** the element leaves the viewport.
+   * No fallback — if `IntersectionObserver` is unavailable, this hook is never called.
+   *
+   * Use for: pausing animations, stopping video playback, cancelling in-progress work.
+   */
+  protected onHidden_?(): Awaitable<void>;
 
   /**
    * Handles one-shot lazy execution with environment-aware fallbacks.
@@ -165,28 +173,47 @@ export abstract class DirectiveBase {
 
   /**
    * Handles persistent visibility tracking with destroy-safe cleanup.
-   * Uses IntersectionObserver when available, falls back to a single immediate execution.
+   * A single IntersectionObserver handles both onVisible_ and onHidden_ to avoid duplicate observers.
+   * Falls back to a single immediate onVisible_ execution if IntersectionObserver is unavailable.
    */
-  private triggerOnVisible_(): void {
-    const execute = async () => {
+  private triggerVisibilityObserver_(): void {
+    const executeOnVisible_ = async () => {
       try {
         if (this.isDestroyed()) return;
-        await this.onVisible_!();
+        await this.onVisible_?.();
       } catch (err) {
-        this.logger_.error('triggerOnVisible_', 'error_in_on_visible', err);
+        this.logger_.error('triggerVisibilityObserver_', 'error_in_on_visible', err);
+      }
+    };
+
+    const executeOnHidden_ = async () => {
+      try {
+        if (this.isDestroyed()) return;
+        await this.onHidden_?.();
+      } catch (err) {
+        this.logger_.error('triggerVisibilityObserver_', 'error_in_on_hidden', err);
       }
     };
 
     if (typeof IntersectionObserver !== 'undefined') {
       const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          void execute();
+        if (this.isDestroyed()) return;
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          void executeOnVisible_();
+        } else {
+          try {
+            void executeOnHidden_();
+          } catch (err) {
+            this.logger_.error('triggerVisibilityObserver_', 'error_in_on_hidden', err);
+          }
         }
       });
       observer.observe(this.element_);
       this.addDestroyHook(() => observer.disconnect());
-    } else {
-      setTimeout(() => void execute(), 100);
+    } else if (this.onVisible_) {
+      // Fallback: run onVisible_ once after 100ms. onHidden_ has no meaningful fallback.
+      setTimeout(() => void executeOnVisible_(), 100);
     }
   }
 
