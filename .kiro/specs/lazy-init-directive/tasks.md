@@ -2,7 +2,7 @@
 
 ## Overview
 
-افزودن دو lifecycle hook اختیاری `lazyInit_` و `onVisible_` به کلاس `DirectiveBase` در فایل `pkg/nanolib/directive/src/directive-class.ts`. پیاده‌سازی با `IntersectionObserver` انجام می‌شود و fallback chain مناسب برای محیط‌های بدون پشتیبانی دارد.
+افزودن lifecycle hook های اختیاری `lazyInit_`، `onVisible_` و `onHidden_` به کلاس `DirectiveBase` در فایل `pkg/nanolib/directive/src/directive-class.ts`. همچنین `init_` به optional تبدیل شده. پیاده‌سازی با `IntersectionObserver` انجام می‌شود. `onVisible_` و `onHidden_` یک observer مشترک دارند.
 
 ## Tasks
 
@@ -95,9 +95,27 @@
 
 - [x] 8. به‌روزرسانی README
   - فایل `pkg/nanolib/directive/README.md` را به‌روز کن
-  - مستندسازی دو hook جدید `lazyInit_` و `onVisible_` با توضیح کارکرد هر کدام
+  - مستندسازی hook های جدید `lazyInit_`، `onVisible_` و `onHidden_` با توضیح کارکرد هر کدام
   - مثال کد برای هر hook نشان بده
   - fallback chain برای `lazyInit_` را توضیح بده (`IntersectionObserver` → `requestIdleCallback` → `setTimeout`)
   - رفتار `onVisible_` در محیط بدون `IntersectionObserver` را توضیح بده
+  - رفتار `onHidden_` (بدون fallback) را توضیح بده
   - نحوه تعامل با `destroy()` و cleanup را مستند کن
-  - _Requirements: 1.1, 1.2, 1.3, 1.4, 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 5.1, 5.2, 5.3, 6.1, 6.2_
+  - _Requirements: 1.1, 1.2, 1.3, 1.4, 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 4.4, 4.5, 5.1, 5.2, 5.3, 6.1, 6.2, 6.3_
+
+- [x] 9. پیاده‌سازی `onHidden_` و یکپارچه‌سازی با `onVisible_`
+  - [x] 9.1 اضافه کردن تعریف نوع `onHidden_` به `DirectiveBase`
+    - در `directive-class.ts`، متد optional protected اضافه شد:
+      - `protected onHidden_?(): Awaitable<void>`
+    - _Requirements: 1.4_
+  - [x] 9.2 تبدیل `triggerOnVisible_` به `triggerVisibilityObserver_`
+    - متد `triggerOnVisible_` به `triggerVisibilityObserver_` تغییر نام یافت
+    - observer مشترک برای هر دو hook ساخته شد
+    - در `initializeLifecycle_`، شرط به `if (this.onVisible_ || this.onHidden_)` تغییر یافت
+    - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 6.1, 6.2, 6.3, 7.2, 7.4, 8.3, 8.4_
+  - [ ] 9.3 نوشتن تست‌های unit برای `onHidden_`
+    - تست کن: وقتی `onHidden_` تعریف شده، هر بار خروج از viewport اجرا شود
+    - تست کن: وقتی `onHidden_()` خطا پرتاب کند، directive crash نکند
+    - تست کن: وقتی `destroy()` فراخوانی شود، `onHidden_()` دیگر اجرا نشود
+    - تست کن: `onVisible_` و `onHidden_` یک observer مشترک دارند (نه دو observer جداگانه)
+    - _Requirements: 4.3, 4.4, 7.2, 7.4, 8.3, 8.4_

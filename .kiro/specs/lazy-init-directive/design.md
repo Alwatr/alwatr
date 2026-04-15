@@ -2,14 +2,20 @@
 
 ## Overview
 
-افزودن دو lifecycle hook اختیاری به کلاس `DirectiveBase` در پکیج `@alwatr/directive`:
+افزودن lifecycle hook های اختیاری به کلاس `DirectiveBase` در پکیج `@alwatr/directive`:
 
 | Hook           | اجرا                                   | تعداد دفعات  |
 | -------------- | -------------------------------------- | ------------ |
+| `init_()`      | بعد از nextMacrotask (optional)        | دقیقاً ۱ بار |
 | `lazyInit_()`  | اولین بار که element وارد viewport شود | دقیقاً ۱ بار |
 | `onVisible_()` | هر بار که element وارد viewport شود    | نامحدود      |
+| `onHidden_()`  | هر بار که element از viewport خارج شود | نامحدود      |
 
-هر دو hook با `IntersectionObserver` پیاده‌سازی می‌شوند. `lazyInit_` در صورت عدم پشتیبانی به `requestIdleCallback` و سپس `setTimeout(100ms)` fallback می‌کند. `onVisible_` در صورت عدم پشتیبانی یک بار در همان لحظه اجرا می‌شود (KISS).
+`init_()` به optional تبدیل شده — directive هایی که فقط از `@on` decorator یا visibility hook استفاده می‌کنند نیازی به تعریف آن ندارند.
+
+`lazyInit_` در صورت عدم پشتیبانی به `requestIdleCallback` و سپس `setTimeout(100ms)` fallback می‌کند. `onVisible_` در صورت عدم پشتیبانی با `setTimeout(100ms)` یک بار اجرا می‌شود. `onHidden_` هیچ fallback ندارد.
+
+`onVisible_` و `onHidden_` یک `IntersectionObserver` مشترک دارند تا از ساخت observer تکراری جلوگیری شود.
 
 ---
 
@@ -51,7 +57,7 @@ sequenceDiagram
             TV->>V: await onVisible_()
             TV->>TV: registered in destroyHookList__
         else fallback
-            TV->>V: await onVisible_() (once, immediately)
+            TV->>V: await onVisible_() (once, after 100ms setTimeout)
         end
     end
 ```
@@ -62,6 +68,12 @@ sequenceDiagram
 
 ```typescript
 /**
+ * Optional lifecycle hook — runs once after next macrotask.
+ * Use for: event listeners, initial DOM setup.
+ */
+protected init_?(): Awaitable<void>;
+
+/**
  * Optional lifecycle hook — runs ONCE when the element first enters the viewport.
  * Falls back to requestIdleCallback or setTimeout(100ms) if IntersectionObserver is unavailable.
  *
@@ -71,11 +83,19 @@ protected lazyInit_?(): Awaitable<void>;
 
 /**
  * Optional lifecycle hook — runs EVERY TIME the element enters the viewport.
- * Falls back to a single immediate execution if IntersectionObserver is unavailable.
+ * Falls back to a single execution via setTimeout(100ms) if IntersectionObserver is unavailable.
  *
  * Use for: impression tracking, restarting animations, refreshing dynamic data.
  */
 protected onVisible_?(): Awaitable<void>;
+
+/**
+ * Optional lifecycle hook — runs EVERY TIME the element leaves the viewport.
+ * No fallback — silently skipped if IntersectionObserver is unavailable.
+ *
+ * Use for: pausing video/audio, cancelling in-progress work, hiding UI.
+ */
+protected onHidden_?(): Awaitable<void>;
 
 /**
  * Handles one-shot lazy execution with environment-aware fallbacks.
@@ -83,9 +103,10 @@ protected onVisible_?(): Awaitable<void>;
 private triggerLazyInit_(): void;
 
 /**
- * Handles persistent visibility tracking with destroy-safe cleanup.
+ * Handles persistent visibility tracking for both onVisible_ and onHidden_.
+ * Creates a single shared IntersectionObserver for both hooks.
  */
-private triggerOnVisible_(): void;
+private triggerVisibilityObserver_(): void;
 ```
 
 ---
@@ -146,7 +167,7 @@ private triggerOnVisible_(): void
 - هر بار که element وارد viewport شود، `onVisible_()` اجرا می‌شود
 - observer در `destroyHookList__` ثبت می‌شود تا هنگام `destroy()` قطع شود
 - خطاهای داخل `onVisible_()` با `logger_.error` لاگ می‌شوند و exception بالا نمی‌رود
-- اگر `IntersectionObserver` موجود نباشد، یک بار بلافاصله اجرا می‌شود
+- اگر `IntersectionObserver` موجود نباشد، یک بار با `setTimeout(100ms)` اجرا می‌شود
 
 ---
 
@@ -195,12 +216,12 @@ constructor(element: HTMLElement, attributeName: string) {
 
   (async () => {
     await delay.nextMacrotask();
-    await this.init_();
+    await this.init_?.();
     if (typeof this.lazyInit_ === 'function') {
       this.triggerLazyInit_();
     }
-    if (typeof this.onVisible_ === 'function') {
-      this.triggerOnVisible_();
+    if (typeof this.onVisible_ === 'function' || typeof this.onHidden_ === 'function') {
+      this.triggerVisibilityObserver_();
     }
   })();
 }
@@ -236,30 +257,35 @@ private triggerLazyInit_(): void {
 }
 ```
 
-### `triggerOnVisible_` Algorithm
+### `triggerVisibilityObserver_` Algorithm
 
 ```typescript
-private triggerOnVisible_(): void {
-  const execute = async () => {
-    try {
-      await this.onVisible_!();
-    } catch (err) {
-      this.logger_.error('triggerOnVisible_', 'error_in_on_visible', err);
-    }
-  };
-
+private triggerVisibilityObserver_(): void {
   if (typeof IntersectionObserver !== 'undefined') {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        void execute();
+    const observer = new IntersectionObserver(async (entries) => {
+      if (this.isDestroyed()) return;
+      const entry = entries[0];
+      if (entry.isIntersecting) {
+        if (this.onVisible_) {
+          try { await this.onVisible_(); }
+          catch (err) { this.logger_.error('triggerVisibilityObserver_', 'error_in_on_visible', err); }
+        }
+      } else {
+        if (this.onHidden_) {
+          try { await this.onHidden_(); }
+          catch (err) { this.logger_.error('triggerVisibilityObserver_', 'error_in_on_hidden', err); }
+        }
       }
     });
     observer.observe(this.element_);
-    // Always register cleanup — observer is persistent
+    // Single cleanup entry for both hooks
     this.addDestroyHook(() => observer.disconnect());
-  } else {
-    // Fallback: run once immediately (KISS — no scroll listener complexity)
-    void execute();
+  } else if (this.onVisible_) {
+    // Fallback: run onVisible_ once after 100ms. onHidden_ has no meaningful fallback.
+    setTimeout(async () => {
+      try { await this.onVisible_!(); }
+      catch (err) { this.logger_.error('triggerVisibilityObserver_', 'error_in_on_visible', err); }
+    }, 100);
   }
 }
 ```
@@ -268,13 +294,14 @@ private triggerOnVisible_(): void {
 
 ## DX Comparison
 
-|                     | `init_()`                   | `lazyInit_()`               | `onVisible_()`                         |
-| ------------------- | --------------------------- | --------------------------- | -------------------------------------- |
-| **زمان اجرا**       | بعد از nextMacrotask        | اولین بار در viewport       | هر بار در viewport                     |
-| **تعداد اجرا**      | ۱ بار                       | ۱ بار                       | نامحدود                                |
-| **مناسب برای**      | event listener، setup اولیه | lazy load تصویر، fetch داده | impression tracking، animation restart |
-| **cleanup خودکار**  | —                           | ✅                          | ✅                                     |
-| **error isolation** | —                           | ✅                          | ✅                                     |
+|                     | `init_()?`                  | `lazyInit_()?`                   | `onVisible_()?`                        | `onHidden_()?`           |
+| ------------------- | --------------------------- | -------------------------------- | -------------------------------------- | ------------------------ |
+| **زمان اجرا**       | بعد از nextMacrotask        | اولین بار در viewport            | هر بار در viewport                     | هر بار خروج از viewport  |
+| **تعداد اجرا**      | ۱ بار                       | ۱ بار                            | نامحدود                                | نامحدود                  |
+| **مناسب برای**      | event listener، setup اولیه | lazy load تصویر، fetch داده      | impression tracking، animation restart | pause video، cancel work |
+| **cleanup خودکار**  | —                           | ✅                               | ✅ (shared observer)                   | ✅ (shared observer)     |
+| **error isolation** | —                           | ✅                               | ✅                                     | ✅                       |
+| **fallback**        | —                           | requestIdleCallback → setTimeout | setTimeout(100ms)                      | ندارد                    |
 
 ---
 
@@ -286,19 +313,24 @@ import {directive, DirectiveBase} from '@alwatr/directive';
 @directive('product-card-tracker')
 export class ProductCardTrackerDirective extends DirectiveBase {
   // ۱. اجرای فوری — event listener وصل می‌کنیم
-  protected init_(): void {
+  protected override init_(): void {
     this.element_.addEventListener('click', this.handleClick_);
   }
 
   // ۲. اجرای یک‌بار با تأخیر — تصویر سنگین رو lazy load می‌کنیم
-  protected lazyInit_(): void {
+  protected override lazyInit_(): void {
     const img = this.element_.querySelector('img')!;
     img.src = img.dataset['src']!;
   }
 
   // ۳. اجرای تکرارشونده — هر بار که کارت دیده شد impression می‌فرستیم
-  protected onVisible_(): void {
+  protected override onVisible_(): void {
     AnalyticsService.sendImpression(this.attributeValue);
+  }
+
+  // ۴. هر بار که کارت از دید خارج شد
+  protected override onHidden_(): void {
+    AnalyticsService.sendHidden(this.attributeValue);
   }
 
   private handleClick_ = () => {
@@ -311,11 +343,11 @@ export class ProductCardTrackerDirective extends DirectiveBase {
 // فقط lazyInit_ — بدون onVisible_
 @directive('my-product-price')
 export class ProductPriceDirective extends DirectiveBase {
-  protected init_(): void {
+  protected override init_(): void {
     this.element_.classList.add('loading-skeleton');
   }
 
-  protected async lazyInit_(): Promise<void> {
+  protected override async lazyInit_(): Promise<void> {
     const price = await fetchPrice(this.attributeValue);
     this.element_.classList.remove('loading-skeleton');
     this.element_.textContent = price;
@@ -329,12 +361,15 @@ export class ProductPriceDirective extends DirectiveBase {
 
 - **lazyInit single execution**: `lazyInit_()` برای هر instance دقیقاً یک بار اجرا می‌شود
 - **onVisible repeated execution**: `onVisible_()` هر بار که element وارد viewport شود اجرا می‌شود
-- **Order guarantee**: هر دو hook همیشه پس از تکمیل `init_()` اجرا می‌شوند
+- **onHidden repeated execution**: `onHidden_()` هر بار که element از viewport خارج شود اجرا می‌شود
+- **Shared observer**: `onVisible_` و `onHidden_` یک `IntersectionObserver` مشترک دارند
+- **Order guarantee**: هر hook همیشه پس از تکمیل `init_()` اجرا می‌شود
 - **Backward compatibility**: directive هایی که هیچ‌کدام از hookها را ندارند رفتار قبلی را حفظ می‌کنند
 - **Error isolation**: خطا در هر hook باعث crash directive یا سایر directive ها نمی‌شود
-- **No memory leak**: observer های `lazyInit_` و `onVisible_` هر دو در `destroyHookList__` ثبت می‌شوند
+- **No memory leak**: observer های `lazyInit_` و visibility هر دو در `destroyHookList__` ثبت می‌شوند
 - **lazyInit fallback chain**: `IntersectionObserver` → `requestIdleCallback` → `setTimeout(100ms)`
-- **onVisible fallback**: `IntersectionObserver` → یک بار اجرای فوری
+- **onVisible fallback**: `IntersectionObserver` → یک بار با `setTimeout(100ms)`
+- **onHidden fallback**: ندارد — در محیط بدون `IntersectionObserver` اجرا نمی‌شود
 
 ---
 
@@ -376,7 +411,7 @@ export class ProductPriceDirective extends DirectiveBase {
 ### Integration Testing
 
 - `IntersectionObserver` mock: element وارد viewport شود → `lazyInit_` یک بار، `onVisible_` هر بار اجرا شود
-- `IntersectionObserver` غیرفعال: `lazyInit_` از fallback chain استفاده کند، `onVisible_` یک بار فوری اجرا شود
+- `IntersectionObserver` غیرفعال: `lazyInit_` از fallback chain استفاده کند، `onVisible_` یک بار با `setTimeout(100ms)` اجرا شود
 - `destroy()` قبل از intersection: هیچ hookی اجرا نشود
 
 ---
