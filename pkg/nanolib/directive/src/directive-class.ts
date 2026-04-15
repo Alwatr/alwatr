@@ -325,9 +325,9 @@ export abstract class DirectiveBase {
     options?: AddEventListenerOptions | boolean,
   ): Awaitable<void>;
 
-  protected on_<K extends keyof HTMLElementEventMap>(
-    eventType: K | string,
-    listener: (this: this, event: HTMLElementEventMap[K]) => Awaitable<void>,
+  protected on_(
+    eventType: string,
+    listener: (this: this, event: Event) => Awaitable<void>,
     element: HTMLElement | string | null = this.element_,
     options?: AddEventListenerOptions | boolean,
   ): Awaitable<void> {
@@ -340,7 +340,7 @@ export abstract class DirectiveBase {
     }
 
     const boundListener = listener.bind(this);
-    element.addEventListener<K>(eventType, boundListener as EventListener, options);
+    element.addEventListener(eventType, boundListener as EventListener, options);
     this.addDestroyHook(() => element.removeEventListener(eventType, boundListener as EventListener, options));
   }
 }
