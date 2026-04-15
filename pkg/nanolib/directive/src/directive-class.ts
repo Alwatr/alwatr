@@ -326,7 +326,7 @@ export abstract class DirectiveBase {
   ): Awaitable<void>;
 
   protected on_<K extends keyof HTMLElementEventMap>(
-    eventType: K,
+    eventType: K | string,
     listener: (this: this, event: HTMLElementEventMap[K]) => Awaitable<void>,
     element: HTMLElement | string | null = this.element_,
     options?: AddEventListenerOptions | boolean,
