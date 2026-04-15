@@ -314,7 +314,7 @@ export abstract class DirectiveBase {
     listener: (this: this, event: HTMLElementEventMap[K]) => Awaitable<void>,
     element?: HTMLElement | string | null,
     options?: AddEventListenerOptions | boolean,
-  ): Awaitable<void>;
+  ): void;
   /**
    * Registers an event listener on a specified element (or the directive's root element by default) and ensures that it is automatically removed when the directive is destroyed.
    */
@@ -323,14 +323,14 @@ export abstract class DirectiveBase {
     listener: (this: this, event: Event) => Awaitable<void>,
     element?: HTMLElement | string | null,
     options?: AddEventListenerOptions | boolean,
-  ): Awaitable<void>;
+  ): void;
 
   protected on_(
     eventType: string,
     listener: (this: this, event: Event) => Awaitable<void>,
     element: HTMLElement | string | null = this.element_,
     options?: AddEventListenerOptions | boolean,
-  ): Awaitable<void> {
+  ): void {
     if (typeof element === 'string') {
       element = this.element_.querySelector(element);
     }
