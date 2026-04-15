@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.10.0](https://github.com/Alwatr/alwatr/compare/v9.9.0...v9.10.0) (2026-04-15)
+
+### ✨ Features
+
+* **nano-build:** add module-web preset for ESM browser builds ([3241561](https://github.com/Alwatr/alwatr/commit/3241561dfa461454ccb81427aa77794150cf2852))
+
 ## [9.3.0](https://github.com/Alwatr/alwatr/compare/v9.2.1...v9.3.0) (2026-04-04)
 
 ### ✨ Features

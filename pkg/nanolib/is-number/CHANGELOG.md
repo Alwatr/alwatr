@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.10.0](https://github.com/Alwatr/alwatr/compare/v9.9.0...v9.10.0) (2026-04-15)
+
+### 🐛 Bug Fixes
+
+* **is-number:** change isNumber return type from type guard to boolean ([0b81cce](https://github.com/Alwatr/alwatr/commit/0b81cce5192ec2eca644a3d44edd8961844228b0))
+
 ## [9.7.0](https://github.com/Alwatr/alwatr/compare/v9.6.1...v9.7.0) (2026-04-14)
 
 **Note:** Version bump only for package @alwatr/is-number

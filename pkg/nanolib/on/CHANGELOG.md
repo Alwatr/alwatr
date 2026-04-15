@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.10.0](https://github.com/Alwatr/alwatr/compare/v9.9.0...v9.10.0) (2026-04-15)
+
+### 🧹 Miscellaneous Chores
+
+* **on:** update build preset to module-web for ESM browser builds ([47ed0e2](https://github.com/Alwatr/alwatr/commit/47ed0e2cab91619e698fe80e44028e6078526504))
+
 ## [9.9.0](https://github.com/Alwatr/alwatr/compare/v9.8.0...v9.9.0) (2026-04-14)
 
 ### ✨ Features

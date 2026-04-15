@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.10.0](https://github.com/Alwatr/alwatr/compare/v9.9.0...v9.10.0) (2026-04-15)
+
+### ✨ Features
+
+* **directive:** add logging for event listener initialization ([eb1212f](https://github.com/Alwatr/alwatr/commit/eb1212f2083dcb679108b0d8655747146eb03d1f))
+* **directive:** add on_ protected method for managed event listeners ([b94292a](https://github.com/Alwatr/alwatr/commit/b94292a009373de3a3919e671cc1f2f38914e0ca))
+* **directive:** add onHidden_ lifecycle hook and unified visibility observer ([4b87d78](https://github.com/Alwatr/alwatr/commit/4b87d78da9c2d2a34f567262ada606b556b79204))
+* **nano-build:** add module-web preset for ESM browser builds ([3241561](https://github.com/Alwatr/alwatr/commit/3241561dfa461454ccb81427aa77794150cf2852))
+
+### 🐛 Bug Fixes
+
+* **directive:** allow string event types in on_ method for better flexibility ([cf2273d](https://github.com/Alwatr/alwatr/commit/cf2273deaa230ae927a23cb63bff82c2eff6f490))
+* **directive:** change return type of on_ methods to void for consistency ([c2e61cf](https://github.com/Alwatr/alwatr/commit/c2e61cf8ff425688f4266ff8b2dd9e671ee03adb))
+* **directive:** simplify on_ method signature by removing generic event type ([0bfe34f](https://github.com/Alwatr/alwatr/commit/0bfe34fb0aad82b8bbd793f6c391d1a43c11c842))
+* **is-number:** change isNumber return type from type guard to boolean ([0b81cce](https://github.com/Alwatr/alwatr/commit/0b81cce5192ec2eca644a3d44edd8961844228b0))
+
+### 🔨 Code Refactoring
+
+* **directive:** add executeOnHidden_ method to handle visibility changes ([94d841f](https://github.com/Alwatr/alwatr/commit/94d841f25afe030e77454d23d092a25a69e5c680))
+
+### 🧹 Miscellaneous Chores
+
+* **decorator:** mark 'on' decorator as deprecated until 'addInitializer' stabilizes ([d295d05](https://github.com/Alwatr/alwatr/commit/d295d054ad9b97df2809b2d5f0c863b84ffe97ca))
+* **directive:** update build preset to module-web for ESM browser builds ([4305564](https://github.com/Alwatr/alwatr/commit/43055645682c02cb8ad33f1a4ef3408d7b602b9d))
+* **on:** update build preset to module-web for ESM browser builds ([47ed0e2](https://github.com/Alwatr/alwatr/commit/47ed0e2cab91619e698fe80e44028e6078526504))
+
 ## [9.9.0](https://github.com/Alwatr/alwatr/compare/v9.8.0...v9.9.0) (2026-04-14)
 
 ### ✨ Features
