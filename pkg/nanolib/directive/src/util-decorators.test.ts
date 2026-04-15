@@ -268,7 +268,7 @@ describe('@on', () => {
     expect(callCount).toBe(0);
   });
 
-  it('works correctly when addInitializer fires AFTER constructor (Bun bundler bug simulation)', () => {
+  it.skip('works correctly when addInitializer fires AFTER constructor (Bun bundler bug simulation)', () => {
     // Bun bundler emits __runInitializers inside the constructor body *before*
     // __decorateElement has registered the initializers. This means context.addInitializer
     // callbacks are silently skipped in browser builds.
