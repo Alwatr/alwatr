@@ -305,4 +305,42 @@ export abstract class DirectiveBase {
     }
     return false;
   }
+
+  /**
+   * Registers an event listener on a specified element (or the directive's root element by default) and ensures that it is automatically removed when the directive is destroyed.
+   */
+  protected on_<K extends keyof HTMLElementEventMap>(
+    eventType: K,
+    listener: (this: this, event: HTMLElementEventMap[K]) => Awaitable<void>,
+    element?: HTMLElement | string | null,
+    options?: AddEventListenerOptions | boolean,
+  ): Awaitable<void>;
+  /**
+   * Registers an event listener on a specified element (or the directive's root element by default) and ensures that it is automatically removed when the directive is destroyed.
+   */
+  protected on_(
+    eventType: string,
+    listener: (this: this, event: Event) => Awaitable<void>,
+    element?: HTMLElement | string | null,
+    options?: AddEventListenerOptions | boolean,
+  ): Awaitable<void>;
+
+  protected on_<K extends keyof HTMLElementEventMap>(
+    eventType: K,
+    listener: (this: this, event: HTMLElementEventMap[K]) => Awaitable<void>,
+    element: HTMLElement | string | null = this.element_,
+    options?: AddEventListenerOptions | boolean,
+  ): Awaitable<void> {
+    if (typeof element === 'string') {
+      element = this.element_.querySelector(element);
+    }
+    if (element == null) {
+      this.logger_.accident('on', 'target_not_found', {target: element});
+      return;
+    }
+
+    const boundListener = listener.bind(this);
+    element.addEventListener<K>(eventType, boundListener as EventListener, options);
+    this.addDestroyHook(() => element.removeEventListener(eventType, boundListener as EventListener, options));
+  }
 }
