@@ -146,6 +146,8 @@ export function attribute(name: string, cache = true, root?: Element) {
  *   When omitted, the listener is registered directly on `this.element_`.
  * @param options Optional `AddEventListenerOptions` or capture boolean passed to `addEventListener`.
  *
+ * @deprecated Do not use this decorator until the JS Decorator `addInitializer` become stable.
+ *
  * @example
  * ```ts
  * @directive('[my-directive]')
