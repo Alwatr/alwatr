@@ -186,15 +186,24 @@ export abstract class DirectiveBase {
       }
     };
 
+    const executeOnHidden_ = async () => {
+      try {
+        if (this.isDestroyed()) return;
+        await this.onHidden_?.();
+      } catch (err) {
+        this.logger_.error('triggerVisibilityObserver_', 'error_in_on_hidden', err);
+      }
+    };
+
     if (typeof IntersectionObserver !== 'undefined') {
-      const observer = new IntersectionObserver(async (entries) => {
+      const observer = new IntersectionObserver((entries) => {
         if (this.isDestroyed()) return;
         const entry = entries[0];
         if (entry.isIntersecting) {
           void executeOnVisible_();
         } else {
           try {
-            await this.onHidden_?.();
+            void executeOnHidden_();
           } catch (err) {
             this.logger_.error('triggerVisibilityObserver_', 'error_in_on_hidden', err);
           }
@@ -203,7 +212,7 @@ export abstract class DirectiveBase {
       observer.observe(this.element_);
       this.addDestroyHook(() => observer.disconnect());
     } else if (this.onVisible_) {
-      // Fallback: run onVisible_ once immediately. onHidden_ has no meaningful fallback.
+      // Fallback: run onVisible_ once after 100ms. onHidden_ has no meaningful fallback.
       setTimeout(() => void executeOnVisible_(), 100);
     }
   }
