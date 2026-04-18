@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.10.1](https://github.com/Alwatr/alwatr/compare/v9.10.0...v9.10.1) (2026-04-18)
+
+### 🐛 Bug Fixes
+
+* **cli:** add missing --env=disable argument to default args ([766456b](https://github.com/Alwatr/alwatr/commit/766456ba476a583f1e897b6557a6a27bd7cfb74f))
+
 ## [9.10.0](https://github.com/Alwatr/alwatr/compare/v9.9.0...v9.10.0) (2026-04-15)
 
 ### ✨ Features
