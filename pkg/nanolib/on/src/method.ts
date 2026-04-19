@@ -24,10 +24,13 @@ import type {SubscribeResult} from '@alwatr/signal';
  * sub.unsubscribe();
  * ```
  */
-export function alwatrOn(actionId: string, handler: (payload: string, event: Event) => void): SubscribeResult {
+export function alwatrOn<TEvent extends Event = Event>(
+  actionId: string,
+  handler: (payload: string, event: TEvent) => void,
+): SubscribeResult {
   return eventSignal_.subscribe((payload) => {
     if (payload.actionId === actionId) {
-      handler(payload.actionPayload, payload.event);
+      handler(payload.actionPayload, payload.event as TEvent);
     }
   });
 }

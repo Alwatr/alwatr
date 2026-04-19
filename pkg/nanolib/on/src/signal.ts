@@ -1,6 +1,6 @@
 import {createEventSignal} from '@alwatr/signal';
 
-export interface EventSignalPayload {
+export interface EventSignalPayload<TEvent extends Event = Event> {
   actionId: string;
   actionPayload: string;
   /**
@@ -13,7 +13,7 @@ export interface EventSignalPayload {
    *
    * Always present — never undefined.
    */
-  event: Event;
+  event: TEvent;
 }
 
 /**
