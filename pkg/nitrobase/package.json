@@ -36,7 +36,7 @@
     "@alwatr/standard": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
     "@types/node": "^24.12.2",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.3"
   },
   "scripts": {
     "b": "bun run build",
