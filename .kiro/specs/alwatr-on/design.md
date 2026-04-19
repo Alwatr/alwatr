@@ -107,7 +107,7 @@ protected dispatch_(event: Event): void
 
 **Postconditions:**
 
-- `event.preventDefault()` is called via optional chaining (`event?.preventDefault()`)
+- event.preventDefault() is called
 - `actionId` is `this.match[2]`
 - `actionPayload` is resolved:
   - `(this.element_ as {value: string}).value` if `this.match[3] === '$value'` and `'value' in this.element_`

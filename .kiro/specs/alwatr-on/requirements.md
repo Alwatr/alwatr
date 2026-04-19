@@ -42,7 +42,7 @@ The package follows the nano-package principle: one responsibility, minimal depe
 1. WHEN `AlwatrActionDirective` is initialized with an `attributeValue`, THE `AlwatrActionDirective` SHALL parse the value against `syntaxRegex` to extract `eventType`, `actionId`, and optional `rawPayload`.
 2. WHEN `attributeValue` matches `syntaxRegex`, THE `AlwatrActionDirective` SHALL store the match result and proceed with initialization.
 3. IF `attributeValue` does not match `syntaxRegex`, THEN THE `AlwatrActionDirective` SHALL call `logger_.accident(...)` and return without registering any DOM listener or dispatching any signal.
-4. THE `syntaxRegex` SHALL be the pattern `/^([a-z]+)->([a-z0-9-]+)(?::(.+))?$/`.
+4. THE syntaxRegex SHALL be the pattern /^([a-z0-9-]+)->([a-z0-9-]+)(?::(.+))?$/.
 
 ---
 
