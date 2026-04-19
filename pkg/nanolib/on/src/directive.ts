@@ -1,4 +1,4 @@
-import {directive, DirectiveBase} from '@alwatr/directive';
+import {lazyDirective, DirectiveBase} from '@alwatr/directive';
 import {eventSignal_} from './signal.js';
 
 /**
@@ -41,7 +41,6 @@ const syntaxRegex = /^([a-z0-9-]+)->([a-z0-9-]+)(?::(.+))?$/;
  * <div alwatr-on="init->page-loaded"></div>
  * ```
  */
-@directive('alwatr-on')
 export class AlwatrActionDirective extends DirectiveBase {
   /**
    * Parsed result of the attribute value against `syntaxRegex`.
@@ -90,3 +89,20 @@ export class AlwatrActionDirective extends DirectiveBase {
     eventSignal_.dispatch({actionId, actionPayload});
   }
 }
+
+/**
+ * Lazy registration function for `AlwatrActionDirective`.
+ *
+ * Call this function once before `bootstrapDirectives()` to opt-in to `alwatr-on` support.
+ * If never called, the entire directive module is tree-shaken from the bundle.
+ *
+ * @example
+ * ```ts
+ * import {registerAlwatrOnDirective} from '@alwatr/on';
+ * import {bootstrapDirectives} from '@alwatr/directive';
+ *
+ * registerAlwatrOnDirective();
+ * bootstrapDirectives();
+ * ```
+ */
+export const registerAlwatrOnDirective = lazyDirective('alwatr-on', AlwatrActionDirective);
