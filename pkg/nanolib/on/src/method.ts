@@ -9,23 +9,25 @@ import type {SubscribeResult} from '@alwatr/signal';
  * method for cleanup.
  *
  * @param actionId - The action identifier to listen for (e.g. `'open-drawer'`).
- * @param handler  - Callback invoked with the resolved payload string.
+ * @param handler  - Callback invoked with the resolved payload string and the
+ *                   originating DOM event (always a valid `Event` — never `undefined`).
  * @returns A subscription result with an `unsubscribe` method.
  *
  * @example
  * ```ts
- * const sub = alwatrOn('open-drawer', (payload) => {
- *   openDrawer(payload); // payload === 'main'
+ * const sub = alwatrOn('open-drawer', (payload, event) => {
+ *   console.log('open drawer:', payload); // 'main'
+ *   console.log('triggered by:', event.type); // 'click'
  * });
  *
  * // Later, when cleanup is needed:
  * sub.unsubscribe();
  * ```
  */
-export function alwatrOn(actionId: string, handler: (payload: string) => void): SubscribeResult {
+export function alwatrOn(actionId: string, handler: (payload: string, event: Event) => void): SubscribeResult {
   return eventSignal_.subscribe((payload) => {
     if (payload.actionId === actionId) {
-      handler(payload.actionPayload);
+      handler(payload.actionPayload, payload.event);
     }
   });
 }

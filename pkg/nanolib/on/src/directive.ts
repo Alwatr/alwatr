@@ -57,7 +57,11 @@ export class AlwatrActionDirective extends DirectiveBase {
     const eventType = this.match[1];
 
     if (eventType === 'init') {
-      this.dispatch_();
+      // Create a synthetic CustomEvent so event.target === element_ and event.type === 'init'.
+      // dispatchEvent must be called first so the browser sets event.target before we forward it.
+      const syntheticEvent = new CustomEvent('init', {bubbles: false, cancelable: false});
+      this.element_.dispatchEvent(syntheticEvent);
+      this.dispatch_(syntheticEvent);
       void this.destroy();
       return;
     }
@@ -72,11 +76,16 @@ export class AlwatrActionDirective extends DirectiveBase {
   /**
    * Resolves the action payload and dispatches the action signal.
    *
-   * - Calls `event.preventDefault()` when a DOM event is provided.
+   * - Calls `event.preventDefault()` to suppress default browser behaviour.
    * - Resolves `$value` to `element_.value` for input-like elements.
+   * - Always receives a valid `Event` — either a real DOM event or the synthetic
+   *   `CustomEvent('init')` created in `init_()`.
+   *
+   * Signature is compatible with `EventListener` so it can be passed directly
+   * to `addEventListener`.
    */
-  protected dispatch_(event?: Event): void {
-    event?.preventDefault();
+  protected dispatch_(event: Event): void {
+    event.preventDefault();
 
     const actionId = this.match![2];
     const actionPayloadRaw = this.match![3];
@@ -86,7 +95,7 @@ export class AlwatrActionDirective extends DirectiveBase {
       actionPayload = (this.element_ as {value: string}).value;
     }
 
-    eventSignal_.dispatch({actionId, actionPayload});
+    eventSignal_.dispatch({actionId, actionPayload, event});
   }
 }
 

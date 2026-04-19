@@ -20,9 +20,9 @@ sequenceDiagram
     Dir->>HTML: addEventListener(eventType, dispatch_)
     HTML->>Dir: user triggers DOM event (e.g. click)
     Dir->>Dir: dispatch_() — resolve actionPayload ($value or literal)
-    Dir->>Sig: eventSignal_.dispatch({actionId, actionPayload})
+    Dir->>Sig: eventSignal_.dispatch({actionId, actionPayload, event})
     Sig-->>App: alwatrOn('open-drawer', handler) callback fires
-    App->>App: handler('main')
+    App->>App: handler('main', MouseEvent)
 ```
 
 Special case — `init` event type:
@@ -30,11 +30,14 @@ Special case — `init` event type:
 ```mermaid
 sequenceDiagram
     participant Dir as AlwatrActionDirective
+    participant El as element_ (HTMLElement)
     participant Sig as eventSignal_
 
     Dir->>Dir: init_() detects eventType === 'init'
-    Dir->>Sig: dispatch_() immediately
-    Dir->>Dir: destroy() — one-shot, no listener registered
+    Dir->>El: element_.dispatchEvent(new CustomEvent('init', {bubbles:false}))
+    Note over El: synthetic event — target = element_, type = 'init'
+    Dir->>Sig: dispatch_(syntheticEvent) — one-shot
+    Dir->>Dir: destroy() — no persistent listener registered
 ```
 
 ---
@@ -48,6 +51,17 @@ interface ActionPayload {
   actionId: string;
   /** Arbitrary string value forwarded to the handler. */
   actionPayload: string;
+  /**
+   * The DOM event that triggered this dispatch.
+   *
+   * For standard DOM event types (e.g. 'click', 'input'), this is the original browser Event.
+   * For the special 'init' event type, this is a synthetic CustomEvent dispatched on the element
+   * via `element_.dispatchEvent(new CustomEvent('init', {bubbles: false, cancelable: false}))`,
+   * so `event.target === element_` and `event.type === 'init'`.
+   *
+   * The field is always present — never undefined.
+   */
+  event: Event;
 }
 
 /** Return value of alwatrOn — wraps the signal subscription. */
@@ -79,26 +93,27 @@ protected init_(): void
 
 ---
 
-### `AlwatrActionDirective.dispatch_(event?)`
+### `AlwatrActionDirective.dispatch_(event)`
 
 ```typescript
-protected dispatch_(event?: Event): void
+protected dispatch_(event: Event): void
 ```
 
 **Preconditions:**
 
 - `this.match` is non-null (guaranteed by `init_` guard)
 - `this.element_` is a connected `HTMLElement`
+- `event` is always a valid `Event` instance (real DOM event or synthetic `CustomEvent('init')`)
 
 **Postconditions:**
 
-- `event.preventDefault()` is called when `event` is provided
+- event.preventDefault() is called
 - `actionId` is `this.match[2]`
 - `actionPayload` is resolved:
+  - `(this.element_ as {value: string}).value` if `this.match[3] === '$value'` and `'value' in this.element_`
   - `this.match[3]` if present and not `'$value'`
-  - `(this.element_ as HTMLInputElement).value` if `this.match[3] === '$value'`
   - `''` if `this.match[3]` is absent
-- `eventSignal_.dispatch({actionId, actionPayload})` is called exactly once
+- `eventSignal_.dispatch({actionId, actionPayload, event})` is called exactly once — `event` is always present
 
 **Loop Invariants:** N/A
 
@@ -107,7 +122,7 @@ protected dispatch_(event?: Event): void
 ### `alwatrOn(actionId, handler)`
 
 ```typescript
-function alwatrOn(actionId: string, handler: (payload: string) => void): SubscribeResult;
+function alwatrOn(actionId: string, handler: (payload: string, event: Event) => void): SubscribeResult;
 ```
 
 **Preconditions:**
@@ -118,7 +133,8 @@ function alwatrOn(actionId: string, handler: (payload: string) => void): Subscri
 **Postconditions:**
 
 - Returns a `SubscribeResult` with an `unsubscribe` method
-- `handler` is called with `payload.actionPayload` whenever `eventSignal_` dispatches a payload where `payload.actionId === actionId`
+- `handler` is called with `(payload.actionPayload, payload.event)` whenever `eventSignal_` dispatches a payload where `payload.actionId === actionId`
+- `event` is always a valid `Event` — either a real DOM event or a synthetic `CustomEvent('init')` with `target === element_`
 - `handler` is NOT called for dispatches with a different `actionId`
 - Calling `result.unsubscribe()` stops future invocations of `handler`
 
@@ -161,7 +177,10 @@ BEGIN
   eventType ← match[1]
 
   IF eventType = 'init' THEN
-    dispatch_()
+    // Synthesize a real CustomEvent so event.target = element_ and event.type = 'init'
+    syntheticEvent ← new CustomEvent('init', {bubbles: false, cancelable: false})
+    element_.dispatchEvent(syntheticEvent)
+    dispatch_(syntheticEvent)
     destroy()
     RETURN
   END IF
@@ -175,26 +194,25 @@ END
 ### Action Dispatch
 
 ```pascal
-ALGORITHM dispatch_(directive, event?)
-INPUT: directive with match, element_; optional DOM event
+ALGORITHM dispatch_(directive, event)
+INPUT: directive with match, element_; Event (real or synthetic)
 
 BEGIN
-  IF event ≠ undefined THEN
-    event.preventDefault()
-  END IF
+  // event is always present — real DOM event or synthetic CustomEvent('init')
+  event.preventDefault()
 
   actionId      ← match[2]
   rawPayload    ← match[3]
 
   IF rawPayload = '$value' AND 'value' IN element_ THEN
-    actionPayload ← (element_ AS HTMLInputElement).value
+    actionPayload ← (element_ AS {value: string}).value
   ELSE IF rawPayload ≠ undefined THEN
     actionPayload ← rawPayload
   ELSE
     actionPayload ← ''
   END IF
 
-  eventSignal_.dispatch({actionId, actionPayload})
+  eventSignal_.dispatch({actionId, actionPayload, event})
 END
 ```
 
@@ -202,13 +220,13 @@ END
 
 ```pascal
 ALGORITHM alwatrOn(actionId, handler)
-INPUT: actionId: string, handler: (payload: string) → void
+INPUT: actionId: string, handler: (payload: string, event: Event) → void
 OUTPUT: SubscribeResult
 
 BEGIN
   RETURN eventSignal_.subscribe((payload) →
     IF payload.actionId = actionId THEN
-      handler(payload.actionPayload)
+      handler(payload.actionPayload, payload.event)
     END IF
   )
 END
@@ -220,25 +238,33 @@ END
 
 ```typescript
 import {bootstrapDirectives} from '@alwatr/directive';
-import {alwatrOn} from '@alwatr/on';
-import '@alwatr/on/directive'; // registers AlwatrActionDirective
+import {alwatrOn, registerAlwatrOnDirective} from '@alwatr/on';
+
+registerAlwatrOnDirective();
+bootstrapDirectives();
 
 // HTML: <button alwatr-on="click->open-drawer:main">Open</button>
 // HTML: <input alwatr-on="input->search-query:$value" />
 // HTML: <div alwatr-on="init->page-loaded"></div>
 
-bootstrapDirectives();
-
-// Subscribe to actions
-const sub = alwatrOn('open-drawer', (payload) => {
+// event is always a real Event — never undefined
+const sub = alwatrOn('open-drawer', (payload, event) => {
   console.log('open drawer:', payload); // 'main'
+  console.log('event type:', event.type); // 'click'
+  console.log('target:', event.target); // <button>
 });
 
-alwatrOn('search-query', (query) => {
+alwatrOn('search-query', (query, event) => {
   console.log('search:', query); // live input value
+  console.log('target tag:', (event.target as HTMLElement).tagName); // 'INPUT'
 });
 
-// Cleanup when no longer needed
+// For init — event is a synthetic CustomEvent, target = element_
+alwatrOn('page-loaded', (payload, event) => {
+  console.log('event type:', event.type); // 'init'
+  console.log('target:', event.target); // <div alwatr-on="init->page-loaded">
+});
+
 sub.unsubscribe();
 ```
 
@@ -246,12 +272,92 @@ sub.unsubscribe();
 
 ## Correctness Properties
 
-- **Syntax guard**: For any `attributeValue` that does not match `syntaxRegex`, `init_()` must not register any DOM listener and must not dispatch any signal.
-- **One-shot init**: For `eventType === 'init'`, `dispatch_()` is called exactly once and the directive is immediately destroyed — no persistent listener.
-- **Payload resolution**: `actionPayload` is `''` when `match[3]` is absent, the element's `.value` when `match[3] === '$value'`, and the literal string otherwise.
-- **Listener cleanup**: Every `addEventListener` call in `init_()` has a corresponding `removeEventListener` registered via `addDestroyHook`.
-- **Action isolation**: `alwatrOn(id, handler)` invokes `handler` only when `payload.actionId === id`; other action IDs are silently ignored.
-- **Unsubscribe idempotency**: Calling `result.unsubscribe()` more than once must not throw.
+_A property is a characteristic or behavior that should hold true across all valid executions of a system — essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees._
+
+### Property 1: Syntax Guard — No Side Effects on Invalid Input
+
+_For any_ `attributeValue` string that does not match `syntaxRegex`, calling `init_()` must not register any DOM listener and must not dispatch any signal on `eventSignal_`.
+
+**Validates: Requirements 1.3**
+
+---
+
+### Property 2: Payload Resolution — Absent Segment
+
+_For any_ `attributeValue` that matches `syntaxRegex` without a `:payload` segment, `actionPayload` in the dispatched `ActionPayload` must equal `""` (empty string).
+
+**Validates: Requirements 4.1**
+
+---
+
+### Property 3: Payload Resolution — `$value` Token
+
+_For any_ element with a `.value` property and any `attributeValue` whose `rawPayload` is `"$value"`, `actionPayload` in the dispatched `ActionPayload` must equal `element_.value` at the exact moment `dispatch_()` is called.
+
+**Validates: Requirements 4.2**
+
+---
+
+### Property 4: Payload Resolution — Literal String
+
+_For any_ `attributeValue` whose `rawPayload` is a non-empty string other than `"$value"`, `actionPayload` in the dispatched `ActionPayload` must equal that literal string unchanged.
+
+**Validates: Requirements 4.3**
+
+---
+
+### Property 5: Listener Cleanup — Symmetric addEventListener / removeEventListener
+
+_For any_ directive initialized with a non-`init` `eventType`, every `addEventListener(eventType, dispatch_)` call must have exactly one corresponding `removeEventListener(eventType, dispatch_)` call registered via `addDestroyHook` — no more, no less.
+
+**Validates: Requirements 2.2, 2.3**
+
+---
+
+### Property 6: One-Shot `init` — Synthetic Event with Correct Target
+
+_For any_ `attributeValue` where `eventType === "init"`, `init_()` must:
+
+1. Create a `CustomEvent('init', {bubbles: false, cancelable: false})` and dispatch it on `element_` via `element_.dispatchEvent()`
+2. Call `dispatch_(syntheticEvent)` exactly once with that synthetic event
+3. Call `destroy()` immediately after
+4. Not call `addEventListener` at any point
+
+The resulting `payload.event` in the signal must have `event.type === 'init'` and `event.target === element_`.
+
+**Validates: Requirements 3.1, 3.2, 3.3**
+
+---
+
+### Property 7: Action Isolation — Handler Invoked Only for Matching `actionId`
+
+_For any_ `actionId` string passed to `alwatrOn`, and _for any_ `ActionPayload` dispatched on `eventSignal_` where `payload.actionId !== actionId`, the registered `handler` must not be invoked.
+
+**Validates: Requirements 6.1, 6.3**
+
+---
+
+### Property 8: Unsubscribe Stops Handler Invocations
+
+_For any_ subscription returned by `alwatrOn`, after `result.unsubscribe()` is called, _for any_ subsequent dispatch on `eventSignal_` (regardless of `actionId`), the `handler` must not be invoked.
+
+**Validates: Requirements 6.4**
+
+---
+
+### Property 9: `event.preventDefault()` Called for All DOM-Triggered Dispatches
+
+_For any_ DOM `Event` object passed to `dispatch_()`, `event.preventDefault()` must be called before `eventSignal_.dispatch(...)` is invoked.
+
+**Validates: Requirements 5.1**
+
+---
+
+### Property 10: Event Forwarding — DOM Event Reaches `alwatrOn` Handler
+
+_For any_ `Event` passed to `dispatch_()` (real DOM event or synthetic `CustomEvent('init')`), the same `Event` instance must be present as `payload.event` in the signal and forwarded as the second argument to the matching `alwatrOn` handler. The `event` field is always a valid `Event` — never `undefined`.
+
+**Validates: Requirements 5.2, 6.1**
 
 ---
 
