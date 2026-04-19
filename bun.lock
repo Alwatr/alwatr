@@ -17,7 +17,7 @@
     },
     "pkg/core": {
       "name": "@alwatr/core",
-      "version": "9.11.0",
+      "version": "9.11.1",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/cyrb53": "workspace:*",
@@ -378,7 +378,7 @@
     },
     "pkg/nanolib/on": {
       "name": "@alwatr/on",
-      "version": "9.11.0",
+      "version": "9.11.1",
       "dependencies": {
         "@alwatr/directive": "workspace:*",
         "@alwatr/signal": "workspace:*",

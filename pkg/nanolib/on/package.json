@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/on",
-  "version": "9.11.0",
+  "version": "9.11.1",
   "description": "Declarative DOM action-dispatch — bridge HTML attributes to typed signal handlers.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
