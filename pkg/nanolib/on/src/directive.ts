@@ -77,6 +77,10 @@ export class AlwatrActionDirective extends DirectiveBase {
       modifiers.add(modifier);
     }
 
+    if (modifiers.has('once') && modifiers.has('prevent')) {
+      this.logger_.accident('init_', 'conflicting_modifiers_once_passive', {attributeValue: this.attributeValue});
+    }
+
     this.actionContext_ = {
       eventType,
       modifiers,
@@ -85,7 +89,10 @@ export class AlwatrActionDirective extends DirectiveBase {
     };
 
     this.dispatch_ = this.dispatch_.bind(this);
-    const listenerOptions: AddEventListenerOptions = {once: modifiers.has('once'), passive: modifiers.has('passive')};
+    const listenerOptions: AddEventListenerOptions = {
+      once: modifiers.has('once'),
+      passive: modifiers.has('passive') && !modifiers.has('prevent'),
+    };
     this.element_.addEventListener(eventType, this.dispatch_, listenerOptions);
     this.addDestroyHook(() => {
       this.element_.removeEventListener(eventType, this.dispatch_, listenerOptions);
