@@ -1,3 +1,4 @@
+import {createLogger} from '@alwatr/logger';
 import {createEventSignal} from '@alwatr/signal';
 
 export interface EventSignalPayload<TEvent extends Event = Event> {
@@ -8,6 +9,8 @@ export interface EventSignalPayload<TEvent extends Event = Event> {
    */
   event?: TEvent;
 }
+
+export const logger_ = createLogger('alwatr-on');
 
 /**
  * The shared module-level event signal that carries all dispatched actions.
