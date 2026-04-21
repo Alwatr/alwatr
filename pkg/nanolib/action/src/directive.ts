@@ -123,18 +123,18 @@ export class ActionDirective extends Directive {
     this.actionContext_ = {eventType, modifiers, actionId, payload};
 
     // Bind once so the same function reference is used for both add and remove.
-    this.dispatch_ = this.dispatch_.bind(this);
     const listenerOptions: AddEventListenerOptions = {
       once: modifiers.has('once'),
       // 'passive' is only meaningful when 'prevent' is absent.
       passive: modifiers.has('passive') && !modifiers.has('prevent'),
     };
 
-    this.element_.addEventListener(eventType, this.dispatch_, listenerOptions);
+    const boundDispatch = this.dispatch_.bind(this);
+    this.element_.addEventListener(eventType, boundDispatch, listenerOptions);
     // Register cleanup so the listener is removed when the directive is destroyed
     // (e.g. when the element is removed from the DOM via autoDestructDirectives).
     this.addDestroyHook(() => {
-      this.element_.removeEventListener(eventType, this.dispatch_, listenerOptions);
+      this.element_.removeEventListener(eventType, boundDispatch, listenerOptions);
     });
   }
 
