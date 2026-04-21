@@ -50,6 +50,8 @@ export class AlwatrActionDirective extends DirectiveBase {
   protected actionContext_?: {actionId: string; actionPayload?: string};
 
   protected override init_(): void {
+    this.logger_.logMethodArgs?.('init_', {attributeValue: this.attributeValue});
+
     const match = this.attributeValue.trim().match(syntaxRegex);
 
     if (!match) {
@@ -85,6 +87,8 @@ export class AlwatrActionDirective extends DirectiveBase {
    * to `addEventListener`.
    */
   protected dispatch_(event?: Event): void {
+    this.logger_.logMethodArgs?.('dispatch_', {eventType: event?.type, actionContext: this.actionContext_});
+
     event?.preventDefault();
 
     let actionPayload = this.actionContext_!.actionPayload;
