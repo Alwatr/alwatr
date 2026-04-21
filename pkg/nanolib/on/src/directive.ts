@@ -62,6 +62,11 @@ export class AlwatrActionDirective extends DirectiveBase {
     const actionId = match[2];
     const payload = match[3] as string | undefined;
 
+    if (!eventType) {
+      this.logger_.accident('init_', 'invalid_syntax', {attributeValue: this.attributeValue});
+      return;
+    }
+
     const modifiers = new Set<string>();
     for (const modifier of modifierList) {
       if (!modifierRegistry.has(modifier) && modifier !== 'once' && modifier !== 'passive') {
@@ -71,8 +76,8 @@ export class AlwatrActionDirective extends DirectiveBase {
       modifiers.add(modifier);
     }
 
-    if (modifiers.has('once') && modifiers.has('prevent')) {
-      this.logger_.accident('init_', 'conflicting_modifiers_once_passive', {attributeValue: this.attributeValue});
+    if (modifiers.has('prevent') && modifiers.has('passive')) {
+      this.logger_.accident('init_', 'conflicting_modifiers_prevent_passive', {attributeValue: this.attributeValue});
     }
 
     this.actionContext_ = {
