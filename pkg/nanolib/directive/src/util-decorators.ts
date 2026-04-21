@@ -2,33 +2,31 @@
 import type {Directive} from './directive-class.js';
 
 /**
- * A property decorator that queries the directive's element for a selector.
- * The query is performed once and the result is cached.
+ * A property decorator that queries the directive's element for a CSS selector.
+ * The result is cached on first access by default.
  *
  * @param selector The CSS selector to query for.
- * @param cache Whether to cache the result on first access. Defaults is true.
- * @param root Optional root element to perform the query on. Defaults to the directive's element.
+ * @param cache    Whether to cache the result after first access. Defaults to `true`.
+ * @param root     Optional root element to query from. Defaults to `this.element_`.
  *
  * @example
  * ```ts
- * @directive('[my-directive]')
- * class MyDirective extends Directive {
- *   @query('.my-element')
- *   protected myElement!: HTMLDivElement | null;
+ * @directive('my-card')
+ * class CardDirective extends Directive {
+ *   @query('.card-title')
+ *   accessor titleEl!: HTMLElement | null;
  * }
  * ```
  */
-export function query<T extends Element>(selector: string, cache = true, root?: ParentNode) {
-  /**
-   * The decorator function that receives the property accessor.
-   * @param target The prototype of the class.
-   * @param context The decorator context.
-   * @return A property descriptor with a getter that performs the query and caches the result.
-   */
+export function query<T extends Element, D extends Directive = Directive>(
+  selector: string,
+  cache = true,
+  root?: ParentNode,
+) {
   return function (
-    _target: ClassAccessorDecoratorTarget<Directive, T | null>,
-    context: ClassAccessorDecoratorContext<Directive, T | null>,
-  ): ClassAccessorDecoratorResult<Directive, T | null> {
+    _target: ClassAccessorDecoratorTarget<D, T | null>,
+    context: ClassAccessorDecoratorContext<D, T | null>,
+  ): ClassAccessorDecoratorResult<D, T | null> {
     if (context.kind !== 'accessor') {
       throw new Error('@query can only be used with the "accessor" keyword');
     }
@@ -36,7 +34,7 @@ export function query<T extends Element>(selector: string, cache = true, root?: 
     const privateKey = Symbol(`${String(context.name)}__`);
 
     return {
-      get() {
+      get(this: D) {
         let value = (this as any)[privateKey] as T | null | undefined;
         if (value === undefined || cache === false) {
           const parent = root ?? this.element_;
@@ -49,33 +47,31 @@ export function query<T extends Element>(selector: string, cache = true, root?: 
 }
 
 /**
- * A property decorator that queries the directive's element for all selectors.
- * The queries are performed once and the result is cached.
+ * A property decorator that queries the directive's element for all matching elements.
+ * The result is cached on first access by default.
  *
  * @param selector The CSS selector to query for.
- * @param cache Whether to cache the result on first access. Defaults is true.
- * @param root Optional root element to perform the query on. Defaults to the directive's element.
+ * @param cache    Whether to cache the result after first access. Defaults to `true`.
+ * @param root     Optional root element to query from. Defaults to `this.element_`.
  *
  * @example
  * ```ts
- * @directive('[my-directive]')
- * class MyDirective extends Directive {
- *   @queryAll('.my-elements')
- *   protected myElements!: NodeListOf<HTMLDivElement>;
+ * @directive('my-tabs')
+ * class TabsDirective extends Directive {
+ *   @queryAll('.tab-item')
+ *   accessor tabItems!: NodeListOf<HTMLElement>;
  * }
  * ```
  */
-export function queryAll<T extends Element>(selector: string, cache = true, root?: ParentNode) {
-  /**
-   * The decorator function that receives the property accessor.
-   * @param target The prototype of the class.
-   * @param context The decorator context.
-   * @return A property descriptor with a getter that performs the query and caches the result.
-   */
+export function queryAll<T extends Element, D extends Directive = Directive>(
+  selector: string,
+  cache = true,
+  root?: ParentNode,
+) {
   return function (
-    _target: ClassAccessorDecoratorTarget<Directive, NodeListOf<T>>,
-    context: ClassAccessorDecoratorContext<Directive, NodeListOf<T>>,
-  ): ClassAccessorDecoratorResult<Directive, NodeListOf<T>> {
+    _target: ClassAccessorDecoratorTarget<D, NodeListOf<T>>,
+    context: ClassAccessorDecoratorContext<D, NodeListOf<T>>,
+  ): ClassAccessorDecoratorResult<D, NodeListOf<T>> {
     if (context.kind !== 'accessor') {
       throw new Error('@queryAll can only be used with the "accessor" keyword');
     }
@@ -83,7 +79,7 @@ export function queryAll<T extends Element>(selector: string, cache = true, root
     const privateKey = Symbol(`${String(context.name)}__`);
 
     return {
-      get() {
+      get(this: D) {
         let value = (this as any)[privateKey] as NodeListOf<T> | undefined;
         if (value === undefined || cache === false) {
           const parent = root ?? this.element_;
@@ -97,26 +93,26 @@ export function queryAll<T extends Element>(selector: string, cache = true, root
 
 /**
  * A property decorator that reads an attribute value from the directive's element.
- * The read is performed once and the result is cached.
+ * The result is cached on first access by default.
  *
- * @param name The attribute name to read.
- * @param cache Whether to cache the result on first access. Defaults to true.
- * @param root Optional root element to read the attribute from. Defaults to the directive's element.
+ * @param name  The attribute name to read.
+ * @param cache Whether to cache the result after first access. Defaults to `true`.
+ * @param root  Optional element to read the attribute from. Defaults to `this.element_`.
  *
  * @example
  * ```ts
- * @directive('[my-directive]')
- * class MyDirective extends Directive {
- *   @attribute('data-id')
- *   accessor dataId!: string | null;
+ * @directive('user-card')
+ * class UserCardDirective extends Directive {
+ *   @attribute('user-id')
+ *   accessor userId!: string | null;
  * }
  * ```
  */
-export function attribute(name: string, cache = true, root?: Element) {
+export function attribute<D extends Directive = Directive>(name: string, cache = true, root?: Element) {
   return function (
-    _target: ClassAccessorDecoratorTarget<Directive, string | null>,
-    context: ClassAccessorDecoratorContext<Directive, string | null>,
-  ): ClassAccessorDecoratorResult<Directive, string | null> {
+    _target: ClassAccessorDecoratorTarget<D, string | null>,
+    context: ClassAccessorDecoratorContext<D, string | null>,
+  ): ClassAccessorDecoratorResult<D, string | null> {
     if (context.kind !== 'accessor') {
       throw new Error('@attribute can only be used with the "accessor" keyword');
     }
@@ -124,7 +120,7 @@ export function attribute(name: string, cache = true, root?: Element) {
     const privateKey = Symbol(`${String(context.name)}__`);
 
     return {
-      get() {
+      get(this: D) {
         let value = (this as any)[privateKey] as string | null | undefined;
         if (value === undefined || cache === false) {
           const element = root ?? this.element_;
@@ -142,50 +138,42 @@ export function attribute(name: string, cache = true, root?: Element) {
  * directive is destroyed, preventing memory leaks.
  *
  * @param eventType The DOM event type to listen for (e.g. `'click'`, `'input'`).
- * @param selector Optional CSS selector to target a child element via `this.element_.querySelector(selector)`.
- *   When omitted, the listener is registered directly on `this.element_`.
- * @param options Optional `AddEventListenerOptions` or capture boolean passed to `addEventListener`.
+ * @param selector  Optional CSS selector; when provided, the listener is registered on
+ *                  `this.element_.querySelector(selector)` instead of `this.element_`.
+ * @param options   Optional `AddEventListenerOptions` or capture boolean passed to `addEventListener`.
  *
- * @deprecated Do not use this decorator until the JS Decorator `addInitializer` become stable.
+ * @deprecated Do not use this decorator until the JS Decorator `addInitializer` becomes stable.
  *
  * @example
  * ```ts
- * @directive('[my-directive]')
- * class MyDirective extends Directive {
- *   protected init_(): void {}
- *
- *   // Listen on this.element_
+ * @directive('my-form')
+ * class MyFormDirective extends Directive {
  *   @on('click')
  *   protected onClick_(event: Event): void {
  *     console.log('clicked', event);
  *   }
  *
- *   // Listen on a child element
  *   @on('input', '.search-input')
  *   protected onInput_(event: Event): void {
  *     console.log('input', (event.target as HTMLInputElement).value);
  *   }
- *
- *   // With options
- *   @on('scroll', undefined, {passive: true})
- *   protected onScroll_(event: Event): void { }
  * }
  * ```
  */
-export function on(
+export function on<D extends Directive = Directive>(
   eventType: keyof HTMLElementEventMap | string,
   selector?: string,
   options?: AddEventListenerOptions | boolean,
 ) {
   return function (
-    target: (this: Directive, event: Event) => void,
-    context: ClassMethodDecoratorContext<Directive, (event: Event) => void>,
+    target: (this: D, event: Event) => void,
+    context: ClassMethodDecoratorContext<D, (event: Event) => void>,
   ): void {
     if (context.kind !== 'method') {
       throw new Error('@on can only be used on class methods');
     }
 
-    context.addInitializer(function (this: Directive) {
+    context.addInitializer(function (this: D) {
       this.logger_.logMethodArgs?.('@on-init', {eventType, selector, options});
       const targetElement = selector ? this.element_.querySelector(selector) : this.element_;
 
