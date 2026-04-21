@@ -61,11 +61,7 @@ export class AlwatrActionDirective extends DirectiveBase {
     this.actionContext_ = {actionId: match[2], actionPayload: match[3]};
 
     if (eventType === 'init') {
-      // Create a synthetic CustomEvent so event.target === element_ and event.type === 'init'.
-      // dispatchEvent must be called first so the browser sets event.target before we forward it.
-      const syntheticEvent = new CustomEvent('init', {bubbles: false, cancelable: false});
-      this.element_.dispatchEvent(syntheticEvent);
-      this.dispatch_(syntheticEvent);
+      this.dispatch_();
       void this.destroy();
       return;
     }
@@ -88,10 +84,10 @@ export class AlwatrActionDirective extends DirectiveBase {
    * Signature is compatible with `EventListener` so it can be passed directly
    * to `addEventListener`.
    */
-  protected dispatch_(event: Event): void {
-    event.preventDefault();
+  protected dispatch_(event?: Event): void {
+    event?.preventDefault();
 
-    let actionPayload = this.actionContext_!.actionPayload ?? '';
+    let actionPayload = this.actionContext_!.actionPayload;
     if (actionPayload === '$value' && 'value' in this.element_) {
       actionPayload = (this.element_ as {value: string}).value;
     }

@@ -26,7 +26,7 @@ import type {SubscribeResult} from '@alwatr/signal';
  */
 export function alwatrOn<TEvent extends Event = Event>(
   actionId: string,
-  handler: (payload: string, event: TEvent) => void,
+  handler: (payload?: string, event?: TEvent) => void,
 ): SubscribeResult {
   return eventSignal_.subscribe((payload) => {
     if (payload.actionId === actionId) {
