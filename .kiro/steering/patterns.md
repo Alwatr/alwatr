@@ -29,6 +29,14 @@ class MyService {
 }
 ```
 
+### Class Naming
+
+- Directive classes: suffix with `Directive` — `ActionDirective`, `PageIdDirective`, `TooltipDirective`
+- Service classes: suffix with `Service` — `CartService`, `AuthService`
+- No vendor-prefix on class names (e.g. `ActionDirective`, not `AlwatrActionDirective`)
+
+---
+
 ## Logger Patterns
 
 ### In Services (non-directive classes)
@@ -67,6 +75,8 @@ this.logger_.error('methodName', 'json_parse_failed', {error});
 
 **Rule**: DOM element not found → `accident`. Item already exists → `incident`. Build failure → `error`.
 
+---
+
 ## Null Safety Rules
 
 1. **Never use `!` without a preceding guard**
@@ -88,3 +98,192 @@ this.logger_.error('methodName', 'json_parse_failed', {error});
      return;
    }
    ```
+
+---
+
+## Directive Patterns (`@alwatr/directive`)
+
+### Creating a directive
+
+Extend `Directive` (not `DirectiveBase` — that name no longer exists) and register with `@directive` or `lazyDirective`:
+
+```ts
+import {Directive, directive} from '@alwatr/directive';
+
+// Eager registration (side effect at import time — use for always-needed directives)
+@directive('show-tooltip')
+export class TooltipDirective extends Directive {
+  protected override init_(): void {
+    this.element_.title = this.attributeValue;
+  }
+}
+```
+
+```ts
+import {Directive, lazyDirective} from '@alwatr/directive';
+
+// Lazy registration (tree-shakeable — use for opt-in directives)
+export class TooltipDirective extends Directive {
+  protected override init_(): void {
+    this.element_.title = this.attributeValue;
+  }
+}
+export const registerTooltipDirective = lazyDirective('show-tooltip', TooltipDirective);
+```
+
+### Directive lifecycle order
+
+```
+constructor → (macrotask) → init_() → lazyInit_()? → onVisible_()/onHidden_()?
+```
+
+- `init_()` — setup, event listeners, synchronous DOM work
+- `lazyInit_()` — runs once on first viewport entry (lazy loading, data fetch)
+- `onVisible_()` — runs every time element enters viewport (impression tracking)
+- `onHidden_()` — runs every time element leaves viewport (pause, cancel)
+
+### Cleanup
+
+Always register cleanup via `addDestroyHook` — never rely on GC:
+
+```ts
+protected override init_(): void {
+  const id = setInterval(() => this.tick_(), 1000);
+  this.addDestroyHook(() => clearInterval(id));
+
+  const sub = signal.subscribe(this.onSignal_.bind(this));
+  this.addDestroyHook(() => sub.unsubscribe());
+}
+```
+
+---
+
+## Action Patterns (`@alwatr/action`)
+
+`@alwatr/action` is the **Action layer** in Unidirectional Data Flow. DOM events flow upward as named actions; business logic subscribes and updates state via signals.
+
+### Unidirectional Data Flow
+
+```
+UI (HTML attributes)
+  │  on-action="click->add-to-cart:42"
+  ▼
+Action Layer (@alwatr/action)
+  │  dispatchAction('add-to-cart', '42')
+  ▼
+Business Logic
+  │  onAction('add-to-cart', id => cartService.add(id))
+  ▼
+State Layer (@alwatr/signal)
+  │  cartSignal.dispatch(newState)
+  ▼
+UI (re-render)
+```
+
+### Subscribing to actions
+
+```ts
+import {onAction} from '@alwatr/action';
+
+// String payload (default)
+onAction('open-drawer', (panel) => {
+  drawerSignal.dispatch({open: true, panel});
+});
+
+// Typed payload
+onAction<{productId: number; qty: number}>('add-to-cart', (item) => {
+  cartService.add(item!.productId, item!.qty);
+});
+
+// Cleanup when component is destroyed
+const sub = onAction('logout', () => authService.logout());
+sub.unsubscribe(); // call when no longer needed
+```
+
+### Dispatching actions from code
+
+```ts
+import {dispatchAction} from '@alwatr/action';
+
+// After an async operation completes
+await uploadFile(file);
+dispatchAction('upload-complete', fileId);
+
+// From a service layer
+dispatchAction('navigate', '/dashboard');
+```
+
+### HTML attribute syntax
+
+```
+on-action="eventType[.modifier…]->actionId[:payload]"
+```
+
+```html
+<!-- Literal payload -->
+<button on-action="click->open-drawer:settings">Settings</button>
+
+<!-- Dynamic payload from input value -->
+<input on-action="input->search-query:$value" />
+
+<!-- Form data payload with validation -->
+<form
+  on-action="submit.prevent.validate->submit-form:$formdata"
+  novalidate
+>
+  …
+</form>
+```
+
+### Built-in modifiers
+
+| Modifier    | Effect                                                       |
+| ----------- | ------------------------------------------------------------ |
+| `.prevent`  | `event.preventDefault()`                                     |
+| `.stop`     | `event.stopPropagation()`                                    |
+| `.once`     | Removes listener after first dispatch                        |
+| `.passive`  | Marks listener passive (cannot combine with `.prevent`)      |
+| `.validate` | Cancels dispatch if nearest `<form>` fails `checkValidity()` |
+
+### Built-in payload resolvers
+
+| Token        | Resolves to                                                    |
+| ------------ | -------------------------------------------------------------- |
+| `:$value`    | `element.value` (for `<input>`, `<select>`, `<textarea>`)      |
+| `:$formdata` | `Object.fromEntries(new FormData(form))` from nearest `<form>` |
+
+### Registration (opt-in, tree-shakeable)
+
+```ts
+import {registerActionDirective, registerPageIdDirective} from '@alwatr/action';
+import {bootstrapDirectives} from '@alwatr/directive';
+
+registerActionDirective(); // enables on-action attribute
+registerPageIdDirective(); // enables page-id attribute (dispatches 'page-ready')
+bootstrapDirectives();
+```
+
+### Extending with custom modifiers and resolvers
+
+```ts
+import {registerModifier, registerPayloadResolver} from '@alwatr/action';
+
+// Custom modifier — cancel dispatch if element is disabled
+registerModifier('not-disabled', function () {
+  return !(this.element_ as HTMLButtonElement).disabled;
+});
+
+// Custom payload resolver — read a data attribute
+registerPayloadResolver('$data-id', function () {
+  return (this.element_ as HTMLElement).dataset.id ?? null;
+});
+```
+
+```html
+<button
+  on-action="click.not-disabled->select-item:$data-id"
+  data-id="42"
+>
+  Select
+</button>
+```

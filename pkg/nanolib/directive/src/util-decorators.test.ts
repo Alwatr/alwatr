@@ -1,6 +1,6 @@
 import {describe, expect, it} from 'bun:test';
 import {GlobalRegistrator} from '@happy-dom/global-registrator';
-import {DirectiveBase} from './directive-class.js';
+import {Directive} from './directive-class.js';
 import {attribute, on, query, queryAll} from './util-decorators.js';
 
 // Guard against double-registration (directive-class.test.ts may have already registered)
@@ -8,7 +8,7 @@ if (typeof document === 'undefined') {
   GlobalRegistrator.register();
 }
 
-class TestDirective extends DirectiveBase {
+class TestDirective extends Directive {
   protected init_(): void {}
 
   @query('.title')
@@ -132,7 +132,7 @@ describe('@on', () => {
   it('calls the decorated method when the event fires on element_', () => {
     let callCount = 0;
 
-    class ClickDirective extends DirectiveBase {
+    class ClickDirective extends Directive {
       protected init_(): void {}
 
       @on('click')
@@ -152,7 +152,7 @@ describe('@on', () => {
     let count1 = 0;
     let count2 = 0;
 
-    class TwoClickDirective extends DirectiveBase {
+    class TwoClickDirective extends Directive {
       protected init_(): void {}
 
       @on('click')
@@ -177,7 +177,7 @@ describe('@on', () => {
   it('binds `this` to the directive instance inside the decorated method', () => {
     let capturedThis: unknown;
 
-    class ThisDirective extends DirectiveBase {
+    class ThisDirective extends Directive {
       protected init_(): void {}
 
       @on('click')
@@ -197,7 +197,7 @@ describe('@on', () => {
   it('removes the listener after destroy() is called', async () => {
     let callCount = 0;
 
-    class DestroyDirective extends DirectiveBase {
+    class DestroyDirective extends Directive {
       protected init_(): void {}
 
       @on('click')
@@ -221,7 +221,7 @@ describe('@on', () => {
   it('registers listener on a matching child element when selector is provided', () => {
     let callCount = 0;
 
-    class ChildDirective extends DirectiveBase {
+    class ChildDirective extends Directive {
       protected init_(): void {}
 
       @on('click', '.btn')
@@ -248,7 +248,7 @@ describe('@on', () => {
 
     // Should not throw during class definition or instantiation
     expect(() => {
-      class MissingChildDirective extends DirectiveBase {
+      class MissingChildDirective extends Directive {
         protected init_(): void {}
 
         @on('click', '.nonexistent')
@@ -279,7 +279,7 @@ describe('@on', () => {
     let callCount = 0;
 
     // Step 1: define a plain class WITHOUT @on (no decorator at class-definition time)
-    class LateDecoratedDirective extends DirectiveBase {
+    class LateDecoratedDirective extends Directive {
       protected init_(): void {}
 
       // This method will have @on applied manually AFTER instantiation (simulating the bug)
@@ -290,7 +290,7 @@ describe('@on', () => {
 
     // Step 2: apply the @on decorator manually to the method function, populating onEntriesWeakMap
     const decorator = on('click');
-    const addInitializerCalls: Array<(this: DirectiveBase) => void> = [];
+    const addInitializerCalls: Array<(this: Directive) => void> = [];
     decorator(LateDecoratedDirective.prototype.onLateClick, {
       kind: 'method',
       name: 'onLateClick',
@@ -316,7 +316,7 @@ describe('@on', () => {
     const instance = new LateDecoratedDirective(root, 'test');
 
     // Step 4: dispatch the event — the listener should be registered via the WeakMap path
-    // in DirectiveBase.runOnEntries_(), NOT via addInitializer
+    // in Directive.runOnEntries_(), NOT via addInitializer
     root.dispatchEvent(new Event('click'));
     expect(callCount).toBe(1);
 

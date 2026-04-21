@@ -25,5 +25,5 @@ export * from '@alwatr/session-storage';
 export * from '@alwatr/directive';
 export * from '@alwatr/unicode-digits';
 export * from '@alwatr/signal';
-export * from '@alwatr/on';
+export * from '@alwatr/action';
 export type * from '@alwatr/type-helper';

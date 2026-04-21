@@ -19,6 +19,7 @@
       "name": "@alwatr/core",
       "version": "9.11.1",
       "dependencies": {
+        "@alwatr/action": "workspace:*",
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/cyrb53": "workspace:*",
         "@alwatr/debounce": "workspace:*",
@@ -38,7 +39,6 @@
         "@alwatr/json2csv": "workspace:*",
         "@alwatr/local-storage": "workspace:*",
         "@alwatr/logger": "workspace:*",
-        "@alwatr/on": "workspace:*",
         "@alwatr/parse-duration": "workspace:*",
         "@alwatr/platform-info": "workspace:*",
         "@alwatr/random": "workspace:*",
@@ -75,6 +75,22 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
+        "typescript": "^6.0.2",
+      },
+    },
+    "pkg/nanolib/action": {
+      "name": "@alwatr/action",
+      "version": "9.11.1",
+      "dependencies": {
+        "@alwatr/directive": "workspace:*",
+        "@alwatr/logger": "workspace:*",
+        "@alwatr/signal": "workspace:*",
+      },
+      "devDependencies": {
+        "@alwatr/nano-build": "workspace:*",
+        "@alwatr/standard": "workspace:*",
+        "@alwatr/type-helper": "workspace:*",
+        "@happy-dom/global-registrator": "^20.9.0",
         "typescript": "^6.0.2",
       },
     },
@@ -373,22 +389,6 @@
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@types/node": "^24.12.2",
-        "typescript": "^6.0.2",
-      },
-    },
-    "pkg/nanolib/on": {
-      "name": "@alwatr/on",
-      "version": "9.11.1",
-      "dependencies": {
-        "@alwatr/directive": "workspace:*",
-        "@alwatr/logger": "workspace:*",
-        "@alwatr/signal": "workspace:*",
-      },
-      "devDependencies": {
-        "@alwatr/nano-build": "workspace:*",
-        "@alwatr/standard": "workspace:*",
-        "@alwatr/type-helper": "workspace:*",
-        "@happy-dom/global-registrator": "^20.9.0",
         "typescript": "^6.0.2",
       },
     },
@@ -691,6 +691,8 @@
     },
   },
   "packages": {
+    "@alwatr/action": ["@alwatr/action@workspace:pkg/nanolib/action"],
+
     "@alwatr/async-queue": ["@alwatr/async-queue@workspace:pkg/nanolib/async-queue"],
 
     "@alwatr/core": ["@alwatr/core@workspace:pkg/core"],
@@ -766,8 +768,6 @@
     "@alwatr/node": ["@alwatr/node@workspace:pkg/node"],
 
     "@alwatr/node-fs": ["@alwatr/node-fs@workspace:pkg/nanolib/node-fs"],
-
-    "@alwatr/on": ["@alwatr/on@workspace:pkg/nanolib/on"],
 
     "@alwatr/parse-duration": ["@alwatr/parse-duration@workspace:pkg/nanolib/parse-duration"],
 

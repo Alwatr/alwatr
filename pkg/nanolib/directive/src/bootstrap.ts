@@ -1,5 +1,5 @@
 import {directiveInstanceRegistry_, directiveRegistry_, initializedDirectiveElements_, logger} from './lib.js';
-import type {DirectiveBase} from './directive-class.js';
+import type {Directive} from './directive-class.js';
 
 /**
  * Initializes all registered directives within a given root element.
@@ -73,7 +73,7 @@ export function bootstrapDirectives(rootElement: Element | Document = document.b
  * Cleans up the directive instance when it is destroyed.
  * @param this The directive instance to clean up.
  */
-function cleanOnDestroy(this: DirectiveBase) {
+function cleanOnDestroy(this: Directive) {
   this.logger_.logMethod?.('cleanOnDestroy');
   directiveInstanceRegistry_.delete(this);
 

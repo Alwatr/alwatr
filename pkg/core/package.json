@@ -44,7 +44,7 @@
     "@alwatr/json2csv": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/logger": "workspace:*",
-    "@alwatr/on": "workspace:*",
+    "@alwatr/action": "workspace:*",
     "@alwatr/parse-duration": "workspace:*",
     "@alwatr/platform-info": "workspace:*",
     "@alwatr/random": "workspace:*",

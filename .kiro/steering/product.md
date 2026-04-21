@@ -55,13 +55,13 @@ A TypeScript/ESM monorepo of small, focused libraries for building robust JavaSc
 
 ### DOM / Browser
 
-| Package                   | Key API / Notes                                                                                                                                                                            |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `@alwatr/directive`       | `@directive('attr-name')` decorator + `DirectiveBase`. Lifecycle: `init_()`, `lazyInit_()`, `onVisible_()`, `onHidden_()`. Utility decorators: `@query`, `@queryAll`, `@attribute`, `@on`. |
-| `@alwatr/on`              | `alwatr-on="eventType->actionId:payload"` HTML attribute → typed signal handler. Subscribe via `alwatrOn(actionId, handler)`.                                                              |
-| `@alwatr/local-storage`   | Versioned JSON in `localStorage`. `createLocalStorageProvider({name, schemaVersion})`. Auto-migrates on version bump.                                                                      |
-| `@alwatr/session-storage` | Same as `local-storage` but scoped to `sessionStorage`.                                                                                                                                    |
-| `@alwatr/render-state`    | Render state management utility.                                                                                                                                                           |
+| Package                   | Key API / Notes                                                                                                                                                                                                                                                                                |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@alwatr/directive`       | `@directive('attr-name')` decorator + `Directive` abstract base class. Lifecycle hooks: `init_()`, `lazyInit_()`, `onVisible_()`, `onHidden_()`. Utility decorators: `@query`, `@queryAll`, `@attribute`, `@on`. Use `lazyDirective()` for tree-shakeable opt-in registration.                 |
+| `@alwatr/action`          | Action layer for Unidirectional Data Flow. HTML attribute `on-action="eventType[.modifier…]->actionId[:payload]"` bridges DOM events to typed signal handlers. Subscribe: `onAction(actionId, handler)`. Dispatch: `dispatchAction(actionId, payload)`. Register: `registerActionDirective()`. |
+| `@alwatr/local-storage`   | Versioned JSON in `localStorage`. `createLocalStorageProvider({name, schemaVersion})`. Auto-migrates on version bump.                                                                                                                                                                          |
+| `@alwatr/session-storage` | Same as `local-storage` but scoped to `sessionStorage`.                                                                                                                                                                                                                                        |
+| `@alwatr/render-state`    | Render state management utility.                                                                                                                                                                                                                                                               |
 
 ### HTTP / Network
 
@@ -116,3 +116,4 @@ A TypeScript/ESM monorepo of small, focused libraries for building robust JavaSc
 - **Atomic file writes**: always use `@alwatr/node-fs` for file I/O in Node.js services — never raw `fs.writeFile`.
 - **Go-style error handling**: `@alwatr/fetch` returns `[data, null] | [null, error]` tuples; follow this pattern in new async APIs where appropriate.
 - **Private member naming**: suffix protected members with `_`, private members with `__` (e.g., `this.value__`, `this.logger_`).
+- **Unidirectional Data Flow (UDF)**: use `@alwatr/action` as the Action layer. DOM events flow up via `on-action` attributes → `dispatchAction` → `onAction` handlers in business logic → state updates via signals → UI re-renders. Never let UI components call business logic directly.
