@@ -1,5 +1,5 @@
 /**
- * Unit tests for DirectiveBase lifecycle hooks: lazyInit_ and onVisible_
+ * Unit tests for Directive lifecycle hooks: lazyInit_ and onVisible_
  *
  * NOTE: bun runs test files alphabetically. This file (directive-class.test.ts)
  * runs BEFORE util-decorators.test.ts, so we must register happy-dom here.
@@ -8,7 +8,7 @@
 
 import {describe, it, expect, mock, beforeEach, afterEach} from 'bun:test';
 import {GlobalRegistrator} from '@happy-dom/global-registrator';
-import {DirectiveBase} from './directive-class.js';
+import {Directive} from './directive-class.js';
 
 // Register DOM globals if not already done (guard against double-registration)
 if (typeof document === 'undefined') {
@@ -92,7 +92,7 @@ function restoreIntersectionObserver(): void {
 
 describe('init_', () => {
   it('does NOT crash when init_() throws an error', async () => {
-    class ThrowingInitDirective extends DirectiveBase {
+    class ThrowingInitDirective extends Directive {
       protected init_(): void {
         throw new Error('init_ error');
       }
@@ -123,7 +123,7 @@ describe('lazyInit_', () => {
 
   // 5.1 test 1 — Requirements 1.3
   it('does NOT create an IntersectionObserver when lazyInit_ is not defined', async () => {
-    class NoLazyDirective extends DirectiveBase {
+    class NoLazyDirective extends Directive {
       protected init_(): void {}
       // lazyInit_ intentionally NOT defined
     }
@@ -140,7 +140,7 @@ describe('lazyInit_', () => {
   it('calls lazyInit_ exactly once after init_() when element intersects', async () => {
     const lazyInitMock = mock(() => {});
 
-    class LazyDirective extends DirectiveBase {
+    class LazyDirective extends Directive {
       protected init_(): void {}
       protected lazyInit_(): void {
         lazyInitMock();
@@ -171,7 +171,7 @@ describe('lazyInit_', () => {
 
   // 5.1 test 3 — Requirements 8.1, 8.3
   it('does NOT crash when lazyInit_() throws an error', async () => {
-    class ThrowingLazyDirective extends DirectiveBase {
+    class ThrowingLazyDirective extends Directive {
       protected init_(): void {}
       protected lazyInit_(): void {
         throw new Error('lazyInit_ error');
@@ -198,7 +198,7 @@ describe('lazyInit_', () => {
   it('does NOT call lazyInit_() when destroy() is called before intersection', async () => {
     const lazyInitMock = mock(() => {});
 
-    class DestroyBeforeLazyDirective extends DirectiveBase {
+    class DestroyBeforeLazyDirective extends Directive {
       protected init_(): void {}
       protected lazyInit_(): void {
         lazyInitMock();
@@ -243,7 +243,7 @@ describe('onVisible_', () => {
 
   // 5.3 test 1 — Requirements 1.4
   it('does NOT create an IntersectionObserver when onVisible_ is not defined', async () => {
-    class NoVisibleDirective extends DirectiveBase {
+    class NoVisibleDirective extends Directive {
       protected init_(): void {}
       // onVisible_ intentionally NOT defined
     }
@@ -260,7 +260,7 @@ describe('onVisible_', () => {
   it('calls onVisible_() each time the element intersects', async () => {
     const onVisibleMock = mock(() => {});
 
-    class VisibleDirective extends DirectiveBase {
+    class VisibleDirective extends Directive {
       protected init_(): void {}
       protected onVisible_(): void {
         onVisibleMock();
@@ -293,7 +293,7 @@ describe('onVisible_', () => {
 
   // 5.3 test 3 — Requirements 8.2, 8.4
   it('does NOT crash when onVisible_() throws an error', async () => {
-    class ThrowingVisibleDirective extends DirectiveBase {
+    class ThrowingVisibleDirective extends Directive {
       protected init_(): void {}
       protected onVisible_(): void {
         throw new Error('onVisible_ error');
@@ -320,7 +320,7 @@ describe('onVisible_', () => {
   it('disconnects the observer and stops calling onVisible_() after destroy()', async () => {
     const onVisibleMock = mock(() => {});
 
-    class DestroyVisibleDirective extends DirectiveBase {
+    class DestroyVisibleDirective extends Directive {
       protected init_(): void {}
       protected onVisible_(): void {
         onVisibleMock();
@@ -391,7 +391,7 @@ describe('lazyInit_ fallback chain', () => {
     });
     (globalThis as any).requestIdleCallback = idleCallbackMock;
 
-    class RicFallbackDirective extends DirectiveBase {
+    class RicFallbackDirective extends Directive {
       protected init_(): void {}
       protected lazyInit_(): void {
         lazyInitMock();
@@ -414,7 +414,7 @@ describe('lazyInit_ fallback chain', () => {
 
     const lazyInitMock = mock(() => {});
 
-    class SetTimeoutFallbackDirective extends DirectiveBase {
+    class SetTimeoutFallbackDirective extends Directive {
       protected init_(): void {}
       protected lazyInit_(): void {
         lazyInitMock();
@@ -461,7 +461,7 @@ describe('onVisible_ fallback', () => {
 
     const onVisibleMock = mock(() => {});
 
-    class ImmediateFallbackDirective extends DirectiveBase {
+    class ImmediateFallbackDirective extends Directive {
       protected init_(): void {}
       protected onVisible_(): void {
         onVisibleMock();
