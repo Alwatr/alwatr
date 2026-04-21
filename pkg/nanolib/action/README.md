@@ -38,15 +38,16 @@ on-action="eventType->actionId:payload"
 
 | Segment     | Description                                                  | Example                       |
 | ----------- | ------------------------------------------------------------ | ----------------------------- |
-| `eventType` | Any DOM event name, or `init` for one-shot dispatch          | `click`, `input`, `init`      |
+| `eventType` | Any standard DOM event name                                  | `click`, `input`, `submit`    |
 | `actionId`  | Identifier your handler subscribes to                        | `open-drawer`, `search-query` |
 | `:payload`  | Optional literal string, or `$value` to read `element.value` | `:main`, `:$value`            |
 
-### Special values
+### Payload resolvers
 
-- **`init`** — dispatches the action immediately on bootstrap, then destroys the directive. No persistent listener.
-- **`$value`** — resolves to the element's `.value` at dispatch time (ideal for `<input>`, `<select>`, `<textarea>`).
-- **`$formdata`** — resolves to an object of all form field values from the nearest `<form>` ancestor.
+| Token        | Resolves to                                                    |
+| ------------ | -------------------------------------------------------------- |
+| `:$value`    | `element.value` (for `<input>`, `<select>`, `<textarea>`)      |
+| `:$formdata` | `Object.fromEntries(new FormData(form))` from nearest `<form>` |
 
 ### Event modifiers
 
@@ -70,7 +71,7 @@ Modifiers are chained with `.` after the event type:
 import {bootstrapDirectives} from '@alwatr/directive';
 import {registerActionDirective} from '@alwatr/action';
 
-registerActionDirective(); // registers AlwatrActionDirective under 'on-action'
+registerActionDirective(); // registers ActionDirective under 'on-action'
 bootstrapDirectives();
 ```
 
@@ -79,7 +80,7 @@ bootstrapDirectives();
 ```typescript
 import {onAction} from '@alwatr/action';
 
-// Fires whenever any element with on-action="click->open-drawer:*" is clicked
+// Fires whenever any element with on-action="click->open-drawer:main" is clicked
 onAction('open-drawer', (payload) => {
   openDrawer(payload); // payload === 'main'
 });
@@ -87,11 +88,6 @@ onAction('open-drawer', (payload) => {
 // Fires on every keystroke in an input with on-action="input->search-query:$value"
 onAction('search-query', (query) => {
   performSearch(query);
-});
-
-// Fires once on page load from on-action="init->page-loaded"
-onAction('page-loaded', () => {
-  console.log('Page is ready');
 });
 ```
 
@@ -111,12 +107,9 @@ onAction('page-loaded', () => {
   placeholder="Search…"
 />
 
-<!-- Dispatches 'page-loaded' once, immediately on bootstrap -->
-<div on-action="init->page-loaded"></div>
-
-<!-- Prevents default and validates form before dispatching -->
+<!-- Prevents default and validates form before dispatching all field values -->
 <form
-  on-action="submit.prevent.validate->submit-form"
+  on-action="submit.prevent.validate->submit-form:$formdata"
   novalidate
 >
   <!-- ... -->
@@ -127,14 +120,14 @@ onAction('page-loaded', () => {
 
 ## Programmatic Dispatch
 
-You can dispatch actions from code (not just from DOM events) using `dispatchAction`:
+Dispatch actions from code using `dispatchAction` — useful after async operations or from service layers:
 
 ```typescript
 import {dispatchAction} from '@alwatr/action';
 
-// Dispatch an action programmatically
 dispatchAction('open-drawer', 'main');
 dispatchAction('navigate', '/home');
+dispatchAction<{code: number}>('show-error', {code: 404});
 ```
 
 ---
@@ -179,7 +172,7 @@ function dispatchAction<T = string>(actionId: string, actionPayload?: T): void;
 
 ### `registerActionDirective()`
 
-Lazy registration function for `AlwatrActionDirective`. Call once before `bootstrapDirectives()`.
+Lazy registration for `ActionDirective`. Call once before `bootstrapDirectives()`.
 If never called, the entire directive module is tree-shaken from the bundle.
 
 ```typescript
@@ -194,7 +187,7 @@ bootstrapDirectives();
 
 ### `registerPageIdDirective()`
 
-Registers the `page-id` directive, which dispatches a `'page-ready'` action with the page ID as payload when initialized.
+Registers the `page-id` directive, which dispatches a `'page-ready'` action with the page ID as payload when the element is initialized.
 
 ```html
 <body page-id="home"></body>
@@ -214,21 +207,18 @@ onAction('page-ready', (pageId) => {
 
 ### `registerModifier(name, handler)`
 
-Registers a custom modifier handler for use in `on-action` directives.
+Registers a custom modifier for use in `on-action` directives. Return `false` from the handler to cancel the dispatch.
 
 ```typescript
-registerModifier('validate', function (event) {
-  return this.element_.checkValidity();
+import {registerModifier} from '@alwatr/action';
+
+registerModifier('confirm', function () {
+  return window.confirm('Are you sure?');
 });
 ```
 
 ```html
-<form
-  on-action="submit.prevent.validate->submit-form"
-  novalidate
->
-  <!-- Dispatches 'submit-form' only if the form is valid -->
-</form>
+<button on-action="click.confirm->delete-item:42">Delete</button>
 ```
 
 ---
@@ -238,6 +228,8 @@ registerModifier('validate', function (event) {
 Registers a custom payload resolver for use in `on-action` directives.
 
 ```typescript
+import {registerPayloadResolver} from '@alwatr/action';
+
 registerPayloadResolver('$checked', function () {
   return (this.element_ as HTMLInputElement).checked;
 });
@@ -252,9 +244,9 @@ registerPayloadResolver('$checked', function () {
 
 ---
 
-### `AlwatrActionDirective`
+### `ActionDirective`
 
-The directive class registered under the `on-action` attribute. Extends `DirectiveBase` from `@alwatr/directive`.
+The directive class registered under the `on-action` attribute. Extends `Directive` from `@alwatr/directive`.
 
 You rarely need to interact with this class directly — use `registerActionDirective()` to register it.
 
@@ -299,15 +291,14 @@ bootstrapDirectives()
   │
   └─ finds element with on-action="click->open-drawer:main"
        │
-       └─ new AlwatrActionDirective(element, 'on-action')
+       └─ new ActionDirective(element, 'on-action')
             │
             └─ after one macrotask → init_()
                  │
                  ├─ parse attributeValue with syntaxRegex
                  ├─ if invalid → log accident, return
-                 ├─ if eventType === 'init' → dispatchAction once, destroy()
-                 └─ else → addEventListener(eventType, dispatch_)
-                            addDestroyHook(removeEventListener)
+                 └─ addEventListener(eventType, dispatch_)
+                    addDestroyHook(removeEventListener)
 ```
 
 ---
