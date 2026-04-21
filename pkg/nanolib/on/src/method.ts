@@ -28,8 +28,10 @@ export function alwatrOn<TEvent extends Event = Event>(
   actionId: string,
   handler: (payload?: string, event?: TEvent) => void,
 ): SubscribeResult {
+  logger_.logMethodArgs?.('alwatrOn.register', {actionId});
   return eventSignal_.subscribe((payload) => {
     if (payload.actionId === actionId) {
+      logger_.logMethodArgs?.('alwatrOn.handler', {actionId, payload});
       handler(payload.actionPayload, payload.event as TEvent);
     }
   });
