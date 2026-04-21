@@ -233,9 +233,6 @@ on-action="eventType[.modifier…]->actionId[:payload]"
 >
   …
 </form>
-
-<!-- One-shot dispatch on bootstrap -->
-<div on-action="init->page-loaded"></div>
 ```
 
 ### Built-in modifiers
