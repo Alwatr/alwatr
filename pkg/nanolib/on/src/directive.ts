@@ -1,5 +1,5 @@
 import {lazyDirective, DirectiveBase} from '@alwatr/directive';
-import {eventSignal_} from './signal.js';
+import {eventSignal_} from './lib.js';
 
 /**
  * Regex for parsing the `alwatr-on` attribute value.
