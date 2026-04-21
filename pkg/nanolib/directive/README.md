@@ -53,7 +53,7 @@ The library is built around three primitives:
 
 A class decorator that **registers** your class against an HTML attribute name. When `bootstrapDirectives()` runs, any element with that attribute gets an instance of your class.
 
-### 2. `DirectiveBase`
+### 2. `Directive`
 
 The abstract base class your directives extend. It wires up the element, a scoped logger, the attribute value, and the lifecycle hooks — so you only write the logic that matters.
 
@@ -69,10 +69,10 @@ Scans a DOM subtree, finds all elements matching registered attribute names, and
 
 ```typescript
 // src/directives/copy-button.ts
-import {directive, DirectiveBase} from '@alwatr/directive';
+import {directive, Directive} from '@alwatr/directive';
 
 @directive('copy-button')
-export class CopyButtonDirective extends DirectiveBase {
+export class CopyButtonDirective extends Directive {
   private originalText_!: string;
 
   protected override async init_(): Promise<void> {
@@ -133,7 +133,7 @@ Every directive automatically receives the attribute's value via `this.attribute
 
 ```typescript
 @directive('show-tooltip')
-class TooltipDirective extends DirectiveBase {
+class TooltipDirective extends Directive {
   protected override init_(): void {
     // this.attributeValue === 'This is a helpful hint'
     this.element_.title = this.attributeValue;
@@ -165,7 +165,7 @@ This makes `@alwatr/directive` a natural fit for SPAs, server-side rendered page
 ## Lifecycle
 
 ```
-new DirectiveBase(element, attributeName)
+new Directive(element, attributeName)
   │
   ├─ constructor runs synchronously
   │    sets: attributeName, attributeValue, element_, logger_, index
@@ -185,7 +185,7 @@ All four hooks are **optional**. You only define the ones you need — a directi
 
 ## Visibility Hooks
 
-`DirectiveBase` provides two optional lifecycle hooks for viewport-aware behavior. Both are powered by `IntersectionObserver` and include automatic cleanup on `destroy()`.
+`Directive` provides two optional lifecycle hooks for viewport-aware behavior. Both are powered by `IntersectionObserver` and include automatic cleanup on `destroy()`.
 
 ### `lazyInit_()`
 
@@ -199,7 +199,7 @@ Runs **exactly once** — the first time the element enters the viewport. Ideal 
 
 ```typescript
 @directive('product-image')
-class ProductImageDirective extends DirectiveBase {
+class ProductImageDirective extends Directive {
   protected override init_(): void {
     this.element_.classList.add('loading-skeleton');
   }
@@ -228,7 +228,7 @@ Runs **every time** the element enters the viewport. Ideal for impression tracki
 
 ```typescript
 @directive('track-impression')
-class ImpressionTrackerDirective extends DirectiveBase {
+class ImpressionTrackerDirective extends Directive {
   protected override onVisible_(): void {
     // Fires each time this element scrolls into view
     analytics.trackImpression(this.attributeValue);
@@ -248,7 +248,7 @@ Runs **every time** the element leaves the viewport. The counterpart to `onVisib
 
 ```typescript
 @directive('auto-pause-video')
-class AutoPauseVideoDirective extends DirectiveBase {
+class AutoPauseVideoDirective extends Directive {
   private video_!: HTMLVideoElement;
 
   protected override init_(): void {
@@ -277,7 +277,7 @@ class AutoPauseVideoDirective extends DirectiveBase {
 
 ```typescript
 @directive('product-card')
-class ProductCardDirective extends DirectiveBase {
+class ProductCardDirective extends Directive {
   // Runs once at setup — attach event listeners
   protected override init_(): void {
     this.element_.addEventListener('click', () => this.handleClick_());
@@ -330,7 +330,7 @@ Register cleanup callbacks that run when `destroy()` is called. Use this to remo
 
 ```typescript
 @directive('live-clock')
-class LiveClockDirective extends DirectiveBase {
+class LiveClockDirective extends Directive {
   protected override init_(): void {
     const intervalId = setInterval(() => {
       this.element_.textContent = new Date().toLocaleTimeString();
@@ -369,7 +369,7 @@ Use `dispatch()` to fire a bubbling `CustomEvent` from the directive's element �
 
 ```typescript
 @directive('submit-form')
-class SubmitFormDirective extends DirectiveBase {
+class SubmitFormDirective extends Directive {
   protected override init_(): void {
     this.element_.addEventListener('click', () => {
       this.dispatch('form-submitted', {formId: this.attributeValue});
@@ -395,7 +395,7 @@ Lazily queries a single child element. Cached by default.
 
 ```typescript
 @directive('my-card')
-class CardDirective extends DirectiveBase {
+class CardDirective extends Directive {
   @query('.card-title')
   accessor titleEl!: HTMLElement | null;
 
@@ -416,7 +416,7 @@ Lazily queries all matching child elements. Cached by default.
 
 ```typescript
 @directive('my-tabs')
-class TabsDirective extends DirectiveBase {
+class TabsDirective extends Directive {
   @queryAll('.tab-item')
   accessor tabItems!: NodeListOf<HTMLElement>;
 
@@ -438,7 +438,7 @@ Lazily reads an attribute value from the element. Cached by default.
 
 ```typescript
 @directive('user-card')
-class UserCardDirective extends DirectiveBase {
+class UserCardDirective extends Directive {
   @attribute('user-id')
   accessor userId!: string | null;
 
@@ -459,7 +459,7 @@ Registers a DOM event listener on `this.element_` (or a matching child element) 
 
 ```typescript
 @directive('my-form')
-class MyFormDirective extends DirectiveBase {
+class MyFormDirective extends Directive {
   // Basic: listen on this.element_
   @on('click')
   protected onClick_(event: Event): void {
@@ -486,7 +486,7 @@ Since `init_()` is optional, a directive that only uses `@on` decorators doesn't
 
 ```typescript
 @directive('close-dialog')
-class CloseDialogDirective extends DirectiveBase {
+class CloseDialogDirective extends Directive {
   @on('click')
   protected onClick_(): void {
     this.element_.closest('dialog')?.close();
@@ -510,7 +510,7 @@ Class decorator. Registers the decorated class in the global directive registry.
 
 ---
 
-### `DirectiveBase` (abstract class)
+### `Directive` (abstract class)
 
 | Member                     | Type                             | Description                                                        |
 | -------------------------- | -------------------------------- | ------------------------------------------------------------------ |

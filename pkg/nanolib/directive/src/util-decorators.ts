@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type {DirectiveBase} from './directive-class.js';
+import type {Directive} from './directive-class.js';
 
 /**
  * A property decorator that queries the directive's element for a selector.
@@ -12,7 +12,7 @@ import type {DirectiveBase} from './directive-class.js';
  * @example
  * ```ts
  * @directive('[my-directive]')
- * class MyDirective extends DirectiveBase {
+ * class MyDirective extends Directive {
  *   @query('.my-element')
  *   protected myElement!: HTMLDivElement | null;
  * }
@@ -26,9 +26,9 @@ export function query<T extends Element>(selector: string, cache = true, root?: 
    * @return A property descriptor with a getter that performs the query and caches the result.
    */
   return function (
-    _target: ClassAccessorDecoratorTarget<DirectiveBase, T | null>,
-    context: ClassAccessorDecoratorContext<DirectiveBase, T | null>,
-  ): ClassAccessorDecoratorResult<DirectiveBase, T | null> {
+    _target: ClassAccessorDecoratorTarget<Directive, T | null>,
+    context: ClassAccessorDecoratorContext<Directive, T | null>,
+  ): ClassAccessorDecoratorResult<Directive, T | null> {
     if (context.kind !== 'accessor') {
       throw new Error('@query can only be used with the "accessor" keyword');
     }
@@ -59,7 +59,7 @@ export function query<T extends Element>(selector: string, cache = true, root?: 
  * @example
  * ```ts
  * @directive('[my-directive]')
- * class MyDirective extends DirectiveBase {
+ * class MyDirective extends Directive {
  *   @queryAll('.my-elements')
  *   protected myElements!: NodeListOf<HTMLDivElement>;
  * }
@@ -73,9 +73,9 @@ export function queryAll<T extends Element>(selector: string, cache = true, root
    * @return A property descriptor with a getter that performs the query and caches the result.
    */
   return function (
-    _target: ClassAccessorDecoratorTarget<DirectiveBase, NodeListOf<T>>,
-    context: ClassAccessorDecoratorContext<DirectiveBase, NodeListOf<T>>,
-  ): ClassAccessorDecoratorResult<DirectiveBase, NodeListOf<T>> {
+    _target: ClassAccessorDecoratorTarget<Directive, NodeListOf<T>>,
+    context: ClassAccessorDecoratorContext<Directive, NodeListOf<T>>,
+  ): ClassAccessorDecoratorResult<Directive, NodeListOf<T>> {
     if (context.kind !== 'accessor') {
       throw new Error('@queryAll can only be used with the "accessor" keyword');
     }
@@ -106,7 +106,7 @@ export function queryAll<T extends Element>(selector: string, cache = true, root
  * @example
  * ```ts
  * @directive('[my-directive]')
- * class MyDirective extends DirectiveBase {
+ * class MyDirective extends Directive {
  *   @attribute('data-id')
  *   accessor dataId!: string | null;
  * }
@@ -114,9 +114,9 @@ export function queryAll<T extends Element>(selector: string, cache = true, root
  */
 export function attribute(name: string, cache = true, root?: Element) {
   return function (
-    _target: ClassAccessorDecoratorTarget<DirectiveBase, string | null>,
-    context: ClassAccessorDecoratorContext<DirectiveBase, string | null>,
-  ): ClassAccessorDecoratorResult<DirectiveBase, string | null> {
+    _target: ClassAccessorDecoratorTarget<Directive, string | null>,
+    context: ClassAccessorDecoratorContext<Directive, string | null>,
+  ): ClassAccessorDecoratorResult<Directive, string | null> {
     if (context.kind !== 'accessor') {
       throw new Error('@attribute can only be used with the "accessor" keyword');
     }
@@ -151,7 +151,7 @@ export function attribute(name: string, cache = true, root?: Element) {
  * @example
  * ```ts
  * @directive('[my-directive]')
- * class MyDirective extends DirectiveBase {
+ * class MyDirective extends Directive {
  *   protected init_(): void {}
  *
  *   // Listen on this.element_
@@ -178,14 +178,14 @@ export function on(
   options?: AddEventListenerOptions | boolean,
 ) {
   return function (
-    target: (this: DirectiveBase, event: Event) => void,
-    context: ClassMethodDecoratorContext<DirectiveBase, (event: Event) => void>,
+    target: (this: Directive, event: Event) => void,
+    context: ClassMethodDecoratorContext<Directive, (event: Event) => void>,
   ): void {
     if (context.kind !== 'method') {
       throw new Error('@on can only be used on class methods');
     }
 
-    context.addInitializer(function (this: DirectiveBase) {
+    context.addInitializer(function (this: Directive) {
       this.logger_.logMethodArgs?.('@on-init', {eventType, selector, options});
       const targetElement = selector ? this.element_.querySelector(selector) : this.element_;
 

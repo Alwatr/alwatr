@@ -1,9 +1,8 @@
 /**
  * @package @alwatr/directive
  *
- * This file defines the `DirectiveBase` class, which is the foundation for creating custom directives
- * in the Alwatr Directive library. Directives are used to attach behavior and logic to DOM elements
- * declaratively.
+ * This file defines the `Directive` abstract class — the foundation for all attribute-based
+ * directives. Extend it to attach declarative behaviour to DOM elements.
  */
 
 import {delay} from '@alwatr/delay';
@@ -32,10 +31,10 @@ function generateIndexForDirective(name: string): number {
  *
  * @example
  * ```ts
- * import {DirectiveBase, directive} from '@alwatr/directive';
+ * import {Directive, directive} from '@alwatr/directive';
  *
  * @directive('my-directive')
- * export class MyDirective extends DirectiveBase {
+ * export class MyDirective extends Directive {
  *   protected init_(): void {
  *     this.element_.textContent = 'Hello from MyDirective!';
  *     this.element_.addEventListener('click', () => this.log('Element clicked!'));
@@ -43,7 +42,7 @@ function generateIndexForDirective(name: string): number {
  * }
  * ```
  */
-export abstract class DirectiveBase {
+export abstract class Directive {
   /**
    * The attribute name that this directive is bound to.
    */

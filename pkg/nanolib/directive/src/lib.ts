@@ -1,7 +1,7 @@
 import {createLogger} from '@alwatr/logger';
 
 import type {DirectiveConstructor} from './directive-decorator.js';
-import type {DirectiveBase} from './directive-class.js';
+import type {Directive} from './directive-class.js';
 
 /**
  * Alwatr Directive System Logger
@@ -27,7 +27,7 @@ export const initializedDirectiveElements_ = new WeakMap<Element, Set<string>>()
 /**
  * A Set to keep track of all directive instances that have been created.
  */
-export const directiveInstanceRegistry_ = new Set<DirectiveBase>();
+export const directiveInstanceRegistry_ = new Set<Directive>();
 
 /**
  * A FinalizationRegistry to monitor when directive instances are garbage collected.
