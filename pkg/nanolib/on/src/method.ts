@@ -36,3 +36,11 @@ export function alwatrOn<TEvent extends Event = Event>(
     }
   });
 }
+
+/**
+ * Dispatches an action signal that can be listened to by any `alwatr-on` directive on the page.
+ */
+export function alwatrDispatch(actionId: string, actionPayload?: string): void {
+  logger_.logMethodArgs?.('alwatrDispatch', {actionId, actionPayload});
+  eventSignal_.dispatch({actionId, actionPayload});
+}
