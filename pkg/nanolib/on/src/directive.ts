@@ -46,15 +46,19 @@ export class AlwatrActionDirective extends DirectiveBase {
    * Parsed result of the attribute value against `syntaxRegex`.
    * `null` when the attribute value is invalid.
    */
-  protected match = this.attributeValue.trim().match(syntaxRegex);
+
+  protected actionContext_?: {actionId: string; actionPayload?: string};
 
   protected override init_(): void {
-    if (!this.match) {
+    const match = this.attributeValue.trim().match(syntaxRegex);
+
+    if (!match) {
       this.logger_.accident('init_', 'invalid_syntax', {attributeValue: this.attributeValue});
       return;
     }
 
-    const eventType = this.match[1];
+    const eventType = match[1];
+    this.actionContext_ = {actionId: match[2], actionPayload: match[3]};
 
     if (eventType === 'init') {
       // Create a synthetic CustomEvent so event.target === element_ and event.type === 'init'.
@@ -87,15 +91,12 @@ export class AlwatrActionDirective extends DirectiveBase {
   protected dispatch_(event: Event): void {
     event.preventDefault();
 
-    const actionId = this.match![2];
-    const actionPayloadRaw = this.match![3];
-
-    let actionPayload = actionPayloadRaw ?? '';
+    let actionPayload = this.actionContext_!.actionPayload ?? '';
     if (actionPayload === '$value' && 'value' in this.element_) {
       actionPayload = (this.element_ as {value: string}).value;
     }
 
-    eventSignal_.dispatch({actionId, actionPayload, event});
+    eventSignal_.dispatch({actionId: this.actionContext_!.actionId, actionPayload, event});
   }
 }
 
