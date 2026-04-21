@@ -55,7 +55,7 @@ export function directive(name: string) {
  * at import time. The directive is only registered when the consumer explicitly calls the
  * returned function. This makes the directive module fully tree-shakeable.
  *
- * @param name The unique attribute name for this directive (e.g., 'alwatr-on').
+ * @param name The unique attribute name for this directive (e.g., 'on-action').
  * @param constructor The directive class constructor.
  * @returns A zero-argument function that registers the directive when called.
  *
