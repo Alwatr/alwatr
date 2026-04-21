@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.11.2](https://github.com/Alwatr/alwatr/compare/v9.11.1...v9.11.2) (2026-04-21)
+
+### 🐛 Bug Fixes
+
+* **directive:** bind dispatch function correctly for event listener management ([cabc52e](https://github.com/Alwatr/alwatr/commit/cabc52e8b248e996b3e490a42b11ba80d0f2619c))
+* **directive:** correct comment on conflicting modifiers in ActionDirective ([98183c1](https://github.com/Alwatr/alwatr/commit/98183c18448bed171cdaf05fa99d53c4e294af89))
+
+### 🔨 Code Refactoring
+
+* **action:** replace DirectiveBase with Directive in ActionDirective and related components ([7553f3b](https://github.com/Alwatr/alwatr/commit/7553f3be24325a1ab302e361fd1bdf0fb8a0c7f9))
+* **directive:** update documentation for on-action attribute syntax and remove deprecated examples ([6a7be46](https://github.com/Alwatr/alwatr/commit/6a7be4681648af72da9b0a608a95724cc88ecf46))
+
+### 🔗 Dependencies update
+
+* update TypeScript to version 6.0.3 across all packages and upgrade prettier to version 3.8.3 ([daf6035](https://github.com/Alwatr/alwatr/commit/daf60356f38b03bb91da075b38777a3f581da656))
+
 ## [9.11.1](https://github.com/Alwatr/alwatr/compare/v9.11.0...v9.11.1) (2026-04-19)
 
 ### 🐛 Bug Fixes

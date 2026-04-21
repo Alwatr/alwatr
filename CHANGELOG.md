@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.11.2](https://github.com/Alwatr/alwatr/compare/v9.11.1...v9.11.2) (2026-04-21)
+
+### ✨ Features
+
+* **alwatr-on:** add alwatrDispatch function for action signal dispatching ([011612f](https://github.com/Alwatr/alwatr/commit/011612f4ff886fd5862203e9293847a6b0fa3ec2))
+* **alwatr-on:** add conflict handling for 'once' and 'prevent' modifiers in event listeners ([60d05a4](https://github.com/Alwatr/alwatr/commit/60d05a4d7d4b248840bf7800e16110905d53641b))
+* **alwatr-on:** add logger for improved debugging in event signal ([c4799fe](https://github.com/Alwatr/alwatr/commit/c4799fea21dcc67cbc4672ccb5c72eab858af403))
+* **alwatr-on:** add logger import for enhanced debugging capabilities ([01a59ad](https://github.com/Alwatr/alwatr/commit/01a59ad075be6d8c3ac4e531d0c94eb19511b7b2))
+* **alwatr-on:** add PageIdDirective for dispatching 'page-ready' signal with page ID ([3149339](https://github.com/Alwatr/alwatr/commit/31493396849ec065060f4c048942e649aefb08a6))
+* **alwatr-on:** add registerModifier and registerPayloadResolver functions for custom event handling ([ad746fc](https://github.com/Alwatr/alwatr/commit/ad746fcc283dfe6fedaf9716189f6f16b72b3a59))
+* **alwatr-on:** enhance alwatr-on directive to support event modifiers and improve action context handling ([8739104](https://github.com/Alwatr/alwatr/commit/87391045df3e799818189d7c4234d94c2a52e3fe))
+* **alwatr-on:** enhance logging in alwatrOn function for better debugging ([2542b56](https://github.com/Alwatr/alwatr/commit/2542b56f409be1b6fc32734cb382e0a38304391a))
+* **alwatr-on:** implement modifier and payload registries for event handling ([235b9b7](https://github.com/Alwatr/alwatr/commit/235b9b7d5b25f8d1e0e4a085353f018c03075ad9))
+* **alwatr-on:** integrate modifier and payload registries for enhanced event handling ([da3875e](https://github.com/Alwatr/alwatr/commit/da3875ead2e0b7e6e156fe3da9becf28b410a177))
+
+### 🐛 Bug Fixes
+
+* **alwatr-on:** add logging for method arguments in AlwatrActionDirective ([3be7f18](https://github.com/Alwatr/alwatr/commit/3be7f18d751ab2941c2028b3999318f9658d3eee))
+* **alwatr-on:** add validation for event type and update conflict handling for modifiers ([43d779a](https://github.com/Alwatr/alwatr/commit/43d779a0ece5ca0027d051aff63758a0e3c6c15a))
+* **alwatr-on:** improve action context handling in AlwatrActionDirective ([76436aa](https://github.com/Alwatr/alwatr/commit/76436aab0bcdc199068a8f2c240baa8b4752b0cd))
+* **alwatr-on:** make actionPayload and event optional in EventSignalPayload and update dispatch handling ([ed0e1d8](https://github.com/Alwatr/alwatr/commit/ed0e1d88b60eea120ee06706dc7dd4d0d8b7011b))
+* **directive:** bind dispatch function correctly for event listener management ([cabc52e](https://github.com/Alwatr/alwatr/commit/cabc52e8b248e996b3e490a42b11ba80d0f2619c))
+* **directive:** correct comment on conflicting modifiers in ActionDirective ([98183c1](https://github.com/Alwatr/alwatr/commit/98183c18448bed171cdaf05fa99d53c4e294af89))
+
+### 🔨 Code Refactoring
+
+* **action:** replace DirectiveBase with Directive in ActionDirective and related components ([7553f3b](https://github.com/Alwatr/alwatr/commit/7553f3be24325a1ab302e361fd1bdf0fb8a0c7f9))
+* **alwatr-on:** rename eventSignal_ to internalSignal_ and update modifiers handling ([ec60774](https://github.com/Alwatr/alwatr/commit/ec607748dfd4d2cef3cac8edf921efccf91d4f2a))
+* **alwatr-on:** rename eventSignal_ to internalSignal_ for consistency ([dc99bc4](https://github.com/Alwatr/alwatr/commit/dc99bc437040ed23af0e1c2c3acb0e1cc36e50f8))
+* **alwatr-on:** rename lib ([326166b](https://github.com/Alwatr/alwatr/commit/326166bfd39489cda666405f8e256130b7b2954a))
+* **decorator:** enhance type safety and improve documentation for query, queryAll, and attribute decorators ([a0d8bf9](https://github.com/Alwatr/alwatr/commit/a0d8bf9078efcee44e968f854396a0b609efa5df))
+* **directive:** rename DirectiveBase to Directive and update references ([8ecfd32](https://github.com/Alwatr/alwatr/commit/8ecfd3238c1ed1e4bbe1ee6eeef6c6f23aeed64e))
+* **directive:** update documentation for on-action attribute syntax and remove deprecated examples ([6a7be46](https://github.com/Alwatr/alwatr/commit/6a7be4681648af72da9b0a608a95724cc88ecf46))
+* **directive:** update tests to use Directive instead of DirectiveBase ([244ef14](https://github.com/Alwatr/alwatr/commit/244ef1463569e93ca55137de9195c05e3a7d196b))
+
+### 🧹 Miscellaneous Chores
+
+* cleanup old specs ([f71652b](https://github.com/Alwatr/alwatr/commit/f71652b5e355a555911336bedd94164db010029e))
+
+### 🔗 Dependencies update
+
+* update TypeScript to version 6.0.3 across all packages and upgrade prettier to version 3.8.3 ([daf6035](https://github.com/Alwatr/alwatr/commit/daf60356f38b03bb91da075b38777a3f581da656))
+
 ## [9.11.1](https://github.com/Alwatr/alwatr/compare/v9.11.0...v9.11.1) (2026-04-19)
 
 ### 🐛 Bug Fixes

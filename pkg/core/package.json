@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/core",
-  "version": "9.11.1",
+  "version": "9.11.2",
   "description": "Necessary library for all ECMAScript (JavaScript/TypeScript) projects.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -25,6 +25,7 @@
   },
   "sideEffects": false,
   "dependencies": {
+    "@alwatr/action": "workspace:*",
     "@alwatr/async-queue": "workspace:*",
     "@alwatr/cyrb53": "workspace:*",
     "@alwatr/debounce": "workspace:*",
@@ -44,7 +45,6 @@
     "@alwatr/json2csv": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/logger": "workspace:*",
-    "@alwatr/action": "workspace:*",
     "@alwatr/parse-duration": "workspace:*",
     "@alwatr/platform-info": "workspace:*",
     "@alwatr/random": "workspace:*",
