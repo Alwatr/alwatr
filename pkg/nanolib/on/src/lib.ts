@@ -1,13 +1,9 @@
 import {createLogger} from '@alwatr/logger';
 import {createEventSignal} from '@alwatr/signal';
 
-export interface EventSignalPayload<TEvent extends Event = Event> {
+export interface EventSignalPayload<T = string> {
   actionId: string;
-  actionPayload?: string;
-  /**
-   * The DOM event that triggered this dispatch.
-   */
-  event?: TEvent;
+  actionPayload?: T;
 }
 
 export const logger_ = createLogger('alwatr-on');

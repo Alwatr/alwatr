@@ -1,5 +1,5 @@
 import {lazyDirective, DirectiveBase} from '@alwatr/directive';
-import {eventSignal_} from './lib.js';
+import {internalSignal_} from './lib.js';
 
 /**
  * Regex for parsing the `alwatr-on` attribute value.
@@ -52,7 +52,7 @@ export class AlwatrActionDirective extends DirectiveBase {
    */
   protected actionContext_?: {
     eventType: string;
-    modifiers: ReadonlySet<OnModifier>;
+    modifiers?: ReadonlySet<OnModifier>;
     actionId: string;
     actionPayload?: string;
   };
@@ -80,7 +80,7 @@ export class AlwatrActionDirective extends DirectiveBase {
 
     this.actionContext_ = {
       eventType,
-      modifiers,
+      modifiers: modifiers.size > 0 ? modifiers : undefined,
       actionId: match[2],
       actionPayload: match[3],
     };
@@ -113,12 +113,14 @@ export class AlwatrActionDirective extends DirectiveBase {
   protected dispatch_(event?: Event): void {
     this.logger_.logMethodArgs?.('dispatch_', {eventType: event?.type, actionContext: this.actionContext_});
 
-    if (event != null && this.actionContext_!.modifiers.has('prevent')) {
-      event.preventDefault();
-    }
+    if (event != null) {
+      if (this.actionContext_!.modifiers?.has('prevent')) {
+        event.preventDefault();
+      }
 
-    if (event != null && this.actionContext_!.modifiers.has('stop')) {
-      event.stopPropagation();
+      if (this.actionContext_!.modifiers?.has('stop')) {
+        event.stopPropagation();
+      }
     }
 
     let actionPayload = this.actionContext_!.actionPayload;

@@ -24,15 +24,12 @@ import type {SubscribeResult} from '@alwatr/signal';
  * sub.unsubscribe();
  * ```
  */
-export function alwatrOn<TEvent extends Event = Event>(
-  actionId: string,
-  handler: (payload?: string, event?: TEvent) => void,
-): SubscribeResult {
+export function alwatrOn<T = string>(actionId: string, handler: (payload?: T) => void): SubscribeResult {
   logger_.logMethodArgs?.('alwatrOn.register', {actionId});
   return internalSignal_.subscribe((payload) => {
     if (payload.actionId === actionId) {
       logger_.logMethodArgs?.('alwatrOn.handler', {actionId, payload});
-      handler(payload.actionPayload, payload.event as TEvent);
+      handler(payload.actionPayload as T);
     }
   });
 }
@@ -40,7 +37,7 @@ export function alwatrOn<TEvent extends Event = Event>(
 /**
  * Dispatches an action signal that can be listened to by any `alwatr-on` directive on the page.
  */
-export function alwatrDispatch(actionId: string, actionPayload?: string): void {
+export function alwatrDispatch<T = string>(actionId: string, actionPayload?: T): void {
   logger_.logMethodArgs?.('alwatrDispatch', {actionId, actionPayload});
   internalSignal_.dispatch({actionId, actionPayload});
 }
