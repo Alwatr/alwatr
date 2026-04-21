@@ -1,4 +1,4 @@
-import {eventSignal_} from './lib.js';
+import {eventSignal_, logger_} from './lib.js';
 import type {SubscribeResult} from '@alwatr/signal';
 
 /**
