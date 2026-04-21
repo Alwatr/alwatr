@@ -18,9 +18,11 @@ alwatr-devkit/
 │   ├── playground/             # local experimentation, not published
 │   ├── standard/               # @alwatr/standard — shared tsconfig + prettier config
 │   ├── nanolib/                # Individual nano-packages (@alwatr/<name>), ~30+ packages
+│   │   ├── action/             # @alwatr/action — Action layer for Unidirectional Data Flow
 │   │   ├── async-queue/
 │   │   ├── debounce/
 │   │   ├── delay/
+│   │   ├── directive/          # @alwatr/directive — attribute-based DOM directives
 │   │   ├── logger/
 │   │   ├── nano-build/         # @alwatr/nano-build — build CLI tool
 │   │   ├── signal/             # @alwatr/signal — reactive signals
