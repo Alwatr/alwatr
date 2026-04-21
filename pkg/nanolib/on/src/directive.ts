@@ -4,18 +4,22 @@ import {eventSignal_} from './lib.js';
 /**
  * Regex for parsing the `alwatr-on` attribute value.
  *
- * Format: `event->actionId` or `event->actionId:payload`
+ * Format: `event.modifier1.modifier2->actionId` or `event.modifier->actionId:payload`
  *
- * - Group 1: DOM event type (e.g. `click`, `input`, `init`)
+ * - Group 1: DOM event type with optional modifiers (e.g. `click.prevent.once`, `input`, `init`)
  * - Group 2: action identifier (e.g. `open-drawer`)
  * - Group 3: optional payload literal or `$value` (e.g. `main`, `$value`)
  *
  * @example
- * 'click->open-drawer:main'   → ['click', 'open-drawer', 'main']
+ * 'click.prevent.once->open-drawer:main'   → ['click.prevent.once', 'open-drawer', 'main']
  * 'input->search-query:$value' → ['input', 'search-query', '$value']
  * 'init->page-loaded'          → ['init', 'page-loaded', undefined]
  */
-const syntaxRegex = /^([a-z0-9-]+)->([a-z0-9-]+)(?::(.+))?$/;
+const syntaxRegex = /^([a-z0-9.-]+)->([a-z0-9-]+)(?::(.+))?$/;
+
+type OnModifier = 'once' | 'prevent' | 'stop' | 'passive';
+
+const supportedModifierSet = new Set<OnModifier>(['once', 'prevent', 'stop', 'passive']);
 
 /**
  * A directive that listens to a DOM event and dispatches a typed action signal.
@@ -46,8 +50,12 @@ export class AlwatrActionDirective extends DirectiveBase {
    * Parsed result of the attribute value against `syntaxRegex`.
    * `null` when the attribute value is invalid.
    */
-
-  protected actionContext_?: {actionId: string; actionPayload?: string};
+  protected actionContext_?: {
+    eventType: string;
+    modifiers: ReadonlySet<OnModifier>;
+    actionId: string;
+    actionPayload?: string;
+  };
 
   protected override init_(): void {
     this.logger_.logMethodArgs?.('init_', {attributeValue: this.attributeValue});
@@ -59,8 +67,23 @@ export class AlwatrActionDirective extends DirectiveBase {
       return;
     }
 
-    const eventType = match[1];
-    this.actionContext_ = {actionId: match[2], actionPayload: match[3]};
+    const [eventType, ...modifierList] = match[1].split('.');
+
+    const modifiers = new Set<OnModifier>();
+    for (const modifier of modifierList) {
+      if (!supportedModifierSet.has(modifier as OnModifier)) {
+        this.logger_.accident('init_', 'invalid_modifier', {attributeValue: this.attributeValue, modifier});
+        return;
+      }
+      modifiers.add(modifier as OnModifier);
+    }
+
+    this.actionContext_ = {
+      eventType,
+      modifiers,
+      actionId: match[2],
+      actionPayload: match[3],
+    };
 
     if (eventType === 'init') {
       this.dispatch_();
@@ -69,9 +92,10 @@ export class AlwatrActionDirective extends DirectiveBase {
     }
 
     this.dispatch_ = this.dispatch_.bind(this);
-    this.element_.addEventListener(eventType, this.dispatch_);
+    const listenerOptions: AddEventListenerOptions = {once: modifiers.has('once'), passive: modifiers.has('passive')};
+    this.element_.addEventListener(eventType, this.dispatch_, listenerOptions);
     this.addDestroyHook(() => {
-      this.element_.removeEventListener(eventType, this.dispatch_);
+      this.element_.removeEventListener(eventType, this.dispatch_, listenerOptions);
     });
   }
 
@@ -89,7 +113,13 @@ export class AlwatrActionDirective extends DirectiveBase {
   protected dispatch_(event?: Event): void {
     this.logger_.logMethodArgs?.('dispatch_', {eventType: event?.type, actionContext: this.actionContext_});
 
-    event?.preventDefault();
+    if (event != null && this.actionContext_!.modifiers.has('prevent')) {
+      event.preventDefault();
+    }
+
+    if (event != null && this.actionContext_!.modifiers.has('stop')) {
+      event.stopPropagation();
+    }
 
     let actionPayload = this.actionContext_!.actionPayload;
     if (actionPayload === '$value' && 'value' in this.element_) {
