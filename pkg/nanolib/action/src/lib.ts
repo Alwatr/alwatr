@@ -35,7 +35,7 @@ export const logger_ = createLogger('alwatr-action');
 /**
  * The single shared event signal that carries every dispatched action.
  *
- * All `AlwatrActionDirective` instances write to this signal via `dispatchAction`,
+ * All `ActionDirective` instances write to this signal via `dispatchAction`,
  * and all `onAction` subscriptions read from it. Using one central signal keeps
  * the pub/sub wiring minimal and makes the action flow easy to trace.
  *

@@ -1,4 +1,4 @@
-import {DirectiveBase, lazyDirective} from '@alwatr/directive';
+import {Directive, lazyDirective} from '@alwatr/directive';
 import {dispatchAction} from './method.js';
 
 // ─── Directive Class ──────────────────────────────────────────────────────────
@@ -21,7 +21,7 @@ import {dispatchAction} from './method.js';
  * <body page-id="home">…</body>
  * ```
  */
-export class PageIdDirective extends DirectiveBase {
+export class PageIdDirective extends Directive {
   /**
    * Reads the `page-id` attribute value, dispatches `'page-ready'` with it as
    * the payload, then destroys the directive.

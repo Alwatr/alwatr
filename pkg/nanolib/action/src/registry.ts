@@ -1,4 +1,4 @@
-import type {AlwatrActionDirective} from './directive.js';
+import type {ActionDirective} from './directive.js';
 
 // ─── Type Definitions ────────────────────────────────────────────────────────
 
@@ -17,7 +17,7 @@ import type {AlwatrActionDirective} from './directive.js';
  * };
  * ```
  */
-export type ModifierHandler = (this: AlwatrActionDirective, event: Event) => boolean;
+export type ModifierHandler = (this: ActionDirective, event: Event) => boolean;
 
 /**
  * A payload resolver attached to an `on-action` directive.
@@ -34,7 +34,7 @@ export type ModifierHandler = (this: AlwatrActionDirective, event: Event) => boo
  * };
  * ```
  */
-export type PayloadResolver = (this: AlwatrActionDirective, event: Event) => unknown;
+export type PayloadResolver = (this: ActionDirective, event: Event) => unknown;
 
 // ─── Registries ──────────────────────────────────────────────────────────────
 

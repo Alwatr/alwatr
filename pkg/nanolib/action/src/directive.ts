@@ -1,4 +1,4 @@
-import {lazyDirective, DirectiveBase} from '@alwatr/directive';
+import {lazyDirective, Directive} from '@alwatr/directive';
 import {modifierRegistry, payloadRegistry} from './registry.js';
 import {dispatchAction} from './method.js';
 
@@ -61,7 +61,7 @@ const syntaxRegex = /^([a-z0-9.-]+)->([a-z0-9-]+)(?::(.+))?$/;
  * <div on-action="init->page-loaded"></div>
  * ```
  */
-export class AlwatrActionDirective extends DirectiveBase {
+export class ActionDirective extends Directive {
   /**
    * Parsed and validated representation of the `on-action` attribute value.
    *
@@ -84,7 +84,7 @@ export class AlwatrActionDirective extends DirectiveBase {
    * Parses the `on-action` attribute, validates modifiers, and attaches the
    * DOM event listener.
    *
-   * Called once by `DirectiveBase` after one macrotask following element
+   * Called once by `Directive` after one macrotask following element
    * discovery. If the attribute value is malformed or references an unknown
    * modifier, an accident is logged and the directive becomes a no-op.
    *
@@ -191,11 +191,11 @@ export class AlwatrActionDirective extends DirectiveBase {
 // ─── Lazy Registration ────────────────────────────────────────────────────────
 
 /**
- * Registers `AlwatrActionDirective` under the `on-action` attribute name.
+ * Registers `ActionDirective` under the `on-action` attribute name.
  *
  * This is a **lazy** registration: calling this function is the only way to
  * opt-in to `on-action` support. If it is never called, the entire directive
- * module (including `AlwatrActionDirective`) is tree-shaken from the bundle.
+ * module (including `ActionDirective`) is tree-shaken from the bundle.
  *
  * Call it once, before `bootstrapDirectives()`, at your application entry point.
  *
@@ -208,4 +208,4 @@ export class AlwatrActionDirective extends DirectiveBase {
  * bootstrapDirectives();
  * ```
  */
-export const registerActionDirective = lazyDirective('on-action', AlwatrActionDirective);
+export const registerActionDirective = lazyDirective('on-action', ActionDirective);
