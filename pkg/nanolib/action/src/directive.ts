@@ -115,7 +115,7 @@ export class ActionDirective extends Directive {
     }
 
     // 'prevent' and 'passive' are mutually exclusive: a passive listener cannot
-    // call preventDefault(). Log an accident but continue — 'passive' wins.
+    // call preventDefault(). Log an accident but continue — 'prevent' wins.
     if (modifiers.has('prevent') && modifiers.has('passive')) {
       this.logger_.accident('init_', 'conflicting_modifiers_prevent_passive', {attributeValue: this.attributeValue});
     }
