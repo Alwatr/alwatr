@@ -1,5 +1,6 @@
 import {lazyDirective, DirectiveBase} from '@alwatr/directive';
-import {internalSignal_} from './lib.js';
+import {modifierRegistry, payloadRegistry} from './registry.js';
+import {alwatrDispatch} from './main.js';
 
 /**
  * Regex for parsing the `alwatr-on` attribute value.
@@ -16,10 +17,6 @@ import {internalSignal_} from './lib.js';
  * 'init->page-loaded'          → ['init', 'page-loaded', undefined]
  */
 const syntaxRegex = /^([a-z0-9.-]+)->([a-z0-9-]+)(?::(.+))?$/;
-
-type OnModifier = 'once' | 'prevent' | 'stop' | 'passive';
-
-const supportedModifierSet = new Set<OnModifier>(['once', 'prevent', 'stop', 'passive']);
 
 /**
  * A directive that listens to a DOM event and dispatches a typed action signal.
@@ -52,9 +49,9 @@ export class AlwatrActionDirective extends DirectiveBase {
    */
   protected actionContext_?: {
     eventType: string;
-    modifiers?: ReadonlySet<OnModifier>;
+    modifiers: ReadonlySet<string>;
     actionId: string;
-    actionPayload?: string;
+    payload?: string;
   };
 
   protected override init_(): void {
@@ -68,28 +65,24 @@ export class AlwatrActionDirective extends DirectiveBase {
     }
 
     const [eventType, ...modifierList] = match[1].split('.');
+    const actionId = match[2];
+    const payload = match[3] as string | undefined;
 
-    const modifiers = new Set<OnModifier>();
+    const modifiers = new Set<string>();
     for (const modifier of modifierList) {
-      if (!supportedModifierSet.has(modifier as OnModifier)) {
+      if (!modifierRegistry.has(modifier) && modifier !== 'once' && modifier !== 'passive') {
         this.logger_.accident('init_', 'invalid_modifier', {attributeValue: this.attributeValue, modifier});
         return;
       }
-      modifiers.add(modifier as OnModifier);
+      modifiers.add(modifier);
     }
 
     this.actionContext_ = {
       eventType,
-      modifiers: modifiers.size > 0 ? modifiers : undefined,
-      actionId: match[2],
-      actionPayload: match[3],
+      modifiers,
+      actionId,
+      payload,
     };
-
-    if (eventType === 'init') {
-      this.dispatch_();
-      void this.destroy();
-      return;
-    }
 
     this.dispatch_ = this.dispatch_.bind(this);
     const listenerOptions: AddEventListenerOptions = {once: modifiers.has('once'), passive: modifiers.has('passive')};
@@ -100,35 +93,38 @@ export class AlwatrActionDirective extends DirectiveBase {
   }
 
   /**
-   * Resolves the action payload and dispatches the action signal.
+   * Event handler that processes modifiers, resolves payload, and dispatches the action signal.
    *
-   * - Calls `event.preventDefault()` to suppress default browser behaviour.
-   * - Resolves `$value` to `element_.value` for input-like elements.
-   * - Always receives a valid `Event` — either a real DOM event or the synthetic
-   *   `CustomEvent('init')` created in `init_()`.
+   * Modifiers are processed first. If any modifier handler returns `false`, the dispatch is cancelled.
+   * Then the payload is resolved using the payload registry if applicable.
+   * Finally, the action signal is dispatched with the resolved payload.
    *
-   * Signature is compatible with `EventListener` so it can be passed directly
-   * to `addEventListener`.
+   * @param event The DOM event that triggered the handler.
    */
-  protected dispatch_(event?: Event): void {
+  protected dispatch_(event: Event): void {
     this.logger_.logMethodArgs?.('dispatch_', {eventType: event?.type, actionContext: this.actionContext_});
 
-    if (event != null) {
-      if (this.actionContext_!.modifiers?.has('prevent')) {
-        event.preventDefault();
-      }
+    const context = this.actionContext_!;
 
-      if (this.actionContext_!.modifiers?.has('stop')) {
-        event.stopPropagation();
+    // Process modifiers first. If any modifier handler returns false, cancel the dispatch.
+    for (const mod of context.modifiers) {
+      const handler = modifierRegistry.get(mod);
+      if (handler && handler.call(this, event) === false) {
+        return; // Modifier handler can cancel the dispatch by returning false
       }
     }
 
-    let actionPayload = this.actionContext_!.actionPayload;
-    if (actionPayload === '$value' && 'value' in this.element_) {
-      actionPayload = (this.element_ as {value: string}).value;
+    // Resolve payload if specified
+    let payload: unknown = context.payload;
+    if (payload) {
+      const resolver = payloadRegistry.get(payload as string);
+      if (resolver) {
+        payload = resolver.call(this, event);
+      }
     }
 
-    internalSignal_.dispatch({actionId: this.actionContext_!.actionId, actionPayload});
+    // Dispatch the action signal with the resolved payload
+    alwatrDispatch(context.actionId, payload);
   }
 }
 
