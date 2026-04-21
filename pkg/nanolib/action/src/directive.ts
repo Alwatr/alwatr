@@ -9,17 +9,17 @@ import {dispatchAction} from './method.js';
  *
  * Full syntax: `eventType[.modifier…]->actionId[:payload]`
  *
- * | Capture group | Matches                                     | Example                  |
- * | ------------- | ------------------------------------------- | ------------------------ |
- * | 1             | Event type + optional dot-chained modifiers | `click.prevent.once`     |
- * | 2             | Action identifier                           | `open-drawer`            |
- * | 3             | Optional payload token or literal           | `main` / `$value`        |
+ * | Capture group | Matches                                     | Example              |
+ * | ------------- | ------------------------------------------- | -------------------- |
+ * | 1             | Event type + optional dot-chained modifiers | `click.prevent.once` |
+ * | 2             | Action identifier                           | `open-drawer`        |
+ * | 3             | Optional payload token or literal           | `main` / `$value`    |
  *
  * @example
  * ```
  * 'click.prevent.once->open-drawer:main' → ['click.prevent.once', 'open-drawer', 'main']
  * 'input->search-query:$value'           → ['input',              'search-query', '$value']
- * 'init->page-loaded'                    → ['init',               'page-loaded',  undefined]
+ * 'submit.prevent->submit-form'          → ['submit.prevent',     'submit-form',  undefined]
  * ```
  */
 const syntaxRegex = /^([a-z0-9.-]+)->([a-z0-9-]+)(?::(.+))?$/;
@@ -38,8 +38,7 @@ const syntaxRegex = /^([a-z0-9.-]+)->([a-z0-9-]+)(?::(.+))?$/;
  * on-action="eventType[.modifier…]->actionId[:payload]"
  * ```
  *
- * - `eventType` — any DOM event name, or the special token `init` for a
- *   one-shot dispatch that fires immediately on bootstrap.
+ * - `eventType` — any standard DOM event name (e.g. `click`, `input`, `submit`).
  * - `modifier` — dot-chained tokens processed before dispatch
  *   (`prevent`, `stop`, `validate`, `once`, `passive`, or custom).
  * - `actionId` — the identifier passed to `onAction` subscribers.
@@ -56,9 +55,6 @@ const syntaxRegex = /^([a-z0-9.-]+)->([a-z0-9-]+)(?::(.+))?$/;
  *
  * <!-- Prevents default, validates, then dispatches 'submit-form' with all field values -->
  * <form on-action="submit.prevent.validate->submit-form:$formdata" novalidate>…</form>
- *
- * <!-- Dispatches 'page-loaded' exactly once, immediately on bootstrap -->
- * <div on-action="init->page-loaded"></div>
  * ```
  */
 export class ActionDirective extends Directive {
@@ -84,12 +80,9 @@ export class ActionDirective extends Directive {
    * Parses the `on-action` attribute, validates modifiers, and attaches the
    * DOM event listener.
    *
-   * Called once by `Directive` after one macrotask following element
-   * discovery. If the attribute value is malformed or references an unknown
-   * modifier, an accident is logged and the directive becomes a no-op.
-   *
-   * For the special `init` event type the action is dispatched immediately
-   * and the directive self-destructs — no persistent listener is registered.
+   * Called once by `Directive` after one macrotask following element discovery.
+   * If the attribute value is malformed or references an unknown modifier,
+   * an accident is logged and the directive becomes a no-op.
    */
   protected override init_(): void {
     this.logger_.logMethodArgs?.('init_', {attributeValue: this.attributeValue});
@@ -125,13 +118,6 @@ export class ActionDirective extends Directive {
     // call preventDefault(). Log an accident but continue — 'passive' wins.
     if (modifiers.has('prevent') && modifiers.has('passive')) {
       this.logger_.accident('init_', 'conflicting_modifiers_prevent_passive', {attributeValue: this.attributeValue});
-    }
-
-    // Special case: 'init' is not a real DOM event — dispatch once and clean up.
-    if (eventType === 'init') {
-      dispatchAction(actionId, payload);
-      this.destroy();
-      return;
     }
 
     this.actionContext_ = {eventType, modifiers, actionId, payload};
