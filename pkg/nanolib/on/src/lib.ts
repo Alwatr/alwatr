@@ -19,4 +19,4 @@ export const logger_ = createLogger('alwatr-on');
  *
  * @internal
  */
-export const eventSignal_ = createEventSignal<EventSignalPayload>({name: 'alwatr-on'});
+export const internalSignal_ = createEventSignal<EventSignalPayload<unknown>>({name: 'alwatr-on'});

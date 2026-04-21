@@ -1,4 +1,4 @@
-import {eventSignal_, logger_} from './lib.js';
+import {internalSignal_, logger_} from './lib.js';
 import type {SubscribeResult} from '@alwatr/signal';
 
 /**
@@ -29,7 +29,7 @@ export function alwatrOn<TEvent extends Event = Event>(
   handler: (payload?: string, event?: TEvent) => void,
 ): SubscribeResult {
   logger_.logMethodArgs?.('alwatrOn.register', {actionId});
-  return eventSignal_.subscribe((payload) => {
+  return internalSignal_.subscribe((payload) => {
     if (payload.actionId === actionId) {
       logger_.logMethodArgs?.('alwatrOn.handler', {actionId, payload});
       handler(payload.actionPayload, payload.event as TEvent);
@@ -42,5 +42,5 @@ export function alwatrOn<TEvent extends Event = Event>(
  */
 export function alwatrDispatch(actionId: string, actionPayload?: string): void {
   logger_.logMethodArgs?.('alwatrDispatch', {actionId, actionPayload});
-  eventSignal_.dispatch({actionId, actionPayload});
+  internalSignal_.dispatch({actionId, actionPayload});
 }

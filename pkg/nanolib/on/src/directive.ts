@@ -126,7 +126,7 @@ export class AlwatrActionDirective extends DirectiveBase {
       actionPayload = (this.element_ as {value: string}).value;
     }
 
-    eventSignal_.dispatch({actionId: this.actionContext_!.actionId, actionPayload, event});
+    internalSignal_.dispatch({actionId: this.actionContext_!.actionId, actionPayload});
   }
 }
 
