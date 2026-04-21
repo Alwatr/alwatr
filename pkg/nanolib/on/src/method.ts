@@ -10,15 +10,13 @@ import {modifierRegistry, payloadRegistry, type ModifierHandler, type PayloadRes
  * method for cleanup.
  *
  * @param actionId - The action identifier to listen for (e.g. `'open-drawer'`).
- * @param handler  - Callback invoked with the resolved payload string and the
- *                   originating DOM event (always a valid `Event` — never `undefined`).
+ * @param handler  - A callback function that will be called with the action payload when an action with the matching `actionId` is dispatched.
  * @returns A subscription result with an `unsubscribe` method.
  *
  * @example
  * ```ts
- * const sub = alwatrOn('open-drawer', (payload, event) => {
+ * const sub = alwatrOn('open-drawer', (payload) => {
  *   console.log('open drawer:', payload); // 'main'
- *   console.log('triggered by:', event.type); // 'click'
  * });
  *
  * // Later, when cleanup is needed:

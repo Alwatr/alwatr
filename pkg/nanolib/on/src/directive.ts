@@ -24,9 +24,6 @@ const syntaxRegex = /^([a-z0-9.-]+)->([a-z0-9-]+)(?::(.+))?$/;
  * Activated by the `alwatr-on` HTML attribute. The attribute value must follow
  * the syntax `event->actionId` or `event->actionId:payload`.
  *
- * Special event type `init` dispatches the action immediately on initialization
- * (without registering a persistent DOM listener) and then destroys itself.
- *
  * The special payload value `$value` is resolved to the element's `.value`
  * property at dispatch time (useful for `<input>` elements).
  *
@@ -37,9 +34,6 @@ const syntaxRegex = /^([a-z0-9.-]+)->([a-z0-9-]+)(?::(.+))?$/;
  *
  * <!-- Dispatches 'search-query' with the input's current value on every keystroke -->
  * <input alwatr-on="input->search-query:$value" />
- *
- * <!-- Dispatches 'page-loaded' once, immediately on bootstrap -->
- * <div alwatr-on="init->page-loaded"></div>
  * ```
  */
 export class AlwatrActionDirective extends DirectiveBase {
