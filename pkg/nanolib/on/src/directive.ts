@@ -1,30 +1,28 @@
 import {lazyDirective, DirectiveBase} from '@alwatr/directive';
-import {eventSignal_} from './signal.js';
+import {modifierRegistry, payloadRegistry} from './registry.js';
+import {alwatrDispatch} from './main.js';
 
 /**
  * Regex for parsing the `alwatr-on` attribute value.
  *
- * Format: `event->actionId` or `event->actionId:payload`
+ * Format: `event.modifier1.modifier2->actionId` or `event.modifier->actionId:payload`
  *
- * - Group 1: DOM event type (e.g. `click`, `input`, `init`)
+ * - Group 1: DOM event type with optional modifiers (e.g. `click.prevent.once`, `input`, `init`)
  * - Group 2: action identifier (e.g. `open-drawer`)
  * - Group 3: optional payload literal or `$value` (e.g. `main`, `$value`)
  *
  * @example
- * 'click->open-drawer:main'   → ['click', 'open-drawer', 'main']
+ * 'click.prevent.once->open-drawer:main'   → ['click.prevent.once', 'open-drawer', 'main']
  * 'input->search-query:$value' → ['input', 'search-query', '$value']
  * 'init->page-loaded'          → ['init', 'page-loaded', undefined]
  */
-const syntaxRegex = /^([a-z0-9-]+)->([a-z0-9-]+)(?::(.+))?$/;
+const syntaxRegex = /^([a-z0-9.-]+)->([a-z0-9-]+)(?::(.+))?$/;
 
 /**
  * A directive that listens to a DOM event and dispatches a typed action signal.
  *
  * Activated by the `alwatr-on` HTML attribute. The attribute value must follow
  * the syntax `event->actionId` or `event->actionId:payload`.
- *
- * Special event type `init` dispatches the action immediately on initialization
- * (without registering a persistent DOM listener) and then destroys itself.
  *
  * The special payload value `$value` is resolved to the element's `.value`
  * property at dispatch time (useful for `<input>` elements).
@@ -36,9 +34,6 @@ const syntaxRegex = /^([a-z0-9-]+)->([a-z0-9-]+)(?::(.+))?$/;
  *
  * <!-- Dispatches 'search-query' with the input's current value on every keystroke -->
  * <input alwatr-on="input->search-query:$value" />
- *
- * <!-- Dispatches 'page-loaded' once, immediately on bootstrap -->
- * <div alwatr-on="init->page-loaded"></div>
  * ```
  */
 export class AlwatrActionDirective extends DirectiveBase {
@@ -46,56 +41,96 @@ export class AlwatrActionDirective extends DirectiveBase {
    * Parsed result of the attribute value against `syntaxRegex`.
    * `null` when the attribute value is invalid.
    */
-  protected match = this.attributeValue.trim().match(syntaxRegex);
+  protected actionContext_?: {
+    eventType: string;
+    modifiers: ReadonlySet<string>;
+    actionId: string;
+    payload?: string;
+  };
 
   protected override init_(): void {
-    if (!this.match) {
+    this.logger_.logMethodArgs?.('init_', {attributeValue: this.attributeValue});
+
+    const match = this.attributeValue.trim().match(syntaxRegex);
+
+    if (!match) {
       this.logger_.accident('init_', 'invalid_syntax', {attributeValue: this.attributeValue});
       return;
     }
 
-    const eventType = this.match[1];
+    const [eventType, ...modifierList] = match[1].split('.');
+    const actionId = match[2];
+    const payload = match[3] as string | undefined;
 
-    if (eventType === 'init') {
-      // Create a synthetic CustomEvent so event.target === element_ and event.type === 'init'.
-      // dispatchEvent must be called first so the browser sets event.target before we forward it.
-      const syntheticEvent = new CustomEvent('init', {bubbles: false, cancelable: false});
-      this.element_.dispatchEvent(syntheticEvent);
-      this.dispatch_(syntheticEvent);
-      void this.destroy();
+    if (!eventType) {
+      this.logger_.accident('init_', 'invalid_syntax', {attributeValue: this.attributeValue});
       return;
     }
 
+    const modifiers = new Set<string>();
+    for (const modifier of modifierList) {
+      if (!modifierRegistry.has(modifier) && modifier !== 'once' && modifier !== 'passive') {
+        this.logger_.accident('init_', 'invalid_modifier', {attributeValue: this.attributeValue, modifier});
+        return;
+      }
+      modifiers.add(modifier);
+    }
+
+    if (modifiers.has('prevent') && modifiers.has('passive')) {
+      this.logger_.accident('init_', 'conflicting_modifiers_prevent_passive', {attributeValue: this.attributeValue});
+    }
+
+    this.actionContext_ = {
+      eventType,
+      modifiers,
+      actionId,
+      payload,
+    };
+
     this.dispatch_ = this.dispatch_.bind(this);
-    this.element_.addEventListener(eventType, this.dispatch_);
+    const listenerOptions: AddEventListenerOptions = {
+      once: modifiers.has('once'),
+      passive: modifiers.has('passive') && !modifiers.has('prevent'),
+    };
+    this.element_.addEventListener(eventType, this.dispatch_, listenerOptions);
     this.addDestroyHook(() => {
-      this.element_.removeEventListener(eventType, this.dispatch_);
+      this.element_.removeEventListener(eventType, this.dispatch_, listenerOptions);
     });
   }
 
   /**
-   * Resolves the action payload and dispatches the action signal.
+   * Event handler that processes modifiers, resolves payload, and dispatches the action signal.
    *
-   * - Calls `event.preventDefault()` to suppress default browser behaviour.
-   * - Resolves `$value` to `element_.value` for input-like elements.
-   * - Always receives a valid `Event` — either a real DOM event or the synthetic
-   *   `CustomEvent('init')` created in `init_()`.
+   * Modifiers are processed first. If any modifier handler returns `false`, the dispatch is cancelled.
+   * Then the payload is resolved using the payload registry if applicable.
+   * Finally, the action signal is dispatched with the resolved payload.
    *
-   * Signature is compatible with `EventListener` so it can be passed directly
-   * to `addEventListener`.
+   * @param event The DOM event that triggered the handler.
    */
   protected dispatch_(event: Event): void {
-    event.preventDefault();
+    this.logger_.logMethodArgs?.('dispatch_', {eventType: event?.type, actionContext: this.actionContext_});
 
-    const actionId = this.match![2];
-    const actionPayloadRaw = this.match![3];
+    const context = this.actionContext_!;
 
-    let actionPayload = actionPayloadRaw ?? '';
-    if (actionPayload === '$value' && 'value' in this.element_) {
-      actionPayload = (this.element_ as {value: string}).value;
+    // Process modifiers first. If any modifier handler returns false, cancel the dispatch.
+    for (const mod of context.modifiers) {
+      const handler = modifierRegistry.get(mod);
+      if (handler && handler.call(this, event) === false) {
+        return; // Modifier handler can cancel the dispatch by returning false
+      }
     }
 
-    eventSignal_.dispatch({actionId, actionPayload, event});
+    // Resolve payload if specified
+    let payload: unknown = context.payload;
+    if (payload) {
+      const resolver = payloadRegistry.get(payload as string);
+      if (resolver) {
+        payload = resolver.call(this, event);
+      }
+    }
+
+    // Dispatch the action signal with the resolved payload
+    alwatrDispatch(context.actionId, payload);
   }
 }
 

@@ -381,6 +381,7 @@
       "version": "9.11.1",
       "dependencies": {
         "@alwatr/directive": "workspace:*",
+        "@alwatr/logger": "workspace:*",
         "@alwatr/signal": "workspace:*",
       },
       "devDependencies": {

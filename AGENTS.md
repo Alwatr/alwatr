@@ -51,3 +51,5 @@ Apply these principles to every implementation decision — in TypeScript, Nunju
 - **Single Responsibility Principle:** Each class, directive, service, template, or function should do exactly one thing. If a unit needs an "and" to describe what it does, split it.
 
 - **Open/Closed Principle:** Design components and services to be extended through composition (new directives, new signals, new modifiers) rather than modified. Existing, working code should rarely need to change to accommodate new features.
+
+- **Unidirectional Data Flow:** «داده‌ها فقط به سمت پایین (به سمت UI) سرازیر می‌شوند، و اکشن‌ها (درخواست‌های تغییر) فقط به سمت بالا (به سمت منطق) ارسال می‌شوند.»
