@@ -233,7 +233,6 @@ export class ChannelSignal<TMap extends Record<string, unknown>> extends SignalB
     // ── Named handlers (O(1) lookup) ──────────────────────────────────────────
     const handlerSet = this.namedHandlers__.get(name);
     if (handlerSet?.size) {
-      // Snapshot the set before iteration to safely handle `once` removals.
       for (const entry of handlerSet) {
         if (entry.once) {
           handlerSet.delete(entry);
