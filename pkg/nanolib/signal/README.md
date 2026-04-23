@@ -31,6 +31,8 @@ There is also a fourth type for stateless events:
 
 4. **`EventSignal`**: A stateless signal for dispatching one-off events that don't have a persistent value.
 
+5. **`ChannelSignal`**: A stateless, typed message bus. Unlike `EventSignal` (one signal = one event type), a single `ChannelSignal` carries multiple named message types — each with its own payload type — and routes them in **O(1)** to the right subscribers.
+
 ---
 
 ## Getting Started: A Practical Example
@@ -128,6 +130,179 @@ User: Jane has clicked 0 times.
 User: Jane has clicked 1 times.
 ```
 
+---
+
+## ChannelSignal: A Typed Message Bus
+
+### Why ChannelSignal?
+
+In real-world applications, you often need to dispatch many different types of events or messages — for example, `'open-drawer'`, `'close-drawer'`, `'show-toast'`, `'navigate'`, etc. You could create a separate `EventSignal` for each one, but that quickly becomes unwieldy:
+
+```typescript
+// ❌ Verbose and hard to manage
+const openDrawerSignal = new EventSignal<{panel: string}>({name: 'open-drawer'});
+const closeDrawerSignal = new EventSignal({name: 'close-drawer'});
+const showToastSignal = new EventSignal<{message: string; type: 'info' | 'error'}>({name: 'show-toast'});
+// ... and so on for every action in your app
+```
+
+**`ChannelSignal` solves this problem.** It's a single signal that acts as a **typed message bus** — one channel, many named message types. Think of it as a Go-style channel or a pub/sub topic with full TypeScript type safety.
+
+### Architecture: O(1) Routing
+
+Internally, `ChannelSignal` uses a `Map<name, Set<handler>>` to route messages. When you dispatch a message with name `'A'`, only the handlers registered for `'A'` are invoked — **O(1) lookup**, regardless of how many other names are subscribed. This is a critical performance optimization for applications with hundreds or thousands of directives/components listening to different actions.
+
+### Creating a ChannelSignal
+
+First, define a **message map** — a TypeScript interface that maps every valid message name to its payload type:
+
+```typescript
+import {ChannelSignal} from '@alwatr/signal';
+
+// Define the message map for your application
+interface AppMessages {
+  'open-drawer': {panel: string};
+  'close-drawer': void; // no payload
+  'show-toast': {message: string; type: 'info' | 'error'};
+  'navigate': {path: string};
+}
+
+// Create the channel
+const appChannel = new ChannelSignal<AppMessages>({name: 'app-channel'});
+```
+
+### Subscribing to Named Messages
+
+Use `.on(name, handler)` to subscribe to a specific message. The handler receives the **payload directly** (not the full `{name, payload}` envelope) — since the name is already known at subscription time, passing it again would be redundant.
+
+```typescript
+// Subscribe to 'open-drawer' messages
+appChannel.on('open-drawer', (payload) => {
+  console.log(`Opening drawer: ${payload!.panel}`);
+  // TypeScript knows payload is {panel: string} | undefined
+});
+
+// Subscribe to 'show-toast' messages
+appChannel.on('show-toast', (payload) => {
+  toast.show(payload!.message, payload!.type);
+  // TypeScript knows payload is {message: string; type: 'info' | 'error'} | undefined
+});
+
+// Subscribe to 'close-drawer' (no payload)
+appChannel.on('close-drawer', (payload) => {
+  console.log('Closing drawer');
+  // TypeScript knows payload is void | undefined
+});
+```
+
+### Dispatching Messages
+
+Use `.dispatch(name, payload)` to send a message. TypeScript enforces that the payload matches the type declared for that name in the message map.
+
+```typescript
+// Dispatch with payload
+appChannel.dispatch('open-drawer', {panel: 'settings'}); // ✅ Type-safe
+appChannel.dispatch('show-toast', {message: 'Saved!', type: 'info'}); // ✅
+
+// Dispatch without payload
+appChannel.dispatch('close-drawer'); // ✅
+
+// ❌ TypeScript errors:
+appChannel.dispatch('open-drawer', {panel: 123}); // Error: panel must be string
+appChannel.dispatch('show-toast', {message: 'Hi'}); // Error: missing 'type'
+appChannel.dispatch('unknown-action'); // Error: 'unknown-action' is not in AppMessages
+```
+
+### Unsubscribing
+
+Just like other signals, `.on()` returns a `SubscribeResult` with an `unsubscribe()` method:
+
+```typescript
+const sub = appChannel.on('navigate', (payload) => {
+  router.push(payload!.path);
+});
+
+// Later, when the component is destroyed:
+sub.unsubscribe();
+```
+
+### One-Time Subscriptions
+
+Use the `once` option to automatically unsubscribe after the first message:
+
+```typescript
+appChannel.on(
+  'app-ready',
+  () => {
+    console.log('App initialized!');
+  },
+  {once: true},
+);
+```
+
+### Raw Stream Subscription (for Logging/Middleware)
+
+If you need to observe **all** messages regardless of name — for example, for logging, analytics, or middleware — use `.subscribe()` instead of `.on()`. This receives the full `{name, payload}` envelope:
+
+```typescript
+// Log every message for debugging
+appChannel.subscribe((msg) => {
+  console.log(`[channel] ${String(msg.name)}`, msg.payload);
+});
+```
+
+**Important:** `.subscribe()` is **not** filtered by name — it receives every message. For normal use cases, prefer `.on(name, handler)` to keep subscriptions focused and performant.
+
+### Use Cases
+
+`ChannelSignal` is ideal for:
+
+- **Action layers** in Unidirectional Data Flow architectures (like `@alwatr/action`)
+- **Event buses** in component-based UIs (e.g., a global app event channel)
+- **Command dispatching** in CQRS-style systems
+- **Pub/sub messaging** where you have many distinct message types but want a single, centralized channel
+
+### Example: A Complete Action System
+
+```typescript
+import {ChannelSignal} from '@alwatr/signal';
+
+// Define all app actions
+interface AppActions {
+  'user-login': {username: string};
+  'user-logout': void;
+  'cart-add-item': {productId: number; quantity: number};
+  'cart-remove-item': {productId: number};
+  'navigate': {path: string};
+}
+
+const actionChannel = new ChannelSignal<AppActions>({name: 'app-actions'});
+
+// Business logic subscribes to actions
+actionChannel.on('user-login', (payload) => {
+  authService.login(payload!.username);
+});
+
+actionChannel.on('cart-add-item', (payload) => {
+  cartService.addItem(payload!.productId, payload!.quantity);
+});
+
+actionChannel.on('navigate', (payload) => {
+  router.push(payload!.path);
+});
+
+// UI dispatches actions (e.g., from button clicks)
+loginButton.addEventListener('click', () => {
+  actionChannel.dispatch('user-login', {username: 'ali'});
+});
+
+addToCartButton.addEventListener('click', () => {
+  actionChannel.dispatch('cart-add-item', {productId: 42, quantity: 1});
+});
+```
+
+---
+
 ## Advanced Topics
 
 ### Lifecycle Management and Memory Leaks
@@ -199,6 +374,14 @@ The `subscribe` method accepts an optional second argument to customize its beha
   - `config.name`: `string`
 - **`.dispatch(payload: T)`**: Dispatches an event to all listeners.
 
+### `ChannelSignal<TMap>`
+
+- **`constructor(config)`**: Creates a new channel signal.
+  - `config.name`: `string`
+- **`.dispatch(name, payload?)`**: Dispatches a named message. TypeScript enforces the correct payload type for each name.
+- **`.on(name, handler, options?)`**: Subscribes to a specific named message. The handler receives the `payload` directly (not the full envelope). Uses an internal `Map` for **O(1)** routing. Supports `once` option.
+- **`.subscribe(callback, options?)`**: Subscribes to the **raw message stream** — receives every `{name, payload}` envelope regardless of name. Useful for logging and middleware.
+
 ### Common Methods
 
 - **`.subscribe(callback, options?)`**: Subscribes a listener. Returns `{ unsubscribe: () => void }`.
@@ -251,6 +434,10 @@ Contributions are welcome! Please read our [contribution guidelines](https://git
 یک نوع چهارم نیز برای رویدادهای بدون حالت وجود دارد:
 
 4. **`EventSignal`**: یک سیگنال بدون حالت برای ارسال رویدادهای یک‌باره که مقدار پایداری ندارند.
+
+و یک نوع پنجم برای مسیریابی پیام‌های چندگانه:
+
+5. **`ChannelSignal`**: یک Message Bus تایپ‌شده و بدون حالت. برخلاف `EventSignal` (یک سیگنال = یک نوع رویداد)، یک `ChannelSignal` واحد چندین نوع پیام با نام‌های مختلف را حمل می‌کند — هر کدام با نوع payload مخصوص خودشان — و آن‌ها را با سرعت **O(1)** به subscriber‌های مناسب هدایت می‌کند.
 
 ---
 
@@ -349,6 +536,178 @@ User: Jane has clicked 0 times.
 User: Jane has clicked 1 times.
 ```
 
+---
+
+## ChannelSignal: یک Message Bus تایپ‌شده
+
+### چرا ChannelSignal؟
+
+در برنامه‌های واقعی، اغلب نیاز دارید انواع مختلفی از رویدادها یا پیام‌ها را dispatch کنید — مثلاً `'open-drawer'`، `'close-drawer'`، `'show-toast'`، `'navigate'` و غیره. می‌توانید برای هر کدام یک `EventSignal` جداگانه بسازید، اما این رویکرد به سرعت دست‌وپاگیر می‌شود:
+
+```typescript
+// ❌ پرحجم و سخت برای مدیریت
+const openDrawerSignal = new EventSignal<{panel: string}>({name: 'open-drawer'});
+const closeDrawerSignal = new EventSignal({name: 'close-drawer'});
+const showToastSignal = new EventSignal<{message: string; type: 'info' | 'error'}>({name: 'show-toast'});
+// ... و به همین ترتیب برای هر action در برنامه
+```
+
+**`ChannelSignal` این مشکل را حل می‌کند.** یک سیگنال واحد است که به عنوان یک **Message Bus تایپ‌شده** عمل می‌کند — یک کانال، انواع پیام‌های مختلف. مثل یک Go-style channel یا یک pub/sub topic با ایمنی کامل TypeScript.
+
+### معماری: مسیریابی O(1)
+
+در داخل، `ChannelSignal` از یک `Map<name, Set<handler>>` برای مسیریابی پیام‌ها استفاده می‌کند. وقتی پیامی با نام `'A'` dispatch می‌شود، فقط handler‌هایی که برای `'A'` ثبت شده‌اند فراخوانی می‌شوند — **جستجوی O(1)**، صرف‌نظر از اینکه چه تعداد نام دیگری subscribe شده باشند. این یک بهینه‌سازی حیاتی برای برنامه‌هایی است که صدها یا هزاران directive/component دارند که به action‌های مختلف گوش می‌دهند.
+
+### ساخت یک ChannelSignal
+
+ابتدا یک **message map** تعریف کنید — یک interface در TypeScript که هر نام پیام معتبر را به نوع payload آن نگاشت می‌کند:
+
+```typescript
+import {ChannelSignal} from '@alwatr/signal';
+
+// تعریف message map برای برنامه
+interface AppMessages {
+  'open-drawer': {panel: string};
+  'close-drawer': void; // بدون payload
+  'show-toast': {message: string; type: 'info' | 'error'};
+  'navigate': {path: string};
+}
+
+// ساخت channel
+const appChannel = new ChannelSignal<AppMessages>({name: 'app-channel'});
+```
+
+### Subscribe به پیام‌های نام‌دار
+
+از `.on(name, handler)` برای subscribe به یک پیام خاص استفاده کنید. handler مستقیماً **payload** را دریافت می‌کند (نه envelope کامل `{name, payload}`) — چون نام در زمان subscribe مشخص است، ارسال مجدد آن اضافی خواهد بود.
+
+```typescript
+// Subscribe به پیام‌های 'open-drawer'
+appChannel.on('open-drawer', (payload) => {
+  console.log(`Opening drawer: ${payload!.panel}`);
+  // TypeScript می‌داند payload از نوع {panel: string} | undefined است
+});
+
+// Subscribe به پیام‌های 'show-toast'
+appChannel.on('show-toast', (payload) => {
+  toast.show(payload!.message, payload!.type);
+  // TypeScript می‌داند payload از نوع {message: string; type: 'info' | 'error'} | undefined است
+});
+
+// Subscribe به 'close-drawer' (بدون payload)
+appChannel.on('close-drawer', () => {
+  console.log('Closing drawer');
+});
+```
+
+### Dispatch پیام‌ها
+
+از `.dispatch(name, payload)` برای ارسال پیام استفاده کنید. TypeScript اعمال می‌کند که payload با نوع تعریف‌شده برای آن نام در message map مطابقت داشته باشد.
+
+```typescript
+// Dispatch با payload
+appChannel.dispatch('open-drawer', {panel: 'settings'}); // ✅ Type-safe
+appChannel.dispatch('show-toast', {message: 'ذخیره شد!', type: 'info'}); // ✅
+
+// Dispatch بدون payload
+appChannel.dispatch('close-drawer'); // ✅
+
+// ❌ خطاهای TypeScript:
+appChannel.dispatch('open-drawer', {panel: 123}); // خطا: panel باید string باشد
+appChannel.dispatch('show-toast', {message: 'سلام'}); // خطا: 'type' وجود ندارد
+appChannel.dispatch('unknown-action'); // خطا: 'unknown-action' در AppMessages نیست
+```
+
+### Unsubscribe کردن
+
+مثل سایر سیگنال‌ها، `.on()` یک `SubscribeResult` با متد `unsubscribe()` برمی‌گرداند:
+
+```typescript
+const sub = appChannel.on('navigate', (payload) => {
+  router.push(payload!.path);
+});
+
+// بعداً، وقتی کامپوننت destroy می‌شود:
+sub.unsubscribe();
+```
+
+### Subscribe یک‌باره
+
+از گزینه `once` برای unsubscribe خودکار بعد از اولین پیام استفاده کنید:
+
+```typescript
+appChannel.on(
+  'app-ready',
+  () => {
+    console.log('برنامه آماده است!');
+  },
+  {once: true},
+);
+```
+
+### Subscribe به جریان خام (برای لاگ‌گیری/Middleware)
+
+اگر نیاز دارید **همه** پیام‌ها را صرف‌نظر از نام مشاهده کنید — مثلاً برای لاگ‌گیری، analytics یا middleware — از `.subscribe()` به جای `.on()` استفاده کنید. این متد envelope کامل `{name, payload}` را دریافت می‌کند:
+
+```typescript
+// لاگ کردن همه پیام‌ها برای debugging
+appChannel.subscribe((msg) => {
+  console.log(`[channel] ${String(msg.name)}`, msg.payload);
+});
+```
+
+**نکته مهم:** `.subscribe()` بر اساس نام فیلتر **نمی‌شود** — هر پیامی را دریافت می‌کند. برای موارد عادی، `.on(name, handler)` را ترجیح دهید تا subscriptionها متمرکز و کارآمد بمانند.
+
+### موارد استفاده
+
+`ChannelSignal` برای موارد زیر ایده‌آل است:
+
+- **لایه Action** در معماری‌های Unidirectional Data Flow (مثل `@alwatr/action`)
+- **Event Bus** در UI‌های مبتنی بر کامپوننت (مثلاً یک کانال رویداد سراسری برنامه)
+- **Command Dispatching** در سیستم‌های CQRS-style
+- **Pub/Sub Messaging** جایی که انواع پیام‌های مختلف دارید اما می‌خواهید یک کانال مرکزی داشته باشید
+
+### مثال کامل: یک سیستم Action
+
+```typescript
+import {ChannelSignal} from '@alwatr/signal';
+
+// تعریف همه action‌های برنامه
+interface AppActions {
+  'user-login': {username: string};
+  'user-logout': void;
+  'cart-add-item': {productId: number; quantity: number};
+  'cart-remove-item': {productId: number};
+  'navigate': {path: string};
+}
+
+const actionChannel = new ChannelSignal<AppActions>({name: 'app-actions'});
+
+// منطق تجاری به action‌ها subscribe می‌کند
+actionChannel.on('user-login', (payload) => {
+  authService.login(payload!.username);
+});
+
+actionChannel.on('cart-add-item', (payload) => {
+  cartService.addItem(payload!.productId, payload!.quantity);
+});
+
+actionChannel.on('navigate', (payload) => {
+  router.push(payload!.path);
+});
+
+// UI اقدام به dispatch action می‌کند (مثلاً از کلیک دکمه)
+loginButton.addEventListener('click', () => {
+  actionChannel.dispatch('user-login', {username: 'ali'});
+});
+
+addToCartButton.addEventListener('click', () => {
+  actionChannel.dispatch('cart-add-item', {productId: 42, quantity: 1});
+});
+```
+
+---
+
 ## مباحث پیشرفته
 
 ### مدیریت چرخه حیات و نشت حافظه
@@ -419,6 +778,14 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 - **`constructor(config)`**: یک سیگنال رویداد جدید ایجاد می‌کند.
   - `config.name`: `string`
 - **`.dispatch(payload: T)`**: یک رویداد را به تمام شنوندگان ارسال می‌کند.
+
+### `ChannelSignal<TMap>`
+
+- **`constructor(config)`**: یک channel signal جدید ایجاد می‌کند.
+  - `config.name`: `string`
+- **`.dispatch(name, payload?)`**: یک پیام با نام مشخص ارسال می‌کند. TypeScript نوع صحیح payload را برای هر نام اعمال می‌کند.
+- **`.on(name, handler, options?)`**: به یک پیام با نام مشخص subscribe می‌کند. handler مستقیماً `payload` را دریافت می‌کند (نه envelope کامل). از یک `Map` داخلی برای routing **O(1)** استفاده می‌کند. از گزینه `once` پشتیبانی می‌کند.
+- **`.subscribe(callback, options?)`**: به **جریان خام پیام‌ها** subscribe می‌کند — هر envelope `{name, payload}` را صرف‌نظر از نام دریافت می‌کند. برای لاگ‌گیری و middleware مفید است.
 
 ### متدهای مشترک
 

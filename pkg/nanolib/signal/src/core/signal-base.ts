@@ -135,6 +135,8 @@ export abstract class SignalBase<T> {
     }
   }
 
+  private pendingRejects__ = new Set<(reason?: any) => void>();
+
   /**
    * Returns a Promise that resolves with the next value dispatched by the signal.
    * This provides an elegant way to wait for a single, future event using `async/await`.
@@ -151,12 +153,19 @@ export abstract class SignalBase<T> {
   public untilNext(): Promise<T> {
     this.logger_.logMethod?.('untilNext');
     this.checkDestroyed_();
-    return new Promise((resolve) => {
-      this.subscribe(resolve, {
-        once: true,
-        priority: true, // Resolve the promise before other listeners are called.
-        receivePrevious: false, // We only want the *next* value, not the current one.
-      });
+    return new Promise((resolve, reject) => {
+      this.pendingRejects__.add(reject);
+      this.subscribe(
+        (value) => {
+          this.pendingRejects__.delete(reject);
+          resolve(value);
+        },
+        {
+          once: true,
+          priority: true, // Resolve the promise before other listeners are called.
+          receivePrevious: false, // We only want the *next* value, not the current one.
+        },
+      );
     });
   }
 
@@ -173,7 +182,15 @@ export abstract class SignalBase<T> {
       this.logger_.incident?.('destroy_', 'double_destroy_attempt');
       return;
     }
-    this.isDestroyed__ = true;
+    this.isDestroyed__ = true; // Mark the signal as destroyed.
+    // Reject all pending promises.
+    if (this.pendingRejects__.size) {
+      const error = new Error('signal_destroyed');
+      for (const reject of this.pendingRejects__) {
+        reject(error);
+      }
+      this.pendingRejects__.clear(); // Clear all pending rejects.
+    }
     this.priorityObservers_.clear(); // Clear all priority observers.
     this.observers_.clear(); // Clear all normal observers.
     this.config_.onDestroy?.(); // Call the optional onDestroy callback.
