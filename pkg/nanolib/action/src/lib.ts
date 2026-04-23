@@ -1,28 +1,5 @@
 import {createLogger} from '@alwatr/logger';
-import {createEventSignal} from '@alwatr/signal';
-
-/**
- * The shape of every payload carried by the internal action signal.
- *
- * `actionId` identifies which action was dispatched (e.g. `'open-drawer'`).
- * `actionPayload` is the optional value attached to the action — defaults to
- * `string` but can be narrowed to any type via the generic parameter `T`.
- *
- * @template T The type of the action payload. Defaults to `string`.
- *
- * @example
- * ```ts
- * // Typed payload for a cart action
- * const payload: ActionSignalPayload<{productId: number; qty: number}> = {
- *   actionId: 'add-to-cart',
- *   actionPayload: {productId: 42, qty: 1},
- * };
- * ```
- */
-export interface ActionSignalPayload<T = string> {
-  actionId: string;
-  actionPayload?: T;
-}
+import {createChannelSignal} from '@alwatr/signal';
 
 /**
  * Module-scoped logger for `@alwatr/action`.
@@ -33,15 +10,18 @@ export interface ActionSignalPayload<T = string> {
 export const logger_ = createLogger('alwatr-action');
 
 /**
- * The single shared event signal that carries every dispatched action.
+ * The action channel — a typed `ChannelSignal` that carries every dispatched action.
  *
- * All `ActionDirective` instances write to this signal via `dispatchAction`,
- * and all `onAction` subscriptions read from it. Using one central signal keeps
- * the pub/sub wiring minimal and makes the action flow easy to trace.
+ * Previously this was an `EventSignal<ActionSignalPayload<unknown>>` where all
+ * subscribers received every action and had to filter by `actionId` themselves
+ * (O(N) per dispatch). Replacing it with `ChannelSignal` gives us O(1) routing:
+ * only the handlers registered for a specific `actionId` are invoked when that
+ * action is dispatched.
  *
- * The payload is typed as `ActionSignalPayload<unknown>` at the signal level;
- * individual subscribers narrow the type through the `onAction` generic.
+ * The channel is typed as `Record<string, unknown>` at the module level so that
+ * any string key is accepted. Individual call sites narrow the payload type
+ * through the generics on `onAction` and `dispatchAction`.
  *
  * @internal — not part of the public API; use `onAction` / `dispatchAction` instead.
  */
-export const internalSignal_ = createEventSignal<ActionSignalPayload<unknown>>({name: 'alwatr-action'});
+export const internalChannel_ = createChannelSignal<Record<string, unknown>>({name: 'alwatr-action'});

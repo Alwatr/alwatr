@@ -2,7 +2,7 @@
 
 **Declarative DOM action-dispatch — the Action layer for Unidirectional Data Flow.**
 
-`@alwatr/action` bridges HTML attributes to typed signal handlers. Add an `on-action` attribute to any element, and the library automatically listens for the specified DOM event, resolves the payload, and dispatches a named action signal. Subscribe to actions anywhere in your app with `onAction`.
+`@alwatr/action` bridges HTML attributes to typed signal handlers. Add an `on-action` attribute to any element, and the library automatically listens for the specified DOM event, resolves the payload, and dispatches a named action. Subscribe to actions anywhere in your app with `onAction`.
 
 This package serves as the **Action layer** in a Unidirectional Data Flow (UDF) architecture: UI elements declare their intent via `on-action` attributes, actions flow upward to business logic via `dispatchAction`, and state flows back down to the UI through signals.
 
@@ -16,6 +16,25 @@ This package serves as the **Action layer** in a Unidirectional Data Flow (UDF) 
 | Framework event bindings (React, Vue…) | Requires full framework buy-in                           |
 | Custom events + `dispatchEvent`        | Verbose, no typed payload, no central subscription point |
 | **`@alwatr/action`**                   | ✅ Declarative, typed, zero-coupling, SPA-friendly       |
+
+---
+
+## How It Works Internally
+
+The action bus is powered by a [`ChannelSignal`](../signal/README.md#channelsignal-a-typed-message-bus) from `@alwatr/signal`.
+
+Previously, the internal signal was an `EventSignal<{actionId, actionPayload}>` — a single stream where every subscriber received every dispatched action and had to filter by `actionId` manually. With 1000 directives on a page, dispatching one action would invoke all 1000 callbacks, with 999 of them doing nothing but a string comparison — **O(N) per dispatch**.
+
+The new implementation uses `ChannelSignal`, which maintains a `Map<actionId, Set<handler>>` internally. Dispatching action `'A'` performs a single `Map.get('A')` lookup and invokes only the handlers registered for that specific action — **O(1) per dispatch**, regardless of how many other actions are subscribed.
+
+```
+dispatchAction('add-to-cart', payload)
+        │
+        ▼
+  ChannelSignal.dispatch('add-to-cart', payload)
+        │
+        └─ Map.get('add-to-cart') → O(1) → invoke only matching handlers
+```
 
 ---
 
@@ -34,22 +53,24 @@ npm i @alwatr/action
 ```
 on-action="eventType->actionId"
 on-action="eventType->actionId:payload"
+on-action="eventType[.modifier…]->actionId[:payload]"
 ```
 
-| Segment     | Description                                                  | Example                       |
-| ----------- | ------------------------------------------------------------ | ----------------------------- |
-| `eventType` | Any standard DOM event name                                  | `click`, `input`, `submit`    |
-| `actionId`  | Identifier your handler subscribes to                        | `open-drawer`, `search-query` |
-| `:payload`  | Optional literal string, or `$value` to read `element.value` | `:main`, `:$value`            |
+| Segment     | Description                                               | Example                       |
+| ----------- | --------------------------------------------------------- | ----------------------------- |
+| `eventType` | Any standard DOM event name                               | `click`, `input`, `submit`    |
+| `modifier`  | Optional dot-chained tokens processed before dispatch     | `.prevent`, `.validate`       |
+| `actionId`  | Identifier your handler subscribes to                     | `open-drawer`, `search-query` |
+| `:payload`  | Optional literal string, or a `$`-prefixed resolver token | `:main`, `:$value`            |
 
-### Payload resolvers
+### Built-in payload resolvers
 
 | Token        | Resolves to                                                    |
 | ------------ | -------------------------------------------------------------- |
 | `:$value`    | `element.value` (for `<input>`, `<select>`, `<textarea>`)      |
 | `:$formdata` | `Object.fromEntries(new FormData(form))` from nearest `<form>` |
 
-### Event modifiers
+### Built-in event modifiers
 
 Modifiers are chained with `.` after the event type:
 
@@ -138,6 +159,8 @@ dispatchAction<{code: number}>('show-error', {code: 404});
 
 Subscribes to a named action dispatched by any `on-action` directive or `dispatchAction` call.
 
+Uses `ChannelSignal.on()` internally for **O(1) routing** — only handlers registered for `actionId` are invoked when that action is dispatched.
+
 ```typescript
 function onAction<T = string>(actionId: string, handler: (payload?: T) => void): SubscribeResult;
 ```
@@ -162,7 +185,7 @@ sub.unsubscribe();
 
 ### `dispatchAction(actionId, payload?)`
 
-Dispatches a named action signal. Any `onAction` subscriber with a matching `actionId` will be invoked.
+Dispatches a named action. Any `onAction` subscriber with a matching `actionId` will be invoked via the internal `ChannelSignal`.
 
 ```typescript
 function dispatchAction<T = string>(actionId: string, actionPayload?: T): void;
@@ -264,8 +287,9 @@ You rarely need to interact with this class directly — use `registerActionDire
 ┌─────────────────────────────────────────────────────────┐
 │                    Action Layer (@alwatr/action)         │
 │  dispatchAction('add-to-cart', '42')                    │
+│  → ChannelSignal.dispatch('add-to-cart', '42')  [O(1)] │
 └────────────────────────┬────────────────────────────────┘
-                         │ action signal
+                         │ action signal (O(1) routing)
                          ▼
 ┌─────────────────────────────────────────────────────────┐
 │                   Business Logic Layer                  │
@@ -275,7 +299,7 @@ You rarely need to interact with this class directly — use `registerActionDire
                          ▼
 ┌─────────────────────────────────────────────────────────┐
 │                    State Layer (@alwatr/signal)          │
-│  cartSignal.dispatch(newCartState)                      │
+│  cartSignal.set(newCartState)                           │
 └────────────────────────┬────────────────────────────────┘
                          │ state flows down to UI
                          ▼
@@ -313,6 +337,41 @@ import {autoDestructDirectives} from '@alwatr/directive';
 // Clean up on every SPA navigation
 router.on('navigate', autoDestructDirectives);
 ```
+
+---
+
+## Migration from Previous Versions
+
+### Removed: `ActionSignalPayload`
+
+The `ActionSignalPayload<T>` interface has been removed from the public API. It was an implementation detail of the old `EventSignal`-based bus and is no longer needed.
+
+**Before:**
+
+```typescript
+import type {ActionSignalPayload} from '@alwatr/action';
+
+const payload: ActionSignalPayload<{productId: number}> = {
+  actionId: 'add-to-cart',
+  actionPayload: {productId: 42},
+};
+```
+
+**After:** Use `onAction` and `dispatchAction` directly — no wrapper type needed:
+
+```typescript
+import {onAction, dispatchAction} from '@alwatr/action';
+
+onAction<{productId: number}>('add-to-cart', (payload) => {
+  cartService.add(payload!.productId);
+});
+
+dispatchAction('add-to-cart', {productId: 42});
+```
+
+### No other breaking changes
+
+`onAction`, `dispatchAction`, `registerActionDirective`, `registerPageIdDirective`, `registerModifier`, and `registerPayloadResolver` all have identical signatures. The upgrade is a drop-in replacement.
 
 ---
 

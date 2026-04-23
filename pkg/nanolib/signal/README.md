@@ -264,10 +264,14 @@ appChannel.subscribe((msg) => {
 
 ### Example: A Complete Action System
 
+> **Note:** `@alwatr/action` is a higher-level package built on top of `ChannelSignal`. It adds declarative HTML attribute support (`on-action="click->add-to-cart:42"`), modifier chaining, payload resolvers, and DOM lifecycle management. For production use, prefer `@alwatr/action` over wiring `ChannelSignal` manually.
+
+The example below shows what `@alwatr/action` does internally — and how you can use `ChannelSignal` directly when you need a pure-code action bus without DOM integration:
+
 ```typescript
 import {ChannelSignal} from '@alwatr/signal';
 
-// Define all app actions
+// Define all app actions and their payload types
 interface AppActions {
   'user-login': {username: string};
   'user-logout': void;
@@ -276,9 +280,10 @@ interface AppActions {
   'navigate': {path: string};
 }
 
+// One channel for the entire action layer
 const actionChannel = new ChannelSignal<AppActions>({name: 'app-actions'});
 
-// Business logic subscribes to actions
+// Business logic subscribes — O(1) routing, no cross-action interference
 actionChannel.on('user-login', (payload) => {
   authService.login(payload!.username);
 });
@@ -291,7 +296,7 @@ actionChannel.on('navigate', (payload) => {
   router.push(payload!.path);
 });
 
-// UI dispatches actions (e.g., from button clicks)
+// UI dispatches actions
 loginButton.addEventListener('click', () => {
   actionChannel.dispatch('user-login', {username: 'ali'});
 });
@@ -669,10 +674,14 @@ appChannel.subscribe((msg) => {
 
 ### مثال کامل: یک سیستم Action
 
+> **نکته:** پکیج `@alwatr/action` یک لایه بالاتر است که روی `ChannelSignal` ساخته شده. این پکیج پشتیبانی از attribute‌های HTML (`on-action="click->add-to-cart:42"`)، modifier chaining، payload resolver و مدیریت lifecycle DOM را اضافه می‌کند. برای استفاده در پروداکشن، `@alwatr/action` را به جای wiring مستقیم `ChannelSignal` ترجیح دهید.
+
+مثال زیر نشان می‌دهد که `@alwatr/action` در داخل چه کاری انجام می‌دهد — و چگونه می‌توانید `ChannelSignal` را مستقیماً زمانی که به یک action bus خالص بدون DOM integration نیاز دارید استفاده کنید:
+
 ```typescript
 import {ChannelSignal} from '@alwatr/signal';
 
-// تعریف همه action‌های برنامه
+// تعریف همه action‌های برنامه و نوع payload آن‌ها
 interface AppActions {
   'user-login': {username: string};
   'user-logout': void;
@@ -681,9 +690,10 @@ interface AppActions {
   'navigate': {path: string};
 }
 
+// یک کانال برای کل لایه action
 const actionChannel = new ChannelSignal<AppActions>({name: 'app-actions'});
 
-// منطق تجاری به action‌ها subscribe می‌کند
+// منطق تجاری subscribe می‌کند — routing با O(1)، بدون تداخل بین action‌ها
 actionChannel.on('user-login', (payload) => {
   authService.login(payload!.username);
 });
@@ -696,7 +706,7 @@ actionChannel.on('navigate', (payload) => {
   router.push(payload!.path);
 });
 
-// UI اقدام به dispatch action می‌کند (مثلاً از کلیک دکمه)
+// UI اقدام به dispatch action می‌کند
 loginButton.addEventListener('click', () => {
   actionChannel.dispatch('user-login', {username: 'ali'});
 });
