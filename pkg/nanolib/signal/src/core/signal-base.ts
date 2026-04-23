@@ -184,10 +184,13 @@ export abstract class SignalBase<T> {
     }
     this.isDestroyed__ = true; // Mark the signal as destroyed.
     // Reject all pending promises.
-    for (const reject of this.pendingRejects__) {
-      reject();
+    if (this.pendingRejects__.size) {
+      const error = new Error('signal_destroyed');
+      for (const reject of this.pendingRejects__) {
+        reject(error);
+      }
+      this.pendingRejects__.clear(); // Clear all pending rejects.
     }
-    this.pendingRejects__.clear(); // Clear all pending rejects.
     this.priorityObservers_.clear(); // Clear all priority observers.
     this.observers_.clear(); // Clear all normal observers.
     this.config_.onDestroy?.(); // Call the optional onDestroy callback.
