@@ -192,7 +192,6 @@ export abstract class SignalBase<T> {
     this.observers_.clear(); // Clear all normal observers.
     this.config_.onDestroy?.(); // Call the optional onDestroy callback.
     this.config_ = null as unknown as SignalConfig; // Help GC by breaking references.
-    this.logger_ = null as unknown as AlwatrLogger; // Help GC by breaking references.
   }
 
   /**
