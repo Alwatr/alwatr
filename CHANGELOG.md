@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.12.0](https://github.com/Alwatr/alwatr/compare/v9.11.2...v9.12.0) (2026-04-23)
+
+### ✨ Features
+
+* **signal:** add ChannelSignal for named message routing ([f017d94](https://github.com/Alwatr/alwatr/commit/f017d949e5cb3902e38aaa327682be5c7d6c9eea))
+
+### 🐛 Bug Fixes
+
+* **signal:** add early return guard in route__ method when signal is destroyed ([8fc7b86](https://github.com/Alwatr/alwatr/commit/8fc7b86f911b94b8d376ed4456968d64f640f179))
+* **signal:** reject pending promises when signal is destroyed ([c584924](https://github.com/Alwatr/alwatr/commit/c584924d994052295e2615a97723b05a9b511a94))
+* **signal:** reject pending promises with error on destroy ([a98454b](https://github.com/Alwatr/alwatr/commit/a98454bf38a3ab2ae6c3bf14bebf82d54fb2b023))
+* **signal:** remove unnecessary comment in named handler iteration ([b1d07ab](https://github.com/Alwatr/alwatr/commit/b1d07abef327d5ca3928ab84c708832715d1781c))
+* **signal:** remove unnecessary logger nullification in destroy ([6a29735](https://github.com/Alwatr/alwatr/commit/6a297353b72f762d45693f96355730196c271cbb))
+
 ## [9.11.2](https://github.com/Alwatr/alwatr/compare/v9.11.1...v9.11.2) (2026-04-21)
 
 ### ✨ Features
