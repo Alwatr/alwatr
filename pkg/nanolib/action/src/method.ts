@@ -1,4 +1,4 @@
-import {internalSignal_, logger_} from './lib.js';
+import {internalChannel_, logger_} from './lib.js';
 import type {SubscribeResult} from '@alwatr/signal';
 import {modifierRegistry, payloadRegistry, type ModifierHandler, type PayloadResolver} from './registry.js';
 
@@ -14,6 +14,11 @@ export type {ModifierHandler, PayloadResolver};
  * called — whether from an `on-action` directive or from code — and the
  * `actionId` matches. Multiple subscribers for the same `actionId` are all
  * notified in subscription order.
+ *
+ * Internally this delegates to `ChannelSignal.on()`, which uses a per-name
+ * handler map for **O(1) routing** — dispatching action `'A'` never invokes
+ * handlers registered for action `'B'`, regardless of how many actions are
+ * subscribed in the application.
  *
  * The generic parameter `T` narrows the type of the received payload.
  * Defaults to `string`, which covers the common case of attribute-driven
@@ -48,12 +53,8 @@ export type {ModifierHandler, PayloadResolver};
  */
 export function onAction<T = string>(actionId: string, handler: (payload?: T) => void): SubscribeResult {
   logger_.logMethodArgs?.('onAction', {actionId});
-  return internalSignal_.subscribe((signal) => {
-    if (signal.actionId === actionId) {
-      logger_.logMethodArgs?.('onAction.invoke', {actionId, payload: signal.actionPayload});
-      handler(signal.actionPayload as T);
-    }
-  });
+  // ChannelSignal.on() routes in O(1) — only this handler fires for `actionId`.
+  return internalChannel_.on(actionId, handler as (payload?: unknown) => void);
 }
 
 /**
@@ -65,7 +66,7 @@ export function onAction<T = string>(actionId: string, handler: (payload?: T) =>
  *
  * The generic parameter `T` types the payload. Omit it to default to `string`.
  *
- * @param actionId     - The action identifier (e.g. `'navigate'`).
+ * @param actionId      - The action identifier (e.g. `'navigate'`).
  * @param actionPayload - Optional value passed to every matching subscriber.
  *
  * @example — dispatch without payload
@@ -85,7 +86,7 @@ export function onAction<T = string>(actionId: string, handler: (payload?: T) =>
  */
 export function dispatchAction<T = string>(actionId: string, actionPayload?: T): void {
   logger_.logMethodArgs?.('dispatchAction', {actionId, actionPayload});
-  internalSignal_.dispatch({actionId, actionPayload});
+  internalChannel_.dispatch(actionId, actionPayload as unknown);
 }
 
 // ─── Extension API ────────────────────────────────────────────────────────────
