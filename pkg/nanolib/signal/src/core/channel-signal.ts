@@ -229,6 +229,7 @@ export class ChannelSignal<TMap extends Record<string, unknown>> extends SignalB
    * @private
    */
   private route__<K extends keyof TMap>(name: K, payload: TMap[K] | undefined): void {
+    if (this.isDestroyed) return;
     // ── Named handlers (O(1) lookup) ──────────────────────────────────────────
     const handlerSet = this.namedHandlers__.get(name);
     if (handlerSet?.size) {
