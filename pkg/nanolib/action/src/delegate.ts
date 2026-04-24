@@ -35,7 +35,7 @@
  * - `stop` stops further bubbling but the delegation handler has already
  *   captured the event at `body` level — it does not prevent other delegation
  *   handlers from running on the same element.
- * - `once` is emulated by tracking fired elements in a `WeakSet` per action.
+ * - `once` is emulated by delete attribute elements after first fire.
  */
 
 import {internalChannel_, logger_} from './lib.js';
