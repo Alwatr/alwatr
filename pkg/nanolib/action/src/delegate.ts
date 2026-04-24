@@ -113,7 +113,7 @@ function parseDescriptor__(attributeValue: string): ActionDescriptor | null {
   // Explicit `undefined` check: `null` means "already parsed and invalid".
   if (cached !== undefined) return cached;
 
-  const match = attributeValue.trim().match(syntaxRegex);
+  const match = attributeValue.match(syntaxRegex);
   if (!match) {
     logger_.accident('parseDescriptor__', 'invalid_syntax', {attributeValue});
     descriptorCache__.set(attributeValue, null);
@@ -159,34 +159,43 @@ const onActionAttrib__ = 'on-action';
  * @internal
  */
 function handleDelegatedEvent__(event: Event): void {
-  logger_.logMethodArgs?.('handleDelegatedEvent__', {eventType: event.type});
+  const eventType = event.type;
+  logger_.logMethodArgs?.('handleDelegatedEvent__', {eventType});
 
   // Walk up the DOM to find the closest element with a matching on-action attribute.
   // We use `closest` on the composedPath target to support Shadow DOM correctly.
-  const target = event.target as HTMLElement | null;
+  const target = event.target as Element | null;
   if (!target) return;
 
   // Find the nearest ancestor (or self) that has an on-action attribute
-  const actionElement =
-    target.hasAttribute(onActionAttrib__) ? target : target.closest<HTMLElement>(`[${onActionAttrib__}]`);
+  const actionElement = target.closest?.(`[${onActionAttrib__}^=${eventType}]`);
   if (!actionElement) return;
 
-  const attributeValue = actionElement.getAttribute(onActionAttrib__);
-  if (!attributeValue) return;
+  const attributeValue = actionElement.getAttribute?.(onActionAttrib__)?.trim();
+  if (!attributeValue) {
+    logger_.accident('handleDelegatedEvent__', 'empty_attribute', {eventType, attributeValue, actionElement});
+    return;
+  }
+
+  if (!(actionElement instanceof HTMLElement)) {
+    logger_.accident('handleDelegatedEvent__', 'target_not_html_element', {eventType, attributeValue, actionElement});
+    return;
+  }
 
   const descriptor = parseDescriptor__(attributeValue);
-  if (!descriptor) return;
+  if (!descriptor) {
+    logger_.accident('handleDelegatedEvent__', 'invalid_attribute', {eventType, attributeValue, actionElement});
+    return;
+  }
 
-  // Verify the event type matches — `closest` finds any `on-action` element,
-  // but we only want to react when the event type in the attribute matches.
-  if (descriptor.eventType !== event.type) return;
+  if (descriptor.eventType !== eventType) return;
 
   logger_.logMethodArgs?.('handleDelegatedEvent__.action', descriptor);
 
   // Step 1: handle once modifier
   if (descriptor.modifiers.has('once')) {
     actionElement.removeAttribute(onActionAttrib__); // remove on-action to prevent repeat the action
-    descriptorCache__.delete(attributeValue); // free memory
+    descriptorCache__.delete(attributeValue); // free memory for once
   }
 
   // Step 2: run modifiers
