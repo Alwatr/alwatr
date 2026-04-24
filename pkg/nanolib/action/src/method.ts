@@ -1,6 +1,7 @@
 import {internalChannel_, logger_} from './lib.js';
 import type {SubscribeResult} from '@alwatr/signal';
 import {modifierRegistry, payloadRegistry, type ModifierHandler, type PayloadResolver} from './registry.js';
+import type {ActionRecord} from './action-record.js';
 
 // Re-export extension types so consumers can import them from the package root.
 export type {ModifierHandler, PayloadResolver};
@@ -10,83 +11,110 @@ export type {ModifierHandler, PayloadResolver};
 /**
  * Subscribes to a named action dispatched anywhere in the application.
  *
- * The handler is invoked every time `dispatchAction(actionId, payload)` is
- * called — whether from an `on-action` directive or from code — and the
- * `actionId` matches. Multiple subscribers for the same `actionId` are all
- * notified in subscription order.
+ * `actionId` must be a key of `ActionRecord`. The handler's `payload` parameter
+ * is automatically typed to the corresponding `ActionRecord` value — no manual
+ * generic annotation needed:
  *
- * Internally this delegates to `ChannelSignal.on()`, which uses a per-name
- * handler map for **O(1) routing** — dispatching action `'A'` never invokes
- * handlers registered for action `'B'`, regardless of how many actions are
- * subscribed in the application.
+ * ```ts
+ * // ActionRecord declares: 'add-to-cart': {productId: number; qty: number}
+ * onAction('add-to-cart', (item) => {
+ *   cartService.add(item.productId, item.qty); // fully typed, no `!` needed
+ * });
+ * ```
  *
- * The generic parameter `T` narrows the type of the received payload.
- * Defaults to `string`, which covers the common case of attribute-driven
- * literal payloads.
+ * Passing an action name not declared in `ActionRecord` is a **compile error**.
+ * Register new actions by extending `ActionRecord` via declaration merging:
  *
- * @param actionId - The action identifier to listen for (e.g. `'open-drawer'`).
- * @param handler  - Callback invoked with the resolved payload each time the
- *                   action is dispatched. `payload` is `undefined` when the
- *                   action was dispatched without a value.
+ * ```ts
+ * // src/action-record.ts
+ * declare module '@alwatr/action' {
+ *   interface ActionRecord {
+ *     'open-drawer': string;
+ *   }
+ * }
+ * ```
+ *
+ * Internally delegates to `ChannelSignal.on()` for **O(1) routing** — dispatching
+ * action `'A'` never invokes handlers registered for action `'B'`.
+ *
+ * @param actionId - A key of `ActionRecord`.
+ * @param handler  - Callback invoked with the typed payload on each dispatch.
  * @returns A `SubscribeResult` with an `unsubscribe()` method for cleanup.
  *
- * @example — basic string payload
+ * @example
  * ```ts
  * import {onAction} from '@alwatr/action';
  *
- * const sub = onAction('open-drawer', (panel) => {
- *   openDrawer(panel); // panel === 'settings'
+ * const sub = onAction('page-ready', (pageId) => {
+ *   router.setPage(pageId); // pageId: string — inferred from ActionRecord
  * });
  *
- * // Stop listening when the component is destroyed
- * sub.unsubscribe();
- * ```
- *
- * @example — typed object payload
- * ```ts
- * import {onAction} from '@alwatr/action';
- *
- * onAction<{productId: number; qty: number}>('add-to-cart', (item) => {
- *   cartService.add(item!.productId, item!.qty);
- * });
+ * sub.unsubscribe(); // stop listening when no longer needed
  * ```
  */
-export function onAction<T = string>(actionId: string, handler: (payload?: T) => void): SubscribeResult {
+export function onAction<K extends keyof ActionRecord>(
+  actionId: K,
+  handler: (payload: ActionRecord[K]) => void,
+): SubscribeResult {
   logger_.logMethodArgs?.('onAction', {actionId});
-  // ChannelSignal.on() routes in O(1) — only this handler fires for `actionId`.
-  return internalChannel_.on(actionId, handler as (payload?: unknown) => void);
+  // Cast through `unknown` to bridge the gap between the strict public signature
+  // (ActionRecord[K]) and the internal channel's wider type (ActionRecord & Record<string, unknown>).
+  return internalChannel_.on(actionId as string, handler as (payload: unknown) => void);
 }
 
 /**
  * Dispatches a named action to all `onAction` subscribers with a matching `actionId`.
  *
- * This is the programmatic counterpart to the `on-action` HTML attribute.
- * Use it when you need to trigger an action from code rather than from a DOM
- * event (e.g. after an async operation completes, or from a service layer).
+ * `actionId` must be a key of `ActionRecord`. The `payload` parameter is
+ * automatically typed — passing the wrong type is a **compile error**:
  *
- * The generic parameter `T` types the payload. Omit it to default to `string`.
+ * ```ts
+ * // ActionRecord declares: 'add-to-cart': {productId: number; qty: number}
+ * dispatchAction('add-to-cart', {productId: 42, qty: 1}); // ✅
+ * dispatchAction('add-to-cart', 'wrong');                  // ❌ compile error
+ * dispatchAction('unknown-action', 'x');                   // ❌ compile error
+ * ```
  *
- * @param actionId      - The action identifier (e.g. `'navigate'`).
- * @param actionPayload - Optional value passed to every matching subscriber.
+ * Register new actions by extending `ActionRecord` via declaration merging:
  *
- * @example — dispatch without payload
+ * ```ts
+ * // src/action-record.ts
+ * declare module '@alwatr/action' {
+ *   interface ActionRecord {
+ *     'navigate': string;
+ *     'logout': void;
+ *   }
+ * }
+ * ```
+ *
+ * Use `dispatchAction` when triggering an action from code — e.g. after an
+ * async operation, from a service layer, or in tests. For DOM-driven actions,
+ * use the `on-action` HTML attribute with `setupActionDelegation`.
+ *
+ * @param actionId      - A key of `ActionRecord`.
+ * @param actionPayload - The payload; type is enforced by `ActionRecord`.
+ *
+ * @example — with payload
  * ```ts
  * import {dispatchAction} from '@alwatr/action';
  *
+ * dispatchAction('page-ready', 'home');
+ * dispatchAction('navigate', '/dashboard');
+ * ```
+ *
+ * @example — void payload (no second argument)
+ * ```ts
  * dispatchAction('logout');
  * ```
- *
- * @example — dispatch with a typed payload
- * ```ts
- * import {dispatchAction} from '@alwatr/action';
- *
- * dispatchAction('navigate', '/dashboard');
- * dispatchAction<{code: number}>('show-error', {code: 404});
- * ```
  */
-export function dispatchAction<T = string>(actionId: string, actionPayload?: T): void {
+// Overload for actions with a void/undefined payload — second argument omitted.
+export function dispatchAction<K extends keyof ActionRecord>(
+  ...args: ActionRecord[K] extends void | undefined ? [actionId: K] : [actionId: K, actionPayload: ActionRecord[K]]
+): void;
+// Implementation
+export function dispatchAction(actionId: keyof ActionRecord, actionPayload?: unknown): void {
   logger_.logMethodArgs?.('dispatchAction', {actionId, actionPayload});
-  internalChannel_.dispatch(actionId, actionPayload as unknown);
+  internalChannel_.dispatch(actionId as string, actionPayload);
 }
 
 // ─── Extension API ────────────────────────────────────────────────────────────
@@ -98,14 +126,14 @@ export function dispatchAction<T = string>(actionId: string, actionPayload?: T):
  * (e.g. `click.mymod->action-id`). Its handler runs before the payload is
  * resolved and the action is dispatched. Returning `false` cancels the dispatch.
  *
- * Built-in modifiers (`prevent`, `stop`, `validate`, `once`, `passive`) are
- * always available. This function lets you add domain-specific ones.
+ * Built-in modifiers (`prevent`, `stop`, `validate`, `once`) are always
+ * available. This function lets you add domain-specific ones.
  *
  * Registering the same name twice logs an accident and overwrites the previous
  * handler — avoid duplicate registrations in production code.
  *
  * @param name    - The modifier token (lowercase, no dots or arrows).
- * @param handler - The `ModifierHandler` function bound to the directive instance.
+ * @param handler - The `ModifierHandler` function bound to an `ActionContext`.
  *
  * @example — a `confirm` modifier that shows a browser dialog
  * ```ts
@@ -132,7 +160,7 @@ export function registerModifier(name: string, handler: ModifierHandler): void {
  *
  * A payload resolver is a colon-suffixed token in the attribute value
  * (e.g. `click->action-id:$mytoken`). Its function is called at dispatch time
- * with the directive instance as `this` and the DOM event as the argument.
+ * with an `ActionContext` as `this` and the DOM event as the argument.
  * The return value becomes the `actionPayload` passed to `onAction` subscribers.
  *
  * Built-in resolvers (`$value`, `$formdata`) are always available. This function
@@ -142,28 +170,18 @@ export function registerModifier(name: string, handler: ModifierHandler): void {
  * resolver — avoid duplicate registrations in production code.
  *
  * @param name     - The resolver token (should start with `$` by convention).
- * @param resolver - The `PayloadResolver` function bound to the directive instance.
+ * @param resolver - The `PayloadResolver` function bound to an `ActionContext`.
  *
  * @example — a `$checked` resolver for checkbox state
  * ```ts
  * import {registerPayloadResolver} from '@alwatr/action';
  *
  * registerPayloadResolver('$checked', function () {
- *   return (this.element_ as HTMLInputElement).checked;
+ *   return (this.element as HTMLInputElement).checked;
  * });
  * ```
  * ```html
  * <input type="checkbox" on-action="change->toggle-feature:$checked" />
- * ```
- *
- * @example — a `$dataset-id` resolver for data attributes
- * ```ts
- * registerPayloadResolver('$dataset-id', function () {
- *   return (this.element_ as HTMLElement).dataset.id ?? null;
- * });
- * ```
- * ```html
- * <li on-action="click->select-item:$dataset-id" data-id="42">Item</li>
  * ```
  */
 export function registerPayloadResolver(name: string, resolver: PayloadResolver): void {
