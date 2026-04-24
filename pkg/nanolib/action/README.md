@@ -2,9 +2,7 @@
 
 **Declarative DOM action-dispatch — the Action layer for Unidirectional Data Flow.**
 
-`@alwatr/action` bridges HTML attributes to typed signal handlers. Add an `on-action` attribute to any element, and the library automatically listens for the specified DOM event, resolves the payload, and dispatches a named action. Subscribe to actions anywhere in your app with `onAction`.
-
-This package serves as the **Action layer** in a Unidirectional Data Flow (UDF) architecture: UI elements declare their intent via `on-action` attributes, actions flow upward to business logic via `dispatchAction`, and state flows back down to the UI through signals.
+`@alwatr/action` bridges HTML `on-action` attributes to typed signal handlers using **global event delegation**. One listener on `document.body` covers every element on the page — including elements added dynamically after bootstrap — with O(1) initialization cost regardless of how many elements exist.
 
 ---
 
@@ -12,29 +10,48 @@ This package serves as the **Action layer** in a Unidirectional Data Flow (UDF) 
 
 | Approach                               | Problem                                                  |
 | -------------------------------------- | -------------------------------------------------------- |
-| Inline `addEventListener` everywhere   | Scattered, hard to trace, breaks on dynamic content      |
+| Inline `addEventListener` everywhere   | O(N) boot cost, scattered, breaks on dynamic content     |
 | Framework event bindings (React, Vue…) | Requires full framework buy-in                           |
 | Custom events + `dispatchEvent`        | Verbose, no typed payload, no central subscription point |
-| **`@alwatr/action`**                   | ✅ Declarative, typed, zero-coupling, SPA-friendly       |
+| **`@alwatr/action`**                   | ✅ O(1) boot, declarative, typed, zero-coupling          |
 
 ---
 
-## How It Works Internally
+## How It Works
 
-The action bus is powered by a [`ChannelSignal`](../signal/README.md#channelsignal-a-typed-message-bus) from `@alwatr/signal`.
+### Global Event Delegation
 
-Previously, the internal signal was an `EventSignal<{actionId, actionPayload}>` — a single stream where every subscriber received every dispatched action and had to filter by `actionId` manually. With 1000 directives on a page, dispatching one action would invoke all 1000 callbacks, with 999 of them doing nothing but a string comparison — **O(N) per dispatch**.
-
-The new implementation uses `ChannelSignal`, which maintains a `Map<actionId, Set<handler>>` internally. Dispatching action `'A'` performs a single `Map.get('A')` lookup and invokes only the handlers registered for that specific action — **O(1) per dispatch**, regardless of how many other actions are subscribed.
+Instead of attaching one listener per element, a single capture-phase listener is registered on `document.body` for each event type. When an event fires anywhere on the page, the handler walks up from `event.target` using `closest('[on-action]')` to find the nearest element with an `on-action` attribute, parses the attribute, runs modifiers, resolves the payload, and calls `dispatchAction`.
 
 ```
-dispatchAction('add-to-cart', payload)
+User clicks a button
         │
         ▼
-  ChannelSignal.dispatch('add-to-cart', payload)
+document.body capture listener (1 listener total)
         │
-        └─ Map.get('add-to-cart') → O(1) → invoke only matching handlers
+        └─ closest('[on-action]') → finds element
+           parse attribute → 'click->add-to-cart:42'
+           run modifiers   → none
+           resolve payload → '42'
+           dispatchAction('add-to-cart', '42')
+                │
+                ▼
+          ChannelSignal.dispatch('add-to-cart', '42')  [O(1)]
+                │
+                └─ Map.get('add-to-cart') → invoke only matching handlers
 ```
+
+### Complexity
+
+| Metric          | Per-element listeners | Global delegation    |
+| --------------- | --------------------- | -------------------- |
+| Boot time       | O(N elements)         | **O(1)**             |
+| Memory          | O(N listeners)        | **O(1)**             |
+| Dynamic content | Requires re-bootstrap | **Works out-of-box** |
+
+### Action Bus
+
+The action bus is powered by a [`ChannelSignal`](../signal/README.md) from `@alwatr/signal`. Dispatching action `'A'` performs a single `Map.get('A')` lookup and invokes only the handlers registered for that specific action — **O(1) per dispatch**, regardless of how many other actions are subscribed.
 
 ---
 
@@ -48,11 +65,87 @@ npm i @alwatr/action
 
 ---
 
+## Quick Start
+
+### 1. Register your action types
+
+Create a declaration file in your package to extend `ActionRecord`. This gives you full type safety and IDE autocomplete across the entire app:
+
+```ts
+// src/action-record.ts
+declare module '@alwatr/action' {
+  interface ActionRecord {
+    'open-drawer': string;
+    'search-query': string;
+    'add-to-cart': {productId: number; qty: number};
+    'logout': void;
+  }
+}
+```
+
+Passing an action name not declared in `ActionRecord` is a **compile error** — there is no string fallback.
+
+### 2. Bootstrap delegation
+
+```ts
+import {setupActionDelegation, onAction} from '@alwatr/action';
+import './action-record.js'; // ensure the declaration is loaded
+
+// One call — the entire page is covered, including future dynamic content.
+setupActionDelegation();
+
+// Payload types are inferred automatically from ActionRecord — no generics needed.
+onAction('open-drawer', (panel) => openDrawer(panel)); // panel: string
+onAction('search-query', (query) => performSearch(query)); // query: string
+onAction('add-to-cart', (item) => {
+  cartService.add(item.productId, item.qty); // fully typed, no `!`
+});
+```
+
+### 3. Add attributes to HTML
+
+```html
+<!-- Dispatches 'open-drawer' with payload 'main' on click -->
+<button on-action="click->open-drawer:main">Open Drawer</button>
+
+<!-- Dispatches 'search-query' with the input's live value -->
+<input
+  type="search"
+  on-action="input->search-query:$value"
+  placeholder="Search…"
+/>
+
+<!-- Prevents default, validates, then dispatches all field values -->
+<form
+  on-action="submit.prevent.validate->submit-form:$formdata"
+  novalidate
+>
+  <input
+    name="username"
+    required
+  />
+  <button type="submit">Save</button>
+</form>
+```
+
+### 3. Programmatic dispatch
+
+```ts
+import {dispatchAction} from '@alwatr/action';
+
+// Trigger actions from code — after async ops, from service layers, etc.
+await uploadFile(file);
+dispatchAction('upload-complete', fileId);
+
+dispatchAction('navigate', '/dashboard');
+dispatchAction<{code: number}>('show-error', {code: 404});
+```
+
+---
+
 ## Attribute Syntax
 
 ```
-on-action="eventType->actionId"
-on-action="eventType->actionId:payload"
 on-action="eventType[.modifier…]->actionId[:payload]"
 ```
 
@@ -63,6 +156,18 @@ on-action="eventType[.modifier…]->actionId[:payload]"
 | `actionId`  | Identifier your handler subscribes to                     | `open-drawer`, `search-query` |
 | `:payload`  | Optional literal string, or a `$`-prefixed resolver token | `:main`, `:$value`            |
 
+### Built-in modifiers
+
+| Modifier    | Behavior                                                             |
+| ----------- | -------------------------------------------------------------------- |
+| `.prevent`  | Calls `event.preventDefault()`                                       |
+| `.stop`     | Calls `event.stopPropagation()`                                      |
+| `.once`     | Dispatches the action only once per element (emulated via `WeakSet`) |
+| `.validate` | Cancels dispatch if the nearest `<form>` fails `checkValidity()`     |
+
+> **Note:** `.passive` is not supported in delegation mode because all delegated
+> listeners must be non-passive to allow `.prevent` to work.
+
 ### Built-in payload resolvers
 
 | Token        | Resolves to                                                    |
@@ -70,114 +175,78 @@ on-action="eventType[.modifier…]->actionId[:payload]"
 | `:$value`    | `element.value` (for `<input>`, `<select>`, `<textarea>`)      |
 | `:$formdata` | `Object.fromEntries(new FormData(form))` from nearest `<form>` |
 
-### Built-in event modifiers
-
-Modifiers are chained with `.` after the event type:
-
-| Modifier    | Behavior                                                             |
-| ----------- | -------------------------------------------------------------------- |
-| `.prevent`  | Calls `event.preventDefault()`                                       |
-| `.stop`     | Calls `event.stopPropagation()`                                      |
-| `.once`     | Removes the listener after the first dispatch (native `once` option) |
-| `.passive`  | Marks the listener as passive (cannot be combined with `.prevent`)   |
-| `.validate` | Cancels dispatch if the nearest `<form>` fails `checkValidity()`     |
-
----
-
-## Quick Start
-
-### 1. Register the directive and bootstrap
-
-```typescript
-import {bootstrapDirectives} from '@alwatr/directive';
-import {registerActionDirective} from '@alwatr/action';
-
-registerActionDirective(); // registers ActionDirective under 'on-action'
-bootstrapDirectives();
-```
-
-### 2. Subscribe to actions
-
-```typescript
-import {onAction} from '@alwatr/action';
-
-// Fires whenever any element with on-action="click->open-drawer:main" is clicked
-onAction('open-drawer', (payload) => {
-  openDrawer(payload); // payload === 'main'
-});
-
-// Fires on every keystroke in an input with on-action="input->search-query:$value"
-onAction('search-query', (query) => {
-  performSearch(query);
-});
-```
-
-### 3. Add attributes to HTML
-
-```html
-<!-- Dispatches 'open-drawer' with payload 'main' on click -->
-<button on-action="click->open-drawer:main">Open Drawer</button>
-
-<!-- Dispatches 'open-drawer' with payload 'settings' on click -->
-<button on-action="click->open-drawer:settings">Settings</button>
-
-<!-- Dispatches 'search-query' with the input's live value -->
-<input
-  type="search"
-  on-action="input->search-query:$value"
-  placeholder="Search…"
-/>
-
-<!-- Prevents default and validates form before dispatching all field values -->
-<form
-  on-action="submit.prevent.validate->submit-form:$formdata"
-  novalidate
->
-  <!-- ... -->
-</form>
-```
-
----
-
-## Programmatic Dispatch
-
-Dispatch actions from code using `dispatchAction` — useful after async operations or from service layers:
-
-```typescript
-import {dispatchAction} from '@alwatr/action';
-
-dispatchAction('open-drawer', 'main');
-dispatchAction('navigate', '/home');
-dispatchAction<{code: number}>('show-error', {code: 404});
-```
-
 ---
 
 ## API Reference
 
+### `ActionRecord` (interface)
+
+The global action type registry. Extend it via declaration merging to register your application's actions and unlock full type safety in `onAction` and `dispatchAction`.
+
+```ts
+// src/action-record.ts
+declare module '@alwatr/action' {
+  interface ActionRecord {
+    'open-drawer': string;
+    'add-to-cart': {productId: number; qty: number};
+    'logout': void;
+  }
+}
+```
+
+Once declared:
+
+- `onAction('open-drawer', (panel) => …)` — `panel` is inferred as `string`
+- `dispatchAction('add-to-cart', {productId: 42, qty: 1})` — payload type enforced
+- `dispatchAction('unknown-action', …)` — **compile error**
+
+---
+
+### `setupActionDelegation(eventTypes?)`
+
+Registers global event delegation on `document.body`. Call once at bootstrap.
+Subsequent calls with the same event types are no-ops (idempotent).
+
+```ts
+function setupActionDelegation(eventTypes?: readonly string[]): void;
+```
+
+Defaults to `DEFAULT_DELEGATED_EVENTS`: `['click', 'submit', 'input', 'change']`.
+
+```ts
+import {setupActionDelegation, DEFAULT_DELEGATED_EVENTS} from '@alwatr/action';
+
+// Default events
+setupActionDelegation();
+
+// Add extra event types
+setupActionDelegation([...DEFAULT_DELEGATED_EVENTS, 'keydown', 'pointerup']);
+```
+
+---
+
+### `teardownActionDelegation()`
+
+Removes all delegation listeners. Useful in tests or micro-frontend teardown.
+
+```ts
+function teardownActionDelegation(): void;
+```
+
+---
+
 ### `onAction(actionId, handler)`
 
-Subscribes to a named action dispatched by any `on-action` directive or `dispatchAction` call.
+Subscribes to a named action. Uses `ChannelSignal.on()` for O(1) routing.
 
-Uses `ChannelSignal.on()` internally for **O(1) routing** — only handlers registered for `actionId` are invoked when that action is dispatched.
-
-```typescript
+```ts
 function onAction<T = string>(actionId: string, handler: (payload?: T) => void): SubscribeResult;
 ```
 
-| Parameter  | Type                    | Description                         |
-| ---------- | ----------------------- | ----------------------------------- |
-| `actionId` | `string`                | The action identifier to listen for |
-| `handler`  | `(payload?: T) => void` | Called with the resolved payload    |
+```ts
+const sub = onAction('open-drawer', (panel) => openDrawer(panel));
 
-Returns a `SubscribeResult` with an `unsubscribe()` method.
-
-```typescript
-const sub = onAction('open-drawer', (payload) => {
-  /* … */
-});
-
-// Stop listening when no longer needed (prevents memory leaks)
+// Unsubscribe when no longer needed (prevents memory leaks)
 sub.unsubscribe();
 ```
 
@@ -185,44 +254,36 @@ sub.unsubscribe();
 
 ### `dispatchAction(actionId, payload?)`
 
-Dispatches a named action. Any `onAction` subscriber with a matching `actionId` will be invoked via the internal `ChannelSignal`.
+Dispatches a named action to all matching `onAction` subscribers.
 
-```typescript
+```ts
 function dispatchAction<T = string>(actionId: string, actionPayload?: T): void;
 ```
 
 ---
 
-### `registerActionDirective()`
+### `dispatchPageId(element?)`
 
-Lazy registration for `ActionDirective`. Call once before `bootstrapDirectives()`.
-If never called, the entire directive module is tree-shaken from the bundle.
+Reads the `page-id` attribute from `element` (defaults to `document.body`) and
+dispatches a `'page-ready'` action with the page identifier as payload.
 
-```typescript
-import {registerActionDirective} from '@alwatr/action';
-import {bootstrapDirectives} from '@alwatr/directive';
-
-registerActionDirective();
-bootstrapDirectives();
+```ts
+function dispatchPageId(element?: HTMLElement): void;
 ```
-
----
-
-### `registerPageIdDirective()`
-
-Registers the `page-id` directive, which dispatches a `'page-ready'` action with the page ID as payload when the element is initialized.
 
 ```html
-<body page-id="home"></body>
+<body page-id="home">
+  …
+</body>
 ```
 
-```typescript
-import {registerPageIdDirective, onAction} from '@alwatr/action';
+```ts
+import {dispatchPageId, onAction} from '@alwatr/action';
 
-registerPageIdDirective();
+dispatchPageId(); // → dispatchAction('page-ready', 'home')
 
 onAction('page-ready', (pageId) => {
-  console.log('Page is ready:', pageId); // 'home'
+  console.log('navigated to:', pageId); // 'home'
 });
 ```
 
@@ -230,9 +291,10 @@ onAction('page-ready', (pageId) => {
 
 ### `registerModifier(name, handler)`
 
-Registers a custom modifier for use in `on-action` directives. Return `false` from the handler to cancel the dispatch.
+Registers a custom modifier. Return `false` to cancel the dispatch.
+Works with both delegation and programmatic dispatch.
 
-```typescript
+```ts
 import {registerModifier} from '@alwatr/action';
 
 registerModifier('confirm', function () {
@@ -244,17 +306,26 @@ registerModifier('confirm', function () {
 <button on-action="click.confirm->delete-item:42">Delete</button>
 ```
 
+The handler receives an `ActionContext` as `this`:
+
+```ts
+interface ActionContext {
+  readonly element: HTMLElement; // the element with the on-action attribute
+}
+```
+
 ---
 
 ### `registerPayloadResolver(name, resolver)`
 
-Registers a custom payload resolver for use in `on-action` directives.
+Registers a custom payload resolver. The return value becomes the action payload.
+Works with both delegation and programmatic dispatch.
 
-```typescript
+```ts
 import {registerPayloadResolver} from '@alwatr/action';
 
 registerPayloadResolver('$checked', function () {
-  return (this.element_ as HTMLInputElement).checked;
+  return (this.element as HTMLInputElement).checked;
 });
 ```
 
@@ -267,14 +338,6 @@ registerPayloadResolver('$checked', function () {
 
 ---
 
-### `ActionDirective`
-
-The directive class registered under the `on-action` attribute. Extends `Directive` from `@alwatr/directive`.
-
-You rarely need to interact with this class directly — use `registerActionDirective()` to register it.
-
----
-
 ## Unidirectional Data Flow
 
 ```
@@ -282,12 +345,13 @@ You rarely need to interact with this class directly — use `registerActionDire
 │                        UI Layer                         │
 │  <button on-action="click->add-to-cart:42">Add</button> │
 └────────────────────────┬────────────────────────────────┘
-                         │ DOM event
+                         │ DOM event bubbles to body
                          ▼
 ┌─────────────────────────────────────────────────────────┐
-│                    Action Layer (@alwatr/action)         │
-│  dispatchAction('add-to-cart', '42')                    │
-│  → ChannelSignal.dispatch('add-to-cart', '42')  [O(1)] │
+│              Action Layer (@alwatr/action)               │
+│  document.body capture listener (1 listener total)      │
+│  → closest('[on-action]') → parse → run modifiers       │
+│  → dispatchAction('add-to-cart', '42')          [O(1)] │
 └────────────────────────┬────────────────────────────────┘
                          │ action signal (O(1) routing)
                          ▼
@@ -303,75 +367,67 @@ You rarely need to interact with this class directly — use `registerActionDire
 └────────────────────────┬────────────────────────────────┘
                          │ state flows down to UI
                          ▼
-                      UI Layer
-```
-
----
-
-## Lifecycle
-
-```
-bootstrapDirectives()
-  │
-  └─ finds element with on-action="click->open-drawer:main"
-       │
-       └─ new ActionDirective(element, 'on-action')
-            │
-            └─ after one macrotask → init_()
-                 │
-                 ├─ parse attributeValue with syntaxRegex
-                 ├─ if invalid → log accident, return
-                 └─ addEventListener(eventType, dispatch_)
-                    addDestroyHook(removeEventListener)
-```
-
----
-
-## Cleanup & Memory Management
-
-Every `addEventListener` registered by the directive has a corresponding `removeEventListener` in a destroy hook. Call `autoDestructDirectives()` periodically (or on route changes) to clean up directives whose elements have been removed from the DOM.
-
-```typescript
-import {autoDestructDirectives} from '@alwatr/directive';
-
-// Clean up on every SPA navigation
-router.on('navigate', autoDestructDirectives);
+                      UI re-renders
 ```
 
 ---
 
 ## Migration from Previous Versions
 
-### Removed: `ActionSignalPayload`
+### `registerActionDirective` / `registerPageIdDirective` removed
 
-The `ActionSignalPayload<T>` interface has been removed from the public API. It was an implementation detail of the old `EventSignal`-based bus and is no longer needed.
+The directive-based approach has been replaced by global delegation.
 
 **Before:**
 
-```typescript
-import type {ActionSignalPayload} from '@alwatr/action';
+```ts
+import {registerActionDirective, registerPageIdDirective} from '@alwatr/action';
+import {bootstrapDirectives} from '@alwatr/directive';
 
-const payload: ActionSignalPayload<{productId: number}> = {
-  actionId: 'add-to-cart',
-  actionPayload: {productId: 42},
-};
+registerActionDirective();
+registerPageIdDirective();
+bootstrapDirectives();
 ```
 
-**After:** Use `onAction` and `dispatchAction` directly — no wrapper type needed:
+**After:**
 
-```typescript
-import {onAction, dispatchAction} from '@alwatr/action';
+```ts
+import {setupActionDelegation, dispatchPageId} from '@alwatr/action';
 
-onAction<{productId: number}>('add-to-cart', (payload) => {
-  cartService.add(payload!.productId);
+setupActionDelegation();
+dispatchPageId();
+```
+
+### `ActionDirective` / `PageIdDirective` removed
+
+These classes are no longer exported. Use `setupActionDelegation()` and
+`dispatchPageId()` instead.
+
+### `ModifierHandler` / `PayloadResolver` context changed
+
+The `this` context in custom modifier and resolver functions changed from
+`ActionDirective` to `ActionContext`:
+
+**Before:**
+
+```ts
+registerModifier('not-disabled', function () {
+  return !(this.element_ as HTMLButtonElement).disabled; // this.element_
 });
-
-dispatchAction('add-to-cart', {productId: 42});
 ```
 
-### No other breaking changes
+**After:**
 
-`onAction`, `dispatchAction`, `registerActionDirective`, `registerPageIdDirective`, `registerModifier`, and `registerPayloadResolver` all have identical signatures. The upgrade is a drop-in replacement.
+```ts
+registerModifier('not-disabled', function () {
+  return !(this.element as HTMLButtonElement).disabled; // this.element (no underscore)
+});
+```
+
+### `ActionSignalPayload` removed
+
+This type was an implementation detail of the old `EventSignal`-based bus and
+is no longer needed. Use `onAction` and `dispatchAction` directly.
 
 ---
 

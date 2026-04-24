@@ -1,40 +1,38 @@
-import type {ActionDirective} from './directive.js';
-
 // ─── Type Definitions ────────────────────────────────────────────────────────
 
 /**
- * A modifier handler attached to an `on-action` directive.
+ * A modifier handler used in `on-action` attribute syntax.
  *
- * Called with the directive instance as `this` and the triggering DOM `event`.
- * Return `true` to allow the action to proceed, or `false` to cancel it.
- * Returning `false` is the only way a modifier can veto a dispatch.
+ * Called with an `ActionContext` as `this` and the triggering DOM `event`.
+ * Return `true` (or any truthy value) to allow the action to proceed,
+ * or `false` to cancel the dispatch.
  *
  * @example
  * ```ts
  * // A modifier that only allows the action when the element is not disabled
  * const notDisabledHandler: ModifierHandler = function () {
- *   return !(this.element_ as HTMLButtonElement).disabled;
+ *   return !(this.element as HTMLButtonElement).disabled;
  * };
  * ```
  */
-export type ModifierHandler = (this: ActionDirective, event: Event) => boolean;
+export type ModifierHandler = (event: Event, element: HTMLElement) => boolean;
 
 /**
- * A payload resolver attached to an `on-action` directive.
+ * A payload resolver used in `on-action` attribute syntax.
  *
- * Called with the directive instance as `this` and the triggering DOM `event`
- * at dispatch time. The return value becomes the `actionPayload` of the
- * dispatched action. Use this to compute dynamic payloads from the DOM state.
+ * Called with an `ActionContext` as `this` and the triggering DOM `event`
+ * at dispatch time. The return value becomes the `actionPayload` passed to
+ * `onAction` subscribers. Use this to compute dynamic payloads from DOM state.
  *
  * @example
  * ```ts
  * // A resolver that returns the element's dataset id
  * const dataIdResolver: PayloadResolver = function () {
- *   return (this.element_ as HTMLElement).dataset.id ?? null;
+ *   return (this.element as HTMLElement).dataset.id ?? null;
  * };
  * ```
  */
-export type PayloadResolver = (this: ActionDirective, event: Event) => unknown;
+export type PayloadResolver = (event: Event, element: HTMLElement) => unknown;
 
 // ─── Registries ──────────────────────────────────────────────────────────────
 
@@ -78,36 +76,20 @@ modifierRegistry.set('prevent', (event) => {
 });
 
 /**
- * `stop` — calls `event.stopPropagation()` before dispatching.
- *
- * Prevents the event from bubbling further up the DOM tree. Useful when a
- * child element should handle a click without triggering a parent's listener.
- *
- * @example `<button on-action="click.stop->select-item:42">`
- */
-modifierRegistry.set('stop', (event) => {
-  event.stopPropagation();
-  return true;
-});
-
-/**
  * `validate` — cancels the dispatch if the nearest `<form>` fails validation.
  *
  * Looks for a `<form>` ancestor (or the element itself if it is a form) and
  * calls `checkValidity()`. If the form is invalid the action is not dispatched,
  * allowing native constraint-validation UI to surface errors. If no form is
- * found the dispatch is also cancelled and an accident is logged.
+ * found the dispatch is also cancelled.
  *
  * Pair with `.prevent` on `submit` events to avoid page reloads:
  *
- * @example `<form on-action="submit.prevent.validate->submit-form" novalidate>`
+ * @example `<form on-action="submit.prevent.validate->submit-form:$formdata" novalidate>`
  */
-modifierRegistry.set('validate', function () {
-  const form = this.element_ instanceof HTMLFormElement ? this.element_ : this.element_.closest('form');
-  if (!form) {
-    this.logger_.accident('validate_modifier', 'no_form_found', {element: this.element_});
-    return false;
-  }
+modifierRegistry.set('validate', function (_, element) {
+  const form = element instanceof HTMLFormElement ? element : element.closest('form');
+  if (!form) return false;
   return form.checkValidity();
 });
 
@@ -121,8 +103,8 @@ modifierRegistry.set('validate', function () {
  *
  * @example `<input on-action="input->search-query:$value" />`
  */
-payloadRegistry.set('$value', function () {
-  return 'value' in this.element_ ? (this.element_ as {value: unknown}).value : null;
+payloadRegistry.set('$value', function (_, element) {
+  return 'value' in element ? (element as {value: unknown}).value : null;
 });
 
 /**
@@ -132,14 +114,14 @@ payloadRegistry.set('$value', function () {
  * Looks for a `<form>` ancestor (or the element itself). Returns `null` when no
  * form is found.
  *
- * @example `<form on-action="submit.prevent.validate->submit-form">`
+ * @example `<form on-action="submit.prevent.validate->submit-form:$formdata">`
  * ```ts
  * onAction<Record<string, FormDataEntryValue>>('submit-form', (data) => {
  *   console.log(data); // {username: 'ali', password: '…'}
  * });
  * ```
  */
-payloadRegistry.set('$formdata', function () {
-  const form = this.element_ instanceof HTMLFormElement ? this.element_ : this.element_.closest('form');
+payloadRegistry.set('$formdata', function (_, element) {
+  const form = element instanceof HTMLFormElement ? element : element.closest('form');
   return form ? Object.fromEntries(new FormData(form).entries()) : null;
 });
