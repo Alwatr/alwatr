@@ -17,7 +17,7 @@
     },
     "pkg/core": {
       "name": "@alwatr/core",
-      "version": "9.12.0",
+      "version": "9.13.0",
       "dependencies": {
         "@alwatr/action": "workspace:*",
         "@alwatr/async-queue": "workspace:*",
@@ -66,7 +66,7 @@
     },
     "pkg/fsm": {
       "name": "@alwatr/fsm",
-      "version": "9.12.0",
+      "version": "9.13.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
         "@alwatr/signal": "workspace:*",
@@ -80,7 +80,7 @@
     },
     "pkg/nanolib/action": {
       "name": "@alwatr/action",
-      "version": "9.12.0",
+      "version": "9.13.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
         "@alwatr/signal": "workspace:*",
@@ -465,7 +465,7 @@
     },
     "pkg/nanolib/signal": {
       "name": "@alwatr/signal",
-      "version": "9.12.0",
+      "version": "9.13.0",
       "dependencies": {
         "@alwatr/debounce": "workspace:*",
         "@alwatr/delay": "workspace:*",
