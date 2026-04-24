@@ -21,7 +21,6 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@alwatr/directive": "workspace:*",
     "@alwatr/logger": "workspace:*",
     "@alwatr/signal": "workspace:*"
   },
@@ -29,7 +28,6 @@
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/standard": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
-    "@happy-dom/global-registrator": "^20.9.0",
     "typescript": "^6.0.3"
   },
   "scripts": {
