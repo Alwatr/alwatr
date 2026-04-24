@@ -162,6 +162,8 @@ protected override init_(): void {
 
 `@alwatr/action` is the **Action layer** in Unidirectional Data Flow. DOM events flow upward as named actions; business logic subscribes and updates state via signals.
 
+Uses **global event delegation**: one capture-phase listener on `document.body` per event type handles every `on-action` element — O(1) boot time, zero per-element overhead, automatic support for dynamic content.
+
 ### Unidirectional Data Flow
 
 ```
@@ -169,7 +171,7 @@ UI (HTML attributes)
   │  on-action="click->add-to-cart:42"
   ▼
 Action Layer (@alwatr/action)
-  │  dispatchAction('add-to-cart', '42')
+  │  document.body capture listener → closest('[on-action]') → dispatchAction
   ▼
 Business Logic
   │  onAction('add-to-cart', id => cartService.add(id))
@@ -179,6 +181,35 @@ State Layer (@alwatr/signal)
   ▼
 UI (re-render)
 ```
+
+### Bootstrap
+
+```ts
+import {setupActionDelegation, dispatchPageId} from '@alwatr/action';
+
+// One call — covers the entire page including future dynamic content.
+setupActionDelegation();
+
+// Optional: read page-id attribute and dispatch 'page-ready'
+dispatchPageId();
+```
+
+### Registering typed actions
+
+Extend `ActionRecord` via declaration merging in each feature package:
+
+```ts
+// src/action-record.ts
+declare module '@alwatr/action' {
+  interface ActionRecord {
+    'open-drawer': string;
+    'add-to-cart': {productId: number; qty: number};
+    'logout': void;
+  }
+}
+```
+
+Passing an undeclared action name to `onAction` or `dispatchAction` is a **compile error**.
 
 ### Subscribing to actions
 
@@ -241,8 +272,7 @@ on-action="eventType[.modifier…]->actionId[:payload]"
 | ----------- | ------------------------------------------------------------ |
 | `.prevent`  | `event.preventDefault()`                                     |
 | `.stop`     | `event.stopPropagation()`                                    |
-| `.once`     | Removes listener after first dispatch                        |
-| `.passive`  | Marks listener passive (cannot combine with `.prevent`)      |
+| `.once`     | Dispatches only once per element (emulated via `WeakSet`)    |
 | `.validate` | Cancels dispatch if nearest `<form>` fails `checkValidity()` |
 
 ### Built-in payload resolvers
@@ -252,30 +282,27 @@ on-action="eventType[.modifier…]->actionId[:payload]"
 | `:$value`    | `element.value` (for `<input>`, `<select>`, `<textarea>`)      |
 | `:$formdata` | `Object.fromEntries(new FormData(form))` from nearest `<form>` |
 
-### Registration (opt-in, tree-shakeable)
+### Extending with custom modifiers and resolvers
+
+The `this` context in handlers is `ActionContext`:
 
 ```ts
-import {registerActionDirective, registerPageIdDirective} from '@alwatr/action';
-import {bootstrapDirectives} from '@alwatr/directive';
-
-registerActionDirective(); // enables on-action attribute
-registerPageIdDirective(); // enables page-id attribute (dispatches 'page-ready')
-bootstrapDirectives();
+interface ActionContext {
+  readonly element: HTMLElement; // the element with the on-action attribute
+}
 ```
-
-### Extending with custom modifiers and resolvers
 
 ```ts
 import {registerModifier, registerPayloadResolver} from '@alwatr/action';
 
 // Custom modifier — cancel dispatch if element is disabled
 registerModifier('not-disabled', function () {
-  return !(this.element_ as HTMLButtonElement).disabled;
+  return !(this.element as HTMLButtonElement).disabled;
 });
 
 // Custom payload resolver — read a data attribute
 registerPayloadResolver('$data-id', function () {
-  return (this.element_ as HTMLElement).dataset.id ?? null;
+  return (this.element as HTMLElement).dataset.id ?? null;
 });
 ```
 
