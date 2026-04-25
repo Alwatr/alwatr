@@ -1,53 +1,33 @@
 {
-  "name": "@alwatr/core",
+  "name": "@alwatr/flux",
   "version": "9.13.0",
-  "description": "Necessary library for all ECMAScript (JavaScript/TypeScript) projects.",
+  "description": "UI and reactive library bundle for ECMAScript (JavaScript/TypeScript) projects — signals, actions, directives, and storage.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/alwatr",
-    "directory": "pkg/core"
+    "directory": "pkg/flux"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/core#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/flux#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
       "import": "./dist/main.js",
       "default": "./dist/main.js"
-    },
-    "./node": {
-      "types": "./dist/node.d.ts",
-      "default": "./dist/node.js"
     }
   },
   "sideEffects": false,
   "dependencies": {
-    "@alwatr/async-queue": "workspace:*",
-    "@alwatr/cyrb53": "workspace:*",
-    "@alwatr/debounce": "workspace:*",
-    "@alwatr/deep-clone": "workspace:*",
-    "@alwatr/delay": "workspace:*",
-    "@alwatr/djb2-hash": "workspace:*",
-    "@alwatr/fetch": "workspace:*",
-    "@alwatr/flat-string": "workspace:*",
-    "@alwatr/flatomise": "workspace:*",
-    "@alwatr/global-this": "workspace:*",
-    "@alwatr/has-own": "workspace:*",
-    "@alwatr/hash-string": "workspace:*",
-    "@alwatr/http-primer": "workspace:*",
-    "@alwatr/iranian-national-code-validator": "workspace:*",
-    "@alwatr/is-number": "workspace:*",
-    "@alwatr/json2csv": "workspace:*",
-    "@alwatr/logger": "workspace:*",
-    "@alwatr/parse-duration": "workspace:*",
-    "@alwatr/platform-info": "workspace:*",
-    "@alwatr/random": "workspace:*",
-    "@alwatr/resolve-url": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
-    "@alwatr/unicode-digits": "workspace:*"
+    "@alwatr/action": "workspace:*",
+    "@alwatr/directive": "workspace:*",
+    "@alwatr/local-storage": "workspace:*",
+    "@alwatr/render-state": "workspace:*",
+    "@alwatr/session-storage": "workspace:*",
+    "@alwatr/signal": "workspace:*",
+    "@alwatr/type-helper": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
@@ -82,27 +62,22 @@
   },
   "keywords": [
     "alwatr",
-    "async",
-    "cross-platform",
+    "action",
+    "directive",
+    "dom",
     "ECMAScript",
     "esm",
-    "file",
-    "filesystem",
-    "fs",
+    "flux",
     "javascript",
-    "JSON",
+    "local-storage",
     "module",
     "nanolib",
-    "node",
-    "nodejs",
-    "queue",
-    "readFile",
-    "readJson",
+    "reactive",
+    "render-state",
+    "session-storage",
+    "signal",
     "typescript",
-    "util",
-    "utility",
-    "utils",
-    "writeFile",
-    "writeJson"
+    "ui",
+    "unidirectional-data-flow"
   ]
 }

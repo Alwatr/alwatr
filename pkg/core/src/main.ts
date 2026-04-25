@@ -1,3 +1,6 @@
+// Core utility bundle — cross-platform, non-UI packages.
+// UI-layer packages (signals, actions, directives, storage) are in @alwatr/flux.
+
 export * from '@alwatr/async-queue';
 export * from '@alwatr/cyrb53';
 export * from '@alwatr/debounce';
@@ -14,16 +17,10 @@ export * from '@alwatr/http-primer';
 export * from '@alwatr/iranian-national-code-validator';
 export * from '@alwatr/is-number';
 export * from '@alwatr/json2csv';
-export * from '@alwatr/local-storage';
 export * from '@alwatr/logger';
 export * from '@alwatr/parse-duration';
 export * from '@alwatr/platform-info';
 export * from '@alwatr/random';
-export * from '@alwatr/render-state';
 export * from '@alwatr/resolve-url';
-export * from '@alwatr/session-storage';
-export * from '@alwatr/directive';
 export * from '@alwatr/unicode-digits';
-export * from '@alwatr/signal';
-export * from '@alwatr/action';
 export type * from '@alwatr/type-helper';
