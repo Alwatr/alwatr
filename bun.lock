@@ -19,13 +19,11 @@
       "name": "@alwatr/core",
       "version": "9.13.0",
       "dependencies": {
-        "@alwatr/action": "workspace:*",
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/cyrb53": "workspace:*",
         "@alwatr/debounce": "workspace:*",
         "@alwatr/deep-clone": "workspace:*",
         "@alwatr/delay": "workspace:*",
-        "@alwatr/directive": "workspace:*",
         "@alwatr/djb2-hash": "workspace:*",
         "@alwatr/fetch": "workspace:*",
         "@alwatr/flat-string": "workspace:*",
@@ -37,15 +35,11 @@
         "@alwatr/iranian-national-code-validator": "workspace:*",
         "@alwatr/is-number": "workspace:*",
         "@alwatr/json2csv": "workspace:*",
-        "@alwatr/local-storage": "workspace:*",
         "@alwatr/logger": "workspace:*",
         "@alwatr/parse-duration": "workspace:*",
         "@alwatr/platform-info": "workspace:*",
         "@alwatr/random": "workspace:*",
-        "@alwatr/render-state": "workspace:*",
         "@alwatr/resolve-url": "workspace:*",
-        "@alwatr/session-storage": "workspace:*",
-        "@alwatr/signal": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@alwatr/unicode-digits": "workspace:*",
       },
@@ -58,6 +52,24 @@
     "pkg/devtools": {
       "name": "@alwatr/devtools",
       "version": "9.1.1",
+      "devDependencies": {
+        "@alwatr/nano-build": "workspace:*",
+        "@alwatr/standard": "workspace:*",
+        "typescript": "^6.0.3",
+      },
+    },
+    "pkg/flux": {
+      "name": "@alwatr/flux",
+      "version": "9.13.0",
+      "dependencies": {
+        "@alwatr/action": "workspace:*",
+        "@alwatr/directive": "workspace:*",
+        "@alwatr/local-storage": "workspace:*",
+        "@alwatr/render-state": "workspace:*",
+        "@alwatr/session-storage": "workspace:*",
+        "@alwatr/signal": "workspace:*",
+        "@alwatr/type-helper": "workspace:*",
+      },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
@@ -736,6 +748,8 @@
     "@alwatr/flat-string": ["@alwatr/flat-string@workspace:pkg/nanolib/flat-string"],
 
     "@alwatr/flatomise": ["@alwatr/flatomise@workspace:pkg/nanolib/flatomise"],
+
+    "@alwatr/flux": ["@alwatr/flux@workspace:pkg/flux"],
 
     "@alwatr/fsm": ["@alwatr/fsm@workspace:pkg/fsm"],
 
