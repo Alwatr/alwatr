@@ -26,6 +26,7 @@
  * any runtime routing logic.
  */
 
+import type {Awaitable} from '@alwatr/type-helper';
 import {createLogger} from '@alwatr/logger';
 import {createChannelSignal} from '@alwatr/signal';
 import type {SubscribeResult} from '@alwatr/signal';

@@ -1,3 +1,4 @@
+import type {Awaitable, JsonObject, SingleOrArray} from '@alwatr/type-helper';
 import type {SignalConfig} from '@alwatr/signal';
 
 /**
@@ -110,8 +111,11 @@ export interface FsmPersistenceConfig {
  * @template TEvent The union type of all possible events.
  * @template TContext The type of the context object.
  */
-export interface StateMachineConfig<TState extends string, TEvent extends MachineEvent, TContext extends JsonObject>
-  extends Pick<SignalConfig, 'name'> {
+export interface StateMachineConfig<
+  TState extends string,
+  TEvent extends MachineEvent,
+  TContext extends JsonObject,
+> extends Pick<SignalConfig, 'name'> {
   /** The initial finite state value. */
   readonly initial: TState;
 

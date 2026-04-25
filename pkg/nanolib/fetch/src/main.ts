@@ -6,12 +6,13 @@
  * timeouts, and duplicate request handling.
  */
 
-import { _processOptions, handleCacheStrategy_, logger_, cacheSupported } from './core.js';
-import { FetchError } from './error.js';
+import type {JsonObject} from '@alwatr/type-helper';
+import {_processOptions, handleCacheStrategy_, logger_, cacheSupported} from './core.js';
+import {FetchError} from './error.js';
 
-import type { FetchJsonOptions, FetchOptions, FetchResponse } from './type.js';
+import type {FetchJsonOptions, FetchOptions, FetchResponse} from './type.js';
 
-export { cacheSupported };
+export {cacheSupported};
 export * from './error.js';
 export type * from './type.js';
 
@@ -57,7 +58,7 @@ export type * from './type.js';
  * ```
  */
 export async function fetch(url: string, options: FetchOptions = {}): Promise<FetchResponse> {
-  logger_.logMethodArgs?.('fetch', { url, options });
+  logger_.logMethodArgs?.('fetch', {url, options});
 
   const options_ = _processOptions(url, options);
 
@@ -70,8 +71,7 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Fe
     }
 
     return [response, null];
-  }
-  catch (err) {
+  } catch (err) {
     let error: FetchError;
 
     if (err instanceof FetchError) {
@@ -84,26 +84,22 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Fe
           try {
             // Try to parse as JSON
             error.data = JSON.parse(bodyText);
-          }
-          catch {
+          } catch {
             error.data = bodyText;
           }
         }
       }
-    }
-    else if (err instanceof Error) {
+    } else if (err instanceof Error) {
       if (err.name === 'AbortError') {
         error = new FetchError('aborted', err.message);
-      }
-      else {
+      } else {
         error = new FetchError('network_error', err.message);
       }
-    }
-    else {
+    } else {
       error = new FetchError('unknown_error', String(err ?? 'unknown_error'));
     }
 
-    logger_.error('fetch', error.reason, { error });
+    logger_.error('fetch', error.reason, {error});
     return [null, error];
   }
 }
@@ -156,7 +152,7 @@ export async function fetchJson<T extends JsonObject = JsonObject>(
   url: string,
   options: FetchJsonOptions = {},
 ): Promise<[T, null] | [null, FetchError]> {
-  logger_.logMethodArgs?.('fetchJson', { url, options });
+  logger_.logMethodArgs?.('fetchJson', {url, options});
 
   const [response, error] = await fetch(url, options);
 
@@ -172,7 +168,7 @@ export async function fetchJson<T extends JsonObject = JsonObject>(
       response,
       bodyText,
     );
-    logger_.error('fetchJson', parseError.reason, { error: parseError });
+    logger_.error('fetchJson', parseError.reason, {error: parseError});
     return [null, parseError];
   }
 
@@ -185,19 +181,18 @@ export async function fetchJson<T extends JsonObject = JsonObject>(
         response,
         data,
       );
-      logger_.error('fetchJson', parseError.reason, { error: parseError });
+      logger_.error('fetchJson', parseError.reason, {error: parseError});
       return [null, parseError];
     }
     return [data, null];
-  }
-  catch (err) {
+  } catch (err) {
     const parseError = new FetchError(
       'json_parse_error',
       err instanceof Error ? err.message : 'Failed to parse JSON response',
       response,
       bodyText,
     );
-    logger_.error('fetchJson', parseError.reason, { error: parseError });
+    logger_.error('fetchJson', parseError.reason, {error: parseError});
     return [null, parseError];
   }
 }

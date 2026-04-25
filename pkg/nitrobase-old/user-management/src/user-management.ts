@@ -8,6 +8,7 @@ import {logger} from './logger.js';
 
 import type {AlwatrNitrobase} from '@alwatr/nitrobase-engine';
 import type {DocumentReference} from '@alwatr/nitrobase-reference';
+import type { JsonObject } from '@alwatr/type-helper';
 
 /**
  * New user data type.

@@ -1,3 +1,4 @@
+import type {AnyFunc} from '@alwatr/type-helper';
 import {Debouncer} from './debounce.js';
 
 import type {DebouncerConfig} from './type.js';

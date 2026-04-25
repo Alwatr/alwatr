@@ -1,3 +1,4 @@
+import type {JsonValue} from '@alwatr/type-helper';
 import {logger} from './common.js';
 
 /**
@@ -14,8 +15,7 @@ import {logger} from './common.js';
 export function parseJson<T extends JsonValue>(content: string): T {
   try {
     return JSON.parse(content);
-  }
-  catch (err) {
+  } catch (err) {
     logger.error('parseJson', 'invalid_json', err);
     throw new Error('invalid_json', {cause: (err as Error).cause});
   }
@@ -35,8 +35,7 @@ export function parseJson<T extends JsonValue>(content: string): T {
 export function jsonStringify<T extends JsonValue>(data: T): string {
   try {
     return JSON.stringify(data);
-  }
-  catch (err) {
+  } catch (err) {
     logger.error('jsonStringify', 'stringify_failed', err);
     throw new Error('stringify_failed', {cause: (err as Error).cause});
   }

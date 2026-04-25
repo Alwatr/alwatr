@@ -1,5 +1,7 @@
 /// <reference types="@alwatr/nano-build" />
 
+import type {DictionaryOpt} from '@alwatr/type-helper';
+
 export type GlobalThis = typeof globalThis;
 
 /**

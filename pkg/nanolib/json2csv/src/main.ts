@@ -1,3 +1,4 @@
+import type {DictionaryOpt, JsonValue} from '@alwatr/type-helper';
 
 /**
  * Converts a JSON array of objects to a CSV string.
@@ -64,11 +65,9 @@ export function jsonToCsv(
 
       if (cellValue === null || cellValue === undefined) {
         // skip empty value
-      }
-      else if (typeof cellValue === 'object') {
+      } else if (typeof cellValue === 'object') {
         rowStr += escapeCsvValue(JSON.stringify(cellValue, replacer), delimiterRegex, doubleQuoteRegex);
-      }
-      else {
+      } else {
         rowStr += escapeCsvValue(String(cellValue), delimiterRegex, doubleQuoteRegex);
       }
     }

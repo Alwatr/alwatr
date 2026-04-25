@@ -1,3 +1,4 @@
+import type {Awaitable} from '@alwatr/type-helper';
 import {delay} from '@alwatr/delay';
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
 

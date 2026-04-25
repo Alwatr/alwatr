@@ -4,6 +4,7 @@ import {getStoreId, getStorePath} from '@alwatr/nitrobase-helper';
 import {StoreFileType, StoreFileExtension, type StoreFileId, type DocumentContext, type StoreFileMeta} from '@alwatr/nitrobase-types';
 
 import {logger} from './logger.js';
+import type { JsonObject, DictionaryOpt } from '@alwatr/type-helper';
 
 __dev_mode__: logger.logFileModule?.('document-reference');
 

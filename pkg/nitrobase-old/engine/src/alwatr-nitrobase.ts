@@ -16,6 +16,7 @@ import {
 import {existsSync, readJson, resolve, unlink, writeJson} from '@alwatr/node-fs';
 
 import {logger} from './logger.js';
+import type { DictionaryReq, JsonObject, DictionaryOpt } from '@alwatr/type-helper';
 
 
 __dev_mode__: logger.logFileModule?.('alwatr-nitrobase');
