@@ -1,8 +1,8 @@
 # @alwatr/page-ready
 
-**Lightweight page identity signal for multi page applications grouting.**
+**Lightweight page identity signal for multi page applications routing.**
 
-## Reads the `page-id` HTML attribute from the document and notifies subscribers using a dedicated O(1) channel signal. Designed for SSG/SSR setups where each generated page has a different `page-id` baked into the HTML.
+## Reads the `page-id` HTML attribute from the document and notifies subscribers using a dedicated O(1) channel signal. Designed for SSG/SSR setups where each generated page has a different `page-id` baked into the HTML
 
 ---
 
