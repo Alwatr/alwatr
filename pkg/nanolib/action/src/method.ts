@@ -54,12 +54,10 @@ export type {ModifierHandler, PayloadResolver};
  */
 export function onAction<K extends keyof ActionRecord>(
   actionId: K,
-  handler: (payload: ActionRecord[K]) => void,
+  handler: (payload: ActionRecord[K]) => Awaitable<void>,
 ): SubscribeResult {
   logger_.logMethodArgs?.('onAction', {actionId});
-  // Cast through `unknown` to bridge the gap between the strict public signature
-  // (ActionRecord[K]) and the internal channel's wider type (ActionRecord & Record<string, unknown>).
-  return internalChannel_.on(actionId as string, handler as (payload: unknown) => void);
+  return internalChannel_.on(actionId, handler as (payload: unknown) => Awaitable<void>);
 }
 
 /**
@@ -107,14 +105,12 @@ export function onAction<K extends keyof ActionRecord>(
  * dispatchAction('logout');
  * ```
  */
-// Overload for actions with a void/undefined payload — second argument omitted.
 export function dispatchAction<K extends keyof ActionRecord>(
   ...args: ActionRecord[K] extends void | undefined ? [actionId: K] : [actionId: K, actionPayload: ActionRecord[K]]
-): void;
-// Implementation — accepts any declared key; payload is unknown at runtime.
-export function dispatchAction(actionId: string, actionPayload?: unknown): void {
+): void {
+  const [actionId, actionPayload] = args;
   logger_.logMethodArgs?.('dispatchAction', {actionId, actionPayload});
-  internalChannel_.dispatch(actionId as string, actionPayload);
+  internalChannel_.dispatch(actionId, actionPayload);
 }
 
 // ─── Extension API ────────────────────────────────────────────────────────────
