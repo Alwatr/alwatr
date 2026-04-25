@@ -1,7 +1,7 @@
 /**
  * @file page-ready.ts
  *
- * Lightweight page identity signal for SPA routing.
+ * Lightweight page identity signal for MPA routing.
  *
  * ## Design
  *

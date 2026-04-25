@@ -1,5 +1,5 @@
 /**
- * @alwatr/page-ready — Lightweight page identity signal for SPA routing.
+ * @alwatr/page-ready — Lightweight page identity signal for MPA routing.
  *
  * Reads the `page-id` attribute from `document.body` and dispatches a named
  * signal so any part of the application can react to the current page without
