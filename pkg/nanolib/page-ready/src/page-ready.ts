@@ -69,7 +69,7 @@ const pageReadyChannel_ = createChannelSignal<Record<string, void>>({name: 'page
  * sub.unsubscribe(); // stop listening when no longer needed
  * ```
  */
-export function onPageReady<T extends string>(pageId: T, handler: () => void): SubscribeResult {
+export function onPageReady<T extends string>(pageId: T, handler: () => Awaitable<void>): SubscribeResult {
   logger.logMethodArgs?.('onPageReady', {pageId});
   return pageReadyChannel_.on(pageId, handler);
 }
