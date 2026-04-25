@@ -1,362 +1,328 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-export {}; // Make this a module
+// Named exports — no declare global. Import explicitly or use via @alwatr/core / @alwatr/flux.
+
+// ─── Primitives ──────────────────────────────────────────────────────────────
 
 /**
- * Global Basic Types.
+ * Union of all JavaScript primitive types.
  */
-declare global {
-  /**
-   * Represents a primitive type in TypeScript.
-   * @example
-   * let myVar: Primitive = "hello";
-   * myVar = 123;
-   * myVar = null;
-   */
-  type Primitive = string | number | bigint | boolean | symbol | null | undefined;
+export type Primitive = string | number | bigint | boolean | symbol | null | undefined;
 
-  /**
-   * Represents a type that includes all falsy values in JavaScript.
-   * @example
-   * const a: Falsy = 0;
-   * const b: Falsy = "";
-   */
-  type Falsy = false | '' | 0 | 0n | null | undefined;
+/**
+ * Union of all JavaScript falsy values.
+ *
+ * @example
+ * function isFalsy(v: unknown): v is Falsy {
+ *   return !v;
+ * }
+ */
+export type Falsy = false | '' | 0 | 0n | null | undefined;
 
-  /**
-   * Represents a type that can be `null` or `undefined`.
-   */
-  type Nullish = null | undefined;
+/**
+ * A value that is either `null` or `undefined`.
+ * Useful for guard clauses: `if (value == null)`.
+ */
+export type Nullish = null | undefined;
+
+// ─── Functions & Classes ─────────────────────────────────────────────────────
+
+/**
+ * Generic function type.
+ *
+ * @template Args - Tuple of argument types. Defaults to `unknown[]`.
+ * @template R    - Return type. Defaults to `unknown`.
+ *
+ * @example
+ * type Handler = Func<[string, number], boolean>;
+ */
+export type Func<Args extends unknown[] = unknown[], R = unknown> = (...args: Args) => R;
+
+/** Any callable — equivalent to `Func` with no constraints. */
+export type AnyFunc = Func<any[], any>;
+
+/** A function that returns `void`. */
+export type VoidFunc = Func<any[], void>;
+
+/** A zero-argument function that returns `void`. */
+export type NoopFunc = () => Awaitable<void>;
+
+/**
+ * Removes the first parameter from a function type.
+ *
+ * @example
+ * type MyFunc = (ctx: Context, id: string) => void;
+ * type WithoutCtx = OmitFirstParam<MyFunc>; // (id: string) => void
+ */
+export type OmitFirstParam<F> = F extends (_first: any, ...args: infer A) => infer R ? (...args: A) => R : never;
+
+/**
+ * A class constructor type.
+ *
+ * @template T     - The instance type produced by `new`.
+ * @template TArgs - Constructor argument tuple. Defaults to `any[]`.
+ *
+ * @example
+ * function create<T>(Ctor: Class<T>): T {
+ *   return new Ctor();
+ * }
+ */
+export type Class<T, TArgs extends unknown[] = any[]> = new (...args: TArgs) => T;
+
+// ─── Wrappers & Modifiers ────────────────────────────────────────────────────
+
+/**
+ * `T | null` — value is present or explicitly absent.
+ */
+export type Nullable<T> = T | null;
+
+/**
+ * `T | undefined` — value may not have been set yet.
+ * For "present or explicitly absent" use `Nullable<T>`.
+ */
+export type Maybe<T> = T | undefined;
+
+/**
+ * `T | Promise<T>` — value may be synchronous or asynchronous.
+ *
+ * @example
+ * async function run(fn: () => Awaitable<void>) {
+ *   await fn();
+ * }
+ */
+export type Awaitable<T> = T | Promise<T>;
+
+/**
+ * `T | T[]` — accepts a single item or a mutable array.
+ */
+export type SingleOrArray<T> = T | T[];
+
+/**
+ * `T | readonly T[]` — accepts a single item or a readonly array.
+ */
+export type SingleOrReadonlyArray<T> = T | readonly T[];
+
+/**
+ * Excludes `undefined` from `T` while keeping `null`.
+ * Use the built-in `NonNullable<T>` to exclude both `null` and `undefined`.
+ */
+export type NonUndefined<T> = T extends undefined ? never : T;
+
+/**
+ * Removes `readonly` from all properties of `T`.
+ *
+ * @example
+ * type Config = { readonly port: number };
+ * type MutableConfig = Mutable<Config>; // { port: number }
+ */
+export type Mutable<T> = {
+  -readonly [P in keyof T]: T[P];
+};
+
+/**
+ * Makes every property of `T` required and strips `null | undefined` from each value type.
+ * Stricter than the built-in `Required<T>`.
+ *
+ * @example
+ * type User = { name?: string | null; age?: number };
+ * type StrictUser = StrictlyRequired<User>; // { name: string; age: number }
+ */
+export type StrictlyRequired<T> = {
+  [P in keyof T]-?: NonNullable<T[P]>;
+};
+// ─── Dictionaries ────────────────────────────────────────────────────────────
+
+/**
+ * A sparse string-keyed map — any key may be absent.
+ * Prefer over `Record<string, T | undefined>` for dynamic/unknown key sets.
+ *
+
+ * @template T - Value type. Defaults to `unknown`.
+ *
+ * @example
+ * const cache: DictionaryOpt<number> = {};
+ * const hit = cache['key']; // number | undefined
+ */
+export type DictionaryOpt<T> = {[key in string]?: T};
+
+/**
+ * A dense string-keyed map — every key is guaranteed to have a value.
+ * Use when you control all keys and can assert their presence.
+ *
+ * @template T - Value type. Defaults to `unknown`.
+ *
+ * @example
+ * const colors: DictionaryReq<string> = { success: '#4CAF50' };
+ */
+export type DictionaryReq<T> = {[key: string]: T};
+
+// ─── Object Utilities ────────────────────────────────────────────────────────
+
+/**
+ * Union of all required keys of `T`.
+ *
+ * @example
+ * type Props = { a: number; b?: string };
+ * type R = RequiredKeys<Props>; // 'a'
+ */
+export type RequiredKeys<T> = {
+  [K in keyof T]-?: Record<string, never> extends Pick<T, K> ? never : K;
+}[keyof T];
+
+/**
+ * Union of all optional keys of `T`.
+ *
+ * @example
+ * type Props = { a: number; b?: string };
+ * type O = OptionalKeys<Props>; // 'b'
+ */
+export type OptionalKeys<T> = {
+  [K in keyof T]-?: Record<string, never> extends Pick<T, K> ? K : never;
+}[keyof T];
+
+/**
+ * The type of property `K` in `T`, or `never` if `K` is not a key of `T`.
+ *
+ * @example
+ * type User = { id: number; name: string };
+ * type NameType = Prop<User, 'name'>; // string
+ */
+export type Prop<T, K> = K extends keyof T ? T[K] : never;
+
+/**
+ * Union of all value types in object type `T`.
+ *
+ * @example
+ * type Config = { host: string; port: number };
+ * type V = ObjectValues<Config>; // string | number
+ */
+export type ObjectValues<T> = T[keyof T];
+
+/**
+ * Extracts the element type from an array or readonly array.
+ * Returns `never` for non-array types.
+ *
+ * @example
+ * type Users = { name: string }[];
+ * type User = ArrayItem<Users>; // { name: string }
+ */
+export type ArrayItem<T> = T extends readonly (infer U)[] ? U : never;
+
+/**
+ * Replaces properties of `M` with matching properties from `N`.
+ * Properties in `N` that don't exist in `M` are added.
+ *
+ * @example
+ * type A = { a: string; b: number };
+ * type B = { b: string; c: boolean };
+ * type C = Overwrite<A, B>; // { a: string; b: string; c: boolean }
+ */
+export type Overwrite<M, N> = Omit<M, keyof N> & N;
+
+/**
+ * Eagerly evaluates a mapped or intersection type into a plain object shape.
+ * Improves IDE tooltip readability for complex types.
+ *
+ * @example
+ * type AB = Simplify<{ a: string } & { b: number }>; // { a: string; b: number }
+ */
+export type Simplify<T> = {[K in keyof T]: T[K]} & NonNullable<unknown>;
+
+/**
+ * Structural interface for anything that exposes `addEventListener`.
+ * Covers `EventTarget`, `HTMLElement`, `Window`, `Worker`, etc.
+ */
+export interface HasAddEventListener {
+  addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: AddEventListenerOptions): void;
+}
+
+// ─── Deep Recursive ──────────────────────────────────────────────────────────
+
+/**
+ * Built-in types whose internal structure should not be recursively transformed.
+ * @internal
+ */
+type KeepMutable =
+  | Date
+  | RegExp
+  | Promise<unknown>
+  | Map<unknown, unknown>
+  | Set<unknown>
+  | WeakMap<object, unknown>
+  | WeakSet<object>;
+
+/**
+ * Recursively makes every property of `T` (and nested objects/arrays) `readonly`.
+ * Leaves primitives, functions, and `KeepMutable` types untouched.
+ */
+export type DeepReadonly<T> =
+  T extends Primitive | ((...args: any[]) => any) ? T
+  : T extends KeepMutable ? T
+  : T extends (infer U)[] ? readonly DeepReadonly<U>[]
+  : T extends readonly (infer U)[] ? readonly DeepReadonly<U>[]
+  : {readonly [P in keyof T]: DeepReadonly<T[P]>};
+
+/**
+ * Recursively makes every property of `T` required and strips `null | undefined`
+ * from each value type. Leaves primitives, functions, and `KeepMutable` types untouched.
+ */
+export type DeepRequired<T> =
+  T extends Primitive | ((...args: any[]) => any) | KeepMutable ? T
+  : T extends (infer U)[] ? DeepRequired<NonNullable<U>>[]
+  : T extends readonly (infer U)[] ? DeepRequired<NonNullable<U>>[]
+  : {[P in keyof T]-?: DeepRequired<NonNullable<T[P]>>};
+
+/**
+ * Recursively makes every property of `T` optional.
+ * Leaves primitives, functions, and `KeepMutable` types untouched.
+ */
+export type DeepPartial<T> =
+  T extends Primitive | ((...args: any[]) => any) | KeepMutable ? T
+  : T extends (infer U)[] ? DeepPartial<U>[]
+  : T extends readonly (infer U)[] ? DeepPartial<U>[]
+  : {[P in keyof T]?: DeepPartial<T[P]>};
+
+// ─── JSON ─────────────────────────────────────────────────────────────────────
+
+/** A JSON-serialisable primitive value. */
+export type JsonPrimitive = string | number | boolean | null;
+
+/**
+ * Any JSON-serialisable value.
+ * Recursive union of `JsonPrimitive`, `JsonObject`, and `JsonArray`.
+ */
+export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
+
+/** A JSON-serialisable array. */
+export type JsonArray = JsonValue[];
+
+/**
+ * A JSON-serialisable object.
+ */
+export interface JsonObject {
+  [key: string]: JsonValue;
 }
 
 /**
- * Global Functions and Class Types.
+ * Converts a TypeScript type `T` into its JSON-serialisable representation.
+ *
+ * Rules applied:
+ * - Types with `toJSON()` resolve to its return type.
+ * - `Date` → `string` (ISO 8601).
+ * - `bigint`, functions, `undefined`, and `symbol` values are stripped.
+ * - Objects and arrays are processed recursively.
+ *
+ * @example
+ * type ApiResponse = { id: number; createdAt: Date; secret: symbol };
+ * type Wire = Jsonify<ApiResponse>; // { id: number; createdAt: string }
  */
-declare global {
-  /**
-   * Generic function type.
-   * @template Args Tuple of argument types (defaults to any[]).
-   * @template R Return type (defaults to any).
-   * @example
-   * type Handler = Func<[string, number], boolean>;
-   * type AnyFunction = Func;
-   */
-  type Func<Args extends any[] = any[], R = any> = (...args: Args) => R;
-
-  /** Alias for any callable. */
-  type AnyFunc = Func;
-
-  /** Alias for function that returns void. */
-  type VoidFunc = Func<any[], void>;
-
-  /** Alias for a no-op function with no arguments. */
-  type NoopFunc = () => void;
-
-  /**
-   * Removes the first parameter from a function type.
-   * @template F The function type.
-   * @example
-   * type MyFunc = (id: string, value: number) => void;
-   * type CurriedFunc = OmitFirstParam<MyFunc>; // (value: number) => void
-   */
-  type OmitFirstParam<F> = F extends (x: any, ...args: infer A) => infer R ? (...args: A) => R : never;
-
-  /**
-   * Represents a class constructor.
-   * @template T The instance type of the class.
-   * @template TArgs The type of the constructor arguments.
-   */
-  type Class<T, TArgs extends any[] = any[]> = new (...args: TArgs) => T;
-}
-
-/**
- * Global Utility Wrapper & Types Modifiers.
- */
-declare global {
-  /**
-   * Represents a type `T` that can also be `null`.
-   * @template T The base type.
-   */
-  type Nullable<T> = T | null;
-
-  /**
-   * Represents a type `T` that can also be `undefined`. Often used for optional properties.
-   * @template T The base type.
-   */
-  type Maybe<T> = T | undefined;
-
-  /**
-   * Represents a value that can be of type `T` or a Promise that resolves to `T`.
-   * A more idiomatic name for `MaybePromise`.
-   * @template T The type of the value.
-   * @example
-   * async function process(data: Awaitable<string>) {
-   *   const resolvedData = await data;
-   *   console.log(resolvedData);
-   * }
-   */
-  type Awaitable<T> = T | Promise<T>;
-
-  /**
-   * Represents a value that can be either a single item of type `T` or an array of `T`.
-   * @template T The type of the item(s).
-   * @example
-   * function logItems(items: SingleOrArray<string>) {
-   *   const allItems = Array.isArray(items) ? items : [items];
-   *   allItems.forEach(item => console.log(item));
-   * }
-   */
-  type SingleOrArray<T> = T | T[];
-
-  /**
-   * Represents a value that can be either a single item of type `T` or a readonly array of `T`.
-   * @template T The type of the item(s).
-   * @example
-   * function logItems(items: SingleOrReadonlyArray<string>) {
-   *   const allItems = Array.isArray(items) ? items : [items];
-   *   allItems.forEach(item => console.log(item));
-   * }
-   */
-  type SingleOrReadonlyArray<T> = T | readonly T[];
-
-  /**
-   * Excludes `undefined` from a type `T`.
-   * @template T The type to modify.
-   */
-  type NonUndefined<T> = T extends undefined ? never : T;
-
-  /**
-   * Makes all properties of an object mutable (removes `readonly`).
-   * @template T The type to make mutable.
-   * @example
-   * type Config = { readonly port: number; };
-   * type MutableConfig = Mutable<Config>; // { port: number; }
-   */
-  type Mutable<T> = {
-    -readonly [P in keyof T]: T[P];
-  };
-
-  /**
-   * Makes properties of `T` required and removes `null` and `undefined` from their types.
-   * Stricter than the built-in `Required<T>`.
-   * @template T The type to make strictly required.
-   * @example
-   * type User = { name?: string | null; age?: number; };
-   * type StrictUser = StrictlyRequired<User>; // { name: string; age: number; }
-   */
-  type StrictlyRequired<T> = {
-    [P in keyof T]-?: NonNullable<T[P]>;
-  };
-
-  /**
-   * Represents a dictionary object with string keys and values of a specific type.
-   * Any key might be absent, making this suitable for sparse objects or dynamic maps.
-   *
-   * @template T The type of values in the dictionary. Defaults to `any`.
-   * @example
-   * const userRoles: DictionaryOpt<number> = {
-   * 'admin': 1,
-   * 'editor': 2,
-   * };
-   *
-   * const guestRole = userRoles['guest']; // number | undefined
-   */
-  type DictionaryOpt<T = any> = {[key in string]?: T};
-
-  /**
-   * Represents a dictionary object where any string key is expected to have a value of a specific type.
-   * Unlike `DictionaryOpt`, values are not optional. This is useful for type constraints.
-   *
-   * @template T The type of values in the dictionary. Defaults to `any`.
-   * @example
-   * const statusColors: DictionaryReq<string> = {
-   * 'success': '#4CAF50',
-   * 'error': '#F44336',
-   * 'warning': '#FFC107'
-   * };
-   *
-   * function getColor(status: string): string {
-   * return statusColors[status] || '#FFFFFF'; // Accessing any key returns a string
-   * }
-   */
-  type DictionaryReq<T = any> = {[key in string]: T};
-}
-
-/**
- * Global Object and Key Manipulation
- */
-declare global {
-  /**
-   * Extracts the keys of `T` that are required.
-   * @template T The object type.
-   * @example
-   * type Props = { a: number; b?: string };
-   * type RKeys = RequiredKeys<Props>; // "a"
-   */
-  type RequiredKeys<T> = {
-    [K in keyof T]-?: {} extends Pick<T, K> ? never : K;
-  }[keyof T];
-
-  /**
-   * Extracts the keys of `T` that are optional.
-   * @template T The object type.
-   * @example
-   * type Props = { a: number; b?: string };
-   * type OKeys = OptionalKeys<Props>; // "b"
-   */
-  type OptionalKeys<T> = {
-    [K in keyof T]-?: {} extends Pick<T, K> ? K : never;
-  }[keyof T];
-
-  /**
-   * Gets the type of a property from an object type.
-   * @template T The object type.
-   * @template K The property key.
-   * @example
-   * type User = { id: number, name: string };
-   * type NameType = Prop<User, 'name'>; // string
-   */
-  type Prop<T, K> = K extends keyof T ? T[K] : never;
-
-  /**
-   * Gets a union of all value types in an object.
-   * @template T The object type.
-   * @example
-   * type Config = { host: string; port: number; };
-   * type ConfigValues = ObjectValues<Config>; // string | number
-   */
-  type ObjectValues<T> = T[keyof T];
-
-  /**
-   * Extracts the item type from an array (including readonly arrays).
-   * Returns `never` if `T` is not an array.
-   * @template T The array type.
-   * @example
-   * type Users = { name: string }[];
-   * type User = ArrayItem<Users>; // { name: string }
-   */
-  type ArrayItem<T> = T extends readonly (infer U)[] ? U : never;
-
-  /**
-   * Overwrites properties of `M` with properties of `N`.
-   * @template M The base type.
-   * @template N The overriding type.
-   * @example
-   * type A = { a: string; b: number; };
-   * type B = { b: string; c: boolean; };
-   * type C = Overwrite<A, B>; // { a: string; b: string; c: boolean; }
-   */
-  type Overwrite<M, N> = Omit<M, keyof N> & N;
-
-  /**
-   * Flattens a complex type into a simple object representation (بکش از ما بیرون).
-   *
-   * Useful for improving editor tooltips for complex intersection and mapped types.
-   *
-   * And also to transform an interface into a type to aide with assignability.
-   * @template T The type to simplify.
-   */
-  type Simplify<T> = {[K in keyof T]: T[K]} & {};
-
-  /**
-   * Represents an object that has the ability to add event listeners.
-   */
-  interface HasAddEventListener {
-    addEventListener: (type: string, listener: EventListenerOrEventListenerObject, options?: AddEventListenerOptions) => void;
-  }
-}
-
-/**
- * A collection of built-in types that should not be made deeply readonly.
- */
-type KeepMutable = Date | RegExp | Map<any, any> | Set<any> | WeakMap<any, any> | WeakSet<any>;
-
-/**
- * Global Deep Recursive Types
- */
-declare global {
-  /**
-   * Recursively makes all properties of an object or array `readonly`.
-   * @template T The type to make deeply readonly.
-   */
-  type DeepReadonly<T> = T extends Primitive | ((...args: any[]) => any)
-    ? T
-    : T extends KeepMutable
-      ? T
-      : T extends (infer U)[]
-        ? readonly DeepReadonly<U>[]
-        : T extends readonly (infer U)[]
-          ? readonly DeepReadonly<U>[]
-          : {readonly [P in keyof T]: DeepReadonly<T[P]>};
-
-  /**
-   * Recursively makes all properties of an object or array required.
-   * It also removes `null` and `undefined` from property types.
-   * @template T The type to make deeply required.
-   */
-  type DeepRequired<T> = T extends Primitive | ((...args: any[]) => any) | KeepMutable
-    ? T
-    : T extends (infer U)[]
-      ? DeepRequired<NonNullable<U>>[]
-      : T extends readonly (infer U)[]
-        ? DeepRequired<NonNullable<U>>[]
-        : {[P in keyof T]-?: DeepRequired<NonNullable<T[P]>>};
-
-  /**
-   * Recursively makes all properties of an object or array optional.
-   * @template T The type to make deeply partial.
-   */
-  type DeepPartial<T> = T extends Primitive | ((...args: any[]) => any) | KeepMutable
-    ? T
-    : T extends (infer U)[]
-      ? DeepPartial<U>[]
-      : T extends readonly (infer U)[]
-        ? DeepPartial<U>[]
-        : {[P in keyof T]?: DeepPartial<T[P]>};
-}
-
-/**
- * Global JSON Types
- */
-declare global {
-  /** A JSON-compatible primitive value. */
-  type JsonPrimitive = string | number | boolean | null;
-
-  /**
-   * Any JSON-compatible value.
-   * This is a recursive type that defines the structure of a JSON object.
-   */
-  type JsonValue = JsonPrimitive | JsonObject | JsonArray;
-
-  /**
-   * A JSON-compatible array.
-   */
-  interface JsonArray extends Array<JsonValue> {}
-
-  /**
-   * A JSON-compatible object.
-   */
-  interface JsonObject extends DictionaryOpt<JsonValue> {}
-
-  /**
-   * Converts a TypeScript type into its JSON-compatible representation.
-   * - Removes functions, `undefined`, and symbols.
-   * - Converts `Date` objects to strings (`toISOString`).
-   * - Recursively processes objects and arrays.
-   * - Handles objects with a `toJSON` method.
-   * @template T The type to convert to a JSON-compatible type.
-   */
-  type Jsonify<T> = T extends {toJSON(): infer J}
-    ? J
-    : T extends JsonPrimitive
-      ? T
-      : T extends Date
-        ? string
-        : T extends (infer U)[]
-          ? Jsonify<U>[]
-          : T extends readonly (infer U)[]
-            ? readonly Jsonify<U>[]
-            : T extends object
-              ? {[K in keyof T as T[K] extends ((...args: any[]) => any) | undefined | symbol ? never : K]: Jsonify<T[K]>}
-              : never;
-}
+export type Jsonify<T> =
+  T extends {toJSON(): infer J} ? J
+  : T extends JsonPrimitive ? T
+  : T extends bigint ? never
+  : T extends Date ? string
+  : T extends (infer U)[] ? Jsonify<U>[]
+  : T extends readonly (infer U)[] ? readonly Jsonify<U>[]
+  : T extends object ?
+    {[K in keyof T as T[K] extends ((...args: any[]) => any) | undefined | symbol | bigint ? never : K]: Jsonify<T[K]>}
+  : never;
