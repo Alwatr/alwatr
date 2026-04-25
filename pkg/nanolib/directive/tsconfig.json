@@ -4,15 +4,8 @@
     "rootDir": "src",
     "outDir": "dist",
     "composite": true,
-    "types": [
-      "@alwatr/type-helper",
-      "@alwatr/nano-build",
-    ],
+    "types": ["@alwatr/nano-build"]
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "**/*.test.ts"
-  ],
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/*.test.ts"]
 }
