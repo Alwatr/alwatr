@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.15.0](https://github.com/Alwatr/alwatr/compare/v9.14.0...v9.15.0) (2026-04-25)
+
+### ✨ Features
+
+* **flux:** add page-ready package ([98052b0](https://github.com/Alwatr/alwatr/commit/98052b030a5cb6bdecf6842faab4f9bf572dacbf))
+
 ## [9.14.0](https://github.com/Alwatr/alwatr/compare/v9.13.0...v9.14.0) (2026-04-25)
 
 ### ✨ Features

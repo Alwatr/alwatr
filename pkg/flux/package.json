@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/flux",
-  "version": "9.14.0",
+  "version": "9.15.0",
   "description": "UI and reactive library bundle for ECMAScript (JavaScript/TypeScript) projects — signals, actions, directives, and storage.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -24,10 +24,10 @@
     "@alwatr/action": "workspace:*",
     "@alwatr/directive": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
+    "@alwatr/page-ready": "workspace:*",
     "@alwatr/render-state": "workspace:*",
     "@alwatr/session-storage": "workspace:*",
     "@alwatr/signal": "workspace:*",
-    "@alwatr/page-ready": "workspace:*",
     "@alwatr/type-helper": "workspace:*"
   },
   "devDependencies": {

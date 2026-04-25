@@ -60,7 +60,7 @@
     },
     "pkg/flux": {
       "name": "@alwatr/flux",
-      "version": "9.14.0",
+      "version": "9.15.0",
       "dependencies": {
         "@alwatr/action": "workspace:*",
         "@alwatr/directive": "workspace:*",
