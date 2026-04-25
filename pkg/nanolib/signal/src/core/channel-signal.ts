@@ -8,28 +8,66 @@ import type {SignalConfig, SubscribeOptions, SubscribeResult, ListenerCallback} 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 /**
+ * Determines whether the payload argument for a given channel message is
+ * required or optional, based solely on the declared type in `TMap`.
+ *
+ * - `void | undefined` → payload is optional (second arg may be omitted).
+ * - anything else      → payload is **required** (omitting it is a compile error).
+ *
+ * This is used to build the rest-parameter tuple for `dispatch()` so that
+ * TypeScript enforces the correct call signature at every dispatch site.
+ *
+ * @template TMap A record mapping message names to their payload types.
+ * @template K    The specific message name key.
+ *
+ * @example
+ * ```ts
+ * // ActionRecord: { 'logout': void; 'add-to-cart': {productId: number} }
+ * type A = DispatchArgs<ActionRecord, 'logout'>;       // [name: 'logout', payload?: void]
+ * type B = DispatchArgs<ActionRecord, 'add-to-cart'>;  // [name: 'add-to-cart', payload: {productId: number}]
+ * ```
+ */
+export type DispatchArgs<TMap extends object, K extends keyof TMap> =
+  TMap[K] extends void | undefined ? [name: K, payload?: TMap[K]] : [name: K, payload: TMap[K]];
+
+/**
  * A single message dispatched through a `ChannelSignal`.
  *
  * `name` identifies the message type (e.g. `'open-drawer'`, `'add-to-cart'`).
- * `payload` is the optional value attached to the message — its type is narrowed
- * by the generic map `TMap` at the class level.
+ * `payload` carries the associated data, whose type is determined by the generic `TMap` based on the `name`.
  *
  * @template TMap A record mapping message names to their payload types.
  * @template K    The specific message name key (inferred, not set manually).
  */
-export type ChannelMessage<TMap extends Record<string, unknown>, K extends keyof TMap = keyof TMap> =
-  K extends keyof TMap ? {name: K; payload?: TMap[K]} : never;
+export type ChannelMessage<TMap extends object, K extends keyof TMap = keyof TMap> = {name: K; payload: TMap[K]};
 
 /**
  * A typed handler for a specific named message on a `ChannelSignal`.
  * Receives only the `payload` — the name is already known at subscription time.
  *
+ * The payload type mirrors `DispatchArgs`: it is `TMap[K] | undefined` only
+ * when the declared type is `void | undefined`; otherwise it is exactly `TMap[K]`
+ * (non-optional) so handlers do not need unnecessary null-guards.
+ *
  * @template TMap A record mapping message names to their payload types.
  * @template K    The specific message name key.
  */
-export type ChannelHandler<TMap extends Record<string, unknown>, K extends keyof TMap> = (
-  payload: TMap[K] | undefined,
-) => void | Promise<void>;
+export type ChannelHandler<TMap extends object, K extends keyof TMap = keyof TMap> = (
+  payload: TMap[K],
+) => Awaitable<void>;
+
+/**
+ * Internal handler type used inside `namedHandlers__`.
+ *
+ * At the storage boundary we erase the conditional payload type to `unknown`
+ * so TypeScript does not need to evaluate the conditional against every
+ * possible `K`. Type safety is already enforced at the public `on()` and
+ * `dispatch()` call sites — the internal executor only needs to call the
+ * function with the value it received.
+ *
+ * @internal
+ */
+type InternalHandler = (payload: unknown) => Awaitable<void>;
 
 /**
  * Configuration for creating a `ChannelSignal`.
@@ -82,7 +120,7 @@ export interface ChannelSignalConfig extends SignalConfig {}
  * appChannel.dispatch('close-drawer'); // no payload needed
  * ```
  */
-export class ChannelSignal<TMap extends Record<string, unknown>> extends SignalBase<ChannelMessage<TMap>> {
+export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessage<TMap>> {
   /**
    * The logger instance for this signal.
    * @protected
@@ -96,10 +134,13 @@ export class ChannelSignal<TMap extends Record<string, unknown>> extends SignalB
    * registered via `on()`. Kept separate from `SignalBase`'s observer list so
    * that `subscribe()` (raw stream) and `on()` (named routing) never interfere.
    *
+   * Stored as `InternalHandler` (erased to `unknown` payload) to avoid
+   * unevaluable conditional types at the storage boundary. Type safety is
+   * enforced at the public `on()` and `dispatch()` call sites.
+   *
    * @private
    */
-  private readonly namedHandlers__: Map<keyof TMap, Set<{handler: ChannelHandler<TMap, keyof TMap>; once: boolean}>> =
-    new Map();
+  private readonly namedHandlers__ = new Map<keyof TMap, Set<{handler: InternalHandler; once: boolean}>>();
 
   constructor(config: ChannelSignalConfig) {
     super(config);
@@ -115,20 +156,26 @@ export class ChannelSignal<TMap extends Record<string, unknown>> extends SignalB
    * The notification is scheduled as a microtask to ensure non-blocking,
    * consistent delivery — matching the behavior of `EventSignal`.
    *
-   * TypeScript enforces that `payload` matches the type declared for `name`
-   * in `TMap`. If the payload type is `void` or `undefined`, the argument can
-   * be omitted entirely.
+   * ### Payload enforcement
    *
-   * @param name    The message name (must be a key of `TMap`).
-   * @param payload The optional payload for the message.
+   * The payload argument is **required** unless the declared type in `TMap` is
+   * `void` or `undefined`. Omitting a required payload — or passing `undefined`
+   * for a non-optional type — is a **compile error**. This prevents accidental
+   * `undefined` from propagating into handlers that expect a real value.
    *
-   * @example
    * ```ts
-   * channel.dispatch('open-drawer', {panel: 'settings'});
-   * channel.dispatch('close-drawer'); // no payload needed
+   * // TMap: { 'add-to-cart': {productId: number}; 'logout': void }
+   * channel.dispatch('add-to-cart', {productId: 42}); // ✅ required payload
+   * channel.dispatch('add-to-cart');                  // ❌ compile error
+   * channel.dispatch('logout');                       // ✅ void — no payload
+   * channel.dispatch('logout', undefined);            // ✅ also fine
    * ```
+   *
+   * @param args Tuple of `[name, payload]` — payload optionality is enforced
+   *             by `DispatchArgs<TMap, K>` based on the declared type.
    */
-  public dispatch<K extends keyof TMap>(name: K, payload?: TMap[K]): void {
+  public dispatch<K extends keyof TMap>(...args: DispatchArgs<TMap, K>): void {
+    const [name, payload] = args;
     this.logger_.logMethodArgs?.('dispatch', {name, payload});
     this.checkDestroyed_();
     delay.nextMicrotask().then(() => this.route__(name, payload));
@@ -176,9 +223,7 @@ export class ChannelSignal<TMap extends Record<string, unknown>> extends SignalB
       this.namedHandlers__.set(name, handlerSet);
     }
 
-    // Cast is safe: K extends keyof TMap, so ChannelHandler<TMap, K> is
-    // assignable to ChannelHandler<TMap, keyof TMap> at runtime.
-    const entry = {handler: handler as ChannelHandler<TMap, keyof TMap>, once: options?.once ?? false};
+    const entry = {handler: handler as InternalHandler, once: options?.once ?? false};
     handlerSet.add(entry);
 
     return {
@@ -250,7 +295,7 @@ export class ChannelSignal<TMap extends Record<string, unknown>> extends SignalB
     }
 
     // ── Raw-stream subscribers (SignalBase observers) ─────────────────────────
-    this.notify_({name, payload} as unknown as ChannelMessage<TMap>);
+    this.notify_({name, payload} as ChannelMessage<TMap>);
   }
 
   /**
