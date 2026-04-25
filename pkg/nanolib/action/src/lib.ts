@@ -1,6 +1,5 @@
 import {createLogger} from '@alwatr/logger';
 import {createChannelSignal} from '@alwatr/signal';
-import type {ActionRecord} from './action-record.js';
 
 /**
  * Module-scoped logger for `@alwatr/action`.
@@ -23,4 +22,4 @@ export const logger_ = createLogger('alwatr-action');
  *
  * @internal — not part of the public API; use `onAction` / `dispatchAction` instead.
  */
-export const internalChannel_ = createChannelSignal<ActionRecord>({name: 'alwatr-action'});
+export const internalChannel_ = createChannelSignal<Record<string, unknown>>({name: 'alwatr-action'});

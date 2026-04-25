@@ -59,7 +59,7 @@ export function onAction<K extends keyof ActionRecord>(
   logger_.logMethodArgs?.('onAction', {actionId});
   // Cast through `unknown` to bridge the gap between the strict public signature
   // (ActionRecord[K]) and the internal channel's wider type (ActionRecord & Record<string, unknown>).
-  return internalChannel_.on(actionId, handler);
+  return internalChannel_.on(actionId, handler as (payload: unknown) => Awaitable<void>);
 }
 
 /**
