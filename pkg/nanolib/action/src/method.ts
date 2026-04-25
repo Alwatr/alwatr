@@ -111,8 +111,8 @@ export function onAction<K extends keyof ActionRecord>(
 export function dispatchAction<K extends keyof ActionRecord>(
   ...args: ActionRecord[K] extends void | undefined ? [actionId: K] : [actionId: K, actionPayload: ActionRecord[K]]
 ): void;
-// Implementation
-export function dispatchAction(actionId: keyof ActionRecord, actionPayload?: unknown): void {
+// Implementation — accepts any declared key; payload is unknown at runtime.
+export function dispatchAction(actionId: string, actionPayload?: unknown): void {
   logger_.logMethodArgs?.('dispatchAction', {actionId, actionPayload});
   internalChannel_.dispatch(actionId as string, actionPayload);
 }
@@ -133,15 +133,13 @@ export function dispatchAction(actionId: keyof ActionRecord, actionPayload?: unk
  * handler — avoid duplicate registrations in production code.
  *
  * @param name    - The modifier token (lowercase, no dots or arrows).
- * @param handler - The `ModifierHandler` function bound to an `ActionContext`.
+ * @param handler - A `ModifierHandler` receiving `(event, element)`.
  *
  * @example — a `confirm` modifier that shows a browser dialog
  * ```ts
  * import {registerModifier} from '@alwatr/action';
  *
- * registerModifier('confirm', function () {
- *   return window.confirm('Are you sure?');
- * });
+ * registerModifier('confirm', () => window.confirm('Are you sure?'));
  * ```
  * ```html
  * <button on-action="click.confirm->delete-item:42">Delete</button>
@@ -170,14 +168,14 @@ export function registerModifier(name: string, handler: ModifierHandler): void {
  * resolver — avoid duplicate registrations in production code.
  *
  * @param name     - The resolver token (should start with `$` by convention).
- * @param resolver - The `PayloadResolver` function bound to an `ActionContext`.
+ * @param resolver - A `PayloadResolver` receiving `(event, element)`.
  *
  * @example — a `$checked` resolver for checkbox state
  * ```ts
  * import {registerPayloadResolver} from '@alwatr/action';
  *
- * registerPayloadResolver('$checked', function () {
- *   return (this.element as HTMLInputElement).checked;
+ * registerPayloadResolver('$checked', (_event, element) => {
+ *   return (element as HTMLInputElement).checked;
  * });
  * ```
  * ```html

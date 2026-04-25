@@ -3,15 +3,18 @@
 /**
  * A modifier handler used in `on-action` attribute syntax.
  *
- * Called with an `ActionContext` as `this` and the triggering DOM `event`.
- * Return `true` (or any truthy value) to allow the action to proceed,
- * or `false` to cancel the dispatch.
+ * Receives the triggering DOM `event` and the `element` that owns the
+ * `on-action` attribute. Return `true` (or any truthy value) to allow the
+ * action to proceed, or `false` to cancel the dispatch.
+ *
+ * Using explicit parameters instead of `this` binding makes handlers
+ * compatible with arrow functions and easier to test in isolation.
  *
  * @example
  * ```ts
  * // A modifier that only allows the action when the element is not disabled
- * const notDisabledHandler: ModifierHandler = function () {
- *   return !(this.element as HTMLButtonElement).disabled;
+ * const notDisabledHandler: ModifierHandler = (_event, element) => {
+ *   return !(element as HTMLButtonElement).disabled;
  * };
  * ```
  */
@@ -20,15 +23,18 @@ export type ModifierHandler = (event: Event, element: HTMLElement) => boolean;
 /**
  * A payload resolver used in `on-action` attribute syntax.
  *
- * Called with an `ActionContext` as `this` and the triggering DOM `event`
- * at dispatch time. The return value becomes the `actionPayload` passed to
- * `onAction` subscribers. Use this to compute dynamic payloads from DOM state.
+ * Receives the triggering DOM `event` and the `element` that owns the
+ * `on-action` attribute. The return value becomes the `actionPayload` passed
+ * to `onAction` subscribers. Use this to compute dynamic payloads from DOM state.
+ *
+ * Using explicit parameters instead of `this` binding makes resolvers
+ * compatible with arrow functions and easier to test in isolation.
  *
  * @example
  * ```ts
  * // A resolver that returns the element's dataset id
- * const dataIdResolver: PayloadResolver = function () {
- *   return (this.element as HTMLElement).dataset.id ?? null;
+ * const dataIdResolver: PayloadResolver = (_event, element) => {
+ *   return (element as HTMLElement).dataset.id ?? null;
  * };
  * ```
  */
@@ -87,7 +93,7 @@ modifierRegistry.set('prevent', (event) => {
  *
  * @example `<form on-action="submit.prevent.validate->submit-form:$formdata" novalidate>`
  */
-modifierRegistry.set('validate', function (_, element) {
+modifierRegistry.set('validate', (_event, element) => {
   const form = element instanceof HTMLFormElement ? element : element.closest('form');
   if (!form) return false;
   return form.checkValidity();
@@ -103,7 +109,7 @@ modifierRegistry.set('validate', function (_, element) {
  *
  * @example `<input on-action="input->search-query:$value" />`
  */
-payloadRegistry.set('$value', function (_, element) {
+payloadRegistry.set('$value', (_event, element) => {
   return 'value' in element ? (element as {value: unknown}).value : null;
 });
 
@@ -116,12 +122,12 @@ payloadRegistry.set('$value', function (_, element) {
  *
  * @example `<form on-action="submit.prevent.validate->submit-form:$formdata">`
  * ```ts
- * onAction<Record<string, FormDataEntryValue>>('submit-form', (data) => {
+ * onAction('submit-form', (data) => {
  *   console.log(data); // {username: 'ali', password: '…'}
  * });
  * ```
  */
-payloadRegistry.set('$formdata', function (_, element) {
+payloadRegistry.set('$formdata', (_event, element) => {
   const form = element instanceof HTMLFormElement ? element : element.closest('form');
   return form ? Object.fromEntries(new FormData(form).entries()) : null;
 });

@@ -1,12 +1,11 @@
 /**
  * @alwatr/action — Declarative DOM action-dispatch for Unidirectional Data Flow.
  *
- * ## Two ways to activate `on-action` attributes
+ * ## Activating `on-action` attributes
  *
- * ### 1. Global delegation (recommended)
- *
- * One listener on `document.body` handles every `on-action` element — past,
- * present, and future. O(1) boot time regardless of element count.
+ * Call `setupActionDelegation()` once at bootstrap. A single capture-phase
+ * listener on `document.body` handles every `on-action` element — including
+ * elements added dynamically after bootstrap — with O(1) initialization cost.
  *
  * ```ts
  * import {setupActionDelegation, onAction} from '@alwatr/action';
@@ -15,22 +14,20 @@
  * onAction('open-drawer', (panel) => openDrawer(panel));
  * ```
  *
- * ### 2. Programmatic dispatch
- *
- * Dispatch actions from code without any HTML attribute:
+ * ## Programmatic dispatch
  *
  * ```ts
- * import {dispatchAction, onAction} from '@alwatr/action';
+ * import {dispatchAction} from '@alwatr/action';
  *
  * dispatchAction('navigate', '/dashboard');
- * onAction('navigate', (path) => router.push(path));
  * ```
  *
  * ## Registering typed actions
  *
- * Extend `ActionMap` via declaration merging to get full type safety:
+ * Extend `ActionRecord` via declaration merging to get full type safety:
  *
  * ```ts
+ * // src/action-record.ts
  * declare module '@alwatr/action' {
  *   interface ActionRecord {
  *     'open-drawer': string;
@@ -46,10 +43,12 @@
  * - `setupActionDelegation` / `teardownActionDelegation` — global delegation lifecycle
  * - `DEFAULT_DELEGATED_EVENTS` — default event types covered by delegation
  * - `onAction` / `dispatchAction` — subscribe to and dispatch named actions
- * - `dispatchPageId` — read `page-id` attribute and dispatch `'page-ready'`
  * - `registerModifier` / `registerPayloadResolver` — extend the attribute syntax
+ *
+ * ## Page identity
+ *
+ * For page-ready signals in SSG/SSR apps, use `@alwatr/page-ready` instead.
  */
+export type {ActionRecord} from './action-record.js';
 export * from './method.js';
 export * from './delegate.js';
-export * from './page-ready.js';
-export * from './action-record.js';

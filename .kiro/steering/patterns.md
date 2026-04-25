@@ -268,12 +268,11 @@ on-action="eventType[.modifier…]->actionId[:payload]"
 
 ### Built-in modifiers
 
-| Modifier    | Effect                                                       |
-| ----------- | ------------------------------------------------------------ |
-| `.prevent`  | `event.preventDefault()`                                     |
-| `.stop`     | `event.stopPropagation()`                                    |
-| `.once`     | Dispatches only once per element (emulated via `WeakSet`)    |
-| `.validate` | Cancels dispatch if nearest `<form>` fails `checkValidity()` |
+| Modifier    | Effect                                                                            |
+| ----------- | --------------------------------------------------------------------------------- |
+| `.prevent`  | `event.preventDefault()`                                                          |
+| `.once`     | Removes `on-action` attribute after first fire — dispatches only once per element |
+| `.validate` | Cancels dispatch if nearest `<form>` fails `checkValidity()`                      |
 
 ### Built-in payload resolvers
 
@@ -284,25 +283,19 @@ on-action="eventType[.modifier…]->actionId[:payload]"
 
 ### Extending with custom modifiers and resolvers
 
-The `this` context in handlers is `ActionContext`:
-
-```ts
-interface ActionContext {
-  readonly element: HTMLElement; // the element with the on-action attribute
-}
-```
+Handler signature uses explicit parameters — no `this` binding:
 
 ```ts
 import {registerModifier, registerPayloadResolver} from '@alwatr/action';
 
 // Custom modifier — cancel dispatch if element is disabled
-registerModifier('not-disabled', function () {
-  return !(this.element as HTMLButtonElement).disabled;
+registerModifier('not-disabled', (_event, element) => {
+  return !(element as HTMLButtonElement).disabled;
 });
 
 // Custom payload resolver — read a data attribute
-registerPayloadResolver('$data-id', function () {
-  return (this.element as HTMLElement).dataset.id ?? null;
+registerPayloadResolver('$data-id', (_event, element) => {
+  return (element as HTMLElement).dataset.id ?? null;
 });
 ```
 

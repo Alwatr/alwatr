@@ -34,8 +34,9 @@
  * Extend this interface via declaration merging to register your application's
  * actions and gain full type safety in `onAction` and `dispatchAction`.
  *
- * Built-in system actions are declared here. Application-level actions should
- * be declared in a dedicated `action-record.ts` file within each feature package.
+ * This interface is intentionally empty in the base package — all actions are
+ * application-specific and should be declared in a dedicated `action-record.ts`
+ * file within each feature package.
  *
  * @example — registering actions in a feature package
  * ```ts
@@ -49,18 +50,5 @@
  * }
  * ```
  */
-export interface ActionRecord {
-  /**
-   * Dispatched by `dispatchPageId()` when the page identity is read from the
-   * `page-id` HTML attribute. Payload is the page identifier string.
-   *
-   * @example
-   * ```html
-   * <body page-id="home">…</body>
-   * ```
-   * ```ts
-   * onAction('page-ready', (pageId) => router.setPage(pageId));
-   * ```
-   */
-  'page-ready': string;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ActionRecord {}
