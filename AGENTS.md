@@ -40,6 +40,10 @@ This repository uses Kiro IDE Steering Documents located in the `.kiro/steering/
 
 Apply these principles to every implementation decision — in TypeScript, Nunjucks templates, CSS, and architecture alike:
 
+- **Unidirectional Data Flow:** «داده‌ها فقط به سمت پایین (به سمت UI) سرازیر می‌شوند، و اکشن‌ها (درخواست‌های تغییر) فقط به سمت بالا (به سمت منطق) ارسال می‌شوند.»
+
+- **Open/Closed Principle:** Design components and services to be extended through composition (new directives, new signals, new modifiers) rather than modified. Existing, working code should rarely need to change to accommodate new features.
+
 - **DRY (Don't Repeat Yourself):** Never duplicate logic or markup. Extract shared behavior into utilities, partials, base classes, or signals. If the same pattern appears twice, it belongs in a shared abstraction.
 
 - **KISS (Keep It Simple, Stupid):** Prefer the simplest solution that correctly solves the problem. Avoid clever abstractions, over-engineering, or premature optimization. Simple code is easier to debug, review, and extend.
@@ -49,7 +53,3 @@ Apply these principles to every implementation decision — in TypeScript, Nunju
 - **Separation of Concerns:** Keep distinct responsibilities in distinct places — business logic in services, state in signals, presentation in templates/directives, styles in `_windstyle`. Never mix these layers.
 
 - **Single Responsibility Principle:** Each class, directive, service, template, or function should do exactly one thing. If a unit needs an "and" to describe what it does, split it.
-
-- **Open/Closed Principle:** Design components and services to be extended through composition (new directives, new signals, new modifiers) rather than modified. Existing, working code should rarely need to change to accommodate new features.
-
-- **Unidirectional Data Flow:** «داده‌ها فقط به سمت پایین (به سمت UI) سرازیر می‌شوند، و اکشن‌ها (درخواست‌های تغییر) فقط به سمت بالا (به سمت منطق) ارسال می‌شوند.»
