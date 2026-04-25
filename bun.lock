@@ -390,6 +390,20 @@
         "typescript": "^6.0.3",
       },
     },
+    "pkg/nanolib/page-ready": {
+      "name": "@alwatr/page-ready",
+      "version": "9.12.0",
+      "dependencies": {
+        "@alwatr/logger": "workspace:*",
+        "@alwatr/signal": "workspace:*",
+      },
+      "devDependencies": {
+        "@alwatr/nano-build": "workspace:*",
+        "@alwatr/standard": "workspace:*",
+        "@alwatr/type-helper": "workspace:*",
+        "typescript": "^6.0.3",
+      },
+    },
     "pkg/nanolib/parse-duration": {
       "name": "@alwatr/parse-duration",
       "version": "9.11.2",
@@ -766,6 +780,8 @@
     "@alwatr/node": ["@alwatr/node@workspace:pkg/node"],
 
     "@alwatr/node-fs": ["@alwatr/node-fs@workspace:pkg/nanolib/node-fs"],
+
+    "@alwatr/page-ready": ["@alwatr/page-ready@workspace:pkg/nanolib/page-ready"],
 
     "@alwatr/parse-duration": ["@alwatr/parse-duration@workspace:pkg/nanolib/parse-duration"],
 
