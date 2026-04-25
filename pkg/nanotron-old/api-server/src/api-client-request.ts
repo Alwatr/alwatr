@@ -5,8 +5,9 @@ import {HttpStatusCodes} from './const.js';
 
 import type {DefineRouteOption, HttpRequestHeaders, NativeClientRequest, NativeServerResponse} from './type.js';
 import type {NanotronUrl} from './url.js';
+import type {DictionaryOpt} from '@alwatr/type-helper';
 
-export class NanotronClientRequest<TSharedMeta extends DictionaryOpt = DictionaryOpt> {
+export class NanotronClientRequest<TSharedMeta extends DictionaryOpt<any> = DictionaryOpt<any>> {
   public readonly url: NanotronUrl;
 
   public readonly serverResponse: NanotronServerResponse;

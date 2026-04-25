@@ -697,12 +697,12 @@
       "version": "1.0.0",
       "dependencies": {
         "@alwatr/core": "workspace:*",
+        "@alwatr/flux": "workspace:*",
         "@alwatr/node": "workspace:*",
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
-        "@alwatr/type-helper": "workspace:*",
         "typescript": "^6.0.3",
       },
     },

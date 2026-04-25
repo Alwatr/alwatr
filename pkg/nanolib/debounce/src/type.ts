@@ -1,3 +1,4 @@
+import type {AnyFunc} from '@alwatr/type-helper';
 
 /**
  * A single configuration object for creating a Debouncer.

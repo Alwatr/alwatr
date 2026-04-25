@@ -1,3 +1,4 @@
+import type {Awaitable} from '@alwatr/type-helper';
 import type {DebouncerConfig} from '@alwatr/debounce';
 import type {LocalStorageProviderConfig} from '@alwatr/local-storage';
 

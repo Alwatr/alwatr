@@ -1,7 +1,7 @@
-
-import type { FetchError } from './error.js';
-import type { HttpMethod, HttpRequestHeaders } from '@alwatr/http-primer';
-import type { Duration } from '@alwatr/parse-duration';
+import type {DictionaryOpt, DictionaryReq, JsonValue} from '@alwatr/type-helper';
+import type {FetchError} from './error.js';
+import type {HttpMethod, HttpRequestHeaders} from '@alwatr/http-primer';
+import type {Duration} from '@alwatr/parse-duration';
 
 /**
  * A dictionary of query parameters.
@@ -126,7 +126,7 @@ export interface AlwatrFetchOptions_ {
  */
 export type FetchOptions = Partial<AlwatrFetchOptions_> & Omit<RequestInit, 'headers'>;
 
-export type FetchJsonOptions = FetchOptions & { requireJsonResponseWithOkTrue?: true };
+export type FetchJsonOptions = FetchOptions & {requireJsonResponseWithOkTrue?: true};
 
 /**
  * Represents the tuple returned by the fetch function.

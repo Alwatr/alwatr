@@ -5,6 +5,7 @@
  * directives. Extend it to attach declarative behaviour to DOM elements.
  */
 
+import type {Awaitable} from '@alwatr/type-helper';
 import {delay} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
 import {finalizationRegistry} from './lib.js';

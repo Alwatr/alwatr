@@ -1,7 +1,8 @@
-export {};
+// Compile-time constants injected by nano-build (bun build --define).
+// These tokens are replaced inline by the bundler at build time.
+// They are NOT runtime globals — never access via globalThis.
+// In unbundled contexts (tests, tsc), these resolve to their injected literal values.
 
-declare global {
-  var __package_name__: string;
-  var __package_version__: string;
-  var __dev_mode__: boolean;
-}
+declare const __dev_mode__: boolean;
+declare const __package_name__: string;
+declare const __package_version__: string;

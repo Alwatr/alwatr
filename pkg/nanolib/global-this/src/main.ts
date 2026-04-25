@@ -1,5 +1,7 @@
 /// <reference types="@alwatr/nano-build" />
 
+import type {DictionaryOpt} from '@alwatr/type-helper';
+
 export type GlobalThis = typeof globalThis;
 
 /**
@@ -25,6 +27,6 @@ const globalThis__: GlobalThis = (() => {
  * }
  * ```
  */
-export function getGlobalThis<T extends DictionaryOpt = GlobalThis>(): GlobalThis & T {
+export function getGlobalThis<T extends DictionaryOpt<unknown> = GlobalThis>(): GlobalThis & T {
   return globalThis__ as GlobalThis & T;
 }

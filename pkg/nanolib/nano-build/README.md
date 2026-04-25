@@ -21,14 +21,14 @@ Lightweight, zero-config Bun-based build CLI powered by `bun build` for modern a
 
 Measured on a 16-inch M1 MacBook Pro using the three.js bundle benchmark:
 
-| Bundler | Time | Relative | Visualization |
-| --- | ---: | ---: | --- |
-| 🚀 **nano-build** | **170ms** | **baseline** | \| |
-| esbuild | 300ms | 1.76x | \|\| |
-| rspack | 4.45s | 26x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
-| Parcel 2 | 26.32s | 155x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
-| Rollup + Terser | 32.00s | 188x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
-| Webpack 5 | 38.02s | 224x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
+| Bundler           |      Time |     Relative | Visualization                                                                                                                                                         |
+| ----------------- | --------: | -----------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🚀 **nano-build** | **170ms** | **baseline** | \|                                                                                                                                                                    |
+| esbuild           |     300ms |        1.76x | \|\|                                                                                                                                                                  |
+| rspack            |     4.45s |          26x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                              |
+| Parcel 2          |    26.32s |         155x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                      |
+| Rollup + Terser   |    32.00s |         188x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒        |
+| Webpack 5         |    38.02s |         224x | ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ |
 
 **Key Takeaways:**
 
@@ -39,6 +39,43 @@ Measured on a 16-inch M1 MacBook Pro using the three.js bundle benchmark:
 
 📊 Benchmark source:
 <https://github.com/oven-sh/bun/tree/main/bench/bundle>
+
+## Compile-time Constants (TypeScript)
+
+`nano-build` injects three compile-time constants via `bun build --define`. They are declared in
+`global.d.ts` as `declare const` — **not** as runtime globals on `globalThis`.
+
+| Constant              | Type      | Value                               |
+| --------------------- | --------- | ----------------------------------- |
+| `__dev_mode__`        | `boolean` | `true` unless `NODE_ENV=production` |
+| `__package_name__`    | `string`  | `name` field from `package.json`    |
+| `__package_version__` | `string`  | `version` field from `package.json` |
+
+The bundler replaces every occurrence of these tokens with their literal values at build time,
+enabling dead code elimination. For example:
+
+```ts
+// Source
+if (__dev_mode__) logger.logMethod?.('init');
+
+// After production build (NODE_ENV=production)
+// → entire if-block is removed by the bundler
+```
+
+To get TypeScript to recognise these constants, add `"@alwatr/nano-build"` to the `types` array
+in your `tsconfig.json`:
+
+```jsonc
+{
+  "compilerOptions": {
+    "types": ["@alwatr/nano-build"],
+  },
+}
+```
+
+> **Note:** Do not access these via `globalThis.__dev_mode__` — they are not runtime globals.
+> In unbundled contexts (e.g. `bun test`), they resolve to the literal values injected by the
+> test runner or remain as-is if not replaced.
 
 ## Requirements
 
@@ -77,17 +114,17 @@ bun run build
 
 Like the Bun runtime, the bundler supports an array of file types out of the box. The following table breaks down the bundler's set of standard loaders.
 
-| Extensions | Details |
-| --- | --- |
+| Extensions                                            | Details                                                                                                                                                                                                                                                                                           |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `.js` `.jsx` `.cjs` `.mjs` `.mts` `.cts` `.ts` `.tsx` | Uses Bun's built-in transpiler to parse the file and transpile TypeScript/JSX syntax to vanilla JavaScript. The bundler applies default transforms, including dead code elimination and tree shaking. Bun does not down-convert newer ECMAScript syntax, so recent syntax is preserved in output. |
-| `.json` | JSON files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import pkg from "./package.json";<br/>pkg.name; // => "my-package"<br/> |
-| `.jsonc` | JSON with comments. Files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import config from "./config.jsonc";<br/>config.name; // => "my-config"<br/> |
-| `.toml` | TOML files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import config from "./bunfig.toml";<br/>config.logLevel; // => "debug"<br/> |
-| `.yaml` `.yml` | YAML files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import config from "./config.yaml";<br/>config.name; // => "my-app"<br/> |
-| `.txt` | The contents of the text file are read and inlined into the bundle as a string.<br/><br/>js<br/>import contents from "./file.txt";<br/>console.log(contents); // => "Hello, world!"<br/> |
-| `.html` | HTML files are processed and any referenced assets (scripts, stylesheets, images) are bundled. |
-| `.css` | CSS files are bundled together into a single `.css` file in the output directory. |
-| `.node` `.wasm` | These files are supported by the Bun runtime, but during bundling they are treated as assets. |
+| `.json`                                               | JSON files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import pkg from "./package.json";<br/>pkg.name; // => "my-package"<br/>                                                                                                                                 |
+| `.jsonc`                                              | JSON with comments. Files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import config from "./config.jsonc";<br/>config.name; // => "my-config"<br/>                                                                                                             |
+| `.toml`                                               | TOML files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import config from "./bunfig.toml";<br/>config.logLevel; // => "debug"<br/>                                                                                                                             |
+| `.yaml` `.yml`                                        | YAML files are parsed and inlined into the bundle as a JavaScript object.<br/><br/>js<br/>import config from "./config.yaml";<br/>config.name; // => "my-app"<br/>                                                                                                                                |
+| `.txt`                                                | The contents of the text file are read and inlined into the bundle as a string.<br/><br/>js<br/>import contents from "./file.txt";<br/>console.log(contents); // => "Hello, world!"<br/>                                                                                                          |
+| `.html`                                               | HTML files are processed and any referenced assets (scripts, stylesheets, images) are bundled.                                                                                                                                                                                                    |
+| `.css`                                                | CSS files are bundled together into a single `.css` file in the output directory.                                                                                                                                                                                                                 |
+| `.node` `.wasm`                                       | These files are supported by the Bun runtime, but during bundling they are treated as assets.                                                                                                                                                                                                     |
 
 If the bundler encounters an import with an unrecognized extension, the file is treated as an asset, copied to `outdir`, and the import is resolved to the emitted file path.
 

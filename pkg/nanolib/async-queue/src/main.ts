@@ -1,5 +1,5 @@
+import type {DictionaryOpt} from '@alwatr/type-helper';
 import {newFlatomise} from '@alwatr/flatomise';
-
 
 /**
  * A queue that executes async tasks in order like mutex and semaphore methodology
@@ -46,8 +46,7 @@ export class AsyncQueue {
 
     try {
       await previousTaskPromise;
-    }
-    catch (_e) {
+    } catch (_e) {
       // ignore
     }
 

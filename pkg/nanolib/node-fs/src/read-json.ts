@@ -1,3 +1,4 @@
+import type {Awaitable, JsonValue} from '@alwatr/type-helper';
 import {logger} from './common.js';
 import {parseJson} from './json.js';
 import {readFile, readFileSync} from './read-file.js';
@@ -52,8 +53,7 @@ export function readJson<T extends JsonValue>(path: string, sync = false): Await
   logger.logMethodArgs?.('readJson', {path: path.slice(-32), sync});
   if (sync === true) {
     return parseJson<T>(readFileSync(path));
-  }
-  else {
+  } else {
     return readFile(path).then((content) => parseJson<T>(content));
   }
 }

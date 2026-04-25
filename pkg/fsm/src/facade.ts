@@ -1,3 +1,4 @@
+import type {JsonObject} from '@alwatr/type-helper';
 import {createPersistentStateSignal, createStateSignal} from '@alwatr/signal';
 
 import {FsmService} from './fsm-service.js';
@@ -72,17 +73,18 @@ export function createFsmService<TState extends string, TEvent extends MachineEv
     context: config.context,
   };
 
-  const stateSignal = config.persistent
-    ? createPersistentStateSignal<MachineState<TState, TContext>>({
-      name: `fsm-state-${config.name}`,
-      storageKey: config.persistent.storageKey ?? config.name,
-      initialValue,
-      schemaVersion: config.persistent.schemaVersion,
-    })
+  const stateSignal =
+    config.persistent ?
+      createPersistentStateSignal<MachineState<TState, TContext>>({
+        name: `fsm-state-${config.name}`,
+        storageKey: config.persistent.storageKey ?? config.name,
+        initialValue,
+        schemaVersion: config.persistent.schemaVersion,
+      })
     : createStateSignal<MachineState<TState, TContext>>({
-      name: `fsm-state-${config.name}`,
-      initialValue: initialValue,
-    });
+        name: `fsm-state-${config.name}`,
+        initialValue: initialValue,
+      });
 
   return new FsmService(config, stateSignal);
 }

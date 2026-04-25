@@ -1,7 +1,14 @@
-import { createLogger, type AlwatrLogger } from '@alwatr/logger';
-import { createEventSignal, type StateSignal, type PersistentStateSignal, EventSignal, type IReadonlySignal } from '@alwatr/signal';
+import type {JsonObject, SingleOrArray} from '@alwatr/type-helper';
+import {createLogger, type AlwatrLogger} from '@alwatr/logger';
+import {
+  createEventSignal,
+  type StateSignal,
+  type PersistentStateSignal,
+  EventSignal,
+  type IReadonlySignal,
+} from '@alwatr/signal';
 
-import type { StateMachineConfig, MachineState, MachineEvent, Transition, Effect, Assigner } from './type.js';
+import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect, Assigner} from './type.js';
 
 /**
  * A generic, encapsulated service that creates, runs, and manages a finite state machine.
@@ -23,7 +30,9 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
   constructor(
     protected readonly config_: StateMachineConfig<TState, TEvent, TContext>,
-    private readonly stateSignal__: StateSignal<MachineState<TState, TContext>> | PersistentStateSignal<MachineState<TState, TContext>>,
+    private readonly stateSignal__:
+      | StateSignal<MachineState<TState, TContext>>
+      | PersistentStateSignal<MachineState<TState, TContext>>,
   ) {
     this.logger_ = createLogger(`fsm:${this.config_.name}`);
     this.logger_.logMethodArgs?.('constructor', config_);
@@ -32,7 +41,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     this.eventSignal = createEventSignal<TEvent>({
       name: `fsm-event-${this.config_.name}`,
     });
-    this.eventSignal.subscribe(this.processTransition__.bind(this), { receivePrevious: false });
+    this.eventSignal.subscribe(this.processTransition__.bind(this), {receivePrevious: false});
   }
 
   /**
@@ -43,7 +52,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    */
   private async processTransition__(event: TEvent): Promise<void> {
     const currentState = this.stateSignal__.get();
-    this.logger_.logMethodArgs?.('processTransition__', { state: currentState.name, event });
+    this.logger_.logMethodArgs?.('processTransition__', {state: currentState.name, event});
 
     const transition = this.findTransition__(event, currentState.context);
 
@@ -87,7 +96,10 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    * @param context The current machine context.
    * @returns The first matching transition or `undefined` if none are found.
    */
-  private findTransition__(event: TEvent, context: Readonly<TContext>): Transition<TState, TEvent, TContext> | undefined {
+  private findTransition__(
+    event: TEvent,
+    context: Readonly<TContext>,
+  ): Transition<TState, TEvent, TContext> | undefined {
     this.logger_.logMethod?.('findTransition__');
 
     const currentStateName = this.stateSignal__.get().name;
@@ -114,8 +126,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
           result: conditionMet,
         });
         return conditionMet;
-      }
-      catch (error) {
+      } catch (error) {
         this.logger_.error('findTransition__', 'condition_failed', error, {
           state: currentStateName,
           eventType: event.type,
@@ -141,12 +152,12 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     effects?: SingleOrArray<Effect<TEvent, TContext>>,
   ): Promise<void> {
     if (!effects) {
-      this.logger_.logMethodArgs?.('executeEffects__//skipped', { count: 0 });
+      this.logger_.logMethodArgs?.('executeEffects__//skipped', {count: 0});
       return;
     }
     const effectsArray: Effect<TEvent, TContext>[] = Array.isArray(effects) ? effects : [effects];
 
-    this.logger_.logMethodArgs?.('executeEffects__', { count: effectsArray.length });
+    this.logger_.logMethodArgs?.('executeEffects__', {count: effectsArray.length});
 
     for (const effect of effectsArray) {
       try {
@@ -160,8 +171,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
           });
           this.eventSignal.dispatch(result);
         }
-      }
-      catch (error) {
+      } catch (error) {
         this.logger_.error('executeEffects__', 'effect_failed', error, {
           effect: effect.name || 'anonymous',
           state: this.stateSignal__.get().name,
@@ -182,31 +192,38 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    * @param assigners A single assigner or an array of assigners.
    * @returns The new, updated context, or the original context if any assigner fails.
    */
-  private applyAssigners__(event: TEvent, context: Readonly<TContext>, assigners?: SingleOrArray<Assigner<TEvent, TContext>>): TContext {
+  private applyAssigners__(
+    event: TEvent,
+    context: Readonly<TContext>,
+    assigners?: SingleOrArray<Assigner<TEvent, TContext>>,
+  ): TContext {
     if (!assigners) {
-      this.logger_.logMethodArgs?.('applyAssigners__//skipped', { count: 0 });
+      this.logger_.logMethodArgs?.('applyAssigners__//skipped', {count: 0});
       return context;
     }
 
     const assignersArray: Assigner<TEvent, TContext>[] = Array.isArray(assigners) ? assigners : [assigners];
 
-    this.logger_.logMethodArgs?.('applyAssigners__', { count: assignersArray.length });
+    this.logger_.logMethodArgs?.('applyAssigners__', {count: assignersArray.length});
 
     try {
       // The entire reduce operation is wrapped in a single try/catch block
       // to ensure atomic updates.
       return assignersArray.reduce((accContext, assigner) => {
         const partialUpdate = assigner(event, accContext);
-        this.logger_.logMethodFull?.(`event.${event.type}.action.${assigner.name || 'anonymous'}`, { event, accContext }, partialUpdate);
+        this.logger_.logMethodFull?.(
+          `event.${event.type}.action.${assigner.name || 'anonymous'}`,
+          {event, accContext},
+          partialUpdate,
+        );
         if (typeof partialUpdate === 'object' && partialUpdate !== null) {
           // The next assigner receives the updated context from the previous one.
-          return { ...accContext, ...partialUpdate };
+          return {...accContext, ...partialUpdate};
         }
         // If an assigner returns nothing, pass the accumulated context along.
         return accContext;
       }, context);
-    }
-    catch (error) {
+    } catch (error) {
       this.logger_.error('applyAssigners__', 'assigner_failed_atomic', error, {
         event,
         context, // Log the original context for debugging.

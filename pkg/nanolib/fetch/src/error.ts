@@ -1,4 +1,5 @@
-import type { FetchErrorReason } from "./type.js";
+import type {JsonObject} from '@alwatr/type-helper';
+import type {FetchErrorReason} from './type.js';
 
 /**
  * Custom error class for fetch-related failures.

@@ -1,3 +1,4 @@
+import type {Awaitable} from '@alwatr/type-helper';
 import {internalChannel_, logger_} from './lib.js';
 import type {SubscribeResult} from '@alwatr/signal';
 import {modifierRegistry, payloadRegistry, type ModifierHandler, type PayloadResolver} from './registry.js';

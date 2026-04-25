@@ -1,6 +1,8 @@
 
 // *** Nitrobase File ***
 
+import type { DictionaryReq, JsonObject } from "@alwatr/type-helper";
+
 /**
  * The subdirectory location for each nitrobase file.
  */

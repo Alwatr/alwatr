@@ -4,6 +4,7 @@ import {getStoreId, getStorePath} from '@alwatr/nitrobase-helper';
 import {StoreFileType, StoreFileExtension, type StoreFileId, type DocumentContext, type StoreFileMeta} from '@alwatr/nitrobase-types';
 
 import {logger} from './logger.js';
+import type { JsonObject, DictionaryOpt } from '@alwatr/type-helper';
 
 __dev_mode__: logger.logFileModule?.('document-reference');
 
@@ -129,7 +130,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
       if (this.context__.meta.schemaVer === undefined || this.context__.meta.schemaVer === 0) {
         this.context__.meta.schemaVer = 1;
       }
-      delete (this.context__.meta as DictionaryOpt)['ver'];
+      delete (this.context__.meta as DictionaryOpt<any>)['ver'];
       this.context__.meta.extra ??= {};
       this.context__.meta.fv = 3;
     }

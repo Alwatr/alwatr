@@ -16,6 +16,7 @@ import {
 import {existsSync, readJson, resolve, unlink, writeJson} from '@alwatr/node-fs';
 
 import {logger} from './logger.js';
+import type { DictionaryReq, JsonObject, DictionaryOpt } from '@alwatr/type-helper';
 
 
 __dev_mode__: logger.logFileModule?.('alwatr-nitrobase');
@@ -183,7 +184,7 @@ export class AlwatrNitrobase {
    * @param stat nitrobase file stat
    * @param data initial data for the document
    */
-  private newStoreFile__(stat: StoreFileStat, data?: DictionaryOpt): void {
+  private newStoreFile__(stat: StoreFileStat, data?: DictionaryOpt<any>): void {
     logger.logMethodArgs?.('newStoreFile__', stat);
 
     (stat.changeDebounce as number | undefined) ??= this.config.defaultChangeDebounce;

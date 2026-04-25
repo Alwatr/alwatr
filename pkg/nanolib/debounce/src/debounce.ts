@@ -1,3 +1,4 @@
+import type {AnyFunc} from '@alwatr/type-helper';
 import type {DebouncerConfig} from './type.ts';
 
 /**
@@ -78,8 +79,7 @@ export class Debouncer<F extends AnyFunc> {
       if (this.config__.leading === true) {
         this.invoke__();
       }
-    }
-    else {
+    } else {
       clearTimeout(this.timerId__!);
     }
 

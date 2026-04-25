@@ -1,6 +1,7 @@
 import {HttpStatusCodes} from '@alwatr/nanotron-api-server';
 
 import type {NanotronClientRequest} from '@alwatr/nanotron-api-server';
+import type {JsonObject, JsonArray, DictionaryOpt} from '@alwatr/type-helper';
 
 /**
  * Middleware to parses the request body as JSON and assigns it to `this.sharedMeta.body`.
@@ -36,9 +37,8 @@ export async function parseBodyAsJson(this: NanotronClientRequest<{body?: JsonOb
   }
 
   try {
-    this.sharedMeta.body = JSON.parse(bodyBuffer.toString()) as DictionaryOpt | JsonArray;
-  }
-  catch (error) {
+    this.sharedMeta.body = JSON.parse(bodyBuffer.toString()) as DictionaryOpt<any> | JsonArray;
+  } catch (error) {
     this.logger_.error('parseBodyAsJson', 'invalid_body_json', error);
     this.serverResponse.statusCode = HttpStatusCodes.Error_Client_422_Unprocessable_Entity;
     this.serverResponse.replyErrorResponse({

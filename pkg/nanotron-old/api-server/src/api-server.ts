@@ -8,6 +8,7 @@ import {NanotronUrl} from './url.js';
 
 import type {DefineRouteOption, MatchType, NativeClientRequest, NativeServerResponse} from './type.js';
 import type {Duplex} from 'node:stream';
+import type {DictionaryOpt} from '@alwatr/type-helper';
 
 /**
  * Configuration options for the NanotronApiServer.
@@ -173,8 +174,8 @@ export class NanotronApiServer {
     this.logger_.logMethod?.('getRouteOption_');
 
     if (
-      Object.hasOwn(this.routeHandlerList__.exact, url.method) &&
-      Object.hasOwn(this.routeHandlerList__.exact[url.method]!, url.pathname)
+      Object.hasOwn(this.routeHandlerList__.exact, url.method)
+      && Object.hasOwn(this.routeHandlerList__.exact[url.method]!, url.pathname)
     ) {
       return this.routeHandlerList__.exact[url.method]![url.pathname]!;
     }
@@ -207,7 +208,9 @@ export class NanotronApiServer {
     routeHandlerList[option.method]![option.url] = option;
   }
 
-  public defineRoute<TSharedMeta extends DictionaryOpt = DictionaryOpt>(option: DefineRouteOption<TSharedMeta>): void {
+  public defineRoute<TSharedMeta extends DictionaryOpt<any> = DictionaryOpt<any>>(
+    option: DefineRouteOption<TSharedMeta>,
+  ): void {
     const option_: Required<DefineRouteOption<TSharedMeta>> = {
       matchType: 'exact',
       preHandlers: [],
@@ -223,8 +226,7 @@ export class NanotronApiServer {
   protected handleServerError_(error: NodeJS.ErrnoException): void {
     if (error.code === 'EADDRINUSE') {
       this.logger_.error('handleServerError_', 'address_in_use', error);
-    }
-    else {
+    } else {
       this.logger_.error('handleServerError_', 'http_server_error', error);
     }
   }
@@ -284,8 +286,7 @@ export class NanotronApiServer {
         if (connection.terminatedHandlers === true) return; // must check before each post-handler.
         await handler.call(connection, connection, connection.serverResponse, connection.sharedMeta);
       }
-    }
-    catch (error) {
+    } catch (error) {
       this.logger_.error('handleClientRequest_', 'route_handler_error', error, url.debugId);
 
       if (connection.serverResponse.statusCode < HttpStatusCodes.Error_Client_400_Bad_Request) {

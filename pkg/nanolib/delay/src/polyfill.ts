@@ -1,5 +1,5 @@
+import type {DictionaryOpt} from '@alwatr/type-helper';
 import {getGlobalThis} from '@alwatr/global-this';
-
 
 const globalThis = getGlobalThis<DictionaryOpt<unknown>>();
 
@@ -12,8 +12,8 @@ const globalThis = getGlobalThis<DictionaryOpt<unknown>>();
  * @returns A long integer value, the request ID, that uniquely identifies the entry in the callback list.
  */
 export const requestAnimationFrame: (callback: FrameRequestCallback) => number =
-  globalThis.requestAnimationFrame?.bind(globalThis) ??
-  ((callback: FrameRequestCallback) => setTimeout(() => callback(performance.now()), 1000 / 60));
+  globalThis.requestAnimationFrame?.bind(globalThis)
+  ?? ((callback: FrameRequestCallback) => setTimeout(() => callback(performance.now()), 1000 / 60));
 
 /**
  * Ensures compatibility for `requestIdleCallback` by using the native API.
@@ -27,8 +27,8 @@ export const requestAnimationFrame: (callback: FrameRequestCallback) => number =
  * @returns An ID which can be used to cancel the callback by calling `cancelIdleCallback()`.
  */
 export const requestIdleCallback: (callback: (deadline: IdleDeadline) => void, options?: IdleRequestOptions) => number =
-  globalThis.requestIdleCallback?.bind(globalThis) ??
-  ((
+  globalThis.requestIdleCallback?.bind(globalThis)
+  ?? ((
     callback: (deadline: IdleDeadline) => void,
     // options is not used in the fallback but kept for API consistency
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

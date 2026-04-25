@@ -1,5 +1,6 @@
 // Remember to remove sideEffect from nanolib package.json before test
-import {createLogger} from '@alwatr/core';
+import {createLogger, type DictionaryOpt} from '@alwatr/core';
+import '@alwatr/flux';
 import '@alwatr/node';
 
 // //

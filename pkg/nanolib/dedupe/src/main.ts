@@ -1,13 +1,12 @@
+import type {DictionaryOpt} from '@alwatr/type-helper';
 import {getGlobalThis} from '@alwatr/global-this';
 import {hasOwn} from '@alwatr/has-own';
-
 
 const globalThis_ = getGlobalThis<{__alwatr_dedupe__: string | true}>();
 
 if (typeof globalThis_.__alwatr_dedupe__ === 'undefined') {
   globalThis_.__alwatr_dedupe__ = __package_version__;
-}
-else {
+} else {
   if (globalThis_.__alwatr_dedupe__ === true) {
     globalThis_.__alwatr_dedupe__ = '1.0.x';
   }
@@ -45,8 +44,7 @@ export function deduplicate(args: {name: string; strict?: true}): void {
 
     if (args.strict) {
       throw error;
-    }
-    else {
+    } else {
       console.error(error);
     }
   }

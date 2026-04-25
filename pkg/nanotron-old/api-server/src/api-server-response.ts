@@ -4,6 +4,7 @@ import {type HttpStatusCode, HttpStatusCodes, HttpStatusMessages} from './const.
 
 import type {NanotronClientRequest} from './api-client-request.js';
 import type {HttpResponseHeaders, ErrorResponse, NativeServerResponse} from './type.js';
+import type {JsonObject} from '@alwatr/type-helper';
 
 /**
  * Configuration options for the Nanotron Api Server Response.
@@ -37,7 +38,7 @@ export class NanotronServerResponse {
 
     // Set default reply headers.
     this.headers = {
-      server: 'Alwatr Nanotron',
+      'server': 'Alwatr Nanotron',
       'content-type': 'text/plain charset=UTF-8',
     };
 
@@ -74,8 +75,7 @@ export class NanotronServerResponse {
       const metaType = typeof errorResponse.meta;
       if (metaType === 'string' || metaType === 'number' || metaType === 'boolean' || errorResponse.meta === null) {
         meta = `,"meta":"${errorResponse.meta}"`;
-      }
-      else if (metaType === 'object') {
+      } else if (metaType === 'object') {
         meta = `,"meta":${JSON.stringify(errorResponse.meta)}`;
       }
     }
@@ -96,21 +96,20 @@ export class NanotronServerResponse {
     if (error instanceof Error) {
       this.replyErrorResponse({
         ok: false,
-        errorCode: (error.name === 'Error' ? 'error_' + statusCode : (error.name + '').toLowerCase()) as Lowercase<string>,
+        errorCode: (error.name === 'Error' ?
+          'error_' + statusCode
+        : (error.name + '').toLowerCase()) as Lowercase<string>,
         errorMessage: error.message,
       });
-    }
-    else if (typeof error === 'string') {
+    } else if (typeof error === 'string') {
       this.replyErrorResponse({
         ok: false,
         errorCode: ('error_' + statusCode) as Lowercase<string>,
         errorMessage: error,
       });
-    }
-    else if (typeof error === 'object' && error !== null) {
+    } else if (typeof error === 'object' && error !== null) {
       this.replyJson(error as JsonObject);
-    }
-    else {
+    } else {
       this.replyErrorResponse({
         ok: false,
         errorCode: ('error_' + statusCode) as Lowercase<string>,
@@ -125,8 +124,7 @@ export class NanotronServerResponse {
     let responseString: string;
     try {
       responseString = JSON.stringify(responseJson);
-    }
-    catch (error) {
+    } catch (error) {
       this.logger_.error('replyJson', 'reply_json_stringify_failed', error, this.clientRequest.url.debugId);
       this.statusCode = HttpStatusCodes.Error_Server_500_Internal_Server_Error;
       this.replyErrorResponse({
@@ -170,8 +168,7 @@ export class NanotronServerResponse {
 
       this.applyHeaders_();
       this.raw_.end(context, 'binary');
-    }
-    catch (error) {
+    } catch (error) {
       this.logger_.error('reply', 'server_response_error', error, this.clientRequest.url.debugId);
       this.hasBeenSent_ = false;
     }

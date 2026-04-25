@@ -1,3 +1,4 @@
+import type {Mutable} from '@alwatr/type-helper';
 
 /**
  * Represents information about the current platform.
@@ -69,8 +70,7 @@ export const platformInfo: PlatformInfo = (() => {
     platformInfo_.isBrowser = true;
     // @ts-expect-error - Cannot find name 'WorkerGlobalScope'
     platformInfo_.isWebWorker = typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope;
-  }
-  else if (typeof process === 'object') {
+  } else if (typeof process === 'object') {
     platformInfo_.isCli = true;
 
     if (process.versions?.node != null) {
@@ -80,8 +80,7 @@ export const platformInfo: PlatformInfo = (() => {
     // @ts-expect-error - Cannot find name 'Bun'
     if (typeof Bun !== 'undefined') {
       platformInfo_.isBun = true;
-    }
-    else if (process.versions?.electron != null) {
+    } else if (process.versions?.electron != null) {
       platformInfo_.isElectron = true;
     }
     // @ts-expect-error - Cannot find name 'nw'
@@ -100,8 +99,7 @@ export const platformInfo: PlatformInfo = (() => {
   // development
   if (platformInfo_.isBrowser === true) {
     platformInfo_.development = location.hostname === 'localhost' || location.hostname.indexOf('127.') === 0;
-  }
-  else if (platformInfo_.isCli === true) {
+  } else if (platformInfo_.isCli === true) {
     platformInfo_.development = process.env.NODE_ENV !== 'production';
   }
 
