@@ -21,11 +21,6 @@ export const logger_ = createLogger('alwatr-action');
  * single `Map.get('A')` lookup and invokes only the handlers registered for
  * that specific action — never handlers for `'B'`, `'C'`, etc.
  *
- * `ActionRecord & Record<string, unknown>` satisfies the `ChannelSignal`
- * constraint (which requires an index signature) while keeping the public API
- * strictly limited to declared keys — the `Record<string, unknown>` part is
- * only visible to the internal channel, not to `onAction`/`dispatchAction`.
- *
  * @internal — not part of the public API; use `onAction` / `dispatchAction` instead.
  */
-export const internalChannel_ = createChannelSignal<ActionRecord & Record<string, unknown>>({name: 'alwatr-action'});
+export const internalChannel_ = createChannelSignal<ActionRecord>({name: 'alwatr-action'});
