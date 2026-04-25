@@ -27,6 +27,7 @@
     "@alwatr/render-state": "workspace:*",
     "@alwatr/session-storage": "workspace:*",
     "@alwatr/signal": "workspace:*",
+    "@alwatr/page-ready": "workspace:*",
     "@alwatr/type-helper": "workspace:*"
   },
   "devDependencies": {

@@ -65,6 +65,7 @@
         "@alwatr/action": "workspace:*",
         "@alwatr/directive": "workspace:*",
         "@alwatr/local-storage": "workspace:*",
+        "@alwatr/page-ready": "workspace:*",
         "@alwatr/render-state": "workspace:*",
         "@alwatr/session-storage": "workspace:*",
         "@alwatr/signal": "workspace:*",
