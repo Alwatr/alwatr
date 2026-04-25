@@ -37,8 +37,6 @@ import type {ChannelSignalConfig} from '../core/channel-signal.js';
  * appChannel.dispatch('close-drawer');
  * ```
  */
-export function createChannelSignal<TMap extends Record<string, unknown>>(
-  config: ChannelSignalConfig,
-): ChannelSignal<TMap> {
+export function createChannelSignal<TMap extends object>(config: ChannelSignalConfig): ChannelSignal<TMap> {
   return new ChannelSignal<TMap>(config);
 }
