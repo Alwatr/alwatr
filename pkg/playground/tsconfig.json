@@ -2,8 +2,7 @@
   "extends": "@alwatr/standard/tsconfig",
   "compilerOptions": {
     "rootDir": "src",
-    "noEmit": true,
-    "types": ["@alwatr/nano-build"]
+    "noEmit": true
   },
   "include": ["src/**/*.ts"]
 }

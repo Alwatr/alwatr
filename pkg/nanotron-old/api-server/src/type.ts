@@ -20,7 +20,7 @@ export type ErrorResponse = {
   meta?: JsonObject;
 };
 
-export type RouteHandler<TSharedMeta extends DictionaryOpt = DictionaryOpt> = (
+export type RouteHandler<TSharedMeta extends DictionaryOpt<any> = DictionaryOpt<any>> = (
   this: NanotronClientRequest<TSharedMeta>,
   clientRequest: NanotronClientRequest<TSharedMeta>,
   serverResponse: NanotronServerResponse,
@@ -33,7 +33,7 @@ export type NativeServerResponse = ServerResponse;
 /**
  * Configuration options for defining a route.
  */
-export interface DefineRouteOption<TSharedMeta extends DictionaryOpt = DictionaryOpt> {
+export interface DefineRouteOption<TSharedMeta extends DictionaryOpt<any> = DictionaryOpt<any>> {
   /**
    * The HTTP method for this route.
    */

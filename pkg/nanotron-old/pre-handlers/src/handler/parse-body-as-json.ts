@@ -37,7 +37,7 @@ export async function parseBodyAsJson(this: NanotronClientRequest<{body?: JsonOb
   }
 
   try {
-    this.sharedMeta.body = JSON.parse(bodyBuffer.toString()) as DictionaryOpt | JsonArray;
+    this.sharedMeta.body = JSON.parse(bodyBuffer.toString()) as DictionaryOpt<any> | JsonArray;
   } catch (error) {
     this.logger_.error('parseBodyAsJson', 'invalid_body_json', error);
     this.serverResponse.statusCode = HttpStatusCodes.Error_Client_422_Unprocessable_Entity;

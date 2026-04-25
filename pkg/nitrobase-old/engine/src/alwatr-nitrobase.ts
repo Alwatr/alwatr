@@ -184,7 +184,7 @@ export class AlwatrNitrobase {
    * @param stat nitrobase file stat
    * @param data initial data for the document
    */
-  private newStoreFile__(stat: StoreFileStat, data?: DictionaryOpt): void {
+  private newStoreFile__(stat: StoreFileStat, data?: DictionaryOpt<any>): void {
     logger.logMethodArgs?.('newStoreFile__', stat);
 
     (stat.changeDebounce as number | undefined) ??= this.config.defaultChangeDebounce;

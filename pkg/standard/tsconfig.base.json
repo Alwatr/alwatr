@@ -78,7 +78,9 @@
     "useDefineForClassFields": true,
     // "resolveJsonModule": true, // temporary for fix import json issue
 
-    "listEmittedFiles": true
+    "listEmittedFiles": true,
     // "diagnostics": true,
+
+    "types": ["@alwatr/nano-build"]
   }
 }

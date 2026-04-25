@@ -23,19 +23,19 @@
   "sideEffects": false,
   "dependencies": {
     "@alwatr/core": "workspace:*",
+    "@alwatr/flux": "workspace:*",
     "@alwatr/node": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/standard": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
     "typescript": "^6.0.3"
   },
   "scripts": {
     "b": "bun run build",
     "build": "bun run build:ts && bun run build:es",
     "build:es": "nano-build --target=bun --debug src/main.ts",
-    "build:ts": "echo tsc skipped",
+    "build:ts": "tsc --build",
     "cl": "bun run clean",
     "clean": "rm -rfv dist *.tsbuildinfo",
     "format": "prettier --write \"src/**/*.ts\"",

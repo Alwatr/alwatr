@@ -208,7 +208,9 @@ export class NanotronApiServer {
     routeHandlerList[option.method]![option.url] = option;
   }
 
-  public defineRoute<TSharedMeta extends DictionaryOpt = DictionaryOpt>(option: DefineRouteOption<TSharedMeta>): void {
+  public defineRoute<TSharedMeta extends DictionaryOpt<any> = DictionaryOpt<any>>(
+    option: DefineRouteOption<TSharedMeta>,
+  ): void {
     const option_: Required<DefineRouteOption<TSharedMeta>> = {
       matchType: 'exact',
       preHandlers: [],
