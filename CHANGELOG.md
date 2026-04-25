@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.14.0](https://github.com/Alwatr/alwatr/compare/v9.13.0...v9.14.0) (2026-04-25)
+
+### ✨ Features
+
+* **flux:** create new UI-layer package for signals, actions, and storage ([bee3362](https://github.com/Alwatr/alwatr/commit/bee3362b07eef2644f8426685a6269d936a2aca6))
+* **page-ready:** add main entry point with public API exports ([d9a3260](https://github.com/Alwatr/alwatr/commit/d9a3260cfa01cbd94b128740222b1d42fabf4cc7))
+* **page-ready:** add page-ready signal implementation ([c9551af](https://github.com/Alwatr/alwatr/commit/c9551afecd775d0fdbb758c72135778b21d425af))
+* **page-ready:** new package ([0fc087c](https://github.com/Alwatr/alwatr/commit/0fc087c0e3fe77d380adc1c82138727790e4aba6))
+
+### 🐛 Bug Fixes
+
+* **action:** update handler type to Awaitable<void> and simplify dispatchAction implementation ([75b4124](https://github.com/Alwatr/alwatr/commit/75b412406c067782a94737076483ebe605ca520f))
+* **action:** update onAction handler type to support wider payload types ([08cfd26](https://github.com/Alwatr/alwatr/commit/08cfd261370fe5a2b10b5121ab77a5dd7faae822))
+* **page-ready:** update onPageReady handler type to Awaitable<void> ([ab27f68](https://github.com/Alwatr/alwatr/commit/ab27f686acbef147e2dbbb327708e77bbf148436))
+* **README:** correct typo in description and heading ([a323dcd](https://github.com/Alwatr/alwatr/commit/a323dcd9c14458116e6d46d255d5c095f5b62ea9))
+
+### 🔨 Code Refactoring
+
+* **action-record:** remove unused easterEgg action from ActionRecord interface ([9ac6a7c](https://github.com/Alwatr/alwatr/commit/9ac6a7c8c3b7786183cd4dc636577aaa4e01b41a))
+* **action:** clarify ActionRecord is application-specific ([5e4f09b](https://github.com/Alwatr/alwatr/commit/5e4f09b527688d157be70ebb12c395bc1f091524))
+* **action:** clarify handler signatures and improve documentation ([9217e5a](https://github.com/Alwatr/alwatr/commit/9217e5a501a26aa3997cee3d43d3659cd74e46a0))
+* **action:** enhance README with clearer explanations and updated examples ([d282463](https://github.com/Alwatr/alwatr/commit/d282463749d5ee7f16b5612c425995953419ef72))
+* **action:** simplify documentation and remove page-ready exports ([17bd973](https://github.com/Alwatr/alwatr/commit/17bd9734469f6e5a44fa2a91f92b4804d29ea6c2))
+* **action:** update principles for implementation decisions and remove duplicates ([83de4dd](https://github.com/Alwatr/alwatr/commit/83de4ddd5218bb1d52e4bee4d7c4562343f9f4df))
+* **action:** use arrow functions and explicit parameters in handlers ([bbf26ab](https://github.com/Alwatr/alwatr/commit/bbf26ab27284e1343b09af305c1a2c67678f10a6))
+* add type imports from @alwatr/type-helper across multiple packages ([9e44c20](https://github.com/Alwatr/alwatr/commit/9e44c20b724b91452848e4ca4344f16133573bcb))
+* **channel-signal:** enhance type safety and clarity in DispatchArgs and ChannelMessage ([d2388aa](https://github.com/Alwatr/alwatr/commit/d2388aa19619fe33a8c883b88f1345cae9474d85))
+* **global.d.ts:** update declaration syntax for compile-time constants ([d3b979e](https://github.com/Alwatr/alwatr/commit/d3b979eaedef0a797dd17367dac868f396dc211a))
+* **internalChannel:** simplify ChannelSignal type by removing index signature ([6101123](https://github.com/Alwatr/alwatr/commit/6101123721e62578aa2f2315bff50751e7384333))
+* **onAction:** remove unnecessary type casting for handler parameter ([135cf10](https://github.com/Alwatr/alwatr/commit/135cf1084a53ffabbb6dd335672923a0726ded19))
+* **signal:** simplify createChannelSignal type definition ([7956977](https://github.com/Alwatr/alwatr/commit/79569776d67a51ddddd3afb9fab48c6f4d7a6055))
+* **tsconfig:** remove @alwatr/type-helper from types array across multiple packages ([09a2177](https://github.com/Alwatr/alwatr/commit/09a2177c0c22631287e896543a4052201d912224))
+* **tsconfig:** remove unnecessary types array from compilerOptions ([a79eec3](https://github.com/Alwatr/alwatr/commit/a79eec3472c5735791bb7698840e030fec9f0236))
+* **type-helper:** migrate from global declarations to named exports ([59bc2cc](https://github.com/Alwatr/alwatr/commit/59bc2cc4c33c0ae447800aac13d293c351ac0e01))
+* update dependencies and refine TypeScript configurations across multiple packages ([d7d00ad](https://github.com/Alwatr/alwatr/commit/d7d00ad37a5285098ff1d4cbba21613de2df0050))
+
+### 🧹 Miscellaneous Chores
+
+* **action-record:** add 'easterEgg' action to ActionRecord interface for fix type issues ([9c0363e](https://github.com/Alwatr/alwatr/commit/9c0363e42e2adfe17e3a9d41dc94ce0127f25349))
+* **flux:** Apply suggestions from code review ([327f638](https://github.com/Alwatr/alwatr/commit/327f6381853d3aecd706b7b7c2997c38d6b7241f))
+* **type-helper:** add import and default exports for types ([1e25f83](https://github.com/Alwatr/alwatr/commit/1e25f83ef3594512c47ac88c4b1dc74ab72e45be))
+
 ## [9.13.0](https://github.com/Alwatr/alwatr/compare/v9.12.0...v9.13.0) (2026-04-24)
 
 ### ✨ Features

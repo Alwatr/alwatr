@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.14.0](https://github.com/Alwatr/alwatr/compare/v9.13.0...v9.14.0) (2026-04-25)
+
+### 🐛 Bug Fixes
+
+* **action:** update handler type to Awaitable<void> and simplify dispatchAction implementation ([75b4124](https://github.com/Alwatr/alwatr/commit/75b412406c067782a94737076483ebe605ca520f))
+* **action:** update onAction handler type to support wider payload types ([08cfd26](https://github.com/Alwatr/alwatr/commit/08cfd261370fe5a2b10b5121ab77a5dd7faae822))
+
+### 🔨 Code Refactoring
+
+* **action-record:** remove unused easterEgg action from ActionRecord interface ([9ac6a7c](https://github.com/Alwatr/alwatr/commit/9ac6a7c8c3b7786183cd4dc636577aaa4e01b41a))
+* **action:** clarify ActionRecord is application-specific ([5e4f09b](https://github.com/Alwatr/alwatr/commit/5e4f09b527688d157be70ebb12c395bc1f091524))
+* **action:** clarify handler signatures and improve documentation ([9217e5a](https://github.com/Alwatr/alwatr/commit/9217e5a501a26aa3997cee3d43d3659cd74e46a0))
+* **action:** enhance README with clearer explanations and updated examples ([d282463](https://github.com/Alwatr/alwatr/commit/d282463749d5ee7f16b5612c425995953419ef72))
+* **action:** simplify documentation and remove page-ready exports ([17bd973](https://github.com/Alwatr/alwatr/commit/17bd9734469f6e5a44fa2a91f92b4804d29ea6c2))
+* **action:** use arrow functions and explicit parameters in handlers ([bbf26ab](https://github.com/Alwatr/alwatr/commit/bbf26ab27284e1343b09af305c1a2c67678f10a6))
+* add type imports from @alwatr/type-helper across multiple packages ([9e44c20](https://github.com/Alwatr/alwatr/commit/9e44c20b724b91452848e4ca4344f16133573bcb))
+* **internalChannel:** simplify ChannelSignal type by removing index signature ([6101123](https://github.com/Alwatr/alwatr/commit/6101123721e62578aa2f2315bff50751e7384333))
+* **onAction:** remove unnecessary type casting for handler parameter ([135cf10](https://github.com/Alwatr/alwatr/commit/135cf1084a53ffabbb6dd335672923a0726ded19))
+* **tsconfig:** remove @alwatr/type-helper from types array across multiple packages ([09a2177](https://github.com/Alwatr/alwatr/commit/09a2177c0c22631287e896543a4052201d912224))
+
+### 🧹 Miscellaneous Chores
+
+* **action-record:** add 'easterEgg' action to ActionRecord interface for fix type issues ([9c0363e](https://github.com/Alwatr/alwatr/commit/9c0363e42e2adfe17e3a9d41dc94ce0127f25349))
+
 ## [9.13.0](https://github.com/Alwatr/alwatr/compare/v9.12.0...v9.13.0) (2026-04-24)
 
 ### ✨ Features

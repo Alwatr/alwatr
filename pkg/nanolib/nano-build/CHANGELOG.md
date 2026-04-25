@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.14.0](https://github.com/Alwatr/alwatr/compare/v9.13.0...v9.14.0) (2026-04-25)
+
+### 🔨 Code Refactoring
+
+* **global.d.ts:** update declaration syntax for compile-time constants ([d3b979e](https://github.com/Alwatr/alwatr/commit/d3b979eaedef0a797dd17367dac868f396dc211a))
+
 ## [9.10.1](https://github.com/Alwatr/alwatr/compare/v9.10.0...v9.10.1) (2026-04-18)
 
 ### 🐛 Bug Fixes

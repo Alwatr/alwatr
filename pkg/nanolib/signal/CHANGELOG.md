@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.14.0](https://github.com/Alwatr/alwatr/compare/v9.13.0...v9.14.0) (2026-04-25)
+
+### 🔨 Code Refactoring
+
+* add type imports from @alwatr/type-helper across multiple packages ([9e44c20](https://github.com/Alwatr/alwatr/commit/9e44c20b724b91452848e4ca4344f16133573bcb))
+* **channel-signal:** enhance type safety and clarity in DispatchArgs and ChannelMessage ([d2388aa](https://github.com/Alwatr/alwatr/commit/d2388aa19619fe33a8c883b88f1345cae9474d85))
+* **signal:** simplify createChannelSignal type definition ([7956977](https://github.com/Alwatr/alwatr/commit/79569776d67a51ddddd3afb9fab48c6f4d7a6055))
+* **tsconfig:** remove @alwatr/type-helper from types array across multiple packages ([09a2177](https://github.com/Alwatr/alwatr/commit/09a2177c0c22631287e896543a4052201d912224))
+
 ## [9.13.0](https://github.com/Alwatr/alwatr/compare/v9.12.0...v9.13.0) (2026-04-24)
 
 **Note:** Version bump only for package @alwatr/signal
