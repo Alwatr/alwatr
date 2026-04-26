@@ -130,7 +130,7 @@ Finds the first `[page-id]` element anywhere in the document and notifies all ma
 function dispatchPageReady(): void;
 ```
 
-Call once at application bootstrap. Logs an accident if no `[page-id]` element is found or the attribute value is empty.
+Call once at application bootstrap. Logs an accident if no `[page-id]` element is found in the document. An empty attribute value (`page-id=""`) is treated as a valid identifier and dispatched normally.
 
 The lookup uses `document.querySelector('[page-id]')`, so the attribute can be placed on any element (`<body>`, `<main>`, `<div>`, etc.).
 

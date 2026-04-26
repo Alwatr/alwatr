@@ -108,7 +108,7 @@ export function onPageReady<T extends string>(pageId: T, handler: () => Awaitabl
  * ```
  */
 export function subscribePageReady<T extends string>(handler: (pageId: T) => Awaitable<void>): SubscribeResult {
-  logger.logMethodArgs?.('subscribePageReady', {handler: handler.name});
+  logger.logMethod?.('subscribePageReady');
   return pageReadyChannel_.subscribe((message) => {
     handler(message.name as T);
   });
@@ -121,8 +121,9 @@ export function subscribePageReady<T extends string>(handler: (pageId: T) => Awa
  * Finds the element via `document.querySelector('[page-id]')` — no argument
  * needed. Call once at application bootstrap after the DOM is ready.
  *
- * If no element with `page-id` is found, or the attribute value is empty,
- * an accident is logged and nothing is dispatched.
+ * If no element with `page-id` is found in the document, an accident is logged
+ * and nothing is dispatched. An empty attribute value (`page-id=""`) is treated
+ * as a valid identifier and will be dispatched normally.
  *
  * @example
  * ```html
@@ -145,6 +146,6 @@ export function dispatchPageReady(): void {
     return;
   }
 
-  // accept empty pageId as a valid identifier
+  // An empty string is a valid page identifier — dispatch as-is.
   pageReadyChannel_.dispatch(pageId);
 }
