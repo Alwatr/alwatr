@@ -34,12 +34,12 @@ User clicks a button
 document.body capture listener  (1 listener per event type)
         │
         └─ closest('[on-action^=click]') → finds element
-           parse attribute → 'click->add-to-cart:42'
+           parse attribute → 'click->add_to_cart:42'
            run modifiers   → none
            resolve payload → '42'
-           internalChannel_.dispatch('add-to-cart', '42')
+           internalChannel_.dispatch('add_to_cart', '42')
                 │
-                └─ Map.get('add-to-cart') → O(1) → invoke only matching handlers
+                └─ Map.get('add_to_cart') → O(1) → invoke only matching handlers
 ```
 
 ### Complexity
@@ -77,10 +77,10 @@ Extend `ActionRecord` via declaration merging. This gives you full type safety a
 // src/action-record.ts
 declare module '@alwatr/action' {
   interface ActionRecord {
-    'open-drawer': string;
-    'search-query': string;
-    'add-to-cart': {productId: number; qty: number};
-    'logout': void;
+    open_drawer: string;
+    search_query: string;
+    add_to_cart: {productId: number; qty: number};
+    logout: void;
   }
 }
 ```
@@ -94,8 +94,8 @@ import './action-record.js'; // ensure the declaration is loaded
 setupActionDelegation();
 
 // Payload types are inferred from ActionRecord — no generics needed.
-onAction('open-drawer', (panel) => openDrawer(panel)); // panel: string
-onAction('add-to-cart', (item) => {
+onAction('open_drawer', (panel) => openDrawer(panel)); // panel: string
+onAction('add_to_cart', (item) => {
   cartService.add(item.productId, item.qty); // fully typed
 });
 ```
@@ -103,19 +103,19 @@ onAction('add-to-cart', (item) => {
 ### 3. Add attributes to HTML
 
 ```html
-<!-- Dispatches 'open-drawer' with payload 'main' on click -->
-<button on-action="click->open-drawer:main">Open Drawer</button>
+<!-- Dispatches 'open_drawer' with payload 'main' on click -->
+<button on-action="click->open_drawer:main">Open Drawer</button>
 
-<!-- Dispatches 'search-query' with the input's live value -->
+<!-- Dispatches 'search_query' with the input's live value -->
 <input
   type="search"
-  on-action="input->search-query:$value"
+  on-action="input->search_query:$value"
   placeholder="Search…"
 />
 
 <!-- Prevents default, validates, then dispatches all field values -->
 <form
-  on-action="submit.prevent.validate->submit-form:$formdata"
+  on-action="submit.prevent.validate->submit_form:$formdata"
   novalidate
 >
   <input
@@ -126,7 +126,7 @@ onAction('add-to-cart', (item) => {
 </form>
 
 <!-- Fires only once — attribute is removed after first click -->
-<button on-action="click.once->welcome-dismissed">Got it</button>
+<button on-action="click.once->welcome_dismissed">Got it</button>
 ```
 
 ### 4. Programmatic dispatch
@@ -135,7 +135,7 @@ onAction('add-to-cart', (item) => {
 import {dispatchAction} from '@alwatr/action';
 
 await uploadFile(file);
-dispatchAction('upload-complete', fileId);
+dispatchAction('upload_complete', fileId);
 
 dispatchAction('navigate', '/dashboard');
 ```
@@ -152,7 +152,7 @@ on-action="eventType[.modifier…]->actionId[:payload]"
 | ----------- | --------------------------------------------------------- | ----------------------------- |
 | `eventType` | Any standard DOM event name                               | `click`, `input`, `submit`    |
 | `modifier`  | Optional dot-chained tokens processed before dispatch     | `.prevent`, `.validate`       |
-| `actionId`  | Identifier your handler subscribes to                     | `open-drawer`, `search-query` |
+| `actionId`  | Identifier your handler subscribes to                     | `open_drawer`, `search_query` |
 | `:payload`  | Optional literal string, or a `$`-prefixed resolver token | `:main`, `:$value`            |
 
 ### Built-in modifiers
@@ -181,8 +181,8 @@ The global action type registry. Extend via declaration merging to register type
 ```ts
 declare module '@alwatr/action' {
   interface ActionRecord {
-    'open-drawer': string;
-    'logout': void;
+    open_drawer: string;
+    logout: void;
   }
 }
 ```
@@ -229,7 +229,7 @@ function onAction<K extends keyof ActionRecord>(
 ```
 
 ```ts
-const sub = onAction('open-drawer', (panel) => openDrawer(panel));
+const sub = onAction('open_drawer', (panel) => openDrawer(panel));
 sub.unsubscribe(); // prevent memory leaks
 ```
 
@@ -241,7 +241,7 @@ Dispatches a named action. Payload type is enforced by `ActionRecord`.
 
 ```ts
 // With payload
-dispatchAction('open-drawer', 'settings');
+dispatchAction('open_drawer', 'settings');
 
 // Void payload — no second argument
 dispatchAction('logout');
@@ -266,7 +266,7 @@ registerModifier('not-disabled', (_event, element) => {
 
 ```html
 <button
-  on-action="click.not-disabled->select-item:$data-id"
+  on-action="click.not-disabled->select_item:$data-id"
   data-id="42"
 >
   Select
@@ -296,10 +296,10 @@ registerPayloadResolver('$data-id', (_event, element) => {
 ```html
 <input
   type="checkbox"
-  on-action="change->toggle-feature:$checked"
+  on-action="change->toggle_feature:$checked"
 />
 <li
-  on-action="click->select-item:$data-id"
+  on-action="click->select_item:$data-id"
   data-id="42"
 >
   Item
@@ -313,7 +313,7 @@ registerPayloadResolver('$data-id', (_event, element) => {
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                        UI Layer                         │
-│  <button on-action="click->add-to-cart:42">Add</button> │
+│  <button on-action="click->add_to_cart:42">Add</button> │
 └────────────────────────┬────────────────────────────────┘
                          │ DOM event bubbles to body
                          ▼
@@ -321,13 +321,13 @@ registerPayloadResolver('$data-id', (_event, element) => {
 │              Action Layer (@alwatr/action)               │
 │  document.body capture listener (1 per event type)      │
 │  → closest('[on-action]') → parse → modifiers           │
-│  → internalChannel_.dispatch('add-to-cart', '42') [O(1)]│
+│  → internalChannel_.dispatch('add_to_cart', '42') [O(1)]│
 └────────────────────────┬────────────────────────────────┘
                          │ O(1) routing via ChannelSignal
                          ▼
 ┌─────────────────────────────────────────────────────────┐
 │                   Business Logic Layer                  │
-│  onAction('add-to-cart', (id) => cartService.add(id))   │
+│  onAction('add_to_cart', (id) => cartService.add(id))   │
 └────────────────────────┬────────────────────────────────┘
                          │ state update
                          ▼

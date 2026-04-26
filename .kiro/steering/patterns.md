@@ -168,13 +168,13 @@ Uses **global event delegation**: one capture-phase listener on `document.body` 
 
 ```
 UI (HTML attributes)
-  │  on-action="click->add-to-cart:42"
+  │  on-action="click->add_to_cart:42"
   ▼
 Action Layer (@alwatr/action)
   │  document.body capture listener → closest('[on-action]') → dispatchAction
   ▼
 Business Logic
-  │  onAction('add-to-cart', id => cartService.add(id))
+  │  onAction('add_to_cart', id => cartService.add(id))
   ▼
 State Layer (@alwatr/signal)
   │  cartSignal.dispatch(newState)
@@ -185,13 +185,20 @@ UI (re-render)
 ### Bootstrap
 
 ```ts
-import {setupActionDelegation, dispatchPageId} from '@alwatr/action';
+import {setupActionDelegation} from '@alwatr/action';
+import {onPageReady, subscribePageReady, dispatchPageReady} from '@alwatr/page-ready';
 
 // One call — covers the entire page including future dynamic content.
 setupActionDelegation();
 
-// Optional: read page-id attribute and dispatch 'page-ready'
-dispatchPageId();
+// Subscribe to a specific page before dispatching.
+onPageReady('home', () => initHomePage());
+
+// Or subscribe to ALL pages — handler receives the page ID.
+subscribePageReady((pageId) => analytics.trackPageView(pageId));
+
+// Read [page-id] attribute via querySelector and notify subscribers.
+dispatchPageReady();
 ```
 
 ### Registering typed actions
@@ -202,9 +209,9 @@ Extend `ActionRecord` via declaration merging in each feature package:
 // src/action-record.ts
 declare module '@alwatr/action' {
   interface ActionRecord {
-    'open-drawer': string;
-    'add-to-cart': {productId: number; qty: number};
-    'logout': void;
+    open_drawer: string;
+    add_to_cart: {productId: number; qty: number};
+    logout: void;
   }
 }
 ```
@@ -217,13 +224,13 @@ Passing an undeclared action name to `onAction` or `dispatchAction` is a **compi
 import {onAction} from '@alwatr/action';
 
 // String payload (default)
-onAction('open-drawer', (panel) => {
+onAction('open_drawer', (panel) => {
   drawerSignal.dispatch({open: true, panel});
 });
 
 // Typed payload
-onAction<{productId: number; qty: number}>('add-to-cart', (item) => {
-  cartService.add(item!.productId, item!.qty);
+onAction('add_to_cart', (item) => {
+  cartService.add(item.productId, item.qty);
 });
 
 // Cleanup when component is destroyed
@@ -238,7 +245,7 @@ import {dispatchAction} from '@alwatr/action';
 
 // After an async operation completes
 await uploadFile(file);
-dispatchAction('upload-complete', fileId);
+dispatchAction('upload_complete', fileId);
 
 // From a service layer
 dispatchAction('navigate', '/dashboard');
@@ -252,14 +259,14 @@ on-action="eventType[.modifier…]->actionId[:payload]"
 
 ```html
 <!-- Literal payload -->
-<button on-action="click->open-drawer:settings">Settings</button>
+<button on-action="click->open_drawer:settings">Settings</button>
 
 <!-- Dynamic payload from input value -->
-<input on-action="input->search-query:$value" />
+<input on-action="input->search_query:$value" />
 
 <!-- Form data payload with validation -->
 <form
-  on-action="submit.prevent.validate->submit-form:$formdata"
+  on-action="submit.prevent.validate->submit_form:$formdata"
   novalidate
 >
   …
@@ -301,7 +308,7 @@ registerPayloadResolver('$data-id', (_event, element) => {
 
 ```html
 <button
-  on-action="click.not-disabled->select-item:$data-id"
+  on-action="click.not-disabled->select_item:$data-id"
   data-id="42"
 >
   Select
