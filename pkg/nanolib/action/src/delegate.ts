@@ -237,7 +237,7 @@ const delegatedEventTypes__ = new Set<string>();
  * Pass additional types to `setupActionDelegation` when your app uses other
  * events (e.g. `'keydown'`, `'pointerup'`).
  */
-export const DEFAULT_DELEGATED_EVENTS: readonly string[] = ['click', 'submit', 'change'];
+export const DEFAULT_DELEGATED_EVENTS: readonly string[] = ['click', 'submit', 'input', 'change'];
 
 /**
  * Registers global event delegation for `on-<eventType>` attributes.
