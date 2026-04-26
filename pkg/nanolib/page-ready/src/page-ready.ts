@@ -76,6 +76,45 @@ export function onPageReady<T extends string>(pageId: T, handler: () => Awaitabl
 }
 
 /**
+ * Subscribes to **all** page-ready events, regardless of which page ID is dispatched.
+ *
+ * Unlike `onPageReady` — which targets a single page ID — this handler is invoked
+ * every time `dispatchPageReady()` fires, and receives the dispatched page ID as
+ * its first argument.
+ *
+ * Useful for cross-cutting concerns that must react to every page change:
+ * analytics tracking, active nav-link updates, layout transitions, etc.
+ *
+ * Pass a string literal union as the generic parameter to get type-safe page IDs:
+ *
+ * ```ts
+ * type PageId = 'home' | 'about' | 'product-detail';
+ *
+ * subscribePageReady<PageId>((pageId) => {
+ *   analytics.trackPageView(pageId);
+ *   updateActiveNavLink(pageId);
+ * });
+ * ```
+ *
+ * @param handler - Called with the dispatched page ID on every `dispatchPageReady()` call.
+ * @returns A `SubscribeResult` with an `unsubscribe()` method for cleanup.
+ *
+ * @example
+ * ```ts
+ * import {subscribePageReady} from '@alwatr/page-ready';
+ *
+ * const sub = subscribePageReady((pageId) => console.log('Page ready:', pageId));
+ * sub.unsubscribe(); // stop listening when no longer needed
+ * ```
+ */
+export function subscribePageReady<T extends string>(handler: (pageId: T) => Awaitable<void>): SubscribeResult {
+  logger.logMethodArgs?.('subscribePageReady', {handler: handler.name});
+  return pageReadyChannel_.subscribe((message) => {
+    handler(message.name as T);
+  });
+}
+
+/**
  * Reads the `page-id` attribute from the first matching element in the document
  * and notifies all `onPageReady` subscribers registered for that page identifier.
  *
@@ -101,10 +140,11 @@ export function dispatchPageReady(): void {
 
   const pageId = document.querySelector('[page-id]')?.getAttribute('page-id')?.trim();
 
-  if (!pageId) {
+  if (pageId == null) {
     logger.accident('dispatchPageReady', 'page_id_not_found');
     return;
   }
 
+  // accept empty pageId as a valid identifier
   pageReadyChannel_.dispatch(pageId);
 }
