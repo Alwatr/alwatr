@@ -229,8 +229,8 @@ onAction('open_drawer', (panel) => {
 });
 
 // Typed payload
-onAction<{productId: number; qty: number}>('add_to_cart', (item) => {
-  cartService.add(item!.productId, item!.qty);
+onAction('add_to_cart', (item) => {
+  cartService.add(item.productId, item.qty);
 });
 
 // Cleanup when component is destroyed
