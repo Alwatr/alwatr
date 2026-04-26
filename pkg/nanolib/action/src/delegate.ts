@@ -70,7 +70,7 @@ import {modifierRegistry, payloadRegistry} from './registry.js';
  *   → actionId='my_submit_handler', payload='$formdata', modifiers={'prevent','validate'}
  * ```
  */
-const syntaxRegex = /^([a-z0-9_-]+)(?::([a-z0-9_$-]+))?(?:;\s*([a-z0-9_,-]+))?$/;
+const syntaxRegex = /^([a-z0-9_-]+)(?::([^;]+))?(?:;\s*([a-z0-9_,-]+))?$/;
 
 // ─── Parsed Action Descriptor ─────────────────────────────────────────────────
 
@@ -134,7 +134,7 @@ function parseDescriptor__(attributeValue: string): ActionDescriptor | null {
   const payload: string | undefined = match[2];
   // match[3] is the raw modifier list string, e.g. "prevent,validate"
   const modifierString = match[3];
-  const modifiers: Set<string> = modifierString ? new Set(modifierString.split(',')) : new Set();
+  const modifiers: Set<string> = modifierString ? new Set(modifierString.split(',').filter(Boolean)) : new Set();
   const descriptor: ActionDescriptor = {modifiers, actionId, payload};
 
   descriptorCache__.set(attributeValue, descriptor);
