@@ -45,8 +45,8 @@ export type PayloadResolver = (event: Event, element: HTMLElement) => unknown;
 /**
  * Registry of all named modifier handlers.
  *
- * Keys are modifier names used in the `on-action` attribute syntax
- * (e.g. `click.prevent->action-id`). Values are `ModifierHandler` functions.
+ * Keys are modifier names used in the `on-<eventType>` attribute syntax
+ * (e.g. `on-click="action-id; prevent"`). Values are `ModifierHandler` functions.
  * Populated at module load with built-in modifiers; extended at runtime via
  * `registerModifier`.
  *
@@ -57,8 +57,8 @@ export const modifierRegistry = new Map<string, ModifierHandler>();
 /**
  * Registry of all named payload resolvers.
  *
- * Keys are resolver tokens used in the `on-action` attribute syntax
- * (e.g. `click->action-id:$value`). Values are `PayloadResolver` functions.
+ * Keys are resolver tokens used in the `on-<eventType>` attribute syntax
+ * (e.g. `on-input="search_query:$value"`). Values are `PayloadResolver` functions.
  * Populated at module load with built-in resolvers; extended at runtime via
  * `registerPayloadResolver`.
  *
@@ -74,7 +74,7 @@ export const payloadRegistry = new Map<string, PayloadResolver>();
  * Use it to suppress the browser's default behaviour (e.g. form submission,
  * link navigation, context menu).
  *
- * @example `<form on-action="submit.prevent->submit-form">`
+ * @example `<form on-submit="submit-form; prevent">`
  */
 modifierRegistry.set('prevent', (event) => {
   event.preventDefault();
@@ -91,7 +91,7 @@ modifierRegistry.set('prevent', (event) => {
  *
  * Pair with `.prevent` on `submit` events to avoid page reloads:
  *
- * @example `<form on-action="submit.prevent.validate->submit-form:$formdata" novalidate>`
+ * @example `<form on-submit="submit_form:$formdata; prevent,validate" novalidate>`
  */
 modifierRegistry.set('validate', (_event, element) => {
   const form = element instanceof HTMLFormElement ? element : element.closest('form');
@@ -107,7 +107,7 @@ modifierRegistry.set('validate', (_event, element) => {
  * Works with any element that exposes a `value` property: `<input>`,
  * `<textarea>`, `<select>`. Returns `null` for elements without `.value`.
  *
- * @example `<input on-action="input->search-query:$value" />`
+ * @example `<input on-input="search_query:$value" />`
  */
 payloadRegistry.set('$value', (_event, element) => {
   return 'value' in element ? (element as {value: unknown}).value : null;
@@ -120,9 +120,9 @@ payloadRegistry.set('$value', (_event, element) => {
  * Looks for a `<form>` ancestor (or the element itself). Returns `null` when no
  * form is found.
  *
- * @example `<form on-action="submit.prevent.validate->submit-form:$formdata">`
+ * @example `<form on-submit="submit_form:$formdata; prevent,validate">`
  * ```ts
- * onAction('submit-form', (data) => {
+ * onAction('submit_form', (data) => {
  *   console.log(data); // {username: 'ali', password: '…'}
  * });
  * ```

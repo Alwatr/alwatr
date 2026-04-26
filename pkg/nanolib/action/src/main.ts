@@ -1,17 +1,29 @@
 /**
  * @alwatr/action — Declarative DOM action-dispatch for Unidirectional Data Flow.
  *
- * ## Activating `on-action` attributes
+ * ## Activating `on-<eventType>` attributes
  *
  * Call `setupActionDelegation()` once at bootstrap. A single capture-phase
- * listener on `document.body` handles every `on-action` element — including
- * elements added dynamically after bootstrap — with O(1) initialization cost.
+ * listener on `document.body` handles every `on-click`, `on-submit`, etc. element —
+ * including elements added dynamically after bootstrap — with O(1) initialization cost.
  *
  * ```ts
  * import {setupActionDelegation, onAction} from '@alwatr/action';
  *
  * setupActionDelegation();
- * onAction('open-drawer', (panel) => openDrawer(panel));
+ * onAction('open_drawer', (panel) => openDrawer(panel));
+ * ```
+ *
+ * ## Attribute syntax
+ *
+ * ```
+ * on-<eventType>="actionId[:payload][; modifier1,modifier2,…]"
+ * ```
+ *
+ * ```html
+ * <button on-click="open_drawer:main">Open</button>
+ * <input on-input="search_query:$value" />
+ * <form on-submit="submit_form:$formdata; prevent,validate" novalidate>…</form>
  * ```
  *
  * ## Programmatic dispatch
@@ -30,8 +42,8 @@
  * // src/action-record.ts
  * declare module '@alwatr/action' {
  *   interface ActionRecord {
- *     'open-drawer': string;
- *     'add-to-cart': {productId: number; qty: number};
+ *     'open_drawer': string;
+ *     'add_to_cart': {productId: number; qty: number};
  *     'logout': void;
  *   }
  * }

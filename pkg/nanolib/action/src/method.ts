@@ -17,8 +17,8 @@ export type {ModifierHandler, PayloadResolver};
  * generic annotation needed:
  *
  * ```ts
- * // ActionRecord declares: 'add-to-cart': {productId: number; qty: number}
- * onAction('add-to-cart', (item) => {
+ * // ActionRecord declares: 'add_to_cart': {productId: number; qty: number}
+ * onAction('add_to_cart', (item) => {
  *   cartService.add(item.productId, item.qty); // fully typed, no `!` needed
  * });
  * ```
@@ -30,7 +30,7 @@ export type {ModifierHandler, PayloadResolver};
  * // src/action-record.ts
  * declare module '@alwatr/action' {
  *   interface ActionRecord {
- *     'open-drawer': string;
+ *     'open_drawer': string;
  *   }
  * }
  * ```
@@ -46,7 +46,7 @@ export type {ModifierHandler, PayloadResolver};
  * ```ts
  * import {onAction} from '@alwatr/action';
  *
- * const sub = onAction('page-ready', (pageId) => {
+ * const sub = onAction('page_ready', (pageId) => {
  *   router.setPage(pageId); // pageId: string — inferred from ActionRecord
  * });
  *
@@ -68,10 +68,10 @@ export function onAction<K extends keyof ActionRecord>(
  * automatically typed — passing the wrong type is a **compile error**:
  *
  * ```ts
- * // ActionRecord declares: 'add-to-cart': {productId: number; qty: number}
- * dispatchAction('add-to-cart', {productId: 42, qty: 1}); // ✅
- * dispatchAction('add-to-cart', 'wrong');                  // ❌ compile error
- * dispatchAction('unknown-action', 'x');                   // ❌ compile error
+ * // ActionRecord declares: 'add_to_cart': {productId: number; qty: number}
+ * dispatchAction('add_to_cart', {productId: 42, qty: 1}); // ✅
+ * dispatchAction('add_to_cart', 'wrong');                  // ❌ compile error
+ * dispatchAction('unknown_action', 'x');                   // ❌ compile error
  * ```
  *
  * Register new actions by extending `ActionRecord` via declaration merging:
@@ -88,7 +88,7 @@ export function onAction<K extends keyof ActionRecord>(
  *
  * Use `dispatchAction` when triggering an action from code — e.g. after an
  * async operation, from a service layer, or in tests. For DOM-driven actions,
- * use the `on-action` HTML attribute with `setupActionDelegation`.
+ * use the `on-<eventType>` HTML attribute with `setupActionDelegation`.
  *
  * @param actionId      - A key of `ActionRecord`.
  * @param actionPayload - The payload; type is enforced by `ActionRecord`.
@@ -97,7 +97,7 @@ export function onAction<K extends keyof ActionRecord>(
  * ```ts
  * import {dispatchAction} from '@alwatr/action';
  *
- * dispatchAction('page-ready', 'home');
+ * dispatchAction('page_ready', 'home');
  * dispatchAction('navigate', '/dashboard');
  * ```
  *
@@ -117,10 +117,10 @@ export function dispatchAction<K extends keyof ActionRecord>(
 // ─── Extension API ────────────────────────────────────────────────────────────
 
 /**
- * Registers a custom modifier that can be used in `on-action` attribute syntax.
+ * Registers a custom modifier that can be used in `on-<eventType>` attribute syntax.
  *
- * A modifier is a dot-chained token placed after the event type
- * (e.g. `click.mymod->action-id`). Its handler runs before the payload is
+ * A modifier is a comma-separated token placed after the `;` separator
+ * (e.g. `on-click="action-id; mymod"`). Its handler runs before the payload is
  * resolved and the action is dispatched. Returning `false` cancels the dispatch.
  *
  * Built-in modifiers (`prevent`, `stop`, `validate`, `once`) are always
@@ -129,7 +129,7 @@ export function dispatchAction<K extends keyof ActionRecord>(
  * Registering the same name twice logs an accident and overwrites the previous
  * handler — avoid duplicate registrations in production code.
  *
- * @param name    - The modifier token (lowercase, no dots or arrows).
+ * @param name    - The modifier token (lowercase, no special characters).
  * @param handler - A `ModifierHandler` receiving `(event, element)`.
  *
  * @example — a `confirm` modifier that shows a browser dialog
@@ -139,7 +139,7 @@ export function dispatchAction<K extends keyof ActionRecord>(
  * registerModifier('confirm', () => window.confirm('Are you sure?'));
  * ```
  * ```html
- * <button on-action="click.confirm->delete-item:42">Delete</button>
+ * <button on-click="delete_item:42; confirm">Delete</button>
  * ```
  */
 export function registerModifier(name: string, handler: ModifierHandler): void {
@@ -151,10 +151,10 @@ export function registerModifier(name: string, handler: ModifierHandler): void {
 }
 
 /**
- * Registers a custom payload resolver that can be used in `on-action` attribute syntax.
+ * Registers a custom payload resolver that can be used in `on-<eventType>` attribute syntax.
  *
- * A payload resolver is a colon-suffixed token in the attribute value
- * (e.g. `click->action-id:$mytoken`). Its function is called at dispatch time
+ * A payload resolver is a colon-prefixed token in the attribute value
+ * (e.g. `on-click="action-id:$mytoken"`). Its function is called at dispatch time
  * with an `ActionContext` as `this` and the DOM event as the argument.
  * The return value becomes the `actionPayload` passed to `onAction` subscribers.
  *
@@ -176,7 +176,7 @@ export function registerModifier(name: string, handler: ModifierHandler): void {
  * });
  * ```
  * ```html
- * <input type="checkbox" on-action="change->toggle-feature:$checked" />
+ * <input type="checkbox" on-change="toggle_feature:$checked" />
  * ```
  */
 export function registerPayloadResolver(name: string, resolver: PayloadResolver): void {
