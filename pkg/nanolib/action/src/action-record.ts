@@ -13,8 +13,8 @@
  * // In your package: src/action-record.ts
  * declare module '@alwatr/action' {
  *   interface ActionRecord {
- *     'open-drawer': string;
- *     'add-to-cart': {productId: number; qty: number};
+ *     'open_drawer': string;
+ *     'add_to_cart': {productId: number; qty: number};
  *     'logout': void;
  *   }
  * }
@@ -43,8 +43,8 @@
  * // pkg/my-feature/src/action-record.ts
  * declare module '@alwatr/action' {
  *   interface ActionRecord {
- *     'open-drawer': string;
- *     'add-to-cart': {productId: number; qty: number};
+ *     'open_drawer': string;
+ *     'add_to_cart': {productId: number; qty: number};
  *     'logout': void;
  *   }
  * }
