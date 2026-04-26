@@ -62,6 +62,7 @@ A TypeScript/ESM monorepo of small, focused libraries for building robust JavaSc
 | `@alwatr/local-storage`   | Versioned JSON in `localStorage`. `createLocalStorageProvider({name, schemaVersion})`. Auto-migrates on version bump.                                                                                                                                                                                                                     |
 | `@alwatr/session-storage` | Same as `local-storage` but scoped to `sessionStorage`.                                                                                                                                                                                                                                                                                   |
 | `@alwatr/render-state`    | Render state management utility.                                                                                                                                                                                                                                                                                                          |
+| `@alwatr/page-ready`      | MPA page identity signal. `onPageReady(pageId, handler)` — subscribe to a specific page. `subscribePageReady(handler)` — subscribe to all pages (handler receives the page ID). `dispatchPageReady()` — reads `[page-id]` attribute via `querySelector` and notifies subscribers. O(1) dispatch via `ChannelSignal`.                      |
 
 ### HTTP / Network
 
