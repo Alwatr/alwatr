@@ -2,7 +2,7 @@
 
 **Declarative DOM action-dispatch — the Action layer for Unidirectional Data Flow.**
 
-`@alwatr/action` bridges HTML `on-action` attributes to typed signal handlers using **global event delegation**. One listener on `document.body` covers every element on the page — including elements added dynamically after bootstrap — with O(1) initialization cost regardless of how many elements exist.
+`@alwatr/action` bridges HTML `on-<eventType>` attributes to typed signal handlers using **global event delegation**. One listener on `document.body` covers every element on the page — including elements added dynamically after bootstrap — with O(1) initialization cost regardless of how many elements exist.
 
 ---
 
@@ -25,7 +25,7 @@ The action bus is powered by a [`ChannelSignal`](../signal/README.md) from `@alw
 
 ### Global Event Delegation
 
-A single capture-phase listener on `document.body` handles all `on-action` elements. When an event fires, the handler walks up from `event.target` using `closest('[on-action]')`, parses the attribute, runs modifiers, resolves the payload, and dispatches the action.
+A single capture-phase listener on `document.body` handles all `on-<eventType>` elements. When an event fires, the handler walks up from `event.target` using `closest('[on-click]')` (or the matching attribute), parses the attribute value, runs modifiers, resolves the payload, and dispatches the action.
 
 ```
 User clicks a button
@@ -33,8 +33,8 @@ User clicks a button
         ▼
 document.body capture listener  (1 listener per event type)
         │
-        └─ closest('[on-action^=click]') → finds element
-           parse attribute → 'click->add_to_cart:42'
+        └─ closest('[on-click]') → finds element
+           parse attribute → 'add_to_cart:42'
            run modifiers   → none
            resolve payload → '42'
            internalChannel_.dispatch('add_to_cart', '42')
@@ -53,7 +53,7 @@ document.body capture listener  (1 listener per event type)
 
 ### `once` modifier
 
-In delegation mode, `once` is implemented by removing the `on-action` attribute from the element after the first fire. This is simpler than a `WeakSet` cache and naturally handles element reuse — if the element is re-rendered with the attribute, it fires again.
+In delegation mode, `once` is implemented by removing the `on-<eventType>` attribute from the element after the first fire. This is simpler than a `WeakSet` cache and naturally handles element reuse — if the element is re-rendered with the attribute, it fires again.
 
 ---
 
@@ -103,19 +103,22 @@ onAction('add_to_cart', (item) => {
 ### 3. Add attributes to HTML
 
 ```html
+<!-- Dispatches 'close_drawer' on click — no payload -->
+<button on-click="close_drawer">Close</button>
+
 <!-- Dispatches 'open_drawer' with payload 'main' on click -->
-<button on-action="click->open_drawer:main">Open Drawer</button>
+<button on-click="open_drawer:main">Open Drawer</button>
 
 <!-- Dispatches 'search_query' with the input's live value -->
 <input
   type="search"
-  on-action="input->search_query:$value"
+  on-input="search_query:$value"
   placeholder="Search…"
 />
 
 <!-- Prevents default, validates, then dispatches all field values -->
 <form
-  on-action="submit.prevent.validate->submit_form:$formdata"
+  on-submit="submit_form:$formdata; prevent,validate"
   novalidate
 >
   <input
@@ -126,7 +129,7 @@ onAction('add_to_cart', (item) => {
 </form>
 
 <!-- Fires only once — attribute is removed after first click -->
-<button on-action="click.once->welcome_dismissed">Got it</button>
+<button on-click="welcome_dismissed; once">Got it</button>
 ```
 
 ### 4. Programmatic dispatch
@@ -145,23 +148,23 @@ dispatchAction('navigate', '/dashboard');
 ## Attribute Syntax
 
 ```
-on-action="eventType[.modifier…]->actionId[:payload]"
+on-<eventType>="actionId[:payload][; modifier1,modifier2,…]"
 ```
 
-| Segment     | Description                                               | Example                       |
-| ----------- | --------------------------------------------------------- | ----------------------------- |
-| `eventType` | Any standard DOM event name                               | `click`, `input`, `submit`    |
-| `modifier`  | Optional dot-chained tokens processed before dispatch     | `.prevent`, `.validate`       |
-| `actionId`  | Identifier your handler subscribes to                     | `open_drawer`, `search_query` |
-| `:payload`  | Optional literal string, or a `$`-prefixed resolver token | `:main`, `:$value`            |
+| Segment       | Description                                                 | Example                       |
+| ------------- | ----------------------------------------------------------- | ----------------------------- |
+| `eventType`   | Any standard DOM event name — encoded in the attribute name | `on-click`, `on-submit`       |
+| `actionId`    | Identifier your handler subscribes to                       | `open_drawer`, `search_query` |
+| `:payload`    | Optional literal string, or a `$`-prefixed resolver token   | `:main`, `:$value`            |
+| `; modifiers` | Optional comma-separated modifier list after a semicolon    | `; prevent,validate`          |
 
 ### Built-in modifiers
 
-| Modifier    | Behavior                                                                         |
-| ----------- | -------------------------------------------------------------------------------- |
-| `.prevent`  | Calls `event.preventDefault()`                                                   |
-| `.once`     | Removes the `on-action` attribute after first fire — action dispatches only once |
-| `.validate` | Cancels dispatch if the nearest `<form>` fails `checkValidity()`                 |
+| Modifier   | Behavior                                                                              |
+| ---------- | ------------------------------------------------------------------------------------- |
+| `prevent`  | Calls `event.preventDefault()`                                                        |
+| `once`     | Removes the `on-<eventType>` attribute after first fire — action dispatches only once |
+| `validate` | Cancels dispatch if the nearest `<form>` fails `checkValidity()`                      |
 
 ### Built-in payload resolvers
 
@@ -258,15 +261,14 @@ Handler signature: `(event: Event, element: HTMLElement) => boolean`
 ```ts
 import {registerModifier} from '@alwatr/action';
 
-// Arrow function — no `this` binding needed
-registerModifier('not-disabled', (_event, element) => {
+registerModifier('not_disabled', (_event, element) => {
   return !(element as HTMLButtonElement).disabled;
 });
 ```
 
 ```html
 <button
-  on-action="click.not-disabled->select_item:$data-id"
+  on-click="select_item:$data_id; not_disabled"
   data-id="42"
 >
   Select
@@ -288,7 +290,7 @@ registerPayloadResolver('$checked', (_event, element) => {
   return (element as HTMLInputElement).checked;
 });
 
-registerPayloadResolver('$data-id', (_event, element) => {
+registerPayloadResolver('$data_id', (_event, element) => {
   return (element as HTMLElement).dataset.id ?? null;
 });
 ```
@@ -296,10 +298,10 @@ registerPayloadResolver('$data-id', (_event, element) => {
 ```html
 <input
   type="checkbox"
-  on-action="change->toggle_feature:$checked"
+  on-change="toggle_feature:$checked"
 />
 <li
-  on-action="click->select_item:$data-id"
+  on-click="select_item:$data_id"
   data-id="42"
 >
   Item
@@ -311,33 +313,33 @@ registerPayloadResolver('$data-id', (_event, element) => {
 ## Unidirectional Data Flow
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                        UI Layer                         │
-│  <button on-action="click->add_to_cart:42">Add</button> │
-└────────────────────────┬────────────────────────────────┘
-                         │ DOM event bubbles to body
-                         ▼
-┌─────────────────────────────────────────────────────────┐
-│              Action Layer (@alwatr/action)               │
-│  document.body capture listener (1 per event type)      │
-│  → closest('[on-action]') → parse → modifiers           │
-│  → internalChannel_.dispatch('add_to_cart', '42') [O(1)]│
-└────────────────────────┬────────────────────────────────┘
-                         │ O(1) routing via ChannelSignal
-                         ▼
-┌─────────────────────────────────────────────────────────┐
-│                   Business Logic Layer                  │
-│  onAction('add_to_cart', (id) => cartService.add(id))   │
-└────────────────────────┬────────────────────────────────┘
-                         │ state update
-                         ▼
-┌─────────────────────────────────────────────────────────┐
-│                    State Layer (@alwatr/signal)          │
-│  cartSignal.set(newCartState)                           │
-└────────────────────────┬────────────────────────────────┘
-                         │ state flows down to UI
-                         ▼
-                      UI re-renders
+┌──────────────────────────────────────────────────────────┐
+│                         UI Layer                         │
+│  <button on-click="add_to_cart:42">Add</button>          │
+└─────────────────────────┬────────────────────────────────┘
+                          │ DOM event bubbles to body
+                          ▼
+┌──────────────────────────────────────────────────────────┐
+│               Action Layer (@alwatr/action)              │
+│  document.body capture listener (1 per event type)       │
+│  → closest('[on-click]') → parse → modifiers             │
+│  → internalChannel_.dispatch('add_to_cart', '42') [O(1)] │
+└─────────────────────────┬────────────────────────────────┘
+                          │ O(1) routing via ChannelSignal
+                          ▼
+┌──────────────────────────────────────────────────────────┐
+│                    Business Logic Layer                  │
+│  onAction('add_to_cart', (id) => cartService.add(id))    │
+└─────────────────────────┬────────────────────────────────┘
+                          │ state update
+                          ▼
+┌──────────────────────────────────────────────────────────┐
+│                 State Layer (@alwatr/signal)              │
+│  cartSignal.set(newCartState)                            │
+└─────────────────────────┬────────────────────────────────┘
+                          │ state flows down to UI
+                          ▼
+                       UI re-renders
 ```
 
 ---
@@ -353,6 +355,36 @@ concern, not a user-interaction action.
 
 ## Migration from Previous Versions
 
+### Attribute syntax changed
+
+The event type is now encoded in the **attribute name** instead of the value, and modifiers are listed after a semicolon instead of dot-chained before the arrow.
+
+**Before:**
+
+```html
+<button on-action="click->open_drawer:main">Open</button>
+<form
+  on-action="submit.prevent.validate->submit_form:$formdata"
+  novalidate
+>
+  …
+</form>
+<button on-action="click.once->welcome_dismissed">Got it</button>
+```
+
+**After:**
+
+```html
+<button on-click="open_drawer:main">Open</button>
+<form
+  on-submit="submit_form:$formdata; prevent,validate"
+  novalidate
+>
+  …
+</form>
+<button on-click="welcome_dismissed; once">Got it</button>
+```
+
 ### `ActionContext` removed
 
 The `this` context in modifier and resolver handlers changed to explicit parameters:
@@ -360,7 +392,7 @@ The `this` context in modifier and resolver handlers changed to explicit paramet
 **Before:**
 
 ```ts
-registerModifier('not-disabled', function () {
+registerModifier('not_disabled', function () {
   return !(this.element as HTMLButtonElement).disabled;
 });
 ```
@@ -368,15 +400,10 @@ registerModifier('not-disabled', function () {
 **After:**
 
 ```ts
-registerModifier('not-disabled', (_event, element) => {
+registerModifier('not_disabled', (_event, element) => {
   return !(element as HTMLButtonElement).disabled;
 });
 ```
-
-### `once` behavior changed
-
-Previously tracked via `WeakSet`. Now removes the `on-action` attribute after first fire.
-Behavior is equivalent for typical use cases.
 
 ### `page-ready` moved to `@alwatr/page-ready`
 
