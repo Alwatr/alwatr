@@ -393,6 +393,32 @@ The `subscribe` method accepts an optional second argument to customize its beha
 - **`.untilNext()`**: Returns a `Promise` that resolves with the next value/payload.
 - **`.destroy()`**: (On all but `StateSignal`) Cleans up the signal.
 
+---
+
+## 🌊 Part of Alwatr Flux
+
+`@alwatr/signal` is the **State Layer** of the [Alwatr Flux](https://github.com/Alwatr/alwatr/tree/next/pkg/flux) architecture — a complete Unidirectional Data Flow system for building scalable Progressive Web Applications.
+
+```
+View → Action (@alwatr/action) → Controller → State (@alwatr/signal) → View
+```
+
+In the Flux architecture, signals serve as the **single source of truth**. Controllers update signals after processing actions, and the View layer subscribes to signals to re-render only the affected parts of the UI — no Virtual DOM, no full-tree reconciliation.
+
+**The full Flux bundle** (`@alwatr/flux`) includes signals, actions, directives, page-ready, and storage — everything you need to build a complete reactive application from a single import.
+
+```typescript
+// Use @alwatr/flux for the complete architecture
+import {createStateSignal, onAction, setupActionDelegation} from '@alwatr/flux';
+
+// Or use @alwatr/signal standalone for just the reactive primitives
+import {createStateSignal, createComputedSignal} from '@alwatr/signal';
+```
+
+→ [View the complete Flux documentation](https://github.com/Alwatr/alwatr/tree/next/pkg/flux)
+
+---
+
 ## Sponsors
 
 The following companies, organizations, and individuals support flux ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.
